@@ -12,8 +12,8 @@ namespace SearchAlgorythms
         private ISearchAlgorythm searchAlgo = null;
         private ICreateAlgorythm createAlgo = null;
         private Button[,] buttons;
-        GraphTop start = null;
-        GraphTop end = null;
+        private GraphTop start = null;
+
         public MainWindow()
         {
             InitializeComponent();
@@ -55,24 +55,21 @@ namespace SearchAlgorythms
             top.IsEnd = true;
             top.BackColor = Color.FromName("Red");
             foreach (var but in buttons)
-                but.Click -= ChooseEnd;
-            end = top;         
+                but.Click -= ChooseEnd;     
         }
 
-        private void findPathToolStripMenuItem_Click(object sender, EventArgs e)
+        private void FindPathToolStripMenuItem_Click(object sender, EventArgs e)
         {
             if (searchAlgo == null) 
-            {
                 MessageBox.Show("Algorithm is not chosen");
-                return;
-            }
-            //Controls.Clear();
-            //SearchAlgorythms_Load(sender, e);
-            searchAlgo.FindDestionation(start);
-            searchAlgo = null;
+            else
+            {
+                searchAlgo.FindDestionation(start);
+                searchAlgo = null;
+            }           
         }
 
-        private void wideSearchToolStripMenuItem_Click(object sender, EventArgs e)
+        private void WideSearchToolStripMenuItem_Click(object sender, EventArgs e)
         {
             searchAlgo = new WideSearch();
         }

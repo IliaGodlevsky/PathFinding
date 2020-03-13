@@ -44,7 +44,7 @@ namespace SearchAlgorythms.Algorythms.SearchAlgorythm
             GraphTop top = button as GraphTop;
             top.IsVisited = true;
             if (!top.IsStart)
-                top.BackColor = Color.FromName("Blue");
+                top.BackColor = Color.FromName("Yellow");
             ExtractNeighbours(top);
         }
     }

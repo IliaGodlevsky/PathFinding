@@ -70,7 +70,7 @@
             this.findPathToolStripMenuItem.Name = "findPathToolStripMenuItem";
             this.findPathToolStripMenuItem.Size = new System.Drawing.Size(209, 22);
             this.findPathToolStripMenuItem.Text = "Find path";
-            this.findPathToolStripMenuItem.Click += new System.EventHandler(this.findPathToolStripMenuItem_Click);
+            this.findPathToolStripMenuItem.Click += new System.EventHandler(this.FindPathToolStripMenuItem_Click);
             // 
             // chooseSearchAlgorythmToolStripMenuItem
             // 
@@ -85,7 +85,7 @@
             this.wideSearchToolStripMenuItem.Name = "wideSearchToolStripMenuItem";
             this.wideSearchToolStripMenuItem.Size = new System.Drawing.Size(138, 22);
             this.wideSearchToolStripMenuItem.Text = "Wide search";
-            this.wideSearchToolStripMenuItem.Click += new System.EventHandler(this.wideSearchToolStripMenuItem_Click);
+            this.wideSearchToolStripMenuItem.Click += new System.EventHandler(this.WideSearchToolStripMenuItem_Click);
             // 
             // aboutToolStripMenuItem
             // 

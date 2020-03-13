@@ -11,6 +11,7 @@ namespace SearchAlgorythms.Algorythms.GraphCreateAlgorythm
         private Button[,] graph;
         private int width;
         private int height;
+
         public Button[,] GetGraph(int x, int y)
         {
             width = x;
