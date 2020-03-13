@@ -11,7 +11,7 @@ namespace SearchAlgorythms.Algorythms.SearchAlgorythm
 
         public void ExtractNeighbours(Button button)
         {
-            GraphTop top = button as GraphTop;
+            var top = button as GraphTop;
             if (top is null)
                 return;
             foreach (var g in top.GetNeighbours())
@@ -21,7 +21,7 @@ namespace SearchAlgorythms.Algorythms.SearchAlgorythm
         public void FindDestionation(GraphTop start)
         {
             Visit(start);
-            GraphTop currentTop = queue.Dequeue();
+            var currentTop = queue.Dequeue();
             while(!IsDestination(currentTop))
             {
                 if (!currentTop.IsVisited 
@@ -33,7 +33,7 @@ namespace SearchAlgorythms.Algorythms.SearchAlgorythm
 
         public bool IsDestination(Button button)
         {
-            GraphTop top = button as GraphTop;
+            var top = button as GraphTop;
             if (top is null)
                 return false;
             return top.IsEnd;
@@ -41,7 +41,7 @@ namespace SearchAlgorythms.Algorythms.SearchAlgorythm
 
         public void Visit(Button button)
         {
-            GraphTop top = button as GraphTop;
+            var top = button as GraphTop;
             top.IsVisited = true;
             if (!top.IsStart)
                 top.BackColor = Color.FromName("Yellow");
