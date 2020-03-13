@@ -1,11 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics;
+﻿using System.Collections.Generic;
 using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 using SearchAlgorythms.Top;
 
@@ -14,12 +8,6 @@ namespace SearchAlgorythms.Algorythms.SearchAlgorythm
     public class WideSearch : ISearchAlgorythm
     {
         private Queue<GraphTop> queue = new Queue<GraphTop>();
-        private Button[,] graph = null;
-
-        public WideSearch(Button[,] graph)
-        {
-            this.graph = graph;
-        }
 
         public void ExtractNeighbours(Button button)
         {

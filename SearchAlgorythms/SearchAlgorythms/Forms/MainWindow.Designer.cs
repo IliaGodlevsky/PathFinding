@@ -32,9 +32,9 @@
             this.fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.optionsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.findPathToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.aboutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.chooseSearchAlgorythmToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.wideSearchToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.aboutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -72,12 +72,6 @@
             this.findPathToolStripMenuItem.Text = "Find path";
             this.findPathToolStripMenuItem.Click += new System.EventHandler(this.findPathToolStripMenuItem_Click);
             // 
-            // aboutToolStripMenuItem
-            // 
-            this.aboutToolStripMenuItem.Name = "aboutToolStripMenuItem";
-            this.aboutToolStripMenuItem.Size = new System.Drawing.Size(52, 20);
-            this.aboutToolStripMenuItem.Text = "About";
-            // 
             // chooseSearchAlgorythmToolStripMenuItem
             // 
             this.chooseSearchAlgorythmToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
@@ -89,9 +83,15 @@
             // wideSearchToolStripMenuItem
             // 
             this.wideSearchToolStripMenuItem.Name = "wideSearchToolStripMenuItem";
-            this.wideSearchToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.wideSearchToolStripMenuItem.Size = new System.Drawing.Size(138, 22);
             this.wideSearchToolStripMenuItem.Text = "Wide search";
             this.wideSearchToolStripMenuItem.Click += new System.EventHandler(this.wideSearchToolStripMenuItem_Click);
+            // 
+            // aboutToolStripMenuItem
+            // 
+            this.aboutToolStripMenuItem.Name = "aboutToolStripMenuItem";
+            this.aboutToolStripMenuItem.Size = new System.Drawing.Size(52, 20);
+            this.aboutToolStripMenuItem.Text = "About";
             // 
             // MainWindow
             // 

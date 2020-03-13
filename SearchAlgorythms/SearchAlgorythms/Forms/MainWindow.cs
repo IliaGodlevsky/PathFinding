@@ -74,7 +74,7 @@ namespace SearchAlgorythms
 
         private void wideSearchToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            searchAlgo = new WideSearch(buttons);
+            searchAlgo = new WideSearch();
         }
     }
 }
