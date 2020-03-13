@@ -35,7 +35,7 @@ namespace SearchAlgorythms.Algorythms.GraphCreateAlgorythm
 
         public void SetNeighbours(int xCoordinate, int yCoordinate)
         {
-            GraphTop top = graph[xCoordinate, yCoordinate] as GraphTop;
+            var top = graph[xCoordinate, yCoordinate] as GraphTop;
             GraphTop neighbour;
             for (int i = xCoordinate - 1; i <= xCoordinate + 1; i++)
             {
