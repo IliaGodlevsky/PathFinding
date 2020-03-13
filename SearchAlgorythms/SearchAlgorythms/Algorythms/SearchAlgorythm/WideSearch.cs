@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Diagnostics;
 using System.Drawing;
 using System.Windows.Forms;
 using SearchAlgorythms.Top;
@@ -7,6 +8,14 @@ namespace SearchAlgorythms.Algorythms.SearchAlgorythm
 {
     public class WideSearch : ISearchAlgorythm
     {
+        private void Pause(int value = 0)
+        {
+            Stopwatch sw = new Stopwatch();
+            sw.Start();
+            while (sw.ElapsedMilliseconds < value)
+                Application.DoEvents();
+        }
+
         private Queue<GraphTop> queue = new Queue<GraphTop>();
 
         public void ExtractNeighbours(Button button)
@@ -28,7 +37,9 @@ namespace SearchAlgorythms.Algorythms.SearchAlgorythm
                     && currentTop.BackColor != Color.FromName("Black"))
                     Visit(currentTop);
                 currentTop = queue.Dequeue();
+                Pause(20);              
             }
+            MessageBox.Show("Destination is found");           
         }
 
         public bool IsDestination(Button button)

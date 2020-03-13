@@ -21,7 +21,7 @@ namespace SearchAlgorythms
 
         private void SearchAlgorythms_Load(object sender, EventArgs e)
         {
-            int x = 27, y = 15;
+            int x = 50, y = 25;
             int buttonSize = 25;
             int buttonPosition = 27;
             createAlgo = new RandomCreate();            
