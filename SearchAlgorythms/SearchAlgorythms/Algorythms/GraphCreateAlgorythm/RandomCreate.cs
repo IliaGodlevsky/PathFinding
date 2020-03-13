@@ -19,17 +19,14 @@ namespace SearchAlgorythms.Algorythms.GraphCreateAlgorythm
             graph = new Button[x, y];
             int percentOfObstacles = 25;
             for (int xCoordinate = 0; xCoordinate < width; xCoordinate++)
+            {
                 for (int yCoordinate = 0; yCoordinate < height; yCoordinate++)
-                {                 
+                {
                     graph[xCoordinate, yCoordinate] = new GraphTop();
-                    if (rand.Next(100/ percentOfObstacles) == 1)
+                    if (rand.Next(100 / percentOfObstacles) == 1)
                         graph[xCoordinate, yCoordinate].BackColor = Color.FromName("Black");
-                    else
-                    {
-                        GraphTop temp = graph[xCoordinate, yCoordinate] as GraphTop;
-                    }
-
                 }
+            }
             for (int xCoordinate = 0; xCoordinate < width; xCoordinate++) 
                 for (int yCoordinate = 0; yCoordinate < height; yCoordinate++)
                     SetNeighbours(xCoordinate, yCoordinate);
