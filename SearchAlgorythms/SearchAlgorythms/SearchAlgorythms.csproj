@@ -58,9 +58,6 @@
     <Compile Include="Top\GraphTop.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="Top\ValuedGraphTop.cs">
-      <SubType>Component</SubType>
-    </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="Forms\MainWindow.resx">

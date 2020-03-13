@@ -1,6 +1,6 @@
 ﻿namespace SearchAlgorythms
 {
-    partial class Form1
+    partial class MainWindow
     {
         /// <summary>
         /// Required designer variable.
@@ -31,7 +31,10 @@
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.optionsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.findPathToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.aboutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.chooseSearchAlgorythmToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.wideSearchToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -55,9 +58,19 @@
             // 
             // optionsToolStripMenuItem
             // 
+            this.optionsToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.findPathToolStripMenuItem,
+            this.chooseSearchAlgorythmToolStripMenuItem});
             this.optionsToolStripMenuItem.Name = "optionsToolStripMenuItem";
             this.optionsToolStripMenuItem.Size = new System.Drawing.Size(61, 20);
             this.optionsToolStripMenuItem.Text = "Options";
+            // 
+            // findPathToolStripMenuItem
+            // 
+            this.findPathToolStripMenuItem.Name = "findPathToolStripMenuItem";
+            this.findPathToolStripMenuItem.Size = new System.Drawing.Size(209, 22);
+            this.findPathToolStripMenuItem.Text = "Find path";
+            this.findPathToolStripMenuItem.Click += new System.EventHandler(this.findPathToolStripMenuItem_Click);
             // 
             // aboutToolStripMenuItem
             // 
@@ -65,15 +78,31 @@
             this.aboutToolStripMenuItem.Size = new System.Drawing.Size(52, 20);
             this.aboutToolStripMenuItem.Text = "About";
             // 
-            // Form1
+            // chooseSearchAlgorythmToolStripMenuItem
+            // 
+            this.chooseSearchAlgorythmToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.wideSearchToolStripMenuItem});
+            this.chooseSearchAlgorythmToolStripMenuItem.Name = "chooseSearchAlgorythmToolStripMenuItem";
+            this.chooseSearchAlgorythmToolStripMenuItem.Size = new System.Drawing.Size(209, 22);
+            this.chooseSearchAlgorythmToolStripMenuItem.Text = "Choose search algorythm";
+            // 
+            // wideSearchToolStripMenuItem
+            // 
+            this.wideSearchToolStripMenuItem.Name = "wideSearchToolStripMenuItem";
+            this.wideSearchToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.wideSearchToolStripMenuItem.Text = "Wide search";
+            this.wideSearchToolStripMenuItem.Click += new System.EventHandler(this.wideSearchToolStripMenuItem_Click);
+            // 
+            // MainWindow
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 450);
             this.Controls.Add(this.menuStrip1);
             this.MainMenuStrip = this.menuStrip1;
-            this.Name = "Form1";
-            this.Text = "Form1";
+            this.Name = "MainWindow";
+            this.Text = "SearchAlgorythms";
+            this.Load += new System.EventHandler(this.SearchAlgorythms_Load);
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();
             this.ResumeLayout(false);
@@ -87,6 +116,9 @@
         private System.Windows.Forms.ToolStripMenuItem fileToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem optionsToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem aboutToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem findPathToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem chooseSearchAlgorythmToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem wideSearchToolStripMenuItem;
     }
 }
 

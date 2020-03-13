@@ -1,7 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
+using System.Drawing;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using SearchAlgorythms.Top;
@@ -11,6 +14,12 @@ namespace SearchAlgorythms.Algorythms.SearchAlgorythm
     public class WideSearch : ISearchAlgorythm
     {
         private Queue<GraphTop> queue = new Queue<GraphTop>();
+        private Button[,] graph = null;
+
+        public WideSearch(Button[,] graph)
+        {
+            this.graph = graph;
+        }
 
         public void ExtractNeighbours(Button button)
         {
@@ -18,7 +27,7 @@ namespace SearchAlgorythms.Algorythms.SearchAlgorythm
             if (top is null)
                 return;
             foreach (var g in top.GetNeighbours())
-                queue.Enqueue(g);           
+                queue.Enqueue(g);
         }
 
         public void FindDestionation(GraphTop start)
@@ -27,7 +36,8 @@ namespace SearchAlgorythms.Algorythms.SearchAlgorythm
             GraphTop currentTop = queue.Dequeue();
             while(!IsDestination(currentTop))
             {
-                if (!currentTop.IsVisited)
+                if (!currentTop.IsVisited 
+                    && currentTop.BackColor != Color.FromName("Black"))
                     Visit(currentTop);
                 currentTop = queue.Dequeue();
             }
@@ -45,6 +55,8 @@ namespace SearchAlgorythms.Algorythms.SearchAlgorythm
         {
             GraphTop top = button as GraphTop;
             top.IsVisited = true;
+            if (!top.IsStart)
+                top.BackColor = Color.FromName("Blue");
             ExtractNeighbours(top);
         }
     }

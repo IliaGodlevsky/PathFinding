@@ -9,7 +9,7 @@ namespace SearchAlgorythms.Algorythms.GraphCreateAlgorythm
 {
     public interface ICreateAlgorythm
     {
-        List<Button> GetGraph(int x, int y);
+        Button[,] GetGraph(int x, int y);
         void SetNeighbours(int x, int y);
     }
 }

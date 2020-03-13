@@ -1,6 +1,7 @@
 ﻿using SearchAlgorythms.Top;
 using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -11,25 +12,51 @@ namespace SearchAlgorythms.Algorythms.GraphCreateAlgorythm
     public class RandomCreate : ICreateAlgorythm
     {
         private Random rand = new Random();
-        private List<Button> graph = new List<Button>();
-        public List<Button> GetGraph(int x, int y)
+        private Button[,] graph;
+        private int width;
+        private int height;
+        public Button[,] GetGraph(int x, int y)
         {
-            int limit = x * y;
-            for (int i = 0; i < limit; i++)
-                graph.Add(new GraphTop());
-            SetNeighbours(x, y);
-            return graph;           
+            width = x;
+            height = y;
+            graph = new Button[x, y];
+            int percentOfObstacles = 25;
+            for (int xCoordinate = 0; xCoordinate < width; xCoordinate++)
+                for (int yCoordinate = 0; yCoordinate < height; yCoordinate++)
+                {                 
+                    graph[xCoordinate, yCoordinate] = new GraphTop();
+                    if (rand.Next(100/ percentOfObstacles) == 1)
+                        graph[xCoordinate, yCoordinate].BackColor = Color.FromName("Black");
+                    else
+                    {
+                        GraphTop temp = graph[xCoordinate, yCoordinate] as GraphTop;
+                    }
+
+                }
+            for (int xCoordinate = 0; xCoordinate < width; xCoordinate++) 
+                for (int yCoordinate = 0; yCoordinate < height; yCoordinate++)
+                    SetNeighbours(xCoordinate, yCoordinate);
+            return graph;
         }
 
-        public void SetNeighbours(int x, int y)
+        public void SetNeighbours(int xCoordinate, int yCoordinate)
         {
-            for (int i = 0; i < x; i++) 
+            GraphTop top = graph[xCoordinate, yCoordinate] as GraphTop;
+            GraphTop neighbour;
+            for (int i = xCoordinate - 1; i <= xCoordinate + 1; i++)
             {
-                for (int j = 0; j < y; j++)
+                for (int j = yCoordinate - 1; j <= yCoordinate + 1; j++)
                 {
-                    
+                    if (i >= 0 && i < width && j >= 0 && j < height)
+                    {
+                        neighbour = graph[i, j] as GraphTop;
+                        if (neighbour != null &&
+                            neighbour.BackColor != Color.FromName("Black")) 
+                            top.AddNeighbour(neighbour);                        
+                    }
                 }
             }
+            top.GetNeighbours().Remove((GraphTop)graph[xCoordinate, yCoordinate]);
         }
     }
 }

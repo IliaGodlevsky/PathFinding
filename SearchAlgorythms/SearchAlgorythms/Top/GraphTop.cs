@@ -14,11 +14,13 @@ namespace SearchAlgorythms.Top
         {
             IsStart = false;
             IsEnd = false;
-            IsVisited = false;           
+            IsVisited = false;
+            Value = 0;
         }
         public bool IsStart { get; set; }
         public bool IsEnd { get; set; }
         public bool IsVisited { get; set; }
+        public int Value { get; set; }
         public void AddNeighbour(GraphTop top)
         {
             neighbours.Add(top);
