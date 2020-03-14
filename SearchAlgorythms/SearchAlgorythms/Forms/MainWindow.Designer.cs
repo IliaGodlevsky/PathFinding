@@ -30,12 +30,13 @@
         {
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.restartToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.createFieldToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.randomToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.optionsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.findPathToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.chooseSearchAlgorythmToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.wideSearchToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.aboutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.restartToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -54,47 +55,11 @@
             // fileToolStripMenuItem
             // 
             this.fileToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.restartToolStripMenuItem});
+            this.restartToolStripMenuItem,
+            this.createFieldToolStripMenuItem});
             this.fileToolStripMenuItem.Name = "fileToolStripMenuItem";
             this.fileToolStripMenuItem.Size = new System.Drawing.Size(37, 20);
             this.fileToolStripMenuItem.Text = "File";
-            // 
-            // optionsToolStripMenuItem
-            // 
-            this.optionsToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.findPathToolStripMenuItem,
-            this.chooseSearchAlgorythmToolStripMenuItem});
-            this.optionsToolStripMenuItem.Name = "optionsToolStripMenuItem";
-            this.optionsToolStripMenuItem.Size = new System.Drawing.Size(61, 20);
-            this.optionsToolStripMenuItem.Text = "Options";
-            // 
-            // findPathToolStripMenuItem
-            // 
-            this.findPathToolStripMenuItem.Name = "findPathToolStripMenuItem";
-            this.findPathToolStripMenuItem.Size = new System.Drawing.Size(209, 22);
-            this.findPathToolStripMenuItem.Text = "Find path";
-            this.findPathToolStripMenuItem.Click += new System.EventHandler(this.FindPathToolStripMenuItem_Click);
-            // 
-            // chooseSearchAlgorythmToolStripMenuItem
-            // 
-            this.chooseSearchAlgorythmToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.wideSearchToolStripMenuItem});
-            this.chooseSearchAlgorythmToolStripMenuItem.Name = "chooseSearchAlgorythmToolStripMenuItem";
-            this.chooseSearchAlgorythmToolStripMenuItem.Size = new System.Drawing.Size(209, 22);
-            this.chooseSearchAlgorythmToolStripMenuItem.Text = "Choose search algorythm";
-            // 
-            // wideSearchToolStripMenuItem
-            // 
-            this.wideSearchToolStripMenuItem.Name = "wideSearchToolStripMenuItem";
-            this.wideSearchToolStripMenuItem.Size = new System.Drawing.Size(138, 22);
-            this.wideSearchToolStripMenuItem.Text = "Wide search";
-            this.wideSearchToolStripMenuItem.Click += new System.EventHandler(this.WideSearchToolStripMenuItem_Click);
-            // 
-            // aboutToolStripMenuItem
-            // 
-            this.aboutToolStripMenuItem.Name = "aboutToolStripMenuItem";
-            this.aboutToolStripMenuItem.Size = new System.Drawing.Size(52, 20);
-            this.aboutToolStripMenuItem.Text = "About";
             // 
             // restartToolStripMenuItem
             // 
@@ -102,6 +67,50 @@
             this.restartToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.restartToolStripMenuItem.Text = "Restart";
             this.restartToolStripMenuItem.Click += new System.EventHandler(this.RestartToolStripMenuItem_Click);
+            // 
+            // createFieldToolStripMenuItem
+            // 
+            this.createFieldToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.randomToolStripMenuItem});
+            this.createFieldToolStripMenuItem.Name = "createFieldToolStripMenuItem";
+            this.createFieldToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.createFieldToolStripMenuItem.Text = "Create field";
+            // 
+            // randomToolStripMenuItem
+            // 
+            this.randomToolStripMenuItem.Name = "randomToolStripMenuItem";
+            this.randomToolStripMenuItem.Size = new System.Drawing.Size(119, 22);
+            this.randomToolStripMenuItem.Text = "Random";
+            this.randomToolStripMenuItem.Click += new System.EventHandler(this.RandomToolStripMenuItem_Click);
+            // 
+            // optionsToolStripMenuItem
+            // 
+            this.optionsToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.findPathToolStripMenuItem});
+            this.optionsToolStripMenuItem.Name = "optionsToolStripMenuItem";
+            this.optionsToolStripMenuItem.Size = new System.Drawing.Size(61, 20);
+            this.optionsToolStripMenuItem.Text = "Options";
+            // 
+            // findPathToolStripMenuItem
+            // 
+            this.findPathToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.wideSearchToolStripMenuItem});
+            this.findPathToolStripMenuItem.Name = "findPathToolStripMenuItem";
+            this.findPathToolStripMenuItem.Size = new System.Drawing.Size(124, 22);
+            this.findPathToolStripMenuItem.Text = "Find path";
+            // 
+            // wideSearchToolStripMenuItem
+            // 
+            this.wideSearchToolStripMenuItem.Name = "wideSearchToolStripMenuItem";
+            this.wideSearchToolStripMenuItem.Size = new System.Drawing.Size(138, 22);
+            this.wideSearchToolStripMenuItem.Text = "Wide search";
+            this.wideSearchToolStripMenuItem.Click += new System.EventHandler(this.WideSearchToolStripMenuItem_Click_1);
+            // 
+            // aboutToolStripMenuItem
+            // 
+            this.aboutToolStripMenuItem.Name = "aboutToolStripMenuItem";
+            this.aboutToolStripMenuItem.Size = new System.Drawing.Size(52, 20);
+            this.aboutToolStripMenuItem.Text = "About";
             // 
             // MainWindow
             // 
@@ -127,9 +136,10 @@
         private System.Windows.Forms.ToolStripMenuItem optionsToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem aboutToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem findPathToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem chooseSearchAlgorythmToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem wideSearchToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem restartToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem createFieldToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem randomToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem wideSearchToolStripMenuItem;
     }
 }
 

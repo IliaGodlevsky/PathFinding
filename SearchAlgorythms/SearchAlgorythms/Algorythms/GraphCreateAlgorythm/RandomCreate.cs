@@ -22,14 +22,16 @@ namespace SearchAlgorythms.Algorythms.GraphCreateAlgorythm
             {
                 for (int yCoordinate = 0; yCoordinate < height; yCoordinate++)
                 {
-                    graph[xCoordinate, yCoordinate] = new GraphTop();
                     if (rand.Next(100 / percentOfObstacles) == 1)
+                    {
+                        graph[xCoordinate, yCoordinate] = new Button();
                         graph[xCoordinate, yCoordinate].BackColor = Color.FromName("Black");
+                    }
+                    else
+                        graph[xCoordinate, yCoordinate] = new GraphTop();
                 }
             }
-            for (int xCoordinate = 0; xCoordinate < width; xCoordinate++) 
-                for (int yCoordinate = 0; yCoordinate < height; yCoordinate++)
-                    SetNeighbours(xCoordinate, yCoordinate);
+            SetNeighbours();
             return graph;
         }
 
@@ -41,16 +43,23 @@ namespace SearchAlgorythms.Algorythms.GraphCreateAlgorythm
             {
                 for (int j = yCoordinate - 1; j <= yCoordinate + 1; j++)
                 {
-                    if (i >= 0 && i < width && j >= 0 && j < height)
+                    if (i >= 0 && i < width && j >= 0 && j < height) 
                     {
                         neighbour = graph[i, j] as GraphTop;
-                        if (neighbour != null &&
+                        if (neighbour != null  &&
                             neighbour.BackColor != Color.FromName("Black")) 
-                            top.AddNeighbour(neighbour);                        
+                            top?.AddNeighbour(neighbour);                        
                     }
                 }
             }
-            top.GetNeighbours().Remove((GraphTop)graph[xCoordinate, yCoordinate]);
+            top?.GetNeighbours().Remove((GraphTop)graph[xCoordinate, yCoordinate]);
+        }
+
+        public void SetNeighbours()
+        {
+            for (int xCoordinate = 0; xCoordinate < width; xCoordinate++)
+                for (int yCoordinate = 0; yCoordinate < height; yCoordinate++)
+                    SetNeighbours(xCoordinate, yCoordinate);
         }
     }
 }
