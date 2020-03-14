@@ -37,7 +37,7 @@ namespace SearchAlgorythms.Algorythms.SearchAlgorythm
                     && currentTop.BackColor != Color.FromName("Black"))
                     Visit(currentTop);
                 currentTop = queue.Dequeue();
-                Pause(20);              
+                Pause(10);              
             }
             MessageBox.Show("Destination is found");           
         }
