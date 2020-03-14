@@ -34,11 +34,15 @@ namespace SearchAlgorythms
                     buttons[i, j].Click += ChooseStart;
                     Controls.Add(buttons[i, j]);
                 }
+            Size = new Size(new Point((x + 1) * buttonPosition, (y + 2) * buttonPosition));
+            DesktopLocation = new Point();
         }
 
         private void ChooseStart(object sender, EventArgs e)
         {
             GraphTop top = sender as GraphTop;
+            if (top.BackColor == Color.FromName("Black"))
+                return;
             top.IsStart = true;
             foreach(var but in buttons)
             {
@@ -52,6 +56,8 @@ namespace SearchAlgorythms
         private void ChooseEnd(object sender, EventArgs e)
         {
             GraphTop top = sender as GraphTop;
+            if (top.BackColor == Color.FromName("Black"))
+                return;
             top.IsEnd = true;
             top.BackColor = Color.FromName("Red");
             foreach (var but in buttons)
@@ -72,6 +78,13 @@ namespace SearchAlgorythms
         private void WideSearchToolStripMenuItem_Click(object sender, EventArgs e)
         {
             searchAlgo = new WideSearch();
+        }
+
+        private void RestartToolStripMenuItem_Click(object sender, EventArgs e)
+        {   
+            foreach(var b in buttons)
+                Controls.Remove(b);
+            SearchAlgorythms_Load(sender, e);
         }
     }
 }
