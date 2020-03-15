@@ -30,10 +30,8 @@ namespace SearchAlgorythms.Algorythms.GraphCreateAlgorythm
                 for (int yCoordinate = 0; yCoordinate < height; yCoordinate++)
                 {
                     if (IsObstacleChance())
-                    {
-                        graph[xCoordinate, yCoordinate] = new Button();
-                        graph[xCoordinate, yCoordinate].BackColor = Color.FromName("Black");
-                    }
+                        graph[xCoordinate, yCoordinate] = new Button
+                        {BackColor = Color.FromName("Black") };
                     else
                         graph[xCoordinate, yCoordinate] = new GraphTop();
                 }
@@ -45,7 +43,6 @@ namespace SearchAlgorythms.Algorythms.GraphCreateAlgorythm
         public void SetNeighbours(int xCoordinate, int yCoordinate)
         {
             var top = graph[xCoordinate, yCoordinate] as GraphTop;
-            GraphTop neighbour;
             // set neighboours in the square around the top of a graph
             // 0  0  0
             // 0  x  0
@@ -56,10 +53,9 @@ namespace SearchAlgorythms.Algorythms.GraphCreateAlgorythm
                 {
                     if (i >= 0 && i < width && j >= 0 && j < height) 
                     {
-                        neighbour = graph[i, j] as GraphTop;
-                        if (neighbour != null  &&
-                            neighbour.BackColor != Color.FromName("Black")) 
-                            top?.AddNeighbour(neighbour);                        
+                        if (graph[i, j] is GraphTop neighbour &&
+                            neighbour.BackColor != Color.FromName("Black"))
+                            top?.AddNeighbour(neighbour);
                     }
                 }
             }
