@@ -93,7 +93,7 @@ namespace SearchAlgorythms
             if (CanStartSearch())
             {
                 searchAlgo = new WideSearch();
-                SearchPath();
+                SearchPath(end);
             }
         }
 
@@ -118,12 +118,12 @@ namespace SearchAlgorythms
             return true;
         }
 
-        private void SearchPath()
+        private void SearchPath(GraphTop startTopOfDrawingPath)
         {
             searchAlgo.FindDestionation(start);
             if (searchAlgo.DestinationFound)
             {
-                searchAlgo.DrawPath(start);
+                searchAlgo.DrawPath(startTopOfDrawingPath);
                 MessageBox.Show("Destination is found");
             }
             else
@@ -138,7 +138,7 @@ namespace SearchAlgorythms
             if (CanStartSearch())
             {
                 searchAlgo = new BestFirstSearch(end);
-                SearchPath();
+                SearchPath(start);
             }            
         }
     }
