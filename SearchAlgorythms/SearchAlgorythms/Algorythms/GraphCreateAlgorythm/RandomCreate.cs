@@ -12,11 +12,11 @@ namespace SearchAlgorythms.Algorythms.GraphCreateAlgorythm
         private int width;
         private int height;
         private int percentOfObstacles = 100;
-        private int currentPercent = 54;
+        private int currentPercent = 44;
 
         public bool IsObstacleChance()
         {
-            return rand.Next(percentOfObstacles) <= currentPercent;
+            return rand.Next(percentOfObstacles) < currentPercent;
         }
 
         public Button[,] GetGraph(int x, int y)

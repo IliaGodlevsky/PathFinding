@@ -8,7 +8,7 @@ namespace SearchAlgorythms.Algorythms.SearchAlgorythm
 {
     public class WideSearch : ISearchAlgorythm
     {
-        private void Pause(int value = 0)
+        protected void Pause(int value = 0)
         {
             Stopwatch sw = new Stopwatch();
             sw.Start();
@@ -21,7 +21,7 @@ namespace SearchAlgorythms.Algorythms.SearchAlgorythm
             return !top.IsStart && !top.IsEnd;
         }
 
-        private GraphTop GoChippestNeighbour(GraphTop top)
+        public GraphTop GoChippestNeighbour(GraphTop top)
         {
             GraphTop chippest = top;
             var neighbours = top.GetNeighbours();
@@ -35,22 +35,22 @@ namespace SearchAlgorythms.Algorythms.SearchAlgorythm
             return chippest;
         }
 
-        private bool IsRightNeighbour(GraphTop top1, GraphTop top2)
+        public virtual bool IsRightNeighbour(GraphTop top1, GraphTop top2)
         {
             return top1.Value >= top2.Value && top2.IsVisited && !top2.IsEnd;
         }
 
-        public bool IsRightCellToVisit(Button button)
+        public virtual bool IsRightCellToVisit(Button button)
         {
             GraphTop top = button as GraphTop;
             return top is null ? false : !top.IsVisited;
         }
 
-        private Queue<GraphTop> queue = new Queue<GraphTop>();
+        protected Queue<GraphTop> queue = new Queue<GraphTop>();
 
         public bool DestinationFound { get; set; }
 
-        public void ExtractNeighbours(Button button)
+        public virtual void ExtractNeighbours(Button button)
         {
             var currentTop = button as GraphTop;
             if (currentTop is null)
@@ -63,7 +63,7 @@ namespace SearchAlgorythms.Algorythms.SearchAlgorythm
             }
         }
 
-        public void FindDestionation(GraphTop start)
+        public virtual void FindDestionation(GraphTop start)
         {
             var currentTop = start;
             Visit(currentTop);
@@ -78,7 +78,7 @@ namespace SearchAlgorythms.Algorythms.SearchAlgorythm
                 && !currentTop.IsEnd ? false : true;
         }
 
-        public void DrawPath(GraphTop end)
+        public virtual void DrawPath(GraphTop end)
         {
             GraphTop top = end;
             while (!top.IsStart)

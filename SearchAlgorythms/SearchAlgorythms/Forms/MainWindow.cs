@@ -14,8 +14,8 @@ namespace SearchAlgorythms
         private Button[,] buttons = null;
         private GraphTop start = null;
         private GraphTop end = null;
-        private int width = 15;
-        private int height = 15;
+        private int width = 25;
+        private int height = 25;
         private const int BUTTON_SIZE = 25;
         private const int BUTTON_POSITION = 27;
 
@@ -31,7 +31,8 @@ namespace SearchAlgorythms
 
         private bool IsRightDestination(GraphTop top)
         {
-            return top != null && top.GetNeighbours().Count > 0;
+            return top != null && top.GetNeighbours().Count > 0 
+                && !top.IsStart && !top.IsEnd;
         }
 
         private void AddButtonsToControls(Button[,] buttons)
@@ -83,29 +84,17 @@ namespace SearchAlgorythms
         {
             if (buttons is null)
                 return;
-            foreach(var b in buttons)
-                Controls.Remove(b);
+            foreach(var button in buttons)
+                Controls.Remove(button);
         }
 
         private void WideSearchToolStripMenuItem_Click_1(object sender, EventArgs e)
         {
-            if(start == null || end == null)
+            if (CanStartSearch())
             {
-                MessageBox.Show("Start or end buttons wasn't chosen");
-                return;
+                searchAlgo = new WideSearch();
+                SearchPath();
             }
-            searchAlgo = new WideSearch();
-            searchAlgo.FindDestionation(start);
-            if (searchAlgo.DestinationFound)
-            {
-                searchAlgo.DrawPath(end);
-                MessageBox.Show("Destination is found");
-            }
-            else
-                MessageBox.Show("Couldn't find path");
-            searchAlgo = null;
-            start = null;
-            end = null;
         }
 
         private void RandomToolStripMenuItem_Click(object sender, EventArgs e)
@@ -117,6 +106,40 @@ namespace SearchAlgorythms
             createAlgo = null;
             start = null;
             end = null;
+        }
+
+        private bool CanStartSearch()
+        {
+            if (start == null || end == null)
+            {
+                MessageBox.Show("Start or end buttons wasn't chosen");
+                return false;
+            }
+            return true;
+        }
+
+        private void SearchPath()
+        {
+            searchAlgo.FindDestionation(start);
+            if (searchAlgo.DestinationFound)
+            {
+                searchAlgo.DrawPath(start);
+                MessageBox.Show("Destination is found");
+            }
+            else
+                MessageBox.Show("Couldn't find path");
+            searchAlgo = null;
+            start = null;
+            end = null;
+        }
+
+        private void BestfirstWideSearchToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (CanStartSearch())
+            {
+                searchAlgo = new BestFirstSearch(end);
+                SearchPath();
+            }            
         }
     }
 }
