@@ -29,6 +29,11 @@ namespace SearchAlgorythms
 
         }
 
+        private bool IsRightDestination(GraphTop top)
+        {
+            return top != null && top.GetNeighbours().Count > 0;
+        }
+
         private void AddButtonsToControls(Button[,] buttons)
         {
             for (int i = 0; i < width; i++)
@@ -50,7 +55,7 @@ namespace SearchAlgorythms
         private void ChooseStart(object sender, EventArgs e)
         {
             GraphTop top = sender as GraphTop;
-            if (top is null)
+            if (!IsRightDestination(top)) 
                 return;
             top.IsStart = true;
             foreach (var but in buttons)
@@ -65,7 +70,7 @@ namespace SearchAlgorythms
         private void ChooseEnd(object sender, EventArgs e)
         {
             GraphTop top = sender as GraphTop;
-            if (top is null)
+            if (!IsRightDestination(top))
                 return;
             top.IsEnd = true;
             top.BackColor = Color.FromName("Red");
@@ -91,8 +96,13 @@ namespace SearchAlgorythms
             }
             searchAlgo = new WideSearch();
             searchAlgo.FindDestionation(start);
-            searchAlgo.DrawPath(end);
-            MessageBox.Show("Destination is found");
+            if (searchAlgo.DestinationFound)
+            {
+                searchAlgo.DrawPath(end);
+                MessageBox.Show("Destination is found");
+            }
+            else
+                MessageBox.Show("Couldn't find path");
             searchAlgo = null;
             start = null;
             end = null;

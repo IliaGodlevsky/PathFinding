@@ -17,7 +17,7 @@ namespace SearchAlgorythms.Algorythms.GraphCreateAlgorythm
             width = x;
             height = y;
             graph = new Button[x, y];
-            int percentOfObstacles = 25;
+            int percentOfObstacles = 50;
             for (int xCoordinate = 0; xCoordinate < width; xCoordinate++)
             {
                 for (int yCoordinate = 0; yCoordinate < height; yCoordinate++)
@@ -39,6 +39,10 @@ namespace SearchAlgorythms.Algorythms.GraphCreateAlgorythm
         {
             var top = graph[xCoordinate, yCoordinate] as GraphTop;
             GraphTop neighbour;
+            // set neighboours in a such a square around the top of a graph
+            // 0  0  0
+            // 0  x  0
+            // 0  0  0
             for (int i = xCoordinate - 1; i <= xCoordinate + 1; i++)
             {
                 for (int j = yCoordinate - 1; j <= yCoordinate + 1; j++)

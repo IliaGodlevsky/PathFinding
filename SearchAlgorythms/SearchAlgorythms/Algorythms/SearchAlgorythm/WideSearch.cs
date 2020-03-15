@@ -16,28 +16,31 @@ namespace SearchAlgorythms.Algorythms.SearchAlgorythm
                 Application.DoEvents();
         }
 
+        private bool IsRigthCellToColor(GraphTop top)
+        {
+            return !top.IsStart && !top.IsEnd;
+        }
+
         private GraphTop GoChippestNeighbour(GraphTop top)
         {
-            GraphTop temp = top;
+            GraphTop chippest = top;
             var neighbours = top.GetNeighbours();
-            var start = neighbours.Find(f => f.IsStart);
-            if (start != null)
-                return start;
-            for (int i = 0; i < neighbours.Count; i++) 
+            foreach (var neighbour in neighbours) 
             {
-                if (IsRightNeighbour(temp, neighbours[i]))
-                    temp = neighbours[i];
+                if (IsRightNeighbour(chippest, neighbour))
+                    chippest = neighbour;
             }
-            temp.BackColor = Color.FromName("Cyan");
-            return temp;
+            if (IsRigthCellToColor(chippest)) 
+                chippest.BackColor = Color.FromName("Cyan");
+            return chippest;
         }
 
         private bool IsRightNeighbour(GraphTop top1, GraphTop top2)
         {
-            return top1.Value > top2.Value && top2.IsVisited && !top2.IsEnd;
+            return top1.Value >= top2.Value && top2.IsVisited && !top2.IsEnd;
         }
 
-        public bool IsRightCell(Button button)
+        public bool IsRightCellToVisit(Button button)
         {
             GraphTop top = button as GraphTop;
             return top is null ? false : !top.IsVisited;
@@ -45,38 +48,44 @@ namespace SearchAlgorythms.Algorythms.SearchAlgorythm
 
         private Queue<GraphTop> queue = new Queue<GraphTop>();
 
+        public bool DestinationFound { get; set; }
+
         public void ExtractNeighbours(Button button)
         {
-            var top = button as GraphTop;
-            if (top is null)
+            var currentTop = button as GraphTop;
+            if (currentTop is null)
                 return;
-            foreach (var g in top.GetNeighbours())
+            foreach (var neigbour in currentTop.GetNeighbours())
             {
-                if (g.Value == 0)
-                    g.Value = top.Value + 1;
-                queue.Enqueue(g);
+                if (neigbour.Value == 0 && !neigbour.IsStart)
+                    neigbour.Value = currentTop.Value + 1;
+                queue.Enqueue(neigbour);
             }
         }
 
         public void FindDestionation(GraphTop start)
         {
-            Visit(start);
-            var currentTop = queue.Dequeue();
-            while(!IsDestination(currentTop))
+            var currentTop = start;
+            Visit(currentTop);
+            while (!IsDestination(currentTop))
             {
-                if (IsRightCell(currentTop))
-                    Visit(currentTop);
                 currentTop = queue.Dequeue();
+                if (IsRightCellToVisit(currentTop))
+                    Visit(currentTop);
                 Pause(10);              
             }
-            Visit(currentTop);
+            DestinationFound = queue.Count == 0 
+                && !currentTop.IsEnd ? false : true;
         }
 
         public void DrawPath(GraphTop end)
         {
             GraphTop top = end;
             while (!top.IsStart)
-                top = GoChippestNeighbour(top);            
+            {
+                top = GoChippestNeighbour(top);
+                Pause(250);
+            }
         }
 
         public bool IsDestination(Button button)
@@ -84,7 +93,7 @@ namespace SearchAlgorythms.Algorythms.SearchAlgorythm
             var top = button as GraphTop;
             if (top is null)
                 return false;
-            return top.IsEnd;
+            return top.IsEnd || queue.Count == 0;
         }
 
         public void Visit(Button button)
@@ -93,7 +102,7 @@ namespace SearchAlgorythms.Algorythms.SearchAlgorythm
             if (top is null)
                 return;
             top.IsVisited = true;
-            if (!top.IsStart && !top.IsEnd)
+            if (IsRigthCellToColor(top))
                 top.BackColor = Color.FromName("Yellow");
             ExtractNeighbours(top);
         }

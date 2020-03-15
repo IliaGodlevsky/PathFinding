@@ -9,7 +9,8 @@ namespace SearchAlgorythms.Algorythms.SearchAlgorythm
         void Visit(Button button);
         void ExtractNeighbours(Button button);
         void FindDestionation(GraphTop start);
-        bool IsRightCell(Button button);
+        bool IsRightCellToVisit(Button button);
         void DrawPath(GraphTop end);
+        bool DestinationFound { get; set; }
     }
 }

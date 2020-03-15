@@ -47,6 +47,7 @@
   <ItemGroup>
     <Compile Include="Algorythms\GraphCreateAlgorythm\ICreateAlgorythm.cs" />
     <Compile Include="Algorythms\GraphCreateAlgorythm\RandomCreate.cs" />
+    <Compile Include="Algorythms\SearchAlgorythm\GreedSearch.cs" />
     <Compile Include="Algorythms\SearchAlgorythm\ISearchAlgorythm.cs" />
     <Compile Include="Algorythms\SearchAlgorythm\WideSearch.cs" />
     <Compile Include="Forms\MainWindow.cs">
