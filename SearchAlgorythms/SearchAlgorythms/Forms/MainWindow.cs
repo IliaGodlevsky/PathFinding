@@ -14,8 +14,8 @@ namespace SearchAlgorythms
         private Button[,] buttons = null;
         private GraphTop start = null;
         private GraphTop end = null;
-        private int width = 25;
-        private int height = 20;
+        private int width = 15;
+        private int height = 15;
         private const int BUTTON_SIZE = 25;
         private const int BUTTON_POSITION = 27;
 

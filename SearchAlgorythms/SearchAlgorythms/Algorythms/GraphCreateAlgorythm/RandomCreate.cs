@@ -11,18 +11,25 @@ namespace SearchAlgorythms.Algorythms.GraphCreateAlgorythm
         private Button[,] graph;
         private int width;
         private int height;
+        private int percentOfObstacles = 100;
+        private int currentPercent = 54;
+
+        public bool IsObstacleChance()
+        {
+            return rand.Next(percentOfObstacles) <= currentPercent;
+        }
 
         public Button[,] GetGraph(int x, int y)
         {
             width = x;
             height = y;
             graph = new Button[x, y];
-            int percentOfObstacles = 50;
+            
             for (int xCoordinate = 0; xCoordinate < width; xCoordinate++)
             {
                 for (int yCoordinate = 0; yCoordinate < height; yCoordinate++)
                 {
-                    if (rand.Next(100 / percentOfObstacles) == 1)
+                    if (IsObstacleChance())
                     {
                         graph[xCoordinate, yCoordinate] = new Button();
                         graph[xCoordinate, yCoordinate].BackColor = Color.FromName("Black");
@@ -39,7 +46,7 @@ namespace SearchAlgorythms.Algorythms.GraphCreateAlgorythm
         {
             var top = graph[xCoordinate, yCoordinate] as GraphTop;
             GraphTop neighbour;
-            // set neighboours in a such a square around the top of a graph
+            // set neighboours in the square around the top of a graph
             // 0  0  0
             // 0  x  0
             // 0  0  0
