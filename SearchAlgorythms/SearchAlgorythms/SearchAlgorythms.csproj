@@ -47,6 +47,9 @@
   <ItemGroup>
     <Compile Include="Algorythms\GraphCreateAlgorythm\ICreateAlgorythm.cs" />
     <Compile Include="Algorythms\GraphCreateAlgorythm\RandomCreate.cs" />
+    <Compile Include="Algorythms\GraphInfoCollector.cs" />
+    <Compile Include="Algorythms\GraphTopShifter.cs" />
+    <Compile Include="Algorythms\NeighbourSetter.cs" />
     <Compile Include="Algorythms\SearchAlgorythm\BestFirstSearch.cs" />
     <Compile Include="Algorythms\SearchAlgorythm\ISearchAlgorythm.cs" />
     <Compile Include="Algorythms\SearchAlgorythm\WideSearch.cs" />
@@ -56,6 +59,9 @@
     <Compile Include="Forms\MainWindow.Designer.cs">
       <DependentUpon>MainWindow.cs</DependentUpon>
     </Compile>
+    <Compile Include="Graph\UnweightedGraph.cs" />
+    <Compile Include="GraphTopInfo.cs" />
+    <Compile Include="Graph\IGraph.cs" />
     <Compile Include="Top\GraphTop.cs">
       <SubType>Component</SubType>
     </Compile>

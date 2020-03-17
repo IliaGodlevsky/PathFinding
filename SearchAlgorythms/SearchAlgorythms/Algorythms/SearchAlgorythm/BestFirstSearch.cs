@@ -43,7 +43,7 @@ namespace SearchAlgorythms.Algorythms.SearchAlgorythm
         public override bool IsRightCellToVisit(Button button)
         {
             GraphTop top = button as GraphTop;
-            return top is null ? false : (!top.IsVisited && top.Value != 0) || top.IsEnd;
+            return (base.IsRightCellToVisit(top) && top?.Value != 0) || top?.IsEnd == true;
         }
 
         private void MarkTop(Button top)
