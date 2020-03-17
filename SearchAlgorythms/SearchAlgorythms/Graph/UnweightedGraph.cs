@@ -1,4 +1,5 @@
 ﻿using SearchAlgorythms.Algorythms;
+using SearchAlgorythms.GraphExtension;
 using SearchAlgorythms.Top;
 using System;
 using System.Collections.Generic;
@@ -79,7 +80,7 @@ namespace SearchAlgorythms.Graph
             GraphTopInfo[,] info = new GraphTopInfo[GetWidth(), GetHeight()];
             for (int i = 0; i < GetWidth(); i++)
                 for (int j = 0; j < GetHeight(); j++)
-                    info[i, j] = new GraphTopInfo(buttons[i, j]);
+                    info[i, j] = buttons[i, j].GetInfo();
             return info;
         }
 
@@ -131,8 +132,7 @@ namespace SearchAlgorythms.Graph
             {
                 for (int j = 0; j < GetHeight(); j++)
                 {
-                    GraphTop top = buttons[i, j] as GraphTop;
-                    if (top is null)
+                    if (buttons[i, j].IsObstacle())
                         numberOfObstacles++;
                 }
             }
@@ -155,8 +155,7 @@ namespace SearchAlgorythms.Graph
         public void Reverse(ref Button top)
         {
             Size size = top.Size;
-            var t = top as GraphTop;
-            if (t is null)
+            if (top.IsObstacle())
                 MakeTop(ref top);
             else
                 MakeObstacle(ref top);
@@ -172,9 +171,9 @@ namespace SearchAlgorythms.Graph
             {
                 for (int j = 0; j < GetHeight(); j++)
                 {
-                    if (buttons[i, j] is GraphTop top)
+                    if (!buttons[i, j].IsObstacle())
                     {
-                        top.SetToDefault();
+                        (buttons[i, j] as GraphTop).SetToDefault();
                         buttons[i, j].Click -= SetStart;
                         buttons[i, j].Click -= SetEnd;
                         buttons[i, j].Click += SetStart;

@@ -20,6 +20,11 @@ namespace SearchAlgorythms.Top
         public bool IsVisited { get; set; }
         public int Value { get; set; }
 
+        public bool IsRightCellToColour()
+        {
+            return !IsStart && !IsEnd;
+        }
+
         public void SetToDefault()
         {
             IsStart = false;

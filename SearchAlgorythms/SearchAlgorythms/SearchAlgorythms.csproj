@@ -59,6 +59,7 @@
     <Compile Include="Forms\MainWindow.Designer.cs">
       <DependentUpon>MainWindow.cs</DependentUpon>
     </Compile>
+    <Compile Include="GraphExtension\ButtonExtension.cs" />
     <Compile Include="Graph\IGraph.cs" />
     <Compile Include="Graph\UnweightedGraph.cs" />
     <Compile Include="GraphTopInfo\GraphTopInfo.cs" />
