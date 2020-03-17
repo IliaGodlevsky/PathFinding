@@ -3,19 +3,32 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Drawing;
 using System.Windows.Forms;
-using SearchAlgorythms.GraphExtension;
 using SearchAlgorythms.Top;
 
 namespace SearchAlgorythms.Algorythms.SearchAlgorythm
 {
     public class WideSearch : ISearchAlgorythm
     {
+        protected GraphTop destination;
+
+        protected double GetDistance(Button x, Button y)
+        {
+            double a = x.Location.X - y.Location.X;
+            double b = x.Location.Y - y.Location.Y;
+            return Math.Sqrt(Math.Pow(a, 2) - Math.Pow(b, 2));
+        }
+
         protected void Pause(int value = 0)
         {
             Stopwatch sw = new Stopwatch();
             sw.Start();
             while (sw.ElapsedMilliseconds < value)
                 Application.DoEvents();
+        }
+
+        private bool IsRigthCellToColor(GraphTop top)
+        {
+            return !top.IsStart && !top.IsEnd;
         }
 
         public GraphTop GoChippestNeighbour(GraphTop top)
@@ -27,8 +40,8 @@ namespace SearchAlgorythms.Algorythms.SearchAlgorythm
                 if (IsRightNeighbour(chippest, neighbour))
                     chippest = neighbour;
             }
-            if (chippest.IsRightCellToColour()) 
-                chippest.MarkAsPath();
+            if (IsRigthCellToColor(chippest)) 
+                chippest.BackColor = Color.FromName("Cyan");
             return chippest;
         }
 
@@ -71,8 +84,13 @@ namespace SearchAlgorythms.Algorythms.SearchAlgorythm
                     Visit(currentTop);
                 Pause(10);              
             }
-            DestinationFound = queue.Count == 0 
-                && !currentTop.IsEnd ? false : true;
+            if (queue.Count == 0 && !currentTop.IsEnd)
+                DestinationFound = false;
+            else
+            {
+                DestinationFound = true;
+                destination = currentTop;
+            }
         }
 
         public virtual void DrawPath(GraphTop end)
@@ -99,8 +117,8 @@ namespace SearchAlgorythms.Algorythms.SearchAlgorythm
             if (top is null)
                 return;
             top.IsVisited = true;
-            if (top.IsRightCellToColour())
-                top.MarkAsVisited();
+            if (IsRigthCellToColor(top))
+                top.BackColor = Color.FromName("Yellow");
             ExtractNeighbours(top);
         }
     }
