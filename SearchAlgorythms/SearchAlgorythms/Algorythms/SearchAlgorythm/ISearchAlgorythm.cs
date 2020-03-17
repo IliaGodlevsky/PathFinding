@@ -12,5 +12,6 @@ namespace SearchAlgorythms.Algorythms.SearchAlgorythm
         bool IsRightCellToVisit(Button button);
         void DrawPath(GraphTop end);
         bool DestinationFound { get; set; }
+        int GetTime();
     }
 }

@@ -43,14 +43,17 @@
             this.create = new System.Windows.Forms.Button();
             this.label2 = new System.Windows.Forms.Label();
             this.FieldParams = new System.Windows.Forms.GroupBox();
+            this.width = new System.Windows.Forms.Label();
             this.refresh = new System.Windows.Forms.Button();
             this.percentTextBox = new System.Windows.Forms.TextBox();
             this.fieldSize = new System.Windows.Forms.Label();
             this.percentOfObstacles = new System.Windows.Forms.Label();
-            this.width = new System.Windows.Forms.Label();
+            this.timeOfSearch = new System.Windows.Forms.GroupBox();
+            this.time = new System.Windows.Forms.Label();
             this.menuStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.percent)).BeginInit();
             this.FieldParams.SuspendLayout();
+            this.timeOfSearch.SuspendLayout();
             this.SuspendLayout();
             // 
             // menuStrip1
@@ -188,6 +191,15 @@
             this.FieldParams.TabStop = false;
             this.FieldParams.Text = "Field parametres";
             // 
+            // width
+            // 
+            this.width.AutoSize = true;
+            this.width.Location = new System.Drawing.Point(14, 114);
+            this.width.Name = "width";
+            this.width.Size = new System.Drawing.Size(64, 13);
+            this.width.TabIndex = 14;
+            this.width.Text = "Graph width";
+            // 
             // refresh
             // 
             this.refresh.Location = new System.Drawing.Point(17, 200);
@@ -224,20 +236,31 @@
             this.percentOfObstacles.TabIndex = 10;
             this.percentOfObstacles.Text = "Percent of obstacles";
             // 
-            // width
+            // timeOfSearch
             // 
-            this.width.AutoSize = true;
-            this.width.Location = new System.Drawing.Point(14, 114);
-            this.width.Name = "width";
-            this.width.Size = new System.Drawing.Size(64, 13);
-            this.width.TabIndex = 14;
-            this.width.Text = "Graph width";
+            this.timeOfSearch.Controls.Add(this.time);
+            this.timeOfSearch.Location = new System.Drawing.Point(18, 272);
+            this.timeOfSearch.Name = "timeOfSearch";
+            this.timeOfSearch.Size = new System.Drawing.Size(153, 42);
+            this.timeOfSearch.TabIndex = 11;
+            this.timeOfSearch.TabStop = false;
+            this.timeOfSearch.Text = "Time of search";
+            // 
+            // time
+            // 
+            this.time.AutoSize = true;
+            this.time.Location = new System.Drawing.Point(41, 20);
+            this.time.Name = "time";
+            this.time.Size = new System.Drawing.Size(35, 13);
+            this.time.TabIndex = 0;
+            this.time.Text = "label1";
             // 
             // MainWindow
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 450);
+            this.Controls.Add(this.timeOfSearch);
             this.Controls.Add(this.FieldParams);
             this.Controls.Add(this.menuStrip1);
             this.MainMenuStrip = this.menuStrip1;
@@ -249,6 +272,8 @@
             ((System.ComponentModel.ISupportInitialize)(this.percent)).EndInit();
             this.FieldParams.ResumeLayout(false);
             this.FieldParams.PerformLayout();
+            this.timeOfSearch.ResumeLayout(false);
+            this.timeOfSearch.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -276,6 +301,8 @@
         private System.Windows.Forms.TextBox percentTextBox;
         private System.Windows.Forms.Button refresh;
         private System.Windows.Forms.Label width;
+        private System.Windows.Forms.GroupBox timeOfSearch;
+        private System.Windows.Forms.Label time;
     }
 }
 

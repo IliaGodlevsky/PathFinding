@@ -33,6 +33,8 @@ namespace SearchAlgorythms
             heightNumber.Text = graphHeight.ToString();
             widthNumber.Update();
             heightNumber.Update();
+            time.Text = 0.ToString() + " seconds";
+            time.Update();
         }
 
         private void SearchAlgorythms_Load(object sender, EventArgs e)
@@ -71,6 +73,9 @@ namespace SearchAlgorythms
                 Controls.Remove(top);
                 graph.Reverse(ref top);
                 Controls.Add(top);
+                percent.Value = graph.ObstaclePercent();
+                percentTextBox.Text = percent.Value.ToString();
+                percentTextBox.Update();
             }
         }
 
@@ -134,6 +139,8 @@ namespace SearchAlgorythms
         private void SearchPath(GraphTop startTopOfDrawingPath)
         {
             searchAlgorythm.FindDestionation(graph.Start);
+            time.Text = searchAlgorythm.GetTime().ToString() + " seconds";
+            time.Update();
             if (searchAlgorythm.DestinationFound)
             {
                 searchAlgorythm.DrawPath(startTopOfDrawingPath);
@@ -270,7 +277,9 @@ namespace SearchAlgorythms
 
         private void Refresh_Click(object sender, EventArgs e)
         {
-            graph.Refresh();
+            graph?.Refresh();
+            time.Text = 0.ToString() + " seconds";
+            time.Update();
         }
     }
 }

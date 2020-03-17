@@ -9,14 +9,7 @@ namespace SearchAlgorythms.Algorythms.SearchAlgorythm
 {
     public class WideSearch : ISearchAlgorythm
     {
-        protected GraphTop destination;
-
-        protected double GetDistance(Button x, Button y)
-        {
-            double a = x.Location.X - y.Location.X;
-            double b = x.Location.Y - y.Location.Y;
-            return Math.Sqrt(Math.Pow(a, 2) - Math.Pow(b, 2));
-        }
+        private Stopwatch watch = new Stopwatch();
 
         protected void Pause(int value = 0)
         {
@@ -74,7 +67,8 @@ namespace SearchAlgorythms.Algorythms.SearchAlgorythm
         }
 
         public virtual void FindDestionation(GraphTop start)
-        {
+        {            
+            watch.Start();
             var currentTop = start;
             Visit(currentTop);
             while (!IsDestination(currentTop))
@@ -84,13 +78,9 @@ namespace SearchAlgorythms.Algorythms.SearchAlgorythm
                     Visit(currentTop);
                 Pause(10);              
             }
-            if (queue.Count == 0 && !currentTop.IsEnd)
-                DestinationFound = false;
-            else
-            {
-                DestinationFound = true;
-                destination = currentTop;
-            }
+            DestinationFound = queue.Count == 0 
+                && !currentTop.IsEnd ? false : true;
+            watch.Stop();
         }
 
         public virtual void DrawPath(GraphTop end)
@@ -120,6 +110,11 @@ namespace SearchAlgorythms.Algorythms.SearchAlgorythm
             if (IsRigthCellToColor(top))
                 top.BackColor = Color.FromName("Yellow");
             ExtractNeighbours(top);
+        }
+
+        public int GetTime()
+        {
+            return watch.Elapsed.Seconds;
         }
     }
 }
