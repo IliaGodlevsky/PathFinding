@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.Drawing;
 using System.Windows.Forms;
@@ -8,6 +9,15 @@ namespace SearchAlgorythms.Algorythms.SearchAlgorythm
 {
     public class WideSearch : ISearchAlgorythm
     {
+        protected GraphTop destination;
+
+        protected double GetDistance(Button x, Button y)
+        {
+            double a = x.Location.X - y.Location.X;
+            double b = x.Location.Y - y.Location.Y;
+            return Math.Sqrt(Math.Pow(a, 2) - Math.Pow(b, 2));
+        }
+
         protected void Pause(int value = 0)
         {
             Stopwatch sw = new Stopwatch();
@@ -74,8 +84,13 @@ namespace SearchAlgorythms.Algorythms.SearchAlgorythm
                     Visit(currentTop);
                 Pause(10);              
             }
-            DestinationFound = queue.Count == 0 
-                && !currentTop.IsEnd ? false : true;
+            if (queue.Count == 0 && !currentTop.IsEnd)
+                DestinationFound = false;
+            else
+            {
+                DestinationFound = true;
+                destination = currentTop;
+            }
         }
 
         public virtual void DrawPath(GraphTop end)

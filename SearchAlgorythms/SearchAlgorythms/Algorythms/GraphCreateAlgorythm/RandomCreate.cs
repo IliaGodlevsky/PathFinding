@@ -8,41 +8,38 @@ namespace SearchAlgorythms.Algorythms.GraphCreateAlgorythm
     public class RandomCreate : ICreateAlgorythm
     {
         private Random rand = new Random();
-        private Button[,] graph;
-        private int width;
-        private int height;
-        private int percentOfObstacles = 100;
-        private int currentPercent = 44;
+        private readonly Button[,] graph;
+        private const int MAX_PERCENT_OF_OBSTACLES = 100;
 
-        public RandomCreate(int percentOfObstacles)
+        public RandomCreate(int percentOfObstacles, int width, int height, int buttonWidth, 
+            int buttonHeight, int placeBetweenButtons)
         {
-            currentPercent = percentOfObstacles;
-        }
-
-        public bool IsObstacleChance()
-        {
-            return rand.Next(percentOfObstacles) < currentPercent;
-        }
-
-        public Button[,] GetGraph(int x, int y)
-        {
-            width = x;
-            height = y;
-            graph = new Button[x, y];           
+            graph = new Button[width, height];
             for (int xCoordinate = 0; xCoordinate < width; xCoordinate++)
             {
                 for (int yCoordinate = 0; yCoordinate < height; yCoordinate++)
                 {
-                    if (IsObstacleChance())
+                    if (IsObstacleChance(percentOfObstacles))
                         graph[xCoordinate, yCoordinate] = new Button
                         { BackColor = Color.FromName("Black") };
                     else
-                        graph[xCoordinate, yCoordinate] = new GraphTop
-                        { BackColor = Color.FromName("White") };
+                        graph[xCoordinate, yCoordinate] = new GraphTop();
+                    graph[xCoordinate, yCoordinate].Size = new Size(buttonWidth, buttonHeight);
+                    graph[xCoordinate, yCoordinate].Location = new Point((xCoordinate + 1) *
+                        placeBetweenButtons + 150, (yCoordinate + 1) * placeBetweenButtons);
                 }
             }
-            NeighbourSetter setter = new NeighbourSetter(width, height, graph);
+            NeigbourSetter setter = new NeigbourSetter(graph);
             setter.SetNeighbours();
+        }
+
+        private bool IsObstacleChance(int percentOfObstacles)
+        {
+            return rand.Next(MAX_PERCENT_OF_OBSTACLES) < percentOfObstacles;
+        }
+
+        public Button[,] GetGraph()
+        {
             return graph;
         }
     }

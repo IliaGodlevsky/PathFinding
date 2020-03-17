@@ -41,13 +41,13 @@
             this.widthNumber = new System.Windows.Forms.TextBox();
             this.heightNumber = new System.Windows.Forms.TextBox();
             this.create = new System.Windows.Forms.Button();
-            this.Width = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.FieldParams = new System.Windows.Forms.GroupBox();
+            this.refresh = new System.Windows.Forms.Button();
             this.percentTextBox = new System.Windows.Forms.TextBox();
             this.fieldSize = new System.Windows.Forms.Label();
             this.percentOfObstacles = new System.Windows.Forms.Label();
-            this.refresh = new System.Windows.Forms.Button();
+            this.width = new System.Windows.Forms.Label();
             this.menuStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.percent)).BeginInit();
             this.FieldParams.SuspendLayout();
@@ -136,17 +136,17 @@
             // 
             // widthNumber
             // 
-            this.widthNumber.Location = new System.Drawing.Point(70, 111);
+            this.widthNumber.Location = new System.Drawing.Point(84, 111);
             this.widthNumber.Name = "widthNumber";
-            this.widthNumber.Size = new System.Drawing.Size(78, 20);
+            this.widthNumber.Size = new System.Drawing.Size(64, 20);
             this.widthNumber.TabIndex = 2;
             this.widthNumber.TextChanged += new System.EventHandler(this.WidthNumber_TextChanged);
             // 
             // heightNumber
             // 
-            this.heightNumber.Location = new System.Drawing.Point(70, 136);
+            this.heightNumber.Location = new System.Drawing.Point(84, 136);
             this.heightNumber.Name = "heightNumber";
-            this.heightNumber.Size = new System.Drawing.Size(78, 20);
+            this.heightNumber.Size = new System.Drawing.Size(64, 20);
             this.heightNumber.TabIndex = 3;
             this.heightNumber.TextChanged += new System.EventHandler(this.HeightNumber_TextChanged);
             // 
@@ -156,30 +156,22 @@
             this.create.Name = "create";
             this.create.Size = new System.Drawing.Size(131, 23);
             this.create.TabIndex = 6;
-            this.create.Text = "Create field";
+            this.create.Text = "Create graph";
             this.create.UseVisualStyleBackColor = true;
             this.create.Click += new System.EventHandler(this.Create_Click);
-            // 
-            // Width
-            // 
-            this.Width.AutoSize = true;
-            this.Width.Location = new System.Drawing.Point(14, 114);
-            this.Width.Name = "Width";
-            this.Width.Size = new System.Drawing.Size(35, 13);
-            this.Width.TabIndex = 8;
-            this.Width.Text = "Width";
             // 
             // label2
             // 
             this.label2.AutoSize = true;
             this.label2.Location = new System.Drawing.Point(14, 139);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(38, 13);
+            this.label2.Size = new System.Drawing.Size(68, 13);
             this.label2.TabIndex = 9;
-            this.label2.Text = "Height";
+            this.label2.Text = "Graph height";
             // 
             // FieldParams
             // 
+            this.FieldParams.Controls.Add(this.width);
             this.FieldParams.Controls.Add(this.refresh);
             this.FieldParams.Controls.Add(this.percentTextBox);
             this.FieldParams.Controls.Add(this.fieldSize);
@@ -187,41 +179,14 @@
             this.FieldParams.Controls.Add(this.percent);
             this.FieldParams.Controls.Add(this.label2);
             this.FieldParams.Controls.Add(this.create);
-            this.FieldParams.Controls.Add(this.Width);
             this.FieldParams.Controls.Add(this.widthNumber);
             this.FieldParams.Controls.Add(this.heightNumber);
             this.FieldParams.Location = new System.Drawing.Point(12, 27);
             this.FieldParams.Name = "FieldParams";
-            this.FieldParams.Size = new System.Drawing.Size(154, 229);
+            this.FieldParams.Size = new System.Drawing.Size(159, 229);
             this.FieldParams.TabIndex = 10;
             this.FieldParams.TabStop = false;
             this.FieldParams.Text = "Field parametres";
-            // 
-            // percentTextBox
-            // 
-            this.percentTextBox.Location = new System.Drawing.Point(116, 45);
-            this.percentTextBox.Name = "percentTextBox";
-            this.percentTextBox.Size = new System.Drawing.Size(32, 20);
-            this.percentTextBox.TabIndex = 12;
-            this.percentTextBox.TextChanged += new System.EventHandler(this.PercentTextBox_TextChanged);
-            // 
-            // fieldSize
-            // 
-            this.fieldSize.AutoSize = true;
-            this.fieldSize.Location = new System.Drawing.Point(60, 93);
-            this.fieldSize.Name = "fieldSize";
-            this.fieldSize.Size = new System.Drawing.Size(50, 13);
-            this.fieldSize.TabIndex = 11;
-            this.fieldSize.Text = "Field size";
-            // 
-            // percentOfObstacles
-            // 
-            this.percentOfObstacles.AutoSize = true;
-            this.percentOfObstacles.Location = new System.Drawing.Point(14, 29);
-            this.percentOfObstacles.Name = "percentOfObstacles";
-            this.percentOfObstacles.Size = new System.Drawing.Size(104, 13);
-            this.percentOfObstacles.TabIndex = 10;
-            this.percentOfObstacles.Text = "Percent of obstacles";
             // 
             // refresh
             // 
@@ -232,6 +197,41 @@
             this.refresh.Text = "Refresh";
             this.refresh.UseVisualStyleBackColor = true;
             this.refresh.Click += new System.EventHandler(this.Refresh_Click);
+            // 
+            // percentTextBox
+            // 
+            this.percentTextBox.Location = new System.Drawing.Point(116, 54);
+            this.percentTextBox.Name = "percentTextBox";
+            this.percentTextBox.Size = new System.Drawing.Size(32, 20);
+            this.percentTextBox.TabIndex = 12;
+            this.percentTextBox.TextChanged += new System.EventHandler(this.PercentTextBox_TextChanged);
+            // 
+            // fieldSize
+            // 
+            this.fieldSize.AutoSize = true;
+            this.fieldSize.Location = new System.Drawing.Point(44, 93);
+            this.fieldSize.Name = "fieldSize";
+            this.fieldSize.Size = new System.Drawing.Size(57, 13);
+            this.fieldSize.TabIndex = 11;
+            this.fieldSize.Text = "Graph size";
+            // 
+            // percentOfObstacles
+            // 
+            this.percentOfObstacles.AutoSize = true;
+            this.percentOfObstacles.Location = new System.Drawing.Point(26, 29);
+            this.percentOfObstacles.Name = "percentOfObstacles";
+            this.percentOfObstacles.Size = new System.Drawing.Size(104, 13);
+            this.percentOfObstacles.TabIndex = 10;
+            this.percentOfObstacles.Text = "Percent of obstacles";
+            // 
+            // width
+            // 
+            this.width.AutoSize = true;
+            this.width.Location = new System.Drawing.Point(14, 114);
+            this.width.Name = "width";
+            this.width.Size = new System.Drawing.Size(64, 13);
+            this.width.TabIndex = 14;
+            this.width.Text = "Graph width";
             // 
             // MainWindow
             // 
@@ -267,7 +267,6 @@
         private System.Windows.Forms.TextBox widthNumber;
         private System.Windows.Forms.TextBox heightNumber;
         private System.Windows.Forms.Button create;
-        private System.Windows.Forms.Label Width;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.GroupBox FieldParams;
         private System.Windows.Forms.Label fieldSize;
@@ -276,6 +275,7 @@
         private System.Windows.Forms.ToolStripMenuItem loadMapToolStripMenuItem;
         private System.Windows.Forms.TextBox percentTextBox;
         private System.Windows.Forms.Button refresh;
+        private System.Windows.Forms.Label width;
     }
 }
 

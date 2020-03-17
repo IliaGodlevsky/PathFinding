@@ -3,16 +3,8 @@ using System.Windows.Forms;
 
 namespace SearchAlgorythms.Algorythms
 {
-    public class GraphTopShifter
+    public class BoundSetter
     {
-        public void InsertGraphTop(Button top, Button[,] buttons, int width, int height)
-        {
-            var coordiantes = NeighbourSetter.GetCoordinates(top, buttons, width, height);
-            buttons[coordiantes.Key, coordiantes.Value] = top;
-            NeighbourSetter setter = new NeighbourSetter(width, height, buttons);
-            setter.SetNeighbours(coordiantes.Key, coordiantes.Value);
-        }
-
         public void SetBoundsBetweenNeighbours(Button top)
         {
             if (top is null)

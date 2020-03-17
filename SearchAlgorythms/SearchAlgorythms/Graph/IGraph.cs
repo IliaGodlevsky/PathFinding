@@ -1,20 +1,31 @@
-﻿using SearchAlgorythms.Top;
-using System;
+﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
+using SearchAlgorythms.Top;
 
 namespace SearchAlgorythms.Graph
 {
     public interface IGraph
     {
-        int Width();
-        int Height();
-        void Insert();
-        Button this[int i, int j] { get;set; }
-        GraphTop Start { get; set; }
+        Button this[int width, int height] { get; set; }
+
         GraphTop End { get; set; }
+        GraphTop Start { get; set; }
+
+        event EventHandler SetEnd;
+        event EventHandler SetStart;
+        event MouseEventHandler SwitchRole;
+
+        Button[,] GetArray();
+        int GetHeight();
+        KeyValuePair<int, int> GetIndexes(Button top);
+        GraphTopInfo[,] GetInfo();
+        int GetSize();
+        int GetWidth();
+        void InitializeWith(GraphTopInfo[,] info);
+        void Insert(Button top);
+        int ObstaclePercent();
+        void Refresh();
+        void Reverse(ref Button top);
     }
 }

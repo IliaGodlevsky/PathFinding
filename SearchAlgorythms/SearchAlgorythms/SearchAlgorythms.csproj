@@ -46,11 +46,13 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Algorythms\GraphCreateAlgorythm\ICreateAlgorythm.cs" />
+    <Compile Include="Algorythms\GraphCreateAlgorythm\OnInfoGraphCreater.cs" />
     <Compile Include="Algorythms\GraphCreateAlgorythm\RandomCreate.cs" />
-    <Compile Include="Algorythms\GraphInfoCollector.cs" />
-    <Compile Include="Algorythms\GraphTopShifter.cs" />
+    <Compile Include="Algorythms\BoundSetter.cs" />
+    <Compile Include="Algorythms\GraphCreateAlgorythm\RandomWeightedGraphCreator.cs" />
     <Compile Include="Algorythms\NeighbourSetter.cs" />
     <Compile Include="Algorythms\SearchAlgorythm\BestFirstSearch.cs" />
+    <Compile Include="Algorythms\SearchAlgorythm\DijkstraAlgorithm.cs" />
     <Compile Include="Algorythms\SearchAlgorythm\ISearchAlgorythm.cs" />
     <Compile Include="Algorythms\SearchAlgorythm\WideSearch.cs" />
     <Compile Include="Forms\MainWindow.cs">
@@ -59,14 +61,19 @@
     <Compile Include="Forms\MainWindow.Designer.cs">
       <DependentUpon>MainWindow.cs</DependentUpon>
     </Compile>
-    <Compile Include="Graph\UnweightedGraph.cs" />
-    <Compile Include="GraphTopInfo.cs" />
     <Compile Include="Graph\IGraph.cs" />
+    <Compile Include="Graph\UnweightedGraph.cs" />
+    <Compile Include="Graph\WieghtedGraph.cs" />
+    <Compile Include="GraphTopInfo\GraphTopInfo.cs" />
     <Compile Include="Top\GraphTop.cs">
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Top\ValuedGraphTop.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="GraphTopInfo\ValuedGraphTopInfo.cs" />
     <EmbeddedResource Include="Forms\MainWindow.resx">
       <DependentUpon>MainWindow.cs</DependentUpon>
     </EmbeddedResource>
