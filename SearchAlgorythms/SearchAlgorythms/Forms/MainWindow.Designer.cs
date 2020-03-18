@@ -36,7 +36,6 @@
             this.findPathToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.wideSearchToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.bestfirstWideSearchToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.aboutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.percent = new System.Windows.Forms.TrackBar();
             this.widthNumber = new System.Windows.Forms.TextBox();
             this.heightNumber = new System.Windows.Forms.TextBox();
@@ -60,8 +59,7 @@
             // 
             this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.fileToolStripMenuItem,
-            this.optionsToolStripMenuItem,
-            this.aboutToolStripMenuItem});
+            this.optionsToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
             this.menuStrip1.Size = new System.Drawing.Size(800, 24);
@@ -80,14 +78,14 @@
             // saveMapToolStripMenuItem
             // 
             this.saveMapToolStripMenuItem.Name = "saveMapToolStripMenuItem";
-            this.saveMapToolStripMenuItem.Size = new System.Drawing.Size(127, 22);
+            this.saveMapToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.saveMapToolStripMenuItem.Text = "Save map";
             this.saveMapToolStripMenuItem.Click += new System.EventHandler(this.SaveMapToolStripMenuItem_Click);
             // 
             // loadMapToolStripMenuItem
             // 
             this.loadMapToolStripMenuItem.Name = "loadMapToolStripMenuItem";
-            this.loadMapToolStripMenuItem.Size = new System.Drawing.Size(127, 22);
+            this.loadMapToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.loadMapToolStripMenuItem.Text = "Load map";
             this.loadMapToolStripMenuItem.Click += new System.EventHandler(this.LoadMapToolStripMenuItem_Click);
             // 
@@ -121,12 +119,6 @@
             this.bestfirstWideSearchToolStripMenuItem.Size = new System.Drawing.Size(186, 22);
             this.bestfirstWideSearchToolStripMenuItem.Text = "Best-first wide search";
             this.bestfirstWideSearchToolStripMenuItem.Click += new System.EventHandler(this.BestfirstWideSearchToolStripMenuItem_Click);
-            // 
-            // aboutToolStripMenuItem
-            // 
-            this.aboutToolStripMenuItem.Name = "aboutToolStripMenuItem";
-            this.aboutToolStripMenuItem.Size = new System.Drawing.Size(52, 20);
-            this.aboutToolStripMenuItem.Text = "About";
             // 
             // percent
             // 
@@ -259,7 +251,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(800, 450);
+            this.ClientSize = new System.Drawing.Size(800, 490);
             this.Controls.Add(this.timeOfSearch);
             this.Controls.Add(this.FieldParams);
             this.Controls.Add(this.menuStrip1);
@@ -284,7 +276,6 @@
         private System.Windows.Forms.MenuStrip menuStrip1;
         private System.Windows.Forms.ToolStripMenuItem fileToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem optionsToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem aboutToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem findPathToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem wideSearchToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem bestfirstWideSearchToolStripMenuItem;
