@@ -2,7 +2,9 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Drawing;
+using System.Linq;
 using System.Windows.Forms;
+using SearchAlgorythms.ButtonExtension;
 using SearchAlgorythms.Top;
 
 namespace SearchAlgorythms.Algorythms.SearchAlgorythm
@@ -11,9 +13,11 @@ namespace SearchAlgorythms.Algorythms.SearchAlgorythm
     {
         private Stopwatch watch = new Stopwatch();
 
+        protected Predicate<GraphTop> predicate;
+
         protected void Pause(int value = 0)
         {
-            Stopwatch sw = new Stopwatch();
+            var sw = new Stopwatch();
             sw.Start();
             while (sw.ElapsedMilliseconds < value)
                 Application.DoEvents();
@@ -26,26 +30,29 @@ namespace SearchAlgorythms.Algorythms.SearchAlgorythm
 
         public GraphTop GoChippestNeighbour(GraphTop top)
         {
-            GraphTop chippest = top;
+            var chippest = top;
             var neighbours = top.GetNeighbours();
-            foreach (var neighbour in neighbours) 
-            {
-                if (IsRightNeighbour(chippest, neighbour))
-                    chippest = neighbour;
-            }
-            if (IsRigthCellToColor(chippest)) 
-                chippest.BackColor = Color.FromName("Cyan");
+            int min = neighbours.Min(t => t.Value);
+            chippest = neighbours.Find(t => min == t.Value
+                    && t.IsVisited && IsRightNeighbour(t));       
+            if (IsRigthCellToColor(chippest))
+                chippest.MarkAsPath();
             return chippest;
         }
 
-        public virtual bool IsRightNeighbour(GraphTop top1, GraphTop top2)
+        public virtual bool IsRightNeighbour(GraphTop top2)
         {
-            return top1.Value >= top2.Value && top2.IsVisited && !top2.IsEnd;
+            return !top2.IsEnd;
+        }
+
+        public virtual bool IsRightPath(GraphTop top)
+        {
+            return !top.IsStart;
         }
 
         public virtual bool IsRightCellToVisit(Button button)
         {
-            GraphTop top = button as GraphTop;
+            var top = button as GraphTop;
             return top is null ? false : !top.IsVisited;
         }
 
@@ -67,7 +74,7 @@ namespace SearchAlgorythms.Algorythms.SearchAlgorythm
         }
 
         public virtual void FindDestionation(GraphTop start)
-        {            
+        {         
             watch.Start();
             var currentTop = start;
             Visit(currentTop);
@@ -83,10 +90,10 @@ namespace SearchAlgorythms.Algorythms.SearchAlgorythm
             watch.Stop();
         }
 
-        public virtual void DrawPath(GraphTop end)
+        public void DrawPath(GraphTop end)
         {
-            GraphTop top = end;
-            while (!top.IsStart)
+            var top = end;
+            while (IsRightPath(top))
             {
                 top = GoChippestNeighbour(top);
                 Pause(250);
@@ -102,13 +109,13 @@ namespace SearchAlgorythms.Algorythms.SearchAlgorythm
         }
 
         public void Visit(Button button)
-        {
-            var top = button as GraphTop;
-            if (top is null)
+        {          
+            if (button.IsObstacle())
                 return;
+            var top = button as GraphTop;
             top.IsVisited = true;
             if (IsRigthCellToColor(top))
-                top.BackColor = Color.FromName("Yellow");
+                top.MarkAsVisited();
             ExtractNeighbours(top);
         }
 

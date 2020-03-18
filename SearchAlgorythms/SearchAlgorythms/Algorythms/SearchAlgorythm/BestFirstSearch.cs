@@ -7,7 +7,7 @@ namespace SearchAlgorythms.Algorythms.SearchAlgorythm
     public class BestFirstSearch : WideSearch
     {
         private Queue<GraphTop> waveQueue = new Queue<GraphTop>();
-        private GraphTop end;
+        private readonly GraphTop end;
 
         public BestFirstSearch(GraphTop end)
         {
@@ -25,19 +25,14 @@ namespace SearchAlgorythms.Algorythms.SearchAlgorythm
             }
         }
 
-        public override void DrawPath(GraphTop end)
+        public override bool IsRightNeighbour(GraphTop top2)
         {
-            GraphTop top = end;
-            while (!top.IsEnd)
-            {
-                top = GoChippestNeighbour(top);
-                Pause(250);
-            }
+            return !top2.IsStart;
         }
 
-        public override bool IsRightNeighbour(GraphTop top1, GraphTop top2)
+        public override bool IsRightPath(GraphTop top)
         {
-            return top1.Value >= top2.Value && top2.IsVisited && !top2.IsStart;
+            return !top.IsEnd;
         }
 
         public override bool IsRightCellToVisit(Button button)
