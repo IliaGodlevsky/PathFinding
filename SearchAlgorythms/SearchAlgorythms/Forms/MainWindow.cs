@@ -74,7 +74,7 @@ namespace SearchAlgorythms
                 Controls.Remove(top);
                 graph.Reverse(ref top);
                 Controls.Add(top);
-                percent.Value = graph.ObstaclePercent();
+                percent.Value = graph.GetObstaclePercent();
                 percentTextBox.Text = percent.Value.ToString();
                 percentTextBox.Update();
             }
@@ -213,7 +213,7 @@ namespace SearchAlgorythms
             NeigbourSetter setter = new NeigbourSetter(graph.GetArray());
             setter.SetNeighbours();
             AddButtonsToControls();
-            PrepareWindow(graph.ObstaclePercent(), graph.GetWidth(), graph.GetHeight());
+            PrepareWindow(graph.GetObstaclePercent(), graph.GetWidth(), graph.GetHeight());
             createAlgorythm = null;
         }
 

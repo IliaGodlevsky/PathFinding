@@ -24,7 +24,7 @@ namespace SearchAlgorythms.Graph
         int GetWidth();
         void InitializeWith(GraphTopInfo[,] info);
         void Insert(Button top);
-        int ObstaclePercent();
+        int GetObstaclePercent();
         void Refresh();
         void Reverse(ref Button top);
     }

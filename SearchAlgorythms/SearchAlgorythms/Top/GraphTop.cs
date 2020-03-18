@@ -5,7 +5,6 @@ using System.Windows.Forms;
 
 namespace SearchAlgorythms.Top
 {
-    [Serializable]
     public class GraphTop : Button
     {
         private List<GraphTop> neighbours = new List<GraphTop>();

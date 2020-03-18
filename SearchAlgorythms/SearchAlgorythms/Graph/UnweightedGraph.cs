@@ -125,7 +125,7 @@ namespace SearchAlgorythms.Graph
             setter.SetNeighbours(coordiantes.Key, coordiantes.Value);
         }
 
-        public int ObstaclePercent()
+        public int GetObstaclePercent()
         {
             int numberOfObstacles = 0;
             for (int i = 0; i < GetWidth(); i++) 
