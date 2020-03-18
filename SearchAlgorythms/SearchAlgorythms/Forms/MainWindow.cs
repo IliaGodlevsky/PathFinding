@@ -14,7 +14,7 @@ namespace SearchAlgorythms
 {
     public partial class MainWindow : Form
     {
-        private IGraph graph;
+        private IGraph graph = null;
         private ISearchAlgorythm searchAlgorythm = null;
         private ICreateAlgorythm createAlgorythm = null;
         private const int BUTTON_SIZE = 25;
