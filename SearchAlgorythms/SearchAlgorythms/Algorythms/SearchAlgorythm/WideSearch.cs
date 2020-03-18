@@ -13,8 +13,6 @@ namespace SearchAlgorythms.Algorythms.SearchAlgorythm
     {
         private Stopwatch watch = new Stopwatch();
 
-        protected Predicate<GraphTop> predicate;
-
         protected void Pause(int value = 0)
         {
             var sw = new Stopwatch();
