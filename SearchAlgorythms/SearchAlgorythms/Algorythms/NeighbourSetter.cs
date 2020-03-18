@@ -1,4 +1,5 @@
-﻿using SearchAlgorythms.Top;
+﻿using SearchAlgorythms.ButtonExtension;
+using SearchAlgorythms.Top;
 using System.Drawing;
 using System.Windows.Forms;
 
@@ -19,6 +20,8 @@ namespace SearchAlgorythms.Algorythms
 
         public void SetNeighbours(int xCoordinate, int yCoordinate)
         {
+            if (graph[xCoordinate, yCoordinate].IsObstacle())
+                return;
             var top = graph[xCoordinate, yCoordinate] as GraphTop;
             for (int i = xCoordinate - 1; i <= xCoordinate + 1; i++)
             {
@@ -26,13 +29,12 @@ namespace SearchAlgorythms.Algorythms
                 {
                     if (i >= 0 && i < width && j >= 0 && j < height) 
                     {
-                        if (graph[i, j] is GraphTop neighbour &&
-                            neighbour.BackColor != Color.FromName("Black"))
-                            top?.AddNeighbour(neighbour);
+                        if (!graph[i, j].IsObstacle())
+                            top.AddNeighbour(graph[i, j] as GraphTop);
                     }
                 }
             }
-            top?.GetNeighbours().Remove((GraphTop)graph[xCoordinate, yCoordinate]);
+            top.GetNeighbours().Remove(graph[xCoordinate, yCoordinate] as GraphTop);
         }
 
         public void SetNeighbours()
