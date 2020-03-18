@@ -1,6 +1,7 @@
 ﻿using SearchAlgorythms.Algorythms;
 using SearchAlgorythms.Algorythms.GraphCreateAlgorythm;
 using SearchAlgorythms.Algorythms.SearchAlgorythm;
+using SearchAlgorythms.ButtonExtension;
 using SearchAlgorythms.Graph;
 using SearchAlgorythms.Top;
 using System;
@@ -91,7 +92,7 @@ namespace SearchAlgorythms
                     graph[i, j].Click -= ChooseStart;
                     graph[i, j].Click += ChooseEnd;
             }
-            top.BackColor = Color.FromName("Green");
+            top.MarkAsStart();
             graph.Start = top;
         }
 
@@ -101,7 +102,7 @@ namespace SearchAlgorythms
             if (!IsRightDestination(top))
                 return;
             top.IsEnd = true;
-            top.BackColor = Color.FromName("Red");
+            top.MarkAsEnd();
             for (int i = 0; i < graph.GetWidth(); i++)
                 for (int j = 0; j < graph.GetHeight(); j++)
                     graph[i, j].Click -= ChooseEnd;

@@ -1,4 +1,5 @@
-﻿using SearchAlgorythms.Top;
+﻿using SearchAlgorythms.ButtonExtension;
+using SearchAlgorythms.Top;
 using System;
 using System.Drawing;
 using System.Windows.Forms;
@@ -20,8 +21,10 @@ namespace SearchAlgorythms.Algorythms.GraphCreateAlgorythm
                 for (int yCoordinate = 0; yCoordinate < height; yCoordinate++)
                 {
                     if (IsObstacleChance(percentOfObstacles))
-                        graph[xCoordinate, yCoordinate] = new Button
-                        { BackColor = Color.FromName("Black") };
+                    {
+                        graph[xCoordinate, yCoordinate] = new Button();
+                        graph[xCoordinate, yCoordinate].MarkAsObstacle();
+                    }
                     else
                         graph[xCoordinate, yCoordinate] = new GraphTop();
                     graph[xCoordinate, yCoordinate].Size = new Size(buttonWidth, buttonHeight);

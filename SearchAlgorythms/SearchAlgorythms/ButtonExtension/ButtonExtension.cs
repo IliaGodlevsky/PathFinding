@@ -31,9 +31,14 @@ namespace SearchAlgorythms.ButtonExtension
             button.BackColor = Color.FromName("Black");
         }
 
-        public static void MarkAsGraphTop(this Button button)
+        public static void MarkAsStart(this Button button)
         {
-            button.BackColor = Color.FromName("White");
+            button.BackColor = Color.FromName("Green");
+        }
+
+        public static void MarkAsEnd(this Button button)
+        {
+            button.BackColor = Color.FromName("Red");
         }
     }
 }
