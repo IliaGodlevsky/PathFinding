@@ -7,4 +7,3 @@
  Red button - end searching point
  Yellow button - visited graph top
  Cyan button - optimal path
- 
