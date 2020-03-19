@@ -29,18 +29,21 @@ namespace SearchAlgorythms.Graph
                     Location = prev.Location,
                     BackColor = Color.FromName("Black")
                 };
+                top.Text = "";
                 Insert(top);
             }
         }
 
         private void MakeTop(ref Button top)
         {
+            Random rand = new Random();
             Button prev = top as Button;
             top = new GraphTop { Location = prev.Location };
             if (Start == null)
                 top.Click += SetStart;
             else if (Start != null && End == null)
                 top.Click += SetEnd;
+            top.Text = (rand.Next(9) + 1).ToString();
             Insert(top);
             boundSetter.SetBoundsBetweenNeighbours(top);
         }

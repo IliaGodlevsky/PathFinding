@@ -49,8 +49,10 @@
     <Compile Include="Algorythms\GraphCreateAlgorythm\OnInfoGraphCreater.cs" />
     <Compile Include="Algorythms\GraphCreateAlgorythm\RandomCreate.cs" />
     <Compile Include="Algorythms\BoundSetter.cs" />
+    <Compile Include="Algorythms\GraphCreateAlgorythm\RandomValuedCreate.cs" />
     <Compile Include="Algorythms\NeighbourSetter.cs" />
     <Compile Include="Algorythms\SearchAlgorythm\BestFirstSearch.cs" />
+    <Compile Include="Algorythms\SearchAlgorythm\DijkstraAlgorythm.cs" />
     <Compile Include="Algorythms\SearchAlgorythm\ISearchAlgorythm.cs" />
     <Compile Include="Algorythms\SearchAlgorythm\WideSearch.cs" />
     <Compile Include="ButtonExtension\ButtonExtension.cs" />

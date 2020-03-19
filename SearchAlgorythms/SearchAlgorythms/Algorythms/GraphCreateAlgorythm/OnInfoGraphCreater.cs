@@ -29,6 +29,7 @@ namespace SearchAlgorythms.Algorythms.GraphCreateAlgorythm
                     buttons[i, j].Size = new Size(buttonWidth, buttonHeight);
                     buttons[i, j].Location = new Point((i + 1) *
                         placeBetweenButtons + 150, (j + 1) * placeBetweenButtons);
+                    buttons[i, j].Text = info[i, j].Text;
                 }
             }
         }

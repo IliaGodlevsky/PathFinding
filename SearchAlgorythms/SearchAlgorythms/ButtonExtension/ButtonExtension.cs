@@ -21,6 +21,11 @@ namespace SearchAlgorythms.ButtonExtension
             button.BackColor = Color.FromName("Yellow");
         }
 
+        public static void MarkAsGraphTop(this Button button)
+        {
+            button.BackColor = Color.FromName("White");
+        }
+
         public static void MarkAsPath(this Button button)
         {
             button.BackColor = Color.FromName("Cyan");

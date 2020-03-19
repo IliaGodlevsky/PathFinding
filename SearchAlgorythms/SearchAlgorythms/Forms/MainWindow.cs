@@ -21,7 +21,7 @@ namespace SearchAlgorythms
         private const int BUTTON_POSITION = 27;
 
         public MainWindow()
-        {
+        {                        
             InitializeComponent();
         }
 
@@ -192,7 +192,7 @@ namespace SearchAlgorythms
             if (!SizeTextBoxTextChanged(widthNumber) || !SizeTextBoxTextChanged(heightNumber))
                 return;
             RestartToolStripMenuItem_Click(sender, e);
-            createAlgorythm = new RandomCreate(percent.Value, int.Parse(widthNumber.Text),
+            createAlgorythm = new RandomValuedCreate(percent.Value, int.Parse(widthNumber.Text),
                 int.Parse(heightNumber.Text), BUTTON_SIZE, BUTTON_SIZE, BUTTON_POSITION);
             graph = new UnweightedGraph(createAlgorythm.GetGraph());
             graph.SetStart += ChooseStart;
@@ -281,6 +281,18 @@ namespace SearchAlgorythms
             graph?.Refresh();
             time.Text = 0.ToString() + " seconds";
             time.Update();
+        }
+
+        private void DijkstraAlgorythmToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if(CanStartSearch())
+            {
+                if (CanStartSearch())
+                {
+                    searchAlgorythm = new DijkstraAlgorythm(graph.End, graph);
+                    SearchPath(graph.End);
+                }
+            }
         }
     }
 }

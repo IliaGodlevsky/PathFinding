@@ -8,7 +8,7 @@ namespace SearchAlgorythms.Algorythms.GraphCreateAlgorythm
 {
     public class RandomCreate : ICreateAlgorythm
     {
-        private Random rand = new Random();
+        protected Random rand = new Random();
         private readonly Button[,] graph;
         private const int MAX_PERCENT_OF_OBSTACLES = 100;
 
@@ -26,7 +26,7 @@ namespace SearchAlgorythms.Algorythms.GraphCreateAlgorythm
                         graph[xCoordinate, yCoordinate].MarkAsObstacle();
                     }
                     else
-                        graph[xCoordinate, yCoordinate] = new GraphTop();
+                        CreateGraphTop(ref graph[xCoordinate, yCoordinate]);
                     graph[xCoordinate, yCoordinate].Size = new Size(buttonWidth, buttonHeight);
                     graph[xCoordinate, yCoordinate].Location = new Point((xCoordinate + 1) *
                         placeBetweenButtons + 150, (yCoordinate + 1) * placeBetweenButtons);
@@ -34,6 +34,12 @@ namespace SearchAlgorythms.Algorythms.GraphCreateAlgorythm
             }
             NeigbourSetter setter = new NeigbourSetter(graph);
             setter.SetNeighbours();
+        }
+
+
+        public virtual void CreateGraphTop(ref Button button)
+        {
+            button = new GraphTop();
         }
 
         private bool IsObstacleChance(int percentOfObstacles)

@@ -49,6 +49,7 @@
             this.percentOfObstacles = new System.Windows.Forms.Label();
             this.timeOfSearch = new System.Windows.Forms.GroupBox();
             this.time = new System.Windows.Forms.Label();
+            this.dijkstraAlgorythmToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.percent)).BeginInit();
             this.FieldParams.SuspendLayout();
@@ -78,14 +79,14 @@
             // saveMapToolStripMenuItem
             // 
             this.saveMapToolStripMenuItem.Name = "saveMapToolStripMenuItem";
-            this.saveMapToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.saveMapToolStripMenuItem.Size = new System.Drawing.Size(127, 22);
             this.saveMapToolStripMenuItem.Text = "Save map";
             this.saveMapToolStripMenuItem.Click += new System.EventHandler(this.SaveMapToolStripMenuItem_Click);
             // 
             // loadMapToolStripMenuItem
             // 
             this.loadMapToolStripMenuItem.Name = "loadMapToolStripMenuItem";
-            this.loadMapToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.loadMapToolStripMenuItem.Size = new System.Drawing.Size(127, 22);
             this.loadMapToolStripMenuItem.Text = "Load map";
             this.loadMapToolStripMenuItem.Click += new System.EventHandler(this.LoadMapToolStripMenuItem_Click);
             // 
@@ -101,9 +102,10 @@
             // 
             this.findPathToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.wideSearchToolStripMenuItem,
-            this.bestfirstWideSearchToolStripMenuItem});
+            this.bestfirstWideSearchToolStripMenuItem,
+            this.dijkstraAlgorythmToolStripMenuItem});
             this.findPathToolStripMenuItem.Name = "findPathToolStripMenuItem";
-            this.findPathToolStripMenuItem.Size = new System.Drawing.Size(124, 22);
+            this.findPathToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.findPathToolStripMenuItem.Text = "Find path";
             // 
             // wideSearchToolStripMenuItem
@@ -247,6 +249,13 @@
             this.time.TabIndex = 0;
             this.time.Text = "label1";
             // 
+            // dijkstraAlgorythmToolStripMenuItem
+            // 
+            this.dijkstraAlgorythmToolStripMenuItem.Name = "dijkstraAlgorythmToolStripMenuItem";
+            this.dijkstraAlgorythmToolStripMenuItem.Size = new System.Drawing.Size(186, 22);
+            this.dijkstraAlgorythmToolStripMenuItem.Text = "Dijkstra algorythm";
+            this.dijkstraAlgorythmToolStripMenuItem.Click += new System.EventHandler(this.DijkstraAlgorythmToolStripMenuItem_Click);
+            // 
             // MainWindow
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -294,6 +303,7 @@
         private System.Windows.Forms.Label width;
         private System.Windows.Forms.GroupBox timeOfSearch;
         private System.Windows.Forms.Label time;
+        private System.Windows.Forms.ToolStripMenuItem dijkstraAlgorythmToolStripMenuItem;
     }
 }
 
