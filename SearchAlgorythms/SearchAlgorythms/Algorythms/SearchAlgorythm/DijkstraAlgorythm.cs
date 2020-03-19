@@ -127,7 +127,7 @@ namespace SearchAlgorythms.Algorythms.SearchAlgorythm
                 if (GetChippestValue() == int.MaxValue)
                     break;
                 Visit(currentTop);
-                Pause(20);
+                Pause(10);
             } while (!IsDestination(currentTop));
             watch.Stop();
             DestinationFound = end.IsVisited 

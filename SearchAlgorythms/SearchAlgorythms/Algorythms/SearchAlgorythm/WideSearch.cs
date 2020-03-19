@@ -1,9 +1,11 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Windows.Forms;
 using SearchAlgorythms.ButtonExtension;
 using SearchAlgorythms.Top;
+using SearchAlgorythms.Extensions.ListExtensions;
 
 namespace SearchAlgorythms.Algorythms.SearchAlgorythm
 {
@@ -66,7 +68,7 @@ namespace SearchAlgorythms.Algorythms.SearchAlgorythm
                 if (neigbour.Value == 0 && !neigbour.IsStart)
                     neigbour.Value = currentTop.Value + 1;
                 queue.Enqueue(neigbour);
-            }
+            }            
         }
 
         public virtual void FindDestionation(GraphTop start)
@@ -81,9 +83,9 @@ namespace SearchAlgorythms.Algorythms.SearchAlgorythm
                     Visit(currentTop);
                 Pause(10);              
             }
-            DestinationFound = queue.Count == 0 
-                && !currentTop.IsEnd ? false : true;
             watch.Stop();
+            DestinationFound = queue.Count == 0 
+                && !currentTop.IsEnd ? false : true;            
         }
 
         public void DrawPath(GraphTop end)

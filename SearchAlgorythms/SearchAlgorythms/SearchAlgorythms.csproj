@@ -55,7 +55,8 @@
     <Compile Include="Algorythms\SearchAlgorythm\DijkstraAlgorythm.cs" />
     <Compile Include="Algorythms\SearchAlgorythm\ISearchAlgorythm.cs" />
     <Compile Include="Algorythms\SearchAlgorythm\WideSearch.cs" />
-    <Compile Include="ButtonExtension\ButtonExtension.cs" />
+    <Compile Include="Extensions\ButtonExtension\ButtonExtension.cs" />
+    <Compile Include="Extensions\ListExtension\ListExtensions.cs" />
     <Compile Include="Forms\MainWindow.cs">
       <SubType>Form</SubType>
     </Compile>
