@@ -35,6 +35,11 @@ namespace SearchAlgorythms.Top
             ParentTop = null;            
         }
 
+        public bool IsSimpleTop()
+        {
+            return !IsStart && !IsEnd;
+        }
+
         public void AddNeighbour(GraphTop top)
         {
             neighbours.Add(top);

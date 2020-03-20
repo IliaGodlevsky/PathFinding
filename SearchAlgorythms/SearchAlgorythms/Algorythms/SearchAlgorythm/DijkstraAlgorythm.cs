@@ -87,6 +87,8 @@ namespace SearchAlgorythms.Algorythms.SearchAlgorythm
             }
         }
 
+        private bool IsNoTopToMark() => GetChippestValue() == int.MaxValue;
+
         public void FindDestionation(GraphTop start)
         {
             watch.Start();
@@ -97,19 +99,20 @@ namespace SearchAlgorythms.Algorythms.SearchAlgorythm
             {
                 ExtractNeighbours(currentTop);
                 currentTop = GetChippestUnvisitedTop();
-                if (GetChippestValue() == int.MaxValue)
+                if (IsNoTopToMark())
                     break;
-                Visit(currentTop);
+                if (IsRightCellToVisit(currentTop))
+                    Visit(currentTop);
                 Pause(10);
             } while (!IsDestination(currentTop));
             watch.Stop();
             DestinationFound = end.IsVisited 
-                && GetChippestValue() != int.MaxValue;
+                && !IsNoTopToMark();
         }
 
         public int GetTime()
         {
-            return watch.Elapsed.Seconds;
+            return watch.Elapsed.Seconds + watch.Elapsed.Minutes * 60;
         }
 
         public bool IsDestination(Button button)
@@ -133,16 +136,10 @@ namespace SearchAlgorythms.Algorythms.SearchAlgorythm
 
         public void Visit(Button button)
         {
-            if (button.IsObstacle() 
-                || button == null)
-                return;
             var top = button as GraphTop;
-            if (top != null)
-            {
-                top.IsVisited = true;
-                if (!top.IsEnd)
-                    top.MarkAsVisited();
-            }
+            top.IsVisited = true;
+            if (!top.IsEnd)
+                top.MarkAsVisited();
         }
     }
 }

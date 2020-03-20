@@ -20,16 +20,12 @@ namespace SearchAlgorythms.Graph
         private void MakeObstacle(ref Button top)
         {
             GraphTop button = top as GraphTop;
-            if (!button.IsStart && !button.IsEnd)
+            if (button.IsSimpleTop())
             {
-                Button prev = top as Button;
+                Point previousLocation = top.Location;
                 boundSetter.BreakBoundsBetweenNeighbours(top);
-                top = new Button
-                {
-                    Location = prev.Location,
-                    BackColor = Color.FromName("Black")
-                };
-                top.Text = "";
+                top = new Button { Location = previousLocation };
+                top.MarkAsObstacle();
                 Insert(top);
             }
         }
@@ -37,8 +33,8 @@ namespace SearchAlgorythms.Graph
         private void MakeTop(ref Button top)
         {
             Random rand = new Random();
-            Button prev = top as Button;
-            top = new GraphTop { Location = prev.Location };
+            Point previousLocation = top.Location;
+            top = new GraphTop { Location = previousLocation};
             if (Start == null)
                 top.Click += SetStart;
             else if (Start != null && End == null)

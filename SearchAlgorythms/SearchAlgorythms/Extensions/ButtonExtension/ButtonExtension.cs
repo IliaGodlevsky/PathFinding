@@ -34,6 +34,7 @@ namespace SearchAlgorythms.ButtonExtension
         public static void MarkAsObstacle(this Button button)
         {
             button.BackColor = Color.FromName("Black");
+            button.Text = "";
         }
 
         public static void MarkAsStart(this Button button)

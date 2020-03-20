@@ -10,6 +10,9 @@ namespace SearchAlgorythms.Algorythms.SearchAlgorythm
 {
     public class GreedySearch : ISearchAlgorythm
     {
+        private Queue<GraphTop> queue =
+            new Queue<GraphTop>();
+
         public bool DestinationFound { get; set; }
 
         public void DrawPath(GraphTop end)

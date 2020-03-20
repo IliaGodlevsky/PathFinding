@@ -123,7 +123,7 @@ namespace SearchAlgorythms.Algorythms.SearchAlgorythm
 
         public int GetTime()
         {
-            return watch.Elapsed.Seconds;
+            return watch.Elapsed.Seconds + watch.Elapsed.Minutes * 60;
         }
     }
 }
