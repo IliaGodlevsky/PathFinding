@@ -46,33 +46,38 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Algorythms\GraphCreateAlgorythm\ICreateAlgorythm.cs" />
-    <Compile Include="Algorythms\GraphCreateAlgorythm\OnInfoGraphCreater.cs" />
-    <Compile Include="Algorythms\GraphCreateAlgorythm\RandomCreate.cs" />
+    <Compile Include="Algorythms\GraphCreateAlgorythm\OnInfoButtonGraphCreater.cs" />
+    <Compile Include="Algorythms\GraphCreateAlgorythm\RandomButtonGraphCreate.cs" />
     <Compile Include="Algorythms\BoundSetter.cs" />
-    <Compile Include="Algorythms\GraphCreateAlgorythm\RandomValuedCreate.cs" />
+    <Compile Include="Algorythms\GraphCreateAlgorythm\RandomValuedButtonGraphCreate.cs" />
     <Compile Include="Algorythms\NeighbourSetter.cs" />
     <Compile Include="Algorythms\SearchAlgorythm\BestFirstSearch.cs" />
     <Compile Include="Algorythms\SearchAlgorythm\DijkstraAlgorythm.cs" />
     <Compile Include="Algorythms\SearchAlgorythm\GreedySearch.cs" />
     <Compile Include="Algorythms\SearchAlgorythm\ISearchAlgorythm.cs" />
     <Compile Include="Algorythms\SearchAlgorythm\WideSearch.cs" />
-    <Compile Include="Extensions\ButtonExtension\ButtonExtension.cs" />
+    <Compile Include="Extensions\IEnumerableExtension.cs" />
     <Compile Include="Extensions\ListExtension\ListExtensions.cs" />
-    <Compile Include="Extensions\QueueExtension\QueueExtension.cs" />
     <Compile Include="Forms\MainWindow.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Forms\MainWindow.Designer.cs">
       <DependentUpon>MainWindow.cs</DependentUpon>
     </Compile>
+    <Compile Include="GraphLoader\ButtonGraphLoader.cs" />
+    <Compile Include="GraphLoader\IGraphLoader.cs" />
+    <Compile Include="GraphSaver\ButtonGraphSaver.cs" />
+    <Compile Include="GraphSaver\IGraphSaver.cs" />
+    <Compile Include="GraphTopInfo\IGraphTopInfo.cs" />
     <Compile Include="Graph\IGraph.cs" />
-    <Compile Include="Graph\Graph.cs" />
+    <Compile Include="Graph\ButtonGraph.cs" />
     <Compile Include="GraphTopInfo\GraphTopInfo.cs" />
     <Compile Include="Top\GraphTop.cs">
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Top\IGraphTop.cs" />
     <EmbeddedResource Include="Forms\MainWindow.resx">
       <DependentUpon>MainWindow.cs</DependentUpon>
     </EmbeddedResource>

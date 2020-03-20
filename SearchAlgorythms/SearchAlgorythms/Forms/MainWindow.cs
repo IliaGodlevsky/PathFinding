@@ -1,13 +1,11 @@
-﻿using SearchAlgorythms.Algorythms;
-using SearchAlgorythms.Algorythms.GraphCreateAlgorythm;
+﻿using SearchAlgorythms.Algorythms.GraphCreateAlgorythm;
 using SearchAlgorythms.Algorythms.SearchAlgorythm;
-using SearchAlgorythms.ButtonExtension;
 using SearchAlgorythms.Graph;
+using SearchAlgorythms.GraphLoader;
+using SearchAlgorythms.GraphSaver;
 using SearchAlgorythms.Top;
 using System;
 using System.Drawing;
-using System.IO;
-using System.Runtime.Serialization.Formatters.Binary;
 using System.Windows.Forms;
 
 namespace SearchAlgorythms
@@ -45,20 +43,22 @@ namespace SearchAlgorythms
 
         private bool IsRightDestination(GraphTop top)
         {
-            return top != null && top.GetNeighbours().Count > 0 
+            return top != null && top.Neighbours.Count > 0 
                 && !top.IsStart && !top.IsEnd;
         }
 
         private void AddGraphToControls()
         {
+            GraphTop top = null;
             for (int i = 0; i < graph.GetWidth(); i++)
             {
                 for (int j = 0; j < graph.GetHeight(); j++)
                 {
-                    if ((graph[i, j] as GraphTop) != null) 
-                      graph[i, j].Click += ChooseStart;
-                    graph[i, j].MouseDown += ChangeColor;
-                    Controls.Add(graph[i, j]);
+                    top = graph[i, j] as GraphTop;
+                    if (!top.IsObstacle) 
+                      top.Click += ChooseStart;
+                    top.MouseDown += ChangeColor;
+                    Controls.Add(top);
                 }
             }
             Size = new Size(new Point((graph.GetWidth() + 2) *
@@ -66,14 +66,14 @@ namespace SearchAlgorythms
             DesktopLocation = new Point();
         }
 
-        private void ChangeColor(object sender, MouseEventArgs e)
+        private void ChangeColor(object sender, EventArgs e)
         {
-            if (e.Button == MouseButtons.Right)
+            if ((e as MouseEventArgs).Button == MouseButtons.Right)
             {
-                Button top = sender as Button;
-                Controls.Remove(top);
+                IGraphTop top = sender as GraphTop;
+                Controls.Remove(top as GraphTop);
                 graph.Reverse(ref top);
-                Controls.Add(top);
+                Controls.Add(top as GraphTop);
                 percent.Value = graph.GetObstaclePercent();
                 percentTextBox.Text = percent.Value.ToString();
                 percentTextBox.Update();
@@ -89,8 +89,9 @@ namespace SearchAlgorythms
             for (int i = 0; i < graph.GetWidth(); i++)
                 for (int j = 0; j < graph.GetHeight(); j++)
             {
-                    graph[i, j].Click -= ChooseStart;
-                    graph[i, j].Click += ChooseEnd;
+                    GraphTop t = graph[i, j] as GraphTop;
+                    t.Click -= ChooseStart;
+                    t.Click += ChooseEnd;
             }
             top.MarkAsStart();
             graph.Start = top;
@@ -105,7 +106,10 @@ namespace SearchAlgorythms
             top.MarkAsEnd();
             for (int i = 0; i < graph.GetWidth(); i++)
                 for (int j = 0; j < graph.GetHeight(); j++)
-                    graph[i, j].Click -= ChooseEnd;
+                {
+                    GraphTop t = graph[i, j] as GraphTop;
+                    t.Click -= ChooseEnd;
+                }
             graph.End = top;
         }
 
@@ -115,38 +119,41 @@ namespace SearchAlgorythms
                 return;
             for (int i = 0; i < graph.GetWidth(); i++)
                 for (int j = 0; j < graph.GetHeight(); j++)
-                    Controls.Remove(graph[i, j]);
+                {
+                    GraphTop t = graph[i, j] as GraphTop;
+                    Controls.Remove(t);
+                }
         }
 
-        private void WideSearchToolStripMenuItem_Click_1(object sender, EventArgs e)
+        private void WideSearchToolStripMenuItem(object sender, EventArgs e)
         {
             searchAlgorythm = new WideSearch(graph.End);
             if (searchAlgorythm.CanStartSearch())
                 SearchPath(graph.End);
         }
 
-        private void DijkstraAlgorythmToolStripMenuItem_Click(object sender, EventArgs e)
+        private void DijkstraAlgorythmToolStripMenuItem(object sender, EventArgs e)
         {
             searchAlgorythm = new DijkstraAlgorythm(graph.End, graph);
             if (searchAlgorythm.CanStartSearch())
                 SearchPath(graph.End);
         }
 
-        private void GreedySearchToolStripMenuItem_Click(object sender, EventArgs e)
+        private void GreedySearchToolStripMenuItem(object sender, EventArgs e)
         {
             searchAlgorythm = new GreedySearch(graph.End);
             if (searchAlgorythm.CanStartSearch())
                 SearchPath(graph.End);
         }
 
-        private void BestfirstWideSearchToolStripMenuItem_Click(object sender, EventArgs e)
+        private void BestfirstWideSearchToolStripMenuItem(object sender, EventArgs e)
         {
             searchAlgorythm = new BestFirstSearch(graph.End);
             if (searchAlgorythm.CanStartSearch())
                 SearchPath(graph.Start);
         }
 
-        private void SearchPath(GraphTop startTopOfDrawingPath)
+        private void SearchPath(IGraphTop startTopOfDrawingPath)
         {
             searchAlgorythm.FindDestionation(graph.Start);
             time.Text = searchAlgorythm.GetTime().ToString() + " seconds";
@@ -187,14 +194,15 @@ namespace SearchAlgorythms
             SizeTextBoxTextChanged((TextBox)sender);
         }
 
-        private void Create_Click(object sender, EventArgs e)
+        private void Create(object sender, EventArgs e)
         {
             if (!SizeTextBoxTextChanged(widthNumber) || !SizeTextBoxTextChanged(heightNumber))
                 return;
             RemoveGraphFromControl();
-            createAlgorythm = new RandomValuedCreate(percent.Value, int.Parse(widthNumber.Text),
+            createAlgorythm = new RandomValuedButtonGraphCreate(percent.Value, 
+                int.Parse(widthNumber.Text),
                 int.Parse(heightNumber.Text), BUTTON_SIZE, BUTTON_SIZE, BUTTON_POSITION);
-            graph = new Graph.Graph(createAlgorythm.GetGraph());
+            graph = new ButtonGraph(createAlgorythm.GetGraph());
             graph.SetStart += ChooseStart;
             graph.SetEnd += ChooseEnd;
             graph.SwitchRole += ChangeColor;
@@ -202,67 +210,29 @@ namespace SearchAlgorythms
             createAlgorythm = null;
         }
 
-        private void InitializeGraphWithInfo(GraphTopInfo[,] info)
-        {
-            if (info == null)
-                return;
-            RemoveGraphFromControl();
-            createAlgorythm = new OnInfoGraphCreater(info,
-                BUTTON_SIZE, BUTTON_SIZE, BUTTON_POSITION);
-            graph = new Graph.Graph(createAlgorythm.GetGraph());
-            NeigbourSetter setter = new NeigbourSetter(graph.GetArray());
-            setter.SetNeighbours();
-            AddGraphToControls();
-            PrepareWindow(graph.GetObstaclePercent(), graph.GetWidth(), graph.GetHeight());
-            createAlgorythm = null;
-        }
-
         private void SaveMapToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            if (graph != null)
-            {
-                SaveFileDialog save = new SaveFileDialog();
-                GraphTopInfo[,] info = graph.GetInfo();
-                BinaryFormatter f = new BinaryFormatter();
-                if (save.ShowDialog() == DialogResult.OK)
-                    using (var stream = new FileStream(save.FileName, FileMode.Create))
-                    {
-                        try
-                        {
-                            f.Serialize(stream, info);
-                        }
-                        catch(Exception ex)
-                        {
-                            MessageBox.Show(ex.Message);
-                            return;
-                        }
-                    }
-            }
+            ButtonGraphSaver saver = new ButtonGraphSaver();
+            saver.SaveGraph(graph);
         }
 
         private void LoadMapToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            GraphTopInfo[,] info = null;
-            OpenFileDialog open = new OpenFileDialog();
-            BinaryFormatter f = new BinaryFormatter();
-            if (open.ShowDialog() == DialogResult.OK)
-                using (var stream = new FileStream(open.FileName, FileMode.Open))
-                {
-                    try
-                    {
-                        info = (GraphTopInfo[,])f.Deserialize(stream);
-                        InitializeGraphWithInfo(info);
-                        graph.SetStart += ChooseStart;
-                        graph.SetEnd += ChooseEnd;
-                        graph.SwitchRole += ChangeColor;
-                    }
-                    catch(Exception ex)
-                    {
-                        MessageBox.Show(ex.Message);
-                        return;
-                    }
-                }
-            
+            ButtonGraphLoader loader = new ButtonGraphLoader(BUTTON_SIZE, 
+                BUTTON_SIZE, BUTTON_POSITION);
+            IGraph temp = loader.GetGraph();                      
+            if (temp != null)
+            {
+                RemoveGraphFromControl();
+                graph = temp;
+                graph.SetStart += ChooseStart;
+                graph.SetEnd += ChooseEnd;
+                graph.SwitchRole += ChangeColor;
+                AddGraphToControls();
+                PrepareWindow(graph.GetObstaclePercent(), 
+                    graph.GetWidth(), graph.GetHeight());
+                createAlgorythm = null;
+            }
         }
 
         private void PercentTextBox_TextChanged(object sender, EventArgs e)

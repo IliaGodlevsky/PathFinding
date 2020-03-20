@@ -6,11 +6,12 @@ using System.Windows.Forms;
 namespace SearchAlgorythms
 {
     [Serializable]
-    public class GraphTopInfo
+    public class GraphTopInfo : IGraphTopInfo
     {
-        public GraphTopInfo(Button button)
+        public GraphTopInfo(IGraphTop graphTop)
         {
-            IsObstacle = button as GraphTop == null;
+            GraphTop button = graphTop as GraphTop;
+            IsObstacle = graphTop.IsObstacle;
             if (IsObstacle)
                 Colour = button.BackColor.Name;
             else

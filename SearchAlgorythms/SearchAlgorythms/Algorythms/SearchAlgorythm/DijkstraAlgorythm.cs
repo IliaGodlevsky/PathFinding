@@ -1,8 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Diagnostics;
-using System.Linq;
 using System.Windows.Forms;
-using SearchAlgorythms.ButtonExtension;
 using SearchAlgorythms.Graph;
 using SearchAlgorythms.Top;
 
@@ -10,9 +8,9 @@ namespace SearchAlgorythms.Algorythms.SearchAlgorythm
 {
     public class DijkstraAlgorythm : ISearchAlgorythm
     {
-        private readonly GraphTop end;
-        private List<GraphTop> tops 
-            = new List<GraphTop>();
+        private readonly IGraphTop end;
+        private List<IGraphTop> tops 
+            = new List<IGraphTop>();
         private Stopwatch watch = new Stopwatch();
 
         protected void Pause(int value = 0)
@@ -23,16 +21,16 @@ namespace SearchAlgorythms.Algorythms.SearchAlgorythm
                 Application.DoEvents();
         }
 
-        public DijkstraAlgorythm(GraphTop end, IGraph graph)
+        public DijkstraAlgorythm(IGraphTop end, IGraph graph)
         {
             for (int i = 0; i < graph.GetWidth(); i++)
             {
                 for (int j = 0; j < graph.GetHeight(); j++)
                 {
-                    if (!graph[i, j].IsObstacle())
+                    if (!graph[i, j].IsObstacle)
                     {               
-                        tops.Add(graph[i, j] as GraphTop);
-                        (graph[i, j] as GraphTop).Value = int.MaxValue;
+                        tops.Add(graph[i, j]);
+                        graph[i, j].Value = int.MaxValue;
                     }                      
                 }
             }
@@ -41,13 +39,13 @@ namespace SearchAlgorythms.Algorythms.SearchAlgorythm
 
         public bool DestinationFound { get; set ; }
 
-        public void DrawPath(GraphTop end)
+        public void DrawPath(IGraphTop end)
         {
             var top = end;
             while (!top.IsStart)
             {
                 top = top.ParentTop;
-                if (top.IsSimpleTop())
+                if (top.IsSimpleTop)
                     top.MarkAsPath();
                 Pause(250);
             }
@@ -67,29 +65,28 @@ namespace SearchAlgorythms.Algorythms.SearchAlgorythm
             return min;
         }
 
-        private GraphTop GetChippestUnvisitedTop()
+        private IGraphTop GetChippestUnvisitedTop()
         {
             return tops.Find(t => GetChippestValue() == t.Value
                     && !t.IsVisited);
         }
 
-        public void ExtractNeighbours(Button button)
+        public void ExtractNeighbours(IGraphTop button)
         {
-            var top = button as GraphTop;
-            var neighbours = top.GetNeighbours();
+            var neighbours = button.Neighbours;
             foreach(var neighbour in neighbours)
             {
-                if (neighbour.Value > int.Parse(neighbour.Text) + top.Value) 
+                if (neighbour.Value > int.Parse(neighbour.Text) + button.Value) 
                 {                  
-                    neighbour.Value = int.Parse(neighbour.Text) + top.Value;
-                    neighbour.ParentTop = top;
+                    neighbour.Value = int.Parse(neighbour.Text) + button.Value;
+                    neighbour.ParentTop = button;
                 }
             }
         }
 
         private bool IsNoTopToMark() => GetChippestValue() == int.MaxValue;
 
-        public void FindDestionation(GraphTop start)
+        public void FindDestionation(IGraphTop start)
         {
             watch.Start();
             var currentTop = start;
@@ -115,31 +112,28 @@ namespace SearchAlgorythms.Algorythms.SearchAlgorythm
             return watch.Elapsed.Seconds + watch.Elapsed.Minutes * 60;
         }
 
-        public bool IsDestination(Button button)
+        public bool IsDestination(IGraphTop button)
         {
-            var top = button as GraphTop;
-            if (top == null)
+            if (button == null)
                 return false;
-            if (top.IsObstacle())
+            if (button.IsObstacle)
                 return false;
-            return top.IsEnd && top.IsVisited;
+            return button.IsEnd && button.IsVisited;
         }
 
-        public bool IsRightCellToVisit(Button button)
+        public bool IsRightCellToVisit(IGraphTop button)
         {
-            GraphTop top = button as GraphTop;
-            if (top.IsObstacle())
+            if (button.IsObstacle)
                 return false;
             else
-                return !top.IsVisited;
+                return !button.IsVisited;
         }
 
-        public void Visit(Button button)
+        public void Visit(IGraphTop button)
         {
-            var top = button as GraphTop;
-            top.IsVisited = true;
-            if (!top.IsEnd)
-                top.MarkAsVisited();
+            button.IsVisited = true;
+            if (!button.IsEnd)
+                button.MarkAsVisited();
         }
 
         public bool CanStartSearch()

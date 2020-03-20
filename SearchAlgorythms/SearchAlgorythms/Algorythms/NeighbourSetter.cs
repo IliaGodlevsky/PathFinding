@@ -1,17 +1,14 @@
-﻿using SearchAlgorythms.ButtonExtension;
-using SearchAlgorythms.Top;
-using System.Drawing;
-using System.Windows.Forms;
+﻿using SearchAlgorythms.Top;
 
 namespace SearchAlgorythms.Algorythms
 {
     public class NeigbourSetter
     {
-        private readonly Button[,] graph;
+        private readonly IGraphTop[,] graph;
         private readonly int width;
         private readonly int height;
 
-        public NeigbourSetter(Button[,] graph)
+        public NeigbourSetter(IGraphTop[,] graph)
         {
             this.graph = graph;
             width = graph.GetLength(0);
@@ -20,21 +17,21 @@ namespace SearchAlgorythms.Algorythms
 
         public void SetNeighbours(int xCoordinate, int yCoordinate)
         {
-            if (graph[xCoordinate, yCoordinate].IsObstacle())
+            if (graph[xCoordinate, yCoordinate].IsObstacle)
                 return;
-            var top = graph[xCoordinate, yCoordinate] as GraphTop;
             for (int i = xCoordinate - 1; i <= xCoordinate + 1; i++)
             {
                 for (int j = yCoordinate - 1; j <= yCoordinate + 1; j++)
                 {
                     if (i >= 0 && i < width && j >= 0 && j < height) 
                     {
-                        if (!graph[i, j].IsObstacle())
-                            top.AddNeighbour(graph[i, j] as GraphTop);
+                        if (!graph[i, j].IsObstacle)
+                            graph[xCoordinate, yCoordinate].Neighbours.Add(graph[i, j]);
                     }
                 }
             }
-            top.GetNeighbours().Remove(graph[xCoordinate, yCoordinate] as GraphTop);
+            graph[xCoordinate, yCoordinate].Neighbours.
+                Remove(graph[xCoordinate, yCoordinate]);
         }
 
         public void SetNeighbours()

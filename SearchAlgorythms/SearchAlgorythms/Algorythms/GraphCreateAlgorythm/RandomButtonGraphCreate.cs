@@ -1,34 +1,33 @@
-﻿using SearchAlgorythms.ButtonExtension;
-using SearchAlgorythms.Top;
+﻿using SearchAlgorythms.Top;
 using System;
 using System.Drawing;
 using System.Windows.Forms;
 
 namespace SearchAlgorythms.Algorythms.GraphCreateAlgorythm
 {
-    public class RandomCreate : ICreateAlgorythm
+    public class RandomButtonGraphCreate : ICreateAlgorythm
     {
         protected Random rand = new Random();
-        private readonly Button[,] graph;
+        private readonly IGraphTop[,] graph;
         private const int MAX_PERCENT_OF_OBSTACLES = 100;
 
-        public RandomCreate(int percentOfObstacles, int width, int height, int buttonWidth, 
+        public RandomButtonGraphCreate(int percentOfObstacles, int width, int height, int buttonWidth, 
             int buttonHeight, int placeBetweenButtons)
         {
-            graph = new Button[width, height];
+            graph = new IGraphTop[width, height];
             for (int xCoordinate = 0; xCoordinate < width; xCoordinate++)
             {
                 for (int yCoordinate = 0; yCoordinate < height; yCoordinate++)
                 {
+                    CreateGraphTop(ref graph[xCoordinate, yCoordinate]);
                     if (IsObstacleChance(percentOfObstacles))
                     {
-                        graph[xCoordinate, yCoordinate] = new Button();
+                        graph[xCoordinate, yCoordinate].IsObstacle = true;
                         graph[xCoordinate, yCoordinate].MarkAsObstacle();
                     }
-                    else
-                        CreateGraphTop(ref graph[xCoordinate, yCoordinate]);
-                    graph[xCoordinate, yCoordinate].Size = new Size(buttonWidth, buttonHeight);
-                    graph[xCoordinate, yCoordinate].Location = new Point((xCoordinate + 1) *
+                    Button button = graph[xCoordinate, yCoordinate] as GraphTop;
+                    button.Size = new Size(buttonWidth, buttonHeight);
+                    button.Location = new Point((xCoordinate + 1) *
                         placeBetweenButtons + 150, (yCoordinate + 1) * placeBetweenButtons);
                 }
             }
@@ -37,7 +36,7 @@ namespace SearchAlgorythms.Algorythms.GraphCreateAlgorythm
         }
 
 
-        public virtual void CreateGraphTop(ref Button button)
+        public virtual void CreateGraphTop(ref IGraphTop button)
         {
             button = new GraphTop();
         }
@@ -47,7 +46,7 @@ namespace SearchAlgorythms.Algorythms.GraphCreateAlgorythm
             return rand.Next(MAX_PERCENT_OF_OBSTACLES) < percentOfObstacles;
         }
 
-        public Button[,] GetGraph()
+        public IGraphTop[,] GetGraph()
         {
             return graph;
         }

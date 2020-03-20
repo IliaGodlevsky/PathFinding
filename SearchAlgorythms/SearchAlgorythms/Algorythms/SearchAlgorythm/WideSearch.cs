@@ -1,19 +1,19 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Windows.Forms;
-using SearchAlgorythms.ButtonExtension;
 using SearchAlgorythms.Top;
 using SearchAlgorythms.Extensions.ListExtensions;
-using SearchAlgorythms.Extensions.QueueExtension;
+using SearchAlgorythms.Extensions;
 
 namespace SearchAlgorythms.Algorythms.SearchAlgorythm
 {
     public class WideSearch : ISearchAlgorythm
     {
+        protected Queue<IGraphTop> queue 
+            = new Queue<IGraphTop>();
         private Stopwatch watch = new Stopwatch();
-        private GraphTop end;
+        private readonly IGraphTop end;
 
         protected void Pause(int value = 0)
         {
@@ -23,20 +23,20 @@ namespace SearchAlgorythms.Algorythms.SearchAlgorythm
                 Application.DoEvents();
         }
 
-        public WideSearch(GraphTop end)
+        public WideSearch(IGraphTop end)
         {
             this.end = end;
         }
 
-        private bool IsRigthCellToColor(GraphTop top)
+        private bool IsRigthCellToColor(IGraphTop top)
         {
             return !top.IsStart && !top.IsEnd;
         }
 
-        public GraphTop GoChippestNeighbour(GraphTop top)
+        public IGraphTop GoChippestNeighbour(IGraphTop top)
         {
             var chippest = top;
-            var neighbours = top.GetNeighbours();
+            var neighbours = top.Neighbours;
             int min = neighbours.Min(t => t.Value);
             chippest = neighbours.Find(t => min == t.Value
                     && t.IsVisited && IsRightNeighbour(t));       
@@ -45,40 +45,36 @@ namespace SearchAlgorythms.Algorythms.SearchAlgorythm
             return chippest;
         }
 
-        public virtual bool IsRightNeighbour(GraphTop top2)
+        public virtual bool IsRightNeighbour(IGraphTop top)
         {
-            return !top2.IsEnd;
+            return !top.IsEnd;
         }
 
-        public virtual bool IsRightPath(GraphTop top)
+        public virtual bool IsRightPath(IGraphTop top)
         {
             return !top.IsStart;
         }
 
-        public virtual bool IsRightCellToVisit(Button button)
+        public virtual bool IsRightCellToVisit(IGraphTop button)
         {
-            var top = button as GraphTop;
-            return top is null ? false : !top.IsVisited;
+            return !button.IsVisited;
         }
-
-        protected Queue<GraphTop> queue = new Queue<GraphTop>();
 
         public bool DestinationFound { get; set; }
 
-        public virtual void ExtractNeighbours(Button button)
+        public virtual void ExtractNeighbours(IGraphTop button)
         {
-            var currentTop = button as GraphTop;
-            if (currentTop is null)
+            if (button is null)
                 return;
-            foreach (var neigbour in currentTop.GetNeighbours())
+            foreach (var neigbour in button.Neighbours)
             {
                 if (neigbour.Value == 0 && !neigbour.IsStart)
-                    neigbour.Value = currentTop.Value + 1;
+                    neigbour.Value = button.Value + 1;
                 queue.Enqueue(neigbour);
             }            
         }
 
-        public virtual void FindDestionation(GraphTop start)
+        public virtual void FindDestionation(IGraphTop start)
         {         
             watch.Start();
             var currentTop = start;
@@ -88,7 +84,7 @@ namespace SearchAlgorythms.Algorythms.SearchAlgorythm
                 currentTop = queue.Dequeue();
                 if (IsRightCellToVisit(currentTop))
                 {
-                    currentTop.GetNeighbours().Shuffle();
+                    currentTop.Neighbours.Shuffle();
                     Visit(currentTop);                    
                 }
                 Pause(10);              
@@ -98,7 +94,7 @@ namespace SearchAlgorythms.Algorythms.SearchAlgorythm
                 && !currentTop.IsEnd ? false : true;            
         }
 
-        public void DrawPath(GraphTop end)
+        public void DrawPath(IGraphTop end)
         {
             var top = end;
             while (IsRightPath(top))
@@ -108,19 +104,17 @@ namespace SearchAlgorythms.Algorythms.SearchAlgorythm
             }
         }
 
-        public bool IsDestination(Button button)
+        public bool IsDestination(IGraphTop button)
         {
-            var top = button as GraphTop;
-            if (top is null)
+            if (button is null)
                 return false;
-            return top.IsEnd || queue.IsEmpty();
+            return button.IsEnd || queue.IsEmpty();
         }
 
-        public void Visit(Button button)
+        public void Visit(IGraphTop top)
         {          
-            if (button.IsObstacle())
+            if (top.IsObstacle)
                 return;
-            var top = button as GraphTop;
             top.IsVisited = true;
             if (IsRigthCellToColor(top))
                 top.MarkAsVisited();

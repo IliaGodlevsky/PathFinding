@@ -1,22 +1,18 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Diagnostics;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
-using SearchAlgorythms.ButtonExtension;
-using SearchAlgorythms.Extensions.QueueExtension;
+using SearchAlgorythms.Extensions;
+using SearchAlgorythms.Extensions.ListExtensions;
 using SearchAlgorythms.Top;
 
 namespace SearchAlgorythms.Algorythms.SearchAlgorythm
 {
     public class GreedySearch : ISearchAlgorythm
     {
-        private Queue<GraphTop> queue =
-            new Queue<GraphTop>();
+        private Stack<IGraphTop> queue =
+            new Stack<IGraphTop>();
 
-        private readonly GraphTop end;
+        private readonly IGraphTop end;
 
         private Stopwatch watch = new Stopwatch();
 
@@ -28,15 +24,15 @@ namespace SearchAlgorythms.Algorythms.SearchAlgorythm
                 Application.DoEvents();
         }
 
-        public GreedySearch(GraphTop end)
+        public GreedySearch(IGraphTop end)
         {
             this.end = end;
         }
 
-        private GraphTop GoChippestNeighbour(GraphTop top)
+        private IGraphTop GoChippestNeighbour(IGraphTop top)
         {
             int min = 0;
-            var neighbours = top.GetNeighbours();
+            var neighbours = top.Neighbours;
             foreach(var neighbour in neighbours)
             {
                 if (!neighbour.IsVisited)
@@ -54,28 +50,28 @@ namespace SearchAlgorythms.Algorythms.SearchAlgorythm
 
         public bool DestinationFound { get; set; }
 
-        public void DrawPath(GraphTop end)
+        public void DrawPath(IGraphTop end)
         {
             var top = end;
             while (!top.IsStart)
             {
                 top = top.ParentTop;
-                if (top.IsSimpleTop())
+                if (top.IsSimpleTop)
                     top.MarkAsPath();
                 Pause(250);
             }
         }
 
-        public void ExtractNeighbours(Button button)
+        public void ExtractNeighbours(IGraphTop button)
         {
             return;
         }
 
-        public void FindDestionation(GraphTop start)
+        public void FindDestionation(IGraphTop start)
         {
             watch.Start();
             var currentTop = start;
-            GraphTop temp = null;
+            IGraphTop temp = null;
             Visit(currentTop);
             while(!IsDestination(currentTop))
             {
@@ -87,7 +83,7 @@ namespace SearchAlgorythms.Algorythms.SearchAlgorythm
                     currentTop.ParentTop = temp;
                 }
                 else
-                    currentTop = queue.Dequeue();  
+                    currentTop = queue.Pop();               
                 Pause(10);
             }
             watch.Stop();
@@ -99,27 +95,25 @@ namespace SearchAlgorythms.Algorythms.SearchAlgorythm
             return watch.Elapsed.Seconds + watch.Elapsed.Minutes * 60;
         }
 
-        public bool IsDestination(Button button)
+        public bool IsDestination(IGraphTop top)
         {
-            var top = button as GraphTop;
             return top.IsEnd && top.IsVisited || queue.IsEmpty();
         }
 
-        public bool IsRightCellToVisit(Button button)
+        public bool IsRightCellToVisit(IGraphTop top)
         {
-            var top = button as GraphTop;
-            if (top == null &&
-                top.IsObstacle())
+            if (top == null)
+                return false;
+            if (top.IsObstacle)
                 return false;
             return true;
         }
 
-        public void Visit(Button button)
+        public void Visit(IGraphTop top)
         {
-            var top = button as GraphTop;
             top.IsVisited = true;
-            queue.Enqueue(top);
-            if (top.IsSimpleTop())
+            queue.Push(top);
+            if (top.IsSimpleTop)
                 top.MarkAsVisited();
         }
 

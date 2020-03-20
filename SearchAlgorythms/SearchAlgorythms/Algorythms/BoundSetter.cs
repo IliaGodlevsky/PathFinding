@@ -1,26 +1,25 @@
 ﻿using SearchAlgorythms.Top;
-using System.Windows.Forms;
 
 namespace SearchAlgorythms.Algorythms
 {
     public class BoundSetter
     {
-        public void SetBoundsBetweenNeighbours(Button top)
+        public void SetBoundsBetweenNeighbours(IGraphTop top)
         {
             if (top is null)
                 return;
-            var neighbours = (top as GraphTop).GetNeighbours();
+            var neighbours = (top as GraphTop).Neighbours;
             foreach (var neigbour in neighbours)
-                neigbour.AddNeighbour(top as GraphTop);
+                neigbour.Neighbours.Add(top);
         }
 
-        public void BreakBoundsBetweenNeighbours(Button top)
+        public void BreakBoundsBetweenNeighbours(IGraphTop top)
         {
             if (top is null)
                 return;
-            var neighbours = (top as GraphTop).GetNeighbours();
+            var neighbours = top.Neighbours;
             foreach (var neigbour in neighbours)
-                neigbour.GetNeighbours().Remove(top as GraphTop);
+                neigbour.Neighbours.Remove(top);
         }
     }
 }

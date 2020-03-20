@@ -115,21 +115,21 @@
             this.wideSearchToolStripMenuItem.Name = "wideSearchToolStripMenuItem";
             this.wideSearchToolStripMenuItem.Size = new System.Drawing.Size(186, 22);
             this.wideSearchToolStripMenuItem.Text = "Wide search";
-            this.wideSearchToolStripMenuItem.Click += new System.EventHandler(this.WideSearchToolStripMenuItem_Click_1);
+            this.wideSearchToolStripMenuItem.Click += new System.EventHandler(this.WideSearchToolStripMenuItem);
             // 
             // bestfirstWideSearchToolStripMenuItem
             // 
             this.bestfirstWideSearchToolStripMenuItem.Name = "bestfirstWideSearchToolStripMenuItem";
             this.bestfirstWideSearchToolStripMenuItem.Size = new System.Drawing.Size(186, 22);
             this.bestfirstWideSearchToolStripMenuItem.Text = "Best-first wide search";
-            this.bestfirstWideSearchToolStripMenuItem.Click += new System.EventHandler(this.BestfirstWideSearchToolStripMenuItem_Click);
+            this.bestfirstWideSearchToolStripMenuItem.Click += new System.EventHandler(this.BestfirstWideSearchToolStripMenuItem);
             // 
             // dijkstraAlgorythmToolStripMenuItem
             // 
             this.dijkstraAlgorythmToolStripMenuItem.Name = "dijkstraAlgorythmToolStripMenuItem";
             this.dijkstraAlgorythmToolStripMenuItem.Size = new System.Drawing.Size(186, 22);
             this.dijkstraAlgorythmToolStripMenuItem.Text = "Dijkstra algorythm";
-            this.dijkstraAlgorythmToolStripMenuItem.Click += new System.EventHandler(this.DijkstraAlgorythmToolStripMenuItem_Click);
+            this.dijkstraAlgorythmToolStripMenuItem.Click += new System.EventHandler(this.DijkstraAlgorythmToolStripMenuItem);
             // 
             // percent
             // 
@@ -164,7 +164,7 @@
             this.create.TabIndex = 6;
             this.create.Text = "Create graph";
             this.create.UseVisualStyleBackColor = true;
-            this.create.Click += new System.EventHandler(this.Create_Click);
+            this.create.Click += new System.EventHandler(this.Create);
             // 
             // label2
             // 
@@ -263,7 +263,7 @@
             this.greedySearchToolStripMenuItem.Name = "greedySearchToolStripMenuItem";
             this.greedySearchToolStripMenuItem.Size = new System.Drawing.Size(186, 22);
             this.greedySearchToolStripMenuItem.Text = "Greedy search";
-            this.greedySearchToolStripMenuItem.Click += new System.EventHandler(this.GreedySearchToolStripMenuItem_Click);
+            this.greedySearchToolStripMenuItem.Click += new System.EventHandler(this.GreedySearchToolStripMenuItem);
             // 
             // MainWindow
             // 
