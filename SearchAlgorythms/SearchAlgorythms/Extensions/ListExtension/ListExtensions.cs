@@ -17,10 +17,5 @@ namespace SearchAlgorythms.Extensions.ListExtensions
                 list[b] = temp;
             }
         }
-
-        public static bool IsEmpty<TSource>(this List<TSource> list)
-        {
-            return list.Count == 0;
-        }
     }
 }

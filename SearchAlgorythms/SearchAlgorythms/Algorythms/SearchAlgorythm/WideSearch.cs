@@ -9,19 +9,11 @@ using SearchAlgorythms.Extensions;
 namespace SearchAlgorythms.Algorythms.SearchAlgorythm
 {
     public class WideSearch : ISearchAlgorythm
-    {
+    {        
         protected Queue<IGraphTop> queue 
             = new Queue<IGraphTop>();
         private Stopwatch watch = new Stopwatch();
         private readonly IGraphTop end;
-
-        protected void Pause(int value = 0)
-        {
-            var sw = new Stopwatch();
-            sw.Start();
-            while (sw.ElapsedMilliseconds < value)
-                Application.DoEvents();
-        }
 
         public WideSearch(IGraphTop end)
         {
@@ -61,6 +53,8 @@ namespace SearchAlgorythms.Algorythms.SearchAlgorythm
         }
 
         public bool DestinationFound { get; set; }
+
+        public PauseCycle Pause { get; set; }
 
         public virtual void ExtractNeighbours(IGraphTop button)
         {

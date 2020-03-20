@@ -5,6 +5,7 @@ using SearchAlgorythms.GraphLoader;
 using SearchAlgorythms.GraphSaver;
 using SearchAlgorythms.Top;
 using System;
+using System.Diagnostics;
 using System.Drawing;
 using System.Windows.Forms;
 
@@ -17,6 +18,14 @@ namespace SearchAlgorythms
         private ICreateAlgorythm createAlgorythm = null;
         private const int BUTTON_SIZE = 25;
         private const int BUTTON_POSITION = 27;
+
+        private void Pause(int value)
+        {
+            var sw = new Stopwatch();
+            sw.Start();
+            while (sw.ElapsedMilliseconds < value)
+                Application.DoEvents();
+        }
 
         public MainWindow()
         {                        
@@ -155,6 +164,7 @@ namespace SearchAlgorythms
 
         private void SearchPath(IGraphTop startTopOfDrawingPath)
         {
+            searchAlgorythm.Pause = Pause;
             searchAlgorythm.FindDestionation(graph.Start);
             time.Text = searchAlgorythm.GetTime().ToString() + " seconds";
             time.Update();

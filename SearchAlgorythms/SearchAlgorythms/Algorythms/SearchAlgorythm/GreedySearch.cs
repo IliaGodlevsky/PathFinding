@@ -16,14 +16,6 @@ namespace SearchAlgorythms.Algorythms.SearchAlgorythm
 
         private Stopwatch watch = new Stopwatch();
 
-        protected void Pause(int value = 0)
-        {
-            var sw = new Stopwatch();
-            sw.Start();
-            while (sw.ElapsedMilliseconds < value)
-                Application.DoEvents();
-        }
-
         public GreedySearch(IGraphTop end)
         {
             this.end = end;
@@ -49,6 +41,8 @@ namespace SearchAlgorythms.Algorythms.SearchAlgorythm
         }
 
         public bool DestinationFound { get; set; }
+        public PauseCycle pause { get; set; }
+        public PauseCycle Pause { set; get; }
 
         public void DrawPath(IGraphTop end)
         {

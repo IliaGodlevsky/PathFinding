@@ -13,14 +13,6 @@ namespace SearchAlgorythms.Algorythms.SearchAlgorythm
             = new List<IGraphTop>();
         private Stopwatch watch = new Stopwatch();
 
-        protected void Pause(int value = 0)
-        {
-            var sw = new Stopwatch();
-            sw.Start();
-            while (sw.ElapsedMilliseconds < value)
-                Application.DoEvents();
-        }
-
         public DijkstraAlgorythm(IGraphTop end, IGraph graph)
         {
             for (int i = 0; i < graph.GetWidth(); i++)
@@ -37,7 +29,8 @@ namespace SearchAlgorythms.Algorythms.SearchAlgorythm
             this.end = end;
         }
 
-        public bool DestinationFound { get; set ; }
+        public bool DestinationFound { get; set; }
+        public PauseCycle Pause { set; get; }
 
         public void DrawPath(IGraphTop end)
         {
