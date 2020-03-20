@@ -13,5 +13,6 @@ namespace SearchAlgorythms.Algorythms.SearchAlgorythm
         void DrawPath(GraphTop end);
         bool DestinationFound { get; set; }
         int GetTime();
+        bool CanStartSearch();
     }
 }

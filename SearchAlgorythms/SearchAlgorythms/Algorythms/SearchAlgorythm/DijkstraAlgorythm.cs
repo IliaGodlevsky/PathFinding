@@ -47,7 +47,7 @@ namespace SearchAlgorythms.Algorythms.SearchAlgorythm
             while (!top.IsStart)
             {
                 top = top.ParentTop;
-                if (!top.IsEnd && !top.IsStart)
+                if (top.IsSimpleTop())
                     top.MarkAsPath();
                 Pause(250);
             }
@@ -140,6 +140,11 @@ namespace SearchAlgorythms.Algorythms.SearchAlgorythm
             top.IsVisited = true;
             if (!top.IsEnd)
                 top.MarkAsVisited();
+        }
+
+        public bool CanStartSearch()
+        {
+            return end != null;
         }
     }
 }

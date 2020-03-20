@@ -13,6 +13,7 @@ namespace SearchAlgorythms.Algorythms.SearchAlgorythm
     public class WideSearch : ISearchAlgorythm
     {
         private Stopwatch watch = new Stopwatch();
+        private GraphTop end;
 
         protected void Pause(int value = 0)
         {
@@ -20,6 +21,11 @@ namespace SearchAlgorythms.Algorythms.SearchAlgorythm
             sw.Start();
             while (sw.ElapsedMilliseconds < value)
                 Application.DoEvents();
+        }
+
+        public WideSearch(GraphTop end)
+        {
+            this.end = end;
         }
 
         private bool IsRigthCellToColor(GraphTop top)
@@ -124,6 +130,11 @@ namespace SearchAlgorythms.Algorythms.SearchAlgorythm
         public int GetTime()
         {
             return watch.Elapsed.Seconds + watch.Elapsed.Minutes * 60;
+        }
+
+        public bool CanStartSearch()
+        {
+            return end != null;
         }
     }
 }

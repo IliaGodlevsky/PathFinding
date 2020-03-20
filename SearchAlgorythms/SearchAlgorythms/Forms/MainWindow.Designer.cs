@@ -36,6 +36,7 @@
             this.findPathToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.wideSearchToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.bestfirstWideSearchToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.dijkstraAlgorythmToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.percent = new System.Windows.Forms.TrackBar();
             this.widthNumber = new System.Windows.Forms.TextBox();
             this.heightNumber = new System.Windows.Forms.TextBox();
@@ -49,7 +50,7 @@
             this.percentOfObstacles = new System.Windows.Forms.Label();
             this.timeOfSearch = new System.Windows.Forms.GroupBox();
             this.time = new System.Windows.Forms.Label();
-            this.dijkstraAlgorythmToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.greedySearchToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.percent)).BeginInit();
             this.FieldParams.SuspendLayout();
@@ -103,7 +104,8 @@
             this.findPathToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.wideSearchToolStripMenuItem,
             this.bestfirstWideSearchToolStripMenuItem,
-            this.dijkstraAlgorythmToolStripMenuItem});
+            this.dijkstraAlgorythmToolStripMenuItem,
+            this.greedySearchToolStripMenuItem});
             this.findPathToolStripMenuItem.Name = "findPathToolStripMenuItem";
             this.findPathToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.findPathToolStripMenuItem.Text = "Find path";
@@ -121,6 +123,13 @@
             this.bestfirstWideSearchToolStripMenuItem.Size = new System.Drawing.Size(186, 22);
             this.bestfirstWideSearchToolStripMenuItem.Text = "Best-first wide search";
             this.bestfirstWideSearchToolStripMenuItem.Click += new System.EventHandler(this.BestfirstWideSearchToolStripMenuItem_Click);
+            // 
+            // dijkstraAlgorythmToolStripMenuItem
+            // 
+            this.dijkstraAlgorythmToolStripMenuItem.Name = "dijkstraAlgorythmToolStripMenuItem";
+            this.dijkstraAlgorythmToolStripMenuItem.Size = new System.Drawing.Size(186, 22);
+            this.dijkstraAlgorythmToolStripMenuItem.Text = "Dijkstra algorythm";
+            this.dijkstraAlgorythmToolStripMenuItem.Click += new System.EventHandler(this.DijkstraAlgorythmToolStripMenuItem_Click);
             // 
             // percent
             // 
@@ -249,12 +258,12 @@
             this.time.TabIndex = 0;
             this.time.Text = "label1";
             // 
-            // dijkstraAlgorythmToolStripMenuItem
+            // greedySearchToolStripMenuItem
             // 
-            this.dijkstraAlgorythmToolStripMenuItem.Name = "dijkstraAlgorythmToolStripMenuItem";
-            this.dijkstraAlgorythmToolStripMenuItem.Size = new System.Drawing.Size(186, 22);
-            this.dijkstraAlgorythmToolStripMenuItem.Text = "Dijkstra algorythm";
-            this.dijkstraAlgorythmToolStripMenuItem.Click += new System.EventHandler(this.DijkstraAlgorythmToolStripMenuItem_Click);
+            this.greedySearchToolStripMenuItem.Name = "greedySearchToolStripMenuItem";
+            this.greedySearchToolStripMenuItem.Size = new System.Drawing.Size(186, 22);
+            this.greedySearchToolStripMenuItem.Text = "Greedy search";
+            this.greedySearchToolStripMenuItem.Click += new System.EventHandler(this.GreedySearchToolStripMenuItem_Click);
             // 
             // MainWindow
             // 
@@ -304,6 +313,7 @@
         private System.Windows.Forms.GroupBox timeOfSearch;
         private System.Windows.Forms.Label time;
         private System.Windows.Forms.ToolStripMenuItem dijkstraAlgorythmToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem greedySearchToolStripMenuItem;
     }
 }
 

@@ -49,7 +49,7 @@ namespace SearchAlgorythms
                 && !top.IsStart && !top.IsEnd;
         }
 
-        private void AddButtonsToControls()
+        private void AddGraphToControls()
         {
             for (int i = 0; i < graph.GetWidth(); i++)
             {
@@ -109,7 +109,7 @@ namespace SearchAlgorythms
             graph.End = top;
         }
 
-        private void RestartToolStripMenuItem_Click(object sender, EventArgs e)
+        private void RemoveGraphFromControl()
         {
             if (graph is null)
                 return;
@@ -120,21 +120,30 @@ namespace SearchAlgorythms
 
         private void WideSearchToolStripMenuItem_Click_1(object sender, EventArgs e)
         {
-            if (CanStartSearch())
-            {
-                searchAlgorythm = new WideSearch();
+            searchAlgorythm = new WideSearch(graph.End);
+            if (searchAlgorythm.CanStartSearch())
                 SearchPath(graph.End);
-            }
         }
 
-        private bool CanStartSearch()
+        private void DijkstraAlgorythmToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            if (graph.Start == null || graph.End == null)
-            {
-                MessageBox.Show("Start or end buttons wasn't chosen");
-                return false;
-            }
-            return true;
+            searchAlgorythm = new DijkstraAlgorythm(graph.End, graph);
+            if (searchAlgorythm.CanStartSearch())
+                SearchPath(graph.End);
+        }
+
+        private void GreedySearchToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            searchAlgorythm = new GreedySearch(graph.End);
+            if (searchAlgorythm.CanStartSearch())
+                SearchPath(graph.End);
+        }
+
+        private void BestfirstWideSearchToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            searchAlgorythm = new BestFirstSearch(graph.End);
+            if (searchAlgorythm.CanStartSearch())
+                SearchPath(graph.Start);
         }
 
         private void SearchPath(GraphTop startTopOfDrawingPath)
@@ -152,15 +161,6 @@ namespace SearchAlgorythms
             searchAlgorythm = null;
             graph.Start = null;
             graph.End = null;
-        }
-
-        private void BestfirstWideSearchToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            if (CanStartSearch())
-            {
-                searchAlgorythm = new BestFirstSearch(graph.End);
-                SearchPath(graph.Start);
-            }            
         }
 
         private void Percent_Scroll(object sender, EventArgs e)
@@ -191,14 +191,14 @@ namespace SearchAlgorythms
         {
             if (!SizeTextBoxTextChanged(widthNumber) || !SizeTextBoxTextChanged(heightNumber))
                 return;
-            RestartToolStripMenuItem_Click(sender, e);
+            RemoveGraphFromControl();
             createAlgorythm = new RandomValuedCreate(percent.Value, int.Parse(widthNumber.Text),
                 int.Parse(heightNumber.Text), BUTTON_SIZE, BUTTON_SIZE, BUTTON_POSITION);
             graph = new Graph.Graph(createAlgorythm.GetGraph());
             graph.SetStart += ChooseStart;
             graph.SetEnd += ChooseEnd;
             graph.SwitchRole += ChangeColor;
-            AddButtonsToControls();
+            AddGraphToControls();
             createAlgorythm = null;
         }
 
@@ -206,13 +206,13 @@ namespace SearchAlgorythms
         {
             if (info == null)
                 return;
-            RestartToolStripMenuItem_Click(this, new EventArgs());
+            RemoveGraphFromControl();
             createAlgorythm = new OnInfoGraphCreater(info,
                 BUTTON_SIZE, BUTTON_SIZE, BUTTON_POSITION);
             graph = new Graph.Graph(createAlgorythm.GetGraph());
             NeigbourSetter setter = new NeigbourSetter(graph.GetArray());
             setter.SetNeighbours();
-            AddButtonsToControls();
+            AddGraphToControls();
             PrepareWindow(graph.GetObstaclePercent(), graph.GetWidth(), graph.GetHeight());
             createAlgorythm = null;
         }
@@ -251,6 +251,10 @@ namespace SearchAlgorythms
                     try
                     {
                         info = (GraphTopInfo[,])f.Deserialize(stream);
+                        InitializeGraphWithInfo(info);
+                        graph.SetStart += ChooseStart;
+                        graph.SetEnd += ChooseEnd;
+                        graph.SwitchRole += ChangeColor;
                     }
                     catch(Exception ex)
                     {
@@ -258,10 +262,7 @@ namespace SearchAlgorythms
                         return;
                     }
                 }
-            InitializeGraphWithInfo(info);
-            graph.SetStart += ChooseStart;
-            graph.SetEnd += ChooseEnd;
-            graph.SwitchRole += ChangeColor;
+            
         }
 
         private void PercentTextBox_TextChanged(object sender, EventArgs e)
@@ -281,18 +282,6 @@ namespace SearchAlgorythms
             graph?.Refresh();
             time.Text = 0.ToString() + " seconds";
             time.Update();
-        }
-
-        private void DijkstraAlgorythmToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            if(CanStartSearch())
-            {
-                if (CanStartSearch())
-                {
-                    searchAlgorythm = new DijkstraAlgorythm(graph.End, graph);
-                    SearchPath(graph.End);
-                }
-            }
         }
     }
 }
