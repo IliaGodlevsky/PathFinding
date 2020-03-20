@@ -53,9 +53,7 @@ namespace SearchAlgorythms.Algorythms.SearchAlgorythm
             while (!top.IsStart)
             {
                 top = top.ParentTop;
-                if (top.IsEnd|| top.IsStart)
-                    continue;
-                else
+                if (!top.IsEnd && !top.IsStart)
                     top.MarkAsPath();
                 Pause(250);
             }
@@ -79,25 +77,6 @@ namespace SearchAlgorythms.Algorythms.SearchAlgorythm
         {
             return tops.Find(t => GetChippestValue() == t.Value
                     && !t.IsVisited);
-        }
-
-        public GraphTop GoChippestNeighbour(GraphTop top)
-        {
-            var neighbours = top.GetNeighbours();
-            int min = 0;
-            foreach (var neighbour in neighbours)
-                if (!neighbour.IsVisited)
-                {
-                    min = int.Parse(neighbour.Text);
-                    break;
-                }
-            foreach (var neighbour in neighbours)
-                if (min > int.Parse(neighbour.Text)
-                    && !neighbour.IsVisited)
-                    min = int.Parse(neighbour.Text);
-            MessageBox.Show(min.ToString());
-            return neighbours.Find(t => min == int.Parse(t.Text)
-                    && !t.IsVisited); 
         }
 
         public void ExtractNeighbours(Button button)

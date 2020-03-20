@@ -53,6 +53,7 @@
     <Compile Include="Algorythms\NeighbourSetter.cs" />
     <Compile Include="Algorythms\SearchAlgorythm\BestFirstSearch.cs" />
     <Compile Include="Algorythms\SearchAlgorythm\DijkstraAlgorythm.cs" />
+    <Compile Include="Algorythms\SearchAlgorythm\GreedySearch.cs" />
     <Compile Include="Algorythms\SearchAlgorythm\ISearchAlgorythm.cs" />
     <Compile Include="Algorythms\SearchAlgorythm\WideSearch.cs" />
     <Compile Include="Extensions\ButtonExtension\ButtonExtension.cs" />
