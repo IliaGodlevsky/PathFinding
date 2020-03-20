@@ -37,6 +37,7 @@
             this.wideSearchToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.bestfirstWideSearchToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.dijkstraAlgorythmToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.greedySearchToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.percent = new System.Windows.Forms.TrackBar();
             this.widthNumber = new System.Windows.Forms.TextBox();
             this.heightNumber = new System.Windows.Forms.TextBox();
@@ -50,7 +51,6 @@
             this.percentOfObstacles = new System.Windows.Forms.Label();
             this.timeOfSearch = new System.Windows.Forms.GroupBox();
             this.time = new System.Windows.Forms.Label();
-            this.greedySearchToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.percent)).BeginInit();
             this.FieldParams.SuspendLayout();
@@ -107,7 +107,7 @@
             this.dijkstraAlgorythmToolStripMenuItem,
             this.greedySearchToolStripMenuItem});
             this.findPathToolStripMenuItem.Name = "findPathToolStripMenuItem";
-            this.findPathToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.findPathToolStripMenuItem.Size = new System.Drawing.Size(124, 22);
             this.findPathToolStripMenuItem.Text = "Find path";
             // 
             // wideSearchToolStripMenuItem
@@ -130,6 +130,13 @@
             this.dijkstraAlgorythmToolStripMenuItem.Size = new System.Drawing.Size(186, 22);
             this.dijkstraAlgorythmToolStripMenuItem.Text = "Dijkstra algorythm";
             this.dijkstraAlgorythmToolStripMenuItem.Click += new System.EventHandler(this.DijkstraAlgorythmToolStripMenuItem);
+            // 
+            // greedySearchToolStripMenuItem
+            // 
+            this.greedySearchToolStripMenuItem.Name = "greedySearchToolStripMenuItem";
+            this.greedySearchToolStripMenuItem.Size = new System.Drawing.Size(186, 22);
+            this.greedySearchToolStripMenuItem.Text = "Greedy search";
+            this.greedySearchToolStripMenuItem.Click += new System.EventHandler(this.GreedySearchToolStripMenuItem);
             // 
             // percent
             // 
@@ -258,17 +265,11 @@
             this.time.TabIndex = 0;
             this.time.Text = "label1";
             // 
-            // greedySearchToolStripMenuItem
-            // 
-            this.greedySearchToolStripMenuItem.Name = "greedySearchToolStripMenuItem";
-            this.greedySearchToolStripMenuItem.Size = new System.Drawing.Size(186, 22);
-            this.greedySearchToolStripMenuItem.Text = "Greedy search";
-            this.greedySearchToolStripMenuItem.Click += new System.EventHandler(this.GreedySearchToolStripMenuItem);
-            // 
             // MainWindow
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.AutoScroll = true;
             this.ClientSize = new System.Drawing.Size(800, 490);
             this.Controls.Add(this.timeOfSearch);
             this.Controls.Add(this.FieldParams);

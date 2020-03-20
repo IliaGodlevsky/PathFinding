@@ -1,6 +1,7 @@
 ﻿using SearchAlgorythms.Algorythms;
 using SearchAlgorythms.Top;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Windows.Forms;
@@ -186,6 +187,11 @@ namespace SearchAlgorythms.Graph
             }
             Start = null;
             End = null;
+        }
+
+        public IEnumerator GetEnumerator()
+        {
+            return buttons.GetEnumerator();
         }
     }
 }

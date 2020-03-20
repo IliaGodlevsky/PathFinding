@@ -1,11 +1,12 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Windows.Forms;
 using SearchAlgorythms.Top;
 
 namespace SearchAlgorythms.Graph
 {
-    public interface IGraph
+    public interface IGraph : IEnumerable
     {
         IGraphTop this[int width, int height] { get; set; }
 

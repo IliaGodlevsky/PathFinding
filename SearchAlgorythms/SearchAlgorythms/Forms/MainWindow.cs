@@ -95,12 +95,11 @@ namespace SearchAlgorythms
             if (!IsRightDestination(top)) 
                 return;
             top.IsStart = true;
-            for (int i = 0; i < graph.GetWidth(); i++)
-                for (int j = 0; j < graph.GetHeight(); j++)
+            foreach (var butt in graph)
             {
-                    GraphTop t = graph[i, j] as GraphTop;
-                    t.Click -= ChooseStart;
-                    t.Click += ChooseEnd;
+                GraphTop t = butt as GraphTop;
+                t.Click -= ChooseStart;
+                t.Click += ChooseEnd;
             }
             top.MarkAsStart();
             graph.Start = top;
@@ -113,12 +112,11 @@ namespace SearchAlgorythms
                 return;
             top.IsEnd = true;
             top.MarkAsEnd();
-            for (int i = 0; i < graph.GetWidth(); i++)
-                for (int j = 0; j < graph.GetHeight(); j++)
-                {
-                    GraphTop t = graph[i, j] as GraphTop;
-                    t.Click -= ChooseEnd;
-                }
+            foreach(var butt in graph)
+            {
+                GraphTop t = butt as GraphTop;
+                t.Click -= ChooseEnd;
+            }
             graph.End = top;
         }
 
