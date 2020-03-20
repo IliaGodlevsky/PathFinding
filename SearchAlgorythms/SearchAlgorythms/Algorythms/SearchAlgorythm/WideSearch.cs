@@ -6,6 +6,7 @@ using System.Windows.Forms;
 using SearchAlgorythms.ButtonExtension;
 using SearchAlgorythms.Top;
 using SearchAlgorythms.Extensions.ListExtensions;
+using SearchAlgorythms.Extensions.QueueExtension;
 
 namespace SearchAlgorythms.Algorythms.SearchAlgorythm
 {
@@ -80,11 +81,14 @@ namespace SearchAlgorythms.Algorythms.SearchAlgorythm
             {
                 currentTop = queue.Dequeue();
                 if (IsRightCellToVisit(currentTop))
-                    Visit(currentTop);
+                {
+                    currentTop.GetNeighbours().Shuffle();
+                    Visit(currentTop);                    
+                }
                 Pause(10);              
             }
             watch.Stop();
-            DestinationFound = queue.Count == 0 
+            DestinationFound = queue.IsEmpty()
                 && !currentTop.IsEnd ? false : true;            
         }
 
@@ -103,7 +107,7 @@ namespace SearchAlgorythms.Algorythms.SearchAlgorythm
             var top = button as GraphTop;
             if (top is null)
                 return false;
-            return top.IsEnd || queue.Count == 0;
+            return top.IsEnd || queue.IsEmpty();
         }
 
         public void Visit(Button button)

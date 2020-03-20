@@ -8,7 +8,7 @@ using System.Windows.Forms;
 
 namespace SearchAlgorythms.Graph
 {
-    public class UnweightedGraph : IGraph
+    public class Graph : IGraph
     {
         public event EventHandler SetStart;
         public event EventHandler SetEnd;
@@ -53,7 +53,7 @@ namespace SearchAlgorythms.Graph
             return buttons;
         }
 
-        public UnweightedGraph(Button[,] buttons)
+        public Graph(Button[,] buttons)
         {
             this.buttons = buttons;
             Start = null;

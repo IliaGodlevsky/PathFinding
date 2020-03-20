@@ -194,7 +194,7 @@ namespace SearchAlgorythms
             RestartToolStripMenuItem_Click(sender, e);
             createAlgorythm = new RandomValuedCreate(percent.Value, int.Parse(widthNumber.Text),
                 int.Parse(heightNumber.Text), BUTTON_SIZE, BUTTON_SIZE, BUTTON_POSITION);
-            graph = new UnweightedGraph(createAlgorythm.GetGraph());
+            graph = new Graph.Graph(createAlgorythm.GetGraph());
             graph.SetStart += ChooseStart;
             graph.SetEnd += ChooseEnd;
             graph.SwitchRole += ChangeColor;
@@ -209,7 +209,7 @@ namespace SearchAlgorythms
             RestartToolStripMenuItem_Click(this, new EventArgs());
             createAlgorythm = new OnInfoGraphCreater(info,
                 BUTTON_SIZE, BUTTON_SIZE, BUTTON_POSITION);
-            graph = new UnweightedGraph(createAlgorythm.GetGraph());
+            graph = new Graph.Graph(createAlgorythm.GetGraph());
             NeigbourSetter setter = new NeigbourSetter(graph.GetArray());
             setter.SetNeighbours();
             AddButtonsToControls();

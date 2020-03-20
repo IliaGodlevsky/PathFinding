@@ -12,11 +12,10 @@ namespace SearchAlgorythms.Extensions.ListExtensions
         public static void Shuffle<TSource>(this List<TSource> list)
         {
             Random rand = new Random();
-            for(int i = 0;i<list.Count;i++)
+            for (int i = 0; i < list.Count; i++) 
             {
                 int a = rand.Next(list.Count);
                 int b = rand.Next(list.Count);
-                MessageBox.Show(a.ToString() + "," + b.ToString());
                 TSource temp = list[a];
                 list[a] = list[b];
                 list[b] = temp;

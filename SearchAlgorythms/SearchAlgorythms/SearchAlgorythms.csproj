@@ -58,6 +58,7 @@
     <Compile Include="Algorythms\SearchAlgorythm\WideSearch.cs" />
     <Compile Include="Extensions\ButtonExtension\ButtonExtension.cs" />
     <Compile Include="Extensions\ListExtension\ListExtensions.cs" />
+    <Compile Include="Extensions\QueueExtension\QueueExtension.cs" />
     <Compile Include="Forms\MainWindow.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -65,7 +66,7 @@
       <DependentUpon>MainWindow.cs</DependentUpon>
     </Compile>
     <Compile Include="Graph\IGraph.cs" />
-    <Compile Include="Graph\UnweightedGraph.cs" />
+    <Compile Include="Graph\Graph.cs" />
     <Compile Include="GraphTopInfo\GraphTopInfo.cs" />
     <Compile Include="Top\GraphTop.cs">
       <SubType>Component</SubType>
