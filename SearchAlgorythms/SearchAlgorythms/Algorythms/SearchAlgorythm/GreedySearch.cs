@@ -1,8 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Diagnostics;
-using System.Windows.Forms;
 using SearchAlgorythms.Extensions;
-using SearchAlgorythms.Extensions.ListExtensions;
 using SearchAlgorythms.Top;
 
 namespace SearchAlgorythms.Algorythms.SearchAlgorythm
@@ -41,7 +39,6 @@ namespace SearchAlgorythms.Algorythms.SearchAlgorythm
         }
 
         public bool DestinationFound { get; set; }
-        public PauseCycle pause { get; set; }
         public PauseCycle Pause { set; get; }
 
         public void DrawPath(IGraphTop end)
