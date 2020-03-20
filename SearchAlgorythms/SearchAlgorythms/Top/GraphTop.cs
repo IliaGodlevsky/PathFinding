@@ -1,6 +1,5 @@
-﻿using System.Collections.Generic;
-using System.Drawing;
-using System.Linq;
+﻿using SearchAlgorythms.ButtonExtension;
+using System.Collections.Generic;
 using System.Windows.Forms;
 
 namespace SearchAlgorythms.Top
@@ -12,7 +11,6 @@ namespace SearchAlgorythms.Top
       
         public GraphTop() : base()
         {
-            ValueHistory = new List<int>();
             SetToDefault();
         }
 
@@ -21,8 +19,6 @@ namespace SearchAlgorythms.Top
         public bool IsVisited { get; set; }
         public int Value { get; set; }
         public GraphTop ParentTop { get; set; }
-        public List<int> ValueHistory { get; set; }
-        public bool ValueChanged => ValueHistory.Last() != Value;
 
         public List<GraphTop> GetNeighbours()
         {
@@ -35,17 +31,13 @@ namespace SearchAlgorythms.Top
             IsEnd = false;
             IsVisited = false;
             Value = 0;
-            BackColor = Color.FromName("White");
-            ParentTop = null;
-            ValueHistory.Clear();
-            ValueHistory.Add(int.MaxValue);
+            this.MarkAsGraphTop();
+            ParentTop = null;            
         }
 
         public void AddNeighbour(GraphTop top)
         {
             neighbours.Add(top);
         }
-
-        public void SaveValueInHistory() => ValueHistory.Add(Value);
     }
 }

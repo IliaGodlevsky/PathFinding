@@ -23,12 +23,6 @@ namespace SearchAlgorythms.Algorythms.SearchAlgorythm
                 Application.DoEvents();
         }
 
-        private void GoNextIteration()
-        {
-            foreach (var top in tops)
-                top.SaveValueInHistory();
-        }
-
         public DijkstraAlgorythm(GraphTop end, IGraph graph)
         {
             for (int i = 0; i < graph.GetWidth(); i++)
