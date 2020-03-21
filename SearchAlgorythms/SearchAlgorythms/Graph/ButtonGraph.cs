@@ -141,7 +141,6 @@ namespace SearchAlgorythms.Graph
             {
                 for (int j = 0; j < GetHeight(); j++)
                 {
-
                     if ((top as GraphTop).Location 
                         == (buttons[i, j] as GraphTop).Location)
                         return new KeyValuePair<int, int>(i, j);
