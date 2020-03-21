@@ -12,7 +12,7 @@ namespace SearchAlgorythms.Graph
     {
         public event EventHandler SetStart;
         public event EventHandler SetEnd;
-        public event MouseEventHandler SwitchRole;
+        public event EventHandler SwitchRole;
 
         private IGraphTop[,] buttons;
         private BoundSetter boundSetter = new BoundSetter();
@@ -129,14 +129,9 @@ namespace SearchAlgorythms.Graph
         public int GetObstaclePercent()
         {
             int numberOfObstacles = 0;
-            for (int i = 0; i < GetWidth(); i++) 
-            {
-                for (int j = 0; j < GetHeight(); j++)
-                {
-                    if (buttons[i,j].IsObstacle)
-                        numberOfObstacles++;
-                }
-            }
+            foreach (var top in buttons)
+                if (top.IsObstacle)
+                    numberOfObstacles++;
             return numberOfObstacles * 100 / GetSize();
         }
 
@@ -147,7 +142,8 @@ namespace SearchAlgorythms.Graph
                 for (int j = 0; j < GetHeight(); j++)
                 {
 
-                    if ((top as GraphTop).Location == (buttons[i, j] as GraphTop).Location)
+                    if ((top as GraphTop).Location 
+                        == (buttons[i, j] as GraphTop).Location)
                         return new KeyValuePair<int, int>(i, j);
                 }
             }
@@ -162,28 +158,24 @@ namespace SearchAlgorythms.Graph
             else
                 MakeObstacle(ref top);
             (top as GraphTop).Size = size;
-            (top as GraphTop).MouseDown += SwitchRole;
+            (top as GraphTop).MouseDown += new MouseEventHandler(SwitchRole);
         }
 
         public void Refresh()
         {
             if (buttons == null)
                 return;
-            for (int i = 0; i < GetWidth(); i++)
+            foreach(var top in buttons)
             {
-                for (int j = 0; j < GetHeight(); j++)
+                if (!top.IsObstacle)
                 {
-                    GraphTop top = buttons[i, j] as GraphTop;
-                    if (!top.IsObstacle)
-                    {
-                        top.SetToDefault();
-                        top.Click -= SetStart;
-                        top.Click -= SetEnd;
-                        top.Click += SetStart;
-                    }
-                    top.MouseDown -= SwitchRole;
-                    top.MouseDown += SwitchRole;
+                    top.SetToDefault();
+                    (top as GraphTop).Click -= SetStart;
+                    (top as GraphTop).Click -= SetEnd;
+                    (top as GraphTop).Click += SetStart;
                 }
+                (top as GraphTop).MouseDown -= new MouseEventHandler(SwitchRole);
+                (top as GraphTop).MouseDown += new MouseEventHandler(SwitchRole);
             }
             Start = null;
             End = null;

@@ -58,17 +58,12 @@ namespace SearchAlgorythms
 
         private void AddGraphToControls()
         {
-            GraphTop top = null;
-            for (int i = 0; i < graph.GetWidth(); i++)
+            foreach (var top in graph)
             {
-                for (int j = 0; j < graph.GetHeight(); j++)
-                {
-                    top = graph[i, j] as GraphTop;
-                    if (!top.IsObstacle) 
-                      top.Click += ChooseStart;
-                    top.MouseDown += ChangeColor;
-                    Controls.Add(top);
-                }
+                if (!(top as GraphTop).IsObstacle)
+                    (top as GraphTop).Click += ChooseStart;
+                (top as GraphTop).MouseDown += ChangeColor;
+                Controls.Add(top as GraphTop);
             }
             Size = new Size(new Point((graph.GetWidth() + 2) *
                 BUTTON_POSITION + 140, (graph.GetHeight() + 3) * BUTTON_POSITION + 100));
@@ -97,9 +92,8 @@ namespace SearchAlgorythms
             top.IsStart = true;
             foreach (var butt in graph)
             {
-                GraphTop t = butt as GraphTop;
-                t.Click -= ChooseStart;
-                t.Click += ChooseEnd;
+                (butt as GraphTop).Click -= ChooseStart;
+                (butt as GraphTop).Click += ChooseEnd;
             }
             top.MarkAsStart();
             graph.Start = top;
@@ -113,10 +107,7 @@ namespace SearchAlgorythms
             top.IsEnd = true;
             top.MarkAsEnd();
             foreach(var butt in graph)
-            {
-                GraphTop t = butt as GraphTop;
-                t.Click -= ChooseEnd;
-            }
+                (butt as GraphTop).Click -= ChooseEnd;
             graph.End = top;
         }
 
@@ -124,12 +115,8 @@ namespace SearchAlgorythms
         {
             if (graph is null)
                 return;
-            for (int i = 0; i < graph.GetWidth(); i++)
-                for (int j = 0; j < graph.GetHeight(); j++)
-                {
-                    GraphTop t = graph[i, j] as GraphTop;
-                    Controls.Remove(t);
-                }
+            foreach(var top in graph)
+                Controls.Remove(top as GraphTop);
         }
 
         private void WideSearchToolStripMenuItem(object sender, EventArgs e)

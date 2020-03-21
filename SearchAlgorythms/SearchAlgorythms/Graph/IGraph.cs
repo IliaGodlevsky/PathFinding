@@ -15,7 +15,7 @@ namespace SearchAlgorythms.Graph
 
         event EventHandler SetEnd;
         event EventHandler SetStart;
-        event MouseEventHandler SwitchRole;
+        event EventHandler SwitchRole;
 
         IGraphTop[,] GetArray();
         int GetHeight();
