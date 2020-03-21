@@ -173,8 +173,6 @@ namespace SearchAlgorythms.Graph
                     (top as GraphTop).Click -= SetEnd;
                     (top as GraphTop).Click += SetStart;
                 }
-                (top as GraphTop).MouseDown -= new MouseEventHandler(SwitchRole);
-                (top as GraphTop).MouseDown += new MouseEventHandler(SwitchRole);
             }
             Start = null;
             End = null;
