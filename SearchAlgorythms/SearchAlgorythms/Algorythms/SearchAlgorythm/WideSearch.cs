@@ -8,7 +8,7 @@ using SearchAlgorythms.Extensions;
 namespace SearchAlgorythms.Algorythms.SearchAlgorythm
 {
     public class WideSearch : ISearchAlgorythm
-    {        
+    {
         protected Queue<IGraphTop> queue 
             = new Queue<IGraphTop>();
         private Stopwatch watch = new Stopwatch();
@@ -80,7 +80,7 @@ namespace SearchAlgorythms.Algorythms.SearchAlgorythm
                     currentTop.Neighbours.Shuffle();
                     Visit(currentTop);                    
                 }
-                Pause(10);              
+                Pause(25);              
             }
             watch.Stop();
             DestinationFound = queue.IsEmpty()

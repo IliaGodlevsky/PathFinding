@@ -92,7 +92,7 @@ namespace SearchAlgorythms.Algorythms.SearchAlgorythm
                     break;
                 if (IsRightCellToVisit(currentTop))
                     Visit(currentTop);
-                Pause(10);
+                Pause(25);
             } while (!IsDestination(currentTop));
             watch.Stop();
             DestinationFound = end.IsVisited 

@@ -7,7 +7,7 @@ namespace SearchAlgorythms.Algorythms.SearchAlgorythm
 {
     public class GreedySearch : ISearchAlgorythm
     {
-        private Stack<IGraphTop> queue =
+        private Stack<IGraphTop> stack =
             new Stack<IGraphTop>();
 
         private readonly IGraphTop end;
@@ -74,8 +74,8 @@ namespace SearchAlgorythms.Algorythms.SearchAlgorythm
                     currentTop.ParentTop = temp;
                 }
                 else
-                    currentTop = queue.Pop();               
-                Pause(10);
+                    currentTop = stack.Pop();               
+                Pause(25);
             }
             watch.Stop();
             DestinationFound = end.IsVisited;
@@ -88,7 +88,7 @@ namespace SearchAlgorythms.Algorythms.SearchAlgorythm
 
         public bool IsDestination(IGraphTop top)
         {
-            return top.IsEnd && top.IsVisited || queue.IsEmpty();
+            return top.IsEnd && top.IsVisited || stack.IsEmpty();
         }
 
         public bool IsRightCellToVisit(IGraphTop top)
@@ -103,7 +103,7 @@ namespace SearchAlgorythms.Algorythms.SearchAlgorythm
         public void Visit(IGraphTop top)
         {
             top.IsVisited = true;
-            queue.Push(top);
+            stack.Push(top);
             if (top.IsSimpleTop)
                 top.MarkAsVisited();
         }

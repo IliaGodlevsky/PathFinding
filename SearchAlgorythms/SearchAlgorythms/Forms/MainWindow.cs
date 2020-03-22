@@ -16,8 +16,8 @@ namespace SearchAlgorythms
         private IGraph graph = null;
         private ISearchAlgorythm searchAlgorythm = null;
         private ICreateAlgorythm createAlgorythm = null;
-        private const int BUTTON_SIZE = 25;
-        private const int BUTTON_POSITION = 27;
+        private const int BUTTON_SIZE = 30;
+        private const int BUTTON_POSITION = 32;
 
         private void Pause(int value)
         {
@@ -47,7 +47,8 @@ namespace SearchAlgorythms
 
         private void SearchAlgorythms_Load(object sender, EventArgs e)
         {
-            PrepareWindow(obstaclePercent: 20, graphWidth: 15, graphHeight: 15);
+            PrepareWindow(obstaclePercent: 40, graphWidth: 25, graphHeight: 18);
+            Create(sender, e);
         }
 
         private bool IsRightDestination(GraphTop top)
@@ -66,7 +67,7 @@ namespace SearchAlgorythms
                 Controls.Add(top as GraphTop);
             }
             Size = new Size(new Point((graph.GetWidth() + 2) *
-                BUTTON_POSITION + 140, (graph.GetHeight() + 3) * BUTTON_POSITION + 100));
+                BUTTON_POSITION + 140, (graph.GetHeight() + 3) * BUTTON_POSITION));
             DesktopLocation = new Point();
         }
 

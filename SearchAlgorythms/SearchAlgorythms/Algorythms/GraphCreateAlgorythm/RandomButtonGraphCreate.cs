@@ -15,20 +15,20 @@ namespace SearchAlgorythms.Algorythms.GraphCreateAlgorythm
             int buttonHeight, int placeBetweenButtons)
         {
             graph = new IGraphTop[width, height];
-            for (int xCoordinate = 0; xCoordinate < width; xCoordinate++)
+            for (int x = 0; x < width; x++)
             {
-                for (int yCoordinate = 0; yCoordinate < height; yCoordinate++)
+                for (int y = 0; y < height; y++)
                 {
-                    CreateGraphTop(ref graph[xCoordinate, yCoordinate]);
+                    CreateGraphTop(ref graph[x, y]);
                     if (IsObstacleChance(percentOfObstacles))
                     {
-                        graph[xCoordinate, yCoordinate].IsObstacle = true;
-                        graph[xCoordinate, yCoordinate].MarkAsObstacle();
+                        graph[x, y].IsObstacle = true;
+                        graph[x, y].MarkAsObstacle();
                     }
-                    Button button = graph[xCoordinate, yCoordinate] as GraphTop;
+                    GraphTop button = graph[x, y] as GraphTop;
                     button.Size = new Size(buttonWidth, buttonHeight);
-                    button.Location = new Point((xCoordinate + 1) *
-                        placeBetweenButtons + 150, (yCoordinate + 1) * placeBetweenButtons);
+                    button.Location = new Point((x + 1) *
+                        placeBetweenButtons + 150, (y + 1) * placeBetweenButtons);
                 }
             }
             NeigbourSetter setter = new NeigbourSetter(graph);
@@ -36,15 +36,10 @@ namespace SearchAlgorythms.Algorythms.GraphCreateAlgorythm
         }
 
 
-        public virtual void CreateGraphTop(ref IGraphTop button)
-        {
-            button = new GraphTop();
-        }
+        public virtual void CreateGraphTop(ref IGraphTop button) => button = new GraphTop();
 
-        private bool IsObstacleChance(int percentOfObstacles)
-        {
-            return rand.Next(MAX_PERCENT_OF_OBSTACLES) < percentOfObstacles;
-        }
+        private bool IsObstacleChance(int percentOfObstacles) 
+            => rand.Next(MAX_PERCENT_OF_OBSTACLES) < percentOfObstacles;
 
         public IGraphTop[,] GetGraph()
         {

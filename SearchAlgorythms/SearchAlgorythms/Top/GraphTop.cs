@@ -4,13 +4,16 @@ using System.Windows.Forms;
 
 namespace SearchAlgorythms.Top
 {
-    public class GraphTop : Button, IGraphTop
+    public class GraphTop : Label, IGraphTop
     {      
         public GraphTop() : base()
         {
             Neighbours = new List<IGraphTop>();
             SetToDefault();
             IsObstacle = false;
+            Font = new Font("Tahoma", 8.0f);
+            TextAlign = ContentAlignment.MiddleCenter;
+            BorderStyle = BorderStyle.FixedSingle;
         }
 
         public bool IsStart { get; set; }
@@ -32,7 +35,7 @@ namespace SearchAlgorythms.Top
         public void MarkAsGraphTop()
         {
             if (!IsObstacle)
-                BackColor = Color.FromName("White");
+                BackColor = Color.FromName("Ivory");
         }
 
         public void MarkAsStart()
@@ -47,12 +50,12 @@ namespace SearchAlgorythms.Top
 
         public void MarkAsVisited()
         {
-            BackColor = Color.FromName("Yellow");
+            BackColor = Color.FromName("Magenta");
         }
 
         public void MarkAsPath()
         {
-            BackColor = Color.FromName("Cyan");
+            BackColor = Color.FromName("Yellow");
         }
 
         public IGraphTopInfo GetInfo()
@@ -67,7 +70,9 @@ namespace SearchAlgorythms.Top
             IsVisited = false;
             Value = 0;
             MarkAsGraphTop();
-            ParentTop = null;            
+            ParentTop = null;
+           
+
         }
        
     }
