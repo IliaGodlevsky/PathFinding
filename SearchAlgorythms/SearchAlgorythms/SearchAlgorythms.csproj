@@ -51,6 +51,7 @@
     <Compile Include="Algorythms\BoundSetter.cs" />
     <Compile Include="Algorythms\GraphCreateAlgorythm\RandomValuedButtonGraphCreate.cs" />
     <Compile Include="Algorythms\NeighbourSetter.cs" />
+    <Compile Include="Algorythms\SearchAlgorythm\AStartSearch.cs" />
     <Compile Include="Algorythms\SearchAlgorythm\BestFirstSearch.cs" />
     <Compile Include="Algorythms\SearchAlgorythm\DijkstraAlgorythm.cs" />
     <Compile Include="Algorythms\SearchAlgorythm\GreedySearch.cs" />

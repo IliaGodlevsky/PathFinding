@@ -13,13 +13,13 @@ namespace SearchAlgorythms.Top
             IsObstacle = false;
             Font = new Font("Tahoma", 8.0f);
             TextAlign = ContentAlignment.MiddleCenter;
-            BorderStyle = BorderStyle.FixedSingle;
+            //BorderStyle = BorderStyle.FixedSingle;
         }
 
         public bool IsStart { get; set; }
         public bool IsEnd { get; set; }
         public bool IsVisited { get; set; }
-        public int Value { get; set; }
+        public double Value { get; set; }
         public IGraphTop ParentTop { get; set; }
         public List<IGraphTop> Neighbours { get; set; }
         public bool IsSimpleTop => !IsStart && !IsEnd;
@@ -71,8 +71,6 @@ namespace SearchAlgorythms.Top
             Value = 0;
             MarkAsGraphTop();
             ParentTop = null;
-           
-
         }
        
     }

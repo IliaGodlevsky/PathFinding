@@ -28,5 +28,8 @@ namespace SearchAlgorythms.Graph
         int GetObstaclePercent();
         void Refresh();
         void Reverse(ref IGraphTop top);
+        void Rebuild(IGraphTopInfo[,] info);
+        void Rebuild(IGraph graph);
+        void Rebuild(IGraphTop[,] tops);
     }
 }

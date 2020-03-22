@@ -9,6 +9,8 @@ namespace SearchAlgorythms.Algorythms.SearchAlgorythm
     {
         private Stack<IGraphTop> stack =
             new Stack<IGraphTop>();
+        private int pathLength;
+        private int cellsVisited;
 
         private readonly IGraphTop end;
 
@@ -49,7 +51,8 @@ namespace SearchAlgorythms.Algorythms.SearchAlgorythm
                 top = top.ParentTop;
                 if (top.IsSimpleTop)
                     top.MarkAsPath();
-                Pause(250);
+                pathLength += int.Parse(top.Text);
+                //Pause(500);
             }
         }
 
@@ -58,8 +61,10 @@ namespace SearchAlgorythms.Algorythms.SearchAlgorythm
             return;
         }
 
-        public void FindDestionation(IGraphTop start)
+        public bool FindDestionation(IGraphTop start)
         {
+            if (end == null)
+                return false;
             watch.Start();
             var currentTop = start;
             IGraphTop temp = null;
@@ -75,16 +80,13 @@ namespace SearchAlgorythms.Algorythms.SearchAlgorythm
                 }
                 else
                     currentTop = stack.Pop();               
-                Pause(25);
+                Pause(10);
             }
             watch.Stop();
-            DestinationFound = end.IsVisited;
+            return end.IsVisited;
         }
 
-        public int GetTime()
-        {
-            return watch.Elapsed.Seconds + watch.Elapsed.Minutes * 60;
-        }
+        public int Time => watch.Elapsed.Seconds + watch.Elapsed.Minutes * 60;
 
         public bool IsDestination(IGraphTop top)
         {
@@ -106,11 +108,13 @@ namespace SearchAlgorythms.Algorythms.SearchAlgorythm
             stack.Push(top);
             if (top.IsSimpleTop)
                 top.MarkAsVisited();
+            cellsVisited++;
         }
 
-        public bool CanStartSearch()
+        public string GetStatistics()
         {
-            return end != null;
+            return "Path length: " + pathLength.ToString() + "\n" +
+                "Cells visited: " + cellsVisited.ToString();
         }
     }
 }

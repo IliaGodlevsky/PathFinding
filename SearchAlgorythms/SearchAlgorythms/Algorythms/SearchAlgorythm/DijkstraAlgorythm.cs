@@ -7,10 +7,12 @@ namespace SearchAlgorythms.Algorythms.SearchAlgorythm
 {
     public class DijkstraAlgorythm : ISearchAlgorythm
     {
-        private readonly IGraphTop end;
-        private List<IGraphTop> tops 
+        protected readonly IGraphTop end;
+        protected List<IGraphTop> tops 
             = new List<IGraphTop>();
-        private Stopwatch watch = new Stopwatch();
+        protected Stopwatch watch = new Stopwatch();
+        private int visitedCells;
+        private int pathLength;
 
         public DijkstraAlgorythm(IGraphTop end, IGraph graph)
         {
@@ -26,6 +28,8 @@ namespace SearchAlgorythms.Algorythms.SearchAlgorythm
                 }
             }
             this.end = end;
+            visitedCells = 0;
+            pathLength = 0;
         }
 
         public bool DestinationFound { get; set; }
@@ -39,13 +43,14 @@ namespace SearchAlgorythms.Algorythms.SearchAlgorythm
                 top = top.ParentTop;
                 if (top.IsSimpleTop)
                     top.MarkAsPath();
-                Pause(250);
+                pathLength += int.Parse(top.Text);
+                //Pause(250);
             }
         }
 
-        private int GetChippestValue()
+        public double GetChippestValue()
         {
-            int min = 0;
+            double min = 0;
             foreach (var top in tops)
             {
                 if (!top.IsVisited)
@@ -57,29 +62,38 @@ namespace SearchAlgorythms.Algorythms.SearchAlgorythm
             return min;
         }
 
-        private IGraphTop GetChippestUnvisitedTop()
+        public IGraphTop GetChippestUnvisitedTop()
         {
             return tops.Find(t => GetChippestValue() == t.Value
                     && !t.IsVisited);
         }
 
+        public virtual double GetPathValue(IGraphTop neighbour, IGraphTop top)
+        {
+            return int.Parse(neighbour.Text) + top.Value;
+        }
+
         public void ExtractNeighbours(IGraphTop button)
         {
+            if (button is null)
+                return;
             var neighbours = button.Neighbours;
             foreach(var neighbour in neighbours)
             {
-                if (neighbour.Value > int.Parse(neighbour.Text) + button.Value) 
+                if (neighbour.Value > GetPathValue(neighbour, button))
                 {                  
-                    neighbour.Value = int.Parse(neighbour.Text) + button.Value;
+                    neighbour.Value = GetPathValue(neighbour, button);
                     neighbour.ParentTop = button;
                 }
             }
         }
 
-        private bool IsNoTopToMark() => GetChippestValue() == int.MaxValue;
+        protected bool IsNoTopToMark() => GetChippestValue() == int.MaxValue;
 
-        public void FindDestionation(IGraphTop start)
+        public bool FindDestionation(IGraphTop start)
         {
+            if (end == null)
+                return false;
             watch.Start();
             var currentTop = start;
             start.IsVisited = true;
@@ -92,17 +106,13 @@ namespace SearchAlgorythms.Algorythms.SearchAlgorythm
                     break;
                 if (IsRightCellToVisit(currentTop))
                     Visit(currentTop);
-                Pause(25);
+                Pause(10);
             } while (!IsDestination(currentTop));
             watch.Stop();
-            DestinationFound = end.IsVisited 
-                && !IsNoTopToMark();
+            return end.IsVisited;
         }
 
-        public int GetTime()
-        {
-            return watch.Elapsed.Seconds + watch.Elapsed.Minutes * 60;
-        }
+        public int Time => watch.Elapsed.Seconds + watch.Elapsed.Minutes * 60;
 
         public bool IsDestination(IGraphTop button)
         {
@@ -115,6 +125,8 @@ namespace SearchAlgorythms.Algorythms.SearchAlgorythm
 
         public bool IsRightCellToVisit(IGraphTop button)
         {
+            if (button is null)
+                return false;
             if (button.IsObstacle)
                 return false;
             else
@@ -125,12 +137,16 @@ namespace SearchAlgorythms.Algorythms.SearchAlgorythm
         {
             button.IsVisited = true;
             if (!button.IsEnd)
+            {
                 button.MarkAsVisited();
+                visitedCells++;
+            }
         }
 
-        public bool CanStartSearch()
+        public string GetStatistics()
         {
-            return end != null;
+            return "Path length: " + pathLength.ToString() + "\n" +
+                "Cells visited: " + visitedCells.ToString();
         }
     }
 }

@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Drawing;
 
 namespace SearchAlgorythms.Top
 {
@@ -12,7 +13,8 @@ namespace SearchAlgorythms.Top
         string Text { get; set; }
         List<IGraphTop> Neighbours { get; set; }
         IGraphTop ParentTop { get; set; }
-        int Value { get; set; }
+        double Value { get; set; }
+        Point Location { get; set; }
 
         IGraphTopInfo GetInfo();
         void MarkAsEnd();

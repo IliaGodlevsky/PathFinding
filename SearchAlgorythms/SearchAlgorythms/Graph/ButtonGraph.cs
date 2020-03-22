@@ -182,5 +182,20 @@ namespace SearchAlgorythms.Graph
         {
             return buttons.GetEnumerator();
         }
+
+        public void Rebuild(IGraphTopInfo[,] info)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void Rebuild(IGraph graph)
+        {
+               
+        }
+
+        public void Rebuild(IGraphTop[,] tops)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

@@ -37,6 +37,7 @@
             this.wideSearchToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.bestfirstWideSearchToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.dijkstraAlgorythmToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.aSearchToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.greedySearchToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.percent = new System.Windows.Forms.TrackBar();
             this.widthNumber = new System.Windows.Forms.TextBox();
@@ -51,10 +52,13 @@
             this.percentOfObstacles = new System.Windows.Forms.Label();
             this.timeOfSearch = new System.Windows.Forms.GroupBox();
             this.time = new System.Windows.Forms.Label();
+            this.statistics = new System.Windows.Forms.GroupBox();
+            this.stat = new System.Windows.Forms.Label();
             this.menuStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.percent)).BeginInit();
             this.FieldParams.SuspendLayout();
             this.timeOfSearch.SuspendLayout();
+            this.statistics.SuspendLayout();
             this.SuspendLayout();
             // 
             // menuStrip1
@@ -105,9 +109,10 @@
             this.wideSearchToolStripMenuItem,
             this.bestfirstWideSearchToolStripMenuItem,
             this.dijkstraAlgorythmToolStripMenuItem,
+            this.aSearchToolStripMenuItem,
             this.greedySearchToolStripMenuItem});
             this.findPathToolStripMenuItem.Name = "findPathToolStripMenuItem";
-            this.findPathToolStripMenuItem.Size = new System.Drawing.Size(124, 22);
+            this.findPathToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.findPathToolStripMenuItem.Text = "Find path";
             // 
             // wideSearchToolStripMenuItem
@@ -130,6 +135,13 @@
             this.dijkstraAlgorythmToolStripMenuItem.Size = new System.Drawing.Size(186, 22);
             this.dijkstraAlgorythmToolStripMenuItem.Text = "Dijkstra algorythm";
             this.dijkstraAlgorythmToolStripMenuItem.Click += new System.EventHandler(this.DijkstraAlgorythmToolStripMenuItem);
+            // 
+            // aSearchToolStripMenuItem
+            // 
+            this.aSearchToolStripMenuItem.Name = "aSearchToolStripMenuItem";
+            this.aSearchToolStripMenuItem.Size = new System.Drawing.Size(186, 22);
+            this.aSearchToolStripMenuItem.Text = "A* search";
+            this.aSearchToolStripMenuItem.Click += new System.EventHandler(this.ASearchToolStripMenuItem_Click);
             // 
             // greedySearchToolStripMenuItem
             // 
@@ -265,11 +277,30 @@
             this.time.TabIndex = 0;
             this.time.Text = "label1";
             // 
+            // statistics
+            // 
+            this.statistics.Controls.Add(this.stat);
+            this.statistics.Location = new System.Drawing.Point(18, 330);
+            this.statistics.Name = "statistics";
+            this.statistics.Size = new System.Drawing.Size(153, 51);
+            this.statistics.TabIndex = 12;
+            this.statistics.TabStop = false;
+            this.statistics.Text = "Statistics";
+            // 
+            // stat
+            // 
+            this.stat.AutoSize = true;
+            this.stat.Location = new System.Drawing.Point(41, 20);
+            this.stat.Name = "stat";
+            this.stat.Size = new System.Drawing.Size(0, 13);
+            this.stat.TabIndex = 0;
+            // 
             // MainWindow
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 490);
+            this.Controls.Add(this.statistics);
             this.Controls.Add(this.timeOfSearch);
             this.Controls.Add(this.FieldParams);
             this.Controls.Add(this.menuStrip1);
@@ -284,6 +315,8 @@
             this.FieldParams.PerformLayout();
             this.timeOfSearch.ResumeLayout(false);
             this.timeOfSearch.PerformLayout();
+            this.statistics.ResumeLayout(false);
+            this.statistics.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -314,6 +347,9 @@
         private System.Windows.Forms.Label time;
         private System.Windows.Forms.ToolStripMenuItem dijkstraAlgorythmToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem greedySearchToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem aSearchToolStripMenuItem;
+        private System.Windows.Forms.GroupBox statistics;
+        private System.Windows.Forms.Label stat;
     }
 }
 

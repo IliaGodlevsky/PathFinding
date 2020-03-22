@@ -1,5 +1,7 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using SearchAlgorythms.Extensions;
+using SearchAlgorythms.Graph;
 using SearchAlgorythms.Top;
 
 namespace SearchAlgorythms.Algorythms.SearchAlgorythm
@@ -67,10 +69,10 @@ namespace SearchAlgorythms.Algorythms.SearchAlgorythm
                 queue.Enqueue(neigbour);
         }
 
-        public override void FindDestionation(IGraphTop start)
+        public override bool FindDestionation(IGraphTop start)
         {
             MakeWavesFromEnd(end);
-            base.FindDestionation(start);
+            return base.FindDestionation(start);
         }
     }
 }

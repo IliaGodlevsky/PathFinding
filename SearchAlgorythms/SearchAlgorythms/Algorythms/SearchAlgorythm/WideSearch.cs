@@ -13,26 +13,23 @@ namespace SearchAlgorythms.Algorythms.SearchAlgorythm
             = new Queue<IGraphTop>();
         private Stopwatch watch = new Stopwatch();
         private readonly IGraphTop end;
+        private int cellsVisited;
+        private int steps;
 
         public WideSearch(IGraphTop end)
         {
             this.end = end;
-        }
-
-        private bool IsRigthCellToColor(IGraphTop top)
-        {
-            return !top.IsStart && !top.IsEnd;
+            cellsVisited = 0;
+            steps = 0;
         }
 
         public IGraphTop GoChippestNeighbour(IGraphTop top)
         {
             var chippest = top;
             var neighbours = top.Neighbours;
-            int min = neighbours.Min(t => t.Value);
+            double min = neighbours.Min(t => t.Value);
             chippest = neighbours.Find(t => min == t.Value
                     && t.IsVisited && IsRightNeighbour(t));       
-            if (IsRigthCellToColor(chippest))
-                chippest.MarkAsPath();
             return chippest;
         }
 
@@ -67,8 +64,10 @@ namespace SearchAlgorythms.Algorythms.SearchAlgorythm
             }            
         }
 
-        public virtual void FindDestionation(IGraphTop start)
-        {         
+        public virtual bool FindDestionation(IGraphTop start)
+        {
+            if (end == null)
+                return false;
             watch.Start();
             var currentTop = start;
             Visit(currentTop);
@@ -77,14 +76,13 @@ namespace SearchAlgorythms.Algorythms.SearchAlgorythm
                 currentTop = queue.Dequeue();
                 if (IsRightCellToVisit(currentTop))
                 {
-                    currentTop.Neighbours.Shuffle();
+                    //currentTop.Neighbours.Shuffle();
                     Visit(currentTop);                    
                 }
-                Pause(25);              
+                Pause(10);              
             }
             watch.Stop();
-            DestinationFound = queue.IsEmpty()
-                && !currentTop.IsEnd ? false : true;            
+            return end.IsVisited;          
         }
 
         public void DrawPath(IGraphTop end)
@@ -93,7 +91,10 @@ namespace SearchAlgorythms.Algorythms.SearchAlgorythm
             while (IsRightPath(top))
             {
                 top = GoChippestNeighbour(top);
-                Pause(250);
+                if (top.IsSimpleTop)
+                    top.MarkAsPath();
+                steps++;
+                //Pause(250);
             }
         }
 
@@ -109,19 +110,18 @@ namespace SearchAlgorythms.Algorythms.SearchAlgorythm
             if (top.IsObstacle)
                 return;
             top.IsVisited = true;
-            if (IsRigthCellToColor(top))
+            if (top.IsSimpleTop)
                 top.MarkAsVisited();
+            cellsVisited++;
             ExtractNeighbours(top);
         }
 
-        public int GetTime()
+        public string GetStatistics()
         {
-            return watch.Elapsed.Seconds + watch.Elapsed.Minutes * 60;
+            return "Steps: " + steps.ToString() + "\n" +
+                "Cells visited: " + cellsVisited.ToString();
         }
 
-        public bool CanStartSearch()
-        {
-            return end != null;
-        }
+        public int Time => watch.Elapsed.Seconds + watch.Elapsed.Minutes * 60;
     }
 }

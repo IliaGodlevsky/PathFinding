@@ -1,5 +1,6 @@
 ﻿using SearchAlgorythms.Algorythms.GraphCreateAlgorythm;
 using SearchAlgorythms.Algorythms.SearchAlgorythm;
+using SearchAlgorythms.Extensions;
 using SearchAlgorythms.Graph;
 using SearchAlgorythms.GraphLoader;
 using SearchAlgorythms.GraphSaver;
@@ -19,11 +20,11 @@ namespace SearchAlgorythms
         private const int BUTTON_SIZE = 30;
         private const int BUTTON_POSITION = 32;
 
-        private void Pause(int value)
+        private void Pause(int milliseconds)
         {
             var sw = new Stopwatch();
             sw.Start();
-            while (sw.ElapsedMilliseconds < value)
+            while (sw.ElapsedMilliseconds < milliseconds)
                 Application.DoEvents();
         }
 
@@ -53,8 +54,7 @@ namespace SearchAlgorythms
 
         private bool IsRightDestination(GraphTop top)
         {
-            return top != null && top.Neighbours.Count > 0 
-                && !top.IsStart && !top.IsEnd;
+            return !top.Neighbours.IsEmpty() && top.IsSimpleTop;
         }
 
         private void AddGraphToControls()
@@ -62,8 +62,8 @@ namespace SearchAlgorythms
             foreach (var top in graph)
             {
                 if (!(top as GraphTop).IsObstacle)
-                    (top as GraphTop).Click += ChooseStart;
-                (top as GraphTop).MouseDown += ChangeColor;
+                    (top as GraphTop).Click += SetStartPoint;
+                (top as GraphTop).MouseDown += ReversePolarity;
                 Controls.Add(top as GraphTop);
             }
             Size = new Size(new Point((graph.GetWidth() + 2) *
@@ -71,7 +71,7 @@ namespace SearchAlgorythms
             DesktopLocation = new Point();
         }
 
-        private void ChangeColor(object sender, EventArgs e)
+        private void ReversePolarity(object sender, EventArgs e)
         {
             if ((e as MouseEventArgs).Button == MouseButtons.Right)
             {
@@ -85,7 +85,7 @@ namespace SearchAlgorythms
             }
         }
 
-        private void ChooseStart(object sender, EventArgs e)
+        private void SetStartPoint(object sender, EventArgs e)
         {
             GraphTop top = sender as GraphTop;
             if (!IsRightDestination(top)) 
@@ -93,14 +93,14 @@ namespace SearchAlgorythms
             top.IsStart = true;
             foreach (var butt in graph)
             {
-                (butt as GraphTop).Click -= ChooseStart;
-                (butt as GraphTop).Click += ChooseEnd;
+                (butt as GraphTop).Click -= SetStartPoint;
+                (butt as GraphTop).Click += SetDestinationPoint;
             }
             top.MarkAsStart();
             graph.Start = top;
         }
 
-        private void ChooseEnd(object sender, EventArgs e)
+        private void SetDestinationPoint(object sender, EventArgs e)
         {
             GraphTop top = sender as GraphTop;
             if (!IsRightDestination(top))
@@ -108,7 +108,7 @@ namespace SearchAlgorythms
             top.IsEnd = true;
             top.MarkAsEnd();
             foreach(var butt in graph)
-                (butt as GraphTop).Click -= ChooseEnd;
+                (butt as GraphTop).Click -= SetDestinationPoint;
             graph.End = top;
         }
 
@@ -123,41 +123,37 @@ namespace SearchAlgorythms
         private void WideSearchToolStripMenuItem(object sender, EventArgs e)
         {
             searchAlgorythm = new WideSearch(graph.End);
-            if (searchAlgorythm.CanStartSearch())
-                SearchPath(graph.End);
+            SearchPath(graph.End);
         }
 
         private void DijkstraAlgorythmToolStripMenuItem(object sender, EventArgs e)
         {
             searchAlgorythm = new DijkstraAlgorythm(graph.End, graph);
-            if (searchAlgorythm.CanStartSearch())
-                SearchPath(graph.End);
+            SearchPath(graph.End);
         }
 
         private void GreedySearchToolStripMenuItem(object sender, EventArgs e)
         {
             searchAlgorythm = new GreedySearch(graph.End);
-            if (searchAlgorythm.CanStartSearch())
-                SearchPath(graph.End);
+            SearchPath(graph.End);
         }
 
         private void BestfirstWideSearchToolStripMenuItem(object sender, EventArgs e)
         {
             searchAlgorythm = new BestFirstSearch(graph.End);
-            if (searchAlgorythm.CanStartSearch())
-                SearchPath(graph.Start);
+            SearchPath(graph.Start);
         }
 
         private void SearchPath(IGraphTop startTopOfDrawingPath)
         {
             searchAlgorythm.Pause = Pause;
-            searchAlgorythm.FindDestionation(graph.Start);
-            time.Text = searchAlgorythm.GetTime().ToString() + " seconds";
-            time.Update();
-            if (searchAlgorythm.DestinationFound)
+            if (searchAlgorythm.FindDestionation(graph.Start))
             {
+                time.Text = searchAlgorythm.Time.ToString() + " seconds";
+                time.Update();
                 searchAlgorythm.DrawPath(startTopOfDrawingPath);
-                MessageBox.Show("Destination is found");
+                stat.Text = searchAlgorythm.GetStatistics();
+                stat.Update();
             }
             else
                 MessageBox.Show("Couldn't find path");
@@ -192,16 +188,17 @@ namespace SearchAlgorythms
 
         private void Create(object sender, EventArgs e)
         {
-            if (!SizeTextBoxTextChanged(widthNumber) || !SizeTextBoxTextChanged(heightNumber))
+            if (!SizeTextBoxTextChanged(widthNumber) 
+                || !SizeTextBoxTextChanged(heightNumber))
                 return;
             RemoveGraphFromControl();
-            createAlgorythm = new RandomValuedButtonGraphCreate(percent.Value, 
-                int.Parse(widthNumber.Text),
-                int.Parse(heightNumber.Text), BUTTON_SIZE, BUTTON_SIZE, BUTTON_POSITION);
+            createAlgorythm = new RandomValuedButtonGraphCreate(percent.Value,
+                int.Parse(widthNumber.Text), int.Parse(heightNumber.Text),
+                BUTTON_SIZE, BUTTON_SIZE, BUTTON_POSITION);
             graph = new ButtonGraph(createAlgorythm.GetGraph());
-            graph.SetStart += ChooseStart;
-            graph.SetEnd += ChooseEnd;
-            graph.SwitchRole += ChangeColor;
+            graph.SetStart += SetStartPoint;
+            graph.SetEnd += SetDestinationPoint;
+            graph.SwitchRole += ReversePolarity;
             AddGraphToControls();
             createAlgorythm = null;
         }
@@ -221,9 +218,9 @@ namespace SearchAlgorythms
             {
                 RemoveGraphFromControl();
                 graph = temp;
-                graph.SetStart += ChooseStart;
-                graph.SetEnd += ChooseEnd;
-                graph.SwitchRole += ChangeColor;
+                graph.SetStart += SetStartPoint;
+                graph.SetEnd += SetDestinationPoint;
+                graph.SwitchRole += ReversePolarity;
                 AddGraphToControls();
                 PrepareWindow(graph.GetObstaclePercent(), 
                     graph.GetWidth(), graph.GetHeight());
@@ -248,6 +245,30 @@ namespace SearchAlgorythms
             graph?.Refresh();
             time.Text = 0.ToString() + " seconds";
             time.Update();
+            stat.Text = "";
+            stat.Update();
+        }
+
+        private void ASearchToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            searchAlgorythm = new AStarSearch(graph.End, graph);
+            var algo = (searchAlgorythm as AStarSearch);
+            algo.Heuristic = GetChebyshevDistance;
+            SearchPath(graph.End);
+        }
+
+        private double GetEuclideanDistance(IGraphTop top1, IGraphTop top2)
+        {
+            double a = Math.Pow(top1.Location.X - top2.Location.X, 2);
+            double b = Math.Pow(top1.Location.Y - top2.Location.Y, 2);
+            return Math.Sqrt(a + b);
+        }
+
+        private double GetChebyshevDistance(IGraphTop top1, IGraphTop top2)
+        {
+            int a = Math.Abs(top1.Location.X - top2.Location.X);
+            int b = Math.Abs(top1.Location.Y - top2.Location.Y);
+            return Math.Max(a, b);
         }
     }
 }
