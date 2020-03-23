@@ -11,8 +11,7 @@ namespace SearchAlgorythms.Algorythms.GraphCreateAlgorythm
         private readonly IGraphTop[,] graph;
         private const int MAX_PERCENT_OF_OBSTACLES = 100;
 
-        public RandomButtonGraphCreate(int percentOfObstacles, int width, int height, int buttonWidth, 
-            int buttonHeight, int placeBetweenButtons)
+        public RandomButtonGraphCreate(int percentOfObstacles, int width, int height, int placeBetweenButtons)
         {
             graph = new IGraphTop[width, height];
             for (int x = 0; x < width; x++)
@@ -26,9 +25,7 @@ namespace SearchAlgorythms.Algorythms.GraphCreateAlgorythm
                         graph[x, y].MarkAsObstacle();
                     }
                     GraphTop button = graph[x, y] as GraphTop;
-                    button.Size = new Size(buttonWidth, buttonHeight);
-                    button.Location = new Point((x + 1) *
-                        placeBetweenButtons + 150, (y + 1) * placeBetweenButtons);
+                    button.Location = new Point(x * placeBetweenButtons, y * placeBetweenButtons);
                 }
             }
             NeigbourSetter setter = new NeigbourSetter(graph);

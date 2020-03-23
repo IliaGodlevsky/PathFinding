@@ -10,16 +10,11 @@ namespace SearchAlgorythms.GraphLoader
 {
     public class ButtonGraphLoader : IGraphLoader
     {
-        private readonly int buttonWidth;
-        private readonly int buttonHeight;
         private readonly int placeBetweenButtons;
         private IGraph graph;
 
-        public ButtonGraphLoader(int buttonWidth,
-            int buttonHeight, int placeBetweenButtons)
+        public ButtonGraphLoader(int placeBetweenButtons)
         {
-            this.buttonWidth = buttonWidth;
-            this.buttonHeight = buttonHeight;
             this.placeBetweenButtons = placeBetweenButtons;
         }
 
@@ -49,7 +44,7 @@ namespace SearchAlgorythms.GraphLoader
         private void Initialise(IGraphTopInfo[,] info)
         {
             OnInfoButtonGraphCreater creator =
-                new OnInfoButtonGraphCreater(info, buttonWidth, buttonHeight, placeBetweenButtons);
+                new OnInfoButtonGraphCreater(info, placeBetweenButtons);
             if (info == null)
                 return;
             graph = new ButtonGraph(creator.GetGraph());

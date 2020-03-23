@@ -9,14 +9,10 @@ namespace SearchAlgorythms
     {
         public GraphTopInfo(IGraphTop graphTop)
         {
-            GraphTop button = graphTop as GraphTop;
             IsObstacle = graphTop.IsObstacle;
-            if (IsObstacle)
-                Colour = button.BackColor.Name;
-            else
-                Colour = "White";
-            Location = button.Location;
-            Text = button.Text;
+            Colour = (graphTop as GraphTop).BackColor.Name;
+            Location = graphTop.Location;
+            Text = graphTop.Text;
         }
 
         public Point Location { get; set; }

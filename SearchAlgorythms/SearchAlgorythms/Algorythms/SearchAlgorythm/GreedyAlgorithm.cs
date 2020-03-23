@@ -1,23 +1,22 @@
 ﻿using System.Collections.Generic;
 using System.Diagnostics;
+using SearchAlgorythms.Algorythms.Statistics;
 using SearchAlgorythms.Extensions;
 using SearchAlgorythms.Top;
 
 namespace SearchAlgorythms.Algorythms.SearchAlgorythm
 {
-    public class GreedySearch : ISearchAlgorythm
+    public class GreedyAlgorithm : ISearchAlgorythm
     {
         private Stack<IGraphTop> stack =
             new Stack<IGraphTop>();
-        private int pathLength;
-        private int cellsVisited;
 
+        WeightedGraphSearchAlgoStatistics statCollector;
         private readonly IGraphTop end;
 
-        private Stopwatch watch = new Stopwatch();
-
-        public GreedySearch(IGraphTop end)
+        public GreedyAlgorithm(IGraphTop end)
         {
+            statCollector = new WeightedGraphSearchAlgoStatistics();
             this.end = end;
         }
 
@@ -51,7 +50,7 @@ namespace SearchAlgorythms.Algorythms.SearchAlgorythm
                 top = top.ParentTop;
                 if (top.IsSimpleTop)
                     top.MarkAsPath();
-                pathLength += int.Parse(top.Text);
+                statCollector.AddLength(int.Parse(top.Text));
                 //Pause(500);
             }
         }
@@ -65,7 +64,7 @@ namespace SearchAlgorythms.Algorythms.SearchAlgorythm
         {
             if (end == null)
                 return false;
-            watch.Start();
+            statCollector.BeginCollectStatistic();
             var currentTop = start;
             IGraphTop temp = null;
             Visit(currentTop);
@@ -82,11 +81,9 @@ namespace SearchAlgorythms.Algorythms.SearchAlgorythm
                     currentTop = stack.Pop();               
                 Pause(10);
             }
-            watch.Stop();
+            statCollector.StopCollectStatistics();
             return end.IsVisited;
         }
-
-        public int Time => watch.Elapsed.Seconds + watch.Elapsed.Minutes * 60;
 
         public bool IsDestination(IGraphTop top)
         {
@@ -108,13 +105,12 @@ namespace SearchAlgorythms.Algorythms.SearchAlgorythm
             stack.Push(top);
             if (top.IsSimpleTop)
                 top.MarkAsVisited();
-            cellsVisited++;
+            statCollector.CellVisited();
         }
 
         public string GetStatistics()
         {
-            return "Path length: " + pathLength.ToString() + "\n" +
-                "Cells visited: " + cellsVisited.ToString();
+            return statCollector.Statistics;
         }
     }
 }

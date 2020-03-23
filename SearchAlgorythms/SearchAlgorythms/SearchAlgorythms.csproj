@@ -51,12 +51,16 @@
     <Compile Include="Algorythms\BoundSetter.cs" />
     <Compile Include="Algorythms\GraphCreateAlgorythm\RandomValuedButtonGraphCreate.cs" />
     <Compile Include="Algorythms\NeighbourSetter.cs" />
-    <Compile Include="Algorythms\SearchAlgorythm\AStartSearch.cs" />
+    <Compile Include="Algorythms\SearchAlgorythm\AStartAlgorithm.cs" />
     <Compile Include="Algorythms\SearchAlgorythm\BestFirstSearch.cs" />
     <Compile Include="Algorythms\SearchAlgorythm\DijkstraAlgorythm.cs" />
-    <Compile Include="Algorythms\SearchAlgorythm\GreedySearch.cs" />
+    <Compile Include="Algorythms\SearchAlgorythm\GreedyAlgorithm.cs" />
     <Compile Include="Algorythms\SearchAlgorythm\ISearchAlgorythm.cs" />
     <Compile Include="Algorythms\SearchAlgorythm\WideSearch.cs" />
+    <Compile Include="Algorythms\Statistics\AbstractStatistics.cs" />
+    <Compile Include="Algorythms\Statistics\UnweightedGraphSearchAlgoStatistics.cs" />
+    <Compile Include="Algorythms\Statistics\WeightedGraphSearchAlgoStatistics.cs" />
+    <Compile Include="DelegatedMethods\DelegatedMethods.cs" />
     <Compile Include="Extensions\IEnumerableExtension.cs" />
     <Compile Include="Extensions\ListExtension\ListExtensions.cs" />
     <Compile Include="Forms\MainWindow.cs">
@@ -64,6 +68,12 @@
     </Compile>
     <Compile Include="Forms\MainWindow.Designer.cs">
       <DependentUpon>MainWindow.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\FieldControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Forms\FieldControl.Designer.cs">
+      <DependentUpon>FieldControl.cs</DependentUpon>
     </Compile>
     <Compile Include="GraphLoader\ButtonGraphLoader.cs" />
     <Compile Include="GraphLoader\IGraphLoader.cs" />
@@ -73,6 +83,8 @@
     <Compile Include="Graph\IGraph.cs" />
     <Compile Include="Graph\ButtonGraph.cs" />
     <Compile Include="GraphTopInfo\GraphTopInfo.cs" />
+    <Compile Include="RoleChanger\ButtonGraphTopRoleChanger.cs" />
+    <Compile Include="RoleChanger\IGraphTopRoleChanger.cs" />
     <Compile Include="Top\GraphTop.cs">
       <SubType>Component</SubType>
     </Compile>
@@ -81,6 +93,9 @@
     <Compile Include="Top\IGraphTop.cs" />
     <EmbeddedResource Include="Forms\MainWindow.resx">
       <DependentUpon>MainWindow.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\FieldControl.resx">
+      <DependentUpon>FieldControl.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>

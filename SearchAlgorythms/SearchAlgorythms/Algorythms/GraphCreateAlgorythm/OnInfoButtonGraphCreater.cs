@@ -7,8 +7,7 @@ namespace SearchAlgorythms.Algorythms.GraphCreateAlgorythm
     {
         private readonly IGraphTop[,] buttons = null;
 
-        public OnInfoButtonGraphCreater(IGraphTopInfo[,] info,int buttonWidth,
-            int buttonHeight, int placeBetweenButtons)
+        public OnInfoButtonGraphCreater(IGraphTopInfo[,] info, int placeBetweenButtons)
         {
             if (info == null)
                 return;
@@ -16,25 +15,8 @@ namespace SearchAlgorythms.Algorythms.GraphCreateAlgorythm
             int graphHeight = info.Length / info.GetLength(0);
             buttons = new IGraphTop[graphWidth, graphHeight];
             for (int i = 0; i < graphWidth; i++)
-            {
                 for (int j = 0; j < graphHeight; j++)
-                {
-                    buttons[i, j] = new GraphTop();
-                    if (info[i, j].IsObstacle)
-                    {
-                        buttons[i, j].IsObstacle = true;
-                        buttons[i, j].MarkAsObstacle();
-                    }
-                    GraphTopInfo graphInfo = info[i, j] as GraphTopInfo;
-                    GraphTop top = buttons[i, j] as GraphTop;
-                    top.Location = graphInfo.Location;
-                    top.BackColor = Color.FromName(graphInfo.Colour);
-                    top.Size = new Size(buttonWidth, buttonHeight);
-                    top.Location = new Point((i + 1) *
-                        placeBetweenButtons + 150, (j + 1) * placeBetweenButtons);
-                    top.Text = graphInfo.Text;
-                }
-            }
+                    buttons[i, j] = new GraphTop(info[i, j]);           
         }
 
         public IGraphTop[,] GetGraph()

@@ -11,9 +11,15 @@ namespace SearchAlgorythms.Top
             Neighbours = new List<IGraphTop>();
             SetToDefault();
             IsObstacle = false;
-            Font = new Font("Tahoma", 8.0f);
-            TextAlign = ContentAlignment.MiddleCenter;
-            //BorderStyle = BorderStyle.FixedSingle;
+        }
+
+        public GraphTop(IGraphTopInfo info) : this()
+        {
+            IsObstacle = info.IsObstacle;
+            Location = info.Location;
+            Text = info.Text;
+            BackColor = Color.FromName(info.Colour);
+            SetToDefault();
         }
 
         public bool IsStart { get; set; }
@@ -27,7 +33,7 @@ namespace SearchAlgorythms.Top
 
         public void MarkAsObstacle()
         {
-            BackColor = Color.FromName("Black");
+            BackColor = Color.FromKnownColor(KnownColor.Black);
             Text = "";
             IsObstacle = true;
         }
@@ -35,27 +41,27 @@ namespace SearchAlgorythms.Top
         public void MarkAsGraphTop()
         {
             if (!IsObstacle)
-                BackColor = Color.FromName("Ivory");
+                BackColor = Color.FromKnownColor(KnownColor.Ivory);
         }
 
         public void MarkAsStart()
         {
-            BackColor = Color.FromName("Green");
+            BackColor = Color.FromKnownColor(KnownColor.Green);
         }
 
         public void MarkAsEnd()
         {
-            BackColor = Color.FromName("Red");
+            BackColor = Color.FromKnownColor(KnownColor.Red);
         }
 
         public void MarkAsVisited()
         {
-            BackColor = Color.FromName("Magenta");
+            BackColor = Color.FromKnownColor(KnownColor.Magenta);
         }
 
         public void MarkAsPath()
         {
-            BackColor = Color.FromName("Yellow");
+            BackColor = Color.FromKnownColor(KnownColor.Yellow);
         }
 
         public IGraphTopInfo GetInfo()
@@ -71,7 +77,11 @@ namespace SearchAlgorythms.Top
             Value = 0;
             MarkAsGraphTop();
             ParentTop = null;
+            Font = new Font("Tahoma", 8.0f);
+            TextAlign = ContentAlignment.MiddleCenter;
+            Size = new Size(27, 27);
+            BorderStyle = BorderStyle.Fixed3D;
         }
-       
+
     }
 }

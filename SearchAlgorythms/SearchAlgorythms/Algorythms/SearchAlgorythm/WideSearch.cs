@@ -2,8 +2,10 @@
 using System.Diagnostics;
 using System.Linq;
 using SearchAlgorythms.Top;
-using SearchAlgorythms.Extensions.ListExtensions;
 using SearchAlgorythms.Extensions;
+using System;
+using System.Windows.Forms;
+using SearchAlgorythms.Algorythms.Statistics;
 
 namespace SearchAlgorythms.Algorythms.SearchAlgorythm
 {
@@ -11,26 +13,22 @@ namespace SearchAlgorythms.Algorythms.SearchAlgorythm
     {
         protected Queue<IGraphTop> queue 
             = new Queue<IGraphTop>();
-        private Stopwatch watch = new Stopwatch();
-        private readonly IGraphTop end;
-        private int cellsVisited;
-        private int steps;
+        UnweightedGraphSearchAlgoStatistics statCollector;
+        protected readonly IGraphTop end;
+
 
         public WideSearch(IGraphTop end)
         {
             this.end = end;
-            cellsVisited = 0;
-            steps = 0;
+            statCollector = new UnweightedGraphSearchAlgoStatistics();
         }
 
         public IGraphTop GoChippestNeighbour(IGraphTop top)
         {
-            var chippest = top;
             var neighbours = top.Neighbours;
             double min = neighbours.Min(t => t.Value);
-            chippest = neighbours.Find(t => min == t.Value
-                    && t.IsVisited && IsRightNeighbour(t));       
-            return chippest;
+            return neighbours.Find(t => min == t.Value
+                    && t.IsVisited && IsRightNeighbour(t));
         }
 
         public virtual bool IsRightNeighbour(IGraphTop top)
@@ -60,7 +58,8 @@ namespace SearchAlgorythms.Algorythms.SearchAlgorythm
             {
                 if (neigbour.Value == 0 && !neigbour.IsStart)
                     neigbour.Value = button.Value + 1;
-                queue.Enqueue(neigbour);
+                if (!neigbour.IsVisited)
+                    queue.Enqueue(neigbour);
             }            
         }
 
@@ -68,20 +67,17 @@ namespace SearchAlgorythms.Algorythms.SearchAlgorythm
         {
             if (end == null)
                 return false;
-            watch.Start();
+            statCollector.BeginCollectStatistic();
             var currentTop = start;
             Visit(currentTop);
             while (!IsDestination(currentTop))
             {
                 currentTop = queue.Dequeue();
                 if (IsRightCellToVisit(currentTop))
-                {
-                    //currentTop.Neighbours.Shuffle();
-                    Visit(currentTop);                    
-                }
+                    Visit(currentTop);
                 Pause(10);              
             }
-            watch.Stop();
+            statCollector.StopCollectStatistics();
             return end.IsVisited;          
         }
 
@@ -93,7 +89,7 @@ namespace SearchAlgorythms.Algorythms.SearchAlgorythm
                 top = GoChippestNeighbour(top);
                 if (top.IsSimpleTop)
                     top.MarkAsPath();
-                steps++;
+                statCollector.AddStep();
                 //Pause(250);
             }
         }
@@ -112,16 +108,13 @@ namespace SearchAlgorythms.Algorythms.SearchAlgorythm
             top.IsVisited = true;
             if (top.IsSimpleTop)
                 top.MarkAsVisited();
-            cellsVisited++;
+            statCollector.CellVisited();
             ExtractNeighbours(top);
         }
 
         public string GetStatistics()
         {
-            return "Steps: " + steps.ToString() + "\n" +
-                "Cells visited: " + cellsVisited.ToString();
+            return statCollector.Statistics;
         }
-
-        public int Time => watch.Elapsed.Seconds + watch.Elapsed.Minutes * 60;
     }
 }

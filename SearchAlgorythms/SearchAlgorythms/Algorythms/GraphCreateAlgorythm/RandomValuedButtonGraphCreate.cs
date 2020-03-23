@@ -5,10 +5,8 @@ namespace SearchAlgorythms.Algorythms.GraphCreateAlgorythm
     public class RandomValuedButtonGraphCreate : RandomButtonGraphCreate
     {
         public RandomValuedButtonGraphCreate(int percentOfObstacles, 
-            int width, int height, int buttonWidth,
-            int buttonHeight, int placeBetweenButtons) : base(percentOfObstacles,
-                width, height, buttonWidth,
-            buttonHeight, placeBetweenButtons)
+            int width, int height, int placeBetweenButtons) : base(percentOfObstacles,
+                width, height, placeBetweenButtons)
         {
 
         }

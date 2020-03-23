@@ -1,17 +1,16 @@
 ﻿using SearchAlgorythms.Graph;
 using SearchAlgorythms.Top;
-using System.Collections.Generic;
 
 namespace SearchAlgorythms.Algorythms.SearchAlgorythm
 {
     
-    public class AStarSearch : DijkstraAlgorythm
+    public class AStarAlgorithm : DijkstraAlgorythm
     {
         public delegate double HeuristicHandler(IGraphTop neighbour, IGraphTop top);
 
         public HeuristicHandler Heuristic;
 
-        public AStarSearch(IGraphTop end, IGraph graph) : base(end, graph)
+        public AStarAlgorithm(IGraphTop end, IGraph graph) : base(end, graph)
         {
 
         }

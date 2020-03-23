@@ -13,7 +13,6 @@ namespace SearchAlgorythms.Algorythms.SearchAlgorythm
         bool FindDestionation(IGraphTop start);
         bool IsRightCellToVisit(IGraphTop button);
         void DrawPath(IGraphTop end);
-        int Time { get; }
         string GetStatistics();
     }
 }

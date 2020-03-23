@@ -12,38 +12,9 @@ namespace SearchAlgorythms.Graph
     {
         public event EventHandler SetStart;
         public event EventHandler SetEnd;
-        public event EventHandler SwitchRole;
 
         private IGraphTop[,] buttons;
         private BoundSetter boundSetter = new BoundSetter();
-
-        private void MakeObstacle(ref IGraphTop top)
-        {
-            if (top.IsSimpleTop)
-            {
-                Point previousLocation = (top as GraphTop).Location;
-                boundSetter.BreakBoundsBetweenNeighbours((top as GraphTop));
-                top = new GraphTop { Location = previousLocation };
-                top.MarkAsObstacle();
-                Insert(top);
-            }
-        }
-
-        private void MakeTop(ref IGraphTop top)
-        {
-            Random rand = new Random();
-            Point previousLocation = (top as GraphTop).Location;
-            top = new GraphTop { Location = previousLocation};
-            if (Start == null)
-                (top as GraphTop).Click += SetStart;
-            else if (Start != null && End == null)
-                (top as GraphTop).Click += SetEnd;
-            (top as GraphTop).Text = (rand.Next(9) + 1).ToString();
-            top.IsObstacle = false;
-            top.MarkAsGraphTop();
-            Insert(top);
-            boundSetter.SetBoundsBetweenNeighbours(top as GraphTop);
-        }
 
         public IGraphTop[,] GetArray()
         {
@@ -55,25 +26,6 @@ namespace SearchAlgorythms.Graph
             this.buttons = buttons;
             Start = null;
             End = null;
-        }
-
-        public void InitializeWith(IGraphTopInfo[,] info)
-        {
-            int graphWidth = info.GetLength(0);
-            int graphHeight = info.Length / info.GetLength(0);
-            for (int i = 0; i < graphWidth; i++)
-            {
-                for (int j = 0; j < graphHeight; j++)
-                {
-                    buttons[i, j] = new GraphTop();
-                    if (info[i, j].IsObstacle)
-                        buttons[i, j].MarkAsObstacle();
-                    GraphTop top = buttons[i, j] as GraphTop;
-                    GraphTopInfo inf = info[i, j] as GraphTopInfo;
-                    top.Location = inf.Location;
-                    top.BackColor = Color.FromName(inf.Colour);
-                }
-            }
         }
 
         public IGraphTopInfo[,] GetInfo()
@@ -149,17 +101,6 @@ namespace SearchAlgorythms.Graph
             return new KeyValuePair<int, int>(GetWidth(), GetHeight());
         }
 
-        public void Reverse(ref IGraphTop top)
-        {
-            Size size = (top as GraphTop).Size;
-            if (top.IsObstacle)
-                MakeTop(ref top);
-            else
-                MakeObstacle(ref top);
-            (top as GraphTop).Size = size;
-            (top as GraphTop).MouseDown += new MouseEventHandler(SwitchRole);
-        }
-
         public void Refresh()
         {
             if (buttons == null)
@@ -181,21 +122,6 @@ namespace SearchAlgorythms.Graph
         public IEnumerator GetEnumerator()
         {
             return buttons.GetEnumerator();
-        }
-
-        public void Rebuild(IGraphTopInfo[,] info)
-        {
-            throw new NotImplementedException();
-        }
-
-        public void Rebuild(IGraph graph)
-        {
-               
-        }
-
-        public void Rebuild(IGraphTop[,] tops)
-        {
-            throw new NotImplementedException();
         }
     }
 }

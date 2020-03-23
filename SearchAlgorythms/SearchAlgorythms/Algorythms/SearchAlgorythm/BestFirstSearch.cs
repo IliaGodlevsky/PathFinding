@@ -9,11 +9,10 @@ namespace SearchAlgorythms.Algorythms.SearchAlgorythm
     public class BestFirstSearch : WideSearch
     {
         private Queue<IGraphTop> waveQueue = new Queue<IGraphTop>();
-        private readonly IGraphTop end;
 
         public BestFirstSearch(IGraphTop end) : base(end)
         {
-            this.end = end;
+            
         }
 
         private void MakeWavesFromEnd(IGraphTop end)
@@ -53,7 +52,7 @@ namespace SearchAlgorythms.Algorythms.SearchAlgorythm
             {
                 if (neigbour.Value == 0 && !neigbour.IsEnd)
                 {
-                    neigbour.Value = currentTop.Value + 1;
+                    neigbour.Value = top.Value + 1;
                     waveQueue.Enqueue(neigbour);
                 }
             }
@@ -66,12 +65,13 @@ namespace SearchAlgorythms.Algorythms.SearchAlgorythm
                 return;
             var neighbours = currentTop.Neighbours;
             foreach (var neigbour in neighbours)
-                queue.Enqueue(neigbour);
+                if (!neigbour.IsVisited)
+                    queue.Enqueue(neigbour);
         }
 
         public override bool FindDestionation(IGraphTop start)
         {
-            MakeWavesFromEnd(end);
+            MakeWavesFromEnd(base.end);
             return base.FindDestionation(start);
         }
     }

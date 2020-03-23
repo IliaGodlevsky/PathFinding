@@ -52,13 +52,12 @@
             this.percentOfObstacles = new System.Windows.Forms.Label();
             this.timeOfSearch = new System.Windows.Forms.GroupBox();
             this.time = new System.Windows.Forms.Label();
-            this.statistics = new System.Windows.Forms.GroupBox();
-            this.stat = new System.Windows.Forms.Label();
+            this.Field = new SearchAlgorythms.Forms.FieldControl();
+            this.userControl11 = new SearchAlgorythms.Forms.FieldControl();
             this.menuStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.percent)).BeginInit();
             this.FieldParams.SuspendLayout();
             this.timeOfSearch.SuspendLayout();
-            this.statistics.SuspendLayout();
             this.SuspendLayout();
             // 
             // menuStrip1
@@ -112,7 +111,7 @@
             this.aSearchToolStripMenuItem,
             this.greedySearchToolStripMenuItem});
             this.findPathToolStripMenuItem.Name = "findPathToolStripMenuItem";
-            this.findPathToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.findPathToolStripMenuItem.Size = new System.Drawing.Size(124, 22);
             this.findPathToolStripMenuItem.Text = "Find path";
             // 
             // wideSearchToolStripMenuItem
@@ -263,44 +262,40 @@
             this.timeOfSearch.Controls.Add(this.time);
             this.timeOfSearch.Location = new System.Drawing.Point(18, 272);
             this.timeOfSearch.Name = "timeOfSearch";
-            this.timeOfSearch.Size = new System.Drawing.Size(153, 42);
+            this.timeOfSearch.Size = new System.Drawing.Size(153, 66);
             this.timeOfSearch.TabIndex = 11;
             this.timeOfSearch.TabStop = false;
-            this.timeOfSearch.Text = "Time of search";
+            this.timeOfSearch.Text = "Statistics";
             // 
             // time
             // 
             this.time.AutoSize = true;
-            this.time.Location = new System.Drawing.Point(41, 20);
+            this.time.Location = new System.Drawing.Point(8, 16);
             this.time.Name = "time";
             this.time.Size = new System.Drawing.Size(35, 13);
             this.time.TabIndex = 0;
             this.time.Text = "label1";
             // 
-            // statistics
+            // Field
             // 
-            this.statistics.Controls.Add(this.stat);
-            this.statistics.Location = new System.Drawing.Point(18, 330);
-            this.statistics.Name = "statistics";
-            this.statistics.Size = new System.Drawing.Size(153, 51);
-            this.statistics.TabIndex = 12;
-            this.statistics.TabStop = false;
-            this.statistics.Text = "Statistics";
+            this.Field.Location = new System.Drawing.Point(177, 36);
+            this.Field.Name = "Field";
+            this.Field.Size = new System.Drawing.Size(611, 354);
+            this.Field.TabIndex = 13;
             // 
-            // stat
+            // userControl11
             // 
-            this.stat.AutoSize = true;
-            this.stat.Location = new System.Drawing.Point(41, 20);
-            this.stat.Name = "stat";
-            this.stat.Size = new System.Drawing.Size(0, 13);
-            this.stat.TabIndex = 0;
+            this.userControl11.Location = new System.Drawing.Point(0, 0);
+            this.userControl11.Name = "userControl11";
+            this.userControl11.Size = new System.Drawing.Size(656, 388);
+            this.userControl11.TabIndex = 0;
             // 
             // MainWindow
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 490);
-            this.Controls.Add(this.statistics);
+            this.Controls.Add(this.Field);
             this.Controls.Add(this.timeOfSearch);
             this.Controls.Add(this.FieldParams);
             this.Controls.Add(this.menuStrip1);
@@ -315,8 +310,6 @@
             this.FieldParams.PerformLayout();
             this.timeOfSearch.ResumeLayout(false);
             this.timeOfSearch.PerformLayout();
-            this.statistics.ResumeLayout(false);
-            this.statistics.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -348,8 +341,8 @@
         private System.Windows.Forms.ToolStripMenuItem dijkstraAlgorythmToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem greedySearchToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem aSearchToolStripMenuItem;
-        private System.Windows.Forms.GroupBox statistics;
-        private System.Windows.Forms.Label stat;
+        private Forms.FieldControl userControl11;
+        private Forms.FieldControl Field;
     }
 }
 

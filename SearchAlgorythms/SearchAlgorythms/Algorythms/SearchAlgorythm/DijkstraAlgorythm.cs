@@ -1,5 +1,8 @@
 ﻿using System.Collections.Generic;
 using System.Diagnostics;
+using System.Linq;
+using System.Windows.Forms;
+using SearchAlgorythms.Algorythms.Statistics;
 using SearchAlgorythms.Graph;
 using SearchAlgorythms.Top;
 
@@ -10,26 +13,20 @@ namespace SearchAlgorythms.Algorythms.SearchAlgorythm
         protected readonly IGraphTop end;
         protected List<IGraphTop> tops 
             = new List<IGraphTop>();
-        protected Stopwatch watch = new Stopwatch();
-        private int visitedCells;
-        private int pathLength;
+        WeightedGraphSearchAlgoStatistics statCollector;
 
         public DijkstraAlgorythm(IGraphTop end, IGraph graph)
         {
-            for (int i = 0; i < graph.GetWidth(); i++)
+            foreach(var top in graph)
             {
-                for (int j = 0; j < graph.GetHeight(); j++)
+                if (!(top as IGraphTop).IsObstacle)
                 {
-                    if (!graph[i, j].IsObstacle)
-                    {               
-                        tops.Add(graph[i, j]);
-                        graph[i, j].Value = int.MaxValue;
-                    }                      
+                    tops.Add(top as IGraphTop);
+                    (top as IGraphTop).Value = int.MaxValue;
                 }
             }
+            statCollector = new WeightedGraphSearchAlgoStatistics();
             this.end = end;
-            visitedCells = 0;
-            pathLength = 0;
         }
 
         public bool DestinationFound { get; set; }
@@ -43,7 +40,7 @@ namespace SearchAlgorythms.Algorythms.SearchAlgorythm
                 top = top.ParentTop;
                 if (top.IsSimpleTop)
                     top.MarkAsPath();
-                pathLength += int.Parse(top.Text);
+                statCollector.AddLength(int.Parse(top.Text));
                 //Pause(250);
             }
         }
@@ -64,8 +61,9 @@ namespace SearchAlgorythms.Algorythms.SearchAlgorythm
 
         public IGraphTop GetChippestUnvisitedTop()
         {
-            return tops.Find(t => GetChippestValue() == t.Value
-                    && !t.IsVisited);
+            tops.Sort((t1, t2) => t1.Value.CompareTo(t2.Value));
+            var chippest = GetChippestValue();
+            return tops.Find(t => chippest == t.Value && !t.IsVisited);
         }
 
         public virtual double GetPathValue(IGraphTop neighbour, IGraphTop top)
@@ -88,13 +86,11 @@ namespace SearchAlgorythms.Algorythms.SearchAlgorythm
             }
         }
 
-        protected bool IsNoTopToMark() => GetChippestValue() == int.MaxValue;
-
         public bool FindDestionation(IGraphTop start)
         {
             if (end == null)
                 return false;
-            watch.Start();
+            statCollector.BeginCollectStatistic();
             var currentTop = start;
             start.IsVisited = true;
             start.Value = 0;
@@ -102,17 +98,15 @@ namespace SearchAlgorythms.Algorythms.SearchAlgorythm
             {
                 ExtractNeighbours(currentTop);
                 currentTop = GetChippestUnvisitedTop();
-                if (IsNoTopToMark())
+                if (currentTop.Value == int.MaxValue)
                     break;
                 if (IsRightCellToVisit(currentTop))
                     Visit(currentTop);
                 Pause(10);
             } while (!IsDestination(currentTop));
-            watch.Stop();
+            statCollector.StopCollectStatistics();
             return end.IsVisited;
         }
-
-        public int Time => watch.Elapsed.Seconds + watch.Elapsed.Minutes * 60;
 
         public bool IsDestination(IGraphTop button)
         {
@@ -139,14 +133,13 @@ namespace SearchAlgorythms.Algorythms.SearchAlgorythm
             if (!button.IsEnd)
             {
                 button.MarkAsVisited();
-                visitedCells++;
+                statCollector.CellVisited();
             }
         }
 
         public string GetStatistics()
         {
-            return "Path length: " + pathLength.ToString() + "\n" +
-                "Cells visited: " + visitedCells.ToString();
+            return statCollector.Statistics;
         }
     }
 }
