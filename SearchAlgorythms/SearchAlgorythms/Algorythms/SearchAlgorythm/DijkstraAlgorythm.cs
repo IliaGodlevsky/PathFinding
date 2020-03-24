@@ -48,7 +48,6 @@ namespace SearchAlgorythms.Algorythms.SearchAlgorythm
 
         public IGraphTop GetChippestUnvisitedTop()
         {
-            tops.Sort((t1, t2) => t1.Value.CompareTo(t2.Value));
             var chippest = GetChippestValue();
             return tops.Find(t => chippest == t.Value && !t.IsVisited);
         }
