@@ -71,7 +71,7 @@ namespace SearchAlgorythms.Algorythms.SearchAlgorythm
                 currentTop = queue.Dequeue();
                 if (IsRightCellToVisit(currentTop))
                     Visit(currentTop);
-                Pause(10);              
+                Pause(2);              
             }
             statCollector.StopCollectStatistics();
             return end.IsVisited;          
@@ -103,7 +103,11 @@ namespace SearchAlgorythms.Algorythms.SearchAlgorythm
                 return;
             top.IsVisited = true;
             if (top.IsSimpleTop)
+            {
+                top.MarkAsCurrentlyLooked();
+                Pause(8);
                 top.MarkAsVisited();
+            }
             statCollector.CellVisited();
             ExtractNeighbours(top);
         }

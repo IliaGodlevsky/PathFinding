@@ -107,13 +107,13 @@ namespace SearchAlgorythms
             {
                 searchAlgorythm.DrawPath();
                 time.Text = searchAlgorythm.GetStatistics();
-                time.Update();                
+                time.Update();
+                searchAlgorythm = null;
+                graph.Start = null;
+                graph.End = null;
             }
             else
-                MessageBox.Show("Couldn't find path");
-            searchAlgorythm = null;
-            graph.Start = null;
-            graph.End = null;
+                MessageBox.Show("Couldn't find path");            
         }
 
         private void Percent_Scroll(object sender, EventArgs e)

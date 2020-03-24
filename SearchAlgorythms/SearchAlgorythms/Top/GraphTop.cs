@@ -83,5 +83,9 @@ namespace SearchAlgorythms.Top
             //BorderStyle = BorderStyle.Fixed3D;
         }
 
+        public void MarkAsCurrentlyLooked()
+        {
+            BackColor = Color.FromKnownColor(KnownColor.DarkMagenta);
+        }
     }
 }

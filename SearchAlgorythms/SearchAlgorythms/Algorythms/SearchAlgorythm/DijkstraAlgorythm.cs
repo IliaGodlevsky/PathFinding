@@ -88,7 +88,7 @@ namespace SearchAlgorythms.Algorythms.SearchAlgorythm
                     break;
                 if (IsRightCellToVisit(currentTop))
                     Visit(currentTop);
-                Pause(10);
+                Pause(2);
             } while (!IsDestination(currentTop));
             statCollector.StopCollectStatistics();
             return end.IsVisited;
@@ -118,6 +118,8 @@ namespace SearchAlgorythms.Algorythms.SearchAlgorythm
             button.IsVisited = true;
             if (!button.IsEnd)
             {
+                button.MarkAsCurrentlyLooked();
+                Pause(8);
                 button.MarkAsVisited();
                 statCollector.CellVisited();
             }

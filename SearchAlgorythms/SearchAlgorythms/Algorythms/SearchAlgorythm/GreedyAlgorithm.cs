@@ -64,7 +64,7 @@ namespace SearchAlgorythms.Algorythms.SearchAlgorythm
                 }
                 else
                     currentTop = stack.Pop();               
-                Pause(10);
+                Pause(2);
             }
             statCollector.StopCollectStatistics();
             return end.IsVisited;
@@ -89,7 +89,11 @@ namespace SearchAlgorythms.Algorythms.SearchAlgorythm
             top.IsVisited = true;
             stack.Push(top);
             if (top.IsSimpleTop)
+            {
+                top.MarkAsCurrentlyLooked();
+                Pause(8);
                 top.MarkAsVisited();
+            }
             statCollector.CellVisited();
         }
 
