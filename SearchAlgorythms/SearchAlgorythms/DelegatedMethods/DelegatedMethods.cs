@@ -19,7 +19,7 @@ namespace SearchAlgorythms.DelegatedMethods
         }
 
         public static double GetMinValue(List<IGraphTop> tops, 
-            Predicate<IGraphTop> predicate, Func<IGraphTop, double> func)
+            Predicate <IGraphTop> predicate, Func<IGraphTop, double> func)
         {
             double min = 0;
             foreach (var top in tops)
