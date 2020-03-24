@@ -38,16 +38,14 @@ namespace SearchAlgorythms.DelegatedMethods
 
         public static double GetEuclideanDistance(IGraphTop top1, IGraphTop top2)
         {
-            double a = Math.Pow(top1.Location.X - top2.Location.X, 2);
-            double b = Math.Pow(top1.Location.Y - top2.Location.Y, 2);
-            return Math.Sqrt(a + b);
+            return Math.Sqrt(Math.Pow(top1.Location.X - top2.Location.X, 2) 
+                + Math.Pow(top1.Location.Y - top2.Location.Y, 2));
         }
 
         public static double GetChebyshevDistance(IGraphTop top1, IGraphTop top2)
         {
-            int a = Math.Abs(top1.Location.X - top2.Location.X);
-            int b = Math.Abs(top1.Location.Y - top2.Location.Y);
-            return Math.Max(a, b);
+            return Math.Max(Math.Abs(top1.Location.X - top2.Location.X), 
+                Math.Abs(top1.Location.Y - top2.Location.Y));
         }
     }
 }
