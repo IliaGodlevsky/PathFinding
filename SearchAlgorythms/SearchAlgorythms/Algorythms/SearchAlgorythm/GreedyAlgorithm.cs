@@ -1,17 +1,15 @@
 ﻿using System.Collections.Generic;
-using System.Diagnostics;
 using SearchAlgorythms.Algorythms.Statistics;
+using SearchAlgorythms.DelegatedMethods;
 using SearchAlgorythms.Extensions;
 using SearchAlgorythms.Top;
 
 namespace SearchAlgorythms.Algorythms.SearchAlgorythm
 {
-    public class GreedyAlgorithm : ISearchAlgorythm
+    public class GreedyAlgorithm : ISearchAlgorithm
     {
-        private Stack<IGraphTop> stack =
-            new Stack<IGraphTop>();
-
-        WeightedGraphSearchAlgoStatistics statCollector;
+        private Stack<IGraphTop> stack = new Stack<IGraphTop>();
+        private WeightedGraphSearchAlgoStatistics statCollector;
         private readonly IGraphTop end;
 
         public GreedyAlgorithm(IGraphTop end)
@@ -22,27 +20,14 @@ namespace SearchAlgorythms.Algorythms.SearchAlgorythm
 
         private IGraphTop GoChippestNeighbour(IGraphTop top)
         {
-            int min = 0;
-            var neighbours = top.Neighbours;
-            foreach(var neighbour in neighbours)
-            {
-                if (!neighbour.IsVisited)
-                    min = int.Parse(neighbour.Text);
-            }
-            foreach(var neighbour in neighbours)
-            {
-                if (min > int.Parse(neighbour.Text)
-                    && (!neighbour.IsVisited || neighbour.IsEnd)) 
-                    min = int.Parse(neighbour.Text);
-            }
-            return neighbours.Find(t => min ==
-                int.Parse(t.Text) && !t.IsVisited);
+            int min = (int)DelegatedMethod.GetMinValue(top.Neighbours, 
+                t => !t.IsVisited || t.IsEnd, t => int.Parse(t.Text));
+            return top.Neighbours.Find(t => min == int.Parse(t.Text) && !t.IsVisited || t.IsEnd);
         }
 
-        public bool DestinationFound { get; set; }
         public PauseCycle Pause { set; get; }
 
-        public void DrawPath(IGraphTop end)
+        public void DrawPath()
         {
             var top = end;
             while (!top.IsStart)

@@ -9,15 +9,14 @@ using SearchAlgorythms.Algorythms.Statistics;
 
 namespace SearchAlgorythms.Algorythms.SearchAlgorythm
 {
-    public class WideSearch : ISearchAlgorythm
+    public class WideSearchAlgorithm : ISearchAlgorithm
     {
-        protected Queue<IGraphTop> queue 
-            = new Queue<IGraphTop>();
-        UnweightedGraphSearchAlgoStatistics statCollector;
-        protected readonly IGraphTop end;
+        protected Queue<IGraphTop> queue = new Queue<IGraphTop>();
+        private UnweightedGraphSearchAlgoStatistics statCollector;
+        protected IGraphTop end;
 
 
-        public WideSearch(IGraphTop end)
+        public WideSearchAlgorithm(IGraphTop end)
         {
             this.end = end;
             statCollector = new UnweightedGraphSearchAlgoStatistics();
@@ -25,9 +24,8 @@ namespace SearchAlgorythms.Algorythms.SearchAlgorythm
 
         public IGraphTop GoChippestNeighbour(IGraphTop top)
         {
-            var neighbours = top.Neighbours;
-            double min = neighbours.Min(t => t.Value);
-            return neighbours.Find(t => min == t.Value
+            double min = top.Neighbours.Min(t => t.Value);
+            return top.Neighbours.Find(t => min == t.Value
                     && t.IsVisited && IsRightNeighbour(t));
         }
 
@@ -45,8 +43,6 @@ namespace SearchAlgorythms.Algorythms.SearchAlgorythm
         {
             return !button.IsVisited;
         }
-
-        public bool DestinationFound { get; set; }
 
         public PauseCycle Pause { get; set; }
 
@@ -81,7 +77,7 @@ namespace SearchAlgorythms.Algorythms.SearchAlgorythm
             return end.IsVisited;          
         }
 
-        public void DrawPath(IGraphTop end)
+        public void DrawPath()
         {
             var top = end;
             while (IsRightPath(top))

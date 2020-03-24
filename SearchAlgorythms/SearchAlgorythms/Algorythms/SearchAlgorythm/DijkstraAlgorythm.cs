@@ -1,21 +1,18 @@
 ﻿using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
-using System.Windows.Forms;
 using SearchAlgorythms.Algorythms.Statistics;
+using SearchAlgorythms.DelegatedMethods;
 using SearchAlgorythms.Graph;
 using SearchAlgorythms.Top;
 
 namespace SearchAlgorythms.Algorythms.SearchAlgorythm
 {
-    public class DijkstraAlgorythm : ISearchAlgorythm
+    public class DijkstraAlgorithm : ISearchAlgorithm
     {
         protected readonly IGraphTop end;
-        protected List<IGraphTop> tops 
-            = new List<IGraphTop>();
-        WeightedGraphSearchAlgoStatistics statCollector;
+        protected List<IGraphTop> tops = new List<IGraphTop>();
+        private WeightedGraphSearchAlgoStatistics statCollector;
 
-        public DijkstraAlgorythm(IGraphTop end, IGraph graph)
+        public DijkstraAlgorithm(IGraphTop end, IGraph graph)
         {
             foreach(var top in graph)
             {
@@ -29,10 +26,9 @@ namespace SearchAlgorythms.Algorythms.SearchAlgorythm
             this.end = end;
         }
 
-        public bool DestinationFound { get; set; }
         public PauseCycle Pause { set; get; }
 
-        public void DrawPath(IGraphTop end)
+        public void DrawPath()
         {
             var top = end;
             while (!top.IsStart)
@@ -47,16 +43,7 @@ namespace SearchAlgorythms.Algorythms.SearchAlgorythm
 
         public double GetChippestValue()
         {
-            double min = 0;
-            foreach (var top in tops)
-            {
-                if (!top.IsVisited)
-                    min = top.Value;
-            }
-            foreach (var top in tops)
-                if (min > top.Value && !top.IsVisited)
-                    min = top.Value;
-            return min;
+            return DelegatedMethod.GetMinValue(tops, t => !t.IsVisited, t => t.Value);
         }
 
         public IGraphTop GetChippestUnvisitedTop()

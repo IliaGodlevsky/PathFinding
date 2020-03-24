@@ -41,7 +41,7 @@ namespace SearchAlgorythms.Top
         public void MarkAsGraphTop()
         {
             if (!IsObstacle)
-                BackColor = Color.FromKnownColor(KnownColor.Ivory);
+                BackColor = Color.FromKnownColor(KnownColor.White);
         }
 
         public void MarkAsStart()
@@ -56,7 +56,7 @@ namespace SearchAlgorythms.Top
 
         public void MarkAsVisited()
         {
-            BackColor = Color.FromKnownColor(KnownColor.Magenta);
+            BackColor = Color.FromKnownColor(KnownColor.CadetBlue);
         }
 
         public void MarkAsPath()
@@ -78,9 +78,9 @@ namespace SearchAlgorythms.Top
             MarkAsGraphTop();
             ParentTop = null;
             Font = new Font("Tahoma", 8.0f);
-            TextAlign = ContentAlignment.MiddleCenter;
             Size = new Size(27, 27);
-            BorderStyle = BorderStyle.Fixed3D;
+            TextAlign = ContentAlignment.MiddleCenter;
+            //BorderStyle = BorderStyle.Fixed3D;
         }
 
     }

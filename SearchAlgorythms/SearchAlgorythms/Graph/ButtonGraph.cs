@@ -10,8 +10,8 @@ namespace SearchAlgorythms.Graph
 {
     public class ButtonGraph : IGraph
     {
-        public event EventHandler SetStart;
-        public event EventHandler SetEnd;
+        public event MouseEventHandler SetStart;
+        public event MouseEventHandler SetEnd;
 
         private IGraphTop[,] buttons;
         private BoundSetter boundSetter = new BoundSetter();
@@ -110,9 +110,9 @@ namespace SearchAlgorythms.Graph
                 if (!top.IsObstacle)
                 {
                     top.SetToDefault();
-                    (top as GraphTop).Click -= SetStart;
-                    (top as GraphTop).Click -= SetEnd;
-                    (top as GraphTop).Click += SetStart;
+                    (top as GraphTop).MouseClick -= SetStart;
+                    (top as GraphTop).MouseClick -= SetEnd;
+                    (top as GraphTop).MouseClick += SetStart;
                 }
             }
             Start = null;

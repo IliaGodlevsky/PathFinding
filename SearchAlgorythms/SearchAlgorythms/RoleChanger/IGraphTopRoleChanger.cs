@@ -14,5 +14,6 @@ namespace SearchAlgorythms.RoleChanger
         void SetStartPoint(object sender, EventArgs e);
         void SetDestinationPoint(object sender, EventArgs e);
         void Reverse(ref IGraphTop top);
+        void ReversePolarity(object sender, EventArgs e);
     }
 }

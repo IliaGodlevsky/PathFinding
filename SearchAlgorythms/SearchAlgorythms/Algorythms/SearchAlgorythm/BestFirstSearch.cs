@@ -1,16 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using SearchAlgorythms.Extensions;
-using SearchAlgorythms.Graph;
 using SearchAlgorythms.Top;
 
 namespace SearchAlgorythms.Algorythms.SearchAlgorythm
 {
-    public class BestFirstSearch : WideSearch
+    public class BestFirstAlgorithm : WideSearchAlgorithm
     {
         private Queue<IGraphTop> waveQueue = new Queue<IGraphTop>();
 
-        public BestFirstSearch(IGraphTop end) : base(end)
+        public BestFirstAlgorithm(IGraphTop end) : base(end)
         {
             
         }
@@ -71,8 +69,10 @@ namespace SearchAlgorythms.Algorythms.SearchAlgorythm
 
         public override bool FindDestionation(IGraphTop start)
         {
-            MakeWavesFromEnd(base.end);
-            return base.FindDestionation(start);
+            MakeWavesFromEnd(end);
+            bool found = base.FindDestionation(start);
+            end = start;
+            return found;
         }
     }
 }

@@ -4,7 +4,7 @@ using SearchAlgorythms.Top;
 namespace SearchAlgorythms.Algorythms.SearchAlgorythm
 {
     
-    public class AStarAlgorithm : DijkstraAlgorythm
+    public class AStarAlgorithm : DijkstraAlgorithm
     {
         public delegate double HeuristicHandler(IGraphTop neighbour, IGraphTop top);
 
