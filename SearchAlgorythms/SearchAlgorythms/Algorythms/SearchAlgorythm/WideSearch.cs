@@ -86,7 +86,7 @@ namespace SearchAlgorythms.Algorythms.SearchAlgorythm
                 if (top.IsSimpleTop)
                     top.MarkAsPath();
                 statCollector.AddStep();
-                //Pause(250);
+                Pause(20);
             }
         }
 

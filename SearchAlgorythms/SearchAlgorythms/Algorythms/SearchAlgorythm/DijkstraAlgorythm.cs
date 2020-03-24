@@ -33,11 +33,12 @@ namespace SearchAlgorythms.Algorythms.SearchAlgorythm
             var top = end;
             while (!top.IsStart)
             {
+                var temp = top;
                 top = top.ParentTop;
                 if (top.IsSimpleTop)
                     top.MarkAsPath();
-                statCollector.AddLength(int.Parse(top.Text));
-                //Pause(250);
+                statCollector.AddLength(int.Parse(temp.Text));
+                Pause(20);
             }
         }
 
@@ -120,9 +121,9 @@ namespace SearchAlgorythms.Algorythms.SearchAlgorythm
             {
                 button.MarkAsCurrentlyLooked();
                 Pause(8);
-                button.MarkAsVisited();
-                statCollector.CellVisited();
+                button.MarkAsVisited();               
             }
+            statCollector.CellVisited();
         }
 
         public string GetStatistics()

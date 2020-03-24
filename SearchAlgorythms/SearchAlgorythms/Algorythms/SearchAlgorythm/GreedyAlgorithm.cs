@@ -32,11 +32,12 @@ namespace SearchAlgorythms.Algorythms.SearchAlgorythm
             var top = end;
             while (!top.IsStart)
             {
+                var temp = top;
                 top = top.ParentTop;
                 if (top.IsSimpleTop)
                     top.MarkAsPath();
-                statCollector.AddLength(int.Parse(top.Text));
-                //Pause(500);
+                statCollector.AddLength(int.Parse(temp.Text));
+                Pause(20);
             }
         }
 
