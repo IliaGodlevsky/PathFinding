@@ -7,11 +7,7 @@ namespace SearchAlgorythms.Algorythms.SearchAlgorythm
     public interface ISearchAlgorithm
     {
         PauseCycle Pause { set; get; }
-        bool IsDestination(IGraphTop button);
-        void Visit(IGraphTop button);
-        void ExtractNeighbours(IGraphTop button);
         bool FindDestionation(IGraphTop start);
-        bool IsRightCellToVisit(IGraphTop button);
         void DrawPath();
         string GetStatistics();
     }

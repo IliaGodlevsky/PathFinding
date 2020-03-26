@@ -6,6 +6,8 @@ using SearchAlgorythms.Extensions;
 using System;
 using System.Windows.Forms;
 using SearchAlgorythms.Algorythms.Statistics;
+using SearchAlgorythms.DelegatedMethods;
+using SearchAlgorythms.Extensions.ListExtensions;
 
 namespace SearchAlgorythms.Algorythms.SearchAlgorythm
 {
@@ -24,6 +26,7 @@ namespace SearchAlgorythms.Algorythms.SearchAlgorythm
 
         public IGraphTop GoChippestNeighbour(IGraphTop top)
         {
+            top.Neighbours.Shuffle();
             double min = top.Neighbours.Min(t => t.Value);
             return top.Neighbours.Find(t => min == t.Value
                     && t.IsVisited && IsRightNeighbour(t));
@@ -53,10 +56,11 @@ namespace SearchAlgorythms.Algorythms.SearchAlgorythm
             foreach (var neigbour in button.Neighbours)
             {
                 if (neigbour.Value == 0 && !neigbour.IsStart)
-                    neigbour.Value = button.Value + 1;
+                    neigbour.Value = button.Value + 
+                        DelegatedMethod.GetChebyshevDistance(neigbour, end);
                 if (!neigbour.IsVisited)
                     queue.Enqueue(neigbour);
-            }            
+            }
         }
 
         public virtual bool FindDestionation(IGraphTop start)
@@ -90,14 +94,14 @@ namespace SearchAlgorythms.Algorythms.SearchAlgorythm
             }
         }
 
-        public bool IsDestination(IGraphTop button)
+        private bool IsDestination(IGraphTop button)
         {
             if (button is null)
                 return false;
             return button.IsEnd || queue.IsEmpty();
         }
 
-        public void Visit(IGraphTop top)
+        private void Visit(IGraphTop top)
         {          
             if (top.IsObstacle)
                 return;

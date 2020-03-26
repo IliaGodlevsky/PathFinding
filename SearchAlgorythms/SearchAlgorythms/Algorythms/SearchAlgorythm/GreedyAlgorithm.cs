@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using SearchAlgorythms.Algorythms.Statistics;
 using SearchAlgorythms.DelegatedMethods;
 using SearchAlgorythms.Extensions;
@@ -20,9 +21,11 @@ namespace SearchAlgorythms.Algorythms.SearchAlgorythm
 
         private IGraphTop GoChippestNeighbour(IGraphTop top)
         {
+            bool predicate(IGraphTop t) => !t.IsVisited || t.IsEnd;
+            double func(IGraphTop t) => int.Parse(t.Text);
             int min = (int)DelegatedMethod.GetMinValue(top.Neighbours, 
-                t => !t.IsVisited || t.IsEnd, t => int.Parse(t.Text));
-            return top.Neighbours.Find(t => min == int.Parse(t.Text) && !t.IsVisited || t.IsEnd);
+               predicate, func);
+            return top.Neighbours.Find(t => min == func(t) && predicate(t));
         }
 
         public PauseCycle Pause { set; get; }
@@ -39,11 +42,6 @@ namespace SearchAlgorythms.Algorythms.SearchAlgorythm
                 statCollector.AddLength(int.Parse(temp.Text));
                 Pause(20);
             }
-        }
-
-        public void ExtractNeighbours(IGraphTop button)
-        {
-            return;
         }
 
         public bool FindDestionation(IGraphTop start)
@@ -64,19 +62,19 @@ namespace SearchAlgorythms.Algorythms.SearchAlgorythm
                     currentTop.ParentTop = temp;
                 }
                 else
-                    currentTop = stack.Pop();               
+                    currentTop = stack.Pop();
                 Pause(2);
             }
             statCollector.StopCollectStatistics();
             return end.IsVisited;
         }
 
-        public bool IsDestination(IGraphTop top)
+        private bool IsDestination(IGraphTop top)
         {
             return top.IsEnd && top.IsVisited || stack.IsEmpty();
         }
 
-        public bool IsRightCellToVisit(IGraphTop top)
+        private bool IsRightCellToVisit(IGraphTop top)
         {
             if (top == null)
                 return false;
@@ -85,7 +83,7 @@ namespace SearchAlgorythms.Algorythms.SearchAlgorythm
             return true;
         }
 
-        public void Visit(IGraphTop top)
+        private void Visit(IGraphTop top)
         {
             top.IsVisited = true;
             stack.Push(top);

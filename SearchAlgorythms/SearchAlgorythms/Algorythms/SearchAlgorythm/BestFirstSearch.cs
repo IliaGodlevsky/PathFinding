@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using SearchAlgorythms.DelegatedMethods;
 using SearchAlgorythms.Extensions;
 using SearchAlgorythms.Top;
 
@@ -36,21 +37,19 @@ namespace SearchAlgorythms.Algorythms.SearchAlgorythm
 
         public override bool IsRightCellToVisit(IGraphTop button)
         {
-            GraphTop top = button as GraphTop;
-            return (base.IsRightCellToVisit(top) && top?.Value != 0) || top?.IsEnd == true;
+            return (base.IsRightCellToVisit(button) && button.Value != 0) || button.IsEnd;
         }
 
         private void MarkTop(IGraphTop top)
         {
-            var currentTop = top as GraphTop;
-            if (currentTop is null)
+            if (top is null)
                 return;
-            var neigbours = currentTop.Neighbours;
-            foreach (var neigbour in neigbours)
+            foreach (var neigbour in top.Neighbours)
             {
                 if (neigbour.Value == 0 && !neigbour.IsEnd)
                 {
-                    neigbour.Value = top.Value + 1;
+                    neigbour.Value = top.Value + 
+                        DelegatedMethod.GetChebyshevDistance(neigbour, end);
                     waveQueue.Enqueue(neigbour);
                 }
             }
@@ -58,11 +57,9 @@ namespace SearchAlgorythms.Algorythms.SearchAlgorythm
 
         public override void ExtractNeighbours(IGraphTop button)
         {
-            var currentTop = button as GraphTop;
-            if (currentTop is null)
+            if (button is null)
                 return;
-            var neighbours = currentTop.Neighbours;
-            foreach (var neigbour in neighbours)
+            foreach (var neigbour in button.Neighbours)
                 if (!neigbour.IsVisited)
                     queue.Enqueue(neigbour);
         }

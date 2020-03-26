@@ -80,7 +80,7 @@ namespace SearchAlgorythms.Top
             Font = new Font("Tahoma", 8.0f);
             Size = new Size(27, 27);
             TextAlign = ContentAlignment.MiddleCenter;
-            //BorderStyle = BorderStyle.Fixed3D;
+            //BorderStyle = BorderStyle.FixedSingle;
         }
 
         public void MarkAsCurrentlyLooked()
