@@ -5,9 +5,8 @@ namespace SearchAlgorythms.Algorythms.Statistics
     public class UnweightedGraphSearchAlgoStatistics : AbstractStatistics
     {
         private int stepsNumber;
-        public override string Statistics => 
-            base.Statistics + "\nSteps: " + stepsNumber 
-            + "\nCells visited: " + visitedCells;
+        public override string Statistics =>
+            base.Statistics + "\nSteps: " + stepsNumber;
 
         public override void BeginCollectStatistic()
         {

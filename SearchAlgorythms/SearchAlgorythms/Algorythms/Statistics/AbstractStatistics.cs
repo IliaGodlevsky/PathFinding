@@ -4,10 +4,17 @@ namespace SearchAlgorythms.Algorythms.Statistics
 {
     public abstract class AbstractStatistics
     {
-        protected Stopwatch watch = new Stopwatch();
-        protected int visitedCells;
+        private Stopwatch watch = new Stopwatch();
+        private int visitedCells;
 
-        public virtual string Statistics { get { return Time; } }
+        public virtual string Statistics
+        {
+            get
+            {
+                return Time + "\nCell visited: "
+                + visitedCells;
+            }
+        }
 
         public virtual void BeginCollectStatistic()
         {

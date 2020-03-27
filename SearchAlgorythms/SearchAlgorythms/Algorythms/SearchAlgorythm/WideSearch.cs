@@ -1,10 +1,7 @@
 ﻿using System.Collections.Generic;
-using System.Diagnostics;
 using System.Linq;
 using SearchAlgorythms.Top;
 using SearchAlgorythms.Extensions;
-using System;
-using System.Windows.Forms;
 using SearchAlgorythms.Algorythms.Statistics;
 using SearchAlgorythms.DelegatedMethods;
 using SearchAlgorythms.Extensions.ListExtensions;

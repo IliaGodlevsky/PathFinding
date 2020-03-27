@@ -5,8 +5,7 @@ namespace SearchAlgorythms.Algorythms.Statistics
     public class WeightedGraphSearchAlgoStatistics : AbstractStatistics
     {
         private int pathLength;
-        public override string Statistics => base.Statistics + "\nPath length: " + pathLength
-            + "\nCells visited: " + visitedCells;
+        public override string Statistics => base.Statistics + "\nPath length: " + pathLength;
 
         public override void BeginCollectStatistic()
         {
