@@ -8,8 +8,6 @@ namespace SearchAlgorythms.DelegatedMethods
 {
     public static class DelegatedMethod
     {
-        public delegate bool Pred(double min, IGraphTop top);
-
         public static void Pause(int milliseconds)
         {
             var sw = new Stopwatch();
