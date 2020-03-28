@@ -45,21 +45,21 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Algorithms\GraphCreateAlgorythm\ICreateAlgorythm.cs" />
-    <Compile Include="Algorithms\GraphCreateAlgorythm\OnInfoButtonGraphCreater.cs" />
-    <Compile Include="Algorithms\GraphCreateAlgorythm\RandomButtonGraphCreate.cs" />
-    <Compile Include="Algorithms\BoundSetter.cs" />
-    <Compile Include="Algorithms\GraphCreateAlgorythm\RandomValuedButtonGraphCreate.cs" />
-    <Compile Include="Algorithms\NeighbourSetter.cs" />
-    <Compile Include="Algorithms\SearchAlgorithm\AStartAlgorithm.cs" />
-    <Compile Include="Algorithms\SearchAlgorithm\BestFirstSearch.cs" />
-    <Compile Include="Algorithms\SearchAlgorithm\DijkstraAlgorythm.cs" />
-    <Compile Include="Algorithms\SearchAlgorithm\GreedyAlgorithm.cs" />
-    <Compile Include="Algorithms\SearchAlgorithm\ISearchAlgorythm.cs" />
-    <Compile Include="Algorithms\SearchAlgorithm\WideSearch.cs" />
-    <Compile Include="Algorithms\Statistics\AbstractStatistics.cs" />
-    <Compile Include="Algorithms\Statistics\UnweightedGraphSearchAlgoStatistics.cs" />
-    <Compile Include="Algorithms\Statistics\WeightedGraphSearchAlgoStatistics.cs" />
+    <Compile Include="Algorythms\GraphCreateAlgorythm\ICreateAlgorythm.cs" />
+    <Compile Include="Algorythms\GraphCreateAlgorythm\OnInfoButtonGraphCreater.cs" />
+    <Compile Include="Algorythms\GraphCreateAlgorythm\RandomButtonGraphCreate.cs" />
+    <Compile Include="Algorythms\BoundSetter.cs" />
+    <Compile Include="Algorythms\GraphCreateAlgorythm\RandomValuedButtonGraphCreate.cs" />
+    <Compile Include="Algorythms\NeighbourSetter.cs" />
+    <Compile Include="Algorythms\SearchAlgorythm\AStartAlgorithm.cs" />
+    <Compile Include="Algorythms\SearchAlgorythm\BestFirstSearch.cs" />
+    <Compile Include="Algorythms\SearchAlgorythm\DijkstraAlgorythm.cs" />
+    <Compile Include="Algorythms\SearchAlgorythm\GreedyAlgorithm.cs" />
+    <Compile Include="Algorythms\SearchAlgorythm\ISearchAlgorythm.cs" />
+    <Compile Include="Algorythms\SearchAlgorythm\WideSearch.cs" />
+    <Compile Include="Algorythms\Statistics\AbstractStatistics.cs" />
+    <Compile Include="Algorythms\Statistics\UnweightedGraphSearchAlgoStatistics.cs" />
+    <Compile Include="Algorythms\Statistics\WeightedGraphSearchAlgoStatistics.cs" />
     <Compile Include="DelegatedMethods\DelegatedMethods.cs" />
     <Compile Include="Extensions\IEnumerableExtension.cs" />
     <Compile Include="Extensions\ListExtension\ListExtensions.cs" />

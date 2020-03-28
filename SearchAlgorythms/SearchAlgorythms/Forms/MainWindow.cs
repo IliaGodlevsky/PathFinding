@@ -1,23 +1,23 @@
-﻿using SearchAlgorithms.Algorithms.IGraphFactory;
-using SearchAlgorithms.Algorithms.SearchAlgorithm;
-using SearchAlgorithms.Extensions;
-using SearchAlgorithms.Graph;
-using SearchAlgorithms.GraphLoader;
-using SearchAlgorithms.GraphSaver;
-using SearchAlgorithms.Top;
+﻿using SearchAlgorythms.Algorythms.GraphCreateAlgorythm;
+using SearchAlgorythms.Algorythms.SearchAlgorythm;
+using SearchAlgorythms.Extensions;
+using SearchAlgorythms.Graph;
+using SearchAlgorythms.GraphLoader;
+using SearchAlgorythms.GraphSaver;
+using SearchAlgorythms.Top;
 using System;
-using SearchAlgorithms.DelegatedMethods;
+using SearchAlgorythms.DelegatedMethods;
 using System.Drawing;
 using System.Windows.Forms;
-using SearchAlgorithms.RoleChanger;
+using SearchAlgorythms.RoleChanger;
 
-namespace SearchAlgorithms
+namespace SearchAlgorythms
 {
     public partial class MainWindow : Form
     {
         private IGraph graph = null;
         private ISearchAlgorithm searchAlgorythm = null;
-        private IGraphFactory createAlgorythm = null;
+        private ICreateAlgorythm createAlgorythm = null;
         private const int BUTTON_POSITION = 29;
         private ButtonGraphTopRoleChanger changer = null;
 
@@ -145,7 +145,7 @@ namespace SearchAlgorithms
             if (!SizeTextBoxTextChanged(widthNumber) 
                 || !SizeTextBoxTextChanged(heightNumber))
                 return;            
-            createAlgorythm = new RandomValuedButtonGraphFactory(percent.Value,
+            createAlgorythm = new RandomValuedButtonGraphCreate(percent.Value,
                 int.Parse(widthNumber.Text), int.Parse(heightNumber.Text),
                 BUTTON_POSITION);
             PrepareGraph(createAlgorythm.GetGraph());           

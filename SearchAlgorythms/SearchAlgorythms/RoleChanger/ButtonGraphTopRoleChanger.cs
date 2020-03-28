@@ -1,15 +1,21 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Drawing;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 using System.Windows.Forms;
-using SearchAlgorithms.Algorithms;
-using SearchAlgorithms.Extensions;
-using SearchAlgorithms.Graph;
-using SearchAlgorithms.Top;
+using SearchAlgorythms.Algorythms;
+using SearchAlgorythms.Extensions;
+using SearchAlgorythms.Graph;
+using SearchAlgorythms.Top;
 
-namespace SearchAlgorithms.RoleChanger
+namespace SearchAlgorythms.RoleChanger
 {
     public class ButtonGraphTopRoleChanger : IGraphTopRoleChanger
     {
-        private readonly IGraph graph;
+        private IGraph graph;
+        private BoundSetter boundSetter = new BoundSetter();
 
         public ButtonGraphTopRoleChanger(IGraph graph)
         {
@@ -34,7 +40,7 @@ namespace SearchAlgorithms.RoleChanger
         {
             if (top.IsSimpleTop)
             {
-                BoundSetter.BreakBoundsBetweenNeighbours(top);
+                boundSetter.BreakBoundsBetweenNeighbours(top);
                 top.Neighbours.Clear();
                 top.IsObstacle = false;
                 top.SetToDefault();
@@ -51,7 +57,7 @@ namespace SearchAlgorithms.RoleChanger
             NeigbourSetter setter = new NeigbourSetter(graph.GetArray());
             var coordinates = graph.GetIndexes(top);
             setter.SetNeighbours(coordinates.Key, coordinates.Value);
-            BoundSetter.SetBoundsBetweenNeighbours(top);
+            boundSetter.SetBoundsBetweenNeighbours(top);
         }
 
         public void Reverse(ref IGraphTop top)

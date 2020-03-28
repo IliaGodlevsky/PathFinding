@@ -1,12 +1,12 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using SearchAlgorithms.Top;
-using SearchAlgorithms.Extensions;
-using SearchAlgorithms.Algorithms.Statistics;
-using SearchAlgorithms.DelegatedMethods;
-using SearchAlgorithms.Extensions.ListExtensions;
+using SearchAlgorythms.Top;
+using SearchAlgorythms.Extensions;
+using SearchAlgorythms.Algorythms.Statistics;
+using SearchAlgorythms.DelegatedMethods;
+using SearchAlgorythms.Extensions.ListExtensions;
 
-namespace SearchAlgorithms.Algorithms.SearchAlgorithm
+namespace SearchAlgorythms.Algorythms.SearchAlgorythm
 {
     public class WideSearchAlgorithm : ISearchAlgorithm
     {

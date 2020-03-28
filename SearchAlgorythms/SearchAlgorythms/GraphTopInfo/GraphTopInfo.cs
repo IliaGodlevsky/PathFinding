@@ -1,8 +1,8 @@
-﻿using SearchAlgorithms.Top;
+﻿using SearchAlgorythms.Top;
 using System;
 using System.Drawing;
 
-namespace SearchAlgorithms
+namespace SearchAlgorythms
 {
     [Serializable]
     public class GraphTopInfo : IGraphTopInfo

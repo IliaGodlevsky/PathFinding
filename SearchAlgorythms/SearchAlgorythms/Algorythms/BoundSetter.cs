@@ -1,10 +1,10 @@
-﻿using SearchAlgorithms.Top;
+﻿using SearchAlgorythms.Top;
 
-namespace SearchAlgorithms.Algorithms
+namespace SearchAlgorythms.Algorythms
 {
-    public static class BoundSetter
+    public class BoundSetter
     {
-        public static void SetBoundsBetweenNeighbours(IGraphTop top)
+        public void SetBoundsBetweenNeighbours(IGraphTop top)
         {
             if (top is null)
                 return;
@@ -13,7 +13,7 @@ namespace SearchAlgorithms.Algorithms
                 neigbour.Neighbours.Add(top);
         }
 
-        public static void BreakBoundsBetweenNeighbours(IGraphTop top)
+        public void BreakBoundsBetweenNeighbours(IGraphTop top)
         {
             if (top is null)
                 return;

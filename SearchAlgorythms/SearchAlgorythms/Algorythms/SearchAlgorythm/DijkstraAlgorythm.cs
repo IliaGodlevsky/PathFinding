@@ -1,10 +1,10 @@
 ﻿using System.Collections.Generic;
-using SearchAlgorithms.Algorithms.Statistics;
-using SearchAlgorithms.DelegatedMethods;
-using SearchAlgorithms.Graph;
-using SearchAlgorithms.Top;
+using SearchAlgorythms.Algorythms.Statistics;
+using SearchAlgorythms.DelegatedMethods;
+using SearchAlgorythms.Graph;
+using SearchAlgorythms.Top;
 
-namespace SearchAlgorithms.Algorithms.SearchAlgorithm
+namespace SearchAlgorythms.Algorythms.SearchAlgorythm
 {
     public class DijkstraAlgorithm : ISearchAlgorithm
     {

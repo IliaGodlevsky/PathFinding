@@ -1,6 +1,6 @@
-﻿using SearchAlgorithms.Graph;
+﻿using SearchAlgorythms.Graph;
 
-namespace SearchAlgorithms.GraphSaver
+namespace SearchAlgorythms.GraphSaver
 {
     public interface IGraphSaver
     {

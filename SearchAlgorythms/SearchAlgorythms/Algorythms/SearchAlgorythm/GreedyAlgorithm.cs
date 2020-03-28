@@ -1,11 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
-using SearchAlgorithms.Algorithms.Statistics;
-using SearchAlgorithms.DelegatedMethods;
-using SearchAlgorithms.Extensions;
-using SearchAlgorithms.Top;
+using SearchAlgorythms.Algorythms.Statistics;
+using SearchAlgorythms.DelegatedMethods;
+using SearchAlgorythms.Extensions;
+using SearchAlgorythms.Top;
 
-namespace SearchAlgorithms.Algorithms.SearchAlgorithm
+namespace SearchAlgorythms.Algorythms.SearchAlgorythm
 {
     public class GreedyAlgorithm : ISearchAlgorithm
     {

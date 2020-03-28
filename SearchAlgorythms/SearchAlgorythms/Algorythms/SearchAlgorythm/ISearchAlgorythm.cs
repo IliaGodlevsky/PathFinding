@@ -1,6 +1,6 @@
-﻿using SearchAlgorithms.Top;
+﻿using SearchAlgorythms.Top;
 
-namespace SearchAlgorithms.Algorithms.SearchAlgorithm
+namespace SearchAlgorythms.Algorythms.SearchAlgorythm
 {
     public delegate void PauseCycle(int milliseconds);
 

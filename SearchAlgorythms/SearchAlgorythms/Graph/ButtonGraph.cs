@@ -1,12 +1,12 @@
-﻿using SearchAlgorithms.Algorithms;
-using SearchAlgorithms.Top;
+﻿using SearchAlgorythms.Algorythms;
+using SearchAlgorythms.Top;
 using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Windows.Forms;
 
-namespace SearchAlgorithms.Graph
+namespace SearchAlgorythms.Graph
 {
     public class ButtonGraph : IGraph
     {
@@ -14,6 +14,7 @@ namespace SearchAlgorithms.Graph
         public event MouseEventHandler SetEnd;
 
         private IGraphTop[,] buttons;
+        private readonly BoundSetter boundSetter = new BoundSetter();
 
         public IGraphTop[,] GetArray()
         {

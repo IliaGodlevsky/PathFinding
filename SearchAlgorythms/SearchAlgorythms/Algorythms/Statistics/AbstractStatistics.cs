@@ -1,6 +1,6 @@
 ﻿using System.Diagnostics;
 
-namespace SearchAlgorithms.Algorithms.Statistics
+namespace SearchAlgorythms.Algorythms.Statistics
 {
     public abstract class AbstractStatistics
     {

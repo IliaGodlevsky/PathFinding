@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace SearchAlgorithms.Algorithms.Statistics
+namespace SearchAlgorythms.Algorythms.Statistics
 {
     public class UnweightedGraphSearchAlgoStatistics : AbstractStatistics
     {

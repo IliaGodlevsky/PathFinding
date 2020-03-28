@@ -1,4 +1,4 @@
-﻿namespace SearchAlgorithms
+﻿namespace SearchAlgorythms
 {
     partial class MainWindow
     {
@@ -52,8 +52,8 @@
             this.percentOfObstacles = new System.Windows.Forms.Label();
             this.timeOfSearch = new System.Windows.Forms.GroupBox();
             this.time = new System.Windows.Forms.Label();
-            this.Field = new SearchAlgorithms.Forms.FieldControl();
-            this.userControl11 = new SearchAlgorithms.Forms.FieldControl();
+            this.Field = new SearchAlgorythms.Forms.FieldControl();
+            this.userControl11 = new SearchAlgorythms.Forms.FieldControl();
             this.menuStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.percent)).BeginInit();
             this.FieldParams.SuspendLayout();

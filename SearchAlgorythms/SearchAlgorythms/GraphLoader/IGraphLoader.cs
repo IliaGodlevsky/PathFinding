@@ -1,6 +1,6 @@
-﻿using SearchAlgorithms.Graph;
+﻿using SearchAlgorythms.Graph;
 
-namespace SearchAlgorithms.GraphLoader
+namespace SearchAlgorythms.GraphLoader
 {
     public interface IGraphLoader
     {

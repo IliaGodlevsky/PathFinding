@@ -1,10 +1,10 @@
-﻿using SearchAlgorithms.Top;
+﻿using SearchAlgorythms.Top;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Windows.Forms;
 
-namespace SearchAlgorithms.DelegatedMethods
+namespace SearchAlgorythms.DelegatedMethods
 {
     public static class DelegatedMethod
     {
