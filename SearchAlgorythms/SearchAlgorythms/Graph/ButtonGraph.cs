@@ -14,7 +14,7 @@ namespace SearchAlgorythms.Graph
         public event MouseEventHandler SetEnd;
 
         private IGraphTop[,] buttons;
-        private BoundSetter boundSetter = new BoundSetter();
+        private readonly BoundSetter boundSetter = new BoundSetter();
 
         public IGraphTop[,] GetArray()
         {
@@ -108,12 +108,10 @@ namespace SearchAlgorythms.Graph
             foreach(var top in buttons)
             {
                 if (!top.IsObstacle)
-                {
                     top.SetToDefault();
-                    (top as GraphTop).MouseClick -= SetStart;
-                    (top as GraphTop).MouseClick -= SetEnd;
-                    (top as GraphTop).MouseClick += SetStart;
-                }
+                (top as GraphTop).MouseClick -= SetStart;
+                (top as GraphTop).MouseClick -= SetEnd;
+                (top as GraphTop).MouseClick += SetStart;
             }
             Start = null;
             End = null;
