@@ -40,7 +40,7 @@ namespace SearchAlgorythms.RoleChanger
         {
             if (top.IsSimpleTop)
             {
-                boundSetter.BreakBoundsBetweenNeighbours((top as GraphTop));
+                boundSetter.BreakBoundsBetweenNeighbours(top);
                 top.Neighbours.Clear();
                 top.IsObstacle = false;
                 top.SetToDefault();
@@ -57,7 +57,7 @@ namespace SearchAlgorythms.RoleChanger
             NeigbourSetter setter = new NeigbourSetter(graph.GetArray());
             var coordinates = graph.GetIndexes(top);
             setter.SetNeighbours(coordinates.Key, coordinates.Value);
-            boundSetter.SetBoundsBetweenNeighbours(top as GraphTop);
+            boundSetter.SetBoundsBetweenNeighbours(top);
         }
 
         public void Reverse(ref IGraphTop top)
