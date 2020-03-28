@@ -108,12 +108,10 @@ namespace SearchAlgorythms.Graph
             foreach(var top in buttons)
             {
                 if (!top.IsObstacle)
-                {
                     top.SetToDefault();
-                    (top as GraphTop).MouseClick -= SetStart;
-                    (top as GraphTop).MouseClick -= SetEnd;
-                    (top as GraphTop).MouseClick += SetStart;
-                }
+                (top as GraphTop).MouseClick -= SetStart;
+                (top as GraphTop).MouseClick -= SetEnd;
+                (top as GraphTop).MouseClick += SetStart;
             }
             Start = null;
             End = null;
