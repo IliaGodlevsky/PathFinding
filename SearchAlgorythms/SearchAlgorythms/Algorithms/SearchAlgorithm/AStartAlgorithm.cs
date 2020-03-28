@@ -1,7 +1,7 @@
-﻿using SearchAlgorythms.Graph;
-using SearchAlgorythms.Top;
+﻿using SearchAlgorithms.Graph;
+using SearchAlgorithms.Top;
 
-namespace SearchAlgorythms.Algorythms.SearchAlgorythm
+namespace SearchAlgorithms.Algorithms.SearchAlgorithm
 {
     
     public class AStarAlgorithm : DijkstraAlgorithm

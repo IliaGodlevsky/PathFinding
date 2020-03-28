@@ -1,7 +1,7 @@
-﻿using SearchAlgorythms.Top;
+﻿using SearchAlgorithms.Top;
 using System;
 
-namespace SearchAlgorythms.RoleChanger
+namespace SearchAlgorithms.RoleChanger
 {
     public interface IGraphTopRoleChanger
     {

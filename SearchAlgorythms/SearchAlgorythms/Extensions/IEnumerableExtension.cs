@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace SearchAlgorythms.Extensions
+namespace SearchAlgorithms.Extensions
 {
     public static class IEnumerableExtension
     {

@@ -1,6 +1,6 @@
 ﻿using System.Drawing;
 
-namespace SearchAlgorythms
+namespace SearchAlgorithms
 {
     public interface IGraphTopInfo
     {

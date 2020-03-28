@@ -1,17 +1,16 @@
-﻿using SearchAlgorythms.Top;
+﻿using SearchAlgorithms.Top;
 using System;
 using System.Drawing;
-using System.Windows.Forms;
 
-namespace SearchAlgorythms.Algorythms.GraphCreateAlgorythm
+namespace SearchAlgorithms.Algorithms.IGraphFactory
 {
-    public class RandomButtonGraphCreate : ICreateAlgorythm
+    public class RandomButtonGraphFactory : IGraphFactory
     {
         protected Random rand = new Random();
         private readonly IGraphTop[,] graph;
         private const int MAX_PERCENT_OF_OBSTACLES = 100;
 
-        public RandomButtonGraphCreate(int percentOfObstacles, int width, int height, int placeBetweenButtons)
+        public RandomButtonGraphFactory(int percentOfObstacles, int width, int height, int placeBetweenButtons)
         {
             graph = new IGraphTop[width, height];
             for (int x = 0; x < width; x++)

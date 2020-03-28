@@ -2,7 +2,7 @@
 using System.Drawing;
 using System.Windows.Forms;
 
-namespace SearchAlgorythms.Top
+namespace SearchAlgorithms.Top
 {
     public class GraphTop : Label, IGraphTop
     {      
@@ -13,7 +13,7 @@ namespace SearchAlgorythms.Top
             IsObstacle = false;
         }
 
-        public GraphTop(IGraphTopInfo info) : this()
+        public GraphTop(IGraphTopInfo info)
         {
             IsObstacle = info.IsObstacle;
             Location = info.Location;

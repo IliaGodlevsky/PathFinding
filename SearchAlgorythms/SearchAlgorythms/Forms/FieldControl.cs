@@ -7,11 +7,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using SearchAlgorythms.Graph;
-using SearchAlgorythms.Top;
-using SearchAlgorythms.Algorythms.GraphCreateAlgorythm;
+using SearchAlgorithms.Graph;
+using SearchAlgorithms.Top;
+using SearchAlgorithms.Algorithms.IGraphFactory;
 
-namespace SearchAlgorythms.Forms
+namespace SearchAlgorithms.Forms
 {
     public partial class FieldControl : UserControl
     {

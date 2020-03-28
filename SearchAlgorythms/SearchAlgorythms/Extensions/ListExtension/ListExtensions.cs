@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace SearchAlgorythms.Extensions.ListExtensions
+namespace SearchAlgorithms.Extensions.ListExtensions
 {
     public static class ListExtension
     {

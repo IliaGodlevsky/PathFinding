@@ -1,9 +1,9 @@
 ﻿using System.Collections.Generic;
-using SearchAlgorythms.DelegatedMethods;
-using SearchAlgorythms.Extensions;
-using SearchAlgorythms.Top;
+using SearchAlgorithms.DelegatedMethods;
+using SearchAlgorithms.Extensions;
+using SearchAlgorithms.Top;
 
-namespace SearchAlgorythms.Algorythms.SearchAlgorythm
+namespace SearchAlgorithms.Algorithms.SearchAlgorithm
 {
     public class BestFirstAlgorithm : WideSearchAlgorithm
     {

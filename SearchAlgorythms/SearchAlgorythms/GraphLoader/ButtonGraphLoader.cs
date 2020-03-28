@@ -2,11 +2,11 @@
 using System.IO;
 using System.Runtime.Serialization.Formatters.Binary;
 using System.Windows.Forms;
-using SearchAlgorythms.Algorythms;
-using SearchAlgorythms.Algorythms.GraphCreateAlgorythm;
-using SearchAlgorythms.Graph;
+using SearchAlgorithms.Algorithms;
+using SearchAlgorithms.Algorithms.IGraphFactory;
+using SearchAlgorithms.Graph;
 
-namespace SearchAlgorythms.GraphLoader
+namespace SearchAlgorithms.GraphLoader
 {
     public class ButtonGraphLoader : IGraphLoader
     {
@@ -43,8 +43,8 @@ namespace SearchAlgorythms.GraphLoader
 
         private void Initialise(IGraphTopInfo[,] info)
         {
-            OnInfoButtonGraphCreater creator =
-                new OnInfoButtonGraphCreater(info, placeBetweenButtons);
+            OnInfoButtonGraphFactory creator =
+                new OnInfoButtonGraphFactory(info, placeBetweenButtons);
             if (info == null)
                 return;
             graph = new ButtonGraph(creator.GetGraph());

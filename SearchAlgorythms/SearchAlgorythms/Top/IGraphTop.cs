@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Drawing;
 
-namespace SearchAlgorythms.Top
+namespace SearchAlgorithms.Top
 {
     public interface IGraphTop
     {

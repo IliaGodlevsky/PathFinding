@@ -2,9 +2,9 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Windows.Forms;
-using SearchAlgorythms.Top;
+using SearchAlgorithms.Top;
 
-namespace SearchAlgorythms.Graph
+namespace SearchAlgorithms.Graph
 {
     public interface IGraph : IEnumerable
     {

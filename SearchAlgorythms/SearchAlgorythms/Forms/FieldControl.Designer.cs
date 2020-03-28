@@ -1,4 +1,4 @@
-﻿namespace SearchAlgorythms.Forms
+﻿namespace SearchAlgorithms.Forms
 {
     partial class FieldControl
     {

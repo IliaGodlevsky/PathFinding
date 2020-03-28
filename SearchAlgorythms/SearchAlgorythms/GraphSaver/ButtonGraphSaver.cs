@@ -6,9 +6,9 @@ using System.Runtime.Serialization.Formatters.Binary;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using SearchAlgorythms.Graph;
+using SearchAlgorithms.Graph;
 
-namespace SearchAlgorythms.GraphSaver
+namespace SearchAlgorithms.GraphSaver
 {
     public class ButtonGraphSaver : IGraphSaver
     {
