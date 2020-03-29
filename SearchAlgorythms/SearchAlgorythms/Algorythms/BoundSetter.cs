@@ -20,6 +20,7 @@ namespace SearchAlgorythms.Algorythms
             var neighbours = top.Neighbours;
             foreach (var neigbour in neighbours)
                 neigbour.Neighbours.Remove(top);
+            top.Neighbours.Clear();
         }
     }
 }
