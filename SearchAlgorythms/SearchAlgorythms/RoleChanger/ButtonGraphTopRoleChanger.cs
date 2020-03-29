@@ -36,7 +36,7 @@ namespace SearchAlgorythms.RoleChanger
             }
         }
 
-        public void MakeObstacle(ref IGraphTop top)
+        private void MakeObstacle(ref IGraphTop top)
         {
             if (top.IsSimpleTop)
             {
@@ -48,7 +48,7 @@ namespace SearchAlgorythms.RoleChanger
             }
         }
 
-        public void MakeTop(ref IGraphTop top)
+        private void MakeTop(ref IGraphTop top)
         {
             Random rand = new Random();
             top.IsObstacle = false;
@@ -60,7 +60,7 @@ namespace SearchAlgorythms.RoleChanger
             boundSetter.SetBoundsBetweenNeighbours(top);
         }
 
-        public void Reverse(ref IGraphTop top)
+        private void Reverse(ref IGraphTop top)
         {
             if (top.IsObstacle)
                 MakeTop(ref top);
