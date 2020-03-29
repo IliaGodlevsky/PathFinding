@@ -48,8 +48,7 @@ namespace SearchAlgorythms.Algorythms.SearchAlgorythm
             {
                 if (neigbour.Value == 0 && !neigbour.IsEnd)
                 {
-                    neigbour.Value = top.Value + 
-                        DelegatedMethod.GetChebyshevDistance(neigbour, end);
+                    neigbour.Value = top.Value + 1;
                     waveQueue.Enqueue(neigbour);
                 }
             }

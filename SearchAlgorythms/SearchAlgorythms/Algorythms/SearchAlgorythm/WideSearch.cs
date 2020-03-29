@@ -53,8 +53,7 @@ namespace SearchAlgorythms.Algorythms.SearchAlgorythm
             foreach (var neigbour in button.Neighbours)
             {
                 if (neigbour.Value == 0 && !neigbour.IsStart)
-                    neigbour.Value = button.Value + 
-                        DelegatedMethod.GetChebyshevDistance(neigbour, end);
+                    neigbour.Value = button.Value + 1;
                 if (!neigbour.IsVisited)
                     queue.Enqueue(neigbour);
             }
@@ -84,6 +83,8 @@ namespace SearchAlgorythms.Algorythms.SearchAlgorythm
             while (IsRightPath(top))
             {
                 top = GoChippestNeighbour(top);
+                if (top == null)
+                    continue;
                 if (top.IsSimpleTop)
                     top.MarkAsPath();
                 statCollector.AddStep();
