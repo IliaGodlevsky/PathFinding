@@ -1,7 +1,5 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Windows.Forms;
+﻿using System.Collections;
+using System.Drawing;
 using SearchAlgorythms.Top;
 
 namespace SearchAlgorythms.Graph
@@ -15,7 +13,7 @@ namespace SearchAlgorythms.Graph
 
         IGraphTop[,] GetArray();
         int GetHeight();
-        KeyValuePair<int, int> GetIndexes(IGraphTop top);
+        Point GetIndexes(IGraphTop top);
         IGraphTopInfo[,] GetInfo();
         int GetSize();
         int GetWidth();

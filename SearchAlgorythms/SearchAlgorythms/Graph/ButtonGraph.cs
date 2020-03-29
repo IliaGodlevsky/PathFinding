@@ -1,8 +1,6 @@
 ﻿using SearchAlgorythms.Algorythms;
 using SearchAlgorythms.Top;
-using System;
 using System.Collections;
-using System.Collections.Generic;
 using System.Drawing;
 using System.Windows.Forms;
 
@@ -14,7 +12,7 @@ namespace SearchAlgorythms.Graph
         public event MouseEventHandler SetEnd;
 
         private IGraphTop[,] buttons;
-        private BoundSetter boundSetter = new BoundSetter();
+        private readonly BoundSetter boundSetter = new BoundSetter();
 
         public IGraphTop[,] GetArray()
         {
@@ -73,9 +71,9 @@ namespace SearchAlgorythms.Graph
         public void Insert(IGraphTop top)
         {
             var coordiantes = GetIndexes(top);
-            buttons[coordiantes.Key, coordiantes.Value] = top;
+            buttons[coordiantes.X, coordiantes.Y] = top;
             NeigbourSetter setter = new NeigbourSetter(buttons);
-            setter.SetNeighbours(coordiantes.Key, coordiantes.Value);
+            setter.SetNeighbours(coordiantes.X, coordiantes.Y);
         }
 
         public int GetObstaclePercent()
@@ -87,7 +85,7 @@ namespace SearchAlgorythms.Graph
             return numberOfObstacles * 100 / GetSize();
         }
 
-        public KeyValuePair<int,int> GetIndexes(IGraphTop top)
+        public Point GetIndexes(IGraphTop top)
         {
             for (int i = 0; i < GetWidth(); i++)
             {
@@ -95,10 +93,10 @@ namespace SearchAlgorythms.Graph
                 {
                     if ((top as GraphTop).Location 
                         == (buttons[i, j] as GraphTop).Location)
-                        return new KeyValuePair<int, int>(i, j);
+                        return new Point(i, j);
                 }
             }
-            return new KeyValuePair<int, int>(GetWidth(), GetHeight());
+            return new Point(GetWidth(), GetHeight());
         }
 
         public void Refresh()
