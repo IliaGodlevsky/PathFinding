@@ -55,7 +55,7 @@ namespace SearchAlgorythms.RoleChanger
             top.MarkAsGraphTop();
             (top as GraphTop).Text = (rand.Next(9) + 1).ToString();
             NeigbourSetter setter = new NeigbourSetter(graph.GetArray());
-            var coordinates = graph.GetIndexes(top);
+            var coordinates = (graph as ButtonGraph).GetIndexes(top);
             setter.SetNeighbours(coordinates.X, coordinates.Y);
             boundSetter.SetBoundsBetweenNeighbours(top);
         }

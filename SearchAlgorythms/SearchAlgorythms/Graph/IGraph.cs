@@ -13,7 +13,6 @@ namespace SearchAlgorythms.Graph
 
         IGraphTop[,] GetArray();
         int GetHeight();
-        Point GetIndexes(IGraphTop top);
         IGraphTopInfo[,] GetInfo();
         int GetSize();
         int GetWidth();
