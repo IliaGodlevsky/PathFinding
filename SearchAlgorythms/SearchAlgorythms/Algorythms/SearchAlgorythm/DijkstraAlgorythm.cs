@@ -9,7 +9,7 @@ namespace SearchAlgorythms.Algorythms.SearchAlgorythm
     public class DijkstraAlgorithm : ISearchAlgorithm
     {
         protected readonly IGraphTop end;
-        protected List<IGraphTop> tops = new List<IGraphTop>();
+        private List<IGraphTop> tops = new List<IGraphTop>();
         private WeightedGraphSearchAlgoStatistics statCollector;
 
         public DijkstraAlgorithm(IGraphTop end, IGraph graph)
