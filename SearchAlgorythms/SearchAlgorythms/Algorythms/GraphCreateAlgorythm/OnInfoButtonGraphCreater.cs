@@ -7,7 +7,7 @@ namespace SearchAlgorythms.Algorythms.GraphCreateAlgorythm
     {
         private readonly IGraphTop[,] buttons = null;
 
-        public OnInfoButtonGraphCreater(IGraphTopInfo[,] info, int placeBetweenButtons)
+        public OnInfoButtonGraphCreater(IGraphTopInfo[,] info)
         {
             if (info == null)
                 return;

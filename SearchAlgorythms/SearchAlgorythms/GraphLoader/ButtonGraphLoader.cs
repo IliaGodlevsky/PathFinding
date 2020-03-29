@@ -44,13 +44,12 @@ namespace SearchAlgorythms.GraphLoader
         private void Initialise(IGraphTopInfo[,] info)
         {
             OnInfoButtonGraphCreater creator =
-                new OnInfoButtonGraphCreater(info, placeBetweenButtons);
+                new OnInfoButtonGraphCreater(info);
             if (info == null)
                 return;
             graph = new ButtonGraph(creator.GetGraph());
             NeigbourSetter setter = new NeigbourSetter(graph.GetArray());
             setter.SetNeighbours();
         }
-
     }
 }
