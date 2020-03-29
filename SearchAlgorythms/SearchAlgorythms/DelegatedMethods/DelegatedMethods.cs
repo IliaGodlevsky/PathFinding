@@ -14,6 +14,7 @@ namespace SearchAlgorythms.DelegatedMethods
             sw.Start();
             while (sw.ElapsedMilliseconds < milliseconds)
                 Application.DoEvents();
+            sw.Stop();
         }
 
         public static double GetMinValue(List<IGraphTop> tops, 
