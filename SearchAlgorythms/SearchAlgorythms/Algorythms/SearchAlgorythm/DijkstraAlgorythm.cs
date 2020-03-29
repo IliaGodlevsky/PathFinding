@@ -38,7 +38,7 @@ namespace SearchAlgorythms.Algorythms.SearchAlgorythm
                 if (top.IsSimpleTop)
                     top.MarkAsPath();
                 statCollector.AddLength(int.Parse(temp.Text));
-                Pause(20);
+                Pause(50);
             }
         }
 
@@ -89,7 +89,7 @@ namespace SearchAlgorythms.Algorythms.SearchAlgorythm
                     break;
                 if (IsRightCellToVisit(currentTop))
                     Visit(currentTop);
-                Pause(2);
+                Pause(5);
             } while (!IsDestination(currentTop));
             statCollector.StopCollectStatistics();
             return end.IsVisited;
