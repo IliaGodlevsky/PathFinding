@@ -83,8 +83,6 @@ namespace SearchAlgorythms.Algorythms.SearchAlgorythm
             while (IsRightPath(top))
             {
                 top = GoChippestNeighbour(top);
-                if (top == null)
-                    continue;
                 if (top.IsSimpleTop)
                     top.MarkAsPath();
                 statCollector.AddStep();
