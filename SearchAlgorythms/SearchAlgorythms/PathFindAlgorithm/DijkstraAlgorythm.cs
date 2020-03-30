@@ -9,19 +9,13 @@ namespace SearchAlgorythms.Algorithm
     public class DijkstraAlgorithm : IPathFindAlgorithm
     {
         protected readonly IGraphTop end;
-        private List<IGraphTop> tops = new List<IGraphTop>();
+        private List<IGraphTop> queue = new List<IGraphTop>();
         private WeightedGraphSearchAlgoStatistics statCollector;
 
         public DijkstraAlgorithm(IGraphTop end, IGraph graph)
         {
-            foreach(var top in graph)
-            {
-                if (!(top as IGraphTop).IsObstacle)
-                {
-                    tops.Add(top as IGraphTop);
-                    (top as IGraphTop).Value = double.PositiveInfinity;
-                }
-            }
+            foreach (var top in graph)
+                (top as IGraphTop).Value = double.PositiveInfinity;
             statCollector = new WeightedGraphSearchAlgoStatistics();
             this.end = end;
         }
@@ -44,9 +38,9 @@ namespace SearchAlgorythms.Algorithm
 
         private IGraphTop GetChippestUnvisitedTop()
         {
-            tops = tops.Where(t => !t.IsVisited).ToList();
-            tops.Sort((t1, t2) => t1.Value.CompareTo(t2.Value));
-            return tops.First();
+            queue = queue.Where(t => !t.IsVisited).ToList();
+            queue.Sort((t1, t2) => t1.Value.CompareTo(t2.Value));
+            return queue.First();
         }
 
         public virtual double GetPathValue(IGraphTop neighbour, IGraphTop top)
@@ -61,8 +55,9 @@ namespace SearchAlgorythms.Algorithm
             var neighbours = button.Neighbours;
             foreach(var neighbour in neighbours)
             {
+                queue.Add(neighbour);
                 if (neighbour.Value > GetPathValue(neighbour, button))
-                {                  
+                {                    
                     neighbour.Value = GetPathValue(neighbour, button);
                     neighbour.ParentTop = button;
                 }
