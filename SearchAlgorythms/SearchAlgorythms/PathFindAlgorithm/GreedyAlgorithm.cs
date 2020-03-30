@@ -1,13 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using SearchAlgorythms.Algorythms.Statistics;
-using SearchAlgorythms.DelegatedMethods;
-using SearchAlgorythms.Extensions;
+﻿using System.Collections.Generic;
+using System.Linq;
+using System.Windows.Forms;
+using SearchAlgorythms.Extensions.ListExtensions;
+using SearchAlgorythms.Statistics;
 using SearchAlgorythms.Top;
 
-namespace SearchAlgorythms.Algorythms.SearchAlgorythm
+namespace SearchAlgorythms.Algorithm
 {
-    public class GreedyAlgorithm : ISearchAlgorithm
+    public class GreedyAlgorithm : IPathFindAlgorithm
     {
         private Stack<IGraphTop> stack = new Stack<IGraphTop>();
         private WeightedGraphSearchAlgoStatistics statCollector;
@@ -21,11 +21,15 @@ namespace SearchAlgorythms.Algorythms.SearchAlgorythm
 
         private IGraphTop GoChippestNeighbour(IGraphTop top)
         {
-            bool predicate(IGraphTop t) => !t.IsVisited || t.IsEnd;
-            double func(IGraphTop t) => int.Parse(t.Text);
-            int min = (int)DelegatedMethod.GetMinValue(top.Neighbours, 
-               predicate, func);
-            return top.Neighbours.Find(t => min == func(t) && predicate(t));
+            List<IGraphTop> neighbours = top.Neighbours.Count(t => t.IsVisited) == 0 
+                ? top.Neighbours : top.Neighbours.Where(t => !t.IsVisited).ToList();
+            neighbours.Shuffle();
+            if (neighbours.Any())
+            {
+                double min = neighbours.Min(t => int.Parse(t.Text));
+                return neighbours.Find(t => t.Text == min.ToString());
+            }
+            return null;
         }
 
         public PauseCycle Pause { set; get; }
@@ -40,7 +44,7 @@ namespace SearchAlgorythms.Algorythms.SearchAlgorythm
                 if (top.IsSimpleTop)
                     top.MarkAsPath();
                 statCollector.AddLength(int.Parse(temp.Text));
-                Pause(50);
+                Pause(35);
             }
         }
 
@@ -63,7 +67,7 @@ namespace SearchAlgorythms.Algorythms.SearchAlgorythm
                 }
                 else
                     currentTop = stack.Pop();
-                Pause(5);
+                Pause(20);
             }
             statCollector.StopCollectStatistics();
             return end.IsVisited;
@@ -71,7 +75,7 @@ namespace SearchAlgorythms.Algorythms.SearchAlgorythm
 
         private bool IsDestination(IGraphTop top)
         {
-            return top.IsEnd && top.IsVisited || stack.IsEmpty();
+            return top.IsEnd && top.IsVisited || !stack.Any();
         }
 
         private bool IsRightCellToVisit(IGraphTop top)

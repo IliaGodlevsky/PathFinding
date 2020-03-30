@@ -45,23 +45,23 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Algorythms\GraphCreateAlgorythm\ICreateAlgorythm.cs" />
-    <Compile Include="Algorythms\GraphCreateAlgorythm\OnInfoButtonGraphCreater.cs" />
-    <Compile Include="Algorythms\GraphCreateAlgorythm\RandomButtonGraphCreate.cs" />
-    <Compile Include="Algorythms\BoundSetter.cs" />
-    <Compile Include="Algorythms\GraphCreateAlgorythm\RandomValuedButtonGraphCreate.cs" />
-    <Compile Include="Algorythms\NeighbourSetter.cs" />
-    <Compile Include="Algorythms\SearchAlgorythm\AStartAlgorithm.cs" />
-    <Compile Include="Algorythms\SearchAlgorythm\BestFirstSearch.cs" />
-    <Compile Include="Algorythms\SearchAlgorythm\DijkstraAlgorythm.cs" />
-    <Compile Include="Algorythms\SearchAlgorythm\GreedyAlgorithm.cs" />
-    <Compile Include="Algorythms\SearchAlgorythm\ISearchAlgorythm.cs" />
-    <Compile Include="Algorythms\SearchAlgorythm\WideSearch.cs" />
-    <Compile Include="Algorythms\Statistics\AbstractStatistics.cs" />
-    <Compile Include="Algorythms\Statistics\UnweightedGraphSearchAlgoStatistics.cs" />
-    <Compile Include="Algorythms\Statistics\WeightedGraphSearchAlgoStatistics.cs" />
-    <Compile Include="DelegatedMethods\DelegatedMethods.cs" />
-    <Compile Include="Extensions\IEnumerableExtension.cs" />
+    <Compile Include="DistanceCalculator\DistanceCalculator.cs" />
+    <Compile Include="GraphFactory\IGraphFactory.cs" />
+    <Compile Include="GraphFactory\OnInfoButtonGraphFactory.cs" />
+    <Compile Include="GraphFactory\RandomButtonGraphFactory.cs" />
+    <Compile Include="BoundSetter.cs" />
+    <Compile Include="GraphFactory\RandomValuedButtonGraphFactory.cs" />
+    <Compile Include="NeighbourSetter.cs" />
+    <Compile Include="PathFindAlgorithm\AStarAlgorithm.cs" />
+    <Compile Include="PathFindAlgorithm\BestFirstSearch.cs" />
+    <Compile Include="PathFindAlgorithm\DijkstraAlgorythm.cs" />
+    <Compile Include="PathFindAlgorithm\GreedyAlgorithm.cs" />
+    <Compile Include="PathFindAlgorithm\IPathFindAlgorithm.cs" />
+    <Compile Include="PathFindAlgorithm\WidePathFindAlgorithm.cs" />
+    <Compile Include="PauseMaker\PauseMaker.cs" />
+    <Compile Include="Statistics\AbstractStatistics.cs" />
+    <Compile Include="Statistics\UnweightedGraphSearchAlgoStatistics.cs" />
+    <Compile Include="Statistics\WeightedGraphSearchAlgoStatistics.cs" />
     <Compile Include="Extensions\ListExtension\ListExtensions.cs" />
     <Compile Include="Forms\MainWindow.cs">
       <SubType>Form</SubType>

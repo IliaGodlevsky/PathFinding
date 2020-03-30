@@ -1,11 +1,10 @@
 ﻿using System.Collections.Generic;
-using SearchAlgorythms.DelegatedMethods;
-using SearchAlgorythms.Extensions;
+using System.Linq;
 using SearchAlgorythms.Top;
 
-namespace SearchAlgorythms.Algorythms.SearchAlgorythm
+namespace SearchAlgorythms.Algorithm
 {
-    public class BestFirstAlgorithm : WideSearchAlgorithm
+    public class BestFirstAlgorithm : WidePathFindAlgorithm
     {
         private Queue<IGraphTop> waveQueue = new Queue<IGraphTop>();
 
@@ -18,7 +17,7 @@ namespace SearchAlgorythms.Algorythms.SearchAlgorythm
         {
             var top = end;
             MarkTop(top);
-            while (!top.IsStart && !waveQueue.IsEmpty())
+            while (!top.IsStart && waveQueue.Any())
             {
                 top = waveQueue.Dequeue();
                 MarkTop(top);

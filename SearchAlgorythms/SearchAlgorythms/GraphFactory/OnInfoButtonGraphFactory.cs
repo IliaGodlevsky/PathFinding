@@ -1,13 +1,12 @@
 ﻿using SearchAlgorythms.Top;
-using System.Drawing;
 
-namespace SearchAlgorythms.Algorythms.GraphCreateAlgorythm
+namespace SearchAlgorythms.GraphFactory
 {
-    public class OnInfoButtonGraphCreater : ICreateAlgorythm
+    public class OnInfoButtonGraphFactory : IGraphFactory
     {
         private readonly IGraphTop[,] buttons = null;
 
-        public OnInfoButtonGraphCreater(IGraphTopInfo[,] info)
+        public OnInfoButtonGraphFactory(IGraphTopInfo[,] info)
         {
             if (info == null)
                 return;

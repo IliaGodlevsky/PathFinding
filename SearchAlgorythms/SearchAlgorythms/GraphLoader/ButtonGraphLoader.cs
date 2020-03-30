@@ -2,9 +2,8 @@
 using System.IO;
 using System.Runtime.Serialization.Formatters.Binary;
 using System.Windows.Forms;
-using SearchAlgorythms.Algorythms;
-using SearchAlgorythms.Algorythms.GraphCreateAlgorythm;
 using SearchAlgorythms.Graph;
+using SearchAlgorythms.GraphFactory;
 
 namespace SearchAlgorythms.GraphLoader
 {
@@ -43,8 +42,8 @@ namespace SearchAlgorythms.GraphLoader
 
         private void Initialise(IGraphTopInfo[,] info)
         {
-            OnInfoButtonGraphCreater creator =
-                new OnInfoButtonGraphCreater(info);
+            OnInfoButtonGraphFactory creator =
+                new OnInfoButtonGraphFactory(info);
             if (info == null)
                 return;
             graph = new ButtonGraph(creator.GetGraph());

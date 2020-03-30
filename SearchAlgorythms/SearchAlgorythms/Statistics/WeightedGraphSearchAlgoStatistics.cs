@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace SearchAlgorythms.Algorythms.Statistics
+namespace SearchAlgorythms.Statistics
 {
     public class WeightedGraphSearchAlgoStatistics : AbstractStatistics
     {

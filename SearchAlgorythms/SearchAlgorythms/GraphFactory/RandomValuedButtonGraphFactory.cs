@@ -1,10 +1,10 @@
 ﻿using SearchAlgorythms.Top;
 
-namespace SearchAlgorythms.Algorythms.GraphCreateAlgorythm
+namespace SearchAlgorythms.GraphFactory
 {
-    public class RandomValuedButtonGraphCreate : RandomButtonGraphCreate
+    public class RandomValuedButtonGraphFactory : RandomButtonGraphFactory
     {
-        public RandomValuedButtonGraphCreate(int percentOfObstacles, 
+        public RandomValuedButtonGraphFactory(int percentOfObstacles, 
             int width, int height, int placeBetweenButtons) : base(percentOfObstacles,
                 width, height, placeBetweenButtons)
         {

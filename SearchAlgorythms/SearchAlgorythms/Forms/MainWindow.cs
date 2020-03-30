@@ -1,24 +1,23 @@
-﻿using SearchAlgorythms.Algorythms.GraphCreateAlgorythm;
-using SearchAlgorythms.Algorythms.SearchAlgorythm;
-using SearchAlgorythms.Extensions;
-using SearchAlgorythms.Graph;
+﻿using SearchAlgorythms.Graph;
 using SearchAlgorythms.GraphLoader;
 using SearchAlgorythms.GraphSaver;
 using SearchAlgorythms.Top;
 using System;
-using SearchAlgorythms.DelegatedMethods;
 using System.Drawing;
 using System.Windows.Forms;
 using SearchAlgorythms.RoleChanger;
+using SearchAlgorythms.Algorithm;
+using SearchAlgorythms.GraphFactory;
+using System.Linq;
 
 namespace SearchAlgorythms
 {
     public partial class MainWindow : Form
     {
         private IGraph graph = null;
-        private ISearchAlgorithm searchAlgorythm = null;
-        private ICreateAlgorythm createAlgorythm = null;
-        private const int BUTTON_POSITION = 29;
+        private IPathFindAlgorithm pathFindAlgorithm = null;
+        private IGraphFactory createAlgorythm = null;
+        private const int BUTTON_POSITION = 27;
         private ButtonGraphTopRoleChanger changer = null;
 
         public MainWindow()
@@ -30,8 +29,7 @@ namespace SearchAlgorythms
         {
             Field.BorderStyle = BorderStyle.FixedSingle;
             percent.Value = obstaclePercent;
-            percentTextBox.Text = percent.Value.ToString();
-            percentTextBox.Update();
+            PreparePercentBar();
             widthNumber.Text = graphWidth.ToString();
             heightNumber.Text = graphHeight.ToString();
             widthNumber.Update();
@@ -42,13 +40,13 @@ namespace SearchAlgorythms
 
         private void SearchAlgorythms_Load(object sender, EventArgs e)
         {
-            PrepareWindow(obstaclePercent: 40, graphWidth: 25, graphHeight: 18);
+            PrepareWindow(obstaclePercent: 40, graphWidth: 35, graphHeight: 23);
             Create(sender, e);
         }
 
         private bool IsRightDestination(GraphTop top)
         {
-            return !top.Neighbours.IsEmpty() && top.IsSimpleTop;
+            return !top.Neighbours.Any() && top.IsSimpleTop;
         }
 
         private void AddGraphToControls()
@@ -78,37 +76,37 @@ namespace SearchAlgorythms
 
         private void WideSearchToolStripMenuItem(object sender, EventArgs e)
         {
-            searchAlgorythm = new WideSearchAlgorithm(graph.End);
+            pathFindAlgorithm = new WidePathFindAlgorithm(graph.End);
             StartSearchPath();
         }
 
         private void DijkstraAlgorythmToolStripMenuItem(object sender, EventArgs e)
         {
-            searchAlgorythm = new DijkstraAlgorithm(graph.End, graph);
+            pathFindAlgorithm = new DijkstraAlgorithm(graph.End, graph);
             StartSearchPath();
         }
 
         private void GreedySearchToolStripMenuItem(object sender, EventArgs e)
         {
-            searchAlgorythm = new GreedyAlgorithm(graph.End);
+            pathFindAlgorithm = new GreedyAlgorithm(graph.End);
             StartSearchPath();
         }
 
         private void BestfirstWideSearchToolStripMenuItem(object sender, EventArgs e)
         {
-            searchAlgorythm = new BestFirstAlgorithm(graph.End);
+            pathFindAlgorithm = new BestFirstAlgorithm(graph.End);
             StartSearchPath();
         }
 
         private void StartSearchPath()
         {
-            searchAlgorythm.Pause = DelegatedMethod.Pause;
-            if (searchAlgorythm.FindDestionation(graph.Start))
+            pathFindAlgorithm.Pause = PauseMaker.PauseMaker.WinFormsPause;
+            if (pathFindAlgorithm.FindDestionation(graph.Start))
             {
-                searchAlgorythm.DrawPath();
-                time.Text = searchAlgorythm.GetStatistics();
+                pathFindAlgorithm.DrawPath();
+                time.Text = pathFindAlgorithm.GetStatistics();
                 time.Update();
-                searchAlgorythm = null;
+                pathFindAlgorithm = null;
                 graph.Start = null;
                 graph.End = null;
             }
@@ -145,7 +143,7 @@ namespace SearchAlgorythms
             if (!SizeTextBoxTextChanged(widthNumber) 
                 || !SizeTextBoxTextChanged(heightNumber))
                 return;            
-            createAlgorythm = new RandomValuedButtonGraphCreate(percent.Value,
+            createAlgorythm = new RandomValuedButtonGraphFactory(percent.Value,
                 int.Parse(widthNumber.Text), int.Parse(heightNumber.Text),
                 BUTTON_POSITION);
             PrepareGraph(createAlgorythm.GetGraph());           
@@ -197,20 +195,19 @@ namespace SearchAlgorythms
             time.Text = "";
             time.Update();
             percent.Value = graph.GetObstaclePercent();
-            percentTextBox.Text = percent.Value.ToString();
-            percentTextBox.Update();
+            PreparePercentBar();
         }
 
         private void ASearchToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            searchAlgorythm = new AStarAlgorithm(graph.End, graph);
-            (searchAlgorythm as AStarAlgorithm).Heuristic = DelegatedMethod.GetChebyshevDistance;
+            pathFindAlgorithm = new AStarAlgorithm(graph.End, graph);
+            (pathFindAlgorithm as AStarAlgorithm).HeuristicFunction = 
+                DistanceCalculator.DistanceCalculator.GetChebyshevDistance;
             StartSearchPath();
         }
 
         private void PreparePercentBar()
         {
-            percent.Value = graph.GetObstaclePercent();
             percentTextBox.Text = percent.Value.ToString();
             percentTextBox.Update();
         }

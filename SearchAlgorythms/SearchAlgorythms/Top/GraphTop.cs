@@ -19,7 +19,6 @@ namespace SearchAlgorythms.Top
             Location = info.Location;
             Text = info.Text;
             BackColor = Color.FromName(info.Colour);
-            SetToDefault();
         }
 
         public bool IsStart { get; set; }
@@ -77,8 +76,8 @@ namespace SearchAlgorythms.Top
             Value = 0;
             MarkAsGraphTop();
             ParentTop = null;
-            Font = new Font("Tahoma", 8.0f);
-            Size = new Size(27, 27);
+            Font = new Font("Tahoma", 7.7f);
+            Size = new Size(25, 25);
             TextAlign = ContentAlignment.MiddleCenter;
             //BorderStyle = BorderStyle.FixedSingle;
         }

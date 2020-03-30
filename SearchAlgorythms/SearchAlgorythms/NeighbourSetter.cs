@@ -1,6 +1,6 @@
 ﻿using SearchAlgorythms.Top;
 
-namespace SearchAlgorythms.Algorythms
+namespace SearchAlgorythms
 {
     public class NeigbourSetter
     {

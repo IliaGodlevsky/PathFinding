@@ -1,7 +1,6 @@
 ﻿using System;
+using System.Linq;
 using System.Windows.Forms;
-using SearchAlgorythms.Algorythms;
-using SearchAlgorythms.Extensions;
 using SearchAlgorythms.Graph;
 using SearchAlgorythms.Top;
 
@@ -10,7 +9,6 @@ namespace SearchAlgorythms.RoleChanger
     public class ButtonGraphTopRoleChanger : IGraphTopRoleChanger
     {
         private IGraph graph;
-        private BoundSetter boundSetter = new BoundSetter();
 
         public ButtonGraphTopRoleChanger(IGraph graph)
         {
@@ -35,7 +33,7 @@ namespace SearchAlgorythms.RoleChanger
         {
             if (top.IsSimpleTop)
             {
-                boundSetter.BreakBoundsBetweenNeighbours(top);
+                BoundSetter.BreakBoundsBetweenNeighbours(top);
                 top.IsObstacle = false;
                 top.SetToDefault();
                 top.MarkAsObstacle();
@@ -51,7 +49,7 @@ namespace SearchAlgorythms.RoleChanger
             NeigbourSetter setter = new NeigbourSetter(graph.GetArray());
             var coordinates = (graph as ButtonGraph).GetIndexes(top);
             setter.SetNeighbours(coordinates.X, coordinates.Y);
-            boundSetter.SetBoundsBetweenNeighbours(top);
+            BoundSetter.SetBoundsBetweenNeighbours(top);
         }
 
         private void Reverse(ref IGraphTop top)
@@ -97,7 +95,7 @@ namespace SearchAlgorythms.RoleChanger
 
         private bool IsRightDestination(GraphTop top)
         {
-            return !top.Neighbours.IsEmpty() && top.IsSimpleTop
+            return top.Neighbours.Any() && top.IsSimpleTop
                 && !top.IsObstacle;
         }
 

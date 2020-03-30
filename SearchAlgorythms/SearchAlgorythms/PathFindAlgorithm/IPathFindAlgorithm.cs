@@ -1,10 +1,10 @@
 ﻿using SearchAlgorythms.Top;
 
-namespace SearchAlgorythms.Algorythms.SearchAlgorythm
+namespace SearchAlgorythms.Algorithm
 {
     public delegate void PauseCycle(int milliseconds);
 
-    public interface ISearchAlgorithm
+    public interface IPathFindAlgorithm
     {
         PauseCycle Pause { set; get; }
         bool FindDestionation(IGraphTop start);

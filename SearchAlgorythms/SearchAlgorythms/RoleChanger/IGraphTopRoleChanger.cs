@@ -1,5 +1,4 @@
-﻿using SearchAlgorythms.Top;
-using System;
+﻿using System;
 
 namespace SearchAlgorythms.RoleChanger
 {
@@ -8,5 +7,6 @@ namespace SearchAlgorythms.RoleChanger
         void SetStartPoint(object sender, EventArgs e);
         void SetDestinationPoint(object sender, EventArgs e);
         void ReversePolarity(object sender, EventArgs e);
+        void ChangeTopText(object sender, EventArgs e);
     }
 }

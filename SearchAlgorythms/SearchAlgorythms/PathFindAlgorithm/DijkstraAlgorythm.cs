@@ -1,12 +1,12 @@
 ﻿using System.Collections.Generic;
-using SearchAlgorythms.Algorythms.Statistics;
-using SearchAlgorythms.DelegatedMethods;
+using System.Linq;
 using SearchAlgorythms.Graph;
+using SearchAlgorythms.Statistics;
 using SearchAlgorythms.Top;
 
-namespace SearchAlgorythms.Algorythms.SearchAlgorythm
+namespace SearchAlgorythms.Algorithm
 {
-    public class DijkstraAlgorithm : ISearchAlgorithm
+    public class DijkstraAlgorithm : IPathFindAlgorithm
     {
         protected readonly IGraphTop end;
         private List<IGraphTop> tops = new List<IGraphTop>();
@@ -19,7 +19,7 @@ namespace SearchAlgorythms.Algorythms.SearchAlgorythm
                 if (!(top as IGraphTop).IsObstacle)
                 {
                     tops.Add(top as IGraphTop);
-                    (top as IGraphTop).Value = int.MaxValue;
+                    (top as IGraphTop).Value = double.PositiveInfinity;
                 }
             }
             statCollector = new WeightedGraphSearchAlgoStatistics();
@@ -38,19 +38,15 @@ namespace SearchAlgorythms.Algorythms.SearchAlgorythm
                 if (top.IsSimpleTop)
                     top.MarkAsPath();
                 statCollector.AddLength(int.Parse(temp.Text));
-                Pause(50);
+                Pause(35);
             }
         }
 
-        public double GetChippestValue()
+        private IGraphTop GetChippestUnvisitedTop()
         {
-            return DelegatedMethod.GetMinValue(tops, t => !t.IsVisited, t => t.Value);
-        }
-
-        public IGraphTop GetChippestUnvisitedTop()
-        {
-            var chippest = GetChippestValue();
-            return tops.Find(t => chippest == t.Value && !t.IsVisited);
+            tops = tops.Where(t => !t.IsVisited).ToList();
+            tops.Sort((t1, t2) => t1.Value.CompareTo(t2.Value));
+            return tops.First();
         }
 
         public virtual double GetPathValue(IGraphTop neighbour, IGraphTop top)
@@ -58,7 +54,7 @@ namespace SearchAlgorythms.Algorythms.SearchAlgorythm
             return int.Parse(neighbour.Text) + top.Value;
         }
 
-        public void ExtractNeighbours(IGraphTop button)
+        private void ExtractNeighbours(IGraphTop button)
         {
             if (button is null)
                 return;
@@ -85,17 +81,17 @@ namespace SearchAlgorythms.Algorythms.SearchAlgorythm
             {
                 ExtractNeighbours(currentTop);
                 currentTop = GetChippestUnvisitedTop();
-                if (currentTop.Value == int.MaxValue)
+                if (currentTop.Value == double.PositiveInfinity)
                     break;
                 if (IsRightCellToVisit(currentTop))
                     Visit(currentTop);
-                Pause(5);
+                Pause(2);
             } while (!IsDestination(currentTop));
             statCollector.StopCollectStatistics();
             return end.IsVisited;
         }
 
-        public bool IsDestination(IGraphTop button)
+        private bool IsDestination(IGraphTop button)
         {
             if (button == null)
                 return false;
@@ -104,7 +100,7 @@ namespace SearchAlgorythms.Algorythms.SearchAlgorythm
             return button.IsEnd && button.IsVisited;
         }
 
-        public bool IsRightCellToVisit(IGraphTop button)
+        private bool IsRightCellToVisit(IGraphTop button)
         {
             if (button is null)
                 return false;
@@ -114,7 +110,7 @@ namespace SearchAlgorythms.Algorythms.SearchAlgorythm
                 return !button.IsVisited;
         }
 
-        public void Visit(IGraphTop button)
+        private void Visit(IGraphTop button)
         {
             button.IsVisited = true;
             if (!button.IsEnd)

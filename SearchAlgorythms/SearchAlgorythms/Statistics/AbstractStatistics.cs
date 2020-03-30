@@ -1,6 +1,6 @@
 ﻿using System.Diagnostics;
 
-namespace SearchAlgorythms.Algorythms.Statistics
+namespace SearchAlgorythms.Statistics
 {
     public abstract class AbstractStatistics
     {
@@ -22,7 +22,8 @@ namespace SearchAlgorythms.Algorythms.Statistics
             watch.Start();
         }
 
-        private string Time => "Time: " + (watch.Elapsed.Minutes + ":" + watch.Elapsed.Seconds + "." +
+        private string Time => "Time: " + (watch.Elapsed.Minutes 
+            + ":" + watch.Elapsed.Seconds + "." +
                 +watch.Elapsed.Milliseconds);
 
         public void StopCollectStatistics()

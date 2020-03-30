@@ -1,21 +1,19 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using SearchAlgorythms.Top;
-using SearchAlgorythms.Extensions;
-using SearchAlgorythms.Algorythms.Statistics;
-using SearchAlgorythms.DelegatedMethods;
 using SearchAlgorythms.Extensions.ListExtensions;
+using SearchAlgorythms.Statistics;
 
-namespace SearchAlgorythms.Algorythms.SearchAlgorythm
+namespace SearchAlgorythms.Algorithm
 {
-    public class WideSearchAlgorithm : ISearchAlgorithm
+    public class WidePathFindAlgorithm : IPathFindAlgorithm
     {
         protected Queue<IGraphTop> queue = new Queue<IGraphTop>();
         private UnweightedGraphSearchAlgoStatistics statCollector;
         protected IGraphTop end;
 
 
-        public WideSearchAlgorithm(IGraphTop end)
+        public WidePathFindAlgorithm(IGraphTop end)
         {
             this.end = end;
             statCollector = new UnweightedGraphSearchAlgoStatistics();
@@ -71,7 +69,7 @@ namespace SearchAlgorythms.Algorythms.SearchAlgorythm
                 currentTop = queue.Dequeue();
                 if (IsRightCellToVisit(currentTop))
                     Visit(currentTop);
-                Pause(5);              
+                Pause(2);              
             }
             statCollector.StopCollectStatistics();
             return end.IsVisited;          
@@ -86,7 +84,7 @@ namespace SearchAlgorythms.Algorythms.SearchAlgorythm
                 if (top.IsSimpleTop)
                     top.MarkAsPath();
                 statCollector.AddStep();
-                Pause(50);
+                Pause(35);
             }
         }
 
@@ -94,7 +92,7 @@ namespace SearchAlgorythms.Algorythms.SearchAlgorythm
         {
             if (button is null)
                 return false;
-            return button.IsEnd || queue.IsEmpty();
+            return button.IsEnd || !queue.Any();
         }
 
         private void Visit(IGraphTop top)
