@@ -22,6 +22,8 @@ namespace SearchAlgorythms.Algorithm
 
         public PauseCycle Pause { set; get; }
 
+        public object Current => throw new System.NotImplementedException();
+
         public void DrawPath()
         {
             var top = end;
@@ -120,6 +122,16 @@ namespace SearchAlgorythms.Algorithm
         public string GetStatistics()
         {
             return statCollector.Statistics;
+        }
+
+        public bool MoveNext()
+        {
+            throw new System.NotImplementedException();
+        }
+
+        public void Reset()
+        {
+            throw new System.NotImplementedException();
         }
     }
 }
