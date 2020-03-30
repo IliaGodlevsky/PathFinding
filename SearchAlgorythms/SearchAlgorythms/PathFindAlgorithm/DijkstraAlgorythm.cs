@@ -38,7 +38,7 @@ namespace SearchAlgorythms.Algorithm
 
         private IGraphTop GetChippestUnvisitedTop()
         {
-            queue = queue.Where(t => !t.IsVisited).ToList();
+            queue.RemoveAll(t => t.IsVisited);
             queue.Sort((t1, t2) => t1.Value.CompareTo(t2.Value));
             return queue.First();
         }
