@@ -7,6 +7,9 @@ using SearchAlgorythms.Top;
 
 namespace SearchAlgorythms.Algorithm
 {
+    /// <summary>
+    /// Greedy algorithm. Each step looks for the chippest top and visit it
+    /// </summary>
     public class GreedyAlgorithm : IPathFindAlgorithm
     {
         private Stack<IGraphTop> stack = new Stack<IGraphTop>();

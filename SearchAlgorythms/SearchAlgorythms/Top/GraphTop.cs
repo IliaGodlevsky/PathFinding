@@ -76,7 +76,7 @@ namespace SearchAlgorythms.Top
             Value = 0;
             MarkAsGraphTop();
             ParentTop = null;
-            Font = new Font("Tahoma", 7.7f);
+            Font = new Font("Times New Roman", 7.8f);
             Size = new Size(25, 25);
             TextAlign = ContentAlignment.MiddleCenter;
             //BorderStyle = BorderStyle.FixedSingle;

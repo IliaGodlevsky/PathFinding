@@ -6,6 +6,9 @@ using SearchAlgorythms.Top;
 
 namespace SearchAlgorythms.Algorithm
 {
+    /// <summary>
+    /// Finds the chippest path to destination top. 
+    /// </summary>
     public class DijkstraAlgorithm : IPathFindAlgorithm
     {
         protected readonly IGraphTop end;
@@ -21,8 +24,6 @@ namespace SearchAlgorythms.Algorithm
         }
 
         public PauseCycle Pause { set; get; }
-
-        public object Current => throw new System.NotImplementedException();
 
         public void DrawPath()
         {
@@ -122,16 +123,6 @@ namespace SearchAlgorythms.Algorithm
         public string GetStatistics()
         {
             return statCollector.Statistics;
-        }
-
-        public bool MoveNext()
-        {
-            throw new System.NotImplementedException();
-        }
-
-        public void Reset()
-        {
-            throw new System.NotImplementedException();
         }
     }
 }

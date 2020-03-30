@@ -6,6 +6,11 @@ using SearchAlgorythms.Statistics;
 
 namespace SearchAlgorythms.Algorithm
 {
+    /// <summary>
+    /// A wave algorithm (Li algorithm, or wide path find algorithm). 
+    /// Uses queue to move next graph top. Finds the shortest path to
+    /// the destination top
+    /// </summary>
     public class WidePathFindAlgorithm : IPathFindAlgorithm
     {
         protected Queue<IGraphTop> queue = new Queue<IGraphTop>();

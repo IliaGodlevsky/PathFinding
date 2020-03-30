@@ -3,7 +3,10 @@ using SearchAlgorythms.Top;
 
 namespace SearchAlgorythms.Algorithm
 {
-    
+    /// <summary>
+    /// An euristic dijkstra's algorithm. Uses distance of the current top
+    /// to the destination top as a correction of top value
+    /// </summary>
     public class AStarAlgorithm : DijkstraAlgorithm
     {
         public delegate double HeuristicHandler(IGraphTop neighbour, IGraphTop top);

@@ -4,6 +4,9 @@ using SearchAlgorythms.Top;
 
 namespace SearchAlgorythms.Algorithm
 {
+    /// <summary>
+    /// An euristic Li algorithm. Ignors tops that are far from destination top
+    /// </summary>
     public class BestFirstAlgorithm : WidePathFindAlgorithm
     {
         private Queue<IGraphTop> waveQueue = new Queue<IGraphTop>();
