@@ -99,8 +99,8 @@
             this.optionsToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.findPathToolStripMenuItem});
             this.optionsToolStripMenuItem.Name = "optionsToolStripMenuItem";
-            this.optionsToolStripMenuItem.Size = new System.Drawing.Size(76, 20);
-            this.optionsToolStripMenuItem.Text = "Algorythm";
+            this.optionsToolStripMenuItem.Size = new System.Drawing.Size(73, 20);
+            this.optionsToolStripMenuItem.Text = "Algorithm";
             // 
             // findPathToolStripMenuItem
             // 
@@ -111,42 +111,42 @@
             this.aSearchToolStripMenuItem,
             this.greedySearchToolStripMenuItem});
             this.findPathToolStripMenuItem.Name = "findPathToolStripMenuItem";
-            this.findPathToolStripMenuItem.Size = new System.Drawing.Size(124, 22);
+            this.findPathToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.findPathToolStripMenuItem.Text = "Find path";
             // 
             // wideSearchToolStripMenuItem
             // 
             this.wideSearchToolStripMenuItem.Name = "wideSearchToolStripMenuItem";
-            this.wideSearchToolStripMenuItem.Size = new System.Drawing.Size(186, 22);
-            this.wideSearchToolStripMenuItem.Text = "Wide search";
+            this.wideSearchToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.wideSearchToolStripMenuItem.Text = "Wide path find";
             this.wideSearchToolStripMenuItem.Click += new System.EventHandler(this.WideSearchToolStripMenuItem);
             // 
             // bestfirstWideSearchToolStripMenuItem
             // 
             this.bestfirstWideSearchToolStripMenuItem.Name = "bestfirstWideSearchToolStripMenuItem";
-            this.bestfirstWideSearchToolStripMenuItem.Size = new System.Drawing.Size(186, 22);
-            this.bestfirstWideSearchToolStripMenuItem.Text = "Best-first wide search";
+            this.bestfirstWideSearchToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.bestfirstWideSearchToolStripMenuItem.Text = "Best-first path find";
             this.bestfirstWideSearchToolStripMenuItem.Click += new System.EventHandler(this.BestfirstWideSearchToolStripMenuItem);
             // 
             // dijkstraAlgorythmToolStripMenuItem
             // 
             this.dijkstraAlgorythmToolStripMenuItem.Name = "dijkstraAlgorythmToolStripMenuItem";
-            this.dijkstraAlgorythmToolStripMenuItem.Size = new System.Drawing.Size(186, 22);
-            this.dijkstraAlgorythmToolStripMenuItem.Text = "Dijkstra algorythm";
+            this.dijkstraAlgorythmToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.dijkstraAlgorythmToolStripMenuItem.Text = "Dijkstra algorithm";
             this.dijkstraAlgorythmToolStripMenuItem.Click += new System.EventHandler(this.DijkstraAlgorythmToolStripMenuItem);
             // 
             // aSearchToolStripMenuItem
             // 
             this.aSearchToolStripMenuItem.Name = "aSearchToolStripMenuItem";
-            this.aSearchToolStripMenuItem.Size = new System.Drawing.Size(186, 22);
-            this.aSearchToolStripMenuItem.Text = "A* search";
+            this.aSearchToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.aSearchToolStripMenuItem.Text = "A* algorithm";
             this.aSearchToolStripMenuItem.Click += new System.EventHandler(this.ASearchToolStripMenuItem_Click);
             // 
             // greedySearchToolStripMenuItem
             // 
             this.greedySearchToolStripMenuItem.Name = "greedySearchToolStripMenuItem";
-            this.greedySearchToolStripMenuItem.Size = new System.Drawing.Size(186, 22);
-            this.greedySearchToolStripMenuItem.Text = "Greedy search";
+            this.greedySearchToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.greedySearchToolStripMenuItem.Text = "Greedy algorithm";
             this.greedySearchToolStripMenuItem.Click += new System.EventHandler(this.GreedySearchToolStripMenuItem);
             // 
             // percent
