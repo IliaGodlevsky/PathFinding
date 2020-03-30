@@ -53,7 +53,7 @@
     <Compile Include="GraphFactory\RandomValuedButtonGraphFactory.cs" />
     <Compile Include="NeighbourSetter.cs" />
     <Compile Include="PathFindAlgorithm\AStarAlgorithm.cs" />
-    <Compile Include="PathFindAlgorithm\BestFirstSearch.cs" />
+    <Compile Include="PathFindAlgorithm\BestFirstAlgorithm.cs" />
     <Compile Include="PathFindAlgorithm\DijkstraAlgorythm.cs" />
     <Compile Include="PathFindAlgorithm\GreedyAlgorithm.cs" />
     <Compile Include="PathFindAlgorithm\IPathFindAlgorithm.cs" />

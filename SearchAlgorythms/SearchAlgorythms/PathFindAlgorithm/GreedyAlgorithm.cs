@@ -67,7 +67,7 @@ namespace SearchAlgorythms.Algorithm
                 }
                 else
                     currentTop = stack.Pop();
-                Pause(20);
+                Pause(2);
             }
             statCollector.StopCollectStatistics();
             return end.IsVisited;
