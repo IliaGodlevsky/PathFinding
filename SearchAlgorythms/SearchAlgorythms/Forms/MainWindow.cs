@@ -17,7 +17,7 @@ namespace SearchAlgorythms
         private IGraph graph = null;
         private IPathFindAlgorithm pathFindAlgorithm = null;
         private IGraphFactory createAlgorythm = null;
-        private const int BUTTON_POSITION = 27;
+        private const int BUTTON_POSITION = 25;
         private ButtonGraphTopRoleChanger changer = null;
 
         public MainWindow()
@@ -210,6 +210,11 @@ namespace SearchAlgorythms
         {
             percentTextBox.Text = percent.Value.ToString();
             percentTextBox.Update();
+        }
+
+        private void menuStrip1_ItemClicked(object sender, ToolStripItemClickedEventArgs e)
+        {
+
         }
     }
 }

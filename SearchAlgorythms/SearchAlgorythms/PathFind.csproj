@@ -47,6 +47,7 @@
   <ItemGroup>
     <Compile Include="DistanceCalculator\DistanceCalculator.cs" />
     <Compile Include="GraphFactory\IGraphFactory.cs" />
+    <Compile Include="GraphFactory\MazeFactory.cs" />
     <Compile Include="GraphFactory\OnInfoButtonGraphFactory.cs" />
     <Compile Include="GraphFactory\RandomButtonGraphFactory.cs" />
     <Compile Include="BoundSetter.cs" />
