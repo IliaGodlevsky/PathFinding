@@ -39,7 +39,7 @@ namespace SearchAlgorythms.Algorithm
 
         public override bool IsRightCellToVisit(IGraphTop button)
         {
-            return (base.IsRightCellToVisit(button) && button.Value != 0) || button.IsEnd;
+            return base.IsRightCellToVisit(button) && button.Value > 0;
         }
 
         private void MarkTop(IGraphTop top)
@@ -48,7 +48,7 @@ namespace SearchAlgorythms.Algorithm
                 return;
             foreach (var neigbour in top.Neighbours)
             {
-                if (neigbour.Value == 0 && !neigbour.IsEnd)
+                if (neigbour.Value == 0)
                 {
                     neigbour.Value = top.Value + 1;
                     waveQueue.Enqueue(neigbour);
@@ -67,7 +67,8 @@ namespace SearchAlgorythms.Algorithm
 
         public override bool FindDestionation(IGraphTop start)
         {
-            MakeWavesFromEnd(end);
+            end.Value = 1;
+            MakeWavesFromEnd(end);           
             bool found = base.FindDestionation(start);
             end = start;
             return found;
