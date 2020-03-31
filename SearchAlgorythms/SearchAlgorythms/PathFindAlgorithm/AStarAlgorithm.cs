@@ -22,6 +22,5 @@ namespace SearchAlgorythms.Algorithm
         {
             return base.GetPathValue(neighbour, top) + HeuristicFunction(neighbour, end);
         }
-
     }
 }
