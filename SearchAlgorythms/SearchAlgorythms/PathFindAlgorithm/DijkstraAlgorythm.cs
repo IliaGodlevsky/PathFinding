@@ -58,7 +58,8 @@ namespace SearchAlgorythms.Algorithm
             var neighbours = button.Neighbours;
             foreach(var neighbour in neighbours)
             {
-                queue.Add(neighbour);
+                if (!neighbour.IsVisited)
+                    queue.Add(neighbour);
                 if (neighbour.Value > GetPathValue(neighbour, button))
                 {                    
                     neighbour.Value = GetPathValue(neighbour, button);

@@ -211,10 +211,5 @@ namespace SearchAlgorythms
             percentTextBox.Text = percent.Value.ToString();
             percentTextBox.Update();
         }
-
-        private void menuStrip1_ItemClicked(object sender, ToolStripItemClickedEventArgs e)
-        {
-
-        }
     }
 }

@@ -43,7 +43,7 @@ namespace SearchAlgorythms.GraphLoader
         private void Initialise(IGraphTopInfo[,] info)
         {
             OnInfoButtonGraphFactory creator =
-                new OnInfoButtonGraphFactory(info);
+                new OnInfoButtonGraphFactory(info, placeBetweenButtons);
             if (info == null)
                 return;
             graph = new ButtonGraph(creator.GetGraph());
