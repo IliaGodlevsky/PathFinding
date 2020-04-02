@@ -24,7 +24,7 @@ namespace SearchAlgorythms.Algorithm
 
         private IGraphTop GoChippestNeighbour(IGraphTop top)
         {
-            List<IGraphTop> neighbours = top.Neighbours.Count(t => t.IsVisited) == 0 
+            var neighbours = top.Neighbours.Count(t => t.IsVisited) == 0 
                 ? top.Neighbours : top.Neighbours.Where(t => !t.IsVisited).ToList();
             neighbours.Shuffle();
             if (neighbours.Any())
