@@ -11,30 +11,30 @@ namespace SearchAlgorythms.Algorithm
     /// </summary>
     public class DijkstraAlgorithm : IPathFindAlgorithm
     {
-        protected readonly IGraphTop end;
+        protected readonly IGraph graph;
         private List<IGraphTop> queue = new List<IGraphTop>();
         private WeightedGraphSearchAlgoStatistics statCollector;
 
-        public DijkstraAlgorithm(IGraphTop end, IGraph graph)
+        public DijkstraAlgorithm(IGraph graph)
         {
+            this.graph = graph;
             foreach (var top in graph)
                 (top as IGraphTop).Value = double.PositiveInfinity;
             statCollector = new WeightedGraphSearchAlgoStatistics();
-            this.end = end;
         }
 
         public PauseCycle Pause { set; get; }
 
         public void DrawPath()
         {
-            var top = end;
+            var top = graph.End;
             while (!top.IsStart)
             {
                 var temp = top;
                 top = top.ParentTop;
                 if (top.IsSimpleTop)
                     top.MarkAsPath();
-                statCollector.AddLength(int.Parse(temp.Text));
+                //statCollector.AddLength(int.Parse(temp.Text));
                 Pause(35);
             }
         }
@@ -43,7 +43,7 @@ namespace SearchAlgorythms.Algorithm
         {
             queue.RemoveAll(t => t.IsVisited);
             queue.Sort((t1, t2) => t1.Value.CompareTo(t2.Value));
-            return queue.First();
+            return queue.Any() ? queue.First() : null;
         }
 
         public virtual double GetPathValue(IGraphTop neighbour, IGraphTop top)
@@ -68,26 +68,27 @@ namespace SearchAlgorythms.Algorithm
             }
         }
 
-        public bool FindDestionation(IGraphTop start)
+        public bool FindDestionation()
         {
-            if (end == null)
+            if (graph.End == null)
                 return false;
             statCollector.BeginCollectStatistic();
-            var currentTop = start;
-            start.IsVisited = true;
-            start.Value = 0;
+            var currentTop = graph.Start;
+            currentTop.IsVisited = true;
+            currentTop.Value = 0;
             do
             {
                 ExtractNeighbours(currentTop);
                 currentTop = GetChippestUnvisitedTop();
-                if (currentTop.Value == double.PositiveInfinity)
+                if (currentTop?.Value == double.PositiveInfinity
+                    || currentTop == null)
                     break;
                 if (IsRightCellToVisit(currentTop))
                     Visit(currentTop);
                 Pause(2);
             } while (!IsDestination(currentTop));
             statCollector.StopCollectStatistics();
-            return end.IsVisited;
+            return graph.End.IsVisited;
         }
 
         private bool IsDestination(IGraphTop button)

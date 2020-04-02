@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using SearchAlgorythms.Graph;
 using SearchAlgorythms.Top;
 
 namespace SearchAlgorythms.Algorithm
@@ -11,7 +12,7 @@ namespace SearchAlgorythms.Algorithm
     {
         private Queue<IGraphTop> waveQueue = new Queue<IGraphTop>();
 
-        public BestFirstAlgorithm(IGraphTop end) : base(end)
+        public BestFirstAlgorithm(IGraph graph) : base(graph)
         {
             
         }
@@ -65,12 +66,12 @@ namespace SearchAlgorythms.Algorithm
                     queue.Enqueue(neigbour);
         }
 
-        public override bool FindDestionation(IGraphTop start)
+        public override bool FindDestionation()
         {
-            end.Value = 1;
-            MakeWavesFromEnd(end);           
-            bool found = base.FindDestionation(start);
-            end = start;
+            graph.End.Value = 1;
+            MakeWavesFromEnd(graph.End);           
+            bool found = base.FindDestionation();
+            graph.End = graph.Start;
             return found;
         }
     }

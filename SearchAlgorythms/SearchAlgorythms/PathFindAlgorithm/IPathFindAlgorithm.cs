@@ -10,7 +10,7 @@ namespace SearchAlgorythms.Algorithm
     public interface IPathFindAlgorithm
     {
         PauseCycle Pause { set; get; }
-        bool FindDestionation(IGraphTop start);
+        bool FindDestionation();
         void DrawPath();
         string GetStatistics();
     }

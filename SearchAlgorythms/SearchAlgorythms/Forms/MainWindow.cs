@@ -76,32 +76,32 @@ namespace SearchAlgorythms
 
         private void WideSearchToolStripMenuItem(object sender, EventArgs e)
         {
-            pathFindAlgorithm = new WidePathFindAlgorithm(graph.End);
+            pathFindAlgorithm = new WidePathFindAlgorithm(graph);
             StartSearchPath();
         }
 
         private void DijkstraAlgorythmToolStripMenuItem(object sender, EventArgs e)
         {
-            pathFindAlgorithm = new DijkstraAlgorithm(graph.End, graph);
+            pathFindAlgorithm = new DijkstraAlgorithm(graph);
             StartSearchPath();
         }
 
         private void GreedySearchToolStripMenuItem(object sender, EventArgs e)
         {
-            pathFindAlgorithm = new GreedyAlgorithm(graph.End);
+            pathFindAlgorithm = new GreedyAlgorithm(graph);
             StartSearchPath();
         }
 
         private void BestfirstWideSearchToolStripMenuItem(object sender, EventArgs e)
         {
-            pathFindAlgorithm = new BestFirstAlgorithm(graph.End);
+            pathFindAlgorithm = new BestFirstAlgorithm(graph);
             StartSearchPath();
         }
 
         private void StartSearchPath()
         {
             pathFindAlgorithm.Pause = PauseMaker.PauseMaker.WinFormsPause;
-            if (pathFindAlgorithm.FindDestionation(graph.Start))
+            if (pathFindAlgorithm.FindDestionation())
             {
                 pathFindAlgorithm.DrawPath();
                 time.Text = pathFindAlgorithm.GetStatistics();
@@ -200,7 +200,7 @@ namespace SearchAlgorythms
 
         private void ASearchToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            pathFindAlgorithm = new AStarAlgorithm(graph.End, graph);
+            pathFindAlgorithm = new AStarAlgorithm(graph);
             (pathFindAlgorithm as AStarAlgorithm).HeuristicFunction = 
                 DistanceCalculator.DistanceCalculator.GetChebyshevDistance;
             StartSearchPath();

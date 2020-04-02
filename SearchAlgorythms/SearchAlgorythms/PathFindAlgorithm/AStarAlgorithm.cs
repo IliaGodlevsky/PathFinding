@@ -13,14 +13,14 @@ namespace SearchAlgorythms.Algorithm
 
         public HeuristicHandler HeuristicFunction;
 
-        public AStarAlgorithm(IGraphTop end, IGraph graph) : base(end, graph)
+        public AStarAlgorithm(IGraph graph) : base(graph)
         {
 
         }
 
         public override double GetPathValue(IGraphTop neighbour, IGraphTop top)
         {
-            return base.GetPathValue(neighbour, top) + HeuristicFunction(neighbour, end);
+            return base.GetPathValue(neighbour, top) + HeuristicFunction(neighbour, graph.End);
         }
     }
 }

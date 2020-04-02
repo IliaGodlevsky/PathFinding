@@ -32,6 +32,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Colorful.Console, Version=1.2.10.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Colorful.Console.1.2.10\lib\net45\Colorful.Console.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -46,11 +49,14 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="DistanceCalculator\DistanceCalculator.cs" />
+    <Compile Include="Forms\ConsoleMenu.cs" />
     <Compile Include="GraphFactory\IGraphFactory.cs" />
     <Compile Include="GraphFactory\OnInfoButtonGraphFactory.cs" />
     <Compile Include="GraphFactory\RandomButtonGraphFactory.cs" />
     <Compile Include="BoundSetter.cs" />
     <Compile Include="GraphFactory\RandomValuedButtonGraphFactory.cs" />
+    <Compile Include="GraphFactory\RandomValuedConsoleGraphFactory.cs" />
+    <Compile Include="Graph\ConsoleGraph.cs" />
     <Compile Include="NeighbourSetter.cs" />
     <Compile Include="PathFindAlgorithm\AStarAlgorithm.cs" />
     <Compile Include="PathFindAlgorithm\BestFirstAlgorithm.cs" />
@@ -59,6 +65,7 @@
     <Compile Include="PathFindAlgorithm\IPathFindAlgorithm.cs" />
     <Compile Include="PathFindAlgorithm\WidePathFindAlgorithm.cs" />
     <Compile Include="PauseMaker\PauseMaker.cs" />
+    <Compile Include="RoleChanger\ConsoleGraphTopRoleChanger.cs" />
     <Compile Include="Statistics\AbstractStatistics.cs" />
     <Compile Include="Statistics\UnweightedGraphSearchAlgoStatistics.cs" />
     <Compile Include="Statistics\WeightedGraphSearchAlgoStatistics.cs" />
@@ -85,6 +92,7 @@
     <Compile Include="GraphTopInfo\GraphTopInfo.cs" />
     <Compile Include="RoleChanger\ButtonGraphTopRoleChanger.cs" />
     <Compile Include="RoleChanger\IGraphTopRoleChanger.cs" />
+    <Compile Include="Top\ConsoleGraphTop.cs" />
     <Compile Include="Top\GraphTop.cs">
       <SubType>Component</SubType>
     </Compile>
@@ -106,6 +114,7 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
+    <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>

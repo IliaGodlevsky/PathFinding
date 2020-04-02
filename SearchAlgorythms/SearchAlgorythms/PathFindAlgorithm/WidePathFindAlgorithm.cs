@@ -3,6 +3,7 @@ using System.Linq;
 using SearchAlgorythms.Top;
 using SearchAlgorythms.Extensions.ListExtensions;
 using SearchAlgorythms.Statistics;
+using SearchAlgorythms.Graph;
 
 namespace SearchAlgorythms.Algorithm
 {
@@ -15,12 +16,12 @@ namespace SearchAlgorythms.Algorithm
     {
         protected Queue<IGraphTop> queue = new Queue<IGraphTop>();
         private UnweightedGraphSearchAlgoStatistics statCollector;
-        protected IGraphTop end;
+        protected readonly IGraph graph;
 
 
-        public WidePathFindAlgorithm(IGraphTop end)
+        public WidePathFindAlgorithm(IGraph graph)
         {
-            this.end = end;
+            this.graph = graph;
             statCollector = new UnweightedGraphSearchAlgoStatistics();
         }
 
@@ -62,12 +63,12 @@ namespace SearchAlgorythms.Algorithm
             }
         }
 
-        public virtual bool FindDestionation(IGraphTop start)
+        public virtual bool FindDestionation()
         {
-            if (end == null)
+            if (graph.End == null)
                 return false;
             statCollector.BeginCollectStatistic();
-            var currentTop = start;
+            var currentTop = graph.Start;
             Visit(currentTop);
             while (!IsDestination(currentTop))
             {
@@ -77,12 +78,12 @@ namespace SearchAlgorythms.Algorithm
                 Pause(2);              
             }
             statCollector.StopCollectStatistics();
-            return end.IsVisited;          
+            return graph.End.IsVisited;          
         }
 
         public void DrawPath()
         {
-            var top = end;
+            var top = graph.End;
             while (IsRightPath(top))
             {
                 top = GoChippestNeighbour(top);

@@ -5,6 +5,7 @@ namespace SearchAlgorythms.Graph
 {
     public interface IGraph : IEnumerable
     {
+
         IGraphTop this[int width, int height] { get; set; }
 
         IGraphTop End { get; set; }

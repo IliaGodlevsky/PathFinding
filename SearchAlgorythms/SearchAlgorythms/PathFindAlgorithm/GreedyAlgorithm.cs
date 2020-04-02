@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using SearchAlgorythms.Extensions.ListExtensions;
+using SearchAlgorythms.Graph;
 using SearchAlgorythms.Statistics;
 using SearchAlgorythms.Top;
 
@@ -11,14 +12,14 @@ namespace SearchAlgorythms.Algorithm
     /// </summary>
     public class GreedyAlgorithm : IPathFindAlgorithm
     {
+        private readonly IGraph graph;
         private Stack<IGraphTop> stack = new Stack<IGraphTop>();
         private WeightedGraphSearchAlgoStatistics statCollector;
-        private readonly IGraphTop end;
 
-        public GreedyAlgorithm(IGraphTop end)
+        public GreedyAlgorithm(IGraph graph)
         {
             statCollector = new WeightedGraphSearchAlgoStatistics();
-            this.end = end;
+            this.graph = graph;
         }
 
         private IGraphTop GoChippestNeighbour(IGraphTop top)
@@ -38,7 +39,7 @@ namespace SearchAlgorythms.Algorithm
 
         public void DrawPath()
         {
-            var top = end;
+            var top = graph.End;
             while (!top.IsStart)
             {
                 var temp = top;
@@ -50,12 +51,12 @@ namespace SearchAlgorythms.Algorithm
             }
         }
 
-        public bool FindDestionation(IGraphTop start)
+        public bool FindDestionation()
         {
-            if (end == null)
+            if (graph.End == null)
                 return false;
             statCollector.BeginCollectStatistic();
-            var currentTop = start;
+            var currentTop = graph.Start;
             IGraphTop temp = null;
             Visit(currentTop);
             while(!IsDestination(currentTop))
@@ -72,7 +73,7 @@ namespace SearchAlgorythms.Algorithm
                 Pause(2);
             }
             statCollector.StopCollectStatistics();
-            return end.IsVisited;
+            return graph.End.IsVisited;
         }
 
         private bool IsDestination(IGraphTop top)
