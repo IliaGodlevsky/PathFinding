@@ -1,6 +1,5 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using System.Windows.Forms;
 using SearchAlgorythms.Extensions.ListExtensions;
 using SearchAlgorythms.Statistics;
 using SearchAlgorythms.Top;
