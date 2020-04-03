@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections;
+﻿using System.Collections;
 using System.Drawing;
 using SearchAlgorythms.Top;
 
@@ -7,9 +6,6 @@ namespace SearchAlgorythms.Graph
 {
     public class ConsoleGraph : IGraph
     {
-        public event EventHandler SetStart;
-        public event EventHandler SetEnd;
-
         private IGraphTop[,] buttons;
 
         public IGraphTop[,] GetArray()
@@ -24,9 +20,9 @@ namespace SearchAlgorythms.Graph
             End = null;
         }
 
-        public IGraphTopInfo[,] GetInfo()
+        public GraphTopInfo[,] GetInfo()
         {
-            IGraphTopInfo[,] info = null /*= new GraphTopInfo[GetWidth(), GetHeight()]*/;
+            GraphTopInfo[,] info = new GraphTopInfo[GetWidth(), GetHeight()];
             for (int i = 0; i < GetWidth(); i++)
                 for (int j = 0; j < GetHeight(); j++)
                     info[i, j] = buttons[i, j].GetInfo();
@@ -68,7 +64,7 @@ namespace SearchAlgorythms.Graph
 
         public void Insert(IGraphTop top)
         {
-            var coordiantes = GetIndexes(top);
+            var coordiantes = new Point(top.Location.X, top.Location.Y);
             buttons[coordiantes.X, coordiantes.Y] = top;
             NeigbourSetter setter = new NeigbourSetter(buttons);
             setter.SetNeighbours(coordiantes.X, coordiantes.Y);
@@ -81,20 +77,6 @@ namespace SearchAlgorythms.Graph
                 if (top.IsObstacle)
                     numberOfObstacles++;
             return numberOfObstacles * 100 / GetSize();
-        }
-
-        public Point GetIndexes(IGraphTop top)
-        {
-            //for (int i = 0; i < GetWidth(); i++)
-            //{
-            //    for (int j = 0; j < GetHeight(); j++)
-            //    {
-            //        if ((top as GraphTop).Location
-            //            == (buttons[i, j] as GraphTop).Location)
-            //            return new Point(i, j);
-            //    }
-            //}
-            return new Point(GetWidth(), GetHeight());
         }
 
         public void Refresh()

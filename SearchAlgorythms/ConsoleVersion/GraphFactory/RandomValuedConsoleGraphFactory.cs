@@ -17,15 +17,16 @@ namespace SearchAlgorythms.GraphFactory
             {
                 for (int y = 0; y < height; y++)
                 {
-                    graph[x, y] = new ConsoleGraphTop();
-                    graph[x, y].Text = (rand.Next(9) + 1).ToString();
+                    graph[x, y] = new ConsoleGraphTop
+                    {
+                        Text = (rand.Next(9) + 1).ToString(),
+                        Location = new Point(x, y)
+                    };
                     if (IsObstacleChance(percentOfObstacles))
                     {
                         graph[x, y].IsObstacle = true;
                         graph[x, y].MarkAsObstacle();
-                    }
-
-                    graph[x, y].Location = new Point(x, y);
+                    }                    
                 }
             }
             NeigbourSetter setter = new NeigbourSetter(graph);

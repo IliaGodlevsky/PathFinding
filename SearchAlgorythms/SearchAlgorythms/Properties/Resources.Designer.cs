@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace SearchAlgorythms.Properties
+namespace ConsoleVersion.Properties
 {
 
 

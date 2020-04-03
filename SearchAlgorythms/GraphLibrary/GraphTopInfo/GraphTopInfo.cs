@@ -5,18 +5,14 @@ using System.Drawing;
 namespace SearchAlgorythms
 {
     [Serializable]
-    public class GraphTopInfo : IGraphTopInfo
+    public class GraphTopInfo
     {
         public GraphTopInfo(IGraphTop graphTop)
         {
-            IsObstacle = graphTop.IsObstacle;
-            Colour = (graphTop as GraphTop).BackColor.Name;
-            Location = graphTop.Location;
+            IsObstacle = graphTop.IsObstacle;            
             Text = graphTop.Text;
         }
 
-        public Point Location { get; set; }
-        public string Colour { get; set; }
         public bool IsObstacle { get; set; }
         public string Text { get; set; }
         

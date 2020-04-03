@@ -13,12 +13,12 @@ namespace SearchAlgorythms.Top
             IsObstacle = false;
         }
 
-        public GraphTop(IGraphTopInfo info) : this()
+        public GraphTop(GraphTopInfo info) : this()
         {
             IsObstacle = info.IsObstacle;
-            Location = info.Location;
             Text = info.Text;
-            BackColor = Color.FromName(info.Colour);
+            if (IsObstacle)
+                MarkAsObstacle();
         }
 
         public bool IsStart { get; set; }
@@ -63,7 +63,7 @@ namespace SearchAlgorythms.Top
             BackColor = Color.FromKnownColor(KnownColor.Yellow);
         }
 
-        public IGraphTopInfo GetInfo()
+        public GraphTopInfo GetInfo()
         {
             return new GraphTopInfo(this);
         }

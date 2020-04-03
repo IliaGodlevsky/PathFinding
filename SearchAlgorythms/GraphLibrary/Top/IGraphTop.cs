@@ -17,7 +17,7 @@ namespace SearchAlgorythms.Top
         double Value { get; set; }
         Point Location { get; set; }
 
-        IGraphTopInfo GetInfo();
+        GraphTopInfo GetInfo();
         void MarkAsCurrentlyLooked();
         void MarkAsEnd();
         void MarkAsGraphTop();

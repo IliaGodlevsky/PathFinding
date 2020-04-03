@@ -25,9 +25,9 @@ namespace SearchAlgorythms.Graph
             End = null;
         }
 
-        public IGraphTopInfo[,] GetInfo()
+        public GraphTopInfo[,] GetInfo()
         {
-            IGraphTopInfo[,] info = new GraphTopInfo[GetWidth(), GetHeight()];
+            GraphTopInfo[,] info = new GraphTopInfo[GetWidth(), GetHeight()];
             for (int i = 0; i < GetWidth(); i++)
                 for (int j = 0; j < GetHeight(); j++)
                     info[i, j] = buttons[i, j].GetInfo();

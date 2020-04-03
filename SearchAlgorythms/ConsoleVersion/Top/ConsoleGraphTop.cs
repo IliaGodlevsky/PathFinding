@@ -1,6 +1,4 @@
-﻿using Colorful;
-using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Drawing;
 using Console = Colorful.Console;
 
@@ -29,9 +27,9 @@ namespace SearchAlgorythms.Top
         public double Value { get; set; }
         public Point Location { get; set; }
 
-        public IGraphTopInfo GetInfo()
+        public GraphTopInfo GetInfo()
         {
-            throw new NotImplementedException();
+            return new GraphTopInfo(this);
         }
 
         public void MarkAsCurrentlyLooked()
@@ -42,7 +40,6 @@ namespace SearchAlgorythms.Top
         public void MarkAsEnd()
         {
             Colour = Color.FromKnownColor(KnownColor.Red);
-            //Text = "&";
         }
 
         public void MarkAsGraphTop()

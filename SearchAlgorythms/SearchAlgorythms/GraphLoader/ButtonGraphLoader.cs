@@ -19,7 +19,7 @@ namespace SearchAlgorythms.GraphLoader
 
         public IGraph GetGraph()
         {
-            IGraphTopInfo[,] info = null;
+            GraphTopInfo[,] info = null;
             OpenFileDialog open = new OpenFileDialog();
             BinaryFormatter f = new BinaryFormatter();
             if (open.ShowDialog() == DialogResult.OK)
@@ -27,7 +27,7 @@ namespace SearchAlgorythms.GraphLoader
                 {
                     try
                     {
-                        info = (IGraphTopInfo[,])f.Deserialize(stream);
+                        info = (GraphTopInfo[,])f.Deserialize(stream);
                         Initialise(info);
 
                     }
@@ -40,7 +40,7 @@ namespace SearchAlgorythms.GraphLoader
             return graph;
         }
 
-        private void Initialise(IGraphTopInfo[,] info)
+        private void Initialise(GraphTopInfo[,] info)
         {
             OnInfoButtonGraphFactory creator =
                 new OnInfoButtonGraphFactory(info, placeBetweenButtons);

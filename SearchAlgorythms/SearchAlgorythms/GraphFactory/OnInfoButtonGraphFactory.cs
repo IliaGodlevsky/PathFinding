@@ -7,7 +7,7 @@ namespace SearchAlgorythms.GraphFactory
     {
         private readonly IGraphTop[,] buttons = null;
 
-        public OnInfoButtonGraphFactory(IGraphTopInfo[,] info, int placeBetweenTops)
+        public OnInfoButtonGraphFactory(GraphTopInfo[,] info, int placeBetweenTops)
         {
             if (info == null)
                 return;

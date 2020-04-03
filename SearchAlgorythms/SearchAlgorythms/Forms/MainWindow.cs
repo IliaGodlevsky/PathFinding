@@ -50,7 +50,7 @@ namespace SearchAlgorythms
         }
 
         private void AddGraphToControls()
-        {
+        { 
             foreach (var top in graph)
             {
                 if (!(top as GraphTop).IsObstacle)

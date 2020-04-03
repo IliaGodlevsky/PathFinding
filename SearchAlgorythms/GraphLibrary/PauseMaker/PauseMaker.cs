@@ -14,5 +14,14 @@ namespace SearchAlgorythms.PauseMaker
                 Application.DoEvents();
             sw.Stop();
         }
+
+        public static void ConsolePause(int milliseconds)
+        {
+            var sw = new Stopwatch();
+            sw.Start();
+            while (sw.ElapsedMilliseconds < milliseconds)
+                continue;
+            sw.Stop();
+        }
     }
 }
