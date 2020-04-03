@@ -1,5 +1,4 @@
-﻿using SearchAlgorythms.Forms;
-using System;
+﻿using System;
 using System.Windows.Forms;
 
 namespace SearchAlgorythms

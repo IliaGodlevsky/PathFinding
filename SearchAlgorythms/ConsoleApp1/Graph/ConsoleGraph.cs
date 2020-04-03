@@ -1,10 +1,6 @@
 ﻿using System;
 using System.Collections;
-using System.Collections.Generic;
 using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using SearchAlgorythms.Top;
 
 namespace SearchAlgorythms.Graph
@@ -30,7 +26,7 @@ namespace SearchAlgorythms.Graph
 
         public IGraphTopInfo[,] GetInfo()
         {
-            IGraphTopInfo[,] info = new GraphTopInfo[GetWidth(), GetHeight()];
+            IGraphTopInfo[,] info = null /*= new GraphTopInfo[GetWidth(), GetHeight()]*/;
             for (int i = 0; i < GetWidth(); i++)
                 for (int j = 0; j < GetHeight(); j++)
                     info[i, j] = buttons[i, j].GetInfo();
@@ -89,15 +85,15 @@ namespace SearchAlgorythms.Graph
 
         public Point GetIndexes(IGraphTop top)
         {
-            for (int i = 0; i < GetWidth(); i++)
-            {
-                for (int j = 0; j < GetHeight(); j++)
-                {
-                    if ((top as GraphTop).Location
-                        == (buttons[i, j] as GraphTop).Location)
-                        return new Point(i, j);
-                }
-            }
+            //for (int i = 0; i < GetWidth(); i++)
+            //{
+            //    for (int j = 0; j < GetHeight(); j++)
+            //    {
+            //        if ((top as GraphTop).Location
+            //            == (buttons[i, j] as GraphTop).Location)
+            //            return new Point(i, j);
+            //    }
+            //}
             return new Point(GetWidth(), GetHeight());
         }
 

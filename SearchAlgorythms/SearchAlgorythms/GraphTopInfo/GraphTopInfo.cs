@@ -19,5 +19,6 @@ namespace SearchAlgorythms
         public string Colour { get; set; }
         public bool IsObstacle { get; set; }
         public string Text { get; set; }
+        
     }
 }

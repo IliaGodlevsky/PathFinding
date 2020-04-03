@@ -32,9 +32,6 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Colorful.Console, Version=1.2.10.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Colorful.Console.1.2.10\lib\net45\Colorful.Console.dll</HintPath>
-    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -48,28 +45,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="DistanceCalculator\DistanceCalculator.cs" />
-    <Compile Include="Forms\ConsoleMenu.cs" />
-    <Compile Include="GraphFactory\IGraphFactory.cs" />
     <Compile Include="GraphFactory\OnInfoButtonGraphFactory.cs" />
     <Compile Include="GraphFactory\RandomButtonGraphFactory.cs" />
-    <Compile Include="BoundSetter.cs" />
     <Compile Include="GraphFactory\RandomValuedButtonGraphFactory.cs" />
-    <Compile Include="GraphFactory\RandomValuedConsoleGraphFactory.cs" />
-    <Compile Include="Graph\ConsoleGraph.cs" />
-    <Compile Include="NeighbourSetter.cs" />
-    <Compile Include="PathFindAlgorithm\AStarAlgorithm.cs" />
-    <Compile Include="PathFindAlgorithm\BestFirstAlgorithm.cs" />
-    <Compile Include="PathFindAlgorithm\DijkstraAlgorythm.cs" />
-    <Compile Include="PathFindAlgorithm\GreedyAlgorithm.cs" />
-    <Compile Include="PathFindAlgorithm\IPathFindAlgorithm.cs" />
-    <Compile Include="PathFindAlgorithm\WidePathFindAlgorithm.cs" />
-    <Compile Include="PauseMaker\PauseMaker.cs" />
-    <Compile Include="RoleChanger\ConsoleGraphTopRoleChanger.cs" />
-    <Compile Include="Statistics\AbstractStatistics.cs" />
-    <Compile Include="Statistics\UnweightedGraphSearchAlgoStatistics.cs" />
-    <Compile Include="Statistics\WeightedGraphSearchAlgoStatistics.cs" />
-    <Compile Include="Extensions\ListExtension\ListExtensions.cs" />
     <Compile Include="Forms\MainWindow.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -83,22 +61,15 @@
       <DependentUpon>FieldControl.cs</DependentUpon>
     </Compile>
     <Compile Include="GraphLoader\ButtonGraphLoader.cs" />
-    <Compile Include="GraphLoader\IGraphLoader.cs" />
     <Compile Include="GraphSaver\ButtonGraphSaver.cs" />
-    <Compile Include="GraphSaver\IGraphSaver.cs" />
-    <Compile Include="GraphTopInfo\IGraphTopInfo.cs" />
-    <Compile Include="Graph\IGraph.cs" />
     <Compile Include="Graph\ButtonGraph.cs" />
     <Compile Include="GraphTopInfo\GraphTopInfo.cs" />
     <Compile Include="RoleChanger\ButtonGraphTopRoleChanger.cs" />
-    <Compile Include="RoleChanger\IGraphTopRoleChanger.cs" />
-    <Compile Include="Top\ConsoleGraphTop.cs" />
     <Compile Include="Top\GraphTop.cs">
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Top\IGraphTop.cs" />
     <EmbeddedResource Include="Forms\MainWindow.resx">
       <DependentUpon>MainWindow.cs</DependentUpon>
     </EmbeddedResource>
@@ -128,6 +99,11 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <ProjectReference Include="..\GraphLibrary\GraphLibrary.csproj">
+      <Project>{5441521c-1754-4098-a843-8904910700e8}</Project>
+      <Name>GraphLibrary</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

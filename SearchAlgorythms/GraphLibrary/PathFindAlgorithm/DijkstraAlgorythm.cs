@@ -34,7 +34,7 @@ namespace SearchAlgorythms.Algorithm
                 top = top.ParentTop;
                 if (top.IsSimpleTop)
                     top.MarkAsPath();
-                //statCollector.AddLength(int.Parse(temp.Text));
+                statCollector.AddLength(int.Parse(temp.Text));
                 Pause(35);
             }
         }

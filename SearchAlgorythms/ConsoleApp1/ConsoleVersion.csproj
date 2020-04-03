@@ -32,8 +32,12 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Colorful.Console, Version=1.2.10.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Colorful.Console.1.2.10\lib\net45\Colorful.Console.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Drawing" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -42,16 +46,27 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Forms\ConsoleMenu.cs" />
+    <Compile Include="GraphFactory\RandomValuedConsoleGraphFactory.cs" />
+    <Compile Include="Graph\ConsoleGraph.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="RoleChanger\ConsoleGraphTopRoleChanger.cs" />
+    <Compile Include="Top\ConsoleGraphTop.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+    <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\SearchAlgorythms\PathFind.csproj">
-      <Project>{5e9a04b8-b760-4d2f-a50d-abf1062eeb66}</Project>
-      <Name>PathFind</Name>
+    <Folder Include="GraphLoader\" />
+    <Folder Include="GraphSaver\" />
+    <Folder Include="GraphTopInfo\" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\GraphLibrary\GraphLibrary.csproj">
+      <Project>{5441521c-1754-4098-a843-8904910700e8}</Project>
+      <Name>GraphLibrary</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
