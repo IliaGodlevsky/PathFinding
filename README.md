@@ -1,6 +1,8 @@
 # SearchAlgorythms
  Exam WindowsForm project, C#
  
+ Also realized console version of program
+ 
  White button - graph top
  
  Black button - obstacle
@@ -9,7 +11,7 @@
  
  Red button - end searching point
  
- Yellow button - visited graph top
+ Blue button - visited graph top
  
- Cyan button - optimal path
+ Yellow button - path
  
