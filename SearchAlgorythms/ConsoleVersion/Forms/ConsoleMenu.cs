@@ -39,22 +39,22 @@ namespace ConsoleVersion.Forms
 
         public void Run()
         {
-            ShowGraph();
+            GraphShower.ShowGraph(ref graph);
             ShowMenu();
             MenuOption option = (MenuOption)Input.InputNumber("Choose option: ", 6, 0);
             while (option != MenuOption.Quit)
             {
                 switch (option)
                 {
-                    case MenuOption.PathFind:   Find();        break;
-                    case MenuOption.Save:       Save();        break;
-                    case MenuOption.Load:       Load();        break;
-                    case MenuOption.Create:     CreateGraph(); break;
-                    case MenuOption.Refresh:    Refresh();     break;
-                    case MenuOption.Reverse:    Reverse();     break;
+                    case MenuOption.PathFind:   Find();               break;
+                    case MenuOption.Save:       Save();               break;
+                    case MenuOption.Load:       Load();               break;
+                    case MenuOption.Create:     CreateGraph();        break;
+                    case MenuOption.Refresh:    graph?.Refresh();     break;
+                    case MenuOption.Reverse:    Reverse();            break;
                 }
                 Console.Clear();
-                ShowGraph();
+                GraphShower.ShowGraph(ref graph);
                 ShowMenu();
                 option = (MenuOption)Input.InputNumber("Choose option: ", 6, 0);
             }
@@ -72,33 +72,12 @@ namespace ConsoleVersion.Forms
         private void CreateGraph()
         {
             int obstacles = Input.InputNumber("Enter number of obstacles: ", 100);
-            int height = Input.InputNumber("Enter width of graph: ", 25, 10);
-            int width = Input.InputNumber("Enter height of graph: ", 25, 10);
+            int height = Input.InputNumber("Enter width of graph: ", 100, 10);
+            int width = Input.InputNumber("Enter height of graph: ", 100, 10);
             factory = new RandomValuedConsoleGraphFactory(obstacles, width, height);
             graph = new ConsoleGraph(factory.GetGraph());
             changer = new ConsoleGraphTopRoleChanger(graph);
             pathFindMenu = new PathFindMenu(graph);
-        }
-       
-        private void ShowGraph()
-        {
-            GraphShower.ShowGraph(ref graph);
-        }
-
-        private void ShowStat()
-        {
-            Console.WriteLine(statistics);
-        }
-
-        private void Refresh()
-        {
-            graph?.Refresh();
-        }
-
-        private void ChooseStart()
-        {
-            Console.WriteLine("Start point: ");
-            pathFindMenu.ChooseStart();
         }
 
         private void Save()
@@ -128,18 +107,18 @@ namespace ConsoleVersion.Forms
 
         private void Find()
         {
-            ChooseStart();
-            ChooseEnd();
+            pathFindMenu.ChooseStart();
+            pathFindMenu.ChooseEnd();
             Console.Clear();
-            ShowGraph();
+            GraphShower.ShowGraph(ref graph);
             var search = pathFindMenu.ChoosePathFindAlgorithm();
             search.Pause = PauseMaker.ConsolePause;
             if (search.FindDestionation())
                 search.DrawPath();
             statistics = search.GetStatistics();
             Console.Clear();
-            ShowGraph();
-            ShowStat();
+            GraphShower.ShowGraph(ref graph);
+            Console.WriteLine(statistics);
             Console.ReadKey();
             graph.End = null;
             graph.Start = null;

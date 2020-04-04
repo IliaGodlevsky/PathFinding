@@ -23,8 +23,8 @@ namespace ConsoleVersion.InputClass
 
         private static bool IsError(string choice, int upper, int lower)
         {
-            return int.TryParse(choice, out int ch) 
-                ? ch > upper || ch < lower : false;
+            return !int.TryParse(choice, out int ch) 
+                || ch > upper || ch < lower;
         }
     }
 }

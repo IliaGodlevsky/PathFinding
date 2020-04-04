@@ -4,11 +4,7 @@ using SearchAlgorythms.DistanceCalculator;
 using SearchAlgorythms.Graph;
 using SearchAlgorythms.RoleChanger;
 using System;
-using System.Collections.Generic;
 using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace ConsoleVersion.PathFindAlgorithmMenu
 {
@@ -34,12 +30,14 @@ namespace ConsoleVersion.PathFindAlgorithmMenu
 
         public void ChooseStart()
         {
+            Console.WriteLine("Start point: ");
             Point point = ChoosePoint();
             changer.SetStartPoint(graph[point.X, point.Y], new EventArgs());
         }
 
         public void ChooseEnd()
         {
+            Console.WriteLine("Destination point: ");
             Point point = ChoosePoint();
             changer.SetDestinationPoint(graph[point.X, point.Y], new EventArgs());
         }
