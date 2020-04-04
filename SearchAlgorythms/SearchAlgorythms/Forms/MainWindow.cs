@@ -116,8 +116,7 @@ namespace SearchAlgorythms
 
         private void Percent_Scroll(object sender, EventArgs e)
         {
-            percentTextBox.Text = percent.Value.ToString();
-            percentTextBox.Update();
+            PreparePercentBar();
         }
 
         private bool SizeTextBoxTextChanged(TextBox textBox)
