@@ -7,8 +7,7 @@ namespace ConsoleVersion
     {
         static void Main(string[] args)
         {
-            ConsoleMenu menu = new ConsoleMenu();
-            menu.Run();
+            new ConsoleMenu().Run();
         }
     }
 }
