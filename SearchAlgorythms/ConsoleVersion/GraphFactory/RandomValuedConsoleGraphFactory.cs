@@ -7,12 +7,12 @@ namespace SearchAlgorythms.GraphFactory
     public class RandomValuedConsoleGraphFactory : IGraphFactory
     {
         protected Random rand = new Random();
-        private readonly IGraphTop[,] graph;
+        private readonly ConsoleGraphTop[,] graph;
         private const int MAX_PERCENT_OF_OBSTACLES = 100;
 
         public RandomValuedConsoleGraphFactory(int percentOfObstacles, int width, int height)
         {
-            graph = new IGraphTop[width, height];
+            graph = new ConsoleGraphTop[width, height];
             for (int x = 0; x < width; x++)
             {
                 for (int y = 0; y < height; y++)
