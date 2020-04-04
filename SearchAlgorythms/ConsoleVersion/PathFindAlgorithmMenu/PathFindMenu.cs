@@ -44,8 +44,8 @@ namespace ConsoleVersion.PathFindAlgorithmMenu
 
         public Point InputPoint()
         {
-            int x = Input.InputNumber("Enter x coordinate of point: ", graph.GetWidth());
-            int y = Input.InputNumber("Enter y coordinate of point: ", graph.GetHeight());
+            int x = Input.InputNumber("Enter x coordinate of point: ", graph.Width);
+            int y = Input.InputNumber("Enter y coordinate of point: ", graph.Height);
             return new Point(x, y);
         }
 

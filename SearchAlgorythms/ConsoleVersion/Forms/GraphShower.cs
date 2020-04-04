@@ -9,14 +9,14 @@ namespace ConsoleVersion.Forms
         private static void ShowGraphParams(ConsoleGraph graph)
         {
             Console.WriteLine("Percent of obstacles: " + graph.GetObstaclePercent());
-            Console.WriteLine("Graph width: " + graph.GetWidth());
-            Console.WriteLine("Graph height: " + graph.GetHeight());
+            Console.WriteLine("Graph width: " + graph.Width);
+            Console.WriteLine("Graph height: " + graph.Height);
         }
 
         private static void WriteYCoordinate(ConsoleGraph graph)
         {
             Console.Write("   ");
-            for (int i = 0; i < graph.GetWidth(); i++)
+            for (int i = 0; i < graph.Width; i++)
             {
                 if (i < 10)
                     Console.Write(i.ToString() + "  ");
@@ -25,7 +25,7 @@ namespace ConsoleVersion.Forms
             }
             Console.WriteLine();
             Console.Write("  ");
-            for (int i = 0; i < graph.GetWidth(); i++)
+            for (int i = 0; i < graph.Width; i++)
                 Console.Write("___");
             Console.WriteLine();
         }
@@ -35,18 +35,18 @@ namespace ConsoleVersion.Forms
             ShowGraphParams(graph);
             WriteYCoordinate(graph);
             string line;
-            for (int height = 0; height < graph.GetHeight(); height++)
+            for (int height = 0; height < graph.Height; height++)
             {
                 if (height < 10)
                     line = " |";
                 else
                     line = "|";
                 Console.Write(height.ToString() + line);
-                for (int width = 0; width <graph.GetWidth(); width++) 
+                for (int width = 0; width <graph.Width; width++) 
                 {
                     ConsoleGraphTop top = graph[width, height] as ConsoleGraphTop;
                     Console.Write(top.Text + "  ", top.Colour);
-                    if (width != 0 && width % (graph.GetWidth() - 1) == 0) 
+                    if (width != 0 && width % (graph.Width- 1) == 0) 
                         Console.Write("\n");
                 }
             }

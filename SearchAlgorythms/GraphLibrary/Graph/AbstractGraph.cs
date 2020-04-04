@@ -27,38 +27,20 @@ namespace SearchAlgorythms.Graph
             return buttons;
         }
 
-        public int GetHeight()
-        {
-            if (buttons != null)
-                return buttons.Length / buttons.GetLength(0);
-            else
-                return 0;
-        }
+        public int Height => buttons.Length / buttons.GetLength(0);
 
         public GraphTopInfo[,] GetInfo()
         {
-            GraphTopInfo[,] info = new GraphTopInfo[GetWidth(), GetHeight()];
-            for (int i = 0; i < GetWidth(); i++)
-                for (int j = 0; j < GetHeight(); j++)
+            GraphTopInfo[,] info = new GraphTopInfo[Width, Height];
+            for (int i = 0; i < Width; i++)
+                for (int j = 0; j < Height; j++)
                     info[i, j] = buttons[i, j].GetInfo();
             return info;
         }
 
-        public int GetSize()
-        {
-            if (GetWidth() == 0 || GetHeight() == 0)
-                return 0;
-            else
-                return GetHeight() * GetWidth();
-        }
+        public int Size => Height* Width;
 
-        public int GetWidth()
-        {
-            if (buttons != null)
-                return buttons.GetLength(0);
-            else
-                return 0;
-        }
+        public int Width => buttons.GetLength(0);
 
         public void Insert(IGraphTop top)
         {
@@ -74,7 +56,7 @@ namespace SearchAlgorythms.Graph
             foreach (var top in buttons)
                 if (top.IsObstacle)
                     numberOfObstacles++;
-            return numberOfObstacles * 100 / GetSize();
+            return numberOfObstacles * 100 / Size;
         }
 
         public abstract Point GetIndexes(IGraphTop top);

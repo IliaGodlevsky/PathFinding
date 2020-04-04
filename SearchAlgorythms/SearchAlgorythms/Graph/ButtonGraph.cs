@@ -16,11 +16,11 @@ namespace SearchAlgorythms.Graph
 
         public override Point GetIndexes(IGraphTop top)
         {
-            for (int i = 0; i < GetWidth(); i++)
-                for (int j = 0; j < GetHeight(); j++)           
+            for (int i = 0; i < Width; i++)
+                for (int j = 0; j < Height; j++)           
                     if (top.Location == buttons[i, j].Location)
                         return new Point(i, j);
-            return new Point(GetWidth(), GetHeight());
+            return new Point(Width, Height);
         }
 
         public override void ToDefault(IGraphTop top)

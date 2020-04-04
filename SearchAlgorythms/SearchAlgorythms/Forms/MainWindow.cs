@@ -59,8 +59,8 @@ namespace SearchAlgorythms
                 (top as GraphTop).MouseClick += changer.ChangeTopText;
                 Field.Controls.Add(top as GraphTop);
             }
-            Field.Size = new Size(new Point(graph.GetWidth() *
-                BUTTON_POSITION, graph.GetHeight() * BUTTON_POSITION));
+            Field.Size = new Size(new Point(graph.Width*
+                BUTTON_POSITION, graph.Height* BUTTON_POSITION));
             Field.Location = new Point(177, 35);
             Size = new Size(Field.Size.Width + FieldParams.Width + 50,
                 Field.Size.Height + 80);
@@ -173,7 +173,7 @@ namespace SearchAlgorythms
             if (temp != null)
             {
                 PrepareGraph(temp.GetArray());                
-                PrepareWindow(graph.GetObstaclePercent(), graph.GetWidth(), graph.GetHeight());
+                PrepareWindow(graph.GetObstaclePercent(), graph.Width, graph.Height);
             }
         }
 
