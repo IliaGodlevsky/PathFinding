@@ -42,16 +42,20 @@ namespace ConsoleVersion.PathFindAlgorithmMenu
             changer.SetDestinationPoint(graph[point.X, point.Y], new EventArgs());
         }
 
-        public Point ChoosePoint()
+        public Point InputPoint()
         {
             int x = Input.InputNumber("Enter x coordinate of point: ", graph.GetWidth());
-            int y = Input.InputNumber("Enter y coordinate of point: ", graph.GetHeight());           
-            while (graph[x, y].IsObstacle || !graph[x, y].IsSimpleTop)
-            {
-                x = Input.InputNumber("Enter x coordinate of point: ", graph.GetWidth());
-                y = Input.InputNumber("Enter y coordinate of point: ", graph.GetHeight());
-            }
+            int y = Input.InputNumber("Enter y coordinate of point: ", graph.GetHeight());
             return new Point(x, y);
+        }
+
+        private Point ChoosePoint()
+        {
+            Point point = InputPoint();      
+            while (graph[point.X, point.Y].IsObstacle 
+                || !graph[point.X, point.Y].IsSimpleTop)            
+                point = InputPoint();
+            return point;
         }
 
         private string ShowAlgorithms()

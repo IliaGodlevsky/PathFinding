@@ -1,14 +1,19 @@
 ﻿using SearchAlgorythms.Graph;
 using SearchAlgorythms.Top;
-using System;
-using System.Drawing;
 using Console = Colorful.Console;
 
 namespace ConsoleVersion.Forms
 {
     public static class GraphShower
     {
-        private static void WriteYCoordinate(ref ConsoleGraph graph)
+        private static void ShowGraphParams(ConsoleGraph graph)
+        {
+            Console.WriteLine("Percent of obstacles: " + graph.GetObstaclePercent());
+            Console.WriteLine("Graph width: " + graph.GetWidth());
+            Console.WriteLine("Graph height: " + graph.GetHeight());
+        }
+
+        private static void WriteYCoordinate(ConsoleGraph graph)
         {
             Console.Write("   ");
             for (int i = 0; i < graph.GetWidth(); i++)
@@ -25,9 +30,10 @@ namespace ConsoleVersion.Forms
             Console.WriteLine();
         }
 
-        public static void ShowGraph(ref ConsoleGraph graph)
+        public static void ShowGraph(ConsoleGraph graph)
         {
-            WriteYCoordinate(ref graph);
+            ShowGraphParams(graph);
+            WriteYCoordinate(graph);
             string line;
             for (int height = 0; height < graph.GetHeight(); height++)
             {

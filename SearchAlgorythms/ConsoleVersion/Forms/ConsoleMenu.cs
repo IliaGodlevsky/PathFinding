@@ -39,7 +39,7 @@ namespace ConsoleVersion.Forms
 
         public void Run()
         {
-            GraphShower.ShowGraph(ref graph);
+            GraphShower.ShowGraph(graph);
             ShowMenu();
             MenuOption option = (MenuOption)Input.InputNumber("Choose option: ", 6, 0);
             while (option != MenuOption.Quit)
@@ -54,7 +54,7 @@ namespace ConsoleVersion.Forms
                     case MenuOption.Reverse:    Reverse();            break;
                 }
                 Console.Clear();
-                GraphShower.ShowGraph(ref graph);
+                GraphShower.ShowGraph(graph);
                 ShowMenu();
                 option = (MenuOption)Input.InputNumber("Choose option: ", 6, 0);
             }
@@ -65,7 +65,7 @@ namespace ConsoleVersion.Forms
         private void Reverse()
         {
             Console.WriteLine("Reverse top choice: ");
-            Point point = pathFindMenu.ChoosePoint();
+            Point point = pathFindMenu.InputPoint();
             changer.ReversePolarity(graph[point.X, point.Y], new EventArgs());
         }
 
@@ -110,14 +110,14 @@ namespace ConsoleVersion.Forms
             pathFindMenu.ChooseStart();
             pathFindMenu.ChooseEnd();
             Console.Clear();
-            GraphShower.ShowGraph(ref graph);
+            GraphShower.ShowGraph(graph);
             var search = pathFindMenu.ChoosePathFindAlgorithm();
             search.Pause = PauseMaker.ConsolePause;
             if (search.FindDestionation())
                 search.DrawPath();
             statistics = search.GetStatistics();
             Console.Clear();
-            GraphShower.ShowGraph(ref graph);
+            GraphShower.ShowGraph(graph);
             Console.WriteLine(statistics);
             Console.ReadKey();
             graph.End = null;
