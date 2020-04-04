@@ -7,9 +7,9 @@ namespace SearchAlgorythms.RoleChanger
 {
     public class ConsoleGraphTopRoleChanger : IGraphTopRoleChanger
     {
-        private IGraph graph;
+        private AbstractGraph graph;
 
-        public ConsoleGraphTopRoleChanger(IGraph graph)
+        public ConsoleGraphTopRoleChanger(AbstractGraph graph)
         {
             this.graph = graph;
         }

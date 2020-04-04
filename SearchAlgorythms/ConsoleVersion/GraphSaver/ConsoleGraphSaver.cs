@@ -9,7 +9,7 @@ namespace ConsoleApp1.GraphSaver
 {
     public class ConsoleGraphSaver : IGraphSaver
     {
-        public void SaveGraph(IGraph graph)
+        public void SaveGraph(AbstractGraph graph)
         {
             if (graph != null)
             {               

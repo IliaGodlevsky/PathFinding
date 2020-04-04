@@ -16,10 +16,10 @@ namespace SearchAlgorythms.Algorithm
     {
         protected Queue<IGraphTop> queue = new Queue<IGraphTop>();
         private UnweightedGraphSearchAlgoStatistics statCollector;
-        protected readonly IGraph graph;
+        protected readonly AbstractGraph graph;
 
 
-        public WidePathFindAlgorithm(IGraph graph)
+        public WidePathFindAlgorithm(AbstractGraph graph)
         {
             this.graph = graph;
             statCollector = new UnweightedGraphSearchAlgoStatistics();

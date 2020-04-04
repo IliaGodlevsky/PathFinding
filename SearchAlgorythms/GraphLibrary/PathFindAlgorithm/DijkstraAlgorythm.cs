@@ -11,11 +11,11 @@ namespace SearchAlgorythms.Algorithm
     /// </summary>
     public class DijkstraAlgorithm : IPathFindAlgorithm
     {
-        protected readonly IGraph graph;
+        protected readonly AbstractGraph graph;
         private List<IGraphTop> queue = new List<IGraphTop>();
         private WeightedGraphSearchAlgoStatistics statCollector;
 
-        public DijkstraAlgorithm(IGraph graph)
+        public DijkstraAlgorithm(AbstractGraph graph)
         {
             this.graph = graph;
             foreach (var top in graph)

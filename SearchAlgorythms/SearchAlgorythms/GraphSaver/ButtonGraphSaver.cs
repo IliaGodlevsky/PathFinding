@@ -8,7 +8,7 @@ namespace SearchAlgorythms.GraphSaver
 {
     public class ButtonGraphSaver : IGraphSaver
     {
-        public void SaveGraph(IGraph graph)
+        public void SaveGraph(AbstractGraph graph)
         {
             if (graph != null)
             {

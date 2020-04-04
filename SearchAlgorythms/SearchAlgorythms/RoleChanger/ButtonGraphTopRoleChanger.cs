@@ -8,9 +8,9 @@ namespace SearchAlgorythms.RoleChanger
 {
     public class ButtonGraphTopRoleChanger : IGraphTopRoleChanger
     {
-        private IGraph graph;
+        private AbstractGraph graph;
 
-        public ButtonGraphTopRoleChanger(IGraph graph)
+        public ButtonGraphTopRoleChanger(AbstractGraph graph)
         {
             this.graph = graph;
         }

@@ -4,6 +4,6 @@ namespace SearchAlgorythms.GraphLoader
 {
     public interface IGraphLoader
     {
-        IGraph GetGraph();
+        AbstractGraph GetGraph();
     }
 }

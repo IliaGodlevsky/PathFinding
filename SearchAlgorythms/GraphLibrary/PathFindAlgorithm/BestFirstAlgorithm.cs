@@ -12,7 +12,7 @@ namespace SearchAlgorythms.Algorithm
     {
         private Queue<IGraphTop> waveQueue = new Queue<IGraphTop>();
 
-        public BestFirstAlgorithm(IGraph graph) : base(graph)
+        public BestFirstAlgorithm(AbstractGraph graph) : base(graph)
         {
             
         }

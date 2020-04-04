@@ -49,7 +49,7 @@
     <Compile Include="GraphLoader\IGraphLoader.cs" />
     <Compile Include="GraphSaver\IGraphSaver.cs" />
     <Compile Include="GraphTopInfo\GraphTopInfo.cs" />
-    <Compile Include="Graph\IGraph.cs" />
+    <Compile Include="Graph\AbstractGraph.cs" />
     <Compile Include="PathFindAlgorithm\AStarAlgorithm.cs" />
     <Compile Include="PathFindAlgorithm\BestFirstAlgorithm.cs" />
     <Compile Include="PathFindAlgorithm\DijkstraAlgorythm.cs" />

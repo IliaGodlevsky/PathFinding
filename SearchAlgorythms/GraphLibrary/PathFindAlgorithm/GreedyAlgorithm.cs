@@ -12,11 +12,11 @@ namespace SearchAlgorythms.Algorithm
     /// </summary>
     public class GreedyAlgorithm : IPathFindAlgorithm
     {
-        private readonly IGraph graph;
+        private readonly AbstractGraph graph;
         private Stack<IGraphTop> stack = new Stack<IGraphTop>();
         private WeightedGraphSearchAlgoStatistics statCollector;
 
-        public GreedyAlgorithm(IGraph graph)
+        public GreedyAlgorithm(AbstractGraph graph)
         {
             statCollector = new WeightedGraphSearchAlgoStatistics();
             this.graph = graph;

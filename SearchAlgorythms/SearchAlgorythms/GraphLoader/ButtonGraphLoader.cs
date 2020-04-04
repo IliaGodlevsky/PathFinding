@@ -10,14 +10,14 @@ namespace SearchAlgorythms.GraphLoader
     public class ButtonGraphLoader : IGraphLoader
     {
         private readonly int placeBetweenButtons;
-        private IGraph graph;
+        private AbstractGraph graph;
 
         public ButtonGraphLoader(int placeBetweenButtons)
         {
             this.placeBetweenButtons = placeBetweenButtons;
         }
 
-        public IGraph GetGraph()
+        public AbstractGraph GetGraph()
         {
             GraphTopInfo[,] info = null;
             OpenFileDialog open = new OpenFileDialog();

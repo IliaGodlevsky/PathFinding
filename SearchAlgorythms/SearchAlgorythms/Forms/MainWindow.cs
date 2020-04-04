@@ -14,7 +14,7 @@ namespace SearchAlgorythms
 {
     public partial class MainWindow : Form
     {
-        private IGraph graph = null;
+        private AbstractGraph graph = null;
         private IPathFindAlgorithm pathFindAlgorithm = null;
         private IGraphFactory createAlgorythm = null;
         private const int BUTTON_POSITION = 25;
@@ -169,7 +169,7 @@ namespace SearchAlgorythms
         private void LoadMapToolStripMenuItem_Click(object sender, EventArgs e)
         {
             var loader = new ButtonGraphLoader(BUTTON_POSITION);
-            IGraph temp = loader.GetGraph();                      
+            AbstractGraph temp = loader.GetGraph();                      
             if (temp != null)
             {
                 PrepareGraph(temp.GetArray());                

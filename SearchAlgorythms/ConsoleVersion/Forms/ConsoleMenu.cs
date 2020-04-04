@@ -67,7 +67,7 @@ namespace ConsoleVersion.Forms
         public void Load()
         {
             ConsoleGraphLoader loader = new ConsoleGraphLoader();
-            IGraph temp = loader.GetGraph();
+            AbstractGraph temp = loader.GetGraph();
             if (temp != null)
             {
                 graph = new ConsoleGraph(temp.GetArray());              

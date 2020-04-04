@@ -10,9 +10,9 @@ namespace ConsoleVersion.GraphLoader
 {
     public class ConsoleGraphLoader : IGraphLoader
     {
-        private IGraph graph = null;
+        private AbstractGraph graph = null;
 
-        public IGraph GetGraph()
+        public AbstractGraph GetGraph()
         {
             BinaryFormatter f = new BinaryFormatter();
             Console.Write("Enter path: ");

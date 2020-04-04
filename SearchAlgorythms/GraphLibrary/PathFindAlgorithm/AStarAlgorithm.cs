@@ -13,7 +13,7 @@ namespace SearchAlgorythms.Algorithm
 
         public HeuristicHandler HeuristicFunction;
 
-        public AStarAlgorithm(IGraph graph) : base(graph)
+        public AStarAlgorithm(AbstractGraph graph) : base(graph)
         {
 
         }
