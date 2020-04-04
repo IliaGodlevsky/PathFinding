@@ -107,6 +107,9 @@ namespace ConsoleVersion.Forms
 
         private void Find()
         {
+            graph.Refresh();
+            Console.Clear();
+            GraphShower.ShowGraph(graph);
             pathFindMenu.ChooseStart();
             pathFindMenu.ChooseEnd();
             Console.Clear();
