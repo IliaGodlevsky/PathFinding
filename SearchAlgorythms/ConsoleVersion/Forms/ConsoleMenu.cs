@@ -32,7 +32,7 @@ namespace ConsoleVersion.Forms
         public ConsoleMenu()
         {
             factory = new RandomValuedConsoleGraphFactory(percentOfObstacles: 40,
-                width: 20, height: 20);
+                width: 35, height: 23);
             graph = new ConsoleGraph(factory.GetGraph());
             changer = new ConsoleGraphTopRoleChanger(graph);
             pathFindMenu = new PathFindMenu(graph);
