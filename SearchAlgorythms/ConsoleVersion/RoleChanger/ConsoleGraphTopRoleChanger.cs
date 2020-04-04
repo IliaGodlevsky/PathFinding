@@ -1,4 +1,5 @@
-﻿using SearchAlgorythms.Graph;
+﻿using ConsoleVersion.InputClass;
+using SearchAlgorythms.Graph;
 using SearchAlgorythms.Top;
 using System;
 using System.Linq;
@@ -16,12 +17,14 @@ namespace SearchAlgorythms.RoleChanger
 
         public void ChangeTopText(object sender, EventArgs e)
         {
-            return;
+            (sender as ConsoleGraphTop).Text = 
+                Input.InputNumber("Enter new top value: ", 9, 1).ToString();
         }
 
         public void ReversePolarity(object sender, EventArgs e)
         {
-            throw new NotImplementedException();
+            IGraphTop top = sender as ConsoleGraphTop;
+            Reverse(ref top);           
         }
 
         public void SetDestinationPoint(object sender, EventArgs e)
@@ -48,6 +51,37 @@ namespace SearchAlgorythms.RoleChanger
         {
             return top.Neighbours.Any() && top.IsSimpleTop
                 && !top.IsObstacle;
+        }
+
+        private void MakeObstacle(ref IGraphTop top)
+        {
+            if (top.IsSimpleTop)
+            {
+                BoundSetter.BreakBoundsBetweenNeighbours(top);
+                top.IsObstacle = false;
+                top.SetToDefault();
+                top.MarkAsObstacle();
+            }
+        }
+
+        private void MakeTop(ref IGraphTop top)
+        {
+            Random rand = new Random();
+            top.IsObstacle = false;
+            top.MarkAsGraphTop();
+            (top as ConsoleGraphTop).Text = (rand.Next(9) + 1).ToString();
+            NeigbourSetter setter = new NeigbourSetter(graph.GetArray());
+            var coordinates = (graph as ConsoleGraph).GetIndexes(top);
+            setter.SetNeighbours(coordinates.X, coordinates.Y);
+            BoundSetter.SetBoundsBetweenNeighbours(top);
+        }
+
+        private void Reverse(ref IGraphTop top)
+        {
+            if (top.IsObstacle)
+                MakeTop(ref top);
+            else
+                MakeObstacle(ref top);
         }
     }
 }

@@ -44,7 +44,7 @@ namespace ConsoleVersion.PathFindAlgorithmMenu
             changer.SetDestinationPoint(graph[point.X, point.Y], new EventArgs());
         }
 
-        private Point ChoosePoint()
+        public Point ChoosePoint()
         {
             int x = Input.InputNumber("Enter x coordinate of point: ", graph.GetWidth());
             int y = Input.InputNumber("Enter y coordinate of point: ", graph.GetHeight());           
