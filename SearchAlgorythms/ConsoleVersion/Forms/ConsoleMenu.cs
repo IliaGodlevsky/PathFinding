@@ -108,12 +108,6 @@ namespace ConsoleVersion.Forms
 
         }
 
-        private void ChooseEnd()
-        {
-            Console.WriteLine("Destination point: ");
-            pathFindMenu.ChooseEnd();
-        }
-
         private void Find()
         {
             graph.Refresh();
