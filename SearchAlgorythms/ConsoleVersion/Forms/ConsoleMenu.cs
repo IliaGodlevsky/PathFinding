@@ -1,5 +1,5 @@
-﻿using ConsoleApp1.GraphSaver;
-using ConsoleVersion.GraphLoader;
+﻿using ConsoleVersion.GraphLoader;
+using ConsoleVersion.GraphSaver;
 using ConsoleVersion.InputClass;
 using ConsoleVersion.PathFindAlgorithmMenu;
 using SearchAlgorythms.Graph;

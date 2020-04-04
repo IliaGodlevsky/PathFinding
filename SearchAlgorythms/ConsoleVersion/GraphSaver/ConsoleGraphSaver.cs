@@ -5,7 +5,7 @@ using System;
 using System.IO;
 using System.Runtime.Serialization.Formatters.Binary;
 
-namespace ConsoleApp1.GraphSaver
+namespace ConsoleVersion.GraphSaver
 {
     public class ConsoleGraphSaver : IGraphSaver
     {
