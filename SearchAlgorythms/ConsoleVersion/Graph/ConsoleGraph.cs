@@ -11,6 +11,7 @@ namespace SearchAlgorythms.Graph
         public IGraphTop[,] GetArray()
         {
             return buttons;
+
         }
 
         public ConsoleGraph(IGraphTop[,] buttons)
