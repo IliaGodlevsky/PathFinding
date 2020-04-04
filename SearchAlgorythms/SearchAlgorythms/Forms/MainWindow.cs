@@ -14,7 +14,7 @@ namespace SearchAlgorythms
 {
     public partial class MainWindow : Form
     {
-        private AbstractGraph graph = null;
+        private ButtonGraph graph = null;
         private IPathFindAlgorithm pathFindAlgorithm = null;
         private IGraphFactory createAlgorythm = null;
         private const int BUTTON_POSITION = 25;
@@ -123,6 +123,8 @@ namespace SearchAlgorythms
         private bool SizeTextBoxTextChanged(TextBox textBox)
         {
             if (textBox.Text.Length == 0 || !int.TryParse(textBox.Text, out int size))
+                return false;
+            if (size <= 5)
                 return false;
             textBox.Text = size.ToString();
             return true;
