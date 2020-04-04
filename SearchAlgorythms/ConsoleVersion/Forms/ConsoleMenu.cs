@@ -13,7 +13,16 @@ namespace ConsoleVersion.Forms
 {
     public class ConsoleMenu
     {
-        private enum MenuOption { Quit, PathFind, Save, Load, Create, Refresh,Reverse};
+        private enum MenuOption
+        {
+            Quit,
+            PathFind,
+            Save,
+            Load,
+            Create,
+            Refresh,
+            Reverse
+        };
         private PathFindMenu pathFindMenu;
         private ConsoleGraph graph = null;
         private ConsoleGraphTopRoleChanger changer;
