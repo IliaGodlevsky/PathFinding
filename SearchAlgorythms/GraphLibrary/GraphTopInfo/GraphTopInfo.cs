@@ -1,6 +1,5 @@
 ﻿using SearchAlgorythms.Top;
 using System;
-using System.Drawing;
 
 namespace SearchAlgorythms
 {
