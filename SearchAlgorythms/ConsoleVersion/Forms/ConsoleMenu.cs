@@ -1,4 +1,5 @@
 ﻿using ConsoleApp1.GraphSaver;
+using ConsoleVersion.GraphLoader;
 using ConsoleVersion.InputClass;
 using ConsoleVersion.PathFindAlgorithmMenu;
 using SearchAlgorythms.Graph;
@@ -61,6 +62,19 @@ namespace ConsoleVersion.Forms
         {
             ConsoleGraphSaver save = new ConsoleGraphSaver();
             save.SaveGraph(graph);
+        }
+
+        public void Load()
+        {
+            ConsoleGraphLoader loader = new ConsoleGraphLoader();
+            IGraph temp = loader.GetGraph();
+            if (temp != null)
+            {
+                graph = new ConsoleGraph(temp.GetArray());              
+                changer = new ConsoleGraphTopRoleChanger(graph);
+                pathFindMenu = new PathFindMenu(graph);
+            }
+
         }
 
         public void ChooseEnd()

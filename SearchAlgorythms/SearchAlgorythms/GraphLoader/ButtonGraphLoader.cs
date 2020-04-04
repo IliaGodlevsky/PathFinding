@@ -29,7 +29,6 @@ namespace SearchAlgorythms.GraphLoader
                     {
                         info = (GraphTopInfo[,])f.Deserialize(stream);
                         Initialise(info);
-
                     }
                     catch (Exception ex)
                     {

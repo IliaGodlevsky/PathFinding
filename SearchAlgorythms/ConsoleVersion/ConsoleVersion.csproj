@@ -48,8 +48,10 @@
   <ItemGroup>
     <Compile Include="Forms\ConsoleMenu.cs" />
     <Compile Include="Forms\GraphShower.cs" />
+    <Compile Include="GraphFactory\OnInfoConsoleGraphFactory.cs" />
     <Compile Include="GraphFactory\RandomValuedConsoleGraphFactory.cs" />
-    <Compile Include="GraphSaver\GraphSaver.cs" />
+    <Compile Include="GraphLoader\ConsoleGraphLoader.cs" />
+    <Compile Include="GraphSaver\ConsoleGraphSaver.cs" />
     <Compile Include="Graph\ConsoleGraph.cs" />
     <Compile Include="InputClass\Input.cs" />
     <Compile Include="PathFindAlgorithmMenu\PathFindMenu.cs" />
@@ -62,9 +64,7 @@
     <None Include="App.config" />
     <None Include="packages.config" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="GraphLoader\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <ProjectReference Include="..\GraphLibrary\GraphLibrary.csproj">
       <Project>{5441521c-1754-4098-a843-8904910700e8}</Project>

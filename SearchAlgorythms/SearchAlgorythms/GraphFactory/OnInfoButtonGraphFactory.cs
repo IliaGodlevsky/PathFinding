@@ -5,7 +5,7 @@ namespace SearchAlgorythms.GraphFactory
 {
     public class OnInfoButtonGraphFactory : IGraphFactory
     {
-        private readonly IGraphTop[,] buttons = null;
+        private readonly GraphTop[,] buttons = null;
 
         public OnInfoButtonGraphFactory(GraphTopInfo[,] info, int placeBetweenTops)
         {
@@ -13,7 +13,7 @@ namespace SearchAlgorythms.GraphFactory
                 return;
             int graphWidth = info.GetLength(0);
             int graphHeight = info.Length / info.GetLength(0);
-            buttons = new IGraphTop[graphWidth, graphHeight];
+            buttons = new GraphTop[graphWidth, graphHeight];
             for (int i = 0; i < graphWidth; i++)
             {
                 for (int j = 0; j < graphHeight; j++)

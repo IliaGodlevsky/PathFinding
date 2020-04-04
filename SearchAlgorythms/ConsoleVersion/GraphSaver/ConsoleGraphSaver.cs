@@ -15,7 +15,8 @@ namespace ConsoleApp1.GraphSaver
             {               
                 GraphTopInfo[,] info = graph.GetInfo();
                 BinaryFormatter f = new BinaryFormatter();
-                string path = "Test";
+                Console.Write("Enter path: ");
+                string path = Console.ReadLine();
                 using (var stream = new FileStream(path, FileMode.Create)) 
                 {
                     try

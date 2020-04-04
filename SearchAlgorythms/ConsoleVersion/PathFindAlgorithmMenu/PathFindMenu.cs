@@ -46,12 +46,12 @@ namespace ConsoleVersion.PathFindAlgorithmMenu
 
         private Point ChoosePoint()
         {
-            int y = Input.InputNumber("Enter x coordinate of point: ", graph.GetHeight());
-            int x = Input.InputNumber("Enter y coordinate of point: ", graph.GetWidth());           
+            int x = Input.InputNumber("Enter x coordinate of point: ", graph.GetWidth());
+            int y = Input.InputNumber("Enter y coordinate of point: ", graph.GetHeight());           
             while (graph[x, y].IsObstacle || !graph[x, y].IsSimpleTop)
             {
-                y = Input.InputNumber("Enter x coordinate of point: ", graph.GetHeight());
-                x = Input.InputNumber("Enter y coordinate of point: ", graph.GetWidth());
+                x = Input.InputNumber("Enter x coordinate of point: ", graph.GetWidth());
+                y = Input.InputNumber("Enter y coordinate of point: ", graph.GetHeight());
             }
             return new Point(x, y);
         }

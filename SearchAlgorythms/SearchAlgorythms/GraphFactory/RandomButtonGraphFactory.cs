@@ -7,12 +7,12 @@ namespace SearchAlgorythms.GraphFactory
     public class RandomButtonGraphFactory : IGraphFactory
     {
         protected Random rand = new Random();
-        private readonly IGraphTop[,] graph;
+        private readonly GraphTop[,] graph;
         private const int MAX_PERCENT_OF_OBSTACLES = 100;
 
         public RandomButtonGraphFactory(int percentOfObstacles, int width, int height, int placeBetweenButtons)
         {
-            graph = new IGraphTop[width, height];
+            graph = new GraphTop[width, height];
             for (int x = 0; x < width; x++)
             {
                 for (int y = 0; y < height; y++)
@@ -23,8 +23,7 @@ namespace SearchAlgorythms.GraphFactory
                         graph[x, y].IsObstacle = true;
                         graph[x, y].MarkAsObstacle();
                     }
-                    GraphTop button = graph[x, y] as GraphTop;
-                    button.Location = new Point(x * placeBetweenButtons, y * placeBetweenButtons);
+                    graph[x, y].Location = new Point(x * placeBetweenButtons, y * placeBetweenButtons);
                 }
             }
             NeigbourSetter setter = new NeigbourSetter(graph);
@@ -32,7 +31,7 @@ namespace SearchAlgorythms.GraphFactory
         }
 
 
-        public virtual void CreateGraphTop(ref IGraphTop button) => button = new GraphTop();
+        public virtual void CreateGraphTop(ref GraphTop button) => button = new GraphTop();
 
         private bool IsObstacleChance(int percentOfObstacles) 
             => rand.Next(MAX_PERCENT_OF_OBSTACLES) < percentOfObstacles;

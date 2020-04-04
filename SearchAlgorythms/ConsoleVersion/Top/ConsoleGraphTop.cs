@@ -13,6 +13,14 @@ namespace SearchAlgorythms.Top
             IsObstacle = false;
         }
 
+        public ConsoleGraphTop(GraphTopInfo info) : this()
+        {
+            IsObstacle = info.IsObstacle;
+            Text = info.Text;
+            if (IsObstacle)
+                MarkAsObstacle();
+        }
+
         public bool IsEnd { get; set; }
         public bool IsObstacle { get; set; }
 
@@ -49,8 +57,7 @@ namespace SearchAlgorythms.Top
 
         public void MarkAsObstacle()
         {
-            Text = "*";
-            Colour = Color.FromKnownColor(KnownColor.Gray);
+            Text = " ";
             IsObstacle = true;
         }
 

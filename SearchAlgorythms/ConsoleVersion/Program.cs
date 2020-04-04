@@ -8,7 +8,8 @@ namespace ConsoleVersion
         static void Main(string[] args)
         {
             ConsoleMenu menu = new ConsoleMenu();
-            menu.CreateGraph();
+            menu.Load();
+            //menu.CreateGraph();
             menu.ShowGraph();
             menu.ChooseStart();
             menu.ChooseEnd();

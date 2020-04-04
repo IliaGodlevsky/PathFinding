@@ -11,10 +11,10 @@ namespace SearchAlgorythms.GraphFactory
 
         }
 
-        public override void CreateGraphTop(ref IGraphTop button)
+        public override void CreateGraphTop(ref GraphTop button)
         {
             base.CreateGraphTop(ref button);
-            (button as GraphTop).Text = (rand.Next(9) + 1).ToString();
+            button.Text = (rand.Next(9) + 1).ToString();
         }
     }
 }
