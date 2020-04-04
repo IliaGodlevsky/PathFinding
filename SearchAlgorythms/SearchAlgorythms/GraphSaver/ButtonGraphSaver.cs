@@ -16,6 +16,7 @@ namespace SearchAlgorythms.GraphSaver
                 GraphTopInfo[,] info = graph.GetInfo();
                 BinaryFormatter f = new BinaryFormatter();
                 if (save.ShowDialog() == DialogResult.OK)
+                {
                     using (var stream = new FileStream(save.FileName, FileMode.Create))
                     {
                         try
@@ -28,6 +29,7 @@ namespace SearchAlgorythms.GraphSaver
                             return;
                         }
                     }
+                }
             }
         }
     }
