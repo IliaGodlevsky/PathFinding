@@ -50,7 +50,8 @@ namespace ConsoleVersion.Forms
         {
             GraphShower.ShowGraph(graph);
             ShowMenu();
-            MenuOption option = (MenuOption)Input.InputNumber("Choose option: ", 6, 0);
+            MenuOption option = (MenuOption)Input.InputNumber("Choose option: ", 
+                (int)MenuOption.Reverse, (int)MenuOption.Quit);
             while (option != MenuOption.Quit)
             {
                 switch (option)
@@ -65,7 +66,8 @@ namespace ConsoleVersion.Forms
                 Console.Clear();
                 GraphShower.ShowGraph(graph);
                 ShowMenu();
-                option = (MenuOption)Input.InputNumber("Choose option: ", 6, 0);
+                option = (MenuOption)Input.InputNumber("Choose option: ",
+                (int)MenuOption.Reverse, (int)MenuOption.Quit);
             }
             Console.WriteLine("Good bye");
             Console.ReadKey();

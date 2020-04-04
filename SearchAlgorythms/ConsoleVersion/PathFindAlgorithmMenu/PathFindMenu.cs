@@ -70,7 +70,8 @@ namespace ConsoleVersion.PathFindAlgorithmMenu
         public IPathFindAlgorithm ChoosePathFindAlgorithm()
         {
             Algorithms algorithms = (Algorithms)Input.InputNumber(
-                ShowAlgorithms() + "Choose algorithm: ", 5, 1);
+                ShowAlgorithms() + "Choose algorithm: ", 
+                (int)Algorithms.GreedyAlgorithm, (int)Algorithms.WidePathFind);
             switch (algorithms)
             {
                 case Algorithms.WidePathFind:
@@ -80,13 +81,9 @@ namespace ConsoleVersion.PathFindAlgorithmMenu
                 case Algorithms.DijkstraAlgorithm:
                     return new DijkstraAlgorithm(graph);
                 case Algorithms.AStarAlgorithm:
-                    {
-                        AStarAlgorithm algo = new AStarAlgorithm(graph)
-                        {
-                            HeuristicFunction = DistanceCalculator.GetChebyshevDistance
-                        };
-                        return algo;
-                    }
+                    return new AStarAlgorithm(graph) {
+                        HeuristicFunction = DistanceCalculator.GetChebyshevDistance
+                    };                  
                 case Algorithms.GreedyAlgorithm:
                     return new GreedyAlgorithm(graph);
                 default:
