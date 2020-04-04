@@ -17,17 +17,14 @@ namespace ConsoleVersion.GraphSaver
                 BinaryFormatter f = new BinaryFormatter();
                 Console.Write("Enter path: ");
                 string path = Console.ReadLine();
-                using (var stream = new FileStream(path, FileMode.Create)) 
+                try
                 {
-                    try
-                    {
-                        f.Serialize(stream, info);
-                    }
-                    catch (Exception ex)
-                    {
-                        Console.WriteLine(ex.Message);
-                        return;
-                    }
+                    using (var stream = new FileStream(path, FileMode.Create))
+                        f.Serialize(stream, info);                    
+                }
+                catch(Exception ex)
+                {
+                    Console.WriteLine(ex.Message);
                 }
             }
         }
