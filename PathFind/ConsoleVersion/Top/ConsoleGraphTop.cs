@@ -1,6 +1,5 @@
 ﻿using System.Collections.Generic;
 using System.Drawing;
-using Console = Colorful.Console;
 
 namespace SearchAlgorythms.Top
 {
@@ -42,7 +41,7 @@ namespace SearchAlgorythms.Top
 
         public void MarkAsCurrentlyLooked()
         {
- 
+            return;
         }
 
         public void MarkAsEnd()
