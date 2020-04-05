@@ -69,7 +69,7 @@ namespace SearchAlgorythms.RoleChanger
             Random rand = new Random();
             top.IsObstacle = false;
             top.MarkAsGraphTop();
-            (top as ConsoleGraphTop).Text = (rand.Next(9) + 1).ToString();
+            top.Text = (rand.Next(9) + 1).ToString();
             NeigbourSetter setter = new NeigbourSetter(graph.GetArray());
             var coordinates = (graph as ConsoleGraph).GetIndexes(top);
             setter.SetNeighbours(coordinates.X, coordinates.Y);
