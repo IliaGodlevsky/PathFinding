@@ -5,16 +5,16 @@ namespace SearchAlgorythms.DistanceCalculator
 {
     public static class DistanceCalculator
     {
-        public static double GetEuclideanDistance(IGraphTop top1, IGraphTop top2)
+        public static double GetEuclideanDistance(IGraphTop from, IGraphTop to)
         {
-            return Math.Sqrt(Math.Pow(top1.Location.X - top2.Location.X, 2)
-                + Math.Pow(top1.Location.Y - top2.Location.Y, 2));
+            return Math.Sqrt(Math.Pow(from.Location.X - to.Location.X, 2)
+                + Math.Pow(from.Location.Y - to.Location.Y, 2));
         }
 
-        public static double GetChebyshevDistance(IGraphTop top1, IGraphTop top2)
+        public static double GetChebyshevDistance(IGraphTop from, IGraphTop to)
         {
-            return Math.Max(Math.Abs(top1.Location.X - top2.Location.X),
-                Math.Abs(top1.Location.Y - top2.Location.Y));
+            return Math.Max(Math.Abs(from.Location.X - to.Location.X),
+                Math.Abs(from.Location.Y - to.Location.Y));
         }
     }
 }
