@@ -9,6 +9,7 @@ using SearchAlgorythms.RoleChanger;
 using SearchAlgorythms.Algorithm;
 using SearchAlgorythms.GraphFactory;
 using System.Linq;
+using GraphLibrary.GraphFactory;
 
 namespace SearchAlgorythms
 {
@@ -16,7 +17,7 @@ namespace SearchAlgorythms
     {
         private ButtonGraph graph = null;
         private IPathFindAlgorithm pathFindAlgorithm = null;
-        private AbstractGraphFactory createAlgorythm = null;
+        private IGraphFactory createAlgorythm = null;
         private const int BUTTON_POSITION = 25;
         private ButtonGraphTopRoleChanger changer = null;
 
