@@ -12,7 +12,7 @@ namespace SearchAlgorythms.Graph
 
         public override Point GetIndexes(IGraphTop top)
         {
-            return new Point(top.Location.X, top.Location.Y);
+            return top.Location;
         }
 
         public override void ToDefault(IGraphTop top)
