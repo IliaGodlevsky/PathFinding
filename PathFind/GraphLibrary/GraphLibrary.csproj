@@ -47,6 +47,7 @@
     <Compile Include="Extensions\ListExtension\ListExtensions.cs" />
     <Compile Include="GraphFactory\AbstractGraphFactory.cs" />
     <Compile Include="GraphFactory\AbstractGraphInitializer.cs" />
+    <Compile Include="GraphFactory\IGraphFactory.cs" />
     <Compile Include="GraphLoader\IGraphLoader.cs" />
     <Compile Include="GraphSaver\IGraphSaver.cs" />
     <Compile Include="GraphTopInfo\GraphTopInfo.cs" />

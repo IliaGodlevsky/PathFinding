@@ -1,10 +1,11 @@
-﻿using SearchAlgorythms.Top;
+﻿using GraphLibrary.GraphFactory;
+using SearchAlgorythms.Top;
 using System;
 using System.Drawing;
 
 namespace SearchAlgorythms.GraphFactory
 {
-    public abstract class AbstractGraphFactory
+    public abstract class AbstractGraphFactory : IGraphFactory
     {
         protected Random rand = new Random();
         protected IGraphTop[,] graph;

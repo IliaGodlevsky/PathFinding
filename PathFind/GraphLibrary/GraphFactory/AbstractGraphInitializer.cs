@@ -4,7 +4,7 @@ using System.Drawing;
 
 namespace GraphLibrary.GraphFactory
 {
-    public abstract class AbstractGraphInitializer
+    public abstract class AbstractGraphInitializer : IGraphFactory
     {
         protected IGraphTop[,] buttons = null;
 
