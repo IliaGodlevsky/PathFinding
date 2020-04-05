@@ -24,7 +24,7 @@ namespace SearchAlgorythms.RoleChanger
         public void ReversePolarity(object sender, EventArgs e)
         {
             IGraphTop top = sender as ConsoleGraphTop;
-            Reverse(ref top);           
+            Reverse(ref top);
         }
 
         public void SetDestinationPoint(object sender, EventArgs e)
@@ -42,9 +42,9 @@ namespace SearchAlgorythms.RoleChanger
             ConsoleGraphTop top = sender as ConsoleGraphTop;
             if (!IsRightDestination(top))
                 return;
-            top.IsStart = true;                
+            top.IsStart = true;
             top.MarkAsStart();
-            graph.Start = top;          
+            graph.Start = top;
         }
 
         private bool IsRightDestination(ConsoleGraphTop top)
