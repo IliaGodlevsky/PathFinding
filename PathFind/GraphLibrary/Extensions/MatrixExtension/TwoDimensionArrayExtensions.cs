@@ -14,7 +14,7 @@ namespace GraphLibrary.Extensions.MatrixExtension
             foreach (var element in arr)
                 if (predicate(element))
                     number++;
-            return number * 100 / arr.Length;
+            return number;
         }
 
         public static TKey[,] Accumulate<TSource, TKey>(this TSource[,] arr, Func<TSource,TKey> func)

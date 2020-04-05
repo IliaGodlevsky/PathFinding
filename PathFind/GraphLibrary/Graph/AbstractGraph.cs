@@ -44,7 +44,7 @@ namespace SearchAlgorythms.Graph
             setter.SetNeighbours(coordiantes.X, coordiantes.Y);
         }
 
-        public int ObstaclePercent => buttons.CountIf(t => t.IsObstacle);
+        public int ObstaclePercent => buttons.CountIf(t => t.IsObstacle) * 100 / Size;
 
         public abstract Point GetIndexes(IGraphTop top);
         public abstract void ToDefault(IGraphTop top);

@@ -27,7 +27,7 @@ namespace SearchAlgorythms.GraphFactory
                         graph[x, y].MarkAsObstacle();
                     }                    
                 }
-            }          
+            }
             graph.Shuffle();
             for (int x = 0; x < width; x++)
             {
