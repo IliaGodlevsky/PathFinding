@@ -17,7 +17,7 @@ namespace GraphLibrary.Extensions.MatrixExtension
             return number;
         }
 
-        public static TKey[,] Accumulate<TSource, TKey>(this TSource[,] arr, Func<TSource,TKey> func)
+        public static TKey[,] Accumulate<TSource, TKey>(this TSource[,] arr, Func<TSource, TKey> func)
         {
             int width = arr.GetLength(0);
             int height = arr.Length / arr.GetLength(0);
@@ -44,7 +44,6 @@ namespace GraphLibrary.Extensions.MatrixExtension
                     arr[a, c] = arr[b, d];
                     arr[b, d] = temp;
                 }
-            
         }
     }
 }
