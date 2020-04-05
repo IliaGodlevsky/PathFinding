@@ -46,12 +46,17 @@ namespace ConsoleVersion.Forms
             Console.WriteLine("6. Reverse");
         }
 
-        public void Run()
+        private MenuOption GetOption()
         {
             GraphShower.ShowGraph(graph);
             ShowMenu();
-            MenuOption option = (MenuOption)Input.InputNumber("Choose option: ", 
+            return (MenuOption)Input.InputNumber("Choose option: ",
                 (int)MenuOption.Reverse, (int)MenuOption.Quit);
+        }
+
+        public void Run()
+        {
+            MenuOption option = GetOption();
             while (option != MenuOption.Quit)
             {
                 switch (option)
@@ -64,13 +69,8 @@ namespace ConsoleVersion.Forms
                     case MenuOption.Reverse:    Reverse();            break;
                 }
                 Console.Clear();
-                GraphShower.ShowGraph(graph);
-                ShowMenu();
-                option = (MenuOption)Input.InputNumber("Choose option: ",
-                (int)MenuOption.Reverse, (int)MenuOption.Quit);
+                option = GetOption();
             }
-            Console.WriteLine("Good bye");
-            Console.ReadKey();
         }
 
         private void Reverse()
