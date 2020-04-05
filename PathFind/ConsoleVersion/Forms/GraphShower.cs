@@ -8,7 +8,7 @@ namespace ConsoleVersion.Forms
     {
         private static void ShowGraphParams(ConsoleGraph graph)
         {
-            Console.WriteLine("Percent of obstacles: " + graph.GetObstaclePercent());
+            Console.WriteLine("Percent of obstacles: " + graph.ObstaclePercent);
             Console.WriteLine("Graph width: " + graph.Width);
             Console.WriteLine("Graph height: " + graph.Height);
         }

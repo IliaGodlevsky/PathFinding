@@ -175,7 +175,7 @@ namespace SearchAlgorythms
             if (temp != null)
             {
                 PrepareGraph(temp.GetArray());                
-                PrepareWindow(graph.GetObstaclePercent(), graph.Width, graph.Height);
+                PrepareWindow(graph.ObstaclePercent, graph.Width, graph.Height);
             }
         }
 
@@ -196,7 +196,7 @@ namespace SearchAlgorythms
             graph?.Refresh();
             time.Text = "";
             time.Update();
-            percent.Value = graph.GetObstaclePercent();
+            percent.Value = graph.ObstaclePercent;
             PreparePercentBar();
         }
 

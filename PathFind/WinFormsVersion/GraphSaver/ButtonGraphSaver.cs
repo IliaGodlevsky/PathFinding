@@ -13,7 +13,7 @@ namespace SearchAlgorythms.GraphSaver
             if (graph != null)
             {
                 SaveFileDialog save = new SaveFileDialog();
-                GraphTopInfo[,] info = graph.GetInfo();
+                GraphTopInfo[,] info = graph.Info;
                 BinaryFormatter f = new BinaryFormatter();
                 if (save.ShowDialog() == DialogResult.OK)
                 {

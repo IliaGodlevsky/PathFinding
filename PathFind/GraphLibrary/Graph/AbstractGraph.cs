@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Drawing;
+using GraphLibrary.Extensions.MatrixExtension;
 using SearchAlgorythms.Top;
 
 namespace SearchAlgorythms.Graph
@@ -27,20 +28,13 @@ namespace SearchAlgorythms.Graph
             return buttons;
         }
 
-        public int Height => buttons.Length / buttons.GetLength(0);
+        public int Height => buttons.Height();
 
-        public GraphTopInfo[,] GetInfo()
-        {
-            GraphTopInfo[,] info = new GraphTopInfo[Width, Height];
-            for (int i = 0; i < Width; i++)
-                for (int j = 0; j < Height; j++)
-                    info[i, j] = buttons[i, j].GetInfo();
-            return info;
-        }
+        public GraphTopInfo[,] Info => buttons.Accumulate(t => t.GetInfo());
 
-        public int Size => Height* Width;
+        public int Size => buttons.Length;
 
-        public int Width => buttons.GetLength(0);
+        public int Width => buttons.Width();
 
         public void Insert(IGraphTop top)
         {
@@ -50,14 +44,7 @@ namespace SearchAlgorythms.Graph
             setter.SetNeighbours(coordiantes.X, coordiantes.Y);
         }
 
-        public int GetObstaclePercent()
-        {
-            int numberOfObstacles = 0;
-            foreach (var top in buttons)
-                if (top.IsObstacle)
-                    numberOfObstacles++;
-            return numberOfObstacles * 100 / Size;
-        }
+        public int ObstaclePercent => buttons.CountIf(t => t.IsObstacle);
 
         public abstract Point GetIndexes(IGraphTop top);
         public abstract void ToDefault(IGraphTop top);

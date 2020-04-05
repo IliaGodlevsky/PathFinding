@@ -13,7 +13,7 @@ namespace ConsoleVersion.GraphSaver
         {
             if (graph != null)
             {               
-                GraphTopInfo[,] info = graph.GetInfo();
+                GraphTopInfo[,] info = graph.Info;
                 BinaryFormatter f = new BinaryFormatter();
                 Console.Write("Enter path: ");
                 string path = Console.ReadLine();

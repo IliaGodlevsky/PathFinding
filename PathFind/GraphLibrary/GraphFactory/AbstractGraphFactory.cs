@@ -1,4 +1,5 @@
-﻿using GraphLibrary.GraphFactory;
+﻿using GraphLibrary.Extensions.MatrixExtension;
+using GraphLibrary.GraphFactory;
 using SearchAlgorythms.Top;
 using System;
 using System.Drawing;
@@ -24,10 +25,14 @@ namespace SearchAlgorythms.GraphFactory
                     {
                         graph[x, y].IsObstacle = true;
                         graph[x, y].MarkAsObstacle();
-                    }
-                    graph[x, y].Location = new Point(x * placeBetweenButtons, 
-                        y * placeBetweenButtons);
+                    }                    
                 }
+            }          
+            graph.Shuffle();
+            for (int x = 0; x < width; x++)
+            {
+                for (int y = 0; y < height; y++)
+                    graph[x, y].Location = new Point(x * placeBetweenButtons, y * placeBetweenButtons);
             }
             NeigbourSetter setter = new NeigbourSetter(graph);
             setter.SetNeighbours();
