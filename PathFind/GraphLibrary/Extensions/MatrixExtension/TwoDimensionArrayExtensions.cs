@@ -2,13 +2,14 @@
 
 namespace GraphLibrary.Extensions.MatrixExtension
 {
-    public static class TwoDimensionArrayExtensions
+    public static class TwoDimensionalArrayExtensions
     {
         public static int Width<TSource>(this TSource[,] arr) => arr.GetLength(0);
 
         public static int Height<TSource>(this TSource[,] arr) => arr.Length / arr.Width();
 
-        public static int CountIf<TSource>(this TSource[,] arr, Predicate<TSource> predicate)
+        public static int CountIf<TSource>(this TSource[,] arr, 
+            Predicate<TSource> predicate)
         {
             int number = 0;
             foreach (var element in arr)
@@ -17,7 +18,8 @@ namespace GraphLibrary.Extensions.MatrixExtension
             return number;
         }
 
-        public static TKey[,] Accumulate<TSource, TKey>(this TSource[,] arr, Func<TSource, TKey> func)
+        public static TKey[,] Accumulate<TSource, TKey>(this TSource[,] arr, 
+            Func<TSource, TKey> func)
         {
             int width = arr.Width();
             int height = arr.Height();
