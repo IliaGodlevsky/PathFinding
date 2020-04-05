@@ -13,10 +13,10 @@ namespace ConsoleVersion.Forms
             Console.WriteLine("Graph height: " + graph.Height);
         }
 
-        private static void WriteYCoordinate(ConsoleGraph graph)
+        private static void WriteYCoordinate(int width)
         {
             Console.Write("   ");
-            for (int i = 0; i < graph.Width; i++)
+            for (int i = 0; i < width; i++)
             {
                 if (i < 10)
                     Console.Write(i.ToString() + "  ");
@@ -24,16 +24,21 @@ namespace ConsoleVersion.Forms
                     Console.Write(i.ToString() + " ");
             }
             Console.WriteLine();
-            Console.Write("  ");
-            for (int i = 0; i < graph.Width; i++)
+            Console.Write("  ");           
+        }
+
+        private static void WriteLine(int width)
+        {
+            for (int i = 0; i < width; i++)
                 Console.Write("___");
-            Console.WriteLine();
         }
 
         public static void ShowGraph(ConsoleGraph graph)
         {
             ShowGraphParams(graph);
-            WriteYCoordinate(graph);
+            WriteYCoordinate(graph.Width);
+            WriteLine(graph.Width);
+            Console.WriteLine();
             string line;
             for (int height = 0; height < graph.Height; height++)
             {
@@ -42,7 +47,7 @@ namespace ConsoleVersion.Forms
                 else
                     line = "|";
                 Console.Write(height.ToString() + line);
-                for (int width = 0; width <graph.Width; width++) 
+                for (int width = 0; width < graph.Width; width++) 
                 {
                     ConsoleGraphTop top = graph[width, height] as ConsoleGraphTop;
                     Console.Write(top.Text + "  ", top.Colour);
