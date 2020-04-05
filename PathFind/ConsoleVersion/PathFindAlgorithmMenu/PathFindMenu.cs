@@ -5,6 +5,7 @@ using SearchAlgorythms.Graph;
 using SearchAlgorythms.RoleChanger;
 using System;
 using System.Drawing;
+using System.Linq;
 
 namespace ConsoleVersion.PathFindAlgorithmMenu
 {
@@ -32,6 +33,8 @@ namespace ConsoleVersion.PathFindAlgorithmMenu
         {
             Console.WriteLine("Start point: ");
             Point point = ChoosePoint();
+            while(!graph[point.X,point.Y].Neighbours.Any())
+                point = ChoosePoint();
             changer.SetStartPoint(graph[point.X, point.Y], new EventArgs());
         }
 
@@ -39,6 +42,8 @@ namespace ConsoleVersion.PathFindAlgorithmMenu
         {
             Console.WriteLine("Destination point: ");
             Point point = ChoosePoint();
+            while (!graph[point.X, point.Y].Neighbours.Any())
+                point = ChoosePoint();
             changer.SetDestinationPoint(graph[point.X, point.Y], new EventArgs());
         }
 
