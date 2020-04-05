@@ -1,44 +1,26 @@
-﻿using System;
-using System.Drawing;
-using SearchAlgorythms.Top;
+﻿using SearchAlgorythms.Top;
 
 namespace SearchAlgorythms.GraphFactory
 {
-    public class RandomValuedConsoleGraphFactory : IGraphFactory
+    public class RandomValuedConsoleGraphFactory : AbstractGraphFactory
     {
-        protected Random rand = new Random();
-        private readonly ConsoleGraphTop[,] graph;
-        private const int MAX_PERCENT_OF_OBSTACLES = 100;
-
-        public RandomValuedConsoleGraphFactory(int percentOfObstacles, int width, int height)
+        public RandomValuedConsoleGraphFactory(int percentOfObstacles,
+        int width, int height) : base(percentOfObstacles, width, height, 1)
         {
-            graph = new ConsoleGraphTop[width, height];
-            for (int x = 0; x < width; x++)
-            {
-                for (int y = 0; y < height; y++)
-                {
-                    graph[x, y] = new ConsoleGraphTop
-                    {
-                        Text = (rand.Next(9) + 1).ToString(),
-                        Location = new Point(x, y)
-                    };
-                    if (IsObstacleChance(percentOfObstacles))
-                    {
-                        graph[x, y].IsObstacle = true;
-                        graph[x, y].MarkAsObstacle();
-                    }                    
-                }
-            }
-            NeigbourSetter setter = new NeigbourSetter(graph);
-            setter.SetNeighbours();
+
         }
 
-        private bool IsObstacleChance(int percentOfObstacles)
-            => rand.Next(MAX_PERCENT_OF_OBSTACLES) < percentOfObstacles;
-
-        public IGraphTop[,] GetGraph()
+        public override IGraphTop CreateGraphTop()
         {
-            return graph;
+            return new ConsoleGraphTop
+            {
+                Text = (rand.Next(9) + 1).ToString()
+            };
+        }
+
+        public override void SetGraph(int width, int height)
+        {
+            graph = new ConsoleGraphTop[width, height];
         }
     }
 }

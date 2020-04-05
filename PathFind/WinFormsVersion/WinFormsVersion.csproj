@@ -45,8 +45,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="GraphFactory\OnInfoButtonGraphFactory.cs" />
-    <Compile Include="GraphFactory\RandomButtonGraphFactory.cs" />
+    <Compile Include="GraphFactory\ButtonGraphInitializer.cs" />
     <Compile Include="GraphFactory\RandomValuedButtonGraphFactory.cs" />
     <Compile Include="Forms\MainWindow.cs">
       <SubType>Form</SubType>

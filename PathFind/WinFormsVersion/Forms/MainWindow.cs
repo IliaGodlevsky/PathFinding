@@ -16,7 +16,7 @@ namespace SearchAlgorythms
     {
         private ButtonGraph graph = null;
         private IPathFindAlgorithm pathFindAlgorithm = null;
-        private IGraphFactory createAlgorythm = null;
+        private AbstractGraphFactory createAlgorythm = null;
         private const int BUTTON_POSITION = 25;
         private ButtonGraphTopRoleChanger changer = null;
 

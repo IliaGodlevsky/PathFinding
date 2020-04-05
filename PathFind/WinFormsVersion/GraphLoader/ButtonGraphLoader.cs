@@ -41,8 +41,8 @@ namespace SearchAlgorythms.GraphLoader
 
         private void Initialise(GraphTopInfo[,] info)
         {
-            OnInfoButtonGraphFactory creator =
-                new OnInfoButtonGraphFactory(info, placeBetweenButtons);
+            ButtonGraphInitializer creator =
+                new ButtonGraphInitializer(info, placeBetweenButtons);
             if (info == null)
                 return;
             graph = new ButtonGraph(creator.GetGraph());

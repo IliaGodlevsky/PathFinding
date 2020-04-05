@@ -34,8 +34,8 @@ namespace ConsoleVersion.GraphLoader
 
         private void Initialise(GraphTopInfo[,] info)
         {
-            OnInfoConsoleGraphFactory creator =
-                new OnInfoConsoleGraphFactory(info);
+            ConsoleGraphInitializer creator =
+                new ConsoleGraphInitializer(info);
             if (info == null)
                 return;
             graph = new ConsoleGraph(creator.GetGraph());

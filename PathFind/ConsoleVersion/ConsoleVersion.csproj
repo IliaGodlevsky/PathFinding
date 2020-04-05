@@ -48,7 +48,7 @@
   <ItemGroup>
     <Compile Include="Forms\ConsoleMenu.cs" />
     <Compile Include="Forms\GraphShower.cs" />
-    <Compile Include="GraphFactory\OnInfoConsoleGraphFactory.cs" />
+    <Compile Include="GraphFactory\ConsoleGraphInitializer.cs" />
     <Compile Include="GraphFactory\RandomValuedConsoleGraphFactory.cs" />
     <Compile Include="GraphLoader\ConsoleGraphLoader.cs" />
     <Compile Include="GraphSaver\ConsoleGraphSaver.cs" />
