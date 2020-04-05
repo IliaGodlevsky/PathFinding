@@ -24,13 +24,13 @@ namespace ConsoleVersion.Forms
                     Console.Write(i.ToString() + " ");
             }
             Console.WriteLine();
-            Console.Write("  ");           
+            Console.Write("   ");           
         }
 
         private static void WriteLine(int width)
         {
             for (int i = 0; i < width; i++)
-                Console.Write("___");
+                Console.Write("---");
         }
 
         public static void ShowGraph(ConsoleGraph graph)
@@ -51,10 +51,16 @@ namespace ConsoleVersion.Forms
                 {
                     ConsoleGraphTop top = graph[width, height] as ConsoleGraphTop;
                     Console.Write(top.Text + "  ", top.Colour);
+                    if (width == graph.Width - 1)
+                        Console.Write("|" + height.ToString());
                     if (width != 0 && width % (graph.Width- 1) == 0) 
                         Console.Write("\n");
                 }
             }
+            Console.Write("   ");
+            WriteLine(graph.Width);
+            Console.WriteLine();
+            WriteYCoordinate(graph.Width);
         }
     }
 }

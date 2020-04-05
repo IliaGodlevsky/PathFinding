@@ -65,7 +65,7 @@ namespace ConsoleVersion.PathFindAlgorithmMenu
 
         private string ShowAlgorithms()
         {
-            return "1. Wide path find\n" +
+            return "\n1. Wide path find\n" +
                     "2. Best first path find\n" +
                     "3. Dijkstra algorithm\n" +
                     "4. A* algorithm\n" +

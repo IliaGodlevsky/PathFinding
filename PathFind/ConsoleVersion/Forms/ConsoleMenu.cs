@@ -126,7 +126,7 @@ namespace ConsoleVersion.Forms
             statistics = search.GetStatistics();
             Console.Clear();
             GraphShower.ShowGraph(graph);
-            Console.WriteLine(statistics);
+            Console.WriteLine("\n" + statistics);
             Console.ReadKey();
             graph.End = null;
             graph.Start = null;
