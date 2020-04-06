@@ -7,61 +7,61 @@ namespace SearchAlgorythms.Graph
 {
     public abstract class AbstractGraph : IEnumerable
     {
-        public AbstractGraph(IGraphTop[,] tops)
+        public AbstractGraph(IVertex[,] vertices)
         {
-            buttons = tops;
+            this.vertices = vertices;
         }
 
-        protected IGraphTop[,] buttons;
+        protected IVertex[,] vertices;
 
-        public IGraphTop this[int width, int height]
+        public IVertex this[int width, int height]
         {
-            get { return buttons[width, height]; }
-            set { buttons[width, height] = value; }
+            get { return vertices[width, height]; }
+            set { vertices[width, height] = value; }
         }
 
-        public IGraphTop End { get; set; }
-        public IGraphTop Start { get; set; }
+        public IVertex End { get; set; }
+        public IVertex Start { get; set; }
 
-        public IGraphTop[,] GetArray()
+        public IVertex[,] GetArray()
         {
-            return buttons;
+            return vertices;
         }
 
-        public int Height => buttons.Height();
+        public int Height => vertices.Height();
 
-        public GraphTopInfo[,] Info => buttons.Accumulate(t => t.GetInfo());
+        public VertexInfo[,] Info => vertices.Accumulate(t => t.GetInfo());
 
-        public int Size => buttons.Length;
+        public int Size => vertices.Length;
 
-        public int Width => buttons.Width();
+        public int Width => vertices.Width();
 
-        public void Insert(IGraphTop top)
+        public void Insert(IVertex vertex)
         {
-            var coordiantes = GetIndexes(top);
-            buttons[coordiantes.X, coordiantes.Y] = top;
-            NeigbourSetter setter = new NeigbourSetter(buttons);
+            var coordiantes = GetIndexes(vertex);
+            vertices[coordiantes.X, coordiantes.Y] = vertex;
+            NeigbourSetter setter = new NeigbourSetter(vertices);
             setter.SetNeighbours(coordiantes.X, coordiantes.Y);
         }
 
-        public int ObstaclePercent => buttons.CountIf(t => t.IsObstacle) * 100 / Size;
+        public int ObstaclePercent => vertices.CountIf(vertex => vertex.IsObstacle) * 100 / Size;
 
-        public abstract Point GetIndexes(IGraphTop top);
-        public abstract void ToDefault(IGraphTop top);
+        public abstract Point GetIndexes(IVertex vertex);
+        public abstract void ToDefault(IVertex vertex);
 
         public void Refresh()
         {
-            if (buttons == null)
+            if (vertices == null)
                 return;
-            foreach (var top in buttons)            
-                ToDefault(top);            
+            foreach (var vertex in vertices)            
+                ToDefault(vertex);            
             Start = null;
             End = null;
         }
 
         public IEnumerator GetEnumerator()
         {
-            return buttons.GetEnumerator();
+            return vertices.GetEnumerator();
         }
     }
 }

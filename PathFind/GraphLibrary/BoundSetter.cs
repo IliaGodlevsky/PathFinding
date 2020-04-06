@@ -4,23 +4,23 @@ namespace SearchAlgorythms
 {
     public static class BoundSetter
     {
-        public static void SetBoundsBetweenNeighbours(IGraphTop top)
+        public static void SetBoundsBetweenNeighbours(IVertex vertex)
         {
-            if (top is null)
+            if (vertex is null)
                 return;
-            var neighbours = top.Neighbours;
+            var neighbours = vertex.Neighbours;
             foreach (var neigbour in neighbours)
-                neigbour.Neighbours.Add(top);
+                neigbour.Neighbours.Add(vertex);
         }
 
-        public static void BreakBoundsBetweenNeighbours(IGraphTop top)
+        public static void BreakBoundsBetweenNeighbours(IVertex vertex)
         {
-            if (top is null)
+            if (vertex is null)
                 return;
-            var neighbours = top.Neighbours;
+            var neighbours = vertex.Neighbours;
             foreach (var neigbour in neighbours)
-                neigbour.Neighbours.Remove(top);
-            top.Neighbours.Clear();
+                neigbour.Neighbours.Remove(vertex);
+            vertex.Neighbours.Clear();
         }
     }
 }

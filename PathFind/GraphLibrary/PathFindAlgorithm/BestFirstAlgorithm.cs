@@ -10,60 +10,60 @@ namespace SearchAlgorythms.Algorithm
     /// </summary>
     public class BestFirstAlgorithm : WidePathFindAlgorithm
     {
-        private Queue<IGraphTop> waveQueue = new Queue<IGraphTop>();
+        private Queue<IVertex> waveQueue = new Queue<IVertex>();
 
         public BestFirstAlgorithm(AbstractGraph graph) : base(graph)
         {
             
         }
 
-        private void MakeWavesFromEnd(IGraphTop end)
+        private void MakeWavesFromEnd(IVertex end)
         {
-            var top = end;
-            MarkTop(top);
-            while (!top.IsStart && waveQueue.Any())
+            var vertex = end;
+            MarkTop(vertex);
+            while (!vertex.IsStart && waveQueue.Any())
             {
-                top = waveQueue.Dequeue();
-                MarkTop(top);
+                vertex = waveQueue.Dequeue();
+                MarkTop(vertex);
             }
         }
 
-        public override bool IsRightNeighbour(IGraphTop top)
+        public override bool IsRightNeighbour(IVertex vertex)
         {
-            return !top.IsStart;
+            return !vertex.IsStart;
         }
 
-        public override bool IsRightPath(IGraphTop top)
+        public override bool IsRightPath(IVertex vertex)
         {
-            return !top.IsEnd;
+            return !vertex.IsEnd;
         }
 
-        public override bool IsRightCellToVisit(IGraphTop button)
+        public override bool IsRightCellToVisit(IVertex vertex)
         {
-            return base.IsRightCellToVisit(button) && button.Value > 0;
+            return base.IsRightCellToVisit(vertex) && vertex.Value > 0;
         }
 
-        private void MarkTop(IGraphTop top)
+        private void MarkTop(IVertex vertex)
         {
-            if (top is null)
+            if (vertex is null)
                 return;
-            foreach (var neigbour in top.Neighbours)
+            foreach (var neigbour in vertex.Neighbours)
             {
                 if (neigbour.Value == 0)
                 {
-                    neigbour.Value = top.Value + 1;
+                    neigbour.Value = vertex.Value + 1;
                     waveQueue.Enqueue(neigbour);
                 }
             }
         }
 
-        public override void ExtractNeighbours(IGraphTop button)
+        public override void ExtractNeighbours(IVertex vertex)
         {
-            if (button is null)
+            if (vertex is null)
                 return;
-            foreach (var neigbour in button.Neighbours)
+            foreach (var neigbour in vertex.Neighbours)
                 if (!neigbour.IsVisited)
-                    queue.Enqueue(neigbour);
+                    neighbourQueue.Enqueue(neigbour);
         }
 
         public override bool FindDestionation()

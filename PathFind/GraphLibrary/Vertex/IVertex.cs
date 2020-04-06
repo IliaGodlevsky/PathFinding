@@ -1,23 +1,22 @@
 ﻿using System.Collections.Generic;
 using System.Drawing;
-using System;
 
 namespace SearchAlgorythms.Top
 {
-    public interface IGraphTop
+    public interface IVertex
     {
         bool IsEnd { get; set; }
         bool IsObstacle { get; set; }
-        bool IsSimpleTop { get; }
+        bool IsSimpleVertex { get; }
         bool IsStart { get; set; }
         bool IsVisited { get; set; }
         string Text { get; set; }
-        List<IGraphTop> Neighbours { get; set; }
-        IGraphTop ParentTop { get; set; }
+        List<IVertex> Neighbours { get; set; }
+        IVertex ParentTop { get; set; }
         double Value { get; set; }
         Point Location { get; set; }
 
-        GraphTopInfo GetInfo();
+        VertexInfo GetInfo();
         void MarkAsCurrentlyLooked();
         void MarkAsEnd();
         void MarkAsGraphTop();

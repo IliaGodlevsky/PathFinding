@@ -4,12 +4,12 @@ using System;
 namespace SearchAlgorythms
 {
     [Serializable]
-    public class GraphTopInfo
+    public class VertexInfo
     {
-        public GraphTopInfo(IGraphTop graphTop)
+        public VertexInfo(IVertex vertex)
         {
-            IsObstacle = graphTop.IsObstacle;            
-            Text = graphTop.Text;
+            IsObstacle = vertex.IsObstacle;            
+            Text = vertex.Text;
         }
 
         public bool IsObstacle { get; set; }

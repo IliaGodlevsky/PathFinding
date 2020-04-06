@@ -49,7 +49,7 @@ namespace ConsoleVersion.Forms
                 Console.Write(height.ToString() + line);
                 for (int width = 0; width < graph.Width; width++) 
                 {
-                    ConsoleGraphTop top = graph[width, height] as ConsoleGraphTop;
+                    ConsoleVertex top = graph[width, height] as ConsoleVertex;
                     Console.Write(top.Text + "  ", top.Colour);
                     if (width == graph.Width - 1)
                         Console.Write("|" + height.ToString());

@@ -51,7 +51,8 @@
     <Compile Include="GraphFactory\IGraphFactory.cs" />
     <Compile Include="GraphLoader\IGraphLoader.cs" />
     <Compile Include="GraphSaver\IGraphSaver.cs" />
-    <Compile Include="GraphTopInfo\GraphTopInfo.cs" />
+    <Compile Include="RoleChanger\AbstractVertexRoleChanger.cs" />
+    <Compile Include="VertexInfo\VertexInfo.cs" />
     <Compile Include="Graph\AbstractGraph.cs" />
     <Compile Include="PathFindAlgorithm\AStarAlgorithm.cs" />
     <Compile Include="PathFindAlgorithm\BestFirstAlgorithm.cs" />
@@ -61,12 +62,12 @@
     <Compile Include="PathFindAlgorithm\WidePathFindAlgorithm.cs" />
     <Compile Include="PauseMaker\PauseMaker.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="RoleChanger\IGraphTopRoleChanger.cs" />
+    <Compile Include="RoleChanger\IVertexRoleChanger.cs" />
     <Compile Include="Statistics\AbstractStatistics.cs" />
     <Compile Include="Statistics\UnweightedGraphSearchAlgoStatistics.cs" />
     <Compile Include="Statistics\WeightedGraphSearchAlgoStatistics.cs" />
     <Compile Include="BoundSetter.cs" />
-    <Compile Include="Top\IGraphTop.cs" />
+    <Compile Include="Vertex\IVertex.cs" />
     <Compile Include="NeighbourSetter.cs" />
   </ItemGroup>
   <ItemGroup />

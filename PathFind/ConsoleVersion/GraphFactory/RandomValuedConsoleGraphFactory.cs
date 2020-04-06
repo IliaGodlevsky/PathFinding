@@ -1,4 +1,5 @@
-﻿using SearchAlgorythms.Top;
+﻿using SearchAlgorythms.Graph;
+using SearchAlgorythms.Top;
 
 namespace SearchAlgorythms.GraphFactory
 {
@@ -10,17 +11,22 @@ namespace SearchAlgorythms.GraphFactory
 
         }
 
-        public override IGraphTop CreateGraphTop()
+        public override IVertex CreateGraphTop()
         {
-            return new ConsoleGraphTop
+            return new ConsoleVertex
             {
                 Text = (rand.Next(9) + 1).ToString()
             };
         }
 
+        public override AbstractGraph GetGraph()
+        {
+            return new ConsoleGraph(vertices);
+        }
+
         public override void SetGraph(int width, int height)
         {
-            graph = new ConsoleGraphTop[width, height];
+            vertices = new ConsoleVertex[width, height];
         }
     }
 }

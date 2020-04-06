@@ -15,11 +15,11 @@ namespace SearchAlgorythms
 {
     public partial class MainWindow : Form
     {
-        private ButtonGraph graph = null;
+        private WinFormsGraph graph = null;
         private IPathFindAlgorithm pathFindAlgorithm = null;
         private IGraphFactory createAlgorythm = null;
         private const int BUTTON_POSITION = 25;
-        private ButtonGraphTopRoleChanger changer = null;
+        private WinFormsVertexRoleChanger changer = null;
 
         public MainWindow()
         {                        
@@ -45,20 +45,20 @@ namespace SearchAlgorythms
             Create(sender, e);
         }
 
-        private bool IsRightDestination(GraphTop top)
+        private bool IsRightDestination(WinFormsVertex top)
         {
-            return !top.Neighbours.Any() && top.IsSimpleTop;
+            return !top.Neighbours.Any() && top.IsSimpleVertex;
         }
 
         private void AddGraphToControls()
         { 
             foreach (var top in graph)
             {
-                if (!(top as GraphTop).IsObstacle)
-                    (top as GraphTop).MouseClick += changer.SetStartPoint;
-                (top as GraphTop).MouseClick += changer.ReversePolarity;
-                (top as GraphTop).MouseClick += changer.ChangeTopText;
-                Field.Controls.Add(top as GraphTop);
+                if (!(top as WinFormsVertex).IsObstacle)
+                    (top as WinFormsVertex).MouseClick += changer.SetStartPoint;
+                (top as WinFormsVertex).MouseClick += changer.ReversePolarity;
+                (top as WinFormsVertex).MouseClick += changer.ChangeTopText;
+                Field.Controls.Add(top as WinFormsVertex);
             }
             Field.Size = new Size(new Point(graph.Width*
                 BUTTON_POSITION, graph.Height* BUTTON_POSITION));
@@ -145,36 +145,36 @@ namespace SearchAlgorythms
             if (!SizeTextBoxTextChanged(widthNumber) 
                 || !SizeTextBoxTextChanged(heightNumber))
                 return;            
-            createAlgorythm = new RandomValuedButtonGraphFactory(percent.Value,
+            createAlgorythm = new RandomValuedWinFormsGraphFactory(percent.Value,
                 int.Parse(widthNumber.Text), int.Parse(heightNumber.Text),
                 BUTTON_POSITION);
-            PrepareGraph(createAlgorythm.GetGraph());           
+            PrepareGraph((WinFormsGraph)createAlgorythm.GetGraph());           
         }
 
-        private void PrepareGraph(IGraphTop[,] tops)
+        private void PrepareGraph(WinFormsGraph graph)
         {
             RemoveGraphFromControl();
-            graph = new ButtonGraph(tops);
-            changer = new ButtonGraphTopRoleChanger(graph);
-            (graph as ButtonGraph).SetStart += changer.SetStartPoint;
-            (graph as ButtonGraph).SetEnd += changer.SetDestinationPoint;
+            this.graph = graph;
+            changer = new WinFormsVertexRoleChanger(graph);
+            this.graph.SetStart += changer.SetStartPoint;
+            this.graph.SetEnd += changer.SetDestinationPoint;
             AddGraphToControls();
             createAlgorythm = null;
         }
 
         private void SaveMapToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            var saver = new ButtonGraphSaver();
+            var saver = new WinFormsGraphSaver();
             saver.SaveGraph(graph);
         }
 
         private void LoadMapToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            var loader = new ButtonGraphLoader(BUTTON_POSITION);
-            AbstractGraph temp = loader.GetGraph();                      
+            var loader = new WinFormsGraphLoader(BUTTON_POSITION);
+            WinFormsGraph temp = (WinFormsGraph)loader.GetGraph();                      
             if (temp != null)
             {
-                PrepareGraph(temp.GetArray());                
+                PrepareGraph(temp);                
                 PrepareWindow(graph.ObstaclePercent, graph.Width, graph.Height);
             }
         }

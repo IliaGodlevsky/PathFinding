@@ -1,5 +1,6 @@
 ﻿using GraphLibrary.Extensions.MatrixExtension;
 using GraphLibrary.GraphFactory;
+using SearchAlgorythms.Graph;
 using SearchAlgorythms.Top;
 using System;
 using System.Drawing;
@@ -9,44 +10,41 @@ namespace SearchAlgorythms.GraphFactory
     public abstract class AbstractGraphFactory : IGraphFactory
     {
         protected Random rand = new Random();
-        protected IGraphTop[,] graph;
+        protected IVertex[,] vertices;
         private const int MAX_PERCENT_OF_OBSTACLES = 100;
 
         public AbstractGraphFactory(int percentOfObstacles,
-            int width, int height, int placeBetweenButtons)
+            int width, int height, int placeBetweenVertices)
         {
             SetGraph(width, height);
             for (int x = 0; x < width; x++)
             {
                 for (int y = 0; y < height; y++)
                 {
-                    graph[x, y] = CreateGraphTop();
+                    vertices[x, y] = CreateGraphTop();
                     if (IsObstacleChance(percentOfObstacles))
                     {
-                        graph[x, y].IsObstacle = true;
-                        graph[x, y].MarkAsObstacle();
+                        vertices[x, y].IsObstacle = true;
+                        vertices[x, y].MarkAsObstacle();
                     }                    
                 }
             }
-            graph.Shuffle();
+            vertices.Shuffle();
             for (int x = 0; x < width; x++)
             {
                 for (int y = 0; y < height; y++)
-                    graph[x, y].Location = new Point(x * placeBetweenButtons, y * placeBetweenButtons);
+                    vertices[x, y].Location = new Point(x * placeBetweenVertices, y * placeBetweenVertices);
             }
-            NeigbourSetter setter = new NeigbourSetter(graph);
+            NeigbourSetter setter = new NeigbourSetter(vertices);
             setter.SetNeighbours();
         }
 
         public abstract void SetGraph(int width, int height);
-        public abstract IGraphTop CreateGraphTop();
+        public abstract IVertex CreateGraphTop();
 
         private bool IsObstacleChance(int percentOfObstacles)
             => rand.Next(MAX_PERCENT_OF_OBSTACLES) < percentOfObstacles;
 
-        public IGraphTop[,] GetGraph()
-        {
-            return graph;
-        }
+        public abstract AbstractGraph GetGraph();
     }
 }

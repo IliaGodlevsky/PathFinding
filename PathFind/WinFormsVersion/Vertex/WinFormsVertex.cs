@@ -4,16 +4,16 @@ using System.Windows.Forms;
 
 namespace SearchAlgorythms.Top
 {
-    public class GraphTop : Label, IGraphTop
+    public class WinFormsVertex : Label, IVertex
     {      
-        public GraphTop() : base()
+        public WinFormsVertex() : base()
         {
-            Neighbours = new List<IGraphTop>();
+            Neighbours = new List<IVertex>();
             SetToDefault();
             IsObstacle = false;
         }
 
-        public GraphTop(GraphTopInfo info) : this()
+        public WinFormsVertex(VertexInfo info) : this()
         {
             IsObstacle = info.IsObstacle;
             Text = info.Text;
@@ -25,9 +25,9 @@ namespace SearchAlgorythms.Top
         public bool IsEnd { get; set; }
         public bool IsVisited { get; set; }
         public double Value { get; set; }
-        public IGraphTop ParentTop { get; set; }
-        public List<IGraphTop> Neighbours { get; set; }
-        public bool IsSimpleTop => !IsStart && !IsEnd;
+        public IVertex ParentTop { get; set; }
+        public List<IVertex> Neighbours { get; set; }
+        public bool IsSimpleVertex => !IsStart && !IsEnd;
         public bool IsObstacle { get; set; }
 
         public void MarkAsObstacle()
@@ -63,9 +63,9 @@ namespace SearchAlgorythms.Top
             BackColor = Color.FromKnownColor(KnownColor.Yellow);
         }
 
-        public GraphTopInfo GetInfo()
+        public VertexInfo GetInfo()
         {
-            return new GraphTopInfo(this);
+            return new VertexInfo(this);
         }
 
         public void SetToDefault()

@@ -1,4 +1,5 @@
 ﻿using SearchAlgorythms;
+using SearchAlgorythms.Graph;
 using SearchAlgorythms.Top;
 using System.Drawing;
 
@@ -6,9 +7,9 @@ namespace GraphLibrary.GraphFactory
 {
     public abstract class AbstractGraphInitializer : IGraphFactory
     {
-        protected IGraphTop[,] buttons = null;
+        protected IVertex[,] vertices = null;
 
-        public AbstractGraphInitializer(GraphTopInfo[,] info, int placeBetweenTops)
+        public AbstractGraphInitializer(VertexInfo[,] info, int placeBetweenVertices)
         {
             if (info == null)
                 return;
@@ -19,20 +20,16 @@ namespace GraphLibrary.GraphFactory
             {
                 for (int j = 0; j < graphHeight; j++)
                 {
-                    buttons[i, j] = CreateGraphTop(info[i, j]);
-                    buttons[i, j].Location = new Point(i * placeBetweenTops, 
-                        j * placeBetweenTops);                    
+                    vertices[i, j] = CreateVertex(info[i, j]);
+                    vertices[i, j].Location = new Point(i * placeBetweenVertices, 
+                        j * placeBetweenVertices);                    
                 }
             }
         }
 
-        public abstract IGraphTop CreateGraphTop( GraphTopInfo info);
+        public abstract IVertex CreateVertex( VertexInfo info);
         public abstract void SetGraph(int width, int height);
-
-        public IGraphTop[,] GetGraph()
-        {
-            return buttons;
-        }
+        public abstract AbstractGraph GetGraph();
        
     }
 }

@@ -25,7 +25,7 @@ namespace ConsoleVersion.Forms
         };
         private PathFindMenu pathFindMenu;
         private ConsoleGraph graph = null;
-        private ConsoleGraphTopRoleChanger changer;
+        private ConsoleVertexRoleChanger changer;
         private RandomValuedConsoleGraphFactory factory;
         private string statistics;
 
@@ -33,8 +33,8 @@ namespace ConsoleVersion.Forms
         {
             factory = new RandomValuedConsoleGraphFactory(percentOfObstacles: 40,
                 width: 35, height: 23);
-            graph = new ConsoleGraph(factory.GetGraph());
-            changer = new ConsoleGraphTopRoleChanger(graph);
+            graph = (ConsoleGraph)factory.GetGraph();
+            changer = new ConsoleVertexRoleChanger(graph);
             pathFindMenu = new PathFindMenu(graph);
         }
         
@@ -86,8 +86,8 @@ namespace ConsoleVersion.Forms
             int height = Input.InputNumber("Enter width of graph: ", 100, 10);
             int width = Input.InputNumber("Enter height of graph: ", 100, 10);
             factory = new RandomValuedConsoleGraphFactory(obstacles, width, height);
-            graph = new ConsoleGraph(factory.GetGraph());
-            changer = new ConsoleGraphTopRoleChanger(graph);
+            graph = (ConsoleGraph)factory.GetGraph();
+            changer = new ConsoleVertexRoleChanger(graph);
             pathFindMenu = new PathFindMenu(graph);
         }
 
@@ -104,7 +104,7 @@ namespace ConsoleVersion.Forms
             if (temp != null)
             {
                 graph = new ConsoleGraph(temp.GetArray());              
-                changer = new ConsoleGraphTopRoleChanger(graph);
+                changer = new ConsoleVertexRoleChanger(graph);
                 pathFindMenu = new PathFindMenu(graph);
             }
 

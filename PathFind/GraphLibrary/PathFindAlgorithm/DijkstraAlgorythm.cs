@@ -12,14 +12,14 @@ namespace SearchAlgorythms.Algorithm
     public class DijkstraAlgorithm : IPathFindAlgorithm
     {
         protected readonly AbstractGraph graph;
-        private List<IGraphTop> queue = new List<IGraphTop>();
+        private List<IVertex> neigbourQueue = new List<IVertex>();
         private WeightedGraphSearchAlgoStatistics statCollector;
 
         public DijkstraAlgorithm(AbstractGraph graph)
         {
             this.graph = graph;
-            foreach (var top in graph)
-                (top as IGraphTop).Value = double.PositiveInfinity;
+            foreach (var vertex in graph)
+                (vertex as IVertex).Value = double.PositiveInfinity;
             statCollector = new WeightedGraphSearchAlgoStatistics();
         }
 
@@ -27,43 +27,43 @@ namespace SearchAlgorythms.Algorithm
 
         public void DrawPath()
         {
-            var top = graph.End;
-            while (!top.IsStart)
+            var vertex = graph.End;
+            while (!vertex.IsStart)
             {
-                var temp = top;
-                top = top.ParentTop;
-                if (top.IsSimpleTop)
-                    top.MarkAsPath();
+                var temp = vertex;
+                vertex = vertex.ParentTop;
+                if (vertex.IsSimpleVertex)
+                    vertex.MarkAsPath();
                 statCollector.AddLength(int.Parse(temp.Text));
                 Pause(35);
             }
         }
 
-        private IGraphTop GetChippestUnvisitedTop()
+        private IVertex GetChippestUnvisitedVertex()
         {
-            queue.RemoveAll(t => t.IsVisited);
-            queue.Sort((t1, t2) => t1.Value.CompareTo(t2.Value));
-            return queue.Any() ? queue.First() : null;
+            neigbourQueue.RemoveAll(vertex => vertex.IsVisited);
+            neigbourQueue.Sort((vertex1, vertex2) => vertex1.Value.CompareTo(vertex2.Value));
+            return neigbourQueue.Any() ? neigbourQueue.First() : null;
         }
 
-        public virtual double GetPathValue(IGraphTop neighbour, IGraphTop top)
+        public virtual double GetPathValue(IVertex neighbour, IVertex vertex)
         {
-            return int.Parse(neighbour.Text) + top.Value;
+            return int.Parse(neighbour.Text) + vertex.Value;
         }
 
-        private void ExtractNeighbours(IGraphTop button)
+        private void ExtractNeighbours(IVertex vertex)
         {
-            if (button is null)
+            if (vertex is null)
                 return;
-            var neighbours = button.Neighbours;
+            var neighbours = vertex.Neighbours;
             foreach(var neighbour in neighbours)
             {
                 if (!neighbour.IsVisited)
-                    queue.Add(neighbour);
-                if (neighbour.Value > GetPathValue(neighbour, button))
+                    neigbourQueue.Add(neighbour);
+                if (neighbour.Value > GetPathValue(neighbour, vertex))
                 {                    
-                    neighbour.Value = GetPathValue(neighbour, button);
-                    neighbour.ParentTop = button;
+                    neighbour.Value = GetPathValue(neighbour, vertex);
+                    neighbour.ParentTop = vertex;
                 }
             }
         }
@@ -73,51 +73,51 @@ namespace SearchAlgorythms.Algorithm
             if (graph.End == null)
                 return false;
             statCollector.BeginCollectStatistic();
-            var currentTop = graph.Start;
-            currentTop.IsVisited = true;
-            currentTop.Value = 0;
+            var currentVertex = graph.Start;
+            currentVertex.IsVisited = true;
+            currentVertex.Value = 0;
             do
             {
-                ExtractNeighbours(currentTop);
-                currentTop = GetChippestUnvisitedTop();
-                if (currentTop?.Value == double.PositiveInfinity
-                    || currentTop == null)
+                ExtractNeighbours(currentVertex);
+                currentVertex = GetChippestUnvisitedVertex();
+                if (currentVertex?.Value == double.PositiveInfinity
+                    || currentVertex == null)
                     break;
-                if (IsRightCellToVisit(currentTop))
-                    Visit(currentTop);
+                if (IsRightCellToVisit(currentVertex))
+                    Visit(currentVertex);
                 Pause(2);
-            } while (!IsDestination(currentTop));
+            } while (!IsDestination(currentVertex));
             statCollector.StopCollectStatistics();
             return graph.End.IsVisited;
         }
 
-        private bool IsDestination(IGraphTop button)
+        private bool IsDestination(IVertex vertex)
         {
-            if (button == null)
+            if (vertex == null)
                 return false;
-            if (button.IsObstacle)
+            if (vertex.IsObstacle)
                 return false;
-            return button.IsEnd && button.IsVisited;
+            return vertex.IsEnd && vertex.IsVisited;
         }
 
-        private bool IsRightCellToVisit(IGraphTop button)
+        private bool IsRightCellToVisit(IVertex vertex)
         {
-            if (button is null)
+            if (vertex is null)
                 return false;
-            if (button.IsObstacle)
+            if (vertex.IsObstacle)
                 return false;
             else
-                return !button.IsVisited;
+                return !vertex.IsVisited;
         }
 
-        private void Visit(IGraphTop button)
+        private void Visit(IVertex vertex)
         {
-            button.IsVisited = true;
-            if (!button.IsEnd)
+            vertex.IsVisited = true;
+            if (!vertex.IsEnd)
             {
-                button.MarkAsCurrentlyLooked();
+                vertex.MarkAsCurrentlyLooked();
                 Pause(8);
-                button.MarkAsVisited();               
+                vertex.MarkAsVisited();               
             }
             statCollector.CellVisited();
         }

@@ -1,9 +1,10 @@
-﻿using SearchAlgorythms.Top;
+﻿using SearchAlgorythms.Graph;
+using SearchAlgorythms.Top;
 
 namespace GraphLibrary.GraphFactory
 {
     public interface IGraphFactory
     {
-        IGraphTop[,] GetGraph();
+        AbstractGraph GetGraph();
     }
 }

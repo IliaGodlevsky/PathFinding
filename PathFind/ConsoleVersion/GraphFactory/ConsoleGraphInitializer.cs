@@ -1,24 +1,30 @@
 ﻿using GraphLibrary.GraphFactory;
 using SearchAlgorythms;
+using SearchAlgorythms.Graph;
 using SearchAlgorythms.Top;
 
 namespace ConsoleVersion.GraphFactory
 {
     public class ConsoleGraphInitializer : AbstractGraphInitializer
     {
-        public ConsoleGraphInitializer(GraphTopInfo[,] info) : base(info, placeBetweenTops: 1)
+        public ConsoleGraphInitializer(VertexInfo[,] info) : base(info, placeBetweenVertices: 1)
         {
 
         }
 
-        public override IGraphTop CreateGraphTop(GraphTopInfo info)
+        public override IVertex CreateVertex(VertexInfo info)
         {
-            return new ConsoleGraphTop(info);
+            return new ConsoleVertex(info);
+        }
+
+        public override AbstractGraph GetGraph()
+        {
+            return new ConsoleGraph(vertices);
         }
 
         public override void SetGraph(int width, int height)
         {
-            buttons = new ConsoleGraphTop[width, height];
+            vertices = new ConsoleVertex[width, height];
         }
     }
 }

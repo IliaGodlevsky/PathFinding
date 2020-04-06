@@ -14,7 +14,7 @@ namespace SearchAlgorythms.Algorithm
     /// </summary>
     public class WidePathFindAlgorithm : IPathFindAlgorithm
     {
-        protected Queue<IGraphTop> queue = new Queue<IGraphTop>();
+        protected Queue<IVertex> neighbourQueue = new Queue<IVertex>();
         private UnweightedGraphSearchAlgoStatistics statCollector;
         protected readonly AbstractGraph graph;
 
@@ -25,41 +25,41 @@ namespace SearchAlgorythms.Algorithm
             statCollector = new UnweightedGraphSearchAlgoStatistics();
         }
 
-        public IGraphTop GoChippestNeighbour(IGraphTop top)
+        public IVertex GoChippestNeighbour(IVertex vertex)
         {
-            top.Neighbours.Shuffle();
-            double min = top.Neighbours.Min(t => t.Value);
-            return top.Neighbours.Find(t => min == t.Value
-                    && t.IsVisited && IsRightNeighbour(t));
+            vertex.Neighbours.Shuffle();
+            double min = vertex.Neighbours.Min(vert => vert.Value);
+            return vertex.Neighbours.Find(vert => min == vert.Value
+                    && vert.IsVisited && IsRightNeighbour(vert));
         }
 
-        public virtual bool IsRightNeighbour(IGraphTop top)
+        public virtual bool IsRightNeighbour(IVertex vertex)
         {
-            return !top.IsEnd;
+            return !vertex.IsEnd;
         }
 
-        public virtual bool IsRightPath(IGraphTop top)
+        public virtual bool IsRightPath(IVertex vertex)
         {
-            return !top.IsStart;
+            return !vertex.IsStart;
         }
 
-        public virtual bool IsRightCellToVisit(IGraphTop button)
+        public virtual bool IsRightCellToVisit(IVertex vertex)
         {
-            return !button.IsVisited;
+            return !vertex.IsVisited;
         }
 
         public PauseCycle Pause { get; set; }
 
-        public virtual void ExtractNeighbours(IGraphTop button)
+        public virtual void ExtractNeighbours(IVertex vertex)
         {
-            if (button is null)
+            if (vertex is null)
                 return;
-            foreach (var neigbour in button.Neighbours)
+            foreach (var neigbour in vertex.Neighbours)
             {
                 if (neigbour.Value == 0 && !neigbour.IsStart)
-                    neigbour.Value = button.Value + 1;
+                    neigbour.Value = vertex.Value + 1;
                 if (!neigbour.IsVisited)
-                    queue.Enqueue(neigbour);
+                    neighbourQueue.Enqueue(neigbour);
             }
         }
 
@@ -68,13 +68,13 @@ namespace SearchAlgorythms.Algorithm
             if (graph.End == null)
                 return false;
             statCollector.BeginCollectStatistic();
-            var currentTop = graph.Start;
-            Visit(currentTop);
-            while (!IsDestination(currentTop))
+            var currentVertex = graph.Start;
+            Visit(currentVertex);
+            while (!IsDestination(currentVertex))
             {
-                currentTop = queue.Dequeue();
-                if (IsRightCellToVisit(currentTop))
-                    Visit(currentTop);
+                currentVertex = neighbourQueue.Dequeue();
+                if (IsRightCellToVisit(currentVertex))
+                    Visit(currentVertex);
                 Pause(2);              
             }
             statCollector.StopCollectStatistics();
@@ -83,37 +83,37 @@ namespace SearchAlgorythms.Algorithm
 
         public void DrawPath()
         {
-            var top = graph.End;
-            while (IsRightPath(top))
+            var vertex = graph.End;
+            while (IsRightPath(vertex))
             {
-                top = GoChippestNeighbour(top);
-                if (top.IsSimpleTop)
-                    top.MarkAsPath();
+                vertex = GoChippestNeighbour(vertex);
+                if (vertex.IsSimpleVertex)
+                    vertex.MarkAsPath();
                 statCollector.AddStep();
                 Pause(35);
             }
         }
 
-        private bool IsDestination(IGraphTop button)
+        private bool IsDestination(IVertex vertex)
         {
-            if (button is null)
+            if (vertex is null)
                 return false;
-            return button.IsEnd || !queue.Any();
+            return vertex.IsEnd || !neighbourQueue.Any();
         }
 
-        private void Visit(IGraphTop top)
+        private void Visit(IVertex vertex)
         {          
-            if (top.IsObstacle)
+            if (vertex.IsObstacle)
                 return;
-            top.IsVisited = true;
-            if (top.IsSimpleTop)
+            vertex.IsVisited = true;
+            if (vertex.IsSimpleVertex)
             {
-                top.MarkAsCurrentlyLooked();
+                vertex.MarkAsCurrentlyLooked();
                 Pause(8);
-                top.MarkAsVisited();
+                vertex.MarkAsVisited();
             }
             statCollector.CellVisited();
-            ExtractNeighbours(top);
+            ExtractNeighbours(vertex);
         }
 
         public string GetStatistics()

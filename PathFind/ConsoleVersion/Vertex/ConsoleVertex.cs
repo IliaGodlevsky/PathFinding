@@ -3,16 +3,16 @@ using System.Drawing;
 
 namespace SearchAlgorythms.Top
 {
-    public class ConsoleGraphTop : IGraphTop
+    public class ConsoleVertex : IVertex
     {
-        public ConsoleGraphTop()
+        public ConsoleVertex()
         {
-            Neighbours = new List<IGraphTop>();
+            Neighbours = new List<IVertex>();
             SetToDefault();
             IsObstacle = false;
         }
 
-        public ConsoleGraphTop(GraphTopInfo info) : this()
+        public ConsoleVertex(VertexInfo info) : this()
         {
             IsObstacle = info.IsObstacle;
             Text = info.Text;
@@ -23,20 +23,20 @@ namespace SearchAlgorythms.Top
         public bool IsEnd { get; set; }
         public bool IsObstacle { get; set; }
 
-        public bool IsSimpleTop => !IsStart && !IsEnd;
+        public bool IsSimpleVertex => !IsStart && !IsEnd;
 
         public bool IsStart { get; set; }
         public bool IsVisited { get; set; }
         public string Text { get; set; }
         public Color Colour { get; set; }
-        public List<IGraphTop> Neighbours { get; set; }
-        public IGraphTop ParentTop { get; set; }
+        public List<IVertex> Neighbours { get; set; }
+        public IVertex ParentTop { get; set; }
         public double Value { get; set; }
         public Point Location { get; set; }
 
-        public GraphTopInfo GetInfo()
+        public VertexInfo GetInfo()
         {
-            return new GraphTopInfo(this);
+            return new VertexInfo(this);
         }
 
         public void MarkAsCurrentlyLooked()

@@ -45,8 +45,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="GraphFactory\ButtonGraphInitializer.cs" />
-    <Compile Include="GraphFactory\RandomValuedButtonGraphFactory.cs" />
+    <Compile Include="GraphFactory\WinFormsGraphInitializer.cs" />
+    <Compile Include="GraphFactory\RandomValuedWinFormsGraphFactory.cs" />
     <Compile Include="Forms\MainWindow.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -59,11 +59,11 @@
     <Compile Include="Forms\FieldControl.Designer.cs">
       <DependentUpon>FieldControl.cs</DependentUpon>
     </Compile>
-    <Compile Include="GraphLoader\ButtonGraphLoader.cs" />
-    <Compile Include="GraphSaver\ButtonGraphSaver.cs" />
-    <Compile Include="Graph\ButtonGraph.cs" />
-    <Compile Include="RoleChanger\ButtonGraphTopRoleChanger.cs" />
-    <Compile Include="Top\GraphTop.cs">
+    <Compile Include="GraphLoader\WinFormsGraphLoader.cs" />
+    <Compile Include="GraphSaver\WinFormsGraphSaver.cs" />
+    <Compile Include="Graph\WinFormsGraph.cs" />
+    <Compile Include="RoleChanger\WinFormsVertexRoleChanger.cs" />
+    <Compile Include="Vertex\WinFormsVertex.cs">
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="Program.cs" />

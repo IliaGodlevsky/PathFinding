@@ -13,7 +13,7 @@ namespace SearchAlgorythms.Algorithm
     public class GreedyAlgorithm : IPathFindAlgorithm
     {
         private readonly AbstractGraph graph;
-        private Stack<IGraphTop> stack = new Stack<IGraphTop>();
+        private Stack<IVertex> visitedVerticesStack = new Stack<IVertex>();
         private WeightedGraphSearchAlgoStatistics statCollector;
 
         public GreedyAlgorithm(AbstractGraph graph)
@@ -22,15 +22,15 @@ namespace SearchAlgorythms.Algorithm
             this.graph = graph;
         }
 
-        private IGraphTop GoChippestNeighbour(IGraphTop top)
+        private IVertex GoChippestNeighbour(IVertex vertex)
         {
-            var neighbours = top.Neighbours.Count(t => t.IsVisited) == 0 
-                ? top.Neighbours : top.Neighbours.Where(t => !t.IsVisited).ToList();
+            var neighbours = vertex.Neighbours.Count(vert => vert.IsVisited) == 0 
+                ? vertex.Neighbours : vertex.Neighbours.Where(vert => !vert.IsVisited).ToList();
             neighbours.Shuffle();
             if (neighbours.Any())
             {
-                double min = neighbours.Min(t => int.Parse(t.Text));
-                return neighbours.Find(t => t.Text == min.ToString());
+                double min = neighbours.Min(vert => int.Parse(vert.Text));
+                return neighbours.Find(vert => vert.Text == min.ToString());
             }
             return null;
         }
@@ -39,13 +39,13 @@ namespace SearchAlgorythms.Algorithm
 
         public void DrawPath()
         {
-            var top = graph.End;
-            while (!top.IsStart)
+            var vertex = graph.End;
+            while (!vertex.IsStart)
             {
-                var temp = top;
-                top = top.ParentTop;
-                if (top.IsSimpleTop)
-                    top.MarkAsPath();
+                var temp = vertex;
+                vertex = vertex.ParentTop;
+                if (vertex.IsSimpleVertex)
+                    vertex.MarkAsPath();
                 statCollector.AddLength(int.Parse(temp.Text));
                 Pause(35);
             }
@@ -56,49 +56,49 @@ namespace SearchAlgorythms.Algorithm
             if (graph.End == null)
                 return false;
             statCollector.BeginCollectStatistic();
-            var currentTop = graph.Start;
-            IGraphTop temp = null;
-            Visit(currentTop);
-            while(!IsDestination(currentTop))
+            var currentVertex = graph.Start;
+            IVertex temp = null;
+            Visit(currentVertex);
+            while(!IsDestination(currentVertex))
             {
-                temp = currentTop;
-                currentTop = GoChippestNeighbour(currentTop);
-                if (IsRightCellToVisit(currentTop))
+                temp = currentVertex;
+                currentVertex = GoChippestNeighbour(currentVertex);
+                if (IsRightCellToVisit(currentVertex))
                 {
-                    Visit(currentTop);
-                    currentTop.ParentTop = temp;
+                    Visit(currentVertex);
+                    currentVertex.ParentTop = temp;
                 }
                 else
-                    currentTop = stack.Pop();
+                    currentVertex = visitedVerticesStack.Pop();
                 Pause(2);
             }
             statCollector.StopCollectStatistics();
             return graph.End.IsVisited;
         }
 
-        private bool IsDestination(IGraphTop top)
+        private bool IsDestination(IVertex vertex)
         {
-            return top.IsEnd && top.IsVisited || !stack.Any();
+            return vertex.IsEnd && vertex.IsVisited || !visitedVerticesStack.Any();
         }
 
-        private bool IsRightCellToVisit(IGraphTop top)
+        private bool IsRightCellToVisit(IVertex vertex)
         {
-            if (top == null)
+            if (vertex == null)
                 return false;
-            if (top.IsObstacle)
+            if (vertex.IsObstacle)
                 return false;
             return true;
         }
 
-        private void Visit(IGraphTop top)
+        private void Visit(IVertex vertex)
         {
-            top.IsVisited = true;
-            stack.Push(top);
-            if (top.IsSimpleTop)
+            vertex.IsVisited = true;
+            visitedVerticesStack.Push(vertex);
+            if (vertex.IsSimpleVertex)
             {
-                top.MarkAsCurrentlyLooked();
+                vertex.MarkAsCurrentlyLooked();
                 Pause(8);
-                top.MarkAsVisited();
+                vertex.MarkAsVisited();
             }
             statCollector.CellVisited();
         }

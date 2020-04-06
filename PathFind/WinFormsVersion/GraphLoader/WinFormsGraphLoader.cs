@@ -7,28 +7,28 @@ using SearchAlgorythms.GraphFactory;
 
 namespace SearchAlgorythms.GraphLoader
 {
-    public class ButtonGraphLoader : IGraphLoader
+    public class WinFormsGraphLoader : IGraphLoader
     {
         private readonly int placeBetweenButtons;
         private AbstractGraph graph;
 
-        public ButtonGraphLoader(int placeBetweenButtons)
+        public WinFormsGraphLoader(int placeBetweenButtons)
         {
             this.placeBetweenButtons = placeBetweenButtons;
         }
 
         public AbstractGraph GetGraph()
         {
-            GraphTopInfo[,] info = null;
-            OpenFileDialog open = new OpenFileDialog();
-            BinaryFormatter f = new BinaryFormatter();
+            VertexInfo[,] vertexInfo = null;
+            var open = new OpenFileDialog();
+            var formatter = new BinaryFormatter();
             if (open.ShowDialog() == DialogResult.OK)
                 using (var stream = new FileStream(open.FileName, FileMode.Open))
                 {
                     try
                     {
-                        info = (GraphTopInfo[,])f.Deserialize(stream);
-                        Initialise(info);
+                        vertexInfo = (VertexInfo[,])formatter.Deserialize(stream);
+                        Initialise(vertexInfo);
                     }
                     catch (Exception ex)
                     {
@@ -39,14 +39,13 @@ namespace SearchAlgorythms.GraphLoader
             return graph;
         }
 
-        private void Initialise(GraphTopInfo[,] info)
+        private void Initialise(VertexInfo[,] info)
         {
-            ButtonGraphInitializer creator =
-                new ButtonGraphInitializer(info, placeBetweenButtons);
+            var creator = new WinFormsGraphInitializer(info, placeBetweenButtons);
             if (info == null)
                 return;
-            graph = new ButtonGraph(creator.GetGraph());
-            NeigbourSetter setter = new NeigbourSetter(graph.GetArray());
+            graph = (WinFormsGraph)creator.GetGraph();
+            var setter = new NeigbourSetter(graph.GetArray());
             setter.SetNeighbours();
         }
     }

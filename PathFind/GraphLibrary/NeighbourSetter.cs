@@ -1,23 +1,24 @@
-﻿using SearchAlgorythms.Top;
+﻿using GraphLibrary.Extensions.MatrixExtension;
+using SearchAlgorythms.Top;
 
 namespace SearchAlgorythms
 {
     public class NeigbourSetter
     {
-        private readonly IGraphTop[,] graph;
+        private readonly IVertex[,] vertices;
         private readonly int width;
         private readonly int height;
 
-        public NeigbourSetter(IGraphTop[,] graph)
+        public NeigbourSetter(IVertex[,] graph)
         {
-            this.graph = graph;
-            width = graph.GetLength(0);
-            height = graph.Length / graph.GetLength(0);
+            this.vertices = graph;
+            width = graph.Width();
+            height = graph.Height();
         }
 
         public void SetNeighbours(int xCoordinate, int yCoordinate)
         {
-            if (graph[xCoordinate, yCoordinate].IsObstacle)
+            if (vertices[xCoordinate, yCoordinate].IsObstacle)
                 return;
             for (int i = xCoordinate - 1; i <= xCoordinate + 1; i++)
             {
@@ -25,13 +26,13 @@ namespace SearchAlgorythms
                 {
                     if (i >= 0 && i < width && j >= 0 && j < height) 
                     {
-                        if (!graph[i, j].IsObstacle)
-                            graph[xCoordinate, yCoordinate].Neighbours.Add(graph[i, j]);
+                        if (!vertices[i, j].IsObstacle)
+                            vertices[xCoordinate, yCoordinate].Neighbours.Add(vertices[i, j]);
                     }
                 }
             }
-            graph[xCoordinate, yCoordinate].Neighbours.
-                Remove(graph[xCoordinate, yCoordinate]);
+            vertices[xCoordinate, yCoordinate].Neighbours.
+                Remove(vertices[xCoordinate, yCoordinate]);
         }
 
         public void SetNeighbours()

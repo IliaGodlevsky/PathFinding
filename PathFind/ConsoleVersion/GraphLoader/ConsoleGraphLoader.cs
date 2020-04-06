@@ -21,7 +21,7 @@ namespace ConsoleVersion.GraphLoader
             {
                 using (var stream = new FileStream(path, FileMode.Open))
                 {
-                    GraphTopInfo[,] info = (GraphTopInfo[,])f.Deserialize(stream);
+                    VertexInfo[,] info = (VertexInfo[,])f.Deserialize(stream);
                     Initialise(info);                   
                 }
             }
@@ -32,13 +32,13 @@ namespace ConsoleVersion.GraphLoader
             return graph;
         }
 
-        private void Initialise(GraphTopInfo[,] info)
+        private void Initialise(VertexInfo[,] info)
         {
             ConsoleGraphInitializer creator =
                 new ConsoleGraphInitializer(info);
             if (info == null)
                 return;
-            graph = new ConsoleGraph(creator.GetGraph());
+            graph = (ConsoleGraph)creator.GetGraph();
             NeigbourSetter setter = new NeigbourSetter(graph.GetArray());
             setter.SetNeighbours();
         }

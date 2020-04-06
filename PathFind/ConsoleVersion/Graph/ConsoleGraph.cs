@@ -5,17 +5,17 @@ namespace SearchAlgorythms.Graph
 {
     public class ConsoleGraph : AbstractGraph
     {
-        public ConsoleGraph(IGraphTop[,] tops) : base(tops)
+        public ConsoleGraph(IVertex[,] tops) : base(tops)
         {
 
         }
 
-        public override Point GetIndexes(IGraphTop top)
+        public override Point GetIndexes(IVertex top)
         {
             return top.Location;
         }
 
-        public override void ToDefault(IGraphTop top)
+        public override void ToDefault(IVertex top)
         {
             if (!top.IsObstacle)
                 top.SetToDefault();

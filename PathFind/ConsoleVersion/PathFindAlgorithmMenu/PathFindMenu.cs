@@ -12,7 +12,7 @@ namespace ConsoleVersion.PathFindAlgorithmMenu
     public class PathFindMenu
     {
         private ConsoleGraph graph = null;
-        private readonly ConsoleGraphTopRoleChanger changer;
+        private readonly ConsoleVertexRoleChanger changer;
 
         public enum Algorithms
         {
@@ -26,7 +26,7 @@ namespace ConsoleVersion.PathFindAlgorithmMenu
         public PathFindMenu(ConsoleGraph graph)
         {
             this.graph = graph;
-            changer = new ConsoleGraphTopRoleChanger(this.graph);
+            changer = new ConsoleVertexRoleChanger(this.graph);
         }
 
         public void ChooseStart()
@@ -58,7 +58,7 @@ namespace ConsoleVersion.PathFindAlgorithmMenu
         {
             Point point = InputPoint();      
             while (graph[point.X, point.Y].IsObstacle 
-                || !graph[point.X, point.Y].IsSimpleTop)            
+                || !graph[point.X, point.Y].IsSimpleVertex)            
                 point = InputPoint();
             return point;
         }

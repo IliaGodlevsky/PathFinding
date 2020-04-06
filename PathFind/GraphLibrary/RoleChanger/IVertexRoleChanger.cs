@@ -2,7 +2,7 @@
 
 namespace SearchAlgorythms.RoleChanger
 {
-    public interface IGraphTopRoleChanger
+    public interface IVertexRoleChanger
     {
         void SetStartPoint(object sender, EventArgs e);
         void SetDestinationPoint(object sender, EventArgs e);
