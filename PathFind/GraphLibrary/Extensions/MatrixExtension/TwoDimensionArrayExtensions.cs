@@ -24,9 +24,9 @@ namespace GraphLibrary.Extensions.MatrixExtension
             int width = arr.Width();
             int height = arr.Height();
             TKey[,] outArray = new TKey[width, height];
-            for (int i = 0; i < width; i++)
-                for (int j = 0; j < height; j++)
-                    outArray[i, j] = func(arr[i, j]);
+            for (int x = 0; x < width; x++)
+                for (int y = 0; y < height; y++)
+                    outArray[x, y] = func(arr[x, y]);
             return outArray;
         }
 
