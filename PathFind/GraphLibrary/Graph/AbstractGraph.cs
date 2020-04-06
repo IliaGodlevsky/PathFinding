@@ -30,7 +30,7 @@ namespace SearchAlgorythms.Graph
 
         public int Height => vertices.Height();
 
-        public VertexInfo[,] Info => vertices.Accumulate(t => t.GetInfo());
+        public VertexInfo[,] Info => vertices.Accumulate(vertex => vertex.GetInfo());
 
         public int Size => vertices.Length;
 
