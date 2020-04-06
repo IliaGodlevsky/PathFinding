@@ -9,11 +9,11 @@ namespace SearchAlgorythms
         private readonly int width;
         private readonly int height;
 
-        public NeigbourSetter(IVertex[,] graph)
+        public NeigbourSetter(IVertex[,] vertices)
         {
-            this.vertices = graph;
-            width = graph.Width();
-            height = graph.Height();
+            this.vertices = vertices;
+            width = vertices.Width();
+            height = vertices.Height();
         }
 
         public void SetNeighbours(int xCoordinate, int yCoordinate)
