@@ -5,20 +5,20 @@ namespace SearchAlgorythms.Graph
 {
     public class ConsoleGraph : AbstractGraph
     {
-        public ConsoleGraph(IVertex[,] tops) : base(tops)
+        public ConsoleGraph(IVertex[,] vertices) : base(vertices)
         {
 
         }
 
-        public override Point GetIndexes(IVertex top)
+        public override Point GetIndexes(IVertex vertex)
         {
-            return top.Location;
+            return vertex.Location;
         }
 
-        public override void ToDefault(IVertex top)
+        public override void ToDefault(IVertex vertex)
         {
-            if (!top.IsObstacle)
-                top.SetToDefault();
+            if (!vertex.IsObstacle)
+                vertex.SetToDefault();
         }
     }
 }
