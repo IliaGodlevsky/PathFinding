@@ -24,7 +24,7 @@ namespace ConsoleVersion.Forms
                     Console.Write(i.ToString() + " ");
             }
             Console.WriteLine();
-            Console.Write("   ");           
+            Console.Write("   ");
         }
 
         private static void WriteLine(int width)
