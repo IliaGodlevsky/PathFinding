@@ -43,6 +43,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Constants\Const.cs" />
     <Compile Include="DistanceCalculator\DistanceCalculator.cs" />
     <Compile Include="Extensions\ListExtension\ListExtensions.cs" />
     <Compile Include="Extensions\MatrixExtension\TwoDimensionArrayExtensions.cs" />
