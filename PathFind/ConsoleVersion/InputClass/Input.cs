@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Drawing;
 
 namespace ConsoleVersion.InputClass
 {
@@ -16,6 +17,10 @@ namespace ConsoleVersion.InputClass
             }
             return int.Parse(choice);
         }
+
+        public static Point InputPoint(int width, int height) => 
+            new Point(InputNumber("Enter x coordinate of point: ", width),
+                InputNumber("Enter y coordinate of point: ", height));
 
         private static bool IsError(string choice, int upper, int lower)
         {

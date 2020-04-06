@@ -29,37 +29,24 @@ namespace ConsoleVersion.PathFindAlgorithmMenu
             changer = new ConsoleVertexRoleChanger(this.graph);
         }
 
-        public void ChooseStart()
-        {
-            Console.WriteLine("Start point: ");
-            Point point = ChoosePoint();
-            while(!graph[point.X,point.Y].Neighbours.Any())
-                point = ChoosePoint();
-            changer.SetStartPoint(graph[point.X, point.Y], new EventArgs());
-        }
+        public void ChooseStart() => ChooseRange("\nStart point: ", changer.SetStartPoint);
 
-        public void ChooseEnd()
-        {
-            Console.WriteLine("Destination point: ");
-            Point point = ChoosePoint();
-            while (!graph[point.X, point.Y].Neighbours.Any())
-                point = ChoosePoint();
-            changer.SetDestinationPoint(graph[point.X, point.Y], new EventArgs());
-        }
+        public void ChooseEnd() => ChooseRange("Destination point: ", changer.SetDestinationPoint);
 
-        public Point InputPoint()
+        private void ChooseRange(string message, EventHandler method)
         {
-            int x = Input.InputNumber("Enter x coordinate of point: ", graph.Width);
-            int y = Input.InputNumber("Enter y coordinate of point: ", graph.Height);
-            return new Point(x, y);
+            Console.WriteLine(message);
+            Point point = ChoosePoint();
+            method(graph[point.X, point.Y], new EventArgs());
         }
 
         private Point ChoosePoint()
         {
-            Point point = InputPoint();      
-            while (graph[point.X, point.Y].IsObstacle 
-                || !graph[point.X, point.Y].IsSimpleVertex)            
-                point = InputPoint();
+            Point point = Input.InputPoint(graph.Width, graph.Height);
+            while (graph[point.X, point.Y].IsObstacle
+                || !graph[point.X, point.Y].IsSimpleVertex ||
+                !graph[point.X, point.Y].Neighbours.Any())          
+                point = Input.InputPoint(graph.Width, graph.Height);
             return point;
         }
 

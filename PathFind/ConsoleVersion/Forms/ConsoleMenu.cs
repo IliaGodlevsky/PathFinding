@@ -76,7 +76,7 @@ namespace ConsoleVersion.Forms
         private void Reverse()
         {
             Console.WriteLine("Reverse top choice: ");
-            Point point = pathFindMenu.InputPoint();
+            Point point = Input.InputPoint(graph.Width, graph.Height);
             changer.ReversePolarity(graph[point.X, point.Y], new EventArgs());
         }
 
