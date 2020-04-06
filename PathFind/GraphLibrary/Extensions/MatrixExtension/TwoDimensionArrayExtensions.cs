@@ -21,11 +21,9 @@ namespace GraphLibrary.Extensions.MatrixExtension
         public static TKey[,] Accumulate<TSource, TKey>(this TSource[,] arr, 
             Func<TSource, TKey> func)
         {
-            int width = arr.Width();
-            int height = arr.Height();
-            TKey[,] outArray = new TKey[width, height];
-            for (int x = 0; x < width; x++)
-                for (int y = 0; y < height; y++)
+            TKey[,] outArray = new TKey[arr.Width(), arr.Height()];
+            for (int x = 0; x < arr.Width(); x++)
+                for (int y = 0; y < arr.Height(); y++)
                     outArray[x, y] = func(arr[x, y]);
             return outArray;
         }
