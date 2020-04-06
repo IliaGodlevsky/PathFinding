@@ -60,8 +60,8 @@ namespace SearchAlgorythms
                 (top as WinFormsVertex).MouseClick += changer.ChangeTopText;
                 Field.Controls.Add(top as WinFormsVertex);
             }
-            Field.Size = new Size(new Point(graph.Width *
-                Const.SIZE_BETWEEN_VERTICES, graph.Height * Const.SIZE_BETWEEN_VERTICES));
+            Field.Size = new Size(new Point(graph.Width * Const.SIZE_BETWEEN_VERTICES,
+                graph.Height * Const.SIZE_BETWEEN_VERTICES));
             Field.Location = new Point(177, 35);
             Size = new Size(Field.Size.Width + FieldParams.Width + 50,
                 Field.Size.Height + 80);
