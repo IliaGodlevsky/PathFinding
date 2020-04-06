@@ -10,6 +10,7 @@ using SearchAlgorythms.Algorithm;
 using SearchAlgorythms.GraphFactory;
 using System.Linq;
 using GraphLibrary.GraphFactory;
+using GraphLibrary.Constants;
 
 namespace SearchAlgorythms
 {
@@ -18,7 +19,6 @@ namespace SearchAlgorythms
         private WinFormsGraph graph = null;
         private IPathFindAlgorithm pathFindAlgorithm = null;
         private IGraphFactory createAlgorythm = null;
-        private const int BUTTON_POSITION = 25;
         private WinFormsVertexRoleChanger changer = null;
 
         public MainWindow()
@@ -61,7 +61,7 @@ namespace SearchAlgorythms
                 Field.Controls.Add(top as WinFormsVertex);
             }
             Field.Size = new Size(new Point(graph.Width*
-                BUTTON_POSITION, graph.Height* BUTTON_POSITION));
+                Const.SIZE_BETWEEN_VERTICES, graph.Height* Const.SIZE_BETWEEN_VERTICES));
             Field.Location = new Point(177, 35);
             Size = new Size(Field.Size.Width + FieldParams.Width + 50,
                 Field.Size.Height + 80);
@@ -147,7 +147,7 @@ namespace SearchAlgorythms
                 return;            
             createAlgorythm = new RandomValuedWinFormsGraphFactory(percent.Value,
                 int.Parse(widthNumber.Text), int.Parse(heightNumber.Text),
-                BUTTON_POSITION);
+                Const.SIZE_BETWEEN_VERTICES);
             PrepareGraph((WinFormsGraph)createAlgorythm.GetGraph());           
         }
 
@@ -170,7 +170,7 @@ namespace SearchAlgorythms
 
         private void LoadMapToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            var loader = new WinFormsGraphLoader(BUTTON_POSITION);
+            var loader = new WinFormsGraphLoader(Const.SIZE_BETWEEN_VERTICES);
             WinFormsGraph temp = (WinFormsGraph)loader.GetGraph();                      
             if (temp != null)
             {
