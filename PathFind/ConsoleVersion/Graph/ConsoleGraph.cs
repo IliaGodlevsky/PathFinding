@@ -1,5 +1,4 @@
-﻿using System.Drawing;
-using SearchAlgorythms.Top;
+﻿using SearchAlgorythms.Top;
 
 namespace SearchAlgorythms.Graph
 {

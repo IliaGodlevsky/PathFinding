@@ -52,6 +52,7 @@ namespace SearchAlgorythms.Graph
             return new Point(vertex.Location.X / Const.SIZE_BETWEEN_VERTICES, 
                 vertex.Location.Y / Const.SIZE_BETWEEN_VERTICES);
         }
+
         public abstract void ToDefault(IVertex vertex);
 
         public void Refresh()

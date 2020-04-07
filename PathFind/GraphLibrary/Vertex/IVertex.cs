@@ -19,7 +19,7 @@ namespace SearchAlgorythms.Top
         VertexInfo GetInfo();
         void MarkAsCurrentlyLooked();
         void MarkAsEnd();
-        void MarkAsGraphTop();
+        void MarkAsSimpleVertex();
         void MarkAsObstacle();
         void MarkAsPath();
         void MarkAsStart();

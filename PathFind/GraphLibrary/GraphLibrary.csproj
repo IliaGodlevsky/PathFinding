@@ -50,7 +50,9 @@
     <Compile Include="GraphFactory\AbstractGraphFactory.cs" />
     <Compile Include="GraphFactory\AbstractGraphInitializer.cs" />
     <Compile Include="GraphFactory\IGraphFactory.cs" />
+    <Compile Include="GraphLoader\AbstractGraphLoader.cs" />
     <Compile Include="GraphLoader\IGraphLoader.cs" />
+    <Compile Include="GraphSaver\AbstractGraphSaver.cs" />
     <Compile Include="GraphSaver\IGraphSaver.cs" />
     <Compile Include="RoleChanger\AbstractVertexRoleChanger.cs" />
     <Compile Include="VertexInfo\VertexInfo.cs" />

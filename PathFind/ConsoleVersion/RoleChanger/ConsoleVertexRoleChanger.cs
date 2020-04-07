@@ -3,7 +3,6 @@ using GraphLibrary.RoleChanger;
 using SearchAlgorythms.Graph;
 using SearchAlgorythms.Top;
 using System;
-using System.Linq;
 
 namespace SearchAlgorythms.RoleChanger
 {
@@ -15,11 +14,8 @@ namespace SearchAlgorythms.RoleChanger
 
         }
 
-        public override void ChangeTopText(object sender, EventArgs e)
-        {
-            (sender as ConsoleVertex).Text = 
+        public override void ChangeTopText(object sender, EventArgs e) => (sender as ConsoleVertex).Text =
                 Input.InputNumber("Enter new top value: ", 9, 1).ToString();
-        }
 
         public override void ReversePolarity(object sender, EventArgs e)
         {

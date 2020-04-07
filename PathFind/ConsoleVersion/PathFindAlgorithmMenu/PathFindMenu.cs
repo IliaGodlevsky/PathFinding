@@ -43,8 +43,7 @@ namespace ConsoleVersion.PathFindAlgorithmMenu
         private Point ChoosePoint()
         {
             Point point = Input.InputPoint(graph.Width, graph.Height);
-            while (graph[point.X, point.Y].IsObstacle
-                || !graph[point.X, point.Y].IsSimpleVertex ||
+            while (graph[point.X, point.Y].IsObstacle || !graph[point.X, point.Y].IsSimpleVertex ||
                 !graph[point.X, point.Y].Neighbours.Any())          
                 point = Input.InputPoint(graph.Width, graph.Height);
             return point;
@@ -61,25 +60,17 @@ namespace ConsoleVersion.PathFindAlgorithmMenu
 
         public IPathFindAlgorithm ChoosePathFindAlgorithm()
         {
-            Algorithms algorithms = (Algorithms)Input.InputNumber(
-                ShowAlgorithms() + "Choose algorithm: ", 
+            Algorithms algorithms = (Algorithms)Input.InputNumber( ShowAlgorithms() + "Choose algorithm: ", 
                 (int)Algorithms.GreedyAlgorithm, (int)Algorithms.WidePathFind);
             switch (algorithms)
             {
-                case Algorithms.WidePathFind:
-                    return new WidePathFindAlgorithm(graph);
-                case Algorithms.BestFirstPathFind:
-                    return new BestFirstAlgorithm(graph);
-                case Algorithms.DijkstraAlgorithm:
-                    return new DijkstraAlgorithm(graph);
-                case Algorithms.AStarAlgorithm:
-                    return new AStarAlgorithm(graph) {
-                        HeuristicFunction = DistanceCalculator.GetChebyshevDistance
-                    };                  
-                case Algorithms.GreedyAlgorithm:
-                    return new GreedyAlgorithm(graph);
-                default:
-                    return null;
+                case Algorithms.WidePathFind: return new WidePathFindAlgorithm(graph);
+                case Algorithms.BestFirstPathFind: return new BestFirstAlgorithm(graph);
+                case Algorithms.DijkstraAlgorithm: return new DijkstraAlgorithm(graph);
+                case Algorithms.AStarAlgorithm: return new AStarAlgorithm(graph) { HeuristicFunction = 
+                    DistanceCalculator.GetChebyshevDistance };              
+                case Algorithms.GreedyAlgorithm: return new GreedyAlgorithm(graph);
+                default: return null;
             }
         }
     }

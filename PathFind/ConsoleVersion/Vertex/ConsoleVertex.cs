@@ -49,7 +49,7 @@ namespace SearchAlgorythms.Top
             Colour = Color.FromKnownColor(KnownColor.Red);
         }
 
-        public void MarkAsGraphTop()
+        public void MarkAsSimpleVertex()
         {
             Colour = Color.FromKnownColor(KnownColor.White);
         }
@@ -81,7 +81,7 @@ namespace SearchAlgorythms.Top
             IsEnd = false;
             IsVisited = false;
             Value = 0;
-            MarkAsGraphTop();
+            MarkAsSimpleVertex();
             ParentTop = null;
         }
     }

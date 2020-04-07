@@ -3,10 +3,7 @@ using SearchAlgorythms.Graph;
 using SearchAlgorythms.RoleChanger;
 using SearchAlgorythms.Top;
 using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace GraphLibrary.RoleChanger
 {
@@ -36,7 +33,7 @@ namespace GraphLibrary.RoleChanger
         {
             Random rand = new Random();
             top.IsObstacle = false;
-            top.MarkAsGraphTop();
+            top.MarkAsSimpleVertex();
             top.Text = (rand.Next(9) + 1).ToString();
             NeigbourSetter setter = new NeigbourSetter(graph.GetArray());
             var coordinates = graph.GetIndexes(top);

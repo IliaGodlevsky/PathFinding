@@ -37,7 +37,7 @@ namespace SearchAlgorythms.Top
             IsObstacle = true;
         }
 
-        public void MarkAsGraphTop()
+        public void MarkAsSimpleVertex()
         {
             if (!IsObstacle)
                 BackColor = Color.FromKnownColor(KnownColor.White);
@@ -74,7 +74,7 @@ namespace SearchAlgorythms.Top
             IsEnd = false;
             IsVisited = false;
             Value = 0;
-            MarkAsGraphTop();
+            MarkAsSimpleVertex();
             ParentTop = null;
             Font = new Font("Times New Roman", 7.8f);
             Size = new Size(25, 25);
