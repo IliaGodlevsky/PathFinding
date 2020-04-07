@@ -2,8 +2,11 @@
 using ConsoleVersion.GraphSaver;
 using ConsoleVersion.InputClass;
 using ConsoleVersion.PathFindAlgorithmMenu;
+using GraphLibrary.GraphFactory;
 using SearchAlgorythms.Graph;
 using SearchAlgorythms.GraphFactory;
+using SearchAlgorythms.GraphLoader;
+using SearchAlgorythms.GraphSaver;
 using SearchAlgorythms.PauseMaker;
 using SearchAlgorythms.RoleChanger;
 using System;
@@ -23,10 +26,11 @@ namespace ConsoleVersion.Forms
             Refresh,
             Reverse
         };
+
         private PathFindMenu pathFindMenu;
         private ConsoleGraph graph = null;
-        private ConsoleVertexRoleChanger changer;
-        private RandomValuedConsoleGraphFactory factory;
+        private IVertexRoleChanger changer;
+        private IGraphFactory factory;
         private string statistics;
 
         public ConsoleMenu()
@@ -93,13 +97,13 @@ namespace ConsoleVersion.Forms
 
         private void Save()
         {
-            ConsoleGraphSaver save = new ConsoleGraphSaver();
+            IGraphSaver save = new ConsoleGraphSaver();
             save.SaveGraph(graph);
         }
 
         private void Load()
         {
-            ConsoleGraphLoader loader = new ConsoleGraphLoader();
+            IGraphLoader loader = new ConsoleGraphLoader();
             AbstractGraph temp = loader.GetGraph();
             if (temp != null)
             {
@@ -107,7 +111,6 @@ namespace ConsoleVersion.Forms
                 changer = new ConsoleVertexRoleChanger(graph);
                 pathFindMenu = new PathFindMenu(graph);
             }
-
         }
 
         private void Find()

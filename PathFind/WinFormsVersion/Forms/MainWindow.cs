@@ -19,7 +19,7 @@ namespace SearchAlgorythms
         private WinFormsGraph graph = null;
         private IPathFindAlgorithm pathFindAlgorithm = null;
         private IGraphFactory createAlgorythm = null;
-        private WinFormsVertexRoleChanger changer = null;
+        private IVertexRoleChanger changer = null;
 
         public MainWindow()
         {                        
