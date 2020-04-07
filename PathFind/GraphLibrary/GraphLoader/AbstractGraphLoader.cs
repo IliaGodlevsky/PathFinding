@@ -16,17 +16,16 @@ namespace GraphLibrary.GraphLoader
         public AbstractGraph GetGraph()
         {
             IFormatter formatter = new BinaryFormatter();
-            using (var stream = new FileStream(GetPath(), FileMode.Open))
-            {
-                try
+            try {
+                using (var stream = new FileStream(GetPath(), FileMode.Open))
                 {
                     VertexInfo[,] vertexInfo = (VertexInfo[,])formatter.Deserialize(stream);
                     Initialise(vertexInfo);
                 }
-                catch (Exception ex)
-                {
-                    ShowMessage(ex.Message);
-                }
+            }
+            catch (Exception ex)
+            {
+                ShowMessage(ex.Message);
             }
             return graph;
         }

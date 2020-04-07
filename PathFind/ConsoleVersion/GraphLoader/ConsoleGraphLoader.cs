@@ -19,6 +19,10 @@ namespace ConsoleVersion.GraphLoader
             return Console.ReadLine();
         }
 
-        public override void ShowMessage(string message) => Console.WriteLine(message);
+        public override void ShowMessage(string message)
+        {
+            Console.WriteLine(message);
+            Console.ReadKey();
+        }
     }
 }
