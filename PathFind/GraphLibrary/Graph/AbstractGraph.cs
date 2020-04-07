@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Drawing;
+using GraphLibrary.Constants;
 using GraphLibrary.Extensions.MatrixExtension;
 using SearchAlgorythms.Top;
 
@@ -46,7 +47,11 @@ namespace SearchAlgorythms.Graph
 
         public int ObstaclePercent => vertices.CountIf(vertex => vertex.IsObstacle) * 100 / Size;
 
-        public abstract Point GetIndexes(IVertex vertex);
+        public virtual Point GetIndexes(IVertex vertex)
+        {
+            return new Point(vertex.Location.X / Const.SIZE_BETWEEN_VERTICES, 
+                vertex.Location.Y / Const.SIZE_BETWEEN_VERTICES);
+        }
         public abstract void ToDefault(IVertex vertex);
 
         public void Refresh()

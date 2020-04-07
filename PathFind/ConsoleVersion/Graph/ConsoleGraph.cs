@@ -10,11 +10,6 @@ namespace SearchAlgorythms.Graph
 
         }
 
-        public override Point GetIndexes(IVertex vertex)
-        {
-            return vertex.Location;
-        }
-
         public override void ToDefault(IVertex vertex)
         {
             if (!vertex.IsObstacle)
