@@ -43,7 +43,7 @@ namespace SearchAlgorythms.Algorithm
             while (!vertex.IsStart)
             {
                 var temp = vertex;
-                vertex = vertex.ParentTop;
+                vertex = vertex.ParentVertex;
                 if (vertex.IsSimpleVertex)
                     vertex.MarkAsPath();
                 statCollector.AddLength(int.Parse(temp.Text));
@@ -66,7 +66,7 @@ namespace SearchAlgorythms.Algorithm
                 if (IsRightCellToVisit(currentVertex))
                 {
                     Visit(currentVertex);
-                    currentVertex.ParentTop = temp;
+                    currentVertex.ParentVertex = temp;
                 }
                 else
                     currentVertex = visitedVerticesStack.Pop();

@@ -12,7 +12,7 @@ namespace SearchAlgorythms.Top
         bool IsVisited { get; set; }
         string Text { get; set; }
         List<IVertex> Neighbours { get; set; }
-        IVertex ParentTop { get; set; }
+        IVertex ParentVertex { get; set; }
         double Value { get; set; }
         Point Location { get; set; }
 

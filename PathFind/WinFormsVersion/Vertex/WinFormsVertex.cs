@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using GraphLibrary.Constants;
+using System.Collections.Generic;
 using System.Drawing;
 using System.Windows.Forms;
 
@@ -25,7 +26,7 @@ namespace SearchAlgorythms.Top
         public bool IsEnd { get; set; }
         public bool IsVisited { get; set; }
         public double Value { get; set; }
-        public IVertex ParentTop { get; set; }
+        public IVertex ParentVertex { get; set; }
         public List<IVertex> Neighbours { get; set; }
         public bool IsSimpleVertex => !IsStart && !IsEnd;
         public bool IsObstacle { get; set; }
@@ -75,9 +76,10 @@ namespace SearchAlgorythms.Top
             IsVisited = false;
             Value = 0;
             MarkAsSimpleVertex();
-            ParentTop = null;
+            ParentVertex = null;
             Font = new Font("Times New Roman", 7.8f);
-            Size = new Size(25, 25);
+            Size = new Size(Const.WIN_FORMS_VERTEX_SIZE,
+                Const.WIN_FORMS_VERTEX_SIZE);
             TextAlign = ContentAlignment.MiddleCenter;
             //BorderStyle = BorderStyle.FixedSingle;
         }

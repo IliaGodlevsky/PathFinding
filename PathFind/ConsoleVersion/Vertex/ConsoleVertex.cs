@@ -30,7 +30,7 @@ namespace SearchAlgorythms.Top
         public string Text { get; set; }
         public Color Colour { get; set; }
         public List<IVertex> Neighbours { get; set; }
-        public IVertex ParentTop { get; set; }
+        public IVertex ParentVertex { get; set; }
         public double Value { get; set; }
         public Point Location { get; set; }
 
@@ -82,7 +82,7 @@ namespace SearchAlgorythms.Top
             IsVisited = false;
             Value = 0;
             MarkAsSimpleVertex();
-            ParentTop = null;
+            ParentVertex = null;
         }
     }
 }
