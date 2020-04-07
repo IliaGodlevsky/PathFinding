@@ -1,4 +1,5 @@
-﻿using GraphLibrary.GraphFactory;
+﻿using GraphLibrary.Constants;
+using GraphLibrary.GraphFactory;
 using SearchAlgorythms;
 using SearchAlgorythms.Graph;
 using SearchAlgorythms.Top;
@@ -7,7 +8,7 @@ namespace ConsoleVersion.GraphFactory
 {
     public class ConsoleGraphInitializer : AbstractGraphInitializer
     {
-        public ConsoleGraphInitializer(VertexInfo[,] info) : base(info, 1)
+        public ConsoleGraphInitializer(VertexInfo[,] info) : base(info, Const.SIZE_BETWEEN_VERTICES)
         {
 
         }
