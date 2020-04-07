@@ -20,13 +20,11 @@ namespace GraphLibrary.GraphSaver
             {
                 VertexInfo[,] info = graph.Info;
                 IFormatter formatter = new BinaryFormatter();               
-                try
-                {
+                try {
                     using (var stream = new FileStream(GetPath(), FileMode.Create))
                         formatter.Serialize(stream, info);
                 }
-                catch (Exception ex)
-                {
+                catch (Exception ex) {
                     Console.WriteLine(ex.Message);
                 }
             }

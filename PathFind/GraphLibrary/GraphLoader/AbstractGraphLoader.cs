@@ -18,13 +18,9 @@ namespace GraphLibrary.GraphLoader
             IFormatter formatter = new BinaryFormatter();
             try {
                 using (var stream = new FileStream(GetPath(), FileMode.Open))
-                {
-                    VertexInfo[,] vertexInfo = (VertexInfo[,])formatter.Deserialize(stream);
-                    Initialise(vertexInfo);
-                }
+                    Initialise((VertexInfo[,])formatter.Deserialize(stream));
             }
-            catch (Exception ex)
-            {
+            catch (Exception ex) {
                 ShowMessage(ex.Message);
             }
             return graph;
