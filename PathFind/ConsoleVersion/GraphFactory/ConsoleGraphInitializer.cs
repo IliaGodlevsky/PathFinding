@@ -8,7 +8,7 @@ namespace ConsoleVersion.GraphFactory
 {
     public class ConsoleGraphInitializer : AbstractGraphInitializer
     {
-        public ConsoleGraphInitializer(VertexInfo[,] info) : base(info, Const.SIZE_BETWEEN_VERTICES)
+        public ConsoleGraphInitializer(VertexInfo[,] info) : base(info, 1)
         {
 
         }
