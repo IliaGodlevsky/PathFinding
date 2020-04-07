@@ -1,5 +1,4 @@
-﻿using GraphLibrary.Constants;
-using GraphLibrary.GraphFactory;
+﻿using GraphLibrary.GraphFactory;
 using SearchAlgorythms;
 using SearchAlgorythms.Graph;
 using SearchAlgorythms.Top;
