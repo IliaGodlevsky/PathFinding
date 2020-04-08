@@ -6,18 +6,19 @@ using System;
 using System.Drawing;
 using System.Windows.Forms;
 using SearchAlgorythms.RoleChanger;
-using SearchAlgorythms.Algorithm;
 using SearchAlgorythms.GraphFactory;
 using System.Linq;
 using GraphLibrary.GraphFactory;
 using GraphLibrary.Constants;
+using SearchAlgorythms.PauseMaker;
+using GraphLibrary.Enums.AlgorithmEnum;
+using GraphLibrary.PathFindAlgorithmSelector;
 
 namespace SearchAlgorythms
 {
     public partial class MainWindow : Form
     {
         private WinFormsGraph graph = null;
-        private IPathFindAlgorithm pathFindAlgorithm = null;
         private IGraphFactory createAlgorythm = null;
         private IVertexRoleChanger changer = null;
 
@@ -75,44 +76,30 @@ namespace SearchAlgorythms
             Field.Controls.Clear();
         }
 
-        private void WideSearchToolStripMenuItem(object sender, EventArgs e)
-        {
-            pathFindAlgorithm = new WidePathFindAlgorithm(graph);
-            StartSearchPath();
-        }
+        private void WideSearchToolStripMenuItem(object sender, EventArgs e) => StartSearchPath(Algorithms.WidePathFind);
 
-        private void DijkstraAlgorythmToolStripMenuItem(object sender, EventArgs e)
-        {
-            pathFindAlgorithm = new DijkstraAlgorithm(graph);
-            StartSearchPath();
-        }
+        private void DijkstraAlgorythmToolStripMenuItem(object sender, EventArgs e) => StartSearchPath(Algorithms.DijkstraAlgorithm);
 
-        private void GreedySearchToolStripMenuItem(object sender, EventArgs e)
-        {
-            pathFindAlgorithm = new GreedyAlgorithm(graph);
-            StartSearchPath();
-        }
+        private void GreedySearchToolStripMenuItem(object sender, EventArgs e) => StartSearchPath(Algorithms.GreedyAlgorithm);
 
-        private void BestfirstWideSearchToolStripMenuItem(object sender, EventArgs e)
-        {
-            pathFindAlgorithm = new BestFirstAlgorithm(graph);
-            StartSearchPath();
-        }
+        private void BestfirstWideSearchToolStripMenuItem(object sender, EventArgs e) => StartSearchPath(Algorithms.BestFirstPathFind);
 
-        private void StartSearchPath()
+        private void ASearchToolStripMenuItem_Click(object sender, EventArgs e) => StartSearchPath(Algorithms.AStarAlgorithm);
+
+        private void StartSearchPath(Algorithms algorithm)
         {
-            pathFindAlgorithm.Pause = PauseMaker.PauseMaker.WinFormsPause;
-            if (pathFindAlgorithm.FindDestionation())
+            var search = AlgorithmSelector.GetPathFindAlgorithm(algorithm, graph);
+            search.Pause = new WinFormsPauseMaker().Pause;
+            if (search.FindDestionation())
             {
-                pathFindAlgorithm.DrawPath();
-                time.Text = pathFindAlgorithm.GetStatistics();
+                search.DrawPath();
+                time.Text = search.GetStatistics();
                 time.Update();
-                pathFindAlgorithm = null;
                 graph.Start = null;
                 graph.End = null;
             }
             else
-                MessageBox.Show("Couldn't find path");            
+                MessageBox.Show("Couldn't find path");
         }
 
         private void Percent_Scroll(object sender, EventArgs e)
@@ -164,13 +151,12 @@ namespace SearchAlgorythms
 
         private void SaveMapToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            var saver = new WinFormsGraphSaver();
-            saver.SaveGraph(graph);
+            new WinFormsGraphSaver().SaveGraph(graph);
         }
 
         private void LoadMapToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            var loader = new WinFormsGraphLoader(Const.SIZE_BETWEEN_VERTICES);
+            IGraphLoader loader = new WinFormsGraphLoader(Const.SIZE_BETWEEN_VERTICES);
             WinFormsGraph temp = (WinFormsGraph)loader.GetGraph();                      
             if (temp != null)
             {
@@ -198,14 +184,6 @@ namespace SearchAlgorythms
             time.Update();
             percent.Value = graph.ObstaclePercent;
             PreparePercentBar();
-        }
-
-        private void ASearchToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            pathFindAlgorithm = new AStarAlgorithm(graph);
-            (pathFindAlgorithm as AStarAlgorithm).HeuristicFunction = 
-                DistanceCalculator.DistanceCalculator.GetChebyshevDistance;
-            StartSearchPath();
         }
 
         private void PreparePercentBar()

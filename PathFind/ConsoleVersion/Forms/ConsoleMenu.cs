@@ -2,12 +2,11 @@
 using ConsoleVersion.GraphSaver;
 using ConsoleVersion.InputClass;
 using ConsoleVersion.PathFindAlgorithmMenu;
+using ConsoleVersion.PauseMaker;
 using GraphLibrary.GraphFactory;
 using SearchAlgorythms.Graph;
 using SearchAlgorythms.GraphFactory;
 using SearchAlgorythms.GraphLoader;
-using SearchAlgorythms.GraphSaver;
-using SearchAlgorythms.PauseMaker;
 using SearchAlgorythms.RoleChanger;
 using System;
 using System.Drawing;
@@ -95,11 +94,7 @@ namespace ConsoleVersion.Forms
             pathFindMenu = new PathFindMenu(graph);
         }
 
-        private void Save()
-        {
-            IGraphSaver save = new ConsoleGraphSaver();
-            save.SaveGraph(graph);
-        }
+        private void Save() => new ConsoleGraphSaver().SaveGraph(graph);
 
         private void Load()
         {
@@ -123,16 +118,20 @@ namespace ConsoleVersion.Forms
             Console.Clear();
             GraphShower.ShowGraph(graph);
             var search = pathFindMenu.ChoosePathFindAlgorithm();
-            search.Pause = PauseMaker.ConsolePause;
+            search.Pause = new ConsolePauseMaker().Pause;
             if (search.FindDestionation())
+            {
                 search.DrawPath();
-            statistics = search.GetStatistics();
-            Console.Clear();
-            GraphShower.ShowGraph(graph);
-            Console.WriteLine("\n" + statistics);
+                statistics = search.GetStatistics();
+                Console.Clear();
+                GraphShower.ShowGraph(graph);
+                Console.WriteLine("\n" + statistics);
+                graph.End = null;
+                graph.Start = null;
+            }
+            else
+                Console.WriteLine("Couldn't find path");
             Console.ReadKey();
-            graph.End = null;
-            graph.Start = null;
         }
     }
 }

@@ -1,26 +1,18 @@
 ﻿using System.Diagnostics;
-using System.Windows.Forms;
 
 namespace SearchAlgorythms.PauseMaker
 {
-    public static class PauseMaker
+    public abstract class PauseMaker
     {
-        public static void WinFormsPause(int milliseconds)
-        {
-            var sw = new Stopwatch();
-            sw.Start();
-            while (sw.ElapsedMilliseconds < milliseconds)
-                Application.DoEvents();
-            sw.Stop();
-        }
+        public abstract void PauseEvent();
 
-        public static void ConsolePause(int milliseconds)
+        public void Pause(int milliseconds)
         {
-            var sw = new Stopwatch();
-            sw.Start();
-            while (sw.ElapsedMilliseconds < milliseconds)
-                continue;
-            sw.Stop();
+            var watch = new Stopwatch();
+            watch.Start();
+            while (watch.ElapsedMilliseconds < milliseconds)
+                PauseEvent();
+            watch.Stop();
         }
     }
 }

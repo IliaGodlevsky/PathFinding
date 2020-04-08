@@ -1,4 +1,6 @@
 ﻿using ConsoleVersion.InputClass;
+using GraphLibrary.Enums.AlgorithmEnum;
+using GraphLibrary.PathFindAlgorithmSelector;
 using SearchAlgorythms.Algorithm;
 using SearchAlgorythms.DistanceCalculator;
 using SearchAlgorythms.Graph;
@@ -13,15 +15,6 @@ namespace ConsoleVersion.PathFindAlgorithmMenu
     {
         private ConsoleGraph graph = null;
         private readonly ConsoleVertexRoleChanger changer;
-
-        public enum Algorithms
-        {
-            WidePathFind = 1,
-            BestFirstPathFind,
-            DijkstraAlgorithm,
-            AStarAlgorithm,
-            GreedyAlgorithm
-        };
 
         public PathFindMenu(ConsoleGraph graph)
         {
@@ -62,16 +55,7 @@ namespace ConsoleVersion.PathFindAlgorithmMenu
         {
             Algorithms algorithms = (Algorithms)Input.InputNumber( ShowAlgorithms() + "Choose algorithm: ", 
                 (int)Algorithms.GreedyAlgorithm, (int)Algorithms.WidePathFind);
-            switch (algorithms)
-            {
-                case Algorithms.WidePathFind: return new WidePathFindAlgorithm(graph);
-                case Algorithms.BestFirstPathFind: return new BestFirstAlgorithm(graph);
-                case Algorithms.DijkstraAlgorithm: return new DijkstraAlgorithm(graph);
-                case Algorithms.AStarAlgorithm: return new AStarAlgorithm(graph) { HeuristicFunction = 
-                    DistanceCalculator.GetChebyshevDistance };              
-                case Algorithms.GreedyAlgorithm: return new GreedyAlgorithm(graph);
-                default: return null;
-            }
+            return AlgorithmSelector.GetPathFindAlgorithm(algorithms, graph);
         }
     }
 }

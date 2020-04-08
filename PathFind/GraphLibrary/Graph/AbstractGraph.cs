@@ -17,8 +17,8 @@ namespace SearchAlgorythms.Graph
 
         public IVertex this[int width, int height]
         {
-            get { return vertices[width, height]; }
-            set { vertices[width, height] = value; }
+            get => vertices[width, height];
+            set => vertices[width, height] = value;
         }
 
         public IVertex End { get; set; }

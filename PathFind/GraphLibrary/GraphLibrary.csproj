@@ -45,6 +45,7 @@
   <ItemGroup>
     <Compile Include="Constants\Const.cs" />
     <Compile Include="DistanceCalculator\DistanceCalculator.cs" />
+    <Compile Include="Enums\AlgorithmEnum\Algorithm.cs" />
     <Compile Include="Extensions\ListExtension\ListExtensions.cs" />
     <Compile Include="Extensions\MatrixExtension\TwoDimensionArrayExtensions.cs" />
     <Compile Include="GraphFactory\AbstractGraphFactory.cs" />
@@ -54,6 +55,7 @@
     <Compile Include="GraphLoader\IGraphLoader.cs" />
     <Compile Include="GraphSaver\AbstractGraphSaver.cs" />
     <Compile Include="GraphSaver\IGraphSaver.cs" />
+    <Compile Include="PathFindAlgorithmSelector\AlgorithmSelector.cs" />
     <Compile Include="RoleChanger\AbstractVertexRoleChanger.cs" />
     <Compile Include="VertexInfo\VertexInfo.cs" />
     <Compile Include="Graph\AbstractGraph.cs" />
