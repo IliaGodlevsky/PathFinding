@@ -1,4 +1,5 @@
-﻿using SearchAlgorythms;
+﻿using GraphLibrary.Extensions.MatrixExtension;
+using SearchAlgorythms;
 using SearchAlgorythms.Graph;
 using SearchAlgorythms.Top;
 using System.Drawing;
@@ -13,12 +14,10 @@ namespace GraphLibrary.GraphFactory
         {
             if (info == null)
                 return;
-            int graphWidth = info.GetLength(0);
-            int graphHeight = info.Length / info.GetLength(0);
-            SetGraph(graphWidth, graphHeight);
-            for (int i = 0; i < graphWidth; i++)
+            SetGraph(info.Width(), info.Height());
+            for (int i = 0; i < info.Width(); i++)
             {
-                for (int j = 0; j < graphHeight; j++)
+                for (int j = 0; j < info.Height(); j++)
                 {
                     vertices[i, j] = CreateVertex(info[i, j]);
                     vertices[i, j].Location = new Point(i * placeBetweenVertices, 
@@ -27,7 +26,7 @@ namespace GraphLibrary.GraphFactory
             }
         }
 
-        public abstract IVertex CreateVertex( VertexInfo info);
+        public abstract IVertex CreateVertex(VertexInfo info);
         public abstract void SetGraph(int width, int height);
         public abstract AbstractGraph GetGraph();
        
