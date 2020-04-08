@@ -6,7 +6,7 @@ namespace SearchAlgorythms.PauseMaker
     {
         public abstract void PauseEvent();
 
-        public void Pause(int milliseconds)
+        public virtual void Pause(int milliseconds)
         {
             var watch = new Stopwatch();
             watch.Start();
