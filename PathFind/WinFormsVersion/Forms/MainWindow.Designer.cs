@@ -140,7 +140,7 @@
             this.aSearchToolStripMenuItem.Name = "aSearchToolStripMenuItem";
             this.aSearchToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.aSearchToolStripMenuItem.Text = "A* algorithm";
-            this.aSearchToolStripMenuItem.Click += new System.EventHandler(this.ASearchToolStripMenuItem_Click);
+            this.aSearchToolStripMenuItem.Click += new System.EventHandler(this.AStarAlgorithmToolStripMenuItem);
             // 
             // greedySearchToolStripMenuItem
             // 

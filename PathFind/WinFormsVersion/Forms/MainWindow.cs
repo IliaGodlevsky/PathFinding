@@ -13,19 +13,19 @@ using GraphLibrary.Constants;
 using SearchAlgorythms.PauseMaker;
 using GraphLibrary.Enums.AlgorithmEnum;
 using GraphLibrary.PathFindAlgorithmSelector;
+using GraphLibrary.View;
+using SearchAlgorythms.Algorithm;
 
 namespace SearchAlgorythms
 {
-    public partial class MainWindow : Form
+    public partial class MainWindow : Form, IView
     {
         private WinFormsGraph graph = null;
         private IGraphFactory createAlgorythm = null;
         private IVertexRoleChanger changer = null;
+        private IPathFindAlgorithm pathFindAlgo = null;
 
-        public MainWindow()
-        {                        
-            InitializeComponent();
-        }
+        public MainWindow() => InitializeComponent();
 
         private void PrepareWindow(int obstaclePercent,int graphWidth, int graphHeight)
         {
@@ -46,10 +46,7 @@ namespace SearchAlgorythms
             Create(sender, e);
         }
 
-        private bool IsRightDestination(WinFormsVertex vertex)
-        {
-            return !vertex.Neighbours.Any() && vertex.IsSimpleVertex;
-        }
+        private bool IsRightDestination(WinFormsVertex vertex) => !vertex.Neighbours.Any() && vertex.IsSimpleVertex;
 
         private void AddGraphToControls()
         { 
@@ -69,13 +66,6 @@ namespace SearchAlgorythms
             DesktopLocation = new Point();
         }
 
-        private void RemoveGraphFromControl()
-        {
-            if (graph is null)
-                return;
-            Field.Controls.Clear();
-        }
-
         private void WideSearchToolStripMenuItem(object sender, EventArgs e) => StartSearchPath(Algorithms.WidePathFind);
 
         private void DijkstraAlgorythmToolStripMenuItem(object sender, EventArgs e) => StartSearchPath(Algorithms.DijkstraAlgorithm);
@@ -84,28 +74,15 @@ namespace SearchAlgorythms
 
         private void BestfirstWideSearchToolStripMenuItem(object sender, EventArgs e) => StartSearchPath(Algorithms.BestFirstPathFind);
 
-        private void ASearchToolStripMenuItem_Click(object sender, EventArgs e) => StartSearchPath(Algorithms.AStarAlgorithm);
+        private void AStarAlgorithmToolStripMenuItem(object sender, EventArgs e) => StartSearchPath(Algorithms.AStarAlgorithm);
 
         private void StartSearchPath(Algorithms algorithm)
         {
-            var search = AlgorithmSelector.GetPathFindAlgorithm(algorithm, graph);
-            search.Pause = new WinFormsPauseMaker().Pause;
-            if (search.FindDestionation())
-            {
-                search.DrawPath();
-                time.Text = search.GetStatistics();
-                time.Update();
-                graph.Start = null;
-                graph.End = null;
-            }
-            else
-                MessageBox.Show("Couldn't find path");
+            pathFindAlgo = AlgorithmSelector.GetPathFindAlgorithm(algorithm, graph);
+            FindPath();
         }
 
-        private void Percent_Scroll(object sender, EventArgs e)
-        {
-            PreparePercentBar();
-        }
+        private void Percent_Scroll(object sender, EventArgs e) => PreparePercentBar();
 
         private bool SizeTextBoxTextChanged(TextBox textBox)
         {
@@ -117,30 +94,15 @@ namespace SearchAlgorythms
             return true;
         }
 
-        private void WidthNumber_TextChanged(object sender, EventArgs e)
-        {
-            SizeTextBoxTextChanged((TextBox)sender);   
-        }
+        private void WidthNumber_TextChanged(object sender, EventArgs e) => SizeTextBoxTextChanged((TextBox)sender);
 
-        private void HeightNumber_TextChanged(object sender, EventArgs e)
-        {
-            SizeTextBoxTextChanged((TextBox)sender);
-        }
+        private void HeightNumber_TextChanged(object sender, EventArgs e) => SizeTextBoxTextChanged((TextBox)sender);
 
-        private void Create(object sender, EventArgs e)
-        {
-            if (!SizeTextBoxTextChanged(widthNumber) 
-                || !SizeTextBoxTextChanged(heightNumber))
-                return;            
-            createAlgorythm = new RandomValuedWinFormsGraphFactory(percent.Value,
-                int.Parse(widthNumber.Text), int.Parse(heightNumber.Text),
-                Const.SIZE_BETWEEN_VERTICES);
-            PrepareGraph((WinFormsGraph)createAlgorythm.GetGraph());           
-        }
+        private void Create(object sender, EventArgs e) => CreateGraph();
 
         private void PrepareGraph(WinFormsGraph graph)
         {
-            RemoveGraphFromControl();
+            Field.Controls.Clear();
             this.graph = graph;
             changer = new WinFormsVertexRoleChanger(graph);
             this.graph.SetStart += changer.SetStartPoint;
@@ -149,21 +111,9 @@ namespace SearchAlgorythms
             createAlgorythm = null;
         }
 
-        private void SaveMapToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            new WinFormsGraphSaver().SaveGraph(graph);
-        }
+        private void SaveMapToolStripMenuItem_Click(object sender, EventArgs e) => SaveGraph();
 
-        private void LoadMapToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            IGraphLoader loader = new WinFormsGraphLoader(Const.SIZE_BETWEEN_VERTICES);
-            WinFormsGraph temp = (WinFormsGraph)loader.GetGraph();                      
-            if (temp != null)
-            {
-                PrepareGraph(temp);                
-                PrepareWindow(graph.ObstaclePercent, graph.Width, graph.Height);
-            }
-        }
+        private void LoadMapToolStripMenuItem_Click(object sender, EventArgs e) => LoadGraph();
 
         private void PercentTextBox_TextChanged(object sender, EventArgs e)
         {
@@ -177,19 +127,62 @@ namespace SearchAlgorythms
                 percent.Value = currentValue;
         }
 
-        private void Refresh_Click(object sender, EventArgs e)
+        private void Refresh_Click(object sender, EventArgs e) => RefreshGraph();
+
+        private void PreparePercentBar()
+        {
+            percentTextBox.Text = percent.Value.ToString();
+            percentTextBox.Update();
+        }
+
+        public void SaveGraph() => new WinFormsGraphSaver().SaveGraph(graph);
+
+        public void LoadGraph()
+        {
+            IGraphLoader loader = new WinFormsGraphLoader(Const.SIZE_BETWEEN_VERTICES);
+            WinFormsGraph temp = (WinFormsGraph)loader.GetGraph();
+            if (temp != null)
+            {
+                PrepareGraph(temp);
+                PrepareWindow(graph.ObstaclePercent, graph.Width, graph.Height);
+            }
+        }
+
+        public void FindPath()
+        {
+            if (pathFindAlgo != null)
+            {
+                pathFindAlgo.Pause = new WinFormsPauseMaker().Pause;
+                if (pathFindAlgo.FindDestionation())
+                {
+                    pathFindAlgo.DrawPath();
+                    time.Text = pathFindAlgo.GetStatistics();
+                    time.Update();
+                    graph.Start = null;
+                    graph.End = null;
+                }
+                else
+                    MessageBox.Show("Couldn't find path");
+            }
+        }
+
+        public void CreateGraph()
+        {
+            if (!SizeTextBoxTextChanged(widthNumber) || !SizeTextBoxTextChanged(heightNumber)) 
+                return;
+            createAlgorythm = new RandomValuedWinFormsGraphFactory(percent.Value,
+                int.Parse(widthNumber.Text), int.Parse(heightNumber.Text),
+                Const.SIZE_BETWEEN_VERTICES);
+            PrepareGraph((WinFormsGraph)createAlgorythm.GetGraph());
+        }
+
+        public void RefreshGraph()
         {
             graph?.Refresh();
             time.Text = "";
             time.Update();
             percent.Value = graph.ObstaclePercent;
             PreparePercentBar();
-        }
-
-        private void PreparePercentBar()
-        {
-            percentTextBox.Text = percent.Value.ToString();
-            percentTextBox.Update();
         }
     }
 }

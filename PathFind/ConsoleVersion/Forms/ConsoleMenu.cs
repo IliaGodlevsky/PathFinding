@@ -4,6 +4,8 @@ using ConsoleVersion.InputClass;
 using ConsoleVersion.PathFindAlgorithmMenu;
 using ConsoleVersion.PauseMaker;
 using GraphLibrary.GraphFactory;
+using GraphLibrary.View;
+using SearchAlgorythms.Algorithm;
 using SearchAlgorythms.Graph;
 using SearchAlgorythms.GraphFactory;
 using SearchAlgorythms.GraphLoader;
@@ -13,7 +15,7 @@ using System.Drawing;
 
 namespace ConsoleVersion.Forms
 {
-    public class ConsoleMenu
+    public class ConsoleMenu : IView
     {
         private enum MenuOption
         {
@@ -64,26 +66,26 @@ namespace ConsoleVersion.Forms
             {
                 switch (option)
                 {
-                    case MenuOption.PathFind:   Find();               break;
-                    case MenuOption.Save:       Save();               break;
-                    case MenuOption.Load:       Load();               break;
-                    case MenuOption.Create:     CreateGraph();        break;
-                    case MenuOption.Refresh:    graph?.Refresh();     break;
-                    case MenuOption.Reverse:    Reverse();            break;
+                    case MenuOption.PathFind: FindPath(); break;
+                    case MenuOption.Save: SaveGraph(); break;
+                    case MenuOption.Load: LoadGraph(); break;
+                    case MenuOption.Create: CreateGraph(); break;
+                    case MenuOption.Refresh: RefreshGraph(); break;
+                    case MenuOption.Reverse: Reverse(); break;
                 }
                 Console.Clear();
                 option = GetOption();
             }
         }
 
-        private void Reverse()
+        public void Reverse()
         {
             Console.WriteLine("Reverse top choice: ");
             Point point = Input.InputPoint(graph.Width, graph.Height);
             changer.ReversePolarity(graph[point.X, point.Y], new EventArgs());
         }
 
-        private void CreateGraph()
+        public void CreateGraph()
         {
             int obstacles = Input.InputNumber("Enter number of obstacles: ", 100);
             int height = Input.InputNumber("Enter width of graph: ", 100, 10);
@@ -94,9 +96,9 @@ namespace ConsoleVersion.Forms
             pathFindMenu = new PathFindMenu(graph);
         }
 
-        private void Save() => new ConsoleGraphSaver().SaveGraph(graph);
+        public void SaveGraph() => new ConsoleGraphSaver().SaveGraph(graph);
 
-        private void Load()
+        public void LoadGraph()
         {
             IGraphLoader loader = new ConsoleGraphLoader();
             AbstractGraph temp = loader.GetGraph();
@@ -108,7 +110,7 @@ namespace ConsoleVersion.Forms
             }
         }
 
-        private void Find()
+        public void FindPath()
         {
             graph.Refresh();
             Console.Clear();
@@ -117,7 +119,7 @@ namespace ConsoleVersion.Forms
             pathFindMenu.ChooseEnd();
             Console.Clear();
             GraphShower.ShowGraph(graph);
-            var search = pathFindMenu.ChoosePathFindAlgorithm();
+            IPathFindAlgorithm search = pathFindMenu.ChoosePathFindAlgorithm();
             search.Pause = new ConsolePauseMaker().Pause;
             if (search.FindDestionation())
             {
@@ -133,5 +135,7 @@ namespace ConsoleVersion.Forms
                 Console.WriteLine("Couldn't find path");
             Console.ReadKey();
         }
+
+        public void RefreshGraph() => graph?.Refresh();
     }
 }

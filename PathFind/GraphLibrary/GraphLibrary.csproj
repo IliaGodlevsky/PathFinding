@@ -74,6 +74,7 @@
     <Compile Include="BoundSetter.cs" />
     <Compile Include="Vertex\IVertex.cs" />
     <Compile Include="NeighbourSetter.cs" />
+    <Compile Include="View\IView.cs" />
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
