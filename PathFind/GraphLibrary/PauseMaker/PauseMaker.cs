@@ -4,7 +4,7 @@ namespace SearchAlgorythms.PauseMaker
 {
     public abstract class PauseMaker
     {
-        public abstract void PauseEvent();
+        protected abstract void PauseEvent();
 
         public virtual void Pause(int milliseconds)
         {

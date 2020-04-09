@@ -11,22 +11,10 @@ namespace SearchAlgorythms.GraphFactory
 
         }
 
-        public override IVertex CreateGraphTop()
-        {
-            return new ConsoleVertex
-            {
-                Text = (rand.Next(9) + 1).ToString()
-            };
-        }
+        protected override IVertex CreateGraphTop() => new ConsoleVertex { Text = (rand.Next(9) + 1).ToString() };
 
-        public override AbstractGraph GetGraph()
-        {
-            return new ConsoleGraph(vertices);
-        }
+        public override AbstractGraph GetGraph() => new ConsoleGraph(vertices);
 
-        public override void SetGraph(int width, int height)
-        {
-            vertices = new ConsoleVertex[width, height];
-        }
+        protected override void SetGraph(int width, int height) => vertices = new ConsoleVertex[width, height];
     }
 }

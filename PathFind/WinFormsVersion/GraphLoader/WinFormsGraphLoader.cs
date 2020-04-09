@@ -12,20 +12,17 @@ namespace SearchAlgorythms.GraphLoader
 
         public WinFormsGraphLoader(int placeBetweenButtons) => this.placeBetweenButtons = placeBetweenButtons;
 
-        public override AbstractGraph CreateGraph(AbstractGraphInitializer initializer) => initializer.GetGraph();
+        protected override AbstractGraph CreateGraph(AbstractGraphInitializer initializer) => initializer.GetGraph();
 
-        public override AbstractGraphInitializer GetInitializer(VertexInfo[,] info) 
+        protected override AbstractGraphInitializer GetInitializer(VertexInfo[,] info) 
             => new WinFormsGraphInitializer(info, placeBetweenButtons);
 
-        public override string GetPath()
+        protected override string GetPath()
         {
             var open = new OpenFileDialog();
-            if (open.ShowDialog() == DialogResult.OK)
-                return open.FileName;
-            else
-                return "";
+            return open.ShowDialog() == DialogResult.OK ? open.FileName : "";
         }
 
-        public override void ShowMessage(string message) => MessageBox.Show(message);
+        protected override void ShowMessage(string message) => MessageBox.Show(message);
     }
 }

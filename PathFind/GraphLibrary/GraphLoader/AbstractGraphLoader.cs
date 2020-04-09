@@ -35,9 +35,9 @@ namespace GraphLibrary.GraphLoader
             setter.SetNeighbours();
         }
 
-        public abstract void ShowMessage(string message);
-        public abstract AbstractGraphInitializer GetInitializer(VertexInfo[,] info);
-        public abstract AbstractGraph CreateGraph(AbstractGraphInitializer initializer);
-        public abstract string GetPath();
+        protected abstract void ShowMessage(string message);
+        protected abstract AbstractGraphInitializer GetInitializer(VertexInfo[,] info);
+        protected abstract AbstractGraph CreateGraph(AbstractGraphInitializer initializer);
+        protected abstract string GetPath();
     }
 }

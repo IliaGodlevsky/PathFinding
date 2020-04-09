@@ -13,19 +13,10 @@ namespace ConsoleVersion.GraphFactory
 
         }
 
-        public override IVertex CreateVertex(VertexInfo info)
-        {
-            return new ConsoleVertex(info);
-        }
+        protected override IVertex CreateVertex(VertexInfo info) => new ConsoleVertex(info);
 
-        public override AbstractGraph GetGraph()
-        {
-            return new ConsoleGraph(vertices);
-        }
+        public override AbstractGraph GetGraph() => new ConsoleGraph(vertices);
 
-        public override void SetGraph(int width, int height)
-        {
-            vertices = new ConsoleVertex[width, height];
-        }
+        protected override void SetGraph(int width, int height) => vertices = new ConsoleVertex[width, height];
     }
 }

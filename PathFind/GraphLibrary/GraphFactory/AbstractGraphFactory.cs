@@ -39,8 +39,8 @@ namespace SearchAlgorythms.GraphFactory
             setter.SetNeighbours();
         }
 
-        public abstract void SetGraph(int width, int height);
-        public abstract IVertex CreateGraphTop();
+        protected abstract void SetGraph(int width, int height);
+        protected abstract IVertex CreateGraphTop();
 
         private bool IsObstacleChance(int percentOfObstacles)
             => rand.Next(MAX_PERCENT_OF_OBSTACLES) < percentOfObstacles;

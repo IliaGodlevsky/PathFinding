@@ -26,8 +26,8 @@ namespace GraphLibrary.GraphFactory
             }
         }
 
-        public abstract IVertex CreateVertex(VertexInfo info);
-        public abstract void SetGraph(int width, int height);
+        protected abstract IVertex CreateVertex(VertexInfo info);
+        protected abstract void SetGraph(int width, int height);
         public abstract AbstractGraph GetGraph();
        
     }

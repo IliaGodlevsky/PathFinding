@@ -10,10 +10,10 @@ namespace SearchAlgorythms.Graph
 
         public WinFormsGraph(IVertex[,] vertices) : base(vertices)
         {
-
+            ;
         }
 
-        public override void ToDefault(IVertex vertex)
+        protected override void ToDefault(IVertex vertex)
         {
             if (!vertex.IsObstacle)
                 vertex.SetToDefault();

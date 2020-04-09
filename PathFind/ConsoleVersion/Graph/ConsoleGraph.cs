@@ -9,7 +9,7 @@ namespace SearchAlgorythms.Graph
 
         }
 
-        public override void ToDefault(IVertex vertex)
+        protected override void ToDefault(IVertex vertex)
         {
             if (!vertex.IsObstacle)
                 vertex.SetToDefault();

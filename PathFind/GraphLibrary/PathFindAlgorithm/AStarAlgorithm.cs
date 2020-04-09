@@ -9,8 +9,6 @@ namespace SearchAlgorythms.Algorithm
     /// </summary>
     public class AStarAlgorithm : DijkstraAlgorithm
     {
-        public delegate double HeuristicHandler(IVertex neighbour, IVertex vertex);
-
         public HeuristicHandler HeuristicFunction;
 
         public AStarAlgorithm(AbstractGraph graph) : base(graph)
@@ -18,9 +16,7 @@ namespace SearchAlgorythms.Algorithm
 
         }
 
-        public override double GetPathValue(IVertex neighbour, IVertex vertex)
-        {
-            return base.GetPathValue(neighbour, vertex) + HeuristicFunction(neighbour, graph.End);
-        }
+        protected override double GetPathValue(IVertex neighbour, IVertex vertex) 
+            => base.GetPathValue(neighbour, vertex) + HeuristicFunction(neighbour, graph.End);
     }
 }

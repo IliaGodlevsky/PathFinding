@@ -14,7 +14,7 @@ namespace SearchAlgorythms.GraphFactory
            
         }
 
-        public override IVertex CreateVertex(VertexInfo info)
+        protected override IVertex CreateVertex(VertexInfo info)
         {
             return new WinFormsVertex(info);
         }
@@ -24,7 +24,7 @@ namespace SearchAlgorythms.GraphFactory
             return new WinFormsGraph(vertices);
         }
 
-        public override void SetGraph(int width, int height)
+        protected override void SetGraph(int width, int height)
         {
             vertices = new WinFormsVertex[width, height];
         }

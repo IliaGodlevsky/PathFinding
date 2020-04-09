@@ -53,7 +53,7 @@ namespace SearchAlgorythms.Graph
                 vertex.Location.Y / Const.SIZE_BETWEEN_VERTICES);
         }
 
-        public abstract void ToDefault(IVertex vertex);
+        protected abstract void ToDefault(IVertex vertex);
 
         public void Refresh()
         {

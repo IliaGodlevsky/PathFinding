@@ -12,7 +12,10 @@ namespace GraphLibrary.PathFindAlgorithmSelector
             switch (algorithms)
             {
                 case Algorithms.WidePathFind: return new WidePathFindAlgorithm(graph);
-                case Algorithms.BestFirstPathFind: return new BestFirstAlgorithm(graph);
+                case Algorithms.BestFirstPathFind: return new BestFirstAlgorithm(graph)
+                {
+                    HeuristicFunction = DistanceCalculator.GetChebyshevDistance
+                };
                 case Algorithms.DijkstraAlgorithm: return new DijkstraAlgorithm(graph);
                 case Algorithms.AStarAlgorithm: return new AStarAlgorithm(graph)
                 {

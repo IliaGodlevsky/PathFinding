@@ -9,17 +9,17 @@ namespace ConsoleVersion.GraphLoader
 {
     public class ConsoleGraphLoader : AbstractGraphLoader
     {
-        public override AbstractGraph CreateGraph(AbstractGraphInitializer initializer) => initializer.GetGraph();
+        protected override AbstractGraph CreateGraph(AbstractGraphInitializer initializer) => initializer.GetGraph();
 
-        public override AbstractGraphInitializer GetInitializer(VertexInfo[,] info) => new ConsoleGraphInitializer(info);
+        protected override AbstractGraphInitializer GetInitializer(VertexInfo[,] info) => new ConsoleGraphInitializer(info);
 
-        public override string GetPath()
+        protected override string GetPath()
         {
             Console.Write("Enter path: ");
             return Console.ReadLine();
         }
 
-        public override void ShowMessage(string message)
+        protected override void ShowMessage(string message)
         {
             Console.WriteLine(message);
             Console.ReadKey();

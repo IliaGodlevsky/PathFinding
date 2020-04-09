@@ -46,12 +46,12 @@ namespace SearchAlgorythms.Algorithm
             return neigbourQueue.Any() ? neigbourQueue.First() : null;
         }
 
-        public virtual double GetPathValue(IVertex neighbour, IVertex vertex)
+        protected virtual double GetPathValue(IVertex neighbour, IVertex vertex)
         {
             return int.Parse(neighbour.Text) + vertex.Value;
         }
 
-        private void ExtractNeighbours(IVertex vertex)
+        private void MakeWaves(IVertex vertex)
         {
             if (vertex is null)
                 return;
@@ -78,7 +78,7 @@ namespace SearchAlgorythms.Algorithm
             currentVertex.Value = 0;
             do
             {
-                ExtractNeighbours(currentVertex);
+                MakeWaves(currentVertex);
                 currentVertex = GetChippestUnvisitedVertex();
                 if (currentVertex?.Value == double.PositiveInfinity
                     || currentVertex == null)

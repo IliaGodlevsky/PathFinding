@@ -12,7 +12,7 @@ namespace SearchAlgorythms.GraphFactory
             
         }
 
-        public override IVertex CreateGraphTop()
+        protected override IVertex CreateGraphTop()
         {
             return new WinFormsVertex
             {
@@ -25,7 +25,7 @@ namespace SearchAlgorythms.GraphFactory
             return new WinFormsGraph(vertices);
         }
 
-        public override void SetGraph(int width, int height)
+        protected override void SetGraph(int width, int height)
         {
             vertices = new WinFormsVertex[width, height];
         }

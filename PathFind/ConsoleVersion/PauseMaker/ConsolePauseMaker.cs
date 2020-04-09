@@ -3,7 +3,7 @@
 {
     public class ConsolePauseMaker : SearchAlgorythms.PauseMaker.PauseMaker
     {
-        public override void PauseEvent()
+        protected override void PauseEvent()
         {
             ;
         }

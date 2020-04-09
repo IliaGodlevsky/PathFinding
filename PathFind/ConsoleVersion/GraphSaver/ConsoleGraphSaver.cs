@@ -10,7 +10,7 @@ namespace ConsoleVersion.GraphSaver
 {
     public class ConsoleGraphSaver : AbstractGraphSaver
     {
-        public override string GetPath()
+        protected override string GetPath()
         {
             Console.Write("Enter path: ");
             return Console.ReadLine();

@@ -30,6 +30,6 @@ namespace GraphLibrary.GraphSaver
             }
         }
 
-        public abstract string GetPath();
+        protected abstract string GetPath();
     }
 }

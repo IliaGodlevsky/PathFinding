@@ -25,7 +25,7 @@ namespace SearchAlgorythms.Algorithm
             statCollector = new UnweightedGraphSearchAlgoStatistics();
         }
 
-        public IVertex GoChippestNeighbour(IVertex vertex)
+        private IVertex GoNextWave(IVertex vertex)
         {
             vertex.Neighbours.Shuffle();
             double min = vertex.Neighbours.Min(vert => vert.Value);
@@ -33,52 +33,60 @@ namespace SearchAlgorythms.Algorithm
                     && vert.IsVisited && IsRightNeighbour(vert));
         }
 
-        public virtual bool IsRightNeighbour(IVertex vertex)
-        {
-            return !vertex.IsEnd;
-        }
+        private bool IsRightNeighbour(IVertex vertex) => !vertex.IsEnd;
 
-        public virtual bool IsRightPath(IVertex vertex)
-        {
-            return !vertex.IsStart;
-        }
+        private bool IsRightPath(IVertex vertex) => !vertex.IsStart;
 
-        public virtual bool IsRightCellToVisit(IVertex vertex)
+        private bool IsRightCellToVisit(IVertex vertex) => !vertex.IsVisited;
+
+        protected virtual void CreateWave(IVertex neighbour, IVertex vertex) => neighbour.Value = vertex.Value + 1;
+
+        protected virtual bool IsSuitableForQueuing(IVertex vertex) => !vertex.IsVisited;
+
+        private void AddToQueue(List<IVertex> neighbours)
         {
-            return !vertex.IsVisited;
+            foreach(var neighbour in neighbours)
+            {
+                if (IsSuitableForQueuing(neighbour))
+                    neighbourQueue.Enqueue(neighbour);
+            }
         }
 
         public PauseCycle Pause { get; set; }
 
-        public virtual void ExtractNeighbours(IVertex vertex)
+        private void MakeWaves(IVertex vertex)
         {
             if (vertex is null)
                 return;
-            foreach (var neigbour in vertex.Neighbours)
+            foreach (var neighbour in vertex.Neighbours)
             {
-                if (neigbour.Value == 0 && !neigbour.IsStart)
-                    neigbour.Value = vertex.Value + 1;
-                if (!neigbour.IsVisited)
-                    neighbourQueue.Enqueue(neigbour);
-            }
+                if (neighbour.Value == 0 && !neighbour.IsStart)
+                    CreateWave(neighbour, vertex); 
+            }           
         }
 
-        public virtual bool FindDestionation()
+        public bool FindDestionation()
         {
             if (graph.End == null)
                 return false;
             statCollector.BeginCollectStatistic();
             var currentVertex = graph.Start;
             Visit(currentVertex);
+            MakeWaves(currentVertex);
+            AddToQueue(currentVertex.Neighbours);
             while (!IsDestination(currentVertex))
             {
                 currentVertex = neighbourQueue.Dequeue();
                 if (IsRightCellToVisit(currentVertex))
+                {
                     Visit(currentVertex);
+                    MakeWaves(currentVertex);
+                    AddToQueue(currentVertex.Neighbours);
+                }
                 Pause(2);              
             }
             statCollector.StopCollectStatistics();
-            return graph.End.IsVisited;          
+            return graph.End.IsVisited;
         }
 
         public void DrawPath()
@@ -86,7 +94,7 @@ namespace SearchAlgorythms.Algorithm
             var vertex = graph.End;
             while (IsRightPath(vertex))
             {
-                vertex = GoChippestNeighbour(vertex);
+                vertex = GoNextWave(vertex);
                 if (vertex.IsSimpleVertex)
                     vertex.MarkAsPath();
                 statCollector.AddStep();
@@ -94,12 +102,7 @@ namespace SearchAlgorythms.Algorithm
             }
         }
 
-        private bool IsDestination(IVertex vertex)
-        {
-            if (vertex is null)
-                return false;
-            return vertex.IsEnd || !neighbourQueue.Any();
-        }
+        private bool IsDestination(IVertex vertex) => vertex is null ? false : vertex.IsEnd || !neighbourQueue.Any();
 
         private void Visit(IVertex vertex)
         {          
@@ -113,12 +116,8 @@ namespace SearchAlgorythms.Algorithm
                 vertex.MarkAsVisited();
             }
             statCollector.CellVisited();
-            ExtractNeighbours(vertex);
         }
 
-        public string GetStatistics()
-        {
-            return statCollector.Statistics;
-        }
+        public string GetStatistics() => statCollector.Statistics;
     }
 }

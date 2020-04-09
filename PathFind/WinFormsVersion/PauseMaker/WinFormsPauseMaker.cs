@@ -4,7 +4,7 @@ namespace SearchAlgorythms.PauseMaker
 {
     public class WinFormsPauseMaker : PauseMaker
     {
-        public override void PauseEvent()
+        protected override void PauseEvent()
         {
             Application.DoEvents();
         }
