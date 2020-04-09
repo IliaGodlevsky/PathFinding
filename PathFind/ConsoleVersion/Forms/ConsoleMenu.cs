@@ -53,6 +53,7 @@ namespace ConsoleVersion.Forms
 
         private MenuOption GetOption()
         {
+            Console.Clear();
             GraphShower.ShowGraph(graph);
             ShowMenu();
             return (MenuOption)Input.InputNumber("Choose option: ",
@@ -73,7 +74,6 @@ namespace ConsoleVersion.Forms
                     case MenuOption.Refresh: RefreshGraph(); break;
                     case MenuOption.Reverse: Reverse(); break;
                 }
-                Console.Clear();
                 option = GetOption();
             }
         }
