@@ -27,7 +27,6 @@ namespace SearchAlgorythms.Algorithm
 
         private IVertex GoNextWave(IVertex vertex)
         {
-            vertex.Neighbours.Shuffle();
             double min = vertex.Neighbours.Min(vert => vert.Value);
             return vertex.Neighbours.Find(vert => min == vert.Value
                     && vert.IsVisited && IsRightNeighbour(vert));
@@ -59,7 +58,8 @@ namespace SearchAlgorythms.Algorithm
             foreach (var neighbour in vertex.Neighbours)
             {
                 if (!neighbour.IsVisited)
-                    neighbour.Value = vertex.Value + 1;
+                    neighbour.Value = DistanceCalculator.DistanceCalculator.
+                        GetEuclideanDistance(neighbour, graph.Start);
             }
         }
 
