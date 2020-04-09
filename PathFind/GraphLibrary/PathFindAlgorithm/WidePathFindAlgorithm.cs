@@ -1,7 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using SearchAlgorythms.Top;
-using SearchAlgorythms.Extensions.ListExtensions;
 using SearchAlgorythms.Statistics;
 using SearchAlgorythms.Graph;
 
@@ -58,8 +57,7 @@ namespace SearchAlgorythms.Algorithm
             foreach (var neighbour in vertex.Neighbours)
             {
                 if (!neighbour.IsVisited)
-                    neighbour.Value = DistanceCalculator.DistanceCalculator.
-                        GetEuclideanDistance(neighbour, graph.Start);
+                    neighbour.Value = vertex.Value + 1;
             }
         }
 
