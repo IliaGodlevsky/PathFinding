@@ -58,9 +58,9 @@ namespace SearchAlgorythms.Algorithm
                 return;
             foreach (var neighbour in vertex.Neighbours)
             {
-                if (neighbour.Value == 0 && !neighbour.IsStart)
+                if (!neighbour.IsVisited)
                     neighbour.Value = vertex.Value + 1;
-            }           
+            }
         }
 
         public bool FindDestionation()
