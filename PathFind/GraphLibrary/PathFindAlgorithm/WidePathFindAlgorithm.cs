@@ -39,8 +39,6 @@ namespace SearchAlgorythms.Algorithm
 
         private bool IsRightCellToVisit(IVertex vertex) => !vertex.IsVisited;
 
-        protected virtual void CreateWave(IVertex neighbour, IVertex vertex) => neighbour.Value = vertex.Value + 1;
-
         protected virtual bool IsSuitableForQueuing(IVertex vertex) => !vertex.IsVisited;
 
         private void AddToQueue(List<IVertex> neighbours)
@@ -61,7 +59,7 @@ namespace SearchAlgorythms.Algorithm
             foreach (var neighbour in vertex.Neighbours)
             {
                 if (neighbour.Value == 0 && !neighbour.IsStart)
-                    CreateWave(neighbour, vertex); 
+                    neighbour.Value = vertex.Value + 1;
             }           
         }
 
