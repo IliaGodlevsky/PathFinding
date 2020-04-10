@@ -3,7 +3,6 @@
 namespace SearchAlgorythms.Algorithm
 {
     public delegate void PauseCycle(int milliseconds);
-    public delegate double HeuristicHandler(IVertex neighbour, IVertex vertex);
 
     /// <summary>
     /// A base interface of path find algorithms

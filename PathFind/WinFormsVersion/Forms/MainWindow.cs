@@ -70,9 +70,11 @@ namespace SearchAlgorythms
 
         private void DijkstraAlgorythmToolStripMenuItem(object sender, EventArgs e) => StartSearchPath(Algorithms.DijkstraAlgorithm);
 
-        private void GreedySearchToolStripMenuItem(object sender, EventArgs e) => StartSearchPath(Algorithms.GreedyAlgorithm);
+        private void GreedyForDistanceAlgorithmToolStripMenuItem_Click(object sender, EventArgs e)
+            => StartSearchPath(Algorithms.DistanceGreedyAlgorithm);
 
-        private void BestfirstWideSearchToolStripMenuItem(object sender, EventArgs e) => StartSearchPath(Algorithms.BestFirstPathFind);
+        private void GreedyForValueAlgorithmToolStripMenuItem_Click(object sender, EventArgs e)
+            => StartSearchPath(Algorithms.ValueGreedyAlgorithm);
 
         private void AStarAlgorithmToolStripMenuItem(object sender, EventArgs e) => StartSearchPath(Algorithms.AStarAlgorithm);
 

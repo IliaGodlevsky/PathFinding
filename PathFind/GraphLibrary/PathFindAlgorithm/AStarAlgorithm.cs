@@ -1,5 +1,6 @@
 ﻿using SearchAlgorythms.Graph;
 using SearchAlgorythms.Top;
+using System;
 
 namespace SearchAlgorythms.Algorithm
 {
@@ -9,14 +10,14 @@ namespace SearchAlgorythms.Algorithm
     /// </summary>
     public class AStarAlgorithm : DijkstraAlgorithm
     {
-        public HeuristicHandler HeuristicFunction;
+        public Func<IVertex, IVertex, IVertex, double> HeuristicFunction;
 
         public AStarAlgorithm(AbstractGraph graph) : base(graph)
         {
 
         }
 
-        protected override double GetPathValue(IVertex neighbour, IVertex vertex) 
-            => base.GetPathValue(neighbour, vertex) + HeuristicFunction(neighbour, graph.End);
+        protected override double GetPathValue(IVertex neighbour, IVertex vertex)
+            => HeuristicFunction(neighbour, vertex, graph.End);
     }
 }

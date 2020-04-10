@@ -35,10 +35,11 @@
             this.optionsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.findPathToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.wideSearchToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.bestfirstWideSearchToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.dijkstraAlgorythmToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.aSearchToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.greedySearchToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.greedyForDistanceAlgorithmToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.greedyForValueAlgorithmToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.percent = new System.Windows.Forms.TrackBar();
             this.widthNumber = new System.Windows.Forms.TextBox();
             this.heightNumber = new System.Windows.Forms.TextBox();
@@ -106,7 +107,6 @@
             // 
             this.findPathToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.wideSearchToolStripMenuItem,
-            this.bestfirstWideSearchToolStripMenuItem,
             this.dijkstraAlgorythmToolStripMenuItem,
             this.aSearchToolStripMenuItem,
             this.greedySearchToolStripMenuItem});
@@ -120,13 +120,6 @@
             this.wideSearchToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.wideSearchToolStripMenuItem.Text = "Wide path find";
             this.wideSearchToolStripMenuItem.Click += new System.EventHandler(this.WideSearchToolStripMenuItem);
-            // 
-            // bestfirstWideSearchToolStripMenuItem
-            // 
-            this.bestfirstWideSearchToolStripMenuItem.Name = "bestfirstWideSearchToolStripMenuItem";
-            this.bestfirstWideSearchToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
-            this.bestfirstWideSearchToolStripMenuItem.Text = "Best-first path find";
-            this.bestfirstWideSearchToolStripMenuItem.Click += new System.EventHandler(this.BestfirstWideSearchToolStripMenuItem);
             // 
             // dijkstraAlgorythmToolStripMenuItem
             // 
@@ -144,10 +137,26 @@
             // 
             // greedySearchToolStripMenuItem
             // 
+            this.greedySearchToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.greedyForDistanceAlgorithmToolStripMenuItem,
+            this.greedyForValueAlgorithmToolStripMenuItem});
             this.greedySearchToolStripMenuItem.Name = "greedySearchToolStripMenuItem";
             this.greedySearchToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.greedySearchToolStripMenuItem.Text = "Greedy algorithm";
-            this.greedySearchToolStripMenuItem.Click += new System.EventHandler(this.GreedySearchToolStripMenuItem);
+            // 
+            // greedyForDistanceAlgorithmToolStripMenuItem
+            // 
+            this.greedyForDistanceAlgorithmToolStripMenuItem.Name = "greedyForDistanceAlgorithmToolStripMenuItem";
+            this.greedyForDistanceAlgorithmToolStripMenuItem.Size = new System.Drawing.Size(231, 22);
+            this.greedyForDistanceAlgorithmToolStripMenuItem.Text = "Greedy for distance algorithm";
+            this.greedyForDistanceAlgorithmToolStripMenuItem.Click += new System.EventHandler(this.GreedyForDistanceAlgorithmToolStripMenuItem_Click);
+            // 
+            // greedyForValueAlgorithmToolStripMenuItem
+            // 
+            this.greedyForValueAlgorithmToolStripMenuItem.Name = "greedyForValueAlgorithmToolStripMenuItem";
+            this.greedyForValueAlgorithmToolStripMenuItem.Size = new System.Drawing.Size(231, 22);
+            this.greedyForValueAlgorithmToolStripMenuItem.Text = "Greedy for value algorithm";
+            this.greedyForValueAlgorithmToolStripMenuItem.Click += new System.EventHandler(this.GreedyForValueAlgorithmToolStripMenuItem_Click);
             // 
             // percent
             // 
@@ -322,7 +331,6 @@
         private System.Windows.Forms.ToolStripMenuItem optionsToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem findPathToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem wideSearchToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem bestfirstWideSearchToolStripMenuItem;
         private System.Windows.Forms.TrackBar percent;
         private System.Windows.Forms.TextBox widthNumber;
         private System.Windows.Forms.TextBox heightNumber;
@@ -343,6 +351,8 @@
         private System.Windows.Forms.ToolStripMenuItem aSearchToolStripMenuItem;
         private Forms.FieldControl userControl11;
         private Forms.FieldControl Field;
+        private System.Windows.Forms.ToolStripMenuItem greedyForDistanceAlgorithmToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem greedyForValueAlgorithmToolStripMenuItem;
     }
 }
 

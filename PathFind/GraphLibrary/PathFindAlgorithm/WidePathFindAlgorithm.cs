@@ -31,19 +31,21 @@ namespace SearchAlgorythms.Algorithm
                     && vert.IsVisited && IsRightNeighbour(vert));
         }
 
+        protected virtual double WaveFunction(IVertex vertex) => vertex.Value + 1;
+
         private bool IsRightNeighbour(IVertex vertex) => !vertex.IsEnd;
 
         private bool IsRightPath(IVertex vertex) => !vertex.IsStart;
 
         private bool IsRightCellToVisit(IVertex vertex) => !vertex.IsVisited;
 
-        protected virtual bool IsSuitableForQueuing(IVertex vertex) => !vertex.IsVisited;
+        protected virtual bool IsSuitableForQueuing(IVertex vertex, List<IVertex> neighbours) => !vertex.IsVisited;
 
         private void AddToQueue(List<IVertex> neighbours)
         {
             foreach(var neighbour in neighbours)
             {
-                if (IsSuitableForQueuing(neighbour))
+                if (IsSuitableForQueuing(neighbour, neighbours)) 
                     neighbourQueue.Enqueue(neighbour);
             }
         }
@@ -57,7 +59,7 @@ namespace SearchAlgorythms.Algorithm
             foreach (var neighbour in vertex.Neighbours)
             {
                 if (!neighbour.IsVisited)
-                    neighbour.Value = vertex.Value + 1;
+                    neighbour.Value = WaveFunction(vertex);
             }
         }
 
@@ -79,7 +81,7 @@ namespace SearchAlgorythms.Algorithm
                     MakeWaves(currentVertex);
                     AddToQueue(currentVertex.Neighbours);
                 }
-                Pause(2);              
+                Pause(2);
             }
             statCollector.StopCollectStatistics();
             return graph.End.IsVisited;

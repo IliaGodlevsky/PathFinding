@@ -60,7 +60,6 @@
     <Compile Include="VertexInfo\VertexInfo.cs" />
     <Compile Include="Graph\AbstractGraph.cs" />
     <Compile Include="PathFindAlgorithm\AStarAlgorithm.cs" />
-    <Compile Include="PathFindAlgorithm\BestFirstAlgorithm.cs" />
     <Compile Include="PathFindAlgorithm\DijkstraAlgorythm.cs" />
     <Compile Include="PathFindAlgorithm\GreedyAlgorithm.cs" />
     <Compile Include="PathFindAlgorithm\IPathFindAlgorithm.cs" />

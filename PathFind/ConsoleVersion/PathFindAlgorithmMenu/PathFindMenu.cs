@@ -2,7 +2,6 @@
 using GraphLibrary.Enums.AlgorithmEnum;
 using GraphLibrary.PathFindAlgorithmSelector;
 using SearchAlgorythms.Algorithm;
-using SearchAlgorythms.DistanceCalculator;
 using SearchAlgorythms.Graph;
 using SearchAlgorythms.RoleChanger;
 using System;
@@ -45,16 +44,16 @@ namespace ConsoleVersion.PathFindAlgorithmMenu
         private string ShowAlgorithms()
         {
             return "\n1. Wide path find\n" +
-                    "2. Best first path find\n" +
-                    "3. Dijkstra algorithm\n" +
-                    "4. A* algorithm\n" +
-                    "5. Greedy algorithm\n";
+                    "2. Dijkstra algorithm\n" +
+                    "3. A* algorithm\n" +
+                    "4. Greedy for distance algorithm\n" +
+                    "5. Greedy for value algorithm\n";
         }
 
         public IPathFindAlgorithm ChoosePathFindAlgorithm()
         {
             Algorithms algorithms = (Algorithms)Input.InputNumber( ShowAlgorithms() + "Choose algorithm: ", 
-                (int)Algorithms.GreedyAlgorithm, (int)Algorithms.WidePathFind);
+                (int)Algorithms.ValueGreedyAlgorithm, (int)Algorithms.WidePathFind);
             return AlgorithmSelector.GetPathFindAlgorithm(algorithms, graph);
         }
     }

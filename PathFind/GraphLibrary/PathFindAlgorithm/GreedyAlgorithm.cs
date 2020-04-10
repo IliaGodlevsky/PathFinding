@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using SearchAlgorythms.Extensions.ListExtensions;
 using SearchAlgorythms.Graph;
@@ -16,6 +17,8 @@ namespace SearchAlgorythms.Algorithm
         private Stack<IVertex> visitedVerticesStack = new Stack<IVertex>();
         private WeightedGraphSearchAlgoStatistics statCollector;
 
+        public Func<IVertex, double> GreedyFunction { get; set; }
+
         public GreedyAlgorithm(AbstractGraph graph)
         {
             statCollector = new WeightedGraphSearchAlgoStatistics();
@@ -29,8 +32,8 @@ namespace SearchAlgorythms.Algorithm
             neighbours.Shuffle();
             if (neighbours.Any())
             {
-                double min = neighbours.Min(vert => int.Parse(vert.Text));
-                return neighbours.Find(vert => vert.Text == min.ToString());
+                double min = neighbours.Min(GreedyFunction);
+                return neighbours.Find(vert => GreedyFunction(vert) == min);
             }
             return null;
         }

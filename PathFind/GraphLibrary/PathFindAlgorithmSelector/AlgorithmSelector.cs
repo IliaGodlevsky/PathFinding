@@ -12,16 +12,20 @@ namespace GraphLibrary.PathFindAlgorithmSelector
             switch (algorithms)
             {
                 case Algorithms.WidePathFind: return new WidePathFindAlgorithm(graph);
-                case Algorithms.BestFirstPathFind: return new BestFirstAlgorithm(graph)
-                {
-                    HeuristicFunction = DistanceCalculator.GetChebyshevDistance
-                };
                 case Algorithms.DijkstraAlgorithm: return new DijkstraAlgorithm(graph);
                 case Algorithms.AStarAlgorithm: return new AStarAlgorithm(graph)
                 {
-                    HeuristicFunction = DistanceCalculator.GetChebyshevDistance
+                    HeuristicFunction = (neighbour, vertex, end) =>
+                    int.Parse(neighbour.Text) + vertex.Value + DistanceCalculator.GetChebyshevDistance(neighbour, end)
                 };
-                case Algorithms.GreedyAlgorithm: return new GreedyAlgorithm(graph);
+                case Algorithms.DistanceGreedyAlgorithm: return new GreedyAlgorithm(graph)
+                {
+                    GreedyFunction = vertex => DistanceCalculator.GetEuclideanDistance(vertex, graph.End)
+                };
+                case Algorithms.ValueGreedyAlgorithm: return new GreedyAlgorithm(graph)
+                {
+                     GreedyFunction = vertex => vertex.Value
+                };
                 default: return null;
             }
         }

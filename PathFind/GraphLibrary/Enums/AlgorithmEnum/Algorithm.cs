@@ -3,9 +3,9 @@
     public enum Algorithms
     {
         WidePathFind = 1,
-        BestFirstPathFind,
         DijkstraAlgorithm,
         AStarAlgorithm,
-        GreedyAlgorithm
+        DistanceGreedyAlgorithm,
+        ValueGreedyAlgorithm
     };
 }
