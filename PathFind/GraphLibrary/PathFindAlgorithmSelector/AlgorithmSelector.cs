@@ -14,7 +14,7 @@ namespace GraphLibrary.PathFindAlgorithmSelector
                 case Algorithms.WidePathFind: return new WidePathFindAlgorithm(graph);
                 case Algorithms.DijkstraAlgorithm: return new DijkstraAlgorithm(graph);
                 case Algorithms.AStarAlgorithm: return new AStarAlgorithm(graph)
-                {
+                {                   
                     HeuristicFunction = (neighbour, vertex, end) =>
                     int.Parse(neighbour.Text) + vertex.Value + DistanceCalculator.GetChebyshevDistance(neighbour, end)
                 };
