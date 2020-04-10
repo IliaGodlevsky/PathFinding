@@ -28,14 +28,24 @@ namespace SearchAlgorythms.Algorithm
         {
             double min = vertex.Neighbours.Min(vert => vert.Value);
             return vertex.Neighbours.Find(vert => min == vert.Value
-                    && vert.IsVisited && !vertex.IsEnd);
+                    && vert.IsVisited && IsRightNeighbour(vert));
         }
+
+        protected virtual double WaveFunction(IVertex vertex) => vertex.Value + 1;
+
+        private bool IsRightNeighbour(IVertex vertex) => !vertex.IsEnd;
+
+        private bool IsRightPath(IVertex vertex) => !vertex.IsStart;
+
+        private bool IsRightCellToVisit(IVertex vertex) => !vertex.IsVisited;
+
+        protected virtual bool IsSuitableForQueuing(IVertex vertex) => !vertex.IsVisited;
 
         private void AddToQueue(List<IVertex> neighbours)
         {
             foreach(var neighbour in neighbours)
             {
-                if (!neighbour.IsVisited) 
+                if (IsSuitableForQueuing(neighbour)) 
                     neighbourQueue.Enqueue(neighbour);
             }
         }
@@ -49,7 +59,7 @@ namespace SearchAlgorythms.Algorithm
             foreach (var neighbour in vertex.Neighbours)
             {
                 if (!neighbour.IsVisited)
-                    neighbour.Value = vertex.Value + 1;
+                    neighbour.Value = WaveFunction(vertex);
             }
         }
 
@@ -65,7 +75,7 @@ namespace SearchAlgorythms.Algorithm
             while (!IsDestination(currentVertex))
             {
                 currentVertex = neighbourQueue.Dequeue();
-                if (!currentVertex.IsVisited)
+                if (IsRightCellToVisit(currentVertex))
                 {
                     Visit(currentVertex);
                     MakeWaves(currentVertex);
@@ -80,7 +90,7 @@ namespace SearchAlgorythms.Algorithm
         public void DrawPath()
         {
             var vertex = graph.End;
-            while (!vertex.IsStart)
+            while (IsRightPath(vertex))
             {
                 vertex = GoNextWave(vertex);
                 if (vertex.IsSimpleVertex)
