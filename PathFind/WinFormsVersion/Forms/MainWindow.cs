@@ -78,6 +78,8 @@ namespace SearchAlgorythms
 
         private void AStarAlgorithmToolStripMenuItem(object sender, EventArgs e) => StartSearchPath(Algorithms.AStarAlgorithm);
 
+        private void DeepPathFindToolStripMenuItem_Click(object sender, EventArgs e) => StartSearchPath(Algorithms.DeepPathFind);
+
         private void StartSearchPath(Algorithms algorithm)
         {
             pathFindAlgo = AlgorithmSelector.GetPathFindAlgorithm(algorithm, graph);
@@ -186,5 +188,7 @@ namespace SearchAlgorythms
             percent.Value = graph.ObstaclePercent;
             PreparePercentBar();
         }
+
+        
     }
 }

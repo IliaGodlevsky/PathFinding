@@ -55,6 +55,7 @@
             this.time = new System.Windows.Forms.Label();
             this.Field = new SearchAlgorythms.Forms.FieldControl();
             this.userControl11 = new SearchAlgorythms.Forms.FieldControl();
+            this.deepPathFindToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.percent)).BeginInit();
             this.FieldParams.SuspendLayout();
@@ -109,7 +110,8 @@
             this.wideSearchToolStripMenuItem,
             this.dijkstraAlgorythmToolStripMenuItem,
             this.aSearchToolStripMenuItem,
-            this.greedySearchToolStripMenuItem});
+            this.greedySearchToolStripMenuItem,
+            this.deepPathFindToolStripMenuItem});
             this.findPathToolStripMenuItem.Name = "findPathToolStripMenuItem";
             this.findPathToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.findPathToolStripMenuItem.Text = "Find path";
@@ -299,6 +301,13 @@
             this.userControl11.Size = new System.Drawing.Size(656, 388);
             this.userControl11.TabIndex = 0;
             // 
+            // deepPathFindToolStripMenuItem
+            // 
+            this.deepPathFindToolStripMenuItem.Name = "deepPathFindToolStripMenuItem";
+            this.deepPathFindToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.deepPathFindToolStripMenuItem.Text = "Deep path find";
+            this.deepPathFindToolStripMenuItem.Click += new System.EventHandler(this.DeepPathFindToolStripMenuItem_Click);
+            // 
             // MainWindow
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -353,6 +362,7 @@
         private Forms.FieldControl Field;
         private System.Windows.Forms.ToolStripMenuItem greedyForDistanceAlgorithmToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem greedyForValueAlgorithmToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem deepPathFindToolStripMenuItem;
     }
 }
 

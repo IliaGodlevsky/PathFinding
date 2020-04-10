@@ -3,6 +3,7 @@
     public enum Algorithms
     {
         WidePathFind = 1,
+        DeepPathFind,
         DijkstraAlgorithm,
         AStarAlgorithm,
         DistanceGreedyAlgorithm,

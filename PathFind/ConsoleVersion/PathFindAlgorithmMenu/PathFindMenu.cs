@@ -44,10 +44,11 @@ namespace ConsoleVersion.PathFindAlgorithmMenu
         private string ShowAlgorithms()
         {
             return "\n1. Wide path find\n" +
-                    "2. Dijkstra algorithm\n" +
-                    "3. A* algorithm\n" +
-                    "4. Greedy for distance algorithm\n" +
-                    "5. Greedy for value algorithm\n";
+                "2. Deep path find\n" +
+                    "3. Dijkstra algorithm\n" +
+                    "4. A* algorithm\n" +
+                    "5. Greedy for distance algorithm\n" +
+                    "6. Greedy for value algorithm\n";
         }
 
         public IPathFindAlgorithm ChoosePathFindAlgorithm()
