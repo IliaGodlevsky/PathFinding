@@ -28,24 +28,14 @@ namespace SearchAlgorythms.Algorithm
         {
             double min = vertex.Neighbours.Min(vert => vert.Value);
             return vertex.Neighbours.Find(vert => min == vert.Value
-                    && vert.IsVisited && IsRightNeighbour(vert));
+                    && vert.IsVisited && !vertex.IsEnd);
         }
-
-        protected virtual double WaveFunction(IVertex vertex) => vertex.Value + 1;
-
-        private bool IsRightNeighbour(IVertex vertex) => !vertex.IsEnd;
-
-        private bool IsRightPath(IVertex vertex) => !vertex.IsStart;
-
-        private bool IsRightCellToVisit(IVertex vertex) => !vertex.IsVisited;
-
-        protected virtual bool IsSuitableForQueuing(IVertex vertex, List<IVertex> neighbours) => !vertex.IsVisited;
 
         private void AddToQueue(List<IVertex> neighbours)
         {
             foreach(var neighbour in neighbours)
             {
-                if (IsSuitableForQueuing(neighbour, neighbours)) 
+                if (!neighbour.IsVisited) 
                     neighbourQueue.Enqueue(neighbour);
             }
         }
@@ -59,7 +49,7 @@ namespace SearchAlgorythms.Algorithm
             foreach (var neighbour in vertex.Neighbours)
             {
                 if (!neighbour.IsVisited)
-                    neighbour.Value = WaveFunction(vertex);
+                    neighbour.Value = vertex.Value + 1;
             }
         }
 
@@ -75,7 +65,7 @@ namespace SearchAlgorythms.Algorithm
             while (!IsDestination(currentVertex))
             {
                 currentVertex = neighbourQueue.Dequeue();
-                if (IsRightCellToVisit(currentVertex))
+                if (!currentVertex.IsVisited)
                 {
                     Visit(currentVertex);
                     MakeWaves(currentVertex);
@@ -90,7 +80,7 @@ namespace SearchAlgorythms.Algorithm
         public void DrawPath()
         {
             var vertex = graph.End;
-            while (IsRightPath(vertex))
+            while (!vertex.IsStart)
             {
                 vertex = GoNextWave(vertex);
                 if (vertex.IsSimpleVertex)
