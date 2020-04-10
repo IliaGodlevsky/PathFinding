@@ -10,7 +10,7 @@ namespace SearchAlgorythms.Algorithm
     /// </summary>
     public class AStarAlgorithm : DijkstraAlgorithm
     {
-        public Func<IVertex, IVertex, IVertex, double> HeuristicFunction;
+        public Func<IVertex, IVertex, double> HeuristicFunction;
 
         public AStarAlgorithm(AbstractGraph graph) : base(graph)
         {
@@ -18,6 +18,6 @@ namespace SearchAlgorythms.Algorithm
         }
 
         protected override double GetPathValue(IVertex neighbour, IVertex vertex)
-            => HeuristicFunction(neighbour, vertex, graph.End);
+            => HeuristicFunction(neighbour, vertex);
     }
 }
