@@ -2,13 +2,9 @@
 using SearchAlgorythms.Graph;
 using SearchAlgorythms.GraphSaver;
 using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using System.Runtime.Serialization;
 using System.Runtime.Serialization.Formatters.Binary;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace GraphLibrary.GraphSaver
 {
@@ -19,7 +15,7 @@ namespace GraphLibrary.GraphSaver
             if (graph != null)
             {
                 VertexInfo[,] info = graph.Info;
-                IFormatter formatter = new BinaryFormatter();               
+                IFormatter formatter = new BinaryFormatter();
                 try {
                     using (var stream = new FileStream(GetPath(), FileMode.Create))
                         formatter.Serialize(stream, info);
