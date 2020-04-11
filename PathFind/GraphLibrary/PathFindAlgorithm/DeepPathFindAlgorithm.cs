@@ -1,8 +1,8 @@
-﻿using SearchAlgorythms.Algorithm;
+﻿using GraphLibrary.Constants;
+using SearchAlgorythms.Algorithm;
 using SearchAlgorythms.Graph;
 using SearchAlgorythms.Statistics;
 using SearchAlgorythms.Top;
-using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -37,7 +37,7 @@ namespace GraphLibrary.PathFindAlgorithm
                 if (vertex.IsSimpleVertex)
                     vertex.MarkAsPath();
                 statCollector.AddLength(int.Parse(temp.Text));
-                Pause(35);
+                Pause(Const.PATH_DRAW_PAUSE_MILLISECONDS);
             }
         }
 
@@ -60,7 +60,7 @@ namespace GraphLibrary.PathFindAlgorithm
                 }
                 else
                     currentVertex = visitedVerticesStack.Pop();
-                Pause(2);
+                Pause(Const.FIND_PROCESS_PAUSE_MILLISECONDS);
             }
             statCollector.StopCollectStatistics();
             return graph.End.IsVisited;
@@ -88,7 +88,7 @@ namespace GraphLibrary.PathFindAlgorithm
             if (vertex.IsSimpleVertex)
             {
                 vertex.MarkAsCurrentlyLooked();
-                Pause(8);
+                Pause(Const.VISIT_PAUSE_MILLISECONDS);
                 vertex.MarkAsVisited();
             }
             statCollector.CellVisited();
