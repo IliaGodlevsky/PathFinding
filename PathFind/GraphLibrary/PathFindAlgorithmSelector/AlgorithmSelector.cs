@@ -26,7 +26,7 @@ namespace GraphLibrary.PathFindAlgorithmSelector
                 };
                 case Algorithms.ValueGreedyAlgorithm: return new GreedyAlgorithm(graph)
                 {
-                     GreedyFunction = vertex => int.Parse(vertex.Text)
+                    GreedyFunction = vertex => int.Parse(vertex.Text)
                 };
                 default: return null;
             }
