@@ -62,7 +62,7 @@ namespace ConsoleVersion.Forms
 
         public void Run()
         {
-            MenuOption option = GetOption();
+            var option = GetOption();
             while (option != MenuOption.Quit)
             {
                 switch (option)
@@ -100,8 +100,7 @@ namespace ConsoleVersion.Forms
 
         public void LoadGraph()
         {
-            IGraphLoader loader = new ConsoleGraphLoader();
-            AbstractGraph temp = loader.GetGraph();
+            AbstractGraph temp = new ConsoleGraphLoader().GetGraph();
             if (temp != null)
             {
                 graph = new ConsoleGraph(temp.GetArray());              
@@ -119,7 +118,7 @@ namespace ConsoleVersion.Forms
             pathFindMenu.ChooseEnd();
             Console.Clear();
             GraphShower.ShowGraph(graph);
-            IPathFindAlgorithm search = pathFindMenu.ChoosePathFindAlgorithm();
+            var search = pathFindMenu.ChoosePathFindAlgorithm();
             search.Pause = new ConsolePauseMaker().Pause;
             if (search.FindDestionation())
             {
