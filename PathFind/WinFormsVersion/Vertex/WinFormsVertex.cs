@@ -12,6 +12,11 @@ namespace SearchAlgorythms.Top
             Neighbours = new List<IVertex>();
             SetToDefault();
             IsObstacle = false;
+            Font = new Font("Times New Roman", 8.0f);
+            Size = new Size(Const.WIN_FORMS_VERTEX_SIZE,
+                Const.WIN_FORMS_VERTEX_SIZE);
+            TextAlign = ContentAlignment.MiddleCenter;
+            //BorderStyle = BorderStyle.FixedSingle;
         }
 
         public WinFormsVertex(VertexInfo info) : this()
@@ -77,11 +82,7 @@ namespace SearchAlgorythms.Top
             Value = 0;
             MarkAsSimpleVertex();
             ParentVertex = null;
-            Font = new Font("Times New Roman", 7.8f);
-            Size = new Size(Const.WIN_FORMS_VERTEX_SIZE,
-                Const.WIN_FORMS_VERTEX_SIZE);
-            TextAlign = ContentAlignment.MiddleCenter;
-            //BorderStyle = BorderStyle.FixedSingle;
+           
         }
 
         public void MarkAsCurrentlyLooked()
