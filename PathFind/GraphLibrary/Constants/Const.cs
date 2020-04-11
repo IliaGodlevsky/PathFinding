@@ -7,5 +7,7 @@
         public const int VISIT_PAUSE_MILLISECONDS = 2;
         public const int FIND_PROCESS_PAUSE_MILLISECONDS = 8;
         public const int PATH_DRAW_PAUSE_MILLISECONDS = 35;
+        public const int MAX_VERTEX_VALUE = 9;
+        public const int MIN_VERTEX_VALUE = 1;
     }
 }

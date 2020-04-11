@@ -1,4 +1,5 @@
-﻿using SearchAlgorythms.Graph;
+﻿using GraphLibrary.Constants;
+using SearchAlgorythms.Graph;
 using SearchAlgorythms.Top;
 
 namespace SearchAlgorythms.GraphFactory
@@ -16,7 +17,7 @@ namespace SearchAlgorythms.GraphFactory
         {
             return new WinFormsVertex
             {
-                Text = (rand.Next(9) + 1).ToString()
+                Text = (rand.Next(Const.MAX_VERTEX_VALUE) + Const.MIN_VERTEX_VALUE).ToString()
             };
         }
 

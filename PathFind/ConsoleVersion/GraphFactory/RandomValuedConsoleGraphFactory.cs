@@ -1,4 +1,5 @@
-﻿using SearchAlgorythms.Graph;
+﻿using GraphLibrary.Constants;
+using SearchAlgorythms.Graph;
 using SearchAlgorythms.Top;
 
 namespace SearchAlgorythms.GraphFactory
@@ -11,7 +12,7 @@ namespace SearchAlgorythms.GraphFactory
 
         }
 
-        protected override IVertex CreateGraphTop() => new ConsoleVertex { Text = (rand.Next(9) + 1).ToString() };
+        protected override IVertex CreateGraphTop() => new ConsoleVertex { Text = (rand.Next(Const.MAX_VERTEX_VALUE) + Const.MIN_VERTEX_VALUE).ToString() };
 
         public override AbstractGraph GetGraph() => new ConsoleGraph(vertices);
 
