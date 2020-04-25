@@ -1,7 +1,9 @@
-﻿using System.Collections.Generic;
+﻿using GraphLibrary;
+using GraphLibrary.Vertex;
+using System.Collections.Generic;
 using System.Drawing;
 
-namespace SearchAlgorythms.Top
+namespace ConsoleVersion.Vertex
 {
     public class ConsoleVertex : IVertex
     {

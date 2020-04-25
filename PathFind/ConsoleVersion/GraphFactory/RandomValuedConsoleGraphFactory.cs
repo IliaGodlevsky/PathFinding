@@ -1,8 +1,11 @@
 ﻿using GraphLibrary.Constants;
-using SearchAlgorythms.Graph;
-using SearchAlgorythms.Top;
+using ConsoleVersion.Graph;
+using ConsoleVersion.Vertex;
+using GraphLibrary.GraphFactory;
+using GraphLibrary.Vertex;
+using GraphLibrary.Graph;
 
-namespace SearchAlgorythms.GraphFactory
+namespace ConsoleVersion.GraphFactory
 {
     public class RandomValuedConsoleGraphFactory : AbstractGraphFactory
     {

@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace SearchAlgorythms.RoleChanger
+namespace GraphLibrary.RoleChanger
 {
     public interface IVertexRoleChanger
     {

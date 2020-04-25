@@ -1,9 +1,7 @@
-﻿using GraphLibrary.Enums.AlgorithmEnum;
+﻿using GraphLibrary.Algorithm;
+using GraphLibrary.Enums.AlgorithmEnum;
+using GraphLibrary.Graph;
 using GraphLibrary.PathFindAlgorithm;
-using SearchAlgorythms.Algorithm;
-using SearchAlgorythms.DistanceCalculator;
-using SearchAlgorythms.Graph;
-
 namespace GraphLibrary.PathFindAlgorithmSelector
 {
     public static class AlgorithmSelector
@@ -18,11 +16,11 @@ namespace GraphLibrary.PathFindAlgorithmSelector
                 case Algorithms.AStarAlgorithm: return new AStarAlgorithm(graph)
                 {
                     HeuristicFunction = (neighbour, vertex) =>
-                    int.Parse(neighbour.Text) + vertex.Value + DistanceCalculator.GetChebyshevDistance(neighbour, graph.End)
+                    int.Parse(neighbour.Text) + vertex.Value + DistanceCalculator.DistanceCalculator.GetChebyshevDistance(neighbour, graph.End)
                 };
                 case Algorithms.DistanceGreedyAlgorithm: return new GreedyAlgorithm(graph)
                 {
-                    GreedyFunction = vertex => DistanceCalculator.GetEuclideanDistance(vertex, graph.End)
+                    GreedyFunction = vertex => DistanceCalculator.DistanceCalculator.GetEuclideanDistance(vertex, graph.End)
                 };
                 case Algorithms.ValueGreedyAlgorithm: return new GreedyAlgorithm(graph)
                 {

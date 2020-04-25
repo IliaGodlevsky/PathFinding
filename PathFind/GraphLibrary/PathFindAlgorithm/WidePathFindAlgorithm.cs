@@ -1,10 +1,10 @@
-﻿using System.Collections.Generic;
+﻿using GraphLibrary.Graph;
+using GraphLibrary.Statistics;
+using GraphLibrary.Vertex;
+using System.Collections.Generic;
 using System.Linq;
-using SearchAlgorythms.Top;
-using SearchAlgorythms.Statistics;
-using SearchAlgorythms.Graph;
 
-namespace SearchAlgorythms.Algorithm
+namespace GraphLibrary.Algorithm
 {
     /// <summary>
     /// A wave algorithm (Li algorithm, or wide path find algorithm). 

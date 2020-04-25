@@ -1,8 +1,8 @@
 ﻿using ConsoleVersion.GraphFactory;
+using GraphLibrary;
+using GraphLibrary.Graph;
 using GraphLibrary.GraphFactory;
 using GraphLibrary.GraphLoader;
-using SearchAlgorythms;
-using SearchAlgorythms.Graph;
 using System;
 
 namespace ConsoleVersion.GraphLoader

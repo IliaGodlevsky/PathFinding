@@ -1,11 +1,11 @@
 ﻿using System;
 using System.Linq;
+using GraphLibrary.Extensions.ListExtensions;
+using GraphLibrary.Graph;
 using GraphLibrary.PathFindAlgorithm;
-using SearchAlgorythms.Extensions.ListExtensions;
-using SearchAlgorythms.Graph;
-using SearchAlgorythms.Top;
+using GraphLibrary.Vertex;
 
-namespace SearchAlgorythms.Algorithm
+namespace GraphLibrary.Algorithm
 {
     /// <summary>
     /// Greedy algorithm. Each step looks for the chippest top and visit it

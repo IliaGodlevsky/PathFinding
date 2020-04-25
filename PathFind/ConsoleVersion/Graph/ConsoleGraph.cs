@@ -1,6 +1,7 @@
-﻿using SearchAlgorythms.Top;
+﻿using GraphLibrary.Graph;
+using GraphLibrary.Vertex;
 
-namespace SearchAlgorythms.Graph
+namespace ConsoleVersion.Graph
 {
     public class ConsoleGraph : AbstractGraph
     {

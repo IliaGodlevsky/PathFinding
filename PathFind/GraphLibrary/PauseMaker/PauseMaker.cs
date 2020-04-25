@@ -1,6 +1,6 @@
 ﻿using System.Diagnostics;
 
-namespace SearchAlgorythms.PauseMaker
+namespace GraphLibrary.PauseMaker
 {
     public abstract class PauseMaker
     {

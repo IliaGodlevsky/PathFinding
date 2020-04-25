@@ -1,7 +1,9 @@
-﻿using SearchAlgorythms.Top;
+﻿using GraphLibrary.Graph;
+using GraphLibrary.Vertex;
 using System.Windows.Forms;
+using WinFormsVersion.Vertex;
 
-namespace SearchAlgorythms.Graph
+namespace WinFormsVersion.Graph
 {
     public class WinFormsGraph : AbstractGraph
     {

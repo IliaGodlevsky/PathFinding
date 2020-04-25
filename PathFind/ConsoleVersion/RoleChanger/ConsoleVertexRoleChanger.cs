@@ -1,10 +1,11 @@
 ﻿using ConsoleVersion.InputClass;
 using GraphLibrary.RoleChanger;
-using SearchAlgorythms.Graph;
-using SearchAlgorythms.Top;
+using ConsoleVersion.Vertex;
 using System;
+using GraphLibrary.Graph;
+using GraphLibrary.Vertex;
 
-namespace SearchAlgorythms.RoleChanger
+namespace ConsoleVersion.RoleChanger
 {
     public class ConsoleVertexRoleChanger : AbstractVertexRoleChanger
     {

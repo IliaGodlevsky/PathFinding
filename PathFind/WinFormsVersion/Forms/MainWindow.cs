@@ -1,22 +1,24 @@
-﻿using SearchAlgorythms.Graph;
-using SearchAlgorythms.GraphLoader;
-using SearchAlgorythms.GraphSaver;
-using SearchAlgorythms.Top;
-using System;
+﻿using System;
 using System.Drawing;
 using System.Windows.Forms;
-using SearchAlgorythms.RoleChanger;
-using SearchAlgorythms.GraphFactory;
 using System.Linq;
 using GraphLibrary.GraphFactory;
 using GraphLibrary.Constants;
-using SearchAlgorythms.PauseMaker;
 using GraphLibrary.Enums.AlgorithmEnum;
 using GraphLibrary.PathFindAlgorithmSelector;
 using GraphLibrary.View;
-using SearchAlgorythms.Algorithm;
+using GraphLibrary.RoleChanger;
+using GraphLibrary.Algorithm;
+using WinFormsVersion.Graph;
+using WinFormsVersion.Vertex;
+using WinFormsVersion.RoleChanger;
+using WinFormsVersion.GraphSaver;
+using GraphLibrary.GraphLoader;
+using WinFormsVersion.GraphLoader;
+using WinFormsVersion.PauseMaker;
+using WinFormsVersion.GraphFactory;
 
-namespace SearchAlgorythms
+namespace WinFormsVersion.Forms
 {
     public partial class MainWindow : Form, IView
     {

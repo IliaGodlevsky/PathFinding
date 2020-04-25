@@ -1,7 +1,7 @@
 ﻿using GraphLibrary.Extensions.MatrixExtension;
-using SearchAlgorythms.Top;
+using GraphLibrary.Vertex;
 
-namespace SearchAlgorythms
+namespace GraphLibrary
 {
     public class NeigbourSetter
     {

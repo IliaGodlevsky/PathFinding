@@ -1,8 +1,7 @@
 ﻿using GraphLibrary.Extensions.MatrixExtension;
-using SearchAlgorythms;
-using SearchAlgorythms.Graph;
-using SearchAlgorythms.Top;
 using System.Drawing;
+using GraphLibrary.Graph;
+using GraphLibrary.Vertex;
 
 namespace GraphLibrary.GraphFactory
 {

@@ -1,9 +1,11 @@
-﻿using GraphLibrary.Constants;
+﻿using GraphLibrary;
+using GraphLibrary.Constants;
+using GraphLibrary.Vertex;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Windows.Forms;
 
-namespace SearchAlgorythms.Top
+namespace WinFormsVersion.Vertex
 {
     public class WinFormsVertex : Label, IVertex
     {      

@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Drawing;
 
-namespace SearchAlgorythms.Top
+namespace GraphLibrary.Vertex
 {
     public interface IVertex
     {

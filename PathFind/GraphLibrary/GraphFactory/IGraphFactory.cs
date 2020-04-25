@@ -1,4 +1,4 @@
-﻿using SearchAlgorythms.Graph;
+﻿using GraphLibrary.Graph;
 
 namespace GraphLibrary.GraphFactory
 {

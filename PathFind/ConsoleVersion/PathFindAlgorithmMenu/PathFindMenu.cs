@@ -1,12 +1,12 @@
 ﻿using ConsoleVersion.InputClass;
 using GraphLibrary.Enums.AlgorithmEnum;
 using GraphLibrary.PathFindAlgorithmSelector;
-using SearchAlgorythms.Algorithm;
-using SearchAlgorythms.Graph;
-using SearchAlgorythms.RoleChanger;
+using ConsoleVersion.Graph;
+using ConsoleVersion.RoleChanger;
 using System;
 using System.Drawing;
 using System.Linq;
+using GraphLibrary.Algorithm;
 
 namespace ConsoleVersion.PathFindAlgorithmMenu
 {

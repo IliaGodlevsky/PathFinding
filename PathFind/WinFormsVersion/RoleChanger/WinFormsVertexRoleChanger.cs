@@ -1,10 +1,11 @@
 ﻿using System;
 using System.Windows.Forms;
+using GraphLibrary.Graph;
 using GraphLibrary.RoleChanger;
-using SearchAlgorythms.Graph;
-using SearchAlgorythms.Top;
+using GraphLibrary.Vertex;
+using WinFormsVersion.Vertex;
 
-namespace SearchAlgorythms.RoleChanger
+namespace WinFormsVersion.RoleChanger
 {
     public class WinFormsVertexRoleChanger : AbstractVertexRoleChanger
     {

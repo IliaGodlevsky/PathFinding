@@ -1,8 +1,11 @@
 ﻿using GraphLibrary.Constants;
 using GraphLibrary.GraphFactory;
-using SearchAlgorythms;
-using SearchAlgorythms.Graph;
-using SearchAlgorythms.Top;
+using ConsoleVersion;
+using ConsoleVersion.Graph;
+using ConsoleVersion.Vertex;
+using GraphLibrary;
+using GraphLibrary.Vertex;
+using GraphLibrary.Graph;
 
 namespace ConsoleVersion.GraphFactory
 {

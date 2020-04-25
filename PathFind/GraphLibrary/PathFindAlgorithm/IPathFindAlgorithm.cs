@@ -1,4 +1,4 @@
-﻿namespace SearchAlgorythms.Algorithm
+﻿namespace GraphLibrary.Algorithm
 {
     public delegate void PauseCycle(int milliseconds);
 

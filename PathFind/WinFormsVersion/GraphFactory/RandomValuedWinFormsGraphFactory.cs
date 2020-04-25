@@ -1,8 +1,11 @@
 ﻿using GraphLibrary.Constants;
-using SearchAlgorythms.Graph;
-using SearchAlgorythms.Top;
+using GraphLibrary.GraphFactory;
+using GraphLibrary.Vertex;
+using GraphLibrary.Graph;
+using WinFormsVersion.Vertex;
+using WinFormsVersion.Graph;
 
-namespace SearchAlgorythms.GraphFactory
+namespace WinFormsVersion.GraphFactory
 {
     public class RandomValuedWinFormsGraphFactory : AbstractGraphFactory
     {

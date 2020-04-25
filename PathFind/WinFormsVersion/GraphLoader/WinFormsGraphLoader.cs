@@ -1,10 +1,11 @@
 ﻿using System.Windows.Forms;
+using GraphLibrary;
+using GraphLibrary.Graph;
 using GraphLibrary.GraphFactory;
 using GraphLibrary.GraphLoader;
-using SearchAlgorythms.Graph;
-using SearchAlgorythms.GraphFactory;
+using WinFormsVersion.GraphFactory;
 
-namespace SearchAlgorythms.GraphLoader
+namespace WinFormsVersion.GraphLoader
 {
     public class WinFormsGraphLoader : AbstractGraphLoader
     {

@@ -1,8 +1,8 @@
-﻿using SearchAlgorythms.Graph;
-using SearchAlgorythms.Top;
+﻿using GraphLibrary.Graph;
+using GraphLibrary.Vertex;
 using System;
 
-namespace SearchAlgorythms.Algorithm
+namespace GraphLibrary.Algorithm
 {
     /// <summary>
     /// An euristic dijkstra's algorithm. Uses distance of the current top

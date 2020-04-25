@@ -1,7 +1,5 @@
-﻿using GraphLibrary.GraphFactory;
-using SearchAlgorythms;
-using SearchAlgorythms.Graph;
-using SearchAlgorythms.GraphLoader;
+﻿using GraphLibrary.Graph;
+using GraphLibrary.GraphFactory;
 using System;
 using System.IO;
 using System.Runtime.Serialization;

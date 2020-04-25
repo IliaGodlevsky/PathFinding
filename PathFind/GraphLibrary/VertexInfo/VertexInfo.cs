@@ -1,7 +1,7 @@
-﻿using SearchAlgorythms.Top;
+﻿using GraphLibrary.Vertex;
 using System;
 
-namespace SearchAlgorythms
+namespace GraphLibrary
 {
     [Serializable]
     public class VertexInfo

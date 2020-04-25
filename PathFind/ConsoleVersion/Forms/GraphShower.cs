@@ -1,5 +1,5 @@
-﻿using SearchAlgorythms.Graph;
-using SearchAlgorythms.Top;
+﻿using ConsoleVersion.Graph;
+using ConsoleVersion.Vertex;
 using Console = Colorful.Console;
 
 namespace ConsoleVersion.Forms

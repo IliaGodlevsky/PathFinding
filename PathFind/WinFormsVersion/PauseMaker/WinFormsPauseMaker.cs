@@ -1,8 +1,8 @@
 ﻿using System.Windows.Forms;
 
-namespace SearchAlgorythms.PauseMaker
+namespace WinFormsVersion.PauseMaker
 {
-    public class WinFormsPauseMaker : PauseMaker
+    public class WinFormsPauseMaker : GraphLibrary.PauseMaker.PauseMaker
     {
         protected override void PauseEvent()
         {

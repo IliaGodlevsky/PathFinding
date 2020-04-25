@@ -1,6 +1,6 @@
-﻿using SearchAlgorythms.Top;
+﻿using GraphLibrary.Vertex;
 
-namespace SearchAlgorythms
+namespace GraphLibrary
 {
     public static class BoundSetter
     {

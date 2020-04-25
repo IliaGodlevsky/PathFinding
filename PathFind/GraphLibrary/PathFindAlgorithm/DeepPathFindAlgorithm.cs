@@ -1,8 +1,8 @@
-﻿using GraphLibrary.Constants;
-using SearchAlgorythms.Algorithm;
-using SearchAlgorythms.Graph;
-using SearchAlgorythms.Statistics;
-using SearchAlgorythms.Top;
+﻿using GraphLibrary.Algorithm;
+using GraphLibrary.Constants;
+using GraphLibrary.Graph;
+using GraphLibrary.Statistics;
+using GraphLibrary.Vertex;
 using System.Collections.Generic;
 using System.Linq;
 

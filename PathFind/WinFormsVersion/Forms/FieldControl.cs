@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Windows.Forms;
 
-namespace SearchAlgorythms.Forms
+namespace WinFormsVerstion.Forms
 {
     public partial class FieldControl : UserControl
     {

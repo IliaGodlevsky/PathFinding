@@ -1,4 +1,6 @@
-﻿namespace SearchAlgorythms
+﻿using WinFormsVerstion.Forms;
+
+namespace WinFormsVersion.Forms
 {
     partial class MainWindow
     {
@@ -53,8 +55,7 @@
             this.percentOfObstacles = new System.Windows.Forms.Label();
             this.timeOfSearch = new System.Windows.Forms.GroupBox();
             this.time = new System.Windows.Forms.Label();
-            this.Field = new SearchAlgorythms.Forms.FieldControl();
-            this.userControl11 = new SearchAlgorythms.Forms.FieldControl();
+            this.Field = new FieldControl();
             this.deepPathFindToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.percent)).BeginInit();
@@ -294,13 +295,6 @@
             this.Field.Size = new System.Drawing.Size(611, 354);
             this.Field.TabIndex = 13;
             // 
-            // userControl11
-            // 
-            this.userControl11.Location = new System.Drawing.Point(0, 0);
-            this.userControl11.Name = "userControl11";
-            this.userControl11.Size = new System.Drawing.Size(656, 388);
-            this.userControl11.TabIndex = 0;
-            // 
             // deepPathFindToolStripMenuItem
             // 
             this.deepPathFindToolStripMenuItem.Name = "deepPathFindToolStripMenuItem";
@@ -358,8 +352,7 @@
         private System.Windows.Forms.ToolStripMenuItem dijkstraAlgorythmToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem greedySearchToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem aSearchToolStripMenuItem;
-        private Forms.FieldControl userControl11;
-        private Forms.FieldControl Field;
+        private FieldControl Field;
         private System.Windows.Forms.ToolStripMenuItem greedyForDistanceAlgorithmToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem greedyForValueAlgorithmToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem deepPathFindToolStripMenuItem;

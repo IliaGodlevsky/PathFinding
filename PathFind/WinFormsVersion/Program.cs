@@ -1,7 +1,8 @@
 ﻿using System;
 using System.Windows.Forms;
+using WinFormsVersion.Forms;
 
-namespace SearchAlgorythms
+namespace WinFormsVersion
 {
     static class Program
     {

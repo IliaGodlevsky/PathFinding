@@ -1,6 +1,5 @@
-﻿using SearchAlgorythms;
-using SearchAlgorythms.Graph;
-using SearchAlgorythms.GraphSaver;
+﻿using GraphFactory.GraphSaver;
+using GraphLibrary.Graph;
 using System;
 using System.IO;
 using System.Runtime.Serialization;

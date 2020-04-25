@@ -1,10 +1,10 @@
-﻿using System.Collections.Generic;
+﻿using GraphLibrary.Graph;
+using GraphLibrary.Statistics;
+using GraphLibrary.Vertex;
+using System.Collections.Generic;
 using System.Linq;
-using SearchAlgorythms.Graph;
-using SearchAlgorythms.Statistics;
-using SearchAlgorythms.Top;
 
-namespace SearchAlgorythms.Algorithm
+namespace GraphLibrary.Algorithm
 {
     /// <summary>
     /// Finds the chippest path to destination top. 

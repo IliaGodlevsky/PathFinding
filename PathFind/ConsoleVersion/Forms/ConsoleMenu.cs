@@ -5,13 +5,13 @@ using ConsoleVersion.PathFindAlgorithmMenu;
 using ConsoleVersion.PauseMaker;
 using GraphLibrary.GraphFactory;
 using GraphLibrary.View;
-using SearchAlgorythms.Algorithm;
-using SearchAlgorythms.Graph;
-using SearchAlgorythms.GraphFactory;
-using SearchAlgorythms.GraphLoader;
-using SearchAlgorythms.RoleChanger;
+using ConsoleVersion.Graph;
+using ConsoleVersion.GraphFactory;
+using ConsoleVersion.RoleChanger;
 using System;
 using System.Drawing;
+using GraphLibrary.RoleChanger;
+using GraphLibrary.Graph;
 
 namespace ConsoleVersion.Forms
 {

@@ -1,7 +1,7 @@
-﻿using SearchAlgorythms.Top;
+﻿using GraphLibrary.Vertex;
 using System;
 
-namespace SearchAlgorythms.DistanceCalculator
+namespace GraphLibrary.DistanceCalculator
 {
     public static class DistanceCalculator
     {

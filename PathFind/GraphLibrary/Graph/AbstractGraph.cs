@@ -2,9 +2,9 @@
 using System.Drawing;
 using GraphLibrary.Constants;
 using GraphLibrary.Extensions.MatrixExtension;
-using SearchAlgorythms.Top;
+using GraphLibrary.Vertex;
 
-namespace SearchAlgorythms.Graph
+namespace GraphLibrary.Graph
 {
     public abstract class AbstractGraph : IEnumerable
     {

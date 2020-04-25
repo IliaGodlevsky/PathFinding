@@ -1,11 +1,10 @@
 ﻿using GraphLibrary.Extensions.MatrixExtension;
-using GraphLibrary.GraphFactory;
-using SearchAlgorythms.Graph;
-using SearchAlgorythms.Top;
+using GraphLibrary.Graph;
+using GraphLibrary.Vertex;
 using System;
 using System.Drawing;
 
-namespace SearchAlgorythms.GraphFactory
+namespace GraphLibrary.GraphFactory
 {
     public abstract class AbstractGraphFactory : IGraphFactory
     {

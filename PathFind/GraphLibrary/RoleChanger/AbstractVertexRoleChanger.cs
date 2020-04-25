@@ -1,7 +1,5 @@
-﻿using SearchAlgorythms;
-using SearchAlgorythms.Graph;
-using SearchAlgorythms.RoleChanger;
-using SearchAlgorythms.Top;
+﻿using GraphLibrary.Graph;
+using GraphLibrary.Vertex;
 using System;
 using System.Linq;
 
