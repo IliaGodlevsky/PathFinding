@@ -28,14 +28,13 @@ namespace GraphLibrary.GraphLoader
         {
             if (info == null)
                 return;
-            graph = CreateGraph(GetInitializer(info));
+            graph = GetInitializer(info).GetGraph();
             var setter = new NeigbourSetter(graph.GetArray());
             setter.SetNeighbours();
         }
 
         protected abstract void ShowMessage(string message);
         protected abstract AbstractGraphInitializer GetInitializer(VertexInfo[,] info);
-        protected abstract AbstractGraph CreateGraph(AbstractGraphInitializer initializer);
         protected abstract string GetPath();
     }
 }
