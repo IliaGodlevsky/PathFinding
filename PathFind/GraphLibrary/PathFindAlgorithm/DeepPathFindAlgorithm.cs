@@ -47,11 +47,10 @@ namespace GraphLibrary.PathFindAlgorithm
                 return false;
             statCollector.BeginCollectStatistic();
             var currentVertex = graph.Start;
-            IVertex temp = null;
             Visit(currentVertex);
             while (!IsDestination(currentVertex))
             {
-                temp = currentVertex;
+                IVertex temp = currentVertex;
                 currentVertex = GoNextVertex(currentVertex);
                 if (IsRightCellToVisit(currentVertex))
                 {

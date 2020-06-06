@@ -12,7 +12,7 @@ namespace WinFormsVersion.Graph
 
         public WinFormsGraph(IVertex[,] vertices) : base(vertices)
         {
-            ;
+            
         }
 
         protected override void ToDefault(IVertex vertex)

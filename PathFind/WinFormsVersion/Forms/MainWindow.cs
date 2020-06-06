@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Drawing;
 using System.Windows.Forms;
-using System.Linq;
 using GraphLibrary.GraphFactory;
 using GraphLibrary.Constants;
 using GraphLibrary.Enums.AlgorithmEnum;
@@ -47,8 +46,6 @@ namespace WinFormsVersion.Forms
             PrepareWindow(obstaclePercent: 40, graphWidth: 35, graphHeight: 23);
             Create(sender, e);
         }
-
-        private bool IsRightDestination(WinFormsVertex vertex) => !vertex.Neighbours.Any() && vertex.IsSimpleVertex;
 
         private void AddGraphToControls()
         { 

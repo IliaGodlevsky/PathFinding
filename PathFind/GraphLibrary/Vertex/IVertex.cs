@@ -16,7 +16,8 @@ namespace GraphLibrary.Vertex
         double Value { get; set; }
         Point Location { get; set; }
 
-        VertexInfo GetInfo();
+        VertexInfo Info { get; }
+
         void MarkAsCurrentlyLooked();
         void MarkAsEnd();
         void MarkAsSimpleVertex();

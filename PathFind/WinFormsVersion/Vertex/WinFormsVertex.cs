@@ -51,30 +51,15 @@ namespace WinFormsVersion.Vertex
                 BackColor = Color.FromKnownColor(KnownColor.White);
         }
 
-        public void MarkAsStart()
-        {
-            BackColor = Color.FromKnownColor(KnownColor.Green);
-        }
+        public void MarkAsStart() => BackColor = Color.FromKnownColor(KnownColor.Green);
 
-        public void MarkAsEnd()
-        {
-            BackColor = Color.FromKnownColor(KnownColor.Red);
-        }
+        public void MarkAsEnd() => BackColor = Color.FromKnownColor(KnownColor.Red);
 
-        public void MarkAsVisited()
-        {
-            BackColor = Color.FromKnownColor(KnownColor.CadetBlue);
-        }
+        public void MarkAsVisited() => BackColor = Color.FromKnownColor(KnownColor.CadetBlue);
 
-        public void MarkAsPath()
-        {
-            BackColor = Color.FromKnownColor(KnownColor.Yellow);
-        }
+        public void MarkAsPath() => BackColor = Color.FromKnownColor(KnownColor.Yellow);
 
-        public VertexInfo GetInfo()
-        {
-            return new VertexInfo(this);
-        }
+        public VertexInfo Info => new VertexInfo(this);
 
         public void SetToDefault()
         {
@@ -83,13 +68,9 @@ namespace WinFormsVersion.Vertex
             IsVisited = false;
             Value = 0;
             MarkAsSimpleVertex();
-            ParentVertex = null;
-           
+            ParentVertex = null;           
         }
 
-        public void MarkAsCurrentlyLooked()
-        {
-            BackColor = Color.FromKnownColor(KnownColor.DarkMagenta);
-        }
+        public void MarkAsCurrentlyLooked() => BackColor = Color.FromKnownColor(KnownColor.DarkMagenta);
     }
 }

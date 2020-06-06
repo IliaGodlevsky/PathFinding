@@ -36,25 +36,13 @@ namespace ConsoleVersion.Vertex
         public double Value { get; set; }
         public Point Location { get; set; }
 
-        public VertexInfo GetInfo()
-        {
-            return new VertexInfo(this);
-        }
+        public VertexInfo Info => new VertexInfo(this);
 
-        public void MarkAsCurrentlyLooked()
-        {
-            return;
-        }
+        public void MarkAsCurrentlyLooked(){ return; }
 
-        public void MarkAsEnd()
-        {
-            Colour = Color.FromKnownColor(KnownColor.Red);
-        }
+        public void MarkAsEnd() => Colour = Color.FromKnownColor(KnownColor.Red);
 
-        public void MarkAsSimpleVertex()
-        {
-            Colour = Color.FromKnownColor(KnownColor.White);
-        }
+        public void MarkAsSimpleVertex() => Colour = Color.FromKnownColor(KnownColor.White);
 
         public void MarkAsObstacle()
         {
@@ -62,20 +50,11 @@ namespace ConsoleVersion.Vertex
             IsObstacle = true;
         }
 
-        public void MarkAsPath()
-        {
-            Colour = Color.FromKnownColor(KnownColor.Yellow);
-        }
+        public void MarkAsPath() => Colour = Color.FromKnownColor(KnownColor.Yellow);
 
-        public void MarkAsStart()
-        {
-            Colour = Color.FromKnownColor(KnownColor.Green);
-        }
+        public void MarkAsStart() => Colour = Color.FromKnownColor(KnownColor.Green);
 
-        public void MarkAsVisited()
-        {
-            Colour = Color.FromKnownColor(KnownColor.Blue);
-        }
+        public void MarkAsVisited() => Colour = Color.FromKnownColor(KnownColor.Blue);
 
         public void SetToDefault()
         {

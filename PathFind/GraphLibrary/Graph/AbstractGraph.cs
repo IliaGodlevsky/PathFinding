@@ -31,7 +31,7 @@ namespace GraphLibrary.Graph
 
         public int Height => vertices.Height();
 
-        public VertexInfo[,] Info => vertices.Accumulate(vertex => vertex.GetInfo());
+        public VertexInfo[,] Info => vertices.Accumulate(vertex => vertex.Info);
 
         public int Size => vertices.Length;
 
