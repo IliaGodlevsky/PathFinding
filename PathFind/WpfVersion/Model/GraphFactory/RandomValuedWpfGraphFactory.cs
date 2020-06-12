@@ -2,19 +2,18 @@
 using GraphLibrary.Graph;
 using GraphLibrary.GraphFactory;
 using GraphLibrary.Vertex;
-using WpfVersion.Graph;
-using WpfVersion.Vertex;
+using WpfVersion.Model.Graph;
+using WpfVersion.Model.Vertex;
 
-namespace WpfVersion.GraphFactory
+namespace WpfVersion.Model.GraphFactory
 {
-    class RandomWpfGraphFactory : AbstractGraphFactory
+    public class RandomValuedWpfGraphFactory : AbstractGraphFactory
     {
-        public RandomWpfGraphFactory(int percentOfObstacles,
-           int width, int height, int placeBetweenButtons) : base(percentOfObstacles,
-               width, height, placeBetweenButtons)
+        public RandomValuedWpfGraphFactory(int percentOfObstacles, int width, int height, int placeBetweenVertices = 0) : 
+            base(percentOfObstacles, width, height, placeBetweenVertices)
         {
-
         }
+
         public override AbstractGraph GetGraph()
         {
             return new WpfGraph(vertices);

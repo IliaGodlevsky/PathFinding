@@ -4,37 +4,34 @@ using GraphLibrary.Vertex;
 using System;
 using System.Collections.Generic;
 using System.Windows.Controls;
-using System.Windows;
-using System.Drawing;
 using System.Windows.Media;
-using GraphLibrary.PauseMaker;
 
-namespace WpfVersion.Vertex
+namespace WpfVersion.Model.Vertex
 {
-    public class WpfVertex : Label, IVertex
+    public class WpfVertex : Button, IVertex
     {
         public WpfVertex() : base()
         {
             Neighbours = new List<IVertex>();
             SetToDefault();
-            IsObstacle = false;
-            FontSize = 8.0f;
             Width = Const.WIN_FORMS_VERTEX_SIZE;
             Height = Const.WIN_FORMS_VERTEX_SIZE;
-            HorizontalAlignment = HorizontalAlignment.Center;
+            IsObstacle = false;
+            FontSize = 12;
         }
 
-        public bool IsEnd { get; set ; }
+        public bool IsEnd { get; set; }
         public bool IsObstacle { get; set; }
 
         public bool IsSimpleVertex => !IsEnd && !IsStart;
 
-        public bool IsStart { get; set ; }
+        public bool IsStart { get; set; }
         public bool IsVisited { get; set; }
-        public string Text
-        {
+        public string Text 
+        { 
             get
             {
+
                 return Content.ToString();
             }
             set
@@ -51,7 +48,7 @@ namespace WpfVersion.Vertex
 
         public void MarkAsCurrentlyLooked()
         {
-            Background = new SolidColorBrush(Colors.Magenta);
+            Background = new SolidColorBrush(Colors.DarkMagenta);
         }
 
         public void MarkAsEnd()
@@ -61,9 +58,9 @@ namespace WpfVersion.Vertex
 
         public void MarkAsObstacle()
         {
-            Background = new SolidColorBrush(Colors.Black);
             Text = "";
             IsObstacle = true;
+            Background = new SolidColorBrush(Colors.Black);
         }
 
         public void MarkAsPath()

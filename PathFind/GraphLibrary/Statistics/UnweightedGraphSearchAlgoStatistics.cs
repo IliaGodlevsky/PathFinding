@@ -2,7 +2,7 @@
 
 namespace GraphLibrary.Statistics
 {
-    public class UnweightedGraphSearchAlgoStatistics : AbstractStatistics
+    public class UnweightedGraphSearchAlgoStatisticsCollector : AbstractStatisticsCollector
     {
         private int stepsNumber;
         public override string Statistics =>

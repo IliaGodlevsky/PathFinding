@@ -14,14 +14,15 @@ namespace GraphLibrary.Algorithm
     public class WidePathFindAlgorithm : IPathFindAlgorithm
     {
         protected Queue<IVertex> neighbourQueue = new Queue<IVertex>();
-        private UnweightedGraphSearchAlgoStatistics statCollector;
+        public AbstractStatisticsCollector StatCollector { get; set; }
+
         protected readonly AbstractGraph graph;
 
 
         public WidePathFindAlgorithm(AbstractGraph graph)
         {
             this.graph = graph;
-            statCollector = new UnweightedGraphSearchAlgoStatistics();
+            StatCollector = new UnweightedGraphSearchAlgoStatisticsCollector();
         }
 
         private IVertex GoNextWave(IVertex vertex)
@@ -67,7 +68,7 @@ namespace GraphLibrary.Algorithm
         {
             if (graph.End == null)
                 return false;
-            statCollector.BeginCollectStatistic();
+            StatCollector.BeginCollectStatistic();
             var currentVertex = graph.Start;
             Visit(currentVertex);
             MakeWaves(currentVertex);
@@ -83,7 +84,7 @@ namespace GraphLibrary.Algorithm
                 }
                 Pause(2);
             }
-            statCollector.StopCollectStatistics();
+            StatCollector.StopCollectStatistics();
             return graph.End.IsVisited;
         }
 
@@ -95,7 +96,7 @@ namespace GraphLibrary.Algorithm
                 vertex = GoNextWave(vertex);
                 if (vertex.IsSimpleVertex)
                     vertex.MarkAsPath();
-                statCollector.AddStep();
+                (StatCollector as UnweightedGraphSearchAlgoStatisticsCollector).AddStep();
                 Pause(35);
             }
         }
@@ -113,9 +114,9 @@ namespace GraphLibrary.Algorithm
                 Pause(8);
                 vertex.MarkAsVisited();
             }
-            statCollector.CellVisited();
+            StatCollector.CellVisited();
         }
 
-        public string GetStatistics() => statCollector.Statistics;
+        public string GetStatistics() => StatCollector.Statistics;
     }
 }

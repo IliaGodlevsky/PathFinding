@@ -1,4 +1,6 @@
-﻿namespace GraphLibrary.Algorithm
+﻿using GraphLibrary.Statistics;
+
+namespace GraphLibrary.Algorithm
 {
     public delegate void PauseCycle(int milliseconds);
 
@@ -7,6 +9,7 @@
     /// </summary>
     public interface IPathFindAlgorithm
     {
+        AbstractStatisticsCollector StatCollector { get; set; }
         PauseCycle Pause { set; get; }
         bool FindDestionation();
         void DrawPath();

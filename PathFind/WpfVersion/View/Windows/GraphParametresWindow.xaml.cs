@@ -1,5 +1,4 @@
-﻿using GraphLibrary.Graph;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -11,25 +10,20 @@ using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
 using System.Windows.Shapes;
-using WpfVersion.Graph;
+using WpfVersion.ViewModel;
 
-namespace WpfVersion.Controls
+namespace WpfVersion.View.Windows
 {
     /// <summary>
-    /// Логика взаимодействия для Field.xaml
+    /// Логика взаимодействия для GraphParametresWindow.xaml
     /// </summary>
-    public partial class Field : UserControl
+    public partial class GraphParametresWindow : Window
     {
-        public void VisualizeGraph(WpfGraph graph)
-        {
-
-        }
-
-        public Field()
+        public GraphParametresWindow()
         {
             InitializeComponent();
+            
         }
     }
 }

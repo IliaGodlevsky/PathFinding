@@ -13,14 +13,14 @@ namespace GraphLibrary.Algorithm
     {
         protected readonly AbstractGraph graph;
         private List<IVertex> neigbourQueue = new List<IVertex>();
-        private WeightedGraphSearchAlgoStatistics statCollector;
+        public AbstractStatisticsCollector StatCollector { get; set; }
 
         public DijkstraAlgorithm(AbstractGraph graph)
         {
             this.graph = graph;
             foreach (var vertex in graph)
                 (vertex as IVertex).Value = double.PositiveInfinity;
-            statCollector = new WeightedGraphSearchAlgoStatistics();
+            StatCollector = new WeightedGraphSearchAlgoStatisticsCollector();
         }
 
         public PauseCycle Pause { set; get; }
@@ -34,7 +34,7 @@ namespace GraphLibrary.Algorithm
                 vertex = vertex.ParentVertex;
                 if (vertex.IsSimpleVertex)
                     vertex.MarkAsPath();
-                statCollector.AddLength(int.Parse(temp.Text));
+                (StatCollector as WeightedGraphSearchAlgoStatisticsCollector).AddLength(int.Parse(temp.Text));
                 Pause(35);
             }
         }
@@ -72,7 +72,7 @@ namespace GraphLibrary.Algorithm
         {
             if (graph.End == null)
                 return false;
-            statCollector.BeginCollectStatistic();
+            StatCollector.BeginCollectStatistic();
             var currentVertex = graph.Start;
             currentVertex.IsVisited = true;
             currentVertex.Value = 0;
@@ -87,7 +87,7 @@ namespace GraphLibrary.Algorithm
                     Visit(currentVertex);
                 Pause(2);
             } while (!IsDestination(currentVertex));
-            statCollector.StopCollectStatistics();
+            StatCollector.StopCollectStatistics();
             return graph.End.IsVisited;
         }
 
@@ -119,12 +119,12 @@ namespace GraphLibrary.Algorithm
                 Pause(8);
                 vertex.MarkAsVisited();               
             }
-            statCollector.CellVisited();
+            StatCollector.CellVisited();
         }
 
         public string GetStatistics()
         {
-            return statCollector.Statistics;
+            return StatCollector.Statistics;
         }
     }
 }

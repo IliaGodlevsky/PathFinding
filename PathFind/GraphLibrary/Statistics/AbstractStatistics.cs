@@ -2,7 +2,7 @@
 
 namespace GraphLibrary.Statistics
 {
-    public abstract class AbstractStatistics
+    public abstract class AbstractStatisticsCollector
     {
         private Stopwatch watch = new Stopwatch();
         private int visitedCells;

@@ -4,7 +4,7 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{CDC72CB3-CF23-419C-BFB0-FD21A6149A1E}</ProjectGuid>
+    <ProjectGuid>{040A5D8B-F84B-4595-9DCB-932976F90EE0}</ProjectGuid>
     <OutputType>WinExe</OutputType>
     <RootNamespace>WpfVersion</RootNamespace>
     <AssemblyName>WpfVersion</AssemblyName>
@@ -37,6 +37,7 @@
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
+    <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Core" />
@@ -55,17 +56,21 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="Controls\Field.xaml.cs">
-      <DependentUpon>Field.xaml</DependentUpon>
+    <Compile Include="Converters\ObstaclePercentConverter.cs" />
+    <Compile Include="Infrastructure\RelayCommand.cs" />
+    <Compile Include="Model\GraphFactory\RandomValuedWpfGraphFactory.cs" />
+    <Compile Include="Model\GraphFactory\WpfGraphInitializer.cs" />
+    <Compile Include="Model\GraphLoader\WpfGraphLoader.cs" />
+    <Compile Include="Model\GraphSaver\GraphSaver.cs" />
+    <Compile Include="Model\Graph\WpfGraph.cs" />
+    <Compile Include="Model\PauseMaker\WpfPauseMaker.cs" />
+    <Compile Include="Model\RoleChanger\WpfRoleChanger.cs" />
+    <Compile Include="Model\Vertex\WpfVertex.cs" />
+    <Compile Include="ViewModel\WpfVersionViewModel.cs" />
+    <Compile Include="View\Windows\GraphParametresWindow.xaml.cs">
+      <DependentUpon>GraphParametresWindow.xaml</DependentUpon>
     </Compile>
-    <Compile Include="GraphFactory\RandomWpfGraphFactory.cs" />
-    <Compile Include="Graph\WpfGraph.cs" />
-    <Compile Include="Vertex\WpfVertex.cs" />
-    <Page Include="Controls\Field.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Windows\MainWindow.xaml">
+    <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
@@ -73,10 +78,14 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Windows\MainWindow.xaml.cs">
+    <Compile Include="MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Page Include="View\Windows\GraphParametresWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs">
@@ -105,10 +114,28 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
+    <Resource Include="Resources\Images\play.png" />
+  </ItemGroup>
+  <ItemGroup>
     <ProjectReference Include="..\GraphLibrary\GraphLibrary.csproj">
-      <Project>{5441521c-1754-4098-a843-8904910700e8}</Project>
+      <Project>{5441521C-1754-4098-A843-8904910700E8}</Project>
       <Name>GraphLibrary</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Images\copy.png" />
+    <Resource Include="Resources\Images\cut.png" />
+    <Resource Include="Resources\Images\filesave.png" />
+    <Resource Include="Resources\Images\new.png" />
+    <Resource Include="Resources\Images\openfile.png" />
+    <Resource Include="Resources\Images\paste.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Images\clear.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Images\obstacle.png" />
+  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

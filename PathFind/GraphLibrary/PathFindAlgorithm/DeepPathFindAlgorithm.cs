@@ -12,11 +12,11 @@ namespace GraphLibrary.PathFindAlgorithm
     {
         private readonly AbstractGraph graph;
         private Stack<IVertex> visitedVerticesStack = new Stack<IVertex>();
-        private WeightedGraphSearchAlgoStatistics statCollector;
+       public AbstractStatisticsCollector StatCollector { get; set; }
 
         public DeepPathFindAlgorithm(AbstractGraph graph)
         {
-            statCollector = new WeightedGraphSearchAlgoStatistics();
+            StatCollector = new WeightedGraphSearchAlgoStatisticsCollector();
             this.graph = graph;
         }
 
@@ -36,7 +36,7 @@ namespace GraphLibrary.PathFindAlgorithm
                 vertex = vertex.ParentVertex;
                 if (vertex.IsSimpleVertex)
                     vertex.MarkAsPath();
-                statCollector.AddLength(int.Parse(temp.Text));
+                (StatCollector as WeightedGraphSearchAlgoStatisticsCollector).AddLength(int.Parse(temp.Text));
                 Pause(Const.PATH_DRAW_PAUSE_MILLISECONDS);
             }
         }
@@ -45,7 +45,7 @@ namespace GraphLibrary.PathFindAlgorithm
         {
             if (graph.End == null)
                 return false;
-            statCollector.BeginCollectStatistic();
+            StatCollector.BeginCollectStatistic();
             var currentVertex = graph.Start;
             Visit(currentVertex);
             while (!IsDestination(currentVertex))
@@ -61,7 +61,7 @@ namespace GraphLibrary.PathFindAlgorithm
                     currentVertex = visitedVerticesStack.Pop();
                 Pause(Const.FIND_PROCESS_PAUSE_MILLISECONDS);
             }
-            statCollector.StopCollectStatistics();
+            StatCollector.StopCollectStatistics();
             return graph.End.IsVisited;
         }
 
@@ -90,12 +90,12 @@ namespace GraphLibrary.PathFindAlgorithm
                 Pause(Const.VISIT_PAUSE_MILLISECONDS);
                 vertex.MarkAsVisited();
             }
-            statCollector.CellVisited();
+            StatCollector.CellVisited();
         }
 
         public string GetStatistics()
         {
-            return statCollector.Statistics;
+            return StatCollector.Statistics;
         }
     }
 }

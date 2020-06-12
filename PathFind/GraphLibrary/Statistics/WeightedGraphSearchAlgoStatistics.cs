@@ -1,6 +1,6 @@
 ﻿namespace GraphLibrary.Statistics
 {
-    public class WeightedGraphSearchAlgoStatistics : AbstractStatistics
+    public class WeightedGraphSearchAlgoStatisticsCollector : AbstractStatisticsCollector
     {
         private int pathLength;
         public override string Statistics => base.Statistics + "\nPath length: " + pathLength;
