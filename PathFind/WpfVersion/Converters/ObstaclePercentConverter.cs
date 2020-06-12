@@ -16,15 +16,14 @@ namespace WpfVersion.Converters
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            double result;
-            if (double.TryParse(value.ToString(), out result))
+            if (double.TryParse(value.ToString(), out double result))
             {
                 if (result >= MIN_SLIDER_VALUE && result <= MAX_SLIDER_VALUE)
                     return result;
                 else if (result > MAX_SLIDER_VALUE)
                     return (double)MAX_SLIDER_VALUE;
                 else
-                    return (double)MIN_SLIDER_VALUE;                  
+                    return (double)MIN_SLIDER_VALUE;
             }
             else
                 return 0D;
