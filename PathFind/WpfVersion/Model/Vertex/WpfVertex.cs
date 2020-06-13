@@ -3,8 +3,10 @@ using GraphLibrary.Constants;
 using GraphLibrary.Vertex;
 using System;
 using System.Collections.Generic;
+using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
+using WpfVersion.Properties;
 
 namespace WpfVersion.Model.Vertex
 {
@@ -18,6 +20,7 @@ namespace WpfVersion.Model.Vertex
             Height = Const.WIN_FORMS_VERTEX_SIZE;
             IsObstacle = false;
             FontSize = 12;
+            Template = (ControlTemplate)TryFindResource("roundbutton");
         }
 
         public bool IsEnd { get; set; }

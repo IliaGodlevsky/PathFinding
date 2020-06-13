@@ -1,7 +1,11 @@
 ﻿using GraphLibrary.Algorithm;
 using GraphLibrary.Constants;
+using GraphLibrary.Enums.AlgorithmEnum;
 using GraphLibrary.GraphFactory;
+using GraphLibrary.PathFindAlgorithmSelector;
 using GraphLibrary.RoleChanger;
+using System.ComponentModel;
+using System.Runtime.CompilerServices;
 using System.Windows;
 using System.Windows.Controls;
 using WpfVersion.Infrastructure;
@@ -14,31 +18,66 @@ using WpfVersion.View.Windows;
 
 namespace WpfVersion.ViewModel
 {
-    public class WpfVersionViewModel
+    public class WpfVersionViewModel : INotifyPropertyChanged
     {
-        private IPathFindAlgorithm algorythm;
+        public Algorithms Algorithm { get; set; }
+
+        public IPathFindAlgorithm Algorythm { get; set; }
+
+        private string statistics;
+
+        public string Statistics 
+        { 
+            get
+            {
+                return statistics;
+            }
+            private set
+            {
+                statistics = value; OnPropertyChanged();
+            }
+        }
+
         private IVertexRoleChanger changer;
+        private Window window;
+
+        public event PropertyChangedEventHandler PropertyChanged;
+
         public Canvas GraphField { get; set; }
         public int Width { get; set; }
         public int Height { get; set; }
         public int ObstaclePercent { get; set; }
         public WpfGraph Graph { get; set; }
 
-        public RelayCommand QuickStartPathFindCommand { get; }
+        public RelayCommand StartPathFindCommand { get; }
         public RelayCommand CreateNewGraphCommand { get; }
         public RelayCommand ClearGraphCommand { get; }
-        public RelayCommand OkCommand { get; set; }
+        public RelayCommand ConfirmCreateGraphCommandCommand { get; }
+        public RelayCommand CancelCreateGrapgCommand { get; }
+        public RelayCommand ChoosePathFindAlgorythmCommand { get; }
+        public RelayCommand ConfirmChoosePathFindAlgorythmCommand { get; }
         public WpfVersionViewModel()
         {
             GraphField = new Canvas();
-            QuickStartPathFindCommand = new RelayCommand(ExecuteQuickStartPathFindCommand, 
-                CanExecuteQuickStartPathFindCommand);
+
+            StartPathFindCommand = new RelayCommand(ExecuteStartPathFindCommand, 
+                CanExecuteStartPathFindCommand);
+
             CreateNewGraphCommand = new RelayCommand(ExecuteCreateNewGraphCommand, 
                 CanExecuteCreateGraphCommand);
+
             ClearGraphCommand = new RelayCommand(ExecuteClearGraphCommand, 
                 CanExecuteClearGraphCommand);
-            OkCommand = new RelayCommand(ExecuteOkCommand, CanExecuteOkCommand);
-            Button button = new Button();
+
+            ConfirmCreateGraphCommandCommand = new RelayCommand(ExecuteConfirmCreateGraphCommand, 
+                CanExecuteConfirmCreateGraphCommand);
+
+            CancelCreateGrapgCommand = new RelayCommand(ExecuteCancelCreateGraphCommand, 
+                CanExecuteCancelCommand);
+
+            ConfirmChoosePathFindAlgorythmCommand = new RelayCommand(ExecuteConfirmChoosePathFindAlgorithm,
+                CanExecuteConfirmChoosePathFindAlorithm);
+
         }
 
         private void FillGraphField()
@@ -58,58 +97,102 @@ namespace WpfVersion.ViewModel
             }
         }
 
-        private void ExecuteClearGraphCommand(object param)
+        private void ExecuteConfirmChoosePathFindAlgorithm(object param)
         {
-            Graph.Refresh();
-        }
-
-        private bool CanExecuteClearGraphCommand(object param)
-        {
-            return true;
-        }
-
-        private void ExecuteQuickStartPathFindCommand(object param)
-        {
-            algorythm = new DijkstraAlgorithm(Graph);
-            algorythm.Pause = new WpfPauseMaker().Pause;
-            if (algorythm.FindDestionation())
+            Algorythm = AlgorithmSelector.GetPathFindAlgorithm(Algorithm, Graph);
+            Algorythm.Pause = new WpfPauseMaker().Pause;
+            window.Close();
+            if (Algorythm.FindDestionation())
             {
-                algorythm.DrawPath();
+                Algorythm.DrawPath();
+                Statistics = Algorythm.StatCollector.Statistics;
                 Graph.Start = null;
                 Graph.End = null;
             }
         }
 
-        private bool CanExecuteQuickStartPathFindCommand(object param)
+        private void ExecuteClearGraphCommand(object param)
         {
-            return true;
+            Graph.Refresh();
+            Statistics = string.Empty;
         }
 
-        private void ExecuteCreateNewGraphCommand(object param)
+        private bool CanExecuteClearGraphCommand(object param)
         {
-            GraphParametresWindow window = new GraphParametresWindow();
+            return Graph != null;
+        }
+
+        private void ExecuteStartPathFindCommand(object param)
+        {
+            window = new PathFindParametresWindow();
             window.DataContext = this;
             window.Show();
         }
 
-        private void ExecuteOkCommand(object param)
+        private bool CanExecuteStartPathFindCommand(object param)
         {
-            IGraphFactory factory = new RandomValuedWpfGraphFactory(ObstaclePercent, Width, Height);
+            return Graph?.End != null && Graph?.Start != null;
+        }
+
+        private void ExecuteCreateNewGraphCommand(object param)
+        {
+            window = new GraphParametresWindow();
+            window.DataContext = this;
+            window.Show();
+        }
+
+        private void ExecuteConfirmCreateGraphCommand(object param)
+        {
+            IGraphFactory factory =
+                new RandomValuedWpfGraphFactory(ObstaclePercent, Width, Height, Const.SIZE_BETWEEN_VERTICES);
             Graph = (WpfGraph)factory.GetGraph();
             changer = new WpfRoleChanger(Graph);
             Graph.SetEnd += changer.SetDestinationPoint;
             Graph.SetStart += changer.SetStartPoint;
             FillGraphField();
+            window.Close();
         }
 
-        private bool CanExecuteOkCommand(object param)
+        private void ExecuteCancelCreateGraphCommand(object param)
         {
-            return Width != 0 && Height != 0 && ObstaclePercent != 0;
+            window.Close();
+        }
+
+        private bool CanExecuteConfirmCreateGraphCommand(object param)
+        {
+            return Width != 0 && Height != 0;
         }
 
         private bool CanExecuteCreateGraphCommand(object param)
         {
             return true;
+        }
+        private bool CanExecuteCancelCommand(object param)
+        {
+            return true;
+        }
+
+        private bool CanExecuteConfirmChoosePathFindAlorithm(object param)
+        {
+            return Algorithm == Algorithms.DijkstraAlgorithm ||
+                Algorithm == Algorithms.AStarAlgorithm ||
+                Algorithm == Algorithms.DeepPathFind ||
+                Algorithm == Algorithms.WidePathFind;
+        }
+
+        public virtual void OnPropertyChanged([CallerMemberName]string propertyName = "")
+        {
+            var handler = PropertyChanged;
+            handler?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        }
+
+        public void Dispose()
+        {
+            OnDispose();
+        }
+
+        protected virtual void OnDispose()
+        {
         }
     }
 }

@@ -1,0 +1,30 @@
+﻿<Window x:Class="WpfVersion.View.Windows.PathFindParametresWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:WpfVersion.View.Windows"
+        mc:Ignorable="d"
+        Title="PathFindParametresWindow" SizeToContent="WidthAndHeight">
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"></ColumnDefinition>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"></RowDefinition>
+            <RowDefinition Height="Auto"></RowDefinition>
+            <RowDefinition Height="Auto"></RowDefinition>
+            <RowDefinition Height="Auto"></RowDefinition>
+            <RowDefinition Height="Auto"></RowDefinition>
+            <RowDefinition Height="Auto"></RowDefinition>
+        </Grid.RowDefinitions>
+        <RadioButton Click="ChooseDijkstraAlgorithm" Margin ="5" Grid.Row ="1" Content="Dijkstra algorythm"></RadioButton>
+        <RadioButton Click="ChooseAStartALgorithm" Margin ="5" Grid.Row ="2" Content="A* algorythm"></RadioButton>
+        <RadioButton Click="ChooseDeepPathFindAlgorithm" Margin ="5" Grid.Row ="3" Content="Deep path find"></RadioButton>
+        <RadioButton Click="ChooseWidePathFindAlgorithm" Margin ="5" Grid.Row ="4" Content="Wide path find algorythm"></RadioButton>
+        <StackPanel HorizontalAlignment="Center"  Orientation="Horizontal" Grid.Row="5">
+            <Button Command="{Binding ConfirmChoosePathFindAlgorythmCommand}"  Margin ="5" Content="Choose"></Button>
+            <Button Margin ="5" Content="Cancel"></Button>
+        </StackPanel>
+    </Grid>
+</Window>

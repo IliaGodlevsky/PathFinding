@@ -6,9 +6,7 @@
         xmlns:local="clr-namespace:WpfVersion" 
         xmlns:converters="clr-namespace:WpfVersion.Converters" xmlns:viewmodel="clr-namespace:WpfVersion.ViewModel"
         mc:Ignorable="d"
-        Title="Path find" 
-        Height = "{Binding ElementName = ViewModel, Path = Graph.Height}" 
-        Width = "{Binding ElementName = ViewModel, Path = Graph.Width}">
+        Title="Path find" SizeToContent="WidthAndHeight">
     <Window.DataContext>
         <viewmodel:WpfVersionViewModel x:Name="ViewModel"></viewmodel:WpfVersionViewModel>
     </Window.DataContext>
@@ -23,58 +21,57 @@
             <RowDefinition Height="Auto"></RowDefinition>
         </Grid.RowDefinitions>
         <Canvas Margin="3" Grid.Row="2" x:Name="graphField" 
-                Width="{Binding ElementName = ViewModel, Path=Graph.Width}"
-                Height = "{Binding ElementName = ViewModel, Path=Graph.Height}" >
+                Width="Auto" Height = "Auto" >
             <ContentPresenter Content="{Binding GraphField}"></ContentPresenter>
         </Canvas>
         <Menu Margin="5">
             <MenuItem Header="File"></MenuItem>
-            <MenuItem Header="Algorythm"></MenuItem>
+            <MenuItem Header="Options" Command="{Binding ChoosePathFindAlgorythm}"></MenuItem>
             <MenuItem Header="Help"></MenuItem>
         </Menu>
         <ToolBar Grid.Row="1">
             <Button>
                 <StackPanel Orientation="Horizontal">
-                    <Image MaxWidth="25" MaxHeight="25" Source="Resources/Images/openfile.png"></Image>
+                    <Image MaxWidth="15" MaxHeight="15" Source="Resources/Images/openfile.png"></Image>
                     <TextBlock Margin ="5" Text="Open"></TextBlock>
                 </StackPanel>
             </Button>
             <Separator/>
             <Button>
                 <StackPanel Orientation="Horizontal">
-                    <Image MaxWidth="25" MaxHeight="25" Source="Resources/Images/filesave.png"></Image>
+                    <Image MaxWidth="15" MaxHeight="15" Source="Resources/Images/filesave.png"></Image>
                     <TextBlock Margin ="5" Text="Save"></TextBlock>
                 </StackPanel>
             </Button>
             <Separator/>
             <Button Command="{Binding CreateNewGraphCommand}">
                 <StackPanel Orientation="Horizontal">
-                    <Image MaxWidth="25" MaxHeight="25" Source="Resources/Images/new.png"></Image>
+                    <Image MaxWidth="15" MaxHeight="15" Source="Resources/Images/new.png"></Image>
                     <TextBlock Margin ="5" Text="New"></TextBlock>
                 </StackPanel>
             </Button>
             <Separator/>
             <Button Command="{Binding ClearGraphCommand}">
                 <StackPanel Orientation="Horizontal">
-                    <Image MaxWidth="25" MaxHeight="25" Source="Resources/Images/clear.png"></Image>
+                    <Image MaxWidth="15" MaxHeight="15" Source="Resources/Images/clear.png"></Image>
                     <TextBlock Margin ="5" Text="Clear"></TextBlock>
                 </StackPanel>
             </Button>
             <Separator/>
             <CheckBox>
-                <Image MaxWidth="25" MaxHeight="25" Source="Resources/Images/obstacle.png"></Image>
+                <Image MaxWidth="15" MaxHeight="15" Source="Resources/Images/obstacle.png"></Image>
             </CheckBox>
             <Separator/>
-            <Button Command ="{Binding QuickStartPathFindCommand}">
+            <Button Command ="{Binding StartPathFindCommand}">
                 <StackPanel Orientation="Horizontal">
-                    <Image MaxWidth="25" MaxHeight="25" Source="Resources/Images/play.png"></Image>
+                    <Image MaxWidth="15" MaxHeight="15" Source="Resources/Images/play.png"></Image>
                     <TextBlock Margin ="5" Text="Start find"></TextBlock>
                 </StackPanel>
             </Button>
         </ToolBar>
-        <StatusBar Grid.Row="3" Margin="5">
-            <TextBlock></TextBlock>
+        <StatusBar HorizontalAlignment="Center" Grid.Row="3" Margin="5">
+            <TextBlock Margin="5" Text = "{Binding Path = Statistics}"></TextBlock>
         </StatusBar>
-       
+
     </Grid>
 </Window>

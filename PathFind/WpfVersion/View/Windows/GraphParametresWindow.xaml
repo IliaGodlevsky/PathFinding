@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:WpfVersion.View.Windows"
         xmlns:converters="clr-namespace:WpfVersion.Converters"
         mc:Ignorable="d"
-        Title="Parametres" Height="180" Width="180">
+        Title="Parametres" SizeToContent="WidthAndHeight">
     <Window.Resources>
         <converters:ObstaclePercentConverter x:Key="obstaclePercentConverter"></converters:ObstaclePercentConverter>
     </Window.Resources>
@@ -22,18 +22,23 @@
             <RowDefinition Height="Auto"></RowDefinition>
             <RowDefinition Height="Auto"></RowDefinition>
         </Grid.RowDefinitions>
-        <TextBlock Margin="5" Text="Obstacle percent" Grid.Row="0" Grid.ColumnSpan="2" HorizontalAlignment="Center"></TextBlock>
-        <Slider Value = "{Binding Path = ObstaclePercent}" x:Name="obstacleSlider" Minimum="0" Maximum ="100" MinWidth="100" Margin="5" Grid.Row="1"></Slider>
+        <TextBlock Margin="5" Text="Obstacle percent" Grid.Row="0" Grid.ColumnSpan="2" 
+                   HorizontalAlignment="Center"></TextBlock>
+        <Slider Value = "{Binding Path = ObstaclePercent}" x:Name="obstacleSlider" 
+                Minimum="0" Maximum ="100" MinWidth="100" Margin="5" Grid.Row="1"></Slider>
         <TextBox Text = "{Binding ElementName = obstacleSlider, Path = Value, 
-            Converter = {StaticResource obstaclePercentConverter},Mode = TwoWay, UpdateSourceTrigger = PropertyChanged}"
+            Converter = {StaticResource obstaclePercentConverter},Mode = TwoWay, 
+            UpdateSourceTrigger = PropertyChanged}"
                  x:Name="obstacleTextBox" MinWidth="40" Margin="5" Grid.Row="1" Grid.Column="1"></TextBox>
         <TextBlock Grid.Row="2" Text="Graph width" Margin="5"></TextBlock>
-        <TextBox Text ="{Binding Path = Width, UpdateSourceTrigger=PropertyChanged}" Grid.Row="2" Grid.Column="1" Margin="5"></TextBox>
+        <TextBox Text ="{Binding Path = Width, UpdateSourceTrigger=PropertyChanged}" 
+                 Grid.Row="2" Grid.Column="1" Margin="5"></TextBox>
         <TextBlock Grid.Row ="3" Text="Graph height" Margin="5"></TextBlock>
-        <TextBox Text="{Binding Path = Height, UpdateSourceTrigger=PropertyChanged}" Grid.Row="3" Grid.Column="1" Margin="5"></TextBox>
+        <TextBox Text="{Binding Path = Height, UpdateSourceTrigger=PropertyChanged}" 
+                 Grid.Row="3" Grid.Column="1" Margin="5"></TextBox>
         <StackPanel Grid.Row="4" Grid.ColumnSpan="2" Orientation="Horizontal" HorizontalAlignment="Center">
-            <Button Command ="{Binding OkCommand}" Margin="5" Content="OK"></Button>
-            <Button Margin="5" Content="Cancel"></Button>
+            <Button Command ="{Binding ConfirmCreateGraphCommandCommand}" Margin="5" Content="OK"></Button>
+            <Button Command="{Binding CancelCreateGrapgCommand}" Margin="5" Content="Cancel"></Button>
         </StackPanel>
     </Grid>
 </Window>

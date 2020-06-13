@@ -70,6 +70,9 @@
     <Compile Include="View\Windows\GraphParametresWindow.xaml.cs">
       <DependentUpon>GraphParametresWindow.xaml</DependentUpon>
     </Compile>
+    <Compile Include="View\Windows\PathFindParametresWindow.xaml.cs">
+      <DependentUpon>PathFindParametresWindow.xaml</DependentUpon>
+    </Compile>
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -82,7 +85,15 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Page Include="Resources\Templates\RoundButton.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="View\Windows\GraphParametresWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\Windows\PathFindParametresWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -123,12 +134,9 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Resources\Images\copy.png" />
-    <Resource Include="Resources\Images\cut.png" />
     <Resource Include="Resources\Images\filesave.png" />
     <Resource Include="Resources\Images\new.png" />
     <Resource Include="Resources\Images\openfile.png" />
-    <Resource Include="Resources\Images\paste.png" />
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Resources\Images\clear.png" />

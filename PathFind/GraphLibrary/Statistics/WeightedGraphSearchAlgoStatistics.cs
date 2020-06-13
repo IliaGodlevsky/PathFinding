@@ -2,7 +2,7 @@
 {
     public class WeightedGraphSearchAlgoStatisticsCollector : AbstractStatisticsCollector
     {
-        private int pathLength;
+        protected int pathLength;
         public override string Statistics => base.Statistics + "\nPath length: " + pathLength;
 
         public override void BeginCollectStatistic()

@@ -5,7 +5,7 @@ namespace GraphLibrary.Statistics
     public abstract class AbstractStatisticsCollector
     {
         private Stopwatch watch = new Stopwatch();
-        private int visitedCells;
+        protected int visitedCells;
 
         public virtual string Statistics
         {
@@ -22,7 +22,7 @@ namespace GraphLibrary.Statistics
             watch.Start();
         }
 
-        private string Time => "Time: " + (watch.Elapsed.Minutes 
+        protected string Time => "Time: " + (watch.Elapsed.Minutes 
             + ":" + watch.Elapsed.Seconds + "." +
                 +watch.Elapsed.Milliseconds);
 
