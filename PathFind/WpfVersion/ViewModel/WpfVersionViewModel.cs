@@ -90,10 +90,14 @@ namespace WpfVersion.ViewModel
                 {
                     GraphField.Children.Add(Graph[i,j] as WpfVertex);
                     if (!Graph[i, j].IsObstacle)
-                        (Graph[i, j] as WpfVertex).Click += changer.SetStartPoint;
-                    (Graph[i, j] as WpfVertex).MouseRightButtonDown += changer.ReversePolarity;
-                    Canvas.SetLeft(Graph[i, j] as WpfVertex, Const.SIZE_BETWEEN_VERTICES * i);
-                    Canvas.SetTop(Graph[i, j] as WpfVertex, Const.SIZE_BETWEEN_VERTICES * j);
+                        (Graph[i, j] as WpfVertex).Click += 
+                            changer.SetStartPoint;
+                    (Graph[i, j] as WpfVertex).MouseRightButtonDown += 
+                        changer.ReversePolarity;
+                    Canvas.SetLeft(Graph[i, j] as WpfVertex, 
+                        Const.SIZE_BETWEEN_VERTICES * i);
+                    Canvas.SetTop(Graph[i, j] as WpfVertex, 
+                        Const.SIZE_BETWEEN_VERTICES * j);
                 }
             }
         }
