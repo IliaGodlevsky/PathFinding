@@ -62,15 +62,9 @@ namespace WpfVersion.Model.Vertex
 
         public VertexInfo Info => new VertexInfo(this);
 
-        public void MarkAsCurrentlyLooked()
-        {
-            Background = BeingVisitedVertexColor;
-        }
+        public void MarkAsCurrentlyLooked() => Background = BeingVisitedVertexColor;
 
-        public void MarkAsEnd()
-        {
-            Background = EndVertexColor;
-        }
+        public void MarkAsEnd() => Background = EndVertexColor;
 
         public void MarkAsObstacle()
         {
@@ -79,10 +73,7 @@ namespace WpfVersion.Model.Vertex
             Background = new SolidColorBrush(Colors.Black);
         }
 
-        public void MarkAsPath()
-        {
-            Background = PathVertexColor;
-        }
+        public void MarkAsPath() => Background = PathVertexColor;
 
         public void MarkAsSimpleVertex()
         {
@@ -90,15 +81,9 @@ namespace WpfVersion.Model.Vertex
                 Background = new SolidColorBrush(Colors.White);
         }
 
-        public void MarkAsStart()
-        {
-            Background = StartVertexColor;
-        }
+        public void MarkAsStart() => Background = StartVertexColor;
 
-        public void MarkAsVisited()
-        {
-            Background = AfterVisitVertexColor;
-        }
+        public void MarkAsVisited() => Background = AfterVisitVertexColor;
 
         public void SetToDefault()
         {
