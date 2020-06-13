@@ -66,12 +66,14 @@
     <Compile Include="Model\PauseMaker\WpfPauseMaker.cs" />
     <Compile Include="Model\RoleChanger\WpfRoleChanger.cs" />
     <Compile Include="Model\Vertex\WpfVertex.cs" />
+    <Compile Include="ViewModel\GraphParametresViewModel.cs" />
+    <Compile Include="ViewModel\PathFindViewModel.cs" />
     <Compile Include="ViewModel\WpfVersionViewModel.cs" />
     <Compile Include="View\Windows\GraphParametresWindow.xaml.cs">
       <DependentUpon>GraphParametresWindow.xaml</DependentUpon>
     </Compile>
-    <Compile Include="View\Windows\PathFindParametresWindow.xaml.cs">
-      <DependentUpon>PathFindParametresWindow.xaml</DependentUpon>
+    <Compile Include="View\Windows\PathFindWindow.xaml.cs">
+      <DependentUpon>PathFindWindow.xaml</DependentUpon>
     </Compile>
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
@@ -93,7 +95,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="View\Windows\PathFindParametresWindow.xaml">
+    <Page Include="View\Windows\PathFindWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

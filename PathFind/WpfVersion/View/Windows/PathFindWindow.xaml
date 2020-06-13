@@ -1,4 +1,4 @@
-﻿<Window x:Class="WpfVersion.View.Windows.PathFindParametresWindow"
+﻿<Window x:Class="WpfVersion.View.Windows.PathFindWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
@@ -18,13 +18,13 @@
             <RowDefinition Height="Auto"></RowDefinition>
             <RowDefinition Height="Auto"></RowDefinition>
         </Grid.RowDefinitions>
-        <RadioButton Click="ChooseDijkstraAlgorithm" Margin ="5" Grid.Row ="1" Content="Dijkstra algorythm"></RadioButton>
-        <RadioButton Click="ChooseAStartALgorithm" Margin ="5" Grid.Row ="2" Content="A* algorythm"></RadioButton>
-        <RadioButton Click="ChooseDeepPathFindAlgorithm" Margin ="5" Grid.Row ="3" Content="Deep path find"></RadioButton>
-        <RadioButton Click="ChooseWidePathFindAlgorithm" Margin ="5" Grid.Row ="4" Content="Wide path find algorythm"></RadioButton>
+        <RadioButton Command="{Binding ChooseDijkstraAlgorithmCommand}" Margin ="5" Grid.Row ="1" Content="Dijkstra algorythm"></RadioButton>
+        <RadioButton Command="{Binding ChooseAStartALgorithmCommand}" Margin ="5" Grid.Row ="2" Content="A* algorythm"></RadioButton>
+        <RadioButton Command="{Binding ChooseDeepPathFindAlgorithmCommand}" Margin ="5" Grid.Row ="3" Content="Deep path find"></RadioButton>
+        <RadioButton Command="{Binding ChooseWidePathFindAlgorithmCommand}" Margin ="5" Grid.Row ="4" Content="Wide path find algorythm"></RadioButton>
         <StackPanel HorizontalAlignment="Center"  Orientation="Horizontal" Grid.Row="5">
-            <Button Command="{Binding ConfirmChoosePathFindAlgorythmCommand}"  Margin ="5" Content="Choose"></Button>
-            <Button Margin ="5" Content="Cancel"></Button>
+            <Button Command="{Binding ConfirmPathFindAlgorithmChoice}"  Margin ="5" Content="Choose"></Button>
+            <Button Command="{Binding CancelPathFindAlgorithmChoice}" Margin ="5" Content="Cancel"></Button>
         </StackPanel>
     </Grid>
 </Window>
