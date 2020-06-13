@@ -28,13 +28,9 @@ namespace WpfVersion.ViewModel
             ConfirmPathFindAlgorithmChoice = new RelayCommand(ExecuteConfirmPathFindAlgorithmChoice,
                 CanExecuteConfirmPathFindAlgorithmChoice);
             CancelPathFindAlgorithmChoice = new RelayCommand(obj => model?.Window.Close(), obj => true);
-
             ChooseDijkstraAlgorithmCommand = new RelayCommand(obj => algorithm = Algorithms.DijkstraAlgorithm, obj => true);
-
             ChooseAStartAlgorithmCommand = new RelayCommand(obj => algorithm = Algorithms.AStarAlgorithm, obj => true);
-
             ChooseDeepPathFindAlgorithmCommand = new RelayCommand(obj => algorithm = Algorithms.DeepPathFind, obj => true);
-
             ChooseWidePathFindAlgorithmCommand = new RelayCommand(obj => algorithm = Algorithms.WidePathFind, obj => true);
         }
 
