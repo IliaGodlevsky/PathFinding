@@ -23,7 +23,7 @@
             <RowDefinition Height="Auto"></RowDefinition>
         </Grid.RowDefinitions>
         <Canvas Margin="3" Grid.Row="2" x:Name="graphField" 
-                Width="Auto" Height = "Auto" >
+                Width="Auto" Height = "Auto">
             <ContentPresenter Content="{Binding GraphField}"></ContentPresenter>
         </Canvas>
         <Menu Margin="5">

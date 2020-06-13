@@ -19,14 +19,8 @@ namespace WpfVersion.ViewModel
 
         public string Statistics 
         { 
-            get
-            {
-                return statistics;
-            }
-            set
-            {
-                statistics = value; OnPropertyChanged();
-            }
+            get{return statistics;}
+            set{statistics = value; OnPropertyChanged();}
         }
 
         public Window Window { get; set; }
@@ -47,19 +41,11 @@ namespace WpfVersion.ViewModel
         public MainWindowViewModel()
         {
             GraphField = new Canvas();
-
-            StartPathFindCommand = new RelayCommand(ExecuteStartPathFindCommand,
-                obj => Graph?.End != null && Graph?.Start != null);
-
+            StartPathFindCommand = new RelayCommand(ExecuteStartPathFindCommand, obj => Graph?.End != null && Graph?.Start != null);
             CreateNewGraphCommand = new RelayCommand(ExecuteCreateNewGraphCommand, obj => true);
-
-            ClearGraphCommand = new RelayCommand(ExecuteClearGraphCommand, 
-                obj=> Graph != null);
-
+            ClearGraphCommand = new RelayCommand(ExecuteClearGraphCommand, obj=> Graph != null);
             SaveGraphCommand = new RelayCommand(ExecuteSaveGraphCommand, obj => Graph != null);
-
             LoadGraphCommand = new RelayCommand(ExecuteLoadGraphCommand, obj => true);
-
         }
 
         private void ExecuteSaveGraphCommand(object param)
