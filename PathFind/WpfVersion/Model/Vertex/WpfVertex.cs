@@ -1,7 +1,6 @@
 ﻿using GraphLibrary;
 using GraphLibrary.Constants;
 using GraphLibrary.Vertex;
-using System;
 using System.Collections.Generic;
 using System.Windows.Controls;
 using System.Windows.Media;
@@ -10,6 +9,21 @@ namespace WpfVersion.Model.Vertex
 {
     public class WpfVertex : Button, IVertex
     {
+        public static SolidColorBrush AfterVisitVertexColor { get; set; }
+        public static SolidColorBrush BeingVisitedVertexColor { get; set; }
+        public static SolidColorBrush PathVertexColor { get; set; }
+        public static SolidColorBrush StartVertexColor { get; set; }
+        public static SolidColorBrush EndVertexColor { get; set; }
+
+        static WpfVertex()
+        {
+            AfterVisitVertexColor = new SolidColorBrush(Colors.CadetBlue);
+            BeingVisitedVertexColor = new SolidColorBrush(Colors.DarkMagenta);
+            PathVertexColor = new SolidColorBrush(Colors.Yellow);
+            StartVertexColor = new SolidColorBrush(Colors.Green);
+            EndVertexColor = new SolidColorBrush(Colors.Red);
+        }
+
         public WpfVertex() : base()
         {
             Neighbours = new List<IVertex>();
@@ -38,15 +52,8 @@ namespace WpfVersion.Model.Vertex
         public bool IsVisited { get; set; }
         public string Text 
         { 
-            get
-            {
-
-                return Content.ToString();
-            }
-            set
-            {
-                Content = value;
-            }
+            get{return Content.ToString();}
+            set{Content = value;}
         }
         public List<IVertex> Neighbours { get; set; }
         public IVertex ParentVertex { get; set; }
@@ -57,12 +64,12 @@ namespace WpfVersion.Model.Vertex
 
         public void MarkAsCurrentlyLooked()
         {
-            Background = new SolidColorBrush(Colors.DarkMagenta);
+            Background = BeingVisitedVertexColor;
         }
 
         public void MarkAsEnd()
         {
-            Background = new SolidColorBrush(Colors.Red);
+            Background = EndVertexColor;
         }
 
         public void MarkAsObstacle()
@@ -74,7 +81,7 @@ namespace WpfVersion.Model.Vertex
 
         public void MarkAsPath()
         {
-            Background = new SolidColorBrush(Colors.Yellow);
+            Background = PathVertexColor;
         }
 
         public void MarkAsSimpleVertex()
@@ -85,12 +92,12 @@ namespace WpfVersion.Model.Vertex
 
         public void MarkAsStart()
         {
-            Background = new SolidColorBrush(Colors.Green);
+            Background = StartVertexColor;
         }
 
         public void MarkAsVisited()
         {
-            Background = new SolidColorBrush(Colors.CadetBlue);
+            Background = AfterVisitVertexColor;
         }
 
         public void SetToDefault()
