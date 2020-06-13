@@ -39,6 +39,7 @@ namespace WpfVersion.ViewModel
         }
 
         private IVertexRoleChanger changer;
+
         private Window window;
 
         public event PropertyChangedEventHandler PropertyChanged;
@@ -52,7 +53,7 @@ namespace WpfVersion.ViewModel
         public RelayCommand StartPathFindCommand { get; }
         public RelayCommand CreateNewGraphCommand { get; }
         public RelayCommand ClearGraphCommand { get; }
-        public RelayCommand ConfirmCreateGraphCommandCommand { get; }
+        public RelayCommand ConfirmCreateGraphCommand { get; }
         public RelayCommand CancelCreateGrapgCommand { get; }
         public RelayCommand ChoosePathFindAlgorythmCommand { get; }
         public RelayCommand ConfirmChoosePathFindAlgorythmCommand { get; }
@@ -69,7 +70,7 @@ namespace WpfVersion.ViewModel
             ClearGraphCommand = new RelayCommand(ExecuteClearGraphCommand, 
                 CanExecuteClearGraphCommand);
 
-            ConfirmCreateGraphCommandCommand = new RelayCommand(ExecuteConfirmCreateGraphCommand, 
+            ConfirmCreateGraphCommand = new RelayCommand(ExecuteConfirmCreateGraphCommand, 
                 CanExecuteConfirmCreateGraphCommand);
 
             CancelCreateGrapgCommand = new RelayCommand(ExecuteCancelCreateGraphCommand, 
@@ -167,6 +168,7 @@ namespace WpfVersion.ViewModel
         {
             return true;
         }
+
         private bool CanExecuteCancelCommand(object param)
         {
             return true;

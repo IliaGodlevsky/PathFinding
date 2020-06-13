@@ -37,7 +37,7 @@
         <TextBox Text="{Binding Path = Height, UpdateSourceTrigger=PropertyChanged}" 
                  Grid.Row="3" Grid.Column="1" Margin="5"></TextBox>
         <StackPanel Grid.Row="4" Grid.ColumnSpan="2" Orientation="Horizontal" HorizontalAlignment="Center">
-            <Button Command ="{Binding ConfirmCreateGraphCommandCommand}" Margin="5" Content="OK"></Button>
+            <Button Command ="{Binding ConfirmCreateGraphCommand}" Margin="5" Content="OK"></Button>
             <Button Command="{Binding CancelCreateGrapgCommand}" Margin="5" Content="Cancel"></Button>
         </StackPanel>
     </Grid>
