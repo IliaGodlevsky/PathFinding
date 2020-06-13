@@ -7,6 +7,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using WpfVersion.Model.Graph;
+using WpfVersion.Model.Vertex;
 
 namespace WpfVersion.Model.GraphFactory
 {
@@ -18,17 +20,17 @@ namespace WpfVersion.Model.GraphFactory
 
         public override AbstractGraph GetGraph()
         {
-            throw new NotImplementedException();
+            return new WpfGraph(vertices);
         }
 
         protected override IVertex CreateVertex(VertexInfo info)
         {
-            throw new NotImplementedException();
+            return new WpfVertex(info);
         }
 
         protected override void SetGraph(int width, int height)
         {
-            throw new NotImplementedException();
+            vertices = new WpfVertex[width, height];
         }
     }
 }

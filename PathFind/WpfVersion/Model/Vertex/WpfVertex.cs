@@ -3,10 +3,8 @@ using GraphLibrary.Constants;
 using GraphLibrary.Vertex;
 using System;
 using System.Collections.Generic;
-using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
-using WpfVersion.Properties;
 
 namespace WpfVersion.Model.Vertex
 {
@@ -21,6 +19,14 @@ namespace WpfVersion.Model.Vertex
             IsObstacle = false;
             FontSize = 12;
             Template = (ControlTemplate)TryFindResource("roundbutton");
+        }
+
+        public WpfVertex(VertexInfo info) : this()
+        {
+            IsObstacle = info.IsObstacle;
+            Text = info.Text;
+            if (IsObstacle)
+                MarkAsObstacle();
         }
 
         public bool IsEnd { get; set; }
@@ -47,7 +53,7 @@ namespace WpfVersion.Model.Vertex
         public double Value { get; set; }
         public System.Drawing.Point Location { get; set; }
 
-        public VertexInfo Info => throw new NotImplementedException();
+        public VertexInfo Info => new VertexInfo(this);
 
         public void MarkAsCurrentlyLooked()
         {

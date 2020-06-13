@@ -1,25 +1,27 @@
 ﻿using GraphLibrary;
 using GraphLibrary.GraphFactory;
 using GraphLibrary.GraphLoader;
-using System;
+using Microsoft.Win32;
+using System.Windows;
+using WpfVersion.Model.GraphFactory;
 
 namespace WpfVersion.Model.GraphLoader
 {
     public class WpfGraphLoader : AbstractGraphLoader
     {
+        private readonly int placeBetweenButtons;
+
+        public WpfGraphLoader(int placeBetweenButtons) => this.placeBetweenButtons = placeBetweenButtons;
+
         protected override AbstractGraphInitializer GetInitializer(VertexInfo[,] info)
-        {
-            throw new NotImplementedException();
-        }
+            => new WpfGraphInitializer(info, placeBetweenButtons);
 
         protected override string GetPath()
         {
-            throw new NotImplementedException();
+            var open = new OpenFileDialog();
+            return open.ShowDialog() == true ? open.FileName : "";
         }
 
-        protected override void ShowMessage(string message)
-        {
-            throw new NotImplementedException();
-        }
+        protected override void ShowMessage(string message) => MessageBox.Show(message);
     }
 }

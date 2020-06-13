@@ -10,7 +10,7 @@ namespace WinFormsVersion.GraphLoader
     {
         private readonly int placeBetweenButtons;
 
-        public WinFormsGraphLoader(int placeBetweenButtons) => this.placeBetweenButtons = placeBetweenButtons;       
+        public WinFormsGraphLoader(int placeBetweenButtons) => this.placeBetweenButtons = placeBetweenButtons;
 
         protected override AbstractGraphInitializer GetInitializer(VertexInfo[,] info) 
             => new WinFormsGraphInitializer(info, placeBetweenButtons);

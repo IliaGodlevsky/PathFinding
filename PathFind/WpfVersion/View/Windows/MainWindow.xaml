@@ -6,7 +6,9 @@
         xmlns:local="clr-namespace:WpfVersion" 
         xmlns:converters="clr-namespace:WpfVersion.Converters" xmlns:viewmodel="clr-namespace:WpfVersion.ViewModel"
         mc:Ignorable="d"
-        Title="Path find" SizeToContent="WidthAndHeight">
+        Title="Path find"
+        ResizeMode="CanResize"
+        SizeToContent="WidthAndHeight">
     <Window.DataContext>
         <viewmodel:MainWindowViewModel x:Name="ViewModel"></viewmodel:MainWindowViewModel>
     </Window.DataContext>
@@ -30,41 +32,41 @@
             <MenuItem Header="Help"></MenuItem>
         </Menu>
         <ToolBar Grid.Row="1">
-            <Button>
+            <Button Command="{Binding LoadGraphCommand}">
                 <StackPanel Orientation="Horizontal">
-                    <Image MaxWidth="15" MaxHeight="15" Source="Resources/Images/openfile.png"></Image>
+                    <Image MaxWidth="15" MaxHeight="15" Source="../../Resources/Images/openfile.png"></Image>
                     <TextBlock Margin ="5" Text="Open"></TextBlock>
                 </StackPanel>
             </Button>
             <Separator/>
-            <Button>
+            <Button Command="{Binding SaveGraphCommand}">
                 <StackPanel Orientation="Horizontal">
-                    <Image MaxWidth="15" MaxHeight="15" Source="Resources/Images/filesave.png"></Image>
+                    <Image MaxWidth="15" MaxHeight="15" Source="../../Resources/Images/filesave.png"></Image>
                     <TextBlock Margin ="5" Text="Save"></TextBlock>
                 </StackPanel>
             </Button>
             <Separator/>
             <Button Command="{Binding CreateNewGraphCommand}">
                 <StackPanel Orientation="Horizontal">
-                    <Image MaxWidth="15" MaxHeight="15" Source="Resources/Images/new.png"></Image>
+                    <Image MaxWidth="15" MaxHeight="15" Source="../../Resources/Images/new.png"></Image>
                     <TextBlock Margin ="5" Text="New"></TextBlock>
                 </StackPanel>
             </Button>
             <Separator/>
             <Button Command="{Binding ClearGraphCommand}">
                 <StackPanel Orientation="Horizontal">
-                    <Image MaxWidth="15" MaxHeight="15" Source="Resources/Images/clear.png"></Image>
+                    <Image MaxWidth="15" MaxHeight="15" Source="../../Resources/Images/clear.png"></Image>
                     <TextBlock Margin ="5" Text="Clear"></TextBlock>
                 </StackPanel>
             </Button>
             <Separator/>
             <CheckBox>
-                <Image MaxWidth="15" MaxHeight="15" Source="Resources/Images/obstacle.png"></Image>
+                <Image MaxWidth="15" MaxHeight="15" Source="../../Resources/Images/obstacle.png"></Image>
             </CheckBox>
             <Separator/>
             <Button Command ="{Binding StartPathFindCommand}">
                 <StackPanel Orientation="Horizontal">
-                    <Image MaxWidth="15" MaxHeight="15" Source="Resources/Images/play.png"></Image>
+                    <Image MaxWidth="15" MaxHeight="15" Source="../../Resources/Images/play.png"></Image>
                     <TextBlock Margin ="5" Text="Start find"></TextBlock>
                 </StackPanel>
             </Button>

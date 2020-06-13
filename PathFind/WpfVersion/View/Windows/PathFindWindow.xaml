@@ -19,7 +19,7 @@
             <RowDefinition Height="Auto"></RowDefinition>
         </Grid.RowDefinitions>
         <RadioButton Command="{Binding ChooseDijkstraAlgorithmCommand}" Margin ="5" Grid.Row ="1" Content="Dijkstra algorythm"></RadioButton>
-        <RadioButton Command="{Binding ChooseAStartALgorithmCommand}" Margin ="5" Grid.Row ="2" Content="A* algorythm"></RadioButton>
+        <RadioButton Command="{Binding ChooseAStartAlgorithmCommand}" Margin ="5" Grid.Row ="2" Content="A* algorythm"></RadioButton>
         <RadioButton Command="{Binding ChooseDeepPathFindAlgorithmCommand}" Margin ="5" Grid.Row ="3" Content="Deep path find"></RadioButton>
         <RadioButton Command="{Binding ChooseWidePathFindAlgorithmCommand}" Margin ="5" Grid.Row ="4" Content="Wide path find algorythm"></RadioButton>
         <StackPanel HorizontalAlignment="Center"  Orientation="Horizontal" Grid.Row="5">

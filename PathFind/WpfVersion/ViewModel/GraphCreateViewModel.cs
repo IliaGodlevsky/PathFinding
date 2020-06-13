@@ -10,7 +10,7 @@ using WpfVersion.Model.Vertex;
 
 namespace WpfVersion.ViewModel
 {
-    public class GraphParametresViewModel
+    public class GraphCreateViewModel
     {
         public string Width { get; set; }
         public string Height { get; set; }
@@ -25,7 +25,7 @@ namespace WpfVersion.ViewModel
         public RelayCommand ConfirmCreateGraphCommand { get; }
         public RelayCommand CancelCreateGraphCommand { get; }
 
-        public GraphParametresViewModel(MainWindowViewModel model)
+        public GraphCreateViewModel(MainWindowViewModel model)
         {
             this.model = model;
             ConfirmCreateGraphCommand = new RelayCommand(ExecuteConfirmCreateGraphCommand, 
@@ -40,7 +40,7 @@ namespace WpfVersion.ViewModel
             IGraphFactory factory = new RandomValuedWpfGraphFactory(ObstaclePercent, width, 
                 height, Const.SIZE_BETWEEN_VERTICES);
             graph = (WpfGraph)factory.GetGraph();
-            FillGraphField();
+            FillGraphField(ref graph, ref graphField);
             model.GraphField = graphField;
             model.Graph = graph;
             model.Window.Close();
@@ -55,7 +55,7 @@ namespace WpfVersion.ViewModel
                 return false;
         }
 
-        private void FillGraphField()
+        public static void FillGraphField(ref WpfGraph graph, ref Canvas graphField)
         {
             IVertexRoleChanger changer = new WpfRoleChanger(graph);
             graphField = new Canvas();

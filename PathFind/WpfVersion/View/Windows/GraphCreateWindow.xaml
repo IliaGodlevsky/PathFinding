@@ -38,7 +38,7 @@
                  Grid.Row="3" Grid.Column="1" Margin="5"></TextBox>
         <StackPanel Grid.Row="4" Grid.ColumnSpan="2" Orientation="Horizontal" HorizontalAlignment="Center">
             <Button Command ="{Binding ConfirmCreateGraphCommand}" Margin="5" Content="OK"></Button>
-            <Button Command="{Binding CancelCreateGrapgCommand}" Margin="5" Content="Cancel"></Button>
+            <Button Command="{Binding CancelCreateGraphCommand}" Margin="5" Content="Cancel"></Button>
         </StackPanel>
     </Grid>
 </Window>
