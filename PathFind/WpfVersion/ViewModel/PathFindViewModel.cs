@@ -13,7 +13,7 @@ namespace WpfVersion.ViewModel
         private IPathFindAlgorithm pathFindAlgorythm;
         private WpfGraph graph;
         private Algorithms algorithm;
-        private WpfVersionViewModel model;
+        private MainWindowViewModel model;
         public RelayCommand ConfirmPathFindAlgorithmChoice { get; }
         public RelayCommand CancelPathFindAlgorithmChoice { get; }
         public RelayCommand ChooseDijkstraAlgorithmCommand { get; }
@@ -21,7 +21,7 @@ namespace WpfVersion.ViewModel
         public RelayCommand ChooseDeepPathFindAlgorithmCommand { get; }
         public RelayCommand ChooseWidePathFindAlgorithmCommand { get; }
 
-        public PathFindViewModel(WpfVersionViewModel model)
+        public PathFindViewModel(MainWindowViewModel model)
         {
             this.model = model;
             graph = model.Graph;

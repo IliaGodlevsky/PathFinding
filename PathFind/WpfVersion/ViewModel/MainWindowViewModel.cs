@@ -8,7 +8,7 @@ using WpfVersion.View.Windows;
 
 namespace WpfVersion.ViewModel
 {
-    public class WpfVersionViewModel : INotifyPropertyChanged
+    public class MainWindowViewModel : INotifyPropertyChanged
     {
         private string statistics;
 
@@ -35,7 +35,7 @@ namespace WpfVersion.ViewModel
         public RelayCommand StartPathFindCommand { get; }
         public RelayCommand CreateNewGraphCommand { get; }
         public RelayCommand ClearGraphCommand { get; }
-        public WpfVersionViewModel()
+        public MainWindowViewModel()
         {
             GraphField = new Canvas();
 
@@ -65,7 +65,7 @@ namespace WpfVersion.ViewModel
 
         private void ExecuteCreateNewGraphCommand(object param)
         {
-            Window = new GraphParametresWindow();
+            Window = new GraphCreatesWindow();
             GraphParametresViewModel model = new GraphParametresViewModel(this);
             Window.DataContext = model;
             Window.Show();

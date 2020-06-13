@@ -1,6 +1,4 @@
-﻿using GraphLibrary.Enums.AlgorithmEnum;
-using System.Windows;
-using WpfVersion.ViewModel;
+﻿using System.Windows;
 
 namespace WpfVersion.View.Windows
 {

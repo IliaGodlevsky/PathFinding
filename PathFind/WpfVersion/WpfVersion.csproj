@@ -68,9 +68,9 @@
     <Compile Include="Model\Vertex\WpfVertex.cs" />
     <Compile Include="ViewModel\GraphParametresViewModel.cs" />
     <Compile Include="ViewModel\PathFindViewModel.cs" />
-    <Compile Include="ViewModel\WpfVersionViewModel.cs" />
-    <Compile Include="View\Windows\GraphParametresWindow.xaml.cs">
-      <DependentUpon>GraphParametresWindow.xaml</DependentUpon>
+    <Compile Include="ViewModel\MainWindowViewModel.cs" />
+    <Compile Include="View\Windows\GraphCreateWindow.xaml.cs">
+      <DependentUpon>GraphCreateWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\Windows\PathFindWindow.xaml.cs">
       <DependentUpon>PathFindWindow.xaml</DependentUpon>
@@ -91,7 +91,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="View\Windows\GraphParametresWindow.xaml">
+    <Page Include="View\Windows\GraphCreateWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

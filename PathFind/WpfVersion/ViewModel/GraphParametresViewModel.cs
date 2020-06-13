@@ -16,7 +16,7 @@ namespace WpfVersion.ViewModel
         public string Height { get; set; }
         public int ObstaclePercent { get; set; }
 
-        private WpfVersionViewModel model;
+        private MainWindowViewModel model;
 
         private WpfGraph graph;
 
@@ -25,7 +25,7 @@ namespace WpfVersion.ViewModel
         public RelayCommand ConfirmCreateGraphCommand { get; }
         public RelayCommand CancelCreateGraphCommand { get; }
 
-        public GraphParametresViewModel(WpfVersionViewModel model)
+        public GraphParametresViewModel(MainWindowViewModel model)
         {
             this.model = model;
             ConfirmCreateGraphCommand = new RelayCommand(ExecuteConfirmCreateGraphCommand, 
