@@ -72,6 +72,8 @@ namespace WpfVersion.ViewModel
         {
             IGraphLoader loader = new WpfGraphLoader(Const.SIZE_BETWEEN_VERTICES);
             graph = (WpfGraph)loader.GetGraph();
+            if (graph == null)
+                return;
             GraphCreateViewModel.FillGraphField(ref graph, ref graphField);
             OnPropertyChanged(nameof(GraphField));
             OnPropertyChanged(nameof(Graph));
