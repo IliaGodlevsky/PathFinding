@@ -11,7 +11,7 @@ namespace GraphLibrary.Statistics
         {
             get
             {
-                return Time + "\nCell visited: "
+                return Time + "\nCells visited: "
                 + visitedCells;
             }
         }

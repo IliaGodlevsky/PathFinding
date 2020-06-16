@@ -12,7 +12,7 @@ namespace GraphLibrary.Algorithm
     public class DijkstraAlgorithm : IPathFindAlgorithm
     {
         protected readonly AbstractGraph graph;
-        private List<IVertex> neigbourQueue = new List<IVertex>();
+        private readonly List<IVertex> neigbourQueue = new List<IVertex>();
         public AbstractStatisticsCollector StatCollector { get; set; }
 
         public DijkstraAlgorithm(AbstractGraph graph)

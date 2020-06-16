@@ -16,7 +16,7 @@ namespace WpfVersion.ViewModel
         public string Height { get; set; }
         public int ObstaclePercent { get; set; }
 
-        private MainWindowViewModel model;
+        private readonly MainWindowViewModel model;
 
         private WpfGraph graph;
 
@@ -65,14 +65,10 @@ namespace WpfVersion.ViewModel
                 {
                     graphField.Children.Add(graph[i, j] as WpfVertex);
                     if (!graph[i, j].IsObstacle)
-                        (graph[i, j] as WpfVertex).Click +=
-                            changer.SetStartPoint;
-                    (graph[i, j] as WpfVertex).MouseRightButtonDown +=
-                        changer.ReversePolarity;
-                    Canvas.SetLeft(graph[i, j] as WpfVertex,
-                        Const.SIZE_BETWEEN_VERTICES * i);
-                    Canvas.SetTop(graph[i, j] as WpfVertex,
-                        Const.SIZE_BETWEEN_VERTICES * j);
+                        (graph[i, j] as WpfVertex).MouseLeftButtonDown += changer.SetStartPoint;
+                    (graph[i, j] as WpfVertex).MouseRightButtonDown += changer.ReversePolarity;
+                    Canvas.SetLeft(graph[i, j] as WpfVertex, Const.SIZE_BETWEEN_VERTICES * i);
+                    Canvas.SetTop(graph[i, j] as WpfVertex, Const.SIZE_BETWEEN_VERTICES * j);
                 }
             }
             graph.SetStart += changer.SetStartPoint;

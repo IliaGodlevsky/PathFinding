@@ -31,7 +31,7 @@ namespace WpfVersion.Model.RoleChanger
             top.IsEnd = true;
             top.MarkAsEnd();
             foreach (var butt in graph)
-                (butt as WpfVertex).Click -= SetDestinationPoint;
+                (butt as WpfVertex).MouseLeftButtonDown -= SetDestinationPoint;
             graph.End = top;
         }
 
@@ -43,8 +43,8 @@ namespace WpfVersion.Model.RoleChanger
             top.IsStart = true;
             foreach (var butt in graph)
             {
-                (butt as WpfVertex).Click -= SetStartPoint;
-                (butt as WpfVertex).Click += SetDestinationPoint;
+                (butt as WpfVertex).MouseLeftButtonDown -= SetStartPoint;
+                (butt as WpfVertex).MouseLeftButtonDown += SetDestinationPoint;
             }
             top.MarkAsStart();
             graph.Start = top;

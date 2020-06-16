@@ -15,6 +15,20 @@ namespace WpfVersion.ViewModel
 {
     public class MainWindowViewModel : INotifyPropertyChanged
     {
+        private int width;
+        private int height;
+        public int Width 
+        { 
+            get{return width;}
+            set{width = value; OnPropertyChanged();} 
+        }
+
+        public int Height
+        {
+            get { return height; }
+            set { height = value; OnPropertyChanged(); }
+        }
+
         private string statistics;
 
         public string Statistics 
@@ -60,6 +74,7 @@ namespace WpfVersion.ViewModel
             graph = (WpfGraph)loader.GetGraph();
             GraphCreateViewModel.FillGraphField(ref graph, ref graphField);
             OnPropertyChanged(nameof(GraphField));
+            OnPropertyChanged(nameof(Graph));
         }
 
 
@@ -74,6 +89,7 @@ namespace WpfVersion.ViewModel
             PathFindViewModel model = new PathFindViewModel(this);
             Window = new PathFindWindow();
             Window.DataContext = model;
+            Window.WindowStartupLocation = WindowStartupLocation.CenterScreen;
             Window.Show();
         }
 
@@ -82,6 +98,7 @@ namespace WpfVersion.ViewModel
             Window = new GraphCreatesWindow();
             GraphCreateViewModel model = new GraphCreateViewModel(this);
             Window.DataContext = model;
+            Window.WindowStartupLocation = WindowStartupLocation.CenterScreen;
             Window.Show();
         }
 

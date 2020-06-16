@@ -7,7 +7,7 @@ using System.Windows.Media;
 
 namespace WpfVersion.Model.Vertex
 {
-    public class WpfVertex : Button, IVertex
+    public class WpfVertex : Label, IVertex
     {
         public static SolidColorBrush AfterVisitVertexColor { get; set; }
         public static SolidColorBrush BeingVisitedVertexColor { get; set; }
@@ -32,7 +32,7 @@ namespace WpfVersion.Model.Vertex
             Height = Const.WIN_FORMS_VERTEX_SIZE;
             IsObstacle = false;
             FontSize = 12;
-            Template = (ControlTemplate)TryFindResource("roundbutton");
+            Template = (ControlTemplate)TryFindResource("vertexTemplate");
         }
 
         public WpfVertex(VertexInfo info) : this()

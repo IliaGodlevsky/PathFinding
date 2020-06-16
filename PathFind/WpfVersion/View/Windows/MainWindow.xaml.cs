@@ -1,8 +1,4 @@
-﻿using GraphLibrary.Algorithm;
-using GraphLibrary.Graph;
-using System.Windows;
-using System.Windows.Controls;
-using WpfVersion.Infrastructure;
+﻿using System.Windows;
 
 namespace WpfVersion
 {
@@ -14,7 +10,6 @@ namespace WpfVersion
         public MainWindow()
         {
             InitializeComponent();
-
         }
     }
 }

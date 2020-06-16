@@ -1,7 +1,11 @@
 ﻿using GraphLibrary.Algorithm;
 using GraphLibrary.Enums.AlgorithmEnum;
 using GraphLibrary.PathFindAlgorithmSelector;
+using System;
+using System.Collections;
 using System.Windows;
+using System.Windows.Navigation;
+using WpfVersion.Extensions.ArrayExtension;
 using WpfVersion.Infrastructure;
 using WpfVersion.Model.Graph;
 using WpfVersion.Model.PauseMaker;
@@ -20,6 +24,8 @@ namespace WpfVersion.ViewModel
         public RelayCommand ChooseAStartAlgorithmCommand { get; }
         public RelayCommand ChooseDeepPathFindAlgorithmCommand { get; }
         public RelayCommand ChooseWidePathFindAlgorithmCommand { get; }
+        public RelayCommand ChooseValueGreedPathFindAlgorithmCommand { get; }
+        public RelayCommand ChooseDistanceGreedPathFindAlgorithmCommand { get; }
 
         public PathFindViewModel(MainWindowViewModel model)
         {
@@ -32,6 +38,8 @@ namespace WpfVersion.ViewModel
             ChooseAStartAlgorithmCommand = new RelayCommand(obj => algorithm = Algorithms.AStarAlgorithm, obj => true);
             ChooseDeepPathFindAlgorithmCommand = new RelayCommand(obj => algorithm = Algorithms.DeepPathFind, obj => true);
             ChooseWidePathFindAlgorithmCommand = new RelayCommand(obj => algorithm = Algorithms.WidePathFind, obj => true);
+            ChooseValueGreedPathFindAlgorithmCommand = new RelayCommand(obj => algorithm = Algorithms.ValueGreedyAlgorithm, obj => true);
+            ChooseDistanceGreedPathFindAlgorithmCommand = new RelayCommand(obj => algorithm = Algorithms.DistanceGreedyAlgorithm, obj => true);
         }
 
         private void ExecuteConfirmPathFindAlgorithmChoice(object param)
@@ -52,10 +60,7 @@ namespace WpfVersion.ViewModel
 
         private bool CanExecuteConfirmPathFindAlgorithmChoice(object param)
         {
-            return algorithm == Algorithms.DijkstraAlgorithm ||
-                algorithm == Algorithms.AStarAlgorithm ||
-                algorithm == Algorithms.DeepPathFind ||
-                algorithm == Algorithms.WidePathFind;
+            return Enum.GetValues(typeof(Algorithms)).Exists(algo => (Algorithms)algo == algorithm);
         }
     }
 }

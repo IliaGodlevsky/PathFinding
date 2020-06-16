@@ -10,5 +10,10 @@ namespace WinFormsVersion.GraphSaver
             var save = new SaveFileDialog();
             return save.ShowDialog() == DialogResult.OK ? save.FileName : "";
         }
+
+        protected override void ShowMessage(string message)
+        {
+            MessageBox.Show(message);
+        }
     }
 }

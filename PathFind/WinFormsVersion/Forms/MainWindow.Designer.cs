@@ -72,7 +72,7 @@ namespace WinFormsVersion.Forms
             this.optionsToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
-            this.menuStrip1.Size = new System.Drawing.Size(1200, 36);
+            this.menuStrip1.Size = new System.Drawing.Size(1200, 33);
             this.menuStrip1.TabIndex = 0;
             this.menuStrip1.Text = "menuStrip1";
             // 
@@ -82,7 +82,7 @@ namespace WinFormsVersion.Forms
             this.saveMapToolStripMenuItem,
             this.loadMapToolStripMenuItem});
             this.fileToolStripMenuItem.Name = "fileToolStripMenuItem";
-            this.fileToolStripMenuItem.Size = new System.Drawing.Size(54, 30);
+            this.fileToolStripMenuItem.Size = new System.Drawing.Size(54, 29);
             this.fileToolStripMenuItem.Text = "File";
             // 
             // saveMapToolStripMenuItem
@@ -104,7 +104,7 @@ namespace WinFormsVersion.Forms
             this.optionsToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.findPathToolStripMenuItem});
             this.optionsToolStripMenuItem.Name = "optionsToolStripMenuItem";
-            this.optionsToolStripMenuItem.Size = new System.Drawing.Size(108, 30);
+            this.optionsToolStripMenuItem.Size = new System.Drawing.Size(108, 29);
             this.optionsToolStripMenuItem.Text = "Algorithm";
             // 
             // findPathToolStripMenuItem

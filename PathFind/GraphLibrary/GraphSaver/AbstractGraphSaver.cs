@@ -20,11 +20,12 @@ namespace GraphLibrary.GraphSaver
                         formatter.Serialize(stream, info);
                 }
                 catch (Exception ex) {
-                    Console.WriteLine(ex.Message);
+                    ShowMessage(ex.Message);
                 }
             }
         }
 
+        protected abstract void ShowMessage(string message);
         protected abstract string GetPath();
     }
 }

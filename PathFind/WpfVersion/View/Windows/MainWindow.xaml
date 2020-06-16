@@ -8,18 +8,20 @@
         mc:Ignorable="d"
         Title="Path find"
         ResizeMode="CanResize"
-        SizeToContent="WidthAndHeight">
+        SizeToContent="WidthAndHeight"
+        WindowStartupLocation="CenterScreen">
     <Window.DataContext>
         <viewmodel:MainWindowViewModel x:Name="ViewModel"></viewmodel:MainWindowViewModel>
     </Window.DataContext>
     <Window.Resources>
-        <converters:ObstaclePercentConverter x:Key="obstaclePercentConverter"></converters:ObstaclePercentConverter>
+        <converters:PathFindResultConverter x:Key="pathFindResultConverter"></converters:PathFindResultConverter>
     </Window.Resources>
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"></RowDefinition>
             <RowDefinition Height="Auto"></RowDefinition>
             <RowDefinition Height="*"></RowDefinition>
+            <RowDefinition Height="Auto"></RowDefinition>
             <RowDefinition Height="Auto"></RowDefinition>
         </Grid.RowDefinitions>
         <Canvas Margin="3" Grid.Row="2" x:Name="graphField" 
@@ -28,7 +30,7 @@
         </Canvas>
         <Menu Margin="5">
             <MenuItem Header="File"></MenuItem>
-            <MenuItem Header="Options" Command="{Binding ChoosePathFindAlgorythm}"></MenuItem>
+            <MenuItem Header="Options"></MenuItem>
             <MenuItem Header="Help"></MenuItem>
         </Menu>
         <ToolBar Grid.Row="1">
@@ -71,9 +73,17 @@
                 </StackPanel>
             </Button>
         </ToolBar>
-        <StatusBar HorizontalAlignment="Center" Grid.Row="3" Margin="5">
-            <TextBlock Margin="5" Text = "{Binding Path = Statistics}"></TextBlock>
+        <StatusBar Grid.Row="3">
+            <TextBlock Text = "{Binding Path = Statistics, 
+                Converter = {StaticResource pathFindResultConverter}}"></TextBlock>
         </StatusBar>
-
+        <StatusBar Grid.Row="4">
+            <TextBlock Text="Width: "></TextBlock>
+            <TextBlock Text="{Binding Graph.Width}"></TextBlock>
+            <TextBlock Text="| Height: "></TextBlock>
+            <TextBlock Text="{Binding Graph.Height}"></TextBlock>
+            <TextBlock Text="| Obstacle percent: "></TextBlock>
+            <TextBlock Text="{Binding Graph.ObstaclePercent}"></TextBlock>
+        </StatusBar>
     </Grid>
 </Window>
