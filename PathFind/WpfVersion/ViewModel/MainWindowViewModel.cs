@@ -9,6 +9,7 @@ using WpfVersion.Infrastructure;
 using WpfVersion.Model.Graph;
 using WpfVersion.Model.GraphLoader;
 using WpfVersion.Model.GraphSaver;
+using WpfVersion.Model.Vertex;
 using WpfVersion.View.Windows;
 
 namespace WpfVersion.ViewModel
@@ -52,6 +53,7 @@ namespace WpfVersion.ViewModel
         public RelayCommand ClearGraphCommand { get; }
         public RelayCommand SaveGraphCommand { get; }
         public RelayCommand LoadGraphCommand { get; }
+        public RelayCommand ShowVertexValueCommand { get; }
         public MainWindowViewModel()
         {
             GraphField = new Canvas();
@@ -60,6 +62,18 @@ namespace WpfVersion.ViewModel
             ClearGraphCommand = new RelayCommand(ExecuteClearGraphCommand, obj=> Graph != null);
             SaveGraphCommand = new RelayCommand(ExecuteSaveGraphCommand, obj => Graph != null);
             LoadGraphCommand = new RelayCommand(ExecuteLoadGraphCommand, obj => true);
+            ShowVertexValueCommand = new RelayCommand(ExecuteShowVertexValueCommand, obj => Graph != null);
+        }
+
+        private void ExecuteShowVertexValueCommand(object param)
+        {
+            foreach (var vertex in Graph)
+            { 
+                if ((vertex as WpfVertex).FontSize == 0.01)
+                    (vertex as WpfVertex).FontSize = 12;
+                else
+                    (vertex as WpfVertex).FontSize = 0.01;            
+            }
         }
 
         private void ExecuteSaveGraphCommand(object param)

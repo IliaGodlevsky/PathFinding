@@ -62,16 +62,18 @@
                 </StackPanel>
             </Button>
             <Separator/>
-            <CheckBox>
-                <Image MaxWidth="15" MaxHeight="15" Source="../../Resources/Images/obstacle.png"></Image>
-            </CheckBox>
-            <Separator/>
             <Button Command ="{Binding StartPathFindCommand}">
                 <StackPanel Orientation="Horizontal">
                     <Image MaxWidth="15" MaxHeight="15" Source="../../Resources/Images/play.png"></Image>
                     <TextBlock Margin ="5" Text="Start find"></TextBlock>
                 </StackPanel>
             </Button>
+            <CheckBox Command="{Binding ShowVertexValueCommand}">
+                <StackPanel Orientation="Horizontal">
+                    <Image MaxWidth="15" MaxHeight="15" Source="../../Resources/Images/openfile.png"></Image>
+                    <TextBlock Margin ="5" Text="Show values"></TextBlock>
+                </StackPanel>
+            </CheckBox>
         </ToolBar>
         <StatusBar Grid.Row="3">
             <TextBlock Text = "{Binding Path = Statistics, 

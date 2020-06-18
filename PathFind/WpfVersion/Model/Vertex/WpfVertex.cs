@@ -15,6 +15,16 @@ namespace WpfVersion.Model.Vertex
         public static SolidColorBrush StartVertexColor { get; set; }
         public static SolidColorBrush EndVertexColor { get; set; }
 
+        public static void ShowValue(WpfVertex vertex)
+        {
+            vertex.FontSize = 12;
+        }
+
+        public static void HideValue(WpfVertex vertex)
+        {
+            vertex.FontSize = 0;
+        }
+
         static WpfVertex()
         {
             AfterVisitVertexColor = new SolidColorBrush(Colors.CadetBlue);
