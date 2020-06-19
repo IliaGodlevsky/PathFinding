@@ -71,15 +71,11 @@
     <Compile Include="ViewModel\GraphCreateViewModel.cs" />
     <Compile Include="ViewModel\PathFindViewModel.cs" />
     <Compile Include="ViewModel\MainWindowViewModel.cs" />
-    <Compile Include="ViewModel\VertexOptionsViewModel.cs" />
     <Compile Include="View\Windows\GraphCreateWindow.xaml.cs">
       <DependentUpon>GraphCreateWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\Windows\PathFindWindow.xaml.cs">
       <DependentUpon>PathFindWindow.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="View\Windows\VertexOptionsWindow.xaml.cs">
-      <DependentUpon>VertexOptionsWindow.xaml</DependentUpon>
     </Compile>
     <Page Include="View\Windows\MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
@@ -102,10 +98,6 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="View\Windows\PathFindWindow.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="View\Windows\VertexOptionsWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

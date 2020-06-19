@@ -5,8 +5,8 @@ namespace WpfVersion.Infrastructure
 {
     public class RelayCommand : ICommand
     {
-        private Action<object> execute;
-        private Func<object, bool> canExecute;
+        private readonly Action<object> execute;
+        private readonly Func<object, bool> canExecute;
 
         public event EventHandler CanExecuteChanged
         {
@@ -21,14 +21,8 @@ namespace WpfVersion.Infrastructure
             this.canExecute = canExecute;
         }
 
-        public bool CanExecute(object parameter)
-        {
-            return canExecute == null || this.canExecute(parameter);
-        }
+        public bool CanExecute(object parameter) => canExecute == null || canExecute(parameter);
 
-        public void Execute(object parameter)
-        {
-            execute(parameter);
-        }
+        public void Execute(object parameter) => execute(parameter);
     }
 }

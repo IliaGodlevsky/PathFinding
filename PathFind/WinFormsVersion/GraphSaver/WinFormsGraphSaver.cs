@@ -8,7 +8,7 @@ namespace WinFormsVersion.GraphSaver
         protected override string GetPath()
         {
             var save = new SaveFileDialog();
-            return save.ShowDialog() == DialogResult.OK ? save.FileName : "";
+            return save.ShowDialog() == DialogResult.OK ? save.FileName : string.Empty;
         }
 
         protected override void ShowMessage(string message)

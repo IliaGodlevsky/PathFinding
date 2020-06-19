@@ -18,7 +18,7 @@ namespace WinFormsVersion.GraphLoader
         protected override string GetPath()
         {
             var open = new OpenFileDialog();
-            return open.ShowDialog() == DialogResult.OK ? open.FileName : "";
+            return open.ShowDialog() == DialogResult.OK ? open.FileName : string.Empty;
         }
 
         protected override void ShowMessage(string message) => MessageBox.Show(message);

@@ -9,27 +9,12 @@ using WpfVersion.Infrastructure;
 using WpfVersion.Model.Graph;
 using WpfVersion.Model.GraphLoader;
 using WpfVersion.Model.GraphSaver;
-using WpfVersion.Model.Vertex;
 using WpfVersion.View.Windows;
 
 namespace WpfVersion.ViewModel
 {
     public class MainWindowViewModel : INotifyPropertyChanged
     {
-        private int width;
-        private int height;
-        public int Width 
-        { 
-            get{return width;}
-            set{width = value; OnPropertyChanged();} 
-        }
-
-        public int Height
-        {
-            get { return height; }
-            set { height = value; OnPropertyChanged(); }
-        }
-
         private string statistics;
 
         public string Statistics 
@@ -62,18 +47,6 @@ namespace WpfVersion.ViewModel
             ClearGraphCommand = new RelayCommand(ExecuteClearGraphCommand, obj=> Graph != null);
             SaveGraphCommand = new RelayCommand(ExecuteSaveGraphCommand, obj => Graph != null);
             LoadGraphCommand = new RelayCommand(ExecuteLoadGraphCommand, obj => true);
-            ShowVertexValueCommand = new RelayCommand(ExecuteShowVertexValueCommand, obj => Graph != null);
-        }
-
-        private void ExecuteShowVertexValueCommand(object param)
-        {
-            foreach (var vertex in Graph)
-            { 
-                if ((vertex as WpfVertex).FontSize == 0.01)
-                    (vertex as WpfVertex).FontSize = 12;
-                else
-                    (vertex as WpfVertex).FontSize = 0.01;            
-            }
         }
 
         private void ExecuteSaveGraphCommand(object param)

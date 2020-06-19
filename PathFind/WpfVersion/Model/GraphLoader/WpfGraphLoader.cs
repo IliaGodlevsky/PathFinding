@@ -19,7 +19,7 @@ namespace WpfVersion.Model.GraphLoader
         protected override string GetPath()
         {
             var open = new OpenFileDialog();
-            return open.ShowDialog() == true ? open.FileName : "";
+            return open.ShowDialog() == true ? open.FileName : string.Empty;
         }
 
         protected override void ShowMessage(string message) => MessageBox.Show(message);

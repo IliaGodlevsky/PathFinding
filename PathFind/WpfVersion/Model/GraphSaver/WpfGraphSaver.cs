@@ -9,7 +9,7 @@ namespace WpfVersion.Model.GraphSaver
         protected override string GetPath()
         {
             var save = new SaveFileDialog();
-            return save.ShowDialog() == true ? save.FileName : "";
+            return save.ShowDialog() == true ? save.FileName : string.Empty;
         }
 
         protected override void ShowMessage(string message)
