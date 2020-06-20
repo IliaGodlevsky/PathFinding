@@ -87,7 +87,7 @@ namespace ConsoleVersion.Forms
 
         public void CreateGraph()
         {
-            int obstacles = Input.InputNumber("Enter number of obstacles: ", 100);
+            int obstacles = Input.InputNumber("Enter percent of obstacles: ", 100);
             int height = Input.InputNumber("Enter width of graph: ", 100, 10);
             int width = Input.InputNumber("Enter height of graph: ", 100, 10);
             factory = new RandomValuedConsoleGraphFactory(obstacles, width, height);
