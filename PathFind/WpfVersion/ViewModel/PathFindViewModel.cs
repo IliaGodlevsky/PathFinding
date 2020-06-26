@@ -3,9 +3,7 @@ using GraphLibrary.Enums.AlgorithmEnum;
 using GraphLibrary.PathFindAlgorithmSelector;
 using GraphLibrary.Statistics;
 using System;
-using System.Collections;
 using System.Windows;
-using System.Windows.Navigation;
 using WpfVersion.Extensions.ArrayExtension;
 using WpfVersion.Infrastructure;
 using WpfVersion.Model.Graph;
@@ -13,7 +11,7 @@ using WpfVersion.Model.PauseMaker;
 
 namespace WpfVersion.ViewModel
 {
-    public class PathFindViewModel
+    public class PathFindViewModel : BaseViewModel
     {
         private IPathFindAlgorithm pathFindAlgorythm;
         private WpfGraph graph;

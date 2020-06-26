@@ -67,6 +67,7 @@
     <Compile Include="Model\PauseMaker\WpfPauseMaker.cs" />
     <Compile Include="Model\RoleChanger\WpfRoleChanger.cs" />
     <Compile Include="Model\Vertex\WpfVertex.cs" />
+    <Compile Include="ViewModel\BaseViewModel.cs" />
     <Compile Include="ViewModel\GraphCreateViewModel.cs" />
     <Compile Include="ViewModel\PathFindViewModel.cs" />
     <Compile Include="ViewModel\MainWindowViewModel.cs" />

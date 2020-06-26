@@ -1,8 +1,6 @@
 ﻿using GraphFactory.GraphSaver;
 using GraphLibrary.Constants;
 using GraphLibrary.GraphLoader;
-using System.ComponentModel;
-using System.Runtime.CompilerServices;
 using System.Windows;
 using System.Windows.Controls;
 using WpfVersion.Infrastructure;
@@ -13,7 +11,7 @@ using WpfVersion.View.Windows;
 
 namespace WpfVersion.ViewModel
 {
-    public class MainWindowViewModel : INotifyPropertyChanged
+    public class MainWindowViewModel : BaseViewModel
     {
         private string statistics;
 
@@ -24,8 +22,6 @@ namespace WpfVersion.ViewModel
         }
 
         public Window Window { get; set; }
-
-        public event PropertyChangedEventHandler PropertyChanged;
 
         private Canvas graphField;
         public Canvas GraphField { get { return graphField; } set { graphField = value; OnPropertyChanged(); } }
@@ -73,28 +69,23 @@ namespace WpfVersion.ViewModel
             Statistics = string.Empty;
         }
 
-        private void ExecuteStartPathFindCommand(object param)
+        private void PrepareWindow(BaseViewModel model, Window window)
         {
-            PathFindViewModel model = new PathFindViewModel(this);
-            Window = new PathFindWindow();
+            var viewModel = model;
+            Window = window;
             Window.DataContext = model;
             Window.WindowStartupLocation = WindowStartupLocation.CenterScreen;
             Window.Show();
+        }
+
+        private void ExecuteStartPathFindCommand(object param)
+        {
+            PrepareWindow(new PathFindViewModel(this), new PathFindWindow());
         }
 
         private void ExecuteCreateNewGraphCommand(object param)
         {
-            Window = new GraphCreatesWindow();
-            GraphCreateViewModel model = new GraphCreateViewModel(this);
-            Window.DataContext = model;
-            Window.WindowStartupLocation = WindowStartupLocation.CenterScreen;
-            Window.Show();
-        }
-
-        public virtual void OnPropertyChanged([CallerMemberName]string propertyName = "")
-        {
-            var handler = PropertyChanged;
-            handler?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+            PrepareWindow(new GraphCreateViewModel(this), new GraphCreatesWindow());
         }
 
         public void Dispose()

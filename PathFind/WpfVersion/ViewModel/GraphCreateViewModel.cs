@@ -11,16 +11,14 @@ using WpfVersion.Model.Vertex;
 
 namespace WpfVersion.ViewModel
 {
-    public class GraphCreateViewModel
+    public class GraphCreateViewModel : BaseViewModel
     {
         public string Width { get; set; }
         public string Height { get; set; }
         public int ObstaclePercent { get; set; }
 
         private readonly MainWindowViewModel model;
-
         private WpfGraph graph;
-
         private Canvas graphField;
 
         public RelayCommand ConfirmCreateGraphCommand { get; }
@@ -34,6 +32,12 @@ namespace WpfVersion.ViewModel
             CancelCreateGraphCommand = new RelayCommand(obj=> model?.Window.Close(), obj => true);
         }
 
+        private void AdjustSizeOfMainWindow()
+        {
+            Application.Current.MainWindow.Width = graph.Width * Const.SIZE_BETWEEN_VERTICES + 50;
+            Application.Current.MainWindow.Height = graph.Height * Const.SIZE_BETWEEN_VERTICES + 150;
+        }
+
         private void ExecuteConfirmCreateGraphCommand(object param)
         {
             int width = int.Parse(Width);
@@ -45,8 +49,7 @@ namespace WpfVersion.ViewModel
             model.GraphField = graphField;
             model.Graph = graph;
             model.Window.Close();
-            Application.Current.MainWindow.Width = graph.Width * Const.SIZE_BETWEEN_VERTICES + 50;
-            Application.Current.MainWindow.Height = graph.Height * Const.SIZE_BETWEEN_VERTICES + 150;
+            AdjustSizeOfMainWindow();
         }
 
         private bool CanExecuteConfirmCreateGraphCommand(object param)
