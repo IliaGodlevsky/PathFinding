@@ -1,6 +1,7 @@
 ﻿using GraphLibrary.Constants;
 using GraphLibrary.GraphFactory;
 using GraphLibrary.RoleChanger;
+using System.Windows;
 using System.Windows.Controls;
 using WpfVersion.Infrastructure;
 using WpfVersion.Model.Graph;
@@ -44,6 +45,8 @@ namespace WpfVersion.ViewModel
             model.GraphField = graphField;
             model.Graph = graph;
             model.Window.Close();
+            Application.Current.MainWindow.Width = graph.Width * Const.SIZE_BETWEEN_VERTICES + 50;
+            Application.Current.MainWindow.Height = graph.Height * Const.SIZE_BETWEEN_VERTICES + 150;
         }
 
         private bool CanExecuteConfirmCreateGraphCommand(object param)

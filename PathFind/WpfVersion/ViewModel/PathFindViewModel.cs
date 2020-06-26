@@ -1,6 +1,7 @@
 ﻿using GraphLibrary.Algorithm;
 using GraphLibrary.Enums.AlgorithmEnum;
 using GraphLibrary.PathFindAlgorithmSelector;
+using GraphLibrary.Statistics;
 using System;
 using System.Collections;
 using System.Windows;
@@ -42,6 +43,14 @@ namespace WpfVersion.ViewModel
             ChooseDistanceGreedPathFindAlgorithmCommand = new RelayCommand(obj => algorithm = Algorithms.DistanceGreedyAlgorithm, obj => true);
         }
 
+        public string TransformStatistics(Statistics statistics)
+        {
+            return "Time: " + string.Format("{0}:{1}.{2}", statistics.Duration.Minute, statistics.Duration.Second, statistics.Duration.Millisecond)
+                + " | Steps: " + statistics.Steps.ToString()
+                + " | Path length: " + statistics.PathLength.ToString()
+                + " | Visited vertices: " + statistics.VisitedVertices.ToString();
+        }
+
         private void ExecuteConfirmPathFindAlgorithmChoice(object param)
         {
             pathFindAlgorythm = AlgorithmSelector.GetPathFindAlgorithm(algorithm, model.Graph);
@@ -50,7 +59,7 @@ namespace WpfVersion.ViewModel
             if (pathFindAlgorythm.FindDestionation())
             {
                 pathFindAlgorythm.DrawPath();
-                model.Statistics = pathFindAlgorythm.StatCollector.Statistics;
+                model.Statistics = TransformStatistics(pathFindAlgorythm.StatCollector.GetStatistics());
                 graph.Start = null;
                 graph.End = null;
             }

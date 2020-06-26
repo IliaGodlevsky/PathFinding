@@ -9,10 +9,9 @@ namespace GraphLibrary.Algorithm
     /// </summary>
     public interface IPathFindAlgorithm
     {
-        AbstractStatisticsCollector StatCollector { get; set; }
+        IStatisticsCollector StatCollector { get; set; }
         PauseCycle Pause { set; get; }
         bool FindDestionation();
         void DrawPath();
-        string GetStatistics();
     }
 }

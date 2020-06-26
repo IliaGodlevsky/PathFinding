@@ -8,14 +8,11 @@
         mc:Ignorable="d"
         Title="Path find"
         ResizeMode="CanResize"
-        SizeToContent="WidthAndHeight"
+        
         WindowStartupLocation="CenterScreen">
     <Window.DataContext>
         <viewmodel:MainWindowViewModel x:Name="ViewModel"></viewmodel:MainWindowViewModel>
     </Window.DataContext>
-    <Window.Resources>
-        <converters:PathFindResultConverter x:Key="pathFindResultConverter"></converters:PathFindResultConverter>
-    </Window.Resources>
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"></RowDefinition>
@@ -70,8 +67,7 @@
             </Button>
         </ToolBar>
         <StatusBar Grid.Row="3">
-            <TextBlock Text = "{Binding Path = Statistics, 
-                Converter = {StaticResource pathFindResultConverter}}"></TextBlock>
+            <TextBlock Text = "{Binding Path = Statistics}"></TextBlock>
         </StatusBar>
         <StatusBar Grid.Row="4">
             <TextBlock Text="Width: "></TextBlock>

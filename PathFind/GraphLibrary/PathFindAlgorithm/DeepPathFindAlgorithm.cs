@@ -12,11 +12,11 @@ namespace GraphLibrary.PathFindAlgorithm
     {
         private readonly AbstractGraph graph;
         private Stack<IVertex> visitedVerticesStack = new Stack<IVertex>();
-       public AbstractStatisticsCollector StatCollector { get; set; }
+       public IStatisticsCollector StatCollector { get; set; }
 
         public DeepPathFindAlgorithm(AbstractGraph graph)
         {
-            StatCollector = new WeightedGraphSearchAlgoStatisticsCollector();
+            StatCollector = new StatisticsCollector();
             this.graph = graph;
         }
 
@@ -36,7 +36,7 @@ namespace GraphLibrary.PathFindAlgorithm
                 vertex = vertex.ParentVertex;
                 if (vertex.IsSimpleVertex)
                     vertex.MarkAsPath();
-                (StatCollector as WeightedGraphSearchAlgoStatisticsCollector).AddLength(int.Parse(temp.Text));
+                StatCollector.IncludeVertexInStatistics(temp);
                 Pause(Const.PATH_DRAW_PAUSE_MILLISECONDS);
             }
         }
@@ -45,7 +45,7 @@ namespace GraphLibrary.PathFindAlgorithm
         {
             if (graph.End == null)
                 return false;
-            StatCollector.BeginCollectStatistic();
+            StatCollector.StartCollect();
             var currentVertex = graph.Start;
             Visit(currentVertex);
             while (!IsDestination(currentVertex))
@@ -61,7 +61,7 @@ namespace GraphLibrary.PathFindAlgorithm
                     currentVertex = visitedVerticesStack.Pop();
                 Pause(Const.FIND_PROCESS_PAUSE_MILLISECONDS);
             }
-            StatCollector.StopCollectStatistics();
+            StatCollector.StartCollect();
             return graph.End.IsVisited;
         }
 
@@ -90,12 +90,7 @@ namespace GraphLibrary.PathFindAlgorithm
                 Pause(Const.VISIT_PAUSE_MILLISECONDS);
                 vertex.MarkAsVisited();
             }
-            StatCollector.CellVisited();
-        }
-
-        public string GetStatistics()
-        {
-            return StatCollector.Statistics;
+            StatCollector.Visited();
         }
     }
 }

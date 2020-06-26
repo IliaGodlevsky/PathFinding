@@ -46,6 +46,7 @@
     <Compile Include="Constants\Const.cs" />
     <Compile Include="DistanceCalculator\DistanceCalculator.cs" />
     <Compile Include="Enums\AlgorithmEnum\Algorithm.cs" />
+    <Compile Include="Extensions\DateTimeExtension\DateTimeExtension.cs" />
     <Compile Include="Extensions\ListExtension\ListExtensions.cs" />
     <Compile Include="Extensions\MatrixExtension\TwoDimensionArrayExtensions.cs" />
     <Compile Include="GraphFactory\AbstractGraphFactory.cs" />
@@ -58,6 +59,9 @@
     <Compile Include="PathFindAlgorithmSelector\AlgorithmSelector.cs" />
     <Compile Include="PathFindAlgorithm\DeepPathFindAlgorithm.cs" />
     <Compile Include="RoleChanger\AbstractVertexRoleChanger.cs" />
+    <Compile Include="Statistics\Statistics.cs" />
+    <Compile Include="Statistics\StatisticsCollector.cs" />
+    <Compile Include="Statistics\IStatisticsCollector.cs" />
     <Compile Include="VertexInfo\VertexInfo.cs" />
     <Compile Include="Graph\AbstractGraph.cs" />
     <Compile Include="PathFindAlgorithm\AStarAlgorithm.cs" />
@@ -68,9 +72,6 @@
     <Compile Include="PauseMaker\PauseMaker.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RoleChanger\IVertexRoleChanger.cs" />
-    <Compile Include="Statistics\AbstractStatistics.cs" />
-    <Compile Include="Statistics\UnweightedGraphSearchAlgoStatistics.cs" />
-    <Compile Include="Statistics\WeightedGraphSearchAlgoStatistics.cs" />
     <Compile Include="BoundSetter.cs" />
     <Compile Include="Vertex\IVertex.cs" />
     <Compile Include="NeighbourSetter.cs" />

@@ -14,15 +14,14 @@ namespace GraphLibrary.Algorithm
     public class WidePathFindAlgorithm : IPathFindAlgorithm
     {
         protected Queue<IVertex> neighbourQueue = new Queue<IVertex>();
-        public AbstractStatisticsCollector StatCollector { get; set; }
+        public IStatisticsCollector StatCollector { get; set; }
 
         protected readonly AbstractGraph graph;
-
 
         public WidePathFindAlgorithm(AbstractGraph graph)
         {
             this.graph = graph;
-            StatCollector = new UnweightedGraphSearchAlgoStatisticsCollector();
+            StatCollector = new StatisticsCollector();
         }
 
         private IVertex GoNextWave(IVertex vertex)
@@ -68,7 +67,7 @@ namespace GraphLibrary.Algorithm
         {
             if (graph.End == null)
                 return false;
-            StatCollector.BeginCollectStatistic();
+            StatCollector.StartCollect();
             var currentVertex = graph.Start;
             Visit(currentVertex);
             MakeWaves(currentVertex);
@@ -82,9 +81,9 @@ namespace GraphLibrary.Algorithm
                     MakeWaves(currentVertex);
                     AddToQueue(currentVertex.Neighbours);
                 }
-                Pause(2);
+                Pause(milliseconds: 2);
             }
-            StatCollector.StopCollectStatistics();
+            StatCollector.StopCollect();
             return graph.End.IsVisited;
         }
 
@@ -96,7 +95,7 @@ namespace GraphLibrary.Algorithm
                 vertex = GoNextWave(vertex);
                 if (vertex.IsSimpleVertex)
                     vertex.MarkAsPath();
-                (StatCollector as UnweightedGraphSearchAlgoStatisticsCollector).AddStep();
+                StatCollector.IncludeVertexInStatistics(vertex);
                 Pause(35);
             }
         }
@@ -114,9 +113,7 @@ namespace GraphLibrary.Algorithm
                 Pause(8);
                 vertex.MarkAsVisited();
             }
-            StatCollector.CellVisited();
+            StatCollector.Visited();
         }
-
-        public string GetStatistics() => StatCollector.Statistics;
     }
 }

@@ -13,14 +13,14 @@ namespace GraphLibrary.Algorithm
     {
         protected readonly AbstractGraph graph;
         private readonly List<IVertex> neigbourQueue = new List<IVertex>();
-        public AbstractStatisticsCollector StatCollector { get; set; }
+        public IStatisticsCollector StatCollector { get; set; }
 
         public DijkstraAlgorithm(AbstractGraph graph)
         {
             this.graph = graph;
             foreach (var vertex in graph)
                 (vertex as IVertex).Value = double.PositiveInfinity;
-            StatCollector = new WeightedGraphSearchAlgoStatisticsCollector();
+            StatCollector = new StatisticsCollector();
         }
 
         public PauseCycle Pause { set; get; }
@@ -34,7 +34,7 @@ namespace GraphLibrary.Algorithm
                 vertex = vertex.ParentVertex;
                 if (vertex.IsSimpleVertex)
                     vertex.MarkAsPath();
-                (StatCollector as WeightedGraphSearchAlgoStatisticsCollector).AddLength(int.Parse(temp.Text));
+                StatCollector.IncludeVertexInStatistics(temp);
                 Pause(35);
             }
         }
@@ -72,7 +72,7 @@ namespace GraphLibrary.Algorithm
         {
             if (graph.End == null)
                 return false;
-            StatCollector.BeginCollectStatistic();
+            StatCollector.StartCollect();
             var currentVertex = graph.Start;
             currentVertex.IsVisited = true;
             currentVertex.Value = 0;
@@ -87,7 +87,7 @@ namespace GraphLibrary.Algorithm
                     Visit(currentVertex);
                 Pause(2);
             } while (!IsDestination(currentVertex));
-            StatCollector.StopCollectStatistics();
+            StatCollector.StopCollect();
             return graph.End.IsVisited;
         }
 
@@ -119,12 +119,7 @@ namespace GraphLibrary.Algorithm
                 Pause(8);
                 vertex.MarkAsVisited();               
             }
-            StatCollector.CellVisited();
-        }
-
-        public string GetStatistics()
-        {
-            return StatCollector.Statistics;
+            StatCollector.Visited();
         }
     }
 }

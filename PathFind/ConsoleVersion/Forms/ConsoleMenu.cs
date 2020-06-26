@@ -12,6 +12,7 @@ using System;
 using System.Drawing;
 using GraphLibrary.RoleChanger;
 using GraphLibrary.Graph;
+using GraphLibrary.Statistics;
 
 namespace ConsoleVersion.Forms
 {
@@ -109,6 +110,14 @@ namespace ConsoleVersion.Forms
             }
         }
 
+        public string TransformStatistics(Statistics statistics)
+        {
+            return "Time: " + string.Format("{0}:{1}.{2}", statistics.Duration.Minute, statistics.Duration.Second, statistics.Duration.Millisecond)
+                + "\nSteps: " + statistics.Steps.ToString() 
+                + "\nPath length: " + statistics.PathLength.ToString() 
+                + "\nVisited vertices: " + statistics.VisitedVertices.ToString();
+        }
+
         public void FindPath()
         {
             graph.Refresh();
@@ -123,7 +132,7 @@ namespace ConsoleVersion.Forms
             if (search.FindDestionation())
             {
                 search.DrawPath();
-                statistics = search.GetStatistics();
+                statistics = TransformStatistics(search.StatCollector.GetStatistics());
                 Console.Clear();
                 GraphShower.ShowGraph(graph);
                 Console.WriteLine("\n" + statistics);
