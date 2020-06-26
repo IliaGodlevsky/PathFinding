@@ -32,12 +32,6 @@ namespace WpfVersion.ViewModel
             CancelCreateGraphCommand = new RelayCommand(obj=> model?.Window.Close(), obj => true);
         }
 
-        private void AdjustSizeOfMainWindow()
-        {
-            Application.Current.MainWindow.Width = graph.Width * Const.SIZE_BETWEEN_VERTICES + 50;
-            Application.Current.MainWindow.Height = graph.Height * Const.SIZE_BETWEEN_VERTICES + 150;
-        }
-
         private void ExecuteConfirmCreateGraphCommand(object param)
         {
             int width = int.Parse(Width);
@@ -49,7 +43,7 @@ namespace WpfVersion.ViewModel
             model.GraphField = graphField;
             model.Graph = graph;
             model.Window.Close();
-            AdjustSizeOfMainWindow();
+            AdjustSizeOfMainWindow(graph.Width, graph.Height);
         }
 
         private bool CanExecuteConfirmCreateGraphCommand(object param)

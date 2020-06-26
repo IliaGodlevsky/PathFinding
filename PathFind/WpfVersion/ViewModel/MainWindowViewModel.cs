@@ -60,6 +60,7 @@ namespace WpfVersion.ViewModel
             GraphCreateViewModel.FillGraphField(ref graph, ref graphField);
             OnPropertyChanged(nameof(GraphField));
             OnPropertyChanged(nameof(Graph));
+            AdjustSizeOfMainWindow(graph.Width, graph.Height);
         }
 
 

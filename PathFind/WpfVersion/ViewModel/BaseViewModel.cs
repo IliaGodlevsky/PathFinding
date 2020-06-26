@@ -1,5 +1,7 @@
-﻿using System.ComponentModel;
+﻿using GraphLibrary.Constants;
+using System.ComponentModel;
 using System.Runtime.CompilerServices;
+using System.Windows;
 
 namespace WpfVersion.ViewModel
 {
@@ -11,6 +13,13 @@ namespace WpfVersion.ViewModel
         {
             var handler = PropertyChanged;
             handler?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        }
+
+        protected virtual void AdjustSizeOfMainWindow(int graphWidth, int graphHeight)
+        {
+            Application.Current.MainWindow.Width = graphWidth * Const.SIZE_BETWEEN_VERTICES + Const.SIZE_BETWEEN_VERTICES;
+            Application.Current.MainWindow.Height = graphHeight * Const.SIZE_BETWEEN_VERTICES + 
+                Application.Current.MainWindow.DesiredSize.Height;
         }
     }
 }
