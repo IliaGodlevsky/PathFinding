@@ -38,7 +38,8 @@ namespace WpfVersion.ViewModel
         public MainWindowViewModel()
         {
             GraphField = new Canvas();
-            StartPathFindCommand = new RelayCommand(ExecuteStartPathFindCommand, obj => Graph?.End != null && Graph?.Start != null);
+            StartPathFindCommand = new RelayCommand(ExecuteStartPathFindCommand, 
+                obj => Graph?.End != null && Graph?.Start != null);
             CreateNewGraphCommand = new RelayCommand(ExecuteCreateNewGraphCommand, obj => true);
             ClearGraphCommand = new RelayCommand(ExecuteClearGraphCommand, obj=> Graph != null);
             SaveGraphCommand = new RelayCommand(ExecuteSaveGraphCommand, obj => Graph != null);
@@ -47,13 +48,13 @@ namespace WpfVersion.ViewModel
 
         private void ExecuteSaveGraphCommand(object param)
         {
-            IGraphSaver saver = new WpfGraphSaver();
+            var saver = new WpfGraphSaver();
             saver.SaveGraph(Graph);
         }
 
         private void ExecuteLoadGraphCommand(object param)
         {
-            IGraphLoader loader = new WpfGraphLoader(Const.SIZE_BETWEEN_VERTICES);
+            var loader = new WpfGraphLoader(Const.SIZE_BETWEEN_VERTICES);
             graph = (WpfGraph)loader.GetGraph();
             if (graph == null)
                 return;
@@ -72,7 +73,6 @@ namespace WpfVersion.ViewModel
 
         private void PrepareWindow(BaseViewModel model, Window window)
         {
-            var viewModel = model;
             Window = window;
             Window.DataContext = model;
             Window.WindowStartupLocation = WindowStartupLocation.CenterScreen;

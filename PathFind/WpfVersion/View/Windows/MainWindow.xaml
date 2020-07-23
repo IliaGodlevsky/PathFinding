@@ -7,8 +7,7 @@
         xmlns:converters="clr-namespace:WpfVersion.Converters" xmlns:viewmodel="clr-namespace:WpfVersion.ViewModel"
         mc:Ignorable="d"
         Title="Path find"
-        ResizeMode="CanResize"
-        
+        ResizeMode="CanResize"        
         WindowStartupLocation="CenterScreen">
     <Window.DataContext>
         <viewmodel:MainWindowViewModel x:Name="ViewModel"></viewmodel:MainWindowViewModel>
@@ -32,38 +31,19 @@
         </Menu>
         <ToolBar Grid.Row="1">
             <Button Command="{Binding LoadGraphCommand}">
-                <StackPanel Orientation="Horizontal">
-                    <Image MaxWidth="15" MaxHeight="15" Source="../../Resources/Images/openfile.png"></Image>
-                    <TextBlock Margin ="5" Text="Open"></TextBlock>
-                </StackPanel>
+                <Image MaxWidth="15" MaxHeight="15" Source="../../Resources/Images/openfile.png"></Image>
             </Button>
-            <Separator/>
             <Button Command="{Binding SaveGraphCommand}">
-                <StackPanel Orientation="Horizontal">
-                    <Image MaxWidth="15" MaxHeight="15" Source="../../Resources/Images/filesave.png"></Image>
-                    <TextBlock Margin ="5" Text="Save"></TextBlock>
-                </StackPanel>
+                <Image MaxWidth="15" MaxHeight="15" Source="../../Resources/Images/filesave.png"></Image>
             </Button>
-            <Separator/>
             <Button Command="{Binding CreateNewGraphCommand}">
-                <StackPanel Orientation="Horizontal">
-                    <Image MaxWidth="15" MaxHeight="15" Source="../../Resources/Images/new.png"></Image>
-                    <TextBlock Margin ="5" Text="New"></TextBlock>
-                </StackPanel>
+                <Image MaxWidth="15" MaxHeight="15" Source="../../Resources/Images/new.png"></Image>
             </Button>
-            <Separator/>
             <Button Command="{Binding ClearGraphCommand}">
-                <StackPanel Orientation="Horizontal">
-                    <Image MaxWidth="15" MaxHeight="15" Source="../../Resources/Images/clear.png"></Image>
-                    <TextBlock Margin ="5" Text="Clear"></TextBlock>
-                </StackPanel>
+                <Image MaxWidth="15" MaxHeight="15" Source="../../Resources/Images/clear.png"></Image>
             </Button>
-            <Separator/>
             <Button Command ="{Binding StartPathFindCommand}">
-                <StackPanel Orientation="Horizontal">
-                    <Image MaxWidth="15" MaxHeight="15" Source="../../Resources/Images/play.png"></Image>
-                    <TextBlock Margin ="5" Text="Start find"></TextBlock>
-                </StackPanel>
+                <Image MaxWidth="15" MaxHeight="15" Source="../../Resources/Images/play.png"></Image>
             </Button>
         </ToolBar>
         <StatusBar Grid.Row="3">

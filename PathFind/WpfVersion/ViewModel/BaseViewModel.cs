@@ -17,8 +17,8 @@ namespace WpfVersion.ViewModel
 
         protected virtual void AdjustSizeOfMainWindow(int graphWidth, int graphHeight)
         {
-            Application.Current.MainWindow.Width = graphWidth * Const.SIZE_BETWEEN_VERTICES + Const.SIZE_BETWEEN_VERTICES;
-            Application.Current.MainWindow.Height = graphHeight * Const.SIZE_BETWEEN_VERTICES + 
+            Application.Current.MainWindow.Width = (graphWidth + 1) * Const.SIZE_BETWEEN_VERTICES + Const.SIZE_BETWEEN_VERTICES;
+            Application.Current.MainWindow.Height = (1 + graphHeight) * Const.SIZE_BETWEEN_VERTICES +
                 Application.Current.MainWindow.DesiredSize.Height;
         }
     }

@@ -36,7 +36,7 @@ namespace WpfVersion.ViewModel
         {
             int width = int.Parse(Width);
             int height = int.Parse(Height);
-            IGraphFactory factory = new RandomValuedWpfGraphFactory(ObstaclePercent, width, 
+            var factory = new RandomValuedWpfGraphFactory(ObstaclePercent, width, 
                 height, Const.SIZE_BETWEEN_VERTICES);
             graph = (WpfGraph)factory.GetGraph();
             FillGraphField(ref graph, ref graphField);
@@ -57,7 +57,7 @@ namespace WpfVersion.ViewModel
 
         public static void FillGraphField(ref WpfGraph graph, ref Canvas graphField)
         {
-            IVertexRoleChanger changer = new WpfRoleChanger(graph);
+            var changer = new WpfRoleChanger(graph);
             graphField = new Canvas();
             for (int i = 0; i < graph.Width; i++)
             {
