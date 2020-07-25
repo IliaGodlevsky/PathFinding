@@ -16,6 +16,20 @@ namespace GraphLibrary.Statistics
             watch = new Stopwatch();
         }
 
+        public string GetFormatedStatistics(string format = "")
+        {
+            var statistics = GetStatistics();
+            if (format == "")
+                format = GraphLibraryResources.StatisticsTransformFormat;
+            return string.Format(format,
+                statistics.Duration.Minute,
+                statistics.Duration.Second,
+                statistics.Duration.Millisecond,
+                statistics.Steps,
+                statistics.PathLength,
+                statistics.VisitedVertices);
+        }
+
         public Statistics GetStatistics()
         {
             return new Statistics(pathLength, steps, new DateTime(watch.ElapsedTicks), visitedVertices);

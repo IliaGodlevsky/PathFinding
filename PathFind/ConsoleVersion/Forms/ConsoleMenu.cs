@@ -110,14 +110,6 @@ namespace ConsoleVersion.Forms
             }
         }
 
-        public string TransformStatistics(Statistics statistics)
-        {
-            return "Time: " + string.Format("{0}:{1}.{2}", statistics.Duration.Minute, statistics.Duration.Second, statistics.Duration.Millisecond)
-                + "\nSteps: " + statistics.Steps.ToString() 
-                + "\nPath length: " + statistics.PathLength.ToString() 
-                + "\nVisited vertices: " + statistics.VisitedVertices.ToString();
-        }
-
         public void FindPath()
         {
             graph.Refresh();
@@ -132,7 +124,7 @@ namespace ConsoleVersion.Forms
             if (search.FindDestionation())
             {
                 search.DrawPath();
-                statistics = TransformStatistics(search.StatCollector.GetStatistics());
+                statistics = search.StatCollector.GetFormatedStatistics();
                 Console.Clear();
                 GraphShower.ShowGraph(graph);
                 Console.WriteLine("\n" + statistics);

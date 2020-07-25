@@ -45,17 +45,6 @@ namespace WpfVersion.ViewModel
             ChooseDistanceGreedPathFindAlgorithmCommand = new RelayCommand(obj => algorithm = Algorithms.DistanceGreedyAlgorithm, obj => true);
         }
 
-        public string TransformStatistics(Statistics statistics)
-        {
-            return string.Format(ViewModelResources.StatisticsTransformFormat, 
-                statistics.Duration.Minute,
-                statistics.Duration.Second,
-                statistics.Duration.Millisecond, 
-                statistics.Steps, 
-                statistics.PathLength, 
-                statistics.VisitedVertices);
-        }
-
         private void ExecuteConfirmPathFindAlgorithmChoice(object param)
         {
             pathFindAlgorythm = AlgorithmSelector.GetPathFindAlgorithm(algorithm, model.Graph);
@@ -64,7 +53,7 @@ namespace WpfVersion.ViewModel
             if (pathFindAlgorythm.FindDestionation())
             {
                 pathFindAlgorythm.DrawPath();
-                model.Statistics = TransformStatistics(pathFindAlgorythm.StatCollector.GetStatistics());
+                model.Statistics = pathFindAlgorythm.StatCollector.GetFormatedStatistics();
                 graph.Start = null;
                 graph.End = null;
             }

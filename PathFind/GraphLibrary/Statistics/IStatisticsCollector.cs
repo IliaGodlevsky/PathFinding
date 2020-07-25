@@ -9,5 +9,6 @@ namespace GraphLibrary.Statistics
         void Visited();
         void IncludeVertexInStatistics(IVertex vertex);
         Statistics GetStatistics();
+        string GetFormatedStatistics(string format = "");
     }
 }

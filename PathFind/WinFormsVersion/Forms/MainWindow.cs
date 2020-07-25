@@ -152,14 +152,6 @@ namespace WinFormsVersion.Forms
             }
         }
 
-        public string TransformStatistics(Statistics statistics)
-        {
-            return "Time: " + string.Format("{0}:{1}.{2}", statistics.Duration.Minute, statistics.Duration.Second, statistics.Duration.Millisecond)
-                + "\nSteps: " + statistics.Steps.ToString()
-                + "\nPath length: " + statistics.PathLength.ToString()
-                + "\nVisited vertices: " + statistics.VisitedVertices.ToString();
-        }
-
         public void FindPath()
         {
             if (pathFindAlgo != null)
@@ -168,7 +160,7 @@ namespace WinFormsVersion.Forms
                 if (pathFindAlgo.FindDestionation())
                 {
                     pathFindAlgo.DrawPath();
-                    time.Text = TransformStatistics(pathFindAlgo.StatCollector.GetStatistics());
+                    time.Text = pathFindAlgo.StatCollector.GetFormatedStatistics();
                     time.Update();
                     graph.Start = null;
                     graph.End = null;

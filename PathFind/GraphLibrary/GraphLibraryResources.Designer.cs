@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace WpfVersion.ViewModel.Resources {
+namespace GraphLibrary {
     using System;
     
     
@@ -22,14 +22,14 @@ namespace WpfVersion.ViewModel.Resources {
     [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "16.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    internal class ViewModelResources {
+    internal class GraphLibraryResources {
         
         private static global::System.Resources.ResourceManager resourceMan;
         
         private static global::System.Globalization.CultureInfo resourceCulture;
         
         [global::System.Diagnostics.CodeAnalysis.SuppressMessageAttribute("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
-        internal ViewModelResources() {
+        internal GraphLibraryResources() {
         }
         
         /// <summary>
@@ -39,7 +39,7 @@ namespace WpfVersion.ViewModel.Resources {
         internal static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
-                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("WpfVersion.ViewModel.Resources.ViewModelResources", typeof(ViewModelResources).Assembly);
+                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("GraphLibrary.GraphLibraryResources", typeof(GraphLibraryResources).Assembly);
                     resourceMan = temp;
                 }
                 return resourceMan;
@@ -61,20 +61,11 @@ namespace WpfVersion.ViewModel.Resources {
         }
         
         /// <summary>
-        ///   Ищет локализованную строку, похожую на Couldn&apos;t find path.
+        ///   Ищет локализованную строку, похожую на Time: {0}:{1}.{2} | Steps: {3} | Path length: {4} | Visited vertices: {5}.
         /// </summary>
-        internal static string BadResultMessage {
+        internal static string StatisticsTransformFormat {
             get {
-                return ResourceManager.GetString("BadResultMessage", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Ищет локализованную строку, похожую на Width: {0} | Height: {1} | Obstacle percent: {2} ({3}/{4}).
-        /// </summary>
-        internal static string GraphParametresFormat {
-            get {
-                return ResourceManager.GetString("GraphParametresFormat", resourceCulture);
+                return ResourceManager.GetString("StatisticsTransformFormat", resourceCulture);
             }
         }
     }
