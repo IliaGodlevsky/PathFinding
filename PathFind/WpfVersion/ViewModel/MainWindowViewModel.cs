@@ -1,6 +1,4 @@
-﻿using GraphFactory.GraphSaver;
-using GraphLibrary.Constants;
-using GraphLibrary.GraphLoader;
+﻿using GraphLibrary.Constants;
 using System.Windows;
 using System.Windows.Controls;
 using WpfVersion.Infrastructure;
@@ -13,21 +11,35 @@ namespace WpfVersion.ViewModel
 {
     public class MainWindowViewModel : BaseViewModel
     {
-        private string statistics;
+        public Window Window { get; set; }
 
+        private string graphParametres;
+        public string GraphParametres
+        {
+            get { return graphParametres; }
+            set { graphParametres = value; OnPropertyChanged(); }
+        }
+
+        private string statistics;
         public string Statistics 
         { 
             get{return statistics;}
             set{statistics = value; OnPropertyChanged();}
         }
 
-        public Window Window { get; set; }
-
         private Canvas graphField;
-        public Canvas GraphField { get { return graphField; } set { graphField = value; OnPropertyChanged(); } }
+        public Canvas GraphField 
+        { 
+            get { return graphField; } 
+            set { graphField = value; OnPropertyChanged(); } 
+        }
 
         private WpfGraph graph;
-        public WpfGraph Graph { get { return graph; } set { graph = value; OnPropertyChanged(); } }
+        public WpfGraph Graph 
+        { 
+            get { return graph; } 
+            set { graph = value; OnPropertyChanged(); } 
+        }
 
         public RelayCommand StartPathFindCommand { get; }
         public RelayCommand CreateNewGraphCommand { get; }
@@ -35,6 +47,7 @@ namespace WpfVersion.ViewModel
         public RelayCommand SaveGraphCommand { get; }
         public RelayCommand LoadGraphCommand { get; }
         public RelayCommand ShowVertexValueCommand { get; }
+
         public MainWindowViewModel()
         {
             GraphField = new Canvas();
@@ -63,7 +76,6 @@ namespace WpfVersion.ViewModel
             OnPropertyChanged(nameof(Graph));
             AdjustSizeOfMainWindow(graph.Width, graph.Height);
         }
-
 
         private void ExecuteClearGraphCommand(object param)
         {

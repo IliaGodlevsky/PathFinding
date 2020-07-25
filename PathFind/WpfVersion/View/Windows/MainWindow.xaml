@@ -24,11 +24,6 @@
                 Width="Auto" Height = "Auto">
             <ContentPresenter Content="{Binding GraphField}"></ContentPresenter>
         </Canvas>
-        <Menu Margin="5">
-            <MenuItem Header="File"></MenuItem>
-            <MenuItem Header="Options"></MenuItem>
-            <MenuItem Header="Help"></MenuItem>
-        </Menu>
         <ToolBar Grid.Row="1">
             <Button Command="{Binding LoadGraphCommand}">
                 <Image MaxWidth="15" MaxHeight="15" Source="../../Resources/Images/openfile.png"></Image>
@@ -50,12 +45,7 @@
             <TextBlock Text = "{Binding Path = Statistics}"></TextBlock>
         </StatusBar>
         <StatusBar Grid.Row="4">
-            <TextBlock Text="Width: "></TextBlock>
-            <TextBlock Text="{Binding Graph.Width}"></TextBlock>
-            <TextBlock Text="| Height: "></TextBlock>
-            <TextBlock Text="{Binding Graph.Height}"></TextBlock>
-            <TextBlock Text="| Obstacle percent: "></TextBlock>
-            <TextBlock Text="{Binding Graph.ObstaclePercent}"></TextBlock>
+            <TextBlock Text="{Binding GraphParametres}"></TextBlock>
         </StatusBar>
     </Grid>
 </Window>

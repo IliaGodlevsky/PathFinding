@@ -46,6 +46,7 @@
     <Compile Include="Constants\Const.cs" />
     <Compile Include="DistanceCalculator\DistanceCalculator.cs" />
     <Compile Include="Enums\AlgorithmEnum\Algorithm.cs" />
+    <Compile Include="Extensions\ArrayExtensions\ArrayExtension.cs" />
     <Compile Include="Extensions\DateTimeExtension\DateTimeExtension.cs" />
     <Compile Include="Extensions\ListExtension\ListExtensions.cs" />
     <Compile Include="Extensions\MatrixExtension\TwoDimensionArrayExtensions.cs" />

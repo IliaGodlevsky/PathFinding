@@ -8,6 +8,7 @@ using WpfVersion.Extensions.ArrayExtension;
 using WpfVersion.Infrastructure;
 using WpfVersion.Model.Graph;
 using WpfVersion.Model.PauseMaker;
+using WpfVersion.ViewModel.Resources;
 
 namespace WpfVersion.ViewModel
 {
@@ -30,8 +31,11 @@ namespace WpfVersion.ViewModel
         {
             this.model = model;
             graph = model.Graph;
-            ConfirmPathFindAlgorithmChoice = new RelayCommand(ExecuteConfirmPathFindAlgorithmChoice,
+
+            ConfirmPathFindAlgorithmChoice = new RelayCommand(
+                ExecuteConfirmPathFindAlgorithmChoice,
                 CanExecuteConfirmPathFindAlgorithmChoice);
+
             CancelPathFindAlgorithmChoice = new RelayCommand(obj => model?.Window.Close(), obj => true);
             ChooseDijkstraAlgorithmCommand = new RelayCommand(obj => algorithm = Algorithms.DijkstraAlgorithm, obj => true);
             ChooseAStartAlgorithmCommand = new RelayCommand(obj => algorithm = Algorithms.AStarAlgorithm, obj => true);
@@ -43,10 +47,13 @@ namespace WpfVersion.ViewModel
 
         public string TransformStatistics(Statistics statistics)
         {
-            return "Time: " + string.Format("{0}:{1}.{2}", statistics.Duration.Minute, statistics.Duration.Second, statistics.Duration.Millisecond)
-                + " | Steps: " + statistics.Steps.ToString()
-                + " | Path length: " + statistics.PathLength.ToString()
-                + " | Visited vertices: " + statistics.VisitedVertices.ToString();
+            return string.Format(ViewModelResources.StatisticsTransformFormat, 
+                statistics.Duration.Minute,
+                statistics.Duration.Second,
+                statistics.Duration.Millisecond, 
+                statistics.Steps, 
+                statistics.PathLength, 
+                statistics.VisitedVertices);
         }
 
         private void ExecuteConfirmPathFindAlgorithmChoice(object param)
@@ -62,7 +69,7 @@ namespace WpfVersion.ViewModel
                 graph.End = null;
             }
             else
-                MessageBox.Show("Couldn't find path");
+                MessageBox.Show(ViewModelResources.BadResultMessage);
         }
 
         private bool CanExecuteConfirmPathFindAlgorithmChoice(object param)

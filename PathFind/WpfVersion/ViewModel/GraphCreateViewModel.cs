@@ -1,13 +1,11 @@
 ﻿using GraphLibrary.Constants;
-using GraphLibrary.GraphFactory;
-using GraphLibrary.RoleChanger;
-using System.Windows;
 using System.Windows.Controls;
 using WpfVersion.Infrastructure;
 using WpfVersion.Model.Graph;
 using WpfVersion.Model.GraphFactory;
 using WpfVersion.Model.RoleChanger;
 using WpfVersion.Model.Vertex;
+using WpfVersion.ViewModel.Resources;
 
 namespace WpfVersion.ViewModel
 {
@@ -36,13 +34,17 @@ namespace WpfVersion.ViewModel
         {
             int width = int.Parse(Width);
             int height = int.Parse(Height);
-            var factory = new RandomValuedWpfGraphFactory(ObstaclePercent, width, 
-                height, Const.SIZE_BETWEEN_VERTICES);
+            var factory = new RandomValuedWpfGraphFactory(ObstaclePercent, 
+                width, 
+                height, 
+                Const.SIZE_BETWEEN_VERTICES);
             graph = (WpfGraph)factory.GetGraph();
             FillGraphField(ref graph, ref graphField);
             model.GraphField = graphField;
             model.Graph = graph;
             model.Window.Close();
+            model.GraphParametres = string.Format(ViewModelResources.GraphParametresFormat, 
+                model.Graph.Width, model.Graph.Height, model.Graph.ObstaclePercent);
             AdjustSizeOfMainWindow(graph.Width, graph.Height);
         }
 
