@@ -35,16 +35,13 @@ namespace WpfVersion.ViewModel
             int width = int.Parse(Width);
             int height = int.Parse(Height);
             var factory = new RandomValuedWpfGraphFactory(ObstaclePercent, 
-                width, 
-                height, 
-                Const.SIZE_BETWEEN_VERTICES);
+                width, height, Const.SIZE_BETWEEN_VERTICES);
             graph = (WpfGraph)factory.GetGraph();
             FillGraphField(ref graph, ref graphField);
             model.GraphField = graphField;
             model.Graph = graph;
             model.Window.Close();
-            model.GraphParametres = string.Format(ViewModelResources.GraphParametresFormat, 
-                model.Graph.Width, model.Graph.Height, model.Graph.ObstaclePercent);
+            model.GraphParametres = GetFormatedGraphParametres(model.Graph);
             AdjustSizeOfMainWindow(graph.Width, graph.Height);
         }
 
@@ -55,6 +52,16 @@ namespace WpfVersion.ViewModel
                 return width > 0 && height > 0;
             else
                 return false;
+        }
+
+        public static string GetFormatedGraphParametres(WpfGraph graph)
+        {
+            return string.Format(ViewModelResources.GraphParametresFormat,
+                graph.Width,
+                graph.Height,
+                graph.ObstaclePercent,
+                graph.ObstacleNumber,
+                graph.Size);
         }
 
         public static void FillGraphField(ref WpfGraph graph, ref Canvas graphField)

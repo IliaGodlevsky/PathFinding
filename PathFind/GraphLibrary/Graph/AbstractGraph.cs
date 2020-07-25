@@ -45,7 +45,9 @@ namespace GraphLibrary.Graph
             setter.SetNeighbours(coordiantes.X, coordiantes.Y);
         }
 
-        public int ObstaclePercent => vertices.CountIf(vertex => vertex.IsObstacle) * 100 / Size;
+        public int ObstaclePercent => ObstacleNumber * 100 / Size;
+
+        public int ObstacleNumber => vertices.CountIf(vertex => vertex.IsObstacle);
 
         public virtual Point GetIndexes(IVertex vertex)
         {
