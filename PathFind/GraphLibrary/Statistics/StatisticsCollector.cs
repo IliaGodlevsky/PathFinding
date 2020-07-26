@@ -16,18 +16,9 @@ namespace GraphLibrary.Statistics
             watch = new Stopwatch();
         }
 
-        public string GetFormatedStatistics(string format = "")
+        public override string ToString()        
         {
-            var statistics = GetStatistics();
-            if (format == "")
-                format = GraphLibraryResources.StatisticsTransformFormat;
-            return string.Format(format,
-                statistics.Duration.Minute,
-                statistics.Duration.Second,
-                statistics.Duration.Millisecond,
-                statistics.Steps,
-                statistics.PathLength,
-                statistics.VisitedVertices);
+            return GetStatistics().ToString();            
         }
 
         public Statistics GetStatistics()

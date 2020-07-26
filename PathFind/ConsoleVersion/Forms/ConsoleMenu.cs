@@ -12,7 +12,6 @@ using System;
 using System.Drawing;
 using GraphLibrary.RoleChanger;
 using GraphLibrary.Graph;
-using GraphLibrary.Statistics;
 
 namespace ConsoleVersion.Forms
 {
@@ -124,7 +123,7 @@ namespace ConsoleVersion.Forms
             if (search.FindDestionation())
             {
                 search.DrawPath();
-                statistics = search.StatCollector.GetFormatedStatistics();
+                statistics = search.StatCollector.ToString();
                 Console.Clear();
                 GraphShower.ShowGraph(graph);
                 Console.WriteLine("\n" + statistics);

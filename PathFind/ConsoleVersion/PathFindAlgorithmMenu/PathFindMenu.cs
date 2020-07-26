@@ -53,7 +53,7 @@ namespace ConsoleVersion.PathFindAlgorithmMenu
 
         public IPathFindAlgorithm ChoosePathFindAlgorithm()
         {
-            Algorithms algorithms = (Algorithms)Input.InputNumber( ShowAlgorithms() + "Choose algorithm: ", 
+            Algorithms algorithms = (Algorithms)Input.InputNumber(ShowAlgorithms() + "Choose algorithm: ", 
                 (int)Algorithms.ValueGreedyAlgorithm, (int)Algorithms.WidePathFind);
             return AlgorithmSelector.GetPathFindAlgorithm(algorithms, graph);
         }

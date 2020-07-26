@@ -1,6 +1,5 @@
 ﻿using GraphLibrary.Graph;
 using GraphLibrary.Vertex;
-using System.Windows;
 using System.Windows.Input;
 using WpfVersion.Model.Vertex;
 

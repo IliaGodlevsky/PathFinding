@@ -160,7 +160,7 @@ namespace WinFormsVersion.Forms
                 if (pathFindAlgo.FindDestionation())
                 {
                     pathFindAlgo.DrawPath();
-                    time.Text = pathFindAlgo.StatCollector.GetFormatedStatistics();
+                    time.Text = pathFindAlgo.StatCollector.ToString();
                     time.Update();
                     graph.Start = null;
                     graph.End = null;

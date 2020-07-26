@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace GraphLibrary.Statistics
 {
@@ -20,5 +16,16 @@ namespace GraphLibrary.Statistics
         public DateTime Duration { get; private set; }
         public int Steps { get; private set; }
         public int VisitedVertices { get; private set; }
+
+        public override string ToString()
+        {
+            return string.Format(GraphLibraryResources.StatisticsTransformFormat,
+                Duration.Minute,
+                Duration.Second,
+                Duration.Millisecond,
+                Steps,
+                PathLength,
+                VisitedVertices);
+        }
     }
 }
