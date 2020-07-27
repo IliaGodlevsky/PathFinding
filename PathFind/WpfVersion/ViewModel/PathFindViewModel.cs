@@ -1,7 +1,6 @@
 ﻿using GraphLibrary.Algorithm;
 using GraphLibrary.Enums.AlgorithmEnum;
 using GraphLibrary.PathFindAlgorithmSelector;
-using GraphLibrary.Statistics;
 using System;
 using System.Windows;
 using WpfVersion.Extensions.ArrayExtension;
