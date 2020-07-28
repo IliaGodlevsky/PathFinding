@@ -41,7 +41,7 @@ namespace GraphLibrary.Graph
         {
             var coordiantes = GetIndexes(vertex);
             vertices[coordiantes.X, coordiantes.Y] = vertex;
-            NeigbourSetter setter = new NeigbourSetter(vertices);
+            var setter = new NeigbourSetter(vertices);
             setter.SetNeighbours(coordiantes.X, coordiantes.Y);
         }
 

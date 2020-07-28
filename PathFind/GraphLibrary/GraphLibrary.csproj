@@ -50,6 +50,7 @@
     <Compile Include="Extensions\DateTimeExtension\DateTimeExtension.cs" />
     <Compile Include="Extensions\ListExtension\ListExtensions.cs" />
     <Compile Include="Extensions\MatrixExtension\TwoDimensionArrayExtensions.cs" />
+    <Compile Include="Extensions\RandomExtension\RandomExtensions.cs" />
     <Compile Include="GraphFactory\AbstractGraphFactory.cs" />
     <Compile Include="GraphFactory\AbstractGraphInitializer.cs" />
     <Compile Include="GraphFactory\IGraphFactory.cs" />

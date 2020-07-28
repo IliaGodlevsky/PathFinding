@@ -2,7 +2,6 @@
 using GraphLibrary.GraphFactory;
 using System;
 using System.IO;
-using System.Runtime.Serialization;
 using System.Runtime.Serialization.Formatters.Binary;
 
 namespace GraphLibrary.GraphLoader
@@ -13,7 +12,7 @@ namespace GraphLibrary.GraphLoader
 
         public AbstractGraph GetGraph()
         {
-            IFormatter formatter = new BinaryFormatter();
+            var formatter = new BinaryFormatter();
             try {
                 using (var stream = new FileStream(GetPath(), FileMode.Open))
                     Initialise((VertexInfo[,])formatter.Deserialize(stream));

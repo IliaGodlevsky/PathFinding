@@ -21,7 +21,7 @@ namespace GraphLibrary.Extensions.MatrixExtension
         public static TKey[,] Accumulate<TSource, TKey>(this TSource[,] arr, 
             Func<TSource, TKey> func)
         {
-            TKey[,] outArray = new TKey[arr.Width(), arr.Height()];
+            var outArray = new TKey[arr.Width(), arr.Height()];
             for (int x = 0; x < arr.Width(); x++)
                 for (int y = 0; y < arr.Height(); y++)
                     outArray[x, y] = func(arr[x, y]);
@@ -30,7 +30,7 @@ namespace GraphLibrary.Extensions.MatrixExtension
 
         public static void Shuffle<TSource>(this TSource[,] arr)
         {
-            Random rand = new Random();
+            var rand = new Random();
             int a, b, c, d;
             TSource temp;
             for (int i = 0; i < arr.Width(); i++)
