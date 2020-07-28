@@ -9,7 +9,8 @@ namespace WpfVersion.Model.GraphFactory
 {
     public class WpfGraphInitializer : AbstractGraphInitializer
     {
-        public WpfGraphInitializer(VertexInfo[,] info, int placeBetweenVertices) : base(info, placeBetweenVertices)
+        public WpfGraphInitializer(VertexInfo[,] info, int placeBetweenVertices) 
+            : base(info, placeBetweenVertices)
         {
         }
 
