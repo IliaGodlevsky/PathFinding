@@ -9,7 +9,8 @@ namespace WpfVersion.Model.GraphFactory
 {
     public class RandomValuedWpfGraphFactory : AbstractGraphFactory
     {
-        public RandomValuedWpfGraphFactory(int percentOfObstacles, int width, int height, int placeBetweenVertices) : 
+        public RandomValuedWpfGraphFactory(int percentOfObstacles, 
+            int width, int height, int placeBetweenVertices) : 
             base(percentOfObstacles, width, height, placeBetweenVertices)
         {
         }
