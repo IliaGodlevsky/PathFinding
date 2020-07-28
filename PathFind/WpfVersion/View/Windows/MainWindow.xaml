@@ -8,44 +8,47 @@
         mc:Ignorable="d"
         Title="Path find"
         ResizeMode="CanResize"        
-        WindowStartupLocation="CenterScreen">
+        WindowStartupLocation="CenterScreen"
+        Icon="../../Resources/Images/mainwindow.png">
     <Window.DataContext>
         <viewmodel:MainWindowViewModel x:Name="ViewModel"></viewmodel:MainWindowViewModel>
     </Window.DataContext>
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition Height="Auto"></RowDefinition>
-            <RowDefinition Height="Auto"></RowDefinition>
+            <RowDefinition Height="auto"></RowDefinition>
             <RowDefinition Height="*"></RowDefinition>
-            <RowDefinition Height="Auto"></RowDefinition>
-            <RowDefinition Height="Auto"></RowDefinition>
+            <RowDefinition Height="auto"></RowDefinition>
         </Grid.RowDefinitions>
-        <Canvas Margin="3" Grid.Row="2" x:Name="graphField" 
+        <Canvas Margin="3" Grid.Row="1" x:Name="graphField" 
                 Width="Auto" Height = "Auto">
             <ContentPresenter Content="{Binding GraphField}"></ContentPresenter>
         </Canvas>
-        <ToolBar Grid.Row="1">
+        <ToolBar Grid.Row="0">
             <Button Command="{Binding LoadGraphCommand}">
-                <Image MaxWidth="15" MaxHeight="15" Source="../../Resources/Images/openfile.png"></Image>
+                <Image Style ="{StaticResource ImageStyle}" Source="../../Resources/Images/openfile.png"></Image>
             </Button>
             <Button Command="{Binding SaveGraphCommand}">
-                <Image MaxWidth="15" MaxHeight="15" Source="../../Resources/Images/filesave.png"></Image>
+                <Image Style ="{StaticResource ImageStyle}" Source="../../Resources/Images/filesave.png"></Image>
             </Button>
             <Button Command="{Binding CreateNewGraphCommand}">
-                <Image MaxWidth="15" MaxHeight="15" Source="../../Resources/Images/new.png"></Image>
+                <Image Style ="{StaticResource ImageStyle}" Source="../../Resources/Images/new.png"></Image>
             </Button>
             <Button Command="{Binding ClearGraphCommand}">
-                <Image MaxWidth="15" MaxHeight="15" Source="../../Resources/Images/clear.png"></Image>
+                <Image Style ="{StaticResource ImageStyle}" Source="../../Resources/Images/clear.png"></Image>
             </Button>
             <Button Command ="{Binding StartPathFindCommand}">
-                <Image MaxWidth="15" MaxHeight="15" Source="../../Resources/Images/play.png"></Image>
+                <Image Style ="{StaticResource ImageStyle}" Source="../../Resources/Images/play.png"></Image>
             </Button>
         </ToolBar>
-        <StatusBar Grid.Row="3">
-            <TextBlock Text = "{Binding Path = Statistics}"></TextBlock>
-        </StatusBar>
-        <StatusBar Grid.Row="4">
-            <TextBlock Text="{Binding GraphParametres}"></TextBlock>
+        <StatusBar Grid.Row="2">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="auto"></RowDefinition>
+                    <RowDefinition Height="auto"></RowDefinition>
+                </Grid.RowDefinitions>
+                <TextBlock Grid.Row="1" Text = "{Binding Statistics}"></TextBlock>
+                <TextBlock Text="{Binding GraphParametres}"></TextBlock>
+            </Grid>
         </StatusBar>
     </Grid>
 </Window>
