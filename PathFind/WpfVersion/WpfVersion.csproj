@@ -81,6 +81,10 @@
     <Compile Include="View\Windows\PathFindWindow.xaml.cs">
       <DependentUpon>PathFindWindow.xaml</DependentUpon>
     </Compile>
+    <Page Include="Resources\Styles\ImageStyle.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Resources\Styles\MainWindowToolBarButtonStyles.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -160,6 +164,8 @@
   <ItemGroup>
     <Resource Include="Resources\Images\obstacle.png" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Resource Include="Resources\Images\mainwindow.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
