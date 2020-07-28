@@ -4,18 +4,19 @@ using ConsoleVersion.Vertex;
 using GraphLibrary.GraphFactory;
 using GraphLibrary.Vertex;
 using GraphLibrary.Graph;
+using GraphLibrary.Extensions.RandomExtension;
 
 namespace ConsoleVersion.GraphFactory
 {
     public class RandomValuedConsoleGraphFactory : AbstractGraphFactory
     {
         public RandomValuedConsoleGraphFactory(int percentOfObstacles,
-        int width, int height) : base(percentOfObstacles, width, height, 1)
+        int width, int height) : base(percentOfObstacles, width, height, Const.SIZE_BETWEEN_VERTICES)
         {
 
         }
 
-        protected override IVertex CreateGraphTop() => new ConsoleVertex { Text = (rand.Next(Const.MAX_VERTEX_VALUE) + Const.MIN_VERTEX_VALUE).ToString() };
+        protected override IVertex CreateGraphTop() => new ConsoleVertex { Text = rand.GetRandomVertexValue() };
 
         public override AbstractGraph GetGraph() => new ConsoleGraph(vertices);
 

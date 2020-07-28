@@ -1,4 +1,5 @@
 ﻿using GraphLibrary.Constants;
+using GraphLibrary.Extensions.RandomExtension;
 using GraphLibrary.Graph;
 using GraphLibrary.GraphFactory;
 using GraphLibrary.Vertex;
@@ -15,22 +16,10 @@ namespace WpfVersion.Model.GraphFactory
         {
         }
 
-        public override AbstractGraph GetGraph()
-        {
-            return new WpfGraph(vertices);
-        }
+        public override AbstractGraph GetGraph() => new WpfGraph(vertices);
 
-        protected override IVertex CreateGraphTop()
-        {
-            return new WpfVertex
-            {
-                Text = (rand.Next(Const.MAX_VERTEX_VALUE) + Const.MIN_VERTEX_VALUE).ToString()
-            };
-        }
+        protected override IVertex CreateGraphTop() => new WpfVertex { Text = rand.GetRandomVertexValue() };
 
-        protected override void SetGraph(int width, int height)
-        {
-            vertices = new WpfVertex[width, height];
-        }
+        protected override void SetGraph(int width, int height) => vertices = new WpfVertex[width, height];
     }
 }

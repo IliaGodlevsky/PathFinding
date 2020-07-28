@@ -4,6 +4,7 @@ using GraphLibrary.Vertex;
 using GraphLibrary.Graph;
 using WinFormsVersion.Vertex;
 using WinFormsVersion.Graph;
+using GraphLibrary.Extensions.RandomExtension;
 
 namespace WinFormsVersion.GraphFactory
 {
@@ -16,22 +17,10 @@ namespace WinFormsVersion.GraphFactory
             
         }
 
-        protected override IVertex CreateGraphTop()
-        {
-            return new WinFormsVertex
-            {
-                Text = (rand.Next(Const.MAX_VERTEX_VALUE) + Const.MIN_VERTEX_VALUE).ToString()
-            };
-        }
+        protected override IVertex CreateGraphTop() => new WinFormsVertex { Text = rand.GetRandomVertexValue() };
 
-        public override AbstractGraph GetGraph()
-        {
-            return new WinFormsGraph(vertices);
-        }
+        public override AbstractGraph GetGraph() => new WinFormsGraph(vertices);
 
-        protected override void SetGraph(int width, int height)
-        {
-            vertices = new WinFormsVertex[width, height];
-        }
+        protected override void SetGraph(int width, int height) => vertices = new WinFormsVertex[width, height];
     }
 }

@@ -1,4 +1,5 @@
-﻿using GraphLibrary.Graph;
+﻿using GraphLibrary.Extensions.RandomExtension;
+using GraphLibrary.Graph;
 using GraphLibrary.Vertex;
 using System;
 using System.Linq;
@@ -29,11 +30,11 @@ namespace GraphLibrary.RoleChanger
 
         private void MakeTop(ref IVertex top)
         {
-            Random rand = new Random();
+            var rand = new Random();
             top.IsObstacle = false;
             top.MarkAsSimpleVertex();
-            top.Text = (rand.Next(9) + 1).ToString();
-            NeigbourSetter setter = new NeigbourSetter(graph.GetArray());
+            top.Text = rand.GetRandomVertexValue();
+            var setter = new NeigbourSetter(graph.GetArray());
             var coordinates = graph.GetIndexes(top);
             setter.SetNeighbours(coordinates.X, coordinates.Y);
             BoundSetter.SetBoundsBetweenNeighbours(top);
