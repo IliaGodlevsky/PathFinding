@@ -22,6 +22,7 @@ namespace GraphLibrary.Algorithm
         {
             var neighbours = !vertex.Neighbours.Any(vert => vert.IsVisited) 
                 ? vertex.Neighbours : vertex.Neighbours.Where(vert => !vert.IsVisited).ToList();
+            neighbours = neighbours.OrderBy(vert => Guid.NewGuid()).ToList();
             if (neighbours.Any())
             {
                 double min = neighbours.Min(GreedyFunction);
