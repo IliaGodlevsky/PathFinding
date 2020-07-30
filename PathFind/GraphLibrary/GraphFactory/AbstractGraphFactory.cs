@@ -1,8 +1,10 @@
 ﻿using GraphLibrary.Extensions.MatrixExtension;
+using GraphLibrary.Extensions.RandomExtension;
 using GraphLibrary.Graph;
 using GraphLibrary.Vertex;
 using System;
 using System.Drawing;
+using System.Linq;
 
 namespace GraphLibrary.GraphFactory
 {
@@ -10,39 +12,40 @@ namespace GraphLibrary.GraphFactory
     {
         protected Random rand = new Random();
         protected IVertex[,] vertices;
-        private const int MAX_PERCENT_OF_OBSTACLES = 100;
 
         public AbstractGraphFactory(int percentOfObstacles,
             int width, int height, int placeBetweenVertices)
         {
-            SetGraph(width, height);
-            for (int x = 0; x < width; x++)
+            IVertex InitializeTop(IVertex vertex)
             {
-                for (int y = 0; y < height; y++)
+                vertex = CreateGraphTop();
+                if (rand.IsObstacleChance(percentOfObstacles))
                 {
-                    vertices[x, y] = CreateGraphTop();
-                    if (IsObstacleChance(percentOfObstacles))
-                    {
-                        vertices[x, y].IsObstacle = true;
-                        vertices[x, y].MarkAsObstacle();
-                    }                    
+                    vertex.IsObstacle = true;
+                    vertex.MarkAsObstacle();
                 }
+                return vertex;
             }
-            vertices.Shuffle();
-            for (int x = 0; x < width; x++)
+
+            IVertex SetLocation(IVertex vertex)
             {
-                for (int y = 0; y < height; y++)
-                    vertices[x, y].Location = new Point(x * placeBetweenVertices, y * placeBetweenVertices);
+                var indexes = vertices.GetIndices(vertex);
+                vertex.Location = new Point(
+                    indexes.X * placeBetweenVertices, 
+                    indexes.Y * placeBetweenVertices);
+                return vertex;
             }
-            NeigbourSetter setter = new NeigbourSetter(vertices);
-            setter.SetNeighbours();
+
+
+            SetGraph(width, height);
+            vertices.Apply(InitializeTop);
+            vertices.Apply(SetLocation);
+            new NeigbourSetter(vertices).SetNeighbours();
         }
 
         protected abstract void SetGraph(int width, int height);
-        protected abstract IVertex CreateGraphTop();
 
-        private bool IsObstacleChance(int percentOfObstacles)
-            => rand.Next(MAX_PERCENT_OF_OBSTACLES) < percentOfObstacles;
+        protected abstract IVertex CreateGraphTop();
 
         public abstract AbstractGraph GetGraph();
     }

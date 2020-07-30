@@ -1,21 +1,23 @@
 ﻿using System;
+using System.Drawing;
+using System.Linq;
 
 namespace GraphLibrary.Extensions.MatrixExtension
 {
     public static class TwoDimensionalArrayExtensions
     {
-        public static int Width<TSource>(this TSource[,] arr) => arr.GetLength(0);
-
-        public static int Height<TSource>(this TSource[,] arr) => arr.Length / arr.Width();
-
-        public static int CountIf<TSource>(this TSource[,] arr, 
-            Predicate<TSource> predicate)
+        public static int Width<TSource>(this TSource[,] arr)
         {
-            int number = 0;
-            foreach (var element in arr)
-                if (predicate(element))
-                    number++;
-            return number;
+            if (arr == null)
+                return 0;
+            return arr.GetLength(0);
+        }
+
+        public static int Height<TSource>(this TSource[,] arr)
+        {
+            if (arr == null)
+                return 0;
+            return arr.Length / arr.Width();
         }
 
         public static TKey[,] Accumulate<TSource, TKey>(this TSource[,] arr, 
@@ -28,22 +30,19 @@ namespace GraphLibrary.Extensions.MatrixExtension
             return outArray;
         }
 
-        public static void Shuffle<TSource>(this TSource[,] arr)
+        public static void Apply<TSource>(this TSource[,] arr, Func<TSource, TSource> function)
         {
-            var rand = new Random();
-            int a, b, c, d;
-            TSource temp;
             for (int i = 0; i < arr.Width(); i++)
-                for (int j = 0; j < arr.Height(); j++) 
-                {
-                    a = rand.Next(arr.Width());
-                    b = rand.Next(arr.Width());
-                    c = rand.Next(arr.Height());
-                    d = rand.Next(arr.Height());
-                    temp = arr[a, c];
-                    arr[a, c] = arr[b, d];
-                    arr[b, d] = temp;
-                }
+                for (int j = 0; j < arr.Height(); j++)
+                    arr[i, j] = function(arr[i, j]);
+        }
+
+        public static Point GetIndices<TSource>(this TSource [,] arr, TSource item)
+        {
+            int index = Array.IndexOf(arr.Cast<TSource>().ToArray(), item);
+            int yCoordinate = (arr.Height() + index) % arr.Height();
+            int xCoordinate = (int)Math.Ceiling((decimal)(index - yCoordinate) / arr.Height());
+            return new Point(xCoordinate, yCoordinate);
         }
     }
 }
