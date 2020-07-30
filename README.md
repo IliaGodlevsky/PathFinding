@@ -1,17 +1,14 @@
-# SearchAlgorythms
- Exam WindowsForm project, C#
+# Path find project
+ Path find project, C#
  
- Also realized console version of program
+ Realized: 
  
- White button - graph top
+ 1. Path find library
  
- Black button - obstacle
+ 2. Wpf version path find
  
- Green button - start searching point
+ 3. WinForms version path find
  
- Red button - end searching point
- 
- Blue button - visited graph top
- 
- Yellow button - path
+ 4. Console version path find
+
  
