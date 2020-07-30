@@ -55,7 +55,6 @@
     <Compile Include="Graph\ConsoleGraph.cs" />
     <Compile Include="InputClass\Input.cs" />
     <Compile Include="PathFindAlgorithmMenu\PathFindMenu.cs" />
-    <Compile Include="PauseMaker\ConsolePauseMaker.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RoleChanger\ConsoleVertexRoleChanger.cs" />
