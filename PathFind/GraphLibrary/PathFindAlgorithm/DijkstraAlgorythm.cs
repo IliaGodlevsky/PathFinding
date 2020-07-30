@@ -1,4 +1,5 @@
 ﻿using GraphLibrary.Graph;
+using GraphLibrary.PauseMaker;
 using GraphLibrary.Statistics;
 using GraphLibrary.Vertex;
 using System.Collections.Generic;
@@ -11,9 +12,15 @@ namespace GraphLibrary.Algorithm
     /// </summary>
     public class DijkstraAlgorithm : IPathFindAlgorithm
     {
+        protected Pauser pauseMaker;
         protected readonly AbstractGraph graph;
         private readonly List<IVertex> neigbourQueue = new List<IVertex>();
         public IStatisticsCollector StatCollector { get; set; }
+        public Pause PauseEvent 
+        {
+            get { return pauseMaker?.PauseEvent; }
+            set { pauseMaker.PauseEvent = value; }
+        }
 
         public DijkstraAlgorithm(AbstractGraph graph)
         {
@@ -21,9 +28,8 @@ namespace GraphLibrary.Algorithm
             foreach (var vertex in graph)
                 (vertex as IVertex).Value = double.PositiveInfinity;
             StatCollector = new StatisticsCollector();
+            pauseMaker = new PauseMaker.Pauser();
         }
-
-        public PauseCycle Pause { set; get; }
 
         public void DrawPath()
         {
@@ -35,7 +41,7 @@ namespace GraphLibrary.Algorithm
                 if (vertex.IsSimpleVertex)
                     vertex.MarkAsPath();
                 StatCollector.IncludeVertexInStatistics(temp);
-                Pause(35);
+                pauseMaker.Pause(35);
             }
         }
 
@@ -85,7 +91,7 @@ namespace GraphLibrary.Algorithm
                     break;
                 if (IsRightCellToVisit(currentVertex))
                     Visit(currentVertex);
-                Pause(2);
+                pauseMaker.Pause(2);
             } while (!IsDestination(currentVertex));
             StatCollector.StopCollect();
             return graph.End.IsVisited;
@@ -116,7 +122,7 @@ namespace GraphLibrary.Algorithm
             if (!vertex.IsEnd)
             {
                 vertex.MarkAsCurrentlyLooked();
-                Pause(8);
+                pauseMaker.Pause(8);
                 vertex.MarkAsVisited();               
             }
             StatCollector.Visited();

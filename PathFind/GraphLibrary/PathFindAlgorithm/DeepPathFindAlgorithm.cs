@@ -1,6 +1,7 @@
 ﻿using GraphLibrary.Algorithm;
 using GraphLibrary.Constants;
 using GraphLibrary.Graph;
+using GraphLibrary.PauseMaker;
 using GraphLibrary.Statistics;
 using GraphLibrary.Vertex;
 using System.Collections.Generic;
@@ -10,14 +11,16 @@ namespace GraphLibrary.PathFindAlgorithm
 {
     public class DeepPathFindAlgorithm : IPathFindAlgorithm
     {
+        protected Pauser pauseMaker;
         private readonly AbstractGraph graph;
         private Stack<IVertex> visitedVerticesStack = new Stack<IVertex>();
-       public IStatisticsCollector StatCollector { get; set; }
+        public IStatisticsCollector StatCollector { get; set; }
 
         public DeepPathFindAlgorithm(AbstractGraph graph)
         {
             StatCollector = new StatisticsCollector();
             this.graph = graph;
+            pauseMaker = new Pauser();
         }
 
         protected virtual IVertex GoNextVertex(IVertex vertex)
@@ -25,7 +28,11 @@ namespace GraphLibrary.PathFindAlgorithm
             return vertex.Neighbours.Find(vert => !vert.IsVisited);
         }
 
-        public PauseCycle Pause { set; get; }
+        public Pause PauseEvent
+        {
+            get { return pauseMaker?.PauseEvent; }
+            set { pauseMaker.PauseEvent = value; }
+        }
 
         public void DrawPath()
         {
@@ -37,7 +44,7 @@ namespace GraphLibrary.PathFindAlgorithm
                 if (vertex.IsSimpleVertex)
                     vertex.MarkAsPath();
                 StatCollector.IncludeVertexInStatistics(temp);
-                Pause(Const.PATH_DRAW_PAUSE_MILLISECONDS);
+                pauseMaker.Pause(Const.PATH_DRAW_PAUSE_MILLISECONDS);
             }
         }
 
@@ -59,7 +66,7 @@ namespace GraphLibrary.PathFindAlgorithm
                 }
                 else
                     currentVertex = visitedVerticesStack.Pop();
-                Pause(Const.FIND_PROCESS_PAUSE_MILLISECONDS);
+                pauseMaker.Pause(Const.FIND_PROCESS_PAUSE_MILLISECONDS);
             }
             StatCollector.StartCollect();
             return graph.End.IsVisited;
@@ -87,7 +94,7 @@ namespace GraphLibrary.PathFindAlgorithm
             if (vertex.IsSimpleVertex)
             {
                 vertex.MarkAsCurrentlyLooked();
-                Pause(Const.VISIT_PAUSE_MILLISECONDS);
+                pauseMaker.Pause(Const.VISIT_PAUSE_MILLISECONDS);
                 vertex.MarkAsVisited();
             }
             StatCollector.Visited();

@@ -1,4 +1,5 @@
 ﻿using GraphLibrary.Graph;
+using GraphLibrary.PauseMaker;
 using GraphLibrary.Statistics;
 using GraphLibrary.Vertex;
 using System.Collections.Generic;
@@ -13,8 +14,14 @@ namespace GraphLibrary.Algorithm
     /// </summary>
     public class WidePathFindAlgorithm : IPathFindAlgorithm
     {
+        protected Pauser pauseMaker;
         protected Queue<IVertex> neighbourQueue = new Queue<IVertex>();
         public IStatisticsCollector StatCollector { get; set; }
+        public Pause PauseEvent
+        {
+            get { return pauseMaker?.PauseEvent; }
+            set { pauseMaker.PauseEvent = value; }
+        }
 
         protected readonly AbstractGraph graph;
 
@@ -22,6 +29,7 @@ namespace GraphLibrary.Algorithm
         {
             this.graph = graph;
             StatCollector = new StatisticsCollector();
+            pauseMaker = new Pauser();
         }
 
         private IVertex GoNextWave(IVertex vertex)
@@ -43,14 +51,12 @@ namespace GraphLibrary.Algorithm
 
         private void AddToQueue(List<IVertex> neighbours)
         {
-            foreach(var neighbour in neighbours)
+            foreach (var neighbour in neighbours)
             {
-                if (IsSuitableForQueuing(neighbour)) 
+                if (IsSuitableForQueuing(neighbour))
                     neighbourQueue.Enqueue(neighbour);
             }
         }
-
-        public PauseCycle Pause { get; set; }
 
         private void MakeWaves(IVertex vertex)
         {
@@ -81,7 +87,7 @@ namespace GraphLibrary.Algorithm
                     MakeWaves(currentVertex);
                     AddToQueue(currentVertex.Neighbours);
                 }
-                Pause(milliseconds: 2);
+                pauseMaker.Pause(milliseconds: 2);
             }
             StatCollector.StopCollect();
             return graph.End.IsVisited;
@@ -96,7 +102,7 @@ namespace GraphLibrary.Algorithm
                 if (vertex.IsSimpleVertex)
                     vertex.MarkAsPath();
                 StatCollector.IncludeVertexInStatistics(vertex);
-                Pause(35);
+                pauseMaker.Pause(35);
             }
         }
 
@@ -110,7 +116,7 @@ namespace GraphLibrary.Algorithm
             if (vertex.IsSimpleVertex)
             {
                 vertex.MarkAsCurrentlyLooked();
-                Pause(8);
+                pauseMaker.Pause(8);
                 vertex.MarkAsVisited();
             }
             StatCollector.Visited();
