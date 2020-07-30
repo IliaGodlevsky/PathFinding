@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Linq;
-using GraphLibrary.Extensions.ListExtensions;
 using GraphLibrary.Graph;
 using GraphLibrary.PathFindAlgorithm;
 using GraphLibrary.Vertex;
@@ -21,7 +20,7 @@ namespace GraphLibrary.Algorithm
 
         protected override IVertex GoNextVertex(IVertex vertex)
         {
-            var neighbours = vertex.Neighbours.Count(vert => vert.IsVisited) == 0 
+            var neighbours = !vertex.Neighbours.Any(vert => vert.IsVisited) 
                 ? vertex.Neighbours : vertex.Neighbours.Where(vert => !vert.IsVisited).ToList();
             neighbours.Shuffle();
             if (neighbours.Any())
