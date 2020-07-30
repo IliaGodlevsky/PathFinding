@@ -118,6 +118,6 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="StatisticsTransformFormat" xml:space="preserve">
-    <value>Time: {0}:{1}.{2} | Steps: {3} | Path length: {4} | Visited vertices: {5}</value>
+    <value>Time: {0}:{1}.{2}  Steps: {3}   Path length: {4}   Visited vertices: {5}</value>
   </data>
 </root>
