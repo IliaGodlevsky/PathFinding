@@ -1,5 +1,6 @@
 ﻿using GraphLibrary.Extensions.MatrixExtension;
 using GraphLibrary.Vertex;
+using System.Linq;
 
 namespace GraphLibrary
 {
@@ -37,9 +38,8 @@ namespace GraphLibrary
 
         public void SetNeighbours()
         {
-            for (int xCoordinate = 0; xCoordinate < width; xCoordinate++)
-                for (int yCoordinate = 0; yCoordinate < height; yCoordinate++)
-                    SetNeighbours(xCoordinate, yCoordinate);
+            vertices.Cast<IVertex>().ToList().ForEach(vertex => 
+            SetNeighbours(vertices.GetIndices(vertex).X, vertices.GetIndices(vertex).Y));
         }
     }
 }
