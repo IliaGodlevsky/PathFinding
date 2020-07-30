@@ -121,6 +121,6 @@
     <value>Couldn't find path</value>
   </data>
   <data name="GraphParametresFormat" xml:space="preserve">
-    <value>Width: {0} | Height: {1} | Obstacle percent: {2} ({3}/{4})</value>
+    <value>Width: {0}   Height: {1}   Obstacle percent: {2} ({3}/{4})</value>
   </data>
 </root>
