@@ -61,7 +61,7 @@ namespace GraphLibrary {
         }
         
         /// <summary>
-        ///   Ищет локализованную строку, похожую на Time: {0}:{1}.{2} | Steps: {3} | Path length: {4} | Visited vertices: {5}.
+        ///   Ищет локализованную строку, похожую на Time: {0}:{1}.{2}  Steps: {3}   Path length: {4}   Visited vertices: {5}.
         /// </summary>
         internal static string StatisticsTransformFormat {
             get {
