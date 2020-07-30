@@ -44,11 +44,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Constants\Const.cs" />
-    <Compile Include="DistanceCalculator\DistanceCalculator.cs" />
+    <Compile Include="DistanceCalculator\Distance.cs" />
     <Compile Include="Enums\AlgorithmEnum\Algorithm.cs" />
-    <Compile Include="Extensions\ArrayExtensions\ArrayExtension.cs" />
-    <Compile Include="Extensions\DateTimeExtension\DateTimeExtension.cs" />
-    <Compile Include="Extensions\ListExtension\ListExtensions.cs" />
     <Compile Include="Extensions\MatrixExtension\TwoDimensionArrayExtensions.cs" />
     <Compile Include="Extensions\RandomExtension\RandomExtensions.cs" />
     <Compile Include="GraphFactory\AbstractGraphFactory.cs" />
@@ -76,7 +73,7 @@
     <Compile Include="PathFindAlgorithm\GreedyAlgorithm.cs" />
     <Compile Include="PathFindAlgorithm\IPathFindAlgorithm.cs" />
     <Compile Include="PathFindAlgorithm\WidePathFindAlgorithm.cs" />
-    <Compile Include="PauseMaker\PauseMaker.cs" />
+    <Compile Include="PauseMaker\Pauser.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RoleChanger\IVertexRoleChanger.cs" />
     <Compile Include="BoundSetter.cs" />
