@@ -61,7 +61,7 @@ namespace WpfVersion.ViewModel
 
         private bool CanExecuteConfirmPathFindAlgorithmChoice(object param)
         {
-            return Enum.GetValues(typeof(Algorithms)).Exists(algo => (Algorithms)algo == algorithm);
+            return (Enum.GetValues(typeof(Algorithms)) as Algorithms[]).Any(algo => algo == algorithm);
         }
     }
 }
