@@ -35,7 +35,7 @@ namespace GraphLibrary.RoleChanger
             top.MarkAsSimpleVertex();
             top.Text = rand.GetRandomVertexValue();
             var setter = new NeigbourSetter(graph.GetArray());
-            var coordinates = graph.GetIndexes(top);
+            var coordinates = graph.GetIndices(top);
             setter.SetNeighbours(coordinates.X, coordinates.Y);
             BoundSetter.SetBoundsBetweenNeighbours(top);
         }
