@@ -63,7 +63,6 @@
     <Compile Include="Model\GraphLoader\WpfGraphLoader.cs" />
     <Compile Include="Model\GraphSaver\WpfGraphSaver.cs" />
     <Compile Include="Model\Graph\WpfGraph.cs" />
-    <Compile Include="Model\PauseMaker\WpfPauseMaker.cs" />
     <Compile Include="Model\RoleChanger\WpfRoleChanger.cs" />
     <Compile Include="Model\Vertex\WpfVertex.cs" />
     <Compile Include="ViewModel\BaseViewModel.cs" />
@@ -82,10 +81,6 @@
       <DependentUpon>PathFindWindow.xaml</DependentUpon>
     </Compile>
     <Page Include="Resources\Styles\ImageStyle.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Resources\Styles\MainWindowToolBarButtonStyles.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
