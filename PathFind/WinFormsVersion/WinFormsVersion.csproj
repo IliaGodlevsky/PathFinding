@@ -62,7 +62,6 @@
     <Compile Include="GraphLoader\WinFormsGraphLoader.cs" />
     <Compile Include="GraphSaver\WinFormsGraphSaver.cs" />
     <Compile Include="Graph\WinFormsGraph.cs" />
-    <Compile Include="PauseMaker\WinFormsPauseMaker.cs" />
     <Compile Include="RoleChanger\WinFormsVertexRoleChanger.cs" />
     <Compile Include="Vertex\WinFormsVertex.cs">
       <SubType>Component</SubType>
