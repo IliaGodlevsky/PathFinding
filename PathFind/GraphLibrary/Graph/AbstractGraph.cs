@@ -1,6 +1,6 @@
 ﻿using System.Collections;
 using System.Drawing;
-using GraphLibrary.Constants;
+using System.Linq;
 using GraphLibrary.Extensions.MatrixExtension;
 using GraphLibrary.Vertex;
 
@@ -39,7 +39,7 @@ namespace GraphLibrary.Graph
 
         public void Insert(IVertex vertex)
         {
-            var coordiantes = GetIndexes(vertex);
+            var coordiantes = GetIndices(vertex);
             vertices[coordiantes.X, coordiantes.Y] = vertex;
             var setter = new NeigbourSetter(vertices);
             setter.SetNeighbours(coordiantes.X, coordiantes.Y);
@@ -47,13 +47,9 @@ namespace GraphLibrary.Graph
 
         public int ObstaclePercent => ObstacleNumber * 100 / Size;
 
-        public int ObstacleNumber => vertices.CountIf(vertex => vertex.IsObstacle);
+        public int ObstacleNumber => vertices.Cast<IVertex>().Count(vertex => vertex.IsObstacle);
 
-        public virtual Point GetIndexes(IVertex vertex)
-        {
-            return new Point(vertex.Location.X / Const.SIZE_BETWEEN_VERTICES, 
-                vertex.Location.Y / Const.SIZE_BETWEEN_VERTICES);
-        }
+        public virtual Point GetIndices(IVertex vertex) => vertices.GetIndices(vertex);
 
         protected abstract void ToDefault(IVertex vertex);
 
