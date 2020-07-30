@@ -2,7 +2,6 @@
 using ConsoleVersion.GraphSaver;
 using ConsoleVersion.InputClass;
 using ConsoleVersion.PathFindAlgorithmMenu;
-using ConsoleVersion.PauseMaker;
 using GraphLibrary.GraphFactory;
 using GraphLibrary.View;
 using ConsoleVersion.Graph;
@@ -119,7 +118,7 @@ namespace ConsoleVersion.Forms
             Console.Clear();
             GraphShower.ShowGraph(graph);
             var search = pathFindMenu.ChoosePathFindAlgorithm();
-            search.Pause = new ConsolePauseMaker().Pause;
+            search.PauseEvent = () => { };
             if (search.FindDestionation())
             {
                 search.DrawPath();

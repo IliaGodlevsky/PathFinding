@@ -2,11 +2,10 @@
 using GraphLibrary.Enums.AlgorithmEnum;
 using GraphLibrary.PathFindAlgorithmSelector;
 using System;
+using System.Linq;
 using System.Windows;
-using WpfVersion.Extensions.ArrayExtension;
 using WpfVersion.Infrastructure;
 using WpfVersion.Model.Graph;
-using WpfVersion.Model.PauseMaker;
 using WpfVersion.ViewModel.Resources;
 
 namespace WpfVersion.ViewModel
@@ -48,7 +47,7 @@ namespace WpfVersion.ViewModel
         {
             pathFindAlgorythm = AlgorithmSelector.GetPathFindAlgorithm(algorithm, model.Graph);
             model.Window.Close();
-            pathFindAlgorythm.Pause = new WpfPauseMaker().Pause;
+            pathFindAlgorythm.PauseEvent = ()=>System.Windows.Forms.Application.DoEvents();
             if (pathFindAlgorythm.FindDestionation())
             {
                 pathFindAlgorythm.DrawPath();

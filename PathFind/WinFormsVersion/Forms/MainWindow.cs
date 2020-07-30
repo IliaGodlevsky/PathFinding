@@ -14,9 +14,7 @@ using WinFormsVersion.RoleChanger;
 using WinFormsVersion.GraphSaver;
 using GraphLibrary.GraphLoader;
 using WinFormsVersion.GraphLoader;
-using WinFormsVersion.PauseMaker;
 using WinFormsVersion.GraphFactory;
-using GraphLibrary.Statistics;
 
 namespace WinFormsVersion.Forms
 {
@@ -156,7 +154,7 @@ namespace WinFormsVersion.Forms
         {
             if (pathFindAlgo != null)
             {
-                pathFindAlgo.Pause = new WinFormsPauseMaker().Pause;
+                pathFindAlgo.PauseEvent = () => Application.DoEvents();
                 if (pathFindAlgo.FindDestionation())
                 {
                     pathFindAlgo.DrawPath();
