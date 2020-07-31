@@ -46,7 +46,6 @@ namespace WpfVersion.ViewModel
         public RelayCommand ClearGraphCommand { get; }
         public RelayCommand SaveGraphCommand { get; }
         public RelayCommand LoadGraphCommand { get; }
-        public RelayCommand ShowVertexValueCommand { get; }
 
         public MainWindowViewModel()
         {
@@ -83,6 +82,8 @@ namespace WpfVersion.ViewModel
         {
             Graph.Refresh();
             Statistics = string.Empty;
+            GraphParametres = GraphCreateViewModel.GetFormatedGraphParametres(Graph);
+            OnPropertyChanged(nameof(GraphParametres));
         }
 
         private void PrepareWindow(BaseViewModel model, Window window)
