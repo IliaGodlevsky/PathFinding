@@ -5,7 +5,7 @@ using GraphLibrary.Vertex;
 namespace GraphLibrary.GraphFactory
 {
     public abstract class AbstractGraphInitializer 
-        : AbstractGraphLocator, IGraphFactory
+        : AbstractGraphSetter, IGraphFactory
     {
         public AbstractGraphInitializer(VertexInfo[,] info,
             int placeBetweenVertices) : base(placeBetweenVertices)

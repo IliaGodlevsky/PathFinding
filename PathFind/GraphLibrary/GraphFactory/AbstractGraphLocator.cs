@@ -4,12 +4,12 @@ using System.Drawing;
 
 namespace GraphLibrary.GraphFactory
 {
-    public abstract class AbstractGraphLocator
+    public abstract class AbstractGraphSetter
     {
         protected IVertex[,] vertices;
         protected int placeBetweenVertices;
 
-        protected AbstractGraphLocator(int placeBetweenVertices)
+        protected AbstractGraphSetter(int placeBetweenVertices)
         {
             this.placeBetweenVertices = placeBetweenVertices;
         }

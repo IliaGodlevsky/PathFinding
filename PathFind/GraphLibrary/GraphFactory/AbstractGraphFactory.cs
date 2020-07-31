@@ -7,7 +7,7 @@ using System;
 namespace GraphLibrary.GraphFactory
 {
     public abstract class AbstractGraphFactory 
-        : AbstractGraphLocator, IGraphFactory
+        : AbstractGraphSetter, IGraphFactory
     {
         protected Random rand = new Random();
 
