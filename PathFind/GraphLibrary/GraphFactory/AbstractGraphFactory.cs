@@ -9,11 +9,12 @@ namespace GraphLibrary.GraphFactory
     public abstract class AbstractGraphFactory 
         : AbstractGraphSetter, IGraphFactory
     {
-        protected Random rand = new Random();
+        protected Random rand;
 
         public AbstractGraphFactory(int percentOfObstacles,
             int width, int height, int placeBetweenVertices) : base(placeBetweenVertices)
         {
+            rand = new Random();
             IVertex InitializeTop(IVertex vertex)
             {
                 vertex = CreateGraphTop();
