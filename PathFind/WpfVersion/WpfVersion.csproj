@@ -140,27 +140,23 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Resources\Images\play.png" />
-  </ItemGroup>
-  <ItemGroup>
     <ProjectReference Include="..\GraphLibrary\GraphLibrary.csproj">
       <Project>{5441521C-1754-4098-A843-8904910700E8}</Project>
       <Name>GraphLibrary</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Resources\Images\filesave.png" />
-    <Resource Include="Resources\Images\new.png" />
-    <Resource Include="Resources\Images\openfile.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Resources\Images\clear.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Resources\Images\obstacle.png" />
-  </ItemGroup>
-  <ItemGroup>
     <Resource Include="Resources\Images\mainwindow.png" />
+    <Resource Include="Resources\Images\refresh.png" />
+    <Resource Include="Resources\Images\open.png" />
+    <Resource Include="Resources\Images\new.png" />
+    <Resource Include="Resources\Images\mainwindow2.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Images\save.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Images\start.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
