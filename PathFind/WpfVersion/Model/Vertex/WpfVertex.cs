@@ -2,6 +2,7 @@
 using GraphLibrary.Constants;
 using GraphLibrary.Vertex;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Windows.Controls;
 using System.Windows.Media;
 
@@ -58,7 +59,7 @@ namespace WpfVersion.Model.Vertex
         public List<IVertex> Neighbours { get; set; }
         public IVertex ParentVertex { get; set; }
         public double Value { get; set; }
-        public System.Drawing.Point Location { get; set; }
+        public Point Location { get; set; }
 
         public VertexInfo Info => new VertexInfo(this);
 
