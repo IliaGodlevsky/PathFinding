@@ -20,7 +20,7 @@
             <RowDefinition Height="*"></RowDefinition>
             <RowDefinition Height="auto"></RowDefinition>
         </Grid.RowDefinitions>
-        <Canvas Margin="3" Grid.Row="1" x:Name="graphField" 
+        <Canvas Margin="3" Grid.Row="2" x:Name="graphField" 
                 Width="Auto" Height = "Auto">
             <ContentPresenter Content="{Binding GraphField}"></ContentPresenter>
         </Canvas>
@@ -41,15 +41,11 @@
                 <Image Style ="{StaticResource ImageStyle}" Source="../../Resources/Images/start.png"></Image>
             </Button>
         </ToolBar>
-        <StatusBar Grid.Row="2">
-            <Grid>
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="auto"></RowDefinition>
-                    <RowDefinition Height="auto"></RowDefinition>
-                </Grid.RowDefinitions>
-                <TextBlock Grid.Row="1" Text = "{Binding Statistics}"></TextBlock>
-                <TextBlock Text="{Binding GraphParametres}"></TextBlock>
-            </Grid>
+        <StatusBar Grid.Row="3">
+            <TextBlock Text = "{Binding Statistics}"></TextBlock>
+        </StatusBar>
+        <StatusBar Grid.Row="1">
+            <TextBlock Text="{Binding GraphParametres}"></TextBlock>
         </StatusBar>
     </Grid>
 </Window>
