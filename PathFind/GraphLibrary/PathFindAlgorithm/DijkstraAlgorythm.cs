@@ -1,4 +1,5 @@
-﻿using GraphLibrary.Graph;
+﻿using GraphLibrary.Constants;
+using GraphLibrary.Graph;
 using GraphLibrary.PauseMaker;
 using GraphLibrary.Statistics;
 using GraphLibrary.Vertex;
@@ -14,7 +15,7 @@ namespace GraphLibrary.Algorithm
     {
         protected Pauser pauseMaker;
         protected readonly AbstractGraph graph;
-        private readonly List<IVertex> neigbourQueue = new List<IVertex>();
+        private readonly List<IVertex> neigbourQueue;
         public IStatisticsCollector StatCollector { get; set; }
         public Pause PauseEvent 
         {
@@ -24,11 +25,12 @@ namespace GraphLibrary.Algorithm
 
         public DijkstraAlgorithm(AbstractGraph graph)
         {
+            neigbourQueue = new List<IVertex>();
             this.graph = graph;
             foreach (var vertex in graph)
                 (vertex as IVertex).Value = double.PositiveInfinity;
             StatCollector = new StatisticsCollector();
-            pauseMaker = new PauseMaker.Pauser();
+            pauseMaker = new Pauser();
         }
 
         public void DrawPath()
@@ -41,7 +43,7 @@ namespace GraphLibrary.Algorithm
                 if (vertex.IsSimpleVertex)
                     vertex.MarkAsPath();
                 StatCollector.IncludeVertexInStatistics(temp);
-                pauseMaker.Pause(35);
+                pauseMaker?.Pause(Const.PATH_DRAW_PAUSE_MILLISECONDS);
             }
         }
 
@@ -91,7 +93,7 @@ namespace GraphLibrary.Algorithm
                     break;
                 if (IsRightCellToVisit(currentVertex))
                     Visit(currentVertex);
-                pauseMaker.Pause(2);
+                pauseMaker?.Pause(Const.FIND_PROCESS_PAUSE_MILLISECONDS);
             } while (!IsDestination(currentVertex));
             StatCollector.StopCollect();
             return graph.End.IsVisited;
@@ -122,7 +124,7 @@ namespace GraphLibrary.Algorithm
             if (!vertex.IsEnd)
             {
                 vertex.MarkAsCurrentlyLooked();
-                pauseMaker.Pause(8);
+                pauseMaker?.Pause(Const.VISIT_PAUSE_MILLISECONDS);
                 vertex.MarkAsVisited();               
             }
             StatCollector.Visited();
