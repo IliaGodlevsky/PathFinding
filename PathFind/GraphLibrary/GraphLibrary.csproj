@@ -50,7 +50,7 @@
     <Compile Include="Extensions\RandomExtension\RandomExtensions.cs" />
     <Compile Include="GraphFactory\AbstractGraphFactory.cs" />
     <Compile Include="GraphFactory\AbstractGraphInitializer.cs" />
-    <Compile Include="GraphFactory\AbstractGraphLocator.cs" />
+    <Compile Include="GraphFactory\AbstractGraphSetter.cs" />
     <Compile Include="GraphFactory\IGraphFactory.cs" />
     <Compile Include="GraphLibraryResources.Designer.cs">
       <AutoGen>True</AutoGen>
