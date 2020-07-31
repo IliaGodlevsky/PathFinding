@@ -1,4 +1,5 @@
-﻿using GraphLibrary.Graph;
+﻿using GraphLibrary.Constants;
+using GraphLibrary.Graph;
 using GraphLibrary.PauseMaker;
 using GraphLibrary.Statistics;
 using GraphLibrary.Vertex;
@@ -15,7 +16,7 @@ namespace GraphLibrary.Algorithm
     public class WidePathFindAlgorithm : IPathFindAlgorithm
     {
         protected Pauser pauseMaker;
-        protected Queue<IVertex> neighbourQueue = new Queue<IVertex>();
+        protected Queue<IVertex> neighbourQueue;
         public IStatisticsCollector StatCollector { get; set; }
         public Pause PauseEvent
         {
@@ -27,6 +28,7 @@ namespace GraphLibrary.Algorithm
 
         public WidePathFindAlgorithm(AbstractGraph graph)
         {
+            neighbourQueue = new Queue<IVertex>();
             this.graph = graph;
             StatCollector = new StatisticsCollector();
             pauseMaker = new Pauser();
@@ -87,7 +89,7 @@ namespace GraphLibrary.Algorithm
                     MakeWaves(currentVertex);
                     AddToQueue(currentVertex.Neighbours);
                 }
-                pauseMaker.Pause(milliseconds: 2);
+                pauseMaker?.Pause(Const.FIND_PROCESS_PAUSE_MILLISECONDS);
             }
             StatCollector.StopCollect();
             return graph.End.IsVisited;
@@ -102,7 +104,7 @@ namespace GraphLibrary.Algorithm
                 if (vertex.IsSimpleVertex)
                     vertex.MarkAsPath();
                 StatCollector.IncludeVertexInStatistics(vertex);
-                pauseMaker.Pause(35);
+                pauseMaker?.Pause(Const.PATH_DRAW_PAUSE_MILLISECONDS);
             }
         }
 
@@ -116,7 +118,7 @@ namespace GraphLibrary.Algorithm
             if (vertex.IsSimpleVertex)
             {
                 vertex.MarkAsCurrentlyLooked();
-                pauseMaker.Pause(8);
+                pauseMaker?.Pause(Const.VISIT_PAUSE_MILLISECONDS);
                 vertex.MarkAsVisited();
             }
             StatCollector.Visited();
