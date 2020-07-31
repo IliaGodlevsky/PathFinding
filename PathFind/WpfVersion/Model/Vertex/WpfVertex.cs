@@ -51,11 +51,13 @@ namespace WpfVersion.Model.Vertex
 
         public bool IsStart { get; set; }
         public bool IsVisited { get; set; }
+
         public string Text 
         {
             get { return Content.ToString(); }
             set { Content = value; }
         }
+
         public List<IVertex> Neighbours { get; set; }
         public IVertex ParentVertex { get; set; }
         public double Value { get; set; }
