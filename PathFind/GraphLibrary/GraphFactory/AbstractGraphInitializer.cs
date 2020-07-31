@@ -15,7 +15,9 @@ namespace GraphLibrary.GraphFactory
                 return;
 
             SetGraph(info.Width(), info.Height());
-            vertices.Apply(vertex => CreateVertex(info[vertices.GetIndices(vertex).X, vertices.GetIndices(vertex).Y]));
+            vertices.Apply(vertex => CreateVertex(
+                info[vertices.GetIndices(vertex).X, 
+                vertices.GetIndices(vertex).Y]));
             vertices.Apply(SetLocation);
         }
 
