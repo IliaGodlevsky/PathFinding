@@ -147,7 +147,6 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Resources\Images\mainwindow.png" />
-    <Resource Include="Resources\Images\refresh.png" />
     <Resource Include="Resources\Images\open.png" />
     <Resource Include="Resources\Images\new.png" />
     <Resource Include="Resources\Images\mainwindow2.png" />
@@ -157,6 +156,9 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Resources\Images\start.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Images\clear.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
