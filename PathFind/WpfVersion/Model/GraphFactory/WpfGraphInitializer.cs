@@ -14,19 +14,10 @@ namespace WpfVersion.Model.GraphFactory
         {
         }
 
-        public override AbstractGraph GetGraph()
-        {
-            return new WpfGraph(vertices);
-        }
+        public override AbstractGraph GetGraph() => new WpfGraph(vertices);
 
-        protected override IVertex CreateVertex(VertexInfo info)
-        {
-            return new WpfVertex(info);
-        }
+        protected override IVertex CreateVertex(VertexInfo info) => new WpfVertex(info);
 
-        protected override void SetGraph(int width, int height)
-        {
-            vertices = new WpfVertex[width, height];
-        }
+        protected override void SetGraph(int width, int height) => vertices = new WpfVertex[width, height];
     }
 }
