@@ -30,7 +30,8 @@ namespace GraphLibrary.Extensions.MatrixExtension
             return outArray;
         }
 
-        public static void Apply<TSource>(this TSource[,] arr, Func<TSource, TSource> function)
+        public static void Apply<TSource>(this TSource[,] arr, 
+            Func<TSource, TSource> function)
         {
             for (int i = 0; i < arr.Width(); i++)
                 for (int j = 0; j < arr.Height(); j++)
