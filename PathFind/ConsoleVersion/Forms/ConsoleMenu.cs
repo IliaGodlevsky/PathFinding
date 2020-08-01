@@ -11,6 +11,9 @@ using System;
 using System.Drawing;
 using GraphLibrary.RoleChanger;
 using GraphLibrary.Graph;
+using System.ComponentModel;
+using System.Text;
+using GraphLibrary.Extensions;
 
 namespace ConsoleVersion.Forms
 {
@@ -18,12 +21,19 @@ namespace ConsoleVersion.Forms
     {
         private enum MenuOption
         {
+            [Description("Quit")]
             Quit,
+            [Description("Find path")]
             PathFind,
+            [Description("Save")]
             Save,
+            [Description("Load")]
             Load,
+            [Description("Create")]
             Create,
+            [Description("Refresh")]
             Refresh,
+            [Description("Reverse")]
             Reverse
         };
 
