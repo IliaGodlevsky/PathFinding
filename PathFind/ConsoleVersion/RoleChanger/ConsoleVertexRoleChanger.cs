@@ -4,6 +4,7 @@ using ConsoleVersion.Vertex;
 using System;
 using GraphLibrary.Graph;
 using GraphLibrary.Vertex;
+using GraphLibrary.Constants;
 
 namespace ConsoleVersion.RoleChanger
 {
@@ -16,7 +17,9 @@ namespace ConsoleVersion.RoleChanger
         }
 
         public override void ChangeTopText(object sender, EventArgs e) => (sender as ConsoleVertex).Text =
-                Input.InputNumber("Enter new top value: ", 9, 1).ToString();
+                Input.InputNumber(Res.NewTopValueMsg, 
+                                  Const.MAX_VERTEX_VALUE, 
+                                  Const.MIN_VERTEX_VALUE).ToString();
 
         public override void ReversePolarity(object sender, EventArgs e)
         {

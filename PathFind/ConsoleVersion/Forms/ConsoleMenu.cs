@@ -151,7 +151,7 @@ namespace ConsoleVersion.Forms
                 graph.Start = null;
             }
             else
-                Console.WriteLine("Couldn't find path");
+                Console.WriteLine(Res.BadResultMsg);
             Console.ReadKey();
         }
 
