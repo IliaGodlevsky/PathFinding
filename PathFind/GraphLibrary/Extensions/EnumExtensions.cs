@@ -26,6 +26,7 @@ namespace GraphLibrary.Extensions
 
             return description;
         }
+
         public static List<string> GetDescriptions<T>(this Enum en)
             where T : struct, IConvertible
         {
