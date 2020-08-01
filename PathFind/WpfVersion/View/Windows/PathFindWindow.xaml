@@ -3,32 +3,39 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:Algorithms="clr-namespace:GraphLibrary.Enums.AlgorithmEnum;assembly=GraphLibrary"
         xmlns:local="clr-namespace:WpfVersion.View.Windows"
+        xmlns:sys="clr-namespace:System;assembly=mscorlib" 
+        xmlns:converters="clr-namespace:WpfVersion.Converters"
         mc:Ignorable="d"
         Title="PathFindParametresWindow" SizeToContent="WidthAndHeight">
+    <Window.Resources>
+        <ObjectDataProvider MethodName="GetValues"
+                ObjectType ="{x:Type sys:Enum}"
+                x:Key="AlgorithmsValues">
+            <ObjectDataProvider.MethodParameters>
+                <x:Type TypeName="Algorithms:Algorithms"/>
+            </ObjectDataProvider.MethodParameters>
+        </ObjectDataProvider>
+        <converters:AlgorithmDescriptionConverter x:Key="enumDescriptionConverter"></converters:AlgorithmDescriptionConverter>
+    </Window.Resources>
     <Grid>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="*"></ColumnDefinition>
-        </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"></RowDefinition>
             <RowDefinition Height="Auto"></RowDefinition>
-            <RowDefinition Height="Auto"></RowDefinition>
-            <RowDefinition Height="Auto"></RowDefinition>
-            <RowDefinition Height="Auto"></RowDefinition>
-            <RowDefinition Height="Auto"></RowDefinition>
-            <RowDefinition Height="Auto"></RowDefinition>
-            <RowDefinition Height="Auto"></RowDefinition>
         </Grid.RowDefinitions>
-        <RadioButton Command="{Binding ChooseDijkstraAlgorithmCommand}" Margin ="5" Grid.Row ="1" Content="Dijkstra algorythm"></RadioButton>
-        <RadioButton Command="{Binding ChooseAStartAlgorithmCommand}" Margin ="5" Grid.Row ="2" Content="A* algorythm"></RadioButton>
-        <RadioButton Command="{Binding ChooseDeepPathFindAlgorithmCommand}" Margin ="5" Grid.Row ="3" Content="Deep path find"></RadioButton>
-        <RadioButton Command="{Binding ChooseWidePathFindAlgorithmCommand}" Margin ="5" Grid.Row ="4" Content="Wide path find algorythm"></RadioButton>
-        <RadioButton Command="{Binding ChooseValueGreedPathFindAlgorithmCommand}" Margin ="5" Grid.Row ="5" Content="Value greedy algorithm"></RadioButton>
-        <RadioButton Command="{Binding ChooseDistanceGreedPathFindAlgorithmCommand}" Margin ="5" Grid.Row ="6" Content="Distance greedy algorithm"></RadioButton>
-        <StackPanel HorizontalAlignment="Center"  Orientation="Horizontal" Grid.Row="7">
+        <StackPanel HorizontalAlignment="Center"  Orientation="Horizontal" Grid.Row="1">
             <Button Command="{Binding ConfirmPathFindAlgorithmChoice}"  Margin ="5" Content="Choose"></Button>
             <Button Command="{Binding CancelPathFindAlgorithmChoice}" Margin ="5" Content="Cancel"></Button>
         </StackPanel>
+        <ListBox BorderThickness="0" Margin="5"
+                 ItemsSource="{Binding Source={StaticResource AlgorithmsValues}}"
+                 SelectedItem="{Binding Path = Algorithm}">
+            <ListBox.ItemTemplate>
+                <DataTemplate>
+                    <TextBlock Margin="5" Text="{Binding Converter={StaticResource enumDescriptionConverter}}"/>
+                </DataTemplate>
+            </ListBox.ItemTemplate>
+        </ListBox>
     </Grid>
 </Window>

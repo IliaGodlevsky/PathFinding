@@ -13,17 +13,13 @@ namespace WpfVersion.ViewModel
     public class PathFindViewModel : BaseViewModel
     {
         private IPathFindAlgorithm pathFindAlgorythm;
+        public Algorithms Algorithm { get; set; }
+
         private WpfGraph graph;
-        private Algorithms algorithm;
         private MainWindowViewModel model;
+
         public RelayCommand ConfirmPathFindAlgorithmChoice { get; }
         public RelayCommand CancelPathFindAlgorithmChoice { get; }
-        public RelayCommand ChooseDijkstraAlgorithmCommand { get; }
-        public RelayCommand ChooseAStartAlgorithmCommand { get; }
-        public RelayCommand ChooseDeepPathFindAlgorithmCommand { get; }
-        public RelayCommand ChooseWidePathFindAlgorithmCommand { get; }
-        public RelayCommand ChooseValueGreedPathFindAlgorithmCommand { get; }
-        public RelayCommand ChooseDistanceGreedPathFindAlgorithmCommand { get; }
 
         public PathFindViewModel(MainWindowViewModel model)
         {
@@ -35,17 +31,11 @@ namespace WpfVersion.ViewModel
                 CanExecuteConfirmPathFindAlgorithmChoice);
 
             CancelPathFindAlgorithmChoice = new RelayCommand(obj => model?.Window.Close(), obj => true);
-            ChooseDijkstraAlgorithmCommand = new RelayCommand(obj => algorithm = Algorithms.DijkstraAlgorithm, obj => true);
-            ChooseAStartAlgorithmCommand = new RelayCommand(obj => algorithm = Algorithms.AStarAlgorithm, obj => true);
-            ChooseDeepPathFindAlgorithmCommand = new RelayCommand(obj => algorithm = Algorithms.DeepPathFind, obj => true);
-            ChooseWidePathFindAlgorithmCommand = new RelayCommand(obj => algorithm = Algorithms.WidePathFind, obj => true);
-            ChooseValueGreedPathFindAlgorithmCommand = new RelayCommand(obj => algorithm = Algorithms.ValueGreedyAlgorithm, obj => true);
-            ChooseDistanceGreedPathFindAlgorithmCommand = new RelayCommand(obj => algorithm = Algorithms.DistanceGreedyAlgorithm, obj => true);
         }
 
         private void ExecuteConfirmPathFindAlgorithmChoice(object param)
         {
-            pathFindAlgorythm = AlgorithmSelector.GetPathFindAlgorithm(algorithm, model.Graph);
+            pathFindAlgorythm = AlgorithmSelector.GetPathFindAlgorithm(Algorithm, model.Graph);
             model.Window.Close();
             pathFindAlgorythm.PauseEvent = ()=>System.Windows.Forms.Application.DoEvents();
             if (pathFindAlgorythm.FindDestionation())
@@ -61,7 +51,7 @@ namespace WpfVersion.ViewModel
 
         private bool CanExecuteConfirmPathFindAlgorithmChoice(object param)
         {
-            return (Enum.GetValues(typeof(Algorithms)) as Algorithms[]).Any(algo => algo == algorithm);
+            return (Enum.GetValues(typeof(Algorithms)) as Algorithms[]).Any(algo => algo == Algorithm);
         }
     }
 }
