@@ -57,6 +57,11 @@
     <Compile Include="PathFindAlgorithmMenu\PathFindMenu.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Res.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Res.resx</DependentUpon>
+    </Compile>
     <Compile Include="RoleChanger\ConsoleVertexRoleChanger.cs" />
     <Compile Include="Vertex\ConsoleVertex.cs" />
   </ItemGroup>
@@ -64,7 +69,12 @@
     <None Include="App.config" />
     <None Include="packages.config" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <EmbeddedResource Include="Res.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Res.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+  </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\GraphLibrary\GraphLibrary.csproj">
       <Project>{5441521c-1754-4098-a843-8904910700e8}</Project>
