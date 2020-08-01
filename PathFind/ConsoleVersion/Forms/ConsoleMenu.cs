@@ -54,10 +54,21 @@ namespace ConsoleVersion.Forms
         
         private void ShowMenu()
         {
-            Console.WriteLine("\n0. Quit   1. Find path");
-            Console.WriteLine("2. Save   3. Load");
-            Console.WriteLine("4. Create 5. Refresh");
-            Console.WriteLine("6. Reverse");
+            var stringBuilder = new StringBuilder("\n");
+            MenuOption menu = default;
+            var descriptions = menu.GetDescriptions<MenuOption>();
+
+            foreach (var item in descriptions)
+            {
+                int numberOf = descriptions.IndexOf(item);
+                if (numberOf % 2 == 0)
+                    stringBuilder.Append("\n");
+                else
+                    stringBuilder.Append("  \t");
+                stringBuilder.Append(string.Format(Res.ShowFormat, numberOf, item));
+            }
+
+            Console.WriteLine(stringBuilder.ToString());
         }
 
         private MenuOption GetOption()

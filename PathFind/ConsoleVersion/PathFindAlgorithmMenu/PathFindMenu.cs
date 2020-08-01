@@ -7,6 +7,8 @@ using System;
 using System.Drawing;
 using System.Linq;
 using GraphLibrary.Algorithm;
+using GraphLibrary.Extensions;
+using System.Text;
 
 namespace ConsoleVersion.PathFindAlgorithmMenu
 {
@@ -21,9 +23,9 @@ namespace ConsoleVersion.PathFindAlgorithmMenu
             changer = new ConsoleVertexRoleChanger(this.graph);
         }
 
-        public void ChooseStart() => ChooseRange("\nStart point: ", changer.SetStartPoint);
+        public void ChooseStart() => ChooseRange("\n" + Res.StartPoint, changer.SetStartPoint);
 
-        public void ChooseEnd() => ChooseRange("Destination point: ", changer.SetDestinationPoint);
+        public void ChooseEnd() => ChooseRange(Res.DestinationPoint, changer.SetDestinationPoint);
 
         private void ChooseRange(string message, EventHandler method)
         {
@@ -43,17 +45,22 @@ namespace ConsoleVersion.PathFindAlgorithmMenu
 
         private string ShowAlgorithms()
         {
-            return "\n1. Wide path find\n" +
-                "2. Deep path find\n" +
-                    "3. Dijkstra algorithm\n" +
-                    "4. A* algorithm\n" +
-                    "5. Greedy for distance algorithm\n" +
-                    "6. Greedy for value algorithm\n";
+            var stringBuilder = new StringBuilder("\n");
+            Algorithms algo = default;
+            var descriptions = algo.GetDescriptions<Algorithms>();
+            foreach (var item in descriptions)
+            {
+                int numberOf = descriptions.IndexOf(item) + 1;
+                stringBuilder.Append(string.Format(Res.ShowFormat, numberOf, item));
+                stringBuilder.Append("\n");
+            }
+
+            return stringBuilder.ToString();
         }
 
         public IPathFindAlgorithm ChoosePathFindAlgorithm()
         {
-            Algorithms algorithms = (Algorithms)Input.InputNumber(ShowAlgorithms() + "Choose algorithm: ", 
+            Algorithms algorithms = (Algorithms)Input.InputNumber(ShowAlgorithms() + Res.ChooseAlrorithm, 
                 (int)Algorithms.ValueGreedyAlgorithm, (int)Algorithms.WidePathFind);
             return AlgorithmSelector.GetPathFindAlgorithm(algorithms, graph);
         }
