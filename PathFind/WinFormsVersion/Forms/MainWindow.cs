@@ -15,17 +15,37 @@ using WinFormsVersion.GraphSaver;
 using GraphLibrary.GraphLoader;
 using WinFormsVersion.GraphLoader;
 using WinFormsVersion.GraphFactory;
+using System.Linq;
+using GraphLibrary.Extensions;
 
 namespace WinFormsVersion.Forms
 {
     public partial class MainWindow : Form, IView
     {
+        private Algorithms algorithm;
         private WinFormsGraph graph = null;
         private IGraphFactory createAlgorythm = null;
         private IVertexRoleChanger changer = null;
         private IPathFindAlgorithm pathFindAlgo = null;
 
-        public MainWindow() => InitializeComponent();
+        public MainWindow()
+        {
+            InitializeComponent();
+            var dataSource = Enum.GetValues(typeof(Algorithms)).Cast<Algorithms>().
+                Select(algo => new { Name = algo.GetDescription(), Value = algo }).ToList();
+            algoComboBox.DataSource = dataSource;
+            var type = dataSource.First().GetType();
+            var properties = type.GetProperties();
+
+            algoComboBox.DisplayMember = properties.First().Name;
+            algoComboBox.ValueMember = properties.Last().Name;
+            algorithm = Algorithms.WidePathFind;
+        }
+
+        private void AlgoComboBox_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            algorithm = (Algorithms)algoComboBox.SelectedValue;
+        }
 
         private void PrepareWindow(int obstaclePercent,int graphWidth, int graphHeight)
         {
@@ -36,7 +56,7 @@ namespace WinFormsVersion.Forms
             heightNumber.Text = graphHeight.ToString();
             widthNumber.Update();
             heightNumber.Update();
-            time.Text = "";
+            time.Text = string.Empty;
             time.Update();
         }
 
@@ -47,7 +67,7 @@ namespace WinFormsVersion.Forms
         }
 
         private void AddGraphToControls()
-        { 
+        {
             foreach (var top in graph)
             {
                 if (!(top as WinFormsVertex).IsObstacle)
@@ -62,26 +82,6 @@ namespace WinFormsVersion.Forms
             Size = new Size(Field.Size.Width + FieldParams.Width + 50,
                 Field.Size.Height + 80);
             DesktopLocation = new Point();
-        }
-
-        private void WideSearchToolStripMenuItem(object sender, EventArgs e) => StartSearchPath(Algorithms.WidePathFind);
-
-        private void DijkstraAlgorythmToolStripMenuItem(object sender, EventArgs e) => StartSearchPath(Algorithms.DijkstraAlgorithm);
-
-        private void GreedyForDistanceAlgorithmToolStripMenuItem_Click(object sender, EventArgs e)
-            => StartSearchPath(Algorithms.DistanceGreedyAlgorithm);
-
-        private void GreedyForValueAlgorithmToolStripMenuItem_Click(object sender, EventArgs e)
-            => StartSearchPath(Algorithms.ValueGreedyAlgorithm);
-
-        private void AStarAlgorithmToolStripMenuItem(object sender, EventArgs e) => StartSearchPath(Algorithms.AStarAlgorithm);
-
-        private void DeepPathFindToolStripMenuItem_Click(object sender, EventArgs e) => StartSearchPath(Algorithms.DeepPathFind);
-
-        private void StartSearchPath(Algorithms algorithm)
-        {
-            pathFindAlgo = AlgorithmSelector.GetPathFindAlgorithm(algorithm, graph);
-            FindPath();
         }
 
         private void Percent_Scroll(object sender, EventArgs e) => PreparePercentBar();
@@ -99,6 +99,13 @@ namespace WinFormsVersion.Forms
         private void WidthNumber_TextChanged(object sender, EventArgs e) => SizeTextBoxTextChanged((TextBox)sender);
 
         private void HeightNumber_TextChanged(object sender, EventArgs e) => SizeTextBoxTextChanged((TextBox)sender);
+
+        private void StartButton_StartPathFind(object sender, EventArgs e)
+        {
+
+            pathFindAlgo = AlgorithmSelector.GetPathFindAlgorithm(algorithm, graph);
+            FindPath();
+        }
 
         private void Create(object sender, EventArgs e) => CreateGraph();
 
@@ -166,7 +173,7 @@ namespace WinFormsVersion.Forms
                     graph.End = null;
                 }
                 else
-                    MessageBox.Show("Couldn't find path");
+                    MessageBox.Show(WinFormsResources.BadResultMsg);
             }
         }
 
@@ -183,7 +190,7 @@ namespace WinFormsVersion.Forms
         public void RefreshGraph()
         {
             graph?.Refresh();
-            time.Text = "";
+            time.Text = string.Empty;
             time.Update();
             percent.Value = graph.ObstaclePercent;
             PreparePercentBar();
