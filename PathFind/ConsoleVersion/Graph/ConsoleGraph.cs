@@ -9,11 +9,5 @@ namespace ConsoleVersion.Graph
         {
 
         }
-
-        protected override void ToDefault(IVertex vertex)
-        {
-            if (!vertex.IsObstacle)
-                vertex.SetToDefault();
-        }
     }
 }
