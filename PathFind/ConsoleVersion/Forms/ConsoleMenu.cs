@@ -61,7 +61,7 @@ namespace ConsoleVersion.Forms
             foreach (var item in descriptions)
             {
                 int numberOf = descriptions.IndexOf(item);
-                if (numberOf % 2 == 0)
+                if (numberOf.IsEven())
                     stringBuilder.Append("\n");
                 else
                     stringBuilder.Append("  \t");
