@@ -51,7 +51,11 @@ namespace GraphLibrary.Graph
 
         public virtual Point GetIndices(IVertex vertex) => vertices.GetIndices(vertex);
 
-        protected abstract void ToDefault(IVertex vertex);
+        protected virtual void ToDefault(IVertex vertex)
+        {
+            if (!vertex.IsObstacle)
+                vertex.SetToDefault();
+        }
 
         public void Refresh()
         {
