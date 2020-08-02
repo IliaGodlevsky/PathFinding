@@ -1,4 +1,5 @@
 ﻿using GraphLibrary.Constants;
+using GraphLibrary.Extensions.MatrixExtension;
 using GraphLibrary.Graph;
 using GraphLibrary.PauseMaker;
 using GraphLibrary.Statistics;
@@ -27,8 +28,12 @@ namespace GraphLibrary.Algorithm
         {
             neigbourQueue = new List<IVertex>();
             this.graph = graph;
-            foreach (var vertex in graph)
-                (vertex as IVertex).Value = double.PositiveInfinity;
+            IVertex SetValueToInfinity(IVertex vertex)
+            {
+                vertex.Value = double.PositiveInfinity; 
+                return vertex;
+            }
+            this.graph.GetArray().Apply(SetValueToInfinity);
             StatCollector = new StatisticsCollector();
             pauseMaker = new Pauser();
         }
