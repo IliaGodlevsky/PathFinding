@@ -126,13 +126,25 @@
   <data name="DestinationPoint" xml:space="preserve">
     <value>Destination point: </value>
   </data>
+  <data name="HeightMsg" xml:space="preserve">
+    <value>Enter height of graph: </value>
+  </data>
   <data name="NewTopValueMsg" xml:space="preserve">
     <value>Enter new top value: </value>
+  </data>
+  <data name="PercentMsg" xml:space="preserve">
+    <value>Enter percent of obstacles: </value>
+  </data>
+  <data name="ReverseMsg" xml:space="preserve">
+    <value>Reverse top choice: </value>
   </data>
   <data name="ShowFormat" xml:space="preserve">
     <value>{0}. {1}</value>
   </data>
   <data name="StartPoint" xml:space="preserve">
     <value>Start point: </value>
+  </data>
+  <data name="WidthMsg" xml:space="preserve">
+    <value>Enter width of graph: </value>
   </data>
 </root>

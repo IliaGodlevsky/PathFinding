@@ -88,11 +88,38 @@ namespace ConsoleVersion {
         }
         
         /// <summary>
+        ///   Ищет локализованную строку, похожую на Enter height of graph: .
+        /// </summary>
+        internal static string HeightMsg {
+            get {
+                return ResourceManager.GetString("HeightMsg", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Ищет локализованную строку, похожую на Enter new top value: .
         /// </summary>
         internal static string NewTopValueMsg {
             get {
                 return ResourceManager.GetString("NewTopValueMsg", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Enter percent of obstacles: .
+        /// </summary>
+        internal static string PercentMsg {
+            get {
+                return ResourceManager.GetString("PercentMsg", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Reverse top choice: .
+        /// </summary>
+        internal static string ReverseMsg {
+            get {
+                return ResourceManager.GetString("ReverseMsg", resourceCulture);
             }
         }
         
@@ -111,6 +138,15 @@ namespace ConsoleVersion {
         internal static string StartPoint {
             get {
                 return ResourceManager.GetString("StartPoint", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Enter width of graph: .
+        /// </summary>
+        internal static string WidthMsg {
+            get {
+                return ResourceManager.GetString("WidthMsg", resourceCulture);
             }
         }
     }
