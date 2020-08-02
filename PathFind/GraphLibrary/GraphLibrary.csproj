@@ -47,6 +47,7 @@
     <Compile Include="DistanceCalculator\Distance.cs" />
     <Compile Include="Enums\AlgorithmEnum\Algorithm.cs" />
     <Compile Include="Extensions\EnumExtensions.cs" />
+    <Compile Include="Extensions\IntExtensions.cs" />
     <Compile Include="Extensions\MatrixExtension\TwoDimensionArrayExtensions.cs" />
     <Compile Include="Extensions\RandomExtension\RandomExtensions.cs" />
     <Compile Include="GraphFactory\AbstractGraphFactory.cs" />
