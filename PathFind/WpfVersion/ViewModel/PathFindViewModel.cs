@@ -37,7 +37,7 @@ namespace WpfVersion.ViewModel
         {
             pathFindAlgorythm = AlgorithmSelector.GetPathFindAlgorithm(Algorithm, model.Graph);
             model.Window.Close();
-            pathFindAlgorythm.PauseEvent = ()=>System.Windows.Forms.Application.DoEvents();
+            pathFindAlgorythm.PauseEvent = () => System.Windows.Forms.Application.DoEvents();
             if (pathFindAlgorythm.FindDestionation())
             {
                 pathFindAlgorythm.DrawPath();
