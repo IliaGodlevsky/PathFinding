@@ -34,15 +34,6 @@ namespace WinFormsVersion.Forms
             this.fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.saveMapToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.loadMapToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.optionsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.findPathToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.wideSearchToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.dijkstraAlgorythmToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.aSearchToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.greedySearchToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.greedyForDistanceAlgorithmToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.greedyForValueAlgorithmToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.deepPathFindToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.percent = new System.Windows.Forms.TrackBar();
             this.widthNumber = new System.Windows.Forms.TextBox();
             this.heightNumber = new System.Windows.Forms.TextBox();
@@ -57,6 +48,8 @@ namespace WinFormsVersion.Forms
             this.timeOfSearch = new System.Windows.Forms.GroupBox();
             this.time = new System.Windows.Forms.Label();
             this.Field = new WinFormsVerstion.Forms.FieldControl();
+            this.algoComboBox = new System.Windows.Forms.ComboBox();
+            this.startPathFind = new System.Windows.Forms.Button();
             this.menuStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.percent)).BeginInit();
             this.FieldParams.SuspendLayout();
@@ -68,8 +61,7 @@ namespace WinFormsVersion.Forms
             this.menuStrip1.GripMargin = new System.Windows.Forms.Padding(2, 2, 0, 2);
             this.menuStrip1.ImageScalingSize = new System.Drawing.Size(24, 24);
             this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.fileToolStripMenuItem,
-            this.optionsToolStripMenuItem});
+            this.fileToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
             this.menuStrip1.Size = new System.Drawing.Size(1200, 33);
@@ -98,77 +90,6 @@ namespace WinFormsVersion.Forms
             this.loadMapToolStripMenuItem.Size = new System.Drawing.Size(194, 34);
             this.loadMapToolStripMenuItem.Text = "Load map";
             this.loadMapToolStripMenuItem.Click += new System.EventHandler(this.LoadMapToolStripMenuItem_Click);
-            // 
-            // optionsToolStripMenuItem
-            // 
-            this.optionsToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.findPathToolStripMenuItem});
-            this.optionsToolStripMenuItem.Name = "optionsToolStripMenuItem";
-            this.optionsToolStripMenuItem.Size = new System.Drawing.Size(108, 29);
-            this.optionsToolStripMenuItem.Text = "Algorithm";
-            // 
-            // findPathToolStripMenuItem
-            // 
-            this.findPathToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.wideSearchToolStripMenuItem,
-            this.dijkstraAlgorythmToolStripMenuItem,
-            this.aSearchToolStripMenuItem,
-            this.greedySearchToolStripMenuItem,
-            this.deepPathFindToolStripMenuItem});
-            this.findPathToolStripMenuItem.Name = "findPathToolStripMenuItem";
-            this.findPathToolStripMenuItem.Size = new System.Drawing.Size(189, 34);
-            this.findPathToolStripMenuItem.Text = "Find path";
-            // 
-            // wideSearchToolStripMenuItem
-            // 
-            this.wideSearchToolStripMenuItem.Name = "wideSearchToolStripMenuItem";
-            this.wideSearchToolStripMenuItem.Size = new System.Drawing.Size(255, 34);
-            this.wideSearchToolStripMenuItem.Text = "Wide path find";
-            this.wideSearchToolStripMenuItem.Click += new System.EventHandler(this.WideSearchToolStripMenuItem);
-            // 
-            // dijkstraAlgorythmToolStripMenuItem
-            // 
-            this.dijkstraAlgorythmToolStripMenuItem.Name = "dijkstraAlgorythmToolStripMenuItem";
-            this.dijkstraAlgorythmToolStripMenuItem.Size = new System.Drawing.Size(255, 34);
-            this.dijkstraAlgorythmToolStripMenuItem.Text = "Dijkstra algorithm";
-            this.dijkstraAlgorythmToolStripMenuItem.Click += new System.EventHandler(this.DijkstraAlgorythmToolStripMenuItem);
-            // 
-            // aSearchToolStripMenuItem
-            // 
-            this.aSearchToolStripMenuItem.Name = "aSearchToolStripMenuItem";
-            this.aSearchToolStripMenuItem.Size = new System.Drawing.Size(255, 34);
-            this.aSearchToolStripMenuItem.Text = "A* algorithm";
-            this.aSearchToolStripMenuItem.Click += new System.EventHandler(this.AStarAlgorithmToolStripMenuItem);
-            // 
-            // greedySearchToolStripMenuItem
-            // 
-            this.greedySearchToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.greedyForDistanceAlgorithmToolStripMenuItem,
-            this.greedyForValueAlgorithmToolStripMenuItem});
-            this.greedySearchToolStripMenuItem.Name = "greedySearchToolStripMenuItem";
-            this.greedySearchToolStripMenuItem.Size = new System.Drawing.Size(255, 34);
-            this.greedySearchToolStripMenuItem.Text = "Greedy algorithm";
-            // 
-            // greedyForDistanceAlgorithmToolStripMenuItem
-            // 
-            this.greedyForDistanceAlgorithmToolStripMenuItem.Name = "greedyForDistanceAlgorithmToolStripMenuItem";
-            this.greedyForDistanceAlgorithmToolStripMenuItem.Size = new System.Drawing.Size(350, 34);
-            this.greedyForDistanceAlgorithmToolStripMenuItem.Text = "Greedy for distance algorithm";
-            this.greedyForDistanceAlgorithmToolStripMenuItem.Click += new System.EventHandler(this.GreedyForDistanceAlgorithmToolStripMenuItem_Click);
-            // 
-            // greedyForValueAlgorithmToolStripMenuItem
-            // 
-            this.greedyForValueAlgorithmToolStripMenuItem.Name = "greedyForValueAlgorithmToolStripMenuItem";
-            this.greedyForValueAlgorithmToolStripMenuItem.Size = new System.Drawing.Size(350, 34);
-            this.greedyForValueAlgorithmToolStripMenuItem.Text = "Greedy for value algorithm";
-            this.greedyForValueAlgorithmToolStripMenuItem.Click += new System.EventHandler(this.GreedyForValueAlgorithmToolStripMenuItem_Click);
-            // 
-            // deepPathFindToolStripMenuItem
-            // 
-            this.deepPathFindToolStripMenuItem.Name = "deepPathFindToolStripMenuItem";
-            this.deepPathFindToolStripMenuItem.Size = new System.Drawing.Size(255, 34);
-            this.deepPathFindToolStripMenuItem.Text = "Deep path find";
-            this.deepPathFindToolStripMenuItem.Click += new System.EventHandler(this.DeepPathFindToolStripMenuItem_Click);
             // 
             // percent
             // 
@@ -293,11 +214,11 @@ namespace WinFormsVersion.Forms
             // timeOfSearch
             // 
             this.timeOfSearch.Controls.Add(this.time);
-            this.timeOfSearch.Location = new System.Drawing.Point(27, 418);
+            this.timeOfSearch.Location = new System.Drawing.Point(27, 487);
             this.timeOfSearch.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.timeOfSearch.Name = "timeOfSearch";
             this.timeOfSearch.Padding = new System.Windows.Forms.Padding(4, 5, 4, 5);
-            this.timeOfSearch.Size = new System.Drawing.Size(230, 102);
+            this.timeOfSearch.Size = new System.Drawing.Size(230, 115);
             this.timeOfSearch.TabIndex = 11;
             this.timeOfSearch.TabStop = false;
             this.timeOfSearch.Text = "Statistics";
@@ -320,6 +241,25 @@ namespace WinFormsVersion.Forms
             this.Field.Size = new System.Drawing.Size(916, 545);
             this.Field.TabIndex = 13;
             // 
+            // algoComboBox
+            // 
+            this.algoComboBox.FormattingEnabled = true;
+            this.algoComboBox.Location = new System.Drawing.Point(28, 402);
+            this.algoComboBox.Name = "algoComboBox";
+            this.algoComboBox.Size = new System.Drawing.Size(229, 28);
+            this.algoComboBox.TabIndex = 14;
+            this.algoComboBox.SelectedIndexChanged += new System.EventHandler(this.AlgoComboBox_SelectedIndexChanged);
+            // 
+            // startPathFind
+            // 
+            this.startPathFind.Location = new System.Drawing.Point(95, 447);
+            this.startPathFind.Name = "startPathFind";
+            this.startPathFind.Size = new System.Drawing.Size(75, 32);
+            this.startPathFind.TabIndex = 15;
+            this.startPathFind.Text = "Start";
+            this.startPathFind.UseVisualStyleBackColor = true;
+            this.startPathFind.Click += new System.EventHandler(this.StartButton_StartPathFind);
+            // 
             // MainWindow
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
@@ -327,6 +267,8 @@ namespace WinFormsVersion.Forms
             this.AutoSize = true;
             this.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.ClientSize = new System.Drawing.Size(1200, 754);
+            this.Controls.Add(this.startPathFind);
+            this.Controls.Add(this.algoComboBox);
             this.Controls.Add(this.Field);
             this.Controls.Add(this.timeOfSearch);
             this.Controls.Add(this.FieldParams);
@@ -352,9 +294,6 @@ namespace WinFormsVersion.Forms
 
         private System.Windows.Forms.MenuStrip menuStrip1;
         private System.Windows.Forms.ToolStripMenuItem fileToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem optionsToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem findPathToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem wideSearchToolStripMenuItem;
         private System.Windows.Forms.TrackBar percent;
         private System.Windows.Forms.TextBox widthNumber;
         private System.Windows.Forms.TextBox heightNumber;
@@ -370,13 +309,9 @@ namespace WinFormsVersion.Forms
         private System.Windows.Forms.Label width;
         private System.Windows.Forms.GroupBox timeOfSearch;
         private System.Windows.Forms.Label time;
-        private System.Windows.Forms.ToolStripMenuItem dijkstraAlgorythmToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem greedySearchToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem aSearchToolStripMenuItem;
         private FieldControl Field;
-        private System.Windows.Forms.ToolStripMenuItem greedyForDistanceAlgorithmToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem greedyForValueAlgorithmToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem deepPathFindToolStripMenuItem;
+        private System.Windows.Forms.ComboBox algoComboBox;
+        private System.Windows.Forms.Button startPathFind;
     }
 }
 
