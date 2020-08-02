@@ -5,7 +5,7 @@ namespace GraphLibrary.Enums.AlgorithmEnum
     public enum Algorithms
     {
         [Description("Wide path find algorithm")]
-        WidePathFind,
+        WidePathFind = 1,
         [Description("Deep path find algorithm")]
         DeepPathFind,
         [Description("Dijkstra algorithm")]
