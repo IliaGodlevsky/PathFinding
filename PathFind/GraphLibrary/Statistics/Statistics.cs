@@ -4,6 +4,8 @@ namespace GraphLibrary.Statistics
 {
     public class Statistics
     {
+        private const string format = "Time: {0}:{1}.{2}  Steps: {3}   Path length: {4}   Visited vertices: {5}";
+
         public Statistics(double pathLength, int steps, DateTime duration, int visitedVertices)
         {
             PathLength = pathLength;
@@ -17,9 +19,9 @@ namespace GraphLibrary.Statistics
         public int Steps { get; private set; }
         public int VisitedVertices { get; private set; }
 
-        public override string ToString()
+        public string GetFormattedData(string format = format)
         {
-            return string.Format(GraphLibraryResources.StatisticsTransformFormat,
+            return string.Format(format,
                 Duration.Minute,
                 Duration.Second,
                 Duration.Millisecond,

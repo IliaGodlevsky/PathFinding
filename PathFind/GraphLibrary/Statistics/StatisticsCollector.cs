@@ -16,11 +16,6 @@ namespace GraphLibrary.Statistics
             watch = new Stopwatch();
         }
 
-        public override string ToString()        
-        {
-            return GetStatistics().ToString();            
-        }
-
         public Statistics GetStatistics()
         {
             return new Statistics(pathLength, steps, new DateTime(watch.ElapsedTicks), visitedVertices);

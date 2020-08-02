@@ -41,7 +41,7 @@ namespace WpfVersion.ViewModel
             if (pathFindAlgorythm.FindDestionation())
             {
                 pathFindAlgorythm.DrawPath();
-                model.Statistics = pathFindAlgorythm.StatCollector.ToString();
+                model.Statistics = pathFindAlgorythm.StatCollector.GetStatistics().GetFormattedData();
                 graph.Start = null;
                 graph.End = null;
             }

@@ -143,7 +143,7 @@ namespace ConsoleVersion.Forms
             if (search.FindDestionation())
             {
                 search.DrawPath();
-                statistics = search.StatCollector.ToString();
+                statistics = search.StatCollector.GetStatistics().GetFormattedData();
                 Console.Clear();
                 GraphShower.ShowGraph(graph);
                 Console.WriteLine("\n" + statistics);

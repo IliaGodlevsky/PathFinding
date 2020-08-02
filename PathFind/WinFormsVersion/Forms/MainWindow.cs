@@ -88,7 +88,7 @@ namespace WinFormsVersion.Forms
 
         private bool SizeTextBoxTextChanged(TextBox textBox)
         {
-            if (textBox.Text.Length == 0 || !int.TryParse(textBox.Text, out int size))
+            if (!textBox.Text.Any() || !int.TryParse(textBox.Text, out int size))
                 return false;
             if (size <= 5)
                 return false;
@@ -152,13 +152,15 @@ namespace WinFormsVersion.Forms
 
         public void FindPath()
         {
+            string format = "Time: {0}:{1}.{2}\nSteps: {3}\nPath length: {4}\nVisited vertices: {5}";
             if (pathFindAlgo != null)
             {
                 pathFindAlgo.PauseEvent = () => Application.DoEvents();
                 if (pathFindAlgo.FindDestionation())
                 {
                     pathFindAlgo.DrawPath();
-                    time.Text = pathFindAlgo.StatCollector.ToString();
+                    time.Text = pathFindAlgo.StatCollector.GetStatistics().
+                        GetFormattedData(format);
                     time.Update();
                     graph.Start = null;
                     graph.End = null;
