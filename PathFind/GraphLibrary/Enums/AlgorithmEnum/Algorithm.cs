@@ -15,6 +15,8 @@ namespace GraphLibrary.Enums.AlgorithmEnum
         [Description("Distance greedy algorithm")]
         DistanceGreedyAlgorithm,
         [Description("Value greedy algorithm")]
-        ValueGreedyAlgorithm
+        ValueGreedyAlgorithm,
+        [Description("Value-distance greedy algorithm")]
+        ValueDistanceGreedyAlgorithm
     };
 }
