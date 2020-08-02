@@ -17,8 +17,7 @@ namespace WinFormsVersion.Graph
 
         protected override void ToDefault(IVertex vertex)
         {
-            if (!vertex.IsObstacle)
-                vertex.SetToDefault();
+            base.ToDefault(vertex);
             (vertex as WinFormsVertex).MouseClick -= SetStart;
             (vertex as WinFormsVertex).MouseClick -= SetEnd;
             (vertex as WinFormsVertex).MouseClick += SetStart;

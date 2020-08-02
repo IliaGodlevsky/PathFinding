@@ -17,8 +17,7 @@ namespace WpfVersion.Model.Graph
 
         protected override void ToDefault(IVertex vertex)
         {
-            if (!vertex.IsObstacle)
-                vertex.SetToDefault();
+            base.ToDefault(vertex);
             (vertex as WpfVertex).MouseLeftButtonDown -= SetStart;
             (vertex as WpfVertex).MouseLeftButtonDown -= SetEnd;
             (vertex as WpfVertex).MouseLeftButtonDown += SetStart;
