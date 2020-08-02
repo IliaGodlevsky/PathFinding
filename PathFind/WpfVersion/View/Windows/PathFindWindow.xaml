@@ -25,7 +25,7 @@
             <RowDefinition Height="Auto"></RowDefinition>
         </Grid.RowDefinitions>
         <StackPanel HorizontalAlignment="Center"  Orientation="Horizontal" Grid.Row="1">
-            <Button Command="{Binding ConfirmPathFindAlgorithmChoice}"  Margin ="5" Content="Choose"></Button>
+            <Button Command="{Binding ConfirmPathFindAlgorithmChoice}"  Margin ="5" Content="Start"></Button>
             <Button Command="{Binding CancelPathFindAlgorithmChoice}" Margin ="5" Content="Cancel"></Button>
         </StackPanel>
         <ListBox BorderThickness="0" Margin="5"
