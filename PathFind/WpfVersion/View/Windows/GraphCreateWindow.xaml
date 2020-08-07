@@ -4,11 +4,15 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:WpfVersion.View.Windows"
-        xmlns:converters="clr-namespace:WpfVersion.Converters"
+        xmlns:converters="clr-namespace:WpfVersion.Converters" xmlns:sys="clr-namespace:System;assembly=mscorlib"
         mc:Ignorable="d"
         Title="Parametres" SizeToContent="WidthAndHeight">
     <Window.Resources>
         <converters:ObstaclePercentConverter x:Key="obstaclePercentConverter"></converters:ObstaclePercentConverter>
+        <x:Array x:Key="SliderRange" Type="{x:Type sys:Int32}">
+            <sys:Int32>0</sys:Int32>
+            <sys:Int32>100</sys:Int32>
+        </x:Array>
     </Window.Resources>
     <Grid>
         <Grid.ColumnDefinitions>
@@ -27,7 +31,8 @@
         <Slider Value = "{Binding Path = ObstaclePercent}" x:Name="obstacleSlider" 
                 Minimum="0" Maximum ="100" MinWidth="100" Margin="5" Grid.Row="1"></Slider>
         <TextBox Text = "{Binding ElementName = obstacleSlider, Path = Value, 
-            Converter = {StaticResource obstaclePercentConverter}, Mode = TwoWay, 
+            Converter = {StaticResource obstaclePercentConverter},
+            ConverterParameter={StaticResource SliderRange}, Mode = TwoWay, 
             UpdateSourceTrigger = PropertyChanged}"
                  x:Name="obstacleTextBox" MinWidth="40" Margin="5" Grid.Row="1" Grid.Column="1"></TextBox>
         <TextBlock Grid.Row="2" Text="Graph width" Margin="5"></TextBlock>
