@@ -14,26 +14,24 @@ using GraphLibrary.Graph;
 using System.ComponentModel;
 using System.Text;
 using GraphLibrary.Extensions;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace ConsoleVersion.Forms
 {
     public class ConsoleMenu : IView
     {
+        private delegate void MenuAction();
+        private MenuAction menuAction;
         private enum MenuOption
         {
-            [Description("Quit")]
             Quit,
             [Description("Find path")]
             PathFind,
-            [Description("Save")]
             Save,
-            [Description("Load")]
             Load,
-            [Description("Create")]
             Create,
-            [Description("Refresh")]
             Refresh,
-            [Description("Reverse")]
             Reverse
         };
 
@@ -50,6 +48,12 @@ namespace ConsoleVersion.Forms
             graph = (ConsoleGraph)factory.GetGraph();
             changer = new ConsoleVertexRoleChanger(graph);
             pathFindMenu = new PathFindMenu(graph);
+            menuAction += FindPath;
+            menuAction += SaveGraph;
+            menuAction += LoadGraph;
+            menuAction += CreateGraph;
+            menuAction += RefreshGraph;
+            menuAction += Reverse;
         }
         
         private void ShowMenu()
@@ -82,19 +86,11 @@ namespace ConsoleVersion.Forms
 
         public void Run()
         {
-            var option = GetOption();
-            while (option != MenuOption.Quit)
+            var option = (int)GetOption();            
+            while (option != (int)MenuOption.Quit)
             {
-                switch (option)
-                {
-                    case MenuOption.PathFind: FindPath(); break;
-                    case MenuOption.Save: SaveGraph(); break;
-                    case MenuOption.Load: LoadGraph(); break;
-                    case MenuOption.Create: CreateGraph(); break;
-                    case MenuOption.Refresh: RefreshGraph(); break;
-                    case MenuOption.Reverse: Reverse(); break;
-                }
-                option = GetOption();
+                menuAction.GetInvocationList()[option - 1].DynamicInvoke();
+                option = (int)GetOption();
             }
         }
 
