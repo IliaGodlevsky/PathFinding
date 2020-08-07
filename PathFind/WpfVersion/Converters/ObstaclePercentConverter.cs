@@ -1,14 +1,12 @@
 ﻿using System;
 using System.Globalization;
+using System.Linq;
 using System.Windows.Data;
 
 namespace WpfVersion.Converters
 {
     public class ObstaclePercentConverter : IValueConverter
     {
-        public const int MAX_SLIDER_VALUE = 100;
-        public const int MIN_SLIDER_VALUE = 0;
-
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
             return Math.Round((double)value, 0);
@@ -16,14 +14,13 @@ namespace WpfVersion.Converters
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            if (double.TryParse(value.ToString(), out double result))
+            var range = (int[])parameter;
+            if (value != null && range != null && (range?.Count()) == 2
+                && double.TryParse(value.ToString(), out double result))
             {
-                if (result >= MIN_SLIDER_VALUE && result <= MAX_SLIDER_VALUE)
+                if (result >= range.First() && result <= range.Last())
                     return result;
-                else if (result > MAX_SLIDER_VALUE)
-                    return (double)MAX_SLIDER_VALUE;
-                else
-                    return (double)MIN_SLIDER_VALUE;
+                return result > range.Last() ? range.Last() : (double)0;
             }
             else
                 return 0D;
