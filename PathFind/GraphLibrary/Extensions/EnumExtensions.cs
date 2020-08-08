@@ -35,9 +35,8 @@ namespace GraphLibrary.Extensions
 
             foreach (var item in enumList)
                 descriptions.Add(((T)item).GetDescription());
-            
+
             return descriptions;
         }
-
     }
 }

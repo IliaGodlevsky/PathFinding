@@ -106,6 +106,15 @@ namespace ConsoleVersion {
         }
         
         /// <summary>
+        ///   Ищет локализованную строку, похожую на Choose option: .
+        /// </summary>
+        internal static string OptionMsg {
+            get {
+                return ResourceManager.GetString("OptionMsg", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Ищет локализованную строку, похожую на Enter percent of obstacles: .
         /// </summary>
         internal static string PercentMsg {
@@ -147,6 +156,24 @@ namespace ConsoleVersion {
         internal static string WidthMsg {
             get {
                 return ResourceManager.GetString("WidthMsg", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Enter x coordinate of point: .
+        /// </summary>
+        internal static string XCoordinateMsg {
+            get {
+                return ResourceManager.GetString("XCoordinateMsg", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Enter y coordinate of point: .
+        /// </summary>
+        internal static string YCoordinateMsg {
+            get {
+                return ResourceManager.GetString("YCoordinateMsg", resourceCulture);
             }
         }
     }

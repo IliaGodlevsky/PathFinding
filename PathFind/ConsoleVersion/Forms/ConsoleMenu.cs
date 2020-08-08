@@ -22,8 +22,8 @@ namespace ConsoleVersion.Forms
     public class ConsoleMenu : IView
     {
         private delegate void MenuAction();
-        private MenuAction menuAction;
-        private enum MenuOption
+        private Dictionary<MenuOption, MenuAction> menuActions;
+        public enum MenuOption
         {
             Quit,
             [Description("Find path")]
@@ -43,17 +43,22 @@ namespace ConsoleVersion.Forms
 
         public ConsoleMenu()
         {
-            factory = new RandomValuedConsoleGraphFactory(percentOfObstacles: 40,
-                width: 35, height: 23);
+            menuActions = new Dictionary<MenuOption, MenuAction>
+            {
+                { MenuOption.PathFind, FindPath },
+                { MenuOption.Save, SaveGraph },
+                { MenuOption.Load, LoadGraph },
+                { MenuOption.Create, CreateGraph },
+                { MenuOption.Refresh, RefreshGraph },
+                { MenuOption.Reverse, Reverse }
+            };
+            factory = new RandomValuedConsoleGraphFactory(
+                percentOfObstacles: 40,
+                width: 35, 
+                height: 23);
             graph = (ConsoleGraph)factory.GetGraph();
             changer = new ConsoleVertexRoleChanger(graph);
             pathFindMenu = new PathFindMenu(graph);
-            menuAction += FindPath;
-            menuAction += SaveGraph;
-            menuAction += LoadGraph;
-            menuAction += CreateGraph;
-            menuAction += RefreshGraph;
-            menuAction += Reverse;
         }
         
         private void ShowMenu()
@@ -80,17 +85,16 @@ namespace ConsoleVersion.Forms
             Console.Clear();
             GraphShower.ShowGraph(graph);
             ShowMenu();
-            return (MenuOption)Input.InputNumber("Choose option: ",
-                (int)MenuOption.Reverse, (int)MenuOption.Quit);
+            return Input.InputOption();
         }
 
         public void Run()
         {
-            var option = (int)GetOption();            
-            while (option != (int)MenuOption.Quit)
+            var option = GetOption();
+            while (option != Enum.GetValues(typeof(MenuOption)).Cast<MenuOption>().First())
             {
-                menuAction.GetInvocationList()[option - 1].DynamicInvoke();
-                option = (int)GetOption();
+                menuActions[option].Invoke();
+                option = GetOption();
             }
         }
 

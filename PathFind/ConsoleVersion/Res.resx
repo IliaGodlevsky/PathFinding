@@ -132,6 +132,9 @@
   <data name="NewTopValueMsg" xml:space="preserve">
     <value>Enter new top value: </value>
   </data>
+  <data name="OptionMsg" xml:space="preserve">
+    <value>Choose option: </value>
+  </data>
   <data name="PercentMsg" xml:space="preserve">
     <value>Enter percent of obstacles: </value>
   </data>
@@ -146,5 +149,11 @@
   </data>
   <data name="WidthMsg" xml:space="preserve">
     <value>Enter width of graph: </value>
+  </data>
+  <data name="XCoordinateMsg" xml:space="preserve">
+    <value>Enter x coordinate of point: </value>
+  </data>
+  <data name="YCoordinateMsg" xml:space="preserve">
+    <value>Enter y coordinate of point: </value>
   </data>
 </root>

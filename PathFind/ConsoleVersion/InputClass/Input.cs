@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Drawing;
+using System.Linq;
+using static ConsoleVersion.Forms.ConsoleMenu;
 
 namespace ConsoleVersion.InputClass
 {
@@ -18,9 +20,15 @@ namespace ConsoleVersion.InputClass
             return int.Parse(choice);
         }
 
+        public static MenuOption InputOption()
+        {
+            var options = Enum.GetValues(typeof(MenuOption));
+            return (MenuOption)InputNumber(Res.OptionMsg, options.Cast<int>().Last());
+        }
+
         public static Point InputPoint(int width, int height) => 
-            new Point(InputNumber("Enter x coordinate of point: ", width),
-                InputNumber("Enter y coordinate of point: ", height));
+            new Point(InputNumber(Res.XCoordinateMsg, width),
+                InputNumber(Res.YCoordinateMsg, height));
 
         private static bool IsError(string choice, int upper, int lower)
         {
