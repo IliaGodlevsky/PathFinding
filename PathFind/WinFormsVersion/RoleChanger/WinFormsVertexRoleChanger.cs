@@ -32,17 +32,13 @@ namespace WinFormsVersion.RoleChanger
         {
             if ((e as MouseEventArgs).Button == MouseButtons.Left)
             {
-                WinFormsVertex top = sender as WinFormsVertex;
-                if (!IsRightDestination(top))
-                    return;
-                top.IsStart = true;
+                base.SetStartPoint(sender, e);
                 foreach (var butt in graph)
                 {
                     (butt as WinFormsVertex).MouseClick -= SetStartPoint;
                     (butt as WinFormsVertex).MouseClick += SetDestinationPoint;
                 }
-                top.MarkAsStart();
-                graph.Start = top;
+
             }
         }
 
@@ -50,24 +46,17 @@ namespace WinFormsVersion.RoleChanger
         {
             if ((e as MouseEventArgs).Button == MouseButtons.Left)
             {
-                WinFormsVertex top = sender as WinFormsVertex;
-                if (!IsRightDestination(top))
-                    return;
-                top.IsEnd = true;
-                top.MarkAsEnd();
-                foreach (var butt in graph)
+                base.SetDestinationPoint(sender, e);
+                foreach (var butt in graph) 
                     (butt as WinFormsVertex).MouseClick -= SetDestinationPoint;
-                graph.End = top;
+
             }
         }
 
         public override void ReversePolarity(object sender, EventArgs e)
         {
             if ((e as MouseEventArgs).Button == MouseButtons.Right)
-            {
-                IVertex top = sender as WinFormsVertex;
-                Reverse(ref top);
-            }
+                base.ReversePolarity(sender, e);            
         }
     }
 }

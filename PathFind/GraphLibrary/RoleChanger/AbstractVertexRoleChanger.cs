@@ -48,9 +48,25 @@ namespace GraphLibrary.RoleChanger
                 MakeObstacle(ref top);
         }
 
-        public abstract void SetStartPoint(object sender, EventArgs e);
+        public virtual void SetStartPoint(object sender, EventArgs e)
+        {
+            var top = sender as IVertex;
+            if (!IsRightDestination(top))
+                return;
+            top.IsStart = true;
+            top.MarkAsStart();
+            graph.Start = top;
+        }
 
-        public abstract void SetDestinationPoint(object sender, EventArgs e);
+        public virtual void SetDestinationPoint(object sender, EventArgs e)
+        {
+            var top = sender as IVertex;
+            if (!IsRightDestination(top))
+                return;
+            top.IsEnd = true;
+            top.MarkAsEnd();
+            graph.End = top;
+        }
 
         protected bool IsRightDestination(IVertex vertex)
         {
@@ -58,6 +74,10 @@ namespace GraphLibrary.RoleChanger
                 && !vertex.IsObstacle;
         }
 
-        public abstract void ReversePolarity(object sender, EventArgs e);
+        public virtual void ReversePolarity(object sender, EventArgs e)
+        {
+            IVertex top = sender as IVertex;
+            Reverse(ref top);
+        }
     }
 }

@@ -1,6 +1,5 @@
 ﻿using GraphLibrary.Graph;
 using GraphLibrary.RoleChanger;
-using GraphLibrary.Vertex;
 using System;
 using WpfVersion.Model.Vertex;
 
@@ -17,37 +16,22 @@ namespace WpfVersion.Model.RoleChanger
             
         }
 
-        public override void ReversePolarity(object sender, EventArgs e)
-        {
-            IVertex top = sender as WpfVertex;
-            Reverse(ref top);
-        }
-
         public override void SetDestinationPoint(object sender, EventArgs e)
         {
-            WpfVertex top = sender as WpfVertex;
-            if (!IsRightDestination(top))
-                return;
-            top.IsEnd = true;
-            top.MarkAsEnd();
+            base.SetDestinationPoint(sender, e);
             foreach (var butt in graph)
                 (butt as WpfVertex).MouseLeftButtonDown -= SetDestinationPoint;
-            graph.End = top;
         }
 
         public override void SetStartPoint(object sender, EventArgs e)
         {
-            WpfVertex top = sender as WpfVertex;
-            if (!IsRightDestination(top))
-                return;
-            top.IsStart = true;
+            base.SetStartPoint(sender, e);
             foreach (var butt in graph)
             {
                 (butt as WpfVertex).MouseLeftButtonDown -= SetStartPoint;
                 (butt as WpfVertex).MouseLeftButtonDown += SetDestinationPoint;
             }
-            top.MarkAsStart();
-            graph.Start = top;
+
         }
     }
 }
