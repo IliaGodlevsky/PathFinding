@@ -15,7 +15,7 @@ namespace WpfVersion.Converters
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
         {
             var range = (int[])parameter;
-            if (value != null && range != null && (range?.Count()) == 2
+            if (value != null && range != null && range?.Count() == 2
                 && double.TryParse(value.ToString(), out double result))
             {
                 if (result >= range.First() && result <= range.Last())
