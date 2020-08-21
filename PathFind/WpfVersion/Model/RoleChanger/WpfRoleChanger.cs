@@ -1,5 +1,6 @@
 ﻿using GraphLibrary.Graph;
 using GraphLibrary.RoleChanger;
+using GraphLibrary.Vertex;
 using System;
 using WpfVersion.Model.Vertex;
 
@@ -19,6 +20,8 @@ namespace WpfVersion.Model.RoleChanger
         public override void SetDestinationPoint(object sender, EventArgs e)
         {
             base.SetDestinationPoint(sender, e);
+            if ((sender as IVertex).IsObstacle)
+                return;
             foreach (var butt in graph)
                 (butt as WpfVertex).MouseLeftButtonDown -= SetDestinationPoint;
         }
@@ -26,12 +29,13 @@ namespace WpfVersion.Model.RoleChanger
         public override void SetStartPoint(object sender, EventArgs e)
         {
             base.SetStartPoint(sender, e);
+            if ((sender as IVertex).IsObstacle)
+                return;
             foreach (var butt in graph)
             {
                 (butt as WpfVertex).MouseLeftButtonDown -= SetStartPoint;
                 (butt as WpfVertex).MouseLeftButtonDown += SetDestinationPoint;
             }
-
         }
     }
 }

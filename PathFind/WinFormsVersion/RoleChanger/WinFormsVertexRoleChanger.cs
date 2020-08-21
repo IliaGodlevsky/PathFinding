@@ -33,6 +33,8 @@ namespace WinFormsVersion.RoleChanger
             if ((e as MouseEventArgs).Button == MouseButtons.Left)
             {
                 base.SetStartPoint(sender, e);
+                if ((sender as IVertex).IsObstacle)
+                    return;
                 foreach (var butt in graph)
                 {
                     (butt as WinFormsVertex).MouseClick -= SetStartPoint;
@@ -47,6 +49,8 @@ namespace WinFormsVersion.RoleChanger
             if ((e as MouseEventArgs).Button == MouseButtons.Left)
             {
                 base.SetDestinationPoint(sender, e);
+                if ((sender as IVertex).IsObstacle)
+                    return;
                 foreach (var butt in graph) 
                     (butt as WinFormsVertex).MouseClick -= SetDestinationPoint;
 
