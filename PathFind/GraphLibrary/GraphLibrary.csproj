@@ -50,6 +50,7 @@
     <Compile Include="Extensions\IntExtensions.cs" />
     <Compile Include="Extensions\MatrixExtension\TwoDimensionArrayExtensions.cs" />
     <Compile Include="Extensions\RandomExtension\RandomExtensions.cs" />
+    <Compile Include="GraphDataFormatter.cs" />
     <Compile Include="GraphFactory\AbstractGraphFactory.cs" />
     <Compile Include="GraphFactory\AbstractGraphInitializer.cs" />
     <Compile Include="GraphFactory\AbstractGraphSetter.cs" />
@@ -63,6 +64,13 @@
     <Compile Include="GraphLoader\IGraphLoader.cs" />
     <Compile Include="GraphSaver\AbstractGraphSaver.cs" />
     <Compile Include="GraphSaver\IGraphSaver.cs" />
+    <Compile Include="Model\AbstractCreateGraphModel.cs" />
+    <Compile Include="Model\AbstractGraphFiller.cs" />
+    <Compile Include="Model\AbstractMainModel.cs" />
+    <Compile Include="Model\AbstractPathFindModel.cs" />
+    <Compile Include="Model\IGraphField.cs" />
+    <Compile Include="Model\IMainModel.cs" />
+    <Compile Include="Model\IModel.cs" />
     <Compile Include="PathFindAlgorithmSelector\AlgorithmSelector.cs" />
     <Compile Include="PathFindAlgorithm\DeepPathFindAlgorithm.cs" />
     <Compile Include="RoleChanger\AbstractVertexRoleChanger.cs" />
@@ -90,5 +98,6 @@
       <LastGenOutput>GraphLibraryResources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

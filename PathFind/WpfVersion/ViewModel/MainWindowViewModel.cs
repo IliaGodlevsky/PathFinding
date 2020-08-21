@@ -1,41 +1,53 @@
 ﻿using GraphLibrary.Constants;
+using GraphLibrary.Graph;
+using GraphLibrary.Model;
+using System.ComponentModel;
+using System.Runtime.CompilerServices;
 using System.Windows;
-using System.Windows.Controls;
 using WpfVersion.Infrastructure;
-using WpfVersion.Model.Graph;
+using WpfVersion.Model;
 using WpfVersion.Model.GraphLoader;
 using WpfVersion.Model.GraphSaver;
 using WpfVersion.View.Windows;
+using WpfVersion.ViewModel.Resources;
 
 namespace WpfVersion.ViewModel
 {
-    public class MainWindowViewModel : BaseViewModel
+    public class MainWindowViewModel : AbstractMainModel, INotifyPropertyChanged
     {
+        public event PropertyChangedEventHandler PropertyChanged;
+
+        public virtual void OnPropertyChanged([CallerMemberName] string propertyName = "")
+        {
+            var handler = PropertyChanged;
+            handler?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        }
+
         public Window Window { get; set; }
 
         private string graphParametres;
-        public string GraphParametres
+        public override string GraphParametres
         {
             get { return graphParametres; }
             set { graphParametres = value; OnPropertyChanged(); }
         }
 
         private string statistics;
-        public string Statistics 
+        public override string Statistics 
         { 
             get{return statistics;}
             set{statistics = value; OnPropertyChanged();}
         }
 
-        private Canvas graphField;
-        public Canvas GraphField 
+        private IGraphField graphField;
+        public override IGraphField GraphField 
         { 
             get { return graphField; } 
             set { graphField = value; OnPropertyChanged(); } 
         }
 
-        private WpfGraph graph;
-        public WpfGraph Graph 
+        private AbstractGraph graph;
+        public override AbstractGraph Graph 
         { 
             get { return graph; } 
             set { graph = value; OnPropertyChanged(); } 
@@ -49,7 +61,11 @@ namespace WpfVersion.ViewModel
 
         public MainWindowViewModel()
         {
-            GraphField = new Canvas();
+            GraphField = new WpfGraphField();
+            Format = ViewModelResources.GraphParametresFormat;
+            saver = new WpfGraphSaver();
+            loader = new WpfGraphLoader(Const.SIZE_BETWEEN_VERTICES);
+            filler = new WpfGraphFiller();
             StartPathFindCommand = new RelayCommand(ExecuteStartPathFindCommand, 
                 obj => Graph?.End != null && Graph?.Start != null);
             CreateNewGraphCommand = new RelayCommand(ExecuteCreateNewGraphCommand, obj => true);
@@ -60,29 +76,23 @@ namespace WpfVersion.ViewModel
 
         private void ExecuteSaveGraphCommand(object param)
         {
-            var saver = new WpfGraphSaver();
-            saver.SaveGraph(Graph);
+            base.SaveGraph();
         }
 
         private void ExecuteLoadGraphCommand(object param)
         {
-            var loader = new WpfGraphLoader(Const.SIZE_BETWEEN_VERTICES);
-            graph = (WpfGraph)loader.GetGraph();
-            if (graph == null)
-                return;
-            GraphCreateViewModel.FillGraphField(ref graph, ref graphField);
-            GraphParametres = GraphCreateViewModel.GetFormatedGraphParametres(Graph);
+            base.LoadGraph();
             OnPropertyChanged(nameof(GraphField));
             OnPropertyChanged(nameof(Graph));
             OnPropertyChanged(nameof(GraphParametres));
-            AdjustSizeOfMainWindow(graph.Width, graph.Height);
+            Application.Current.MainWindow.Width = (graph.Width + 1) * Const.SIZE_BETWEEN_VERTICES + Const.SIZE_BETWEEN_VERTICES;
+            Application.Current.MainWindow.Height = (1 + graph.Height) * Const.SIZE_BETWEEN_VERTICES +
+                Application.Current.MainWindow.DesiredSize.Height;
         }
 
         private void ExecuteClearGraphCommand(object param)
         {
-            Graph.Refresh();
-            Statistics = string.Empty;
-            GraphParametres = GraphCreateViewModel.GetFormatedGraphParametres(Graph);
+            base.ClearGraph();
             OnPropertyChanged(nameof(GraphParametres));
         }
 
@@ -96,12 +106,18 @@ namespace WpfVersion.ViewModel
 
         private void ExecuteStartPathFindCommand(object param)
         {
-            PrepareWindow(new PathFindViewModel(this), new PathFindWindow());
+            Window = new PathFindWindow();
+            Window.DataContext = new PathFindViewModel(this);
+            Window.WindowStartupLocation = WindowStartupLocation.CenterScreen;
+            Window.Show();
         }
 
         private void ExecuteCreateNewGraphCommand(object param)
         {
-            PrepareWindow(new GraphCreateViewModel(this), new GraphCreatesWindow());
+            Window = new GraphCreatesWindow();
+            Window.DataContext = new GraphCreateViewModel(this);
+            Window.WindowStartupLocation = WindowStartupLocation.CenterScreen;
+            Window.Show();
         }
 
         public void Dispose()
@@ -112,6 +128,16 @@ namespace WpfVersion.ViewModel
         protected virtual void OnDispose()
         {
             return;
+        }
+
+        public override void PathFind()
+        {
+            throw new System.NotImplementedException();
+        }
+
+        public override void CreateNewGraph()
+        {
+            throw new System.NotImplementedException();
         }
     }
 }

@@ -1,49 +1,40 @@
 ﻿using GraphLibrary.Constants;
-using System.Windows.Controls;
+using GraphLibrary.GraphFactory;
+using GraphLibrary.Model;
+using System.Windows;
 using WpfVersion.Infrastructure;
-using WpfVersion.Model.Graph;
+using WpfVersion.Model;
 using WpfVersion.Model.GraphFactory;
-using WpfVersion.Model.RoleChanger;
-using WpfVersion.Model.Vertex;
-using WpfVersion.ViewModel.Resources;
 
 namespace WpfVersion.ViewModel
 {
-    public class GraphCreateViewModel : BaseViewModel
+    public class GraphCreateViewModel : AbstractCreateGraphModel
     {
-        public string Width { get; set; }
-        public string Height { get; set; }
-        public int ObstaclePercent { get; set; }
-
-        private readonly MainWindowViewModel model;
-        private WpfGraph graph;
-        private Canvas graphField;
 
         public RelayCommand ConfirmCreateGraphCommand { get; }
         public RelayCommand CancelCreateGraphCommand { get; }
 
-        public GraphCreateViewModel(MainWindowViewModel model)
+        public GraphCreateViewModel(IMainModel model) : base(model)
         {
             this.model = model;
+            graphField = model.GraphField;
+            filler = new WpfGraphFiller();
             ConfirmCreateGraphCommand = new RelayCommand(
                 ExecuteConfirmCreateGraphCommand, 
                 CanExecuteConfirmCreateGraphCommand);
-            CancelCreateGraphCommand = new RelayCommand(obj=> model?.Window.Close(), obj => true);
+            CancelCreateGraphCommand = new RelayCommand(obj=> 
+            (model as MainWindowViewModel)?.Window.Close(), obj => true);
         }
 
         private void ExecuteConfirmCreateGraphCommand(object param)
         {
-            int width = int.Parse(Width);
-            int height = int.Parse(Height);
-            var factory = new RandomValuedWpfGraphFactory(ObstaclePercent, 
-                width, height, Const.SIZE_BETWEEN_VERTICES);
-            graph = (WpfGraph)factory.GetGraph();
-            FillGraphField(ref graph, ref graphField);
-            model.GraphField = graphField;
-            model.Graph = graph;
-            model.Window.Close();
-            model.GraphParametres = GetFormatedGraphParametres(model.Graph);
-            AdjustSizeOfMainWindow(graph.Width, graph.Height);
+            base.CreateGraph();
+            (model as MainWindowViewModel).Window.Close();
+            Application.Current.MainWindow.Width = (graph.Width + 1) * 
+                Const.SIZE_BETWEEN_VERTICES + Const.SIZE_BETWEEN_VERTICES;
+            Application.Current.MainWindow.Height = (1 + graph.Height) * 
+                Const.SIZE_BETWEEN_VERTICES +
+                Application.Current.MainWindow.DesiredSize.Height;
         }
 
         private bool CanExecuteConfirmCreateGraphCommand(object param)
@@ -55,34 +46,12 @@ namespace WpfVersion.ViewModel
                 return false;
         }
 
-        public static string GetFormatedGraphParametres(WpfGraph graph)
+        public override IGraphFactory GetFactory()
         {
-            return string.Format(ViewModelResources.GraphParametresFormat,
-                graph.Width,
-                graph.Height,
-                graph.ObstaclePercent,
-                graph.ObstacleNumber,
-                graph.Size);
-        }
-
-        public static void FillGraphField(ref WpfGraph graph, ref Canvas graphField)
-        {
-            var changer = new WpfRoleChanger(graph);
-            graphField = new Canvas();
-            for (int i = 0; i < graph.Width; i++)
-            {
-                for (int j = 0; j < graph.Height; j++)
-                {
-                    graphField.Children.Add(graph[i, j] as WpfVertex);
-                    if (!graph[i, j].IsObstacle)
-                        (graph[i, j] as WpfVertex).MouseLeftButtonDown += changer.SetStartPoint;
-                    (graph[i, j] as WpfVertex).MouseRightButtonDown += changer.ReversePolarity;
-                    Canvas.SetLeft(graph[i, j] as WpfVertex, Const.SIZE_BETWEEN_VERTICES * i);
-                    Canvas.SetTop(graph[i, j] as WpfVertex, Const.SIZE_BETWEEN_VERTICES * j);
-                }
-            }
-            graph.SetStart += changer.SetStartPoint;
-            graph.SetEnd += changer.SetDestinationPoint;
+            int width = int.Parse(Width);
+            int height = int.Parse(Height);
+            return new RandomValuedWpfGraphFactory(ObstaclePercent,
+                width, height, Const.SIZE_BETWEEN_VERTICES);
         }
     }
 }

@@ -66,6 +66,8 @@
     <Compile Include="Model\Graph\WpfGraph.cs" />
     <Compile Include="Model\RoleChanger\WpfRoleChanger.cs" />
     <Compile Include="Model\Vertex\WpfVertex.cs" />
+    <Compile Include="Model\WpfGraphField.cs" />
+    <Compile Include="Model\WpfGraphFiller.cs" />
     <Compile Include="ViewModel\BaseViewModel.cs" />
     <Compile Include="ViewModel\GraphCreateViewModel.cs" />
     <Compile Include="ViewModel\PathFindViewModel.cs" />
