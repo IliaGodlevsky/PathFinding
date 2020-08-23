@@ -42,6 +42,6 @@ namespace WinFormsVersion.ViewModel
         private bool CanExecuteConfirmPathFindAlgorithmChoice()
         {
             return (Enum.GetValues(typeof(Algorithms)) as Algorithms[]).Any(algo => algo == Algorithm);
-        }       
+        }
     }
 }
