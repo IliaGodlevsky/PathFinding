@@ -51,46 +51,45 @@
     <Compile Include="Extensions\MatrixExtension\TwoDimensionArrayExtensions.cs" />
     <Compile Include="Extensions\RandomExtension\RandomExtensions.cs" />
     <Compile Include="GraphDataFormatter.cs" />
-    <Compile Include="GraphFactory\AbstractGraphFactory.cs" />
-    <Compile Include="GraphFactory\AbstractGraphInitializer.cs" />
-    <Compile Include="GraphFactory\AbstractGraphSetter.cs" />
-    <Compile Include="GraphFactory\IGraphFactory.cs" />
+    <Compile Include="Model\GraphFactory\AbstractGraphFactory.cs" />
+    <Compile Include="Model\GraphFactory\AbstractGraphInitializer.cs" />
+    <Compile Include="Model\GraphFactory\AbstractGraphSetter.cs" />
+    <Compile Include="Model\GraphFactory\IGraphFactory.cs" />
     <Compile Include="GraphLibraryResources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>GraphLibraryResources.resx</DependentUpon>
     </Compile>
-    <Compile Include="GraphLoader\AbstractGraphLoader.cs" />
-    <Compile Include="GraphLoader\IGraphLoader.cs" />
-    <Compile Include="GraphSaver\AbstractGraphSaver.cs" />
-    <Compile Include="GraphSaver\IGraphSaver.cs" />
-    <Compile Include="Model\AbstractCreateGraphModel.cs" />
+    <Compile Include="Model\GraphLoader\AbstractGraphLoader.cs" />
+    <Compile Include="Model\GraphLoader\IGraphLoader.cs" />
+    <Compile Include="Model\GraphSaver\AbstractGraphSaver.cs" />
+    <Compile Include="Model\GraphSaver\IGraphSaver.cs" />
+    <Compile Include="ViewModel\AbstractCreateGraphModel.cs" />
     <Compile Include="Model\AbstractGraphFiller.cs" />
-    <Compile Include="Model\AbstractMainModel.cs" />
-    <Compile Include="Model\AbstractPathFindModel.cs" />
+    <Compile Include="ViewModel\AbstractMainModel.cs" />
+    <Compile Include="ViewModel\AbstractPathFindModel.cs" />
     <Compile Include="Model\IGraphField.cs" />
-    <Compile Include="Model\IMainModel.cs" />
-    <Compile Include="Model\IModel.cs" />
-    <Compile Include="PathFindAlgorithmSelector\AlgorithmSelector.cs" />
-    <Compile Include="PathFindAlgorithm\DeepPathFindAlgorithm.cs" />
-    <Compile Include="RoleChanger\AbstractVertexRoleChanger.cs" />
-    <Compile Include="Statistics\Statistics.cs" />
-    <Compile Include="Statistics\StatisticsCollector.cs" />
-    <Compile Include="Statistics\IStatisticsCollector.cs" />
-    <Compile Include="VertexInfo\VertexInfo.cs" />
-    <Compile Include="Graph\AbstractGraph.cs" />
-    <Compile Include="PathFindAlgorithm\AStarAlgorithm.cs" />
-    <Compile Include="PathFindAlgorithm\DijkstraAlgorythm.cs" />
-    <Compile Include="PathFindAlgorithm\GreedyAlgorithm.cs" />
-    <Compile Include="PathFindAlgorithm\IPathFindAlgorithm.cs" />
-    <Compile Include="PathFindAlgorithm\WidePathFindAlgorithm.cs" />
-    <Compile Include="PauseMaker\Pauser.cs" />
+    <Compile Include="ViewModel\IMainModel.cs" />
+    <Compile Include="ViewModel\IModel.cs" />
+    <Compile Include="Model\PathFindAlgorithmSelector\AlgorithmSelector.cs" />
+    <Compile Include="Model\PathFindAlgorithm\DeepPathFindAlgorithm.cs" />
+    <Compile Include="Model\RoleChanger\AbstractVertexRoleChanger.cs" />
+    <Compile Include="Model\Statistics\Statistics.cs" />
+    <Compile Include="Model\Statistics\StatisticsCollector.cs" />
+    <Compile Include="Model\Statistics\IStatisticsCollector.cs" />
+    <Compile Include="Model\VertexInfo\VertexInfo.cs" />
+    <Compile Include="Model\Graph\AbstractGraph.cs" />
+    <Compile Include="Model\PathFindAlgorithm\AStarAlgorithm.cs" />
+    <Compile Include="Model\PathFindAlgorithm\DijkstraAlgorythm.cs" />
+    <Compile Include="Model\PathFindAlgorithm\GreedyAlgorithm.cs" />
+    <Compile Include="Model\PathFindAlgorithm\IPathFindAlgorithm.cs" />
+    <Compile Include="Model\PathFindAlgorithm\WidePathFindAlgorithm.cs" />
+    <Compile Include="Model\PauseMaker\Pauser.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="RoleChanger\IVertexRoleChanger.cs" />
+    <Compile Include="Model\RoleChanger\IVertexRoleChanger.cs" />
     <Compile Include="BoundSetter.cs" />
-    <Compile Include="Vertex\IVertex.cs" />
+    <Compile Include="Model\Vertex\IVertex.cs" />
     <Compile Include="NeighbourSetter.cs" />
-    <Compile Include="View\IView.cs" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="GraphLibraryResources.resx">

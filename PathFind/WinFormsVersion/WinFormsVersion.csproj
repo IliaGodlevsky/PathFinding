@@ -47,7 +47,6 @@
   <ItemGroup>
     <Compile Include="Model\GraphFactory\WinFormsGraphInitializer.cs" />
     <Compile Include="Model\GraphFactory\RandomValuedWinFormsGraphFactory.cs" />
-    <Compile Include="Model\WindowAdjust.cs" />
     <Compile Include="ViewModel\CreateGraphViewModel.cs" />
     <Compile Include="ViewModel\PathFindViewModel.cs" />
     <Compile Include="View\CreateGraphWindow.cs">

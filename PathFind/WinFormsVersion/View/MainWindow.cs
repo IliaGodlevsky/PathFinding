@@ -31,6 +31,7 @@ namespace WinFormsVersion.Forms
             menu.Items[2].Click += mainModel.CreateNewGraph;
             menu.Items[3].Click += mainModel.ClearGraph;
             menu.Items[4].Click += mainModel.StartPathFind;
+
         }
     }
 }

@@ -19,23 +19,26 @@ namespace WinFormsVersion.ViewModel
             graphField = model.GraphField;
             filler = new WinFormsGraphFiller();
         }
+        public override void CreateGraph()
+        {
+            int size = Const.SIZE_BETWEEN_VERTICES;
+            MainWindowViewModel mainModel = (model as MainWindowViewModel);
+            var field = mainModel.MainWindow.GraphField;
+            mainModel.MainWindow.Controls.Remove(field);
+            base.CreateGraph();
+            mainModel?.Window.Close();
+            mainModel.MainWindow.GraphField = new WinFormsGraphField() { Location = new Point(4, 90) };
+            mainModel.MainWindow.GraphField.Controls.AddRange(model.Graph.GetArray().
+                Cast<WinFormsVertex>().ToArray());
+            mainModel.MainWindow.GraphField.Size = new Size(model.Graph.Width * size, model.Graph.Height * size);
+            mainModel.MainWindow.Controls.Add(mainModel.MainWindow.GraphField);
+        }
 
         public void CreateGraph(object sender, EventArgs e)
         {
             if (!CanCreate())
-                return;
-            (model as MainWindowViewModel).MainWindow.GraphField.Controls.Clear();
-            base.CreateGraph();
-            (model as MainWindowViewModel)?.Window.Close();
-            (model as MainWindowViewModel).MainWindow.GraphField.Controls.
-                AddRange(
-                model.Graph.
-                GetArray().
-                Cast<WinFormsVertex>().
-                ToArray());            
-            (model as MainWindowViewModel).MainWindow.GraphField.Size = 
-                new Size(model.Graph.Width * Const.SIZE_BETWEEN_VERTICES,
-                model.Graph.Height * Const.SIZE_BETWEEN_VERTICES);
+                return;           
+            CreateGraph();            
         }
 
         private bool CanCreate()

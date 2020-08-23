@@ -100,14 +100,15 @@ namespace WinFormsVersion.ViewModel
             OnPropertyChanged(nameof(GraphParametres));
             if (Graph == null)
                 return;
-            MainWindow.GraphField.Controls.
-                AddRange(
-                Graph.GetArray().
-                Cast<WinFormsVertex>().
-                ToArray());
-            MainWindow.GraphField.Size = 
-                new Size(Graph.Width * Const.SIZE_BETWEEN_VERTICES,
-                Graph.Height * Const.SIZE_BETWEEN_VERTICES);
+            int size = Const.SIZE_BETWEEN_VERTICES;
+            var field = MainWindow.GraphField;
+            MainWindow.Controls.Remove(field);
+            Window?.Close();
+            MainWindow.GraphField = new WinFormsGraphField() { Location = new Point(4, 90) };
+            MainWindow.GraphField.Controls.AddRange(Graph.GetArray().
+                Cast<WinFormsVertex>().ToArray());
+            MainWindow.GraphField.Size = new Size(Graph.Width * size, Graph.Height * size);
+            MainWindow.Controls.Add(MainWindow.GraphField);
         }
 
         public void ClearGraph(object sender, EventArgs e)
