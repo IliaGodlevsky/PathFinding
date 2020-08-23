@@ -41,13 +41,6 @@ namespace WinFormsVersion.ViewModel
             set { statistics = value; OnPropertyChanged(); }
         }
 
-        private IGraphField graphField;
-        public override IGraphField GraphField
-        {
-            get { return graphField; }
-            set { graphField = value; OnPropertyChanged(); }
-        }
-
         private AbstractGraph graph;
         public override AbstractGraph Graph
         {
@@ -59,7 +52,6 @@ namespace WinFormsVersion.ViewModel
 
         public MainWindowViewModel()
         {
-            GraphField = new WinFormsGraphField();
             Format = WinFormsResources.ParametresFormat;
             saver = new WinFormsGraphSaver();
             loader = new WinFormsGraphLoader(Const.SIZE_BETWEEN_VERTICES);
@@ -95,7 +87,6 @@ namespace WinFormsVersion.ViewModel
         public void LoadGraph(object sender, EventArgs e)
         {
             base.LoadGraph();
-            OnPropertyChanged(nameof(GraphField));
             OnPropertyChanged(nameof(Graph));
             OnPropertyChanged(nameof(GraphParametres));
             if (Graph == null)

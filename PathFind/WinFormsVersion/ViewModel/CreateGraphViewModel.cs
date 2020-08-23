@@ -22,16 +22,17 @@ namespace WinFormsVersion.ViewModel
         public override void CreateGraph()
         {
             int size = Const.SIZE_BETWEEN_VERTICES;
-            MainWindowViewModel mainModel = (model as MainWindowViewModel);
-            var field = mainModel.MainWindow.GraphField;
-            mainModel.MainWindow.Controls.Remove(field);
+            var window = (model as MainWindowViewModel).MainWindow;
+            var field = window.GraphField;
+            window.Controls.Remove(field);
             base.CreateGraph();
-            mainModel?.Window.Close();
-            mainModel.MainWindow.GraphField = new WinFormsGraphField() { Location = new Point(4, 90) };
-            mainModel.MainWindow.GraphField.Controls.AddRange(model.Graph.GetArray().
+            (model as MainWindowViewModel).Window?.Close();
+            window.GraphField 
+                = new WinFormsGraphField() { Location = new Point(4, 90) };
+            window.GraphField.Controls.AddRange(model.Graph.GetArray().
                 Cast<WinFormsVertex>().ToArray());
-            mainModel.MainWindow.GraphField.Size = new Size(model.Graph.Width * size, model.Graph.Height * size);
-            mainModel.MainWindow.Controls.Add(mainModel.MainWindow.GraphField);
+            window.GraphField.Size = new Size(model.Graph.Width * size, model.Graph.Height * size);
+            window.Controls.Add(window.GraphField);
         }
 
         public void CreateGraph(object sender, EventArgs e)

@@ -6,7 +6,7 @@ namespace WinFormsVersion.Forms
 {
     public partial class MainWindow : Form
     {
-        private MainWindowViewModel mainModel;
+        private readonly MainWindowViewModel mainModel;
         public WinFormsGraphField GraphField
         {
             get { return winFormsGraphField; }
@@ -17,8 +17,10 @@ namespace WinFormsVersion.Forms
         {
             InitializeComponent();
 
-            mainModel = new MainWindowViewModel();
-            mainModel.MainWindow = this;
+            mainModel = new MainWindowViewModel
+            {
+                MainWindow = this
+            };
 
             var bindingStatistics = new Binding("Text", mainModel, "Statistics");
             statistics.DataBindings.Add(bindingStatistics);
