@@ -74,6 +74,21 @@ namespace WpfVersion.ViewModel
             LoadGraphCommand = new RelayCommand(ExecuteLoadGraphCommand, obj => true);
         }
 
+        public override void PathFind()
+        {
+            PrepareWindow(new PathFindViewModel(this), new PathFindWindow());
+        }
+
+        public override void CreateNewGraph()
+        {
+            PrepareWindow(new GraphCreateViewModel(this), new GraphCreatesWindow());
+        }
+
+        public void Dispose()
+        {
+            OnDispose();
+        }
+
         private void ExecuteSaveGraphCommand(object param)
         {
             base.SaveGraph();
@@ -85,9 +100,7 @@ namespace WpfVersion.ViewModel
             OnPropertyChanged(nameof(GraphField));
             OnPropertyChanged(nameof(Graph));
             OnPropertyChanged(nameof(GraphParametres));
-            Application.Current.MainWindow.Width = (graph.Width + 1) * Const.SIZE_BETWEEN_VERTICES + Const.SIZE_BETWEEN_VERTICES;
-            Application.Current.MainWindow.Height = (1 + graph.Height) * Const.SIZE_BETWEEN_VERTICES +
-                Application.Current.MainWindow.DesiredSize.Height;
+            WindowAdjust.Adjust(Graph);
         }
 
         private void ExecuteClearGraphCommand(object param)
@@ -96,48 +109,31 @@ namespace WpfVersion.ViewModel
             OnPropertyChanged(nameof(GraphParametres));
         }
 
-        private void PrepareWindow(BaseViewModel model, Window window)
-        {
-            Window = window;
-            Window.DataContext = model;
-            Window.WindowStartupLocation = WindowStartupLocation.CenterScreen;
-            Window.Show();
-        }
-
         private void ExecuteStartPathFindCommand(object param)
         {
-            Window = new PathFindWindow();
-            Window.DataContext = new PathFindViewModel(this);
-            Window.WindowStartupLocation = WindowStartupLocation.CenterScreen;
-            Window.Show();
+            PathFind();
         }
 
         private void ExecuteCreateNewGraphCommand(object param)
         {
-            Window = new GraphCreatesWindow();
-            Window.DataContext = new GraphCreateViewModel(this);
-            Window.WindowStartupLocation = WindowStartupLocation.CenterScreen;
-            Window.Show();
+            CreateNewGraph();
         }
 
-        public void Dispose()
-        {
-            OnDispose();
-        }
+
 
         protected virtual void OnDispose()
         {
             return;
         }
 
-        public override void PathFind()
-        {
-            throw new System.NotImplementedException();
-        }
+        
 
-        public override void CreateNewGraph()
+        private void PrepareWindow(IModel model, Window window)
         {
-            throw new System.NotImplementedException();
+            Window = window;
+            Window.DataContext = model;
+            Window.WindowStartupLocation = WindowStartupLocation.CenterScreen;
+            Window.Show();
         }
     }
 }

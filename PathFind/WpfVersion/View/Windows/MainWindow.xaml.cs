@@ -9,7 +9,7 @@ namespace WpfVersion
     {
         public MainWindow()
         {
-            InitializeComponent();
+            InitializeComponent();            
         }
     }
 }

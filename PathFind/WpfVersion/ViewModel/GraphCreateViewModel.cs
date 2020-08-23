@@ -1,7 +1,6 @@
 ﻿using GraphLibrary.Constants;
 using GraphLibrary.GraphFactory;
 using GraphLibrary.Model;
-using System.Windows;
 using WpfVersion.Infrastructure;
 using WpfVersion.Model;
 using WpfVersion.Model.GraphFactory;
@@ -30,11 +29,7 @@ namespace WpfVersion.ViewModel
         {
             base.CreateGraph();
             (model as MainWindowViewModel).Window.Close();
-            Application.Current.MainWindow.Width = (graph.Width + 1) * 
-                Const.SIZE_BETWEEN_VERTICES + Const.SIZE_BETWEEN_VERTICES;
-            Application.Current.MainWindow.Height = (1 + graph.Height) * 
-                Const.SIZE_BETWEEN_VERTICES +
-                Application.Current.MainWindow.DesiredSize.Height;
+            WindowAdjust.Adjust(model.Graph);
         }
 
         private bool CanExecuteConfirmCreateGraphCommand(object param)

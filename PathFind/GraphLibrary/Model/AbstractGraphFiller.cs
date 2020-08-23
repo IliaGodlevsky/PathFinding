@@ -15,6 +15,7 @@ namespace GraphLibrary.Model
         {
             var changer = GetRoleChanger(graph);
             var graphField = GetField();
+
             for (int i = 0; i < graph.Width; i++)
             {
                 for (int j = 0; j < graph.Height; j++)
@@ -23,6 +24,7 @@ namespace GraphLibrary.Model
                     ChargeVertex(graph[i, j], changer);
                 }
             }
+
             ChargeGraph(graph, changer);
             return graphField;
         }

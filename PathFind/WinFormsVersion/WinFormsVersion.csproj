@@ -45,38 +45,60 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="GraphFactory\WinFormsGraphInitializer.cs" />
-    <Compile Include="GraphFactory\RandomValuedWinFormsGraphFactory.cs" />
-    <Compile Include="Forms\MainWindow.cs">
+    <Compile Include="Model\GraphFactory\WinFormsGraphInitializer.cs" />
+    <Compile Include="Model\GraphFactory\RandomValuedWinFormsGraphFactory.cs" />
+    <Compile Include="ViewModel\CreateGraphViewModel.cs" />
+    <Compile Include="ViewModel\PathFindViewModel.cs" />
+    <Compile Include="View\CreateGraphWindow.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Forms\MainWindow.Designer.cs">
-      <DependentUpon>MainWindow.cs</DependentUpon>
+    <Compile Include="View\CreateGraphWindow.Designer.cs">
+      <DependentUpon>CreateGraphWindow.cs</DependentUpon>
     </Compile>
-    <Compile Include="Forms\FieldControl.cs">
+    <Compile Include="View\PathFindWindow.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="View\PathFindWindow.Designer.cs">
+      <DependentUpon>PathFindWindow.cs</DependentUpon>
+    </Compile>
+    <Compile Include="View\WinFormsGraphField.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="Forms\FieldControl.Designer.cs">
+    <Compile Include="Model\WinFormsGraphFiller.cs" />
+    <Compile Include="View\MainWindow.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="View\MainWindow.Designer.cs">
+      <DependentUpon>MainWindow.cs</DependentUpon>
+    </Compile>
+    <Compile Include="View\FieldControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="View\FieldControl.Designer.cs">
       <DependentUpon>FieldControl.cs</DependentUpon>
     </Compile>
-    <Compile Include="GraphLoader\WinFormsGraphLoader.cs" />
-    <Compile Include="GraphSaver\WinFormsGraphSaver.cs" />
-    <Compile Include="Graph\WinFormsGraph.cs" />
-    <Compile Include="RoleChanger\WinFormsVertexRoleChanger.cs" />
-    <Compile Include="Vertex\WinFormsVertex.cs">
+    <Compile Include="Model\GraphLoader\WinFormsGraphLoader.cs" />
+    <Compile Include="Model\GraphSaver\WinFormsGraphSaver.cs" />
+    <Compile Include="Model\Graph\WinFormsGraph.cs" />
+    <Compile Include="Model\RoleChanger\WinFormsVertexRoleChanger.cs" />
+    <Compile Include="Model\Vertex\WinFormsVertex.cs">
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ViewModel\MainWindowViewModel.cs" />
     <Compile Include="WinFormsResources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>WinFormsResources.resx</DependentUpon>
     </Compile>
-    <EmbeddedResource Include="Forms\MainWindow.resx">
+    <EmbeddedResource Include="View\CreateGraphWindow.resx">
+      <DependentUpon>CreateGraphWindow.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="View\MainWindow.resx">
       <DependentUpon>MainWindow.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Forms\FieldControl.resx">
+    <EmbeddedResource Include="View\FieldControl.resx">
       <DependentUpon>FieldControl.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
@@ -89,6 +111,9 @@
       <DependentUpon>Resources.resx</DependentUpon>
       <DesignTime>True</DesignTime>
     </Compile>
+    <EmbeddedResource Include="View\PathFindWindow.resx">
+      <DependentUpon>PathFindWindow.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="WinFormsResources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>WinFormsResources.Designer.cs</LastGenOutput>
@@ -113,5 +138,6 @@
       <Name>GraphLibrary</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
