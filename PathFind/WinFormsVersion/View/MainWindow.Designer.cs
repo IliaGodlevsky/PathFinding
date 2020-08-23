@@ -1,6 +1,4 @@
-﻿using WinFormsVerstion.Forms;
-
-namespace WinFormsVersion.Forms
+﻿namespace WinFormsVersion.Forms
 {
     partial class MainWindow
     {
@@ -30,72 +28,103 @@ namespace WinFormsVersion.Forms
         /// </summary>
         private void InitializeComponent()
         {
-            this.menuStrip1 = new System.Windows.Forms.MenuStrip();
-            this.fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.saveMapToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.loadMapToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.saveFileDialog1 = new System.Windows.Forms.SaveFileDialog();
-            this.button1 = new System.Windows.Forms.Button();
+            this.statistics = new System.Windows.Forms.Label();
+            this.parametres = new System.Windows.Forms.Label();
+            this.toolStripButton1 = new System.Windows.Forms.ToolStripButton();
+            this.toolStripButton2 = new System.Windows.Forms.ToolStripButton();
+            this.toolStripButton3 = new System.Windows.Forms.ToolStripButton();
+            this.toolStripButton4 = new System.Windows.Forms.ToolStripButton();
+            this.toolStripButton5 = new System.Windows.Forms.ToolStripButton();
+            this.menu = new System.Windows.Forms.ToolStrip();
             this.winFormsGraphField = new WinFormsVersion.Model.WinFormsGraphField();
-            this.button2 = new System.Windows.Forms.Button();
-            this.menuStrip1.SuspendLayout();
+            this.menu.SuspendLayout();
             this.SuspendLayout();
             // 
-            // menuStrip1
+            // statistics
             // 
-            this.menuStrip1.GripMargin = new System.Windows.Forms.Padding(2, 2, 0, 2);
-            this.menuStrip1.ImageScalingSize = new System.Drawing.Size(24, 24);
-            this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.fileToolStripMenuItem});
-            this.menuStrip1.Location = new System.Drawing.Point(0, 0);
-            this.menuStrip1.Name = "menuStrip1";
-            this.menuStrip1.Size = new System.Drawing.Size(1200, 33);
-            this.menuStrip1.TabIndex = 0;
-            this.menuStrip1.Text = "menuStrip1";
+            this.statistics.AutoSize = true;
+            this.statistics.Location = new System.Drawing.Point(12, 87);
+            this.statistics.Name = "statistics";
+            this.statistics.Size = new System.Drawing.Size(51, 20);
+            this.statistics.TabIndex = 17;
+            this.statistics.Text = "label1";
             // 
-            // fileToolStripMenuItem
+            // parametres
             // 
-            this.fileToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.saveMapToolStripMenuItem,
-            this.loadMapToolStripMenuItem});
-            this.fileToolStripMenuItem.Name = "fileToolStripMenuItem";
-            this.fileToolStripMenuItem.Size = new System.Drawing.Size(54, 29);
-            this.fileToolStripMenuItem.Text = "File";
+            this.parametres.AutoSize = true;
+            this.parametres.Location = new System.Drawing.Point(12, 51);
+            this.parametres.Name = "parametres";
+            this.parametres.Size = new System.Drawing.Size(51, 20);
+            this.parametres.TabIndex = 18;
+            this.parametres.Text = "label2";
             // 
-            // saveMapToolStripMenuItem
+            // toolStripButton1
             // 
-            this.saveMapToolStripMenuItem.Name = "saveMapToolStripMenuItem";
-            this.saveMapToolStripMenuItem.Size = new System.Drawing.Size(102, 34);
+            this.toolStripButton1.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.toolStripButton1.Image = global::WinFormsVersion.Properties.Resources.save;
+            this.toolStripButton1.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolStripButton1.Name = "toolStripButton1";
+            this.toolStripButton1.Size = new System.Drawing.Size(34, 28);
+            this.toolStripButton1.Text = "toolStripButton1";
             // 
-            // loadMapToolStripMenuItem
+            // toolStripButton2
             // 
-            this.loadMapToolStripMenuItem.Name = "loadMapToolStripMenuItem";
-            this.loadMapToolStripMenuItem.Size = new System.Drawing.Size(102, 34);
+            this.toolStripButton2.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.toolStripButton2.Image = global::WinFormsVersion.Properties.Resources.open;
+            this.toolStripButton2.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolStripButton2.Name = "toolStripButton2";
+            this.toolStripButton2.Size = new System.Drawing.Size(34, 28);
+            this.toolStripButton2.Text = "toolStripButton2";
             // 
-            // button1
+            // toolStripButton3
             // 
-            this.button1.Location = new System.Drawing.Point(32, 39);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(75, 37);
-            this.button1.TabIndex = 14;
-            this.button1.Text = "button1";
-            this.button1.UseVisualStyleBackColor = true;
+            this.toolStripButton3.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.toolStripButton3.Image = global::WinFormsVersion.Properties.Resources.refresh;
+            this.toolStripButton3.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolStripButton3.Name = "toolStripButton3";
+            this.toolStripButton3.Size = new System.Drawing.Size(34, 28);
+            this.toolStripButton3.Text = "toolStripButton3";
+            // 
+            // toolStripButton4
+            // 
+            this.toolStripButton4.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.toolStripButton4.Image = global::WinFormsVersion.Properties.Resources.clear;
+            this.toolStripButton4.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolStripButton4.Name = "toolStripButton4";
+            this.toolStripButton4.Size = new System.Drawing.Size(34, 28);
+            this.toolStripButton4.Text = "toolStripButton4";
+            // 
+            // toolStripButton5
+            // 
+            this.toolStripButton5.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.toolStripButton5.Image = global::WinFormsVersion.Properties.Resources.find;
+            this.toolStripButton5.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolStripButton5.Name = "toolStripButton5";
+            this.toolStripButton5.Size = new System.Drawing.Size(34, 28);
+            this.toolStripButton5.Text = "toolStripButton5";
+            // 
+            // menu
+            // 
+            this.menu.ImageScalingSize = new System.Drawing.Size(24, 24);
+            this.menu.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.toolStripButton1,
+            this.toolStripButton2,
+            this.toolStripButton3,
+            this.toolStripButton4,
+            this.toolStripButton5});
+            this.menu.Location = new System.Drawing.Point(0, 0);
+            this.menu.Name = "menu";
+            this.menu.Size = new System.Drawing.Size(610, 33);
+            this.menu.TabIndex = 19;
+            this.menu.Text = "toolStrip1";
             // 
             // winFormsGraphField
             // 
-            this.winFormsGraphField.Location = new System.Drawing.Point(32, 97);
+            this.winFormsGraphField.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.winFormsGraphField.Location = new System.Drawing.Point(4, 119);
             this.winFormsGraphField.Name = "winFormsGraphField";
-            this.winFormsGraphField.Size = new System.Drawing.Size(1156, 581);
+            this.winFormsGraphField.Size = new System.Drawing.Size(554, 577);
             this.winFormsGraphField.TabIndex = 15;
-            // 
-            // button2
-            // 
-            this.button2.Location = new System.Drawing.Point(139, 40);
-            this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(75, 36);
-            this.button2.TabIndex = 16;
-            this.button2.Text = "button2";
-            this.button2.UseVisualStyleBackColor = true;
             // 
             // MainWindow
             // 
@@ -103,32 +132,31 @@ namespace WinFormsVersion.Forms
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoSize = true;
             this.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-            this.ClientSize = new System.Drawing.Size(1200, 754);
-            this.Controls.Add(this.button2);
+            this.ClientSize = new System.Drawing.Size(610, 717);
+            this.Controls.Add(this.menu);
+            this.Controls.Add(this.parametres);
+            this.Controls.Add(this.statistics);
             this.Controls.Add(this.winFormsGraphField);
-            this.Controls.Add(this.button1);
-            this.Controls.Add(this.menuStrip1);
-            this.MainMenuStrip = this.menuStrip1;
             this.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.Name = "MainWindow";
             this.Text = "PathFind";
-            this.menuStrip1.ResumeLayout(false);
-            this.menuStrip1.PerformLayout();
+            this.menu.ResumeLayout(false);
+            this.menu.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
         }
 
         #endregion
-
-        private System.Windows.Forms.MenuStrip menuStrip1;
-        private System.Windows.Forms.ToolStripMenuItem fileToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem saveMapToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem loadMapToolStripMenuItem;
-        private System.Windows.Forms.SaveFileDialog saveFileDialog1;
-        private System.Windows.Forms.Button button1;
         private Model.WinFormsGraphField winFormsGraphField;
-        private System.Windows.Forms.Button button2;
+        private System.Windows.Forms.Label statistics;
+        private System.Windows.Forms.Label parametres;
+        private System.Windows.Forms.ToolStripButton toolStripButton1;
+        private System.Windows.Forms.ToolStripButton toolStripButton2;
+        private System.Windows.Forms.ToolStripButton toolStripButton3;
+        private System.Windows.Forms.ToolStripButton toolStripButton4;
+        private System.Windows.Forms.ToolStripButton toolStripButton5;
+        private System.Windows.Forms.ToolStrip menu;
     }
 }
 

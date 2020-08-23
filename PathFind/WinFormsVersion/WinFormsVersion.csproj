@@ -47,6 +47,7 @@
   <ItemGroup>
     <Compile Include="Model\GraphFactory\WinFormsGraphInitializer.cs" />
     <Compile Include="Model\GraphFactory\RandomValuedWinFormsGraphFactory.cs" />
+    <Compile Include="Model\WindowAdjust.cs" />
     <Compile Include="ViewModel\CreateGraphViewModel.cs" />
     <Compile Include="ViewModel\PathFindViewModel.cs" />
     <Compile Include="View\CreateGraphWindow.cs">
@@ -71,12 +72,6 @@
     <Compile Include="View\MainWindow.Designer.cs">
       <DependentUpon>MainWindow.cs</DependentUpon>
     </Compile>
-    <Compile Include="View\FieldControl.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="View\FieldControl.Designer.cs">
-      <DependentUpon>FieldControl.cs</DependentUpon>
-    </Compile>
     <Compile Include="Model\GraphLoader\WinFormsGraphLoader.cs" />
     <Compile Include="Model\GraphSaver\WinFormsGraphSaver.cs" />
     <Compile Include="Model\Graph\WinFormsGraph.cs" />
@@ -87,7 +82,7 @@
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ViewModel\MainWindowViewModel.cs" />
-    <Compile Include="WinFormsResources.Designer.cs">
+    <Compile Include="Resources\WinFormsResources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>WinFormsResources.resx</DependentUpon>
@@ -97,9 +92,6 @@
     </EmbeddedResource>
     <EmbeddedResource Include="View\MainWindow.resx">
       <DependentUpon>MainWindow.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="View\FieldControl.resx">
-      <DependentUpon>FieldControl.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
@@ -114,7 +106,7 @@
     <EmbeddedResource Include="View\PathFindWindow.resx">
       <DependentUpon>PathFindWindow.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="WinFormsResources.resx">
+    <EmbeddedResource Include="Resources\WinFormsResources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>WinFormsResources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
@@ -139,5 +131,12 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup />
+  <ItemGroup>
+    <Content Include="Resources\Images\save.png" />
+    <Content Include="Resources\Images\clear.png" />
+    <Content Include="Resources\Images\refresh.png" />
+    <Content Include="Resources\Images\open.png" />
+    <Content Include="Resources\Images\find.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

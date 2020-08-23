@@ -39,12 +39,12 @@
             this.algorithmListBox.ItemHeight = 20;
             this.algorithmListBox.Location = new System.Drawing.Point(31, 12);
             this.algorithmListBox.Name = "algorithmListBox";
-            this.algorithmListBox.Size = new System.Drawing.Size(187, 284);
+            this.algorithmListBox.Size = new System.Drawing.Size(187, 104);
             this.algorithmListBox.TabIndex = 0;
             // 
             // okButton
             // 
-            this.okButton.Location = new System.Drawing.Point(31, 306);
+            this.okButton.Location = new System.Drawing.Point(31, 143);
             this.okButton.Name = "okButton";
             this.okButton.Size = new System.Drawing.Size(75, 33);
             this.okButton.TabIndex = 1;
@@ -53,7 +53,7 @@
             // 
             // cancelButton
             // 
-            this.cancelButton.Location = new System.Drawing.Point(143, 306);
+            this.cancelButton.Location = new System.Drawing.Point(143, 143);
             this.cancelButton.Name = "cancelButton";
             this.cancelButton.Size = new System.Drawing.Size(75, 33);
             this.cancelButton.TabIndex = 2;
@@ -64,7 +64,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(459, 404);
+            this.ClientSize = new System.Drawing.Size(277, 223);
             this.Controls.Add(this.cancelButton);
             this.Controls.Add(this.okButton);
             this.Controls.Add(this.algorithmListBox);

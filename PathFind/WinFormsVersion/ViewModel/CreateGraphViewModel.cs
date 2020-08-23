@@ -2,6 +2,7 @@
 using GraphLibrary.GraphFactory;
 using GraphLibrary.Model;
 using System;
+using System.Drawing;
 using System.Linq;
 using System.Windows.Forms;
 using WinFormsVersion.GraphFactory;
@@ -21,12 +22,29 @@ namespace WinFormsVersion.ViewModel
 
         public void CreateGraph(object sender, EventArgs e)
         {
+            if (!CanCreate())
+                return;
             (model as MainWindowViewModel).MainWindow.GraphField.Controls.Clear();
-            (graphField as UserControl).Controls.Clear();
             base.CreateGraph();
             (model as MainWindowViewModel)?.Window.Close();
-            (model as MainWindowViewModel).MainWindow.GraphField.Controls.AddRange(
-                model.Graph.GetArray().Cast<WinFormsVertex>().ToArray());
+            (model as MainWindowViewModel).MainWindow.GraphField.Controls.
+                AddRange(
+                model.Graph.
+                GetArray().
+                Cast<WinFormsVertex>().
+                ToArray());            
+            (model as MainWindowViewModel).MainWindow.GraphField.Size = 
+                new Size(model.Graph.Width * Const.SIZE_BETWEEN_VERTICES,
+                model.Graph.Height * Const.SIZE_BETWEEN_VERTICES);
+        }
+
+        private bool CanCreate()
+        {
+            if (int.TryParse(Width, out int width)
+                && int.TryParse(Height, out int height))
+                return width > 0 && height > 0;
+            else
+                return false;
         }
 
         public void CancelCreateGraph(object sender, EventArgs e)

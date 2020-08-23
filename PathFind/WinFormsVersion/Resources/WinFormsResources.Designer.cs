@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace WinFormsVersion {
+namespace WinFormsVersion.Resources {
     using System;
     
     
@@ -39,7 +39,7 @@ namespace WinFormsVersion {
         internal static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
-                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("WinFormsVersion.WinFormsResources", typeof(WinFormsResources).Assembly);
+                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("WinFormsVersion.Resources.WinFormsResources", typeof(WinFormsResources).Assembly);
                     resourceMan = temp;
                 }
                 return resourceMan;
@@ -70,11 +70,11 @@ namespace WinFormsVersion {
         }
         
         /// <summary>
-        ///   Ищет локализованную строку, похожую на Time: {0}:{1}.{2}\nSteps: {3}\nPath length: {4}\nVisited vertices: {5}\n.
+        ///   Ищет локализованную строку, похожую на Width: {0} Height: {1} Obstacle percent: {2} ({3}/{4}).
         /// </summary>
-        internal static string StatisticsTransformFormat {
+        internal static string ParametresFormat {
             get {
-                return ResourceManager.GetString("StatisticsTransformFormat", resourceCulture);
+                return ResourceManager.GetString("ParametresFormat", resourceCulture);
             }
         }
     }

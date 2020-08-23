@@ -1,5 +1,4 @@
-﻿using GraphLibrary.Model;
-using System.Windows.Forms;
+﻿using System.Windows.Forms;
 using WinFormsVersion.Model;
 using WinFormsVersion.ViewModel;
 
@@ -20,8 +19,18 @@ namespace WinFormsVersion.Forms
 
             mainModel = new MainWindowViewModel();
             mainModel.MainWindow = this;
-            button1.Click += mainModel.CreateNewGraph;
-            button2.Click += mainModel.StartPathFind;
-        }       
+
+            var bindingStatistics = new Binding("Text", mainModel, "Statistics");
+            statistics.DataBindings.Add(bindingStatistics);
+
+            var bindingParametres = new Binding("Text", mainModel, "GraphParametres");
+            parametres.DataBindings.Add(bindingParametres);
+
+            menu.Items[0].Click += mainModel.SaveGraph;
+            menu.Items[1].Click += mainModel.LoadGraph;
+            menu.Items[2].Click += mainModel.CreateNewGraph;
+            menu.Items[3].Click += mainModel.ClearGraph;
+            menu.Items[4].Click += mainModel.StartPathFind;
+        }
     }
 }

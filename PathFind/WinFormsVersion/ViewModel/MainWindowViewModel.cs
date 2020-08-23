@@ -3,12 +3,16 @@ using GraphLibrary.Graph;
 using GraphLibrary.Model;
 using System;
 using System.ComponentModel;
+using System.Drawing;
+using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Windows.Forms;
 using WinFormsVersion.Forms;
 using WinFormsVersion.GraphLoader;
 using WinFormsVersion.GraphSaver;
 using WinFormsVersion.Model;
+using WinFormsVersion.Resources;
+using WinFormsVersion.Vertex;
 using WinFormsVersion.View;
 
 namespace WinFormsVersion.ViewModel
@@ -56,7 +60,7 @@ namespace WinFormsVersion.ViewModel
         public MainWindowViewModel()
         {
             GraphField = new WinFormsGraphField();
-            Format = "Time: {0}:{1}.{2}\nSteps: {3}\nPath length: {4}\nVisited vertices: {5}";
+            Format = WinFormsResources.ParametresFormat;
             saver = new WinFormsGraphSaver();
             loader = new WinFormsGraphLoader(Const.SIZE_BETWEEN_VERTICES);
             filler = new WinFormsGraphFiller();
@@ -64,6 +68,8 @@ namespace WinFormsVersion.ViewModel
 
         public override void PathFind()
         {
+            if (graph?.Start == null || graph?.End == null) 
+                return;
             var model = new PathFindViewModel(this);
             var form = new PathFindWindow(model);
             PrepareWindow(form);
@@ -92,11 +98,22 @@ namespace WinFormsVersion.ViewModel
             OnPropertyChanged(nameof(GraphField));
             OnPropertyChanged(nameof(Graph));
             OnPropertyChanged(nameof(GraphParametres));
+            if (Graph == null)
+                return;
+            MainWindow.GraphField.Controls.
+                AddRange(
+                Graph.GetArray().
+                Cast<WinFormsVertex>().
+                ToArray());
+            MainWindow.GraphField.Size = 
+                new Size(Graph.Width * Const.SIZE_BETWEEN_VERTICES,
+                Graph.Height * Const.SIZE_BETWEEN_VERTICES);
         }
 
         public void ClearGraph(object sender, EventArgs e)
         {
-            base.ClearGraph();
+            if (graph != null)
+                base.ClearGraph();
         }
 
         public void StartPathFind(object sender, EventArgs e)
@@ -107,7 +124,6 @@ namespace WinFormsVersion.ViewModel
         public void CreateNewGraph(object sender, EventArgs e)
         {
             CreateNewGraph();
-
         }
 
         protected virtual void OnDispose()

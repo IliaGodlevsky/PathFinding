@@ -37,7 +37,7 @@ namespace GraphLibrary.Model
 
         public virtual void ClearGraph()
         {
-            Graph.Refresh();
+            Graph?.Refresh();
             Statistics = string.Empty;
             GraphParametres = GraphDataFormatter.GetFormattedData(Graph, Format);
         }

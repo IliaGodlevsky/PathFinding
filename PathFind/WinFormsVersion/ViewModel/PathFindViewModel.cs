@@ -3,6 +3,7 @@ using GraphLibrary.Model;
 using System;
 using System.Linq;
 using System.Windows.Forms;
+using WinFormsVersion.Resources;
 
 namespace WinFormsVersion.ViewModel
 {
