@@ -50,7 +50,7 @@
     <Compile Include="Extensions\IntExtensions.cs" />
     <Compile Include="Extensions\MatrixExtension\TwoDimensionArrayExtensions.cs" />
     <Compile Include="Extensions\RandomExtension\RandomExtensions.cs" />
-    <Compile Include="GraphDataFormatter.cs" />
+    <Compile Include="Model\GraphDataFormatter.cs" />
     <Compile Include="Model\GraphFactory\AbstractGraphFactory.cs" />
     <Compile Include="Model\GraphFactory\AbstractGraphInitializer.cs" />
     <Compile Include="Model\GraphFactory\AbstractGraphSetter.cs" />
@@ -87,9 +87,9 @@
     <Compile Include="Model\PauseMaker\Pauser.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Model\RoleChanger\IVertexRoleChanger.cs" />
-    <Compile Include="BoundSetter.cs" />
+    <Compile Include="Model\BoundSetter.cs" />
     <Compile Include="Model\Vertex\IVertex.cs" />
-    <Compile Include="NeighbourSetter.cs" />
+    <Compile Include="Model\NeighbourSetter.cs" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="GraphLibraryResources.resx">
