@@ -126,6 +126,9 @@
   <data name="DestinationPoint" xml:space="preserve">
     <value>Destination point: </value>
   </data>
+  <data name="GraphParametresFormat" xml:space="preserve">
+    <value>Width: {0} Height: {1} Obstacle percent: {2} ({3}/{4})</value>
+  </data>
   <data name="HeightMsg" xml:space="preserve">
     <value>Enter height of graph: </value>
   </data>

@@ -1,12 +1,10 @@
 ﻿using ConsoleVersion.InputClass;
 using GraphLibrary.Enums.AlgorithmEnum;
-using GraphLibrary.PathFindAlgorithmSelector;
 using ConsoleVersion.Graph;
 using ConsoleVersion.RoleChanger;
 using System;
 using System.Drawing;
 using System.Linq;
-using GraphLibrary.Algorithm;
 using GraphLibrary.Extensions;
 using System.Text;
 
@@ -14,7 +12,7 @@ namespace ConsoleVersion.PathFindAlgorithmMenu
 {
     public class PathFindMenu
     {
-        private ConsoleGraph graph = null;
+        private readonly ConsoleGraph graph;
         private readonly ConsoleVertexRoleChanger changer;
 
         public PathFindMenu(ConsoleGraph graph)
@@ -58,11 +56,10 @@ namespace ConsoleVersion.PathFindAlgorithmMenu
             return stringBuilder.ToString();
         }
 
-        public IPathFindAlgorithm ChoosePathFindAlgorithm()
+        public Algorithms GetAlgorithmEnum()
         {
-            Algorithms algorithms = (Algorithms)Input.InputNumber(ShowAlgorithms() + Res.ChooseAlrorithm, 
+            return (Algorithms)Input.InputNumber(ShowAlgorithms() + Res.ChooseAlrorithm,
                 (int)Algorithms.ValueGreedyAlgorithm, (int)Algorithms.WidePathFind);
-            return AlgorithmSelector.GetPathFindAlgorithm(algorithms, graph);
         }
     }
 }

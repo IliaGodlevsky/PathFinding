@@ -3,10 +3,8 @@ using GraphLibrary.GraphFactory;
 using GraphLibrary.Model;
 using System;
 using System.Drawing;
-using System.Linq;
 using WinFormsVersion.GraphFactory;
 using WinFormsVersion.Model;
-using WinFormsVersion.Vertex;
 
 namespace WinFormsVersion.ViewModel
 {
@@ -18,6 +16,7 @@ namespace WinFormsVersion.ViewModel
             graphField = model.GraphField;
             filler = new WinFormsGraphFiller();
         }
+
         public override void CreateGraph()
         {
             int size = Const.SIZE_BETWEEN_VERTICES;
@@ -26,12 +25,8 @@ namespace WinFormsVersion.ViewModel
             window.Controls.Remove(field);
             base.CreateGraph();
             (model as MainWindowViewModel).Window?.Close();
-            window.GraphField 
-                = new WinFormsGraphField() { Location = new Point(4, 90) };
-            window.GraphField.Controls.AddRange(model.Graph.GetArray().
-                Cast<WinFormsVertex>().ToArray());
-            window.GraphField.Size = new Size(model.Graph.Width * size, model.Graph.Height * size);
-            window.Controls.Add(window.GraphField);
+            (graphField as WinFormsGraphField).Size = new Size(model.Graph.Width * size, model.Graph.Height * size);
+            window.Controls.Add(graphField as WinFormsGraphField);
         }
 
         public void CreateGraph(object sender, EventArgs e)

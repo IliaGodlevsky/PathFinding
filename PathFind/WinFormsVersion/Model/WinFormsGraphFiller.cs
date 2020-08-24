@@ -2,6 +2,7 @@
 using GraphLibrary.Model;
 using GraphLibrary.RoleChanger;
 using GraphLibrary.Vertex;
+using System.Drawing;
 using WinFormsVersion.Graph;
 using WinFormsVersion.RoleChanger;
 using WinFormsVersion.Vertex;
@@ -25,7 +26,7 @@ namespace WinFormsVersion.Model
 
         protected override IGraphField GetField()
         {
-            return new WinFormsGraphField();
+            return new WinFormsGraphField() { Location = new Point(4, 90) };
         }
 
         protected override IVertexRoleChanger GetRoleChanger(AbstractGraph graph)

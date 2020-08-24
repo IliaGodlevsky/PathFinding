@@ -1,9 +1,12 @@
-﻿using ConsoleVersion.Forms;
+﻿using ConsoleVersion.View;
 
 namespace ConsoleVersion
 {
     class Program
     {
-        static void Main(string[] args) => new ConsoleMenu().Run();
+        static void Main(string[] args)
+        {
+            new MainView().Start();
+        }
     }
 }

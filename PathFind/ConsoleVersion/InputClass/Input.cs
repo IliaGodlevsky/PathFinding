@@ -1,12 +1,13 @@
-﻿using System;
+﻿using ConsoleVersion.Enums;
+using System;
 using System.Drawing;
 using System.Linq;
-using static ConsoleVersion.Forms.ConsoleMenu;
 
 namespace ConsoleVersion.InputClass
 {
     public static class Input
     {
+
         public static int InputNumber(string msg, int upper, int lower = 0)
         {
             string choice;

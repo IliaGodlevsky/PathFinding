@@ -95,11 +95,8 @@ namespace WinFormsVersion.ViewModel
             var field = MainWindow.GraphField;
             MainWindow.Controls.Remove(field);
             Window?.Close();
-            MainWindow.GraphField = new WinFormsGraphField() { Location = new Point(4, 90) };
-            MainWindow.GraphField.Controls.AddRange(Graph.GetArray().
-                Cast<WinFormsVertex>().ToArray());
-            MainWindow.GraphField.Size = new Size(Graph.Width * size, Graph.Height * size);
-            MainWindow.Controls.Add(MainWindow.GraphField);
+            (GraphField as WinFormsGraphField).Size = new Size(Graph.Width * size, Graph.Height * size);
+            MainWindow.Controls.Add(GraphField as WinFormsGraphField);
         }
 
         public void ClearGraph(object sender, EventArgs e)

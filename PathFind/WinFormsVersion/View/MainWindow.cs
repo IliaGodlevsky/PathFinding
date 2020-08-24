@@ -1,4 +1,6 @@
-﻿using System.Windows.Forms;
+﻿using System;
+using System.Collections.Generic;
+using System.Windows.Forms;
 using WinFormsVersion.Model;
 using WinFormsVersion.ViewModel;
 
@@ -22,17 +24,23 @@ namespace WinFormsVersion.Forms
                 MainWindow = this
             };
 
+            List<EventHandler> events = new List<EventHandler>()
+            {
+                mainModel.SaveGraph,
+                mainModel.LoadGraph,
+                mainModel.CreateNewGraph,
+                mainModel.ClearGraph,
+                mainModel.StartPathFind
+            };
+
             var bindingStatistics = new Binding("Text", mainModel, "Statistics");
             statistics.DataBindings.Add(bindingStatistics);
 
             var bindingParametres = new Binding("Text", mainModel, "GraphParametres");
             parametres.DataBindings.Add(bindingParametres);
 
-            menu.Items[0].Click += mainModel.SaveGraph;
-            menu.Items[1].Click += mainModel.LoadGraph;
-            menu.Items[2].Click += mainModel.CreateNewGraph;
-            menu.Items[3].Click += mainModel.ClearGraph;
-            menu.Items[4].Click += mainModel.StartPathFind;
+            for (int i = 0; i < menu.Items.Count; i++)
+                menu.Items[i].Click += events[i];
 
         }
     }

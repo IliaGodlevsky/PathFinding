@@ -1,27 +1,21 @@
 ﻿using ConsoleVersion.Graph;
 using ConsoleVersion.Vertex;
+using GraphLibrary;
 using Console = Colorful.Console;
 
 namespace ConsoleVersion.Forms
 {
     public static class GraphShower
     {
-        private static void ShowGraphParams(ConsoleGraph graph)
-        {
-            Console.WriteLine("Percent of obstacles: " + graph.ObstaclePercent);
-            Console.WriteLine("Graph width: " + graph.Width);
-            Console.WriteLine("Graph height: " + graph.Height);
-        }
-
         private static void WriteYCoordinate(int width)
         {
             Console.Write("   ");
+            string str;
             for (int i = 0; i < width; i++)
             {
-                if (i < 10)
-                    Console.Write(i.ToString() + "  ");
-                else
-                    Console.Write(i.ToString() + " ");
+                str = i.ToString();
+                str += i < 10 ? "  " : " ";
+                Console.Write(str);
             }
             Console.WriteLine();
             Console.Write("   ");
@@ -33,30 +27,36 @@ namespace ConsoleVersion.Forms
                 Console.Write("---");
         }
 
-        public static void ShowGraph(ConsoleGraph graph)
+        private static void Show(ConsoleGraph graph)
         {
-            ShowGraphParams(graph);
-            WriteYCoordinate(graph.Width);
-            WriteLine(graph.Width);
-            Console.WriteLine();
-            string line;
             for (int height = 0; height < graph.Height; height++)
             {
-                if (height < 10)
-                    line = " |";
-                else
-                    line = "|";
+                string line = height < 10 ? " |" : "|";
                 Console.Write(height.ToString() + line);
-                for (int width = 0; width < graph.Width; width++) 
+                for (int width = 0; width < graph.Width; width++)
                 {
-                    ConsoleVertex vertex = graph[width, height] as ConsoleVertex;
+                    ConsoleVertex vertex =
+                        graph[width, height] as ConsoleVertex;
                     Console.Write(vertex.Text + "  ", vertex.Colour);
                     if (width == graph.Width - 1)
                         Console.Write("|" + height.ToString());
-                    if (width != 0 && width % (graph.Width- 1) == 0) 
-                        Console.Write("\n");
+                    if (width != 0 && width % (graph.Width - 1) == 0)
+                        Console.WriteLine();
                 }
             }
+        }
+
+        public static void ShowGraph(ConsoleGraph graph)
+        {
+            if (graph == null)
+                return;
+            Console.WriteLine(GraphDataFormatter.
+                GetFormattedData(graph, Res.GraphParametresFormat));
+            Console.WriteLine();
+            WriteYCoordinate(graph.Width);
+            WriteLine(graph.Width);
+            Console.WriteLine();
+            Show(graph);
             Console.Write("   ");
             WriteLine(graph.Width);
             Console.WriteLine();
