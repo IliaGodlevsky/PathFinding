@@ -11,10 +11,7 @@ namespace WinFormsVersion.ViewModel
     {
         public PathFindViewModel(IMainModel model) : base(model)
         {
-            this.model = model;
-            graph = model.Graph;
-            badResultMessage = WinFormsResources.BadResultMsg;
-            
+            badResultMessage = WinFormsResources.BadResultMsg;           
         }
 
         protected override void FindPreparations()

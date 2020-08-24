@@ -12,8 +12,6 @@ namespace WinFormsVersion.ViewModel
     {
         public CreateGraphViewModel(IMainModel model) : base(model)
         {
-            this.model = model;
-            graphField = model.GraphField;
             filler = new WinFormsGraphFiller();
         }
 
