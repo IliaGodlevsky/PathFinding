@@ -43,7 +43,7 @@ namespace ConsoleVersion.PathFindAlgorithmMenu
 
         private string ShowAlgorithms()
         {
-            var stringBuilder = new StringBuilder("\n");
+            var stringBuilder = new StringBuilder();
             Algorithms algo = default;
             var descriptions = algo.GetDescriptions<Algorithms>();
             foreach (var item in descriptions)
