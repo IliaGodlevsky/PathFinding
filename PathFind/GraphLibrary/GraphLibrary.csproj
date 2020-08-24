@@ -50,7 +50,7 @@
     <Compile Include="Extensions\IntExtensions.cs" />
     <Compile Include="Extensions\MatrixExtension\TwoDimensionArrayExtensions.cs" />
     <Compile Include="Extensions\RandomExtension\RandomExtensions.cs" />
-    <Compile Include="Model\GraphDataFormatter.cs" />
+    <Compile Include="Model\DataFormatter\GraphDataFormatter.cs" />
     <Compile Include="Model\GraphFactory\AbstractGraphFactory.cs" />
     <Compile Include="Model\GraphFactory\AbstractGraphInitializer.cs" />
     <Compile Include="Model\GraphFactory\AbstractGraphSetter.cs" />
@@ -65,12 +65,12 @@
     <Compile Include="Model\GraphSaver\AbstractGraphSaver.cs" />
     <Compile Include="Model\GraphSaver\IGraphSaver.cs" />
     <Compile Include="ViewModel\AbstractCreateGraphModel.cs" />
-    <Compile Include="Model\AbstractGraphFiller.cs" />
+    <Compile Include="Model\GraphFiller\AbstractGraphFiller.cs" />
     <Compile Include="ViewModel\AbstractMainModel.cs" />
     <Compile Include="ViewModel\AbstractPathFindModel.cs" />
     <Compile Include="Model\IGraphField.cs" />
-    <Compile Include="ViewModel\IMainModel.cs" />
-    <Compile Include="ViewModel\IModel.cs" />
+    <Compile Include="ViewModel\Interface\IMainModel.cs" />
+    <Compile Include="ViewModel\Interface\IModel.cs" />
     <Compile Include="Model\PathFindAlgorithmSelector\AlgorithmSelector.cs" />
     <Compile Include="Model\PathFindAlgorithm\DeepPathFindAlgorithm.cs" />
     <Compile Include="Model\RoleChanger\AbstractVertexRoleChanger.cs" />
@@ -87,9 +87,9 @@
     <Compile Include="Model\PauseMaker\Pauser.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Model\RoleChanger\IVertexRoleChanger.cs" />
-    <Compile Include="Model\BoundSetter.cs" />
+    <Compile Include="Model\BoundSetter\BoundSetter.cs" />
     <Compile Include="Model\Vertex\IVertex.cs" />
-    <Compile Include="Model\NeighbourSetter.cs" />
+    <Compile Include="Model\NeighbourSetter\NeighbourSetter.cs" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="GraphLibraryResources.resx">
