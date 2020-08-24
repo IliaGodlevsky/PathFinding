@@ -21,9 +21,15 @@ namespace ConsoleVersion.PathFindAlgorithmMenu
             changer = new ConsoleVertexRoleChanger(this.graph);
         }
 
-        public void ChooseStart() => ChooseRange("\n" + Res.StartPoint, changer.SetStartPoint);
+        public void ChooseStart()
+        {
+            ChooseRange("\n" + Res.StartPoint, changer.SetStartPoint);
+        }
 
-        public void ChooseEnd() => ChooseRange(Res.DestinationPoint, changer.SetDestinationPoint);
+        public void ChooseEnd()
+        {
+            ChooseRange(Res.DestinationPoint, changer.SetDestinationPoint);
+        }
 
         private void ChooseRange(string message, EventHandler method)
         {
