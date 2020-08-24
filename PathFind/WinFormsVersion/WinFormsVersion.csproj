@@ -124,6 +124,10 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\ConsoleVersion\ConsoleVersion.csproj">
+      <Project>{21737C42-9926-4992-BBFC-F2BEA9B4561A}</Project>
+      <Name>ConsoleVersion</Name>
+    </ProjectReference>
     <ProjectReference Include="..\GraphLibrary\GraphLibrary.csproj">
       <Project>{5441521c-1754-4098-a843-8904910700e8}</Project>
       <Name>GraphLibrary</Name>

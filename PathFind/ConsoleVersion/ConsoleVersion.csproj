@@ -69,7 +69,7 @@
     </Compile>
     <Compile Include="Model\RoleChanger\ConsoleVertexRoleChanger.cs" />
     <Compile Include="Model\Vertex\ConsoleVertex.cs" />
-    <Compile Include="View\IView.cs" />
+    <Compile Include="View\Interface\IView.cs" />
     <Compile Include="View\MainView.cs" />
     <Compile Include="View\PathFindView.cs" />
   </ItemGroup>
