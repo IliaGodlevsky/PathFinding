@@ -4,7 +4,6 @@ using GraphLibrary.Model;
 using System;
 using System.ComponentModel;
 using System.Drawing;
-using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Windows.Forms;
 using WinFormsVersion.Forms;
@@ -12,7 +11,6 @@ using WinFormsVersion.GraphLoader;
 using WinFormsVersion.GraphSaver;
 using WinFormsVersion.Model;
 using WinFormsVersion.Resources;
-using WinFormsVersion.Vertex;
 using WinFormsVersion.View;
 
 namespace WinFormsVersion.ViewModel
