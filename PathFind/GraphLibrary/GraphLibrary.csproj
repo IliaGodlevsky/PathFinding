@@ -48,6 +48,7 @@
     <Compile Include="Enums\AlgorithmEnum\Algorithm.cs" />
     <Compile Include="Extensions\EnumExtensions.cs" />
     <Compile Include="Extensions\IntExtensions.cs" />
+    <Compile Include="Extensions\IVertexExtension.cs" />
     <Compile Include="Extensions\MatrixExtension\TwoDimensionArrayExtensions.cs" />
     <Compile Include="Extensions\RandomExtension\RandomExtensions.cs" />
     <Compile Include="Model\DataFormatter\GraphDataFormatter.cs" />

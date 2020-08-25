@@ -41,8 +41,7 @@ namespace ConsoleVersion.PathFindAlgorithmMenu
         private Point ChoosePoint()
         {
             Point point = Input.InputPoint(graph.Width, graph.Height);
-            while (graph[point.X, point.Y].IsObstacle || !graph[point.X, point.Y].IsSimpleVertex ||
-                !graph[point.X, point.Y].Neighbours.Any())          
+            while (!graph[point.X, point.Y].IsValidToBeRange())
                 point = Input.InputPoint(graph.Width, graph.Height);
             return point;
         }

@@ -1,8 +1,8 @@
-﻿using GraphLibrary.Extensions.RandomExtension;
+﻿using GraphLibrary.Extensions;
+using GraphLibrary.Extensions.RandomExtension;
 using GraphLibrary.Graph;
 using GraphLibrary.Vertex;
 using System;
-using System.Linq;
 
 namespace GraphLibrary.RoleChanger
 {
@@ -51,7 +51,7 @@ namespace GraphLibrary.RoleChanger
         public virtual void SetStartPoint(object sender, EventArgs e)
         {
             var top = sender as IVertex;
-            if (!IsRightDestination(top))
+            if (!top.IsValidToBeRange())
                 return;
             top.IsStart = true;
             top.MarkAsStart();
@@ -61,17 +61,11 @@ namespace GraphLibrary.RoleChanger
         public virtual void SetDestinationPoint(object sender, EventArgs e)
         {
             var top = sender as IVertex;
-            if (!IsRightDestination(top))
+            if (!top.IsValidToBeRange())
                 return;
             top.IsEnd = true;
             top.MarkAsEnd();
             graph.End = top;
-        }
-
-        protected bool IsRightDestination(IVertex vertex)
-        {
-            return vertex.Neighbours.Any() && vertex.IsSimpleVertex
-                && !vertex.IsObstacle;
         }
 
         public virtual void ReversePolarity(object sender, EventArgs e)
