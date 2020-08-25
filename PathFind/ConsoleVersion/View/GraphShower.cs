@@ -10,10 +10,9 @@ namespace ConsoleVersion.Forms
         private static void WriteYCoordinate(int width)
         {
             Console.Write("   ");
-            string str;
             for (int i = 0; i < width; i++)
             {
-                str = i.ToString();
+                string str = i.ToString();
                 str += i < 10 ? "  " : " ";
                 Console.Write(str);
             }
