@@ -28,9 +28,10 @@ namespace GraphLibrary.Model
 
         public virtual void LoadGraph()
         {
-            Graph = loader.GetGraph();
-            if (Graph == null)
+            var temp = loader.GetGraph();
+            if (temp == null)
                 return;
+            Graph = temp;
             GraphField = filler.FillGraphField(Graph);
             GraphParametres = GraphDataFormatter.GetFormattedData(Graph, Format);
         }
