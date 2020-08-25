@@ -35,6 +35,10 @@ namespace ConsoleVersion.View
 
         private void ShowMenu()
         {
+            const string newLine = "\n";
+            const string bigSpace = "  ";
+            const string tab = "\t";
+
             var stringBuilder = new StringBuilder();
             MenuOption menu = default;
             var descriptions = menu.GetDescriptions<MenuOption>();
@@ -43,9 +47,9 @@ namespace ConsoleVersion.View
             {
                 int numberOf = descriptions.IndexOf(item);
                 if (numberOf.IsEven())
-                    stringBuilder.Append("\n");
+                    stringBuilder.Append(newLine);
                 else
-                    stringBuilder.Append("  \t");
+                    stringBuilder.Append(bigSpace + tab);
                 stringBuilder.Append(string.Format(Res.ShowFormat, numberOf, item));
             }
 

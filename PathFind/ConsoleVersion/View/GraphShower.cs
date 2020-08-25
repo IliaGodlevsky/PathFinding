@@ -7,38 +7,44 @@ namespace ConsoleVersion.Forms
 {
     public static class GraphShower
     {
+        private const string space = " ";
+        private const string bigSpace = "  ";
+        private const string largeSpace = "   ";
+        private const string horizontalFrame = "---";
+        private const string verticalFrame = "|";
+
         private static void WriteYCoordinate(int width)
         {
-            Console.Write("   ");
+            Console.Write(largeSpace);
             for (int i = 0; i < width; i++)
             {
                 string str = i.ToString();
-                str += i < 10 ? "  " : " ";
+                str += i < 10 ? bigSpace : space;
                 Console.Write(str);
             }
             Console.WriteLine();
-            Console.Write("   ");
+            Console.Write(largeSpace);
         }
 
         private static void WriteLine(int width)
         {
             for (int i = 0; i < width; i++)
-                Console.Write("---");
+                Console.Write(horizontalFrame);
         }
 
         private static void Show(ConsoleGraph graph)
         {
             for (int height = 0; height < graph.Height; height++)
             {
-                string line = height < 10 ? " |" : "|";
+                string line = height < 10 ? space + verticalFrame : verticalFrame;
                 Console.Write(height.ToString() + line);
                 for (int width = 0; width < graph.Width; width++)
                 {
                     ConsoleVertex vertex =
                         graph[width, height] as ConsoleVertex;
-                    Console.Write(vertex.Text + "  ", vertex.Colour);
+                    Console.Write(vertex.Text + bigSpace, vertex.Colour);
                     if (width == graph.Width - 1)
-                        Console.Write("|" + height.ToString());
+                        Console.Write(verticalFrame + height.ToString());
                     if (width != 0 && width % (graph.Width - 1) == 0)
                         Console.WriteLine();
                 }
@@ -54,7 +60,7 @@ namespace ConsoleVersion.Forms
             WriteLine(graph.Width);
             Console.WriteLine();
             Show(graph);
-            Console.Write("   ");
+            Console.Write(largeSpace);
             WriteLine(graph.Width);
             Console.WriteLine();
             WriteYCoordinate(graph.Width);
