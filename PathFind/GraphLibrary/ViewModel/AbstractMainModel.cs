@@ -6,7 +6,7 @@ namespace GraphLibrary.Model
 {
     public abstract class AbstractMainModel : IMainModel
     {
-        public virtual string GraphParametres { get; set; }        
+        public virtual string GraphParametres { get; set; }
         public virtual string Statistics { get; set; }
         public virtual IGraphField GraphField { get; set; }
         public virtual AbstractGraph Graph { get; set; }
