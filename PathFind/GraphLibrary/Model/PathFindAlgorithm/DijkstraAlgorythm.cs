@@ -100,7 +100,7 @@ namespace GraphLibrary.Algorithm
                 pauseMaker?.Pause(Const.FIND_PROCESS_PAUSE_MILLISECONDS);
             } while (!IsDestination(currentVertex));
             StatCollector.StopCollect();
-            return graph.End.IsVisited;
+            return graph?.End?.IsVisited == true;
         }
 
         private bool IsValidVertex(IVertex vertex)
