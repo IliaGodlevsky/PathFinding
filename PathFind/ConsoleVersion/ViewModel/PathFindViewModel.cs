@@ -13,6 +13,7 @@ namespace ConsoleVersion.ViewModel
         public PathFindViewModel(IMainModel model) : base(model)
         {
             menu = new PathFindMenu(model.Graph as ConsoleGraph);
+            badResultMessage = Res.BadResultMsg;
         }
 
         public override void PathFind()
@@ -35,7 +36,10 @@ namespace ConsoleVersion.ViewModel
 
         protected override void ShowMessage(string message)
         {
+            Console.Clear();
+            GraphShower.ShowGraph(model.Graph as ConsoleGraph);
             Console.WriteLine(message);
+            Console.ReadLine();
         }
     }
 }
