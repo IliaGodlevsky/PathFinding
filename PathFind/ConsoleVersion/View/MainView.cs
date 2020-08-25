@@ -4,6 +4,7 @@ using ConsoleVersion.Graph;
 using ConsoleVersion.GraphFactory;
 using ConsoleVersion.InputClass;
 using ConsoleVersion.ViewModel;
+using GraphLibrary;
 using GraphLibrary.Extensions;
 using System;
 using System.Collections.Generic;
@@ -54,6 +55,7 @@ namespace ConsoleVersion.View
         private MenuOption GetOption()
         {
             Console.Clear();
+            Console.WriteLine(mainModel.GraphParametres);
             GraphShower.ShowGraph(mainModel.Graph as ConsoleGraph);
             Console.WriteLine(mainModel?.Statistics);
             ShowMenu();
@@ -65,6 +67,8 @@ namespace ConsoleVersion.View
             var factory = new RandomValuedConsoleGraphFactory(
                 percentOfObstacles: 25, width: 25, height: 25);
             mainModel.Graph = factory.GetGraph();
+            mainModel.GraphParametres 
+                = GraphDataFormatter.GetFormattedData(mainModel.Graph, mainModel.Format);
             var option = GetOption();
             while (option != Enum.GetValues(typeof(MenuOption)).Cast<MenuOption>().First())
             {

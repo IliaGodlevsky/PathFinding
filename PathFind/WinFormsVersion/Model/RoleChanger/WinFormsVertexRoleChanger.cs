@@ -1,5 +1,7 @@
 ﻿using System;
+using System.Linq;
 using System.Windows.Forms;
+using GraphLibrary.Constants;
 using GraphLibrary.Graph;
 using GraphLibrary.RoleChanger;
 using GraphLibrary.Vertex;
@@ -22,8 +24,8 @@ namespace WinFormsVersion.RoleChanger
                     return;
                 int current = int.Parse((sender as WinFormsVertex).Text);
                 current++;
-                if (current > 9)
-                    current = 1;
+                if (current > Const.MAX_VERTEX_VALUE)
+                    current = Const.MIN_VERTEX_VALUE;
                 (sender as WinFormsVertex).Text = current.ToString();
             }
         }
@@ -33,14 +35,13 @@ namespace WinFormsVersion.RoleChanger
             if ((e as MouseEventArgs).Button == MouseButtons.Left)
             {
                 base.SetStartPoint(sender, e);
-                if ((sender as IVertex).IsObstacle)
+                if ((sender as IVertex).IsObstacle || !(sender as IVertex).Neighbours.Any())
                     return;
                 foreach (var butt in graph)
                 {
                     (butt as WinFormsVertex).MouseClick -= SetStartPoint;
                     (butt as WinFormsVertex).MouseClick += SetDestinationPoint;
                 }
-
             }
         }
 
@@ -49,7 +50,7 @@ namespace WinFormsVersion.RoleChanger
             if ((e as MouseEventArgs).Button == MouseButtons.Left)
             {
                 base.SetDestinationPoint(sender, e);
-                if ((sender as IVertex).IsObstacle)
+                if ((sender as IVertex).IsObstacle || !(sender as IVertex).Neighbours.Any())
                     return;
                 foreach (var butt in graph) 
                     (butt as WinFormsVertex).MouseClick -= SetDestinationPoint;

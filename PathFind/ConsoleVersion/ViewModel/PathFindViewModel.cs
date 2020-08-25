@@ -20,10 +20,12 @@ namespace ConsoleVersion.ViewModel
         {
             Console.Clear();
             model.Graph.Refresh();
+            Console.WriteLine(model.GraphParametres);
             GraphShower.ShowGraph(model.Graph as ConsoleGraph);
             menu.ChooseStart();
             menu.ChooseEnd();
             Console.Clear();
+            Console.WriteLine(model.GraphParametres);
             GraphShower.ShowGraph(model.Graph as ConsoleGraph);
             Algorithm = menu.GetAlgorithmEnum();
             base.PathFind();
@@ -37,6 +39,7 @@ namespace ConsoleVersion.ViewModel
         protected override void ShowMessage(string message)
         {
             Console.Clear();
+            Console.WriteLine(model.GraphParametres);
             GraphShower.ShowGraph(model.Graph as ConsoleGraph);
             Console.WriteLine(message);
             Console.ReadLine();

@@ -49,8 +49,6 @@ namespace ConsoleVersion.Forms
         {
             if (graph == null)
                 return;
-            Console.WriteLine(GraphDataFormatter.
-                GetFormattedData(graph, Res.GraphParametresFormat));
             Console.WriteLine();
             WriteYCoordinate(graph.Width);
             WriteLine(graph.Width);

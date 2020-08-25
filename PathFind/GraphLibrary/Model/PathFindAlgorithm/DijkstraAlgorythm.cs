@@ -93,15 +93,19 @@ namespace GraphLibrary.Algorithm
             {
                 MakeWaves(currentVertex);
                 currentVertex = GetChippestUnvisitedVertex();
-                if (currentVertex?.Value == double.PositiveInfinity
-                    || currentVertex == null)
+                if (!IsValidVertex(currentVertex))
                     break;
-                if (IsRightCellToVisit(currentVertex))
+                if (IsRightVertexToVisit(currentVertex))
                     Visit(currentVertex);
                 pauseMaker?.Pause(Const.FIND_PROCESS_PAUSE_MILLISECONDS);
             } while (!IsDestination(currentVertex));
             StatCollector.StopCollect();
             return graph.End.IsVisited;
+        }
+
+        private bool IsValidVertex(IVertex vertex)
+        {
+            return vertex?.Value != double.PositiveInfinity && vertex != null;
         }
 
         private bool IsDestination(IVertex vertex)
@@ -113,7 +117,7 @@ namespace GraphLibrary.Algorithm
             return vertex.IsEnd && vertex.IsVisited;
         }
 
-        private bool IsRightCellToVisit(IVertex vertex)
+        private bool IsRightVertexToVisit(IVertex vertex)
         {
             if (vertex is null)
                 return false;
