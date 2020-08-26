@@ -6,6 +6,7 @@ using System.ComponentModel;
 using System.Drawing;
 using System.Runtime.CompilerServices;
 using System.Windows.Forms;
+using WinFormsVersion.Extensions;
 using WinFormsVersion.Forms;
 using WinFormsVersion.GraphLoader;
 using WinFormsVersion.GraphSaver;
@@ -39,6 +40,21 @@ namespace WinFormsVersion.ViewModel
             set { statistics = value; OnPropertyChanged(); }
         }
 
+        private IGraphField graphField;
+        public override IGraphField GraphField 
+        {
+            get => graphField;
+            set
+            {
+                graphField = value;
+                int size = Const.SIZE_BETWEEN_VERTICES;
+                MainWindow.Controls.RemoveBy(ctrl => ctrl.IsGraphField());
+                (graphField as WinFormsGraphField).Size =
+                    new Size(Graph.Width * size, Graph.Height * size);
+                MainWindow.Controls.Add(graphField as WinFormsGraphField);
+            }
+        }
+
         private AbstractGraph graph;
         public override AbstractGraph Graph
         {
@@ -54,6 +70,7 @@ namespace WinFormsVersion.ViewModel
             saver = new WinFormsGraphSaver();
             loader = new WinFormsGraphLoader(Const.SIZE_BETWEEN_VERTICES);
             filler = new WinFormsGraphFiller();
+            graphField = new WinFormsGraphField();
         }
 
         public override void PathFind()
@@ -88,13 +105,9 @@ namespace WinFormsVersion.ViewModel
             OnPropertyChanged(nameof(Graph));
             OnPropertyChanged(nameof(GraphParametres));
             if (Graph == null)
-                return;
-            int size = Const.SIZE_BETWEEN_VERTICES;
-            var field = MainWindow.GraphField;
-            MainWindow.Controls.Remove(field);
+                return;          
             Window?.Close();
-            (GraphField as WinFormsGraphField).Size = new Size(Graph.Width * size, Graph.Height * size);
-            MainWindow.Controls.Add(GraphField as WinFormsGraphField);
+            
         }
 
         public void ClearGraph(object sender, EventArgs e)
