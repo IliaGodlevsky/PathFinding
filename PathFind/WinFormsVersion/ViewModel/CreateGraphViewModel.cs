@@ -2,7 +2,6 @@
 using GraphLibrary.GraphFactory;
 using GraphLibrary.Model;
 using System;
-using System.Drawing;
 using WinFormsVersion.GraphFactory;
 using WinFormsVersion.Model;
 
@@ -17,14 +16,8 @@ namespace WinFormsVersion.ViewModel
 
         public override void CreateGraph()
         {
-            int size = Const.SIZE_BETWEEN_VERTICES;
-            var window = (model as MainWindowViewModel).MainWindow;
-            var field = window.GraphField;
-            window.Controls.Remove(field);
             base.CreateGraph();
             (model as MainWindowViewModel).Window?.Close();
-            (graphField as WinFormsGraphField).Size = new Size(model.Graph.Width * size, model.Graph.Height * size);
-            window.Controls.Add(graphField as WinFormsGraphField);
         }
 
         public void CreateGraph(object sender, EventArgs e)
