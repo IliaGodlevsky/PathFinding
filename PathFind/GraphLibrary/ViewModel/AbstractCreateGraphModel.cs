@@ -26,8 +26,8 @@ namespace GraphLibrary.Model
             var factory = GetFactory();
             graph = factory.GetGraph();
             graphField = filler.FillGraphField(graph);
-            model.GraphField = graphField;
             model.Graph = graph;
+            model.GraphField = graphField;
             model.GraphParametres = 
                 GraphDataFormatter.GetFormattedData(model.Graph, model.Format);
             model.Statistics = string.Empty;
