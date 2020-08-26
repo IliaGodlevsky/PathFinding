@@ -16,6 +16,7 @@ namespace ConsoleVersion.ViewModel
     public class MainViewModel : AbstractMainModel
     {
         private IVertexRoleChanger changer;
+
         public MainViewModel()
         {            
             Format = Res.GraphParametresFormat;
