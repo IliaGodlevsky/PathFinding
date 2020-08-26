@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel;
 
-namespace GraphLibrary.Enums.AlgorithmEnum
+namespace GraphLibrary.AlgorithmEnum
 {
     public enum Algorithms
     {
