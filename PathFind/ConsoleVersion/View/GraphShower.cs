@@ -15,12 +15,8 @@ namespace ConsoleVersion.Forms
         private static void WriteYCoordinate(int width)
         {
             Console.Write(largeSpace);
-            for (int i = 0; i < width; i++)
-            {
-                string str = i.ToString();
-                str += i < 10 ? bigSpace : space;
-                Console.Write(str);
-            }
+            for (int i = 0; i < width; i++)            
+                Console.Write(i.ToString() + (i < 10 ? bigSpace : space));           
             Console.WriteLine();
             Console.Write(largeSpace);
         }
@@ -31,20 +27,33 @@ namespace ConsoleVersion.Forms
                 Console.Write(horizontalFrame);
         }
 
+        private static bool IsNewLine(int width, IMainModel model)
+        {
+            return width != 0 && width % (model.Graph.Width - 1) == 0;
+        }
+
+        private static void WriteVerticalFrame(int height, bool reverse)
+        {
+            Console.Write(reverse ? verticalFrame + height.ToString() :
+                height + (height < 10 ? space + verticalFrame : verticalFrame));           
+        }
+
+        private static void WriteVertex(ConsoleVertex vertex)
+        {
+            Console.Write(vertex.Text + bigSpace, vertex.Colour);
+        }
+
         private static void ShowGraph(IMainModel model)
         {
             for (int height = 0; height < model.Graph.Height; height++)
             {
-                string line = height < 10 ? space + verticalFrame : verticalFrame;
-                Console.Write(height.ToString() + line);
+                WriteVerticalFrame(height, reverse: false);
                 for (int width = 0; width < model.Graph.Width; width++)
                 {
-                    ConsoleVertex vertex =
-                        model.Graph[width, height] as ConsoleVertex;
-                    Console.Write(vertex.Text + bigSpace, vertex.Colour);
+                    WriteVertex(model.Graph[width, height] as ConsoleVertex);
                     if (width == model.Graph.Width - 1)
-                        Console.Write(verticalFrame + height.ToString());
-                    if (width != 0 && width % (model.Graph.Width - 1) == 0)
+                        WriteVerticalFrame(height, reverse: true);
+                    if (IsNewLine(width, model))
                         Console.WriteLine();
                 }
             }
