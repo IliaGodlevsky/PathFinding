@@ -41,15 +41,11 @@ namespace ConsoleVersion.View
 
             var stringBuilder = new StringBuilder();
             MenuOption menu = default;
-            var descriptions = menu.GetDescriptions<MenuOption>();
 
-            foreach (var item in descriptions)
-            {
-                int numberOf = descriptions.IndexOf(item);
-                if (numberOf.IsEven())
-                    stringBuilder.Append(newLine);
-                else
-                    stringBuilder.Append(bigSpace + tab);
+            foreach (var item in menu.GetDescriptions<MenuOption>())
+            {               
+                int numberOf = menu.GetDescriptions<MenuOption>().IndexOf(item);
+                stringBuilder.Append(numberOf.IsEven() ? newLine : bigSpace + tab);
                 stringBuilder.Append(string.Format(Res.ShowFormat, numberOf, item));
             }
 
