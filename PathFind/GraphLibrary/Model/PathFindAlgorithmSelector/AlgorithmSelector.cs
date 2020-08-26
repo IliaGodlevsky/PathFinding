@@ -1,6 +1,6 @@
 ﻿using GraphLibrary.Algorithm;
 using GraphLibrary.DistanceCalculator;
-using GraphLibrary.Enums.AlgorithmEnum;
+using GraphLibrary.AlgorithmEnum;
 using GraphLibrary.Graph;
 using GraphLibrary.PathFindAlgorithm;
 

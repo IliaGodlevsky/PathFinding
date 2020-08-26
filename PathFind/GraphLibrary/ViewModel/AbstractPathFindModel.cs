@@ -1,5 +1,5 @@
 ﻿using GraphLibrary.Algorithm;
-using GraphLibrary.Enums.AlgorithmEnum;
+using GraphLibrary.AlgorithmEnum;
 using GraphLibrary.Graph;
 using GraphLibrary.PathFindAlgorithmSelector;
 

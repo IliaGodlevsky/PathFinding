@@ -1,5 +1,5 @@
 ﻿using ConsoleVersion.InputClass;
-using GraphLibrary.Enums.AlgorithmEnum;
+using GraphLibrary.AlgorithmEnum;
 using ConsoleVersion.Graph;
 using ConsoleVersion.RoleChanger;
 using System;
@@ -50,12 +50,11 @@ namespace ConsoleVersion.PathFindAlgorithmMenu
         private string GetShowAlgorithms()
         {
             var stringBuilder = new StringBuilder("\n");
-            var descriptions = ((Algorithms)default).GetDescriptions<Algorithms>();
-            foreach (var item in descriptions)
+
+            foreach (var item in ((Algorithms)default).GetDescriptions<Algorithms>())
             {
-                int numberOf = descriptions.IndexOf(item) + 1;
-                stringBuilder.Append(string.Format(Res.ShowFormat, numberOf, item));
-                stringBuilder.Append("\n");
+                int numberOf = ((Algorithms)default).GetDescriptions<Algorithms>().IndexOf(item) + 1;
+                stringBuilder.Append(string.Format(Res.ShowFormat, numberOf, item) + "\n");
             }
 
             return stringBuilder.ToString();
