@@ -17,16 +17,12 @@ namespace ConsoleVersion.ViewModel
         }
 
         public override void PathFind()
-        {
-            Console.Clear();
+        {            
             model.Graph.Refresh();
-            Console.WriteLine(model.GraphParametres);
-            GraphShower.ShowGraph(model.Graph as ConsoleGraph);
+            GraphShower.DisplayGraph(model);
             menu.ChooseStart();
             menu.ChooseEnd();
-            Console.Clear();
-            Console.WriteLine(model.GraphParametres);
-            GraphShower.ShowGraph(model.Graph as ConsoleGraph);
+            GraphShower.DisplayGraph(model);
             Algorithm = menu.GetAlgorithmEnum();
             base.PathFind();
         }
@@ -38,9 +34,7 @@ namespace ConsoleVersion.ViewModel
 
         protected override void ShowMessage(string message)
         {
-            Console.Clear();
-            Console.WriteLine(model.GraphParametres);
-            GraphShower.ShowGraph(model.Graph as ConsoleGraph);
+            GraphShower.DisplayGraph(model);
             Console.WriteLine(message);
             Console.ReadLine();
         }

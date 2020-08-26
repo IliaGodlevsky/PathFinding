@@ -1,6 +1,5 @@
-﻿using ConsoleVersion.Graph;
-using ConsoleVersion.Vertex;
-using GraphLibrary;
+﻿using ConsoleVersion.Vertex;
+using GraphLibrary.Model;
 using Console = Colorful.Console;
 
 namespace ConsoleVersion.Forms
@@ -26,44 +25,52 @@ namespace ConsoleVersion.Forms
             Console.Write(largeSpace);
         }
 
-        private static void WriteLine(int width)
+        private static void WriteHorizontalFrame(int width)
         {
             for (int i = 0; i < width; i++)
                 Console.Write(horizontalFrame);
         }
 
-        private static void Show(ConsoleGraph graph)
+        private static void ShowGraph(IMainModel model)
         {
-            for (int height = 0; height < graph.Height; height++)
+            for (int height = 0; height < model.Graph.Height; height++)
             {
                 string line = height < 10 ? space + verticalFrame : verticalFrame;
                 Console.Write(height.ToString() + line);
-                for (int width = 0; width < graph.Width; width++)
+                for (int width = 0; width < model.Graph.Width; width++)
                 {
                     ConsoleVertex vertex =
-                        graph[width, height] as ConsoleVertex;
+                        model.Graph[width, height] as ConsoleVertex;
                     Console.Write(vertex.Text + bigSpace, vertex.Colour);
-                    if (width == graph.Width - 1)
+                    if (width == model.Graph.Width - 1)
                         Console.Write(verticalFrame + height.ToString());
-                    if (width != 0 && width % (graph.Width - 1) == 0)
+                    if (width != 0 && width % (model.Graph.Width - 1) == 0)
                         Console.WriteLine();
                 }
             }
         }
 
-        public static void ShowGraph(ConsoleGraph graph)
+        public static void ShowGraphWithFrames(IMainModel model)
         {
-            if (graph == null)
+            if (model.Graph == null)
                 return;
             Console.WriteLine();
-            WriteYCoordinate(graph.Width);
-            WriteLine(graph.Width);
+            WriteYCoordinate(model.Graph.Width);
+            WriteHorizontalFrame(model.Graph.Width);
             Console.WriteLine();
-            Show(graph);
+            ShowGraph(model);
             Console.Write(largeSpace);
-            WriteLine(graph.Width);
+            WriteHorizontalFrame(model.Graph.Width);
             Console.WriteLine();
-            WriteYCoordinate(graph.Width);
+            WriteYCoordinate(model.Graph.Width);
+        }
+
+        public static void DisplayGraph(IMainModel model)
+        {
+            Console.Clear();
+            Console.WriteLine(model.GraphParametres);
+            ShowGraphWithFrames(model);
+            Console.WriteLine(model?.Statistics);
         }
     }
 }

@@ -38,7 +38,7 @@ namespace ConsoleVersion.View
             const string newLine = "\n";
             const string bigSpace = "  ";
             const string tab = "\t";
-
+            
             var stringBuilder = new StringBuilder();
             MenuOption menu = default;
 
@@ -52,15 +52,6 @@ namespace ConsoleVersion.View
             return stringBuilder.ToString();
         }
 
-        private void DisplayGraph()
-        {
-            Console.Clear();
-
-            Console.WriteLine(mainModel.GraphParametres);
-            GraphShower.ShowGraph(mainModel.Graph as ConsoleGraph);
-            Console.WriteLine(mainModel?.Statistics);
-        }
-
         private MenuOption GetOption()
         {
             Console.WriteLine(menu);
@@ -69,12 +60,12 @@ namespace ConsoleVersion.View
 
         public void Start()
         {
-            DisplayGraph();
+            GraphShower.DisplayGraph(mainModel);
             var option = GetOption();
             while (option != MenuOption.Quit)
             {
                 menuActions[option]();
-                DisplayGraph();
+                GraphShower.DisplayGraph(mainModel);
                 option = GetOption();
             }
         }
