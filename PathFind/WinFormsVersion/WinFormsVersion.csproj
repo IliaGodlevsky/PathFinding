@@ -45,6 +45,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Extensions\ConstrolCollectionExtension.cs" />
+    <Compile Include="Extensions\ControlExtension.cs" />
     <Compile Include="Model\GraphFactory\WinFormsGraphInitializer.cs" />
     <Compile Include="Model\GraphFactory\RandomValuedWinFormsGraphFactory.cs" />
     <Compile Include="ViewModel\CreateGraphViewModel.cs" />
