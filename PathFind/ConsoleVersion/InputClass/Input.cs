@@ -23,8 +23,8 @@ namespace ConsoleVersion.InputClass
 
         public static MenuOption InputOption()
         {
-            var options = Enum.GetValues(typeof(MenuOption));
-            return (MenuOption)InputNumber(Res.OptionMsg, options.Cast<int>().Last());
+            return (MenuOption)InputNumber(Res.OptionMsg, 
+                Enum.GetValues(typeof(MenuOption)).Cast<int>().Last());
         }
 
         public static Point InputPoint(int width, int height) => 
