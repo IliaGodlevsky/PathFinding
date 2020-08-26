@@ -1,10 +1,8 @@
 ﻿using ConsoleVersion.Enums;
 using ConsoleVersion.Forms;
 using ConsoleVersion.Graph;
-using ConsoleVersion.GraphFactory;
 using ConsoleVersion.InputClass;
 using ConsoleVersion.ViewModel;
-using GraphLibrary;
 using GraphLibrary.Extensions;
 using System.Collections.Generic;
 using System.Text;
@@ -33,12 +31,6 @@ namespace ConsoleVersion.View
             };
 
             menu = GetMenu();
-
-            var factory = new RandomValuedConsoleGraphFactory(
-                percentOfObstacles: 25, width: 25, height: 25);
-            mainModel.Graph = factory.GetGraph();
-            mainModel.GraphParametres = GraphDataFormatter.
-                GetFormattedData(mainModel.Graph, mainModel.Format);
         }
 
         private string GetMenu()
