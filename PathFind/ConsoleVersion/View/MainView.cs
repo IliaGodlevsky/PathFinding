@@ -11,10 +11,15 @@ namespace ConsoleVersion.View
 {
     public class MainView : IView
     {
+        private const string newLine = "\n";
+        private string largeSpace = "   ";
+        private string tab = "\t";
+
         private delegate void MenuAction();
         private readonly Dictionary<MenuOption, MenuAction> menuActions;
         private readonly MainViewModel mainModel;
         private readonly string menu;
+
         public MainView()
         {
             mainModel = new MainViewModel();
@@ -33,17 +38,14 @@ namespace ConsoleVersion.View
         }
 
         private string GetMenu()
-        {
-            const string newLine = "\n";
-            const string largeSpace = "   ";
-            const string tab = "\t";
-            
+        {           
             var stringBuilder = new StringBuilder();
             MenuOption menu = default;
+            var descriptions = menu.GetDescriptions<MenuOption>();
 
-            foreach (var item in menu.GetDescriptions<MenuOption>())
+            foreach (var item in descriptions)
             {               
-                int numberOf = menu.GetDescriptions<MenuOption>().IndexOf(item);
+                int numberOf = descriptions.IndexOf(item);
                 stringBuilder.Append(numberOf.IsEven() ? newLine : largeSpace + tab);
                 stringBuilder.Append(string.Format(Res.ShowFormat, numberOf, item));
             }
