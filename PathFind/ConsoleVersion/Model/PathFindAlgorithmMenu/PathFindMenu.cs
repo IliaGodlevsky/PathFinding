@@ -4,7 +4,6 @@ using ConsoleVersion.Graph;
 using ConsoleVersion.RoleChanger;
 using System;
 using System.Drawing;
-using System.Linq;
 using GraphLibrary.Extensions;
 using System.Text;
 
@@ -14,11 +13,13 @@ namespace ConsoleVersion.PathFindAlgorithmMenu
     {
         private readonly ConsoleGraph graph;
         private readonly ConsoleVertexRoleChanger changer;
+        private readonly string algorithmList;
 
         public PathFindMenu(ConsoleGraph graph)
         {
             this.graph = graph;
             changer = new ConsoleVertexRoleChanger(this.graph);
+            algorithmList = GetShowAlgorithms();
         }
 
         public void ChooseStart()
@@ -46,7 +47,7 @@ namespace ConsoleVersion.PathFindAlgorithmMenu
             return point;
         }
 
-        private string ShowAlgorithms()
+        private string GetShowAlgorithms()
         {
             var stringBuilder = new StringBuilder("\n");
             var descriptions = ((Algorithms)default).GetDescriptions<Algorithms>();
@@ -62,7 +63,7 @@ namespace ConsoleVersion.PathFindAlgorithmMenu
 
         public Algorithms GetAlgorithmEnum()
         {
-            return (Algorithms)Input.InputNumber(ShowAlgorithms() + Res.ChooseAlrorithm,
+            return (Algorithms)Input.InputNumber(algorithmList + Res.ChooseAlrorithm,
                 (int)Algorithms.ValueGreedyAlgorithm, (int)Algorithms.WidePathFind);
         }
     }
