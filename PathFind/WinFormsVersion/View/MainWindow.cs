@@ -9,11 +9,6 @@ namespace WinFormsVersion.Forms
     public partial class MainWindow : Form
     {
         private readonly MainWindowViewModel mainModel;
-        public WinFormsGraphField GraphField
-        {
-            get { return winFormsGraphField; }
-            set { winFormsGraphField = value; }
-        }
 
         public MainWindow()
         {
