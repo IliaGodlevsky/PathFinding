@@ -6,9 +6,7 @@ using ConsoleVersion.InputClass;
 using ConsoleVersion.ViewModel;
 using GraphLibrary;
 using GraphLibrary.Extensions;
-using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Text;
 using Console = Colorful.Console;
 
@@ -23,6 +21,7 @@ namespace ConsoleVersion.View
         public MainView()
         {
             mainModel = new MainViewModel();
+
             menuActions = new Dictionary<MenuOption, MenuAction>
             {
                 { MenuOption.PathFind, mainModel.PathFind },
@@ -32,7 +31,14 @@ namespace ConsoleVersion.View
                 { MenuOption.Refresh, mainModel.ClearGraph },
                 { MenuOption.Reverse, mainModel.Reverse }
             };
+
             menu = GetMenu();
+
+            var factory = new RandomValuedConsoleGraphFactory(
+                percentOfObstacles: 25, width: 25, height: 25);
+            mainModel.Graph = factory.GetGraph();
+            mainModel.GraphParametres = GraphDataFormatter.
+                GetFormattedData(mainModel.Graph, mainModel.Format);
         }
 
         private string GetMenu()
@@ -61,6 +67,7 @@ namespace ConsoleVersion.View
         private void DisplayGraph()
         {
             Console.Clear();
+
             Console.WriteLine(mainModel.GraphParametres);
             GraphShower.ShowGraph(mainModel.Graph as ConsoleGraph);
             Console.WriteLine(mainModel?.Statistics);
@@ -74,11 +81,6 @@ namespace ConsoleVersion.View
 
         public void Start()
         {
-            var factory = new RandomValuedConsoleGraphFactory(
-                percentOfObstacles: 25, width: 25, height: 25);
-            mainModel.Graph = factory.GetGraph();
-            mainModel.GraphParametres 
-                = GraphDataFormatter.GetFormattedData(mainModel.Graph, mainModel.Format);
             DisplayGraph();
             var option = GetOption();
             while (option != MenuOption.Quit)
