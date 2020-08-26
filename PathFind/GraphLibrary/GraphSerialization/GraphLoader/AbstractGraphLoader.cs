@@ -28,7 +28,7 @@ namespace GraphLibrary.GraphLoader
             if (info == null)
                 return;
             graph = GetInitializer(info).GetGraph();
-            var setter = new NeigbourSetter(graph.GetArray());
+            var setter = new NeigbourSetter(graph);
             setter.SetNeighbours();
         }
 

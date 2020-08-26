@@ -29,7 +29,8 @@ namespace GraphLibrary.GraphFactory
             SetGraph(width, height);
             vertices.Apply(InitializeTop);
             vertices.Apply(SetLocation);
-            new NeigbourSetter(vertices).SetNeighbours();
+            var setter = new NeigbourSetter(GetGraph());
+            setter.SetNeighbours();
         }
 
         protected abstract IVertex CreateGraphTop();

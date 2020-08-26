@@ -1,4 +1,4 @@
-﻿using GraphLibrary.Enums.AlgorithmEnum;
+﻿using GraphLibrary.AlgorithmEnum;
 using GraphLibrary.Model;
 using System;
 using System.Linq;
