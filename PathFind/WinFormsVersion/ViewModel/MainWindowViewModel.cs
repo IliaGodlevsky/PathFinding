@@ -48,10 +48,10 @@ namespace WinFormsVersion.ViewModel
             {
                 graphField = value;
                 int size = Const.SIZE_BETWEEN_VERTICES;
+                var field = graphField as WinFormsGraphField;
                 MainWindow.Controls.RemoveBy(ctrl => ctrl.IsGraphField());
-                (graphField as WinFormsGraphField).Size =
-                    new Size(Graph.Width * size, Graph.Height * size);
-                MainWindow.Controls.Add(graphField as WinFormsGraphField);
+                field.Size = new Size(Graph.Width * size, Graph.Height * size);
+                MainWindow.Controls.Add(field);
             }
         }
 
