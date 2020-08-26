@@ -16,7 +16,7 @@ namespace ConsoleVersion.Forms
         {
             Console.Write(largeSpace);
             for (int i = 0; i < width; i++)            
-                Console.Write(i.ToString() + (i < 10 ? bigSpace : space));           
+                Console.Write(i + (i < 10 ? bigSpace : space));           
             Console.WriteLine();
             Console.Write(largeSpace);
         }
