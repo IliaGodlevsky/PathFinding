@@ -85,7 +85,7 @@ namespace ConsoleVersion.View
             var option = GetOption();
             while (option != MenuOption.Quit)
             {
-                menuActions[option].Invoke();
+                menuActions[option]();
                 DisplayGraph();
                 option = GetOption();
             }
