@@ -23,10 +23,10 @@ namespace ConsoleVersion.View
             menuActions = new Dictionary<MenuOption, MenuAction>
             {
                 { MenuOption.PathFind, mainModel.PathFind },
-                { MenuOption.Save, mainModel.SaveGraph },
-                { MenuOption.Load, mainModel.LoadGraph },
-                { MenuOption.Create, mainModel.CreateNewGraph },
-                { MenuOption.Refresh, mainModel.ClearGraph },
+                { MenuOption.SaveGraph, mainModel.SaveGraph },
+                { MenuOption.LoadGraph, mainModel.LoadGraph },
+                { MenuOption.CreateGraph, mainModel.CreateNewGraph },
+                { MenuOption.RefreshGraph, mainModel.ClearGraph },
                 { MenuOption.Reverse, mainModel.Reverse }
             };
 
@@ -36,7 +36,7 @@ namespace ConsoleVersion.View
         private string GetMenu()
         {
             const string newLine = "\n";
-            const string bigSpace = "  ";
+            const string largeSpace = "   ";
             const string tab = "\t";
             
             var stringBuilder = new StringBuilder();
@@ -45,7 +45,7 @@ namespace ConsoleVersion.View
             foreach (var item in menu.GetDescriptions<MenuOption>())
             {               
                 int numberOf = menu.GetDescriptions<MenuOption>().IndexOf(item);
-                stringBuilder.Append(numberOf.IsEven() ? newLine : bigSpace + tab);
+                stringBuilder.Append(numberOf.IsEven() ? newLine : largeSpace + tab);
                 stringBuilder.Append(string.Format(Res.ShowFormat, numberOf, item));
             }
 
