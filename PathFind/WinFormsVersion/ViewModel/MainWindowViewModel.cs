@@ -102,8 +102,6 @@ namespace WinFormsVersion.ViewModel
         public void LoadGraph(object sender, EventArgs e)
         {
             base.LoadGraph();
-            OnPropertyChanged(nameof(Graph));
-            OnPropertyChanged(nameof(GraphParametres));
             if (Graph == null)
                 return;          
             Window?.Close();
