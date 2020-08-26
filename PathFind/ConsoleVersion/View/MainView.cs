@@ -19,6 +19,7 @@ namespace ConsoleVersion.View
         private delegate void MenuAction();
         private readonly Dictionary<MenuOption, MenuAction> menuActions;
         private readonly MainViewModel mainModel;
+        private readonly string menu;
         public MainView()
         {
             mainModel = new MainViewModel();
@@ -31,9 +32,10 @@ namespace ConsoleVersion.View
                 { MenuOption.Refresh, mainModel.ClearGraph },
                 { MenuOption.Reverse, mainModel.Reverse }
             };
+            menu = GetMenu();
         }
 
-        private void ShowMenu()
+        private string GetMenu()
         {
             const string newLine = "\n";
             const string bigSpace = "  ";
@@ -53,16 +55,20 @@ namespace ConsoleVersion.View
                 stringBuilder.Append(string.Format(Res.ShowFormat, numberOf, item));
             }
 
-            Console.WriteLine(stringBuilder.ToString());
+            return stringBuilder.ToString();
         }
 
-        private MenuOption GetOption()
+        private void DisplayGraph()
         {
             Console.Clear();
             Console.WriteLine(mainModel.GraphParametres);
             GraphShower.ShowGraph(mainModel.Graph as ConsoleGraph);
             Console.WriteLine(mainModel?.Statistics);
-            ShowMenu();
+        }
+
+        private MenuOption GetOption()
+        {
+            Console.WriteLine(menu);
             return Input.InputOption();
         }
 
@@ -73,10 +79,12 @@ namespace ConsoleVersion.View
             mainModel.Graph = factory.GetGraph();
             mainModel.GraphParametres 
                 = GraphDataFormatter.GetFormattedData(mainModel.Graph, mainModel.Format);
+            DisplayGraph();
             var option = GetOption();
-            while (option != Enum.GetValues(typeof(MenuOption)).Cast<MenuOption>().First())
+            while (option != MenuOption.Quit)
             {
                 menuActions[option].Invoke();
+                DisplayGraph();
                 option = GetOption();
             }
         }
