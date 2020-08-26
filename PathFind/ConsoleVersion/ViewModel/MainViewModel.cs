@@ -1,9 +1,11 @@
-﻿using ConsoleVersion.GraphLoader;
+﻿using ConsoleVersion.GraphFactory;
+using ConsoleVersion.GraphLoader;
 using ConsoleVersion.GraphSaver;
 using ConsoleVersion.InputClass;
 using ConsoleVersion.Model;
 using ConsoleVersion.RoleChanger;
 using ConsoleVersion.View;
+using GraphLibrary;
 using GraphLibrary.Model;
 using GraphLibrary.RoleChanger;
 using System;
@@ -20,6 +22,11 @@ namespace ConsoleVersion.ViewModel
             saver = new ConsoleGraphSaver();
             loader = new ConsoleGraphLoader();
             filler = new ConsoleGraphFiller();
+
+            var factory = new RandomValuedConsoleGraphFactory(
+                percentOfObstacles: 25, width: 25, height: 25);
+            Graph = factory.GetGraph();
+            GraphParametres = GraphDataFormatter.GetFormattedData(Graph, Format);
         }
 
         public override void CreateNewGraph()
