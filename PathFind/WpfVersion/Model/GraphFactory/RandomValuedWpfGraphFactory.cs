@@ -4,6 +4,7 @@ using GraphLibrary.Graph;
 using GraphLibrary.GraphFactory;
 using GraphLibrary.Vertex;
 using WpfVersion.Model.Graph;
+using WpfVersion.Model.StatusSetter;
 using WpfVersion.Model.Vertex;
 
 namespace WpfVersion.Model.GraphFactory
