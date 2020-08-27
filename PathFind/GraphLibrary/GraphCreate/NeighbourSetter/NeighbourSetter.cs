@@ -1,6 +1,5 @@
 ﻿using GraphLibrary.Graph;
 using GraphLibrary.Vertex;
-using System.Linq;
 
 namespace GraphLibrary
 {
@@ -13,31 +12,32 @@ namespace GraphLibrary
             this.graph = graph;
         }
 
-        public void SetNeighbours(IVertex vertex)
+        private bool IsInBounds(int width, int height)
         {
-            var coordinates = graph.GetIndices(vertex);
-            if (graph[coordinates.X, coordinates.Y].IsObstacle)
+            return width >= 0 && width < graph.Width 
+                && height >= 0 && height < graph.Height;
+        }
+
+        private bool CanBeNeighbour(IVertex vertex, IVertex neighbour)
+        {
+            return !neighbour.IsObstacle && vertex != neighbour;
+        }
+
+        public void SetNeighbours(IVertex vertex)
+        {            
+            if (vertex.IsObstacle)
                 return;
-            for (int i = coordinates.X - 1; i <= coordinates.X + 1; i++)
-            {
-                for (int j = coordinates.Y - 1; j <= coordinates.Y + 1; j++)
-                {
-                    if (i >= 0 && i < graph.Width && j >= 0 && j < graph.Height) 
-                    {
-                        if (!graph[i, j].IsObstacle)
-                            graph[coordinates.X, coordinates.Y].Neighbours.Add(graph[i, j]);
-                    }
-                }
-            }
-            graph[coordinates.X, coordinates.Y].Neighbours.
-                Remove(graph[coordinates.X, coordinates.Y]);
+            var vertexCoordinates = graph.GetIndices(vertex);
+            for (int i = vertexCoordinates.X - 1; i <= vertexCoordinates.X + 1; i++)
+                for (int j = vertexCoordinates.Y - 1; j <= vertexCoordinates.Y + 1; j++)
+                    if (IsInBounds(i, j) && CanBeNeighbour(vertex, graph[i, j]))
+                        vertex.Neighbours.Add(graph[i, j]);
         }
 
         public void SetNeighbours()
         {
-            graph.GetArray().
-                Cast<IVertex>().ToList().
-                ForEach(vertex => SetNeighbours(vertex));
+            foreach (IVertex vertex in graph)
+                SetNeighbours(vertex);
         }
     }
 }
