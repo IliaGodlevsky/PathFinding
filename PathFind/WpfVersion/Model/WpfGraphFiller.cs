@@ -19,8 +19,10 @@ namespace WpfVersion.Model
         protected override void ChargeVertex(IVertex vertex, IVertexStatusSetter changer)
         {
             if (!vertex.IsObstacle)
-                (vertex as WpfVertex).MouseLeftButtonDown += changer.SetStartVertex;
+                (vertex as WpfVertex).MouseLeftButtonDown += changer.SetStartVertex;            
             (vertex as WpfVertex).MouseRightButtonDown += changer.ReversePolarity;
+            (vertex as WpfVertex).MouseWheel += changer.ChangeVertexValue;
+            
         }
 
         protected override IGraphField GetField()
