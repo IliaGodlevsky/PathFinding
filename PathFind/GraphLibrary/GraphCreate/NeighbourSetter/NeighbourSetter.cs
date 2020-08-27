@@ -24,7 +24,7 @@ namespace GraphLibrary
         }
 
         public void SetNeighbours(IVertex vertex)
-        {            
+        {
             if (vertex.IsObstacle)
                 return;
             var vertexCoordinates = graph.GetIndices(vertex);
