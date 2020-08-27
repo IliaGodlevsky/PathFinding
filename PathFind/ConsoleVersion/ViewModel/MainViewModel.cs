@@ -15,7 +15,7 @@ namespace ConsoleVersion.ViewModel
 {
     public class MainViewModel : AbstractMainModel
     {
-        private IVertexStatusSetter changer;
+        private readonly IVertexStatusSetter changer;
 
         public MainViewModel()
         {            
