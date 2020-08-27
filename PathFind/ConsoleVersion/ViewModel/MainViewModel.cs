@@ -28,6 +28,7 @@ namespace ConsoleVersion.ViewModel
                 percentOfObstacles: 25, width: 25, height: 25);
             Graph = factory.GetGraph();
             GraphParametres = GraphDataFormatter.GetFormattedData(Graph, Format);
+            changer = new ConsoleVertexStatusSetter(Graph);
         }
 
         public override void CreateNewGraph()
@@ -44,14 +45,16 @@ namespace ConsoleVersion.ViewModel
             view.Start();
         }
 
-        public void Reverse()
-        {            
+        private void VertexChange(EventHandler method)
+        {
             if (Graph == null)
                 return;
-            changer = new ConsoleVertexStatusSetter(Graph);
-            Console.WriteLine(Res.ReverseMsg);
             Point point = Input.InputPoint(Graph.Width, Graph.Height);
-            changer.ReversePolarity(Graph[point.X, point.Y], new EventArgs());
+            method(Graph[point.X, point.Y], new EventArgs());
         }
+
+        public void Reverse() => VertexChange(changer.ReversePolarity);
+
+        public void ChangeVertexValue() => VertexChange(changer.ChangeVertexValue);
     }
 }
