@@ -76,7 +76,7 @@
     <Compile Include="Model\GraphLoader\WinFormsGraphLoader.cs" />
     <Compile Include="Model\GraphSaver\WinFormsGraphSaver.cs" />
     <Compile Include="Model\Graph\WinFormsGraph.cs" />
-    <Compile Include="Model\RoleChanger\WinFormsVertexRoleChanger.cs" />
+    <Compile Include="Model\StatusSetter\WinFormsVertexStatusSetter.cs" />
     <Compile Include="Model\Vertex\WinFormsVertex.cs">
       <SubType>Component</SubType>
     </Compile>

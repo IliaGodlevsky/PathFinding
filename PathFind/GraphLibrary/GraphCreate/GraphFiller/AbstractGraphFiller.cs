@@ -1,15 +1,15 @@
 ﻿using GraphLibrary.Graph;
-using GraphLibrary.RoleChanger;
+using GraphLibrary.StatusSetter;
 using GraphLibrary.Vertex;
 
 namespace GraphLibrary.Model
 {
     public abstract class AbstractGraphFiller
     {
-        protected abstract IVertexRoleChanger GetRoleChanger(AbstractGraph graph);
+        protected abstract IVertexStatusSetter GetRoleChanger(AbstractGraph graph);
         protected abstract IGraphField GetField();
-        protected abstract void ChargeVertex(IVertex vertex, IVertexRoleChanger changer);
-        protected abstract void ChargeGraph(AbstractGraph graph, IVertexRoleChanger changer);
+        protected abstract void ChargeVertex(IVertex vertex, IVertexStatusSetter changer);
+        protected abstract void ChargeGraph(AbstractGraph graph, IVertexStatusSetter changer);
 
         public IGraphField FillGraphField(AbstractGraph graph)
         {

@@ -1,6 +1,6 @@
 ﻿using ConsoleVersion.Forms;
 using ConsoleVersion.InputClass;
-using ConsoleVersion.RoleChanger;
+using ConsoleVersion.StatusSetter;
 using GraphLibrary.AlgorithmEnum;
 using GraphLibrary.Extensions;
 using GraphLibrary.Model;
@@ -11,12 +11,12 @@ namespace ConsoleVersion.ViewModel
 {
     public class PathFindViewModel : AbstractPathFindModel
     {
-        private readonly ConsoleVertexRoleChanger changer;
+        private readonly ConsoleVertexStatusSetter changer;
         public string AlgoList { get; set; }
 
         public PathFindViewModel(IMainModel model) : base(model)
         {
-            changer = new ConsoleVertexRoleChanger(model.Graph);
+            changer = new ConsoleVertexStatusSetter(model.Graph);
             badResultMessage = Res.BadResultMsg;
         }
 
@@ -51,12 +51,12 @@ namespace ConsoleVersion.ViewModel
 
         private void ChooseStart()
         {
-            ChooseRange("\n" + Res.StartPoint, changer.SetStartPoint);
+            ChooseRange("\n" + Res.StartPoint, changer.SetStartVertex);
         }
 
         private void ChooseEnd()
         {
-            ChooseRange(Res.DestinationPoint, changer.SetDestinationPoint);
+            ChooseRange(Res.DestinationPoint, changer.SetDestinationVertex);
         }
 
         private void ChooseRange(string message, EventHandler method)

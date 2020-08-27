@@ -74,7 +74,7 @@
     <Compile Include="ViewModel\Interface\IModel.cs" />
     <Compile Include="Model\PathFindAlgorithmSelector\AlgorithmSelector.cs" />
     <Compile Include="Algorithms\PathFindAlgorithm\DeepPathFindAlgorithm.cs" />
-    <Compile Include="Model\RoleChanger\AbstractVertexRoleChanger.cs" />
+    <Compile Include="Model\StatusSetter\AbstractVertexStatusSetter.cs" />
     <Compile Include="Algorithms\Statistics\Statistics.cs" />
     <Compile Include="Algorithms\Statistics\StatisticsCollector.cs" />
     <Compile Include="Algorithms\Statistics\IStatisticsCollector.cs" />
@@ -87,7 +87,7 @@
     <Compile Include="Algorithms\PathFindAlgorithm\WidePathFindAlgorithm.cs" />
     <Compile Include="Algorithms\PauseMaker\Pauser.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Model\RoleChanger\IVertexRoleChanger.cs" />
+    <Compile Include="Model\StatusSetter\IVertexRoleChanger.cs" />
     <Compile Include="GraphCreate\BoundSetter\BoundSetter.cs" />
     <Compile Include="Model\Vertex\IVertex.cs" />
     <Compile Include="GraphCreate\NeighbourSetter\NeighbourSetter.cs" />

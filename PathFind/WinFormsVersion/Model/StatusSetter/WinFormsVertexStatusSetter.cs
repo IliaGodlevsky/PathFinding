@@ -1,23 +1,22 @@
 ﻿using System;
-using System.Linq;
 using System.Windows.Forms;
 using GraphLibrary.Constants;
 using GraphLibrary.Extensions;
 using GraphLibrary.Graph;
-using GraphLibrary.RoleChanger;
+using GraphLibrary.StatusSetter;
 using GraphLibrary.Vertex;
 using WinFormsVersion.Vertex;
 
-namespace WinFormsVersion.RoleChanger
+namespace WinFormsVersion.StatusSetter
 {
-    public class WinFormsVertexRoleChanger : AbstractVertexRoleChanger
+    public class WinFormsVertexStatusSetter : AbstractVertexStatusSetter
     {
-        public WinFormsVertexRoleChanger(AbstractGraph graph) : base(graph)
+        public WinFormsVertexStatusSetter(AbstractGraph graph) : base(graph)
         {
 
         }
 
-        public override void ChangeTopText(object sender, EventArgs e)
+        public override void ChangeVertexValue(object sender, EventArgs e)
         {
             if ((e as MouseEventArgs).Button == MouseButtons.Middle)
             {
@@ -31,30 +30,30 @@ namespace WinFormsVersion.RoleChanger
             }
         }
 
-        public override void SetStartPoint(object sender, EventArgs e)
+        public override void SetStartVertex(object sender, EventArgs e)
         {
             if ((e as MouseEventArgs).Button == MouseButtons.Left)
             {
-                base.SetStartPoint(sender, e);
+                base.SetStartVertex(sender, e);
                 if ((sender as IVertex).IsIsolated())
                     return;
                 foreach (var butt in graph)
                 {
-                    (butt as WinFormsVertex).MouseClick -= SetStartPoint;
-                    (butt as WinFormsVertex).MouseClick += SetDestinationPoint;
+                    (butt as WinFormsVertex).MouseClick -= SetStartVertex;
+                    (butt as WinFormsVertex).MouseClick += SetDestinationVertex;
                 }
             }
         }
 
-        public override void SetDestinationPoint(object sender, EventArgs e)
+        public override void SetDestinationVertex(object sender, EventArgs e)
         {
             if ((e as MouseEventArgs).Button == MouseButtons.Left)
             {
-                base.SetDestinationPoint(sender, e);
+                base.SetDestinationVertex(sender, e);
                 if ((sender as IVertex).IsIsolated())
                     return;
                 foreach (var butt in graph) 
-                    (butt as WinFormsVertex).MouseClick -= SetDestinationPoint;
+                    (butt as WinFormsVertex).MouseClick -= SetDestinationVertex;
 
             }
         }

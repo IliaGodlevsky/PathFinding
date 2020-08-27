@@ -1,19 +1,19 @@
-﻿using ConsoleVersion.RoleChanger;
+﻿using ConsoleVersion.StatusSetter;
 using GraphLibrary.Graph;
 using GraphLibrary.Model;
-using GraphLibrary.RoleChanger;
+using GraphLibrary.StatusSetter;
 using GraphLibrary.Vertex;
 
 namespace ConsoleVersion.Model
 {
     public class ConsoleGraphFiller : AbstractGraphFiller
     {
-        protected override void ChargeGraph(AbstractGraph graph, IVertexRoleChanger changer)
+        protected override void ChargeGraph(AbstractGraph graph, IVertexStatusSetter changer)
         {
             
         }
 
-        protected override void ChargeVertex(IVertex vertex, IVertexRoleChanger changer)
+        protected override void ChargeVertex(IVertex vertex, IVertexStatusSetter changer)
         {
             
         }
@@ -23,9 +23,9 @@ namespace ConsoleVersion.Model
             return null;
         }
 
-        protected override IVertexRoleChanger GetRoleChanger(AbstractGraph graph)
+        protected override IVertexStatusSetter GetRoleChanger(AbstractGraph graph)
         {
-            return new ConsoleVertexRoleChanger(graph);
+            return new ConsoleVertexStatusSetter(graph);
         }
     }
 }

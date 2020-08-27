@@ -1,26 +1,26 @@
 ﻿using GraphLibrary.Graph;
 using GraphLibrary.Model;
-using GraphLibrary.RoleChanger;
+using GraphLibrary.StatusSetter;
 using GraphLibrary.Vertex;
 using System.Drawing;
 using WinFormsVersion.Graph;
-using WinFormsVersion.RoleChanger;
+using WinFormsVersion.StatusSetter;
 using WinFormsVersion.Vertex;
 
 namespace WinFormsVersion.Model
 {
     public class WinFormsGraphFiller : AbstractGraphFiller
     {
-        protected override void ChargeGraph(AbstractGraph graph, IVertexRoleChanger changer)
+        protected override void ChargeGraph(AbstractGraph graph, IVertexStatusSetter changer)
         {
-            (graph as WinFormsGraph).SetStart += changer.SetStartPoint;
-            (graph as WinFormsGraph).SetEnd += changer.SetDestinationPoint;
+            (graph as WinFormsGraph).SetStart += changer.SetStartVertex;
+            (graph as WinFormsGraph).SetEnd += changer.SetDestinationVertex;
         }
 
-        protected override void ChargeVertex(IVertex vertex, IVertexRoleChanger changer)
+        protected override void ChargeVertex(IVertex vertex, IVertexStatusSetter changer)
         {
             if (!vertex.IsObstacle)
-                (vertex as WinFormsVertex).MouseClick += changer.SetStartPoint;
+                (vertex as WinFormsVertex).MouseClick += changer.SetStartVertex;
             (vertex as WinFormsVertex).MouseClick += changer.ReversePolarity;
         }
 
@@ -29,9 +29,9 @@ namespace WinFormsVersion.Model
             return new WinFormsGraphField() { Location = new Point(4, 90) };
         }
 
-        protected override IVertexRoleChanger GetRoleChanger(AbstractGraph graph)
+        protected override IVertexStatusSetter GetRoleChanger(AbstractGraph graph)
         {
-            return new WinFormsVertexRoleChanger(graph);
+            return new WinFormsVertexStatusSetter(graph);
         }
     }
 }

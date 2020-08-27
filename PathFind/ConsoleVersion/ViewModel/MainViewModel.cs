@@ -3,11 +3,11 @@ using ConsoleVersion.GraphLoader;
 using ConsoleVersion.GraphSaver;
 using ConsoleVersion.InputClass;
 using ConsoleVersion.Model;
-using ConsoleVersion.RoleChanger;
+using ConsoleVersion.StatusSetter;
 using ConsoleVersion.View;
 using GraphLibrary;
 using GraphLibrary.Model;
-using GraphLibrary.RoleChanger;
+using GraphLibrary.StatusSetter;
 using System;
 using System.Drawing;
 
@@ -15,7 +15,7 @@ namespace ConsoleVersion.ViewModel
 {
     public class MainViewModel : AbstractMainModel
     {
-        private IVertexRoleChanger changer;
+        private IVertexStatusSetter changer;
 
         public MainViewModel()
         {            
@@ -48,7 +48,7 @@ namespace ConsoleVersion.ViewModel
         {            
             if (Graph == null)
                 return;
-            changer = new ConsoleVertexRoleChanger(Graph);
+            changer = new ConsoleVertexStatusSetter(Graph);
             Console.WriteLine(Res.ReverseMsg);
             Point point = Input.InputPoint(Graph.Width, Graph.Height);
             changer.ReversePolarity(Graph[point.X, point.Y], new EventArgs());

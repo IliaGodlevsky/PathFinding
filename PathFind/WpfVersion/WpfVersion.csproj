@@ -64,7 +64,7 @@
     <Compile Include="Model\GraphLoader\WpfGraphLoader.cs" />
     <Compile Include="Model\GraphSaver\WpfGraphSaver.cs" />
     <Compile Include="Model\Graph\WpfGraph.cs" />
-    <Compile Include="Model\RoleChanger\WpfRoleChanger.cs" />
+    <Compile Include="Model\StatusSetter\WpfVertexStatusSetter.cs" />
     <Compile Include="Model\Vertex\WpfVertex.cs" />
     <Compile Include="Model\WindowAdjust.cs" />
     <Compile Include="Model\WpfGraphField.cs" />

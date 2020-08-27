@@ -1,21 +1,21 @@
 ﻿using ConsoleVersion.InputClass;
-using GraphLibrary.RoleChanger;
+using GraphLibrary.StatusSetter;
 using ConsoleVersion.Vertex;
 using System;
 using GraphLibrary.Graph;
 using GraphLibrary.Constants;
 
-namespace ConsoleVersion.RoleChanger
+namespace ConsoleVersion.StatusSetter
 {
-    public class ConsoleVertexRoleChanger : AbstractVertexRoleChanger
+    public class ConsoleVertexStatusSetter : AbstractVertexStatusSetter
     {
 
-        public ConsoleVertexRoleChanger(AbstractGraph graph) : base(graph)
+        public ConsoleVertexStatusSetter(AbstractGraph graph) : base(graph)
         {
 
         }
 
-        public override void ChangeTopText(object sender, EventArgs e) => (sender as ConsoleVertex).Text =
+        public override void ChangeVertexValue(object sender, EventArgs e) => (sender as ConsoleVertex).Text =
                 Input.InputNumber(Res.NewTopValueMsg, 
                                   Const.MAX_VERTEX_VALUE, 
                                   Const.MIN_VERTEX_VALUE).ToString();
