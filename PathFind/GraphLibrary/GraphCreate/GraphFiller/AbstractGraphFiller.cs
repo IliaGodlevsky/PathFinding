@@ -6,14 +6,14 @@ namespace GraphLibrary.Model
 {
     public abstract class AbstractGraphFiller
     {
-        protected abstract IVertexStatusSetter GetRoleChanger(AbstractGraph graph);
+        protected abstract IVertexStatusSetter GetStatusSetter(AbstractGraph graph);
         protected abstract IGraphField GetField();
         protected abstract void ChargeVertex(IVertex vertex, IVertexStatusSetter changer);
         protected abstract void ChargeGraph(AbstractGraph graph, IVertexStatusSetter changer);
 
         public IGraphField FillGraphField(AbstractGraph graph)
         {
-            var changer = GetRoleChanger(graph);
+            var changer = GetStatusSetter(graph);
             var graphField = GetField();
 
             for (int i = 0; i < graph.Width; i++)

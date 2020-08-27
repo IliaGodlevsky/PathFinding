@@ -30,7 +30,7 @@ namespace WpfVersion.Model
             return new WpfGraphField();
         }
 
-        protected override IVertexStatusSetter GetRoleChanger(AbstractGraph graph)
+        protected override IVertexStatusSetter GetStatusSetter(AbstractGraph graph)
         {
             return new WpfVertexStatusSetter(graph);
         }

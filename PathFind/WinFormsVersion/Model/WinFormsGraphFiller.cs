@@ -30,7 +30,7 @@ namespace WinFormsVersion.Model
             return new WinFormsGraphField() { Location = new Point(4, 90) };
         }
 
-        protected override IVertexStatusSetter GetRoleChanger(AbstractGraph graph)
+        protected override IVertexStatusSetter GetStatusSetter(AbstractGraph graph)
         {
             return new WinFormsVertexStatusSetter(graph);
         }

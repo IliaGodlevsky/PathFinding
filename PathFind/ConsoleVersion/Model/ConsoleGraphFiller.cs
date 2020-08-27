@@ -23,7 +23,7 @@ namespace ConsoleVersion.Model
             return null;
         }
 
-        protected override IVertexStatusSetter GetRoleChanger(AbstractGraph graph)
+        protected override IVertexStatusSetter GetStatusSetter(AbstractGraph graph)
         {
             return new ConsoleVertexStatusSetter(graph);
         }
