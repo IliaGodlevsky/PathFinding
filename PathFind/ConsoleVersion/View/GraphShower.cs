@@ -12,19 +12,19 @@ namespace ConsoleVersion.Forms
         private const string horizontalFrame = "---";
         private const string verticalFrame = "|";
 
-        private static void WriteYCoordinate(int width)
+        private static void WriteXCoordinate(int width)
         {
             Console.Write(largeSpace);
             for (int i = 0; i < width; i++)            
-                Console.Write(i + (i < 10 ? bigSpace : space));           
-            Console.WriteLine();
-            Console.Write(largeSpace);
+                Console.Write(i + (i < 10 ? bigSpace : space));
+            Console.Write("\n" + largeSpace);
         }
 
         private static void WriteHorizontalFrame(int width)
         {
             for (int i = 0; i < width; i++)
                 Console.Write(horizontalFrame);
+            Console.WriteLine();
         }
 
         private static bool IsNewLine(int width, IMainModel model)
@@ -63,15 +63,12 @@ namespace ConsoleVersion.Forms
         {
             if (model.Graph == null)
                 return;
-            Console.WriteLine();
-            WriteYCoordinate(model.Graph.Width);
+            WriteXCoordinate(model.Graph.Width);
             WriteHorizontalFrame(model.Graph.Width);
-            Console.WriteLine();
             ShowGraph(model);
             Console.Write(largeSpace);
             WriteHorizontalFrame(model.Graph.Width);
-            Console.WriteLine();
-            WriteYCoordinate(model.Graph.Width);
+            WriteXCoordinate(model.Graph.Width);
         }
 
         public static void DisplayGraph(IMainModel model)
