@@ -12,8 +12,8 @@ namespace ConsoleVersion.View
     public class MainView : IView
     {
         private const string newLine = "\n";
-        private string largeSpace = "   ";
-        private string tab = "\t";
+        private const string largeSpace = "   ";
+        private const string tab = "\t";
 
         private delegate void MenuAction();
         private readonly Dictionary<MenuOption, MenuAction> menuActions;
@@ -31,7 +31,8 @@ namespace ConsoleVersion.View
                 { MenuOption.LoadGraph, mainModel.LoadGraph },
                 { MenuOption.CreateGraph, mainModel.CreateNewGraph },
                 { MenuOption.RefreshGraph, mainModel.ClearGraph },
-                { MenuOption.Reverse, mainModel.Reverse }
+                { MenuOption.Reverse, mainModel.Reverse },
+                { MenuOption.ChangeValue, mainModel.ChangeVertexValue }
             };
 
             menu = GetMenu();
