@@ -29,10 +29,10 @@ namespace GraphLibrary.StatusSetter
         }
 
         private void MakeVertex(ref IVertex vertex)
-        {
-            var rand = new Random();
+        {           
             vertex.IsObstacle = false;
             vertex.MarkAsSimpleVertex();
+            var rand = new Random();
             vertex.Text = rand.GetRandomVertexValue();
             var setter = new NeigbourSetter(graph);
             setter.SetNeighbours(vertex);
