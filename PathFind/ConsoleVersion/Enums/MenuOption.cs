@@ -18,6 +18,8 @@ namespace ConsoleVersion.Enums
         [Description("Refresh graph")]
         RefreshGraph,
         [Description("Reverse vertex")]
-        Reverse
+        Reverse,
+        [Description("Change vertex value")]
+        ChangeValue
     };
 }
