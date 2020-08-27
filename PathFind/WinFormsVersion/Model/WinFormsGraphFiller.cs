@@ -22,6 +22,7 @@ namespace WinFormsVersion.Model
             if (!vertex.IsObstacle)
                 (vertex as WinFormsVertex).MouseClick += changer.SetStartVertex;
             (vertex as WinFormsVertex).MouseClick += changer.ReversePolarity;
+            (vertex as WinFormsVertex).MouseWheel += changer.ChangeVertexValue;
         }
 
         protected override IGraphField GetField()
