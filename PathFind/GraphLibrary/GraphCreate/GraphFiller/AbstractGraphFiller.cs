@@ -20,8 +20,7 @@ namespace GraphLibrary.Model
             {
                 for (int j = 0; j < graph.Height; j++)
                 {
-                    if (graphField != null)
-                        graphField.Add(graph[i, j], i, j);
+                    graphField?.Add(graph[i, j], i, j);
                     ChargeVertex(graph[i, j], changer);
                 }
             }
