@@ -18,16 +18,14 @@ namespace WinFormsVersion.StatusSetter
 
         public override void ChangeVertexValue(object sender, EventArgs e)
         {
-            if ((e as MouseEventArgs).Button == MouseButtons.Middle)
-            {
-                if ((sender as WinFormsVertex).IsObstacle)
-                    return;
-                int current = int.Parse((sender as WinFormsVertex).Text);
-                current++;
-                if (current > Const.MAX_VERTEX_VALUE)
-                    current = Const.MIN_VERTEX_VALUE;
-                (sender as WinFormsVertex).Text = current.ToString();
-            }
+            var vertex = (sender as WinFormsVertex);
+            if (vertex.IsObstacle)
+                return;
+            int current = int.Parse(vertex.Text);
+            current++;
+            if (current > Const.MAX_VERTEX_VALUE)
+                current = Const.MIN_VERTEX_VALUE;
+            vertex.Text = current.ToString();
         }
 
         public override void SetStartVertex(object sender, EventArgs e)
