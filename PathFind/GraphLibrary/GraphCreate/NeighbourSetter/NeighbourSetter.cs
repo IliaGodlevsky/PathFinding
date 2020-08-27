@@ -13,32 +13,31 @@ namespace GraphLibrary
             this.graph = graph;
         }
 
-        public void SetNeighbours(int xCoordinate, int yCoordinate)
+        public void SetNeighbours(IVertex vertex)
         {
-            if (graph[xCoordinate, yCoordinate].IsObstacle)
+            var coordinates = graph.GetIndices(vertex);
+            if (graph[coordinates.X, coordinates.Y].IsObstacle)
                 return;
-            for (int i = xCoordinate - 1; i <= xCoordinate + 1; i++)
+            for (int i = coordinates.X - 1; i <= coordinates.X + 1; i++)
             {
-                for (int j = yCoordinate - 1; j <= yCoordinate + 1; j++)
+                for (int j = coordinates.Y - 1; j <= coordinates.Y + 1; j++)
                 {
                     if (i >= 0 && i < graph.Width && j >= 0 && j < graph.Height) 
                     {
                         if (!graph[i, j].IsObstacle)
-                            graph[xCoordinate, yCoordinate].Neighbours.Add(graph[i, j]);
+                            graph[coordinates.X, coordinates.Y].Neighbours.Add(graph[i, j]);
                     }
                 }
             }
-            graph[xCoordinate, yCoordinate].Neighbours.
-                Remove(graph[xCoordinate, yCoordinate]);
+            graph[coordinates.X, coordinates.Y].Neighbours.
+                Remove(graph[coordinates.X, coordinates.Y]);
         }
 
         public void SetNeighbours()
         {
             graph.GetArray().
                 Cast<IVertex>().ToList().
-                ForEach(vertex => SetNeighbours(
-                    graph.GetIndices(vertex).X, 
-                    graph.GetIndices(vertex).Y));
+                ForEach(vertex => SetNeighbours(vertex));
         }
     }
 }
