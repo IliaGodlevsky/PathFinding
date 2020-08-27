@@ -87,7 +87,7 @@
     <Compile Include="Algorithms\PathFindAlgorithm\WidePathFindAlgorithm.cs" />
     <Compile Include="Algorithms\PauseMaker\Pauser.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Model\StatusSetter\IVertexRoleChanger.cs" />
+    <Compile Include="Model\StatusSetter\IVertexStatusSetter.cs" />
     <Compile Include="GraphCreate\BoundSetter\BoundSetter.cs" />
     <Compile Include="Model\Vertex\IVertex.cs" />
     <Compile Include="GraphCreate\NeighbourSetter\NeighbourSetter.cs" />
