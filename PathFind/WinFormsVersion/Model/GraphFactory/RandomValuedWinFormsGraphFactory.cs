@@ -5,6 +5,7 @@ using GraphLibrary.Graph;
 using WinFormsVersion.Vertex;
 using WinFormsVersion.Graph;
 using GraphLibrary.Extensions.RandomExtension;
+using WinFormsVersion.StatusSetter;
 
 namespace WinFormsVersion.GraphFactory
 {
