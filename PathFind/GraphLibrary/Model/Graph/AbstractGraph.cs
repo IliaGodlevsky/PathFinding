@@ -37,14 +37,6 @@ namespace GraphLibrary.Graph
 
         public int Width => vertices.Width();
 
-        public void Insert(IVertex vertex)
-        {
-            var coordiantes = GetIndices(vertex);
-            vertices[coordiantes.X, coordiantes.Y] = vertex;
-            var setter = new NeigbourSetter(this);
-            setter.SetNeighbours(coordiantes.X, coordiantes.Y);
-        }
-
         public int ObstaclePercent => ObstacleNumber * 100 / Size;
 
         public int ObstacleNumber => vertices.Cast<IVertex>().Count(vertex => vertex.IsObstacle);
