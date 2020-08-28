@@ -24,7 +24,7 @@ namespace ConsoleVersion.ViewModel
             loader = new ConsoleGraphLoader();
             filler = new ConsoleGraphFiller();
 
-            var factory = new RandomValuedConsoleGraphFactory(
+            var factory = new ConsoleGraphFactory(
                 percentOfObstacles: 25, width: 25, height: 25);
             Graph = factory.GetGraph();
             GraphParametres = GraphParametresPresenter.GetFormattedData(Graph, Format);

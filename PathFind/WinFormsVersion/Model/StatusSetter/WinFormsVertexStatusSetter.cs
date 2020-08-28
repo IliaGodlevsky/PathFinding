@@ -16,7 +16,7 @@ namespace WinFormsVersion.StatusSetter
 
         }
 
-        protected override int GetMouseDelta(EventArgs e)
+        protected override int GetWheelDelta(EventArgs e)
         {
             return (e as MouseEventArgs).Delta;
         }

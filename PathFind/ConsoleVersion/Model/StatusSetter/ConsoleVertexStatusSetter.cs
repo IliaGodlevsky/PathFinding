@@ -19,7 +19,7 @@ namespace ConsoleVersion.StatusSetter
             (sender as ConsoleVertex).Text = Input.InputNumber(Res.NewTopValueMsg,
                 Const.MAX_VERTEX_VALUE, Const.MIN_VERTEX_VALUE).ToString();
 
-        protected override int GetMouseDelta(EventArgs e)
+        protected override int GetWheelDelta(EventArgs e)
         {
             return default;
         }

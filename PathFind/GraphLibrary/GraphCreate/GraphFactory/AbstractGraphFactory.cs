@@ -22,12 +22,10 @@ namespace GraphLibrary.GraphFactory
                     vertex.MarkAsObstacle();               
                 return vertex;
             }
-
             SetGraph(width, height);
             vertices.Apply(InitializeTop);
             vertices.Apply(SetLocation);
-            var setter = new VertexConnector(GetGraph());
-            setter.ConnectVertices();
+            VertexLinkManager.ConnectVertices(GetGraph());
         }
 
         protected abstract IVertex CreateGraphTop();

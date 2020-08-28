@@ -25,7 +25,7 @@ namespace ConsoleVersion.ViewModel
             int obstacles = Input.InputNumber(Res.PercentMsg, MAX_PERCENT_OF_OBSTACLES);
             int width = Input.InputNumber(Res.WidthMsg, MAX_GRAPH_WIDTH, MIN_GRAPH_WIDTH);
             int height = Input.InputNumber(Res.HeightMsg, MAX_GRAPH_HEIGHT, MIN_GRAPH_HEIGHT);
-            return new RandomValuedConsoleGraphFactory(obstacles, width, height);
+            return new ConsoleGraphFactory(obstacles, width, height);
         }
     }
 }

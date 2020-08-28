@@ -54,7 +54,7 @@
     <Compile Include="View\GraphCreateView.cs" />
     <Compile Include="View\GraphShower.cs" />
     <Compile Include="Model\GraphFactory\ConsoleGraphInitializer.cs" />
-    <Compile Include="Model\GraphFactory\RandomValuedConsoleGraphFactory.cs" />
+    <Compile Include="Model\GraphFactory\ConsoleGraphFactory.cs" />
     <Compile Include="Model\GraphLoader\ConsoleGraphLoader.cs" />
     <Compile Include="Model\GraphSaver\ConsoleGraphSaver.cs" />
     <Compile Include="Model\Graph\ConsoleGraph.cs" />

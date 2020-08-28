@@ -1,17 +1,15 @@
-﻿using GraphLibrary.Constants;
-using GraphLibrary.GraphFactory;
+﻿using GraphLibrary.GraphFactory;
 using GraphLibrary.Vertex;
 using GraphLibrary.Graph;
 using WinFormsVersion.Vertex;
 using WinFormsVersion.Graph;
 using GraphLibrary.Extensions.RandomExtension;
-using WinFormsVersion.StatusSetter;
 
 namespace WinFormsVersion.GraphFactory
 {
-    public class RandomValuedWinFormsGraphFactory : AbstractGraphFactory
+    public class WinFormsGraphFactory : AbstractGraphFactory
     {
-        public RandomValuedWinFormsGraphFactory(int percentOfObstacles,
+        public WinFormsGraphFactory(int percentOfObstacles,
             int width, int height, int placeBetweenButtons) : base(percentOfObstacles,
                 width, height, placeBetweenButtons)
         {

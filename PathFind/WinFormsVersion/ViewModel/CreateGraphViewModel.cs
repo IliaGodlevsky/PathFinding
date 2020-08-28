@@ -45,7 +45,7 @@ namespace WinFormsVersion.ViewModel
         {
             int width = int.Parse(Width);
             int height = int.Parse(Height);
-            return new RandomValuedWinFormsGraphFactory(ObstaclePercent,
+            return new WinFormsGraphFactory(ObstaclePercent,
                 width, height, Const.SIZE_BETWEEN_VERTICES);
         }
     }

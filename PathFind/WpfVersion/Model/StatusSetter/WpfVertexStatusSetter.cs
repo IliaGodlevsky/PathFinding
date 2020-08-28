@@ -17,7 +17,7 @@ namespace WpfVersion.Model.StatusSetter
 
         }
 
-        protected override int GetMouseDelta(EventArgs e)
+        protected override int GetWheelDelta(EventArgs e)
         {
             return (e as MouseWheelEventArgs).Delta;
         }

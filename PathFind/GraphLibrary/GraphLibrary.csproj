@@ -90,7 +90,6 @@
     <Compile Include="Model\StatusSetter\IVertexStatusSetter.cs" />
     <Compile Include="GraphCreate\VertexLinkManager\VertexLinkManager.cs" />
     <Compile Include="Model\Vertex\IVertex.cs" />
-    <Compile Include="GraphCreate\VertexConnector\VertexConnector.cs" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="LibraryResources.resx">

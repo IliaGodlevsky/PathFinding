@@ -1,17 +1,15 @@
-﻿using GraphLibrary.Constants;
-using GraphLibrary.Extensions.RandomExtension;
+﻿using GraphLibrary.Extensions.RandomExtension;
 using GraphLibrary.Graph;
 using GraphLibrary.GraphFactory;
 using GraphLibrary.Vertex;
 using WpfVersion.Model.Graph;
-using WpfVersion.Model.StatusSetter;
 using WpfVersion.Model.Vertex;
 
 namespace WpfVersion.Model.GraphFactory
 {
-    public class RandomValuedWpfGraphFactory : AbstractGraphFactory
+    public class WpfGraphFactory : AbstractGraphFactory
     {
-        public RandomValuedWpfGraphFactory(int percentOfObstacles, 
+        public WpfGraphFactory(int percentOfObstacles, 
             int width, int height, int placeBetweenVertices) : 
             base(percentOfObstacles, width, height, placeBetweenVertices)
         {

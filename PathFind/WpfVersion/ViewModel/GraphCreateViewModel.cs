@@ -45,7 +45,7 @@ namespace WpfVersion.ViewModel
         {
             int width = int.Parse(Width);
             int height = int.Parse(Height);
-            return new RandomValuedWpfGraphFactory(ObstaclePercent,
+            return new WpfGraphFactory(ObstaclePercent,
                 width, height, Const.SIZE_BETWEEN_VERTICES);
         }
     }

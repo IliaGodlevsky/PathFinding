@@ -8,9 +8,9 @@ using GraphLibrary.Extensions.RandomExtension;
 
 namespace ConsoleVersion.GraphFactory
 {
-    public class RandomValuedConsoleGraphFactory : AbstractGraphFactory
+    public class ConsoleGraphFactory : AbstractGraphFactory
     {
-        public RandomValuedConsoleGraphFactory(int percentOfObstacles,
+        public ConsoleGraphFactory(int percentOfObstacles,
         int width, int height) : base(percentOfObstacles, width, height, Const.SIZE_BETWEEN_VERTICES)
         {
 

@@ -16,17 +16,14 @@ namespace GraphLibrary.StatusSetter
             this.graph = graph;
         }
 
-        protected abstract int GetMouseDelta(EventArgs e);
+        protected abstract int GetWheelDelta(EventArgs e);
         public virtual void ChangeVertexValue(object sender, EventArgs e)
         {
             var vertex = (sender as IVertex);
             if (vertex.IsObstacle)
                 return;
             int current = int.Parse(vertex.Text);
-            if (GetMouseDelta(e) > 0)
-                current++;
-            else
-                current--;
+            current += GetWheelDelta(e) > 0 ? 1 : -1;
             if (current > Const.MAX_VERTEX_VALUE)
                 current = Const.MIN_VERTEX_VALUE;
             else if (current < Const.MIN_VERTEX_VALUE)
@@ -51,17 +48,8 @@ namespace GraphLibrary.StatusSetter
             vertex.MarkAsSimpleVertex();
             var rand = new Random();
             vertex.Text = rand.GetRandomVertexValue();
-            var setter = new VertexConnector(graph);
-            setter.SetNeighbours(vertex);
+            VertexLinkManager.SetNeighbours(graph, vertex);
             VertexLinkManager.ConnectToNeighbours(vertex);
-        }
-
-        protected void Reverse(IVertex top)
-        {
-            if (top.IsObstacle)
-                MakeVertex(top);
-            else
-                MakeObstacle(top);
         }
 
         public virtual void SetStartVertex(object sender, EventArgs e)
@@ -87,7 +75,10 @@ namespace GraphLibrary.StatusSetter
         public virtual void ReversePolarity(object sender, EventArgs e)
         {
             IVertex vertex = sender as IVertex;
-            Reverse(vertex);
+            if (vertex.IsObstacle)
+                MakeVertex(vertex);
+            else
+                MakeObstacle(vertex);
         }
     }
 }
