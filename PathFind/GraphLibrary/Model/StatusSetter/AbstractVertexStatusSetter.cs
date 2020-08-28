@@ -40,7 +40,7 @@ namespace GraphLibrary.StatusSetter
             {
                 BoundSetter.BreakBoundsBetweenNeighbours(vertex);
                 vertex.IsObstacle = false;
-                vertex.SetToDefualt();
+                vertex.SetToDefault();
                 vertex.MarkAsObstacle();
             }
         }

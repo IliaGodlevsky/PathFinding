@@ -47,7 +47,7 @@ namespace GraphLibrary.Graph
         protected virtual void ToDefault(IVertex vertex)
         {
             if (!vertex.IsObstacle)
-                vertex.SetToDefualt();
+                vertex.SetToDefault();
         }
 
         public void Refresh()

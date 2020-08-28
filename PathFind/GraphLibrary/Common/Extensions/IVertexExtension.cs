@@ -16,7 +16,7 @@ namespace GraphLibrary.Extensions
             return vertex.IsObstacle || !vertex.Neighbours.Any();
         }
 
-        public static void SetToDefualt(this IVertex vertex)
+        public static void SetToDefault(this IVertex vertex)
         {
             vertex.IsStart = false;
             vertex.IsEnd = false;
@@ -29,7 +29,7 @@ namespace GraphLibrary.Extensions
         public static void Initialize(this IVertex vertex)
         {
             vertex.Neighbours = new List<IVertex>();
-            vertex.SetToDefualt();
+            vertex.SetToDefault();
             vertex.IsObstacle = false;
         }
 
