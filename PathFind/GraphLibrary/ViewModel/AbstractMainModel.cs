@@ -33,14 +33,14 @@ namespace GraphLibrary.Model
                 return;
             Graph = temp;
             GraphField = filler.FillGraphField(Graph);
-            GraphParametres = GraphDataFormatter.GetFormattedData(Graph, Format);
+            GraphParametres = GraphParametresPresenter.GetFormattedData(Graph, Format);
         }
 
         public virtual void ClearGraph()
         {
             Graph?.Refresh();
             Statistics = string.Empty;
-            GraphParametres = GraphDataFormatter.GetFormattedData(Graph, Format);
+            GraphParametres = GraphParametresPresenter.GetFormattedData(Graph, Format);
         }
 
         public abstract void PathFind();

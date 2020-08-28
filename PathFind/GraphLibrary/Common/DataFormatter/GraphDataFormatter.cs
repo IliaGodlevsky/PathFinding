@@ -2,7 +2,7 @@
 
 namespace GraphLibrary
 {
-    public static class GraphDataFormatter
+    public static class GraphParametresPresenter
     {
         public static string GetFormattedData(AbstractGraph graph, string format)
         {

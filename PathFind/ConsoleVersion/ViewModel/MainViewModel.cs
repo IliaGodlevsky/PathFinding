@@ -27,7 +27,7 @@ namespace ConsoleVersion.ViewModel
             var factory = new RandomValuedConsoleGraphFactory(
                 percentOfObstacles: 25, width: 25, height: 25);
             Graph = factory.GetGraph();
-            GraphParametres = GraphDataFormatter.GetFormattedData(Graph, Format);
+            GraphParametres = GraphParametresPresenter.GetFormattedData(Graph, Format);
             changer = new ConsoleVertexStatusSetter(Graph);
         }
 

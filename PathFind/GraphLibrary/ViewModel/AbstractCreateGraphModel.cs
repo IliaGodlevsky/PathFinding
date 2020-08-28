@@ -29,7 +29,7 @@ namespace GraphLibrary.Model
             model.Graph = graph;
             model.GraphField = graphField;
             model.GraphParametres = 
-                GraphDataFormatter.GetFormattedData(model.Graph, model.Format);
+                GraphParametresPresenter.GetFormattedData(model.Graph, model.Format);
             model.Statistics = string.Empty;
         }
     }
