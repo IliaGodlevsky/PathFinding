@@ -37,8 +37,7 @@ namespace WinFormsVersion.Vertex
         public void MarkAsObstacle()
         {
             BackColor = Color.FromKnownColor(KnownColor.Black);
-            Text = "";
-            IsObstacle = true;
+            this.WashVertex();
         }
 
         public void MarkAsSimpleVertex()

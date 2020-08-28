@@ -13,7 +13,7 @@ namespace WpfVersion.Model.GraphLoader
 
         public WpfGraphLoader(int placeBetweenButtons) => this.placeBetweenButtons = placeBetweenButtons;
 
-        protected override AbstractGraphInitializer GetInitializer(VertexInfo[,] info)
+        protected override AbstractGraphInfoInitializer GetInitializer(VertexInfo[,] info)
             => new WpfGraphInitializer(info, placeBetweenButtons);
 
         protected override string GetPath()

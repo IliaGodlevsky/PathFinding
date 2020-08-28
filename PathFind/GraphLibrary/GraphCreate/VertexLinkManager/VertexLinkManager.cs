@@ -2,9 +2,9 @@
 
 namespace GraphLibrary
 {
-    public static class BoundSetter
+    public static class VertexLinkManager
     {
-        public static void SetBoundsBetweenNeighbours(IVertex vertex)
+        public static void ConnectToNeighbours(IVertex vertex)
         {
             if (vertex is null)
                 return;
@@ -13,7 +13,7 @@ namespace GraphLibrary
                 neigbour.Neighbours.Add(vertex);
         }
 
-        public static void BreakBoundsBetweenNeighbours(IVertex vertex)
+        public static void IsolateVertex(IVertex vertex)
         {
             if (vertex is null)
                 return;

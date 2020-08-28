@@ -8,7 +8,7 @@ namespace ConsoleVersion.GraphLoader
 {
     public class ConsoleGraphLoader : AbstractGraphLoader
     {
-        protected override AbstractGraphInitializer GetInitializer(VertexInfo[,] info) => new ConsoleGraphInitializer(info);
+        protected override AbstractGraphInfoInitializer GetInitializer(VertexInfo[,] info) => new ConsoleGraphInitializer(info);
 
         protected override string GetPath()
         {

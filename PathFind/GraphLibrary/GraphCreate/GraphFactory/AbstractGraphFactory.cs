@@ -7,7 +7,7 @@ using System;
 namespace GraphLibrary.GraphFactory
 {
     public abstract class AbstractGraphFactory 
-        : AbstractGraphSetter, IGraphFactory
+        : AbstractVertexLocator, IGraphFactory
     {
         protected Random rand;
 
@@ -18,19 +18,16 @@ namespace GraphLibrary.GraphFactory
             IVertex InitializeTop(IVertex vertex)
             {
                 vertex = CreateGraphTop();
-                if (rand.IsObstacleChance(percentOfObstacles))
-                {
-                    vertex.IsObstacle = true;
-                    vertex.MarkAsObstacle();
-                }
+                if (rand.IsObstacleChance(percentOfObstacles))                
+                    vertex.MarkAsObstacle();               
                 return vertex;
             }
 
             SetGraph(width, height);
             vertices.Apply(InitializeTop);
             vertices.Apply(SetLocation);
-            var setter = new NeigbourSetter(GetGraph());
-            setter.SetNeighbours();
+            var setter = new VertexConnector(GetGraph());
+            setter.ConnectVertices();
         }
 
         protected abstract IVertex CreateGraphTop();

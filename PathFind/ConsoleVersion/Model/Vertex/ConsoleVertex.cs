@@ -40,11 +40,7 @@ namespace ConsoleVersion.Vertex
 
         public void MarkAsSimpleVertex() => Colour = Color.FromKnownColor(KnownColor.White);
 
-        public void MarkAsObstacle()
-        {
-            Text = " ";
-            IsObstacle = true;
-        }
+        public void MarkAsObstacle() => this.WashVertex();
 
         public void MarkAsPath() => Colour = Color.FromKnownColor(KnownColor.Yellow);
 

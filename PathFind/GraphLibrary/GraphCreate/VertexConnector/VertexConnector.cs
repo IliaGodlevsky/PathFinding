@@ -3,11 +3,14 @@ using GraphLibrary.Vertex;
 
 namespace GraphLibrary
 {
-    public class NeigbourSetter
+    /// <summary>
+    /// Connects vertices in graph, sets neighbours
+    /// </summary>
+    public class VertexConnector
     {
         private readonly AbstractGraph graph;
 
-        public NeigbourSetter(AbstractGraph graph)
+        public VertexConnector(AbstractGraph graph)
         {
             this.graph = graph;
         }
@@ -34,7 +37,7 @@ namespace GraphLibrary
                         vertex.Neighbours.Add(graph[i, j]);
         }
 
-        public void SetNeighbours()
+        public void ConnectVertices()
         {
             foreach (IVertex vertex in graph)
                 SetNeighbours(vertex);

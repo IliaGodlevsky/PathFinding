@@ -7,7 +7,7 @@ using WinFormsVersion.Graph;
 
 namespace WinFormsVersion.GraphFactory
 {
-    public class WinFormsGraphInitializer : AbstractGraphInitializer
+    public class WinFormsGraphInitializer : AbstractGraphInfoInitializer
     {
 
         public WinFormsGraphInitializer(VertexInfo[,] info, int placeBetweenTops)

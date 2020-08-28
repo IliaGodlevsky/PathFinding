@@ -4,7 +4,7 @@ using GraphLibrary.AlgorithmEnum;
 using GraphLibrary.Graph;
 using GraphLibrary.PathFindAlgorithm;
 
-namespace GraphLibrary.PathFindAlgorithmSelector
+namespace GraphLibrary.AlgoSelector
 {
     public static class AlgorithmSelector
     {

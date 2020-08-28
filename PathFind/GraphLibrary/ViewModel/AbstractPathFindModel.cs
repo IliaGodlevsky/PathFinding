@@ -1,7 +1,7 @@
 ﻿using GraphLibrary.Algorithm;
 using GraphLibrary.AlgorithmEnum;
 using GraphLibrary.Graph;
-using GraphLibrary.PathFindAlgorithmSelector;
+using GraphLibrary.AlgoSelector;
 
 namespace GraphLibrary.Model
 {
@@ -13,7 +13,7 @@ namespace GraphLibrary.Model
         protected AbstractGraph graph;
         protected IMainModel model;
         protected string badResultMessage;
-        private string format;
+        protected string format;
 
         public AbstractPathFindModel(IMainModel model)
         {

@@ -28,12 +28,12 @@ namespace GraphLibrary.GraphLoader
             if (info == null)
                 return;
             graph = GetInitializer(info).GetGraph();
-            var setter = new NeigbourSetter(graph);
-            setter.SetNeighbours();
+            var setter = new VertexConnector(graph);
+            setter.ConnectVertices();
         }
 
         protected abstract void ShowMessage(string message);
-        protected abstract AbstractGraphInitializer GetInitializer(VertexInfo[,] info);
+        protected abstract AbstractGraphInfoInitializer GetInitializer(VertexInfo[,] info);
         protected abstract string GetPath();
     }
 }

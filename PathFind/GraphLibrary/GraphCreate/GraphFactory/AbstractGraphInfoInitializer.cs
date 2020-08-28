@@ -4,10 +4,10 @@ using GraphLibrary.Vertex;
 
 namespace GraphLibrary.GraphFactory
 {
-    public abstract class AbstractGraphInitializer 
-        : AbstractGraphSetter, IGraphFactory
+    public abstract class AbstractGraphInfoInitializer
+        : AbstractVertexLocator, IGraphFactory
     {
-        public AbstractGraphInitializer(VertexInfo[,] info,
+        public AbstractGraphInfoInitializer(VertexInfo[,] info,
             int placeBetweenVertices) : base(placeBetweenVertices)
         {
 

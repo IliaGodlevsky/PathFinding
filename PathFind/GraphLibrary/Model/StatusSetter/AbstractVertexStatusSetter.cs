@@ -38,7 +38,7 @@ namespace GraphLibrary.StatusSetter
         {
             if (vertex.IsSimpleVertex)
             {
-                BoundSetter.BreakBoundsBetweenNeighbours(vertex);
+                VertexLinkManager.IsolateVertex(vertex);
                 vertex.IsObstacle = false;
                 vertex.SetToDefault();
                 vertex.MarkAsObstacle();
@@ -51,9 +51,9 @@ namespace GraphLibrary.StatusSetter
             vertex.MarkAsSimpleVertex();
             var rand = new Random();
             vertex.Text = rand.GetRandomVertexValue();
-            var setter = new NeigbourSetter(graph);
+            var setter = new VertexConnector(graph);
             setter.SetNeighbours(vertex);
-            BoundSetter.SetBoundsBetweenNeighbours(vertex);
+            VertexLinkManager.ConnectToNeighbours(vertex);
         }
 
         protected void Reverse(IVertex top)

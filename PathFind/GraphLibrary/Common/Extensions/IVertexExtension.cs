@@ -40,5 +40,11 @@ namespace GraphLibrary.Extensions
             if (vertex.IsObstacle)
                 vertex.MarkAsObstacle();
         }
+
+        public static void WashVertex(this IVertex vertex)
+        {
+            vertex.Text = " ";
+            vertex.IsObstacle = true;
+        }
     }
 }

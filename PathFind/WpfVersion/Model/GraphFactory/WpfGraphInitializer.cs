@@ -7,7 +7,7 @@ using WpfVersion.Model.Vertex;
 
 namespace WpfVersion.Model.GraphFactory
 {
-    public class WpfGraphInitializer : AbstractGraphInitializer
+    public class WpfGraphInitializer : AbstractGraphInfoInitializer
     {
         public WpfGraphInitializer(VertexInfo[,] info, int placeBetweenVertices) 
             : base(info, placeBetweenVertices)

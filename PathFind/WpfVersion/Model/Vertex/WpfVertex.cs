@@ -67,8 +67,7 @@ namespace WpfVersion.Model.Vertex
 
         public void MarkAsObstacle()
         {
-            Text = string.Empty;
-            IsObstacle = true;
+            this.WashVertex();
             Background = new SolidColorBrush(Colors.Black);
         }
 

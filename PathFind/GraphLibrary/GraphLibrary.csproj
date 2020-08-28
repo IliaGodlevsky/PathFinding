@@ -53,8 +53,8 @@
     <Compile Include="Common\Extensions\RandomExtensions.cs" />
     <Compile Include="Common\DataFormatter\GraphDataFormatter.cs" />
     <Compile Include="GraphCreate\GraphFactory\AbstractGraphFactory.cs" />
-    <Compile Include="GraphCreate\GraphFactory\AbstractGraphInitializer.cs" />
-    <Compile Include="GraphCreate\GraphFactory\AbstractGraphSetter.cs" />
+    <Compile Include="GraphCreate\GraphFactory\AbstractGraphInfoInitializer.cs" />
+    <Compile Include="GraphCreate\GraphFactory\AbstractVertexLocator.cs" />
     <Compile Include="GraphCreate\GraphFactory\IGraphFactory.cs" />
     <Compile Include="LibraryResources.Designer.cs">
       <AutoGen>True</AutoGen>
@@ -72,7 +72,7 @@
     <Compile Include="Model\IGraphField.cs" />
     <Compile Include="ViewModel\Interface\IMainModel.cs" />
     <Compile Include="ViewModel\Interface\IModel.cs" />
-    <Compile Include="Model\PathFindAlgorithmSelector\AlgorithmSelector.cs" />
+    <Compile Include="Model\AlgoSelector\AlgorithmSelector.cs" />
     <Compile Include="Algorithms\PathFindAlgorithm\DeepPathFindAlgorithm.cs" />
     <Compile Include="Model\StatusSetter\AbstractVertexStatusSetter.cs" />
     <Compile Include="Algorithms\Statistics\Statistics.cs" />
@@ -88,9 +88,9 @@
     <Compile Include="Algorithms\PauseMaker\Pauser.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Model\StatusSetter\IVertexStatusSetter.cs" />
-    <Compile Include="GraphCreate\BoundSetter\BoundSetter.cs" />
+    <Compile Include="GraphCreate\VertexLinkManager\VertexLinkManager.cs" />
     <Compile Include="Model\Vertex\IVertex.cs" />
-    <Compile Include="GraphCreate\NeighbourSetter\NeighbourSetter.cs" />
+    <Compile Include="GraphCreate\VertexConnector\VertexConnector.cs" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="LibraryResources.resx">

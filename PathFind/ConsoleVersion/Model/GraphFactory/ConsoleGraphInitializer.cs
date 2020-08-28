@@ -9,7 +9,7 @@ using GraphLibrary.Graph;
 
 namespace ConsoleVersion.GraphFactory
 {
-    public class ConsoleGraphInitializer : AbstractGraphInitializer
+    public class ConsoleGraphInitializer : AbstractGraphInfoInitializer
     {
         public ConsoleGraphInitializer(VertexInfo[,] info) : base(info, Const.SIZE_BETWEEN_VERTICES)
         {
