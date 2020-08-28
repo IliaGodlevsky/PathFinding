@@ -17,7 +17,6 @@ namespace ConsoleVersion.ViewModel
         public PathFindViewModel(IMainModel model) : base(model)
         {
             changer = new ConsoleVertexStatusSetter(model.Graph);
-            badResultMessage = Res.BadResultMsg;
         }
 
         public override void PathFind()
@@ -33,7 +32,7 @@ namespace ConsoleVersion.ViewModel
 
         protected override void FindPreparations()
         {
-            pathFindAlgorythm.PauseEvent = () => { };
+            pathAlgorithm.PauseEvent = () => { };
         }
 
         protected override void ShowMessage(string message)

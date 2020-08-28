@@ -4,7 +4,6 @@ using System;
 using System.Linq;
 using System.Windows;
 using WpfVersion.Infrastructure;
-using WpfVersion.ViewModel.Resources;
 
 namespace WpfVersion.ViewModel
 {
@@ -17,7 +16,6 @@ namespace WpfVersion.ViewModel
         {
             this.model = model;
             graph = model.Graph;
-            badResultMessage = ViewModelResources.BadResultMessage;
 
             ConfirmPathFindAlgorithmChoice = new RelayCommand(
                 ExecuteConfirmPathFindAlgorithmChoice,
@@ -40,7 +38,7 @@ namespace WpfVersion.ViewModel
         protected override void FindPreparations()
         {
             (model as MainWindowViewModel).Window.Close();
-            pathFindAlgorythm.PauseEvent = () => System.Windows.Forms.Application.DoEvents();
+            pathAlgorithm.PauseEvent = () => System.Windows.Forms.Application.DoEvents();
         }
 
         protected override void ShowMessage(string message)

@@ -3,7 +3,6 @@ using GraphLibrary.Model;
 using System;
 using System.Linq;
 using System.Windows.Forms;
-using WinFormsVersion.Resources;
 
 namespace WinFormsVersion.ViewModel
 {
@@ -11,13 +10,13 @@ namespace WinFormsVersion.ViewModel
     {
         public PathFindViewModel(IMainModel model) : base(model)
         {
-            badResultMessage = WinFormsResources.BadResultMsg;           
+
         }
 
         protected override void FindPreparations()
         {
             (model as MainWindowViewModel).Window.Close();
-            pathFindAlgorythm.PauseEvent = () => Application.DoEvents();
+            pathAlgorithm.PauseEvent = () => Application.DoEvents();
         }
 
         protected override void ShowMessage(string message)

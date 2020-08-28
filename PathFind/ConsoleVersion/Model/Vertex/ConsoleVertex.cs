@@ -1,4 +1,5 @@
 ﻿using GraphLibrary;
+using GraphLibrary.Extensions;
 using GraphLibrary.Vertex;
 using System.Collections.Generic;
 using System.Drawing;
@@ -9,17 +10,12 @@ namespace ConsoleVersion.Vertex
     {
         public ConsoleVertex()
         {
-            Neighbours = new List<IVertex>();
-            SetToDefault();
-            IsObstacle = false;
+            this.Initialize();
         }
 
         public ConsoleVertex(VertexInfo info) : this()
         {
-            IsObstacle = info.IsObstacle;
-            Text = info.Text;
-            if (IsObstacle)
-                MarkAsObstacle();
+            this.Initialize(info);
         }
 
         public bool IsEnd { get; set; }
@@ -55,15 +51,5 @@ namespace ConsoleVersion.Vertex
         public void MarkAsStart() => Colour = Color.FromKnownColor(KnownColor.Green);
 
         public void MarkAsVisited() => Colour = Color.FromKnownColor(KnownColor.Blue);
-
-        public void SetToDefault()
-        {
-            IsStart = false;
-            IsEnd = false;
-            IsVisited = false;
-            Value = 0;
-            MarkAsSimpleVertex();
-            ParentVertex = null;
-        }
     }
 }

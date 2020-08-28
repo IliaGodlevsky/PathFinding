@@ -17,21 +17,9 @@ namespace WpfVersion.Model.StatusSetter
 
         }
 
-        public override void ChangeVertexValue(object sender, EventArgs e)
+        protected override int GetMouseDelta(EventArgs e)
         {
-            var vertex = (sender as WpfVertex);
-            if (vertex.IsObstacle)
-                return;
-            int current = int.Parse(vertex.Text);
-            if ((e as MouseWheelEventArgs).Delta > 0)
-                current++;
-            else
-                current--;
-            if (current > Const.MAX_VERTEX_VALUE)
-                current = Const.MIN_VERTEX_VALUE;
-            else if (current < Const.MIN_VERTEX_VALUE)
-                current = Const.MAX_VERTEX_VALUE;
-            vertex.Text = current.ToString();
+            return (e as MouseWheelEventArgs).Delta;
         }
 
         public override void SetDestinationVertex(object sender, EventArgs e)

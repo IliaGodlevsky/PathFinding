@@ -1,5 +1,6 @@
 ﻿using GraphLibrary;
 using GraphLibrary.Constants;
+using GraphLibrary.Extensions;
 using GraphLibrary.Vertex;
 using System.Collections.Generic;
 using System.Drawing;
@@ -27,21 +28,16 @@ namespace WpfVersion.Model.Vertex
 
         public WpfVertex() : base()
         {
-            Neighbours = new List<IVertex>();
-            SetToDefault();
+            this.Initialize();
             Width = Const.WIN_FORMS_VERTEX_SIZE;
             Height = Const.WIN_FORMS_VERTEX_SIZE;
-            IsObstacle = false;
             FontSize = 12;
             Template = (ControlTemplate)TryFindResource("vertexTemplate");
         }
 
         public WpfVertex(VertexInfo info) : this()
         {
-            IsObstacle = info.IsObstacle;
-            Text = info.Text;
-            if (IsObstacle)
-                MarkAsObstacle();
+            this.Initialize(info);
         }
 
         public bool IsEnd { get; set; }
@@ -87,15 +83,5 @@ namespace WpfVersion.Model.Vertex
         public void MarkAsStart() => Background = StartVertexColor;
 
         public void MarkAsVisited() => Background = AfterVisitVertexColor;
-
-        public void SetToDefault()
-        {
-            IsStart = false;
-            IsEnd = false;
-            IsVisited = false;
-            Value = 0;
-            MarkAsSimpleVertex();
-            ParentVertex = null;
-        }
     }
 }

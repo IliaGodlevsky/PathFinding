@@ -16,16 +16,9 @@ namespace WinFormsVersion.StatusSetter
 
         }
 
-        public override void ChangeVertexValue(object sender, EventArgs e)
+        protected override int GetMouseDelta(EventArgs e)
         {
-            var vertex = (sender as WinFormsVertex);
-            if (vertex.IsObstacle)
-                return;
-            int current = int.Parse(vertex.Text);
-            current++;
-            if (current > Const.MAX_VERTEX_VALUE)
-                current = Const.MIN_VERTEX_VALUE;
-            vertex.Text = current.ToString();
+            return (e as MouseEventArgs).Delta;
         }
 
         public override void SetStartVertex(object sender, EventArgs e)

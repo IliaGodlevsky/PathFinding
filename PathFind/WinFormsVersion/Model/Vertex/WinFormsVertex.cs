@@ -1,5 +1,6 @@
 ﻿using GraphLibrary;
 using GraphLibrary.Constants;
+using GraphLibrary.Extensions;
 using GraphLibrary.Vertex;
 using System.Collections.Generic;
 using System.Drawing;
@@ -11,9 +12,7 @@ namespace WinFormsVersion.Vertex
     {      
         public WinFormsVertex() : base()
         {
-            Neighbours = new List<IVertex>();
-            SetToDefault();
-            IsObstacle = false;
+            this.Initialize();
             Font = new Font("Times New Roman", 8.0f);
             Size = new Size(Const.WIN_FORMS_VERTEX_SIZE,
                 Const.WIN_FORMS_VERTEX_SIZE);
@@ -23,10 +22,7 @@ namespace WinFormsVersion.Vertex
 
         public WinFormsVertex(VertexInfo info) : this()
         {
-            IsObstacle = info.IsObstacle;
-            Text = info.Text;
-            if (IsObstacle)
-                MarkAsObstacle();
+            this.Initialize(info);
         }
 
         public bool IsStart { get; set; }
@@ -60,16 +56,6 @@ namespace WinFormsVersion.Vertex
         public void MarkAsPath() => BackColor = Color.FromKnownColor(KnownColor.Yellow);
 
         public VertexInfo Info => new VertexInfo(this);
-
-        public void SetToDefault()
-        {
-            IsStart = false;
-            IsEnd = false;
-            IsVisited = false;
-            Value = 0;
-            MarkAsSimpleVertex();
-            ParentVertex = null;           
-        }
 
         public void MarkAsCurrentlyLooked() => BackColor = Color.FromKnownColor(KnownColor.DarkMagenta);
     }

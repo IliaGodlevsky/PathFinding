@@ -56,10 +56,10 @@
     <Compile Include="GraphCreate\GraphFactory\AbstractGraphInitializer.cs" />
     <Compile Include="GraphCreate\GraphFactory\AbstractGraphSetter.cs" />
     <Compile Include="GraphCreate\GraphFactory\IGraphFactory.cs" />
-    <Compile Include="GraphLibraryResources.Designer.cs">
+    <Compile Include="LibraryResources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>GraphLibraryResources.resx</DependentUpon>
+      <DependentUpon>LibraryResources.resx</DependentUpon>
     </Compile>
     <Compile Include="GraphSerialization\GraphLoader\AbstractGraphLoader.cs" />
     <Compile Include="GraphSerialization\GraphLoader\IGraphLoader.cs" />
@@ -93,9 +93,9 @@
     <Compile Include="GraphCreate\NeighbourSetter\NeighbourSetter.cs" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="GraphLibraryResources.resx">
+    <EmbeddedResource Include="LibraryResources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
-      <LastGenOutput>GraphLibraryResources.Designer.cs</LastGenOutput>
+      <LastGenOutput>LibraryResources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup />

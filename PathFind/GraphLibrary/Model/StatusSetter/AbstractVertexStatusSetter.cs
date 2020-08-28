@@ -1,4 +1,5 @@
-﻿using GraphLibrary.Extensions;
+﻿using GraphLibrary.Constants;
+using GraphLibrary.Extensions;
 using GraphLibrary.Extensions.RandomExtension;
 using GraphLibrary.Graph;
 using GraphLibrary.Vertex;
@@ -15,20 +16,36 @@ namespace GraphLibrary.StatusSetter
             this.graph = graph;
         }
 
-        public abstract void ChangeVertexValue(object sender, EventArgs e);
+        protected abstract int GetMouseDelta(EventArgs e);
+        public virtual void ChangeVertexValue(object sender, EventArgs e)
+        {
+            var vertex = (sender as IVertex);
+            if (vertex.IsObstacle)
+                return;
+            int current = int.Parse(vertex.Text);
+            if (GetMouseDelta(e) > 0)
+                current++;
+            else
+                current--;
+            if (current > Const.MAX_VERTEX_VALUE)
+                current = Const.MIN_VERTEX_VALUE;
+            else if (current < Const.MIN_VERTEX_VALUE)
+                current = Const.MAX_VERTEX_VALUE;
+            vertex.Text = current.ToString();
+        }
 
-        private void MakeObstacle(ref IVertex vertex)
+        private void MakeObstacle(IVertex vertex)
         {
             if (vertex.IsSimpleVertex)
             {
                 BoundSetter.BreakBoundsBetweenNeighbours(vertex);
                 vertex.IsObstacle = false;
-                vertex.SetToDefault();
+                vertex.SetToDefualt();
                 vertex.MarkAsObstacle();
             }
         }
 
-        private void MakeVertex(ref IVertex vertex)
+        private void MakeVertex(IVertex vertex)
         {           
             vertex.IsObstacle = false;
             vertex.MarkAsSimpleVertex();
@@ -39,12 +56,12 @@ namespace GraphLibrary.StatusSetter
             BoundSetter.SetBoundsBetweenNeighbours(vertex);
         }
 
-        protected void Reverse(ref IVertex top)
+        protected void Reverse(IVertex top)
         {
             if (top.IsObstacle)
-                MakeVertex(ref top);
+                MakeVertex(top);
             else
-                MakeObstacle(ref top);
+                MakeObstacle(top);
         }
 
         public virtual void SetStartVertex(object sender, EventArgs e)
@@ -70,7 +87,7 @@ namespace GraphLibrary.StatusSetter
         public virtual void ReversePolarity(object sender, EventArgs e)
         {
             IVertex vertex = sender as IVertex;
-            Reverse(ref vertex);
+            Reverse(vertex);
         }
     }
 }

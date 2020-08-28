@@ -8,6 +8,6 @@ namespace GraphLibrary.Statistics
         void StopCollect();
         void Visited();
         void IncludeVertexInStatistics(IVertex vertex);
-        Statistics GetStatistics();
+        string GetStatistics(string format);
     }
 }

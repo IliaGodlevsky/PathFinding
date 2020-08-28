@@ -72,7 +72,7 @@
     <Compile Include="ViewModel\GraphCreateViewModel.cs" />
     <Compile Include="ViewModel\PathFindViewModel.cs" />
     <Compile Include="ViewModel\MainWindowViewModel.cs" />
-    <Compile Include="ViewModel\Resources\ViewModelResources.Designer.cs">
+    <Compile Include="Resources\ViewModelResources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>ViewModelResources.resx</DependentUpon>
@@ -130,7 +130,7 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-    <EmbeddedResource Include="ViewModel\Resources\ViewModelResources.resx">
+    <EmbeddedResource Include="Resources\ViewModelResources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>ViewModelResources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
@@ -163,5 +163,6 @@
   <ItemGroup>
     <Resource Include="Resources\Images\clear.png" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

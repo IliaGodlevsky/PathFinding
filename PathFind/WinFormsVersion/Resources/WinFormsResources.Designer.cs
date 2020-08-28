@@ -61,15 +61,6 @@ namespace WinFormsVersion.Resources {
         }
         
         /// <summary>
-        ///   Ищет локализованную строку, похожую на Couldn&apos;t find path.
-        /// </summary>
-        internal static string BadResultMsg {
-            get {
-                return ResourceManager.GetString("BadResultMsg", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Ищет локализованную строку, похожую на Width: {0} Height: {1} Obstacle percent: {2} ({3}/{4}).
         /// </summary>
         internal static string ParametresFormat {

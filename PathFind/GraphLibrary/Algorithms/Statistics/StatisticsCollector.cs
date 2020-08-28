@@ -5,7 +5,7 @@ using System.Diagnostics;
 namespace GraphLibrary.Statistics
 {
     public class StatisticsCollector : IStatisticsCollector
-    {
+    {        
         private int visitedVertices;
         private double pathLength;
         private int steps;
@@ -16,9 +16,11 @@ namespace GraphLibrary.Statistics
             watch = new Stopwatch();
         }
 
-        public Statistics GetStatistics()
+        public string GetStatistics(string format)
         {
-            return new Statistics(pathLength, steps, new DateTime(watch.ElapsedTicks), visitedVertices);
+            return new Statistics(pathLength, steps, 
+                new DateTime(watch.ElapsedTicks), visitedVertices).
+                GetFormattedData(format);
         }
 
         public void IncludeVertexInStatistics(IVertex vertex)

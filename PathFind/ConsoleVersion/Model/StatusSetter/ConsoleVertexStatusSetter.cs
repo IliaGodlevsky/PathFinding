@@ -19,5 +19,10 @@ namespace ConsoleVersion.StatusSetter
                 Input.InputNumber(Res.NewTopValueMsg, 
                                   Const.MAX_VERTEX_VALUE, 
                                   Const.MIN_VERTEX_VALUE).ToString();
+
+        protected override int GetMouseDelta(EventArgs e)
+        {
+            return default;
+        }
     }
 }

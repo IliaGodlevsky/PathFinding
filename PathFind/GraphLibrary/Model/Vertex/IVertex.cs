@@ -25,6 +25,5 @@ namespace GraphLibrary.Vertex
         void MarkAsPath();
         void MarkAsStart();
         void MarkAsVisited();
-        void SetToDefault();
     }
 }

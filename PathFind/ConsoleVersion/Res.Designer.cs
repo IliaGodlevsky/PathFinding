@@ -61,15 +61,6 @@ namespace ConsoleVersion {
         }
         
         /// <summary>
-        ///   Ищет локализованную строку, похожую на Couldn&apos;t find path.
-        /// </summary>
-        internal static string BadResultMsg {
-            get {
-                return ResourceManager.GetString("BadResultMsg", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Ищет локализованную строку, похожую на Choose algorithm: .
         /// </summary>
         internal static string ChooseAlrorithm {

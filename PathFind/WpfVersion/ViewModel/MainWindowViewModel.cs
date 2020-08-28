@@ -8,8 +8,8 @@ using WpfVersion.Infrastructure;
 using WpfVersion.Model;
 using WpfVersion.Model.GraphLoader;
 using WpfVersion.Model.GraphSaver;
+using WpfVersion.Resources;
 using WpfVersion.View.Windows;
-using WpfVersion.ViewModel.Resources;
 
 namespace WpfVersion.ViewModel
 {

@@ -7,29 +7,35 @@ namespace GraphLibrary.Model
 {
     public abstract class AbstractPathFindModel : IModel
     {
-        protected IPathFindAlgorithm pathFindAlgorythm;
+        protected IPathFindAlgorithm pathAlgorithm;
         public Algorithms Algorithm { get; set; }
 
         protected AbstractGraph graph;
         protected IMainModel model;
         protected string badResultMessage;
+        private string format;
 
         public AbstractPathFindModel(IMainModel model)
         {
             this.model = model;
             graph = model.Graph;
+            format = LibraryResources.StatisticsFormat;
+            badResultMessage = LibraryResources.BadResultMsg;
         }
 
         protected abstract void FindPreparations();
 
         public virtual void PathFind()
         {
-            pathFindAlgorythm = AlgorithmSelector.GetPathFindAlgorithm(Algorithm, model.Graph);
+            pathAlgorithm = AlgorithmSelector.
+                GetPathFindAlgorithm(Algorithm, model.Graph);
             FindPreparations();
-            if (pathFindAlgorythm.FindDestionation())
+            if (pathAlgorithm.FindDestionation())
             {
-                pathFindAlgorythm.DrawPath();
-                model.Statistics = pathFindAlgorythm.StatCollector.GetStatistics().GetFormattedData();
+                pathAlgorithm.DrawPath();
+                model.Statistics = 
+                    pathAlgorithm.StatCollector.
+                    GetStatistics(format);
                 graph.Start = null;
                 graph.End = null;
             }

@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Drawing;
 using System.Linq;
+using GraphLibrary.Extensions;
 using GraphLibrary.Extensions.MatrixExtension;
 using GraphLibrary.Vertex;
 
@@ -46,7 +47,7 @@ namespace GraphLibrary.Graph
         protected virtual void ToDefault(IVertex vertex)
         {
             if (!vertex.IsObstacle)
-                vertex.SetToDefault();
+                vertex.SetToDefualt();
         }
 
         public void Refresh()
