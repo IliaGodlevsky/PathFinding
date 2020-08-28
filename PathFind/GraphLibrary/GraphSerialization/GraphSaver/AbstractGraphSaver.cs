@@ -12,11 +12,10 @@ namespace GraphLibrary.GraphSaver
         {
             if (graph != null)
             {
-                var info = graph.Info;
                 var formatter = new BinaryFormatter();
                 try {
                     using (var stream = new FileStream(GetPath(), FileMode.Create))
-                        formatter.Serialize(stream, info);
+                        formatter.Serialize(stream, graph.Info);
                 }
                 catch (Exception ex) {
                     ShowMessage(ex.Message);
