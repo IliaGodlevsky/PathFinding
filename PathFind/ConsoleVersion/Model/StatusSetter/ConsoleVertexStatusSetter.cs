@@ -16,9 +16,7 @@ namespace ConsoleVersion.StatusSetter
         }
 
         public override void ChangeVertexValue(object sender, EventArgs e) => (sender as ConsoleVertex).Text =
-                Input.InputNumber(Res.NewTopValueMsg, 
-                                  Const.MAX_VERTEX_VALUE, 
-                                  Const.MIN_VERTEX_VALUE).ToString();
+                Input.InputNumber(Res.NewTopValueMsg, Const.MAX_VERTEX_VALUE, Const.MIN_VERTEX_VALUE).ToString();
 
         protected override int GetMouseDelta(EventArgs e)
         {
