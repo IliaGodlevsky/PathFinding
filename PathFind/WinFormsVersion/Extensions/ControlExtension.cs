@@ -1,5 +1,5 @@
-﻿using System.Windows.Forms;
-using WinFormsVersion.Model;
+﻿using GraphLibrary.Model;
+using System.Windows.Forms;
 
 namespace WinFormsVersion.Extensions
 {
@@ -7,7 +7,7 @@ namespace WinFormsVersion.Extensions
     {
         public static bool IsGraphField(this Control control)
         {
-            return control.GetType() == typeof(WinFormsGraphField);
+            return (control as IGraphField) != null;
         }
     }
 }
