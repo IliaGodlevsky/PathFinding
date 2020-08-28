@@ -24,10 +24,7 @@ namespace GraphLibrary.Algorithm
                 ? vertex.Neighbours : vertex.Neighbours.Where(vert => !vert.IsVisited).ToList();
             neighbours = neighbours.OrderBy(vert => Guid.NewGuid()).ToList();
             if (neighbours.Any())
-            {
-                double min = neighbours.Min(GreedyFunction);
-                return neighbours.Find(vert => GreedyFunction(vert) == min);
-            }
+                return neighbours.Find(vert => GreedyFunction(vert) == neighbours.Min(GreedyFunction));            
             return null;
         }
     }
