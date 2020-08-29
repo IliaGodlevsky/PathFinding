@@ -17,7 +17,7 @@ namespace GraphLibrary.GraphFactory
             rand = new Random();
             IVertex InitializeVertex(IVertex vertex)
             {
-                vertex = CreateGraphTop();
+                vertex = CreateVertex();
                 if (rand.IsObstacleChance(percentOfObstacles))                
                     vertex.MarkAsObstacle();               
                 return vertex;
@@ -28,7 +28,7 @@ namespace GraphLibrary.GraphFactory
             VertexLinkManager.ConnectVertices(GetGraph());
         }
 
-        protected abstract IVertex CreateGraphTop();
+        protected abstract IVertex CreateVertex();
 
         public abstract AbstractGraph GetGraph();
     }

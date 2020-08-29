@@ -17,7 +17,7 @@ namespace WpfVersion.Model.GraphFactory
 
         public override AbstractGraph GetGraph() => new WpfGraph(vertices);
 
-        protected override IVertex CreateGraphTop() => new WpfVertex { Cost = VertexValueRange.GetRandomVertexValue() };
+        protected override IVertex CreateVertex() => new WpfVertex { Cost = VertexValueRange.GetRandomVertexValue() };
 
         protected override void SetGraph(int width, int height) => vertices = new WpfVertex[width, height];
     }
