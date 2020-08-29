@@ -41,16 +41,13 @@ namespace ConsoleVersion.View
         private string GetMenu()
         {           
             var stringBuilder = new StringBuilder();
-            MenuOption menu = default;
-            var descriptions = menu.GetDescriptions<MenuOption>();
-
+            var descriptions = ((MenuOption)default).GetDescriptions<MenuOption>();
             foreach (var item in descriptions)
             {               
                 int numberOf = descriptions.IndexOf(item);
                 stringBuilder.Append(numberOf.IsEven() ? newLine : largeSpace + tab);
                 stringBuilder.Append(string.Format(Res.ShowFormat, numberOf, item));
             }
-
             return stringBuilder.ToString();
         }
 
