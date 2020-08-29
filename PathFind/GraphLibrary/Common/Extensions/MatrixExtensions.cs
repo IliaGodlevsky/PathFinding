@@ -31,11 +31,12 @@ namespace GraphLibrary.Extensions.MatrixExtension
         }
 
         public static void Apply<TSource>(this TSource[,] arr, 
-            Func<TSource, TSource> function)
+            params Func<TSource, TSource>[] methods)
         {
-            for (int i = 0; i < arr.Width(); i++)
-                for (int j = 0; j < arr.Height(); j++)
-                    arr[i, j] = function(arr[i, j]);
+            for (int x = 0; x < arr.Width(); x++)
+                for (int y = 0; y < arr.Height(); y++)
+                    foreach (var method in methods)
+                        arr[x, y] = method(arr[x, y]);
         }
 
         public static Point GetIndices<TSource>(this TSource [,] arr, TSource item)
