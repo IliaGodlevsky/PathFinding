@@ -6,12 +6,8 @@ namespace GraphLibrary
     {
         public static string GetFormattedData(AbstractGraph graph, string format)
         {
-            return string.Format(format,
-               graph.Width,
-               graph.Height,
-               graph.ObstaclePercent,
-               graph.ObstacleNumber,
-               graph.Size);
+            return string.Format(format, graph.Width, graph.Height,
+               graph.ObstaclePercent, graph.ObstacleNumber, graph.Size);
         }
     }
 }
