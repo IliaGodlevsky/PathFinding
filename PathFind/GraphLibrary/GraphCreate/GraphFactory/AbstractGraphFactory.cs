@@ -10,7 +10,6 @@ namespace GraphLibrary.GraphFactory
         : AbstractVertexLocator, IGraphFactory
     {
         protected Random rand;
-
         public AbstractGraphFactory(int percentOfObstacles,
             int width, int height, int placeBetweenVertices) : base(placeBetweenVertices)
         {
@@ -23,8 +22,7 @@ namespace GraphLibrary.GraphFactory
                 return vertex;
             }
             SetGraph(width, height);
-            vertices.Apply(InitializeVertex);
-            vertices.Apply(SetLocation);
+            vertices.Apply(InitializeVertex, SetLocation);
             VertexLinkManager.ConnectVertices(GetGraph());
         }
 
