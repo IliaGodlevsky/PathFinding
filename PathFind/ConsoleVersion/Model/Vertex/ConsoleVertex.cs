@@ -20,9 +20,6 @@ namespace ConsoleVersion.Vertex
 
         public bool IsEnd { get; set; }
         public bool IsObstacle { get; set; }
-
-        public bool IsSimpleVertex => !IsStart && !IsEnd;
-
         public bool IsStart { get; set; }
         public bool IsVisited { get; set; }
         public int Cost { get; set; }
