@@ -3,7 +3,7 @@ using ConsoleVersion.Forms;
 using ConsoleVersion.InputClass;
 using ConsoleVersion.ViewModel;
 using GraphLibrary.Extensions;
-using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using Console = Colorful.Console;
 
@@ -16,7 +16,7 @@ namespace ConsoleVersion.View
         private const string tab = "\t";
 
         private delegate void MenuAction();
-        private readonly Dictionary<MenuOption, MenuAction> menuActions;
+        private readonly MenuAction menuAction;
         private readonly MainViewModel mainModel;
         private readonly string menu;
 
@@ -24,17 +24,14 @@ namespace ConsoleVersion.View
         {
             mainModel = new MainViewModel();
 
-            menuActions = new Dictionary<MenuOption, MenuAction>
-            {
-                { MenuOption.PathFind, mainModel.PathFind },
-                { MenuOption.SaveGraph, mainModel.SaveGraph },
-                { MenuOption.LoadGraph, mainModel.LoadGraph },
-                { MenuOption.CreateGraph, mainModel.CreateNewGraph },
-                { MenuOption.RefreshGraph, mainModel.ClearGraph },
-                { MenuOption.Reverse, mainModel.Reverse },
-                { MenuOption.ChangeValue, mainModel.ChangeVertexValue }
-            };
-
+            menuAction += mainModel.PathFind;
+            menuAction += mainModel.SaveGraph;
+            menuAction += mainModel.LoadGraph;
+            menuAction += mainModel.CreateNewGraph;
+            menuAction += mainModel.ClearGraph;
+            menuAction += mainModel.Reverse;
+            menuAction += mainModel.ChangeVertexValue;
+            
             menu = GetMenu();
         }
 
@@ -63,7 +60,10 @@ namespace ConsoleVersion.View
             var option = GetOption();
             while (option != MenuOption.Quit)
             {
-                menuActions[option]();
+                menuAction.
+                    GetInvocationList().
+                    ElementAt((byte)option).
+                    DynamicInvoke();
                 GraphShower.DisplayGraph(mainModel);
                 option = GetOption();
             }
