@@ -1,5 +1,6 @@
 ﻿using GraphLibrary.Algorithm;
-using GraphLibrary.Constants;
+using GraphLibrary.Common.Constants;
+using GraphLibrary.Extensions;
 using GraphLibrary.Graph;
 using GraphLibrary.PauseMaker;
 using GraphLibrary.Statistics;
@@ -42,10 +43,10 @@ namespace GraphLibrary.PathFindAlgorithm
             {
                 var temp = vertex;
                 vertex = vertex.ParentVertex;
-                if (vertex.IsSimpleVertex)
+                if (vertex.IsSimpleVertex())
                     vertex.MarkAsPath();
                 StatCollector.IncludeVertexInStatistics(temp);
-                pauseMaker?.Pause(Const.PATH_DRAW_PAUSE_MILLISECONDS);
+                pauseMaker?.Pause(AlgorithmExecutionDelay.PATH_DRAW_PAUSE);
             }
         }
 
@@ -58,7 +59,7 @@ namespace GraphLibrary.PathFindAlgorithm
             Visit(currentVertex);
             while (!IsDestination(currentVertex))
             {
-                IVertex temp = currentVertex;
+                var temp = currentVertex;
                 currentVertex = GoNextVertex(currentVertex);
                 if (IsRightCellToVisit(currentVertex))
                 {
@@ -67,35 +68,38 @@ namespace GraphLibrary.PathFindAlgorithm
                 }
                 else
                     currentVertex = visitedVerticesStack.Pop();
-                pauseMaker?.Pause(Const.FIND_PROCESS_PAUSE_MILLISECONDS);
+                pauseMaker?.Pause(AlgorithmExecutionDelay.FIND_PROCESS_PAUSE);
             }
             StatCollector.StartCollect();
-            return graph.End.IsVisited;
+            return graph.End?.IsVisited == true;
         }
 
         private bool IsDestination(IVertex vertex)
         {
-            return vertex.IsEnd && vertex.IsVisited
-                || (!visitedVerticesStack.Any() && vertex.Neighbours.Find(v => !v.IsVisited) == null);
+            bool hasUnvisitedNeighbours = vertex.Neighbours.Find(v => !v.IsVisited) != null;
+            bool hasReachedEnd = vertex.IsEnd && vertex.IsVisited;
+            bool hasVerticesToComeBack = visitedVerticesStack.Any();
+            bool lostDestinationPoint = graph.End == null;
+
+            return hasReachedEnd
+                || !hasVerticesToComeBack
+                && !hasUnvisitedNeighbours
+                || lostDestinationPoint;
         }
 
         private bool IsRightCellToVisit(IVertex vertex)
         {
-            if (vertex == null)
-                return false;
-            if (vertex.IsObstacle)
-                return false;
-            return true;
+            return vertex != null || vertex?.IsObstacle == false;
         }
 
         private void Visit(IVertex vertex)
         {
             vertex.IsVisited = true;
             visitedVerticesStack.Push(vertex);
-            if (vertex.IsSimpleVertex)
+            if (vertex.IsSimpleVertex())
             {
                 vertex.MarkAsCurrentlyLooked();
-                pauseMaker?.Pause(Const.VISIT_PAUSE_MILLISECONDS);
+                pauseMaker?.Pause(AlgorithmExecutionDelay.VISIT_PAUSE);
                 vertex.MarkAsVisited();
             }
             StatCollector.Visited();

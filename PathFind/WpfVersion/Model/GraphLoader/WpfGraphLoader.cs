@@ -7,7 +7,7 @@ using WpfVersion.Model.GraphFactory;
 
 namespace WpfVersion.Model.GraphLoader
 {
-    public class WpfGraphLoader : AbstractGraphLoader
+    internal class WpfGraphLoader : AbstractGraphLoader
     {
         private readonly int placeBetweenButtons;
 

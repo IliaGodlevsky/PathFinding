@@ -9,7 +9,7 @@ using Console = Colorful.Console;
 
 namespace ConsoleVersion.View
 {
-    public class MainView : IView
+    internal class MainView : IView
     {
         private const string newLine = "\n";
         private const string largeSpace = "   ";

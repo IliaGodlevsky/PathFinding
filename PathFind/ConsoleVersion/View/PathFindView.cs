@@ -1,18 +1,21 @@
-﻿using ConsoleVersion.Graph;
-using ConsoleVersion.ViewModel;
+﻿using ConsoleVersion.ViewModel;
 using GraphLibrary.AlgorithmEnum;
 using GraphLibrary.Extensions;
+using System;
 using System.Text;
 
 namespace ConsoleVersion.View
 {
-    public class PathFindView : IView
+    internal class PathFindView : IView
     {
         public PathFindViewModel Model { get; set; }
         public PathFindView(PathFindViewModel model)
         {
             Model = model;
-            model.AlgoList = GetAlgorithmsList();
+            Model.Messages = new Tuple<string, string, string>(
+                "\n" + Res.StartPoint,
+                Res.DestinationPoint,
+                GetAlgorithmsList() + Res.ChooseAlrorithm);
         }
 
         public void Start()

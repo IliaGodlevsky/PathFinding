@@ -25,7 +25,7 @@ namespace GraphLibrary.Statistics
 
         public void IncludeVertexInStatistics(IVertex vertex)
         {
-            pathLength += double.Parse(vertex.Text);
+            pathLength += vertex.Cost;
             steps++;
         }
 

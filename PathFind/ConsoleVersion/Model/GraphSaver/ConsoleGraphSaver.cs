@@ -3,7 +3,7 @@ using System;
 
 namespace ConsoleVersion.GraphSaver
 {
-    public class ConsoleGraphSaver : AbstractGraphSaver
+    internal class ConsoleGraphSaver : AbstractGraphSaver
     {
         protected override string GetPath()
         {

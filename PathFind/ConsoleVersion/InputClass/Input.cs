@@ -5,9 +5,8 @@ using System.Linq;
 
 namespace ConsoleVersion.InputClass
 {
-    public static class Input
+    internal static class Input
     {
-
         public static int InputNumber(string msg, int upper, int lower = 0)
         {
             string choice;
@@ -24,7 +23,7 @@ namespace ConsoleVersion.InputClass
         public static MenuOption InputOption()
         {
             return (MenuOption)InputNumber(Res.OptionMsg, 
-                Enum.GetValues(typeof(MenuOption)).Cast<int>().Last());
+                Enum.GetValues(typeof(MenuOption)).Cast<byte>().Last());
         }
 
         public static Point InputPoint(int width, int height) => 

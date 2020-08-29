@@ -1,22 +1,21 @@
-﻿using GraphLibrary.Constants;
-using ConsoleVersion.Graph;
+﻿using ConsoleVersion.Graph;
 using ConsoleVersion.Vertex;
 using GraphLibrary.GraphFactory;
 using GraphLibrary.Vertex;
 using GraphLibrary.Graph;
-using GraphLibrary.Extensions.RandomExtension;
+using GraphLibrary.Common.Constants;
 
 namespace ConsoleVersion.GraphFactory
 {
-    public class ConsoleGraphFactory : AbstractGraphFactory
+    internal class ConsoleGraphFactory : AbstractGraphFactory
     {
         public ConsoleGraphFactory(int percentOfObstacles,
-        int width, int height) : base(percentOfObstacles, width, height, Const.SIZE_BETWEEN_VERTICES)
+        int width, int height) : base(percentOfObstacles, width, height, VertexSize.SIZE_BETWEEN_VERTICES)
         {
 
         }
 
-        protected override IVertex CreateGraphTop() => new ConsoleVertex { Text = rand.GetRandomVertexValue() };
+        protected override IVertex CreateGraphTop() => new ConsoleVertex { Cost = VertexValueRange.GetRandomVertexValue() };
 
         public override AbstractGraph GetGraph() => new ConsoleGraph(vertices);
 

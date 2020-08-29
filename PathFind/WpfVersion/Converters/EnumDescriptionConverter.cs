@@ -6,7 +6,7 @@ using System.Windows.Data;
 
 namespace WpfVersion.Converters
 {
-    public class AlgorithmDescriptionConverter : IValueConverter
+    internal class AlgorithmDescriptionConverter : IValueConverter
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {

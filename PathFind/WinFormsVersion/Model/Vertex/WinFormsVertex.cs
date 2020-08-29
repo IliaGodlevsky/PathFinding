@@ -1,5 +1,5 @@
 ﻿using GraphLibrary;
-using GraphLibrary.Constants;
+using GraphLibrary.Common.Constants;
 using GraphLibrary.Extensions;
 using GraphLibrary.Vertex;
 using System.Collections.Generic;
@@ -8,14 +8,14 @@ using System.Windows.Forms;
 
 namespace WinFormsVersion.Vertex
 {
-    public class WinFormsVertex : Label, IVertex
+    internal class WinFormsVertex : Label, IVertex
     {      
         public WinFormsVertex() : base()
         {
             this.Initialize();
             Font = new Font("Times New Roman", 8.0f);
-            Size = new Size(Const.WIN_FORMS_VERTEX_SIZE,
-                Const.WIN_FORMS_VERTEX_SIZE);
+            Size = new Size(VertexSize.VERTEX_SIZE,
+                VertexSize.SIZE_BETWEEN_VERTICES);
             TextAlign = ContentAlignment.MiddleCenter;
             //BorderStyle = BorderStyle.FixedSingle;
         }
@@ -28,10 +28,9 @@ namespace WinFormsVersion.Vertex
         public bool IsStart { get; set; }
         public bool IsEnd { get; set; }
         public bool IsVisited { get; set; }
-        public double Value { get; set; }
+        public double AccumulatedCost { get; set; }
         public IVertex ParentVertex { get; set; }
         public List<IVertex> Neighbours { get; set; }
-        public bool IsSimpleVertex => !IsStart && !IsEnd;
         public bool IsObstacle { get; set; }
 
         public void MarkAsObstacle()
@@ -55,6 +54,8 @@ namespace WinFormsVersion.Vertex
         public void MarkAsPath() => BackColor = Color.FromKnownColor(KnownColor.Yellow);
 
         public VertexInfo Info => new VertexInfo(this);
+
+        public int Cost { get => int.Parse(Text); set => Text = value.ToString(); }
 
         public void MarkAsCurrentlyLooked() => BackColor = Color.FromKnownColor(KnownColor.DarkMagenta);
     }

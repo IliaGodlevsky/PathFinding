@@ -4,7 +4,7 @@ using System.Linq;
 
 namespace GraphLibrary.Extensions.MatrixExtension
 {
-    public static class TwoDimensionalArrayExtensions
+    public static class MatrixExtensions
     {
         public static int Width<TSource>(this TSource[,] arr)
         {

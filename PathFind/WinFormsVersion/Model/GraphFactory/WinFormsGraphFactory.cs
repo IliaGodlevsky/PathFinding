@@ -3,11 +3,11 @@ using GraphLibrary.Vertex;
 using GraphLibrary.Graph;
 using WinFormsVersion.Vertex;
 using WinFormsVersion.Graph;
-using GraphLibrary.Extensions.RandomExtension;
+using GraphLibrary.Common.Constants;
 
 namespace WinFormsVersion.GraphFactory
 {
-    public class WinFormsGraphFactory : AbstractGraphFactory
+    internal class WinFormsGraphFactory : AbstractGraphFactory
     {
         public WinFormsGraphFactory(int percentOfObstacles,
             int width, int height, int placeBetweenButtons) : base(percentOfObstacles,
@@ -16,7 +16,7 @@ namespace WinFormsVersion.GraphFactory
             
         }
 
-        protected override IVertex CreateGraphTop() => new WinFormsVertex { Text = rand.GetRandomVertexValue() };
+        protected override IVertex CreateGraphTop() => new WinFormsVertex { Text = VertexValueRange.GetRandomVertexValue().ToString() };
 
         public override AbstractGraph GetGraph() => new WinFormsGraph(vertices);
 

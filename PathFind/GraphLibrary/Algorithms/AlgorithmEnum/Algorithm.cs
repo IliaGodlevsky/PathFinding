@@ -2,7 +2,7 @@
 
 namespace GraphLibrary.AlgorithmEnum
 {
-    public enum Algorithms
+    public enum Algorithms : byte
     {
         [Description("Wide path find algorithm")]
         WidePathFind = 1,

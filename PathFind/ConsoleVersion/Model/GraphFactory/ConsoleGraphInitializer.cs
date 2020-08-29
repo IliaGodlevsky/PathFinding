@@ -1,17 +1,16 @@
-﻿using GraphLibrary.Constants;
-using GraphLibrary.GraphFactory;
-using ConsoleVersion;
+﻿using GraphLibrary.GraphFactory;
 using ConsoleVersion.Graph;
 using ConsoleVersion.Vertex;
 using GraphLibrary;
 using GraphLibrary.Vertex;
 using GraphLibrary.Graph;
+using GraphLibrary.Common.Constants;
 
 namespace ConsoleVersion.GraphFactory
 {
-    public class ConsoleGraphInitializer : AbstractGraphInfoInitializer
+    internal class ConsoleGraphInitializer : AbstractGraphInfoInitializer
     {
-        public ConsoleGraphInitializer(VertexInfo[,] info) : base(info, Const.SIZE_BETWEEN_VERTICES)
+        public ConsoleGraphInitializer(VertexInfo[,] info) : base(info, VertexSize.SIZE_BETWEEN_VERTICES)
         {
 
         }

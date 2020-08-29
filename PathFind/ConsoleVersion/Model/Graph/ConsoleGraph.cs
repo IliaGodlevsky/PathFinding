@@ -3,7 +3,7 @@ using GraphLibrary.Vertex;
 
 namespace ConsoleVersion.Graph
 {
-    public class ConsoleGraph : AbstractGraph
+    internal class ConsoleGraph : AbstractGraph
     {
         public ConsoleGraph(IVertex[,] vertices) : base(vertices)
         {

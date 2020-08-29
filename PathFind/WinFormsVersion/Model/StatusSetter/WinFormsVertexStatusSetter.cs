@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Windows.Forms;
-using GraphLibrary.Constants;
 using GraphLibrary.Extensions;
 using GraphLibrary.Graph;
 using GraphLibrary.StatusSetter;
@@ -9,7 +8,7 @@ using WinFormsVersion.Vertex;
 
 namespace WinFormsVersion.StatusSetter
 {
-    public class WinFormsVertexStatusSetter : AbstractVertexStatusSetter
+    internal class WinFormsVertexStatusSetter : AbstractVertexStatusSetter
     {
         public WinFormsVertexStatusSetter(AbstractGraph graph) : base(graph)
         {

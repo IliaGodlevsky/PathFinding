@@ -4,7 +4,7 @@ using System.Windows;
 
 namespace WpfVersion.Model.GraphSaver
 {
-    public class WpfGraphSaver : AbstractGraphSaver
+    internal class WpfGraphSaver : AbstractGraphSaver
     {
         protected override string GetPath()
         {

@@ -7,7 +7,7 @@ using WpfVersion.Infrastructure;
 
 namespace WpfVersion.ViewModel
 {
-    public class PathFindViewModel : AbstractPathFindModel
+    internal class PathFindViewModel : AbstractPathFindModel
     {
         public RelayCommand ConfirmPathFindAlgorithmChoice { get; }
         public RelayCommand CancelPathFindAlgorithmChoice { get; }

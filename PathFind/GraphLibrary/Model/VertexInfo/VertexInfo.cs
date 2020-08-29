@@ -9,10 +9,10 @@ namespace GraphLibrary
         public VertexInfo(IVertex vertex)
         {
             IsObstacle = vertex.IsObstacle;            
-            Text = vertex.Text;
+            Cost = vertex.Cost;
         }
 
-        public bool IsObstacle { get; set; }
-        public string Text { get; set; }
+        public bool IsObstacle { get; private set; }
+        public int Cost { get; private set; }
     }
 }

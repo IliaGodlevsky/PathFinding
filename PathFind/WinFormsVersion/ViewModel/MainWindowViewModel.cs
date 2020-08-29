@@ -1,4 +1,4 @@
-﻿using GraphLibrary.Constants;
+﻿using GraphLibrary.Common.Constants;
 using GraphLibrary.Graph;
 using GraphLibrary.Model;
 using System;
@@ -16,7 +16,7 @@ using WinFormsVersion.View;
 
 namespace WinFormsVersion.ViewModel
 {
-    public class MainWindowViewModel : AbstractMainModel, INotifyPropertyChanged
+    internal class MainWindowViewModel : AbstractMainModel, INotifyPropertyChanged
     {
         public event PropertyChangedEventHandler PropertyChanged;
 
@@ -47,7 +47,7 @@ namespace WinFormsVersion.ViewModel
             set
             {
                 graphField = value;
-                int size = Const.SIZE_BETWEEN_VERTICES;
+                int size = VertexSize.SIZE_BETWEEN_VERTICES;
                 var field = graphField as WinFormsGraphField;
                 MainWindow.Controls.RemoveBy(ctrl => ctrl.IsGraphField());
                 field.Size = new Size(Graph.Width * size, Graph.Height * size);
@@ -68,7 +68,7 @@ namespace WinFormsVersion.ViewModel
         {
             Format = WinFormsResources.ParametresFormat;
             saver = new WinFormsGraphSaver();
-            loader = new WinFormsGraphLoader(Const.SIZE_BETWEEN_VERTICES);
+            loader = new WinFormsGraphLoader(VertexSize.SIZE_BETWEEN_VERTICES);
             filler = new WinFormsGraphFiller();
             graphField = new WinFormsGraphField();
         }

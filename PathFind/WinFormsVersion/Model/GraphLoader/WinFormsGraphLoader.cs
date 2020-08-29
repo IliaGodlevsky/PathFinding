@@ -6,7 +6,7 @@ using WinFormsVersion.GraphFactory;
 
 namespace WinFormsVersion.GraphLoader
 {
-    public class WinFormsGraphLoader : AbstractGraphLoader
+    internal class WinFormsGraphLoader : AbstractGraphLoader
     {
         private readonly int placeBetweenButtons;
 

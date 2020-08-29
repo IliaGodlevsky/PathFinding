@@ -9,17 +9,18 @@ namespace GraphLibrary
         {
             if (vertex is null)
                 return;
-            var neighbours = vertex.Neighbours;
-            foreach (var neigbour in neighbours)
-                neigbour.Neighbours.Add(vertex);
+            foreach (var neigbour in vertex.Neighbours)
+            {
+                if (CanBeNeighbour(neigbour, vertex))
+                    neigbour.Neighbours.Add(vertex);
+            }
         }
 
         public static void IsolateVertex(IVertex vertex)
         {
             if (vertex is null)
                 return;
-            var neighbours = vertex.Neighbours;
-            foreach (var neigbour in neighbours)
+            foreach (var neigbour in vertex.Neighbours)
                 neigbour.Neighbours.Remove(vertex);
             vertex.Neighbours.Clear();
         }
@@ -32,7 +33,8 @@ namespace GraphLibrary
 
         private static bool CanBeNeighbour(IVertex vertex, IVertex neighbourCandidate)
         {
-            return !neighbourCandidate.IsObstacle && vertex != neighbourCandidate;
+            return !neighbourCandidate.IsObstacle && vertex != neighbourCandidate &&
+                !vertex.Neighbours.Contains(neighbourCandidate);
         }
 
         public static void SetNeighbours(AbstractGraph graph, IVertex vertex)

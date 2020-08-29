@@ -1,4 +1,4 @@
-﻿using GraphLibrary.Constants;
+﻿using GraphLibrary.Common.Constants;
 using GraphLibrary.GraphFactory;
 using GraphLibrary.Model;
 using WpfVersion.Infrastructure;
@@ -7,7 +7,7 @@ using WpfVersion.Model.GraphFactory;
 
 namespace WpfVersion.ViewModel
 {
-    public class GraphCreateViewModel : AbstractCreateGraphModel
+    internal class GraphCreateViewModel : AbstractCreateGraphModel
     {
 
         public RelayCommand ConfirmCreateGraphCommand { get; }
@@ -46,7 +46,7 @@ namespace WpfVersion.ViewModel
             int width = int.Parse(Width);
             int height = int.Parse(Height);
             return new WpfGraphFactory(ObstaclePercent,
-                width, height, Const.SIZE_BETWEEN_VERTICES);
+                width, height, VertexSize.SIZE_BETWEEN_VERTICES);
         }
     }
 }

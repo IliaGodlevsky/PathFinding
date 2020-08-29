@@ -5,7 +5,7 @@ using WinFormsVersion.Vertex;
 
 namespace WinFormsVersion.Graph
 {
-    public class WinFormsGraph : AbstractGraph
+    internal class WinFormsGraph : AbstractGraph
     {
         public event MouseEventHandler SetStart;
         public event MouseEventHandler SetEnd;

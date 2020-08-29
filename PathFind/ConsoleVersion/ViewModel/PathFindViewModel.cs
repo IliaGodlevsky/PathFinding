@@ -9,10 +9,10 @@ using System.Drawing;
 
 namespace ConsoleVersion.ViewModel
 {
-    public class PathFindViewModel : AbstractPathFindModel
+    internal class PathFindViewModel : AbstractPathFindModel
     {
         private readonly ConsoleVertexStatusSetter changer;
-        public string AlgoList { get; set; }
+        public Tuple<string, string, string> Messages { get; set; }
 
         public PathFindViewModel(IMainModel model) : base(model)
         {
@@ -44,18 +44,19 @@ namespace ConsoleVersion.ViewModel
 
         private Algorithms GetAlgorithmEnum()
         {
-            return (Algorithms)Input.InputNumber(AlgoList + Res.ChooseAlrorithm,
-                (int)Algorithms.ValueGreedyAlgorithm, (int)Algorithms.WidePathFind);
+            return (Algorithms)Input.InputNumber(Messages.Item3,
+                (int)Algorithms.ValueGreedyAlgorithm, 
+                (int)Algorithms.WidePathFind);
         }
 
         private void ChooseStart()
         {
-            ChooseRange("\n" + Res.StartPoint, changer.SetStartVertex);
+            ChooseRange(Messages.Item1, changer.SetStartVertex);
         }
 
         private void ChooseEnd()
         {
-            ChooseRange(Res.DestinationPoint, changer.SetDestinationVertex);
+            ChooseRange(Messages.Item2, changer.SetDestinationVertex);
         }
 
         private void ChooseRange(string message, EventHandler method)

@@ -18,7 +18,7 @@ namespace GraphLibrary.AlgoSelector
                 case Algorithms.AStarAlgorithm: return new AStarAlgorithm(graph)
                 {
                     HeuristicFunction = (neighbour, vertex) =>
-                    int.Parse(neighbour.Text) + vertex.Value + 
+                    neighbour.Cost + vertex.AccumulatedCost +
                     Distance.GetChebyshevDistance(neighbour, graph.End)
                 };
                 case Algorithms.DistanceGreedyAlgorithm: return new GreedyAlgorithm(graph)
@@ -27,11 +27,11 @@ namespace GraphLibrary.AlgoSelector
                 };
                 case Algorithms.ValueGreedyAlgorithm: return new GreedyAlgorithm(graph)
                 {
-                    GreedyFunction = vertex => int.Parse(vertex.Text)
+                    GreedyFunction = vertex => vertex.Cost
                 };
                 case Algorithms.ValueDistanceGreedyAlgorithm: return new GreedyAlgorithm(graph)
                 {
-                    GreedyFunction = vertex => int.Parse(vertex.Text) + 
+                    GreedyFunction = vertex => vertex.Cost + 
                     Distance.GetEuclideanDistance(vertex, graph.End)
                 };
                 default: return null;

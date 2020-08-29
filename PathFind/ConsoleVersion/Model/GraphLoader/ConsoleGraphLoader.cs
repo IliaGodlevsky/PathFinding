@@ -6,7 +6,7 @@ using System;
 
 namespace ConsoleVersion.GraphLoader
 {
-    public class ConsoleGraphLoader : AbstractGraphLoader
+    internal class ConsoleGraphLoader : AbstractGraphLoader
     {
         protected override AbstractGraphInfoInitializer GetInitializer(VertexInfo[,] info) => new ConsoleGraphInitializer(info);
 

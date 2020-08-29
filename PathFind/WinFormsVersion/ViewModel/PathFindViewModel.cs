@@ -6,7 +6,7 @@ using System.Windows.Forms;
 
 namespace WinFormsVersion.ViewModel
 {
-    public class PathFindViewModel : AbstractPathFindModel
+    internal class PathFindViewModel : AbstractPathFindModel
     {
         public PathFindViewModel(IMainModel model) : base(model)
         {

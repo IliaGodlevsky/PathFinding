@@ -5,7 +5,7 @@ using WpfVersion.Model.Vertex;
 
 namespace WpfVersion.Model.Graph
 {
-    public class WpfGraph : AbstractGraph
+    internal class WpfGraph : AbstractGraph
     {
         public event MouseButtonEventHandler SetStart;
         public event MouseButtonEventHandler SetEnd;

@@ -5,7 +5,7 @@ using WinFormsVersion.Vertex;
 
 namespace WinFormsVersion.Model
 {
-    public class WinFormsGraphField : UserControl, IGraphField
+    internal class WinFormsGraphField : UserControl, IGraphField
     {
         public WinFormsGraphField()
         {

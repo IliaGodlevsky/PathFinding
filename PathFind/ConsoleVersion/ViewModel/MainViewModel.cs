@@ -13,7 +13,7 @@ using System.Drawing;
 
 namespace ConsoleVersion.ViewModel
 {
-    public class MainViewModel : AbstractMainModel
+    internal class MainViewModel : AbstractMainModel
     {
         private readonly IVertexStatusSetter changer;
 

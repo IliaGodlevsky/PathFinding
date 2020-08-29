@@ -15,7 +15,7 @@ namespace GraphLibrary.GraphFactory
             int width, int height, int placeBetweenVertices) : base(placeBetweenVertices)
         {
             rand = new Random();
-            IVertex InitializeTop(IVertex vertex)
+            IVertex InitializeVertex(IVertex vertex)
             {
                 vertex = CreateGraphTop();
                 if (rand.IsObstacleChance(percentOfObstacles))                
@@ -23,7 +23,7 @@ namespace GraphLibrary.GraphFactory
                 return vertex;
             }
             SetGraph(width, height);
-            vertices.Apply(InitializeTop);
+            vertices.Apply(InitializeVertex);
             vertices.Apply(SetLocation);
             VertexLinkManager.ConnectVertices(GetGraph());
         }

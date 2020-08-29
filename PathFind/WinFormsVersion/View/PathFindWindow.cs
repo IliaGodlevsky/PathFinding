@@ -7,7 +7,7 @@ using WinFormsVersion.ViewModel;
 
 namespace WinFormsVersion.View
 {
-    public partial class PathFindWindow : Form
+    internal partial class PathFindWindow : Form
     {
         public PathFindViewModel Model { get; set; }
         public PathFindWindow(PathFindViewModel model)

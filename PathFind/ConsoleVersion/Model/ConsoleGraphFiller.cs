@@ -6,7 +6,7 @@ using GraphLibrary.Vertex;
 
 namespace ConsoleVersion.Model
 {
-    public class ConsoleGraphFiller : AbstractGraphFiller
+    internal class ConsoleGraphFiller : AbstractGraphFiller
     {
         protected override void ChargeGraph(AbstractGraph graph, IVertexStatusSetter changer)
         {

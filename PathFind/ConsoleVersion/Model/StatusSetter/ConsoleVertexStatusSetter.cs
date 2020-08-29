@@ -3,11 +3,11 @@ using GraphLibrary.StatusSetter;
 using ConsoleVersion.Vertex;
 using System;
 using GraphLibrary.Graph;
-using GraphLibrary.Constants;
+using GraphLibrary.Common.Constants;
 
 namespace ConsoleVersion.StatusSetter
 {
-    public class ConsoleVertexStatusSetter : AbstractVertexStatusSetter
+    internal class ConsoleVertexStatusSetter : AbstractVertexStatusSetter
     {
 
         public ConsoleVertexStatusSetter(AbstractGraph graph) : base(graph)
@@ -16,8 +16,8 @@ namespace ConsoleVersion.StatusSetter
         }
 
         public override void ChangeVertexValue(object sender, EventArgs e) =>
-            (sender as ConsoleVertex).Text = Input.InputNumber(Res.NewTopValueMsg,
-                Const.MAX_VERTEX_VALUE, Const.MIN_VERTEX_VALUE).ToString();
+            (sender as ConsoleVertex).Cost = Input.InputNumber(Res.NewTopValueMsg,
+                VertexValueRange.UpperValue, VertexValueRange.LowerValue);
 
         protected override int GetWheelDelta(EventArgs e)
         {

@@ -8,7 +8,7 @@ using WpfVersion.Model.Vertex;
 
 namespace WpfVersion.Model
 {
-    public class WpfGraphFiller : AbstractGraphFiller
+    internal class WpfGraphFiller : AbstractGraphFiller
     {
         protected override void ChargeGraph(AbstractGraph graph, IVertexStatusSetter changer)
         {

@@ -3,7 +3,7 @@ using WinFormsVersion.ViewModel;
 
 namespace WinFormsVersion.View
 {
-    public partial class CreateGraphWindow : Form
+    internal partial class CreateGraphWindow : Form
     {
         public CreateGraphViewModel Model { get; set; }
         public CreateGraphWindow(CreateGraphViewModel model)

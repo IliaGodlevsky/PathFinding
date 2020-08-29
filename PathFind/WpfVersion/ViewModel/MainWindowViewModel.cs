@@ -1,4 +1,4 @@
-﻿using GraphLibrary.Constants;
+﻿using GraphLibrary.Common.Constants;
 using GraphLibrary.Graph;
 using GraphLibrary.Model;
 using System.ComponentModel;
@@ -13,7 +13,7 @@ using WpfVersion.View.Windows;
 
 namespace WpfVersion.ViewModel
 {
-    public class MainWindowViewModel : AbstractMainModel, INotifyPropertyChanged
+    internal class MainWindowViewModel : AbstractMainModel, INotifyPropertyChanged
     {
         public event PropertyChangedEventHandler PropertyChanged;
 
@@ -64,7 +64,7 @@ namespace WpfVersion.ViewModel
             GraphField = new WpfGraphField();
             Format = ViewModelResources.GraphParametresFormat;
             saver = new WpfGraphSaver();
-            loader = new WpfGraphLoader(Const.SIZE_BETWEEN_VERTICES);
+            loader = new WpfGraphLoader(VertexSize.SIZE_BETWEEN_VERTICES);
             filler = new WpfGraphFiller();
             StartPathFindCommand = new RelayCommand(ExecuteStartPathFindCommand, 
                 obj => Graph?.End != null && Graph?.Start != null);

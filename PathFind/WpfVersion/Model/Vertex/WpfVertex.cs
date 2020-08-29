@@ -1,5 +1,5 @@
 ﻿using GraphLibrary;
-using GraphLibrary.Constants;
+using GraphLibrary.Common.Constants;
 using GraphLibrary.Extensions;
 using GraphLibrary.Vertex;
 using System.Collections.Generic;
@@ -9,7 +9,7 @@ using System.Windows.Media;
 
 namespace WpfVersion.Model.Vertex
 {
-    public class WpfVertex : Label, IVertex
+    internal class WpfVertex : Label, IVertex
     {
         public static SolidColorBrush AfterVisitVertexColor { get; set; }
         public static SolidColorBrush BeingVisitedVertexColor { get; set; }
@@ -29,8 +29,7 @@ namespace WpfVersion.Model.Vertex
         public WpfVertex() : base()
         {
             this.Initialize();
-            Width = Const.WIN_FORMS_VERTEX_SIZE;
-            Height = Const.WIN_FORMS_VERTEX_SIZE;
+            Width = Height = VertexSize.VERTEX_SIZE;
             FontSize = 12;
             Template = (ControlTemplate)TryFindResource("vertexTemplate");
         }
@@ -42,21 +41,18 @@ namespace WpfVersion.Model.Vertex
 
         public bool IsEnd { get; set; }
         public bool IsObstacle { get; set; }
-
-        public bool IsSimpleVertex => !IsEnd && !IsStart;
-
         public bool IsStart { get; set; }
         public bool IsVisited { get; set; }
 
-        public string Text 
+        public int Cost 
         {
-            get { return Content.ToString(); }
-            set { Content = value; }
+            get { return int.Parse(Content.ToString()); }
+            set { Content = value.ToString(); }
         }
 
         public List<IVertex> Neighbours { get; set; }
         public IVertex ParentVertex { get; set; }
-        public double Value { get; set; }
+        public double AccumulatedCost { get; set; }
         public Point Location { get; set; }
 
         public VertexInfo Info => new VertexInfo(this);

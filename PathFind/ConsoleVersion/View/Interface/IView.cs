@@ -1,6 +1,6 @@
 ﻿namespace ConsoleVersion.View
 {
-    public interface IView
+    internal interface IView
     {
         void Start();
     }

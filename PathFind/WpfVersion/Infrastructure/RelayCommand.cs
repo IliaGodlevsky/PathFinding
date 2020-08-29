@@ -3,7 +3,7 @@ using System.Windows.Input;
 
 namespace WpfVersion.Infrastructure
 {
-    public class RelayCommand : ICommand
+    internal class RelayCommand : ICommand
     {
         private readonly Action<object> execute;
         private readonly Func<object, bool> canExecute;

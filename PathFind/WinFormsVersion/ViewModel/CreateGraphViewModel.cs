@@ -1,4 +1,4 @@
-﻿using GraphLibrary.Constants;
+﻿using GraphLibrary.Common.Constants;
 using GraphLibrary.GraphFactory;
 using GraphLibrary.Model;
 using System;
@@ -7,7 +7,7 @@ using WinFormsVersion.Model;
 
 namespace WinFormsVersion.ViewModel
 {
-    public class CreateGraphViewModel : AbstractCreateGraphModel
+    internal class CreateGraphViewModel : AbstractCreateGraphModel
     {
         public CreateGraphViewModel(IMainModel model) : base(model)
         {
@@ -46,7 +46,7 @@ namespace WinFormsVersion.ViewModel
             int width = int.Parse(Width);
             int height = int.Parse(Height);
             return new WinFormsGraphFactory(ObstaclePercent,
-                width, height, Const.SIZE_BETWEEN_VERTICES);
+                width, height, VertexSize.SIZE_BETWEEN_VERTICES);
         }
     }
 }

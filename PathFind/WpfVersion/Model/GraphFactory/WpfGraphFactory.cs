@@ -1,4 +1,4 @@
-﻿using GraphLibrary.Extensions.RandomExtension;
+﻿using GraphLibrary.Common.Constants;
 using GraphLibrary.Graph;
 using GraphLibrary.GraphFactory;
 using GraphLibrary.Vertex;
@@ -7,7 +7,7 @@ using WpfVersion.Model.Vertex;
 
 namespace WpfVersion.Model.GraphFactory
 {
-    public class WpfGraphFactory : AbstractGraphFactory
+    internal class WpfGraphFactory : AbstractGraphFactory
     {
         public WpfGraphFactory(int percentOfObstacles, 
             int width, int height, int placeBetweenVertices) : 
@@ -17,7 +17,7 @@ namespace WpfVersion.Model.GraphFactory
 
         public override AbstractGraph GetGraph() => new WpfGraph(vertices);
 
-        protected override IVertex CreateGraphTop() => new WpfVertex { Text = rand.GetRandomVertexValue() };
+        protected override IVertex CreateGraphTop() => new WpfVertex { Cost = VertexValueRange.GetRandomVertexValue() };
 
         protected override void SetGraph(int width, int height) => vertices = new WpfVertex[width, height];
     }

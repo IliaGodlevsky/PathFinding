@@ -3,7 +3,7 @@ using GraphLibrary.GraphSaver;
 
 namespace WinFormsVersion.GraphSaver
 {
-    public class WinFormsGraphSaver : AbstractGraphSaver
+    internal class WinFormsGraphSaver : AbstractGraphSaver
     {
         protected override string GetPath()
         {

@@ -1,4 +1,5 @@
-﻿using GraphLibrary.Constants;
+﻿using GraphLibrary.Common.Constants;
+using GraphLibrary.Extensions;
 using GraphLibrary.Extensions.MatrixExtension;
 using GraphLibrary.Graph;
 using GraphLibrary.PauseMaker;
@@ -30,7 +31,7 @@ namespace GraphLibrary.Algorithm
             this.graph = graph;
             IVertex SetValueToInfinity(IVertex vertex)
             {
-                vertex.Value = double.PositiveInfinity; 
+                vertex.AccumulatedCost = double.PositiveInfinity; 
                 return vertex;
             }
             this.graph.GetArray().Apply(SetValueToInfinity);
@@ -45,23 +46,23 @@ namespace GraphLibrary.Algorithm
             {
                 var temp = vertex;
                 vertex = vertex.ParentVertex;
-                if (vertex.IsSimpleVertex)
+                if (vertex.IsSimpleVertex())
                     vertex.MarkAsPath();
                 StatCollector.IncludeVertexInStatistics(temp);
-                pauseMaker?.Pause(Const.PATH_DRAW_PAUSE_MILLISECONDS);
+                pauseMaker?.Pause(AlgorithmExecutionDelay.PATH_DRAW_PAUSE);
             }
         }
 
         private IVertex GetChippestUnvisitedVertex()
         {
             neigbourQueue.RemoveAll(vertex => vertex.IsVisited);
-            neigbourQueue.Sort((vertex1, vertex2) => vertex1.Value.CompareTo(vertex2.Value));
+            neigbourQueue.Sort((vertex1, vertex2) => vertex1.AccumulatedCost.CompareTo(vertex2.AccumulatedCost));
             return neigbourQueue.Any() ? neigbourQueue.First() : null;
         }
 
         protected virtual double GetPathValue(IVertex neighbour, IVertex vertex)
         {
-            return int.Parse(neighbour.Text) + vertex.Value;
+            return neighbour.Cost + vertex.AccumulatedCost;
         }
 
         private void MakeWaves(IVertex vertex)
@@ -73,9 +74,9 @@ namespace GraphLibrary.Algorithm
             {
                 if (!neighbour.IsVisited)
                     neigbourQueue.Add(neighbour);
-                if (neighbour.Value > GetPathValue(neighbour, vertex))
+                if (neighbour.AccumulatedCost > GetPathValue(neighbour, vertex))
                 {                    
-                    neighbour.Value = GetPathValue(neighbour, vertex);
+                    neighbour.AccumulatedCost = GetPathValue(neighbour, vertex);
                     neighbour.ParentVertex = vertex;
                 }
             }
@@ -88,24 +89,24 @@ namespace GraphLibrary.Algorithm
             StatCollector.StartCollect();
             var currentVertex = graph.Start;
             currentVertex.IsVisited = true;
-            currentVertex.Value = 0;
+            currentVertex.AccumulatedCost = 0;
             do
             {
                 MakeWaves(currentVertex);
                 currentVertex = GetChippestUnvisitedVertex();
-                if (!IsValidVertex(currentVertex))
+                if (!IsValidVertex(currentVertex)) 
                     break;
                 if (IsRightVertexToVisit(currentVertex))
                     Visit(currentVertex);
-                pauseMaker?.Pause(Const.FIND_PROCESS_PAUSE_MILLISECONDS);
+                pauseMaker?.Pause(AlgorithmExecutionDelay.FIND_PROCESS_PAUSE);
             } while (!IsDestination(currentVertex));
             StatCollector.StopCollect();
-            return graph?.End?.IsVisited == true;
+            return graph.End?.IsVisited == true;
         }
 
         private bool IsValidVertex(IVertex vertex)
         {
-            return vertex?.Value != double.PositiveInfinity && vertex != null;
+            return vertex?.AccumulatedCost != double.PositiveInfinity && vertex != null;
         }
 
         private bool IsDestination(IVertex vertex)
@@ -114,7 +115,8 @@ namespace GraphLibrary.Algorithm
                 return false;
             if (vertex.IsObstacle)
                 return false;
-            return vertex.IsEnd && vertex.IsVisited;
+            return vertex.IsEnd && vertex.IsVisited
+                || graph.End == null;
         }
 
         private bool IsRightVertexToVisit(IVertex vertex)
@@ -133,7 +135,7 @@ namespace GraphLibrary.Algorithm
             if (!vertex.IsEnd)
             {
                 vertex.MarkAsCurrentlyLooked();
-                pauseMaker?.Pause(Const.VISIT_PAUSE_MILLISECONDS);
+                pauseMaker?.Pause(AlgorithmExecutionDelay.VISIT_PAUSE);
                 vertex.MarkAsVisited();               
             }
             StatCollector.Visited();

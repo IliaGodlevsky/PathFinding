@@ -1,5 +1,4 @@
-﻿using GraphLibrary.Constants;
-using GraphLibrary.Extensions;
+﻿using GraphLibrary.Extensions;
 using GraphLibrary.Graph;
 using GraphLibrary.StatusSetter;
 using GraphLibrary.Vertex;
@@ -9,7 +8,7 @@ using WpfVersion.Model.Vertex;
 
 namespace WpfVersion.Model.StatusSetter
 {
-    public class WpfVertexStatusSetter : AbstractVertexStatusSetter
+    internal class WpfVertexStatusSetter : AbstractVertexStatusSetter
     {
 
         public WpfVertexStatusSetter(AbstractGraph graph) : base(graph)

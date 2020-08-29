@@ -4,7 +4,7 @@ using Console = Colorful.Console;
 
 namespace ConsoleVersion.Forms
 {
-    public static class GraphShower
+    internal static class GraphShower
     {
         private const string space = " ";
         private const string bigSpace = "  ";
@@ -40,7 +40,7 @@ namespace ConsoleVersion.Forms
 
         private static void WriteVertex(ConsoleVertex vertex)
         {
-            Console.Write(vertex.Text + bigSpace, vertex.Colour);
+            Console.Write(vertex.Cost + bigSpace, vertex.Colour);
         }
 
         private static void ShowGraph(IMainModel model)

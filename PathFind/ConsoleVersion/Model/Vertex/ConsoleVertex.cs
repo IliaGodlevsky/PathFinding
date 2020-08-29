@@ -6,7 +6,7 @@ using System.Drawing;
 
 namespace ConsoleVersion.Vertex
 {
-    public class ConsoleVertex : IVertex
+    internal class ConsoleVertex : IVertex
     {
         public ConsoleVertex()
         {
@@ -25,22 +25,29 @@ namespace ConsoleVersion.Vertex
 
         public bool IsStart { get; set; }
         public bool IsVisited { get; set; }
-        public string Text { get; set; }
+        public int Cost { get; set; }
         public Color Colour { get; set; }
         public List<IVertex> Neighbours { get; set; }
         public IVertex ParentVertex { get; set; }
-        public double Value { get; set; }
+        public double AccumulatedCost { get; set; }
         public Point Location { get; set; }
 
         public VertexInfo Info => new VertexInfo(this);
 
-        public void MarkAsCurrentlyLooked(){ return; }
+        public void MarkAsCurrentlyLooked()
+        {
+            return;
+        }
 
         public void MarkAsEnd() => Colour = Color.FromKnownColor(KnownColor.Red);
 
         public void MarkAsSimpleVertex() => Colour = Color.FromKnownColor(KnownColor.White);
 
-        public void MarkAsObstacle() => this.WashVertex();
+        public void MarkAsObstacle()
+        {
+            this.WashVertex();
+            Colour = Color.FromKnownColor(KnownColor.Black);
+        }
 
         public void MarkAsPath() => Colour = Color.FromKnownColor(KnownColor.Yellow);
 

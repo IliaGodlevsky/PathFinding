@@ -3,7 +3,7 @@
 namespace ConsoleVersion.Enums
 {
 
-    public enum MenuOption
+    internal enum MenuOption : byte
     {
         [Description("Quit program")]
         Quit,

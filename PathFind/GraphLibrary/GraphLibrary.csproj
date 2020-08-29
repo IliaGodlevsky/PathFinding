@@ -43,13 +43,15 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Common\Constants\Const.cs" />
+    <Compile Include="Common\Constants\AlgorithmExecutionDelay.cs" />
     <Compile Include="Algorithms\DistanceCalculator\Distance.cs" />
     <Compile Include="Algorithms\AlgorithmEnum\Algorithm.cs" />
+    <Compile Include="Common\Constants\VertexSize.cs" />
+    <Compile Include="Common\Constants\VertexValueRange.cs" />
     <Compile Include="Common\Extensions\EnumExtensions.cs" />
     <Compile Include="Common\Extensions\IntExtensions.cs" />
     <Compile Include="Common\Extensions\IVertexExtension.cs" />
-    <Compile Include="Common\Extensions\TwoDimensionArrayExtensions.cs" />
+    <Compile Include="Common\Extensions\MatrixExtensions.cs" />
     <Compile Include="Common\Extensions\RandomExtensions.cs" />
     <Compile Include="Common\DataFormatter\GraphDataFormatter.cs" />
     <Compile Include="GraphCreate\GraphFactory\AbstractGraphFactory.cs" />

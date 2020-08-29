@@ -5,7 +5,7 @@ using System.Windows.Data;
 
 namespace WpfVersion.Converters
 {
-    public class ObstaclePercentConverter : IValueConverter
+    internal class ObstaclePercentConverter : IValueConverter
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {

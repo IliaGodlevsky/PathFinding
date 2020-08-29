@@ -1,4 +1,5 @@
-﻿using GraphLibrary.Constants;
+﻿using GraphLibrary.Common.Constants;
+using GraphLibrary.Extensions;
 using GraphLibrary.Graph;
 using GraphLibrary.PauseMaker;
 using GraphLibrary.Statistics;
@@ -36,18 +37,18 @@ namespace GraphLibrary.Algorithm
 
         private IVertex GoNextWave(IVertex vertex)
         {
-            double min = vertex.Neighbours.Min(vert => vert.Value);
-            return vertex.Neighbours.Find(vert => min == vert.Value
+            double min = vertex.Neighbours.Min(vert => vert.AccumulatedCost);
+            return vertex.Neighbours.Find(vert => min == vert.AccumulatedCost
                     && vert.IsVisited && IsRightNeighbour(vert));
         }
 
-        protected virtual double WaveFunction(IVertex vertex) => vertex.Value + 1;
+        protected virtual double WaveFunction(IVertex vertex) => vertex.AccumulatedCost + 1;
 
         private bool IsRightNeighbour(IVertex vertex) => !vertex.IsEnd;
 
         private bool IsRightPath(IVertex vertex) => !vertex.IsStart;
 
-        private bool IsRightCellToVisit(IVertex vertex) => !vertex.IsVisited;
+        private bool IsRightVertexToVisit(IVertex vertex) => !vertex.IsVisited;
 
         protected virtual bool IsSuitableForQueuing(IVertex vertex) => !vertex.IsVisited;
 
@@ -67,8 +68,15 @@ namespace GraphLibrary.Algorithm
             foreach (var neighbour in vertex.Neighbours)
             {
                 if (!neighbour.IsVisited)
-                    neighbour.Value = WaveFunction(vertex);
+                    neighbour.AccumulatedCost = WaveFunction(vertex);
             }
+        }
+
+        private void FindAction(IVertex currentVertex)
+        {
+            Visit(currentVertex);
+            MakeWaves(currentVertex);
+            AddToQueue(currentVertex.Neighbours);
         }
 
         public bool FindDestionation()
@@ -77,22 +85,16 @@ namespace GraphLibrary.Algorithm
                 return false;
             StatCollector.StartCollect();
             var currentVertex = graph.Start;
-            Visit(currentVertex);
-            MakeWaves(currentVertex);
-            AddToQueue(currentVertex.Neighbours);
+            FindAction(currentVertex);
             while (!IsDestination(currentVertex))
             {
                 currentVertex = neighbourQueue.Dequeue();
-                if (IsRightCellToVisit(currentVertex))
-                {
-                    Visit(currentVertex);
-                    MakeWaves(currentVertex);
-                    AddToQueue(currentVertex.Neighbours);
-                }
-                pauseMaker?.Pause(Const.FIND_PROCESS_PAUSE_MILLISECONDS);
+                if (IsRightVertexToVisit(currentVertex))
+                    FindAction(currentVertex);
+                pauseMaker?.Pause(AlgorithmExecutionDelay.FIND_PROCESS_PAUSE);
             }
             StatCollector.StopCollect();
-            return graph.End.IsVisited;
+            return graph.End?.IsVisited == true;
         }
 
         public void DrawPath()
@@ -101,24 +103,27 @@ namespace GraphLibrary.Algorithm
             while (IsRightPath(vertex))
             {
                 vertex = GoNextWave(vertex);
-                if (vertex.IsSimpleVertex)
+                if (vertex.IsSimpleVertex())
                     vertex.MarkAsPath();
                 StatCollector.IncludeVertexInStatistics(vertex);
-                pauseMaker?.Pause(Const.PATH_DRAW_PAUSE_MILLISECONDS);
+                pauseMaker?.Pause(AlgorithmExecutionDelay.PATH_DRAW_PAUSE);
             }
         }
 
-        private bool IsDestination(IVertex vertex) => vertex is null ? false : vertex.IsEnd || !neighbourQueue.Any();
+        private bool IsDestination(IVertex vertex)
+        {
+            return !(vertex is null) && (vertex.IsEnd || !neighbourQueue.Any() || graph.End == null);
+        }
 
         private void Visit(IVertex vertex)
         {          
             if (vertex.IsObstacle)
                 return;
             vertex.IsVisited = true;
-            if (vertex.IsSimpleVertex)
+            if (vertex.IsSimpleVertex())
             {
                 vertex.MarkAsCurrentlyLooked();
-                pauseMaker?.Pause(Const.VISIT_PAUSE_MILLISECONDS);
+                pauseMaker?.Pause(AlgorithmExecutionDelay.VISIT_PAUSE);
                 vertex.MarkAsVisited();
             }
             StatCollector.Visited();
