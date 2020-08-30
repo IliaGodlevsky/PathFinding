@@ -11,7 +11,6 @@ namespace GraphLibrary.GraphFactory
             int placeBetweenVertices) : 
             base(info.Width(), info.Height(), placeBetweenVertices)
         {
-
             if (info == null)
                 return;
             IVertex InitializeVertex(IVertex vertex)
