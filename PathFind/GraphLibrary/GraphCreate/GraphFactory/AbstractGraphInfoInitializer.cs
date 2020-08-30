@@ -19,8 +19,7 @@ namespace GraphLibrary.GraphFactory
                 vertex = CreateVertex(info[indices.X, indices.Y]);                
                 return SetLocation(vertex);
             }
-            vertices.Apply(InitializeVertex);
-            
+            vertices.Apply(InitializeVertex);            
         }
 
         protected abstract IVertex CreateVertex(VertexInfo info);
