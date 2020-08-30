@@ -11,7 +11,8 @@ namespace GraphLibrary.GraphFactory
     {
         protected Random rand;
         public AbstractGraphFactory(int percentOfObstacles,
-            int width, int height, int placeBetweenVertices) : base(width, height, placeBetweenVertices)
+            int width, int height, int placeBetweenVertices) 
+            : base(width, height, placeBetweenVertices)
         {
             rand = new Random();
             IVertex InitializeVertex(IVertex vertex)
