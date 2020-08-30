@@ -22,12 +22,15 @@ namespace ConsoleVersion.ViewModel
             int obstacles = Input.InputNumber(Messages.Item1, 
                 GraphParametresRange.UpperObstacleValue, 
                 GraphParametresRange.LowerObstacleValue);
+
             int width = Input.InputNumber(Messages.Item2, 
                 GraphParametresRange.UpperWidthValue, 
                 GraphParametresRange.LowerWidthValue);
+
             int height = Input.InputNumber(Messages.Item3, 
                 GraphParametresRange.UpperHeightValue, 
                 GraphParametresRange.LowerHeightValue);
+
             return new ConsoleGraphFactory(obstacles, width, height);
         }
     }
