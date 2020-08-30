@@ -40,15 +40,15 @@ namespace ConsoleVersion.View
 
         private string GetMenu()
         {           
-            var stringBuilder = new StringBuilder();
+            var menu = new StringBuilder();
             var descriptions = ((MenuOption)default).GetDescriptions<MenuOption>();
             foreach (var item in descriptions)
             {               
                 int numberOf = descriptions.IndexOf(item);
-                stringBuilder.Append(numberOf.IsEven() ? newLine : largeSpace + tab);
-                stringBuilder.Append(string.Format(Res.ShowFormat, numberOf, item));
+                menu.Append(numberOf.IsEven() ? newLine : largeSpace + tab);
+                menu.Append(string.Format(Res.ShowFormat, numberOf, item));
             }
-            return stringBuilder.ToString();
+            return menu.ToString();
         }
 
         private MenuOption GetOption()
