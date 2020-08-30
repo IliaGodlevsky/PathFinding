@@ -15,7 +15,7 @@ namespace GraphLibrary.GraphFactory
             vertices = new IVertex[width, height];
         }
 
-        protected virtual IVertex SetLocation(IVertex vertex)
+        protected IVertex SetLocation(IVertex vertex)
         {
             vertex.Location = new Point(
                     indices.X * placeBetweenVertices,
