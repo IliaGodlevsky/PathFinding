@@ -8,8 +8,8 @@ namespace GraphLibrary.GraphFactory
         : AbstractVertexLocator, IGraphFactory
     {
         public AbstractGraphInfoInitializer(VertexInfo[,] info,
-            int placeBetweenVertices) : base(info.Width(), 
-                info.Height(), placeBetweenVertices)
+            int placeBetweenVertices) : 
+            base(info.Width(), info.Height(), placeBetweenVertices)
         {
 
             if (info == null)
