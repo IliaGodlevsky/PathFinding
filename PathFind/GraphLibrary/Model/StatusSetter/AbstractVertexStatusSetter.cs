@@ -1,6 +1,5 @@
 ﻿using GraphLibrary.Common.Constants;
 using GraphLibrary.Extensions;
-using GraphLibrary.Extensions.RandomExtension;
 using GraphLibrary.Graph;
 using GraphLibrary.Vertex;
 using System;
@@ -20,14 +19,10 @@ namespace GraphLibrary.StatusSetter
 
         public virtual void ChangeVertexValue(object sender, EventArgs e)
         {
-            var vertex = (sender as IVertex);
+            var vertex = sender as IVertex;
             if (vertex.IsObstacle)
                 return;
-            int currentVertexValue = vertex.Cost;
-            currentVertexValue += GetWheelDelta(e) > 0 ? 1 : -1;
-            currentVertexValue = VertexValueRange.
-                ReturnValueInValueRange(currentVertexValue);
-            vertex.Cost = currentVertexValue;
+            vertex.Cost = VertexValueRange.ReturnValueInValueRange(vertex.Cost += GetWheelDelta(e) > 0 ? 1 : -1);
         }
 
         private void MakeObstacle(IVertex vertex)
@@ -71,7 +66,7 @@ namespace GraphLibrary.StatusSetter
 
         public virtual void ReversePolarity(object sender, EventArgs e)
         {
-            IVertex vertex = sender as IVertex;
+            var vertex = sender as IVertex;
             if (vertex.IsObstacle)
                 MakeVertex(vertex);
             else
