@@ -1,5 +1,4 @@
-﻿using GraphLibrary.Extensions.MatrixExtension;
-using GraphLibrary.Vertex;
+﻿using GraphLibrary.Vertex;
 using System.Drawing;
 
 namespace GraphLibrary.GraphFactory
@@ -8,21 +7,20 @@ namespace GraphLibrary.GraphFactory
     {
         protected IVertex[,] vertices;
         protected int placeBetweenVertices;
+        protected Point indices;
 
-        protected AbstractVertexLocator(int placeBetweenVertices)
+        protected AbstractVertexLocator(int width, int height, int placeBetweenVertices)
         {
             this.placeBetweenVertices = placeBetweenVertices;
+            vertices = new IVertex[width, height];
         }
 
         protected virtual IVertex SetLocation(IVertex vertex)
         {
-            var indices = vertices.GetIndices(vertex);
             vertex.Location = new Point(
-                indices.X * placeBetweenVertices,
-                indices.Y * placeBetweenVertices);
+                    indices.X * placeBetweenVertices,
+                    indices.Y * placeBetweenVertices);
             return vertex;
         }
-
-        protected abstract void SetGraph(int width, int height);
     }
 }

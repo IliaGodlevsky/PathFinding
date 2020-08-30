@@ -5,28 +5,28 @@ namespace GraphLibrary.Common.Constants
     public static class VertexValueRange
     {
         private static readonly Random rand;
-        private static readonly int upperValue;
-        private static readonly int lowerValue;
+        public static int UpperValue { get; }
+        public static  int LowerValue { get; }
 
         static VertexValueRange()
         {
             rand = new Random();
-            upperValue = 9;
-            lowerValue = 1;
+            UpperValue = 9;
+            LowerValue = 1;
         }
 
         public static int ReturnValueInValueRange(int value)
         {
-            if (value > upperValue)
-                value = lowerValue;
-            else if (value < lowerValue)
-                value = upperValue;
+            if (value > UpperValue)
+                value = LowerValue;
+            else if (value < LowerValue)
+                value = UpperValue;
             return value;
         }
 
         public static int GetRandomVertexValue()
         {
-            return rand.Next(upperValue) + lowerValue;
+            return rand.Next(UpperValue) + LowerValue;
         }
     }
 }

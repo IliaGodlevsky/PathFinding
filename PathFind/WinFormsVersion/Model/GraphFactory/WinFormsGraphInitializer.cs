@@ -25,10 +25,5 @@ namespace WinFormsVersion.GraphFactory
         {
             return new WinFormsGraph(vertices);
         }
-
-        protected override void SetGraph(int width, int height)
-        {
-            vertices = new WinFormsVertex[width, height];
-        }
     }
 }

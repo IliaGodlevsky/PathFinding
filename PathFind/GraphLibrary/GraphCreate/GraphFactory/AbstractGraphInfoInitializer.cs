@@ -8,17 +8,20 @@ namespace GraphLibrary.GraphFactory
         : AbstractVertexLocator, IGraphFactory
     {
         public AbstractGraphInfoInitializer(VertexInfo[,] info,
-            int placeBetweenVertices) : base(placeBetweenVertices)
+            int placeBetweenVertices) : base(info.Width(), 
+                info.Height(), placeBetweenVertices)
         {
 
             if (info == null)
                 return;
-
-            SetGraph(info.Width(), info.Height());
-            vertices.Apply(vertex => CreateVertex(
-                info[vertices.GetIndices(vertex).X, 
-                vertices.GetIndices(vertex).Y]));
-            vertices.Apply(SetLocation);
+            IVertex InitializeVertex(IVertex vertex)
+            {
+                indices = vertices.GetIndices(vertex);
+                vertex = CreateVertex(info[indices.X, indices.Y]);                
+                return SetLocation(vertex);
+            }
+            vertices.Apply(InitializeVertex);
+            
         }
 
         protected abstract IVertex CreateVertex(VertexInfo info);

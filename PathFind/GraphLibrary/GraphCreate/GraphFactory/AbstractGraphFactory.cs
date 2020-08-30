@@ -11,18 +11,18 @@ namespace GraphLibrary.GraphFactory
     {
         protected Random rand;
         public AbstractGraphFactory(int percentOfObstacles,
-            int width, int height, int placeBetweenVertices) : base(placeBetweenVertices)
+            int width, int height, int placeBetweenVertices) : base(width, height, placeBetweenVertices)
         {
             rand = new Random();
             IVertex InitializeVertex(IVertex vertex)
             {
+                indices = vertices.GetIndices(vertex);
                 vertex = CreateVertex();
                 if (rand.IsObstacleChance(percentOfObstacles))                
-                    vertex.MarkAsObstacle();               
-                return vertex;
+                    vertex.MarkAsObstacle();
+                return SetLocation(vertex);
             }
-            SetGraph(width, height);
-            vertices.Apply(InitializeVertex, SetLocation);
+            vertices.Apply(InitializeVertex);
             VertexLinkManager.ConnectVertices(GetGraph());
         }
 

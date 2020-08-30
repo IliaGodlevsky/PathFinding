@@ -19,7 +19,5 @@ namespace WinFormsVersion.GraphFactory
         protected override IVertex CreateVertex() => new WinFormsVertex { Text = VertexValueRange.GetRandomVertexValue().ToString() };
 
         public override AbstractGraph GetGraph() => new WinFormsGraph(vertices);
-
-        protected override void SetGraph(int width, int height) => vertices = new WinFormsVertex[width, height];
     }
 }

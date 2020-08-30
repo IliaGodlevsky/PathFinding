@@ -17,7 +17,5 @@ namespace WpfVersion.Model.GraphFactory
         public override AbstractGraph GetGraph() => new WpfGraph(vertices);
 
         protected override IVertex CreateVertex(VertexInfo info) => new WpfVertex(info);
-
-        protected override void SetGraph(int width, int height) => vertices = new WpfVertex[width, height];
     }
 }

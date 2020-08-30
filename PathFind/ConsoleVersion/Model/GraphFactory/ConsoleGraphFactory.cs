@@ -18,7 +18,5 @@ namespace ConsoleVersion.GraphFactory
         protected override IVertex CreateVertex() => new ConsoleVertex { Cost = VertexValueRange.GetRandomVertexValue() };
 
         public override AbstractGraph GetGraph() => new ConsoleGraph(vertices);
-
-        protected override void SetGraph(int width, int height) => vertices = new ConsoleVertex[width, height];
     }
 }
