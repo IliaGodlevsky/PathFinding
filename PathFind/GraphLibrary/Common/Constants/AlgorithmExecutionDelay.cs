@@ -7,6 +7,6 @@
     {
         public const int VISIT_PAUSE = 2;
         public const int FIND_PROCESS_PAUSE = 8;
-        public const int PATH_DRAW_PAUSE = 35;
+        public const int PATH_DRAW_PAUSE = 30;
     }
 }

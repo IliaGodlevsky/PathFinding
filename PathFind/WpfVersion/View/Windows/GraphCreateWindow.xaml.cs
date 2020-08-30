@@ -1,4 +1,5 @@
-﻿using System.Windows;
+﻿using GraphLibrary.Common.Constants;
+using System.Windows;
 
 namespace WpfVersion.View.Windows
 {
@@ -10,7 +11,8 @@ namespace WpfVersion.View.Windows
         public GraphCreatesWindow()
         {
             InitializeComponent();
-            
+            obstacleSlider.Minimum = GraphParametresRange.LowerObstacleValue;
+            obstacleSlider.Maximum = GraphParametresRange.UpperObstacleValue;
         }
     }
 }

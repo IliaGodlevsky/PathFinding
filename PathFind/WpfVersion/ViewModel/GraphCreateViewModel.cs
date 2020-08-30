@@ -9,7 +9,6 @@ namespace WpfVersion.ViewModel
 {
     internal class GraphCreateViewModel : AbstractCreateGraphModel
     {
-
         public RelayCommand ConfirmCreateGraphCommand { get; }
         public RelayCommand CancelCreateGraphCommand { get; }
 
@@ -34,9 +33,9 @@ namespace WpfVersion.ViewModel
 
         private bool CanExecuteConfirmCreateGraphCommand(object param)
         {
-            if (int.TryParse(Width, out int width)
-                && int.TryParse(Height, out int height))
-                return width > 0 && height > 0;
+            if (int.TryParse(Width, out int width) && int.TryParse(Height, out int height))
+                return GraphParametresRange.
+                    IsRightGraphParamters(width, height, ObstaclePercent);
             else
                 return false;
         }

@@ -5,6 +5,7 @@ using GraphLibrary.Graph;
 using GraphLibrary.PauseMaker;
 using GraphLibrary.Statistics;
 using GraphLibrary.Vertex;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -12,13 +13,14 @@ namespace GraphLibrary.Algorithm
 {
     /// <summary>
     /// Finds the chippest path to destination top. 
-    /// </summary>
+    /// </summary>    
     public class DijkstraAlgorithm : IPathFindAlgorithm
     {
         protected Pauser pauseMaker;
-        protected readonly AbstractGraph graph;
+        protected AbstractGraph graph;
         private readonly List<IVertex> neigbourQueue;
         public IStatisticsCollector StatCollector { get; set; }
+        public Func<IVertex, IVertex, double> RelaxFunction { get; set; }
         public Pause PauseEvent 
         {
             get { return pauseMaker?.PauseEvent; }
@@ -37,6 +39,7 @@ namespace GraphLibrary.Algorithm
             this.graph.GetArray().Apply(SetValueToInfinity);
             StatCollector = new StatisticsCollector();
             pauseMaker = new Pauser();
+            RelaxFunction = (neighbour, vertex) => neighbour.Cost + vertex.AccumulatedCost;
         }
 
         public void DrawPath()
@@ -60,11 +63,6 @@ namespace GraphLibrary.Algorithm
             return neigbourQueue.Any() ? neigbourQueue.First() : null;
         }
 
-        protected virtual double GetPathValue(IVertex neighbour, IVertex vertex)
-        {
-            return neighbour.Cost + vertex.AccumulatedCost;
-        }
-
         private void MakeWaves(IVertex vertex)
         {
             if (vertex is null)
@@ -74,9 +72,9 @@ namespace GraphLibrary.Algorithm
             {
                 if (!neighbour.IsVisited)
                     neigbourQueue.Add(neighbour);
-                if (neighbour.AccumulatedCost > GetPathValue(neighbour, vertex))
+                if (neighbour.AccumulatedCost > RelaxFunction(neighbour, vertex))
                 {                    
-                    neighbour.AccumulatedCost = GetPathValue(neighbour, vertex);
+                    neighbour.AccumulatedCost = RelaxFunction(neighbour, vertex);
                     neighbour.ParentVertex = vertex;
                 }
             }

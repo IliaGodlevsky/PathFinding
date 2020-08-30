@@ -1,4 +1,5 @@
-﻿using System.Windows.Forms;
+﻿using GraphLibrary.Common.Constants;
+using System.Windows.Forms;
 using WinFormsVersion.ViewModel;
 
 namespace WinFormsVersion.View
@@ -23,6 +24,8 @@ namespace WinFormsVersion.View
             var bindTextBoxAndSlider = new Binding("Value", obstacleTextBox, "Text", true, 
                 DataSourceUpdateMode.OnPropertyChanged);
             obstacleSlider.DataBindings.Add(bindTextBoxAndSlider);
+            obstacleSlider.Maximum = GraphParametresRange.UpperObstacleValue;
+            obstacleSlider.Minimum = GraphParametresRange.LowerObstacleValue;
 
             var bindObstaclePercent = new Binding("Text", Model, "ObstaclePercent", true,
                 DataSourceUpdateMode.OnPropertyChanged);

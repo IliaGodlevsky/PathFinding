@@ -15,10 +15,9 @@ namespace GraphLibrary.AlgoSelector
                 case Algorithms.WidePathFind: return new WidePathFindAlgorithm(graph);
                 case Algorithms.DeepPathFind: return new DeepPathFindAlgorithm(graph);
                 case Algorithms.DijkstraAlgorithm: return new DijkstraAlgorithm(graph);
-                case Algorithms.AStarAlgorithm: return new AStarAlgorithm(graph)
+                case Algorithms.AStarAlgorithm: return new DijkstraAlgorithm(graph)
                 {
-                    HeuristicFunction = (neighbour, vertex) =>
-                    neighbour.Cost + vertex.AccumulatedCost +
+                    RelaxFunction = (neighbour, vertex) => neighbour.Cost + vertex.AccumulatedCost +
                     Distance.GetChebyshevDistance(neighbour, graph.End)
                 };
                 case Algorithms.DistanceGreedyAlgorithm: return new GreedyAlgorithm(graph)

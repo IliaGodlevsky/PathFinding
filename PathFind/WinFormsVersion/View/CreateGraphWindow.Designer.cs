@@ -109,7 +109,7 @@
             // obstacleSlider
             // 
             this.obstacleSlider.Location = new System.Drawing.Point(15, 46);
-            this.obstacleSlider.Maximum = 100;
+            this.obstacleSlider.Maximum = 0;
             this.obstacleSlider.Name = "obstacleSlider";
             this.obstacleSlider.Size = new System.Drawing.Size(140, 69);
             this.obstacleSlider.TabIndex = 9;

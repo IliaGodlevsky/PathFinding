@@ -46,6 +46,7 @@
     <Compile Include="Common\Constants\AlgorithmExecutionDelay.cs" />
     <Compile Include="Algorithms\DistanceCalculator\Distance.cs" />
     <Compile Include="Algorithms\AlgorithmEnum\Algorithm.cs" />
+    <Compile Include="Common\Constants\GraphParametresRange.cs" />
     <Compile Include="Common\Constants\VertexSize.cs" />
     <Compile Include="Common\Constants\VertexValueRange.cs" />
     <Compile Include="Common\Extensions\EnumExtensions.cs" />
@@ -82,7 +83,6 @@
     <Compile Include="Algorithms\Statistics\IStatisticsCollector.cs" />
     <Compile Include="Model\VertexInfo\VertexInfo.cs" />
     <Compile Include="Model\Graph\AbstractGraph.cs" />
-    <Compile Include="Algorithms\PathFindAlgorithm\AStarAlgorithm.cs" />
     <Compile Include="Algorithms\PathFindAlgorithm\DijkstraAlgorythm.cs" />
     <Compile Include="Algorithms\PathFindAlgorithm\GreedyAlgorithm.cs" />
     <Compile Include="Algorithms\PathFindAlgorithm\IPathFindAlgorithm.cs" />

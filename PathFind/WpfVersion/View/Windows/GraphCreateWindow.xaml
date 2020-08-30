@@ -3,8 +3,8 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:WpfVersion.View.Windows"
-        xmlns:converters="clr-namespace:WpfVersion.Converters" xmlns:sys="clr-namespace:System;assembly=mscorlib"
+        xmlns:converters="clr-namespace:WpfVersion.Converters" 
+        xmlns:sys="clr-namespace:System;assembly=mscorlib"
         mc:Ignorable="d"
         Title="Parametres" SizeToContent="WidthAndHeight">
     <Window.Resources>
@@ -29,7 +29,7 @@
         <TextBlock Margin="5" Text="Obstacle percent" Grid.Row="0" Grid.ColumnSpan="2" 
                    HorizontalAlignment="Center"></TextBlock>
         <Slider Value = "{Binding Path = ObstaclePercent}" x:Name="obstacleSlider" 
-                Minimum="0" Maximum ="100" MinWidth="100" Margin="5" Grid.Row="1"></Slider>
+                MinWidth="100" Margin="5" Grid.Row="1"></Slider>
         <TextBox Text = "{Binding ElementName = obstacleSlider, Path = Value, 
             Converter = {StaticResource obstaclePercentConverter},
             ConverterParameter={StaticResource SliderRange}, Mode = TwoWay, 
