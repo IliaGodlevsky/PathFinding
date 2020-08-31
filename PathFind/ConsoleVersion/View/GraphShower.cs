@@ -1,5 +1,6 @@
 ﻿using ConsoleVersion.Vertex;
 using GraphLibrary.Model;
+using GraphLibrary.Vertex;
 using Console = Colorful.Console;
 
 namespace ConsoleVersion.Forms
@@ -12,7 +13,7 @@ namespace ConsoleVersion.Forms
         private const string horizontalFrame = "---";
         private const string verticalFrame = "|";
 
-        private static void WriteXCoordinate(int width)
+        private static void DrawAbscissa(int width)
         {
             Console.Write(largeSpace);
             for (int i = 0; i < width; i++)            
@@ -32,43 +33,45 @@ namespace ConsoleVersion.Forms
             return width != 0 && width % (model.Graph.Width - 1) == 0;
         }
 
-        private static void WriteVerticalFrame(int height, bool reverse)
+        private static void DrawOrdinate(int height, bool reverse)
         {
             Console.Write(reverse ? verticalFrame + height.ToString() :
                 height + (height < 10 ? space + verticalFrame : verticalFrame));           
         }
 
-        private static void WriteVertex(ConsoleVertex vertex)
+        private static void ShowVertex(IVertex vertex)
         {
-            Console.Write(vertex.Cost + bigSpace, vertex.Colour);
+            ConsoleVertex vert = vertex as ConsoleVertex;
+            Console.Write(vert.Cost + bigSpace, vert.Colour);
         }
 
         private static void ShowGraph(IMainModel model)
         {
             for (int height = 0; height < model.Graph.Height; height++)
             {
-                WriteVerticalFrame(height, reverse: false);
+                DrawOrdinate(height, reverse: false);
                 for (int width = 0; width < model.Graph.Width; width++)
                 {
-                    WriteVertex(model.Graph[width, height] as ConsoleVertex);
+                    ShowVertex(model.Graph[width, height]);
                     if (width == model.Graph.Width - 1)
-                        WriteVerticalFrame(height, reverse: true);
+                        DrawOrdinate(height, reverse: true);
                     if (IsNewLine(width, model))
                         Console.WriteLine();
                 }
             }
         }
 
-        public static void ShowGraphWithFrames(IMainModel model)
+        private static void ShowGraphWithFrames(IMainModel model)
         {
             if (model.Graph == null)
                 return;
-            WriteXCoordinate(model.Graph.Width);
-            WriteHorizontalFrame(model.Graph.Width);
+            int width = model.Graph.Width;
+            DrawAbscissa(width);
+            WriteHorizontalFrame(width);
             ShowGraph(model);
             Console.Write(largeSpace);
-            WriteHorizontalFrame(model.Graph.Width);
-            WriteXCoordinate(model.Graph.Width);
+            WriteHorizontalFrame(width);
+            DrawAbscissa(width);
         }
 
         public static void DisplayGraph(IMainModel model)
