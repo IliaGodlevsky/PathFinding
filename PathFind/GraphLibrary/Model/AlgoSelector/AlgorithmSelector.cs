@@ -3,11 +3,20 @@ using GraphLibrary.DistanceCalculator;
 using GraphLibrary.AlgorithmEnum;
 using GraphLibrary.Graph;
 using GraphLibrary.PathFindAlgorithm;
+using GraphLibrary.Vertex;
 
 namespace GraphLibrary.AlgoSelector
 {
+    
     public static class AlgorithmSelector
     {
+        private static double AStartRelaxFunction(IVertex vertex, 
+            IVertex neighbour, IVertex destination)
+        {
+            return neighbour.Cost + vertex.AccumulatedCost 
+                + Distance.GetChebyshevDistance(neighbour, destination);
+        }
+
         public static IPathFindAlgorithm GetPathFindAlgorithm(Algorithms algorithms, AbstractGraph graph)
         {
             switch (algorithms)
@@ -17,8 +26,7 @@ namespace GraphLibrary.AlgoSelector
                 case Algorithms.DijkstraAlgorithm: return new DijkstraAlgorithm(graph);
                 case Algorithms.AStarAlgorithm: return new DijkstraAlgorithm(graph)
                 {
-                    RelaxFunction = (neighbour, vertex) => neighbour.Cost + vertex.AccumulatedCost +
-                    Distance.GetChebyshevDistance(neighbour, graph.End)
+                    RelaxFunction = (neighbour, vertex) => AStartRelaxFunction(vertex, neighbour, graph.End)
                 };
                 case Algorithms.DistanceGreedyAlgorithm: return new GreedyAlgorithm(graph)
                 {
@@ -30,8 +38,7 @@ namespace GraphLibrary.AlgoSelector
                 };
                 case Algorithms.ValueDistanceGreedyAlgorithm: return new GreedyAlgorithm(graph)
                 {
-                    GreedyFunction = vertex => vertex.Cost + 
-                    Distance.GetEuclideanDistance(vertex, graph.End)
+                    GreedyFunction = vertex => vertex.Cost + Distance.GetEuclideanDistance(vertex, graph.End)
                 };
                 default: return null;
             }
