@@ -5,8 +5,16 @@ using Console = Colorful.Console;
 
 namespace ConsoleVersion.Forms
 {
+
     internal static class GraphShower
     {
+        private enum TableSide
+        {
+            Right,
+            Left
+        }
+
+        private const int OFFSET_ARRAY_INDEX = 10;
         private const string space = " ";
         private const string bigSpace = "  ";
         private const string largeSpace = "   ";
@@ -17,7 +25,7 @@ namespace ConsoleVersion.Forms
         {
             Console.Write(largeSpace);
             for (int i = 0; i < width; i++)            
-                Console.Write(i + (i < 10 ? bigSpace : space));
+                Console.Write(i + (i < OFFSET_ARRAY_INDEX ? bigSpace : space));
             Console.Write("\n" + largeSpace);
         }
 
@@ -33,10 +41,16 @@ namespace ConsoleVersion.Forms
             return width != 0 && width % (model.Graph.Width - 1) == 0;
         }
 
-        private static void DrawOrdinate(int height, bool reverse)
+        private static void DrawOrdinate(int height, TableSide tableSide = TableSide.Left)
         {
-            Console.Write(reverse ? verticalFrame + height.ToString() :
-                height + (height < 10 ? space + verticalFrame : verticalFrame));           
+            string line;
+            if (tableSide == TableSide.Right)
+                line = verticalFrame + height;
+            else if (height < OFFSET_ARRAY_INDEX)
+                line = height + space + verticalFrame;
+            else
+                line = height + verticalFrame;
+            Console.Write(line);
         }
 
         private static void ShowVertex(IVertex vertex)
@@ -45,16 +59,21 @@ namespace ConsoleVersion.Forms
             Console.Write(vert.Cost + bigSpace, vert.Colour);
         }
 
+        private static bool IsEndOfRow(int width, IMainModel model)
+        {
+            return width == model.Graph.Width - 1;
+        }
+
         private static void ShowGraph(IMainModel model)
         {
             for (int height = 0; height < model.Graph.Height; height++)
             {
-                DrawOrdinate(height, reverse: false);
+                DrawOrdinate(height);
                 for (int width = 0; width < model.Graph.Width; width++)
                 {
                     ShowVertex(model.Graph[width, height]);
-                    if (width == model.Graph.Width - 1)
-                        DrawOrdinate(height, reverse: true);
+                    if (IsEndOfRow(width, model))
+                        DrawOrdinate(height, TableSide.Right);
                     if (IsNewLine(width, model))
                         Console.WriteLine();
                 }
@@ -79,7 +98,7 @@ namespace ConsoleVersion.Forms
             Console.Clear();
             Console.WriteLine(model.GraphParametres);
             ShowGraphWithFrames(model);
-            Console.WriteLine(model?.Statistics);
+            Console.WriteLine(model.Statistics);
         }
     }
 }
