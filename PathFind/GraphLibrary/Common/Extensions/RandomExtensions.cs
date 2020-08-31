@@ -7,8 +7,7 @@ namespace GraphLibrary.Extensions.RandomExtension
     {        
         public static bool IsObstacleChance(this Random rand, int percentOfObstacles)
         {
-            const int MAX_PERCENT_OF_OBSTACLES = 100;
-            return rand.Next(MAX_PERCENT_OF_OBSTACLES) < percentOfObstacles;
+            return rand.Next(GraphParametresRange.UpperObstacleValue) < percentOfObstacles;
         }
     }
 }
