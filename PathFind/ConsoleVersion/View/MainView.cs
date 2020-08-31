@@ -51,7 +51,7 @@ namespace ConsoleVersion.View
             return menu.ToString();
         }
 
-        private MenuOption GetOption()
+        private MenuOption GetMenuOption()
         {
             Console.WriteLine(menu);
             return Input.InputOption();
@@ -60,12 +60,12 @@ namespace ConsoleVersion.View
         public void Start()
         {
             GraphShower.DisplayGraph(mainModel);
-            var option = GetOption();
-            while (option != MenuOption.Quit)
+            var menuOption = GetMenuOption();
+            while (menuOption != MenuOption.Quit)
             {
-                menuActions[option]();
+                menuActions[menuOption]();
                 GraphShower.DisplayGraph(mainModel);
-                option = GetOption();
+                menuOption = GetMenuOption();
             }
         }
     }
