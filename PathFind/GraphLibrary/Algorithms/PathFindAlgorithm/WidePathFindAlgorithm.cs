@@ -69,11 +69,11 @@ namespace GraphLibrary.Algorithm
             }
         }
 
-        private void ProcessVertex(IVertex currentVertex)
+        private void ProcessVertex(IVertex vertex)
         {
-            this.VisitVertex(currentVertex);
-            SpreadWaves(currentVertex);
-            AddToQueue(currentVertex.Neighbours);
+            this.VisitVertex(vertex);
+            SpreadWaves(vertex);
+            AddToQueue(vertex.Neighbours);
         }
 
         private bool IsDestination(IVertex vertex)
