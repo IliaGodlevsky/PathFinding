@@ -56,7 +56,7 @@
     <Compile Include="Common\Extensions\IVertexExtension.cs" />
     <Compile Include="Common\Extensions\MatrixExtensions.cs" />
     <Compile Include="Common\Extensions\RandomExtensions.cs" />
-    <Compile Include="Common\DataFormatter\GraphDataFormatter.cs" />
+    <Compile Include="Common\DataFormatter\GraphParametresPresenter.cs" />
     <Compile Include="GraphCreate\GraphFactory\AbstractGraphFactory.cs" />
     <Compile Include="GraphCreate\GraphFactory\AbstractGraphInfoInitializer.cs" />
     <Compile Include="GraphCreate\GraphFactory\AbstractVertexLocator.cs" />
