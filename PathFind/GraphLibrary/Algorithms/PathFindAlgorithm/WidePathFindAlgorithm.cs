@@ -33,12 +33,12 @@ namespace GraphLibrary.Algorithm
             {
                 StatCollector.StartCollect();
                 var currentVertex = Graph.Start;
-                FindAction(currentVertex);
+                ProcessVertex(currentVertex);
                 while (!IsDestination(currentVertex))
                 {
                     currentVertex = neighbourQueue.Dequeue();
                     if (!currentVertex.IsVisited)
-                        FindAction(currentVertex);
+                        ProcessVertex(currentVertex);
                 }
                 StatCollector.StopCollect();
             }
@@ -69,7 +69,7 @@ namespace GraphLibrary.Algorithm
             }
         }
 
-        private void FindAction(IVertex currentVertex)
+        private void ProcessVertex(IVertex currentVertex)
         {
             this.VisitVertex(currentVertex);
             SpreadWaves(currentVertex);
