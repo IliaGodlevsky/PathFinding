@@ -17,7 +17,7 @@ namespace GraphLibrary.Common.Extensions
                 vertex = parentVertexFunction(vertex);
                 if (vertex.IsSimpleVertex())
                     vertex.MarkAsPath();
-                algo.Pauser.Pause(AlgorithmExecutionDelay.PATH_DRAW_PAUSE);
+                algo.Pauser?.Pause(AlgorithmExecutionDelay.PATH_DRAW_PAUSE);
             }
         }
 
@@ -34,7 +34,7 @@ namespace GraphLibrary.Common.Extensions
             if (vertex.IsSimpleVertex())
             {
                 vertex.MarkAsCurrentlyLooked();
-                algorithm.Pauser.Pause(AlgorithmExecutionDelay.VISIT_PAUSE);
+                algorithm.Pauser?.Pause(AlgorithmExecutionDelay.VISIT_PAUSE);
                 vertex.MarkAsVisited();
             }
             algorithm.StatCollector.Visited();
