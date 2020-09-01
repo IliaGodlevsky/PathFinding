@@ -7,13 +7,8 @@ namespace GraphLibrary.Extensions
 {
     public static class EnumExtensions
     {
-        public static string GetDescription<T>(this T enumValue)
-                where T : struct, IConvertible
-
-        {
-            if (!typeof(T).IsEnum)
-                return null;
-
+        public static string GetDescription(this Enum enumValue)
+        {            
             var description = enumValue.ToString();
             var fieldInfo = enumValue.GetType().GetField(enumValue.ToString());
 
@@ -27,14 +22,13 @@ namespace GraphLibrary.Extensions
             return description;
         }
 
-        public static List<string> GetDescriptions<T>(this Enum en)
-            where T : struct, IConvertible
+        public static List<string> GetDescriptions(this Enum en)
         {
             List<string> descriptions = new List<string>();
-            var enumList = Enum.GetValues(typeof(T));
+            var enumList = Enum.GetValues(en.GetType());
 
             foreach (var item in enumList)
-                descriptions.Add(((T)item).GetDescription());
+                descriptions.Add(((Enum)item).GetDescription());
 
             return descriptions;
         }
