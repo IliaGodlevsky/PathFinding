@@ -8,7 +8,7 @@ namespace ConsoleVersion.View
 {
     internal class PathFindView : IView
     {
-        public PathFindViewModel Model { get; set; }
+        public PathFindViewModel Model { get; }
         public PathFindView(PathFindViewModel model)
         {
             Model = model;
