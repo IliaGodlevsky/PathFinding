@@ -1,4 +1,5 @@
-﻿using GraphLibrary.PauseMaker;
+﻿using GraphLibrary.Graph;
+using GraphLibrary.PauseMaker;
 using GraphLibrary.Statistics;
 
 namespace GraphLibrary.Algorithm
@@ -8,9 +9,10 @@ namespace GraphLibrary.Algorithm
     /// </summary>
     public interface IPathFindAlgorithm
     {
-        IStatisticsCollector StatCollector { get; set; }
-        Pause PauseEvent { set; get; }
-        bool FindDestionation();
+        IStatisticsCollector StatCollector { get; set; }        
+        AbstractGraph Graph { get; set; }
+        IPauseProvider Pauser { get; set; }
+        void FindDestionation();
         void DrawPath();
     }
 }

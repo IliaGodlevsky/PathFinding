@@ -129,6 +129,9 @@
   <data name="HeightMsg" xml:space="preserve">
     <value>Enter height of graph: </value>
   </data>
+  <data name="MenuFormat" xml:space="preserve">
+    <value>{0}. {1}</value>
+  </data>
   <data name="NewTopValueMsg" xml:space="preserve">
     <value>Enter new top value: </value>
   </data>
@@ -140,9 +143,6 @@
   </data>
   <data name="ReverseMsg" xml:space="preserve">
     <value>Reverse top choice: </value>
-  </data>
-  <data name="ShowFormat" xml:space="preserve">
-    <value>{0}. {1}</value>
   </data>
   <data name="StartPoint" xml:space="preserve">
     <value>Start point: </value>

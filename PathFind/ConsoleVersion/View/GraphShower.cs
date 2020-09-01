@@ -36,16 +36,11 @@ namespace ConsoleVersion.Forms
             Console.WriteLine();
         }
 
-        private static bool IsNewLine(int width, IMainModel model)
-        {
-            return width != 0 && width % (model.Graph.Width - 1) == 0;
-        }
-
         private static void DrawOrdinate(int height, TableSide tableSide = TableSide.Left)
         {
             string line;
             if (tableSide == TableSide.Right)
-                line = verticalFrame + height;
+                line = verticalFrame + height + "\n";
             else if (height < OFFSET_ARRAY_INDEX)
                 line = height + space + verticalFrame;
             else
@@ -74,8 +69,6 @@ namespace ConsoleVersion.Forms
                     ShowVertex(model.Graph[width, height]);
                     if (IsEndOfRow(width, model))
                         DrawOrdinate(height, TableSide.Right);
-                    if (IsNewLine(width, model))
-                        Console.WriteLine();
                 }
             }
         }
@@ -95,6 +88,8 @@ namespace ConsoleVersion.Forms
 
         public static void DisplayGraph(IMainModel model)
         {
+            if (model == null)
+                return;
             Console.Clear();
             Console.WriteLine(model.GraphParametres);
             ShowGraphWithFrames(model);

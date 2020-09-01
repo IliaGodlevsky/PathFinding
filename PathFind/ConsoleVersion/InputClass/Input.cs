@@ -22,17 +22,17 @@ namespace ConsoleVersion.InputClass
 
         public static MenuOption InputOption()
         {
-            return (MenuOption)InputNumber(Res.OptionMsg, 
+            return (MenuOption)InputNumber(ConsoleVersionResources.OptionMsg, 
                 Enum.GetValues(typeof(MenuOption)).Cast<byte>().Last());
         }
 
         public static Point InputPoint(int width, int height) => 
-            new Point(InputNumber(Res.XCoordinateMsg, width),
-                InputNumber(Res.YCoordinateMsg, height));
+            new Point(InputNumber(ConsoleVersionResources.XCoordinateMsg, width),
+                InputNumber(ConsoleVersionResources.YCoordinateMsg, height));
 
         private static bool IsError(string choice, int upper, int lower)
         {
-            return !int.TryParse(choice, out int ch) 
+            return !int.TryParse(choice, out var ch) 
                 || ch > upper || ch < lower;
         }
     }

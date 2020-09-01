@@ -19,7 +19,7 @@ namespace ConsoleVersion.ViewModel
 
         public MainViewModel()
         {            
-            Format = Res.GraphParametresFormat;
+            Format = ConsoleVersionResources.GraphParametresFormat;
             saver = new ConsoleGraphSaver();
             loader = new ConsoleGraphLoader();
             filler = new ConsoleGraphFiller();

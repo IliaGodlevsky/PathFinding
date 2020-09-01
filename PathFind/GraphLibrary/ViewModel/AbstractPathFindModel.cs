@@ -2,6 +2,7 @@
 using GraphLibrary.AlgorithmEnum;
 using GraphLibrary.Graph;
 using GraphLibrary.AlgoSelector;
+using GraphLibrary.Common.Extensions;
 
 namespace GraphLibrary.Model
 {
@@ -30,7 +31,8 @@ namespace GraphLibrary.Model
             pathAlgorithm = AlgorithmSelector.
                 GetPathFindAlgorithm(Algorithm, model.Graph);
             FindPreparations();
-            if (pathAlgorithm.FindDestionation())
+            pathAlgorithm.FindDestionation();
+            if (pathAlgorithm.HasFoundPath())
             {
                 pathAlgorithm.DrawPath();
                 model.Statistics = 

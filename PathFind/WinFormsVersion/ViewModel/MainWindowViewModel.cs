@@ -66,7 +66,7 @@ namespace WinFormsVersion.ViewModel
 
         public MainWindowViewModel()
         {
-            Format = WinFormsResources.ParametresFormat;
+            Format = WinFormsVersionResources.ParametresFormat;
             saver = new WinFormsGraphSaver();
             loader = new WinFormsGraphLoader(VertexSize.SIZE_BETWEEN_VERTICES);
             filler = new WinFormsGraphFiller();

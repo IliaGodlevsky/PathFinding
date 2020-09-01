@@ -1,5 +1,4 @@
-﻿using GraphLibrary.Common.Constants;
-using GraphLibrary.Extensions;
+﻿using GraphLibrary.Common.Extensions;
 using GraphLibrary.Extensions.MatrixExtension;
 using GraphLibrary.Graph;
 using GraphLibrary.PauseMaker;
@@ -15,128 +14,98 @@ namespace GraphLibrary.Algorithm
     /// Finds the chippest path to destination top. 
     /// </summary>    
     public class DijkstraAlgorithm : IPathFindAlgorithm
-    {
-        protected Pauser pauseMaker;
-        protected AbstractGraph graph;
-        private readonly List<IVertex> neigbourQueue;
+    {        
         public IStatisticsCollector StatCollector { get; set; }
         public Func<IVertex, IVertex, double> RelaxFunction { get; set; }
-        public Pause PauseEvent 
-        {
-            get { return pauseMaker?.PauseEvent; }
-            set { pauseMaker.PauseEvent = value; }
-        }
+        public AbstractGraph Graph { get; set; }
+        public IPauseProvider Pauser { get; set; }
 
-        public DijkstraAlgorithm(AbstractGraph graph)
+        public DijkstraAlgorithm()
         {
             neigbourQueue = new List<IVertex>();
-            this.graph = graph;
-            IVertex SetValueToInfinity(IVertex vertex)
-            {
-                vertex.AccumulatedCost = double.PositiveInfinity; 
-                return vertex;
-            }
-            this.graph.GetArray().Apply(SetValueToInfinity);
             StatCollector = new StatisticsCollector();
-            pauseMaker = new Pauser();
             RelaxFunction = (neighbour, vertex) => neighbour.Cost + vertex.AccumulatedCost;
         }
 
-        public void DrawPath()
+        public void DrawPath() => this.DrawPath(vertex => vertex.ParentVertex);
+
+        public void FindDestionation()
         {
-            var vertex = graph.End;
-            while (!vertex.IsStart)
+            if (this.IsRightGraphSettings())
             {
-                var temp = vertex;
-                vertex = vertex.ParentVertex;
-                if (vertex.IsSimpleVertex())
-                    vertex.MarkAsPath();
-                StatCollector.IncludeVertexInStatistics(temp);
-                pauseMaker?.Pause(AlgorithmExecutionDelay.PATH_DRAW_PAUSE);
+                SetAccumulatedCostToInfinity();
+                StatCollector.StartCollect();
+                var currentVertex = Graph.Start;
+                currentVertex.IsVisited = true;
+                currentVertex.AccumulatedCost = 0;
+                do
+                {
+                    ExtractNeighbours(currentVertex);
+                    SpreadRelaxWave(currentVertex);
+                    currentVertex = GetChippestUnvisitedVertex();
+                    if (!IsValidVertex(currentVertex))
+                        break;
+                    if (!currentVertex.IsVisited)
+                        this.VisitVertex(currentVertex);
+                } while (!IsDestination(currentVertex));
+                StatCollector.StopCollect();
+            }
+        }
+
+        private void SetAccumulatedCostToInfinity()
+        {
+            IVertex SetValueToInfinity(IVertex vertex)
+            {
+                if (!vertex.IsObstacle)
+                    vertex.AccumulatedCost = double.PositiveInfinity;
+                return vertex;
+            }
+            Graph.GetArray().Apply(SetValueToInfinity);
+        }
+
+        private void ExtractNeighbours(IVertex vertex)
+        {
+            foreach (var neighbour in vertex.Neighbours)
+            {
+                if (!neighbour.IsVisited)
+                    neigbourQueue.Add(neighbour);
+            }
+        }
+
+        private void SpreadRelaxWave(IVertex vertex)
+        {
+            foreach (var neighbour in vertex.Neighbours)
+            {
+                var relaxFunctionResult = RelaxFunction(neighbour, vertex);
+                if (neighbour.AccumulatedCost > relaxFunctionResult)
+                {
+                    neighbour.AccumulatedCost = relaxFunctionResult;
+                    neighbour.ParentVertex = vertex;
+                }
             }
         }
 
         private IVertex GetChippestUnvisitedVertex()
         {
             neigbourQueue.RemoveAll(vertex => vertex.IsVisited);
-            neigbourQueue.Sort((vertex1, vertex2) => vertex1.AccumulatedCost.CompareTo(vertex2.AccumulatedCost));
-            return neigbourQueue.Any() ? neigbourQueue.First() : null;
-        }
-
-        private void MakeWaves(IVertex vertex)
-        {
-            if (vertex is null)
-                return;
-            var neighbours = vertex.Neighbours;
-            foreach(var neighbour in neighbours)
-            {
-                if (!neighbour.IsVisited)
-                    neigbourQueue.Add(neighbour);
-                if (neighbour.AccumulatedCost > RelaxFunction(neighbour, vertex))
-                {                    
-                    neighbour.AccumulatedCost = RelaxFunction(neighbour, vertex);
-                    neighbour.ParentVertex = vertex;
-                }
-            }
-        }
-
-        public bool FindDestionation()
-        {
-            if (graph.End == null)
-                return false;
-            StatCollector.StartCollect();
-            var currentVertex = graph.Start;
-            currentVertex.IsVisited = true;
-            currentVertex.AccumulatedCost = 0;
-            do
-            {
-                MakeWaves(currentVertex);
-                currentVertex = GetChippestUnvisitedVertex();
-                if (!IsValidVertex(currentVertex)) 
-                    break;
-                if (IsRightVertexToVisit(currentVertex))
-                    Visit(currentVertex);
-                pauseMaker?.Pause(AlgorithmExecutionDelay.FIND_PROCESS_PAUSE);
-            } while (!IsDestination(currentVertex));
-            StatCollector.StopCollect();
-            return graph.End?.IsVisited == true;
+            neigbourQueue.Sort((vertex1, vertex2) => 
+                vertex1.AccumulatedCost.CompareTo(vertex2.AccumulatedCost));
+            return neigbourQueue.FirstOrDefault();
         }
 
         private bool IsValidVertex(IVertex vertex)
         {
-            return vertex?.AccumulatedCost != double.PositiveInfinity && vertex != null;
+            if (vertex == null)
+                return false;
+            return vertex.AccumulatedCost != double.PositiveInfinity;
         }
 
         private bool IsDestination(IVertex vertex)
         {
-            if (vertex == null)
-                return false;
-            if (vertex.IsObstacle)
-                return false;
             return vertex.IsEnd && vertex.IsVisited
-                || graph.End == null;
+                || Graph.End == null;
         }
 
-        private bool IsRightVertexToVisit(IVertex vertex)
-        {
-            if (vertex is null)
-                return false;
-            if (vertex.IsObstacle)
-                return false;
-            else
-                return !vertex.IsVisited;
-        }
-
-        private void Visit(IVertex vertex)
-        {
-            vertex.IsVisited = true;
-            if (!vertex.IsEnd)
-            {
-                vertex.MarkAsCurrentlyLooked();
-                pauseMaker?.Pause(AlgorithmExecutionDelay.VISIT_PAUSE);
-                vertex.MarkAsVisited();               
-            }
-            StatCollector.Visited();
-        }
+        private readonly List<IVertex> neigbourQueue;
     }
 }

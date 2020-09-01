@@ -46,7 +46,7 @@ namespace ConsoleVersion.View
             {               
                 int numberOf = descriptions.IndexOf(item);
                 menu.Append(numberOf.IsEven() ? newLine : largeSpace + tab);
-                menu.Append(string.Format(Res.ShowFormat, numberOf, item));
+                menu.Append(string.Format(ConsoleVersionResources.MenuFormat, numberOf, item));
             }
             return menu.ToString();
         }

@@ -43,6 +43,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Algorithms\PauseMaker\IPauser.cs" />
     <Compile Include="Common\Constants\AlgorithmExecutionDelay.cs" />
     <Compile Include="Algorithms\DistanceCalculator\Distance.cs" />
     <Compile Include="Algorithms\AlgorithmEnum\Algorithm.cs" />
@@ -51,6 +52,7 @@
     <Compile Include="Common\Constants\VertexValueRange.cs" />
     <Compile Include="Common\Extensions\EnumExtensions.cs" />
     <Compile Include="Common\Extensions\IntExtensions.cs" />
+    <Compile Include="Common\Extensions\IPathFindAlgorithmExtension.cs" />
     <Compile Include="Common\Extensions\IVertexExtension.cs" />
     <Compile Include="Common\Extensions\MatrixExtensions.cs" />
     <Compile Include="Common\Extensions\RandomExtensions.cs" />

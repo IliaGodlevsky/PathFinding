@@ -2,10 +2,9 @@
 
 namespace GraphLibrary.PauseMaker
 {
-    public delegate void Pause();
-    public class Pauser
+    public class PauseProvider : IPauseProvider
     {
-        public Pause PauseEvent;
+        public  Pause PauseEvent { get; set; }
 
         public void Pause(int milliseconds)
         {

@@ -16,7 +16,7 @@ namespace ConsoleVersion.StatusSetter
         }
 
         public override void ChangeVertexValue(object sender, EventArgs e) =>
-            (sender as ConsoleVertex).Cost = Input.InputNumber(Res.NewTopValueMsg,
+            (sender as ConsoleVertex).Cost = Input.InputNumber(ConsoleVersionResources.NewTopValueMsg,
                 VertexValueRange.UpperValue, VertexValueRange.LowerValue);
 
         protected override int GetWheelDelta(EventArgs e)

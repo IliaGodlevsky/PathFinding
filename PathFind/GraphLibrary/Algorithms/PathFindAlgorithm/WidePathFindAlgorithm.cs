@@ -1,5 +1,4 @@
-﻿using GraphLibrary.Common.Constants;
-using GraphLibrary.Extensions;
+﻿using GraphLibrary.Common.Extensions;
 using GraphLibrary.Graph;
 using GraphLibrary.PauseMaker;
 using GraphLibrary.Statistics;
@@ -15,118 +14,75 @@ namespace GraphLibrary.Algorithm
     /// the destination top
     /// </summary>
     public class WidePathFindAlgorithm : IPathFindAlgorithm
-    {
-        protected Pauser pauseMaker;
-        protected Queue<IVertex> neighbourQueue;
+    {       
         public IStatisticsCollector StatCollector { get; set; }
-        public Pause PauseEvent
-        {
-            get { return pauseMaker?.PauseEvent; }
-            set { pauseMaker.PauseEvent = value; }
-        }
+        public AbstractGraph Graph { get; set; }
+        public IPauseProvider Pauser { get; set; }
 
-        protected readonly AbstractGraph graph;
-
-        public WidePathFindAlgorithm(AbstractGraph graph)
+        public WidePathFindAlgorithm()
         {
             neighbourQueue = new Queue<IVertex>();
-            this.graph = graph;
             StatCollector = new StatisticsCollector();
-            pauseMaker = new Pauser();
+        }
+
+        public void DrawPath() => this.DrawPath(GoNextWave);
+
+        public void FindDestionation()
+        {
+            if (this.IsRightGraphSettings())
+            {
+                StatCollector.StartCollect();
+                var currentVertex = Graph.Start;
+                FindAction(currentVertex);
+                while (!IsDestination(currentVertex))
+                {
+                    currentVertex = neighbourQueue.Dequeue();
+                    if (!currentVertex.IsVisited)
+                        FindAction(currentVertex);
+                }
+                StatCollector.StopCollect();
+            }
         }
 
         private IVertex GoNextWave(IVertex vertex)
         {
             double min = vertex.Neighbours.Min(vert => vert.AccumulatedCost);
             return vertex.Neighbours.Find(vert => min == vert.AccumulatedCost
-                    && vert.IsVisited && IsRightNeighbour(vert));
+                    && vert.IsVisited && !vert.IsEnd);
         }
-
-        protected virtual double WaveFunction(IVertex vertex) => vertex.AccumulatedCost + 1;
-
-        private bool IsRightNeighbour(IVertex vertex) => !vertex.IsEnd;
-
-        private bool IsRightPath(IVertex vertex) => !vertex.IsStart;
-
-        private bool IsRightVertexToVisit(IVertex vertex) => !vertex.IsVisited;
-
-        protected virtual bool IsSuitableForQueuing(IVertex vertex) => !vertex.IsVisited;
 
         private void AddToQueue(List<IVertex> neighbours)
         {
             foreach (var neighbour in neighbours)
             {
-                if (IsSuitableForQueuing(neighbour))
+                if (!neighbour.IsVisited)
                     neighbourQueue.Enqueue(neighbour);
             }
         }
 
-        private void MakeWaves(IVertex vertex)
+        private void SpreadWaves(IVertex vertex)
         {
-            if (vertex is null)
-                return;
             foreach (var neighbour in vertex.Neighbours)
             {
                 if (!neighbour.IsVisited)
-                    neighbour.AccumulatedCost = WaveFunction(vertex);
+                    neighbour.AccumulatedCost = vertex.AccumulatedCost + 1;
             }
         }
 
         private void FindAction(IVertex currentVertex)
         {
-            Visit(currentVertex);
-            MakeWaves(currentVertex);
+            this.VisitVertex(currentVertex);
+            SpreadWaves(currentVertex);
             AddToQueue(currentVertex.Neighbours);
-        }
-
-        public bool FindDestionation()
-        {
-            if (graph.End == null)
-                return false;
-            StatCollector.StartCollect();
-            var currentVertex = graph.Start;
-            FindAction(currentVertex);
-            while (!IsDestination(currentVertex))
-            {
-                currentVertex = neighbourQueue.Dequeue();
-                if (IsRightVertexToVisit(currentVertex))
-                    FindAction(currentVertex);
-                pauseMaker?.Pause(AlgorithmExecutionDelay.FIND_PROCESS_PAUSE);
-            }
-            StatCollector.StopCollect();
-            return graph.End?.IsVisited == true;
-        }
-
-        public void DrawPath()
-        {
-            var vertex = graph.End;
-            while (IsRightPath(vertex))
-            {
-                vertex = GoNextWave(vertex);
-                if (vertex.IsSimpleVertex())
-                    vertex.MarkAsPath();
-                StatCollector.IncludeVertexInStatistics(vertex);
-                pauseMaker?.Pause(AlgorithmExecutionDelay.PATH_DRAW_PAUSE);
-            }
         }
 
         private bool IsDestination(IVertex vertex)
         {
-            return !(vertex is null) && (vertex.IsEnd || !neighbourQueue.Any() || graph.End == null);
+            if (vertex == null || Graph.End == null) 
+                return true;
+            return vertex.IsEnd || !neighbourQueue.Any();
         }
 
-        private void Visit(IVertex vertex)
-        {          
-            if (vertex.IsObstacle)
-                return;
-            vertex.IsVisited = true;
-            if (vertex.IsSimpleVertex())
-            {
-                vertex.MarkAsCurrentlyLooked();
-                pauseMaker?.Pause(AlgorithmExecutionDelay.VISIT_PAUSE);
-                vertex.MarkAsVisited();
-            }
-            StatCollector.Visited();
-        }
+        protected Queue<IVertex> neighbourQueue;
     }
 }

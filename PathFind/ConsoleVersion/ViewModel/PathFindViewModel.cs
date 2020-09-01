@@ -4,6 +4,7 @@ using ConsoleVersion.StatusSetter;
 using GraphLibrary.AlgorithmEnum;
 using GraphLibrary.Extensions;
 using GraphLibrary.Model;
+using GraphLibrary.PauseMaker;
 using System;
 using System.Drawing;
 
@@ -32,7 +33,7 @@ namespace ConsoleVersion.ViewModel
 
         protected override void FindPreparations()
         {
-            pathAlgorithm.PauseEvent = () => { };
+            pathAlgorithm.Pauser = new PauseProvider() { PauseEvent = () => { GraphShower.DisplayGraph(model); } };
         }
 
         protected override void ShowMessage(string message)

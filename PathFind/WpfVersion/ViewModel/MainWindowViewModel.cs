@@ -62,7 +62,7 @@ namespace WpfVersion.ViewModel
         public MainWindowViewModel()
         {
             GraphField = new WpfGraphField();
-            Format = ViewModelResources.GraphParametresFormat;
+            Format = WpfVersionResources.GraphParametresFormat;
             saver = new WpfGraphSaver();
             loader = new WpfGraphLoader(VertexSize.SIZE_BETWEEN_VERTICES);
             filler = new WpfGraphFiller();

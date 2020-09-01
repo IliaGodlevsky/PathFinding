@@ -10,9 +10,9 @@ namespace ConsoleVersion.View
         {
             Model = model;
             Model.Messages = new Tuple<string, string, string>(
-                Res.PercentMsg, 
-                Res.WidthMsg, 
-                Res.HeightMsg);
+                ConsoleVersionResources.PercentMsg,
+                ConsoleVersionResources.WidthMsg,
+                ConsoleVersionResources.HeightMsg);
         }
 
         public void Start()

@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace WinFormsVersion.Resources {
+namespace WpfVersion.Resources {
     using System;
     
     
@@ -22,14 +22,14 @@ namespace WinFormsVersion.Resources {
     [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "16.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    internal class WinFormsResources {
+    internal class WpfVersionResources {
         
         private static global::System.Resources.ResourceManager resourceMan;
         
         private static global::System.Globalization.CultureInfo resourceCulture;
         
         [global::System.Diagnostics.CodeAnalysis.SuppressMessageAttribute("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
-        internal WinFormsResources() {
+        internal WpfVersionResources() {
         }
         
         /// <summary>
@@ -39,7 +39,7 @@ namespace WinFormsVersion.Resources {
         internal static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
-                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("WinFormsVersion.Resources.WinFormsResources", typeof(WinFormsResources).Assembly);
+                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("WpfVersion.Resources.WpfVersionResources", typeof(WpfVersionResources).Assembly);
                     resourceMan = temp;
                 }
                 return resourceMan;
@@ -61,11 +61,11 @@ namespace WinFormsVersion.Resources {
         }
         
         /// <summary>
-        ///   Ищет локализованную строку, похожую на Width: {0} Height: {1} Obstacle percent: {2} ({3}/{4}).
+        ///   Ищет локализованную строку, похожую на Width: {0}   Height: {1}   Obstacle percent: {2} ({3}/{4}).
         /// </summary>
-        internal static string ParametresFormat {
+        internal static string GraphParametresFormat {
             get {
-                return ResourceManager.GetString("ParametresFormat", resourceCulture);
+                return ResourceManager.GetString("GraphParametresFormat", resourceCulture);
             }
         }
     }

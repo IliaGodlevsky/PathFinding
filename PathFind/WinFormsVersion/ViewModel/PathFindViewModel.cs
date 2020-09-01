@@ -1,5 +1,6 @@
 ﻿using GraphLibrary.AlgorithmEnum;
 using GraphLibrary.Model;
+using GraphLibrary.PauseMaker;
 using System;
 using System.Linq;
 using System.Windows.Forms;
@@ -16,7 +17,7 @@ namespace WinFormsVersion.ViewModel
         protected override void FindPreparations()
         {
             (model as MainWindowViewModel).Window.Close();
-            pathAlgorithm.PauseEvent = () => Application.DoEvents();
+            pathAlgorithm.Pauser = new PauseProvider() { PauseEvent = () => Application.DoEvents() };
         }
 
         protected override void ShowMessage(string message)

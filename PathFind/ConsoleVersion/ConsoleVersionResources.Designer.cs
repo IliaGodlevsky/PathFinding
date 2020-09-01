@@ -22,14 +22,14 @@ namespace ConsoleVersion {
     [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "16.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    internal class Res {
+    internal class ConsoleVersionResources {
         
         private static global::System.Resources.ResourceManager resourceMan;
         
         private static global::System.Globalization.CultureInfo resourceCulture;
         
         [global::System.Diagnostics.CodeAnalysis.SuppressMessageAttribute("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
-        internal Res() {
+        internal ConsoleVersionResources() {
         }
         
         /// <summary>
@@ -39,7 +39,7 @@ namespace ConsoleVersion {
         internal static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
-                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("ConsoleVersion.Res", typeof(Res).Assembly);
+                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("ConsoleVersion.ConsoleVersionResources", typeof(ConsoleVersionResources).Assembly);
                     resourceMan = temp;
                 }
                 return resourceMan;
@@ -97,6 +97,15 @@ namespace ConsoleVersion {
         }
         
         /// <summary>
+        ///   Ищет локализованную строку, похожую на {0}. {1}.
+        /// </summary>
+        internal static string MenuFormat {
+            get {
+                return ResourceManager.GetString("MenuFormat", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Ищет локализованную строку, похожую на Enter new top value: .
         /// </summary>
         internal static string NewTopValueMsg {
@@ -129,15 +138,6 @@ namespace ConsoleVersion {
         internal static string ReverseMsg {
             get {
                 return ResourceManager.GetString("ReverseMsg", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Ищет локализованную строку, похожую на {0}. {1}.
-        /// </summary>
-        internal static string ShowFormat {
-            get {
-                return ResourceManager.GetString("ShowFormat", resourceCulture);
             }
         }
         

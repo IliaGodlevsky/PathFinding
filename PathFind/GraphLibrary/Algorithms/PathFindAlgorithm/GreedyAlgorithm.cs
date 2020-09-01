@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Linq;
-using GraphLibrary.Graph;
 using GraphLibrary.PathFindAlgorithm;
 using GraphLibrary.Vertex;
 
@@ -12,8 +11,7 @@ namespace GraphLibrary.Algorithm
     public class GreedyAlgorithm : DeepPathFindAlgorithm
     {
         public Func<IVertex, double> GreedyFunction { get; set; }
-
-        public GreedyAlgorithm(AbstractGraph graph) : base(graph)
+        public GreedyAlgorithm() : base()
         {
             
         }

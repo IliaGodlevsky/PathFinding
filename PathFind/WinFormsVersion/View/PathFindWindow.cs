@@ -24,8 +24,10 @@ namespace WinFormsVersion.View
                 Select(algo => new { Name = algo.GetDescription(), Value = algo }).
                 ToList();
             algorithmListBox.DataSource = dataSource;
+
             var type = dataSource.First().GetType();
             var properties = type.GetProperties();
+
             algorithmListBox.DisplayMember = properties.First().Name;
             algorithmListBox.ValueMember = properties.Last().Name;
 

@@ -72,10 +72,10 @@
     <Compile Include="ViewModel\GraphCreateViewModel.cs" />
     <Compile Include="ViewModel\PathFindViewModel.cs" />
     <Compile Include="ViewModel\MainWindowViewModel.cs" />
-    <Compile Include="Resources\ViewModelResources.Designer.cs">
+    <Compile Include="Resources\WpfVersionResources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>ViewModelResources.resx</DependentUpon>
+      <DependentUpon>WpfVersionResources.resx</DependentUpon>
     </Compile>
     <Compile Include="View\Windows\GraphCreateWindow.xaml.cs">
       <DependentUpon>GraphCreateWindow.xaml</DependentUpon>
@@ -130,9 +130,9 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-    <EmbeddedResource Include="Resources\ViewModelResources.resx">
+    <EmbeddedResource Include="Resources\WpfVersionResources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
-      <LastGenOutput>ViewModelResources.Designer.cs</LastGenOutput>
+      <LastGenOutput>WpfVersionResources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>

@@ -61,10 +61,10 @@
     <Compile Include="InputClass\Input.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Res.Designer.cs">
+    <Compile Include="ConsoleVersionResources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>Res.resx</DependentUpon>
+      <DependentUpon>ConsoleVersionResources.resx</DependentUpon>
     </Compile>
     <Compile Include="Model\StatusSetter\ConsoleVertexStatusSetter.cs" />
     <Compile Include="Model\Vertex\ConsoleVertex.cs" />
@@ -77,9 +77,9 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Res.resx">
+    <EmbeddedResource Include="ConsoleVersionResources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
-      <LastGenOutput>Res.Designer.cs</LastGenOutput>
+      <LastGenOutput>ConsoleVersionResources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
