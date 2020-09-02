@@ -15,7 +15,7 @@ namespace GraphLibrary.GraphSaver
                 var formatter = new BinaryFormatter();
                 try {
                     using (var stream = new FileStream(GetPath(), FileMode.Create))
-                        formatter.Serialize(stream, graph.Info);
+                        formatter.Serialize(stream, graph.VerticesInfo);
                 }
                 catch (Exception ex) {
                     ShowMessage(ex.Message);
