@@ -34,8 +34,7 @@ namespace ConsoleVersion.ViewModel
 
         protected override void FindPreparations()
         {
-            pathAlgorithm.Pauser = new PauseProvider() 
-            { PauseEvent = () => { GraphShower.DisplayGraph(model); } };
+            pathAlgorithm.Pauser = new PauseProvider() { PauseEvent = () => { } };
         }
 
         protected override void ShowMessage(string message)
