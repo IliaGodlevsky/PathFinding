@@ -1,4 +1,5 @@
 ﻿using GraphLibrary.Common.Extensions;
+using GraphLibrary.Extensions;
 using GraphLibrary.Extensions.MatrixExtension;
 using GraphLibrary.Graph;
 using GraphLibrary.PauseMaker;
@@ -63,17 +64,8 @@ namespace GraphLibrary.Algorithm
             Graph.GetArray().Apply(SetValueToInfinity);
         }
 
-        private void ExtractNeighbours(IVertex vertex)
-        {
-            foreach (var neighbour in vertex.Neighbours)
-            {
-                if (!neighbour.IsVisited)
-                    neigbourQueue.Add(neighbour);
-            }
-        }
-
         private void SpreadRelaxWave(IVertex vertex)
-        {
+        {            
             foreach (var neighbour in vertex.Neighbours)
             {
                 var relaxFunctionResult = RelaxFunction(neighbour, vertex);
@@ -83,6 +75,11 @@ namespace GraphLibrary.Algorithm
                     neighbour.ParentVertex = vertex;
                 }
             }
+        }
+
+        private void ExtractNeighbours(IVertex vertex)
+        {
+            neigbourQueue.AddRange(vertex.GetUnvisitedNeighbours());
         }
 
         private IVertex GetChippestUnvisitedVertex()
@@ -102,8 +99,7 @@ namespace GraphLibrary.Algorithm
 
         private bool IsDestination(IVertex vertex)
         {
-            return vertex.IsEnd && vertex.IsVisited
-                || Graph.End == null;
+            return vertex.IsEnd || Graph.End == null;
         }
 
         private readonly List<IVertex> neigbourQueue;
