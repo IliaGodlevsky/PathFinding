@@ -13,7 +13,7 @@ namespace GraphLibrary.AlgoSelector
         private static double AStartRelaxFunction(IVertex vertex, 
             IVertex neighbour, IVertex destination)
         {
-            return neighbour.Cost + vertex.AccumulatedCost 
+            return neighbour.Cost + vertex.AccumulatedCost
                 + Distance.GetChebyshevDistance(neighbour, destination);
         }
 
