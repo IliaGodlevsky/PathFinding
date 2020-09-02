@@ -50,5 +50,10 @@ namespace GraphLibrary.Extensions
         {
             return !vertex.IsStart && !vertex.IsEnd;
         }
+
+        public static IEnumerable<IVertex> GetUnvisitedNeighbours(this IVertex vertex)
+        {
+            return vertex.Neighbours.Where(vert => !vert.IsVisited);
+        }
     }
 }
