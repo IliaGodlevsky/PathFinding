@@ -29,7 +29,7 @@ namespace GraphLibrary.StatusSetter
         {
             if (vertex.IsSimpleVertex())
             {
-                VertexLinkManager.IsolateVertex(vertex);
+                VertexBinder.IsolateVertex(vertex);
                 vertex.IsObstacle = false;
                 vertex.SetToDefault();
                 vertex.MarkAsObstacle();
@@ -40,8 +40,8 @@ namespace GraphLibrary.StatusSetter
         {           
             vertex.IsObstacle = false;
             vertex.MarkAsSimpleVertex();
-            VertexLinkManager.SetNeighbours(graph, vertex);
-            VertexLinkManager.ConnectToNeighbours(vertex);
+            VertexBinder.SetNeighbours(graph, vertex);
+            VertexBinder.ConnectToNeighbours(vertex);
         }
 
         public virtual void SetStartVertex(object sender, EventArgs e)
