@@ -1,9 +1,11 @@
 ﻿using GraphLibrary.Algorithm;
 using GraphLibrary.Common.Extensions;
+using GraphLibrary.Extensions;
 using GraphLibrary.Graph;
 using GraphLibrary.PauseMaker;
 using GraphLibrary.Statistics;
 using GraphLibrary.Vertex;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -18,7 +20,7 @@ namespace GraphLibrary.PathFindAlgorithm
         public DeepPathFindAlgorithm()
         {
             visitedVerticesStack = new Stack<IVertex>();
-            StatCollector = new StatisticsCollector();           
+            StatCollector = new StatisticsCollector();
         }
 
         public void DrawPath() => this.DrawPath(vertex => vertex.ParentVertex);
@@ -49,18 +51,13 @@ namespace GraphLibrary.PathFindAlgorithm
 
         protected virtual IVertex GoNextVertex(IVertex vertex)
         {
-            return vertex.Neighbours.Find(vert => !vert.IsVisited);
+            return vertex.GetUnvisitedNeighbours().Shuffle().FirstOrDefault();
         }
 
         private bool IsDestination(IVertex vertex)
         {
-            bool hasUnvisitedNeighbours = vertex.Neighbours.Find(v => !v.IsVisited) != null;
-            bool hasReachedEnd = vertex.IsEnd && vertex.IsVisited;
-            bool hasVerticesToComeBack = visitedVerticesStack.Any();
-            bool lostDestinationPoint = Graph.End == null;
-
-            return hasReachedEnd || !hasVerticesToComeBack
-                && !hasUnvisitedNeighbours || lostDestinationPoint;
+            return vertex.IsEnd || !visitedVerticesStack.Any()
+                && !vertex.GetUnvisitedNeighbours().Any() || Graph.End == null;
         }
 
         private bool IsRightVertexToVisit(IVertex vertex)
