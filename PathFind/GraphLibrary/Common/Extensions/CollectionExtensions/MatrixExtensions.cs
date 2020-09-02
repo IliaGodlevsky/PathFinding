@@ -10,7 +10,7 @@ namespace GraphLibrary.Extensions.MatrixExtension
         {
             if (arr == null)
                 return 0;
-            return arr.GetLength(0);
+            return arr.GetLength(dimension: 0);
         }
 
         public static int Height<TSource>(this TSource[,] arr)
