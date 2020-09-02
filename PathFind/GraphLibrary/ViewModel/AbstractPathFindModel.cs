@@ -24,13 +24,13 @@ namespace GraphLibrary.Model
             badResultMessage = LibraryResources.BadResultMsg;
         }
 
-        protected abstract void FindPreparations();
+        protected abstract void PrepareAlgorithm();
 
         public virtual void PathFind()
         {
             pathAlgorithm = AlgorithmSelector.
                 GetPathFindAlgorithm(Algorithm, model.Graph);
-            FindPreparations();
+            PrepareAlgorithm();
             pathAlgorithm.FindDestionation();
             if (pathAlgorithm.HasFoundPath())
             {

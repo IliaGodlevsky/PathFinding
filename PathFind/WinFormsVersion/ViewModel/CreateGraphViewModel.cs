@@ -31,7 +31,7 @@ namespace WinFormsVersion.ViewModel
         {
             if (int.TryParse(Width, out int width) && int.TryParse(Height, out int height))
                 return GraphParametresRange.
-                    IsRightGraphParamters(width, height, ObstaclePercent);
+                    IsValidGraphParamters(width, height, ObstaclePercent);
             else
                 return false;
         }

@@ -19,29 +19,29 @@
             LowerObstacleValue = 0;
         }
 
-        public static bool IsInWidthRange(int width)
+        public static bool IsInValidWidthRange(int width)
         {
             return width <= UpperWidthValue 
                 && width >= LowerWidthValue;
         }
 
-        public static bool IsInHeightRange(int height)
+        public static bool IsInValidHeightRange(int height)
         {
             return height <= UpperHeightValue 
                 && height >= LowerHeightValue;
         }
 
-        public static bool IsInObstacleRange(int obstaclePercent)
+        public static bool IsInValidObstacleRange(int obstaclePercent)
         {
             return obstaclePercent <= UpperObstacleValue 
                 && obstaclePercent >= LowerObstacleValue;
         }
 
-        public static bool IsRightGraphParamters(int width, int height, int obstaclePercent)
+        public static bool IsValidGraphParamters(int width, int height, int obstaclePercent)
         {
-            return IsInWidthRange(width) 
-                && IsInHeightRange(height) 
-                && IsInObstacleRange(obstaclePercent);
+            return IsInValidWidthRange(width) 
+                && IsInValidHeightRange(height) 
+                && IsInValidObstacleRange(obstaclePercent);
         }
     }
 }

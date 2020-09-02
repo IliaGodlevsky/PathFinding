@@ -16,7 +16,7 @@
                 <x:Type TypeName="Algorithms:Algorithms"/>
             </ObjectDataProvider.MethodParameters>
         </ObjectDataProvider>
-        <converters:AlgorithmDescriptionConverter x:Key="enumDescriptionConverter"></converters:AlgorithmDescriptionConverter>
+        <converters:EnumDescriptionConverter x:Key="enumDescriptionConverter"></converters:EnumDescriptionConverter>
     </Window.Resources>
     <Grid>
         <Grid.RowDefinitions>

@@ -19,7 +19,7 @@ namespace GraphLibrary.Algorithm
 
         protected override IVertex GoNextVertex(IVertex vertex)
         {
-            var neighbours = vertex.GetUnvisitedNeighbours()?.ToList();
+            var neighbours = vertex.GetUnvisitedNeighbours().ToList();
             return neighbours?.Find(vert => GreedyFunction(vert) == neighbours.Min(GreedyFunction));
         }
     }

@@ -36,7 +36,7 @@ namespace WpfVersion.ViewModel
             return (Enum.GetValues(typeof(Algorithms)) as Algorithms[]).Any(algo => algo == Algorithm);
         }
 
-        protected override void FindPreparations()
+        protected override void PrepareAlgorithm()
         {
             (model as MainWindowViewModel).Window.Close();
             pathAlgorithm.Pauser = new PauseProvider() { PauseEvent = () => System.Windows.Forms.Application.DoEvents() };

@@ -7,7 +7,6 @@ using GraphLibrary.Model;
 using GraphLibrary.PauseMaker;
 using System;
 using System.Drawing;
-using System.Threading;
 
 namespace ConsoleVersion.ViewModel
 {
@@ -32,7 +31,7 @@ namespace ConsoleVersion.ViewModel
             base.PathFind();
         }
 
-        protected override void FindPreparations()
+        protected override void PrepareAlgorithm()
         {
             pathAlgorithm.Pauser = new PauseProvider() { PauseEvent = () => { } };
         }

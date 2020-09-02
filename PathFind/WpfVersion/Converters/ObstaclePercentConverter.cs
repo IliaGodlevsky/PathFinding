@@ -1,6 +1,6 @@
-﻿using System;
+﻿using GraphLibrary.Common.Constants;
+using System;
 using System.Globalization;
-using System.Linq;
 using System.Windows.Data;
 
 namespace WpfVersion.Converters
@@ -14,16 +14,18 @@ namespace WpfVersion.Converters
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            var range = (int[])parameter;
-            if (value != null && range != null && range?.Count() == 2
-                && double.TryParse(value.ToString(), out double result))
+            double result = 0D;
+            if (value == null)
+                return result;
+            if (double.TryParse(value.ToString(), out result))
             {
-                if (result >= range.First() && result <= range.Last())
-                    return result;
-                return result > range.Last() ? range.Last() : (double)0;
+                var obstaclePercent = System.Convert.ToInt32(result);
+                if (GraphParametresRange.IsInValidObstacleRange(obstaclePercent))
+                    result = obstaclePercent;
+                else
+                    result = GraphParametresRange.UpperObstacleValue;
             }
-            else
-                return 0D;
+            return result;
         }
     }
 }

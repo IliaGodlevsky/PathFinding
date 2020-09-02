@@ -9,10 +9,6 @@
         Title="Parametres" SizeToContent="WidthAndHeight">
     <Window.Resources>
         <converters:ObstaclePercentConverter x:Key="obstaclePercentConverter"></converters:ObstaclePercentConverter>
-        <x:Array x:Key="SliderRange" Type="{x:Type sys:Int32}">
-            <sys:Int32>0</sys:Int32>
-            <sys:Int32>100</sys:Int32>
-        </x:Array>
     </Window.Resources>
     <Grid>
         <Grid.ColumnDefinitions>
@@ -31,8 +27,7 @@
         <Slider Value = "{Binding Path = ObstaclePercent}" x:Name="obstacleSlider" 
                 MinWidth="100" Margin="5" Grid.Row="1"></Slider>
         <TextBox Text = "{Binding ElementName = obstacleSlider, Path = Value, 
-            Converter = {StaticResource obstaclePercentConverter},
-            ConverterParameter={StaticResource SliderRange}, Mode = TwoWay, 
+            Converter = {StaticResource obstaclePercentConverter}, Mode = TwoWay, 
             UpdateSourceTrigger = PropertyChanged}"
                  x:Name="obstacleTextBox" MinWidth="40" Margin="5" Grid.Row="1" Grid.Column="1"></TextBox>
         <TextBlock Grid.Row="2" Text="Graph width" Margin="5"></TextBlock>
