@@ -24,7 +24,7 @@ namespace GraphLibrary.GraphFactory
                 return SetLocation(vertex);
             }
             vertices.Apply(InitializeVertex);
-            VertexLinkManager.ConnectVertices(GetGraph());
+            VertexBinder.ConnectVertices(GetGraph());
         }
 
         protected abstract IVertex CreateVertex();
