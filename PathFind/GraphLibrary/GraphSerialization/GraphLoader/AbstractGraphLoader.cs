@@ -28,7 +28,7 @@ namespace GraphLibrary.GraphLoader
             if (info == null)
                 return;
             graph = GetInitializer(info).GetGraph();
-            VertexLinkManager.ConnectVertices(graph);
+            VertexBinder.ConnectVertices(graph);
         }
 
         protected abstract void ShowMessage(string message);
