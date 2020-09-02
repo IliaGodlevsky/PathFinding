@@ -1,4 +1,5 @@
 ﻿using GraphLibrary.Common.Extensions;
+using GraphLibrary.Extensions;
 using GraphLibrary.Graph;
 using GraphLibrary.PauseMaker;
 using GraphLibrary.Statistics;
@@ -25,7 +26,7 @@ namespace GraphLibrary.Algorithm
             StatCollector = new StatisticsCollector();
         }
 
-        public void DrawPath() => this.DrawPath(GoNextWave);
+        public void DrawPath() => this.DrawPath(FollowWave);
 
         public void FindDestionation()
         {
@@ -44,20 +45,17 @@ namespace GraphLibrary.Algorithm
             }
         }
 
-        private IVertex GoNextWave(IVertex vertex)
+        private IVertex FollowWave(IVertex vertex)
         {
+            bool IsWaveVertex(IVertex vert) => vert.IsVisited && !vert.IsEnd;
             double min = vertex.Neighbours.Min(vert => vert.AccumulatedCost);
             return vertex.Neighbours.Find(vert => min == vert.AccumulatedCost
-                    && vert.IsVisited && !vert.IsEnd);
+                   && IsWaveVertex(vert));
         }
 
-        private void AddToQueue(List<IVertex> neighbours)
+        private void ExtractNeighbours(IVertex vertex)
         {
-            foreach (var neighbour in neighbours)
-            {
-                if (!neighbour.IsVisited)
-                    neighbourQueue.Enqueue(neighbour);
-            }
+            neighbourQueue.EnqueueRange(vertex.GetUnvisitedNeighbours());
         }
 
         private void SpreadWaves(IVertex vertex)
@@ -73,7 +71,7 @@ namespace GraphLibrary.Algorithm
         {
             this.VisitVertex(vertex);
             SpreadWaves(vertex);
-            AddToQueue(vertex.Neighbours);
+            ExtractNeighbours(vertex);
         }
 
         private bool IsDestination(IVertex vertex)
