@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Linq;
+using GraphLibrary.Extensions;
 using GraphLibrary.PathFindAlgorithm;
 using GraphLibrary.Vertex;
 
@@ -10,7 +11,7 @@ namespace GraphLibrary.Algorithm
     /// </summary>
     public class GreedyAlgorithm : DeepPathFindAlgorithm
     {
-        public Func<IVertex, double> GreedyFunction { get; set; }
+        public Func<IVertex, double> GreedyFunction { private get; set; }
         public GreedyAlgorithm() : base()
         {
             
@@ -18,11 +19,8 @@ namespace GraphLibrary.Algorithm
 
         protected override IVertex GoNextVertex(IVertex vertex)
         {
-            var neighbours = !vertex.Neighbours.Any(vert => vert.IsVisited) 
-                ? vertex.Neighbours : vertex.Neighbours.Where(vert => !vert.IsVisited).ToList();
-            neighbours = neighbours.OrderBy(vert => Guid.NewGuid()).ToList();
-            return neighbours?.Find(vert => GreedyFunction(vert) == neighbours.Min(GreedyFunction));          
- 
+            var neighbours = vertex.GetUnvisitedNeighbours()?.ToList();
+            return neighbours?.Find(vert => GreedyFunction(vert) == neighbours.Min(GreedyFunction));
         }
     }
 }
