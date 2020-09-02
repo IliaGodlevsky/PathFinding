@@ -41,9 +41,9 @@ namespace GraphLibrary.Extensions.MatrixExtension
 
         public static Point GetIndices<TSource>(this TSource [,] arr, TSource item)
         {
-            int index = Array.IndexOf(arr.Cast<TSource>().ToArray(), item);
-            int yCoordinate = (arr.Height() + index) % arr.Height();
-            int xCoordinate = (int)Math.Ceiling((decimal)(index - yCoordinate) / arr.Height());
+            var index = Array.IndexOf(arr.Cast<TSource>().ToArray(), item);
+            var yCoordinate = (arr.Height() + index) % arr.Height();
+            var xCoordinate = (int)Math.Ceiling((decimal)(index - yCoordinate) / arr.Height());
             return new Point(xCoordinate, yCoordinate);
         }
     }
