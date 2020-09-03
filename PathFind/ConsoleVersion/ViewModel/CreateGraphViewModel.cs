@@ -14,7 +14,7 @@ namespace ConsoleVersion.ViewModel
 
         public CreateGraphViewModel(IMainModel model) : base(model)
         {
-            filler = new ConsoleGraphFiller();            
+            filler = new ConsoleVersionGraphFiller();            
         }
 
         public override IGraphFactory GetFactory()

@@ -63,6 +63,7 @@
     <Compile Include="GraphCreate\GraphFactory\AbstractGraphInfoInitializer.cs" />
     <Compile Include="GraphCreate\GraphFactory\AbstractVertexLocator.cs" />
     <Compile Include="GraphCreate\GraphFactory\IGraphFactory.cs" />
+    <Compile Include="GraphCreate\GraphFieldFiller\AbstractGraphFieldFiller.cs" />
     <Compile Include="LibraryResources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>

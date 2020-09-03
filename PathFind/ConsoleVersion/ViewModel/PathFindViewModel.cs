@@ -1,5 +1,6 @@
 ﻿using ConsoleVersion.Forms;
 using ConsoleVersion.InputClass;
+using ConsoleVersion.Model;
 using ConsoleVersion.StatusSetter;
 using GraphLibrary.AlgorithmEnum;
 using GraphLibrary.Extensions;
@@ -13,16 +14,19 @@ namespace ConsoleVersion.ViewModel
     internal class PathFindViewModel : AbstractPathFindModel
     {
         private readonly ConsoleVertexStatusSetter changer;
+        private readonly ConsoleVersionGraphFiller filler;
+
         public Tuple<string, string, string> Messages { get; set; }
 
         public PathFindViewModel(IMainModel model) : base(model)
         {
             changer = new ConsoleVertexStatusSetter(model.Graph);
+            filler = new ConsoleVersionGraphFiller();
         }
 
         public override void PathFind()
         {
-            model.Graph.Refresh();
+            filler.RefreshGraph(model.Graph);
             GraphShower.DisplayGraph(model);
             ChooseStart();
             ChooseEnd();

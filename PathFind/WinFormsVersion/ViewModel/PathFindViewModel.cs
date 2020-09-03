@@ -4,6 +4,7 @@ using GraphLibrary.PauseMaker;
 using System;
 using System.Linq;
 using System.Windows.Forms;
+using WinFormsVersion.Model;
 
 namespace WinFormsVersion.ViewModel
 {
@@ -11,7 +12,7 @@ namespace WinFormsVersion.ViewModel
     {
         public PathFindViewModel(IMainModel model) : base(model)
         {
-
+            filler = new WinFormsGraphFiller();
         }
 
         protected override void PrepareAlgorithm()

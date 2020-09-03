@@ -44,22 +44,6 @@ namespace GraphLibrary.Graph
 
         public virtual Point GetIndices(IVertex vertex) => vertices.GetIndices(vertex);
 
-        protected virtual void ToDefault(IVertex vertex)
-        {
-            if (!vertex.IsObstacle)
-                vertex.SetToDefault();
-        }
-
-        public void Refresh()
-        {
-            if (vertices == null)
-                return;
-            foreach (var vertex in vertices)            
-                ToDefault(vertex);            
-            Start = null;
-            End = null;
-        }
-
         public IEnumerator GetEnumerator()
         {
             return vertices.GetEnumerator();

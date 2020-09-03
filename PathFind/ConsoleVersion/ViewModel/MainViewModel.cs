@@ -22,8 +22,8 @@ namespace ConsoleVersion.ViewModel
             Format = ConsoleVersionResources.GraphParametresFormat;
             saver = new ConsoleGraphSaver();
             loader = new ConsoleGraphLoader();
-            filler = new ConsoleGraphFiller();
-
+            filler = new ConsoleVersionGraphFiller();
+            graphFieldFiller = new ConsoleGraphFieldFiller();
             var factory = new ConsoleGraphFactory(
                 percentOfObstacles: 25, width: 25, height: 25);
             Graph = factory.GetGraph();

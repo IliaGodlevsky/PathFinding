@@ -49,6 +49,7 @@
     <Compile Include="Extensions\ControlExtension.cs" />
     <Compile Include="Model\GraphFactory\WinFormsGraphInitializer.cs" />
     <Compile Include="Model\GraphFactory\WinFormsGraphFactory.cs" />
+    <Compile Include="Model\WinFormsGraphFieldFiller.cs" />
     <Compile Include="ViewModel\CreateGraphViewModel.cs" />
     <Compile Include="ViewModel\PathFindViewModel.cs" />
     <Compile Include="View\CreateGraphWindow.cs">

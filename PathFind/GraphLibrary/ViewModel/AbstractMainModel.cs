@@ -1,5 +1,6 @@
 ﻿using GraphFactory.GraphSaver;
 using GraphLibrary.Graph;
+using GraphLibrary.GraphCreate.GraphFieldFiller;
 using GraphLibrary.GraphLoader;
 
 namespace GraphLibrary.Model
@@ -15,6 +16,7 @@ namespace GraphLibrary.Model
         protected IGraphSaver saver;
         protected IGraphLoader loader;
         protected AbstractGraphFiller filler;
+        protected AbstractGraphFieldFiller graphFieldFiller;
 
         public AbstractMainModel()
         {
@@ -32,13 +34,14 @@ namespace GraphLibrary.Model
             if (temp == null)
                 return;
             Graph = temp;
-            GraphField = filler.FillGraphField(Graph);
+            GraphField = graphFieldFiller.FileGraphField(Graph);
+            filler.ChargeGraph(Graph);
             GraphParametres = GraphParametresPresenter.GetFormattedData(Graph, Format);
         }
 
         public virtual void ClearGraph()
         {
-            Graph?.Refresh();
+            filler.RefreshGraph(Graph);
             Statistics = string.Empty;
             GraphParametres = GraphParametresPresenter.GetFormattedData(Graph, Format);
         }

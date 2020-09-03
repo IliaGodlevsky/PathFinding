@@ -66,6 +66,7 @@ namespace WpfVersion.ViewModel
             saver = new WpfGraphSaver();
             loader = new WpfGraphLoader(VertexSize.SIZE_BETWEEN_VERTICES);
             filler = new WpfGraphFiller();
+            graphFieldFiller = new WpfGraphFieldFiller();
             StartPathFindCommand = new RelayCommand(ExecuteStartPathFindCommand, 
                 obj => Graph?.End != null && Graph?.Start != null);
             CreateNewGraphCommand = new RelayCommand(ExecuteCreateNewGraphCommand, obj => true);

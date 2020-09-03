@@ -1,4 +1,5 @@
 ﻿using GraphLibrary.Graph;
+using GraphLibrary.GraphCreate.GraphFieldFiller;
 using GraphLibrary.GraphFactory;
 
 namespace GraphLibrary.Model
@@ -13,6 +14,7 @@ namespace GraphLibrary.Model
         protected AbstractGraph graph;
         protected IGraphField graphField;
         protected AbstractGraphFiller filler;
+        protected AbstractGraphFieldFiller graphFieldFiller;
 
         public AbstractCreateGraphModel(IMainModel model)
         {
@@ -25,7 +27,8 @@ namespace GraphLibrary.Model
         {
             var factory = GetFactory();
             graph = factory.GetGraph();
-            graphField = filler.FillGraphField(graph);
+            filler.ChargeGraph(graph);
+            graphField = graphFieldFiller.FileGraphField(graph);
             model.Graph = graph;
             model.GraphField = graphField;
             model.GraphParametres = 

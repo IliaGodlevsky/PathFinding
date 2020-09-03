@@ -71,6 +71,7 @@ namespace WinFormsVersion.ViewModel
             loader = new WinFormsGraphLoader(VertexSize.SIZE_BETWEEN_VERTICES);
             filler = new WinFormsGraphFiller();
             graphField = new WinFormsGraphField();
+            graphFieldFiller = new WinFormsGraphFieldFiller();
         }
 
         public override void PathFind()

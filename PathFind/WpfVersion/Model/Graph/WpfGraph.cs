@@ -14,12 +14,12 @@ namespace WpfVersion.Model.Graph
 
         }
 
-        protected override void ToDefault(IVertex vertex)
-        {
-            base.ToDefault(vertex);
-            (vertex as WpfVertex).MouseLeftButtonDown -= SetStart;
-            (vertex as WpfVertex).MouseLeftButtonDown -= SetEnd;
-            (vertex as WpfVertex).MouseLeftButtonDown += SetStart;
-        }
+        //protected override void ToDefault(IVertex vertex)
+        //{
+        //    base.ToDefault(vertex);
+        //    (vertex as WpfVertex).MouseLeftButtonDown -= SetStart;
+        //    (vertex as WpfVertex).MouseLeftButtonDown -= SetEnd;
+        //    (vertex as WpfVertex).MouseLeftButtonDown += SetStart;
+        //}
     }
 }

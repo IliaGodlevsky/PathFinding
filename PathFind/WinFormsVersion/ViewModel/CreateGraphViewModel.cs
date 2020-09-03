@@ -12,6 +12,7 @@ namespace WinFormsVersion.ViewModel
         public CreateGraphViewModel(IMainModel model) : base(model)
         {
             filler = new WinFormsGraphFiller();
+            graphFieldFiller = new WinFormsGraphFieldFiller();
         }
 
         public override void CreateGraph()

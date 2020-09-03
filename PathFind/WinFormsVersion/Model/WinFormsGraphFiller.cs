@@ -1,4 +1,5 @@
-﻿using GraphLibrary.Graph;
+﻿using GraphLibrary.Extensions;
+using GraphLibrary.Graph;
 using GraphLibrary.Model;
 using GraphLibrary.StatusSetter;
 using GraphLibrary.Vertex;
@@ -11,28 +12,29 @@ namespace WinFormsVersion.Model
 {
     public class WinFormsGraphFiller : AbstractGraphFiller
     {
-        protected override void ChargeGraph(AbstractGraph graph, IVertexStatusSetter changer)
-        {
-            (graph as WinFormsGraph).SetStart += changer.SetStartVertex;
-            (graph as WinFormsGraph).SetEnd += changer.SetDestinationVertex;
-        }
-
         protected override void ChargeVertex(IVertex vertex, IVertexStatusSetter changer)
         {
             if (!vertex.IsObstacle)
                 (vertex as WinFormsVertex).MouseClick += changer.SetStartVertex;
             (vertex as WinFormsVertex).MouseClick += changer.ReversePolarity;
-            (vertex as WinFormsVertex).MouseWheel += changer.ChangeVertexValue;
-        }
-
-        protected override IGraphField GetField()
-        {
-            return new WinFormsGraphField() { Location = new Point(4, 90) };
+           (vertex as WinFormsVertex).MouseWheel += changer.ChangeVertexValue;
         }
 
         protected override IVertexStatusSetter GetStatusSetter(AbstractGraph graph)
         {
             return new WinFormsVertexStatusSetter(graph);
+        }
+
+        protected override void RefreshVertex(IVertex vertex, IVertexStatusSetter changer)
+        {
+            if (!vertex.IsObstacle)
+            {
+                vertex.SetToDefault();
+                (vertex as WinFormsVertex).MouseClick -= changer.SetStartVertex;
+                (vertex as WinFormsVertex).MouseClick -= changer.SetDestinationVertex;
+                (vertex as WinFormsVertex).MouseClick += changer.SetStartVertex;
+            }
+
         }
     }
 }

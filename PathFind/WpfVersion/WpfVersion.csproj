@@ -68,6 +68,7 @@
     <Compile Include="Model\Vertex\WpfVertex.cs" />
     <Compile Include="Model\WindowAdjust.cs" />
     <Compile Include="Model\WpfGraphField.cs" />
+    <Compile Include="Model\WpfGraphFieldFiller.cs" />
     <Compile Include="Model\WpfGraphFiller.cs" />
     <Compile Include="ViewModel\GraphCreateViewModel.cs" />
     <Compile Include="ViewModel\PathFindViewModel.cs" />
