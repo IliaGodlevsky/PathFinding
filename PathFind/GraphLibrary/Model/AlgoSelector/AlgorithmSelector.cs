@@ -21,7 +21,7 @@ namespace GraphLibrary.AlgoSelector
         {
             switch (algorithms)
             {
-                //case Algorithms.WidePathFind: return new WidePathFindAlgorithm() { Graph = graph };
+                case Algorithms.WidePathFind: return new WidePathFindAlgorithm() { Graph = graph };
                 case Algorithms.DeepPathFind: return new DeepPathFindAlgorithm() { Graph = graph };
                 case Algorithms.DijkstraAlgorithm: return new DijkstraAlgorithm() { Graph = graph };
                 case Algorithms.AStarAlgorithm: return new DijkstraAlgorithm()

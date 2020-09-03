@@ -4,10 +4,10 @@ namespace GraphLibrary.AlgorithmEnum
 {
     public enum Algorithms : byte
     {
-        //[Description("Wide path find algorithm")]
-        //WidePathFind = 1,
+        [Description("Wide path find algorithm")]
+        WidePathFind = 1,
         [Description("Deep path find algorithm")]
-        DeepPathFind = 1,
+        DeepPathFind,
         [Description("Dijkstra algorithm")]
         DijkstraAlgorithm,
         [Description("A* algorithm")]

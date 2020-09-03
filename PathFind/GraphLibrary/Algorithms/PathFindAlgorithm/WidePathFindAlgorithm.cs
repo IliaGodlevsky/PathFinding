@@ -6,8 +6,7 @@ using GraphLibrary.Statistics;
 using GraphLibrary.Vertex;
 using System.Collections.Generic;
 using System.Linq;
-using GraphLibrary.Common.Constants;
-using GraphLibrary.DistanceCalculator;
+using GraphLibrary.Common.Extensions.CollectionExtensions;
 
 namespace GraphLibrary.Algorithm
 {
@@ -28,18 +27,7 @@ namespace GraphLibrary.Algorithm
             StatCollector = new StatisticsCollector();
         }
 
-        public void DrawPath()
-        {
-            var vertex = Graph.End;
-            while (!vertex.IsStart)
-            {
-                vertex = FollowWave(vertex);
-                if (vertex.IsSimpleVertex())
-                    vertex.MarkAsPath();
-                StatCollector.IncludeVertexInStatistics(vertex);
-                Pauser?.Pause(AlgorithmExecutionDelay.PATH_DRAW_PAUSE);
-            }
-        }
+        public void DrawPath() => this.DrawPath(FollowWave);
 
         public void FindDestionation()
         {
@@ -58,12 +46,6 @@ namespace GraphLibrary.Algorithm
             }
         }
 
-        /// <summary>
-        /// Hint! incorrectly bends around obstacles!
-        /// </summary>
-        /// <param name="vertex"></param>
-        /// <returns></returns>
-        // TODO: Change algorithm of choosing next wave vertex
         private IVertex FollowWave(IVertex vertex)
         {
             bool IsWaveVertex(IVertex vert) => vert.IsVisited && !vert.IsEnd;
@@ -79,14 +61,12 @@ namespace GraphLibrary.Algorithm
 
         private void SpreadWaves(IVertex vertex)
         {
-            foreach (var neighbour in vertex.Neighbours)
+            vertex.GetUnvisitedNeighbours().ToList().Apply(vert =>
             {
-                if (!neighbour.IsVisited)
-                {
-                    neighbour.AccumulatedCost = vertex.AccumulatedCost + 1;
-                    neighbour.Cost = (int)neighbour.AccumulatedCost;
-                }
-            }
+                if (vert.AccumulatedCost == 0)
+                    vert.AccumulatedCost = vertex.AccumulatedCost + 1;
+                return vert;
+            });
         }
 
         private void ProcessVertex(IVertex vertex)
