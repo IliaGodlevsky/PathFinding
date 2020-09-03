@@ -2,6 +2,7 @@
 using ConsoleVersion.InputClass;
 using ConsoleVersion.Model;
 using GraphLibrary.Common.Constants;
+using GraphLibrary.GraphCreate.GraphFieldFiller;
 using GraphLibrary.GraphFactory;
 using GraphLibrary.Model;
 using System;
@@ -14,7 +15,14 @@ namespace ConsoleVersion.ViewModel
 
         public CreateGraphViewModel(IMainModel model) : base(model)
         {
-            filler = new ConsoleVersionGraphFiller();            
+            vertexEventSetter = new ConsoleVersionVertexEventSetter();
+        }
+
+        public CreateGraphViewModel(IMainModel model,
+            AbstractGraphFieldFiller graphFieldFiller,
+            AbstractVertexEventSetter eventSetter) : base(model, graphFieldFiller, eventSetter)
+        {
+
         }
 
         public override IGraphFactory GetFactory()

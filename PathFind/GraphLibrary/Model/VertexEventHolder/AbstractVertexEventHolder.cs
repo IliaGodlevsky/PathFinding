@@ -1,16 +1,16 @@
 ﻿using GraphLibrary.Common.Constants;
 using GraphLibrary.Extensions;
-using GraphLibrary.Graph;
+using GraphLibrary.Collection;
 using GraphLibrary.Vertex;
 using System;
 
-namespace GraphLibrary.StatusSetter
+namespace GraphLibrary.VertexEventHolder
 {
-    public abstract class AbstractVertexStatusSetter : IVertexStatusSetter
+    public abstract class AbstractVertexEventHolder : IVertexEventHolder
     {
-        protected AbstractGraph graph;
+        protected Graph graph;
 
-        public AbstractVertexStatusSetter(AbstractGraph graph)
+        public AbstractVertexEventHolder(Graph graph)
         {
             this.graph = graph;
         }

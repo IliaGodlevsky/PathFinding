@@ -1,5 +1,5 @@
 ﻿using GraphFactory.GraphSaver;
-using GraphLibrary.Graph;
+using GraphLibrary.Collection;
 using System;
 using System.IO;
 using System.Runtime.Serialization.Formatters.Binary;
@@ -8,7 +8,7 @@ namespace GraphLibrary.GraphSaver
 {
     public abstract class AbstractGraphSaver : IGraphSaver
     {
-        public void SaveGraph(AbstractGraph graph)
+        public void SaveGraph(Graph graph)
         {
             if (graph != null)
             {

@@ -1,8 +1,6 @@
 ﻿using GraphLibrary;
-using GraphLibrary.Graph;
 using GraphLibrary.GraphFactory;
 using GraphLibrary.Vertex;
-using WpfVersion.Model.Graph;
 using WpfVersion.Model.Vertex;
 
 namespace WpfVersion.Model.GraphFactory
@@ -12,9 +10,8 @@ namespace WpfVersion.Model.GraphFactory
         public WpfGraphInitializer(VertexInfo[,] info, int placeBetweenVertices) 
             : base(info, placeBetweenVertices)
         {
-        }
 
-        public override AbstractGraph GetGraph() => new WpfGraph(vertices);
+        }
 
         protected override IVertex CreateVertex(VertexInfo info) => new WpfVertex(info);
     }

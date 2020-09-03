@@ -1,5 +1,5 @@
 ﻿using GraphLibrary.Extensions.MatrixExtension;
-using GraphLibrary.Graph;
+using GraphLibrary.Collection;
 using GraphLibrary.Vertex;
 
 namespace GraphLibrary.GraphFactory
@@ -23,7 +23,7 @@ namespace GraphLibrary.GraphFactory
         }
 
         protected abstract IVertex CreateVertex(VertexInfo info);
-        public abstract AbstractGraph GetGraph();
+        public Graph GetGraph() => new Graph(vertices);
        
     }
 }

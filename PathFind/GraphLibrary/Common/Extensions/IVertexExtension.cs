@@ -1,4 +1,5 @@
 ﻿using GraphLibrary.Vertex;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -54,6 +55,18 @@ namespace GraphLibrary.Extensions
         public static IEnumerable<IVertex> GetUnvisitedNeighbours(this IVertex vertex)
         {
             return vertex.Neighbours.Where(vert => !vert.IsVisited);
+        }
+
+        public static IEnumerable<IVertex> GetPathToVertex(this IVertex vertex, 
+            IVertex destination, Func<IVertex, IVertex> parentVertexFunction)
+        {
+            var vert = vertex;
+            while (vert.Location != destination.Location
+                && parentVertexFunction(vert) != null)
+            {                
+                vert = parentVertexFunction(vert);
+                yield return vert;
+            }
         }
     }
 }

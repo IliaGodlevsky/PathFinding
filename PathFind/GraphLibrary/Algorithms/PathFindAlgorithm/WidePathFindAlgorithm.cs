@@ -1,11 +1,13 @@
 ﻿using GraphLibrary.Common.Extensions;
 using GraphLibrary.Extensions;
-using GraphLibrary.Graph;
+using GraphLibrary.Collection;
 using GraphLibrary.PauseMaker;
 using GraphLibrary.Statistics;
 using GraphLibrary.Vertex;
 using System.Collections.Generic;
 using System.Linq;
+using GraphLibrary.Common.Constants;
+using GraphLibrary.DistanceCalculator;
 
 namespace GraphLibrary.Algorithm
 {
@@ -15,9 +17,9 @@ namespace GraphLibrary.Algorithm
     /// the destination top
     /// </summary>
     public class WidePathFindAlgorithm : IPathFindAlgorithm
-    {       
+    {
         public IStatisticsCollector StatCollector { get; set; }
-        public AbstractGraph Graph { get; set; }
+        public Graph Graph { get; set; }
         public IPauseProvider Pauser { get; set; }
 
         public WidePathFindAlgorithm()
@@ -26,7 +28,18 @@ namespace GraphLibrary.Algorithm
             StatCollector = new StatisticsCollector();
         }
 
-        public void DrawPath() => this.DrawPath(FollowWave);
+        public void DrawPath()
+        {
+            var vertex = Graph.End;
+            while (!vertex.IsStart)
+            {
+                vertex = FollowWave(vertex);
+                if (vertex.IsSimpleVertex())
+                    vertex.MarkAsPath();
+                StatCollector.IncludeVertexInStatistics(vertex);
+                Pauser?.Pause(AlgorithmExecutionDelay.PATH_DRAW_PAUSE);
+            }
+        }
 
         public void FindDestionation()
         {
@@ -45,6 +58,12 @@ namespace GraphLibrary.Algorithm
             }
         }
 
+        /// <summary>
+        /// Hint! incorrectly bends around obstacles!
+        /// </summary>
+        /// <param name="vertex"></param>
+        /// <returns></returns>
+        // TODO: Change algorithm of choosing next wave vertex
         private IVertex FollowWave(IVertex vertex)
         {
             bool IsWaveVertex(IVertex vert) => vert.IsVisited && !vert.IsEnd;
@@ -63,7 +82,10 @@ namespace GraphLibrary.Algorithm
             foreach (var neighbour in vertex.Neighbours)
             {
                 if (!neighbour.IsVisited)
+                {
                     neighbour.AccumulatedCost = vertex.AccumulatedCost + 1;
+                    neighbour.Cost = (int)neighbour.AccumulatedCost;
+                }
             }
         }
 
@@ -76,7 +98,7 @@ namespace GraphLibrary.Algorithm
 
         private bool IsDestination(IVertex vertex)
         {
-            if (vertex == null || Graph.End == null) 
+            if (vertex == null || Graph.End == null)
                 return true;
             return vertex.IsEnd || !neighbourQueue.Any();
         }

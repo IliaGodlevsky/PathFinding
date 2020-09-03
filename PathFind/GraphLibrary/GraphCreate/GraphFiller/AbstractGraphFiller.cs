@@ -1,23 +1,23 @@
-﻿using GraphLibrary.Graph;
-using GraphLibrary.StatusSetter;
+﻿using GraphLibrary.Collection;
+using GraphLibrary.VertexEventHolder;
 using GraphLibrary.Vertex;
 using System;
 
 namespace GraphLibrary.Model
 {
-    public abstract class AbstractGraphFiller
+    public abstract class AbstractVertexEventSetter
     {
-        public void ChargeGraph(AbstractGraph graph) => SetVertexStatus(graph, ChargeVertex);
+        public void ChargeGraph(Graph graph) => SetEventsToVertex(graph, ChargeVertex);
 
-        public void RefreshGraph(AbstractGraph graph) => SetVertexStatus(graph, RefreshVertex);
+        public void RefreshGraph(Graph graph) => SetEventsToVertex(graph, RefreshVertex);
 
-        protected abstract IVertexStatusSetter GetStatusSetter(AbstractGraph graph);
+        protected abstract IVertexEventHolder GetStatusSetter(Graph graph);
 
-        protected abstract void ChargeVertex(IVertex vertex, IVertexStatusSetter changer);
-        protected abstract void RefreshVertex(IVertex vertex, IVertexStatusSetter changer);
+        protected abstract void ChargeVertex(IVertex vertex, IVertexEventHolder changer);
+        protected abstract void RefreshVertex(IVertex vertex, IVertexEventHolder changer);
 
-        private void SetVertexStatus(AbstractGraph graph,
-            Action<IVertex, IVertexStatusSetter> action)
+        private void SetEventsToVertex(Graph graph,
+            Action<IVertex, IVertexEventHolder> action)
         {
             var changer = GetStatusSetter(graph);
             for (int i = 0; i < graph.Width; i++)

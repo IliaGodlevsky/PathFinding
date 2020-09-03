@@ -1,4 +1,4 @@
-﻿using GraphLibrary.Graph;
+﻿using GraphLibrary.Collection;
 using GraphLibrary.GraphFactory;
 using System;
 using System.IO;
@@ -8,9 +8,9 @@ namespace GraphLibrary.GraphLoader
 {
     public abstract class AbstractGraphLoader : IGraphLoader
     {
-        protected AbstractGraph graph = null;
+        protected Graph graph = null;
 
-        public AbstractGraph GetGraph()
+        public Graph GetGraph()
         {
             var formatter = new BinaryFormatter();
             try {

@@ -1,4 +1,4 @@
-﻿using GraphLibrary.Graph;
+﻿using GraphLibrary.Collection;
 using GraphLibrary.Vertex;
 
 namespace GraphLibrary
@@ -25,7 +25,7 @@ namespace GraphLibrary
             vertex.Neighbours.Clear();
         }
 
-        private static bool IsWithinGraph(AbstractGraph graph, int width, int height)
+        private static bool IsWithinGraph(Graph graph, int width, int height)
         {
             return width >= 0 && width < graph.Width
                 && height >= 0 && height < graph.Height;
@@ -37,7 +37,7 @@ namespace GraphLibrary
                 !vertex.Neighbours.Contains(neighbourCandidate);
         }
 
-        public static void SetNeighbours(AbstractGraph graph, IVertex vertex)
+        public static void SetNeighbours(Graph graph, IVertex vertex)
         {
             if (vertex.IsObstacle)
                 return;
@@ -48,7 +48,7 @@ namespace GraphLibrary
                         vertex.Neighbours.Add(graph[i, j]);
         }
 
-        public static void ConnectVertices(AbstractGraph graph)
+        public static void ConnectVertices(Graph graph)
         {
             foreach (IVertex vertex in graph)
                 SetNeighbours(graph, vertex);

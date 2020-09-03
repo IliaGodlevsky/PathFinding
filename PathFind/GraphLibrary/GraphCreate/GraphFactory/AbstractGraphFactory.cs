@@ -1,6 +1,6 @@
 ﻿using GraphLibrary.Extensions.MatrixExtension;
 using GraphLibrary.Extensions.RandomExtension;
-using GraphLibrary.Graph;
+using GraphLibrary.Collection;
 using GraphLibrary.Vertex;
 using System;
 
@@ -29,6 +29,6 @@ namespace GraphLibrary.GraphFactory
 
         protected abstract IVertex CreateVertex();
 
-        public abstract AbstractGraph GetGraph();
+        public Graph GetGraph() => new Graph(vertices);
     }
 }

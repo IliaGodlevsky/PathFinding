@@ -1,4 +1,5 @@
 ﻿using GraphLibrary.Vertex;
+using System.Collections.Generic;
 
 namespace GraphLibrary.Statistics
 {
@@ -8,6 +9,7 @@ namespace GraphLibrary.Statistics
         void StopCollect();
         void Visited();
         void IncludeVertexInStatistics(IVertex vertex);
+        void IncludeVerticesInStatistics(IEnumerable<IVertex> collection);
         string GetStatistics(string format);
     }
 }

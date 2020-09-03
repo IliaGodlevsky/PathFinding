@@ -11,7 +11,7 @@ namespace WinFormsVersion.ViewModel
     {
         public CreateGraphViewModel(IMainModel model) : base(model)
         {
-            filler = new WinFormsGraphFiller();
+            vertexEventSetter = new WinFormsVertexEventSetter();
             graphFieldFiller = new WinFormsGraphFieldFiller();
         }
 

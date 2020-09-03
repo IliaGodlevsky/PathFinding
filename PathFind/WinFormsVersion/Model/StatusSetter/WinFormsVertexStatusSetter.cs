@@ -1,16 +1,16 @@
 ﻿using System;
 using System.Windows.Forms;
 using GraphLibrary.Extensions;
-using GraphLibrary.Graph;
-using GraphLibrary.StatusSetter;
+using GraphLibrary.Collection;
+using GraphLibrary.VertexEventHolder;
 using GraphLibrary.Vertex;
 using WinFormsVersion.Vertex;
 
 namespace WinFormsVersion.StatusSetter
 {
-    internal class WinFormsVertexStatusSetter : AbstractVertexStatusSetter
+    internal class WinFormsVertexStatusSetter : AbstractVertexEventHolder
     {
-        public WinFormsVertexStatusSetter(AbstractGraph graph) : base(graph)
+        public WinFormsVertexStatusSetter(GraphLibrary.Collection.Graph graph) : base(graph)
         {
 
         }

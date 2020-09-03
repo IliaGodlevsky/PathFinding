@@ -1,15 +1,14 @@
 ﻿using System.Collections;
 using System.Drawing;
 using System.Linq;
-using GraphLibrary.Extensions;
 using GraphLibrary.Extensions.MatrixExtension;
 using GraphLibrary.Vertex;
 
-namespace GraphLibrary.Graph
+namespace GraphLibrary.Collection
 {
-    public abstract class AbstractGraph : IEnumerable
+    public class Graph : IEnumerable
     {
-        public AbstractGraph(IVertex[,] vertices)
+        public Graph(IVertex[,] vertices)
         {
             this.vertices = vertices;
         }

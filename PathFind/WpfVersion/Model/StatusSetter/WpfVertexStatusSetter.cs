@@ -1,6 +1,6 @@
 ﻿using GraphLibrary.Extensions;
-using GraphLibrary.Graph;
-using GraphLibrary.StatusSetter;
+using GraphLibrary.Collection;
+using GraphLibrary.VertexEventHolder;
 using GraphLibrary.Vertex;
 using System;
 using System.Windows.Input;
@@ -8,10 +8,10 @@ using WpfVersion.Model.Vertex;
 
 namespace WpfVersion.Model.StatusSetter
 {
-    internal class WpfVertexStatusSetter : AbstractVertexStatusSetter
+    internal class WpfVertexStatusSetter : AbstractVertexEventHolder
     {
 
-        public WpfVertexStatusSetter(AbstractGraph graph) : base(graph)
+        public WpfVertexStatusSetter(GraphLibrary.Collection.Graph graph) : base(graph)
         { 
 
         }

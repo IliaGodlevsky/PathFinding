@@ -1,8 +1,8 @@
 ﻿using System;
 
-namespace GraphLibrary.StatusSetter
+namespace GraphLibrary.VertexEventHolder
 {
-    public interface IVertexStatusSetter
+    public interface IVertexEventHolder
     {
         void SetStartVertex(object sender, EventArgs e);
         void SetDestinationVertex(object sender, EventArgs e);

@@ -1,7 +1,7 @@
 ﻿using GraphLibrary.Algorithm;
 using GraphLibrary.DistanceCalculator;
 using GraphLibrary.AlgorithmEnum;
-using GraphLibrary.Graph;
+using GraphLibrary.Collection;
 using GraphLibrary.PathFindAlgorithm;
 using GraphLibrary.Vertex;
 
@@ -17,11 +17,11 @@ namespace GraphLibrary.AlgoSelector
                 + Distance.GetChebyshevDistance(neighbour, destination);
         }
 
-        public static IPathFindAlgorithm GetPathFindAlgorithm(Algorithms algorithms, AbstractGraph graph)
+        public static IPathFindAlgorithm GetPathFindAlgorithm(Algorithms algorithms, Graph graph)
         {
             switch (algorithms)
             {
-                case Algorithms.WidePathFind: return new WidePathFindAlgorithm() { Graph = graph };
+                //case Algorithms.WidePathFind: return new WidePathFindAlgorithm() { Graph = graph };
                 case Algorithms.DeepPathFind: return new DeepPathFindAlgorithm() { Graph = graph };
                 case Algorithms.DijkstraAlgorithm: return new DijkstraAlgorithm() { Graph = graph };
                 case Algorithms.AStarAlgorithm: return new DijkstraAlgorithm()

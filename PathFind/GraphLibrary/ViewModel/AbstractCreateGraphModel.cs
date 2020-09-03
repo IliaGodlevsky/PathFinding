@@ -1,4 +1,5 @@
-﻿using GraphLibrary.Graph;
+﻿using GraphLibrary.Collection;
+using GraphLibrary.Common.Extensions;
 using GraphLibrary.GraphCreate.GraphFieldFiller;
 using GraphLibrary.GraphFactory;
 
@@ -11,14 +12,21 @@ namespace GraphLibrary.Model
         public int ObstaclePercent { get; set; }
 
         protected IMainModel model;
-        protected AbstractGraph graph;
+        protected Graph graph;
         protected IGraphField graphField;
-        protected AbstractGraphFiller filler;
+        protected AbstractVertexEventSetter vertexEventSetter;
         protected AbstractGraphFieldFiller graphFieldFiller;
 
         public AbstractCreateGraphModel(IMainModel model)
         {
             this.model = model;
+        }
+        public AbstractCreateGraphModel(IMainModel model, 
+            AbstractGraphFieldFiller graphFieldFiller, 
+            AbstractVertexEventSetter eventSetter) : this(model)
+        {
+            this.graphFieldFiller = graphFieldFiller;
+            vertexEventSetter = eventSetter;
         }
 
         public abstract IGraphFactory GetFactory();
@@ -27,12 +35,12 @@ namespace GraphLibrary.Model
         {
             var factory = GetFactory();
             graph = factory.GetGraph();
-            filler.ChargeGraph(graph);
+            vertexEventSetter.ChargeGraph(graph);
             graphField = graphFieldFiller.FileGraphField(graph);
             model.Graph = graph;
             model.GraphField = graphField;
-            model.GraphParametres = 
-                GraphParametresPresenter.GetFormattedData(model.Graph, model.Format);
+            model.GraphParametres =
+                model.Graph.GetFormattedInfo(model.Format);
             model.Statistics = string.Empty;
         }
     }

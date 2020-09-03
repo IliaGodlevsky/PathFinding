@@ -1,5 +1,5 @@
 ﻿using GraphLibrary.Common.Constants;
-using GraphLibrary.Graph;
+using GraphLibrary.Collection;
 using GraphLibrary.Model;
 using System;
 using System.ComponentModel;
@@ -55,8 +55,8 @@ namespace WinFormsVersion.ViewModel
             }
         }
 
-        private AbstractGraph graph;
-        public override AbstractGraph Graph
+        private GraphLibrary.Collection.Graph graph;
+        public override GraphLibrary.Collection.Graph Graph
         {
             get { return graph; }
             set { graph = value; OnPropertyChanged(); }
@@ -69,12 +69,12 @@ namespace WinFormsVersion.ViewModel
             Format = WinFormsVersionResources.ParametresFormat;
             saver = new WinFormsGraphSaver();
             loader = new WinFormsGraphLoader(VertexSize.SIZE_BETWEEN_VERTICES);
-            filler = new WinFormsGraphFiller();
+            vertexEventSetter = new WinFormsVertexEventSetter();
             graphField = new WinFormsGraphField();
             graphFieldFiller = new WinFormsGraphFieldFiller();
         }
 
-        public override void PathFind()
+        public override void FindPath()
         {
             if (graph?.Start == null || graph?.End == null) 
                 return;
@@ -117,7 +117,7 @@ namespace WinFormsVersion.ViewModel
 
         public void StartPathFind(object sender, EventArgs e)
         {
-            PathFind();
+            FindPath();
         }
 
         public void CreateNewGraph(object sender, EventArgs e)

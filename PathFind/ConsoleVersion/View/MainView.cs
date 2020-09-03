@@ -26,7 +26,7 @@ namespace ConsoleVersion.View
 
             menuActions = new Dictionary<MenuOption, MenuAction>()
             {
-                { MenuOption.PathFind, mainModel.PathFind },
+                { MenuOption.PathFind, mainModel.FindPath },
                 { MenuOption.SaveGraph, mainModel.SaveGraph },
                 { MenuOption.LoadGraph, mainModel.LoadGraph },
                 { MenuOption.CreateGraph, mainModel.CreateNewGraph },

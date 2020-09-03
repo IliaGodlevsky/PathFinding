@@ -1,9 +1,9 @@
-﻿using GraphLibrary.Graph;
+﻿using GraphLibrary.Collection;
 
 namespace GraphLibrary.GraphLoader
 {
     public interface IGraphLoader
     {
-        AbstractGraph GetGraph();
+        Graph GetGraph();
     }
 }

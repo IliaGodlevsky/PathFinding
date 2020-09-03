@@ -1,9 +1,9 @@
-﻿using GraphLibrary.Graph;
+﻿using GraphLibrary.Collection;
 
 namespace GraphFactory.GraphSaver
 {
     public interface IGraphSaver
     {
-        void SaveGraph(AbstractGraph graph);
+        void SaveGraph(Graph graph);
     }
 }

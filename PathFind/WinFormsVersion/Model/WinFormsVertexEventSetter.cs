@@ -1,18 +1,15 @@
 ﻿using GraphLibrary.Extensions;
-using GraphLibrary.Graph;
 using GraphLibrary.Model;
-using GraphLibrary.StatusSetter;
+using GraphLibrary.VertexEventHolder;
 using GraphLibrary.Vertex;
-using System.Drawing;
-using WinFormsVersion.Graph;
 using WinFormsVersion.StatusSetter;
 using WinFormsVersion.Vertex;
 
 namespace WinFormsVersion.Model
 {
-    public class WinFormsGraphFiller : AbstractGraphFiller
+    public class WinFormsVertexEventSetter : AbstractVertexEventSetter
     {
-        protected override void ChargeVertex(IVertex vertex, IVertexStatusSetter changer)
+        protected override void ChargeVertex(IVertex vertex, IVertexEventHolder changer)
         {
             if (!vertex.IsObstacle)
                 (vertex as WinFormsVertex).MouseClick += changer.SetStartVertex;
@@ -20,12 +17,12 @@ namespace WinFormsVersion.Model
            (vertex as WinFormsVertex).MouseWheel += changer.ChangeVertexValue;
         }
 
-        protected override IVertexStatusSetter GetStatusSetter(AbstractGraph graph)
+        protected override IVertexEventHolder GetStatusSetter(GraphLibrary.Collection.Graph graph)
         {
             return new WinFormsVertexStatusSetter(graph);
         }
 
-        protected override void RefreshVertex(IVertex vertex, IVertexStatusSetter changer)
+        protected override void RefreshVertex(IVertex vertex, IVertexEventHolder changer)
         {
             if (!vertex.IsObstacle)
             {

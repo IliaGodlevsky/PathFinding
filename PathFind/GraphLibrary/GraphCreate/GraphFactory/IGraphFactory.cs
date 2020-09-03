@@ -1,9 +1,9 @@
-﻿using GraphLibrary.Graph;
+﻿using GraphLibrary.Collection;
 
 namespace GraphLibrary.GraphFactory
 {
     public interface IGraphFactory
     {
-        AbstractGraph GetGraph();
+        Graph GetGraph();
     }
 }

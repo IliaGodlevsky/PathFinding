@@ -1,5 +1,6 @@
 ﻿using GraphLibrary.Vertex;
 using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 
 namespace GraphLibrary.Statistics
@@ -27,6 +28,12 @@ namespace GraphLibrary.Statistics
         {
             pathLength += vertex.Cost;
             steps++;
+        }
+
+        public void IncludeVerticesInStatistics(IEnumerable<IVertex> collection)
+        {
+            foreach (var vertex in collection)
+                IncludeVertexInStatistics(vertex);
         }
 
         public void StartCollect() => watch.Start();

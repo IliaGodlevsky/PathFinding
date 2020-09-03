@@ -1,23 +1,30 @@
 ﻿using GraphLibrary.Algorithm;
 using GraphLibrary.Common.Constants;
+using GraphLibrary.Common.Extensions.CollectionExtensions;
 using GraphLibrary.Extensions;
 using GraphLibrary.Vertex;
 using System;
+using System.Linq;
 
 namespace GraphLibrary.Common.Extensions
 {
     public static class IPathFindAlgorithmExtension
     {
-        public static void DrawPath(this IPathFindAlgorithm algo, Func<IVertex, IVertex> parentVertexFunction)
+        private static IVertex ColorizeVertext(IVertex vertex)
         {
-            var vertex = algo.Graph.End;
-            while (!vertex.IsStart)
+            if (vertex.IsSimpleVertex())
+                vertex.MarkAsPath();
+            return vertex;
+        }
+
+        public static void DrawPath(this IPathFindAlgorithm algo, 
+            Func<IVertex, IVertex> parentVertexFunction)
+        {
+            var path = algo.Graph.End.GetPathToVertex(algo.Graph.Start, parentVertexFunction)?.ToList();
+            if (path != null)
             {
-                algo.StatCollector.IncludeVertexInStatistics(vertex);
-                vertex = parentVertexFunction(vertex);
-                if (vertex.IsSimpleVertex())
-                    vertex.MarkAsPath();
-                algo.Pauser?.Pause(AlgorithmExecutionDelay.PATH_DRAW_PAUSE);
+                path.Apply(ColorizeVertext);
+                algo.StatCollector.IncludeVerticesInStatistics(path);
             }
         }
 

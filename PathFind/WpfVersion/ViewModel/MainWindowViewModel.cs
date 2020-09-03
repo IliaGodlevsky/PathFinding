@@ -1,5 +1,5 @@
 ﻿using GraphLibrary.Common.Constants;
-using GraphLibrary.Graph;
+using GraphLibrary.Collection;
 using GraphLibrary.Model;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
@@ -46,8 +46,8 @@ namespace WpfVersion.ViewModel
             set { graphField = value; OnPropertyChanged(); } 
         }
 
-        private AbstractGraph graph;
-        public override AbstractGraph Graph 
+        private Graph graph;
+        public override Graph Graph 
         { 
             get { return graph; } 
             set { graph = value; OnPropertyChanged(); } 
@@ -65,8 +65,9 @@ namespace WpfVersion.ViewModel
             Format = WpfVersionResources.GraphParametresFormat;
             saver = new WpfGraphSaver();
             loader = new WpfGraphLoader(VertexSize.SIZE_BETWEEN_VERTICES);
-            filler = new WpfGraphFiller();
+            vertexEventSetter = new WpfVertexEventSetter();
             graphFieldFiller = new WpfGraphFieldFiller();
+
             StartPathFindCommand = new RelayCommand(ExecuteStartPathFindCommand, 
                 obj => Graph?.End != null && Graph?.Start != null);
             CreateNewGraphCommand = new RelayCommand(ExecuteCreateNewGraphCommand, obj => true);
@@ -75,7 +76,7 @@ namespace WpfVersion.ViewModel
             LoadGraphCommand = new RelayCommand(ExecuteLoadGraphCommand, obj => true);
         }
 
-        public override void PathFind()
+        public override void FindPath()
         {
             PrepareWindow(new PathFindViewModel(this), new PathFindWindow());
         }
@@ -112,15 +113,13 @@ namespace WpfVersion.ViewModel
 
         private void ExecuteStartPathFindCommand(object param)
         {
-            PathFind();
+            FindPath();
         }
 
         private void ExecuteCreateNewGraphCommand(object param)
         {
             CreateNewGraph();
         }
-
-
 
         protected virtual void OnDispose()
         {

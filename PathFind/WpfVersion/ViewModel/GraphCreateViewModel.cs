@@ -16,7 +16,7 @@ namespace WpfVersion.ViewModel
         {
             this.model = model;
             graphField = model.GraphField;
-            filler = new WpfGraphFiller();
+            vertexEventSetter = new WpfVertexEventSetter();
             graphFieldFiller = new WpfGraphFieldFiller();
             ConfirmCreateGraphCommand = new RelayCommand(
                 ExecuteConfirmCreateGraphCommand, 

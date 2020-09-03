@@ -1,16 +1,16 @@
 ﻿using ConsoleVersion.InputClass;
-using GraphLibrary.StatusSetter;
+using GraphLibrary.VertexEventHolder;
 using ConsoleVersion.Vertex;
 using System;
-using GraphLibrary.Graph;
+using GraphLibrary.Collection;
 using GraphLibrary.Common.Constants;
 
 namespace ConsoleVersion.StatusSetter
 {
-    internal class ConsoleVertexStatusSetter : AbstractVertexStatusSetter
+    internal class ConsoleVertexStatusSetter : AbstractVertexEventHolder
     {
 
-        public ConsoleVertexStatusSetter(AbstractGraph graph) : base(graph)
+        public ConsoleVertexStatusSetter(GraphLibrary.Collection.Graph graph) : base(graph)
         {
 
         }

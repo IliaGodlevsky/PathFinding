@@ -1,8 +1,6 @@
-﻿using ConsoleVersion.Graph;
-using ConsoleVersion.Vertex;
+﻿using ConsoleVersion.Vertex;
 using GraphLibrary.GraphFactory;
 using GraphLibrary.Vertex;
-using GraphLibrary.Graph;
 using GraphLibrary.Common.Constants;
 
 namespace ConsoleVersion.GraphFactory
@@ -16,7 +14,5 @@ namespace ConsoleVersion.GraphFactory
         }
 
         protected override IVertex CreateVertex() => new ConsoleVertex { Cost = VertexValueRange.GetRandomVertexValue() };
-
-        public override AbstractGraph GetGraph() => new ConsoleGraph(vertices);
     }
 }

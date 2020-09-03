@@ -1,7 +1,7 @@
 ﻿using GraphLibrary.Common.Extensions;
 using GraphLibrary.Extensions;
 using GraphLibrary.Extensions.MatrixExtension;
-using GraphLibrary.Graph;
+using GraphLibrary.Collection;
 using GraphLibrary.PauseMaker;
 using GraphLibrary.Statistics;
 using GraphLibrary.Vertex;
@@ -18,7 +18,7 @@ namespace GraphLibrary.Algorithm
     {        
         public IStatisticsCollector StatCollector { get; set; }
         public Func<IVertex, IVertex, double> RelaxFunction { get; set; }
-        public AbstractGraph Graph { get; set; }
+        public Graph Graph { get; set; }
         public IPauseProvider Pauser { get; set; }
 
         public DijkstraAlgorithm()

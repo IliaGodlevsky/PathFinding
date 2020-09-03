@@ -1,4 +1,4 @@
-﻿using GraphLibrary.Graph;
+﻿using GraphLibrary.Collection;
 using GraphLibrary.Model;
 
 namespace GraphLibrary.GraphCreate.GraphFieldFiller
@@ -6,7 +6,7 @@ namespace GraphLibrary.GraphCreate.GraphFieldFiller
     public abstract class AbstractGraphFieldFiller
     {
         protected abstract IGraphField GetField();
-        public virtual IGraphField FileGraphField(AbstractGraph graph)
+        public virtual IGraphField FileGraphField(Graph graph)
         {
             var graphField = GetField();
             for (int i = 0; i < graph.Width; i++)           

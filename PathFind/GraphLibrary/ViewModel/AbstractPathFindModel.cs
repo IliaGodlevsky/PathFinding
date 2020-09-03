@@ -1,6 +1,6 @@
 ﻿using GraphLibrary.Algorithm;
 using GraphLibrary.AlgorithmEnum;
-using GraphLibrary.Graph;
+using GraphLibrary.Collection;
 using GraphLibrary.AlgoSelector;
 using GraphLibrary.Common.Extensions;
 
@@ -11,7 +11,7 @@ namespace GraphLibrary.Model
         protected IPathFindAlgorithm pathAlgorithm;
         public Algorithms Algorithm { get; set; }
 
-        protected AbstractGraph graph;
+        protected Graph graph;
         protected IMainModel model;
         protected string badResultMessage;
         protected string format;
@@ -22,6 +22,13 @@ namespace GraphLibrary.Model
             graph = model.Graph;
             format = LibraryResources.StatisticsFormat;
             badResultMessage = LibraryResources.BadResultMsg;
+        }
+
+        public AbstractPathFindModel(IMainModel model, 
+            string badResultMessage, string format) : this(model)
+        {
+            this.format = format;
+            this.badResultMessage = badResultMessage;
         }
 
         protected abstract void PrepareAlgorithm();

@@ -14,19 +14,26 @@ namespace ConsoleVersion.ViewModel
     internal class PathFindViewModel : AbstractPathFindModel
     {
         private readonly ConsoleVertexStatusSetter changer;
-        private readonly ConsoleVersionGraphFiller filler;
+        private readonly ConsoleVersionVertexEventSetter vertexEventSetter;
 
         public Tuple<string, string, string> Messages { get; set; }
 
         public PathFindViewModel(IMainModel model) : base(model)
         {
             changer = new ConsoleVertexStatusSetter(model.Graph);
-            filler = new ConsoleVersionGraphFiller();
+            vertexEventSetter = new ConsoleVersionVertexEventSetter();
+        }
+
+        public PathFindViewModel(IMainModel model,
+            string badResultMessage, string format) : 
+            base(model, badResultMessage, format)
+        {
+
         }
 
         public override void PathFind()
         {
-            filler.RefreshGraph(model.Graph);
+            vertexEventSetter.RefreshGraph(model.Graph);
             GraphShower.DisplayGraph(model);
             ChooseStart();
             ChooseEnd();

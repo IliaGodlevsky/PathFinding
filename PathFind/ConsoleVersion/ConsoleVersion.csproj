@@ -48,7 +48,7 @@
   <ItemGroup>
     <Compile Include="Enums\MenuOption.cs" />
     <Compile Include="Model\ConsoleGraphFieldFiller.cs" />
-    <Compile Include="Model\ConsoleVersionGraphFiller.cs" />
+    <Compile Include="Model\ConsoleVersionVertexEventSetter.cs" />
     <Compile Include="ViewModel\CreateGraphViewModel.cs" />
     <Compile Include="ViewModel\MainViewModel.cs" />
     <Compile Include="ViewModel\PathFindViewModel.cs" />
@@ -58,7 +58,6 @@
     <Compile Include="Model\GraphFactory\ConsoleGraphFactory.cs" />
     <Compile Include="Model\GraphLoader\ConsoleGraphLoader.cs" />
     <Compile Include="Model\GraphSaver\ConsoleGraphSaver.cs" />
-    <Compile Include="Model\Graph\ConsoleGraph.cs" />
     <Compile Include="InputClass\Input.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

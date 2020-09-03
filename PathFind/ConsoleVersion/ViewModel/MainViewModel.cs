@@ -5,9 +5,13 @@ using ConsoleVersion.InputClass;
 using ConsoleVersion.Model;
 using ConsoleVersion.StatusSetter;
 using ConsoleVersion.View;
+using GraphFactory.GraphSaver;
 using GraphLibrary;
+using GraphLibrary.Common.Extensions;
+using GraphLibrary.GraphCreate.GraphFieldFiller;
+using GraphLibrary.GraphLoader;
 using GraphLibrary.Model;
-using GraphLibrary.StatusSetter;
+using GraphLibrary.VertexEventHolder;
 using System;
 using System.Drawing;
 
@@ -15,20 +19,28 @@ namespace ConsoleVersion.ViewModel
 {
     internal class MainViewModel : AbstractMainModel
     {
-        private readonly IVertexStatusSetter changer;
+        private readonly IVertexEventHolder changer;
 
         public MainViewModel()
         {            
             Format = ConsoleVersionResources.GraphParametresFormat;
             saver = new ConsoleGraphSaver();
             loader = new ConsoleGraphLoader();
-            filler = new ConsoleVersionGraphFiller();
+            vertexEventSetter = new ConsoleVersionVertexEventSetter();
             graphFieldFiller = new ConsoleGraphFieldFiller();
             var factory = new ConsoleGraphFactory(
                 percentOfObstacles: 25, width: 25, height: 25);
             Graph = factory.GetGraph();
-            GraphParametres = GraphParametresPresenter.GetFormattedData(Graph, Format);
+            GraphParametres = Graph.GetFormattedInfo(Format);
             changer = new ConsoleVertexStatusSetter(Graph);
+        }
+
+        public MainViewModel(AbstractVertexEventSetter vertexEventSetter,
+            AbstractGraphFieldFiller graphFieldFiller,
+            IGraphSaver saver, IGraphLoader loader) :
+            base(vertexEventSetter, graphFieldFiller, saver, loader)
+        {
+
         }
 
         public override void CreateNewGraph()
@@ -38,7 +50,7 @@ namespace ConsoleVersion.ViewModel
             view.Start();
         }
 
-        public override void PathFind()
+        public override void FindPath()
         {
             var model = new PathFindViewModel(this);
             var view = new PathFindView(model);
