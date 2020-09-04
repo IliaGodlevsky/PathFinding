@@ -9,7 +9,12 @@ namespace GraphLibrary.Model
     {
         public void ChargeGraph(Graph graph) => SetEventsToVertex(graph, ChargeVertex);
 
-        public void RefreshGraph(Graph graph) => SetEventsToVertex(graph, RefreshVertex);
+        public void RefreshGraph(Graph graph)
+        {
+            graph.End = null;
+            graph.Start = null;
+            SetEventsToVertex(graph, RefreshVertex);
+        }
 
         protected abstract IVertexEventHolder GetStatusSetter(Graph graph);
 
