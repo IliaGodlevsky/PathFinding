@@ -20,10 +20,7 @@ namespace GraphLibrary.Common.Extensions
         {
             var path = algo.Graph.End.GetPathToStartVertex()?.ToList();
             if (path != null)
-            {
-                path.Apply(ColorizeVertext);
-                algo.StatCollector.IncludeVerticesInStatistics(path);
-            }
+                path.Apply(ColorizeVertext);           
         }
 
         public static bool IsRightGraphSettings(this IPathFindAlgorithm algo)
@@ -42,7 +39,6 @@ namespace GraphLibrary.Common.Extensions
                 algorithm.Pauser?.Pause(AlgorithmExecutionDelay.VISIT_PAUSE);
                 vertex.MarkAsVisited();
             }
-            algorithm.StatCollector.Visited();
         }
 
         public static bool HasFoundPathToEndVertex(this IPathFindAlgorithm algorithm)

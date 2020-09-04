@@ -14,6 +14,6 @@ namespace WinFormsVersion.GraphFactory
             
         }
 
-        protected override IVertex CreateVertex() => new WinFormsVertex { Cost = VertexValueRange.GetRandomVertexValue() };
+        protected override IVertex CreateVertex() => new WinFormsVertex { Cost = VertexValueRange.GetRandomVertexCost() };
     }
 }

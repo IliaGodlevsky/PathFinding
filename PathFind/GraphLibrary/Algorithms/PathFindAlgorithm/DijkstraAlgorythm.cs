@@ -3,7 +3,6 @@ using GraphLibrary.Extensions;
 using GraphLibrary.Extensions.MatrixExtension;
 using GraphLibrary.Collection;
 using GraphLibrary.PauseMaker;
-using GraphLibrary.Statistics;
 using GraphLibrary.Vertex;
 using System;
 using System.Collections.Generic;
@@ -15,8 +14,7 @@ namespace GraphLibrary.Algorithm
     /// Finds the chippest path to destination top. 
     /// </summary>    
     public class DijkstraAlgorithm : IPathFindAlgorithm
-    {        
-        public IStatisticsCollector StatCollector { get; set; }
+    {
         public Func<IVertex, IVertex, double> RelaxFunction { get; set; }
         public Graph Graph { get; set; }
         public IPauseProvider Pauser { get; set; }
@@ -24,14 +22,12 @@ namespace GraphLibrary.Algorithm
         public DijkstraAlgorithm()
         {
             neigbourQueue = new List<IVertex>();
-            StatCollector = new StatisticsCollector();
             RelaxFunction = (neighbour, vertex) => neighbour.Cost + vertex.AccumulatedCost;
         }
 
         public void FindDestionation()
         {
             SetAccumulatedCostToInfinity();
-            StatCollector.StartCollect();
             var currentVertex = Graph.Start;
             currentVertex.IsVisited = true;
             currentVertex.AccumulatedCost = 0;
@@ -44,8 +40,7 @@ namespace GraphLibrary.Algorithm
                     break;
                 if (!currentVertex.IsVisited)
                     this.VisitVertex(currentVertex);
-            } while (!IsDestination(currentVertex));
-            StatCollector.StopCollect();            
+            } while (!IsDestination(currentVertex));       
         }
 
         private void SetAccumulatedCostToInfinity()

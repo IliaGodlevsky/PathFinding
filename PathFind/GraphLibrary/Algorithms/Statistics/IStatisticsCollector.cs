@@ -1,15 +1,11 @@
-﻿using GraphLibrary.Vertex;
-using System.Collections.Generic;
+﻿using GraphLibrary.Collection;
+using System.Diagnostics;
 
 namespace GraphLibrary.Statistics
 {
     public interface IStatisticsCollector
     {
-        void StartCollect();
-        void StopCollect();
-        void Visited();
-        void IncludeVertexInStatistics(IVertex vertex);
-        void IncludeVerticesInStatistics(IEnumerable<IVertex> collection);
+        void CollectStatistics(Graph graph, Stopwatch timer);
         string GetStatistics(string format);
     }
 }

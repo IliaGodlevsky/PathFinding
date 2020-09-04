@@ -5,7 +5,6 @@
     /// </summary>
     public static class AlgorithmExecutionDelay
     {
-        public const int VISIT_PAUSE = 10;
-        public const int PATH_DRAW_PAUSE = 5;
+        public const int VISIT_PAUSE = 15;
     }
 }

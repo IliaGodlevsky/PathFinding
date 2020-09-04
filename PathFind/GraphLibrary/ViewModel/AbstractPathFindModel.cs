@@ -3,18 +3,14 @@ using GraphLibrary.AlgorithmEnum;
 using GraphLibrary.Collection;
 using GraphLibrary.AlgoSelector;
 using GraphLibrary.Common.Extensions;
+using GraphLibrary.Statistics;
+using System.Diagnostics;
 
 namespace GraphLibrary.Model
 {
     public abstract class AbstractPathFindModel : IModel
-    {
-        protected IPathFindAlgorithm pathAlgorithm;
+    {         
         public Algorithms Algorithm { get; set; }
-
-        protected Graph graph;
-        protected IMainModel mainViewModel;
-        protected string badResultMessage;
-        protected string pathFindStatisticsFormat;
 
         public AbstractPathFindModel(IMainModel mainViewModel)
         {
@@ -24,22 +20,22 @@ namespace GraphLibrary.Model
             badResultMessage = LibraryResources.BadResultMsg;
         }
 
-        protected abstract void PrepareAlgorithm();
-
         public virtual void FindPath()
         {
-            pathAlgorithm = AlgorithmSelector.
-                GetPathFindAlgorithm(Algorithm, mainViewModel.Graph);
-            PrepareAlgorithm();
+            pathAlgorithm = AlgorithmSelector.GetPathFindAlgorithm(Algorithm, mainViewModel.Graph);
+            PrepareAlgorithm();           
             if (pathAlgorithm.IsRightGraphSettings())
             {
+                Stopwatch timer = new Stopwatch();
+                timer.Start();
                 pathAlgorithm.FindDestionation();
+                timer.Stop();
                 if (pathAlgorithm.HasFoundPathToEndVertex())
                 {
                     pathAlgorithm.DrawPath();
-                    mainViewModel.Statistics =
-                        pathAlgorithm.StatCollector.
-                        GetStatistics(pathFindStatisticsFormat);
+                    StatisticsCollector collector = new StatisticsCollector();
+                    collector.CollectStatistics(pathAlgorithm.Graph, timer);
+                    mainViewModel.Statistics = collector.GetStatistics(pathFindStatisticsFormat);
                     graph.Start = null;
                     graph.End = null;
                 }
@@ -49,5 +45,13 @@ namespace GraphLibrary.Model
         }
 
         protected abstract void ShowMessage(string message);
+
+        protected IPathFindAlgorithm pathAlgorithm;
+
+        protected abstract void PrepareAlgorithm();
+        protected Graph graph;
+        protected IMainModel mainViewModel;
+        protected string badResultMessage;
+        protected string pathFindStatisticsFormat;
     }
 }

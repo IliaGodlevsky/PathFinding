@@ -24,7 +24,7 @@ namespace GraphLibrary.Common.Constants
             return value;
         }
 
-        public static int GetRandomVertexValue()
+        public static int GetRandomVertexCost()
         {
             return rand.Next(UpperValue) + LowerValue;
         }

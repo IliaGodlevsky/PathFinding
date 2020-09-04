@@ -13,6 +13,6 @@ namespace ConsoleVersion.GraphFactory
 
         }
 
-        protected override IVertex CreateVertex() => new ConsoleVertex { Cost = VertexValueRange.GetRandomVertexValue() };
+        protected override IVertex CreateVertex() => new ConsoleVertex { Cost = VertexValueRange.GetRandomVertexCost() };
     }
 }

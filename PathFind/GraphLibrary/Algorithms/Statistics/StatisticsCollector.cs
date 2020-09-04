@@ -1,7 +1,8 @@
-﻿using GraphLibrary.Vertex;
-using System;
-using System.Collections.Generic;
+﻿using GraphLibrary.Collection;
+using GraphLibrary.Common.Extensions;
+using GraphLibrary.Extensions;
 using System.Diagnostics;
+using System.Linq;
 
 namespace GraphLibrary.Statistics
 {
@@ -10,34 +11,31 @@ namespace GraphLibrary.Statistics
         private int visitedVertices;
         private double pathLength;
         private int steps;
-        private Stopwatch watch;
+        private Stopwatch timer;
 
         public StatisticsCollector()
         {
-            watch = new Stopwatch();
+
+        }
+
+        public void CollectStatistics(Graph graph, Stopwatch timer)
+        {
+            this.timer = timer;
+            pathLength = graph.End.GetPathToStartVertex().Sum(vertex =>
+            {
+                if (vertex.IsStart)
+                    return 0;
+                return vertex.Cost;
+            });
+            steps = graph.End.GetPathToStartVertex().Count() - 1;
+            visitedVertices = graph.GetNumberOfVisitedVertices();
         }
 
         public string GetStatistics(string format)
         {
-            return new Statistics(pathLength, steps, 
-                new DateTime(watch.ElapsedTicks), visitedVertices).
-                GetFormattedData(format);
+            return string.Format(format, timer.Elapsed.Minutes,
+                    timer.Elapsed.Seconds, timer.Elapsed.Milliseconds,
+                    steps, pathLength, visitedVertices);           
         }
-
-        public void IncludeVertexInStatistics(IVertex vertex)
-        {
-            pathLength += vertex.Cost;
-            steps++;
-        }
-
-        public void IncludeVerticesInStatistics(IEnumerable<IVertex> collection)
-        {
-            foreach (var vertex in collection)
-                IncludeVertexInStatistics(vertex);
-        }
-
-        public void StartCollect() => watch.Start();
-        public void StopCollect() => watch.Stop();
-        public void Visited() => visitedVertices++;
     }
 }

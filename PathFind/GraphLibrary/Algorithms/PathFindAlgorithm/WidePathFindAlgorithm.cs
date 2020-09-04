@@ -17,19 +17,16 @@ namespace GraphLibrary.Algorithm
     /// </summary>
     public class WidePathFindAlgorithm : IPathFindAlgorithm
     {
-        public IStatisticsCollector StatCollector { get; set; }
         public Graph Graph { get; set; }
         public IPauseProvider Pauser { get; set; }
 
         public WidePathFindAlgorithm()
         {
             neighbourQueue = new Queue<IVertex>();
-            StatCollector = new StatisticsCollector();
         }
 
         public void FindDestionation()
         {
-            StatCollector.StartCollect();
             var currentVertex = Graph.Start;
             ProcessVertex(currentVertex);
             while (!IsDestination(currentVertex))
@@ -38,7 +35,6 @@ namespace GraphLibrary.Algorithm
                 if (!currentVertex.IsVisited)
                     ProcessVertex(currentVertex);
             }
-            StatCollector.StopCollect();          
         }
 
         private void ExtractNeighbours(IVertex vertex)

@@ -13,6 +13,6 @@ namespace WpfVersion.Model.GraphFactory
         {
         }
 
-        protected override IVertex CreateVertex() => new WpfVertex { Cost = VertexValueRange.GetRandomVertexValue() };
+        protected override IVertex CreateVertex() => new WpfVertex { Cost = VertexValueRange.GetRandomVertexCost() };
     }
 }
