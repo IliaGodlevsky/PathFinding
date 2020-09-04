@@ -31,7 +31,6 @@ namespace WinFormsVersion.Model
                 (vertex as WinFormsVertex).MouseClick -= changer.SetDestinationVertex;
                 (vertex as WinFormsVertex).MouseClick += changer.SetStartVertex;
             }
-
         }
     }
 }
