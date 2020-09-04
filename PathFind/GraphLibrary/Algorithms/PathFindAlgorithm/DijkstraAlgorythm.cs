@@ -30,24 +30,22 @@ namespace GraphLibrary.Algorithm
 
         public void FindDestionation()
         {
-
-                SetAccumulatedCostToInfinity();
-                StatCollector.StartCollect();
-                var currentVertex = Graph.Start;
-                currentVertex.IsVisited = true;
-                currentVertex.AccumulatedCost = 0;
-                do
-                {
-                    ExtractNeighbours(currentVertex);
-                    SpreadRelaxWave(currentVertex);
-                    currentVertex = GetChippestUnvisitedVertex();
-                    if (!IsValidVertex(currentVertex))
-                        break;
-                    if (!currentVertex.IsVisited)
-                        this.VisitVertex(currentVertex);
-                } while (!IsDestination(currentVertex));
-                StatCollector.StopCollect();
-            
+            SetAccumulatedCostToInfinity();
+            StatCollector.StartCollect();
+            var currentVertex = Graph.Start;
+            currentVertex.IsVisited = true;
+            currentVertex.AccumulatedCost = 0;
+            do
+            {
+                ExtractNeighbours(currentVertex);
+                SpreadRelaxWave(currentVertex);
+                currentVertex = GetChippestUnvisitedVertex();
+                if (!IsValidVertex(currentVertex))
+                    break;
+                if (!currentVertex.IsVisited)
+                    this.VisitVertex(currentVertex);
+            } while (!IsDestination(currentVertex));
+            StatCollector.StopCollect();            
         }
 
         private void SetAccumulatedCostToInfinity()
