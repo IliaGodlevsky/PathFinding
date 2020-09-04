@@ -16,7 +16,7 @@ namespace WinFormsVersion.ViewModel
 
         protected override void PrepareAlgorithm()
         {
-            (model as MainWindowViewModel).Window.Close();
+            (mainViewModel as MainWindowViewModel).Window.Close();
             pathAlgorithm.Pauser = new PauseProvider() { PauseEvent = () => Application.DoEvents() };
         }
 
@@ -28,12 +28,12 @@ namespace WinFormsVersion.ViewModel
         public void PathFind(object sender, EventArgs e)
         {
             if (CanExecuteConfirmPathFindAlgorithmChoice())            
-                PathFind();
+                FindPath();
         }
 
         public void CancelPathFind(object sender, EventArgs e)
         {
-            (model as MainWindowViewModel).Window.Close();
+            (mainViewModel as MainWindowViewModel).Window.Close();
         }
 
         private bool CanExecuteConfirmPathFindAlgorithmChoice()

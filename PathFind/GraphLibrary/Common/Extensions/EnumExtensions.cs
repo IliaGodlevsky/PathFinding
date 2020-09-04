@@ -22,15 +22,10 @@ namespace GraphLibrary.Extensions
             return description;
         }
 
-        public static List<string> GetDescriptions(this Enum en)
+        public static IEnumerable<string> GetDescriptions(this Enum enumValue)
         {
-            List<string> descriptions = new List<string>();
-            var enumList = Enum.GetValues(en.GetType());
-
-            foreach (var item in enumList)
-                descriptions.Add(((Enum)item).GetDescription());
-
-            return descriptions;
+            return Enum.GetValues(enumValue.GetType()).Cast<Enum>().
+                Select(enumeration => enumeration.GetDescription());
         }
     }
 }

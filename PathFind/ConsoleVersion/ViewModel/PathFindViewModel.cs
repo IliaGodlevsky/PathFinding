@@ -31,15 +31,15 @@ namespace ConsoleVersion.ViewModel
 
         }
 
-        public override void PathFind()
+        public override void FindPath()
         {
-            vertexEventSetter.RefreshGraph(model.Graph);
-            GraphShower.DisplayGraph(model);
+            vertexEventSetter.RefreshGraph(mainViewModel.Graph);
+            GraphShower.DisplayGraph(mainViewModel);
             ChooseStart();
             ChooseEnd();
-            GraphShower.DisplayGraph(model);
+            GraphShower.DisplayGraph(mainViewModel);
             Algorithm = GetAlgorithmEnum();
-            base.PathFind();
+            base.FindPath();
         }
 
         protected override void PrepareAlgorithm()
@@ -49,7 +49,7 @@ namespace ConsoleVersion.ViewModel
 
         protected override void ShowMessage(string message)
         {
-            GraphShower.DisplayGraph(model);
+            GraphShower.DisplayGraph(mainViewModel);
             Console.WriteLine(message);
             Console.ReadLine();
         }

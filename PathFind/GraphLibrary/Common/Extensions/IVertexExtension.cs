@@ -1,5 +1,4 @@
 ﻿using GraphLibrary.Vertex;
-using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -57,14 +56,12 @@ namespace GraphLibrary.Extensions
             return vertex.Neighbours.Where(vert => !vert.IsVisited);
         }
 
-        public static IEnumerable<IVertex> GetPathToVertex(this IVertex vertex, 
-            IVertex destination, Func<IVertex, IVertex> parentVertexFunction)
+        public static IEnumerable<IVertex> GetPathToStartVertex(this IVertex vertex)
         {
             var vert = vertex;
-            while (vert.Location != destination.Location
-                && parentVertexFunction(vert) != null)
+            while (vert.ParentVertex != null)
             {                
-                vert = parentVertexFunction(vert);
+                vert = vert.ParentVertex;
                 yield return vert;
             }
         }

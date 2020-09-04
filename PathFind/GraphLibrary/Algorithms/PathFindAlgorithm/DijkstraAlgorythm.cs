@@ -28,12 +28,9 @@ namespace GraphLibrary.Algorithm
             RelaxFunction = (neighbour, vertex) => neighbour.Cost + vertex.AccumulatedCost;
         }
 
-        public void DrawPath() => this.DrawPath(vertex => vertex.ParentVertex);
-
         public void FindDestionation()
         {
-            if (this.IsRightGraphSettings())
-            {
+
                 SetAccumulatedCostToInfinity();
                 StatCollector.StartCollect();
                 var currentVertex = Graph.Start;
@@ -50,7 +47,7 @@ namespace GraphLibrary.Algorithm
                         this.VisitVertex(currentVertex);
                 } while (!IsDestination(currentVertex));
                 StatCollector.StopCollect();
-            }
+            
         }
 
         private void SetAccumulatedCostToInfinity()

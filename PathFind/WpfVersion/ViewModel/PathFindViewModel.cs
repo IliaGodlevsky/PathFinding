@@ -15,7 +15,7 @@ namespace WpfVersion.ViewModel
 
         public PathFindViewModel(IMainModel model) : base(model)
         {
-            this.model = model;
+            this.mainViewModel = model;
             graph = model.Graph;
 
             ConfirmPathFindAlgorithmChoice = new RelayCommand(
@@ -28,7 +28,7 @@ namespace WpfVersion.ViewModel
 
         private void ExecuteConfirmPathFindAlgorithmChoice(object param)
         {
-            base.PathFind();
+            base.FindPath();
         }
 
         private bool CanExecuteConfirmPathFindAlgorithmChoice(object param)
@@ -38,7 +38,7 @@ namespace WpfVersion.ViewModel
 
         protected override void PrepareAlgorithm()
         {
-            (model as MainWindowViewModel).Window.Close();
+            (mainViewModel as MainWindowViewModel).Window.Close();
             pathAlgorithm.Pauser = new PauseProvider() { PauseEvent = () => System.Windows.Forms.Application.DoEvents() };
         }
 

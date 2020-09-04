@@ -4,6 +4,7 @@ using ConsoleVersion.InputClass;
 using ConsoleVersion.ViewModel;
 using GraphLibrary.Extensions;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using Console = Colorful.Console;
 
@@ -41,7 +42,7 @@ namespace ConsoleVersion.View
         private string GetMenu()
         {           
             var menu = new StringBuilder();
-            var descriptions = ((MenuOption)default).GetDescriptions();
+            var descriptions = ((MenuOption)default).GetDescriptions().ToList();
             foreach (var item in descriptions)
             {               
                 int numberOf = descriptions.IndexOf(item);

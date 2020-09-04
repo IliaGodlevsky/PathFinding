@@ -3,7 +3,6 @@ using GraphLibrary.Common.Constants;
 using GraphLibrary.Common.Extensions.CollectionExtensions;
 using GraphLibrary.Extensions;
 using GraphLibrary.Vertex;
-using System;
 using System.Linq;
 
 namespace GraphLibrary.Common.Extensions
@@ -17,10 +16,9 @@ namespace GraphLibrary.Common.Extensions
             return vertex;
         }
 
-        public static void DrawPath(this IPathFindAlgorithm algo, 
-            Func<IVertex, IVertex> parentVertexFunction)
+        public static void DrawPath(this IPathFindAlgorithm algo)
         {
-            var path = algo.Graph.End.GetPathToVertex(algo.Graph.Start, parentVertexFunction)?.ToList();
+            var path = algo.Graph.End.GetPathToStartVertex()?.ToList();
             if (path != null)
             {
                 path.Apply(ColorizeVertext);
@@ -47,7 +45,7 @@ namespace GraphLibrary.Common.Extensions
             algorithm.StatCollector.Visited();
         }
 
-        public static bool HasFoundPath(this IPathFindAlgorithm algorithm)
+        public static bool HasFoundPathToEndVertex(this IPathFindAlgorithm algorithm)
         {
             return algorithm.Graph?.End.IsVisited == true;
         }

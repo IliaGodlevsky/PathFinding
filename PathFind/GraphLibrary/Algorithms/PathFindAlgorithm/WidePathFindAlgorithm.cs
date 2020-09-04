@@ -27,12 +27,8 @@ namespace GraphLibrary.Algorithm
             StatCollector = new StatisticsCollector();
         }
 
-        public void DrawPath() => this.DrawPath(FollowWave);
-
         public void FindDestionation()
         {
-            if (this.IsRightGraphSettings())
-            {
                 StatCollector.StartCollect();
                 var currentVertex = Graph.Start;
                 ProcessVertex(currentVertex);
@@ -42,16 +38,7 @@ namespace GraphLibrary.Algorithm
                     if (!currentVertex.IsVisited)
                         ProcessVertex(currentVertex);
                 }
-                StatCollector.StopCollect();
-            }
-        }
-
-        private IVertex FollowWave(IVertex vertex)
-        {
-            bool IsWaveVertex(IVertex vert) => vert.IsVisited && !vert.IsEnd;
-            double min = vertex.Neighbours.Min(vert => vert.AccumulatedCost);
-            return vertex.Neighbours.Find(vert => min == vert.AccumulatedCost
-                   && IsWaveVertex(vert));
+                StatCollector.StopCollect();            
         }
 
         private void ExtractNeighbours(IVertex vertex)
@@ -64,7 +51,10 @@ namespace GraphLibrary.Algorithm
             vertex.GetUnvisitedNeighbours().ToList().Apply(vert =>
             {
                 if (vert.AccumulatedCost == 0)
+                {
                     vert.AccumulatedCost = vertex.AccumulatedCost + 1;
+                    vert.ParentVertex = vertex;
+                }
                 return vert;
             });
         }

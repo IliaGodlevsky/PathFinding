@@ -2,6 +2,7 @@
 using GraphLibrary.AlgorithmEnum;
 using GraphLibrary.Extensions;
 using System;
+using System.Linq;
 using System.Text;
 
 namespace ConsoleVersion.View
@@ -20,13 +21,13 @@ namespace ConsoleVersion.View
 
         public void Start()
         {
-            Model.PathFind();
+            Model.FindPath();
         }
 
         private string GetAlgorithmsList()
         {
             var algorithmList = new StringBuilder("\n");
-            var algoDescriptionList = ((Algorithms)default).GetDescriptions();
+            var algoDescriptionList = ((Algorithms)default).GetDescriptions().ToList();
 
             foreach (var item in algoDescriptionList)
             {

@@ -12,44 +12,47 @@ namespace GraphLibrary.Model
         public Algorithms Algorithm { get; set; }
 
         protected Graph graph;
-        protected IMainModel model;
+        protected IMainModel mainViewModel;
         protected string badResultMessage;
-        protected string format;
+        protected string pathFindStatisticsFormat;
 
-        public AbstractPathFindModel(IMainModel model)
+        public AbstractPathFindModel(IMainModel mainViewModel)
         {
-            this.model = model;
-            graph = model.Graph;
-            format = LibraryResources.StatisticsFormat;
+            this.mainViewModel = mainViewModel;
+            graph = mainViewModel.Graph;
+            pathFindStatisticsFormat = LibraryResources.StatisticsFormat;
             badResultMessage = LibraryResources.BadResultMsg;
         }
 
         public AbstractPathFindModel(IMainModel model, 
             string badResultMessage, string format) : this(model)
         {
-            this.format = format;
+            pathFindStatisticsFormat = format;
             this.badResultMessage = badResultMessage;
         }
 
         protected abstract void PrepareAlgorithm();
 
-        public virtual void PathFind()
+        public virtual void FindPath()
         {
             pathAlgorithm = AlgorithmSelector.
-                GetPathFindAlgorithm(Algorithm, model.Graph);
+                GetPathFindAlgorithm(Algorithm, mainViewModel.Graph);
             PrepareAlgorithm();
-            pathAlgorithm.FindDestionation();
-            if (pathAlgorithm.HasFoundPath())
+            if (pathAlgorithm.IsRightGraphSettings())
             {
-                pathAlgorithm.DrawPath();
-                model.Statistics = 
-                    pathAlgorithm.StatCollector.
-                    GetStatistics(format);
-                graph.Start = null;
-                graph.End = null;
+                pathAlgorithm.FindDestionation();
+                if (pathAlgorithm.HasFoundPathToEndVertex())
+                {
+                    pathAlgorithm.DrawPath();
+                    mainViewModel.Statistics =
+                        pathAlgorithm.StatCollector.
+                        GetStatistics(pathFindStatisticsFormat);
+                    graph.Start = null;
+                    graph.End = null;
+                }
+                else
+                    ShowMessage(badResultMessage);
             }
-            else
-                ShowMessage(badResultMessage);
         }
 
         protected abstract void ShowMessage(string message);

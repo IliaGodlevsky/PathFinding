@@ -13,6 +13,5 @@ namespace GraphLibrary.Algorithm
         Graph Graph { get; set; }
         IPauseProvider Pauser { get; set; }
         void FindDestionation();
-        void DrawPath();
     }
 }

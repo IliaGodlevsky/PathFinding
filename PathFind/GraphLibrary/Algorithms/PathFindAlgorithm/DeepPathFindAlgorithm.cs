@@ -23,12 +23,9 @@ namespace GraphLibrary.PathFindAlgorithm
             StatCollector = new StatisticsCollector();
         }
 
-        public void DrawPath() => this.DrawPath(vertex => vertex.ParentVertex);
-
         public void FindDestionation()
         {
-            if (this.IsRightGraphSettings())
-            {
+
                 StatCollector.StartCollect();
                 var currentVertex = Graph.Start;
                 this.VisitVertex(currentVertex);
@@ -46,7 +43,7 @@ namespace GraphLibrary.PathFindAlgorithm
                         currentVertex = visitedVerticesStack.Pop();
                 }
                 StatCollector.StopCollect();
-            }
+            
         }
 
         protected virtual IVertex GoNextVertex(IVertex vertex)
