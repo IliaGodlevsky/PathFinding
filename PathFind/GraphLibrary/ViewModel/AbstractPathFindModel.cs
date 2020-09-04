@@ -26,14 +26,14 @@ namespace GraphLibrary.Model
             PrepareAlgorithm();           
             if (pathAlgorithm.IsRightGraphSettings())
             {
-                Stopwatch timer = new Stopwatch();
+                var timer = new Stopwatch();
                 timer.Start();
                 pathAlgorithm.FindDestionation();
                 timer.Stop();
                 if (pathAlgorithm.HasFoundPathToEndVertex())
                 {
                     pathAlgorithm.DrawPath();
-                    StatisticsCollector collector = new StatisticsCollector();
+                    var collector = new StatisticsCollector();
                     collector.CollectStatistics(pathAlgorithm.Graph, timer);
                     mainViewModel.Statistics = collector.GetStatistics(pathFindStatisticsFormat);
                     graph.Start = null;
