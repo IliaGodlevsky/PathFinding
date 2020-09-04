@@ -67,7 +67,6 @@
     <Compile Include="View\WinFormsGraphField.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="Model\WinFormsVertexEventSetter.cs" />
     <Compile Include="View\MainWindow.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -76,7 +75,7 @@
     </Compile>
     <Compile Include="Model\GraphLoader\WinFormsGraphLoader.cs" />
     <Compile Include="Model\GraphSaver\WinFormsGraphSaver.cs" />
-    <Compile Include="Model\StatusSetter\WinFormsVertexStatusSetter.cs" />
+    <Compile Include="Model\EventHolder\WinFormsVertexStatusSetter.cs" />
     <Compile Include="Model\Vertex\WinFormsVertex.cs">
       <SubType>Component</SubType>
     </Compile>

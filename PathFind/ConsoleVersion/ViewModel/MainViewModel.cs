@@ -3,15 +3,10 @@ using ConsoleVersion.GraphLoader;
 using ConsoleVersion.GraphSaver;
 using ConsoleVersion.InputClass;
 using ConsoleVersion.Model;
-using ConsoleVersion.StatusSetter;
+using ConsoleVersion.EventHolder;
 using ConsoleVersion.View;
-using GraphFactory.GraphSaver;
-using GraphLibrary;
 using GraphLibrary.Common.Extensions;
-using GraphLibrary.GraphCreate.GraphFieldFiller;
-using GraphLibrary.GraphLoader;
 using GraphLibrary.Model;
-using GraphLibrary.VertexEventHolder;
 using System;
 using System.Drawing;
 
@@ -19,28 +14,18 @@ namespace ConsoleVersion.ViewModel
 {
     internal class MainViewModel : AbstractMainModel
     {
-        private readonly IVertexEventHolder changer;
-
         public MainViewModel()
         {            
-            Format = ConsoleVersionResources.GraphParametresFormat;
+            GraphParametresFormat = ConsoleVersionResources.GraphParametresFormat;
             saver = new ConsoleGraphSaver();
             loader = new ConsoleGraphLoader();
-            vertexEventSetter = new ConsoleVersionVertexEventSetter();
+            VertexEventHolder = new ConsoleVertexEventHolder();
             graphFieldFiller = new ConsoleGraphFieldFiller();
             var factory = new ConsoleGraphFactory(
                 percentOfObstacles: 25, width: 25, height: 25);
             Graph = factory.GetGraph();
-            GraphParametres = Graph.GetFormattedInfo(Format);
-            changer = new ConsoleVertexStatusSetter(Graph);
-        }
-
-        public MainViewModel(AbstractVertexEventSetter vertexEventSetter,
-            AbstractGraphFieldFiller graphFieldFiller,
-            IGraphSaver saver, IGraphLoader loader) :
-            base(vertexEventSetter, graphFieldFiller, saver, loader)
-        {
-
+            GraphParametres = Graph.GetFormattedInfo(GraphParametresFormat);
+            VertexEventHolder.Graph = Graph;
         }
 
         public override void CreateNewGraph()
@@ -65,8 +50,8 @@ namespace ConsoleVersion.ViewModel
             method(Graph[point.X, point.Y], new EventArgs());
         }
 
-        public void Reverse() => VertexChange(changer.ReversePolarity);
+        public void Reverse() => VertexChange(VertexEventHolder.ReversePolarity);
 
-        public void ChangeVertexValue() => VertexChange(changer.ChangeVertexValue);
+        public void ChangeVertexValue() => VertexChange(VertexEventHolder.ChangeVertexValue);
     }
 }

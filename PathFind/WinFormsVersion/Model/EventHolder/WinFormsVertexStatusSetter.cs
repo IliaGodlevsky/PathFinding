@@ -6,15 +6,10 @@ using GraphLibrary.VertexEventHolder;
 using GraphLibrary.Vertex;
 using WinFormsVersion.Vertex;
 
-namespace WinFormsVersion.StatusSetter
+namespace WinFormsVersion.EventHolder
 {
-    internal class WinFormsVertexStatusSetter : AbstractVertexEventHolder
+    internal class WinFormsVertexEventHolder : AbstractVertexEventHolder
     {
-        public WinFormsVertexStatusSetter(GraphLibrary.Collection.Graph graph) : base(graph)
-        {
-
-        }
-
         protected override int GetWheelDelta(EventArgs e)
         {
             return (e as MouseEventArgs).Delta;
@@ -27,10 +22,10 @@ namespace WinFormsVersion.StatusSetter
                 base.SetStartVertex(sender, e);
                 if ((sender as IVertex).IsIsolated())
                     return;
-                foreach (var butt in graph)
+                foreach (WinFormsVertex vertex in Graph)
                 {
-                    (butt as WinFormsVertex).MouseClick -= SetStartVertex;
-                    (butt as WinFormsVertex).MouseClick += SetDestinationVertex;
+                    vertex.MouseClick -= SetStartVertex;
+                    vertex.MouseClick += SetDestinationVertex;
                 }
             }
         }
@@ -42,8 +37,8 @@ namespace WinFormsVersion.StatusSetter
                 base.SetDestinationVertex(sender, e);
                 if ((sender as IVertex).IsIsolated())
                     return;
-                foreach (var butt in graph) 
-                    (butt as WinFormsVertex).MouseClick -= SetDestinationVertex;
+                foreach (WinFormsVertex vertex in Graph)
+                    vertex.MouseClick -= SetDestinationVertex;
 
             }
         }
@@ -52,6 +47,25 @@ namespace WinFormsVersion.StatusSetter
         {
             if ((e as MouseEventArgs).Button == MouseButtons.Right)
                 base.ReversePolarity(sender, e);            
+        }
+
+        protected override void ChargeVertex(IVertex vertex)
+        {
+            if (!vertex.IsObstacle)
+                (vertex as WinFormsVertex).MouseClick += SetStartVertex;
+            (vertex as WinFormsVertex).MouseClick += ReversePolarity;
+            (vertex as WinFormsVertex).MouseWheel += ChangeVertexValue;
+        }
+
+        protected override void RefreshVertex(IVertex vertex)
+        {
+            if (!vertex.IsObstacle)
+            {
+                vertex.SetToDefault();
+                (vertex as WinFormsVertex).MouseClick -= SetStartVertex;
+                (vertex as WinFormsVertex).MouseClick -= SetDestinationVertex;
+                (vertex as WinFormsVertex).MouseClick += SetStartVertex;
+            }
         }
     }
 }

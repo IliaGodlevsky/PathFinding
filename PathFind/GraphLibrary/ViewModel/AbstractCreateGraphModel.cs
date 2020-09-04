@@ -14,19 +14,11 @@ namespace GraphLibrary.Model
         protected IMainModel model;
         protected Graph graph;
         protected IGraphField graphField;
-        protected AbstractVertexEventSetter vertexEventSetter;
         protected AbstractGraphFieldFiller graphFieldFiller;
 
         public AbstractCreateGraphModel(IMainModel model)
         {
             this.model = model;
-        }
-        public AbstractCreateGraphModel(IMainModel model, 
-            AbstractGraphFieldFiller graphFieldFiller, 
-            AbstractVertexEventSetter eventSetter) : this(model)
-        {
-            this.graphFieldFiller = graphFieldFiller;
-            vertexEventSetter = eventSetter;
         }
 
         public abstract IGraphFactory GetFactory();
@@ -35,12 +27,13 @@ namespace GraphLibrary.Model
         {
             var factory = GetFactory();
             graph = factory.GetGraph();
-            vertexEventSetter.ChargeGraph(graph);
+            model.VertexEventHolder.Graph = graph;
+            model.VertexEventHolder.ChargeGraph();
             graphField = graphFieldFiller.FileGraphField(graph);
             model.Graph = graph;
             model.GraphField = graphField;
             model.GraphParametres =
-                model.Graph.GetFormattedInfo(model.Format);
+                model.Graph.GetFormattedInfo(model.GraphParametresFormat);
             model.Statistics = string.Empty;
         }
     }

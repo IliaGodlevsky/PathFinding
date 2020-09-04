@@ -15,9 +15,6 @@ namespace WpfVersion.ViewModel
 
         public PathFindViewModel(IMainModel model) : base(model)
         {
-            this.mainViewModel = model;
-            graph = model.Graph;
-
             ConfirmPathFindAlgorithmChoice = new RelayCommand(
                 ExecuteConfirmPathFindAlgorithmChoice,
                 CanExecuteConfirmPathFindAlgorithmChoice);

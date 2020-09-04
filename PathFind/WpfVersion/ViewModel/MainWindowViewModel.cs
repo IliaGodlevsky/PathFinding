@@ -10,6 +10,7 @@ using WpfVersion.Model.GraphLoader;
 using WpfVersion.Model.GraphSaver;
 using WpfVersion.Resources;
 using WpfVersion.View.Windows;
+using WpfVersion.Model.EventHolder;
 
 namespace WpfVersion.ViewModel
 {
@@ -62,10 +63,10 @@ namespace WpfVersion.ViewModel
         public MainWindowViewModel()
         {
             GraphField = new WpfGraphField();
-            Format = WpfVersionResources.GraphParametresFormat;
+            GraphParametresFormat = WpfVersionResources.GraphParametresFormat;
             saver = new WpfGraphSaver();
             loader = new WpfGraphLoader(VertexSize.SIZE_BETWEEN_VERTICES);
-            vertexEventSetter = new WpfVertexEventSetter();
+            VertexEventHolder = new WpfVertexEventHolder();
             graphFieldFiller = new WpfGraphFieldFiller();
 
             StartPathFindCommand = new RelayCommand(ExecuteStartPathFindCommand, 

@@ -8,5 +8,7 @@ namespace GraphLibrary.VertexEventHolder
         void SetDestinationVertex(object sender, EventArgs e);
         void ReversePolarity(object sender, EventArgs e);
         void ChangeVertexValue(object sender, EventArgs e);
+        void ChargeGraph();
+        void RefreshGraph();
     }
 }

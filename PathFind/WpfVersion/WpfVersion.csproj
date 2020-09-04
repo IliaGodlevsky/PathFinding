@@ -63,12 +63,11 @@
     <Compile Include="Model\GraphFactory\WpfGraphInitializer.cs" />
     <Compile Include="Model\GraphLoader\WpfGraphLoader.cs" />
     <Compile Include="Model\GraphSaver\WpfGraphSaver.cs" />
-    <Compile Include="Model\StatusSetter\WpfVertexStatusSetter.cs" />
+    <Compile Include="Model\EventHolder\WpfVertexEventHolder.cs" />
     <Compile Include="Model\Vertex\WpfVertex.cs" />
     <Compile Include="Model\WindowAdjust.cs" />
     <Compile Include="Model\WpfGraphField.cs" />
     <Compile Include="Model\WpfGraphFieldFiller.cs" />
-    <Compile Include="Model\WpfVertexEventSetter.cs" />
     <Compile Include="ViewModel\GraphCreateViewModel.cs" />
     <Compile Include="ViewModel\PathFindViewModel.cs" />
     <Compile Include="ViewModel\MainWindowViewModel.cs" />

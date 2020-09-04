@@ -75,7 +75,6 @@
     <Compile Include="GraphSerialization\GraphSaver\AbstractGraphSaver.cs" />
     <Compile Include="GraphSerialization\GraphSaver\IGraphSaver.cs" />
     <Compile Include="ViewModel\AbstractCreateGraphModel.cs" />
-    <Compile Include="GraphCreate\GraphFiller\AbstractGraphFiller.cs" />
     <Compile Include="ViewModel\AbstractMainModel.cs" />
     <Compile Include="ViewModel\AbstractPathFindModel.cs" />
     <Compile Include="Model\IGraphField.cs" />

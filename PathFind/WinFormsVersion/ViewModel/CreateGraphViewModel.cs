@@ -10,8 +10,7 @@ namespace WinFormsVersion.ViewModel
     internal class CreateGraphViewModel : AbstractCreateGraphModel
     {
         public CreateGraphViewModel(IMainModel model) : base(model)
-        {
-            vertexEventSetter = new WinFormsVertexEventSetter();
+        {            
             graphFieldFiller = new WinFormsGraphFieldFiller();
         }
 

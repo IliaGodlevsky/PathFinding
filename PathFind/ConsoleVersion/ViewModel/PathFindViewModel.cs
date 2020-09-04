@@ -1,39 +1,29 @@
 ﻿using ConsoleVersion.Forms;
 using ConsoleVersion.InputClass;
-using ConsoleVersion.Model;
-using ConsoleVersion.StatusSetter;
 using GraphLibrary.AlgorithmEnum;
 using GraphLibrary.Extensions;
 using GraphLibrary.Model;
 using GraphLibrary.PauseMaker;
 using System;
 using System.Drawing;
+using GraphLibrary.VertexEventHolder;
 
 namespace ConsoleVersion.ViewModel
 {
     internal class PathFindViewModel : AbstractPathFindModel
     {
-        private readonly ConsoleVertexStatusSetter changer;
-        private readonly ConsoleVersionVertexEventSetter vertexEventSetter;
+        private readonly AbstractVertexEventHolder eventHolder;
 
         public Tuple<string, string, string> Messages { get; set; }
 
         public PathFindViewModel(IMainModel model) : base(model)
         {
-            changer = new ConsoleVertexStatusSetter(model.Graph);
-            vertexEventSetter = new ConsoleVersionVertexEventSetter();
-        }
-
-        public PathFindViewModel(IMainModel model,
-            string badResultMessage, string format) : 
-            base(model, badResultMessage, format)
-        {
-
+            eventHolder = model.VertexEventHolder;
         }
 
         public override void FindPath()
         {
-            vertexEventSetter.RefreshGraph(mainViewModel.Graph);
+            eventHolder.RefreshGraph();
             GraphShower.DisplayGraph(mainViewModel);
             ChooseStart();
             ChooseEnd();
@@ -63,12 +53,12 @@ namespace ConsoleVersion.ViewModel
 
         private void ChooseStart()
         {
-            ChooseRange(Messages.Item1, changer.SetStartVertex);
+            ChooseRange(Messages.Item1, eventHolder.SetStartVertex);
         }
 
         private void ChooseEnd()
         {
-            ChooseRange(Messages.Item2, changer.SetDestinationVertex);
+            ChooseRange(Messages.Item2, eventHolder.SetDestinationVertex);
         }
 
         private void ChooseRange(string message, EventHandler method)

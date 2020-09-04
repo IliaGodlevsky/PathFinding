@@ -3,6 +3,7 @@ using GraphLibrary.Collection;
 using GraphLibrary.Common.Extensions;
 using GraphLibrary.GraphCreate.GraphFieldFiller;
 using GraphLibrary.GraphLoader;
+using GraphLibrary.VertexEventHolder;
 
 namespace GraphLibrary.Model
 {
@@ -12,26 +13,16 @@ namespace GraphLibrary.Model
         public virtual string Statistics { get; set; }
         public virtual IGraphField GraphField { get; set; }
         public virtual Graph Graph { get; set; }
-        public string Format { get; protected set; }
+        public AbstractVertexEventHolder VertexEventHolder { get; set; }
+        public string GraphParametresFormat { get; protected set; }
 
         protected IGraphSaver saver;
         protected IGraphLoader loader;
-        protected AbstractVertexEventSetter vertexEventSetter;
         protected AbstractGraphFieldFiller graphFieldFiller;
 
         public AbstractMainModel()
         {
             
-        }
-
-        public AbstractMainModel(AbstractVertexEventSetter vertexEventSetter, 
-            AbstractGraphFieldFiller graphFieldFiller, 
-            IGraphSaver saver, IGraphLoader loader)
-        {
-            this.vertexEventSetter = vertexEventSetter;
-            this.graphFieldFiller = graphFieldFiller;
-            this.saver = saver;
-            this.loader = loader;
         }
 
         public virtual void SaveGraph()
@@ -46,15 +37,16 @@ namespace GraphLibrary.Model
                 return;
             Graph = temp;
             GraphField = graphFieldFiller.FileGraphField(Graph);
-            vertexEventSetter.ChargeGraph(Graph);
-            GraphParametres = Graph.GetFormattedInfo(Format);
+            VertexEventHolder.Graph = Graph;
+            VertexEventHolder.ChargeGraph();
+            GraphParametres = Graph.GetFormattedInfo(GraphParametresFormat);
         }
 
         public virtual void ClearGraph()
         {
-            vertexEventSetter.RefreshGraph(Graph);
+            VertexEventHolder.RefreshGraph();
             Statistics = string.Empty;
-            GraphParametres = Graph.GetFormattedInfo(Format);
+            GraphParametres = Graph.GetFormattedInfo(GraphParametresFormat);
         }
 
         public abstract void FindPath();

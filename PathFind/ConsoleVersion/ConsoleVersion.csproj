@@ -48,7 +48,6 @@
   <ItemGroup>
     <Compile Include="Enums\MenuOption.cs" />
     <Compile Include="Model\ConsoleGraphFieldFiller.cs" />
-    <Compile Include="Model\ConsoleVersionVertexEventSetter.cs" />
     <Compile Include="ViewModel\CreateGraphViewModel.cs" />
     <Compile Include="ViewModel\MainViewModel.cs" />
     <Compile Include="ViewModel\PathFindViewModel.cs" />
@@ -66,7 +65,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>ConsoleVersionResources.resx</DependentUpon>
     </Compile>
-    <Compile Include="Model\StatusSetter\ConsoleVertexStatusSetter.cs" />
+    <Compile Include="Model\EventHolder\ConsoleVertexEventHolder.cs" />
     <Compile Include="Model\Vertex\ConsoleVertex.cs" />
     <Compile Include="View\Interface\IView.cs" />
     <Compile Include="View\MainView.cs" />

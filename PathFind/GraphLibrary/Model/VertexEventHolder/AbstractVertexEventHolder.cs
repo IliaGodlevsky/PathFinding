@@ -8,12 +8,7 @@ namespace GraphLibrary.VertexEventHolder
 {
     public abstract class AbstractVertexEventHolder : IVertexEventHolder
     {
-        protected Graph graph;
-
-        public AbstractVertexEventHolder(Graph graph)
-        {
-            this.graph = graph;
-        }
+        public Graph Graph { get; set; }
 
         protected abstract int GetWheelDelta(EventArgs e);
 
@@ -40,7 +35,7 @@ namespace GraphLibrary.VertexEventHolder
         {           
             vertex.IsObstacle = false;
             vertex.MarkAsSimpleVertex();
-            VertexBinder.SetNeighbours(graph, vertex);
+            VertexBinder.SetNeighbours(Graph, vertex);
             VertexBinder.ConnectToNeighbours(vertex);
         }
 
@@ -51,7 +46,7 @@ namespace GraphLibrary.VertexEventHolder
                 return;
             vertex.IsStart = true;
             vertex.MarkAsStart();
-            graph.Start = vertex;
+            Graph.Start = vertex;
         }
 
         public virtual void SetDestinationVertex(object sender, EventArgs e)
@@ -61,7 +56,7 @@ namespace GraphLibrary.VertexEventHolder
                 return;
             vertex.IsEnd = true;
             vertex.MarkAsEnd();
-            graph.End = vertex;
+            Graph.End = vertex;
         }
 
         public virtual void ReversePolarity(object sender, EventArgs e)
@@ -71,6 +66,25 @@ namespace GraphLibrary.VertexEventHolder
                 MakeVertex(vertex);
             else
                 MakeObstacle(vertex);
+        }
+
+        public void ChargeGraph() => SetEventsToVertex(ChargeVertex);
+
+        public void RefreshGraph()
+        {
+            Graph.End = null;
+            Graph.Start = null;
+            SetEventsToVertex(RefreshVertex);
+        }
+
+        protected abstract void ChargeVertex(IVertex vertex);
+        protected abstract void RefreshVertex(IVertex vertex);
+
+        private void SetEventsToVertex(Action<IVertex> action)
+        {
+            for (int i = 0; i < Graph.Width; i++)
+                for (int j = 0; j < Graph.Height; j++)
+                    action(Graph[i, j]);
         }
     }
 }

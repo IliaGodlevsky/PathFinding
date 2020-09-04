@@ -13,6 +13,7 @@ using WinFormsVersion.GraphSaver;
 using WinFormsVersion.Model;
 using WinFormsVersion.Resources;
 using WinFormsVersion.View;
+using WinFormsVersion.EventHolder;
 
 namespace WinFormsVersion.ViewModel
 {
@@ -55,8 +56,8 @@ namespace WinFormsVersion.ViewModel
             }
         }
 
-        private GraphLibrary.Collection.Graph graph;
-        public override GraphLibrary.Collection.Graph Graph
+        private Graph graph;
+        public override Graph Graph
         {
             get { return graph; }
             set { graph = value; OnPropertyChanged(); }
@@ -66,10 +67,10 @@ namespace WinFormsVersion.ViewModel
 
         public MainWindowViewModel()
         {
-            Format = WinFormsVersionResources.ParametresFormat;
+            GraphParametresFormat = WinFormsVersionResources.ParametresFormat;
             saver = new WinFormsGraphSaver();
             loader = new WinFormsGraphLoader(VertexSize.SIZE_BETWEEN_VERTICES);
-            vertexEventSetter = new WinFormsVertexEventSetter();
+            VertexEventHolder = new WinFormsVertexEventHolder();
             graphField = new WinFormsGraphField();
             graphFieldFiller = new WinFormsGraphFieldFiller();
         }

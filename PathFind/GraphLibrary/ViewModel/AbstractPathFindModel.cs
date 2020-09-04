@@ -24,13 +24,6 @@ namespace GraphLibrary.Model
             badResultMessage = LibraryResources.BadResultMsg;
         }
 
-        public AbstractPathFindModel(IMainModel model, 
-            string badResultMessage, string format) : this(model)
-        {
-            pathFindStatisticsFormat = format;
-            this.badResultMessage = badResultMessage;
-        }
-
         protected abstract void PrepareAlgorithm();
 
         public virtual void FindPath()

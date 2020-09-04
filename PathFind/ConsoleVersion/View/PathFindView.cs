@@ -27,7 +27,8 @@ namespace ConsoleVersion.View
         private string GetAlgorithmsList()
         {
             var algorithmList = new StringBuilder("\n");
-            var algoDescriptionList = ((Algorithms)default).GetDescriptions().ToList();
+            Algorithms algo = Algorithms.AStarAlgorithm;
+            var algoDescriptionList = algo.GetDescriptions().ToList();
 
             foreach (var item in algoDescriptionList)
             {

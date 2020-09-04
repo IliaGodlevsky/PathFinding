@@ -42,7 +42,8 @@ namespace ConsoleVersion.View
         private string GetMenu()
         {           
             var menu = new StringBuilder();
-            var descriptions = ((MenuOption)default).GetDescriptions().ToList();
+            MenuOption opt = MenuOption.Quit;
+            var descriptions = opt.GetDescriptions().ToList();
             foreach (var item in descriptions)
             {               
                 int numberOf = descriptions.IndexOf(item);
