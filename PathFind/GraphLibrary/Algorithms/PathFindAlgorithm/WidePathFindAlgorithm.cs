@@ -29,16 +29,16 @@ namespace GraphLibrary.Algorithm
 
         public void FindDestionation()
         {
-                StatCollector.StartCollect();
-                var currentVertex = Graph.Start;
-                ProcessVertex(currentVertex);
-                while (!IsDestination(currentVertex))
-                {
-                    currentVertex = neighbourQueue.Dequeue();
-                    if (!currentVertex.IsVisited)
-                        ProcessVertex(currentVertex);
-                }
-                StatCollector.StopCollect();            
+            StatCollector.StartCollect();
+            var currentVertex = Graph.Start;
+            ProcessVertex(currentVertex);
+            while (!IsDestination(currentVertex))
+            {
+                currentVertex = neighbourQueue.Dequeue();
+                if (!currentVertex.IsVisited)
+                    ProcessVertex(currentVertex);
+            }
+            StatCollector.StopCollect();          
         }
 
         private void ExtractNeighbours(IVertex vertex)
