@@ -25,25 +25,23 @@ namespace GraphLibrary.PathFindAlgorithm
 
         public void FindDestionation()
         {
-
-                StatCollector.StartCollect();
-                var currentVertex = Graph.Start;
-                this.VisitVertex(currentVertex);
-                while (!IsDestination(currentVertex))
+            StatCollector.StartCollect();
+            var currentVertex = Graph.Start;
+            this.VisitVertex(currentVertex);
+            while (!IsDestination(currentVertex))
+            {
+                var temp = currentVertex;
+                currentVertex = GoNextVertex(currentVertex);
+                if (IsRightVertexToVisit(currentVertex))
                 {
-                    var temp = currentVertex;
-                    currentVertex = GoNextVertex(currentVertex);
-                    if (IsRightVertexToVisit(currentVertex))
-                    {
-                        this.VisitVertex(currentVertex);
-                        visitedVerticesStack.Push(currentVertex);
-                        currentVertex.ParentVertex = temp;
-                    }
-                    else
-                        currentVertex = visitedVerticesStack.Pop();
+                    this.VisitVertex(currentVertex);
+                    visitedVerticesStack.Push(currentVertex);
+                    currentVertex.ParentVertex = temp;
                 }
-                StatCollector.StopCollect();
-            
+                else
+                    currentVertex = visitedVerticesStack.Pop();
+            }
+            StatCollector.StopCollect();            
         }
 
         protected virtual IVertex GoNextVertex(IVertex vertex)
