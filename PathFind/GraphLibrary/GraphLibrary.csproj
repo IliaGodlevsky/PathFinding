@@ -90,7 +90,7 @@
     <Compile Include="Algorithms\PathFindAlgorithm\DijkstraAlgorythm.cs" />
     <Compile Include="Algorithms\PathFindAlgorithm\GreedyAlgorithm.cs" />
     <Compile Include="Algorithms\PathFindAlgorithm\IPathFindAlgorithm.cs" />
-    <Compile Include="Algorithms\PathFindAlgorithm\WidePathFindAlgorithm.cs" />
+    <Compile Include="Algorithms\PathFindAlgorithm\LiAlgorithm.cs" />
     <Compile Include="Algorithms\PauseMaker\Pauser.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Model\VertexEventHolder\IVertexEventHolder.cs" />

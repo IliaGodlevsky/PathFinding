@@ -49,7 +49,7 @@ namespace ConsoleVersion.ViewModel
         {
             return (Algorithms)Input.InputNumber(Messages.Item3,
                 (int)Algorithms.ValueGreedyAlgorithm, 
-                (int)Algorithms.WidePathFind);
+                (int)Algorithms.LiAlgorithm);
         }
 
         private void ChooseStart()

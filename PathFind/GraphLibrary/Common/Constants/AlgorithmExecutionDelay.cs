@@ -5,6 +5,6 @@
     /// </summary>
     public static class AlgorithmExecutionDelay
     {
-        public const int VISIT_PAUSE = 15;
+        public const int VISIT_PAUSE = 9;
     }
 }

@@ -2,7 +2,6 @@
 
 namespace ConsoleVersion.Enums
 {
-
     internal enum MenuOption : byte
     {
         [Description("Quit program")]
@@ -21,5 +20,5 @@ namespace ConsoleVersion.Enums
         Reverse,
         [Description("Change vertex value")]
         ChangeValue
-    };
+    }
 }

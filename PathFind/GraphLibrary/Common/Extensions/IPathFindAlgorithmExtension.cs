@@ -43,7 +43,7 @@ namespace GraphLibrary.Common.Extensions
 
         public static bool HasFoundPathToEndVertex(this IPathFindAlgorithm algorithm)
         {
-            return algorithm.Graph?.End.IsVisited == true;
+            return algorithm.Graph?.End?.IsVisited == true;
         }
     }
 }

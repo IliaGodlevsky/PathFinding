@@ -15,12 +15,12 @@ namespace GraphLibrary.Algorithm
     /// Uses queue to move next graph top. Finds the shortest path to
     /// the destination top
     /// </summary>
-    public class WidePathFindAlgorithm : IPathFindAlgorithm
+    public class LiAlgorithm : IPathFindAlgorithm
     {
         public Graph Graph { get; set; }
         public IPauseProvider Pauser { get; set; }
 
-        public WidePathFindAlgorithm()
+        public LiAlgorithm()
         {
             neighbourQueue = new Queue<IVertex>();
         }

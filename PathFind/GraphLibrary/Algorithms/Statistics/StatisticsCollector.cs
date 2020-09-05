@@ -28,7 +28,7 @@ namespace GraphLibrary.Statistics
                 return vertex.Cost;
             });
             steps = graph.End.GetPathToStartVertex().Count() - 1;
-            visitedVertices = graph.GetNumberOfVisitedVertices();
+            visitedVertices = graph.NumberOfVisitedVertices;
         }
 
         public string GetStatistics(string format)

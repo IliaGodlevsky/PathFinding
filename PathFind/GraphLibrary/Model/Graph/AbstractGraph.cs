@@ -24,10 +24,7 @@ namespace GraphLibrary.Collection
         public IVertex End { get; set; }
         public IVertex Start { get; set; }
 
-        public IVertex[,] GetArray()
-        {
-            return vertices;
-        }
+        public IVertex[,] GetArray() => vertices;
 
         public int Height => vertices.Height();
 
@@ -39,13 +36,12 @@ namespace GraphLibrary.Collection
 
         public int ObstaclePercent => ObstacleNumber * 100 / Size;
 
+        public int NumberOfVisitedVertices => vertices.Cast<IVertex>().Count(vertex => vertex.IsVisited);
+
         public int ObstacleNumber => vertices.Cast<IVertex>().Count(vertex => vertex.IsObstacle);
 
         public virtual Point GetIndices(IVertex vertex) => vertices.GetIndices(vertex);
 
-        public IEnumerator GetEnumerator()
-        {
-            return vertices.GetEnumerator();
-        }
+        public IEnumerator GetEnumerator() => vertices.GetEnumerator();
     }
 }

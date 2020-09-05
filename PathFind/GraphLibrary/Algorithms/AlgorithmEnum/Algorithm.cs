@@ -4,8 +4,8 @@ namespace GraphLibrary.AlgorithmEnum
 {
     public enum Algorithms : byte
     {
-        [Description("Wide path find algorithm")]
-        WidePathFind = 1,
+        [Description("Li algorithm")]
+        LiAlgorithm = 1,
         [Description("Deep path find algorithm")]
         DeepPathFind,
         [Description("Dijkstra algorithm")]
@@ -18,5 +18,5 @@ namespace GraphLibrary.AlgorithmEnum
         ValueGreedyAlgorithm,
         [Description("Value-distance greedy algorithm")]
         ValueDistanceGreedyAlgorithm
-    };
+    }
 }

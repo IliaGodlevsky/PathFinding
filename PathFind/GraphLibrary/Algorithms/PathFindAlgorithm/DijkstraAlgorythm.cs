@@ -12,7 +12,7 @@ namespace GraphLibrary.Algorithm
 {
     /// <summary>
     /// Finds the chippest path to destination top. 
-    /// </summary>    
+    /// </summary>
     public class DijkstraAlgorithm : IPathFindAlgorithm
     {
         public Func<IVertex, IVertex, double> RelaxFunction { get; set; }
@@ -30,24 +30,23 @@ namespace GraphLibrary.Algorithm
             SetAccumulatedCostToInfinity();
             var currentVertex = Graph.Start;
             currentVertex.IsVisited = true;
-            currentVertex.AccumulatedCost = 0;
             do
             {
                 ExtractNeighbours(currentVertex);
                 SpreadRelaxWave(currentVertex);
-                currentVertex = GetChippestUnvisitedVertex();
+                currentVertex = ChippestUnvisitedVertex;
                 if (!IsValidVertex(currentVertex))
                     break;
                 if (!currentVertex.IsVisited)
                     this.VisitVertex(currentVertex);
-            } while (!IsDestination(currentVertex));       
+            } while (!IsDestination(currentVertex));
         }
 
         private void SetAccumulatedCostToInfinity()
         {
             IVertex SetValueToInfinity(IVertex vertex)
             {
-                if (!vertex.IsObstacle)
+                if (!vertex.IsStart && !vertex.IsObstacle)
                     vertex.AccumulatedCost = double.PositiveInfinity;
                 return vertex;
             }
@@ -72,12 +71,15 @@ namespace GraphLibrary.Algorithm
             neigbourQueue.AddRange(vertex.GetUnvisitedNeighbours());
         }
 
-        private IVertex GetChippestUnvisitedVertex()
+        private IVertex ChippestUnvisitedVertex
         {
-            neigbourQueue.RemoveAll(vertex => vertex.IsVisited);
-            neigbourQueue.Sort((vertex1, vertex2) => 
-                vertex1.AccumulatedCost.CompareTo(vertex2.AccumulatedCost));
-            return neigbourQueue.FirstOrDefault();
+            get
+            {
+                neigbourQueue.RemoveAll(vertex => vertex.IsVisited);
+                neigbourQueue.Sort((vertex1, vertex2) =>
+                    vertex1.AccumulatedCost.CompareTo(vertex2.AccumulatedCost));
+                return neigbourQueue.FirstOrDefault();
+            }
         }
 
         private bool IsValidVertex(IVertex vertex)
