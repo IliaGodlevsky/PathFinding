@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Windows.Forms;
-using GraphLibrary.Extensions;
 using GraphLibrary.Collection;
 using GraphLibrary.VertexEventHolder;
 using GraphLibrary.Vertex;
@@ -15,34 +14,6 @@ namespace WinFormsVersion.EventHolder
             return (e as MouseEventArgs).Delta;
         }
 
-        public override void SetStartVertex(object sender, EventArgs e)
-        {
-            if ((e as MouseEventArgs).Button == MouseButtons.Left)
-            {
-                base.SetStartVertex(sender, e);
-                if ((sender as IVertex).IsIsolated())
-                    return;
-                foreach (WinFormsVertex vertex in Graph)
-                {
-                    vertex.MouseClick -= SetStartVertex;
-                    vertex.MouseClick += SetDestinationVertex;
-                }
-            }
-        }
-
-        public override void SetDestinationVertex(object sender, EventArgs e)
-        {
-            if ((e as MouseEventArgs).Button == MouseButtons.Left)
-            {
-                base.SetDestinationVertex(sender, e);
-                if ((sender as IVertex).IsIsolated())
-                    return;
-                foreach (WinFormsVertex vertex in Graph)
-                    vertex.MouseClick -= SetDestinationVertex;
-
-            }
-        }
-
         public override void ReversePolarity(object sender, EventArgs e)
         {
             if ((e as MouseEventArgs).Button == MouseButtons.Right)
@@ -51,20 +22,19 @@ namespace WinFormsVersion.EventHolder
 
         protected override void ChargeVertex(IVertex vertex)
         {
-            if (!vertex.IsObstacle)
-                (vertex as WinFormsVertex).MouseClick += SetStartVertex;
+            (vertex as WinFormsVertex).MouseClick += ChooseExtremeVertices;
             (vertex as WinFormsVertex).MouseClick += ReversePolarity;
             (vertex as WinFormsVertex).MouseWheel += ChangeVertexValue;
         }
 
-        protected override void RefreshVertex(IVertex vertex)
+        public override void ChooseExtremeVertices(object sender, EventArgs e)
         {
-            if (!vertex.IsObstacle)
+            if ((e as MouseEventArgs).Button == MouseButtons.Left)
             {
-                vertex.SetToDefault();
-                (vertex as WinFormsVertex).MouseClick -= SetStartVertex;
-                (vertex as WinFormsVertex).MouseClick -= SetDestinationVertex;
-                (vertex as WinFormsVertex).MouseClick += SetStartVertex;
+                if (Graph.Start == null)
+                    SetStartVertex(sender as IVertex);
+                else if (Graph.Start != null && Graph.End == null)
+                    SetDestinationVertex(sender as IVertex);
             }
         }
     }

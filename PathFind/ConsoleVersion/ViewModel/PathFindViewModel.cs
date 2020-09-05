@@ -7,6 +7,7 @@ using GraphLibrary.PauseMaker;
 using System;
 using System.Drawing;
 using GraphLibrary.VertexEventHolder;
+using GraphLibrary.Vertex;
 
 namespace ConsoleVersion.ViewModel
 {
@@ -23,7 +24,7 @@ namespace ConsoleVersion.ViewModel
 
         public override void FindPath()
         {
-            eventHolder.RefreshGraph();
+            mainViewModel.ClearGraph();
             GraphShower.DisplayGraph(mainViewModel);
             ChooseStart();
             ChooseEnd();
@@ -61,11 +62,11 @@ namespace ConsoleVersion.ViewModel
             ChooseRange(Messages.Item2, eventHolder.SetDestinationVertex);
         }
 
-        private void ChooseRange(string message, EventHandler method)
+        private void ChooseRange(string message, Action<IVertex> method)
         {
             Console.WriteLine(message);
             Point point = ChoosePoint();
-            method(graph[point.X, point.Y], new EventArgs());
+            method(graph[point.X, point.Y]);
         }
 
         private Point ChoosePoint()

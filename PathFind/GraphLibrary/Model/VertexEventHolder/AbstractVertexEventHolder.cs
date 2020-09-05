@@ -39,9 +39,8 @@ namespace GraphLibrary.VertexEventHolder
             VertexBinder.ConnectToNeighbours(vertex);
         }
 
-        public virtual void SetStartVertex(object sender, EventArgs e)
-        {
-            var vertex = sender as IVertex;
+        public virtual void SetStartVertex(IVertex vertex)
+        {            
             if (!vertex.IsValidToBeRange())
                 return;
             vertex.IsStart = true;
@@ -49,9 +48,8 @@ namespace GraphLibrary.VertexEventHolder
             Graph.Start = vertex;
         }
 
-        public virtual void SetDestinationVertex(object sender, EventArgs e)
+        public virtual void SetDestinationVertex(IVertex vertex)
         {
-            var vertex = sender as IVertex;
             if (!vertex.IsValidToBeRange())
                 return;
             vertex.IsEnd = true;
@@ -70,21 +68,21 @@ namespace GraphLibrary.VertexEventHolder
 
         public void ChargeGraph() => SetEventsToVertex(ChargeVertex);
 
-        public void RefreshGraph()
-        {
-            Graph.End = null;
-            Graph.Start = null;
-            SetEventsToVertex(RefreshVertex);
-        }
-
         protected abstract void ChargeVertex(IVertex vertex);
-        protected abstract void RefreshVertex(IVertex vertex);
 
         private void SetEventsToVertex(Action<IVertex> action)
         {
             for (int i = 0; i < Graph.Width; i++)
                 for (int j = 0; j < Graph.Height; j++)
                     action(Graph[i, j]);
+        }
+
+        public virtual void ChooseExtremeVertices(object sender, EventArgs e)
+        {
+            if (Graph.Start == null)
+                SetStartVertex(sender as IVertex);
+            else if (Graph.Start != null && Graph.End == null)
+                SetDestinationVertex(sender as IVertex);            
         }
     }
 }

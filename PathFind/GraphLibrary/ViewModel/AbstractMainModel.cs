@@ -44,7 +44,7 @@ namespace GraphLibrary.Model
 
         public virtual void ClearGraph()
         {
-            VertexEventHolder.RefreshGraph();
+            Graph.Refresh();
             Statistics = string.Empty;
             GraphParametres = Graph.GetFormattedInfo(GraphParametresFormat);
         }
