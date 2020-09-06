@@ -21,19 +21,8 @@ namespace WinFormsVersion.ViewModel
         }
 
         public void CreateGraph(object sender, EventArgs e)
-        {
-            if (!CanCreate())
-                return;           
-            CreateGraph();            
-        }
-
-        private bool CanCreate()
-        {
-            if (int.TryParse(Width, out int width) && int.TryParse(Height, out int height))
-                return GraphParametresRange.IsValidGraphParamters(width, height) 
-                    && new ObstaclePercentRange().IsInBounds(ObstaclePercent);
-            else
-                return false;
+        {         
+            CreateGraph();
         }
 
         public void CancelCreateGraph(object sender, EventArgs e)
@@ -43,10 +32,8 @@ namespace WinFormsVersion.ViewModel
 
         public override IGraphFactory GetFactory()
         {
-            int width = int.Parse(Width);
-            int height = int.Parse(Height);
             return new WinFormsGraphFactory(ObstaclePercent,
-                width, height, VertexSize.SIZE_BETWEEN_VERTICES);
+                Width, Height, VertexSize.SIZE_BETWEEN_VERTICES);
         }
     }
 }

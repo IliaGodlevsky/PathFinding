@@ -1,5 +1,4 @@
-﻿using GraphLibrary.Common.Extensions;
-using GraphLibrary.Extensions;
+﻿using GraphLibrary.Extensions;
 using GraphLibrary.Extensions.MatrixExtension;
 using GraphLibrary.Collection;
 using GraphLibrary.PauseMaker;
@@ -15,7 +14,7 @@ namespace GraphLibrary.Algorithm
     /// </summary>
     public class DijkstraAlgorithm : IPathFindAlgorithm
     {
-        public Func<IVertex, IVertex, double> RelaxFunction { get; set; }
+        public Func<IVertex, IVertex, double> RelaxFunction { private get; set; }
         public Graph Graph { get; set; }
         public IPauseProvider Pauser { get; set; }
 
@@ -27,6 +26,7 @@ namespace GraphLibrary.Algorithm
 
         public void FindDestionation()
         {
+            OnAlgorithmStarted?.Invoke();
             SetAccumulatedCostToInfinity();
             var currentVertex = Graph.Start;
             currentVertex.IsVisited = true;
@@ -37,9 +37,10 @@ namespace GraphLibrary.Algorithm
                 currentVertex = ChippestUnvisitedVertex;
                 if (!IsValidVertex(currentVertex))
                     break;
-                if (!currentVertex.IsVisited)
-                    this.VisitVertex(currentVertex);
+                if (!currentVertex.IsVisited)                
+                    OnVertexVisited?.Invoke(currentVertex);                
             } while (!IsDestination(currentVertex));
+            OnAlgorithmFinished?.Invoke();
         }
 
         private void SetAccumulatedCostToInfinity()
@@ -95,5 +96,9 @@ namespace GraphLibrary.Algorithm
         }
 
         private readonly List<IVertex> neigbourQueue;
+
+        public event AlgorithmEventHanlder OnAlgorithmStarted;
+        public event Action<IVertex> OnVertexVisited;
+        public event AlgorithmEventHanlder OnAlgorithmFinished;
     }
 }

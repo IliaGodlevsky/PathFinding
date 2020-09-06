@@ -1,5 +1,4 @@
 ﻿using GraphLibrary.Algorithm;
-using GraphLibrary.Common.Constants;
 using GraphLibrary.Common.Extensions.CollectionExtensions;
 using GraphLibrary.Extensions;
 using GraphLibrary.Vertex;
@@ -20,25 +19,14 @@ namespace GraphLibrary.Common.Extensions
         {
             var path = algo.Graph.End.GetPathToStartVertex()?.ToList();
             if (path != null)
-                path.Apply(ColorizeVertext);           
-        }
-
-        public static bool IsRightGraphSettings(this IPathFindAlgorithm algo)
-        {
-            return algo.Graph != null
-                && algo.Graph?.End != null
-                && algo.Graph?.Start != null;
+                path.Apply(ColorizeVertext);
         }
 
         public static void VisitVertex(this IPathFindAlgorithm algorithm, IVertex vertex)
         {
             vertex.IsVisited = true;
             if (vertex.IsSimpleVertex())
-            {
-                vertex.MarkAsCurrentlyLooked();
-                algorithm.Pauser?.Pause();
                 vertex.MarkAsVisited();
-            }
         }
 
         public static bool HasFoundPathToEndVertex(this IPathFindAlgorithm algorithm)

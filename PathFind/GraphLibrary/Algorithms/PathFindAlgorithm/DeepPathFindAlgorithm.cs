@@ -2,17 +2,16 @@
 using GraphLibrary.Common.Extensions;
 using GraphLibrary.Extensions;
 using GraphLibrary.Collection;
-using GraphLibrary.PauseMaker;
 using GraphLibrary.Vertex;
 using System.Collections.Generic;
 using System.Linq;
+using System;
 
 namespace GraphLibrary.PathFindAlgorithm
 {
     public class DeepPathFindAlgorithm : IPathFindAlgorithm
-    {        
+    {
         public Graph Graph { get; set; }
-        public IPauseProvider Pauser { get; set; }
 
         public DeepPathFindAlgorithm()
         {
@@ -21,6 +20,7 @@ namespace GraphLibrary.PathFindAlgorithm
 
         public void FindDestionation()
         {
+            OnAlgorithmStarted?.Invoke();
             var currentVertex = Graph.Start;
             this.VisitVertex(currentVertex);
             while (!IsDestination(currentVertex))
@@ -29,13 +29,14 @@ namespace GraphLibrary.PathFindAlgorithm
                 currentVertex = GoNextVertex(currentVertex);
                 if (IsRightVertexToVisit(currentVertex))
                 {
-                    this.VisitVertex(currentVertex);
+                    OnVertexVisited?.Invoke(currentVertex);
                     visitedVerticesStack.Push(currentVertex);
                     currentVertex.ParentVertex = temp;
                 }
                 else
                     currentVertex = visitedVerticesStack.Pop();
-            }         
+            }
+            OnAlgorithmFinished?.Invoke();
         }
 
         protected virtual IVertex GoNextVertex(IVertex vertex)
@@ -55,5 +56,9 @@ namespace GraphLibrary.PathFindAlgorithm
         }
 
         private readonly Stack<IVertex> visitedVerticesStack;
+
+        public event AlgorithmEventHanlder OnAlgorithmStarted;
+        public event Action<IVertex> OnVertexVisited;
+        public event AlgorithmEventHanlder OnAlgorithmFinished;
     }
 }

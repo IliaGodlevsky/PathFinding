@@ -8,6 +8,7 @@ using System;
 using System.Drawing;
 using GraphLibrary.VertexEventHolder;
 using GraphLibrary.Vertex;
+using GraphLibrary.Common.Extensions;
 
 namespace ConsoleVersion.ViewModel
 {
@@ -36,14 +37,17 @@ namespace ConsoleVersion.ViewModel
         protected override void PrepareAlgorithm()
         {
             DelayTime = Input.InputNumber("Enter delay time: ", 99, 1);
-            pathAlgorithm.Pauser = new PauseProvider(DelayTime) { PauseEvent = () => { } };
-        }
-
-        protected override void ShowMessage(string message)
-        {
-            GraphShower.DisplayGraph(mainViewModel);
-            Console.WriteLine(message);
-            Console.ReadLine();
+            var pauser = new PauseProvider(DelayTime) { PauseEvent = () => { } };
+            pathAlgorithm.OnVertexVisited += (vertex) => pauser.Pause();
+            pathAlgorithm.OnAlgorithmFinished += () =>
+              {
+                  if (!pathAlgorithm.HasFoundPathToEndVertex())
+                  {
+                      GraphShower.DisplayGraph(mainViewModel);
+                      Console.WriteLine(badResultMessage);
+                      Console.ReadLine();
+                  }
+              };
         }
 
         private Algorithms GetAlgorithmEnum()

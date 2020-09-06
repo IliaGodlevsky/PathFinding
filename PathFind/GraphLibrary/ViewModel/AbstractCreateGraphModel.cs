@@ -7,21 +7,14 @@ namespace GraphLibrary.Model
 {
     public abstract class AbstractCreateGraphModel : IModel
     {
-        public string Width { get; set; }
-        public string Height { get; set; }
+        public int Width { get; set; }
+        public int Height { get; set; }
         public int ObstaclePercent { get; set; }
-
-        protected IMainModel model;
-        protected Graph graph;
-        protected IGraphField graphField;
-        protected AbstractGraphFieldFiller graphFieldFiller;
 
         public AbstractCreateGraphModel(IMainModel model)
         {
             this.model = model;
         }
-
-        public abstract IGraphFactory GetFactory();
 
         public virtual void CreateGraph()
         {
@@ -33,8 +26,15 @@ namespace GraphLibrary.Model
             model.Graph = graph;
             model.GraphField = graphField;
             model.GraphParametres =
-                model.Graph.GetFormattedInfo(model.GraphParametresFormat);
+            model.Graph.GetFormattedInfo(model.GraphParametresFormat);
             model.Statistics = string.Empty;
         }
+
+        public abstract IGraphFactory GetFactory();
+
+        protected IMainModel model;
+        protected Graph graph;
+        protected IGraphField graphField;
+        protected AbstractGraphFieldFiller graphFieldFiller;
     }
 }

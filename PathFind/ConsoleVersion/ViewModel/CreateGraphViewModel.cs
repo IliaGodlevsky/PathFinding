@@ -1,6 +1,5 @@
 ﻿using ConsoleVersion.GraphFactory;
 using ConsoleVersion.InputClass;
-using ConsoleVersion.Model;
 using GraphLibrary.Common.Constants;
 using GraphLibrary.GraphFactory;
 using GraphLibrary.Model;
@@ -19,19 +18,19 @@ namespace ConsoleVersion.ViewModel
 
         public override IGraphFactory GetFactory()
         {
-            int obstacles = Input.InputNumber(Messages.Item1, 
-                new ObstaclePercentRange().UpperRange,
-                new ObstaclePercentRange().LowerRange);
+            ObstaclePercent = Input.InputNumber(Messages.Item1, 
+                Range.ObstaclePercentValueRange.UpperRange,
+                Range.ObstaclePercentValueRange.LowerRange);
 
-            int width = Input.InputNumber(Messages.Item2, 
-                GraphParametresRange.UpperWidthValue, 
-                GraphParametresRange.LowerWidthValue);
+            Width = Input.InputNumber(Messages.Item2, 
+                Range.WidthValueRange.UpperRange,
+                Range.WidthValueRange.LowerRange);
 
-            int height = Input.InputNumber(Messages.Item3, 
-                GraphParametresRange.UpperHeightValue, 
-                GraphParametresRange.LowerHeightValue);
+            Height = Input.InputNumber(Messages.Item3,
+                Range.HeightValueRange.UpperRange,
+                Range.HeightValueRange.LowerRange);
 
-            return new ConsoleGraphFactory(obstacles, width, height);
+            return new ConsoleGraphFactory(ObstaclePercent, Width, Height);
         }
     }
 }

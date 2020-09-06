@@ -1,4 +1,5 @@
 ﻿using GraphLibrary.AlgorithmEnum;
+using GraphLibrary.Common.Constants;
 using GraphLibrary.Extensions;
 using System;
 using System.Linq;
@@ -37,8 +38,9 @@ namespace WinFormsVersion.View
             var bindingDelaySliderToDelayTextBox = new Binding("Value", delayTextBox, "Text",
                 true, DataSourceUpdateMode.OnPropertyChanged);
             delaySlider.DataBindings.Add(bindingDelaySliderToDelayTextBox);
-            delaySlider.Minimum = 1;
-            delaySlider.Maximum = 99;
+
+            delaySlider.Minimum = Range.DelayValueRange.LowerRange;
+            delaySlider.Maximum = Range.DelayValueRange.UpperRange;
 
             var bindingDelatTextBoxToModel = new Binding("Text", Model, "DelayTime", 
                 true, DataSourceUpdateMode.OnPropertyChanged);

@@ -1,4 +1,5 @@
-﻿using System.Windows;
+﻿using GraphLibrary.Common.Constants;
+using System.Windows;
 
 namespace WpfVersion.View.Windows
 {
@@ -10,6 +11,8 @@ namespace WpfVersion.View.Windows
         public PathFindWindow()
         {
             InitializeComponent();
+            delayTimeSlider.Minimum = Range.DelayValueRange.LowerRange;
+            delayTimeSlider.Maximum = Range.DelayValueRange.UpperRange;
         }
     }
 }

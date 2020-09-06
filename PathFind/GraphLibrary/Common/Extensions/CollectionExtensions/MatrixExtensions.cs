@@ -17,6 +17,8 @@ namespace GraphLibrary.Extensions.MatrixExtension
         {
             if (arr == null)
                 return 0;
+            else if (arr.Width() == 0)
+                return 0;
             return arr.Length / arr.Width();
         }
 

@@ -1,15 +1,21 @@
 ﻿using GraphLibrary.Collection;
-using GraphLibrary.PauseMaker;
+using GraphLibrary.Vertex;
+using System;
 
 namespace GraphLibrary.Algorithm
-{ 
+{
+    public delegate void AlgorithmEventHanlder();
+
     /// <summary>
     /// A base interface of path find algorithms
     /// </summary>
     public interface IPathFindAlgorithm
     {
+        event AlgorithmEventHanlder OnAlgorithmStarted;
+        event Action<IVertex> OnVertexVisited;
+        event AlgorithmEventHanlder OnAlgorithmFinished;
+
         Graph Graph { get; set; }
-        IPauseProvider Pauser { get; set; }
         void FindDestionation();
     }
 }

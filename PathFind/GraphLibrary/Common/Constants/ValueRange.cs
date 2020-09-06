@@ -4,6 +4,13 @@
     {
         public ValueRange(int upper, int lower)
         {
+            if (upper < lower) 
+            {
+                int temp = upper;
+                upper = lower;
+                lower = temp;
+            }
+
             UpperRange = upper;
             LowerRange = lower;
         }

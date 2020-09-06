@@ -11,9 +11,8 @@ namespace WpfVersion.View.Windows
         public GraphCreatesWindow()
         {
             InitializeComponent();
-            obstacleSlider.Minimum = new ObstaclePercentRange().LowerRange;
-            obstacleSlider.Maximum = new ObstaclePercentRange().UpperRange;
-            var obstaclePercentRange = new ObstaclePercentRange();
+            obstacleSlider.Minimum = Range.ObstaclePercentValueRange.LowerRange;
+            obstacleSlider.Maximum = Range.ObstaclePercentValueRange.UpperRange;
         }
     }
 }

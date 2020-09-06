@@ -1,12 +1,11 @@
 ﻿using GraphLibrary.Common.Extensions;
 using GraphLibrary.Extensions;
 using GraphLibrary.Collection;
-using GraphLibrary.PauseMaker;
-using GraphLibrary.Statistics;
 using GraphLibrary.Vertex;
 using System.Collections.Generic;
 using System.Linq;
 using GraphLibrary.Common.Extensions.CollectionExtensions;
+using System;
 
 namespace GraphLibrary.Algorithm
 {
@@ -18,7 +17,6 @@ namespace GraphLibrary.Algorithm
     public class LiAlgorithm : IPathFindAlgorithm
     {
         public Graph Graph { get; set; }
-        public IPauseProvider Pauser { get; set; }
 
         public LiAlgorithm()
         {
@@ -27,6 +25,7 @@ namespace GraphLibrary.Algorithm
 
         public void FindDestionation()
         {
+            OnAlgorithmStarted?.Invoke();
             var currentVertex = Graph.Start;
             ProcessVertex(currentVertex);
             while (!IsDestination(currentVertex))
@@ -35,6 +34,7 @@ namespace GraphLibrary.Algorithm
                 if (!currentVertex.IsVisited)
                     ProcessVertex(currentVertex);
             }
+            OnAlgorithmFinished?.Invoke();
         }
 
         private void ExtractNeighbours(IVertex vertex)
@@ -57,7 +57,7 @@ namespace GraphLibrary.Algorithm
 
         private void ProcessVertex(IVertex vertex)
         {
-            this.VisitVertex(vertex);
+            OnVertexVisited?.Invoke(vertex);
             SpreadWaves(vertex);
             ExtractNeighbours(vertex);
         }
@@ -70,5 +70,9 @@ namespace GraphLibrary.Algorithm
         }
 
         protected Queue<IVertex> neighbourQueue;
+
+        public event AlgorithmEventHanlder OnAlgorithmStarted;
+        public event Action<IVertex> OnVertexVisited;
+        public event AlgorithmEventHanlder OnAlgorithmFinished;
     }
 }

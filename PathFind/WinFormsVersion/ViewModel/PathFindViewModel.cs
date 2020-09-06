@@ -1,4 +1,5 @@
 ﻿using GraphLibrary.AlgorithmEnum;
+using GraphLibrary.Common.Extensions;
 using GraphLibrary.Model;
 using GraphLibrary.PauseMaker;
 using System;
@@ -17,12 +18,14 @@ namespace WinFormsVersion.ViewModel
         protected override void PrepareAlgorithm()
         {
             (mainViewModel as MainWindowViewModel).Window.Close();
-            pathAlgorithm.Pauser = new PauseProvider(DelayTime) { PauseEvent = () => Application.DoEvents() };
-        }
+            var pauser = new PauseProvider(DelayTime) { PauseEvent = () => Application.DoEvents() };
+            pathAlgorithm.OnVertexVisited += (vertex) => pauser.Pause();
 
-        protected override void ShowMessage(string message)
-        {
-            MessageBox.Show(message);
+            pathAlgorithm.OnAlgorithmFinished += () =>
+            {
+                if (!pathAlgorithm.HasFoundPathToEndVertex())
+                    MessageBox.Show(badResultMessage);
+            };
         }
 
         public void PathFind(object sender, EventArgs e)

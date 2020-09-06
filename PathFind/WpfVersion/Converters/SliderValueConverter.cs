@@ -1,6 +1,7 @@
 ﻿using GraphLibrary.Common.Constants;
 using System;
 using System.Globalization;
+using System.Windows;
 using System.Windows.Data;
 
 namespace WpfVersion.Converters
@@ -15,7 +16,8 @@ namespace WpfVersion.Converters
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
         {
             double result = 0D;
-            if (!(parameter is ISliderValueRange sliderValueRange) || value == null)
+            var sliderValueRange = parameter as ValueRange;
+            if (sliderValueRange == null || value == null)
                 return result;
             if (double.TryParse(value.ToString(), out result))
             {

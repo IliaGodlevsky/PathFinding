@@ -9,7 +9,7 @@ using System.Diagnostics;
 namespace GraphLibrary.Model
 {
     public abstract class AbstractPathFindModel : IModel
-    {         
+    {   
         public int DelayTime { get; set; } // miliseconds
         public Algorithms Algorithm { get; set; }
 
@@ -20,17 +20,16 @@ namespace GraphLibrary.Model
             pathFindStatisticsFormat = LibraryResources.StatisticsFormat;
             badResultMessage = LibraryResources.BadResultMsg;
             DelayTime = 9;
+            timer = new Stopwatch();
         }
 
-        public virtual void FindPath()
+        private void SubsribeAlgorithm()
         {
-            pathAlgorithm = AlgorithmSelector.GetPathFindAlgorithm(Algorithm, graph);
-            PrepareAlgorithm();           
-            if (pathAlgorithm.IsRightGraphSettings())
+            pathAlgorithm.OnVertexVisited += (vertex) => { pathAlgorithm.VisitVertex(vertex); };
+            pathAlgorithm.OnAlgorithmStarted += () => { timer.Start(); };
+
+            pathAlgorithm.OnAlgorithmFinished += () =>
             {
-                var timer = new Stopwatch();
-                timer.Start();
-                pathAlgorithm.FindDestionation();
                 timer.Stop();
                 if (pathAlgorithm.HasFoundPathToEndVertex())
                 {
@@ -38,17 +37,23 @@ namespace GraphLibrary.Model
                     var collector = new StatisticsCollector();
                     collector.CollectStatistics(graph, timer);
                     mainViewModel.Statistics = collector.GetStatistics(pathFindStatisticsFormat);
-                    graph.RemoveExtremeVertices();
                 }
-                else
-                    ShowMessage(badResultMessage);
-            }
+            };
         }
 
-        protected abstract void ShowMessage(string message);
+        public virtual void FindPath()
+        {
+            pathAlgorithm = AlgorithmSelector.GetPathFindAlgorithm(Algorithm, graph);
+            PrepareAlgorithm();
+            SubsribeAlgorithm();
+            pathAlgorithm.FindDestionation();
+        }
 
         protected IPathFindAlgorithm pathAlgorithm;
+
         protected abstract void PrepareAlgorithm();
+
+        private readonly Stopwatch timer;
         protected Graph graph;
         protected IMainModel mainViewModel;
         protected string badResultMessage;

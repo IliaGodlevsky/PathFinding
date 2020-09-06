@@ -18,8 +18,7 @@ namespace WpfVersion.ViewModel
             graphField = model.GraphField;
             graphFieldFiller = new WpfGraphFieldFiller();
             ConfirmCreateGraphCommand = new RelayCommand(
-                ExecuteConfirmCreateGraphCommand, 
-                CanExecuteConfirmCreateGraphCommand);
+                ExecuteConfirmCreateGraphCommand, obj => true);
             CancelCreateGraphCommand = new RelayCommand(obj=> 
             (model as MainWindowViewModel)?.Window.Close(), obj => true);
         }
@@ -31,21 +30,10 @@ namespace WpfVersion.ViewModel
             WindowAdjust.Adjust(model.Graph);
         }
 
-        private bool CanExecuteConfirmCreateGraphCommand(object param)
-        {
-            if (int.TryParse(Width, out int width) && int.TryParse(Height, out int height))
-                return GraphParametresRange.IsValidGraphParamters(width, height)
-                    && new ObstaclePercentRange().IsInBounds(ObstaclePercent);
-            else
-                return false;
-        }
-
         public override IGraphFactory GetFactory()
         {
-            int width = int.Parse(Width);
-            int height = int.Parse(Height);
             return new WpfGraphFactory(ObstaclePercent,
-                width, height, VertexSize.SIZE_BETWEEN_VERTICES);
+                Width, Height, VertexSize.SIZE_BETWEEN_VERTICES);
         }
     }
 }

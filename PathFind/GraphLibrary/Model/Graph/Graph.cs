@@ -1,4 +1,5 @@
 ﻿using System.Collections;
+using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
 using GraphLibrary.Extensions.MatrixExtension;
@@ -6,14 +7,11 @@ using GraphLibrary.Vertex;
 
 namespace GraphLibrary.Collection
 {
-    public class Graph : IEnumerable
+    public class Graph : IEnumerable<IVertex>
     {
-        public Graph(IVertex[,] vertices)
-        {
-            this.vertices = vertices;
-        }
+        public Graph(IVertex[,] vertices) => this.vertices = vertices;
 
-        protected IVertex[,] vertices;
+        private readonly IVertex[,] vertices;
 
         public IVertex this[int width, int height]
         {
@@ -22,6 +20,7 @@ namespace GraphLibrary.Collection
         }
 
         public IVertex End { get; set; }
+
         public IVertex Start { get; set; }
 
         public IVertex[,] GetArray() => vertices;
@@ -34,14 +33,16 @@ namespace GraphLibrary.Collection
 
         public int Width => vertices.Width();
 
-        public int ObstaclePercent => ObstacleNumber * 100 / Size;
+        public int ObstaclePercent => Size == 0 ? 0 : ObstacleNumber * 100 / Size;
 
         public int NumberOfVisitedVertices => vertices.Cast<IVertex>().Count(vertex => vertex.IsVisited);
 
         public int ObstacleNumber => vertices.Cast<IVertex>().Count(vertex => vertex.IsObstacle);
 
-        public virtual Point GetIndices(IVertex vertex) => vertices.GetIndices(vertex);
+        public Point GetIndices(IVertex vertex) => vertices.GetIndices(vertex);
 
         public IEnumerator GetEnumerator() => vertices.GetEnumerator();
+
+        IEnumerator<IVertex> IEnumerable<IVertex>.GetEnumerator() => (IEnumerator<IVertex>)GetEnumerator();
     }
 }
