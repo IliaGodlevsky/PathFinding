@@ -12,7 +12,6 @@ namespace WpfVersion.Model.Vertex
     internal class WpfVertex : Label, IVertex
     {
         public static SolidColorBrush AfterVisitVertexColor { get; set; }
-        public static SolidColorBrush BeingVisitedVertexColor { get; set; }
         public static SolidColorBrush PathVertexColor { get; set; }
         public static SolidColorBrush StartVertexColor { get; set; }
         public static SolidColorBrush EndVertexColor { get; set; }
@@ -20,7 +19,6 @@ namespace WpfVersion.Model.Vertex
         static WpfVertex()
         {
             AfterVisitVertexColor = new SolidColorBrush(Colors.CadetBlue);
-            BeingVisitedVertexColor = new SolidColorBrush(Colors.DarkMagenta);
             PathVertexColor = new SolidColorBrush(Colors.Yellow);
             StartVertexColor = new SolidColorBrush(Colors.Green);
             EndVertexColor = new SolidColorBrush(Colors.Red);
@@ -53,8 +51,6 @@ namespace WpfVersion.Model.Vertex
         public Point Location { get; set; }
 
         public VertexInfo Info => new VertexInfo(this);
-
-        public void MarkAsCurrentlyLooked() => Background = BeingVisitedVertexColor;
 
         public void MarkAsEnd() => Background = EndVertexColor;
 

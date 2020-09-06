@@ -56,7 +56,5 @@ namespace WinFormsVersion.Vertex
         public VertexInfo Info => new VertexInfo(this);
 
         public int Cost { get => int.Parse(Text); set => Text = value.ToString(); }
-
-        public void MarkAsCurrentlyLooked() => BackColor = Color.FromKnownColor(KnownColor.DarkMagenta);
     }
 }

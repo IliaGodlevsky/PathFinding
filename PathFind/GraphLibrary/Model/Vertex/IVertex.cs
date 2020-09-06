@@ -14,10 +14,7 @@ namespace GraphLibrary.Vertex
         IVertex ParentVertex { get; set; }
         double AccumulatedCost { get; set; }
         Point Location { get; set; }
-
         VertexInfo Info { get; }
-
-        void MarkAsCurrentlyLooked();
         void MarkAsEnd();
         void MarkAsSimpleVertex();
         void MarkAsObstacle();

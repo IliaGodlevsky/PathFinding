@@ -31,11 +31,6 @@ namespace ConsoleVersion.Vertex
 
         public VertexInfo Info => new VertexInfo(this);
 
-        public void MarkAsCurrentlyLooked()
-        {
-            return;
-        }
-
         public void MarkAsEnd() => Colour = Color.FromKnownColor(KnownColor.Red);
 
         public void MarkAsSimpleVertex() => Colour = Color.FromKnownColor(KnownColor.White);
