@@ -3,7 +3,6 @@ using GraphLibrary.AlgorithmEnum;
 using GraphLibrary.Collection;
 using GraphLibrary.AlgoSelector;
 using GraphLibrary.Common.Extensions;
-using GraphLibrary.Statistics;
 using System.Diagnostics;
 
 namespace GraphLibrary.Model
@@ -33,8 +32,9 @@ namespace GraphLibrary.Model
                 if (pathAlgorithm.HasFoundPathToEndVertex())
                 {
                     pathAlgorithm.DrawPath();
-                    mainViewModel.Statistics = mainViewModel.Graph.
-                        GetFormattedStatistics(timer, pathFindStatisticsFormat);
+                    mainViewModel.Statistics = 
+                        timer.GetTimeInformation(LibraryResources.TimerInfoFormat) + " " +
+                        mainViewModel.Graph.GetFormattedStatistics(pathFindStatisticsFormat);
                 }
             };
         }
@@ -45,6 +45,7 @@ namespace GraphLibrary.Model
             PrepareAlgorithm();
             SubsribeAlgorithm();
             pathAlgorithm.FindDestionation();
+            mainViewModel.Graph.RemoveExtremeVertices();
         }
 
         protected IPathFindAlgorithm pathAlgorithm;

@@ -22,20 +22,18 @@ namespace GraphLibrary.Common.Extensions
                graph.ObstaclePercent, graph.ObstacleNumber, graph.Size);
         }
 
-        public static string GetFormattedStatistics(this Graph graph, Stopwatch timer, string format)
+        public static string GetFormattedStatistics(this Graph graph, string format)
         {
             var pathLength = graph.End.GetPathToStartVertex().Sum(vertex =>
             {
-                if (vertex.IsStart)
+                if (!vertex.IsSimpleVertex())
                     return 0;
                 return vertex.Cost;
             });
             var steps = graph.End.GetPathToStartVertex().Count() - 1;
             var visitedVertices = graph.NumberOfVisitedVertices;
 
-            return string.Format(format, timer.Elapsed.Minutes,
-                    timer.Elapsed.Seconds, timer.Elapsed.Milliseconds,
-                    steps, pathLength, visitedVertices);
+            return string.Format(format, steps, pathLength, visitedVertices);
         }
 
         public static void Refresh(this Graph graph)

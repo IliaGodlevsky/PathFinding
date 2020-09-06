@@ -61,6 +61,7 @@
     <Compile Include="Common\Extensions\CollectionExtensions\MatrixExtensions.cs" />
     <Compile Include="Common\Extensions\CollectionExtensions\QueueExtensions.cs" />
     <Compile Include="Common\Extensions\RandomExtensions.cs" />
+    <Compile Include="Common\Extensions\StopwatchExtension.cs" />
     <Compile Include="GraphCreate\GraphFactory\AbstractGraphFactory.cs" />
     <Compile Include="GraphCreate\GraphFactory\AbstractGraphInfoInitializer.cs" />
     <Compile Include="GraphCreate\GraphFactory\AbstractVertexLocator.cs" />

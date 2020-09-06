@@ -70,11 +70,20 @@ namespace GraphLibrary {
         }
         
         /// <summary>
-        ///   Ищет локализованную строку, похожую на Time: {0}:{1}.{2}  Steps: {3}   Path length: {4}   Visited vertices: {5}.
+        ///   Ищет локализованную строку, похожую на Steps: {0}   Path length: {1}   Visited vertices: {2}.
         /// </summary>
         internal static string StatisticsFormat {
             get {
                 return ResourceManager.GetString("StatisticsFormat", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Time: {0}:{1}.{2}.
+        /// </summary>
+        internal static string TimerInfoFormat {
+            get {
+                return ResourceManager.GetString("TimerInfoFormat", resourceCulture);
             }
         }
     }
