@@ -24,8 +24,9 @@ namespace WinFormsVersion.View
             var bindTextBoxAndSlider = new Binding("Value", obstacleTextBox, "Text", true, 
                 DataSourceUpdateMode.OnPropertyChanged);
             obstacleSlider.DataBindings.Add(bindTextBoxAndSlider);
-            obstacleSlider.Maximum = GraphParametresRange.UpperObstacleValue;
-            obstacleSlider.Minimum = GraphParametresRange.LowerObstacleValue;
+
+            obstacleSlider.Maximum = new ObstaclePercentRange().UpperRange;
+            obstacleSlider.Minimum = new ObstaclePercentRange().LowerRange;
 
             var bindObstaclePercent = new Binding("Text", Model, "ObstaclePercent", true,
                 DataSourceUpdateMode.OnPropertyChanged);

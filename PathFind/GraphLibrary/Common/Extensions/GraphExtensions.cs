@@ -22,9 +22,14 @@ namespace GraphLibrary.Common.Extensions
 
         public static void Refresh(this Graph graph)
         {
+            graph.RemoveExtremeVertices();
+            graph.GetArray().Apply(RefreshVertex);
+        }
+
+        public static void RemoveExtremeVertices(this Graph graph)
+        {
             graph.End = null;
             graph.Start = null;
-            graph.GetArray().Apply(RefreshVertex);
         }
     }
 }

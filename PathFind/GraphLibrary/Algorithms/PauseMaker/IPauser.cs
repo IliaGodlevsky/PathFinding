@@ -4,6 +4,6 @@
     public interface IPauseProvider
     {
         Pause PauseEvent { get; set; }
-        void Pause(int milliseconds);
+        void Pause();
     }
 }

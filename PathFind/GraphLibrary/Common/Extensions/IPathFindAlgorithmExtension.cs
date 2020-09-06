@@ -36,7 +36,7 @@ namespace GraphLibrary.Common.Extensions
             if (vertex.IsSimpleVertex())
             {
                 vertex.MarkAsCurrentlyLooked();
-                algorithm.Pauser?.Pause(AlgorithmExecutionDelay.VISIT_PAUSE);
+                algorithm.Pauser?.Pause();
                 vertex.MarkAsVisited();
             }
         }

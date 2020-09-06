@@ -5,10 +5,11 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:converters="clr-namespace:WpfVersion.Converters" 
         xmlns:sys="clr-namespace:System;assembly=mscorlib"
+        xmlns:constants="clr-namespace:GraphLibrary.Common.Constants;assembly=GraphLibrary"
         mc:Ignorable="d"
         Title="Parametres" SizeToContent="WidthAndHeight">
     <Window.Resources>
-        <converters:ObstaclePercentConverter x:Key="obstaclePercentConverter"></converters:ObstaclePercentConverter>
+        <converters:SliderValueConverter x:Key="sliderValueConverter"></converters:SliderValueConverter>
     </Window.Resources>
     <Grid>
         <Grid.ColumnDefinitions>
@@ -27,7 +28,7 @@
         <Slider Value = "{Binding Path = ObstaclePercent}" x:Name="obstacleSlider" 
                 MinWidth="100" Margin="5" Grid.Row="1"></Slider>
         <TextBox Text = "{Binding ElementName = obstacleSlider, Path = Value, 
-            Converter = {StaticResource obstaclePercentConverter}, Mode = TwoWay, 
+            Converter = {StaticResource sliderValueConverter}, Mode = TwoWay, 
             UpdateSourceTrigger = PropertyChanged}"
                  x:Name="obstacleTextBox" MinWidth="40" Margin="5" Grid.Row="1" Grid.Column="1"></TextBox>
         <TextBlock Grid.Row="2" Text="Graph width" Margin="5"></TextBlock>

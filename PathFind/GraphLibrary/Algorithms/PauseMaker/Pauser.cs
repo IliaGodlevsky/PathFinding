@@ -4,15 +4,22 @@ namespace GraphLibrary.PauseMaker
 {
     public class PauseProvider : IPauseProvider
     {
-        public  Pause PauseEvent { get; set; }
+        public Pause PauseEvent { get; set; }
 
-        public void Pause(int milliseconds)
+        public PauseProvider(int delayTime)
         {
-            var watch = new Stopwatch();
-            watch.Start();
-            while (watch.ElapsedMilliseconds < milliseconds)
-                PauseEvent();
-            watch.Stop();
+            this.delayTime = delayTime;
         }
+
+        public void Pause()
+        {
+            var timer = new Stopwatch();
+            timer.Start();
+            while (timer.ElapsedMilliseconds < delayTime)
+                PauseEvent();
+            timer.Stop();
+        }
+
+        private readonly int delayTime;
     }
 }

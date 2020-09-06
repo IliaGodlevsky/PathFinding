@@ -35,7 +35,8 @@ namespace ConsoleVersion.ViewModel
 
         protected override void PrepareAlgorithm()
         {
-            pathAlgorithm.Pauser = new PauseProvider() { PauseEvent = () => { } };
+            DelayTime = Input.InputNumber("Enter delay time: ", 99, 1);
+            pathAlgorithm.Pauser = new PauseProvider(DelayTime) { PauseEvent = () => { } };
         }
 
         protected override void ShowMessage(string message)

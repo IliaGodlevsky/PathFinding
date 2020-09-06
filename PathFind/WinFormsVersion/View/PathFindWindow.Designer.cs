@@ -31,46 +31,81 @@
             this.algorithmListBox = new System.Windows.Forms.ListBox();
             this.okButton = new System.Windows.Forms.Button();
             this.cancelButton = new System.Windows.Forms.Button();
+            this.delaySlider = new System.Windows.Forms.TrackBar();
+            this.delayTextBox = new System.Windows.Forms.TextBox();
+            this.label1 = new System.Windows.Forms.Label();
+            ((System.ComponentModel.ISupportInitialize)(this.delaySlider)).BeginInit();
             this.SuspendLayout();
             // 
             // algorithmListBox
             // 
             this.algorithmListBox.FormattingEnabled = true;
-            this.algorithmListBox.ItemHeight = 20;
-            this.algorithmListBox.Location = new System.Drawing.Point(31, 12);
+            this.algorithmListBox.Location = new System.Drawing.Point(21, 8);
+            this.algorithmListBox.Margin = new System.Windows.Forms.Padding(2);
             this.algorithmListBox.Name = "algorithmListBox";
-            this.algorithmListBox.Size = new System.Drawing.Size(187, 104);
+            this.algorithmListBox.Size = new System.Drawing.Size(166, 108);
             this.algorithmListBox.TabIndex = 0;
             // 
             // okButton
             // 
-            this.okButton.Location = new System.Drawing.Point(31, 143);
+            this.okButton.Location = new System.Drawing.Point(21, 194);
+            this.okButton.Margin = new System.Windows.Forms.Padding(2);
             this.okButton.Name = "okButton";
-            this.okButton.Size = new System.Drawing.Size(75, 33);
+            this.okButton.Size = new System.Drawing.Size(50, 21);
             this.okButton.TabIndex = 1;
             this.okButton.Text = "Ok";
             this.okButton.UseVisualStyleBackColor = true;
             // 
             // cancelButton
             // 
-            this.cancelButton.Location = new System.Drawing.Point(143, 143);
+            this.cancelButton.Location = new System.Drawing.Point(137, 194);
+            this.cancelButton.Margin = new System.Windows.Forms.Padding(2);
             this.cancelButton.Name = "cancelButton";
-            this.cancelButton.Size = new System.Drawing.Size(75, 33);
+            this.cancelButton.Size = new System.Drawing.Size(50, 21);
             this.cancelButton.TabIndex = 2;
             this.cancelButton.Text = "Cancel";
             this.cancelButton.UseVisualStyleBackColor = true;
             // 
+            // delaySlider
+            // 
+            this.delaySlider.Location = new System.Drawing.Point(21, 144);
+            this.delaySlider.Name = "delaySlider";
+            this.delaySlider.Size = new System.Drawing.Size(117, 45);
+            this.delaySlider.TabIndex = 3;
+            // 
+            // delayTextBox
+            // 
+            this.delayTextBox.Location = new System.Drawing.Point(144, 144);
+            this.delayTextBox.Name = "delayTextBox";
+            this.delayTextBox.Size = new System.Drawing.Size(43, 20);
+            this.delayTextBox.TabIndex = 4;
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(67, 118);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(82, 13);
+            this.label1.TabIndex = 5;
+            this.label1.Text = "Algorithm speed";
+            // 
             // PathFindWindow
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(277, 223);
+            this.ClientSize = new System.Drawing.Size(208, 226);
+            this.Controls.Add(this.label1);
+            this.Controls.Add(this.delayTextBox);
+            this.Controls.Add(this.delaySlider);
             this.Controls.Add(this.cancelButton);
             this.Controls.Add(this.okButton);
             this.Controls.Add(this.algorithmListBox);
+            this.Margin = new System.Windows.Forms.Padding(2);
             this.Name = "PathFindWindow";
             this.Text = "PathFindWindow";
+            ((System.ComponentModel.ISupportInitialize)(this.delaySlider)).EndInit();
             this.ResumeLayout(false);
+            this.PerformLayout();
 
         }
 
@@ -79,5 +114,8 @@
         private System.Windows.Forms.ListBox algorithmListBox;
         private System.Windows.Forms.Button okButton;
         private System.Windows.Forms.Button cancelButton;
+        private System.Windows.Forms.TrackBar delaySlider;
+        private System.Windows.Forms.TextBox delayTextBox;
+        private System.Windows.Forms.Label label1;
     }
 }

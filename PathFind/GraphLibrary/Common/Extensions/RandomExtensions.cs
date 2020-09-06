@@ -7,7 +7,7 @@ namespace GraphLibrary.Extensions.RandomExtension
     {        
         public static bool IsObstacleChance(this Random rand, int percentOfObstacles)
         {
-            return rand.Next(GraphParametresRange.UpperObstacleValue) < percentOfObstacles;
+            return rand.Next(new ObstaclePercentRange().UpperRange) < percentOfObstacles;
         }
     }
 }

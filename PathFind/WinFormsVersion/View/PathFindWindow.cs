@@ -33,6 +33,17 @@ namespace WinFormsVersion.View
 
             var bindingAlgorithm = new Binding("SelectedValue", Model, "Algorithm");
             algorithmListBox.DataBindings.Add(bindingAlgorithm);
+
+            var bindingDelaySliderToDelayTextBox = new Binding("Value", delayTextBox, "Text",
+                true, DataSourceUpdateMode.OnPropertyChanged);
+            delaySlider.DataBindings.Add(bindingDelaySliderToDelayTextBox);
+            delaySlider.Minimum = 1;
+            delaySlider.Maximum = 99;
+
+            var bindingDelatTextBoxToModel = new Binding("Text", Model, "DelayTime", 
+                true, DataSourceUpdateMode.OnPropertyChanged);
+            delayTextBox.DataBindings.Add(bindingDelatTextBoxToModel);
+
         }
     }
 }

@@ -5,7 +5,7 @@ using System.Windows.Data;
 
 namespace WpfVersion.Converters
 {
-    internal class ObstaclePercentConverter : IValueConverter
+    internal class SliderValueConverter : IValueConverter
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
@@ -15,15 +15,15 @@ namespace WpfVersion.Converters
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
         {
             double result = 0D;
-            if (value == null)
+            if (!(parameter is ISliderValueRange sliderValueRange) || value == null)
                 return result;
             if (double.TryParse(value.ToString(), out result))
             {
-                var obstaclePercent = System.Convert.ToInt32(result);
-                if (GraphParametresRange.IsInValidObstacleRange(obstaclePercent))
-                    result = obstaclePercent;
+                var sliderValue = System.Convert.ToInt32(result);
+                if (sliderValueRange.IsInBounds(sliderValue))
+                    result = sliderValue;
                 else
-                    result = GraphParametresRange.UpperObstacleValue;
+                    result = sliderValueRange.UpperRange;
             }
             return result;
         }

@@ -57,7 +57,7 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Converters\EnumDescriptionConverter.cs" />
-    <Compile Include="Converters\ObstaclePercentConverter.cs" />
+    <Compile Include="Converters\SliderValueConverter.cs" />
     <Compile Include="Infrastructure\RelayCommand.cs" />
     <Compile Include="Model\GraphFactory\WpfGraphFactory.cs" />
     <Compile Include="Model\GraphFactory\WpfGraphInitializer.cs" />

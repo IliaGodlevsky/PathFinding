@@ -20,8 +20,8 @@ namespace ConsoleVersion.ViewModel
         public override IGraphFactory GetFactory()
         {
             int obstacles = Input.InputNumber(Messages.Item1, 
-                GraphParametresRange.UpperObstacleValue, 
-                GraphParametresRange.LowerObstacleValue);
+                new ObstaclePercentRange().UpperRange,
+                new ObstaclePercentRange().LowerRange);
 
             int width = Input.InputNumber(Messages.Item2, 
                 GraphParametresRange.UpperWidthValue, 

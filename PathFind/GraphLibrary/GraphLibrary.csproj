@@ -44,7 +44,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Algorithms\PauseMaker\IPauser.cs" />
-    <Compile Include="Common\Constants\AlgorithmExecutionDelay.cs" />
+    <Compile Include="Common\Constants\ValueRange.cs" />
     <Compile Include="Algorithms\DistanceCalculator\Distance.cs" />
     <Compile Include="Algorithms\AlgorithmEnum\Algorithm.cs" />
     <Compile Include="Common\Constants\GraphParametresRange.cs" />

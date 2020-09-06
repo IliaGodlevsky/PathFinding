@@ -10,6 +10,7 @@ namespace GraphLibrary.Model
 {
     public abstract class AbstractPathFindModel : IModel
     {         
+        public int DelayTime { get; set; } // miliseconds
         public Algorithms Algorithm { get; set; }
 
         public AbstractPathFindModel(IMainModel mainViewModel)
@@ -18,11 +19,12 @@ namespace GraphLibrary.Model
             graph = mainViewModel.Graph;
             pathFindStatisticsFormat = LibraryResources.StatisticsFormat;
             badResultMessage = LibraryResources.BadResultMsg;
+            DelayTime = 9;
         }
 
         public virtual void FindPath()
         {
-            pathAlgorithm = AlgorithmSelector.GetPathFindAlgorithm(Algorithm, mainViewModel.Graph);
+            pathAlgorithm = AlgorithmSelector.GetPathFindAlgorithm(Algorithm, graph);
             PrepareAlgorithm();           
             if (pathAlgorithm.IsRightGraphSettings())
             {
@@ -34,10 +36,9 @@ namespace GraphLibrary.Model
                 {
                     pathAlgorithm.DrawPath();
                     var collector = new StatisticsCollector();
-                    collector.CollectStatistics(pathAlgorithm.Graph, timer);
+                    collector.CollectStatistics(graph, timer);
                     mainViewModel.Statistics = collector.GetStatistics(pathFindStatisticsFormat);
-                    graph.Start = null;
-                    graph.End = null;
+                    graph.RemoveExtremeVertices();
                 }
                 else
                     ShowMessage(badResultMessage);
@@ -47,7 +48,6 @@ namespace GraphLibrary.Model
         protected abstract void ShowMessage(string message);
 
         protected IPathFindAlgorithm pathAlgorithm;
-
         protected abstract void PrepareAlgorithm();
         protected Graph graph;
         protected IMainModel mainViewModel;

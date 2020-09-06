@@ -36,7 +36,7 @@ namespace WpfVersion.ViewModel
         protected override void PrepareAlgorithm()
         {
             (mainViewModel as MainWindowViewModel).Window.Close();
-            pathAlgorithm.Pauser = new PauseProvider() { PauseEvent = () => System.Windows.Forms.Application.DoEvents() };
+            pathAlgorithm.Pauser = new PauseProvider(DelayTime) { PauseEvent = () => System.Windows.Forms.Application.DoEvents() };
         }
 
         protected override void ShowMessage(string message)

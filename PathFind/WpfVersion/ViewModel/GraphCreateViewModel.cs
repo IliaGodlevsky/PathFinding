@@ -34,8 +34,8 @@ namespace WpfVersion.ViewModel
         private bool CanExecuteConfirmCreateGraphCommand(object param)
         {
             if (int.TryParse(Width, out int width) && int.TryParse(Height, out int height))
-                return GraphParametresRange.
-                    IsValidGraphParamters(width, height, ObstaclePercent);
+                return GraphParametresRange.IsValidGraphParamters(width, height)
+                    && new ObstaclePercentRange().IsInBounds(ObstaclePercent);
             else
                 return false;
         }
