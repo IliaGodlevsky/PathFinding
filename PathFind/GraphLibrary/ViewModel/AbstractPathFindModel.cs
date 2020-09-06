@@ -27,16 +27,14 @@ namespace GraphLibrary.Model
         {
             pathAlgorithm.OnVertexVisited += (vertex) => { pathAlgorithm.VisitVertex(vertex); };
             pathAlgorithm.OnAlgorithmStarted += () => { timer.Start(); };
-
             pathAlgorithm.OnAlgorithmFinished += () =>
             {
                 timer.Stop();
                 if (pathAlgorithm.HasFoundPathToEndVertex())
                 {
                     pathAlgorithm.DrawPath();
-                    var collector = new StatisticsCollector();
-                    collector.CollectStatistics(graph, timer);
-                    mainViewModel.Statistics = collector.GetStatistics(pathFindStatisticsFormat);
+                    mainViewModel.Statistics = mainViewModel.Graph.
+                        GetFormattedStatistics(timer, pathFindStatisticsFormat);
                 }
             };
         }
