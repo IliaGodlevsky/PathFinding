@@ -39,24 +39,24 @@
                 </DataTemplate>
             </ListBox.ItemTemplate>
         </ListBox>
-        <StackPanel Grid.Row="1" Orientation="Horizontal">
-            <Grid>
+
+            <Grid Grid.Row="1">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="Auto"></RowDefinition>
-                    <RowDefinition></RowDefinition>
+                    <RowDefinition Height="Auto"></RowDefinition>
                 </Grid.RowDefinitions>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="Auto"></ColumnDefinition>
-                    <ColumnDefinition Width="Auto"/>
-                    <ColumnDefinition Width="Auto"></ColumnDefinition>
+                    <ColumnDefinition Width="*"></ColumnDefinition>
                 </Grid.ColumnDefinitions>
-                <TextBlock  Margin="33.019,5,39,5" Grid.Row=" 0" Text="Algorithm speed" HorizontalAlignment="Center" Grid.Column="1"/>
-                <Slider Grid.Row="1" Maximum="99" Minimum="1" 
-                        Value ="{Binding Path=DelayTime}" x:Name="delayTimeSlider" Width="170" Margin="5" Grid.ColumnSpan="2" ></Slider>
-                <TextBox Grid.Row="1" Text ="{Binding ElementName=delayTimeSlider, Path=Value, 
+                <TextBlock Grid.ColumnSpan="2" Margin="5" Grid.Row="0" 
+                           Text="Algorithm speed" HorizontalAlignment="Center" Grid.Column="0"/>
+                <Slider Grid.Row="1" 
+                        Value ="{Binding Path=DelayTime}" x:Name="delayTimeSlider" MinWidth="160" Margin="5"></Slider>
+                <TextBox MaxWidth="25" Grid.Row="1" Text ="{Binding ElementName=delayTimeSlider, Path=Value, 
                     Converter = {StaticResource sliderValueConverter}, ConverterParameter={x:Static constants:Range.DelayValueRange} ,Mode = TwoWay, 
-                    UpdateSourceTrigger = PropertyChanged}" Grid.Column="2" Margin="5"></TextBox>
+                    UpdateSourceTrigger = PropertyChanged}" Grid.Column="1" Margin="5"></TextBox>
             </Grid>
-        </StackPanel>
+       
     </Grid>
 </Window>
