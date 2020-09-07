@@ -21,7 +21,6 @@ namespace GraphLibrary.Model
             pathFindStatisticsFormat = LibraryResources.StatisticsFormat;
             badResultMessage = LibraryResources.BadResultMsg;
             DelayTime = 4;
-            timer = new Stopwatch();
         }
 
         public virtual void FindPath()
@@ -40,23 +39,25 @@ namespace GraphLibrary.Model
 
         protected virtual void PrepareAlgorithm()
         {
+            var timer = new Stopwatch();
             pathAlgorithm.OnVertexVisited += (vertex) =>
             {
                 vertex.IsVisited = true;
                 if (vertex.IsSimpleVertex())
                     vertex.MarkAsVisited();
             };
-            pathAlgorithm.OnAlgorithmStarted += (sender, eventArgs) => { timer.Start(); };
+            pathAlgorithm.OnAlgorithmStarted += 
+                (sender, eventArgs) => { timer.Start(); };
             pathAlgorithm.OnAlgorithmFinished += (sender, eventArgs) =>
             {
                 timer.Stop();
-                mainViewModel.Statistics = timer.GetTimeInformation(LibraryResources.TimerInfoFormat);
+                mainViewModel.Statistics = timer.
+                GetTimeInformation(LibraryResources.TimerInfoFormat);
                 pathAlgorithm.DrawPath();
 
             };
         }
 
-        private readonly Stopwatch timer;
         protected Graph graph;
         protected IMainModel mainViewModel;
         protected string badResultMessage;
