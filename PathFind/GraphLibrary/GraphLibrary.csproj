@@ -88,7 +88,7 @@
     <Compile Include="Model\VertexEventHolder\AbstractVertexEventHolder.cs" />
     <Compile Include="Model\VertexInfo\VertexInfo.cs" />
     <Compile Include="Model\Graph\Graph.cs" />
-    <Compile Include="Algorithms\PathFindAlgorithm\DijkstraAlgorythm.cs" />
+    <Compile Include="Algorithms\PathFindAlgorithm\DijkstraAlgorithm.cs" />
     <Compile Include="Algorithms\PathFindAlgorithm\GreedyAlgorithm.cs" />
     <Compile Include="Algorithms\PathFindAlgorithm\IPathFindAlgorithm.cs" />
     <Compile Include="Algorithms\PathFindAlgorithm\LiAlgorithm.cs" />
