@@ -1,5 +1,4 @@
 ﻿using GraphLibrary.AlgorithmEnum;
-using GraphLibrary.Common.Extensions;
 using GraphLibrary.Model;
 using GraphLibrary.PauseMaker;
 using System;
@@ -18,7 +17,8 @@ namespace WinFormsVersion.ViewModel
         protected override void PrepareAlgorithm()
         {
             (mainViewModel as MainWindowViewModel).Window.Close();
-            var pauser = new PauseProvider(DelayTime) { PauseEvent = () => Application.DoEvents() };
+            var pauser = new PauseProvider(DelayTime) { PauseEvent = () 
+                => Application.DoEvents() };
             pathAlgorithm.OnVertexVisited += (vertex) => pauser.Pause();
 
             pathAlgorithm.OnFinished += (sender, eventArgs) =>
@@ -36,7 +36,7 @@ namespace WinFormsVersion.ViewModel
         }
 
         public void CancelPathFind(object sender, EventArgs e)
-        {
+        {           
             (mainViewModel as MainWindowViewModel).Window.Close();
         }
 
