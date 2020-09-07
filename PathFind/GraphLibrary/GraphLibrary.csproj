@@ -90,7 +90,7 @@
     <Compile Include="Model\Graph\Graph.cs" />
     <Compile Include="Algorithms\PathFindAlgorithm\DijkstraAlgorithm.cs" />
     <Compile Include="Algorithms\PathFindAlgorithm\GreedyAlgorithm.cs" />
-    <Compile Include="Algorithms\PathFindAlgorithm\IPathFindAlgorithm.cs" />
+    <Compile Include="Algorithms\PathFindAlgorithm\IPathFindingAlgorithm.cs" />
     <Compile Include="Algorithms\PathFindAlgorithm\LiAlgorithm.cs" />
     <Compile Include="Model\PauseMaker\Pauser.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
