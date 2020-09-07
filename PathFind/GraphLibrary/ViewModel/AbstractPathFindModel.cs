@@ -25,10 +25,12 @@ namespace GraphLibrary.Model
 
         public virtual void FindPath()
         {
-            pathAlgorithm = AlgorithmSelector.GetPathFindAlgorithm(Algorithm, graph);
+            pathAlgorithm = AlgorithmSelector.
+                GetPathFindAlgorithm(Algorithm, graph);
             PrepareAlgorithm();
             var path = pathAlgorithm.FindDestionation();
-            mainViewModel.Statistics += string.Format(" " + pathFindStatisticsFormat,
+            mainViewModel.Statistics += 
+                string.Format(" " + pathFindStatisticsFormat,
                 path.Count(),
                 path.Sum(vertex => vertex.Cost),
                 graph.NumberOfVisitedVertices);
@@ -40,14 +42,17 @@ namespace GraphLibrary.Model
         protected virtual void PrepareAlgorithm()
         {
             var timer = new Stopwatch();
+
             pathAlgorithm.OnVertexVisited += (vertex) =>
             {
                 vertex.IsVisited = true;
                 if (vertex.IsSimpleVertex())
                     vertex.MarkAsVisited();
             };
+
             pathAlgorithm.OnAlgorithmStarted += 
                 (sender, eventArgs) => { timer.Start(); };
+
             pathAlgorithm.OnAlgorithmFinished += (sender, eventArgs) =>
             {
                 timer.Stop();
