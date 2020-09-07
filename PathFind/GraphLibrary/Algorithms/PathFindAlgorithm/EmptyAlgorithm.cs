@@ -20,9 +20,11 @@ namespace GraphLibrary.Algorithm
             Graph = null;
             OnStarted = null;
             OnVertexVisited = null;
-            OnStarted?.Invoke(this, new AlgorithmEventArgs());
+            OnStarted?.Invoke(this, 
+                new AlgorithmEventArgs());
             OnVertexVisited?.Invoke(null);
-            OnFinished?.Invoke(this, new AlgorithmEventArgs());
+            OnFinished?.Invoke(this, 
+                new AlgorithmEventArgs());
             return this.GetFoundPath();
         }
     }
