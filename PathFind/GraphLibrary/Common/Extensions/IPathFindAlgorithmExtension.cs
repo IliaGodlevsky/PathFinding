@@ -2,36 +2,34 @@
 using GraphLibrary.Common.Extensions.CollectionExtensions;
 using GraphLibrary.Extensions;
 using GraphLibrary.Vertex;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace GraphLibrary.Common.Extensions
 {
     public static class IPathFindAlgorithmExtension
     {
-        private static IVertex ColorizeVertext(IVertex vertex)
-        {
-            if (vertex.IsSimpleVertex())
-                vertex.MarkAsPath();
-            return vertex;
-        }
-
         public static void DrawPath(this IPathFindAlgorithm algo)
         {
-            var path = algo.Graph.End.GetPathToStartVertex()?.ToList();
+            var path = algo.GetFoundPath()?.ToList();
             if (path != null)
-                path.Apply(ColorizeVertext);
+                path.Apply(vertex =>
+                {
+                    if (vertex.IsSimpleVertex())
+                        vertex.MarkAsPath();
+                    return vertex;
+                });
         }
 
-        public static void VisitVertex(this IPathFindAlgorithm algorithm, IVertex vertex)
+        public static IEnumerable<IVertex> GetFoundPath(this IPathFindAlgorithm algorithm)
         {
-            vertex.IsVisited = true;
-            if (vertex.IsSimpleVertex())
-                vertex.MarkAsVisited();
-        }
-
-        public static bool HasFoundPathToEndVertex(this IPathFindAlgorithm algorithm)
-        {
-            return algorithm.Graph?.End?.IsVisited == true;
+            var vert = algorithm.Graph?.End;
+            while (vert?.ParentVertex != null)
+            {
+                vert = vert.ParentVertex;
+                if (vert.IsSimpleVertex())
+                    yield return vert;
+            }
         }
     }
 }

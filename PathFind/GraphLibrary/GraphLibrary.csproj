@@ -43,8 +43,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Algorithms\AlgorithmEventArgs\AlgorithmEventArgs.cs" />
     <Compile Include="Algorithms\PathFindAlgorithm\EmptyAlgorithm.cs" />
-    <Compile Include="Algorithms\PauseMaker\IPauser.cs" />
+    <Compile Include="Model\PauseMaker\IPauser.cs" />
     <Compile Include="Common\Constants\Range.cs" />
     <Compile Include="Common\Constants\ValueRange.cs" />
     <Compile Include="Algorithms\DistanceCalculator\Distance.cs" />
@@ -91,7 +92,7 @@
     <Compile Include="Algorithms\PathFindAlgorithm\GreedyAlgorithm.cs" />
     <Compile Include="Algorithms\PathFindAlgorithm\IPathFindAlgorithm.cs" />
     <Compile Include="Algorithms\PathFindAlgorithm\LiAlgorithm.cs" />
-    <Compile Include="Algorithms\PauseMaker\Pauser.cs" />
+    <Compile Include="Model\PauseMaker\Pauser.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Model\VertexEventHolder\IVertexEventHolder.cs" />
     <Compile Include="GraphCreate\VertexBinder\VertexBinder.cs" />

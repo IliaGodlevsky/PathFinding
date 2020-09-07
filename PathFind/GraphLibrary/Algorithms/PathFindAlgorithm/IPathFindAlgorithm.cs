@@ -1,10 +1,12 @@
-﻿using GraphLibrary.Collection;
+﻿using GraphLibrary.AlgorithmArgs;
+using GraphLibrary.Collection;
 using GraphLibrary.Vertex;
 using System;
+using System.Collections.Generic;
 
 namespace GraphLibrary.Algorithm
 {
-    public delegate void AlgorithmEventHanlder();
+    public delegate void AlgorithmEventHanlder(object sender, AlgorithmEventArgs e);
 
     /// <summary>
     /// A base interface of path find algorithms
@@ -16,6 +18,6 @@ namespace GraphLibrary.Algorithm
         event AlgorithmEventHanlder OnAlgorithmFinished;
 
         Graph Graph { get; set; }
-        void FindDestionation();
+        IEnumerable<IVertex> FindDestionation();
     }
 }

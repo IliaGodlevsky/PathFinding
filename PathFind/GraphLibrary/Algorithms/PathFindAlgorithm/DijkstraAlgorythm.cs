@@ -1,11 +1,12 @@
 ﻿using GraphLibrary.Extensions;
 using GraphLibrary.Extensions.MatrixExtension;
 using GraphLibrary.Collection;
-using GraphLibrary.PauseMaker;
 using GraphLibrary.Vertex;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using GraphLibrary.Common.Extensions;
+using GraphLibrary.AlgorithmArgs;
 
 namespace GraphLibrary.Algorithm
 {
@@ -14,9 +15,12 @@ namespace GraphLibrary.Algorithm
     /// </summary>
     public class DijkstraAlgorithm : IPathFindAlgorithm
     {
+        public event AlgorithmEventHanlder OnAlgorithmStarted;
+        public event Action<IVertex> OnVertexVisited;
+        public event AlgorithmEventHanlder OnAlgorithmFinished;
+
         public Func<IVertex, IVertex, double> RelaxFunction { private get; set; }
         public Graph Graph { get; set; }
-        public IPauseProvider Pauser { get; set; }
 
         public DijkstraAlgorithm()
         {
@@ -24,9 +28,10 @@ namespace GraphLibrary.Algorithm
             RelaxFunction = (neighbour, vertex) => neighbour.Cost + vertex.AccumulatedCost;
         }
 
-        public void FindDestionation()
+        public IEnumerable<IVertex> FindDestionation()
         {
-            OnAlgorithmStarted?.Invoke();
+            OnAlgorithmStarted?.Invoke(this, 
+                new AlgorithmEventArgs(Graph));
             SetAccumulatedCostToInfinity();
             var currentVertex = Graph.Start;
             currentVertex.IsVisited = true;
@@ -40,7 +45,9 @@ namespace GraphLibrary.Algorithm
                 if (!currentVertex.IsVisited)                
                     OnVertexVisited?.Invoke(currentVertex);                
             } while (!IsDestination(currentVertex));
-            OnAlgorithmFinished?.Invoke();
+            OnAlgorithmFinished?.Invoke(this, 
+                new AlgorithmEventArgs(Graph));
+            return this.GetFoundPath();
         }
 
         private void SetAccumulatedCostToInfinity()
@@ -96,9 +103,5 @@ namespace GraphLibrary.Algorithm
         }
 
         private readonly List<IVertex> neigbourQueue;
-
-        public event AlgorithmEventHanlder OnAlgorithmStarted;
-        public event Action<IVertex> OnVertexVisited;
-        public event AlgorithmEventHanlder OnAlgorithmFinished;
     }
 }

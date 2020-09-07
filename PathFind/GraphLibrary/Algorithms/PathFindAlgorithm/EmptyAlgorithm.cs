@@ -1,6 +1,9 @@
-﻿using GraphLibrary.Collection;
+﻿using GraphLibrary.AlgorithmArgs;
+using GraphLibrary.Collection;
+using GraphLibrary.Common.Extensions;
 using GraphLibrary.Vertex;
 using System;
+using System.Collections.Generic;
 
 namespace GraphLibrary.Algorithm
 {
@@ -12,14 +15,15 @@ namespace GraphLibrary.Algorithm
         public event Action<IVertex> OnVertexVisited;
         public event AlgorithmEventHanlder OnAlgorithmFinished;
 
-        public void FindDestionation()
+        public IEnumerable<IVertex> FindDestionation()
         {
             Graph = null;
             OnAlgorithmStarted = null;
             OnVertexVisited = null;
-            OnAlgorithmStarted?.Invoke();
+            OnAlgorithmStarted?.Invoke(this, new AlgorithmEventArgs());
             OnVertexVisited?.Invoke(null);
-            OnAlgorithmFinished?.Invoke();            
+            OnAlgorithmFinished?.Invoke(this, new AlgorithmEventArgs());
+            return this.GetFoundPath();
         }
     }
 }

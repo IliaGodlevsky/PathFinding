@@ -4,6 +4,8 @@ using GraphLibrary.Collection;
 using GraphLibrary.AlgoSelector;
 using GraphLibrary.Common.Extensions;
 using System.Diagnostics;
+using System.Linq;
+using GraphLibrary.Extensions;
 
 namespace GraphLibrary.Model
 {
@@ -22,35 +24,37 @@ namespace GraphLibrary.Model
             timer = new Stopwatch();
         }
 
-        private void SubsribeAlgorithm()
-        {
-            pathAlgorithm.OnVertexVisited += (vertex) => { pathAlgorithm.VisitVertex(vertex); };
-            pathAlgorithm.OnAlgorithmStarted += () => { timer.Start(); };
-            pathAlgorithm.OnAlgorithmFinished += () =>
-            {
-                timer.Stop();
-                if (pathAlgorithm.HasFoundPathToEndVertex())
-                {
-                    pathAlgorithm.DrawPath();
-                    mainViewModel.Statistics = 
-                        timer.GetTimeInformation(LibraryResources.TimerInfoFormat) + " " +
-                        mainViewModel.Graph.GetFormattedStatistics(pathFindStatisticsFormat);
-                }
-            };
-        }
-
         public virtual void FindPath()
         {
             pathAlgorithm = AlgorithmSelector.GetPathFindAlgorithm(Algorithm, graph);
             PrepareAlgorithm();
-            SubsribeAlgorithm();
-            pathAlgorithm.FindDestionation();
+            var path = pathAlgorithm.FindDestionation();
+            mainViewModel.Statistics += string.Format(" " + pathFindStatisticsFormat,
+                path.Count(),
+                path.Sum(vertex => vertex.Cost),
+                graph.NumberOfVisitedVertices);
             mainViewModel.Graph.RemoveExtremeVertices();
         }
 
         protected IPathFindAlgorithm pathAlgorithm;
 
-        protected abstract void PrepareAlgorithm();
+        protected virtual void PrepareAlgorithm()
+        {
+            pathAlgorithm.OnVertexVisited += (vertex) =>
+            {
+                vertex.IsVisited = true;
+                if (vertex.IsSimpleVertex())
+                    vertex.MarkAsVisited();
+            };
+            pathAlgorithm.OnAlgorithmStarted += (sender, eventArgs) => { timer.Start(); };
+            pathAlgorithm.OnAlgorithmFinished += (sender, eventArgs) =>
+            {
+                timer.Stop();
+                mainViewModel.Statistics = timer.GetTimeInformation(LibraryResources.TimerInfoFormat);
+                pathAlgorithm.DrawPath();
+
+            };
+        }
 
         private readonly Stopwatch timer;
         protected Graph graph;

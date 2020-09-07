@@ -40,11 +40,12 @@ namespace WpfVersion.ViewModel
             var pauser = new PauseProvider(DelayTime) { PauseEvent = () => System.Windows.Forms.Application.DoEvents() };
             pathAlgorithm.OnVertexVisited += (vertex) => pauser.Pause();
 
-            pathAlgorithm.OnAlgorithmFinished += () =>
+            pathAlgorithm.OnAlgorithmFinished += (sender, eventArgs) =>
             {
-                if (!pathAlgorithm.HasFoundPathToEndVertex())
+                if (!eventArgs.HasFoundPath)
                     MessageBox.Show(badResultMessage);
             };
+            base.PrepareAlgorithm();
         }
     }
 }
