@@ -30,7 +30,7 @@ namespace GraphLibrary.Model
             PrepareAlgorithm();
             var path = pathAlgorithm.FindPath();
             mainViewModel.Statistics += 
-                string.Format(" " + pathFindStatisticsFormat,
+                string.Format("   " + pathFindStatisticsFormat,
                 path.Count(),
                 path.Sum(vertex => vertex.Cost),
                 graph.NumberOfVisitedVertices);
@@ -59,7 +59,6 @@ namespace GraphLibrary.Model
                 mainViewModel.Statistics = timer.
                 GetTimeInformation(LibraryResources.TimerInfoFormat);
                 pathAlgorithm.DrawPath();
-
             };
         }
 
