@@ -12,9 +12,9 @@ namespace GraphLibrary.PathFindAlgorithm
 {
     public class DeepPathFindAlgorithm : IPathFindingAlgorithm
     {
-        public event AlgorithmEventHanlder OnAlgorithmStarted;
+        public event AlgorithmEventHanlder OnStarted;
         public event Action<IVertex> OnVertexVisited;
-        public event AlgorithmEventHanlder OnAlgorithmFinished;
+        public event AlgorithmEventHanlder OnFinished;
 
         public Graph Graph { get; set; }
 
@@ -25,7 +25,7 @@ namespace GraphLibrary.PathFindAlgorithm
 
         public IEnumerable<IVertex> FindPath()
         {
-            OnAlgorithmStarted?.Invoke(this, 
+            OnStarted?.Invoke(this, 
                 new AlgorithmEventArgs(Graph));
             var currentVertex = Graph.Start;
             while (!IsDestination(currentVertex))
@@ -41,7 +41,7 @@ namespace GraphLibrary.PathFindAlgorithm
                 else
                     currentVertex = visitedVerticesStack.Pop();
             }
-            OnAlgorithmFinished?.Invoke(this, 
+            OnFinished?.Invoke(this, 
                 new AlgorithmEventArgs(Graph));
             return this.GetFoundPath();
         }

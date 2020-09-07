@@ -15,9 +15,9 @@ namespace GraphLibrary.Algorithm
     /// </summary>
     public class DijkstraAlgorithm : IPathFindingAlgorithm
     {
-        public event AlgorithmEventHanlder OnAlgorithmStarted;
+        public event AlgorithmEventHanlder OnStarted;
         public event Action<IVertex> OnVertexVisited;
-        public event AlgorithmEventHanlder OnAlgorithmFinished;
+        public event AlgorithmEventHanlder OnFinished;
 
         public Func<IVertex, IVertex, double> RelaxFunction { private get; set; }
         public Graph Graph { get; set; }
@@ -31,7 +31,7 @@ namespace GraphLibrary.Algorithm
 
         public IEnumerable<IVertex> FindPath()
         {
-            OnAlgorithmStarted?.Invoke(this, 
+            OnStarted?.Invoke(this, 
                 new AlgorithmEventArgs(Graph));
             SetAccumulatedCostToInfinity();
             var currentVertex = Graph.Start;
@@ -46,7 +46,7 @@ namespace GraphLibrary.Algorithm
                 if (!currentVertex.IsVisited)                
                     OnVertexVisited?.Invoke(currentVertex);                
             } while (!IsDestination(currentVertex));
-            OnAlgorithmFinished?.Invoke(this, 
+            OnFinished?.Invoke(this, 
                 new AlgorithmEventArgs(Graph));
             return this.GetFoundPath();
         }

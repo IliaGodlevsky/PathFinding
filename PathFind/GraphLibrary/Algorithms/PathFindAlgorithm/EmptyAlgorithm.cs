@@ -11,18 +11,18 @@ namespace GraphLibrary.Algorithm
     {
         public Graph Graph { get; set; }
 
-        public event AlgorithmEventHanlder OnAlgorithmStarted;
+        public event AlgorithmEventHanlder OnStarted;
         public event Action<IVertex> OnVertexVisited;
-        public event AlgorithmEventHanlder OnAlgorithmFinished;
+        public event AlgorithmEventHanlder OnFinished;
 
         public IEnumerable<IVertex> FindPath()
         {
             Graph = null;
-            OnAlgorithmStarted = null;
+            OnStarted = null;
             OnVertexVisited = null;
-            OnAlgorithmStarted?.Invoke(this, new AlgorithmEventArgs());
+            OnStarted?.Invoke(this, new AlgorithmEventArgs());
             OnVertexVisited?.Invoke(null);
-            OnAlgorithmFinished?.Invoke(this, new AlgorithmEventArgs());
+            OnFinished?.Invoke(this, new AlgorithmEventArgs());
             return this.GetFoundPath();
         }
     }

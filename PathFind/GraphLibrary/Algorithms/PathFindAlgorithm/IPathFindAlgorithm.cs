@@ -13,9 +13,9 @@ namespace GraphLibrary.Algorithm
     /// </summary>
     public interface IPathFindingAlgorithm
     {
-        event AlgorithmEventHanlder OnAlgorithmStarted;
+        event AlgorithmEventHanlder OnStarted;
         event Action<IVertex> OnVertexVisited;
-        event AlgorithmEventHanlder OnAlgorithmFinished;
+        event AlgorithmEventHanlder OnFinished;
 
         Graph Graph { get; set; }
         /// <summary>

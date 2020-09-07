@@ -17,9 +17,9 @@ namespace GraphLibrary.Algorithm
     /// </summary>
     public class LiAlgorithm : IPathFindingAlgorithm
     {
-        public event AlgorithmEventHanlder OnAlgorithmStarted;
+        public event AlgorithmEventHanlder OnStarted;
         public event Action<IVertex> OnVertexVisited;
-        public event AlgorithmEventHanlder OnAlgorithmFinished;
+        public event AlgorithmEventHanlder OnFinished;
 
         public Graph Graph { get; set; }
 
@@ -30,7 +30,7 @@ namespace GraphLibrary.Algorithm
 
         public IEnumerable<IVertex> FindPath()
         {
-            OnAlgorithmStarted?.Invoke(this, 
+            OnStarted?.Invoke(this, 
                 new AlgorithmEventArgs(Graph));
             var currentVertex = Graph.Start;
             ProcessVertex(currentVertex);
@@ -40,7 +40,7 @@ namespace GraphLibrary.Algorithm
                 if (!currentVertex.IsVisited)
                     ProcessVertex(currentVertex);
             }
-            OnAlgorithmFinished?.Invoke(this, 
+            OnFinished?.Invoke(this, 
                 new AlgorithmEventArgs(Graph));
             return this.GetFoundPath();
         }

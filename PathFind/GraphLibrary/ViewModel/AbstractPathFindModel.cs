@@ -50,10 +50,10 @@ namespace GraphLibrary.Model
                     vertex.MarkAsVisited();
             };
 
-            pathAlgorithm.OnAlgorithmStarted += 
+            pathAlgorithm.OnStarted += 
                 (sender, eventArgs) => { timer.Start(); };
 
-            pathAlgorithm.OnAlgorithmFinished += (sender, eventArgs) =>
+            pathAlgorithm.OnFinished += (sender, eventArgs) =>
             {
                 timer.Stop();
                 mainViewModel.Statistics = timer.

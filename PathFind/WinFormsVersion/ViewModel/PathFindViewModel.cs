@@ -21,7 +21,7 @@ namespace WinFormsVersion.ViewModel
             var pauser = new PauseProvider(DelayTime) { PauseEvent = () => Application.DoEvents() };
             pathAlgorithm.OnVertexVisited += (vertex) => pauser.Pause();
 
-            pathAlgorithm.OnAlgorithmFinished += (sender, eventArgs) =>
+            pathAlgorithm.OnFinished += (sender, eventArgs) =>
             {
                 if (!eventArgs.HasFoundPath)
                     MessageBox.Show(badResultMessage);

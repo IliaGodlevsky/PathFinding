@@ -42,7 +42,7 @@ namespace ConsoleVersion.ViewModel
                 Range.DelayValueRange.LowerRange);
             var pauser = new PauseProvider(DelayTime) { PauseEvent = () => { } };
             pathAlgorithm.OnVertexVisited += (vertex) => pauser.Pause();
-            pathAlgorithm.OnAlgorithmFinished += (sender, eventArgs) =>
+            pathAlgorithm.OnFinished += (sender, eventArgs) =>
               {
                   if (!eventArgs.HasFoundPath)
                   {
