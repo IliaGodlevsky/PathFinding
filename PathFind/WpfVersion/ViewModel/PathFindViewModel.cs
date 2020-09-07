@@ -1,5 +1,4 @@
 ﻿using GraphLibrary.AlgorithmEnum;
-using GraphLibrary.Common.Extensions;
 using GraphLibrary.Model;
 using GraphLibrary.PauseMaker;
 using System;
@@ -36,16 +35,19 @@ namespace WpfVersion.ViewModel
 
         protected override void PrepareAlgorithm()
         {
+            base.PrepareAlgorithm();
             (mainViewModel as MainWindowViewModel).Window.Close();
-            var pauser = new PauseProvider(DelayTime) { PauseEvent = () => System.Windows.Forms.Application.DoEvents() };
-            pathAlgorithm.OnVertexVisited += (vertex) => pauser.Pause();
+            var pauser = new PauseProvider(DelayTime) { PauseEvent = () 
+                => System.Windows.Forms.Application.DoEvents() };
 
+            pathAlgorithm.OnVertexVisited += (vertex) => pauser.Pause();
+            
             pathAlgorithm.OnFinished += (sender, eventArgs) =>
             {
                 if (!eventArgs.HasFoundPath)
                     MessageBox.Show(badResultMessage);
             };
-            base.PrepareAlgorithm();
+
         }
     }
 }
