@@ -70,6 +70,15 @@ namespace ConsoleVersion {
         }
         
         /// <summary>
+        ///   Ищет локализованную строку, похожую на Enter delay time: .
+        /// </summary>
+        internal static string DelayTimeMsg {
+            get {
+                return ResourceManager.GetString("DelayTimeMsg", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Ищет локализованную строку, похожую на Destination point: .
         /// </summary>
         internal static string DestinationPoint {

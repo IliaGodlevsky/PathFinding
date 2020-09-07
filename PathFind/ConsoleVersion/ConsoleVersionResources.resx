@@ -120,6 +120,9 @@
   <data name="ChooseAlrorithm" xml:space="preserve">
     <value>Choose algorithm: </value>
   </data>
+  <data name="DelayTimeMsg" xml:space="preserve">
+    <value>Enter delay time: </value>
+  </data>
   <data name="DestinationPoint" xml:space="preserve">
     <value>Destination point: </value>
   </data>

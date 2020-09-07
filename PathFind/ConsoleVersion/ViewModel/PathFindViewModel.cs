@@ -37,7 +37,7 @@ namespace ConsoleVersion.ViewModel
 
         protected override void PrepareAlgorithm()
         {
-            DelayTime = Input.InputNumber("Enter delay time: ", 
+            DelayTime = Input.InputNumber(ConsoleVersionResources.DelayTimeMsg, 
                 Range.DelayValueRange.UpperRange, 
                 Range.DelayValueRange.LowerRange);
             var pauser = new PauseProvider(DelayTime) { PauseEvent = () => { } };
