@@ -39,7 +39,7 @@ namespace GraphLibrary.Algorithm
             {
                 ExtractNeighbours(currentVertex);
                 SpreadRelaxWave(currentVertex);
-                currentVertex = ChippestUnvisitedVertex;
+                currentVertex = GetChippestUnvisitedVertex();
                 if (!IsValidVertex(currentVertex))
                     break;
                 if (!currentVertex.IsVisited)                
@@ -79,15 +79,11 @@ namespace GraphLibrary.Algorithm
             neigbourQueue.AddRange(vertex.GetUnvisitedNeighbours());
         }
 
-        private IVertex ChippestUnvisitedVertex
+        private IVertex GetChippestUnvisitedVertex()
         {
-            get
-            {
-                neigbourQueue.RemoveAll(vertex => vertex.IsVisited);
-                neigbourQueue.Sort((vertex1, vertex2) =>
-                    vertex1.AccumulatedCost.CompareTo(vertex2.AccumulatedCost));
-                return neigbourQueue.FirstOrDefault();
-            }
+            neigbourQueue.RemoveAll(vertex => vertex.IsVisited);
+            neigbourQueue.Sort((vertex1, vertex2) => vertex1.AccumulatedCost.CompareTo(vertex2.AccumulatedCost));
+            return neigbourQueue.FirstOrDefault();
         }
 
         private bool IsValidVertex(IVertex vertex)
