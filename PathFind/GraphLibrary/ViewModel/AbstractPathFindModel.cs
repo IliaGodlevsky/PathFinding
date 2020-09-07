@@ -20,7 +20,7 @@ namespace GraphLibrary.Model
             graph = mainViewModel.Graph;
             pathFindStatisticsFormat = LibraryResources.StatisticsFormat;
             badResultMessage = LibraryResources.BadResultMsg;
-            DelayTime = 9;
+            DelayTime = 4;
             timer = new Stopwatch();
         }
 
