@@ -9,7 +9,7 @@ namespace GraphLibrary.Algorithm
     public delegate void AlgorithmEventHanlder(object sender, AlgorithmEventArgs e);
 
     /// <summary>
-    /// A base interface of path find algorithms
+    /// A base interface of path finding algorithms
     /// </summary>
     public interface IPathFindingAlgorithm
     {
