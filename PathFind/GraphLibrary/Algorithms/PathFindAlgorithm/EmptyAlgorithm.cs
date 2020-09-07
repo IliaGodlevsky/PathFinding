@@ -15,7 +15,7 @@ namespace GraphLibrary.Algorithm
         public event Action<IVertex> OnVertexVisited;
         public event AlgorithmEventHanlder OnAlgorithmFinished;
 
-        public IEnumerable<IVertex> FindDestionation()
+        public IEnumerable<IVertex> FindPath()
         {
             Graph = null;
             OnAlgorithmStarted = null;

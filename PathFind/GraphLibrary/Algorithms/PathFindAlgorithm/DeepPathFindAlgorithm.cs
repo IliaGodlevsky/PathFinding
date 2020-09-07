@@ -23,7 +23,7 @@ namespace GraphLibrary.PathFindAlgorithm
             visitedVerticesStack = new Stack<IVertex>();
         }
 
-        public IEnumerable<IVertex> FindDestionation()
+        public IEnumerable<IVertex> FindPath()
         {
             OnAlgorithmStarted?.Invoke(this, 
                 new AlgorithmEventArgs(Graph));

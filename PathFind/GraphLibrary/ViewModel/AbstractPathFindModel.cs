@@ -28,7 +28,7 @@ namespace GraphLibrary.Model
             pathAlgorithm = AlgorithmSelector.
                 GetPathFindAlgorithm(Algorithm, graph);
             PrepareAlgorithm();
-            var path = pathAlgorithm.FindDestionation();
+            var path = pathAlgorithm.FindPath();
             mainViewModel.Statistics += 
                 string.Format(" " + pathFindStatisticsFormat,
                 path.Count(),

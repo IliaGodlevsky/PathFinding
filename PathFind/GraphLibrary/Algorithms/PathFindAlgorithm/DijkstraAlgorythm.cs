@@ -28,7 +28,7 @@ namespace GraphLibrary.Algorithm
             RelaxFunction = (neighbour, vertex) => neighbour.Cost + vertex.AccumulatedCost;
         }
 
-        public IEnumerable<IVertex> FindDestionation()
+        public IEnumerable<IVertex> FindPath()
         {
             OnAlgorithmStarted?.Invoke(this, 
                 new AlgorithmEventArgs(Graph));

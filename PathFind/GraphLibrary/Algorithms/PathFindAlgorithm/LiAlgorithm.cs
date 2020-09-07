@@ -28,7 +28,7 @@ namespace GraphLibrary.Algorithm
             neighbourQueue = new Queue<IVertex>();
         }
 
-        public IEnumerable<IVertex> FindDestionation()
+        public IEnumerable<IVertex> FindPath()
         {
             OnAlgorithmStarted?.Invoke(this, 
                 new AlgorithmEventArgs(Graph));

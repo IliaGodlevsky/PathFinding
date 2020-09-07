@@ -22,6 +22,6 @@ namespace GraphLibrary.Algorithm
         /// 
         /// </summary>
         /// <returns> collection of path vertices </returns>
-        IEnumerable<IVertex> FindDestionation();
+        IEnumerable<IVertex> FindPath();
     }
 }
