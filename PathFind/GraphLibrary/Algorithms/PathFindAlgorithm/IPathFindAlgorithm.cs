@@ -18,6 +18,10 @@ namespace GraphLibrary.Algorithm
         event AlgorithmEventHanlder OnAlgorithmFinished;
 
         Graph Graph { get; set; }
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns> collection of path vertices </returns>
         IEnumerable<IVertex> FindDestionation();
     }
 }
