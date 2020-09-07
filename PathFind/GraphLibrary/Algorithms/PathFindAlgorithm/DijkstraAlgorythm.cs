@@ -11,7 +11,7 @@ using GraphLibrary.AlgorithmArgs;
 namespace GraphLibrary.Algorithm
 {
     /// <summary>
-    /// Finds the chippest path to destination top. 
+    /// Finds the chippest path to destination vertex. 
     /// </summary>
     public class DijkstraAlgorithm : IPathFindingAlgorithm
     {
@@ -25,7 +25,8 @@ namespace GraphLibrary.Algorithm
         public DijkstraAlgorithm()
         {
             neigbourQueue = new List<IVertex>();
-            RelaxFunction = (neighbour, vertex) => neighbour.Cost + vertex.AccumulatedCost;
+            RelaxFunction = (neighbour, vertex) 
+                => neighbour.Cost + vertex.AccumulatedCost;
         }
 
         public IEnumerable<IVertex> FindPath()
@@ -82,7 +83,8 @@ namespace GraphLibrary.Algorithm
         private IVertex GetChippestUnvisitedVertex()
         {
             neigbourQueue.RemoveAll(vertex => vertex.IsVisited);
-            neigbourQueue.Sort((vertex1, vertex2) => vertex1.AccumulatedCost.CompareTo(vertex2.AccumulatedCost));
+            neigbourQueue.Sort((vertex1, vertex2) 
+                => vertex1.AccumulatedCost.CompareTo(vertex2.AccumulatedCost));
             return neigbourQueue.FirstOrDefault();
         }
 
