@@ -77,6 +77,6 @@ namespace GraphLibrary.Algorithm
             return vertex.IsEnd || !neighbourQueue.Any();
         }
 
-        protected Queue<IVertex> neighbourQueue;
+        private readonly Queue<IVertex> neighbourQueue;
     }
 }
