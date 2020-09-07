@@ -7,7 +7,7 @@ using GraphLibrary.Vertex;
 namespace GraphLibrary.Algorithm
 {
     /// <summary>
-    /// Greedy algorithm. Each step looks for the chippest top and visit it
+    /// Greedy algorithm. Each step looks for the chippest vertex and visits it
     /// </summary>
     public class GreedyAlgorithm : DeepPathFindAlgorithm
     {
@@ -20,7 +20,8 @@ namespace GraphLibrary.Algorithm
         protected override IVertex GoNextVertex(IVertex vertex)
         {
             var neighbours = vertex.GetUnvisitedNeighbours().ToList();
-            return neighbours?.Find(vert => GreedyFunction(vert) == neighbours.Min(GreedyFunction));
+            return neighbours?.Find(vert 
+                => GreedyFunction(vert) == neighbours.Min(GreedyFunction));
         }
     }
 }
