@@ -9,7 +9,7 @@ namespace GraphLibrary.Common.Extensions
 {
     public static class IPathFindAlgorithmExtension
     {
-        public static void DrawPath(this IPathFindAlgorithm algo)
+        public static void DrawPath(this IPathFindingAlgorithm algo)
         {
             var path = algo.GetFoundPath()?.ToList();
             if (path != null)
@@ -21,7 +21,7 @@ namespace GraphLibrary.Common.Extensions
                 });
         }
 
-        public static IEnumerable<IVertex> GetFoundPath(this IPathFindAlgorithm algorithm)
+        public static IEnumerable<IVertex> GetFoundPath(this IPathFindingAlgorithm algorithm)
         {
             var vert = algorithm.Graph?.End;
             while (vert?.ParentVertex != null)

@@ -10,7 +10,7 @@ using GraphLibrary.AlgorithmArgs;
 
 namespace GraphLibrary.PathFindAlgorithm
 {
-    public class DeepPathFindAlgorithm : IPathFindAlgorithm
+    public class DeepPathFindAlgorithm : IPathFindingAlgorithm
     {
         public event AlgorithmEventHanlder OnAlgorithmStarted;
         public event Action<IVertex> OnVertexVisited;

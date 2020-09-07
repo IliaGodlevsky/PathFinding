@@ -13,7 +13,7 @@ namespace GraphLibrary.Algorithm
     /// <summary>
     /// Finds the chippest path to destination top. 
     /// </summary>
-    public class DijkstraAlgorithm : IPathFindAlgorithm
+    public class DijkstraAlgorithm : IPathFindingAlgorithm
     {
         public event AlgorithmEventHanlder OnAlgorithmStarted;
         public event Action<IVertex> OnVertexVisited;

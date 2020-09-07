@@ -11,7 +11,7 @@ namespace GraphLibrary.Algorithm
     /// <summary>
     /// A base interface of path find algorithms
     /// </summary>
-    public interface IPathFindAlgorithm
+    public interface IPathFindingAlgorithm
     {
         event AlgorithmEventHanlder OnAlgorithmStarted;
         event Action<IVertex> OnVertexVisited;

@@ -7,7 +7,7 @@ using System.Collections.Generic;
 
 namespace GraphLibrary.Algorithm
 {
-    public class EmptyAlgorithm : IPathFindAlgorithm
+    public class EmptyAlgorithm : IPathFindingAlgorithm
     {
         public Graph Graph { get; set; }
 

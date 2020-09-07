@@ -21,7 +21,7 @@ namespace GraphLibrary.AlgoSelector
             return vertex.Cost + Distance.GetEuclideanDistance(vertex, destination);
         }
 
-        public static IPathFindAlgorithm GetPathFindAlgorithm(Algorithms algorithms, Graph graph)
+        public static IPathFindingAlgorithm GetPathFindAlgorithm(Algorithms algorithms, Graph graph)
         {
             switch (algorithms)
             {

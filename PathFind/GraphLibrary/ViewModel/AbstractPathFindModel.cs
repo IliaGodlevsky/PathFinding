@@ -37,7 +37,7 @@ namespace GraphLibrary.Model
             mainViewModel.Graph.RemoveExtremeVertices();
         }
 
-        protected IPathFindAlgorithm pathAlgorithm;
+        protected IPathFindingAlgorithm pathAlgorithm;
 
         protected virtual void PrepareAlgorithm()
         {

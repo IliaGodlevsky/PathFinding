@@ -15,7 +15,7 @@ namespace GraphLibrary.Algorithm
     /// Uses queue to move next graph top. Finds the shortest path to
     /// the destination top
     /// </summary>
-    public class LiAlgorithm : IPathFindAlgorithm
+    public class LiAlgorithm : IPathFindingAlgorithm
     {
         public event AlgorithmEventHanlder OnAlgorithmStarted;
         public event Action<IVertex> OnVertexVisited;
