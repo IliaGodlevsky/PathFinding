@@ -83,7 +83,7 @@ namespace GraphLibrary.PathFindingAlgorithm
             neigbourQueue.RemoveAll(vertex => vertex.IsVisited);
             neigbourQueue.Sort((vertex1, vertex2)
                 => vertex1.AccumulatedCost.CompareTo(vertex2.AccumulatedCost));
-            return neigbourQueue.FirstOrDefaultSecure();
+            return neigbourQueue.FirstSecure();
         }
 
         private bool IsValidVertex(IVertex vertex)

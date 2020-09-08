@@ -8,7 +8,6 @@ using GraphLibrary.Extensions.CollectionExtensions;
 using GraphLibrary.Graphs.Interface;
 using GraphLibrary.PathFindingAlgorithm.Interface;
 using GraphLibrary.Vertex.Interface;
-using GraphLibrary.Vertex;
 
 namespace GraphLibrary.PathFindingAlgorithm
 {
@@ -28,7 +27,8 @@ namespace GraphLibrary.PathFindingAlgorithm
 
         public IEnumerable<IVertex> FindPath()
         {
-            OnStarted?.Invoke(this, new AlgorithmEventArgs(Graph));
+            OnStarted?.Invoke(this, 
+                new AlgorithmEventArgs(Graph));
             var currentVertex = Graph.Start;
             while (!currentVertex.IsEnd)
             {
@@ -43,15 +43,14 @@ namespace GraphLibrary.PathFindingAlgorithm
                 else
                     currentVertex = visitedVerticesStack.PopSecure();
             }
-            OnFinished?.Invoke(this, new AlgorithmEventArgs(Graph));
+            OnFinished?.Invoke(this, 
+                new AlgorithmEventArgs(Graph));
             return this.GetFoundPath();
         }
 
         protected virtual IVertex GoNextVertex(IVertex vertex)
         {
-            if (vertex.GetUnvisitedNeighbours().Any())
-                return vertex.GetUnvisitedNeighbours().Shuffle().FirstOrDefault();
-            return NullVertex.GetInstance();
+            return vertex.GetUnvisitedNeighbours().ToList().FirstSecure();
         }
 
         private readonly Stack<IVertex> visitedVerticesStack;

@@ -11,7 +11,7 @@ namespace GraphLibrary.Extensions
     {
         public static void DrawPath(this IPathFindingAlgorithm algo)
         {
-            var path = algo.GetFoundPath()?.ToList();
+            var path = algo.GetFoundPath().ToList();
             if (path != null)
                 path.Apply(vertex =>
                 {
@@ -23,12 +23,13 @@ namespace GraphLibrary.Extensions
 
         public static IEnumerable<IVertex> GetFoundPath(this IPathFindingAlgorithm algorithm)
         {
-            var vert = algorithm.Graph.End;
-            while (vert.ParentVertex != NullVertex.GetInstance())
+            var vertex = algorithm.Graph.End;
+            while (algorithm.Graph.Start != vertex
+                && vertex != NullVertex.GetInstance())
             {
-                vert = vert.ParentVertex;
-                if (vert.IsSimpleVertex())
-                    yield return vert;
+                vertex = vertex.ParentVertex;
+                if (vertex.IsSimpleVertex())
+                    yield return vertex;                
             }
         }
     }

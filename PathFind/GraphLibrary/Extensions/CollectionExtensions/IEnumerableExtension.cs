@@ -18,7 +18,7 @@ namespace GraphLibrary.Extensions.CollectionExtensions
         /// </summary>
         /// <param name="collection"></param>
         /// <returns> if collection is empty returns NullVertex</returns>
-        public static IVertex FirstOrDefaultSecure(this IEnumerable<IVertex> collection)
+        public static IVertex FirstSecure(this IEnumerable<IVertex> collection)
         {
             if (!collection.Any())
                 return NullVertex.GetInstance();
