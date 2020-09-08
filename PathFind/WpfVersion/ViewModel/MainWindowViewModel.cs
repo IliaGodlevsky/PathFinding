@@ -11,6 +11,7 @@ using WpfVersion.Model.GraphSaver;
 using WpfVersion.Resources;
 using WpfVersion.View.Windows;
 using WpfVersion.Model.EventHolder;
+using GraphLibrary.Model.Vertex;
 
 namespace WpfVersion.ViewModel
 {
@@ -69,8 +70,9 @@ namespace WpfVersion.ViewModel
             VertexEventHolder = new WpfVertexEventHolder();
             graphFieldFiller = new WpfGraphFieldFiller();
 
-            StartPathFindCommand = new RelayCommand(ExecuteStartPathFindCommand, 
-                obj => Graph?.End != null && Graph?.Start != null);
+            StartPathFindCommand = new RelayCommand(
+                ExecuteStartPathFindCommand,
+               CanExecuteStartFindPathCommand);
             CreateNewGraphCommand = new RelayCommand(ExecuteCreateNewGraphCommand, obj => true);
             ClearGraphCommand = new RelayCommand(ExecuteClearGraphCommand, obj=> Graph != null);
             SaveGraphCommand = new RelayCommand(ExecuteSaveGraphCommand, obj => Graph != null);
@@ -95,6 +97,12 @@ namespace WpfVersion.ViewModel
         private void ExecuteSaveGraphCommand(object param)
         {
             base.SaveGraph();
+        }
+
+        private bool CanExecuteStartFindPathCommand(object param)
+        {
+            return Graph?.End != NullVertex.GetInstance() 
+                && Graph?.Start != NullVertex.GetInstance() && Graph != null;
         }
 
         private void ExecuteLoadGraphCommand(object param)

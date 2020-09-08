@@ -3,13 +3,19 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
 using GraphLibrary.Extensions.MatrixExtension;
+using GraphLibrary.Model.Vertex;
 using GraphLibrary.Vertex;
 
 namespace GraphLibrary.Collection
 {
     public class Graph : IEnumerable<IVertex>
     {
-        public Graph(IVertex[,] vertices) => this.vertices = vertices;
+        public Graph(IVertex[,] vertices)
+        {
+            this.vertices = vertices;
+            End = NullVertex.GetInstance();
+            Start = NullVertex.GetInstance();
+        }
 
         private readonly IVertex[,] vertices;
 

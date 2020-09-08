@@ -1,6 +1,7 @@
 ﻿using GraphLibrary.Collection;
 using GraphLibrary.Extensions;
 using GraphLibrary.Extensions.MatrixExtension;
+using GraphLibrary.Model.Vertex;
 using GraphLibrary.Vertex;
 
 namespace GraphLibrary.Common.Extensions
@@ -28,8 +29,8 @@ namespace GraphLibrary.Common.Extensions
 
         public static void RemoveExtremeVertices(this Graph graph)
         {
-            graph.End = null;
-            graph.Start = null;
+            graph.End = NullVertex.GetInstance();
+            graph.Start = NullVertex.GetInstance();
         }
     }
 }

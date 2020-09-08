@@ -1,4 +1,6 @@
-﻿using System;
+﻿using GraphLibrary.Model.Vertex;
+using GraphLibrary.Vertex;
+using System;
 using System.Collections.Generic;
 
 namespace GraphLibrary.Common.Extensions.CollectionExtensions
@@ -11,6 +13,13 @@ namespace GraphLibrary.Common.Extensions.CollectionExtensions
             for (int x = 0; x < list.Count; x++)
                 foreach (var method in methods)
                     list[x] = method(list[x]);
+        }
+
+        public static IVertex FindSecure(this List<IVertex> list, Predicate<IVertex> match)
+        {
+            if (list.Find(match) == null)
+                return NullVertex.GetInstance();
+            return list.Find(match);
         }
     }
 }

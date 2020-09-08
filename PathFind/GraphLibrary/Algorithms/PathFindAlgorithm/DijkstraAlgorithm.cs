@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.Linq;
 using GraphLibrary.Common.Extensions;
 using GraphLibrary.AlgorithmArgs;
+using GraphLibrary.Model.Vertex;
 
 namespace GraphLibrary.Algorithm
 {
@@ -31,8 +32,7 @@ namespace GraphLibrary.Algorithm
 
         public IEnumerable<IVertex> FindPath()
         {
-            OnStarted?.Invoke(this, 
-                new AlgorithmEventArgs(Graph));
+            OnStarted?.Invoke(this, new AlgorithmEventArgs(Graph));
             SetAccumulatedCostToInfinity();
             var currentVertex = Graph.Start;
             currentVertex.IsVisited = true;
@@ -41,13 +41,9 @@ namespace GraphLibrary.Algorithm
                 ExtractNeighbours(currentVertex);
                 SpreadRelaxWave(currentVertex);
                 currentVertex = GetChippestUnvisitedVertex();
-                if (!IsValidVertex(currentVertex))
-                    break;
-                if (!currentVertex.IsVisited)                
-                    OnVertexVisited?.Invoke(currentVertex);                
-            } while (!IsDestination(currentVertex));
-            OnFinished?.Invoke(this, 
-                new AlgorithmEventArgs(Graph));
+                OnVertexVisited?.Invoke(currentVertex);
+            } while (!currentVertex.IsEnd);
+            OnFinished?.Invoke(this, new AlgorithmEventArgs(Graph));
             return this.GetFoundPath();
         }
 
@@ -85,19 +81,12 @@ namespace GraphLibrary.Algorithm
             neigbourQueue.RemoveAll(vertex => vertex.IsVisited);
             neigbourQueue.Sort((vertex1, vertex2) 
                 => vertex1.AccumulatedCost.CompareTo(vertex2.AccumulatedCost));
-            return neigbourQueue.FirstOrDefault();
+            return neigbourQueue.FirstOrDefaultSecure();
         }
 
         private bool IsValidVertex(IVertex vertex)
         {
-            if (vertex == null)
-                return false;
             return vertex.AccumulatedCost != double.PositiveInfinity;
-        }
-
-        private bool IsDestination(IVertex vertex)
-        {
-            return vertex.IsEnd || Graph.End == null;
         }
 
         private readonly List<IVertex> neigbourQueue;

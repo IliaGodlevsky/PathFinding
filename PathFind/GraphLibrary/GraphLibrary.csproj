@@ -44,7 +44,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Algorithms\AlgorithmEventArgs\AlgorithmEventArgs.cs" />
-    <Compile Include="Algorithms\PathFindAlgorithm\EmptyAlgorithm.cs" />
+    <Compile Include="Algorithms\PathFindAlgorithm\NullAlgorithm.cs" />
+    <Compile Include="Common\Extensions\CollectionExtensions\StackExtension.cs" />
     <Compile Include="Model\PauseMaker\IPauser.cs" />
     <Compile Include="Common\Constants\Range.cs" />
     <Compile Include="Common\Constants\ValueRange.cs" />
@@ -77,6 +78,7 @@
     <Compile Include="GraphSerialization\GraphLoader\IGraphLoader.cs" />
     <Compile Include="GraphSerialization\GraphSaver\AbstractGraphSaver.cs" />
     <Compile Include="GraphSerialization\GraphSaver\IGraphSaver.cs" />
+    <Compile Include="Model\Vertex\NullVertex.cs" />
     <Compile Include="ViewModel\AbstractCreateGraphModel.cs" />
     <Compile Include="ViewModel\AbstractMainModel.cs" />
     <Compile Include="ViewModel\AbstractPathFindModel.cs" />

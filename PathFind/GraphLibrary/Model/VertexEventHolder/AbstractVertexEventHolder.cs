@@ -3,6 +3,7 @@ using GraphLibrary.Extensions;
 using GraphLibrary.Collection;
 using GraphLibrary.Vertex;
 using System;
+using GraphLibrary.Model.Vertex;
 
 namespace GraphLibrary.VertexEventHolder
 {
@@ -79,10 +80,11 @@ namespace GraphLibrary.VertexEventHolder
 
         public virtual void ChooseExtremeVertices(object sender, EventArgs e)
         {
-            if (Graph.Start == null)
+            var nullVertex = NullVertex.GetInstance();
+            if (Graph.Start == nullVertex)
                 SetStartVertex(sender as IVertex);
-            else if (Graph.Start != null && Graph.End == null)
-                SetDestinationVertex(sender as IVertex);            
+            else if (Graph.Start != nullVertex && Graph.End == nullVertex)
+                SetDestinationVertex(sender as IVertex);
         }
     }
 }

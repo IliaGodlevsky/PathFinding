@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Linq;
+using GraphLibrary.Common.Extensions.CollectionExtensions;
 using GraphLibrary.Extensions;
 using GraphLibrary.PathFindAlgorithm;
 using GraphLibrary.Vertex;
@@ -20,8 +21,7 @@ namespace GraphLibrary.Algorithm
         protected override IVertex GoNextVertex(IVertex vertex)
         {
             var neighbours = vertex.GetUnvisitedNeighbours().ToList();
-            return neighbours?.Find(vert 
-                => GreedyFunction(vert) == neighbours.Min(GreedyFunction));
+            return neighbours.FindSecure(vert => GreedyFunction(vert) == neighbours.Min(GreedyFunction));
         }
     }
 }

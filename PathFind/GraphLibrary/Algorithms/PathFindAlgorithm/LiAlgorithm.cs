@@ -34,9 +34,9 @@ namespace GraphLibrary.Algorithm
                 new AlgorithmEventArgs(Graph));
             var currentVertex = Graph.Start;
             ProcessVertex(currentVertex);
-            while (!IsDestination(currentVertex))
+            while (!currentVertex.IsEnd)
             {
-                currentVertex = neighbourQueue.Dequeue();
+                currentVertex = neighbourQueue.DequeueSecure();
                 if (!currentVertex.IsVisited)
                     ProcessVertex(currentVertex);
             }

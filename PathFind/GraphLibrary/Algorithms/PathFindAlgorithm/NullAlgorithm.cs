@@ -1,13 +1,14 @@
 ﻿using GraphLibrary.AlgorithmArgs;
 using GraphLibrary.Collection;
 using GraphLibrary.Common.Extensions;
+using GraphLibrary.Model.Vertex;
 using GraphLibrary.Vertex;
 using System;
 using System.Collections.Generic;
 
 namespace GraphLibrary.Algorithm
 {
-    public class EmptyAlgorithm : IPathFindingAlgorithm
+    public class NullAlgorithm : IPathFindingAlgorithm
     {
         public Graph Graph { get; set; }
 
@@ -22,7 +23,7 @@ namespace GraphLibrary.Algorithm
             OnVertexVisited = null;
             OnStarted?.Invoke(this, 
                 new AlgorithmEventArgs());
-            OnVertexVisited?.Invoke(null);
+            OnVertexVisited?.Invoke(NullVertex.GetInstance());
             OnFinished?.Invoke(this, 
                 new AlgorithmEventArgs());
             return this.GetFoundPath();

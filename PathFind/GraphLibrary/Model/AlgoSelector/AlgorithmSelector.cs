@@ -55,7 +55,7 @@ namespace GraphLibrary.AlgoSelector
                     GreedyFunction = vertex => ValueDistanceGreedyFunction(vertex, graph.End)
                 };
 
-                default: return new EmptyAlgorithm() { Graph = graph };
+                default: return new NullAlgorithm() { Graph = graph };
             }
         }
     }

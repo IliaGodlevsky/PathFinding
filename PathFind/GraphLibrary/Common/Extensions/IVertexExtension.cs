@@ -1,4 +1,5 @@
-﻿using GraphLibrary.Vertex;
+﻿using GraphLibrary.Model.Vertex;
+using GraphLibrary.Vertex;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -23,7 +24,7 @@ namespace GraphLibrary.Extensions
             vertex.IsVisited = false;
             vertex.AccumulatedCost = 0;
             vertex.MarkAsSimpleVertex();
-            vertex.ParentVertex = null;
+            vertex.ParentVertex = NullVertex.GetInstance();
         }
 
         public static void Initialize(this IVertex vertex)
