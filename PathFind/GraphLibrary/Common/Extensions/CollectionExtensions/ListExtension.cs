@@ -15,6 +15,12 @@ namespace GraphLibrary.Common.Extensions.CollectionExtensions
                     list[x] = method(list[x]);
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="list"></param>
+        /// <param name="match"></param>
+        /// <returns>if no match returns NullVertex</returns>
         public static IVertex FindSecure(this List<IVertex> list, Predicate<IVertex> match)
         {
             if (list.Find(match) == null)

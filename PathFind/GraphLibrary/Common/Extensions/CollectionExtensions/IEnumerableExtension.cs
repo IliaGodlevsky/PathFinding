@@ -13,6 +13,11 @@ namespace GraphLibrary.Common.Extensions
             return collection.OrderBy(item => Guid.NewGuid());
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="collection"></param>
+        /// <returns> if collection is empty returns NullVertex</returns>
         public static IVertex FirstOrDefaultSecure(this IEnumerable<IVertex> collection)
         {
             if (!collection.Any())

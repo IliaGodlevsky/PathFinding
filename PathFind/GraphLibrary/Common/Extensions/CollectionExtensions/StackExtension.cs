@@ -7,7 +7,11 @@ namespace GraphLibrary.Common.Extensions.CollectionExtensions
 {
     public static class StackExtension
     {
-
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="stack"></param>
+        /// <returns>if stack is empty returns NullVertex</returns>
         public static IVertex PopSecure(this Stack<IVertex> stack)
         {
             if (!stack.Any())

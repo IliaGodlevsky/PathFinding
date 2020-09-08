@@ -14,6 +14,11 @@ namespace GraphLibrary.Common.Extensions
                 queue.Enqueue(item);           
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="queue"></param>
+        /// <returns>if queue is empty returns NullVertex</returns>
         public static IVertex DequeueSecure(this Queue<IVertex> queue)
         {
             if(!queue.Any())
