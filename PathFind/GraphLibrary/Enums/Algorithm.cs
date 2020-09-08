@@ -6,17 +6,17 @@ namespace GraphLibrary.Enums
     {
         [Description("Li algorithm")]
         LiAlgorithm = 1,
-        [Description("Deep path find algorithm")]
-        DeepPathFind,
         [Description("Dijkstra algorithm")]
         DijkstraAlgorithm,
         [Description("A* algorithm")]
         AStarAlgorithm,
-        [Description("Distance greedy algorithm")]
+        [Description("Greedy algorithm (distance)")]
         DistanceGreedyAlgorithm,
-        [Description("Value greedy algorithm")]
+        [Description("Greedy algorithm (cost)")]
         ValueGreedyAlgorithm,
-        [Description("Value-distance greedy algorithm")]
-        ValueDistanceGreedyAlgorithm
+        [Description("Greedy algorithm (distance & cost)")]
+        ValueDistanceGreedyAlgorithm,
+        [Description("Greedy algorithm (deep)")]
+        DeepPathFind
     }
 }

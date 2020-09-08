@@ -27,8 +27,7 @@ namespace GraphLibrary.PathFindingAlgorithm
 
         public IEnumerable<IVertex> FindPath()
         {
-            OnStarted?.Invoke(this, 
-                new AlgorithmEventArgs(Graph));
+            OnStarted?.Invoke(this, new AlgorithmEventArgs(Graph));
             var currentVertex = Graph.Start;
             while (!currentVertex.IsEnd)
             {
@@ -43,8 +42,7 @@ namespace GraphLibrary.PathFindingAlgorithm
                 else
                     currentVertex = visitedVerticesStack.PopSecure();
             }
-            OnFinished?.Invoke(this, 
-                new AlgorithmEventArgs(Graph));
+            OnFinished?.Invoke(this, new AlgorithmEventArgs(Graph));
             return this.GetFoundPath();
         }
 

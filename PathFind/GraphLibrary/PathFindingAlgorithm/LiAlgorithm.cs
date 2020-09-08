@@ -72,13 +72,6 @@ namespace GraphLibrary.PathFindingAlgorithm
             ExtractNeighbours(vertex);
         }
 
-        private bool IsDestination(IVertex vertex)
-        {
-            if (vertex == null || Graph.End == null)
-                return true;
-            return vertex.IsEnd || !neighbourQueue.Any();
-        }
-
         private readonly Queue<IVertex> neighbourQueue;
     }
 }

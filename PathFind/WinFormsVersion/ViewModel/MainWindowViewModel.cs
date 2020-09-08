@@ -15,6 +15,7 @@ using WinFormsVersion.EventHolder;
 using GraphLibrary.Graphs;
 using GraphLibrary.ViewModel;
 using GraphLibrary.GraphField;
+using GraphLibrary.Vertex;
 
 namespace WinFormsVersion.ViewModel
 {
@@ -76,9 +77,10 @@ namespace WinFormsVersion.ViewModel
             graphFieldFiller = new WinFormsGraphFieldFiller();
         }
 
+
         public override void FindPath()
         {
-            if (graph?.Start == null || graph?.End == null) 
+            if (!CanStartPathFinding())
                 return;
             var model = new PathFindViewModel(this);
             var form = new PathFindWindow(model);
@@ -136,6 +138,13 @@ namespace WinFormsVersion.ViewModel
         {
             Window = window;
             Window.Show();
+        }
+
+        private bool CanStartPathFinding()
+        {
+            return graph?.Start != NullVertex.GetInstance()
+                && graph?.End != NullVertex.GetInstance()
+                && Graph != null;
         }
     }
 }

@@ -29,13 +29,8 @@ namespace WinFormsVersion.EventHolder
 
         public override void ChooseExtremeVertices(object sender, EventArgs e)
         {
-            if ((e as MouseEventArgs).Button == MouseButtons.Left)
-            {
-                if (Graph.Start == null)
-                    SetStartVertex(sender as IVertex);
-                else if (Graph.Start != null && Graph.End == null)
-                    SetDestinationVertex(sender as IVertex);
-            }
+            if ((e as MouseEventArgs).Button == MouseButtons.Left)           
+                base.ChooseExtremeVertices(sender, e);           
         }
     }
 }
