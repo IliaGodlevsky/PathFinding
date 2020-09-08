@@ -1,0 +1,59 @@
+﻿using GraphLibrary.Extensions;
+using GraphLibrary.Graphs;
+using System.Collections.Generic;
+using System.Linq;
+using System;
+using GraphLibrary.EventArguments;
+using GraphLibrary.Extensions.CollectionExtensions;
+using GraphLibrary.Graphs.Interface;
+using GraphLibrary.PathFindingAlgorithm.Interface;
+using GraphLibrary.Vertex.Interface;
+using GraphLibrary.Vertex;
+
+namespace GraphLibrary.PathFindingAlgorithm
+{
+    public class DeepPathFindAlgorithm : IPathFindingAlgorithm
+    {
+        public event AlgorithmEventHanlder OnStarted;
+        public event Action<IVertex> OnVertexVisited;
+        public event AlgorithmEventHanlder OnFinished;
+
+        public IGraph Graph { get; set; }
+
+        public DeepPathFindAlgorithm()
+        {
+            Graph = NullGraph.GetInstance();
+            visitedVerticesStack = new Stack<IVertex>();
+        }
+
+        public IEnumerable<IVertex> FindPath()
+        {
+            OnStarted?.Invoke(this, new AlgorithmEventArgs(Graph));
+            var currentVertex = Graph.Start;
+            while (!currentVertex.IsEnd)
+            {
+                var temp = currentVertex;
+                currentVertex = GoNextVertex(currentVertex);
+                if (!currentVertex.IsIsolated())
+                {
+                    OnVertexVisited?.Invoke(currentVertex);
+                    visitedVerticesStack.Push(currentVertex);
+                    currentVertex.ParentVertex = temp;
+                }
+                else
+                    currentVertex = visitedVerticesStack.PopSecure();
+            }
+            OnFinished?.Invoke(this, new AlgorithmEventArgs(Graph));
+            return this.GetFoundPath();
+        }
+
+        protected virtual IVertex GoNextVertex(IVertex vertex)
+        {
+            if (vertex.GetUnvisitedNeighbours().Any())
+                return vertex.GetUnvisitedNeighbours().Shuffle().FirstOrDefault();
+            return NullVertex.GetInstance();
+        }
+
+        private readonly Stack<IVertex> visitedVerticesStack;
+    }
+}

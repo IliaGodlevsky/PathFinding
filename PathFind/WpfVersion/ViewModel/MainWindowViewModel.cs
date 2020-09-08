@@ -1,6 +1,4 @@
 ﻿using GraphLibrary.Common.Constants;
-using GraphLibrary.Collection;
-using GraphLibrary.Model;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using System.Windows;
@@ -11,7 +9,11 @@ using WpfVersion.Model.GraphSaver;
 using WpfVersion.Resources;
 using WpfVersion.View.Windows;
 using WpfVersion.Model.EventHolder;
-using GraphLibrary.Model.Vertex;
+using GraphLibrary.Graphs;
+using GraphLibrary.Vertex;
+using GraphLibrary.ViewModel.Interface;
+using GraphLibrary.ViewModel;
+using GraphLibrary.GraphField;
 
 namespace WpfVersion.ViewModel
 {

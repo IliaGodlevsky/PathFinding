@@ -1,6 +1,7 @@
-﻿using GraphLibrary.Extensions.MatrixExtension;
-using GraphLibrary.Collection;
-using GraphLibrary.Vertex;
+﻿using GraphLibrary.DTO;
+using GraphLibrary.Extensions.CollectionExtensions;
+using GraphLibrary.Graphs;
+using GraphLibrary.Vertex.Interface;
 
 namespace GraphLibrary.GraphFactory
 {

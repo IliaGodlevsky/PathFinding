@@ -1,10 +1,10 @@
 ﻿using GraphLibrary.GraphFactory;
-using ConsoleVersion.Vertex;
-using GraphLibrary;
-using GraphLibrary.Vertex;
 using GraphLibrary.Common.Constants;
+using GraphLibrary.DTO;
+using GraphLibrary.Vertex.Interface;
+using ConsoleVersion.Model.Vertex;
 
-namespace ConsoleVersion.GraphFactory
+namespace ConsoleVersion.Model.GraphFactory
 {
     internal class ConsoleGraphInitializer : AbstractGraphInfoInitializer
     {

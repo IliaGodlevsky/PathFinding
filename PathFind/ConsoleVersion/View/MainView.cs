@@ -1,6 +1,7 @@
 ﻿using ConsoleVersion.Enums;
 using ConsoleVersion.Forms;
 using ConsoleVersion.InputClass;
+using ConsoleVersion.View.Interface;
 using ConsoleVersion.ViewModel;
 using GraphLibrary.Extensions;
 using System.Collections.Generic;

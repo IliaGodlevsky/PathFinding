@@ -1,11 +1,13 @@
-﻿using GraphFactory.GraphSaver;
-using GraphLibrary.Collection;
-using GraphLibrary.Common.Extensions;
+﻿using GraphLibrary.EventHolder;
+using GraphLibrary.Extensions;
 using GraphLibrary.GraphCreate.GraphFieldFiller;
-using GraphLibrary.GraphLoader;
-using GraphLibrary.VertexEventHolder;
+using GraphLibrary.GraphField;
+using GraphLibrary.Graphs;
+using GraphLibrary.GraphSerialization.GraphLoader.Interface;
+using GraphLibrary.GraphSerialization.GraphSaver.Interface;
+using GraphLibrary.ViewModel.Interface;
 
-namespace GraphLibrary.Model
+namespace GraphLibrary.ViewModel
 {
     public abstract class AbstractMainModel : IMainModel
     {
@@ -22,7 +24,7 @@ namespace GraphLibrary.Model
 
         public AbstractMainModel()
         {
-            
+
         }
 
         public virtual void SaveGraph()

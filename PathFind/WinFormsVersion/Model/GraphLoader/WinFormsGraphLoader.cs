@@ -1,7 +1,7 @@
 ﻿using System.Windows.Forms;
-using GraphLibrary;
+using GraphLibrary.DTO;
 using GraphLibrary.GraphFactory;
-using GraphLibrary.GraphLoader;
+using GraphLibrary.GraphSerialization.GraphLoader;
 using WinFormsVersion.GraphFactory;
 
 namespace WinFormsVersion.GraphLoader

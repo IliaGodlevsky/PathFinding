@@ -1,10 +1,13 @@
-﻿using GraphLibrary.Collection;
+﻿using GraphLibrary.DTO;
 using GraphLibrary.GraphFactory;
+using GraphLibrary.Graphs;
+using GraphLibrary.GraphSerialization.GraphLoader.Interface;
+using GraphLibrary.VertexBinding;
 using System;
 using System.IO;
 using System.Runtime.Serialization.Formatters.Binary;
 
-namespace GraphLibrary.GraphLoader
+namespace GraphLibrary.GraphSerialization.GraphLoader
 {
     public abstract class AbstractGraphLoader : IGraphLoader
     {
@@ -13,11 +16,13 @@ namespace GraphLibrary.GraphLoader
         public Graph GetGraph()
         {
             var formatter = new BinaryFormatter();
-            try {
+            try
+            {
                 using (var stream = new FileStream(GetPath(), FileMode.Open))
                     Initialise((VertexInfo[,])formatter.Deserialize(stream));
             }
-            catch (Exception ex) {
+            catch (Exception ex)
+            {
                 ShowMessage(ex.Message);
             }
             return graph;

@@ -1,15 +1,15 @@
 ﻿using ConsoleVersion.Forms;
 using ConsoleVersion.InputClass;
-using GraphLibrary.AlgorithmEnum;
 using GraphLibrary.Extensions;
-using GraphLibrary.Model;
 using GraphLibrary.PauseMaker;
 using System;
 using System.Drawing;
-using GraphLibrary.VertexEventHolder;
-using GraphLibrary.Vertex;
-using GraphLibrary.Common.Extensions;
 using GraphLibrary.Common.Constants;
+using GraphLibrary.Enums;
+using GraphLibrary.EventHolder;
+using GraphLibrary.Vertex.Interface;
+using GraphLibrary.ViewModel.Interface;
+using GraphLibrary.ViewModel;
 
 namespace ConsoleVersion.ViewModel
 {

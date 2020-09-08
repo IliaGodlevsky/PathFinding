@@ -1,10 +1,10 @@
-﻿using ConsoleVersion.GraphFactory;
-using GraphLibrary;
+﻿using ConsoleVersion.Model.GraphFactory;
+using GraphLibrary.DTO;
 using GraphLibrary.GraphFactory;
-using GraphLibrary.GraphLoader;
+using GraphLibrary.GraphSerialization.GraphLoader;
 using System;
 
-namespace ConsoleVersion.GraphLoader
+namespace ConsoleVersion.Model.GraphLoader
 {
     internal class ConsoleGraphLoader : AbstractGraphLoader
     {

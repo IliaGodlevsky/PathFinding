@@ -1,6 +1,6 @@
-﻿using ConsoleVersion.Vertex;
-using GraphLibrary.Model;
-using GraphLibrary.Vertex;
+﻿using ConsoleVersion.Model.Vertex;
+using GraphLibrary.Vertex.Interface;
+using GraphLibrary.ViewModel.Interface;
 using Console = Colorful.Console;
 
 namespace ConsoleVersion.Forms

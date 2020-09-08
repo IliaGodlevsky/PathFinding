@@ -1,11 +1,11 @@
 ﻿using ConsoleVersion.InputClass;
-using GraphLibrary.VertexEventHolder;
-using ConsoleVersion.Vertex;
 using System;
 using GraphLibrary.Common.Constants;
-using GraphLibrary.Vertex;
+using GraphLibrary.EventHolder;
+using GraphLibrary.Vertex.Interface;
+using ConsoleVersion.Model.Vertex;
 
-namespace ConsoleVersion.EventHolder
+namespace ConsoleVersion.Model.EventHolder
 {
     internal class ConsoleVertexEventHolder : AbstractVertexEventHolder
     {

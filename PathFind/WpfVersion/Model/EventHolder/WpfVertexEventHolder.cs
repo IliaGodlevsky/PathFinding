@@ -1,9 +1,8 @@
-﻿using GraphLibrary.Extensions;
-using GraphLibrary.VertexEventHolder;
-using GraphLibrary.Vertex;
-using System;
+﻿using System;
 using System.Windows.Input;
 using WpfVersion.Model.Vertex;
+using GraphLibrary.EventHolder;
+using GraphLibrary.Vertex.Interface;
 
 namespace WpfVersion.Model.EventHolder
 {

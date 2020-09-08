@@ -1,4 +1,4 @@
-﻿namespace ConsoleVersion.View
+﻿namespace ConsoleVersion.View.Interface
 {
     internal interface IView
     {

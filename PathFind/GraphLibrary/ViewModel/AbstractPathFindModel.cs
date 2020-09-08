@@ -1,16 +1,16 @@
-﻿using GraphLibrary.Algorithm;
-using GraphLibrary.AlgorithmEnum;
-using GraphLibrary.Collection;
-using GraphLibrary.AlgoSelector;
-using GraphLibrary.Common.Extensions;
+﻿using GraphLibrary.AlgoSelector;
 using System.Diagnostics;
 using System.Linq;
 using GraphLibrary.Extensions;
+using GraphLibrary.Enums;
+using GraphLibrary.Graphs;
+using GraphLibrary.PathFindingAlgorithm.Interface;
+using GraphLibrary.ViewModel.Interface;
 
-namespace GraphLibrary.Model
+namespace GraphLibrary.ViewModel
 {
     public abstract class AbstractPathFindModel : IModel
-    {   
+    {
         public int DelayTime { get; set; } // miliseconds
         public Algorithms Algorithm { get; set; }
 
@@ -29,7 +29,7 @@ namespace GraphLibrary.Model
                 GetPathFindAlgorithm(Algorithm, graph);
             PrepareAlgorithm();
             var path = pathAlgorithm.FindPath();
-            mainViewModel.Statistics += 
+            mainViewModel.Statistics +=
                 string.Format("   " + pathFindStatisticsFormat,
                 path.Count(),
                 path.Sum(vertex => vertex.Cost),
@@ -50,7 +50,7 @@ namespace GraphLibrary.Model
                     vertex.MarkAsVisited();
             };
 
-            pathAlgorithm.OnStarted += 
+            pathAlgorithm.OnStarted +=
                 (sender, eventArgs) => { timer.Start(); };
 
             pathAlgorithm.OnFinished += (sender, eventArgs) =>

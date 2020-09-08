@@ -1,5 +1,5 @@
 ﻿using GraphLibrary.GraphCreate.GraphFieldFiller;
-using GraphLibrary.Model;
+using GraphLibrary.GraphField;
 using System.Drawing;
 
 namespace WinFormsVersion.Model

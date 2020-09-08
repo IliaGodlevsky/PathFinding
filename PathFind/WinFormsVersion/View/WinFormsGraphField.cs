@@ -1,5 +1,5 @@
-﻿using GraphLibrary.Model;
-using GraphLibrary.Vertex;
+﻿using GraphLibrary.GraphField;
+using GraphLibrary.Vertex.Interface;
 using System.Windows.Forms;
 using WinFormsVersion.Vertex;
 

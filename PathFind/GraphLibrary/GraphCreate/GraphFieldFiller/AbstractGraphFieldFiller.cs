@@ -1,5 +1,5 @@
-﻿using GraphLibrary.Collection;
-using GraphLibrary.Model;
+﻿using GraphLibrary.GraphField;
+using GraphLibrary.Graphs;
 
 namespace GraphLibrary.GraphCreate.GraphFieldFiller
 {

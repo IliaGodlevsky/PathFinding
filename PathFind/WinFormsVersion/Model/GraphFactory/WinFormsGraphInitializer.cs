@@ -1,7 +1,7 @@
 ﻿using GraphLibrary.GraphFactory;
-using GraphLibrary;
-using GraphLibrary.Vertex;
 using WinFormsVersion.Vertex;
+using GraphLibrary.DTO;
+using GraphLibrary.Vertex.Interface;
 
 namespace WinFormsVersion.GraphFactory
 {

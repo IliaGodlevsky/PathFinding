@@ -1,10 +1,10 @@
-﻿using GraphLibrary;
+﻿using GraphLibrary.DTO;
 using GraphLibrary.Extensions;
-using GraphLibrary.Vertex;
+using GraphLibrary.Vertex.Interface;
 using System.Collections.Generic;
 using System.Drawing;
 
-namespace ConsoleVersion.Vertex
+namespace ConsoleVersion.Model.Vertex
 {
     internal class ConsoleVertex : IVertex
     {

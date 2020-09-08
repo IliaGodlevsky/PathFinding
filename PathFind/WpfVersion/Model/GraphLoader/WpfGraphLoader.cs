@@ -1,6 +1,6 @@
-﻿using GraphLibrary;
+﻿using GraphLibrary.DTO;
 using GraphLibrary.GraphFactory;
-using GraphLibrary.GraphLoader;
+using GraphLibrary.GraphSerialization.GraphLoader;
 using Microsoft.Win32;
 using System.Windows;
 using WpfVersion.Model.GraphFactory;

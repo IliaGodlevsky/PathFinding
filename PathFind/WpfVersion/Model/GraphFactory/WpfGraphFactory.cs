@@ -1,6 +1,6 @@
 ﻿using GraphLibrary.Common.Constants;
 using GraphLibrary.GraphFactory;
-using GraphLibrary.Vertex;
+using GraphLibrary.Vertex.Interface;
 using WpfVersion.Model.Vertex;
 
 namespace WpfVersion.Model.GraphFactory

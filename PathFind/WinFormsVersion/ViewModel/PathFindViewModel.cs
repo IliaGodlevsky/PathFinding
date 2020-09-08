@@ -1,6 +1,7 @@
-﻿using GraphLibrary.AlgorithmEnum;
-using GraphLibrary.Model;
+﻿using GraphLibrary.Enums;
 using GraphLibrary.PauseMaker;
+using GraphLibrary.ViewModel;
+using GraphLibrary.ViewModel.Interface;
 using System;
 using System.Linq;
 using System.Windows.Forms;

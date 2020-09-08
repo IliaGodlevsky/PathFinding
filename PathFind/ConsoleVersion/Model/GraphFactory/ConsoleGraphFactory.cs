@@ -1,9 +1,9 @@
-﻿using ConsoleVersion.Vertex;
-using GraphLibrary.GraphFactory;
-using GraphLibrary.Vertex;
+﻿using GraphLibrary.GraphFactory;
 using GraphLibrary.Common.Constants;
+using GraphLibrary.Vertex.Interface;
+using ConsoleVersion.Model.Vertex;
 
-namespace ConsoleVersion.GraphFactory
+namespace ConsoleVersion.Model.GraphFactory
 {
     internal class ConsoleGraphFactory : AbstractGraphFactory
     {

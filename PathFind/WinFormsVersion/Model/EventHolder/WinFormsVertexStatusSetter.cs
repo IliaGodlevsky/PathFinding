@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Windows.Forms;
-using GraphLibrary.Collection;
-using GraphLibrary.VertexEventHolder;
-using GraphLibrary.Vertex;
+using GraphLibrary.Graphs;
 using WinFormsVersion.Vertex;
+using GraphLibrary.EventHolder;
+using GraphLibrary.Vertex.Interface;
 
 namespace WinFormsVersion.EventHolder
 {

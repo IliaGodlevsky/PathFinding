@@ -1,5 +1,6 @@
-﻿using ConsoleVersion.ViewModel;
-using GraphLibrary.AlgorithmEnum;
+﻿using ConsoleVersion.View.Interface;
+using ConsoleVersion.ViewModel;
+using GraphLibrary.Enums;
 using GraphLibrary.Extensions;
 using System;
 using System.Linq;

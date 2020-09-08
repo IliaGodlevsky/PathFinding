@@ -1,8 +1,9 @@
-﻿using ConsoleVersion.GraphFactory;
-using ConsoleVersion.InputClass;
+﻿using ConsoleVersion.InputClass;
+using ConsoleVersion.Model.GraphFactory;
 using GraphLibrary.Common.Constants;
 using GraphLibrary.GraphFactory;
-using GraphLibrary.Model;
+using GraphLibrary.ViewModel;
+using GraphLibrary.ViewModel.Interface;
 using System;
 
 namespace ConsoleVersion.ViewModel

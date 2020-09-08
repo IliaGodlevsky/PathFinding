@@ -1,14 +1,14 @@
-﻿using ConsoleVersion.GraphFactory;
-using ConsoleVersion.GraphLoader;
-using ConsoleVersion.GraphSaver;
-using ConsoleVersion.InputClass;
+﻿using ConsoleVersion.InputClass;
 using ConsoleVersion.Model;
-using ConsoleVersion.EventHolder;
 using ConsoleVersion.View;
-using GraphLibrary.Common.Extensions;
-using GraphLibrary.Model;
 using System;
 using System.Drawing;
+using GraphLibrary.Extensions;
+using GraphLibrary.ViewModel;
+using ConsoleVersion.Model.GraphSaver;
+using ConsoleVersion.Model.GraphLoader;
+using ConsoleVersion.Model.GraphFactory;
+using ConsoleVersion.Model.EventHolder;
 
 namespace ConsoleVersion.ViewModel
 {

@@ -1,4 +1,5 @@
-﻿using ConsoleVersion.ViewModel;
+﻿using ConsoleVersion.View.Interface;
+using ConsoleVersion.ViewModel;
 using System;
 
 namespace ConsoleVersion.View

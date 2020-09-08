@@ -1,4 +1,4 @@
-﻿using GraphLibrary.Collection;
+﻿using GraphLibrary.Graphs;
 
 namespace GraphLibrary.GraphFactory
 {

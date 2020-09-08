@@ -1,12 +1,12 @@
 ﻿using GraphLibrary.Common.Constants;
-using GraphLibrary.Collection;
 using System.Windows;
+using GraphLibrary.Graphs;
 
 namespace WpfVersion.Model
 {
     internal static class WindowAdjust
     {
-        public static void Adjust(GraphLibrary.Collection.Graph graph)
+        public static void Adjust(Graph graph)
         {
             if (graph == null)
                 return;

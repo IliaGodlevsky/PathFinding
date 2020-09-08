@@ -1,7 +1,7 @@
-﻿using GraphLibrary;
-using GraphLibrary.Common.Constants;
+﻿using GraphLibrary.Common.Constants;
+using GraphLibrary.DTO;
 using GraphLibrary.Extensions;
-using GraphLibrary.Vertex;
+using GraphLibrary.Vertex.Interface;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Windows.Controls;

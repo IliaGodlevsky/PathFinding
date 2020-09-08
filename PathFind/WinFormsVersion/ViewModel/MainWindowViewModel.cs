@@ -1,6 +1,4 @@
 ﻿using GraphLibrary.Common.Constants;
-using GraphLibrary.Collection;
-using GraphLibrary.Model;
 using System;
 using System.ComponentModel;
 using System.Drawing;
@@ -14,6 +12,9 @@ using WinFormsVersion.Model;
 using WinFormsVersion.Resources;
 using WinFormsVersion.View;
 using WinFormsVersion.EventHolder;
+using GraphLibrary.Graphs;
+using GraphLibrary.ViewModel;
+using GraphLibrary.GraphField;
 
 namespace WinFormsVersion.ViewModel
 {

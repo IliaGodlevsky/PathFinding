@@ -1,9 +1,11 @@
-﻿using GraphLibrary.Collection;
-using GraphLibrary.Common.Extensions;
+﻿using GraphLibrary.Extensions;
 using GraphLibrary.GraphCreate.GraphFieldFiller;
 using GraphLibrary.GraphFactory;
+using GraphLibrary.GraphField;
+using GraphLibrary.Graphs;
+using GraphLibrary.ViewModel.Interface;
 
-namespace GraphLibrary.Model
+namespace GraphLibrary.ViewModel
 {
     public abstract class AbstractCreateGraphModel : IModel
     {

@@ -1,8 +1,9 @@
-﻿using GraphLibrary.Extensions.MatrixExtension;
-using GraphLibrary.Extensions.RandomExtension;
-using GraphLibrary.Collection;
-using GraphLibrary.Vertex;
-using System;
+﻿using System;
+using GraphLibrary.Extensions.CollectionExtensions;
+using GraphLibrary.Extensions;
+using GraphLibrary.Graphs;
+using GraphLibrary.Vertex.Interface;
+using GraphLibrary.VertexBinding;
 
 namespace GraphLibrary.GraphFactory
 {

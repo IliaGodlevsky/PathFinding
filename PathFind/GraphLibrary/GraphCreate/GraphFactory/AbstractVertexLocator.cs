@@ -1,4 +1,4 @@
-﻿using GraphLibrary.Vertex;
+﻿using GraphLibrary.Vertex.Interface;
 using System.Drawing;
 
 namespace GraphLibrary.GraphFactory

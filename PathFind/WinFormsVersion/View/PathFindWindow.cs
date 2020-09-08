@@ -1,5 +1,5 @@
-﻿using GraphLibrary.AlgorithmEnum;
-using GraphLibrary.Common.Constants;
+﻿using GraphLibrary.Common.Constants;
+using GraphLibrary.Enums;
 using GraphLibrary.Extensions;
 using System;
 using System.Linq;

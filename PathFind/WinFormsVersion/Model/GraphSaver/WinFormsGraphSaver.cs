@@ -1,5 +1,5 @@
 ﻿using System.Windows.Forms;
-using GraphLibrary.GraphSaver;
+using GraphLibrary.GraphSerialization.GraphSaver;
 
 namespace WinFormsVersion.GraphSaver
 {

@@ -1,7 +1,7 @@
-﻿using GraphLibrary.GraphSaver;
+﻿using GraphLibrary.GraphSerialization.GraphSaver;
 using System;
 
-namespace ConsoleVersion.GraphSaver
+namespace ConsoleVersion.Model.GraphSaver
 {
     internal class ConsoleGraphSaver : AbstractGraphSaver
     {

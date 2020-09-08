@@ -1,7 +1,8 @@
-﻿using GraphLibrary.Collection;
-using GraphLibrary.VertexEventHolder;
+﻿using GraphLibrary.EventHolder;
+using GraphLibrary.GraphField;
+using GraphLibrary.Graphs;
 
-namespace GraphLibrary.Model
+namespace GraphLibrary.ViewModel.Interface
 {
     public interface IMainModel : IModel
     {

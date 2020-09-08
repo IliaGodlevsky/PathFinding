@@ -1,6 +1,7 @@
 ﻿using GraphLibrary.Common.Constants;
 using GraphLibrary.GraphFactory;
-using GraphLibrary.Model;
+using GraphLibrary.ViewModel;
+using GraphLibrary.ViewModel.Interface;
 using WpfVersion.Infrastructure;
 using WpfVersion.Model;
 using WpfVersion.Model.GraphFactory;

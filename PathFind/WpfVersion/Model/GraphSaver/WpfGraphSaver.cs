@@ -1,4 +1,4 @@
-﻿using GraphLibrary.GraphSaver;
+﻿using GraphLibrary.GraphSerialization.GraphSaver;
 using Microsoft.Win32;
 using System.Windows;
 
