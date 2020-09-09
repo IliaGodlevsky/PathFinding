@@ -63,15 +63,16 @@ namespace GraphLibrary.PathFindingAlgorithm
 
         private void SpreadRelaxWave(IVertex vertex)
         {
-            foreach (var neighbour in vertex.Neighbours)
+            IVertex RelaxVertex(IVertex neighbour)
             {
-                var relaxFunctionResult = RelaxFunction(neighbour, vertex);
-                if (neighbour.AccumulatedCost > relaxFunctionResult)
+                if (neighbour.AccumulatedCost > RelaxFunction(neighbour, vertex))
                 {
-                    neighbour.AccumulatedCost = relaxFunctionResult;
+                    neighbour.AccumulatedCost = RelaxFunction(neighbour, vertex);
                     neighbour.ParentVertex = vertex;
                 }
+                return neighbour;
             }
+            vertex.Neighbours.Apply(RelaxVertex);
         }
 
         private void ExtractNeighbours(IVertex vertex)
