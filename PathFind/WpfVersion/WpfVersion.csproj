@@ -63,7 +63,6 @@
     <Compile Include="Model\GraphFactory\WpfGraphFactory.cs" />
     <Compile Include="Model\GraphFactory\WpfGraphInitializer.cs" />
     <Compile Include="Model\GraphLoader\WpfGraphLoader.cs" />
-    <Compile Include="Model\GraphSaver\WpfGraphSaver.cs" />
     <Compile Include="Model\EventHolder\WpfVertexEventHolder.cs" />
     <Compile Include="Model\Vertex\WpfVertex.cs" />
     <Compile Include="Model\WindowAdjust.cs" />

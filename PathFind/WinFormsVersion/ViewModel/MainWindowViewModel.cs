@@ -7,7 +7,6 @@ using System.Windows.Forms;
 using WinFormsVersion.Extensions;
 using WinFormsVersion.Forms;
 using WinFormsVersion.GraphLoader;
-using WinFormsVersion.GraphSaver;
 using WinFormsVersion.Model;
 using WinFormsVersion.Resources;
 using WinFormsVersion.View;
@@ -16,6 +15,7 @@ using GraphLibrary.Graphs;
 using GraphLibrary.ViewModel;
 using GraphLibrary.GraphField;
 using GraphLibrary.Vertex;
+using GraphLibrary.GraphSerialization.GraphSaver;
 
 namespace WinFormsVersion.ViewModel
 {
@@ -70,7 +70,7 @@ namespace WinFormsVersion.ViewModel
         public MainWindowViewModel()
         {
             GraphParametresFormat = WinFormsVersionResources.ParametresFormat;
-            saver = new WinFormsGraphSaver();
+            saver = new GraphSaver();
             loader = new WinFormsGraphLoader(VertexSize.SIZE_BETWEEN_VERTICES);
             VertexEventHolder = new WinFormsVertexEventHolder();
             graphField = new WinFormsGraphField();
@@ -145,6 +145,18 @@ namespace WinFormsVersion.ViewModel
             return graph?.Start != NullVertex.GetInstance()
                 && graph?.End != NullVertex.GetInstance()
                 && Graph != null;
+        }
+
+        protected override string GetSavePath()
+        {
+            var save = new SaveFileDialog();
+            return save.ShowDialog() == DialogResult.OK ? save.FileName : string.Empty;
+        }
+
+        protected override string GetLoadPath()
+        {
+            var open = new OpenFileDialog();
+            return open.ShowDialog() == DialogResult.OK ? open.FileName : string.Empty;
         }
     }
 }

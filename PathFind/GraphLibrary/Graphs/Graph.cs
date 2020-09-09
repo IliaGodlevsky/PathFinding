@@ -10,47 +10,52 @@ using GraphLibrary.Vertex.Interface;
 
 namespace GraphLibrary.Graphs
 {
-    public class Graph : IEnumerable<IVertex>, IGraph
+    public class Graph : IGraph
     {
         public Graph(IVertex[,] vertices)
         {
-            this.vertices = vertices;
+            this.Array = vertices;
             End = NullVertex.GetInstance();
             Start = NullVertex.GetInstance();
         }
 
-        private IVertex[,] vertices;
+        public Graph(int width, int height)
+        {
+            Array = new IVertex[width, height];
+            End = NullVertex.GetInstance();
+            Start = NullVertex.GetInstance();
+        }
 
         public IVertex this[int width, int height]
         {
-            get => vertices[width, height];
-            set => vertices[width, height] = value;
+            get => Array[width, height];
+            set => Array[width, height] = value;
         }
 
         public IVertex End { get; set; }
 
         public IVertex Start { get; set; }
 
-        public IVertex[,] Array => vertices;
+        public IVertex[,] Array { get; }
 
-        public int Height => vertices.Height();
+        public int Height => Array.Height();
 
-        public VertexInfo[,] VerticesInfo => vertices.Accumulate(vertex => vertex.Info);
+        public VertexInfo[,] VerticesInfo => Array.Accumulate(vertex => vertex.Info);
 
-        public int Size => vertices.Length;
+        public int Size => Array.Length;
 
-        public int Width => vertices.Width();
+        public int Width => Array.Width();
 
         public int ObstaclePercent => Size == 0 ? 0 : ObstacleNumber * 100 / Size;
 
-        public int NumberOfVisitedVertices => vertices.Cast<IVertex>().Count(vertex => vertex.IsVisited);
+        public int NumberOfVisitedVertices => Array.Cast<IVertex>().Count(vertex => vertex.IsVisited);
 
-        public int ObstacleNumber => vertices.Cast<IVertex>().Count(vertex => vertex.IsObstacle);
+        public int ObstacleNumber => Array.Cast<IVertex>().Count(vertex => vertex.IsObstacle);
 
-        public Point GetIndices(IVertex vertex) => vertices.GetIndices(vertex);
+        public Point GetIndices(IVertex vertex) => Array.GetIndices(vertex);
 
-        public IEnumerator GetEnumerator() => vertices.GetEnumerator();
+        public IEnumerator GetEnumerator() => Array.GetEnumerator();
 
-        IEnumerator<IVertex> IEnumerable<IVertex>.GetEnumerator() => (IEnumerator<IVertex>)GetEnumerator();
+        IEnumerator<IVertex> IEnumerable<IVertex>.GetEnumerator() => (IEnumerator<IVertex>)Array.GetEnumerator();
     }
 }

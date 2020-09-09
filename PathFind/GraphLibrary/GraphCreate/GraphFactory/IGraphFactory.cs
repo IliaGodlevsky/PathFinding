@@ -4,6 +4,6 @@ namespace GraphLibrary.GraphFactory
 {
     public interface IGraphFactory
     {
-        Graph GetGraph();
+        Graph Graph { get; }
     }
 }

@@ -5,7 +5,6 @@ using System.Windows;
 using WpfVersion.Infrastructure;
 using WpfVersion.Model;
 using WpfVersion.Model.GraphLoader;
-using WpfVersion.Model.GraphSaver;
 using WpfVersion.Resources;
 using WpfVersion.View.Windows;
 using WpfVersion.Model.EventHolder;
@@ -14,6 +13,8 @@ using GraphLibrary.Vertex;
 using GraphLibrary.ViewModel.Interface;
 using GraphLibrary.ViewModel;
 using GraphLibrary.GraphField;
+using GraphLibrary.GraphSerialization.GraphSaver;
+using Microsoft.Win32;
 
 namespace WpfVersion.ViewModel
 {
@@ -67,7 +68,7 @@ namespace WpfVersion.ViewModel
         {
             GraphField = new WpfGraphField();
             GraphParametresFormat = WpfVersionResources.GraphParametresFormat;
-            saver = new WpfGraphSaver();
+            saver = new GraphSaver();
             loader = new WpfGraphLoader(VertexSize.SIZE_BETWEEN_VERTICES);
             VertexEventHolder = new WpfVertexEventHolder();
             graphFieldFiller = new WpfGraphFieldFiller();
@@ -145,6 +146,18 @@ namespace WpfVersion.ViewModel
             Window.DataContext = model;
             Window.WindowStartupLocation = WindowStartupLocation.CenterScreen;
             Window.Show();
+        }
+
+        protected override string GetSavePath()
+        {
+            var save = new SaveFileDialog();
+            return save.ShowDialog() == true ? save.FileName : string.Empty;
+        }
+
+        protected override string GetLoadPath()
+        {
+            var open = new OpenFileDialog();
+            return open.ShowDialog() == true ? open.FileName : string.Empty;
         }
     }
 }

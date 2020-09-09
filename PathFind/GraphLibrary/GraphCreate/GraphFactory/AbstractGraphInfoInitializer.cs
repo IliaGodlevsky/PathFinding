@@ -7,31 +7,28 @@ using System.Drawing;
 
 namespace GraphLibrary.GraphFactory
 {
-    public abstract class AbstractGraphInfoInitializer
-        : IGraphFactory
+    public abstract class AbstractGraphInfoInitializer : IGraphFactory
     {
-        protected IVertex[,] vertices;
-        protected int placeBetweenVertices;
+        public Graph Graph { get; private set; }
 
-        public AbstractGraphInfoInitializer(VertexInfo[,] info, int placeBetweenVertices)            
+        public AbstractGraphInfoInitializer(VertexInfo[,] info, 
+            int placeBetweenVertices)
         {
-            this.placeBetweenVertices = placeBetweenVertices;
-            vertices = new IVertex[info.Width(), info.Height()];
+            Graph = new Graph(info.Width(), info.Height());
 
             if (info == null)
                 return;
             IVertex InitializeVertex(IVertex vertex)
             {
-                var indices = vertices.GetIndices(vertex);
+                var indices = Graph.GetIndices(vertex);
                 vertex = CreateVertex(info[indices.X, indices.Y]);
-                vertex.SetLocation(new Point(indices.X * placeBetweenVertices, indices.Y * placeBetweenVertices));
+                vertex.SetLocation(new Point(indices.X * placeBetweenVertices, 
+                    indices.Y * placeBetweenVertices));
                 return vertex;
             }
-            vertices.Apply(InitializeVertex);            
+            Graph.Array.Apply(InitializeVertex);
         }
 
         protected abstract IVertex CreateVertex(VertexInfo info);
-        public Graph GetGraph() => new Graph(vertices);
-       
     }
 }

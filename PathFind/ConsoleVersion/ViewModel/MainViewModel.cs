@@ -5,10 +5,10 @@ using System;
 using System.Drawing;
 using GraphLibrary.Extensions;
 using GraphLibrary.ViewModel;
-using ConsoleVersion.Model.GraphSaver;
 using ConsoleVersion.Model.GraphLoader;
 using ConsoleVersion.Model.GraphFactory;
 using ConsoleVersion.Model.EventHolder;
+using GraphLibrary.GraphSerialization.GraphSaver;
 
 namespace ConsoleVersion.ViewModel
 {
@@ -17,13 +17,14 @@ namespace ConsoleVersion.ViewModel
         public MainViewModel()
         {            
             GraphParametresFormat = ConsoleVersionResources.GraphParametresFormat;
-            saver = new ConsoleGraphSaver();
+            saver = new GraphSaver();
+            saver.OnBadSave += message => { Console.WriteLine(message); Console.ReadKey(); };
             loader = new ConsoleGraphLoader();
             VertexEventHolder = new ConsoleVertexEventHolder();
             graphFieldFiller = new ConsoleGraphFieldFiller();
             var factory = new ConsoleGraphFactory(
                 percentOfObstacles: 25, width: 25, height: 25);
-            Graph = factory.GetGraph();
+            Graph = factory.Graph;
             GraphParametres = Graph.GetFormattedInfo(GraphParametresFormat);
             VertexEventHolder.Graph = Graph;
         }
@@ -53,5 +54,16 @@ namespace ConsoleVersion.ViewModel
         public void Reverse() => VertexChange(VertexEventHolder.ReversePolarity);
 
         public void ChangeVertexValue() => VertexChange(VertexEventHolder.ChangeVertexValue);
+
+        protected override string GetSavePath()
+        {
+            Console.Write("Enter path: ");
+            return Console.ReadLine();
+        }
+
+        protected override string GetLoadPath()
+        {
+            return GetSavePath();
+        }
     }
 }

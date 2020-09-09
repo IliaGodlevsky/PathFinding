@@ -13,17 +13,19 @@ namespace GraphLibrary.GraphSerialization.GraphLoader
     {
         protected Graph graph = null;
 
-        public Graph GetGraph()
+        public event Action<string> OnBadLoad;
+
+        public Graph GetGraph(string path)
         {
             var formatter = new BinaryFormatter();
             try
             {
-                using (var stream = new FileStream(GetPath(), FileMode.Open))
+                using (var stream = new FileStream(path, FileMode.Open))
                     Initialise((VertexInfo[,])formatter.Deserialize(stream));
             }
             catch (Exception ex)
             {
-                ShowMessage(ex.Message);
+                OnBadLoad?.Invoke(ex.Message);
             }
             return graph;
         }
@@ -32,12 +34,9 @@ namespace GraphLibrary.GraphSerialization.GraphLoader
         {
             if (info == null)
                 return;
-            graph = GetInitializer(info).GetGraph();
+            graph = GetInitializer(info).Graph;
             VertexBinder.ConnectVertices(graph);
         }
-
-        protected abstract void ShowMessage(string message);
         protected abstract AbstractGraphInfoInitializer GetInitializer(VertexInfo[,] info);
-        protected abstract string GetPath();
     }
 }

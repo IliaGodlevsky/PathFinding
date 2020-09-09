@@ -56,7 +56,6 @@
     <Compile Include="Model\GraphFactory\ConsoleGraphInitializer.cs" />
     <Compile Include="Model\GraphFactory\ConsoleGraphFactory.cs" />
     <Compile Include="Model\GraphLoader\ConsoleGraphLoader.cs" />
-    <Compile Include="Model\GraphSaver\ConsoleGraphSaver.cs" />
     <Compile Include="InputClass\Input.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

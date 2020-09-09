@@ -29,12 +29,12 @@ namespace GraphLibrary.ViewModel
 
         public virtual void SaveGraph()
         {
-            saver.SaveGraph(Graph);
+            saver.SaveGraph(Graph, GetSavePath());
         }
 
         public virtual void LoadGraph()
         {
-            var temp = loader.GetGraph();
+            var temp = loader.GetGraph(GetLoadPath());
             if (temp == null)
                 return;
             Graph = temp;
@@ -51,6 +51,8 @@ namespace GraphLibrary.ViewModel
             GraphParametres = Graph.GetFormattedInfo(GraphParametresFormat);
         }
 
+        protected abstract string GetSavePath();
+        protected abstract string GetLoadPath();
         public abstract void FindPath();
         public abstract void CreateNewGraph();
     }

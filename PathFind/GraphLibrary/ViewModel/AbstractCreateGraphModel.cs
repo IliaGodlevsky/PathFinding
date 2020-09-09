@@ -21,7 +21,7 @@ namespace GraphLibrary.ViewModel
         public virtual void CreateGraph()
         {
             var factory = GetFactory();
-            graph = factory.GetGraph();
+            graph = factory.Graph;
             model.VertexEventHolder.Graph = graph;
             model.VertexEventHolder.ChargeGraph();
             graphField = graphFieldFiller.FileGraphField(graph);

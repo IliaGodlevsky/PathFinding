@@ -6,26 +6,25 @@ using System.Runtime.Serialization.Formatters.Binary;
 
 namespace GraphLibrary.GraphSerialization.GraphSaver
 {
-    public abstract class AbstractGraphSaver : IGraphSaver
+    public class GraphSaver : IGraphSaver
     {
-        public void SaveGraph(Graph graph)
+        public event Action<string> OnBadSave;
+
+        public void SaveGraph(Graph graph, string path)
         {
             if (graph != null)
             {
                 var formatter = new BinaryFormatter();
                 try
                 {
-                    using (var stream = new FileStream(GetPath(), FileMode.Create))
+                    using (var stream = new FileStream(path, FileMode.Create))
                         formatter.Serialize(stream, graph.VerticesInfo);
                 }
                 catch (Exception ex)
                 {
-                    ShowMessage(ex.Message);
+                    OnBadSave?.Invoke(ex.Message);
                 }
             }
         }
-
-        protected abstract void ShowMessage(string message);
-        protected abstract string GetPath();
     }
 }
