@@ -14,7 +14,7 @@ namespace GraphLibrary.Graphs
     {
         public Graph(IVertex[,] vertices)
         {
-            this.Array = vertices;
+            Array = vertices;
             End = NullVertex.GetInstance();
             Start = NullVertex.GetInstance();
         }
