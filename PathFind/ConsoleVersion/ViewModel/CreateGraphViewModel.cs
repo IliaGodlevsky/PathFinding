@@ -1,4 +1,5 @@
 ﻿using ConsoleVersion.InputClass;
+using ConsoleVersion.Model;
 using ConsoleVersion.Model.GraphFactory;
 using GraphLibrary.GraphFactory;
 using GraphLibrary.ValueRanges;
@@ -10,11 +11,11 @@ namespace ConsoleVersion.ViewModel
 {
     internal class CreateGraphViewModel : AbstractCreateGraphModel
     {
-        public Tuple<string,string,string> Messages { get; set; }
+        public Tuple<string, string, string> Messages { get; set; }
 
         public CreateGraphViewModel(IMainModel model) : base(model)
         {
-
+            graphFieldFiller = new ConsoleGraphFieldFiller();
         }
 
         public override IGraphFactory GetFactory()

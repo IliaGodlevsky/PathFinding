@@ -15,7 +15,6 @@ namespace WpfVersion.ViewModel
 
         public GraphCreateViewModel(IMainModel model) : base(model)
         {
-            this.model = model;
             graphField = model.GraphField;
             graphFieldFiller = new WpfGraphFieldFiller();
             ConfirmCreateGraphCommand = new RelayCommand(
