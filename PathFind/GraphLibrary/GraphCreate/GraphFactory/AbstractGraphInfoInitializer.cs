@@ -1,24 +1,31 @@
 ﻿using GraphLibrary.DTO;
+using GraphLibrary.Extensions;
 using GraphLibrary.Extensions.CollectionExtensions;
 using GraphLibrary.Graphs;
 using GraphLibrary.Vertex.Interface;
+using System.Drawing;
 
 namespace GraphLibrary.GraphFactory
 {
     public abstract class AbstractGraphInfoInitializer
-        : AbstractVertexLocator, IGraphFactory
+        : IGraphFactory
     {
-        public AbstractGraphInfoInitializer(VertexInfo[,] info,
-            int placeBetweenVertices) : 
-            base(info.Width(), info.Height(), placeBetweenVertices)
+        protected IVertex[,] vertices;
+        protected int placeBetweenVertices;
+
+        public AbstractGraphInfoInitializer(VertexInfo[,] info, int placeBetweenVertices)            
         {
+            this.placeBetweenVertices = placeBetweenVertices;
+            vertices = new IVertex[info.Width(), info.Height()];
+
             if (info == null)
                 return;
             IVertex InitializeVertex(IVertex vertex)
             {
-                indices = vertices.GetIndices(vertex);
-                vertex = CreateVertex(info[indices.X, indices.Y]);                
-                return SetLocation(vertex);
+                var indices = vertices.GetIndices(vertex);
+                vertex = CreateVertex(info[indices.X, indices.Y]);
+                vertex.SetLocation(new Point(indices.X * placeBetweenVertices, indices.Y * placeBetweenVertices));
+                return vertex;
             }
             vertices.Apply(InitializeVertex);            
         }

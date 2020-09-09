@@ -45,7 +45,6 @@ namespace GraphLibrary.ViewModel
 
             pathAlgorithm.OnVertexVisited += (vertex) =>
             {
-                vertex.IsVisited = true;
                 if (vertex.IsSimpleVertex())
                     vertex.MarkAsVisited();
             };

@@ -67,6 +67,7 @@ namespace GraphLibrary.PathFindingAlgorithm
 
         private void ProcessVertex(IVertex vertex)
         {
+            vertex.IsVisited = true;
             OnVertexVisited?.Invoke(vertex);
             SpreadWaves(vertex);
             ExtractNeighbours(vertex);

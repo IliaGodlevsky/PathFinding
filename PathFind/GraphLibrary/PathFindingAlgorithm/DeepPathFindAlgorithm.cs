@@ -35,6 +35,7 @@ namespace GraphLibrary.PathFindingAlgorithm
                 currentVertex = GoNextVertex(currentVertex);
                 if (!currentVertex.IsIsolated())
                 {
+                    currentVertex.IsVisited = true;
                     OnVertexVisited?.Invoke(currentVertex);
                     visitedVerticesStack.Push(currentVertex);
                     currentVertex.ParentVertex = temp;

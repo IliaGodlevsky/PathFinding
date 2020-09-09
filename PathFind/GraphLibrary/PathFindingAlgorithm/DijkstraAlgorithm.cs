@@ -42,6 +42,7 @@ namespace GraphLibrary.PathFindingAlgorithm
                 ExtractNeighbours(currentVertex);
                 SpreadRelaxWave(currentVertex);
                 currentVertex = GetChippestUnvisitedVertex();
+                currentVertex.IsVisited = true;
                 OnVertexVisited?.Invoke(currentVertex);
             } while (!currentVertex.IsEnd);
             OnFinished?.Invoke(this,

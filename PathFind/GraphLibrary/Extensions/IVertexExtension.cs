@@ -2,6 +2,7 @@
 using GraphLibrary.Vertex;
 using GraphLibrary.Vertex.Interface;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Linq;
 
 namespace GraphLibrary.Extensions
@@ -58,14 +59,16 @@ namespace GraphLibrary.Extensions
             return vertex.Neighbours.Where(vert => !vert.IsVisited);
         }
 
-        public static IEnumerable<IVertex> GetPathToStartVertex(this IVertex vertex)
+        public static IVertex Refresh(this IVertex vertex)
         {
-            var vert = vertex;
-            while (vert.ParentVertex != null)
-            {                
-                vert = vert.ParentVertex;
-                yield return vert;
-            }
+            if (!vertex.IsObstacle)
+                vertex.SetToDefault();
+            return vertex;
+        }
+
+        public static void SetLocation(this IVertex vertex, Point location)
+        {
+            vertex.Location = location;
         }
     }
 }
