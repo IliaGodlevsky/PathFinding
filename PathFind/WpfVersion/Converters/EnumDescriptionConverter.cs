@@ -1,4 +1,4 @@
-﻿using GraphLibrary.Extensions;
+﻿using GraphLibrary.Extensions.SystemTypeExtensions;
 using System;
 using System.Globalization;
 using System.Windows.Data;

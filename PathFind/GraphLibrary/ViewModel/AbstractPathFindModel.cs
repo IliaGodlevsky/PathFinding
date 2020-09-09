@@ -1,11 +1,12 @@
 ﻿using GraphLibrary.AlgoSelector;
 using System.Diagnostics;
 using System.Linq;
-using GraphLibrary.Extensions;
 using GraphLibrary.Enums;
 using GraphLibrary.Graphs;
 using GraphLibrary.PathFindingAlgorithm.Interface;
 using GraphLibrary.ViewModel.Interface;
+using GraphLibrary.Extensions.CustomTypeExtensions;
+using GraphLibrary.Extensions.SystemTypeExtensions;
 
 namespace GraphLibrary.ViewModel
 {

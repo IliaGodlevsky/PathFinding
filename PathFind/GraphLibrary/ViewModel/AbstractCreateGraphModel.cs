@@ -1,4 +1,4 @@
-﻿using GraphLibrary.Extensions;
+﻿using GraphLibrary.Extensions.CustomTypeExtensions;
 using GraphLibrary.GraphCreate.GraphFieldFiller;
 using GraphLibrary.GraphFactory;
 using GraphLibrary.GraphField;

@@ -1,11 +1,11 @@
 ﻿using GraphLibrary.Common.Constants;
-using GraphLibrary.Extensions;
 using System;
 using GraphLibrary.EventHolder.Interface;
 using GraphLibrary.Graphs;
 using GraphLibrary.Vertex.Interface;
 using GraphLibrary.Vertex;
 using GraphLibrary.VertexBinding;
+using GraphLibrary.Extensions.CustomTypeExtensions;
 
 namespace GraphLibrary.EventHolder
 {

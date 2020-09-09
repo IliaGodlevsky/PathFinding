@@ -1,8 +1,8 @@
-﻿using GraphLibrary.Extensions.CollectionExtensions;
+﻿using GraphLibrary.Extensions.SystemTypeExtensions;
 using GraphLibrary.Graphs;
 using GraphLibrary.Vertex;
 
-namespace GraphLibrary.Extensions
+namespace GraphLibrary.Extensions.CustomTypeExtensions
 {
     public static class GraphExtensions
     {
@@ -15,7 +15,7 @@ namespace GraphLibrary.Extensions
         public static void Refresh(this Graph graph)
         {
             graph.RemoveExtremeVertices();
-            graph.Array.Apply(vertex=>vertex.Refresh());
+            graph.Array.Apply(vertex => vertex.Refresh());
         }
 
         public static void RemoveExtremeVertices(this Graph graph)

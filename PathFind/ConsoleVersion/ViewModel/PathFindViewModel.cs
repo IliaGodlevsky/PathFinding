@@ -1,6 +1,5 @@
 ﻿using ConsoleVersion.Forms;
 using ConsoleVersion.InputClass;
-using GraphLibrary.Extensions;
 using GraphLibrary.PauseMaker;
 using System;
 using System.Drawing;
@@ -10,6 +9,7 @@ using GraphLibrary.EventHolder;
 using GraphLibrary.Vertex.Interface;
 using GraphLibrary.ViewModel.Interface;
 using GraphLibrary.ViewModel;
+using GraphLibrary.Extensions.CustomTypeExtensions;
 
 namespace ConsoleVersion.ViewModel
 {

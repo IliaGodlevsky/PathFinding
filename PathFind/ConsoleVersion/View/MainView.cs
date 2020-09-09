@@ -3,7 +3,7 @@ using ConsoleVersion.Forms;
 using ConsoleVersion.InputClass;
 using ConsoleVersion.View.Interface;
 using ConsoleVersion.ViewModel;
-using GraphLibrary.Extensions;
+using GraphLibrary.Extensions.SystemTypeExtensions;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;

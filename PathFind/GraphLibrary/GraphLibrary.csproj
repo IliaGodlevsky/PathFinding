@@ -45,7 +45,7 @@
   <ItemGroup>
     <Compile Include="EventArguments\AlgorithmEventArgs.cs" />
     <Compile Include="PathFindingAlgorithm\NullAlgorithm.cs" />
-    <Compile Include="Extensions\CollectionExtensions\StackExtension.cs" />
+    <Compile Include="Extensions\SystemTypeExtensions\StackExtension.cs" />
     <Compile Include="Graphs\Interface\IGraph.cs" />
     <Compile Include="Graphs\NullGraph.cs" />
     <Compile Include="PauseMaker\Interface\IPauser.cs" />
@@ -55,17 +55,17 @@
     <Compile Include="Enums\Algorithm.cs" />
     <Compile Include="Common\Constants\VertexSize.cs" />
     <Compile Include="Common\Constants\VertexValueRange.cs" />
-    <Compile Include="Extensions\CollectionExtensions\ListExtension.cs" />
-    <Compile Include="Extensions\EnumExtensions.cs" />
-    <Compile Include="Extensions\CollectionExtensions\IEnumerableExtension.cs" />
-    <Compile Include="Extensions\GraphExtensions.cs" />
-    <Compile Include="Extensions\IntExtensions.cs" />
-    <Compile Include="Extensions\IPathFindAlgorithmExtension.cs" />
-    <Compile Include="Extensions\IVertexExtension.cs" />
-    <Compile Include="Extensions\CollectionExtensions\MatrixExtensions.cs" />
-    <Compile Include="Extensions\CollectionExtensions\QueueExtensions.cs" />
-    <Compile Include="Extensions\RandomExtensions.cs" />
-    <Compile Include="Extensions\StopwatchExtension.cs" />
+    <Compile Include="Extensions\SystemTypeExtensions\ListExtension.cs" />
+    <Compile Include="Extensions\SystemTypeExtensions\EnumExtensions.cs" />
+    <Compile Include="Extensions\SystemTypeExtensions\IEnumerableExtension.cs" />
+    <Compile Include="Extensions\CustomTypeExtensions\GraphExtensions.cs" />
+    <Compile Include="Extensions\SystemTypeExtensions\IntExtensions.cs" />
+    <Compile Include="Extensions\CustomTypeExtensions\IPathFindAlgorithmExtension.cs" />
+    <Compile Include="Extensions\CustomTypeExtensions\IVertexExtension.cs" />
+    <Compile Include="Extensions\SystemTypeExtensions\MatrixExtensions.cs" />
+    <Compile Include="Extensions\SystemTypeExtensions\QueueExtensions.cs" />
+    <Compile Include="Extensions\SystemTypeExtensions\RandomExtensions.cs" />
+    <Compile Include="Extensions\SystemTypeExtensions\StopwatchExtension.cs" />
     <Compile Include="GraphCreate\GraphFactory\AbstractGraphFactory.cs" />
     <Compile Include="GraphCreate\GraphFactory\AbstractGraphInfoInitializer.cs" />
     <Compile Include="GraphCreate\GraphFactory\IGraphFactory.cs" />

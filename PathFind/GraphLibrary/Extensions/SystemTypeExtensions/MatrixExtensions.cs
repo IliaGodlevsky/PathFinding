@@ -2,7 +2,7 @@
 using System.Drawing;
 using System.Linq;
 
-namespace GraphLibrary.Extensions.CollectionExtensions
+namespace GraphLibrary.Extensions.SystemTypeExtensions
 {
     public static class MatrixExtensions
     {

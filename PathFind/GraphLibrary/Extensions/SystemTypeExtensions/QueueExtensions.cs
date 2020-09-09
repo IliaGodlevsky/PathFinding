@@ -3,7 +3,7 @@ using GraphLibrary.Vertex.Interface;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace GraphLibrary.Extensions.CollectionExtensions
+namespace GraphLibrary.Extensions.SystemTypeExtensions
 {
     public static class QueueExtensions
     {

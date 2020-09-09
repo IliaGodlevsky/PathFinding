@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
 using GraphLibrary.DTO;
-using GraphLibrary.Extensions.CollectionExtensions;
+using GraphLibrary.Extensions.SystemTypeExtensions;
 using GraphLibrary.Graphs.Interface;
 using GraphLibrary.Vertex;
 using GraphLibrary.Vertex.Interface;

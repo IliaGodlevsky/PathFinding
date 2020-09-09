@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Linq;
-using GraphLibrary.Extensions;
-using GraphLibrary.Extensions.CollectionExtensions;
+using GraphLibrary.Extensions.SystemTypeExtensions;
+using GraphLibrary.Extensions.CustomTypeExtensions;
 using GraphLibrary.Vertex.Interface;
 
 namespace GraphLibrary.PathFindingAlgorithm

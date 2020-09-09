@@ -1,4 +1,4 @@
-﻿namespace GraphLibrary.Extensions
+﻿namespace GraphLibrary.Extensions.SystemTypeExtensions
 {
     public static class IntExtensions
     {

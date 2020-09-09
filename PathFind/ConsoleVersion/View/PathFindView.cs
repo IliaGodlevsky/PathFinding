@@ -1,7 +1,7 @@
 ﻿using ConsoleVersion.View.Interface;
 using ConsoleVersion.ViewModel;
 using GraphLibrary.Enums;
-using GraphLibrary.Extensions;
+using GraphLibrary.Extensions.SystemTypeExtensions;
 using System;
 using System.Linq;
 using System.Text;

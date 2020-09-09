@@ -1,6 +1,6 @@
 ﻿using System.Diagnostics;
 
-namespace GraphLibrary.Extensions
+namespace GraphLibrary.Extensions.SystemTypeExtensions
 {
     public static class StopwatchExtension
     {

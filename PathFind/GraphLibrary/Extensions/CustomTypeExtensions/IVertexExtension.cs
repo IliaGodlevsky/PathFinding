@@ -5,7 +5,7 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
 
-namespace GraphLibrary.Extensions
+namespace GraphLibrary.Extensions.CustomTypeExtensions
 {
     public static class IVertexExtension
     {

@@ -3,12 +3,12 @@ using ConsoleVersion.Model;
 using ConsoleVersion.View;
 using System;
 using System.Drawing;
-using GraphLibrary.Extensions;
 using GraphLibrary.ViewModel;
 using ConsoleVersion.Model.GraphLoader;
 using ConsoleVersion.Model.GraphFactory;
 using ConsoleVersion.Model.EventHolder;
 using GraphLibrary.GraphSerialization.GraphSaver;
+using GraphLibrary.Extensions.CustomTypeExtensions;
 
 namespace ConsoleVersion.ViewModel
 {

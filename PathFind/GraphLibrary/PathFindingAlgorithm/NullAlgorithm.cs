@@ -1,12 +1,12 @@
 ﻿using GraphLibrary.Graphs;
 using GraphLibrary.EventArguments;
-using GraphLibrary.Extensions;
 using GraphLibrary.Graphs.Interface;
 using System;
 using System.Collections.Generic;
 using GraphLibrary.PathFindingAlgorithm.Interface;
 using GraphLibrary.Vertex.Interface;
 using GraphLibrary.Vertex;
+using GraphLibrary.Extensions.CustomTypeExtensions;
 
 namespace GraphLibrary.PathFindingAlgorithm
 {

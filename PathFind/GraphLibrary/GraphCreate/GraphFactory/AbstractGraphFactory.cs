@@ -1,10 +1,10 @@
 ﻿using System;
-using GraphLibrary.Extensions.CollectionExtensions;
-using GraphLibrary.Extensions;
+using GraphLibrary.Extensions.SystemTypeExtensions;
 using GraphLibrary.Graphs;
 using GraphLibrary.Vertex.Interface;
 using GraphLibrary.VertexBinding;
 using System.Drawing;
+using GraphLibrary.Extensions.CustomTypeExtensions;
 
 namespace GraphLibrary.GraphFactory
 {

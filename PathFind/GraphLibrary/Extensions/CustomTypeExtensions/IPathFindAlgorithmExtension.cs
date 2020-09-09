@@ -1,11 +1,11 @@
-﻿using GraphLibrary.Extensions.CollectionExtensions;
+﻿using GraphLibrary.Extensions.SystemTypeExtensions;
 using GraphLibrary.PathFindingAlgorithm.Interface;
 using GraphLibrary.Vertex;
 using GraphLibrary.Vertex.Interface;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace GraphLibrary.Extensions
+namespace GraphLibrary.Extensions.CustomTypeExtensions
 {
     public static class IPathFindAlgorithmExtension
     {
@@ -29,7 +29,7 @@ namespace GraphLibrary.Extensions
             {
                 vertex = vertex.ParentVertex;
                 if (vertex.IsSimpleVertex())
-                    yield return vertex;                
+                    yield return vertex;
             }
         }
     }

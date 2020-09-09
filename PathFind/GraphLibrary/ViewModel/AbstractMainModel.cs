@@ -1,5 +1,6 @@
 ﻿using GraphLibrary.EventHolder;
 using GraphLibrary.Extensions;
+using GraphLibrary.Extensions.CustomTypeExtensions;
 using GraphLibrary.GraphCreate.GraphFieldFiller;
 using GraphLibrary.GraphField;
 using GraphLibrary.Graphs;

@@ -1,5 +1,5 @@
 ﻿using GraphLibrary.DTO;
-using GraphLibrary.Extensions;
+using GraphLibrary.Extensions.CustomTypeExtensions;
 using GraphLibrary.Vertex.Interface;
 using System.Collections.Generic;
 using System.Drawing;

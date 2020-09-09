@@ -3,7 +3,7 @@ using GraphLibrary.Vertex.Interface;
 using System;
 using System.Collections.Generic;
 
-namespace GraphLibrary.Extensions.CollectionExtensions
+namespace GraphLibrary.Extensions.SystemTypeExtensions
 {
     public static class ListExtension
     {
