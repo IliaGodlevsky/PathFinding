@@ -49,12 +49,11 @@
     <Compile Include="Graphs\Interface\IGraph.cs" />
     <Compile Include="Graphs\NullGraph.cs" />
     <Compile Include="PauseMaker\Interface\IPauser.cs" />
-    <Compile Include="Common\Constants\Range.cs" />
-    <Compile Include="Common\Constants\ValueRange.cs" />
+    <Compile Include="ValueRanges\Range.cs" />
+    <Compile Include="ValueRanges\ValueRange.cs" />
     <Compile Include="DistanceCalculator\Distance.cs" />
     <Compile Include="Enums\Algorithm.cs" />
-    <Compile Include="Common\Constants\VertexSize.cs" />
-    <Compile Include="Common\Constants\VertexValueRange.cs" />
+    <Compile Include="Constants\VertexSize.cs" />
     <Compile Include="Extensions\SystemTypeExtensions\ListExtension.cs" />
     <Compile Include="Extensions\SystemTypeExtensions\EnumExtensions.cs" />
     <Compile Include="Extensions\SystemTypeExtensions\IEnumerableExtension.cs" />

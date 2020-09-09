@@ -1,6 +1,6 @@
-﻿using GraphLibrary.Common.Constants;
-using System.Windows;
+﻿using System.Windows;
 using GraphLibrary.Graphs;
+using GraphLibrary.Constants;
 
 namespace WpfVersion.Model
 {

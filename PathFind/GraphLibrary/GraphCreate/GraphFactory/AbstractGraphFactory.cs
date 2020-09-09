@@ -11,9 +11,9 @@ namespace GraphLibrary.GraphFactory
     public abstract class AbstractGraphFactory 
         : IGraphFactory
     {
-
         public Graph Graph { get; private set; }
         
+
         public AbstractGraphFactory(int percentOfObstacles, 
             int width, int height, int placeBetweenVertices)
         {
@@ -23,6 +23,7 @@ namespace GraphLibrary.GraphFactory
             {
                 var indices = Graph.GetIndices(vertex);
                 vertex = CreateVertex();
+                vertex.Cost = rand.GetRandomValueCost();
                 if (rand.IsObstacleChance(percentOfObstacles))                
                     vertex.MarkAsObstacle();
                 vertex.SetLocation(new Point(indices.X * placeBetweenVertices, 
@@ -40,6 +41,6 @@ namespace GraphLibrary.GraphFactory
 
         protected abstract IVertex CreateVertex();
 
-        private static Random rand;
+        private static readonly Random rand;
     }
 }

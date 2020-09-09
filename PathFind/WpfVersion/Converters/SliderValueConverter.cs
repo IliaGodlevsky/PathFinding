@@ -1,4 +1,4 @@
-﻿using GraphLibrary.Common.Constants;
+﻿using GraphLibrary.ValueRanges;
 using System;
 using System.Globalization;
 using System.Windows.Data;

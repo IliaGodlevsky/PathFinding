@@ -1,4 +1,4 @@
-﻿namespace GraphLibrary.Common.Constants
+﻿namespace GraphLibrary.Constants
 {
     /// <summary>
     /// size in pts

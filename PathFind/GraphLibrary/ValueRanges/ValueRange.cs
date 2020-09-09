@@ -1,10 +1,10 @@
-﻿namespace GraphLibrary.Common.Constants
+﻿namespace GraphLibrary.ValueRanges
 {
     public class ValueRange
     {
         public ValueRange(int upper, int lower)
         {
-            if (upper < lower) 
+            if (upper < lower)
             {
                 int temp = upper;
                 upper = lower;
@@ -13,6 +13,15 @@
 
             UpperRange = upper;
             LowerRange = lower;
+        }
+
+        public int ReturnInBounds(int value)
+        {
+            if (value > UpperRange)
+                value = LowerRange;
+            else if (value < LowerRange)
+                value = UpperRange;
+            return value;
         }
 
         public bool IsInBounds(int value)

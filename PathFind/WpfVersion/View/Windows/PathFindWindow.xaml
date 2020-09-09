@@ -6,7 +6,7 @@
         xmlns:enums="clr-namespace:GraphLibrary.Enums;assembly=GraphLibrary"
         xmlns:sys="clr-namespace:System;assembly=mscorlib" 
         xmlns:converters="clr-namespace:WpfVersion.Converters"
-        xmlns:constants="clr-namespace:GraphLibrary.Common.Constants;assembly=GraphLibrary"
+        xmlns:range="clr-namespace:GraphLibrary.ValueRanges;assembly=GraphLibrary"
         mc:Ignorable="d"
         Title="PathFindParametresWindow" SizeToContent="WidthAndHeight">
     <Window.Resources>
@@ -54,7 +54,7 @@
                 <Slider Grid.Row="1" 
                         Value ="{Binding Path=DelayTime}" x:Name="delayTimeSlider" MinWidth="160" Margin="5"></Slider>
                 <TextBox MaxWidth="25" Grid.Row="1" Text ="{Binding ElementName=delayTimeSlider, Path=Value, 
-                    Converter = {StaticResource sliderValueConverter}, ConverterParameter={x:Static constants:Range.DelayValueRange} ,Mode = TwoWay, 
+                    Converter = {StaticResource sliderValueConverter}, ConverterParameter={x:Static range:Range.DelayValueRange} ,Mode = TwoWay, 
                     UpdateSourceTrigger = PropertyChanged}" Grid.Column="1" Margin="5"></TextBox>
             </Grid>
        

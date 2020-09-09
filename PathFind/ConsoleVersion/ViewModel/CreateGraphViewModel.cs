@@ -1,7 +1,7 @@
 ﻿using ConsoleVersion.InputClass;
 using ConsoleVersion.Model.GraphFactory;
-using GraphLibrary.Common.Constants;
 using GraphLibrary.GraphFactory;
+using GraphLibrary.ValueRanges;
 using GraphLibrary.ViewModel;
 using GraphLibrary.ViewModel.Interface;
 using System;

@@ -1,11 +1,11 @@
-﻿using GraphLibrary.Common.Constants;
-using System;
+﻿using System;
 using GraphLibrary.EventHolder.Interface;
 using GraphLibrary.Graphs;
 using GraphLibrary.Vertex.Interface;
 using GraphLibrary.Vertex;
 using GraphLibrary.VertexBinding;
 using GraphLibrary.Extensions.CustomTypeExtensions;
+using GraphLibrary.ValueRanges;
 
 namespace GraphLibrary.EventHolder
 {
@@ -20,7 +20,7 @@ namespace GraphLibrary.EventHolder
             var vertex = sender as IVertex;
             if (vertex.IsObstacle)
                 return;
-            vertex.Cost = VertexValueRange.ReturnValueInValueRange(vertex.Cost += GetWheelDelta(e) > 0 ? 1 : -1);
+            vertex.Cost = Range.VertexCostRange.ReturnInBounds(vertex.Cost += GetWheelDelta(e) > 0 ? 1 : -1);
         }
 
         private void MakeObstacle(IVertex vertex)

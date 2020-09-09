@@ -1,6 +1,6 @@
-﻿using GraphLibrary.Common.Constants;
-using GraphLibrary.Enums;
+﻿using GraphLibrary.Enums;
 using GraphLibrary.Extensions.SystemTypeExtensions;
+using GraphLibrary.ValueRanges;
 using System;
 using System.Linq;
 using System.Windows.Forms;

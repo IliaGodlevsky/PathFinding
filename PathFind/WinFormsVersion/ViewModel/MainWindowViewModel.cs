@@ -1,5 +1,4 @@
-﻿using GraphLibrary.Common.Constants;
-using System;
+﻿using System;
 using System.ComponentModel;
 using System.Drawing;
 using System.Runtime.CompilerServices;
@@ -16,6 +15,7 @@ using GraphLibrary.ViewModel;
 using GraphLibrary.GraphField;
 using GraphLibrary.Vertex;
 using GraphLibrary.GraphSerialization.GraphSaver;
+using GraphLibrary.Constants;
 
 namespace WinFormsVersion.ViewModel
 {

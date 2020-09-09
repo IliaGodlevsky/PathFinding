@@ -1,4 +1,4 @@
-﻿using GraphLibrary.Common.Constants;
+﻿using GraphLibrary.Constants;
 using GraphLibrary.DTO;
 using GraphLibrary.Extensions.CustomTypeExtensions;
 using GraphLibrary.Vertex.Interface;

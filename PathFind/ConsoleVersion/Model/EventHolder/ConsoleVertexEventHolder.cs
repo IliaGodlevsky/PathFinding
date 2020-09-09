@@ -1,9 +1,9 @@
 ﻿using ConsoleVersion.InputClass;
 using System;
-using GraphLibrary.Common.Constants;
 using GraphLibrary.EventHolder;
 using GraphLibrary.Vertex.Interface;
 using ConsoleVersion.Model.Vertex;
+using GraphLibrary.ValueRanges;
 
 namespace ConsoleVersion.Model.EventHolder
 {
@@ -12,7 +12,7 @@ namespace ConsoleVersion.Model.EventHolder
 
         public override void ChangeVertexValue(object sender, EventArgs e) =>
             (sender as ConsoleVertex).Cost = Input.InputNumber(ConsoleVersionResources.NewTopValueMsg,
-                VertexValueRange.UpperValue, VertexValueRange.LowerValue);
+                Range.VertexCostRange.UpperRange, Range.VertexCostRange.LowerRange);
 
         protected override int GetWheelDelta(EventArgs e)
         {

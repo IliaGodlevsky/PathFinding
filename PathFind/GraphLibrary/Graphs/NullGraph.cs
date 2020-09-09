@@ -10,7 +10,16 @@ namespace GraphLibrary.Graphs
 {
     public class NullGraph : IGraph
     {
-        public static NullGraph Instance => instance ?? new NullGraph();
+        public static NullGraph Instance
+        {
+            get
+            {
+                if (instance == null)
+                    instance = new NullGraph();
+                return instance;
+            }
+        }
+
         private NullGraph() => nullVertex = NullVertex.Instance;        
         public IVertex this[int width, int height] { get => nullVertex; set => nullVertex = NullVertex.Instance; }
         public IVertex End { get => nullVertex; set => nullVertex = NullVertex.Instance; }
@@ -28,6 +37,6 @@ namespace GraphLibrary.Graphs
         IEnumerator IEnumerable.GetEnumerator() => new IVertex[0, 0].GetEnumerator();
 
         private NullVertex nullVertex;
-        private static readonly NullGraph instance = null;
+        private static NullGraph instance = null;
     }
 }

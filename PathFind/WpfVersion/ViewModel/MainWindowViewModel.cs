@@ -1,5 +1,4 @@
-﻿using GraphLibrary.Common.Constants;
-using System.ComponentModel;
+﻿using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using System.Windows;
 using WpfVersion.Infrastructure;
@@ -15,6 +14,7 @@ using GraphLibrary.ViewModel;
 using GraphLibrary.GraphField;
 using GraphLibrary.GraphSerialization.GraphSaver;
 using Microsoft.Win32;
+using GraphLibrary.Constants;
 
 namespace WpfVersion.ViewModel
 {
@@ -104,7 +104,7 @@ namespace WpfVersion.ViewModel
 
         private bool CanExecuteStartFindPathCommand(object param)
         {
-            return Graph?.End != NullVertex.Instance 
+            return Graph?.End != NullVertex.Instance
                 && Graph?.Start != NullVertex.Instance && Graph != null;
         }
 

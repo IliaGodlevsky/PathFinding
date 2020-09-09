@@ -8,7 +8,6 @@ using GraphLibrary.Graphs.Interface;
 using GraphLibrary.PathFindingAlgorithm.Interface;
 using GraphLibrary.Vertex.Interface;
 using GraphLibrary.Extensions.CustomTypeExtensions;
-using GraphLibrary.Extensions.SystemTypeExtensions;
 
 namespace GraphLibrary.PathFindingAlgorithm
 {

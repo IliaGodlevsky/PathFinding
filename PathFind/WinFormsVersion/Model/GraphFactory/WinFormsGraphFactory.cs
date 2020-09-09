@@ -1,6 +1,5 @@
 ﻿using GraphLibrary.GraphFactory;
 using WinFormsVersion.Vertex;
-using GraphLibrary.Common.Constants;
 using GraphLibrary.Vertex.Interface;
 
 namespace WinFormsVersion.GraphFactory
@@ -14,6 +13,6 @@ namespace WinFormsVersion.GraphFactory
             
         }
 
-        protected override IVertex CreateVertex() => new WinFormsVertex { Cost = VertexValueRange.GetRandomVertexCost() };
+        protected override IVertex CreateVertex() => new WinFormsVertex();
     }
 }

@@ -7,8 +7,17 @@ namespace GraphLibrary.Vertex
 {
     public class NullVertex : IVertex
     {
-        private static readonly NullVertex instance = null;
-        public static NullVertex Instance => instance ?? new NullVertex();
+        private static NullVertex instance = null;
+
+        public static NullVertex Instance
+        {
+            get
+            {
+                if (instance == null)
+                    instance = new NullVertex();
+                return instance;
+            }
+        }
 
         private NullVertex()
         {

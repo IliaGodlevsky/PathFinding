@@ -1,7 +1,7 @@
 ﻿using GraphLibrary.GraphFactory;
-using GraphLibrary.Common.Constants;
 using GraphLibrary.Vertex.Interface;
 using ConsoleVersion.Model.Vertex;
+using GraphLibrary.Constants;
 
 namespace ConsoleVersion.Model.GraphFactory
 {
@@ -13,6 +13,6 @@ namespace ConsoleVersion.Model.GraphFactory
 
         }
 
-        protected override IVertex CreateVertex() => new ConsoleVertex { Cost = VertexValueRange.GetRandomVertexCost() };
+        protected override IVertex CreateVertex() => new ConsoleVertex();
     }
 }

@@ -3,13 +3,13 @@ using ConsoleVersion.InputClass;
 using GraphLibrary.PauseMaker;
 using System;
 using System.Drawing;
-using GraphLibrary.Common.Constants;
 using GraphLibrary.Enums;
 using GraphLibrary.EventHolder;
 using GraphLibrary.Vertex.Interface;
 using GraphLibrary.ViewModel.Interface;
 using GraphLibrary.ViewModel;
 using GraphLibrary.Extensions.CustomTypeExtensions;
+using GraphLibrary.ValueRanges;
 
 namespace ConsoleVersion.ViewModel
 {

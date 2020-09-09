@@ -1,5 +1,4 @@
-﻿using GraphLibrary.Common.Constants;
-using GraphLibrary.GraphFactory;
+﻿using GraphLibrary.GraphFactory;
 using GraphLibrary.Vertex.Interface;
 using WpfVersion.Model.Vertex;
 
@@ -13,6 +12,6 @@ namespace WpfVersion.Model.GraphFactory
         {
         }
 
-        protected override IVertex CreateVertex() => new WpfVertex { Cost = VertexValueRange.GetRandomVertexCost() };
+        protected override IVertex CreateVertex() => new WpfVertex();
     }
 }

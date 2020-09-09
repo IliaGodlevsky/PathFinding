@@ -1,4 +1,4 @@
-﻿using GraphLibrary.Common.Constants;
+﻿using GraphLibrary.Constants;
 using GraphLibrary.GraphFactory;
 using GraphLibrary.ViewModel;
 using GraphLibrary.ViewModel.Interface;

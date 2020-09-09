@@ -1,8 +1,8 @@
 ﻿using GraphLibrary.GraphFactory;
-using GraphLibrary.Common.Constants;
 using GraphLibrary.DTO;
 using GraphLibrary.Vertex.Interface;
 using ConsoleVersion.Model.Vertex;
+using GraphLibrary.Constants;
 
 namespace ConsoleVersion.Model.GraphFactory
 {

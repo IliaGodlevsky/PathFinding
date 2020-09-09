@@ -1,4 +1,4 @@
-﻿using GraphLibrary.Common.Constants;
+﻿using GraphLibrary.Constants;
 using GraphLibrary.GraphField;
 using GraphLibrary.Vertex.Interface;
 using System.Windows.Controls;

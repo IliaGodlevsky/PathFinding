@@ -3,8 +3,8 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:sys="clr-namespace:System;assembly=mscorlib" 
-        xmlns:converters="clr-namespace:WpfVersion.Converters" xmlns:constants="clr-namespace:GraphLibrary.Common.Constants;assembly=GraphLibrary"
+        xmlns:converters="clr-namespace:WpfVersion.Converters"
+        xmlns:range="clr-namespace:GraphLibrary.ValueRanges;assembly=GraphLibrary" 
         mc:Ignorable="d"
         Title="Parametres" SizeToContent="WidthAndHeight">
     <Window.Resources>
@@ -29,7 +29,7 @@
                 MinWidth="100" Margin="5" Grid.Row="1"></Slider>
         <TextBox Text = "{Binding ElementName = obstacleSlider, Path = Value, 
             Converter = {StaticResource sliderValueConverter}, 
-            ConverterParameter={x:Static constants:Range.ObstaclePercentValueRange}, 
+            ConverterParameter={x:Static range:Range.ObstaclePercentValueRange}, 
             Mode = TwoWay, 
             UpdateSourceTrigger = PropertyChanged}"
                  x:Name="obstacleTextBox" MinWidth="40" Margin="5" Grid.Row="1" Grid.Column="1"></TextBox>
@@ -37,13 +37,13 @@
         <TextBox Text ="{Binding Path = Width, 
             UpdateSourceTrigger=PropertyChanged, 
             Converter={StaticResource stringToIntCOnverter}, 
-            ConverterParameter={x:Static constants:Range.WidthValueRange}}" 
+            ConverterParameter={x:Static range:Range.WidthValueRange}}" 
                  Grid.Row="2" Grid.Column="1" Margin="5"></TextBox>
         <TextBlock Grid.Row ="3" Text="Graph height" Margin="5"></TextBlock>
         <TextBox Text="{Binding Path = Height, 
             UpdateSourceTrigger=PropertyChanged,
             Converter={StaticResource stringToIntCOnverter}, 
-            ConverterParameter={x:Static constants:Range.HeightValueRange}}" 
+            ConverterParameter={x:Static range:Range.HeightValueRange}}" 
                  Grid.Row="3" Grid.Column="1" Margin="5"></TextBox>
         <StackPanel Grid.Row="4" Grid.ColumnSpan="2" Orientation="Horizontal" HorizontalAlignment="Center">
             <Button Command ="{Binding ConfirmCreateGraphCommand}" Margin="5" Content="OK"></Button>
