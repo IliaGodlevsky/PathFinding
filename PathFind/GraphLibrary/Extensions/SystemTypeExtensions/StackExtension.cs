@@ -12,11 +12,9 @@ namespace GraphLibrary.Extensions.SystemTypeExtensions
         /// </summary>
         /// <param name="stack"></param>
         /// <returns>if stack is empty returns NullVertex</returns>
-        public static IVertex PopSecure(this Stack<IVertex> stack)
+        public static IVertex PopOrNullVertex(this Stack<IVertex> stack)
         {
-            if (!stack.Any())
-                return NullVertex.GetInstance();
-            return stack.Pop();
+            return !stack.Any() ? NullVertex.Instance : stack.Pop();
         }
     }
 }

@@ -25,7 +25,7 @@ namespace GraphLibrary.Extensions.CustomTypeExtensions
         {
             var vertex = algorithm.Graph.End;
             while (algorithm.Graph.Start != vertex
-                && vertex != NullVertex.GetInstance())
+                && vertex != NullVertex.Instance)
             {
                 vertex = vertex.ParentVertex;
                 if (vertex.IsSimpleVertex())

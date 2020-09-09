@@ -20,7 +20,7 @@ namespace GraphLibrary.PathFindingAlgorithm
         protected override IVertex GoNextVertex(IVertex vertex)
         {
             var neighbours = vertex.GetUnvisitedNeighbours().ToList();
-            return neighbours.FindSecure(vert => GreedyFunction(vert) == neighbours.Min(GreedyFunction));
+            return neighbours.FindOrNullVertex(vert => GreedyFunction(vert) == neighbours.Min(GreedyFunction));
         }
     }
 }

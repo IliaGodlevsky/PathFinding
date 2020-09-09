@@ -19,11 +19,9 @@ namespace GraphLibrary.Extensions.SystemTypeExtensions
         /// </summary>
         /// <param name="queue"></param>
         /// <returns>if queue is empty returns NullVertex</returns>
-        public static IVertex DequeueSecure(this Queue<IVertex> queue)
+        public static IVertex DequeueOrNullVertex(this Queue<IVertex> queue)
         {
-            if (!queue.Any())
-                return NullVertex.GetInstance();
-            return queue.Dequeue();
+            return !queue.Any() ? NullVertex.Instance : queue.Dequeue();
         }
     }
 }

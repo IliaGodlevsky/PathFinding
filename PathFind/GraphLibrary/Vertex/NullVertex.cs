@@ -7,13 +7,8 @@ namespace GraphLibrary.Vertex
 {
     public class NullVertex : IVertex
     {
-        private static NullVertex instance = null;
-        public static NullVertex GetInstance()
-        {
-            if (instance == null)
-                instance = new NullVertex();
-            return instance;
-        }
+        private static readonly NullVertex instance = null;
+        public static NullVertex Instance => instance ?? new NullVertex();
 
         private NullVertex()
         {
@@ -46,7 +41,7 @@ namespace GraphLibrary.Vertex
         public List<IVertex> Neighbours { get => neighbours; set => neighbours = new List<IVertex>(); }
 
         private IVertex parentVertex;
-        public IVertex ParentVertex { get => GetInstance(); set => parentVertex = GetInstance(); }
+        public IVertex ParentVertex { get => Instance; set => parentVertex = Instance; }
 
         private double accumulatedCost;
         public double AccumulatedCost { get => accumulatedCost; set => accumulatedCost = double.PositiveInfinity; }

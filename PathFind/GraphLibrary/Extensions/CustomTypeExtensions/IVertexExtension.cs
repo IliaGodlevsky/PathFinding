@@ -26,7 +26,7 @@ namespace GraphLibrary.Extensions.CustomTypeExtensions
             vertex.IsVisited = false;
             vertex.AccumulatedCost = 0;
             vertex.MarkAsSimpleVertex();
-            vertex.ParentVertex = NullVertex.GetInstance();
+            vertex.ParentVertex = NullVertex.Instance;
         }
 
         public static void Initialize(this IVertex vertex)

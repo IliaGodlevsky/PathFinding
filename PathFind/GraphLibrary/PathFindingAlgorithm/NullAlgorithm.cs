@@ -14,17 +14,12 @@ namespace GraphLibrary.PathFindingAlgorithm
     {
         private NullAlgorithm()
         {
-            Graph = NullGraph.GetInstance();
+            Graph = NullGraph.Instance;
             OnStarted = null;
             OnVertexVisited = null;
         }
 
-        public static NullAlgorithm GetInstance()
-        {
-            if (instance == null)
-                instance = new NullAlgorithm();
-            return instance;
-        }
+        public static NullAlgorithm Instance => instance ?? new NullAlgorithm();
 
         public IGraph Graph { get; set; }
 
@@ -36,12 +31,12 @@ namespace GraphLibrary.PathFindingAlgorithm
         {
             OnStarted?.Invoke(this,
                 new AlgorithmEventArgs());
-            OnVertexVisited?.Invoke(NullVertex.GetInstance());
+            OnVertexVisited?.Invoke(NullVertex.Instance);
             OnFinished?.Invoke(this,
                 new AlgorithmEventArgs());
             return this.GetFoundPath();
         }
 
-        private static NullAlgorithm instance = null;
+        private static readonly NullAlgorithm instance = null;
     }
 }

@@ -82,7 +82,7 @@ namespace GraphLibrary.EventHolder
 
         public virtual void ChooseExtremeVertices(object sender, EventArgs e)
         {
-            var nullVertex = NullVertex.GetInstance();
+            var nullVertex = NullVertex.Instance;
             if (Graph.Start == nullVertex)
                 SetStartVertex(sender as IVertex);
             else if (Graph.Start != nullVertex && Graph.End == nullVertex)

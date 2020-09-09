@@ -21,11 +21,9 @@ namespace GraphLibrary.Extensions.SystemTypeExtensions
         /// <param name="list"></param>
         /// <param name="match"></param>
         /// <returns>if no match returns NullVertex</returns>
-        public static IVertex FindSecure(this List<IVertex> list, Predicate<IVertex> match)
+        public static IVertex FindOrNullVertex(this List<IVertex> list, Predicate<IVertex> match)
         {
-            if (list.Find(match) == null)
-                return NullVertex.GetInstance();
-            return list.Find(match);
+            return list.Find(match) == null ? NullVertex.Instance : list.Find(match);
         }
     }
 }

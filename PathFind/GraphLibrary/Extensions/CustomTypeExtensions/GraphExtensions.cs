@@ -20,8 +20,8 @@ namespace GraphLibrary.Extensions.CustomTypeExtensions
 
         public static void RemoveExtremeVertices(this Graph graph)
         {
-            graph.End = NullVertex.GetInstance();
-            graph.Start = NullVertex.GetInstance();
+            graph.End = NullVertex.Instance;
+            graph.Start = NullVertex.Instance;
         }
     }
 }

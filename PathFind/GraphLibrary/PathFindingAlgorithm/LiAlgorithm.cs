@@ -26,7 +26,7 @@ namespace GraphLibrary.PathFindingAlgorithm
 
         public LiAlgorithm()
         {
-            Graph = NullGraph.GetInstance();
+            Graph = NullGraph.Instance;
             neighbourQueue = new Queue<IVertex>();
         }
 
@@ -38,7 +38,7 @@ namespace GraphLibrary.PathFindingAlgorithm
             ProcessVertex(currentVertex);
             while (!currentVertex.IsEnd)
             {
-                currentVertex = neighbourQueue.DequeueSecure();
+                currentVertex = neighbourQueue.DequeueOrNullVertex();
                 if (!currentVertex.IsVisited)
                     ProcessVertex(currentVertex);
             }

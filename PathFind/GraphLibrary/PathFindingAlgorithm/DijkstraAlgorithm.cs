@@ -25,7 +25,7 @@ namespace GraphLibrary.PathFindingAlgorithm
 
         public DijkstraAlgorithm()
         {
-            Graph = NullGraph.GetInstance();
+            Graph = NullGraph.Instance;
             verticesProessQueue = new List<IVertex>();
             RelaxFunction = (neighbour, vertex)
                 => neighbour.Cost + vertex.AccumulatedCost;
@@ -85,7 +85,7 @@ namespace GraphLibrary.PathFindingAlgorithm
             verticesProessQueue.RemoveAll(vertex => vertex.IsVisited);
             verticesProessQueue.Sort((vertex1, vertex2)
                 => vertex1.AccumulatedCost.CompareTo(vertex2.AccumulatedCost));
-            return verticesProessQueue.FirstSecure();
+            return verticesProessQueue.FirstOrNullVertex();
         }
 
         private readonly List<IVertex> verticesProessQueue;

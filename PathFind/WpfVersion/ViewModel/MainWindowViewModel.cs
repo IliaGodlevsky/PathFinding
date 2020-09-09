@@ -104,8 +104,8 @@ namespace WpfVersion.ViewModel
 
         private bool CanExecuteStartFindPathCommand(object param)
         {
-            return Graph?.End != NullVertex.GetInstance() 
-                && Graph?.Start != NullVertex.GetInstance() && Graph != null;
+            return Graph?.End != NullVertex.Instance 
+                && Graph?.Start != NullVertex.Instance && Graph != null;
         }
 
         private void ExecuteLoadGraphCommand(object param)

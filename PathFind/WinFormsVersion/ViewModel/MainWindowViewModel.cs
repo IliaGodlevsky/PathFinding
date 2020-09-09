@@ -142,8 +142,8 @@ namespace WinFormsVersion.ViewModel
 
         private bool CanStartPathFinding()
         {
-            return graph?.Start != NullVertex.GetInstance()
-                && graph?.End != NullVertex.GetInstance()
+            return graph?.Start != NullVertex.Instance
+                && graph?.End != NullVertex.Instance
                 && Graph != null;
         }
 

@@ -22,7 +22,7 @@ namespace GraphLibrary.PathFindingAlgorithm
 
         public DeepPathFindAlgorithm()
         {
-            Graph = NullGraph.GetInstance();
+            Graph = NullGraph.Instance;
             visitedVerticesStack = new Stack<IVertex>();
         }
 
@@ -42,7 +42,7 @@ namespace GraphLibrary.PathFindingAlgorithm
                     currentVertex.ParentVertex = temp;
                 }
                 else
-                    currentVertex = visitedVerticesStack.PopSecure();
+                    currentVertex = visitedVerticesStack.PopOrNullVertex();
             }
             OnFinished?.Invoke(this, new AlgorithmEventArgs(Graph));
             return this.GetFoundPath();
@@ -50,7 +50,7 @@ namespace GraphLibrary.PathFindingAlgorithm
 
         protected virtual IVertex GoNextVertex(IVertex vertex)
         {
-            return vertex.GetUnvisitedNeighbours().ToList().FirstSecure();
+            return vertex.GetUnvisitedNeighbours().ToList().FirstOrNullVertex();
         }
 
         private readonly Stack<IVertex> visitedVerticesStack;
