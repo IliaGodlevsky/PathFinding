@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
 using GraphLibrary.DTO;
+using GraphLibrary.Extensions.CustomTypeExtensions;
 using GraphLibrary.Extensions.SystemTypeExtensions;
 using GraphLibrary.Graphs.Interface;
-using GraphLibrary.Vertex;
 using GraphLibrary.Vertex.Interface;
 
 namespace GraphLibrary.Graphs
@@ -15,15 +15,12 @@ namespace GraphLibrary.Graphs
         public Graph(IVertex[,] vertices)
         {
             Array = vertices;
-            End = NullVertex.GetInstance();
-            Start = NullVertex.GetInstance();
+            this.RemoveExtremeVertices();
         }
 
-        public Graph(int width, int height)
+        public Graph(int width, int height) : this(new IVertex[width, height])
         {
-            Array = new IVertex[width, height];
-            End = NullVertex.GetInstance();
-            Start = NullVertex.GetInstance();
+
         }
 
         public IVertex this[int width, int height]
