@@ -15,7 +15,7 @@ namespace GraphLibrary.Vertex.Interface
         IVertex ParentVertex { get; set; }
         double AccumulatedCost { get; set; }
         Point Location { get; set; }
-        VertexInfo Info { get; }
+        VertexDto Info { get; }
         void MarkAsEnd();
         void MarkAsSimpleVertex();
         void MarkAsObstacle();

@@ -7,12 +7,12 @@ namespace WpfVersion.Model.GraphFactory
 {
     internal class WpfGraphInitializer : AbstractGraphInfoInitializer
     {
-        public WpfGraphInitializer(VertexInfo[,] info, int placeBetweenVertices) 
+        public WpfGraphInitializer(VertexDto[,] info, int placeBetweenVertices) 
             : base(info, placeBetweenVertices)
         {
 
         }
 
-        protected override IVertex CreateVertex(VertexInfo info) => new WpfVertex(info);
+        protected override IVertex CreateVertex(VertexDto info) => new WpfVertex(info);
     }
 }

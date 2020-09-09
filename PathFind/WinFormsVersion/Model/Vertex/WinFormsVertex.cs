@@ -20,7 +20,7 @@ namespace WinFormsVersion.Vertex
             //BorderStyle = BorderStyle.FixedSingle;
         }
 
-        public WinFormsVertex(VertexInfo info) : this()
+        public WinFormsVertex(VertexDto info) : this()
         {
             this.Initialize(info);
         }
@@ -53,7 +53,7 @@ namespace WinFormsVersion.Vertex
 
         public void MarkAsPath() => BackColor = Color.FromKnownColor(KnownColor.Yellow);
 
-        public VertexInfo Info => new VertexInfo(this);
+        public VertexDto Info => new VertexDto(this);
 
         public int Cost { get => int.Parse(Text); set => Text = value.ToString(); }
     }

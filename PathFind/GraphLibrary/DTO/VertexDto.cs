@@ -4,9 +4,9 @@ using System;
 namespace GraphLibrary.DTO
 {
     [Serializable]
-    public class VertexInfo
+    public class VertexDto
     {
-        public VertexInfo(IVertex vertex)
+        public VertexDto(IVertex vertex)
         {
             IsObstacle = vertex.IsObstacle;
             Cost = vertex.Cost;

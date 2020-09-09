@@ -8,13 +8,13 @@ namespace WinFormsVersion.GraphFactory
     internal class WinFormsGraphInitializer : AbstractGraphInfoInitializer
     {
 
-        public WinFormsGraphInitializer(VertexInfo[,] info, int placeBetweenTops)
+        public WinFormsGraphInitializer(VertexDto[,] info, int placeBetweenTops)
             : base(info, placeBetweenTops)
         {
            
         }
 
-        protected override IVertex CreateVertex(VertexInfo info)
+        protected override IVertex CreateVertex(VertexDto info)
         {
             return new WinFormsVertex(info);
         }

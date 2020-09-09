@@ -32,7 +32,7 @@ namespace WpfVersion.Model.Vertex
             Template = (ControlTemplate)TryFindResource("vertexTemplate");
         }
 
-        public WpfVertex(VertexInfo info) : this() => this.Initialize(info);
+        public WpfVertex(VertexDto info) : this() => this.Initialize(info);
 
         public bool IsEnd { get; set; }
         public bool IsObstacle { get; set; }
@@ -50,7 +50,7 @@ namespace WpfVersion.Model.Vertex
         public double AccumulatedCost { get; set; }
         public Point Location { get; set; }
 
-        public VertexInfo Info => new VertexInfo(this);
+        public VertexDto Info => new VertexDto(this);
 
         public void MarkAsEnd() => Background = EndVertexColor;
 

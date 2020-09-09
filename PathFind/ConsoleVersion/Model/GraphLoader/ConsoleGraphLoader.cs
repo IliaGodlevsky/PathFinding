@@ -7,6 +7,6 @@ namespace ConsoleVersion.Model.GraphLoader
 {
     internal class ConsoleGraphLoader : AbstractGraphLoader
     {
-        protected override AbstractGraphInfoInitializer GetInitializer(VertexInfo[,] info) => new ConsoleGraphInitializer(info);
+        protected override AbstractGraphInfoInitializer GetInitializer(VertexDto[,] info) => new ConsoleGraphInitializer(info);
     }
 }

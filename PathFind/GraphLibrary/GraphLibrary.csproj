@@ -88,7 +88,7 @@
     <Compile Include="AlgoSelector\AlgorithmSelector.cs" />
     <Compile Include="PathFindingAlgorithm\DeepPathFindAlgorithm.cs" />
     <Compile Include="EventHolder\AbstractVertexEventHolder.cs" />
-    <Compile Include="DTO\VertexInfo.cs" />
+    <Compile Include="DTO\VertexDto.cs" />
     <Compile Include="Graphs\Graph.cs" />
     <Compile Include="PathFindingAlgorithm\DijkstraAlgorithm.cs" />
     <Compile Include="PathFindingAlgorithm\GreedyAlgorithm.cs" />

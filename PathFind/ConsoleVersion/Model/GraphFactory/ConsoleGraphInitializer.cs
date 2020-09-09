@@ -8,11 +8,11 @@ namespace ConsoleVersion.Model.GraphFactory
 {
     internal class ConsoleGraphInitializer : AbstractGraphInfoInitializer
     {
-        public ConsoleGraphInitializer(VertexInfo[,] info) : base(info, VertexSize.SIZE_BETWEEN_VERTICES)
+        public ConsoleGraphInitializer(VertexDto[,] info) : base(info, VertexSize.SIZE_BETWEEN_VERTICES)
         {
 
         }
 
-        protected override IVertex CreateVertex(VertexInfo info) => new ConsoleVertex(info);
+        protected override IVertex CreateVertex(VertexDto info) => new ConsoleVertex(info);
     }
 }

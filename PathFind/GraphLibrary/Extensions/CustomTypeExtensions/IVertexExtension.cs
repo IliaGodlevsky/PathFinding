@@ -36,7 +36,7 @@ namespace GraphLibrary.Extensions.CustomTypeExtensions
             vertex.IsObstacle = false;
         }
 
-        public static void Initialize(this IVertex vertex, VertexInfo info)
+        public static void Initialize(this IVertex vertex, VertexDto info)
         {
             vertex.IsObstacle = info.IsObstacle;
             vertex.Cost = info.Cost;

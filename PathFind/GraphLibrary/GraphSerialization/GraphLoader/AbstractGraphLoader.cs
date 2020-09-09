@@ -21,7 +21,7 @@ namespace GraphLibrary.GraphSerialization.GraphLoader
             try
             {
                 using (var stream = new FileStream(path, FileMode.Open))
-                    Initialise((VertexInfo[,])formatter.Deserialize(stream));
+                    Initialise((VertexDto[,])formatter.Deserialize(stream));
             }
             catch (Exception ex)
             {
@@ -30,13 +30,13 @@ namespace GraphLibrary.GraphSerialization.GraphLoader
             return graph;
         }
 
-        private void Initialise(VertexInfo[,] info)
+        private void Initialise(VertexDto[,] info)
         {
             if (info == null)
                 return;
             graph = GetInitializer(info).Graph;
             VertexBinder.ConnectVertices(graph);
         }
-        protected abstract AbstractGraphInfoInitializer GetInitializer(VertexInfo[,] info);
+        protected abstract AbstractGraphInfoInitializer GetInitializer(VertexDto[,] info);
     }
 }

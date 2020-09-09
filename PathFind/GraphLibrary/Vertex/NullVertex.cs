@@ -58,7 +58,7 @@ namespace GraphLibrary.Vertex
         private Point location;
         public Point Location { get => location; set => location = new Point(0, 0); }
 
-        public VertexInfo Info => new VertexInfo(this);
+        public VertexDto Info => new VertexDto(this);
 
         public void MarkAsEnd() { }
         public void MarkAsObstacle() { }

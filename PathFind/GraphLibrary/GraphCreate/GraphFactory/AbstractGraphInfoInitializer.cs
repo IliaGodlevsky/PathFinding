@@ -11,7 +11,7 @@ namespace GraphLibrary.GraphFactory
     {
         public Graph Graph { get; private set; }
 
-        public AbstractGraphInfoInitializer(VertexInfo[,] info, 
+        public AbstractGraphInfoInitializer(VertexDto[,] info, 
             int placeBetweenVertices)
         {
             Graph = new Graph(info.Width(), info.Height());
@@ -29,6 +29,6 @@ namespace GraphLibrary.GraphFactory
             Graph.Array.Apply(InitializeVertex);
         }
 
-        protected abstract IVertex CreateVertex(VertexInfo info);
+        protected abstract IVertex CreateVertex(VertexDto info);
     }
 }

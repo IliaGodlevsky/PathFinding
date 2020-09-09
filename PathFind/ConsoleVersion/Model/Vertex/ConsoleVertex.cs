@@ -13,7 +13,7 @@ namespace ConsoleVersion.Model.Vertex
             this.Initialize();
         }
 
-        public ConsoleVertex(VertexInfo info) : this()
+        public ConsoleVertex(VertexDto info) : this()
         {
             this.Initialize(info);
         }
@@ -29,7 +29,7 @@ namespace ConsoleVersion.Model.Vertex
         public double AccumulatedCost { get; set; }
         public Point Location { get; set; }
 
-        public VertexInfo Info => new VertexInfo(this);
+        public VertexDto Info => new VertexDto(this);
 
         public void MarkAsEnd() => Colour = Color.FromKnownColor(KnownColor.Red);
 
