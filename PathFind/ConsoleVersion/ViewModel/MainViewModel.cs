@@ -50,7 +50,7 @@ namespace ConsoleVersion.ViewModel
         {
             if (Graph == null)
                 return;
-            Point point = Input.InputPoint(Graph.Width, Graph.Height);
+            var point = Input.InputPoint(Graph.Width, Graph.Height);
             method(Graph[point.X, point.Y], new EventArgs());
         }
 
