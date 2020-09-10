@@ -17,7 +17,7 @@ namespace GraphLibrary.PauseMaker
             var timer = new Stopwatch();
             timer.Start();
             while (timer.ElapsedMilliseconds < delayTime)
-                PauseEvent();
+                PauseEvent?.Invoke();
             timer.Stop();
         }
 
