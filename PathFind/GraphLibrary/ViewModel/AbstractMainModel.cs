@@ -29,10 +29,7 @@ namespace GraphLibrary.ViewModel
             loader = new GraphLoader();
         }
 
-        public virtual void SaveGraph()
-        {
-            saver.SaveGraph(Graph, GetSavePath());
-        }
+        public virtual void SaveGraph() => saver.SaveGraph(Graph, GetSavePath());
 
         public virtual void LoadGraph()
         {
@@ -48,9 +45,6 @@ namespace GraphLibrary.ViewModel
             Statistics = string.Empty;
             GraphParametres = Graph.GetFormattedInfo(GraphParametresFormat);
         }
-        
-        public abstract void FindPath();
-        public abstract void CreateNewGraph();
 
         public void SetGraph(Graph graph)
         {
@@ -61,6 +55,9 @@ namespace GraphLibrary.ViewModel
             GraphParametres = Graph.GetFormattedInfo(GraphParametresFormat);
             Statistics = string.Empty;
         }
+
+        public abstract void FindPath();
+        public abstract void CreateNewGraph();
 
         protected abstract string GetSavePath();
         protected abstract string GetLoadPath();
