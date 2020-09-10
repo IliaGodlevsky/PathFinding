@@ -19,11 +19,14 @@ namespace GraphLibrary.PathFindingAlgorithm
             OnVertexVisited = null;
         }
 
-        public static NullAlgorithm GetInstance()
+        public static NullAlgorithm Instance
         {
-            if (instance == null)
-                instance = new NullAlgorithm();
-            return instance;
+            get
+            {
+                if (instance == null)
+                    instance = new NullAlgorithm();
+                return instance;
+            }
         }
 
         public IGraph Graph { get; set; }
