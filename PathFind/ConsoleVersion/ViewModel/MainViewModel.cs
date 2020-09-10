@@ -45,17 +45,23 @@ namespace ConsoleVersion.ViewModel
             view.Start();
         }
 
-        private void VertexChange(EventHandler method)
+        public void Reverse()
         {
             if (Graph == null)
                 return;
             var point = Input.InputPoint(Graph.Width, Graph.Height);
-            method(Graph[point.X, point.Y], new EventArgs());
+            VertexEventHolder.ReversePolarity(Graph[point.X, point.Y], new EventArgs());
         }
 
-        public void Reverse() => VertexChange(VertexEventHolder.ReversePolarity);
-
-        public void ChangeVertexValue() => VertexChange(VertexEventHolder.ChangeVertexValue);
+        public void ChangeVertexValue()
+        {
+            if (Graph == null)
+                return;
+            var point = Input.InputPoint(Graph.Width, Graph.Height);
+            while (Graph[point.X, point.Y].IsObstacle)
+                point = Input.InputPoint(Graph.Width, Graph.Height);
+            VertexEventHolder.ChangeVertexValue(Graph[point.X, point.Y], new EventArgs());
+        }
 
         protected override string GetSavePath() => GetPath();
 
