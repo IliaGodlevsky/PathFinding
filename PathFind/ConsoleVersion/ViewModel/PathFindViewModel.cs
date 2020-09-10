@@ -43,14 +43,14 @@ namespace ConsoleVersion.ViewModel
             var pauser = new PauseProvider(DelayTime) { PauseEvent = () => { } };
             pathAlgorithm.OnVertexVisited += (vertex) => pauser.Pause();
             pathAlgorithm.OnFinished += (sender, eventArgs) =>
-              {
-                  if (!eventArgs.HasFoundPath)
-                  {
-                      GraphShower.DisplayGraph(mainViewModel);
-                      Console.WriteLine(badResultMessage);
-                      Console.ReadLine();
-                  }
-              };
+            {
+                if (!eventArgs.HasFoundPath)
+                {
+                    GraphShower.DisplayGraph(mainViewModel);
+                    Console.WriteLine(badResultMessage);
+                    Console.ReadLine();
+                }
+            };
             base.PrepareAlgorithm();
         }
 
