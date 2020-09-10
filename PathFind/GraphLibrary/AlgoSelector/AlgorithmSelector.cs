@@ -9,7 +9,7 @@ namespace GraphLibrary.AlgoSelector
 {
     public static class AlgorithmSelector
     {
-        private static double AStartRelaxFunction(IVertex vertex, 
+        private static double AStarRelaxFunction(IVertex vertex, 
             IVertex neighbour, IVertex destination)
         {
             return neighbour.Cost + vertex.AccumulatedCost
@@ -31,7 +31,7 @@ namespace GraphLibrary.AlgoSelector
                 case Algorithms.AStarAlgorithm: return new DijkstraAlgorithm()
                 {
                     Graph = graph,
-                    RelaxFunction = (neighbour, vertex) => AStartRelaxFunction(vertex, neighbour, graph.End)
+                    RelaxFunction = (neighbour, vertex) => AStarRelaxFunction(vertex, neighbour, graph.End)
                 };
                 case Algorithms.DistanceGreedyAlgorithm: return new GreedyAlgorithm()
                 {
