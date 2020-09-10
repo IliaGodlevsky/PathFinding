@@ -19,26 +19,22 @@ namespace WinFormsVersion.View
 
             int ConvertFromString(string str, int alternativeResult)
             {
-                if (int.TryParse(str, out int number))
-                    return int.Parse(str);
-                else
-                    return alternativeResult;
+                return int.TryParse(str, out int number) ? int.Parse(str) : alternativeResult;
             }
 
             void StringToWidth(object sender, ConvertEventArgs e)
             {
-                e.Value = ConvertFromString(e.Value.ToString(), Range.WidthValueRange.LowerRange);
+                e.Value = ConvertFromString(e.Value.ToString(), 
+                    Range.WidthValueRange.LowerRange);
             }
 
             void StringToHeight(object sender, ConvertEventArgs e)
             {
-                e.Value = ConvertFromString(e.Value.ToString(), Range.HeightValueRange.LowerRange);
+                e.Value = ConvertFromString(e.Value.ToString(), 
+                    Range.HeightValueRange.LowerRange);
             }
 
-            void IntToString(object sender, ConvertEventArgs e)
-            {
-                e.Value = e.Value.ToString();
-            }
+            void IntToString(object sender, ConvertEventArgs e) => e.Value = e.Value.ToString();
 
 
 
@@ -52,14 +48,16 @@ namespace WinFormsVersion.View
             bindHeight.Format += IntToString;
             bindHeight.Parse += StringToHeight;
 
-            var bindTextBoxAndSlider = new Binding(nameof(obstacleSlider.Value), obstacleTextBox, nameof(obstacleTextBox.Text), true, 
+            var bindTextBoxAndSlider = new Binding(nameof(obstacleSlider.Value), 
+                obstacleTextBox, nameof(obstacleTextBox.Text), true, 
                 DataSourceUpdateMode.OnPropertyChanged);
             obstacleSlider.DataBindings.Add(bindTextBoxAndSlider);
 
             obstacleSlider.Maximum = Range.ObstaclePercentValueRange.UpperRange;
             obstacleSlider.Minimum = Range.ObstaclePercentValueRange.LowerRange;
 
-            var bindObstaclePercent = new Binding(nameof(obstacleTextBox.Text), Model, nameof(Model.ObstaclePercent), true,
+            var bindObstaclePercent = new Binding(nameof(obstacleTextBox.Text), 
+                Model, nameof(Model.ObstaclePercent), true,
                 DataSourceUpdateMode.OnPropertyChanged);
             obstacleTextBox.DataBindings.Add(bindObstaclePercent);
         }
