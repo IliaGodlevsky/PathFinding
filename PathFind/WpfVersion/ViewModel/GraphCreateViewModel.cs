@@ -1,6 +1,7 @@
 ﻿using GraphLibrary.Constants;
 using GraphLibrary.GraphCreate.GraphFactory.Interface;
 using GraphLibrary.GraphFactory;
+using GraphLibrary.Graphs;
 using GraphLibrary.ViewModel;
 using GraphLibrary.ViewModel.Interface;
 using WpfVersion.Infrastructure;
@@ -27,12 +28,6 @@ namespace WpfVersion.ViewModel
             base.CreateGraph(() => new WpfVertex());
             (model as MainWindowViewModel).Window.Close();
             WindowAdjust.Adjust(model.Graph);
-        }
-
-        public override IGraphFactory GetFactory()
-        {
-            return new GraphFactory(ObstaclePercent,
-                Width, Height, VertexSize.SIZE_BETWEEN_VERTICES);
         }
     }
 }

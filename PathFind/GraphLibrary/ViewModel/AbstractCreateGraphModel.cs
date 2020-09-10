@@ -1,4 +1,5 @@
-﻿using GraphLibrary.GraphCreate.GraphFactory.Interface;
+﻿using GraphLibrary.Constants;
+using GraphLibrary.GraphCreate.GraphFactory.Interface;
 using GraphLibrary.Graphs;
 using GraphLibrary.Vertex.Interface;
 using GraphLibrary.ViewModel.Interface;
@@ -19,12 +20,12 @@ namespace GraphLibrary.ViewModel
 
         public virtual void CreateGraph(Func<IVertex> generator)
         {
-            var factory = GetFactory();
+            IGraphFactory factory = new GraphFactory.GraphFactory(
+                new GraphParametres(Width, Height, ObstaclePercent),
+                VertexSize.SIZE_BETWEEN_VERTICES);
             graph = factory.GetGraph(generator);
             model.SetGraph(graph);
         }
-
-        public abstract IGraphFactory GetFactory();
 
         protected IMainModel model;
         protected Graph graph;

@@ -20,11 +20,8 @@ namespace WpfVersion.ViewModel
     {
         public event PropertyChangedEventHandler PropertyChanged;
 
-        public virtual void OnPropertyChanged([CallerMemberName] string propertyName = "")
-        {
-            var handler = PropertyChanged;
-            handler?.Invoke(this, new PropertyChangedEventArgs(propertyName));
-        }
+        public virtual void OnPropertyChanged([CallerMemberName] string propertyName = "") 
+            => PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
 
         public Window Window { get; set; }
 
@@ -79,25 +76,13 @@ namespace WpfVersion.ViewModel
             LoadGraphCommand = new RelayCommand(ExecuteLoadGraphCommand, obj => true);
         }
 
-        public override void FindPath()
-        {
-            PrepareWindow(new PathFindViewModel(this), new PathFindWindow());
-        }
+        public override void FindPath() => PrepareWindow(new PathFindViewModel(this), new PathFindWindow());
 
-        public override void CreateNewGraph()
-        {
-            PrepareWindow(new GraphCreateViewModel(this), new GraphCreatesWindow());
-        }
+        public override void CreateNewGraph() => PrepareWindow(new GraphCreateViewModel(this), new GraphCreatesWindow());
 
-        public void Dispose()
-        {
-            OnDispose();
-        }
+        public void Dispose() => OnDispose();
 
-        private void ExecuteSaveGraphCommand(object param)
-        {
-            base.SaveGraph();
-        }
+        private void ExecuteSaveGraphCommand(object param) => base.SaveGraph();
 
         private bool CanExecuteStartFindPathCommand(object param)
         {

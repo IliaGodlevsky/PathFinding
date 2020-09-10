@@ -11,12 +11,9 @@ namespace GraphLibrary.GraphFactory
 {
     public class GraphFactory : IGraphFactory
     {
-        public GraphFactory(int percentOfObstacles, 
-            int width, int height, int placeBetweenVertices)
+        public GraphFactory(GraphParametres parametres, int placeBetweenVertices)
         {
-            this.percentOfObstacles = percentOfObstacles;
-            this.width = width;
-            this.height = height;
+            this.parametres = parametres;
             this.placeBetweenVertices = placeBetweenVertices;
         }
 
@@ -28,14 +25,14 @@ namespace GraphLibrary.GraphFactory
 
         public Graph GetGraph(Func<IVertex> generator)
         {
-            graph = new Graph(width, height);
+            graph = new Graph(parametres.Width, parametres.Height);
 
             IVertex InitializeVertex(IVertex vertex)
             {
                 var indices = graph.GetIndices(vertex);
                 vertex = generator();
                 vertex.Cost = rand.GetRandomValueCost();
-                if (rand.IsObstacleChance(percentOfObstacles))
+                if (rand.IsObstacleChance(parametres.ObstaclePercent))
                     vertex.MarkAsObstacle();
                 vertex.SetLocation(new Point(indices.X * placeBetweenVertices,
                     indices.Y * placeBetweenVertices));
@@ -51,9 +48,8 @@ namespace GraphLibrary.GraphFactory
         private static readonly Random rand;
 
         private Graph graph;
-        private readonly int width;
-        private readonly int height;
+        private readonly GraphParametres parametres;
         private readonly int placeBetweenVertices;
-        private readonly int percentOfObstacles;
+
     }
 }

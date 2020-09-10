@@ -5,12 +5,11 @@ using System;
 using System.Drawing;
 using GraphLibrary.ViewModel;
 using ConsoleVersion.Model.EventHolder;
-using GraphLibrary.GraphSerialization.GraphSaver;
 using GraphLibrary.Extensions.CustomTypeExtensions;
-using GraphLibrary.GraphSerialization.GraphLoader;
 using ConsoleVersion.Model.Vertex;
 using GraphLibrary.Constants;
 using GraphLibrary.GraphFactory;
+using GraphLibrary.Graphs;
 
 namespace ConsoleVersion.ViewModel
 {
@@ -26,8 +25,8 @@ namespace ConsoleVersion.ViewModel
 
             generator = (dto) => new ConsoleVertex(dto);
 
-            var factory = new GraphFactory(percentOfObstacles: 25, width: 25, 
-                height: 25, VertexSize.SIZE_BETWEEN_VERTICES);
+            var factory = new GraphFactory(new GraphParametres(width: 25, height: 25, obstaclePercent: 25),
+                VertexSize.SIZE_BETWEEN_VERTICES);
             Graph = factory.GetGraph(() => new ConsoleVertex());
             GraphParametres = Graph.GetFormattedInfo(GraphParametresFormat);
             VertexEventHolder.Graph = Graph;

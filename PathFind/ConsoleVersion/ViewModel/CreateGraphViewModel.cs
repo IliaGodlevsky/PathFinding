@@ -1,8 +1,6 @@
 ﻿using ConsoleVersion.InputClass;
-using GraphLibrary.Constants;
-using GraphLibrary.GraphCreate.GraphFactory.Interface;
-using GraphLibrary.GraphFactory;
 using GraphLibrary.ValueRanges;
+using GraphLibrary.Vertex.Interface;
 using GraphLibrary.ViewModel;
 using GraphLibrary.ViewModel.Interface;
 using System;
@@ -18,13 +16,13 @@ namespace ConsoleVersion.ViewModel
 
         }
 
-        public override IGraphFactory GetFactory()
+        public override void CreateGraph(Func<IVertex> generator)
         {
-            ObstaclePercent = Input.InputNumber(Messages.Item1, 
+            ObstaclePercent = Input.InputNumber(Messages.Item1,
                 Range.ObstaclePercentValueRange.UpperRange,
                 Range.ObstaclePercentValueRange.LowerRange);
 
-            Width = Input.InputNumber(Messages.Item2, 
+            Width = Input.InputNumber(Messages.Item2,
                 Range.WidthValueRange.UpperRange,
                 Range.WidthValueRange.LowerRange);
 
@@ -32,7 +30,7 @@ namespace ConsoleVersion.ViewModel
                 Range.HeightValueRange.UpperRange,
                 Range.HeightValueRange.LowerRange);
 
-            return new GraphFactory(ObstaclePercent, Width, Height, VertexSize.SIZE_BETWEEN_VERTICES);
+            base.CreateGraph(generator);
         }
     }
 }

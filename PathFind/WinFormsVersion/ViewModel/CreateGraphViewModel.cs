@@ -1,7 +1,4 @@
-﻿using GraphLibrary.Constants;
-using GraphLibrary.GraphCreate.GraphFactory.Interface;
-using GraphLibrary.GraphFactory;
-using GraphLibrary.Vertex.Interface;
+﻿using GraphLibrary.Vertex.Interface;
 using GraphLibrary.ViewModel;
 using GraphLibrary.ViewModel.Interface;
 using System;
@@ -25,11 +22,6 @@ namespace WinFormsVersion.ViewModel
         public void CreateGraph(object sender, EventArgs e) => CreateGraph(() => new WinFormsVertex());
 
         public void CancelCreateGraph(object sender, EventArgs e) => (model as MainWindowViewModel)?.Window.Close();
-
-        public override IGraphFactory GetFactory()
-        {
-            return new GraphFactory(ObstaclePercent,
-                Width, Height, VertexSize.SIZE_BETWEEN_VERTICES);
-        }
+        
     }
 }

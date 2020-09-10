@@ -22,11 +22,8 @@ namespace WinFormsVersion.ViewModel
     {
         public event PropertyChangedEventHandler PropertyChanged;
 
-        protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = "")
-        {
-            var handler = PropertyChanged;
-            handler?.Invoke(this, new PropertyChangedEventArgs(propertyName));
-        }
+        protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = "") 
+            => PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
 
         private string graphParametres;
         public override string GraphParametres
