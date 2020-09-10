@@ -7,6 +7,13 @@ namespace ConsoleVersion.InputClass
 {
     internal static class Input
     {
+        static Input()
+        {
+            var menuValues = Enum.GetValues(typeof(MenuOption)).Cast<byte>();
+            minMenuValue = menuValues.First();
+            maxMenuValue = menuValues.Last();
+        }
+
         public static int InputNumber(string msg, int upper, int lower = 0)
         {
             string choice;
@@ -22,8 +29,9 @@ namespace ConsoleVersion.InputClass
 
         public static MenuOption InputOption()
         {
-            return (MenuOption)InputNumber(ConsoleVersionResources.OptionMsg, 
-                Enum.GetValues(typeof(MenuOption)).Cast<byte>().Last());
+            return (MenuOption)InputNumber(
+                ConsoleVersionResources.OptionMsg,
+                maxMenuValue, minMenuValue);
         }
 
         public static Point InputPoint(int width, int height) => 
@@ -35,5 +43,8 @@ namespace ConsoleVersion.InputClass
             return !int.TryParse(choice, out var ch) 
                 || ch > upper || ch < lower;
         }
+
+        private static readonly byte minMenuValue;
+        private static readonly byte maxMenuValue;
     }
 }

@@ -1,6 +1,7 @@
 ﻿using ConsoleVersion.Model.Vertex;
 using GraphLibrary.Vertex.Interface;
 using GraphLibrary.ViewModel.Interface;
+using System.Text;
 using Console = Colorful.Console;
 
 namespace ConsoleVersion.Forms
@@ -21,22 +22,26 @@ namespace ConsoleVersion.Forms
         private const string horizontalFrame = "---";
         private const string verticalFrame = "|";
 
-        private static void DrawAbscissa(int width)
+        private static string DrawAbscissa(int width)
         {
-            Console.Write(largeSpace);
-            for (int i = 0; i < width; i++)            
-                Console.Write(i + (i < OFFSET_ARRAY_INDEX ? bigSpace : space));
-            Console.Write("\n" + largeSpace);
-        }
-
-        private static void WriteHorizontalFrame(int width)
-        {
+            var abscissa = new StringBuilder();
+            abscissa.Append(largeSpace);
             for (int i = 0; i < width; i++)
-                Console.Write(horizontalFrame);
-            Console.WriteLine();
+                abscissa.Append(i + (i < OFFSET_ARRAY_INDEX ? bigSpace : space));
+            abscissa.Append("\n" + largeSpace);
+            return abscissa.ToString();
         }
 
-        private static void DrawOrdinate(int height, TableSide tableSide = TableSide.Left)
+        private static string WriteHorizontalFrame(int width)
+        {
+            var frame = new StringBuilder();
+            for (int i = 0; i < width; i++)
+                frame.Append(horizontalFrame);
+            frame.Append("\n");
+            return frame.ToString();
+        }
+
+        private static string DrawOrdinate(int height, TableSide tableSide = TableSide.Left)
         {
             string line;
             if (tableSide == TableSide.Right)
@@ -45,7 +50,7 @@ namespace ConsoleVersion.Forms
                 line = height + space + verticalFrame;
             else
                 line = height + verticalFrame;
-            Console.Write(line);
+            return line;
         }
 
         private static void ShowVertex(IVertex vertex)
@@ -63,12 +68,12 @@ namespace ConsoleVersion.Forms
         {
             for (int height = 0; height < model.Graph.Height; height++)
             {
-                DrawOrdinate(height);
+                Console.Write(DrawOrdinate(height));
                 for (int width = 0; width < model.Graph.Width; width++)
                 {
                     ShowVertex(model.Graph[width, height]);
                     if (IsEndOfRow(width, model))
-                        DrawOrdinate(height, TableSide.Right);
+                        Console.Write(DrawOrdinate(height, TableSide.Right));
                 }
             }
         }
@@ -78,12 +83,12 @@ namespace ConsoleVersion.Forms
             if (model.Graph == null)
                 return;
             int width = model.Graph.Width;
-            DrawAbscissa(width);
-            WriteHorizontalFrame(width);
+            Console.Write(DrawAbscissa(width));
+            Console.Write(WriteHorizontalFrame(width));
             ShowGraph(model);
             Console.Write(largeSpace);
-            WriteHorizontalFrame(width);
-            DrawAbscissa(width);
+            Console.Write(WriteHorizontalFrame(width));
+            Console.Write(DrawAbscissa(width));
         }
 
         public static void DisplayGraph(IMainModel model)

@@ -10,18 +10,22 @@ using GraphLibrary.ViewModel.Interface;
 using GraphLibrary.ViewModel;
 using GraphLibrary.Extensions.CustomTypeExtensions;
 using GraphLibrary.ValueRanges;
+using System.Threading;
+using System.Linq;
+using System.Collections.Generic;
 
 namespace ConsoleVersion.ViewModel
 {
     internal class PathFindViewModel : AbstractPathFindModel
     {
-        private readonly AbstractVertexEventHolder eventHolder;
-
         public Tuple<string, string, string> Messages { get; set; }
 
         public PathFindViewModel(IMainModel model) : base(model)
         {
             eventHolder = model.VertexEventHolder;
+            var algorithmEnums = Enum.GetValues(typeof(Algorithms)).Cast<byte>();
+            maxAlgorithmValue = algorithmEnums.Last();
+            minAlgorithmValue = algorithmEnums.First();
         }
 
         public override void FindPath()
@@ -38,12 +42,23 @@ namespace ConsoleVersion.ViewModel
         protected override void PrepareAlgorithm()
         {
             DelayTime = Input.InputNumber(ConsoleVersionResources.DelayTimeMsg, 
-                Range.DelayValueRange.UpperRange, 
-                Range.DelayValueRange.LowerRange);
+                Range.DelayValueRange.UpperRange, Range.DelayValueRange.LowerRange);
+            var thread = new Thread(() => 
+            {
+                while (true)
+                {
+                    Thread.Sleep(millisecondsTimeout: 125);
+                    GraphShower.DisplayGraph(mainViewModel);
+                }
+            });
             var pauser = new PauseProvider(DelayTime) { PauseEvent = () => { } };
+            pathAlgorithm.OnStarted += (sender, eventArgs) => thread.Start();
             pathAlgorithm.OnVertexVisited += (vertex) => pauser.Pause();
             pathAlgorithm.OnFinished += (sender, eventArgs) =>
             {
+                thread.Abort();
+                thread.Join();
+                Console.ForegroundColor = ConsoleColor.White;
                 if (!eventArgs.HasFoundPath)
                 {
                     GraphShower.DisplayGraph(mainViewModel);
@@ -57,8 +72,7 @@ namespace ConsoleVersion.ViewModel
         private Algorithms GetAlgorithmEnum()
         {
             return (Algorithms)Input.InputNumber(Messages.Item3,
-                (int)Algorithms.ValueGreedyAlgorithm, 
-                (int)Algorithms.LiAlgorithm);
+                maxAlgorithmValue, minAlgorithmValue);
         }
 
         private void ChooseStart() => ChooseRange(Messages.Item1, eventHolder.SetStartVertex);
@@ -79,5 +93,9 @@ namespace ConsoleVersion.ViewModel
                 point = Input.InputPoint(graph.Width, graph.Height);
             return point;
         }
+
+        private readonly AbstractVertexEventHolder eventHolder;
+        private readonly byte maxAlgorithmValue;
+        private readonly byte minAlgorithmValue;
     }
 }
