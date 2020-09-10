@@ -10,9 +10,13 @@ namespace ConsoleVersion.Model.EventHolder
     internal class ConsoleVertexEventHolder : AbstractVertexEventHolder
     {
 
-        public override void ChangeVertexValue(object sender, EventArgs e) =>
-            (sender as ConsoleVertex).Cost = Input.InputNumber(ConsoleVersionResources.NewTopValueMsg,
-                Range.VertexCostRange.UpperRange, Range.VertexCostRange.LowerRange);
+        public override void ChangeVertexValue(object sender, EventArgs e)
+        {
+            var vertex = sender as ConsoleVertex;
+            if (!vertex.IsObstacle)
+                vertex.Cost = Input.InputNumber(ConsoleVersionResources.NewTopValueMsg,
+                    Range.VertexCostRange.UpperRange, Range.VertexCostRange.LowerRange);
+        }
 
         protected override int GetWheelDelta(EventArgs e)
         {
