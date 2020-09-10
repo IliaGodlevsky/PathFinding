@@ -3,7 +3,6 @@ using System.Runtime.CompilerServices;
 using System.Windows;
 using WpfVersion.Infrastructure;
 using WpfVersion.Model;
-using WpfVersion.Model.GraphLoader;
 using WpfVersion.Resources;
 using WpfVersion.View.Windows;
 using WpfVersion.Model.EventHolder;
@@ -15,6 +14,8 @@ using GraphLibrary.GraphField;
 using GraphLibrary.GraphSerialization.GraphSaver;
 using Microsoft.Win32;
 using GraphLibrary.Constants;
+using GraphLibrary.GraphSerialization.GraphLoader;
+using WpfVersion.Model.Vertex;
 
 namespace WpfVersion.ViewModel
 {
@@ -55,7 +56,7 @@ namespace WpfVersion.ViewModel
         public override Graph Graph 
         { 
             get { return graph; } 
-            set { graph = value; OnPropertyChanged(); } 
+            protected set { graph = value; OnPropertyChanged(); } 
         }
 
         public RelayCommand StartPathFindCommand { get; }
@@ -69,9 +70,9 @@ namespace WpfVersion.ViewModel
             GraphField = new WpfGraphField();
             GraphParametresFormat = WpfVersionResources.GraphParametresFormat;
             saver = new GraphSaver();
-            loader = new WpfGraphLoader(VertexSize.SIZE_BETWEEN_VERTICES);
+            loader = new GraphLoader();
             VertexEventHolder = new WpfVertexEventHolder();
-            graphFieldFiller = new WpfGraphFieldFiller();
+            graphFieldFiller = new WpfGraphFieldFactory();
 
             StartPathFindCommand = new RelayCommand(
                 ExecuteStartPathFindCommand,
@@ -110,7 +111,7 @@ namespace WpfVersion.ViewModel
 
         private void ExecuteLoadGraphCommand(object param)
         {
-            base.LoadGraph();
+            base.LoadGraph(dto => new WpfVertex(dto));
             OnPropertyChanged(nameof(GraphField));
             OnPropertyChanged(nameof(Graph));
             OnPropertyChanged(nameof(GraphParametres));

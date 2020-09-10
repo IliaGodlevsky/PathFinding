@@ -1,9 +1,9 @@
-﻿using GraphLibrary.GraphCreate.GraphFieldFiller;
+﻿using GraphLibrary.GraphCreate.GraphFieldFactory;
 using GraphLibrary.GraphField;
 
 namespace ConsoleVersion.Model
 {
-    internal class ConsoleGraphFieldFiller : AbstractGraphFieldFiller
+    internal class ConsoleGraphFieldFactory : AbstractGraphFieldFactory
     {
         protected override IGraphField GetField()
         {

@@ -1,9 +1,8 @@
-﻿using GraphLibrary.Extensions.CustomTypeExtensions;
-using GraphLibrary.GraphCreate.GraphFieldFiller;
-using GraphLibrary.GraphFactory;
-using GraphLibrary.GraphField;
+﻿using GraphLibrary.GraphCreate.GraphFactory.Interface;
 using GraphLibrary.Graphs;
+using GraphLibrary.Vertex.Interface;
 using GraphLibrary.ViewModel.Interface;
+using System;
 
 namespace GraphLibrary.ViewModel
 {
@@ -18,25 +17,16 @@ namespace GraphLibrary.ViewModel
             this.model = model;
         }
 
-        public virtual void CreateGraph()
+        public virtual void CreateGraph(Func<IVertex> generator)
         {
             var factory = GetFactory();
-            graph = factory.Graph;
-            model.VertexEventHolder.Graph = graph;
-            model.VertexEventHolder.ChargeGraph();
-            graphField = graphFieldFiller.FileGraphField(graph);
-            model.Graph = graph;
-            model.GraphField = graphField;
-            model.GraphParametres =
-            model.Graph.GetFormattedInfo(model.GraphParametresFormat);
-            model.Statistics = string.Empty;
+            graph = factory.GetGraph(generator);
+            model.SetGraph(graph);
         }
 
         public abstract IGraphFactory GetFactory();
 
         protected IMainModel model;
         protected Graph graph;
-        protected IGraphField graphField;
-        protected AbstractGraphFieldFiller graphFieldFiller;
     }
 }

@@ -5,7 +5,6 @@ using System.Runtime.CompilerServices;
 using System.Windows.Forms;
 using WinFormsVersion.Extensions;
 using WinFormsVersion.Forms;
-using WinFormsVersion.GraphLoader;
 using WinFormsVersion.Model;
 using WinFormsVersion.Resources;
 using WinFormsVersion.View;
@@ -16,6 +15,8 @@ using GraphLibrary.GraphField;
 using GraphLibrary.Vertex;
 using GraphLibrary.GraphSerialization.GraphSaver;
 using GraphLibrary.Constants;
+using GraphLibrary.GraphSerialization.GraphLoader;
+using WinFormsVersion.Vertex;
 
 namespace WinFormsVersion.ViewModel
 {
@@ -62,7 +63,7 @@ namespace WinFormsVersion.ViewModel
         public override Graph Graph
         {
             get { return graph; }
-            set { graph = value; OnPropertyChanged(); }
+            protected set { graph = value; OnPropertyChanged(); }
         }
         public Form Window { get; set; }
         public MainWindow MainWindow { get; set; }
@@ -71,10 +72,10 @@ namespace WinFormsVersion.ViewModel
         {
             GraphParametresFormat = WinFormsVersionResources.ParametresFormat;
             saver = new GraphSaver();
-            loader = new WinFormsGraphLoader(VertexSize.SIZE_BETWEEN_VERTICES);
+            loader = new GraphLoader();
             VertexEventHolder = new WinFormsVertexEventHolder();
             graphField = new WinFormsGraphField();
-            graphFieldFiller = new WinFormsGraphFieldFiller();
+            graphFieldFiller = new WinFormsGraphFieldFactory();
         }
 
 
@@ -106,11 +107,10 @@ namespace WinFormsVersion.ViewModel
 
         public void LoadGraph(object sender, EventArgs e)
         {
-            base.LoadGraph();
+            base.LoadGraph(dto => new WinFormsVertex(dto));
             if (Graph == null)
                 return;          
-            Window?.Close();
-            
+            Window?.Close();            
         }
 
         public void ClearGraph(object sender, EventArgs e)

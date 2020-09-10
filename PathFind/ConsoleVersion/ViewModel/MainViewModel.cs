@@ -4,11 +4,13 @@ using ConsoleVersion.View;
 using System;
 using System.Drawing;
 using GraphLibrary.ViewModel;
-using ConsoleVersion.Model.GraphLoader;
-using ConsoleVersion.Model.GraphFactory;
 using ConsoleVersion.Model.EventHolder;
 using GraphLibrary.GraphSerialization.GraphSaver;
 using GraphLibrary.Extensions.CustomTypeExtensions;
+using GraphLibrary.GraphSerialization.GraphLoader;
+using ConsoleVersion.Model.Vertex;
+using GraphLibrary.Constants;
+using GraphLibrary.GraphFactory;
 
 namespace ConsoleVersion.ViewModel
 {
@@ -19,12 +21,12 @@ namespace ConsoleVersion.ViewModel
             GraphParametresFormat = ConsoleVersionResources.GraphParametresFormat;
             saver = new GraphSaver();
             saver.OnBadSave += message => { Console.WriteLine(message); Console.ReadKey(); };
-            loader = new ConsoleGraphLoader();
+            loader = new GraphLoader();
             VertexEventHolder = new ConsoleVertexEventHolder();
-            graphFieldFiller = new ConsoleGraphFieldFiller();
-            var factory = new ConsoleGraphFactory(
-                percentOfObstacles: 25, width: 25, height: 25);
-            Graph = factory.Graph;
+            graphFieldFiller = new ConsoleGraphFieldFactory();
+            var factory = new GraphFactory(percentOfObstacles: 25, width: 25, 
+                height: 25, VertexSize.SIZE_BETWEEN_VERTICES);
+            Graph = factory.GetGraph(() => new ConsoleVertex());
             GraphParametres = Graph.GetFormattedInfo(GraphParametresFormat);
             VertexEventHolder.Graph = Graph;
         }
@@ -65,5 +67,7 @@ namespace ConsoleVersion.ViewModel
         {
             return GetSavePath();
         }
+
+        public void LoadGraph() => base.LoadGraph(dto => new ConsoleVertex(dto));
     }
 }

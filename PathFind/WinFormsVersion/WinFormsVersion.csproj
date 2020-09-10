@@ -47,9 +47,7 @@
   <ItemGroup>
     <Compile Include="Extensions\ConstrolCollectionExtension.cs" />
     <Compile Include="Extensions\ControlExtension.cs" />
-    <Compile Include="Model\GraphFactory\WinFormsGraphInitializer.cs" />
-    <Compile Include="Model\GraphFactory\WinFormsGraphFactory.cs" />
-    <Compile Include="Model\WinFormsGraphFieldFiller.cs" />
+    <Compile Include="Model\WinFormsGraphFieldFactory.cs" />
     <Compile Include="ViewModel\CreateGraphViewModel.cs" />
     <Compile Include="ViewModel\PathFindViewModel.cs" />
     <Compile Include="View\CreateGraphWindow.cs">
@@ -73,7 +71,6 @@
     <Compile Include="View\MainWindow.Designer.cs">
       <DependentUpon>MainWindow.cs</DependentUpon>
     </Compile>
-    <Compile Include="Model\GraphLoader\WinFormsGraphLoader.cs" />
     <Compile Include="Model\EventHolder\WinFormsVertexStatusSetter.cs" />
     <Compile Include="Model\Vertex\WinFormsVertex.cs">
       <SubType>Component</SubType>

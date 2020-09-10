@@ -1,10 +1,11 @@
 ﻿using GraphLibrary.Constants;
+using GraphLibrary.GraphCreate.GraphFactory.Interface;
 using GraphLibrary.GraphFactory;
 using GraphLibrary.ViewModel;
 using GraphLibrary.ViewModel.Interface;
 using WpfVersion.Infrastructure;
 using WpfVersion.Model;
-using WpfVersion.Model.GraphFactory;
+using WpfVersion.Model.Vertex;
 
 namespace WpfVersion.ViewModel
 {
@@ -15,8 +16,6 @@ namespace WpfVersion.ViewModel
 
         public GraphCreateViewModel(IMainModel model) : base(model)
         {
-            graphField = model.GraphField;
-            graphFieldFiller = new WpfGraphFieldFiller();
             ConfirmCreateGraphCommand = new RelayCommand(
                 ExecuteConfirmCreateGraphCommand, obj => true);
             CancelCreateGraphCommand = new RelayCommand(obj=> 
@@ -25,14 +24,14 @@ namespace WpfVersion.ViewModel
 
         private void ExecuteConfirmCreateGraphCommand(object param)
         {
-            base.CreateGraph();
+            base.CreateGraph(() => new WpfVertex());
             (model as MainWindowViewModel).Window.Close();
             WindowAdjust.Adjust(model.Graph);
         }
 
         public override IGraphFactory GetFactory()
         {
-            return new WpfGraphFactory(ObstaclePercent,
+            return new GraphFactory(ObstaclePercent,
                 Width, Height, VertexSize.SIZE_BETWEEN_VERTICES);
         }
     }

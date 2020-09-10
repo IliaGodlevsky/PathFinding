@@ -1,10 +1,11 @@
 ﻿using GraphLibrary.Constants;
+using GraphLibrary.GraphCreate.GraphFactory.Interface;
 using GraphLibrary.GraphFactory;
+using GraphLibrary.Vertex.Interface;
 using GraphLibrary.ViewModel;
 using GraphLibrary.ViewModel.Interface;
 using System;
-using WinFormsVersion.GraphFactory;
-using WinFormsVersion.Model;
+using WinFormsVersion.Vertex;
 
 namespace WinFormsVersion.ViewModel
 {
@@ -12,18 +13,18 @@ namespace WinFormsVersion.ViewModel
     {
         public CreateGraphViewModel(IMainModel model) : base(model)
         {            
-            graphFieldFiller = new WinFormsGraphFieldFiller();
+
         }
 
-        public override void CreateGraph()
+        public override void CreateGraph(Func<IVertex> generator)
         {
-            base.CreateGraph();
+            base.CreateGraph(generator);
             (model as MainWindowViewModel).Window?.Close();
         }
 
         public void CreateGraph(object sender, EventArgs e)
-        {         
-            CreateGraph();
+        {
+            CreateGraph(() => new WinFormsVertex());
         }
 
         public void CancelCreateGraph(object sender, EventArgs e)
@@ -33,7 +34,7 @@ namespace WinFormsVersion.ViewModel
 
         public override IGraphFactory GetFactory()
         {
-            return new WinFormsGraphFactory(ObstaclePercent,
+            return new GraphFactory(ObstaclePercent,
                 Width, Height, VertexSize.SIZE_BETWEEN_VERTICES);
         }
     }

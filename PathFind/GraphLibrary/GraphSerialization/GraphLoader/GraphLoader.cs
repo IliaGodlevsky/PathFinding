@@ -1,7 +1,9 @@
-﻿using GraphLibrary.DTO;
+﻿using GraphLibrary.Constants;
+using GraphLibrary.DTO;
 using GraphLibrary.GraphFactory;
 using GraphLibrary.Graphs;
 using GraphLibrary.GraphSerialization.GraphLoader.Interface;
+using GraphLibrary.Vertex.Interface;
 using GraphLibrary.VertexBinding;
 using System;
 using System.IO;
@@ -9,19 +11,17 @@ using System.Runtime.Serialization.Formatters.Binary;
 
 namespace GraphLibrary.GraphSerialization.GraphLoader
 {
-    public abstract class AbstractGraphLoader : IGraphLoader
+    public class GraphLoader : IGraphLoader
     {
-        protected Graph graph = null;
-
         public event Action<string> OnBadLoad;
 
-        public Graph GetGraph(string path)
+        public Graph GetGraph(string path, Func<VertexDto, IVertex> generator)
         {
             var formatter = new BinaryFormatter();
             try
             {
                 using (var stream = new FileStream(path, FileMode.Open))
-                    Initialise((VertexDto[,])formatter.Deserialize(stream));
+                    Initialise((VertexDto[,])formatter.Deserialize(stream), generator);
             }
             catch (Exception ex)
             {
@@ -30,13 +30,15 @@ namespace GraphLibrary.GraphSerialization.GraphLoader
             return graph;
         }
 
-        private void Initialise(VertexDto[,] info)
+        private void Initialise(VertexDto[,] info, Func<VertexDto, IVertex> generator)
         {
             if (info == null)
                 return;
-            graph = GetInitializer(info).Graph;
+            var initializer = new GraphInfoInitializer(info, VertexSize.SIZE_BETWEEN_VERTICES);
+            graph = initializer.GetGraph(generator);
             VertexBinder.ConnectVertices(graph);
         }
-        protected abstract AbstractGraphInfoInitializer GetInitializer(VertexDto[,] info);
+
+        private Graph graph = null;
     }
 }

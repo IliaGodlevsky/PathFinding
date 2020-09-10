@@ -1,4 +1,5 @@
-﻿using ConsoleVersion.View.Interface;
+﻿using ConsoleVersion.Model.Vertex;
+using ConsoleVersion.View.Interface;
 using ConsoleVersion.ViewModel;
 using System;
 
@@ -18,7 +19,7 @@ namespace ConsoleVersion.View
 
         public void Start()
         {
-            Model.CreateGraph();
+            Model.CreateGraph(() => new ConsoleVertex());
         }
     }
 }

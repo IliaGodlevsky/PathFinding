@@ -1,6 +1,6 @@
 ﻿using ConsoleVersion.InputClass;
-using ConsoleVersion.Model;
-using ConsoleVersion.Model.GraphFactory;
+using GraphLibrary.Constants;
+using GraphLibrary.GraphCreate.GraphFactory.Interface;
 using GraphLibrary.GraphFactory;
 using GraphLibrary.ValueRanges;
 using GraphLibrary.ViewModel;
@@ -15,7 +15,7 @@ namespace ConsoleVersion.ViewModel
 
         public CreateGraphViewModel(IMainModel model) : base(model)
         {
-            graphFieldFiller = new ConsoleGraphFieldFiller();
+
         }
 
         public override IGraphFactory GetFactory()
@@ -32,7 +32,7 @@ namespace ConsoleVersion.ViewModel
                 Range.HeightValueRange.UpperRange,
                 Range.HeightValueRange.LowerRange);
 
-            return new ConsoleGraphFactory(ObstaclePercent, Width, Height);
+            return new GraphFactory(ObstaclePercent, Width, Height, VertexSize.SIZE_BETWEEN_VERTICES);
         }
     }
 }

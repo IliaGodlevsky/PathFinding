@@ -61,14 +61,11 @@
     <Compile Include="Converters\SliderValueConverter.cs" />
     <Compile Include="Converters\StringToIntConverter.cs" />
     <Compile Include="Infrastructure\RelayCommand.cs" />
-    <Compile Include="Model\GraphFactory\WpfGraphFactory.cs" />
-    <Compile Include="Model\GraphFactory\WpfGraphInitializer.cs" />
-    <Compile Include="Model\GraphLoader\WpfGraphLoader.cs" />
     <Compile Include="Model\EventHolder\WpfVertexEventHolder.cs" />
     <Compile Include="Model\Vertex\WpfVertex.cs" />
     <Compile Include="Model\WindowAdjust.cs" />
     <Compile Include="Model\WpfGraphField.cs" />
-    <Compile Include="Model\WpfGraphFieldFiller.cs" />
+    <Compile Include="Model\WpfGraphFieldFactory.cs" />
     <Compile Include="ViewModel\GraphCreateViewModel.cs" />
     <Compile Include="ViewModel\PathFindViewModel.cs" />
     <Compile Include="ViewModel\MainWindowViewModel.cs" />

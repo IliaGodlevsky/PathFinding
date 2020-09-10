@@ -1,10 +1,10 @@
-﻿using GraphLibrary.GraphCreate.GraphFieldFiller;
+﻿using GraphLibrary.GraphCreate.GraphFieldFactory;
 using GraphLibrary.GraphField;
 using System.Drawing;
 
 namespace WinFormsVersion.Model
 {
-    internal class WinFormsGraphFieldFiller : AbstractGraphFieldFiller
+    internal class WinFormsGraphFieldFactory : AbstractGraphFieldFactory
     {
         protected override IGraphField GetField()
         {

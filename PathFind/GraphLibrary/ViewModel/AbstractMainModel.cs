@@ -1,12 +1,14 @@
-﻿using GraphLibrary.EventHolder;
-using GraphLibrary.Extensions;
+﻿using GraphLibrary.DTO;
+using GraphLibrary.EventHolder;
 using GraphLibrary.Extensions.CustomTypeExtensions;
-using GraphLibrary.GraphCreate.GraphFieldFiller;
+using GraphLibrary.GraphCreate.GraphFieldFactory;
 using GraphLibrary.GraphField;
 using GraphLibrary.Graphs;
 using GraphLibrary.GraphSerialization.GraphLoader.Interface;
 using GraphLibrary.GraphSerialization.GraphSaver.Interface;
+using GraphLibrary.Vertex.Interface;
 using GraphLibrary.ViewModel.Interface;
+using System;
 
 namespace GraphLibrary.ViewModel
 {
@@ -15,13 +17,13 @@ namespace GraphLibrary.ViewModel
         public virtual string GraphParametres { get; set; }
         public virtual string Statistics { get; set; }
         public virtual IGraphField GraphField { get; set; }
-        public virtual Graph Graph { get; set; }
+        public virtual Graph Graph { get; protected set; }
         public AbstractVertexEventHolder VertexEventHolder { get; set; }
         public string GraphParametresFormat { get; protected set; }
 
         protected IGraphSaver saver;
         protected IGraphLoader loader;
-        protected AbstractGraphFieldFiller graphFieldFiller;
+        protected AbstractGraphFieldFactory graphFieldFiller;
 
         public AbstractMainModel()
         {
@@ -33,16 +35,12 @@ namespace GraphLibrary.ViewModel
             saver.SaveGraph(Graph, GetSavePath());
         }
 
-        public virtual void LoadGraph()
+        public virtual void LoadGraph(Func<VertexDto, IVertex> generator)
         {
-            var temp = loader.GetGraph(GetLoadPath());
+            var temp = loader.GetGraph(GetLoadPath(), generator);
             if (temp == null)
                 return;
-            Graph = temp;
-            GraphField = graphFieldFiller.FileGraphField(Graph);
-            VertexEventHolder.Graph = Graph;
-            VertexEventHolder.ChargeGraph();
-            GraphParametres = Graph.GetFormattedInfo(GraphParametresFormat);
+            SetGraph(temp);
         }
 
         public virtual void ClearGraph()
@@ -56,5 +54,15 @@ namespace GraphLibrary.ViewModel
         protected abstract string GetLoadPath();
         public abstract void FindPath();
         public abstract void CreateNewGraph();
+
+        public void SetGraph(Graph graph)
+        {
+            Graph = graph;
+            GraphField = graphFieldFiller.GetGraphField(Graph);
+            VertexEventHolder.Graph = Graph;
+            VertexEventHolder.ChargeGraph();
+            GraphParametres = Graph.GetFormattedInfo(GraphParametresFormat);
+            Statistics = string.Empty;
+        }
     }
 }
