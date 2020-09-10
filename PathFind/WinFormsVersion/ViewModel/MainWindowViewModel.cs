@@ -13,9 +13,7 @@ using GraphLibrary.Graphs;
 using GraphLibrary.ViewModel;
 using GraphLibrary.GraphField;
 using GraphLibrary.Vertex;
-using GraphLibrary.GraphSerialization.GraphSaver;
 using GraphLibrary.Constants;
-using GraphLibrary.GraphSerialization.GraphLoader;
 using WinFormsVersion.Vertex;
 
 namespace WinFormsVersion.ViewModel
@@ -68,14 +66,16 @@ namespace WinFormsVersion.ViewModel
         public Form Window { get; set; }
         public MainWindow MainWindow { get; set; }
 
-        public MainWindowViewModel()
+        public MainWindowViewModel() : base()
         {
             GraphParametresFormat = WinFormsVersionResources.ParametresFormat;
-            saver = new GraphSaver();
-            loader = new GraphLoader();
+
             VertexEventHolder = new WinFormsVertexEventHolder();
+
             graphField = new WinFormsGraphField();
-            graphFieldFiller = new WinFormsGraphFieldFactory();
+            graphFieldFactory = new WinFormsGraphFieldFactory();
+
+            generator = (dto) => new WinFormsVertex(dto);
         }
 
 
@@ -95,19 +95,13 @@ namespace WinFormsVersion.ViewModel
             PrepareWindow(form);
         }
 
-        public void Dispose()
-        {
-            OnDispose();
-        }
+        public void Dispose() => OnDispose();
 
-        public void SaveGraph(object sender, EventArgs e)
-        {
-            base.SaveGraph();
-        }
+        public void SaveGraph(object sender, EventArgs e) => base.SaveGraph();
 
         public void LoadGraph(object sender, EventArgs e)
         {
-            base.LoadGraph(dto => new WinFormsVertex(dto));
+            base.LoadGraph();
             if (Graph == null)
                 return;          
             Window?.Close();            
@@ -119,15 +113,9 @@ namespace WinFormsVersion.ViewModel
                 base.ClearGraph();
         }
 
-        public void StartPathFind(object sender, EventArgs e)
-        {
-            FindPath();
-        }
+        public void StartPathFind(object sender, EventArgs e) => FindPath();
 
-        public void CreateNewGraph(object sender, EventArgs e)
-        {
-            CreateNewGraph();
-        }
+        public void CreateNewGraph(object sender, EventArgs e) => CreateNewGraph();
 
         protected virtual void OnDispose()
         {

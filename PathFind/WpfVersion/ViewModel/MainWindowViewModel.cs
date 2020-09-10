@@ -11,10 +11,7 @@ using GraphLibrary.Vertex;
 using GraphLibrary.ViewModel.Interface;
 using GraphLibrary.ViewModel;
 using GraphLibrary.GraphField;
-using GraphLibrary.GraphSerialization.GraphSaver;
 using Microsoft.Win32;
-using GraphLibrary.Constants;
-using GraphLibrary.GraphSerialization.GraphLoader;
 using WpfVersion.Model.Vertex;
 
 namespace WpfVersion.ViewModel
@@ -69,10 +66,9 @@ namespace WpfVersion.ViewModel
         {
             GraphField = new WpfGraphField();
             GraphParametresFormat = WpfVersionResources.GraphParametresFormat;
-            saver = new GraphSaver();
-            loader = new GraphLoader();
             VertexEventHolder = new WpfVertexEventHolder();
-            graphFieldFiller = new WpfGraphFieldFactory();
+            graphFieldFactory = new WpfGraphFieldFactory();
+            generator = (dto) => new WpfVertex(dto);
 
             StartPathFindCommand = new RelayCommand(
                 ExecuteStartPathFindCommand,
@@ -111,7 +107,7 @@ namespace WpfVersion.ViewModel
 
         private void ExecuteLoadGraphCommand(object param)
         {
-            base.LoadGraph(dto => new WpfVertex(dto));
+            base.LoadGraph();
             OnPropertyChanged(nameof(GraphField));
             OnPropertyChanged(nameof(Graph));
             OnPropertyChanged(nameof(GraphParametres));
@@ -124,22 +120,14 @@ namespace WpfVersion.ViewModel
             OnPropertyChanged(nameof(GraphParametres));
         }
 
-        private void ExecuteStartPathFindCommand(object param)
-        {
-            FindPath();
-        }
+        private void ExecuteStartPathFindCommand(object param) => FindPath();
 
-        private void ExecuteCreateNewGraphCommand(object param)
-        {
-            CreateNewGraph();
-        }
+        private void ExecuteCreateNewGraphCommand(object param) => CreateNewGraph();
 
         protected virtual void OnDispose()
         {
             return;
         }
-
-        
 
         private void PrepareWindow(IModel model, Window window)
         {

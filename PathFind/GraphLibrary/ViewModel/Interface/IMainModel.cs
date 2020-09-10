@@ -9,8 +9,7 @@ namespace GraphLibrary.ViewModel.Interface
 {
     public interface IMainModel : IModel
     {
-        AbstractVertexEventHolder VertexEventHolder { get; set; }
-        void LoadGraph(Func<VertexDto, IVertex> generator);
+        AbstractVertexEventHolder VertexEventHolder { get; set; }        
         string GraphParametresFormat { get; }
         string GraphParametres { get; set; }
         IGraphField GraphField { get; set; }
@@ -20,6 +19,7 @@ namespace GraphLibrary.ViewModel.Interface
         Graph Graph { get; }
         void SaveGraph();
         void ClearGraph();
-        void FindPath();
+        void LoadGraph();
+        void FindPath();        
     }
 }

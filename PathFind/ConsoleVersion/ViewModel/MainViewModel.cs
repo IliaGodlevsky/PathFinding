@@ -16,14 +16,16 @@ namespace ConsoleVersion.ViewModel
 {
     internal class MainViewModel : AbstractMainModel
     {
-        public MainViewModel()
+        public MainViewModel() : base()
         {            
             GraphParametresFormat = ConsoleVersionResources.GraphParametresFormat;
-            saver = new GraphSaver();
-            saver.OnBadSave += message => { Console.WriteLine(message); Console.ReadKey(); };
-            loader = new GraphLoader();
+
             VertexEventHolder = new ConsoleVertexEventHolder();
-            graphFieldFiller = new ConsoleGraphFieldFactory();
+
+            graphFieldFactory = new ConsoleGraphFieldFactory();
+
+            generator = (dto) => new ConsoleVertex(dto);
+
             var factory = new GraphFactory(percentOfObstacles: 25, width: 25, 
                 height: 25, VertexSize.SIZE_BETWEEN_VERTICES);
             Graph = factory.GetGraph(() => new ConsoleVertex());
@@ -57,17 +59,14 @@ namespace ConsoleVersion.ViewModel
 
         public void ChangeVertexValue() => VertexChange(VertexEventHolder.ChangeVertexValue);
 
-        protected override string GetSavePath()
+        protected override string GetSavePath() => GetPath();
+
+        protected override string GetLoadPath() => GetPath();
+
+        private string GetPath()
         {
             Console.Write("Enter path: ");
             return Console.ReadLine();
         }
-
-        protected override string GetLoadPath()
-        {
-            return GetSavePath();
-        }
-
-        public void LoadGraph() => base.LoadGraph(dto => new ConsoleVertex(dto));
     }
 }
