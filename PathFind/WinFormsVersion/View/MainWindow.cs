@@ -20,7 +20,7 @@ namespace WinFormsVersion.Forms
                 MainWindow = this
             };
 
-            List<EventHandler> events = new List<EventHandler>()
+            var events = new List<EventHandler>()
             {
                 mainModel.SaveGraph,
                 mainModel.LoadGraph,
