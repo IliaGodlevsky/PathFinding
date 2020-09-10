@@ -68,7 +68,7 @@ namespace ConsoleVersion.ViewModel
         private void ChooseRange(string message, Action<IVertex> method)
         {
             Console.WriteLine(message);
-            Point point = ChoosePoint();
+            var point = ChoosePoint();
             method(graph[point.X, point.Y]);
         }
 
