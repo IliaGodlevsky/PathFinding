@@ -42,24 +42,24 @@ namespace WinFormsVersion.View
 
 
 
-            var bindWidth = new Binding("Text", Model, "Width");
+            var bindWidth = new Binding(nameof(widthTextBox.Text), Model, nameof(Model.Width));
             widthTextBox.DataBindings.Add(bindWidth);
             bindWidth.Format += IntToString;
             bindWidth.Parse += StringToWidth;
 
-            var bindHeight = new Binding("Text", Model, "Height");
+            var bindHeight = new Binding(nameof(heightTextBox.Text), Model, nameof(Model.Height));
             heightTextBox.DataBindings.Add(bindHeight);
             bindHeight.Format += IntToString;
             bindHeight.Parse += StringToHeight;
 
-            var bindTextBoxAndSlider = new Binding("Value", obstacleTextBox, "Text", true, 
+            var bindTextBoxAndSlider = new Binding(nameof(obstacleSlider.Value), obstacleTextBox, nameof(obstacleTextBox.Text), true, 
                 DataSourceUpdateMode.OnPropertyChanged);
             obstacleSlider.DataBindings.Add(bindTextBoxAndSlider);
 
             obstacleSlider.Maximum = Range.ObstaclePercentValueRange.UpperRange;
             obstacleSlider.Minimum = Range.ObstaclePercentValueRange.LowerRange;
 
-            var bindObstaclePercent = new Binding("Text", Model, "ObstaclePercent", true,
+            var bindObstaclePercent = new Binding(nameof(obstacleTextBox.Text), Model, nameof(Model.ObstaclePercent), true,
                 DataSourceUpdateMode.OnPropertyChanged);
             obstacleTextBox.DataBindings.Add(bindObstaclePercent);
         }

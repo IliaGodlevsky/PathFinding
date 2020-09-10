@@ -61,15 +61,9 @@ namespace ConsoleVersion.ViewModel
                 (int)Algorithms.LiAlgorithm);
         }
 
-        private void ChooseStart()
-        {
-            ChooseRange(Messages.Item1, eventHolder.SetStartVertex);
-        }
+        private void ChooseStart() => ChooseRange(Messages.Item1, eventHolder.SetStartVertex);
 
-        private void ChooseEnd()
-        {
-            ChooseRange(Messages.Item2, eventHolder.SetDestinationVertex);
-        }
+        private void ChooseEnd() => ChooseRange(Messages.Item2, eventHolder.SetDestinationVertex);
 
         private void ChooseRange(string message, Action<IVertex> method)
         {

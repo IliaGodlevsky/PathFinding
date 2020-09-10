@@ -122,6 +122,7 @@ namespace WinFormsVersion.ViewModel
         private void PrepareWindow(Form window)
         {
             Window = window;
+            Window.StartPosition = FormStartPosition.CenterScreen;
             Window.Show();
         }
 

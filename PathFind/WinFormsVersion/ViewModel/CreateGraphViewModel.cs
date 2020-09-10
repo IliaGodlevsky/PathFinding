@@ -1,5 +1,4 @@
-﻿using GraphLibrary.Vertex.Interface;
-using GraphLibrary.ViewModel;
+﻿using GraphLibrary.ViewModel;
 using GraphLibrary.ViewModel.Interface;
 using System;
 using WinFormsVersion.Vertex;
@@ -13,13 +12,11 @@ namespace WinFormsVersion.ViewModel
 
         }
 
-        public override void CreateGraph(Func<IVertex> generator)
+        public void CreateGraph(object sender, EventArgs e)
         {
-            base.CreateGraph(generator);
+            CreateGraph(() => new WinFormsVertex());
             (model as MainWindowViewModel).Window?.Close();
         }
-
-        public void CreateGraph(object sender, EventArgs e) => CreateGraph(() => new WinFormsVertex());
 
         public void CancelCreateGraph(object sender, EventArgs e) => (model as MainWindowViewModel)?.Window.Close();
         

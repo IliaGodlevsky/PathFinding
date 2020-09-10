@@ -32,17 +32,17 @@ namespace WinFormsVersion.View
             algorithmListBox.DisplayMember = properties.First().Name;
             algorithmListBox.ValueMember = properties.Last().Name;
 
-            var bindingAlgorithm = new Binding("SelectedValue", Model, "Algorithm");
+            var bindingAlgorithm = new Binding(nameof(algorithmListBox.SelectedValue), Model, nameof(Model.Algorithm));
             algorithmListBox.DataBindings.Add(bindingAlgorithm);
 
-            var bindingDelaySliderToDelayTextBox = new Binding("Value", delayTextBox, "Text",
+            var bindingDelaySliderToDelayTextBox = new Binding(nameof(delaySlider.Value), delayTextBox, nameof(delayTextBox.Text),
                 true, DataSourceUpdateMode.OnPropertyChanged);
             delaySlider.DataBindings.Add(bindingDelaySliderToDelayTextBox);
 
             delaySlider.Minimum = Range.DelayValueRange.LowerRange;
             delaySlider.Maximum = Range.DelayValueRange.UpperRange;
 
-            var bindingDelatTextBoxToModel = new Binding("Text", Model, "DelayTime", 
+            var bindingDelatTextBoxToModel = new Binding(nameof(delayTextBox.Text), Model, nameof(Model.DelayTime),
                 true, DataSourceUpdateMode.OnPropertyChanged);
             delayTextBox.DataBindings.Add(bindingDelatTextBoxToModel);
 

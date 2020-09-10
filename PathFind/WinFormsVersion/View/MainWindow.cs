@@ -13,6 +13,8 @@ namespace WinFormsVersion.Forms
         {
             InitializeComponent();
 
+            StartPosition = FormStartPosition.CenterScreen;
+
             mainModel = new MainWindowViewModel
             {
                 MainWindow = this
@@ -27,15 +29,16 @@ namespace WinFormsVersion.Forms
                 mainModel.StartPathFind
             };
 
-            var bindingStatistics = new Binding("Text", mainModel, "Statistics");
+            var bindingStatistics = new Binding(nameof(statistics.Text), 
+                mainModel, nameof(mainModel.Statistics));
             statistics.DataBindings.Add(bindingStatistics);
 
-            var bindingParametres = new Binding("Text", mainModel, "GraphParametres");
+            var bindingParametres = new Binding(nameof(statistics.Text), 
+                mainModel, nameof(mainModel.GraphParametres));
             parametres.DataBindings.Add(bindingParametres);
 
             for (int i = 0; i < menu.Items.Count; i++)
                 menu.Items[i].Click += events[i];
-
         }
     }
 }
