@@ -53,6 +53,6 @@ namespace GraphLibrary.Graphs
 
         public IEnumerator GetEnumerator() => Array.GetEnumerator();
 
-        IEnumerator<IVertex> IEnumerable<IVertex>.GetEnumerator() => (IEnumerator<IVertex>)Array.GetEnumerator();
+        IEnumerator<IVertex> IEnumerable<IVertex>.GetEnumerator() => Array.Cast<IVertex>().ToList().GetEnumerator();
     }
 }
