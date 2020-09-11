@@ -53,7 +53,7 @@ namespace WinFormsVersion.Vertex
 
         public void MarkAsPath() => BackColor = Color.FromKnownColor(KnownColor.Yellow);
 
-        public VertexDto Info => new VertexDto(this);
+        public VertexDto Dto => new VertexDto(this);
 
         public int Cost { get => int.Parse(Text); set => Text = value.ToString(); }
     }

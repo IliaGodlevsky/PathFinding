@@ -15,7 +15,7 @@ namespace GraphLibrary.Graphs.Interface
         int ObstaclePercent { get; }
         int Size { get; }
         IVertex Start { get; set; }
-        VertexDto[,] VerticesInfo { get; }
+        VertexDto[,] VerticesDto { get; }
         int Width { get; }
         IVertex[,] Array { get; }
         Point GetIndices(IVertex vertex);

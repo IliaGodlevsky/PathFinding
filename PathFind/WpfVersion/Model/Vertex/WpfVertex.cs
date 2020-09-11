@@ -50,7 +50,7 @@ namespace WpfVersion.Model.Vertex
         public double AccumulatedCost { get; set; }
         public Point Location { get; set; }
 
-        public VertexDto Info => new VertexDto(this);
+        public VertexDto Dto => new VertexDto(this);
 
         public void MarkAsEnd() => Background = EndVertexColor;
 

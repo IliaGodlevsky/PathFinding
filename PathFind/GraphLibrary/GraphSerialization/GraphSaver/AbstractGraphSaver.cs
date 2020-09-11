@@ -18,7 +18,7 @@ namespace GraphLibrary.GraphSerialization.GraphSaver
                 try
                 {
                     using (var stream = new FileStream(path, FileMode.Create))
-                        formatter.Serialize(stream, graph.VerticesInfo);
+                        formatter.Serialize(stream, graph.VerticesDto);
                 }
                 catch (Exception ex)
                 {

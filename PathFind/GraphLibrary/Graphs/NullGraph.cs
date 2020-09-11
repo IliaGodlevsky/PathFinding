@@ -29,7 +29,7 @@ namespace GraphLibrary.Graphs
         public int ObstaclePercent => 0;
         public int Size => 0;
         public IVertex Start { get => nullVertex; set => nullVertex = NullVertex.Instance; }
-        public VertexDto[,] VerticesInfo => new VertexDto[0, 0];
+        public VertexDto[,] VerticesDto => new VertexDto[0, 0];
         public int Width => 0;
         public IVertex[,] Array => new IVertex[0, 0];
         public IEnumerator<IVertex> GetEnumerator() => (IEnumerator<IVertex>)new IVertex[0, 0].GetEnumerator();
