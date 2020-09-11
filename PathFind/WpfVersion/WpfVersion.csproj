@@ -75,13 +75,13 @@
       <DependentUpon>WpfVersionResources.resx</DependentUpon>
     </Compile>
     <Compile Include="ViewModel\VertexSizeViewModel.cs" />
-    <Compile Include="View\GraphCreateWindow.xaml.cs">
+    <Compile Include="View\Windows\GraphCreateWindow.xaml.cs">
       <DependentUpon>GraphCreateWindow.xaml</DependentUpon>
     </Compile>
-    <Compile Include="View\PathFindWindow.xaml.cs">
+    <Compile Include="View\Windows\PathFindWindow.xaml.cs">
       <DependentUpon>PathFindWindow.xaml</DependentUpon>
     </Compile>
-    <Compile Include="View\VertexSizeChangeWIndow.xaml.cs">
+    <Compile Include="View\Windows\VertexSizeChangeWIndow.xaml.cs">
       <DependentUpon>VertexSizeChangeWIndow.xaml</DependentUpon>
     </Compile>
     <Page Include="Resources\Styles\ImageStyle.xaml">
@@ -92,7 +92,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="View\MainWindow.xaml">
+    <Page Include="View\Windows\MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
@@ -100,7 +100,7 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="View\MainWindow.xaml.cs">
+    <Compile Include="View\Windows\MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
@@ -108,15 +108,15 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="View\GraphCreateWindow.xaml">
+    <Page Include="View\Windows\GraphCreateWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="View\PathFindWindow.xaml">
+    <Page Include="View\Windows\PathFindWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="View\VertexSizeChangeWIndow.xaml">
+    <Page Include="View\Windows\VertexSizeChangeWIndow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
