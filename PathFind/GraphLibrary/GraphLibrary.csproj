@@ -46,6 +46,7 @@
     <Compile Include="EventArguments\AlgorithmEventArgs.cs" />
     <Compile Include="GraphCreate\GraphFactory\Interface\IGraphInitializer.cs" />
     <Compile Include="Graphs\GraphParametres.cs" />
+    <Compile Include="PathFindingAlgorithm\DeepAlgorithm.cs" />
     <Compile Include="PathFindingAlgorithm\NullAlgorithm.cs" />
     <Compile Include="Extensions\SystemTypeExtensions\StackExtension.cs" />
     <Compile Include="Graphs\Interface\IGraph.cs" />
@@ -88,7 +89,6 @@
     <Compile Include="ViewModel\Interface\IMainModel.cs" />
     <Compile Include="ViewModel\Interface\IModel.cs" />
     <Compile Include="AlgoSelector\AlgorithmSelector.cs" />
-    <Compile Include="PathFindingAlgorithm\DeepPathFindAlgorithm.cs" />
     <Compile Include="EventHolder\AbstractVertexEventHolder.cs" />
     <Compile Include="DTO\VertexDto.cs" />
     <Compile Include="Graphs\Graph.cs" />
