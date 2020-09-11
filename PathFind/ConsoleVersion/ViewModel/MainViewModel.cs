@@ -6,9 +6,9 @@ using GraphLibrary.ViewModel;
 using ConsoleVersion.Model.EventHolder;
 using GraphLibrary.Extensions.CustomTypeExtensions;
 using ConsoleVersion.Model.Vertex;
-using GraphLibrary.Constants;
 using GraphLibrary.GraphFactory;
 using GraphLibrary.Graphs;
+using GraphLibrary.Globals;
 
 namespace ConsoleVersion.ViewModel
 {

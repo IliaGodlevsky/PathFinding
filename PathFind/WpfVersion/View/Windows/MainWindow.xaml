@@ -39,6 +39,9 @@
             <Button Command ="{Binding StartPathFindCommand}">
                 <Image Style ="{StaticResource ImageStyle}" Source="../../Resources/Images/start.png"></Image>
             </Button>
+            <Button Command ="{Binding ChangeVertexSize}">
+                <Image Style ="{StaticResource ImageStyle}" Source="../../Resources/Images/change.png"></Image>
+            </Button>
         </ToolBar>
         <StatusBar Grid.Row="3">
             <TextBlock Text = "{Binding Statistics}"></TextBlock>

@@ -1,6 +1,6 @@
-﻿using GraphLibrary.Constants;
-using GraphLibrary.DTO;
+﻿using GraphLibrary.DTO;
 using GraphLibrary.Extensions.CustomTypeExtensions;
+using GraphLibrary.Globals;
 using GraphLibrary.Vertex.Interface;
 using System.Collections.Generic;
 using System.Drawing;
@@ -13,7 +13,7 @@ namespace WinFormsVersion.Vertex
         public WinFormsVertex() : base()
         {
             this.Initialize();
-            Font = new Font("Times New Roman", 8.0f);
+            Font = new Font("Times New Roman", 7.0f);
             Size = new Size(VertexSize.VERTEX_SIZE,
                 VertexSize.SIZE_BETWEEN_VERTICES);
             TextAlign = ContentAlignment.MiddleCenter;

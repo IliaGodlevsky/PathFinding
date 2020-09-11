@@ -4,11 +4,13 @@ using GraphLibrary.Vertex.Interface;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
+using System.Reflection;
 
 namespace GraphLibrary.Extensions.CustomTypeExtensions
 {
     public static class IVertexExtension
     {
+
         public static bool IsValidToBeRange(this IVertex vertex)
         {
             return vertex.IsSimpleVertex() && !vertex.IsIsolated();
@@ -38,8 +40,10 @@ namespace GraphLibrary.Extensions.CustomTypeExtensions
 
         public static void Initialize(this IVertex vertex, VertexDto info)
         {
-            vertex.IsObstacle = info.IsObstacle;
-            vertex.Cost = info.Cost;
+            foreach (var vertexProperty in vertex.GetType().GetProperties())
+                foreach (var dtoProperty in info.GetType().GetProperties())
+                    if (IsSuitableProperty(vertexProperty, dtoProperty))
+                        vertexProperty.SetValue(vertex, dtoProperty.GetValue(info));
             if (vertex.IsObstacle)
                 vertex.MarkAsObstacle();
         }
@@ -69,6 +73,12 @@ namespace GraphLibrary.Extensions.CustomTypeExtensions
         public static void SetLocation(this IVertex vertex, Point location)
         {
             vertex.Location = location;
+        }
+
+        private static bool IsSuitableProperty(PropertyInfo first, PropertyInfo second)
+        {
+            return first.Name == second.Name 
+                && first.PropertyType == second.PropertyType;
         }
     }
 }

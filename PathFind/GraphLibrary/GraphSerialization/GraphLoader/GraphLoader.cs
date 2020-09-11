@@ -1,5 +1,5 @@
-﻿using GraphLibrary.Constants;
-using GraphLibrary.DTO;
+﻿using GraphLibrary.DTO;
+using GraphLibrary.Globals;
 using GraphLibrary.GraphFactory;
 using GraphLibrary.Graphs;
 using GraphLibrary.GraphSerialization.GraphLoader.Interface;

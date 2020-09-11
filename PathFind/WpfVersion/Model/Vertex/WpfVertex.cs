@@ -1,6 +1,6 @@
-﻿using GraphLibrary.Constants;
-using GraphLibrary.DTO;
+﻿using GraphLibrary.DTO;
 using GraphLibrary.Extensions.CustomTypeExtensions;
+using GraphLibrary.Globals;
 using GraphLibrary.Vertex.Interface;
 using System.Collections.Generic;
 using System.Drawing;
@@ -28,7 +28,7 @@ namespace WpfVersion.Model.Vertex
         {
             this.Initialize();
             Width = Height = VertexSize.VERTEX_SIZE;
-            FontSize = 12;
+            FontSize = VertexSize.VERTEX_SIZE * VertexSize.TextToSizeRatio;
             Template = (ControlTemplate)TryFindResource("vertexTemplate");
         }
 

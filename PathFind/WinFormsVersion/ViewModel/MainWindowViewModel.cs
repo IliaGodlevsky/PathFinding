@@ -13,8 +13,8 @@ using GraphLibrary.Graphs;
 using GraphLibrary.ViewModel;
 using GraphLibrary.GraphField;
 using GraphLibrary.Vertex;
-using GraphLibrary.Constants;
 using WinFormsVersion.Vertex;
+using GraphLibrary.Globals;
 
 namespace WinFormsVersion.ViewModel
 {

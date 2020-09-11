@@ -74,13 +74,21 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>WpfVersionResources.resx</DependentUpon>
     </Compile>
+    <Compile Include="ViewModel\VertexSizeViewModel.cs" />
     <Compile Include="View\Windows\GraphCreateWindow.xaml.cs">
       <DependentUpon>GraphCreateWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\Windows\PathFindWindow.xaml.cs">
       <DependentUpon>PathFindWindow.xaml</DependentUpon>
     </Compile>
+    <Compile Include="View\Windows\VertexSizeChangeWIndow.xaml.cs">
+      <DependentUpon>VertexSizeChangeWIndow.xaml</DependentUpon>
+    </Compile>
     <Page Include="Resources\Styles\ImageStyle.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Resources\Triggers\LabelChangeSizeVertex.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -105,6 +113,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="View\Windows\PathFindWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\Windows\VertexSizeChangeWIndow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -160,6 +172,8 @@
   <ItemGroup>
     <Resource Include="Resources\Images\clear.png" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Resource Include="Resources\Images\change.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

@@ -55,7 +55,7 @@
     <Compile Include="ValueRanges\ValueRange.cs" />
     <Compile Include="DistanceCalculator\Distance.cs" />
     <Compile Include="Enums\Algorithm.cs" />
-    <Compile Include="Constants\VertexSize.cs" />
+    <Compile Include="Globals\VertexSize.cs" />
     <Compile Include="Extensions\SystemTypeExtensions\ListExtension.cs" />
     <Compile Include="Extensions\SystemTypeExtensions\EnumExtensions.cs" />
     <Compile Include="Extensions\SystemTypeExtensions\IEnumerableExtension.cs" />

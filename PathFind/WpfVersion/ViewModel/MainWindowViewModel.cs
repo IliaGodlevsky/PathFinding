@@ -58,6 +58,7 @@ namespace WpfVersion.ViewModel
         public RelayCommand ClearGraphCommand { get; }
         public RelayCommand SaveGraphCommand { get; }
         public RelayCommand LoadGraphCommand { get; }
+        public RelayCommand ChangeVertexSize { get; }
 
         public MainWindowViewModel()
         {
@@ -74,11 +75,14 @@ namespace WpfVersion.ViewModel
             ClearGraphCommand = new RelayCommand(ExecuteClearGraphCommand, obj=> Graph != null);
             SaveGraphCommand = new RelayCommand(ExecuteSaveGraphCommand, obj => Graph != null);
             LoadGraphCommand = new RelayCommand(ExecuteLoadGraphCommand, obj => true);
+            ChangeVertexSize = new RelayCommand(ExecuteChangeVertexSize, obj => Graph != null);
         }
 
         public override void FindPath() => PrepareWindow(new PathFindViewModel(this), new PathFindWindow());
 
         public override void CreateNewGraph() => PrepareWindow(new GraphCreateViewModel(this), new GraphCreatesWindow());
+
+        public void ExecuteChangeVertexSize(object param) => PrepareWindow(new VertexSizeViewModel(this), new VertexSizeChangeWindow());
 
         public void Dispose() => OnDispose();
 
