@@ -11,7 +11,7 @@ using GraphLibrary.Extensions.CustomTypeExtensions;
 
 namespace GraphLibrary.PathFindingAlgorithm
 {
-    public class DeepPathFindAlgorithm : IPathFindingAlgorithm
+    public class DeepAlgorithm : IPathFindingAlgorithm
     {
         public event AlgorithmEventHanlder OnStarted;
         public event Action<IVertex> OnVertexVisited;
@@ -19,7 +19,7 @@ namespace GraphLibrary.PathFindingAlgorithm
 
         public IGraph Graph { get; set; }
 
-        public DeepPathFindAlgorithm()
+        public DeepAlgorithm()
         {
             Graph = NullGraph.Instance;
             visitedVerticesStack = new Stack<IVertex>();

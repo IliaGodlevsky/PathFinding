@@ -9,7 +9,7 @@ namespace GraphLibrary.PathFindingAlgorithm
     /// <summary>
     /// Greedy algorithm. Each step looks for the chippest vertex and visits it
     /// </summary>
-    public class GreedyAlgorithm : DeepPathFindAlgorithm
+    public class GreedyAlgorithm : DeepAlgorithm
     {
         public Func<IVertex, double> GreedyFunction { private get; set; }
         public GreedyAlgorithm() : base()
