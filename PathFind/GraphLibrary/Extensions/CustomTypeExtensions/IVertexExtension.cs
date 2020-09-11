@@ -38,12 +38,12 @@ namespace GraphLibrary.Extensions.CustomTypeExtensions
             vertex.IsObstacle = false;
         }
 
-        public static void Initialize(this IVertex vertex, VertexDto info)
+        public static void Initialize(this IVertex vertex, VertexDto dto)
         {
             foreach (var vertexProperty in vertex.GetType().GetProperties())
-                foreach (var dtoProperty in info.GetType().GetProperties())
+                foreach (var dtoProperty in dto.GetType().GetProperties())
                     if (IsSuitableProperty(vertexProperty, dtoProperty))
-                        vertexProperty.SetValue(vertex, dtoProperty.GetValue(info));
+                        vertexProperty.SetValue(vertex, dtoProperty.GetValue(dto));
             if (vertex.IsObstacle)
                 vertex.MarkAsObstacle();
         }
