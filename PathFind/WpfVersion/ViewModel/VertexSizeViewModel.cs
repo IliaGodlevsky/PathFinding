@@ -3,6 +3,8 @@ using GraphLibrary.Globals;
 using GraphLibrary.ValueRanges;
 using GraphLibrary.Vertex.Interface;
 using GraphLibrary.ViewModel.Interface;
+using System;
+using System.Linq;
 using System.Windows.Controls;
 using WpfVersion.Infrastructure;
 using WpfVersion.Model;
@@ -26,7 +28,7 @@ namespace WpfVersion.ViewModel
                 obj => Model.Window.Close(), 
                 obj => true);
 
-            Size = Range.VertexSizeRange.LowerRange;
+            Size = Convert.ToInt32((Model.Graph.First() as WpfVertex).Width);
         }
 
         private void ChangeVertexSize(object param)
