@@ -16,7 +16,7 @@ namespace GraphLibrary.AlgoSelector
                 + Distance.GetChebyshevDistance(neighbour, destination);
         }
 
-        private static double ValueDistanceGreedyFunction(IVertex vertex, IVertex destination)
+        private static double CastAndDistanceGreedyFunction(IVertex vertex, IVertex destination)
         {
             return vertex.Cost + Distance.GetEuclideanDistance(vertex, destination);
         }
@@ -46,7 +46,7 @@ namespace GraphLibrary.AlgoSelector
                 case Algorithms.ValueDistanceGreedyAlgorithm: return new GreedyAlgorithm()
                 {
                     Graph = graph,
-                    GreedyFunction = vertex => ValueDistanceGreedyFunction(vertex, graph.End)
+                    GreedyFunction = vertex => CastAndDistanceGreedyFunction(vertex, graph.End)
                 };
                 default: return NullAlgorithm.Instance;
             }
