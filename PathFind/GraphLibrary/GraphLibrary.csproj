@@ -78,7 +78,7 @@
     </Compile>
     <Compile Include="GraphSerialization\GraphLoader\GraphLoader.cs" />
     <Compile Include="GraphSerialization\GraphLoader\Interface\IGraphLoader.cs" />
-    <Compile Include="GraphSerialization\GraphSaver\AbstractGraphSaver.cs" />
+    <Compile Include="GraphSerialization\GraphSaver\GraphSaver.cs" />
     <Compile Include="GraphSerialization\GraphSaver\Interface\IGraphSaver.cs" />
     <Compile Include="Vertex\NullVertex.cs" />
     <Compile Include="ViewModel\AbstractCreateGraphModel.cs" />
