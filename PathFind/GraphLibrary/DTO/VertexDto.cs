@@ -4,7 +4,7 @@ using System;
 namespace GraphLibrary.DTO
 {
     [Serializable]
-    public class VertexDto
+    public sealed class VertexDto
     {
         public VertexDto(IVertex vertex)
         {

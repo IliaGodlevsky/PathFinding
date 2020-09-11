@@ -10,7 +10,7 @@ using GraphLibrary.Extensions.CustomTypeExtensions;
 
 namespace GraphLibrary.PathFindingAlgorithm
 {
-    public class NullAlgorithm : IPathFindingAlgorithm
+    public sealed class NullAlgorithm : IPathFindingAlgorithm
     {
         private NullAlgorithm()
         {

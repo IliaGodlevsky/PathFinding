@@ -5,7 +5,7 @@ using System.Drawing;
 
 namespace GraphLibrary.Vertex
 {
-    public class NullVertex : IVertex
+    public sealed class NullVertex : IVertex
     {
         private static NullVertex instance = null;
 

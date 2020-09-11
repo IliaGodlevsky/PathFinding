@@ -8,7 +8,7 @@ using System.Drawing;
 
 namespace GraphLibrary.Graphs
 {
-    public class NullGraph : IGraph
+    public sealed class NullGraph : IGraph
     {
         public static NullGraph Instance
         {
