@@ -48,6 +48,8 @@ namespace GraphLibrary.ViewModel
             {
                 if (vertex.IsSimpleVertex())
                     vertex.MarkAsVisited();
+                mainViewModel.Statistics = timer.GetTimeInformation(LibraryResources.TimerInfoFormat) +
+                string.Format("   " + pathFindStatisticsFormat, 0, 0, graph.NumberOfVisitedVertices);
             };
 
             pathAlgorithm.OnStarted +=
