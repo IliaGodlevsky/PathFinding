@@ -40,7 +40,7 @@ namespace WpfVersion.ViewModel
                 var temp = vertex as WpfVertex;
                 temp.Width  = VertexSize.VERTEX_SIZE;
                 temp.Height = VertexSize.VERTEX_SIZE;
-                temp.FontSize = Size * VertexSize.TextToSizeRatio;
+                temp.FontSize = Size * VertexSize.TEXT_TO_SIZE_RATIO;
                 return temp;
             }
             Model.Graph.Array.Apply(ChangeSize);
