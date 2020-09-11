@@ -20,7 +20,7 @@ namespace GraphLibrary.Graphs
             }
         }
 
-        private NullGraph() => nullVertex = NullVertex.Instance;        
+        private NullGraph() => nullVertex = NullVertex.Instance;
         public IVertex this[int width, int height] { get => nullVertex; set => nullVertex = NullVertex.Instance; }
         public IVertex End { get => nullVertex; set => nullVertex = NullVertex.Instance; }
         public int Height => 0;
