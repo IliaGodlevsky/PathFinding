@@ -8,15 +8,9 @@ namespace ConsoleVersion.Model.Vertex
 {
     internal class ConsoleVertex : IVertex
     {
-        public ConsoleVertex()
-        {
-            this.Initialize();
-        }
+        public ConsoleVertex() => this.Initialize();
 
-        public ConsoleVertex(VertexDto info) : this()
-        {
-            this.Initialize(info);
-        }
+        public ConsoleVertex(VertexDto dto) : this() => this.Initialize(dto);
 
         public bool IsEnd { get; set; }
         public bool IsObstacle { get; set; }
