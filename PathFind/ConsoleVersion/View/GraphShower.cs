@@ -6,7 +6,6 @@ using Console = Colorful.Console;
 
 namespace ConsoleVersion.Forms
 {
-
     internal static class GraphShower
     {
         private enum TableSide
