@@ -41,7 +41,8 @@ namespace ConsoleVersion.Forms
             return frame.ToString();
         }
 
-        private static string DrawOrdinate(int height, TableSide tableSide = TableSide.Left)
+        private static string DrawOrdinate(int height, 
+            TableSide tableSide = TableSide.Left)
         {
             string line;
             if (tableSide == TableSide.Right)
