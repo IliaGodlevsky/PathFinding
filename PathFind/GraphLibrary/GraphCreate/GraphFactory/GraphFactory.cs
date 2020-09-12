@@ -3,9 +3,9 @@ using GraphLibrary.Extensions.SystemTypeExtensions;
 using GraphLibrary.Graphs;
 using GraphLibrary.Vertex.Interface;
 using GraphLibrary.VertexBinding;
-using System.Drawing;
 using GraphLibrary.Extensions.CustomTypeExtensions;
 using GraphLibrary.GraphCreate.GraphFactory.Interface;
+using GraphLibrary.Graphs.Interface;
 
 namespace GraphLibrary.GraphFactory
 {

@@ -1,6 +1,7 @@
 ﻿using GraphLibrary.Globals;
 using GraphLibrary.GraphCreate.GraphFactory.Interface;
 using GraphLibrary.Graphs;
+using GraphLibrary.Graphs.Interface;
 using GraphLibrary.Vertex.Interface;
 using GraphLibrary.ViewModel.Interface;
 using System;

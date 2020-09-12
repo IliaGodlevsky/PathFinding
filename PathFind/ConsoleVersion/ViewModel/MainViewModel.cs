@@ -9,6 +9,7 @@ using ConsoleVersion.Model.Vertex;
 using GraphLibrary.GraphFactory;
 using GraphLibrary.Graphs;
 using GraphLibrary.Globals;
+using GraphLibrary.Graphs.Interface;
 
 namespace ConsoleVersion.ViewModel
 {

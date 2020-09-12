@@ -12,6 +12,18 @@ namespace GraphLibrary.Vertex.Interface
             X = x;
             Y = y;
         }
+
+        public override bool Equals(object pos)
+        {
+            if(pos is Position position)
+                return position.X == X && position.Y == Y;
+            return false;
+        }
+
+        public override int GetHashCode()
+        {
+            return X ^ Y;
+        }
     }
 
     public interface IVertex
