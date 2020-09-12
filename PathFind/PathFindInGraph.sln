@@ -11,7 +11,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WinFormsVersion", "WinForms
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WpfVersion", "WpfVersion\WpfVersion.csproj", "{040A5D8B-F84B-4595-9DCB-932976F90EE0}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GraphLibrary.UnitTests", "GraphLibraryTest\GraphLibrary.UnitTests.csproj", "{AD2D89AD-7F04-4E35-B016-D9BA86744110}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GraphLibraryTest", "GraphLibraryTest\GraphLibraryTest.csproj", "{AD2D89AD-7F04-4E35-B016-D9BA86744110}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
