@@ -51,14 +51,17 @@ namespace ConsoleVersion.ViewModel
                     GraphShower.DisplayGraph(mainViewModel);
                 }
             });
+
             var pauser = new PauseProvider(DelayTime) { PauseEvent = () => { } };
+
             pathAlgorithm.OnStarted += (sender, eventArgs) => thread.Start();
             pathAlgorithm.OnVertexVisited += (vertex) => pauser.Pause();
+
             pathAlgorithm.OnFinished += (sender, eventArgs) =>
             {
                 thread.Abort();
                 thread.Join();
-                Console.ForegroundColor = ConsoleColor.White;
+                Console.ForegroundColor = ConsoleColor.Gray;
                 if (!eventArgs.HasFoundPath)
                 {
                     GraphShower.DisplayGraph(mainViewModel);
