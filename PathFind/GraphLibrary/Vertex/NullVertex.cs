@@ -28,7 +28,7 @@ namespace GraphLibrary.Vertex
             cost = 0;
             neighbours = new List<IVertex>();
             accumulatedCost = double.PositiveInfinity;
-            location = new Point(0, 0);
+            position = new Position(0, 0);
         }
 
         private bool isEnd;
@@ -55,8 +55,8 @@ namespace GraphLibrary.Vertex
         private double accumulatedCost;
         public double AccumulatedCost { get => accumulatedCost; set => accumulatedCost = double.PositiveInfinity; }
 
-        private Point location;
-        public Point Location { get => location; set => location = new Point(0, 0); }
+        private Position position;
+        public Position Position { get => position; set => position = new Position(0, 0); }
 
         public VertexDto Dto => new VertexDto(this);
 

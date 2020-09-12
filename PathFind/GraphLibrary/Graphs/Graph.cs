@@ -1,6 +1,5 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
-using System.Drawing;
 using System.Linq;
 using GraphLibrary.DTO;
 using GraphLibrary.Extensions.CustomTypeExtensions;
@@ -49,7 +48,7 @@ namespace GraphLibrary.Graphs
 
         public int ObstacleNumber => Array.Cast<IVertex>().Count(vertex => vertex.IsObstacle);
 
-        public Point GetIndices(IVertex vertex) => Array.GetIndices(vertex);
+        public Position GetIndices(IVertex vertex) => Array.GetIndices(vertex);
 
         public IEnumerator GetEnumerator() => Array.GetEnumerator();
 

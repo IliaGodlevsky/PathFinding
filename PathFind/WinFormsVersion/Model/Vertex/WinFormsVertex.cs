@@ -57,5 +57,6 @@ namespace WinFormsVersion.Vertex
         public VertexDto Dto => new VertexDto(this);
 
         public int Cost { get => int.Parse(Text); set => Text = value.ToString(); }
+        public Position Position { get; set; }
     }
 }

@@ -33,7 +33,7 @@ namespace GraphLibrary.Graphs
         public int Width => 0;
         public IVertex[,] Array => new IVertex[0, 0];
         public IEnumerator<IVertex> GetEnumerator() => (IEnumerator<IVertex>)new IVertex[0, 0].GetEnumerator();
-        public Point GetIndices(IVertex vertex) => new Point(0, 0);
+        public Position GetIndices(IVertex vertex) => new Position(0, 0);
         IEnumerator IEnumerable.GetEnumerator() => new IVertex[0, 0].GetEnumerator();
 
         private NullVertex nullVertex;

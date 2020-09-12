@@ -1,9 +1,19 @@
 ﻿using GraphLibrary.DTO;
 using System.Collections.Generic;
-using System.Drawing;
 
 namespace GraphLibrary.Vertex.Interface
 {
+    public struct Position
+    {
+        public int X { get; set; }
+        public int Y { get; set; }
+        public Position(int x, int y)
+        {
+            X = x;
+            Y = y;
+        }
+    }
+
     public interface IVertex
     {
         bool IsEnd { get; set; }
@@ -14,7 +24,7 @@ namespace GraphLibrary.Vertex.Interface
         List<IVertex> Neighbours { get; set; }
         IVertex ParentVertex { get; set; }
         double AccumulatedCost { get; set; }
-        Point Location { get; set; }
+        Position Position { get; set; }
         VertexDto Dto { get; }
         void MarkAsEnd();
         void MarkAsSimpleVertex();

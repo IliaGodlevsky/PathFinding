@@ -3,7 +3,6 @@ using GraphLibrary.Extensions.CustomTypeExtensions;
 using GraphLibrary.Globals;
 using GraphLibrary.Vertex.Interface;
 using System.Collections.Generic;
-using System.Drawing;
 using System.Windows.Controls;
 using System.Windows.Media;
 
@@ -48,7 +47,7 @@ namespace WpfVersion.Model.Vertex
         public List<IVertex> Neighbours { get; set; }
         public IVertex ParentVertex { get; set; }
         public double AccumulatedCost { get; set; }
-        public Point Location { get; set; }
+        public Position Position { get; set; }
 
         public VertexDto Dto => new VertexDto(this);
 

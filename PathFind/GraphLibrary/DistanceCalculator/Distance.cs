@@ -7,14 +7,14 @@ namespace GraphLibrary.DistanceCalculator
     {
         public static double GetEuclideanDistance(IVertex from, IVertex to)
         {
-            return Math.Sqrt(Math.Pow(from.Location.X - to.Location.X, 2)
-                           + Math.Pow(from.Location.Y - to.Location.Y, 2));
+            return Math.Sqrt(Math.Pow(from.Position.X - to.Position.X, 2)
+                           + Math.Pow(from.Position.Y - to.Position.Y, 2));
         }
 
         public static double GetChebyshevDistance(IVertex from, IVertex to)
         {
-            return Math.Max(Math.Abs(from.Location.X - to.Location.X),
-                           Math.Abs(from.Location.Y - to.Location.Y));
+            return Math.Max(Math.Abs(from.Position.X - to.Position.X),
+                           Math.Abs(from.Position.Y - to.Position.Y));
         }
     }
 }

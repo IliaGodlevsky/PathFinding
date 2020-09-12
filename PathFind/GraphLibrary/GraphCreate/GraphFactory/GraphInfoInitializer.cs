@@ -33,8 +33,7 @@ namespace GraphLibrary.GraphFactory
             {
                 var indices = graph.GetIndices(vertex);
                 vertex = generator(vertexDtos[indices.X, indices.Y]);
-                vertex.SetLocation(new Point(indices.X * placeBetweenVertices,
-                    indices.Y * placeBetweenVertices));
+                vertex.SetLocation(indices);
                 return vertex;
             }
 

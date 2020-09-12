@@ -21,8 +21,7 @@ namespace ConsoleVersion.Model.Vertex
         public List<IVertex> Neighbours { get; set; }
         public IVertex ParentVertex { get; set; }
         public double AccumulatedCost { get; set; }
-        public Point Location { get; set; }
-
+        public Position Position { get; set; }
         public VertexDto Dto => new VertexDto(this);
 
         public void MarkAsEnd() => Colour = Color.FromKnownColor(KnownColor.Red);

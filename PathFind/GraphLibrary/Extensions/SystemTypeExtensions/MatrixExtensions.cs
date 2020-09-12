@@ -1,4 +1,5 @@
-﻿using System;
+﻿using GraphLibrary.Vertex.Interface;
+using System;
 using System.Drawing;
 using System.Linq;
 
@@ -41,12 +42,12 @@ namespace GraphLibrary.Extensions.SystemTypeExtensions
                         arr[x, y] = method(arr[x, y]);
         }
 
-        public static Point GetIndices<TSource>(this TSource[,] arr, TSource item)
+        public static Position GetIndices<TSource>(this TSource[,] arr, TSource item)
         {
             var index = Array.IndexOf(arr.Cast<TSource>().ToArray(), item);
             var yCoordinate = (arr.Height() + index) % arr.Height();
             var xCoordinate = (int)Math.Ceiling((decimal)(index - yCoordinate) / arr.Height());
-            return new Point(xCoordinate, yCoordinate);
+            return new Position(xCoordinate, yCoordinate);
         }
     }
 }

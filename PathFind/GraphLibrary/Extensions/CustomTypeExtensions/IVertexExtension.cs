@@ -70,9 +70,9 @@ namespace GraphLibrary.Extensions.CustomTypeExtensions
             return vertex;
         }
 
-        public static void SetLocation(this IVertex vertex, Point location)
+        public static void SetLocation(this IVertex vertex, Position position)
         {
-            vertex.Location = location;
+            vertex.Position = position;
         }
 
         private static bool IsSuitableProperty(PropertyInfo first, PropertyInfo second)

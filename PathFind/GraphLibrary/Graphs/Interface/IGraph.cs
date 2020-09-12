@@ -18,6 +18,6 @@ namespace GraphLibrary.Graphs.Interface
         VertexDto[,] VerticesDto { get; }
         int Width { get; }
         IVertex[,] Array { get; }
-        Point GetIndices(IVertex vertex);
+        Position GetIndices(IVertex vertex);
     }
 }
