@@ -49,11 +49,23 @@
     <Reference Include="System.Core" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Classes\TestVertex.cs" />
+    <Compile Include="Tests\DistanceTests.cs" />
+    <Compile Include="Tests\DtoTests.cs" />
+    <Compile Include="Tests\GraphFactoryTest.cs" />
+    <Compile Include="Tests\GraphTests.cs" />
+    <Compile Include="Tests\ValueRangeTest.cs" />
     <Compile Include="UnitTest1.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\GraphLibrary\GraphLibrary.csproj">
+      <Project>{5441521C-1754-4098-A843-8904910700E8}</Project>
+      <Name>GraphLibrary</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(VSToolsPath)\TeamTest\Microsoft.TestTools.targets" Condition="Exists('$(VSToolsPath)\TeamTest\Microsoft.TestTools.targets')" />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

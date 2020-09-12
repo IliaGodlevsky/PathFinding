@@ -11,7 +11,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WinFormsVersion", "WinForms
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WpfVersion", "WpfVersion\WpfVersion.csproj", "{040A5D8B-F84B-4595-9DCB-932976F90EE0}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GraphLibraryTest", "GraphLibraryTest\GraphLibraryTest.csproj", "{AD2D89AD-7F04-4E35-B016-D9BA86744110}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GraphLibrary.UnitTests", "GraphLibrary.UnitTests\GraphLibrary.UnitTests.csproj", "{F844347E-1929-40AC-A0B4-5362CCA0A660}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -35,10 +35,10 @@ Global
 		{040A5D8B-F84B-4595-9DCB-932976F90EE0}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{040A5D8B-F84B-4595-9DCB-932976F90EE0}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{040A5D8B-F84B-4595-9DCB-932976F90EE0}.Release|Any CPU.Build.0 = Release|Any CPU
-		{AD2D89AD-7F04-4E35-B016-D9BA86744110}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{AD2D89AD-7F04-4E35-B016-D9BA86744110}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{AD2D89AD-7F04-4E35-B016-D9BA86744110}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{AD2D89AD-7F04-4E35-B016-D9BA86744110}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F844347E-1929-40AC-A0B4-5362CCA0A660}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F844347E-1929-40AC-A0B4-5362CCA0A660}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F844347E-1929-40AC-A0B4-5362CCA0A660}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F844347E-1929-40AC-A0B4-5362CCA0A660}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
