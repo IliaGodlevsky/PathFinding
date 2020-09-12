@@ -5,9 +5,6 @@ namespace ConsoleVersion.Model
 {
     internal class ConsoleGraphFieldFactory : AbstractGraphFieldFactory
     {
-        protected override IGraphField GetField()
-        {
-            return null;
-        }
+        protected override IGraphField GetField() => null;
     }
 }
