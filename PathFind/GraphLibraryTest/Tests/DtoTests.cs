@@ -1,8 +1,8 @@
 ﻿using GraphLibrary.DTO;
-using GraphLibraryTest.Classes;
+using GraphLibrary.UnitTests.Classes;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
-namespace GraphLibraryTest.Tests
+namespace GraphLibrary.UnitTests.Tests
 {
     [TestClass]
     public class DtoTests
@@ -34,7 +34,7 @@ namespace GraphLibraryTest.Tests
 
             var dto = new VertexDto(vertex);
 
-            Assert.IsTrue(dto.Cost == vertex.Cost && 
+            Assert.IsTrue(dto.Cost == vertex.Cost &&
                 dto.IsObstacle && vertex.IsObstacle);
         }
     }

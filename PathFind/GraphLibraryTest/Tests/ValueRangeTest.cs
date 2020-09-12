@@ -1,7 +1,7 @@
 ﻿using GraphLibrary.ValueRanges;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
-namespace GraphLibraryTest.Tests
+namespace GraphLibrary.UnitTests.Tests
 {
     [TestClass]
     public class ValueRangeTest

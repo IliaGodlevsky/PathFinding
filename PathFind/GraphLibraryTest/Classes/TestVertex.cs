@@ -3,7 +3,7 @@ using GraphLibrary.Extensions.CustomTypeExtensions;
 using GraphLibrary.Vertex.Interface;
 using System.Collections.Generic;
 
-namespace GraphLibraryTest.Classes
+namespace GraphLibrary.UnitTests.Classes
 {
     public class TestVertex : IVertex
     {
@@ -31,9 +31,9 @@ namespace GraphLibraryTest.Classes
             this.WashVertex();
         }
 
-        public void MarkAsPath() {}
+        public void MarkAsPath() { }
 
-        public void MarkAsStart() {}
+        public void MarkAsStart() { }
 
         public void MarkAsVisited() { }
     }

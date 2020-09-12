@@ -1,9 +1,9 @@
 ﻿using GraphLibrary.GraphFactory;
 using GraphLibrary.Graphs.Interface;
-using GraphLibraryTest.Classes;
+using GraphLibrary.UnitTests.Classes;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
-namespace GraphLibraryTest.Tests
+namespace GraphLibrary.UnitTests.Tests
 {
     [TestClass]
     public class GraphFactoryTest

@@ -1,6 +1,6 @@
 ﻿using GraphLibrary.Graphs.Interface;
+using GraphLibrary.UnitTests.Classes;
 using GraphLibrary.Vertex.Interface;
-using GraphLibraryTest.Classes;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace GraphLibrary.UnitTests.Tests
