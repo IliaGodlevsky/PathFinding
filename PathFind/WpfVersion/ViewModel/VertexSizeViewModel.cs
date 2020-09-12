@@ -1,6 +1,5 @@
 ﻿using GraphLibrary.Extensions.SystemTypeExtensions;
 using GraphLibrary.Globals;
-using GraphLibrary.ValueRanges;
 using GraphLibrary.Vertex.Interface;
 using GraphLibrary.ViewModel.Interface;
 using System;
@@ -35,6 +34,7 @@ namespace WpfVersion.ViewModel
         {
             VertexSize.VERTEX_SIZE = Size;
             VertexSize.SIZE_BETWEEN_VERTICES = Size + 1;
+
             IVertex ChangeSize(IVertex vertex)
             {
                 var temp = vertex as WpfVertex;
@@ -43,10 +43,13 @@ namespace WpfVersion.ViewModel
                 temp.FontSize = Size * VertexSize.TEXT_TO_SIZE_RATIO;
                 return temp;
             }
+
             Model.Graph.Array.Apply(ChangeSize);
+
             (Model.GraphField as Canvas).Children.Clear();
-            Model.GraphField = new WpfGraphFieldFactory().
-                GetGraphField(Model.Graph);
+            var fieldFactory = new WpfGraphFieldFactory();
+            Model.GraphField = fieldFactory.GetGraphField(Model.Graph);
+
             WindowAdjust.Adjust(Model.Graph);
             Model.Window.Close();
         }
