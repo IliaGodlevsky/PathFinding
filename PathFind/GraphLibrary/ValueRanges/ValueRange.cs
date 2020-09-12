@@ -2,6 +2,9 @@
 {
     public class ValueRange
     {
+        public int UpperRange { get; }
+        public int LowerRange { get; }
+
         public ValueRange(int upper, int lower)
         {
             if (upper < lower)
@@ -29,8 +32,5 @@
             return value <= UpperRange &&
                 value >= LowerRange;
         }
-
-        public int UpperRange { get; }
-        public int LowerRange { get; }
     }
 }
