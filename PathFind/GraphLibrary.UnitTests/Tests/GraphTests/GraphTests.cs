@@ -3,7 +3,7 @@ using GraphLibrary.UnitTests.Classes;
 using GraphLibrary.Vertex.Interface;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
-namespace GraphLibrary.UnitTests.Tests
+namespace GraphLibrary.UnitTests.Tests.GraphTests
 {
     [TestClass]
     public class GraphTests

@@ -46,7 +46,6 @@ namespace GraphLibrary.EventHolder
         {
             if (!vertex.IsValidToBeRange())
                 return;
-            vertex.IsStart = true;
             vertex.MarkAsStart();
             Graph.Start = vertex;
         }
@@ -55,7 +54,6 @@ namespace GraphLibrary.EventHolder
         {
             if (!vertex.IsValidToBeRange())
                 return;
-            vertex.IsEnd = true;
             vertex.MarkAsEnd();
             Graph.End = vertex;
         }

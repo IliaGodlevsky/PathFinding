@@ -2,7 +2,7 @@
 using GraphLibrary.UnitTests.Classes;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
-namespace GraphLibrary.UnitTests.Tests
+namespace GraphLibrary.UnitTests.Tests.DTOTests
 {
     [TestClass]
     public class DtoTests

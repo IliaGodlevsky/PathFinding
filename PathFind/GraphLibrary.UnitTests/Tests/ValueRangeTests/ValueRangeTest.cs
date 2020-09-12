@@ -1,7 +1,7 @@
 ﻿using GraphLibrary.ValueRanges;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
-namespace GraphLibrary.UnitTests.Tests
+namespace GraphLibrary.UnitTests.Tests.ValueRangeTests
 {
     [TestClass]
     public class ValueRangeTest
@@ -25,6 +25,28 @@ namespace GraphLibrary.UnitTests.Tests
             value1 = valueRange.ReturnInBounds(value1);
 
             Assert.AreEqual(valueRange.LowerRange, value1);
+
+        }
+
+        [TestMethod]
+        public void IsInBounds_ValueIsInBounds_ReturnsTrue()
+        {
+            var valueRange = new ValueRange(25, 100);
+            var value = 75;
+
+            Assert.IsTrue(valueRange.IsInBounds(value));
+        }
+
+        [TestMethod]
+        public void ReturnInBounds_ValueIsInOfBounds_ReturnsValue()
+        {
+            var valueRange = new ValueRange(25, 100);
+
+            var value = 75;
+            var temp = value;
+            value = valueRange.ReturnInBounds(value);
+
+            Assert.AreEqual(temp, value);
 
         }
     }

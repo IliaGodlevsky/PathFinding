@@ -4,13 +4,13 @@ using GraphLibrary.UnitTests.Classes;
 using GraphLibrary.Vertex.Interface;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
-namespace GraphLibrary.UnitTests.Tests
+namespace GraphLibrary.UnitTests.Tests.DistanceCalculatorTests
 {
     [TestClass]
     public class DistanceTests
     {
         [TestMethod]
-        public void EuclidianDistanceTest()
+        public void GetEuclidianDistance_NotNullVertex_ReturnsEuclidianDistance()
         {
             var vertex1 = new TestVertex();
             var vertex2 = new TestVertex();
@@ -25,7 +25,7 @@ namespace GraphLibrary.UnitTests.Tests
         }
 
         [TestMethod]
-        public void ChebyshevDistanceTest()
+        public void GetChebyshevDistance_NotNullVertex_ReturnsChebyshevDistance()
         {
             var vertex1 = new TestVertex();
             var vertex2 = new TestVertex();

@@ -28,9 +28,19 @@ namespace GraphLibrary.Graphs
             set => Array[width, height] = value;
         }
 
-        public IVertex End { get; set; }
+        private IVertex end;
+        public IVertex End 
+        { 
+            get => end;
+            set { end = value; end.IsEnd = true; }
+        }
 
-        public IVertex Start { get; set; }
+        private IVertex start;
+        public IVertex Start
+        {
+            get => start;
+            set { start = value; start.IsStart = true; }
+        }
 
         public IVertex[,] Array { get; }
 

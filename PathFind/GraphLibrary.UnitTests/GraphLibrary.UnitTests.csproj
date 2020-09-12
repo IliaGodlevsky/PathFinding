@@ -50,12 +50,14 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Classes\TestVertex.cs" />
-    <Compile Include="Tests\DistanceTests.cs" />
-    <Compile Include="Tests\DtoTests.cs" />
-    <Compile Include="Tests\GraphFactoryTest.cs" />
-    <Compile Include="Tests\GraphTests.cs" />
-    <Compile Include="Tests\ValueRangeTest.cs" />
-    <Compile Include="UnitTest1.cs" />
+    <Compile Include="Tests\DistanceCalculatorTests\DistanceTests.cs" />
+    <Compile Include="Tests\DTOTests\DtoTests.cs" />
+    <Compile Include="Tests\GraphFactoryTests\GraphFactoryTest.cs" />
+    <Compile Include="Tests\GraphTests\GraphTests.cs" />
+    <Compile Include="Tests\GraphTests\NullGraphTests.cs" />
+    <Compile Include="Tests\PathFindingAlgorithmsTests\DijkstraAlgorithmTests.cs" />
+    <Compile Include="Tests\PathFindingAlgorithmsTests\NullAlgorithmTests.cs" />
+    <Compile Include="Tests\ValueRangeTests\ValueRangeTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
