@@ -51,11 +51,7 @@ namespace GraphLibrary.VertexBinding
 
         public static void ConnectVertices(Graph graph)
         {
-            graph.Array.ApplyParallel(vertex =>
-            {
-                SetNeighbours(graph, vertex);
-                return vertex;
-            });
+            graph.Array.ApplyParallel(vertex => { SetNeighbours(graph, vertex); return vertex; });
         }
     }
 }

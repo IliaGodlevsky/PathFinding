@@ -34,20 +34,17 @@ namespace GraphLibrary.Extensions.SystemTypeExtensions
         }
 
         private static void Apply<TSource>(TSource [,] arr, 
-            int endFrom, int startFrom,
-            params Func<TSource, TSource>[] methods)
+            int start, int end, params Func<TSource, TSource>[] methods)
         {
-            for (int x = startFrom; x < endFrom; x++)
+            for (int x = start; x < end; x++)
                 for (int y = 0; y < arr.Height(); y++)
                     foreach (var method in methods)
                         arr[x, y] = method(arr[x, y]);
         }
 
         public static void Apply<TSource>(this TSource[,] arr,
-            params Func<TSource, TSource>[] methods)
-        {
-            Apply(arr, arr.Width(), 0, methods);
-        }
+            params Func<TSource, TSource>[] methods) 
+                    => Apply(arr, 0, arr.Width(), methods);
 
         public static void ApplyParallel<TSource>(this TSource[,] arr,
             params Func<TSource, TSource>[] methods)
@@ -58,7 +55,8 @@ namespace GraphLibrary.Extensions.SystemTypeExtensions
             {
                 var start = arr.Width() * i / threads;
                 var end = arr.Width() * (i + 1) / threads;
-                threadPool[i] = new Thread(() => Apply(arr, end, start, methods));
+                threadPool[i] = new Thread(() 
+                    => Apply(arr, start, end, methods));
             }
             foreach (var thread in threadPool) thread.Start();
             foreach (var thread in threadPool) thread.Join();

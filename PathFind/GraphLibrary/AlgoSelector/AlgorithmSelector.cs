@@ -13,7 +13,7 @@ namespace GraphLibrary.AlgoSelector
             IVertex neighbour, IVertex destination)
         {
             return neighbour.Cost + vertex.AccumulatedCost
-                + Distance.GetEuclideanDistance(neighbour, destination);
+                + Distance.GetChebyshevDistance(neighbour, destination);
         }
 
         private static double CastAndDistanceGreedyFunction(IVertex vertex, IVertex destination)

@@ -32,8 +32,7 @@ namespace GraphLibrary.PathFindingAlgorithm
 
         public IEnumerable<IVertex> FindPath()
         {
-            OnStarted?.Invoke(this,
-                new AlgorithmEventArgs(Graph));
+            OnStarted?.Invoke(this, new AlgorithmEventArgs(Graph));
             SetAccumulatedCostToInfinity();
             var currentVertex = Graph.Start;
             currentVertex.IsVisited = true;
@@ -45,8 +44,7 @@ namespace GraphLibrary.PathFindingAlgorithm
                 currentVertex.IsVisited = true;
                 OnVertexVisited?.Invoke(currentVertex);
             } while (!currentVertex.IsEnd);
-            OnFinished?.Invoke(this,
-                new AlgorithmEventArgs(Graph));
+            OnFinished?.Invoke(this, new AlgorithmEventArgs(Graph));
             return this.GetFoundPath();
         }
 

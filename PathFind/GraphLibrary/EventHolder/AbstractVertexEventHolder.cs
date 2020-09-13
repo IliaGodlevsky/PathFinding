@@ -74,10 +74,7 @@ namespace GraphLibrary.EventHolder
 
         private void SetEventsToVertex(Action<IVertex> action)
         {
-            Graph.Array.ApplyParallel(vertex =>
-            {
-                action(vertex); return vertex;
-            });
+            Graph.Array.ApplyParallel(vertex => { action(vertex); return vertex; });
         }
 
         public virtual void ChooseExtremeVertices(object sender, EventArgs e)

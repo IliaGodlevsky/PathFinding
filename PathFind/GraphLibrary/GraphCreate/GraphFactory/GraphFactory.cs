@@ -28,9 +28,9 @@ namespace GraphLibrary.GraphFactory
             graph = new Graph(parametres.Width, parametres.Height);
 
             IVertex InitializeVertex(IVertex vertex)
-            {
+            {                
+                var indices = graph.GetIndices(vertex);
                 vertex = generator();
-                var indices = graph.GetIndices(vertex);               
                 vertex.Cost = rand.GetRandomValueCost();
                 if (rand.IsObstacleChance(parametres.ObstaclePercent))
                     vertex.MarkAsObstacle();

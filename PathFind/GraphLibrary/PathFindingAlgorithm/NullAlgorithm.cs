@@ -37,11 +37,9 @@ namespace GraphLibrary.PathFindingAlgorithm
 
         public IEnumerable<IVertex> FindPath()
         {
-            OnStarted?.Invoke(this,
-                new AlgorithmEventArgs());
+            OnStarted?.Invoke(this, new AlgorithmEventArgs());
             OnVertexVisited?.Invoke(NullVertex.Instance);
-            OnFinished?.Invoke(this,
-                new AlgorithmEventArgs());
+            OnFinished?.Invoke(this, new AlgorithmEventArgs());
             return this.GetFoundPath();
         }
 
