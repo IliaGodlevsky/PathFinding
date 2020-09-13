@@ -1,5 +1,6 @@
 ﻿using GraphLibrary.DTO;
 using GraphLibrary.UnitTests.Classes;
+using GraphLibrary.Vertex;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace GraphLibrary.UnitTests.Tests.DTOTests

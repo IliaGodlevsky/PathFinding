@@ -54,9 +54,9 @@ namespace GraphLibrary.Graphs
 
         public int ObstaclePercent => Size == 0 ? 0 : ObstacleNumber * 100 / Size;
 
-        public int NumberOfVisitedVertices => Array.Cast<IVertex>().Count(vertex => vertex.IsVisited);
+        public int NumberOfVisitedVertices => Array.Cast<IVertex>().AsParallel().Count(vertex => vertex.IsVisited);
 
-        public int ObstacleNumber => Array.Cast<IVertex>().Count(vertex => vertex.IsObstacle);
+        public int ObstacleNumber => Array.Cast<IVertex>().AsParallel().Count(vertex => vertex.IsObstacle);
 
         public Position GetIndices(IVertex vertex) => Array.GetIndices(vertex);
 

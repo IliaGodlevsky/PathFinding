@@ -1,4 +1,5 @@
-﻿using GraphLibrary.Graphs;
+﻿using GraphLibrary.Extensions.SystemTypeExtensions;
+using GraphLibrary.Graphs;
 using GraphLibrary.Vertex.Interface;
 
 namespace GraphLibrary.VertexBinding
@@ -50,8 +51,11 @@ namespace GraphLibrary.VertexBinding
 
         public static void ConnectVertices(Graph graph)
         {
-            foreach (IVertex vertex in graph)
+            graph.Array.ApplyParallel(vertex =>
+            {
                 SetNeighbours(graph, vertex);
+                return vertex;
+            });
         }
     }
 }

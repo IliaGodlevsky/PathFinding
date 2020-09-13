@@ -1,7 +1,7 @@
 ﻿using GraphLibrary.Vertex.Interface;
 using System;
-using System.Drawing;
 using System.Linq;
+using System.Threading;
 
 namespace GraphLibrary.Extensions.SystemTypeExtensions
 {
@@ -33,17 +33,40 @@ namespace GraphLibrary.Extensions.SystemTypeExtensions
             return outArray;
         }
 
-        public static void Apply<TSource>(this TSource[,] arr,
+        private static void Apply<TSource>(TSource [,] arr, 
+            int endFrom, int startFrom,
             params Func<TSource, TSource>[] methods)
         {
-            for (int x = 0; x < arr.Width(); x++)
+            for (int x = startFrom; x < endFrom; x++)
                 for (int y = 0; y < arr.Height(); y++)
                     foreach (var method in methods)
                         arr[x, y] = method(arr[x, y]);
         }
 
+        public static void Apply<TSource>(this TSource[,] arr,
+            params Func<TSource, TSource>[] methods)
+        {
+            Apply(arr, arr.Width(), 0, methods);
+        }
+
+        public static void ApplyParallel<TSource>(this TSource[,] arr,
+            params Func<TSource, TSource>[] methods)
+        {
+            var threads = Environment.ProcessorCount;
+            var threadPool = new Thread[threads];
+            for (int i = 0; i < threads; i++)
+            {
+                var start = arr.Width() * i / threads;
+                var end = arr.Width() * (i + 1) / threads;
+                threadPool[i] = new Thread(() => Apply(arr, end, start, methods));
+            }
+            foreach (var thread in threadPool) thread.Start();
+            foreach (var thread in threadPool) thread.Join();
+        }
+
         public static Position GetIndices<TSource>(this TSource[,] arr, TSource item)
         {
+            // an ancient math magic of Jedi. It works, believe me))
             var index = Array.IndexOf(arr.Cast<TSource>().ToArray(), item);
             var yCoordinate = (arr.Height() + index) % arr.Height();
             var xCoordinate = (int)Math.Ceiling((decimal)(index - yCoordinate) / arr.Height());

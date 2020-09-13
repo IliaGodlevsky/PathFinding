@@ -9,7 +9,7 @@ namespace GraphLibrary.UnitTests.Tests.GraphTests
     public class GraphTests
     {
         [TestMethod]
-        public void GetIndicesTest_VertexBelongsToGraph_ReturnsRightIndices()
+        public void GetIndices_VertexBelongsToGraph_ReturnsRightIndices()
         {
             var factory = new GraphFactory.GraphFactory(new GraphParametres(25, 25, 0), 25);
             var graph = factory.GetGraph(() => new TestVertex());
@@ -20,7 +20,7 @@ namespace GraphLibrary.UnitTests.Tests.GraphTests
         }
 
         [TestMethod]
-        public void GetIndicesTest_VertexDoesNotBelongToGraph_ReturnsWrongIndices()
+        public void GetIndices_VertexDoesNotBelongToGraph_ReturnsWrongIndices()
         {
             var factory = new GraphFactory.GraphFactory(new GraphParametres(25, 25, 0), 25);
             var graph = factory.GetGraph(() => new TestVertex());
