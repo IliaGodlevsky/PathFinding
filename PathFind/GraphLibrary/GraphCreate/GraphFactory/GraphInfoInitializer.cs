@@ -16,7 +16,6 @@ namespace GraphLibrary.GraphFactory
         public GraphInfoInitializer(VertexDto[,] info, 
             int placeBetweenVertices)
         {
-            this.placeBetweenVertices = placeBetweenVertices;
             vertexDtos = info;
             if (vertexDtos != null)
             {
@@ -43,7 +42,6 @@ namespace GraphLibrary.GraphFactory
         }
 
         private Graph graph;
-        private readonly int placeBetweenVertices;
         private readonly int width;
         private readonly int height;
         private readonly VertexDto[,] vertexDtos;

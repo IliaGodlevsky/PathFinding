@@ -28,9 +28,19 @@ namespace GraphLibrary.Graphs
             set => Array[width, height] = value;
         }
 
-        public IVertex End { get; set; }
+        private IVertex end;
+        public IVertex End 
+        { 
+            get => end;
+            set { end = value; end.IsEnd = true; }
+        }
 
-        public IVertex Start { get; set; }
+        private IVertex start;
+        public IVertex Start
+        {
+            get => start;
+            set { start = value; start.IsStart = true; }
+        }
 
         public IVertex[,] Array { get; }
 
@@ -44,9 +54,9 @@ namespace GraphLibrary.Graphs
 
         public int ObstaclePercent => Size == 0 ? 0 : ObstacleNumber * 100 / Size;
 
-        public int NumberOfVisitedVertices => Array.Cast<IVertex>().Count(vertex => vertex.IsVisited);
+        public int NumberOfVisitedVertices => Array.Cast<IVertex>().AsParallel().Count(vertex => vertex.IsVisited);
 
-        public int ObstacleNumber => Array.Cast<IVertex>().Count(vertex => vertex.IsObstacle);
+        public int ObstacleNumber => Array.Cast<IVertex>().AsParallel().Count(vertex => vertex.IsObstacle);
 
         public Position GetIndices(IVertex vertex) => Array.GetIndices(vertex);
 

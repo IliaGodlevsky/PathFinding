@@ -58,7 +58,7 @@ namespace GraphLibrary.PathFindingAlgorithm
                     vertex.AccumulatedCost = double.PositiveInfinity;
                 return vertex;
             }
-            Graph.Array.Apply(SetValueToInfinity);
+            Graph.Array.ApplyParallel(SetValueToInfinity);
         }
 
         private void SpreadRelaxWave(IVertex vertex)

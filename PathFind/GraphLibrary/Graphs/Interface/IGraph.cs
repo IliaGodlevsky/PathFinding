@@ -5,6 +5,21 @@ using System.Drawing;
 
 namespace GraphLibrary.Graphs.Interface
 {
+    public struct GraphParametres
+    {
+        public int Width { get; }
+        public int Height { get; }
+        public int ObstaclePercent { get; }
+
+        public GraphParametres(int width,
+            int height, int obstaclePercent)
+        {
+            Width = width;
+            Height = height;
+            ObstaclePercent = obstaclePercent;
+        }
+    }
+
     public interface IGraph : IEnumerable<IVertex>
     {
         IVertex this[int width, int height] { get; set; }

@@ -6,6 +6,7 @@ using GraphLibrary.Vertex;
 using GraphLibrary.VertexBinding;
 using GraphLibrary.Extensions.CustomTypeExtensions;
 using GraphLibrary.ValueRanges;
+using GraphLibrary.Extensions.SystemTypeExtensions;
 
 namespace GraphLibrary.EventHolder
 {
@@ -46,7 +47,6 @@ namespace GraphLibrary.EventHolder
         {
             if (!vertex.IsValidToBeRange())
                 return;
-            vertex.IsStart = true;
             vertex.MarkAsStart();
             Graph.Start = vertex;
         }
@@ -55,7 +55,6 @@ namespace GraphLibrary.EventHolder
         {
             if (!vertex.IsValidToBeRange())
                 return;
-            vertex.IsEnd = true;
             vertex.MarkAsEnd();
             Graph.End = vertex;
         }
@@ -75,9 +74,10 @@ namespace GraphLibrary.EventHolder
 
         private void SetEventsToVertex(Action<IVertex> action)
         {
-            for (int i = 0; i < Graph.Width; i++)
-                for (int j = 0; j < Graph.Height; j++)
-                    action(Graph[i, j]);
+            Graph.Array.ApplyParallel(vertex =>
+            {
+                action(vertex); return vertex;
+            });
         }
 
         public virtual void ChooseExtremeVertices(object sender, EventArgs e)
