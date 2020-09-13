@@ -12,7 +12,6 @@ using GraphLibrary.Extensions.CustomTypeExtensions;
 using GraphLibrary.ValueRanges;
 using System.Threading;
 using System.Linq;
-using System.Collections.Generic;
 
 namespace ConsoleVersion.ViewModel
 {

@@ -1,4 +1,5 @@
-﻿using GraphLibrary.GraphField;
+﻿using GraphLibrary.Extensions.SystemTypeExtensions;
+using GraphLibrary.GraphField;
 using GraphLibrary.Graphs;
 
 namespace GraphLibrary.GraphCreate.GraphFieldFactory
