@@ -25,6 +25,7 @@ namespace GraphLibrary.GraphSerialization.GraphLoader
             }
             catch (Exception ex)
             {
+                graph = null;
                 OnBadLoad?.Invoke(ex.Message);
             }
             return graph;

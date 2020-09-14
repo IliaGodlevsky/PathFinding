@@ -19,15 +19,12 @@ namespace GraphLibrary.PathFindingAlgorithm
         public event Action<IVertex> OnVertexVisited;
         public event AlgorithmEventHanlder OnFinished;
 
-        public Func<IVertex, IVertex, double> RelaxFunction { private get; set; }
         public IGraph Graph { get; set; }
 
         public DijkstraAlgorithm()
         {
             Graph = NullGraph.Instance;
             verticesProcessQueue = new List<IVertex>();
-            RelaxFunction = (neighbour, vertex)
-                => neighbour.Cost + vertex.AccumulatedCost;
         }
 
         public IEnumerable<IVertex> FindPath()
@@ -56,14 +53,19 @@ namespace GraphLibrary.PathFindingAlgorithm
                     vertex.AccumulatedCost = double.PositiveInfinity;
                 return vertex;
             }
-            Graph.Array.ApplyParallel(SetValueToInfinity);
+            Graph.Array.Apply(SetValueToInfinity);
+        }
+
+        protected virtual double RelaxFunction(IVertex neighbour, IVertex vertex)
+        {
+            return neighbour.Cost + vertex.AccumulatedCost;
         }
 
         private void SpreadRelaxWave(IVertex vertex)
         {
             IVertex RelaxVertex(IVertex neighbour)
             {
-                if (neighbour.AccumulatedCost > RelaxFunction(neighbour, vertex))
+                if (neighbour.AccumulatedCost > RelaxFunction(neighbour,vertex))
                 {
                     neighbour.AccumulatedCost = RelaxFunction(neighbour, vertex);
                     neighbour.ParentVertex = vertex;
@@ -78,14 +80,13 @@ namespace GraphLibrary.PathFindingAlgorithm
             verticesProcessQueue.AddRange(vertex.GetUnvisitedNeighbours());
         }
 
-        private IVertex GetChippestUnvisitedVertex()
+        protected virtual IVertex GetChippestUnvisitedVertex()
         {
             verticesProcessQueue.RemoveAll(vertex => vertex.IsVisited);
-            verticesProcessQueue.Sort((vertex1, vertex2)
-                => vertex1.AccumulatedCost.CompareTo(vertex2.AccumulatedCost));
+            verticesProcessQueue.Sort((v1, v2) => v1.AccumulatedCost.CompareTo(v2.AccumulatedCost));
             return verticesProcessQueue.FirstOrNullVertex();
         }
 
-        private readonly List<IVertex> verticesProcessQueue;
+        protected List<IVertex> verticesProcessQueue;
     }
 }

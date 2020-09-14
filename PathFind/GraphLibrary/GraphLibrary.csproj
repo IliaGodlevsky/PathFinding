@@ -45,6 +45,8 @@
   <ItemGroup>
     <Compile Include="EventArguments\AlgorithmEventArgs.cs" />
     <Compile Include="GraphCreate\GraphFactory\Interface\IGraphInitializer.cs" />
+    <Compile Include="PathFindingAlgorithm\AStarAlgorithm.cs" />
+    <Compile Include="PathFindingAlgorithm\AStartModified.cs" />
     <Compile Include="PathFindingAlgorithm\DeepAlgorithm.cs" />
     <Compile Include="PathFindingAlgorithm\NullAlgorithm.cs" />
     <Compile Include="Extensions\SystemTypeExtensions\StackExtension.cs" />

@@ -9,13 +9,6 @@ namespace GraphLibrary.AlgoSelector
 {
     public static class AlgorithmSelector
     {
-        private static double AStarRelaxFunction(IVertex vertex, 
-            IVertex neighbour, IVertex destination)
-        {
-            return neighbour.Cost + vertex.AccumulatedCost
-                + Distance.GetChebyshevDistance(neighbour, destination);
-        }
-
         private static double CastAndDistanceGreedyFunction(IVertex vertex, IVertex destination)
         {
             return vertex.Cost + Distance.GetEuclideanDistance(vertex, destination);
@@ -28,10 +21,15 @@ namespace GraphLibrary.AlgoSelector
                 case Algorithms.LiAlgorithm: return new LiAlgorithm() { Graph = graph };
                 case Algorithms.DeepPathFind: return new DeepAlgorithm() { Graph = graph };
                 case Algorithms.DijkstraAlgorithm: return new DijkstraAlgorithm() { Graph = graph };
-                case Algorithms.AStarAlgorithm: return new DijkstraAlgorithm()
+                case Algorithms.AStarAlgorithm: return new AStarAlgorithm()
                 {
                     Graph = graph,
-                    RelaxFunction = (neighbour, vertex) => AStarRelaxFunction(vertex, neighbour, graph.End)
+                    HeuristicFunction = vertex => Distance.GetChebyshevDistance(vertex, graph.End)
+                };
+                case Algorithms.AStarModified: return new AStarModified()
+                {
+                    Graph = graph,
+                    HeuristicFunction = vertex => Distance.GetEuclideanDistance(vertex, graph.End)
                 };
                 case Algorithms.DistanceGreedyAlgorithm: return new GreedyAlgorithm()
                 {

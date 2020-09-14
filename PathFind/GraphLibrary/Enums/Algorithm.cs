@@ -10,6 +10,8 @@ namespace GraphLibrary.Enums
         DijkstraAlgorithm,
         [Description("A* algorithm")]
         AStarAlgorithm,
+        [Description("A* algorithm (modified)")]
+        AStarModified,
         [Description("Greedy algorithm (distance)")]
         DistanceGreedyAlgorithm,
         [Description("Greedy algorithm (cost)")]
