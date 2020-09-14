@@ -1,5 +1,4 @@
-﻿using GraphLibrary.DistanceCalculator;
-using GraphLibrary.Vertex.Interface;
+﻿using GraphLibrary.Vertex.Interface;
 
 namespace GraphLibrary.PathFindingAlgorithm
 {
