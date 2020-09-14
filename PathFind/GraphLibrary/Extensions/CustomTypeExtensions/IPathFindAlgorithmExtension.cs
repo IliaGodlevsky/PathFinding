@@ -27,9 +27,9 @@ namespace GraphLibrary.Extensions.CustomTypeExtensions
             while (algorithm.Graph.Start != vertex
                 && vertex != NullVertex.Instance)
             {
-                vertex = vertex.ParentVertex;
-                if (vertex.IsSimpleVertex())
+                if (!vertex.IsStart)
                     yield return vertex;
+                vertex = vertex.ParentVertex;
             }
         }
     }
