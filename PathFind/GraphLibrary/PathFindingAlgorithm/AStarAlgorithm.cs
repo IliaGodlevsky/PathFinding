@@ -1,5 +1,4 @@
-﻿using GraphLibrary.Extensions.SystemTypeExtensions;
-using GraphLibrary.Vertex.Interface;
+﻿using GraphLibrary.Vertex.Interface;
 using System;
 
 namespace GraphLibrary.PathFindingAlgorithm
