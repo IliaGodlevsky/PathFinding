@@ -11,10 +11,8 @@ namespace GraphLibrary.PathFindingAlgorithm
 
         protected override IVertex GetChippestUnvisitedVertex()
         {
-            int startIndexOfRemoval = 0;
-            int partOfRemoval = verticesProcessQueue.Count / 25;
             verticesProcessQueue.Sort((v1, v2) => HeuristicFunction(v2).CompareTo(HeuristicFunction(v1)));
-            verticesProcessQueue.RemoveRange(startIndexOfRemoval, partOfRemoval);
+            verticesProcessQueue.RemoveRange(0, verticesProcessQueue.Count / 25);
             return base.GetChippestUnvisitedVertex();
         }
     }
