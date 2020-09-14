@@ -7,6 +7,7 @@ namespace GraphLibrary.Extensions.SystemTypeExtensions
 {
     public static class MatrixExtensions
     {
+        
         public static int Width<TSource>(this TSource[,] arr)
         {
             if (arr == null)
@@ -49,17 +50,22 @@ namespace GraphLibrary.Extensions.SystemTypeExtensions
         public static void ApplyParallel<TSource>(this TSource[,] arr,
             params Func<TSource, TSource>[] methods)
         {
-            var threads = Environment.ProcessorCount;
-            var threadPool = new Thread[threads];
-            for (int i = 0; i < threads; i++)
+            if (arr.IsBigEnoughToParallel())
             {
-                var start = arr.Width() * i / threads;
-                var end = arr.Width() * (i + 1) / threads;
-                threadPool[i] = new Thread(() 
-                    => Apply(arr, start, end, methods));
+                var threads = Environment.ProcessorCount;
+                var threadPool = new Thread[threads];
+                for (int i = 0; i < threads; i++)
+                {
+                    var start = arr.Width() * i / threads;
+                    var end = arr.Width() * (i + 1) / threads;
+                    threadPool[i] = new Thread(()
+                        => Apply(arr, start, end, methods));
+                }
+                foreach (var thread in threadPool) thread.Start();
+                foreach (var thread in threadPool) thread.Join();
             }
-            foreach (var thread in threadPool) thread.Start();
-            foreach (var thread in threadPool) thread.Join();
+            else
+                arr.Apply(methods);
         }
 
         public static Position GetIndices<TSource>(this TSource[,] arr, TSource item)
@@ -69,6 +75,11 @@ namespace GraphLibrary.Extensions.SystemTypeExtensions
             var yCoordinate = (arr.Height() + index) % arr.Height();
             var xCoordinate = (int)Math.Ceiling((decimal)(index - yCoordinate) / arr.Height());
             return new Position(xCoordinate, yCoordinate);
+        }
+
+        private static bool IsBigEnoughToParallel<TSource>(this TSource[,] arr)
+        {
+            return arr.Length >= 200;
         }
     }
 }
