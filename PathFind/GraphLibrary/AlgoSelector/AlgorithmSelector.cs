@@ -29,7 +29,7 @@ namespace GraphLibrary.AlgoSelector
                 case Algorithms.AStarModified: return new AStarModified()
                 {
                     Graph = graph,
-                    HeuristicFunction = vertex => Distance.GetEuclideanDistance(vertex, graph.End)
+                    HeuristicFunction = vertex => Distance.GetChebyshevDistance(vertex, graph.End)
                 };
                 case Algorithms.DistanceGreedyAlgorithm: return new GreedyAlgorithm()
                 {
