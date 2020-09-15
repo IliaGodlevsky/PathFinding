@@ -58,8 +58,7 @@ namespace GraphLibrary.Extensions.SystemTypeExtensions
                 {
                     var start = arr.Width() * i / threads;
                     var end = arr.Width() * (i + 1) / threads;
-                    threadPool[i] = new Thread(()
-                        => Apply(arr, start, end, methods));
+                    threadPool[i] = new Thread(() => Apply(arr, start, end, methods));
                 }
                 foreach (var thread in threadPool) thread.Start();
                 foreach (var thread in threadPool) thread.Join();
