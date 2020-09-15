@@ -3,7 +3,7 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
-        xmlns:viewmodel="clr-namespace:WpfVersion.ViewModel"
+        xmlns:viewmodel="clr-namespace:WpfVersion.ViewModel" xmlns:model="clr-namespace:WpfVersion.Model"
         mc:Ignorable="d"
         Title="Path find"
         ResizeMode="CanResize"        
@@ -19,10 +19,9 @@
             <RowDefinition Height="*"></RowDefinition>
             <RowDefinition Height="auto"></RowDefinition>
         </Grid.RowDefinitions>
-        <Canvas Margin="3" Grid.Row="2" x:Name="graphField" 
-                Width="Auto" Height = "Auto">
+        <model:WpfGraphField Margin="3" Grid.Row="2" x:Name="graphField" Width="Auto" Height = "Auto">
             <ContentPresenter Content="{Binding GraphField}"></ContentPresenter>
-        </Canvas>
+        </model:WpfGraphField>
         <ToolBar Grid.Row="0">
             <Button Command="{Binding LoadGraphCommand}">
                 <Image Style ="{StaticResource ImageStyle}" Source="../../Resources/Images/open.png"></Image>

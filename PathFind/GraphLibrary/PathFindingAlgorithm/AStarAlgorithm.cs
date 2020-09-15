@@ -12,9 +12,9 @@ namespace GraphLibrary.PathFindingAlgorithm
 
         public Func<IVertex, double> HeuristicFunction { protected get; set; }
 
-        protected override double RelaxFunction(IVertex neighbour, IVertex vertex)
+        protected override double Relax(IVertex neighbour, IVertex vertex)
         {
-            return base.RelaxFunction(neighbour, vertex) + HeuristicFunction(vertex);
+            return base.Relax(neighbour, vertex) + HeuristicFunction(vertex);
         }
     }
 }

@@ -49,7 +49,8 @@ namespace GraphLibrary.PathFindingAlgorithm
 
         protected virtual IVertex GoNextVertex(IVertex vertex)
         {
-            return vertex.GetUnvisitedNeighbours().ToList().FirstOrNullVertex();
+            var unvisitedVertices = vertex.GetUnvisitedNeighbours().Shuffle();
+            return unvisitedVertices.ToList().FirstOrNullVertex();
         }
 
         private readonly Stack<IVertex> visitedVerticesStack;

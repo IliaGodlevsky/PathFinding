@@ -56,7 +56,7 @@ namespace GraphLibrary.PathFindingAlgorithm
             Graph.Array.Apply(SetValueToInfinity);
         }
 
-        protected virtual double RelaxFunction(IVertex neighbour, IVertex vertex)
+        protected virtual double Relax(IVertex neighbour, IVertex vertex)
         {
             return neighbour.Cost + vertex.AccumulatedCost;
         }
@@ -65,9 +65,9 @@ namespace GraphLibrary.PathFindingAlgorithm
         {
             IVertex RelaxVertex(IVertex neighbour)
             {
-                if (neighbour.AccumulatedCost > RelaxFunction(neighbour,vertex))
+                if (neighbour.AccumulatedCost > Relax(neighbour,vertex))
                 {
-                    neighbour.AccumulatedCost = RelaxFunction(neighbour, vertex);
+                    neighbour.AccumulatedCost = Relax(neighbour, vertex);
                     neighbour.ParentVertex = vertex;
                 }
                 return neighbour;
