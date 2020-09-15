@@ -36,7 +36,7 @@ namespace GraphLibrary.PathFindingAlgorithm
             do
             {
                 ExtractNeighbours(currentVertex);
-                SpreadRelaxWave(currentVertex);
+                RelaxNeighbours(currentVertex);
                 currentVertex = GetChippestUnvisitedVertex();
                 currentVertex.IsVisited = true;
                 OnVertexVisited?.Invoke(currentVertex);
@@ -61,7 +61,7 @@ namespace GraphLibrary.PathFindingAlgorithm
             return neighbour.Cost + vertex.AccumulatedCost;
         }
 
-        private void SpreadRelaxWave(IVertex vertex)
+        private void RelaxNeighbours(IVertex vertex)
         {
             IVertex RelaxVertex(IVertex neighbour)
             {
@@ -83,8 +83,13 @@ namespace GraphLibrary.PathFindingAlgorithm
         protected virtual IVertex GetChippestUnvisitedVertex()
         {
             verticesProcessQueue.RemoveAll(vertex => vertex.IsVisited);
-            verticesProcessQueue.Sort((v1, v2) => v1.AccumulatedCost.CompareTo(v2.AccumulatedCost));
+            verticesProcessQueue.Sort(CompareByAccumulatedCost);
             return verticesProcessQueue.FirstOrNullVertex();
+        }
+
+        private int CompareByAccumulatedCost(IVertex vertex1, IVertex vertex2)
+        {
+            return vertex1.AccumulatedCost.CompareTo(vertex2.AccumulatedCost);
         }
 
         protected List<IVertex> verticesProcessQueue;
