@@ -46,7 +46,7 @@ namespace ConsoleVersion.ViewModel
             {
                 while (true)
                 {
-                    Thread.Sleep(millisecondsTimeout: 125);
+                    Thread.Sleep(millisecondsTimeout: 135);
                     GraphShower.DisplayGraph(mainViewModel);
                 }
             });
