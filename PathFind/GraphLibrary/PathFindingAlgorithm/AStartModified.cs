@@ -12,7 +12,7 @@ namespace GraphLibrary.PathFindingAlgorithm
         protected override IVertex GetChippestUnvisitedVertex()
         {
             verticesProcessQueue.Sort((v1, v2) => HeuristicFunction(v2).CompareTo(HeuristicFunction(v1)));
-            verticesProcessQueue.RemoveRange(0, verticesProcessQueue.Count / 25);
+            verticesProcessQueue.RemoveRange(0, verticesProcessQueue.Count / 20);
             return base.GetChippestUnvisitedVertex();
         }
     }
