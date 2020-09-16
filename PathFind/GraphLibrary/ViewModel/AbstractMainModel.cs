@@ -4,6 +4,7 @@ using GraphLibrary.Extensions.CustomTypeExtensions;
 using GraphLibrary.GraphCreate.GraphFieldFactory;
 using GraphLibrary.GraphField;
 using GraphLibrary.Graphs;
+using GraphLibrary.Graphs.Interface;
 using GraphLibrary.GraphSerialization.GraphLoader;
 using GraphLibrary.GraphSerialization.GraphLoader.Interface;
 using GraphLibrary.GraphSerialization.GraphSaver;
@@ -19,12 +20,13 @@ namespace GraphLibrary.ViewModel
         public virtual string GraphParametres { get; set; }
         public virtual string Statistics { get; set; }
         public virtual IGraphField GraphField { get; set; }
-        public virtual Graph Graph { get; protected set; }
+        public virtual IGraph Graph { get; protected set; }
         public AbstractVertexEventHolder VertexEventHolder { get; set; }
         public string GraphParametresFormat { get; protected set; }
 
         public AbstractMainModel()
         {
+            Graph = NullGraph.Instance;
             saver = new GraphSaver();
             loader = new GraphLoader();
         }
@@ -46,7 +48,7 @@ namespace GraphLibrary.ViewModel
             GraphParametres = Graph.GetFormattedInfo(GraphParametresFormat);
         }
 
-        public void SetGraph(Graph graph)
+        public void SetGraph(IGraph graph)
         {
             Graph = graph;
             GraphField = graphFieldFactory.GetGraphField(Graph);
