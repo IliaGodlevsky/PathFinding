@@ -7,6 +7,7 @@ using GraphLibrary.PathFindingAlgorithm.Interface;
 using GraphLibrary.ViewModel.Interface;
 using GraphLibrary.Extensions.CustomTypeExtensions;
 using GraphLibrary.Extensions.SystemTypeExtensions;
+using GraphLibrary.Graphs.Interface;
 
 namespace GraphLibrary.ViewModel
 {
@@ -64,7 +65,7 @@ namespace GraphLibrary.ViewModel
             };
         }
 
-        protected Graph graph;
+        protected IGraph graph;
         protected IMainModel mainViewModel;
         protected string badResultMessage;
         protected string pathFindStatisticsFormat;
