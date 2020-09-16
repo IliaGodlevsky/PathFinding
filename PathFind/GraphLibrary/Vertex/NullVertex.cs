@@ -21,7 +21,7 @@ namespace GraphLibrary.Vertex
         private NullVertex()
         {
             isEnd = true;
-            isObstacle = true;
+            isObstacle = false;
             isStart = true;
             isVisited = false;
             cost = 0;
@@ -34,7 +34,7 @@ namespace GraphLibrary.Vertex
         public bool IsEnd { get => isEnd; set => isEnd = true; }
 
         private bool isObstacle;
-        public bool IsObstacle { get => isObstacle; set => isObstacle = true; }
+        public bool IsObstacle { get => isObstacle; set => isObstacle = false; }
 
         private bool isStart;
         public bool IsStart { get => isStart; set => isStart = true; }
