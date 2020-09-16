@@ -7,6 +7,7 @@ using System.Drawing;
 using System;
 using GraphLibrary.VertexBinding;
 using GraphLibrary.GraphCreate.GraphFactory.Interface;
+using GraphLibrary.Graphs.Interface;
 
 namespace GraphLibrary.GraphFactory
 {
@@ -24,7 +25,7 @@ namespace GraphLibrary.GraphFactory
             }
         }
 
-        public Graph GetGraph(Func<VertexDto, IVertex> generator)
+        public IGraph GetGraph(Func<VertexDto, IVertex> generator)
         {
             graph = new Graph(width, height);
 
@@ -41,7 +42,7 @@ namespace GraphLibrary.GraphFactory
             return graph;
         }
 
-        private Graph graph;
+        private IGraph graph;
         private readonly int width;
         private readonly int height;
         private readonly VertexDto[,] vertexDtos;

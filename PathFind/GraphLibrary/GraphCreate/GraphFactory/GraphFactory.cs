@@ -23,7 +23,7 @@ namespace GraphLibrary.GraphFactory
         }
 
 
-        public Graph GetGraph(Func<IVertex> generator)
+        public IGraph GetGraph(Func<IVertex> generator)
         {
             graph = new Graph(parametres.Width, parametres.Height);
 
@@ -46,7 +46,7 @@ namespace GraphLibrary.GraphFactory
 
         private static readonly Random rand;
 
-        private Graph graph;
+        private IGraph graph;
         private readonly GraphParametres parametres;
         private readonly int placeBetweenVertices;
 
