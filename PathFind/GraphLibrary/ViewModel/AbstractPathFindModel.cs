@@ -36,7 +36,6 @@ namespace GraphLibrary.ViewModel
                 path.Count(),
                 path.Sum(vertex => vertex.Cost),
                 graph.NumberOfVisitedVertices);
-            mainViewModel.Graph.RemoveExtremeVertices();
         }
 
         protected IPathFindingAlgorithm pathAlgorithm;
