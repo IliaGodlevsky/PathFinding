@@ -61,7 +61,7 @@
     <Compile Include="Extensions\SystemTypeExtensions\ListExtension.cs" />
     <Compile Include="Extensions\SystemTypeExtensions\EnumExtensions.cs" />
     <Compile Include="Extensions\SystemTypeExtensions\IEnumerableExtension.cs" />
-    <Compile Include="Extensions\CustomTypeExtensions\GraphExtensions.cs" />
+    <Compile Include="Extensions\CustomTypeExtensions\IGraphExtensions.cs" />
     <Compile Include="Extensions\SystemTypeExtensions\IntExtensions.cs" />
     <Compile Include="Extensions\CustomTypeExtensions\IPathFindAlgorithmExtension.cs" />
     <Compile Include="Extensions\CustomTypeExtensions\IVertexExtension.cs" />
