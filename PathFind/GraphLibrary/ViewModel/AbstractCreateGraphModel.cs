@@ -17,6 +17,7 @@ namespace GraphLibrary.ViewModel
         public AbstractCreateGraphModel(IMainModel model)
         {
             this.model = model;
+            graph = NullGraph.Instance;
         }
 
         public virtual void CreateGraph(Func<IVertex> generator)
@@ -29,6 +30,6 @@ namespace GraphLibrary.ViewModel
         }
 
         protected IMainModel model;
-        protected Graph graph;
+        protected IGraph graph;
     }
 }
