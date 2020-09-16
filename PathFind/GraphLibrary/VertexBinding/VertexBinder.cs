@@ -1,5 +1,5 @@
 ﻿using GraphLibrary.Extensions.SystemTypeExtensions;
-using GraphLibrary.Graphs;
+using GraphLibrary.Graphs.Interface;
 using GraphLibrary.Vertex.Interface;
 
 namespace GraphLibrary.VertexBinding
@@ -26,7 +26,7 @@ namespace GraphLibrary.VertexBinding
             vertex.Neighbours.Clear();
         }
 
-        private static bool IsWithinGraph(Graph graph, int width, int height)
+        private static bool IsWithinGraph(IGraph graph, int width, int height)
         {
             return width >= 0 && width < graph.Width
                 && height >= 0 && height < graph.Height;
@@ -38,7 +38,7 @@ namespace GraphLibrary.VertexBinding
                 !vertex.Neighbours.Contains(neighbourCandidate);
         }
 
-        public static void SetNeighbours(Graph graph, IVertex vertex)
+        public static void SetNeighbours(IGraph graph, IVertex vertex)
         {
             if (vertex.IsObstacle)
                 return;
@@ -49,7 +49,7 @@ namespace GraphLibrary.VertexBinding
                         vertex.Neighbours.Add(graph[i, j]);
         }
 
-        public static void ConnectVertices(Graph graph)
+        public static void ConnectVertices(IGraph graph)
         {
             graph.Array.ApplyParallel(vertex => { SetNeighbours(graph, vertex); return vertex; });
         }
