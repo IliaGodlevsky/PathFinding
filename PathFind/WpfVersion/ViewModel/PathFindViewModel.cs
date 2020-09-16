@@ -38,8 +38,8 @@ namespace WpfVersion.ViewModel
         {
             base.PrepareAlgorithm();
             (mainViewModel as MainWindowViewModel).Window.Close();
-            var pauser = new PauseProvider(DelayTime) { PauseEvent = () 
-                => System.Windows.Forms.Application.DoEvents() };
+            var pauser = new PauseProvider(DelayTime);
+            pauser.PauseEvent += () => System.Windows.Forms.Application.DoEvents();
 
             pathAlgorithm.OnVertexVisited += (vertex) => pauser.Pause();
             

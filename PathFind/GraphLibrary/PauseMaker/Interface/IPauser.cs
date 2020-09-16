@@ -1,9 +1,10 @@
-﻿namespace GraphLibrary.PauseMaker.Interface
+﻿using System;
+
+namespace GraphLibrary.PauseMaker.Interface
 {
-    public delegate void Pause();
     public interface IPauseProvider
     {
-        Pause PauseEvent { get; set; }
+        event Action PauseEvent;
         void Pause();
     }
 }

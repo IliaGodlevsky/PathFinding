@@ -1,11 +1,12 @@
 ﻿using GraphLibrary.PauseMaker.Interface;
+using System;
 using System.Diagnostics;
 
 namespace GraphLibrary.PauseMaker
 {
     public class PauseProvider : IPauseProvider
     {
-        public Pause PauseEvent { get; set; }
+        public event Action PauseEvent;
 
         public PauseProvider(int delayTime)
         {

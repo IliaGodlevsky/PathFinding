@@ -18,8 +18,8 @@ namespace WinFormsVersion.ViewModel
         protected override void PrepareAlgorithm()
         {
             (mainViewModel as MainWindowViewModel).Window.Close();
-            var pauser = new PauseProvider(DelayTime) { PauseEvent = () 
-                => Application.DoEvents() };
+            var pauser = new PauseProvider(DelayTime);
+            pauser.PauseEvent += () => Application.DoEvents();
             pathAlgorithm.OnVertexVisited += (vertex) => pauser.Pause();
 
             pathAlgorithm.OnFinished += (sender, eventArgs) =>

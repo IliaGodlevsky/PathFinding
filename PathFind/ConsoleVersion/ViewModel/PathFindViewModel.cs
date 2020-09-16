@@ -53,7 +53,8 @@ namespace ConsoleVersion.ViewModel
                 }
             });
 
-            var pauser = new PauseProvider(DelayTime) { PauseEvent = () => { } };
+            var pauser = new PauseProvider(DelayTime);
+            pauser.PauseEvent += () => { };
 
             pathAlgorithm.OnStarted += (sender, eventArgs) => thread.Start();
             pathAlgorithm.OnVertexVisited += (vertex) => pauser.Pause();
