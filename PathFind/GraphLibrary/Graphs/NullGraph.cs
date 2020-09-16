@@ -4,7 +4,7 @@ using GraphLibrary.Vertex;
 using GraphLibrary.Vertex.Interface;
 using System.Collections;
 using System.Collections.Generic;
-using System.Drawing;
+using System.Linq;
 
 namespace GraphLibrary.Graphs
 {
@@ -20,7 +20,12 @@ namespace GraphLibrary.Graphs
             }
         }
 
-        private NullGraph() => nullVertex = NullVertex.Instance;
+        private NullGraph()
+        {
+            nullVertex = NullVertex.Instance;
+            Array = new NullVertex[0, 0];
+        }
+
         public IVertex this[int width, int height] { get => nullVertex; set => nullVertex = NullVertex.Instance; }
         public IVertex End { get => nullVertex; set => nullVertex = NullVertex.Instance; }
         public int Height => 0;
@@ -31,10 +36,10 @@ namespace GraphLibrary.Graphs
         public IVertex Start { get => nullVertex; set => nullVertex = NullVertex.Instance; }
         public VertexDto[,] VerticesDto => new VertexDto[0, 0];
         public int Width => 0;
-        public IVertex[,] Array => new IVertex[0, 0];
-        public IEnumerator<IVertex> GetEnumerator() => (IEnumerator<IVertex>)new IVertex[0, 0].GetEnumerator();
+        public IVertex[,] Array { get; }
+        public IEnumerator<IVertex> GetEnumerator() => Array.Cast<IVertex>().ToList().GetEnumerator();
         public Position GetIndices(IVertex vertex) => new Position(0, 0);
-        IEnumerator IEnumerable.GetEnumerator() => new IVertex[0, 0].GetEnumerator();
+        IEnumerator IEnumerable.GetEnumerator() => Array.GetEnumerator();
 
         private NullVertex nullVertex;
         private static NullGraph instance = null;
