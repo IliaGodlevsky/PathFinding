@@ -12,6 +12,7 @@ using GraphLibrary.Extensions.CustomTypeExtensions;
 using GraphLibrary.ValueRanges;
 using System.Threading;
 using System.Linq;
+using GraphLibrary.Graphs;
 
 namespace ConsoleVersion.ViewModel
 {
@@ -29,6 +30,8 @@ namespace ConsoleVersion.ViewModel
 
         public override void FindPath()
         {
+            if (!graph.Any())
+                return;
             mainViewModel.ClearGraph();
             GraphShower.DisplayGraph(mainViewModel);
             ChooseStart();

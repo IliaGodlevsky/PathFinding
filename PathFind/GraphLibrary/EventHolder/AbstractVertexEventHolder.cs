@@ -7,12 +7,13 @@ using GraphLibrary.VertexBinding;
 using GraphLibrary.Extensions.CustomTypeExtensions;
 using GraphLibrary.ValueRanges;
 using GraphLibrary.Extensions.SystemTypeExtensions;
+using GraphLibrary.Graphs.Interface;
 
 namespace GraphLibrary.EventHolder
 {
     public abstract class AbstractVertexEventHolder : IVertexEventHolder
     {
-        public Graph Graph { get; set; }
+        public IGraph Graph { get; set; }
 
         protected abstract int GetWheelDelta(EventArgs e);
 

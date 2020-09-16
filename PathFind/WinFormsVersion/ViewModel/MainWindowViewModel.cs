@@ -15,6 +15,8 @@ using GraphLibrary.GraphField;
 using GraphLibrary.Vertex;
 using WinFormsVersion.Vertex;
 using GraphLibrary.Globals;
+using GraphLibrary.Graphs.Interface;
+using System.Linq;
 
 namespace WinFormsVersion.ViewModel
 {
@@ -54,8 +56,8 @@ namespace WinFormsVersion.ViewModel
             }
         }
 
-        private Graph graph;
-        public override Graph Graph
+        private IGraph graph;
+        public override IGraph Graph
         {
             get { return graph; }
             protected set { graph = value; OnPropertyChanged(); }
@@ -128,9 +130,9 @@ namespace WinFormsVersion.ViewModel
 
         private bool CanStartPathFinding()
         {
-            return graph?.Start != NullVertex.Instance
-                && graph?.End != NullVertex.Instance
-                && Graph != null;
+            return graph.Start != NullVertex.Instance
+                && graph.End != NullVertex.Instance
+                && Graph.Any();
         }
 
         protected override string GetSavePath()

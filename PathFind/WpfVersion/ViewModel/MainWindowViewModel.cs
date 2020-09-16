@@ -13,6 +13,8 @@ using GraphLibrary.ViewModel;
 using GraphLibrary.GraphField;
 using Microsoft.Win32;
 using WpfVersion.Model.Vertex;
+using GraphLibrary.Graphs.Interface;
+using System.Linq;
 
 namespace WpfVersion.ViewModel
 {
@@ -46,8 +48,8 @@ namespace WpfVersion.ViewModel
             set { graphField = value; OnPropertyChanged(); } 
         }
 
-        private Graph graph;
-        public override Graph Graph 
+        private IGraph graph;
+        public override IGraph Graph 
         { 
             get { return graph; } 
             protected set { graph = value; OnPropertyChanged(); } 
@@ -90,8 +92,8 @@ namespace WpfVersion.ViewModel
 
         private bool CanExecuteStartFindPathCommand(object param)
         {
-            return Graph?.End != NullVertex.Instance
-                && Graph?.Start != NullVertex.Instance && Graph != null;
+            return Graph.End != NullVertex.Instance
+                && Graph.Start != NullVertex.Instance && Graph.Any();
         }
 
         private void ExecuteLoadGraphCommand(object param)

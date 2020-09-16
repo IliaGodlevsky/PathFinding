@@ -2,6 +2,7 @@
 using GraphLibrary.EventHolder;
 using GraphLibrary.GraphField;
 using GraphLibrary.Graphs;
+using GraphLibrary.Graphs.Interface;
 using GraphLibrary.Vertex.Interface;
 using System;
 
@@ -14,9 +15,9 @@ namespace GraphLibrary.ViewModel.Interface
         string GraphParametres { get; set; }
         IGraphField GraphField { get; set; }
         string Statistics { get; set; }
-        void SetGraph(Graph graph);
+        void SetGraph(IGraph graph);
         void CreateNewGraph();
-        Graph Graph { get; }
+        IGraph Graph { get; }
         void SaveGraph();
         void ClearGraph();
         void LoadGraph();

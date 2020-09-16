@@ -4,6 +4,7 @@ using GraphLibrary.Graphs;
 using WinFormsVersion.Vertex;
 using GraphLibrary.EventHolder;
 using GraphLibrary.Vertex.Interface;
+using GraphLibrary.Vertex;
 
 namespace WinFormsVersion.EventHolder
 {
@@ -22,6 +23,8 @@ namespace WinFormsVersion.EventHolder
 
         protected override void ChargeVertex(IVertex vertex)
         {
+            if (vertex == NullVertex.Instance)
+                return;
             (vertex as WinFormsVertex).MouseClick += ChooseExtremeVertices;
             (vertex as WinFormsVertex).MouseClick += ReversePolarity;
             (vertex as WinFormsVertex).MouseWheel += ChangeVertexValue;
