@@ -2,7 +2,6 @@
 using System.Diagnostics;
 using System.Linq;
 using GraphLibrary.Enums;
-using GraphLibrary.Graphs;
 using GraphLibrary.PathFindingAlgorithm.Interface;
 using GraphLibrary.ViewModel.Interface;
 using GraphLibrary.Extensions.CustomTypeExtensions;
