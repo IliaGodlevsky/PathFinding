@@ -1,14 +1,12 @@
 # Path find project
  Path find project, C#
  
- Realized: 
+ Realized on: 
+  
+ 1. WPF
  
- 1. Path find library
+ 2. WinForms
  
- 2. Wpf version path find
- 
- 3. WinForms version path find
- 
- 4. Console version path find
+ 3. Console
 
- 
+ Install Colorful Console from nuget to run Console Version of program correctly
