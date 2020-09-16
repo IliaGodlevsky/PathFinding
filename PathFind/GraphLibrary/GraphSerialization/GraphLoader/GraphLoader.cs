@@ -2,6 +2,7 @@
 using GraphLibrary.Globals;
 using GraphLibrary.GraphFactory;
 using GraphLibrary.Graphs;
+using GraphLibrary.Graphs.Interface;
 using GraphLibrary.GraphSerialization.GraphLoader.Interface;
 using GraphLibrary.Vertex.Interface;
 using GraphLibrary.VertexBinding;
@@ -15,7 +16,7 @@ namespace GraphLibrary.GraphSerialization.GraphLoader
     {
         public event Action<string> OnBadLoad;
 
-        public Graph GetGraph(string path, Func<VertexDto, IVertex> generator)
+        public IGraph GetGraph(string path, Func<VertexDto, IVertex> generator)
         {
             var formatter = new BinaryFormatter();
             try
@@ -25,7 +26,7 @@ namespace GraphLibrary.GraphSerialization.GraphLoader
             }
             catch (Exception ex)
             {
-                graph = null;
+                graph = NullGraph.Instance;
                 OnBadLoad?.Invoke(ex.Message);
             }
             return graph;
@@ -40,6 +41,6 @@ namespace GraphLibrary.GraphSerialization.GraphLoader
             VertexBinder.ConnectVertices(graph);
         }
 
-        private Graph graph = null;
+        private IGraph graph = null;
     }
 }

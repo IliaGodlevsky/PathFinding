@@ -1,4 +1,4 @@
-﻿using GraphLibrary.Graphs;
+﻿using GraphLibrary.Graphs.Interface;
 using GraphLibrary.GraphSerialization.GraphSaver.Interface;
 using System;
 using System.IO;
@@ -10,20 +10,17 @@ namespace GraphLibrary.GraphSerialization.GraphSaver
     {
         public event Action<string> OnBadSave;
 
-        public void SaveGraph(Graph graph, string path)
+        public void SaveGraph(IGraph graph, string path)
         {
-            if (graph != null)
+            var formatter = new BinaryFormatter();
+            try
             {
-                var formatter = new BinaryFormatter();
-                try
-                {
-                    using (var stream = new FileStream(path, FileMode.Create))
-                        formatter.Serialize(stream, graph.VerticesDto);
-                }
-                catch (Exception ex)
-                {
-                    OnBadSave?.Invoke(ex.Message);
-                }
+                using (var stream = new FileStream(path, FileMode.Create))
+                    formatter.Serialize(stream, graph.VerticesDto);
+            }
+            catch (Exception ex)
+            {
+                OnBadSave?.Invoke(ex.Message);
             }
         }
     }

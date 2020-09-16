@@ -1,4 +1,4 @@
-﻿using GraphLibrary.Graphs;
+﻿using GraphLibrary.Graphs.Interface;
 using System;
 
 namespace GraphLibrary.GraphSerialization.GraphSaver.Interface
@@ -6,6 +6,6 @@ namespace GraphLibrary.GraphSerialization.GraphSaver.Interface
     public interface IGraphSaver
     {
         event Action<string> OnBadSave;
-        void SaveGraph(Graph graph, string path);
+        void SaveGraph(IGraph graph, string path);
     }
 }
