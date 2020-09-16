@@ -1,7 +1,19 @@
-# Path find project
- Path find project, C#
+# Pathfinding project
+ Pathfinding project, C#
  
- Realized on: 
+ Realized 5 pathfinding algorithms:
+ 
+ 1. Li algorithm
+ 
+ 2. Dijkstra algorithm
+ 
+ 3. A* algorithm (with modification)
+ 
+ 4. Deep pathfinding algorithm
+ 
+ 5. Greedy algorithm (with modifications)
+ 
+ Visualization of algorithms realized on: 
   
  1. WPF
  
