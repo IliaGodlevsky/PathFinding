@@ -1,24 +1,22 @@
 # Pathfinding project
  Pathfinding project, C#
  
- Realized 5 pathfinding algorithms:
+ **_Realized 5 pathfinding algorithms_**:
  
- 1. Li algorithm
+ 1. [Lee algorithm](https://github.com/IliaGodlevsky/PathFinding/blob/master/PathFind/GraphLibrary/PathFindingAlgorithm/LeeAlgorithm.cs)
  
- 2. Dijkstra algorithm
+ 2. [Dijkstra algorithm](https://github.com/IliaGodlevsky/PathFinding/blob/master/PathFind/GraphLibrary/PathFindingAlgorithm/DijkstraAlgorithm.cs)
  
- 3. A* algorithm (with modification)
- 
- 4. Deep pathfinding algorithm
- 
- 5. Greedy algorithm (with modifications)
+ 3. [A* algorithm](https://github.com/IliaGodlevsky/PathFinding/blob/master/PathFind/GraphLibrary/PathFindingAlgorithm/AStarAlgorithm.cs) ([with modification](https://github.com/IliaGodlevsky/PathFinding/blob/master/PathFind/GraphLibrary/PathFindingAlgorithm/AStartModified.cs))
+  
+ 4. [Greedy algorithm](https://github.com/IliaGodlevsky/PathFinding/blob/master/PathFind/GraphLibrary/PathFindingAlgorithm/GreedyAlgorithm.cs)
  
  Visualization of algorithms realized on: 
   
- 1. WPF
+ 1. [WPF](https://github.com/IliaGodlevsky/PathFinding/tree/master/PathFind/WpfVersion)
  
- 2. WinForms
+ 2. [WinForms](https://github.com/IliaGodlevsky/PathFinding/tree/master/PathFind/WinFormsVersion)
  
- 3. Console
+ 3. [Console](https://github.com/IliaGodlevsky/PathFinding/tree/master/PathFind/ConsoleVersion)
 
- Install Colorful Console from nuget to run Console Version of program correctly
+ Install [Colorful.Console](http://colorfulconsole.com/) package from to run the Console Version of program correctly
