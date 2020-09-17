@@ -22,37 +22,48 @@ namespace GraphLibrary.AlgoSelector
                 { 
                     Graph = graph 
                 };
+
                 case Algorithms.DeepPathFind: return new GreedyAlgorithm() 
                 { 
                     Graph = graph,
                     GreedyFunction = vertex => Distance.GetChebyshevDistance(vertex, graph.Start)
                 };
-                case Algorithms.DijkstraAlgorithm: return new DijkstraAlgorithm() { Graph = graph };
+
+                case Algorithms.DijkstraAlgorithm: return new DijkstraAlgorithm() 
+                { 
+                    Graph = graph 
+                };
+
                 case Algorithms.AStarAlgorithm: return new AStarAlgorithm()
                 {
                     Graph = graph,
                     HeuristicFunction = vertex => Distance.GetChebyshevDistance(vertex, graph.End)
                 };
+
                 case Algorithms.AStarModified: return new AStarModified()
                 {
                     Graph = graph,
                     HeuristicFunction = vertex => Distance.GetChebyshevDistance(vertex, graph.End)
                 };
+
                 case Algorithms.DistanceGreedyAlgorithm: return new GreedyAlgorithm()
                 {
                     Graph = graph,
                     GreedyFunction = vertex => Distance.GetEuclideanDistance(vertex, graph.End)
                 };
+
                 case Algorithms.ValueGreedyAlgorithm: return new GreedyAlgorithm()
                 {
-                    Graph = graph,
+                    Graph = graph,                   
                     GreedyFunction = vertex => vertex.Cost
                 };
+
                 case Algorithms.ValueDistanceGreedyAlgorithm: return new GreedyAlgorithm()
                 {
                     Graph = graph,
                     GreedyFunction = vertex => CastAndDistanceGreedyFunction(vertex, graph.End)
                 };
+
                 default: return NullAlgorithm.Instance;
             }
         }
