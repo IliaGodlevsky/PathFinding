@@ -47,7 +47,6 @@
     <Compile Include="GraphCreate\GraphFactory\Interface\IGraphInitializer.cs" />
     <Compile Include="PathFindingAlgorithm\AStarAlgorithm.cs" />
     <Compile Include="PathFindingAlgorithm\AStartModified.cs" />
-    <Compile Include="PathFindingAlgorithm\DeepAlgorithm.cs" />
     <Compile Include="PathFindingAlgorithm\NullAlgorithm.cs" />
     <Compile Include="Extensions\SystemTypeExtensions\StackExtension.cs" />
     <Compile Include="Graphs\Interface\IGraph.cs" />
@@ -96,7 +95,7 @@
     <Compile Include="PathFindingAlgorithm\DijkstraAlgorithm.cs" />
     <Compile Include="PathFindingAlgorithm\GreedyAlgorithm.cs" />
     <Compile Include="PathFindingAlgorithm\Interface\IPathFindingAlgorithm.cs" />
-    <Compile Include="PathFindingAlgorithm\LiAlgorithm.cs" />
+    <Compile Include="PathFindingAlgorithm\LeeAlgorithm.cs" />
     <Compile Include="PauseMaker\Pauser.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="EventHolder\Interface\IVertexEventHolder.cs" />

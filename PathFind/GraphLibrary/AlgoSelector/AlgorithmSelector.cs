@@ -13,13 +13,17 @@ namespace GraphLibrary.AlgoSelector
         {
             return vertex.Cost + Distance.GetEuclideanDistance(vertex, destination);
         }
-
+        
         public static IPathFindingAlgorithm GetPathFindAlgorithm(Algorithms algorithms, IGraph graph)
         {
             switch (algorithms)
             {
                 case Algorithms.LiAlgorithm: return new LeeAlgorithm() { Graph = graph };
-                case Algorithms.DeepPathFind: return new DeepAlgorithm() { Graph = graph };
+                case Algorithms.DeepPathFind: return new GreedyAlgorithm() 
+                { 
+                    Graph = graph,
+                    GreedyFunction = vertex => Distance.GetChebyshevDistance(vertex, graph.Start)
+                };
                 case Algorithms.DijkstraAlgorithm: return new DijkstraAlgorithm() { Graph = graph };
                 case Algorithms.AStarAlgorithm: return new AStarAlgorithm()
                 {
