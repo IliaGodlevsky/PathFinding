@@ -16,7 +16,7 @@ namespace GraphLibrary.PathFindingAlgorithm
     /// Uses queue to move next graph top. Finds the shortest path to
     /// the destination top
     /// </summary>
-    public class LiAlgorithm : IPathFindingAlgorithm
+    public class LeeAlgorithm : IPathFindingAlgorithm
     {
         public event AlgorithmEventHanlder OnStarted;
         public event Action<IVertex> OnVertexVisited;
@@ -24,7 +24,7 @@ namespace GraphLibrary.PathFindingAlgorithm
 
         public IGraph Graph { get; set; }
 
-        public LiAlgorithm()
+        public LeeAlgorithm()
         {
             Graph = NullGraph.Instance;
             neighbourQueue = new Queue<IVertex>();
