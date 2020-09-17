@@ -18,7 +18,7 @@ namespace GraphLibrary.AlgoSelector
         {
             switch (algorithms)
             {
-                case Algorithms.LiAlgorithm: return new LiAlgorithm() { Graph = graph };
+                case Algorithms.LiAlgorithm: return new LeeAlgorithm() { Graph = graph };
                 case Algorithms.DeepPathFind: return new DeepAlgorithm() { Graph = graph };
                 case Algorithms.DijkstraAlgorithm: return new DijkstraAlgorithm() { Graph = graph };
                 case Algorithms.AStarAlgorithm: return new AStarAlgorithm()
