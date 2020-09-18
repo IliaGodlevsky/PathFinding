@@ -27,7 +27,7 @@ namespace GraphLibrary.EventHolder
 
         private void MakeObstacle(IVertex vertex)
         {
-            if (vertex.IsSimpleVertex())
+            if (vertex.IsSimpleVertex() && !vertex.IsVisited)
             {
                 VertexBinder.IsolateVertex(vertex);
                 vertex.IsObstacle = false;
