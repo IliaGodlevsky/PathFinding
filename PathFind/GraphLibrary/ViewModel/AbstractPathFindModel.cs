@@ -51,8 +51,7 @@ namespace GraphLibrary.ViewModel
                 string.Format("   " + pathFindStatisticsFormat, 0, 0, graph.NumberOfVisitedVertices);
             };
 
-            pathAlgorithm.OnStarted +=
-                (sender, eventArgs) => { timer.Start(); };
+            pathAlgorithm.OnStarted += (sender, eventArgs) => { timer.Start(); };
 
             pathAlgorithm.OnFinished += (sender, eventArgs) =>
             {
