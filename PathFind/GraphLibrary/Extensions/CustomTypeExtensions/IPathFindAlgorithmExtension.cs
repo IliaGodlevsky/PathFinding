@@ -23,13 +23,16 @@ namespace GraphLibrary.Extensions.CustomTypeExtensions
 
         public static IEnumerable<IVertex> GetFoundPath(this IPathFindingAlgorithm algorithm)
         {
-            var vertex = algorithm.Graph.End;
-            while (algorithm.Graph.Start != vertex
-                && vertex != NullVertex.Instance)
+            if (algorithm.Graph.End.IsVisited)
             {
-                if (!vertex.IsStart)
-                    yield return vertex;
-                vertex = vertex.ParentVertex;
+                var vertex = algorithm.Graph.End;
+                while (algorithm.Graph.Start != vertex
+                    && vertex != NullVertex.Instance)
+                {
+                    if (!vertex.IsStart)
+                        yield return vertex;
+                    vertex = vertex.ParentVertex;
+                }
             }
         }
     }
