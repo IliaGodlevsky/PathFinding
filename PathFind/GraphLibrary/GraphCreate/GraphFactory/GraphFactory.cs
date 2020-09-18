@@ -34,7 +34,7 @@ namespace GraphLibrary.GraphFactory
                 vertex.Cost = rand.GetRandomValueCost();
                 if (rand.IsObstacleChance(parametres.ObstaclePercent))
                     vertex.MarkAsObstacle();
-                vertex.SetLocation(indices);
+                vertex.Position = indices;
                 return vertex;
             }
 
