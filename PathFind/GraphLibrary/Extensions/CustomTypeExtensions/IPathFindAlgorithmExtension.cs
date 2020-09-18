@@ -12,13 +12,12 @@ namespace GraphLibrary.Extensions.CustomTypeExtensions
         public static void DrawPath(this IPathFindingAlgorithm algo)
         {
             var path = algo.GetFoundPath().ToList();
-            if (path != null)
-                path.Apply(vertex =>
-                {
-                    if (vertex.IsSimpleVertex())
-                        vertex.MarkAsPath();
-                    return vertex;
-                });
+            path.Apply(vertex =>
+            {
+                if (vertex.IsSimpleVertex())
+                    vertex.MarkAsPath();
+                return vertex;
+            });
         }
 
         public static IEnumerable<IVertex> GetFoundPath(this IPathFindingAlgorithm algorithm)
