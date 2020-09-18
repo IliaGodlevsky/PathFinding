@@ -26,7 +26,6 @@ namespace GraphLibrary.GraphSerialization.GraphLoader
             }
             catch (Exception ex)
             {
-                graph = NullGraph.Instance;
                 OnBadLoad?.Invoke(ex.Message);
             }
             return graph;
@@ -41,6 +40,6 @@ namespace GraphLibrary.GraphSerialization.GraphLoader
             VertexBinder.ConnectVertices(graph);
         }
 
-        private IGraph graph = null;
+        private IGraph graph = NullGraph.Instance;
     }
 }

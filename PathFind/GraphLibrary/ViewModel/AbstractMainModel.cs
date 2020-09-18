@@ -36,9 +36,8 @@ namespace GraphLibrary.ViewModel
         public virtual void LoadGraph()
         {
             var temp = loader.GetGraph(GetLoadPath(), generator);
-            if (temp == null)
-                return;
-            SetGraph(temp);
+            if (temp != NullGraph.Instance)
+                SetGraph(temp);
         }
 
         public virtual void ClearGraph()
