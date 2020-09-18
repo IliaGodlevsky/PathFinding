@@ -45,7 +45,7 @@ namespace WpfVersion.Model.Vertex
             set { Content = value.ToString(); }
         }
 
-        public List<IVertex> Neighbours { get; set; }
+        public IList<IVertex> Neighbours { get; set; }
         public IVertex ParentVertex { get; set; }
         public double AccumulatedCost { get; set; }
         public Position Position { get; set; }

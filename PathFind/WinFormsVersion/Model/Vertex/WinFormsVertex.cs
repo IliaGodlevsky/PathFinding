@@ -31,7 +31,7 @@ namespace WinFormsVersion.Vertex
         public bool IsVisited { get; set; }
         public double AccumulatedCost { get; set; }
         public IVertex ParentVertex { get; set; }
-        public List<IVertex> Neighbours { get; set; }
+        public IList<IVertex> Neighbours { get; set; }
         public bool IsObstacle { get; set; }
 
         public void MarkAsObstacle()

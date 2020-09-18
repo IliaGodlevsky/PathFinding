@@ -3,6 +3,9 @@ using System.Collections.Generic;
 
 namespace GraphLibrary.Vertex.Interface
 {
+    /// <summary>
+    /// Cartesian coordinates of the vertex on the graph
+    /// </summary>
     public struct Position
     {
         public int X { get; set; }
@@ -33,7 +36,7 @@ namespace GraphLibrary.Vertex.Interface
         bool IsStart { get; set; }
         bool IsVisited { get; set; }
         int Cost { get; set; }
-        List<IVertex> Neighbours { get; set; }
+        IList<IVertex> Neighbours { get; set; }
         IVertex ParentVertex { get; set; }
         double AccumulatedCost { get; set; }
         Position Position { get; set; }
