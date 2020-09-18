@@ -105,8 +105,8 @@ namespace WpfVersion.ViewModel
                 OnPropertyChanged(nameof(GraphField));
                 OnPropertyChanged(nameof(Graph));
                 OnPropertyChanged(nameof(GraphParametres));
-            }
-            WindowAdjust.Adjust(Graph);
+                WindowAdjust.Adjust(Graph);
+            }           
         }
 
         private void ExecuteClearGraphCommand(object param)
