@@ -34,13 +34,11 @@ namespace GraphLibrary.PathFindingAlgorithm
         {
             OnStarted?.Invoke(this, new AlgorithmEventArgs(Graph));
             var currentVertex = Graph.Start;
-            ProcessVertex(currentVertex);
-            while (!currentVertex.IsEnd)
+            do
             {
-                currentVertex = neighbourQueue.DequeueOrNullVertex();
-                if (!currentVertex.IsVisited)
-                    ProcessVertex(currentVertex);
-            }
+                ProcessVertex(currentVertex);
+                currentVertex = GetNextVertex();
+            } while (!currentVertex.IsEnd);
             OnFinished?.Invoke(this, new AlgorithmEventArgs(Graph));
             return this.GetFoundPath();
         }
@@ -48,6 +46,17 @@ namespace GraphLibrary.PathFindingAlgorithm
         private void ExtractNeighbours(IVertex vertex)
         {
             neighbourQueue.EnqueueRange(vertex.GetUnvisitedNeighbours());
+
+            neighbourQueue = new Queue<IVertex>(neighbourQueue.
+                DistinctBy(vert => vert.Position).ToList());
+        }
+
+        private IVertex GetNextVertex()
+        {           
+            neighbourQueue = new Queue<IVertex>(neighbourQueue.
+                Where(vertex => !vertex.IsVisited).ToList());
+
+            return neighbourQueue.Dequeue();
         }
 
         private void SpreadWaves(IVertex vertex)
@@ -71,6 +80,6 @@ namespace GraphLibrary.PathFindingAlgorithm
             ExtractNeighbours(vertex);
         }
 
-        private readonly Queue<IVertex> neighbourQueue;
+        private Queue<IVertex> neighbourQueue;
     }
 }

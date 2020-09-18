@@ -8,11 +8,6 @@ namespace GraphLibrary.Extensions.SystemTypeExtensions
 {
     public static class IEnumerableExtension
     {
-        public static IEnumerable<TSource> Shuffle<TSource>(this IEnumerable<TSource> collection)
-        {
-            return collection.OrderBy(item => Guid.NewGuid());
-        }
-
         /// <summary>
         /// 
         /// </summary>
@@ -21,6 +16,11 @@ namespace GraphLibrary.Extensions.SystemTypeExtensions
         public static IVertex FirstOrNullVertex(this IEnumerable<IVertex> collection)
         {
             return !collection.Any() ? NullVertex.Instance : collection.First();
+        }
+
+        public static IEnumerable<T> DistinctBy<T, TKey>(this IEnumerable<T> items, Func<T, TKey> property)
+        {
+            return items.GroupBy(property).Select(x => x.First());
         }
     }
 }

@@ -7,11 +7,11 @@ namespace GraphLibrary.Extensions.SystemTypeExtensions
 {
     public static class QueueExtensions
     {
-        public static void EnqueueRange<TSource>(this Queue<TSource> queue,
-            IEnumerable<TSource> collection)
+        public static void EnqueueRange(this Queue<IVertex> queue,
+            IEnumerable<IVertex> collection)
         {
             foreach (var item in collection)
-                queue.Enqueue(item);
+                queue.Enqueue(item);           
         }
 
         /// <summary>
