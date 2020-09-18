@@ -12,8 +12,8 @@ using GraphLibrary.Extensions.CustomTypeExtensions;
 namespace GraphLibrary.PathFindingAlgorithm
 {
     /// <summary>
-    /// A wave algorithm (Li algorithm, or wide path find algorithm). 
-    /// Uses queue to move next graph top. Finds the shortest path to
+    /// A wave algorithm (Lee algorithm, or width-first pathfinding algorithm). 
+    /// Uses queue to move next vertex. Finds the shortest path (in steps) to
     /// the destination top
     /// </summary>
     public class LeeAlgorithm : IPathFindingAlgorithm
@@ -34,11 +34,12 @@ namespace GraphLibrary.PathFindingAlgorithm
         {
             OnStarted?.Invoke(this, new AlgorithmEventArgs(Graph));
             var currentVertex = Graph.Start;
-            do
+            ProcessVertex(currentVertex);
+            while(!currentVertex.IsEnd)
             {
-                ProcessVertex(currentVertex);
                 currentVertex = GetNextVertex();
-            } while (!currentVertex.IsEnd);
+                ProcessVertex(currentVertex);
+            }
             OnFinished?.Invoke(this, new AlgorithmEventArgs(Graph));
             return this.GetFoundPath();
         }
@@ -46,16 +47,12 @@ namespace GraphLibrary.PathFindingAlgorithm
         private void ExtractNeighbours(IVertex vertex)
         {
             neighbourQueue.EnqueueRange(vertex.GetUnvisitedNeighbours());
-
-            neighbourQueue = new Queue<IVertex>(neighbourQueue.
-                DistinctBy(vert => vert.Position).ToList());
+            neighbourQueue = new Queue<IVertex>(neighbourQueue.DistinctBy(vert => vert.Position));
         }
 
         private IVertex GetNextVertex()
         {           
-            neighbourQueue = new Queue<IVertex>(neighbourQueue.
-                Where(vertex => !vertex.IsVisited).ToList());
-
+            neighbourQueue = new Queue<IVertex>(neighbourQueue.Where(vertex => !vertex.IsVisited));
             return neighbourQueue.Dequeue();
         }
 
