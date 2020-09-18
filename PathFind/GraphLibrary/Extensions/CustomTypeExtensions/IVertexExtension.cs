@@ -10,15 +10,9 @@ namespace GraphLibrary.Extensions.CustomTypeExtensions
     public static class IVertexExtension
     {
 
-        public static bool IsValidToBeRange(this IVertex vertex)
-        {
-            return vertex.IsSimpleVertex() && !vertex.IsIsolated();
-        }
+        public static bool IsValidToBeRange(this IVertex vertex) => vertex.IsSimpleVertex() && !vertex.IsIsolated();
 
-        public static bool IsIsolated(this IVertex vertex)
-        {
-            return vertex.IsObstacle || !vertex.Neighbours.Any();
-        }
+        public static bool IsIsolated(this IVertex vertex) => vertex.IsObstacle || !vertex.Neighbours.Any();
 
         public static void SetToDefault(this IVertex vertex)
         {
@@ -47,15 +41,9 @@ namespace GraphLibrary.Extensions.CustomTypeExtensions
                 vertex.MarkAsObstacle();
         }
 
-        public static void WashVertex(this IVertex vertex)
-        {
-            vertex.IsObstacle = true;
-        }
+        public static void WashVertex(this IVertex vertex) => vertex.IsObstacle = true;
 
-        public static bool IsSimpleVertex(this IVertex vertex)
-        {
-            return !vertex.IsStart && !vertex.IsEnd;
-        }
+        public static bool IsSimpleVertex(this IVertex vertex) => !vertex.IsStart && !vertex.IsEnd;
 
         public static IEnumerable<IVertex> GetUnvisitedNeighbours(this IVertex vertex)
         {
@@ -69,15 +57,7 @@ namespace GraphLibrary.Extensions.CustomTypeExtensions
             return vertex;
         }
 
-        public static void SetLocation(this IVertex vertex, Position position)
-        {
-            vertex.Position = position;
-        }
-
-        private static bool IsSuitableProperty(PropertyInfo first, PropertyInfo second)
-        {
-            return first.Name == second.Name 
-                && first.PropertyType == second.PropertyType;
-        }
+        private static bool IsSuitableProperty(PropertyInfo first, PropertyInfo second) => 
+            first.Name == second.Name && first.PropertyType == second.PropertyType;
     }
 }

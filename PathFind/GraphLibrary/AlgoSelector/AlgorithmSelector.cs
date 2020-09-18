@@ -18,7 +18,7 @@ namespace GraphLibrary.AlgoSelector
         {
             switch (algorithms)
             {
-                case Algorithms.LiAlgorithm: return new LeeAlgorithm() 
+                case Algorithms.LeeAlgorithm: return new LeeAlgorithm() 
                 { 
                     Graph = graph 
                 };

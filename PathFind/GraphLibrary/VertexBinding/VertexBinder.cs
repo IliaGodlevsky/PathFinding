@@ -4,8 +4,15 @@ using GraphLibrary.Vertex.Interface;
 
 namespace GraphLibrary.VertexBinding
 {
+    /// <summary>
+    /// A class that responses for connection of vertex with neighbour vertices
+    /// </summary>
     public static class VertexBinder
     {
+        /// <summary>
+        /// Connects vertex with its neighbours
+        /// </summary>
+        /// <param name="vertex"></param>
         public static void ConnectToNeighbours(IVertex vertex)
         {
             if (vertex is null)
@@ -17,6 +24,10 @@ namespace GraphLibrary.VertexBinding
             }
         }
 
+        /// <summary>
+        /// Removes vertex connections with its neighbours
+        /// </summary>
+        /// <param name="vertex"></param>
         public static void IsolateVertex(IVertex vertex)
         {
             if (vertex is null)
@@ -38,6 +49,11 @@ namespace GraphLibrary.VertexBinding
                 !vertex.Neighbours.Contains(neighbourCandidate);
         }
 
+        /// <summary>
+        /// Connects neighbours with its vertex
+        /// </summary>
+        /// <param name="graph"></param>
+        /// <param name="vertex"></param>
         public static void SetNeighbours(IGraph graph, IVertex vertex)
         {
             if (vertex.IsObstacle)
@@ -49,6 +65,10 @@ namespace GraphLibrary.VertexBinding
                         vertex.Neighbours.Add(graph[i, j]);
         }
 
+        /// <summary>
+        /// Connects all vertices in the graph with each other
+        /// </summary>
+        /// <param name="graph"></param>
         public static void ConnectVertices(IGraph graph)
         {
             graph.Array.ApplyParallel(vertex => { SetNeighbours(graph, vertex); return vertex; });

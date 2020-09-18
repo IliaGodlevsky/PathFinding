@@ -29,6 +29,9 @@ namespace GraphLibrary.Vertex.Interface
         }
     }
 
+    /// <summary>
+    /// Represents an object that can be used to find a path in a graph
+    /// </summary>
     public interface IVertex
     {
         bool IsEnd { get; set; }
