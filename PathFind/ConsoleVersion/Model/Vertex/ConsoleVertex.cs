@@ -18,7 +18,7 @@ namespace ConsoleVersion.Model.Vertex
         public bool IsVisited { get; set; }
         public int Cost { get; set; }
         public Color Colour { get; set; }
-        public List<IVertex> Neighbours { get; set; }
+        public IList<IVertex> Neighbours { get; set; }
         public IVertex ParentVertex { get; set; }
         public double AccumulatedCost { get; set; }
         public Position Position { get; set; }

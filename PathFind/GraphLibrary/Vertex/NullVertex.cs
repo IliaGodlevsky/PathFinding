@@ -45,8 +45,8 @@ namespace GraphLibrary.Vertex
         private int cost;
         public int Cost { get => cost; set => cost = 0; }
 
-        private List<IVertex> neighbours;
-        public List<IVertex> Neighbours { get => neighbours; set => neighbours = new List<IVertex>(); }
+        private IList<IVertex> neighbours;
+        public IList<IVertex> Neighbours { get => neighbours; set => neighbours = new List<IVertex>(); }
 
         private IVertex parentVertex;
         public IVertex ParentVertex { get => Instance; set => parentVertex = Instance; }
