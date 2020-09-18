@@ -101,8 +101,6 @@ namespace WinFormsVersion.ViewModel
         public void LoadGraph(object sender, EventArgs e)
         {
             base.LoadGraph();
-            if (Graph == null)
-                return;
             Window?.Close();            
         }
 
