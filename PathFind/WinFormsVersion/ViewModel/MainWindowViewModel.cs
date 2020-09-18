@@ -102,7 +102,7 @@ namespace WinFormsVersion.ViewModel
         {
             base.LoadGraph();
             if (Graph == null)
-                return;          
+                return;
             Window?.Close();            
         }
 
@@ -132,7 +132,7 @@ namespace WinFormsVersion.ViewModel
         {
             return graph.Start != NullVertex.Instance
                 && graph.End != NullVertex.Instance
-                && Graph.Any();
+                && Graph.Any() && !graph.Start.IsVisited;
         }
 
         protected override string GetSavePath()
