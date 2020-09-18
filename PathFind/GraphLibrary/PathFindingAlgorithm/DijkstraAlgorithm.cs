@@ -7,6 +7,7 @@ using GraphLibrary.Graphs.Interface;
 using GraphLibrary.PathFindingAlgorithm.Interface;
 using GraphLibrary.Vertex.Interface;
 using GraphLibrary.Extensions.CustomTypeExtensions;
+using System.Linq;
 
 namespace GraphLibrary.PathFindingAlgorithm
 {
@@ -78,6 +79,7 @@ namespace GraphLibrary.PathFindingAlgorithm
         private void ExtractNeighbours(IVertex vertex)
         {
             verticesProcessQueue.AddRange(vertex.GetUnvisitedNeighbours());
+            verticesProcessQueue = verticesProcessQueue.DistinctBy(vert => vert.Position).ToList();
         }
 
         protected virtual IVertex GetChippestUnvisitedVertex()
