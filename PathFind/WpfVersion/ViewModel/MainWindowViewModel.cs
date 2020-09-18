@@ -100,9 +100,12 @@ namespace WpfVersion.ViewModel
         private void ExecuteLoadGraphCommand(object param)
         {
             base.LoadGraph();
-            OnPropertyChanged(nameof(GraphField));
-            OnPropertyChanged(nameof(Graph));
-            OnPropertyChanged(nameof(GraphParametres));
+            if (Graph != NullGraph.Instance)
+            {
+                OnPropertyChanged(nameof(GraphField));
+                OnPropertyChanged(nameof(Graph));
+                OnPropertyChanged(nameof(GraphParametres));
+            }
             WindowAdjust.Adjust(Graph);
         }
 
