@@ -53,7 +53,7 @@ namespace GraphLibrary.PathFindingAlgorithm
         private IVertex GetNextVertex()
         {           
             neighbourQueue = new Queue<IVertex>(neighbourQueue.Where(vertex => !vertex.IsVisited));
-            return neighbourQueue.Dequeue();
+            return neighbourQueue.DequeueOrNullVertex();
         }
 
         private void SpreadWaves(IVertex vertex)
