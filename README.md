@@ -1,7 +1,7 @@
 # Pathfinding project
  Pathfinding project, C#
  
- **_Realized 5 pathfinding algorithms_**:
+ **_Realized 4 pathfinding algorithms_**:
  
  1. [Lee algorithm](https://github.com/IliaGodlevsky/PathFinding/blob/master/PathFind/GraphLibrary/PathFindingAlgorithm/LeeAlgorithm.cs)
  
