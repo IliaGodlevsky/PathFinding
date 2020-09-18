@@ -19,6 +19,10 @@ namespace GraphLibrary.Graphs.Interface
         }
     }
 
+    /// <summary>
+    /// Provides methods for accessing the vertices of the graph, 
+    /// as well as for getting information about the graph
+    /// </summary>
     public interface IGraph : IEnumerable<IVertex>
     {
         IVertex this[int width, int height] { get; set; }

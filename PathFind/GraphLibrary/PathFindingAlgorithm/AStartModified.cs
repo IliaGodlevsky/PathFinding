@@ -2,6 +2,10 @@
 
 namespace GraphLibrary.PathFindingAlgorithm
 {
+    /// <summary>
+    /// A modified A* algorithm, that ignores vertices 
+    /// that are far from optimal heuristic function result
+    /// </summary>
     public class AStarModified : AStarAlgorithm
     {
         public AStarModified() : base()

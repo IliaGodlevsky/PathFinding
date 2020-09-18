@@ -4,8 +4,14 @@ using System.Diagnostics;
 
 namespace GraphLibrary.PauseMaker
 {
+    /// <summary>
+    /// Pauses all processes in current thread
+    /// </summary>
     public class PauseProvider : IPauseProvider
     {
+        /// <summary>
+        /// Event during the pause
+        /// </summary>
         public event Action PauseEvent;
 
         public PauseProvider(int delayTime)

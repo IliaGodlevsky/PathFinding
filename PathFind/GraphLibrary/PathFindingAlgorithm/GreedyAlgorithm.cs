@@ -12,7 +12,7 @@ using GraphLibrary.EventArguments;
 namespace GraphLibrary.PathFindingAlgorithm
 {
     /// <summary>
-    /// Greedy algorithm. Each step looks for the chippest vertex and visits it
+    /// Greedy algorithm. Each step looks for the best vertex and visits it
     /// </summary>
     public class GreedyAlgorithm : IPathFindingAlgorithm
     {
@@ -20,6 +20,9 @@ namespace GraphLibrary.PathFindingAlgorithm
         public event Action<IVertex> OnVertexVisited;
         public event AlgorithmEventHanlder OnFinished;
 
+        /// <summary>
+        /// A function that selects the best vertex on the step
+        /// </summary>
         public Func<IVertex, double> GreedyFunction { private get; set; }
 
         public IGraph Graph { get; set; }

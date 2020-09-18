@@ -6,6 +6,9 @@ using System;
 
 namespace GraphLibrary.GraphSerialization.GraphLoader.Interface
 {
+    /// <summary>
+    /// Provides methods for deserializion of graph
+    /// </summary>
     public interface IGraphLoader
     {
         event Action<string> OnBadLoad;

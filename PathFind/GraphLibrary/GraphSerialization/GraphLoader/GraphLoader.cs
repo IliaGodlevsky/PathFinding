@@ -12,6 +12,9 @@ using System.Runtime.Serialization.Formatters.Binary;
 
 namespace GraphLibrary.GraphSerialization.GraphLoader
 {
+    /// <summary>
+    /// Deserializes graph using BinaryFormatter class
+    /// </summary>
     public class GraphLoader : IGraphLoader
     {
         public event Action<string> OnBadLoad;

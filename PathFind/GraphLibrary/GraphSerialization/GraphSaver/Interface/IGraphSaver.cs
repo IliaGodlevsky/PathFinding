@@ -3,6 +3,9 @@ using System;
 
 namespace GraphLibrary.GraphSerialization.GraphSaver.Interface
 {
+    /// <summary>
+    /// Presents methods to serialize graph
+    /// </summary>
     public interface IGraphSaver
     {
         event Action<string> OnBadSave;

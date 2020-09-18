@@ -19,7 +19,7 @@ namespace GraphLibrary.PathFindingAlgorithm.Interface
 
         IGraph Graph { get; set; }
         /// <summary>
-        /// 
+        /// Finds path from start vertex to end vertex by definite rules
         /// </summary>
         /// <returns> collection of path vertices </returns>
         IEnumerable<IVertex> FindPath();

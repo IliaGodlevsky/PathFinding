@@ -8,6 +8,10 @@ using System.Linq;
 
 namespace GraphLibrary.Graphs
 {
+    /// <summary>
+    /// An empty graph. Returns instead of 
+    /// real instance of Graph class instead of null
+    /// </summary>
     public sealed class NullGraph : IGraph
     {
         public static NullGraph Instance

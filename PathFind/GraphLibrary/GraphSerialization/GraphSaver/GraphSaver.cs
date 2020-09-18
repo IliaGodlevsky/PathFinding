@@ -6,6 +6,9 @@ using System.Runtime.Serialization.Formatters.Binary;
 
 namespace GraphLibrary.GraphSerialization.GraphSaver
 {
+    /// <summary>
+    /// Saves graph using BinaryFormatter class
+    /// </summary>
     public class GraphSaver : IGraphSaver
     {
         public event Action<string> OnBadSave;

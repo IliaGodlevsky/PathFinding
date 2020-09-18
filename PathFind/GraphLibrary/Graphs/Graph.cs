@@ -9,6 +9,10 @@ using GraphLibrary.Vertex.Interface;
 
 namespace GraphLibrary.Graphs
 {
+    /// <summary>
+    /// A structure amounting to a set of objects in which 
+    /// some pairs of the objects are in some sense "related"
+    /// </summary>
     public class Graph : IGraph
     {
         public Graph(IVertex[,] vertices)

@@ -4,7 +4,9 @@ using System;
 namespace GraphLibrary.PathFindingAlgorithm
 {
     /// <summary>
-    /// 
+    /// An informed pathfinding algorithm, or a 
+    /// best-first pathfinding algorithm, searching 
+    /// the path using heuristic function
     /// </summary>
     public class AStarAlgorithm : DijkstraAlgorithm
     {
