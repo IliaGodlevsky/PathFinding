@@ -71,7 +71,11 @@ namespace GraphLibrary.VertexBinding
         /// <param name="graph"></param>
         public static void ConnectVertices(IGraph graph)
         {
-            graph.Array.ApplyParallel(vertex => { SetNeighbours(graph, vertex); return vertex; });
+            graph.Array.ApplyParallel(vertex =>
+            {
+                SetNeighbours(graph, vertex);
+                return vertex;
+            });
         }
     }
 }
