@@ -1,5 +1,4 @@
 ﻿using GraphLibrary.DTO;
-using GraphLibrary.Globals;
 using GraphLibrary.GraphFactory;
 using GraphLibrary.Graphs;
 using GraphLibrary.Graphs.Interface;
@@ -25,7 +24,9 @@ namespace GraphLibrary.GraphSerialization.GraphLoader
             try
             {
                 using (var stream = new FileStream(path, FileMode.Open))
+                { 
                     Initialise((VertexDto[,])formatter.Deserialize(stream), generator);
+                }
             }
             catch (Exception ex)
             {
