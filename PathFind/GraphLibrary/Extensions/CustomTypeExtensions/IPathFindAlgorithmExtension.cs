@@ -1,38 +1,14 @@
-﻿using GraphLibrary.Extensions.SystemTypeExtensions;
-using GraphLibrary.PathFindingAlgorithm.Interface;
-using GraphLibrary.Vertex;
+﻿using GraphLibrary.PathFindingAlgorithm.Interface;
 using GraphLibrary.Vertex.Interface;
 using System.Collections.Generic;
-using System.Linq;
 
 namespace GraphLibrary.Extensions.CustomTypeExtensions
 {
     public static class IPathFindAlgorithmExtension
     {
-        public static void DrawPath(this IPathFindingAlgorithm algo)
+        public static IEnumerable<IVertex> GetPath(this IPathFindingAlgorithm algorithm)
         {
-            var path = algo.GetFoundPath().ToList();
-            path.Apply(vertex =>
-            {
-                if (vertex.IsSimpleVertex())
-                    vertex.MarkAsPath();
-                return vertex;
-            });
-        }
-
-        public static IEnumerable<IVertex> GetFoundPath(this IPathFindingAlgorithm algorithm)
-        {
-            if (algorithm.Graph.End.IsVisited)
-            {
-                var vertex = algorithm.Graph.End;
-                while (!ReferenceEquals(algorithm.Graph.Start, vertex)
-                    && !ReferenceEquals(vertex, NullVertex.Instance))
-                {
-                    if (!vertex.IsStart)
-                        yield return vertex;
-                    vertex = vertex.ParentVertex;
-                }
-            }
+            return algorithm.Graph.End.GetPathToStartVertex();
         }
     }
 }

@@ -2,7 +2,6 @@
 using ConsoleVersion.InputClass;
 using GraphLibrary.PauseMaker;
 using System;
-using System.Drawing;
 using GraphLibrary.Enums;
 using GraphLibrary.EventHolder;
 using GraphLibrary.Vertex.Interface;

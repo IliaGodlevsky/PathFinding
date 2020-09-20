@@ -4,6 +4,7 @@ using ConsoleVersion.InputClass;
 using ConsoleVersion.View.Interface;
 using ConsoleVersion.ViewModel;
 using GraphLibrary.Extensions.SystemTypeExtensions;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -43,14 +44,14 @@ namespace ConsoleVersion.View
         private string GetMenu()
         {           
             var menu = new StringBuilder();
-            MenuOption opt = MenuOption.Quit;
-            var descriptions = opt.GetDescriptions().ToList();
-            foreach (var item in descriptions)
-            {               
-                int numberOf = descriptions.IndexOf(item);
-                menu.Append(numberOf.IsEven() ? newLine : largeSpace + tab);
-                menu.Append(string.Format(ConsoleVersionResources.MenuFormat, numberOf, item));
+            var enums = Enum.GetValues(typeof(MenuOption)).Cast<MenuOption>().ToList();
+
+            for (int i = 0; i < enums.Count; i++)
+            {
+                menu.Append(i.IsEven() ? newLine : largeSpace + tab);
+                menu.AppendFormat(ConsoleVersionResources.MenuFormat, i, enums[i].GetDescription());
             }
+
             return menu.ToString();
         }
 

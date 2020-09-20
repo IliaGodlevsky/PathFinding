@@ -2,11 +2,9 @@
 using GraphLibrary.EventArguments;
 using GraphLibrary.Graphs.Interface;
 using System;
-using System.Collections.Generic;
 using GraphLibrary.PathFindingAlgorithm.Interface;
 using GraphLibrary.Vertex.Interface;
 using GraphLibrary.Vertex;
-using GraphLibrary.Extensions.CustomTypeExtensions;
 
 namespace GraphLibrary.PathFindingAlgorithm
 {
@@ -36,13 +34,12 @@ namespace GraphLibrary.PathFindingAlgorithm
         public event AlgorithmEventHanlder OnFinished;
         public event Action<IVertex> OnEnqueued;
 
-        public IEnumerable<IVertex> FindPath()
+        public void FindPath()
         {
             OnStarted?.Invoke(this, new AlgorithmEventArgs());
             OnVertexVisited?.Invoke(NullVertex.Instance);
             OnFinished?.Invoke(this, new AlgorithmEventArgs());
             OnEnqueued?.Invoke(NullVertex.Instance);
-            return this.GetFoundPath();
         }
 
         private static NullAlgorithm instance = null;

@@ -28,14 +28,10 @@ namespace ConsoleVersion.View
         private string GetAlgorithmsList()
         {
             var algorithmList = new StringBuilder("\n");
-            Algorithms algo = Algorithms.AStarAlgorithm;
-            var algoDescriptionList = algo.GetDescriptions().ToList();
+            var enums = Enum.GetValues(typeof(Algorithms)).Cast<Algorithms>().ToList();
 
-            foreach (var item in algoDescriptionList)
-            {
-                int numberOf = algoDescriptionList.IndexOf(item) + 1;
-                algorithmList.Append(string.Format(ConsoleVersionResources.MenuFormat, numberOf, item) + "\n");
-            }
+            for (int i = 0; i < enums.Count(); i++)
+                algorithmList.AppendFormatLine(ConsoleVersionResources.MenuFormat, i, enums[i].GetDescription());            
 
             return algorithmList.ToString();
         }

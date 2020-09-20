@@ -1,6 +1,5 @@
 ﻿using System;
 using GraphLibrary.EventHolder.Interface;
-using GraphLibrary.Graphs;
 using GraphLibrary.Vertex.Interface;
 using GraphLibrary.Vertex;
 using GraphLibrary.VertexBinding;
@@ -20,8 +19,10 @@ namespace GraphLibrary.EventHolder
         public virtual void ChangeVertexValue(object sender, EventArgs e)
         {
             var vertex = sender as IVertex;
+
             if (vertex.IsObstacle)
                 return;
+
             vertex.Cost = Range.VertexCostRange.ReturnInBounds(vertex.Cost += GetWheelDelta(e) > 0 ? 1 : -1);
         }
 
@@ -48,6 +49,7 @@ namespace GraphLibrary.EventHolder
         {
             if (!vertex.IsValidToBeRange())
                 return;
+
             vertex.MarkAsStart();
             Graph.Start = vertex;
         }
@@ -56,6 +58,7 @@ namespace GraphLibrary.EventHolder
         {
             if (!vertex.IsValidToBeRange())
                 return;
+
             vertex.MarkAsEnd();
             Graph.End = vertex;
         }
@@ -63,6 +66,7 @@ namespace GraphLibrary.EventHolder
         public virtual void ReversePolarity(object sender, EventArgs e)
         {
             var vertex = sender as IVertex;
+
             if (vertex.IsObstacle)
                 MakeVertex(vertex);
             else
@@ -75,15 +79,15 @@ namespace GraphLibrary.EventHolder
 
         private void SetEventsToVertex(Action<IVertex> action)
         {
-            Graph.Array.ApplyParallel(vertex => { action(vertex); return vertex; });
+            Graph.Array.Apply(vertex => { action(vertex); return vertex; });
         }
 
         public virtual void ChooseExtremeVertices(object sender, EventArgs e)
         {
-            var nullVertex = NullVertex.Instance;
-            if (Graph.Start == nullVertex)
+            if (ReferenceEquals(Graph.Start, NullVertex.Instance))
                 SetStartVertex(sender as IVertex);
-            else if (Graph.Start != nullVertex && Graph.End == nullVertex)
+            else if (!ReferenceEquals(Graph.Start, NullVertex.Instance)
+                && ReferenceEquals(Graph.End, NullVertex.Instance))
                 SetDestinationVertex(sender as IVertex);
         }
     }

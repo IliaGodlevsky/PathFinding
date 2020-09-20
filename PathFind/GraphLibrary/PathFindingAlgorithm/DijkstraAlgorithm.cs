@@ -29,7 +29,7 @@ namespace GraphLibrary.PathFindingAlgorithm
             verticesProcessQueue = new List<IVertex>();
         }
 
-        public IEnumerable<IVertex> FindPath()
+        public void FindPath()
         {
             OnStarted?.Invoke(this, new AlgorithmEventArgs(Graph));
             SetAccumulatedCostToInfinity();
@@ -44,7 +44,6 @@ namespace GraphLibrary.PathFindingAlgorithm
                 OnVertexVisited?.Invoke(currentVertex);
             } while (!currentVertex.IsEnd);
             OnFinished?.Invoke(this, new AlgorithmEventArgs(Graph));
-            return this.GetFoundPath();
         }
 
         private void SetAccumulatedCostToInfinity()

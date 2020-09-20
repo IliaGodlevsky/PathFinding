@@ -10,7 +10,7 @@ namespace WinFormsVersion.Model
     {
         public WinFormsGraphField()
         {
-            BorderStyle = BorderStyle.FixedSingle;
+            //BorderStyle = BorderStyle.FixedSingle;
         }
 
         public void Add(IVertex vertex, int xCoordinate, int yCoordinate)

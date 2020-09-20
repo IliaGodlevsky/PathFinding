@@ -45,6 +45,7 @@
   <ItemGroup>
     <Compile Include="EventArguments\AlgorithmEventArgs.cs" />
     <Compile Include="Extensions\SystemTypeExtensions\IListExtensions.cs" />
+    <Compile Include="Extensions\SystemTypeExtensions\StringBuilderExtensions.cs" />
     <Compile Include="GraphCreate\GraphFactory\Interface\IGraphInitializer.cs" />
     <Compile Include="PathFindingAlgorithm\AStarAlgorithm.cs" />
     <Compile Include="PathFindingAlgorithm\AStartModified.cs" />

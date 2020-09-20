@@ -9,8 +9,10 @@ namespace GraphLibrary.Extensions.SystemTypeExtensions
             params Func<TSource, TSource>[] methods)
         {
             for (int x = 0; x < list.Count; x++)
+            {
                 foreach (var method in methods)
                     list[x] = method(list[x]);
+            }
         }
     }
 }

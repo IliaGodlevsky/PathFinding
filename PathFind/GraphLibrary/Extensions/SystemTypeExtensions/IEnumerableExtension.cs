@@ -1,4 +1,5 @@
-﻿using GraphLibrary.Vertex;
+﻿using GraphLibrary.Extensions.CustomTypeExtensions;
+using GraphLibrary.Vertex;
 using GraphLibrary.Vertex.Interface;
 using System;
 using System.Collections.Generic;
@@ -21,6 +22,17 @@ namespace GraphLibrary.Extensions.SystemTypeExtensions
         public static IEnumerable<T> DistinctBy<T, TKey>(this IEnumerable<T> items, Func<T, TKey> property)
         {
             return items.GroupBy(property).Select(x => x.First());
+        }
+
+        public static void DrawPath(this IEnumerable<IVertex> path)
+        {
+            path.ToList().Apply(vertex =>
+            {
+                if (vertex.IsSimpleVertex())
+                    vertex.MarkAsPath();
+
+                return vertex;
+            });
         }
     }
 }

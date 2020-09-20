@@ -31,7 +31,7 @@ namespace GraphLibrary.PathFindingAlgorithm
             neighbourQueue = new Queue<IVertex>();
         }
 
-        public IEnumerable<IVertex> FindPath()
+        public void FindPath()
         {
             OnStarted?.Invoke(this, new AlgorithmEventArgs(Graph));
             var currentVertex = Graph.Start;
@@ -42,7 +42,6 @@ namespace GraphLibrary.PathFindingAlgorithm
                 ProcessVertex(currentVertex);
             }
             OnFinished?.Invoke(this, new AlgorithmEventArgs(Graph));
-            return this.GetFoundPath();
         }
 
         private void ExtractNeighbours(IVertex vertex)

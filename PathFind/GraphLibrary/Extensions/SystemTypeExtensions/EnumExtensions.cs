@@ -21,11 +21,5 @@ namespace GraphLibrary.Extensions.SystemTypeExtensions
 
             return description;
         }
-
-        public static IEnumerable<string> GetDescriptions(this Enum enumValue)
-        {
-            return Enum.GetValues(enumValue.GetType()).Cast<Enum>().
-                Select(enumeration => enumeration.GetDescription());
-        }
     }
 }

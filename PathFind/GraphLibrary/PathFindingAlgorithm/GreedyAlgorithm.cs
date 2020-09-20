@@ -34,7 +34,7 @@ namespace GraphLibrary.PathFindingAlgorithm
             visitedVerticesStack = new Stack<IVertex>();
         }
 
-        public IEnumerable<IVertex> FindPath()
+        public void FindPath()
         {
             OnStarted?.Invoke(this, new AlgorithmEventArgs(Graph));
             var currentVertex = Graph.Start;
@@ -53,7 +53,6 @@ namespace GraphLibrary.PathFindingAlgorithm
                     currentVertex = visitedVerticesStack.PopOrNullVertex();
             }
             OnFinished?.Invoke(this, new AlgorithmEventArgs(Graph));
-            return this.GetFoundPath();
         }
 
         private IVertex GoNextVertex(IVertex vertex)

@@ -9,7 +9,19 @@ namespace GraphLibrary.Extensions.CustomTypeExtensions
 {
     public static class IVertexExtension
     {
+        public static IEnumerable<IVertex>GetPathToStartVertex(this IVertex vertex)
+        {
+            if (vertex.IsEnd && vertex.IsVisited)
+            {
+                var temp = vertex;
 
+                while (!temp.IsStart && !ReferenceEquals(vertex, NullVertex.Instance))
+                {
+                    yield return temp;
+                    temp = temp.ParentVertex;
+                }
+            }
+        }
         public static bool IsValidToBeRange(this IVertex vertex) => vertex.IsSimpleVertex() && !vertex.IsIsolated();
 
         public static bool IsIsolated(this IVertex vertex) => vertex.IsObstacle || !vertex.Neighbours.Any();
@@ -27,7 +39,9 @@ namespace GraphLibrary.Extensions.CustomTypeExtensions
         public static void Initialize(this IVertex vertex)
         {
             vertex.Neighbours = new List<IVertex>();
+
             vertex.SetToDefault();
+
             vertex.IsObstacle = false;
         }
 
@@ -37,6 +51,7 @@ namespace GraphLibrary.Extensions.CustomTypeExtensions
                 foreach (var dtoProperty in dto.GetType().GetProperties())
                     if (IsSuitableProperty(vertexProperty, dtoProperty))
                         vertexProperty.SetValue(vertex, dtoProperty.GetValue(dto));
+
             if (vertex.IsObstacle)
                 vertex.MarkAsObstacle();
         }
@@ -54,10 +69,12 @@ namespace GraphLibrary.Extensions.CustomTypeExtensions
         {
             if (!vertex.IsObstacle)
                 vertex.SetToDefault();
+
             return vertex;
         }
 
         private static bool IsSuitableProperty(PropertyInfo first, PropertyInfo second) => 
-            first.Name == second.Name && first.PropertyType == second.PropertyType;
+            first.Name == second.Name
+            && first.PropertyType == second.PropertyType;
     }
 }
