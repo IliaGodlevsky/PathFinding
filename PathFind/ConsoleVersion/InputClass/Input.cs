@@ -1,4 +1,5 @@
 ﻿using ConsoleVersion.Enums;
+using GraphLibrary.Vertex.Interface;
 using System;
 using System.Drawing;
 using System.Linq;
@@ -34,8 +35,8 @@ namespace ConsoleVersion.InputClass
                 maxMenuValue, minMenuValue);
         }
 
-        public static Point InputPoint(int width, int height) => 
-            new Point(InputNumber(ConsoleVersionResources.XCoordinateMsg, width),
+        public static Position InputPoint(int width, int height) => 
+            new Position(InputNumber(ConsoleVersionResources.XCoordinateMsg, width),
                 InputNumber(ConsoleVersionResources.YCoordinateMsg, height));
 
         private static bool IsError(string choice, int upper, int lower)

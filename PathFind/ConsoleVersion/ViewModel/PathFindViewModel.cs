@@ -92,7 +92,7 @@ namespace ConsoleVersion.ViewModel
             method(graph[point.X, point.Y]);
         }
 
-        private Point ChoosePoint()
+        private Position ChoosePoint()
         {
             var point = Input.InputPoint(graph.Width, graph.Height);
             while (!graph[point.X, point.Y].IsValidToBeRange())
