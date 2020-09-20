@@ -2,7 +2,6 @@
 using GraphLibrary.Extensions.CustomTypeExtensions;
 using GraphLibrary.Globals;
 using GraphLibrary.Vertex.Interface;
-using System;
 using System.Collections.Generic;
 using System.Windows.Controls;
 using System.Windows.Media;
@@ -15,6 +14,7 @@ namespace WpfVersion.Model.Vertex
         public static SolidColorBrush PathVertexColor { get; set; }
         public static SolidColorBrush StartVertexColor { get; set; }
         public static SolidColorBrush EndVertexColor { get; set; }
+        public static SolidColorBrush EnqueuedVertexColor { get; set; }
 
         static WpfVertex()
         {
@@ -22,7 +22,8 @@ namespace WpfVersion.Model.Vertex
             PathVertexColor = new SolidColorBrush(Colors.Yellow);
             StartVertexColor = new SolidColorBrush(Colors.Green);
             EndVertexColor = new SolidColorBrush(Colors.Red);
-        }
+            EnqueuedVertexColor = new SolidColorBrush(Colors.Aquamarine);
+    }
 
         public WpfVertex() : base()
         {
@@ -71,5 +72,7 @@ namespace WpfVersion.Model.Vertex
         public void MarkAsStart() => Background = StartVertexColor;
 
         public void MarkAsVisited() => Background = AfterVisitVertexColor;
+
+        public void MarkAsEnqueued() => Background = EnqueuedVertexColor;
     }
 }

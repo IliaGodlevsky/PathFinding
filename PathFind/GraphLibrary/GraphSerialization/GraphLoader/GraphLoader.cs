@@ -38,7 +38,7 @@ namespace GraphLibrary.GraphSerialization.GraphLoader
         {
             if (info == null)
                 return;
-            var initializer = new GraphInfoInitializer(info, VertexSize.SIZE_BETWEEN_VERTICES);
+            var initializer = new GraphInfoInitializer(info);
             graph = initializer.GetGraph(generator);
             VertexBinder.ConnectVertices(graph);
         }

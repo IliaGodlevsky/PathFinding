@@ -21,6 +21,7 @@ namespace GraphLibrary.PathFindingAlgorithm
         public event AlgorithmEventHanlder OnStarted;
         public event Action<IVertex> OnVertexVisited;
         public event AlgorithmEventHanlder OnFinished;
+        public event Action<IVertex> OnEnqueued;
 
         public IGraph Graph { get; set; }
 
@@ -46,7 +47,11 @@ namespace GraphLibrary.PathFindingAlgorithm
 
         private void ExtractNeighbours(IVertex vertex)
         {
-            neighbourQueue.EnqueueRange(vertex.GetUnvisitedNeighbours());
+            foreach(var vert in vertex.GetUnvisitedNeighbours())
+            {
+                OnEnqueued?.Invoke(vert);
+                neighbourQueue.Enqueue(vert);
+            }
             neighbourQueue = new Queue<IVertex>(neighbourQueue.DistinctBy(vert => vert.Position));
         }
 

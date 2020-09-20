@@ -1,6 +1,7 @@
 ﻿using ConsoleVersion.Model.Vertex;
 using GraphLibrary.Vertex.Interface;
 using GraphLibrary.ViewModel.Interface;
+using System.Drawing;
 using System.Text;
 using Console = Colorful.Console;
 
@@ -83,6 +84,7 @@ namespace ConsoleVersion.Forms
             if (model.Graph == null)
                 return;
             int width = model.Graph.Width;
+            Console.ForegroundColor = Color.White;
             Console.Write(DrawAbscissa(width));
             Console.Write(WriteHorizontalFrame(width));
             ShowGraph(model);

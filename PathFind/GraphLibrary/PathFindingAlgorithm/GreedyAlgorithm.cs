@@ -19,6 +19,7 @@ namespace GraphLibrary.PathFindingAlgorithm
         public event AlgorithmEventHanlder OnStarted;
         public event Action<IVertex> OnVertexVisited;
         public event AlgorithmEventHanlder OnFinished;
+        public event Action<IVertex> OnEnqueued;
 
         /// <summary>
         /// A function that selects the best vertex on the step
@@ -58,6 +59,8 @@ namespace GraphLibrary.PathFindingAlgorithm
         private IVertex GoNextVertex(IVertex vertex)
         {
             var neighbours = vertex.GetUnvisitedNeighbours().ToList();
+            foreach (var vert in neighbours)
+                OnEnqueued?.Invoke(vert);
             return neighbours.FindOrNullVertex(vert => GreedyFunction(vert) == neighbours.Min(GreedyFunction));
         }
 

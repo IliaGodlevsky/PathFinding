@@ -37,7 +37,7 @@ namespace GraphLibrary.VertexBinding
             vertex.Neighbours.Clear();
         }
 
-        private static bool IsWithinGraph(IGraph graph, int width, int height)
+        public static bool IsWithinGraph(IGraph graph, int width, int height)
         {
             return width >= 0 && width < graph.Width
                 && height >= 0 && height < graph.Height;
@@ -45,8 +45,9 @@ namespace GraphLibrary.VertexBinding
 
         private static bool CanBeNeighbour(IVertex vertex, IVertex neighbourCandidate)
         {
-            return !neighbourCandidate.IsObstacle && vertex != neighbourCandidate &&
-                !vertex.Neighbours.Contains(neighbourCandidate);
+            return !neighbourCandidate.IsObstacle 
+                && !ReferenceEquals(vertex,neighbourCandidate)
+                && !vertex.Neighbours.Contains(neighbourCandidate);
         }
 
         /// <summary>

@@ -38,6 +38,8 @@ namespace ConsoleVersion.Model.Vertex
 
         public void MarkAsStart() => Colour = Color.FromKnownColor(KnownColor.Green);
 
-        public void MarkAsVisited() => Colour = Color.FromKnownColor(KnownColor.Blue);
+        public void MarkAsVisited() => Colour = Color.FromKnownColor(KnownColor.CadetBlue);
+
+        public void MarkAsEnqueued() => Colour = Color.FromKnownColor(KnownColor.Aquamarine);
     }
 }

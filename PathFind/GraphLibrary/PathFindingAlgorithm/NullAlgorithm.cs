@@ -34,12 +34,14 @@ namespace GraphLibrary.PathFindingAlgorithm
         public event AlgorithmEventHanlder OnStarted;
         public event Action<IVertex> OnVertexVisited;
         public event AlgorithmEventHanlder OnFinished;
+        public event Action<IVertex> OnEnqueued;
 
         public IEnumerable<IVertex> FindPath()
         {
             OnStarted?.Invoke(this, new AlgorithmEventArgs());
             OnVertexVisited?.Invoke(NullVertex.Instance);
             OnFinished?.Invoke(this, new AlgorithmEventArgs());
+            OnEnqueued?.Invoke(NullVertex.Instance);
             return this.GetFoundPath();
         }
 

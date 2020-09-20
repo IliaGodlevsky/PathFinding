@@ -44,11 +44,14 @@ namespace ConsoleVersion.ViewModel
         {
             DelayTime = Input.InputNumber(ConsoleVersionResources.DelayTimeMsg, 
                 Range.DelayValueRange.UpperRange, Range.DelayValueRange.LowerRange);
+
+            base.PrepareAlgorithm();
+
             var thread = new Thread(() => 
             {
                 while (true)
                 {
-                    Thread.Sleep(millisecondsTimeout: 135);
+                    Thread.Sleep(millisecondsTimeout: 135);                    
                     GraphShower.DisplayGraph(mainViewModel);
                 }
             });
@@ -63,15 +66,13 @@ namespace ConsoleVersion.ViewModel
             {
                 thread.Abort();
                 thread.Join();
-                Console.ForegroundColor = ConsoleColor.Gray;
                 if (!eventArgs.HasFoundPath)
                 {
                     GraphShower.DisplayGraph(mainViewModel);
                     Console.WriteLine(badResultMessage);
                     Console.ReadLine();
-                }
-            };
-            base.PrepareAlgorithm();
+                }                
+            };         
         }
 
         private Algorithms GetAlgorithmEnum()

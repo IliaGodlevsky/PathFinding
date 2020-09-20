@@ -7,8 +7,6 @@ using ConsoleVersion.Model.EventHolder;
 using GraphLibrary.Extensions.CustomTypeExtensions;
 using ConsoleVersion.Model.Vertex;
 using GraphLibrary.GraphFactory;
-using GraphLibrary.Graphs;
-using GraphLibrary.Globals;
 using GraphLibrary.Graphs.Interface;
 
 namespace ConsoleVersion.ViewModel
@@ -25,8 +23,7 @@ namespace ConsoleVersion.ViewModel
 
             generator = (dto) => new ConsoleVertex(dto);
 
-            var factory = new GraphFactory(new GraphParametres(width: 25, height: 25, obstaclePercent: 25),
-                VertexSize.SIZE_BETWEEN_VERTICES);            
+            var factory = new GraphFactory(new GraphParametres(width: 25, height: 25, obstaclePercent: 25));
             Graph = factory.GetGraph(() => new ConsoleVertex());
             GraphParametres = Graph.GetFormattedInfo(GraphParametresFormat);
             VertexEventHolder.Graph = Graph;

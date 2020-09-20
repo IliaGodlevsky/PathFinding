@@ -16,6 +16,7 @@ namespace GraphLibrary.PathFindingAlgorithm.Interface
         event AlgorithmEventHanlder OnStarted;
         event Action<IVertex> OnVertexVisited;
         event AlgorithmEventHanlder OnFinished;
+        event Action<IVertex> OnEnqueued;
 
         IGraph Graph { get; set; }
         /// <summary>

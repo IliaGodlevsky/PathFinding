@@ -1,9 +1,7 @@
 ﻿using GraphLibrary.DTO;
 using GraphLibrary.Extensions.SystemTypeExtensions;
-using GraphLibrary.Extensions.CustomTypeExtensions;
 using GraphLibrary.Graphs;
 using GraphLibrary.Vertex.Interface;
-using System.Drawing;
 using System;
 using GraphLibrary.VertexBinding;
 using GraphLibrary.GraphCreate.GraphFactory.Interface;
@@ -14,8 +12,7 @@ namespace GraphLibrary.GraphFactory
     public class GraphInfoInitializer : IGraphInitializer
     {
         
-        public GraphInfoInitializer(VertexDto[,] info, 
-            int placeBetweenVertices)
+        public GraphInfoInitializer(VertexDto[,] info)
         {
             vertexDtos = info;
             if (vertexDtos != null)

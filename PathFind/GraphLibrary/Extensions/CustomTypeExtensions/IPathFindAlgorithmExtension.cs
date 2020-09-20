@@ -25,8 +25,8 @@ namespace GraphLibrary.Extensions.CustomTypeExtensions
             if (algorithm.Graph.End.IsVisited)
             {
                 var vertex = algorithm.Graph.End;
-                while (algorithm.Graph.Start != vertex
-                    && vertex != NullVertex.Instance)
+                while (!ReferenceEquals(algorithm.Graph.Start, vertex)
+                    && !ReferenceEquals(vertex, NullVertex.Instance))
                 {
                     if (!vertex.IsStart)
                         yield return vertex;

@@ -3,7 +3,6 @@ using GraphLibrary.Extensions.SystemTypeExtensions;
 using GraphLibrary.Graphs;
 using GraphLibrary.Vertex.Interface;
 using GraphLibrary.VertexBinding;
-using GraphLibrary.Extensions.CustomTypeExtensions;
 using GraphLibrary.GraphCreate.GraphFactory.Interface;
 using GraphLibrary.Graphs.Interface;
 
@@ -11,10 +10,9 @@ namespace GraphLibrary.GraphFactory
 {
     public class GraphFactory : IGraphFactory
     {
-        public GraphFactory(GraphParametres parametres, int placeBetweenVertices)
+        public GraphFactory(GraphParametres parametres)
         {
             this.parametres = parametres;
-            this.placeBetweenVertices = placeBetweenVertices;
         }
 
         static GraphFactory()
@@ -48,7 +46,5 @@ namespace GraphLibrary.GraphFactory
 
         private IGraph graph;
         private readonly GraphParametres parametres;
-        private readonly int placeBetweenVertices;
-
     }
 }

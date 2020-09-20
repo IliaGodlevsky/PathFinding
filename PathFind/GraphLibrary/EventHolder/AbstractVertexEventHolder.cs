@@ -30,7 +30,7 @@ namespace GraphLibrary.EventHolder
             if (vertex.IsSimpleVertex() && !vertex.IsVisited)
             {
                 VertexBinder.IsolateVertex(vertex);
-                vertex.IsObstacle = false;
+                vertex.IsObstacle = true;
                 vertex.SetToDefault();
                 vertex.MarkAsObstacle();
             }

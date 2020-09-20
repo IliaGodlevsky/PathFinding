@@ -60,6 +60,12 @@ namespace GraphLibrary.ViewModel
                 GetTimeInformation(LibraryResources.TimerInfoFormat);
                 pathAlgorithm.DrawPath();
             };
+
+            pathAlgorithm.OnEnqueued += vertex =>
+            {
+                if (vertex.IsSimpleVertex())
+                    vertex.MarkAsEnqueued();
+            };
         }
 
         protected IGraph graph;

@@ -65,5 +65,7 @@ namespace GraphLibrary.Vertex
         public void MarkAsSimpleVertex() { }
         public void MarkAsStart() { }
         public void MarkAsVisited() { }
+
+        public void MarkAsEnqueued() { }
     }
 }

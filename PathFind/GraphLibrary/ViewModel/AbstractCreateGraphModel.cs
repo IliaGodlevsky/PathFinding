@@ -22,9 +22,7 @@ namespace GraphLibrary.ViewModel
 
         public virtual void CreateGraph(Func<IVertex> generator)
         {
-            IGraphFactory factory = new GraphFactory.GraphFactory(
-                new GraphParametres(Width, Height, ObstaclePercent),
-                VertexSize.SIZE_BETWEEN_VERTICES);
+            IGraphFactory factory = new GraphFactory.GraphFactory(new GraphParametres(Width, Height, ObstaclePercent));
             graph = factory.GetGraph(generator);
             model.SetGraph(graph);
         }

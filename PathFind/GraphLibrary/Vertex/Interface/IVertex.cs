@@ -50,5 +50,6 @@ namespace GraphLibrary.Vertex.Interface
         void MarkAsPath();
         void MarkAsStart();
         void MarkAsVisited();
+        void MarkAsEnqueued();
     }
 }
