@@ -13,7 +13,6 @@ namespace GraphLibrary.DTO
         }
 
         public bool IsObstacle { get; private set; }
-
         public int Cost { get; private set; }
     }
 }

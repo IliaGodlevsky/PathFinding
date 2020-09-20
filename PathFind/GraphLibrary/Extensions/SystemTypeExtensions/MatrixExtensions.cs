@@ -24,13 +24,9 @@ namespace GraphLibrary.Extensions.SystemTypeExtensions
             Func<TSource, TKey> func)
         {
             var outArray = new TKey[arr.Width(), arr.Height()];
-
             for (int x = 0; x < arr.Width(); x++)
-            {
                 for (int y = 0; y < arr.Height(); y++)
                     outArray[x, y] = func(arr[x, y]);
-            }
-
             return outArray;
         }
 
@@ -38,19 +34,13 @@ namespace GraphLibrary.Extensions.SystemTypeExtensions
             int start, int end, params Func<TSource, TSource>[] methods)
         {
             for (int x = start; x < end; x++)
-            {
                 for (int y = 0; y < arr.Height(); y++)
-                {
                     foreach (var method in methods)
-                        arr[x, y] = method(arr[x, y]);
-                }
-            }
+                        arr[x, y] = method(arr[x, y]);            
         }
 
-        public static void Apply<TSource>(this TSource[,] arr, params Func<TSource, TSource>[] methods)
-        {
-            Apply(arr, 0, arr.Width(), methods);
-        }
+        public static void Apply<TSource>(this TSource[,] arr, params Func<TSource, TSource>[] methods) 
+            => Apply(arr, 0, arr.Width(), methods);
 
         public static async void ApplyParallel<TSource>(this TSource[,] arr,
             params Func<TSource, TSource>[] methods)
@@ -59,14 +49,12 @@ namespace GraphLibrary.Extensions.SystemTypeExtensions
             {
                 var tasks = Environment.ProcessorCount;
                 var tasksPool = new Task[tasks];
-
                 for (int i = 0; i < tasks; i++)
                 {
                     var start = arr.Width() * i / tasks;
                     var end = arr.Width() * (i + 1) / tasks;
                     tasksPool[i] = new Task(() => Apply(arr, start, end, methods));
                 }
-
                 foreach (var task in tasksPool) task.Start();
                 foreach (var task in tasksPool) await task;
             }
@@ -78,10 +66,8 @@ namespace GraphLibrary.Extensions.SystemTypeExtensions
         {
             // an ancient math magic of Jedi. It works, believe me))
             var index = Array.IndexOf(arr.Cast<TSource>().ToArray(), item);
-
             var yCoordinate = (arr.Height() + index) % arr.Height();
             var xCoordinate = (int)Math.Ceiling((decimal)(index - yCoordinate) / arr.Height());
-
             return new Position(xCoordinate, yCoordinate);
         }
 

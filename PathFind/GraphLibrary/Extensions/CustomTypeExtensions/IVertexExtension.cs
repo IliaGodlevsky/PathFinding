@@ -14,7 +14,6 @@ namespace GraphLibrary.Extensions.CustomTypeExtensions
             if (vertex.IsEnd && vertex.IsVisited)
             {
                 var temp = vertex;
-
                 while (!temp.IsStart && !ReferenceEquals(vertex, NullVertex.Instance))
                 {
                     yield return temp;
@@ -39,9 +38,7 @@ namespace GraphLibrary.Extensions.CustomTypeExtensions
         public static void Initialize(this IVertex vertex)
         {
             vertex.Neighbours = new List<IVertex>();
-
             vertex.SetToDefault();
-
             vertex.IsObstacle = false;
         }
 
@@ -51,7 +48,6 @@ namespace GraphLibrary.Extensions.CustomTypeExtensions
                 foreach (var dtoProperty in dto.GetType().GetProperties())
                     if (IsSuitableProperty(vertexProperty, dtoProperty))
                         vertexProperty.SetValue(vertex, dtoProperty.GetValue(dto));
-
             if (vertex.IsObstacle)
                 vertex.MarkAsObstacle();
         }
@@ -69,7 +65,6 @@ namespace GraphLibrary.Extensions.CustomTypeExtensions
         {
             if (!vertex.IsObstacle)
                 vertex.SetToDefault();
-
             return vertex;
         }
 

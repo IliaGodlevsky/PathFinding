@@ -19,10 +19,8 @@ namespace GraphLibrary.EventHolder
         public virtual void ChangeVertexValue(object sender, EventArgs e)
         {
             var vertex = sender as IVertex;
-
             if (vertex.IsObstacle)
                 return;
-
             vertex.Cost = Range.VertexCostRange.ReturnInBounds(vertex.Cost += GetWheelDelta(e) > 0 ? 1 : -1);
         }
 
@@ -49,7 +47,6 @@ namespace GraphLibrary.EventHolder
         {
             if (!vertex.IsValidToBeRange())
                 return;
-
             vertex.MarkAsStart();
             Graph.Start = vertex;
         }
@@ -58,7 +55,6 @@ namespace GraphLibrary.EventHolder
         {
             if (!vertex.IsValidToBeRange())
                 return;
-
             vertex.MarkAsEnd();
             Graph.End = vertex;
         }

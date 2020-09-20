@@ -30,7 +30,6 @@ namespace GraphLibrary.Extensions.SystemTypeExtensions
             {
                 if (vertex.IsSimpleVertex())
                     vertex.MarkAsPath();
-
                 return vertex;
             });
         }

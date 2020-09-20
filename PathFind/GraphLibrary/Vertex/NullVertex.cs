@@ -56,16 +56,13 @@ namespace GraphLibrary.Vertex
 
         private Position position;
         public Position Position { get => position; set => position = new Position(0, 0); }
-
         public VertexDto Dto => new VertexDto(this);
-
         public void MarkAsEnd() { }
         public void MarkAsObstacle() { }
         public void MarkAsPath() { }
         public void MarkAsSimpleVertex() { }
         public void MarkAsStart() { }
         public void MarkAsVisited() { }
-
         public void MarkAsEnqueued() { }
     }
 }
