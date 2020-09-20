@@ -16,11 +16,12 @@ namespace GraphLibrary.UnitTests.Classes
         public bool IsStart { get; set; }
         public bool IsVisited { get; set; }
         public int Cost { get; set; }
-        public List<IVertex> Neighbours { get; set; }
         public IVertex ParentVertex { get; set; }
         public double AccumulatedCost { get; set; }
         public Position Position { get; set; }
         public VertexDto Dto => new VertexDto(this);
+
+        IList<IVertex> IVertex.Neighbours { get; set; }
 
         public void MarkAsEnd() { }
 
@@ -36,5 +37,7 @@ namespace GraphLibrary.UnitTests.Classes
         public void MarkAsStart() { }
 
         public void MarkAsVisited() { }
+
+        public void MarkAsEnqueued() { }
     }
 }

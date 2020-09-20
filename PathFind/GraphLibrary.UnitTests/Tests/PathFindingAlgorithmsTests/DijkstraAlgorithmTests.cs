@@ -1,4 +1,5 @@
 ﻿using System.Linq;
+using GraphLibrary.Extensions.CustomTypeExtensions;
 using GraphLibrary.Graphs;
 using GraphLibrary.Graphs.Interface;
 using GraphLibrary.PathFindingAlgorithm;
@@ -16,26 +17,31 @@ namespace GraphLibrary.UnitTests.Tests.PathFindingAlgorithmsTests
         {
             var dikstraAlgorithm = new DijkstraAlgorithm() { Graph = NullGraph.Instance };
 
-            var path = dikstraAlgorithm.FindPath();
+            dikstraAlgorithm.FindPath();
 
-            Assert.IsFalse(path.Any());
+            Assert.IsFalse(dikstraAlgorithm.GetPath().Any());
         }
 
         [TestMethod]
         public void FindPath_NotNullGraph_ReturnsNotEmptyPath()
         {
             var startVertexPosition = new Position(1, 1);
+
             var endVertexPosition = new Position(10, 10);
+
             var parametres = new GraphParametres(width: 25, height: 25, obstaclePercent: 0);
-            var factory = new GraphFactory.GraphFactory(parametres, placeBetweenVertices: 1);
+            var factory = new GraphFactory.GraphFactory(parametres);
+
             var graph = factory.GetGraph(() => new TestVertex());
+
             graph.Start = graph[startVertexPosition.X, startVertexPosition.Y];
             graph.End = graph[endVertexPosition.X,endVertexPosition.Y];
+
             var dikstraAlgorithm = new DijkstraAlgorithm() { Graph = graph };
 
-            var path = dikstraAlgorithm.FindPath();
+            dikstraAlgorithm.FindPath();
 
-            Assert.IsTrue(path.Any());
+            Assert.IsTrue(dikstraAlgorithm.GetPath().Any());
         }
     }
 }

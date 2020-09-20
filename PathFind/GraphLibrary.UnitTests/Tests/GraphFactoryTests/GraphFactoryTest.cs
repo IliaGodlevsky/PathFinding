@@ -12,7 +12,7 @@ namespace GraphLibrary.UnitTests.Tests.GraphFactoryTests
         public void GetGraph_NotZeroParams_ReturnsGraphWithSameParams()
         {
             var parametres = new GraphParametres(width: 25, height: 25, obstaclePercent: 25);
-            var factory = new GraphFactory.GraphFactory(parametres, placeBetweenVertices: 0);
+            var factory = new GraphFactory.GraphFactory(parametres);
 
             var graph = factory.GetGraph(() => new TestVertex());
 

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Linq;
+using GraphLibrary.Extensions.CustomTypeExtensions;
 using GraphLibrary.PathFindingAlgorithm;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
@@ -13,9 +14,9 @@ namespace GraphLibrary.UnitTests.Tests.PathFindingAlgorithmsTests
         {
             var algorithm = NullAlgorithm.Instance;
 
-            var path = algorithm.FindPath();
+            algorithm.FindPath();
 
-            Assert.IsFalse(path.Any());
+            Assert.IsFalse(algorithm.GetPath().Any());
         }
 
         [TestMethod]

@@ -11,7 +11,7 @@ namespace GraphLibrary.UnitTests.Tests.GraphTests
         [TestMethod]
         public void GetIndices_VertexBelongsToGraph_ReturnsRightIndices()
         {
-            var factory = new GraphFactory.GraphFactory(new GraphParametres(25, 25, 0), 25);
+            var factory = new GraphFactory.GraphFactory(new GraphParametres(25, 25, 0));
             var graph = factory.GetGraph(() => new TestVertex());
 
             var vertex = graph[15, 15];
@@ -22,7 +22,7 @@ namespace GraphLibrary.UnitTests.Tests.GraphTests
         [TestMethod]
         public void GetIndices_VertexDoesNotBelongToGraph_ReturnsWrongIndices()
         {
-            var factory = new GraphFactory.GraphFactory(new GraphParametres(25, 25, 0), 25);
+            var factory = new GraphFactory.GraphFactory(new GraphParametres(25, 25, 0));
             var graph = factory.GetGraph(() => new TestVertex());
 
             var vertex = new TestVertex
