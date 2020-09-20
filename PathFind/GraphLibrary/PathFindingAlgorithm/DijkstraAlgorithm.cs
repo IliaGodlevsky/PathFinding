@@ -48,13 +48,12 @@ namespace GraphLibrary.PathFindingAlgorithm
 
         private void SetAccumulatedCostToInfinity()
         {
-            IVertex SetValueToInfinity(IVertex vertex)
+            Graph.Array.Apply(vertex =>
             {
                 if (!vertex.IsStart && !vertex.IsObstacle)
                     vertex.AccumulatedCost = double.PositiveInfinity;
                 return vertex;
-            }
-            Graph.Array.Apply(SetValueToInfinity);
+            });
         }
 
         protected virtual double Relax(IVertex neighbour, IVertex vertex)
@@ -92,9 +91,9 @@ namespace GraphLibrary.PathFindingAlgorithm
             return verticesProcessQueue.FirstOrNullVertex();
         }
 
-        private int CompareByAccumulatedCost(IVertex vertex1, IVertex vertex2)
+        private int CompareByAccumulatedCost(IVertex v1, IVertex v2)
         {
-            return vertex1.AccumulatedCost.CompareTo(vertex2.AccumulatedCost);
+            return v1.AccumulatedCost.CompareTo(v2.AccumulatedCost);
         }
 
         protected List<IVertex> verticesProcessQueue;
