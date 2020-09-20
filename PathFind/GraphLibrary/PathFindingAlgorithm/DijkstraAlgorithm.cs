@@ -64,16 +64,15 @@ namespace GraphLibrary.PathFindingAlgorithm
 
         private void RelaxNeighbours(IVertex vertex)
         {
-            IVertex RelaxVertex(IVertex neighbour)
+            vertex.Neighbours.Apply(neighbour =>
             {
-                if (neighbour.AccumulatedCost > Relax(neighbour,vertex))
+                if (neighbour.AccumulatedCost > Relax(neighbour, vertex))
                 {
                     neighbour.AccumulatedCost = Relax(neighbour, vertex);
                     neighbour.ParentVertex = vertex;
                 }
                 return neighbour;
-            }
-            vertex.Neighbours.Apply(RelaxVertex);
+            });
         }
 
         private void ExtractNeighbours(IVertex vertex)
