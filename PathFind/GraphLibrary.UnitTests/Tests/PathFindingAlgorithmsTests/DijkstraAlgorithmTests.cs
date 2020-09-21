@@ -27,9 +27,9 @@ namespace GraphLibrary.UnitTests.Tests.PathFindingAlgorithmsTests
         {
             var startVertexPosition = new Position(1, 1);
 
-            var endVertexPosition = new Position(10, 10);
+            var endVertexPosition = new Position(9, 9);
 
-            var parametres = new GraphParametres(width: 25, height: 25, obstaclePercent: 0);
+            var parametres = new GraphParametres(width: 10, height: 10, obstaclePercent: 0);
             var factory = new GraphFactory.GraphFactory(parametres);
 
             var graph = factory.GetGraph(() => new TestVertex());
