@@ -2,7 +2,6 @@
 using GraphLibrary.Graphs.Interface;
 using GraphLibrary.Vertex.Interface;
 using System;
-using System.Collections.Generic;
 
 namespace GraphLibrary.PathFindingAlgorithm.Interface
 {
