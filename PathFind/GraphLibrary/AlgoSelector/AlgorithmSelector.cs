@@ -4,6 +4,7 @@ using GraphLibrary.Graphs.Interface;
 using GraphLibrary.PathFindingAlgorithm;
 using GraphLibrary.PathFindingAlgorithm.Interface;
 using GraphLibrary.Vertex.Interface;
+using System.Collections.Generic;
 
 namespace GraphLibrary.AlgoSelector
 {
@@ -11,7 +12,7 @@ namespace GraphLibrary.AlgoSelector
     {
         private static double CastAndDistanceGreedyFunction(IVertex vertex, IVertex destination)
         {
-            return vertex.Cost + Distance.GetEuclideanDistance(vertex, destination);
+            return vertex.Cost + Distance.GetChebyshevDistance(vertex, destination);
         }
         
         public static IPathFindingAlgorithm GetPathFindAlgorithm(Algorithms algorithms, IGraph graph)
@@ -49,7 +50,7 @@ namespace GraphLibrary.AlgoSelector
                 case Algorithms.DistanceGreedyAlgorithm: return new GreedyAlgorithm()
                 {
                     Graph = graph,
-                    GreedyFunction = vertex => Distance.GetEuclideanDistance(vertex, graph.End)
+                    GreedyFunction = vertex => Distance.GetChebyshevDistance(vertex, graph.End)
                 };
 
                 case Algorithms.ValueGreedyAlgorithm: return new GreedyAlgorithm()
