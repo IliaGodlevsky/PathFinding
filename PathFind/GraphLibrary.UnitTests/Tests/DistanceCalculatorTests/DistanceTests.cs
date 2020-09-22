@@ -1,5 +1,5 @@
 ﻿using System;
-using GraphLibrary.DistanceCalculator;
+using GraphLibrary.DistanceCalculating;
 using GraphLibrary.UnitTests.Classes;
 using GraphLibrary.Vertex.Interface;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
@@ -19,7 +19,7 @@ namespace GraphLibrary.UnitTests.Tests.DistanceCalculatorTests
             var expectedDistance = Math.Sqrt(2);
 
             var realDistance =
-                Distance.GetEuclideanDistance(vertex1, vertex2);
+                DistanceCalculator.GetEuclideanDistance(vertex1, vertex2);
 
             Assert.AreEqual(expectedDistance, realDistance);
         }
@@ -34,7 +34,7 @@ namespace GraphLibrary.UnitTests.Tests.DistanceCalculatorTests
             var expectedDistance = 1.0;
 
             var realDistance =
-                Distance.GetChebyshevDistance(vertex1, vertex2);
+                DistanceCalculator.GetChebyshevDistance(vertex1, vertex2);
 
             Assert.AreEqual(expectedDistance, realDistance);
         }

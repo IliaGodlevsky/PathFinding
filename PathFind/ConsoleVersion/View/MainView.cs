@@ -18,8 +18,7 @@ namespace ConsoleVersion.View
         private const string largeSpace = "   ";
         private const string tab = "\t";
 
-        private delegate void MenuAction();
-        private readonly Dictionary<MenuOption, MenuAction> menuActions;
+        private readonly Dictionary<MenuOption, Action> menuActions;
         private readonly MainViewModel mainModel;
         private readonly string menu;
 
@@ -27,7 +26,7 @@ namespace ConsoleVersion.View
         {
             mainModel = new MainViewModel();
 
-            menuActions = new Dictionary<MenuOption, MenuAction>()
+            menuActions = new Dictionary<MenuOption, Action>()
             {
                 { MenuOption.PathFind, mainModel.FindPath },
                 { MenuOption.SaveGraph, mainModel.SaveGraph },
@@ -45,13 +44,12 @@ namespace ConsoleVersion.View
         {           
             var menu = new StringBuilder();
             var enums = Enum.GetValues(typeof(MenuOption)).Cast<MenuOption>().ToList();
-
             for (int i = 0; i < enums.Count; i++)
             {
                 menu.Append(i.IsEven() ? newLine : largeSpace + tab);
-                menu.AppendFormat(ConsoleVersionResources.MenuFormat, i, enums[i].GetDescription());
+                int menuItem = i + 1;
+                menu.AppendFormat(ConsoleVersionResources.MenuFormat, menuItem, enums[i].GetDescription());
             }
-
             return menu.ToString();
         }
 

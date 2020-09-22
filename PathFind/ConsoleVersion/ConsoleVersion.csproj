@@ -48,9 +48,9 @@
   <ItemGroup>
     <Compile Include="Enums\MenuOption.cs" />
     <Compile Include="Model\ConsoleGraphFieldFactory.cs" />
-    <Compile Include="ViewModel\CreateGraphViewModel.cs" />
+    <Compile Include="ViewModel\GraphCreatingViewModel.cs" />
     <Compile Include="ViewModel\MainViewModel.cs" />
-    <Compile Include="ViewModel\PathFindViewModel.cs" />
+    <Compile Include="ViewModel\PathFindingViewModel.cs" />
     <Compile Include="View\GraphCreateView.cs" />
     <Compile Include="View\GraphShower.cs" />
     <Compile Include="InputClass\Input.cs" />

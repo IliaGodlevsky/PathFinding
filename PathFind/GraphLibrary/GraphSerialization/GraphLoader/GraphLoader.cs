@@ -1,10 +1,10 @@
 ﻿using GraphLibrary.DTO;
-using GraphLibrary.GraphFactory;
+using GraphLibrary.Extensions.SystemTypeExtensions;
 using GraphLibrary.Graphs;
 using GraphLibrary.Graphs.Interface;
 using GraphLibrary.GraphSerialization.GraphLoader.Interface;
 using GraphLibrary.Vertex.Interface;
-using GraphLibrary.VertexBinding;
+using GraphLibrary.VertexConnecting;
 using System;
 using System.IO;
 using System.Runtime.Serialization.Formatters.Binary;
@@ -18,14 +18,15 @@ namespace GraphLibrary.GraphSerialization.GraphLoader
     {
         public event Action<string> OnBadLoad;
 
-        public IGraph GetGraph(string path, Func<VertexDto, IVertex> generator)
+        public IGraph LoadGraph(string path, Func<VertexDto, IVertex> converter)
         {
             var formatter = new BinaryFormatter();
             try
             {
                 using (var stream = new FileStream(path, FileMode.Open))
                 { 
-                    Initialise((VertexDto[,])formatter.Deserialize(stream), generator);
+                    var verticesDto = (VertexDto[,])formatter.Deserialize(stream);
+                    graph = GetGraphFromDto(verticesDto, converter);
                 }
             }
             catch (Exception ex)
@@ -35,13 +36,22 @@ namespace GraphLibrary.GraphSerialization.GraphLoader
             return graph;
         }
 
-        private void Initialise(VertexDto[,] info, Func<VertexDto, IVertex> generator)
+        private IGraph GetGraphFromDto(VertexDto[,] verticesDto, Func<VertexDto, IVertex> dtoConverter)
         {
-            if (info == null)
-                return;
-            var initializer = new GraphInfoInitializer(info);
-            graph = initializer.GetGraph(generator);
-            VertexBinder.ConnectVertices(graph);
+            graph = new Graph(verticesDto.Width(), verticesDto.Height());
+
+            IVertex GetVertexFromDto(IVertex vertex)
+            {
+                var indices = graph.GetIndices(vertex);
+                vertex = dtoConverter(verticesDto[indices.X, indices.Y]);
+                vertex.Position = indices;
+                return vertex;
+            }
+
+            graph.Array.Apply(GetVertexFromDto);
+            VertexConnector.ConnectVertices(graph);
+
+            return graph;
         }
 
         private IGraph graph = NullGraph.Instance;

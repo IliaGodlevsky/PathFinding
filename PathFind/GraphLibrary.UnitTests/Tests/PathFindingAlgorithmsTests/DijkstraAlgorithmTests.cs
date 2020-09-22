@@ -1,5 +1,6 @@
 ﻿using System.Linq;
 using GraphLibrary.Extensions.CustomTypeExtensions;
+using GraphLibrary.GraphCreating;
 using GraphLibrary.Graphs;
 using GraphLibrary.Graphs.Interface;
 using GraphLibrary.PathFindingAlgorithm;
@@ -30,12 +31,12 @@ namespace GraphLibrary.UnitTests.Tests.PathFindingAlgorithmsTests
             var endVertexPosition = new Position(9, 9);
 
             var parametres = new GraphParametres(width: 10, height: 10, obstaclePercent: 0);
-            var factory = new GraphFactory.GraphFactory(parametres);
+            var factory = new GraphFactory(parametres);
 
-            var graph = factory.GetGraph(() => new TestVertex());
+            var graph = factory.CreateGraph(() => new TestVertex());
 
-            graph.Start = graph[startVertexPosition.X, startVertexPosition.Y];
-            graph.End = graph[endVertexPosition.X,endVertexPosition.Y];
+            graph.Start = graph[startVertexPosition];
+            graph.End = graph[endVertexPosition];
 
             var dikstraAlgorithm = new DijkstraAlgorithm() { Graph = graph };
 

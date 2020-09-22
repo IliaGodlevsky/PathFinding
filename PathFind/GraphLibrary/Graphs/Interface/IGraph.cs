@@ -26,6 +26,7 @@ namespace GraphLibrary.Graphs.Interface
     public interface IGraph : IEnumerable<IVertex>
     {
         IVertex this[int width, int height] { get; set; }
+        IVertex this[Position position] { get; set; }
         IVertex End { get; set; }
         int Height { get; }
         int NumberOfVisitedVertices { get; }

@@ -7,7 +7,7 @@ using GraphLibrary.Vertex;
 
 namespace WpfVersion.Model.EventHolder
 {
-    internal class WpfVertexEventHolder : AbstractVertexEventHolder
+    internal class WpfVertexEventHolder : VertexEventHolder
     {
         protected override int GetWheelDelta(EventArgs e)
         {

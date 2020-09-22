@@ -66,15 +66,15 @@
     <Compile Include="Model\WindowAdjust.cs" />
     <Compile Include="Model\WpfGraphField.cs" />
     <Compile Include="Model\WpfGraphFieldFactory.cs" />
-    <Compile Include="ViewModel\GraphCreateViewModel.cs" />
-    <Compile Include="ViewModel\PathFindViewModel.cs" />
+    <Compile Include="ViewModel\GraphCreatingViewModel.cs" />
+    <Compile Include="ViewModel\PathFindingViewModel.cs" />
     <Compile Include="ViewModel\MainWindowViewModel.cs" />
     <Compile Include="Resources\WpfVersionResources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>WpfVersionResources.resx</DependentUpon>
     </Compile>
-    <Compile Include="ViewModel\VertexSizeViewModel.cs" />
+    <Compile Include="ViewModel\VertexSizeChangingViewModel.cs" />
     <Compile Include="View\Windows\GraphCreateWindow.xaml.cs">
       <DependentUpon>GraphCreateWindow.xaml</DependentUpon>
     </Compile>

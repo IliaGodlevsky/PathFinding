@@ -1,4 +1,5 @@
-﻿using GraphLibrary.Graphs.Interface;
+﻿using GraphLibrary.GraphCreating;
+using GraphLibrary.Graphs.Interface;
 using GraphLibrary.UnitTests.Classes;
 using GraphLibrary.Vertex.Interface;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
@@ -11,8 +12,8 @@ namespace GraphLibrary.UnitTests.Tests.GraphTests
         [TestMethod]
         public void GetIndices_VertexBelongsToGraph_ReturnsRightIndices()
         {
-            var factory = new GraphFactory.GraphFactory(new GraphParametres(25, 25, 0));
-            var graph = factory.GetGraph(() => new TestVertex());
+            var factory = new GraphFactory(new GraphParametres(25, 25, 0));
+            var graph = factory.CreateGraph(() => new TestVertex());
 
             var vertex = graph[15, 15];
 
@@ -22,8 +23,8 @@ namespace GraphLibrary.UnitTests.Tests.GraphTests
         [TestMethod]
         public void GetIndices_VertexDoesNotBelongToGraph_ReturnsWrongIndices()
         {
-            var factory = new GraphFactory.GraphFactory(new GraphParametres(25, 25, 0));
-            var graph = factory.GetGraph(() => new TestVertex());
+            var factory = new GraphFactory(new GraphParametres(25, 25, 0));
+            var graph = factory.CreateGraph(() => new TestVertex());
 
             var vertex = new TestVertex
             {

@@ -10,8 +10,8 @@ namespace ConsoleVersion.View
 {
     internal class PathFindView : IView
     {
-        public PathFindViewModel Model { get; }
-        public PathFindView(PathFindViewModel model)
+        public PathFindingViewModel Model { get; }
+        public PathFindView(PathFindingViewModel model)
         {
             Model = model;
             Model.Messages = new Tuple<string, string, string>(

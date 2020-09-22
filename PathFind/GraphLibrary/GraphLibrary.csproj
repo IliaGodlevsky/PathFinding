@@ -46,17 +46,16 @@
     <Compile Include="EventArguments\AlgorithmEventArgs.cs" />
     <Compile Include="Extensions\SystemTypeExtensions\IListExtensions.cs" />
     <Compile Include="Extensions\SystemTypeExtensions\StringBuilderExtensions.cs" />
-    <Compile Include="GraphCreate\GraphFactory\Interface\IGraphInitializer.cs" />
     <Compile Include="PathFindingAlgorithm\AStarAlgorithm.cs" />
     <Compile Include="PathFindingAlgorithm\AStartModified.cs" />
     <Compile Include="PathFindingAlgorithm\NullAlgorithm.cs" />
     <Compile Include="Extensions\SystemTypeExtensions\StackExtension.cs" />
     <Compile Include="Graphs\Interface\IGraph.cs" />
     <Compile Include="Graphs\NullGraph.cs" />
-    <Compile Include="PauseMaker\Interface\IPauser.cs" />
+    <Compile Include="PauseMaking\Interface\IPauser.cs" />
     <Compile Include="ValueRanges\Range.cs" />
     <Compile Include="ValueRanges\ValueRange.cs" />
-    <Compile Include="DistanceCalculator\Distance.cs" />
+    <Compile Include="DistanceCalculating\Distance.cs" />
     <Compile Include="Enums\Algorithm.cs" />
     <Compile Include="Globals\VertexSize.cs" />
     <Compile Include="Extensions\SystemTypeExtensions\ListExtension.cs" />
@@ -70,10 +69,9 @@
     <Compile Include="Extensions\SystemTypeExtensions\QueueExtensions.cs" />
     <Compile Include="Extensions\SystemTypeExtensions\RandomExtensions.cs" />
     <Compile Include="Extensions\SystemTypeExtensions\StopwatchExtension.cs" />
-    <Compile Include="GraphCreate\GraphFactory\GraphFactory.cs" />
-    <Compile Include="GraphCreate\GraphFactory\GraphInfoInitializer.cs" />
-    <Compile Include="GraphCreate\GraphFactory\Interface\IGraphFactory.cs" />
-    <Compile Include="GraphCreate\GraphFieldFactory\AbstractGraphFieldFactory.cs" />
+    <Compile Include="GraphCreating\GraphFactory.cs" />
+    <Compile Include="GraphCreating\Interface\IGraphFactory.cs" />
+    <Compile Include="GraphFieldCreating\GraphFieldFactory.cs" />
     <Compile Include="LibraryResources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -84,24 +82,24 @@
     <Compile Include="GraphSerialization\GraphSaver\GraphSaver.cs" />
     <Compile Include="GraphSerialization\GraphSaver\Interface\IGraphSaver.cs" />
     <Compile Include="Vertex\NullVertex.cs" />
-    <Compile Include="ViewModel\AbstractCreateGraphModel.cs" />
-    <Compile Include="ViewModel\AbstractMainModel.cs" />
-    <Compile Include="ViewModel\AbstractPathFindModel.cs" />
+    <Compile Include="ViewModel\GraphCreatingModel.cs" />
+    <Compile Include="ViewModel\MainModel.cs" />
+    <Compile Include="ViewModel\PathFindingModel.cs" />
     <Compile Include="GraphField\IGraphField.cs" />
     <Compile Include="ViewModel\Interface\IMainModel.cs" />
     <Compile Include="ViewModel\Interface\IModel.cs" />
-    <Compile Include="AlgoSelector\AlgorithmSelector.cs" />
-    <Compile Include="EventHolder\AbstractVertexEventHolder.cs" />
+    <Compile Include="AlgorithmCreating\AlgorithmSelector.cs" />
+    <Compile Include="EventHolder\VertexEventHolder.cs" />
     <Compile Include="DTO\VertexDto.cs" />
     <Compile Include="Graphs\Graph.cs" />
     <Compile Include="PathFindingAlgorithm\DijkstraAlgorithm.cs" />
     <Compile Include="PathFindingAlgorithm\GreedyAlgorithm.cs" />
     <Compile Include="PathFindingAlgorithm\Interface\IPathFindingAlgorithm.cs" />
     <Compile Include="PathFindingAlgorithm\LeeAlgorithm.cs" />
-    <Compile Include="PauseMaker\Pauser.cs" />
+    <Compile Include="PauseMaking\Pauser.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="EventHolder\Interface\IVertexEventHolder.cs" />
-    <Compile Include="VertexBinding\VertexBinder.cs" />
+    <Compile Include="VertexConnecting\VertexBinder.cs" />
     <Compile Include="Vertex\Interface\IVertex.cs" />
   </ItemGroup>
   <ItemGroup>

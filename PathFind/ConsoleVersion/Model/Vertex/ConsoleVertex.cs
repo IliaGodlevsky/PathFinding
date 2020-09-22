@@ -1,6 +1,7 @@
 ﻿using GraphLibrary.DTO;
 using GraphLibrary.Extensions.CustomTypeExtensions;
 using GraphLibrary.Vertex.Interface;
+using System;
 using System.Collections.Generic;
 using System.Drawing;
 
@@ -8,6 +9,10 @@ namespace ConsoleVersion.Model.Vertex
 {
     internal class ConsoleVertex : IVertex
     {
+        public event EventHandler OnDestinationChosen;
+        public event EventHandler OnCostChanged;
+        public event EventHandler OnRoleChanged;
+
         public ConsoleVertex() => this.Initialize();
 
         public ConsoleVertex(VertexDto dto) : this() => this.Initialize(dto);
@@ -23,6 +28,21 @@ namespace ConsoleVersion.Model.Vertex
         public double AccumulatedCost { get; set; }
         public Position Position { get; set; }
         public VertexDto Dto => new VertexDto(this);
+
+        public void ChangeCost()
+        {
+            OnCostChanged?.Invoke(this, new EventArgs());
+        }
+
+        public void ChangeRole()
+        {
+            OnRoleChanged?.Invoke(this, new EventArgs());
+        }
+
+        public void SetAsExtremeVertex()
+        {
+            OnDestinationChosen?.Invoke(this, new EventArgs());
+        }
 
         public void MarkAsEnd() => Colour = Color.FromKnownColor(KnownColor.Red);
 

@@ -1,11 +1,11 @@
-﻿using GraphLibrary.GraphCreate.GraphFieldFactory;
-using GraphLibrary.GraphField;
+﻿using GraphLibrary.GraphField;
+using GraphLibrary.GraphFieldCreating;
 
 namespace WpfVersion.Model
 {
-    internal class WpfGraphFieldFactory : AbstractGraphFieldFactory
+    internal class WpfGraphFieldFactory : GraphFieldFactory
     {
-        protected override IGraphField GetField()
+        protected override IGraphField CreateField()
         {
             return new WpfGraphField();
         }

@@ -30,7 +30,18 @@ namespace GraphLibrary.Graphs
             Array = new NullVertex[0, 0];
         }
 
-        public IVertex this[int width, int height] { get => nullVertex; set => nullVertex = NullVertex.Instance; }
+        public IVertex this[int width, int height] 
+        { 
+            get => nullVertex; 
+            set => nullVertex = NullVertex.Instance; 
+        }
+
+        public IVertex this[Position position]
+        { 
+            get => nullVertex; 
+            set => nullVertex = NullVertex.Instance; 
+        }
+
         public IVertex End { get => nullVertex; set => nullVertex = NullVertex.Instance; }
         public int Height => 0;
         public int NumberOfVisitedVertices => 0;
@@ -41,6 +52,9 @@ namespace GraphLibrary.Graphs
         public VertexDto[,] VerticesDto => new VertexDto[0, 0];
         public int Width => 0;
         public IVertex[,] Array { get; }
+
+        
+
         public IEnumerator<IVertex> GetEnumerator() => Array.Cast<IVertex>().ToList().GetEnumerator();
         public Position GetIndices(IVertex vertex) => new Position(0, 0);
         IEnumerator IEnumerable.GetEnumerator() => Array.GetEnumerator();

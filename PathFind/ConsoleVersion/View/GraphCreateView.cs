@@ -7,8 +7,8 @@ namespace ConsoleVersion.View
 {
     internal class GraphCreateView : IView
     {
-        private CreateGraphViewModel Model { get; set; }
-        public GraphCreateView(CreateGraphViewModel model)
+        private GraphCreatingViewModel Model { get; set; }
+        public GraphCreateView(GraphCreatingViewModel model)
         {
             Model = model;
             Model.Messages = new Tuple<string, string, string>(

@@ -18,7 +18,7 @@ using System.Linq;
 
 namespace WpfVersion.ViewModel
 {
-    internal class MainWindowViewModel : AbstractMainModel, INotifyPropertyChanged
+    internal class MainWindowViewModel : MainModel, INotifyPropertyChanged
     {
         public event PropertyChangedEventHandler PropertyChanged;
 
@@ -68,7 +68,7 @@ namespace WpfVersion.ViewModel
             GraphParametresFormat = WpfVersionResources.GraphParametresFormat;
             VertexEventHolder = new WpfVertexEventHolder();
             graphFieldFactory = new WpfGraphFieldFactory();
-            generator = (dto) => new WpfVertex(dto);
+            dtoConverter = (dto) => new WpfVertex(dto);
 
             StartPathFindCommand = new RelayCommand(
                 ExecuteStartPathFindCommand,
@@ -80,11 +80,11 @@ namespace WpfVersion.ViewModel
             ChangeVertexSize = new RelayCommand(ExecuteChangeVertexSize, obj => Graph != null);
         }
 
-        public override void FindPath() => PrepareWindow(new PathFindViewModel(this), new PathFindWindow());
+        public override void FindPath() => PrepareWindow(new PathFindingViewModel(this), new PathFindWindow());
 
-        public override void CreateNewGraph() => PrepareWindow(new GraphCreateViewModel(this), new GraphCreatesWindow());
+        public override void CreateNewGraph() => PrepareWindow(new GraphCreatingViewModel(this), new GraphCreatesWindow());
 
-        public void ExecuteChangeVertexSize(object param) => PrepareWindow(new VertexSizeViewModel(this), new VertexSizeChangeWindow());
+        public void ExecuteChangeVertexSize(object param) => PrepareWindow(new VertexSizeChangingViewModel(this), new VertexSizeChangeWindow());
 
         public void Dispose() => OnDispose();
 

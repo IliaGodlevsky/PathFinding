@@ -1,16 +1,12 @@
-﻿using GraphLibrary.DTO;
-using GraphLibrary.EventHolder;
+﻿using GraphLibrary.EventHolder.Interface;
 using GraphLibrary.GraphField;
-using GraphLibrary.Graphs;
 using GraphLibrary.Graphs.Interface;
-using GraphLibrary.Vertex.Interface;
-using System;
 
 namespace GraphLibrary.ViewModel.Interface
 {
     public interface IMainModel : IModel
     {
-        AbstractVertexEventHolder VertexEventHolder { get; set; }        
+        IVertexEventHolder VertexEventHolder { get; set; }        
         string GraphParametresFormat { get; }
         string GraphParametres { get; set; }
         IGraphField GraphField { get; set; }

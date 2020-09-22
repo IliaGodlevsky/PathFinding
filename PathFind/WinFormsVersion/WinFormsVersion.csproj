@@ -48,19 +48,19 @@
     <Compile Include="Extensions\ConstrolCollectionExtension.cs" />
     <Compile Include="Extensions\ControlExtension.cs" />
     <Compile Include="Model\WinFormsGraphFieldFactory.cs" />
-    <Compile Include="ViewModel\CreateGraphViewModel.cs" />
-    <Compile Include="ViewModel\PathFindViewModel.cs" />
-    <Compile Include="View\CreateGraphWindow.cs">
+    <Compile Include="ViewModel\GraphCreatingViewModel.cs" />
+    <Compile Include="ViewModel\PathFindingViewModel.cs" />
+    <Compile Include="View\GraphCreatingWIndow.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="View\CreateGraphWindow.Designer.cs">
-      <DependentUpon>CreateGraphWindow.cs</DependentUpon>
+    <Compile Include="View\GraphCreatingWIndow.Designer.cs">
+      <DependentUpon>GraphCreatingWIndow.cs</DependentUpon>
     </Compile>
-    <Compile Include="View\PathFindWindow.cs">
+    <Compile Include="View\PathFindingWindow.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="View\PathFindWindow.Designer.cs">
-      <DependentUpon>PathFindWindow.cs</DependentUpon>
+    <Compile Include="View\PathFindingWindow.Designer.cs">
+      <DependentUpon>PathFindingWindow.cs</DependentUpon>
     </Compile>
     <Compile Include="View\WinFormsGraphField.cs">
       <SubType>UserControl</SubType>
@@ -71,7 +71,7 @@
     <Compile Include="View\MainWindow.Designer.cs">
       <DependentUpon>MainWindow.cs</DependentUpon>
     </Compile>
-    <Compile Include="Model\EventHolder\WinFormsVertexStatusSetter.cs" />
+    <Compile Include="Model\EventHolder\WinFormsVertexEventHolder.cs" />
     <Compile Include="Model\Vertex\WinFormsVertex.cs">
       <SubType>Component</SubType>
     </Compile>
@@ -83,8 +83,8 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>WinFormsVersionResources.resx</DependentUpon>
     </Compile>
-    <EmbeddedResource Include="View\CreateGraphWindow.resx">
-      <DependentUpon>CreateGraphWindow.cs</DependentUpon>
+    <EmbeddedResource Include="View\GraphCreatingWIndow.resx">
+      <DependentUpon>GraphCreatingWIndow.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="View\MainWindow.resx">
       <DependentUpon>MainWindow.cs</DependentUpon>
@@ -99,8 +99,8 @@
       <DependentUpon>Resources.resx</DependentUpon>
       <DesignTime>True</DesignTime>
     </Compile>
-    <EmbeddedResource Include="View\PathFindWindow.resx">
-      <DependentUpon>PathFindWindow.cs</DependentUpon>
+    <EmbeddedResource Include="View\PathFindingWindow.resx">
+      <DependentUpon>PathFindingWindow.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Resources\WinFormsVersionResources.resx">
       <Generator>ResXFileCodeGenerator</Generator>

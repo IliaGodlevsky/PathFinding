@@ -21,7 +21,8 @@ namespace GraphLibrary.Graphs
             this.RemoveExtremeVertices();
         }
 
-        public Graph(int width, int height) : this(new IVertex[width, height])
+        public Graph(int width, int height) 
+            : this(new IVertex[width, height])
         {
 
         }
@@ -30,6 +31,12 @@ namespace GraphLibrary.Graphs
         {
             get => Array[width, height];
             set => Array[width, height] = value;
+        }
+
+        public IVertex this[Position position] 
+        {
+            get => Array[position.X, position.Y];
+            set => Array[position.X, position.Y] = value; 
         }
 
         private IVertex end;

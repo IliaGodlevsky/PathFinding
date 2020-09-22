@@ -7,7 +7,7 @@ using GraphLibrary.ValueRanges;
 
 namespace ConsoleVersion.Model.EventHolder
 {
-    internal class ConsoleVertexEventHolder : AbstractVertexEventHolder
+    internal class ConsoleVertexEventHolder : VertexEventHolder
     {
 
         public override void ChangeVertexValue(object sender, EventArgs e)
@@ -25,7 +25,9 @@ namespace ConsoleVersion.Model.EventHolder
 
         protected override void ChargeVertex(IVertex vertex)
         {
-
+            (vertex as ConsoleVertex).OnCostChanged += ChangeVertexValue;
+            (vertex as ConsoleVertex).OnDestinationChosen += ChooseExtremeVertices;
+            (vertex as ConsoleVertex).OnRoleChanged += ReversePolarity;
         }
     }
 }

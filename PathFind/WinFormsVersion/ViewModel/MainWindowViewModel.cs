@@ -20,7 +20,7 @@ using System.Linq;
 
 namespace WinFormsVersion.ViewModel
 {
-    internal class MainWindowViewModel : AbstractMainModel, INotifyPropertyChanged
+    internal class MainWindowViewModel : MainModel, INotifyPropertyChanged
     {
         public event PropertyChangedEventHandler PropertyChanged;
 
@@ -74,7 +74,7 @@ namespace WinFormsVersion.ViewModel
             graphField = new WinFormsGraphField();
             graphFieldFactory = new WinFormsGraphFieldFactory();
 
-            generator = (dto) => new WinFormsVertex(dto);
+            dtoConverter = (dto) => new WinFormsVertex(dto);
         }
 
 
@@ -82,15 +82,15 @@ namespace WinFormsVersion.ViewModel
         {
             if (!CanStartPathFinding())
                 return;
-            var model = new PathFindViewModel(this);
-            var form = new PathFindWindow(model);
+            var model = new PathFindingViewModel(this);
+            var form = new PathFindingWindow(model);
             PrepareWindow(form);
         }
 
         public override void CreateNewGraph()
         {
-            var model = new CreateGraphViewModel(this);
-            var form = new CreateGraphWindow(model);
+            var model = new GraphCreatingViewModel(this);
+            var form = new GraphCreatingWIndow(model);
             PrepareWindow(form);
         }
 

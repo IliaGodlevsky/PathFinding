@@ -1,10 +1,10 @@
-﻿using GraphLibrary.GraphCreate.GraphFieldFactory;
-using GraphLibrary.GraphField;
+﻿using GraphLibrary.GraphField;
+using GraphLibrary.GraphFieldCreating;
 
 namespace ConsoleVersion.Model
 {
-    internal class ConsoleGraphFieldFactory : AbstractGraphFieldFactory
+    internal class ConsoleGraphFieldFactory : GraphFieldFactory
     {
-        protected override IGraphField GetField() => null;
+        protected override IGraphField CreateField() => null;
     }
 }
