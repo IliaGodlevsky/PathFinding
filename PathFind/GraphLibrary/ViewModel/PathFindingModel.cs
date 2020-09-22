@@ -26,14 +26,10 @@ namespace GraphLibrary.ViewModel
 
         public virtual void FindPath()
         {
-            pathAlgorithm = AlgorithmFactory.
-                CreateAlgorithm(Algorithm, graph);
-
+            pathAlgorithm = AlgorithmFactory.CreateAlgorithm(Algorithm, graph);
             PrepareAlgorithm();
             pathAlgorithm.FindPath();
-
             var path = pathAlgorithm.GetPath();
-
             mainViewModel.Statistics +=
                 string.Format("   " + pathFindStatisticsFormat,
                 path.Count(),
@@ -44,7 +40,6 @@ namespace GraphLibrary.ViewModel
         protected virtual void PrepareAlgorithm()
         {
             var timer = new Stopwatch();
-
             pathAlgorithm.OnVertexVisited += (vertex) =>
             {
                 if (vertex.IsSimpleVertex())
@@ -53,16 +48,13 @@ namespace GraphLibrary.ViewModel
                 mainViewModel.Statistics = timer.GetTimeInformation(LibraryResources.TimerInfoFormat) +
                 string.Format("   " + pathFindStatisticsFormat, 0, 0, graph.NumberOfVisitedVertices);
             };
-
             pathAlgorithm.OnStarted += (sender, eventArgs) => { timer.Start(); };
-
             pathAlgorithm.OnFinished += (sender, eventArgs) =>
             {
                 timer.Stop();
                 mainViewModel.Statistics = timer.GetTimeInformation(LibraryResources.TimerInfoFormat);
                 pathAlgorithm.GetPath().DrawPath();
             };
-
             pathAlgorithm.OnEnqueued += vertex =>
             {
                 if (vertex.IsSimpleVertex())

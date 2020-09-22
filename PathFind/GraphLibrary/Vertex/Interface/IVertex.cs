@@ -1,4 +1,5 @@
 ﻿using GraphLibrary.DTO;
+using System;
 using System.Collections.Generic;
 
 namespace GraphLibrary.Vertex.Interface
@@ -6,7 +7,7 @@ namespace GraphLibrary.Vertex.Interface
     /// <summary>
     /// Cartesian coordinates of the vertex on the graph
     /// </summary>
-    public struct Position
+    public struct Position : IComparable<Position>
     {
         public int X { get; set; }
         public int Y { get; set; }
@@ -19,7 +20,7 @@ namespace GraphLibrary.Vertex.Interface
 
         public override bool Equals(object pos)
         {
-            if(pos is Position position)
+            if (pos is Position position)
                 return position.X == X && position.Y == Y;
             return false;
         }
@@ -27,6 +28,16 @@ namespace GraphLibrary.Vertex.Interface
         public override int GetHashCode()
         {
             return X ^ Y;
+        }
+
+        public int CompareTo(Position other)
+        {
+            if (X == other.X && Y == other.Y)
+                return 0;
+            else if (X == other.X && Y > other.Y || X > other.X)
+                return 1;
+            else
+                return -1;
         }
     }
 

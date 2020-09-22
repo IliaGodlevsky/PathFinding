@@ -1,10 +1,11 @@
 ﻿using ConsoleVersion.InputClass;
 using ConsoleVersion.Model;
 using ConsoleVersion.View;
-using System;
 using GraphLibrary.ViewModel;
 using ConsoleVersion.Model.EventHolder;
 using ConsoleVersion.Model.Vertex;
+using System.Drawing;
+using Console = Colorful.Console;
 
 namespace ConsoleVersion.ViewModel
 {
@@ -54,6 +55,15 @@ namespace ConsoleVersion.ViewModel
         {
             Console.Write("Enter path: ");
             return Console.ReadLine();
+        }
+
+        public void DisplayGraph()
+        {
+            Console.Clear();
+            Console.ForegroundColor = Color.White;
+            Console.WriteLine(GraphParametres);
+            (GraphField as ConsoleGraphField)?.ShowGraphWithFrames();
+            Console.WriteLine(Statistics);
         }
     }
 }

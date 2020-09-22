@@ -1,5 +1,4 @@
-﻿using ConsoleVersion.Forms;
-using ConsoleVersion.InputClass;
+﻿using ConsoleVersion.InputClass;
 using System;
 using GraphLibrary.Enums;
 using GraphLibrary.Vertex.Interface;
@@ -30,9 +29,9 @@ namespace ConsoleVersion.ViewModel
             if (!graph.Any())
                 return;
             mainViewModel.ClearGraph();
-            GraphShower.DisplayGraph(mainViewModel);
+            (mainViewModel as MainViewModel).DisplayGraph();
             ChooseExtremeVertex();
-            GraphShower.DisplayGraph(mainViewModel);
+            (mainViewModel as MainViewModel).DisplayGraph();
             Algorithm = GetAlgorithmEnum();
             base.FindPath();
         }
@@ -48,8 +47,8 @@ namespace ConsoleVersion.ViewModel
             {
                 while (true)
                 {
-                    Thread.Sleep(millisecondsTimeout: 135);                    
-                    GraphShower.DisplayGraph(mainViewModel);
+                    Thread.Sleep(millisecondsTimeout: 135);
+                    (mainViewModel as MainViewModel).DisplayGraph();
                 }
             });
 
@@ -65,7 +64,7 @@ namespace ConsoleVersion.ViewModel
                 thread.Join();
                 if (!eventArgs.HasFoundPath)
                 {
-                    GraphShower.DisplayGraph(mainViewModel);
+                    (mainViewModel as MainViewModel).DisplayGraph();
                     Console.WriteLine(badResultMessage);
                     Console.ReadLine();
                 }                

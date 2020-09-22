@@ -35,9 +35,11 @@ namespace ConsoleVersion.InputClass
                 maxMenuValue, minMenuValue);
         }
 
-        public static Position InputPoint(int width, int height) => 
-            new Position(InputNumber(ConsoleVersionResources.XCoordinateMsg, width),
-                InputNumber(ConsoleVersionResources.YCoordinateMsg, height));
+        public static Position InputPoint(int width, int height)
+        {
+            return new Position(InputNumber(ConsoleVersionResources.XCoordinateMsg, width),
+                                InputNumber(ConsoleVersionResources.YCoordinateMsg, height));
+        }
 
         private static bool IsError(string choice, int upper, int lower)
         {

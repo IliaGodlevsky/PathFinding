@@ -28,17 +28,12 @@ namespace GraphLibrary.UnitTests.Tests.PathFindingAlgorithmsTests
         public void LeeAlgorithmFindPath_NotNullGraph_ReturnsNotEmptyPath()
         {
             var startVertexPosition = new Position(1, 1);
-
             var endVertexPosition = new Position(9, 9);
-
             var parametres = new GraphParametres(width: 10, height: 10, obstaclePercent: 0);
             var factory = new GraphFactory(parametres);
-
             var graph = factory.CreateGraph(() => new TestVertex());
-
             graph.Start = graph[startVertexPosition];
             graph.End = graph[endVertexPosition];
-
             var leeAlgorithm = new LeeAlgorithm() { Graph = graph };
 
             leeAlgorithm.FindPath();

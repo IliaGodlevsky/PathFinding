@@ -29,10 +29,11 @@ namespace ConsoleVersion.View
         {
             var algorithmList = new StringBuilder("\n");
             var enums = Enum.GetValues(typeof(Algorithms)).Cast<Algorithms>().ToList();
-
-            for (int i = 0; i < enums.Count(); i++)
-                algorithmList.AppendFormatLine(ConsoleVersionResources.MenuFormat, i, enums[i].GetDescription());            
-
+            for (int listItem = 0; listItem < enums.Count(); listItem++)
+            {
+                algorithmList.AppendFormatLine(ConsoleVersionResources.MenuFormat,
+                      listItem + 1, enums[listItem].GetDescription());
+            }
             return algorithmList.ToString();
         }
     }

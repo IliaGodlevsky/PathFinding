@@ -13,9 +13,15 @@ namespace ConsoleVersion.Model.Vertex
         public event EventHandler OnCostChanged;
         public event EventHandler OnRoleChanged;
 
-        public ConsoleVertex() => this.Initialize();
+        public ConsoleVertex()
+        {
+            this.Initialize();
+        }
 
-        public ConsoleVertex(VertexDto dto) : this() => this.Initialize(dto);
+        public ConsoleVertex(VertexDto dto) : this()
+        {
+            this.Initialize(dto);
+        }
 
         public bool IsEnd { get; set; }
         public bool IsObstacle { get; set; }
@@ -44,9 +50,15 @@ namespace ConsoleVersion.Model.Vertex
             OnDestinationChosen?.Invoke(this, new EventArgs());
         }
 
-        public void MarkAsEnd() => Colour = Color.FromKnownColor(KnownColor.Red);
+        public void MarkAsEnd()
+        {
+            Colour = Color.FromKnownColor(KnownColor.Red);
+        }
 
-        public void MarkAsSimpleVertex() => Colour = Color.FromKnownColor(KnownColor.White);
+        public void MarkAsSimpleVertex()
+        {
+            Colour = Color.FromKnownColor(KnownColor.White);
+        }
 
         public void MarkAsObstacle()
         {
@@ -54,12 +66,24 @@ namespace ConsoleVersion.Model.Vertex
             Colour = Color.FromKnownColor(KnownColor.Black);
         }
 
-        public void MarkAsPath() => Colour = Color.FromKnownColor(KnownColor.Yellow);
+        public void MarkAsPath()
+        {
+            Colour = Color.FromKnownColor(KnownColor.Yellow);
+        }
 
-        public void MarkAsStart() => Colour = Color.FromKnownColor(KnownColor.Green);
+        public void MarkAsStart()
+        {
+            Colour = Color.FromKnownColor(KnownColor.Green);
+        }
 
-        public void MarkAsVisited() => Colour = Color.FromKnownColor(KnownColor.Blue);
+        public void MarkAsVisited()
+        {
+            Colour = Color.FromKnownColor(KnownColor.Blue);
+        }
 
-        public void MarkAsEnqueued() => Colour = Color.FromKnownColor(KnownColor.Aquamarine);
+        public void MarkAsEnqueued()
+        {
+            Colour = Color.FromKnownColor(KnownColor.Aquamarine);
+        }
     }
 }

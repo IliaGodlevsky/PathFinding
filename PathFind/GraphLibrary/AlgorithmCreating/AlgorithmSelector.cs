@@ -9,12 +9,14 @@ namespace GraphLibrary.AlgorithmCreating
 {
     public static class AlgorithmFactory
     {
-        private static double CastAndDistanceGreedyFunction(IVertex vertex, IVertex destination)
+        private static double CastAndDistanceGreedyFunction(
+            IVertex vertex, IVertex destination)
         {
             return vertex.Cost + DistanceCalculator.GetChebyshevDistance(vertex, destination);
         }
 
-        public static IPathFindingAlgorithm CreateAlgorithm(Algorithms algorithms, IGraph graph)
+        public static IPathFindingAlgorithm CreateAlgorithm(
+            Algorithms algorithms, IGraph graph)
         {
             switch (algorithms)
             {

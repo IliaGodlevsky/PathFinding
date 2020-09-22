@@ -55,7 +55,7 @@
     <Compile Include="PauseMaking\Interface\IPauser.cs" />
     <Compile Include="ValueRanges\Range.cs" />
     <Compile Include="ValueRanges\ValueRange.cs" />
-    <Compile Include="DistanceCalculating\Distance.cs" />
+    <Compile Include="DistanceCalculating\DistanceCalculator.cs" />
     <Compile Include="Enums\Algorithm.cs" />
     <Compile Include="Globals\VertexSize.cs" />
     <Compile Include="Extensions\SystemTypeExtensions\ListExtension.cs" />

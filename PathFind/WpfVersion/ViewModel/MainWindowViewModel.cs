@@ -70,9 +70,7 @@ namespace WpfVersion.ViewModel
             graphFieldFactory = new WpfGraphFieldFactory();
             dtoConverter = (dto) => new WpfVertex(dto);
 
-            StartPathFindCommand = new RelayCommand(
-                ExecuteStartPathFindCommand,
-               CanExecuteStartFindPathCommand);
+            StartPathFindCommand = new RelayCommand(ExecuteStartPathFindCommand, CanExecuteStartFindPathCommand);
             CreateNewGraphCommand = new RelayCommand(ExecuteCreateNewGraphCommand, obj => true);
             ClearGraphCommand = new RelayCommand(ExecuteClearGraphCommand, obj=> Graph != null);
             SaveGraphCommand = new RelayCommand(ExecuteSaveGraphCommand, obj => Graph != null);
@@ -80,15 +78,30 @@ namespace WpfVersion.ViewModel
             ChangeVertexSize = new RelayCommand(ExecuteChangeVertexSize, obj => Graph != null);
         }
 
-        public override void FindPath() => PrepareWindow(new PathFindingViewModel(this), new PathFindWindow());
+        public override void FindPath()
+        {
+            PrepareWindow(new PathFindingViewModel(this), new PathFindWindow());
+        }
 
-        public override void CreateNewGraph() => PrepareWindow(new GraphCreatingViewModel(this), new GraphCreatesWindow());
+        public override void CreateNewGraph()
+        {
+            PrepareWindow(new GraphCreatingViewModel(this), new GraphCreatesWindow());
+        }
 
-        public void ExecuteChangeVertexSize(object param) => PrepareWindow(new VertexSizeChangingViewModel(this), new VertexSizeChangeWindow());
+        public void ExecuteChangeVertexSize(object param)
+        {
+            PrepareWindow(new VertexSizeChangingViewModel(this), new VertexSizeChangeWindow());
+        }
 
-        public void Dispose() => OnDispose();
+        public void Dispose()
+        {
+            OnDispose();
+        }
 
-        private void ExecuteSaveGraphCommand(object param) => base.SaveGraph();
+        private void ExecuteSaveGraphCommand(object param)
+        {
+            base.SaveGraph();
+        }
 
         private bool CanExecuteStartFindPathCommand(object param)
         {
@@ -115,9 +128,15 @@ namespace WpfVersion.ViewModel
             OnPropertyChanged(nameof(GraphParametres));
         }
 
-        private void ExecuteStartPathFindCommand(object param) => FindPath();
+        private void ExecuteStartPathFindCommand(object param)
+        {
+            FindPath();
+        }
 
-        private void ExecuteCreateNewGraphCommand(object param) => CreateNewGraph();
+        private void ExecuteCreateNewGraphCommand(object param)
+        {
+            CreateNewGraph();
+        }
 
         protected virtual void OnDispose()
         {

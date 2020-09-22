@@ -1,5 +1,4 @@
 ﻿using ConsoleVersion.Enums;
-using ConsoleVersion.Forms;
 using ConsoleVersion.InputClass;
 using ConsoleVersion.View.Interface;
 using ConsoleVersion.ViewModel;
@@ -44,11 +43,10 @@ namespace ConsoleVersion.View
         {           
             var menu = new StringBuilder();
             var enums = Enum.GetValues(typeof(MenuOption)).Cast<MenuOption>().ToList();
-            for (int i = 0; i < enums.Count; i++)
+            for (int menuItem = 0; menuItem < enums.Count; menuItem++)
             {
-                menu.Append(i.IsEven() ? newLine : largeSpace + tab);
-                int menuItem = i + 1;
-                menu.AppendFormat(ConsoleVersionResources.MenuFormat, menuItem, enums[i].GetDescription());
+                menu.Append(menuItem.IsEven() ? newLine : largeSpace + tab);
+                menu.AppendFormat(ConsoleVersionResources.MenuFormat, menuItem, enums[menuItem].GetDescription());
             }
             return menu.ToString();
         }
@@ -61,12 +59,12 @@ namespace ConsoleVersion.View
 
         public void Start()
         {
-            GraphShower.DisplayGraph(mainModel);
+            mainModel.DisplayGraph();
             var menuOption = GetMenuOption();
             while (menuOption != MenuOption.Quit)
             {
                 menuActions[menuOption]();
-                GraphShower.DisplayGraph(mainModel);
+                mainModel.DisplayGraph();
                 menuOption = GetMenuOption();
             }
         }

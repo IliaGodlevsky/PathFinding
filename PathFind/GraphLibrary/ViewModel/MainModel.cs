@@ -1,5 +1,4 @@
 ﻿using GraphLibrary.DTO;
-using GraphLibrary.EventHolder;
 using GraphLibrary.EventHolder.Interface;
 using GraphLibrary.Extensions.CustomTypeExtensions;
 using GraphLibrary.GraphField;
@@ -32,7 +31,10 @@ namespace GraphLibrary.ViewModel
             loader = new GraphLoader();
         }
 
-        public virtual void SaveGraph() => saver.SaveGraph(Graph, GetSavePath());
+        public virtual void SaveGraph()
+        {
+            saver.SaveGraph(Graph, GetSavePath());
+        }
 
         public virtual void LoadGraph()
         {
