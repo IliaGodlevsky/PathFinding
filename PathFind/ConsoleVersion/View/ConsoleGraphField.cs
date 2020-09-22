@@ -25,6 +25,17 @@ namespace ConsoleVersion.View
         public int Width { get; private set; }
         public int Height { get; private set; }
 
+        public void ShowGraphWithFrames()
+        {
+            Console.ForegroundColor = Color.White;
+            Console.Write(DrawAbscissa());
+            Console.Write(WriteHorizontalFrame());
+            ShowGraph();
+            Console.Write(largeSpace);
+            Console.Write(WriteHorizontalFrame());
+            Console.Write(DrawAbscissa());
+        }
+
         private readonly Dictionary<Position, IVertex> vertices;
 
         private enum TableSide
@@ -96,17 +107,6 @@ namespace ConsoleVersion.View
                         Console.Write(DrawOrdinate(currentHeight, TableSide.Right));
                 }
             }
-        }
-
-        public void ShowGraphWithFrames()
-        {
-            Console.ForegroundColor = Color.White;
-            Console.Write(DrawAbscissa());
-            Console.Write(WriteHorizontalFrame());
-            ShowGraph();
-            Console.Write(largeSpace);
-            Console.Write(WriteHorizontalFrame());
-            Console.Write(DrawAbscissa());
         }
     }
 }
