@@ -28,8 +28,8 @@ namespace WpfVersion.Model.Vertex
         public WpfVertex() : base()
         {
             this.Initialize();
-            Width = Height = VertexSize.VERTEX_SIZE;
-            FontSize = VertexSize.VERTEX_SIZE * VertexSize.TEXT_TO_SIZE_RATIO;
+            Width = Height = VertexParametres.VertexSize;
+            FontSize = VertexParametres.VertexSize * VertexParametres.TextToSizeRatio;
             Template = (ControlTemplate)TryFindResource("vertexTemplate");
         }
 

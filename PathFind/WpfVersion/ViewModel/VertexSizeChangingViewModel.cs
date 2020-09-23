@@ -28,14 +28,13 @@ namespace WpfVersion.ViewModel
 
         private void ChangeVertexSize(object param)
         {
-            VertexSize.VERTEX_SIZE = Size;
-            VertexSize.SIZE_BETWEEN_VERTICES = Size + 1;
+            VertexParametres.VertexSize = Size;
             IVertex ChangeSize(IVertex vertex)
             {
                 var temp = vertex as WpfVertex;
-                temp.Width = VertexSize.VERTEX_SIZE;
-                temp.Height = VertexSize.VERTEX_SIZE;
-                temp.FontSize = Size * VertexSize.TEXT_TO_SIZE_RATIO;
+                temp.Width = VertexParametres.VertexSize;
+                temp.Height = VertexParametres.VertexSize;
+                temp.FontSize = Size * VertexParametres.TextToSizeRatio;
                 return temp;
             }
             Model.Graph.Array.Apply(ChangeSize);

@@ -40,9 +40,7 @@ namespace ConsoleVersion.ViewModel
         {
             DelayTime = Input.InputNumber(ConsoleVersionResources.DelayTimeMsg, 
                 Range.DelayValueRange.UpperRange, Range.DelayValueRange.LowerRange);
-
             base.PrepareAlgorithm();
-
             var thread = new Thread(() => 
             {
                 while (true)
@@ -51,13 +49,10 @@ namespace ConsoleVersion.ViewModel
                     (mainViewModel as MainViewModel).DisplayGraph();
                 }
             });
-
             var pauser = new PauseProvider(DelayTime);
             pauser.PauseEvent += () => { };
-
             pathAlgorithm.OnStarted += (sender, eventArgs) => thread.Start();
             pathAlgorithm.OnVertexVisited += (vertex) => pauser.Pause();
-
             pathAlgorithm.OnFinished += (sender, eventArgs) =>
             {
                 thread.Abort();

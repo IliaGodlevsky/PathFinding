@@ -48,7 +48,7 @@ namespace WinFormsVersion.ViewModel
             set
             {
                 graphField = value;
-                int size = VertexSize.SIZE_BETWEEN_VERTICES;
+                int size = VertexParametres.SizeBetweenVertices;
                 var field = graphField as WinFormsGraphField;
                 MainWindow.Controls.RemoveBy(ctrl => ctrl.IsGraphField());
                 field.Size = new Size(Graph.Width * size, Graph.Height * size);
@@ -133,13 +133,13 @@ namespace WinFormsVersion.ViewModel
                 && Graph.Any() && !graph.Start.IsVisited;
         }
 
-        protected override string GetSavePath()
+        protected override string GetSavingPath()
         {
             var save = new SaveFileDialog();
             return save.ShowDialog() == DialogResult.OK ? save.FileName : string.Empty;
         }
 
-        protected override string GetLoadPath()
+        protected override string GetLoadingPath()
         {
             var open = new OpenFileDialog();
             return open.ShowDialog() == DialogResult.OK ? open.FileName : string.Empty;

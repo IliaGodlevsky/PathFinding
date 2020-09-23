@@ -15,7 +15,7 @@ namespace WinFormsVersion.Model
 
         public void Add(IVertex vertex, int xCoordinate, int yCoordinate)
         {
-            int sizeBetween = GraphLibrary.Globals.VertexSize.SIZE_BETWEEN_VERTICES;
+            int sizeBetween = GraphLibrary.Globals.VertexParametres.SizeBetweenVertices;
             if (sizeBetween < 0)
                 sizeBetween = 26;
             (vertex as WinFormsVertex).Location = new Point(xCoordinate * sizeBetween, yCoordinate * sizeBetween);

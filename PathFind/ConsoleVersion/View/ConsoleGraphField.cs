@@ -35,6 +35,9 @@ namespace ConsoleVersion.View
             Console.Write(HorizontalFrame);
             Console.Write(Abscissa);
         }
+
+
+
         
         private string Abscissa
         {

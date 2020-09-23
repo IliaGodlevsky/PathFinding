@@ -153,13 +153,13 @@ namespace WpfVersion.ViewModel
             Window.Show();
         }
 
-        protected override string GetSavePath()
+        protected override string GetSavingPath()
         {
             var save = new SaveFileDialog();
             return save.ShowDialog() == true ? save.FileName : string.Empty;
         }
 
-        protected override string GetLoadPath()
+        protected override string GetLoadingPath()
         {
             var open = new OpenFileDialog();
             return open.ShowDialog() == true ? open.FileName : string.Empty;

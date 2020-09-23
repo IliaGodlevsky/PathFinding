@@ -3,10 +3,23 @@
     /// <summary>
     /// size in pts
     /// </summary>
-    public static class VertexSize
+    public static class VertexParametres
     {
-        public const float TEXT_TO_SIZE_RATIO = 0.475f;
-        public static int VERTEX_SIZE = 24;
-        public static int SIZE_BETWEEN_VERTICES = VERTEX_SIZE + 1;
+        static VertexParametres()
+        {
+            TextToSizeRatio = 0.475f;
+            VertexSize = 24;
+        }
+
+        public static float TextToSizeRatio { get; }
+
+        private static int vertexSize;
+        public static int VertexSize 
+        {
+            get => vertexSize;
+            set { vertexSize = value; SizeBetweenVertices = vertexSize + 1; }
+        }
+
+        public static int SizeBetweenVertices { get; private set; }
     }
 }

@@ -33,12 +33,12 @@ namespace GraphLibrary.ViewModel
 
         public virtual void SaveGraph()
         {
-            saver.SaveGraph(Graph, GetSavePath());
+            saver.SaveGraph(Graph, GetSavingPath());
         }
 
         public virtual void LoadGraph()
         {
-            var temp = loader.LoadGraph(GetLoadPath(), dtoConverter);
+            var temp = loader.LoadGraph(GetLoadingPath(), dtoConverter);
             if (temp != NullGraph.Instance)
                 SetGraph(temp);
         }
@@ -63,8 +63,8 @@ namespace GraphLibrary.ViewModel
         public abstract void FindPath();
         public abstract void CreateNewGraph();
 
-        protected abstract string GetSavePath();
-        protected abstract string GetLoadPath();
+        protected abstract string GetSavingPath();
+        protected abstract string GetLoadingPath();
 
         protected Func<VertexDto, IVertex> dtoConverter;
         protected IGraphSaver saver;

@@ -47,9 +47,15 @@ namespace ConsoleVersion.ViewModel
             (Graph[point] as ConsoleVertex).ChangeCost();
         }
 
-        protected override string GetSavePath() => GetPath();
+        protected override string GetSavingPath()
+        {
+            return GetPath();
+        }
 
-        protected override string GetLoadPath() => GetPath();
+        protected override string GetLoadingPath()
+        {
+            return GetPath();
+        }
 
         private string GetPath()
         {

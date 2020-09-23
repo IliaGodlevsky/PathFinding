@@ -13,10 +13,10 @@ namespace WinFormsVersion.Vertex
         public WinFormsVertex() : base()
         {
             this.Initialize();
-            float fontSize = VertexSize.VERTEX_SIZE * VertexSize.TEXT_TO_SIZE_RATIO; ;
+            float fontSize = VertexParametres.VertexSize * VertexParametres.TextToSizeRatio; ;
             Font = new Font("Times New Roman", fontSize);
-            Size = new Size(VertexSize.VERTEX_SIZE,
-                VertexSize.SIZE_BETWEEN_VERTICES);
+            Size = new Size(VertexParametres.VertexSize,
+                VertexParametres.SizeBetweenVertices);
             TextAlign = ContentAlignment.MiddleCenter;
             //BorderStyle = BorderStyle.FixedSingle;
         }

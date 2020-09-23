@@ -34,9 +34,10 @@ namespace WinFormsVersion.View
                     Range.HeightValueRange.LowerRange);
             }
 
-            void IntToString(object sender, ConvertEventArgs e) => e.Value = e.Value.ToString();
-
-
+            void IntToString(object sender, ConvertEventArgs e)
+            {
+                e.Value = e.Value.ToString();
+            }
 
             var bindWidth = new Binding(nameof(widthTextBox.Text), Model, nameof(Model.Width));
             widthTextBox.DataBindings.Add(bindWidth);

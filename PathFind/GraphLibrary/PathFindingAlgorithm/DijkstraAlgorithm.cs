@@ -76,11 +76,12 @@ namespace GraphLibrary.PathFindingAlgorithm
 
         private void ExtractNeighbours(IVertex vertex)
         {
-            foreach(var vert in vertex.GetUnvisitedNeighbours())
+            vertex.GetUnvisitedNeighbours().ToList().Apply(neighbour =>
             {
-                OnEnqueued?.Invoke(vert);
-                verticesProcessQueue.Add(vert);
-            }
+                OnEnqueued?.Invoke(neighbour);
+                verticesProcessQueue.Add(neighbour);
+                return neighbour;
+            });
             verticesProcessQueue = verticesProcessQueue.DistinctBy(vert => vert.Position).ToList();
         }
 
