@@ -82,10 +82,10 @@ namespace ConsoleVersion.View
 
         private void ShowGraph()
         {
-            for (var currentHeight = 0; currentHeight < Height; currentHeight++)
+            for (int currentHeight = 0; currentHeight < Height; currentHeight++)
             {
                 Console.Write(DrawOrdinate(currentHeight));
-                for (var currentWidth = 0; currentWidth < Width; currentWidth++)
+                for (int currentWidth = 0; currentWidth < Width; currentWidth++)
                 {
                     var currentVertexIndex = currentWidth * Height + currentHeight;
                     ShowVertex(vertices[currentVertexIndex]);
