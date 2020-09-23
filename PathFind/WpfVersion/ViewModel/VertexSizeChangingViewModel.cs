@@ -20,13 +20,8 @@ namespace WpfVersion.ViewModel
         public VertexSizeChangingViewModel(MainWindowViewModel model)
         {
             Model = model;
-
-            ExecuteChangeVertexSize = new RelayCommand(
-                ChangeVertexSize, obj => true);
-            ExecuteCancel = new RelayCommand(
-                obj => Model.Window.Close(), 
-                obj => true);
-
+            ExecuteChangeVertexSize = new RelayCommand(ChangeVertexSize, obj => true);
+            ExecuteCancel = new RelayCommand(obj => Model.Window.Close(), obj => true);
             if (Model.Graph.Size > 0)
                 Size = Convert.ToInt32((Model.Graph.First() as WpfVertex).Width);
         }
