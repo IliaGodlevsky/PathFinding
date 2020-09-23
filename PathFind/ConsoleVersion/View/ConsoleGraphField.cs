@@ -10,88 +10,71 @@ namespace ConsoleVersion.View
 {
     internal class ConsoleGraphField : IGraphField
     {
+        public int Width { get; private set; }
+        public int Height { get; private set; }
+
         public ConsoleGraphField()
         {
-            vertices = new Dictionary<Position, IVertex>();
+            vertices = new List<ConsoleVertex>();
         }
 
         public void Add(IVertex vertex, int xCoordinate, int yCoordinate)
         {
-            vertices.Add(new Position(xCoordinate, yCoordinate), vertex);
+            vertices.Add(vertex as ConsoleVertex);
             Width = xCoordinate + 1;
             Height = yCoordinate + 1;
         }
 
-        public int Width { get; private set; }
-        public int Height { get; private set; }
-
         public void ShowGraphWithFrames()
         {
             Console.ForegroundColor = Color.White;
-            Console.Write(DrawAbscissa());
-            Console.Write(WriteHorizontalFrame());
+            Console.Write(Abscissa);
+            Console.Write(HorizontalFrame);
             ShowGraph();
             Console.Write(largeSpace);
-            Console.Write(WriteHorizontalFrame());
-            Console.Write(DrawAbscissa());
+            Console.Write(HorizontalFrame);
+            Console.Write(Abscissa);
+        }
+        
+        private string Abscissa
+        {
+            get
+            {
+                var abscissa = new StringBuilder();
+                abscissa.Append(largeSpace);
+                for (int i = 0; i < Width; i++)
+                {
+                    var offset = !IsOffsetIndex(i) ? bigSpace : space;
+                    abscissa.Append(i + offset);
+                }
+                abscissa.Append(newLine + largeSpace);
+                return abscissa.ToString();
+            }
         }
 
-        private readonly Dictionary<Position, IVertex> vertices;
-
-        private enum TableSide
+        private string HorizontalFrame
         {
-            Right,
-            Left
-        }
-
-        private const int OFFSET_ARRAY_INDEX = 10;
-        private const string space = " ";
-        private const string bigSpace = "  ";
-        private const string largeSpace = "   ";
-        private const string horizontalFrame = "---";
-        private const string verticalFrame = "|";
-
-        private string DrawAbscissa()
-        {
-            var abscissa = new StringBuilder();
-            abscissa.Append(largeSpace);
-            for (int i = 0; i < Width; i++)
-                abscissa.Append(i + (i < OFFSET_ARRAY_INDEX ? bigSpace : space));
-            abscissa.Append("\n" + largeSpace);
-            return abscissa.ToString();
-        }
-
-        private string WriteHorizontalFrame()
-        {
-            var frame = new StringBuilder();
-            for (int i = 0; i < Width; i++)
-                frame.Append(horizontalFrame);
-            frame.Append("\n");
-            return frame.ToString();
+            get
+            {
+                var frame = new StringBuilder();
+                for (int i = 0; i < Width; i++)
+                    frame.Append(horizontalFrame);
+                frame.Append(newLine);
+                return frame.ToString();
+            }
         }
 
         private string DrawOrdinate(int currentHeight,
             TableSide tableSide = TableSide.Left)
         {
             string line;
-            if (tableSide == TableSide.Right)
-                line = verticalFrame + currentHeight + "\n";
-            else if (currentHeight < OFFSET_ARRAY_INDEX)
+            if (tableSide is TableSide.Right)
+                line = verticalFrame + currentHeight + newLine;
+            else if (!IsOffsetIndex(currentHeight))
                 line = currentHeight + space + verticalFrame;
             else
                 line = currentHeight + verticalFrame;
             return line;
-        }
-
-        private void ShowVertex(IVertex vertex)
-        {
-            ConsoleVertex vert = vertex as ConsoleVertex;
-            Console.Write(vert.Cost + bigSpace, vert.Colour);
-        }
-
-        private bool IsEndOfRow(int currentWidth)
-        {
-            return currentWidth == Width - 1;
         }
 
         private void ShowGraph()
@@ -101,12 +84,42 @@ namespace ConsoleVersion.View
                 Console.Write(DrawOrdinate(currentHeight));
                 for (int currentWidth = 0; currentWidth < Width; currentWidth++)
                 {
-                    var currentVertexPosition = new Position(currentWidth, currentHeight);
-                    ShowVertex(vertices[currentVertexPosition]);
+                    int currentVertexIndex = currentWidth * Height + currentHeight;
+                    ShowVertex(vertices[currentVertexIndex]);
                     if (IsEndOfRow(currentWidth))
                         Console.Write(DrawOrdinate(currentHeight, TableSide.Right));
                 }
             }
         }
+
+        private void ShowVertex(ConsoleVertex vertex)
+        {
+            Console.Write(vertex.Cost + bigSpace, vertex.Colour);
+        }
+
+        private bool IsEndOfRow(int currentWidth)
+        {
+            return currentWidth == Width - 1;
+        }
+
+        private bool IsOffsetIndex(int currentIndex)
+        {
+            return currentIndex >= 10;
+        }
+
+        private enum TableSide
+        {
+            Right,
+            Left
+        }
+
+        private readonly List<ConsoleVertex> vertices;
+
+        private const string newLine = "\n";
+        private const string space = " ";
+        private const string bigSpace = "  ";
+        private const string largeSpace = "   ";
+        private const string horizontalFrame = "---";
+        private const string verticalFrame = "|";
     }
 }
