@@ -82,12 +82,12 @@ namespace ConsoleVersion.View
 
         private void ShowGraph()
         {
-            for (int currentHeight = 0; currentHeight < Height; currentHeight++)
+            for (var currentHeight = 0; currentHeight < Height; currentHeight++)
             {
                 Console.Write(DrawOrdinate(currentHeight));
-                for (int currentWidth = 0; currentWidth < Width; currentWidth++)
+                for (var currentWidth = 0; currentWidth < Width; currentWidth++)
                 {
-                    int currentVertexIndex = currentWidth * Height + currentHeight;
+                    var currentVertexIndex = currentWidth * Height + currentHeight;
                     ShowVertex(vertices[currentVertexIndex]);
                     if (IsEndOfRow(currentWidth))
                         Console.Write(DrawOrdinate(currentHeight, TableSide.Right));
