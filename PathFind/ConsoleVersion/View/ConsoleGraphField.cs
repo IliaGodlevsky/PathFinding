@@ -10,8 +10,27 @@ namespace ConsoleVersion.View
 {
     internal class ConsoleGraphField : IGraphField
     {
-        public int Width { get; private set; }
-        public int Height { get; private set; }
+        private int width;
+        public int Width
+        {
+            get => width;
+            private set
+            {
+                if (value > width)
+                    width = value;
+            }
+        }
+
+        private int height;
+        public int Height 
+        {
+            get => height;
+            private set
+            {
+                if (value > height)
+                    height = value;
+            }
+        }
 
         public ConsoleGraphField()
         {
@@ -28,26 +47,22 @@ namespace ConsoleVersion.View
         public void ShowGraphWithFrames()
         {
             Console.ForegroundColor = Color.White;
-            Console.Write(Abscissa);
-            Console.Write(HorizontalFrame);
+            Console.Write(GetFramedAbscissa(FramedAbscissaView.FrameBelow));
             ShowGraph();
-            Console.Write(largeSpace);
-            Console.Write(HorizontalFrame);
-            Console.Write(Abscissa);
+            Console.Write(GetFramedAbscissa(FramedAbscissaView.FrameUnder));
         }
        
         private string Abscissa
         {
             get
             {
-                var abscissa = new StringBuilder();
-                abscissa.Append(largeSpace);
+                var abscissa = new StringBuilder(largeSpace);
                 for (int i = 0; i < Width; i++)
                 {
                     var offset = !IsOffsetIndex(i) ? bigSpace : space;
                     abscissa.Append(i + offset);
                 }
-                abscissa.Append(newLine + largeSpace);
+                abscissa.Append(largeSpace);
                 return abscissa.ToString();
             }
         }
@@ -56,19 +71,31 @@ namespace ConsoleVersion.View
         {
             get
             {
-                var frame = new StringBuilder();
+                var frame = new StringBuilder(largeSpace);
                 for (int i = 0; i < Width; i++)
                     frame.Append(horizontalFrame);
-                frame.Append(newLine);
                 return frame.ToString();
             }
+        }
+
+        private string GetFramedAbscissa(FramedAbscissaView framedAbscissaView)
+        {
+            var framedAbscissaComponents = new List<string>();
+            framedAbscissaComponents.Add(Abscissa);
+            framedAbscissaComponents.Add(HorizontalFrame);
+            var framedAbscissa = new StringBuilder();
+            if (framedAbscissaView == FramedAbscissaView.FrameUnder)
+                framedAbscissaComponents.Reverse();
+            foreach (var component in framedAbscissaComponents)
+                framedAbscissa.AppendLine(component);
+            return framedAbscissa.ToString();
         }
 
         private string DrawOrdinate(int currentHeight,
             TableSide tableSide = TableSide.Left)
         {
             string line;
-            if (tableSide is TableSide.Right)
+            if (tableSide == TableSide.Right)
                 line = verticalFrame + currentHeight + newLine;
             else if (!IsOffsetIndex(currentHeight))
                 line = currentHeight + space + verticalFrame;
@@ -92,6 +119,8 @@ namespace ConsoleVersion.View
             }
         }
 
+
+
         private void ShowVertex(ConsoleVertex vertex)
         {
             Console.Write(vertex.Cost + bigSpace, vertex.Colour);
@@ -107,11 +136,9 @@ namespace ConsoleVersion.View
             return currentIndex >= 10;
         }
 
-        private enum TableSide
-        {
-            Right,
-            Left
-        }
+        private enum FramedAbscissaView { FrameUnder, FrameBelow }
+
+        private enum TableSide { Right, Left }
 
         private readonly List<ConsoleVertex> vertices;
 
