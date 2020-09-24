@@ -92,7 +92,7 @@ namespace ConsoleVersion.View
         }
 
         private string DrawOrdinate(int currentHeight,
-            TableSide tableSide = TableSide.Left)
+            TableSide tableSide)
         {
             string line;
             if (tableSide == TableSide.Right)
@@ -108,7 +108,7 @@ namespace ConsoleVersion.View
         {
             for (int currentHeight = 0; currentHeight < Height; currentHeight++)
             {
-                Console.Write(DrawOrdinate(currentHeight));
+                Console.Write(DrawOrdinate(currentHeight, TableSide.Left));
                 for (int currentWidth = 0; currentWidth < Width; currentWidth++)
                 {
                     var currentVertexIndex = currentWidth * Height + currentHeight;
