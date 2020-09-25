@@ -47,9 +47,9 @@ namespace ConsoleVersion.View
         public void ShowGraphWithFrames()
         {
             Console.ForegroundColor = Color.White;
-            Console.Write(GetFramedAbscissa(FramedAbscissaView.FrameBelow));
-            ShowGraph();
             Console.Write(GetFramedAbscissa(FramedAbscissaView.FrameUnder));
+            ShowGraph();
+            Console.Write(GetFramedAbscissa(FramedAbscissaView.FrameOver));
         }
        
         private string Abscissa
@@ -80,11 +80,9 @@ namespace ConsoleVersion.View
 
         private string GetFramedAbscissa(FramedAbscissaView framedAbscissaView)
         {
-            var framedAbscissaComponents = new List<string>();
-            framedAbscissaComponents.Add(Abscissa);
-            framedAbscissaComponents.Add(HorizontalFrame);
+            var framedAbscissaComponents = new List<string>() { Abscissa, HorizontalFrame };
             var framedAbscissa = new StringBuilder();
-            if (framedAbscissaView == FramedAbscissaView.FrameUnder)
+            if (framedAbscissaView == FramedAbscissaView.FrameOver)
                 framedAbscissaComponents.Reverse();
             foreach (var component in framedAbscissaComponents)
                 framedAbscissa.AppendLine(component);
@@ -136,7 +134,7 @@ namespace ConsoleVersion.View
             return currentIndex >= 10;
         }
 
-        private enum FramedAbscissaView { FrameUnder, FrameBelow }
+        private enum FramedAbscissaView { FrameOver, FrameUnder }
 
         private enum TableSide { Right, Left }
 
@@ -146,7 +144,7 @@ namespace ConsoleVersion.View
         private const string space = " ";
         private const string bigSpace = "  ";
         private const string largeSpace = "   ";
-        private const string horizontalFrame = "***";
+        private const string horizontalFrame = "+--";
         private const string verticalFrame = "|";
     }
 }
