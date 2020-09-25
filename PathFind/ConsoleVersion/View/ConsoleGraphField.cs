@@ -94,14 +94,14 @@ namespace ConsoleVersion.View
         private string DrawOrdinate(int currentHeight,
             TableSide tableSide)
         {
-            string line;
+            string ordinate;
             if (tableSide == TableSide.Right)
-                line = verticalFrame + currentHeight + newLine;
+                ordinate = verticalFrame + currentHeight + newLine;
             else if (!IsOffsetIndex(currentHeight))
-                line = currentHeight + space + verticalFrame;
+                ordinate = currentHeight + space + verticalFrame;
             else
-                line = currentHeight + verticalFrame;
-            return line;
+                ordinate = currentHeight + verticalFrame;
+            return ordinate;
         }
 
         private void ShowGraph()
@@ -146,7 +146,7 @@ namespace ConsoleVersion.View
         private const string space = " ";
         private const string bigSpace = "  ";
         private const string largeSpace = "   ";
-        private const string horizontalFrame = "---";
+        private const string horizontalFrame = "***";
         private const string verticalFrame = "|";
     }
 }
