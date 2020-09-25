@@ -11,6 +11,7 @@ namespace ConsoleVersion.ViewModel
 {
     internal class MainViewModel : MainModel
     {
+
         public MainViewModel() : base()
         {            
             GraphParametresFormat = ConsoleVersionResources.GraphParametresFormat;
