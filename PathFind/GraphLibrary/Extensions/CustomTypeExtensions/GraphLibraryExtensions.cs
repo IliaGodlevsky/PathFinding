@@ -9,7 +9,7 @@ namespace GraphLibrary.Extensions.CustomTypeExtensions
         public static T DeepCopy<T>(this T self)
         {
             if (!typeof(T).IsSerializable)
-                throw new ArgumentException("Type must be serialiable");
+                throw new ArgumentException("Type must be serializable");
             if (self == null)
                 return default;
             var formatter = new BinaryFormatter();
