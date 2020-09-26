@@ -9,7 +9,6 @@ using WinFormsVersion.Model;
 using WinFormsVersion.Resources;
 using WinFormsVersion.View;
 using WinFormsVersion.EventHolder;
-using GraphLibrary.Graphs;
 using GraphLibrary.ViewModel;
 using GraphLibrary.GraphField;
 using GraphLibrary.Vertex;
@@ -68,13 +67,10 @@ namespace WinFormsVersion.ViewModel
         public MainWindowViewModel() : base()
         {
             GraphParametresFormat = WinFormsVersionResources.ParametresFormat;
-
             VertexEventHolder = new WinFormsVertexEventHolder();
-
             graphField = new WinFormsGraphField();
-            graphFieldFactory = new WinFormsGraphFieldFactory();
-
-            dtoConverter = (dto) => new WinFormsVertex(dto);
+            FieldFactory = new WinFormsGraphFieldFactory();
+            DtoConverter = (dto) => new WinFormsVertex(dto);
         }
 
 

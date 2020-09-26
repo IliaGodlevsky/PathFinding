@@ -16,8 +16,8 @@ namespace ConsoleVersion.ViewModel
         {            
             GraphParametresFormat = ConsoleVersionResources.GraphParametresFormat;
             VertexEventHolder = new ConsoleVertexEventHolder();
-            graphFieldFactory = new ConsoleGraphFieldFactory();
-            dtoConverter = (dto) => new ConsoleVertex(dto);
+            FieldFactory = new ConsoleGraphFieldFactory();
+            DtoConverter = (dto) => new ConsoleVertex(dto);
         }
 
         public override void CreateNewGraph()

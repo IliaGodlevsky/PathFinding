@@ -23,22 +23,27 @@ namespace GraphLibrary.ViewModel
         public virtual IGraph Graph { get; protected set; }
         public IVertexEventHolder VertexEventHolder { get; set; }
         public string GraphParametresFormat { get; protected set; }
+        public IGraphSaver Saver { get; set; }
+        public IGraphLoader Loader { get; set; }
+        public GraphFieldFactory FieldFactory { get; set; }
+        public Func<VertexDto, IVertex> DtoConverter { get; set; }
+
 
         public MainModel()
         {
             Graph = NullGraph.Instance;
-            saver = new GraphSaver();
-            loader = new GraphLoader();
+            Saver = new GraphSaver();
+            Loader = new GraphLoader();
         }
 
         public virtual void SaveGraph()
         {
-            saver.SaveGraph(Graph, GetSavingPath());
+            Saver.SaveGraph(Graph, GetSavingPath());
         }
 
         public virtual void LoadGraph()
         {
-            var temp = loader.LoadGraph(GetLoadingPath(), dtoConverter);
+            var temp = Loader.LoadGraph(GetLoadingPath(), DtoConverter);
             if (temp != NullGraph.Instance)
                 SetGraph(temp);
         }
@@ -53,7 +58,7 @@ namespace GraphLibrary.ViewModel
         public void SetGraph(IGraph graph)
         {
             Graph = graph;
-            GraphField = graphFieldFactory.CreateGraphField(Graph);
+            GraphField = FieldFactory.CreateGraphField(Graph);
             VertexEventHolder.Graph = Graph;
             VertexEventHolder.ChargeGraph();
             GraphParametres = Graph.GetFormattedInfo(GraphParametresFormat);
@@ -65,10 +70,5 @@ namespace GraphLibrary.ViewModel
 
         protected abstract string GetSavingPath();
         protected abstract string GetLoadingPath();
-
-        protected Func<VertexDto, IVertex> dtoConverter;
-        protected IGraphSaver saver;
-        protected IGraphLoader loader;
-        protected GraphFieldFactory graphFieldFactory;
     }
 }

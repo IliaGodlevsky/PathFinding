@@ -69,8 +69,8 @@ namespace WpfVersion.ViewModel
             GraphField = new WpfGraphField();
             GraphParametresFormat = WpfVersionResources.GraphParametresFormat;
             VertexEventHolder = new WpfVertexEventHolder();
-            graphFieldFactory = new WpfGraphFieldFactory();
-            dtoConverter = (dto) => new WpfVertex(dto);
+            FieldFactory = new WpfGraphFieldFactory();
+            DtoConverter = (dto) => new WpfVertex(dto);
 
             StartPathFindCommand = new RelayCommand(ExecuteStartPathFindCommand, CanExecuteStartFindPathCommand);
             CreateNewGraphCommand = new RelayCommand(ExecuteCreateNewGraphCommand, obj => true);
