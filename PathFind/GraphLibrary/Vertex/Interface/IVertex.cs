@@ -7,6 +7,7 @@ namespace GraphLibrary.Vertex.Interface
     /// <summary>
     /// Cartesian coordinates of the vertex on the graph
     /// </summary>
+    [Serializable]
     public struct Position : IComparable<Position>
     {
         public int X { get; set; }
@@ -23,6 +24,16 @@ namespace GraphLibrary.Vertex.Interface
             if (pos is Position position)
                 return position.X == X && position.Y == Y;
             return false;
+        }
+
+        public static bool operator==(Position position1, Position position2)
+        {
+            return position1.Equals(position2);
+        }
+
+        public static bool operator !=(Position position1, Position position2)
+        {
+            return !position1.Equals(position2);
         }
 
         public override int GetHashCode()
