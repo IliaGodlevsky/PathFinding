@@ -7,6 +7,9 @@ namespace GraphLibrary.Enums
         [Description("Lee algorithm")]
         LeeAlgorithm = 1,
 
+        [Description("Lee algorithm (heuristic)")]
+        BestFirstLeeAlgorithm,
+
         [Description("Dijkstra algorithm")]
         DijkstraAlgorithm,
 
