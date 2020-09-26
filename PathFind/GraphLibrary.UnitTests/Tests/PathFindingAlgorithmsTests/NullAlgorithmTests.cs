@@ -1,5 +1,4 @@
-﻿using System;
-using System.Linq;
+﻿using System.Linq;
 using GraphLibrary.Extensions.CustomTypeExtensions;
 using GraphLibrary.PathFindingAlgorithm;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
