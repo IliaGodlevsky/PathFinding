@@ -54,10 +54,15 @@ namespace GraphLibrary.PathFindingAlgorithm
             neighbourQueue = new Queue<IVertex>(neighbourQueue.DistinctBy(vert => vert.Position));
         }
 
-        private IVertex GetNextVertex()
+        protected virtual IVertex GetNextVertex()
         {           
             neighbourQueue = new Queue<IVertex>(neighbourQueue.Where(vertex => !vertex.IsVisited));
             return neighbourQueue.DequeueOrNullVertex();
+        }
+
+        protected virtual double WaveFunction(IVertex vertex)
+        {
+            return vertex.AccumulatedCost + 1;
         }
 
         private void SpreadWaves(IVertex vertex)
@@ -66,7 +71,7 @@ namespace GraphLibrary.PathFindingAlgorithm
             {
                 if (vert.AccumulatedCost == 0)
                 {
-                    vert.AccumulatedCost = vertex.AccumulatedCost + 1;
+                    vert.AccumulatedCost = WaveFunction(vertex);
                     vert.ParentVertex = vertex;
                 }
                 return vert;
@@ -81,6 +86,6 @@ namespace GraphLibrary.PathFindingAlgorithm
             ExtractNeighbours(vertex);
         }
 
-        private Queue<IVertex> neighbourQueue;
+        protected Queue<IVertex> neighbourQueue;
     }
 }

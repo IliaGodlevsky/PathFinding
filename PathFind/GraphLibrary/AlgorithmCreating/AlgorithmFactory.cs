@@ -26,6 +26,13 @@ namespace GraphLibrary.AlgorithmCreating
                         Graph = graph
                     };
 
+                case Algorithms.BestFirstLeeAlgorithm:
+                    return new BestFirstLeeAlgorithm()
+                {
+                    Graph = graph,
+                    HeuristicFunction = vertex => DistanceCalculator.GetChebyshevDistance(vertex, graph.End)
+                };
+
                 case Algorithms.DeepPathFind:
                     return new GreedyAlgorithm()
                     {
@@ -43,7 +50,7 @@ namespace GraphLibrary.AlgorithmCreating
                     return new AStarAlgorithm()
                     {
                         Graph = graph,
-                        HeuristicFunction = vertex => DistanceCalculator.GetChebyshevDistance(vertex, graph.End)
+                        HeuristicFunction = vertex => DistanceCalculator.GetChebyshevDistance(vertex, graph.End)                        
                     };
 
                 case Algorithms.AStarModified:
