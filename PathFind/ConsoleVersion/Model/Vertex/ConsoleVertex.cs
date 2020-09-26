@@ -7,6 +7,7 @@ using System.Drawing;
 
 namespace ConsoleVersion.Model.Vertex
 {
+    [Serializable]
     internal class ConsoleVertex : IVertex
     {
         public event EventHandler OnDestinationChosen;

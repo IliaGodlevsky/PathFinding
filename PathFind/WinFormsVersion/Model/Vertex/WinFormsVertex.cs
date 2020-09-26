@@ -2,18 +2,20 @@
 using GraphLibrary.Extensions.CustomTypeExtensions;
 using GraphLibrary.Globals;
 using GraphLibrary.Vertex.Interface;
+using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Windows.Forms;
 
 namespace WinFormsVersion.Vertex
 {
+    [Serializable]
     internal class WinFormsVertex : Label, IVertex
     {      
         public WinFormsVertex() : base()
         {
             this.Initialize();
-            float fontSize = VertexParametres.VertexSize * VertexParametres.TextToSizeRatio; ;
+            float fontSize = VertexParametres.VertexSize * VertexParametres.TextToSizeRatio;
             Font = new Font("Times New Roman", fontSize);
             Size = new Size(VertexParametres.VertexSize,
                 VertexParametres.SizeBetweenVertices);

@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using GraphLibrary.DTO;
@@ -13,6 +14,7 @@ namespace GraphLibrary.Graphs
     /// A structure amounting to a set of objects in which 
     /// some pairs of the objects are in some sense "related"
     /// </summary>
+    [Serializable]
     public class Graph : IGraph
     {
         public Graph(IVertex[,] vertices)

@@ -2,12 +2,14 @@
 using GraphLibrary.Extensions.CustomTypeExtensions;
 using GraphLibrary.Globals;
 using GraphLibrary.Vertex.Interface;
+using System;
 using System.Collections.Generic;
 using System.Windows.Controls;
 using System.Windows.Media;
 
 namespace WpfVersion.Model.Vertex
 {
+    [Serializable]
     internal class WpfVertex : Label, IVertex
     {
         public static SolidColorBrush AfterVisitVertexColor { get; set; }
