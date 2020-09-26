@@ -60,7 +60,10 @@ namespace GraphLibrary.PathFindingAlgorithm
             var neighbours = vertex.GetUnvisitedNeighbours().ToList();
             foreach (var vert in neighbours)
                 OnEnqueued?.Invoke(vert);
-            return neighbours.FindOrNullVertex(vert => GreedyFunction(vert) == neighbours.Min(GreedyFunction));
+            return neighbours.FindOrNullVertex(vert =>
+            {
+                return GreedyFunction(vert) == neighbours.Min(GreedyFunction);
+            });
         }
 
         private readonly Stack<IVertex> visitedVerticesStack;
