@@ -1,6 +1,7 @@
 ﻿using GraphLibrary.Extensions.SystemTypeExtensions;
 using GraphLibrary.Graphs.Interface;
 using GraphLibrary.Vertex;
+using GraphLibrary.Vertex.Interface;
 
 namespace GraphLibrary.Extensions.CustomTypeExtensions
 {
