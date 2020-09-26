@@ -19,10 +19,10 @@ namespace GraphLibrary.ViewModel
             graph = NullGraph.Instance;
         }
 
-        public virtual void CreateGraph(Func<IVertex> generator)
+        public virtual void CreateGraph(Func<IVertex> vertexFactory)
         {
             var factory = new GraphFactory(new GraphParametres(Width, Height, ObstaclePercent));
-            graph = factory.CreateGraph(generator);
+            graph = factory.CreateGraph(vertexFactory);
             model.SetGraph(graph);
         }
 

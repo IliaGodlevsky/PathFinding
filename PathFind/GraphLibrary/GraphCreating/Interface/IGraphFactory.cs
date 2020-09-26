@@ -7,6 +7,6 @@ namespace GraphLibrary.GraphCreating.Interface
 {
     public interface IGraphFactory
     {
-        IGraph CreateGraph(Func<IVertex> generator);
+        IGraph CreateGraph(Func<IVertex> vertexFactory);
     }
 }
