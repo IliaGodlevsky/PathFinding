@@ -31,6 +31,12 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Dynamitey, Version=2.0.9.136, Culture=neutral, PublicKeyToken=cbf53ea3aeb972c6, processorArchitecture=MSIL">
+      <HintPath>..\packages\Dynamitey.2.0.9.136\lib\net40\Dynamitey.dll</HintPath>
+    </Reference>
+    <Reference Include="ImpromptuInterface, Version=7.0.1.0, Culture=neutral, PublicKeyToken=0b1781c923b2975b, processorArchitecture=MSIL">
+      <HintPath>..\packages\ImpromptuInterface.7.0.1\lib\net40\ImpromptuInterface.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Drawing" />
@@ -44,10 +50,12 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="EventArguments\AlgorithmEventArgs.cs" />
+    <Compile Include="Extensions\CustomTypeExtensions\GraphLibraryExtensions.cs" />
     <Compile Include="Extensions\SystemTypeExtensions\IListExtensions.cs" />
     <Compile Include="Extensions\SystemTypeExtensions\StringBuilderExtensions.cs" />
     <Compile Include="PathFindingAlgorithm\AStarAlgorithm.cs" />
     <Compile Include="PathFindingAlgorithm\AStartModified.cs" />
+    <Compile Include="PathFindingAlgorithm\BestFirstLeeAlgorithm.cs" />
     <Compile Include="PathFindingAlgorithm\NullAlgorithm.cs" />
     <Compile Include="Extensions\SystemTypeExtensions\StackExtension.cs" />
     <Compile Include="Graphs\Interface\IGraph.cs" />
@@ -88,7 +96,7 @@
     <Compile Include="GraphField\IGraphField.cs" />
     <Compile Include="ViewModel\Interface\IMainModel.cs" />
     <Compile Include="ViewModel\Interface\IModel.cs" />
-    <Compile Include="AlgorithmCreating\AlgorithmSelector.cs" />
+    <Compile Include="AlgorithmCreating\AlgorithmFactory.cs" />
     <Compile Include="EventHolder\VertexEventHolder.cs" />
     <Compile Include="DTO\VertexDto.cs" />
     <Compile Include="Graphs\Graph.cs" />
@@ -108,6 +116,8 @@
       <LastGenOutput>LibraryResources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <None Include="packages.config" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
