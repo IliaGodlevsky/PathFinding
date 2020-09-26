@@ -61,7 +61,7 @@ namespace GraphLibrary.PathFindingAlgorithm
             return neighbour.Cost + vertex.AccumulatedCost;
         }
 
-        private void RelaxNeighbours(IVertex vertex)
+        protected virtual void RelaxNeighbours(IVertex vertex)
         {
             vertex.Neighbours.Apply(neighbour =>
             {
