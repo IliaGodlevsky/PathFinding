@@ -27,7 +27,7 @@ namespace GraphLibrary.PathFindingAlgorithm
             }
         }
 
-        public IGraph Graph { get; set; }
+        public IGraph Graph { get => NullGraph.Instance; set => _ = value; }
 
         public event AlgorithmEventHanlder OnStarted;
         public event Action<IVertex> OnVertexVisited;

@@ -24,15 +24,15 @@ namespace GraphLibrary.Vertex
 
         }
 
-        public bool IsEnd { get => true; set => _ = true; }
-        public bool IsObstacle { get => false; set => _ = false; }
-        public bool IsStart { get => true; set => _ = true; }
-        public bool IsVisited { get => false; set => _ = false; }
-        public int Cost { get => 0; set => _ = 0; }
-        public IList<IVertex> Neighbours { get => new List<IVertex>(); set => _ = new List<IVertex>(); }
-        public IVertex ParentVertex { get => Instance; set => _ = Instance; }
-        public double AccumulatedCost { get => double.PositiveInfinity; set => _ = double.PositiveInfinity; }
-        public Position Position { get => new Position(0,0); set => _ = new Position(0, 0); }
+        public bool IsEnd { get => true; set => _ = value; }
+        public bool IsObstacle { get => false; set => _ = value; }
+        public bool IsStart { get => true; set => _ = value; }
+        public bool IsVisited { get => false; set => _ = value; }
+        public int Cost { get => 0; set => _ = value; }
+        public IList<IVertex> Neighbours { get => new List<IVertex>(); set => _ = value; }
+        public IVertex ParentVertex { get => Instance; set => _ = value; }
+        public double AccumulatedCost { get => double.PositiveInfinity; set => _ = value; }
+        public Position Position { get => new Position(0,0); set => _ = value; }
         public VertexDto Dto => new VertexDto(this);
         public void MarkAsEnd() { }
         public void MarkAsObstacle() { }
