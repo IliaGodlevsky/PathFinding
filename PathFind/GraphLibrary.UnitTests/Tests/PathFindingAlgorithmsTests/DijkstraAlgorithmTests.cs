@@ -1,4 +1,5 @@
 ﻿using System.Linq;
+using GraphLibrary.Coordinates;
 using GraphLibrary.Extensions.CustomTypeExtensions;
 using GraphLibrary.GraphCreating;
 using GraphLibrary.Graphs;

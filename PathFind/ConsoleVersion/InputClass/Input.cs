@@ -1,4 +1,5 @@
 ﻿using ConsoleVersion.Enums;
+using GraphLibrary.Coordinates;
 using GraphLibrary.Vertex.Interface;
 using System;
 using System.Drawing;

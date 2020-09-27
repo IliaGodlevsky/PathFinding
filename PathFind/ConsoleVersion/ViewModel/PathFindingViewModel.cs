@@ -10,6 +10,7 @@ using System.Threading;
 using System.Linq;
 using GraphLibrary.PauseMaking;
 using ConsoleVersion.Model.Vertex;
+using GraphLibrary.Coordinates;
 
 namespace ConsoleVersion.ViewModel
 {

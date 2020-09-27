@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using GraphLibrary.Coordinates;
 using GraphLibrary.DTO;
 using GraphLibrary.Extensions.CustomTypeExtensions;
 using GraphLibrary.Extensions.SystemTypeExtensions;

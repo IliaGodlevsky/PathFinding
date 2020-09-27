@@ -62,6 +62,7 @@
     <Compile Include="Graphs\Interface\IGraph.cs" />
     <Compile Include="Graphs\NullGraph.cs" />
     <Compile Include="PauseMaking\Interface\IPauser.cs" />
+    <Compile Include="Coordinates\Position.cs" />
     <Compile Include="ValueRanges\Range.cs" />
     <Compile Include="ValueRanges\ValueRange.cs" />
     <Compile Include="DistanceCalculating\DistanceCalculator.cs" />
