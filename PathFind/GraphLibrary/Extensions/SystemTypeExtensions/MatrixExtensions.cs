@@ -16,7 +16,6 @@ namespace GraphLibrary.Extensions.SystemTypeExtensions
         {
             if (arr?.Width() == 0)
                 return 0;
-
             return arr.Length / arr.Width();
         }
 
