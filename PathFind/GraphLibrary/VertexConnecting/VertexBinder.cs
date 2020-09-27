@@ -49,8 +49,8 @@ namespace GraphLibrary.VertexConnecting
         /// <summary>
         /// Connects neighbours with its vertex
         /// </summary>
-        /// <param name="graph"></param>
-        /// <param name="vertex"></param>
+        /// <param name="graph">graph where vertex belongs</param>
+        /// <param name="vertex">vertex that must be connected with its neighbours</param>
         public static void SetNeighbours(IGraph graph, IVertex vertex)
         {
             if (vertex.IsObstacle)
