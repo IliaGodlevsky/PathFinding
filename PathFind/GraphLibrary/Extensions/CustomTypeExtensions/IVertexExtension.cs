@@ -9,7 +9,7 @@ namespace GraphLibrary.Extensions.CustomTypeExtensions
 {
     public static class IVertexExtension
     {
-        public static IEnumerable<IVertex>GetPathToStartVertex(this IVertex vertex)
+        public static IEnumerable<IVertex> GetPathToStartVertex(this IVertex vertex)
         {
             if (vertex.IsEnd && vertex.IsVisited)
             {
