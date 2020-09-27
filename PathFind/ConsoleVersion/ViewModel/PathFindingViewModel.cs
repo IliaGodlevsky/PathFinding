@@ -1,7 +1,6 @@
 ﻿using ConsoleVersion.InputClass;
 using System;
 using GraphLibrary.Enums;
-using GraphLibrary.Vertex.Interface;
 using GraphLibrary.ViewModel.Interface;
 using GraphLibrary.ViewModel;
 using GraphLibrary.Extensions.CustomTypeExtensions;
