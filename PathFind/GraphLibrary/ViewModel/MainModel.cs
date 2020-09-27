@@ -38,7 +38,7 @@ namespace GraphLibrary.ViewModel
 
         public virtual void SaveGraph()
         {
-            Saver.SaveGraph(Graph, GetSavingPath());
+            Saver.SaveInFile(Graph, GetSavingPath());
         }
 
         public virtual void LoadGraph()

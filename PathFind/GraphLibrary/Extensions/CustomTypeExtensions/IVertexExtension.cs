@@ -68,8 +68,9 @@ namespace GraphLibrary.Extensions.CustomTypeExtensions
             return vertex;
         }
 
-        private static bool IsSuitableProperty(PropertyInfo first, PropertyInfo second) => 
-            first.Name == second.Name
-            && first.PropertyType == second.PropertyType;
+        private static bool IsSuitableProperty(PropertyInfo first, PropertyInfo second)
+        {
+            return first.Name == second.Name && first.PropertyType == second.PropertyType;
+        }
     }
 }

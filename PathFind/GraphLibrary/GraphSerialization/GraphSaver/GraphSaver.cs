@@ -13,15 +13,12 @@ namespace GraphLibrary.GraphSerialization.GraphSaver
     {
         public event Action<string> OnBadSave;
 
-        public void SaveGraph(IGraph graph, string path)
+        public void SaveGraph(IGraph graph, Stream stream)
         {
             var formatter = new BinaryFormatter();
             try
             {
-                using (var stream = new FileStream(path, FileMode.Create))
-                {
-                    formatter.Serialize(stream, graph.VerticesDto);
-                }
+                formatter.Serialize(stream, graph.VerticesDto);               
             }
             catch (Exception ex)
             {

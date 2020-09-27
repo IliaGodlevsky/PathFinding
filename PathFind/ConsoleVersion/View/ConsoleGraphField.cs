@@ -117,8 +117,6 @@ namespace ConsoleVersion.View
             }
         }
 
-
-
         private void ShowVertex(ConsoleVertex vertex)
         {
             Console.Write(vertex.Cost + bigSpace, vertex.Colour);

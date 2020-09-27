@@ -7,6 +7,9 @@ using GraphLibrary.Vertex.Interface;
 
 namespace GraphLibrary.AlgorithmCreating
 {
+    /// <summary>
+    /// A state machine, creates pathfinding algorithm according to enum
+    /// </summary>
     public static class AlgorithmFactory
     {
         private static double CastAndDistanceGreedyFunction(
