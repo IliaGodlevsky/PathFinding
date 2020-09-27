@@ -1,5 +1,4 @@
 ﻿using GraphLibrary.Coordinates;
-using GraphLibrary.Vertex.Interface;
 using System;
 using System.Linq;
 using System.Threading.Tasks;
@@ -40,9 +39,21 @@ namespace GraphLibrary.Extensions.SystemTypeExtensions
                         arr[x, y] = method(arr[x, y]);            
         }
 
+        /// <summary>
+        /// Apply each method of methods to each element in array
+        /// </summary>
+        /// <typeparam name="TSource"></typeparam>
+        /// <param name="arr"></param>
+        /// <param name="methods"></param>
         public static void Apply<TSource>(this TSource[,] arr, params Func<TSource, TSource>[] methods) 
             => Apply(arr, 0, arr.Width(), methods);
 
+        /// <summary>
+        /// Uses all processors to parallelize function execution
+        /// </summary>
+        /// <typeparam name="TSource"></typeparam>
+        /// <param name="arr"></param>
+        /// <param name="methods">array of methods to apply to each element in array</param>
         public static async void ApplyParallel<TSource>(this TSource[,] arr,
             params Func<TSource, TSource>[] methods)
         {
@@ -65,7 +76,6 @@ namespace GraphLibrary.Extensions.SystemTypeExtensions
 
         public static Position GetIndices<TSource>(this TSource[,] arr, TSource item)
         {
-            // an ancient math magic of Jedi. It works, believe me))
             var index = Array.IndexOf(arr.Cast<TSource>().ToArray(), item);
             var yCoordinate = (arr.Height() + index) % arr.Height();
             var xCoordinate = (int)Math.Ceiling((decimal)(index - yCoordinate) / arr.Height());
