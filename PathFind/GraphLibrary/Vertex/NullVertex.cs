@@ -21,42 +21,18 @@ namespace GraphLibrary.Vertex
 
         private NullVertex()
         {
-            isEnd = true;
-            isObstacle = false;
-            isStart = true;
-            isVisited = false;
-            cost = 0;
-            neighbours = new List<IVertex>();
-            accumulatedCost = double.PositiveInfinity;
-            position = new Position(0, 0);
+
         }
 
-        private bool isEnd;
-        public bool IsEnd { get => isEnd; set => isEnd = true; }
-
-        private bool isObstacle;
-        public bool IsObstacle { get => isObstacle; set => isObstacle = false; }
-
-        private bool isStart;
-        public bool IsStart { get => isStart; set => isStart = true; }
-
-        private bool isVisited;
-        public bool IsVisited { get => isVisited; set => isVisited = false; }
-
-        private int cost;
-        public int Cost { get => cost; set => cost = 0; }
-
-        private IList<IVertex> neighbours;
-        public IList<IVertex> Neighbours { get => neighbours; set => neighbours = new List<IVertex>(); }
-
-        private IVertex parentVertex;
-        public IVertex ParentVertex { get => Instance; set => parentVertex = Instance; }
-
-        private double accumulatedCost;
-        public double AccumulatedCost { get => accumulatedCost; set => accumulatedCost = double.PositiveInfinity; }
-
-        private Position position;
-        public Position Position { get => position; set => position = new Position(0, 0); }
+        public bool IsEnd { get => true; set => _ = true; }
+        public bool IsObstacle { get => false; set => _ = false; }
+        public bool IsStart { get => true; set => _ = true; }
+        public bool IsVisited { get => false; set => _ = false; }
+        public int Cost { get => 0; set => _ = 0; }
+        public IList<IVertex> Neighbours { get => new List<IVertex>(); set => _ = new List<IVertex>(); }
+        public IVertex ParentVertex { get => Instance; set => _ = Instance; }
+        public double AccumulatedCost { get => double.PositiveInfinity; set => _ = double.PositiveInfinity; }
+        public Position Position { get => new Position(0,0); set => _ = new Position(0, 0); }
         public VertexDto Dto => new VertexDto(this);
         public void MarkAsEnd() { }
         public void MarkAsObstacle() { }
