@@ -37,7 +37,7 @@ namespace WpfVersion.ViewModel
         }
 
         private string statistics;
-        public override string Statistics 
+        public override string PathFindingStatistics 
         { 
             get{return statistics;}
             set{statistics = value; OnPropertyChanged();}

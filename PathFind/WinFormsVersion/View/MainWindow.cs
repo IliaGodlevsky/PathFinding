@@ -30,7 +30,7 @@ namespace WinFormsVersion.Forms
             };
 
             var bindingStatistics = new Binding(nameof(statistics.Text), 
-                mainModel, nameof(mainModel.Statistics));
+                mainModel, nameof(mainModel.PathFindingStatistics));
             statistics.DataBindings.Add(bindingStatistics);
 
             var bindingParametres = new Binding(nameof(statistics.Text), 

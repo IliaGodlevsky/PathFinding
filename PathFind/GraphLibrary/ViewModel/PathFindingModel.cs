@@ -30,7 +30,7 @@ namespace GraphLibrary.ViewModel
             PrepareAlgorithm();
             pathAlgorithm.FindPath();
             var path = pathAlgorithm.GetPath();
-            mainViewModel.Statistics +=
+            mainViewModel.PathFindingStatistics +=
                 string.Format("   " + pathFindStatisticsFormat,
                 path.Count(),
                 path.Sum(vertex => vertex.Cost),
@@ -44,15 +44,14 @@ namespace GraphLibrary.ViewModel
             {
                 if (vertex.IsSimpleVertex())
                     vertex.MarkAsVisited();
-
-                mainViewModel.Statistics = timer.GetTimeInformation(LibraryResources.TimerInfoFormat) +
+                mainViewModel.PathFindingStatistics = timer.GetTimeInformation(LibraryResources.TimerInfoFormat) +
                 string.Format("   " + pathFindStatisticsFormat, 0, 0, graph.NumberOfVisitedVertices);
             };
             pathAlgorithm.OnStarted += (sender, eventArgs) => { timer.Start(); };
             pathAlgorithm.OnFinished += (sender, eventArgs) =>
             {
                 timer.Stop();
-                mainViewModel.Statistics = timer.GetTimeInformation(LibraryResources.TimerInfoFormat);
+                mainViewModel.PathFindingStatistics = timer.GetTimeInformation(LibraryResources.TimerInfoFormat);
                 pathAlgorithm.GetPath().DrawPath();
             };
             pathAlgorithm.OnEnqueued += vertex =>

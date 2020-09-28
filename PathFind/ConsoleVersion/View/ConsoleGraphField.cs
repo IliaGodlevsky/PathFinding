@@ -57,7 +57,7 @@ namespace ConsoleVersion.View
             get
             {
                 var abscissa = new StringBuilder(largeSpace);
-                for (int i = 0; i < Width; i++)
+                for (var i = 0; i < Width; i++)
                 {
                     var offset = !IsOffsetIndex(i) ? bigSpace : space;
                     abscissa.Append(i + offset);
@@ -72,7 +72,7 @@ namespace ConsoleVersion.View
             get
             {
                 var frame = new StringBuilder(largeSpace);
-                for (int i = 0; i < Width; i++)
+                for (var i = 0; i < Width; i++)
                     frame.Append(horizontalFrame);
                 return frame.ToString();
             }
@@ -104,10 +104,10 @@ namespace ConsoleVersion.View
 
         private void ShowGraph()
         {
-            for (int currentHeight = 0; currentHeight < Height; currentHeight++)
+            for (var currentHeight = 0; currentHeight < Height; currentHeight++)
             {
                 Console.Write(DrawOrdinate(currentHeight, TableSide.Left));
-                for (int currentWidth = 0; currentWidth < Width; currentWidth++)
+                for (var currentWidth = 0; currentWidth < Width; currentWidth++)
                 {
                     var currentVertexIndex = currentWidth * Height + currentHeight;
                     ShowVertex(vertices[currentVertexIndex]);

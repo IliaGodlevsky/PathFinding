@@ -43,7 +43,7 @@ namespace ConsoleVersion.View
         {           
             var menu = new StringBuilder();
             var enums = Enum.GetValues(typeof(MenuOption)).Cast<MenuOption>().ToList();
-            for (int menuItem = 0; menuItem < enums.Count; menuItem++)
+            for (var menuItem = 0; menuItem < enums.Count; menuItem++)
             {
                 menu.Append(menuItem.IsEven() ? newLine : largeSpace + tab);
                 menu.AppendFormat(ConsoleVersionResources.MenuFormat, menuItem, enums[menuItem].GetDescription());

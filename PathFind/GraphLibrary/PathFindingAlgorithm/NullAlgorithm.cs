@@ -13,9 +13,12 @@ namespace GraphLibrary.PathFindingAlgorithm
         private NullAlgorithm()
         {
             Graph = NullGraph.Instance;
-            OnStarted = null;
-            OnVertexVisited = null;
-        }
+            OnStarted = delegate { };
+            OnVertexVisited = delegate { };
+            OnFinished = delegate { };
+            OnEnqueued = delegate { };
+
+    }
 
         public static NullAlgorithm Instance
         {
@@ -36,10 +39,10 @@ namespace GraphLibrary.PathFindingAlgorithm
 
         public void FindPath()
         {
-            OnStarted?.Invoke(this, new AlgorithmEventArgs());
-            OnVertexVisited?.Invoke(NullVertex.Instance);
-            OnFinished?.Invoke(this, new AlgorithmEventArgs());
-            OnEnqueued?.Invoke(NullVertex.Instance);
+            OnStarted.Invoke(this, new AlgorithmEventArgs());
+            OnVertexVisited.Invoke(NullVertex.Instance);
+            OnFinished.Invoke(this, new AlgorithmEventArgs());
+            OnEnqueued.Invoke(NullVertex.Instance);
         }
 
         private static NullAlgorithm instance = null;

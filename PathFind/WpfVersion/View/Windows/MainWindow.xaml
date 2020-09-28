@@ -43,7 +43,7 @@
             </Button>
         </ToolBar>
         <StatusBar Grid.Row="3">
-            <TextBlock Text = "{Binding Statistics}"></TextBlock>
+            <TextBlock Text = "{Binding PathFindingStatistics}"></TextBlock>
         </StatusBar>
         <StatusBar Grid.Row="1">
             <TextBlock Text="{Binding GraphParametres}"></TextBlock>

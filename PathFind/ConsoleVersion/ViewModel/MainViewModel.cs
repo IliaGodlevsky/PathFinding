@@ -70,7 +70,7 @@ namespace ConsoleVersion.ViewModel
             Console.ForegroundColor = Color.White;
             Console.WriteLine(GraphParametres);
             (GraphField as ConsoleGraphField)?.ShowGraphWithFrames();
-            Console.WriteLine(Statistics);
+            Console.WriteLine(PathFindingStatistics);
         }
     }
 }

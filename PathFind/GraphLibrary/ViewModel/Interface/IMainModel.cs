@@ -10,8 +10,8 @@ namespace GraphLibrary.ViewModel.Interface
         string GraphParametresFormat { get; }
         string GraphParametres { get; set; }
         IGraphField GraphField { get; set; }
-        string Statistics { get; set; }
-        void SetGraph(IGraph graph);
+        string PathFindingStatistics { get; set; }
+        void ConnectNewGraph(IGraph graph);
         void CreateNewGraph();
         IGraph Graph { get; }
         void SaveGraph();

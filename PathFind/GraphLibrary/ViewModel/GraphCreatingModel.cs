@@ -21,9 +21,9 @@ namespace GraphLibrary.ViewModel
 
         public virtual void CreateGraph(Func<IVertex> vertexFactory)
         {
-            var factory = new GraphFactory(new GraphParametres(Width, Height, ObstaclePercent));
-            graph = factory.CreateGraph(vertexFactory);
-            model.SetGraph(graph);
+            var graphfactory = new GraphFactory(new GraphParametres(Width, Height, ObstaclePercent));
+            graph = graphfactory.CreateGraph(vertexFactory);
+            model.ConnectNewGraph(graph);
         }
 
         protected IMainModel model;

@@ -47,7 +47,7 @@ namespace GraphLibrary.EventHolder
                 MakeObstacle(vertex);
         }
 
-        public void ChargeGraph() => SetEventsToVertex(ChargeVertex);
+        public void SubscribeVertices() => SetEventsToVertex(ChargeVertex);
 
         public virtual void ChooseExtremeVertices(object sender, EventArgs e)
         {
