@@ -41,7 +41,6 @@ namespace GraphLibrary.EventHolder
         public virtual void ReversePolarity(object sender, EventArgs e)
         {
             var vertex = sender as IVertex;
-
             if (vertex.IsObstacle)
                 MakeVertex(vertex);
             else
