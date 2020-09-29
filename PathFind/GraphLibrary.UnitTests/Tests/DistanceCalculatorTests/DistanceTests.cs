@@ -1,4 +1,5 @@
 ﻿using System;
+using GraphLibrary.Coordinates;
 using GraphLibrary.DistanceCalculating;
 using GraphLibrary.UnitTests.Classes;
 using GraphLibrary.Vertex.Interface;

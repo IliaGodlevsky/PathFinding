@@ -1,7 +1,7 @@
-﻿using GraphLibrary.GraphCreating;
+﻿using GraphLibrary.Coordinates;
+using GraphLibrary.GraphCreating;
 using GraphLibrary.Graphs.Interface;
 using GraphLibrary.UnitTests.Classes;
-using GraphLibrary.Vertex.Interface;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace GraphLibrary.UnitTests.Tests.GraphTests
