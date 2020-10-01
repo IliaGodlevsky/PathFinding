@@ -88,13 +88,8 @@ namespace GraphLibrary.PathFindingAlgorithm
         protected virtual IVertex GetChippestUnvisitedVertex()
         {
             verticesProcessQueue.RemoveAll(vertex => vertex.IsVisited);
-            verticesProcessQueue.Sort(CompareByAccumulatedCost);
+            verticesProcessQueue.Sort((v1, v2) => v1.AccumulatedCost.CompareTo(v2.AccumulatedCost));
             return verticesProcessQueue.FirstOrNullVertex();
-        }
-
-        private int CompareByAccumulatedCost(IVertex v1, IVertex v2)
-        {
-            return v1.AccumulatedCost.CompareTo(v2.AccumulatedCost);
         }
 
         protected List<IVertex> verticesProcessQueue;
