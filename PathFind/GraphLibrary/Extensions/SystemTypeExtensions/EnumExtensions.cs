@@ -21,10 +21,9 @@ namespace GraphLibrary.Extensions.SystemTypeExtensions
 
         public static int GetValue(this Enum enumValue)
         {
-            var name = enumValue.ToString();
             var names = Enum.GetNames(enumValue.GetType()).Cast<string>().ToList();
-            var enumValueIndex = names.IndexOf(name);
-            return Enum.GetValues(enumValue.GetType()).Cast<byte>().ElementAt(enumValueIndex);
+            var enumValueIndex = names.IndexOf(enumValue.ToString());
+            return Convert.ToInt32(Enum.GetValues(enumValue.GetType()).GetValue(enumValueIndex));
         }
     }
 }
