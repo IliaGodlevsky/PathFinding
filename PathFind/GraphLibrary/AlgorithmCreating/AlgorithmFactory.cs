@@ -12,7 +12,7 @@ namespace GraphLibrary.AlgorithmCreating
     /// </summary>
     public static class AlgorithmFactory
     {
-        private static double CastAndDistanceGreedyFunction(
+        private static double CostAndDistanceGreedyFunction(
             IVertex vertex, IVertex destination)
         {
             return vertex.Cost + DistanceCalculator.GetChebyshevDistance(vertex, destination);
@@ -81,7 +81,7 @@ namespace GraphLibrary.AlgorithmCreating
                     return new GreedyAlgorithm()
                     {
                         Graph = graph,
-                        GreedyFunction = vertex => CastAndDistanceGreedyFunction(vertex, graph.End)
+                        GreedyFunction = vertex => CostAndDistanceGreedyFunction(vertex, graph.End)
                     };
 
                 default: return NullAlgorithm.Instance;

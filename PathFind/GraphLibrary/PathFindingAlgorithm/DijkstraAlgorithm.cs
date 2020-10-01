@@ -83,11 +83,11 @@ namespace GraphLibrary.PathFindingAlgorithm
                 return neighbour;
             });
             verticesProcessQueue = verticesProcessQueue.DistinctBy(vert => vert.Position).ToList();
+            verticesProcessQueue.RemoveAll(vert => vert.IsVisited);
         }
 
         protected virtual IVertex GetChippestUnvisitedVertex()
-        {
-            verticesProcessQueue.RemoveAll(vertex => vertex.IsVisited);
+        {           
             verticesProcessQueue.Sort((v1, v2) => v1.AccumulatedCost.CompareTo(v2.AccumulatedCost));
             return verticesProcessQueue.FirstOrNullVertex();
         }
