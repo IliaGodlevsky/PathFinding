@@ -32,7 +32,7 @@ namespace ConsoleVersion.View
             for (var listItem = 0; listItem < enums.Count(); listItem++)
             {
                 algorithmList.AppendFormatLine(ConsoleVersionResources.MenuFormat,
-                      listItem + 1, enums[listItem].GetDescription());
+                      enums[listItem].GetValue(), enums[listItem].GetDescription());
             }
             return algorithmList.ToString();
         }

@@ -46,7 +46,8 @@ namespace ConsoleVersion.View
             for (var menuItem = 0; menuItem < enums.Count; menuItem++)
             {
                 menu.Append(menuItem.IsEven() ? newLine : largeSpace + tab);
-                menu.AppendFormat(ConsoleVersionResources.MenuFormat, menuItem, enums[menuItem].GetDescription());
+                menu.AppendFormat(ConsoleVersionResources.MenuFormat,
+                    enums[menuItem].GetValue(), enums[menuItem].GetDescription());
             }
             return menu.ToString();
         }
