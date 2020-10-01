@@ -9,7 +9,7 @@ namespace GraphLibrary.Extensions.SystemTypeExtensions
         public static string GetDescription(this Enum enumValue)
         {
             var description = enumValue.ToString();
-            var fieldInfo = enumValue.GetType().GetField(enumValue.ToString());
+            var fieldInfo = enumValue.GetType().GetField(description);
             if (fieldInfo != null)
             {
                 var attrs = fieldInfo.GetCustomAttributes(typeof(DescriptionAttribute), true);
