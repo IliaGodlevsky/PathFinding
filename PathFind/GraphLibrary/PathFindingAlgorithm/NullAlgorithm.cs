@@ -17,8 +17,7 @@ namespace GraphLibrary.PathFindingAlgorithm
             OnVertexVisited = delegate { };
             OnFinished = delegate { };
             OnEnqueued = delegate { };
-
-    }
+        }
 
         public static NullAlgorithm Instance
         {
