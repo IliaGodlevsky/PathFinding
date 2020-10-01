@@ -42,12 +42,10 @@ namespace ConsoleVersion.View
         private string GetMenu()
         {           
             var menu = new StringBuilder();
-            var enums = Enum.GetValues(typeof(MenuOption)).Cast<MenuOption>().ToList();
-            for (var menuItem = 0; menuItem < enums.Count; menuItem++)
+            foreach (var item in Enum.GetValues(typeof(MenuOption)).Cast<MenuOption>())
             {
-                menu.Append(menuItem.IsEven() ? newLine : largeSpace + tab);
-                menu.AppendFormat(ConsoleVersionResources.MenuFormat,
-                    enums[menuItem].GetValue(), enums[menuItem].GetDescription());
+                menu.Append(item.GetValue().IsEven() ? newLine : largeSpace + tab)
+                    .AppendFormat(ConsoleVersionResources.MenuFormat, item.GetValue(), item.GetDescription());
             }
             return menu.ToString();
         }
