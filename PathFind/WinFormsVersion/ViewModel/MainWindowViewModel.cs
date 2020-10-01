@@ -6,7 +6,6 @@ using System.Windows.Forms;
 using WinFormsVersion.Extensions;
 using WinFormsVersion.Forms;
 using WinFormsVersion.Model;
-using WinFormsVersion.Resources;
 using WinFormsVersion.View;
 using WinFormsVersion.EventHolder;
 using GraphLibrary.ViewModel;
@@ -66,7 +65,6 @@ namespace WinFormsVersion.ViewModel
 
         public MainWindowViewModel() : base()
         {
-            GraphParametresFormat = WinFormsVersionResources.ParametresFormat;
             VertexEventHolder = new WinFormsVertexEventHolder();
             graphField = new WinFormsGraphField();
             FieldFactory = new WinFormsGraphFieldFactory();

@@ -22,7 +22,6 @@ namespace GraphLibrary.ViewModel
         public virtual IGraphField GraphField { get; set; }
         public virtual IGraph Graph { get; protected set; }
         public IVertexEventHolder VertexEventHolder { get; set; }
-        public string GraphParametresFormat { get; protected set; }
         public IGraphSaver Saver { get; set; }
         public IGraphLoader Loader { get; set; }
         public GraphFieldFactory FieldFactory { get; set; }
@@ -51,7 +50,7 @@ namespace GraphLibrary.ViewModel
         {
             Graph.Refresh();
             PathFindingStatistics = string.Empty;
-            GraphParametres = Graph.GetFormattedInfo(GraphParametresFormat);
+            GraphParametres = Graph.GetFormattedInfo(LibraryResources.GraphParametresFormat);
         }
 
         public void ConnectNewGraph(IGraph graph)
@@ -60,7 +59,7 @@ namespace GraphLibrary.ViewModel
             GraphField = FieldFactory.CreateGraphField(Graph);
             VertexEventHolder.Graph = Graph;
             VertexEventHolder.SubscribeVertices();
-            GraphParametres = Graph.GetFormattedInfo(GraphParametresFormat);
+            GraphParametres = Graph.GetFormattedInfo(LibraryResources.GraphParametresFormat);
             PathFindingStatistics = string.Empty;
         }
 

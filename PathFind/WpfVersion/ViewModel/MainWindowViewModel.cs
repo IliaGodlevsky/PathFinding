@@ -3,7 +3,6 @@ using System.Runtime.CompilerServices;
 using System.Windows;
 using WpfVersion.Infrastructure;
 using WpfVersion.Model;
-using WpfVersion.Resources;
 using WpfVersion.View.Windows;
 using WpfVersion.Model.EventHolder;
 using GraphLibrary.Graphs;
@@ -67,7 +66,6 @@ namespace WpfVersion.ViewModel
         public MainWindowViewModel()
         {
             GraphField = new WpfGraphField();
-            GraphParametresFormat = WpfVersionResources.GraphParametresFormat;
             VertexEventHolder = new WpfVertexEventHolder();
             FieldFactory = new WpfGraphFieldFactory();
             DtoConverter = (dto) => new WpfVertex(dto);

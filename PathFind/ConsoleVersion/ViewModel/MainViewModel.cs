@@ -14,7 +14,6 @@ namespace ConsoleVersion.ViewModel
 
         public MainViewModel() : base()
         {            
-            GraphParametresFormat = ConsoleVersionResources.GraphParametresFormat;
             VertexEventHolder = new ConsoleVertexEventHolder();
             FieldFactory = new ConsoleGraphFieldFactory();
             DtoConverter = (dto) => new ConsoleVertex(dto);

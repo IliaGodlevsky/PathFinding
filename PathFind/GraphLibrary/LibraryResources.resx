@@ -120,6 +120,9 @@
   <data name="BadResultMsg" xml:space="preserve">
     <value>Couldn't find path</value>
   </data>
+  <data name="GraphParametresFormat" xml:space="preserve">
+    <value>Width: {0}   Height: {1}   Obstacle percent: {2} ({3}/{4})</value>
+  </data>
   <data name="StatisticsFormat" xml:space="preserve">
     <value>Steps: {0}   Path length: {1}   Visited vertices: {2}</value>
   </data>

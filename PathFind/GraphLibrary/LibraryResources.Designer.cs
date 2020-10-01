@@ -70,6 +70,15 @@ namespace GraphLibrary {
         }
         
         /// <summary>
+        ///   Ищет локализованную строку, похожую на Width: {0}   Height: {1}   Obstacle percent: {2} ({3}/{4}).
+        /// </summary>
+        internal static string GraphParametresFormat {
+            get {
+                return ResourceManager.GetString("GraphParametresFormat", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Ищет локализованную строку, похожую на Steps: {0}   Path length: {1}   Visited vertices: {2}.
         /// </summary>
         internal static string StatisticsFormat {

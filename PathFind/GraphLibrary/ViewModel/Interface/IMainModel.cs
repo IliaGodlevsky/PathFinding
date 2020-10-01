@@ -7,7 +7,6 @@ namespace GraphLibrary.ViewModel.Interface
     public interface IMainModel : IModel
     {
         IVertexEventHolder VertexEventHolder { get; set; }        
-        string GraphParametresFormat { get; }
         string GraphParametres { get; set; }
         IGraphField GraphField { get; set; }
         string PathFindingStatistics { get; set; }

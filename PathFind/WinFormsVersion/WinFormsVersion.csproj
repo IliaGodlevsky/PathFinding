@@ -78,11 +78,6 @@
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ViewModel\MainWindowViewModel.cs" />
-    <Compile Include="Resources\WinFormsVersionResources.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>WinFormsVersionResources.resx</DependentUpon>
-    </Compile>
     <EmbeddedResource Include="View\GraphCreatingWIndow.resx">
       <DependentUpon>GraphCreatingWIndow.cs</DependentUpon>
     </EmbeddedResource>
@@ -101,10 +96,6 @@
     </Compile>
     <EmbeddedResource Include="View\PathFindingWindow.resx">
       <DependentUpon>PathFindingWindow.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Resources\WinFormsVersionResources.resx">
-      <Generator>ResXFileCodeGenerator</Generator>
-      <LastGenOutput>WinFormsVersionResources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
