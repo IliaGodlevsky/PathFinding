@@ -39,8 +39,8 @@ namespace GraphLibrary.PathFindingAlgorithm
         {
             IVertex next = NullVertex.Instance;
             verticesProcessQueue.Sort(CompareByHeuristic);
-            deletedVertices.AddRange(verticesProcessQueue.Take(UpperRange));
-            verticesProcessQueue.RemoveRange(0, UpperRange);
+            deletedVertices.AddRange(verticesProcessQueue.Take(NumberOfVerticesToDelete));
+            verticesProcessQueue.RemoveRange(0, NumberOfVerticesToDelete);
             next = base.GetChippestUnvisitedVertex();
             if (ReferenceEquals(next, NullVertex.Instance))
                 verticesProcessQueue = deletedVertices;
@@ -52,7 +52,8 @@ namespace GraphLibrary.PathFindingAlgorithm
             return HeuristicFunction(vertex2).CompareTo(HeuristicFunction(vertex1));
         }
 
-        private int UpperRange => verticesProcessQueue.Count * PersentOfFurthestToDelete / 100;
+        private int NumberOfVerticesToDelete => 
+            verticesProcessQueue.Count * PersentOfFurthestToDelete / 100;
 
         private ValueRange percentRange;
         private List<IVertex> deletedVertices;
