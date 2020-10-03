@@ -26,7 +26,7 @@ namespace WpfVersion.Model.Vertex
             StartVertexColor = new SolidColorBrush(Colors.Green);
             EndVertexColor = new SolidColorBrush(Colors.Red);
             EnqueuedVertexColor = new SolidColorBrush(Colors.Brown);
-    }
+        }
 
         public WpfVertex() : base()
         {
