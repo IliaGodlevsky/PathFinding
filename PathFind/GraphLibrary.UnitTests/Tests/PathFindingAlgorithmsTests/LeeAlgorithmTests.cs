@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Linq;
+using System.Threading;
 using GraphLibrary.Coordinates;
 using GraphLibrary.Extensions.CustomTypeExtensions;
 using GraphLibrary.GraphCreating;
@@ -33,6 +34,7 @@ namespace GraphLibrary.UnitTests.Tests.PathFindingAlgorithmsTests
             var parametres = new GraphParametres(width: 10, height: 10, obstaclePercent: 0);
             var factory = new GraphFactory(parametres);
             var graph = factory.CreateGraph(() => new TestVertex());
+            Thread.Sleep(millisecondsTimeout: 230);
             graph.Start = graph[startVertexPosition];
             graph.End = graph[endVertexPosition];
             var leeAlgorithm = new LeeAlgorithm() { Graph = graph };
