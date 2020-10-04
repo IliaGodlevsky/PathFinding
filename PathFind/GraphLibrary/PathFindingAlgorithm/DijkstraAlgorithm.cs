@@ -82,7 +82,7 @@ namespace GraphLibrary.PathFindingAlgorithm
                 verticesProcessQueue.Add(neighbour);
                 return neighbour;
             });
-            verticesProcessQueue = verticesProcessQueue.DistinctBy(vert => vert.Position).ToList();           
+            verticesProcessQueue = verticesProcessQueue.DistinctBy(vert => vert.Position).ToList();
         }
 
         protected virtual IVertex GetChippestUnvisitedVertex()
