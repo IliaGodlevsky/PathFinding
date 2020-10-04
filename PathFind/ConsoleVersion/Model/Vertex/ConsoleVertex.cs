@@ -85,7 +85,7 @@ namespace ConsoleVersion.Model.Vertex
 
         public void MarkAsEnqueued()
         {
-            Colour = Color.FromKnownColor(KnownColor.Aquamarine);
+            Colour = Color.FromKnownColor(KnownColor.Orange);
         }
     }
 }
