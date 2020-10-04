@@ -55,7 +55,7 @@ namespace GraphLibrary.PathFindingAlgorithm
         private int VerticesCountToDelete => 
             verticesProcessQueue.Count * PersentOfFurthestToDelete / 100;
 
-        private ValueRange percentRange;
-        private List<IVertex> deletedVertices;
+        private readonly ValueRange percentRange;
+        private readonly List<IVertex> deletedVertices;
     }
 }
