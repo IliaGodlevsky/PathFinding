@@ -16,7 +16,7 @@ namespace GraphLibrary.PathFindingAlgorithm
         /// <summary>
         /// Percent in percent points, f.e. 5, 10, 15
         /// </summary>
-        public int PersentOfFurthestToDelete
+        private int PersentOfFurthestToDelete
         {
             get => persentOfFurthestToDelete;
             set
@@ -45,11 +45,6 @@ namespace GraphLibrary.PathFindingAlgorithm
             if (ReferenceEquals(next, NullVertex.Instance))
                 verticesProcessQueue = deletedVertices;
             return base.GetChippestUnvisitedVertex();
-        }
-
-        private int CompareByHeuristic(IVertex vertex1, IVertex vertex2)
-        {
-            return HeuristicFunction(vertex2).CompareTo(HeuristicFunction(vertex1));
         }
 
         private int VerticesCountToDelete => 
