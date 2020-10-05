@@ -10,8 +10,10 @@ namespace GraphLibrary.Extensions.CustomTypeExtensions
         public static void SaveInFile(this IGraphSaver saver, IGraph graph, string path)
         {
             if (!string.IsNullOrEmpty(path))
+            {
                 using (var stream = new FileStream(path, FileMode.OpenOrCreate))
                     saver.SaveGraph(graph, stream);
+            }
         }
     }
 }
