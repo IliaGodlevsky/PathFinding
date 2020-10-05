@@ -38,7 +38,7 @@ namespace GraphLibrary.PathFindingAlgorithm
         protected override IVertex GetChippestUnvisitedVertex()
         {
             IVertex next = NullVertex.Instance;
-            verticesProcessQueue.Sort(CompareByHeuristic);
+            verticesProcessQueue.Sort((v1, v2) => HeuristicFunction(v2).CompareTo(HeuristicFunction(v1)));
             deletedVertices.AddRange(verticesProcessQueue.Take(VerticesCountToDelete));
             verticesProcessQueue.RemoveRange(0, VerticesCountToDelete);
             next = base.GetChippestUnvisitedVertex();
