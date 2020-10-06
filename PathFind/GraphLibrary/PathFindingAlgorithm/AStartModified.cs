@@ -16,7 +16,7 @@ namespace GraphLibrary.PathFindingAlgorithm
         /// <summary>
         /// Percent in percent points, f.e. 5, 10, 15
         /// </summary>
-        private int PersentOfFurthestToDelete
+        private int PersentOfFurthestVerticesToDelete
         {
             get => persentOfFurthestVerticesToDelete;
             set
@@ -32,7 +32,7 @@ namespace GraphLibrary.PathFindingAlgorithm
         {
             deletedVertices = new List<IVertex>();
             percentRange = new ValueRange(99, 0);
-            PersentOfFurthestToDelete = 5;
+            PersentOfFurthestVerticesToDelete = 5;
         }
 
         protected override IVertex GetChippestUnvisitedVertex()
@@ -48,7 +48,7 @@ namespace GraphLibrary.PathFindingAlgorithm
         }
 
         private int VerticesCountToDelete => 
-            verticesProcessQueue.Count * PersentOfFurthestToDelete / 100;
+            verticesProcessQueue.Count * PersentOfFurthestVerticesToDelete / 100;
 
         private readonly ValueRange percentRange;
         private readonly List<IVertex> deletedVertices;
