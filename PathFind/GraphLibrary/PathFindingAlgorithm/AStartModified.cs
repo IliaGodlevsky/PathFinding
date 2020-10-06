@@ -12,19 +12,19 @@ namespace GraphLibrary.PathFindingAlgorithm
     /// </summary>
     public class AStarModified : AStarAlgorithm
     {
-        private int persentOfFurthestToDelete;
+        private int persentOfFurthestVerticesToDelete;
         /// <summary>
         /// Percent in percent points, f.e. 5, 10, 15
         /// </summary>
         private int PersentOfFurthestToDelete
         {
-            get => persentOfFurthestToDelete;
+            get => persentOfFurthestVerticesToDelete;
             set
             {
-                persentOfFurthestToDelete = value;
-                if (!percentRange.IsInBounds(persentOfFurthestToDelete))
-                    persentOfFurthestToDelete = 
-                        percentRange.ReturnInBounds(persentOfFurthestToDelete);
+                persentOfFurthestVerticesToDelete = value;
+                if (!percentRange.IsInBounds(persentOfFurthestVerticesToDelete))
+                    persentOfFurthestVerticesToDelete = 
+                        percentRange.ReturnInBounds(persentOfFurthestVerticesToDelete);
             }
         }
 
