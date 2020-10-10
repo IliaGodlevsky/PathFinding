@@ -18,11 +18,11 @@ namespace GraphLibrary.UnitTests.Tests.AlgorithmFactoryTesting
             Algorithms aStarModified = Algorithms.AStarModified;
             Algorithms greedy = Algorithms.ValueGreedyAlgorithm;
 
-            var leeAlgo = AlgorithmFactory.CreateAlgorithm(lee, NullGraph.Instance);
-            var dikstraAlgo = AlgorithmFactory.CreateAlgorithm(dijkstra, NullGraph.Instance);
-            var aStarAlgo = AlgorithmFactory.CreateAlgorithm(aStar, NullGraph.Instance);
-            var aStarModifiedAlgo = AlgorithmFactory.CreateAlgorithm(aStarModified, NullGraph.Instance);
-            var greedyAlgo = AlgorithmFactory.CreateAlgorithm(greedy, NullGraph.Instance);
+            var leeAlgo = AlgorithmFactory.CreateAlgorithm(lee, null);
+            var dikstraAlgo = AlgorithmFactory.CreateAlgorithm(dijkstra, null);
+            var aStarAlgo = AlgorithmFactory.CreateAlgorithm(aStar, null);
+            var aStarModifiedAlgo = AlgorithmFactory.CreateAlgorithm(aStarModified, null);
+            var greedyAlgo = AlgorithmFactory.CreateAlgorithm(greedy, null);
 
             Assert.IsInstanceOfType(leeAlgo, typeof(LeeAlgorithm));
             Assert.IsInstanceOfType(dikstraAlgo, typeof(DijkstraAlgorithm));

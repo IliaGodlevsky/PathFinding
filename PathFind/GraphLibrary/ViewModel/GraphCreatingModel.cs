@@ -16,7 +16,6 @@ namespace GraphLibrary.ViewModel
         public GraphCreatingModel(IMainModel model)
         {
             this.model = model;
-            graph = NullGraph.Instance;
         }
 
         public virtual void CreateGraph(Func<IVertex> vertexFactory)

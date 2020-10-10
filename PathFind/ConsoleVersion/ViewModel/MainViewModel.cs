@@ -6,6 +6,7 @@ using ConsoleVersion.Model.EventHolder;
 using ConsoleVersion.Model.Vertex;
 using System.Drawing;
 using Console = Colorful.Console;
+using GraphLibrary.Graphs;
 
 namespace ConsoleVersion.ViewModel
 {
@@ -35,15 +36,15 @@ namespace ConsoleVersion.ViewModel
 
         public void Reverse()
         {
-            var point = Input.InputPoint(Graph.Width, Graph.Height);
+            var point = Input.InputPoint((Graph as Graph).Width, (Graph as Graph).Height);
             (Graph[point] as ConsoleVertex).ChangeRole();
         }
 
         public void ChangeVertexValue()
         {
-            var point = Input.InputPoint(Graph.Width, Graph.Height);
+            var point = Input.InputPoint((Graph as Graph).Width, (Graph as Graph).Height);
             while (Graph[point].IsObstacle)
-                point = Input.InputPoint(Graph.Width, Graph.Height);
+                point = Input.InputPoint((Graph as Graph).Width, (Graph as Graph).Height);
             (Graph[point] as ConsoleVertex).ChangeCost();
         }
 

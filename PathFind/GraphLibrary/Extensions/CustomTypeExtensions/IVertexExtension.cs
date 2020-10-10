@@ -1,5 +1,4 @@
 ﻿using GraphLibrary.DTO;
-using GraphLibrary.Vertex;
 using GraphLibrary.Vertex.Interface;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,16 +13,22 @@ namespace GraphLibrary.Extensions.CustomTypeExtensions
             if (vertex.IsEnd && vertex.IsVisited)
             {
                 var temp = vertex;
-                while (!temp.IsStart && !ReferenceEquals(vertex, NullVertex.Instance))
+                while (!temp.IsStart && vertex is object)
                 {
                     yield return temp;
                     temp = temp.ParentVertex;
                 }
             }
         }
-        public static bool IsValidToBeRange(this IVertex vertex) => vertex.IsSimpleVertex() && !vertex.IsIsolated();
+        public static bool IsValidToBeRange(this IVertex vertex)
+        {
+            return vertex.IsSimpleVertex() && !vertex.IsIsolated();
+        }
 
-        public static bool IsIsolated(this IVertex vertex) => vertex.IsObstacle || !vertex.Neighbours.Any();
+        public static bool IsIsolated(this IVertex vertex)
+        {
+            return vertex.IsObstacle || !vertex.Neighbours.Any();
+        }
 
         public static void SetToDefault(this IVertex vertex)
         {
@@ -32,7 +37,6 @@ namespace GraphLibrary.Extensions.CustomTypeExtensions
             vertex.IsVisited = false;
             vertex.AccumulatedCost = 0;
             vertex.MarkAsSimpleVertex();
-            vertex.ParentVertex = NullVertex.Instance;
         }
 
         public static void Initialize(this IVertex vertex)
@@ -52,9 +56,15 @@ namespace GraphLibrary.Extensions.CustomTypeExtensions
                 vertex.MarkAsObstacle();
         }
 
-        public static void WashVertex(this IVertex vertex) => vertex.IsObstacle = true;
+        public static void WashVertex(this IVertex vertex)
+        {
+            vertex.IsObstacle = true;
+        }
 
-        public static bool IsSimpleVertex(this IVertex vertex) => !vertex.IsStart && !vertex.IsEnd;
+        public static bool IsSimpleVertex(this IVertex vertex)
+        {
+            return !vertex.IsStart && !vertex.IsEnd;
+        }
 
         public static IEnumerable<IVertex> GetUnvisitedNeighbours(this IVertex vertex)
         {

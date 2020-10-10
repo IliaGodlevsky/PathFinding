@@ -1,5 +1,6 @@
 ﻿using System.Windows;
 using GraphLibrary.Globals;
+using GraphLibrary.Graphs;
 using GraphLibrary.Graphs.Interface;
 
 namespace WpfVersion.Model
@@ -10,8 +11,8 @@ namespace WpfVersion.Model
         {
             if (graph == null)
                 return;
-            Application.Current.MainWindow.Width = (graph.Width + 1) * VertexParametres.SizeBetweenVertices + VertexParametres.SizeBetweenVertices;
-            Application.Current.MainWindow.Height = (1 + graph.Height) * VertexParametres.SizeBetweenVertices +
+            Application.Current.MainWindow.Width = ((graph as Graph).Width + 1) * VertexParametres.SizeBetweenVertices + VertexParametres.SizeBetweenVertices;
+            Application.Current.MainWindow.Height = (1 + (graph as Graph).Height) * VertexParametres.SizeBetweenVertices +
                 Application.Current.MainWindow.DesiredSize.Height;
         }
     }

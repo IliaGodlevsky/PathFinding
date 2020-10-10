@@ -19,7 +19,7 @@ namespace GraphLibrary.UnitTests.Tests.PathFindingAlgorithmsTests
         [TestMethod]
         public void LeeAlgorithmFindPath_NullGraph_ReturnsEmptyPath()
         {
-            var leeAlgorithm = new LeeAlgorithm() { Graph = NullGraph.Instance };
+            var leeAlgorithm = new LeeAlgorithm();
 
             leeAlgorithm.FindPath();
 
@@ -29,8 +29,8 @@ namespace GraphLibrary.UnitTests.Tests.PathFindingAlgorithmsTests
         [TestMethod]
         public void LeeAlgorithmFindPath_NotNullGraph_ReturnsNotEmptyPath()
         {
-            var startVertexPosition = new Position(1, 1);
-            var endVertexPosition = new Position(9, 9);
+            var startVertexPosition = new Coordinate2D(1, 1);
+            var endVertexPosition = new Coordinate2D(9, 9);
             var parametres = new GraphParametres(width: 10, height: 10, obstaclePercent: 0);
             var factory = new GraphFactory(parametres);
             var graph = factory.CreateGraph(() => new TestVertex());

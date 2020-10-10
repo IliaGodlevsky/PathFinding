@@ -51,26 +51,30 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Coordinates\Interface\ICoordinate.cs" />
+    <Compile Include="Coordinates\NullCoordinate.cs" />
+    <Compile Include="DTO\Containers\NullVertexDtoContainer.cs" />
+    <Compile Include="DTO\Interface\IVertexDtoContainer.cs" />
+    <Compile Include="DTO\Containers\VertexDtoContainer2D.cs" />
     <Compile Include="EventArguments\AlgorithmEventArgs.cs" />
-    <Compile Include="Extensions\CustomTypeExtensions\GraphLibraryExtensions.cs" />
     <Compile Include="Extensions\CustomTypeExtensions\IGraphSaverExtensions.cs" />
-    <Compile Include="Extensions\SystemTypeExtensions\IListExtensions.cs" />
+    <Compile Include="Extensions\SystemTypeExtensions\ListExtension.cs" />
+    <Compile Include="Extensions\SystemTypeExtensions\QueueExtensions.cs" />
+    <Compile Include="Extensions\SystemTypeExtensions\StackExtension.cs" />
     <Compile Include="Extensions\SystemTypeExtensions\StringBuilderExtensions.cs" />
+    <Compile Include="Graphs\NullGraph.cs" />
     <Compile Include="PathFindingAlgorithm\AStarAlgorithm.cs" />
     <Compile Include="PathFindingAlgorithm\AStartModified.cs" />
     <Compile Include="PathFindingAlgorithm\BestFirstLeeAlgorithm.cs" />
-    <Compile Include="PathFindingAlgorithm\NullAlgorithm.cs" />
-    <Compile Include="Extensions\SystemTypeExtensions\StackExtension.cs" />
     <Compile Include="Graphs\Interface\IGraph.cs" />
-    <Compile Include="Graphs\NullGraph.cs" />
+    <Compile Include="PathFindingAlgorithm\NullAlgorithm.cs" />
     <Compile Include="PauseMaking\Interface\IPauser.cs" />
-    <Compile Include="Coordinates\Position.cs" />
+    <Compile Include="Coordinates\Coordinate2D.cs" />
     <Compile Include="ValueRanges\Range.cs" />
     <Compile Include="ValueRanges\ValueRange.cs" />
     <Compile Include="DistanceCalculating\DistanceCalculator.cs" />
     <Compile Include="Enums\Algorithm.cs" />
     <Compile Include="Globals\VertexSize.cs" />
-    <Compile Include="Extensions\SystemTypeExtensions\ListExtension.cs" />
     <Compile Include="Extensions\SystemTypeExtensions\EnumExtensions.cs" />
     <Compile Include="Extensions\SystemTypeExtensions\IEnumerableExtension.cs" />
     <Compile Include="Extensions\CustomTypeExtensions\IGraphExtensions.cs" />
@@ -78,7 +82,6 @@
     <Compile Include="Extensions\CustomTypeExtensions\IPathFindAlgorithmExtension.cs" />
     <Compile Include="Extensions\CustomTypeExtensions\IVertexExtension.cs" />
     <Compile Include="Extensions\SystemTypeExtensions\MatrixExtensions.cs" />
-    <Compile Include="Extensions\SystemTypeExtensions\QueueExtensions.cs" />
     <Compile Include="Extensions\SystemTypeExtensions\RandomExtensions.cs" />
     <Compile Include="Extensions\SystemTypeExtensions\StopwatchExtension.cs" />
     <Compile Include="GraphCreating\GraphFactory.cs" />
@@ -111,7 +114,7 @@
     <Compile Include="PauseMaking\Pauser.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="EventHolder\Interface\IVertexEventHolder.cs" />
-    <Compile Include="VertexConnecting\VertexBinder.cs" />
+    <Compile Include="VertexConnecting\VertexConnector.cs" />
     <Compile Include="Vertex\Interface\IVertex.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -123,5 +126,6 @@
   <ItemGroup>
     <None Include="packages.config" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

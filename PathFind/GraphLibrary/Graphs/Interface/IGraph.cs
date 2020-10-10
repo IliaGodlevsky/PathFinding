@@ -1,5 +1,7 @@
 ﻿using GraphLibrary.Coordinates;
+using GraphLibrary.Coordinates.Interface;
 using GraphLibrary.DTO;
+using GraphLibrary.DTO.Interface;
 using GraphLibrary.Vertex.Interface;
 using System.Collections.Generic;
 
@@ -26,18 +28,15 @@ namespace GraphLibrary.Graphs.Interface
     /// </summary>
     public interface IGraph : IEnumerable<IVertex>
     {
-        IVertex this[int width, int height] { get; set; }
-        IVertex this[Position position] { get; set; }
-        IVertex End { get; set; }
-        int Height { get; }
+        int Size { get; }
         int NumberOfVisitedVertices { get; }
         int ObstacleNumber { get; }
         int ObstaclePercent { get; }
-        int Size { get; }
+        IVertex this[ICoordinate coordinate] { get; set; }
+        IVertex End { get; set; }
         IVertex Start { get; set; }
-        VertexDto[,] VerticesDto { get; }
-        int Width { get; }
-        IVertex[,] Array { get; }
-        Position GetIndices(IVertex vertex);
+        IVertexDtoContainer VertexDtos { get; }
+        string GetFormattedData(string format);
+        IEnumerable<int> DimensionsSizes { get; }
     }
 }

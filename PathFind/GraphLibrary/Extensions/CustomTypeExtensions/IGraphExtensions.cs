@@ -1,22 +1,17 @@
-﻿using GraphLibrary.Extensions.SystemTypeExtensions;
+﻿using GraphLibrary.Graphs;
 using GraphLibrary.Graphs.Interface;
 using GraphLibrary.Vertex;
-using GraphLibrary.Vertex.Interface;
+using System.Linq;
 
 namespace GraphLibrary.Extensions.CustomTypeExtensions
 {
     public static class IGraphExtensions
     {
-        public static string GetFormattedInfo(this IGraph graph, string format)
-        {
-            return string.Format(format, graph.Width, graph.Height,
-               graph.ObstaclePercent, graph.ObstacleNumber, graph.Size);
-        }
-
         public static void Refresh(this IGraph graph)
         {
             graph.RemoveExtremeVertices();
-            graph.Array.Apply(vertex => vertex.Refresh());
+            foreach (var vertex in graph)
+                vertex.Refresh();
         }
 
         public static void RemoveExtremeVertices(this IGraph graph)

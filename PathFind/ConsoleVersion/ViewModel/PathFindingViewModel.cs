@@ -10,6 +10,7 @@ using System.Linq;
 using GraphLibrary.PauseMaking;
 using ConsoleVersion.Model.Vertex;
 using GraphLibrary.Coordinates;
+using GraphLibrary.Graphs;
 
 namespace ConsoleVersion.ViewModel
 {
@@ -84,12 +85,12 @@ namespace ConsoleVersion.ViewModel
             }
         }
 
-        private Position ChoosePoint(string message)
+        private Coordinate2D ChoosePoint(string message)
         {
             Console.WriteLine(message);
-            var point = Input.InputPoint(graph.Width, graph.Height);
+            var point = Input.InputPoint((graph as Graph).Width, (graph as Graph).Height);
             while (!graph[point].IsValidToBeRange())
-                point = Input.InputPoint(graph.Width, graph.Height);
+                point = Input.InputPoint((graph as Graph).Width, (graph as Graph).Height);
             return point;
         }
 

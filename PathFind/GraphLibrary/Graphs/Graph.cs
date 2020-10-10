@@ -3,10 +3,13 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using GraphLibrary.Coordinates;
+using GraphLibrary.Coordinates.Interface;
 using GraphLibrary.DTO;
+using GraphLibrary.DTO.Interface;
 using GraphLibrary.Extensions.CustomTypeExtensions;
 using GraphLibrary.Extensions.SystemTypeExtensions;
 using GraphLibrary.Graphs.Interface;
+using GraphLibrary.Vertex;
 using GraphLibrary.Vertex.Interface;
 
 namespace GraphLibrary.Graphs
@@ -18,33 +21,48 @@ namespace GraphLibrary.Graphs
     [Serializable]
     public class Graph : IGraph
     {
-        public Graph(IVertex[,] vertices)
+        public Graph(int width, int height)
         {
-            Array = vertices;
+            vertices = new IVertex[width, height];
             this.RemoveExtremeVertices();
         }
 
-        public Graph(int width, int height) 
-            : this(new IVertex[width, height])
-        {
+        public int Width => vertices.Width();
 
-        }
+        public int Height => vertices.Height();
 
-        public IVertex this[int width, int height]
+        public IVertex this[ICoordinate coordinate]
         {
-            get => Array[width, height];
-            set => Array[width, height] = value;
+            get
+            {
+                if (ReferenceEquals(coordinate, NullCoordinate.Instance))
+                    return NullVertex.Instance;
+                var coord = coordinate as Coordinate2D;
+                if (coord == null)
+                    throw new ArgumentException("Must be 2D coordinates");
+                return vertices[coord.X, coord.Y];
+            }
+            set
+            {
+                if (ReferenceEquals(coordinate, NullCoordinate.Instance))
+                    return;
+                var coord = coordinate as Coordinate2D;
+                if (coord == null)
+                    throw new ArgumentException("Must be 2D coordinates");
+                vertices[coord.X, coord.Y] = value;
+            }
         }
+        public int Size => vertices.Length;
 
-        public IVertex this[Position position] 
-        {
-            get => Array[position.X, position.Y];
-            set => Array[position.X, position.Y] = value; 
-        }
+        public int NumberOfVisitedVertices => vertices.Cast<IVertex>().AsParallel().Count(vertex => vertex.IsVisited);
+
+        public int ObstacleNumber => vertices.Cast<IVertex>().AsParallel().Count(vertex => vertex.IsObstacle);
+
+        public int ObstaclePercent => Size == 0 ? 0 : ObstacleNumber * 100 / Size;
 
         private IVertex end;
-        public IVertex End 
-        { 
+        public IVertex End
+        {
             get => end;
             set { end = value; end.IsEnd = true; }
         }
@@ -56,26 +74,26 @@ namespace GraphLibrary.Graphs
             set { start = value; start.IsStart = true; }
         }
 
-        public IVertex[,] Array { get; }
+        public IVertexDtoContainer VertexDtos => new VertexDtoContainer2D(this, Width, Height);
 
-        public int Height => Array.Height();
+        public IEnumerable<int> DimensionsSizes => new int[] { Width, Height };
 
-        public VertexDto[,] VerticesDto => Array.Accumulate(vertex => vertex.Dto);
+        public IEnumerator<IVertex> GetEnumerator()
+        {
+            return vertices.Cast<IVertex>().GetEnumerator();
+        }
 
-        public int Size => Array.Length;
+        IEnumerator IEnumerable.GetEnumerator()
+        {
+            return vertices.GetEnumerator();
+        }
 
-        public int Width => Array.Width();
+        public string GetFormattedData(string format)
+        {
+            return string.Format(format, Width, Height,
+               ObstaclePercent, ObstacleNumber, Size);
+        }
 
-        public int ObstaclePercent => Size == 0 ? 0 : ObstacleNumber * 100 / Size;
-
-        public int NumberOfVisitedVertices => Array.Cast<IVertex>().AsParallel().Count(vertex => vertex.IsVisited);
-
-        public int ObstacleNumber => Array.Cast<IVertex>().AsParallel().Count(vertex => vertex.IsObstacle);
-
-        public Position GetIndices(IVertex vertex) => Array.GetIndices(vertex);
-
-        public IEnumerator GetEnumerator() => Array.GetEnumerator();
-
-        IEnumerator<IVertex> IEnumerable<IVertex>.GetEnumerator() => Array.Cast<IVertex>().ToList().GetEnumerator();
+        private readonly IVertex[,] vertices;
     }
 }

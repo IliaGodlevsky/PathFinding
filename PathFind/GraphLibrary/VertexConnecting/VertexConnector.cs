@@ -1,6 +1,8 @@
-﻿using GraphLibrary.Extensions.SystemTypeExtensions;
+﻿using GraphLibrary.Coordinates.Interface;
 using GraphLibrary.Graphs.Interface;
 using GraphLibrary.Vertex.Interface;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace GraphLibrary.VertexConnecting
 {
@@ -33,10 +35,18 @@ namespace GraphLibrary.VertexConnecting
             vertex.Neighbours.Clear();
         }
 
-        public static bool IsWithinGraph(IGraph graph, int width, int height)
+        private static bool IsWithinGraph(IGraph graph, ICoordinate coordinates)
         {
-            return width >= 0 && width < graph.Width
-                && height >= 0 && height < graph.Height;
+            var dimensionSizes = graph.DimensionsSizes.ToArray();
+            var currentCoordinates = coordinates.Coordinates.ToArray();
+            bool IsOutOfBounds(int currentCoordinate, int dimensionSize) 
+                => currentCoordinate < 0 || currentCoordinate >= dimensionSize;
+            if (dimensionSizes.Length != currentCoordinates.Length)
+                return false;
+            for (int i = 0; i < currentCoordinates.Length; i++)
+                if (IsOutOfBounds(currentCoordinates[i], dimensionSizes[i]))
+                    return false;
+            return true;
         }
 
         private static bool CanBeNeighbour(IVertex vertex, IVertex neighbourCandidate)
@@ -44,6 +54,13 @@ namespace GraphLibrary.VertexConnecting
             return !neighbourCandidate.IsObstacle
                 && !ReferenceEquals(vertex, neighbourCandidate)
                 && !vertex.Neighbours.Contains(neighbourCandidate);
+        }
+
+        private static IEnumerable<IVertex> GetVertexEnvironment(IGraph graph, IVertex vertex)
+        {
+            foreach (var coordinate in vertex.Position.Environment)
+                if (IsWithinGraph(graph, coordinate))
+                    yield return graph[coordinate];
         }
 
         /// <summary>
@@ -55,11 +72,9 @@ namespace GraphLibrary.VertexConnecting
         {
             if (vertex.IsObstacle)
                 return;
-            var vertexCoordinates = graph.GetIndices(vertex);
-            for (int i = vertexCoordinates.X - 1; i <= vertexCoordinates.X + 1; i++)
-                for (int j = vertexCoordinates.Y - 1; j <= vertexCoordinates.Y + 1; j++)
-                    if (IsWithinGraph(graph, i, j) && CanBeNeighbour(vertex, graph[i, j]))
-                        vertex.Neighbours.Add(graph[i, j]);
+            foreach (var potentialNeighbor in GetVertexEnvironment(graph, vertex).ToArray())
+                if (CanBeNeighbour(vertex, potentialNeighbor))
+                    vertex.Neighbours.Add(potentialNeighbor);
         }
 
         /// <summary>
@@ -68,11 +83,7 @@ namespace GraphLibrary.VertexConnecting
         /// <param name="graph"></param>
         public static void ConnectVertices(IGraph graph)
         {
-            graph.Array.ApplyParallel(vertex =>
-            {
-                SetNeighbours(graph, vertex);
-                return vertex;
-            });
+            graph.AsParallel().ForAll(vertex => SetNeighbours(graph, vertex));
         }
     }
 }

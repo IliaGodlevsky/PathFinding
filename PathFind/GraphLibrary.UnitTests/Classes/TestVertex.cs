@@ -1,4 +1,5 @@
 ﻿using GraphLibrary.Coordinates;
+using GraphLibrary.Coordinates.Interface;
 using GraphLibrary.DTO;
 using GraphLibrary.Extensions.CustomTypeExtensions;
 using GraphLibrary.Vertex.Interface;
@@ -19,7 +20,7 @@ namespace GraphLibrary.UnitTests.Classes
         public int Cost { get; set; }
         public IVertex ParentVertex { get; set; }
         public double AccumulatedCost { get; set; }
-        public Position Position { get; set; }
+        public ICoordinate Position { get; set; }
         public VertexDto Dto => new VertexDto(this);
 
         IList<IVertex> IVertex.Neighbours { get; set; }

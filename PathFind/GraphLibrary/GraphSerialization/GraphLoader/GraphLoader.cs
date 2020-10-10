@@ -1,5 +1,5 @@
-﻿using GraphLibrary.DTO;
-using GraphLibrary.Extensions.SystemTypeExtensions;
+﻿using GraphLibrary.Coordinates;
+using GraphLibrary.DTO;
 using GraphLibrary.Graphs;
 using GraphLibrary.Graphs.Interface;
 using GraphLibrary.GraphSerialization.GraphLoader.Interface;
@@ -7,6 +7,7 @@ using GraphLibrary.Vertex.Interface;
 using GraphLibrary.VertexConnecting;
 using System;
 using System.IO;
+using System.Linq;
 using System.Runtime.Serialization.Formatters.Binary;
 
 namespace GraphLibrary.GraphSerialization.GraphLoader
@@ -25,7 +26,7 @@ namespace GraphLibrary.GraphSerialization.GraphLoader
             {
                 using (var stream = new FileStream(path, FileMode.Open))
                 { 
-                    var verticesDto = (VertexDto[,])formatter.Deserialize(stream);
+                    var verticesDto = (VertexDtoContainer2D)formatter.Deserialize(stream);
                     graph = GetGraphFromDto(verticesDto, converter);
                 }
             }
@@ -36,21 +37,20 @@ namespace GraphLibrary.GraphSerialization.GraphLoader
             return graph;
         }
 
-        private IGraph GetGraphFromDto(VertexDto[,] verticesDto, Func<VertexDto, IVertex> dtoConverter)
+        private IGraph GetGraphFromDto(VertexDtoContainer2D verticesDto, Func<VertexDto, IVertex> dtoConverter)
         {
-            graph = new Graph(verticesDto.Width(), verticesDto.Height());
-
-            IVertex GetVertexFromDto(IVertex vertex)
+            graph = new Graph(verticesDto.Width, verticesDto.Height);
+            for (int i = 0; i < verticesDto.Width; i++)
             {
-                var indices = graph.GetIndices(vertex);
-                vertex = dtoConverter(verticesDto[indices.X, indices.Y]);
-                vertex.Position = indices;
-                return vertex;
-            }
-
-            graph.Array.Apply(GetVertexFromDto);
+                for (int j = 0; j < verticesDto.Height; j++)
+                {
+                    var indices = new Coordinate2D(i, j);
+                    var index = i * verticesDto.Height + j;
+                    graph[indices] = dtoConverter(verticesDto.ElementAt(index));
+                    graph[indices].Position = indices;
+                }
+            }            
             VertexConnector.ConnectVertices(graph);
-
             return graph;
         }
 

@@ -7,13 +7,6 @@ namespace GraphLibrary.Extensions.SystemTypeExtensions
 {
     public static class QueueExtensions
     {
-        public static void EnqueueRange(this Queue<IVertex> queue,
-            IEnumerable<IVertex> collection)
-        {
-            foreach (var item in collection)
-                queue.Enqueue(item);           
-        }
-
         /// <summary>
         /// 
         /// </summary>
@@ -21,7 +14,7 @@ namespace GraphLibrary.Extensions.SystemTypeExtensions
         /// <returns>if queue is empty returns NullVertex</returns>
         public static IVertex DequeueOrNullVertex(this Queue<IVertex> queue)
         {
-            return !queue.Any() ? NullVertex.Instance : queue.Dequeue();
+            return !queue.AsParallel().Any() ? NullVertex.Instance : queue.Dequeue();
         }
     }
 }

@@ -18,7 +18,7 @@ namespace GraphLibrary.UnitTests.Tests.PathFindingAlgorithmsTests
         [TestMethod]
         public void FindPath_NullGraph_ReturnsEmptyPath()
         {
-            var dikstraAlgorithm = new DijkstraAlgorithm() { Graph = NullGraph.Instance };
+            var dikstraAlgorithm = new DijkstraAlgorithm();
 
             dikstraAlgorithm.FindPath();
 
@@ -29,8 +29,8 @@ namespace GraphLibrary.UnitTests.Tests.PathFindingAlgorithmsTests
         public void FindPath_NotNullGraph_ReturnsNotEmptyPath()
         {
             
-            var startVertexPosition = new Position(x: 1, y: 1);
-            var endVertexPosition = new Position(x: 9, y: 9);
+            var startVertexPosition = new Coordinate2D(x: 1, y: 1);
+            var endVertexPosition = new Coordinate2D(x: 9, y: 9);
             var parametres = new GraphParametres(width: 10, height: 10, obstaclePercent: 0);
             var factory = new GraphFactory(parametres);
             var graph = factory.CreateGraph(() => new TestVertex());

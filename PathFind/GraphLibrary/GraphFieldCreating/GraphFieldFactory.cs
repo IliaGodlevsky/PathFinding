@@ -9,9 +9,8 @@ namespace GraphLibrary.GraphFieldCreating
         public virtual IGraphField CreateGraphField(IGraph graph)
         {
             var graphField = CreateField();
-            for (int i = 0; i < graph.Width; i++)
-                for (int j = 0; j < graph.Height; j++)
-                    graphField?.Add(graph[i, j], i, j);
+            foreach (var vertex in graph)
+                graphField?.Add(vertex);
             return graphField;
         }
     }

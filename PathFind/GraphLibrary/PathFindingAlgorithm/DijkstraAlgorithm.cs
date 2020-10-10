@@ -48,11 +48,10 @@ namespace GraphLibrary.PathFindingAlgorithm
 
         private void SetAccumulatedCostToInfinity()
         {
-            Graph.Array.Apply(vertex =>
+            Graph.AsParallel().ForAll(vertex =>
             {
                 if (!vertex.IsStart && !vertex.IsObstacle)
-                    vertex.AccumulatedCost = double.PositiveInfinity;
-                return vertex;
+                    Graph[vertex.Position].AccumulatedCost = double.PositiveInfinity;
             });
         }
 
@@ -63,32 +62,30 @@ namespace GraphLibrary.PathFindingAlgorithm
 
         protected virtual void RelaxNeighbours(IVertex vertex)
         {
-            vertex.Neighbours.Apply(neighbour =>
+            foreach(var neighbour in vertex.Neighbours)
             {
                 if (neighbour.AccumulatedCost > Relax(neighbour, vertex))
                 {
                     neighbour.AccumulatedCost = Relax(neighbour, vertex);
                     neighbour.ParentVertex = vertex;
                 }
-                return neighbour;
-            });
+            }
         }
 
         private void ExtractNeighbours(IVertex vertex)
-        {
-            vertex.GetUnvisitedNeighbours().ToList().Apply(neighbour =>
+        {            
+            foreach(var neighbour in vertex.GetUnvisitedNeighbours())
             {
                 OnEnqueued?.Invoke(neighbour);
                 verticesProcessQueue.Add(neighbour);
-                return neighbour;
-            });
-            verticesProcessQueue = verticesProcessQueue.DistinctBy(vert => vert.Position).ToList();
+            }
+            verticesProcessQueue = verticesProcessQueue.AsParallel().DistinctBy(vert => vert.Position).ToList();
         }
 
         protected virtual IVertex GetChippestUnvisitedVertex()
         {
             verticesProcessQueue.RemoveAll(vert => vert.IsVisited);
-            verticesProcessQueue.Sort((v1, v2) => v1.AccumulatedCost.CompareTo(v2.AccumulatedCost));
+            verticesProcessQueue = verticesProcessQueue.AsParallel().OrderBy(v => v.AccumulatedCost).ToList();
             return verticesProcessQueue.FirstOrNullVertex();
         }
 

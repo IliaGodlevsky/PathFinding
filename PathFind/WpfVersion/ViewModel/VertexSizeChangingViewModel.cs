@@ -29,15 +29,15 @@ namespace WpfVersion.ViewModel
         private void ChangeVertexSize(object param)
         {
             VertexParametres.VertexSize = Size;
-            IVertex ChangeSize(IVertex vertex)
+            void ChangeSize(IVertex vertex)
             {
                 var temp = vertex as WpfVertex;
                 temp.Width = VertexParametres.VertexSize;
                 temp.Height = VertexParametres.VertexSize;
                 temp.FontSize = Size * VertexParametres.TextToSizeRatio;
-                return temp;
             }
-            Model.Graph.Array.Apply(ChangeSize);
+            foreach(var vertex in Model.Graph)            
+                ChangeSize(vertex);           
             (Model.GraphField as Canvas).Children.Clear();
             var fieldFactory = new WpfGraphFieldFactory();
             Model.GraphField = fieldFactory.CreateGraphField(Model.Graph);

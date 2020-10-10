@@ -36,7 +36,7 @@ namespace GraphLibrary.PathFindingAlgorithm
             OnStarted?.Invoke(this, new AlgorithmEventArgs(Graph));
             var currentVertex = Graph.Start;
             ProcessVertex(currentVertex);
-            while(!currentVertex.IsEnd)
+            while (currentVertex?.IsEnd == false)
             {
                 currentVertex = GetNextVertex();
                 ProcessVertex(currentVertex);
@@ -67,15 +67,14 @@ namespace GraphLibrary.PathFindingAlgorithm
 
         private void SpreadWaves(IVertex vertex)
         {
-            vertex.GetUnvisitedNeighbours().ToList().Apply(vert =>
+            foreach(var vert in vertex.GetUnvisitedNeighbours())
             {
                 if (vert.AccumulatedCost == 0)
                 {
                     vert.AccumulatedCost = WaveFunction(vertex);
                     vert.ParentVertex = vertex;
                 }
-                return vert;
-            });
+            }
         }
 
         private void ProcessVertex(IVertex vertex)

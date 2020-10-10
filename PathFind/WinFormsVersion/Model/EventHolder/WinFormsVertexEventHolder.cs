@@ -22,7 +22,7 @@ namespace WinFormsVersion.EventHolder
 
         protected override void ChargeVertex(IVertex vertex)
         {
-            if (vertex == NullVertex.Instance)
+            if (vertex == null)
                 return;
             (vertex as WinFormsVertex).MouseClick += ChooseExtremeVertices;
             (vertex as WinFormsVertex).MouseClick += ReversePolarity;

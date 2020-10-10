@@ -1,5 +1,7 @@
-﻿using GraphLibrary.Coordinates;
+﻿using GraphLibrary.Coordinates.Interface;
 using GraphLibrary.DTO;
+using GraphLibrary.DTO.Containers;
+using GraphLibrary.DTO.Interface;
 using GraphLibrary.Graphs.Interface;
 using GraphLibrary.Vertex;
 using GraphLibrary.Vertex.Interface;
@@ -28,35 +30,30 @@ namespace GraphLibrary.Graphs
         private NullGraph()
         {
             nullVertex = NullVertex.Instance;
-            Array = new NullVertex[0, 0];
+            array = new NullVertex[] { };
         }
 
-        public IVertex this[int width, int height] 
-        { 
-            get => nullVertex; 
-            set => _ = value; 
-        }
-
-        public IVertex this[Position position]
+        public IVertex this[ICoordinate position]
         { 
             get => nullVertex; 
             set => _ = value; 
         }
 
         public IVertex End { get => nullVertex; set => _ = value; }
-        public int Height => 0;
         public int NumberOfVisitedVertices => 0;
         public int ObstacleNumber => 0;
         public int ObstaclePercent => 0;
         public int Size => 0;
-        public IVertex Start { get => nullVertex; set => _ = value; }
-        public VertexDto[,] VerticesDto => new VertexDto[0, 0];
-        public int Width => 0;
-        public IVertex[,] Array { get; }
-        public IEnumerator<IVertex> GetEnumerator() => Array.Cast<IVertex>().ToList().GetEnumerator();
-        public Position GetIndices(IVertex vertex) => new Position(0, 0);
-        IEnumerator IEnumerable.GetEnumerator() => Array.GetEnumerator();
+        public IVertex Start { get => nullVertex; set => _ = value; }    
+        public IVertexDtoContainer VertexDtos => NullVertexDtoContainer.Instance;
 
+        public IEnumerable<int> DimensionsSizes => new int[] { };
+
+        public IEnumerator<IVertex> GetEnumerator() => array.Cast<IVertex>().ToList().GetEnumerator();
+        IEnumerator IEnumerable.GetEnumerator() => array.GetEnumerator();
+        public string GetFormattedData(string format) => string.Empty;
+
+        private readonly IEnumerable<IVertex> array;
         private readonly NullVertex nullVertex;
         private static NullGraph instance = null;
     }

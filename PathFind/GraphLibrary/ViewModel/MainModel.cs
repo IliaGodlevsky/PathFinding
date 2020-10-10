@@ -41,16 +41,14 @@ namespace GraphLibrary.ViewModel
 
         public virtual void LoadGraph()
         {
-            var tempGraph = Loader.LoadGraph(GetLoadingPath(), DtoConverter);
-            if (tempGraph != NullGraph.Instance)
-                ConnectNewGraph(tempGraph);
+            ConnectNewGraph(Loader.LoadGraph(GetLoadingPath(), DtoConverter));
         }
 
         public virtual void ClearGraph()
         {
             Graph.Refresh();
             PathFindingStatistics = string.Empty;
-            GraphParametres = Graph.GetFormattedInfo(LibraryResources.GraphParametresFormat);
+            GraphParametres = Graph.GetFormattedData(LibraryResources.GraphParametresFormat);
         }
 
         public void ConnectNewGraph(IGraph graph)
@@ -59,7 +57,7 @@ namespace GraphLibrary.ViewModel
             GraphField = FieldFactory.CreateGraphField(Graph);
             VertexEventHolder.Graph = Graph;
             VertexEventHolder.SubscribeVertices();
-            GraphParametres = Graph.GetFormattedInfo(LibraryResources.GraphParametresFormat);
+            GraphParametres = Graph.GetFormattedData(LibraryResources.GraphParametresFormat);
             PathFindingStatistics = string.Empty;
         }
 

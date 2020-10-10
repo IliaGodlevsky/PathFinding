@@ -1,4 +1,5 @@
 ﻿using GraphLibrary.Coordinates;
+using GraphLibrary.Coordinates.Interface;
 using GraphLibrary.DTO;
 using GraphLibrary.Vertex.Interface;
 using System.Collections.Generic;
@@ -32,7 +33,7 @@ namespace GraphLibrary.Vertex
         public IList<IVertex> Neighbours { get => new List<IVertex>(); set => _ = value; }
         public IVertex ParentVertex { get => Instance; set => _ = value; }
         public double AccumulatedCost { get => double.PositiveInfinity; set => _ = value; }
-        public Position Position { get => new Position(0,0); set => _ = value; }
+        public ICoordinate Position { get => NullCoordinate.Instance; set => _ = value; }
         public VertexDto Dto => new VertexDto(this);
         public void MarkAsEnd() { }
         public void MarkAsObstacle() { }

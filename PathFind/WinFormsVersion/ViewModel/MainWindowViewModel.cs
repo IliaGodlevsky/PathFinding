@@ -15,6 +15,7 @@ using WinFormsVersion.Vertex;
 using GraphLibrary.Globals;
 using GraphLibrary.Graphs.Interface;
 using System.Linq;
+using GraphLibrary.Graphs;
 
 namespace WinFormsVersion.ViewModel
 {
@@ -49,7 +50,7 @@ namespace WinFormsVersion.ViewModel
                 int size = VertexParametres.SizeBetweenVertices;
                 var field = graphField as WinFormsGraphField;
                 MainWindow.Controls.RemoveBy(ctrl => ctrl.IsGraphField());
-                field.Size = new Size(Graph.Width * size, Graph.Height * size);
+                field.Size = new Size((Graph as Graph).Width * size, (Graph as Graph).Height * size);
                 MainWindow.Controls.Add(field);
             }
         }
@@ -100,8 +101,7 @@ namespace WinFormsVersion.ViewModel
 
         public void ClearGraph(object sender, EventArgs e)
         {
-            if (graph != null)
-                base.ClearGraph();
+            base.ClearGraph();
         }
 
         public void StartPathFind(object sender, EventArgs e) => FindPath();

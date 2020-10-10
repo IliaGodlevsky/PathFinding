@@ -5,6 +5,7 @@ using GraphLibrary.Vertex.Interface;
 using GraphLibrary.Graphs.Interface;
 using GraphLibrary.GraphCreating.Interface;
 using GraphLibrary.VertexConnecting;
+using GraphLibrary.Coordinates;
 
 namespace GraphLibrary.GraphCreating
 {
@@ -24,27 +25,25 @@ namespace GraphLibrary.GraphCreating
         public IGraph CreateGraph(Func<IVertex> vertexFactory)
         {
             graph = new Graph(parametres.Width, parametres.Height);
-
-            IVertex InitializeVertex(IVertex vertex)
+            for (int i = 0; i < parametres.Width; i++)
             {
-                var indices = graph.GetIndices(vertex);
-                vertex = vertexFactory();
-                vertex.Cost = rand.GetRandomValueCost();
-                if (rand.IsObstacleChance(parametres.ObstaclePercent))
-                    vertex.MarkAsObstacle();
-                vertex.Position = indices;
-                return vertex;
+                for (int j = 0; j < parametres.Height; j++)
+                {
+                    var indices = new Coordinate2D(i, j);
+                    graph[indices] = vertexFactory();
+                    graph[indices].Cost = rand.GetRandomValueCost();
+                    if (rand.IsObstacleChance(parametres.ObstaclePercent))
+                        graph[indices].MarkAsObstacle();
+                    graph[indices].Position = indices;
+                }
             }
-
-            graph.Array.Apply(InitializeVertex);
             VertexConnector.ConnectVertices(graph);
-
             return graph;
         }
 
         private static readonly Random rand;
 
-        private IGraph graph;
+        private IGraph graph = NullGraph.Instance;
         private readonly GraphParametres parametres;
     }
 }

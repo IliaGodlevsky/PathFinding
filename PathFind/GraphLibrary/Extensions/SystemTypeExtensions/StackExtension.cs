@@ -14,7 +14,7 @@ namespace GraphLibrary.Extensions.SystemTypeExtensions
         /// <returns>if stack is empty returns NullVertex</returns>
         public static IVertex PopOrNullVertex(this Stack<IVertex> stack)
         {
-            return !stack.Any() ? NullVertex.Instance : stack.Pop();
+            return !stack.AsParallel().Any() ? NullVertex.Instance : stack.Pop();
         }
     }
 }

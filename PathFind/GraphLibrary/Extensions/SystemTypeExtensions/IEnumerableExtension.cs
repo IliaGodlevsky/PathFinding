@@ -16,7 +16,7 @@ namespace GraphLibrary.Extensions.SystemTypeExtensions
         /// <returns> if collection is empty returns NullVertex</returns>
         public static IVertex FirstOrNullVertex(this IEnumerable<IVertex> collection)
         {
-            return !collection.Any() ? NullVertex.Instance : collection.First();
+            return !collection.AsParallel().Any() ? NullVertex.Instance : collection.First();
         }
 
         public static IEnumerable<T> DistinctBy<T, TKey>(this IEnumerable<T> items, Func<T, TKey> property)
@@ -26,11 +26,10 @@ namespace GraphLibrary.Extensions.SystemTypeExtensions
 
         public static void DrawPath(this IEnumerable<IVertex> path)
         {
-            path.ToList().Apply(vertex =>
+            Array.ForEach(path.ToArray(), vertex =>
             {
                 if (vertex.IsSimpleVertex())
                     vertex.MarkAsPath();
-                return vertex;
             });
         }
     }

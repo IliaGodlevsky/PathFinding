@@ -1,6 +1,8 @@
 ﻿using ConsoleVersion.Model.Vertex;
+using GraphLibrary.Coordinates;
 using GraphLibrary.GraphField;
 using GraphLibrary.Vertex.Interface;
+using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Text;
@@ -37,11 +39,14 @@ namespace ConsoleVersion.View
             vertices = new List<ConsoleVertex>();
         }
 
-        public void Add(IVertex vertex, int xCoordinate, int yCoordinate)
+        public void Add(IVertex vertex)
         {
+            var coordinate = vertex.Position as Coordinate2D;
+            if (coordinate == null)
+                throw new ArgumentException("Must be 2D coordinates");
             vertices.Add(vertex as ConsoleVertex);
-            Width = xCoordinate + 1;
-            Height = yCoordinate + 1;
+            Width = coordinate.X + 1;
+            Height = coordinate.Y + 1;
         }
 
         public void ShowGraphWithFrames()

@@ -36,9 +36,9 @@ namespace ConsoleVersion.InputClass
                 maxMenuValue, minMenuValue);
         }
 
-        public static Position InputPoint(int width, int height)
+        public static Coordinate2D InputPoint(int width, int height)
         {
-            return new Position(InputNumber(ConsoleVersionResources.XCoordinateMsg, width),
+            return new Coordinate2D(InputNumber(ConsoleVersionResources.XCoordinateMsg, width),
                                 InputNumber(ConsoleVersionResources.YCoordinateMsg, height));
         }
 

@@ -1,4 +1,5 @@
 ﻿using GraphLibrary.Coordinates;
+using GraphLibrary.Coordinates.Interface;
 using GraphLibrary.DTO;
 using GraphLibrary.Extensions.CustomTypeExtensions;
 using GraphLibrary.Globals;
@@ -62,6 +63,6 @@ namespace WinFormsVersion.Vertex
         public VertexDto Dto => new VertexDto(this);
 
         public int Cost { get => int.Parse(Text); set => Text = value.ToString(); }
-        public Position Position { get; set; }
+        public ICoordinate Position { get; set; }
     }
 }

@@ -1,4 +1,5 @@
 ﻿using GraphLibrary.Coordinates;
+using GraphLibrary.Coordinates.Interface;
 using GraphLibrary.DTO;
 using GraphLibrary.Extensions.CustomTypeExtensions;
 using GraphLibrary.Globals;
@@ -52,7 +53,7 @@ namespace WpfVersion.Model.Vertex
         public IList<IVertex> Neighbours { get; set; }
         public IVertex ParentVertex { get; set; }
         public double AccumulatedCost { get; set; }
-        public Position Position { get; set; }
+        public ICoordinate Position { get; set; }
 
         public VertexDto Dto => new VertexDto(this);
 

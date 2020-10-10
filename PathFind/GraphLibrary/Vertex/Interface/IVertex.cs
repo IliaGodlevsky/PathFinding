@@ -1,4 +1,4 @@
-﻿using GraphLibrary.Coordinates;
+﻿using GraphLibrary.Coordinates.Interface;
 using GraphLibrary.DTO;
 using System.Collections.Generic;
 
@@ -17,7 +17,7 @@ namespace GraphLibrary.Vertex.Interface
         IList<IVertex> Neighbours { get; set; }
         IVertex ParentVertex { get; set; }
         double AccumulatedCost { get; set; }
-        Position Position { get; set; }
+        ICoordinate Position { get; set; }
         VertexDto Dto { get; }
         void MarkAsEnd();
         void MarkAsSimpleVertex();

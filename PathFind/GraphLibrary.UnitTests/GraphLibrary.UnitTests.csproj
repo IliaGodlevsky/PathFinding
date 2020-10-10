@@ -56,11 +56,8 @@
     <Compile Include="Tests\DistanceCalculatorTests\DistanceTests.cs" />
     <Compile Include="Tests\DTOTests\DtoTests.cs" />
     <Compile Include="Tests\GraphFactoryTests\GraphFactoryTest.cs" />
-    <Compile Include="Tests\GraphTests\GraphTests.cs" />
-    <Compile Include="Tests\GraphTests\NullGraphTests.cs" />
     <Compile Include="Tests\PathFindingAlgorithmsTests\DijkstraAlgorithmTests.cs" />
     <Compile Include="Tests\PathFindingAlgorithmsTests\LeeAlgorithmTests.cs" />
-    <Compile Include="Tests\PathFindingAlgorithmsTests\NullAlgorithmTests.cs" />
     <Compile Include="Tests\ValueRangeTests\ValueRangeTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

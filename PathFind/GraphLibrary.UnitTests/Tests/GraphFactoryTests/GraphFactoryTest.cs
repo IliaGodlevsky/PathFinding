@@ -17,8 +17,6 @@ namespace GraphLibrary.UnitTests.Tests.GraphFactoryTests
 
             var graph = factory.CreateGraph(() => new TestVertex());
 
-            Assert.AreEqual(graph.Width, parametres.Width);
-            Assert.AreEqual(graph.Height, parametres.Height);
             Assert.AreEqual(graph.Size, parametres.Width * parametres.Height);
             Assert.IsTrue(Range.ObstaclePercentValueRange.IsInBounds(graph.ObstaclePercent));
         }

@@ -4,9 +4,9 @@ using GraphLibrary.Vertex.Interface;
 using GraphLibrary.Vertex;
 using GraphLibrary.Extensions.CustomTypeExtensions;
 using GraphLibrary.ValueRanges;
-using GraphLibrary.Extensions.SystemTypeExtensions;
 using GraphLibrary.Graphs.Interface;
 using GraphLibrary.VertexConnecting;
+using System.Linq;
 
 namespace GraphLibrary.EventHolder
 {
@@ -85,7 +85,7 @@ namespace GraphLibrary.EventHolder
 
         private void SetEventsToVertex(Action<IVertex> action)
         {
-            Graph.Array.Apply(vertex => { action(vertex); return vertex; });
+            Graph.AsParallel().ForAll(action);
         }
     }
 }
