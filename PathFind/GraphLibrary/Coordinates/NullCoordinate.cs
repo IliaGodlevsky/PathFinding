@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace GraphLibrary.Coordinates
 {
-    public class NullCoordinate : ICoordinate
+    public sealed class NullCoordinate : ICoordinate
     {
         public static NullCoordinate Instance
         {
