@@ -72,7 +72,7 @@ namespace GraphLibrary.VertexConnecting
         {
             if (vertex.IsObstacle)
                 return;
-            foreach (var potentialNeighbor in GetVertexEnvironment(graph, vertex).ToArray())
+            foreach (var potentialNeighbor in GetVertexEnvironment(graph, vertex))
                 if (CanBeNeighbour(vertex, potentialNeighbor))
                     vertex.Neighbours.Add(potentialNeighbor);
         }
