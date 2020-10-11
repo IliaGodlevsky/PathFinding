@@ -9,7 +9,7 @@ namespace GraphLibrary.DistanceCalculating
     {
         public static double GetChebyshevDistance(IVertex from, IVertex to)
         {
-            if (from.Position.GetType() != to.Position.GetType() || ReferenceEquals(from, to)) 
+            if (from.Position.GetType() != to.Position.GetType() || ReferenceEquals(from, to))
                 return 0;
             var fromCoordinates = from.Position.Coordinates.ToArray();
             var toCoordinates = to.Position.Coordinates.ToArray();
