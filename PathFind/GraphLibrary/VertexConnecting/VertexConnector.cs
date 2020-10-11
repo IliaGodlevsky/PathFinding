@@ -39,10 +39,10 @@ namespace GraphLibrary.VertexConnecting
         {
             var dimensionSizes = graph.DimensionsSizes.ToArray();
             var currentCoordinates = coordinates.Coordinates.ToArray();
-            bool IsOutOfBounds(int currentCoordinate, int dimensionSize) 
-                => currentCoordinate < 0 || currentCoordinate >= dimensionSize;
             if (dimensionSizes.Length != currentCoordinates.Length)
                 return false;
+            bool IsOutOfBounds(int currentCoordinate, int dimensionSize)
+                => currentCoordinate < 0 || currentCoordinate >= dimensionSize;
             for (int i = 0; i < currentCoordinates.Length; i++)
                 if (IsOutOfBounds(currentCoordinates[i], dimensionSizes[i]))
                     return false;
