@@ -49,7 +49,7 @@ namespace GraphLibrary.Graphs
 
         public IEnumerable<int> DimensionsSizes => new int[] { };
 
-        public IEnumerator<IVertex> GetEnumerator() => array.Cast<IVertex>().ToList().GetEnumerator();
+        public IEnumerator<IVertex> GetEnumerator() => array.Cast<IVertex>().GetEnumerator();
         IEnumerator IEnumerable.GetEnumerator() => array.GetEnumerator();
         public string GetFormattedData(string format) => string.Empty;
 
