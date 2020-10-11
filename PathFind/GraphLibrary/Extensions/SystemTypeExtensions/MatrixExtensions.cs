@@ -12,7 +12,7 @@ namespace GraphLibrary.Extensions.SystemTypeExtensions
             return arr == null ? 0 : arr.GetLength(dimension: 0);
         }
 
-        public static int Height<TSource>(this TSource[,] arr)
+        public static int Length<TSource>(this TSource[,] arr)
         {
             if (arr?.Width() == 0)
                 return 0;

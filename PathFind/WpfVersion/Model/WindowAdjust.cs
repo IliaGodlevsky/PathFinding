@@ -12,7 +12,7 @@ namespace WpfVersion.Model
             if (graph == null)
                 return;
             Application.Current.MainWindow.Width = ((graph as Graph).Width + 1) * VertexParametres.SizeBetweenVertices + VertexParametres.SizeBetweenVertices;
-            Application.Current.MainWindow.Height = (1 + (graph as Graph).Height) * VertexParametres.SizeBetweenVertices +
+            Application.Current.MainWindow.Height = (1 + (graph as Graph).Length) * VertexParametres.SizeBetweenVertices +
                 Application.Current.MainWindow.DesiredSize.Height;
         }
     }

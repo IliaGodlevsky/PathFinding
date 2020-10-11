@@ -29,7 +29,7 @@ namespace GraphLibrary.Graphs
 
         public int Width => vertices.Width();
 
-        public int Height => vertices.Height();
+        public int Length => vertices.Length();
 
         public IVertex this[ICoordinate coordinate]
         {
@@ -74,9 +74,9 @@ namespace GraphLibrary.Graphs
             set { start = value; start.IsStart = true; }
         }
 
-        public IVertexDtoContainer VertexDtos => new VertexDtoContainer2D(this, Width, Height);
+        public IVertexDtoContainer VertexDtos => new VertexDtoContainer2D(this, Width, Length);
 
-        public IEnumerable<int> DimensionsSizes => new int[] { Width, Height };
+        public IEnumerable<int> DimensionsSizes => new int[] { Width, Length };
 
         public IEnumerator<IVertex> GetEnumerator()
         {
@@ -90,7 +90,7 @@ namespace GraphLibrary.Graphs
 
         public string GetFormattedData(string format)
         {
-            return string.Format(format, Width, Height,
+            return string.Format(format, Width, Length,
                ObstaclePercent, ObstacleNumber, Size);
         }
 

@@ -50,7 +50,7 @@ namespace WinFormsVersion.ViewModel
                 int size = VertexParametres.SizeBetweenVertices;
                 var field = graphField as WinFormsGraphField;
                 MainWindow.Controls.RemoveBy(ctrl => ctrl.IsGraphField());
-                field.Size = new Size((Graph as Graph).Width * size, (Graph as Graph).Height * size);
+                field.Size = new Size((Graph as Graph).Width * size, (Graph as Graph).Length * size);
                 MainWindow.Controls.Add(field);
             }
         }

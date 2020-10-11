@@ -36,15 +36,15 @@ namespace ConsoleVersion.ViewModel
 
         public void Reverse()
         {
-            var point = Input.InputPoint((Graph as Graph).Width, (Graph as Graph).Height);
+            var point = Input.InputPoint((Graph as Graph).Width, (Graph as Graph).Length);
             (Graph[point] as ConsoleVertex).ChangeRole();
         }
 
         public void ChangeVertexValue()
         {
-            var point = Input.InputPoint((Graph as Graph).Width, (Graph as Graph).Height);
+            var point = Input.InputPoint((Graph as Graph).Width, (Graph as Graph).Length);
             while (Graph[point].IsObstacle)
-                point = Input.InputPoint((Graph as Graph).Width, (Graph as Graph).Height);
+                point = Input.InputPoint((Graph as Graph).Width, (Graph as Graph).Length);
             (Graph[point] as ConsoleVertex).ChangeCost();
         }
 

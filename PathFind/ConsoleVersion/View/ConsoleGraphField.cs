@@ -23,14 +23,14 @@ namespace ConsoleVersion.View
             }
         }
 
-        private int height;
-        public int Height 
+        private int length;
+        public int Length 
         {
-            get => height;
+            get => length;
             private set
             {
-                if (value > height)
-                    height = value;
+                if (value > length)
+                    length = value;
             }
         }
 
@@ -46,7 +46,7 @@ namespace ConsoleVersion.View
                 throw new ArgumentException("Must be 2D coordinates");
             vertices.Add(vertex as ConsoleVertex);
             Width = coordinate.X + 1;
-            Height = coordinate.Y + 1;
+            Length = coordinate.Y + 1;
         }
 
         public void ShowGraphWithFrames()
@@ -94,36 +94,36 @@ namespace ConsoleVersion.View
             return framedAbscissa.ToString();
         }
 
-        private string DrawOrdinate(int currentHeight,
+        private string DrawOrdinate(int currentLength,
             TableSide tableSide)
         {
             string ordinate;
             if (tableSide == TableSide.Right)
-                ordinate = verticalFrame + currentHeight + newLine;
-            else if (!IsOffsetIndex(currentHeight))
-                ordinate = currentHeight + space + verticalFrame;
+                ordinate = verticalFrame + currentLength + newLine;
+            else if (!IsOffsetIndex(currentLength))
+                ordinate = currentLength + space + verticalFrame;
             else
-                ordinate = currentHeight + verticalFrame;
+                ordinate = currentLength + verticalFrame;
             return ordinate;
         }
 
         private void ShowGraph()
         {
-            for (var currentHeight = 0; currentHeight < Height; currentHeight++)
+            for (var currentLength = 0; currentLength < Length; currentLength++)
             {
-                Console.Write(DrawOrdinate(currentHeight, TableSide.Left));
+                Console.Write(DrawOrdinate(currentLength, TableSide.Left));
                 for (var currentWidth = 0; currentWidth < Width; currentWidth++)
                 {
-                    ShowVertex(vertices[GetOneDimensionIndex(currentWidth, currentHeight)]);
+                    ShowVertex(vertices[GetOneDimensionIndex(currentWidth, currentLength)]);
                     if (IsEndOfRow(currentWidth))
-                        Console.Write(DrawOrdinate(currentHeight, TableSide.Right));
+                        Console.Write(DrawOrdinate(currentLength, TableSide.Right));
                 }
             }
         }
 
         private int GetOneDimensionIndex(int x, int y)
         {
-            return x * Height + y;
+            return x * Length + y;
         }
 
         private void ShowVertex(ConsoleVertex vertex)
