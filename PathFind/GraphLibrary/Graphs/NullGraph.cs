@@ -1,5 +1,4 @@
 ﻿using GraphLibrary.Coordinates.Interface;
-using GraphLibrary.DTO;
 using GraphLibrary.DTO.Containers;
 using GraphLibrary.DTO.Interface;
 using GraphLibrary.Graphs.Interface;
