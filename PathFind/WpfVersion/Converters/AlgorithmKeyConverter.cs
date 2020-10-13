@@ -5,11 +5,11 @@ using System.Windows.Data;
 
 namespace WpfVersion.Converters
 {
-    internal class EnumDescriptionConverter : IValueConverter
+    internal class AlgorithmKeyConverter : IValueConverter
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            return ((Enum)value).GetDescription();
+            return value;
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)

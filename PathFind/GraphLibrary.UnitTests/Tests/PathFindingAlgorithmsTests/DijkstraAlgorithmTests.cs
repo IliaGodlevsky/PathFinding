@@ -18,7 +18,7 @@ namespace GraphLibrary.UnitTests.Tests.PathFindingAlgorithmsTests
         [TestMethod]
         public void FindPath_NullGraph_ReturnsEmptyPath()
         {
-            var dikstraAlgorithm = new DijkstraAlgorithm();
+            var dikstraAlgorithm = new DijkstraAlgorithm(NullGraph.Instance);
 
             dikstraAlgorithm.FindPath();
 
@@ -37,7 +37,7 @@ namespace GraphLibrary.UnitTests.Tests.PathFindingAlgorithmsTests
             Thread.Sleep(millisecondsTimeout: 230);
             graph.Start = graph[startVertexPosition];
             graph.End = graph[endVertexPosition];
-            var dikstraAlgorithm = new DijkstraAlgorithm() { Graph = graph };
+            var dikstraAlgorithm = new DijkstraAlgorithm(graph);
 
             dikstraAlgorithm.FindPath();
 

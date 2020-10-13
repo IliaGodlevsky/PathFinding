@@ -59,7 +59,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="Converters\EnumDescriptionConverter.cs" />
+    <Compile Include="Converters\AlgorithmKeyConverter.cs" />
     <Compile Include="Converters\SliderValueConverter.cs" />
     <Compile Include="Converters\StringToIntConverter.cs" />
     <Compile Include="Infrastructure\RelayCommand.cs" />

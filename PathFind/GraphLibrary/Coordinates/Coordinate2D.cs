@@ -1,4 +1,5 @@
 ﻿using GraphLibrary.Coordinates.Interface;
+using GraphLibrary.Extensions.CustomTypeExtensions;
 using System;
 using System.Collections.Generic;
 
@@ -33,9 +34,9 @@ namespace GraphLibrary.Coordinates
 
         public override bool Equals(object pos)
         {
-            if (pos is Coordinate2D position)
-                return position.X == X && position.Y == Y;
-            return false;
+            if (pos == null)
+                return false;
+            return this.IsEqual(pos as ICoordinate);
         }
 
         public static bool operator ==(Coordinate2D position1, Coordinate2D position2)

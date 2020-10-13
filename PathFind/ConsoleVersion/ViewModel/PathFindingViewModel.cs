@@ -1,6 +1,5 @@
 ﻿using ConsoleVersion.InputClass;
 using System;
-using GraphLibrary.Enums;
 using GraphLibrary.ViewModel.Interface;
 using GraphLibrary.ViewModel;
 using GraphLibrary.Extensions.CustomTypeExtensions;
@@ -11,18 +10,21 @@ using GraphLibrary.PauseMaking;
 using ConsoleVersion.Model.Vertex;
 using GraphLibrary.Coordinates;
 using GraphLibrary.Graphs;
+using GraphLibrary.AlgorithmCreating;
+using System.Collections.Generic;
 
 namespace ConsoleVersion.ViewModel
 {
     internal class PathFindingViewModel : PathFindingModel
     {
         public Tuple<string, string, string> Messages { get; set; }
+        private readonly List<string> algorithmEnums;
 
         public PathFindingViewModel(IMainModel model) : base(model)
         {
-            var algorithmEnums = Enum.GetValues(typeof(Algorithms)).Cast<byte>();
-            maxAlgorithmValue = algorithmEnums.Last();
-            minAlgorithmValue = algorithmEnums.First();
+            algorithmEnums = AlgorithmFactory.GetAlgorithmKeys().ToList();
+            maxAlgorithmValue = algorithmEnums.Count;
+            minAlgorithmValue = 1;
         }
 
         public override void FindPath()
@@ -33,7 +35,7 @@ namespace ConsoleVersion.ViewModel
             (mainViewModel as MainViewModel).DisplayGraph();
             ChooseExtremeVertex();
             (mainViewModel as MainViewModel).DisplayGraph();
-            Algorithm = GetAlgorithmEnum();
+            Algorithm = algorithmEnums[GetAlgorithmEnum()];
             base.FindPath();
         }
 
@@ -67,10 +69,10 @@ namespace ConsoleVersion.ViewModel
             };         
         }
 
-        private Algorithms GetAlgorithmEnum()
+        private int GetAlgorithmEnum()
         {
-            return (Algorithms)Input.InputNumber(Messages.Item3,
-                maxAlgorithmValue, minAlgorithmValue);
+            return Input.InputNumber(Messages.Item3,
+                maxAlgorithmValue, minAlgorithmValue) - 1;
         }
 
         private void ChooseExtremeVertex()
@@ -94,7 +96,7 @@ namespace ConsoleVersion.ViewModel
             return point;
         }
 
-        private readonly byte maxAlgorithmValue;
-        private readonly byte minAlgorithmValue;
+        private readonly int maxAlgorithmValue;
+        private readonly int minAlgorithmValue;
     }
 }

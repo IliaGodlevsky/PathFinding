@@ -5,16 +5,18 @@ using GraphLibrary.Extensions.CustomTypeExtensions;
 using GraphLibrary.Vertex.Interface;
 using GraphLibrary.PathFindingAlgorithm.Interface;
 using System.Collections.Generic;
-using GraphLibrary.Graphs;
 using GraphLibrary.Graphs.Interface;
 using GraphLibrary.EventArguments;
+using GraphLibrary.DistanceCalculating;
+using System.ComponentModel;
 
 namespace GraphLibrary.PathFindingAlgorithm
 {
     /// <summary>
     /// Greedy algorithm. Each step looks for the best vertex and visits it
     /// </summary>
-    public class GreedyAlgorithm : IPathFindingAlgorithm
+    [Description("Depth-first algorithm")]
+    public class DepthFirstAlgorithm : IPathFindingAlgorithm
     {
         public event AlgorithmEventHanlder OnStarted;
         public event Action<IVertex> OnVertexVisited;
@@ -26,11 +28,12 @@ namespace GraphLibrary.PathFindingAlgorithm
         /// </summary>
         public Func<IVertex, double> GreedyFunction { private get; set; }
 
-        public IGraph Graph { get; set; }
+        public IGraph Graph { get; protected set; }
 
-        public GreedyAlgorithm()
+        public DepthFirstAlgorithm(IGraph graph)
         {
-            Graph = NullGraph.Instance;
+            GreedyFunction = vertex => DistanceCalculator.GetChebyshevDistance(vertex, graph.Start);
+            Graph = graph;
             visitedVerticesStack = new Stack<IVertex>();
         }
 

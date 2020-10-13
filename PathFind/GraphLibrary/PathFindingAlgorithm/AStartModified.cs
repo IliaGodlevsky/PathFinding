@@ -1,7 +1,9 @@
-﻿using GraphLibrary.ValueRanges;
+﻿using GraphLibrary.Graphs.Interface;
+using GraphLibrary.ValueRanges;
 using GraphLibrary.Vertex;
 using GraphLibrary.Vertex.Interface;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 
 namespace GraphLibrary.PathFindingAlgorithm
@@ -10,8 +12,16 @@ namespace GraphLibrary.PathFindingAlgorithm
     /// A modified A* algorithm, that ignores vertices 
     /// that are far from optimal heuristic function result
     /// </summary>
+    [Description("A* algorithm (modified)")]
     public class AStarModified : AStarAlgorithm
     {
+        public AStarModified(IGraph graph) : base(graph)
+        {
+            deletedVertices = new List<IVertex>();
+            percentRange = new ValueRange(99, 0);
+            PersentOfFurthestVerticesToDelete = 5;
+        }
+
         private int persentOfFurthestVerticesToDelete;
         /// <summary>
         /// Percent in percent points, f.e. 5, 10, 15
@@ -26,13 +36,6 @@ namespace GraphLibrary.PathFindingAlgorithm
                     persentOfFurthestVerticesToDelete = 
                         percentRange.ReturnInBounds(persentOfFurthestVerticesToDelete);
             }
-        }
-
-        public AStarModified() : base()
-        {
-            deletedVertices = new List<IVertex>();
-            percentRange = new ValueRange(99, 0);
-            PersentOfFurthestVerticesToDelete = 5;
         }
 
         protected override IVertex GetChippestUnvisitedVertex()

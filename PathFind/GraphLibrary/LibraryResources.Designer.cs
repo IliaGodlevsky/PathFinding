@@ -61,6 +61,15 @@ namespace GraphLibrary {
         }
         
         /// <summary>
+        ///   Ищет локализованную строку, похожую на &quot;C:\Users\IceWind\Documents\GitHub\PathFinding\PathFind\GraphLibrary\obj\Debug\GraphLibrary.dll&quot;.
+        /// </summary>
+        internal static string AssemblyName {
+            get {
+                return ResourceManager.GetString("AssemblyName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Ищет локализованную строку, похожую на Couldn&apos;t find path.
         /// </summary>
         internal static string BadResultMsg {

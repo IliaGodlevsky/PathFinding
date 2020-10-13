@@ -1,5 +1,8 @@
-﻿using GraphLibrary.Vertex.Interface;
+﻿using GraphLibrary.DistanceCalculating;
+using GraphLibrary.Graphs.Interface;
+using GraphLibrary.Vertex.Interface;
 using System;
+using System.ComponentModel;
 
 namespace GraphLibrary.PathFindingAlgorithm
 {
@@ -8,12 +11,14 @@ namespace GraphLibrary.PathFindingAlgorithm
     /// best-first pathfinding algorithm, searching 
     /// the path using heuristic function
     /// </summary>
+    [Description("A* algorithm")]
     public class AStarAlgorithm : DijkstraAlgorithm
     {
-        public AStarAlgorithm() : base()
+        public AStarAlgorithm(IGraph graph) : base(graph)
         {
-
+            HeuristicFunction = vertex => DistanceCalculator.GetChebyshevDistance(vertex, graph.End);
         }
+
         /// <summary>
         /// A heuristic function is a creative function that consists in organizing a selective pathfinding
         /// </summary>

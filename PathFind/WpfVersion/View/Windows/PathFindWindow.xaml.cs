@@ -1,4 +1,5 @@
-﻿using GraphLibrary.ValueRanges;
+﻿using GraphLibrary.AlgorithmCreating;
+using GraphLibrary.ValueRanges;
 using System.Windows;
 
 namespace WpfVersion.View.Windows
@@ -13,6 +14,7 @@ namespace WpfVersion.View.Windows
             InitializeComponent();
             delayTimeSlider.Minimum = Range.DelayValueRange.LowerRange;
             delayTimeSlider.Maximum = Range.DelayValueRange.UpperRange;
+            algoListBox.ItemsSource = AlgorithmFactory.GetAlgorithmKeys();
         }
     }
 }

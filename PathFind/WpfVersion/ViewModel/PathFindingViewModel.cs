@@ -1,8 +1,7 @@
-﻿using GraphLibrary.Enums;
+﻿using GraphLibrary.AlgorithmCreating;
 using GraphLibrary.PauseMaking;
 using GraphLibrary.ViewModel;
 using GraphLibrary.ViewModel.Interface;
-using System;
 using System.Linq;
 using System.Windows;
 using WpfVersion.Infrastructure;
@@ -31,7 +30,7 @@ namespace WpfVersion.ViewModel
 
         private bool CanExecuteConfirmPathFindAlgorithmChoice(object param)
         {
-            return (Enum.GetValues(typeof(Algorithms)) as Algorithms[]).Any(algo => algo == Algorithm);
+            return AlgorithmFactory.GetAlgorithmKeys().Any(algo => algo == Algorithm);
         }
 
         protected override void PrepareAlgorithm()

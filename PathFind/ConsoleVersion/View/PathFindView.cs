@@ -1,9 +1,8 @@
 ﻿using ConsoleVersion.View.Interface;
 using ConsoleVersion.ViewModel;
-using GraphLibrary.Enums;
+using GraphLibrary.AlgorithmCreating;
 using GraphLibrary.Extensions.SystemTypeExtensions;
 using System;
-using System.Linq;
 using System.Text;
 
 namespace ConsoleVersion.View
@@ -28,11 +27,9 @@ namespace ConsoleVersion.View
         private string GetAlgorithmsList()
         {
             var algorithmList = new StringBuilder("\n");
-            foreach (var item in Enum.GetValues(typeof(Algorithms)).Cast<Algorithms>())
-            {
-                algorithmList.AppendFormatLine(ConsoleVersionResources.MenuFormat, 
-                    item.GetValue(), item.GetDescription());
-            }
+            var algorithmKeys = AlgorithmFactory.GetAlgorithmKeys();
+            for (int i = 0; i < algorithmKeys.Length; i++)             
+                algorithmList.AppendFormatLine(ConsoleVersionResources.MenuFormat, i + 1, algorithmKeys[i]);            
             return algorithmList.ToString();
         }
     }

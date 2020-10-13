@@ -1,7 +1,5 @@
-﻿using GraphLibrary.Enums;
-using GraphLibrary.Extensions.SystemTypeExtensions;
+﻿using GraphLibrary.AlgorithmCreating;
 using GraphLibrary.ValueRanges;
-using System;
 using System.Linq;
 using System.Windows.Forms;
 using WinFormsVersion.ViewModel;
@@ -20,17 +18,12 @@ namespace WinFormsVersion.View
             okButton.Click += Model.PathFind;
             cancelButton.Click += Model.CancelPathFind;
 
-            var dataSource = Enum.GetValues(typeof(Algorithms)).
-                Cast<Algorithms>().
-                Select(algo => new { Name = algo.GetDescription(), Value = algo }).
-                ToList();
+            var dataSource = AlgorithmFactory.GetAlgorithmKeys().Select(key => new { Name = key }).ToArray();
             algorithmListBox.DataSource = dataSource;
 
-            var type = dataSource.First().GetType();
-            var properties = type.GetProperties();
+            var obj = dataSource.First();
+            algorithmListBox.ValueMember = nameof(obj.Name);
 
-            algorithmListBox.DisplayMember = properties.First().Name;
-            algorithmListBox.ValueMember = properties.Last().Name;
 
             var bindingAlgorithm = new Binding(nameof(algorithmListBox.SelectedValue), Model, nameof(Model.Algorithm));
             algorithmListBox.DataBindings.Add(bindingAlgorithm);

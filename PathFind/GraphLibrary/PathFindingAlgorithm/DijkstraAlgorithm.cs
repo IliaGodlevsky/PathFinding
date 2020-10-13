@@ -8,12 +8,14 @@ using GraphLibrary.PathFindingAlgorithm.Interface;
 using GraphLibrary.Vertex.Interface;
 using GraphLibrary.Extensions.CustomTypeExtensions;
 using System.Linq;
+using System.ComponentModel;
 
 namespace GraphLibrary.PathFindingAlgorithm
 {
     /// <summary>
     /// Finds the chippest path to destination vertex. 
     /// </summary>
+    [Description("Dijkstra algorithm")]
     public class DijkstraAlgorithm : IPathFindingAlgorithm
     {
         public event AlgorithmEventHanlder OnStarted;
@@ -21,11 +23,11 @@ namespace GraphLibrary.PathFindingAlgorithm
         public event AlgorithmEventHanlder OnFinished;
         public event Action<IVertex> OnEnqueued;
 
-        public IGraph Graph { get; set; }
+        public IGraph Graph { get; protected set; }
 
-        public DijkstraAlgorithm()
+        public DijkstraAlgorithm(IGraph graph)
         {
-            Graph = NullGraph.Instance;
+            Graph = graph;
             verticesProcessQueue = new List<IVertex>();
         }
 

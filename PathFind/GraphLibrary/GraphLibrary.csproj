@@ -57,6 +57,7 @@
     <Compile Include="DTO\Interface\IVertexDtoContainer.cs" />
     <Compile Include="DTO\Containers\VertexDtoContainer2D.cs" />
     <Compile Include="EventArguments\AlgorithmEventArgs.cs" />
+    <Compile Include="Extensions\CustomTypeExtensions\ICoordinateExtensions.cs" />
     <Compile Include="Extensions\CustomTypeExtensions\IGraphSaverExtensions.cs" />
     <Compile Include="Extensions\SystemTypeExtensions\ListExtension.cs" />
     <Compile Include="Extensions\SystemTypeExtensions\QueueExtensions.cs" />
@@ -67,13 +68,15 @@
     <Compile Include="PathFindingAlgorithm\AStartModified.cs" />
     <Compile Include="PathFindingAlgorithm\BestFirstLeeAlgorithm.cs" />
     <Compile Include="Graphs\Interface\IGraph.cs" />
+    <Compile Include="PathFindingAlgorithm\CostDistanceGreedyAlgorithm.cs" />
+    <Compile Include="PathFindingAlgorithm\DistanceGreedyAlgoritm.cs" />
     <Compile Include="PathFindingAlgorithm\NullAlgorithm.cs" />
+    <Compile Include="PathFindingAlgorithm\CostGreedyAlgorithm.cs" />
     <Compile Include="PauseMaking\Interface\IPauser.cs" />
     <Compile Include="Coordinates\Coordinate2D.cs" />
     <Compile Include="ValueRanges\Range.cs" />
     <Compile Include="ValueRanges\ValueRange.cs" />
     <Compile Include="DistanceCalculating\DistanceCalculator.cs" />
-    <Compile Include="Enums\Algorithm.cs" />
     <Compile Include="Globals\VertexSize.cs" />
     <Compile Include="Extensions\SystemTypeExtensions\EnumExtensions.cs" />
     <Compile Include="Extensions\SystemTypeExtensions\IEnumerableExtension.cs" />
@@ -108,7 +111,7 @@
     <Compile Include="DTO\VertexDto.cs" />
     <Compile Include="Graphs\Graph.cs" />
     <Compile Include="PathFindingAlgorithm\DijkstraAlgorithm.cs" />
-    <Compile Include="PathFindingAlgorithm\GreedyAlgorithm.cs" />
+    <Compile Include="PathFindingAlgorithm\DepthFirstAlgorithm.cs" />
     <Compile Include="PathFindingAlgorithm\Interface\IPathFindingAlgorithm.cs" />
     <Compile Include="PathFindingAlgorithm\LeeAlgorithm.cs" />
     <Compile Include="PauseMaking\Pauser.cs" />

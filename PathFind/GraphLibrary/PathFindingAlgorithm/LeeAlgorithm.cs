@@ -8,6 +8,7 @@ using GraphLibrary.Graphs.Interface;
 using GraphLibrary.PathFindingAlgorithm.Interface;
 using GraphLibrary.Vertex.Interface;
 using GraphLibrary.Extensions.CustomTypeExtensions;
+using System.ComponentModel;
 
 namespace GraphLibrary.PathFindingAlgorithm
 {
@@ -16,6 +17,7 @@ namespace GraphLibrary.PathFindingAlgorithm
     /// Uses queue to move next vertex. Finds the shortest path (in steps) to
     /// the destination top
     /// </summary>
+    [Description("Lee algorithm")]
     public class LeeAlgorithm : IPathFindingAlgorithm
     {
         public event AlgorithmEventHanlder OnStarted;
@@ -23,11 +25,11 @@ namespace GraphLibrary.PathFindingAlgorithm
         public event AlgorithmEventHanlder OnFinished;
         public event Action<IVertex> OnEnqueued;
 
-        public IGraph Graph { get; set; }
+        public IGraph Graph { get; protected set; }
 
-        public LeeAlgorithm()
+        public LeeAlgorithm(IGraph graph)
         {
-            Graph = NullGraph.Instance;
+            Graph = graph;
             neighbourQueue = new Queue<IVertex>();
         }
 

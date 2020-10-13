@@ -3,22 +3,14 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:enums="clr-namespace:GraphLibrary.Enums;assembly=GraphLibrary"
         xmlns:sys="clr-namespace:System;assembly=mscorlib" 
         xmlns:converters="clr-namespace:WpfVersion.Converters"
         xmlns:range="clr-namespace:GraphLibrary.ValueRanges;assembly=GraphLibrary"
         mc:Ignorable="d"
         Title="PathFindParametresWindow" SizeToContent="WidthAndHeight">
     <Window.Resources>
-        <ObjectDataProvider MethodName="GetValues"
-                ObjectType ="{x:Type sys:Enum}"
-                x:Key="AlgorithmsValues">
-            <ObjectDataProvider.MethodParameters>
-                <x:Type TypeName="enums:Algorithms"/>
-            </ObjectDataProvider.MethodParameters>
-        </ObjectDataProvider>
         <converters:SliderValueConverter x:Key="sliderValueConverter"></converters:SliderValueConverter>
-        <converters:EnumDescriptionConverter x:Key="enumDescriptionConverter"></converters:EnumDescriptionConverter>
+        <converters:AlgorithmKeyConverter x:Key="algorithmKeyConverter"></converters:AlgorithmKeyConverter>
     </Window.Resources>
     <Grid>
         <Grid.RowDefinitions>
@@ -30,12 +22,11 @@
             <Button Command="{Binding ConfirmPathFindAlgorithmChoice}"  Margin ="5" Content="Start"></Button>
             <Button Command="{Binding CancelPathFindAlgorithmChoice}" Margin ="5" Content="Cancel"></Button>
         </StackPanel>
-        <ListBox BorderThickness="0" Margin="5"
-                 ItemsSource="{Binding Source={StaticResource AlgorithmsValues}}"
+        <ListBox x:Name="algoListBox" BorderThickness="0" Margin="5"
                  SelectedItem="{Binding Path = Algorithm}">
             <ListBox.ItemTemplate>
                 <DataTemplate>
-                    <TextBlock Margin="5" Text="{Binding Converter={StaticResource enumDescriptionConverter}}"/>
+                    <TextBlock Margin="3" Text="{Binding Converter={StaticResource algorithmKeyConverter}}"/>
                 </DataTemplate>
             </ListBox.ItemTemplate>
         </ListBox>

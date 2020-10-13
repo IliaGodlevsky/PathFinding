@@ -1,92 +1,43 @@
-﻿using GraphLibrary.DistanceCalculating;
-using GraphLibrary.Enums;
-using GraphLibrary.Graphs.Interface;
+﻿using GraphLibrary.Graphs.Interface;
 using GraphLibrary.PathFindingAlgorithm;
 using GraphLibrary.PathFindingAlgorithm.Interface;
-using GraphLibrary.Vertex.Interface;
 using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Linq;
+using System.Reflection;
 
 namespace GraphLibrary.AlgorithmCreating
 {
-    /// <summary>
-    /// A state machine, creates pathfinding algorithm according to enum
-    /// </summary>
     public static class AlgorithmFactory
     {
-        private static double CostAndDistanceGreedyFunction(
-            IVertex vertex, IVertex destination)
+        private static readonly Dictionary<string, Type> pathFindingAlgorithms;
+
+        static AlgorithmFactory()
         {
-            return vertex.Cost + DistanceCalculator.GetChebyshevDistance(vertex, destination);
+            pathFindingAlgorithms = new Dictionary<string, Type>();
+            var assembly = Assembly.Load(typeof(IPathFindingAlgorithm).Assembly.GetName());
+            foreach (var type in assembly.GetTypes().Where(t => t != typeof(NullAlgorithm)))
+            {
+                if (type.GetInterfaces().Select(interf => interf.Name).
+                    Contains(typeof(IPathFindingAlgorithm).Name))
+                {
+                    var attribute = (DescriptionAttribute)Attribute.
+                        GetCustomAttribute(type, typeof(DescriptionAttribute));
+                    var description = attribute != null ? attribute.Description : type.ToString();
+                    pathFindingAlgorithms.Add(description, type);
+                }
+            }
         }
 
-        public static IPathFindingAlgorithm CreateAlgorithm(
-            Algorithms algorithms, IGraph graph)
+        public static string[] GetAlgorithmKeys()
+        {            
+            return pathFindingAlgorithms.Select(value => value.Key).ToArray();
+        }
+        
+        public static IPathFindingAlgorithm CreateAlgorithm(string algorithmKey, IGraph graph)
         {
-            switch (algorithms)
-            {
-                case Algorithms.LeeAlgorithm:
-                    return new LeeAlgorithm()
-                    {
-                        Graph = graph
-                    };
-
-                case Algorithms.BestFirstLeeAlgorithm:
-                    return new BestFirstLeeAlgorithm()
-                {
-                    Graph = graph,
-                    HeuristicFunction = vertex => DistanceCalculator.GetChebyshevDistance(vertex, graph.End)
-                };
-
-                case Algorithms.DeepPathFind:
-                    return new GreedyAlgorithm()
-                    {
-                        Graph = graph,
-                        GreedyFunction = vertex => DistanceCalculator.GetChebyshevDistance(vertex, graph.Start)
-                    };
-
-                case Algorithms.DijkstraAlgorithm:
-                    return new DijkstraAlgorithm()
-                    {
-                        Graph = graph
-                    };
-
-                case Algorithms.AStarAlgorithm:
-                    return new AStarAlgorithm()
-                    {
-                        Graph = graph,
-                        HeuristicFunction = vertex => DistanceCalculator.GetChebyshevDistance(vertex, graph.End)                        
-                    };
-
-                case Algorithms.AStarModified:
-                    return new AStarModified()
-                    {
-                        Graph = graph,
-                        HeuristicFunction = vertex => DistanceCalculator.GetChebyshevDistance(vertex, graph.End)
-                    };
-
-                case Algorithms.DistanceGreedyAlgorithm:
-                    return new GreedyAlgorithm()
-                    {
-                        Graph = graph,
-                        GreedyFunction = vertex => DistanceCalculator.GetChebyshevDistance(vertex, graph.End)
-                    };
-
-                case Algorithms.ValueGreedyAlgorithm:
-                    return new GreedyAlgorithm()
-                    {
-                        Graph = graph,
-                        GreedyFunction = vertex => vertex.Cost
-                    };
-
-                case Algorithms.ValueDistanceGreedyAlgorithm:
-                    return new GreedyAlgorithm()
-                    {
-                        Graph = graph,
-                        GreedyFunction = vertex => CostAndDistanceGreedyFunction(vertex, graph.End)
-                    };
-
-                default: return NullAlgorithm.Instance;
-            }
+            return (IPathFindingAlgorithm)Activator.CreateInstance(pathFindingAlgorithms[algorithmKey], graph);
         }
     }
 }

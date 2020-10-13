@@ -1,6 +1,5 @@
 ﻿using System.Diagnostics;
 using System.Linq;
-using GraphLibrary.Enums;
 using GraphLibrary.PathFindingAlgorithm.Interface;
 using GraphLibrary.ViewModel.Interface;
 using GraphLibrary.Extensions.CustomTypeExtensions;
@@ -13,7 +12,7 @@ namespace GraphLibrary.ViewModel
     public abstract class PathFindingModel : IModel
     {
         public int DelayTime { get; set; } // miliseconds
-        public Algorithms Algorithm { get; set; }
+        public string Algorithm { get; set; }
 
         public PathFindingModel(IMainModel mainViewModel)
         {

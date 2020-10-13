@@ -1,4 +1,4 @@
-﻿using GraphLibrary.Enums;
+﻿using GraphLibrary.AlgorithmCreating;
 using GraphLibrary.PauseMaking;
 using GraphLibrary.ViewModel;
 using GraphLibrary.ViewModel.Interface;
@@ -43,7 +43,7 @@ namespace WinFormsVersion.ViewModel
 
         private bool CanExecuteConfirmPathFindAlgorithmChoice()
         {
-            return (Enum.GetValues(typeof(Algorithms)) as Algorithms[]).Any(algo => algo == Algorithm);
+            return AlgorithmFactory.GetAlgorithmKeys().Any(algo => algo == Algorithm);
         }
     }
 }
