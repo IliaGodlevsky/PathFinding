@@ -12,7 +12,7 @@ namespace GraphLibrary.ViewModel
     public abstract class PathFindingModel : IModel
     {
         public int DelayTime { get; set; } // miliseconds
-        public string Algorithm { get; set; }
+        public string AlgorithmKey { get; set; }
 
         public PathFindingModel(IMainModel mainViewModel)
         {
@@ -25,7 +25,7 @@ namespace GraphLibrary.ViewModel
 
         public virtual void FindPath()
         {
-            pathAlgorithm = AlgorithmFactory.CreateAlgorithm(Algorithm, graph);
+            pathAlgorithm = AlgorithmFactory.CreateAlgorithm(AlgorithmKey, graph);
             PrepareAlgorithm();
             pathAlgorithm.FindPath();
             var path = pathAlgorithm.GetPath();

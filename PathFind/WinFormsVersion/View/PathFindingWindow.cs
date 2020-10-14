@@ -25,7 +25,7 @@ namespace WinFormsVersion.View
             algorithmListBox.ValueMember = nameof(obj.Name);
 
 
-            var bindingAlgorithm = new Binding(nameof(algorithmListBox.SelectedValue), Model, nameof(Model.Algorithm));
+            var bindingAlgorithm = new Binding(nameof(algorithmListBox.SelectedValue), Model, nameof(Model.AlgorithmKey));
             algorithmListBox.DataBindings.Add(bindingAlgorithm);
 
             var bindingDelaySliderToDelayTextBox = new Binding(nameof(delaySlider.Value), delayTextBox, nameof(delayTextBox.Text),

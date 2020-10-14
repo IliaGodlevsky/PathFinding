@@ -35,7 +35,7 @@ namespace ConsoleVersion.ViewModel
             (mainViewModel as MainViewModel).DisplayGraph();
             ChooseExtremeVertex();
             (mainViewModel as MainViewModel).DisplayGraph();
-            Algorithm = algorithmEnums[GetAlgorithmEnum()];
+            AlgorithmKey = algorithmEnums[GetAlgorithmEnum()];
             base.FindPath();
         }
 
