@@ -68,7 +68,6 @@
     <Compile Include="PathFindingAlgorithm\AStartModified.cs" />
     <Compile Include="PathFindingAlgorithm\BestFirstLeeAlgorithm.cs" />
     <Compile Include="Graphs\Interface\IGraph.cs" />
-    <Compile Include="PathFindingAlgorithm\CostDistanceGreedyAlgorithm.cs" />
     <Compile Include="PathFindingAlgorithm\DistanceGreedyAlgoritm.cs" />
     <Compile Include="PathFindingAlgorithm\NullAlgorithm.cs" />
     <Compile Include="PathFindingAlgorithm\CostGreedyAlgorithm.cs" />
