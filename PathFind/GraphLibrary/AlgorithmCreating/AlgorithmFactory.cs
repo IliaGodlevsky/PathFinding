@@ -28,7 +28,7 @@ namespace GraphLibrary.AlgorithmCreating
                     algorithms.Add(description, type);
                 }
             }
-            AlgorithmKeys = algorithms.Select(value => value.Key).ToArray();
+            AlgorithmKeys = algorithms.Select(item => item.Key).ToArray();
         }
 
         public static IPathFindingAlgorithm CreateAlgorithm(string algorithmKey, IGraph graph)
