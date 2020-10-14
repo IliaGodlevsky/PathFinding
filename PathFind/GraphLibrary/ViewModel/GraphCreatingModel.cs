@@ -1,5 +1,4 @@
 ﻿using GraphLibrary.GraphCreating;
-using GraphLibrary.Graphs;
 using GraphLibrary.Graphs.Interface;
 using GraphLibrary.Vertex.Interface;
 using GraphLibrary.ViewModel.Interface;
