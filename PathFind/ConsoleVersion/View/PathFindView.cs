@@ -27,7 +27,7 @@ namespace ConsoleVersion.View
         private string GetAlgorithmsList()
         {
             var algorithmList = new StringBuilder("\n");
-            var algorithmKeys = AlgorithmFactory.GetAlgorithmKeys();
+            var algorithmKeys = AlgorithmFactory.AlgorithmKeys;
             for (int i = 0; i < algorithmKeys.Length; i++)             
                 algorithmList.AppendFormatLine(ConsoleVersionResources.MenuFormat, i + 1, algorithmKeys[i]);            
             return algorithmList.ToString();

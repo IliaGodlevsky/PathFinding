@@ -22,7 +22,7 @@ namespace ConsoleVersion.ViewModel
 
         public PathFindingViewModel(IMainModel model) : base(model)
         {
-            algorithmEnums = AlgorithmFactory.GetAlgorithmKeys().ToList();
+            algorithmEnums = AlgorithmFactory.AlgorithmKeys.ToList();
             maxAlgorithmValue = algorithmEnums.Count;
             minAlgorithmValue = 1;
         }

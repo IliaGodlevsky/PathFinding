@@ -14,7 +14,7 @@ namespace WpfVersion.View.Windows
             InitializeComponent();
             delayTimeSlider.Minimum = Range.DelayValueRange.LowerRange;
             delayTimeSlider.Maximum = Range.DelayValueRange.UpperRange;
-            algoListBox.ItemsSource = AlgorithmFactory.GetAlgorithmKeys();
+            algoListBox.ItemsSource = AlgorithmFactory.AlgorithmKeys;
         }
     }
 }

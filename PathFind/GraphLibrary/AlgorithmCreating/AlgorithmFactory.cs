@@ -11,7 +11,7 @@ namespace GraphLibrary.AlgorithmCreating
 {
     public static class AlgorithmFactory
     {
-        private static readonly Dictionary<string, Type> algorithms;
+        public static string[] AlgorithmKeys { get; private set; }
 
         static AlgorithmFactory()
         {
@@ -28,16 +28,16 @@ namespace GraphLibrary.AlgorithmCreating
                     algorithms.Add(description, type);
                 }
             }
+            AlgorithmKeys = algorithms.Select(value => value.Key).ToArray();
         }
 
-        public static string[] GetAlgorithmKeys()
-        {            
-            return algorithms.Select(value => value.Key).ToArray();
-        }
-        
         public static IPathFindingAlgorithm CreateAlgorithm(string algorithmKey, IGraph graph)
         {
-            return (IPathFindingAlgorithm)Activator.CreateInstance(algorithms[algorithmKey], graph);
+            return AlgorithmKeys.Contains(algorithmKey)
+                ? (IPathFindingAlgorithm)Activator.CreateInstance(algorithms[algorithmKey], graph)
+                : NullAlgorithm.Instance;
         }
+
+        private static readonly Dictionary<string, Type> algorithms;
     }
 }
