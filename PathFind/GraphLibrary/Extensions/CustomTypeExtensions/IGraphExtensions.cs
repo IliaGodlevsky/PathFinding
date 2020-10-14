@@ -1,7 +1,5 @@
-﻿using GraphLibrary.Graphs;
-using GraphLibrary.Graphs.Interface;
+﻿using GraphLibrary.Graphs.Interface;
 using GraphLibrary.Vertex;
-using System.Linq;
 
 namespace GraphLibrary.Extensions.CustomTypeExtensions
 {
