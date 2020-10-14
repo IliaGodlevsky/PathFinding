@@ -53,7 +53,7 @@ namespace GraphLibrary.PathFindingAlgorithm
                     currentVertex.ParentVertex = temp;
                 }
                 else
-                    currentVertex = visitedVerticesStack.Pop();
+                    currentVertex = visitedVerticesStack.PopOrNullVertex();
             }
             OnFinished?.Invoke(this, new AlgorithmEventArgs(Graph));
         }
