@@ -11,19 +11,16 @@ using ConsoleVersion.Model.Vertex;
 using GraphLibrary.Coordinates;
 using GraphLibrary.Graphs;
 using GraphLibrary.AlgorithmCreating;
-using System.Collections.Generic;
 
 namespace ConsoleVersion.ViewModel
 {
     internal class PathFindingViewModel : PathFindingModel
     {
         public Tuple<string, string, string> Messages { get; set; }
-        private readonly List<string> algorithmEnums;
 
         public PathFindingViewModel(IMainModel model) : base(model)
         {
-            algorithmEnums = AlgorithmFactory.AlgorithmKeys.ToList();
-            maxAlgorithmValue = algorithmEnums.Count;
+            maxAlgorithmValue = AlgorithmFactory.AlgorithmKeys.Length;
             minAlgorithmValue = 1;
         }
 
@@ -35,7 +32,7 @@ namespace ConsoleVersion.ViewModel
             (mainViewModel as MainViewModel).DisplayGraph();
             ChooseExtremeVertex();
             (mainViewModel as MainViewModel).DisplayGraph();
-            AlgorithmKey = algorithmEnums[GetAlgorithmEnum()];
+            AlgorithmKey = AlgorithmFactory.AlgorithmKeys[GetAlgorithmKey()];
             base.FindPath();
         }
 
@@ -69,7 +66,7 @@ namespace ConsoleVersion.ViewModel
             };         
         }
 
-        private int GetAlgorithmEnum()
+        private int GetAlgorithmKey()
         {
             return Input.InputNumber(Messages.Item3,
                 maxAlgorithmValue, minAlgorithmValue) - 1;
