@@ -37,7 +37,7 @@ namespace WpfVersion.Model.Vertex
             Template = (ControlTemplate)TryFindResource("vertexTemplate");
         }
 
-        public WpfVertex(VertexDto info) : this() => this.Initialize(info);
+        public WpfVertex(VertexDto info) : this() => this.InitializeBy(info);
 
         public bool IsEnd { get; set; }
         public bool IsObstacle { get; set; }

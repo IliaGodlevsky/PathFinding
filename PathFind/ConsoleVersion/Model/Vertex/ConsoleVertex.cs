@@ -23,7 +23,7 @@ namespace ConsoleVersion.Model.Vertex
 
         public ConsoleVertex(VertexDto dto) : this()
         {
-            this.Initialize(dto);
+            this.InitializeBy(dto);
         }
 
         public bool IsEnd { get; set; }

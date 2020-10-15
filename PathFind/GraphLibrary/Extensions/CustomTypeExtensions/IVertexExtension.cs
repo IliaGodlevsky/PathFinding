@@ -47,7 +47,7 @@ namespace GraphLibrary.Extensions.CustomTypeExtensions
             vertex.IsObstacle = false;
         }
 
-        public static void Initialize(this IVertex vertex, VertexDto dto)
+        public static void InitializeBy(this IVertex vertex, VertexDto dto)
         {
             vertex.InitilizeBy(dto);
             if (vertex.IsObstacle)
