@@ -1,4 +1,5 @@
-﻿using GraphLibrary.Vertex.Interface;
+﻿using GraphLibrary.Extensions.SystemTypeExtensions;
+using GraphLibrary.Vertex.Interface;
 using System;
 
 namespace GraphLibrary.DTO
@@ -8,8 +9,7 @@ namespace GraphLibrary.DTO
     {
         public VertexDto(IVertex vertex)
         {
-            IsObstacle = vertex.IsObstacle;
-            Cost = vertex.Cost;
+            this.InitilizeBy(vertex);
         }
 
         public bool IsObstacle { get; private set; }

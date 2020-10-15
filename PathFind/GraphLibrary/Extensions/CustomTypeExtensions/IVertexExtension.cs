@@ -1,4 +1,5 @@
 ﻿using GraphLibrary.DTO;
+using GraphLibrary.Extensions.SystemTypeExtensions;
 using GraphLibrary.Vertex.Interface;
 using System.Collections.Generic;
 using System.Linq;
@@ -48,10 +49,7 @@ namespace GraphLibrary.Extensions.CustomTypeExtensions
 
         public static void Initialize(this IVertex vertex, VertexDto dto)
         {
-            foreach (var vertexProperty in vertex.GetType().GetProperties())
-                foreach (var dtoProperty in dto.GetType().GetProperties())
-                    if (IsSuitableProperty(vertexProperty, dtoProperty))
-                        vertexProperty.SetValue(vertex, dtoProperty.GetValue(dto));
+            vertex.InitilizeBy(dto);
             if (vertex.IsObstacle)
                 vertex.MarkAsObstacle();
         }
@@ -76,11 +74,6 @@ namespace GraphLibrary.Extensions.CustomTypeExtensions
             if (!vertex.IsObstacle)
                 vertex.SetToDefault();
             return vertex;
-        }
-
-        private static bool IsSuitableProperty(PropertyInfo first, PropertyInfo second)
-        {
-            return first.Name == second.Name && first.PropertyType == second.PropertyType;
         }
     }
 }

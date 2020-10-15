@@ -1,9 +1,11 @@
 ﻿using GraphLibrary.DTO.Interface;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 
 namespace GraphLibrary.DTO.Containers
 {
+    [Serializable]
     public sealed class NullVertexDtoContainer : IVertexDtoContainer
     {
         public static NullVertexDtoContainer Instance

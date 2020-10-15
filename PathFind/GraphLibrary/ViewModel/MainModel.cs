@@ -41,7 +41,9 @@ namespace GraphLibrary.ViewModel
 
         public virtual void LoadGraph()
         {
-            ConnectNewGraph(Loader.LoadGraph(GetLoadingPath(), DtoConverter));
+            var newGraph = Loader.LoadGraph(GetLoadingPath(), DtoConverter);
+            if (!ReferenceEquals(newGraph, NullGraph.Instance))
+                ConnectNewGraph(newGraph);
         }
 
         public virtual void ClearGraph()

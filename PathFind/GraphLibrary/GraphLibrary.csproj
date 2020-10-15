@@ -60,6 +60,7 @@
     <Compile Include="Extensions\CustomTypeExtensions\ICoordinateExtensions.cs" />
     <Compile Include="Extensions\CustomTypeExtensions\IGraphSaverExtensions.cs" />
     <Compile Include="Extensions\SystemTypeExtensions\ListExtension.cs" />
+    <Compile Include="Extensions\SystemTypeExtensions\ObjectExtensions.cs" />
     <Compile Include="Extensions\SystemTypeExtensions\QueueExtensions.cs" />
     <Compile Include="Extensions\SystemTypeExtensions\StackExtension.cs" />
     <Compile Include="Extensions\SystemTypeExtensions\StringBuilderExtensions.cs" />

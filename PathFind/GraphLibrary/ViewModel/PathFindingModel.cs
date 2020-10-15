@@ -19,6 +19,7 @@ namespace GraphLibrary.ViewModel
             this.mainViewModel = mainViewModel;
             graph = mainViewModel.Graph;
             pathFindStatisticsFormat = LibraryResources.StatisticsFormat;
+            badResultMessage = LibraryResources.BadResultMsg;
             DelayTime = 4;
         }
 
@@ -62,6 +63,7 @@ namespace GraphLibrary.ViewModel
         protected IPathFindingAlgorithm pathAlgorithm;
         protected IGraph graph;
         protected IMainModel mainViewModel;
+        protected string badResultMessage;
         protected string pathFindStatisticsFormat;
     }
 }
