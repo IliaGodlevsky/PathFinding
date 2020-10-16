@@ -11,6 +11,6 @@ namespace GraphLibrary.GraphSerialization.GraphLoader.Interface
     public interface IGraphLoader
     {
         event Action<string> OnBadLoad;
-        IGraph LoadGraph(string path, Func<VertexDto, IVertex> dtoConverter);
+        IGraph LoadGraph(string path, Func<Dto<IVertex>, IVertex> dtoConverter);
     }
 }

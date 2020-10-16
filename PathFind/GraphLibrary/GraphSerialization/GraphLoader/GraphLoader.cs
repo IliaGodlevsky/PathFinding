@@ -19,7 +19,7 @@ namespace GraphLibrary.GraphSerialization.GraphLoader
     {
         public event Action<string> OnBadLoad;
 
-        public IGraph LoadGraph(string path, Func<VertexDto, IVertex> converter)
+        public IGraph LoadGraph(string path, Func<Dto<IVertex>, IVertex> converter)
         {
             var formatter = new BinaryFormatter();
             try
@@ -37,7 +37,7 @@ namespace GraphLibrary.GraphSerialization.GraphLoader
             return graph;
         }
 
-        private IGraph GetGraphFromDto(VertexDtoContainer2D verticesDto, Func<VertexDto, IVertex> dtoConverter)
+        private IGraph GetGraphFromDto(VertexDtoContainer2D verticesDto, Func<Dto<IVertex>, IVertex> dtoConverter)
         {
             graph = new Graph(verticesDto.Width, verticesDto.Height);
             for (int i = 0; i < verticesDto.Width; i++)

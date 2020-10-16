@@ -1,4 +1,4 @@
-﻿using GraphLibrary.Coordinates;
+﻿using GraphLibrary.Attributes;
 using GraphLibrary.Coordinates.Interface;
 using GraphLibrary.DTO;
 using GraphLibrary.Extensions.CustomTypeExtensions;
@@ -37,7 +37,7 @@ namespace WpfVersion.Model.Vertex
             Template = (ControlTemplate)TryFindResource("vertexTemplate");
         }
 
-        public WpfVertex(VertexDto info) : this() => this.InitializeBy(info);
+        public WpfVertex(Dto<IVertex> info) : this() => this.InitializeBy(info);
 
         public bool IsEnd { get; set; }
         public bool IsObstacle { get; set; }
@@ -55,7 +55,7 @@ namespace WpfVersion.Model.Vertex
         public double AccumulatedCost { get; set; }
         public ICoordinate Position { get; set; }
 
-        public VertexDto Dto => new VertexDto(this);
+        public Dto<IVertex> Dto => new Dto<IVertex>(this);
 
         public void MarkAsEnd() => Background = EndVertexColor;
 

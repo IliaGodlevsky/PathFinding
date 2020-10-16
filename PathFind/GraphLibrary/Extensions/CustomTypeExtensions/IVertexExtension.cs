@@ -1,9 +1,7 @@
 ﻿using GraphLibrary.DTO;
-using GraphLibrary.Extensions.SystemTypeExtensions;
 using GraphLibrary.Vertex.Interface;
 using System.Collections.Generic;
 using System.Linq;
-using System.Reflection;
 
 namespace GraphLibrary.Extensions.CustomTypeExtensions
 {
@@ -47,9 +45,9 @@ namespace GraphLibrary.Extensions.CustomTypeExtensions
             vertex.IsObstacle = false;
         }
 
-        public static void InitializeBy(this IVertex vertex, VertexDto dto)
+        public static void InitializeBy(this IVertex vertex, Dto<IVertex> dto)
         {
-            vertex.InitilizeBy(dto);
+            dto.InitializeObject(vertex);
             if (vertex.IsObstacle)
                 vertex.MarkAsObstacle();
         }

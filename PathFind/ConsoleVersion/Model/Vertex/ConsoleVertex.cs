@@ -21,7 +21,7 @@ namespace ConsoleVersion.Model.Vertex
             this.Initialize();
         }
 
-        public ConsoleVertex(VertexDto dto) : this()
+        public ConsoleVertex(Dto<IVertex> dto) : this()
         {
             this.InitializeBy(dto);
         }
@@ -36,7 +36,7 @@ namespace ConsoleVersion.Model.Vertex
         public IVertex ParentVertex { get; set; }
         public double AccumulatedCost { get; set; }
         public ICoordinate Position { get; set; }
-        public VertexDto Dto => new VertexDto(this);
+        public Dto<IVertex> Dto => new Dto<IVertex>(this);
 
         public void ChangeCost()
         {

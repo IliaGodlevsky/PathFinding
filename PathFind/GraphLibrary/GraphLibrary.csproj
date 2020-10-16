@@ -33,8 +33,8 @@
     <LangVersion>7.1</LangVersion>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Dynamitey, Version=2.0.9.136, Culture=neutral, PublicKeyToken=cbf53ea3aeb972c6, processorArchitecture=MSIL">
-      <HintPath>..\packages\Dynamitey.2.0.9.136\lib\net40\Dynamitey.dll</HintPath>
+    <Reference Include="Dynamitey, Version=2.0.10.189, Culture=neutral, PublicKeyToken=cbf53ea3aeb972c6, processorArchitecture=MSIL">
+      <HintPath>..\packages\Dynamitey.2.0.10.189\lib\net40\Dynamitey.dll</HintPath>
     </Reference>
     <Reference Include="ImpromptuInterface, Version=7.0.1.0, Culture=neutral, PublicKeyToken=0b1781c923b2975b, processorArchitecture=MSIL">
       <HintPath>..\packages\ImpromptuInterface.7.0.1\lib\net40\ImpromptuInterface.dll</HintPath>
@@ -51,6 +51,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Attributes\DtoMemberAttribute.cs" />
     <Compile Include="Coordinates\Interface\ICoordinate.cs" />
     <Compile Include="Coordinates\NullCoordinate.cs" />
     <Compile Include="DTO\Containers\NullVertexDtoContainer.cs" />
@@ -59,8 +60,8 @@
     <Compile Include="EventArguments\AlgorithmEventArgs.cs" />
     <Compile Include="Extensions\CustomTypeExtensions\ICoordinateExtensions.cs" />
     <Compile Include="Extensions\CustomTypeExtensions\IGraphSaverExtensions.cs" />
+    <Compile Include="Extensions\CustomTypeExtensions\DtoExtensions.cs" />
     <Compile Include="Extensions\SystemTypeExtensions\ListExtension.cs" />
-    <Compile Include="Extensions\SystemTypeExtensions\ObjectExtensions.cs" />
     <Compile Include="Extensions\SystemTypeExtensions\QueueExtensions.cs" />
     <Compile Include="Extensions\SystemTypeExtensions\StackExtension.cs" />
     <Compile Include="Extensions\SystemTypeExtensions\StringBuilderExtensions.cs" />
@@ -108,7 +109,7 @@
     <Compile Include="ViewModel\Interface\IModel.cs" />
     <Compile Include="AlgorithmCreating\AlgorithmFactory.cs" />
     <Compile Include="EventHolder\VertexEventHolder.cs" />
-    <Compile Include="DTO\VertexDto.cs" />
+    <Compile Include="DTO\Dto.cs" />
     <Compile Include="Graphs\Graph.cs" />
     <Compile Include="PathFindingAlgorithm\DijkstraAlgorithm.cs" />
     <Compile Include="PathFindingAlgorithm\DepthFirstAlgorithm.cs" />
@@ -127,6 +128,7 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
+    <None Include="app.config" />
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup />

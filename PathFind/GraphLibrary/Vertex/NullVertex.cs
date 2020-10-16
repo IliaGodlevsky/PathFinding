@@ -34,7 +34,7 @@ namespace GraphLibrary.Vertex
         public IVertex ParentVertex { get => Instance; set => _ = value; }
         public double AccumulatedCost { get => double.PositiveInfinity; set => _ = value; }
         public ICoordinate Position { get => NullCoordinate.Instance; set => _ = value; }
-        public VertexDto Dto => new VertexDto(this);
+        public Dto<IVertex> Dto => new Dto<IVertex>(this);
         public void MarkAsEnd() { }
         public void MarkAsObstacle() { }
         public void MarkAsPath() { }

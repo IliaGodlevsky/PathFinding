@@ -25,7 +25,7 @@ namespace WinFormsVersion.Vertex
             //BorderStyle = BorderStyle.FixedSingle;
         }
 
-        public WinFormsVertex(VertexDto info) : this()
+        public WinFormsVertex(Dto<IVertex> info) : this()
         {
             this.InitializeBy(info);
         }
@@ -60,7 +60,7 @@ namespace WinFormsVersion.Vertex
 
         public void MarkAsEnqueued() => BackColor = Color.FromKnownColor(KnownColor.Aquamarine);
 
-        public VertexDto Dto => new VertexDto(this);
+        public Dto<IVertex> Dto => new Dto<IVertex>(this);
 
         public int Cost { get => int.Parse(Text); set => Text = value.ToString(); }
         public ICoordinate Position { get; set; }

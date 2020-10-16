@@ -22,7 +22,7 @@ namespace GraphLibrary.DTO
 
         public IEnumerable<int> DimensionsSizes => new int[] { Width, Height };
 
-        public IEnumerator<VertexDto> GetEnumerator()
+        public IEnumerator<Dto<IVertex>> GetEnumerator()
         {
             return verticesDto.GetEnumerator();
         }
@@ -32,6 +32,6 @@ namespace GraphLibrary.DTO
             return verticesDto.GetEnumerator();
         }
 
-        private readonly IEnumerable<VertexDto> verticesDto;
+        private readonly IEnumerable<Dto<IVertex>> verticesDto;
     }
 }

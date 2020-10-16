@@ -1,4 +1,5 @@
 ﻿using GraphLibrary.DTO.Interface;
+using GraphLibrary.Vertex.Interface;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -20,12 +21,12 @@ namespace GraphLibrary.DTO.Containers
 
         private NullVertexDtoContainer()
         {
-            verticesDto = new VertexDto[] { };
+            verticesDto = new Dto<IVertex>[] { };
         }
 
         public IEnumerable<int> DimensionsSizes => new int[] { };
 
-        public IEnumerator<VertexDto> GetEnumerator()
+        public IEnumerator<Dto<IVertex>> GetEnumerator()
         {
             return verticesDto.GetEnumerator();
         }
@@ -36,6 +37,6 @@ namespace GraphLibrary.DTO.Containers
         }
 
         private static NullVertexDtoContainer instance = null;
-        private readonly IEnumerable<VertexDto> verticesDto;
+        private readonly IEnumerable<Dto<IVertex>> verticesDto;
     }
 }

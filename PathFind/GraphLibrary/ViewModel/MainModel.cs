@@ -25,7 +25,7 @@ namespace GraphLibrary.ViewModel
         public IGraphSaver Saver { get; set; }
         public IGraphLoader Loader { get; set; }
         public GraphFieldFactory FieldFactory { get; set; }
-        public Func<VertexDto, IVertex> DtoConverter { get; set; }
+        public Func<Dto<IVertex>, IVertex> DtoConverter { get; set; }
 
         public MainModel()
         {
