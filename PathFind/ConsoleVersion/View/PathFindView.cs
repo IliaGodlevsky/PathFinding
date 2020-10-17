@@ -3,6 +3,7 @@ using ConsoleVersion.ViewModel;
 using GraphLibrary.AlgorithmCreating;
 using GraphLibrary.Extensions.SystemTypeExtensions;
 using System;
+using System.Linq;
 using System.Text;
 
 namespace ConsoleVersion.View
@@ -27,10 +28,10 @@ namespace ConsoleVersion.View
         private string GetAlgorithmsList()
         {
             var algorithmList = new StringBuilder("\n");
-            for (int i = 0; i < AlgorithmFactory.AlgorithmKeys.Length; i++)
+            for (int i = 0; i < AlgorithmFactory.AlgorithmKeys.Count(); i++)
             {
                 algorithmList.AppendFormatLine(ConsoleVersionResources.MenuFormat,
-                    i + 1, AlgorithmFactory.AlgorithmKeys[i]);
+                    i + 1, AlgorithmFactory.AlgorithmKeys.ElementAt(i));
             }
             return algorithmList.ToString();
         }

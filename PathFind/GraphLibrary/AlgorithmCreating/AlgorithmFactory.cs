@@ -11,11 +11,12 @@ namespace GraphLibrary.AlgorithmCreating
 {
     public static class AlgorithmFactory
     {
-        public static string[] AlgorithmKeys { get; private set; }
+        public static IEnumerable<string> AlgorithmKeys => Algorithms.Keys;
+        public static IDictionary<string, Type> Algorithms { get; private set; }
 
         static AlgorithmFactory()
         {
-            algorithms = new Dictionary<string, Type>();
+            Algorithms = new Dictionary<string, Type>();
             var assembly = Assembly.Load(typeof(IPathFindingAlgorithm).Assembly.GetName());
             foreach (var type in assembly.GetTypes().Where(t => t != typeof(NullAlgorithm)))
             {
@@ -25,19 +26,16 @@ namespace GraphLibrary.AlgorithmCreating
                     var attribute = (DescriptionAttribute)Attribute.
                         GetCustomAttribute(type, typeof(DescriptionAttribute));
                     var description = attribute != null ? attribute.Description : type.ToString();
-                    algorithms.Add(description, type);
+                    Algorithms.Add(description, type);
                 }
             }
-            AlgorithmKeys = algorithms.Select(item => item.Key).ToArray();
         }
 
         public static IPathFindingAlgorithm CreateAlgorithm(string algorithmKey, IGraph graph)
         {
-            return AlgorithmKeys.Contains(algorithmKey)
-                ? (IPathFindingAlgorithm)Activator.CreateInstance(algorithms[algorithmKey], graph)
+            return Algorithms.Keys.Contains(algorithmKey)
+                ? (IPathFindingAlgorithm)Activator.CreateInstance(Algorithms[algorithmKey], graph)
                 : NullAlgorithm.Instance;
         }
-
-        private static readonly Dictionary<string, Type> algorithms;
     }
 }

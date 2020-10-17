@@ -20,7 +20,7 @@ namespace ConsoleVersion.ViewModel
 
         public PathFindingViewModel(IMainModel model) : base(model)
         {
-            maxAlgorithmValue = AlgorithmFactory.AlgorithmKeys.Length;
+            maxAlgorithmValue = AlgorithmFactory.AlgorithmKeys.Count();
             minAlgorithmValue = 1;
         }
 
@@ -32,7 +32,7 @@ namespace ConsoleVersion.ViewModel
             (mainViewModel as MainViewModel).DisplayGraph();
             ChooseExtremeVertex();
             (mainViewModel as MainViewModel).DisplayGraph();
-            AlgorithmKey = AlgorithmFactory.AlgorithmKeys[GetAlgorithmKey()];
+            AlgorithmKey = AlgorithmFactory.AlgorithmKeys.ElementAt(GetAlgorithmKeyIndex());
             base.FindPath();
         }
 
@@ -66,7 +66,7 @@ namespace ConsoleVersion.ViewModel
             };         
         }
 
-        private int GetAlgorithmKey()
+        private int GetAlgorithmKeyIndex()
         {
             return Input.InputNumber(Messages.Item3,
                 maxAlgorithmValue, minAlgorithmValue) - 1;

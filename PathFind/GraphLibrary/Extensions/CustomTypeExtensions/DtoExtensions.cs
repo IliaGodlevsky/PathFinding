@@ -42,7 +42,7 @@ namespace GraphLibrary.Extensions.CustomTypeExtensions
                 var dictionary = (Dictionary<string, object>)self;
                 if (dictionary.ContainsKey(property.Name))
                 {
-                    object result = Dynamic.InvokeGet(self, property.Name);
+                    var result = Dynamic.InvokeGet(self, property.Name);
                     property.SetValue(obj, result);
                 }
             });
