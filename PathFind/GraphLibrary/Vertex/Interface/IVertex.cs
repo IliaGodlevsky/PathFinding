@@ -11,12 +11,10 @@ namespace GraphLibrary.Vertex.Interface
     public interface IVertex
     {
         bool IsEnd { get; set; }
-
         [DtoMember]
         bool IsObstacle { get; set; }
         bool IsStart { get; set; }
         bool IsVisited { get; set; }
-
         [DtoMember]
         int Cost { get; set; }
         IList<IVertex> Neighbours { get; set; }
