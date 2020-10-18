@@ -72,10 +72,10 @@ namespace WpfVersion.ViewModel
 
             StartPathFindCommand = new RelayCommand(ExecuteStartPathFindCommand, CanExecuteStartFindPathCommand);
             CreateNewGraphCommand = new RelayCommand(ExecuteCreateNewGraphCommand, obj => true);
-            ClearGraphCommand = new RelayCommand(ExecuteClearGraphCommand, obj=> Graph != null);
-            SaveGraphCommand = new RelayCommand(ExecuteSaveGraphCommand, obj => Graph != null);
+            ClearGraphCommand = new RelayCommand(ExecuteClearGraphCommand, obj => !ReferenceEquals(Graph, NullGraph.Instance));
+            SaveGraphCommand = new RelayCommand(ExecuteSaveGraphCommand, obj => !ReferenceEquals(Graph, NullGraph.Instance));
             LoadGraphCommand = new RelayCommand(ExecuteLoadGraphCommand, obj => true);
-            ChangeVertexSize = new RelayCommand(ExecuteChangeVertexSize, obj => Graph != null);
+            ChangeVertexSize = new RelayCommand(ExecuteChangeVertexSize, obj => !ReferenceEquals(Graph, NullGraph.Instance));
         }
 
         public override void FindPath()
@@ -105,15 +105,15 @@ namespace WpfVersion.ViewModel
 
         private bool CanExecuteStartFindPathCommand(object param)
         {
-            return Graph.End != NullVertex.Instance
-                && Graph.Start != NullVertex.Instance && Graph.Any()
+            return !ReferenceEquals(Graph.End, NullVertex.Instance)
+                && !ReferenceEquals(Graph.Start, NullVertex.Instance) && Graph.Any()
                 && !Graph.Start.IsVisited;
         }
 
         private void ExecuteLoadGraphCommand(object param)
         {
             base.LoadGraph();
-            if (Graph != NullGraph.Instance)
+            if (!ReferenceEquals(Graph, NullGraph.Instance))
             {
                 OnPropertyChanged(nameof(GraphField));
                 OnPropertyChanged(nameof(Graph));

@@ -2,7 +2,7 @@
 
 namespace GraphLibrary.Attributes
 {
-    public class DtoMemberAttribute : Attribute
+    public sealed class DtoMemberAttribute : Attribute
     {
 
     }

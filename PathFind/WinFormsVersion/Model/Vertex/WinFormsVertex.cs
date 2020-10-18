@@ -27,7 +27,7 @@ namespace WinFormsVersion.Vertex
 
         public WinFormsVertex(Dto<IVertex> info) : this()
         {
-            this.InitializeBy(info);
+            this.Initialize(info);
         }
 
         public bool IsStart { get; set; }

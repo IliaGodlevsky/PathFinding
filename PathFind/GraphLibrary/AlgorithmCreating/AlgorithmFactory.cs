@@ -17,11 +17,13 @@ namespace GraphLibrary.AlgorithmCreating
         static AlgorithmFactory()
         {
             Algorithms = new Dictionary<string, Type>();
-            var assembly = Assembly.Load(typeof(IPathFindingAlgorithm).Assembly.GetName());
-            foreach (var type in assembly.GetTypes().Where(t => t != typeof(NullAlgorithm)))
+            var algoType = typeof(IPathFindingAlgorithm);
+            var filterType = typeof(NullAlgorithm);
+
+            var assembly = Assembly.Load(algoType.Assembly.GetName());
+            foreach (var type in assembly.GetTypes().Where(t => t != filterType))
             {
-                if (type.GetInterfaces().Select(interf => interf.Name).
-                    Contains(typeof(IPathFindingAlgorithm).Name))
+                if (type.GetInterfaces().Select(interf => interf.Name).Contains(algoType.Name))
                 {
                     var attribute = (DescriptionAttribute)Attribute.
                         GetCustomAttribute(type, typeof(DescriptionAttribute));

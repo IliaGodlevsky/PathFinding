@@ -20,6 +20,7 @@ namespace GraphLibrary.Vertex.Interface
         IList<IVertex> Neighbours { get; set; }
         IVertex ParentVertex { get; set; }
         double AccumulatedCost { get; set; }
+        [DtoMember]
         ICoordinate Position { get; set; }
         Dto<IVertex> Dto { get; }
         void MarkAsEnd();

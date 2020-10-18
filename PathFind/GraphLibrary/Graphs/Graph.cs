@@ -7,7 +7,6 @@ using GraphLibrary.Coordinates.Interface;
 using GraphLibrary.DTO;
 using GraphLibrary.DTO.Interface;
 using GraphLibrary.Extensions.CustomTypeExtensions;
-using GraphLibrary.Extensions.SystemTypeExtensions;
 using GraphLibrary.Graphs.Interface;
 using GraphLibrary.Vertex;
 using GraphLibrary.Vertex.Interface;
@@ -21,15 +20,16 @@ namespace GraphLibrary.Graphs
     [Serializable]
     public class Graph : IGraph
     {
-        public Graph(int width, int height)
+        public Graph(int width, int lenght)
         {
-            vertices = new IVertex[width, height];
+            Width = width; Length = lenght;
+            vertices = new IVertex[Size];
             this.RemoveExtremeVertices();
         }
 
-        public int Width => vertices.Width();
+        public int Width { get; private set; }
 
-        public int Length => vertices.Length();
+        public int Length { get; private set; }
 
         public IVertex this[ICoordinate coordinate]
         {
@@ -40,7 +40,7 @@ namespace GraphLibrary.Graphs
                 var coord = coordinate as Coordinate2D;
                 if (coord == null)
                     throw new ArgumentException("Must be 2D coordinates");
-                return vertices[coord.X, coord.Y];
+                return vertices[Converter.ToIndex(coordinate, Length)];
             }
             set
             {
@@ -49,14 +49,14 @@ namespace GraphLibrary.Graphs
                 var coord = coordinate as Coordinate2D;
                 if (coord == null)
                     throw new ArgumentException("Must be 2D coordinates");
-                vertices[coord.X, coord.Y] = value;
+                vertices[Converter.ToIndex(coordinate, Length)] = value;
             }
         }
-        public int Size => vertices.Length;
+        public int Size => Width * Length;
 
-        public int NumberOfVisitedVertices => vertices.Cast<IVertex>().AsParallel().Count(vertex => vertex.IsVisited);
+        public int NumberOfVisitedVertices => vertices.AsParallel().Count(vertex => vertex.IsVisited);
 
-        public int ObstacleNumber => vertices.Cast<IVertex>().AsParallel().Count(vertex => vertex.IsObstacle);
+        public int ObstacleNumber => vertices.AsParallel().Count(vertex => vertex.IsObstacle);
 
         public int ObstaclePercent => Size == 0 ? 0 : ObstacleNumber * 100 / Size;
 
@@ -80,12 +80,12 @@ namespace GraphLibrary.Graphs
 
         public IEnumerator<IVertex> GetEnumerator()
         {
-            return vertices.Cast<IVertex>().GetEnumerator();
+            return vertices.AsEnumerable().GetEnumerator();
         }
 
         IEnumerator IEnumerable.GetEnumerator()
         {
-            return vertices.GetEnumerator();
+            return vertices.AsEnumerable().GetEnumerator();
         }
 
         public string GetFormattedData(string format)
@@ -94,6 +94,6 @@ namespace GraphLibrary.Graphs
                ObstaclePercent, ObstacleNumber, Size);
         }
 
-        private readonly IVertex[,] vertices;
+        private readonly IVertex[] vertices;
     }
 }

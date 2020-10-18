@@ -52,6 +52,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Attributes\DtoMemberAttribute.cs" />
+    <Compile Include="Coordinates\Converter.cs" />
     <Compile Include="Coordinates\Interface\ICoordinate.cs" />
     <Compile Include="Coordinates\NullCoordinate.cs" />
     <Compile Include="DTO\Containers\NullVertexDtoContainer.cs" />
@@ -60,8 +61,8 @@
     <Compile Include="EventArguments\AlgorithmEventArgs.cs" />
     <Compile Include="Extensions\CustomTypeExtensions\ICoordinateExtensions.cs" />
     <Compile Include="Extensions\CustomTypeExtensions\IGraphSaverExtensions.cs" />
-    <Compile Include="Extensions\CustomTypeExtensions\DtoExtensions.cs" />
     <Compile Include="Extensions\SystemTypeExtensions\ListExtension.cs" />
+    <Compile Include="Extensions\SystemTypeExtensions\ObjectExtensions.cs" />
     <Compile Include="Extensions\SystemTypeExtensions\QueueExtensions.cs" />
     <Compile Include="Extensions\SystemTypeExtensions\StackExtension.cs" />
     <Compile Include="Extensions\SystemTypeExtensions\StringBuilderExtensions.cs" />

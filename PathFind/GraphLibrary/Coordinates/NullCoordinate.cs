@@ -1,8 +1,10 @@
 ﻿using GraphLibrary.Coordinates.Interface;
+using System;
 using System.Collections.Generic;
 
 namespace GraphLibrary.Coordinates
 {
+    [Serializable]
     public sealed class NullCoordinate : ICoordinate
     {
         public static NullCoordinate Instance

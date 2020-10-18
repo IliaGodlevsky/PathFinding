@@ -1,4 +1,6 @@
-﻿using GraphLibrary.Extensions.CustomTypeExtensions;
+﻿using Dynamitey;
+using GraphLibrary.Attributes;
+using GraphLibrary.Extensions.SystemTypeExtensions;
 using System;
 using System.Collections.Generic;
 using System.Dynamic;
@@ -13,7 +15,8 @@ namespace GraphLibrary.DTO
         public Dto(TSource obj)
         {
             members = new Dictionary<string, object>();
-            this.InitilizeByObject(obj);
+            foreach (var property in obj.GetMarkedProperties<DtoMemberAttribute>(true))
+                Dynamic.InvokeSet(this, property.Name, property.GetValue(obj));
         }
 
         public override bool TrySetMember(SetMemberBinder binder, object value)

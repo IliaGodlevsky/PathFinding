@@ -4,6 +4,7 @@ using GraphLibrary.Vertex.Interface;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 
 namespace GraphLibrary.Extensions.SystemTypeExtensions
 {
@@ -26,11 +27,22 @@ namespace GraphLibrary.Extensions.SystemTypeExtensions
 
         public static void DrawPath(this IEnumerable<IVertex> path)
         {
-            Array.ForEach(path.ToArray(), vertex =>
+            foreach(var vertex in path)
             {
                 if (vertex.IsSimpleVertex())
                     vertex.MarkAsPath();
-            });
+            }
+        }
+
+        public static IEnumerable<MemberInfo> GetMarked<TMark>(this IEnumerable<MemberInfo> members)
+            where TMark : Attribute
+        {
+            foreach (var member in members)
+            {
+                var attribute = member.GetCustomAttribute(typeof(TMark), inherit: true);
+                if (attribute != null)
+                    yield return member;
+            }
         }
     }
 }

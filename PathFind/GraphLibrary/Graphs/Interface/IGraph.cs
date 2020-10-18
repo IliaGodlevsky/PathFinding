@@ -1,6 +1,4 @@
-﻿using GraphLibrary.Coordinates;
-using GraphLibrary.Coordinates.Interface;
-using GraphLibrary.DTO;
+﻿using GraphLibrary.Coordinates.Interface;
 using GraphLibrary.DTO.Interface;
 using GraphLibrary.Vertex.Interface;
 using System.Collections.Generic;
