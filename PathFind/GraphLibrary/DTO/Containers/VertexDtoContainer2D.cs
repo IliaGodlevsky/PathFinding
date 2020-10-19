@@ -14,7 +14,7 @@ namespace GraphLibrary.DTO
         {
             Width = width;
             Height = height;
-            verticesDto = vertices.Select(vertex => vertex.Dto).ToArray();
+            verticesDto = vertices.AsParallel().Select(vertex => vertex.Dto).ToArray();
         }
        
         public int Width { get; private set; }
