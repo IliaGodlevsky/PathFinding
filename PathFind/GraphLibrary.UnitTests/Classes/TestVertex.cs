@@ -2,6 +2,7 @@
 using GraphLibrary.Coordinates.Interface;
 using GraphLibrary.DTO;
 using GraphLibrary.Extensions.CustomTypeExtensions;
+using GraphLibrary.Extensions.SystemTypeExtensions;
 using GraphLibrary.Vertex.Interface;
 using System.Collections.Generic;
 
@@ -11,7 +12,7 @@ namespace GraphLibrary.UnitTests.Classes
     {
         public TestVertex() => this.Initialize();
 
-        public TestVertex(VertexDto dto) : this() => this.InitializeBy(dto);
+        public TestVertex(Dto<IVertex> dto) : this() => this.InitializeByDto(dto);
 
         public bool IsEnd { get; set; }
         public bool IsObstacle { get; set; }
@@ -21,25 +22,17 @@ namespace GraphLibrary.UnitTests.Classes
         public IVertex ParentVertex { get; set; }
         public double AccumulatedCost { get; set; }
         public ICoordinate Position { get; set; }
-        public VertexDto Dto => new VertexDto(this);
-
-        IList<IVertex> IVertex.Neighbours { get; set; }
-
+        public Dto<IVertex> Dto => new Dto<IVertex>(this);
+        public IList<IVertex> Neighbours { get; set; }
         public void MarkAsEnd() { }
-
         public void MarkAsSimpleVertex() { }
-
         public void MarkAsObstacle()
         {
             this.WashVertex();
         }
-
         public void MarkAsPath() { }
-
         public void MarkAsStart() { }
-
         public void MarkAsVisited() { }
-
         public void MarkAsEnqueued() { }
     }
 }
