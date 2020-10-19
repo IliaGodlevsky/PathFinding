@@ -12,27 +12,8 @@ namespace ConsoleVersion.View
 {
     internal class ConsoleGraphField : IGraphField
     {
-        private int width;
-        public int Width
-        {
-            get => width;
-            private set
-            {
-                if (value > width)
-                    width = value;
-            }
-        }
-
-        private int length;
-        public int Length 
-        {
-            get => length;
-            private set
-            {
-                if (value > length)
-                    length = value;
-            }
-        }
+        public int Width { get; set; }
+        public int Length { get; set; }
 
         public ConsoleGraphField()
         {
@@ -45,8 +26,6 @@ namespace ConsoleVersion.View
             if (coordinate == null)
                 throw new ArgumentException("Must be 2D coordinates");
             vertices.Add(vertex as ConsoleVertex);
-            Width = coordinate.X + 1;
-            Length = coordinate.Y + 1;
         }
 
         public void ShowGraphWithFrames()
@@ -114,16 +93,12 @@ namespace ConsoleVersion.View
                 Console.Write(DrawOrdinate(currentLength, TableSide.Left));
                 for (var currentWidth = 0; currentWidth < Width; currentWidth++)
                 {
-                    ShowVertex(vertices[GetOneDimensionIndex(currentWidth, currentLength)]);
+                    int index = Converter.ToIndex(new Coordinate2D(currentWidth, currentLength), Length);
+                    ShowVertex(vertices[index]);
                     if (IsEndOfRow(currentWidth))
                         Console.Write(DrawOrdinate(currentLength, TableSide.Right));
                 }
             }
-        }
-
-        private int GetOneDimensionIndex(int x, int y)
-        {
-            return x * Length + y;
         }
 
         private void ShowVertex(ConsoleVertex vertex)

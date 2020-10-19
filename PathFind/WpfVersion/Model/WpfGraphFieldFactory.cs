@@ -5,7 +5,7 @@ namespace WpfVersion.Model
 {
     internal class WpfGraphFieldFactory : GraphFieldFactory
     {
-        protected override IGraphField CreateField()
+        protected override IGraphField GetField()
         {
             return new WpfGraphField();
         }
