@@ -12,7 +12,7 @@ namespace GraphLibrary.UnitTests.Classes
     {
         public TestVertex() => this.Initialize();
 
-        public TestVertex(Info<IVertex> dto) : this() => this.InitializeByDto(dto);
+        public TestVertex(Info<IVertex> dto) : this() => this.InitializeByInfo(dto);
 
         public bool IsEnd { get; set; }
         public bool IsObstacle { get; set; }
