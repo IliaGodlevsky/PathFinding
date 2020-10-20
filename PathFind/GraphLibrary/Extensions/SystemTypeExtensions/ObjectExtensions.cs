@@ -1,5 +1,6 @@
 ﻿using Dynamitey;
-using GraphLibrary.DTO;
+using GraphLibrary.Attributes;
+using GraphLibrary.Info;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -27,9 +28,10 @@ namespace GraphLibrary.Extensions.SystemTypeExtensions
             return properties;
         }
 
-        public static void InitializeByDto<TSource>(this TSource self, Dto<TSource> dto)
+        public static void InitializeByDto<TSource>(this TSource self, Info<TSource> dto)
         {
-            foreach (var property in self.GetType().GetProperties())
+            var markedProperties = self.GetMarkedProperties<InfoMemberAttribute>(true);
+            foreach (var property in markedProperties)
             {
                 var dictionary = (Dictionary<string, object>)dto;
                 if (dictionary.ContainsKey(property.Name))

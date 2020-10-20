@@ -5,17 +5,17 @@ using System;
 using System.Collections.Generic;
 using System.Dynamic;
 
-namespace GraphLibrary.DTO
+namespace GraphLibrary.Info
 {
     [Serializable]
-    public sealed class Dto<TSource> : DynamicObject
-    { 
+    public sealed class Info<TSource> : DynamicObject
+    {
         private readonly Dictionary<string, object> members;
 
-        public Dto(TSource obj)
+        public Info(TSource obj)
         {
             members = new Dictionary<string, object>();
-            foreach (var property in obj.GetMarkedProperties<DtoMemberAttribute>(true))
+            foreach (var property in obj.GetMarkedProperties<InfoMemberAttribute>(true))
                 Dynamic.InvokeSet(this, property.Name, property.GetValue(obj));
         }
 
@@ -36,7 +36,7 @@ namespace GraphLibrary.DTO
             return false;
         }
 
-        public static explicit operator Dictionary<string,object>(Dto<TSource> dto)
+        public static explicit operator Dictionary<string, object>(Info<TSource> dto)
         {
             return dto.members;
         }

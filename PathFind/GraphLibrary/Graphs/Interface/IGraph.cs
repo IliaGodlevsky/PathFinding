@@ -1,5 +1,5 @@
 ﻿using GraphLibrary.Coordinates.Interface;
-using GraphLibrary.DTO.Interface;
+using GraphLibrary.Info.Interface;
 using GraphLibrary.Vertex.Interface;
 using System.Collections.Generic;
 
@@ -33,7 +33,7 @@ namespace GraphLibrary.Graphs.Interface
         IVertex this[ICoordinate coordinate] { get; set; }
         IVertex End { get; set; }
         IVertex Start { get; set; }
-        IVertexDtoContainer VertexDtos { get; }
+        IVertexInfoCollection VertexInfoCollection { get; }
         string GetFormattedData(string format);
         IEnumerable<int> DimensionsSizes { get; }
     }

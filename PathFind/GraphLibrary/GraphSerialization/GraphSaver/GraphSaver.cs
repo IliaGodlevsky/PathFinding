@@ -19,7 +19,7 @@ namespace GraphLibrary.GraphSerialization.GraphSaver
             var formatter = new BinaryFormatter();
             try
             {
-                formatter.Serialize(stream, graph.VertexDtos);
+                formatter.Serialize(stream, graph.VertexInfoCollection);
             }
             catch (Exception ex)
             {

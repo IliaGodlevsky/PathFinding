@@ -4,10 +4,10 @@ using System.Collections.Generic;
 using System.Linq;
 using GraphLibrary.Coordinates;
 using GraphLibrary.Coordinates.Interface;
-using GraphLibrary.DTO;
-using GraphLibrary.DTO.Interface;
 using GraphLibrary.Extensions.CustomTypeExtensions;
 using GraphLibrary.Graphs.Interface;
+using GraphLibrary.Info.Containers;
+using GraphLibrary.Info.Interface;
 using GraphLibrary.Vertex;
 using GraphLibrary.Vertex.Interface;
 
@@ -74,7 +74,7 @@ namespace GraphLibrary.Graphs
             set { start = value; start.IsStart = true; }
         }
 
-        public IVertexDtoContainer VertexDtos => new VertexDtoContainer2D(this, Width, Length);
+        public IVertexInfoCollection VertexInfoCollection => new VertexInfoCollection2D(this, Width, Length);
 
         public IEnumerable<int> DimensionsSizes => new int[] { Width, Length };
 

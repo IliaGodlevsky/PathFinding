@@ -1,5 +1,5 @@
-﻿using GraphLibrary.DTO;
-using GraphLibrary.Graphs.Interface;
+﻿using GraphLibrary.Graphs.Interface;
+using GraphLibrary.Info;
 using GraphLibrary.Vertex.Interface;
 using System;
 
@@ -11,6 +11,6 @@ namespace GraphLibrary.GraphSerialization.GraphLoader.Interface
     public interface IGraphLoader
     {
         event Action<string> OnBadLoad;
-        IGraph LoadGraph(string path, Func<Dto<IVertex>, IVertex> dtoConverter);
+        IGraph LoadGraph(string path, Func<Info<IVertex>, IVertex> dtoConverter);
     }
 }

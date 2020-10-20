@@ -1,8 +1,8 @@
 ﻿using GraphLibrary.Attributes;
 using GraphLibrary.Coordinates.Interface;
-using GraphLibrary.DTO;
 using GraphLibrary.Extensions.CustomTypeExtensions;
 using GraphLibrary.Globals;
+using GraphLibrary.Info;
 using GraphLibrary.Vertex.Interface;
 using System;
 using System.Collections.Generic;
@@ -37,7 +37,7 @@ namespace WpfVersion.Model.Vertex
             Template = (ControlTemplate)TryFindResource("vertexTemplate");
         }
 
-        public WpfVertex(Dto<IVertex> info) : this()
+        public WpfVertex(Info<IVertex> info) : this()
         {
             this.Initialize(info);
         }
@@ -58,7 +58,7 @@ namespace WpfVersion.Model.Vertex
         public double AccumulatedCost { get; set; }
         public ICoordinate Position { get; set; }
 
-        public Dto<IVertex> Dto => new Dto<IVertex>(this);
+        public Info<IVertex> Info => new Info<IVertex>(this);
 
         public void MarkAsEnd() => Background = EndVertexColor;
 

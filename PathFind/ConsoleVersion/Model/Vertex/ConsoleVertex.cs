@@ -1,7 +1,7 @@
 ﻿using GraphLibrary.Coordinates;
 using GraphLibrary.Coordinates.Interface;
-using GraphLibrary.DTO;
 using GraphLibrary.Extensions.CustomTypeExtensions;
+using GraphLibrary.Info;
 using GraphLibrary.Vertex.Interface;
 using System;
 using System.Collections.Generic;
@@ -21,7 +21,7 @@ namespace ConsoleVersion.Model.Vertex
             this.Initialize();
         }
 
-        public ConsoleVertex(Dto<IVertex> dto) : this()
+        public ConsoleVertex(Info<IVertex> dto) : this()
         {
             this.Initialize(dto);
         }
@@ -36,7 +36,7 @@ namespace ConsoleVersion.Model.Vertex
         public IVertex ParentVertex { get; set; }
         public double AccumulatedCost { get; set; }
         public ICoordinate Position { get; set; }
-        public Dto<IVertex> Dto => new Dto<IVertex>(this);
+        public Info<IVertex> Info => new Info<IVertex>(this);
 
         public void ChangeCost()
         {

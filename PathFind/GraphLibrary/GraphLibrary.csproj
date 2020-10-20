@@ -51,13 +51,13 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Attributes\DtoMemberAttribute.cs" />
+    <Compile Include="Attributes\InfoMemberAttribute.cs" />
     <Compile Include="Coordinates\Converter.cs" />
     <Compile Include="Coordinates\Interface\ICoordinate.cs" />
     <Compile Include="Coordinates\NullCoordinate.cs" />
-    <Compile Include="DTO\Containers\NullVertexDtoContainer.cs" />
-    <Compile Include="DTO\Interface\IVertexDtoContainer.cs" />
-    <Compile Include="DTO\Containers\VertexDtoContainer2D.cs" />
+    <Compile Include="Info\Containers\NullVertexInfoCollection.cs" />
+    <Compile Include="Info\Interface\IVertexInfoContainer.cs" />
+    <Compile Include="Info\Containers\VertexInfoCollection2D.cs" />
     <Compile Include="EventArguments\AlgorithmEventArgs.cs" />
     <Compile Include="Extensions\CustomTypeExtensions\ICoordinateExtensions.cs" />
     <Compile Include="Extensions\CustomTypeExtensions\IGraphSaverExtensions.cs" />
@@ -110,7 +110,7 @@
     <Compile Include="ViewModel\Interface\IModel.cs" />
     <Compile Include="AlgorithmCreating\AlgorithmFactory.cs" />
     <Compile Include="EventHolder\VertexEventHolder.cs" />
-    <Compile Include="DTO\Dto.cs" />
+    <Compile Include="Info\Info.cs" />
     <Compile Include="Graphs\Graph.cs" />
     <Compile Include="PathFindingAlgorithm\DijkstraAlgorithm.cs" />
     <Compile Include="PathFindingAlgorithm\DepthFirstAlgorithm.cs" />

@@ -1,5 +1,5 @@
 ﻿using GraphLibrary.Coordinates;
-using GraphLibrary.DTO;
+using GraphLibrary.Info;
 using GraphLibrary.UnitTests.Classes;
 using GraphLibrary.Vertex.Interface;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
@@ -19,7 +19,7 @@ namespace GraphLibrary.UnitTests.Tests.DTOTests
                 Position = new Coordinate2D(4, 5)
             };
 
-            dynamic dto = new Dto<IVertex>(temp);
+            dynamic dto = new Info<IVertex>(temp);
             var testVertex = new TestVertex(dto);
 
             Assert.IsTrue(dto.Cost == testVertex.Cost 
@@ -37,7 +37,7 @@ namespace GraphLibrary.UnitTests.Tests.DTOTests
                 Position = new Coordinate2D(4, 5)
             };
 
-            dynamic dto = new Dto<IVertex>(vertex);
+            dynamic dto = new Info<IVertex>(vertex);
 
             Assert.IsTrue(dto.Cost == vertex.Cost
                 && dto.IsObstacle && vertex.IsObstacle

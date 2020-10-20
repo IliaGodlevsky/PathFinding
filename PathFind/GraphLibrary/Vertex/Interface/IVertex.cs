@@ -1,6 +1,6 @@
 ﻿using GraphLibrary.Attributes;
 using GraphLibrary.Coordinates.Interface;
-using GraphLibrary.DTO;
+using GraphLibrary.Info;
 using System.Collections.Generic;
 
 namespace GraphLibrary.Vertex.Interface
@@ -11,18 +11,18 @@ namespace GraphLibrary.Vertex.Interface
     public interface IVertex
     {
         bool IsEnd { get; set; }
-        [DtoMember]
+        [InfoMember]
         bool IsObstacle { get; set; }
         bool IsStart { get; set; }
         bool IsVisited { get; set; }
-        [DtoMember]
+        [InfoMember]
         int Cost { get; set; }
         IList<IVertex> Neighbours { get; set; }
         IVertex ParentVertex { get; set; }
         double AccumulatedCost { get; set; }
-        [DtoMember]
+        [InfoMember]
         ICoordinate Position { get; set; }
-        Dto<IVertex> Dto { get; }
+        Info<IVertex> Info { get; }
         void MarkAsEnd();
         void MarkAsSimpleVertex();
         void MarkAsObstacle();

@@ -1,7 +1,7 @@
 ﻿using GraphLibrary.Coordinates.Interface;
-using GraphLibrary.DTO.Containers;
-using GraphLibrary.DTO.Interface;
 using GraphLibrary.Graphs.Interface;
+using GraphLibrary.Info.Containers;
+using GraphLibrary.Info.Interface;
 using GraphLibrary.Vertex;
 using GraphLibrary.Vertex.Interface;
 using System.Collections;
@@ -44,7 +44,7 @@ namespace GraphLibrary.Graphs
         public int ObstaclePercent => 0;
         public int Size => 0;
         public IVertex Start { get => nullVertex; set => _ = value; }    
-        public IVertexDtoContainer VertexDtos => NullVertexDtoContainer.Instance;
+        public IVertexInfoCollection VertexInfoCollection => NullVertexInfoCollection.Instance;
 
         public IEnumerable<int> DimensionsSizes => new int[] { };
 

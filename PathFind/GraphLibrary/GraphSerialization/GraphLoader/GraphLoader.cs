@@ -1,8 +1,9 @@
 ﻿using GraphLibrary.Coordinates;
-using GraphLibrary.DTO;
 using GraphLibrary.Graphs;
 using GraphLibrary.Graphs.Interface;
 using GraphLibrary.GraphSerialization.GraphLoader.Interface;
+using GraphLibrary.Info;
+using GraphLibrary.Info.Containers;
 using GraphLibrary.Vertex.Interface;
 using GraphLibrary.VertexConnecting;
 using System;
@@ -19,14 +20,14 @@ namespace GraphLibrary.GraphSerialization.GraphLoader
     {
         public event Action<string> OnBadLoad;
 
-        public IGraph LoadGraph(string path, Func<Dto<IVertex>, IVertex> converter)
+        public IGraph LoadGraph(string path, Func<Info<IVertex>, IVertex> converter)
         {
             var formatter = new BinaryFormatter();
             try
             {
                 using (var stream = new FileStream(path, FileMode.Open))
                 { 
-                    var verticesDto = (VertexDtoContainer2D)formatter.Deserialize(stream);
+                    var verticesDto = (VertexInfoCollection2D)formatter.Deserialize(stream);
                     graph = GetGraphFromDto(verticesDto, converter);
                 }
             }
@@ -37,7 +38,7 @@ namespace GraphLibrary.GraphSerialization.GraphLoader
             return graph;
         }
 
-        private IGraph GetGraphFromDto(VertexDtoContainer2D verticesDto, Func<Dto<IVertex>, IVertex> dtoConverter)
+        private IGraph GetGraphFromDto(VertexInfoCollection2D verticesDto, Func<Info<IVertex>, IVertex> dtoConverter)
         {
             graph = new Graph(verticesDto.Width, verticesDto.Height);
             for (int i = 0; i < verticesDto.Width; i++)
@@ -45,7 +46,8 @@ namespace GraphLibrary.GraphSerialization.GraphLoader
                 for (int j = 0; j < verticesDto.Height; j++)
                 {
                     var indices = new Coordinate2D(i, j);
-                    var index = Converter.ToIndex(indices, verticesDto.Height);
+                    var index = i * verticesDto.Height + j;
+                    //var index = Converter.ToIndex(indices, verticesDto.Height);
                     graph[indices] = dtoConverter(verticesDto.ElementAt(index));
                 }
             }

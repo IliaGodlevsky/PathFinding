@@ -1,9 +1,9 @@
 ﻿using GraphLibrary.Vertex.Interface;
 using System.Collections.Generic;
 
-namespace GraphLibrary.DTO.Interface
+namespace GraphLibrary.Info.Interface
 {
-    public interface  IVertexDtoContainer : IEnumerable<Dto<IVertex>>
+    public interface IVertexInfoCollection : IEnumerable<Info<IVertex>>
     {
         IEnumerable<int> DimensionsSizes { get; }
     }

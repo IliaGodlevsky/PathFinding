@@ -1,32 +1,32 @@
-﻿using GraphLibrary.DTO.Interface;
+﻿using GraphLibrary.Info.Interface;
 using GraphLibrary.Vertex.Interface;
 using System;
 using System.Collections;
 using System.Collections.Generic;
 
-namespace GraphLibrary.DTO.Containers
+namespace GraphLibrary.Info.Containers
 {
     [Serializable]
-    public sealed class NullVertexDtoContainer : IVertexDtoContainer
+    public sealed class NullVertexInfoCollection : IVertexInfoCollection
     {
-        public static NullVertexDtoContainer Instance
+        public static NullVertexInfoCollection Instance
         {
             get
             {
                 if (instance == null)
-                    instance = new NullVertexDtoContainer();
+                    instance = new NullVertexInfoCollection();
                 return instance;
             }
         }
 
-        private NullVertexDtoContainer()
+        private NullVertexInfoCollection()
         {
-            verticesDto = new Dto<IVertex>[] { };
+            verticesDto = new Info<IVertex>[] { };
         }
 
         public IEnumerable<int> DimensionsSizes => new int[] { };
 
-        public IEnumerator<Dto<IVertex>> GetEnumerator()
+        public IEnumerator<Info<IVertex>> GetEnumerator()
         {
             return verticesDto.GetEnumerator();
         }
@@ -36,7 +36,7 @@ namespace GraphLibrary.DTO.Containers
             return verticesDto.GetEnumerator();
         }
 
-        private static NullVertexDtoContainer instance = null;
-        private readonly IEnumerable<Dto<IVertex>> verticesDto;
+        private static NullVertexInfoCollection instance = null;
+        private readonly IEnumerable<Info<IVertex>> verticesDto;
     }
 }

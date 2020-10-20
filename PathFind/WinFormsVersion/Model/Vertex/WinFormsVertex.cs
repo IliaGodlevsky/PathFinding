@@ -1,8 +1,8 @@
 ﻿using GraphLibrary.Coordinates;
 using GraphLibrary.Coordinates.Interface;
-using GraphLibrary.DTO;
 using GraphLibrary.Extensions.CustomTypeExtensions;
 using GraphLibrary.Globals;
+using GraphLibrary.Info;
 using GraphLibrary.Vertex.Interface;
 using System;
 using System.Collections.Generic;
@@ -25,7 +25,7 @@ namespace WinFormsVersion.Vertex
             //BorderStyle = BorderStyle.FixedSingle;
         }
 
-        public WinFormsVertex(Dto<IVertex> info) : this()
+        public WinFormsVertex(Info<IVertex> info) : this()
         {
             this.Initialize(info);
         }
@@ -60,7 +60,7 @@ namespace WinFormsVersion.Vertex
 
         public void MarkAsEnqueued() => BackColor = Color.FromKnownColor(KnownColor.Aquamarine);
 
-        public Dto<IVertex> Dto => new Dto<IVertex>(this);
+        public Info<IVertex> Info => new Info<IVertex>(this);
 
         public int Cost { get => int.Parse(Text); set => Text = value.ToString(); }
         public ICoordinate Position { get; set; }
