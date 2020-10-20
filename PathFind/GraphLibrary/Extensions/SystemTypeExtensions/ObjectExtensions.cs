@@ -28,15 +28,15 @@ namespace GraphLibrary.Extensions.SystemTypeExtensions
             return properties;
         }
 
-        public static void InitializeByDto<TSource>(this TSource self, Info<TSource> dto)
+        public static void InitializeByInfo<TSource>(this TSource self, Info<TSource> info)
         {
             var markedProperties = self.GetMarkedProperties<InfoMemberAttribute>(true);
             foreach (var property in markedProperties)
             {
-                var dictionary = (Dictionary<string, object>)dto;
+                var dictionary = (Dictionary<string, object>)info;
                 if (dictionary.ContainsKey(property.Name))
                 {
-                    var result = Dynamic.InvokeGet(dto, property.Name);
+                    var result = Dynamic.InvokeGet(info, property.Name);
                     property.SetValue(self, result);
                 }
             }
