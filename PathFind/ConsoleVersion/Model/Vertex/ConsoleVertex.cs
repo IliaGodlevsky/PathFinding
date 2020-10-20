@@ -21,9 +21,9 @@ namespace ConsoleVersion.Model.Vertex
             this.Initialize();
         }
 
-        public ConsoleVertex(Info<IVertex> dto) : this()
+        public ConsoleVertex(Info<IVertex> info) : this()
         {
-            this.Initialize(dto);
+            this.Initialize(info);
         }
 
         public bool IsEnd { get; set; }
