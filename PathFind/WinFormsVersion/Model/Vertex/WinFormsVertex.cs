@@ -20,7 +20,7 @@ namespace WinFormsVersion.Vertex
             float fontSize = VertexParametres.VertexSize * VertexParametres.TextToSizeRatio;
             Font = new Font("Times New Roman", fontSize);
             Size = new Size(VertexParametres.VertexSize,
-                VertexParametres.SizeBetweenVertices);
+                VertexParametres.VertexSize);
             TextAlign = ContentAlignment.MiddleCenter;
             //BorderStyle = BorderStyle.FixedSingle;
         }
