@@ -2,7 +2,7 @@
 
 namespace GraphLibrary.Attributes
 {
-    [AttributeUsage(AttributeTargets.Property)]
+    [AttributeUsage(AttributeTargets.Property, Inherited = true)]
     public sealed class InfoMemberAttribute : Attribute
     {
 
