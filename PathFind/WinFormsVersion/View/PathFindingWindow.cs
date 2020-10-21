@@ -8,15 +8,12 @@ namespace WinFormsVersion.View
 {
     internal partial class PathFindingWindow : Form
     {
-        public PathFindingViewModel Model { get; set; }
         public PathFindingWindow(PathFindingViewModel model)
         {
             InitializeComponent();
 
-            Model = model;
-
-            okButton.Click += Model.PathFind;
-            cancelButton.Click += Model.CancelPathFind;
+            okButton.Click += model.PathFind;
+            cancelButton.Click += model.CancelPathFind;
 
             var dataSource = AlgorithmFactory.AlgorithmKeys.Select(key => new { Name = key }).ToArray();
             algorithmListBox.DataSource = dataSource;
@@ -25,7 +22,7 @@ namespace WinFormsVersion.View
             algorithmListBox.ValueMember = nameof(obj.Name);
 
 
-            var bindingAlgorithm = new Binding(nameof(algorithmListBox.SelectedValue), Model, nameof(Model.AlgorithmKey));
+            var bindingAlgorithm = new Binding(nameof(algorithmListBox.SelectedValue), model, nameof(model.AlgorithmKey));
             algorithmListBox.DataBindings.Add(bindingAlgorithm);
 
             var bindingDelaySliderToDelayTextBox = new Binding(nameof(delaySlider.Value), delayTextBox, nameof(delayTextBox.Text),
@@ -35,7 +32,7 @@ namespace WinFormsVersion.View
             delaySlider.Minimum = Range.DelayValueRange.LowerRange;
             delaySlider.Maximum = Range.DelayValueRange.UpperRange;
 
-            var bindingDelatTextBoxToModel = new Binding(nameof(delayTextBox.Text), Model, nameof(Model.DelayTime),
+            var bindingDelatTextBoxToModel = new Binding(nameof(delayTextBox.Text), model, nameof(model.DelayTime),
                 true, DataSourceUpdateMode.OnPropertyChanged);
             delayTextBox.DataBindings.Add(bindingDelatTextBoxToModel);
 
