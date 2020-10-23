@@ -70,12 +70,16 @@ namespace WpfVersion.ViewModel
             FieldFactory = new WpfGraphFieldFactory();
             DtoConverter = (dto) => new WpfVertex(dto);
 
-            StartPathFindCommand = new RelayCommand(ExecuteStartPathFindCommand, CanExecuteStartFindPathCommand);
+            StartPathFindCommand = new RelayCommand(ExecuteStartPathFindCommand, 
+                CanExecuteStartFindPathCommand);
             CreateNewGraphCommand = new RelayCommand(ExecuteCreateNewGraphCommand, obj => true);
-            ClearGraphCommand = new RelayCommand(ExecuteClearGraphCommand, obj => !ReferenceEquals(Graph, NullGraph.Instance));
-            SaveGraphCommand = new RelayCommand(ExecuteSaveGraphCommand, obj => !ReferenceEquals(Graph, NullGraph.Instance));
+            ClearGraphCommand = new RelayCommand(ExecuteClearGraphCommand, 
+                obj => !ReferenceEquals(Graph, NullGraph.Instance));
+            SaveGraphCommand = new RelayCommand(ExecuteSaveGraphCommand, 
+                obj => !ReferenceEquals(Graph, NullGraph.Instance));
             LoadGraphCommand = new RelayCommand(ExecuteLoadGraphCommand, obj => true);
-            ChangeVertexSize = new RelayCommand(ExecuteChangeVertexSize, obj => !ReferenceEquals(Graph, NullGraph.Instance));
+            ChangeVertexSize = new RelayCommand(ExecuteChangeVertexSize, 
+                obj => !ReferenceEquals(Graph, NullGraph.Instance));
         }
 
         public override void FindPath()
