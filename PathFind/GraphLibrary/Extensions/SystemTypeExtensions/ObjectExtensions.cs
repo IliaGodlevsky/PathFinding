@@ -15,17 +15,37 @@ namespace GraphLibrary.Extensions.SystemTypeExtensions
         {
             var properties = new List<PropertyInfo>();
             if (watchInterface)
-            {
-                foreach (var inter in self.GetType().GetInterfaces())
-                {
-                    var interfaceProperties = inter.GetProperties().GetMarked<TMark>();
-                    properties.AddRange(interfaceProperties.Cast<PropertyInfo>());
-                }
-            }
-            var objectProps = self.GetType().GetProperties().GetMarked<TMark>();
-            properties.AddRange(objectProps.Cast<PropertyInfo>());
+                properties.AddRange(self.GetMarkedInterfaceProperties<TMark>());
+            properties.AddRange(self.GetMarkedProperties<TMark>());
             properties = properties.DistinctBy(prop => prop.Name).ToList();
             return properties;
+        }
+
+        private static IEnumerable<PropertyInfo> GetMarkedInterfaceProperties<TMark>(this object self)
+            where TMark : Attribute
+        {
+            foreach (var Interface in self.GetType().GetInterfaces())
+            {
+                var markderProperties = Interface.GetProperties();
+                foreach (var property in GetMarked<TMark>(markderProperties))
+                    yield return property;
+            }
+        }
+
+        private static IEnumerable<PropertyInfo> GetMarkedProperties<TMark>(this object self)
+        {
+            var properties = self.GetType().GetProperties();
+            return GetMarked<TMark>(properties);
+        }
+
+        private static IEnumerable<PropertyInfo> GetMarked<TMark>(IEnumerable<PropertyInfo> properties)
+        {
+            foreach (var property in properties)
+            {
+                var attribute = property.GetCustomAttribute(typeof(TMark), inherit: true);
+                if (attribute != null)
+                    yield return property;
+            }
         }
 
         public static void InitializeByInfo<TSource>(this TSource self, Info<TSource> info)
