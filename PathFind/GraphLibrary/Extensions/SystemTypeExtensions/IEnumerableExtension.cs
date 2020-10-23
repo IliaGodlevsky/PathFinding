@@ -33,16 +33,5 @@ namespace GraphLibrary.Extensions.SystemTypeExtensions
                     vertex.MarkAsPath();
             }
         }
-
-        public static IEnumerable<MemberInfo> GetMarked<TMark>(this IEnumerable<MemberInfo> members)
-            where TMark : Attribute
-        {
-            foreach (var member in members)
-            {
-                var attribute = member.GetCustomAttribute(typeof(TMark), inherit: true);
-                if (attribute != null)
-                    yield return member;
-            }
-        }
     }
 }
