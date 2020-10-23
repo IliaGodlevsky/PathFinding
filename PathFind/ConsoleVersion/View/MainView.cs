@@ -52,18 +52,17 @@ namespace ConsoleVersion.View
 
         private MenuOption GetMenuOption()
         {
+            mainModel.DisplayGraph();
             Console.WriteLine(menu);
             return Input.InputOption();
         }
 
         public void Start()
         {
-            mainModel.DisplayGraph();
             var menuOption = GetMenuOption();
             while (menuOption != MenuOption.Quit)
             {
                 menuActions[menuOption]();
-                mainModel.DisplayGraph();
                 menuOption = GetMenuOption();
             }
         }
