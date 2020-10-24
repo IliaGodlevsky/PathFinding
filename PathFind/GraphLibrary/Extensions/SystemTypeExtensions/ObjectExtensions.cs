@@ -24,12 +24,9 @@ namespace GraphLibrary.Extensions.SystemTypeExtensions
         private static IEnumerable<PropertyInfo> GetMarkedInterfaceProperties<TMark>(this object self)
             where TMark : Attribute
         {
-            foreach (var Interface in self.GetType().GetInterfaces())
-            {
-                var markderProperties = Interface.GetProperties();
-                foreach (var property in GetMarked<TMark>(markderProperties))
+            foreach (var Interface in self.GetType().GetInterfaces())            
+                foreach (var property in GetMarked<TMark>(Interface.GetProperties()))
                     yield return property;
-            }
         }
 
         private static IEnumerable<PropertyInfo> GetMarkedProperties<TMark>(this object self)
