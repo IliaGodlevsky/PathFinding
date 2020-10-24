@@ -1,11 +1,8 @@
-﻿using Dynamitey;
-using GraphLibrary.Attributes;
-using GraphLibrary.Extensions.SystemTypeExtensions;
+﻿using GraphLibrary.Extensions.SystemTypeExtensions;
 using GraphLibrary.Info;
 using GraphLibrary.Vertex.Interface;
 using System.Collections.Generic;
 using System.Linq;
-using System.Reflection;
 
 namespace GraphLibrary.Extensions.CustomTypeExtensions
 {

@@ -46,8 +46,7 @@ namespace GraphLibrary.GraphSerialization.GraphLoader
                 for (int j = 0; j < verticesDto.Height; j++)
                 {
                     var indices = new Coordinate2D(i, j);
-                    var index = i * verticesDto.Height + j;
-                    //var index = Converter.ToIndex(indices, verticesDto.Height);
+                    var index = Converter.ToIndex(indices, verticesDto.Height);
                     graph[indices] = dtoConverter(verticesDto.ElementAt(index));
                 }
             }
