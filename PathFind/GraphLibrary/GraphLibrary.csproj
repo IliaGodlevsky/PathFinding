@@ -102,6 +102,7 @@
     <Compile Include="GraphSerialization\GraphSaver\GraphSaver.cs" />
     <Compile Include="GraphSerialization\GraphSaver\Interface\IGraphSaver.cs" />
     <Compile Include="Vertex\NullVertex.cs" />
+    <Compile Include="Vertex\Cost\VertexCost.cs" />
     <Compile Include="ViewModel\GraphCreatingModel.cs" />
     <Compile Include="ViewModel\MainModel.cs" />
     <Compile Include="ViewModel\PathFindingModel.cs" />

@@ -1,8 +1,8 @@
-﻿using GraphLibrary.Attributes;
-using GraphLibrary.Coordinates.Interface;
+﻿using GraphLibrary.Coordinates.Interface;
 using GraphLibrary.Extensions.CustomTypeExtensions;
 using GraphLibrary.Globals;
 using GraphLibrary.Info;
+using GraphLibrary.Vertex.Cost;
 using GraphLibrary.Vertex.Interface;
 using System;
 using System.Collections.Generic;
@@ -36,7 +36,6 @@ namespace WpfVersion.Model.Vertex
             FontSize = VertexParametres.VertexSize * VertexParametres.TextToSizeRatio;
             Template = (ControlTemplate)TryFindResource("vertexTemplate");
         }
-
         public WpfVertex(Info<IVertex> info) : this()
         {
             this.Initialize(info);
@@ -47,16 +46,23 @@ namespace WpfVersion.Model.Vertex
         public bool IsStart { get; set; }
         public bool IsVisited { get; set; }
 
-        public int Cost 
+        private VertexCost cost;
+        public VertexCost Cost 
         {
-            get { return int.Parse(Content.ToString()); }
-            set { Content = value.ToString(); }
+            get { return cost; }
+            set { cost = (VertexCost)value.Clone(); Content = cost.ToString(string.Empty); }
         }
 
         public IList<IVertex> Neighbours { get; set; }
         public IVertex ParentVertex { get; set; }
         public double AccumulatedCost { get; set; }
-        public ICoordinate Position { get; set; }
+
+        private ICoordinate position;
+        public ICoordinate Position 
+        {
+            get => position;
+            set { position = value; ToolTip = position.ToString(); }
+        }
 
         public Info<IVertex> Info => new Info<IVertex>(this);
 
@@ -68,11 +74,14 @@ namespace WpfVersion.Model.Vertex
             Background = new SolidColorBrush(Colors.Black);
         }
 
-        public void MarkAsPath() => Background = PathVertexColor;
+        public void MarkAsPath()
+        {
+            Background = PathVertexColor;
+        }
 
         public void MarkAsSimpleVertex()
         {
-            if (!IsObstacle)
+            if (!IsObstacle)            
                 Background = new SolidColorBrush(Colors.White);
         }
 
@@ -80,6 +89,21 @@ namespace WpfVersion.Model.Vertex
 
         public void MarkAsVisited() => Background = AfterVisitVertexColor;
 
-        public void MarkAsEnqueued() => Background = EnqueuedVertexColor;
+        public void MarkAsEnqueued()
+        {
+            Background = EnqueuedVertexColor;
+        }
+
+        public void MakeUnweighted()
+        {
+            Content = string.Empty;
+            cost.MakeUnWeighted();
+        }
+
+        public void MakeWeighted()
+        {
+            cost.MakeWeighted();
+            Content = cost.ToString(string.Empty);
+        }
     }
 }

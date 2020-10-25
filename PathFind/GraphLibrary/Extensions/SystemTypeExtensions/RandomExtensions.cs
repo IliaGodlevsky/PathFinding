@@ -1,4 +1,5 @@
 ﻿using GraphLibrary.ValueRanges;
+using GraphLibrary.Vertex.Cost;
 using System;
 
 namespace GraphLibrary.Extensions.SystemTypeExtensions
@@ -10,9 +11,11 @@ namespace GraphLibrary.Extensions.SystemTypeExtensions
             return rand.Next(Range.ObstaclePercentValueRange.UpperRange) < percentOfObstacles;
         }
 
-        public static int GetRandomValueCost(this Random rand)
+        public static VertexCost GetRandomValueCost(this Random rand)
         {
-            return rand.Next(Range.VertexCostRange.UpperRange) + Range.VertexCostRange.LowerRange;
+            var cost = rand.Next(Range.VertexCostRange.UpperRange) 
+                + Range.VertexCostRange.LowerRange;
+            return new VertexCost(cost);
         }
     }
 }

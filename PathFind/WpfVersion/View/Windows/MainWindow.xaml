@@ -10,7 +10,7 @@
         WindowStartupLocation="CenterScreen"
         Icon="../../Resources/Images/mainwindow2.png">
     <Window.DataContext>
-        <viewmodel:MainWindowViewModel x:Name="ViewModel"></viewmodel:MainWindowViewModel>
+        <viewmodel:MainWindowViewModel x:Name ="ViewModel"></viewmodel:MainWindowViewModel>
     </Window.DataContext>
     <Grid>
         <Grid.RowDefinitions>
@@ -24,23 +24,28 @@
         </model:WpfGraphField>
         <ToolBar Grid.Row="0">
             <Button Command="{Binding LoadGraphCommand}">
-                <Image Style ="{StaticResource ImageStyle}" Source="../../Resources/Images/open.png"></Image>
+                <Image Style ="{StaticResource ImageStyle}" Source="/Resources/Images/open.png"></Image>
             </Button>
             <Button Command="{Binding SaveGraphCommand}">
-                <Image Style ="{StaticResource ImageStyle}" Source="../../Resources/Images/save.png"></Image>
+                <Image Style ="{StaticResource ImageStyle}" Source="/Resources/Images/save.png"></Image>
             </Button>
             <Button Command="{Binding CreateNewGraphCommand}">
-                <Image Style ="{StaticResource ImageStyle}" Source="../../Resources/Images/new.png"></Image>
+                <Image Style ="{StaticResource ImageStyle}" Source="/Resources/Images/new.png"></Image>
             </Button>
             <Button Command="{Binding ClearGraphCommand}">
-                <Image Style ="{StaticResource ImageStyle}" Source="../../Resources/Images/clear.png"></Image>
+                <Image Style ="{StaticResource ImageStyle}" Source="/Resources/Images/clear.png"></Image>
             </Button>
             <Button Command ="{Binding StartPathFindCommand}">
-                <Image Style ="{StaticResource ImageStyle}" Source="../../Resources/Images/start.png"></Image>
+                <Image Style ="{StaticResource ImageStyle}" Source="/Resources/Images/start.png"></Image>
             </Button>
             <Button Command ="{Binding ChangeVertexSize}">
-                <Image Style ="{StaticResource ImageStyle}" Source="../../Resources/Images/change.png"></Image>
+                <Image Style ="{StaticResource ImageStyle}" Source="/Resources/Images/change.png"></Image>
             </Button>
+            <ToggleButton Command="{Binding ShowVertexCost}"
+                         CommandParameter="{Binding IsChecked,RelativeSource = {RelativeSource Self}}"
+                        x:Name="fontButton" IsChecked="True">
+                <Image Style="{StaticResource ImageStyle}" Source ="/Resources/Images/show.png"></Image>
+            </ToggleButton>
         </ToolBar>
         <StatusBar Grid.Row="3">
             <TextBlock Text = "{Binding PathFindingStatistics}"></TextBlock>

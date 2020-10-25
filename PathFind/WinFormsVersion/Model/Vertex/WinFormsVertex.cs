@@ -1,8 +1,8 @@
-﻿using GraphLibrary.Coordinates;
-using GraphLibrary.Coordinates.Interface;
+﻿using GraphLibrary.Coordinates.Interface;
 using GraphLibrary.Extensions.CustomTypeExtensions;
 using GraphLibrary.Globals;
 using GraphLibrary.Info;
+using GraphLibrary.Vertex.Cost;
 using GraphLibrary.Vertex.Interface;
 using System;
 using System.Collections.Generic;
@@ -17,7 +17,7 @@ namespace WinFormsVersion.Vertex
         public WinFormsVertex() : base()
         {
             this.Initialize();
-            float fontSize = VertexParametres.VertexSize * VertexParametres.TextToSizeRatio;
+            float fontSize = VertexParametres.VertexSize * (VertexParametres.TextToSizeRatio * 0.75f);
             Font = new Font("Times New Roman", fontSize);
             Size = new Size(VertexParametres.VertexSize,
                 VertexParametres.VertexSize);
@@ -47,7 +47,7 @@ namespace WinFormsVersion.Vertex
         public void MarkAsSimpleVertex()
         {
             if (!IsObstacle)
-                BackColor = Color.FromKnownColor(KnownColor.White);
+                BackColor = Color.FromKnownColor(KnownColor.WhiteSmoke);
         }
 
         public void MarkAsStart() => BackColor = Color.FromKnownColor(KnownColor.Green);
@@ -60,9 +60,30 @@ namespace WinFormsVersion.Vertex
 
         public void MarkAsEnqueued() => BackColor = Color.FromKnownColor(KnownColor.Aquamarine);
 
+        public void MakeUnweighted()
+        {
+            Text = string.Empty;
+            cost.MakeUnWeighted();
+        }
+
+        public void MakeWeighted()
+        {
+            cost.MakeWeighted();
+            Text = ((int)cost).ToString(string.Empty);
+        }
+
         public Info<IVertex> Info => new Info<IVertex>(this);
 
-        public int Cost { get => int.Parse(Text); set => Text = value.ToString(); }
+        private VertexCost cost;
+        public VertexCost Cost 
+        { 
+            get => cost;
+            set 
+            { 
+                cost = (VertexCost)value.Clone();
+                Text = cost.ToString(string.Empty); 
+            } 
+        }
         public ICoordinate Position { get; set; }
     }
 }

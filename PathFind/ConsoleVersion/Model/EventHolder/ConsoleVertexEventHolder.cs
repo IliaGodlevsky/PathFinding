@@ -4,6 +4,7 @@ using GraphLibrary.EventHolder;
 using GraphLibrary.Vertex.Interface;
 using ConsoleVersion.Model.Vertex;
 using GraphLibrary.ValueRanges;
+using GraphLibrary.Vertex.Cost;
 
 namespace ConsoleVersion.Model.EventHolder
 {
@@ -14,8 +15,8 @@ namespace ConsoleVersion.Model.EventHolder
         {
             var vertex = sender as ConsoleVertex;
             if (!vertex.IsObstacle)
-                vertex.Cost = Input.InputNumber(ConsoleVersionResources.NewTopValueMsg,
-                    Range.VertexCostRange.UpperRange, Range.VertexCostRange.LowerRange);
+                vertex.Cost = new VertexCost(Input.InputNumber(ConsoleVersionResources.NewTopValueMsg,
+                    Range.VertexCostRange.UpperRange, Range.VertexCostRange.LowerRange));
         }
 
         protected override int GetWheelDelta(EventArgs e)

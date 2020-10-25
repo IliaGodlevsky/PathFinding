@@ -59,7 +59,7 @@ namespace GraphLibrary.PathFindingAlgorithm
 
         protected virtual double Relax(IVertex neighbour, IVertex vertex)
         {
-            return neighbour.Cost + vertex.AccumulatedCost;
+            return (int)neighbour.Cost + vertex.AccumulatedCost;
         }
 
         protected virtual void RelaxNeighbours(IVertex vertex)

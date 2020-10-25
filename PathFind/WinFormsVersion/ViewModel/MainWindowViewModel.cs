@@ -16,6 +16,8 @@ using GraphLibrary.Globals;
 using GraphLibrary.Graphs.Interface;
 using System.Linq;
 using GraphLibrary.Graphs;
+using Syncfusion.Windows.Forms.Tools;
+using GraphLibrary.Extensions.CustomTypeExtensions;
 
 namespace WinFormsVersion.ViewModel
 {
@@ -91,7 +93,11 @@ namespace WinFormsVersion.ViewModel
 
         public void Dispose() => OnDispose();
 
-        public void SaveGraph(object sender, EventArgs e) => base.SaveGraph();
+        public void SaveGraph(object sender, EventArgs e)
+        {
+            if (!ReferenceEquals(NullGraph.Instance, Graph))
+                base.SaveGraph();
+        }
 
         public void LoadGraph(object sender, EventArgs e)
         {
@@ -102,6 +108,16 @@ namespace WinFormsVersion.ViewModel
         public void ClearGraph(object sender, EventArgs e)
         {
             base.ClearGraph();
+        }
+
+        public void MakeWeighted(object sender, EventArgs e)
+        {
+            Graph.ToWeighted();
+        }
+
+        public void MakeUnweighted(object sender, EventArgs e)
+        {
+            Graph.ToUnweighted();
         }
 
         public void StartPathFind(object sender, EventArgs e) => FindPath();

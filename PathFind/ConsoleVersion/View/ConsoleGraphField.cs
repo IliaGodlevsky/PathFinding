@@ -103,7 +103,7 @@ namespace ConsoleVersion.View
 
         private void ShowVertex(ConsoleVertex vertex)
         {
-            Console.Write(vertex.Cost + bigSpace, vertex.Colour);
+            Console.Write(vertex.Text + bigSpace, vertex.Colour);
         }
 
         private bool IsEndOfRow(int currentWidth)

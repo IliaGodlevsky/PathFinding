@@ -2,6 +2,7 @@
 using GraphLibrary.Coordinates.Interface;
 using GraphLibrary.Info;
 using System.Collections.Generic;
+using GraphLibrary.Vertex.Cost;
 
 namespace GraphLibrary.Vertex.Interface
 {
@@ -16,7 +17,7 @@ namespace GraphLibrary.Vertex.Interface
         bool IsStart { get; set; }
         bool IsVisited { get; set; }
         [InfoMember]
-        int Cost { get; set; }
+        VertexCost Cost { get; set; }
         IList<IVertex> Neighbours { get; set; }
         IVertex ParentVertex { get; set; }
         double AccumulatedCost { get; set; }
@@ -30,5 +31,7 @@ namespace GraphLibrary.Vertex.Interface
         void MarkAsStart();
         void MarkAsVisited();
         void MarkAsEnqueued();
+        void MakeUnweighted();
+        void MakeWeighted();
     }
 }

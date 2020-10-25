@@ -62,6 +62,7 @@
     <Compile Include="Converters\AlgorithmKeyConverter.cs" />
     <Compile Include="Converters\SliderValueConverter.cs" />
     <Compile Include="Converters\StringToIntConverter.cs" />
+    <Compile Include="Extensions\ImageExtensions.cs" />
     <Compile Include="Infrastructure\RelayCommand.cs" />
     <Compile Include="Model\EventHolder\WpfVertexEventHolder.cs" />
     <Compile Include="Model\Vertex\WpfVertex.cs" />
@@ -82,10 +83,6 @@
       <DependentUpon>VertexSizeChangeWIndow.xaml</DependentUpon>
     </Compile>
     <Page Include="Resources\Styles\ImageStyle.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Resources\Triggers\LabelChangeSizeVertex.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -167,6 +164,16 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Resources\Images\change.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Images\path.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Images\obstacle.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Images\show.png" />
+    <Resource Include="Resources\Images\hide.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

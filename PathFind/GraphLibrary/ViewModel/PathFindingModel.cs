@@ -32,7 +32,7 @@ namespace GraphLibrary.ViewModel
             mainViewModel.PathFindingStatistics +=
                 string.Format("   " + pathFindStatisticsFormat,
                 path.Count(),
-                path.Sum(vertex => vertex.Cost),
+                path.Sum(vertex => (int)vertex.Cost),
                 graph.NumberOfVisitedVertices);
         }
 

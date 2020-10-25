@@ -2,6 +2,7 @@
 using ConsoleVersion.InputClass;
 using ConsoleVersion.View.Interface;
 using ConsoleVersion.ViewModel;
+using GraphLibrary.Extensions.CustomTypeExtensions;
 using GraphLibrary.Extensions.SystemTypeExtensions;
 using System;
 using System.Collections.Generic;
@@ -33,7 +34,9 @@ namespace ConsoleVersion.View
                 { MenuOption.CreateGraph, mainModel.CreateNewGraph },
                 { MenuOption.RefreshGraph, mainModel.ClearGraph },
                 { MenuOption.Reverse, mainModel.Reverse },
-                { MenuOption.ChangeValue, mainModel.ChangeVertexValue }
+                { MenuOption.ChangeValue, mainModel.ChangeVertexValue },
+                { MenuOption.MakeWeighted, () => { mainModel.Graph.ToWeighted(); } },
+                { MenuOption.MakeUnweigted, () => { mainModel.Graph.ToUnweighted(); } }
             };
             
             menu = GetMenu();

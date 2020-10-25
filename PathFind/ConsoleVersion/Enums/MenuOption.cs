@@ -26,6 +26,12 @@ namespace ConsoleVersion.Enums
         Reverse,
 
         [Description("Change vertex value")]
-        ChangeValue
+        ChangeValue,
+
+        [Description("Make weighted")]
+        MakeWeighted,
+
+        [Description("Make unweighted")]
+        MakeUnweigted
     }
 }

@@ -2,6 +2,7 @@
 using GraphLibrary.Coordinates.Interface;
 using GraphLibrary.Extensions.CustomTypeExtensions;
 using GraphLibrary.Info;
+using GraphLibrary.Vertex.Cost;
 using GraphLibrary.Vertex.Interface;
 using System;
 using System.Collections.Generic;
@@ -30,7 +31,14 @@ namespace ConsoleVersion.Model.Vertex
         public bool IsObstacle { get; set; }
         public bool IsStart { get; set; }
         public bool IsVisited { get; set; }
-        public int Cost { get; set; }
+        public string Text { get; set; }
+
+        private VertexCost cost;
+        public VertexCost Cost
+        {
+            get { return cost; }
+            set { cost = (VertexCost)value.Clone(); Text = cost.ToString("#"); }
+        }
         public Color Colour { get; set; }
         public IList<IVertex> Neighbours { get; set; }
         public IVertex ParentVertex { get; set; }
@@ -87,6 +95,18 @@ namespace ConsoleVersion.Model.Vertex
         public void MarkAsEnqueued()
         {
             Colour = Color.FromKnownColor(KnownColor.Orange);
+        }
+
+        public void MakeUnweighted()
+        {
+            cost.MakeUnWeighted();
+            Text = cost.ToString("#");
+        }
+
+        public void MakeWeighted()
+        {
+            cost.MakeWeighted();
+            Text = cost.ToString("#");
         }
     }
 }

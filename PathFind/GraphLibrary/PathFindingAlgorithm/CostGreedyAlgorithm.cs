@@ -8,7 +8,7 @@ namespace GraphLibrary.PathFindingAlgorithm
     {
         public CostGreedyAlgorithm(IGraph graph) : base(graph)
         {
-            GreedyFunction = vertex => vertex.Cost;
+            GreedyFunction = vertex => (int)vertex.Cost;
         }
     }
 }

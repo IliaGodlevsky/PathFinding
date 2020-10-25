@@ -3,6 +3,7 @@ using GraphLibrary.Coordinates.Interface;
 using GraphLibrary.Extensions.CustomTypeExtensions;
 using GraphLibrary.Extensions.SystemTypeExtensions;
 using GraphLibrary.Info;
+using GraphLibrary.Vertex.Cost;
 using GraphLibrary.Vertex.Interface;
 using System.Collections.Generic;
 
@@ -18,7 +19,7 @@ namespace GraphLibrary.UnitTests.Classes
         public bool IsObstacle { get; set; }
         public bool IsStart { get; set; }
         public bool IsVisited { get; set; }
-        public int Cost { get; set; }
+        public VertexCost Cost { get; set; }
         public IVertex ParentVertex { get; set; }
         public double AccumulatedCost { get; set; }
         public ICoordinate Position { get; set; }
@@ -34,5 +35,15 @@ namespace GraphLibrary.UnitTests.Classes
         public void MarkAsStart() { }
         public void MarkAsVisited() { }
         public void MarkAsEnqueued() { }
+
+        public void MakeUnweighted()
+        {
+            
+        }
+
+        public void MakeWeighted()
+        {
+            
+        }
     }
 }

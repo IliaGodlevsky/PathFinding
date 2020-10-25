@@ -14,6 +14,7 @@ using Microsoft.Win32;
 using WpfVersion.Model.Vertex;
 using GraphLibrary.Graphs.Interface;
 using System.Linq;
+using GraphLibrary.Extensions.CustomTypeExtensions;
 
 namespace WpfVersion.ViewModel
 {
@@ -62,6 +63,7 @@ namespace WpfVersion.ViewModel
         public RelayCommand SaveGraphCommand { get; }
         public RelayCommand LoadGraphCommand { get; }
         public RelayCommand ChangeVertexSize { get; }
+        public RelayCommand ShowVertexCost { get; }
 
         public MainWindowViewModel()
         {
@@ -80,6 +82,15 @@ namespace WpfVersion.ViewModel
             LoadGraphCommand = new RelayCommand(ExecuteLoadGraphCommand, obj => true);
             ChangeVertexSize = new RelayCommand(ExecuteChangeVertexSize, 
                 obj => !ReferenceEquals(Graph, NullGraph.Instance));
+            ShowVertexCost = new RelayCommand(ExecuteShowVertexCostCommand, obj => true);
+        }
+
+        public void ExecuteShowVertexCostCommand(object parametres)
+        {
+            if ((bool)parametres)
+                graph.ToWeighted();
+            else
+                graph.ToUnweighted();
         }
 
         public override void FindPath()

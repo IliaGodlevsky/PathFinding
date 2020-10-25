@@ -7,6 +7,7 @@ using GraphLibrary.ValueRanges;
 using GraphLibrary.Graphs.Interface;
 using GraphLibrary.VertexConnecting;
 using System.Linq;
+using GraphLibrary.Vertex.Cost;
 
 namespace GraphLibrary.EventHolder
 {
@@ -19,7 +20,10 @@ namespace GraphLibrary.EventHolder
             var vertex = sender as IVertex;
             if (vertex.IsObstacle)
                 return;
-            vertex.Cost = Range.VertexCostRange.ReturnInBounds(vertex.Cost += GetWheelDelta(e) > 0 ? 1 : -1);
+            int delta = GetWheelDelta(e) > 0 ? 1 : -1;
+            int newCost = vertex.Cost + delta;
+            int boundedCost = Range.VertexCostRange.ReturnInBounds(newCost);
+            vertex.Cost = new VertexCost(boundedCost);
         }
 
         public virtual void SetStartVertex(IVertex vertex)
