@@ -27,5 +27,10 @@ namespace GraphLibrary.Coordinates
         }
 
         private static NullCoordinate instance = null;
+
+        public object Clone()
+        {
+            return instance;
+        }
     }
 }

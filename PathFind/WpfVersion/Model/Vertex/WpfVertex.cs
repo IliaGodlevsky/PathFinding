@@ -4,14 +4,12 @@ using GraphLibrary.Globals;
 using GraphLibrary.Info;
 using GraphLibrary.Vertex.Cost;
 using GraphLibrary.Vertex.Interface;
-using System;
 using System.Collections.Generic;
 using System.Windows.Controls;
 using System.Windows.Media;
 
 namespace WpfVersion.Model.Vertex
 {
-    [Serializable]
     internal class WpfVertex : Label, IVertex
     {
         public static SolidColorBrush AfterVisitVertexColor { get; set; }
@@ -36,7 +34,7 @@ namespace WpfVersion.Model.Vertex
             FontSize = VertexParametres.VertexSize * VertexParametres.TextToSizeRatio;
             Template = (ControlTemplate)TryFindResource("vertexTemplate");
         }
-        public WpfVertex(Info<IVertex> info) : this()
+        public WpfVertex(VertexInfo info) : this()
         {
             this.Initialize(info);
         }
@@ -64,7 +62,7 @@ namespace WpfVersion.Model.Vertex
             set { position = value; ToolTip = position.ToString(); }
         }
 
-        public Info<IVertex> Info => new Info<IVertex>(this);
+        public VertexInfo Info => new VertexInfo(this);
 
         public void MarkAsEnd() => Background = EndVertexColor;
 

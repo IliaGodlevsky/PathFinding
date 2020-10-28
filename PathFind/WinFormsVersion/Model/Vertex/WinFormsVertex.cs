@@ -4,14 +4,12 @@ using GraphLibrary.Globals;
 using GraphLibrary.Info;
 using GraphLibrary.Vertex.Cost;
 using GraphLibrary.Vertex.Interface;
-using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Windows.Forms;
 
 namespace WinFormsVersion.Vertex
 {
-    [Serializable]
     internal class WinFormsVertex : Label, IVertex
     {      
         public WinFormsVertex() : base()
@@ -25,7 +23,7 @@ namespace WinFormsVersion.Vertex
             //BorderStyle = BorderStyle.FixedSingle;
         }
 
-        public WinFormsVertex(Info<IVertex> info) : this()
+        public WinFormsVertex(VertexInfo info) : this()
         {
             this.Initialize(info);
         }
@@ -72,7 +70,7 @@ namespace WinFormsVersion.Vertex
             Text = ((int)cost).ToString(string.Empty);
         }
 
-        public Info<IVertex> Info => new Info<IVertex>(this);
+        public VertexInfo Info => new VertexInfo(this);
 
         private VertexCost cost;
         public VertexCost Cost 

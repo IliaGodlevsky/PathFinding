@@ -1,5 +1,4 @@
 ﻿using GraphLibrary.Info.Interface;
-using GraphLibrary.Vertex.Interface;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -21,12 +20,12 @@ namespace GraphLibrary.Info.Containers
 
         private NullVertexInfoCollection()
         {
-            verticesDto = new Info<IVertex>[] { };
+            verticesDto = new VertexInfo[] { };
         }
 
         public IEnumerable<int> DimensionsSizes => new int[] { };
 
-        public IEnumerator<Info<IVertex>> GetEnumerator()
+        public IEnumerator<VertexInfo> GetEnumerator()
         {
             return verticesDto.GetEnumerator();
         }
@@ -37,6 +36,6 @@ namespace GraphLibrary.Info.Containers
         }
 
         private static NullVertexInfoCollection instance = null;
-        private readonly IEnumerable<Info<IVertex>> verticesDto;
+        private readonly IEnumerable<VertexInfo> verticesDto;
     }
 }

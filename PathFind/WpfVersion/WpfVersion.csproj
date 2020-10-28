@@ -62,7 +62,6 @@
     <Compile Include="Converters\AlgorithmKeyConverter.cs" />
     <Compile Include="Converters\SliderValueConverter.cs" />
     <Compile Include="Converters\StringToIntConverter.cs" />
-    <Compile Include="Extensions\ImageExtensions.cs" />
     <Compile Include="Infrastructure\RelayCommand.cs" />
     <Compile Include="Model\EventHolder\WpfVertexEventHolder.cs" />
     <Compile Include="Model\Vertex\WpfVertex.cs" />

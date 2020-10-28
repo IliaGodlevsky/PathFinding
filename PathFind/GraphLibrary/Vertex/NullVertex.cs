@@ -35,7 +35,7 @@ namespace GraphLibrary.Vertex
         public IVertex ParentVertex { get => Instance; set => _ = value; }
         public double AccumulatedCost { get => double.PositiveInfinity; set => _ = value; }
         public ICoordinate Position { get => NullCoordinate.Instance; set => _ = value; }
-        public Info<IVertex> Info => new Info<IVertex>(this);
+        public VertexInfo Info => new VertexInfo(this);
         public void MarkAsEnd() { }
         public void MarkAsObstacle() { }
         public void MarkAsPath() { }

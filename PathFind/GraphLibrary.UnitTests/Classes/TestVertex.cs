@@ -13,7 +13,7 @@ namespace GraphLibrary.UnitTests.Classes
     {
         public TestVertex() => this.Initialize();
 
-        public TestVertex(Info<IVertex> dto) : this() => this.InitializeByInfo(dto);
+        public TestVertex(VertexInfo info) : this() => this.Initialize(info);
 
         public bool IsEnd { get; set; }
         public bool IsObstacle { get; set; }
@@ -23,7 +23,7 @@ namespace GraphLibrary.UnitTests.Classes
         public IVertex ParentVertex { get; set; }
         public double AccumulatedCost { get; set; }
         public ICoordinate Position { get; set; }
-        public Info<IVertex> Info => new Info<IVertex>(this);
+        public VertexInfo Info => new VertexInfo(this);
         public IList<IVertex> Neighbours { get; set; }
         public void MarkAsEnd() { }
         public void MarkAsSimpleVertex() { }

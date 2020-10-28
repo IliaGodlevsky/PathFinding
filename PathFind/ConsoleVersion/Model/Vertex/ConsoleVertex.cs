@@ -10,7 +10,6 @@ using System.Drawing;
 
 namespace ConsoleVersion.Model.Vertex
 {
-    [Serializable]
     internal class ConsoleVertex : IVertex
     {
         public event EventHandler OnDestinationChosen;
@@ -22,7 +21,7 @@ namespace ConsoleVersion.Model.Vertex
             this.Initialize();
         }
 
-        public ConsoleVertex(Info<IVertex> info) : this()
+        public ConsoleVertex(VertexInfo info) : this()
         {
             this.Initialize(info);
         }
@@ -44,7 +43,7 @@ namespace ConsoleVersion.Model.Vertex
         public IVertex ParentVertex { get; set; }
         public double AccumulatedCost { get; set; }
         public ICoordinate Position { get; set; }
-        public Info<IVertex> Info => new Info<IVertex>(this);
+        public VertexInfo Info => new VertexInfo(this);
 
         public void ChangeCost()
         {

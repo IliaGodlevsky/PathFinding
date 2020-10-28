@@ -46,9 +46,11 @@ namespace GraphLibrary.Extensions.CustomTypeExtensions
             vertex.IsObstacle = false;
         }
 
-        public static void Initialize(this IVertex vertex, Info<IVertex> info)
+        public static void Initialize(this IVertex vertex, VertexInfo info)
         {
-            vertex.InitializeByInfo(info);
+            vertex.Position = info.Position;
+            vertex.Cost = info.Cost;
+            vertex.IsObstacle = info.IsObstacle;
             if (vertex.IsObstacle)
                 vertex.MarkAsObstacle();
         }

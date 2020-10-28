@@ -1,5 +1,4 @@
-﻿using GraphLibrary.Attributes;
-using GraphLibrary.Coordinates.Interface;
+﻿using GraphLibrary.Coordinates.Interface;
 using GraphLibrary.Info;
 using System.Collections.Generic;
 using GraphLibrary.Vertex.Cost;
@@ -12,18 +11,15 @@ namespace GraphLibrary.Vertex.Interface
     public interface IVertex
     {
         bool IsEnd { get; set; }
-        [InfoMember]
         bool IsObstacle { get; set; }
         bool IsStart { get; set; }
         bool IsVisited { get; set; }
-        [InfoMember]
         VertexCost Cost { get; set; }
         IList<IVertex> Neighbours { get; set; }
         IVertex ParentVertex { get; set; }
         double AccumulatedCost { get; set; }
-        [InfoMember]
         ICoordinate Position { get; set; }
-        Info<IVertex> Info { get; }
+        VertexInfo Info { get; }
         void MarkAsEnd();
         void MarkAsSimpleVertex();
         void MarkAsObstacle();

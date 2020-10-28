@@ -11,8 +11,8 @@ namespace GraphLibrary.Coordinates
     [Serializable]
     public class Coordinate2D : ICoordinate
     {
-        public int X { get; set; }
-        public int Y { get; set; }
+        public int X { get; private set; }
+        public int Y { get; private set; }
 
         public IEnumerable<int> Coordinates => new int[] { X, Y };
 
@@ -57,6 +57,11 @@ namespace GraphLibrary.Coordinates
         public override string ToString()
         {
             return string.Format("{0}:{1}", X, Y);
+        }
+
+        public object Clone()
+        {
+            return new Coordinate2D(X, Y);
         }
     }
 }

@@ -4,7 +4,6 @@ using GraphLibrary.Vertex.Interface;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Reflection;
 
 namespace GraphLibrary.Extensions.SystemTypeExtensions
 {
