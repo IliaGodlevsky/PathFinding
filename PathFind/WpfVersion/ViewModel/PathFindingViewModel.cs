@@ -43,7 +43,7 @@ namespace WpfVersion.ViewModel
             pathAlgorithm.OnFinished += (sender, eventArgs) =>
             {
                 if (!eventArgs.HasFoundPath)
-                    MessageBox.Show(badResultMessage);
+                    MessageBox.Show(badResultMessage);                
             };
         }
     }
