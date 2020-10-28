@@ -175,5 +175,6 @@
     <Resource Include="Resources\Images\show.png" />
     <Resource Include="Resources\Images\hide.png" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
