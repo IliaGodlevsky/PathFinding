@@ -12,7 +12,6 @@ using GraphLibrary.ViewModel;
 using GraphLibrary.GraphField;
 using Microsoft.Win32;
 using WpfVersion.Model.Vertex;
-using GraphLibrary.Graphs.Interface;
 using System.Linq;
 using GraphLibrary.Extensions.CustomTypeExtensions;
 
@@ -50,13 +49,6 @@ namespace WpfVersion.ViewModel
             set { graphField = value; OnPropertyChanged(); } 
         }
 
-        private IGraph graph;
-        public override IGraph Graph 
-        { 
-            get { return graph; } 
-            protected set { graph = value; OnPropertyChanged(); } 
-        }
-
         public RelayCommand StartPathFindCommand { get; }
         public RelayCommand CreateNewGraphCommand { get; }
         public RelayCommand ClearGraphCommand { get; }
@@ -72,25 +64,25 @@ namespace WpfVersion.ViewModel
             FieldFactory = new WpfGraphFieldFactory();
             DtoConverter = (dto) => new WpfVertex(dto);
 
-            StartPathFindCommand = new RelayCommand(ExecuteStartPathFindCommand, 
-                CanExecuteStartFindPathCommand);
-            CreateNewGraphCommand = new RelayCommand(ExecuteCreateNewGraphCommand, obj => true);
-            ClearGraphCommand = new RelayCommand(ExecuteClearGraphCommand, 
-                obj => !ReferenceEquals(Graph, NullGraph.Instance));
-            SaveGraphCommand = new RelayCommand(ExecuteSaveGraphCommand, 
-                obj => !ReferenceEquals(Graph, NullGraph.Instance));
-            LoadGraphCommand = new RelayCommand(ExecuteLoadGraphCommand, obj => true);
-            ChangeVertexSize = new RelayCommand(ExecuteChangeVertexSize, 
-                obj => !ReferenceEquals(Graph, NullGraph.Instance));
-            ShowVertexCost = new RelayCommand(ExecuteShowVertexCostCommand, obj => true);
+            StartPathFindCommand = new RelayCommand(ExecuteStartPathFindCommand, CanExecuteStartFindPathCommand);
+            CreateNewGraphCommand = new RelayCommand(ExecuteCreateNewGraphCommand, AlwaysExecutable);
+            ClearGraphCommand = new RelayCommand(ExecuteClearGraphCommand, CanExecuteGraphOperation);
+            SaveGraphCommand = new RelayCommand(ExecuteSaveGraphCommand, CanExecuteGraphOperation);
+            LoadGraphCommand = new RelayCommand(ExecuteLoadGraphCommand, AlwaysExecutable);
+            ChangeVertexSize = new RelayCommand(ExecuteChangeVertexSize, CanExecuteGraphOperation);
+            ShowVertexCost = new RelayCommand(ExecuteShowVertexCostCommand, AlwaysExecutable);
         }
+
+        private bool AlwaysExecutable(object param) => true;
+
+        private bool CanExecuteGraphOperation(object param) => !ReferenceEquals(Graph, NullGraph.Instance);
 
         public void ExecuteShowVertexCostCommand(object parametres)
         {
             if ((bool)parametres)
-                graph.ToWeighted();
+                Graph.ToWeighted();
             else
-                graph.ToUnweighted();
+                Graph.ToUnweighted();
         }
 
         public override void FindPath()
@@ -108,50 +100,32 @@ namespace WpfVersion.ViewModel
             PrepareWindow(new VertexSizeChangingViewModel(this), new VertexSizeChangeWindow());
         }
 
-        public void Dispose()
-        {
-            OnDispose();
-        }
+        public void Dispose() => OnDispose();
 
-        private void ExecuteSaveGraphCommand(object param)
-        {
-            base.SaveGraph();
-        }
+        private void ExecuteSaveGraphCommand(object param) => base.SaveGraph();
 
         private bool CanExecuteStartFindPathCommand(object param)
         {
             return !ReferenceEquals(Graph.End, NullVertex.Instance)
-                && !ReferenceEquals(Graph.Start, NullVertex.Instance) && Graph.Any()
-                && !Graph.Start.IsVisited;
+                && !ReferenceEquals(Graph.Start, NullVertex.Instance)
+                && Graph.Any() && !Graph.Start.IsVisited;
         }
 
         private void ExecuteLoadGraphCommand(object param)
         {
             base.LoadGraph();
-            if (!ReferenceEquals(Graph, NullGraph.Instance))
-            {
-                OnPropertyChanged(nameof(GraphField));
-                OnPropertyChanged(nameof(Graph));
-                OnPropertyChanged(nameof(GraphParametres));
-                WindowAdjust.Adjust(Graph);
-            }
+            if (!ReferenceEquals(Graph, NullGraph.Instance))           
+                WindowAdjust.Adjust(Graph);           
         }
 
-        private void ExecuteClearGraphCommand(object param)
-        {
-            base.ClearGraph();
-            OnPropertyChanged(nameof(GraphParametres));
-        }
+        private void ExecuteClearGraphCommand(object param) => base.ClearGraph();
 
         private void ExecuteStartPathFindCommand(object param)
         {
             FindPath();
         }
 
-        private void ExecuteCreateNewGraphCommand(object param)
-        {
-            CreateNewGraph();
-        }
+        private void ExecuteCreateNewGraphCommand(object param) => CreateNewGraph();
 
         protected virtual void OnDispose()
         {
@@ -166,16 +140,14 @@ namespace WpfVersion.ViewModel
             Window.Show();
         }
 
-        protected override string GetSavingPath()
+        private string GetPath(FileDialog dialog)
         {
-            var save = new SaveFileDialog();
-            return save.ShowDialog() == true ? save.FileName : string.Empty;
+            return dialog.ShowDialog() == true 
+                ? dialog.FileName 
+                : string.Empty;
         }
 
-        protected override string GetLoadingPath()
-        {
-            var open = new OpenFileDialog();
-            return open.ShowDialog() == true ? open.FileName : string.Empty;
-        }
+        protected override string GetSavingPath() => GetPath(new SaveFileDialog());
+        protected override string GetLoadingPath() => GetPath(new OpenFileDialog());
     }
 }
