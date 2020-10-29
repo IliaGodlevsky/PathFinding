@@ -37,16 +37,16 @@ namespace WpfVersion.ViewModel
 
         private string statistics;
         public override string PathFindingStatistics 
-        { 
-            get{return statistics;}
-            set{statistics = value; OnPropertyChanged();}
+        {
+            get { return statistics; }
+            set { statistics = value; OnPropertyChanged(); }
         }
 
         private IGraphField graphField;
         public override IGraphField GraphField 
         { 
             get { return graphField; } 
-            set { graphField = value; OnPropertyChanged(); } 
+            set { graphField = value; OnPropertyChanged(); }
         }
 
         public RelayCommand StartPathFindCommand { get; }
@@ -114,8 +114,8 @@ namespace WpfVersion.ViewModel
         private void ExecuteLoadGraphCommand(object param)
         {
             base.LoadGraph();
-            if (!ReferenceEquals(Graph, NullGraph.Instance))           
-                WindowAdjust.Adjust(Graph);           
+            if (!ReferenceEquals(Graph, NullGraph.Instance))
+                WindowAdjust.Adjust(Graph);
         }
 
         private void ExecuteClearGraphCommand(object param) => base.ClearGraph();
