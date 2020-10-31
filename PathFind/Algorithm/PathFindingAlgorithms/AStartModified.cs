@@ -2,6 +2,7 @@
 using GraphLib.Graphs.Abstractions;
 using GraphLib.Vertex;
 using GraphLib.Vertex.Interface;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
@@ -19,7 +20,7 @@ namespace Algorithm.PathFindingAlgorithms
         {
             deletedVertices = new List<IVertex>();
             percentRange = new ValueRange(99, 0);
-            PersentOfFurthestVerticesToDelete = 5;
+            PersentOfFurthestVerticesToDelete = Convert.ToInt32(Math.Floor(Math.Log(graph.Size, 4)));
         }
 
         private int persentOfFurthestVerticesToDelete;
