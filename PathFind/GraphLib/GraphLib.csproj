@@ -1,0 +1,81 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{ECA71C4F-5DEF-4135-A0B3-25F73170C6C1}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>GraphLib</RootNamespace>
+    <AssemblyName>GraphLib</AssemblyName>
+    <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <Deterministic>true</Deterministic>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Coordinates\Converter.cs" />
+    <Compile Include="Coordinates\Coordinate2D.cs" />
+    <Compile Include="Coordinates\Interface\ICoordinate.cs" />
+    <Compile Include="Coordinates\NullCoordinate.cs" />
+    <Compile Include="Extensions\ICoordinateExtensions.cs" />
+    <Compile Include="Extensions\IGraphExtensions.cs" />
+    <Compile Include="Extensions\IVertexExtension.cs" />
+    <Compile Include="Extensions\RandomExtensions.cs" />
+    <Compile Include="Graphs\Graph.cs" />
+    <Compile Include="Graphs\Abstractions\BaseGraph.cs" />
+    <Compile Include="Graphs\Abstractions\IGraph.cs" />
+    <Compile Include="Graphs\Displaying\GraphField\Factories\GraphFieldFactory.cs" />
+    <Compile Include="Graphs\Displaying\GraphField\Interfaces\IGraphField.cs" />
+    <Compile Include="Graphs\Factories\Graph2dFactory.cs" />
+    <Compile Include="Graphs\Factories\Interface\IGraphFactory.cs" />
+    <Compile Include="Graphs\Serialization\Graph2DSerializer.cs" />
+    <Compile Include="Graphs\Serialization\Infrastructure\Info\Collections\Interface\IVertexInfoContainer.cs" />
+    <Compile Include="Graphs\Serialization\Infrastructure\Info\Collections\NullVertexInfoCollection.cs" />
+    <Compile Include="Graphs\Serialization\Infrastructure\Info\Collections\VertexInfoCollection2D.cs" />
+    <Compile Include="Graphs\Serialization\Infrastructure\Info\VertexInfo.cs" />
+    <Compile Include="Graphs\Serialization\Interface\IGraphSerializer.cs" />
+    <Compile Include="Graphs\NullGraph.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Vertex\Cost\VertexCost.cs" />
+    <Compile Include="Vertex\Infrastructure\EventHolder\BaseVertexEventHolder.cs" />
+    <Compile Include="Vertex\Infrastructure\EventHolder\Interface\IVertexEventHolder.cs" />
+    <Compile Include="Vertex\Infrastructure\VertexConnector.cs" />
+    <Compile Include="Vertex\Interface\IVertex.cs" />
+    <Compile Include="Vertex\NullVertex.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Common\Common.csproj">
+      <Project>{A5A743F5-D346-4B2B-B6AC-07152F64E4D9}</Project>
+      <Name>Common</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+</Project>

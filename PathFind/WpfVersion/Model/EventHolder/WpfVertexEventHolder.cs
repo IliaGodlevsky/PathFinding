@@ -1,12 +1,12 @@
 ﻿using System;
 using System.Windows.Input;
 using WpfVersion.Model.Vertex;
-using GraphLibrary.EventHolder;
-using GraphLibrary.Vertex.Interface;
+using GraphLib.EventHolder;
+using GraphLib.Vertex.Interface;
 
 namespace WpfVersion.Model.EventHolder
 {
-    internal class WpfVertexEventHolder : VertexEventHolder
+    internal class WpfVertexEventHolder : BaseVertexEventHolder
     {
         protected override int GetWheelDelta(EventArgs e)
         {

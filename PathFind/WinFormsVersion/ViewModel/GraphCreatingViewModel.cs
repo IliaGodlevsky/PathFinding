@@ -1,5 +1,5 @@
-﻿using GraphLibrary.ViewModel;
-using GraphLibrary.ViewModel.Interface;
+﻿using GraphLib.ViewModel;
+using GraphViewModel.Interfaces;
 using System;
 using WinFormsVersion.Vertex;
 

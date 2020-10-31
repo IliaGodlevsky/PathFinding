@@ -1,8 +1,8 @@
-﻿using ConsoleVersion.InputClass;
-using GraphLibrary.ValueRanges;
-using GraphLibrary.Vertex.Interface;
-using GraphLibrary.ViewModel;
-using GraphLibrary.ViewModel.Interface;
+﻿using Common.ValueRanges;
+using ConsoleVersion.InputClass;
+using GraphLib.Vertex.Interface;
+using GraphLib.ViewModel;
+using GraphViewModel.Interfaces;
 using System;
 
 namespace ConsoleVersion.ViewModel

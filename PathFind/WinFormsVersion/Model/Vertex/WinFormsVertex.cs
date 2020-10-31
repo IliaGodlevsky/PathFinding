@@ -1,9 +1,9 @@
-﻿using GraphLibrary.Coordinates.Interface;
-using GraphLibrary.Extensions.CustomTypeExtensions;
-using GraphLibrary.Globals;
-using GraphLibrary.Info;
-using GraphLibrary.Vertex.Cost;
-using GraphLibrary.Vertex.Interface;
+﻿using Common;
+using GraphLib.Coordinates.Interface;
+using GraphLib.Extensions;
+using GraphLib.Info;
+using GraphLib.Vertex.Cost;
+using GraphLib.Vertex.Interface;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Windows.Forms;

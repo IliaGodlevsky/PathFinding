@@ -1,8 +1,8 @@
 ﻿using ConsoleVersion.View;
-using GraphLibrary.GraphField;
-using GraphLibrary.GraphFieldCreating;
-using GraphLibrary.Graphs;
-using GraphLibrary.Graphs.Interface;
+using GraphLib.GraphField;
+using GraphLib.GraphFieldCreating;
+using GraphLib.Graphs;
+using GraphLib.Graphs.Abstractions;
 
 namespace ConsoleVersion.Model
 {

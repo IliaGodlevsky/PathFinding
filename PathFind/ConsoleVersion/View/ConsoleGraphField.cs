@@ -1,7 +1,7 @@
 ﻿using ConsoleVersion.Model.Vertex;
-using GraphLibrary.Coordinates;
-using GraphLibrary.GraphField;
-using GraphLibrary.Vertex.Interface;
+using GraphLib.Coordinates;
+using GraphLib.GraphField;
+using GraphLib.Vertex.Interface;
 using System;
 using System.Collections.Generic;
 using System.Drawing;

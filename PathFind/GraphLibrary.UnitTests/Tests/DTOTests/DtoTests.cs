@@ -1,10 +1,10 @@
-﻿using GraphLibrary.Coordinates;
-using GraphLibrary.Info;
-using GraphLibrary.UnitTests.Classes;
-using GraphLibrary.Vertex.Cost;
+﻿using GraphLib.Coordinates;
+using GraphLib.Info;
+using GraphLib.UnitTests.Classes;
+using GraphLib.Vertex.Cost;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
-namespace GraphLibrary.UnitTests.Tests.DTOTests
+namespace GraphLib.UnitTests.Tests.DTOTests
 {
     [TestClass]
     public class DtoTests

@@ -1,7 +1,7 @@
-﻿using GraphLibrary.AlgorithmCreating;
-using GraphLibrary.PauseMaking;
-using GraphLibrary.ViewModel;
-using GraphLibrary.ViewModel.Interface;
+﻿using Algorithm.AlgorithmCreating;
+using GraphLib.PauseMaking;
+using GraphLib.ViewModel;
+using GraphViewModel.Interfaces;
 using System;
 using System.Linq;
 using System.Windows.Forms;

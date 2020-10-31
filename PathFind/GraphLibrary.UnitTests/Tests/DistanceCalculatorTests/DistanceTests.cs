@@ -1,11 +1,9 @@
-﻿using System;
-using GraphLibrary.Coordinates;
-using GraphLibrary.DistanceCalculating;
-using GraphLibrary.UnitTests.Classes;
-using GraphLibrary.Vertex.Interface;
+﻿using Algorithm.Сalculations.DistanceCalculating;
+using GraphLib.Coordinates;
+using GraphLib.UnitTests.Classes;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
-namespace GraphLibrary.UnitTests.Tests.DistanceCalculatorTests
+namespace GraphLib.UnitTests.Tests.DistanceCalculatorTests
 {
     [TestClass]
     public class DistanceTests

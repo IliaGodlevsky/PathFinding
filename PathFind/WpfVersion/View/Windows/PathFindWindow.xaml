@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:sys="clr-namespace:System;assembly=mscorlib" 
         xmlns:converters="clr-namespace:WpfVersion.Converters"
-        xmlns:range="clr-namespace:GraphLibrary.ValueRanges;assembly=GraphLibrary"
+        xmlns:range="clr-namespace:Common.ValueRanges;assembly=Common"
         mc:Ignorable="d"
         Title="PathFindParametresWindow" SizeToContent="WidthAndHeight">
     <Window.Resources>

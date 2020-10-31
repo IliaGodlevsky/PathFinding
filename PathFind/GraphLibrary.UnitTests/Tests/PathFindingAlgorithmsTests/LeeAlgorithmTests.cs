@@ -1,17 +1,15 @@
-﻿using System;
-using System.Linq;
+﻿using System.Linq;
 using System.Threading;
-using GraphLibrary.Coordinates;
-using GraphLibrary.Extensions.CustomTypeExtensions;
-using GraphLibrary.GraphCreating;
-using GraphLibrary.Graphs;
-using GraphLibrary.Graphs.Interface;
-using GraphLibrary.PathFindingAlgorithm;
-using GraphLibrary.UnitTests.Classes;
-using GraphLibrary.Vertex.Interface;
+using Algorithm.Extensions;
+using Algorithm.PathFindingAlgorithms;
+using GraphLib.Coordinates;
+using GraphLib.Graphs;
+using GraphLib.Graphs.Abstractions;
+using GraphLib.Graphs.Factories;
+using GraphLib.UnitTests.Classes;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
-namespace GraphLibrary.UnitTests.Tests.PathFindingAlgorithmsTests
+namespace GraphLib.UnitTests.Tests.PathFindingAlgorithmsTests
 {
     [TestClass]
     public class LeeAlgorithmTests
@@ -32,7 +30,7 @@ namespace GraphLibrary.UnitTests.Tests.PathFindingAlgorithmsTests
             var startVertexPosition = new Coordinate2D(1, 1);
             var endVertexPosition = new Coordinate2D(9, 9);
             var parametres = new GraphParametres(width: 10, height: 10, obstaclePercent: 0);
-            var factory = new GraphFactory(parametres);
+            var factory = new Graph2dFactory(parametres);
             var graph = factory.CreateGraph(() => new TestVertex());
             Thread.Sleep(millisecondsTimeout: 230);
             graph.Start = graph[startVertexPosition];

@@ -51,75 +51,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Coordinates\Converter.cs" />
-    <Compile Include="Coordinates\Interface\ICoordinate.cs" />
-    <Compile Include="Coordinates\NullCoordinate.cs" />
-    <Compile Include="Info\Containers\NullVertexInfoCollection.cs" />
-    <Compile Include="Info\Interface\IVertexInfoContainer.cs" />
-    <Compile Include="Info\Containers\VertexInfoCollection2D.cs" />
-    <Compile Include="EventArguments\AlgorithmEventArgs.cs" />
-    <Compile Include="Extensions\CustomTypeExtensions\ICoordinateExtensions.cs" />
-    <Compile Include="Extensions\CustomTypeExtensions\IGraphSaverExtensions.cs" />
-    <Compile Include="Extensions\SystemTypeExtensions\ListExtension.cs" />
-    <Compile Include="Extensions\SystemTypeExtensions\QueueExtensions.cs" />
-    <Compile Include="Extensions\SystemTypeExtensions\StackExtension.cs" />
-    <Compile Include="Extensions\SystemTypeExtensions\StringBuilderExtensions.cs" />
-    <Compile Include="Graphs\NullGraph.cs" />
-    <Compile Include="Info\VertexInfo.cs" />
-    <Compile Include="PathFindingAlgorithm\AStarAlgorithm.cs" />
-    <Compile Include="PathFindingAlgorithm\AStartModified.cs" />
-    <Compile Include="PathFindingAlgorithm\BestFirstLeeAlgorithm.cs" />
-    <Compile Include="Graphs\Interface\IGraph.cs" />
-    <Compile Include="PathFindingAlgorithm\DistanceGreedyAlgoritm.cs" />
-    <Compile Include="PathFindingAlgorithm\NullAlgorithm.cs" />
-    <Compile Include="PathFindingAlgorithm\CostGreedyAlgorithm.cs" />
-    <Compile Include="PauseMaking\Interface\IPauser.cs" />
-    <Compile Include="Coordinates\Coordinate2D.cs" />
-    <Compile Include="ValueRanges\Range.cs" />
-    <Compile Include="ValueRanges\ValueRange.cs" />
-    <Compile Include="DistanceCalculating\DistanceCalculator.cs" />
-    <Compile Include="Globals\VertexSize.cs" />
-    <Compile Include="Extensions\SystemTypeExtensions\EnumExtensions.cs" />
-    <Compile Include="Extensions\SystemTypeExtensions\IEnumerableExtension.cs" />
-    <Compile Include="Extensions\CustomTypeExtensions\IGraphExtensions.cs" />
-    <Compile Include="Extensions\SystemTypeExtensions\IntExtensions.cs" />
-    <Compile Include="Extensions\CustomTypeExtensions\IPathFindAlgorithmExtension.cs" />
-    <Compile Include="Extensions\CustomTypeExtensions\IVertexExtension.cs" />
-    <Compile Include="Extensions\SystemTypeExtensions\MatrixExtensions.cs" />
-    <Compile Include="Extensions\SystemTypeExtensions\RandomExtensions.cs" />
-    <Compile Include="Extensions\SystemTypeExtensions\StopwatchExtension.cs" />
-    <Compile Include="GraphCreating\GraphFactory.cs" />
-    <Compile Include="GraphCreating\Interface\IGraphFactory.cs" />
-    <Compile Include="GraphFieldCreating\GraphFieldFactory.cs" />
     <Compile Include="LibraryResources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>LibraryResources.resx</DependentUpon>
     </Compile>
-    <Compile Include="GraphSerialization\GraphLoader\GraphLoader.cs" />
-    <Compile Include="GraphSerialization\GraphLoader\Interface\IGraphLoader.cs" />
-    <Compile Include="GraphSerialization\GraphSaver\GraphSaver.cs" />
-    <Compile Include="GraphSerialization\GraphSaver\Interface\IGraphSaver.cs" />
-    <Compile Include="Vertex\NullVertex.cs" />
-    <Compile Include="Vertex\Cost\VertexCost.cs" />
-    <Compile Include="ViewModel\GraphCreatingModel.cs" />
-    <Compile Include="ViewModel\MainModel.cs" />
-    <Compile Include="ViewModel\PathFindingModel.cs" />
-    <Compile Include="GraphField\IGraphField.cs" />
-    <Compile Include="ViewModel\Interface\IMainModel.cs" />
-    <Compile Include="ViewModel\Interface\IModel.cs" />
-    <Compile Include="AlgorithmCreating\AlgorithmFactory.cs" />
-    <Compile Include="EventHolder\VertexEventHolder.cs" />
-    <Compile Include="Graphs\Graph.cs" />
-    <Compile Include="PathFindingAlgorithm\DijkstraAlgorithm.cs" />
-    <Compile Include="PathFindingAlgorithm\DepthFirstAlgorithm.cs" />
-    <Compile Include="PathFindingAlgorithm\Interface\IPathFindingAlgorithm.cs" />
-    <Compile Include="PathFindingAlgorithm\LeeAlgorithm.cs" />
-    <Compile Include="PauseMaking\Pauser.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="EventHolder\Interface\IVertexEventHolder.cs" />
-    <Compile Include="VertexConnecting\VertexConnector.cs" />
-    <Compile Include="Vertex\Interface\IVertex.cs" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="LibraryResources.resx">

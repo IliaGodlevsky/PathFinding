@@ -1,14 +1,14 @@
 ﻿using ConsoleVersion.InputClass;
 using System;
-using GraphLibrary.EventHolder;
-using GraphLibrary.Vertex.Interface;
+using GraphLib.EventHolder;
+using GraphLib.Vertex.Interface;
 using ConsoleVersion.Model.Vertex;
-using GraphLibrary.ValueRanges;
-using GraphLibrary.Vertex.Cost;
+using GraphLib.Vertex.Cost;
+using Common.ValueRanges;
 
 namespace ConsoleVersion.Model.EventHolder
 {
-    internal class ConsoleVertexEventHolder : VertexEventHolder
+    internal class ConsoleVertexEventHolder : BaseVertexEventHolder
     {
 
         public override void ChangeVertexValue(object sender, EventArgs e)

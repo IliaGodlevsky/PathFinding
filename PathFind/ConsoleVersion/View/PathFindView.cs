@@ -1,7 +1,7 @@
-﻿using ConsoleVersion.View.Interface;
+﻿using Algorithm.AlgorithmCreating;
+using Common.Extensions;
+using ConsoleVersion.View.Interface;
 using ConsoleVersion.ViewModel;
-using GraphLibrary.AlgorithmCreating;
-using GraphLibrary.Extensions.SystemTypeExtensions;
 using System;
 using System.Linq;
 using System.Text;

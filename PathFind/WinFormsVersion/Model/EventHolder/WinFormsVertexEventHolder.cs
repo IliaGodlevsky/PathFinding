@@ -1,13 +1,12 @@
-﻿using System;
+﻿using GraphLib.EventHolder;
+using GraphLib.Vertex.Interface;
+using System;
 using System.Windows.Forms;
 using WinFormsVersion.Vertex;
-using GraphLibrary.EventHolder;
-using GraphLibrary.Vertex.Interface;
-using GraphLibrary.Vertex;
 
 namespace WinFormsVersion.EventHolder
 {
-    internal class WinFormsVertexEventHolder : VertexEventHolder
+    internal class WinFormsVertexEventHolder : BaseVertexEventHolder
     {
         protected override int GetWheelDelta(EventArgs e)
         {

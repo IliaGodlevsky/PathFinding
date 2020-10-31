@@ -1,4 +1,4 @@
-﻿using GraphLibrary.ValueRanges;
+﻿using Common.ValueRanges;
 using System.Windows.Forms;
 using WinFormsVersion.ViewModel;
 

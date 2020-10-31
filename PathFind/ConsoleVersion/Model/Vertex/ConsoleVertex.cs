@@ -1,9 +1,8 @@
-﻿using GraphLibrary.Coordinates;
-using GraphLibrary.Coordinates.Interface;
-using GraphLibrary.Extensions.CustomTypeExtensions;
-using GraphLibrary.Info;
-using GraphLibrary.Vertex.Cost;
-using GraphLibrary.Vertex.Interface;
+﻿using GraphLib.Coordinates.Interface;
+using GraphLib.Extensions;
+using GraphLib.Info;
+using GraphLib.Vertex.Cost;
+using GraphLib.Vertex.Interface;
 using System;
 using System.Collections.Generic;
 using System.Drawing;

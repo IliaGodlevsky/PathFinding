@@ -1,7 +1,7 @@
-﻿using GraphLibrary.Coordinates;
-using GraphLibrary.Globals;
-using GraphLibrary.GraphField;
-using GraphLibrary.Vertex.Interface;
+﻿using Common;
+using GraphLib.Coordinates;
+using GraphLib.GraphField;
+using GraphLib.Vertex.Interface;
 using System;
 using System.Windows.Controls;
 using WpfVersion.Model.Vertex;

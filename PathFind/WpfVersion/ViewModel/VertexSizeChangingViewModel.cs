@@ -1,7 +1,6 @@
-﻿using GraphLibrary.Extensions.SystemTypeExtensions;
-using GraphLibrary.Globals;
-using GraphLibrary.Vertex.Interface;
-using GraphLibrary.ViewModel.Interface;
+﻿using Common;
+using GraphLib.Vertex.Interface;
+using GraphViewModel.Interfaces;
 using System;
 using System.Linq;
 using System.Windows.Controls;

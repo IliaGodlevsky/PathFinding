@@ -8,16 +8,15 @@ using WinFormsVersion.Forms;
 using WinFormsVersion.Model;
 using WinFormsVersion.View;
 using WinFormsVersion.EventHolder;
-using GraphLibrary.ViewModel;
-using GraphLibrary.GraphField;
-using GraphLibrary.Vertex;
+using GraphLib.GraphField;
+using GraphLib.Vertex;
 using WinFormsVersion.Vertex;
-using GraphLibrary.Globals;
-using GraphLibrary.Graphs.Interface;
 using System.Linq;
-using GraphLibrary.Graphs;
-using Syncfusion.Windows.Forms.Tools;
-using GraphLibrary.Extensions.CustomTypeExtensions;
+using GraphLib.Graphs;
+using GraphViewModel;
+using GraphLib.Graphs.Abstractions;
+using GraphLib.Extensions;
+using Common;
 
 namespace WinFormsVersion.ViewModel
 {

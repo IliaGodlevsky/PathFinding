@@ -1,9 +1,9 @@
-﻿using ConsoleVersion.Enums;
+﻿using Common.Extensions;
+using ConsoleVersion.Enums;
 using ConsoleVersion.InputClass;
 using ConsoleVersion.View.Interface;
 using ConsoleVersion.ViewModel;
-using GraphLibrary.Extensions.CustomTypeExtensions;
-using GraphLibrary.Extensions.SystemTypeExtensions;
+using GraphLib.Extensions;
 using System;
 using System.Collections.Generic;
 using System.Linq;

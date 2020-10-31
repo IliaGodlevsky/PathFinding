@@ -1,12 +1,12 @@
 ﻿using ConsoleVersion.InputClass;
 using ConsoleVersion.Model;
 using ConsoleVersion.View;
-using GraphLibrary.ViewModel;
 using ConsoleVersion.Model.EventHolder;
 using ConsoleVersion.Model.Vertex;
 using System.Drawing;
 using Console = Colorful.Console;
-using GraphLibrary.Graphs;
+using GraphLib.Graphs;
+using GraphViewModel;
 
 namespace ConsoleVersion.ViewModel
 {

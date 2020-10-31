@@ -1,16 +1,16 @@
 ﻿using ConsoleVersion.InputClass;
 using System;
-using GraphLibrary.ViewModel.Interface;
-using GraphLibrary.ViewModel;
-using GraphLibrary.Extensions.CustomTypeExtensions;
-using GraphLibrary.ValueRanges;
+using GraphLib.ViewModel;
 using System.Threading;
 using System.Linq;
-using GraphLibrary.PauseMaking;
+using GraphLib.PauseMaking;
 using ConsoleVersion.Model.Vertex;
-using GraphLibrary.Coordinates;
-using GraphLibrary.Graphs;
-using GraphLibrary.AlgorithmCreating;
+using GraphLib.Coordinates;
+using GraphLib.Graphs;
+using Algorithm.AlgorithmCreating;
+using GraphViewModel.Interfaces;
+using GraphLib.Extensions;
+using Common.ValueRanges;
 
 namespace ConsoleVersion.ViewModel
 {

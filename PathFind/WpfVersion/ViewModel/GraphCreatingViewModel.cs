@@ -1,5 +1,5 @@
-﻿using GraphLibrary.ViewModel;
-using GraphLibrary.ViewModel.Interface;
+﻿using GraphLib.ViewModel;
+using GraphViewModel.Interfaces;
 using WpfVersion.Infrastructure;
 using WpfVersion.Model;
 using WpfVersion.Model.Vertex;

@@ -1,8 +1,6 @@
 ﻿using ConsoleVersion.Enums;
-using GraphLibrary.Coordinates;
-using GraphLibrary.Vertex.Interface;
+using GraphLib.Coordinates;
 using System;
-using System.Drawing;
 using System.Linq;
 
 namespace ConsoleVersion.InputClass

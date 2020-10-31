@@ -5,15 +5,15 @@ using WpfVersion.Infrastructure;
 using WpfVersion.Model;
 using WpfVersion.View.Windows;
 using WpfVersion.Model.EventHolder;
-using GraphLibrary.Graphs;
-using GraphLibrary.Vertex;
-using GraphLibrary.ViewModel.Interface;
-using GraphLibrary.ViewModel;
-using GraphLibrary.GraphField;
+using GraphLib.Graphs;
+using GraphLib.Vertex;
+using GraphLib.GraphField;
 using Microsoft.Win32;
 using WpfVersion.Model.Vertex;
 using System.Linq;
-using GraphLibrary.Extensions.CustomTypeExtensions;
+using GraphViewModel;
+using GraphLib.Extensions;
+using GraphViewModel.Interfaces;
 
 namespace WpfVersion.ViewModel
 {

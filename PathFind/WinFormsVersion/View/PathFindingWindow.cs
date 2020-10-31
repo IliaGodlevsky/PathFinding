@@ -1,5 +1,5 @@
-﻿using GraphLibrary.AlgorithmCreating;
-using GraphLibrary.ValueRanges;
+﻿using Algorithm.AlgorithmCreating;
+using Common.ValueRanges;
 using System.Linq;
 using System.Windows.Forms;
 using WinFormsVersion.ViewModel;

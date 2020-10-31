@@ -1,7 +1,7 @@
 ﻿using System.Windows;
-using GraphLibrary.Globals;
-using GraphLibrary.Graphs;
-using GraphLibrary.Graphs.Interface;
+using Common;
+using GraphLib.Graphs;
+using GraphLib.Graphs.Abstractions;
 
 namespace WpfVersion.Model
 {

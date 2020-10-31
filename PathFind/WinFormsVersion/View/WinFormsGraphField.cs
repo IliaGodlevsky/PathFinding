@@ -1,6 +1,7 @@
-﻿using GraphLibrary.Coordinates;
-using GraphLibrary.GraphField;
-using GraphLibrary.Vertex.Interface;
+﻿using Common;
+using GraphLib.Coordinates;
+using GraphLib.GraphField;
+using GraphLib.Vertex.Interface;
 using System;
 using System.Drawing;
 using System.Windows.Forms;
@@ -20,7 +21,7 @@ namespace WinFormsVersion.Model
             var coordinate = vertex.Position as Coordinate2D;
             if (coordinate == null)
                 throw new ArgumentException("Must be 2D coordinates");
-            int sizeBetween = GraphLibrary.Globals.VertexParametres.SizeBetweenVertices;
+            int sizeBetween = VertexParametres.SizeBetweenVertices;
             if (sizeBetween < 0)
                 sizeBetween = 26;
             (vertex as WinFormsVertex).Location
