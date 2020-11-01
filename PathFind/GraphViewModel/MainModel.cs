@@ -27,7 +27,7 @@ namespace GraphViewModel
 
         public MainModel()
         {
-            Graph = NullGraph.Instance;
+            Graph = new DefaultGraph();
             Serializer = new Graph2DSerializer();
         }
 
@@ -39,8 +39,7 @@ namespace GraphViewModel
         public virtual void LoadGraph()
         {
             var newGraph = Serializer.LoadGraph(GetLoadingPath(), DtoConverter);
-            if (!ReferenceEquals(newGraph, NullGraph.Instance))
-                ConnectNewGraph(newGraph);
+            ConnectNewGraph(newGraph);
         }
 
         public virtual void ClearGraph()

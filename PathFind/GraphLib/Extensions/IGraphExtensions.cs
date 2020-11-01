@@ -14,8 +14,8 @@ namespace GraphLib.Extensions
 
         internal static void RemoveExtremeVertices(this IGraph graph)
         {
-            graph.End = NullVertex.Instance;
-            graph.Start = NullVertex.Instance;
+            graph.End = new DefaultVertex();
+            graph.Start = new DefaultVertex();
         }
 
         public static void ToUnweighted(this IGraph graph)

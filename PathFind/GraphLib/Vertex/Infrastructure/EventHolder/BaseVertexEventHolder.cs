@@ -1,7 +1,6 @@
 ﻿using System;
 using GraphLib.EventHolder.Interface;
 using GraphLib.Vertex.Interface;
-using GraphLib.Vertex;
 using GraphLib.VertexConnecting;
 using System.Linq;
 using GraphLib.Vertex.Cost;
@@ -83,9 +82,9 @@ namespace GraphLib.EventHolder
             VertexConnector.ConnectToNeighbours(vertex);
         }
 
-        private bool IsStartChosen() => !ReferenceEquals(Graph.Start, NullVertex.Instance);
+        private bool IsStartChosen() => !Graph.Start.IsDefault;
 
-        private bool IsEndChosen() => !ReferenceEquals(Graph.End, NullVertex.Instance);
+        private bool IsEndChosen() => !Graph.End.IsDefault;
 
         private void SetEventsToVertex(Action<IVertex> action)
         {

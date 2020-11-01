@@ -30,6 +30,8 @@ namespace Algorithm.PathFindingAlgorithms
 
         public IGraph Graph { get; protected set; }
 
+        public bool IsDefault => true;
+
         public DepthFirstAlgorithm(IGraph graph)
         {
             GreedyFunction = vertex => DistanceCalculator.GetChebyshevDistance(vertex, graph.Start);
@@ -53,7 +55,7 @@ namespace Algorithm.PathFindingAlgorithms
                     currentVertex.ParentVertex = temp;
                 }
                 else
-                    currentVertex = visitedVerticesStack.PopOrNullVertex();
+                    currentVertex = visitedVerticesStack.PopOrDefaultVertex();
             }
             OnFinished?.Invoke(this, new AlgorithmEventArgs(Graph));
         }
@@ -63,7 +65,7 @@ namespace Algorithm.PathFindingAlgorithms
             var neighbours = vertex.GetUnvisitedNeighbours().ToList();
             foreach (var vert in neighbours)
                 OnEnqueued?.Invoke(vert);
-            return neighbours.FindOrNullVertex(vert =>
+            return neighbours.FindOrDefaultVertex(vert =>
             {
                 return GreedyFunction(vert) == neighbours.Min(GreedyFunction);
             });

@@ -23,7 +23,7 @@ namespace GraphLib.Graphs.Factories
 
         public IGraph CreateGraph(Func<IVertex> vertexFactory)
         {
-            graph = new Graph(parametres.Width, parametres.Height);
+            graph = new Graph2d(parametres.Width, parametres.Height);
 
             for (int i = 0; i < parametres.Width; i++)
             {
@@ -45,7 +45,7 @@ namespace GraphLib.Graphs.Factories
 
         private static readonly Random rand;
 
-        private IGraph graph = NullGraph.Instance;
+        private IGraph graph = new DefaultGraph();
         private readonly GraphParametres parametres;
     }
 }

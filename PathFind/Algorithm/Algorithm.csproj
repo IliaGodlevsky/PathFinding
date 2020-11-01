@@ -58,7 +58,7 @@
     <Compile Include="PathFindingAlgorithms\DistanceGreedyAlgoritm.cs" />
     <Compile Include="PathFindingAlgorithms\Interface\IPathFindingAlgorithm.cs" />
     <Compile Include="PathFindingAlgorithms\LeeAlgorithm.cs" />
-    <Compile Include="PathFindingAlgorithms\NullAlgorithm.cs" />
+    <Compile Include="PathFindingAlgorithms\DefaultAlgorithm.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

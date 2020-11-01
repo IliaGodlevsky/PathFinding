@@ -8,9 +8,9 @@ namespace Algorithm.Extensions
 {
     public static class IEnumerableExtenions
     {
-        internal static IVertex FirstOrNullVertex(this IEnumerable<IVertex> collection)
+        internal static IVertex FirstOrDefault(this IEnumerable<IVertex> collection)
         {
-            return !collection.AsParallel().Any() ? NullVertex.Instance : collection.First();
+            return !collection.AsParallel().Any() ? new DefaultVertex() : collection.First();
         }
 
         public static void DrawPath(this IEnumerable<IVertex> path)

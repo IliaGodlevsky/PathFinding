@@ -7,35 +7,26 @@ using System.Collections.Generic;
 
 namespace GraphLib.Vertex
 {
-    public sealed class NullVertex : IVertex
+    public sealed class DefaultVertex : IVertex
     {
-        private static NullVertex instance = null;
-
-        public static NullVertex Instance
-        {
-            get
-            {
-                if (instance == null)
-                    instance = new NullVertex();
-                return instance;
-            }
-        }
-
-        private NullVertex()
+        public DefaultVertex()
         {
 
         }
 
         public bool IsEnd { get => true; set => _ = value; }
-        public bool IsObstacle { get => false; set => _ = value; }
+        public bool IsObstacle { get => true; set => _ = value; }
         public bool IsStart { get => true; set => _ = value; }
-        public bool IsVisited { get => false; set => _ = value; }
-        public VertexCost Cost { get => new VertexCost(0); set => _ = (VertexCost)value.Clone(); }
+        public bool IsVisited { get => true; set => _ = value; }
+        public VertexCost Cost { get => new VertexCost(default); set => _ = (VertexCost)value.Clone(); }
         public IList<IVertex> Neighbours { get => new List<IVertex>(); set => _ = value; }
-        public IVertex ParentVertex { get => Instance; set => _ = value; }
+        public IVertex ParentVertex { get => new DefaultVertex(); set => _ = value; }
         public double AccumulatedCost { get => double.PositiveInfinity; set => _ = value; }
-        public ICoordinate Position { get => NullCoordinate.Instance; set => _ = value; }
+        public ICoordinate Position { get => new DefaultCoordinate(); set => _ = value; }
         public VertexInfo Info => new VertexInfo(this);
+
+        public bool IsDefault => true;
+
         public void MarkAsEnd() { }
         public void MarkAsObstacle() { }
         public void MarkAsPath() { }

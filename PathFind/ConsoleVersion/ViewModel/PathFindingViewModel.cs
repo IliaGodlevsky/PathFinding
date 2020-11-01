@@ -87,9 +87,9 @@ namespace ConsoleVersion.ViewModel
         private Coordinate2D ChoosePoint(string message)
         {
             Console.WriteLine(message);
-            var point = Input.InputPoint((graph as Graph).Width, (graph as Graph).Length);
+            var point = Input.InputPoint((graph as Graph2d).Width, (graph as Graph2d).Length);
             while (!graph[point].IsValidToBeRange())
-                point = Input.InputPoint((graph as Graph).Width, (graph as Graph).Length);
+                point = Input.InputPoint((graph as Graph2d).Width, (graph as Graph2d).Length);
             return point;
         }
 

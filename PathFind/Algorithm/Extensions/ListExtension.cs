@@ -13,9 +13,9 @@ namespace Algorithm.Extensions
         /// <param name="list"></param>
         /// <param name="match"></param>
         /// <returns>if no match returns NullVertex</returns>
-        public static IVertex FindOrNullVertex(this List<IVertex> list, Predicate<IVertex> match)
+        public static IVertex FindOrDefaultVertex(this List<IVertex> list, Predicate<IVertex> match)
         {
-            return list.Find(match) ?? NullVertex.Instance;
+            return list.Find(match) ?? new DefaultVertex();
         }
     }
 }

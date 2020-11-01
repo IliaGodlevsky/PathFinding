@@ -22,6 +22,8 @@ namespace GraphLib.Info.Containers
 
         public IEnumerable<int> DimensionsSizes => new int[] { Width, Height };
 
+        public bool IsDefault => false;
+
         public IEnumerator<VertexInfo> GetEnumerator()
         {
             return verticesDto.GetEnumerator();

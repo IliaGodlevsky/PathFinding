@@ -17,7 +17,7 @@ namespace GraphLib.UnitTests.Tests.PathFindingAlgorithmsTests
         [TestMethod]
         public void LeeAlgorithmFindPath_NullGraph_ReturnsEmptyPath()
         {
-            var leeAlgorithm = new LeeAlgorithm(NullGraph.Instance);
+            var leeAlgorithm = new LeeAlgorithm(new DefaultGraph());
 
             leeAlgorithm.FindPath();
 

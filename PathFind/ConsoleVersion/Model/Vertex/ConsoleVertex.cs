@@ -44,6 +44,8 @@ namespace ConsoleVersion.Model.Vertex
         public ICoordinate Position { get; set; }
         public VertexInfo Info => new VertexInfo(this);
 
+        public bool IsDefault => false;
+
         public void ChangeCost()
         {
             OnCostChanged?.Invoke(this, new EventArgs());

@@ -26,6 +26,8 @@ namespace GraphLib.Coordinates
             }
         }
 
+        public bool IsDefault => false;
+
         public Coordinate2D(int x, int y)
         {
             X = x;

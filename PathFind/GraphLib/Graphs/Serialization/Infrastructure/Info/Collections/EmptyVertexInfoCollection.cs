@@ -6,24 +6,16 @@ using System.Collections.Generic;
 namespace GraphLib.Info.Containers
 {
     [Serializable]
-    public sealed class NullVertexInfoCollection : IVertexInfoCollection
+    public sealed class EmptyVertexInfoCollection : IVertexInfoCollection
     {
-        public static NullVertexInfoCollection Instance
-        {
-            get
-            {
-                if (instance == null)
-                    instance = new NullVertexInfoCollection();
-                return instance;
-            }
-        }
-
-        private NullVertexInfoCollection()
+        public EmptyVertexInfoCollection()
         {
             verticesDto = new VertexInfo[] { };
         }
 
         public IEnumerable<int> DimensionsSizes => new int[] { };
+
+        public bool IsDefault => true;
 
         public IEnumerator<VertexInfo> GetEnumerator()
         {
@@ -35,7 +27,6 @@ namespace GraphLib.Info.Containers
             return verticesDto.GetEnumerator();
         }
 
-        private static NullVertexInfoCollection instance = null;
         private readonly IEnumerable<VertexInfo> verticesDto;
     }
 }

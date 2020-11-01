@@ -5,7 +5,6 @@ using WpfVersion.Infrastructure;
 using WpfVersion.Model;
 using WpfVersion.View.Windows;
 using WpfVersion.Model.EventHolder;
-using GraphLib.Graphs;
 using GraphLib.Vertex;
 using GraphLib.GraphField;
 using Microsoft.Win32;
@@ -46,7 +45,12 @@ namespace WpfVersion.ViewModel
         public override IGraphField GraphField 
         { 
             get { return graphField; } 
-            set { graphField = value; OnPropertyChanged(); }
+            set 
+            { 
+                graphField = value; 
+                OnPropertyChanged();
+                WindowAdjust.Adjust(Graph);
+            }
         }
 
         public RelayCommand StartPathFindCommand { get; }
@@ -75,11 +79,11 @@ namespace WpfVersion.ViewModel
 
         private bool AlwaysExecutable(object param) => true;
 
-        private bool CanExecuteGraphOperation(object param) => !ReferenceEquals(Graph, NullGraph.Instance);
+        private bool CanExecuteGraphOperation(object param) => !Graph.IsDefault;
 
-        public void ExecuteShowVertexCostCommand(object parametres)
+        public void ExecuteShowVertexCostCommand(object parametre)
         {
-            if ((bool)parametres)
+            if ((bool)parametre)
                 Graph.ToWeighted();
             else
                 Graph.ToUnweighted();
@@ -106,16 +110,14 @@ namespace WpfVersion.ViewModel
 
         private bool CanExecuteStartFindPathCommand(object param)
         {
-            return !ReferenceEquals(Graph.End, NullVertex.Instance)
-                && !ReferenceEquals(Graph.Start, NullVertex.Instance)
+            return !ReferenceEquals(Graph.End, new DefaultVertex())
+                && !ReferenceEquals(Graph.Start, new DefaultVertex())
                 && Graph.Any() && !Graph.Start.IsVisited;
         }
 
         private void ExecuteLoadGraphCommand(object param)
         {
             base.LoadGraph();
-            if (!ReferenceEquals(Graph, NullGraph.Instance))
-                WindowAdjust.Adjust(Graph);
         }
 
         private void ExecuteClearGraphCommand(object param) => base.ClearGraph();

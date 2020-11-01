@@ -51,7 +51,7 @@ namespace WinFormsVersion.ViewModel
                 int size = VertexParametres.SizeBetweenVertices;
                 var field = graphField as WinFormsGraphField;
                 MainWindow.Controls.RemoveBy(ctrl => ctrl.IsGraphField());
-                field.Size = new Size((Graph as Graph).Width * size, (Graph as Graph).Length * size);
+                field.Size = new Size((Graph as Graph2d).Width * size, (Graph as Graph2d).Length * size);
                 MainWindow.Controls.Add(field);
             }
         }
@@ -94,7 +94,7 @@ namespace WinFormsVersion.ViewModel
 
         public void SaveGraph(object sender, EventArgs e)
         {
-            if (!ReferenceEquals(NullGraph.Instance, Graph))
+            if (!Graph.IsDefault)
                 base.SaveGraph();
         }
 
@@ -137,9 +137,10 @@ namespace WinFormsVersion.ViewModel
 
         private bool CanStartPathFinding()
         {
-            return graph.Start != NullVertex.Instance
-                && graph.End != NullVertex.Instance
-                && Graph.Any() && !graph.Start.IsVisited;
+            return !graph.Start.IsDefault
+                && !graph.End.IsDefault
+                && Graph.Any() 
+                && !graph.Start.IsVisited;
         }
 
         protected override string GetSavingPath()

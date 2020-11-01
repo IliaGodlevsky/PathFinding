@@ -14,46 +14,37 @@ namespace GraphLib.Graphs
     /// An empty graph. Returns instead of 
     /// real instance of Graph class instead of null
     /// </summary>
-    public sealed class NullGraph : IGraph
+    public sealed class DefaultGraph : IGraph
     {
-        public static NullGraph Instance
+        public DefaultGraph()
         {
-            get
-            {
-                if (instance == null)
-                    instance = new NullGraph();
-                return instance;
-            }
-        }
-
-        private NullGraph()
-        {
-            nullVertex = NullVertex.Instance;
-            array = new NullVertex[] { };
+            defaultVertex = new DefaultVertex();
+            array = new DefaultVertex[] { };
         }
 
         public IVertex this[ICoordinate position]
         {
-            get => nullVertex;
+            get => defaultVertex;
             set => _ = value;
         }
 
-        public IVertex End { get => nullVertex; set => _ = value; }
+        public IVertex End { get => defaultVertex; set => _ = value; }
         public int NumberOfVisitedVertices => 0;
         public int ObstacleNumber => 0;
         public int ObstaclePercent => 0;
         public int Size => 0;
-        public IVertex Start { get => nullVertex; set => _ = value; }
-        public IVertexInfoCollection VertexInfoCollection => NullVertexInfoCollection.Instance;
+        public IVertex Start { get => defaultVertex; set => _ = value; }
+        public IVertexInfoCollection VertexInfoCollection => new EmptyVertexInfoCollection();
 
         public IEnumerable<int> DimensionsSizes => new int[] { };
+
+        public bool IsDefault => true;
 
         public IEnumerator<IVertex> GetEnumerator() => array.Cast<IVertex>().GetEnumerator();
         IEnumerator IEnumerable.GetEnumerator() => array.GetEnumerator();
         public string GetFormattedData(string format) => string.Empty;
 
         private readonly IEnumerable<IVertex> array;
-        private readonly NullVertex nullVertex;
-        private static NullGraph instance = null;
+        private readonly DefaultVertex defaultVertex;
     }
 }

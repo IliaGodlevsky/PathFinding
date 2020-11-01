@@ -26,6 +26,8 @@ namespace GraphLib.Graphs.Abstractions
 
         public abstract IEnumerable<int> DimensionsSizes { get; }
 
+        public abstract bool IsDefault { get; }
+
         public virtual IEnumerator<IVertex> GetEnumerator()
         {
             return vertices.AsEnumerable().GetEnumerator();

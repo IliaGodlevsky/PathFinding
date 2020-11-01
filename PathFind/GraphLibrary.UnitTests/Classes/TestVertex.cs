@@ -23,6 +23,9 @@ namespace GraphLib.UnitTests.Classes
         public ICoordinate Position { get; set; }
         public VertexInfo Info => new VertexInfo(this);
         public IList<IVertex> Neighbours { get; set; }
+
+        public bool IsDefault => false;
+
         public void MarkAsEnd() { }
         public void MarkAsSimpleVertex() { }
         public void MarkAsObstacle()

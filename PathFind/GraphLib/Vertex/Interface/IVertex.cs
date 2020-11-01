@@ -2,13 +2,14 @@
 using System.Collections.Generic;
 using GraphLib.Vertex.Cost;
 using GraphLib.Coordinates.Interface;
+using Common.Interfaces;
 
 namespace GraphLib.Vertex.Interface
 {
     /// <summary>
     /// Represents an object that can be used to find a path in a graph
     /// </summary>
-    public interface IVertex
+    public interface IVertex : IDefault
     {
         bool IsEnd { get; set; }
         bool IsObstacle { get; set; }

@@ -26,6 +26,8 @@ namespace Algorithm.PathFindingAlgorithms
 
         public IGraph Graph { get; protected set; }
 
+        public bool IsDefault => false;
+
         public DijkstraAlgorithm(IGraph graph)
         {
             Graph = graph;
@@ -89,7 +91,7 @@ namespace Algorithm.PathFindingAlgorithms
         {
             verticesProcessQueue.RemoveAll(vert => vert.IsVisited);
             verticesProcessQueue = verticesProcessQueue.AsParallel().OrderBy(v => v.AccumulatedCost).ToList();
-            return verticesProcessQueue.FirstOrNullVertex();
+            return verticesProcessQueue.FirstOrDefault();
         }
 
         protected List<IVertex> verticesProcessQueue;

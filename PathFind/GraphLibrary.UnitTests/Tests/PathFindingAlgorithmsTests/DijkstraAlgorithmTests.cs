@@ -17,7 +17,7 @@ namespace GraphLib.UnitTests.Tests.PathFindingAlgorithmsTests
         [TestMethod]
         public void FindPath_NullGraph_ReturnsEmptyPath()
         {
-            var dikstraAlgorithm = new DijkstraAlgorithm(NullGraph.Instance);
+            var dikstraAlgorithm = new DijkstraAlgorithm(new DefaultGraph());
 
             dikstraAlgorithm.FindPath();
 

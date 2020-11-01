@@ -5,16 +5,11 @@ using System.Linq;
 
 namespace Algorithm.Extensions
 {
-    internal static class StackExtension
+    public static class StackExtension
     {
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="stack"></param>
-        /// <returns>if stack is empty returns NullVertex</returns>
-        public static IVertex PopOrNullVertex(this Stack<IVertex> stack)
+        internal static IVertex PopOrDefaultVertex(this Stack<IVertex> stack)
         {
-            return !stack.AsParallel().Any() ? NullVertex.Instance : stack.Pop();
+            return !stack.AsParallel().Any() ? new DefaultVertex() : stack.Pop();
         }
     }
 }

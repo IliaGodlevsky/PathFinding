@@ -1,4 +1,5 @@
 ﻿using Algorithm.EventArguments;
+using Common.Interfaces;
 using GraphLib.Graphs.Abstractions;
 using GraphLib.Vertex.Interface;
 using System;
@@ -10,7 +11,7 @@ namespace Algorithm.PathFindingAlgorithms.Interface
     /// <summary>
     /// A base interface of path finding algorithms
     /// </summary>
-    public interface IPathFindingAlgorithm
+    public interface IPathFindingAlgorithm : IDefault
     {
         event AlgorithmEventHanlder OnStarted;
         event Action<IVertex> OnVertexVisited;

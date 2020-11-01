@@ -83,5 +83,7 @@ namespace WinFormsVersion.Vertex
             } 
         }
         public ICoordinate Position { get; set; }
+
+        public bool IsDefault => false;
     }
 }

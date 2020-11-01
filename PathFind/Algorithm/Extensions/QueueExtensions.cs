@@ -12,9 +12,9 @@ namespace Algorithm.Extensions
         /// </summary>
         /// <param name="queue"></param>
         /// <returns>if queue is empty returns NullVertex</returns>
-        public static IVertex DequeueOrNullVertex(this Queue<IVertex> queue)
+        public static IVertex DequeueOrDefaultVertex(this Queue<IVertex> queue)
         {
-            return !queue.AsParallel().Any() ? NullVertex.Instance : queue.Dequeue();
+            return !queue.AsParallel().Any() ? new DefaultVertex() : queue.Dequeue();
         }
     }
 }

@@ -27,6 +27,8 @@ namespace Algorithm.PathFindingAlgorithms
 
         public IGraph Graph { get; protected set; }
 
+        public bool IsDefault => false;
+
         public LeeAlgorithm(IGraph graph)
         {
             Graph = graph;
@@ -59,7 +61,7 @@ namespace Algorithm.PathFindingAlgorithms
         protected virtual IVertex GetNextVertex()
         {
             neighbourQueue = new Queue<IVertex>(neighbourQueue.Where(vertex => !vertex.IsVisited));
-            return neighbourQueue.DequeueOrNullVertex();
+            return neighbourQueue.DequeueOrDefaultVertex();
         }
 
         protected virtual double WaveFunction(IVertex vertex)

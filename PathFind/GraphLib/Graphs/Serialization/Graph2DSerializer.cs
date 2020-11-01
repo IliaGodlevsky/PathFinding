@@ -64,7 +64,7 @@ namespace GraphLib.GraphLib.Graphs.Serialization
         private IGraph GetGraphFromDto(VertexInfoCollection2D verticesDto,
             Func<VertexInfo, IVertex> dtoConverter)
         {
-            graph = new Graph(verticesDto.Width, verticesDto.Height);
+            graph = new Graph2d(verticesDto.Width, verticesDto.Height);
 
             for (int i = 0; i < verticesDto.Width; i++)
             {
@@ -81,7 +81,7 @@ namespace GraphLib.GraphLib.Graphs.Serialization
             return graph;
         }
 
-        private IGraph graph = NullGraph.Instance;
+        private IGraph graph = new DefaultGraph();
         private readonly IFormatter formatter;
     }
 }

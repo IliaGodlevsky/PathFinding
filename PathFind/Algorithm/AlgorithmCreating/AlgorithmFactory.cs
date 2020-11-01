@@ -18,7 +18,7 @@ namespace Algorithm.AlgorithmCreating
         {
             Algorithms = new Dictionary<string, Type>();
             var algoType = typeof(IPathFindingAlgorithm);
-            var filterType = typeof(NullAlgorithm);
+            var filterType = typeof(DefaultAlgorithm);
 
             var assembly = Assembly.Load(algoType.Assembly.GetName());
             foreach (var type in assembly.GetTypes().Where(t => t != filterType))
@@ -37,7 +37,7 @@ namespace Algorithm.AlgorithmCreating
         {
             return Algorithms.Keys.Contains(algorithmKey)
                 ? (IPathFindingAlgorithm)Activator.CreateInstance(Algorithms[algorithmKey], graph)
-                : NullAlgorithm.Instance;
+                : new DefaultAlgorithm();
         }
     }
 }

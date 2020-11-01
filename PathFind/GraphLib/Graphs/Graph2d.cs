@@ -16,9 +16,9 @@ namespace GraphLib.Graphs
     /// some pairs of the objects are in some sense "related"
     /// </summary>
     [Serializable]
-    public class Graph : BaseGraph
+    public class Graph2d : BaseGraph
     {
-        public Graph(int width, int lenght)
+        public Graph2d(int width, int lenght)
         {
             Width = width; Length = lenght;
             vertices = new IVertex[Size];
@@ -33,8 +33,8 @@ namespace GraphLib.Graphs
         {
             get
             {
-                if (ReferenceEquals(coordinate, NullCoordinate.Instance))
-                    return NullVertex.Instance;
+                if (coordinate.IsDefault)
+                    return new DefaultVertex();
                 var coord = coordinate as Coordinate2D;
                 if (coord == null)
                     throw new ArgumentException("Must be 2D coordinates");
@@ -42,7 +42,7 @@ namespace GraphLib.Graphs
             }
             set
             {
-                if (ReferenceEquals(coordinate, NullCoordinate.Instance))
+                if (coordinate.IsDefault)
                     return;
                 var coord = coordinate as Coordinate2D;
                 if (coord == null)
@@ -68,6 +68,8 @@ namespace GraphLib.Graphs
         public override IVertexInfoCollection VertexInfoCollection => new VertexInfoCollection2D(this, Width, Length);
 
         public override IEnumerable<int> DimensionsSizes => new int[] { Width, Length };
+
+        public override bool IsDefault => false;
 
         public override string GetFormattedData(string format)
         {

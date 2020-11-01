@@ -1,4 +1,5 @@
-﻿using GraphLib.Coordinates.Interface;
+﻿using Common.Interfaces;
+using GraphLib.Coordinates.Interface;
 using GraphLib.Info.Interface;
 using GraphLib.Vertex.Interface;
 using System.Collections.Generic;
@@ -24,7 +25,7 @@ namespace GraphLib.Graphs.Abstractions
     /// Provides methods for accessing the vertices of the graph, 
     /// as well as for getting information about the graph
     /// </summary>
-    public interface IGraph : IEnumerable<IVertex>
+    public interface IGraph : IEnumerable<IVertex>, IDefault
     {
         int Size { get; }
         int NumberOfVisitedVertices { get; }
