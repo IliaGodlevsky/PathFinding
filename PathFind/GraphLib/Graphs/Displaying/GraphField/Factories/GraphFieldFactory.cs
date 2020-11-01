@@ -10,7 +10,7 @@ namespace GraphLib.GraphFieldCreating
         {
             var graphField = GetField();
             foreach (var vertex in graph)
-                graphField?.Add(vertex);
+                graphField.Add(vertex);
             return graphField;
         }
     }
