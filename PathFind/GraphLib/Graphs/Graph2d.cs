@@ -51,20 +51,6 @@ namespace GraphLib.Graphs
             }
         }
 
-        private IVertex end;
-        public override IVertex End
-        {
-            get => end;
-            set { end = value; end.IsEnd = true; }
-        }
-
-        private IVertex start;
-        public override IVertex Start
-        {
-            get => start;
-            set { start = value; start.IsStart = true; }
-        }
-
         public override IVertexInfoCollection VertexInfoCollection => new VertexInfoCollection2D(this, Width, Length);
 
         public override IEnumerable<int> DimensionsSizes => new int[] { Width, Length };

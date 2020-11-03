@@ -11,6 +11,7 @@ namespace ConsoleVersion.Model.Vertex
 {
     internal class ConsoleVertex : IVertex
     {
+
         public event EventHandler OnDestinationChosen;
         public event EventHandler OnCostChanged;
         public event EventHandler OnRoleChanged;

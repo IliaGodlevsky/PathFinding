@@ -19,8 +19,19 @@ namespace GraphLib.Graphs.Abstractions
 
         public virtual int ObstaclePercent => Size == 0 ? 0 : ObstacleNumber * 100 / Size;
 
-        public virtual IVertex End { get; set; }
-        public virtual IVertex Start { get; set; }
+        protected IVertex end;
+        public virtual IVertex End
+        {
+            get => end;
+            set { end = value; end.IsEnd = true; }
+        }
+
+        protected IVertex start;
+        public virtual IVertex Start
+        {
+            get => start;
+            set { start = value; start.IsStart = true; }
+        }
 
         public abstract IVertexInfoCollection VertexInfoCollection { get; }
 

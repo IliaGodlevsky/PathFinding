@@ -43,12 +43,14 @@
   <ItemGroup>
     <Compile Include="Coordinates\Converter.cs" />
     <Compile Include="Coordinates\Coordinate2D.cs" />
+    <Compile Include="Coordinates\Coordinate3D.cs" />
     <Compile Include="Coordinates\Interface\ICoordinate.cs" />
     <Compile Include="Coordinates\DefaultCoordinate.cs" />
     <Compile Include="Extensions\ICoordinateExtensions.cs" />
     <Compile Include="Extensions\IGraphExtensions.cs" />
     <Compile Include="Extensions\IVertexExtension.cs" />
     <Compile Include="Extensions\RandomExtensions.cs" />
+    <Compile Include="Graphs\Factories\Graph3dFactory.cs" />
     <Compile Include="Graphs\Graph2d.cs" />
     <Compile Include="Graphs\Abstractions\BaseGraph.cs" />
     <Compile Include="Graphs\Abstractions\IGraph.cs" />
@@ -56,6 +58,7 @@
     <Compile Include="Graphs\Displaying\GraphField\Interfaces\IGraphField.cs" />
     <Compile Include="Graphs\Factories\Graph2dFactory.cs" />
     <Compile Include="Graphs\Factories\Interface\IGraphFactory.cs" />
+    <Compile Include="Graphs\Graph3d.cs" />
     <Compile Include="Graphs\Serialization\Graph2DSerializer.cs" />
     <Compile Include="Graphs\Serialization\Infrastructure\Info\Collections\Interface\IVertexInfoContainer.cs" />
     <Compile Include="Graphs\Serialization\Infrastructure\Info\Collections\EmptyVertexInfoCollection.cs" />

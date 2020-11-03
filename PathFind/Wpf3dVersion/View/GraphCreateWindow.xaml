@@ -1,0 +1,80 @@
+﻿<Window x:Class="Wpf3dVersion.View.GraphCreateWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:converters="clr-namespace:Wpf3dVersion.Converters"
+        xmlns:range="clr-namespace:Common.ValueRanges;assembly=Common" 
+        mc:Ignorable="d"
+        Title="GraphCreateWindow"
+        SizeToContent="WidthAndHeight">
+    
+    <Window.Resources>
+        <converters:SliderValueConverter x:Key="sliderValueConverter"></converters:SliderValueConverter>
+        <converters:StringToIntConverter x:Key="stringToIntCOnverter"></converters:StringToIntConverter>
+    </Window.Resources>
+    
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"></ColumnDefinition>
+            <ColumnDefinition Width="Auto"></ColumnDefinition>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"></RowDefinition>
+            <RowDefinition Height="Auto"></RowDefinition>
+            <RowDefinition Height="Auto"></RowDefinition>
+            <RowDefinition Height="Auto"></RowDefinition>
+            <RowDefinition Height="Auto"></RowDefinition>
+            <RowDefinition Height="Auto"></RowDefinition>
+        </Grid.RowDefinitions>
+        
+        <TextBlock Margin="5" 
+                   Text="Obstacle percent" 
+                   Grid.Row="0" 
+                   Grid.ColumnSpan="2" 
+                   HorizontalAlignment="Center">
+        </TextBlock>
+        
+        <Slider Value = "{Binding Path = ObstaclePercent}" 
+                x:Name="obstacleSlider" 
+                MinWidth="100" 
+                Margin="5" 
+                Grid.Row="1">
+        </Slider>
+        
+        <TextBox Text = "{Binding ElementName = obstacleSlider, 
+            Path = Value, 
+            Converter = {StaticResource sliderValueConverter}, 
+            ConverterParameter={x:Static range:Range.ObstaclePercentValueRange}, 
+            Mode = TwoWay, 
+            UpdateSourceTrigger = PropertyChanged}"
+                 x:Name="obstacleTextBox" 
+                 MinWidth="40" 
+                 Margin="5" 
+                 Grid.Row="1" 
+                 Grid.Column="1">
+        </TextBox>
+        <TextBlock Grid.Row="2" Text="Graph width" Margin="5"></TextBlock>
+        <TextBox Text ="{Binding Path = Width, 
+            UpdateSourceTrigger=PropertyChanged, 
+            Converter={StaticResource stringToIntCOnverter}, 
+            ConverterParameter={x:Static range:Range.WidthValueRange}}" 
+                 Grid.Row="2" Grid.Column="1" Margin="5"></TextBox>
+        <TextBlock Grid.Row ="3" Text="Graph height" Margin="5"></TextBlock>
+        <TextBox Text="{Binding Path = Height, 
+            UpdateSourceTrigger=PropertyChanged,
+            Converter={StaticResource stringToIntCOnverter}, 
+            ConverterParameter={x:Static range:Range.HeightValueRange}}"
+                 Grid.Row="3" Grid.Column="1" Margin="5"></TextBox>
+        <TextBlock Grid.Row ="4" Text="Graph length" Margin="5"></TextBlock>
+        <TextBox Text="{Binding Path = Length, 
+            UpdateSourceTrigger=PropertyChanged,
+            Converter={StaticResource stringToIntCOnverter}, 
+            ConverterParameter={x:Static range:Range.HeightValueRange}}"
+                 Grid.Row="4" Grid.Column="1" Margin="5"></TextBox>
+        <StackPanel Grid.Row="5" Grid.ColumnSpan="2" Orientation="Horizontal" HorizontalAlignment="Center">
+            <Button Command ="{Binding ConfirmCreateGraphCommand}" Margin="5" Content="OK"></Button>
+            <Button Command="{Binding CancelCreateGraphCommand}" Margin="5" Content="Cancel"></Button>
+        </StackPanel>
+    </Grid>
+</Window>

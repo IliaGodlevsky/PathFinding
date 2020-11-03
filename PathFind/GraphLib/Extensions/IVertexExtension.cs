@@ -12,7 +12,7 @@ namespace GraphLib.Extensions
             if (vertex.IsEnd && vertex.IsVisited)
             {
                 var temp = vertex;
-                while (!temp.IsStart && vertex is object)
+                while (!temp.IsStart && !vertex.IsDefault)
                 {
                     yield return temp;
                     temp = temp.ParentVertex;
