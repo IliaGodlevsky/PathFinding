@@ -1,7 +1,6 @@
 ﻿using GraphLib.GraphField;
 using GraphLib.Graphs.Abstractions;
 using GraphLib.Vertex.Interface;
-using System;
 using System.Linq;
 using System.Windows.Media.Media3D;
 
@@ -9,7 +8,7 @@ namespace Wpf3dVersion.Model
 {
     public class Wpf3dGraphField : ModelVisual3D, IGraphField
     {
-        private byte[] correctionOffset;
+        private readonly byte[] correctionOffset;
         public double DistanceBetween { get; set; }
 
         public void IsolateXAxis() => correctionOffset[0] = 0;
@@ -57,12 +56,9 @@ namespace Wpf3dVersion.Model
             var coordinates = vertex.Position.Coordinates;
             var translate = new TranslateTransform3D
             {
-                OffsetX = coordinates.First() * vertex.Size +
-                    coordinates.First() * DistanceBetween * correctionOffset[0] + offsetCorrection,
-                OffsetY = coordinates.ElementAt(1) * vertex.Size + 
-                    coordinates.ElementAt(1) * DistanceBetween * correctionOffset[1] + offsetCorrection,
-                OffsetZ = coordinates.Last() * vertex.Size +
-                    coordinates.Last() * DistanceBetween * correctionOffset[2] + offsetCorrection
+                OffsetX = coordinates.First() * (vertex.Size + DistanceBetween * correctionOffset[0]) + offsetCorrection,
+                OffsetY = coordinates.ElementAt(1) * (vertex.Size + DistanceBetween * correctionOffset[1]) + offsetCorrection,
+                OffsetZ = coordinates.Last() * (vertex.Size + DistanceBetween * correctionOffset[2]) + offsetCorrection
             };
             vertex.Transform = translate;
         }
