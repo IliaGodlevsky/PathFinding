@@ -29,6 +29,7 @@ namespace GraphViewModel
         {
             Graph = new DefaultGraph();
             Serializer = new Graph2DSerializer();
+            graphParamFormat = ViewModelResources.GraphParametresFormat;
         }
 
         public virtual void SaveGraph()
@@ -46,7 +47,7 @@ namespace GraphViewModel
         {
             Graph.Refresh();
             PathFindingStatistics = string.Empty;
-            GraphParametres = Graph.GetFormattedData(ViewModelResources.GraphParametresFormat);
+            GraphParametres = Graph.GetFormattedData(graphParamFormat);
         }
 
         public void ConnectNewGraph(IGraph graph)
@@ -55,9 +56,11 @@ namespace GraphViewModel
             GraphField = FieldFactory.CreateGraphField(Graph);
             VertexEventHolder.Graph = Graph;
             VertexEventHolder.SubscribeVertices();
-            GraphParametres = Graph.GetFormattedData(ViewModelResources.GraphParametresFormat);
+            GraphParametres = Graph.GetFormattedData(graphParamFormat);
             PathFindingStatistics = string.Empty;
         }
+
+        protected string graphParamFormat;
 
         public abstract void FindPath();
         public abstract void CreateNewGraph();

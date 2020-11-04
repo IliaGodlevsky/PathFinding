@@ -5,7 +5,7 @@ using System.Windows.Media.Media3D;
 
 namespace Wpf3dVersion.Converters
 {
-    public class ZoomConverter : IValueConverter
+    public class CoordinateToDistanceConverter : IValueConverter
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {

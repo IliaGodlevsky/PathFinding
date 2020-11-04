@@ -3,6 +3,8 @@ using GraphLib.Vertex.Interface;
 using GraphLib.ViewModel;
 using GraphViewModel.Interfaces;
 using System;
+using System.Windows;
+using System.Windows.Media.Media3D;
 using Wpf3dVersion.Infrastructure;
 using Wpf3dVersion.Model;
 
@@ -25,6 +27,9 @@ namespace Wpf3dVersion.ViewModel
         private void ExecuteConfirmCreateGraphCommand(object param)
         {
             CreateGraph(() => new Wpf3dVertex());
+            (model.GraphField as Wpf3dGraphField).CenterGraph(model.Graph);
+            (Application.Current.MainWindow as MainWindow).GraphField.Children.Clear();
+            (Application.Current.MainWindow as MainWindow).GraphField.Children.Add(model.GraphField as ModelVisual3D);
             (model as MainWindowViewModel).Window.Close();
         }
 

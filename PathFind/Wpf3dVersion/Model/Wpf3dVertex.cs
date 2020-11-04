@@ -26,12 +26,14 @@ namespace Wpf3dVersion.Model
         private static MaterialGroup GetMaterial(Color color, double opacity)
         {
             var materailGroup = new MaterialGroup();
-            var diffusialMaterial = new DiffuseMaterial
+
+            var diffuseMaterial = new DiffuseMaterial
             {
                 Brush = new SolidColorBrush(color)
             };
-            diffusialMaterial.Brush.Opacity = opacity;
-            materailGroup.Children.Add(diffusialMaterial);
+            diffuseMaterial.Brush.Opacity = opacity;
+            materailGroup.Children.Add(diffuseMaterial);      
+
             return materailGroup;
         }
 

@@ -58,7 +58,9 @@ namespace GraphLib.Graphs
 
         public override string GetFormattedData(string format)
         {
-            return string.Empty;
+
+            return string.Format(format, Width, Length, Height,
+                ObstaclePercent, ObstacleNumber, Size);
         }
     }
 }

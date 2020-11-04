@@ -8,98 +8,147 @@
         mc:Ignorable="d"
         Title="MainWindow" Height="350" Width="800">
     <Window.DataContext>
-        <viewmodel:MainWindowViewModel></viewmodel:MainWindowViewModel>
+        <viewmodel:MainWindowViewModel x:Name="viewModel"/>
     </Window.DataContext>
     <Window.Resources>
-        <converters:LookBackConverter x:Key="lookBackConverter"></converters:LookBackConverter>
-        <converters:ZoomConverter x:Key="ZConverter"></converters:ZoomConverter>
+        <converters:InvertPointConverter x:Key="invertPointConverter"/>
+        <converters:CoordinateToDistanceConverter x:Key="coordinateToDistance"/>
+        <converters:StringToDoubleConverter x:Key="stringToDoubleConverter"/>
     </Window.Resources>
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition Height="auto"></RowDefinition>
-            <RowDefinition Height="auto"></RowDefinition>
-            <RowDefinition Height="*"></RowDefinition>
-            <RowDefinition Height="auto"></RowDefinition>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="auto"/>
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="*"></ColumnDefinition>
-            <ColumnDefinition Width="auto"></ColumnDefinition>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="auto"/>
         </Grid.ColumnDefinitions>
         <Expander Grid.Column="1" Grid.RowSpan="4">
             <Grid>
+                
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition></ColumnDefinition>
+                    <ColumnDefinition></ColumnDefinition>
+                    <ColumnDefinition></ColumnDefinition>
+                </Grid.ColumnDefinitions>
+                
                 <Grid.RowDefinitions>
                     <RowDefinition Height="auto"></RowDefinition>
                     <RowDefinition Height="auto"></RowDefinition>
                     <RowDefinition Height="auto"></RowDefinition>
                     <RowDefinition Height="auto"></RowDefinition>
+                    <RowDefinition Height="auto"></RowDefinition>
                 </Grid.RowDefinitions>
-                <Slider Margin="5" MinWidth="100" Minimum="0" Maximum="1000" Grid.Row="0" Value="{Binding ElementName=look, Path=Position, Converter={StaticResource ZConverter}}"></Slider>
-                <Slider Margin="5" MinWidth="100" Minimum="0" Maximum="360" Grid.Row="1" Value="{Binding ElementName=Rotate, Path=Angle}"></Slider>
-                <Slider Margin="5" MinWidth="100" Minimum="0" Maximum="360" Grid.Row="2" Value="{Binding ElementName=Rotate2, Path=Angle}"></Slider>
-                <Slider Margin="5" MinWidth="100" Minimum="0" Maximum="360" Grid.Row="3" Value="{Binding ElementName=Rotate3, Path=Angle}"></Slider>
+
+                <TextBlock Margin="5" Text="Zoom"/>
+                <TextBlock Grid.Row="1" Margin="5" Text="X axis rotate"/>
+                <TextBlock Grid.Row="2" Margin="5" Text="Y axis rotate"/>
+                <TextBlock Grid.Row="3" Margin="5" Text="Z axis rotate"/>
+                <TextBlock Grid.Row="4" Margin="5" Text="Distance between vertices"/>
+                <TextBox Margin="5" MinWidth="40" Grid.Column="2" Grid.Row="0" 
+                         Text="{Binding ElementName=zoomSlider, Path=Value, 
+                    Converter={StaticResource stringToDoubleConverter}, Mode=TwoWay}"/>
+
+                <TextBox Margin="5" MinWidth="40" Grid.Column="2" Grid.Row="1" 
+                         Text="{Binding ElementName=xAxisSlider, Path=Value, 
+                    Converter={StaticResource stringToDoubleConverter}, Mode=TwoWay}"/>
+
+                <TextBox Margin="5" MinWidth="40" Grid.Column="2" Grid.Row="2" 
+                         Text="{Binding ElementName=yAxisSlider, Path=Value, 
+                    Converter={StaticResource stringToDoubleConverter}, Mode=TwoWay}"/>
+
+                <TextBox Margin="5" MinWidth="40" Grid.Column="2" Grid.Row="3" 
+                         Text="{Binding ElementName=zAxisSlider, Path=Value, 
+                    Converter={StaticResource stringToDoubleConverter}, Mode=TwoWay}"/>
+
+                <TextBox Margin="5" MinWidth="40" Grid.Column="2" Grid.Row="4"
+                         Text="{Binding ElementName=distanceBetweenSlider, Path=Value,
+                    Converter={StaticResource stringToDoubleConverter}, Mode=TwoWay}"/>
+
+                <Slider x:Name="zoomSlider" Grid.Column="1" Margin="5" 
+                        MinWidth="100" Minimum="0" Maximum="1000" Grid.Row="0" 
+                        Value="{Binding ElementName=look, Path=Position, 
+                        Converter={StaticResource coordinateToDistance}}"/>
+
+                <Slider x:Name="xAxisSlider" Grid.Column="1" Margin="5" 
+                        MinWidth="100" Minimum="0" Maximum="360" Grid.Row="1" 
+                        Value="{Binding ElementName=xAxis, Path=Angle}"/>
+
+                <Slider x:Name="yAxisSlider" Grid.Column="1" Margin="5" 
+                        MinWidth="100" Minimum="0" Maximum="360" Grid.Row="2" 
+                        Value="{Binding ElementName=yAxis, Path=Angle}"/>
+
+                <Slider x:Name="zAxisSlider" Grid.Column="1" Margin="5" 
+                        MinWidth="100" Minimum="0" Maximum="360" Grid.Row="3" 
+                        Value="{Binding ElementName=zAxis, Path=Angle}"/>
+
+                <Slider x:Name="distanceBetweenSlider" Grid.Column="1" Margin="5" 
+                        MinWidth="100" Minimum="0" Maximum="60" Grid.Row="4" 
+                        ValueChanged="Slider_ValueChanged"/>
+
             </Grid>
         </Expander>
         <ToolBar Grid.Row="0">
             <Button Command="{Binding LoadGraphCommand}">
-                <Image Style ="{StaticResource ImageStyle}" Source="/Resources/Images/open.png"></Image>
+                <Image Style ="{StaticResource ImageStyle}" Source="/Resources/Images/open.png"/>
             </Button>
             <Button Command="{Binding SaveGraphCommand}">
-                <Image Style ="{StaticResource ImageStyle}" Source="/Resources/Images/save.png"></Image>
+                <Image Style ="{StaticResource ImageStyle}" Source="/Resources/Images/save.png"/>
             </Button>
             <Button Command="{Binding CreateNewGraphCommand}">
-                <Image Style ="{StaticResource ImageStyle}" Source="/Resources/Images/new.png"></Image>
+                <Image Style ="{StaticResource ImageStyle}" Source="/Resources/Images/new.png"/>
             </Button>
             <Button Command="{Binding ClearGraphCommand}">
-                <Image Style ="{StaticResource ImageStyle}" Source="/Resources/Images/clear.png"></Image>
+                <Image Style ="{StaticResource ImageStyle}" Source="/Resources/Images/clear.png"/>
             </Button>
             <Button Command ="{Binding StartPathFindCommand}">
-                <Image Style ="{StaticResource ImageStyle}" Source="/Resources/Images/start.png"></Image>
+                <Image Style ="{StaticResource ImageStyle}" Source="/Resources/Images/start.png"/>
             </Button>
             <Button Command ="{Binding ChangeOpacityCommand}">
+                <Image Style ="{StaticResource ImageStyle}" Source="/Resources/Images/opacity.png"/>
             </Button>
         </ToolBar>
         <Viewport3D Grid.Row="2">
             <Viewport3D.Camera>
                 <PerspectiveCamera x:Name="look" LookDirection="{Binding RelativeSource={RelativeSource Self}, 
-                    Path=Position, Converter={StaticResource lookBackConverter}}" Position="600,600,600">
-                    <PerspectiveCamera.Transform>
-                        <RotateTransform3D>
-                            <RotateTransform3D.Rotation>
-                                <AxisAngleRotation3D x:Name="Rotate2" Axis="0 0 1" />
-                            </RotateTransform3D.Rotation>
-                        </RotateTransform3D>
-                    </PerspectiveCamera.Transform>
-                </PerspectiveCamera>
+                    Path=Position, Converter={StaticResource invertPointConverter}}" Position="600,600,600"/>
             </Viewport3D.Camera>
-            <ModelVisual3D x:Name="mainVisual3D">
+            <ModelVisual3D x:Name="GraphField">
                 <ModelVisual3D.Content>
                     <Model3DGroup>
-                        <DirectionalLight Direction="{Binding ElementName=look, Path=LookDirection}" />
+                        <DirectionalLight Direction="{Binding ElementName=look, Path=LookDirection}" 
+                                          Color="White"/>
                     </Model3DGroup>
                 </ModelVisual3D.Content>
-                <ModelVisual3D x:Name="GraphField">
-                    <ModelVisual3D.Transform>
+                <ModelVisual3D.Transform>
+                    <Transform3DGroup>
                         <RotateTransform3D>
                             <RotateTransform3D.Rotation>
-                                <AxisAngleRotation3D x:Name="Rotate3" Axis="0 1 0" />
+                                <AxisAngleRotation3D x:Name="xAxis" Axis="1 0 0"/>
                             </RotateTransform3D.Rotation>
                         </RotateTransform3D>
-                    </ModelVisual3D.Transform>
-                </ModelVisual3D>
-                <ModelVisual3D.Transform>
-                    <RotateTransform3D>
-                        <RotateTransform3D.Rotation>
-                            <AxisAngleRotation3D x:Name="Rotate" Axis="1 0 0" />
-                        </RotateTransform3D.Rotation>
-                    </RotateTransform3D>
+                        <RotateTransform3D>
+                            <RotateTransform3D.Rotation>
+                                <AxisAngleRotation3D x:Name="yAxis" Axis="0 1 0"/>
+                            </RotateTransform3D.Rotation>
+                        </RotateTransform3D>
+                        <RotateTransform3D>
+                            <RotateTransform3D.Rotation>
+                                <AxisAngleRotation3D x:Name="zAxis" Axis="0 0 1"/>
+                            </RotateTransform3D.Rotation>
+                        </RotateTransform3D>
+                    </Transform3DGroup>
                 </ModelVisual3D.Transform>
             </ModelVisual3D>
         </Viewport3D>
         <StatusBar Grid.Row="3">
-            <TextBlock Text = "{Binding PathFindingStatistics}"></TextBlock>
+            <TextBlock Text = "{Binding PathFindingStatistics}"/>
         </StatusBar>
         <StatusBar Grid.Row="1">
-            <TextBlock Text="{Binding GraphParametres}"></TextBlock>
+            <TextBlock Text="{Binding GraphParametres}"/>
         </StatusBar>
     </Grid>
 </Window>

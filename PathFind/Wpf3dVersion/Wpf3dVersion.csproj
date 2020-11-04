@@ -57,6 +57,12 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Converters\MaterialOpacityConverter.cs" />
+    <Compile Include="Converters\StringToDoubleConverter.cs" />
+    <Compile Include="Resources\Resource.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resource.resx</DependentUpon>
+    </Compile>
     <Compile Include="ViewModel\GraphCreateViewModel.cs" />
     <Compile Include="ViewModel\MainWindowViewModel.cs" />
     <Compile Include="ViewModel\OpacityChangeViewModel.cs" />
@@ -104,12 +110,12 @@
     </Page>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Converters\LookBackConverter.cs" />
+    <Compile Include="Converters\InvertPointConverter.cs" />
     <Compile Include="Model\Wpf3dVertex.cs" />
     <Compile Include="Model\Wpf3dGraphField.cs" />
     <Compile Include="Model\Wpf3DGraphFieldFactory.cs" />
     <Compile Include="Model\Wpf3dVertexEventHolder.cs" />
-    <Compile Include="Converters\ZoomConverter.cs" />
+    <Compile Include="Converters\CoordinateToDistanceConverter.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -126,6 +132,10 @@
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\Resource.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resource.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
@@ -153,15 +163,14 @@
       <Name>GraphViewModel</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Resource Include="Resources\Images\opacity.png" />
+  </ItemGroup>
   <ItemGroup>
     <Resource Include="Resources\Images\change.png" />
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Resources\Images\clear.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Resources\Images\hide.png" />
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Resources\Images\mainwindow.png" />
@@ -173,19 +182,10 @@
     <Resource Include="Resources\Images\new.png" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Resources\Images\obstacle.png" />
-  </ItemGroup>
-  <ItemGroup>
     <Resource Include="Resources\Images\open.png" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Resources\Images\path.png" />
-  </ItemGroup>
-  <ItemGroup>
     <Resource Include="Resources\Images\save.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Resources\Images\show.png" />
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Resources\Images\start.png" />

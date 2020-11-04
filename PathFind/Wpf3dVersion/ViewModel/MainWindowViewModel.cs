@@ -11,6 +11,7 @@ using System.Windows;
 using System.Windows.Media.Media3D;
 using Wpf3dVersion.Infrastructure;
 using Wpf3dVersion.Model;
+using Wpf3dVersion.Resources;
 using Wpf3dVersion.View;
 
 namespace Wpf3dVersion.ViewModel
@@ -74,6 +75,8 @@ namespace Wpf3dVersion.ViewModel
             SaveGraphCommand = new RelayCommand(ExecuteSaveGraphCommand, CanExecuteGraphOperation);
             LoadGraphCommand = new RelayCommand(ExecuteLoadGraphCommand, AlwaysExecutable);           
             ChangeOpacityCommand = new RelayCommand(ExecuteChangeOpacity, CanExecuteGraphOperation);
+
+            graphParamFormat = Resource.GraphParamFormat;
         }
 
         private bool AlwaysExecutable(object param) => true;
@@ -119,7 +122,10 @@ namespace Wpf3dVersion.ViewModel
             FindPath();
         }
 
-        private void ExecuteCreateNewGraphCommand(object param) => CreateNewGraph();
+        private void ExecuteCreateNewGraphCommand(object param)
+        {
+            CreateNewGraph();            
+        }
 
         protected virtual void OnDispose()
         {
