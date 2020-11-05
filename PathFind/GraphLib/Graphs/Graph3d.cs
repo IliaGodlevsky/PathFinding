@@ -29,7 +29,7 @@ namespace GraphLib.Graphs
                     return new DefaultVertex();
                 var coord = coordinate as Coordinate3D;
                 if (coord == null)
-                    throw new ArgumentException("Must be 2D coordinates");
+                    throw new ArgumentException("Must be 3D coordinates");
                 return vertices[Index.ToIndex(coordinate, Length, Height)];
             }
             set
@@ -38,7 +38,7 @@ namespace GraphLib.Graphs
                     return;
                 var coord = coordinate as Coordinate3D;
                 if (coord == null)
-                    throw new ArgumentException("Must be 2D coordinates");
+                    throw new ArgumentException("Must be 3D coordinates");
                 vertices[Index.ToIndex(coordinate, Length, Height)] = value;
             }
         }

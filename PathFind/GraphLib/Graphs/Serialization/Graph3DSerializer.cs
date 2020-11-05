@@ -1,11 +1,12 @@
 ﻿using GraphLib.Coordinates;
-using GraphLib.GraphLib.Graphs.Serialization.Interface;
 using GraphLib.Graphs.Abstractions;
+using GraphLib.Graphs.Serialization.Abstractions;
 using GraphLib.Graphs.Serialization.Infrastructure.Info.Collections;
 using GraphLib.Info;
 using GraphLib.Vertex.Interface;
 using GraphLib.VertexConnecting;
 using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Runtime.Serialization;
@@ -64,20 +65,18 @@ namespace GraphLib.Graphs.Serialization
             Func<VertexInfo, IVertex> dtoConverter)
         {
             graph = new Graph3d(verticesDto.Width, verticesDto.Length, verticesDto.Height);
-
-            for (int i = 0; i < verticesDto.Width; i++)
+            for (int x = 0; x < verticesDto.Width; x++)
             {
-                for (int j = 0; j < verticesDto.Length; j++)
+                for (int y = 0; y < verticesDto.Length; y++)
                 {
-                    for (int l = 0; l < verticesDto.Height; l++)
+                    for (int z = 0; z < verticesDto.Height; z++)
                     {
-                        var indices = new Coordinate3D(i, j, l);
-                        var index = Index.ToIndex(indices, verticesDto.Height, verticesDto.Length);
+                        var indices = new Coordinate3D(x, y, z);
+                        var index = Index.ToIndex(indices, verticesDto.Length, verticesDto.Height);
                         graph[indices] = dtoConverter(verticesDto.ElementAt(index));
                     }
                 }
             }
-
             VertexConnector.ConnectVertices(graph);
 
             return graph;

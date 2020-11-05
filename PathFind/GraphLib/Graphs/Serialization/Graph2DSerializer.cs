@@ -1,6 +1,5 @@
 ﻿using GraphLib.Graphs;
 using GraphLib.Coordinates;
-using GraphLib.GraphLib.Graphs.Serialization.Interface;
 using GraphLib.Info;
 using GraphLib.Info.Containers;
 using GraphLib.Vertex.Interface;
@@ -11,6 +10,7 @@ using System.Linq;
 using System.Runtime.Serialization;
 using System.Runtime.Serialization.Formatters.Binary;
 using GraphLib.Graphs.Abstractions;
+using GraphLib.Graphs.Serialization.Abstractions;
 
 namespace GraphLib.GraphLib.Graphs.Serialization
 {

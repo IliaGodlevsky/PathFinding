@@ -9,7 +9,6 @@ using System.ComponentModel;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Windows;
-using System.Windows.Media.Media3D;
 using Wpf3dVersion.Infrastructure;
 using Wpf3dVersion.Model;
 using Wpf3dVersion.Resources;
@@ -51,7 +50,8 @@ namespace Wpf3dVersion.ViewModel
                 graphField = value;
                 var currentWindow = (Application.Current.MainWindow as MainWindow);
                 currentWindow?.GraphField?.Children?.Clear();
-                currentWindow?.GraphField?.Children?.Add(graphField as ModelVisual3D);
+                currentWindow?.GraphField?.Children?.Add(graphField as Wpf3dGraphField);
+                (graphField as Wpf3dGraphField).CenterGraph(Graph);
                 OnPropertyChanged();
             }
         }
