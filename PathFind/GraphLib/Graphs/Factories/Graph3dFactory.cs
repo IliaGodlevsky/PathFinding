@@ -1,60 +1,50 @@
 ﻿using GraphLib.Coordinates;
-using GraphLib.Extensions;
+using GraphLib.Coordinates.Interface;
 using GraphLib.Graphs.Abstractions;
-using GraphLib.Graphs.Factories.Interface;
-using GraphLib.Vertex.Cost;
+using GraphLib.Graphs.Factories.Interface.Abstractions;
 using GraphLib.Vertex.Interface;
 using GraphLib.VertexConnecting;
 using System;
+using System.Linq;
 
 namespace GraphLib.Graphs.Factories
 {
-    public class Graph3dFactory : IGraphFactory
+    public class Graph3dFactory : BaseGraphFactory
     {
-        public Graph3dFactory(int width, int length, int height, int obstacleChance)
+        public Graph3dFactory(int width, int length, 
+            int height, int obstacleChance) : base(obstacleChance)
         {
             this.width = width;
             this.length = length;
             this.height = height;
-            this.obstacleChance = obstacleChance;
         }
 
-        static Graph3dFactory()
-        {
-            rand = new Random();
-        }
-
-
-        public IGraph CreateGraph(Func<IVertex> vertexFactory)
+        public override IGraph CreateGraph(Func<IVertex> vertexFactory)
         {
             graph = new Graph3d(width, length, height);
+
             for (int i = 0; i < width; i++)
-            {
                 for (int j = 0; j < length; j++)
-                {
                     for (int l = 0; l < height; l++)
-                    {
-                        var indices = new Coordinate3D(i, j, l);
-                        graph[indices] = vertexFactory();
-                        graph[indices].Cost = rand.GetRandomValueCost();
-                        if (rand.IsObstacleChance(obstacleChance))
-                            graph[indices].MarkAsObstacle();
-                        graph[indices].Position = indices;
-                    }
-                }
-            }
+                        CreateVertex(vertexFactory, i, j, l);
 
             VertexConnector.ConnectVertices(graph);
 
             return graph;
         }
 
-        private static readonly Random rand;
+        protected override ICoordinate GetCoordinate(params int[] coordinates)
+        {
+            if (coordinates.Length != 3)
+                throw new ArgumentException("Must be two coordinates");
+            return new Coordinate3D(
+                coordinates.ElementAt(0), 
+                coordinates.ElementAt(1), 
+                coordinates.ElementAt(2));
+        }
 
-        private IGraph graph = new DefaultGraph();
         private readonly int width;
         private readonly int length;
         private readonly int height;
-        private readonly int obstacleChance;
     }
 }

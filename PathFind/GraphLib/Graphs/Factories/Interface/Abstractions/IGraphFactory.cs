@@ -1,9 +1,8 @@
-﻿using GraphLib.Graphs;
-using GraphLib.Graphs.Abstractions;
+﻿using GraphLib.Graphs.Abstractions;
 using GraphLib.Vertex.Interface;
 using System;
 
-namespace GraphLib.Graphs.Factories.Interface
+namespace GraphLib.Graphs.Factories.Interface.Abstractions
 {
     public interface IGraphFactory
     {

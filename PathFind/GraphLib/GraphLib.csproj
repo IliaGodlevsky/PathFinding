@@ -51,14 +51,16 @@
     <Compile Include="Extensions\IVertexExtension.cs" />
     <Compile Include="Extensions\RandomExtensions.cs" />
     <Compile Include="Graphs\Factories\Graph3dFactory.cs" />
+    <Compile Include="Graphs\Factories\Interface\Abstractions\BaseGraphFactory.cs" />
     <Compile Include="Graphs\Graph2d.cs" />
     <Compile Include="Graphs\Abstractions\BaseGraph.cs" />
     <Compile Include="Graphs\Abstractions\IGraph.cs" />
     <Compile Include="Graphs\Displaying\GraphField\Factories\GraphFieldFactory.cs" />
     <Compile Include="Graphs\Displaying\GraphField\Interfaces\IGraphField.cs" />
     <Compile Include="Graphs\Factories\Graph2dFactory.cs" />
-    <Compile Include="Graphs\Factories\Interface\IGraphFactory.cs" />
+    <Compile Include="Graphs\Factories\Interface\Abstractions\IGraphFactory.cs" />
     <Compile Include="Graphs\Graph3d.cs" />
+    <Compile Include="Graphs\Serialization\Abstractions\BaseGraphSerializer.cs" />
     <Compile Include="Graphs\Serialization\Graph2DSerializer.cs" />
     <Compile Include="Graphs\Serialization\Graph3DSerializer.cs" />
     <Compile Include="Graphs\Serialization\Infrastructure\Info\Collections\Interface\IVertexInfoContainer.cs" />

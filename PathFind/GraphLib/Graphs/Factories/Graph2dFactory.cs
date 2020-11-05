@@ -3,49 +3,40 @@ using GraphLib.Vertex.Interface;
 using GraphLib.VertexConnecting;
 using GraphLib.Coordinates;
 using GraphLib.Graphs.Abstractions;
-using GraphLib.Graphs.Factories.Interface;
-using GraphLib.Extensions;
+using GraphLib.Graphs.Factories.Interface.Abstractions;
+using GraphLib.Coordinates.Interface;
+using System.Linq;
 
 namespace GraphLib.Graphs.Factories
 {
-    public class Graph2dFactory : IGraphFactory
+    public class Graph2dFactory : BaseGraphFactory
     {
-        public Graph2dFactory(GraphParametres parametres)
+        public Graph2dFactory(GraphParametres parametres) : base(parametres.ObstaclePercent)
         {
             this.parametres = parametres;
         }
 
-        static Graph2dFactory()
-        {
-            rand = new Random();
-        }
-
-
-        public IGraph CreateGraph(Func<IVertex> vertexFactory)
+        public override IGraph CreateGraph(Func<IVertex> vertexFactory)
         {
             graph = new Graph2d(parametres.Width, parametres.Height);
 
-            for (int i = 0; i < parametres.Width; i++)
-            {
-                for (int j = 0; j < parametres.Height; j++)
-                {
-                    var indices = new Coordinate2D(i, j);
-                    graph[indices] = vertexFactory();
-                    graph[indices].Cost = rand.GetRandomValueCost();
-                    if (rand.IsObstacleChance(parametres.ObstaclePercent))
-                        graph[indices].MarkAsObstacle();
-                    graph[indices].Position = indices;
-                }
-            }
+            for (int i = 0; i < parametres.Width; i++)            
+                for (int j = 0; j < parametres.Height; j++)                
+                    CreateVertex(vertexFactory, i, j);
 
             VertexConnector.ConnectVertices(graph);
 
             return graph;
         }
 
-        private static readonly Random rand;
+        protected override ICoordinate GetCoordinate(params int[] coordinates)
+        {
+            if (coordinates.Length != 2)
+                throw new ArgumentException("Must be two coordinates");
+            return new Coordinate2D(coordinates.First(), coordinates.Last());
+        }
 
-        private IGraph graph = new DefaultGraph();
+
         private readonly GraphParametres parametres;
     }
 }

@@ -1,0 +1,40 @@
+﻿using GraphLib.Coordinates.Interface;
+using GraphLib.Extensions;
+using GraphLib.Graphs.Abstractions;
+using GraphLib.Vertex.Interface;
+using System;
+
+namespace GraphLib.Graphs.Factories.Interface.Abstractions
+{
+    public abstract class BaseGraphFactory : IGraphFactory
+    {
+        public BaseGraphFactory(int obstacleChance)
+        {
+            this.obstacleChance = obstacleChance;
+        }
+
+        public abstract IGraph CreateGraph(Func<IVertex> vertexFactory);
+
+        static BaseGraphFactory()
+        {
+            rand = new Random();
+        }
+
+        protected abstract ICoordinate GetCoordinate(params int[] coordinates);
+
+        protected void CreateVertex(Func<IVertex> vertexFactory, params int[] coordinates)
+        {
+            var indices = GetCoordinate(coordinates);
+            graph[indices] = vertexFactory();
+            graph[indices].Cost = rand.GetRandomValueCost();
+            if (rand.IsObstacleChance(obstacleChance))
+                graph[indices].MarkAsObstacle();
+            graph[indices].Position = indices;
+        }
+
+        private static readonly Random rand;
+
+        protected IGraph graph = new DefaultGraph();
+        protected int obstacleChance;
+    }
+}

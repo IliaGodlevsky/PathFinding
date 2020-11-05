@@ -15,26 +15,12 @@ namespace Wpf3dVersion.Model
         public Wpf3dVertex()
         {
             this.Initialize();
-            Size = 5;
+            Size = 5;            
         }
 
         public Wpf3dVertex(VertexInfo info) : this()
         {
             this.Initialize(info);
-        }
-
-        private static MaterialGroup GetMaterial(Color color, double opacity)
-        {
-            var materailGroup = new MaterialGroup();
-
-            var diffuseMaterial = new DiffuseMaterial
-            {
-                Brush = new SolidColorBrush(color)
-            };
-            diffuseMaterial.Brush.Opacity = opacity;
-            materailGroup.Children.Add(diffuseMaterial);      
-
-            return materailGroup;
         }
 
         public static MaterialGroup AfterVisitVertexColor { get; set; }
@@ -55,27 +41,17 @@ namespace Wpf3dVersion.Model
             ObstacleVertexColor = GetMaterial(Colors.Black, opacity: 0.25);
             SimpleVertexColor = GetMaterial(Colors.White, opacity: 0.35);
 
+            ModelProperty = DependencyProperty.Register("Model", typeof(Model3D),
+                typeof(Wpf3dVertex), new PropertyMetadata(ModelPropertyChanged));
+            MaterialProperty = DependencyProperty.Register("Material", typeof(Material),typeof(Wpf3dVertex), 
+                new PropertyMetadata(new DiffuseMaterial(Brushes.White), VisualPropertyChanged));
+            SizeProperty = DependencyProperty.Register("Size", typeof(double),
+                typeof(Wpf3dVertex), new UIPropertyMetadata(25d, VisualPropertyChanged));
         }
 
-        public static readonly DependencyProperty ModelProperty
-            = DependencyProperty.Register(
-                "Model",
-                typeof(Model3D),
-                typeof(Wpf3dVertex),
-                new PropertyMetadata(ModelPropertyChanged));
-
-        public static readonly DependencyProperty MaterialProperty
-            = DependencyProperty.Register(
-                "Material",
-                typeof(Material),
-                typeof(Wpf3dVertex),
-                new PropertyMetadata(new DiffuseMaterial(Brushes.White), VisualPropertyChanged));
-
-        public static readonly DependencyProperty SizeProperty = DependencyProperty.Register(
-            "Size",
-            typeof(double),
-            typeof(Wpf3dVertex),
-            new UIPropertyMetadata(25d, VisualPropertyChanged));
+        public static readonly DependencyProperty ModelProperty;
+        public static readonly DependencyProperty MaterialProperty;
+        public static readonly DependencyProperty SizeProperty;
 
         public double Size
         {
@@ -244,6 +220,20 @@ namespace Wpf3dVersion.Model
         protected static GeometryModel3D CreateRectangleModel(Point3D p0, Point3D p1, Point3D p2, Point3D p3, Material material)
         {
             return new GeometryModel3D(CreateRectangleMesh(p0, p1, p2, p3), material);
+        }
+
+        private static MaterialGroup GetMaterial(Color color, double opacity)
+        {
+            var materailGroup = new MaterialGroup();
+
+            var diffuseMaterial = new DiffuseMaterial
+            {
+                Brush = new SolidColorBrush(color)
+            };
+            diffuseMaterial.Brush.Opacity = opacity;
+            materailGroup.Children.Add(diffuseMaterial);
+
+            return materailGroup;
         }
     }
 }
