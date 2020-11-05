@@ -2,6 +2,7 @@
 using GraphLib.Coordinates.Interface;
 using GraphLib.Extensions;
 using GraphLib.Graphs.Abstractions;
+using GraphLib.Graphs.Serialization.Infrastructure.Info.Collections;
 using GraphLib.Info.Containers;
 using GraphLib.Info.Interface;
 using GraphLib.Vertex;
@@ -29,9 +30,7 @@ namespace GraphLib.Graphs
                 var coord = coordinate as Coordinate3D;
                 if (coord == null)
                     throw new ArgumentException("Must be 2D coordinates");
-                var c = coordinate as Coordinate3D;
-                var index = c.X * Height * Length + c.Y * Height + c.Z;
-                return vertices[index];
+                return vertices[Index.ToIndex(coordinate, Length, Height)];
             }
             set
             {
@@ -40,9 +39,7 @@ namespace GraphLib.Graphs
                 var coord = coordinate as Coordinate3D;
                 if (coord == null)
                     throw new ArgumentException("Must be 2D coordinates");
-                var c = coordinate as Coordinate3D;
-                var index = c.X * Height * Length + c.Y * Height + c.Z;
-                vertices[index] = value;
+                vertices[Index.ToIndex(coordinate, Length, Height)] = value;
             }
         }
 
@@ -50,7 +47,7 @@ namespace GraphLib.Graphs
         public int Length { get; private set; }
         public int Height { get; private set; }
 
-        public override IVertexInfoCollection VertexInfoCollection => new EmptyVertexInfoCollection();
+        public override IVertexInfoCollection VertexInfoCollection => new VertexInfoCollection3D(vertices, Width, Length, Height);
 
         public override IEnumerable<int> DimensionsSizes => new int[] { Width, Length, Height };
 

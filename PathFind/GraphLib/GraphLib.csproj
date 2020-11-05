@@ -41,7 +41,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Coordinates\Converter.cs" />
+    <Compile Include="Coordinates\Index.cs" />
     <Compile Include="Coordinates\Coordinate2D.cs" />
     <Compile Include="Coordinates\Coordinate3D.cs" />
     <Compile Include="Coordinates\Interface\ICoordinate.cs" />
@@ -60,9 +60,11 @@
     <Compile Include="Graphs\Factories\Interface\IGraphFactory.cs" />
     <Compile Include="Graphs\Graph3d.cs" />
     <Compile Include="Graphs\Serialization\Graph2DSerializer.cs" />
+    <Compile Include="Graphs\Serialization\Graph3DSerializer.cs" />
     <Compile Include="Graphs\Serialization\Infrastructure\Info\Collections\Interface\IVertexInfoContainer.cs" />
     <Compile Include="Graphs\Serialization\Infrastructure\Info\Collections\EmptyVertexInfoCollection.cs" />
     <Compile Include="Graphs\Serialization\Infrastructure\Info\Collections\VertexInfoCollection2D.cs" />
+    <Compile Include="Graphs\Serialization\Infrastructure\Info\Collections\VertexInfoCollection3D.cs" />
     <Compile Include="Graphs\Serialization\Infrastructure\Info\VertexInfo.cs" />
     <Compile Include="Graphs\Serialization\Interface\IGraphSerializer.cs" />
     <Compile Include="Graphs\DefaultGraph.cs" />

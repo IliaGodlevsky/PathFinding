@@ -1,9 +1,11 @@
 ﻿using GraphLib.Coordinates.Interface;
 using GraphLib.Extensions;
+using System;
 using System.Collections.Generic;
 
 namespace GraphLib.Coordinates
 {
+    [Serializable]
     public class Coordinate3D : ICoordinate
     {
         public Coordinate3D(int x, int y, int z)
@@ -58,6 +60,7 @@ namespace GraphLib.Coordinates
         {
             return string.Format("{0}:{1}:{2}", X, Y, Z);
         }
+
         public object Clone()
         {
             return new Coordinate3D(X, Y, Z);

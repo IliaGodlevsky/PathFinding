@@ -38,7 +38,7 @@ namespace GraphLib.Graphs
                 var coord = coordinate as Coordinate2D;
                 if (coord == null)
                     throw new ArgumentException("Must be 2D coordinates");
-                return vertices[Converter.ToIndex(coordinate, Length)];
+                return vertices[Index.ToIndex(coordinate, Length)];
             }
             set
             {
@@ -47,7 +47,7 @@ namespace GraphLib.Graphs
                 var coord = coordinate as Coordinate2D;
                 if (coord == null)
                     throw new ArgumentException("Must be 2D coordinates");
-                vertices[Converter.ToIndex(coordinate, Length)] = value;
+                vertices[Index.ToIndex(coordinate, Length)] = value;
             }
         }
 

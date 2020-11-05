@@ -1,8 +1,8 @@
-﻿using GraphLib.Graphs;
-using GraphLib.Coordinates;
+﻿using GraphLib.Coordinates;
 using GraphLib.GraphLib.Graphs.Serialization.Interface;
+using GraphLib.Graphs.Abstractions;
+using GraphLib.Graphs.Serialization.Infrastructure.Info.Collections;
 using GraphLib.Info;
-using GraphLib.Info.Containers;
 using GraphLib.Vertex.Interface;
 using GraphLib.VertexConnecting;
 using System;
@@ -10,20 +10,19 @@ using System.IO;
 using System.Linq;
 using System.Runtime.Serialization;
 using System.Runtime.Serialization.Formatters.Binary;
-using GraphLib.Graphs.Abstractions;
 
-namespace GraphLib.GraphLib.Graphs.Serialization
+namespace GraphLib.Graphs.Serialization
 {
-    public class Graph2DSerializer : IGraphSerializer
+    public class Graph3DSerializer : IGraphSerializer
     {
         public event Action<string> OnExceptionCaught;
 
-        public Graph2DSerializer(IFormatter formatter)
+        public Graph3DSerializer(IFormatter formatter)
         {
             this.formatter = formatter;
         }
 
-        public Graph2DSerializer()
+        public Graph3DSerializer()
         {
             formatter = new BinaryFormatter();
         }
@@ -34,7 +33,7 @@ namespace GraphLib.GraphLib.Graphs.Serialization
             {
                 using (var stream = new FileStream(path, FileMode.Open))
                 {
-                    var verticesDto = (VertexInfoCollection2D)formatter.Deserialize(stream);
+                    var verticesDto = (VertexInfoCollection3D)formatter.Deserialize(stream);
                     graph = GetGraphFromDto(verticesDto, converter);
                 }
             }
@@ -61,18 +60,21 @@ namespace GraphLib.GraphLib.Graphs.Serialization
             }
         }
 
-        private IGraph GetGraphFromDto(VertexInfoCollection2D verticesDto,
+        private IGraph GetGraphFromDto(VertexInfoCollection3D verticesDto,
             Func<VertexInfo, IVertex> dtoConverter)
         {
-            graph = new Graph2d(verticesDto.Width, verticesDto.Length);
+            graph = new Graph3d(verticesDto.Width, verticesDto.Length, verticesDto.Height);
 
             for (int i = 0; i < verticesDto.Width; i++)
             {
                 for (int j = 0; j < verticesDto.Length; j++)
                 {
-                    var indices = new Coordinate2D(i, j);
-                    var index = Index.ToIndex(indices, verticesDto.Length);
-                    graph[indices] = dtoConverter(verticesDto.ElementAt(index));
+                    for (int l = 0; l < verticesDto.Height; l++)
+                    {
+                        var indices = new Coordinate3D(i, j, l);
+                        var index = Index.ToIndex(indices, verticesDto.Height, verticesDto.Length);
+                        graph[indices] = dtoConverter(verticesDto.ElementAt(index));
+                    }
                 }
             }
 

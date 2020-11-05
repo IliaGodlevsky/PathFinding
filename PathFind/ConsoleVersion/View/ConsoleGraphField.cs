@@ -93,7 +93,7 @@ namespace ConsoleVersion.View
                 Console.Write(DrawOrdinate(currentLength, TableSide.Left));
                 for (var currentWidth = 0; currentWidth < Width; currentWidth++)
                 {
-                    int index = Converter.ToIndex(new Coordinate2D(currentWidth, currentLength), Length);
+                    int index = Index.ToIndex(new Coordinate2D(currentWidth, currentLength), Length);
                     ShowVertex(vertices[index]);
                     if (IsEndOfRow(currentWidth))
                         Console.Write(DrawOrdinate(currentLength, TableSide.Right));
