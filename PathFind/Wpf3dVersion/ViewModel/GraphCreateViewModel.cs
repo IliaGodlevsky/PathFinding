@@ -35,7 +35,7 @@ namespace Wpf3dVersion.ViewModel
 
         public override void CreateGraph(Func<IVertex> vertexFactory)
         {
-            var graphfactory = new Graph3dFactory(Width, Height, Length, ObstaclePercent);
+            var graphfactory = new Graph3dFactory(Width, Length, Height, ObstaclePercent);
             graph = graphfactory.CreateGraph(vertexFactory);
             model.ConnectNewGraph(graph);
         }

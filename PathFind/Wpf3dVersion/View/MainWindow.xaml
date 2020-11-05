@@ -7,9 +7,6 @@
         xmlns:viewmodel="clr-namespace:Wpf3dVersion.ViewModel"
         mc:Ignorable="d"
         Title="MainWindow" Height="350" Width="800">
-    <Window.DataContext>
-        <viewmodel:MainWindowViewModel x:Name="viewModel"/>
-    </Window.DataContext>
     <Window.Resources>
         <converters:InvertPointConverter x:Key="invertPointConverter"/>
         <converters:CoordinateToDistanceConverter x:Key="coordinateToDistance"/>
@@ -34,8 +31,10 @@
                     <ColumnDefinition></ColumnDefinition>
                     <ColumnDefinition></ColumnDefinition>
                 </Grid.ColumnDefinitions>
-                
+
                 <Grid.RowDefinitions>
+                    <RowDefinition Height="auto"></RowDefinition>
+                    <RowDefinition Height="auto"></RowDefinition>
                     <RowDefinition Height="auto"></RowDefinition>
                     <RowDefinition Height="auto"></RowDefinition>
                     <RowDefinition Height="auto"></RowDefinition>
@@ -44,22 +43,19 @@
                     <RowDefinition Height="auto"></RowDefinition>
                 </Grid.RowDefinitions>
 
-                <StackPanel HorizontalAlignment="Stretch" Orientation="Horizontal" Grid.Row="5">
-                    <TextBlock Margin="5" Text="IsolatedVertices"></TextBlock>
-                    <CheckBox Checked="IsolateXAxis" Unchecked="ReturnXAxis"  Margin="5">X</CheckBox>
-                    <CheckBox Checked="IsolateYAxis" Unchecked="ReturnYAxis" Margin="5">Y</CheckBox>
-                    <CheckBox Checked="IsolateZAxis" Unchecked="ReturnZAxis" Margin="5">Z</CheckBox>
-                </StackPanel>
-
                 <TextBlock Margin="5" Text="Zoom"/>
                 <TextBlock Grid.Row="1" Margin="5" Text="X axis rotate"/>
                 <TextBlock Grid.Row="2" Margin="5" Text="Y axis rotate"/>
                 <TextBlock Grid.Row="3" Margin="5" Text="Z axis rotate"/>
                 <TextBlock Grid.ColumnSpan="3" HorizontalAlignment="Center" 
                            Grid.Row="4" Margin="5" Text="Distance between vertices"/>
+                
                 <TextBox Margin="5" MinWidth="40" Grid.Column="2" Grid.Row="0" 
                          Text="{Binding ElementName=zoomSlider, Path=Value, 
                     Converter={StaticResource stringToDoubleConverter}, Mode=TwoWay}"/>
+                <TextBlock Grid.Row="5" Margin="5" Text="X axis"/>
+                <TextBlock Grid.Row="6" Margin="5" Text="Y axis"/>
+                <TextBlock Grid.Row="7" Margin="5" Text="Z axis"/>
 
                 <TextBox Margin="5" MinWidth="40" Grid.Column="2" Grid.Row="1" 
                          Text="{Binding ElementName=xAxisSlider, Path=Value, 
@@ -74,7 +70,15 @@
                     Converter={StaticResource stringToDoubleConverter}, Mode=TwoWay}"/>
 
                 <TextBox Margin="5" MinWidth="40" Grid.Column="2" Grid.Row="5"
-                         Text="{Binding ElementName=distanceBetweenSlider, Path=Value,
+                         Text="{Binding ElementName=distanceBetweenAtXAxisSlider, Path=Value,
+                    Converter={StaticResource stringToDoubleConverter}, Mode=TwoWay}"/>
+
+                <TextBox Margin="5" MinWidth="40" Grid.Column="2" Grid.Row="6"
+                         Text="{Binding ElementName=distanceBetweenAtYAxisSlider, Path=Value,
+                    Converter={StaticResource stringToDoubleConverter}, Mode=TwoWay}"/>
+
+                <TextBox Margin="5" MinWidth="40" Grid.Column="2" Grid.Row="7"
+                         Text="{Binding ElementName=distanceBetweenAtZAxisSlider, Path=Value,
                     Converter={StaticResource stringToDoubleConverter}, Mode=TwoWay}"/>
 
                 <Slider x:Name="zoomSlider" Grid.Column="1" Margin="5" 
@@ -94,9 +98,14 @@
                         MinWidth="100" Minimum="0" Maximum="360" Grid.Row="3" 
                         Value="{Binding ElementName=zAxis, Path=Angle}"/>
 
-                <Slider x:Name="distanceBetweenSlider" Grid.Column="1" Margin="5" 
-                        MinWidth="100" Minimum="0" Maximum="60" Grid.Row="5" 
-                        ValueChanged="Slider_ValueChanged"/>
+                <Slider x:Name="distanceBetweenAtXAxisSlider" Grid.Column="1" Margin="5" 
+                        MinWidth="100" Minimum="0" Maximum="60" Grid.Row="5"/>
+
+                <Slider x:Name="distanceBetweenAtYAxisSlider" Grid.Column="1" Margin="5" 
+                        MinWidth="100" Minimum="0" Maximum="60" Grid.Row="6"/>
+
+                <Slider x:Name="distanceBetweenAtZAxisSlider" Grid.Column="1" Margin="5" 
+                        MinWidth="100" Minimum="0" Maximum="60" Grid.Row="7"/>
 
             </Grid>
         </Expander>

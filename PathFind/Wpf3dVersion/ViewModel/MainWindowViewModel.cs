@@ -1,9 +1,9 @@
-﻿using GraphLib.Extensions;
-using GraphLib.GraphField;
+﻿using GraphLib.GraphField;
 using GraphLib.Vertex;
 using GraphViewModel;
 using GraphViewModel.Interfaces;
 using Microsoft.Win32;
+using System;
 using System.ComponentModel;
 using System.Linq;
 using System.Runtime.CompilerServices;
@@ -91,6 +91,29 @@ namespace Wpf3dVersion.ViewModel
         public override void CreateNewGraph()
         {
             PrepareWindow(new GraphCreatingViewModel(this), new GraphCreateWindow());
+        }
+
+        private void AxisValueChanged(Action<double, Wpf3dGraphField> func, double sliderNewValue)
+        {
+            var field = graphField as Wpf3dGraphField;
+            func(sliderNewValue, field);
+            field.SetDistanceBetweenVertices(Graph);
+            field.CenterGraph(Graph);
+        }
+
+        public void XAxisSliderValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
+        {
+            AxisValueChanged((sliderValue, field) => field.DistanceBetweenAtXAxis = sliderValue, e.NewValue);
+        }
+
+        public void YAxisSliderValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
+        {
+            AxisValueChanged((sliderValue, field) => field.DistanceBetweenAtYAxis = sliderValue, e.NewValue);
+        }
+
+        public void ZAxisSliderValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
+        {
+            AxisValueChanged((sliderValue, field) => field.DistanceBetweenAtZAxis = sliderValue, e.NewValue);
         }
 
         private void ChangeVerticesOpacity()

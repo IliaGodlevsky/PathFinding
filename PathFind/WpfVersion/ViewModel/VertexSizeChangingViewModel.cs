@@ -40,7 +40,6 @@ namespace WpfVersion.ViewModel
             (Model.GraphField as Canvas).Children.Clear();
             var fieldFactory = new WpfGraphFieldFactory();
             Model.GraphField = fieldFactory.CreateGraphField(Model.Graph);
-            WindowAdjust.Adjust(Model.Graph);
             Model.Window.Close();
         }
     }
