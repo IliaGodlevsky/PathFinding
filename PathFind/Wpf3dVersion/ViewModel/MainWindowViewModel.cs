@@ -100,7 +100,7 @@ namespace Wpf3dVersion.ViewModel
             var field = graphField as Wpf3dGraphField;
             func(sliderNewValue, field);
             field.SetDistanceBetweenVertices(Graph);
-            field.CenterGraph(Graph);
+            field.CenterGraph(Graph, centerOffsetCorrection: 1);
         }
 
         public void XAxisSliderValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)

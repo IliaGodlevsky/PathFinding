@@ -1,6 +1,7 @@
 ﻿using GraphLib.GraphField;
 using GraphLib.Graphs.Abstractions;
 using GraphLib.Vertex.Interface;
+using System;
 using System.Linq;
 using System.Windows.Media.Media3D;
 
@@ -31,14 +32,14 @@ namespace Wpf3dVersion.Model
                 SetVertexOffset(vertex);
         }
 
-        public void CenterGraph(IGraph graph)
+        public void CenterGraph(IGraph graph, int centerOffsetCorrection = 0)
         {
             var dimensionSizes = graph.DimensionsSizes.ToArray();
             foreach (Wpf3dVertex vertex in graph)
             {
-                var xAxisDistanceToCenter = -dimensionSizes[0] * (vertex.Size + DistanceBetweenAtXAxis) / 2;
-                var yAxisDistanceToCenter = -dimensionSizes[1] * (vertex.Size + DistanceBetweenAtYAxis) / 2;
-                var zAxisDistanceToCenter = -dimensionSizes[2] * (vertex.Size + DistanceBetweenAtZAxis) / 2;
+                var xAxisDistanceToCenter = (-dimensionSizes[0] + centerOffsetCorrection) * (vertex.Size + DistanceBetweenAtXAxis) / 2;
+                var yAxisDistanceToCenter = (-dimensionSizes[1] + centerOffsetCorrection) * (vertex.Size + DistanceBetweenAtYAxis) / 2;
+                var zAxisDistanceToCenter = (-dimensionSizes[2] + centerOffsetCorrection) * (vertex.Size + DistanceBetweenAtZAxis) / 2;
                 SetVertexOffset(vertex, xAxisDistanceToCenter, yAxisDistanceToCenter, zAxisDistanceToCenter);
             }
         }
