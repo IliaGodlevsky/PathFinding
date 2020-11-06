@@ -10,6 +10,16 @@
         <converters:InvertPointConverter x:Key="invertPointConverter"/>
         <converters:CoordinateToDistanceConverter x:Key="coordinateToDistance"/>
         <converters:StringToDoubleConverter x:Key="stringToDoubleConverter"/>
+        
+        <Style TargetType="TextBox" x:Key="TextBoxStyle">
+            <Setter Property="MinWidth" Value="40"></Setter>
+            <Setter Property="Margin" Value="5"></Setter>
+        </Style>
+        <Style TargetType="Slider" x:Key="SliderStyle">
+            <Setter Property="MinWidth" Value="100"></Setter>
+            <Setter Property="Minimum" Value="0"></Setter>
+            <Setter Property="Margin" Value="5"></Setter>
+        </Style>
     </Window.Resources>
     <Grid>
         <Grid.RowDefinitions>
@@ -49,77 +59,85 @@
                 <TextBlock Grid.ColumnSpan="3" HorizontalAlignment="Center" 
                            Grid.Row="4" Margin="5" Text="Distance between vertices"/>
                 
-                <TextBox Margin="5" MinWidth="40" Grid.Column="2" Grid.Row="0" 
+                <TextBox Style="{StaticResource TextBoxStyle}" Grid.Column="2" Grid.Row="0" 
                          Text="{Binding ElementName=zoomSlider, 
                                 Path=Value, 
                                 Converter={StaticResource stringToDoubleConverter}, 
-                                Mode=TwoWay}"/>
+                                Mode=TwoWay,
+                                UpdateSourceTrigger=PropertyChanged}"/>
+                
                 <TextBlock Grid.Row="5" Margin="5" Text="X axis"/>
                 <TextBlock Grid.Row="6" Margin="5" Text="Y axis"/>
                 <TextBlock Grid.Row="7" Margin="5" Text="Z axis"/>
 
-                <TextBox Margin="5" MinWidth="40" Grid.Column="2" Grid.Row="1" 
+                <TextBox Style="{StaticResource TextBoxStyle}" Grid.Column="2" Grid.Row="1" 
                          Text="{Binding ElementName=xAxisSlider, 
                                 Path=Value, 
                                 Converter={StaticResource stringToDoubleConverter}, 
-                                Mode=TwoWay}"/>
+                                Mode=TwoWay,
+                                UpdateSourceTrigger=PropertyChanged}"/>
 
-                <TextBox Margin="5" MinWidth="40" Grid.Column="2" Grid.Row="2" 
+                <TextBox Style="{StaticResource TextBoxStyle}" Grid.Column="2" Grid.Row="2" 
                          Text="{Binding ElementName=yAxisSlider, 
                                 Path=Value, 
                                 Converter={StaticResource stringToDoubleConverter}, 
-                                Mode=TwoWay}"/>
+                                Mode=TwoWay,
+                                UpdateSourceTrigger=PropertyChanged}"/>
 
-                <TextBox Margin="5" MinWidth="40" Grid.Column="2" Grid.Row="3" 
+                <TextBox Style="{StaticResource TextBoxStyle}" Grid.Column="2" Grid.Row="3" 
                          Text="{Binding ElementName=zAxisSlider, 
                                 Path=Value, 
                                 Converter={StaticResource stringToDoubleConverter}, 
-                                Mode=TwoWay}"/>
+                                Mode=TwoWay,
+                                UpdateSourceTrigger=PropertyChanged}"/>
 
-                <TextBox Margin="5" MinWidth="40" Grid.Column="2" Grid.Row="5"
+                <TextBox Style="{StaticResource TextBoxStyle}" Grid.Column="2" Grid.Row="5"
                          Text="{Binding ElementName=distanceBetweenAtXAxisSlider, 
                                 Path=Value,
                                 Converter={StaticResource stringToDoubleConverter}, 
-                                Mode=TwoWay}"/>
+                                Mode=TwoWay,
+                                UpdateSourceTrigger=PropertyChanged}"/>
 
-                <TextBox Margin="5" MinWidth="40" Grid.Column="2" Grid.Row="6"
+                <TextBox Style="{StaticResource TextBoxStyle}" Grid.Column="2" Grid.Row="6"
                          Text="{Binding ElementName=distanceBetweenAtYAxisSlider, 
                                 Path=Value,
                                 Converter={StaticResource stringToDoubleConverter}, 
-                                Mode=TwoWay}"/>
+                                Mode=TwoWay,
+                                UpdateSourceTrigger=PropertyChanged}"/>
 
-                <TextBox Margin="5" MinWidth="40" Grid.Column="2" Grid.Row="7"
+                <TextBox Style="{StaticResource TextBoxStyle}" Grid.Column="2" Grid.Row="7"
                          Text="{Binding ElementName=distanceBetweenAtZAxisSlider, 
                                 Path=Value,
                                 Converter={StaticResource stringToDoubleConverter}, 
-                                Mode=TwoWay}"/>
+                                Mode=TwoWay,
+                                UpdateSourceTrigger=PropertyChanged}"/>
 
-                <Slider x:Name="zoomSlider" Grid.Column="1" Margin="5" 
-                        MinWidth="100" Minimum="0" Maximum="1000" Grid.Row="0" 
+                <Slider x:Name="zoomSlider" Grid.Column="1" 
+                        Style="{StaticResource SliderStyle}" Maximum="1000" Grid.Row="0" 
                         Value="{Binding ElementName=camera,     
                                 Path=Position, 
                                 Converter={StaticResource coordinateToDistance}}"/>
 
-                <Slider x:Name="xAxisSlider" Grid.Column="1" Margin="5" 
-                        MinWidth="100" Minimum="0" Maximum="360" Grid.Row="1" 
+                <Slider x:Name="xAxisSlider" Grid.Column="1" 
+                        Style="{StaticResource SliderStyle}" Maximum="360" Grid.Row="1" 
                         Value="{Binding ElementName=xAxis, Path=Angle}"/>
 
-                <Slider x:Name="yAxisSlider" Grid.Column="1" Margin="5" 
-                        MinWidth="100" Minimum="0" Maximum="360" Grid.Row="2" 
+                <Slider x:Name="yAxisSlider" Grid.Column="1" 
+                        Style="{StaticResource SliderStyle}" Maximum="360" Grid.Row="2" 
                         Value="{Binding ElementName=yAxis, Path=Angle}"/>
 
-                <Slider x:Name="zAxisSlider" Grid.Column="1" Margin="5" 
-                        MinWidth="100" Minimum="0" Maximum="360" Grid.Row="3" 
+                <Slider x:Name="zAxisSlider" Grid.Column="1" 
+                        Style="{StaticResource SliderStyle}" Maximum="360" Grid.Row="3" 
                         Value="{Binding ElementName=zAxis, Path=Angle}"/>
 
-                <Slider x:Name="distanceBetweenAtXAxisSlider" Grid.Column="1" Margin="5" 
-                        MinWidth="100" Minimum="0" Maximum="60" Grid.Row="5"/>
+                <Slider x:Name="distanceBetweenAtXAxisSlider" Grid.Column="1" 
+                        Style="{StaticResource SliderStyle}" Maximum="60" Grid.Row="5"/>
 
-                <Slider x:Name="distanceBetweenAtYAxisSlider" Grid.Column="1" Margin="5" 
-                        MinWidth="100" Minimum="0" Maximum="60" Grid.Row="6"/>
+                <Slider x:Name="distanceBetweenAtYAxisSlider" Grid.Column="1" 
+                        Style="{StaticResource SliderStyle}" Maximum="60" Grid.Row="6"/>
 
-                <Slider x:Name="distanceBetweenAtZAxisSlider" Grid.Column="1" Margin="5" 
-                        MinWidth="100" Minimum="0" Maximum="60" Grid.Row="7"/>
+                <Slider x:Name="distanceBetweenAtZAxisSlider" Grid.Column="1" 
+                        Style="{StaticResource SliderStyle}" Maximum="60" Grid.Row="7"/>
 
             </Grid>
         </Expander>
