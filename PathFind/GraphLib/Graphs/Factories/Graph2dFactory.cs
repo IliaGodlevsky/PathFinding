@@ -3,9 +3,9 @@ using GraphLib.Vertex.Interface;
 using GraphLib.VertexConnecting;
 using GraphLib.Coordinates;
 using GraphLib.Graphs.Abstractions;
-using GraphLib.Graphs.Factories.Interface.Abstractions;
 using GraphLib.Coordinates.Interface;
 using System.Linq;
+using GraphLib.Graphs.Factories.Abstractions;
 
 namespace GraphLib.Graphs.Factories
 {

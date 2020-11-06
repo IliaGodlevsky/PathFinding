@@ -1,7 +1,7 @@
 ﻿using GraphLib.Coordinates;
 using GraphLib.Coordinates.Interface;
 using GraphLib.Graphs.Abstractions;
-using GraphLib.Graphs.Factories.Interface.Abstractions;
+using GraphLib.Graphs.Factories.Abstractions;
 using GraphLib.Vertex.Interface;
 using GraphLib.VertexConnecting;
 using System;
@@ -36,7 +36,7 @@ namespace GraphLib.Graphs.Factories
         protected override ICoordinate GetCoordinate(params int[] coordinates)
         {
             if (coordinates.Length != 3)
-                throw new ArgumentException("Must be two coordinates");
+                throw new ArgumentException("Must be three coordinates");
             return new Coordinate3D(
                 coordinates.ElementAt(0), 
                 coordinates.ElementAt(1), 

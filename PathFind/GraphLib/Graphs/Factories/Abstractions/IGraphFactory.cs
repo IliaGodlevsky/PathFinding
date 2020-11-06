@@ -2,7 +2,7 @@
 using GraphLib.Vertex.Interface;
 using System;
 
-namespace GraphLib.Graphs.Factories.Interface.Abstractions
+namespace GraphLib.Graphs.Factories.Abstractions
 {
     public interface IGraphFactory
     {

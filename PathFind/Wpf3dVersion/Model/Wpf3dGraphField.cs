@@ -33,24 +33,24 @@ namespace Wpf3dVersion.Model
 
         public void CenterGraph(IGraph graph)
         {
-            var sizes = graph.DimensionsSizes.ToArray();
+            var dimensionSizes = graph.DimensionsSizes.ToArray();
             foreach (Wpf3dVertex vertex in graph)
             {
-                var xAxisDistanceToCenter = -sizes[0] * (vertex.Size + DistanceBetweenAtXAxis) / 2;
-                var yAxisDistanceToCenter = -sizes[1] * (vertex.Size + DistanceBetweenAtYAxis) / 2;
-                var zAxisDistanceToCenter = -sizes[2] * (vertex.Size + DistanceBetweenAtZAxis) / 2;
+                var xAxisDistanceToCenter = -dimensionSizes[0] * (vertex.Size + DistanceBetweenAtXAxis) / 2;
+                var yAxisDistanceToCenter = -dimensionSizes[1] * (vertex.Size + DistanceBetweenAtYAxis) / 2;
+                var zAxisDistanceToCenter = -dimensionSizes[2] * (vertex.Size + DistanceBetweenAtZAxis) / 2;
                 SetVertexOffset(vertex, xAxisDistanceToCenter, yAxisDistanceToCenter, zAxisDistanceToCenter);
             }
         }
 
-        private void SetVertexOffset(Wpf3dVertex vertex, params double[] offsetCorrection)
+        private void SetVertexOffset(Wpf3dVertex vertex, params double[] additionalOffset)
         {
             var coordinates = vertex.Position.Coordinates;
             var translate = new TranslateTransform3D
             {
-                OffsetX = coordinates.ElementAt(0) * (vertex.Size + DistanceBetweenAtXAxis) + offsetCorrection.ElementAtOrDefault(0),
-                OffsetY = coordinates.ElementAt(1) * (vertex.Size + DistanceBetweenAtYAxis) + offsetCorrection.ElementAtOrDefault(1),
-                OffsetZ = coordinates.ElementAt(2) * (vertex.Size + DistanceBetweenAtZAxis) + offsetCorrection.ElementAtOrDefault(2)
+                OffsetX = coordinates.ElementAt(0) * (vertex.Size + DistanceBetweenAtXAxis) + additionalOffset.ElementAtOrDefault(0),
+                OffsetY = coordinates.ElementAt(1) * (vertex.Size + DistanceBetweenAtYAxis) + additionalOffset.ElementAtOrDefault(1),
+                OffsetZ = coordinates.ElementAt(2) * (vertex.Size + DistanceBetweenAtZAxis) + additionalOffset.ElementAtOrDefault(2)
             };
             vertex.Transform = translate;
         }

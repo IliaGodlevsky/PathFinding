@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
         xmlns:converters="clr-namespace:Wpf3dVersion.Converters" 
         mc:Ignorable="d"
-        Title="MainWindow" Height="350" Width="800">
+        Title="3D pathfinding" Height="350" Width="450">
     <Window.Resources>
         <converters:InvertPointConverter x:Key="invertPointConverter"/>
         <converters:CoordinateToDistanceConverter x:Key="coordinateToDistance"/>
@@ -50,40 +50,55 @@
                            Grid.Row="4" Margin="5" Text="Distance between vertices"/>
                 
                 <TextBox Margin="5" MinWidth="40" Grid.Column="2" Grid.Row="0" 
-                         Text="{Binding ElementName=zoomSlider, Path=Value, 
-                    Converter={StaticResource stringToDoubleConverter}, Mode=TwoWay}"/>
+                         Text="{Binding ElementName=zoomSlider, 
+                                Path=Value, 
+                                Converter={StaticResource stringToDoubleConverter}, 
+                                Mode=TwoWay}"/>
                 <TextBlock Grid.Row="5" Margin="5" Text="X axis"/>
                 <TextBlock Grid.Row="6" Margin="5" Text="Y axis"/>
                 <TextBlock Grid.Row="7" Margin="5" Text="Z axis"/>
 
                 <TextBox Margin="5" MinWidth="40" Grid.Column="2" Grid.Row="1" 
-                         Text="{Binding ElementName=xAxisSlider, Path=Value, 
-                    Converter={StaticResource stringToDoubleConverter}, Mode=TwoWay}"/>
+                         Text="{Binding ElementName=xAxisSlider, 
+                                Path=Value, 
+                                Converter={StaticResource stringToDoubleConverter}, 
+                                Mode=TwoWay}"/>
 
                 <TextBox Margin="5" MinWidth="40" Grid.Column="2" Grid.Row="2" 
-                         Text="{Binding ElementName=yAxisSlider, Path=Value, 
-                    Converter={StaticResource stringToDoubleConverter}, Mode=TwoWay}"/>
+                         Text="{Binding ElementName=yAxisSlider, 
+                                Path=Value, 
+                                Converter={StaticResource stringToDoubleConverter}, 
+                                Mode=TwoWay}"/>
 
                 <TextBox Margin="5" MinWidth="40" Grid.Column="2" Grid.Row="3" 
-                         Text="{Binding ElementName=zAxisSlider, Path=Value, 
-                    Converter={StaticResource stringToDoubleConverter}, Mode=TwoWay}"/>
+                         Text="{Binding ElementName=zAxisSlider, 
+                                Path=Value, 
+                                Converter={StaticResource stringToDoubleConverter}, 
+                                Mode=TwoWay}"/>
 
                 <TextBox Margin="5" MinWidth="40" Grid.Column="2" Grid.Row="5"
-                         Text="{Binding ElementName=distanceBetweenAtXAxisSlider, Path=Value,
-                    Converter={StaticResource stringToDoubleConverter}, Mode=TwoWay}"/>
+                         Text="{Binding ElementName=distanceBetweenAtXAxisSlider, 
+                                Path=Value,
+                                Converter={StaticResource stringToDoubleConverter}, 
+                                Mode=TwoWay}"/>
 
                 <TextBox Margin="5" MinWidth="40" Grid.Column="2" Grid.Row="6"
-                         Text="{Binding ElementName=distanceBetweenAtYAxisSlider, Path=Value,
-                    Converter={StaticResource stringToDoubleConverter}, Mode=TwoWay}"/>
+                         Text="{Binding ElementName=distanceBetweenAtYAxisSlider, 
+                                Path=Value,
+                                Converter={StaticResource stringToDoubleConverter}, 
+                                Mode=TwoWay}"/>
 
                 <TextBox Margin="5" MinWidth="40" Grid.Column="2" Grid.Row="7"
-                         Text="{Binding ElementName=distanceBetweenAtZAxisSlider, Path=Value,
-                    Converter={StaticResource stringToDoubleConverter}, Mode=TwoWay}"/>
+                         Text="{Binding ElementName=distanceBetweenAtZAxisSlider, 
+                                Path=Value,
+                                Converter={StaticResource stringToDoubleConverter}, 
+                                Mode=TwoWay}"/>
 
                 <Slider x:Name="zoomSlider" Grid.Column="1" Margin="5" 
                         MinWidth="100" Minimum="0" Maximum="1000" Grid.Row="0" 
-                        Value="{Binding ElementName=look, Path=Position, 
-                        Converter={StaticResource coordinateToDistance}}"/>
+                        Value="{Binding ElementName=camera,     
+                                Path=Position, 
+                                Converter={StaticResource coordinateToDistance}}"/>
 
                 <Slider x:Name="xAxisSlider" Grid.Column="1" Margin="5" 
                         MinWidth="100" Minimum="0" Maximum="360" Grid.Row="1" 
@@ -130,13 +145,16 @@
         </ToolBar>
         <Viewport3D Grid.Row="2">
             <Viewport3D.Camera>
-                <PerspectiveCamera x:Name="look" LookDirection="{Binding RelativeSource={RelativeSource Self}, 
-                    Path=Position, Converter={StaticResource invertPointConverter}}" Position="600,600,600"/>
+                <PerspectiveCamera x:Name="camera" 
+                    LookDirection="{Binding RelativeSource={RelativeSource Self}, 
+                                    Path=Position, 
+                                    Converter={StaticResource invertPointConverter}}" 
+                    Position="600,600,600"/>
             </Viewport3D.Camera>
             <ModelVisual3D x:Name="GraphField">
                 <ModelVisual3D.Content>
                     <Model3DGroup>
-                        <DirectionalLight Direction="{Binding ElementName=look, Path=LookDirection}" 
+                        <DirectionalLight Direction="{Binding ElementName=camera, Path=LookDirection}" 
                                           Color="White"/>
                     </Model3DGroup>
                 </ModelVisual3D.Content>

@@ -1,6 +1,5 @@
 ﻿using GraphLib.GraphField;
 using GraphLib.Graphs.Serialization;
-using GraphLib.Vertex;
 using GraphViewModel;
 using GraphViewModel.Interfaces;
 using Microsoft.Win32;
@@ -96,7 +95,7 @@ namespace Wpf3dVersion.ViewModel
             PrepareWindow(new GraphCreatingViewModel(this), new GraphCreateWindow());
         }
 
-        private void AxisValueChanged(Action<double, Wpf3dGraphField> func, double sliderNewValue)
+        private void AxisSliderValueChanged(Action<double, Wpf3dGraphField> func, double sliderNewValue)
         {
             var field = graphField as Wpf3dGraphField;
             func(sliderNewValue, field);
@@ -106,17 +105,17 @@ namespace Wpf3dVersion.ViewModel
 
         public void XAxisSliderValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
         {
-            AxisValueChanged((sliderValue, field) => field.DistanceBetweenAtXAxis = sliderValue, e.NewValue);
+            AxisSliderValueChanged((sliderValue, field) => field.DistanceBetweenAtXAxis = sliderValue, e.NewValue);
         }
 
         public void YAxisSliderValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
         {
-            AxisValueChanged((sliderValue, field) => field.DistanceBetweenAtYAxis = sliderValue, e.NewValue);
+            AxisSliderValueChanged((sliderValue, field) => field.DistanceBetweenAtYAxis = sliderValue, e.NewValue);
         }
 
         public void ZAxisSliderValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
         {
-            AxisValueChanged((sliderValue, field) => field.DistanceBetweenAtZAxis = sliderValue, e.NewValue);
+            AxisSliderValueChanged((sliderValue, field) => field.DistanceBetweenAtZAxis = sliderValue, e.NewValue);
         }
 
         private void ChangeVerticesOpacity()
@@ -131,8 +130,7 @@ namespace Wpf3dVersion.ViewModel
 
         private bool CanExecuteStartFindPathCommand(object param)
         {
-            return !ReferenceEquals(Graph.End, new DefaultVertex())
-                && !ReferenceEquals(Graph.Start, new DefaultVertex())
+            return !Graph.End.IsDefault && !Graph.Start.IsDefault
                 && Graph.Any() && !Graph.Start.IsVisited;
         }
 
