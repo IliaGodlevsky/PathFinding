@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.Windows;
 using System.Windows.Media;
 using System.Windows.Media.Media3D;
+using Wpf3dVersion.Factories;
 
 namespace Wpf3dVersion.Model
 {
@@ -23,30 +24,30 @@ namespace Wpf3dVersion.Model
             this.Initialize(info);
         }
 
-        public static MaterialGroup AfterVisitVertexColor { get; set; }
-        public static MaterialGroup ObstacleVertexColor { get; set; }
-        public static MaterialGroup SimpleVertexColor { get; set; }
-        public static MaterialGroup PathVertexColor { get; set; }
-        public static MaterialGroup StartVertexColor { get; set; }
-        public static MaterialGroup EndVertexColor { get; set; }
-        public static MaterialGroup EnqueuedVertexColor { get; set; }
+        public static DiffuseMaterial VisitedVertexMaterial { get; set; }
+        public static DiffuseMaterial ObstacleVertexMaterial { get; set; }
+        public static DiffuseMaterial SimpleVertexMaterial { get; set; }
+        public static DiffuseMaterial PathVertexMaterial { get; set; }
+        public static DiffuseMaterial StartVertexMaterial { get; set; }
+        public static DiffuseMaterial EndVertexMaterial { get; set; }
+        public static DiffuseMaterial EnqueuedVertexMaterial { get; set; }
 
         static Wpf3dVertex()
         {
-            AfterVisitVertexColor = GetMaterial(Colors.CadetBlue, opacity: 0.25);
-            PathVertexColor = GetMaterial(Colors.Yellow, opacity: 0.9);
-            StartVertexColor = GetMaterial(Colors.Green, opacity: 0.5);
-            EndVertexColor = GetMaterial(Colors.Red, opacity: 0.5);
-            EnqueuedVertexColor = GetMaterial(Colors.Brown, opacity: 0.25);
-            ObstacleVertexColor = GetMaterial(Colors.Black, opacity: 0.25);
-            SimpleVertexColor = GetMaterial(Colors.White, opacity: 0.35);
+            VisitedVertexMaterial = MaterialFactory.GetDiffuseMaterial(Colors.CadetBlue, opacity: 0.15);
+            PathVertexMaterial = MaterialFactory.GetDiffuseMaterial(Colors.Yellow, opacity: 0.9);
+            StartVertexMaterial = MaterialFactory.GetDiffuseMaterial(Colors.Green, opacity: 0.5);
+            EndVertexMaterial = MaterialFactory.GetDiffuseMaterial(Colors.Red, opacity: 0.5);
+            EnqueuedVertexMaterial = MaterialFactory.GetDiffuseMaterial(Colors.Magenta, opacity: 0.15);
+            ObstacleVertexMaterial = MaterialFactory.GetDiffuseMaterial(Colors.Black, opacity: 0.2);
+            SimpleVertexMaterial = MaterialFactory.GetDiffuseMaterial(Colors.White, opacity: 0.25);
 
             ModelProperty = DependencyProperty.Register("Model", typeof(Model3D),
                 typeof(Wpf3dVertex), new PropertyMetadata(ModelPropertyChanged));
             MaterialProperty = DependencyProperty.Register("Material", typeof(Material),typeof(Wpf3dVertex), 
-                new PropertyMetadata(new DiffuseMaterial(Brushes.White), VisualPropertyChanged));
+                new PropertyMetadata(VisualPropertyChanged));
             SizeProperty = DependencyProperty.Register("Size", typeof(double),
-                typeof(Wpf3dVertex), new UIPropertyMetadata(25d, VisualPropertyChanged));
+                typeof(Wpf3dVertex), new UIPropertyMetadata(VisualPropertyChanged));
         }
 
         public static readonly DependencyProperty ModelProperty;
@@ -93,50 +94,50 @@ namespace Wpf3dVersion.Model
 
         public void MakeUnweighted()
         {
-
+            Cost.MakeUnWeighted();
         }
 
         public void MakeWeighted()
         {
-
+            Cost.MakeWeighted();
         }
 
         public void MarkAsEnd()
         {
-            Material = EndVertexColor;
+            Material = EndVertexMaterial;
         }
 
         public void MarkAsEnqueued()
         {
-            Material = EnqueuedVertexColor;
+            Material = EnqueuedVertexMaterial;
         }
 
         public void MarkAsObstacle()
         {
             this.WashVertex();
-            Material = ObstacleVertexColor;
+            Material = ObstacleVertexMaterial;
         }
 
         public void MarkAsPath()
         {
-            Material = PathVertexColor;
+            Material = PathVertexMaterial;
         }
 
         public void MarkAsSimpleVertex()
         {
             if (!IsObstacle)
-                Material = SimpleVertexColor;
+                Material = SimpleVertexMaterial;
             
         }
 
         public void MarkAsStart()
         {
-            Material = StartVertexColor;
+            Material = StartVertexMaterial;
         }
 
         public void MarkAsVisited()
         {
-            Material = AfterVisitVertexColor;
+            Material = VisitedVertexMaterial;
         }
 
         protected static void VisualPropertyChanged(DependencyObject depObj, DependencyPropertyChangedEventArgs prop)
@@ -153,87 +154,7 @@ namespace Wpf3dVersion.Model
 
         protected override void OnUpdateModel()
         {
-            Model = CreateElementModel();
-        }
-
-        protected Model3D CreateElementModel()
-        {
-            Model3DGroup model = new Model3DGroup();
-
-            var p0 = new Point3D(0d, 0d, 0d);
-            var p1 = new Point3D(Size, 0d, 0d);
-            var p2 = new Point3D(Size, 0d, Size);
-            var p3 = new Point3D(0d, 0d, Size);
-            var p4 = new Point3D(0d, Size, Size);
-            var p5 = new Point3D(Size, Size, Size);
-            var p6 = new Point3D(Size, Size, 0d);
-            var p7 = new Point3D(0d, Size, 0d);
-
-            model.Children.Add(CreateRectangleModel(p4, p3, p2, p5, Material));
-            model.Children.Add(CreateRectangleModel(p5, p2, p1, p6, Material));
-            model.Children.Add(CreateRectangleModel(p7, p6, p1, p0, Material));
-            model.Children.Add(CreateRectangleModel(p7, p0, p3, p4, Material));
-            model.Children.Add(CreateRectangleModel(p7, p4, p5, p6, Material));
-            model.Children.Add(CreateRectangleModel(p0, p1, p2, p3, Material));
-
-            return model;
-        }
-
-        protected static MeshGeometry3D CreateTriangleMesh(Point3D p0, Point3D p1, Point3D p2)
-        {
-            MeshGeometry3D mesh = new MeshGeometry3D();
-
-            mesh.Positions.Add(p0);
-            mesh.Positions.Add(p1);
-            mesh.Positions.Add(p2);
-            mesh.TriangleIndices.Add(0);
-            mesh.TriangleIndices.Add(1);
-            mesh.TriangleIndices.Add(2);
-
-            return mesh;
-        }
-
-        private static MeshGeometry3D CreateRectangleMesh(Point3D p0, Point3D p1, Point3D p2, Point3D p3)
-        {
-            MeshGeometry3D mesh = new MeshGeometry3D();
-
-            mesh.Positions.Add(p0);
-            mesh.Positions.Add(p1);
-            mesh.Positions.Add(p2);
-            mesh.Positions.Add(p3);
-
-            mesh.TriangleIndices.Add(0);
-            mesh.TriangleIndices.Add(1);
-            mesh.TriangleIndices.Add(2);
-            mesh.TriangleIndices.Add(0);
-            mesh.TriangleIndices.Add(2);
-            mesh.TriangleIndices.Add(3);
-
-            return mesh;
-        }
-
-        protected static GeometryModel3D CreateTriangleModel(Point3D p0, Point3D p1, Point3D p2, Material material)
-        {
-            return new GeometryModel3D(CreateTriangleMesh(p0, p1, p2), material);
-        }
-
-        protected static GeometryModel3D CreateRectangleModel(Point3D p0, Point3D p1, Point3D p2, Point3D p3, Material material)
-        {
-            return new GeometryModel3D(CreateRectangleMesh(p0, p1, p2, p3), material);
-        }
-
-        private static MaterialGroup GetMaterial(Color color, double opacity)
-        {
-            var materailGroup = new MaterialGroup();
-
-            var diffuseMaterial = new DiffuseMaterial
-            {
-                Brush = new SolidColorBrush(color)
-            };
-            diffuseMaterial.Brush.Opacity = opacity;
-            materailGroup.Children.Add(diffuseMaterial);
-
-            return materailGroup;
+            Model = Model3DFactory.GetRectangleModel3D(Size, Material);
         }
     }
 }

@@ -1,6 +1,4 @@
 ﻿using GraphViewModel.Interfaces;
-using System.Linq;
-using System.Windows.Media.Media3D;
 using Wpf3dVersion.Infrastructure;
 using Wpf3dVersion.Model;
 
@@ -20,37 +18,29 @@ namespace Wpf3dVersion.ViewModel
         public MainWindowViewModel Model { get; set; }
         public OpacityChangeViewModel(IMainModel model)
         {
-            ObstacleColorOpacity = (Wpf3dVertex.ObstacleVertexColor.Children.
-                           First() as DiffuseMaterial).Brush.Opacity;
-            VisitedVertexColorOpacity = (Wpf3dVertex.AfterVisitVertexColor.Children.
-                           First() as DiffuseMaterial).Brush.Opacity;
-            EnqueuedVertexColorOpacity = (Wpf3dVertex.EnqueuedVertexColor.Children.
-                           First() as DiffuseMaterial).Brush.Opacity;
-            PathVertexColorOpacity = (Wpf3dVertex.PathVertexColor.Children.
-                           First() as DiffuseMaterial).Brush.Opacity;
-            SimpleVertexColorOpacity = (Wpf3dVertex.SimpleVertexColor.Children.
-                           First() as DiffuseMaterial).Brush.Opacity;
+            ObstacleColorOpacity = Wpf3dVertex.ObstacleVertexMaterial.Brush.Opacity;
+            VisitedVertexColorOpacity = Wpf3dVertex.VisitedVertexMaterial.Brush.Opacity;
+            EnqueuedVertexColorOpacity = Wpf3dVertex.EnqueuedVertexMaterial.Brush.Opacity;
+            PathVertexColorOpacity = Wpf3dVertex.PathVertexMaterial.Brush.Opacity;
+            SimpleVertexColorOpacity = Wpf3dVertex.SimpleVertexMaterial.Brush.Opacity;
+
             Model = model as MainWindowViewModel;
             ConfirmOpacityChange = new RelayCommand(ExecuteChangeVertexOpacity, obj => true);
-            CancelOpacityChange = new RelayCommand(ExecuteCancelChangeVertexOpacity, obj => true);
+            CancelOpacityChange = new RelayCommand(ExecuteCloseChangeVertexOpacity, obj => true);
         }
 
         private void ExecuteChangeVertexOpacity(object param)
         {
-            (Wpf3dVertex.EnqueuedVertexColor.Children.
-                First() as DiffuseMaterial).Brush.Opacity = EnqueuedVertexColorOpacity;
-            (Wpf3dVertex.ObstacleVertexColor.Children.
-                First() as DiffuseMaterial).Brush.Opacity = ObstacleColorOpacity;
-            (Wpf3dVertex.SimpleVertexColor.Children.
-                First() as DiffuseMaterial).Brush.Opacity = SimpleVertexColorOpacity;
-            (Wpf3dVertex.PathVertexColor.Children.
-                First() as DiffuseMaterial).Brush.Opacity = PathVertexColorOpacity;
-            (Wpf3dVertex.AfterVisitVertexColor.Children.
-                First() as DiffuseMaterial).Brush.Opacity = VisitedVertexColorOpacity;
+            Wpf3dVertex.EnqueuedVertexMaterial.Brush.Opacity = EnqueuedVertexColorOpacity;
+            Wpf3dVertex.ObstacleVertexMaterial.Brush.Opacity = ObstacleColorOpacity;
+            Wpf3dVertex.SimpleVertexMaterial.Brush.Opacity = SimpleVertexColorOpacity;
+            Wpf3dVertex.PathVertexMaterial.Brush.Opacity = PathVertexColorOpacity;
+            Wpf3dVertex.VisitedVertexMaterial.Brush.Opacity = VisitedVertexColorOpacity;
+
             Model?.Window?.Close();
         }
 
-        private void ExecuteCancelChangeVertexOpacity(object param)
+        private void ExecuteCloseChangeVertexOpacity(object param)
         {
             Model?.Window?.Close();
         }
