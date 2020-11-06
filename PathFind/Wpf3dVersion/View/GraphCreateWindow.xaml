@@ -10,8 +10,8 @@
         SizeToContent="WidthAndHeight">
     
     <Window.Resources>
-        <converters:SliderValueConverter x:Key="sliderValueConverter"></converters:SliderValueConverter>
-        <converters:StringToIntConverter x:Key="stringToIntCOnverter"></converters:StringToIntConverter>
+        <converters:StringToRangedDoubleConverter x:Key="sliderValueConverter"></converters:StringToRangedDoubleConverter>
+        <converters:StringToRangedIntConverter x:Key="stringToIntCOnverter"></converters:StringToRangedIntConverter>
     </Window.Resources>
     
     <Grid>

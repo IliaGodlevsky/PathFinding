@@ -4,7 +4,7 @@ using System.Windows.Media.Media3D;
 
 namespace Wpf3dVersion.Converters
 {
-    public class InvertPointConverter : IValueConverter
+    internal class InvertPointConverter : IValueConverter
     {
         public object Convert(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)
         {

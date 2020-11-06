@@ -4,17 +4,16 @@ using System.Windows.Data;
 
 namespace Wpf3dVersion.Converters
 {
-    internal class MaterialOpacityConverter : IValueConverter
+    internal class ToStringConverter : IValueConverter
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            return Math.Round((double)value, 2);
+            return value.ToString();
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            var result = Math.Round((double)value, 2);
-            return result;
+            return string.Empty;
         }
     }
 }

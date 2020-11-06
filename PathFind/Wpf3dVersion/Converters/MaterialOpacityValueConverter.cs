@@ -1,21 +1,20 @@
 ﻿using System;
 using System.Globalization;
 using System.Windows.Data;
-using System.Windows.Media.Media3D;
 
 namespace Wpf3dVersion.Converters
 {
-    public class CoordinateToDistanceConverter : IValueConverter
+    internal class MaterialOpacityValueConverter : IValueConverter
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            return ((Point3D)value).Z;
+            return Math.Round((double)value, 2);
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            double point = (double)value;
-            return new Point3D(point, point, point);
+            var result = Math.Round((double)value, 2);
+            return result;
         }
     }
 }

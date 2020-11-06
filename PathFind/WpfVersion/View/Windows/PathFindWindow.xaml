@@ -9,8 +9,8 @@
         mc:Ignorable="d"
         Title="PathFindParametresWindow" SizeToContent="WidthAndHeight">
     <Window.Resources>
-        <converters:SliderValueConverter x:Key="sliderValueConverter"></converters:SliderValueConverter>
-        <converters:AlgorithmKeyConverter x:Key="algorithmKeyConverter"></converters:AlgorithmKeyConverter>
+        <converters:StringToRangedDoubleConverter x:Key="sliderValueConverter"></converters:StringToRangedDoubleConverter>
+        <converters:ToStringConverter x:Key="algorithmKeyConverter"></converters:ToStringConverter>
     </Window.Resources>
     <Grid>
         <Grid.RowDefinitions>

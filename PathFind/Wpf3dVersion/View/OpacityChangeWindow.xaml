@@ -9,7 +9,7 @@
         Title="OpacityChangeWindow"
         SizeToContent="WidthAndHeight">
     <Window.Resources>
-        <converter:MaterialOpacityConverter x:Key="opacityConverter"></converter:MaterialOpacityConverter>
+        <converter:MaterialOpacityValueConverter x:Key="opacityConverter"></converter:MaterialOpacityValueConverter>
     </Window.Resources>
     <Grid>
         <Grid.ColumnDefinitions>

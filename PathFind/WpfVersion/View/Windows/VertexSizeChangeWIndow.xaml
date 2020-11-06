@@ -8,7 +8,7 @@
         mc:Ignorable="d"
         Title="VertexSizeChangeWIndow" SizeToContent="WidthAndHeight">
     <Window.Resources>
-        <converters:SliderValueConverter x:Key="sizeConverter"></converters:SliderValueConverter>
+        <converters:StringToRangedDoubleConverter x:Key="sizeConverter"></converters:StringToRangedDoubleConverter>
     </Window.Resources>
     <Grid>
         <Grid.ColumnDefinitions>

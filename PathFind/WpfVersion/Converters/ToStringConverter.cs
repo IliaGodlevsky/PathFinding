@@ -4,7 +4,7 @@ using System.Windows.Data;
 
 namespace WpfVersion.Converters
 {
-    internal class AlgorithmKeyConverter : IValueConverter
+    internal class ToStringConverter : IValueConverter
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {

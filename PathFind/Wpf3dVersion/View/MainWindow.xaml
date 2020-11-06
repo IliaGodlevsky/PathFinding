@@ -8,7 +8,7 @@
         Title="3D pathfinding" Height="350" Width="450">
     <Window.Resources>
         <converters:InvertPointConverter x:Key="invertPointConverter"/>
-        <converters:CoordinateToDistanceConverter x:Key="coordinateToDistance"/>
+        <converters:NummberToPointConverter x:Key="coordinateToDistance"/>
         <converters:StringToDoubleConverter x:Key="stringToDoubleConverter"/>
         
         <Style TargetType="TextBox" x:Key="TextBoxStyle">

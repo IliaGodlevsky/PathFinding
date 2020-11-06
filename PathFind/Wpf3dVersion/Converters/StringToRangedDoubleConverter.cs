@@ -5,7 +5,7 @@ using System.Windows.Data;
 
 namespace Wpf3dVersion.Converters
 {
-    internal class SliderValueConverter : IValueConverter
+    internal class StringToRangedDoubleConverter : IValueConverter
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
