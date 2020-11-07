@@ -1,5 +1,4 @@
 ﻿using Common.Interfaces;
-using GraphLib.Vertex.Interface;
 using System.Collections.Generic;
 
 namespace GraphLib.Info.Interface

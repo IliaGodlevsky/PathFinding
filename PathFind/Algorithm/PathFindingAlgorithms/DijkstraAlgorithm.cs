@@ -37,17 +37,23 @@ namespace Algorithm.PathFindingAlgorithms
         public void FindPath()
         {
             OnStarted?.Invoke(this, new AlgorithmEventArgs(Graph));
+
             SetAccumulatedCostToInfinity();
+
             var currentVertex = Graph.Start;
             currentVertex.IsVisited = true;
+
             do
             {
                 ExtractNeighbours(currentVertex);
                 RelaxNeighbours(currentVertex);
+
                 currentVertex = GetChippestUnvisitedVertex();
                 currentVertex.IsVisited = true;
+
                 OnVertexVisited?.Invoke(currentVertex);
             } while (!currentVertex.IsEnd);
+
             OnFinished?.Invoke(this, new AlgorithmEventArgs(Graph));
         }
 
@@ -56,7 +62,9 @@ namespace Algorithm.PathFindingAlgorithms
             Graph.AsParallel().ForAll(vertex =>
             {
                 if (!vertex.IsStart && !vertex.IsObstacle)
+                {
                     Graph[vertex.Position].AccumulatedCost = double.PositiveInfinity;
+                }
             });
         }
 
@@ -67,14 +75,14 @@ namespace Algorithm.PathFindingAlgorithms
 
         protected virtual void RelaxNeighbours(IVertex vertex)
         {
-            foreach (var neighbour in vertex.Neighbours)
+            vertex.Neighbours.AsParallel().ForAll(neighbour =>
             {
                 if (neighbour.AccumulatedCost > Relax(neighbour, vertex))
                 {
                     neighbour.AccumulatedCost = Relax(neighbour, vertex);
                     neighbour.ParentVertex = vertex;
                 }
-            }
+            });
         }
 
         private void ExtractNeighbours(IVertex vertex)
@@ -84,6 +92,7 @@ namespace Algorithm.PathFindingAlgorithms
                 OnEnqueued?.Invoke(neighbour);
                 verticesProcessQueue.Add(neighbour);
             }
+
             verticesProcessQueue = verticesProcessQueue.AsParallel().DistinctBy(vert => vert.Position).ToList();
         }
 

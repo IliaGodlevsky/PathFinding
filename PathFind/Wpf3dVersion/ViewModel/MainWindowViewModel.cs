@@ -99,6 +99,7 @@ namespace Wpf3dVersion.ViewModel
         {
             var field = graphField as Wpf3dGraphField;
             func(sliderNewValue, field);
+
             field.SetDistanceBetweenVertices(Graph);
             field.CenterGraph(Graph, centerOffsetCorrection: 1);
         }
@@ -125,13 +126,22 @@ namespace Wpf3dVersion.ViewModel
 
         public void Dispose() => OnDispose();
 
-        private void ExecuteSaveGraphCommand(object param) => base.SaveGraph();
-        private void ExecuteChangeOpacity(object param) => ChangeVerticesOpacity();
+        private void ExecuteSaveGraphCommand(object param)
+        {
+            base.SaveGraph();
+        }
+
+        private void ExecuteChangeOpacity(object param)
+        {
+            ChangeVerticesOpacity();
+        }
 
         private bool CanExecuteStartFindPathCommand(object param)
         {
-            return !Graph.End.IsDefault && !Graph.Start.IsDefault
-                && Graph.Any() && !Graph.Start.IsVisited;
+            return !Graph.End.IsDefault 
+                && !Graph.Start.IsDefault
+                && Graph.Any() 
+                && !Graph.Start.IsVisited;
         }
 
         private void ExecuteLoadGraphCommand(object param)
@@ -139,7 +149,10 @@ namespace Wpf3dVersion.ViewModel
             base.LoadGraph();
         }
 
-        private void ExecuteClearGraphCommand(object param) => base.ClearGraph();
+        private void ExecuteClearGraphCommand(object param)
+        {
+            base.ClearGraph();
+        }
 
         private void ExecuteStartPathFindCommand(object param)
         {
@@ -171,7 +184,14 @@ namespace Wpf3dVersion.ViewModel
                 : string.Empty;
         }
 
-        protected override string GetSavingPath() => GetPath(new SaveFileDialog());
-        protected override string GetLoadingPath() => GetPath(new OpenFileDialog());
+        protected override string GetSavingPath()
+        {
+            return GetPath(new SaveFileDialog());
+        }
+
+        protected override string GetLoadingPath()
+        {
+            return GetPath(new OpenFileDialog());
+        }
     }
 }

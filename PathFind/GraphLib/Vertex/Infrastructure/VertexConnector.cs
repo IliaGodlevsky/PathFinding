@@ -17,14 +17,19 @@ namespace GraphLib.VertexConnecting
             foreach (var neigbour in vertex.Neighbours)
             {
                 if (CanBeNeighbour(neigbour, vertex))
+                {
                     neigbour.Neighbours.Add(vertex);
+                }
             }
         }
 
         public static void IsolateVertex(IVertex vertex)
         {
             foreach (var neigbour in vertex.Neighbours)
+            {
                 neigbour.Neighbours.Remove(vertex);
+            }
+
             vertex.Neighbours.Clear();
         }
 
@@ -32,13 +37,25 @@ namespace GraphLib.VertexConnecting
         {
             var dimensionSizes = graph.DimensionsSizes.ToArray();
             var currentCoordinates = coordinates.Coordinates.ToArray();
+
             if (dimensionSizes.Length != currentCoordinates.Length)
+            {
                 throw new ArgumentException("Dimensions of coordinate and graph don't match each other");
+            }
+
             bool IsOutOfBounds(int currentCoordinate, int dimensionSize)
-                => currentCoordinate < 0 || currentCoordinate >= dimensionSize;
+            {
+                return currentCoordinate < 0 || currentCoordinate >= dimensionSize;
+            }
+
             for (int i = 0; i < currentCoordinates.Length; i++)
+            {
                 if (IsOutOfBounds(currentCoordinates[i], dimensionSizes[i]))
+                {
                     return false;
+                }
+            }
+
             return true;
         }
 
@@ -52,17 +69,26 @@ namespace GraphLib.VertexConnecting
         private static IEnumerable<IVertex> GetVertexEnvironment(IGraph graph, IVertex vertex)
         {
             foreach (var coordinate in vertex.Position.Environment)
+            {
                 if (IsWithinGraph(graph, coordinate))
+                {
                     yield return graph[coordinate];
+                }
+            }
         }
 
         public static void SetNeighbours(IGraph graph, IVertex vertex)
         {
             if (vertex.IsObstacle)
                 return;
+
             foreach (var potentialNeighbor in GetVertexEnvironment(graph, vertex))
+            {
                 if (CanBeNeighbour(vertex, potentialNeighbor))
+                {
                     vertex.Neighbours.Add(potentialNeighbor);
+                }
+            }
         }
 
         public static void ConnectVertices(IGraph graph)

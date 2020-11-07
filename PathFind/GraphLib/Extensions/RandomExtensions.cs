@@ -13,8 +13,7 @@ namespace GraphLib.Extensions
 
         internal static VertexCost GetRandomValueCost(this Random rand)
         {
-            var cost = rand.Next(Range.VertexCostRange.UpperRange)
-                + Range.VertexCostRange.LowerRange;
+            var cost = rand.Next(Range.VertexCostRange.UpperRange) + Range.VertexCostRange.LowerRange;
             return new VertexCost(cost);
         }
     }

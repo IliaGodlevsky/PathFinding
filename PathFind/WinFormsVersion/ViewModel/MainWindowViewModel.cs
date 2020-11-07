@@ -9,12 +9,10 @@ using WinFormsVersion.Model;
 using WinFormsVersion.View;
 using WinFormsVersion.EventHolder;
 using GraphLib.GraphField;
-using GraphLib.Vertex;
 using WinFormsVersion.Vertex;
 using System.Linq;
 using GraphLib.Graphs;
 using GraphViewModel;
-using GraphLib.Graphs.Abstractions;
 using GraphLib.Extensions;
 using Common;
 
@@ -24,8 +22,10 @@ namespace WinFormsVersion.ViewModel
     {
         public event PropertyChangedEventHandler PropertyChanged;
 
-        protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = "") 
-            => PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = "")
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        }
 
         private string graphParametres;
         public override string GraphParametres
@@ -50,18 +50,14 @@ namespace WinFormsVersion.ViewModel
                 graphField = value;
                 int size = VertexParametres.SizeBetweenVertices;
                 var field = graphField as WinFormsGraphField;
+
                 MainWindow.Controls.RemoveBy(ctrl => ctrl.IsGraphField());
+
                 field.Size = new Size((Graph as Graph2d).Width * size, (Graph as Graph2d).Length * size);
                 MainWindow.Controls.Add(field);
             }
         }
 
-        private IGraph graph;
-        public override IGraph Graph
-        {
-            get { return graph; }
-            protected set { graph = value; OnPropertyChanged(); }
-        }
         public Form Window { get; set; }
         public MainWindow MainWindow { get; set; }
 
@@ -78,8 +74,10 @@ namespace WinFormsVersion.ViewModel
         {
             if (!CanStartPathFinding())
                 return;
+
             var model = new PathFindingViewModel(this);
             var form = new PathFindingWindow(model);
+
             PrepareWindow(form);
         }
 
@@ -87,6 +85,7 @@ namespace WinFormsVersion.ViewModel
         {
             var model = new GraphCreatingViewModel(this);
             var form = new GraphCreatingWIndow(model);
+
             PrepareWindow(form);
         }
 
@@ -137,10 +136,10 @@ namespace WinFormsVersion.ViewModel
 
         private bool CanStartPathFinding()
         {
-            return !graph.Start.IsDefault
-                && !graph.End.IsDefault
+            return !Graph.Start.IsDefault
+                && !Graph.End.IsDefault
                 && Graph.Any() 
-                && !graph.Start.IsVisited;
+                && !Graph.Start.IsVisited;
         }
 
         protected override string GetSavingPath()

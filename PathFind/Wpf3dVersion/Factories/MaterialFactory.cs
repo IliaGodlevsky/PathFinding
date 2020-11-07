@@ -11,6 +11,7 @@ namespace Wpf3dVersion.Factories
             {
                 Brush = new SolidColorBrush(color)
             };
+
             diffuseMaterial.Brush.Opacity = opacity;
             return diffuseMaterial;
         }

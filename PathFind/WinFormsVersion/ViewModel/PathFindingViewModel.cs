@@ -27,6 +27,7 @@ namespace WinFormsVersion.ViewModel
                 if (!eventArgs.HasFoundPath)
                     MessageBox.Show(badResultMessage);
             };
+
             base.PrepareAlgorithm();
         }
 

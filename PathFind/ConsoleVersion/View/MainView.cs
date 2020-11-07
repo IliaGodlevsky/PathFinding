@@ -63,6 +63,7 @@ namespace ConsoleVersion.View
         public void Start()
         {
             var menuOption = GetMenuOption();
+
             while (menuOption != MenuOption.Quit)
             {
                 menuActions[menuOption]();

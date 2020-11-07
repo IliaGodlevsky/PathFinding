@@ -8,8 +8,11 @@ namespace GraphLib.Extensions
         public static void Refresh(this IGraph graph)
         {
             graph.RemoveExtremeVertices();
+
             foreach (var vertex in graph)
+            {
                 vertex.Refresh();
+            }
         }
 
         internal static void RemoveExtremeVertices(this IGraph graph)
@@ -21,13 +24,17 @@ namespace GraphLib.Extensions
         public static void ToUnweighted(this IGraph graph)
         {
             foreach (var vertex in graph)
+            {
                 vertex.MakeUnweighted();
+            }
         }
 
         public static void ToWeighted(this IGraph graph)
         {
             foreach (var vertex in graph)
+            {
                 vertex.MakeWeighted();
+            }
         }
     }
 }

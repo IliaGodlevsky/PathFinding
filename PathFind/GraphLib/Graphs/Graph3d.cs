@@ -3,7 +3,6 @@ using GraphLib.Coordinates.Interface;
 using GraphLib.Extensions;
 using GraphLib.Graphs.Abstractions;
 using GraphLib.Graphs.Serialization.Infrastructure.Info.Collections;
-using GraphLib.Info.Containers;
 using GraphLib.Info.Interface;
 using GraphLib.Vertex;
 using GraphLib.Vertex.Interface;

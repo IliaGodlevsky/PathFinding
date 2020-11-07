@@ -34,20 +34,26 @@ namespace Algorithm.PathFindingAlgorithms
             {
                 persentOfFurthestVerticesToDelete = value;
                 if (!percentRange.IsInBounds(persentOfFurthestVerticesToDelete))
-                    persentOfFurthestVerticesToDelete =
-                        percentRange.ReturnInBounds(persentOfFurthestVerticesToDelete);
+                {
+                    persentOfFurthestVerticesToDelete = percentRange.ReturnInBounds(persentOfFurthestVerticesToDelete);
+                }
             }
         }
 
         protected override IVertex GetChippestUnvisitedVertex()
         {
             IVertex next = new DefaultVertex();
+
             verticesProcessQueue.Sort((v1, v2) => HeuristicFunction(v2).CompareTo(HeuristicFunction(v1)));
+
             deletedVertices.AddRange(verticesProcessQueue.Take(VerticesCountToDelete));
             verticesProcessQueue.RemoveRange(0, VerticesCountToDelete);
+
             next = base.GetChippestUnvisitedVertex();
             if (next.IsDefault)
+            {
                 verticesProcessQueue = deletedVertices;
+            }
             return base.GetChippestUnvisitedVertex();
         }
 

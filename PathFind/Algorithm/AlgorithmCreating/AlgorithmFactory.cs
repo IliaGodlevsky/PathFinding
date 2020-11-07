@@ -21,6 +21,7 @@ namespace Algorithm.AlgorithmCreating
             var filterType = typeof(DefaultAlgorithm);
 
             var assembly = Assembly.Load(algoType.Assembly.GetName());
+
             foreach (var type in assembly.GetTypes().Where(t => t != filterType))
             {
                 if (type.GetInterfaces().Select(interf => interf.Name).Contains(algoType.Name))

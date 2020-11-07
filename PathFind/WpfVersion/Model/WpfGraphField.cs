@@ -13,9 +13,14 @@ namespace WpfVersion.Model
         public void Add(IVertex vertex)
         {
             var coordinates = vertex.Position as Coordinate2D;
+
             if (coordinates == null)
+            {
                 throw new ArgumentException("Must be 2D coordinates");
+            }
+
             Children.Add(vertex as WpfVertex);
+
             SetLeft(vertex as WpfVertex, VertexParametres.SizeBetweenVertices * coordinates.X);
             SetTop(vertex as WpfVertex, VertexParametres.SizeBetweenVertices * coordinates.Y);
         }

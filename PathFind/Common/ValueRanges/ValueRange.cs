@@ -21,9 +21,14 @@
         public int ReturnInBounds(int value)
         {
             if (value > UpperRange)
+            {
                 value = LowerRange;
+            }
             else if (value < LowerRange)
+            {
                 value = UpperRange;
+            }
+
             return value;
         }
 

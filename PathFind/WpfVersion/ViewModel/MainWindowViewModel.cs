@@ -77,16 +77,26 @@ namespace WpfVersion.ViewModel
             ShowVertexCost = new RelayCommand(ExecuteShowVertexCostCommand, AlwaysExecutable);
         }
 
-        private bool AlwaysExecutable(object param) => true;
+        private bool AlwaysExecutable(object param)
+        {
+            return true;
+        }
 
-        private bool CanExecuteGraphOperation(object param) => !Graph.IsDefault;
+        private bool CanExecuteGraphOperation(object param)
+        {
+            return !Graph.IsDefault;
+        }
 
         public void ExecuteShowVertexCostCommand(object parametre)
         {
             if ((bool)parametre)
+            {
                 Graph.ToWeighted();
+            }
             else
+            {
                 Graph.ToUnweighted();
+            }
         }
 
         public override void FindPath()
@@ -104,15 +114,19 @@ namespace WpfVersion.ViewModel
             PrepareWindow(new VertexSizeChangingViewModel(this), new VertexSizeChangeWindow());
         }
 
-        public void Dispose() => OnDispose();
+        public void Dispose()
+        {
+            OnDispose();
+        }
 
         private void ExecuteSaveGraphCommand(object param) => base.SaveGraph();
 
         private bool CanExecuteStartFindPathCommand(object param)
         {
-            return !ReferenceEquals(Graph.End, new DefaultVertex())
-                && !ReferenceEquals(Graph.Start, new DefaultVertex())
-                && Graph.Any() && !Graph.Start.IsVisited;
+            return !Graph.End.IsDefault
+                && !Graph.Start.IsDefault
+                && Graph.Any() 
+                && !Graph.Start.IsVisited;
         }
 
         private void ExecuteLoadGraphCommand(object param)
@@ -120,14 +134,20 @@ namespace WpfVersion.ViewModel
             base.LoadGraph();
         }
 
-        private void ExecuteClearGraphCommand(object param) => base.ClearGraph();
+        private void ExecuteClearGraphCommand(object param)
+        {
+            base.ClearGraph();
+        }
 
         private void ExecuteStartPathFindCommand(object param)
         {
             FindPath();
         }
 
-        private void ExecuteCreateNewGraphCommand(object param) => CreateNewGraph();
+        private void ExecuteCreateNewGraphCommand(object param)
+        {
+            CreateNewGraph();
+        }
 
         protected virtual void OnDispose()
         {
@@ -149,7 +169,14 @@ namespace WpfVersion.ViewModel
                 : string.Empty;
         }
 
-        protected override string GetSavingPath() => GetPath(new SaveFileDialog());
-        protected override string GetLoadingPath() => GetPath(new OpenFileDialog());
+        protected override string GetSavingPath()
+        {
+            return GetPath(new SaveFileDialog());
+        }
+
+        protected override string GetLoadingPath()
+        {
+            return GetPath(new OpenFileDialog());
+        }
     }
 }

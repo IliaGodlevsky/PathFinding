@@ -18,7 +18,9 @@ namespace WinFormsVersion.ViewModel
             (model as MainWindowViewModel).Window?.Close();
         }
 
-        public void CancelCreateGraph(object sender, EventArgs e) => (model as MainWindowViewModel)?.Window.Close();
-        
+        public void CancelCreateGraph(object sender, EventArgs e)
+        {
+            (model as MainWindowViewModel)?.Window.Close();
+        }
     }
 }

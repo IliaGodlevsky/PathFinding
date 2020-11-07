@@ -16,11 +16,19 @@ namespace Wpf3dVersion.Converters
         {
             int result = 0;
             var range = parameter as ValueRange;
+
             if (range == null || value == null)
+            {
                 return result;
+            }
             if (int.TryParse(value.ToString(), out result))
+            {
                 if (!range.IsInBounds(result))
+                {
                     result = range.LowerRange;
+                }
+            }
+
             return result;
         }
     }

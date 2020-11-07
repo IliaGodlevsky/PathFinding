@@ -22,12 +22,15 @@ namespace WpfVersion.ViewModel
             ExecuteChangeVertexSize = new RelayCommand(ChangeVertexSize, obj => true);
             ExecuteCancel = new RelayCommand(obj => Model.Window.Close(), obj => true);
             if (Model.Graph.Size > 0)
+            {
                 Size = Convert.ToInt32((Model.Graph.First() as WpfVertex).Width);
+            }
         }
 
         private void ChangeVertexSize(object param)
         {
             VertexParametres.VertexSize = Size;
+
             void ChangeSize(IVertex vertex)
             {
                 var temp = vertex as WpfVertex;
@@ -35,11 +38,16 @@ namespace WpfVersion.ViewModel
                 temp.Height = VertexParametres.VertexSize;
                 temp.FontSize = Size * VertexParametres.TextToSizeRatio;
             }
-            foreach(var vertex in Model.Graph)            
-                ChangeSize(vertex);           
+
+            foreach (var vertex in Model.Graph)
+            {
+                ChangeSize(vertex);
+            }
+
             (Model.GraphField as Canvas).Children.Clear();
             var fieldFactory = new WpfGraphFieldFactory();
             Model.GraphField = fieldFactory.CreateGraphField(Model.Graph);
+
             Model.Window.Close();
         }
     }

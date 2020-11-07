@@ -25,10 +25,15 @@ namespace GraphLib.Graphs.Factories.Abstractions
         protected void CreateVertex(Func<IVertex> vertexFactory, params int[] coordinates)
         {
             var indices = GetCoordinate(coordinates);
+
             graph[indices] = vertexFactory();
             graph[indices].Cost = rand.GetRandomValueCost();
+
             if (rand.IsObstacleChance(obstacleChance))
+            {
                 graph[indices].MarkAsObstacle();
+            }
+
             graph[indices].Position = indices;
         }
 

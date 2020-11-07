@@ -14,9 +14,12 @@ namespace ConsoleVersion.Model.EventHolder
         public override void ChangeVertexValue(object sender, EventArgs e)
         {
             var vertex = sender as ConsoleVertex;
+
             if (!vertex.IsObstacle)
+            {
                 vertex.Cost = new VertexCost(Input.InputNumber(ConsoleVersionResources.NewTopValueMsg,
-                    Range.VertexCostRange.UpperRange, Range.VertexCostRange.LowerRange));
+                      Range.VertexCostRange.UpperRange, Range.VertexCostRange.LowerRange));
+            }
         }
 
         protected override int GetWheelDelta(EventArgs e)

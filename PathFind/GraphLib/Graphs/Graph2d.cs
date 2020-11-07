@@ -34,19 +34,30 @@ namespace GraphLib.Graphs
             get
             {
                 if (coordinate.IsDefault)
+                {
                     return new DefaultVertex();
+                }
                 var coord = coordinate as Coordinate2D;
+
                 if (coord == null)
+                {
                     throw new ArgumentException("Must be 2D coordinates");
+                }
+
                 return vertices[Index.ToIndex(coordinate, Length)];
             }
             set
             {
                 if (coordinate.IsDefault)
                     return;
+
                 var coord = coordinate as Coordinate2D;
+
                 if (coord == null)
+                {
                     throw new ArgumentException("Must be 2D coordinates");
+                }
+
                 vertices[Index.ToIndex(coordinate, Length)] = value;
             }
         }

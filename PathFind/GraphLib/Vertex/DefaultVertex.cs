@@ -18,7 +18,7 @@ namespace GraphLib.Vertex
         public bool IsObstacle { get => true; set => _ = value; }
         public bool IsStart { get => true; set => _ = value; }
         public bool IsVisited { get => true; set => _ = value; }
-        public VertexCost Cost { get => new VertexCost(default); set => _ = (VertexCost)value.Clone(); }
+        public VertexCost Cost { get => new VertexCost(default); set => _ = value; }
         public IList<IVertex> Neighbours { get => new List<IVertex>(); set => _ = value; }
         public IVertex ParentVertex { get => new DefaultVertex(); set => _ = value; }
         public double AccumulatedCost { get => double.PositiveInfinity; set => _ = value; }

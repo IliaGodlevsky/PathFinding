@@ -48,15 +48,30 @@ namespace WinFormsVersion.Vertex
                 BackColor = Color.FromKnownColor(KnownColor.WhiteSmoke);
         }
 
-        public void MarkAsStart() => BackColor = Color.FromKnownColor(KnownColor.Green);
+        public void MarkAsStart()
+        {
+            BackColor = Color.FromKnownColor(KnownColor.Green);
+        }
 
-        public void MarkAsEnd() => BackColor = Color.FromKnownColor(KnownColor.Red);
+        public void MarkAsEnd()
+        {
+            BackColor = Color.FromKnownColor(KnownColor.Red);
+        }
 
-        public void MarkAsVisited() => BackColor = Color.FromKnownColor(KnownColor.CadetBlue);
+        public void MarkAsVisited()
+        {
+            BackColor = Color.FromKnownColor(KnownColor.CadetBlue);
+        }
 
-        public void MarkAsPath() => BackColor = Color.FromKnownColor(KnownColor.Yellow);
+        public void MarkAsPath()
+        {
+            BackColor = Color.FromKnownColor(KnownColor.Yellow);
+        }
 
-        public void MarkAsEnqueued() => BackColor = Color.FromKnownColor(KnownColor.Aquamarine);
+        public void MarkAsEnqueued()
+        {
+            BackColor = Color.FromKnownColor(KnownColor.Aquamarine);
+        }
 
         public void MakeUnweighted()
         {

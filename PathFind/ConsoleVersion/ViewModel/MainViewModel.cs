@@ -24,6 +24,7 @@ namespace ConsoleVersion.ViewModel
         {
             var model = new GraphCreatingViewModel(this);
             var view = new GraphCreateView(model);
+
             view.Start();
         }
 
@@ -31,6 +32,7 @@ namespace ConsoleVersion.ViewModel
         {
             var model = new PathFindingViewModel(this);
             var view = new PathFindView(model);
+
             view.Start();
         }
 
@@ -43,8 +45,12 @@ namespace ConsoleVersion.ViewModel
         public void ChangeVertexValue()
         {
             var point = Input.InputPoint((Graph as Graph2d).Width, (Graph as Graph2d).Length);
+
             while (Graph[point].IsObstacle)
+            {
                 point = Input.InputPoint((Graph as Graph2d).Width, (Graph as Graph2d).Length);
+            }
+
             (Graph[point] as ConsoleVertex).ChangeCost();
         }
 
@@ -68,6 +74,7 @@ namespace ConsoleVersion.ViewModel
         {
             Console.Clear();
             Console.ForegroundColor = Color.White;
+
             Console.WriteLine(GraphParametres);
             (GraphField as ConsoleGraphField)?.ShowGraphWithFrames();
             Console.WriteLine(PathFindingStatistics);

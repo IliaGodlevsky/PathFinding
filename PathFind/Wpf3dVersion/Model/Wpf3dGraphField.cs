@@ -29,17 +29,21 @@ namespace Wpf3dVersion.Model
         public void SetDistanceBetweenVertices(IGraph graph)
         {
             foreach (Wpf3dVertex vertex in graph)
+            {
                 SetVertexOffset(vertex);
+            }
         }
 
         public void CenterGraph(IGraph graph, int centerOffsetCorrection = 0)
         {
             var dimensionSizes = graph.DimensionsSizes.ToArray();
+
             foreach (Wpf3dVertex vertex in graph)
             {
                 var xAxisDistanceToCenter = (-dimensionSizes[0] + centerOffsetCorrection) * (vertex.Size + DistanceBetweenAtXAxis) / 2;
                 var yAxisDistanceToCenter = (-dimensionSizes[1] + centerOffsetCorrection) * (vertex.Size + DistanceBetweenAtYAxis) / 2;
                 var zAxisDistanceToCenter = (-dimensionSizes[2] + centerOffsetCorrection) * (vertex.Size + DistanceBetweenAtZAxis) / 2;
+
                 SetVertexOffset(vertex, xAxisDistanceToCenter, yAxisDistanceToCenter, zAxisDistanceToCenter);
             }
         }
@@ -47,12 +51,14 @@ namespace Wpf3dVersion.Model
         private void SetVertexOffset(Wpf3dVertex vertex, params double[] additionalOffset)
         {
             var coordinates = vertex.Position.Coordinates;
+
             var translate = new TranslateTransform3D
             {
                 OffsetX = coordinates.ElementAt(0) * (vertex.Size + DistanceBetweenAtXAxis) + additionalOffset.ElementAtOrDefault(0),
                 OffsetY = coordinates.ElementAt(1) * (vertex.Size + DistanceBetweenAtYAxis) + additionalOffset.ElementAtOrDefault(1),
                 OffsetZ = coordinates.ElementAt(2) * (vertex.Size + DistanceBetweenAtZAxis) + additionalOffset.ElementAtOrDefault(2)
             };
+
             vertex.Transform = translate;
         }
     }

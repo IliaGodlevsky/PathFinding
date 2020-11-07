@@ -24,9 +24,15 @@ namespace GraphLib.Graphs.Factories
             graph = new Graph3d(width, length, height);
 
             for (int i = 0; i < width; i++)
+            {
                 for (int j = 0; j < length; j++)
+                {
                     for (int l = 0; l < height; l++)
+                    {
                         CreateVertex(vertexFactory, i, j, l);
+                    }
+                }
+            }
 
             VertexConnector.ConnectVertices(graph);
 

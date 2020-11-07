@@ -38,13 +38,16 @@ namespace Algorithm.PathFindingAlgorithms
         public void FindPath()
         {
             OnStarted?.Invoke(this, new AlgorithmEventArgs(Graph));
+
             var currentVertex = Graph.Start;
             ProcessVertex(currentVertex);
+
             while (currentVertex?.IsEnd == false)
             {
                 currentVertex = GetNextVertex();
                 ProcessVertex(currentVertex);
             }
+
             OnFinished?.Invoke(this, new AlgorithmEventArgs(Graph));
         }
 
@@ -55,6 +58,7 @@ namespace Algorithm.PathFindingAlgorithms
                 OnEnqueued?.Invoke(vert);
                 neighbourQueue.Enqueue(vert);
             }
+
             neighbourQueue = new Queue<IVertex>(neighbourQueue.DistinctBy(vert => vert.Position));
         }
 

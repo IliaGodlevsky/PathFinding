@@ -9,7 +9,7 @@ namespace Algorithm.Extensions
     {
         internal static IVertex PopOrDefaultVertex(this Stack<IVertex> stack)
         {
-            return !stack.AsParallel().Any() ? new DefaultVertex() : stack.Pop();
+            return !stack.Any() ? new DefaultVertex() : stack.Pop();
         }
     }
 }

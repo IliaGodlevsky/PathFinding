@@ -6,6 +6,8 @@ namespace Common.Extensions
     {
         public static StringBuilder AppendFormatLine(this StringBuilder builder,
             string format, params object[] args)
-            => builder.AppendFormat(format, args).AppendLine();
+        {
+            return builder.AppendFormat(format, args).AppendLine();
+        }
     }
 }

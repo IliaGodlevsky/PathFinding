@@ -21,8 +21,12 @@ namespace GraphLib.Coordinates
             get
             {
                 for (int i = X - 1; i <= X + 1; i++)
+                {
                     for (int j = Y - 1; j <= Y + 1; j++)
+                    {
                         yield return new Coordinate2D(i, j);
+                    }
+                }
             }
         }
 
@@ -38,6 +42,7 @@ namespace GraphLib.Coordinates
         {
             if (pos == null)
                 return false;
+
             return this.IsEqual(pos as ICoordinate);
         }
 

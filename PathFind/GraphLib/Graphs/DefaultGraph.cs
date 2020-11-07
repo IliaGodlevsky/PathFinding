@@ -40,9 +40,20 @@ namespace GraphLib.Graphs
 
         public bool IsDefault => true;
 
-        public IEnumerator<IVertex> GetEnumerator() => array.Cast<IVertex>().GetEnumerator();
-        IEnumerator IEnumerable.GetEnumerator() => array.GetEnumerator();
-        public string GetFormattedData(string format) => string.Empty;
+        public IEnumerator<IVertex> GetEnumerator()
+        {
+            return array.Cast<IVertex>().GetEnumerator();
+        }
+
+        IEnumerator IEnumerable.GetEnumerator()
+        {
+            return array.GetEnumerator();
+        }
+
+        public string GetFormattedData(string format)
+        {
+            return string.Empty;
+        }
 
         private readonly IEnumerable<IVertex> array;
         private readonly DefaultVertex defaultVertex;

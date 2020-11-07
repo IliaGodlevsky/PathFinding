@@ -28,11 +28,13 @@ namespace ConsoleVersion.ViewModel
         {
             if (!graph.Any())
                 return;
+
             mainViewModel.ClearGraph();
             (mainViewModel as MainViewModel).DisplayGraph();
             ChooseExtremeVertex();
             (mainViewModel as MainViewModel).DisplayGraph();
             AlgorithmKey = AlgorithmFactory.AlgorithmKeys.ElementAt(GetAlgorithmKeyIndex());
+
             base.FindPath();
         }
 
@@ -76,6 +78,7 @@ namespace ConsoleVersion.ViewModel
         {           
             const int EXTREME_VERTICES_COUNT = 2;
             string[] chooseMessages = new string[EXTREME_VERTICES_COUNT] 
+
                     { Messages.Item1, Messages.Item2 };
             for (int i = 0; i < EXTREME_VERTICES_COUNT; i++)
             {
@@ -88,8 +91,12 @@ namespace ConsoleVersion.ViewModel
         {
             Console.WriteLine(message);
             var point = Input.InputPoint((graph as Graph2d).Width, (graph as Graph2d).Length);
+
             while (!graph[point].IsValidToBeRange())
+            {
                 point = Input.InputPoint((graph as Graph2d).Width, (graph as Graph2d).Length);
+            }
+
             return point;
         }
 

@@ -23,8 +23,12 @@ namespace GraphLib.PauseMaking
         {
             var timer = new Stopwatch();
             timer.Start();
+
             while (timer.ElapsedMilliseconds < delayTime)
+            {
                 PauseEvent?.Invoke();
+            }
+
             timer.Stop();
         }
 

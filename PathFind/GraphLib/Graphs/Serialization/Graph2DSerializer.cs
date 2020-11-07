@@ -7,8 +7,6 @@ using GraphLib.VertexConnecting;
 using System;
 using System.IO;
 using System.Linq;
-using System.Runtime.Serialization;
-using System.Runtime.Serialization.Formatters.Binary;
 using GraphLib.Graphs.Abstractions;
 using GraphLib.Graphs.Serialization.Abstractions;
 using GraphLib.Info.Interface;

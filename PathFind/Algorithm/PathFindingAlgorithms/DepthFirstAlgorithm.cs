@@ -5,10 +5,10 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using Algorithm.Extensions;
 using Algorithm.EventArguments;
-using Algorithm.Сalculations.DistanceCalculating;
 using Algorithm.PathFindingAlgorithms.Interface;
 using GraphLib.Extensions;
 using GraphLib.Graphs.Abstractions;
+using Algorithm.Сalculations;
 
 namespace Algorithm.PathFindingAlgorithms
 {
@@ -43,10 +43,12 @@ namespace Algorithm.PathFindingAlgorithms
         {
             OnStarted?.Invoke(this, new AlgorithmEventArgs(Graph));
             var currentVertex = Graph.Start;
+
             while (!currentVertex.IsEnd)
             {
                 var temp = currentVertex;
                 currentVertex = GoNextVertex(currentVertex);
+
                 if (!currentVertex.IsIsolated())
                 {
                     currentVertex.IsVisited = true;
@@ -55,16 +57,23 @@ namespace Algorithm.PathFindingAlgorithms
                     currentVertex.ParentVertex = temp;
                 }
                 else
+                {
                     currentVertex = visitedVerticesStack.PopOrDefaultVertex();
+                }
             }
+
             OnFinished?.Invoke(this, new AlgorithmEventArgs(Graph));
         }
 
         private IVertex GoNextVertex(IVertex vertex)
         {
             var neighbours = vertex.GetUnvisitedNeighbours().ToList();
+
             foreach (var vert in neighbours)
+            {
                 OnEnqueued?.Invoke(vert);
+            }
+
             return neighbours.FindOrDefaultVertex(vert =>
             {
                 return GreedyFunction(vert) == neighbours.Min(GreedyFunction);

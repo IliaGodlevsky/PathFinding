@@ -12,7 +12,7 @@ namespace WpfVersion.Model.Vertex
 {
     internal class WpfVertex : Label, IVertex
     {
-        public static SolidColorBrush AfterVisitVertexColor { get; set; }
+        public static SolidColorBrush VisitedVertexColor { get; set; }
         public static SolidColorBrush PathVertexColor { get; set; }
         public static SolidColorBrush StartVertexColor { get; set; }
         public static SolidColorBrush EndVertexColor { get; set; }
@@ -20,7 +20,7 @@ namespace WpfVersion.Model.Vertex
 
         static WpfVertex()
         {
-            AfterVisitVertexColor = new SolidColorBrush(Colors.CadetBlue);
+            VisitedVertexColor = new SolidColorBrush(Colors.CadetBlue);
             PathVertexColor = new SolidColorBrush(Colors.Yellow);
             StartVertexColor = new SolidColorBrush(Colors.Green);
             EndVertexColor = new SolidColorBrush(Colors.Red);
@@ -31,7 +31,9 @@ namespace WpfVersion.Model.Vertex
         {
             this.Initialize();
             Width = Height = VertexParametres.VertexSize;
+
             FontSize = VertexParametres.VertexSize * VertexParametres.TextToSizeRatio;
+
             Template = (ControlTemplate)TryFindResource("vertexTemplate");
         }
         public WpfVertex(VertexInfo info) : this()
@@ -66,7 +68,10 @@ namespace WpfVersion.Model.Vertex
 
         public bool IsDefault => false;
 
-        public void MarkAsEnd() => Background = EndVertexColor;
+        public void MarkAsEnd()
+        {
+            Background = EndVertexColor;
+        }
 
         public void MarkAsObstacle()
         {
@@ -85,9 +90,15 @@ namespace WpfVersion.Model.Vertex
                 Background = new SolidColorBrush(Colors.White);
         }
 
-        public void MarkAsStart() => Background = StartVertexColor;
+        public void MarkAsStart()
+        {
+            Background = StartVertexColor;
+        }
 
-        public void MarkAsVisited() => Background = AfterVisitVertexColor;
+        public void MarkAsVisited()
+        {
+            Background = VisitedVertexColor;
+        }
 
         public void MarkAsEnqueued()
         {

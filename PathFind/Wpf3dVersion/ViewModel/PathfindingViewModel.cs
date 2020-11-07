@@ -35,10 +35,14 @@ namespace Wpf3dVersion.ViewModel
         protected override void PrepareAlgorithm()
         {
             base.PrepareAlgorithm();
+
             (mainViewModel as MainWindowViewModel).Window.Close();
+
             var pauser = new PauseProvider(DelayTime);
             pauser.PauseEvent += () => System.Windows.Forms.Application.DoEvents();
+
             pathAlgorithm.OnVertexVisited += (vertex) => pauser.Pause();
+
             pathAlgorithm.OnFinished += (sender, eventArgs) =>
             {
                 if (!eventArgs.HasFoundPath)

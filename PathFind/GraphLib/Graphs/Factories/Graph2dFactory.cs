@@ -20,9 +20,13 @@ namespace GraphLib.Graphs.Factories
         {
             graph = new Graph2d(parametres.Width, parametres.Height);
 
-            for (int i = 0; i < parametres.Width; i++)            
-                for (int j = 0; j < parametres.Height; j++)                
+            for (int i = 0; i < parametres.Width; i++)
+            {
+                for (int j = 0; j < parametres.Height; j++)
+                {
                     CreateVertex(vertexFactory, i, j);
+                }
+            }
 
             VertexConnector.ConnectVertices(graph);
 

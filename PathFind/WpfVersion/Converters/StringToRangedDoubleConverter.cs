@@ -16,16 +16,25 @@ namespace WpfVersion.Converters
         {
             double result = 0D;
             var sliderValueRange = parameter as ValueRange;
+
             if (sliderValueRange == null || value == null)
+            {
                 return result;
+            }
+
             if (double.TryParse(value.ToString(), out result))
             {
                 var sliderValue = System.Convert.ToInt32(result);
                 if (sliderValueRange.IsInBounds(sliderValue))
+                {
                     result = sliderValue;
+                }
                 else
+                {
                     result = sliderValueRange.UpperRange;
+                }
             }
+
             return result;
         }
     }

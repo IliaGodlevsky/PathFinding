@@ -10,7 +10,7 @@ namespace Algorithm.Extensions
     {
         internal static IVertex FirstOrDefault(this IEnumerable<IVertex> collection)
         {
-            return !collection.AsParallel().Any() ? new DefaultVertex() : collection.First();
+            return !collection.Any() ? new DefaultVertex() : collection.First();
         }
 
         public static void DrawPath(this IEnumerable<IVertex> path)
@@ -18,7 +18,9 @@ namespace Algorithm.Extensions
             foreach (var vertex in path)
             {
                 if (vertex.IsSimpleVertex())
+                {
                     vertex.MarkAsPath();
+                }
             }
         }
     }

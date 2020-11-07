@@ -14,8 +14,7 @@ namespace WpfVersion.Model
             Application.Current.MainWindow.Width = ((graph as Graph2d).Width + 1) * 
                 VertexParametres.SizeBetweenVertices + VertexParametres.SizeBetweenVertices;
             Application.Current.MainWindow.Height = (1 + (graph as Graph2d).Length) * 
-                VertexParametres.SizeBetweenVertices +
-                Application.Current.MainWindow.DesiredSize.Height;
+                VertexParametres.SizeBetweenVertices + Application.Current.MainWindow.DesiredSize.Height;
         }
     }
 }

@@ -1,4 +1,4 @@
-﻿using Algorithm.Сalculations.DistanceCalculating;
+﻿using Algorithm.Сalculations;
 using GraphLib.Graphs.Abstractions;
 using System.ComponentModel;
 

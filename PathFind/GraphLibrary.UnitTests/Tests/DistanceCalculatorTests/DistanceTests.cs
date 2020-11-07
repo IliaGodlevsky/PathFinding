@@ -1,4 +1,4 @@
-﻿using Algorithm.Сalculations.DistanceCalculating;
+﻿using Algorithm.Сalculations;
 using GraphLib.Coordinates;
 using GraphLib.UnitTests.Classes;
 using Microsoft.VisualStudio.TestTools.UnitTesting;

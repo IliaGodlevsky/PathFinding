@@ -12,6 +12,7 @@ namespace GraphLib.Extensions
             if (vertex.IsEnd && vertex.IsVisited)
             {
                 var temp = vertex;
+
                 while (!temp.IsStart && !vertex.IsDefault)
                 {
                     yield return temp;
@@ -51,7 +52,9 @@ namespace GraphLib.Extensions
             vertex.Cost = info.Cost;
             vertex.IsObstacle = info.IsObstacle;
             if (vertex.IsObstacle)
+            {
                 vertex.MarkAsObstacle();
+            }
         }
 
         public static void WashVertex(this IVertex vertex)
@@ -72,7 +75,10 @@ namespace GraphLib.Extensions
         public static IVertex Refresh(this IVertex vertex)
         {
             if (!vertex.IsObstacle)
+            {
                 vertex.SetToDefault();
+            }
+
             return vertex;
         }
     }

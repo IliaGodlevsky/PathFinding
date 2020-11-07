@@ -12,7 +12,9 @@ namespace WinFormsVersion.Extensions
             foreach(Control control in collection)
             {
                 if (predicate(control))
+                {
                     collection.Remove(control);
+                }
             }
         }
     }

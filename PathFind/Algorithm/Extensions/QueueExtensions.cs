@@ -14,7 +14,7 @@ namespace Algorithm.Extensions
         /// <returns>if queue is empty returns NullVertex</returns>
         public static IVertex DequeueOrDefaultVertex(this Queue<IVertex> queue)
         {
-            return !queue.AsParallel().Any() ? new DefaultVertex() : queue.Dequeue();
+            return !queue.Any() ? new DefaultVertex() : queue.Dequeue();
         }
     }
 }

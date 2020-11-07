@@ -41,7 +41,9 @@ namespace GraphViewModel
         {
             var newGraph = Serializer.LoadGraph(GetLoadingPath(), DtoConverter);
             if (!newGraph.IsDefault)
+            {
                 ConnectNewGraph(newGraph);
+            }
         }
 
         public virtual void ClearGraph()
