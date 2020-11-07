@@ -92,13 +92,20 @@ namespace Algorithm.PathFindingAlgorithms
                 verticesProcessQueue.Add(neighbour);
             }
 
-            verticesProcessQueue = verticesProcessQueue.AsParallel().DistinctBy(vert => vert.Position).ToList();
+            verticesProcessQueue = verticesProcessQueue
+                .AsParallel()
+                .DistinctBy(vert => vert.Position)
+                .ToList();
         }
 
         protected virtual IVertex GetChippestUnvisitedVertex()
         {
-            verticesProcessQueue.RemoveAll(vert => vert.IsVisited);
-            verticesProcessQueue = verticesProcessQueue.AsParallel().OrderBy(v => v.AccumulatedCost).ToList();
+            verticesProcessQueue = verticesProcessQueue
+                .AsParallel()
+                .Where(vertex => !vertex.IsVisited)
+                .OrderBy(vertex => vertex.AccumulatedCost)
+                .ToList();
+
             return verticesProcessQueue.FirstOrDefault();
         }
 
