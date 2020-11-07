@@ -27,7 +27,8 @@ namespace Wpf3dVersion.Factories
             return model;
         }
 
-        private static MeshGeometry3D CreateRectangleMesh(Point3D p0, Point3D p1, Point3D p2, Point3D p3)
+        private static GeometryModel3D CreateRectangleModel(Point3D p0, Point3D p1, 
+            Point3D p2, Point3D p3, Material material)
         {
             var mesh = new MeshGeometry3D();
 
@@ -43,15 +44,7 @@ namespace Wpf3dVersion.Factories
             mesh.TriangleIndices.Add(2);
             mesh.TriangleIndices.Add(3);
 
-            return mesh;
-        }
-
-        private static GeometryModel3D CreateRectangleModel(Point3D p0, Point3D p1, 
-            Point3D p2, Point3D p3, Material material)
-        {
-            return new GeometryModel3D(CreateRectangleMesh(p0, p1, p2, p3), material);
-        }
-
-        
+            return new GeometryModel3D(mesh, material);
+        }        
     }
 }
