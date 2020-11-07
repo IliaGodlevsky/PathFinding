@@ -4,7 +4,7 @@ namespace Wpf3dVersion.Factories
 {
     internal static class Model3DFactory
     {
-        internal static Model3D GetRectangleModel3D(double size, Material material)
+        internal static Model3D GetCubicModel3D(double size, Material material)
         {
             Model3DGroup model = new Model3DGroup();
 
