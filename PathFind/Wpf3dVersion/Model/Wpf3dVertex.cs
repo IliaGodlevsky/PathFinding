@@ -38,8 +38,8 @@ namespace Wpf3dVersion.Model
         {
             VisitedVertexMaterial = MaterialFactory.GetDiffuseMaterial(Colors.CadetBlue, opacity: 0.15);
             PathVertexMaterial = MaterialFactory.GetDiffuseMaterial(Colors.Yellow, opacity: 0.9);
-            StartVertexMaterial = MaterialFactory.GetDiffuseMaterial(Colors.Green, opacity: 0.5);
-            EndVertexMaterial = MaterialFactory.GetDiffuseMaterial(Colors.Red, opacity: 0.5);
+            StartVertexMaterial = MaterialFactory.GetDiffuseMaterial(Colors.Green, opacity: 1);
+            EndVertexMaterial = MaterialFactory.GetDiffuseMaterial(Colors.Red, opacity: 1);
             EnqueuedVertexMaterial = MaterialFactory.GetDiffuseMaterial(Colors.Magenta, opacity: 0.15);
             ObstacleVertexMaterial = MaterialFactory.GetDiffuseMaterial(Colors.Black, opacity: 0.2);
             SimpleVertexMaterial = MaterialFactory.GetDiffuseMaterial(Colors.White, opacity: 0.25);
