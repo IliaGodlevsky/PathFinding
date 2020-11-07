@@ -154,7 +154,7 @@ namespace Wpf3dVersion.Model
 
         protected override void OnUpdateModel()
         {
-            Model = Model3DFactory.GetRectangleModel3D(Size, Material);
+            Model = Model3DFactory.GetCubicModel3D(Size, Material);
         }
     }
 }
