@@ -18,6 +18,7 @@ namespace Wpf3dVersion.Model
         {
             this.Initialize();
             Size = 5;
+            Material = new DiffuseMaterial();
             Model = Model3DFactory.GetCubicModel3D(Size, Material);
         }
 
@@ -26,23 +27,23 @@ namespace Wpf3dVersion.Model
             this.Initialize(info);
         }
 
-        public static DiffuseMaterial VisitedVertexMaterial { get; set; }
-        public static DiffuseMaterial ObstacleVertexMaterial { get; set; }
-        public static DiffuseMaterial SimpleVertexMaterial { get; set; }
-        public static DiffuseMaterial PathVertexMaterial { get; set; }
-        public static DiffuseMaterial StartVertexMaterial { get; set; }
-        public static DiffuseMaterial EndVertexMaterial { get; set; }
-        public static DiffuseMaterial EnqueuedVertexMaterial { get; set; }
+        public static SolidColorBrush VisitedVertexBrush { get; set; }
+        public static SolidColorBrush ObstacleVertexBrush { get; set; }
+        public static SolidColorBrush SimpleVertexBrush { get; set; }
+        public static SolidColorBrush PathVertexBrush { get; set; }
+        public static SolidColorBrush StartVertexBrush { get; set; }
+        public static SolidColorBrush EndVertexBrush { get; set; }
+        public static SolidColorBrush EnqueuedVertexBrush { get; set; }
 
         static Wpf3dVertex()
         {
-            VisitedVertexMaterial = MaterialFactory.GetDiffuseMaterial(Colors.CadetBlue, opacity: 0.15);
-            PathVertexMaterial = MaterialFactory.GetDiffuseMaterial(Colors.Yellow, opacity: 0.9);
-            StartVertexMaterial = MaterialFactory.GetDiffuseMaterial(Colors.Green, opacity: 1);
-            EndVertexMaterial = MaterialFactory.GetDiffuseMaterial(Colors.Red, opacity: 1);
-            EnqueuedVertexMaterial = MaterialFactory.GetDiffuseMaterial(Colors.Magenta, opacity: 0.15);
-            ObstacleVertexMaterial = MaterialFactory.GetDiffuseMaterial(Colors.Black, opacity: 0.2);
-            SimpleVertexMaterial = MaterialFactory.GetDiffuseMaterial(Colors.White, opacity: 0.25);
+            VisitedVertexBrush = new SolidColorBrush(Colors.CadetBlue) { Opacity = 0.15 };
+            PathVertexBrush = new SolidColorBrush(Colors.Yellow) { Opacity = 0.9 };
+            StartVertexBrush = new SolidColorBrush(Colors.Green) { Opacity = 1 };
+            EndVertexBrush = new SolidColorBrush(Colors.Red) { Opacity = 1 };
+            EnqueuedVertexBrush = new SolidColorBrush(Colors.Magenta) { Opacity = 0.15 };
+            ObstacleVertexBrush = new SolidColorBrush(Colors.Black) { Opacity = 0.2 };
+            SimpleVertexBrush = new SolidColorBrush(Colors.White) { Opacity = 0.25 };
 
             ModelProperty = DependencyProperty.Register(nameof(Model), typeof(Model3D),
                 typeof(Wpf3dVertex), new PropertyMetadata(ModelPropertyChanged));
@@ -106,46 +107,49 @@ namespace Wpf3dVersion.Model
 
         public void MarkAsEnd()
         {
-            Material = EndVertexMaterial;
+            Brush = EndVertexBrush;
         }
 
         public void MarkAsEnqueued()
         {
-            Material = EnqueuedVertexMaterial;
+            Brush = EnqueuedVertexBrush;
         }
 
         public void MarkAsObstacle()
         {
             this.WashVertex();
-            Material = ObstacleVertexMaterial;
+            Brush = ObstacleVertexBrush;
         }
 
         public void MarkAsPath()
         {
-            Material = PathVertexMaterial;
+            Brush = PathVertexBrush;
+            
         }
 
         public void MarkAsSimpleVertex()
         {
             if (!IsObstacle)
-                Material = SimpleVertexMaterial;
+            {
+                Brush = SimpleVertexBrush;
+            }
             
         }
 
         public void MarkAsStart()
         {
-            Material = StartVertexMaterial;
+            Brush = StartVertexBrush;
         }
 
         public void MarkAsVisited()
         {
-            Material = VisitedVertexMaterial;
+            Brush = VisitedVertexBrush;
         }
 
         protected static void VisualPropertyChanged(DependencyObject depObj, DependencyPropertyChangedEventArgs prop)
         {
-            Wpf3dVertex vert = (Wpf3dVertex)depObj;
-            vert.InvalidateModel();
+            //Wpf3dVertex vert = (Wpf3dVertex)depObj;
+            //vert.InvalidateModel();
         }
 
         protected static void ModelPropertyChanged(DependencyObject depObj, DependencyPropertyChangedEventArgs prop)
@@ -154,9 +158,20 @@ namespace Wpf3dVersion.Model
             vert.Visual3DModel = vert.Model;
         }
 
+        private SolidColorBrush brush;
+        private SolidColorBrush Brush 
+        { 
+            get => brush; 
+            set
+            {
+                brush = value;
+                OnUpdateModel();
+            }
+        }
+
         protected override void OnUpdateModel()
         {
-            (Model as Model3DGroup).ChangeMaterial(Material);
+            (Model as Model3DGroup)?.ChangeBrush(Brush);
         }
     }    
 }

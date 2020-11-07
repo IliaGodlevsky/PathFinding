@@ -18,11 +18,11 @@ namespace Wpf3dVersion.ViewModel
         public MainWindowViewModel Model { get; set; }
         public OpacityChangeViewModel(IMainModel model)
         {
-            ObstacleColorOpacity = Wpf3dVertex.ObstacleVertexMaterial.Brush.Opacity;
-            VisitedVertexColorOpacity = Wpf3dVertex.VisitedVertexMaterial.Brush.Opacity;
-            EnqueuedVertexColorOpacity = Wpf3dVertex.EnqueuedVertexMaterial.Brush.Opacity;
-            PathVertexColorOpacity = Wpf3dVertex.PathVertexMaterial.Brush.Opacity;
-            SimpleVertexColorOpacity = Wpf3dVertex.SimpleVertexMaterial.Brush.Opacity;
+            ObstacleColorOpacity = Wpf3dVertex.ObstacleVertexBrush.Opacity;
+            VisitedVertexColorOpacity = Wpf3dVertex.VisitedVertexBrush.Opacity;
+            EnqueuedVertexColorOpacity = Wpf3dVertex.EnqueuedVertexBrush.Opacity;
+            PathVertexColorOpacity = Wpf3dVertex.PathVertexBrush.Opacity;
+            SimpleVertexColorOpacity = Wpf3dVertex.SimpleVertexBrush.Opacity;
 
             Model = model as MainWindowViewModel;
             ConfirmOpacityChange = new RelayCommand(ExecuteChangeVertexOpacity, obj => true);
@@ -31,11 +31,11 @@ namespace Wpf3dVersion.ViewModel
 
         private void ExecuteChangeVertexOpacity(object param)
         {
-            Wpf3dVertex.EnqueuedVertexMaterial.Brush.Opacity = EnqueuedVertexColorOpacity;
-            Wpf3dVertex.ObstacleVertexMaterial.Brush.Opacity = ObstacleColorOpacity;
-            Wpf3dVertex.SimpleVertexMaterial.Brush.Opacity = SimpleVertexColorOpacity;
-            Wpf3dVertex.PathVertexMaterial.Brush.Opacity = PathVertexColorOpacity;
-            Wpf3dVertex.VisitedVertexMaterial.Brush.Opacity = VisitedVertexColorOpacity;
+            Wpf3dVertex.EnqueuedVertexBrush.Opacity = EnqueuedVertexColorOpacity;
+            Wpf3dVertex.ObstacleVertexBrush.Opacity = ObstacleColorOpacity;
+            Wpf3dVertex.SimpleVertexBrush.Opacity = SimpleVertexColorOpacity;
+            Wpf3dVertex.PathVertexBrush.Opacity = PathVertexColorOpacity;
+            Wpf3dVertex.VisitedVertexBrush.Opacity = VisitedVertexColorOpacity;
 
             Model?.Window?.Close();
         }

@@ -8,14 +8,14 @@ namespace Wpf3dVersion.Factories
         {
             var model = new Model3DGroup();
 
-            var p0 = new Point3D(0d, 0d, 0d);
-            var p1 = new Point3D(size, 0d, 0d);
-            var p2 = new Point3D(size, 0d, size);
-            var p3 = new Point3D(0d, 0d, size);
-            var p4 = new Point3D(0d, size, size);
+            var p0 = new Point3D(0, 0, 0);
+            var p1 = new Point3D(size, 0, 0);
+            var p2 = new Point3D(size, 0, size);
+            var p3 = new Point3D(0, 0, size);
+            var p4 = new Point3D(0, size, size);
             var p5 = new Point3D(size, size, size);
-            var p6 = new Point3D(size, size, 0d);
-            var p7 = new Point3D(0d, size, 0d);
+            var p6 = new Point3D(size, size, 0);
+            var p7 = new Point3D(0, size, 0);
 
             model.Children.Add(CreateRectangleModel(p4, p3, p2, p5, material));
             model.Children.Add(CreateRectangleModel(p5, p2, p1, p6, material));
