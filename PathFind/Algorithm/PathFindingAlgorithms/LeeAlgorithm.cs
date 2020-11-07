@@ -75,14 +75,14 @@ namespace Algorithm.PathFindingAlgorithms
 
         private void SpreadWaves(IVertex vertex)
         {
-            foreach (var vert in vertex.GetUnvisitedNeighbours())
+            vertex.GetUnvisitedNeighbours().AsParallel().ForAll(neighbour =>
             {
-                if (vert.AccumulatedCost == 0)
+                if (neighbour.AccumulatedCost == 0)
                 {
-                    vert.AccumulatedCost = WaveFunction(vertex);
-                    vert.ParentVertex = vertex;
+                    neighbour.AccumulatedCost = WaveFunction(vertex);
+                    neighbour.ParentVertex = vertex;
                 }
-            }
+            });
         }
 
         private void ProcessVertex(IVertex vertex)
