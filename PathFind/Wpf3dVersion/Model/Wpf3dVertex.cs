@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.Windows;
 using System.Windows.Media;
 using System.Windows.Media.Media3D;
+using Wpf3dVersion.Extensions;
 using Wpf3dVersion.Factories;
 
 namespace Wpf3dVersion.Model
@@ -16,7 +17,8 @@ namespace Wpf3dVersion.Model
         public Wpf3dVertex()
         {
             this.Initialize();
-            Size = 5;            
+            Size = 5;
+            Model = Model3DFactory.GetCubicModel3D(Size, Material);
         }
 
         public Wpf3dVertex(VertexInfo info) : this()
@@ -154,7 +156,7 @@ namespace Wpf3dVersion.Model
 
         protected override void OnUpdateModel()
         {
-            Model = Model3DFactory.GetCubicModel3D(Size, Material);
+            (Model as Model3DGroup).ChangeMaterial(Material);
         }
-    }
+    }    
 }

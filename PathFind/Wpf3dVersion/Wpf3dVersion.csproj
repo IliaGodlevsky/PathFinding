@@ -59,6 +59,7 @@
     </ApplicationDefinition>
     <Compile Include="Converters\MaterialOpacityValueConverter.cs" />
     <Compile Include="Converters\StringToDoubleConverter.cs" />
+    <Compile Include="Extensions\Model3DGroupExtensions.cs" />
     <Compile Include="Factories\MaterialFactory.cs" />
     <Compile Include="Factories\Model3DFactory.cs" />
     <Compile Include="Resources\Resource.Designer.cs">
