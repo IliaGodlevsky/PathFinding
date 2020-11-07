@@ -1,5 +1,4 @@
-﻿using GraphLib.Graphs;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using GraphLib.Vertex.Interface;
 using System.Linq;
@@ -75,7 +74,7 @@ namespace Algorithm.PathFindingAlgorithms
 
         protected virtual void RelaxNeighbours(IVertex vertex)
         {
-            vertex.Neighbours.AsParallel().ForAll(neighbour =>
+            vertex.GetUnvisitedNeighbours().AsParallel().ForAll(neighbour =>
             {
                 if (neighbour.AccumulatedCost > Relax(neighbour, vertex))
                 {
