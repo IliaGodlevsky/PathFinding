@@ -2,6 +2,7 @@
 using GraphLib.Extensions;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace GraphLib.Coordinates
 {
@@ -20,11 +21,16 @@ namespace GraphLib.Coordinates
         {
             get
             {
-                for (int i = X - 1; i <= X + 1; i++)
+                for (int x = X - 1; x <= X + 1; x++)
                 {
-                    for (int j = Y - 1; j <= Y + 1; j++)
+                    for (int y = Y - 1; y <= Y + 1; y++)
                     {
-                        yield return new Coordinate2D(i, j);
+                        var coordinate = new Coordinate2D(x, y);
+
+                        if (!Equals(coordinate))
+                        {
+                            yield return coordinate;
+                        }
                     }
                 }
             }
