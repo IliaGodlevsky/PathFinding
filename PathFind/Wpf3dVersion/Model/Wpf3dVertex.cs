@@ -42,11 +42,11 @@ namespace Wpf3dVersion.Model
             ObstacleVertexMaterial = MaterialFactory.GetDiffuseMaterial(Colors.Black, opacity: 0.2);
             SimpleVertexMaterial = MaterialFactory.GetDiffuseMaterial(Colors.White, opacity: 0.25);
 
-            ModelProperty = DependencyProperty.Register("Model", typeof(Model3D),
+            ModelProperty = DependencyProperty.Register(nameof(Model), typeof(Model3D),
                 typeof(Wpf3dVertex), new PropertyMetadata(ModelPropertyChanged));
-            MaterialProperty = DependencyProperty.Register("Material", typeof(Material),typeof(Wpf3dVertex), 
-                new PropertyMetadata(VisualPropertyChanged));
-            SizeProperty = DependencyProperty.Register("Size", typeof(double),
+            MaterialProperty = DependencyProperty.Register(nameof(Material), typeof(Material),
+                typeof(Wpf3dVertex), new PropertyMetadata(VisualPropertyChanged));
+            SizeProperty = DependencyProperty.Register(nameof(Size), typeof(double),
                 typeof(Wpf3dVertex), new UIPropertyMetadata(VisualPropertyChanged));
         }
 
