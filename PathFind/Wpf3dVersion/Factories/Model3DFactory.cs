@@ -6,7 +6,7 @@ namespace Wpf3dVersion.Factories
     {
         internal static Model3D GetCubicModel3D(double size, Material material)
         {
-            Model3DGroup model = new Model3DGroup();
+            var model = new Model3DGroup();
 
             var p0 = new Point3D(0d, 0d, 0d);
             var p1 = new Point3D(size, 0d, 0d);
@@ -29,7 +29,7 @@ namespace Wpf3dVersion.Factories
 
         private static MeshGeometry3D CreateRectangleMesh(Point3D p0, Point3D p1, Point3D p2, Point3D p3)
         {
-            MeshGeometry3D mesh = new MeshGeometry3D();
+            var mesh = new MeshGeometry3D();
 
             mesh.Positions.Add(p0);
             mesh.Positions.Add(p1);
