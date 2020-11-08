@@ -146,13 +146,15 @@ namespace Wpf3dVersion.Model
             Brush = VisitedVertexBrush;
         }
 
-        protected static void VisualPropertyChanged(DependencyObject depObj, DependencyPropertyChangedEventArgs prop)
+        protected static void VisualPropertyChanged(DependencyObject depObj, 
+            DependencyPropertyChangedEventArgs prop)
         {
-            //Wpf3dVertex vert = (Wpf3dVertex)depObj;
-            //vert.InvalidateModel();
+            Wpf3dVertex vert = (Wpf3dVertex)depObj;
+            vert.InvalidateModel();
         }
 
-        protected static void ModelPropertyChanged(DependencyObject depObj, DependencyPropertyChangedEventArgs prop)
+        protected static void ModelPropertyChanged(DependencyObject depObj, 
+            DependencyPropertyChangedEventArgs prop)
         {
             Wpf3dVertex vert = (Wpf3dVertex)depObj;
             vert.Visual3DModel = vert.Model;
