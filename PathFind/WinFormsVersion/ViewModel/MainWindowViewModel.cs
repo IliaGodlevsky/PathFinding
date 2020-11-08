@@ -46,7 +46,7 @@ namespace WinFormsVersion.ViewModel
         {
             get => graphField;
             set
-            {
+            {                
                 graphField = value;
                 int size = VertexParametres.SizeBetweenVertices;
                 var field = graphField as WinFormsGraphField;
@@ -72,55 +72,114 @@ namespace WinFormsVersion.ViewModel
 
         public override void FindPath()
         {
-            if (!CanStartPathFinding())
-                return;
+            try
+            {
+                if (!CanStartPathFinding())
+                    return;
 
-            var model = new PathFindingViewModel(this);
-            var form = new PathFindingWindow(model);
+                var model = new PathFindingViewModel(this);
+                var form = new PathFindingWindow(model);
 
-            PrepareWindow(form);
+                PrepareWindow(form);
+            }
+            catch(Exception ex)
+            {
+                logger.Log(ex);
+            }
         }
 
         public override void CreateNewGraph()
         {
-            var model = new GraphCreatingViewModel(this);
-            var form = new GraphCreatingWIndow(model);
+            try
+            {
+                var model = new GraphCreatingViewModel(this);
+                var form = new GraphCreatingWIndow(model);
 
-            PrepareWindow(form);
+                PrepareWindow(form);
+            }
+            catch(Exception ex)
+            {
+                logger.Log(ex);
+            }
         }
 
-        public void Dispose() => OnDispose();
+        public void Dispose()
+        {
+            OnDispose();
+        }
 
         public void SaveGraph(object sender, EventArgs e)
         {
-            if (!Graph.IsDefault)
-                base.SaveGraph();
+            try
+            {
+                if (!Graph.IsDefault)
+                    base.SaveGraph();
+            }
+            catch(Exception ex)
+            {
+                logger.Log(ex);
+            }
         }
 
         public void LoadGraph(object sender, EventArgs e)
         {
-            base.LoadGraph();
-            Window?.Close();            
+            try
+            {
+                base.LoadGraph();
+                Window?.Close();
+            }
+            catch(Exception ex)
+            {
+                logger.Log(ex);
+            }
         }
 
         public void ClearGraph(object sender, EventArgs e)
         {
-            base.ClearGraph();
+            try
+            {
+                base.ClearGraph();
+            }
+            catch(Exception ex)
+            {
+                logger.Log(ex);
+            }
         }
 
         public void MakeWeighted(object sender, EventArgs e)
         {
-            Graph.ToWeighted();
+            try
+            {
+                Graph.ToWeighted();
+            }
+            catch(Exception ex)
+            {
+                logger.Log(ex);
+            }
+            
         }
 
         public void MakeUnweighted(object sender, EventArgs e)
         {
-            Graph.ToUnweighted();
+            try
+            {
+                Graph.ToUnweighted();
+            }
+            catch (Exception ex)
+            {
+                logger.Log(ex);
+            }           
         }
 
-        public void StartPathFind(object sender, EventArgs e) => FindPath();
+        public void StartPathFind(object sender, EventArgs e)
+        {
+            FindPath();
+        }
 
-        public void CreateNewGraph(object sender, EventArgs e) => CreateNewGraph();
+        public void CreateNewGraph(object sender, EventArgs e)
+        {
+            CreateNewGraph();
+        }
 
         protected virtual void OnDispose()
         {

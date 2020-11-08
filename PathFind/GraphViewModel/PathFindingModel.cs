@@ -8,6 +8,7 @@ using GraphLib.Graphs.Abstractions;
 using GraphLib.Extensions;
 using Algorithm.Extensions;
 using Common.Extensions;
+using System;
 
 namespace GraphLib.ViewModel
 {

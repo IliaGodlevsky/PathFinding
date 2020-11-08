@@ -1,4 +1,6 @@
-﻿using GraphLib.EventHolder.Interface;
+﻿using Common.Logger;
+using Common.Logger.Interface;
+using GraphLib.EventHolder.Interface;
 using GraphLib.Extensions;
 using GraphLib.GraphField;
 using GraphLib.GraphFieldCreating;
@@ -27,6 +29,7 @@ namespace GraphViewModel
 
         public MainModel()
         {
+            logger = InFileLogger.Instance;
             Graph = new DefaultGraph();
             Serializer = new Graph2DSerializer();
             graphParamFormat = ViewModelResources.GraphParametresFormat;
@@ -55,19 +58,28 @@ namespace GraphViewModel
 
         public void ConnectNewGraph(IGraph graph)
         {
-            Graph = graph;
-            GraphField = FieldFactory.CreateGraphField(Graph);
-            VertexEventHolder.Graph = Graph;
-            VertexEventHolder.SubscribeVertices();
-            GraphParametres = Graph.GetFormattedData(graphParamFormat);
-            PathFindingStatistics = string.Empty;
+            try
+            {
+                Graph = graph;
+                GraphField = FieldFactory.CreateGraphField(Graph);
+                VertexEventHolder.Graph = Graph;
+                VertexEventHolder.SubscribeVertices();
+                GraphParametres = Graph.GetFormattedData(graphParamFormat);
+                PathFindingStatistics = string.Empty;
+            }
+            catch(Exception ex)
+            {
+                logger.Log(ex);
+            }
         }
 
         protected string graphParamFormat;
+        protected ILog logger;
 
         public abstract void FindPath();
         public abstract void CreateNewGraph();
         protected abstract string GetSavingPath();
         protected abstract string GetLoadingPath();
+
     }
 }

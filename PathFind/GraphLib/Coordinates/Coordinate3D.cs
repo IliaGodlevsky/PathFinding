@@ -32,6 +32,7 @@ namespace GraphLib.Coordinates
                         for (int z = Z - 1; z <= Z + 1; z++)
                         {
                             var coordinate = new Coordinate3D(x, y, z);
+
                             if (!Equals(coordinate))
                             {
                                 yield return coordinate;

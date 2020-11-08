@@ -87,21 +87,42 @@ namespace Wpf3dVersion.ViewModel
 
         public override void FindPath()
         {
-            PrepareWindow(new PathFindingViewModel(this), new PathFindWindow());
+            try
+            {
+                PrepareWindow(new PathFindingViewModel(this), new PathFindWindow());
+            }
+            catch(Exception ex)
+            {
+                logger.Log(ex);
+            }
         }
 
         public override void CreateNewGraph()
         {
-            PrepareWindow(new GraphCreatingViewModel(this), new GraphCreateWindow());
+            try
+            {
+                PrepareWindow(new GraphCreatingViewModel(this), new GraphCreateWindow());
+            }
+            catch(Exception ex)
+            {
+                logger.Log(ex);
+            }
         }
 
         private void AxisSliderValueChanged(Action<double, Wpf3dGraphField> func, double sliderNewValue)
         {
-            var field = graphField as Wpf3dGraphField;
-            func(sliderNewValue, field);
+            try
+            {
+                var field = graphField as Wpf3dGraphField;
+                func(sliderNewValue, field);
 
-            field.SetDistanceBetweenVertices(Graph);
-            field.CenterGraph(Graph, centerOffsetCorrection: 1);
+                field.SetDistanceBetweenVertices(Graph);
+                field.CenterGraph(Graph, centerOffsetCorrection: 1);
+            }
+            catch(Exception ex)
+            {
+                logger.Log(ex);
+            }
         }
 
         public void XAxisSliderValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
@@ -121,10 +142,20 @@ namespace Wpf3dVersion.ViewModel
 
         private void ChangeVerticesOpacity()
         {
-            PrepareWindow(new OpacityChangeViewModel(this), new OpacityChangeWindow());
+            try
+            {
+                PrepareWindow(new OpacityChangeViewModel(this), new OpacityChangeWindow());
+            }
+            catch(Exception ex)
+            {
+                logger.Log(ex);
+            }
         }
 
-        public void Dispose() => OnDispose();
+        public void Dispose()
+        {
+            OnDispose();
+        }
 
         private void ExecuteSaveGraphCommand(object param)
         {

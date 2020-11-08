@@ -5,7 +5,6 @@ using WpfVersion.Infrastructure;
 using WpfVersion.Model;
 using WpfVersion.View.Windows;
 using WpfVersion.Model.EventHolder;
-using GraphLib.Vertex;
 using GraphLib.GraphField;
 using Microsoft.Win32;
 using WpfVersion.Model.Vertex;
@@ -13,6 +12,7 @@ using System.Linq;
 using GraphViewModel;
 using GraphLib.Extensions;
 using GraphViewModel.Interfaces;
+using System;
 
 namespace WpfVersion.ViewModel
 {
@@ -89,29 +89,57 @@ namespace WpfVersion.ViewModel
 
         public void ExecuteShowVertexCostCommand(object parametre)
         {
-            if ((bool)parametre)
-            {
-                Graph.ToWeighted();
+            try
+            { 
+                if ((bool)parametre)
+                {
+                    Graph.ToWeighted();
+                }
+                else
+                {
+                    Graph.ToUnweighted();
+                }
             }
-            else
+            catch (Exception ex)
             {
-                Graph.ToUnweighted();
+                logger.Log(ex);
             }
         }
 
         public override void FindPath()
         {
-            PrepareWindow(new PathFindingViewModel(this), new PathFindWindow());
+            try
+            {
+                PrepareWindow(new PathFindingViewModel(this), new PathFindWindow());
+            }
+            catch(Exception ex)
+            {
+                logger.Log(ex);
+            }
         }
 
         public override void CreateNewGraph()
         {
-            PrepareWindow(new GraphCreatingViewModel(this), new GraphCreatesWindow());
+            try
+            {
+                PrepareWindow(new GraphCreatingViewModel(this), new GraphCreatesWindow());
+            }
+            catch(Exception ex)
+            {
+                logger.Log(ex);
+            }
         }
 
         public void ExecuteChangeVertexSize(object param)
         {
-            PrepareWindow(new VertexSizeChangingViewModel(this), new VertexSizeChangeWindow());
+            try
+            {
+                PrepareWindow(new VertexSizeChangingViewModel(this), new VertexSizeChangeWindow());
+            }
+            catch(Exception ex)
+            {
+                logger.Log(ex);
+            }
         }
 
         public void Dispose()
@@ -119,7 +147,10 @@ namespace WpfVersion.ViewModel
             OnDispose();
         }
 
-        private void ExecuteSaveGraphCommand(object param) => base.SaveGraph();
+        private void ExecuteSaveGraphCommand(object param)
+        {
+            base.SaveGraph();
+        }
 
         private bool CanExecuteStartFindPathCommand(object param)
         {
@@ -136,7 +167,14 @@ namespace WpfVersion.ViewModel
 
         private void ExecuteClearGraphCommand(object param)
         {
-            base.ClearGraph();
+            try
+            {
+                base.ClearGraph();
+            }
+            catch(Exception ex)
+            {
+                logger.Log(ex);
+            }            
         }
 
         private void ExecuteStartPathFindCommand(object param)

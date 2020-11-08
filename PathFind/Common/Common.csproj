@@ -48,6 +48,8 @@
     <Compile Include="Extensions\StopwatchExtension.cs" />
     <Compile Include="Extensions\StringBuilderExtensions.cs" />
     <Compile Include="Interfaces\IDefault.cs" />
+    <Compile Include="Logger\InFileLogger.cs" />
+    <Compile Include="Logger\Interface\ILog.cs" />
     <Compile Include="PauseMaking\Interface\IPauser.cs" />
     <Compile Include="PauseMaking\Pauser.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
