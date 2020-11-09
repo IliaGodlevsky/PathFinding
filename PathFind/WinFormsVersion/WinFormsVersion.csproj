@@ -98,8 +98,8 @@
     <Compile Include="View\MainWindow.Designer.cs">
       <DependentUpon>MainWindow.cs</DependentUpon>
     </Compile>
-    <Compile Include="Model\EventHolder\WinFormsVertexEventHolder.cs" />
-    <Compile Include="Model\Vertex\WinFormsVertex.cs">
+    <Compile Include="Model\WinFormsVertexEventHolder.cs" />
+    <Compile Include="Model\WinFormsVertex.cs">
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="Program.cs" />

@@ -18,7 +18,7 @@ namespace Wpf3dVersion.Model
         {           
             Size = 5;
             Material = new DiffuseMaterial();
-            Model = Model3DFactory.GetCubicModel3D(Size, Material);
+            Model = Model3DFactory.CreateCubicModel3D(Size, Material);
             this.Initialize();
         }
 
@@ -45,14 +45,29 @@ namespace Wpf3dVersion.Model
             ObstacleVertexBrush = new SolidColorBrush(Colors.Black) { Opacity = 0.2 };
             SimpleVertexBrush = new SolidColorBrush(Colors.White) { Opacity = 0.25 };
 
-            ModelProperty = DependencyProperty.Register(nameof(Model), typeof(Model3D),
-                typeof(Wpf3dVertex), new PropertyMetadata(ModelPropertyChanged));
-            MaterialProperty = DependencyProperty.Register(nameof(Material), typeof(Material),
-                typeof(Wpf3dVertex), new PropertyMetadata(VisualPropertyChanged));
-            SizeProperty = DependencyProperty.Register(nameof(Size), typeof(double),
-                typeof(Wpf3dVertex), new UIPropertyMetadata(VisualPropertyChanged));
-            BrushProperty = DependencyProperty.Register(nameof(Brush), typeof(Brush),
-                typeof(Wpf3dVertex), new PropertyMetadata(BrushPropertyChanged));
+            ModelProperty = DependencyProperty.Register(
+                nameof(Model), 
+                typeof(Model3D),
+                typeof(Wpf3dVertex), 
+                new PropertyMetadata(ModelPropertyChanged));
+
+            MaterialProperty = DependencyProperty.Register(
+                nameof(Material), 
+                typeof(Material),
+                typeof(Wpf3dVertex), 
+                new PropertyMetadata(VisualPropertyChanged));
+
+            SizeProperty = DependencyProperty.Register(
+                nameof(Size), 
+                typeof(double),
+                typeof(Wpf3dVertex), 
+                new UIPropertyMetadata(VisualPropertyChanged));
+
+            BrushProperty = DependencyProperty.Register(
+                nameof(Brush), 
+                typeof(Brush),
+                typeof(Wpf3dVertex), 
+                new PropertyMetadata(BrushPropertyChanged));
         }
 
         public static readonly DependencyProperty ModelProperty;
@@ -85,9 +100,13 @@ namespace Wpf3dVersion.Model
         }
 
         public bool IsEnd { get; set; }
+
         public bool IsObstacle { get; set; }
+
         public bool IsStart { get; set; }
+
         public bool IsVisited { get; set; }
+
 
         private VertexCost cost;
         public VertexCost Cost
@@ -95,9 +114,13 @@ namespace Wpf3dVersion.Model
             get { return cost; }
             set { cost = (VertexCost)value.Clone(); }
         }
+
         public IList<IVertex> Neighbours { get; set; }
+
         public IVertex ParentVertex { get; set; }
+
         public double AccumulatedCost { get; set; }
+
         public ICoordinate Position { get; set; }
 
         public VertexInfo Info => new VertexInfo(this);

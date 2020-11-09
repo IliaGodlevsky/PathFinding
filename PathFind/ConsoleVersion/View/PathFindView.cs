@@ -11,9 +11,11 @@ namespace ConsoleVersion.View
     internal class PathFindView : IView
     {
         public PathFindingViewModel Model { get; }
+
         public PathFindView(PathFindingViewModel model)
         {
             Model = model;
+
             Model.Messages = new Tuple<string, string, string>(
                 "\n" + ConsoleVersionResources.StartPoint,
                 ConsoleVersionResources.DestinationPoint,
@@ -28,11 +30,16 @@ namespace ConsoleVersion.View
         private string GetAlgorithmsList()
         {
             var algorithmList = new StringBuilder("\n");
-            for (int i = 0; i < AlgorithmFactory.AlgorithmKeys.Count(); i++)
+            var algorithmKeys = AlgorithmFactory.AlgorithmKeys.ToArray();
+
+            for (int i = 0; i < algorithmKeys.Length; i++)
             {
-                algorithmList.AppendFormatLine(ConsoleVersionResources.MenuFormat,
-                    i + 1, AlgorithmFactory.AlgorithmKeys.ElementAt(i));
+                algorithmList.AppendFormatLine(
+                    ConsoleVersionResources.MenuFormat, 
+                    i + 1, 
+                    algorithmKeys[i]);
             }
+
             return algorithmList.ToString();
         }
     }

@@ -1,4 +1,4 @@
-﻿using ConsoleVersion.Model.Vertex;
+﻿using ConsoleVersion.Model;
 using GraphLib.Coordinates;
 using GraphLib.GraphField;
 using GraphLib.Vertex.Interface;
@@ -13,6 +13,7 @@ namespace ConsoleVersion.View
     internal class ConsoleGraphField : IGraphField
     {
         public int Width { get; set; }
+
         public int Length { get; set; }
 
         public ConsoleGraphField()
@@ -22,9 +23,7 @@ namespace ConsoleVersion.View
 
         public void Add(IVertex vertex)
         {
-            var coordinate = vertex.Position as Coordinate2D;
-
-            if (coordinate == null)
+            if (vertex.Position as Coordinate2D == null)
             {
                 throw new ArgumentException("Must be 2D coordinates");
             }
@@ -45,11 +44,13 @@ namespace ConsoleVersion.View
             get
             {
                 var abscissa = new StringBuilder(largeSpace);
+
                 for (var i = 0; i < Width; i++)
                 {
                     var offset = !IsOffsetIndex(i) ? bigSpace : space;
                     abscissa.Append(i + offset);
                 }
+
                 abscissa.Append(largeSpace);
                 return abscissa.ToString();
             }
@@ -72,7 +73,12 @@ namespace ConsoleVersion.View
 
         private string GetFramedAbscissa(FramedAbscissaView framedAbscissaView)
         {
-            var framedAbscissaComponents = new List<string>() { Abscissa, HorizontalFrame };
+            var framedAbscissaComponents = new List<string>() 
+            { 
+                Abscissa, 
+                HorizontalFrame 
+            };
+
             var framedAbscissa = new StringBuilder();
 
             if (framedAbscissaView == FramedAbscissaView.FrameOver)
@@ -116,7 +122,9 @@ namespace ConsoleVersion.View
 
                 for (var currentWidth = 0; currentWidth < Width; currentWidth++)
                 {
-                    int index = Index.ToIndex(new Coordinate2D(currentWidth, currentLength), Length);
+                    var coordinate = new Coordinate2D(currentWidth, currentLength);
+                    int index = Index.ToIndex(coordinate, Length);
+
                     ShowVertex(vertices[index]);
 
                     if (IsEndOfRow(currentWidth))
@@ -142,8 +150,17 @@ namespace ConsoleVersion.View
             return currentIndex >= 10;
         }
 
-        private enum FramedAbscissaView { FrameOver, FrameUnder }
-        private enum TableSide { Right, Left }
+        private enum FramedAbscissaView 
+        { 
+            FrameOver, 
+            FrameUnder 
+        
+        }
+        private enum TableSide 
+        { 
+            Right, 
+            Left 
+        }
 
         private readonly IList<ConsoleVertex> vertices;
 

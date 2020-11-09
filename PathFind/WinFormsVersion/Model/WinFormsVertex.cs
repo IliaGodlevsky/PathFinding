@@ -8,18 +8,19 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.Windows.Forms;
 
-namespace WinFormsVersion.Vertex
+namespace WinFormsVersion.Model
 {
     internal class WinFormsVertex : Label, IVertex
-    {      
+    {
         public WinFormsVertex() : base()
-        {
-            this.Initialize();
-            float fontSize = VertexParametres.VertexSize * (VertexParametres.TextToSizeRatio * 0.75f);
+        {            
+            var fontSizeRatio = (VertexParametres.TextToSizeRatio * 0.75f);
+            float fontSize = VertexParametres.VertexSize * fontSizeRatio;
             Font = new Font("Times New Roman", fontSize);
-            Size = new Size(VertexParametres.VertexSize,
-                VertexParametres.VertexSize);
+            var size = VertexParametres.VertexSize;
+            Size = new Size(size, size);
             TextAlign = ContentAlignment.MiddleCenter;
+            this.Initialize();
             //BorderStyle = BorderStyle.FixedSingle;
         }
 
@@ -29,11 +30,17 @@ namespace WinFormsVersion.Vertex
         }
 
         public bool IsStart { get; set; }
+
         public bool IsEnd { get; set; }
+
         public bool IsVisited { get; set; }
+
         public double AccumulatedCost { get; set; }
+
         public IVertex ParentVertex { get; set; }
+
         public IList<IVertex> Neighbours { get; set; }
+
         public bool IsObstacle { get; set; }
 
         public void MarkAsObstacle()
@@ -45,7 +52,9 @@ namespace WinFormsVersion.Vertex
         public void MarkAsSimpleVertex()
         {
             if (!IsObstacle)
+            {
                 BackColor = Color.FromKnownColor(KnownColor.WhiteSmoke);
+            }
         }
 
         public void MarkAsStart()
@@ -88,14 +97,14 @@ namespace WinFormsVersion.Vertex
         public VertexInfo Info => new VertexInfo(this);
 
         private VertexCost cost;
-        public VertexCost Cost 
-        { 
+        public VertexCost Cost
+        {
             get => cost;
-            set 
-            { 
+            set
+            {
                 cost = (VertexCost)value.Clone();
-                Text = cost.ToString(string.Empty); 
-            } 
+                Text = cost.ToString(string.Empty);
+            }
         }
         public ICoordinate Position { get; set; }
 

@@ -13,14 +13,20 @@ namespace WpfVersion.ViewModel
     internal class VertexSizeChangingViewModel : IModel
     {       
         public int Size { get; set; }
+
         public MainWindowViewModel Model { get; set; }
+
         public RelayCommand ExecuteChangeVertexSize { get; }
+
         public RelayCommand ExecuteCancel { get; }
+
         public VertexSizeChangingViewModel(MainWindowViewModel model)
         {
             Model = model;
+
             ExecuteChangeVertexSize = new RelayCommand(ChangeVertexSize, obj => true);
             ExecuteCancel = new RelayCommand(obj => Model.Window.Close(), obj => true);
+
             if (Model.Graph.Size > 0)
             {
                 Size = Convert.ToInt32((Model.Graph.First() as WpfVertex).Width);
@@ -34,8 +40,8 @@ namespace WpfVersion.ViewModel
             void ChangeSize(IVertex vertex)
             {
                 var temp = vertex as WpfVertex;
-                temp.Width = VertexParametres.VertexSize;
-                temp.Height = VertexParametres.VertexSize;
+                temp.Width = Size;
+                temp.Height = Size;
                 temp.FontSize = Size * VertexParametres.TextToSizeRatio;
             }
 
@@ -45,6 +51,7 @@ namespace WpfVersion.ViewModel
             }
 
             (Model.GraphField as Canvas).Children.Clear();
+
             var fieldFactory = new WpfGraphFieldFactory();
             Model.GraphField = fieldFactory.CreateGraphField(Model.Graph);
 

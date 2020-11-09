@@ -33,16 +33,21 @@ namespace WinFormsVersion.Forms
 
             toolStripRadioButton2.GroupID = 1;
             toolStripButton6.GroupID = 1;
-            var bindingStatistics = new Binding(nameof(statistics.Text), 
-                mainModel, nameof(mainModel.PathFindingStatistics));
+
+            var bindingStatistics = new Binding(
+                nameof(statistics.Text), 
+                mainModel, 
+                nameof(mainModel.PathFindingStatistics));
             statistics.DataBindings.Add(bindingStatistics);
 
-            var bindingParametres = new Binding(nameof(statistics.Text), 
-                mainModel, nameof(mainModel.GraphParametres));
+            var bindingParametres = new Binding(
+                nameof(statistics.Text), 
+                mainModel, 
+                nameof(mainModel.GraphParametres));
             parametres.DataBindings.Add(bindingParametres);
 
-            for (int i = 0; i < menu.Items.Count; i++)            
-                menu.Items[i].Click += events[i];            
+            for (int i = 0; i < menu.Items.Count; i++)
+                menu.Items[i].Click += events[i];
         }
     }
 }

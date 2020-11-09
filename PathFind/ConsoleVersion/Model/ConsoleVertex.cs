@@ -7,7 +7,7 @@ using System;
 using System.Collections.Generic;
 using System.Drawing;
 
-namespace ConsoleVersion.Model.Vertex
+namespace ConsoleVersion.Model
 {
     internal class ConsoleVertex : IVertex
     {
@@ -27,22 +27,35 @@ namespace ConsoleVersion.Model.Vertex
         }
 
         public bool IsEnd { get; set; }
+
         public bool IsObstacle { get; set; }
+
         public bool IsStart { get; set; }
+
         public bool IsVisited { get; set; }
+
         public string Text { get; set; }
 
         private VertexCost cost;
         public VertexCost Cost
         {
             get { return cost; }
-            set { cost = (VertexCost)value.Clone(); Text = cost.ToString("#"); }
+            set
+            {
+                cost = (VertexCost)value.Clone();
+                Text = cost.ToString("#");
+            }
         }
         public Color Colour { get; set; }
+
         public IList<IVertex> Neighbours { get; set; }
+
         public IVertex ParentVertex { get; set; }
+
         public double AccumulatedCost { get; set; }
+
         public ICoordinate Position { get; set; }
+
         public VertexInfo Info => new VertexInfo(this);
 
         public bool IsDefault => false;
@@ -52,7 +65,7 @@ namespace ConsoleVersion.Model.Vertex
             OnCostChanged?.Invoke(this, new EventArgs());
         }
 
-        public void ChangeRole()
+        public void ChangeStatus()
         {
             OnRoleChanged?.Invoke(this, new EventArgs());
         }

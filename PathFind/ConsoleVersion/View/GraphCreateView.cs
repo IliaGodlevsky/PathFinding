@@ -1,4 +1,4 @@
-﻿using ConsoleVersion.Model.Vertex;
+﻿using ConsoleVersion.Model;
 using ConsoleVersion.View.Interface;
 using ConsoleVersion.ViewModel;
 using System;

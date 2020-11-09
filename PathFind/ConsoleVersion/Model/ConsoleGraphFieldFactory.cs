@@ -15,9 +15,12 @@ namespace ConsoleVersion.Model
 
         public override IGraphField CreateGraphField(IGraph graph)
         {
-            var field = base.CreateGraphField(graph);
-            (field as ConsoleGraphField).Width = (graph as Graph2d).Width;
-            (field as ConsoleGraphField).Length = (graph as Graph2d).Length;
+            var field = base.CreateGraphField(graph) as ConsoleGraphField;
+            Graph2d graph2d = graph as Graph2d;
+
+            field.Width = graph2d.Width;
+            field.Length = graph2d.Length;
+
             return field;
         }
     }

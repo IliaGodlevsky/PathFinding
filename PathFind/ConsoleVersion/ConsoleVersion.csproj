@@ -70,8 +70,8 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>ConsoleVersionResources.resx</DependentUpon>
     </Compile>
-    <Compile Include="Model\EventHolder\ConsoleVertexEventHolder.cs" />
-    <Compile Include="Model\Vertex\ConsoleVertex.cs" />
+    <Compile Include="Model\ConsoleVertexEventHolder.cs" />
+    <Compile Include="Model\ConsoleVertex.cs" />
     <Compile Include="View\Interface\IView.cs" />
     <Compile Include="View\MainView.cs" />
     <Compile Include="View\PathFindView.cs" />

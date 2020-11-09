@@ -4,7 +4,6 @@ using GraphLib.ViewModel;
 using GraphViewModel.Interfaces;
 using System;
 using System.Windows;
-using System.Windows.Media.Media3D;
 using Wpf3dVersion.Infrastructure;
 using Wpf3dVersion.Model;
 
@@ -13,7 +12,9 @@ namespace Wpf3dVersion.ViewModel
     internal class GraphCreatingViewModel : GraphCreatingModel
     {
         public int Length { get; set; }
+
         public RelayCommand ConfirmCreateGraphCommand { get; }
+
         public RelayCommand CancelCreateGraphCommand { get; }
 
         public GraphCreatingViewModel(IMainModel model) : base(model)
@@ -27,16 +28,24 @@ namespace Wpf3dVersion.ViewModel
         private void ExecuteConfirmCreateGraphCommand(object param)
         {
             CreateGraph(() => new Wpf3dVertex());
-            (model.GraphField as Wpf3dGraphField).CenterGraph(model.Graph);
-            (Application.Current.MainWindow as MainWindow).GraphField.Children.Clear();
-            (Application.Current.MainWindow as MainWindow).GraphField.Children.Add(model.GraphField as ModelVisual3D);
+
+            var mainWindow = Application.Current.MainWindow as MainWindow;
+            var field = model.GraphField as Wpf3dGraphField;
+
+            field.CenterGraph(model.Graph);
+
+            mainWindow.GraphField.Children.Clear();
+            mainWindow.GraphField.Children.Add(field);
+
             (model as MainWindowViewModel).Window.Close();
         }
 
         public override void CreateGraph(Func<IVertex> vertexFactory)
         {
-            var graphfactory = new Graph3dFactory(Width, Length, Height, ObstaclePercent);
+            var graphfactory = new Graph3dFactory(
+                Width, Length, Height, ObstaclePercent);
             graph = graphfactory.CreateGraph(vertexFactory);
+
             model.ConnectNewGraph(graph);
         }
     }

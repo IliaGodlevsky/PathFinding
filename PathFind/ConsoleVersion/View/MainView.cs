@@ -14,14 +14,6 @@ namespace ConsoleVersion.View
 {
     internal class MainView : IView
     {
-        private const string newLine = "\n";
-        private const string largeSpace = "   ";
-        private const string tab = "\t";
-
-        private readonly Dictionary<MenuOption, Action> menuActions;
-        private readonly MainViewModel mainModel;
-        private readonly string menu;
-
         public MainView()
         {
             mainModel = new MainViewModel();
@@ -33,31 +25,13 @@ namespace ConsoleVersion.View
                 { MenuOption.LoadGraph, mainModel.LoadGraph },
                 { MenuOption.CreateGraph, mainModel.CreateNewGraph },
                 { MenuOption.RefreshGraph, mainModel.ClearGraph },
-                { MenuOption.Reverse, mainModel.Reverse },
-                { MenuOption.ChangeValue, mainModel.ChangeVertexValue },
+                { MenuOption.Reverse, mainModel.ChangeStatus },
+                { MenuOption.ChangeValue, mainModel.ChangeVertexCost },
                 { MenuOption.MakeWeighted, () => { mainModel.Graph.ToWeighted(); } },
                 { MenuOption.MakeUnweigted, () => { mainModel.Graph.ToUnweighted(); } }
             };
             
             menu = GetMenu();
-        }
-
-        private string GetMenu()
-        {           
-            var menu = new StringBuilder();
-            foreach (var item in Enum.GetValues(typeof(MenuOption)).Cast<MenuOption>())
-            {
-                menu.Append(item.GetValue().IsEven() ? newLine : largeSpace + tab)
-                    .AppendFormat(ConsoleVersionResources.MenuFormat, item.GetValue(), item.GetDescription());
-            }
-            return menu.ToString();
-        }
-
-        private MenuOption GetMenuOption()
-        {
-            mainModel.DisplayGraph();
-            Console.WriteLine(menu);
-            return Input.InputOption();
         }
 
         public void Start()
@@ -70,5 +44,36 @@ namespace ConsoleVersion.View
                 menuOption = GetMenuOption();
             }
         }
+
+        private MenuOption GetMenuOption()
+        {
+            mainModel.DisplayGraph();
+            Console.WriteLine(menu);
+            return Input.InputOption();
+        }
+
+        private string GetMenu()
+        {
+            var menu = new StringBuilder();
+
+            foreach (var item in Enum.GetValues(typeof(MenuOption)).Cast<MenuOption>())
+            {
+                var viewElement = item.GetValue().IsEven() ? newLine : largeSpace + tab;
+                var enumValue = item.GetValue();
+                var enumDescription = item.GetDescription();
+                var menuItem = string.Format(ConsoleVersionResources.MenuFormat, enumValue, enumDescription);
+                menu.Append(viewElement).Append(menuItem);
+            }
+
+            return menu.ToString();
+        }
+
+        private const string newLine = "\n";
+        private const string largeSpace = "   ";
+        private const string tab = "\t";
+
+        private readonly Dictionary<MenuOption, Action> menuActions;
+        private readonly MainViewModel mainModel;
+        private readonly string menu;
     }
 }

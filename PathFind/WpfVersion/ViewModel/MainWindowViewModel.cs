@@ -54,11 +54,17 @@ namespace WpfVersion.ViewModel
         }
 
         public RelayCommand StartPathFindCommand { get; }
+
         public RelayCommand CreateNewGraphCommand { get; }
+
         public RelayCommand ClearGraphCommand { get; }
+
         public RelayCommand SaveGraphCommand { get; }
+
         public RelayCommand LoadGraphCommand { get; }
+
         public RelayCommand ChangeVertexSize { get; }
+
         public RelayCommand ShowVertexCost { get; }
 
         public MainWindowViewModel()
@@ -66,7 +72,7 @@ namespace WpfVersion.ViewModel
             GraphField = new WpfGraphField();
             VertexEventHolder = new WpfVertexEventHolder();
             FieldFactory = new WpfGraphFieldFactory();
-            DtoConverter = (dto) => new WpfVertex(dto);
+            InfoConverter = (dto) => new WpfVertex(dto);
 
             StartPathFindCommand = new RelayCommand(ExecuteStartPathFindCommand, CanExecuteStartFindPathCommand);
             CreateNewGraphCommand = new RelayCommand(ExecuteCreateNewGraphCommand, AlwaysExecutable);
@@ -77,15 +83,7 @@ namespace WpfVersion.ViewModel
             ShowVertexCost = new RelayCommand(ExecuteShowVertexCostCommand, AlwaysExecutable);
         }
 
-        private bool AlwaysExecutable(object param)
-        {
-            return true;
-        }
 
-        private bool CanExecuteGraphOperation(object param)
-        {
-            return !Graph.IsDefault;
-        }
 
         public void ExecuteShowVertexCostCommand(object parametre)
         {
@@ -119,37 +117,14 @@ namespace WpfVersion.ViewModel
             OnDispose();
         }
 
-        private void ExecuteSaveGraphCommand(object param)
+        protected override string GetSavingPath()
         {
-            base.SaveGraph();
+            return GetPath(new SaveFileDialog());
         }
 
-        private bool CanExecuteStartFindPathCommand(object param)
+        protected override string GetLoadingPath()
         {
-            return !Graph.End.IsDefault
-                && !Graph.Start.IsDefault
-                && Graph.Any() 
-                && !Graph.Start.IsVisited;
-        }
-
-        private void ExecuteLoadGraphCommand(object param)
-        {
-            base.LoadGraph();
-        }
-
-        private void ExecuteClearGraphCommand(object param)
-        {
-            base.ClearGraph();                    
-        }
-
-        private void ExecuteStartPathFindCommand(object param)
-        {
-            FindPath();
-        }
-
-        private void ExecuteCreateNewGraphCommand(object param)
-        {
-            CreateNewGraph();
+            return GetPath(new OpenFileDialog());
         }
 
         protected virtual void OnDispose()
@@ -171,15 +146,48 @@ namespace WpfVersion.ViewModel
                 ? dialog.FileName 
                 : string.Empty;
         }
-
-        protected override string GetSavingPath()
+        private void ExecuteSaveGraphCommand(object param)
         {
-            return GetPath(new SaveFileDialog());
+            base.SaveGraph();
         }
 
-        protected override string GetLoadingPath()
+        private bool CanExecuteStartFindPathCommand(object param)
         {
-            return GetPath(new OpenFileDialog());
+            return !Graph.End.IsDefault
+                && !Graph.Start.IsDefault
+                && Graph.Any()
+                && !Graph.Start.IsVisited;
         }
+
+        private void ExecuteLoadGraphCommand(object param)
+        {
+            base.LoadGraph();
+        }
+
+        private void ExecuteClearGraphCommand(object param)
+        {
+            base.ClearGraph();
+        }
+
+        private void ExecuteStartPathFindCommand(object param)
+        {
+            FindPath();
+        }
+
+        private void ExecuteCreateNewGraphCommand(object param)
+        {
+            CreateNewGraph();
+        }
+
+        private bool AlwaysExecutable(object param)
+        {
+            return true;
+        }
+
+        private bool CanExecuteGraphOperation(object param)
+        {
+            return !Graph.IsDefault;
+        }
+
     }
 }

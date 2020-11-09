@@ -1,8 +1,6 @@
 ﻿using ConsoleVersion.InputClass;
 using ConsoleVersion.Model;
 using ConsoleVersion.View;
-using ConsoleVersion.Model.EventHolder;
-using ConsoleVersion.Model.Vertex;
 using System.Drawing;
 using Console = Colorful.Console;
 using GraphLib.Graphs;
@@ -16,7 +14,7 @@ namespace ConsoleVersion.ViewModel
         {            
             VertexEventHolder = new ConsoleVertexEventHolder();
             FieldFactory = new ConsoleGraphFieldFactory();
-            DtoConverter = (dto) => new ConsoleVertex(dto);
+            InfoConverter = (info) => new ConsoleVertex(info);
         }
 
         public override void CreateNewGraph()
@@ -35,19 +33,26 @@ namespace ConsoleVersion.ViewModel
             view.Start();
         }
 
-        public void Reverse()
+        public void ChangeStatus()
         {
-            var point = Input.InputPoint((Graph as Graph2d).Width, (Graph as Graph2d).Length);
-            (Graph[point] as ConsoleVertex).ChangeRole();
+            var upperPossibleXValue = (Graph as Graph2d).Width;
+            var upperPossibleYValue = (Graph as Graph2d).Length;
+
+            var point = Input.InputPoint(upperPossibleXValue, upperPossibleYValue);
+
+            (Graph[point] as ConsoleVertex).ChangeStatus();
         }
 
-        public void ChangeVertexValue()
+        public void ChangeVertexCost()
         {
-            var point = Input.InputPoint((Graph as Graph2d).Width, (Graph as Graph2d).Length);
+            var upperPossibleXValue = (Graph as Graph2d).Width;
+            var upperPossibleYValue = (Graph as Graph2d).Length;
+
+            var point = Input.InputPoint(upperPossibleXValue, upperPossibleYValue);
 
             while (Graph[point].IsObstacle)
             {
-                point = Input.InputPoint((Graph as Graph2d).Width, (Graph as Graph2d).Length);
+                point = Input.InputPoint(upperPossibleXValue, upperPossibleYValue);
             }
 
             (Graph[point] as ConsoleVertex).ChangeCost();

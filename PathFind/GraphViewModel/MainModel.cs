@@ -25,7 +25,7 @@ namespace GraphViewModel
         public IVertexEventHolder VertexEventHolder { get; set; }
         public IGraphSerializer Serializer { get; set; }
         public GraphFieldFactory FieldFactory { get; set; }
-        public Func<VertexInfo, IVertex> DtoConverter { get; set; }
+        public Func<VertexInfo, IVertex> InfoConverter { get; set; }
 
         public MainModel()
         {           
@@ -41,7 +41,7 @@ namespace GraphViewModel
 
         public virtual void LoadGraph()
         {
-            var newGraph = Serializer.LoadGraph(GetLoadingPath(), DtoConverter);
+            var newGraph = Serializer.LoadGraph(GetLoadingPath(), InfoConverter);
             if (!newGraph.IsDefault)
             {
                 ConnectNewGraph(newGraph);

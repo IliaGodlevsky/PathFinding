@@ -6,7 +6,8 @@ namespace ConsoleVersion
     {        
         static void Main(string[] args)
         {
-            new MainView().Start();
+            var view = new MainView();
+            view.Start();
         }
     }
 }

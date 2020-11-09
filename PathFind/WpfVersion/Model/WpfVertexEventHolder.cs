@@ -13,7 +13,7 @@ namespace WpfVersion.Model.EventHolder
             return (e as MouseWheelEventArgs).Delta;
         }
 
-        protected override void ChargeVertex(IVertex vertex)
+        protected override void SubscribeToEvents(IVertex vertex)
         {
             (vertex as WpfVertex).MouseLeftButtonDown += ChooseExtremeVertices;           
             (vertex as WpfVertex).MouseRightButtonDown += ReversePolarity;

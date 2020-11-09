@@ -9,12 +9,16 @@ namespace WpfVersion.Model
     {
         public static void Adjust(IGraph graph)
         {
-            if (graph.IsDefault)
-                return;
-            Application.Current.MainWindow.Width = ((graph as Graph2d).Width + 1) * 
-                VertexParametres.SizeBetweenVertices + VertexParametres.SizeBetweenVertices;
-            Application.Current.MainWindow.Height = (1 + (graph as Graph2d).Length) * 
-                VertexParametres.SizeBetweenVertices + Application.Current.MainWindow.DesiredSize.Height;
+            if (!graph.IsDefault)
+            {
+                var graph2d = graph as Graph2d;
+
+                var mainWindowDesiredWidth = (graph2d.Width + 2) * VertexParametres.SizeBetweenVertices;
+                var mainWindowDesiredHeight = (graph2d.Length + 2) * VertexParametres.SizeBetweenVertices;
+
+                Application.Current.MainWindow.Width = mainWindowDesiredWidth;
+                Application.Current.MainWindow.Height = mainWindowDesiredHeight;
+            }
         }
     }
 }

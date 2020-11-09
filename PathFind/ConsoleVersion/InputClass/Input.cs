@@ -31,13 +31,16 @@ namespace ConsoleVersion.InputClass
         {
             return (MenuOption)InputNumber(
                 ConsoleVersionResources.OptionMsg,
-                maxMenuValue, minMenuValue);
+                maxMenuValue, 
+                minMenuValue);
         }
 
         public static Coordinate2D InputPoint(int width, int height)
         {
-            return new Coordinate2D(InputNumber(ConsoleVersionResources.XCoordinateMsg, width),
-                                InputNumber(ConsoleVersionResources.YCoordinateMsg, height));
+            var xCoordinate = InputNumber(ConsoleVersionResources.XCoordinateMsg, width);
+            var yCoordinate = InputNumber(ConsoleVersionResources.YCoordinateMsg, height);
+
+            return new Coordinate2D(xCoordinate, yCoordinate);
         }
 
         private static bool IsError(string choice, int upper, int lower)

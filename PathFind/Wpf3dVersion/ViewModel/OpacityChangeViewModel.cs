@@ -7,15 +7,22 @@ namespace Wpf3dVersion.ViewModel
     internal class OpacityChangeViewModel : IModel
     {
         public double ObstacleColorOpacity { get; set; }
+
         public double VisitedVertexColorOpacity { get; set; }
+
         public double EnqueuedVertexColorOpacity { get; set; }
+
         public double PathVertexColorOpacity { get; set; }
+
         public double SimpleVertexColorOpacity { get; set; }
 
+
         public RelayCommand ConfirmOpacityChange { get; }
+
         public RelayCommand CancelOpacityChange { get; }
 
         public MainWindowViewModel Model { get; set; }
+
         public OpacityChangeViewModel(IMainModel model)
         {
             ObstacleColorOpacity = Wpf3dVertex.ObstacleVertexBrush.Opacity;

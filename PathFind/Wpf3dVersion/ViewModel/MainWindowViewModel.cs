@@ -56,18 +56,24 @@ namespace Wpf3dVersion.ViewModel
         }
 
         public RelayCommand StartPathFindCommand { get; }
+
         public RelayCommand CreateNewGraphCommand { get; }
+
         public RelayCommand ClearGraphCommand { get; }
+
         public RelayCommand SaveGraphCommand { get; }
+
         public RelayCommand LoadGraphCommand { get; }
+
         public RelayCommand ChangeOpacityCommand { get; }
+
 
         public MainWindowViewModel()
         {
             GraphField = new Wpf3dGraphField();
             VertexEventHolder = new Wpf3dVertexEventHolder();
             FieldFactory = new Wpf3DGraphFieldFactory();
-            DtoConverter = (dto) => new Wpf3dVertex(dto);
+            InfoConverter = (dto) => new Wpf3dVertex(dto);
 
             StartPathFindCommand = new RelayCommand(ExecuteStartPathFindCommand, CanExecuteStartFindPathCommand);
             CreateNewGraphCommand = new RelayCommand(ExecuteCreateNewGraphCommand, AlwaysExecutable);
@@ -93,7 +99,7 @@ namespace Wpf3dVersion.ViewModel
         }
 
         public void XAxisSliderValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
-        {
+        { 
             AxisSliderValueChanged((sliderValue, field) => field.DistanceBetweenAtXAxis = sliderValue, e.NewValue);
         }
 
@@ -185,13 +191,13 @@ namespace Wpf3dVersion.ViewModel
                 : string.Empty;
         }
 
-        private void AxisSliderValueChanged(Action<double, Wpf3dGraphField> func, double sliderNewValue)
+        private void AxisSliderValueChanged(Action<double, Wpf3dGraphField> callBack, double sliderNewValue)
         {
             var field = graphField as Wpf3dGraphField;
-            func(sliderNewValue, field);
+            callBack(sliderNewValue, field);
 
             field.SetDistanceBetweenVertices(Graph);
-            field.CenterGraph(Graph, centerOffsetCorrection: 1);
+            field.CenterGraph(Graph);
         }
 
         private bool AlwaysExecutable(object param)

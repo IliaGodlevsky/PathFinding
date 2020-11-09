@@ -1,7 +1,7 @@
 ﻿using GraphLib.ViewModel;
 using GraphViewModel.Interfaces;
 using System;
-using WinFormsVersion.Vertex;
+using WinFormsVersion.Model;
 
 namespace WinFormsVersion.ViewModel
 {

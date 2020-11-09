@@ -5,7 +5,6 @@ using GraphLib.Vertex.Interface;
 using System;
 using System.Drawing;
 using System.Windows.Forms;
-using WinFormsVersion.Vertex;
 
 namespace WinFormsVersion.Model
 {
@@ -24,10 +23,12 @@ namespace WinFormsVersion.Model
                 throw new ArgumentException("Must be 2D coordinates");
             }
 
-            int sizeBetween = VertexParametres.SizeBetweenVertices;
+            var winFormsVertex = vertex as WinFormsVertex;
 
-            (vertex as WinFormsVertex).Location
-                = new Point(coordinate.X * sizeBetween, coordinate.Y * sizeBetween);
+            var xCoordinate = coordinate.X * VertexParametres.SizeBetweenVertices;
+            var yCoordinate = coordinate.Y * VertexParametres.SizeBetweenVertices;
+
+            winFormsVertex.Location = new Point(xCoordinate, yCoordinate);
 
             Controls.Add(vertex as WinFormsVertex);
         }

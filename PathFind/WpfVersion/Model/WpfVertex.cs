@@ -29,39 +29,53 @@ namespace WpfVersion.Model.Vertex
 
         public WpfVertex() : base()
         {
-            this.Initialize();
+            
             Width = Height = VertexParametres.VertexSize;
-
             FontSize = VertexParametres.VertexSize * VertexParametres.TextToSizeRatio;
-
             Template = (ControlTemplate)TryFindResource("vertexTemplate");
+            this.Initialize();
         }
+
         public WpfVertex(VertexInfo info) : this()
         {
             this.Initialize(info);
         }
 
         public bool IsEnd { get; set; }
+
         public bool IsObstacle { get; set; }
+
         public bool IsStart { get; set; }
+
         public bool IsVisited { get; set; }
+
 
         private VertexCost cost;
         public VertexCost Cost 
         {
             get { return cost; }
-            set { cost = (VertexCost)value.Clone(); Content = cost.ToString(string.Empty); }
+            set 
+            { 
+                cost = (VertexCost)value.Clone(); 
+                Content = cost.ToString(string.Empty); 
+            }
         }
 
         public IList<IVertex> Neighbours { get; set; }
+
         public IVertex ParentVertex { get; set; }
+
         public double AccumulatedCost { get; set; }
 
         private ICoordinate position;
         public ICoordinate Position 
         {
             get => position;
-            set { position = value; ToolTip = position.ToString(); }
+            set 
+            { 
+                position = value;
+                ToolTip = position.ToString();
+            }
         }
 
         public VertexInfo Info => new VertexInfo(this);
@@ -86,8 +100,10 @@ namespace WpfVersion.Model.Vertex
 
         public void MarkAsSimpleVertex()
         {
-            if (!IsObstacle)            
+            if (!IsObstacle)
+            {
                 Background = new SolidColorBrush(Colors.White);
+            }
         }
 
         public void MarkAsStart()

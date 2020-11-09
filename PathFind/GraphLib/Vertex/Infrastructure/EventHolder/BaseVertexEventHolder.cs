@@ -57,7 +57,7 @@ namespace GraphLib.EventHolder
 
         public void SubscribeVertices()
         {
-            SetEventsToVertex(ChargeVertex);
+            SetEventsToVertex(SubscribeToEvents);
         }
 
         public virtual void ChooseExtremeVertices(object sender, EventArgs e)
@@ -72,7 +72,7 @@ namespace GraphLib.EventHolder
             }
         }
 
-        protected abstract void ChargeVertex(IVertex vertex);
+        protected abstract void SubscribeToEvents(IVertex vertex);
         protected abstract int GetWheelDelta(EventArgs e);
 
         private void MakeObstacle(IVertex vertex)

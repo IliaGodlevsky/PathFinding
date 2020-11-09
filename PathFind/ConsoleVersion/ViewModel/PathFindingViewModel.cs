@@ -4,13 +4,13 @@ using GraphLib.ViewModel;
 using System.Threading;
 using System.Linq;
 using GraphLib.PauseMaking;
-using ConsoleVersion.Model.Vertex;
 using GraphLib.Coordinates;
 using GraphLib.Graphs;
 using Algorithm.AlgorithmCreating;
 using GraphViewModel.Interfaces;
 using GraphLib.Extensions;
 using Common.ValueRanges;
+using ConsoleVersion.Model;
 
 namespace ConsoleVersion.ViewModel
 {
@@ -40,9 +40,13 @@ namespace ConsoleVersion.ViewModel
 
         protected override void PrepareAlgorithm()
         {
-            DelayTime = Input.InputNumber(ConsoleVersionResources.DelayTimeMsg, 
-                Range.DelayValueRange.UpperRange, Range.DelayValueRange.LowerRange);
+            DelayTime = Input.InputNumber(
+                ConsoleVersionResources.DelayTimeMsg, 
+                Range.DelayValueRange.UpperRange, 
+                Range.DelayValueRange.LowerRange);
+
             base.PrepareAlgorithm();
+
             var thread = new Thread(() => 
             {
                 while (true)
@@ -51,35 +55,50 @@ namespace ConsoleVersion.ViewModel
                     (mainViewModel as MainViewModel).DisplayGraph();
                 }
             });
+
+            pathAlgorithm.OnStarted += (sender, eventArgs) =>
+            {
+                thread.Start();
+            };
+
             var pauser = new PauseProvider(DelayTime);
             pauser.PauseEvent += () => { };
-            pathAlgorithm.OnStarted += (sender, eventArgs) => thread.Start();
             pathAlgorithm.OnVertexVisited += (vertex) => pauser.Pause();
+
             pathAlgorithm.OnFinished += (sender, eventArgs) =>
             {
                 thread.Abort();
                 thread.Join();
+
                 if (!eventArgs.HasFoundPath)
                 {
                     (mainViewModel as MainViewModel).DisplayGraph();
                     Console.WriteLine(badResultMessage);
                     Console.ReadLine();
-                }                
-            };         
+                }
+            };
         }
+
+
 
         private int GetAlgorithmKeyIndex()
         {
-            return Input.InputNumber(Messages.Item3,
-                maxAlgorithmValue, minAlgorithmValue) - 1;
+            return Input.InputNumber(
+                Messages.Item3,
+                maxAlgorithmValue, 
+                minAlgorithmValue) - 1;
         }
 
         private void ChooseExtremeVertex()
         {           
             const int EXTREME_VERTICES_COUNT = 2;
-            string[] chooseMessages = new string[EXTREME_VERTICES_COUNT] 
 
-                    { Messages.Item1, Messages.Item2 };
+            string[] chooseMessages = new string[EXTREME_VERTICES_COUNT] 
+            { 
+                Messages.Item1, 
+                Messages.Item2 
+            };
+
             for (int i = 0; i < EXTREME_VERTICES_COUNT; i++)
             {
                 var point = ChoosePoint(chooseMessages[i]);
@@ -90,11 +109,15 @@ namespace ConsoleVersion.ViewModel
         private Coordinate2D ChoosePoint(string message)
         {
             Console.WriteLine(message);
-            var point = Input.InputPoint((graph as Graph2d).Width, (graph as Graph2d).Length);
+
+            var upperPosibleXValue = (graph as Graph2d).Width;
+            var upperPosibleYValue = (graph as Graph2d).Length;
+
+            var point = Input.InputPoint(upperPosibleXValue, upperPosibleYValue);
 
             while (!graph[point].IsValidToBeRange())
             {
-                point = Input.InputPoint((graph as Graph2d).Width, (graph as Graph2d).Length);
+                point = Input.InputPoint(upperPosibleXValue, upperPosibleYValue);
             }
 
             return point;

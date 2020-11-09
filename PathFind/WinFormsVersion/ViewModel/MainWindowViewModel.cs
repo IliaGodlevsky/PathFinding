@@ -9,7 +9,6 @@ using WinFormsVersion.Model;
 using WinFormsVersion.View;
 using WinFormsVersion.EventHolder;
 using GraphLib.GraphField;
-using WinFormsVersion.Vertex;
 using System.Linq;
 using GraphLib.Graphs;
 using GraphViewModel;
@@ -66,9 +65,8 @@ namespace WinFormsVersion.ViewModel
             VertexEventHolder = new WinFormsVertexEventHolder();
             graphField = new WinFormsGraphField();
             FieldFactory = new WinFormsGraphFieldFactory();
-            DtoConverter = (dto) => new WinFormsVertex(dto);
+            InfoConverter = (dto) => new WinFormsVertex(dto);
         }
-
 
         public override void FindPath()
         {
@@ -97,7 +95,9 @@ namespace WinFormsVersion.ViewModel
         public void SaveGraph(object sender, EventArgs e)
         {
             if (!Graph.IsDefault)
+            {
                 base.SaveGraph();
+            }
         }
 
         public void LoadGraph(object sender, EventArgs e)
@@ -136,6 +136,18 @@ namespace WinFormsVersion.ViewModel
             return;
         }
 
+        protected override string GetSavingPath()
+        {
+            var save = new SaveFileDialog();
+            return save.ShowDialog() == DialogResult.OK ? save.FileName : string.Empty;
+        }
+
+        protected override string GetLoadingPath()
+        {
+            var open = new OpenFileDialog();
+            return open.ShowDialog() == DialogResult.OK ? open.FileName : string.Empty;
+        }
+
         private void PrepareWindow(Form window)
         {
             Window = window;
@@ -151,16 +163,6 @@ namespace WinFormsVersion.ViewModel
                 && !Graph.Start.IsVisited;
         }
 
-        protected override string GetSavingPath()
-        {
-            var save = new SaveFileDialog();
-            return save.ShowDialog() == DialogResult.OK ? save.FileName : string.Empty;
-        }
 
-        protected override string GetLoadingPath()
-        {
-            var open = new OpenFileDialog();
-            return open.ShowDialog() == DialogResult.OK ? open.FileName : string.Empty;
-        }
     }
 }

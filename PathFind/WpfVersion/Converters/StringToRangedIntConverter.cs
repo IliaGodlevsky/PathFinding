@@ -15,17 +15,15 @@ namespace WpfVersion.Converters
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
         {
             int result = 0;
-            var range = parameter as ValueRange;
 
-            if (range == null || value == null)
+            if (parameter is ValueRange range && value != null)
             {
-                return result;
-            }
-            if (int.TryParse(value.ToString(), out result))
-            {
-                if (!range.IsInBounds(result))
+                if (int.TryParse(value.ToString(), out result))
                 {
-                    result = range.LowerRange;
+                    if (!range.IsInBounds(result))
+                    {
+                        result = range.LowerRange;
+                    }
                 }
             }
 

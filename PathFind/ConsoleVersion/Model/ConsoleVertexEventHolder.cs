@@ -2,11 +2,10 @@
 using System;
 using GraphLib.EventHolder;
 using GraphLib.Vertex.Interface;
-using ConsoleVersion.Model.Vertex;
 using GraphLib.Vertex.Cost;
 using Common.ValueRanges;
 
-namespace ConsoleVersion.Model.EventHolder
+namespace ConsoleVersion.Model
 {
     internal class ConsoleVertexEventHolder : BaseVertexEventHolder
     {
@@ -17,8 +16,12 @@ namespace ConsoleVersion.Model.EventHolder
 
             if (!vertex.IsObstacle)
             {
-                vertex.Cost = new VertexCost(Input.InputNumber(ConsoleVersionResources.NewTopValueMsg,
-                      Range.VertexCostRange.UpperRange, Range.VertexCostRange.LowerRange));
+                var cost = Input.InputNumber(
+                    ConsoleVersionResources.NewTopValueMsg,
+                      Range.VertexCostRange.UpperRange,
+                      Range.VertexCostRange.LowerRange);
+
+                vertex.Cost = new VertexCost(cost);
             }
         }
 
@@ -27,7 +30,7 @@ namespace ConsoleVersion.Model.EventHolder
             return 0;
         }
 
-        protected override void ChargeVertex(IVertex vertex)
+        protected override void SubscribeToEvents(IVertex vertex)
         {
             (vertex as ConsoleVertex).OnCostChanged += ChangeVertexValue;
             (vertex as ConsoleVertex).OnDestinationChosen += ChooseExtremeVertices;

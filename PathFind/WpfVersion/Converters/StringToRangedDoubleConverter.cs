@@ -15,23 +15,20 @@ namespace WpfVersion.Converters
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
         {
             double result = 0D;
-            var sliderValueRange = parameter as ValueRange;
 
-            if (sliderValueRange == null || value == null)
+            if (parameter as ValueRange != null && value != null)
             {
-                return result;
-            }
-
-            if (double.TryParse(value.ToString(), out result))
-            {
-                var sliderValue = System.Convert.ToInt32(result);
-                if (sliderValueRange.IsInBounds(sliderValue))
+                if (double.TryParse(value.ToString(), out result))
                 {
-                    result = sliderValue;
-                }
-                else
-                {
-                    result = sliderValueRange.UpperRange;
+                    var sliderValue = System.Convert.ToInt32(result);
+                    if ((parameter as ValueRange).IsInBounds(sliderValue))
+                    {
+                        result = sliderValue;
+                    }
+                    else
+                    {
+                        result = (parameter as ValueRange).UpperRange;
+                    }
                 }
             }
 

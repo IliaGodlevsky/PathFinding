@@ -2,7 +2,6 @@
 using GraphLib.Extensions;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 
 namespace GraphLib.Coordinates
 {
@@ -13,6 +12,7 @@ namespace GraphLib.Coordinates
     public class Coordinate2D : ICoordinate
     {
         public int X { get; private set; }
+
         public int Y { get; private set; }
 
         public IEnumerable<int> Coordinates => new int[] { X, Y };

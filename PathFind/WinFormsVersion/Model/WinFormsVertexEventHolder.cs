@@ -2,7 +2,7 @@
 using GraphLib.Vertex.Interface;
 using System;
 using System.Windows.Forms;
-using WinFormsVersion.Vertex;
+using WinFormsVersion.Model;
 
 namespace WinFormsVersion.EventHolder
 {
@@ -21,9 +21,9 @@ namespace WinFormsVersion.EventHolder
             }
         }
 
-        protected override void ChargeVertex(IVertex vertex)
+        protected override void SubscribeToEvents(IVertex vertex)
         {
-            if (vertex == null)
+            if (vertex.IsDefault)
                 return;
 
             (vertex as WinFormsVertex).MouseClick += ChooseExtremeVertices;

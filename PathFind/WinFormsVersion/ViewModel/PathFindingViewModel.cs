@@ -18,6 +18,7 @@ namespace WinFormsVersion.ViewModel
         protected override void PrepareAlgorithm()
         {
             (mainViewModel as MainWindowViewModel).Window.Close();
+
             var pauser = new PauseProvider(DelayTime);
             pauser.PauseEvent += () => Application.DoEvents();
             pathAlgorithm.OnVertexVisited += (vertex) => pauser.Pause();
@@ -25,7 +26,9 @@ namespace WinFormsVersion.ViewModel
             pathAlgorithm.OnFinished += (sender, eventArgs) =>
             {
                 if (!eventArgs.HasFoundPath)
+                {
                     MessageBox.Show(badResultMessage);
+                }
             };
 
             base.PrepareAlgorithm();
@@ -33,8 +36,10 @@ namespace WinFormsVersion.ViewModel
 
         public void PathFind(object sender, EventArgs e)
         {
-            if (CanExecuteConfirmPathFindAlgorithmChoice())            
+            if (CanExecuteConfirmPathFindAlgorithmChoice())
+            {
                 FindPath();
+            }
         }
 
         public void CancelPathFind(object sender, EventArgs e)
