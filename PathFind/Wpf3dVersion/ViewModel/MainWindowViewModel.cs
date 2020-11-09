@@ -81,48 +81,15 @@ namespace Wpf3dVersion.ViewModel
             graphParamFormat = Resource.GraphParamFormat;
         }
 
-        private bool AlwaysExecutable(object param) => true;
-
-        private bool CanExecuteGraphOperation(object param) => !Graph.IsDefault;
-
         public override void FindPath()
         {
-            try
-            {
-                PrepareWindow(new PathFindingViewModel(this), new PathFindWindow());
-            }
-            catch(Exception ex)
-            {
-                logger.Log(ex);
-            }
+            PrepareWindow(new PathFindingViewModel(this), new PathFindWindow());
         }
 
         public override void CreateNewGraph()
         {
-            try
-            {
-                PrepareWindow(new GraphCreatingViewModel(this), new GraphCreateWindow());
-            }
-            catch(Exception ex)
-            {
-                logger.Log(ex);
-            }
-        }
 
-        private void AxisSliderValueChanged(Action<double, Wpf3dGraphField> func, double sliderNewValue)
-        {
-            try
-            {
-                var field = graphField as Wpf3dGraphField;
-                func(sliderNewValue, field);
-
-                field.SetDistanceBetweenVertices(Graph);
-                field.CenterGraph(Graph, centerOffsetCorrection: 1);
-            }
-            catch(Exception ex)
-            {
-                logger.Log(ex);
-            }
+            PrepareWindow(new GraphCreatingViewModel(this), new GraphCreateWindow());
         }
 
         public void XAxisSliderValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
@@ -142,19 +109,27 @@ namespace Wpf3dVersion.ViewModel
 
         private void ChangeVerticesOpacity()
         {
-            try
-            {
-                PrepareWindow(new OpacityChangeViewModel(this), new OpacityChangeWindow());
-            }
-            catch(Exception ex)
-            {
-                logger.Log(ex);
-            }
+            PrepareWindow(new OpacityChangeViewModel(this), new OpacityChangeWindow());
         }
 
         public void Dispose()
         {
             OnDispose();
+        }
+
+        protected virtual void OnDispose()
+        {
+            return;
+        }
+
+        protected override string GetSavingPath()
+        {
+            return GetPath(new SaveFileDialog());
+        }
+
+        protected override string GetLoadingPath()
+        {
+            return GetPath(new OpenFileDialog());
         }
 
         private void ExecuteSaveGraphCommand(object param)
@@ -169,9 +144,9 @@ namespace Wpf3dVersion.ViewModel
 
         private bool CanExecuteStartFindPathCommand(object param)
         {
-            return !Graph.End.IsDefault 
+            return !Graph.End.IsDefault
                 && !Graph.Start.IsDefault
-                && Graph.Any() 
+                && Graph.Any()
                 && !Graph.Start.IsVisited;
         }
 
@@ -192,12 +167,7 @@ namespace Wpf3dVersion.ViewModel
 
         private void ExecuteCreateNewGraphCommand(object param)
         {
-            CreateNewGraph();            
-        }
-
-        protected virtual void OnDispose()
-        {
-            return;
+            CreateNewGraph();
         }
 
         private void PrepareWindow(IModel model, Window window)
@@ -215,14 +185,23 @@ namespace Wpf3dVersion.ViewModel
                 : string.Empty;
         }
 
-        protected override string GetSavingPath()
+        private void AxisSliderValueChanged(Action<double, Wpf3dGraphField> func, double sliderNewValue)
         {
-            return GetPath(new SaveFileDialog());
+            var field = graphField as Wpf3dGraphField;
+            func(sliderNewValue, field);
+
+            field.SetDistanceBetweenVertices(Graph);
+            field.CenterGraph(Graph, centerOffsetCorrection: 1);
         }
 
-        protected override string GetLoadingPath()
+        private bool AlwaysExecutable(object param)
         {
-            return GetPath(new OpenFileDialog());
+            return true;
+        }
+
+        private bool CanExecuteGraphOperation(object param)
+        {
+            return !Graph.IsDefault;
         }
     }
 }

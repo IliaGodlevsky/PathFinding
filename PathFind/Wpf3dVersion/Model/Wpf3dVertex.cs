@@ -4,10 +4,10 @@ using GraphLib.Info;
 using GraphLib.Vertex.Cost;
 using GraphLib.Vertex.Interface;
 using System.Collections.Generic;
+using System.Linq;
 using System.Windows;
 using System.Windows.Media;
 using System.Windows.Media.Media3D;
-using Wpf3dVersion.Extensions;
 using Wpf3dVersion.Factories;
 
 namespace Wpf3dVersion.Model
@@ -15,11 +15,11 @@ namespace Wpf3dVersion.Model
     public class Wpf3dVertex : UIElement3D, IVertex
     {
         public Wpf3dVertex()
-        {
-            this.Initialize();
+        {           
             Size = 5;
             Material = new DiffuseMaterial();
             Model = Model3DFactory.GetCubicModel3D(Size, Material);
+            this.Initialize();
         }
 
         public Wpf3dVertex(VertexInfo info) : this()
@@ -51,11 +51,14 @@ namespace Wpf3dVersion.Model
                 typeof(Wpf3dVertex), new PropertyMetadata(VisualPropertyChanged));
             SizeProperty = DependencyProperty.Register(nameof(Size), typeof(double),
                 typeof(Wpf3dVertex), new UIPropertyMetadata(VisualPropertyChanged));
+            BrushProperty = DependencyProperty.Register(nameof(Brush), typeof(Brush),
+                typeof(Wpf3dVertex), new PropertyMetadata(BrushPropertyChanged));
         }
 
         public static readonly DependencyProperty ModelProperty;
         public static readonly DependencyProperty MaterialProperty;
         public static readonly DependencyProperty SizeProperty;
+        public static readonly DependencyProperty BrushProperty;
 
         public double Size
         {
@@ -73,6 +76,12 @@ namespace Wpf3dVersion.Model
         {
             get => (Material)GetValue(MaterialProperty);
             set => SetValue(MaterialProperty, value);
+        }
+
+        public SolidColorBrush Brush
+        {
+            get => (SolidColorBrush)GetValue(BrushProperty);
+            set => SetValue(BrushProperty, value);
         }
 
         public bool IsEnd { get; set; }
@@ -160,20 +169,31 @@ namespace Wpf3dVersion.Model
             vert.Visual3DModel = vert.Model;
         }
 
-        private SolidColorBrush brush;
-        private SolidColorBrush Brush 
-        { 
-            get => brush; 
-            set
-            {
-                brush = value;
-                OnUpdateModel();
-            }
+        protected static void BrushPropertyChanged(DependencyObject depObj,
+            DependencyPropertyChangedEventArgs prop)
+        {
+            Wpf3dVertex vert = (Wpf3dVertex)depObj;
+            vert.OnUpdateModel();
         }
 
         protected override void OnUpdateModel()
         {
-            (Model as Model3DGroup)?.ChangeBrush(Brush);
+            GeometryModel3D child = null;
+            if (Model is Model3DGroup modelGroup)
+            {
+               child = modelGroup.Children.FirstOrDefault() as GeometryModel3D;
+            }
+
+            DiffuseMaterial material = null;
+            if (child != null) 
+            {
+                 material = child.Material as DiffuseMaterial;
+            }
+
+            if (material != null)
+            {
+                material.Brush = Brush;
+            }
         }
     }    
 }

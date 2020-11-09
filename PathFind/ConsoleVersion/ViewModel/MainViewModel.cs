@@ -7,7 +7,6 @@ using System.Drawing;
 using Console = Colorful.Console;
 using GraphLib.Graphs;
 using GraphViewModel;
-using System;
 
 namespace ConsoleVersion.ViewModel
 {
@@ -22,64 +21,36 @@ namespace ConsoleVersion.ViewModel
 
         public override void CreateNewGraph()
         {
-            try
-            {
-                var model = new GraphCreatingViewModel(this);
-                var view = new GraphCreateView(model);
+            var model = new GraphCreatingViewModel(this);
+            var view = new GraphCreateView(model);
 
-                view.Start();
-            }
-            catch(Exception ex)
-            {
-                logger.Log(ex);
-            }
+            view.Start();
         }
 
         public override void FindPath()
         {
-            try
-            {
-                var model = new PathFindingViewModel(this);
-                var view = new PathFindView(model);
+            var model = new PathFindingViewModel(this);
+            var view = new PathFindView(model);
 
-                view.Start();
-            }
-            catch(Exception ex)
-            {
-                logger.Log(ex);
-            }
+            view.Start();
         }
 
         public void Reverse()
         {
-            try
-            {
-                var point = Input.InputPoint((Graph as Graph2d).Width, (Graph as Graph2d).Length);
-                (Graph[point] as ConsoleVertex).ChangeRole();
-            }
-            catch(Exception ex)
-            {
-                logger.Log(ex);
-            }
+            var point = Input.InputPoint((Graph as Graph2d).Width, (Graph as Graph2d).Length);
+            (Graph[point] as ConsoleVertex).ChangeRole();
         }
 
         public void ChangeVertexValue()
         {
-            try
-            {
-                var point = Input.InputPoint((Graph as Graph2d).Width, (Graph as Graph2d).Length);
+            var point = Input.InputPoint((Graph as Graph2d).Width, (Graph as Graph2d).Length);
 
-                while (Graph[point].IsObstacle)
-                {
-                    point = Input.InputPoint((Graph as Graph2d).Width, (Graph as Graph2d).Length);
-                }
-
-                (Graph[point] as ConsoleVertex).ChangeCost();
-            }
-            catch(Exception ex)
+            while (Graph[point].IsObstacle)
             {
-                logger.Log(ex);
+                point = Input.InputPoint((Graph as Graph2d).Width, (Graph as Graph2d).Length);
             }
+
+            (Graph[point] as ConsoleVertex).ChangeCost();
         }
 
         protected override string GetSavingPath()
@@ -100,18 +71,11 @@ namespace ConsoleVersion.ViewModel
 
         public void DisplayGraph()
         {
-            try
-            {
-                Console.Clear();
-                Console.ForegroundColor = Color.White;
-                Console.WriteLine(GraphParametres);
-                (GraphField as ConsoleGraphField)?.ShowGraphWithFrames();
-                Console.WriteLine(PathFindingStatistics);
-            }
-            catch(Exception ex)
-            {
-                logger.Log(ex);
-            }
+            Console.Clear();
+            Console.ForegroundColor = Color.White;
+            Console.WriteLine(GraphParametres);
+            (GraphField as ConsoleGraphField)?.ShowGraphWithFrames();
+            Console.WriteLine(PathFindingStatistics);
         }
     }
 }

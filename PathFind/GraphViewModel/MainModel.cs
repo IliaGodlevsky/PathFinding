@@ -28,8 +28,7 @@ namespace GraphViewModel
         public Func<VertexInfo, IVertex> DtoConverter { get; set; }
 
         public MainModel()
-        {
-            logger = InFileLogger.Instance;
+        {           
             Graph = new DefaultGraph();
             Serializer = new Graph2DSerializer();
             graphParamFormat = ViewModelResources.GraphParametresFormat;
@@ -58,23 +57,15 @@ namespace GraphViewModel
 
         public void ConnectNewGraph(IGraph graph)
         {
-            try
-            {
-                Graph = graph;
-                GraphField = FieldFactory.CreateGraphField(Graph);
-                VertexEventHolder.Graph = Graph;
-                VertexEventHolder.SubscribeVertices();
-                GraphParametres = Graph.GetFormattedData(graphParamFormat);
-                PathFindingStatistics = string.Empty;
-            }
-            catch(Exception ex)
-            {
-                logger.Log(ex);
-            }
+            Graph = graph;
+            GraphField = FieldFactory.CreateGraphField(Graph);
+            VertexEventHolder.Graph = Graph;
+            VertexEventHolder.SubscribeVertices();
+            GraphParametres = Graph.GetFormattedData(graphParamFormat);
+            PathFindingStatistics = string.Empty;
         }
 
         protected string graphParamFormat;
-        protected ILog logger;
 
         public abstract void FindPath();
         public abstract void CreateNewGraph();

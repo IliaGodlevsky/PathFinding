@@ -89,57 +89,29 @@ namespace WpfVersion.ViewModel
 
         public void ExecuteShowVertexCostCommand(object parametre)
         {
-            try
-            { 
-                if ((bool)parametre)
-                {
-                    Graph.ToWeighted();
-                }
-                else
-                {
-                    Graph.ToUnweighted();
-                }
-            }
-            catch (Exception ex)
+            if ((bool)parametre)
             {
-                logger.Log(ex);
+                Graph.ToWeighted();
+            }
+            else
+            {
+                Graph.ToUnweighted();
             }
         }
 
         public override void FindPath()
         {
-            try
-            {
-                PrepareWindow(new PathFindingViewModel(this), new PathFindWindow());
-            }
-            catch(Exception ex)
-            {
-                logger.Log(ex);
-            }
+            PrepareWindow(new PathFindingViewModel(this), new PathFindWindow());
         }
 
         public override void CreateNewGraph()
         {
-            try
-            {
-                PrepareWindow(new GraphCreatingViewModel(this), new GraphCreatesWindow());
-            }
-            catch(Exception ex)
-            {
-                logger.Log(ex);
-            }
+            PrepareWindow(new GraphCreatingViewModel(this), new GraphCreatesWindow());           
         }
 
         public void ExecuteChangeVertexSize(object param)
         {
-            try
-            {
-                PrepareWindow(new VertexSizeChangingViewModel(this), new VertexSizeChangeWindow());
-            }
-            catch(Exception ex)
-            {
-                logger.Log(ex);
-            }
+            PrepareWindow(new VertexSizeChangingViewModel(this), new VertexSizeChangeWindow());
         }
 
         public void Dispose()
@@ -167,14 +139,7 @@ namespace WpfVersion.ViewModel
 
         private void ExecuteClearGraphCommand(object param)
         {
-            try
-            {
-                base.ClearGraph();
-            }
-            catch(Exception ex)
-            {
-                logger.Log(ex);
-            }            
+            base.ClearGraph();                    
         }
 
         private void ExecuteStartPathFindCommand(object param)

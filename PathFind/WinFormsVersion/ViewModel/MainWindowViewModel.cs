@@ -72,35 +72,21 @@ namespace WinFormsVersion.ViewModel
 
         public override void FindPath()
         {
-            try
-            {
-                if (!CanStartPathFinding())
-                    return;
+            if (!CanStartPathFinding())
+                return;
 
-                var model = new PathFindingViewModel(this);
-                var form = new PathFindingWindow(model);
+            var model = new PathFindingViewModel(this);
+            var form = new PathFindingWindow(model);
 
-                PrepareWindow(form);
-            }
-            catch(Exception ex)
-            {
-                logger.Log(ex);
-            }
+            PrepareWindow(form);
         }
 
         public override void CreateNewGraph()
         {
-            try
-            {
-                var model = new GraphCreatingViewModel(this);
-                var form = new GraphCreatingWIndow(model);
+            var model = new GraphCreatingViewModel(this);
+            var form = new GraphCreatingWIndow(model);
 
-                PrepareWindow(form);
-            }
-            catch(Exception ex)
-            {
-                logger.Log(ex);
-            }
+            PrepareWindow(form);
         }
 
         public void Dispose()
@@ -110,65 +96,29 @@ namespace WinFormsVersion.ViewModel
 
         public void SaveGraph(object sender, EventArgs e)
         {
-            try
-            {
-                if (!Graph.IsDefault)
-                    base.SaveGraph();
-            }
-            catch(Exception ex)
-            {
-                logger.Log(ex);
-            }
+            if (!Graph.IsDefault)
+                base.SaveGraph();
         }
 
         public void LoadGraph(object sender, EventArgs e)
         {
-            try
-            {
-                base.LoadGraph();
-                Window?.Close();
-            }
-            catch(Exception ex)
-            {
-                logger.Log(ex);
-            }
+            base.LoadGraph();
+            Window?.Close();
         }
 
         public void ClearGraph(object sender, EventArgs e)
         {
-            try
-            {
-                base.ClearGraph();
-            }
-            catch(Exception ex)
-            {
-                logger.Log(ex);
-            }
+            base.ClearGraph();
         }
 
         public void MakeWeighted(object sender, EventArgs e)
         {
-            try
-            {
-                Graph.ToWeighted();
-            }
-            catch(Exception ex)
-            {
-                logger.Log(ex);
-            }
-            
+            Graph.ToWeighted();
         }
 
         public void MakeUnweighted(object sender, EventArgs e)
         {
-            try
-            {
-                Graph.ToUnweighted();
-            }
-            catch (Exception ex)
-            {
-                logger.Log(ex);
-            }           
+            Graph.ToUnweighted();
         }
 
         public void StartPathFind(object sender, EventArgs e)
