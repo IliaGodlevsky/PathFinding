@@ -12,22 +12,25 @@ namespace Algorithm.AlgorithmCreating
     public static class AlgorithmFactory
     {
         public static IEnumerable<string> AlgorithmKeys => Algorithms.Keys;
+
         public static IDictionary<string, Type> Algorithms { get; private set; }
 
         static AlgorithmFactory()
         {
             Algorithms = new Dictionary<string, Type>();
-            var algoType = typeof(IPathFindingAlgorithm);
-            var filterType = typeof(DefaultAlgorithm);
+            var algorithmInterfaceType = typeof(IPathFindingAlgorithm);
+            var filterAlgorithmType = typeof(DefaultAlgorithm);
+            var assembly = Assembly.Load(algorithmInterfaceType.Assembly.GetName());
+            var assemblyTypes = assembly.GetTypes().Where(type => type != filterAlgorithmType);
 
-            var assembly = Assembly.Load(algoType.Assembly.GetName());
-
-            foreach (var type in assembly.GetTypes().Where(t => t != filterType))
+            foreach (var type in assemblyTypes)
             {
-                if (type.GetInterfaces().Select(interf => interf.Name).Contains(algoType.Name))
+                var typeRealizedInterfaces = type.GetInterfaces().Select(interf => interf.Name);
+
+                if (typeRealizedInterfaces.Contains(algorithmInterfaceType.Name))
                 {
-                    var attribute = (DescriptionAttribute)Attribute.
-                        GetCustomAttribute(type, typeof(DescriptionAttribute));
+                    var attributeType = typeof(DescriptionAttribute);
+                    var attribute = (DescriptionAttribute)Attribute.GetCustomAttribute(type, attributeType);
                     var description = attribute != null ? attribute.Description : type.ToString();
                     Algorithms.Add(description, type);
                 }
@@ -36,7 +39,7 @@ namespace Algorithm.AlgorithmCreating
 
         public static IPathFindingAlgorithm CreateAlgorithm(string algorithmKey, IGraph graph)
         {
-            return Algorithms.Keys.Contains(algorithmKey)
+            return Algorithms.ContainsKey(algorithmKey)
                 ? (IPathFindingAlgorithm)Activator.CreateInstance(Algorithms[algorithmKey], graph)
                 : new DefaultAlgorithm();
         }
