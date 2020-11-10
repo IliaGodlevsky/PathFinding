@@ -47,7 +47,7 @@ namespace Algorithm.PathFindingAlgorithms
             while (!currentVertex.IsEnd)
             {
                 var temp = currentVertex;
-                currentVertex = GoNextVertex(currentVertex);
+                currentVertex = GetNextVertex(currentVertex);
 
                 if (!currentVertex.IsIsolated())
                 {
@@ -65,7 +65,7 @@ namespace Algorithm.PathFindingAlgorithms
             OnFinished?.Invoke(this, new AlgorithmEventArgs(Graph));
         }
 
-        private IVertex GoNextVertex(IVertex vertex)
+        private IVertex GetNextVertex(IVertex vertex)
         {
             var neighbours = vertex.GetUnvisitedNeighbours().ToList();
 

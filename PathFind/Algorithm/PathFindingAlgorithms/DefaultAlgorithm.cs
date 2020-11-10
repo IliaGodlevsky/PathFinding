@@ -5,12 +5,19 @@ using Algorithm.EventArguments;
 using Algorithm.PathFindingAlgorithms.Interface;
 using GraphLib.Graphs;
 using GraphLib.Graphs.Abstractions;
+using System.ComponentModel;
 
 namespace Algorithm.PathFindingAlgorithms
 {
+    [Description("Default algorithm")]
     public sealed class DefaultAlgorithm : IPathFindingAlgorithm
     {
         public DefaultAlgorithm()
+        {
+
+        }
+
+        public DefaultAlgorithm(IGraph graph)
         {
 
         }
@@ -27,9 +34,9 @@ namespace Algorithm.PathFindingAlgorithms
         public void FindPath()
         {
             OnStarted?.Invoke(this, new AlgorithmEventArgs());
-            OnVertexVisited?.Invoke(new DefaultVertex());
-            OnFinished?.Invoke(this, new AlgorithmEventArgs());
+            OnVertexVisited?.Invoke(new DefaultVertex());           
             OnEnqueued?.Invoke(new DefaultVertex());
+            OnFinished?.Invoke(this, new AlgorithmEventArgs());
         }
     }
 }

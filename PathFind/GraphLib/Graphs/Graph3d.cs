@@ -25,25 +25,39 @@ namespace GraphLib.Graphs
             get
             {
                 if (coordinate.IsDefault)
+                {
                     return new DefaultVertex();
+                }
+
                 var coord = coordinate as Coordinate3D;
                 if (coord == null)
+                {
                     throw new ArgumentException("Must be 3D coordinates");
+                }
+
                 return vertices[Index.ToIndex(coordinate, Length, Height)];
             }
             set
             {
                 if (coordinate.IsDefault)
+                {
                     return;
+                }
+
                 var coord = coordinate as Coordinate3D;
                 if (coord == null)
+                {
                     throw new ArgumentException("Must be 3D coordinates");
+                }
+
                 vertices[Index.ToIndex(coordinate, Length, Height)] = value;
             }
         }
 
         public int Width { get; private set; }
+
         public int Length { get; private set; }
+
         public int Height { get; private set; }
 
         public override IVertexInfoCollection VertexInfoCollection => new VertexInfoCollection3D(vertices, Width, Length, Height);
@@ -54,7 +68,6 @@ namespace GraphLib.Graphs
 
         public override string GetFormattedData(string format)
         {
-
             return string.Format(format, Width, Length, Height,
                 ObstaclePercent, ObstacleNumber, Size);
         }

@@ -20,6 +20,7 @@ namespace GraphLib.Graphs.Serialization.Abstractions
 
         public BaseGraphSerializer()
         {
+            graph = new DefaultGraph();
             formatter = new BinaryFormatter();
         }
 
@@ -61,7 +62,7 @@ namespace GraphLib.Graphs.Serialization.Abstractions
         protected abstract IGraph GetGraphFromDto(IVertexInfoCollection verticesDto,
                        Func<VertexInfo, IVertex> dtoConverter);
 
-        protected IGraph graph = new DefaultGraph();
+        protected IGraph graph;
         protected IFormatter formatter;
     }
 }

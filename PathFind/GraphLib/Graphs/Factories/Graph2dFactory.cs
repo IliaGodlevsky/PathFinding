@@ -11,7 +11,8 @@ namespace GraphLib.Graphs.Factories
 {
     public class Graph2dFactory : BaseGraphFactory
     {
-        public Graph2dFactory(GraphParametres parametres) : base(parametres.ObstaclePercent)
+        public Graph2dFactory(GraphParametres parametres) 
+            : base(parametres.ObstaclePercent)
         {
             this.parametres = parametres;
         }
@@ -36,10 +37,12 @@ namespace GraphLib.Graphs.Factories
         protected override ICoordinate GetCoordinate(params int[] coordinates)
         {
             if (coordinates.Length != 2)
+            {
                 throw new ArgumentException("Must be two coordinates");
+            }
+
             return new Coordinate2D(coordinates.First(), coordinates.Last());
         }
-
 
         private readonly GraphParametres parametres;
     }

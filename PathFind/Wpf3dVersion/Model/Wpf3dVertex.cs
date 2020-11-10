@@ -3,10 +3,12 @@ using GraphLib.Extensions;
 using GraphLib.Info;
 using GraphLib.Vertex.Cost;
 using GraphLib.Vertex.Interface;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Windows;
 using System.Windows.Media;
+using System.Windows.Media.Imaging;
 using System.Windows.Media.Media3D;
 using Wpf3dVersion.Factories;
 
@@ -37,6 +39,7 @@ namespace Wpf3dVersion.Model
 
         static Wpf3dVertex()
         {
+
             VisitedVertexBrush = new SolidColorBrush(Colors.CadetBlue) { Opacity = 0.15 };
             PathVertexBrush = new SolidColorBrush(Colors.Yellow) { Opacity = 0.9 };
             StartVertexBrush = new SolidColorBrush(Colors.Green) { Opacity = 1 };

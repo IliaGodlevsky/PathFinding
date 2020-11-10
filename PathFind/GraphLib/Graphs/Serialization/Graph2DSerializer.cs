@@ -24,6 +24,7 @@ namespace GraphLib.GraphLib.Graphs.Serialization
         {
             var width = (verticesDto as VertexInfoCollection2D).Width;
             var length = (verticesDto as VertexInfoCollection2D).Length;
+
             graph = new Graph2d(width, length);
 
             for (int i = 0; i < width; i++)

@@ -20,7 +20,9 @@ namespace GraphLib.Graphs.Serialization.Infrastructure.Info.Collections
         }
 
         public int Width { get; private set; }
+
         public int Length { get; private set; }
+
         public int Height { get; private set; }
 
         public IEnumerable<int> DimensionsSizes => new int[] { Width, Length, Height };

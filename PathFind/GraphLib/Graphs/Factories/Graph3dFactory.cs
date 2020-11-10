@@ -42,7 +42,10 @@ namespace GraphLib.Graphs.Factories
         protected override ICoordinate GetCoordinate(params int[] coordinates)
         {
             if (coordinates.Length != 3)
+            {
                 throw new ArgumentException("Must be three coordinates");
+            }
+
             return new Coordinate3D(
                 coordinates.ElementAt(0), 
                 coordinates.ElementAt(1), 

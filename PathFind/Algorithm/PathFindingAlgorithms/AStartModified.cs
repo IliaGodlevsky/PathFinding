@@ -20,7 +20,8 @@ namespace Algorithm.PathFindingAlgorithms
         {
             deletedVertices = new List<IVertex>();
             percentRange = new ValueRange(99, 0);
-            PersentOfFurthestVerticesToDelete = Convert.ToInt32(Math.Floor(Math.Log(graph.Size, 4)));
+            var partOfVertexToDelete = Math.Floor(Math.Log(graph.Size, 4));
+            PersentOfFurthestVerticesToDelete = Convert.ToInt32(partOfVertexToDelete);
         }
 
         private int persentOfFurthestVerticesToDelete;

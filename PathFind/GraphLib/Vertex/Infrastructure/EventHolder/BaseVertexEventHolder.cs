@@ -16,63 +16,73 @@ namespace GraphLib.EventHolder
 
         public virtual void ChangeVertexValue(object sender, EventArgs e)
         {
-            var vertex = sender as IVertex;
-            if (vertex.IsObstacle)
-                return;
-            int delta = GetWheelDelta(e) > 0 ? 1 : -1;
-            int newCost = vertex.Cost + delta;
-            int boundedCost = Range.VertexCostRange.ReturnInBounds(newCost);
-            vertex.Cost = new VertexCost(boundedCost);
+            if (sender is IVertex vertex)
+            {
+                if (!vertex.IsObstacle)
+                {
+                    int delta = GetWheelDelta(e) > 0 ? 1 : -1;
+                    int newCost = vertex.Cost + delta;
+                    int boundedCost = Range.VertexCostRange.ReturnInBounds(newCost);
+                    vertex.Cost = new VertexCost(boundedCost);
+                }
+            }
         }
 
         public virtual void SetStartVertex(IVertex vertex)
         {
-            if (!vertex.IsValidToBeRange())
-                return;
-            vertex.MarkAsStart();
-            Graph.Start = vertex;
+            if (vertex.IsValidToBeRange())
+            {
+                vertex.MarkAsStart();
+                Graph.Start = vertex;
+            }
         }
 
         public virtual void SetDestinationVertex(IVertex vertex)
         {
-            if (!vertex.IsValidToBeRange())
-                return;
-            vertex.MarkAsEnd();
-            Graph.End = vertex;
+            if (vertex.IsValidToBeRange())
+            {
+                vertex.MarkAsEnd();
+                Graph.End = vertex;
+            }
         }
 
         public virtual void ReversePolarity(object sender, EventArgs e)
         {
-            var vertex = sender as IVertex;
-
-            if (vertex.IsObstacle)
+            if (sender is IVertex vertex)
             {
-                MakeVertex(vertex);
-            }
-            else
-            {
-                MakeObstacle(vertex);
+                if (vertex.IsObstacle)
+                {
+                    MakeVertex(vertex);
+                }
+                else
+                {
+                    MakeObstacle(vertex);
+                }
             }
         }
 
         public void SubscribeVertices()
         {
-            SetEventsToVertex(SubscribeToEvents);
+            Graph.AsParallel().ForAll(SubscribeToEvents);
         }
 
         public virtual void ChooseExtremeVertices(object sender, EventArgs e)
         {
-            if (!IsStartChosen())
+            if (sender is IVertex vertex)
             {
-                SetStartVertex(sender as IVertex);
-            }
-            else if (IsStartChosen() && !IsEndChosen())
-            {
-                SetDestinationVertex(sender as IVertex);
+                if (!IsStartChosen())
+                {
+                    SetStartVertex(vertex);
+                }
+                else if (IsStartChosen() && !IsEndChosen())
+                {
+                    SetDestinationVertex(vertex);
+                }
             }
         }
 
         protected abstract void SubscribeToEvents(IVertex vertex);
+
         protected abstract int GetWheelDelta(EventArgs e);
 
         private void MakeObstacle(IVertex vertex)
@@ -94,13 +104,14 @@ namespace GraphLib.EventHolder
             VertexConnector.ConnectToNeighbours(vertex);
         }
 
-        private bool IsStartChosen() => !Graph.Start.IsDefault;
-
-        private bool IsEndChosen() => !Graph.End.IsDefault;
-
-        private void SetEventsToVertex(Action<IVertex> action)
+        private bool IsStartChosen()
         {
-            Graph.AsParallel().ForAll(action);
+            return !Graph.Start.IsDefault;
+        }
+
+        private bool IsEndChosen()
+        {
+            return !Graph.End.IsDefault;
         }
     }
 }

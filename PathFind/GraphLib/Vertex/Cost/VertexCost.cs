@@ -70,8 +70,11 @@ namespace GraphLib.Vertex.Cost
         }
 
         private bool IsWeighted { get; set; }
+
         private int CurrentCost { get; set; }
+
         private int UnweightedCost => 1;
+
         private int WeightedCost { get; set; }
     }
 }

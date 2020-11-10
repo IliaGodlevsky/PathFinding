@@ -16,8 +16,11 @@ namespace GraphLib.Coordinates
         }
 
         public int X { get; set; }
+
         public int Y { get; set; }
+
         public int Z { get; set; }
+
 
         public IEnumerable<int> Coordinates => new int[] { X, Y, Z };
 
@@ -47,19 +50,14 @@ namespace GraphLib.Coordinates
 
         public override bool Equals(object pos)
         {
-            if (pos == null)
-                return false;
-            return this.IsEqual(pos as ICoordinate);
-        }
+            ICoordinate coordinate = pos as Coordinate3D;
 
-        public static bool operator ==(Coordinate3D position1, Coordinate3D position2)
-        {
-            return position1.Equals(position2);
-        }
+            if (coordinate == null)
+            {
+                throw new ArgumentException("Invalid value to compare");
+            }
 
-        public static bool operator !=(Coordinate3D position1, Coordinate3D position2)
-        {
-            return !position1.Equals(position2);
+            return this.IsEqual(coordinate);
         }
 
         public override int GetHashCode()

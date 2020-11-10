@@ -79,14 +79,14 @@ namespace GraphLib.VertexConnecting
 
         public static void SetNeighbours(IGraph graph, IVertex vertex)
         {
-            if (vertex.IsObstacle)
-                return;
-
-            foreach (var potentialNeighbor in GetVertexEnvironment(graph, vertex))
+            if (!vertex.IsObstacle)
             {
-                if (CanBeNeighbour(vertex, potentialNeighbor))
+                foreach (var potentialNeighbor in GetVertexEnvironment(graph, vertex))
                 {
-                    vertex.Neighbours.Add(potentialNeighbor);
+                    if (CanBeNeighbour(vertex, potentialNeighbor))
+                    {
+                        vertex.Neighbours.Add(potentialNeighbor);
+                    }
                 }
             }
         }

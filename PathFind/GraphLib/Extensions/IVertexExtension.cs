@@ -1,4 +1,5 @@
 ﻿using GraphLib.Info;
+using GraphLib.Vertex;
 using GraphLib.Vertex.Interface;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,11 +10,11 @@ namespace GraphLib.Extensions
     {
         public static IEnumerable<IVertex> GetPathToStartVertex(this IVertex vertex)
         {
-            if (vertex.IsEnd && vertex.IsVisited)
+            if (vertex.IsEnd && vertex.IsVisited && !vertex.IsDefault)
             {
                 var temp = vertex;
 
-                while (!temp.IsStart && !vertex.IsDefault)
+                while (!temp.IsStart && !temp.IsDefault)
                 {
                     yield return temp;
                     temp = temp.ParentVertex;
@@ -36,6 +37,7 @@ namespace GraphLib.Extensions
             vertex.IsEnd = false;
             vertex.IsVisited = false;
             vertex.AccumulatedCost = 0;
+            vertex.ParentVertex = new DefaultVertex();
             vertex.MarkAsSimpleVertex();
         }
 
@@ -67,9 +69,9 @@ namespace GraphLib.Extensions
             return !vertex.IsStart && !vertex.IsEnd;
         }
 
-        public static IEnumerable<IVertex> GetUnvisitedNeighbours(this IVertex vertex)
+        public static IEnumerable<IVertex> GetUnvisitedNeighbours(this IVertex self)
         {
-            return vertex.Neighbours.Where(vert => !vert.IsVisited);
+            return self.Neighbours.Where(vertex => !vertex.IsVisited);
         }
 
         public static IVertex Refresh(this IVertex vertex)

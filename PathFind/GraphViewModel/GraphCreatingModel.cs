@@ -9,7 +9,9 @@ namespace GraphLib.ViewModel
     public abstract class GraphCreatingModel : IModel
     {
         public int Width { get; set; }
+
         public int Height { get; set; }
+
         public int ObstaclePercent { get; set; }
 
         public GraphCreatingModel(IMainModel model)

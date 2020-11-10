@@ -1,6 +1,4 @@
-﻿using Common.Logger;
-using Common.Logger.Interface;
-using GraphLib.EventHolder.Interface;
+﻿using GraphLib.EventHolder.Interface;
 using GraphLib.Extensions;
 using GraphLib.GraphField;
 using GraphLib.GraphFieldCreating;
@@ -19,12 +17,19 @@ namespace GraphViewModel
     public abstract class MainModel : IMainModel
     {
         public virtual string GraphParametres { get; set; }
+
         public virtual string PathFindingStatistics { get; set; }
+
         public virtual IGraphField GraphField { get; set; }
+
         public virtual IGraph Graph { get; protected set; }
+
         public IVertexEventHolder VertexEventHolder { get; set; }
+
         public IGraphSerializer Serializer { get; set; }
+
         public GraphFieldFactory FieldFactory { get; set; }
+
         public Func<VertexInfo, IVertex> InfoConverter { get; set; }
 
         public MainModel()
@@ -68,9 +73,13 @@ namespace GraphViewModel
         protected string graphParamFormat;
 
         public abstract void FindPath();
+
         public abstract void CreateNewGraph();
+
         protected abstract string GetSavingPath();
+
         protected abstract string GetLoadingPath();
+
 
     }
 }

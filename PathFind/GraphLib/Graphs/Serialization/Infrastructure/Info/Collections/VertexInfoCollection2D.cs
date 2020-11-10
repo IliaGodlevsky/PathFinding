@@ -18,6 +18,7 @@ namespace GraphLib.Info.Containers
         }
 
         public int Width { get; private set; }
+
         public int Length { get; private set; }
 
         public IEnumerable<int> DimensionsSizes => new int[] { Width, Length };

@@ -46,20 +46,13 @@ namespace GraphLib.Coordinates
 
         public override bool Equals(object pos)
         {
-            if (pos == null)
-                return false;
+            ICoordinate coordinate = pos as Coordinate2D;
+            if (coordinate == null)
+            {
+                throw new ArgumentException("Invalid value to compare");
+            }
 
-            return this.IsEqual(pos as ICoordinate);
-        }
-
-        public static bool operator ==(Coordinate2D position1, Coordinate2D position2)
-        {
-            return position1.Equals(position2);
-        }
-
-        public static bool operator !=(Coordinate2D position1, Coordinate2D position2)
-        {
-            return !position1.Equals(position2);
+            return this.IsEqual(coordinate);
         }
 
         public override int GetHashCode()

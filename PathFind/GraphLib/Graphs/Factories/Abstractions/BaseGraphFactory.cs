@@ -11,6 +11,7 @@ namespace GraphLib.Graphs.Factories.Abstractions
         public BaseGraphFactory(int obstacleChance)
         {
             this.obstacleChance = obstacleChance;
+            graph = new DefaultGraph();
         }
 
         public abstract IGraph CreateGraph(Func<IVertex> vertexFactory);
@@ -37,9 +38,9 @@ namespace GraphLib.Graphs.Factories.Abstractions
             graph[indices].Position = indices;
         }
 
-        private static readonly Random rand;
-
-        protected IGraph graph = new DefaultGraph();
+        protected IGraph graph;
         protected int obstacleChance;
+
+        private static readonly Random rand;        
     }
 }

@@ -3,10 +3,15 @@
     public static class Range
     {
         public static ValueRange ObstaclePercentValueRange { get; }
+
         public static ValueRange DelayValueRange { get; }
+
         public static ValueRange WidthValueRange { get; }
+
         public static ValueRange HeightValueRange { get; }
+
         public static ValueRange VertexCostRange { get; }
+
         public static ValueRange VertexSizeRange { get; }
 
         static Range()

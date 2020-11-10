@@ -16,7 +16,9 @@ namespace GraphLib.Info
         }
 
         public bool IsObstacle { get; set; }
+
         public VertexCost Cost { get; set; }
+
         public ICoordinate Position { get; set; }
     }
 }

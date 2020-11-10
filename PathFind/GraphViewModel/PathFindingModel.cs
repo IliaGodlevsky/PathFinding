@@ -8,13 +8,13 @@ using GraphLib.Graphs.Abstractions;
 using GraphLib.Extensions;
 using Algorithm.Extensions;
 using Common.Extensions;
-using System;
 
 namespace GraphLib.ViewModel
 {
     public abstract class PathFindingModel : IModel
     {
         public int DelayTime { get; set; } // miliseconds
+
         public string AlgorithmKey { get; set; }
 
         public PathFindingModel(IMainModel mainViewModel)
@@ -51,8 +51,10 @@ namespace GraphLib.ViewModel
                 {
                     vertex.MarkAsVisited();
                 }
-                mainViewModel.PathFindingStatistics = timer.GetTimeInformation(ViewModelResources.TimerInfoFormat) +
-                string.Format("   " + pathFindStatisticsFormat, 0, 0, graph.NumberOfVisitedVertices);
+
+                var timerCurrentInformation = timer.GetTimeInformation(ViewModelResources.TimerInfoFormat);
+                var currentPathfindingStatistics = string.Format("   " + pathFindStatisticsFormat, 0, 0, graph.NumberOfVisitedVertices);
+                mainViewModel.PathFindingStatistics = timerCurrentInformation + currentPathfindingStatistics;
             };
 
             pathAlgorithm.OnStarted += (sender, eventArgs) => { timer.Start(); };
