@@ -197,7 +197,7 @@ namespace Wpf3dVersion.ViewModel
             callBack(sliderNewValue, field);
 
             field.SetDistanceBetweenVertices(Graph);
-            field.CenterGraph(Graph);
+            field.CenterGraph(Graph, additionalOffset: 1.0);
         }
 
         private bool AlwaysExecutable(object param)
