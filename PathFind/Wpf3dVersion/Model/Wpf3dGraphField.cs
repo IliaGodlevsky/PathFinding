@@ -34,17 +34,20 @@ namespace Wpf3dVersion.Model
             }
         }
 
-        public void CenterGraph(IGraph graph)
+        public void CenterGraph(IGraph graph, double additionalOffset = 0.0)
         {
             var dimensionSizes = graph.DimensionsSizes.ToArray();
-
+            var distancesToCenter = new double[dimensionSizes.Length];
+            
             foreach (Wpf3dVertex vertex in graph)
             {
-                var xAxisDistanceToCenter = (-dimensionSizes[0] + 1) * (vertex.Size + DistanceBetweenAtXAxis) / 2;
-                var yAxisDistanceToCenter = (-dimensionSizes[1] + 1) * (vertex.Size + DistanceBetweenAtYAxis) / 2;
-                var zAxisDistanceToCenter = (-dimensionSizes[2] + 1) * (vertex.Size + DistanceBetweenAtZAxis) / 2;
+                for (int i = 0; i < dimensionSizes.Length; i++)
+                {
+                    distancesToCenter[i] = GetVertexDistanceToCenter(vertex.Size, 
+                        dimensionSizes[i], additionalOffset, DistanceBetween[i]);
+                }
 
-                SetVertexOffset(vertex, xAxisDistanceToCenter, yAxisDistanceToCenter, zAxisDistanceToCenter);
+                SetVertexOffset(vertex, distancesToCenter);
             }
         }
 
@@ -64,6 +67,19 @@ namespace Wpf3dVersion.Model
             };
 
             vertex.Transform = translate;
+        }
+
+        private double[] DistanceBetween => new double[] 
+        { 
+            DistanceBetweenAtXAxis, 
+            DistanceBetweenAtYAxis , 
+            DistanceBetweenAtZAxis 
+        };
+
+        private static double GetVertexDistanceToCenter(double vertexSize, 
+            double dimensionSize, double additionalOffset, double distanceBetweenVertices)
+        {
+            return (-dimensionSize + additionalOffset) * (vertexSize + distanceBetweenVertices) / 2;
         }
     }
 }
