@@ -72,7 +72,7 @@ namespace Wpf3dVersion.Model
         private double[] DistanceBetween => new double[] 
         { 
             DistanceBetweenAtXAxis, 
-            DistanceBetweenAtYAxis , 
+            DistanceBetweenAtYAxis, 
             DistanceBetweenAtZAxis 
         };
 
