@@ -3,7 +3,7 @@ using GraphLib.Coordinates.Interface;
 using GraphLib.Extensions;
 using GraphLib.Graphs.Abstractions;
 using GraphLib.Graphs.Serialization.Infrastructure.Info.Collections;
-using GraphLib.Info.Interface;
+using GraphLib.Graphs.Serialization.Infrastructure.Info.Collections.Interface;
 using GraphLib.Vertex;
 using GraphLib.Vertex.Interface;
 using System;
@@ -29,13 +29,12 @@ namespace GraphLib.Graphs
                     return new DefaultVertex();
                 }
 
-                var coord = coordinate as Coordinate3D;
-                if (coord == null)
+                if (coordinate is Coordinate3D)
                 {
-                    throw new ArgumentException("Must be 3D coordinates");
+                    return vertices[Index.ToIndex(coordinate, Length, Height)];
                 }
 
-                return vertices[Index.ToIndex(coordinate, Length, Height)];
+                throw new ArgumentException("Must be 3D coordinates");
             }
             set
             {
@@ -44,8 +43,7 @@ namespace GraphLib.Graphs
                     return;
                 }
 
-                var coord = coordinate as Coordinate3D;
-                if (coord == null)
+                if (!(coordinate is Coordinate3D))
                 {
                     throw new ArgumentException("Must be 3D coordinates");
                 }

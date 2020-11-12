@@ -1,6 +1,6 @@
 ﻿using GraphLib.Graphs.Abstractions;
+using GraphLib.Graphs.Serialization.Infrastructure.Info.Collections.Interface;
 using GraphLib.Info;
-using GraphLib.Info.Interface;
 using GraphLib.Vertex.Interface;
 using System;
 using System.IO;

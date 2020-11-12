@@ -1,7 +1,8 @@
 ﻿using Common.Interfaces;
+using GraphLib.Info;
 using System.Collections.Generic;
 
-namespace GraphLib.Info.Interface
+namespace GraphLib.Graphs.Serialization.Infrastructure.Info.Collections.Interface
 {
     public interface IVertexInfoCollection : IEnumerable<VertexInfo>, IDefault
     {

@@ -2,8 +2,8 @@
 using GraphLib.Graphs.Abstractions;
 using GraphLib.Graphs.Serialization.Abstractions;
 using GraphLib.Graphs.Serialization.Infrastructure.Info.Collections;
+using GraphLib.Graphs.Serialization.Infrastructure.Info.Collections.Interface;
 using GraphLib.Info;
-using GraphLib.Info.Interface;
 using GraphLib.Vertex.Interface;
 using GraphLib.VertexConnecting;
 using System;
@@ -19,11 +19,13 @@ namespace GraphLib.Graphs.Serialization
             return (VertexInfoCollection3D)formatter.Deserialize(stream);
         }
 
-        protected override IGraph GetGraphFromDto(IVertexInfoCollection verticesDto, Func<VertexInfo, IVertex> dtoConverter)
+        protected override IGraph GetGraphFromDto(IVertexInfoCollection verticesDto, 
+            Func<VertexInfo, IVertex> dtoConverter)
         {
-            var width = (verticesDto as VertexInfoCollection3D).Width;
-            var length = (verticesDto as VertexInfoCollection3D).Length;
-            var height = (verticesDto as VertexInfoCollection3D).Height;
+            var vertexInfoCollection = verticesDto as VertexInfoCollection3D;
+            var width = vertexInfoCollection.Width;
+            var length = vertexInfoCollection.Length;
+            var height = vertexInfoCollection.Height;
 
             graph = new Graph3d(width, length, height);
 

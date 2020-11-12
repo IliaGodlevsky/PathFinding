@@ -1,9 +1,10 @@
-﻿using GraphLib.Info.Interface;
+﻿using GraphLib.Graphs.Serialization.Infrastructure.Info.Collections.Interface;
+using GraphLib.Info;
 using System;
 using System.Collections;
 using System.Collections.Generic;
 
-namespace GraphLib.Info.Containers
+namespace GraphLib.Graphs.Serialization.Infrastructure.Info.Collections
 {
     [Serializable]
     public sealed class EmptyVertexInfoCollection : IVertexInfoCollection

@@ -1,7 +1,7 @@
 ﻿using GraphLib.Coordinates.Interface;
 using GraphLib.Graphs.Abstractions;
-using GraphLib.Info.Containers;
-using GraphLib.Info.Interface;
+using GraphLib.Graphs.Serialization.Infrastructure.Info.Collections;
+using GraphLib.Graphs.Serialization.Infrastructure.Info.Collections.Interface;
 using GraphLib.Vertex;
 using GraphLib.Vertex.Interface;
 using System.Collections;

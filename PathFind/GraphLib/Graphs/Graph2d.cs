@@ -2,12 +2,12 @@
 using System.Collections.Generic;
 using GraphLib.Coordinates.Interface;
 using GraphLib.Coordinates;
-using GraphLib.Info.Containers;
-using GraphLib.Info.Interface;
 using GraphLib.Vertex;
 using GraphLib.Vertex.Interface;
 using GraphLib.Extensions;
 using GraphLib.Graphs.Abstractions;
+using GraphLib.Graphs.Serialization.Infrastructure.Info.Collections.Interface;
+using GraphLib.Graphs.Serialization.Infrastructure.Info.Collections;
 
 namespace GraphLib.Graphs
 {
@@ -15,7 +15,6 @@ namespace GraphLib.Graphs
     /// A structure amounting to a set of objects in which 
     /// some pairs of the objects are in some sense "related"
     /// </summary>
-    [Serializable]
     public class Graph2d : BaseGraph
     {
         public Graph2d(int width, int lenght)
@@ -37,28 +36,27 @@ namespace GraphLib.Graphs
                 {
                     return new DefaultVertex();
                 }
-                var coord = coordinate as Coordinate2D;
 
-                if (coord == null)
+                if (!(coordinate is Coordinate2D))
                 {
                     throw new ArgumentException("Must be 2D coordinates");
                 }
 
-                return vertices[Index.ToIndex(coordinate, Length)];
+                var index = Index.ToIndex(coordinate, Length);
+                return vertices[index];
             }
             set
             {
                 if (coordinate.IsDefault)
                     return;
 
-                var coord = coordinate as Coordinate2D;
-
-                if (coord == null)
+                if (!(coordinate is Coordinate2D))
                 {
                     throw new ArgumentException("Must be 2D coordinates");
                 }
 
-                vertices[Index.ToIndex(coordinate, Length)] = value;
+                var index = Index.ToIndex(coordinate, Length);
+                vertices[index] = value;
             }
         }
 
