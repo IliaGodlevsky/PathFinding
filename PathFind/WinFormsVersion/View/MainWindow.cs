@@ -31,8 +31,8 @@ namespace WinFormsVersion.Forms
                 mainModel.MakeUnweighted
             };
 
-            toolStripRadioButton2.GroupID = 1;
-            toolStripButton6.GroupID = 1;
+            weightedButton.GroupID = 1;
+            unweightedButton.GroupID = 1;
 
             var bindingStatistics = new Binding(
                 nameof(statistics.Text), 
@@ -41,7 +41,7 @@ namespace WinFormsVersion.Forms
             statistics.DataBindings.Add(bindingStatistics);
 
             var bindingParametres = new Binding(
-                nameof(statistics.Text), 
+                nameof(parametres.Text), 
                 mainModel, 
                 nameof(mainModel.GraphParametres));
             parametres.DataBindings.Add(bindingParametres);

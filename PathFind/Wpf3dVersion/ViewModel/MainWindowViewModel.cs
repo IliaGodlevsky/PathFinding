@@ -50,7 +50,7 @@ namespace Wpf3dVersion.ViewModel
                 var currentWindow = (Application.Current.MainWindow as MainWindow);
                 currentWindow?.GraphField?.Children?.Clear();
                 currentWindow?.GraphField?.Children?.Add(graphField as Wpf3dGraphField);
-                (graphField as Wpf3dGraphField).CenterGraph(Graph);
+                (graphField as Wpf3dGraphField).CenterGraph();
                 OnPropertyChanged();
             }
         }
@@ -99,18 +99,18 @@ namespace Wpf3dVersion.ViewModel
         }
 
         public void XAxisSliderValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
-        { 
-            AxisSliderValueChanged((sliderValue, field) => field.DistanceBetweenAtXAxis = sliderValue, e.NewValue);
+        {
+            AxisSliderValueChanged((sliderValue, field) => field.DistanceBetweenAtXAxis = sliderValue, e.NewValue, 1, 0, 0);
         }
 
         public void YAxisSliderValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
         {
-            AxisSliderValueChanged((sliderValue, field) => field.DistanceBetweenAtYAxis = sliderValue, e.NewValue);
+            AxisSliderValueChanged((sliderValue, field) => field.DistanceBetweenAtYAxis = sliderValue, e.NewValue, 0, 1, 0);
         }
 
         public void ZAxisSliderValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
         {
-            AxisSliderValueChanged((sliderValue, field) => field.DistanceBetweenAtZAxis = sliderValue, e.NewValue);
+            AxisSliderValueChanged((sliderValue, field) => field.DistanceBetweenAtZAxis = sliderValue, e.NewValue, 0, 0, 1);
         }
 
         private void ChangeVerticesOpacity()
@@ -191,13 +191,17 @@ namespace Wpf3dVersion.ViewModel
                 : string.Empty;
         }
 
-        private void AxisSliderValueChanged(Action<double, Wpf3dGraphField> callBack, double sliderNewValue)
+        private void AxisSliderValueChanged(Action<double, Wpf3dGraphField> callBack, 
+            double sliderNewValue, params double[] additionalOffset)
         {
             var field = graphField as Wpf3dGraphField;
-            callBack(sliderNewValue, field);
 
-            field.SetDistanceBetweenVertices(Graph);
-            field.CenterGraph(Graph, additionalOffset: 1.0);
+            callBack(sliderNewValue, field);
+            field.SetDistanceBetweenVertices();
+            if (sliderNewValue == 0)
+                field.CenterGraph(0, 0, 0);
+            else
+                field.CenterGraph(additionalOffset);
         }
 
         private bool AlwaysExecutable(object param)
