@@ -20,7 +20,9 @@ namespace Algorithm.PathFindingAlgorithms
 
         protected override IVertex GetNextVertex()
         {
-            neighbourQueue = new Queue<IVertex>(neighbourQueue.OrderBy(vertex => vertex.AccumulatedCost));
+            var orderedVertices = neighbourQueue.OrderBy(vertex => vertex.AccumulatedCost);
+            neighbourQueue = new Queue<IVertex>(orderedVertices);
+
             return base.GetNextVertex();
         }
 

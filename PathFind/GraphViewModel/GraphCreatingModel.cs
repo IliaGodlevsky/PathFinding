@@ -1,8 +1,11 @@
-﻿using GraphLib.Graphs.Abstractions;
+﻿using GraphLib.Coordinates;
+using GraphLib.Graphs;
+using GraphLib.Graphs.Abstractions;
 using GraphLib.Graphs.Factories;
 using GraphLib.Vertex.Interface;
 using GraphViewModel.Interfaces;
 using System;
+using System.Linq;
 
 namespace GraphLib.ViewModel
 {
@@ -21,8 +24,9 @@ namespace GraphLib.ViewModel
 
         public virtual void CreateGraph(Func<IVertex> vertexFactory)
         {
-            var graphfactory = new Graph2dFactory(new GraphParametres(Width, Height, ObstaclePercent));
-            graph = graphfactory.CreateGraph(vertexFactory);
+            var graphfactory = new GraphFactory<Graph2d>(ObstaclePercent, Width, Height);
+            graph = graphfactory.CreateGraph(vertexFactory, 
+                (coordinates) => new Coordinate2D(coordinates.ToArray()));
             model.ConnectNewGraph(graph);
         }
 

@@ -25,6 +25,7 @@ namespace Algorithm.PathFindingAlgorithms
         }
 
         private int persentOfFurthestVerticesToDelete;
+
         /// <summary>
         /// Percent in percent points, f.e. 5, 10, 15
         /// </summary>
@@ -45,17 +46,25 @@ namespace Algorithm.PathFindingAlgorithms
         {
             IVertex next = new DefaultVertex();
 
-            verticesProcessQueue.Sort((v1, v2) => HeuristicFunction(v2).CompareTo(HeuristicFunction(v1)));
+            verticesProcessQueue.Sort(CompareByHeuristic);
 
-            deletedVertices.AddRange(verticesProcessQueue.Take(VerticesCountToDelete));
+            var verticesToDelete = verticesProcessQueue.Take(VerticesCountToDelete);
+            deletedVertices.AddRange(verticesToDelete);
             verticesProcessQueue.RemoveRange(0, VerticesCountToDelete);
 
             next = base.GetChippestUnvisitedVertex();
+
             if (next.IsDefault)
             {
                 verticesProcessQueue = deletedVertices;
             }
+
             return base.GetChippestUnvisitedVertex();
+        }
+
+        protected virtual int CompareByHeuristic(IVertex v1, IVertex v2)
+        {
+            return HeuristicFunction(v2).CompareTo(HeuristicFunction(v1));
         }
 
         private int VerticesCountToDelete =>

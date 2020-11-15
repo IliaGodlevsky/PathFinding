@@ -47,6 +47,6 @@ namespace Wpf3dVersion.Factories
             mesh.TriangleIndices.Add(3);
 
             return new GeometryModel3D(mesh, material);
-        }        
+        }
     }
 }

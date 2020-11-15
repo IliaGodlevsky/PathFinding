@@ -1,5 +1,6 @@
 ﻿using GraphLib.Coordinates.Interface;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace GraphLib.Coordinates
@@ -30,6 +31,17 @@ namespace GraphLib.Coordinates
             }
 
             return index;
+        }
+
+        public static IEnumerable<int> ToCoordinate(int currentIndex,
+            params int[] referenceDimensions)
+        {
+            for (int i = 0; i < referenceDimensions.Length; i++)
+            {
+                int coordinate = currentIndex % referenceDimensions[i];
+                currentIndex /= referenceDimensions[i];
+                yield return coordinate;
+            }
         }
     }
 }

@@ -3,8 +3,10 @@ using GraphLib.Extensions;
 using GraphLib.Info;
 using GraphLib.Vertex.Cost;
 using GraphLib.Vertex.Interface;
+using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using System.Windows;
 using System.Windows.Media;
 using System.Windows.Media.Media3D;
@@ -166,7 +168,6 @@ namespace Wpf3dVersion.Model
             {
                 Brush = SimpleVertexBrush;
             }
-            
         }
 
         public void MarkAsStart()
@@ -179,11 +180,13 @@ namespace Wpf3dVersion.Model
             Brush = VisitedVertexBrush;
         }
 
-        protected static void VisualPropertyChanged(DependencyObject depObj, 
+        protected async static void VisualPropertyChanged(DependencyObject depObj, 
             DependencyPropertyChangedEventArgs prop)
         {
-            Wpf3dVertex vert = (Wpf3dVertex)depObj;
-            vert.InvalidateModel();
+            var flags = BindingFlags.Public | BindingFlags.Instance;
+            var method = depObj.GetType().GetMethod(nameof(InvalidateModel), flags);
+            var delegatedMethod = Delegate.CreateDelegate(typeof(Action), depObj, method);
+            await depObj.Dispatcher.BeginInvoke(delegatedMethod);
         }
 
         protected static void ModelPropertyChanged(DependencyObject depObj, 
@@ -193,11 +196,13 @@ namespace Wpf3dVersion.Model
             vert.Visual3DModel = vert.Model;
         }
 
-        protected static void BrushPropertyChanged(DependencyObject depObj,
+        protected async static void BrushPropertyChanged(DependencyObject depObj,
             DependencyPropertyChangedEventArgs prop)
         {
-            Wpf3dVertex vert = (Wpf3dVertex)depObj;
-            vert.OnUpdateModel();
+            var flags = BindingFlags.NonPublic | BindingFlags.Instance;
+            var method = depObj.GetType().GetMethod(nameof(OnUpdateModel), flags);
+            var delegatedMethod = Delegate.CreateDelegate(typeof(Action), depObj, method);
+            await depObj.Dispatcher.BeginInvoke(delegatedMethod);
         }
 
         protected override void OnUpdateModel()

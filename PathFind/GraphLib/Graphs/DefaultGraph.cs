@@ -46,6 +46,12 @@ namespace GraphLib.Graphs
 
         public bool IsDefault => true;
 
+        public IVertex this[int index] 
+        { 
+            get => defaultVertex;
+            set => _ = value; 
+        }
+
         public IEnumerator<IVertex> GetEnumerator()
         {
             return array.Cast<IVertex>().GetEnumerator();

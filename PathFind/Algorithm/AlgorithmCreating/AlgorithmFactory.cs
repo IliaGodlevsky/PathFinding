@@ -30,7 +30,7 @@ namespace Algorithm.AlgorithmCreating
                 if (typeRealizedInterfaces.Contains(algorithmInterfaceType.Name))
                 {
                     var attributeType = typeof(DescriptionAttribute);
-                    var attribute = (DescriptionAttribute)Attribute.GetCustomAttribute(type, attributeType);
+                    dynamic attribute = Attribute.GetCustomAttribute(type, attributeType);
                     var description = attribute != null ? attribute.Description : type.ToString();
                     Algorithms.Add(description, type);
                 }

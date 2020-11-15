@@ -21,6 +21,7 @@ namespace GraphLib.Extensions
                 }
             }
         }
+
         public static bool IsValidToBeRange(this IVertex vertex)
         {
             return vertex.IsSimpleVertex() && !vertex.IsIsolated();
@@ -45,7 +46,7 @@ namespace GraphLib.Extensions
         {
             vertex.Neighbours = new List<IVertex>();
             vertex.SetToDefault();
-            vertex.IsObstacle = false;
+            vertex.IsObstacle = false;           
         }
 
         public static void Initialize(this IVertex vertex, VertexInfo info)

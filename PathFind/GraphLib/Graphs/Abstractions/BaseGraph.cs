@@ -39,6 +39,12 @@ namespace GraphLib.Graphs.Abstractions
 
         public abstract bool IsDefault { get; }
 
+        public virtual IVertex this[int index]
+        {
+            get => vertices[index];
+            set => vertices[index] = value;
+        }
+
         public virtual IEnumerator<IVertex> GetEnumerator()
         {
             return vertices.AsEnumerable().GetEnumerator();

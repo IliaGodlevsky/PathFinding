@@ -29,13 +29,13 @@ namespace Algorithm.PathFindingAlgorithms
         public event AlgorithmEventHanlder OnStarted;
         public event Action<IVertex> OnVertexVisited;
         public event AlgorithmEventHanlder OnFinished;
-        public event Action<IVertex> OnEnqueued;
+        public event Action<IVertex> OnVertexEnqueued;
 
         public void FindPath()
         {
             OnStarted?.Invoke(this, new AlgorithmEventArgs());
             OnVertexVisited?.Invoke(new DefaultVertex());           
-            OnEnqueued?.Invoke(new DefaultVertex());
+            OnVertexEnqueued?.Invoke(new DefaultVertex());
             OnFinished?.Invoke(this, new AlgorithmEventArgs());
         }
     }

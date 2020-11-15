@@ -14,8 +14,22 @@ namespace GraphLib.Graphs
     public class Graph3d : BaseGraph
     {
         public Graph3d(int width, int lenght, int height)
+            : this(new int[] { width, lenght, height })
         {
-            Width = width; Length = lenght; Height = height;
+
+        }
+
+        public Graph3d(params int[] dimensions)
+        {
+            if (dimensions.Length != 3)
+            {
+                throw new ArgumentException("Number of dimensions doesn't match");
+            }
+
+            Width = dimensions[0]; 
+            Length = dimensions[1]; 
+            Height = dimensions[2];
+
             vertices = new IVertex[Size];
             this.RemoveExtremeVertices();
         }

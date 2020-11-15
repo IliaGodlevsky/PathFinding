@@ -8,6 +8,7 @@ using GraphLib.Extensions;
 using GraphLib.Graphs.Abstractions;
 using GraphLib.Graphs.Serialization.Infrastructure.Info.Collections.Interface;
 using GraphLib.Graphs.Serialization.Infrastructure.Info.Collections;
+using System.Linq;
 
 namespace GraphLib.Graphs
 {
@@ -17,9 +18,22 @@ namespace GraphLib.Graphs
     /// </summary>
     public class Graph2d : BaseGraph
     {
-        public Graph2d(int width, int lenght)
+        public Graph2d(int width, int length) 
+            : this(new int[] { width, length })
         {
-            Width = width; Length = lenght;
+
+        }
+
+        public Graph2d(params int[] dimensions)
+        {
+            if (dimensions.Length != 2)
+            {
+                throw new ArgumentException("Number of dimensions doesn't match");
+            }
+
+            Width = dimensions.First();
+            Length = dimensions.Last();
+
             vertices = new IVertex[Size];
             this.RemoveExtremeVertices();
         }

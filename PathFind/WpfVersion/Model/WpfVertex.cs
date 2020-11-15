@@ -4,6 +4,7 @@ using GraphLib.Extensions;
 using GraphLib.Info;
 using GraphLib.Vertex.Cost;
 using GraphLib.Vertex.Interface;
+using System;
 using System.Collections.Generic;
 using System.Windows.Controls;
 using System.Windows.Media;
@@ -57,7 +58,7 @@ namespace WpfVersion.Model.Vertex
             set 
             { 
                 cost = (VertexCost)value.Clone(); 
-                Content = cost.ToString(string.Empty); 
+                Content = cost.ToString(string.Empty);
             }
         }
 
@@ -102,7 +103,7 @@ namespace WpfVersion.Model.Vertex
         {
             if (!IsObstacle)
             {
-                Background = new SolidColorBrush(Colors.White);
+                Background = new SolidColorBrush(Colors.White);            
             }
         }
 

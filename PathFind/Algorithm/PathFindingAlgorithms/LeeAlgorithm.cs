@@ -23,7 +23,7 @@ namespace Algorithm.PathFindingAlgorithms
         public event AlgorithmEventHanlder OnStarted;
         public event Action<IVertex> OnVertexVisited;
         public event AlgorithmEventHanlder OnFinished;
-        public event Action<IVertex> OnEnqueued;
+        public event Action<IVertex> OnVertexEnqueued;
 
         public IGraph Graph { get; protected set; }
 
@@ -55,17 +55,20 @@ namespace Algorithm.PathFindingAlgorithms
         {
             foreach (var vert in vertex.GetUnvisitedNeighbours())
             {
-                OnEnqueued?.Invoke(vert);
+                OnVertexEnqueued?.Invoke(vert);
                 neighbourQueue.Enqueue(vert);
             }
 
-            neighbourQueue = new Queue<IVertex>(neighbourQueue.DistinctBy(vert => vert.Position));
+            var distincted = neighbourQueue.DistinctBy(vert => vert.Position);
+            neighbourQueue = new Queue<IVertex>(distincted);
         }
 
         protected virtual IVertex GetNextVertex()
         {
-            neighbourQueue = new Queue<IVertex>(neighbourQueue.Where(vertex => !vertex.IsVisited));
-            return neighbourQueue.DequeueOrDefaultVertex();
+            var notVisited = neighbourQueue.Where(vertex => !vertex.IsVisited);
+            neighbourQueue = new Queue<IVertex>(notVisited);
+
+            return neighbourQueue.DequeueOrDefault();
         }
 
         protected virtual double WaveFunction(IVertex vertex)

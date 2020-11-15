@@ -1,8 +1,11 @@
-﻿using GraphLib.Graphs.Factories;
+﻿using GraphLib.Coordinates;
+using GraphLib.Graphs;
+using GraphLib.Graphs.Factories;
 using GraphLib.Vertex.Interface;
 using GraphLib.ViewModel;
 using GraphViewModel.Interfaces;
 using System;
+using System.Linq;
 using System.Windows;
 using Wpf3dVersion.Infrastructure;
 using Wpf3dVersion.Model;
@@ -42,9 +45,9 @@ namespace Wpf3dVersion.ViewModel
 
         public override void CreateGraph(Func<IVertex> vertexFactory)
         {
-            var graphfactory = new Graph3dFactory(
-                Width, Length, Height, ObstaclePercent);
-            graph = graphfactory.CreateGraph(vertexFactory);
+            var graphfactory = new GraphFactory<Graph3d>(ObstaclePercent, Width, Length, Height);
+            graph = graphfactory.CreateGraph(vertexFactory,
+                (coordinates) => new Coordinate3D(coordinates.ToArray()));
 
             model.ConnectNewGraph(graph);
         }

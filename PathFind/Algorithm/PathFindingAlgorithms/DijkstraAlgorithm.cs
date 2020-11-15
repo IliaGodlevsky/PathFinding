@@ -21,7 +21,7 @@ namespace Algorithm.PathFindingAlgorithms
         public event AlgorithmEventHanlder OnStarted;
         public event Action<IVertex> OnVertexVisited;
         public event AlgorithmEventHanlder OnFinished;
-        public event Action<IVertex> OnEnqueued;
+        public event Action<IVertex> OnVertexEnqueued;
 
         public IGraph Graph { get; protected set; }
 
@@ -37,7 +37,7 @@ namespace Algorithm.PathFindingAlgorithms
         {
             OnStarted?.Invoke(this, new AlgorithmEventArgs(Graph));
 
-            SetAccumulatedCostToInfinity();
+            SetVerticesAccumulatedCost();
 
             var currentVertex = Graph.Start;
             currentVertex.IsVisited = true;
@@ -56,13 +56,13 @@ namespace Algorithm.PathFindingAlgorithms
             OnFinished?.Invoke(this, new AlgorithmEventArgs(Graph));
         }
 
-        private void SetAccumulatedCostToInfinity()
+        private void SetVerticesAccumulatedCost(double accumulatedCost = double.PositiveInfinity)
         {
             Graph.AsParallel().ForAll(vertex =>
             {
                 if (!vertex.IsStart && !vertex.IsObstacle)
                 {
-                    Graph[vertex.Position].AccumulatedCost = double.PositiveInfinity;
+                    Graph[vertex.Position].AccumulatedCost = accumulatedCost;
                 }
             });
         }
@@ -84,11 +84,11 @@ namespace Algorithm.PathFindingAlgorithms
             });
         }
 
-        private void ExtractNeighbours(IVertex vertex)
+        protected virtual void ExtractNeighbours(IVertex vertex)
         {
             foreach (var neighbour in vertex.GetUnvisitedNeighbours())
             {
-                OnEnqueued?.Invoke(neighbour);
+                OnVertexEnqueued?.Invoke(neighbour);
                 verticesProcessQueue.Add(neighbour);
             }
 

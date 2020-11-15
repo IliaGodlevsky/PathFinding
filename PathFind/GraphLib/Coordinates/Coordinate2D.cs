@@ -2,6 +2,7 @@
 using GraphLib.Extensions;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace GraphLib.Coordinates
 {
@@ -38,10 +39,21 @@ namespace GraphLib.Coordinates
 
         public bool IsDefault => false;
 
-        public Coordinate2D(int x, int y)
+        public Coordinate2D(int x, int y) 
+            : this(new int[] { x, y })
         {
-            X = x;
-            Y = y;
+
+        }
+
+        public Coordinate2D(params int[] coordinates)
+        {
+            if (coordinates.Length != 2) 
+            {
+                throw new ArgumentException("Must be two coordinates");
+            }
+
+            X = coordinates.First();
+            Y = coordinates.Last();
         }
 
         public override bool Equals(object pos)

@@ -8,11 +8,22 @@ namespace GraphLib.Coordinates
     [Serializable]
     public class Coordinate3D : ICoordinate
     {
-        public Coordinate3D(int x, int y, int z)
+        public Coordinate3D(params int[] coordinates)
         {
-            X = x;
-            Y = y;
-            Z = z;
+            if (coordinates.Length != 3)
+            {
+                throw new ArgumentException("Must be two coordinates");
+            }
+
+            X = coordinates[0];
+            Y = coordinates[1];
+            Z = coordinates[2];
+        }
+
+        public Coordinate3D(int x, int y, int z)
+            : this(new int[] { x, y, z })
+        {
+
         }
 
         public int X { get; set; }

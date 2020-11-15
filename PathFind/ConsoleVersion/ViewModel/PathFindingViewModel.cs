@@ -47,7 +47,7 @@ namespace ConsoleVersion.ViewModel
 
             base.PrepareAlgorithm();
 
-            var thread = new Thread(() => 
+            var thread = new Thread(() =>
             {
                 while (true)
                 {

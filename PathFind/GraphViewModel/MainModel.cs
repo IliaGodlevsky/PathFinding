@@ -2,10 +2,10 @@
 using GraphLib.Extensions;
 using GraphLib.GraphField;
 using GraphLib.GraphFieldCreating;
-using GraphLib.GraphLib.Graphs.Serialization;
 using GraphLib.Graphs;
 using GraphLib.Graphs.Abstractions;
-using GraphLib.Graphs.Serialization.Abstractions;
+using GraphLib.Graphs.Serialization;
+using GraphLib.Graphs.Serialization.Interfaces;
 using GraphLib.Info;
 using GraphLib.Vertex.Interface;
 using GraphViewModel.Interfaces;
@@ -35,7 +35,7 @@ namespace GraphViewModel
         public MainModel()
         {           
             Graph = new DefaultGraph();
-            Serializer = new Graph2DSerializer();
+            Serializer = new GraphSerializer<Graph2d>();
             graphParamFormat = ViewModelResources.GraphParametresFormat;
         }
 

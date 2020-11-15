@@ -6,23 +6,6 @@ using System.Collections.Generic;
 
 namespace GraphLib.Graphs.Abstractions
 {
-    public struct GraphParametres
-    {
-        public int Width { get; }
-
-        public int Height { get; }
-
-        public int ObstaclePercent { get; }
-
-        public GraphParametres(int width,
-            int height, int obstaclePercent)
-        {
-            Width = width;
-            Height = height;
-            ObstaclePercent = obstaclePercent;
-        }
-    }
-
     /// <summary>
     /// Provides methods for accessing the vertices of the graph, 
     /// as well as for getting information about the graph
@@ -38,6 +21,8 @@ namespace GraphLib.Graphs.Abstractions
         int ObstaclePercent { get; }
 
         IVertex this[ICoordinate coordinate] { get; set; }
+
+        IVertex this[int index] { get; set; }
 
         IVertex End { get; set; }
 

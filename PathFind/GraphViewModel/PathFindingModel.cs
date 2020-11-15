@@ -53,7 +53,10 @@ namespace GraphLib.ViewModel
                 }
 
                 var timerCurrentInformation = timer.GetTimeInformation(ViewModelResources.TimerInfoFormat);
-                var currentPathfindingStatistics = string.Format("   " + pathFindStatisticsFormat, 0, 0, graph.NumberOfVisitedVertices);
+
+                var currentPathfindingStatistics = string.Format("   " + 
+                    pathFindStatisticsFormat, 0, 0, graph.NumberOfVisitedVertices);
+
                 mainViewModel.PathFindingStatistics = timerCurrentInformation + currentPathfindingStatistics;
             };
 
@@ -62,11 +65,14 @@ namespace GraphLib.ViewModel
             pathAlgorithm.OnFinished += (sender, eventArgs) =>
             {
                 timer.Stop();
-                mainViewModel.PathFindingStatistics = timer.GetTimeInformation(ViewModelResources.TimerInfoFormat);
+
+                mainViewModel.PathFindingStatistics 
+                = timer.GetTimeInformation(ViewModelResources.TimerInfoFormat);
+
                 pathAlgorithm.GetPath().DrawPath();
             };
 
-            pathAlgorithm.OnEnqueued += vertex =>
+            pathAlgorithm.OnVertexEnqueued += vertex =>
             {
                 if (vertex.IsSimpleVertex())
                 {

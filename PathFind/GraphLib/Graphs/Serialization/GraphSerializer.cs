@@ -1,24 +1,28 @@
 ﻿using GraphLib.Graphs.Abstractions;
 using GraphLib.Graphs.Serialization.Infrastructure.Info.Collections.Interface;
+using GraphLib.Graphs.Serialization.Interfaces;
 using GraphLib.Info;
 using GraphLib.Vertex.Interface;
+using GraphLib.VertexConnecting;
 using System;
 using System.IO;
+using System.Linq;
 using System.Runtime.Serialization;
 using System.Runtime.Serialization.Formatters.Binary;
 
-namespace GraphLib.Graphs.Serialization.Abstractions
+namespace GraphLib.Graphs.Serialization
 {
-    public abstract class BaseGraphSerializer : IGraphSerializer
+    public class GraphSerializer<TGraph> : IGraphSerializer
+        where TGraph : IGraph
     {
         public event Action<string> OnExceptionCaught;
 
-        public BaseGraphSerializer(IFormatter formatter)
+        public GraphSerializer(IFormatter formatter)
         {
             this.formatter = formatter;
         }
 
-        public BaseGraphSerializer()
+        public GraphSerializer()
         {
             graph = new DefaultGraph();
             formatter = new BinaryFormatter();
@@ -30,8 +34,8 @@ namespace GraphLib.Graphs.Serialization.Abstractions
             {
                 using (var stream = new FileStream(path, FileMode.Open))
                 {
-                    var verticesDto = Deserialize(stream);
-                    graph = GetGraphFromDto(verticesDto, vertexFactory);
+                    var verticesDto = (IVertexInfoCollection)formatter.Deserialize(stream);
+                    graph = AssembleGraph(verticesDto, vertexFactory);
                 }
             }
             catch (Exception ex)
@@ -41,8 +45,6 @@ namespace GraphLib.Graphs.Serialization.Abstractions
 
             return graph;
         }
-
-        protected abstract IVertexInfoCollection Deserialize(Stream stream);
 
         public void SaveGraph(IGraph graph, string path)
         {
@@ -59,10 +61,24 @@ namespace GraphLib.Graphs.Serialization.Abstractions
             }
         }
 
-        protected abstract IGraph GetGraphFromDto(IVertexInfoCollection verticesDto,
-                       Func<VertexInfo, IVertex> dtoConverter);
+        private IGraph AssembleGraph(IVertexInfoCollection verticesInfo,
+                    Func<VertexInfo, IVertex> dtoConverter)
+        {
+            var dimensions = verticesInfo.DimensionsSizes.ToArray();
+            graph = (IGraph)Activator.CreateInstance(typeof(TGraph), dimensions);
 
-        protected IGraph graph;
+            for (int i = 0; i < verticesInfo.Count(); i++)
+            {
+                graph[i] = dtoConverter(verticesInfo.ElementAt(i));
+            }
+
+            VertexConnector.ConnectVertices(graph);
+
+            return graph;
+        }
+
         protected IFormatter formatter;
+
+        private IGraph graph;
     }
 }

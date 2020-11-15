@@ -10,7 +10,7 @@ namespace Algorithm.Extensions
     {
         public static IEnumerable<IVertex> GetPath(this IPathFindingAlgorithm self)
         {
-            if (self.Graph.Start.IsVisited)
+            if (self.Graph.End.IsVisited)
             {
                 return self.Graph.End.GetPathToStartVertex();
             }

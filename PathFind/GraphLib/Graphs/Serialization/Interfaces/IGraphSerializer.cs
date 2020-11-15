@@ -3,7 +3,7 @@ using GraphLib.Info;
 using GraphLib.Vertex.Interface;
 using System;
 
-namespace GraphLib.Graphs.Serialization.Abstractions
+namespace GraphLib.Graphs.Serialization.Interfaces
 {
     public interface IGraphSerializer
     {

@@ -1,4 +1,5 @@
 ﻿using GraphLib.GraphField;
+using GraphLib.Graphs;
 using GraphLib.Graphs.Serialization;
 using GraphViewModel;
 using GraphViewModel.Interfaces;
@@ -82,7 +83,7 @@ namespace Wpf3dVersion.ViewModel
             LoadGraphCommand = new RelayCommand(ExecuteLoadGraphCommand, AlwaysExecutable);           
             ChangeOpacityCommand = new RelayCommand(ExecuteChangeOpacity, CanExecuteGraphOperation);
 
-            Serializer = new Graph3DSerializer();
+            Serializer = new GraphSerializer<Graph3d>();
 
             graphParamFormat = Resource.GraphParamFormat;
         }

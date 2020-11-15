@@ -11,6 +11,7 @@ namespace Wpf3dVersion.ViewModel
     internal class PathFindingViewModel : PathFindingModel
     {
         public RelayCommand ConfirmPathFindAlgorithmChoice { get; }
+
         public RelayCommand CancelPathFindAlgorithmChoice { get; }
 
         public PathFindingViewModel(IMainModel model) : base(model)

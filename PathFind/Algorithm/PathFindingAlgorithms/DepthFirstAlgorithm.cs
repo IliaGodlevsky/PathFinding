@@ -21,7 +21,7 @@ namespace Algorithm.PathFindingAlgorithms
         public event AlgorithmEventHanlder OnStarted;
         public event Action<IVertex> OnVertexVisited;
         public event AlgorithmEventHanlder OnFinished;
-        public event Action<IVertex> OnEnqueued;
+        public event Action<IVertex> OnVertexEnqueued;
 
         /// <summary>
         /// A function that selects the best vertex on the step
@@ -43,6 +43,7 @@ namespace Algorithm.PathFindingAlgorithms
         {
             OnStarted?.Invoke(this, new AlgorithmEventArgs(Graph));
             var currentVertex = Graph.Start;
+            currentVertex.IsVisited = true;
 
             while (!currentVertex.IsEnd)
             {
@@ -58,7 +59,7 @@ namespace Algorithm.PathFindingAlgorithms
                 }
                 else
                 {
-                    currentVertex = visitedVerticesStack.PopOrDefaultVertex();
+                    currentVertex = visitedVerticesStack.PopOrDefault();
                 }
             }
 
@@ -71,10 +72,10 @@ namespace Algorithm.PathFindingAlgorithms
 
             foreach (var vert in neighbours)
             {
-                OnEnqueued?.Invoke(vert);
+                OnVertexEnqueued?.Invoke(vert);
             }
 
-            return neighbours.FindOrDefaultVertex(vert =>
+            return neighbours.FindOrDefault(vert =>
             {
                 return GreedyFunction(vert) == neighbours.Min(GreedyFunction);
             });
