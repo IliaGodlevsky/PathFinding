@@ -35,7 +35,7 @@ namespace GraphViewModel
         public MainModel()
         {           
             Graph = new DefaultGraph();
-            Serializer = new GraphSerializer<Graph2d>();
+            Serializer = new GraphSerializer<Graph2D>();
             graphParamFormat = ViewModelResources.GraphParametresFormat;
         }
 

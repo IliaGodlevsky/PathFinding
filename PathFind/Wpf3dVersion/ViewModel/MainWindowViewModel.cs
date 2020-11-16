@@ -83,7 +83,7 @@ namespace Wpf3dVersion.ViewModel
             LoadGraphCommand = new RelayCommand(ExecuteLoadGraphCommand, AlwaysExecutable);           
             ChangeOpacityCommand = new RelayCommand(ExecuteChangeOpacity, CanExecuteGraphOperation);
 
-            Serializer = new GraphSerializer<Graph3d>();
+            Serializer = new GraphSerializer<Graph3D>();
 
             graphParamFormat = Resource.GraphParamFormat;
         }

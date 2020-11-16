@@ -29,8 +29,7 @@ namespace WpfVersion.Model.Vertex
         }
 
         public WpfVertex() : base()
-        {
-            
+        {            
             Width = Height = VertexParametres.VertexSize;
             FontSize = VertexParametres.VertexSize * VertexParametres.TextToSizeRatio;
             Template = (ControlTemplate)TryFindResource("vertexTemplate");
@@ -103,7 +102,7 @@ namespace WpfVersion.Model.Vertex
         {
             if (!IsObstacle)
             {
-                Background = new SolidColorBrush(Colors.White);            
+                Background = new SolidColorBrush(Colors.White);
             }
         }
 

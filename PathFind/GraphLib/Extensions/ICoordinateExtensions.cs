@@ -5,14 +5,14 @@ namespace GraphLib.Extensions
 {
     public static class ICoordinateExtensions
     {
-        internal static bool IsEqual(this ICoordinate self, ICoordinate coordinate)
+        internal static bool IsEqual(this ICoordinate self, ICoordinate coordinates)
         {
-            if (self == null || coordinate == null)
+            if (self == null || coordinates == null)
             {
                 return false;
             }
 
-            return !self.Coordinates.Except(coordinate.Coordinates).Any();
+            return self.Coordinates.SequenceEqual(coordinates.Coordinates);
         }
     }
 }

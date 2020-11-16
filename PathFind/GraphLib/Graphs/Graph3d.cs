@@ -11,15 +11,15 @@ using System.Collections.Generic;
 
 namespace GraphLib.Graphs
 {
-    public class Graph3d : BaseGraph
+    public class Graph3D : BaseGraph
     {
-        public Graph3d(int width, int lenght, int height)
+        public Graph3D(int width, int lenght, int height)
             : this(new int[] { width, lenght, height })
         {
 
         }
 
-        public Graph3d(params int[] dimensions)
+        public Graph3D(params int[] dimensions)
         {
             if (dimensions.Length != 3)
             {

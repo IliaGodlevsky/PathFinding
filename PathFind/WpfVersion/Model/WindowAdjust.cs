@@ -1,7 +1,9 @@
-﻿using System.Windows;
+﻿using System.Linq;
+using System.Windows;
 using Common;
 using GraphLib.Graphs;
 using GraphLib.Graphs.Abstractions;
+using WpfVersion.Model.Vertex;
 
 namespace WpfVersion.Model
 {
@@ -11,7 +13,8 @@ namespace WpfVersion.Model
         {
             if (!graph.IsDefault)
             {
-                var graph2d = graph as Graph2d;
+                var graph2d = graph as Graph2D;
+                var vertex = graph2d.First() as WpfVertex;
 
                 var mainWindowDesiredWidth = (graph2d.Width + 2) * VertexParametres.SizeBetweenVertices;
                 var mainWindowDesiredHeight = (graph2d.Length + 2) * VertexParametres.SizeBetweenVertices;

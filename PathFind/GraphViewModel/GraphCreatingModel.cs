@@ -24,7 +24,7 @@ namespace GraphLib.ViewModel
 
         public virtual void CreateGraph(Func<IVertex> vertexFactory)
         {
-            var graphfactory = new GraphFactory<Graph2d>(ObstaclePercent, Width, Height);
+            var graphfactory = new GraphFactory<Graph2D>(ObstaclePercent, Width, Height);
             graph = graphfactory.CreateGraph(vertexFactory, 
                 (coordinates) => new Coordinate2D(coordinates.ToArray()));
             model.ConnectNewGraph(graph);

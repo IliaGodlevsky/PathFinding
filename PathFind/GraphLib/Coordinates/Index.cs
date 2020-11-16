@@ -36,10 +36,16 @@ namespace GraphLib.Coordinates
         public static IEnumerable<int> ToCoordinate(int currentIndex,
             params int[] referenceDimensions)
         {
+            if (currentIndex >= referenceDimensions.Aggregate((x, y) => x * y) || currentIndex < 0) 
+            {
+                throw new ArgumentOutOfRangeException("Index is out of range");
+            }
+
             for (int i = 0; i < referenceDimensions.Length; i++)
             {
                 int coordinate = currentIndex % referenceDimensions[i];
                 currentIndex /= referenceDimensions[i];
+
                 yield return coordinate;
             }
         }

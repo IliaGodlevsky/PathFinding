@@ -8,7 +8,7 @@ namespace GraphLib.Graphs.Factories.Interfaces
 {
     public interface IGraphFactory
     {
-        IGraph CreateGraph(Func<IVertex> vertexFactory, 
-            Func<IEnumerable<int>, ICoordinate> coordinateFactory);
+        IGraph CreateGraph(Func<IVertex> vertexFactoryMethod, 
+            Func<IEnumerable<int>, ICoordinate> coordinateFactoryMethod);
     }
 }

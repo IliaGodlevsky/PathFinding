@@ -35,8 +35,8 @@ namespace ConsoleVersion.ViewModel
 
         public void ChangeStatus()
         {
-            var upperPossibleXValue = (Graph as Graph2d).Width;
-            var upperPossibleYValue = (Graph as Graph2d).Length;
+            var upperPossibleXValue = (Graph as Graph2D).Width;
+            var upperPossibleYValue = (Graph as Graph2D).Length;
 
             var point = Input.InputPoint(upperPossibleXValue, upperPossibleYValue);
 
@@ -45,8 +45,8 @@ namespace ConsoleVersion.ViewModel
 
         public void ChangeVertexCost()
         {
-            var upperPossibleXValue = (Graph as Graph2d).Width;
-            var upperPossibleYValue = (Graph as Graph2d).Length;
+            var upperPossibleXValue = (Graph as Graph2D).Width;
+            var upperPossibleYValue = (Graph as Graph2D).Length;
 
             var point = Input.InputPoint(upperPossibleXValue, upperPossibleYValue);
 

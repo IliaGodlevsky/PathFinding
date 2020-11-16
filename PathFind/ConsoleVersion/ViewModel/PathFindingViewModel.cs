@@ -110,8 +110,8 @@ namespace ConsoleVersion.ViewModel
         {
             Console.WriteLine(message);
 
-            var upperPosibleXValue = (graph as Graph2d).Width;
-            var upperPosibleYValue = (graph as Graph2d).Length;
+            var upperPosibleXValue = (graph as Graph2D).Width;
+            var upperPosibleYValue = (graph as Graph2D).Length;
 
             var point = Input.InputPoint(upperPosibleXValue, upperPosibleYValue);
 

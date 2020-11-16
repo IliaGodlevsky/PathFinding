@@ -24,12 +24,12 @@ namespace GraphLib.Graphs.Serialization
 
         public GraphSerializer()
         {
-            graph = new DefaultGraph();
             formatter = new BinaryFormatter();
         }
 
         public IGraph LoadGraph(string path, Func<VertexInfo, IVertex> vertexFactory)
         {
+            IGraph graph;
             try
             {
                 using (var stream = new FileStream(path, FileMode.Open))
@@ -41,6 +41,7 @@ namespace GraphLib.Graphs.Serialization
             catch (Exception ex)
             {
                 OnExceptionCaught?.Invoke(ex.Message);
+                return new DefaultGraph();
             }
 
             return graph;
@@ -62,14 +63,14 @@ namespace GraphLib.Graphs.Serialization
         }
 
         private IGraph AssembleGraph(IVertexInfoCollection verticesInfo,
-                    Func<VertexInfo, IVertex> dtoConverter)
+                    Func<VertexInfo, IVertex> convertMethod)
         {
             var dimensions = verticesInfo.DimensionsSizes.ToArray();
-            graph = (IGraph)Activator.CreateInstance(typeof(TGraph), dimensions);
+            var graph = (IGraph)Activator.CreateInstance(typeof(TGraph), dimensions);
 
             for (int i = 0; i < verticesInfo.Count(); i++)
             {
-                graph[i] = dtoConverter(verticesInfo.ElementAt(i));
+                graph[i] = convertMethod(verticesInfo.ElementAt(i));
             }
 
             VertexConnector.ConnectVertices(graph);
@@ -77,8 +78,6 @@ namespace GraphLib.Graphs.Serialization
             return graph;
         }
 
-        protected IFormatter formatter;
-
-        private IGraph graph;
+        private IFormatter formatter;
     }
 }

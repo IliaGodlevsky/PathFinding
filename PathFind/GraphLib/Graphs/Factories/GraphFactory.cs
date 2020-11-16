@@ -17,7 +17,6 @@ namespace GraphLib.Graphs.Factories
         public GraphFactory(int obstacleChance, params int[] dimensionSizes)
         {
             this.obstacleChance = obstacleChance;
-            graph = new DefaultGraph();
             this.dimensionSizes = dimensionSizes;
         }
 
@@ -26,45 +25,39 @@ namespace GraphLib.Graphs.Factories
             rand = new Random();
         }
 
-        public IGraph CreateGraph(Func<IVertex> vertexFactory,
-            Func<IEnumerable<int>, ICoordinate> coordinateFactory)
+        public IGraph CreateGraph(Func<IVertex> vertexFactoryMethod,
+            Func<IEnumerable<int>, ICoordinate> coordinateFactoryMethod)
         {
             try
             {
-                graph = (IGraph)Activator.CreateInstance(typeof(TGraph), dimensionSizes);
+                var graph = (IGraph)Activator.CreateInstance(typeof(TGraph), dimensionSizes);
 
                 for (int i = 0; i < graph.Size; i++)
                 {
                     var coordinates = Index.ToCoordinate(i, dimensionSizes).ToArray();
-                    var coordinate = coordinateFactory(coordinates);
-                    CreateVertex(vertexFactory, coordinate);
+                    var coordinate = coordinateFactoryMethod?.Invoke(coordinates);
+
+                    graph[coordinate] = vertexFactoryMethod?.Invoke();
+
+                    graph[coordinate].Cost = rand.GetRandomValueCost();
+                    if (rand.IsObstacleChance(obstacleChance))
+                    {
+                        graph[coordinate].MarkAsObstacle();
+                    }
+
+                    graph[coordinate].Position = coordinate;
                 }
 
                 VertexConnector.ConnectVertices(graph);
+
+                return graph;
             }
             catch
             {
                 return new DefaultGraph();
             }
-
-            return graph;
         }
 
-        private void CreateVertex(Func<IVertex> vertexFactory,
-            ICoordinate coordinate)
-        {
-            graph[coordinate] = vertexFactory();
-            graph[coordinate].Cost = rand.GetRandomValueCost();
-
-            if (rand.IsObstacleChance(obstacleChance))
-            {
-                graph[coordinate].MarkAsObstacle();
-            }
-
-            graph[coordinate].Position = coordinate;
-        }
-
-        private IGraph graph;
         private readonly int obstacleChance;
         private readonly int[] dimensionSizes;
 

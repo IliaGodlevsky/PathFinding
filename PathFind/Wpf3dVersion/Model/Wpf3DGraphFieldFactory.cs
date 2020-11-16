@@ -9,7 +9,7 @@ namespace Wpf3dVersion.Model
     {
         public override IGraphField CreateGraphField(IGraph graph)
         {
-            var graph3D = graph as Graph3d;
+            var graph3D = graph as Graph3D;
 
             int width = graph3D.Width;
             int length = graph3D.Length;

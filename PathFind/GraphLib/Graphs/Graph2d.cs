@@ -16,15 +16,15 @@ namespace GraphLib.Graphs
     /// A structure amounting to a set of objects in which 
     /// some pairs of the objects are in some sense "related"
     /// </summary>
-    public class Graph2d : BaseGraph
+    public class Graph2D : BaseGraph
     {
-        public Graph2d(int width, int length) 
+        public Graph2D(int width, int length)
             : this(new int[] { width, length })
         {
 
         }
 
-        public Graph2d(params int[] dimensions)
+        public Graph2D(params int[] dimensions)
         {
             if (dimensions.Length != 2)
             {

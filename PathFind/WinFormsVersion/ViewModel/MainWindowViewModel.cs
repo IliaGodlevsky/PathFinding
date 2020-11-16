@@ -52,7 +52,7 @@ namespace WinFormsVersion.ViewModel
 
                 MainWindow.Controls.RemoveBy(ctrl => ctrl.IsGraphField());
 
-                field.Size = new Size((Graph as Graph2d).Width * size, (Graph as Graph2d).Length * size);
+                field.Size = new Size((Graph as Graph2D).Width * size, (Graph as Graph2D).Length * size);
                 MainWindow.Controls.Add(field);
             }
         }

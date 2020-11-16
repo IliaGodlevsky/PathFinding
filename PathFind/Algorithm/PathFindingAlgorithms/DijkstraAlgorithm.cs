@@ -74,14 +74,15 @@ namespace Algorithm.PathFindingAlgorithms
 
         protected virtual void RelaxNeighbours(IVertex vertex)
         {
-            vertex.GetUnvisitedNeighbours().AsParallel().ForAll(neighbour =>
+            foreach(var neighbour in vertex.GetUnvisitedNeighbours())
             {
-                if (neighbour.AccumulatedCost > Relax(neighbour, vertex))
+                var relaxedCost = Relax(neighbour, vertex);
+                if (neighbour.AccumulatedCost > relaxedCost)
                 {
-                    neighbour.AccumulatedCost = Relax(neighbour, vertex);
+                    neighbour.AccumulatedCost = relaxedCost;
                     neighbour.ParentVertex = vertex;
                 }
-            });
+            }
         }
 
         protected virtual void ExtractNeighbours(IVertex vertex)
