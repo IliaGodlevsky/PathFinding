@@ -1,6 +1,6 @@
 ﻿using Common.Interfaces;
 using GraphLib.Coordinates.Interface;
-using GraphLib.Graphs.Serialization.Infrastructure.Info.Collections.Interface;
+using GraphLib.Graphs.Serialization.Infrastructure.Info.Collections;
 using GraphLib.Vertex.Interface;
 using System.Collections.Generic;
 
@@ -28,10 +28,10 @@ namespace GraphLib.Graphs.Abstractions
 
         IVertex Start { get; set; }
 
-        IVertexInfoCollection VertexInfoCollection { get; }
-
-        string GetFormattedData(string format);
+        VertexInfoCollection VertexInfoCollection { get; }
 
         IEnumerable<int> DimensionsSizes { get; }
+
+        string GetFormattedData(string format);
     }
 }

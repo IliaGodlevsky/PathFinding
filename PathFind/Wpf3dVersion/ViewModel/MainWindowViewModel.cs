@@ -95,7 +95,6 @@ namespace Wpf3dVersion.ViewModel
 
         public override void CreateNewGraph()
         {
-
             PrepareWindow(new GraphCreatingViewModel(this), new GraphCreateWindow());
         }
 

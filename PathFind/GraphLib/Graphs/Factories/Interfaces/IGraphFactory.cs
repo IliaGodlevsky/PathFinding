@@ -8,6 +8,8 @@ namespace GraphLib.Graphs.Factories.Interfaces
 {
     public interface IGraphFactory
     {
+        event Action<string> OnExceptionCaught;
+
         IGraph CreateGraph(Func<IVertex> vertexFactoryMethod, 
             Func<IEnumerable<int>, ICoordinate> coordinateFactoryMethod);
     }

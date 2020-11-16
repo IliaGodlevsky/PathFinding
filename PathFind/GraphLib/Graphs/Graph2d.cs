@@ -6,8 +6,6 @@ using GraphLib.Vertex;
 using GraphLib.Vertex.Interface;
 using GraphLib.Extensions;
 using GraphLib.Graphs.Abstractions;
-using GraphLib.Graphs.Serialization.Infrastructure.Info.Collections.Interface;
-using GraphLib.Graphs.Serialization.Infrastructure.Info.Collections;
 using System.Linq;
 
 namespace GraphLib.Graphs
@@ -31,8 +29,8 @@ namespace GraphLib.Graphs
                 throw new ArgumentException("Number of dimensions doesn't match");
             }
 
-            Width = dimensions.First();
-            Length = dimensions.Last();
+            Width = dimensions.FirstOrDefault();
+            Length = dimensions.LastOrDefault();
 
             vertices = new IVertex[Size];
             this.RemoveExtremeVertices();
@@ -72,9 +70,7 @@ namespace GraphLib.Graphs
                 var index = Index.ToIndex(coordinate, Length);
                 vertices[index] = value;
             }
-        }
-
-        public override IVertexInfoCollection VertexInfoCollection => new VertexInfoCollection2D(this, Width, Length);
+        }      
 
         public override IEnumerable<int> DimensionsSizes => new int[] { Width, Length };
 

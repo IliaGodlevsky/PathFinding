@@ -60,11 +60,7 @@
     <Compile Include="Graphs\Factories\Interfaces\IGraphFactory.cs" />
     <Compile Include="Graphs\Graph3D.cs" />
     <Compile Include="Graphs\Serialization\GraphSerializer.cs" />
-    <Compile Include="Graphs\Serialization\Infrastructure\Info\Collections\Interface\BaseVertexInfoCollection.cs" />
-    <Compile Include="Graphs\Serialization\Infrastructure\Info\Collections\Interface\IVertexInfoContainer.cs" />
-    <Compile Include="Graphs\Serialization\Infrastructure\Info\Collections\EmptyVertexInfoCollection.cs" />
-    <Compile Include="Graphs\Serialization\Infrastructure\Info\Collections\VertexInfoCollection2D.cs" />
-    <Compile Include="Graphs\Serialization\Infrastructure\Info\Collections\VertexInfoCollection3D.cs" />
+    <Compile Include="Graphs\Serialization\Infrastructure\Info\Collections\VertexInfoCollection.cs" />
     <Compile Include="Graphs\Serialization\Infrastructure\Info\VertexInfo.cs" />
     <Compile Include="Graphs\Serialization\Interfaces\IGraphSerializer.cs" />
     <Compile Include="Graphs\DefaultGraph.cs" />

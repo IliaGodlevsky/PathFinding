@@ -14,7 +14,7 @@ namespace Wpf3dVersion.ViewModel
 {
     internal class GraphCreatingViewModel : GraphCreatingModel
     {
-        public int Length { get; set; }
+        public int Height { get; set; }
 
         public RelayCommand ConfirmCreateGraphCommand { get; }
 
@@ -46,6 +46,7 @@ namespace Wpf3dVersion.ViewModel
         public override void CreateGraph(Func<IVertex> vertexFactory)
         {
             var graphfactory = new GraphFactory<Graph3D>(ObstaclePercent, Width, Length, Height);
+
             graph = graphfactory.CreateGraph(vertexFactory,
                 (coordinates) => new Coordinate3D(coordinates.ToArray()));
 

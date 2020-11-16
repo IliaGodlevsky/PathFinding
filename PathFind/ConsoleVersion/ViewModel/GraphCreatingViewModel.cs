@@ -28,7 +28,7 @@ namespace ConsoleVersion.ViewModel
                 Range.WidthValueRange.UpperRange,
                 Range.WidthValueRange.LowerRange);
 
-            Height = Input.InputNumber(
+            Length = Input.InputNumber(
                 Messages.Item3,
                 Range.HeightValueRange.UpperRange,
                 Range.HeightValueRange.LowerRange);

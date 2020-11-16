@@ -47,10 +47,7 @@ namespace GraphViewModel
         public virtual void LoadGraph()
         {
             var newGraph = Serializer.LoadGraph(GetLoadingPath(), InfoConverter);
-            if (!newGraph.IsDefault)
-            {
-                ConnectNewGraph(newGraph);
-            }
+            ConnectNewGraph(newGraph);
         }
 
         public virtual void ClearGraph()
@@ -62,12 +59,15 @@ namespace GraphViewModel
 
         public void ConnectNewGraph(IGraph graph)
         {
-            Graph = graph;
-            GraphField = FieldFactory.CreateGraphField(Graph);
-            VertexEventHolder.Graph = Graph;
-            VertexEventHolder.SubscribeVertices();
-            GraphParametres = Graph.GetFormattedData(graphParamFormat);
-            PathFindingStatistics = string.Empty;
+            if (!graph.IsDefault)
+            {
+                Graph = graph;
+                GraphField = FieldFactory.CreateGraphField(Graph);
+                VertexEventHolder.Graph = Graph;
+                VertexEventHolder.SubscribeVertices();
+                GraphParametres = Graph.GetFormattedData(graphParamFormat);
+                PathFindingStatistics = string.Empty;
+            }
         }
 
         protected string graphParamFormat;

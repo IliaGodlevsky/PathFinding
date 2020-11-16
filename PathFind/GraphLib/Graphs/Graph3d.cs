@@ -2,12 +2,11 @@
 using GraphLib.Coordinates.Interface;
 using GraphLib.Extensions;
 using GraphLib.Graphs.Abstractions;
-using GraphLib.Graphs.Serialization.Infrastructure.Info.Collections;
-using GraphLib.Graphs.Serialization.Infrastructure.Info.Collections.Interface;
 using GraphLib.Vertex;
 using GraphLib.Vertex.Interface;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace GraphLib.Graphs
 {
@@ -26,9 +25,9 @@ namespace GraphLib.Graphs
                 throw new ArgumentException("Number of dimensions doesn't match");
             }
 
-            Width = dimensions[0]; 
-            Length = dimensions[1]; 
-            Height = dimensions[2];
+            Width = dimensions.ElementAtOrDefault(0); 
+            Length = dimensions.ElementAtOrDefault(1);
+            Height = dimensions.ElementAtOrDefault(2);
 
             vertices = new IVertex[Size];
             this.RemoveExtremeVertices();
@@ -70,9 +69,7 @@ namespace GraphLib.Graphs
 
         public int Length { get; private set; }
 
-        public int Height { get; private set; }
-
-        public override IVertexInfoCollection VertexInfoCollection => new VertexInfoCollection3D(vertices, Width, Length, Height);
+        public int Height { get; private set; }        
 
         public override IEnumerable<int> DimensionsSizes => new int[] { Width, Length, Height };
 

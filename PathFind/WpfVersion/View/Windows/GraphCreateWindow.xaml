@@ -39,8 +39,8 @@
             Converter={StaticResource stringToIntCOnverter}, 
             ConverterParameter={x:Static range:Range.WidthValueRange}}" 
                  Grid.Row="2" Grid.Column="1" Margin="5"></TextBox>
-        <TextBlock Grid.Row ="3" Text="Graph height" Margin="5"></TextBlock>
-        <TextBox Text="{Binding Path = Height, 
+        <TextBlock Grid.Row ="3" Text="Graph length" Margin="5"></TextBlock>
+        <TextBox Text="{Binding Path = Length, 
             UpdateSourceTrigger=PropertyChanged,
             Converter={StaticResource stringToIntCOnverter}, 
             ConverterParameter={x:Static range:Range.HeightValueRange}}" 

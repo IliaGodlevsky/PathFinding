@@ -1,7 +1,6 @@
 ﻿using GraphLib.Coordinates.Interface;
 using GraphLib.Graphs.Abstractions;
 using GraphLib.Graphs.Serialization.Infrastructure.Info.Collections;
-using GraphLib.Graphs.Serialization.Infrastructure.Info.Collections.Interface;
 using GraphLib.Vertex;
 using GraphLib.Vertex.Interface;
 using System.Collections;
@@ -40,7 +39,7 @@ namespace GraphLib.Graphs
 
         public IVertex Start { get => defaultVertex; set => _ = value; }
 
-        public IVertexInfoCollection VertexInfoCollection => new EmptyVertexInfoCollection();
+        public VertexInfoCollection VertexInfoCollection => new VertexInfoCollection(array, DimensionsSizes.ToArray());
 
         public IEnumerable<int> DimensionsSizes => new int[] { };
 

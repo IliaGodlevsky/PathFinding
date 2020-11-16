@@ -1,5 +1,5 @@
 ﻿using GraphLib.Coordinates.Interface;
-using GraphLib.Graphs.Serialization.Infrastructure.Info.Collections.Interface;
+using GraphLib.Graphs.Serialization.Infrastructure.Info.Collections;
 using GraphLib.Vertex.Interface;
 using System.Collections;
 using System.Collections.Generic;
@@ -33,7 +33,7 @@ namespace GraphLib.Graphs.Abstractions
             set { start = value; start.IsStart = true; }
         }
 
-        public abstract IVertexInfoCollection VertexInfoCollection { get; }
+        public VertexInfoCollection VertexInfoCollection => new VertexInfoCollection(vertices, DimensionsSizes.ToArray());
 
         public abstract IEnumerable<int> DimensionsSizes { get; }
 

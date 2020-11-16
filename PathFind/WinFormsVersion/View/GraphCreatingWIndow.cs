@@ -56,7 +56,7 @@ namespace WinFormsVersion.View
             var bindHeight = new Binding(
                 nameof(heightTextBox.Text), 
                 Model, 
-                nameof(Model.Height));
+                nameof(Model.Length));
             heightTextBox.DataBindings.Add(bindHeight);
 
             bindHeight.Format += IntToString;

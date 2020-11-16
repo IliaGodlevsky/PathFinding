@@ -5,17 +5,19 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace GraphLib.Graphs.Serialization.Infrastructure.Info.Collections.Interface
+namespace GraphLib.Graphs.Serialization.Infrastructure.Info.Collections
 {
     [Serializable]
-    public abstract class BaseVertexInfoCollection : IVertexInfoCollection
+    public class VertexInfoCollection : IEnumerable<VertexInfo>
     {
-        public BaseVertexInfoCollection(IEnumerable<IVertex> vertices)
+        public VertexInfoCollection(IEnumerable<IVertex> vertices,
+            params int[] dimensionsSizes)
         {
+            DimensionsSizes = dimensionsSizes;
             verticesDto = vertices.Select(vertex => vertex.Info).ToArray();
         }
 
-        public abstract IEnumerable<int> DimensionsSizes { get; }
+        public IEnumerable<int> DimensionsSizes { get; private set; }
 
         public bool IsDefault => false;
 

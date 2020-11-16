@@ -13,7 +13,7 @@ namespace GraphLib.ViewModel
     {
         public int Width { get; set; }
 
-        public int Height { get; set; }
+        public int Length { get; set; }
 
         public int ObstaclePercent { get; set; }
 
@@ -24,7 +24,7 @@ namespace GraphLib.ViewModel
 
         public virtual void CreateGraph(Func<IVertex> vertexFactory)
         {
-            var graphfactory = new GraphFactory<Graph2D>(ObstaclePercent, Width, Height);
+            var graphfactory = new GraphFactory<Graph2D>(ObstaclePercent, Width, Length);
             graph = graphfactory.CreateGraph(vertexFactory, 
                 (coordinates) => new Coordinate2D(coordinates.ToArray()));
             model.ConnectNewGraph(graph);

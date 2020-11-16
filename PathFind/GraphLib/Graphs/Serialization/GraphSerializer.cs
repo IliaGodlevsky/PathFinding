@@ -1,5 +1,5 @@
 ﻿using GraphLib.Graphs.Abstractions;
-using GraphLib.Graphs.Serialization.Infrastructure.Info.Collections.Interface;
+using GraphLib.Graphs.Serialization.Infrastructure.Info.Collections;
 using GraphLib.Graphs.Serialization.Interfaces;
 using GraphLib.Info;
 using GraphLib.Vertex.Interface;
@@ -27,15 +27,25 @@ namespace GraphLib.Graphs.Serialization
             formatter = new BinaryFormatter();
         }
 
-        public IGraph LoadGraph(string path, Func<VertexInfo, IVertex> vertexFactory)
+        public IGraph LoadGraph(string path, Func<VertexInfo, IVertex> vertexConvertMethod)
         {
-            IGraph graph;
             try
             {
                 using (var stream = new FileStream(path, FileMode.Open))
                 {
-                    var verticesDto = (IVertexInfoCollection)formatter.Deserialize(stream);
-                    graph = AssembleGraph(verticesDto, vertexFactory);
+                    var verticesInfo = (VertexInfoCollection)formatter.Deserialize(stream);
+                    var dimensions = verticesInfo.DimensionsSizes.ToArray();
+
+                    var graph = (IGraph)Activator.CreateInstance(typeof(TGraph), dimensions);
+
+                    for (int i = 0; i < verticesInfo.Count(); i++)
+                    {
+                        graph[i] = vertexConvertMethod(verticesInfo.ElementAt(i));
+                    }
+
+                    VertexConnector.ConnectVertices(graph);
+
+                    return graph;
                 }
             }
             catch (Exception ex)
@@ -43,8 +53,6 @@ namespace GraphLib.Graphs.Serialization
                 OnExceptionCaught?.Invoke(ex.Message);
                 return new DefaultGraph();
             }
-
-            return graph;
         }
 
         public void SaveGraph(IGraph graph, string path)
@@ -62,22 +70,6 @@ namespace GraphLib.Graphs.Serialization
             }
         }
 
-        private IGraph AssembleGraph(IVertexInfoCollection verticesInfo,
-                    Func<VertexInfo, IVertex> convertMethod)
-        {
-            var dimensions = verticesInfo.DimensionsSizes.ToArray();
-            var graph = (IGraph)Activator.CreateInstance(typeof(TGraph), dimensions);
-
-            for (int i = 0; i < verticesInfo.Count(); i++)
-            {
-                graph[i] = convertMethod(verticesInfo.ElementAt(i));
-            }
-
-            VertexConnector.ConnectVertices(graph);
-
-            return graph;
-        }
-
-        private IFormatter formatter;
+        private readonly IFormatter formatter;
     }
 }

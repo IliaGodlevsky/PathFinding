@@ -14,6 +14,8 @@ namespace GraphLib.Graphs.Factories
     public class GraphFactory<TGraph> : IGraphFactory
         where TGraph : IGraph
     {
+        public event Action<string> OnExceptionCaught;
+
         public GraphFactory(int obstacleChance, params int[] dimensionSizes)
         {
             this.obstacleChance = obstacleChance;
@@ -52,8 +54,9 @@ namespace GraphLib.Graphs.Factories
 
                 return graph;
             }
-            catch
+            catch(Exception ex)
             {
+                OnExceptionCaught?.Invoke(ex.Message);
                 return new DefaultGraph();
             }
         }
