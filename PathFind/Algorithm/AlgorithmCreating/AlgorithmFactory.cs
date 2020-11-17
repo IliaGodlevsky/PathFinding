@@ -11,7 +11,7 @@ namespace Algorithm.AlgorithmCreating
 {
     public static class AlgorithmFactory
     {
-        public static IEnumerable<string> AlgorithmKeys => Algorithms.Keys;
+        public static ICollection<string> AlgorithmKeys => Algorithms.Keys;
 
         public static IDictionary<string, Type> Algorithms { get; private set; }
 
@@ -19,9 +19,8 @@ namespace Algorithm.AlgorithmCreating
         {
             Algorithms = new Dictionary<string, Type>();
             var algorithmInterfaceType = typeof(IPathFindingAlgorithm);
-            var filterAlgorithmType = typeof(DefaultAlgorithm);
             var assembly = Assembly.Load(algorithmInterfaceType.Assembly.GetName());
-            var assemblyTypes = assembly.GetTypes().Where(type => type != filterAlgorithmType);
+            var assemblyTypes = assembly.GetTypes().Where(type => type != typeof(DefaultAlgorithm));
 
             foreach (var type in assemblyTypes)
             {
@@ -29,8 +28,7 @@ namespace Algorithm.AlgorithmCreating
 
                 if (typeRealizedInterfaces.Contains(algorithmInterfaceType.Name))
                 {
-                    var attributeType = typeof(DescriptionAttribute);
-                    dynamic attribute = Attribute.GetCustomAttribute(type, attributeType);
+                    dynamic attribute = Attribute.GetCustomAttribute(type, typeof(DescriptionAttribute));
                     var description = attribute != null ? attribute.Description : type.ToString();
                     Algorithms.Add(description, type);
                 }

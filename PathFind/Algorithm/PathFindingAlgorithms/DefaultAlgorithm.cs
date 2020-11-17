@@ -30,6 +30,7 @@ namespace Algorithm.PathFindingAlgorithms
         public event Action<IVertex> OnVertexVisited;
         public event AlgorithmEventHanlder OnFinished;
         public event Action<IVertex> OnVertexEnqueued;
+        public event EventHandler OnIteration;
 
         public void FindPath()
         {
@@ -37,6 +38,7 @@ namespace Algorithm.PathFindingAlgorithms
             OnVertexVisited?.Invoke(new DefaultVertex());           
             OnVertexEnqueued?.Invoke(new DefaultVertex());
             OnFinished?.Invoke(this, new AlgorithmEventArgs());
+            OnIteration?.Invoke(this, new EventArgs());
         }
     }
 }

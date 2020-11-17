@@ -7,7 +7,7 @@ namespace Algorithm.Сalculations
 {
     public static class DistanceCalculator
     {
-        public static double GetChebyshevDistance(IVertex from, IVertex to)
+        public static double CalculateChebyshevDistance(IVertex from, IVertex to)
         {
             if (from?.Position?.GetType() != to?.Position?.GetType() || ReferenceEquals(from, to))
             {

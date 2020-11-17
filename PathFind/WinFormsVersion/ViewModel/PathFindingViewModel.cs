@@ -1,5 +1,5 @@
 ﻿using Algorithm.AlgorithmCreating;
-using GraphLib.PauseMaking;
+using Algorithm.EventArguments;
 using GraphLib.ViewModel;
 using GraphViewModel.Interfaces;
 using System;
@@ -12,32 +12,14 @@ namespace WinFormsVersion.ViewModel
     {
         public PathFindingViewModel(IMainModel model) : base(model)
         {
-
-        }
-
-        protected override void PrepareAlgorithm()
-        {
-            (mainViewModel as MainWindowViewModel).Window.Close();
-
-            var pauser = new PauseProvider(DelayTime);
-            pauser.PauseEvent += () => Application.DoEvents();
-            pathAlgorithm.OnVertexVisited += (vertex) => pauser.Pause();
-
-            pathAlgorithm.OnFinished += (sender, eventArgs) =>
-            {
-                if (!eventArgs.HasFoundPath)
-                {
-                    MessageBox.Show(badResultMessage);
-                }
-            };
-
-            base.PrepareAlgorithm();
+            pauseProvider.PauseEvent += () => Application.DoEvents();
         }
 
         public void PathFind(object sender, EventArgs e)
         {
             if (CanExecuteConfirmPathFindAlgorithmChoice())
             {
+                (mainViewModel as MainWindowViewModel).Window.Close();
                 FindPath();
             }
         }
@@ -45,6 +27,15 @@ namespace WinFormsVersion.ViewModel
         public void CancelPathFind(object sender, EventArgs e)
         {           
             (mainViewModel as MainWindowViewModel).Window.Close();
+        }
+
+        protected override void OnAlgorithmFinished(object sender, AlgorithmEventArgs e)
+        {
+            if (!e.HasFoundPath)
+            {
+                MessageBox.Show(badResultMessage);
+            }
+            base.OnAlgorithmFinished(sender, e);
         }
 
         private bool CanExecuteConfirmPathFindAlgorithmChoice()

@@ -8,6 +8,6 @@ namespace GraphLib.PauseMaking.Interface
     public interface IPauseProvider
     {
         event Action PauseEvent;
-        void Pause();
+        void Pause(int delayTime);
     }
 }

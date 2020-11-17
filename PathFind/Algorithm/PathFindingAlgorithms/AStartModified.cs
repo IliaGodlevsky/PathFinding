@@ -37,7 +37,8 @@ namespace Algorithm.PathFindingAlgorithms
                 persentOfFurthestVerticesToDelete = value;
                 if (!percentRange.IsInBounds(persentOfFurthestVerticesToDelete))
                 {
-                    persentOfFurthestVerticesToDelete = percentRange.ReturnInBounds(persentOfFurthestVerticesToDelete);
+                    persentOfFurthestVerticesToDelete = 
+                        percentRange.ReturnInBounds(persentOfFurthestVerticesToDelete);
                 }
             }
         }

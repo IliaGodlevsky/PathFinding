@@ -22,6 +22,7 @@ namespace Algorithm.PathFindingAlgorithms
         public event Action<IVertex> OnVertexVisited;
         public event AlgorithmEventHanlder OnFinished;
         public event Action<IVertex> OnVertexEnqueued;
+        public event EventHandler OnIteration;
 
         /// <summary>
         /// A function that selects the best vertex on the step
@@ -34,7 +35,7 @@ namespace Algorithm.PathFindingAlgorithms
 
         public DepthFirstAlgorithm(IGraph graph)
         {
-            GreedyFunction = vertex => DistanceCalculator.GetChebyshevDistance(vertex, graph.Start);
+            GreedyFunction = vertex => DistanceCalculator.CalculateChebyshevDistance(vertex, graph.Start);
             Graph = graph;
             visitedVerticesStack = new Stack<IVertex>();
         }
@@ -44,12 +45,10 @@ namespace Algorithm.PathFindingAlgorithms
             OnStarted?.Invoke(this, new AlgorithmEventArgs(Graph));
             var currentVertex = Graph.Start;
             currentVertex.IsVisited = true;
-
             while (!currentVertex.IsEnd)
             {
                 var temp = currentVertex;
                 currentVertex = GetNextVertex(currentVertex);
-
                 if (!currentVertex.IsIsolated())
                 {
                     currentVertex.IsVisited = true;
@@ -61,8 +60,8 @@ namespace Algorithm.PathFindingAlgorithms
                 {
                     currentVertex = visitedVerticesStack.PopOrDefault();
                 }
+                OnIteration?.Invoke(this, new EventArgs());
             }
-
             OnFinished?.Invoke(this, new AlgorithmEventArgs(Graph));
         }
 

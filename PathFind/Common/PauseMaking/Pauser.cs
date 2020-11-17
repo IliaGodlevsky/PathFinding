@@ -14,12 +14,12 @@ namespace GraphLib.PauseMaking
         /// </summary>
         public event Action PauseEvent;
 
-        public PauseProvider(int delayTime)
+        public PauseProvider()
         {
-            this.delayTime = delayTime;
+
         }
 
-        public void Pause()
+        public void Pause(int delayTime)
         {
             var timer = new Stopwatch();
             timer.Start();
@@ -31,7 +31,5 @@ namespace GraphLib.PauseMaking
 
             timer.Stop();
         }
-
-        private readonly int delayTime;
     }
 }

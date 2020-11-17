@@ -3,7 +3,6 @@ using System;
 using GraphLib.ViewModel;
 using System.Threading;
 using System.Linq;
-using GraphLib.PauseMaking;
 using GraphLib.Coordinates;
 using GraphLib.Graphs;
 using Algorithm.AlgorithmCreating;
@@ -11,6 +10,7 @@ using GraphViewModel.Interfaces;
 using GraphLib.Extensions;
 using Common.ValueRanges;
 using ConsoleVersion.Model;
+using Algorithm.EventArguments;
 
 namespace ConsoleVersion.ViewModel
 {
@@ -22,6 +22,7 @@ namespace ConsoleVersion.ViewModel
         {
             maxAlgorithmValue = AlgorithmFactory.AlgorithmKeys.Count();
             minAlgorithmValue = 1;
+            pauseProvider.PauseEvent += () => { };
         }
 
         public override void FindPath()
@@ -35,51 +36,35 @@ namespace ConsoleVersion.ViewModel
             (mainViewModel as MainViewModel).DisplayGraph();
             AlgorithmKey = AlgorithmFactory.AlgorithmKeys.ElementAt(GetAlgorithmKeyIndex());
 
+            DelayTime = Input.InputNumber(
+                ConsoleVersionResources.DelayTimeMsg,
+                Range.DelayValueRange.UpperRange,
+                Range.DelayValueRange.LowerRange);
+
             base.FindPath();
         }
 
-        protected override void PrepareAlgorithm()
+        protected override void OnAlgorithmStarted(object sender, AlgorithmEventArgs e)
         {
-            DelayTime = Input.InputNumber(
-                ConsoleVersionResources.DelayTimeMsg, 
-                Range.DelayValueRange.UpperRange, 
-                Range.DelayValueRange.LowerRange);
-
-            base.PrepareAlgorithm();
-
-            var thread = new Thread(() =>
-            {
-                while (true)
-                {
-                    Thread.Sleep(millisecondsTimeout: 135);
-                    (mainViewModel as MainViewModel).DisplayGraph();
-                }
-            });
-
-            pathAlgorithm.OnStarted += (sender, eventArgs) =>
-            {
-                thread.Start();
-            };
-
-            var pauser = new PauseProvider(DelayTime);
-            pauser.PauseEvent += () => { };
-            pathAlgorithm.OnVertexVisited += (vertex) => pauser.Pause();
-
-            pathAlgorithm.OnFinished += (sender, eventArgs) =>
-            {
-                thread.Abort();
-                thread.Join();
-
-                if (!eventArgs.HasFoundPath)
-                {
-                    (mainViewModel as MainViewModel).DisplayGraph();
-                    Console.WriteLine(badResultMessage);
-                    Console.ReadLine();
-                }
-            };
+            base.OnAlgorithmStarted(sender, e);
+            thread = new Thread(DisplayGraphIndefinitly);
+            thread.Start();
         }
 
+        protected override void OnAlgorithmFinished(object sender, AlgorithmEventArgs e)
+        {
+            thread.Abort();
+            thread.Join();
 
+            base.OnAlgorithmFinished(sender, e);
+
+            if (!e.HasFoundPath)
+            {
+                (mainViewModel as MainViewModel).DisplayGraph();
+                Console.WriteLine(badResultMessage);
+                Console.ReadLine();
+            }
+        }
 
         private int GetAlgorithmKeyIndex()
         {
@@ -123,7 +108,17 @@ namespace ConsoleVersion.ViewModel
             return point;
         }
 
+        private void DisplayGraphIndefinitly()
+        {
+            while (true)
+            {
+                Thread.Sleep(millisecondsTimeout: 135);
+                (mainViewModel as MainViewModel).DisplayGraph();
+            }
+        }
+
         private readonly int maxAlgorithmValue;
         private readonly int minAlgorithmValue;
+        private Thread thread;
     }
 }

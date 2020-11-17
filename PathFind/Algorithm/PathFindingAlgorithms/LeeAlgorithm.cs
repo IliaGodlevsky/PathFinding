@@ -24,6 +24,7 @@ namespace Algorithm.PathFindingAlgorithms
         public event Action<IVertex> OnVertexVisited;
         public event AlgorithmEventHanlder OnFinished;
         public event Action<IVertex> OnVertexEnqueued;
+        public event EventHandler OnIteration;
 
         public IGraph Graph { get; protected set; }
 
@@ -38,16 +39,14 @@ namespace Algorithm.PathFindingAlgorithms
         public void FindPath()
         {
             OnStarted?.Invoke(this, new AlgorithmEventArgs(Graph));
-
             var currentVertex = Graph.Start;
             ProcessVertex(currentVertex);
-
             while (currentVertex?.IsEnd == false)
             {
                 currentVertex = GetNextVertex();
                 ProcessVertex(currentVertex);
+                OnIteration?.Invoke(this, new EventArgs());
             }
-
             OnFinished?.Invoke(this, new AlgorithmEventArgs(Graph));
         }
 
