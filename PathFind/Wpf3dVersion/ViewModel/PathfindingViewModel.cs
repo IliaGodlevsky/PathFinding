@@ -19,14 +19,18 @@ namespace Wpf3dVersion.ViewModel
             ConfirmPathFindAlgorithmChoice = new RelayCommand(
                 ExecuteConfirmPathFindAlgorithmChoice,
                 CanExecuteConfirmPathFindAlgorithmChoice);
-            CancelPathFindAlgorithmChoice = new RelayCommand(obj =>
-            (model as MainWindowViewModel)?.Window.Close(), obj => true);
+            CancelPathFindAlgorithmChoice = new RelayCommand(obj => CloseWindow(), obj => true);
             pauseProvider.PauseEvent += () => System.Windows.Forms.Application.DoEvents();
+        }
+
+        private void CloseWindow()
+        {
+            (mainViewModel as MainWindowViewModel)?.Window?.Close();
         }
 
         private void ExecuteConfirmPathFindAlgorithmChoice(object param)
         {
-            (mainViewModel as MainWindowViewModel).Window.Close();
+            CloseWindow();
             base.FindPath();
         }
 

@@ -70,7 +70,8 @@ namespace GraphLib.ViewModel
 
         protected virtual void OnIteration(object sender, EventArgs e)
         {
-            mainViewModel.PathFindingStatistics = GetUpdatedStatistics(new IVertex[] { });
+            mainViewModel.PathFindingStatistics 
+                = GetUpdatedStatistics(new IVertex[] { });
                 
             pauseProvider.Pause(DelayTime);
         }
