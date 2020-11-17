@@ -27,7 +27,8 @@ namespace GraphLib.Graphs.Serialization
             formatter = new BinaryFormatter();
         }
 
-        public IGraph LoadGraph(string path, Func<VertexInfo, IVertex> vertexConvertMethod)
+        public IGraph LoadGraph(string path, 
+            Func<VertexInfo, IVertex> vertexConvertMethod)
         {
             try
             {

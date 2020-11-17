@@ -41,12 +41,14 @@ namespace GraphViewModel
 
         public virtual void SaveGraph()
         {
-            Serializer.SaveGraph(Graph, GetSavingPath());
+            var savePath = GetSavingPath();
+            Serializer.SaveGraph(Graph, savePath);
         }
 
         public virtual void LoadGraph()
         {
-            var newGraph = Serializer.LoadGraph(GetLoadingPath(), InfoConverter);
+            var loadPath = GetLoadingPath();
+            var newGraph = Serializer.LoadGraph(loadPath, InfoConverter);
             ConnectNewGraph(newGraph);
         }
 
