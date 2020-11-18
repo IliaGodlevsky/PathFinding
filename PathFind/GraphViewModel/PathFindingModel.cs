@@ -41,7 +41,6 @@ namespace GraphLib.ViewModel
             algorithm.OnVertexVisited += OnVertexVisited;
             algorithm.OnFinished += OnAlgorithmFinished;
             algorithm.OnStarted += OnAlgorithmStarted;
-            algorithm.OnIteration += OnIteration;
 
             algorithm.FindPath();
 
@@ -49,7 +48,6 @@ namespace GraphLib.ViewModel
             algorithm.OnVertexVisited -= OnVertexVisited;
             algorithm.OnFinished -= OnAlgorithmFinished;
             algorithm.OnStarted -= OnAlgorithmStarted;
-            algorithm.OnIteration -= OnIteration;
         }
 
         protected virtual void OnVertexVisited(IVertex vertex)
@@ -58,6 +56,11 @@ namespace GraphLib.ViewModel
             {
                 vertex.MarkAsVisited();
             }
+
+            mainViewModel.PathFindingStatistics
+                = GetUpdatedStatistics(new IVertex[] { });
+
+            pauseProvider.Pause(DelayTime);
         }
 
         protected virtual void OnVertexEnqueued(IVertex vertex)
@@ -66,14 +69,6 @@ namespace GraphLib.ViewModel
             {
                 vertex.MarkAsEnqueued();
             }
-        }
-
-        protected virtual void OnIteration(object sender, EventArgs e)
-        {
-            mainViewModel.PathFindingStatistics 
-                = GetUpdatedStatistics(new IVertex[] { });
-                
-            pauseProvider.Pause(DelayTime);
         }
 
         protected virtual void OnAlgorithmFinished(object sender, AlgorithmEventArgs e)

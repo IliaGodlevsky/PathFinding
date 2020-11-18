@@ -22,7 +22,6 @@ namespace Algorithm.PathFindingAlgorithms
         public event Action<IVertex> OnVertexVisited;
         public event AlgorithmEventHanlder OnFinished;
         public event Action<IVertex> OnVertexEnqueued;
-        public event EventHandler OnIteration;
 
         public IGraph Graph { get; protected set; }
 
@@ -47,7 +46,6 @@ namespace Algorithm.PathFindingAlgorithms
                 currentVertex = GetChippestUnvisitedVertex();
                 currentVertex.IsVisited = true;
                 OnVertexVisited?.Invoke(currentVertex);
-                OnIteration?.Invoke(this, new EventArgs());
             } while (!currentVertex.IsEnd);
             OnFinished?.Invoke(this, new AlgorithmEventArgs(Graph));
         }

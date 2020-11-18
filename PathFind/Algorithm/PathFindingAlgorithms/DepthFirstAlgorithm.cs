@@ -22,7 +22,6 @@ namespace Algorithm.PathFindingAlgorithms
         public event Action<IVertex> OnVertexVisited;
         public event AlgorithmEventHanlder OnFinished;
         public event Action<IVertex> OnVertexEnqueued;
-        public event EventHandler OnIteration;
 
         /// <summary>
         /// A function that selects the best vertex on the step
@@ -60,7 +59,6 @@ namespace Algorithm.PathFindingAlgorithms
                 {
                     currentVertex = visitedVerticesStack.PopOrDefault();
                 }
-                OnIteration?.Invoke(this, new EventArgs());
             }
             OnFinished?.Invoke(this, new AlgorithmEventArgs(Graph));
         }
