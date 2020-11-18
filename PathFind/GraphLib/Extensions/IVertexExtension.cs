@@ -8,20 +8,6 @@ namespace GraphLib.Extensions
 {
     public static class IVertexExtension
     {
-        public static IEnumerable<IVertex> GetPathToStartVertex(this IVertex vertex)
-        {
-            if (vertex.IsEnd && vertex.IsVisited && !vertex.IsDefault)
-            {
-                var temp = vertex;
-
-                while (!temp.IsStart && !temp.IsDefault)
-                {
-                    yield return temp;
-                    temp = temp.ParentVertex;
-                }
-            }
-        }
-
         public static bool IsValidToBeRange(this IVertex vertex)
         {
             return vertex.IsSimpleVertex() && !vertex.IsIsolated();

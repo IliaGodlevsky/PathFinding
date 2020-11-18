@@ -1,4 +1,5 @@
-﻿using GraphLib.GraphField;
+﻿using GraphLib.Extensions;
+using GraphLib.GraphField;
 using GraphLib.Graphs;
 using GraphLib.Graphs.Serialization;
 using GraphViewModel;
@@ -6,7 +7,6 @@ using GraphViewModel.Interfaces;
 using Microsoft.Win32;
 using System;
 using System.ComponentModel;
-using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Windows;
 using Wpf3dVersion.Infrastructure;
@@ -48,10 +48,11 @@ namespace Wpf3dVersion.ViewModel
             set
             {
                 graphField = value;
+                var field = graphField as Wpf3dGraphField;
                 var currentWindow = (Application.Current.MainWindow as MainWindow);
-                currentWindow?.GraphField?.Children?.Clear();
-                currentWindow?.GraphField?.Children?.Add(graphField as Wpf3dGraphField);
-                (graphField as Wpf3dGraphField).CenterGraph();
+                currentWindow?.GraphField?.Children.Clear();
+                currentWindow?.GraphField?.Children.Add(field);
+                field.CenterGraph();
                 OnPropertyChanged();
             }
         }
@@ -150,10 +151,7 @@ namespace Wpf3dVersion.ViewModel
 
         private bool CanExecuteStartFindPathCommand(object param)
         {
-            return !Graph.End.IsDefault
-                && !Graph.Start.IsDefault
-                && Graph.Any()
-                && !Graph.Start.IsVisited;
+            return Graph.IsReadyForPathfinding();
         }
 
         private void ExecuteLoadGraphCommand(object param)
@@ -198,10 +196,15 @@ namespace Wpf3dVersion.ViewModel
 
             callBack(sliderNewValue, field);
             field.SetDistanceBetweenVertices();
+
             if (sliderNewValue == 0)
+            {
                 field.CenterGraph(0, 0, 0);
+            }
             else
+            {
                 field.CenterGraph(additionalOffset);
+            }
         }
 
         private bool AlwaysExecutable(object param)

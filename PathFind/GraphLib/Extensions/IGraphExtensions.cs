@@ -1,5 +1,8 @@
 ﻿using GraphLib.Graphs.Abstractions;
 using GraphLib.Vertex;
+using GraphLib.Vertex.Interface;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace GraphLib.Extensions
 {
@@ -35,6 +38,20 @@ namespace GraphLib.Extensions
             {
                 vertex.MakeWeighted();
             }
+        }
+
+        public static bool IsExtremeVerticesVisited(this IGraph self)
+        {
+            return self.End.IsVisited && self.Start.IsVisited
+                && !self.End.IsDefault && !self.Start.IsDefault;
+        }
+
+        public static bool IsReadyForPathfinding(this IGraph self)
+        {
+            return !self.End.IsDefault
+                && !self.Start.IsDefault
+                && self.Any()
+                && !self.Start.IsVisited;
         }
     }
 }

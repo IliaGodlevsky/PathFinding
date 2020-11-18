@@ -153,10 +153,7 @@ namespace WpfVersion.ViewModel
 
         private bool CanExecuteStartFindPathCommand(object param)
         {
-            return !Graph.End.IsDefault
-                && !Graph.Start.IsDefault
-                && Graph.Any()
-                && !Graph.Start.IsVisited;
+            return Graph.IsReadyForPathfinding();
         }
 
         private void ExecuteLoadGraphCommand(object param)

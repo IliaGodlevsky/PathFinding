@@ -1,30 +1,24 @@
 ﻿using System.Diagnostics;
-using System.Linq;
 using GraphViewModel.Interfaces;
 using GraphViewModel.Resources;
 using Algorithm.AlgorithmCreating;
-using Algorithm.PathFindingAlgorithms.Interface;
 using GraphLib.Graphs.Abstractions;
 using GraphLib.Extensions;
-using Algorithm.Extensions;
 using Common.Extensions;
 using GraphLib.Vertex.Interface;
-using System;
 using Algorithm.EventArguments;
 using GraphLib.PauseMaking;
-using System.Collections.Generic;
 
 namespace GraphLib.ViewModel
 {
     public abstract class PathFindingModel : IModel
     {
-        public int DelayTime { get; set; } // miliseconds
+        public int DelayTime { get; set; } // milliseconds
 
         public string AlgorithmKey { get; set; }
 
         public PathFindingModel(IMainModel mainViewModel)
         {
-            pathFindStatisticsFormat = ViewModelResources.StatisticsFormat;
             badResultMessage = ViewModelResources.BadResultMsg;
             pauseProvider = new PauseProvider();
             this.mainViewModel = mainViewModel;
@@ -34,7 +28,7 @@ namespace GraphLib.ViewModel
 
         public virtual void FindPath()
         {
-            algorithm = AlgorithmFactory.
+            var algorithm = AlgorithmFactory.
                 CreateAlgorithm(AlgorithmKey, graph);
 
             algorithm.OnVertexEnqueued += OnVertexEnqueued;
@@ -43,11 +37,6 @@ namespace GraphLib.ViewModel
             algorithm.OnStarted += OnAlgorithmStarted;
 
             algorithm.FindPath();
-
-            algorithm.OnVertexEnqueued -= OnVertexEnqueued;
-            algorithm.OnVertexVisited -= OnVertexVisited;
-            algorithm.OnFinished -= OnAlgorithmFinished;
-            algorithm.OnStarted -= OnAlgorithmStarted;
         }
 
         protected virtual void OnVertexVisited(IVertex vertex)
@@ -57,8 +46,12 @@ namespace GraphLib.ViewModel
                 vertex.MarkAsVisited();
             }
 
-            mainViewModel.PathFindingStatistics
-                = GetUpdatedStatistics(new IVertex[] { });
+            var visitedVertices = graph.NumberOfVisitedVertices;
+            mainViewModel.PathFindingStatistics = GetIntermediateStatistics(
+                timer, 
+                steps: 0, 
+                pathLength: 0, 
+                visitedVertices);
 
             pauseProvider.Pause(DelayTime);
         }
@@ -74,12 +67,20 @@ namespace GraphLib.ViewModel
         protected virtual void OnAlgorithmFinished(object sender, AlgorithmEventArgs e)
         {
             timer.Stop();
-            var path = algorithm.GetPath();
-            mainViewModel.PathFindingStatistics = GetUpdatedStatistics(path);
 
-            if (e.HasFoundPath)
-            { 
-                path.DrawPath(); 
+            var path = new Path();
+            var isPathExtracted = path.ExtractPath(graph);
+
+            mainViewModel.PathFindingStatistics
+                = GetIntermediateStatistics(
+                    timer, 
+                    path.PathCost, 
+                    path.PathLength, 
+                    graph.NumberOfVisitedVertices);
+
+            if (isPathExtracted)
+            {
+                path.HighlightPath();
             }
         }
 
@@ -89,20 +90,21 @@ namespace GraphLib.ViewModel
             timer.Start();
         }
 
-        private string GetUpdatedStatistics(IEnumerable<IVertex> path)
+        private string GetIntermediateStatistics(
+            Stopwatch timer, 
+            int steps, 
+            int pathLength, 
+            int visitedVertices)
         {
-            string format = "   " + pathFindStatisticsFormat;
-            var pathLength = path.Count();
-            var pathCost = path.Sum(vertex => (int)vertex.Cost);
-            var visited = graph.NumberOfVisitedVertices;
+            var graphInfo = string.Format(
+                ViewModelResources.StatisticsFormat,
+                steps, 
+                pathLength, 
+                visitedVertices);
             var timerInfo = timer.GetTimeInformation(ViewModelResources.TimerInfoFormat);
-            var statistics = string.Format(format, pathLength, pathCost, visited);
-
-            return timerInfo + statistics;
+            return timerInfo + "   " + graphInfo;
         }
 
-        protected IPathFindingAlgorithm algorithm;
-        protected string pathFindStatisticsFormat;
         protected PauseProvider pauseProvider;
         protected IMainModel mainViewModel;
         protected string badResultMessage;
