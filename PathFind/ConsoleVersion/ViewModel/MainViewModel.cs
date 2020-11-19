@@ -5,6 +5,8 @@ using System.Drawing;
 using Console = Colorful.Console;
 using GraphLib.Graphs;
 using GraphViewModel;
+using System;
+using Common.EventArguments;
 
 namespace ConsoleVersion.ViewModel
 {
@@ -28,6 +30,7 @@ namespace ConsoleVersion.ViewModel
         public override void FindPath()
         {
             var model = new PathFindingViewModel(this);
+            model.OnPathNotFound += OnPathNotFound;
             var view = new PathFindView(model);
 
             view.Start();
@@ -58,6 +61,15 @@ namespace ConsoleVersion.ViewModel
             (Graph[point] as ConsoleVertex).ChangeCost();
         }
 
+        public void DisplayGraph()
+        {
+            Console.Clear();
+            Console.ForegroundColor = Color.White;
+            Console.WriteLine(GraphParametres);
+            (GraphField as ConsoleGraphField)?.ShowGraphWithFrames();
+            Console.WriteLine(PathFindingStatistics);
+        }
+
         protected override string GetSavingPath()
         {
             return GetPath();
@@ -74,13 +86,13 @@ namespace ConsoleVersion.ViewModel
             return Console.ReadLine();
         }
 
-        public void DisplayGraph()
+        private void OnPathNotFound(object sender, EventArgs e)
         {
-            Console.Clear();
-            Console.ForegroundColor = Color.White;
-            Console.WriteLine(GraphParametres);
-            (GraphField as ConsoleGraphField)?.ShowGraphWithFrames();
-            Console.WriteLine(PathFindingStatistics);
+            var args = e as PathNotFoundEventArgs;
+
+            DisplayGraph();
+            Console.WriteLine(args.Message);
+            Console.ReadLine();
         }
     }
 }

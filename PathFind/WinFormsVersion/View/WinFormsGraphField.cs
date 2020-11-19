@@ -12,25 +12,26 @@ namespace WinFormsVersion.Model
     {
         public WinFormsGraphField()
         {
-            //BorderStyle = BorderStyle.FixedSingle;
+            
         }
 
         public void Add(IVertex vertex)
         {
-            var coordinate = vertex.Position as Coordinate2D;
-            if (coordinate == null)
+            if (vertex.Position is Coordinate2D coordinate)
+            {
+                var winFormsVertex = vertex as WinFormsVertex;
+
+                var xCoordinate = coordinate.X * VertexParametres.SizeBetweenVertices;
+                var yCoordinate = coordinate.Y * VertexParametres.SizeBetweenVertices;
+
+                winFormsVertex.Location = new Point(xCoordinate, yCoordinate);
+
+                Controls.Add(winFormsVertex);
+            }
+            else
             {
                 throw new ArgumentException("Must be 2D coordinates");
             }
-
-            var winFormsVertex = vertex as WinFormsVertex;
-
-            var xCoordinate = coordinate.X * VertexParametres.SizeBetweenVertices;
-            var yCoordinate = coordinate.Y * VertexParametres.SizeBetweenVertices;
-
-            winFormsVertex.Location = new Point(xCoordinate, yCoordinate);
-
-            Controls.Add(vertex as WinFormsVertex);
         }
     }
 }

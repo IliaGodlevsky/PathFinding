@@ -9,7 +9,7 @@ using System.Linq;
 namespace Algorithm.PathFindingAlgorithms
 {
     [Description("Lee algorithm (heuristic)")]
-    public class BestFirstLeeAlgorithm : LeeAlgorithm
+    internal class BestFirstLeeAlgorithm : LeeAlgorithm
     {
         public Func<IVertex, double> HeuristicFunction { protected get; set; }
 

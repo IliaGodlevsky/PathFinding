@@ -129,7 +129,8 @@ namespace ConsoleVersion.View
 
                     if (IsEndOfRow(currentWidth))
                     {
-                        Console.Write(DrawOrdinate(currentLength, TableSide.Right));
+                        var ordinate = DrawOrdinate(currentLength, TableSide.Right);
+                        Console.Write(ordinate);
                     }
                 }
             }
@@ -162,7 +163,7 @@ namespace ConsoleVersion.View
             Left 
         }
 
-        private readonly IList<ConsoleVertex> vertices;
+        private readonly List<ConsoleVertex> vertices;
 
         private const string newLine = "\n";
         private const string space = " ";

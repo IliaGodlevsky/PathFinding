@@ -1,7 +1,5 @@
 ﻿using GraphLib.Graphs.Abstractions;
 using GraphLib.Vertex;
-using GraphLib.Vertex.Interface;
-using System.Collections.Generic;
 using System.Linq;
 
 namespace GraphLib.Extensions

@@ -21,7 +21,6 @@ namespace WinFormsVersion.Model
             Size = new Size(size, size);
             TextAlign = ContentAlignment.MiddleCenter;
             this.Initialize();
-            //BorderStyle = BorderStyle.FixedSingle;
         }
 
         public WinFormsVertex(VertexInfo info) : this()
@@ -91,7 +90,7 @@ namespace WinFormsVersion.Model
         public void MakeWeighted()
         {
             cost.MakeWeighted();
-            Text = ((int)cost).ToString(string.Empty);
+            Text = cost.ToString(string.Empty);
         }
 
         public VertexInfo Info => new VertexInfo(this);

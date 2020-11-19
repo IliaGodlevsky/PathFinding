@@ -8,7 +8,7 @@ namespace GraphLib.Extensions
 {
     public static class IVertexExtension
     {
-        public static bool IsValidToBeRange(this IVertex vertex)
+        public static bool IsValidToBeExtreme(this IVertex vertex)
         {
             return vertex.IsSimpleVertex() && !vertex.IsIsolated();
         }
@@ -61,14 +61,12 @@ namespace GraphLib.Extensions
             return self.Neighbours.Where(vertex => !vertex.IsVisited);
         }
 
-        public static IVertex Refresh(this IVertex vertex)
+        public static void Refresh(this IVertex vertex)
         {
             if (!vertex.IsObstacle)
             {
                 vertex.SetToDefault();
             }
-
-            return vertex;
         }
     }
 }

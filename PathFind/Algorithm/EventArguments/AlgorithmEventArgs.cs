@@ -15,6 +15,6 @@ namespace Algorithm.EventArguments
             HasFoundPath = graph.End.IsVisited;
         }
 
-        public bool HasFoundPath { get; }
+        public bool HasFoundPath { get; private set; }
     }
 }

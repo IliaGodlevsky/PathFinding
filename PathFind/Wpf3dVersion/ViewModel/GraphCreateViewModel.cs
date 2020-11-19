@@ -1,10 +1,12 @@
 ﻿using GraphLib.Coordinates;
+using GraphLib.Coordinates.Interface;
 using GraphLib.Graphs;
 using GraphLib.Graphs.Factories;
 using GraphLib.Vertex.Interface;
 using GraphLib.ViewModel;
 using GraphViewModel.Interfaces;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Windows;
 using Wpf3dVersion.Infrastructure;
@@ -47,8 +49,12 @@ namespace Wpf3dVersion.ViewModel
         {
             var graphfactory = new GraphFactory<Graph3D>(ObstaclePercent, Width, Length, Height);
 
-            graph = graphfactory.CreateGraph(vertexFactory,
-                (coordinates) => new Coordinate3D(coordinates.ToArray()));
+            ICoordinate coordinate3DFactory(IEnumerable<int> coordinates)
+            {
+                return new Coordinate3D(coordinates.ToArray());
+            }
+
+            graph = graphfactory.CreateGraph(vertexFactory, coordinate3DFactory);
 
             model.ConnectNewGraph(graph);
         }

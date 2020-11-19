@@ -13,11 +13,11 @@ namespace WinFormsVersion.EventHolder
             return (e as MouseEventArgs).Delta;
         }
 
-        public override void ReversePolarity(object sender, EventArgs e)
+        public override void Reverse(object sender, EventArgs e)
         {
             if ((e as MouseEventArgs).Button == MouseButtons.Right)
             {
-                base.ReversePolarity(sender, e);
+                base.Reverse(sender, e);
             }
         }
 
@@ -27,8 +27,8 @@ namespace WinFormsVersion.EventHolder
                 return;
 
             (vertex as WinFormsVertex).MouseClick += ChooseExtremeVertices;
-            (vertex as WinFormsVertex).MouseClick += ReversePolarity;
-            (vertex as WinFormsVertex).MouseWheel += ChangeVertexValue;
+            (vertex as WinFormsVertex).MouseClick += Reverse;
+            (vertex as WinFormsVertex).MouseWheel += ChangeVertexCost;
         }
 
         public override void ChooseExtremeVertices(object sender, EventArgs e)

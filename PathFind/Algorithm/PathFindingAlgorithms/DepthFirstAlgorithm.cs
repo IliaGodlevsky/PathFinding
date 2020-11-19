@@ -9,6 +9,7 @@ using Algorithm.PathFindingAlgorithms.Interface;
 using GraphLib.Extensions;
 using GraphLib.Graphs.Abstractions;
 using Algorithm.Сalculations;
+using Algorithm.Delegates;
 
 namespace Algorithm.PathFindingAlgorithms
 {
@@ -16,7 +17,7 @@ namespace Algorithm.PathFindingAlgorithms
     /// Greedy algorithm. Each step looks for the best vertex and visits it
     /// </summary>
     [Description("Depth-first algorithm")]
-    public class DepthFirstAlgorithm : IPathFindingAlgorithm
+    internal class DepthFirstAlgorithm : IPathFindingAlgorithm
     {
         public event AlgorithmEventHanlder OnStarted;
         public event Action<IVertex> OnVertexVisited;

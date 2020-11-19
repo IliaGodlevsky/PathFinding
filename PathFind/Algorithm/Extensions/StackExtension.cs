@@ -5,7 +5,7 @@ using System.Linq;
 
 namespace Algorithm.Extensions
 {
-    public static class StackExtension
+    internal static class StackExtension
     {
         internal static IVertex PopOrDefault(this Stack<IVertex> stack)
         {

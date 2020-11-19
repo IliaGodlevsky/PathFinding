@@ -12,7 +12,7 @@ namespace Algorithm.Extensions
         /// </summary>
         /// <param name="queue"></param>
         /// <returns>if queue is empty returns NullVertex</returns>
-        public static IVertex DequeueOrDefault(this Queue<IVertex> queue)
+        internal static IVertex DequeueOrDefault(this Queue<IVertex> queue)
         {
             return !queue.Any() ? new DefaultVertex() : queue.Dequeue();
         }

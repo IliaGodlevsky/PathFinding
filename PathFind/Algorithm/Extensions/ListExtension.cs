@@ -13,7 +13,7 @@ namespace Algorithm.Extensions
         /// <param name="list"></param>
         /// <param name="match"></param>
         /// <returns>if no match returns NullVertex</returns>
-        public static IVertex FindOrDefault(this List<IVertex> list, Predicate<IVertex> match)
+        internal static IVertex FindOrDefault(this List<IVertex> list, Predicate<IVertex> match)
         {
             return list.Find(match) ?? new DefaultVertex();
         }

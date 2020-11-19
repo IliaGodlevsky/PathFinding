@@ -8,7 +8,7 @@ using System.Linq;
 namespace GraphLib.Graphs.Serialization.Infrastructure.Info.Collections
 {
     [Serializable]
-    public class VertexInfoCollection : IEnumerable<VertexInfo>
+    public sealed class VertexInfoCollection : IEnumerable<VertexInfo>
     {
         public VertexInfoCollection(IEnumerable<IVertex> vertices,
             params int[] dimensionsSizes)

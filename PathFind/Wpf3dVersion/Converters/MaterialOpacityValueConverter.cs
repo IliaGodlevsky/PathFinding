@@ -13,8 +13,7 @@ namespace Wpf3dVersion.Converters
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            var result = Math.Round((double)value, 2);
-            return result;
+            return Math.Round((double)value, 2);
         }
     }
 }

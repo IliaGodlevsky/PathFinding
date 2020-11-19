@@ -10,7 +10,7 @@ namespace ConsoleVersion.Model
     internal class ConsoleVertexEventHolder : BaseVertexEventHolder
     {
 
-        public override void ChangeVertexValue(object sender, EventArgs e)
+        public override void ChangeVertexCost(object sender, EventArgs e)
         {
             var vertex = sender as ConsoleVertex;
 
@@ -32,9 +32,9 @@ namespace ConsoleVersion.Model
 
         protected override void SubscribeToEvents(IVertex vertex)
         {
-            (vertex as ConsoleVertex).OnCostChanged += ChangeVertexValue;
+            (vertex as ConsoleVertex).OnCostChanged += ChangeVertexCost;
             (vertex as ConsoleVertex).OnDestinationChosen += ChooseExtremeVertices;
-            (vertex as ConsoleVertex).OnRoleChanged += ReversePolarity;
+            (vertex as ConsoleVertex).OnRoleChanged += Reverse;
         }
     }
 }

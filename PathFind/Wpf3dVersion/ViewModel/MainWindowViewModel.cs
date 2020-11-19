@@ -1,4 +1,5 @@
-﻿using GraphLib.Extensions;
+﻿using Common.EventArguments;
+using GraphLib.Extensions;
 using GraphLib.GraphField;
 using GraphLib.Graphs;
 using GraphLib.Graphs.Serialization;
@@ -72,17 +73,17 @@ namespace Wpf3dVersion.ViewModel
 
         public MainWindowViewModel()
         {
-            GraphField = new Wpf3dGraphField();
-            VertexEventHolder = new Wpf3dVertexEventHolder();
-            FieldFactory = new Wpf3DGraphFieldFactory();
-            InfoConverter = (dto) => new Wpf3dVertex(dto);
+            GraphField          = new Wpf3dGraphField();
+            VertexEventHolder   = new Wpf3dVertexEventHolder();
+            FieldFactory        = new Wpf3DGraphFieldFactory();
+            InfoConverter       = (dto) => new Wpf3dVertex(dto);
 
-            StartPathFindCommand = new RelayCommand(ExecuteStartPathFindCommand, CanExecuteStartFindPathCommand);
-            CreateNewGraphCommand = new RelayCommand(ExecuteCreateNewGraphCommand, AlwaysExecutable);
-            ClearGraphCommand = new RelayCommand(ExecuteClearGraphCommand, CanExecuteGraphOperation);
-            SaveGraphCommand = new RelayCommand(ExecuteSaveGraphCommand, CanExecuteGraphOperation);
-            LoadGraphCommand = new RelayCommand(ExecuteLoadGraphCommand, AlwaysExecutable);           
-            ChangeOpacityCommand = new RelayCommand(ExecuteChangeOpacity, CanExecuteGraphOperation);
+            StartPathFindCommand    = new RelayCommand(ExecuteStartPathFindCommand,  CanExecuteStartFindPathCommand);
+            CreateNewGraphCommand   = new RelayCommand(ExecuteCreateNewGraphCommand, AlwaysExecutable);
+            ClearGraphCommand       = new RelayCommand(ExecuteClearGraphCommand,     CanExecuteGraphOperation);
+            SaveGraphCommand        = new RelayCommand(ExecuteSaveGraphCommand,      CanExecuteGraphOperation);
+            LoadGraphCommand        = new RelayCommand(ExecuteLoadGraphCommand,      AlwaysExecutable);           
+            ChangeOpacityCommand    = new RelayCommand(ExecuteChangeOpacity,         CanExecuteGraphOperation);
 
             Serializer = new GraphSerializer<Graph3D>();
 
@@ -91,7 +92,11 @@ namespace Wpf3dVersion.ViewModel
 
         public override void FindPath()
         {
-            PrepareWindow(new PathFindingViewModel(this), new PathFindWindow());
+            var viewModel = new PathFindingViewModel(this);
+
+            viewModel.OnPathNotFound += OnPathNotFound;
+
+            PrepareWindow(viewModel, new PathFindWindow());
         }
 
         public override void CreateNewGraph()
@@ -101,17 +106,20 @@ namespace Wpf3dVersion.ViewModel
 
         public void XAxisSliderValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
         {
-            AxisSliderValueChanged((sliderValue, field) => field.DistanceBetweenAtXAxis = sliderValue, e.NewValue, 1, 0, 0);
+            AxisSliderValueChanged((sliderValue, field)
+                => field.DistanceBetweenVerticesAtXAxis = sliderValue, e.NewValue, 1, 0, 0);
         }
 
         public void YAxisSliderValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
         {
-            AxisSliderValueChanged((sliderValue, field) => field.DistanceBetweenAtYAxis = sliderValue, e.NewValue, 0, 1, 0);
+            AxisSliderValueChanged((sliderValue, field) 
+                => field.DistanceBetweenVerticesAtYAxis = sliderValue, e.NewValue, 0, 1, 0);
         }
 
         public void ZAxisSliderValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
         {
-            AxisSliderValueChanged((sliderValue, field) => field.DistanceBetweenAtZAxis = sliderValue, e.NewValue, 0, 0, 1);
+            AxisSliderValueChanged((sliderValue, field) 
+                => field.DistanceBetweenVerticesAtZAxis = sliderValue, e.NewValue, 0, 0, 1);
         }
 
         private void ChangeVerticesOpacity()
@@ -205,6 +213,12 @@ namespace Wpf3dVersion.ViewModel
             {
                 field.CenterGraph(additionalOffset);
             }
+        }
+
+        private void OnPathNotFound(object sender, EventArgs e)
+        {
+            var args = e as PathNotFoundEventArgs;
+            MessageBox.Show(args?.Message);
         }
 
         private bool AlwaysExecutable(object param)

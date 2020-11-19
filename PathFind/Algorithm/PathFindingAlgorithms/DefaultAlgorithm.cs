@@ -6,11 +6,12 @@ using Algorithm.PathFindingAlgorithms.Interface;
 using GraphLib.Graphs;
 using GraphLib.Graphs.Abstractions;
 using System.ComponentModel;
+using Algorithm.Delegates;
 
 namespace Algorithm.PathFindingAlgorithms
 {
     [Description("Default algorithm")]
-    public sealed class DefaultAlgorithm : IPathFindingAlgorithm
+    internal sealed class DefaultAlgorithm : IPathFindingAlgorithm
     {
         public DefaultAlgorithm()
         {

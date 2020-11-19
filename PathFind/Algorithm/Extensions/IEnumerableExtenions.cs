@@ -12,16 +12,5 @@ namespace Algorithm.Extensions
         {
             return !collection.Any() ? new DefaultVertex() : collection.First();
         }
-
-        public static void DrawPath(this IEnumerable<IVertex> path)
-        {
-            foreach (var vertex in path)
-            {
-                if (vertex.IsSimpleVertex())
-                {
-                    vertex.MarkAsPath();
-                }
-            }
-        }
     }
 }

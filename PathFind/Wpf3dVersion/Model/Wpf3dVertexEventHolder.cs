@@ -14,8 +14,8 @@ namespace Wpf3dVersion.Model
         protected override void SubscribeToEvents(IVertex vertex)
         {
             (vertex as Wpf3dVertex).MouseLeftButtonDown += ChooseExtremeVertices;
-            (vertex as Wpf3dVertex).MouseRightButtonDown += ReversePolarity;
-            (vertex as Wpf3dVertex).MouseWheel += ChangeVertexValue;
+            (vertex as Wpf3dVertex).MouseRightButtonDown += Reverse;
+            (vertex as Wpf3dVertex).MouseWheel += ChangeVertexCost;
         }
     }
 }

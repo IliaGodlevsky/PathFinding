@@ -8,11 +8,11 @@ namespace Wpf3dVersion.Model
 {
     public class Wpf3dGraphField : ModelVisual3D, IGraphField
     {
-        public double DistanceBetweenAtXAxis { get; set; }
+        public double DistanceBetweenVerticesAtXAxis { get; set; }
 
-        public double DistanceBetweenAtYAxis { get; set; }
+        public double DistanceBetweenVerticesAtYAxis { get; set; }
 
-        public double DistanceBetweenAtZAxis { get; set; }
+        public double DistanceBetweenVerticesAtZAxis { get; set; }
 
         public Wpf3dGraphField(int width, 
             int length, int height) : this()
@@ -24,15 +24,16 @@ namespace Wpf3dVersion.Model
 
         public Wpf3dGraphField()
         {
-            DistanceBetweenAtXAxis = 0;
-            DistanceBetweenAtYAxis = 0;
-            DistanceBetweenAtZAxis = 0;
+            DistanceBetweenVerticesAtXAxis = 0;
+            DistanceBetweenVerticesAtYAxis = 0;
+            DistanceBetweenVerticesAtZAxis = 0;
         }
 
         public void Add(IVertex vertex)
         {
-            SetVertexOffset(vertex as Wpf3dVertex);
-            Children.Add(vertex as Wpf3dVertex);
+            Wpf3dVertex vertex3D = vertex as Wpf3dVertex;
+            SetVertexOffset(vertex3D);
+            Children.Add(vertex3D);
         }
 
         public void SetDistanceBetweenVertices()
@@ -106,9 +107,9 @@ namespace Wpf3dVersion.Model
 
         private double[] DistanceBetween => new double[] 
         { 
-            DistanceBetweenAtXAxis, 
-            DistanceBetweenAtYAxis, 
-            DistanceBetweenAtZAxis 
+            DistanceBetweenVerticesAtXAxis, 
+            DistanceBetweenVerticesAtYAxis, 
+            DistanceBetweenVerticesAtZAxis 
         };
     }
 

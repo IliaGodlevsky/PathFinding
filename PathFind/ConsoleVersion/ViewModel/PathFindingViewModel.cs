@@ -47,6 +47,7 @@ namespace ConsoleVersion.ViewModel
         protected override void OnAlgorithmStarted(object sender, AlgorithmEventArgs e)
         {
             base.OnAlgorithmStarted(sender, e);
+
             thread = new Thread(DisplayGraphIndefinitly);
             thread.Start();
         }
@@ -54,16 +55,8 @@ namespace ConsoleVersion.ViewModel
         protected override void OnAlgorithmFinished(object sender, AlgorithmEventArgs e)
         {
             thread.Abort();
-            thread.Join();
 
             base.OnAlgorithmFinished(sender, e);
-
-            if (!e.HasFoundPath)
-            {
-                (mainViewModel as MainViewModel).DisplayGraph();
-                Console.WriteLine(badResultMessage);
-                Console.ReadLine();
-            }
         }
 
         private int GetAlgorithmKeyIndex()
@@ -75,16 +68,10 @@ namespace ConsoleVersion.ViewModel
         }
 
         private void ChooseExtremeVertex()
-        {           
-            const int EXTREME_VERTICES_COUNT = 2;
+        {
+            var chooseMessages = new string[] { Messages.Item1, Messages.Item2 };
 
-            string[] chooseMessages = new string[EXTREME_VERTICES_COUNT] 
-            { 
-                Messages.Item1, 
-                Messages.Item2 
-            };
-
-            for (int i = 0; i < EXTREME_VERTICES_COUNT; i++)
+            for (int i = 0; i < chooseMessages.Length; i++)
             {
                 var point = ChoosePoint(chooseMessages[i]);
                 (mainViewModel.Graph[point] as ConsoleVertex).SetAsExtremeVertex();
@@ -100,7 +87,7 @@ namespace ConsoleVersion.ViewModel
 
             var point = Input.InputPoint(upperPosibleXValue, upperPosibleYValue);
 
-            while (!graph[point].IsValidToBeRange())
+            while (!graph[point].IsValidToBeExtreme())
             {
                 point = Input.InputPoint(upperPosibleXValue, upperPosibleYValue);
             }
@@ -109,7 +96,7 @@ namespace ConsoleVersion.ViewModel
         }
 
         private void DisplayGraphIndefinitly()
-        {
+        { 
             while (true)
             {
                 Thread.Sleep(millisecondsTimeout: 135);
@@ -117,8 +104,9 @@ namespace ConsoleVersion.ViewModel
             }
         }
 
+        private Thread thread;
+
         private readonly int maxAlgorithmValue;
         private readonly int minAlgorithmValue;
-        private Thread thread;
     }
 }

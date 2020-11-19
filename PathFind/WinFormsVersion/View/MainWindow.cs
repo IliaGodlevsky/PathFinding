@@ -47,7 +47,9 @@ namespace WinFormsVersion.Forms
             parametres.DataBindings.Add(bindingParametres);
 
             for (int i = 0; i < menu.Items.Count; i++)
+            {
                 menu.Items[i].Click += events[i];
+            }
         }
     }
 }

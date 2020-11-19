@@ -1,9 +1,7 @@
 ﻿using Algorithm.AlgorithmCreating;
-using Algorithm.EventArguments;
 using GraphLib.ViewModel;
 using GraphViewModel.Interfaces;
 using System.Linq;
-using System.Windows;
 using Wpf3dVersion.Infrastructure;
 
 namespace Wpf3dVersion.ViewModel
@@ -37,15 +35,6 @@ namespace Wpf3dVersion.ViewModel
         private bool CanExecuteConfirmPathFindAlgorithmChoice(object param)
         {
             return AlgorithmFactory.AlgorithmKeys.Any(algo => algo == AlgorithmKey);
-        }
-
-        protected override void OnAlgorithmFinished(object sender, AlgorithmEventArgs e)
-        {
-            base.OnAlgorithmFinished(sender, e);
-            if (!e.HasFoundPath)
-            {
-                MessageBox.Show(badResultMessage);
-            }
         }
     }
 }

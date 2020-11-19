@@ -1,4 +1,4 @@
-﻿using Algorithm.EventArguments;
+﻿using Algorithm.Delegates;
 using Common.Interfaces;
 using GraphLib.Graphs.Abstractions;
 using GraphLib.Vertex.Interface;
@@ -6,8 +6,6 @@ using System;
 
 namespace Algorithm.PathFindingAlgorithms.Interface
 {
-    public delegate void AlgorithmEventHanlder(object sender, AlgorithmEventArgs e);
-
     /// <summary>
     /// A base interface of path finding algorithms
     /// </summary>

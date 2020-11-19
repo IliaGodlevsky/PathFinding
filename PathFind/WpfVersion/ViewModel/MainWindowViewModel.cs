@@ -13,6 +13,7 @@ using GraphViewModel;
 using GraphLib.Extensions;
 using GraphViewModel.Interfaces;
 using System;
+using Common.EventArguments;
 
 namespace WpfVersion.ViewModel
 {
@@ -99,7 +100,11 @@ namespace WpfVersion.ViewModel
 
         public override void FindPath()
         {
-            PrepareWindow(new PathFindingViewModel(this), new PathFindWindow());
+            var viewModel = new PathFindingViewModel(this);
+
+            viewModel.OnPathNotFound += OnPathNotFound;
+
+            PrepareWindow(viewModel, new PathFindWindow());
         }
 
         public override void CreateNewGraph()
@@ -186,5 +191,10 @@ namespace WpfVersion.ViewModel
             return !Graph.IsDefault;
         }
 
+        private void OnPathNotFound(object sender, EventArgs e)
+        {
+            var args = e as PathNotFoundEventArgs;
+            MessageBox.Show(args.Message);
+        }
     }
 }

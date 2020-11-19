@@ -9,6 +9,7 @@ using Algorithm.PathFindingAlgorithms.Interface;
 using Common.Extensions;
 using GraphLib.Extensions;
 using GraphLib.Graphs.Abstractions;
+using Algorithm.Delegates;
 
 namespace Algorithm.PathFindingAlgorithms
 {
@@ -18,7 +19,7 @@ namespace Algorithm.PathFindingAlgorithms
     /// the destination top
     /// </summary>
     [Description("Lee algorithm")]
-    public class LeeAlgorithm : IPathFindingAlgorithm
+    internal class LeeAlgorithm : IPathFindingAlgorithm
     {
         public event AlgorithmEventHanlder OnStarted;
         public event Action<IVertex> OnVertexVisited;
@@ -48,18 +49,6 @@ namespace Algorithm.PathFindingAlgorithms
             OnFinished?.Invoke(this, new AlgorithmEventArgs(Graph));
         }
 
-        private void ExtractNeighbours(IVertex vertex)
-        {
-            foreach (var vert in vertex.GetUnvisitedNeighbours())
-            {
-                OnVertexEnqueued?.Invoke(vert);
-                neighbourQueue.Enqueue(vert);
-            }
-
-            var distincted = neighbourQueue.DistinctBy(vert => vert.Position);
-            neighbourQueue = new Queue<IVertex>(distincted);
-        }
-
         protected virtual IVertex GetNextVertex()
         {
             var notVisited = neighbourQueue.Where(vertex => !vertex.IsVisited);
@@ -85,6 +74,18 @@ namespace Algorithm.PathFindingAlgorithms
             });
         }
 
+        private void ExtractNeighbours(IVertex vertex)
+        {
+            foreach (var vert in vertex.GetUnvisitedNeighbours())
+            {
+                OnVertexEnqueued?.Invoke(vert);
+                neighbourQueue.Enqueue(vert);
+            }
+
+            var distincted = neighbourQueue.DistinctBy(vert => vert.Position);
+            neighbourQueue = new Queue<IVertex>(distincted);
+        }
+
         private void ProcessVertex(IVertex vertex)
         {
             vertex.IsVisited = true;
@@ -93,6 +94,6 @@ namespace Algorithm.PathFindingAlgorithms
             ExtractNeighbours(vertex);
         }
 
-        protected Queue<IVertex> neighbourQueue;
+        protected  Queue<IVertex> neighbourQueue;
     }
 }

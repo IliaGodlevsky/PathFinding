@@ -38,14 +38,5 @@ namespace WpfVersion.ViewModel
         {
             return AlgorithmFactory.AlgorithmKeys.Any(algo => algo == AlgorithmKey);
         }
-
-        protected override void OnAlgorithmFinished(object sender, AlgorithmEventArgs e)
-        {
-            base.OnAlgorithmFinished(sender, e);
-            if (!e.HasFoundPath)
-            {
-                MessageBox.Show(badResultMessage);
-            }
-        }
     }
 }

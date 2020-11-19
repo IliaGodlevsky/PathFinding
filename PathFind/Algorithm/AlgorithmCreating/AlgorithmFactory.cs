@@ -18,15 +18,18 @@ namespace Algorithm.AlgorithmCreating
         static AlgorithmFactory()
         {
             Algorithms = new Dictionary<string, Type>();
-            var algorithmInterfaceType = typeof(IPathFindingAlgorithm);
-            var assembly = Assembly.Load(algorithmInterfaceType.Assembly.GetName());
-            var assemblyTypes = assembly.GetTypes().Where(type => type != typeof(DefaultAlgorithm));
+
+            var algorithmInterface = typeof(IPathFindingAlgorithm);
+            var assembly = Assembly.Load(algorithmInterface.Assembly.GetName());
+            var assemblyTypes = assembly.GetTypes().
+                Where(type => type != typeof(DefaultAlgorithm));
 
             foreach (var type in assemblyTypes)
             {
-                var typeRealizedInterfaces = type.GetInterfaces().Select(interf => interf.Name);
+                var interfaces = type.GetInterfaces();
+                var interfacesNames = interfaces.Select(interf => interf.Name);
 
-                if (typeRealizedInterfaces.Contains(algorithmInterfaceType.Name))
+                if (interfacesNames.Contains(algorithmInterface.Name))
                 {
                     dynamic attribute = Attribute.GetCustomAttribute(type, typeof(DescriptionAttribute));
                     var description = attribute != null ? attribute.Description : type.ToString();

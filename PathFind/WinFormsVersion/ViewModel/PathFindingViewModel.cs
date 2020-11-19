@@ -29,15 +29,6 @@ namespace WinFormsVersion.ViewModel
             (mainViewModel as MainWindowViewModel).Window.Close();
         }
 
-        protected override void OnAlgorithmFinished(object sender, AlgorithmEventArgs e)
-        {
-            if (!e.HasFoundPath)
-            {
-                MessageBox.Show(badResultMessage);
-            }
-            base.OnAlgorithmFinished(sender, e);
-        }
-
         private bool CanExecuteConfirmPathFindAlgorithmChoice()
         {
             return AlgorithmFactory.AlgorithmKeys.Any(algo => algo == AlgorithmKey);

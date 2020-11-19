@@ -9,6 +9,7 @@ using Algorithm.PathFindingAlgorithms.Interface;
 using Common.Extensions;
 using GraphLib.Extensions;
 using GraphLib.Graphs.Abstractions;
+using Algorithm.Delegates;
 
 namespace Algorithm.PathFindingAlgorithms
 {
@@ -16,7 +17,7 @@ namespace Algorithm.PathFindingAlgorithms
     /// Finds the chippest path to destination vertex. 
     /// </summary>
     [Description("Dijkstra algorithm")]
-    public class DijkstraAlgorithm : IPathFindingAlgorithm
+    internal class DijkstraAlgorithm : IPathFindingAlgorithm
     {
         public event AlgorithmEventHanlder OnStarted;
         public event Action<IVertex> OnVertexVisited;
@@ -61,7 +62,7 @@ namespace Algorithm.PathFindingAlgorithms
             });
         }
 
-        protected virtual double Relax(IVertex neighbour, IVertex vertex)
+        protected virtual double GetVertexRelaxedCost(IVertex neighbour, IVertex vertex)
         {
             return (int)neighbour.Cost + vertex.AccumulatedCost;
         }
@@ -70,7 +71,7 @@ namespace Algorithm.PathFindingAlgorithms
         {
             foreach(var neighbour in vertex.GetUnvisitedNeighbours())
             {
-                var relaxedCost = Relax(neighbour, vertex);
+                var relaxedCost = GetVertexRelaxedCost(neighbour, vertex);
                 if (neighbour.AccumulatedCost > relaxedCost)
                 {
                     neighbour.AccumulatedCost = relaxedCost;

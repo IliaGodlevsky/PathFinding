@@ -11,7 +11,7 @@ using System.Linq;
 
 namespace GraphLib.Graphs.Factories
 {
-    public class GraphFactory<TGraph> : IGraphFactory
+    public sealed class GraphFactory<TGraph> : IGraphFactory
         where TGraph : IGraph
     {
         public event Action<string> OnExceptionCaught;
@@ -27,8 +27,8 @@ namespace GraphLib.Graphs.Factories
             rand = new Random();
         }
 
-        public IGraph CreateGraph(Func<IVertex> vertexFactoryMethod,
-            Func<IEnumerable<int>, ICoordinate> coordinateFactoryMethod)
+        public IGraph CreateGraph(Func<IVertex> vertexCreateMethod,
+            Func<IEnumerable<int>, ICoordinate> coordinateCreateMethod)
         {
             try
             {
@@ -37,9 +37,9 @@ namespace GraphLib.Graphs.Factories
                 for (int i = 0; i < graph.Size; i++)
                 {
                     var coordinates = Index.ToCoordinate(i, dimensionSizes).ToArray();
-                    var coordinate = coordinateFactoryMethod?.Invoke(coordinates);
+                    var coordinate = coordinateCreateMethod?.Invoke(coordinates);
 
-                    graph[coordinate] = vertexFactoryMethod?.Invoke();
+                    graph[coordinate] = vertexCreateMethod?.Invoke();
 
                     graph[coordinate].Cost = rand.GetRandomValueCost();
                     if (rand.IsObstacleChance(obstacleChance))

@@ -9,11 +9,11 @@ using WinFormsVersion.Model;
 using WinFormsVersion.View;
 using WinFormsVersion.EventHolder;
 using GraphLib.GraphField;
-using System.Linq;
 using GraphLib.Graphs;
 using GraphViewModel;
 using GraphLib.Extensions;
 using Common;
+using Common.EventArguments;
 
 namespace WinFormsVersion.ViewModel
 {
@@ -74,6 +74,7 @@ namespace WinFormsVersion.ViewModel
                 return;
 
             var model = new PathFindingViewModel(this);
+            model.OnPathNotFound += OnPathNotFound;
             var form = new PathFindingWindow(model);
 
             PrepareWindow(form);
@@ -157,12 +158,13 @@ namespace WinFormsVersion.ViewModel
 
         private bool CanStartPathFinding()
         {
-            return !Graph.Start.IsDefault
-                && !Graph.End.IsDefault
-                && Graph.Any() 
-                && !Graph.Start.IsVisited;
+            return Graph.IsReadyForPathfinding();
         }
 
-
+        private void OnPathNotFound(object sender, EventArgs e)
+        {
+            var args = e as PathNotFoundEventArgs;
+            MessageBox.Show(args?.Message);
+        }
     }
 }

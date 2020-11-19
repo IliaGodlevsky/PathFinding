@@ -16,12 +16,12 @@ namespace GraphLib.PauseMaking
 
         public PauseProvider()
         {
-
+            timer = new Stopwatch();
         }
 
         public void Pause(int delayTime)
         {
-            var timer = new Stopwatch();
+            timer.Reset();
             timer.Start();
 
             while (timer.ElapsedMilliseconds < delayTime)
@@ -31,5 +31,7 @@ namespace GraphLib.PauseMaking
 
             timer.Stop();
         }
+
+        private readonly Stopwatch timer;
     }
 }

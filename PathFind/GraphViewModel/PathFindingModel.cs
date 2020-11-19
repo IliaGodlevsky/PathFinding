@@ -8,18 +8,21 @@ using Common.Extensions;
 using GraphLib.Vertex.Interface;
 using Algorithm.EventArguments;
 using GraphLib.PauseMaking;
+using System;
+using Common.EventArguments;
 
 namespace GraphLib.ViewModel
 {
     public abstract class PathFindingModel : IModel
     {
+        public event EventHandler OnPathNotFound;
+
         public int DelayTime { get; set; } // milliseconds
 
         public string AlgorithmKey { get; set; }
 
         public PathFindingModel(IMainModel mainViewModel)
         {
-            badResultMessage = ViewModelResources.BadResultMsg;
             pauseProvider = new PauseProvider();
             this.mainViewModel = mainViewModel;
             graph = mainViewModel.Graph;
@@ -46,12 +49,8 @@ namespace GraphLib.ViewModel
                 vertex.MarkAsVisited();
             }
 
-            var visitedVertices = graph.NumberOfVisitedVertices;
-            mainViewModel.PathFindingStatistics = GetIntermediateStatistics(
-                timer, 
-                steps: 0, 
-                pathLength: 0, 
-                visitedVertices);
+            mainViewModel.PathFindingStatistics = GetIntermediateStatistics(timer,
+                steps: 0, pathLength: 0, graph.NumberOfVisitedVertices);
 
             pauseProvider.Pause(DelayTime);
         }
@@ -71,16 +70,17 @@ namespace GraphLib.ViewModel
             var path = new Path();
             var isPathExtracted = path.ExtractPath(graph);
 
-            mainViewModel.PathFindingStatistics
-                = GetIntermediateStatistics(
-                    timer, 
-                    path.PathCost, 
-                    path.PathLength, 
-                    graph.NumberOfVisitedVertices);
+            mainViewModel.PathFindingStatistics = GetIntermediateStatistics(timer,
+                    path.PathLength, path.PathCost, graph.NumberOfVisitedVertices);
 
             if (isPathExtracted)
             {
                 path.HighlightPath();
+            }
+            else
+            {
+                var args = new PathNotFoundEventArgs("Couln't find path");
+                OnPathNotFound?.Invoke(this, args);
             }
         }
 
@@ -90,24 +90,19 @@ namespace GraphLib.ViewModel
             timer.Start();
         }
 
-        private string GetIntermediateStatistics(
-            Stopwatch timer, 
-            int steps, 
-            int pathLength, 
-            int visitedVertices)
+        private string GetIntermediateStatistics(Stopwatch timer, 
+            int steps, int pathLength, int visitedVertices)
         {
-            var graphInfo = string.Format(
-                ViewModelResources.StatisticsFormat,
-                steps, 
-                pathLength, 
-                visitedVertices);
+            var graphInfo = string.Format(ViewModelResources.StatisticsFormat,
+                steps, pathLength, visitedVertices);
+
             var timerInfo = timer.GetTimeInformation(ViewModelResources.TimerInfoFormat);
+
             return timerInfo + "   " + graphInfo;
         }
 
         protected PauseProvider pauseProvider;
         protected IMainModel mainViewModel;
-        protected string badResultMessage;
         protected IGraph graph;
 
         private Stopwatch timer;

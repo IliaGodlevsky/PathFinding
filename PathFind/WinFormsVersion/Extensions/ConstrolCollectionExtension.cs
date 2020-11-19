@@ -6,8 +6,8 @@ namespace WinFormsVersion.Extensions
 {
     internal static class ConstrolCollectionExtension
     {
-        public static void RemoveBy(this ControlCollection collection, 
-            Func<Control,bool> predicate)
+        public static void RemoveBy(this ControlCollection collection,
+            Func<Control, bool> predicate)
         {
             foreach(Control control in collection)
             {

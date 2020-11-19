@@ -43,14 +43,9 @@ namespace GraphLib.VertexConnecting
                 throw new ArgumentException("Dimensions of coordinate and graph don't match each other");
             }
 
-            bool IsOutOfBounds(int currentCoordinate, int dimensionSize)
-            {
-                return currentCoordinate < 0 || currentCoordinate >= dimensionSize;
-            }
-
             for (int i = 0; i < currentCoordinates.Length; i++)
             {
-                if (IsOutOfBounds(currentCoordinates[i], dimensionSizes[i]))
+                if (currentCoordinates[i] >= dimensionSizes[i])
                 {
                     return false;
                 }
@@ -81,11 +76,11 @@ namespace GraphLib.VertexConnecting
         {
             if (!vertex.IsObstacle)
             {
-                foreach (var potentialNeighbor in GetVertexEnvironment(graph, vertex))
+                foreach (var neighbourCandidate in GetVertexEnvironment(graph, vertex))
                 {
-                    if (CanBeNeighbour(vertex, potentialNeighbor))
+                    if (CanBeNeighbour(vertex, neighbourCandidate))
                     {
-                        vertex.Neighbours.Add(potentialNeighbor);
+                        vertex.Neighbours.Add(neighbourCandidate);
                     }
                 }
             }

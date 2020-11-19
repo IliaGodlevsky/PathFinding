@@ -1,5 +1,4 @@
 ﻿using GraphLib.Coordinates.Interface;
-using GraphLib.Extensions;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,15 +9,13 @@ namespace GraphLib.Coordinates
     /// Cartesian coordinates of the vertex on the graph
     /// </summary>
     [Serializable]
-    public class Coordinate2D : ICoordinate
+    public sealed class Coordinate2D : BaseCoordinate
     {
-        public int X { get; private set; }
+        public int X => Coordinates.First();
 
-        public int Y { get; private set; }
+        public int Y => Coordinates.Last();
 
-        public IEnumerable<int> Coordinates => new int[] { X, Y };
-
-        public IEnumerable<ICoordinate> Environment
+        public override IEnumerable<ICoordinate> Environment
         {
             get
             {
@@ -26,6 +23,9 @@ namespace GraphLib.Coordinates
                 {
                     for (int y = Y - 1; y <= Y + 1; y++)
                     {
+                        if (x < 0 || y < 0)
+                            continue;
+                        
                         var coordinate = new Coordinate2D(x, y);
 
                         if (!Equals(coordinate))
@@ -37,8 +37,6 @@ namespace GraphLib.Coordinates
             }
         }
 
-        public bool IsDefault => false;
-
         public Coordinate2D(int x, int y) 
             : this(new int[] { x, y })
         {
@@ -46,39 +44,17 @@ namespace GraphLib.Coordinates
         }
 
         public Coordinate2D(params int[] coordinates)
+            : base(coordinates)
         {
             if (coordinates.Length != 2) 
             {
                 throw new ArgumentException("Must be two coordinates");
             }
-
-            X = coordinates.First();
-            Y = coordinates.Last();
         }
 
-        public override bool Equals(object pos)
+        public override object Clone()
         {
-            if (pos is Coordinate2D coordinate)
-            {
-                return this.IsEqual(coordinate);
-            }
-
-            throw new ArgumentException("Invalid value to compare");
-        }
-
-        public override int GetHashCode()
-        {
-            return X ^ Y;
-        }
-
-        public override string ToString()
-        {
-            return string.Format("{0}:{1}", X, Y);
-        }
-
-        public object Clone()
-        {
-            return new Coordinate2D(X, Y);
+            return new Coordinate2D(Coordinates.ToArray());
         }
     }
 }
