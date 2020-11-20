@@ -1,7 +1,6 @@
 ﻿using System;
 using GraphLib.EventHolder.Interface;
 using GraphLib.Vertex.Interface;
-using GraphLib.VertexConnecting;
 using System.Linq;
 using GraphLib.Vertex.Cost;
 using GraphLib.Extensions;
@@ -89,7 +88,7 @@ namespace GraphLib.EventHolder
         {
             if (vertex.IsSimpleVertex() && !vertex.IsVisited)
             {
-                VertexConnector.IsolateVertex(vertex);
+                vertex.Isolate();
                 vertex.IsObstacle = true;
                 vertex.SetToDefault();
                 vertex.MarkAsObstacle();
@@ -100,8 +99,8 @@ namespace GraphLib.EventHolder
         {
             vertex.IsObstacle = false;
             vertex.MarkAsSimpleVertex();
-            VertexConnector.SetNeighbours(Graph, vertex);
-            VertexConnector.ConnectToNeighbours(vertex);
+            vertex.SetNeighbours(Graph);
+            vertex.ConnectWithNeighbours();
         }
 
         private bool IsStartChosen()

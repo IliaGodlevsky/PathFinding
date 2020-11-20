@@ -1,9 +1,9 @@
-﻿using GraphLib.Graphs.Abstractions;
+﻿using GraphLib.Extensions;
+using GraphLib.Graphs.Abstractions;
 using GraphLib.Graphs.Serialization.Infrastructure.Info.Collections;
 using GraphLib.Graphs.Serialization.Interfaces;
 using GraphLib.Info;
 using GraphLib.Vertex.Interface;
-using GraphLib.VertexConnecting;
 using System;
 using System.IO;
 using System.Linq;
@@ -44,7 +44,7 @@ namespace GraphLib.Graphs.Serialization
                         graph[i] = vertexConvertMethod(verticesInfo.ElementAt(i));
                     }
 
-                    VertexConnector.ConnectVertices(graph);
+                    graph.ConnectVertices();
 
                     return graph;
                 }

@@ -44,6 +44,11 @@ namespace GraphLib.Extensions
                 && !self.End.IsDefault && !self.Start.IsDefault;
         }
 
+        public static void ConnectVertices(this IGraph self)
+        {
+            self.AsParallel().ForAll(vertex => vertex.SetNeighbours(self));
+        }
+
         public static bool IsReadyForPathfinding(this IGraph self)
         {
             return !self.End.IsDefault

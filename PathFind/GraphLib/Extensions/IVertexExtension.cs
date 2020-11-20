@@ -1,4 +1,5 @@
-﻿using GraphLib.Info;
+﻿using GraphLib.Graphs.Abstractions;
+using GraphLib.Info;
 using GraphLib.Vertex;
 using GraphLib.Vertex.Interface;
 using System.Collections.Generic;
@@ -68,5 +69,65 @@ namespace GraphLib.Extensions
                 vertex.SetToDefault();
             }
         }
+
+        public static void Isolate(this IVertex self)
+        {
+            foreach (var neigbour in self.Neighbours)
+            {
+                neigbour.Neighbours.Remove(self);
+            }
+
+            self.Neighbours.Clear();
+        }
+
+        public static void ConnectWithNeighbours(this IVertex self)
+        {
+            foreach (var neigbour in self.Neighbours)
+            {
+                if (CanBeNeighbour(self, neigbour))
+                {
+                    neigbour.Neighbours.Add(self);
+                }
+            }
+        }
+
+        public static void SetNeighbours(this IVertex self, IGraph graph)
+        {
+            if (!self.IsObstacle)
+            {
+                foreach (var neighbourCandidate in self.GetEnvironment(graph))
+                {
+                    if (CanBeNeighbour(self, neighbourCandidate))
+                    {
+                        self.Neighbours.Add(neighbourCandidate);
+                    }
+                }
+            }
+        }
+
+        internal static IEnumerable<IVertex> GetEnvironment(this IVertex self, IGraph graph)
+        {
+            foreach (var coordinate in self.Position.Environment)
+            {
+                if (coordinate.IsWithinGraph(graph))
+                {
+                    yield return graph[coordinate];
+                }
+            }
+        }
+
+        private static bool CanBeNeighbour(IVertex vertex, IVertex neighbourCandidate)
+        {
+            return !neighbourCandidate.IsObstacle
+                && !ReferenceEquals(vertex, neighbourCandidate)
+                && !vertex.Neighbours.Contains(neighbourCandidate);
+        }
+
+        //internal static bool CanBeNeighbourOf(this IVertex neighbourCandidate, IVertex vertex)
+        //{
+        //    return !neighbourCandidate.IsObstacle
+        //        && !ReferenceEquals(vertex, neighbourCandidate)
+        //        && !vertex.Neighbours.Contains(neighbourCandidate);
+        //}
     }
 }

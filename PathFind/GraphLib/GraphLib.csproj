@@ -42,6 +42,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Comparers\DimensionComparer.cs" />
     <Compile Include="Coordinates\Index.cs" />
     <Compile Include="Coordinates\Coordinate2D.cs" />
     <Compile Include="Coordinates\Coordinate3D.cs" />
@@ -70,7 +71,6 @@
     <Compile Include="Vertex\Cost\VertexCost.cs" />
     <Compile Include="Vertex\Infrastructure\EventHolder\BaseVertexEventHolder.cs" />
     <Compile Include="Vertex\Infrastructure\EventHolder\Interface\IVertexEventHolder.cs" />
-    <Compile Include="Vertex\Infrastructure\VertexConnector.cs" />
     <Compile Include="Vertex\Interface\IVertex.cs" />
     <Compile Include="Vertex\DefaultVertex.cs" />
   </ItemGroup>

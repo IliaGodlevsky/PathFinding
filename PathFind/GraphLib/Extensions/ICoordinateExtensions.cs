@@ -1,4 +1,6 @@
-﻿using GraphLib.Coordinates.Abstractions;
+﻿using GraphLib.Comparers;
+using GraphLib.Coordinates.Abstractions;
+using GraphLib.Graphs.Abstractions;
 using System.Linq;
 
 namespace GraphLib.Extensions
@@ -13,6 +15,14 @@ namespace GraphLib.Extensions
             }
 
             return self.Coordinates.SequenceEqual(coordinates.Coordinates);
+        }
+
+        internal static bool IsWithinGraph(this ICoordinate coordinates, IGraph graph)
+        {
+            var dimensionSizes = graph.DimensionsSizes.ToArray();
+            var currentCoordinates = coordinates.Coordinates.ToArray();
+
+            return currentCoordinates.SequenceEqual(dimensionSizes, new DimensionComparer());
         }
     }
 }

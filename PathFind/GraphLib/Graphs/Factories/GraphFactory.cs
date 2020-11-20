@@ -4,7 +4,6 @@ using GraphLib.Extensions;
 using GraphLib.Graphs.Abstractions;
 using GraphLib.Graphs.Factories.Interfaces;
 using GraphLib.Vertex.Interface;
-using GraphLib.VertexConnecting;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -50,7 +49,7 @@ namespace GraphLib.Graphs.Factories
                     graph[coordinate].Position = coordinate;
                 }
 
-                VertexConnector.ConnectVertices(graph);
+                graph.ConnectVertices();
 
                 return graph;
             }
