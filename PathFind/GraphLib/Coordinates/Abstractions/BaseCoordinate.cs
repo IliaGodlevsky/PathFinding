@@ -3,7 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace GraphLib.Coordinates.Interface
+namespace GraphLib.Coordinates.Abstractions
 {
     [Serializable]
     public abstract class BaseCoordinate : ICoordinate

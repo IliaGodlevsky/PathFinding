@@ -3,7 +3,7 @@
 namespace GraphLib.Vertex.Cost
 {
     [Serializable]
-    public class VertexCost : ICloneable, IComparable<int>
+    public sealed class VertexCost : ICloneable, IComparable<int>
     {
         public VertexCost(int currentCost)
         {

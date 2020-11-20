@@ -1,9 +1,9 @@
-﻿using GraphLib.Coordinates.Interface;
-using GraphLib.Coordinates;
+﻿using GraphLib.Coordinates;
 using GraphLib.Info;
 using GraphLib.Vertex.Cost;
 using GraphLib.Vertex.Interface;
 using System.Collections.Generic;
+using GraphLib.Coordinates.Abstractions;
 
 namespace GraphLib.Vertex
 {

@@ -9,7 +9,11 @@ namespace ConsoleVersion.ViewModel
 {
     internal class GraphCreatingViewModel : GraphCreatingModel
     {
-        public Tuple<string, string, string> Messages { get; set; }
+        public string ObstaclePercentInputMessage { private get; set; }
+
+        public string WidthInputMessage { private get; set; }
+
+        public string HeightInputMessage { private get; set; }
 
         public GraphCreatingViewModel(IMainModel model) : base(model)
         {
@@ -19,17 +23,17 @@ namespace ConsoleVersion.ViewModel
         public override void CreateGraph(Func<IVertex> generator)
         {
             ObstaclePercent = Input.InputNumber(
-                Messages.Item1,
+                ObstaclePercentInputMessage,
                 Range.ObstaclePercentValueRange.UpperRange,
                 Range.ObstaclePercentValueRange.LowerRange);
 
             Width = Input.InputNumber(
-                Messages.Item2,
+                WidthInputMessage,
                 Range.WidthValueRange.UpperRange,
                 Range.WidthValueRange.LowerRange);
 
             Length = Input.InputNumber(
-                Messages.Item3,
+                HeightInputMessage,
                 Range.HeightValueRange.UpperRange,
                 Range.HeightValueRange.LowerRange);
 

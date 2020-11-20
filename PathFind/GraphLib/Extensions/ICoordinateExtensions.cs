@@ -1,4 +1,4 @@
-﻿using GraphLib.Coordinates.Interface;
+﻿using GraphLib.Coordinates.Abstractions;
 using System.Linq;
 
 namespace GraphLib.Extensions

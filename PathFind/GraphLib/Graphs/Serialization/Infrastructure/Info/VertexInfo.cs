@@ -1,4 +1,4 @@
-﻿using GraphLib.Coordinates.Interface;
+﻿using GraphLib.Coordinates.Abstractions;
 using GraphLib.Vertex.Cost;
 using GraphLib.Vertex.Interface;
 using System;

@@ -16,7 +16,11 @@ namespace ConsoleVersion.ViewModel
 {
     internal class PathFindingViewModel : PathFindingModel
     {
-        public Tuple<string, string, string> Messages { get; set; }
+        public string AlgorithmKeyInputMessage { private get; set; }
+
+        public string EndVertexInputMessage { private get; set; }
+
+        public string StartVertexInputMessage { private get; set; }
 
         public PathFindingViewModel(IMainModel model) : base(model)
         {
@@ -62,19 +66,24 @@ namespace ConsoleVersion.ViewModel
         private int GetAlgorithmKeyIndex()
         {
             return Input.InputNumber(
-                Messages.Item3,
+                AlgorithmKeyInputMessage,
                 maxAlgorithmValue, 
                 minAlgorithmValue) - 1;
         }
 
         private void ChooseExtremeVertex()
         {
-            var chooseMessages = new string[] { Messages.Item1, Messages.Item2 };
+            var chooseMessages = new string[] 
+            { 
+                StartVertexInputMessage, 
+                EndVertexInputMessage 
+            };
 
             for (int i = 0; i < chooseMessages.Length; i++)
             {
                 var point = ChoosePoint(chooseMessages[i]);
-                (mainViewModel.Graph[point] as ConsoleVertex).SetAsExtremeVertex();
+                var vertex = mainViewModel.Graph[point] as ConsoleVertex;
+                vertex.SetAsExtremeVertex();
             }
         }
 

@@ -1,5 +1,5 @@
 ﻿using GraphLib.Coordinates;
-using GraphLib.Coordinates.Interface;
+using GraphLib.Coordinates.Abstractions;
 using GraphLib.Extensions;
 using GraphLib.Graphs.Abstractions;
 using GraphLib.Graphs.Factories.Interfaces;

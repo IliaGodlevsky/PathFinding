@@ -1,5 +1,5 @@
 ﻿using Common.Interfaces;
-using GraphLib.Coordinates.Interface;
+using GraphLib.Coordinates.Abstractions;
 using GraphLib.Graphs.Serialization.Infrastructure.Info.Collections;
 using GraphLib.Vertex.Interface;
 using System.Collections.Generic;

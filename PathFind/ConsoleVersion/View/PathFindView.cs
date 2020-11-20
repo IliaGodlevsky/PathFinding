@@ -2,7 +2,6 @@
 using Common.Extensions;
 using ConsoleVersion.View.Interface;
 using ConsoleVersion.ViewModel;
-using System;
 using System.Linq;
 using System.Text;
 
@@ -16,10 +15,11 @@ namespace ConsoleVersion.View
         {
             Model = model;
 
-            Model.Messages = new Tuple<string, string, string>(
-                "\n" + ConsoleVersionResources.StartPoint,
-                ConsoleVersionResources.DestinationPoint,
-                GetAlgorithmsList() + ConsoleVersionResources.ChooseAlrorithm);
+            var algorithmList = GetAlgorithmsList();
+
+            Model.AlgorithmKeyInputMessage = algorithmList + ConsoleVersionResources.ChooseAlrorithm;
+            Model.StartVertexInputMessage = "\n" + ConsoleVersionResources.StartPoint;
+            Model.EndVertexInputMessage = ConsoleVersionResources.DestinationPoint;
         }
 
         public void Start()

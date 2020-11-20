@@ -1,4 +1,5 @@
-﻿using GraphLib.Coordinates.Interface;
+﻿using GraphLib.Coordinates.Abstractions;
+using GraphLib.Extensions;
 using GraphLib.Graphs.Serialization.Infrastructure.Info.Collections;
 using GraphLib.Vertex.Interface;
 using System.Collections;
@@ -9,15 +10,24 @@ namespace GraphLib.Graphs.Abstractions
 {
     public abstract class BaseGraph : IGraph
     {
-        public abstract IVertex this[ICoordinate coordinate] { get; set; }
+        public BaseGraph(params int[]dimensionSizes)
+        {
+            DimensionsSizes = dimensionSizes;
 
-        public virtual int Size => DimensionsSizes.Aggregate((x, y) => x * y);
+            vertices = new IVertex[Size];
+            this.RemoveExtremeVertices();
+        }
 
-        public virtual int NumberOfVisitedVertices => vertices.AsParallel().Count(vertex => vertex.IsVisited);
+        public int Size => DimensionsSizes.Aggregate((x, y) => x * y);
 
-        public virtual int ObstacleNumber => vertices.AsParallel().Count(vertex => vertex.IsObstacle);
+        public int NumberOfVisitedVertices
+            => vertices.AsParallel().Count(vertex => vertex.IsVisited);
 
-        public virtual int ObstaclePercent => Size == 0 ? 0 : ObstacleNumber * 100 / Size;
+        public int ObstacleNumber 
+            => vertices.AsParallel().Count(vertex => vertex.IsObstacle);
+
+        public int ObstaclePercent 
+            => Size == 0 ? 0 : ObstacleNumber * 100 / Size;
 
         protected IVertex end;
         public virtual IVertex End
@@ -33,11 +43,12 @@ namespace GraphLib.Graphs.Abstractions
             set { start = value; start.IsStart = true; }
         }
 
-        public VertexInfoCollection VertexInfoCollection => new VertexInfoCollection(vertices, DimensionsSizes.ToArray());
+        public VertexInfoCollection VertexInfoCollection 
+            => new VertexInfoCollection(vertices, DimensionsSizes.ToArray());
 
-        public abstract IEnumerable<int> DimensionsSizes { get; }
+        public IEnumerable<int> DimensionsSizes { get; private set; }
 
-        public abstract bool IsDefault { get; }
+        public bool IsDefault => false;
 
         public virtual IVertex this[int index]
         {
@@ -57,6 +68,8 @@ namespace GraphLib.Graphs.Abstractions
 
         public abstract string GetFormattedData(string format);
 
-        protected IVertex[] vertices;
+        public abstract IVertex this[ICoordinate coordinate] { get; set; }
+
+        protected readonly IVertex[] vertices;
     }
 }

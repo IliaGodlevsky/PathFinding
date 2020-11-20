@@ -2,7 +2,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace GraphLib.Coordinates.Interface
+namespace GraphLib.Coordinates.Abstractions
 {
     public interface ICoordinate : ICloneable, IDefault
     {

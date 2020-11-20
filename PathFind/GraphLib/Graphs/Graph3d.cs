@@ -1,36 +1,33 @@
 ﻿using GraphLib.Coordinates;
-using GraphLib.Coordinates.Interface;
-using GraphLib.Extensions;
+using GraphLib.Coordinates.Abstractions;
 using GraphLib.Graphs.Abstractions;
 using GraphLib.Vertex;
 using GraphLib.Vertex.Interface;
 using System;
-using System.Collections.Generic;
 using System.Linq;
 
 namespace GraphLib.Graphs
 {
-    public class Graph3D : BaseGraph
+    public sealed class Graph3D : BaseGraph
     {
+        public int Width => DimensionsSizes.First();
+
+        public int Length => DimensionsSizes.ElementAt(1);
+
+        public int Height => DimensionsSizes.Last();
+
         public Graph3D(int width, int lenght, int height)
             : this(new int[] { width, lenght, height })
         {
 
         }
 
-        public Graph3D(params int[] dimensions)
+        public Graph3D(params int[] dimensions) : base(dimensions)
         {
             if (dimensions.Length != 3)
             {
                 throw new ArgumentException("Number of dimensions doesn't match");
             }
-
-            Width = dimensions.ElementAtOrDefault(0); 
-            Length = dimensions.ElementAtOrDefault(1);
-            Height = dimensions.ElementAtOrDefault(2);
-
-            vertices = new IVertex[Size];
-            this.RemoveExtremeVertices();
         }
 
         public override IVertex this[ICoordinate coordinate]
@@ -63,17 +60,7 @@ namespace GraphLib.Graphs
 
                 vertices[Index.ToIndex(coordinate, Length, Height)] = value;
             }
-        }
-
-        public int Width { get; private set; }
-
-        public int Length { get; private set; }
-
-        public int Height { get; private set; }        
-
-        public override IEnumerable<int> DimensionsSizes => new int[] { Width, Length, Height };
-
-        public override bool IsDefault => false;
+        }    
 
         public override string GetFormattedData(string format)
         {

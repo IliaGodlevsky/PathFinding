@@ -1,12 +1,10 @@
 ﻿using System;
-using System.Collections.Generic;
-using GraphLib.Coordinates.Interface;
 using GraphLib.Coordinates;
 using GraphLib.Vertex;
 using GraphLib.Vertex.Interface;
-using GraphLib.Extensions;
 using GraphLib.Graphs.Abstractions;
 using System.Linq;
+using GraphLib.Coordinates.Abstractions;
 
 namespace GraphLib.Graphs
 {
@@ -14,8 +12,12 @@ namespace GraphLib.Graphs
     /// A structure amounting to a set of objects in which 
     /// some pairs of the objects are in some sense "related"
     /// </summary>
-    public class Graph2D : BaseGraph
+    public sealed class Graph2D : BaseGraph
     {
+        public int Width => DimensionsSizes.First();
+
+        public int Length => DimensionsSizes.Last();
+
         public Graph2D(int width, int length)
             : this(new int[] { width, length })
         {
@@ -23,22 +25,13 @@ namespace GraphLib.Graphs
         }
 
         public Graph2D(params int[] dimensions)
+            :base(dimensions)
         {
             if (dimensions.Length != 2)
             {
                 throw new ArgumentException("Number of dimensions doesn't match");
             }
-
-            Width = dimensions.FirstOrDefault();
-            Length = dimensions.LastOrDefault();
-
-            vertices = new IVertex[Size];
-            this.RemoveExtremeVertices();
         }
-
-        public int Width { get; private set; }
-
-        public int Length { get; private set; }
 
         public override IVertex this[ICoordinate coordinate]
         {
@@ -70,11 +63,7 @@ namespace GraphLib.Graphs
                 var index = Index.ToIndex(coordinate, Length);
                 vertices[index] = value;
             }
-        }      
-
-        public override IEnumerable<int> DimensionsSizes => new int[] { Width, Length };
-
-        public override bool IsDefault => false;
+        }
 
         public override string GetFormattedData(string format)
         {

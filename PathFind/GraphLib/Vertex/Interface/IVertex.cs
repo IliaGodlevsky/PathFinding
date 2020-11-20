@@ -1,8 +1,8 @@
 ﻿using GraphLib.Info;
 using System.Collections.Generic;
 using GraphLib.Vertex.Cost;
-using GraphLib.Coordinates.Interface;
 using Common.Interfaces;
+using GraphLib.Coordinates.Abstractions;
 
 namespace GraphLib.Vertex.Interface
 {

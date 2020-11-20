@@ -1,20 +1,20 @@
 ﻿using ConsoleVersion.Model;
 using ConsoleVersion.View.Interface;
 using ConsoleVersion.ViewModel;
-using System;
 
 namespace ConsoleVersion.View
 {
     internal class GraphCreateView : IView
     {
         private GraphCreatingViewModel Model { get; set; }
+
         public GraphCreateView(GraphCreatingViewModel model)
         {
             Model = model;
-            Model.Messages = new Tuple<string, string, string>(
-                ConsoleVersionResources.PercentMsg,
-                ConsoleVersionResources.WidthMsg,
-                ConsoleVersionResources.HeightMsg);
+
+            Model.ObstaclePercentInputMessage = ConsoleVersionResources.PercentMsg;
+            Model.WidthInputMessage = ConsoleVersionResources.WidthMsg;
+            Model.HeightInputMessage = ConsoleVersionResources.HeightMsg;
         }
 
         public void Start()
