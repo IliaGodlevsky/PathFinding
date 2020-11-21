@@ -84,7 +84,7 @@ namespace GraphLib.Extensions
         {
             foreach (var neigbour in self.Neighbours)
             {
-                if (CanBeNeighbour(self, neigbour))
+                if (CanBeNeighbour(neigbour, self))
                 {
                     neigbour.Neighbours.Add(self);
                 }
@@ -105,7 +105,7 @@ namespace GraphLib.Extensions
             }
         }
 
-        internal static IEnumerable<IVertex> GetEnvironment(this IVertex self, IGraph graph)
+        private static IEnumerable<IVertex> GetEnvironment(this IVertex self, IGraph graph)
         {
             foreach (var coordinate in self.Position.Environment)
             {
