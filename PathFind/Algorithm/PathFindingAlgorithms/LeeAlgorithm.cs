@@ -41,7 +41,7 @@ namespace Algorithm.PathFindingAlgorithms
             OnStarted?.Invoke(this, new AlgorithmEventArgs(Graph));
             var currentVertex = Graph.Start;
             ProcessVertex(currentVertex);
-            while (currentVertex?.IsEnd == false)
+            while (!currentVertex.IsEnd)
             {
                 currentVertex = GetNextVertex();
                 ProcessVertex(currentVertex);
