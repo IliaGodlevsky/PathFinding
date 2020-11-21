@@ -59,7 +59,7 @@ namespace GraphLib.Coordinates
 
         public override string ToString()
         {
-            return $"X:{X}, Y: {Y}";
+            return $"{X},{Y}";
         }
     }
 }

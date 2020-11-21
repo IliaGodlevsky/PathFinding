@@ -105,7 +105,7 @@ namespace GraphLib.Extensions
             }
         }
 
-        private static IEnumerable<IVertex> GetEnvironment(this IVertex self, IGraph graph)
+        internal static IEnumerable<IVertex> GetEnvironment(this IVertex self, IGraph graph)
         {
             foreach (var coordinate in self.Position.Environment)
             {
@@ -122,12 +122,5 @@ namespace GraphLib.Extensions
                 && !ReferenceEquals(vertex, neighbourCandidate)
                 && !vertex.Neighbours.Contains(neighbourCandidate);
         }
-
-        //internal static bool CanBeNeighbourOf(this IVertex neighbourCandidate, IVertex vertex)
-        //{
-        //    return !neighbourCandidate.IsObstacle
-        //        && !ReferenceEquals(vertex, neighbourCandidate)
-        //        && !vertex.Neighbours.Contains(neighbourCandidate);
-        //}
     }
 }

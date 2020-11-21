@@ -4,7 +4,6 @@ using GraphLib.Extensions;
 using GraphLib.Info;
 using GraphLib.Vertex.Cost;
 using GraphLib.Vertex.Interface;
-using System;
 using System.Collections.Generic;
 using System.Windows.Controls;
 using System.Windows.Media;
