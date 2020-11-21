@@ -56,5 +56,10 @@ namespace GraphLib.Coordinates
         {
             return new Coordinate2D(Coordinates.ToArray());
         }
+
+        public override string ToString()
+        {
+            return $"X:{X}, Y: {Y}";
+        }
     }
 }
