@@ -5,10 +5,11 @@ using ConsoleVersion.View.Interface;
 using ConsoleVersion.ViewModel;
 using GraphLib.Extensions;
 using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Console = Colorful.Console;
+using MenuActions = System.Collections.Generic.
+    Dictionary<ConsoleVersion.Enums.MenuOption, System.Action>;
 
 namespace ConsoleVersion.View
 {
@@ -18,7 +19,7 @@ namespace ConsoleVersion.View
         {
             mainModel = new MainViewModel();
 
-            menuActions = new Dictionary<MenuOption, Action>()
+            menuActions = new MenuActions()
             {
                 { MenuOption.PathFind, mainModel.FindPath },
                 { MenuOption.SaveGraph, mainModel.SaveGraph },
@@ -74,7 +75,7 @@ namespace ConsoleVersion.View
         private const string largeSpace = "   ";
         private const string tab = "\t";
 
-        private readonly Dictionary<MenuOption, Action> menuActions;
+        private readonly MenuActions menuActions;
         private readonly MainViewModel mainModel;
         private readonly string menu;
     }
