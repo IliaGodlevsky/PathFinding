@@ -16,8 +16,6 @@ namespace ConsoleVersion.ViewModel
 {
     internal class PathFindingViewModel : PathFindingModel
     {
-        public event Func<string, Coordinate2D> CoordinateChoiceEvent;
-
         public string AlgorithmKeyInputMessage { private get; set; }
 
         public string EndVertexInputMessage { private get; set; }
