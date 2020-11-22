@@ -1,5 +1,4 @@
 ﻿using Algorithm.AlgorithmCreating;
-using Algorithm.EventArguments;
 using GraphLib.ViewModel;
 using GraphViewModel.Interfaces;
 using System;

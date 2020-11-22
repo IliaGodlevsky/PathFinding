@@ -19,11 +19,8 @@ namespace GraphLib.Extensions
 
         internal static bool IsWithinGraph(this ICoordinate coordinates, IGraph graph)
         {
-            var dimensionSizes = graph.DimensionsSizes.ToArray();
-            var currentCoordinates = coordinates.Coordinates.ToArray();
-
             var dimensionComparer = new DimensionComparer();
-            return currentCoordinates.SequenceEqual(dimensionSizes, dimensionComparer);
+            return coordinates.Coordinates.SequenceEqual(graph.DimensionsSizes, dimensionComparer);
         }
     }
 }

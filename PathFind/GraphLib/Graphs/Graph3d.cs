@@ -41,7 +41,8 @@ namespace GraphLib.Graphs
 
                 if (coordinate is Coordinate3D)
                 {
-                    return vertices[Index.ToIndex(coordinate, Length, Height)];
+                    int index = Index.ToIndex(coordinate, Length, Height);
+                    return vertices[index];
                 }
 
                 throw new ArgumentException("Must be 3D coordinates");
@@ -58,7 +59,8 @@ namespace GraphLib.Graphs
                     throw new ArgumentException("Must be 3D coordinates");
                 }
 
-                vertices[Index.ToIndex(coordinate, Length, Height)] = value;
+                int index = Index.ToIndex(coordinate, Length, Height);
+                vertices[index] = value;
             }
         }    
 

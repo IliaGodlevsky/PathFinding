@@ -47,7 +47,7 @@ namespace GraphLib.Graphs
                     throw new ArgumentException("Must be 2D coordinates");
                 }
 
-                var index = Index.ToIndex(coordinate, Length);
+                int index = Index.ToIndex(coordinate, Length);
                 return vertices[index];
             }
             set
@@ -60,7 +60,7 @@ namespace GraphLib.Graphs
                     throw new ArgumentException("Must be 2D coordinates");
                 }
 
-                var index = Index.ToIndex(coordinate, Length);
+                int index = Index.ToIndex(coordinate, Length);
                 vertices[index] = value;
             }
         }

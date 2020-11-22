@@ -84,7 +84,7 @@ namespace GraphLib.Extensions
         {
             foreach (var neigbour in self.Neighbours)
             {
-                if (CanBeNeighbour(neigbour, self))
+                if (self.CanBeNeighbourOf(neigbour))
                 {
                     neigbour.Neighbours.Add(self);
                 }
@@ -97,7 +97,7 @@ namespace GraphLib.Extensions
             {
                 foreach (var neighbourCandidate in self.GetEnvironment(graph))
                 {
-                    if (CanBeNeighbour(self, neighbourCandidate))
+                    if (neighbourCandidate.CanBeNeighbourOf(self))
                     {
                         self.Neighbours.Add(neighbourCandidate);
                     }
@@ -116,11 +116,10 @@ namespace GraphLib.Extensions
             }
         }
 
-        private static bool CanBeNeighbour(IVertex vertex, IVertex neighbourCandidate)
+        private static bool CanBeNeighbourOf(this IVertex self, IVertex vertex)
         {
-            return !neighbourCandidate.IsObstacle
-                && !ReferenceEquals(vertex, neighbourCandidate)
-                && !vertex.Neighbours.Contains(neighbourCandidate);
+            return !self.IsObstacle && !ReferenceEquals(vertex, self)
+                && !vertex.Neighbours.Contains(self);
         }
     }
 }

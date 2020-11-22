@@ -105,6 +105,7 @@ namespace WinFormsVersion.Model
                 Text = cost.ToString(string.Empty);
             }
         }
+
         public ICoordinate Position { get; set; }
 
         public bool IsDefault => false;

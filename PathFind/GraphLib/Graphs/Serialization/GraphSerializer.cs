@@ -41,7 +41,8 @@ namespace GraphLib.Graphs.Serialization
 
                     for (int i = 0; i < verticesInfo.Count(); i++)
                     {
-                        graph[i] = vertexConvertMethod(verticesInfo.ElementAt(i));
+                        var vertexInfo = verticesInfo.ElementAt(i);
+                        graph[i] = vertexConvertMethod(vertexInfo);
                     }
 
                     graph.ConnectVertices();

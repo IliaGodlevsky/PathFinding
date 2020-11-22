@@ -94,8 +94,7 @@ namespace ConsoleVersion.View
             return framedAbscissa.ToString();
         }
 
-        private string DrawOrdinate(int currentLength,
-            TableSide tableSide)
+        private string DrawOrdinate(int currentLength, TableSide tableSide)
         {
             string ordinate;
             if (tableSide == TableSide.Right)

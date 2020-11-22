@@ -46,6 +46,7 @@ namespace ConsoleVersion.Model
                 Text = cost.ToString("#");
             }
         }
+
         public Color Colour { get; set; }
 
         public IList<IVertex> Neighbours { get; set; }
