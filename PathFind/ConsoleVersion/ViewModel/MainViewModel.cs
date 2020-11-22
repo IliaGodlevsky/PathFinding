@@ -38,8 +38,8 @@ namespace ConsoleVersion.ViewModel
 
         public void ReverseVertex()
         {
-            var upperPossibleXValue = (Graph as Graph2D).Width;
-            var upperPossibleYValue = (Graph as Graph2D).Length;
+            var upperPossibleXValue = (Graph as Graph2D).Width - 1;
+            var upperPossibleYValue = (Graph as Graph2D).Length - 1;
 
             var point = Input.InputPoint(upperPossibleXValue, upperPossibleYValue);
 
@@ -49,8 +49,8 @@ namespace ConsoleVersion.ViewModel
         public void ChangeVertexCost()
         {
             var graph2D = Graph as Graph2D;
-            var upperPossibleXValue = graph2D.Width;
-            var upperPossibleYValue = graph2D.Length;
+            var upperPossibleXValue = graph2D.Width - 1;
+            var upperPossibleYValue = graph2D.Length - 1;
 
             var point = Input.InputPoint(upperPossibleXValue, upperPossibleYValue);
 
