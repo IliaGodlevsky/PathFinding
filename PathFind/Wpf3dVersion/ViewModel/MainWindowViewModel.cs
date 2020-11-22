@@ -49,7 +49,7 @@ namespace Wpf3dVersion.ViewModel
             set
             {
                 graphField = value;
-                var field = graphField as Wpf3dGraphField;
+                var field = graphField as WpfGraphField3D;
                 var currentWindow = (Application.Current.MainWindow as MainWindow);
                 currentWindow?.GraphField?.Children.Clear();
                 currentWindow?.GraphField?.Children.Add(field);
@@ -73,9 +73,9 @@ namespace Wpf3dVersion.ViewModel
 
         public MainWindowViewModel()
         {
-            GraphField          = new Wpf3dGraphField();
-            VertexEventHolder   = new Wpf3dVertexEventHolder();
-            FieldFactory        = new Wpf3DGraphFieldFactory();
+            GraphField          = new WpfGraphField3D();
+            VertexEventHolder   = new WpfVertex3DEventHolder();
+            FieldFactory        = new WpfGraphField3DFactory();
             InfoConverter       = (dto) => new WpfVertex3D(dto);
 
             StartPathFindCommand    = new RelayCommand(ExecuteStartPathFindCommand,  CanExecuteStartFindPathCommand);
@@ -197,10 +197,10 @@ namespace Wpf3dVersion.ViewModel
                 : string.Empty;
         }
 
-        private void AxisSliderValueChanged(Action<double, Wpf3dGraphField> callBack, 
+        private void AxisSliderValueChanged(Action<double, WpfGraphField3D> callBack, 
             double sliderNewValue, params double[] additionalOffset)
         {
-            var field = graphField as Wpf3dGraphField;
+            var field = graphField as WpfGraphField3D;
 
             callBack(sliderNewValue, field);
             field.SetDistanceBetweenVertices();

@@ -47,7 +47,7 @@ namespace Wpf3dVersion.ViewModel
             CreateGraph(() => new WpfVertex3D());
 
             var mainWindow = Application.Current.MainWindow as MainWindow;
-            var field = model.GraphField as Wpf3dGraphField;
+            var field = model.GraphField as WpfGraphField3D;
 
             field.CenterGraph();
 

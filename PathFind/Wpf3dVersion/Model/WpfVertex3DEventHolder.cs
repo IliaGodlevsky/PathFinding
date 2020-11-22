@@ -4,7 +4,7 @@ using System;
 
 namespace Wpf3dVersion.Model
 {
-    public class Wpf3dVertexEventHolder : BaseVertexEventHolder
+    public class WpfVertex3DEventHolder : BaseVertexEventHolder
     {
         protected override int GetWheelDelta(EventArgs e)
         {
