@@ -36,14 +36,14 @@ namespace ConsoleVersion.ViewModel
             view.Start();
         }
 
-        public void ChangeStatus()
+        public void ReverseVertex()
         {
             var upperPossibleXValue = (Graph as Graph2D).Width;
             var upperPossibleYValue = (Graph as Graph2D).Length;
 
             var point = Input.InputPoint(upperPossibleXValue, upperPossibleYValue);
 
-            (Graph[point] as ConsoleVertex).ChangeStatus();
+            (Graph[point] as ConsoleVertex).Reverse();
         }
 
         public void ChangeVertexCost()

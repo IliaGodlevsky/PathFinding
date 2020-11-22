@@ -65,7 +65,7 @@ namespace ConsoleVersion.Model
             OnCostChanged?.Invoke(this, new EventArgs());
         }
 
-        public void ChangeStatus()
+        public void Reverse()
         {
             OnReverse?.Invoke(this, new EventArgs());
         }
