@@ -33,7 +33,7 @@ namespace ConsoleVersion.ViewModel
 
         public override void FindPath()
         {
-            if (graph.IsReadyForPathfinding())
+            if (graph.Any())
             {
                 var mainModel = mainViewModel as MainViewModel;
 
