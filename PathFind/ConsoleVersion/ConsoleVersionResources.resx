@@ -120,40 +120,40 @@
   <data name="ChooseAlrorithm" xml:space="preserve">
     <value>Choose algorithm: </value>
   </data>
-  <data name="DelayTimeMsg" xml:space="preserve">
+  <data name="ChooseVertexToReverseMsg" xml:space="preserve">
+    <value>Choose vertex to reverse: </value>
+  </data>
+  <data name="DelayTimeInputMsg" xml:space="preserve">
     <value>Enter delay time: </value>
   </data>
-  <data name="DestinationPoint" xml:space="preserve">
-    <value>Destination point: </value>
+  <data name="EndVertexCoordinateInputMsg" xml:space="preserve">
+    <value>End point: </value>
   </data>
-  <data name="HeightMsg" xml:space="preserve">
+  <data name="HeightInputMsg" xml:space="preserve">
     <value>Enter height of graph: </value>
   </data>
   <data name="MenuFormat" xml:space="preserve">
     <value>{0}. {1}</value>
   </data>
-  <data name="NewTopValueMsg" xml:space="preserve">
-    <value>Enter new top value: </value>
-  </data>
-  <data name="OptionMsg" xml:space="preserve">
-    <value>Choose option: </value>
-  </data>
-  <data name="PercentMsg" xml:space="preserve">
+  <data name="ObstaclePercentInputMsg" xml:space="preserve">
     <value>Enter percent of obstacles: </value>
   </data>
-  <data name="ReverseMsg" xml:space="preserve">
-    <value>Reverse top choice: </value>
+  <data name="OptionInputMsg" xml:space="preserve">
+    <value>Choose option: </value>
   </data>
-  <data name="StartPoint" xml:space="preserve">
+  <data name="StartVertexPointInputMsg" xml:space="preserve">
     <value>Start point: </value>
   </data>
-  <data name="WidthMsg" xml:space="preserve">
+  <data name="VertexCostInputMsg" xml:space="preserve">
+    <value>Enter new top value: </value>
+  </data>
+  <data name="WidthInputMsg" xml:space="preserve">
     <value>Enter width of graph: </value>
   </data>
-  <data name="XCoordinateMsg" xml:space="preserve">
+  <data name="XCoordinateInputMsg" xml:space="preserve">
     <value>Enter x coordinate of point: </value>
   </data>
-  <data name="YCoordinateMsg" xml:space="preserve">
+  <data name="YCoordinateInputMsg" xml:space="preserve">
     <value>Enter y coordinate of point: </value>
   </data>
 </root>

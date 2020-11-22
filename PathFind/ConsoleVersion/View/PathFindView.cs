@@ -18,8 +18,8 @@ namespace ConsoleVersion.View
             var algorithmList = GetAlgorithmsList();
 
             Model.AlgorithmKeyInputMessage = algorithmList + ConsoleVersionResources.ChooseAlrorithm;
-            Model.StartVertexInputMessage = "\n" + ConsoleVersionResources.StartPoint;
-            Model.EndVertexInputMessage = ConsoleVersionResources.DestinationPoint;
+            Model.StartVertexInputMessage = "\n" + ConsoleVersionResources.StartVertexPointInputMsg;
+            Model.EndVertexInputMessage = ConsoleVersionResources.EndVertexCoordinateInputMsg;
         }
 
         public void Start()
@@ -34,10 +34,8 @@ namespace ConsoleVersion.View
 
             for (int i = 0; i < algorithmKeys.Length; i++)
             {
-                algorithmList.AppendFormatLine(
-                    ConsoleVersionResources.MenuFormat, 
-                    i + 1, 
-                    algorithmKeys[i]);
+                string format = ConsoleVersionResources.MenuFormat;
+                algorithmList.AppendFormatLine(format, i + 1, algorithmKeys[i]);
             }
 
             return algorithmList.ToString();

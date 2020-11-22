@@ -12,9 +12,9 @@ namespace ConsoleVersion.Model
     internal class ConsoleVertex : IVertex
     {
 
-        public event EventHandler OnDestinationChosen;
+        public event EventHandler OnExtremeVertexChosen;
         public event EventHandler OnCostChanged;
-        public event EventHandler OnRoleChanged;
+        public event EventHandler OnReverse;
 
         public ConsoleVertex()
         {
@@ -67,12 +67,12 @@ namespace ConsoleVersion.Model
 
         public void ChangeStatus()
         {
-            OnRoleChanged?.Invoke(this, new EventArgs());
+            OnReverse?.Invoke(this, new EventArgs());
         }
 
         public void SetAsExtremeVertex()
         {
-            OnDestinationChosen?.Invoke(this, new EventArgs());
+            OnExtremeVertexChosen?.Invoke(this, new EventArgs());
         }
 
         public void MarkAsEnd()

@@ -70,29 +70,38 @@ namespace ConsoleVersion {
         }
         
         /// <summary>
-        ///   Ищет локализованную строку, похожую на Enter delay time: .
+        ///   Ищет локализованную строку, похожую на Choose vertex to reverse: .
         /// </summary>
-        internal static string DelayTimeMsg {
+        internal static string ChooseVertexToReverseMsg {
             get {
-                return ResourceManager.GetString("DelayTimeMsg", resourceCulture);
+                return ResourceManager.GetString("ChooseVertexToReverseMsg", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Ищет локализованную строку, похожую на Destination point: .
+        ///   Ищет локализованную строку, похожую на Enter delay time: .
         /// </summary>
-        internal static string DestinationPoint {
+        internal static string DelayTimeInputMsg {
             get {
-                return ResourceManager.GetString("DestinationPoint", resourceCulture);
+                return ResourceManager.GetString("DelayTimeInputMsg", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на End point: .
+        /// </summary>
+        internal static string EndVertexCoordinateInputMsg {
+            get {
+                return ResourceManager.GetString("EndVertexCoordinateInputMsg", resourceCulture);
             }
         }
         
         /// <summary>
         ///   Ищет локализованную строку, похожую на Enter height of graph: .
         /// </summary>
-        internal static string HeightMsg {
+        internal static string HeightInputMsg {
             get {
-                return ResourceManager.GetString("HeightMsg", resourceCulture);
+                return ResourceManager.GetString("HeightInputMsg", resourceCulture);
             }
         }
         
@@ -106,74 +115,65 @@ namespace ConsoleVersion {
         }
         
         /// <summary>
-        ///   Ищет локализованную строку, похожую на Enter new top value: .
+        ///   Ищет локализованную строку, похожую на Enter percent of obstacles: .
         /// </summary>
-        internal static string NewTopValueMsg {
+        internal static string ObstaclePercentInputMsg {
             get {
-                return ResourceManager.GetString("NewTopValueMsg", resourceCulture);
+                return ResourceManager.GetString("ObstaclePercentInputMsg", resourceCulture);
             }
         }
         
         /// <summary>
         ///   Ищет локализованную строку, похожую на Choose option: .
         /// </summary>
-        internal static string OptionMsg {
+        internal static string OptionInputMsg {
             get {
-                return ResourceManager.GetString("OptionMsg", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Ищет локализованную строку, похожую на Enter percent of obstacles: .
-        /// </summary>
-        internal static string PercentMsg {
-            get {
-                return ResourceManager.GetString("PercentMsg", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Ищет локализованную строку, похожую на Reverse top choice: .
-        /// </summary>
-        internal static string ReverseMsg {
-            get {
-                return ResourceManager.GetString("ReverseMsg", resourceCulture);
+                return ResourceManager.GetString("OptionInputMsg", resourceCulture);
             }
         }
         
         /// <summary>
         ///   Ищет локализованную строку, похожую на Start point: .
         /// </summary>
-        internal static string StartPoint {
+        internal static string StartVertexPointInputMsg {
             get {
-                return ResourceManager.GetString("StartPoint", resourceCulture);
+                return ResourceManager.GetString("StartVertexPointInputMsg", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Enter new top value: .
+        /// </summary>
+        internal static string VertexCostInputMsg {
+            get {
+                return ResourceManager.GetString("VertexCostInputMsg", resourceCulture);
             }
         }
         
         /// <summary>
         ///   Ищет локализованную строку, похожую на Enter width of graph: .
         /// </summary>
-        internal static string WidthMsg {
+        internal static string WidthInputMsg {
             get {
-                return ResourceManager.GetString("WidthMsg", resourceCulture);
+                return ResourceManager.GetString("WidthInputMsg", resourceCulture);
             }
         }
         
         /// <summary>
         ///   Ищет локализованную строку, похожую на Enter x coordinate of point: .
         /// </summary>
-        internal static string XCoordinateMsg {
+        internal static string XCoordinateInputMsg {
             get {
-                return ResourceManager.GetString("XCoordinateMsg", resourceCulture);
+                return ResourceManager.GetString("XCoordinateInputMsg", resourceCulture);
             }
         }
         
         /// <summary>
         ///   Ищет локализованную строку, похожую на Enter y coordinate of point: .
         /// </summary>
-        internal static string YCoordinateMsg {
+        internal static string YCoordinateInputMsg {
             get {
-                return ResourceManager.GetString("YCoordinateMsg", resourceCulture);
+                return ResourceManager.GetString("YCoordinateInputMsg", resourceCulture);
             }
         }
     }

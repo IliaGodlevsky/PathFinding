@@ -30,15 +30,15 @@ namespace ConsoleVersion.InputClass
         public static MenuOption InputOption()
         {
             return (MenuOption)InputNumber(
-                ConsoleVersionResources.OptionMsg,
+                ConsoleVersionResources.OptionInputMsg,
                 maxMenuValue, 
                 minMenuValue);
         }
 
         public static Coordinate2D InputPoint(int width, int height)
         {
-            var xCoordinate = InputNumber(ConsoleVersionResources.XCoordinateMsg, width);
-            var yCoordinate = InputNumber(ConsoleVersionResources.YCoordinateMsg, height);
+            var xCoordinate = InputNumber(ConsoleVersionResources.XCoordinateInputMsg, width);
+            var yCoordinate = InputNumber(ConsoleVersionResources.YCoordinateInputMsg, height);
 
             return new Coordinate2D(xCoordinate, yCoordinate);
         }

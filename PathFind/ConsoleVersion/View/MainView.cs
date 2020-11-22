@@ -56,12 +56,14 @@ namespace ConsoleVersion.View
         {
             var menu = new StringBuilder();
 
-            foreach (var item in Enum.GetValues(typeof(MenuOption)).Cast<MenuOption>())
+            var menuOptions = Enum.GetValues(typeof(MenuOption)).OfType<MenuOption>();
+            foreach (var menuOption in menuOptions)
             {
-                var viewElement = item.GetValue().IsEven() ? newLine : largeSpace + tab;
-                var enumValue = item.GetValue();
-                var enumDescription = item.GetDescription();
-                var menuItem = string.Format(ConsoleVersionResources.MenuFormat, enumValue, enumDescription);
+                string viewElement = menuOption.GetValue().IsEven() ? newLine : largeSpace + tab;
+                int enumValue = menuOption.GetValue();
+                string enumDescription = menuOption.GetDescription();
+                string format = ConsoleVersionResources.MenuFormat;
+                string menuItem = string.Format(format, enumValue, enumDescription);
                 menu.Append(viewElement).Append(menuItem);
             }
 

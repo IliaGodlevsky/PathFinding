@@ -45,7 +45,7 @@ namespace ConsoleVersion.ViewModel
                     AlgorithmKeys.ElementAt(algorithmKeyIndex);
 
                 DelayTime = Input.InputNumber(
-                    ConsoleVersionResources.DelayTimeMsg,
+                    ConsoleVersionResources.DelayTimeInputMsg,
                     Range.DelayValueRange.UpperRange,
                     Range.DelayValueRange.LowerRange);
 

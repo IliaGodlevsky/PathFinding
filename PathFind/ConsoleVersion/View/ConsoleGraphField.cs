@@ -116,20 +116,21 @@ namespace ConsoleVersion.View
 
         private void ShowGraph()
         {
-            for (var currentLength = 0; currentLength < Length; currentLength++)
+            for (int length = 0; length < Length; length++)
             {
-                Console.Write(DrawOrdinate(currentLength, TableSide.Left));
+                string ordinate = DrawOrdinate(length, TableSide.Left);
+                Console.Write(ordinate);
 
-                for (var currentWidth = 0; currentWidth < Width; currentWidth++)
+                for (int width = 0; width < Width; width++)
                 {
-                    var coordinate = new Coordinate2D(currentWidth, currentLength);
+                    var coordinate = new Coordinate2D(width, length);
                     int index = Index.ToIndex(coordinate, Length);
 
                     ShowVertex(vertices[index]);
 
-                    if (IsEndOfRow(currentWidth))
+                    if (IsEndOfRow(width))
                     {
-                        var ordinate = DrawOrdinate(currentLength, TableSide.Right);
+                        ordinate = DrawOrdinate(length, TableSide.Right);
                         Console.Write(ordinate);
                     }
                 }
@@ -157,6 +158,7 @@ namespace ConsoleVersion.View
             FrameUnder 
         
         }
+
         private enum TableSide 
         { 
             Right, 

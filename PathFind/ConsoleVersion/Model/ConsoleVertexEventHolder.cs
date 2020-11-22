@@ -9,7 +9,6 @@ namespace ConsoleVersion.Model
 {
     internal class ConsoleVertexEventHolder : BaseVertexEventHolder
     {
-
         public override void ChangeVertexCost(object sender, EventArgs e)
         {
             var vertex = sender as ConsoleVertex;
@@ -17,7 +16,7 @@ namespace ConsoleVersion.Model
             if (!vertex.IsObstacle)
             {
                 var cost = Input.InputNumber(
-                    ConsoleVersionResources.NewTopValueMsg,
+                    ConsoleVersionResources.VertexCostInputMsg,
                       Range.VertexCostRange.UpperRange,
                       Range.VertexCostRange.LowerRange);
 
@@ -33,8 +32,8 @@ namespace ConsoleVersion.Model
         protected override void SubscribeToEvents(IVertex vertex)
         {
             (vertex as ConsoleVertex).OnCostChanged += ChangeVertexCost;
-            (vertex as ConsoleVertex).OnDestinationChosen += ChooseExtremeVertices;
-            (vertex as ConsoleVertex).OnRoleChanged += Reverse;
+            (vertex as ConsoleVertex).OnExtremeVertexChosen += ChooseExtremeVertices;
+            (vertex as ConsoleVertex).OnReverse += Reverse;
         }
     }
 }

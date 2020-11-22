@@ -12,9 +12,9 @@ namespace ConsoleVersion.View
         {
             Model = model;
 
-            Model.ObstaclePercentInputMessage = ConsoleVersionResources.PercentMsg;
-            Model.WidthInputMessage = ConsoleVersionResources.WidthMsg;
-            Model.HeightInputMessage = ConsoleVersionResources.HeightMsg;
+            Model.ObstaclePercentInputMessage = ConsoleVersionResources.ObstaclePercentInputMsg;
+            Model.WidthInputMessage = ConsoleVersionResources.WidthInputMsg;
+            Model.HeightInputMessage = ConsoleVersionResources.HeightInputMsg;
         }
 
         public void Start()
