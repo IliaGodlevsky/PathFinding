@@ -34,7 +34,7 @@ namespace Algorithm.PathFindingAlgorithms
             verticesProcessQueue = new List<IVertex>();
         }
 
-        public void FindPath()
+        public virtual void FindPath()
         {
             OnStarted?.Invoke(this, new AlgorithmEventArgs(Graph));
             SetVerticesAccumulatedCost();
@@ -48,6 +48,7 @@ namespace Algorithm.PathFindingAlgorithms
                 currentVertex.IsVisited = true;
                 OnVertexVisited?.Invoke(currentVertex);
             } while (!currentVertex.IsEnd);
+            verticesProcessQueue.Clear();
             OnFinished?.Invoke(this, new AlgorithmEventArgs(Graph));
         }
 

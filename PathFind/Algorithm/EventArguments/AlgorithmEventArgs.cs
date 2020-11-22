@@ -12,7 +12,7 @@ namespace Algorithm.EventArguments
 
         public AlgorithmEventArgs(IGraph graph)
         {
-            HasFoundPath = graph.End.IsVisited;
+            HasFoundPath = graph.End.IsVisited && !graph.End.IsDefault;
         }
 
         public bool HasFoundPath { get; private set; }

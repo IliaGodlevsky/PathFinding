@@ -46,6 +46,7 @@ namespace Algorithm.PathFindingAlgorithms
                 currentVertex = GetNextVertex();
                 ProcessVertex(currentVertex);
             }
+            neighbourQueue.Clear();
             OnFinished?.Invoke(this, new AlgorithmEventArgs(Graph));
         }
 

@@ -9,7 +9,8 @@ namespace Algorithm.PathFindingAlgorithms
     {
         public DistanceGreedyAlgoritm(IGraph graph) : base(graph)
         {
-            GreedyFunction = vertex => DistanceCalculator.CalculateChebyshevDistance(vertex, Graph.End);
+            GreedyFunction = vertex => DistanceCalculator.
+                    CalculateChebyshevDistance(vertex, Graph.End);
         }
     }
 }

@@ -35,7 +35,8 @@ namespace Algorithm.PathFindingAlgorithms
 
         public DepthFirstAlgorithm(IGraph graph)
         {
-            GreedyFunction = vertex => DistanceCalculator.CalculateChebyshevDistance(vertex, graph.Start);
+            GreedyFunction = vertex => DistanceCalculator.
+                CalculateChebyshevDistance(vertex, graph.Start);
             Graph = graph;
             visitedVerticesStack = new Stack<IVertex>();
         }
@@ -61,6 +62,7 @@ namespace Algorithm.PathFindingAlgorithms
                     currentVertex = visitedVerticesStack.PopOrDefault();
                 }
             }
+            visitedVerticesStack.Clear();
             OnFinished?.Invoke(this, new AlgorithmEventArgs(Graph));
         }
 

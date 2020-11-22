@@ -15,7 +15,8 @@ namespace Algorithm.PathFindingAlgorithms
 
         public BestFirstLeeAlgorithm(IGraph graph) : base(graph)
         {
-            HeuristicFunction = vertex => DistanceCalculator.CalculateChebyshevDistance(vertex, Graph.End);
+            HeuristicFunction = vertex => DistanceCalculator.
+                    CalculateChebyshevDistance(vertex, Graph.End);
         }
 
         protected override IVertex GetNextVertex()

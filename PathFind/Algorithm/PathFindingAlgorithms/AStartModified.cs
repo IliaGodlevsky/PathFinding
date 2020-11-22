@@ -24,6 +24,12 @@ namespace Algorithm.PathFindingAlgorithms
             PersentOfFurthestVerticesToDelete = Convert.ToInt32(partOfVertexToDelete);
         }
 
+        public override void FindPath()
+        {
+            base.FindPath();
+            deletedVertices.Clear();
+        }
+
         protected override IVertex GetChippestUnvisitedVertex()
         {
             IVertex next = new DefaultVertex();
