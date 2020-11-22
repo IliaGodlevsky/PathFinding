@@ -15,30 +15,28 @@ namespace ConsoleVersion.InputClass
         }
 
         public static int InputNumber(string msg, int upper, int lower = 0)
-        {
-            string choice;
+        {         
             Console.Write(msg);
-            choice = Console.ReadLine();
+            string choice = Console.ReadLine();
             while (IsError(choice, upper, lower)) 
             {
                 Console.Write(msg);
                 choice = Console.ReadLine();
             }
-            return int.Parse(choice);
+            return Convert.ToInt32(choice);
         }
 
         public static MenuOption InputOption()
         {
-            return (MenuOption)InputNumber(
-                ConsoleVersionResources.OptionInputMsg,
-                maxMenuValue, 
-                minMenuValue);
+            var format = ConsoleVersionResources.OptionInputMsg;
+            int option = InputNumber(format, maxMenuValue, minMenuValue);
+            return (MenuOption)option;
         }
 
         public static Coordinate2D InputPoint(int width, int height)
         {
-            var xCoordinate = InputNumber(ConsoleVersionResources.XCoordinateInputMsg, width);
-            var yCoordinate = InputNumber(ConsoleVersionResources.YCoordinateInputMsg, height);
+            int xCoordinate = InputNumber(ConsoleVersionResources.XCoordinateInputMsg, width);
+            int yCoordinate = InputNumber(ConsoleVersionResources.YCoordinateInputMsg, height);
 
             return new Coordinate2D(xCoordinate, yCoordinate);
         }
