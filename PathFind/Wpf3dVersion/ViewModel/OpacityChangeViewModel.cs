@@ -25,11 +25,11 @@ namespace Wpf3dVersion.ViewModel
 
         public OpacityChangeViewModel(IMainModel model)
         {
-            ObstacleColorOpacity        = Wpf3dVertex.ObstacleVertexBrush.Opacity;
-            VisitedVertexColorOpacity   = Wpf3dVertex.VisitedVertexBrush.Opacity;
-            EnqueuedVertexColorOpacity  = Wpf3dVertex.EnqueuedVertexBrush.Opacity;
-            PathVertexColorOpacity      = Wpf3dVertex.PathVertexBrush.Opacity;
-            SimpleVertexColorOpacity    = Wpf3dVertex.SimpleVertexBrush.Opacity;
+            ObstacleColorOpacity        = WpfVertex3D.ObstacleVertexBrush.Opacity;
+            VisitedVertexColorOpacity   = WpfVertex3D.VisitedVertexBrush.Opacity;
+            EnqueuedVertexColorOpacity  = WpfVertex3D.EnqueuedVertexBrush.Opacity;
+            PathVertexColorOpacity      = WpfVertex3D.PathVertexBrush.Opacity;
+            SimpleVertexColorOpacity    = WpfVertex3D.SimpleVertexBrush.Opacity;
 
             Model = model as MainWindowViewModel;
             ConfirmOpacityChange = new RelayCommand(ExecuteChangeVertexOpacity, obj => true);
@@ -38,11 +38,11 @@ namespace Wpf3dVersion.ViewModel
 
         private void ExecuteChangeVertexOpacity(object param)
         {
-            Wpf3dVertex.EnqueuedVertexBrush.Opacity = EnqueuedVertexColorOpacity;
-            Wpf3dVertex.ObstacleVertexBrush.Opacity = ObstacleColorOpacity;
-            Wpf3dVertex.SimpleVertexBrush.Opacity   = SimpleVertexColorOpacity;
-            Wpf3dVertex.PathVertexBrush.Opacity     = PathVertexColorOpacity;
-            Wpf3dVertex.VisitedVertexBrush.Opacity  = VisitedVertexColorOpacity;
+            WpfVertex3D.EnqueuedVertexBrush.Opacity = EnqueuedVertexColorOpacity;
+            WpfVertex3D.ObstacleVertexBrush.Opacity = ObstacleColorOpacity;
+            WpfVertex3D.SimpleVertexBrush.Opacity   = SimpleVertexColorOpacity;
+            WpfVertex3D.PathVertexBrush.Opacity     = PathVertexColorOpacity;
+            WpfVertex3D.VisitedVertexBrush.Opacity  = VisitedVertexColorOpacity;
 
             Model?.Window?.Close();
         }

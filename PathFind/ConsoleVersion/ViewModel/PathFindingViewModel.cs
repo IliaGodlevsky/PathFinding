@@ -16,6 +16,8 @@ namespace ConsoleVersion.ViewModel
 {
     internal class PathFindingViewModel : PathFindingModel
     {
+        public event Func<string, Coordinate2D> CoordinateChoiceEvent;
+
         public string AlgorithmKeyInputMessage { private get; set; }
 
         public string EndVertexInputMessage { private get; set; }
@@ -24,28 +26,33 @@ namespace ConsoleVersion.ViewModel
 
         public PathFindingViewModel(IMainModel model) : base(model)
         {
-            maxAlgorithmValue = AlgorithmFactory.AlgorithmKeys.Count();
-            minAlgorithmValue = 1;
+            maxAlgorithmKeysNumber = AlgorithmFactory.AlgorithmKeys.Count();
+            minAlgorithmKeysNumber = 1;
             pauseProvider.PauseEvent += () => { };
         }
 
         public override void FindPath()
         {
-            if (!graph.Any())
-                return;
+            if (graph.IsReadyForPathfinding())
+            {
+                var mainModel = mainViewModel as MainViewModel;
 
-            mainViewModel.ClearGraph();
-            (mainViewModel as MainViewModel).DisplayGraph();
-            ChooseExtremeVertex();
-            (mainViewModel as MainViewModel).DisplayGraph();
-            AlgorithmKey = AlgorithmFactory.AlgorithmKeys.ElementAt(GetAlgorithmKeyIndex());
+                mainModel.ClearGraph();
+                mainModel.DisplayGraph();
+                ChooseExtremeVertex();
+                mainModel.DisplayGraph();
 
-            DelayTime = Input.InputNumber(
-                ConsoleVersionResources.DelayTimeMsg,
-                Range.DelayValueRange.UpperRange,
-                Range.DelayValueRange.LowerRange);
+                var algorithmKeyIndex = GetAlgorithmKeyIndex();
+                AlgorithmKey = AlgorithmFactory.
+                    AlgorithmKeys.ElementAt(algorithmKeyIndex);
 
-            base.FindPath();
+                DelayTime = Input.InputNumber(
+                    ConsoleVersionResources.DelayTimeMsg,
+                    Range.DelayValueRange.UpperRange,
+                    Range.DelayValueRange.LowerRange);
+
+                base.FindPath();
+            }
         }
 
         protected override void OnAlgorithmStarted(object sender, AlgorithmEventArgs e)
@@ -67,8 +74,8 @@ namespace ConsoleVersion.ViewModel
         {
             return Input.InputNumber(
                 AlgorithmKeyInputMessage,
-                maxAlgorithmValue, 
-                minAlgorithmValue) - 1;
+                maxAlgorithmKeysNumber, 
+                minAlgorithmKeysNumber) - 1;
         }
 
         private void ChooseExtremeVertex()
@@ -115,7 +122,7 @@ namespace ConsoleVersion.ViewModel
 
         private Thread thread;
 
-        private readonly int maxAlgorithmValue;
-        private readonly int minAlgorithmValue;
+        private readonly int maxAlgorithmKeysNumber;
+        private readonly int minAlgorithmKeysNumber;
     }
 }

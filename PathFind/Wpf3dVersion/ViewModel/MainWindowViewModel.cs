@@ -76,7 +76,7 @@ namespace Wpf3dVersion.ViewModel
             GraphField          = new Wpf3dGraphField();
             VertexEventHolder   = new Wpf3dVertexEventHolder();
             FieldFactory        = new Wpf3DGraphFieldFactory();
-            InfoConverter       = (dto) => new Wpf3dVertex(dto);
+            InfoConverter       = (dto) => new WpfVertex3D(dto);
 
             StartPathFindCommand    = new RelayCommand(ExecuteStartPathFindCommand,  CanExecuteStartFindPathCommand);
             CreateNewGraphCommand   = new RelayCommand(ExecuteCreateNewGraphCommand, AlwaysExecutable);

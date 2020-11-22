@@ -22,7 +22,8 @@ namespace GraphLib.Extensions
             var dimensionSizes = graph.DimensionsSizes.ToArray();
             var currentCoordinates = coordinates.Coordinates.ToArray();
 
-            return currentCoordinates.SequenceEqual(dimensionSizes, new DimensionComparer());
+            var dimensionComparer = new DimensionComparer();
+            return currentCoordinates.SequenceEqual(dimensionSizes, dimensionComparer);
         }
     }
 }

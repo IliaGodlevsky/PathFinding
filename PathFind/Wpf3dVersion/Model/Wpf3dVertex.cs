@@ -14,9 +14,9 @@ using Wpf3dVersion.Factories;
 
 namespace Wpf3dVersion.Model
 {
-    public class Wpf3dVertex : UIElement3D, IVertex
+    public class WpfVertex3D : UIElement3D, IVertex
     {
-        public Wpf3dVertex()
+        public WpfVertex3D()
         {           
             Size = 5;
             Material = new DiffuseMaterial();
@@ -24,7 +24,7 @@ namespace Wpf3dVersion.Model
             this.Initialize();
         }
 
-        public Wpf3dVertex(VertexInfo info) : this()
+        public WpfVertex3D(VertexInfo info) : this()
         {
             this.Initialize(info);
         }
@@ -37,7 +37,7 @@ namespace Wpf3dVersion.Model
         public static SolidColorBrush EndVertexBrush { get; set; }
         public static SolidColorBrush EnqueuedVertexBrush { get; set; }
 
-        static Wpf3dVertex()
+        static WpfVertex3D()
         {
 
             VisitedVertexBrush = new SolidColorBrush(Colors.CadetBlue) { Opacity = 0.15 };
@@ -51,25 +51,25 @@ namespace Wpf3dVersion.Model
             ModelProperty = DependencyProperty.Register(
                 nameof(Model), 
                 typeof(Model3D),
-                typeof(Wpf3dVertex), 
+                typeof(WpfVertex3D), 
                 new PropertyMetadata(ModelPropertyChanged));
 
             MaterialProperty = DependencyProperty.Register(
                 nameof(Material), 
                 typeof(Material),
-                typeof(Wpf3dVertex), 
+                typeof(WpfVertex3D), 
                 new PropertyMetadata(VisualPropertyChanged));
 
             SizeProperty = DependencyProperty.Register(
                 nameof(Size), 
                 typeof(double),
-                typeof(Wpf3dVertex), 
+                typeof(WpfVertex3D), 
                 new UIPropertyMetadata(VisualPropertyChanged));
 
             BrushProperty = DependencyProperty.Register(
                 nameof(Brush), 
                 typeof(Brush),
-                typeof(Wpf3dVertex), 
+                typeof(WpfVertex3D), 
                 new PropertyMetadata(BrushPropertyChanged));
         }
 
@@ -110,13 +110,7 @@ namespace Wpf3dVersion.Model
 
         public bool IsVisited { get; set; }
 
-
-        private VertexCost cost;
-        public VertexCost Cost
-        {
-            get { return cost; }
-            set { cost = (VertexCost)value.Clone(); }
-        }
+        public VertexCost Cost { get; set; }
 
         public IList<IVertex> Neighbours { get; set; }
 
@@ -192,7 +186,7 @@ namespace Wpf3dVersion.Model
         protected static void ModelPropertyChanged(DependencyObject depObj, 
             DependencyPropertyChangedEventArgs prop)
         {
-            Wpf3dVertex vert = (Wpf3dVertex)depObj;
+            WpfVertex3D vert = (WpfVertex3D)depObj;
             vert.Visual3DModel = vert.Model;
         }
 

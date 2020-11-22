@@ -8,7 +8,7 @@ namespace Algorithm.Сalculations
     {
         internal static double CalculateChebyshevDistance(IVertex from, IVertex to)
         {
-            if (from?.Position?.GetType() != to?.Position?.GetType() || ReferenceEquals(from, to))
+            if (from == null || to == null)
             {
                 return 0;
             }

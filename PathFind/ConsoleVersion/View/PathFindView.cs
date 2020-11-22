@@ -2,6 +2,9 @@
 using Common.Extensions;
 using ConsoleVersion.View.Interface;
 using ConsoleVersion.ViewModel;
+using GraphLib.Coordinates;
+using GraphLib.Graphs;
+using System;
 using System.Linq;
 using System.Text;
 

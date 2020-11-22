@@ -24,15 +24,27 @@ namespace Wpf3dVersion.ViewModel
 
         public GraphCreatingViewModel(IMainModel model) : base(model)
         {
-            ConfirmCreateGraphCommand = new RelayCommand(
-                ExecuteConfirmCreateGraphCommand, obj => true);
-            CancelCreateGraphCommand = new RelayCommand(obj =>
-            (model as MainWindowViewModel)?.Window.Close(), obj => true);
+            ConfirmCreateGraphCommand = new RelayCommand(ExecuteConfirmCreateGraphCommand, obj => true);
+            CancelCreateGraphCommand = new RelayCommand(obj => CloseWindow(), obj => true);
+        }
+
+        public override void CreateGraph(Func<IVertex> vertexFactory)
+        {
+            var graphfactory = new GraphFactory<Graph3D>(ObstaclePercent, Width, Length, Height);
+
+            ICoordinate CoordinateFactory(IEnumerable<int> coordinates)
+            {
+                return new Coordinate3D(coordinates.ToArray());
+            }
+
+            var graph = graphfactory.CreateGraph(vertexFactory, CoordinateFactory);
+
+            model.ConnectNewGraph(graph);
         }
 
         private void ExecuteConfirmCreateGraphCommand(object param)
         {
-            CreateGraph(() => new Wpf3dVertex());
+            CreateGraph(() => new WpfVertex3D());
 
             var mainWindow = Application.Current.MainWindow as MainWindow;
             var field = model.GraphField as Wpf3dGraphField;
@@ -42,21 +54,12 @@ namespace Wpf3dVersion.ViewModel
             mainWindow.GraphField.Children.Clear();
             mainWindow.GraphField.Children.Add(field);
 
-            (model as MainWindowViewModel).Window.Close();
+            CloseWindow();
         }
 
-        public override void CreateGraph(Func<IVertex> vertexFactory)
+        private void CloseWindow()
         {
-            var graphfactory = new GraphFactory<Graph3D>(ObstaclePercent, Width, Length, Height);
-
-            ICoordinate coordinate3DFactory(IEnumerable<int> coordinates)
-            {
-                return new Coordinate3D(coordinates.ToArray());
-            }
-
-            graph = graphfactory.CreateGraph(vertexFactory, coordinate3DFactory);
-
-            model.ConnectNewGraph(graph);
+            (model as MainWindowViewModel).Window.Close();
         }
     }
 }

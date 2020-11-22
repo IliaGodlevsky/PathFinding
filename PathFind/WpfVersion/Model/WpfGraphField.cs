@@ -14,10 +14,11 @@ namespace WpfVersion.Model
         {
             if (vertex.Position is Coordinate2D coordinates)
             {
-                Children.Add(vertex as WpfVertex);
+                var wpfVertex = vertex as WpfVertex;
+                Children.Add(wpfVertex);
 
-                SetLeft(vertex as WpfVertex, VertexParametres.SizeBetweenVertices * coordinates.X);
-                SetTop(vertex as WpfVertex, VertexParametres.SizeBetweenVertices * coordinates.Y);
+                SetLeft(wpfVertex, VertexParametres.SizeBetweenVertices * coordinates.X);
+                SetTop(wpfVertex, VertexParametres.SizeBetweenVertices * coordinates.Y);
             }
             else
             {

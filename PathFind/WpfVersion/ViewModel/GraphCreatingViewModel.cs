@@ -9,22 +9,26 @@ namespace WpfVersion.ViewModel
     internal class GraphCreatingViewModel : GraphCreatingModel
     {
         public RelayCommand ConfirmCreateGraphCommand { get; }
+
         public RelayCommand CancelCreateGraphCommand { get; }
 
         public GraphCreatingViewModel(IMainModel model) : base(model)
         {
-            ConfirmCreateGraphCommand = new RelayCommand(
-                ExecuteConfirmCreateGraphCommand, obj => true);
-            CancelCreateGraphCommand = new RelayCommand(obj=> 
-            (model as MainWindowViewModel)?.Window.Close(), obj => true);
+            ConfirmCreateGraphCommand = new RelayCommand(ExecuteConfirmCreateGraphCommand, obj => true);
+            CancelCreateGraphCommand = new RelayCommand(obj=> CloseWindow(), obj => true);
         }
 
         private void ExecuteConfirmCreateGraphCommand(object param)
         {
             base.CreateGraph(() => new WpfVertex());
 
-            (model as MainWindowViewModel).Window.Close();
+            CloseWindow();
             WindowAdjust.Adjust(model.Graph);
+        }
+
+        private void CloseWindow()
+        {
+            (model as MainWindowViewModel)?.Window.Close();
         }
     }
 }

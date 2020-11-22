@@ -8,7 +8,6 @@ using WpfVersion.Model.EventHolder;
 using GraphLib.GraphField;
 using Microsoft.Win32;
 using WpfVersion.Model.Vertex;
-using System.Linq;
 using GraphViewModel;
 using GraphLib.Extensions;
 using GraphViewModel.Interfaces;

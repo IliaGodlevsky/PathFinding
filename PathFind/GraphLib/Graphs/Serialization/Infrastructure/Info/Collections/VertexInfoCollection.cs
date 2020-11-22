@@ -19,7 +19,6 @@ namespace GraphLib.Graphs.Serialization.Infrastructure.Info.Collections
 
         public IEnumerable<int> DimensionsSizes { get; private set; }
 
-        public bool IsDefault => false;
 
         public IEnumerator<VertexInfo> GetEnumerator()
         {

@@ -48,8 +48,9 @@ namespace ConsoleVersion.ViewModel
 
         public void ChangeVertexCost()
         {
-            var upperPossibleXValue = (Graph as Graph2D).Width;
-            var upperPossibleYValue = (Graph as Graph2D).Length;
+            var graph2D = Graph as Graph2D;
+            var upperPossibleXValue = graph2D.Width;
+            var upperPossibleYValue = graph2D.Length;
 
             var point = Input.InputPoint(upperPossibleXValue, upperPossibleYValue);
 
@@ -66,7 +67,8 @@ namespace ConsoleVersion.ViewModel
             Console.Clear();
             Console.ForegroundColor = Color.White;
             Console.WriteLine(GraphParametres);
-            (GraphField as ConsoleGraphField)?.ShowGraphWithFrames();
+            var field = GraphField as ConsoleGraphField;
+            field?.ShowGraphWithFrames();
             Console.WriteLine(PathFindingStatistics);
         }
 

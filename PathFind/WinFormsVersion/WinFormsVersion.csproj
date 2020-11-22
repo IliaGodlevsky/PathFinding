@@ -35,29 +35,8 @@
     <LangVersion>7.1</LangVersion>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Syncfusion.Grid.Base, Version=18.3450.0.42, Culture=neutral, PublicKeyToken=3d67ed1f87d44c89, processorArchitecture=MSIL">
-      <HintPath>..\packages\Syncfusion.Grid.Base.18.3.0.42\lib\net45\Syncfusion.Grid.Base.dll</HintPath>
-    </Reference>
-    <Reference Include="Syncfusion.Grid.Windows, Version=18.3450.0.42, Culture=neutral, PublicKeyToken=3d67ed1f87d44c89, processorArchitecture=MSIL">
-      <HintPath>..\packages\Syncfusion.Grid.Windows.18.3.0.42\lib\net45\Syncfusion.Grid.Windows.dll</HintPath>
-    </Reference>
-    <Reference Include="Syncfusion.Licensing, Version=18.3450.0.42, Culture=neutral, PublicKeyToken=632609b4d040f6b4, processorArchitecture=MSIL">
-      <HintPath>..\packages\Syncfusion.Licensing.18.3.0.42\lib\net45\Syncfusion.Licensing.dll</HintPath>
-    </Reference>
-    <Reference Include="Syncfusion.Shared.Base, Version=18.3450.0.42, Culture=neutral, PublicKeyToken=3d67ed1f87d44c89, processorArchitecture=MSIL">
-      <HintPath>..\packages\Syncfusion.Shared.Base.18.3.0.42\lib\net45\Syncfusion.Shared.Base.dll</HintPath>
-    </Reference>
-    <Reference Include="Syncfusion.Shared.Windows, Version=18.3450.0.42, Culture=neutral, PublicKeyToken=3d67ed1f87d44c89, processorArchitecture=MSIL">
-      <HintPath>..\packages\Syncfusion.Shared.Windows.18.3.0.42\lib\net45\Syncfusion.Shared.Windows.dll</HintPath>
-    </Reference>
-    <Reference Include="Syncfusion.SpellChecker.Base, Version=18.3450.0.42, Culture=neutral, PublicKeyToken=3d67ed1f87d44c89, processorArchitecture=MSIL">
-      <HintPath>..\packages\Syncfusion.SpellChecker.Base.18.3.0.42\lib\net45\Syncfusion.SpellChecker.Base.dll</HintPath>
-    </Reference>
-    <Reference Include="Syncfusion.Tools.Base, Version=18.3450.0.42, Culture=neutral, PublicKeyToken=3d67ed1f87d44c89, processorArchitecture=MSIL">
-      <HintPath>..\packages\Syncfusion.Tools.Base.18.3.0.42\lib\net45\Syncfusion.Tools.Base.dll</HintPath>
-    </Reference>
-    <Reference Include="Syncfusion.Tools.Windows, Version=18.3450.0.42, Culture=neutral, PublicKeyToken=3d67ed1f87d44c89, processorArchitecture=MSIL">
-      <HintPath>..\packages\Syncfusion.Tools.Windows.18.3.0.42\lib\net45\Syncfusion.Tools.Windows.dll</HintPath>
+    <Reference Include="Colorful.Console, Version=1.2.11.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Colorful.Console.1.2.11\lib\net461\Colorful.Console.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />

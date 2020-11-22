@@ -1,9 +1,7 @@
 ﻿using Algorithm.AlgorithmCreating;
-using Algorithm.EventArguments;
 using GraphLib.ViewModel;
 using GraphViewModel.Interfaces;
 using System.Linq;
-using System.Windows;
 using WpfVersion.Infrastructure;
 
 namespace WpfVersion.ViewModel
@@ -11,6 +9,7 @@ namespace WpfVersion.ViewModel
     internal class PathFindingViewModel : PathFindingModel
     {
         public RelayCommand ConfirmPathFindAlgorithmChoice { get; }
+
         public RelayCommand CancelPathFindAlgorithmChoice { get; }
 
         public PathFindingViewModel(IMainModel model) : base(model)
@@ -25,7 +24,7 @@ namespace WpfVersion.ViewModel
 
         private void CloseWindow()
         {
-            (mainViewModel as MainWindowViewModel)?.Window?.Close();
+            (mainViewModel as MainWindowViewModel)?.Window.Close();
         }
 
         private void ExecuteConfirmPathFindAlgorithmChoice(object param)

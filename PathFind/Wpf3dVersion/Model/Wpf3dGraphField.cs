@@ -31,14 +31,14 @@ namespace Wpf3dVersion.Model
 
         public void Add(IVertex vertex)
         {
-            Wpf3dVertex vertex3D = vertex as Wpf3dVertex;
+            WpfVertex3D vertex3D = vertex as WpfVertex3D;
             SetVertexOffset(vertex3D);
             Children.Add(vertex3D);
         }
 
         public void SetDistanceBetweenVertices()
         {
-            foreach (Wpf3dVertex vertex in Children)
+            foreach (WpfVertex3D vertex in Children)
             {
                 SetVertexOffset(vertex);
             }
@@ -49,7 +49,7 @@ namespace Wpf3dVersion.Model
             var dimensionSizes = new int[] { Width, Length, Height };
             var centerOffsets = new double[dimensionSizes.Length];
             
-            foreach (Wpf3dVertex vertex in Children)
+            foreach (WpfVertex3D vertex in Children)
             {
                 for (int i = 0; i < dimensionSizes.Length; i++)
                 {
@@ -68,7 +68,7 @@ namespace Wpf3dVersion.Model
             }
         }
 
-        private void SetVertexOffset(Wpf3dVertex vertex, 
+        private void SetVertexOffset(WpfVertex3D vertex, 
             params double[] additionalOffset)
         {            
             var coordinates = vertex.Position.Coordinates;
