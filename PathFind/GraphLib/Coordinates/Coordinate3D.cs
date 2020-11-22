@@ -56,7 +56,7 @@ namespace GraphLib.Coordinates
 
         public override object Clone()
         {
-            return new Coordinate3D(Coordinates.ToArray());
+            return new Coordinate3D(X, Y, Z);
         }
     }
 }
