@@ -31,7 +31,7 @@ namespace Algorithm.PathFindingAlgorithms
 
         public IGraph Graph { get; protected set; }
 
-        public bool IsDefault => true;
+        public bool IsDefault => false;
 
         public DepthFirstAlgorithm(IGraph graph)
         {

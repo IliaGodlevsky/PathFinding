@@ -27,6 +27,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Logic", "Logic", "{C2095ABE
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Wpf3dVersion", "Wpf3dVersion\Wpf3dVersion.csproj", "{C50DAB38-75A5-47F5-A6A0-1165BBE5E283}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Algorithm.Test", "Algorithm.Test\Algorithm.Test.csproj", "{86DCDF96-3F02-47E1-B1D3-0FBA65878E2E}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -65,6 +67,10 @@ Global
 		{C50DAB38-75A5-47F5-A6A0-1165BBE5E283}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C50DAB38-75A5-47F5-A6A0-1165BBE5E283}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C50DAB38-75A5-47F5-A6A0-1165BBE5E283}.Release|Any CPU.Build.0 = Release|Any CPU
+		{86DCDF96-3F02-47E1-B1D3-0FBA65878E2E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{86DCDF96-3F02-47E1-B1D3-0FBA65878E2E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{86DCDF96-3F02-47E1-B1D3-0FBA65878E2E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{86DCDF96-3F02-47E1-B1D3-0FBA65878E2E}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -77,6 +83,7 @@ Global
 		{ECA71C4F-5DEF-4135-A0B3-25F73170C6C1} = {FC422D56-6D0C-48D8-9F47-A6B3B43623B3}
 		{16D6E068-2A1C-4903-930F-762681A2802E} = {A5000CE5-7646-4EC3-B431-1F4047956F2B}
 		{C50DAB38-75A5-47F5-A6A0-1165BBE5E283} = {8786CE26-2414-4E8F-BC64-825BED0390E9}
+		{86DCDF96-3F02-47E1-B1D3-0FBA65878E2E} = {C2095ABE-A68C-4A85-82E8-D12C8D5FB2AD}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {97B689F4-F324-4048-A586-6D7150C9C419}
