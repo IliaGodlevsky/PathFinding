@@ -43,6 +43,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Comparers\DimensionComparer.cs" />
+    <Compile Include="Coordinates\Coordinate4D.cs" />
     <Compile Include="Coordinates\Index.cs" />
     <Compile Include="Coordinates\Coordinate2D.cs" />
     <Compile Include="Coordinates\Coordinate3D.cs" />
@@ -61,6 +62,7 @@
     <Compile Include="Graphs\Displaying\GraphField\Interfaces\IGraphField.cs" />
     <Compile Include="Graphs\Factories\Interfaces\IGraphFactory.cs" />
     <Compile Include="Graphs\Graph3D.cs" />
+    <Compile Include="Graphs\Graph4D.cs" />
     <Compile Include="Graphs\Serialization\GraphSerializer.cs" />
     <Compile Include="Graphs\Serialization\Infrastructure\Info\Collections\VertexInfoCollection.cs" />
     <Compile Include="Graphs\Serialization\Infrastructure\Info\VertexInfo.cs" />
