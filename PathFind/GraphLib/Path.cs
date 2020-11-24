@@ -17,27 +17,9 @@ namespace GraphLib
             path = new IVertex[] { };
         }
 
-        private int pathLength;
-        public int PathLength
-        {
-            get
-            {
-                if (pathLength == 0)
-                    pathLength = path.Count();
-                return pathLength;
-            }
-        }
+        public int PathLength { get; private set; }
 
-        private int pathCost;
-        public int PathCost
-        {
-            get
-            {
-                if (pathCost == 0)
-                    pathCost = path.Sum(vertex => (int)vertex.Cost);
-                return pathCost;
-            }
-        }
+        public int PathCost { get; private set; }
 
         public void HighlightPath()
         {
@@ -56,6 +38,8 @@ namespace GraphLib
             if (graph.IsExtremeVerticesVisited())
             {
                 path = UnwindPath(graph.End);
+                PathCost = path.Sum(vertex => (int)vertex.Cost);
+                PathLength = path.Count();
             }
 
             return path.Any();
