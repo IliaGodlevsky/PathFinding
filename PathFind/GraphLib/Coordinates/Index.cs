@@ -19,7 +19,7 @@ namespace GraphLib.Coordinates
 
             for (int i = 0; i < referenceDimensions.Length - 1; i++)
             {
-                for (int j = 1; j < referenceDimensions.Length; j++)
+                for (int j = 1 + i; j < referenceDimensions.Length; j++)
                 {
                     referenceDimensions[i] *= referenceDimensions[j];
                 }
