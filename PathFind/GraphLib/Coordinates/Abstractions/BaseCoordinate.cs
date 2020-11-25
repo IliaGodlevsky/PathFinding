@@ -33,7 +33,7 @@ namespace GraphLib.Coordinates.Abstractions
             return Coordinates.Aggregate((x, y) => x ^ y);
         }
 
-        public virtual IEnumerable<ICoordinate> Environment
+        public IEnumerable<ICoordinate> Environment
         {
             get
             {
