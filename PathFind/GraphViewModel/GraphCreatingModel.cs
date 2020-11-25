@@ -1,7 +1,6 @@
 ﻿using GraphLib.Coordinates;
 using GraphLib.Coordinates.Abstractions;
 using GraphLib.Graphs;
-using GraphLib.Graphs.Abstractions;
 using GraphLib.Graphs.Factories;
 using GraphLib.Vertex.Interface;
 using GraphViewModel.Interfaces;
