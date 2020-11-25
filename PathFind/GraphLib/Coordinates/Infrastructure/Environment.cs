@@ -24,24 +24,19 @@ namespace GraphLib.Coordinates.Infrastructure
         private IEnumerable<ICoordinate> GetEnvironment(int currentDepth, int limitDepth)
         {
             var environment = new List<ICoordinate>();
-
             if (currentDepth < limitDepth)
             {
-                for (int i = selfCoordinates[currentDepth] - 1; i <= selfCoordinates[currentDepth] + 1; i++)
+                int start = selfCoordinates[currentDepth] - 1;
+                int limit = selfCoordinates[currentDepth] + 1;
+                for (int i = start; i <= limit; i++)
                 {
                     neighbourCoordinates[currentDepth] = i;
-
                     if (CanMoveNextDimension(currentDepth, limitDepth))
-                    {
                         MoveNextDimension(environment, currentDepth + 1, limitDepth);
-                    }
                     else
-                    {
                         ExpandEnvironment(environment);
-                    }
                 }
             }
-
             return environment;
         }
 
@@ -58,7 +53,8 @@ namespace GraphLib.Coordinates.Infrastructure
             }
         }
 
-        private void MoveNextDimension(List<ICoordinate> environment, int nextDepth, int limitDepth)
+        private void MoveNextDimension(List<ICoordinate> environment, 
+            int nextDepth, int limitDepth)
         {
             environment.AddRange(GetEnvironment(nextDepth, limitDepth));
         }
