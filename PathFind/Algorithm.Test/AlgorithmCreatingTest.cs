@@ -11,7 +11,7 @@ namespace Algorithm.Test
     public class AlgorithmCreatingTest
     {
         [TestMethod]
-        public void AlgorithmCreatingTest_ValidKeys_ReturnSuccess()
+        public void Should_ReturnAlgorithm_When_KeyIsValid()
         {
             var keys = AlgorithmFactory.AlgorithmKeys.ToArray();
 
@@ -22,7 +22,7 @@ namespace Algorithm.Test
         }
 
         [TestMethod]
-        public void AlgorithmCreatingTest_InvalidKeys_ReturnsDefaultAlgorithm()
+        public void Should_ReturnDefaultAlgorithm_When_KeyIsInValid()
         {
             var keys = new string[] { "A", "B", "C", "D", "E", "F" };
 
@@ -32,6 +32,7 @@ namespace Algorithm.Test
             Assert.IsTrue(algorithms.All(algo => algo.IsDefault));
         }
 
+        [Ignore]
         private List<IPathFindingAlgorithm> GetAlgorithms(string[] keys)
         {
             var algorithms = new List<IPathFindingAlgorithm>();
