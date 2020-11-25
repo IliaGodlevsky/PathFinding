@@ -5,7 +5,7 @@ using System.Linq;
 
 namespace GraphLib.Coordinates.Infrastructure
 {
-    internal static class Index
+    public static class Index
     {
         public static int ToIndex(ICoordinate coordinate, params int[] dimensions)
         {
