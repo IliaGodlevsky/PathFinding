@@ -18,7 +18,7 @@ namespace GraphLib.Coordinates.Infrastructure
         public IEnumerable<ICoordinate> GetEnvironment()
         {
             int limitDepth = selfCoordinates.Count();
-            return GetEnvironment(0, limitDepth);
+            return GetEnvironment(currentDepth: 0, limitDepth);
         }
 
         private IEnumerable<ICoordinate> GetEnvironment(int currentDepth, int limitDepth)
@@ -66,7 +66,7 @@ namespace GraphLib.Coordinates.Infrastructure
 
         private bool CanMoveDeeper(int currentDepth, int limitDepth)
         {
-            return currentDepth != limitDepth - 1;
+            return currentDepth < limitDepth - 1;
         }
 
         private readonly Type coordinateType;
