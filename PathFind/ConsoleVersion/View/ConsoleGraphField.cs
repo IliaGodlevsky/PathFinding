@@ -1,5 +1,6 @@
 ﻿using ConsoleVersion.Model;
 using GraphLib.Coordinates;
+using GraphLib.Coordinates.Infrastructure;
 using GraphLib.GraphField;
 using GraphLib.Vertex.Interface;
 using System;
