@@ -37,7 +37,7 @@ namespace GraphLib.Coordinates.Abstractions
         {
             get
             {
-                var environment = new Infrastructure.Environment(this);
+                var environment = new CoordinateEnvironment(this);
                 return environment.GetEnvironment();
             }
         }
