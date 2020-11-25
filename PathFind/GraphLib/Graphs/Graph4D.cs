@@ -1,8 +1,4 @@
-﻿using GraphLib.Coordinates;
-using GraphLib.Coordinates.Abstractions;
-using GraphLib.Graphs.Abstractions;
-using GraphLib.Vertex;
-using GraphLib.Vertex.Interface;
+﻿using GraphLib.Graphs.Abstractions;
 using System;
 using System.Linq;
 
@@ -29,40 +25,6 @@ namespace GraphLib.Graphs
             if (dimensions.Length != 4)
             {
                 throw new ArgumentException("Number of dimensions doesn't match");
-            }
-        }
-
-        public override IVertex this[ICoordinate coordinate]
-        {
-            get
-            {
-                if (coordinate.IsDefault)
-                {
-                    return new DefaultVertex();
-                }
-
-                if (coordinate is Coordinate4D)
-                {
-                    int index = Index.ToIndex(coordinate, Length, Height, FourthDimension);
-                    return vertices[index];
-                }
-
-                throw new ArgumentException("Must be 4D coordinates");
-            }
-            set
-            {
-                if (coordinate.IsDefault)
-                {
-                    return;
-                }
-
-                if (!(coordinate is Coordinate4D))
-                {
-                    throw new ArgumentException("Must be 4D coordinates");
-                }
-
-                int index = Index.ToIndex(coordinate, Length, Height, FourthDimension);
-                vertices[index] = value;
             }
         }
 

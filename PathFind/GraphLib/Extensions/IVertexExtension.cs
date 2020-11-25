@@ -95,7 +95,8 @@ namespace GraphLib.Extensions
         {
             if (!self.IsObstacle)
             {
-                foreach (var neighbourCandidate in self.GetEnvironment(graph))
+                var environment = self.GetEnvironment(graph).ToList();
+                foreach (var neighbourCandidate in environment)
                 {
                     if (neighbourCandidate.CanBeNeighbourOf(self))
                     {

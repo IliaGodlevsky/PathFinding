@@ -1,4 +1,5 @@
-﻿using GraphLib.Extensions;
+﻿using GraphLib.Coordinates.Infrastructure;
+using GraphLib.Extensions;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -32,7 +33,14 @@ namespace GraphLib.Coordinates.Abstractions
             return Coordinates.Aggregate((x, y) => x ^ y);
         }
 
-        public abstract IEnumerable<ICoordinate> Environment { get; }
+        public virtual IEnumerable<ICoordinate> Environment
+        {
+            get
+            {
+                var environment = new Infrastructure.Environment(this);
+                return environment.GetEnvironment();
+            }
+        }
 
         public abstract object Clone();
     }

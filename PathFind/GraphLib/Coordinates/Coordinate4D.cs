@@ -1,9 +1,6 @@
 ﻿using GraphLib.Coordinates.Abstractions;
 using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace GraphLib.Coordinates
 {
@@ -31,34 +28,6 @@ namespace GraphLib.Coordinates
             : this(new int[] { x, y, z, w })
         {
 
-        }
-
-        public override IEnumerable<ICoordinate> Environment
-        {
-            get
-            {
-                for (int x = X - 1; x <= X + 1; x++)
-                {
-                    for (int y = Y - 1; y <= Y + 1; y++)
-                    {
-                        for (int z = Z - 1; z <= Z + 1; z++)
-                        {
-                            for (int w = W - 1; w <= W + 1; w++)
-                            {
-                                if (x < 0 || y < 0 || z < 0 || w < 0)
-                                    continue;
-
-                                var coordinate = new Coordinate4D(x, y, z, w);
-
-                                if (!Equals(coordinate))
-                                {
-                                    yield return coordinate;
-                                }
-                            }
-                        }
-                    }
-                }
-            }
         }
 
         public override object Clone()

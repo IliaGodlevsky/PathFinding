@@ -1,10 +1,6 @@
 ﻿using System;
-using GraphLib.Coordinates;
-using GraphLib.Vertex;
-using GraphLib.Vertex.Interface;
 using GraphLib.Graphs.Abstractions;
 using System.Linq;
-using GraphLib.Coordinates.Abstractions;
 
 namespace GraphLib.Graphs
 {
@@ -25,43 +21,11 @@ namespace GraphLib.Graphs
         }
 
         public Graph2D(params int[] dimensions)
-            :base(dimensions)
+            : base(dimensions)
         {
             if (dimensions.Length != 2)
             {
                 throw new ArgumentException("Number of dimensions doesn't match");
-            }
-        }
-
-        public override IVertex this[ICoordinate coordinate]
-        {
-            get
-            {
-                if (coordinate.IsDefault)
-                {
-                    return new DefaultVertex();
-                }
-
-                if (!(coordinate is Coordinate2D))
-                {
-                    throw new ArgumentException("Must be 2D coordinates");
-                }
-
-                int index = Index.ToIndex(coordinate, Length);
-                return vertices[index];
-            }
-            set
-            {
-                if (coordinate.IsDefault)
-                    return;
-
-                if (!(coordinate is Coordinate2D))
-                {
-                    throw new ArgumentException("Must be 2D coordinates");
-                }
-
-                int index = Index.ToIndex(coordinate, Length);
-                vertices[index] = value;
             }
         }
 

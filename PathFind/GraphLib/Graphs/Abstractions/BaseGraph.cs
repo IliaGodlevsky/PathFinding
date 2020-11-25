@@ -1,7 +1,10 @@
 ﻿using GraphLib.Coordinates.Abstractions;
+using GraphLib.Coordinates.Infrastructure;
 using GraphLib.Extensions;
 using GraphLib.Graphs.Serialization.Infrastructure.Info.Collections;
+using GraphLib.Vertex;
 using GraphLib.Vertex.Interface;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -68,7 +71,39 @@ namespace GraphLib.Graphs.Abstractions
 
         public abstract string GetFormattedData(string format);
 
-        public abstract IVertex this[ICoordinate coordinate] { get; set; }
+        public virtual IVertex this[ICoordinate coordinate] 
+        {
+            get
+            {
+                if (coordinate.IsDefault)
+                {
+                    return new DefaultVertex();
+                }
+
+                if (coordinate.Coordinates.Count() != DimensionsSizes.Count())
+                {
+                    throw new ArgumentException("Dimensions of graph and coordinate doesn't match");
+                }
+
+                var referenceDimensions = DimensionsSizes.Skip(1).ToArray();
+                int index = Index.ToIndex(coordinate, referenceDimensions);
+                return vertices[index];
+            }
+            set
+            {
+                if (coordinate.IsDefault)
+                    return;
+
+                if (coordinate.Coordinates.Count() != DimensionsSizes.Count()) 
+                {
+                    throw new ArgumentException("Dimensions of graph and coordinate doesn't match");
+                }
+
+                var referenceDimensions = DimensionsSizes.Skip(1).ToArray();
+                int index = Index.ToIndex(coordinate, referenceDimensions);
+                vertices[index] = value;
+            }
+        }
 
         protected readonly IVertex[] vertices;
     }
