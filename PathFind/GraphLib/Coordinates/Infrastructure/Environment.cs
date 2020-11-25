@@ -32,7 +32,7 @@ namespace GraphLib.Coordinates.Infrastructure
                 {
                     neighbourCoordinates[currentDepth] = i;
                     if (CanMoveNextDimension(currentDepth, limitDepth))
-                        MoveNextDimension(environment, currentDepth + 1, limitDepth);
+                        environment.AddRange(GetEnvironment(currentDepth + 1, limitDepth));
                     else
                         ExpandEnvironment(environment);
                 }
@@ -51,12 +51,6 @@ namespace GraphLib.Coordinates.Infrastructure
                     environment.Add(coordinate);
                 }
             }
-        }
-
-        private void MoveNextDimension(List<ICoordinate> environment, 
-            int nextDepth, int limitDepth)
-        {
-            environment.AddRange(GetEnvironment(nextDepth, limitDepth));
         }
 
         private ICoordinate CreateCoordinate()
