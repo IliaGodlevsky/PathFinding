@@ -11,7 +11,7 @@ namespace GraphLib.Coordinates.Abstractions
     {
         public BaseCoordinate(params int[] coordinates)
         {
-            Coordinates = coordinates;
+            Coordinates = coordinates.ToArray();
         }
 
         public IEnumerable<int> Coordinates { get; }
