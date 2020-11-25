@@ -45,7 +45,7 @@ namespace Algorithm.PathFindingAlgorithms
             {
                 ExtractNeighbours(currentVertex);
                 RelaxNeighbours(currentVertex);
-                currentVertex = GetChippestUnvisitedVertex();
+                currentVertex = ChippestUnvisitedVertex;
                 currentVertex.IsVisited = true;
                 OnVertexVisited?.Invoke(currentVertex);
             } while (!currentVertex.IsEnd);
@@ -97,15 +97,18 @@ namespace Algorithm.PathFindingAlgorithms
                 .ToList();
         }
 
-        protected virtual IVertex GetChippestUnvisitedVertex()
+        protected virtual IVertex ChippestUnvisitedVertex
         {
-            verticesProcessQueue = verticesProcessQueue
-                .AsParallel()
-                .Where(vertex => !vertex.IsVisited)
-                .OrderBy(vertex => vertex.AccumulatedCost)
-                .ToList();
+            get
+            {
+                verticesProcessQueue = verticesProcessQueue
+                    .AsParallel()
+                    .Where(vertex => !vertex.IsVisited)
+                    .OrderBy(vertex => vertex.AccumulatedCost)
+                    .ToList();
 
-            return verticesProcessQueue.FirstOrDefault();
+                return verticesProcessQueue.FirstOrDefault();
+            }
         }
 
         protected List<IVertex> verticesProcessQueue;
