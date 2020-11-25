@@ -61,7 +61,7 @@ namespace GraphLib.Coordinates.Infrastructure
         private ICoordinate CreateCoordinate()
         {
             return (ICoordinate)Activator.
-                CreateInstance(coordinateType, neighbourCoordinates.ToArray());
+                CreateInstance(coordinateType, neighbourCoordinates);
         }
 
         private bool CanMoveDeeper(int currentDepth, int limitDepth)
