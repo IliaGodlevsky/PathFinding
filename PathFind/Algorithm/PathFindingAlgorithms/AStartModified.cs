@@ -30,24 +30,27 @@ namespace Algorithm.PathFindingAlgorithms
             deletedVertices.Clear();
         }
 
-        protected override IVertex GetChippestUnvisitedVertex()
+        protected override IVertex ChippestUnvisitedVertex
         {
-            IVertex next = new DefaultVertex();
-
-            verticesProcessQueue.Sort(CompareByHeuristic);
-
-            var verticesToDelete = verticesProcessQueue.Take(VerticesCountToDelete);
-            deletedVertices.AddRange(verticesToDelete);
-            verticesProcessQueue.RemoveRange(0, VerticesCountToDelete);
-
-            next = base.GetChippestUnvisitedVertex();
-
-            if (next.IsDefault)
+            get
             {
-                verticesProcessQueue = deletedVertices;
-            }
+                IVertex next = new DefaultVertex();
 
-            return base.GetChippestUnvisitedVertex();
+                verticesProcessQueue.Sort(CompareByHeuristic);
+
+                var verticesToDelete = verticesProcessQueue.Take(VerticesCountToDelete);
+                deletedVertices.AddRange(verticesToDelete);
+                verticesProcessQueue.RemoveRange(0, VerticesCountToDelete);
+
+                next = base.ChippestUnvisitedVertex;
+
+                if (next.IsDefault)
+                {
+                    verticesProcessQueue = deletedVertices;
+                }
+
+                return base.ChippestUnvisitedVertex;
+            }
         }
 
         protected virtual int CompareByHeuristic(IVertex v1, IVertex v2)
