@@ -5,9 +5,9 @@ using System.Linq;
 
 namespace GraphLib.Coordinates.Infrastructure
 {
-    internal sealed class Environment
+    internal sealed class CoordinateEnvironment
     {
-        public Environment(ICoordinate coordinate)
+        public CoordinateEnvironment(ICoordinate coordinate)
         {
             middleCoordinate = coordinate;
             coordinateType = coordinate.GetType();
@@ -31,10 +31,10 @@ namespace GraphLib.Coordinates.Infrastructure
                 for (int i = start; i <= limit; i++)
                 {
                     neighbourCoordinates[currentDepth] = i;
-                    if (!CanMoveDeeper(currentDepth, limitDepth))
-                        ExpandEnvironment(environment);
+                    if (CanMoveDeeper(currentDepth, limitDepth))
+                        MoveNextDimension(environment, currentDepth + 1, limitDepth);
                     else
-                        MoveDeeper(environment, currentDepth + 1, limitDepth);
+                        ExpandEnvironment(environment);
                 }
             }
             return environment;
@@ -42,18 +42,18 @@ namespace GraphLib.Coordinates.Infrastructure
 
         private void ExpandEnvironment(List<ICoordinate> environment)
         {
-            if (neighbourCoordinates.Any(value => value < 0))
-                return;
-
-            var coordinate = CreateCoordinate();
-
-            if (!middleCoordinate.Equals(coordinate))
+            if (!neighbourCoordinates.Any(value => value < 0))
             {
-                environment.Add(coordinate);
+                var coordinate = CreateCoordinate();
+
+                if (!middleCoordinate.Equals(coordinate))
+                {
+                    environment.Add(coordinate);
+                }
             }
         }
 
-        private void MoveDeeper(List<ICoordinate> environment, int nextDepth, int limitDepth)
+        private void MoveNextDimension(List<ICoordinate> environment, int nextDepth, int limitDepth)
         {
             environment.AddRange(GetEnvironment(nextDepth, limitDepth));
         }
