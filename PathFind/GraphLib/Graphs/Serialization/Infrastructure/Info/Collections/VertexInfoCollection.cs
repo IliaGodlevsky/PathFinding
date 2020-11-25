@@ -13,7 +13,7 @@ namespace GraphLib.Graphs.Serialization.Infrastructure.Info.Collections
         public VertexInfoCollection(IEnumerable<IVertex> vertices,
             params int[] dimensionsSizes)
         {
-            DimensionsSizes = dimensionsSizes;
+            DimensionsSizes = dimensionsSizes.ToArray();
             verticesDto = vertices.Select(vertex => vertex.Info).ToArray();
         }
 
