@@ -15,7 +15,7 @@ namespace GraphLib.Graphs.Abstractions
     {
         public BaseGraph(params int[]dimensionSizes)
         {
-            DimensionsSizes = dimensionSizes;
+            DimensionsSizes = dimensionSizes.ToArray();
 
             vertices = new IVertex[Size];
             this.RemoveExtremeVertices();
@@ -75,33 +75,33 @@ namespace GraphLib.Graphs.Abstractions
         {
             get
             {
-                if (coordinate.IsDefault)
+                if (!coordinate.IsDefault)
                 {
-                    return new DefaultVertex();
+                    if (coordinate.Coordinates.Count() != DimensionsSizes.Count())
+                    {
+                        throw new ArgumentException("Dimensions of graph and coordinate doesn't match");
+                    }
+
+                    var referenceDimensions = DimensionsSizes.Skip(1).ToArray();
+                    int index = Index.ToIndex(coordinate, referenceDimensions);
+                    return vertices[index];
                 }
 
-                if (coordinate.Coordinates.Count() != DimensionsSizes.Count())
-                {
-                    throw new ArgumentException("Dimensions of graph and coordinate doesn't match");
-                }
-
-                var referenceDimensions = DimensionsSizes.Skip(1).ToArray();
-                int index = Index.ToIndex(coordinate, referenceDimensions);
-                return vertices[index];
+                return new DefaultVertex();
             }
             set
             {
-                if (coordinate.IsDefault)
-                    return;
-
-                if (coordinate.Coordinates.Count() != DimensionsSizes.Count()) 
+                if (!coordinate.IsDefault)
                 {
-                    throw new ArgumentException("Dimensions of graph and coordinate doesn't match");
-                }
+                    if (coordinate.Coordinates.Count() != DimensionsSizes.Count())
+                    {
+                        throw new ArgumentException("Dimensions of graph and coordinate doesn't match");
+                    }
 
-                var referenceDimensions = DimensionsSizes.Skip(1).ToArray();
-                int index = Index.ToIndex(coordinate, referenceDimensions);
-                vertices[index] = value;
+                    var referenceDimensions = DimensionsSizes.Skip(1).ToArray();
+                    int index = Index.ToIndex(coordinate, referenceDimensions);
+                    vertices[index] = value;
+                }
             }
         }
 
