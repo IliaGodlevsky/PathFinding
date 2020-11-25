@@ -36,7 +36,8 @@ namespace Algorithm.PathFindingAlgorithms
 
         public virtual void FindPath()
         {
-            OnStarted?.Invoke(this, new AlgorithmEventArgs(Graph));
+            var args = new AlgorithmEventArgs(Graph);
+            OnStarted?.Invoke(this, args);
             SetVerticesAccumulatedCost();
             var currentVertex = Graph.Start;
             currentVertex.IsVisited = true;
@@ -49,7 +50,8 @@ namespace Algorithm.PathFindingAlgorithms
                 OnVertexVisited?.Invoke(currentVertex);
             } while (!currentVertex.IsEnd);
             verticesProcessQueue.Clear();
-            OnFinished?.Invoke(this, new AlgorithmEventArgs(Graph));
+            args = new AlgorithmEventArgs(Graph);
+            OnFinished?.Invoke(this, args);
         }
 
         private void SetVerticesAccumulatedCost(double accumulatedCost = double.PositiveInfinity)
