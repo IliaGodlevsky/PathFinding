@@ -72,8 +72,7 @@ namespace GraphLib.ViewModel
         {
             timer.Stop();
 
-            var path = new GraphPath();
-            var isPathExtracted = path.ExtractPath(graph);
+            var path = new GraphPath(graph);
 
             mainViewModel.PathFindingStatistics = 
                 GetIntermediateStatistics(
@@ -82,7 +81,7 @@ namespace GraphLib.ViewModel
                     path.PathCost, 
                     graph.NumberOfVisitedVertices);
 
-            if (isPathExtracted)
+            if (path.IsExtracted)
             {
                 path.HighlightPath();
             }

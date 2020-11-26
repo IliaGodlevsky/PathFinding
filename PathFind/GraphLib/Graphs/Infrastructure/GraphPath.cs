@@ -12,6 +12,13 @@ namespace GraphLib.Graphs.Infrastructure
     {
         public event EventHandler OnVertexHighlighted;
 
+        public GraphPath(IGraph graph) : this()
+        {
+            ExtractPath(graph);
+        }
+
+        public bool IsExtracted { get; private set; }
+
         public GraphPath()
         {
             path = new IVertex[] { };
@@ -33,7 +40,7 @@ namespace GraphLib.Graphs.Infrastructure
             }
         }
 
-        public bool ExtractPath(IGraph graph)
+        public void ExtractPath(IGraph graph)
         {
             if (graph.IsExtremeVerticesVisited())
             {
@@ -42,7 +49,7 @@ namespace GraphLib.Graphs.Infrastructure
                 PathLength = path.Count();
             }
 
-            return path.Any();
+            IsExtracted =  path.Any();
         }
 
         public IEnumerator<IVertex> GetEnumerator()

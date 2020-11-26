@@ -49,14 +49,13 @@ namespace Algorithm.Test
         {
             var graph = CreateGraph2D();
             var leeAlgorithm = new LeeAlgorithm(graph);
-            var path = new GraphPath();
 
-            leeAlgorithm.FindPath();            
-            path.ExtractPath(graph);
+            leeAlgorithm.FindPath();
+            var path = new GraphPath(graph);
 
             Assert.IsTrue(!graph.Start.IsDefault && graph.Start.IsVisited);
             Assert.IsTrue(!graph.End.IsDefault && graph.End.IsVisited);
-            Assert.IsTrue(path.Any());
+            Assert.IsTrue(path.IsExtracted);
         }
 
         [TestMethod]
@@ -64,29 +63,27 @@ namespace Algorithm.Test
         {
             var graph = CreateGraph3D();
             var leeAlgorithm = new LeeAlgorithm(graph);
-            var path = new GraphPath();
-
+            
             leeAlgorithm.FindPath();
-            path.ExtractPath(graph);
+            var path = new GraphPath(graph);
 
             Assert.IsTrue(!graph.Start.IsDefault && graph.Start.IsVisited);
             Assert.IsTrue(!graph.End.IsDefault && graph.End.IsVisited);
-            Assert.IsTrue(path.Any());
+            Assert.IsTrue(path.IsExtracted);
         }
 
         [TestMethod]
         public void BestFirstLeeAlgorithm_Should_FindPath_When_GraphAs2D()
         {
             var graph = CreateGraph2D();
-            var bestFirstLeeAlgorithm = new BestFirstLeeAlgorithm(graph);
-            var path = new GraphPath();
+            var bestFirstLeeAlgorithm = new BestFirstLeeAlgorithm(graph);            
 
             bestFirstLeeAlgorithm.FindPath();
-            path.ExtractPath(graph);
+            var path = new GraphPath(graph);
 
             Assert.IsTrue(!graph.Start.IsDefault && graph.Start.IsVisited);
             Assert.IsTrue(!graph.End.IsDefault && graph.End.IsVisited);
-            Assert.IsTrue(path.Any());
+            Assert.IsTrue(path.IsExtracted);
         }
 
         [TestMethod]
@@ -94,14 +91,13 @@ namespace Algorithm.Test
         {
             var graph = CreateGraph3D();
             var bestFirstLeeAlgorithm = new BestFirstLeeAlgorithm(graph);
-            var path = new GraphPath();
 
             bestFirstLeeAlgorithm.FindPath();
-            path.ExtractPath(graph);
+            var path = new GraphPath(graph);
 
             Assert.IsTrue(!graph.Start.IsDefault && graph.Start.IsVisited);
             Assert.IsTrue(!graph.End.IsDefault && graph.End.IsVisited);
-            Assert.IsTrue(path.Any());
+            Assert.IsTrue(path.IsExtracted);
         }
 
         [TestMethod]
@@ -109,14 +105,13 @@ namespace Algorithm.Test
         {
             var graph = CreateGraph2D();
             var dijkstraAlgorithm = new DijkstraAlgorithm(graph);
-            var path = new GraphPath();
 
             dijkstraAlgorithm.FindPath();
-            path.ExtractPath(graph);
+            var path = new GraphPath(graph);
 
             Assert.IsTrue(!graph.Start.IsDefault && graph.Start.IsVisited);
             Assert.IsTrue(!graph.End.IsDefault && graph.End.IsVisited);
-            Assert.IsTrue(path.Any());
+            Assert.IsTrue(path.IsExtracted);
         }
 
         [TestMethod]
@@ -124,14 +119,13 @@ namespace Algorithm.Test
         {
             var graph = CreateGraph3D();
             var dijkstraAlgorithm = new DijkstraAlgorithm(graph);
-            var path = new GraphPath();
 
             dijkstraAlgorithm.FindPath();
-            path.ExtractPath(graph);
+            var path = new GraphPath(graph);
 
             Assert.IsTrue(!graph.Start.IsDefault && graph.Start.IsVisited);
             Assert.IsTrue(!graph.End.IsDefault && graph.End.IsVisited);
-            Assert.IsTrue(path.Any());
+            Assert.IsTrue(path.IsExtracted);
         }
 
         [TestMethod]
@@ -139,14 +133,13 @@ namespace Algorithm.Test
         {
             var graph = CreateGraph4D();
             var dijkstraAlgorithm = new DijkstraAlgorithm(graph);
-            var path = new GraphPath();
 
             dijkstraAlgorithm.FindPath();
-            path.ExtractPath(graph);
+            var path = new GraphPath(graph);
 
             Assert.IsTrue(!graph.Start.IsDefault && graph.Start.IsVisited);
             Assert.IsTrue(!graph.End.IsDefault && graph.End.IsVisited);
-            Assert.IsTrue(path.Any());
+            Assert.IsTrue(path.IsExtracted);
         }
     }
 }
