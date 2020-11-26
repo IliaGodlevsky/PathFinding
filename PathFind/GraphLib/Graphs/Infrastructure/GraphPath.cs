@@ -6,13 +6,13 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace GraphLib
+namespace GraphLib.Graphs.Infrastructure
 {
-    public sealed class Path : IEnumerable<IVertex>
+    public sealed class GraphPath : IEnumerable<IVertex>
     {
         public event EventHandler OnVertexHighlighted;
 
-        public Path()
+        public GraphPath()
         {
             path = new IVertex[] { };
         }

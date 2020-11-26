@@ -10,6 +10,7 @@ using Algorithm.EventArguments;
 using GraphLib.PauseMaking;
 using System;
 using Common.EventArguments;
+using GraphLib.Graphs.Infrastructure;
 
 namespace GraphLib.ViewModel
 {
@@ -71,7 +72,7 @@ namespace GraphLib.ViewModel
         {
             timer.Stop();
 
-            var path = new Path();
+            var path = new GraphPath();
             var isPathExtracted = path.ExtractPath(graph);
 
             mainViewModel.PathFindingStatistics = 
