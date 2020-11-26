@@ -44,15 +44,15 @@ namespace ConsoleVersion.View
         {
             get
             {
-                var abscissa = new StringBuilder(largeSpace);
+                var abscissa = new StringBuilder(LargeSpace);
 
                 for (var i = 0; i < Width; i++)
                 {
-                    var offset = !IsOffsetIndex(i) ? bigSpace : space;
+                    var offset = !IsOffsetIndex(i) ? BigSpace : Space;
                     abscissa.Append(i + offset);
                 }
 
-                abscissa.Append(largeSpace);
+                abscissa.Append(LargeSpace);
                 return abscissa.ToString();
             }
         }
@@ -61,7 +61,7 @@ namespace ConsoleVersion.View
         {
             get
             {
-                var frame = new StringBuilder(largeSpace);
+                var frame = new StringBuilder(LargeSpace);
 
                 for (var i = 0; i < Width; i++)
                 {
@@ -100,11 +100,11 @@ namespace ConsoleVersion.View
             string ordinate;
             if (tableSide == TableSide.Right)
             {
-                ordinate = verticalFrame + currentLength + newLine;
+                ordinate = verticalFrame + currentLength + NewLine;
             }
             else if (!IsOffsetIndex(currentLength))
             {
-                ordinate = currentLength + space + verticalFrame;
+                ordinate = currentLength + Space + verticalFrame;
             }
             else
             {
@@ -139,7 +139,7 @@ namespace ConsoleVersion.View
 
         private void ShowVertex(ConsoleVertex vertex)
         {
-            Console.Write(vertex.Text + bigSpace, vertex.Colour);
+            Console.Write(vertex.Text + BigSpace, vertex.Colour);
         }
 
         private bool IsEndOfRow(int currentWidth)
@@ -167,10 +167,10 @@ namespace ConsoleVersion.View
 
         private readonly List<ConsoleVertex> vertices;
 
-        private const string newLine = "\n";
-        private const string space = " ";
-        private const string bigSpace = "  ";
-        private const string largeSpace = "   ";
+        private const string NewLine = "\n";
+        private const string Space = " ";
+        private const string BigSpace = "  ";
+        private const string LargeSpace = "   ";
         private const string horizontalFrame = "+--";
         private const string verticalFrame = "|";
     }
