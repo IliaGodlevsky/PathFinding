@@ -36,7 +36,7 @@ namespace GraphLib.Coordinates.Infrastructure
         public static IEnumerable<int> ToCoordinate(int currentIndex,
             params int[] dimensions)
         {
-            if (currentIndex >= dimensions.Aggregate((x, y) => x * y) || currentIndex < 0)
+            if (currentIndex >= dimensions.Aggregate(GetMultiplication) || currentIndex < 0)
             {
                 throw new ArgumentOutOfRangeException("Index is out of range");
             }
