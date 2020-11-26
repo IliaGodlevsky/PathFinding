@@ -36,17 +36,17 @@ namespace Algorithm.PathFindingAlgorithms
             {
                 IVertex next = new DefaultVertex();
 
-                verticesProcessQueue.Sort(CompareByHeuristic);
+                verticesQueue.Sort(CompareByHeuristic);
 
-                var verticesToDelete = verticesProcessQueue.Take(VerticesCountToDelete);
+                var verticesToDelete = verticesQueue.Take(VerticesCountToDelete);
                 deletedVertices.AddRange(verticesToDelete);
-                verticesProcessQueue.RemoveRange(0, VerticesCountToDelete);
+                verticesQueue.RemoveRange(0, VerticesCountToDelete);
 
                 next = base.ChippestUnvisitedVertex;
 
                 if (next.IsDefault)
                 {
-                    verticesProcessQueue = deletedVertices;
+                    verticesQueue = deletedVertices;
                 }
 
                 return base.ChippestUnvisitedVertex;
@@ -59,7 +59,7 @@ namespace Algorithm.PathFindingAlgorithms
         }
 
         private int VerticesCountToDelete =>
-            verticesProcessQueue.Count * PersentOfFurthestVerticesToDelete / 100;
+            verticesQueue.Count * PersentOfFurthestVerticesToDelete / 100;
 
         private int persentOfFurthestVerticesToDelete;
 

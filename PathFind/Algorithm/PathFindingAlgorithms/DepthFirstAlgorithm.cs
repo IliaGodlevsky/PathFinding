@@ -38,7 +38,7 @@ namespace Algorithm.PathFindingAlgorithms
             GreedyFunction = vertex => DistanceCalculator.
                 CalculateChebyshevDistance(vertex, graph.Start);
             Graph = graph;
-            visitedVerticesStack = new Stack<IVertex>();
+            visitedVertices = new Stack<IVertex>();
         }
 
         public void FindPath()
@@ -54,15 +54,15 @@ namespace Algorithm.PathFindingAlgorithms
                 {
                     currentVertex.IsVisited = true;
                     OnVertexVisited?.Invoke(currentVertex);
-                    visitedVerticesStack.Push(currentVertex);
+                    visitedVertices.Push(currentVertex);
                     currentVertex.ParentVertex = temp;
                 }
                 else
                 {
-                    currentVertex = visitedVerticesStack.PopOrDefault();
+                    currentVertex = visitedVertices.PopOrDefault();
                 }
             }
-            visitedVerticesStack.Clear();
+            visitedVertices.Clear();
             OnFinished?.Invoke(this, new AlgorithmEventArgs(Graph));
         }
 
@@ -81,6 +81,6 @@ namespace Algorithm.PathFindingAlgorithms
             });
         }
 
-        private readonly Stack<IVertex> visitedVerticesStack;
+        private readonly Stack<IVertex> visitedVertices;
     }
 }

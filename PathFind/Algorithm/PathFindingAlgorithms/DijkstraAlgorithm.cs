@@ -31,7 +31,7 @@ namespace Algorithm.PathFindingAlgorithms
         public DijkstraAlgorithm(IGraph graph)
         {
             Graph = graph;
-            verticesProcessQueue = new List<IVertex>();
+            verticesQueue = new List<IVertex>();
         }
 
         public virtual void FindPath()
@@ -49,7 +49,7 @@ namespace Algorithm.PathFindingAlgorithms
                 currentVertex.IsVisited = true;
                 OnVertexVisited?.Invoke(currentVertex);
             } while (!currentVertex.IsEnd);
-            verticesProcessQueue.Clear();
+            verticesQueue.Clear();
             args = new AlgorithmEventArgs(Graph);
             OnFinished?.Invoke(this, args);
         }
@@ -88,10 +88,10 @@ namespace Algorithm.PathFindingAlgorithms
             foreach (var neighbour in vertex.GetUnvisitedNeighbours())
             {
                 OnVertexEnqueued?.Invoke(neighbour);
-                verticesProcessQueue.Add(neighbour);
+                verticesQueue.Add(neighbour);
             }
 
-            verticesProcessQueue = verticesProcessQueue
+            verticesQueue = verticesQueue
                 .AsParallel()
                 .DistinctBy(vert => vert.Position)
                 .ToList();
@@ -101,16 +101,16 @@ namespace Algorithm.PathFindingAlgorithms
         {
             get
             {
-                verticesProcessQueue = verticesProcessQueue
+                verticesQueue = verticesQueue
                     .AsParallel()
                     .Where(vertex => !vertex.IsVisited)
                     .OrderBy(vertex => vertex.AccumulatedCost)
                     .ToList();
 
-                return verticesProcessQueue.FirstOrDefault();
+                return verticesQueue.FirstOrDefault();
             }
         }
 
-        protected List<IVertex> verticesProcessQueue;
+        protected List<IVertex> verticesQueue;
     }
 }

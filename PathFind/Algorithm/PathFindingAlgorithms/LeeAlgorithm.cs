@@ -33,12 +33,13 @@ namespace Algorithm.PathFindingAlgorithms
         public LeeAlgorithm(IGraph graph)
         {
             Graph = graph;
-            neighbourQueue = new Queue<IVertex>();
+            verticesQueue = new Queue<IVertex>();
         }
 
         public void FindPath()
         {
-            OnStarted?.Invoke(this, new AlgorithmEventArgs(Graph));
+            var args = new AlgorithmEventArgs(Graph);
+            OnStarted?.Invoke(this, args);
             var currentVertex = Graph.Start;
             ProcessVertex(currentVertex);
             while (!currentVertex.IsEnd)
@@ -46,16 +47,18 @@ namespace Algorithm.PathFindingAlgorithms
                 currentVertex = GetNextVertex();
                 ProcessVertex(currentVertex);
             }
-            neighbourQueue.Clear();
-            OnFinished?.Invoke(this, new AlgorithmEventArgs(Graph));
+            verticesQueue.Clear();
+            args = new AlgorithmEventArgs(Graph);
+            OnFinished?.Invoke(this, args);
         }
 
         protected virtual IVertex GetNextVertex()
         {
-            var notVisited = neighbourQueue.Where(vertex => !vertex.IsVisited);
-            neighbourQueue = new Queue<IVertex>(notVisited);
+            var notVisitedVertices = verticesQueue.
+                Where(vertex => !vertex.IsVisited);
+            verticesQueue = new Queue<IVertex>(notVisitedVertices);
 
-            return neighbourQueue.DequeueOrDefault();
+            return verticesQueue.DequeueOrDefault();
         }
 
         protected virtual double WaveFunction(IVertex vertex)
@@ -80,11 +83,12 @@ namespace Algorithm.PathFindingAlgorithms
             foreach (var vert in vertex.GetUnvisitedNeighbours())
             {
                 OnVertexEnqueued?.Invoke(vert);
-                neighbourQueue.Enqueue(vert);
+                verticesQueue.Enqueue(vert);
             }
 
-            var distincted = neighbourQueue.DistinctBy(vert => vert.Position);
-            neighbourQueue = new Queue<IVertex>(distincted);
+            var distinctedVertices = verticesQueue.
+                DistinctBy(vert => vert.Position);
+            verticesQueue = new Queue<IVertex>(distinctedVertices);
         }
 
         private void ProcessVertex(IVertex vertex)
@@ -95,6 +99,6 @@ namespace Algorithm.PathFindingAlgorithms
             ExtractNeighbours(vertex);
         }
 
-        protected  Queue<IVertex> neighbourQueue;
+        protected Queue<IVertex> verticesQueue;
     }
 }
