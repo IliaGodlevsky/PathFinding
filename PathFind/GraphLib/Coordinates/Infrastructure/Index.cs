@@ -7,6 +7,11 @@ namespace GraphLib.Coordinates.Infrastructure
 {
     public static class Index
     {
+        private static int GetMultiplication(int first, int second)
+        {
+            return first * second;
+        }
+
         public static int ToIndex(ICoordinate coordinate, params int[] dimensions)
         {
             if (coordinate.Coordinates.Count() != dimensions.Length + 1)
@@ -25,7 +30,7 @@ namespace GraphLib.Coordinates.Infrastructure
                 }
             }
 
-            return dimensions.Select((dimension, i) => dimension * coordinates[i]).Sum() + index;
+            return dimensions.Zip(coordinates, GetMultiplication).Sum() + index;
         }
 
         public static IEnumerable<int> ToCoordinate(int currentIndex,
