@@ -16,6 +16,15 @@ namespace GraphLib.Coordinates.Abstractions
 
         public IEnumerable<int> Coordinates { get; }
 
+        public IEnumerable<ICoordinate> Environment
+        {
+            get
+            {
+                var environment = new CoordinateEnvironment(this);
+                return environment.GetEnvironment();
+            }
+        }
+
         public bool IsDefault => false;
 
         public override bool Equals(object pos)
@@ -31,15 +40,6 @@ namespace GraphLib.Coordinates.Abstractions
         public override int GetHashCode()
         {
             return Coordinates.Aggregate((x, y) => x ^ y);
-        }
-
-        public IEnumerable<ICoordinate> Environment
-        {
-            get
-            {
-                var environment = new CoordinateEnvironment(this);
-                return environment.GetEnvironment();
-            }
         }
 
         public abstract object Clone();
