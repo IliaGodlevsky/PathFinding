@@ -1,4 +1,5 @@
-﻿using GraphLib.Info;
+﻿using GraphLib.Extensions;
+using GraphLib.Info;
 using GraphLib.Vertex.Interface;
 using System;
 using System.Collections;
@@ -14,7 +15,7 @@ namespace GraphLib.Graphs.Serialization.Infrastructure.Info.Collections
             params int[] dimensionsSizes)
         {
             DimensionsSizes = dimensionsSizes.ToArray();
-            verticesDto = vertices.Select(vertex => vertex.Info).ToArray();
+            verticesDto = vertices.Select(vertex => vertex.GetInfo()).ToArray();
         }
 
         public IEnumerable<int> DimensionsSizes { get; private set; }

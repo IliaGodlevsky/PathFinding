@@ -93,8 +93,6 @@ namespace WinFormsVersion.Model
             Text = cost.ToString(string.Empty);
         }
 
-        public VertexInfo Info => new VertexInfo(this);
-
         private VertexCost cost;
         public VertexCost Cost
         {

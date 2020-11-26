@@ -80,6 +80,11 @@ namespace GraphLib.Extensions
             self.Neighbours.Clear();
         }
 
+        public static VertexInfo GetInfo(this IVertex self)
+        {
+            return new VertexInfo(self);
+        }
+
         public static void ConnectWithNeighbours(this IVertex self)
         {
             foreach (var neigbour in self.Neighbours)
@@ -95,8 +100,8 @@ namespace GraphLib.Extensions
         {
             if (!self.IsObstacle)
             {
-                var environment = self.GetEnvironment(graph).ToList();
-                foreach (var neighbourCandidate in environment)
+                var vertexEnvironment = self.GetEnvironment(graph);
+                foreach (var neighbourCandidate in vertexEnvironment)
                 {
                     if (neighbourCandidate.CanBeNeighbourOf(self))
                     {

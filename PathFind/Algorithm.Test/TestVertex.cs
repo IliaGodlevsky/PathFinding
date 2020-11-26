@@ -29,8 +29,6 @@ namespace Algorithm.Test
         public double AccumulatedCost { get; set; }
         public ICoordinate Position { get; set; }
 
-        public VertexInfo Info => new VertexInfo(this);
-
         public bool IsDefault => false;
 
         public void MakeUnweighted()

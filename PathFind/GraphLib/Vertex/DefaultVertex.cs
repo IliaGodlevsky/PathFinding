@@ -32,8 +32,6 @@ namespace GraphLib.Vertex
 
         public ICoordinate Position { get => new DefaultCoordinate(); set => _ = value; }
 
-        public VertexInfo Info => new VertexInfo(this);
-
         public bool IsDefault => true;
 
         public void MarkAsEnd() 

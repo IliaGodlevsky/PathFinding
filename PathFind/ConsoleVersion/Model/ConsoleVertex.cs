@@ -57,8 +57,6 @@ namespace ConsoleVersion.Model
 
         public ICoordinate Position { get; set; }
 
-        public VertexInfo Info => new VertexInfo(this);
-
         public bool IsDefault => false;
 
         public void ChangeCost()

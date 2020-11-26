@@ -1,5 +1,4 @@
-﻿using GraphLib.Info;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using GraphLib.Vertex.Cost;
 using Common.Interfaces;
 using GraphLib.Coordinates.Abstractions;
@@ -28,8 +27,6 @@ namespace GraphLib.Vertex.Interface
         double AccumulatedCost { get; set; }
 
         ICoordinate Position { get; set; }
-
-        VertexInfo Info { get; }
 
         void MarkAsEnd();
 

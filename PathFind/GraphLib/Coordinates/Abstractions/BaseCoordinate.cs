@@ -20,8 +20,13 @@ namespace GraphLib.Coordinates.Abstractions
         {
             get
             {
-                var environment = new CoordinateEnvironment(this);
-                return environment.GetEnvironment();
+                if (coordinateEnvironment == null)
+                {
+                    var environment = new CoordinateEnvironment(this);
+                    coordinateEnvironment = environment.GetEnvironment();
+                }
+
+                return coordinateEnvironment;
             }
         }
 
@@ -43,5 +48,7 @@ namespace GraphLib.Coordinates.Abstractions
         }
 
         public abstract object Clone();
+
+        private IEnumerable<ICoordinate> coordinateEnvironment;
     }
 }

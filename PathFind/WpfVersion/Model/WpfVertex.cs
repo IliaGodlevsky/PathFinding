@@ -77,8 +77,6 @@ namespace WpfVersion.Model.Vertex
             }
         }
 
-        public VertexInfo Info => new VertexInfo(this);
-
         public bool IsDefault => false;
 
         public void MarkAsEnd()

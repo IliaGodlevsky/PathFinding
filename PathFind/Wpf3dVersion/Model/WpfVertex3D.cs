@@ -120,8 +120,6 @@ namespace Wpf3dVersion.Model
 
         public ICoordinate Position { get; set; }
 
-        public VertexInfo Info => new VertexInfo(this);
-
         public bool IsDefault => false;
 
         public void MakeUnweighted()
