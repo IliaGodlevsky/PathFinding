@@ -6,31 +6,27 @@ namespace Algorithm.Сalculations
 {
     internal static class DistanceCalculator
     {
-        internal static double CalculateChebyshevDistance(IVertex from, IVertex to)
+        private static int GetAbsoluteSubstract(int first, int second)
         {
-            if (from == null || to == null)
+            return Math.Abs(first - second);
+        }
+
+        internal static double CalculateChebyshevDistance(IVertex fromVertex, IVertex toVertex)
+        {
+            if (fromVertex == null || toVertex == null)
             {
                 return 0;
             }
 
-            var fromCoordinates = from.Position.Coordinates.ToArray();
-            var toCoordinates = to.Position.Coordinates.ToArray();
+            var fromCoordinates = fromVertex.Position.Coordinates.ToArray();
+            var toCoordinates = toVertex.Position.Coordinates.ToArray();
 
             if (fromCoordinates.Length != toCoordinates.Length)
             {
                 return 0;
             }
 
-            var count = fromCoordinates.Length;
-            var result = new int[count];
-
-            for (var i = 0; i < count; i++)
-            {
-                var distanceBetween = fromCoordinates[i] - toCoordinates[i];
-                result[i] = Math.Abs(distanceBetween);
-            }
-
-            return result.Max();
+            return fromCoordinates.Zip(toCoordinates, GetAbsoluteSubstract).Max();
         }
     }
 }
