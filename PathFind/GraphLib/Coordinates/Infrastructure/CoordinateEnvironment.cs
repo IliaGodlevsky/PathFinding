@@ -25,18 +25,17 @@ namespace GraphLib.Coordinates.Infrastructure
 
         private void FormEnvironment(int currentDepth, int limit)
         {
-            if (currentDepth < limit)
+            if (currentDepth >= limit)           
+                return;
+            int start = selfCoordinates[currentDepth] - 1;
+            int end = selfCoordinates[currentDepth] + 1;
+            for (int i = start; i <= end; i++)
             {
-                int start = selfCoordinates[currentDepth] - 1;
-                int end = selfCoordinates[currentDepth] + 1;
-                for (int i = start; i <= end; i++)
-                {
-                    neighbourCoordinates[currentDepth] = i;
-                    if (CanMoveNextDimension(currentDepth, limit))
-                        FormEnvironment(currentDepth + 1, limit);
-                    else
-                        AddNeighbourCoordinateToEnvironment();
-                }
+                neighbourCoordinates[currentDepth] = i;
+                if (CanMoveNextDimension(currentDepth, limit))
+                    FormEnvironment(currentDepth + 1, limit);
+                else
+                    AddNeighbourCoordinateToEnvironment();
             }
         }
 
