@@ -5,24 +5,26 @@ using System.Linq;
 
 namespace GraphLib.Coordinates.Infrastructure
 {
-    internal sealed class CoordinateEnvironment
+    public sealed class CoordinateEnvironment
     {
         public CoordinateEnvironment(ICoordinate coordinate)
         {
-            middleCoordinate = coordinate;
-            coordinateType = coordinate.GetType();
             selfCoordinates = coordinate.Coordinates.ToArray();
             neighbourCoordinates = new int[selfCoordinates.Length];
+            coordinateType = coordinate.GetType();
+            environment = new List<ICoordinate>();
+            middleCoordinate = coordinate;
         }
 
         public IEnumerable<ICoordinate> GetEnvironment()
         {
-            return GetNeighbours(currentDepth: 0, limit: selfCoordinates.Count());
+            int limitDepth = selfCoordinates.Count();
+            FormEnvironment(currentDepth: 0, limitDepth);
+            return environment;
         }
 
-        private IEnumerable<ICoordinate> GetNeighbours(int currentDepth, int limit)
+        private void FormEnvironment(int currentDepth, int limit)
         {
-            var environment = new List<ICoordinate>();
             if (currentDepth < limit)
             {
                 int start = selfCoordinates[currentDepth] - 1;
@@ -31,18 +33,14 @@ namespace GraphLib.Coordinates.Infrastructure
                 {
                     neighbourCoordinates[currentDepth] = i;
                     if (CanMoveNextDimension(currentDepth, limit))
-                    {
-                        var temp = GetNeighbours(currentDepth + 1, limit);
-                        environment.AddRange(temp);
-                    }
+                        FormEnvironment(currentDepth + 1, limit);
                     else
-                        GetNeighbours(environment);
+                        AddNeighbourCoordinateToEnvironment();
                 }
             }
-            return environment;
         }
 
-        private void GetNeighbours(List<ICoordinate> environment)
+        private void AddNeighbourCoordinateToEnvironment()
         {
             if (!neighbourCoordinates.Any(value => value < 0))
             {
@@ -65,11 +63,13 @@ namespace GraphLib.Coordinates.Infrastructure
         {
             return currentDepth < limitDepth - 1;
         }
-
+       
         private readonly Type coordinateType;
         private readonly ICoordinate middleCoordinate;
 
         private readonly int[] neighbourCoordinates;
         private readonly int[] selfCoordinates;
+
+        private readonly List<ICoordinate> environment;
     }
 }
