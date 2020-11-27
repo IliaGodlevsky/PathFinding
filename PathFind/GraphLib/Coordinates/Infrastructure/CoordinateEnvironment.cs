@@ -18,35 +18,35 @@ namespace GraphLib.Coordinates.Infrastructure
         public IEnumerable<ICoordinate> GetEnvironment()
         {
             int limitDepth = selfCoordinates.Count();
-            return GetEnvironment(currentDepth: 0, limitDepth);
+            return GetNeighbours(currentDepth: 0, limitDepth);
         }
 
-        private IEnumerable<ICoordinate> GetEnvironment(int currentDepth, int limitDepth)
+        private IEnumerable<ICoordinate> GetNeighbours(int currentDepth, int limitDepth)
         {
             var environment = new List<ICoordinate>();
-
             if (currentDepth < limitDepth)
             {
-                for (int i = selfCoordinates[currentDepth] - 1; i <= selfCoordinates[currentDepth] + 1; i++)
+                int start = selfCoordinates[currentDepth] - 1;
+                int limit = selfCoordinates[currentDepth] + 1;
+                for (int i = start; i <= limit; i++)
                 {
                     neighbourCoordinates[currentDepth] = i;
-
-                    if (CanMoveNextDimension(currentDepth, limitDepth))
+                    if (!CanMoveNextDimension(currentDepth, limitDepth))
                     {
-                        var portion = GetEnvironment(currentDepth + 1, limitDepth);
-                        environment.AddRange(portion);
+                        FillEnvironment(environment);
                     }
                     else
                     {
-                        ExpandEnvironment(environment);
-                    }                       
+                        var neighbours = GetNeighbours(currentDepth + 1, limitDepth);
+                        environment.AddRange(neighbours);
+                    }
+                    
                 }
             }
-
             return environment;
         }
 
-        private void ExpandEnvironment(List<ICoordinate> environment)
+        private void FillEnvironment(List<ICoordinate> environment)
         {
             if (!neighbourCoordinates.Any(value => value < 0))
             {
