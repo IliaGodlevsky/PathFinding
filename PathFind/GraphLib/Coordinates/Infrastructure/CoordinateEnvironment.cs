@@ -27,10 +27,7 @@ namespace GraphLib.Coordinates.Infrastructure
 
             if (currentDepth < limitDepth)
             {
-                int start = selfCoordinates[currentDepth] - 1;
-                int limit = selfCoordinates[currentDepth] + 1;
-
-                for (int i = start; i <= limit; i++)
+                for (int i = selfCoordinates[currentDepth] - 1; i <= selfCoordinates[currentDepth] + 1; i++)
                 {
                     neighbourCoordinates[currentDepth] = i;
 
