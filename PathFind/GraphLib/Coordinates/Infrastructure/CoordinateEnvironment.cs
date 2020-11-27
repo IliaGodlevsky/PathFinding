@@ -17,36 +17,32 @@ namespace GraphLib.Coordinates.Infrastructure
 
         public IEnumerable<ICoordinate> GetEnvironment()
         {
-            int limitDepth = selfCoordinates.Count();
-            return GetNeighbours(currentDepth: 0, limitDepth);
+            return GetNeighbours(currentDepth: 0, limit: selfCoordinates.Count());
         }
 
-        private IEnumerable<ICoordinate> GetNeighbours(int currentDepth, int limitDepth)
+        private IEnumerable<ICoordinate> GetNeighbours(int currentDepth, int limit)
         {
             var environment = new List<ICoordinate>();
-            if (currentDepth < limitDepth)
+            if (currentDepth < limit)
             {
                 int start = selfCoordinates[currentDepth] - 1;
-                int limit = selfCoordinates[currentDepth] + 1;
-                for (int i = start; i <= limit; i++)
+                int end = selfCoordinates[currentDepth] + 1;
+                for (int i = start; i <= end; i++)
                 {
                     neighbourCoordinates[currentDepth] = i;
-                    if (!CanMoveNextDimension(currentDepth, limitDepth))
+                    if (CanMoveNextDimension(currentDepth, limit))
                     {
-                        FillEnvironment(environment);
+                        var temp = GetNeighbours(currentDepth + 1, limit);
+                        environment.AddRange(temp);
                     }
                     else
-                    {
-                        var neighbours = GetNeighbours(currentDepth + 1, limitDepth);
-                        environment.AddRange(neighbours);
-                    }
-                    
+                        GetNeighbours(environment);
                 }
             }
             return environment;
         }
 
-        private void FillEnvironment(List<ICoordinate> environment)
+        private void GetNeighbours(List<ICoordinate> environment)
         {
             if (!neighbourCoordinates.Any(value => value < 0))
             {
