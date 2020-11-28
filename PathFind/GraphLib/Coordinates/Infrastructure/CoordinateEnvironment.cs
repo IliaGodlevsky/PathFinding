@@ -14,17 +14,17 @@ namespace GraphLib.Coordinates.Infrastructure
             coordinateType = coordinate.GetType();
             environment = new List<ICoordinate>();
             middleCoordinate = coordinate;
+            limitDepth = selfCoordinates.Length;
         }
 
         public IEnumerable<ICoordinate> GetEnvironment()
         {
-            int limitDepth = selfCoordinates.Count();
-            FormEnvironment(currentDepth: 0, limitDepth);
+            FormEnvironment();
             return environment;
         }
 
         // recursive method
-        private void FormEnvironment(int currentDepth, int limitDepth)
+        private void FormEnvironment(int currentDepth = 0)
         {
             if (currentDepth < limitDepth)
             {
@@ -33,8 +33,8 @@ namespace GraphLib.Coordinates.Infrastructure
                 for (int i = leftNeighbour; i <= rightNeighbour; i++)
                 {
                     neighbourCoordinates[currentDepth] = i;
-                    if (CanMoveNextDimension(currentDepth, limitDepth))
-                        FormEnvironment(currentDepth + 1, limitDepth);
+                    if (CanMoveNextDimension(currentDepth))
+                        FormEnvironment(currentDepth + 1);
                     else
                         AddNeighbourCoordinateToEnvironment();
                 }
@@ -60,7 +60,7 @@ namespace GraphLib.Coordinates.Infrastructure
                 CreateInstance(coordinateType, neighbourCoordinates);
         }
 
-        private bool CanMoveNextDimension(int currentDepth, int limitDepth)
+        private bool CanMoveNextDimension(int currentDepth)
         {
             return currentDepth < limitDepth - 1;
         }
@@ -72,5 +72,6 @@ namespace GraphLib.Coordinates.Infrastructure
         private readonly int[] selfCoordinates;
 
         private readonly List<ICoordinate> environment;
+        private readonly int limitDepth;
     }
 }
