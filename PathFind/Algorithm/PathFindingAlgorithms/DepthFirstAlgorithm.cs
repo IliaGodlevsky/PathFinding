@@ -8,7 +8,6 @@ using Algorithm.EventArguments;
 using Algorithm.PathFindingAlgorithms.Interface;
 using GraphLib.Extensions;
 using GraphLib.Graphs.Abstractions;
-using Algorithm.Сalculations;
 using Algorithm.Delegates;
 
 namespace Algorithm.PathFindingAlgorithms
@@ -35,8 +34,7 @@ namespace Algorithm.PathFindingAlgorithms
 
         public DepthFirstAlgorithm(IGraph graph)
         {
-            GreedyFunction = vertex => DistanceCalculator.
-                CalculateChebyshevDistance(vertex, graph.Start);
+            GreedyFunction = vertex => vertex.GetChebyshevDistanceTo(graph.Start);
             Graph = graph;
             visitedVertices = new Stack<IVertex>();
         }

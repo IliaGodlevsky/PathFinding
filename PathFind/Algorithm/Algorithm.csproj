@@ -49,7 +49,6 @@
     <Compile Include="Extensions\ListExtension.cs" />
     <Compile Include="Extensions\QueueExtensions.cs" />
     <Compile Include="Extensions\StackExtension.cs" />
-    <Compile Include="Сalculations\DistanceCalculator.cs" />
     <Compile Include="PathFindingAlgorithms\AStarAlgorithm.cs" />
     <Compile Include="PathFindingAlgorithms\AStartModified.cs" />
     <Compile Include="PathFindingAlgorithms\BestFirstLeeAlgorithm.cs" />

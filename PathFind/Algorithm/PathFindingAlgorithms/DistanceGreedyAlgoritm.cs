@@ -1,4 +1,4 @@
-﻿using Algorithm.Сalculations;
+﻿using GraphLib.Extensions;
 using GraphLib.Graphs.Abstractions;
 using System.ComponentModel;
 
@@ -9,8 +9,7 @@ namespace Algorithm.PathFindingAlgorithms
     {
         public DistanceGreedyAlgoritm(IGraph graph) : base(graph)
         {
-            GreedyFunction = vertex => DistanceCalculator.
-                    CalculateChebyshevDistance(vertex, Graph.End);
+            GreedyFunction = vertex => vertex.GetChebyshevDistanceTo(Graph.End);
         }
     }
 }

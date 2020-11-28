@@ -47,21 +47,21 @@ namespace Wpf3dVersion.Model
         public void CenterGraph(params double[] additionalOffset)
         {
             var dimensionSizes = new int[] { Width, Length, Height };
-            var centerOffsets = new double[dimensionSizes.Length];           
+            var axisOffsets = new double[dimensionSizes.Length];           
             foreach (WpfVertex3D vertex in Children)
             {
                 for (int i = 0; i < dimensionSizes.Length; i++)
                 {
-                    var offsetCalculate = new OffsetCalculate
+                    var graphOffset = new Offset
                     {
                         DimensionSize = dimensionSizes.ElementAtOrDefault(i),
                         VertexSize = vertex.Size,
                         AdditionalOffset = additionalOffset.ElementAtOrDefault(i),
                         DistanceBetweenVertices = DistanceBetween.ElementAtOrDefault(i)
                     };
-                    centerOffsets[i] = offsetCalculate.CalculateCenterOffset();
+                    axisOffsets[i] = graphOffset.GraphCenterOffset;
                 }
-                SetVertexOffset(vertex, centerOffsets);
+                SetVertexOffset(vertex, axisOffsets);
             }
         }
 
@@ -72,14 +72,14 @@ namespace Wpf3dVersion.Model
             var translate = new TranslateTransform3D();
             for (int i = 0; i < coordinates.Count(); i++)
             {
-                var offsetCalculate = new OffsetCalculate
+                var vertexOffset = new Offset
                 {
                     CoordinateValue = coordinates.ElementAtOrDefault(i),
                     VertexSize = vertex.Size,
                     DistanceBetweenVertices = DistanceBetween.ElementAtOrDefault(i),
                     AdditionalOffset = additionalOffset.ElementAtOrDefault(i)
                 };
-                var offset = offsetCalculate.CalculateVertexOffset();
+                var offset = vertexOffset.VertexOffset;
                 OffsetActions[i](translate, offset);
             }
             vertex.Transform = translate;
@@ -106,28 +106,24 @@ namespace Wpf3dVersion.Model
         };
     }
 
-    class OffsetCalculate
+    class Offset
     {
         public int CoordinateValue { private get; set; }
+
+        public int DimensionSize { private get; set; }
 
         public double VertexSize { private get; set; }
 
         public double AdditionalOffset { private get; set; }
 
-        public int DimensionSize { private get; set; }
-
         public double DistanceBetweenVertices { private get; set; }
 
-        public double CalculateCenterOffset()
-        {
-            return (-DimensionSize + AdditionalOffset) 
-                * (VertexSize + DistanceBetweenVertices) / 2;
-        }
+        public double GraphCenterOffset => AdjustedDimensionSize * AdjustedVertexSize;
 
-        public double CalculateVertexOffset()
-        {
-            return (VertexSize + DistanceBetweenVertices)
-                * CoordinateValue + AdditionalOffset;
-        }
+        public double VertexOffset => AdjustedVertexSize * CoordinateValue + AdditionalOffset;
+
+        private double AdjustedVertexSize => VertexSize + DistanceBetweenVertices;
+
+        private double AdjustedDimensionSize => (-DimensionSize + AdditionalOffset) / 2;
     }
 }

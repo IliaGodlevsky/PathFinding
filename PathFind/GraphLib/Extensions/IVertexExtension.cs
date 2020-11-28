@@ -1,7 +1,9 @@
-﻿using GraphLib.Graphs.Abstractions;
+﻿using GraphLib.Coordinates;
+using GraphLib.Graphs.Abstractions;
 using GraphLib.Info;
 using GraphLib.Vertex;
 using GraphLib.Vertex.Interface;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -17,6 +19,15 @@ namespace GraphLib.Extensions
         public static bool IsIsolated(this IVertex vertex)
         {
             return vertex.IsObstacle || !vertex.Neighbours.Any();
+        }
+
+        public static double GetChebyshevDistanceTo(this IVertex self, IVertex toVertex)
+        {
+            var fromCoordinates = self.Position.Coordinates.ToArray();
+            var toCoordinates = toVertex.Position.Coordinates.ToArray();
+
+            return fromCoordinates.Zip(toCoordinates,
+                (x, y) => Math.Abs(x - y)).Max();
         }
 
         public static void SetToDefault(this IVertex vertex)

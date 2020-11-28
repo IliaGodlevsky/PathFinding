@@ -78,7 +78,7 @@ namespace WinFormsVersion.Model
 
         public void MarkAsEnqueued()
         {
-            BackColor = Color.FromKnownColor(KnownColor.Aquamarine);
+            BackColor = Color.FromKnownColor(KnownColor.Magenta);
         }
 
         public void MakeUnweighted()

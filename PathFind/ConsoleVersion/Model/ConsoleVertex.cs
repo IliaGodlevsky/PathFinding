@@ -107,7 +107,7 @@ namespace ConsoleVersion.Model
 
         public void MarkAsEnqueued()
         {
-            Colour = Color.FromKnownColor(KnownColor.Orange);
+            Colour = Color.FromKnownColor(KnownColor.Magenta);
         }
 
         public void MakeUnweighted()

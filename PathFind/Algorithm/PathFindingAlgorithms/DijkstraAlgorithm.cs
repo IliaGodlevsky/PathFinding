@@ -54,18 +54,21 @@ namespace Algorithm.PathFindingAlgorithms
             OnFinished?.Invoke(this, args);
         }
 
-        private void SetVerticesAccumulatedCost(double accumulatedCost = double.PositiveInfinity)
+        private void SetVerticesAccumulatedCost(double accumulatedCost 
+            = double.PositiveInfinity)
         {
             Graph.AsParallel().ForAll(vertex =>
             {
                 if (!vertex.IsStart && !vertex.IsObstacle)
                 {
-                    Graph[vertex.Position].AccumulatedCost = accumulatedCost;
+                    var coordinate = vertex.Position;
+                    Graph[coordinate].AccumulatedCost = accumulatedCost;
                 }
             });
         }
 
-        protected virtual double GetVertexRelaxedCost(IVertex neighbour, IVertex vertex)
+        protected virtual double GetVertexRelaxedCost(
+            IVertex neighbour, IVertex vertex)
         {
             return (int)neighbour.Cost + vertex.AccumulatedCost;
         }
