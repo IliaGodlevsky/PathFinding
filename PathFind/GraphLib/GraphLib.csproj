@@ -45,7 +45,6 @@
     <Compile Include="Comparers\DimensionComparer.cs" />
     <Compile Include="Coordinates\Coordinate4D.cs" />
     <Compile Include="Coordinates\Infrastructure\CoordinateEnvironment.cs" />
-    <Compile Include="Coordinates\Infrastructure\Index.cs" />
     <Compile Include="Coordinates\Coordinate2D.cs" />
     <Compile Include="Coordinates\Coordinate3D.cs" />
     <Compile Include="Coordinates\Abstractions\BaseCoordinate.cs" />

@@ -33,9 +33,9 @@ namespace GraphLib.Graphs.Factories
             {
                 var graph = (IGraph)Activator.CreateInstance(typeof(TGraph), dimensionSizes);
 
-                for (int i = 0; i < graph.Size; i++)
+                for (int index = 0; index < graph.Size; index++)
                 {
-                    var coordinates = Index.ToCoordinate(i, dimensionSizes).ToArray();
+                    var coordinates = ToCoordinates(index, dimensionSizes);
                     var coordinate = coordinateCreateMethod?.Invoke(coordinates);
 
                     graph[coordinate] = vertexCreateMethod?.Invoke();
@@ -57,6 +57,23 @@ namespace GraphLib.Graphs.Factories
             {
                 OnExceptionCaught?.Invoke(ex.Message);
                 return new DefaultGraph();
+            }
+        }
+
+        private IEnumerable<int> ToCoordinates(int index,
+                 params int[] dimensions)
+        {
+            if (index >= dimensions.Aggregate((x, y) => x * y) || index < 0)
+            {
+                throw new ArgumentOutOfRangeException("Index is out of range");
+            }
+
+            for (int i = 0; i < dimensions.Length; i++)
+            {
+                int coordinate = index % dimensions[i];
+                index /= dimensions[i];
+
+                yield return coordinate;
             }
         }
 

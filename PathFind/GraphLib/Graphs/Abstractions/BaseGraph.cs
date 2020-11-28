@@ -1,5 +1,4 @@
 ﻿using GraphLib.Coordinates.Abstractions;
-using GraphLib.Coordinates.Infrastructure;
 using GraphLib.Extensions;
 using GraphLib.Graphs.Serialization.Infrastructure.Info.Collections;
 using GraphLib.Vertex;
@@ -82,9 +81,7 @@ namespace GraphLib.Graphs.Abstractions
                         throw new ArgumentException("Dimensions of graph and coordinate doesn't match");
                     }
 
-                    var referenceDimensions = DimensionsSizes.Skip(1).ToArray();
-                    int index = Index.ToIndex(coordinate, referenceDimensions);
-                    return vertices[index];
+                    return vertices[coordinate.ToIndex(this)];
                 }
 
                 return new DefaultVertex();
@@ -98,9 +95,7 @@ namespace GraphLib.Graphs.Abstractions
                         throw new ArgumentException("Dimensions of graph and coordinate doesn't match");
                     }
 
-                    var referenceDimensions = DimensionsSizes.Skip(1).ToArray();
-                    int index = Index.ToIndex(coordinate, referenceDimensions);
-                    vertices[index] = value;
+                    vertices[coordinate.ToIndex(this)] = value;
                 }
             }
         }

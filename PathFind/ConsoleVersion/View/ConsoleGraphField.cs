@@ -1,6 +1,7 @@
 ﻿using ConsoleVersion.Model;
 using GraphLib.Coordinates;
 using GraphLib.Coordinates.Infrastructure;
+using GraphLib.Extensions;
 using GraphLib.GraphField;
 using GraphLib.Vertex.Interface;
 using System;
@@ -124,7 +125,7 @@ namespace ConsoleVersion.View
                 for (int width = 0; width < Width; width++)
                 {
                     var coordinate = new Coordinate2D(width, length);
-                    int index = Index.ToIndex(coordinate, Length);
+                    int index = coordinate.ToIndex(Length);
 
                     ShowVertex(vertices[index]);
 

@@ -12,25 +12,25 @@ namespace GraphLib.Graphs.Abstractions
     /// </summary>
     public interface IGraph : IEnumerable<IVertex>, IDefault
     {
-        int Size { get; }
-
-        int NumberOfVisitedVertices { get; }
-
-        int ObstacleNumber { get; }
-
-        int ObstaclePercent { get; }
+        VertexInfoCollection VertexInfoCollection { get; }
 
         IVertex this[ICoordinate coordinate] { get; set; }
 
+        IEnumerable<int> DimensionsSizes { get; }
+
         IVertex this[int index] { get; set; }
 
-        IVertex End { get; set; }
+        int NumberOfVisitedVertices { get; }
+
+        int ObstaclePercent { get; }
+
+        int ObstacleNumber { get; }
 
         IVertex Start { get; set; }
 
-        VertexInfoCollection VertexInfoCollection { get; }
+        IVertex End { get; set; }
 
-        IEnumerable<int> DimensionsSizes { get; }
+        int Size { get; }
 
         string GetFormattedData(string format);
     }
