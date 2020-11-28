@@ -62,7 +62,7 @@ namespace GraphLib.Extensions
             return self.Neighbours.Where(vertex => !vertex.IsVisited);
         }
 
-        public static void Refresh(this IVertex vertex)
+        internal static void Refresh(this IVertex vertex)
         {
             if (!vertex.IsObstacle)
             {
@@ -70,7 +70,7 @@ namespace GraphLib.Extensions
             }
         }
 
-        public static void Isolate(this IVertex self)
+        internal static void Isolate(this IVertex self)
         {
             foreach (var neigbour in self.Neighbours)
             {
@@ -80,7 +80,7 @@ namespace GraphLib.Extensions
             self.Neighbours.Clear();
         }
 
-        public static VertexInfo GetInfo(this IVertex self)
+        internal static VertexInfo GetInfo(this IVertex self)
         {
             return new VertexInfo(self);
         }
@@ -96,7 +96,7 @@ namespace GraphLib.Extensions
             }
         }
 
-        public static void SetNeighbours(this IVertex self, IGraph graph)
+        internal static void SetNeighbours(this IVertex self, IGraph graph)
         {
             if (!self.IsObstacle)
             {

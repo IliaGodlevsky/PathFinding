@@ -10,10 +10,7 @@ namespace GraphLib.Extensions
         {
             graph.RemoveExtremeVertices();
 
-            foreach (var vertex in graph)
-            {
-                vertex.Refresh();
-            }
+            graph.AsParallel().ForAll(vertex => vertex.Refresh());
         }
 
         internal static void RemoveExtremeVertices(this IGraph graph)
@@ -38,13 +35,13 @@ namespace GraphLib.Extensions
             }
         }
 
-        public static bool IsExtremeVerticesVisited(this IGraph self)
+        internal static bool IsExtremeVerticesVisited(this IGraph self)
         {
             return self.End.IsVisited && self.Start.IsVisited
                 && !self.End.IsDefault && !self.Start.IsDefault;
         }
 
-        public static void ConnectVertices(this IGraph self)
+        internal static void ConnectVertices(this IGraph self)
         {
             self.AsParallel().ForAll(vertex => vertex.SetNeighbours(self));
         }

@@ -72,7 +72,7 @@ namespace Algorithm.PathFindingAlgorithms
 
         protected virtual void RelaxNeighbours(IVertex vertex)
         {
-            foreach(var neighbour in vertex.GetUnvisitedNeighbours())
+            vertex.GetUnvisitedNeighbours().AsParallel().ForAll(neighbour=> 
             {
                 var relaxedCost = GetVertexRelaxedCost(neighbour, vertex);
                 if (neighbour.AccumulatedCost > relaxedCost)
@@ -80,12 +80,12 @@ namespace Algorithm.PathFindingAlgorithms
                     neighbour.AccumulatedCost = relaxedCost;
                     neighbour.ParentVertex = vertex;
                 }
-            }
+            });
         }
 
         protected virtual void ExtractNeighbours(IVertex vertex)
         {
-            foreach (var neighbour in vertex.GetUnvisitedNeighbours())
+            foreach(var neighbour in vertex.GetUnvisitedNeighbours())
             {
                 OnVertexEnqueued?.Invoke(neighbour);
                 verticesQueue.Add(neighbour);

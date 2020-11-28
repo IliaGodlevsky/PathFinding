@@ -4,6 +4,7 @@ using GraphLib.Extensions;
 using GraphLib.Info;
 using GraphLib.Vertex.Cost;
 using GraphLib.Vertex.Interface;
+using System;
 using System.Collections.Generic;
 using System.Windows.Controls;
 using System.Windows.Media;
@@ -97,10 +98,9 @@ namespace WpfVersion.Model.Vertex
 
         public void MarkAsSimpleVertex()
         {
-            if (!IsObstacle)
-            {
-                Background = new SolidColorBrush(Colors.White);
-            }
+            var delegatedMethod = Delegate.CreateDelegate(
+                typeof(Action), this, nameof(ToSimple));
+            Dispatcher.BeginInvoke(delegatedMethod);
         }
 
         public void MarkAsStart()
@@ -110,12 +110,16 @@ namespace WpfVersion.Model.Vertex
 
         public void MarkAsVisited()
         {
-            Background = VisitedVertexColor;
+            var delegatedMethod = Delegate.CreateDelegate(
+                typeof(Action), this, nameof(ToVisited));
+            Dispatcher.BeginInvoke(delegatedMethod);           
         }
 
         public void MarkAsEnqueued()
         {
-            Background = EnqueuedVertexColor;
+            var delegatedMethod = Delegate.CreateDelegate(
+                typeof(Action), this, nameof(ToEnqueued));
+            Dispatcher.BeginInvoke(delegatedMethod);
         }
 
         public void MakeUnweighted()
@@ -128,6 +132,24 @@ namespace WpfVersion.Model.Vertex
         {
             cost.MakeWeighted();
             Content = cost.ToString(string.Empty);
+        }
+
+        private void ToVisited()
+        {
+            Background = VisitedVertexColor;
+        }
+
+        private void ToEnqueued()
+        {
+            Background = EnqueuedVertexColor;
+        }
+
+        private void ToSimple()
+        {
+            if (!IsObstacle)
+            {
+                Background = new SolidColorBrush(Colors.White);
+            }
         }
     }
 }

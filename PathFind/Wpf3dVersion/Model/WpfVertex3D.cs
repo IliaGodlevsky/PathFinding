@@ -137,11 +137,6 @@ namespace Wpf3dVersion.Model
             Brush = EndVertexBrush;
         }
 
-        public void MarkAsEnqueued()
-        {
-            Brush = EnqueuedVertexBrush;
-        }
-
         public void MarkAsObstacle()
         {
             this.WashVertex();
@@ -150,26 +145,34 @@ namespace Wpf3dVersion.Model
 
         public void MarkAsPath()
         {
-            Brush = PathVertexBrush;
-            
+
+            Brush = PathVertexBrush;            
         }
 
         public void MarkAsSimpleVertex()
         {
-            if (!IsObstacle)
-            {
-                Brush = SimpleVertexBrush;
-            }
+            var delegatedMethod = Delegate.CreateDelegate(
+                typeof(Action), this, nameof(ToSimple));
+            Dispatcher.BeginInvoke(delegatedMethod);
+        }
+
+        public void MarkAsVisited()
+        {
+            var delegatedMethod = Delegate.CreateDelegate(
+                typeof(Action), this, nameof(ToVisited));
+            Dispatcher.BeginInvoke(delegatedMethod);
+        }
+
+        public void MarkAsEnqueued()
+        {
+            var delegatedMethod = Delegate.CreateDelegate(
+                typeof(Action), this, nameof(ToEnqueued));
+            Dispatcher.BeginInvoke(delegatedMethod);
         }
 
         public void MarkAsStart()
         {
             Brush = StartVertexBrush;
-        }
-
-        public void MarkAsVisited()
-        {
-            Brush = VisitedVertexBrush;
         }
 
         protected async static void VisualPropertyChanged(DependencyObject depObj, 
@@ -214,6 +217,24 @@ namespace Wpf3dVersion.Model
             if (material != null)
             {
                 material.Brush = Brush;
+            }
+        }
+
+        private void ToVisited()
+        {
+            Brush = VisitedVertexBrush;
+        }
+
+        private void ToEnqueued()
+        {
+            Brush = EnqueuedVertexBrush;
+        }
+
+        private void ToSimple()
+        {
+            if (!IsObstacle)
+            {
+                Brush = SimpleVertexBrush;
             }
         }
     }    
