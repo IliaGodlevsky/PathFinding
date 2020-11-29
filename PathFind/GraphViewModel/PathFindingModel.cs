@@ -50,12 +50,8 @@ namespace GraphLib.ViewModel
                 vertex.MarkAsVisited();
             }
 
-            mainViewModel.PathFindingStatistics = 
-                GetIntermediateStatistics(
-                timer,
-                steps: 0, 
-                pathLength: 0, 
-                graph.NumberOfVisitedVertices);
+            mainViewModel.PathFindingStatistics = GetIntermediateStatistics(timer,
+                steps: 0, pathLength: 0, graph.NumberOfVisitedVertices);
 
             pauseProvider.Pause(DelayTime);
         }
@@ -74,12 +70,8 @@ namespace GraphLib.ViewModel
 
             var path = new GraphPath(graph);
 
-            mainViewModel.PathFindingStatistics = 
-                GetIntermediateStatistics(
-                    timer,
-                    path.PathLength, 
-                    path.PathCost, 
-                    graph.NumberOfVisitedVertices);
+            mainViewModel.PathFindingStatistics = GetIntermediateStatistics(timer, 
+                path.PathLength, path.PathCost, graph.NumberOfVisitedVertices);
 
             if (path.IsExtracted)
             {
@@ -106,7 +98,7 @@ namespace GraphLib.ViewModel
 
             var timerInfo = timer.GetTimeInformation(ViewModelResources.TimerInfoFormat);
 
-            return timerInfo + "   " + graphInfo;
+            return AlgorithmKey + "   " + timerInfo + "   " + graphInfo;
         }
 
         protected PauseProvider pauseProvider;
