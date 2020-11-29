@@ -34,21 +34,19 @@ namespace GraphLib.Graphs.Factories
 
                 for (int index = 0; index < graph.Size; index++)
                 {
-                    graph[index] = vertexCreateMethod?.Invoke();
-
-                    graph[index].Cost = rand.GetRandomValueCost();
-                    if (rand.IsObstacleChance(obstacleChance))
-                    {
-                        graph[index].MarkAsObstacle();
-                    }
-
                     var coordinates = ToCoordinates(index, dimensionSizes);
                     var coordinate = coordinateCreateMethod?.Invoke(coordinates);
 
-                    graph[index].Position = coordinate;
+                    graph[coordinate] = vertexCreateMethod?.Invoke();
+
+                    graph[coordinate].Cost = rand.GetRandomValueCost();
+                    if (rand.IsObstacleChance(obstacleChance))
+                    {
+                        graph[coordinate].MarkAsObstacle();
+                    }
+
+                    graph[coordinate].Position = coordinate;
                 }
-
-
 
                 graph.ConnectVertices();
 
