@@ -27,7 +27,10 @@ namespace Common.Extensions
         {
             var names = Enum.GetNames(enumValue.GetType()).Cast<string>().ToList();
             var enumValueIndex = names.IndexOf(enumValue.ToString());
-            return Convert.ToInt32(Enum.GetValues(enumValue.GetType()).GetValue(enumValueIndex));
+            var values = Enum.GetValues(enumValue.GetType());
+            var value = values.GetValue(enumValueIndex);
+
+            return Convert.ToInt32(value);
         }
     }
 }
