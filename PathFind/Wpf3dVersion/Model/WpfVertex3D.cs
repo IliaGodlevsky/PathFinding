@@ -17,10 +17,13 @@ namespace Wpf3dVersion.Model
     public class WpfVertex3D : UIElement3D, IVertex
     {
         public WpfVertex3D()
-        {           
-            Size = 5;
-            Material = new DiffuseMaterial();
-            Model = Model3DFactory.CreateCubicModel3D(Size, Material);
+        {
+            Dispatcher.InvokeAsync(() =>
+            {
+                Size = 5;
+                Material = new DiffuseMaterial();
+                Model = Model3DFactory.CreateCubicModel3D(Size, Material);
+            });
             this.Initialize();
         }
 
@@ -134,45 +137,44 @@ namespace Wpf3dVersion.Model
 
         public void MarkAsEnd()
         {
-            Brush = EndVertexBrush;
+            Dispatcher.InvokeAsync(() => Brush = EndVertexBrush);
         }
 
         public void MarkAsObstacle()
         {
             this.WashVertex();
-            Brush = ObstacleVertexBrush;
+            Dispatcher.InvokeAsync(() => Brush = ObstacleVertexBrush);
         }
 
         public void MarkAsPath()
         {
-
-            Brush = PathVertexBrush;            
+            Dispatcher.InvokeAsync(() => Brush = PathVertexBrush);            
         }
 
         public void MarkAsSimpleVertex()
         {
-            var delegatedMethod = Delegate.CreateDelegate(
-                typeof(Action), this, nameof(ToSimple));
-            Dispatcher.BeginInvoke(delegatedMethod);
+            Dispatcher.InvokeAsync(()=> 
+            {
+                if (!IsObstacle)
+                {
+                    Brush = SimpleVertexBrush;
+                }
+            });
         }
 
         public void MarkAsVisited()
         {
-            var delegatedMethod = Delegate.CreateDelegate(
-                typeof(Action), this, nameof(ToVisited));
-            Dispatcher.BeginInvoke(delegatedMethod);
+            Dispatcher.InvokeAsync(() => Brush = VisitedVertexBrush);
         }
 
         public void MarkAsEnqueued()
         {
-            var delegatedMethod = Delegate.CreateDelegate(
-                typeof(Action), this, nameof(ToEnqueued));
-            Dispatcher.BeginInvoke(delegatedMethod);
+            Dispatcher.InvokeAsync(() => Brush = EnqueuedVertexBrush);
         }
 
         public void MarkAsStart()
         {
-            Brush = StartVertexBrush;
+            Dispatcher.InvokeAsync(() => Brush = StartVertexBrush);
         }
 
         protected async static void VisualPropertyChanged(DependencyObject depObj, 
@@ -217,24 +219,6 @@ namespace Wpf3dVersion.Model
             if (material != null)
             {
                 material.Brush = Brush;
-            }
-        }
-
-        private void ToVisited()
-        {
-            Brush = VisitedVertexBrush;
-        }
-
-        private void ToEnqueued()
-        {
-            Brush = EnqueuedVertexBrush;
-        }
-
-        private void ToSimple()
-        {
-            if (!IsObstacle)
-            {
-                Brush = SimpleVertexBrush;
             }
         }
     }    

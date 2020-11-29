@@ -40,15 +40,15 @@ namespace WpfVersion.ViewModel
             void ChangeSize(IVertex vertex)
             {
                 var temp = vertex as WpfVertex;
-                temp.Width = Size;
-                temp.Height = Size;
-                temp.FontSize = Size * VertexParametres.TextToSizeRatio;
+                temp.Dispatcher.InvokeAsync(() =>
+                {
+                    temp.Width = Size;
+                    temp.Height = Size;
+                    temp.FontSize = Size * VertexParametres.TextToSizeRatio;
+                });
             }
 
-            foreach (var vertex in Model.Graph)
-            {
-                ChangeSize(vertex);
-            }
+            Model.Graph.AsParallel().ForAll(ChangeSize);
 
             (Model.GraphField as Canvas).Children.Clear();
 

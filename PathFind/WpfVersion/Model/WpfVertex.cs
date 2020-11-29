@@ -4,7 +4,6 @@ using GraphLib.Extensions;
 using GraphLib.Info;
 using GraphLib.Vertex.Cost;
 using GraphLib.Vertex.Interface;
-using System;
 using System.Collections.Generic;
 using System.Windows.Controls;
 using System.Windows.Media;
@@ -29,10 +28,13 @@ namespace WpfVersion.Model.Vertex
         }
 
         public WpfVertex() : base()
-        {            
-            Width = Height = VertexParametres.VertexSize;
-            FontSize = VertexParametres.VertexSize * VertexParametres.TextToSizeRatio;
-            Template = (ControlTemplate)TryFindResource("vertexTemplate");
+        {
+            Dispatcher.InvokeAsync(() =>
+            {
+                Width = Height = VertexParametres.VertexSize;
+                FontSize = VertexParametres.VertexSize * VertexParametres.TextToSizeRatio;
+                Template = (ControlTemplate)TryFindResource("vertexTemplate");
+            });
             this.Initialize();
         }
 
@@ -56,8 +58,8 @@ namespace WpfVersion.Model.Vertex
             get { return cost; }
             set 
             { 
-                cost = (VertexCost)value.Clone(); 
-                Content = cost.ToString(string.Empty);
+                cost = (VertexCost)value.Clone();
+                Dispatcher.InvokeAsync(() => Content = cost.ToString(string.Empty));
             }
         }
 
@@ -74,7 +76,7 @@ namespace WpfVersion.Model.Vertex
             set 
             { 
                 position = value;
-                ToolTip = position.ToString();
+                Dispatcher.InvokeAsync(() => ToolTip = position.ToString());
             }
         }
 
@@ -82,74 +84,56 @@ namespace WpfVersion.Model.Vertex
 
         public void MarkAsEnd()
         {
-            Background = EndVertexColor;
+            Dispatcher.InvokeAsync(() => Background = EndVertexColor);
         }
 
         public void MarkAsObstacle()
         {
             this.WashVertex();
-            Background = new SolidColorBrush(Colors.Black);
+            Dispatcher.InvokeAsync(() => Background = new SolidColorBrush(Colors.Black));
         }
 
         public void MarkAsPath()
         {
-            Background = PathVertexColor;
-        }
-
-        public void MarkAsSimpleVertex()
-        {
-            var delegatedMethod = Delegate.CreateDelegate(
-                typeof(Action), this, nameof(ToSimple));
-            Dispatcher.BeginInvoke(delegatedMethod);
+            Dispatcher.InvokeAsync(() => Background = PathVertexColor);
         }
 
         public void MarkAsStart()
         {
-            Background = StartVertexColor;
+            Dispatcher.InvokeAsync(() => Background = StartVertexColor);
+        }
+
+        public void MarkAsSimpleVertex()
+        {
+            Dispatcher.InvokeAsync(() =>
+            {
+                if (!IsObstacle)
+                {
+                    Background = new SolidColorBrush(Colors.White);
+                }
+            });
         }
 
         public void MarkAsVisited()
         {
-            var delegatedMethod = Delegate.CreateDelegate(
-                typeof(Action), this, nameof(ToVisited));
-            Dispatcher.BeginInvoke(delegatedMethod);           
+            Dispatcher.InvokeAsync(() => Background = VisitedVertexColor);
         }
 
         public void MarkAsEnqueued()
         {
-            var delegatedMethod = Delegate.CreateDelegate(
-                typeof(Action), this, nameof(ToEnqueued));
-            Dispatcher.BeginInvoke(delegatedMethod);
+            Dispatcher.InvokeAsync(() => Background = EnqueuedVertexColor);
         }
 
         public void MakeUnweighted()
         {
-            Content = string.Empty;
+            Dispatcher.InvokeAsync(() => Content = string.Empty);
             cost.MakeUnWeighted();
         }
 
         public void MakeWeighted()
         {
-            cost.MakeWeighted();
+            Dispatcher.InvokeAsync(() => cost.MakeWeighted());
             Content = cost.ToString(string.Empty);
-        }
-
-        private void ToVisited()
-        {
-            Background = VisitedVertexColor;
-        }
-
-        private void ToEnqueued()
-        {
-            Background = EnqueuedVertexColor;
-        }
-
-        private void ToSimple()
-        {
-            if (!IsObstacle)
-            {
-                Background = new SolidColorBrush(Colors.White);
-            }
         }
     }
 }
