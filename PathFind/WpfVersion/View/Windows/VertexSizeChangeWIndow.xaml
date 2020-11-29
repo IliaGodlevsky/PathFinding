@@ -20,15 +20,27 @@
             <RowDefinition></RowDefinition>
             <RowDefinition></RowDefinition>
         </Grid.RowDefinitions>
+        
         <TextBlock Text="Vertex size" Margin="5" Grid.Row="0" Grid.Column="0"></TextBlock>
+        
         <TextBox Text="{Binding ElementName=sizeSlider, Path=Value, 
             Converter={StaticResource sizeConverter}, 
             ConverterParameter={x:Static range:Range.VertexSizeRange }, 
             Mode=TwoWay, 
             UpdateSourceTrigger=PropertyChanged}"
-                 x:Name="textBox" MinWidth="30" Margin="5" Grid.Column="2"></TextBox>
-        <Slider Margin="5" x:Name="sizeSlider" Value="{Binding Path = Size}" MinWidth="100" Grid.Column="1"></Slider>
-        <StackPanel Grid.Row="1" Grid.ColumnSpan="3" Orientation="Horizontal"
+            x:Name="textBox" 
+            MinWidth="30" 
+            Margin="5" 
+            Grid.Column="2"></TextBox>
+        
+        <Slider Margin="5" x:Name="sizeSlider" 
+                Value="{Binding Path = Size}" 
+                MinWidth="100" 
+                Grid.Column="1"></Slider>
+        
+        <StackPanel Grid.Row="1" 
+                    Grid.ColumnSpan="3" 
+                    Orientation="Horizontal"
                     HorizontalAlignment="Center">
             <Button Command="{Binding ExecuteChangeVertexSize}" Margin ="5" Content="Ok"></Button>
             <Button Command="{Binding ExecuteCancel}" Margin="5" Content="Cancel"></Button>

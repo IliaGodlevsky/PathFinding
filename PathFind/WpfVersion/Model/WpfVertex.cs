@@ -29,12 +29,9 @@ namespace WpfVersion.Model.Vertex
 
         public WpfVertex() : base()
         {
-            Dispatcher.InvokeAsync(() =>
-            {
-                Width = Height = VertexParametres.VertexSize;
-                FontSize = VertexParametres.VertexSize * VertexParametres.TextToSizeRatio;
-                Template = (ControlTemplate)TryFindResource("vertexTemplate");
-            });
+            Width = Height = VertexParametres.VertexSize;
+            FontSize = VertexParametres.VertexSize * VertexParametres.TextToSizeRatio;
+            Template = (ControlTemplate)TryFindResource("vertexTemplate");
             this.Initialize();
         }
 
@@ -59,7 +56,7 @@ namespace WpfVersion.Model.Vertex
             set 
             { 
                 cost = (VertexCost)value.Clone();
-                Dispatcher.InvokeAsync(() => Content = cost.ToString(string.Empty));
+                Content = cost.ToString(string.Empty);
             }
         }
 
@@ -76,7 +73,7 @@ namespace WpfVersion.Model.Vertex
             set 
             { 
                 position = value;
-                Dispatcher.InvokeAsync(() => ToolTip = position.ToString());
+                ToolTip = position.ToString();
             }
         }
 
@@ -84,55 +81,52 @@ namespace WpfVersion.Model.Vertex
 
         public void MarkAsEnd()
         {
-            Dispatcher.InvokeAsync(() => Background = EndVertexColor);
+            Background = EndVertexColor;
         }
 
         public void MarkAsObstacle()
         {
             this.WashVertex();
-            Dispatcher.InvokeAsync(() => Background = new SolidColorBrush(Colors.Black));
+            Background = new SolidColorBrush(Colors.Black);
         }
 
         public void MarkAsPath()
         {
-            Dispatcher.InvokeAsync(() => Background = PathVertexColor);
+            Background = PathVertexColor;
         }
 
         public void MarkAsStart()
         {
-            Dispatcher.InvokeAsync(() => Background = StartVertexColor);
+            Background = StartVertexColor;
         }
 
         public void MarkAsSimpleVertex()
         {
-            Dispatcher.InvokeAsync(() =>
+            if (!IsObstacle)
             {
-                if (!IsObstacle)
-                {
-                    Background = new SolidColorBrush(Colors.White);
-                }
-            });
+                Background = new SolidColorBrush(Colors.White);
+            }
         }
 
         public void MarkAsVisited()
         {
-            Dispatcher.InvokeAsync(() => Background = VisitedVertexColor);
+            Background = VisitedVertexColor;
         }
 
         public void MarkAsEnqueued()
         {
-            Dispatcher.InvokeAsync(() => Background = EnqueuedVertexColor);
+            Background = EnqueuedVertexColor;
         }
 
         public void MakeUnweighted()
-        {
-            Dispatcher.InvokeAsync(() => Content = string.Empty);
+        {            
             cost.MakeUnWeighted();
+            Content = string.Empty;
         }
 
         public void MakeWeighted()
         {
-            Dispatcher.InvokeAsync(() => cost.MakeWeighted());
+            cost.MakeWeighted();
             Content = cost.ToString(string.Empty);
         }
     }

@@ -10,7 +10,10 @@ namespace GraphLib.Extensions
         {
             graph.RemoveExtremeVertices();
 
-            graph.AsParallel().ForAll(vertex => vertex.Refresh());
+            foreach(var vertex in graph)
+            {
+                vertex.Refresh();
+            }
         }
 
         internal static void RemoveExtremeVertices(this IGraph graph)

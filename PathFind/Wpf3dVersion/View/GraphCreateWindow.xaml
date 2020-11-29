@@ -54,7 +54,9 @@
                  Grid.Row="1" 
                  Grid.Column="1">
         </TextBox>
+        
         <TextBlock Grid.Row="2" Text="Graph width" Margin="5"></TextBlock>
+        
         <TextBox Text ="{Binding Path = Width, 
             UpdateSourceTrigger=PropertyChanged, 
             Converter={StaticResource stringToIntCOnverter}, 

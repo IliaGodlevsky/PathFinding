@@ -23,28 +23,45 @@
             <RowDefinition Height="Auto"></RowDefinition>
             <RowDefinition Height="Auto"></RowDefinition>
         </Grid.RowDefinitions>
+        
         <TextBlock Margin="5" Text="Obstacle percent" Grid.Row="0" Grid.ColumnSpan="2" 
                    HorizontalAlignment="Center"></TextBlock>
-        <Slider Value = "{Binding Path = ObstaclePercent}" x:Name="obstacleSlider" 
-                MinWidth="100" Margin="5" Grid.Row="1"></Slider>
-        <TextBox Text = "{Binding ElementName = obstacleSlider, Path = Value, 
+        
+        <Slider Value = "{Binding Path = ObstaclePercent}" 
+                x:Name="obstacleSlider" 
+                MinWidth="100"
+                Margin="5" 
+                Grid.Row="1"></Slider>
+        
+        <TextBox Text = "{Binding ElementName = obstacleSlider, 
+            Path = Value, 
             Converter = {StaticResource sliderValueConverter}, 
             ConverterParameter={x:Static range:Range.ObstaclePercentValueRange}, 
             Mode = TwoWay, 
             UpdateSourceTrigger = PropertyChanged}"
-                 x:Name="obstacleTextBox" MinWidth="40" Margin="5" Grid.Row="1" Grid.Column="1"></TextBox>
+            x:Name="obstacleTextBox" 
+            MinWidth="40" 
+            Margin="5" 
+            Grid.Row="1" 
+            Grid.Column="1"></TextBox>
+        
         <TextBlock Grid.Row="2" Text="Graph width" Margin="5"></TextBlock>
+        
         <TextBox Text ="{Binding Path = Width, 
             UpdateSourceTrigger=PropertyChanged, 
             Converter={StaticResource stringToIntCOnverter}, 
             ConverterParameter={x:Static range:Range.WidthValueRange}}" 
-                 Grid.Row="2" Grid.Column="1" Margin="5"></TextBox>
+            Grid.Row="2" Grid.Column="1" 
+            Margin="5"></TextBox>
+        
         <TextBlock Grid.Row ="3" Text="Graph length" Margin="5"></TextBlock>
+        
         <TextBox Text="{Binding Path = Length, 
             UpdateSourceTrigger=PropertyChanged,
             Converter={StaticResource stringToIntCOnverter}, 
             ConverterParameter={x:Static range:Range.HeightValueRange}}" 
-                 Grid.Row="3" Grid.Column="1" Margin="5"></TextBox>
+            Grid.Row="3" Grid.Column="1" Margin="5"></TextBox>
+        
         <StackPanel Grid.Row="4" Grid.ColumnSpan="2" Orientation="Horizontal" HorizontalAlignment="Center">
             <Button Command ="{Binding ConfirmCreateGraphCommand}" Margin="5" Content="OK"></Button>
             <Button Command="{Binding CancelCreateGraphCommand}" Margin="5" Content="Cancel"></Button>

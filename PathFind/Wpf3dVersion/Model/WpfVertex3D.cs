@@ -18,12 +18,9 @@ namespace Wpf3dVersion.Model
     {
         public WpfVertex3D()
         {
-            Dispatcher.InvokeAsync(() =>
-            {
-                Size = 5;
-                Material = new DiffuseMaterial();
-                Model = Model3DFactory.CreateCubicModel3D(Size, Material);
-            });
+            Size = 5;
+            Material = new DiffuseMaterial();
+            Model = Model3DFactory.CreateCubicModel3D(Size, Material);
             this.Initialize();
         }
 
@@ -137,44 +134,41 @@ namespace Wpf3dVersion.Model
 
         public void MarkAsEnd()
         {
-            Dispatcher.InvokeAsync(() => Brush = EndVertexBrush);
+            Brush = EndVertexBrush;
         }
 
         public void MarkAsObstacle()
         {
             this.WashVertex();
-            Dispatcher.InvokeAsync(() => Brush = ObstacleVertexBrush);
+            Brush = ObstacleVertexBrush;
         }
 
         public void MarkAsPath()
         {
-            Dispatcher.InvokeAsync(() => Brush = PathVertexBrush);            
+            Brush = PathVertexBrush;          
         }
 
         public void MarkAsSimpleVertex()
         {
-            Dispatcher.InvokeAsync(()=> 
+            if (!IsObstacle)
             {
-                if (!IsObstacle)
-                {
-                    Brush = SimpleVertexBrush;
-                }
-            });
+                Brush = SimpleVertexBrush;
+            }
         }
 
         public void MarkAsVisited()
         {
-            Dispatcher.InvokeAsync(() => Brush = VisitedVertexBrush);
+            Brush = VisitedVertexBrush;
         }
 
         public void MarkAsEnqueued()
         {
-            Dispatcher.InvokeAsync(() => Brush = EnqueuedVertexBrush);
+            Brush = EnqueuedVertexBrush;
         }
 
         public void MarkAsStart()
         {
-            Dispatcher.InvokeAsync(() => Brush = StartVertexBrush);
+            Brush = StartVertexBrush;
         }
 
         protected async static void VisualPropertyChanged(DependencyObject depObj, 

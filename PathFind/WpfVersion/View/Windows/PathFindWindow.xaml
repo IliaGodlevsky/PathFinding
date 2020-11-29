@@ -39,13 +39,28 @@
                     <ColumnDefinition Width="Auto"></ColumnDefinition>
                     <ColumnDefinition Width="*"></ColumnDefinition>
                 </Grid.ColumnDefinitions>
-                <TextBlock Grid.ColumnSpan="2" Margin="5" Grid.Row="0" 
-                           Text="Algorithm speed" HorizontalAlignment="Center" Grid.Column="0"/>
+            
+                <TextBlock Grid.ColumnSpan="2" 
+                           Margin="5" 
+                           Grid.Row="0" 
+                           Text="Algorithm speed" 
+                           HorizontalAlignment="Center" 
+                           Grid.Column="0"/>
+            
                 <Slider Grid.Row="1" 
-                        Value ="{Binding Path=DelayTime}" x:Name="delayTimeSlider" MinWidth="160" Margin="5"></Slider>
-                <TextBox MaxWidth="25" Grid.Row="1" Text ="{Binding ElementName=delayTimeSlider, Path=Value, 
-                    Converter = {StaticResource sliderValueConverter}, ConverterParameter={x:Static range:Range.DelayValueRange} ,Mode = TwoWay, 
-                    UpdateSourceTrigger = PropertyChanged}" Grid.Column="1" Margin="5"></TextBox>
+                        Value ="{Binding Path=DelayTime}" 
+                        x:Name="delayTimeSlider" 
+                        MinWidth="160" 
+                        Margin="5"></Slider>
+            
+                <TextBox MaxWidth="25" Grid.Row="1" 
+                         Text ="{Binding ElementName=delayTimeSlider, 
+                         Path=Value, 
+                         Converter = {StaticResource sliderValueConverter}, 
+                         ConverterParameter={x:Static range:Range.DelayValueRange}, 
+                         Mode = TwoWay, 
+                         UpdateSourceTrigger = PropertyChanged}" 
+                         Grid.Column="1" Margin="5"></TextBox>
         </Grid>
        
     </Grid>

@@ -47,7 +47,7 @@ namespace Wpf3dVersion.Model
         public void CenterGraph(params double[] additionalOffset)
         {
             var dimensionSizes = new int[] { Width, Length, Height };
-            var axisOffsets = new double[dimensionSizes.Length];           
+            var axisOffsets = new double[dimensionSizes.Length];
             foreach (WpfVertex3D vertex in Children)
             {
                 for (int i = 0; i < dimensionSizes.Length; i++)
@@ -108,6 +108,10 @@ namespace Wpf3dVersion.Model
 
     class Offset
     {
+        public double GraphCenterOffset => AdjustedDimensionSize * AdjustedVertexSize;
+
+        public double VertexOffset => AdjustedVertexSize * CoordinateValue + AdditionalOffset;
+
         public int CoordinateValue { private get; set; }
 
         public int DimensionSize { private get; set; }
@@ -117,10 +121,6 @@ namespace Wpf3dVersion.Model
         public double AdditionalOffset { private get; set; }
 
         public double DistanceBetweenVertices { private get; set; }
-
-        public double GraphCenterOffset => AdjustedDimensionSize * AdjustedVertexSize;
-
-        public double VertexOffset => AdjustedVertexSize * CoordinateValue + AdditionalOffset;
 
         private double AdjustedVertexSize => VertexSize + DistanceBetweenVertices;
 
