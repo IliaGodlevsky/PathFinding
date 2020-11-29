@@ -19,8 +19,8 @@ namespace Algorithm.AlgorithmCreating
         {
             Algorithms = new Dictionary<string, Type>();
 
-            var algorithmInterface = typeof(IPathFindingAlgorithm);
-            var assembly = Assembly.Load(algorithmInterface.Assembly.GetName());
+            var algorithmInterfaceType = typeof(IPathFindingAlgorithm);
+            var assembly = Assembly.Load(algorithmInterfaceType.Assembly.GetName());
             var assemblyTypes = assembly.GetTypes().
                 Where(type => type != typeof(DefaultAlgorithm));
 
@@ -29,7 +29,7 @@ namespace Algorithm.AlgorithmCreating
                 var interfaces = type.GetInterfaces();
                 var interfacesNames = interfaces.Select(interf => interf.Name);
 
-                if (interfacesNames.Contains(algorithmInterface.Name))
+                if (interfacesNames.Contains(algorithmInterfaceType.Name))
                 {
                     dynamic attribute = Attribute.GetCustomAttribute(type, typeof(DescriptionAttribute));
                     var description = attribute != null ? attribute.Description : type.ToString();
