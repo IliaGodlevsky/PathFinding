@@ -11,8 +11,9 @@ namespace Wpf3dVersion
         public MainWindow()
         {
             InitializeComponent();
-            MainWindowViewModel model = new MainWindowViewModel();
+            var model = new MainWindowViewModel();
             DataContext = model;
+
             distanceBetweenAtXAxisSlider.ValueChanged += model.XAxisSliderValueChanged;
             distanceBetweenAtYAxisSlider.ValueChanged += model.YAxisSliderValueChanged;
             distanceBetweenAtZAxisSlider.ValueChanged += model.ZAxisSliderValueChanged;
