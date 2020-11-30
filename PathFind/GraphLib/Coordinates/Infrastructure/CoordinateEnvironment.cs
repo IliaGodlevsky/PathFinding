@@ -31,14 +31,14 @@ namespace GraphLib.Coordinates.Infrastructure
             for (int i = leftNeighbour; i <= rightNeighbour; i++)
             {
                 neighbourCoordinates[currentDepth] = i;
-                if (CanMoveNextDimension(currentDepth))
+                if (CanMoveDeeper(currentDepth))
                     FormEnvironment(currentDepth + 1);
                 else
-                    AddNeighbourCoordinateToEnvironment();
+                    AddNeighbourToEnvironment();
             }
         }
 
-        private void AddNeighbourCoordinateToEnvironment()
+        private void AddNeighbourToEnvironment()
         {
             if (!neighbourCoordinates.Any(value => value < 0))
             {
@@ -57,7 +57,7 @@ namespace GraphLib.Coordinates.Infrastructure
                 CreateInstance(coordinateType, neighbourCoordinates);
         }
 
-        private bool CanMoveNextDimension(int currentDepth)
+        private bool CanMoveDeeper(int currentDepth)
         {
             return currentDepth < limitDepth - 1;
         }
