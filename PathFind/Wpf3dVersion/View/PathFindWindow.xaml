@@ -3,13 +3,17 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:Wpf3dVersion.View" 
         xmlns:converters="clr-namespace:Wpf3dVersion.Converters"
+        xmlns:algo="clr-namespace:Algorithm.AlgorithmCreating;assembly=Algorithm"
         xmlns:range="clr-namespace:Common.ValueRanges;assembly=Common"
         mc:Ignorable="d"
         Title="PathFindWindow" 
         SizeToContent="WidthAndHeight">
     <Window.Resources>
+        <ObjectDataProvider x:Key="algorithmList" MethodName="GetAlgorithmKeys" 
+                            ObjectType="{x:Type algo:AlgorithmFactory}">
+
+        </ObjectDataProvider>
         <converters:StringToRangedDoubleConverter x:Key="sliderValueConverter"></converters:StringToRangedDoubleConverter>
         <converters:ToStringConverter x:Key="algorithmKeyConverter"></converters:ToStringConverter>
     </Window.Resources>
@@ -24,8 +28,9 @@
             <Button Command="{Binding ConfirmPathFindAlgorithmChoice}"  Margin ="5" Content="Start"></Button>
             <Button Command="{Binding CancelPathFindAlgorithmChoice}" Margin ="5" Content="Cancel"></Button>
         </StackPanel>
-        
-        <ListBox x:Name="algoListBox" BorderThickness="0" Margin="5"
+
+        <ListBox ItemsSource="{Binding Source={StaticResource algorithmList} }"
+                 x:Name="algoListBox" BorderThickness="0" Margin="5"
                  SelectedItem="{Binding Path = AlgorithmKey}">
             <ListBox.ItemTemplate>
                 <DataTemplate>

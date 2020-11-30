@@ -15,7 +15,7 @@ namespace WinFormsVersion.View
             okButton.Click += model.PathFind;
             cancelButton.Click += model.CancelPathFind;
 
-            var dataSource = AlgorithmFactory.AlgorithmKeys.
+            var dataSource = AlgorithmFactory.GetAlgorithmKeys().
                 Select(key => new { Name = key }).ToArray();
             algorithmListBox.DataSource = dataSource;
 
