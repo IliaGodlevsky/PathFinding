@@ -5,7 +5,7 @@ using System.Linq;
 
 namespace GraphLib.Coordinates.Infrastructure
 {
-    internal sealed class CoordinateEnvironment
+    public sealed class CoordinateEnvironment
     {
         public CoordinateEnvironment(ICoordinate coordinate)
         {
@@ -26,18 +26,15 @@ namespace GraphLib.Coordinates.Infrastructure
         // recursive method
         private void FormEnvironment(int currentDepth = 0)
         {
-            if (currentDepth < limitDepth)
+            int leftNeighbour = selfCoordinates[currentDepth] - 1;
+            int rightNeighbour = selfCoordinates[currentDepth] + 1;
+            for (int i = leftNeighbour; i <= rightNeighbour; i++)
             {
-                int leftNeighbour = selfCoordinates[currentDepth] - 1;
-                int rightNeighbour = selfCoordinates[currentDepth] + 1;
-                for (int i = leftNeighbour; i <= rightNeighbour; i++)
-                {
-                    neighbourCoordinates[currentDepth] = i;
-                    if (CanMoveNextDimension(currentDepth))
-                        FormEnvironment(currentDepth + 1);
-                    else
-                        AddNeighbourCoordinateToEnvironment();
-                }
+                neighbourCoordinates[currentDepth] = i;
+                if (CanMoveNextDimension(currentDepth))
+                    FormEnvironment(currentDepth + 1);
+                else
+                    AddNeighbourCoordinateToEnvironment();
             }
         }
 
