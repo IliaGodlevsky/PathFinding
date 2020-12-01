@@ -19,14 +19,14 @@ namespace GraphLib.Graphs.Infrastructure
 
         public bool IsExtracted { get; private set; }
 
+        public int PathLength { get; private set; }
+
+        public int PathCost { get; private set; }
+
         public GraphPath()
         {
             path = new IVertex[] { };
         }
-
-        public int PathLength { get; private set; }
-
-        public int PathCost { get; private set; }
 
         public void HighlightPath()
         {
