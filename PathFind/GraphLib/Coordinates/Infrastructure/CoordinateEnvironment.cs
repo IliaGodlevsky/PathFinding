@@ -62,9 +62,9 @@ namespace GraphLib.Coordinates.Infrastructure
             return LeftNeighbour(depth) + 2;
         }
 
-        private bool CanMoveDeeper(int currentDepth)
+        private bool CanMoveDeeper(int depth)
         {
-            return currentDepth < limitDepth - 1;
+            return depth < limitDepth - 1;
         }
        
         private readonly Type coordinateType;
