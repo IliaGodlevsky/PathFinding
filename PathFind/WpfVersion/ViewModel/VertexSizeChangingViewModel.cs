@@ -25,7 +25,7 @@ namespace WpfVersion.ViewModel
             Model = model;
 
             ExecuteChangeVertexSize = new RelayCommand(ChangeVertexSize, obj => true);
-            ExecuteCancel = new RelayCommand(obj => Model.Window.Close(), obj => true);
+            ExecuteCancel = new RelayCommand(obj => CloseWindow(), obj => true);
 
             if (Model.Graph.Size > 0)
             {
@@ -33,29 +33,30 @@ namespace WpfVersion.ViewModel
             }
         }
 
+        private void CloseWindow()
+        {
+            Model.Window.Close();
+        }
+
+        private void ChangeSize(IVertex vertex)
+        {
+            var temp = vertex as WpfVertex;
+            temp.Dispatcher.InvokeAsync(() =>
+            {
+                temp.Width = Size;
+                temp.Height = Size;
+                temp.FontSize = Size * VertexParametres.TextToSizeRatio;
+            });
+        }
+
         private void ChangeVertexSize(object param)
         {
             VertexParametres.VertexSize = Size;
-
-            void ChangeSize(IVertex vertex)
-            {
-                var temp = vertex as WpfVertex;
-                temp.Dispatcher.InvokeAsync(() =>
-                {
-                    temp.Width = Size;
-                    temp.Height = Size;
-                    temp.FontSize = Size * VertexParametres.TextToSizeRatio;
-                });
-            }
-
             Model.Graph.AsParallel().ForAll(ChangeSize);
-
             (Model.GraphField as Canvas).Children.Clear();
-
             var fieldFactory = new WpfGraphFieldFactory();
             Model.GraphField = fieldFactory.CreateGraphField(Model.Graph);
-
-            Model.Window.Close();
+            CloseWindow();
         }
     }
 }

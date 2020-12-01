@@ -18,9 +18,12 @@ namespace Wpf3dVersion.Model
     {
         public WpfVertex3D()
         {
-            Size = 5;
-            Material = new DiffuseMaterial();
-            Model = Model3DFactory.CreateCubicModel3D(Size, Material);
+            Dispatcher.Invoke(() =>
+            {
+                Size = 5;
+                Material = new DiffuseMaterial();
+                Model = Model3DFactory.CreateCubicModel3D(Size, Material);
+            });           
             this.Initialize();
         }
 
@@ -134,41 +137,44 @@ namespace Wpf3dVersion.Model
 
         public void MarkAsEnd()
         {
-            Brush = EndVertexBrush;
+            Dispatcher.Invoke(() => Brush = EndVertexBrush);
         }
 
         public void MarkAsObstacle()
         {
             this.WashVertex();
-            Brush = ObstacleVertexBrush;
+            Dispatcher.Invoke(() => Brush = ObstacleVertexBrush);
         }
 
         public void MarkAsPath()
         {
-            Brush = PathVertexBrush;          
+            Dispatcher.Invoke(() => Brush = PathVertexBrush);          
         }
 
         public void MarkAsSimpleVertex()
         {
-            if (!IsObstacle)
+            Dispatcher.Invoke(() => 
             {
-                Brush = SimpleVertexBrush;
-            }
+                if (!IsObstacle)
+                {
+                    Brush = SimpleVertexBrush;
+                }
+            });           
         }
 
         public void MarkAsVisited()
         {
-            Brush = VisitedVertexBrush;
+            Dispatcher.Invoke(() => Brush = VisitedVertexBrush);
         }
 
         public void MarkAsEnqueued()
         {
-            Brush = EnqueuedVertexBrush;
+            Dispatcher.Invoke(() => Brush = EnqueuedVertexBrush);
         }
 
         public void MarkAsStart()
         {
-            Brush = StartVertexBrush;
+            Dispatcher.Invoke(() => Brush = StartVertexBrush);
         }
 
         protected async static void VisualPropertyChanged(DependencyObject depObj, 

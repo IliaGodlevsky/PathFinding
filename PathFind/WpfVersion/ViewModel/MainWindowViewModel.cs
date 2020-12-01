@@ -69,18 +69,18 @@ namespace WpfVersion.ViewModel
 
         public MainWindowViewModel()
         {
-            GraphField = new WpfGraphField();
-            VertexEventHolder = new WpfVertexEventHolder();
-            FieldFactory = new WpfGraphFieldFactory();
-            InfoConverter = (dto) => new WpfVertex(dto);
+            GraphField          = new WpfGraphField();
+            VertexEventHolder   = new WpfVertexEventHolder();
+            FieldFactory        = new WpfGraphFieldFactory();
+            InfoConverter       = (dto) => new WpfVertex(dto);
 
-            StartPathFindCommand = new RelayCommand(ExecuteStartPathFindCommand, CanExecuteStartFindPathCommand);
-            CreateNewGraphCommand = new RelayCommand(ExecuteCreateNewGraphCommand, AlwaysExecutable);
-            ClearGraphCommand = new RelayCommand(ExecuteClearGraphCommand, CanExecuteGraphOperation);
-            SaveGraphCommand = new RelayCommand(ExecuteSaveGraphCommand, CanExecuteGraphOperation);
-            LoadGraphCommand = new RelayCommand(ExecuteLoadGraphCommand, AlwaysExecutable);
-            ChangeVertexSize = new RelayCommand(ExecuteChangeVertexSize, CanExecuteGraphOperation);
-            ShowVertexCost = new RelayCommand(ExecuteShowVertexCostCommand, AlwaysExecutable);
+            StartPathFindCommand    = new RelayCommand(ExecuteStartPathFindCommand,     CanExecuteStartFindPathCommand);
+            CreateNewGraphCommand   = new RelayCommand(ExecuteCreateNewGraphCommand,    AlwaysExecutable);
+            ClearGraphCommand       = new RelayCommand(ExecuteClearGraphCommand,        CanExecuteGraphOperation);
+            SaveGraphCommand        = new RelayCommand(ExecuteSaveGraphCommand,         CanExecuteGraphOperation);
+            LoadGraphCommand        = new RelayCommand(ExecuteLoadGraphCommand,         AlwaysExecutable);
+            ChangeVertexSize        = new RelayCommand(ExecuteChangeVertexSize,         CanExecuteGraphOperation);
+            ShowVertexCost          = new RelayCommand(ExecuteShowVertexCostCommand,    AlwaysExecutable);
         }
 
 

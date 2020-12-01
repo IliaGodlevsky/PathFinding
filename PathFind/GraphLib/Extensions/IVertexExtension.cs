@@ -1,6 +1,8 @@
-﻿using GraphLib.Graphs.Abstractions;
+﻿using GraphLib.Coordinates.Abstractions;
+using GraphLib.Graphs.Abstractions;
 using GraphLib.Info;
 using GraphLib.Vertex;
+using GraphLib.Vertex.Cost;
 using GraphLib.Vertex.Interface;
 using System;
 using System.Collections.Generic;
@@ -48,9 +50,10 @@ namespace GraphLib.Extensions
 
         public static void Initialize(this IVertex vertex, VertexInfo info)
         {
-            vertex.Position = info.Position;
-            vertex.Cost = info.Cost;
+            vertex.Position = (ICoordinate)info.Position.Clone();
+            vertex.Cost = (VertexCost)info.Cost.Clone();
             vertex.IsObstacle = info.IsObstacle;
+
             if (vertex.IsObstacle)
             {
                 vertex.MarkAsObstacle();
