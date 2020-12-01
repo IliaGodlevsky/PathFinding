@@ -42,19 +42,14 @@ namespace GraphLib.Coordinates.Infrastructure
         {
             if (!neighbourCoordinates.Any(value => value < 0))
             {
-                var coordinate = CreateCoordinate();
+                var coordinate = (ICoordinate)Activator.
+                    CreateInstance(coordinateType, neighbourCoordinates);
 
                 if (!middleCoordinate.Equals(coordinate))
                 {
                     environment.Add(coordinate);
                 }
             }
-        }
-
-        private ICoordinate CreateCoordinate()
-        {
-            return (ICoordinate)Activator.
-                CreateInstance(coordinateType, neighbourCoordinates);
         }
 
         private bool CanMoveDeeper(int currentDepth)
