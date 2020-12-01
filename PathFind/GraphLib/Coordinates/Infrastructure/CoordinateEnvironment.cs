@@ -24,15 +24,13 @@ namespace GraphLib.Coordinates.Infrastructure
         }
 
         // recursive method
-        private void FormEnvironment(int currentDepth = 0)
+        private void FormEnvironment(int depth = 0)
         {
-            int leftNeighbour = selfCoordinates[currentDepth] - 1;
-            int rightNeighbour = selfCoordinates[currentDepth] + 1;
-            for (int i = leftNeighbour; i <= rightNeighbour; i++)
+            for (int i = LeftNeighbour(depth); i <= RightNeighbour(depth); i++)
             {
-                neighbourCoordinates[currentDepth] = i;
-                if (CanMoveDeeper(currentDepth))
-                    FormEnvironment(currentDepth + 1);
+                neighbourCoordinates[depth] = i;
+                if (CanMoveDeeper(depth))
+                    FormEnvironment(depth + 1);
                 else
                     AddNeighbourToEnvironment();
             }
@@ -40,7 +38,7 @@ namespace GraphLib.Coordinates.Infrastructure
 
         private void AddNeighbourToEnvironment()
         {
-            if (!neighbourCoordinates.Any(value => value < 0))
+            if (!NeighboursAreNegative)
             {
                 var coordinate = (ICoordinate)Activator.
                     CreateInstance(coordinateType, neighbourCoordinates);
@@ -50,6 +48,18 @@ namespace GraphLib.Coordinates.Infrastructure
                     environment.Add(coordinate);
                 }
             }
+        }
+
+        private bool NeighboursAreNegative => neighbourCoordinates.Any(value => value < 0);
+
+        private int LeftNeighbour(int depth)
+        {
+            return selfCoordinates[depth] - 1;
+        }
+
+        private int RightNeighbour(int depth)
+        {
+            return LeftNeighbour(depth) + 2;
         }
 
         private bool CanMoveDeeper(int currentDepth)
