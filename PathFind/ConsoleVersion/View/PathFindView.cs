@@ -15,9 +15,7 @@ namespace ConsoleVersion.View
         {
             Model = model;
 
-            var algorithmList = GetAlgorithmsList();
-
-            Model.AlgorithmKeyInputMessage = algorithmList + ConsoleVersionResources.ChooseAlrorithm;
+            Model.AlgorithmKeyInputMessage = AlgorithmsList + ConsoleVersionResources.ChooseAlrorithm;
             Model.StartVertexInputMessage = "\n" + ConsoleVersionResources.StartVertexPointInputMsg;
             Model.EndVertexInputMessage = ConsoleVersionResources.EndVertexCoordinateInputMsg;
         }
@@ -27,18 +25,21 @@ namespace ConsoleVersion.View
             Model.FindPath();
         }
 
-        private string GetAlgorithmsList()
+        private string AlgorithmsList
         {
-            var algorithmList = new StringBuilder("\n");
-            var algorithmKeys = AlgorithmFactory.GetAlgorithmKeys().ToArray();
-
-            for (int i = 0; i < algorithmKeys.Length; i++)
+            get
             {
-                string format = ConsoleVersionResources.MenuFormat;
-                algorithmList.AppendFormatLine(format, i + 1, algorithmKeys[i]);
-            }
+                var algorithmList = new StringBuilder("\n");
+                var algorithmKeys = AlgorithmFactory.GetAlgorithmKeys().ToArray();
 
-            return algorithmList.ToString();
+                for (int i = 0; i < algorithmKeys.Length; i++)
+                {
+                    string format = ConsoleVersionResources.MenuFormat;
+                    algorithmList.AppendFormatLine(format, i + 1, algorithmKeys[i]);
+                }
+
+                return algorithmList.ToString();
+            }
         }
     }
 }

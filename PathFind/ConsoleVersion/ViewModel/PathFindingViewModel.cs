@@ -41,8 +41,8 @@ namespace ConsoleVersion.ViewModel
                 mainModel.DisplayGraph();
 
                 var algorithmKeyIndex = GetAlgorithmKeyIndex();
-                AlgorithmKey = AlgorithmFactory.
-                    GetAlgorithmKeys().ElementAt(algorithmKeyIndex);
+                var algorithmKeys = AlgorithmFactory.GetAlgorithmKeys();
+                AlgorithmKey = algorithmKeys.ElementAt(algorithmKeyIndex);
 
                 DelayTime = Input.InputNumber(
                     ConsoleVersionResources.DelayTimeInputMsg,
@@ -55,15 +55,17 @@ namespace ConsoleVersion.ViewModel
 
         protected override void OnAlgorithmStarted(object sender, AlgorithmEventArgs e)
         {
+            IsPathfindingEnded = false;
             base.OnAlgorithmStarted(sender, e);
-
-            thread = new Thread(DisplayGraphIndefinitly);
+            
+            thread = new Thread(DisplayGraphDuringPathfinding);
             thread.Start();
         }
 
         protected override void OnAlgorithmFinished(object sender, AlgorithmEventArgs e)
         {
-            thread.Abort();
+            IsPathfindingEnded = true;
+            thread.Join();
 
             base.OnAlgorithmFinished(sender, e);
         }
@@ -109,14 +111,17 @@ namespace ConsoleVersion.ViewModel
             return point;
         }
 
-        private void DisplayGraphIndefinitly()
+        private void DisplayGraphDuringPathfinding()
         { 
-            while (true)
+            while (!IsPathfindingEnded)
             {
                 Thread.Sleep(millisecondsTimeout: 135);
-                (mainViewModel as MainViewModel).DisplayGraph();
+                var mainModel = mainViewModel as MainViewModel;
+                mainModel.DisplayGraph();
             }
         }
+
+        private bool IsPathfindingEnded { get; set; }
 
         private Thread thread;
 

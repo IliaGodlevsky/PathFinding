@@ -54,6 +54,8 @@
     <Compile Include="Extensions\IGraphExtensions.cs" />
     <Compile Include="Extensions\IVertexExtension.cs" />
     <Compile Include="Extensions\RandomExtensions.cs" />
+    <Compile Include="Graphs\Delegates\GraphPathEventHandler.cs" />
+    <Compile Include="Graphs\EventArguments\GraphPathEventArgs.cs" />
     <Compile Include="Graphs\Factories\GraphFactory.cs" />
     <Compile Include="Graphs\Graph2D.cs" />
     <Compile Include="Graphs\Abstractions\BaseGraph.cs" />

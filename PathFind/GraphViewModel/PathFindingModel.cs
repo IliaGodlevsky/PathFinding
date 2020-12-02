@@ -11,6 +11,7 @@ using GraphLib.PauseMaking;
 using System;
 using Common.EventArguments;
 using GraphLib.Graphs.Infrastructure;
+using GraphLib.Graphs.EventArguments;
 
 namespace GraphLib.ViewModel
 {
@@ -69,6 +70,8 @@ namespace GraphLib.ViewModel
             timer.Stop();
 
             var path = new GraphPath(graph);
+            path.OnVertexHighlighted += OnVertexHighlighted;
+
 
             mainViewModel.PathFindingStatistics = GetIntermediateStatistics(timer, 
                 path.PathLength, path.PathCost, graph.NumberOfVisitedVertices);
@@ -88,6 +91,14 @@ namespace GraphLib.ViewModel
         {
             timer = new Stopwatch();
             timer.Start();
+        }
+
+        protected virtual void OnVertexHighlighted(object sender, GraphPathEventArgs e)
+        {
+            if (e.Vertex.IsSimpleVertex())
+            {
+                e.Vertex.MarkAsPath();
+            }
         }
 
         private string GetIntermediateStatistics(Stopwatch timer, 

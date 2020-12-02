@@ -33,9 +33,9 @@ namespace Algorithm.Test
         }
 
         [Ignore]
-        private List<IPathFindingAlgorithm> GetAlgorithms(string[] keys)
+        private List<IAlgorithm> GetAlgorithms(string[] keys)
         {
-            var algorithms = new List<IPathFindingAlgorithm>();
+            var algorithms = new List<IAlgorithm>();
 
             foreach (var key in keys)
             {

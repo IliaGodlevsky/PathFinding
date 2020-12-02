@@ -16,7 +16,7 @@ namespace Algorithm.PathFindingAlgorithms
     /// Greedy algorithm. Each step looks for the best vertex and visits it
     /// </summary>
     [Description("Depth-first algorithm")]
-    internal class DepthFirstAlgorithm : IPathFindingAlgorithm
+    internal class DepthFirstAlgorithm : IAlgorithm
     {
         public event AlgorithmEventHanlder OnStarted;
         public event Action<IVertex> OnVertexVisited;

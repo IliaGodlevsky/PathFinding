@@ -5,13 +5,11 @@ using Algorithm.EventArguments;
 using Algorithm.PathFindingAlgorithms.Interface;
 using GraphLib.Graphs;
 using GraphLib.Graphs.Abstractions;
-using System.ComponentModel;
 using Algorithm.Delegates;
 
 namespace Algorithm.PathFindingAlgorithms
 {
-    [Description("Default algorithm")]
-    internal sealed class DefaultAlgorithm : IPathFindingAlgorithm
+    internal sealed class DefaultAlgorithm : IAlgorithm
     {
         public DefaultAlgorithm()
         {

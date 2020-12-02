@@ -19,7 +19,7 @@ namespace Algorithm.PathFindingAlgorithms
     /// the destination top
     /// </summary>
     [Description("Lee algorithm")]
-    public class LeeAlgorithm : IPathFindingAlgorithm
+    public class LeeAlgorithm : IAlgorithm
     {
         public event AlgorithmEventHanlder OnStarted;
         public event Action<IVertex> OnVertexVisited;

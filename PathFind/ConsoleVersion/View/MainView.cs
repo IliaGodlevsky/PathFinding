@@ -60,8 +60,8 @@ namespace ConsoleVersion.View
             var menuOptions = Enum.GetValues(typeof(MenuOption)).OfType<MenuOption>();
             foreach (var menuOption in menuOptions)
             {
-                string viewElement = menuOption.GetValue().IsEven() ? newLine : largeSpace + tab;
                 int enumValue = menuOption.GetValue();
+                string viewElement = enumValue.IsEven() ? newLine : largeSpace + tab;
                 string enumDescription = menuOption.GetDescription();
                 string format = ConsoleVersionResources.MenuFormat;
                 string menuItem = string.Format(format, enumValue, enumDescription);

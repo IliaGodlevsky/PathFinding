@@ -9,7 +9,7 @@ namespace Algorithm.PathFindingAlgorithms.Interface
     /// <summary>
     /// A base interface of path finding algorithms
     /// </summary>
-    public interface IPathFindingAlgorithm : IDefault
+    public interface IAlgorithm : IDefault
     {
         event AlgorithmEventHanlder OnStarted;
         event Action<IVertex> OnVertexVisited;

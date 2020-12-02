@@ -19,7 +19,7 @@ namespace Algorithm.AlgorithmCreating
         {
             Algorithms = new Dictionary<string, Type>();
 
-            var algorithmInterfaceType = typeof(IPathFindingAlgorithm);
+            var algorithmInterfaceType = typeof(IAlgorithm);
             var assembly = Assembly.Load(algorithmInterfaceType.Assembly.GetName());
             var assemblyTypes = assembly.GetTypes().
                 Where(type => type != typeof(DefaultAlgorithm));
@@ -38,10 +38,10 @@ namespace Algorithm.AlgorithmCreating
             }
         }
 
-        public static IPathFindingAlgorithm CreateAlgorithm(string algorithmKey, IGraph graph)
+        public static IAlgorithm CreateAlgorithm(string algorithmKey, IGraph graph)
         {
             return Algorithms.ContainsKey(algorithmKey)
-                ? (IPathFindingAlgorithm)Activator.CreateInstance(Algorithms[algorithmKey], graph)
+                ? (IAlgorithm)Activator.CreateInstance(Algorithms[algorithmKey], graph)
                 : new DefaultAlgorithm();
         }
     }

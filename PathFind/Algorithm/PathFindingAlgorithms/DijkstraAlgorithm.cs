@@ -17,7 +17,7 @@ namespace Algorithm.PathFindingAlgorithms
     /// Finds the chippest path to destination vertex. 
     /// </summary>
     [Description("Dijkstra algorithm")]
-    public class DijkstraAlgorithm : IPathFindingAlgorithm
+    public class DijkstraAlgorithm : IAlgorithm
     {
         public event AlgorithmEventHanlder OnStarted;
         public event Action<IVertex> OnVertexVisited;

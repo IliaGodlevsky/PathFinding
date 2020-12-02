@@ -35,21 +35,17 @@ namespace Algorithm.PathFindingAlgorithms
             get
             {
                 IVertex next = new DefaultVertex();
-
                 verticesQueue.Sort(CompareByHeuristic);
-
                 var verticesToDelete = verticesQueue.Take(VerticesCountToDelete);
                 deletedVertices.AddRange(verticesToDelete);
                 verticesQueue.RemoveRange(0, VerticesCountToDelete);
-
                 next = base.ChippestUnvisitedVertex;
-
                 if (next.IsDefault)
                 {
                     verticesQueue = deletedVertices;
+                    next = base.ChippestUnvisitedVertex;
                 }
-
-                return base.ChippestUnvisitedVertex;
+                return next;
             }
         }
 
