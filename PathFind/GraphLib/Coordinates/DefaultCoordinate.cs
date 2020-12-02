@@ -2,7 +2,6 @@
 using GraphLib.Extensions;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 
 namespace GraphLib.Coordinates
 {
@@ -32,7 +31,7 @@ namespace GraphLib.Coordinates
 
         public override int GetHashCode()
         {
-            return Coordinates.Aggregate((x, y) => x ^ y);
+            return 0;
         }
 
         public object Clone()
