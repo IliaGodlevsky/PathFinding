@@ -4,9 +4,9 @@ using GraphLib.Vertex.Interface;
 using System.Collections.Generic;
 using System.ComponentModel;
 using Algorithm.Extensions;
-using Algorithm.PathFindingAlgorithms.Interface;
 using GraphLib.Extensions;
 using GraphLib.Graphs.Abstractions;
+using Algorithm.PathFindingAlgorithms.Abstractions;
 
 namespace Algorithm.PathFindingAlgorithms
 {

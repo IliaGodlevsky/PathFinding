@@ -1,5 +1,4 @@
-﻿using Algorithm.PathFindingAlgorithms;
-using Algorithm.PathFindingAlgorithms.Interface;
+﻿using Algorithm.PathFindingAlgorithms.Abstractions;
 using GraphLib.Graphs.Abstractions;
 using System;
 using System.Collections.Generic;

@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using Algorithm.AlgorithmCreating;
-using Algorithm.PathFindingAlgorithms.Interface;
+using Algorithm.PathFindingAlgorithms.Abstractions;
 using GraphLib.Graphs;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 

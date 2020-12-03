@@ -4,7 +4,7 @@ using GraphLib.Graphs.Abstractions;
 using GraphLib.Vertex.Interface;
 using System;
 
-namespace Algorithm.PathFindingAlgorithms.Interface
+namespace Algorithm.PathFindingAlgorithms.Abstractions
 {
     public interface IAlgorithm : IDefault
     {
