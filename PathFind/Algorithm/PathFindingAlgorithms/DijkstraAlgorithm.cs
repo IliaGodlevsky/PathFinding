@@ -57,8 +57,8 @@ namespace Algorithm.PathFindingAlgorithms
 
         protected override void BeginPathfinding()
         {
-            SetVerticesAccumulatedCost();
             base.BeginPathfinding();
+            SetVerticesAccumulatedCost();            
         }
 
         protected override void CompletePathfinding()
