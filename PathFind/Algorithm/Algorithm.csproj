@@ -49,17 +49,17 @@
     <Compile Include="Extensions\ListExtension.cs" />
     <Compile Include="Extensions\QueueExtensions.cs" />
     <Compile Include="Extensions\StackExtension.cs" />
-    <Compile Include="PathFindingAlgorithms\AStarAlgorithm.cs" />
-    <Compile Include="PathFindingAlgorithms\AStartModified.cs" />
-    <Compile Include="PathFindingAlgorithms\BestFirstLeeAlgorithm.cs" />
-    <Compile Include="PathFindingAlgorithms\CostGreedyAlgorithm.cs" />
-    <Compile Include="PathFindingAlgorithms\DepthFirstAlgorithm.cs" />
-    <Compile Include="PathFindingAlgorithms\DijkstraAlgorithm.cs" />
-    <Compile Include="PathFindingAlgorithms\DistanceGreedyAlgoritm.cs" />
-    <Compile Include="PathFindingAlgorithms\Abstractions\BaseAlgorithm.cs" />
-    <Compile Include="PathFindingAlgorithms\Abstractions\IAlgorithm.cs" />
-    <Compile Include="PathFindingAlgorithms\LeeAlgorithm.cs" />
-    <Compile Include="PathFindingAlgorithms\Abstractions\DefaultAlgorithm.cs" />
+    <Compile Include="Algorithms\AStarAlgorithm.cs" />
+    <Compile Include="Algorithms\AStartModified.cs" />
+    <Compile Include="Algorithms\BestFirstLeeAlgorithm.cs" />
+    <Compile Include="Algorithms\CostGreedyAlgorithm.cs" />
+    <Compile Include="Algorithms\DepthFirstAlgorithm.cs" />
+    <Compile Include="Algorithms\DijkstraAlgorithm.cs" />
+    <Compile Include="Algorithms\DistanceGreedyAlgoritm.cs" />
+    <Compile Include="Algorithms\Abstractions\BaseAlgorithm.cs" />
+    <Compile Include="Algorithms\Abstractions\IAlgorithm.cs" />
+    <Compile Include="Algorithms\LeeAlgorithm.cs" />
+    <Compile Include="Algorithms\Abstractions\DefaultAlgorithm.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

@@ -6,7 +6,7 @@ using GraphLib.Graphs;
 using GraphLib.Graphs.Abstractions;
 using Algorithm.Delegates;
 
-namespace Algorithm.PathFindingAlgorithms.Abstractions
+namespace Algorithm.Algorithms.Abstractions
 {
     internal sealed class DefaultAlgorithm : IAlgorithm
     {

@@ -6,9 +6,9 @@ using Algorithm.Extensions;
 using Common.Extensions;
 using GraphLib.Extensions;
 using GraphLib.Graphs.Abstractions;
-using Algorithm.PathFindingAlgorithms.Abstractions;
+using Algorithm.Algorithms.Abstractions;
 
-namespace Algorithm.PathFindingAlgorithms
+namespace Algorithm.Algorithms
 {
     /// <summary>
     /// A wave algorithm (Lee algorithm, or width-first pathfinding algorithm). 

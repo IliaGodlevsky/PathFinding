@@ -4,7 +4,7 @@ using GraphLib.Graphs.Abstractions;
 using GraphLib.Vertex.Interface;
 using System;
 
-namespace Algorithm.PathFindingAlgorithms.Abstractions
+namespace Algorithm.Algorithms.Abstractions
 {
     internal abstract class BaseAlgorithm : IAlgorithm
     {

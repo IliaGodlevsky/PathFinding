@@ -7,7 +7,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
 
-namespace Algorithm.PathFindingAlgorithms
+namespace Algorithm.Algorithms
 {
     /// <summary>
     /// A modified A* algorithm, that ignores vertices 

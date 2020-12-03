@@ -6,14 +6,14 @@ using Algorithm.Extensions;
 using Common.Extensions;
 using GraphLib.Extensions;
 using GraphLib.Graphs.Abstractions;
-using Algorithm.PathFindingAlgorithms.Abstractions;
+using Algorithm.Algorithms.Abstractions;
 
-namespace Algorithm.PathFindingAlgorithms
+namespace Algorithm.Algorithms
 {
     /// <summary>
     /// Finds the chippest path to destination vertex. 
     /// </summary>
-    [Description("Dijkstra algorithm")]
+    [Description("Dijkstra's algorithm")]
     internal class DijkstraAlgorithm : BaseAlgorithm
     {
         public DijkstraAlgorithm(IGraph graph) : base(graph)
@@ -57,7 +57,7 @@ namespace Algorithm.PathFindingAlgorithms
         protected override void BeginPathfinding()
         {
             base.BeginPathfinding();
-            SetVerticesAccumulatedCost();            
+            SetVerticesAccumulatedCost();
         }
 
         protected override void CompletePathfinding()
@@ -97,7 +97,7 @@ namespace Algorithm.PathFindingAlgorithms
                 .ToList();
         }
 
-        private void SetVerticesAccumulatedCost(double accumulatedCost 
+        private void SetVerticesAccumulatedCost(double accumulatedCost
             = double.PositiveInfinity)
         {
             Graph.AsParallel().ForAll(vertex =>

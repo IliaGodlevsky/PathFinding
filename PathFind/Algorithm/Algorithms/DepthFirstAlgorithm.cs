@@ -6,9 +6,9 @@ using System.ComponentModel;
 using Algorithm.Extensions;
 using GraphLib.Extensions;
 using GraphLib.Graphs.Abstractions;
-using Algorithm.PathFindingAlgorithms.Abstractions;
+using Algorithm.Algorithms.Abstractions;
 
-namespace Algorithm.PathFindingAlgorithms
+namespace Algorithm.Algorithms
 {
     /// <summary>
     /// Greedy algorithm. Each step looks for the best vertex and visits it

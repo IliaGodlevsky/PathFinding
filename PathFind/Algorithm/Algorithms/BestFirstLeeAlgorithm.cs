@@ -1,4 +1,5 @@
-﻿using GraphLib.Extensions;
+﻿using Algorithm.Algorithms;
+using GraphLib.Extensions;
 using GraphLib.Graphs.Abstractions;
 using GraphLib.Vertex.Interface;
 using System;

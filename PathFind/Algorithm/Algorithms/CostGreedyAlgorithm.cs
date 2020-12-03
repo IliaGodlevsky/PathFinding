@@ -1,7 +1,7 @@
 ﻿using GraphLib.Graphs.Abstractions;
 using System.ComponentModel;
 
-namespace Algorithm.PathFindingAlgorithms
+namespace Algorithm.Algorithms
 {
     [Description("Cost-greedy algorithm")]
     internal class CostGreedyAlgorithm : DepthFirstAlgorithm

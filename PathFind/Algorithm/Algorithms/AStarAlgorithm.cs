@@ -4,7 +4,7 @@ using GraphLib.Vertex.Interface;
 using System;
 using System.ComponentModel;
 
-namespace Algorithm.PathFindingAlgorithms
+namespace Algorithm.Algorithms
 {
     [Description("A* algorithm")]
     internal class AStarAlgorithm : DijkstraAlgorithm

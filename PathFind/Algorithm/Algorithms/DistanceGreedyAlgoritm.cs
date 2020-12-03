@@ -2,7 +2,7 @@
 using GraphLib.Graphs.Abstractions;
 using System.ComponentModel;
 
-namespace Algorithm.PathFindingAlgorithms
+namespace Algorithm.Algorithms
 {
     [Description("Distance greedy algorithm")]
     internal class DistanceGreedyAlgoritm : DepthFirstAlgorithm
