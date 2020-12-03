@@ -14,7 +14,7 @@ namespace Algorithm.PathFindingAlgorithms
     /// Finds the chippest path to destination vertex. 
     /// </summary>
     [Description("Dijkstra algorithm")]
-    public class DijkstraAlgorithm : BaseAlgorithm
+    internal class DijkstraAlgorithm : BaseAlgorithm
     {
         public DijkstraAlgorithm(IGraph graph) : base(graph)
         {

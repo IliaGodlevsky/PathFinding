@@ -16,7 +16,7 @@ namespace Algorithm.PathFindingAlgorithms
     /// the destination top
     /// </summary>
     [Description("Lee algorithm")]
-    public class LeeAlgorithm : BaseAlgorithm
+    internal class LeeAlgorithm : BaseAlgorithm
     {
         public LeeAlgorithm(IGraph graph) : base(graph)
         {

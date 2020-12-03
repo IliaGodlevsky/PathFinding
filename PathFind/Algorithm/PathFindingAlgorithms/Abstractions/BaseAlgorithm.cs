@@ -6,7 +6,7 @@ using System;
 
 namespace Algorithm.PathFindingAlgorithms.Abstractions
 {
-    public abstract class BaseAlgorithm : IAlgorithm
+    internal abstract class BaseAlgorithm : IAlgorithm
     {
         public event AlgorithmEventHanlder OnStarted;
         public event Action<IVertex> OnVertexVisited;
