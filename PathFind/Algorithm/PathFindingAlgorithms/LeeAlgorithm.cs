@@ -1,15 +1,12 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using System;
 using GraphLib.Vertex.Interface;
 using System.ComponentModel;
 using Algorithm.Extensions;
-using Algorithm.EventArguments;
 using Algorithm.PathFindingAlgorithms.Interface;
 using Common.Extensions;
 using GraphLib.Extensions;
 using GraphLib.Graphs.Abstractions;
-using Algorithm.Delegates;
 
 namespace Algorithm.PathFindingAlgorithms
 {
@@ -19,46 +16,43 @@ namespace Algorithm.PathFindingAlgorithms
     /// the destination top
     /// </summary>
     [Description("Lee algorithm")]
-    public class LeeAlgorithm : IAlgorithm
+    public class LeeAlgorithm : BaseAlgorithm
     {
-        public event AlgorithmEventHanlder OnStarted;
-        public event Action<IVertex> OnVertexVisited;
-        public event AlgorithmEventHanlder OnFinished;
-        public event Action<IVertex> OnVertexEnqueued;
-
-        public IGraph Graph { get; protected set; }
-
-        public bool IsDefault => false;
-
-        public LeeAlgorithm(IGraph graph)
+        public LeeAlgorithm(IGraph graph) : base(graph)
         {
-            Graph = graph;
             verticesQueue = new Queue<IVertex>();
         }
 
-        public void FindPath()
+        public override void FindPath()
         {
-            var args = new AlgorithmEventArgs(Graph);
-            OnStarted?.Invoke(this, args);
-            var currentVertex = Graph.Start;
-            ProcessVertex(currentVertex);
-            while (!currentVertex.IsEnd)
+            BeginPathfinding();
+            do
             {
-                currentVertex = GetNextVertex();
-                ProcessVertex(currentVertex);
-            }
-            verticesQueue.Clear();
-            args = new AlgorithmEventArgs(Graph);
-            OnFinished?.Invoke(this, args);
+                ExtractNeighbours();
+                SpreadWaves();
+                CurrentVertex = NextVertex;
+                CurrentVertex.IsVisited = true;
+                RaiseOnVertexVisitedEvent();
+            } while (!IsDestination);
+            CompletePathfinding();
         }
 
-        protected virtual IVertex GetNextVertex()
+        protected override IVertex NextVertex
         {
-            var notVisitedVertices = verticesQueue.
-                Where(vertex => !vertex.IsVisited);
-            verticesQueue = new Queue<IVertex>(notVisitedVertices);
+            get
+            {
+                var notVisitedVertices = verticesQueue.
+                    Where(vertex => !vertex.IsVisited);
+                verticesQueue = new Queue<IVertex>(notVisitedVertices);
 
-            return verticesQueue.DequeueOrDefault();
+                return verticesQueue.DequeueOrDefault();
+            }
+        }
+
+        protected override void CompletePathfinding()
+        {
+            verticesQueue.Clear();
+            base.CompletePathfinding();
         }
 
         protected virtual double WaveFunction(IVertex vertex)
@@ -66,37 +60,31 @@ namespace Algorithm.PathFindingAlgorithms
             return vertex.AccumulatedCost + 1;
         }
 
-        private void SpreadWaves(IVertex vertex)
+        private void SpreadWaves()
         {
-            vertex.GetUnvisitedNeighbours().AsParallel().ForAll(neighbour =>
+            CurrentVertex.GetUnvisitedNeighbours().AsParallel().ForAll(neighbour =>
             {
                 if (neighbour.AccumulatedCost == 0)
                 {
-                    neighbour.AccumulatedCost = WaveFunction(vertex);
-                    neighbour.ParentVertex = vertex;
+                    neighbour.AccumulatedCost = WaveFunction(CurrentVertex);
+                    neighbour.ParentVertex = CurrentVertex;
                 }
             });
         }
 
-        private void ExtractNeighbours(IVertex vertex)
+        private void ExtractNeighbours()
         {
-            foreach (var vert in vertex.GetUnvisitedNeighbours())
+            var neighbours = CurrentVertex.GetUnvisitedNeighbours();
+
+            foreach (var neighbour in neighbours)
             {
-                OnVertexEnqueued?.Invoke(vert);
-                verticesQueue.Enqueue(vert);
+                RaiseOnVertexEnqueuedEvent(neighbour);
+                verticesQueue.Enqueue(neighbour);
             }
 
             var distinctedVertices = verticesQueue.
                 DistinctBy(vert => vert.Position);
             verticesQueue = new Queue<IVertex>(distinctedVertices);
-        }
-
-        private void ProcessVertex(IVertex vertex)
-        {
-            vertex.IsVisited = true;
-            OnVertexVisited?.Invoke(vertex);
-            SpreadWaves(vertex);
-            ExtractNeighbours(vertex);
         }
 
         protected Queue<IVertex> verticesQueue;

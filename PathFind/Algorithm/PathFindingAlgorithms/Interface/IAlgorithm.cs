@@ -6,9 +6,6 @@ using System;
 
 namespace Algorithm.PathFindingAlgorithms.Interface
 {
-    /// <summary>
-    /// A base interface of path finding algorithms
-    /// </summary>
     public interface IAlgorithm : IDefault
     {
         event AlgorithmEventHanlder OnStarted;
@@ -18,9 +15,6 @@ namespace Algorithm.PathFindingAlgorithms.Interface
 
         IGraph Graph { get; }
 
-        /// <summary>
-        /// Finds path from start vertex to end vertex by definite rules
-        /// </summary>
         void FindPath();
     }
 }

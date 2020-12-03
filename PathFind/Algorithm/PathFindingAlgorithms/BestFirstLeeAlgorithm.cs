@@ -18,13 +18,16 @@ namespace Algorithm.PathFindingAlgorithms
             HeuristicFunction = vertex => vertex.GetChebyshevDistanceTo(Graph.End);
         }
 
-        protected override IVertex GetNextVertex()
+        protected override IVertex NextVertex
         {
-            var orderedVertices = verticesQueue.
-                OrderBy(vertex => vertex.AccumulatedCost);
-            verticesQueue = new Queue<IVertex>(orderedVertices);
+            get
+            {
+                var orderedVertices = verticesQueue.
+                    OrderBy(vertex => vertex.AccumulatedCost);
+                verticesQueue = new Queue<IVertex>(orderedVertices);
 
-            return base.GetNextVertex();
+                return base.NextVertex;
+            }
         }
 
         protected override double WaveFunction(IVertex vertex)

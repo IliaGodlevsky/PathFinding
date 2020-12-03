@@ -27,6 +27,11 @@ namespace GraphLib.Extensions
             var fromCoordinates = self.Position.Coordinates.ToArray();
             var toCoordinates = toVertex.Position.Coordinates.ToArray();
 
+            if (!fromCoordinates.Any() || !toCoordinates.Any())
+            {
+                return 0.0;
+            }
+
             return fromCoordinates.Zip(toCoordinates,
                 (x, y) => Math.Abs(x - y)).Max();
         }
@@ -73,6 +78,11 @@ namespace GraphLib.Extensions
         public static IEnumerable<IVertex> GetUnvisitedNeighbours(this IVertex self)
         {
             return self.Neighbours.Where(vertex => !vertex.IsVisited);
+        }
+
+        public static bool HasUnvisitedNeighbours(this IVertex self)
+        {
+            return self.GetUnvisitedNeighbours().Any();
         }
 
         internal static void Refresh(this IVertex vertex)

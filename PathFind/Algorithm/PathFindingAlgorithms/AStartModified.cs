@@ -21,7 +21,7 @@ namespace Algorithm.PathFindingAlgorithms
             deletedVertices = new List<IVertex>();
             percentRange = new ValueRange(99, 0);
             var partOfVertexToDelete = Math.Floor(Math.Log(graph.Size + 1, 4));
-            PersentOfFurthestVerticesToDelete = Convert.ToInt32(partOfVertexToDelete);
+            PersentOfFarthestVerticesToDelete = Convert.ToInt32(partOfVertexToDelete);
         }
 
         public override void FindPath()
@@ -30,7 +30,7 @@ namespace Algorithm.PathFindingAlgorithms
             deletedVertices.Clear();
         }
 
-        protected override IVertex ChippestUnvisitedVertex
+        protected override IVertex NextVertex
         {
             get
             {
@@ -39,39 +39,36 @@ namespace Algorithm.PathFindingAlgorithms
                 var verticesToDelete = verticesQueue.Take(VerticesCountToDelete);
                 deletedVertices.AddRange(verticesToDelete);
                 verticesQueue.RemoveRange(0, VerticesCountToDelete);
-                next = base.ChippestUnvisitedVertex;
+                next = base.NextVertex;
                 if (next.IsDefault)
                 {
                     verticesQueue = deletedVertices;
-                    next = base.ChippestUnvisitedVertex;
+                    next = base.NextVertex;
                 }
                 return next;
             }
         }
 
-        protected virtual int CompareByHeuristic(IVertex v1, IVertex v2)
+        private int CompareByHeuristic(IVertex v1, IVertex v2)
         {
             return HeuristicFunction(v2).CompareTo(HeuristicFunction(v1));
         }
 
         private int VerticesCountToDelete =>
-            verticesQueue.Count * PersentOfFurthestVerticesToDelete / 100;
+            verticesQueue.Count * PersentOfFarthestVerticesToDelete / 100;
 
-        private int persentOfFurthestVerticesToDelete;
+        private int persentOfFarthestVerticesToDelete;
 
-        /// <summary>
-        /// Percent in percent points, f.e. 5, 10, 15
-        /// </summary>
-        private int PersentOfFurthestVerticesToDelete
+        private int PersentOfFarthestVerticesToDelete
         {
-            get => persentOfFurthestVerticesToDelete;
+            get => persentOfFarthestVerticesToDelete;
             set
             {
-                persentOfFurthestVerticesToDelete = value;
-                if (!percentRange.IsInBounds(persentOfFurthestVerticesToDelete))
+                persentOfFarthestVerticesToDelete = value;
+                if (!percentRange.IsInBounds(persentOfFarthestVerticesToDelete))
                 {
-                    persentOfFurthestVerticesToDelete =
-                        percentRange.ReturnInBounds(persentOfFurthestVerticesToDelete);
+                    persentOfFarthestVerticesToDelete =
+                        percentRange.ReturnInBounds(persentOfFarthestVerticesToDelete);
                 }
             }
         }

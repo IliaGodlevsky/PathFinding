@@ -56,6 +56,7 @@
     <Compile Include="PathFindingAlgorithms\DepthFirstAlgorithm.cs" />
     <Compile Include="PathFindingAlgorithms\DijkstraAlgorithm.cs" />
     <Compile Include="PathFindingAlgorithms\DistanceGreedyAlgoritm.cs" />
+    <Compile Include="PathFindingAlgorithms\Interface\BaseAlgorithm.cs" />
     <Compile Include="PathFindingAlgorithms\Interface\IAlgorithm.cs" />
     <Compile Include="PathFindingAlgorithms\LeeAlgorithm.cs" />
     <Compile Include="PathFindingAlgorithms\DefaultAlgorithm.cs" />

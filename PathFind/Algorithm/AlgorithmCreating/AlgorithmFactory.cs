@@ -21,8 +21,9 @@ namespace Algorithm.AlgorithmCreating
 
             var algorithmInterfaceType = typeof(IAlgorithm);
             var assembly = Assembly.Load(algorithmInterfaceType.Assembly.GetName());
+            var filterTypes = new Type[] { typeof(DefaultAlgorithm), typeof(BaseAlgorithm) };
             var assemblyTypes = assembly.GetTypes().
-                Where(type => type != typeof(DefaultAlgorithm));
+                Where(type => !filterTypes.Contains(type));
 
             foreach (var type in assemblyTypes)
             {

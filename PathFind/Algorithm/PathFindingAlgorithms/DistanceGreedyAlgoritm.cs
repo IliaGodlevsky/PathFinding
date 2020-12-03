@@ -4,7 +4,7 @@ using System.ComponentModel;
 
 namespace Algorithm.PathFindingAlgorithms
 {
-    [Description(Resources.DistanceGreedyAlgorithm)]
+    [Description("Distance greedy algorithm")]
     internal class DistanceGreedyAlgoritm : DepthFirstAlgorithm
     {
         public DistanceGreedyAlgoritm(IGraph graph) : base(graph)
