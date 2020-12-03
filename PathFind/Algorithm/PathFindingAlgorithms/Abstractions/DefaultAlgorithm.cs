@@ -14,6 +14,7 @@ namespace Algorithm.PathFindingAlgorithms.Abstractions
         public event Action<IVertex> OnVertexVisited;
         public event AlgorithmEventHanlder OnFinished;
         public event Action<IVertex> OnVertexEnqueued;
+
         public IGraph Graph { get => new DefaultGraph(); set => _ = value; }
 
         public bool IsDefault => true;
