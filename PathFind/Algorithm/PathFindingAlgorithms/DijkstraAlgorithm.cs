@@ -35,10 +35,9 @@ namespace Algorithm.PathFindingAlgorithms
             CompletePathfinding();
         }
 
-        protected virtual double GetVertexRelaxedCost(
-            IVertex neighbour, IVertex vertex)
+        protected virtual double GetVertexRelaxedCost(IVertex neighbour)
         {
-            return (int)neighbour.Cost + vertex.AccumulatedCost;
+            return (int)neighbour.Cost + CurrentVertex.AccumulatedCost;
         }
 
         protected override IVertex NextVertex
@@ -73,7 +72,7 @@ namespace Algorithm.PathFindingAlgorithms
         {
             CurrentVertex.GetUnvisitedNeighbours().AsParallel().ForAll(neighbour =>
             {
-                var relaxedCost = GetVertexRelaxedCost(neighbour, CurrentVertex);
+                var relaxedCost = GetVertexRelaxedCost(neighbour);
                 if (neighbour.AccumulatedCost > relaxedCost)
                 {
                     neighbour.AccumulatedCost = relaxedCost;

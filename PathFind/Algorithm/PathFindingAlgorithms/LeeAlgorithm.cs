@@ -55,9 +55,9 @@ namespace Algorithm.PathFindingAlgorithms
             base.CompletePathfinding();
         }
 
-        protected virtual double WaveFunction(IVertex vertex)
+        protected virtual double CreateWave()
         {
-            return vertex.AccumulatedCost + 1;
+            return CurrentVertex.AccumulatedCost + 1;
         }
 
         private void SpreadWaves()
@@ -66,7 +66,7 @@ namespace Algorithm.PathFindingAlgorithms
             {
                 if (neighbour.AccumulatedCost == 0)
                 {
-                    neighbour.AccumulatedCost = WaveFunction(CurrentVertex);
+                    neighbour.AccumulatedCost = CreateWave();
                     neighbour.ParentVertex = CurrentVertex;
                 }
             });

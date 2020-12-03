@@ -16,9 +16,9 @@ namespace Algorithm.PathFindingAlgorithms
             HeuristicFunction = vertex => vertex.GetChebyshevDistanceTo(graph.End);
         }
 
-        protected override double GetVertexRelaxedCost(IVertex neighbour, IVertex vertex)
+        protected override double GetVertexRelaxedCost(IVertex neighbour)
         {
-            return base.GetVertexRelaxedCost(neighbour, vertex) + HeuristicFunction(vertex);
+            return base.GetVertexRelaxedCost(neighbour) + HeuristicFunction(CurrentVertex);
         }
     }
 }

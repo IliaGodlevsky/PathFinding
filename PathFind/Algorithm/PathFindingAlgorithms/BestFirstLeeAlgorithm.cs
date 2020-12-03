@@ -30,9 +30,9 @@ namespace Algorithm.PathFindingAlgorithms
             }
         }
 
-        protected override double WaveFunction(IVertex vertex)
+        protected override double CreateWave()
         {
-            return base.WaveFunction(vertex) + HeuristicFunction(vertex);
+            return base.CreateWave() + HeuristicFunction(CurrentVertex);
         }
     }
 }
