@@ -16,10 +16,16 @@
  **_Visualization of algorithms realized on:_**
   
  1. [WPF](https://github.com/IliaGodlevsky/PathFinding/tree/master/PathFind/WpfVersion)
+ 
+ ![Wpf](https://github.com/IliaGodlevsky/PathFinding/blob/master/PathFind/img/Wpf.jpg)
 
  2. [WPF 3D Version](https://github.com/IliaGodlevsky/PathFinding/tree/master/PathFind/Wpf3dVersion)
  
- 2. [WinForms](https://github.com/IliaGodlevsky/PathFinding/tree/master/PathFind/WinFormsVersion)
+ ![3D](https://github.com/IliaGodlevsky/PathFinding/blob/master/PathFind/img/Wpf3D.jpg)
+ 
+ 3. [WinForms](https://github.com/IliaGodlevsky/PathFinding/tree/master/PathFind/WinFormsVersion)
+ 
+ ![WinForms](https://github.com/IliaGodlevsky/PathFinding/blob/master/PathFind/img/WinFormsVersion.jpg)
  
  4. [Console](https://github.com/IliaGodlevsky/PathFinding/tree/master/PathFind/ConsoleVersion)
  
