@@ -22,7 +22,8 @@
  2. [WinForms](https://github.com/IliaGodlevsky/PathFinding/tree/master/PathFind/WinFormsVersion)
  
  4. [Console](https://github.com/IliaGodlevsky/PathFinding/tree/master/PathFind/ConsoleVersion)
- [Console](https://github.com/IliaGodlevsky/PathFinding/blob/master/PathFind/img/ConsoleVersion.jpg)
+ 
+ ![Console](https://github.com/IliaGodlevsky/PathFinding/blob/master/PathFind/img/ConsoleVersion.jpg)
 
  Install [Colorful.Console](http://colorfulconsole.com/) package from to run the Console Version of program correctly
  
