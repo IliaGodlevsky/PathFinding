@@ -10,10 +10,12 @@ using System;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using System.Windows;
+using Wpf3dVersion.Enums;
 using Wpf3dVersion.Infrastructure;
 using Wpf3dVersion.Model;
 using Wpf3dVersion.Resources;
 using Wpf3dVersion.View;
+
 
 namespace Wpf3dVersion.ViewModel
 {
@@ -70,6 +72,11 @@ namespace Wpf3dVersion.ViewModel
 
         public RelayCommand ChangeOpacityCommand { get; }
 
+        public RelayCommand AutoRotateXAxisCommand { get; }
+
+        public RelayCommand AutoRotateYAxisCommand { get; }
+
+        public RelayCommand AutoRotateZAxisCommand { get; }
 
         public MainWindowViewModel()
         {
@@ -84,6 +91,9 @@ namespace Wpf3dVersion.ViewModel
             SaveGraphCommand        = new RelayCommand(ExecuteSaveGraphCommand,      CanExecuteGraphOperation);
             LoadGraphCommand        = new RelayCommand(ExecuteLoadGraphCommand,      AlwaysExecutable);           
             ChangeOpacityCommand    = new RelayCommand(ExecuteChangeOpacity,         CanExecuteGraphOperation);
+            AutoRotateXAxisCommand  = new RelayCommand(ExecuteAutoRotateXAxisCommand, AlwaysExecutable);
+            AutoRotateYAxisCommand  = new RelayCommand(ExecuteAutoRotateYAxisCommand, AlwaysExecutable);
+            AutoRotateZAxisCommand  = new RelayCommand(ExecuteAutoRotateZAxisCommand, AlwaysExecutable);
 
             Serializer = new GraphSerializer<Graph3D>();
 
@@ -106,20 +116,23 @@ namespace Wpf3dVersion.ViewModel
 
         public void XAxisSliderValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
         {
-            AxisSliderValueChanged((sliderValue, field)
-                => field.DistanceBetweenVerticesAtXAxis = sliderValue, e.NewValue, 1, 0, 0);
+            var sliderDistance = new VertexDistanceBetween(Axis.AxisX, 
+                graphField as WpfGraphField3D, e.NewValue, 1, 0, 0);
+            sliderDistance.Offset();
         }
 
         public void YAxisSliderValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
         {
-            AxisSliderValueChanged((sliderValue, field) 
-                => field.DistanceBetweenVerticesAtYAxis = sliderValue, e.NewValue, 0, 1, 0);
+            var sliderDistance = new VertexDistanceBetween(Axis.AxisY,
+                graphField as WpfGraphField3D, e.NewValue, 0, 1, 0);
+            sliderDistance.Offset();
         }
 
         public void ZAxisSliderValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
         {
-            AxisSliderValueChanged((sliderValue, field) 
-                => field.DistanceBetweenVerticesAtZAxis = sliderValue, e.NewValue, 0, 0, 1);
+            var sliderDistance = new VertexDistanceBetween(Axis.AxisZ,
+                graphField as WpfGraphField3D, e.NewValue, 0, 0, 1);
+            sliderDistance.Offset();
         }
 
         private void ChangeVerticesOpacity()
@@ -197,22 +210,28 @@ namespace Wpf3dVersion.ViewModel
                 : string.Empty;
         }
 
-        private void AxisSliderValueChanged(Action<double, WpfGraphField3D> callBack, 
-            double sliderNewValue, params double[] additionalOffset)
+        private void ExecuteAutoRotateXAxisCommand(object direction)
         {
-            var field = graphField as WpfGraphField3D;
+            var currentWindow = Application.Current.MainWindow as MainWindow;
+            var axisRotate = new AxisRotate(currentWindow.xAxis, 
+                (RotateDirection)direction);
+            axisRotate.RotateAxisAnimated();
+        }
 
-            callBack(sliderNewValue, field);
-            field.SetDistanceBetweenVertices();
+        private void ExecuteAutoRotateYAxisCommand(object direction)
+        {
+            var currentWindow = Application.Current.MainWindow as MainWindow;
+            var axisRotate = new AxisRotate(currentWindow.yAxis, 
+                (RotateDirection)direction);
+            axisRotate.RotateAxisAnimated();
+        }
 
-            if (sliderNewValue == 0)
-            {
-                field.CenterGraph(0, 0, 0);
-            }
-            else
-            {
-                field.CenterGraph(additionalOffset);
-            }
+        private void ExecuteAutoRotateZAxisCommand(object direction)
+        {
+            var currentWindow = Application.Current.MainWindow as MainWindow;
+            var axisRotate = new AxisRotate(currentWindow.zAxis, 
+                (RotateDirection)direction);
+            axisRotate.RotateAxisAnimated();
         }
 
         private void OnPathNotFound(object sender, EventArgs e)

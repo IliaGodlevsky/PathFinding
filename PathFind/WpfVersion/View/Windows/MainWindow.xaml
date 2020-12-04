@@ -42,7 +42,7 @@
                 <Image Style ="{StaticResource ImageStyle}" Source="/Resources/Images/change.png"></Image>
             </Button>
             <ToggleButton Command="{Binding ShowVertexCost}"
-                         CommandParameter="{Binding IsChecked,RelativeSource = {RelativeSource Self}}"
+                         CommandParameter="{Binding IsChecked, RelativeSource = {RelativeSource Self}}"
                         x:Name="fontButton" IsChecked="True">
                 <Image Style="{StaticResource ImageStyle}" Source ="/Resources/Images/show.png"></Image>
             </ToggleButton>
