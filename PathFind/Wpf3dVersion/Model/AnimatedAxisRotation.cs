@@ -8,6 +8,9 @@ namespace Wpf3dVersion.Model
 {
     internal class AnimatedAxisRotation
     {
+        public static double StartAngle => 0;
+        public static double EndAngle => 360;
+
         public AnimatedAxisRotation(AxisAngleRotation3D axis, RotateDirection direction)
         {
             this.axis = axis;
@@ -43,17 +46,16 @@ namespace Wpf3dVersion.Model
             var duration = InitialDuration;
 
             if (direction == RotateDirection.Forward)
-                duration *= (EndAngle - axis.Angle) / EndAngle;
+                duration *= (AngleAmplitude - axis.Angle) / AngleAmplitude;
             else
-                duration *= axis.Angle / EndAngle;
+                duration *= axis.Angle / AngleAmplitude;
 
             return new Duration(TimeSpan.FromMilliseconds(duration));
         }
 
-        private double InitialDuration => 3000;
+        private double AngleAmplitude => EndAngle - StartAngle;
 
-        private double StartAngle => 0;
-        private double EndAngle => 360;
+        private double InitialDuration => 3000;
 
         private readonly AxisAngleRotation3D axis;
         private readonly RotateDirection direction;

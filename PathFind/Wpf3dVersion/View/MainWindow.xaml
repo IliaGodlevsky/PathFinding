@@ -3,7 +3,8 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
-        xmlns:converters="clr-namespace:Wpf3dVersion.Converters" xmlns:model="clr-namespace:Wpf3dVersion.Model"
+        xmlns:converters="clr-namespace:Wpf3dVersion.Converters" 
+        xmlns:model="clr-namespace:Wpf3dVersion.Model"
         mc:Ignorable="d"
         Title="3D pathfinding" Height="350" Width="450">
     <Window.Resources>
@@ -18,7 +19,7 @@
         </Style>
         <Style TargetType="Slider" x:Key="SliderStyle">
             <Setter Property="MinWidth" Value="100"></Setter>
-            <Setter Property="Minimum" Value="0"></Setter>
+            <Setter Property="Minimum" Value="{x:Static model:AnimatedAxisRotation.StartAngle}"></Setter>
             <Setter Property="Margin" Value="5"></Setter>
         </Style>
     </Window.Resources>
@@ -136,15 +137,21 @@
                                 Converter={StaticResource coordinateToDistance}}"/>
 
                 <Slider x:Name="xAxisSlider" Grid.Column="1" 
-                        Style="{StaticResource SliderStyle}" Maximum="360" Grid.Row="1" 
+                        Style="{StaticResource SliderStyle}" 
+                        Maximum="{x:Static model:AnimatedAxisRotation.EndAngle}" 
+                        Grid.Row="1" 
                         Value="{Binding ElementName=xAxis, Path=Angle}"/>
 
                 <Slider x:Name="yAxisSlider" Grid.Column="1" 
-                        Style="{StaticResource SliderStyle}" Maximum="360" Grid.Row="2" 
+                        Style="{StaticResource SliderStyle}" 
+                        Maximum="{x:Static model:AnimatedAxisRotation.EndAngle}" 
+                        Grid.Row="2" 
                         Value="{Binding ElementName=yAxis, Path=Angle}"/>
 
                 <Slider x:Name="zAxisSlider" Grid.Column="1" 
-                        Style="{StaticResource SliderStyle}" Maximum="360" Grid.Row="3" 
+                        Style="{StaticResource SliderStyle}" 
+                        Maximum="{x:Static model:AnimatedAxisRotation.EndAngle}" 
+                        Grid.Row="3" 
                         Value="{Binding ElementName=zAxis, Path=Angle}"/>
 
                 <Slider x:Name="distanceBetweenAtXAxisSlider" Grid.Column="1" 

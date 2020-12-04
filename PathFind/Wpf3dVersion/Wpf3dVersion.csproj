@@ -63,8 +63,8 @@
     <Compile Include="Enums\Axis.cs" />
     <Compile Include="Enums\RotateDirection.cs" />
     <Compile Include="Factories\Model3DFactory.cs" />
-    <Compile Include="Model\AxisRotate.cs" />
-    <Compile Include="Model\GraphFieldOffset.cs" />
+    <Compile Include="Model\AnimatedAxisRotation.cs" />
+    <Compile Include="Model\Offset.cs" />
     <Compile Include="Model\VertexDistanceBetween.cs" />
     <Compile Include="Resources\Resource.Designer.cs">
       <AutoGen>True</AutoGen>

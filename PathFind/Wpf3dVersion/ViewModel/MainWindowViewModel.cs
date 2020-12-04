@@ -52,7 +52,7 @@ namespace Wpf3dVersion.ViewModel
             {
                 graphField = value;
                 var field = graphField as WpfGraphField3D;
-                var currentWindow = (Application.Current.MainWindow as MainWindow);
+                var currentWindow = Application.Current.MainWindow as MainWindow;
                 currentWindow?.GraphField?.Children.Clear();
                 currentWindow?.GraphField?.Children.Add(field);
                 field.CenterGraph();
