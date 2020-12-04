@@ -17,7 +17,7 @@ namespace GraphLib.Graphs.Factories
         public GraphFactory(int obstacleChance, params int[] dimensionSizes)
         {
             this.obstacleChance = obstacleChance;
-            this.dimensionSizes = dimensionSizes;
+            this.dimensionSizes = dimensionSizes.ToArray();
         }
 
         static GraphFactory()
