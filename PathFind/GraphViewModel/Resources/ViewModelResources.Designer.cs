@@ -70,7 +70,7 @@ namespace GraphViewModel.Resources {
         }
         
         /// <summary>
-        ///   Ищет локализованную строку, похожую на Width: {0}   Height: {1}   Obstacle percent: {2} ({3}/{4}).
+        ///   Ищет локализованную строку, похожую на Width: {0}   Length: {1}   Obstacle percent: {2} ({3}/{4}).
         /// </summary>
         internal static string GraphParametresFormat {
             get {
