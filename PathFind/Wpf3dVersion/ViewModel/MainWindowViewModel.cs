@@ -83,7 +83,7 @@ namespace Wpf3dVersion.ViewModel
             GraphField          = new WpfGraphField3D();
             VertexEventHolder   = new WpfVertex3DEventHolder();
             FieldFactory        = new WpfGraphField3DFactory();
-            InfoConverter       = (dto) => new WpfVertex3D(dto);
+            InfoConverter       = (info) => new WpfVertex3D(info);
 
             StartPathFindCommand    = new RelayCommand(ExecuteStartPathFindCommand,  CanExecuteStartFindPathCommand);
             CreateNewGraphCommand   = new RelayCommand(ExecuteCreateNewGraphCommand, AlwaysExecutable);
@@ -118,21 +118,21 @@ namespace Wpf3dVersion.ViewModel
         {
             var sliderDistance = new VertexDistanceBetween(Axis.AxisX, 
                 graphField as WpfGraphField3D, e.NewValue, 1, 0, 0);
-            sliderDistance.Offset();
+            sliderDistance.SetDistance();
         }
 
         public void YAxisSliderValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
         {
-            var sliderDistance = new VertexDistanceBetween(Axis.AxisY,
+            var distanceBetween = new VertexDistanceBetween(Axis.AxisY,
                 graphField as WpfGraphField3D, e.NewValue, 0, 1, 0);
-            sliderDistance.Offset();
+            distanceBetween.SetDistance();
         }
 
         public void ZAxisSliderValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
         {
             var sliderDistance = new VertexDistanceBetween(Axis.AxisZ,
                 graphField as WpfGraphField3D, e.NewValue, 0, 0, 1);
-            sliderDistance.Offset();
+            sliderDistance.SetDistance();
         }
 
         private void ChangeVerticesOpacity()
@@ -213,7 +213,7 @@ namespace Wpf3dVersion.ViewModel
         private void ExecuteAutoRotateXAxisCommand(object direction)
         {
             var currentWindow = Application.Current.MainWindow as MainWindow;
-            var axisRotate = new AxisRotate(currentWindow.xAxis, 
+            var axisRotate = new AnimatedAxisRotation(currentWindow.xAxis, 
                 (RotateDirection)direction);
             axisRotate.RotateAxisAnimated();
         }
@@ -221,7 +221,7 @@ namespace Wpf3dVersion.ViewModel
         private void ExecuteAutoRotateYAxisCommand(object direction)
         {
             var currentWindow = Application.Current.MainWindow as MainWindow;
-            var axisRotate = new AxisRotate(currentWindow.yAxis, 
+            var axisRotate = new AnimatedAxisRotation(currentWindow.yAxis, 
                 (RotateDirection)direction);
             axisRotate.RotateAxisAnimated();
         }
@@ -229,7 +229,7 @@ namespace Wpf3dVersion.ViewModel
         private void ExecuteAutoRotateZAxisCommand(object direction)
         {
             var currentWindow = Application.Current.MainWindow as MainWindow;
-            var axisRotate = new AxisRotate(currentWindow.zAxis, 
+            var axisRotate = new AnimatedAxisRotation(currentWindow.zAxis, 
                 (RotateDirection)direction);
             axisRotate.RotateAxisAnimated();
         }

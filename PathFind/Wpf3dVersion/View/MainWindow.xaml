@@ -3,7 +3,7 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
-        xmlns:converters="clr-namespace:Wpf3dVersion.Converters" 
+        xmlns:converters="clr-namespace:Wpf3dVersion.Converters" xmlns:model="clr-namespace:Wpf3dVersion.Model"
         mc:Ignorable="d"
         Title="3D pathfinding" Height="350" Width="450">
     <Window.Resources>
@@ -186,7 +186,7 @@
                                     Converter={StaticResource invertPointConverter}}" 
                     Position="600,600,600"/>
             </Viewport3D.Camera>
-            <ModelVisual3D x:Name="GraphField">
+            <model:WpfGraphField3D x:Name="GraphField">
                 <ModelVisual3D.Content>
                     <Model3DGroup>
                         <DirectionalLight Direction="{Binding ElementName=camera, Path=LookDirection}" 
@@ -212,7 +212,7 @@
                         </RotateTransform3D>
                     </Transform3DGroup>
                 </ModelVisual3D.Transform>
-            </ModelVisual3D>
+            </model:WpfGraphField3D>
         </Viewport3D>
         <StatusBar Grid.Row="3">
             <TextBlock Text = "{Binding PathFindingStatistics}"/>

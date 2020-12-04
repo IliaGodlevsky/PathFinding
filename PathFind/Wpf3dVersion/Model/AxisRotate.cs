@@ -6,9 +6,9 @@ using Wpf3dVersion.Enums;
 
 namespace Wpf3dVersion.Model
 {
-    internal class AxisRotate
+    internal class AnimatedAxisRotation
     {
-        public AxisRotate(AxisAngleRotation3D axis, RotateDirection direction)
+        public AnimatedAxisRotation(AxisAngleRotation3D axis, RotateDirection direction)
         {
             this.axis = axis;
             this.direction = direction;

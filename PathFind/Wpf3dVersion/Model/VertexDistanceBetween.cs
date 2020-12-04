@@ -16,7 +16,7 @@ namespace Wpf3dVersion.Model
             this.distanceBetween = distanceBetween;
         }
 
-        public void Offset()
+        public void SetDistance()
         {
             int axisIndex = axis.GetValue();
             CallBacks[axisIndex](distanceBetween, field);
