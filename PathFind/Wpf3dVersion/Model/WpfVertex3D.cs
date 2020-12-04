@@ -23,6 +23,7 @@ namespace Wpf3dVersion.Model
                 Size = 5;
                 Material = new DiffuseMaterial();
                 Model = Model3DFactory.CreateCubicModel3D(Size, Material);
+                Transform = new TranslateTransform3D();
             });           
             this.Initialize();
         }
