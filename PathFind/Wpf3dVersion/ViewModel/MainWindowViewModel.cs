@@ -116,21 +116,21 @@ namespace Wpf3dVersion.ViewModel
 
         public void XAxisSliderValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
         {
-            var sliderDistance = new VertexDistanceBetween(Axis.AxisX, 
+            var sliderDistance = new DistanceBetweenVertices(Axis.AxisX, 
                 graphField as WpfGraphField3D, e.NewValue, 1, 0, 0);
             sliderDistance.SetDistance();
         }
 
         public void YAxisSliderValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
         {
-            var distanceBetween = new VertexDistanceBetween(Axis.AxisY,
+            var distanceBetween = new DistanceBetweenVertices(Axis.AxisY,
                 graphField as WpfGraphField3D, e.NewValue, 0, 1, 0);
             distanceBetween.SetDistance();
         }
 
         public void ZAxisSliderValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
         {
-            var sliderDistance = new VertexDistanceBetween(Axis.AxisZ,
+            var sliderDistance = new DistanceBetweenVertices(Axis.AxisZ,
                 graphField as WpfGraphField3D, e.NewValue, 0, 0, 1);
             sliderDistance.SetDistance();
         }

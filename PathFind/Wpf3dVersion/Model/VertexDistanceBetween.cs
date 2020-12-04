@@ -5,9 +5,9 @@ using OffsetCallback = System.Action<double, Wpf3dVersion.Model.WpfGraphField3D>
 
 namespace Wpf3dVersion.Model
 {
-    internal class VertexDistanceBetween
+    internal class DistanceBetweenVertices
     {
-        public VertexDistanceBetween(Axis axis, WpfGraphField3D field,
+        public DistanceBetweenVertices(Axis axis, WpfGraphField3D field,
             double distanceBetween, params double[] additionalOffset)
         {
             this.axis = axis;
@@ -23,13 +23,9 @@ namespace Wpf3dVersion.Model
             field.SetDistanceBetweenVertices();
 
             if (distanceBetween == 0)
-            {
                 field.CenterGraph(0, 0, 0);
-            }
             else
-            {
                 field.CenterGraph(additionalOffset);
-            }
         }
 
         private OffsetCallback[] CallBacks => new OffsetCallback[]
