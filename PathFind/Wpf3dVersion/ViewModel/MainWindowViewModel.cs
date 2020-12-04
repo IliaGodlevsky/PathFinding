@@ -116,23 +116,17 @@ namespace Wpf3dVersion.ViewModel
 
         public void XAxisSliderValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
         {
-            var sliderDistance = new DistanceBetweenVertices(Axis.AxisX, 
-                graphField as WpfGraphField3D, e.NewValue, 1, 0, 0);
-            sliderDistance.SetDistance();
+            (graphField as WpfGraphField3D).StretchAlongAxis(Axis.AxisX, e.NewValue, 1, 0, 0);
         }
 
         public void YAxisSliderValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
         {
-            var distanceBetween = new DistanceBetweenVertices(Axis.AxisY,
-                graphField as WpfGraphField3D, e.NewValue, 0, 1, 0);
-            distanceBetween.SetDistance();
+            (graphField as WpfGraphField3D).StretchAlongAxis(Axis.AxisY, e.NewValue, 0, 1, 0);
         }
 
         public void ZAxisSliderValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
         {
-            var sliderDistance = new DistanceBetweenVertices(Axis.AxisZ,
-                graphField as WpfGraphField3D, e.NewValue, 0, 0, 1);
-            sliderDistance.SetDistance();
+            (graphField as WpfGraphField3D).StretchAlongAxis(Axis.AxisZ, e.NewValue, 0, 0, 1);
         }
 
         private void ChangeVerticesOpacity()

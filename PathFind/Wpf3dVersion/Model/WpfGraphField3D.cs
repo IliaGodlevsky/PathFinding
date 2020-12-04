@@ -3,10 +3,13 @@ using GraphLib.Vertex.Interface;
 using System.Linq;
 using System.Windows.Media.Media3D;
 using OffsetAction = System.Action<System.Windows.Media.Media3D.TranslateTransform3D, double>;
+using DistanceBetweenSetCallback = System.Action<double, Wpf3dVersion.Model.WpfGraphField3D>;
+using Wpf3dVersion.Enums;
+using Common.Extensions;
 
 namespace Wpf3dVersion.Model
 {
-    public class WpfGraphField3D : ModelVisual3D, IGraphField
+    internal class WpfGraphField3D : ModelVisual3D, IGraphField
     {
         public double DistanceBetweenVerticesAtXAxis { get; set; }
 
@@ -32,15 +35,15 @@ namespace Wpf3dVersion.Model
         public void Add(IVertex vertex)
         {
             WpfVertex3D vertex3D = vertex as WpfVertex3D;
-            SetVertexOffset(vertex3D);
+            LocateVertex(vertex3D);
             Children.Add(vertex3D);
         }
 
-        public void SetDistanceBetweenVertices()
+        public void StretchAlongAxes()
         {
             foreach (WpfVertex3D vertex in Children)
             {
-                SetVertexOffset(vertex);
+                LocateVertex(vertex);
             }
         }
 
@@ -61,11 +64,24 @@ namespace Wpf3dVersion.Model
                     };
                     axisOffsets[i] = graphOffset.GraphCenterOffset;
                 }
-                SetVertexOffset(vertex, axisOffsets);
+                LocateVertex(vertex, axisOffsets);
             }
         }
 
-        private void SetVertexOffset(WpfVertex3D vertex, 
+        public void StretchAlongAxis(Axis axis, double distanceBetween, 
+            params double[] additionalOffset)
+        {
+            int axisIndex = axis.GetValue();
+            DistanceBetweenSetters[axisIndex](distanceBetween, this);
+            StretchAlongAxes();
+
+            if (distanceBetween == 0)
+                CenterGraph(0, 0, 0);
+            else
+                CenterGraph(additionalOffset);
+        }
+
+        private void LocateVertex(WpfVertex3D vertex, 
             params double[] additionalOffset)
         {            
             var coordinates = vertex.Position.Coordinates;
@@ -103,6 +119,13 @@ namespace Wpf3dVersion.Model
             (transform, offset) => { transform.OffsetX = offset; },
             (transform, offset) => { transform.OffsetY = offset; },
             (transform, offset) => { transform.OffsetZ = offset; }
+        };
+
+        private DistanceBetweenSetCallback[] DistanceBetweenSetters => new DistanceBetweenSetCallback[]
+        {
+            (distanceBetween, field) => field.DistanceBetweenVerticesAtXAxis = distanceBetween,
+            (distanceBetween, field) => field.DistanceBetweenVerticesAtYAxis = distanceBetween,
+            (distanceBetween, field) => field.DistanceBetweenVerticesAtZAxis = distanceBetween
         };
     }
 }

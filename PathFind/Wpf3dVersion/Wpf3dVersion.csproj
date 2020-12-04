@@ -65,7 +65,6 @@
     <Compile Include="Factories\Model3DFactory.cs" />
     <Compile Include="Model\AnimatedAxisRotation.cs" />
     <Compile Include="Model\Offset.cs" />
-    <Compile Include="Model\VertexDistanceBetween.cs" />
     <Compile Include="Resources\Resource.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
