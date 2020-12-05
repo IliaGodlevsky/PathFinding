@@ -2,8 +2,8 @@
 {
     internal enum Axis
     {
-        AxisX = 0,
-        AxisY = 1,
-        AxisZ = 2,
+        Abscissa = 0,
+        Ordinate = 1,
+        Applicate = 2,
     }
 }

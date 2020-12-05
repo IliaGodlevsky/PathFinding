@@ -3,6 +3,6 @@
     internal enum RotateDirection
     {
         Forward = 0,
-        Back = 1
+        Backward = 1
     }
 }

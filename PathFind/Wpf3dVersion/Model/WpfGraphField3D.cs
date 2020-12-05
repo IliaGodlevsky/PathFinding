@@ -57,7 +57,7 @@ namespace Wpf3dVersion.Model
                         DimensionSize = DimensionSizes.ElementAtOrDefault(i),
                         VertexSize = vertex.Size,
                         AdditionalOffset = additionalOffset.ElementAtOrDefault(i),
-                        DistanceBetweenVertices = DistanceBetween.ElementAtOrDefault(i)
+                        DistanceBetweenVertices = DistancesBetween.ElementAtOrDefault(i)
                     };
                     axisOffsets[i] = graphOffset.GraphCenterOffset;
                     LocateVertex(Axes[i], vertex, axisOffsets);
@@ -98,7 +98,7 @@ namespace Wpf3dVersion.Model
             {
                 CoordinateValue = coordinates.ElementAtOrDefault(axisIndex),
                 VertexSize = vertex.Size,
-                DistanceBetweenVertices = DistanceBetween.ElementAtOrDefault(axisIndex),
+                DistanceBetweenVertices = DistancesBetween.ElementAtOrDefault(axisIndex),
                 AdditionalOffset = additionalOffset.ElementAtOrDefault(axisIndex)
             };
             var offset = vertexOffset.VertexOffset;
@@ -116,7 +116,7 @@ namespace Wpf3dVersion.Model
             Width, Length, Height
         };
 
-        private double[] DistanceBetween => new double[] 
+        private double[] DistancesBetween => new double[] 
         { 
             DistanceBetweenVerticesAtXAxis, 
             DistanceBetweenVerticesAtYAxis, 

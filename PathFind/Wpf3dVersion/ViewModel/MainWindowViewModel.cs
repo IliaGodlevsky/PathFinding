@@ -116,17 +116,17 @@ namespace Wpf3dVersion.ViewModel
 
         public void XAxisSliderValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
         {
-            (graphField as WpfGraphField3D).StretchAlongAxis(Axis.AxisX, e.NewValue, 1, 0, 0);
+            (graphField as WpfGraphField3D).StretchAlongAxis(Axis.Abscissa, e.NewValue, 1, 0, 0);
         }
 
         public void YAxisSliderValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
         {
-            (graphField as WpfGraphField3D).StretchAlongAxis(Axis.AxisY, e.NewValue, 0, 1, 0);
+            (graphField as WpfGraphField3D).StretchAlongAxis(Axis.Ordinate, e.NewValue, 0, 1, 0);
         }
 
         public void ZAxisSliderValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
         {
-            (graphField as WpfGraphField3D).StretchAlongAxis(Axis.AxisZ, e.NewValue, 0, 0, 1);
+            (graphField as WpfGraphField3D).StretchAlongAxis(Axis.Applicate, e.NewValue, 0, 0, 1);
         }
 
         private void ChangeVerticesOpacity()
