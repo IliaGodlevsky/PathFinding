@@ -6,7 +6,6 @@ using OffsetAction = System.Action<System.Windows.Media.Media3D.TranslateTransfo
 using DistanceBetweenSetCallback = System.Action<double, Wpf3dVersion.Model.WpfGraphField3D>;
 using Wpf3dVersion.Enums;
 using Common.Extensions;
-using System;
 
 namespace Wpf3dVersion.Model
 {
@@ -31,7 +30,6 @@ namespace Wpf3dVersion.Model
             DistanceBetweenVerticesAtXAxis = 0;
             DistanceBetweenVerticesAtYAxis = 0;
             DistanceBetweenVerticesAtZAxis = 0;
-            Axes = Enum.GetValues(typeof(Axis)).Cast<Axis>().ToArray();
         }
 
         public void Add(IVertex vertex)
@@ -138,6 +136,11 @@ namespace Wpf3dVersion.Model
             (distanceBetween, field) => field.DistanceBetweenVerticesAtZAxis = distanceBetween
         };
 
-        private Axis[] Axes { get; set; }
+        private Axis[] Axes => new Axis[]
+        {
+            Axis.Abscissa,
+            Axis.Ordinate,
+            Axis.Applicate
+        };
     }
 }
