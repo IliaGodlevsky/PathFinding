@@ -31,6 +31,7 @@ namespace Wpf3dVersion.Model
             DistanceBetweenVerticesAtXAxis = 0;
             DistanceBetweenVerticesAtYAxis = 0;
             DistanceBetweenVerticesAtZAxis = 0;
+            Axes = Enum.GetValues(typeof(Axis)).Cast<Axis>().ToArray();
         }
 
         public void Add(IVertex vertex)
@@ -137,6 +138,6 @@ namespace Wpf3dVersion.Model
             (distanceBetween, field) => field.DistanceBetweenVerticesAtZAxis = distanceBetween
         };
 
-        private Axis[] Axes => Enum.GetValues(typeof(Axis)).Cast<Axis>().ToArray();
+        private Axis[] Axes { get; set; }
     }
 }
