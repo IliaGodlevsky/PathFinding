@@ -17,8 +17,7 @@ namespace Wpf3dVersion.Model
 
         public double DistanceBetweenVerticesAtZAxis { get; set; }
 
-        public WpfGraphField3D(int width,
-            int length, int height) : this()
+        public WpfGraphField3D(int width, int length, int height) : this()
         {
             Width = width;
             Length = length;
