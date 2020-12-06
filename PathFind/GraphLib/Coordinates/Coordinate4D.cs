@@ -29,10 +29,5 @@ namespace GraphLib.Coordinates
         {
 
         }
-
-        public override object Clone()
-        {
-            return new Coordinate4D(X, Y, Z, W);
-        }
     }
 }

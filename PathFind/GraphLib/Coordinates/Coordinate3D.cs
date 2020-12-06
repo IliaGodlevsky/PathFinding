@@ -27,10 +27,5 @@ namespace GraphLib.Coordinates
         {
 
         }
-
-        public override object Clone()
-        {
-            return new Coordinate3D(X, Y, Z);
-        }
     }
 }

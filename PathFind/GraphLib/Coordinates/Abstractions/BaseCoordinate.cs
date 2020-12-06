@@ -3,6 +3,7 @@ using GraphLib.Extensions;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 
 namespace GraphLib.Coordinates.Abstractions
 {
@@ -47,7 +48,26 @@ namespace GraphLib.Coordinates.Abstractions
             return Coordinates.Aggregate((x, y) => x ^ y);
         }
 
-        public abstract object Clone();
+        public override string ToString()
+        {
+            var information = new StringBuilder("(");
+            var coordinatesInString = Coordinates.
+                Select(coordinate => coordinate.ToString());
+
+            for (int i = 0; i < coordinatesInString.Count() - 1; i++)
+            {
+                information.Append(coordinatesInString.
+                    ElementAt(i)).Append(",");
+            }
+
+            information.Append(coordinatesInString.Last()).Append(")");
+            return information.ToString();
+        }
+
+        public object Clone()
+        {
+            return Activator.CreateInstance(GetType(), Coordinates.ToArray());
+        }
 
         private IEnumerable<ICoordinate> coordinateEnvironment;
     }

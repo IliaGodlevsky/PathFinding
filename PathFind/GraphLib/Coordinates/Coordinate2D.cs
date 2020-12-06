@@ -28,15 +28,5 @@ namespace GraphLib.Coordinates
                 throw new ArgumentException("Must be two coordinates");
             }
         }
-
-        public override object Clone()
-        {
-            return new Coordinate2D(X, Y);
-        }
-
-        public override string ToString()
-        {
-            return $"{X},{Y}";
-        }
     }
 }
