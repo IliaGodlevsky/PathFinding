@@ -59,7 +59,7 @@ namespace Wpf3dVersion.Model
                     };
                     axisOffsets[i] = graphOffset.GraphCenterOffset;
                     LocateVertex(Axes[i], vertex, axisOffsets);
-                }                
+                }
             }
         }
 
