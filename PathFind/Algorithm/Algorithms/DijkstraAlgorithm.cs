@@ -10,11 +10,8 @@ using Algorithm.Algorithms.Abstractions;
 
 namespace Algorithm.Algorithms
 {
-    /// <summary>
-    /// Finds the chippest path to destination vertex. 
-    /// </summary>
     [Description("Dijkstra's algorithm")]
-    internal class DijkstraAlgorithm : BaseAlgorithm
+    public class DijkstraAlgorithm : BaseAlgorithm
     {
         public DijkstraAlgorithm(IGraph graph) : base(graph)
         {
@@ -23,7 +20,7 @@ namespace Algorithm.Algorithms
 
         public override void FindPath()
         {
-            BeginPathfinding();
+            PrepareForPathfinding();
             do
             {
                 ExtractNeighbours();
@@ -54,9 +51,9 @@ namespace Algorithm.Algorithms
             }
         }
 
-        protected override void BeginPathfinding()
+        protected override void PrepareForPathfinding()
         {
-            base.BeginPathfinding();
+            base.PrepareForPathfinding();
             SetVerticesAccumulatedCost();
         }
 

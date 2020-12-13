@@ -6,7 +6,7 @@ using System;
 
 namespace Algorithm.Algorithms.Abstractions
 {
-    internal abstract class BaseAlgorithm : IAlgorithm
+    public abstract class BaseAlgorithm : IAlgorithm
     {
         public event AlgorithmEventHanlder OnStarted;
         public event Action<IVertex> OnVertexVisited;
@@ -50,7 +50,7 @@ namespace Algorithm.Algorithms.Abstractions
             OnVertexEnqueued?.Invoke(vertex);
         }
 
-        protected virtual void BeginPathfinding()
+        protected virtual void PrepareForPathfinding()
         {
             var args = new AlgorithmEventArgs(Graph);
             RaiseOnAlgorithmStartedEvent(args);

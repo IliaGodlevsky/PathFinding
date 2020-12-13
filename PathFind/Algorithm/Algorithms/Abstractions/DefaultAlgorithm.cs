@@ -8,7 +8,7 @@ using Algorithm.Delegates;
 
 namespace Algorithm.Algorithms.Abstractions
 {
-    internal sealed class DefaultAlgorithm : IAlgorithm
+    public sealed class DefaultAlgorithm : IAlgorithm
     {
         public event AlgorithmEventHanlder OnStarted;
         public event Action<IVertex> OnVertexVisited;

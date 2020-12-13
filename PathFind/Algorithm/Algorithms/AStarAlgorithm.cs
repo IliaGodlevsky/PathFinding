@@ -7,7 +7,7 @@ using System.ComponentModel;
 namespace Algorithm.Algorithms
 {
     [Description("A* algorithm")]
-    internal class AStarAlgorithm : DijkstraAlgorithm
+    public class AStarAlgorithm : DijkstraAlgorithm
     {
         public Func<IVertex, double> HeuristicFunction { protected get; set; }
 

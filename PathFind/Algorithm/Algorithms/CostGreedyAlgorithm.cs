@@ -4,7 +4,7 @@ using System.ComponentModel;
 namespace Algorithm.Algorithms
 {
     [Description("Cost-greedy algorithm")]
-    internal class CostGreedyAlgorithm : DepthFirstAlgorithm
+    public class CostGreedyAlgorithm : DepthFirstAlgorithm
     {
         public CostGreedyAlgorithm(IGraph graph) : base(graph)
         {

@@ -10,15 +10,10 @@ using Algorithm.Algorithms.Abstractions;
 
 namespace Algorithm.Algorithms
 {
-    /// <summary>
-    /// Greedy algorithm. Each step looks for the best vertex and visits it
-    /// </summary>
+
     [Description("Depth-first algorithm")]
-    internal class DepthFirstAlgorithm : BaseAlgorithm
+    public class DepthFirstAlgorithm : BaseAlgorithm
     {
-        /// <summary>
-        /// A function that selects the best vertex on the step
-        /// </summary>
         public Func<IVertex, double> GreedyFunction { private get; set; }
 
         public DepthFirstAlgorithm(IGraph graph) : base(graph)
@@ -29,7 +24,7 @@ namespace Algorithm.Algorithms
 
         public override void FindPath()
         {
-            BeginPathfinding();
+            PrepareForPathfinding();
             while (!IsDestination)
             {
                 PreviousVertex = CurrentVertex;

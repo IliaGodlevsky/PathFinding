@@ -5,7 +5,7 @@ using System.ComponentModel;
 namespace Algorithm.Algorithms
 {
     [Description("Distance greedy algorithm")]
-    internal class DistanceGreedyAlgoritm : DepthFirstAlgorithm
+    public class DistanceGreedyAlgoritm : DepthFirstAlgorithm
     {
         public DistanceGreedyAlgoritm(IGraph graph) : base(graph)
         {

@@ -10,13 +10,8 @@ using Algorithm.Algorithms.Abstractions;
 
 namespace Algorithm.Algorithms
 {
-    /// <summary>
-    /// A wave algorithm (Lee algorithm, or width-first pathfinding algorithm). 
-    /// Uses queue to move next vertex. Finds the shortest path (in steps) to
-    /// the destination top
-    /// </summary>
     [Description("Lee algorithm")]
-    internal class LeeAlgorithm : BaseAlgorithm
+    public class LeeAlgorithm : BaseAlgorithm
     {
         public LeeAlgorithm(IGraph graph) : base(graph)
         {
@@ -25,7 +20,7 @@ namespace Algorithm.Algorithms
 
         public override void FindPath()
         {
-            BeginPathfinding();
+            PrepareForPathfinding();
             do
             {
                 ExtractNeighbours();

@@ -14,7 +14,7 @@ namespace Algorithm.Algorithms
     /// that are far from optimal heuristic function result
     /// </summary>
     [Description("A* algorithm (modified)")]
-    internal class AStarModified : AStarAlgorithm
+    public class AStarModified : AStarAlgorithm
     {
         public AStarModified(IGraph graph) : base(graph)
         {

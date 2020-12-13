@@ -1,4 +1,5 @@
-﻿using Algorithm.PathFindingAlgorithms;
+﻿using Algorithm.Algorithms;
+using Algorithm.PathFindingAlgorithms;
 using GraphLib.Coordinates;
 using GraphLib.Graphs;
 using GraphLib.Graphs.Factories;
@@ -36,7 +37,7 @@ namespace Algorithm.Test
         [Ignore]
         private Graph4D CreateGraph4D()
         {
-            var factory = new GraphFactory<Graph4D>(0, 7, 7, 5, 5);
+            var factory = new GraphFactory<Graph4D>(0, 5, 5, 5, 5);
             var graph = (Graph4D)factory.CreateGraph(() => new TestVertex(),
                 (coordinates) => new Coordinate4D(coordinates.ToArray()));
             graph.Start = graph.First();
