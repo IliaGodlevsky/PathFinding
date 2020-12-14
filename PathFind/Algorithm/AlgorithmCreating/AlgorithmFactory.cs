@@ -10,7 +10,7 @@ namespace Algorithm.AlgorithmCreating
 {
     public static class AlgorithmFactory
     {
-        public static ICollection<string> GetAlgorithmKeys() => Algorithms.Keys.OrderBy(key => key).ToList();
+        public static IEnumerable<string> GetAlgorithmKeys() => Algorithms.Keys.OrderBy(key => key);
 
         public static IDictionary<string, Type> Algorithms { get; private set; }
 
