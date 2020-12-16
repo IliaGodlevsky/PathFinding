@@ -5,7 +5,6 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
-using System.Reflection;
 
 namespace Algorithm.AlgorithmCreating
 {
@@ -18,7 +17,7 @@ namespace Algorithm.AlgorithmCreating
 
         static AlgorithmFactory()
         {
-            Algorithms = AlgorithmsTypes.ToDictionary(type => GetAlgorithmDescription(type), type => type);
+            Algorithms = GetDictionaryOfAlgorithms();
             AlgorithmKeys = Algorithms.Keys.OrderBy(key => key);
         }
 
@@ -33,8 +32,15 @@ namespace Algorithm.AlgorithmCreating
 
         private static Dictionary<string, Type> Algorithms { get; set; }
 
-        private static IEnumerable<Type> AlgorithmsTypes 
-            => AssemblyTypes.Where(type => type.GetInterfacesNames().Contains(AlgorithmInterfaceName));
+        private static Dictionary<string, Type> GetDictionaryOfAlgorithms()
+        {
+            return typeof(IAlgorithm)
+                .GetAssembly()
+                .GetTypes()
+                .Except(FilterTypes)
+                .Where(type => type.IsInterfaceImplemeted<IAlgorithm>())
+                .ToDictionary(type => GetAlgorithmDescription(type), type => type);
+        }
 
         private static string GetAlgorithmDescription(Type algorithmType)
         {
@@ -44,15 +50,7 @@ namespace Algorithm.AlgorithmCreating
             return description;
         }
 
-        private static Type AlgorithmInterfaceType => typeof(IAlgorithm);
-
-        private static string AlgorithmInterfaceName => AlgorithmInterfaceType.Name;
-
-        private static Assembly AlgorithmInterfaceAssembly => AlgorithmInterfaceType.GetAssembly();
-
-        private static IEnumerable<Type> FilterTypes => new Type[] { typeof(DefaultAlgorithm), typeof(BaseAlgorithm) };
-
-        private static IEnumerable<Type> AssemblyTypes
-            => AlgorithmInterfaceAssembly.GetTypes().Where(type => !FilterTypes.Contains(type));
+        private static IEnumerable<Type> FilterTypes 
+            => new Type[] { typeof(DefaultAlgorithm), typeof(BaseAlgorithm) };        
     }
 }
