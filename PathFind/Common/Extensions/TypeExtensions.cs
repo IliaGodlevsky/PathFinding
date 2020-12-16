@@ -14,8 +14,9 @@ namespace Common.Extensions
 
         public static IEnumerable<string> GetInterfacesNames(this Type self)
         {
-            var interfaces = self.GetInterfaces();
-            return interfaces.Select(interf => interf.Name);
+            return self
+                .GetInterfaces()
+                .Select(interf => interf.Name);
         }
 
         public static bool IsInterfaceImplemeted<Interface>(this Type self) where Interface : class
@@ -24,7 +25,8 @@ namespace Common.Extensions
             {
                 return false;
             }
-            return self.GetInterfacesNames().Contains(typeof(Interface).Name);
+            return self.GetInterfacesNames()
+                .Contains(typeof(Interface).Name);
         }
     }
 }
