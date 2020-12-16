@@ -23,7 +23,6 @@ namespace GraphLib.Coordinates.Infrastructure
             return environment;
         }
 
-        // recursive method
         private void FormEnvironment(int depth = 0)
         {
             for (int i = LeftNeighbour(depth); i <= RightNeighbour(depth); i++)
