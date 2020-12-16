@@ -17,5 +17,14 @@ namespace Common.Extensions
             var interfaces = self.GetInterfaces();
             return interfaces.Select(interf => interf.Name);
         }
+
+        public static bool IsInterfaceImplemeted<Interface>(this Type self) where Interface : class
+        {
+            if (!typeof(Interface).IsInterface)
+            {
+                return false;
+            }
+            return self.GetInterfacesNames().Contains(typeof(Interface).Name);
+        }
     }
 }
