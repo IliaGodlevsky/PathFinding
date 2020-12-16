@@ -14,7 +14,7 @@ namespace WpfVersion.Infrastructure
             remove { CommandManager.RequerySuggested -= value; }
         }
 
-        public RelayCommand(Action<object> execute, 
+        public RelayCommand(Action<object> execute,
             Func<object, bool> canExecute = null)
         {
             this.execute = execute;

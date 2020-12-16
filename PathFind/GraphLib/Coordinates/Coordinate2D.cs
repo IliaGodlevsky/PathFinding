@@ -23,7 +23,7 @@ namespace GraphLib.Coordinates
         public Coordinate2D(params int[] coordinates)
             : base(coordinates)
         {
-            if (coordinates.Length != 2) 
+            if (coordinates.Length != 2)
             {
                 throw new ArgumentException("Must be two coordinates");
             }

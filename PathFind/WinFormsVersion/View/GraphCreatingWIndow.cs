@@ -20,22 +20,22 @@ namespace WinFormsVersion.View
 
             int ConvertFromString(string str, int alternativeResult)
             {
-                return int.TryParse(str, out int number) 
-                    ? int.Parse(str) 
+                return int.TryParse(str, out int number)
+                    ? int.Parse(str)
                     : alternativeResult;
             }
 
             void StringToWidth(object sender, ConvertEventArgs e)
             {
                 e.Value = ConvertFromString(
-                    e.Value.ToString(), 
+                    e.Value.ToString(),
                     Range.WidthValueRange.LowerRange);
             }
 
             void StringToHeight(object sender, ConvertEventArgs e)
             {
                 e.Value = ConvertFromString(
-                    e.Value.ToString(), 
+                    e.Value.ToString(),
                     Range.HeightValueRange.LowerRange);
             }
 
@@ -45,8 +45,8 @@ namespace WinFormsVersion.View
             }
 
             var bindWidth = new Binding(
-                nameof(widthTextBox.Text), 
-                Model, 
+                nameof(widthTextBox.Text),
+                Model,
                 nameof(Model.Width));
             widthTextBox.DataBindings.Add(bindWidth);
 
@@ -54,8 +54,8 @@ namespace WinFormsVersion.View
             bindWidth.Parse += StringToWidth;
 
             var bindHeight = new Binding(
-                nameof(heightTextBox.Text), 
-                Model, 
+                nameof(heightTextBox.Text),
+                Model,
                 nameof(Model.Length));
             heightTextBox.DataBindings.Add(bindHeight);
 
@@ -63,10 +63,10 @@ namespace WinFormsVersion.View
             bindHeight.Parse += StringToHeight;
 
             var bindTextBoxAndSlider = new Binding(
-                nameof(obstacleSlider.Value), 
-                obstacleTextBox, 
-                nameof(obstacleTextBox.Text), 
-                true, 
+                nameof(obstacleSlider.Value),
+                obstacleTextBox,
+                nameof(obstacleTextBox.Text),
+                true,
                 DataSourceUpdateMode.OnPropertyChanged);
             obstacleSlider.DataBindings.Add(bindTextBoxAndSlider);
 
@@ -74,9 +74,9 @@ namespace WinFormsVersion.View
             obstacleSlider.Minimum = Range.ObstaclePercentValueRange.LowerRange;
 
             var bindObstaclePercent = new Binding(
-                nameof(obstacleTextBox.Text), 
-                Model, 
-                nameof(Model.ObstaclePercent), 
+                nameof(obstacleTextBox.Text),
+                Model,
+                nameof(Model.ObstaclePercent),
                 true,
                 DataSourceUpdateMode.OnPropertyChanged);
             obstacleTextBox.DataBindings.Add(bindObstaclePercent);

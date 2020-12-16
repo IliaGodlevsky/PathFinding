@@ -66,7 +66,7 @@ namespace GraphLib.Coordinates.Infrastructure
         {
             return depth < limitDepth - 1;
         }
-       
+
         private readonly Type coordinateType;
         private readonly ICoordinate middleCoordinate;
 

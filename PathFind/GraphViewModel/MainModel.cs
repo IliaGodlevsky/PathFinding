@@ -33,8 +33,8 @@ namespace GraphViewModel
         public Func<VertexInfo, IVertex> InfoConverter { get; set; }
 
         public MainModel()
-        {           
-            Graph = new DefaultGraph();
+        {
+            Graph = new NullGraph();
             Serializer = new GraphSerializer<Graph2D>();
             graphParamFormat = ViewModelResources.GraphParametresFormat;
         }

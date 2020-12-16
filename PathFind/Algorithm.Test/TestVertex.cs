@@ -33,47 +33,47 @@ namespace Algorithm.Test
 
         public void MakeUnweighted()
         {
-            
+
         }
 
         public void MakeWeighted()
         {
-            
+
         }
 
         public void MarkAsEnd()
         {
-            
+
         }
 
         public void MarkAsEnqueued()
         {
-            
+
         }
 
         public void MarkAsObstacle()
         {
-            
+
         }
 
         public void MarkAsPath()
         {
-            
+
         }
 
         public void MarkAsSimpleVertex()
         {
-            
+
         }
 
         public void MarkAsStart()
         {
-            
+
         }
 
         public void MarkAsVisited()
         {
-            
+
         }
     }
 }

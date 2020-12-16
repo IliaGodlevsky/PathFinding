@@ -13,7 +13,7 @@ namespace WinFormsVersion.Model
     internal class WinFormsVertex : Label, IVertex
     {
         public WinFormsVertex() : base()
-        {            
+        {
             var fontSizeRatio = (VertexParametres.TextToSizeRatio * 0.75f);
             float fontSize = VertexParametres.VertexSize * fontSizeRatio;
             Font = new Font("Times New Roman", fontSize);

@@ -9,10 +9,6 @@ using System.Linq;
 
 namespace Algorithm.Algorithms
 {
-    /// <summary>
-    /// A modified A* algorithm, that ignores vertices 
-    /// that are far from optimal heuristic function result
-    /// </summary>
     [Description("A* algorithm (modified)")]
     public class AStarModified : AStarAlgorithm
     {

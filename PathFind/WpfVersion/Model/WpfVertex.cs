@@ -53,11 +53,11 @@ namespace WpfVersion.Model.Vertex
 
 
         private VertexCost cost;
-        public VertexCost Cost 
+        public VertexCost Cost
         {
             get { return cost; }
-            set 
-            { 
+            set
+            {
                 cost = (VertexCost)value.Clone();
                 Dispatcher.Invoke(() => Content = cost.ToString(string.Empty));
             }
@@ -70,11 +70,11 @@ namespace WpfVersion.Model.Vertex
         public double AccumulatedCost { get; set; }
 
         private ICoordinate position;
-        public ICoordinate Position 
+        public ICoordinate Position
         {
             get => position;
-            set 
-            { 
+            set
+            {
                 position = value;
                 Dispatcher.Invoke(() => ToolTip = position.ToString());
             }
@@ -105,13 +105,13 @@ namespace WpfVersion.Model.Vertex
 
         public void MarkAsSimpleVertex()
         {
-            Dispatcher.Invoke(() => 
+            Dispatcher.Invoke(() =>
             {
                 if (!IsObstacle)
                 {
                     Background = new SolidColorBrush(Colors.White);
                 }
-            });           
+            });
         }
 
         public void MarkAsVisited()
@@ -125,7 +125,7 @@ namespace WpfVersion.Model.Vertex
         }
 
         public void MakeUnweighted()
-        {            
+        {
             cost.MakeUnWeighted();
             Dispatcher.Invoke(() => Content = string.Empty);
         }

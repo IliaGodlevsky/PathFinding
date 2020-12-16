@@ -1,19 +1,17 @@
 ﻿using ConsoleVersion.InputClass;
 using ConsoleVersion.Model;
 using ConsoleVersion.View;
-using System.Drawing;
-using Console = Colorful.Console;
 using GraphLib.Graphs;
 using GraphViewModel;
-using System;
-using Common.EventArguments;
+using System.Drawing;
+using Console = Colorful.Console;
 
 namespace ConsoleVersion.ViewModel
 {
     internal class MainViewModel : MainModel
     {
         public MainViewModel() : base()
-        {            
+        {
             VertexEventHolder = new ConsoleVertexEventHolder();
             FieldFactory = new ConsoleGraphFieldFactory();
             InfoConverter = (info) => new ConsoleVertex(info);
@@ -88,12 +86,10 @@ namespace ConsoleVersion.ViewModel
             return Console.ReadLine();
         }
 
-        private void OnPathNotFound(object sender, EventArgs e)
+        private void OnPathNotFound(string message)
         {
-            var args = e as PathNotFoundEventArgs;
-
             DisplayGraph();
-            Console.WriteLine(args.Message);
+            Console.WriteLine(message);
             Console.ReadLine();
         }
     }

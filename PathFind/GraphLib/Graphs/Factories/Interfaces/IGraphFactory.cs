@@ -10,7 +10,7 @@ namespace GraphLib.Graphs.Factories.Interfaces
     {
         event Action<string> OnExceptionCaught;
 
-        IGraph CreateGraph(Func<IVertex> vertexFactoryMethod, 
+        IGraph CreateGraph(Func<IVertex> vertexFactoryMethod,
             Func<IEnumerable<int>, ICoordinate> coordinateFactoryMethod);
     }
 }

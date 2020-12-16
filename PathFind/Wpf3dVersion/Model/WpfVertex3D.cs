@@ -8,6 +8,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using System.Windows;
+using System.Windows.Controls;
 using System.Windows.Media;
 using System.Windows.Media.Media3D;
 using Wpf3dVersion.Factories;
@@ -24,7 +25,7 @@ namespace Wpf3dVersion.Model
                 Material = new DiffuseMaterial();
                 Model = Model3DFactory.CreateCubicModel3D(Size, Material);
                 Transform = new TranslateTransform3D();
-            });           
+            });
             this.Initialize();
         }
 
@@ -53,27 +54,27 @@ namespace Wpf3dVersion.Model
             SimpleVertexBrush = new SolidColorBrush(Colors.White) { Opacity = 0.25 };
 
             ModelProperty = DependencyProperty.Register(
-                nameof(Model), 
+                nameof(Model),
                 typeof(Model3D),
-                typeof(WpfVertex3D), 
+                typeof(WpfVertex3D),
                 new PropertyMetadata(ModelPropertyChanged));
 
             MaterialProperty = DependencyProperty.Register(
-                nameof(Material), 
+                nameof(Material),
                 typeof(Material),
-                typeof(WpfVertex3D), 
+                typeof(WpfVertex3D),
                 new PropertyMetadata(VisualPropertyChanged));
 
             SizeProperty = DependencyProperty.Register(
-                nameof(Size), 
+                nameof(Size),
                 typeof(double),
-                typeof(WpfVertex3D), 
+                typeof(WpfVertex3D),
                 new UIPropertyMetadata(VisualPropertyChanged));
 
             BrushProperty = DependencyProperty.Register(
-                nameof(Brush), 
+                nameof(Brush),
                 typeof(Brush),
-                typeof(WpfVertex3D), 
+                typeof(WpfVertex3D),
                 new PropertyMetadata(BrushPropertyChanged));
         }
 
@@ -149,18 +150,18 @@ namespace Wpf3dVersion.Model
 
         public void MarkAsPath()
         {
-            Dispatcher.Invoke(() => Brush = PathVertexBrush);          
+            Dispatcher.Invoke(() => Brush = PathVertexBrush);
         }
 
         public void MarkAsSimpleVertex()
         {
-            Dispatcher.Invoke(() => 
+            Dispatcher.Invoke(() =>
             {
                 if (!IsObstacle)
                 {
                     Brush = SimpleVertexBrush;
                 }
-            });           
+            });
         }
 
         public void MarkAsVisited()
@@ -178,7 +179,7 @@ namespace Wpf3dVersion.Model
             Dispatcher.Invoke(() => Brush = StartVertexBrush);
         }
 
-        protected async static void VisualPropertyChanged(DependencyObject depObj, 
+        protected static async void VisualPropertyChanged(DependencyObject depObj,
             DependencyPropertyChangedEventArgs prop)
         {
             var flags = BindingFlags.Public | BindingFlags.Instance;
@@ -187,14 +188,14 @@ namespace Wpf3dVersion.Model
             await depObj.Dispatcher.BeginInvoke(delegatedMethod);
         }
 
-        protected static void ModelPropertyChanged(DependencyObject depObj, 
+        protected static void ModelPropertyChanged(DependencyObject depObj,
             DependencyPropertyChangedEventArgs prop)
         {
             WpfVertex3D vert = (WpfVertex3D)depObj;
             vert.Visual3DModel = vert.Model;
         }
 
-        protected async static void BrushPropertyChanged(DependencyObject depObj,
+        protected static async void BrushPropertyChanged(DependencyObject depObj,
             DependencyPropertyChangedEventArgs prop)
         {
             var flags = BindingFlags.NonPublic | BindingFlags.Instance;
@@ -208,13 +209,13 @@ namespace Wpf3dVersion.Model
             GeometryModel3D child = null;
             if (Model is Model3DGroup modelGroup)
             {
-               child = modelGroup.Children.FirstOrDefault() as GeometryModel3D;
+                child = modelGroup.Children.FirstOrDefault() as GeometryModel3D;
             }
 
             DiffuseMaterial material = null;
-            if (child != null) 
+            if (child != null)
             {
-                 material = child.Material as DiffuseMaterial;
+                material = child.Material as DiffuseMaterial;
             }
 
             if (material != null)
@@ -222,5 +223,5 @@ namespace Wpf3dVersion.Model
                 material.Brush = Brush;
             }
         }
-    }    
+    }
 }

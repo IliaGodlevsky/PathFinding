@@ -1,9 +1,9 @@
-﻿using ConsoleVersion.InputClass;
-using System;
+﻿using Common.ValueRanges;
+using ConsoleVersion.InputClass;
 using GraphLib.EventHolder;
-using GraphLib.Vertex.Interface;
 using GraphLib.Vertex.Cost;
-using Common.ValueRanges;
+using GraphLib.Vertex.Interface;
+using System;
 
 namespace ConsoleVersion.Model
 {

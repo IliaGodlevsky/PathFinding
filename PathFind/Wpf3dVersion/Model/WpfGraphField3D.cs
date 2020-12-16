@@ -1,11 +1,11 @@
-﻿using GraphLib.GraphField;
+﻿using Common.Extensions;
+using GraphLib.GraphField;
 using GraphLib.Vertex.Interface;
 using System.Linq;
 using System.Windows.Media.Media3D;
-using OffsetAction = System.Action<System.Windows.Media.Media3D.TranslateTransform3D, double>;
-using DistanceBetweenSetCallback = System.Action<double, Wpf3dVersion.Model.WpfGraphField3D>;
 using Wpf3dVersion.Enums;
-using Common.Extensions;
+using DistanceBetweenSetCallback = System.Action<double, Wpf3dVersion.Model.WpfGraphField3D>;
+using OffsetAction = System.Action<System.Windows.Media.Media3D.TranslateTransform3D, double>;
 
 namespace Wpf3dVersion.Model
 {
@@ -114,11 +114,11 @@ namespace Wpf3dVersion.Model
             Width, Length, Height
         };
 
-        private double[] DistancesBetween => new double[] 
-        { 
-            DistanceBetweenVerticesAtXAxis, 
-            DistanceBetweenVerticesAtYAxis, 
-            DistanceBetweenVerticesAtZAxis 
+        private double[] DistancesBetween => new double[]
+        {
+            DistanceBetweenVerticesAtXAxis,
+            DistanceBetweenVerticesAtYAxis,
+            DistanceBetweenVerticesAtZAxis
         };
 
         private OffsetAction[] OffsetActions => new OffsetAction[]

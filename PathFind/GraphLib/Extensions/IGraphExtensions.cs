@@ -10,7 +10,7 @@ namespace GraphLib.Extensions
         {
             graph.RemoveExtremeVertices();
 
-            foreach(var vertex in graph)
+            foreach (var vertex in graph)
             {
                 vertex.Refresh();
             }

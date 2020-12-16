@@ -25,11 +25,11 @@ namespace Wpf3dVersion.ViewModel
 
         public OpacityChangeViewModel(IMainModel model)
         {
-            ObstacleColorOpacity        = WpfVertex3D.ObstacleVertexBrush.Opacity;
-            VisitedVertexColorOpacity   = WpfVertex3D.VisitedVertexBrush.Opacity;
-            EnqueuedVertexColorOpacity  = WpfVertex3D.EnqueuedVertexBrush.Opacity;
-            PathVertexColorOpacity      = WpfVertex3D.PathVertexBrush.Opacity;
-            SimpleVertexColorOpacity    = WpfVertex3D.SimpleVertexBrush.Opacity;
+            ObstacleColorOpacity = WpfVertex3D.ObstacleVertexBrush.Opacity;
+            VisitedVertexColorOpacity = WpfVertex3D.VisitedVertexBrush.Opacity;
+            EnqueuedVertexColorOpacity = WpfVertex3D.EnqueuedVertexBrush.Opacity;
+            PathVertexColorOpacity = WpfVertex3D.PathVertexBrush.Opacity;
+            SimpleVertexColorOpacity = WpfVertex3D.SimpleVertexBrush.Opacity;
 
             Model = model as MainWindowViewModel;
             ConfirmOpacityChange = new RelayCommand(ExecuteChangeVertexOpacity, obj => true);
@@ -40,9 +40,9 @@ namespace Wpf3dVersion.ViewModel
         {
             WpfVertex3D.EnqueuedVertexBrush.Opacity = EnqueuedVertexColorOpacity;
             WpfVertex3D.ObstacleVertexBrush.Opacity = ObstacleColorOpacity;
-            WpfVertex3D.SimpleVertexBrush.Opacity   = SimpleVertexColorOpacity;
-            WpfVertex3D.PathVertexBrush.Opacity     = PathVertexColorOpacity;
-            WpfVertex3D.VisitedVertexBrush.Opacity  = VisitedVertexColorOpacity;
+            WpfVertex3D.SimpleVertexBrush.Opacity = SimpleVertexColorOpacity;
+            WpfVertex3D.PathVertexBrush.Opacity = PathVertexColorOpacity;
+            WpfVertex3D.VisitedVertexBrush.Opacity = VisitedVertexColorOpacity;
 
             Model?.Window?.Close();
         }

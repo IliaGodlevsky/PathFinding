@@ -9,13 +9,9 @@ using System.Linq;
 
 namespace GraphLib.Graphs
 {
-    /// <summary>
-    /// An empty graph. Returns instead of 
-    /// real instance of Graph class instead of null
-    /// </summary>
-    public sealed class DefaultGraph : IGraph
+    public sealed class NullGraph : IGraph
     {
-        public DefaultGraph()
+        public NullGraph()
         {
             defaultVertex = new DefaultVertex();
             array = new DefaultVertex[] { };
@@ -39,17 +35,17 @@ namespace GraphLib.Graphs
 
         public IVertex Start { get => defaultVertex; set => _ = value; }
 
-        public VertexInfoCollection VertexInfoCollection 
+        public VertexInfoCollection VertexInfoCollection
             => new VertexInfoCollection(array, DimensionsSizes.ToArray());
 
         public IEnumerable<int> DimensionsSizes => new int[] { };
 
         public bool IsDefault => true;
 
-        public IVertex this[int index] 
-        { 
+        public IVertex this[int index]
+        {
             get => defaultVertex;
-            set => _ = value; 
+            set => _ = value;
         }
 
         public IEnumerator<IVertex> GetEnumerator()

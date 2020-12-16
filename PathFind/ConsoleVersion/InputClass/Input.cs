@@ -15,10 +15,10 @@ namespace ConsoleVersion.InputClass
         }
 
         public static int InputNumber(string msg, int upper, int lower = 0)
-        {         
+        {
             Console.Write(msg);
             string choice = Console.ReadLine();
-            while (IsError(choice, upper, lower)) 
+            while (IsError(choice, upper, lower))
             {
                 Console.Write(msg);
                 choice = Console.ReadLine();
@@ -43,7 +43,7 @@ namespace ConsoleVersion.InputClass
 
         private static bool IsError(string choice, int upper, int lower)
         {
-            return !int.TryParse(choice, out var ch) 
+            return !int.TryParse(choice, out var ch)
                 || ch > upper || ch < lower;
         }
 

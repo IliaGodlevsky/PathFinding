@@ -1,9 +1,7 @@
-﻿using System.Linq;
-using System.Windows;
-using Common;
+﻿using Common;
 using GraphLib.Graphs;
 using GraphLib.Graphs.Abstractions;
-using WpfVersion.Model.Vertex;
+using System.Windows;
 
 namespace WpfVersion.Model
 {

@@ -1,4 +1,5 @@
 ﻿using Algorithm.Algorithms.Abstractions;
+using Common.Extensions;
 using GraphLib.Graphs.Abstractions;
 using System;
 using System.Collections.Generic;
@@ -10,31 +11,15 @@ namespace Algorithm.AlgorithmCreating
 {
     public static class AlgorithmFactory
     {
-        public static IEnumerable<string> GetAlgorithmKeys() => Algorithms.Keys.OrderBy(key => key);
-
-        public static IDictionary<string, Type> Algorithms { get; private set; }
+        public static IEnumerable<string> GetAlgorithmKeys()
+        {
+            return AlgorithmKeys;
+        }
 
         static AlgorithmFactory()
         {
-            Algorithms = new Dictionary<string, Type>();
-
-            var algorithmInterfaceType = typeof(IAlgorithm);
-            var assembly = Assembly.Load(algorithmInterfaceType.Assembly.GetName());
-            var filterTypes = new Type[] { typeof(DefaultAlgorithm), typeof(BaseAlgorithm) };
-            var assemblyTypes = assembly.GetTypes().Where(type => !filterTypes.Contains(type));
-
-            foreach (var type in assemblyTypes)
-            {
-                var interfaces = type.GetInterfaces();
-                var interfacesNames = interfaces.Select(interf => interf.Name);
-
-                if (interfacesNames.Contains(algorithmInterfaceType.Name))
-                {
-                    dynamic attribute = Attribute.GetCustomAttribute(type, typeof(DescriptionAttribute));
-                    var description = attribute != null ? attribute.Description : type.ToString();
-                    Algorithms.Add(description, type);
-                }
-            }
+            Algorithms = AlgorithmsTypes.ToDictionary(type => GetAlgorithmDescription(type), type => type);
+            AlgorithmKeys = Algorithms.Keys.OrderBy(key => key);
         }
 
         public static IAlgorithm CreateAlgorithm(string algorithmKey, IGraph graph)
@@ -43,5 +28,31 @@ namespace Algorithm.AlgorithmCreating
                 ? (IAlgorithm)Activator.CreateInstance(Algorithms[algorithmKey], graph)
                 : new DefaultAlgorithm();
         }
+
+        private static IEnumerable<string> AlgorithmKeys { get; set; }
+
+        private static Dictionary<string, Type> Algorithms { get; set; }
+
+        private static IEnumerable<Type> AlgorithmsTypes 
+            => AssemblyTypes.Where(type => type.GetInterfacesNames().Contains(AlgorithmInterfaceName));
+
+        private static string GetAlgorithmDescription(Type algorithmType)
+        {
+            var attribute = (DescriptionAttribute)Attribute.
+                GetCustomAttribute(algorithmType, typeof(DescriptionAttribute));
+            var description = attribute == null ? algorithmType.ToString() : attribute.Description;
+            return description;
+        }
+
+        private static Type AlgorithmInterfaceType => typeof(IAlgorithm);
+
+        private static string AlgorithmInterfaceName => AlgorithmInterfaceType.Name;
+
+        private static Assembly AlgorithmInterfaceAssembly => AlgorithmInterfaceType.GetAssembly();
+
+        private static IEnumerable<Type> FilterTypes => new Type[] { typeof(DefaultAlgorithm), typeof(BaseAlgorithm) };
+
+        private static IEnumerable<Type> AssemblyTypes
+            => AlgorithmInterfaceAssembly.GetTypes().Where(type => !FilterTypes.Contains(type));
     }
 }

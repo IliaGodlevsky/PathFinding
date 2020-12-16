@@ -1,23 +1,20 @@
-﻿using System.Diagnostics;
+﻿using Algorithm.AlgorithmCreating;
+using Common.Extensions;
+using GraphLib.Extensions;
+using GraphLib.Graphs.Abstractions;
+using GraphLib.Graphs.Infrastructure;
+using GraphLib.PauseMaking;
+using GraphLib.Vertex.Interface;
 using GraphViewModel.Interfaces;
 using GraphViewModel.Resources;
-using Algorithm.AlgorithmCreating;
-using GraphLib.Graphs.Abstractions;
-using GraphLib.Extensions;
-using Common.Extensions;
-using GraphLib.Vertex.Interface;
-using Algorithm.EventArguments;
-using GraphLib.PauseMaking;
 using System;
-using Common.EventArguments;
-using GraphLib.Graphs.Infrastructure;
-using GraphLib.Graphs.EventArguments;
+using System.Diagnostics;
 
 namespace GraphLib.ViewModel
 {
     public abstract class PathFindingModel : IModel
     {
-        public event EventHandler OnPathNotFound;
+        public event Action<string> OnPathNotFound;
 
         public int DelayTime { get; set; } // milliseconds
 
@@ -65,15 +62,14 @@ namespace GraphLib.ViewModel
             }
         }
 
-        protected virtual void OnAlgorithmFinished(object sender, AlgorithmEventArgs e)
+        protected virtual void OnAlgorithmFinished()
         {
             timer.Stop();
 
             var path = new GraphPath(graph);
-            path.OnVertexHighlighted += OnVertexHighlighted;
 
 
-            mainViewModel.PathFindingStatistics = GetIntermediateStatistics(timer, 
+            mainViewModel.PathFindingStatistics = GetIntermediateStatistics(timer,
                 path.PathLength, path.PathCost, graph.NumberOfVisitedVertices);
 
             if (path.IsExtracted)
@@ -82,26 +78,17 @@ namespace GraphLib.ViewModel
             }
             else
             {
-                var args = new PathNotFoundEventArgs("Couln't find path");
-                OnPathNotFound?.Invoke(this, args);
+                OnPathNotFound?.Invoke("Couln't find path");
             }
         }
 
-        protected virtual void OnAlgorithmStarted(object sender, AlgorithmEventArgs e)
+        protected virtual void OnAlgorithmStarted()
         {
             timer = new Stopwatch();
             timer.Start();
         }
 
-        protected virtual void OnVertexHighlighted(object sender, GraphPathEventArgs e)
-        {
-            if (e.Vertex.IsSimpleVertex())
-            {
-                e.Vertex.MarkAsPath();
-            }
-        }
-
-        private string GetIntermediateStatistics(Stopwatch timer, 
+        private string GetIntermediateStatistics(Stopwatch timer,
             int steps, int pathLength, int visitedVertices)
         {
             var graphInfo = string.Format(ViewModelResources.StatisticsFormat,

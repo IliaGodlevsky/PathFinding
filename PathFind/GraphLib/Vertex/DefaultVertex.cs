@@ -1,9 +1,8 @@
 ﻿using GraphLib.Coordinates;
-using GraphLib.Info;
+using GraphLib.Coordinates.Abstractions;
 using GraphLib.Vertex.Cost;
 using GraphLib.Vertex.Interface;
 using System.Collections.Generic;
-using GraphLib.Coordinates.Abstractions;
 
 namespace GraphLib.Vertex
 {
@@ -34,13 +33,13 @@ namespace GraphLib.Vertex
 
         public bool IsDefault => true;
 
-        public void MarkAsEnd() 
-        { 
+        public void MarkAsEnd()
+        {
 
         }
 
-        public void MarkAsObstacle() 
-        { 
+        public void MarkAsObstacle()
+        {
 
         }
 
@@ -55,12 +54,12 @@ namespace GraphLib.Vertex
         }
 
         public void MarkAsStart()
-        { 
+        {
 
         }
 
-        public void MarkAsVisited() 
-        { 
+        public void MarkAsVisited()
+        {
 
         }
 
@@ -71,12 +70,12 @@ namespace GraphLib.Vertex
 
         public void MakeUnweighted()
         {
-            
+
         }
 
         public void MakeWeighted()
         {
-            
+
         }
     }
 }

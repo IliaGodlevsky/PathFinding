@@ -1,9 +1,9 @@
-﻿using System.Collections.Generic;
-using System.Linq;
-using Algorithm.AlgorithmCreating;
+﻿using Algorithm.AlgorithmCreating;
 using Algorithm.Algorithms.Abstractions;
 using GraphLib.Graphs;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace Algorithm.Test
 {
@@ -39,7 +39,7 @@ namespace Algorithm.Test
 
             foreach (var key in keys)
             {
-                algorithms.Add(AlgorithmFactory.CreateAlgorithm(key, new DefaultGraph()));
+                algorithms.Add(AlgorithmFactory.CreateAlgorithm(key, new NullGraph()));
             }
 
             return algorithms;

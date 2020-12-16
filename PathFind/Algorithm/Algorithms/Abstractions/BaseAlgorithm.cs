@@ -1,6 +1,4 @@
-﻿using Algorithm.Delegates;
-using Algorithm.EventArguments;
-using GraphLib.Graphs.Abstractions;
+﻿using GraphLib.Graphs.Abstractions;
 using GraphLib.Vertex.Interface;
 using System;
 
@@ -8,9 +6,9 @@ namespace Algorithm.Algorithms.Abstractions
 {
     public abstract class BaseAlgorithm : IAlgorithm
     {
-        public event AlgorithmEventHanlder OnStarted;
+        public event Action OnStarted;
         public event Action<IVertex> OnVertexVisited;
-        public event AlgorithmEventHanlder OnFinished;
+        public event Action OnFinished;
         public event Action<IVertex> OnVertexEnqueued;
 
         public IGraph Graph { get; protected set; }
@@ -30,14 +28,14 @@ namespace Algorithm.Algorithms.Abstractions
 
         protected virtual bool IsDestination => CurrentVertex.IsEnd;
 
-        protected void RaiseOnAlgorithmStartedEvent(AlgorithmEventArgs e)
+        protected void RaiseOnAlgorithmStartedEvent()
         {
-            OnStarted?.Invoke(this, e);
+            OnStarted?.Invoke();
         }
 
-        protected void RaiseOnAlgorithmFinishedEvent(AlgorithmEventArgs e)
+        protected void RaiseOnAlgorithmFinishedEvent()
         {
-            OnFinished?.Invoke(this, e);
+            OnFinished?.Invoke();
         }
 
         protected void RaiseOnVertexVisitedEvent()
@@ -52,16 +50,14 @@ namespace Algorithm.Algorithms.Abstractions
 
         protected virtual void PrepareForPathfinding()
         {
-            var args = new AlgorithmEventArgs(Graph);
-            RaiseOnAlgorithmStartedEvent(args);
+            RaiseOnAlgorithmStartedEvent();
             CurrentVertex = Graph.Start;
             CurrentVertex.IsVisited = true;
         }
 
         protected virtual void CompletePathfinding()
         {
-            var args = new AlgorithmEventArgs(Graph);
-            RaiseOnAlgorithmFinishedEvent(args);
+            RaiseOnAlgorithmFinishedEvent();
         }
     }
 }

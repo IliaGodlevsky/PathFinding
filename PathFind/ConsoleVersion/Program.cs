@@ -2,9 +2,9 @@
 
 namespace ConsoleVersion
 {
-    class Program
-    {        
-        static void Main(string[] args)
+    internal class Program
+    {
+        private static void Main(string[] args)
         {
             var view = new MainView();
             view.Start();

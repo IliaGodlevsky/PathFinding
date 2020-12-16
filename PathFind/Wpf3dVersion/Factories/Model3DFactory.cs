@@ -16,7 +16,7 @@ namespace Wpf3dVersion.Factories
             var p5 = new Point3D(size, size, size);
             var p6 = new Point3D(size, size, 0);
             var p7 = new Point3D(0, size, 0);
-            
+
             model.Children.Add(CreateRectangleModel(p4, p3, p2, p5, material));
             model.Children.Add(CreateRectangleModel(p5, p2, p1, p6, material));
             model.Children.Add(CreateRectangleModel(p7, p6, p1, p0, material));
@@ -28,8 +28,8 @@ namespace Wpf3dVersion.Factories
         }
 
         private static GeometryModel3D CreateRectangleModel(
-            Point3D p0, Point3D p1, 
-            Point3D p2, Point3D p3, 
+            Point3D p0, Point3D p1,
+            Point3D p2, Point3D p3,
             Material material)
         {
             var mesh = new MeshGeometry3D();

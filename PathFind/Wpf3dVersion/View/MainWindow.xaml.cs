@@ -17,6 +17,6 @@ namespace Wpf3dVersion
             distanceBetweenAtXAxisSlider.ValueChanged += model.XAxisSliderValueChanged;
             distanceBetweenAtYAxisSlider.ValueChanged += model.YAxisSliderValueChanged;
             distanceBetweenAtZAxisSlider.ValueChanged += model.ZAxisSliderValueChanged;
-        }       
+        }
     }
 }

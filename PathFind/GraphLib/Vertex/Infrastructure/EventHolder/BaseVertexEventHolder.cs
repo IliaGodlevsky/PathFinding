@@ -1,11 +1,11 @@
-﻿using System;
+﻿using Common.ValueRanges;
 using GraphLib.EventHolder.Interface;
-using GraphLib.Vertex.Interface;
-using System.Linq;
-using GraphLib.Vertex.Cost;
 using GraphLib.Extensions;
 using GraphLib.Graphs.Abstractions;
-using Common.ValueRanges;
+using GraphLib.Vertex.Cost;
+using GraphLib.Vertex.Interface;
+using System;
+using System.Linq;
 
 namespace GraphLib.EventHolder
 {

@@ -1,12 +1,10 @@
-﻿using Common.EventArguments;
-using GraphLib.Extensions;
+﻿using GraphLib.Extensions;
 using GraphLib.GraphField;
 using GraphLib.Graphs;
 using GraphLib.Graphs.Serialization;
 using GraphViewModel;
 using GraphViewModel.Interfaces;
 using Microsoft.Win32;
-using System;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using System.Windows;
@@ -80,20 +78,20 @@ namespace Wpf3dVersion.ViewModel
 
         public MainWindowViewModel()
         {
-            GraphField          = new WpfGraphField3D();
-            VertexEventHolder   = new WpfVertex3DEventHolder();
-            FieldFactory        = new WpfGraphField3DFactory();
-            InfoConverter       = (info) => new WpfVertex3D(info);
+            GraphField = new WpfGraphField3D();
+            VertexEventHolder = new WpfVertex3DEventHolder();
+            FieldFactory = new WpfGraphField3DFactory();
+            InfoConverter = (info) => new WpfVertex3D(info);
 
-            StartPathFindCommand    = new RelayCommand(ExecuteStartPathFindCommand,  CanExecuteStartFindPathCommand);
-            CreateNewGraphCommand   = new RelayCommand(ExecuteCreateNewGraphCommand, AlwaysExecutable);
-            ClearGraphCommand       = new RelayCommand(ExecuteClearGraphCommand,     CanExecuteGraphOperation);
-            SaveGraphCommand        = new RelayCommand(ExecuteSaveGraphCommand,      CanExecuteGraphOperation);
-            LoadGraphCommand        = new RelayCommand(ExecuteLoadGraphCommand,      AlwaysExecutable);           
-            ChangeOpacityCommand    = new RelayCommand(ExecuteChangeOpacity,         CanExecuteGraphOperation);
-            AutoRotateXAxisCommand  = new RelayCommand(ExecuteAutoRotateXAxisCommand, AlwaysExecutable);
-            AutoRotateYAxisCommand  = new RelayCommand(ExecuteAutoRotateYAxisCommand, AlwaysExecutable);
-            AutoRotateZAxisCommand  = new RelayCommand(ExecuteAutoRotateZAxisCommand, AlwaysExecutable);
+            StartPathFindCommand = new RelayCommand(ExecuteStartPathFindCommand, CanExecuteStartFindPathCommand);
+            CreateNewGraphCommand = new RelayCommand(ExecuteCreateNewGraphCommand, AlwaysExecutable);
+            ClearGraphCommand = new RelayCommand(ExecuteClearGraphCommand, CanExecuteGraphOperation);
+            SaveGraphCommand = new RelayCommand(ExecuteSaveGraphCommand, CanExecuteGraphOperation);
+            LoadGraphCommand = new RelayCommand(ExecuteLoadGraphCommand, AlwaysExecutable);
+            ChangeOpacityCommand = new RelayCommand(ExecuteChangeOpacity, CanExecuteGraphOperation);
+            AutoRotateXAxisCommand = new RelayCommand(ExecuteAutoRotateXAxisCommand, AlwaysExecutable);
+            AutoRotateYAxisCommand = new RelayCommand(ExecuteAutoRotateYAxisCommand, AlwaysExecutable);
+            AutoRotateZAxisCommand = new RelayCommand(ExecuteAutoRotateZAxisCommand, AlwaysExecutable);
 
             Serializer = new GraphSerializer<Graph3D>();
 
@@ -207,7 +205,7 @@ namespace Wpf3dVersion.ViewModel
         private void ExecuteAutoRotateXAxisCommand(object direction)
         {
             var currentWindow = Application.Current.MainWindow as MainWindow;
-            var axisRotate = new AnimatedAxisRotation(currentWindow.xAxis, 
+            var axisRotate = new AnimatedAxisRotation(currentWindow.xAxis,
                 (RotateDirection)direction);
             axisRotate.RotateAxisAnimated();
         }
@@ -215,7 +213,7 @@ namespace Wpf3dVersion.ViewModel
         private void ExecuteAutoRotateYAxisCommand(object direction)
         {
             var currentWindow = Application.Current.MainWindow as MainWindow;
-            var axisRotate = new AnimatedAxisRotation(currentWindow.yAxis, 
+            var axisRotate = new AnimatedAxisRotation(currentWindow.yAxis,
                 (RotateDirection)direction);
             axisRotate.RotateAxisAnimated();
         }
@@ -223,15 +221,14 @@ namespace Wpf3dVersion.ViewModel
         private void ExecuteAutoRotateZAxisCommand(object direction)
         {
             var currentWindow = Application.Current.MainWindow as MainWindow;
-            var axisRotate = new AnimatedAxisRotation(currentWindow.zAxis, 
+            var axisRotate = new AnimatedAxisRotation(currentWindow.zAxis,
                 (RotateDirection)direction);
             axisRotate.RotateAxisAnimated();
         }
 
-        private void OnPathNotFound(object sender, EventArgs e)
+        private void OnPathNotFound(string message)
         {
-            var args = e as PathNotFoundEventArgs;
-            MessageBox.Show(args?.Message);
+            MessageBox.Show(message);
         }
 
         private bool AlwaysExecutable(object param)

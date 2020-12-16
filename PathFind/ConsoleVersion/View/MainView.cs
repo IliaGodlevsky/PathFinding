@@ -31,7 +31,7 @@ namespace ConsoleVersion.View
                 { MenuOption.MakeWeighted, () => { mainModel.Graph.ToWeighted(); } },
                 { MenuOption.MakeUnweigted, () => { mainModel.Graph.ToUnweighted(); } }
             };
-            
+
             menu = GetMenu();
         }
 

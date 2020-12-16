@@ -35,8 +35,8 @@ namespace Common.Logger
         public void Log(string format, params object[] paramters)
         {
             using (stream = new StreamWriter(Path, append: true))
-            { 
-                stream.Write(string.Format(format, paramters)); 
+            {
+                stream.Write(string.Format(format, paramters));
             }
         }
 

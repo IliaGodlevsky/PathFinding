@@ -1,7 +1,5 @@
 ﻿using GraphLib.Extensions;
 using GraphLib.Graphs.Abstractions;
-using GraphLib.Graphs.Delegates;
-using GraphLib.Graphs.EventArguments;
 using GraphLib.Vertex.Interface;
 using System.Collections;
 using System.Collections.Generic;
@@ -11,8 +9,6 @@ namespace GraphLib.Graphs.Infrastructure
 {
     public sealed class GraphPath : IEnumerable<IVertex>
     {
-        public event GraphPathEventHandler OnVertexHighlighted;
-
         public GraphPath(IGraph graph) : this()
         {
             ExtractPath(graph);
@@ -28,8 +24,10 @@ namespace GraphLib.Graphs.Infrastructure
         {
             foreach (IVertex vertex in path)
             {
-                var args = new GraphPathEventArgs(vertex);
-                OnVertexHighlighted?.Invoke(vertex, args);               
+                if (vertex.IsSimpleVertex())
+                {
+                    vertex.MarkAsPath();
+                }
             }
         }
 
@@ -37,12 +35,11 @@ namespace GraphLib.Graphs.Infrastructure
         {
             if (graph.IsExtremeVerticesVisited())
             {
-                path = UnwindPath(graph.End);
+                path = GetPath(graph.End);
                 PathCost = path.Sum(vertex => (int)vertex.Cost);
                 PathLength = path.Count();
+                IsExtracted = path.Any();
             }
-
-            IsExtracted =  path.Any();
         }
 
         public IEnumerator<IVertex> GetEnumerator()
@@ -60,18 +57,18 @@ namespace GraphLib.Graphs.Infrastructure
             path = new IVertex[] { };
         }
 
-        private IEnumerable<IVertex> UnwindPath(IVertex end)
+        private IEnumerable<IVertex> GetPath(IVertex end)
         {
             var temp = end;
 
-            while (!IsEndOfPath(temp))
+            while (!IsStartOfPath(temp))
             {
                 yield return temp;
                 temp = temp.ParentVertex;
             }
         }
 
-        private bool IsEndOfPath(IVertex vertex)
+        private bool IsStartOfPath(IVertex vertex)
         {
             return vertex.IsDefault || vertex.IsStart;
         }

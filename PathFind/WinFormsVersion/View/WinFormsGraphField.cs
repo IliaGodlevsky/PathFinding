@@ -12,7 +12,7 @@ namespace WinFormsVersion.Model
     {
         public WinFormsGraphField()
         {
-            
+
         }
 
         public void Add(IVertex vertex)

@@ -1,6 +1,5 @@
 ﻿using ConsoleVersion.Model;
 using GraphLib.Coordinates;
-using GraphLib.Coordinates.Infrastructure;
 using GraphLib.Extensions;
 using GraphLib.GraphField;
 using GraphLib.Vertex.Interface;
@@ -40,7 +39,7 @@ namespace ConsoleVersion.View
             ShowGraph();
             Console.Write(GetFramedAbscissa(FramedAbscissaView.FrameOver));
         }
-       
+
         private string Abscissa
         {
             get
@@ -74,11 +73,11 @@ namespace ConsoleVersion.View
         }
 
         private string GetFramedAbscissa(FramedAbscissaView framedAbscissaView)
-        {            
-            var framedAbscissaComponents = new List<string>() 
-            { 
-                Abscissa, 
-                HorizontalFrame 
+        {
+            var framedAbscissaComponents = new List<string>()
+            {
+                Abscissa,
+                HorizontalFrame
             };
 
             var framedAbscissa = new StringBuilder();
@@ -153,17 +152,17 @@ namespace ConsoleVersion.View
             return currentIndex >= 10;
         }
 
-        private enum FramedAbscissaView 
-        { 
-            FrameOver, 
-            FrameUnder 
-        
+        private enum FramedAbscissaView
+        {
+            FrameOver,
+            FrameUnder
+
         }
 
-        private enum TableSide 
-        { 
-            Right, 
-            Left 
+        private enum TableSide
+        {
+            Right,
+            Left
         }
 
         private readonly List<ConsoleVertex> vertices;

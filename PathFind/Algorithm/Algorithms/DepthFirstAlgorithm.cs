@@ -1,12 +1,12 @@
-﻿using System;
-using System.Linq;
-using GraphLib.Vertex.Interface;
-using System.Collections.Generic;
-using System.ComponentModel;
+﻿using Algorithm.Algorithms.Abstractions;
 using Algorithm.Extensions;
 using GraphLib.Extensions;
 using GraphLib.Graphs.Abstractions;
-using Algorithm.Algorithms.Abstractions;
+using GraphLib.Vertex.Interface;
+using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Linq;
 
 namespace Algorithm.Algorithms
 {

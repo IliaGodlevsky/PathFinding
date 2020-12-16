@@ -1,7 +1,7 @@
-﻿using System.Collections.Generic;
-using GraphLib.Vertex.Cost;
-using Common.Interfaces;
+﻿using Common.Interfaces;
 using GraphLib.Coordinates.Abstractions;
+using GraphLib.Vertex.Cost;
+using System.Collections.Generic;
 
 namespace GraphLib.Vertex.Interface
 {

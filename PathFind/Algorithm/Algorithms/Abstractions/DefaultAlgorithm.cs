@@ -1,21 +1,23 @@
-﻿using System;
-using GraphLib.Vertex.Interface;
-using GraphLib.Vertex;
-using Algorithm.EventArguments;
-using GraphLib.Graphs;
+﻿using GraphLib.Graphs;
 using GraphLib.Graphs.Abstractions;
-using Algorithm.Delegates;
+using GraphLib.Vertex;
+using GraphLib.Vertex.Interface;
+using System;
 
 namespace Algorithm.Algorithms.Abstractions
 {
     public sealed class DefaultAlgorithm : IAlgorithm
     {
-        public event AlgorithmEventHanlder OnStarted;
+        public event Action OnStarted;
         public event Action<IVertex> OnVertexVisited;
-        public event AlgorithmEventHanlder OnFinished;
+        public event Action OnFinished;
         public event Action<IVertex> OnVertexEnqueued;
 
-        public IGraph Graph { get => new DefaultGraph(); set => _ = value; }
+        public IGraph Graph
+        {
+            get => new NullGraph();
+            set => _ = value;
+        }
 
         public bool IsDefault => true;
 
@@ -31,10 +33,10 @@ namespace Algorithm.Algorithms.Abstractions
 
         public void FindPath()
         {
-            OnStarted?.Invoke(this, new AlgorithmEventArgs());
+            OnStarted?.Invoke();
             OnVertexVisited?.Invoke(new DefaultVertex());
             OnVertexEnqueued?.Invoke(new DefaultVertex());
-            OnFinished?.Invoke(this, new AlgorithmEventArgs());
+            OnFinished?.Invoke();
         }
     }
 }

@@ -24,7 +24,7 @@ namespace WinFormsVersion.ViewModel
         }
 
         public void CancelPathFind(object sender, EventArgs e)
-        {           
+        {
             (mainViewModel as MainWindowViewModel).Window.Close();
         }
 

@@ -8,7 +8,7 @@ namespace WinFormsVersion.ViewModel
     internal class GraphCreatingViewModel : GraphCreatingModel
     {
         public GraphCreatingViewModel(IMainModel model) : base(model)
-        {            
+        {
 
         }
 

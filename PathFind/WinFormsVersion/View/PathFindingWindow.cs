@@ -23,14 +23,14 @@ namespace WinFormsVersion.View
             algorithmListBox.ValueMember = nameof(algoKey.Name);
 
             var algorithmBinding = new Binding(
-                nameof(algorithmListBox.SelectedValue), 
-                model, 
+                nameof(algorithmListBox.SelectedValue),
+                model,
                 nameof(model.AlgorithmKey));
             algorithmListBox.DataBindings.Add(algorithmBinding);
 
             var bindingDelaySliderToDelayTextBox = new Binding(
-                nameof(delaySlider.Value), 
-                delayTextBox, 
+                nameof(delaySlider.Value),
+                delayTextBox,
                 nameof(delayTextBox.Text),
                 true, DataSourceUpdateMode.OnPropertyChanged);
             delaySlider.DataBindings.Add(bindingDelaySliderToDelayTextBox);
@@ -39,8 +39,8 @@ namespace WinFormsVersion.View
             delaySlider.Maximum = Range.DelayValueRange.UpperRange;
 
             var bindingDelatTextBoxToModel = new Binding(
-                nameof(delayTextBox.Text), 
-                model, 
+                nameof(delayTextBox.Text),
+                model,
                 nameof(model.DelayTime),
                 true, DataSourceUpdateMode.OnPropertyChanged);
             delayTextBox.DataBindings.Add(bindingDelatTextBoxToModel);

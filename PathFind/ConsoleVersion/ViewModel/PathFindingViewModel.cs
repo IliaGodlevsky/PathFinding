@@ -1,16 +1,15 @@
-﻿using ConsoleVersion.InputClass;
-using System;
-using GraphLib.ViewModel;
-using System.Threading;
-using System.Linq;
-using GraphLib.Coordinates;
-using GraphLib.Graphs;
-using Algorithm.AlgorithmCreating;
-using GraphViewModel.Interfaces;
-using GraphLib.Extensions;
+﻿using Algorithm.AlgorithmCreating;
 using Common.ValueRanges;
+using ConsoleVersion.InputClass;
 using ConsoleVersion.Model;
-using Algorithm.EventArguments;
+using GraphLib.Coordinates;
+using GraphLib.Extensions;
+using GraphLib.Graphs;
+using GraphLib.ViewModel;
+using GraphViewModel.Interfaces;
+using System;
+using System.Linq;
+using System.Threading;
 
 namespace ConsoleVersion.ViewModel
 {
@@ -26,7 +25,6 @@ namespace ConsoleVersion.ViewModel
         {
             maxAlgorithmKeysNumber = AlgorithmFactory.GetAlgorithmKeys().Count();
             minAlgorithmKeysNumber = 1;
-            pauseProvider.PauseEvent += () => { };
         }
 
         public override void FindPath()
@@ -53,37 +51,37 @@ namespace ConsoleVersion.ViewModel
             }
         }
 
-        protected override void OnAlgorithmStarted(object sender, AlgorithmEventArgs e)
+        protected override void OnAlgorithmStarted()
         {
             IsPathfindingEnded = false;
-            base.OnAlgorithmStarted(sender, e);
-            
+            base.OnAlgorithmStarted();
+
             thread = new Thread(DisplayGraphDuringPathfinding);
             thread.Start();
         }
 
-        protected override void OnAlgorithmFinished(object sender, AlgorithmEventArgs e)
+        protected override void OnAlgorithmFinished()
         {
             IsPathfindingEnded = true;
             thread.Join();
 
-            base.OnAlgorithmFinished(sender, e);
+            base.OnAlgorithmFinished();
         }
 
         private int GetAlgorithmKeyIndex()
         {
             return Input.InputNumber(
                 AlgorithmKeyInputMessage,
-                maxAlgorithmKeysNumber, 
+                maxAlgorithmKeysNumber,
                 minAlgorithmKeysNumber) - 1;
         }
 
         private void ChooseExtremeVertex()
         {
-            var chooseMessages = new string[] 
-            { 
-                StartVertexInputMessage, 
-                EndVertexInputMessage 
+            var chooseMessages = new string[]
+            {
+                StartVertexInputMessage,
+                EndVertexInputMessage
             };
 
             for (int i = 0; i < chooseMessages.Length; i++)
@@ -112,11 +110,11 @@ namespace ConsoleVersion.ViewModel
         }
 
         private void DisplayGraphDuringPathfinding()
-        { 
+        {
+            var mainModel = mainViewModel as MainViewModel;
             while (!IsPathfindingEnded)
             {
                 Thread.Sleep(millisecondsTimeout: 135);
-                var mainModel = mainViewModel as MainViewModel;
                 mainModel.DisplayGraph();
             }
         }

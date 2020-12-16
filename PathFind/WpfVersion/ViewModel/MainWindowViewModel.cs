@@ -1,18 +1,16 @@
-﻿using System.ComponentModel;
+﻿using GraphLib.Extensions;
+using GraphLib.GraphField;
+using GraphViewModel;
+using GraphViewModel.Interfaces;
+using Microsoft.Win32;
+using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using System.Windows;
 using WpfVersion.Infrastructure;
 using WpfVersion.Model;
-using WpfVersion.View.Windows;
 using WpfVersion.Model.EventHolder;
-using GraphLib.GraphField;
-using Microsoft.Win32;
 using WpfVersion.Model.Vertex;
-using GraphViewModel;
-using GraphLib.Extensions;
-using GraphViewModel.Interfaces;
-using System;
-using Common.EventArguments;
+using WpfVersion.View.Windows;
 
 namespace WpfVersion.ViewModel
 {
@@ -35,19 +33,19 @@ namespace WpfVersion.ViewModel
         }
 
         private string statistics;
-        public override string PathFindingStatistics 
+        public override string PathFindingStatistics
         {
             get { return statistics; }
             set { statistics = value; OnPropertyChanged(); }
         }
 
         private IGraphField graphField;
-        public override IGraphField GraphField 
-        { 
-            get { return graphField; } 
-            set 
-            { 
-                graphField = value; 
+        public override IGraphField GraphField
+        {
+            get { return graphField; }
+            set
+            {
+                graphField = value;
                 OnPropertyChanged();
                 WindowAdjust.Adjust(Graph);
             }
@@ -69,18 +67,18 @@ namespace WpfVersion.ViewModel
 
         public MainWindowViewModel()
         {
-            GraphField          = new WpfGraphField();
-            VertexEventHolder   = new WpfVertexEventHolder();
-            FieldFactory        = new WpfGraphFieldFactory();
-            InfoConverter       = (dto) => new WpfVertex(dto);
+            GraphField = new WpfGraphField();
+            VertexEventHolder = new WpfVertexEventHolder();
+            FieldFactory = new WpfGraphFieldFactory();
+            InfoConverter = (dto) => new WpfVertex(dto);
 
-            StartPathFindCommand    = new RelayCommand(ExecuteStartPathFindCommand,     CanExecuteStartFindPathCommand);
-            CreateNewGraphCommand   = new RelayCommand(ExecuteCreateNewGraphCommand,    AlwaysExecutable);
-            ClearGraphCommand       = new RelayCommand(ExecuteClearGraphCommand,        CanExecuteGraphOperation);
-            SaveGraphCommand        = new RelayCommand(ExecuteSaveGraphCommand,         CanExecuteGraphOperation);
-            LoadGraphCommand        = new RelayCommand(ExecuteLoadGraphCommand,         AlwaysExecutable);
-            ChangeVertexSize        = new RelayCommand(ExecuteChangeVertexSize,         CanExecuteGraphOperation);
-            ShowVertexCost          = new RelayCommand(ExecuteShowVertexCostCommand,    AlwaysExecutable);
+            StartPathFindCommand = new RelayCommand(ExecuteStartPathFindCommand, CanExecuteStartFindPathCommand);
+            CreateNewGraphCommand = new RelayCommand(ExecuteCreateNewGraphCommand, AlwaysExecutable);
+            ClearGraphCommand = new RelayCommand(ExecuteClearGraphCommand, CanExecuteGraphOperation);
+            SaveGraphCommand = new RelayCommand(ExecuteSaveGraphCommand, CanExecuteGraphOperation);
+            LoadGraphCommand = new RelayCommand(ExecuteLoadGraphCommand, AlwaysExecutable);
+            ChangeVertexSize = new RelayCommand(ExecuteChangeVertexSize, CanExecuteGraphOperation);
+            ShowVertexCost = new RelayCommand(ExecuteShowVertexCostCommand, AlwaysExecutable);
         }
 
 
@@ -108,7 +106,7 @@ namespace WpfVersion.ViewModel
 
         public override void CreateNewGraph()
         {
-            PrepareWindow(new GraphCreatingViewModel(this), new GraphCreatesWindow());           
+            PrepareWindow(new GraphCreatingViewModel(this), new GraphCreatesWindow());
         }
 
         public void ExecuteChangeVertexSize(object param)
@@ -146,8 +144,8 @@ namespace WpfVersion.ViewModel
 
         private string GetPath(FileDialog dialog)
         {
-            return dialog.ShowDialog() == true 
-                ? dialog.FileName 
+            return dialog.ShowDialog() == true
+                ? dialog.FileName
                 : string.Empty;
         }
         private void ExecuteSaveGraphCommand(object param)
@@ -190,10 +188,9 @@ namespace WpfVersion.ViewModel
             return !Graph.IsDefault;
         }
 
-        private void OnPathNotFound(object sender, EventArgs e)
+        private void OnPathNotFound(string message)
         {
-            var args = e as PathNotFoundEventArgs;
-            MessageBox.Show(args.Message);
+            MessageBox.Show(message);
         }
     }
 }

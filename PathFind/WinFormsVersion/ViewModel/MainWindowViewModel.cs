@@ -1,19 +1,18 @@
-﻿using System;
+﻿using Common;
+using GraphLib.Extensions;
+using GraphLib.GraphField;
+using GraphLib.Graphs;
+using GraphViewModel;
+using System;
 using System.ComponentModel;
 using System.Drawing;
 using System.Runtime.CompilerServices;
 using System.Windows.Forms;
+using WinFormsVersion.EventHolder;
 using WinFormsVersion.Extensions;
 using WinFormsVersion.Forms;
 using WinFormsVersion.Model;
 using WinFormsVersion.View;
-using WinFormsVersion.EventHolder;
-using GraphLib.GraphField;
-using GraphLib.Graphs;
-using GraphViewModel;
-using GraphLib.Extensions;
-using Common;
-using Common.EventArguments;
 
 namespace WinFormsVersion.ViewModel
 {
@@ -41,11 +40,11 @@ namespace WinFormsVersion.ViewModel
         }
 
         private IGraphField graphField;
-        public override IGraphField GraphField 
+        public override IGraphField GraphField
         {
             get => graphField;
             set
-            {                
+            {
                 graphField = value;
                 int size = VertexParametres.SizeBetweenVertices;
                 var field = graphField as WinFormsGraphField;
@@ -161,10 +160,9 @@ namespace WinFormsVersion.ViewModel
             return Graph.IsReadyForPathfinding();
         }
 
-        private void OnPathNotFound(object sender, EventArgs e)
+        private void OnPathNotFound(string message)
         {
-            var args = e as PathNotFoundEventArgs;
-            MessageBox.Show(args?.Message);
+            MessageBox.Show(message);
         }
     }
 }

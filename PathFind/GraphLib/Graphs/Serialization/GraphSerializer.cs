@@ -27,7 +27,7 @@ namespace GraphLib.Graphs.Serialization
             formatter = new BinaryFormatter();
         }
 
-        public IGraph LoadGraph(string path, 
+        public IGraph LoadGraph(string path,
             Func<VertexInfo, IVertex> vertexConvertMethod)
         {
             try
@@ -53,7 +53,7 @@ namespace GraphLib.Graphs.Serialization
             catch (Exception ex)
             {
                 OnExceptionCaught?.Invoke(ex.Message);
-                return new DefaultGraph();
+                return new NullGraph();
             }
         }
 

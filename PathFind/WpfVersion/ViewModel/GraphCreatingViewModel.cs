@@ -15,7 +15,7 @@ namespace WpfVersion.ViewModel
         public GraphCreatingViewModel(IMainModel model) : base(model)
         {
             ConfirmCreateGraphCommand = new RelayCommand(ExecuteConfirmCreateGraphCommand, obj => true);
-            CancelCreateGraphCommand = new RelayCommand(obj=> CloseWindow(), obj => true);
+            CancelCreateGraphCommand = new RelayCommand(obj => CloseWindow(), obj => true);
         }
 
         private void ExecuteConfirmCreateGraphCommand(object param)

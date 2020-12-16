@@ -43,8 +43,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AlgorithmCreating\AlgorithmFactory.cs" />
-    <Compile Include="Delegates\AlgorithmEventHandler.cs" />
-    <Compile Include="EventArguments\AlgorithmEventArgs.cs" />
     <Compile Include="Extensions\IEnumerableExtenions.cs" />
     <Compile Include="Extensions\ListExtension.cs" />
     <Compile Include="Extensions\QueueExtensions.cs" />

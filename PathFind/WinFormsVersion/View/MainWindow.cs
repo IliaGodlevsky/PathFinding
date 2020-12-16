@@ -35,14 +35,14 @@ namespace WinFormsVersion.Forms
             unweightedButton.GroupID = 1;
 
             var bindingStatistics = new Binding(
-                nameof(statistics.Text), 
-                mainModel, 
+                nameof(statistics.Text),
+                mainModel,
                 nameof(mainModel.PathFindingStatistics));
             statistics.DataBindings.Add(bindingStatistics);
 
             var bindingParametres = new Binding(
-                nameof(parametres.Text), 
-                mainModel, 
+                nameof(parametres.Text),
+                mainModel,
                 nameof(mainModel.GraphParametres));
             parametres.DataBindings.Add(bindingParametres);
 

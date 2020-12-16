@@ -12,7 +12,7 @@ namespace GraphLib.Graphs.Abstractions
 {
     public abstract class BaseGraph : IGraph
     {
-        public BaseGraph(params int[]dimensionSizes)
+        public BaseGraph(params int[] dimensionSizes)
         {
             DimensionsSizes = dimensionSizes.ToArray();
 
@@ -25,10 +25,10 @@ namespace GraphLib.Graphs.Abstractions
         public int NumberOfVisitedVertices
             => vertices.AsParallel().Count(vertex => vertex.IsVisited);
 
-        public int ObstacleNumber 
+        public int ObstacleNumber
             => vertices.AsParallel().Count(vertex => vertex.IsObstacle);
 
-        public int ObstaclePercent 
+        public int ObstaclePercent
             => Size == 0 ? 0 : ObstacleNumber * 100 / Size;
 
         protected IVertex end;
@@ -45,7 +45,7 @@ namespace GraphLib.Graphs.Abstractions
             set { start = value; start.IsStart = true; }
         }
 
-        public VertexInfoCollection VertexInfoCollection 
+        public VertexInfoCollection VertexInfoCollection
             => new VertexInfoCollection(vertices, DimensionsSizes.ToArray());
 
         public IEnumerable<int> DimensionsSizes { get; private set; }
@@ -70,7 +70,7 @@ namespace GraphLib.Graphs.Abstractions
 
         public abstract string GetFormattedData(string format);
 
-        public virtual IVertex this[ICoordinate coordinate] 
+        public virtual IVertex this[ICoordinate coordinate]
         {
             get
             {

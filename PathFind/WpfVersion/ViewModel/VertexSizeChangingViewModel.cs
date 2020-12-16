@@ -11,7 +11,7 @@ using WpfVersion.Model.Vertex;
 namespace WpfVersion.ViewModel
 {
     internal class VertexSizeChangingViewModel : IModel
-    {       
+    {
         public int Size { get; set; }
 
         public MainWindowViewModel Model { get; set; }

@@ -1,13 +1,9 @@
-﻿using System;
-using GraphLib.Graphs.Abstractions;
+﻿using GraphLib.Graphs.Abstractions;
+using System;
 using System.Linq;
 
 namespace GraphLib.Graphs
 {
-    /// <summary>
-    /// A structure amounting to a set of objects in which 
-    /// some pairs of the objects are in some sense "related"
-    /// </summary>
     public sealed class Graph2D : BaseGraph
     {
         public int Width => DimensionsSizes.First();

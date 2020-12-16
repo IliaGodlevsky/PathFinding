@@ -52,10 +52,10 @@ namespace GraphLib.Graphs.Factories
 
                 return graph;
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 OnExceptionCaught?.Invoke(ex.Message);
-                return new DefaultGraph();
+                return new NullGraph();
             }
         }
 

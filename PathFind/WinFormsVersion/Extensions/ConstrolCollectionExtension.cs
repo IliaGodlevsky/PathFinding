@@ -9,7 +9,7 @@ namespace WinFormsVersion.Extensions
         public static void RemoveBy(this ControlCollection collection,
             Func<Control, bool> predicate)
         {
-            foreach(Control control in collection)
+            foreach (Control control in collection)
             {
                 if (predicate(control))
                 {
