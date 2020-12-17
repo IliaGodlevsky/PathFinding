@@ -49,7 +49,13 @@ namespace GraphLib.Coordinates.Infrastructure
             }
         }
 
-        private bool NeighboursAreNegative => neighbourCoordinates.Any(value => value < 0);
+        private bool NeighboursAreNegative
+        {
+            get
+            {
+                return neighbourCoordinates.Any(value => value < 0);
+            }
+        }
 
         private int LeftNeighbour(int depth)
         {
