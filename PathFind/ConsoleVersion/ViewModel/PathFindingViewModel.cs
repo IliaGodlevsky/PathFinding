@@ -23,7 +23,7 @@ namespace ConsoleVersion.ViewModel
 
         public PathFindingViewModel(IMainModel model) : base(model)
         {
-            maxAlgorithmKeysNumber = AlgorithmFactory.GetAlgorithmKeys().Count();
+            maxAlgorithmKeysNumber = AlgorithmFactory.AlgorithmKeys.Count();
             minAlgorithmKeysNumber = 1;
         }
 
@@ -39,7 +39,7 @@ namespace ConsoleVersion.ViewModel
                 mainModel.DisplayGraph();
 
                 var algorithmKeyIndex = GetAlgorithmKeyIndex();
-                var algorithmKeys = AlgorithmFactory.GetAlgorithmKeys();
+                var algorithmKeys = AlgorithmFactory.AlgorithmKeys;
                 AlgorithmKey = algorithmKeys.ElementAt(algorithmKeyIndex);
 
                 DelayTime = Input.InputNumber(

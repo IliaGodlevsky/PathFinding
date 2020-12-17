@@ -12,21 +12,14 @@ namespace Common.Extensions
             return Assembly.Load(self.Assembly.GetName());
         }
 
-        public static IEnumerable<string> GetInterfacesNames(this Type self)
-        {
-            return self
-                .GetInterfaces()
-                .Select(interf => interf.Name);
-        }
-
-        public static bool IsInterfaceImplemeted<Interface>(this Type self) where Interface : class
+        public static bool IsImplementationOf<Interface>(this Type self) where Interface : class
         {
             if (!typeof(Interface).IsInterface)
             {
                 return false;
             }
-            return self.GetInterfacesNames()
-                .Contains(typeof(Interface).Name);
+            return self.GetInterfaces()
+                .Contains(typeof(Interface));
         }
     }
 }

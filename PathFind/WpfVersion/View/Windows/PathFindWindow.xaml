@@ -9,10 +9,6 @@
         mc:Ignorable="d"       
         Title="PathFindParametresWindow" SizeToContent="WidthAndHeight">
     <Window.Resources>
-        <ObjectDataProvider x:Key="algorithmList" MethodName="GetAlgorithmKeys" 
-                            ObjectType="{x:Type algo:AlgorithmFactory}">
-            
-        </ObjectDataProvider>
         <converters:StringToRangedDoubleConverter x:Key="sliderValueConverter"></converters:StringToRangedDoubleConverter>
         <converters:ToStringConverter x:Key="algorithmKeyConverter"></converters:ToStringConverter>
     </Window.Resources>
@@ -26,7 +22,8 @@
             <Button Command="{Binding ConfirmPathFindAlgorithmChoice}"  Margin ="5" Content="Start"></Button>
             <Button Command="{Binding CancelPathFindAlgorithmChoice}" Margin ="5" Content="Cancel"></Button>
         </StackPanel>
-        <ListBox ItemsSource="{Binding Source={StaticResource algorithmList} }" x:Name="algoListBox" BorderThickness="0" Margin="5"
+        <ListBox ItemsSource="{Binding Source={x:Static algo:AlgorithmFactory.AlgorithmKeys } }" 
+                 x:Name="algoListBox" BorderThickness="0" Margin="5"
                  SelectedItem="{Binding Path = AlgorithmKey}">
             <ListBox.ItemTemplate>
                 <DataTemplate>

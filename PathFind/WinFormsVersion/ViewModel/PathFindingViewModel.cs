@@ -30,7 +30,7 @@ namespace WinFormsVersion.ViewModel
 
         private bool CanExecuteConfirmPathFindAlgorithmChoice()
         {
-            return AlgorithmFactory.GetAlgorithmKeys().Any(algo => algo == AlgorithmKey);
+            return AlgorithmFactory.AlgorithmKeys.Any(algo => algo == AlgorithmKey);
         }
     }
 }

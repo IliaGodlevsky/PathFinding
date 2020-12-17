@@ -10,10 +10,7 @@ namespace Algorithm.AlgorithmCreating
 {
     public static class AlgorithmFactory
     {
-        public static IEnumerable<string> GetAlgorithmKeys()
-        {
-            return AlgorithmKeys;
-        }
+        public static IEnumerable<string> AlgorithmKeys { get; private set; }
 
         static AlgorithmFactory()
         {
@@ -28,8 +25,6 @@ namespace Algorithm.AlgorithmCreating
                 : new DefaultAlgorithm();
         }
 
-        private static IEnumerable<string> AlgorithmKeys { get; set; }
-
         private static Dictionary<string, Type> Algorithms { get; set; }
 
         private static Dictionary<string, Type> GetDictionaryOfAlgorithms()
@@ -38,8 +33,8 @@ namespace Algorithm.AlgorithmCreating
                 .GetAssembly()
                 .GetTypes()
                 .Except(FilterTypes)
-                .Where(type => type.IsInterfaceImplemeted<IAlgorithm>())
-                .ToDictionary(type => GetAlgorithmDescription(type), type => type);
+                .Where(type => type.IsImplementationOf<IAlgorithm>())
+                .ToDictionary(GetAlgorithmDescription, type => type);
         }
 
         private static string GetAlgorithmDescription(Type algorithmType)
@@ -50,7 +45,7 @@ namespace Algorithm.AlgorithmCreating
             return description;
         }
 
-        private static IEnumerable<Type> FilterTypes 
-            => new Type[] { typeof(DefaultAlgorithm), typeof(BaseAlgorithm) };        
+        private static IEnumerable<Type> FilterTypes
+            => new Type[] { typeof(DefaultAlgorithm), typeof(BaseAlgorithm) };
     }
 }

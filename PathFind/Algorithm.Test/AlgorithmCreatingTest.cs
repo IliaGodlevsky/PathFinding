@@ -13,7 +13,7 @@ namespace Algorithm.Test
         [TestMethod]
         public void Should_ReturnAlgorithm_When_KeyIsValid()
         {
-            var keys = AlgorithmFactory.GetAlgorithmKeys().ToArray();
+            var keys = AlgorithmFactory.AlgorithmKeys.ToArray();
 
             var algorithms = GetAlgorithms(keys);
 
