@@ -29,7 +29,11 @@ namespace Algorithm.AlgorithmCreating
         {
             get
             {
-                return new Type[] { typeof(DefaultAlgorithm), typeof(BaseAlgorithm) };
+                return new Type[]
+                {
+                    typeof(DefaultAlgorithm),
+                    typeof(BaseAlgorithm)
+                };
             }
         }
 
