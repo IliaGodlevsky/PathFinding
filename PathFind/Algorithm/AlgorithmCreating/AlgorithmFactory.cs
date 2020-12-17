@@ -53,8 +53,6 @@ namespace Algorithm.AlgorithmCreating
             return description;
         }
 
-
-
         private static bool IsPathfindingAlgorithmType(Type type)
         {
             return type.IsImplementationOf<IAlgorithm>();
