@@ -1,18 +1,14 @@
 ﻿using GraphLib.Extensions;
 using GraphLib.Graphs.Abstractions;
 using GraphLib.Vertex.Interface;
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 
 namespace GraphLib.Graphs.Infrastructure
 {
-    public sealed class GraphPath : IEnumerable<IVertex>
+    public sealed class GraphPath
     {
-        public GraphPath(IGraph graph) : this()
-        {
-            ExtractPath(graph);
-        }
+        public IEnumerable<IVertex> Path { get; private set; }
 
         public bool IsExtracted { get; private set; }
 
@@ -20,9 +16,14 @@ namespace GraphLib.Graphs.Infrastructure
 
         public int PathCost { get; private set; }
 
+        public GraphPath(IGraph graph) : this()
+        {
+            ExtractPath(graph);
+        }
+
         public void HighlightPath()
         {
-            foreach (IVertex vertex in path)
+            foreach (IVertex vertex in Path)
             {
                 if (vertex.IsSimpleVertex())
                 {
@@ -35,26 +36,16 @@ namespace GraphLib.Graphs.Infrastructure
         {
             if (graph.IsExtremeVerticesVisited())
             {
-                path = GetPath(graph.End);
-                PathCost = path.Sum(vertex => (int)vertex.Cost);
-                PathLength = path.Count();
-                IsExtracted = path.Any();
+                Path = GetPath(graph.End);
+                PathCost = Path.Sum(vertex => (int)vertex.Cost);
+                PathLength = Path.Count();
+                IsExtracted = Path.Any();
             }
-        }
-
-        public IEnumerator<IVertex> GetEnumerator()
-        {
-            return path.GetEnumerator();
-        }
-
-        IEnumerator IEnumerable.GetEnumerator()
-        {
-            return path.GetEnumerator();
         }
 
         private GraphPath()
         {
-            path = new IVertex[] { };
+            Path = new IVertex[] { };
         }
 
         private IEnumerable<IVertex> GetPath(IVertex end)
@@ -72,7 +63,5 @@ namespace GraphLib.Graphs.Infrastructure
         {
             return vertex.IsDefault || vertex.IsStart;
         }
-
-        private IEnumerable<IVertex> path;
     }
 }
