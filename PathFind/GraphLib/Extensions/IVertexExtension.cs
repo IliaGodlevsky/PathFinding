@@ -80,11 +80,6 @@ namespace GraphLib.Extensions
             return self.Neighbours.Where(vertex => !vertex.IsVisited);
         }
 
-        public static bool HasUnvisitedNeighbours(this IVertex self)
-        {
-            return self.GetUnvisitedNeighbours().Any();
-        }
-
         internal static void Refresh(this IVertex vertex)
         {
             if (!vertex.IsObstacle)
