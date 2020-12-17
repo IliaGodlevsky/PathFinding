@@ -33,7 +33,7 @@ namespace Algorithm.AlgorithmCreating
                 .GetAssembly()
                 .GetTypes()
                 .Except(FilterTypes)
-                .Where(type => type.IsImplementationOf<IAlgorithm>())
+                .Where(IsPathfindingAlgorithm)
                 .ToDictionary(GetAlgorithmDescription, type => type);
         }
 
@@ -47,5 +47,8 @@ namespace Algorithm.AlgorithmCreating
 
         private static IEnumerable<Type> FilterTypes
             => new Type[] { typeof(DefaultAlgorithm), typeof(BaseAlgorithm) };
+
+        private static bool IsPathfindingAlgorithm(Type type) 
+            => type.IsImplementationOf<IAlgorithm>();
     }
 }
