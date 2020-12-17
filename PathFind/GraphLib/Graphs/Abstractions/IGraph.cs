@@ -6,10 +6,6 @@ using System.Collections.Generic;
 
 namespace GraphLib.Graphs.Abstractions
 {
-    /// <summary>
-    /// Provides methods for accessing the vertices of the graph, 
-    /// as well as for getting information about the graph
-    /// </summary>
     public interface IGraph : IEnumerable<IVertex>, IDefault
     {
         VertexInfoCollection VertexInfoCollection { get; }
