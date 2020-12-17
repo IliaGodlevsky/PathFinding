@@ -35,7 +35,7 @@ namespace WpfVersion.ViewModel
 
         private bool CanExecuteConfirmPathFindAlgorithmChoice(object param)
         {
-            return AlgorithmFactory.AlgorithmKeys.Any(algo => algo == AlgorithmKey);
+            return AlgorithmFactory.AlgorithmsDescriptions.Any(algo => algo == AlgorithmKey);
         }
     }
 }

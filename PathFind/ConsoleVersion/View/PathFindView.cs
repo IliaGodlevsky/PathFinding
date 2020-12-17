@@ -30,7 +30,7 @@ namespace ConsoleVersion.View
             get
             {
                 var algorithmList = new StringBuilder("\n");
-                var algorithmKeys = AlgorithmFactory.AlgorithmKeys.ToArray();
+                var algorithmKeys = AlgorithmFactory.AlgorithmsDescriptions.ToArray();
 
                 for (int i = 0; i < algorithmKeys.Length; i++)
                 {

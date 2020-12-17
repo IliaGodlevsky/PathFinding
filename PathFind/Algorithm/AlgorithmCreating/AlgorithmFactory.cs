@@ -10,12 +10,12 @@ namespace Algorithm.AlgorithmCreating
 {
     public static class AlgorithmFactory
     {
-        public static IEnumerable<string> AlgorithmKeys { get; private set; }
+        public static IEnumerable<string> AlgorithmsDescriptions { get; private set; }
 
         static AlgorithmFactory()
         {
             Algorithms = GetDictionaryOfAlgorithms();
-            AlgorithmKeys = Algorithms.Keys.OrderBy(key => key);
+            AlgorithmsDescriptions = Algorithms.Keys.OrderBy(key => key);
         }
 
         public static IAlgorithm CreateAlgorithm(string algorithmKey, IGraph graph)
@@ -32,9 +32,9 @@ namespace Algorithm.AlgorithmCreating
             return typeof(IAlgorithm)
                 .GetAssembly()
                 .GetTypes()
-                .Except(FilterTypes)
-                .Where(IsPathfindingAlgorithm)
-                .ToDictionary(GetAlgorithmDescription, type => type);
+                .Except(NotActiveAlgorithms)
+                .Where(IsPathfindingAlgorithmType)
+                .ToDictionary(GetAlgorithmDescription);
         }
 
         private static string GetAlgorithmDescription(Type algorithmType)
@@ -45,10 +45,17 @@ namespace Algorithm.AlgorithmCreating
             return description;
         }
 
-        private static IEnumerable<Type> FilterTypes
-            => new Type[] { typeof(DefaultAlgorithm), typeof(BaseAlgorithm) };
+        private static IEnumerable<Type> NotActiveAlgorithms
+        {
+            get
+            {
+                return new Type[] { typeof(DefaultAlgorithm), typeof(BaseAlgorithm) };
+            }
+        }
 
-        private static bool IsPathfindingAlgorithm(Type type) 
-            => type.IsImplementationOf<IAlgorithm>();
+        private static bool IsPathfindingAlgorithmType(Type type)
+        {
+            return type.IsImplementationOf<IAlgorithm>();
+        }
     }
 }

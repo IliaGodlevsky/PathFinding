@@ -25,7 +25,7 @@
             <Button Command="{Binding CancelPathFindAlgorithmChoice}" Margin ="5" Content="Cancel"></Button>
         </StackPanel>
 
-        <ListBox ItemsSource="{Binding Source={x:Static algo:AlgorithmFactory.AlgorithmKeys } }"
+        <ListBox ItemsSource="{Binding Source={x:Static algo:AlgorithmFactory.AlgorithmsDescriptions } }"
                  x:Name="algoListBox" BorderThickness="0" Margin="5"
                  SelectedItem="{Binding Path = AlgorithmKey}">
             <ListBox.ItemTemplate>
