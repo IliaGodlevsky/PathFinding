@@ -14,20 +14,28 @@ namespace Algorithm.AlgorithmCreating
 
         static AlgorithmFactory()
         {
-            Algorithms = GetDictionaryOfAlgorithms();
-            AlgorithmsDescriptions = Algorithms.Keys.OrderBy(key => key);
+            AlgorithmsDictionary = CreateAlgorithmsDictionary();
+            AlgorithmsDescriptions = AlgorithmsDictionary.Keys.OrderBy(key => key);
         }
 
         public static IAlgorithm CreateAlgorithm(string algorithmKey, IGraph graph)
         {
-            return Algorithms.ContainsKey(algorithmKey)
-                ? (IAlgorithm)Activator.CreateInstance(Algorithms[algorithmKey], graph)
+            return AlgorithmsDictionary.ContainsKey(algorithmKey)
+                ? (IAlgorithm)Activator.CreateInstance(AlgorithmsDictionary[algorithmKey], graph)
                 : new DefaultAlgorithm();
         }
 
-        private static Dictionary<string, Type> Algorithms { get; set; }
+        private static IEnumerable<Type> NotActiveAlgorithms
+        {
+            get
+            {
+                return new Type[] { typeof(DefaultAlgorithm), typeof(BaseAlgorithm) };
+            }
+        }
 
-        private static Dictionary<string, Type> GetDictionaryOfAlgorithms()
+        private static Dictionary<string, Type> AlgorithmsDictionary { get; set; }
+
+        private static Dictionary<string, Type> CreateAlgorithmsDictionary()
         {
             return typeof(IAlgorithm)
                 .GetAssembly()
@@ -45,13 +53,7 @@ namespace Algorithm.AlgorithmCreating
             return description;
         }
 
-        private static IEnumerable<Type> NotActiveAlgorithms
-        {
-            get
-            {
-                return new Type[] { typeof(DefaultAlgorithm), typeof(BaseAlgorithm) };
-            }
-        }
+
 
         private static bool IsPathfindingAlgorithmType(Type type)
         {
