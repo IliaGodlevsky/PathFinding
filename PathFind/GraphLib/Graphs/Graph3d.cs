@@ -12,12 +12,6 @@ namespace GraphLib.Graphs
 
         public int Height => DimensionsSizes.Last();
 
-        public Graph3D(int width, int lenght, int height)
-            : this(new int[] { width, lenght, height })
-        {
-
-        }
-
         public Graph3D(params int[] dimensions) : base(dimensions)
         {
             if (dimensions.Length != 3)

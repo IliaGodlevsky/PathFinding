@@ -1,4 +1,5 @@
-﻿using GraphLib.Extensions;
+﻿using Common;
+using GraphLib.Extensions;
 using GraphLib.Graphs.Abstractions;
 using GraphLib.Graphs.Serialization.Infrastructure.Info.Collections;
 using GraphLib.Graphs.Serialization.Interfaces;
@@ -9,6 +10,7 @@ using System.IO;
 using System.Linq;
 using System.Runtime.Serialization;
 using System.Runtime.Serialization.Formatters.Binary;
+using static Common.ObjectActivator;
 
 namespace GraphLib.Graphs.Serialization
 {
@@ -17,19 +19,20 @@ namespace GraphLib.Graphs.Serialization
     {
         public event Action<string> OnExceptionCaught;
 
-        public GraphSerializer(IFormatter formatter)
-        {
-            this.formatter = formatter;
-        }
-
         public GraphSerializer()
         {
             formatter = new BinaryFormatter();
         }
 
+        static GraphSerializer()
+        {
+            var ctor = typeof(TGraph).GetConstructor(new Type[] { typeof(int[]) });
+            RegisterConstructor<IGraph>(ctor);
+        }
+
         public IGraph LoadGraph(string path,
             Func<VertexInfo, IVertex> vertexConvertMethod)
-        {
+        {           
             try
             {
                 using (var stream = new FileStream(path, FileMode.Open))
@@ -37,7 +40,8 @@ namespace GraphLib.Graphs.Serialization
                     var verticesInfo = (VertexInfoCollection)formatter.Deserialize(stream);
                     var dimensions = verticesInfo.DimensionsSizes.ToArray();
 
-                    var graph = (IGraph)Activator.CreateInstance(typeof(TGraph), dimensions);
+                    var activator = (Activator<IGraph>)GetConstructor(typeof(TGraph));
+                    var graph = activator(dimensions);
 
                     for (int i = 0; i < verticesInfo.Count(); i++)
                     {

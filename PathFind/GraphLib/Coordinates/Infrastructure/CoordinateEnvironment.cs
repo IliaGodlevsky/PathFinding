@@ -1,20 +1,28 @@
-﻿using GraphLib.Coordinates.Abstractions;
+﻿using Common;
+using GraphLib.Coordinates.Abstractions;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using static Common.ObjectActivator;
 
 namespace GraphLib.Coordinates.Infrastructure
 {
-    public sealed class CoordinateEnvironment
+    public sealed class CoordinateEnvironment <TCoordinate> 
+        where TCoordinate : ICoordinate
     {
         public CoordinateEnvironment(ICoordinate coordinate)
         {
+            environment = new List<ICoordinate>();
             selfCoordinates = coordinate.Coordinates.ToArray();
             neighbourCoordinates = new int[selfCoordinates.Length];
-            coordinateType = coordinate.GetType();
-            environment = new List<ICoordinate>();
             middleCoordinate = coordinate;
             limitDepth = selfCoordinates.Length;
+        }
+
+        static CoordinateEnvironment()
+        {
+            var ctor = typeof(TCoordinate).GetConstructor(new Type[] { typeof(int[]) });
+            RegisterConstructor<ICoordinate>(ctor);
         }
 
         public IEnumerable<ICoordinate> GetEnvironment()
@@ -37,10 +45,10 @@ namespace GraphLib.Coordinates.Infrastructure
 
         private void AddNeighbourToEnvironment()
         {
+            var activator = (Activator<ICoordinate>)GetConstructor(typeof(TCoordinate));
             if (!NeighboursAreNegative)
             {
-                var coordinate = (ICoordinate)Activator.
-                    CreateInstance(coordinateType, neighbourCoordinates);
+                var coordinate = activator(neighbourCoordinates);
 
                 if (!middleCoordinate.Equals(coordinate))
                 {
@@ -72,7 +80,6 @@ namespace GraphLib.Coordinates.Infrastructure
             return depth < limitDepth - 1;
         }
 
-        private readonly Type coordinateType;
         private readonly ICoordinate middleCoordinate;
 
         private readonly int[] neighbourCoordinates;

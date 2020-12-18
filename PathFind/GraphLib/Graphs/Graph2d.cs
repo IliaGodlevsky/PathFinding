@@ -10,12 +10,6 @@ namespace GraphLib.Graphs
 
         public int Length => DimensionsSizes.Last();
 
-        public Graph2D(int width, int length)
-            : this(new int[] { width, length })
-        {
-
-        }
-
         public Graph2D(params int[] dimensions)
             : base(dimensions)
         {

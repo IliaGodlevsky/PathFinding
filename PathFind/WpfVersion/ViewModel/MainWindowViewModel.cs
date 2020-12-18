@@ -81,8 +81,6 @@ namespace WpfVersion.ViewModel
             ShowVertexCost = new RelayCommand(ExecuteShowVertexCostCommand, AlwaysExecutable);
         }
 
-
-
         public void ExecuteShowVertexCostCommand(object parametre)
         {
             if ((bool)parametre)

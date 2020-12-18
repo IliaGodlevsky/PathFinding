@@ -1,5 +1,4 @@
-﻿using GraphLib.Coordinates.Infrastructure;
-using GraphLib.Extensions;
+﻿using GraphLib.Extensions;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -17,19 +16,7 @@ namespace GraphLib.Coordinates.Abstractions
 
         public IEnumerable<int> Coordinates { get; }
 
-        public IEnumerable<ICoordinate> Environment
-        {
-            get
-            {
-                if (coordinateEnvironment == null)
-                {
-                    var environment = new CoordinateEnvironment(this);
-                    coordinateEnvironment = environment.GetEnvironment();
-                }
-
-                return coordinateEnvironment;
-            }
-        }
+        public abstract IEnumerable<ICoordinate> Environment { get; }
 
         public bool IsDefault => false;
 
@@ -64,11 +51,8 @@ namespace GraphLib.Coordinates.Abstractions
             return information.ToString();
         }
 
-        public object Clone()
-        {
-            return Activator.CreateInstance(GetType(), Coordinates.ToArray());
-        }
+        public abstract object Clone();
 
-        private IEnumerable<ICoordinate> coordinateEnvironment;
+        protected IEnumerable<ICoordinate> coordinateEnvironment;
     }
 }

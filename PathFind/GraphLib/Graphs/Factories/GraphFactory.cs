@@ -1,4 +1,5 @@
-﻿using GraphLib.Coordinates.Abstractions;
+﻿using Common;
+using GraphLib.Coordinates.Abstractions;
 using GraphLib.Extensions;
 using GraphLib.Graphs.Abstractions;
 using GraphLib.Graphs.Factories.Interfaces;
@@ -6,6 +7,7 @@ using GraphLib.Vertex.Interface;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using static Common.ObjectActivator;
 
 namespace GraphLib.Graphs.Factories
 {
@@ -23,6 +25,8 @@ namespace GraphLib.Graphs.Factories
         static GraphFactory()
         {
             rand = new Random();
+            var ctor = typeof(TGraph).GetConstructor(new Type[] { typeof(int[]) });
+            RegisterConstructor<IGraph>(ctor);
         }
 
         public IGraph CreateGraph(Func<IVertex> vertexCreateMethod,
@@ -30,7 +34,8 @@ namespace GraphLib.Graphs.Factories
         {
             try
             {
-                var graph = (IGraph)Activator.CreateInstance(typeof(TGraph), dimensionSizes);
+                var activator = (Activator<IGraph>)GetConstructor(typeof(TGraph));
+                var graph = activator(dimensionSizes);
 
                 for (int index = 0; index < graph.Size; index++)
                 {
