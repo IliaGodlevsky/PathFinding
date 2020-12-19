@@ -1,4 +1,5 @@
-﻿using GraphLib.Graphs;
+﻿using Algorithm.Attributes;
+using GraphLib.Graphs;
 using GraphLib.Graphs.Abstractions;
 using GraphLib.Vertex;
 using GraphLib.Vertex.Interface;
@@ -6,6 +7,7 @@ using System;
 
 namespace Algorithm.Algorithms.Abstractions
 {
+    [Filterable]
     public sealed class DefaultAlgorithm : IAlgorithm
     {
         public event Action OnStarted;

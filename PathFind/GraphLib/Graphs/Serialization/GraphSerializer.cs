@@ -16,7 +16,7 @@ using static Common.ObjectActivator;
 namespace GraphLib.Graphs.Serialization
 {
     public class GraphSerializer<TGraph> : IGraphSerializer
-        where TGraph : IGraph
+        where TGraph : class, IGraph
     {
         public event Action<string> OnExceptionCaught;
 
@@ -28,7 +28,7 @@ namespace GraphLib.Graphs.Serialization
         static GraphSerializer()
         {
             var ctor = typeof(TGraph).GetConstructor(typeof(int[]));
-            RegisterConstructor<IGraph>(ctor);
+            RegisterConstructor<TGraph>(ctor);
         }
 
         public IGraph LoadGraph(string path,
@@ -41,7 +41,7 @@ namespace GraphLib.Graphs.Serialization
                     var verticesInfo = (VertexInfoCollection)formatter.Deserialize(stream);
                     var dimensions = verticesInfo.DimensionsSizes.ToArray();
 
-                    var activator = (Activator<IGraph>)GetConstructor(typeof(TGraph));
+                    var activator = (Activator<TGraph>)GetConstructor(typeof(TGraph));
 
                     var graph = activator(dimensions);
 

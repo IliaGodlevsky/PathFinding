@@ -21,9 +21,9 @@ namespace Algorithm.AlgorithmCreating
             AlgorithmsDescriptions = AlgorithmsDictionary.Keys.OrderBy(key => key);
         }
 
-        public static IAlgorithm CreateAlgorithm(string algorithmKey, IGraph graph)
+        public static IAlgorithm CreateAlgorithm(string algorithmDescription, IGraph graph)
         {
-            if (AlgorithmsDictionary.TryGetValue(algorithmKey, out Type algoType))
+            if (AlgorithmsDictionary.TryGetValue(algorithmDescription, out Type algoType))
             {
                 var activator = (Activator<IAlgorithm>)GetConstructor(algoType);
                 return activator(graph);
@@ -38,10 +38,9 @@ namespace Algorithm.AlgorithmCreating
             return typeof(IAlgorithm)
                 .GetAssembly()
                 .GetTypes()
-                .Except(typeof(DefaultAlgorithm), typeof(BaseAlgorithm))
-                .Where(IsPathfindingAlgorithmType)
-                .ToDictionary(GetAlgorithmDescription)
-                .ForEach(RegisterConstructor);
+                .Where(IsValidAlgorithm)
+                .ForEach(RegisterConstructor)
+                .ToDictionary(GetAlgorithmDescription);
         }
 
         private static void RegisterConstructor(Type type)
@@ -58,9 +57,11 @@ namespace Algorithm.AlgorithmCreating
             return description;
         }
 
-        private static bool IsPathfindingAlgorithmType(Type type)
+        private static bool IsValidAlgorithm(Type type)
         {
-            return type.IsImplementationOf<IAlgorithm>();
+            return type.IsImplementationOf<IAlgorithm>() 
+                && !type.IsFilterable()
+                && !type.IsAbstract;
         }
     }
 }

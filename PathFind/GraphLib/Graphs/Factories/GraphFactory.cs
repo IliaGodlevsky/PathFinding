@@ -13,7 +13,7 @@ using static Common.ObjectActivator;
 namespace GraphLib.Graphs.Factories
 {
     public sealed class GraphFactory<TGraph> : IGraphFactory
-        where TGraph : IGraph
+        where TGraph : class, IGraph
     {
         public event Action<string> OnExceptionCaught;
 
@@ -27,7 +27,7 @@ namespace GraphLib.Graphs.Factories
         {
             rand = new Random();
             var ctor = typeof(TGraph).GetConstructor(typeof(int[]));
-            RegisterConstructor<IGraph>(ctor);
+            RegisterConstructor<TGraph>(ctor);
         }
 
         public IGraph CreateGraph(Func<IVertex> vertexCreateMethod,
@@ -35,7 +35,7 @@ namespace GraphLib.Graphs.Factories
         {
             try
             {
-                var activator = (Activator<IGraph>)GetConstructor(typeof(TGraph));
+                var activator = (Activator<TGraph>)GetConstructor(typeof(TGraph));
                 var graph = activator(dimensionSizes);
 
                 for (int index = 0; index < graph.Size; index++)

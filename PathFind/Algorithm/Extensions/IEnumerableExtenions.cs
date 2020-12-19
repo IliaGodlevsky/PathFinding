@@ -13,21 +13,19 @@ namespace Algorithm.Extensions
             return !collection.Any() ? new DefaultVertex() : collection.First();
         }
 
-        internal static Dictionary<TKey, TValue> ForEach<TKey, TValue>(
-            this Dictionary<TKey, TValue> collection, 
-            Action<TValue> action)
-        {
-            foreach(var value in collection.Values)
-            {
-                action(value);
-            }
-
-            return collection;
-        }
-
         internal static IEnumerable<T> Except<T>(this IEnumerable<T> collection, params T[] objects)
         {
             return collection.Except(objects.AsEnumerable());
+        }
+
+        internal static IEnumerable<T> ForEach<T>(this IEnumerable<T> collection, Action<T> action)
+        {
+            foreach(var item in collection)
+            {
+                action(item);
+            }
+
+            return collection;
         }
     }
 }

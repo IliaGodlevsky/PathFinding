@@ -43,6 +43,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AlgorithmCreating\AlgorithmFactory.cs" />
+    <Compile Include="Attributes\FilterableAttribute.cs" />
     <Compile Include="Extensions\IEnumerableExtenions.cs" />
     <Compile Include="Extensions\ListExtension.cs" />
     <Compile Include="Extensions\QueueExtensions.cs" />
@@ -58,6 +59,7 @@
     <Compile Include="Algorithms\Abstractions\IAlgorithm.cs" />
     <Compile Include="Algorithms\LeeAlgorithm.cs" />
     <Compile Include="Algorithms\Abstractions\DefaultAlgorithm.cs" />
+    <Compile Include="Extensions\TypeExtensions.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -70,5 +72,6 @@
       <Name>GraphLib</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

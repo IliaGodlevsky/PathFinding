@@ -8,11 +8,11 @@ using static Common.ObjectActivator;
 namespace GraphLib.Coordinates.Infrastructure
 {
     public sealed class CoordinateEnvironment <TCoordinate> 
-        where TCoordinate : ICoordinate
+        where TCoordinate : class, ICoordinate
     {
-        public CoordinateEnvironment(ICoordinate coordinate)
+        public CoordinateEnvironment(TCoordinate coordinate)
         {
-            environment = new List<ICoordinate>();
+            environment = new List<TCoordinate>();
             selfCoordinates = coordinate.Coordinates.ToArray();
             neighbourCoordinates = new int[selfCoordinates.Length];
             middleCoordinate = coordinate;
@@ -22,7 +22,7 @@ namespace GraphLib.Coordinates.Infrastructure
         static CoordinateEnvironment()
         {
             var ctor = typeof(TCoordinate).GetConstructor(typeof(int[]));
-            RegisterConstructor<ICoordinate>(ctor);
+            RegisterConstructor<TCoordinate>(ctor);
         }
 
         public IEnumerable<ICoordinate> GetEnvironment()
@@ -33,21 +33,25 @@ namespace GraphLib.Coordinates.Infrastructure
 
         private void FormEnvironment(int depth = 0)
         {
-            for (int i = LeftNeighbour(depth); i <= RightNeighbour(depth); i++)
+            foreach (var i in GetNeighbourCoordinates(depth))
             {
                 neighbourCoordinates[depth] = i;
                 if (CanMoveDeeper(depth))
+                {
                     FormEnvironment(depth + 1);
+                }
                 else
+                {
                     AddNeighbourToEnvironment();
+                }
             }
         }
 
         private void AddNeighbourToEnvironment()
         {
-            var activator = (Activator<ICoordinate>)GetConstructor(typeof(TCoordinate));
             if (!NeighboursAreNegative)
             {
+                var activator = (Activator<TCoordinate>)GetConstructor(typeof(TCoordinate));
                 var coordinate = activator(neighbourCoordinates);
 
                 if (!middleCoordinate.Equals(coordinate))
@@ -65,14 +69,14 @@ namespace GraphLib.Coordinates.Infrastructure
             }
         }
 
-        private int LeftNeighbour(int depth)
+        private IEnumerable<int> GetNeighbourCoordinates(int depth)
         {
-            return selfCoordinates[depth] - 1;
-        }
-
-        private int RightNeighbour(int depth)
-        {
-            return LeftNeighbour(depth) + 2;
+            return new int[]
+            {
+                selfCoordinates[depth] - 1,
+                selfCoordinates[depth],
+                selfCoordinates[depth] + 1
+            };
         }
 
         private bool CanMoveDeeper(int depth)
@@ -80,12 +84,12 @@ namespace GraphLib.Coordinates.Infrastructure
             return depth < limitDepth - 1;
         }
 
-        private readonly ICoordinate middleCoordinate;
+        private readonly TCoordinate middleCoordinate;
 
         private readonly int[] neighbourCoordinates;
         private readonly int[] selfCoordinates;
 
-        private readonly List<ICoordinate> environment;
+        private readonly List<TCoordinate> environment;
         private readonly int limitDepth;
     }
 }
