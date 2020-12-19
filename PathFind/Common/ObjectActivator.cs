@@ -17,6 +17,11 @@ namespace Common
 
         public static bool RegisterConstructor<TSource>(ConstructorInfo ctor) where TSource : class
         {
+            if (ctor == null)
+            {
+                throw new ArgumentNullException("Incoming argument is null");
+            }
+
             if (CanBeAdded<TSource>(ctor))
             {
                 var activator = CreateActivator<TSource>(ctor);
@@ -34,7 +39,7 @@ namespace Common
                 return activator;
             }
 
-            return null;
+            throw new KeyNotFoundException("For this type activator doesn't have any constructor");
         }
 
         private static Dictionary<Type, Delegate> Activators { get; set; }
@@ -59,8 +64,7 @@ namespace Common
 
         private static bool CanBeAdded<TSource>(ConstructorInfo ctor) where TSource : class
         {
-            return ctor != null 
-                && (ctor.DeclaringType.IsImplementationOf<TSource>() 
+            return (ctor.DeclaringType.IsImplementationOf<TSource>() 
                 || typeof(TSource).Equals(ctor.DeclaringType))
                 && !Activators.ContainsKey(ctor.DeclaringType);
         }

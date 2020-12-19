@@ -27,7 +27,7 @@ namespace Algorithm.Extensions
 
         internal static IEnumerable<T> Except<T>(this IEnumerable<T> collection, params T[] objects)
         {
-            return collection.Except(objects);
+            return collection.Except(objects.AsEnumerable());
         }
     }
 }

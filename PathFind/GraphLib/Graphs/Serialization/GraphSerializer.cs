@@ -42,6 +42,7 @@ namespace GraphLib.Graphs.Serialization
                     var dimensions = verticesInfo.DimensionsSizes.ToArray();
 
                     var activator = (Activator<IGraph>)GetConstructor(typeof(TGraph));
+
                     var graph = activator(dimensions);
 
                     for (int i = 0; i < verticesInfo.Count(); i++)
