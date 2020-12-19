@@ -1,4 +1,5 @@
 ﻿using Common;
+using Common.Extensions;
 using GraphLib.Coordinates.Abstractions;
 using GraphLib.Extensions;
 using GraphLib.Graphs.Abstractions;
@@ -25,7 +26,7 @@ namespace GraphLib.Graphs.Factories
         static GraphFactory()
         {
             rand = new Random();
-            var ctor = typeof(TGraph).GetConstructor(new Type[] { typeof(int[]) });
+            var ctor = typeof(TGraph).GetConstructor(typeof(int[]));
             RegisterConstructor<IGraph>(ctor);
         }
 

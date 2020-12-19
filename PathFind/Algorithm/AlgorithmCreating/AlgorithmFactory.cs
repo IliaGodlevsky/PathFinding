@@ -1,10 +1,13 @@
 ﻿using Algorithm.Algorithms.Abstractions;
+using Algorithm.Extensions;
+using Common;
 using Common.Extensions;
 using GraphLib.Graphs.Abstractions;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
+using static Common.ObjectActivator;
 
 namespace Algorithm.AlgorithmCreating
 {
@@ -20,21 +23,12 @@ namespace Algorithm.AlgorithmCreating
 
         public static IAlgorithm CreateAlgorithm(string algorithmKey, IGraph graph)
         {
-            return AlgorithmsDictionary.ContainsKey(algorithmKey)
-                ? (IAlgorithm)Activator.CreateInstance(AlgorithmsDictionary[algorithmKey], graph)
-                : new DefaultAlgorithm();
-        }
-
-        private static IEnumerable<Type> NotActiveAlgorithms
-        {
-            get
+            if (AlgorithmsDictionary.TryGetValue(algorithmKey, out Type algoType))
             {
-                return new Type[]
-                {
-                    typeof(DefaultAlgorithm),
-                    typeof(BaseAlgorithm)
-                };
+                var activator = (Activator<IAlgorithm>)GetConstructor(algoType);
+                return activator(graph);
             }
+            return new DefaultAlgorithm();
         }
 
         private static Dictionary<string, Type> AlgorithmsDictionary { get; set; }
@@ -44,9 +38,16 @@ namespace Algorithm.AlgorithmCreating
             return typeof(IAlgorithm)
                 .GetAssembly()
                 .GetTypes()
-                .Except(NotActiveAlgorithms)
+                .Except(typeof(DefaultAlgorithm), typeof(BaseAlgorithm))
                 .Where(IsPathfindingAlgorithmType)
-                .ToDictionary(GetAlgorithmDescription);
+                .ToDictionary(GetAlgorithmDescription)
+                .ForEach(RegisterConstructor);
+        }
+
+        private static void RegisterConstructor(Type type)
+        {
+            var ctor = type.GetConstructor(typeof(IGraph));
+            RegisterConstructor<IAlgorithm>(ctor);
         }
 
         private static string GetAlgorithmDescription(Type algorithmType)

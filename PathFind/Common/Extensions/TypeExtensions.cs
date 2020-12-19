@@ -21,5 +21,10 @@ namespace Common.Extensions
             return self.GetInterfaces()
                 .Contains(typeof(Interface));
         }
+
+        public static ConstructorInfo GetConstructor(this Type self, params Type[] parametres)
+        {
+            return self.GetConstructor(parametres);
+        }
     }
 }

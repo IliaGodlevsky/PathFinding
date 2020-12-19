@@ -1,6 +1,6 @@
 ﻿using Common;
+using Common.Extensions;
 using GraphLib.Coordinates.Abstractions;
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using static Common.ObjectActivator;
@@ -21,7 +21,7 @@ namespace GraphLib.Coordinates.Infrastructure
 
         static CoordinateEnvironment()
         {
-            var ctor = typeof(TCoordinate).GetConstructor(new Type[] { typeof(int[]) });
+            var ctor = typeof(TCoordinate).GetConstructor(typeof(int[]));
             RegisterConstructor<ICoordinate>(ctor);
         }
 

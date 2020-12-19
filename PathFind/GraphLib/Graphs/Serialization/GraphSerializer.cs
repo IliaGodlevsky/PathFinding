@@ -1,4 +1,5 @@
 ﻿using Common;
+using Common.Extensions;
 using GraphLib.Extensions;
 using GraphLib.Graphs.Abstractions;
 using GraphLib.Graphs.Serialization.Infrastructure.Info.Collections;
@@ -26,7 +27,7 @@ namespace GraphLib.Graphs.Serialization
 
         static GraphSerializer()
         {
-            var ctor = typeof(TGraph).GetConstructor(new Type[] { typeof(int[]) });
+            var ctor = typeof(TGraph).GetConstructor(typeof(int[]));
             RegisterConstructor<IGraph>(ctor);
         }
 
