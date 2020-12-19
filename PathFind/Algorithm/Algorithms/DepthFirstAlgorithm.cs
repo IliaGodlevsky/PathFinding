@@ -10,7 +10,6 @@ using System.Linq;
 
 namespace Algorithm.Algorithms
 {
-
     [Description("Depth-first algorithm")]
     public class DepthFirstAlgorithm : BaseAlgorithm
     {
