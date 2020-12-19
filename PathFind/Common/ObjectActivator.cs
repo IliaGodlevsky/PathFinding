@@ -22,7 +22,12 @@ namespace Common
                 throw new ArgumentNullException(nameof(ctor));
             }
 
-            if (CanBeAdded<TReturnType>(ctor))
+            if (ctor.DeclaringType.IsAbstract)
+            {
+                throw new ArgumentException("Can't register constructor of abstract type");
+            }
+
+            if (typeof(TReturnType).IsAssignableFrom(ctor.DeclaringType))
             {
                 var activator = CreateActivator<TReturnType>(ctor);
                 Activators[ctor.DeclaringType] = activator;
@@ -66,12 +71,6 @@ namespace Common
                 newExpression, parameter);
 
             return lambda.Compile();
-        }
-
-        private static bool CanBeAdded<TReturnType>(ConstructorInfo ctor) where TReturnType : class
-        {
-            return ctor.DeclaringType.IsImplementationOf<TReturnType>() 
-                || typeof(TReturnType).Equals(ctor.DeclaringType);
         }
     }
 }

@@ -59,7 +59,7 @@ namespace Algorithm.AlgorithmCreating
 
         private static bool IsValidAlgorithm(Type type)
         {
-            return type.IsImplementationOf<IAlgorithm>() 
+            return typeof(IAlgorithm).IsAssignableFrom(type)
                 && !type.IsFilterable()
                 && !type.IsAbstract;
         }
