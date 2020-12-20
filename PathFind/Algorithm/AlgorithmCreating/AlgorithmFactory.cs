@@ -52,7 +52,7 @@ namespace Algorithm.AlgorithmCreating
         private static string GetAlgorithmDescription(Type algorithmType)
         {
             var attribute = algorithmType.GetAttribute<DescriptionAttribute>();
-            return attribute == null ? algorithmType.ToString() : attribute.Description;
+            return attribute?.Description ?? algorithmType.Name;
         }
 
         private static bool IsValidAlgorithm(Type type)
