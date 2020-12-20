@@ -14,5 +14,10 @@ namespace Common.Extensions
         {
             return self.GetConstructor(parametres);
         }
+
+        public static TAttribute GetAttribute<TAttribute>(this Type self) where TAttribute : Attribute
+        {
+            return (TAttribute)Attribute.GetCustomAttribute(self, typeof(TAttribute));
+        }
     }
 }
