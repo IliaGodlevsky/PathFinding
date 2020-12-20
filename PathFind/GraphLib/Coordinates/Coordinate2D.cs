@@ -17,7 +17,7 @@ namespace GraphLib.Coordinates
         {
             get
             {
-                if (coordinateEnvironment == null) 
+                if (coordinateEnvironment == null)
                 {
                     var environment = new CoordinateEnvironment<Coordinate2D>(this);
                     coordinateEnvironment = environment.GetEnvironment();

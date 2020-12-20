@@ -1,5 +1,4 @@
-﻿using Common;
-using Common.Extensions;
+﻿using Common.Extensions;
 using GraphLib.Coordinates.Abstractions;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,7 +6,7 @@ using static Common.ObjectActivator;
 
 namespace GraphLib.Coordinates.Infrastructure
 {
-    public sealed class CoordinateEnvironment <TCoordinate> 
+    public sealed class CoordinateEnvironment<TCoordinate>
         where TCoordinate : class, ICoordinate
     {
         public CoordinateEnvironment(TCoordinate coordinate)
@@ -49,23 +48,12 @@ namespace GraphLib.Coordinates.Infrastructure
 
         private void AddNeighbourToEnvironment()
         {
-            if (!NeighboursAreNegative)
-            {
-                var activator = (Activator<TCoordinate>)GetConstructor(typeof(TCoordinate));
-                var coordinate = activator(neighbourCoordinates);
+            var activator = GetActivator<TCoordinate>();
+            var coordinate = activator(neighbourCoordinates);
 
-                if (!middleCoordinate.Equals(coordinate))
-                {
-                    environment.Add(coordinate);
-                }
-            }
-        }
-
-        private bool NeighboursAreNegative
-        {
-            get
+            if (!middleCoordinate.Equals(coordinate))
             {
-                return neighbourCoordinates.Any(value => value < 0);
+                environment.Add(coordinate);
             }
         }
 

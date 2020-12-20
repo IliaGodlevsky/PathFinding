@@ -1,10 +1,8 @@
 ﻿using ConsoleVersion.InputClass;
 using ConsoleVersion.Model;
 using ConsoleVersion.View;
-using GraphLib.Coordinates;
 using GraphLib.Graphs;
 using GraphViewModel;
-using System;
 using System.Drawing;
 using Console = Colorful.Console;
 

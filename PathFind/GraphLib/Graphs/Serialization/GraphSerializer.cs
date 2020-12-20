@@ -1,5 +1,4 @@
-﻿using Common;
-using Common.Extensions;
+﻿using Common.Extensions;
 using GraphLib.Extensions;
 using GraphLib.Graphs.Abstractions;
 using GraphLib.Graphs.Serialization.Infrastructure.Info.Collections;
@@ -33,7 +32,7 @@ namespace GraphLib.Graphs.Serialization
 
         public IGraph LoadGraph(string path,
             Func<VertexInfo, IVertex> vertexConvertMethod)
-        {           
+        {
             try
             {
                 using (var stream = new FileStream(path, FileMode.Open))
@@ -41,7 +40,7 @@ namespace GraphLib.Graphs.Serialization
                     var verticesInfo = (VertexInfoCollection)formatter.Deserialize(stream);
                     var dimensions = verticesInfo.DimensionsSizes.ToArray();
 
-                    var activator = (Activator<TGraph>)GetConstructor(typeof(TGraph));
+                    var activator = GetActivator<TGraph>();
 
                     var graph = activator(dimensions);
 

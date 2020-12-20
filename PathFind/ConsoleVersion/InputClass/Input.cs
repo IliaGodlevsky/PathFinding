@@ -1,4 +1,5 @@
-﻿using ConsoleVersion.Enums;
+﻿using Common.ValueRanges;
+using ConsoleVersion.Enums;
 using GraphLib.Coordinates;
 using System;
 using System.Linq;
@@ -16,9 +17,10 @@ namespace ConsoleVersion.InputClass
 
         public static int InputNumber(string msg, int upper, int lower = 0)
         {
+            var range = new ValueRange(upper, lower);
             Console.Write(msg);
             string choice = Console.ReadLine();
-            while (IsError(choice, upper, lower))
+            while (IsError(choice, range))
             {
                 Console.Write(msg);
                 choice = Console.ReadLine();
@@ -41,10 +43,9 @@ namespace ConsoleVersion.InputClass
             return new Coordinate2D(xCoordinate, yCoordinate);
         }
 
-        private static bool IsError(string choice, int upper, int lower)
+        private static bool IsError(string choice, ValueRange range)
         {
-            return !int.TryParse(choice, out var ch)
-                || ch > upper || ch < lower;
+            return !int.TryParse(choice, out var ch) || !range.IsInBounds(ch);
         }
 
         private static readonly byte minMenuValue;

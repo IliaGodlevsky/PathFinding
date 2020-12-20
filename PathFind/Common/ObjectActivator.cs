@@ -1,7 +1,7 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq.Expressions;
 using System.Reflection;
-using System.Collections.Generic;
 
 namespace Common
 {
@@ -36,7 +36,7 @@ namespace Common
             return false;
         }
 
-        public static Delegate GetConstructor(Type type)
+        public static Delegate GetActivator(Type type)
         {
             if (Activators.TryGetValue(type, out Delegate activator))
             {
@@ -44,6 +44,11 @@ namespace Common
             }
 
             throw new KeyNotFoundException("For this type activator doesn't have any constructor");
+        }
+
+        public static Activator<T> GetActivator<T>() where T : class
+        {
+            return (Activator<T>)GetActivator(typeof(T));
         }
 
         private static Dictionary<Type, Delegate> Activators { get; set; }
@@ -58,7 +63,7 @@ namespace Common
             {
                 var index = Expression.Constant(i);
                 var parameterType = ctorParameters[i].ParameterType;
-                var parameterAccessorExpression 
+                var parameterAccessorExpression
                     = Expression.ArrayIndex(parameter, index);
                 var parameterCastExpression = Expression
                     .Convert(parameterAccessorExpression, parameterType);
@@ -66,7 +71,7 @@ namespace Common
             }
 
             var newExpression = Expression.New(ctor, argsExpression);
-            var lambda = Expression.Lambda(typeof(Activator<TReturnType>), 
+            var lambda = Expression.Lambda(typeof(Activator<TReturnType>),
                 newExpression, parameter);
 
             return lambda.Compile();

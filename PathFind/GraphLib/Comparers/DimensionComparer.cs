@@ -6,7 +6,7 @@ namespace GraphLib.Comparers
     {
         public bool Equals(int coordinate, int graphDimension)
         {
-            return coordinate < graphDimension;
+            return coordinate < graphDimension && coordinate > 0;
         }
 
         public int GetHashCode(int obj)

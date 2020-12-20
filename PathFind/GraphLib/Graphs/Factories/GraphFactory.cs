@@ -1,5 +1,4 @@
-﻿using Common;
-using Common.Extensions;
+﻿using Common.Extensions;
 using GraphLib.Coordinates.Abstractions;
 using GraphLib.Extensions;
 using GraphLib.Graphs.Abstractions;
@@ -35,7 +34,7 @@ namespace GraphLib.Graphs.Factories
         {
             try
             {
-                var activator = (Activator<TGraph>)GetConstructor(typeof(TGraph));
+                var activator = GetActivator<TGraph>();
                 var graph = activator(dimensionSizes);
 
                 for (int index = 0; index < graph.Size; index++)

@@ -25,7 +25,7 @@ namespace Algorithm.AlgorithmCreating
         {
             if (AlgorithmsDictionary.TryGetValue(algorithmDescription, out Type algoType))
             {
-                var activator = (Activator<IAlgorithm>)GetConstructor(algoType);
+                var activator = (Activator<IAlgorithm>)GetActivator(algoType);
                 return activator(graph);
             }
             return new DefaultAlgorithm();
