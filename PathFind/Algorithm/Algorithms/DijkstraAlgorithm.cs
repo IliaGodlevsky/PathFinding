@@ -42,7 +42,6 @@ namespace Algorithm.Algorithms
             get
             {
                 verticesQueue = verticesQueue
-                    .AsParallel()
                     .Where(vertex => !vertex.IsVisited)
                     .OrderBy(vertex => vertex.AccumulatedCost)
                     .ToList();
