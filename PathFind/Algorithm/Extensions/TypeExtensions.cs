@@ -1,4 +1,5 @@
 ﻿using Algorithm.Attributes;
+using Common.Extensions;
 using System;
 
 namespace Algorithm.Extensions
@@ -7,9 +8,7 @@ namespace Algorithm.Extensions
     {
         internal static bool IsFilterable(this Type self)
         {
-            var attribute = (FilterableAttribute)Attribute
-                .GetCustomAttribute(self, typeof(FilterableAttribute));
-            return attribute != null;
+            return self.GetAttribute<FilterableAttribute>() != null;
         }
     }
 }
