@@ -51,10 +51,8 @@ namespace Algorithm.AlgorithmCreating
 
         private static string GetAlgorithmDescription(Type algorithmType)
         {
-            var attribute = (DescriptionAttribute)Attribute.
-                GetCustomAttribute(algorithmType, typeof(DescriptionAttribute));
-            var description = attribute == null ? algorithmType.ToString() : attribute.Description;
-            return description;
+            var attribute = algorithmType.GetAttribute<DescriptionAttribute>();
+            return attribute == null ? algorithmType.ToString() : attribute.Description;
         }
 
         private static bool IsValidAlgorithm(Type type)
