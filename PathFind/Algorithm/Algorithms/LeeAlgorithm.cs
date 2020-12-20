@@ -57,7 +57,7 @@ namespace Algorithm.Algorithms
 
         private void SpreadWaves()
         {
-            CurrentVertex.GetUnvisitedNeighbours().AsParallel().ForAll(neighbour =>
+            CurrentVertex.GetUnvisitedNeighbours().ForEach(neighbour =>
             {
                 if (neighbour.AccumulatedCost == 0)
                 {

@@ -17,15 +17,5 @@ namespace Algorithm.Extensions
         {
             return collection.Except(objects.AsEnumerable());
         }
-
-        internal static IEnumerable<T> ForEach<T>(this IEnumerable<T> collection, Action<T> action)
-        {
-            foreach(var item in collection)
-            {
-                action(item);
-            }
-
-            return collection;
-        }
     }
 }

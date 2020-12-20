@@ -67,7 +67,7 @@ namespace Algorithm.Algorithms
 
         private void RelaxNeighbours()
         {
-            CurrentVertex.GetUnvisitedNeighbours().AsParallel().ForAll(neighbour =>
+            CurrentVertex.GetUnvisitedNeighbours().ForEach(neighbour =>
             {
                 var relaxedCost = GetVertexRelaxedCost(neighbour);
                 if (neighbour.AccumulatedCost > relaxedCost)
@@ -89,7 +89,6 @@ namespace Algorithm.Algorithms
             }
 
             verticesQueue = verticesQueue
-                .AsParallel()
                 .DistinctBy(vert => vert.Position)
                 .ToList();
         }
@@ -97,7 +96,7 @@ namespace Algorithm.Algorithms
         private void SetVerticesAccumulatedCost(double accumulatedCost
             = double.PositiveInfinity)
         {
-            Graph.AsParallel().ForAll(vertex =>
+            Graph.ForEach(vertex =>
             {
                 if (!vertex.IsStart && !vertex.IsObstacle)
                 {

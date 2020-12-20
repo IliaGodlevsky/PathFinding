@@ -1,5 +1,6 @@
 ﻿using Algorithm.Algorithms.Abstractions;
 using Algorithm.Extensions;
+using Common.Extensions;
 using GraphLib.Extensions;
 using GraphLib.Graphs.Abstractions;
 using GraphLib.Vertex.Interface;
@@ -37,17 +38,11 @@ namespace Algorithm.Algorithms
         {
             get
             {
-                var neighbours = CurrentVertex.GetUnvisitedNeighbours().ToList();
-
-                foreach (var neighbour in neighbours)
-                {
-                    RaiseOnVertexEnqueuedEvent(neighbour);
-                }
-
-                return neighbours.FindOrDefault(vert =>
-                {
-                    return GreedyFunction(vert) == neighbours.Min(GreedyFunction);
-                });
+                var neighbours = CurrentVertex.GetUnvisitedNeighbours();
+                return neighbours
+                    .ForEach(RaiseOnVertexEnqueuedEvent)
+                    .ToList()
+                    .FindOrDefault(vert => GreedyFunction(vert) == neighbours.Min(GreedyFunction));
             }
         }
 
