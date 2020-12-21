@@ -5,7 +5,13 @@ using System.Reflection;
 
 namespace Common
 {
-    public delegate TReturnType Activator<TReturnType>(params object[] args) where TReturnType : class;
+    /// <summary>
+    /// A handler for constructor
+    /// </summary>
+    /// <typeparam name="TReturnType"></typeparam>
+    /// <param name="args"></param>
+    /// <returns><typeparamref name="TReturnType"></typeparamref></returns>
+    public delegate TReturnType ActivatorHandler<TReturnType>(params object[] args) where TReturnType : class;
 
     public static class ObjectActivator
     {
@@ -14,6 +20,15 @@ namespace Common
             Activators = new Dictionary<Type, Delegate>();
         }
 
+        /// <summary>
+        /// Registers constructor that will return <typeparamref name="TReturnType"/>
+        /// </summary>
+        /// <typeparam name="TReturnType"></typeparam>
+        /// <param name="ctor"></param>
+        /// <returns><see cref="true"/> when register is successful, <see cref="false"/> when ctor 
+        /// declaring type is not assignable to <typeparamref name="TReturnType"/></returns>
+        /// <exception cref="ArgumentNullException">Thrown when ctor is null</exception>
+        /// <exception cref="ArgumentException">Thrown when ctor declaring type is abstract</exception>
         public static bool RegisterConstructor<TReturnType>(ConstructorInfo ctor) where TReturnType : class
         {
             if (ctor == null)
@@ -36,6 +51,13 @@ namespace Common
             return false;
         }
 
+        /// <summary>
+        /// Returns an activator according to <paramref name="type"></paramref>
+        /// </summary>
+        /// <param name="type"></param>
+        /// <returns>Activator handler for <paramref name="type"></paramref></returns>
+        /// <exception cref="KeyNotFoundException">Thrown when activator 
+        /// doesn't exist for <paramref name="type"></paramref></exception>
         public static Delegate GetActivator(Type type)
         {
             if (Activators.TryGetValue(type, out Delegate activator))
@@ -46,9 +68,16 @@ namespace Common
             throw new KeyNotFoundException("For this type activator doesn't have any constructor");
         }
 
-        public static Activator<T> GetActivator<T>() where T : class
+        /// <summary>
+        /// Returns activator for <typeparamref name="T"/>
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <returns>Activator for <typeparamref name="T"></typeparamref></returns>
+        /// <exception cref="KeyNotFoundException">Thrown when activator 
+        /// doesn't exist for <typeparamref name="T"/></exception>
+        public static ActivatorHandler<T> GetActivator<T>() where T : class
         {
-            return (Activator<T>)GetActivator(typeof(T));
+            return (ActivatorHandler<T>)GetActivator(typeof(T));
         }
 
         private static Dictionary<Type, Delegate> Activators { get; set; }
@@ -71,7 +100,7 @@ namespace Common
             }
 
             var newExpression = Expression.New(ctor, argsExpression);
-            var lambda = Expression.Lambda(typeof(Activator<TReturnType>),
+            var lambda = Expression.Lambda(typeof(ActivatorHandler<TReturnType>),
                 newExpression, parameter);
 
             return lambda.Compile();
