@@ -11,10 +11,10 @@ namespace GraphLib.Coordinates.Abstractions
     {
         public BaseCoordinate(params int[] coordinates)
         {
-            Coordinates = coordinates.ToArray();
+            CoordinatesValues = coordinates.ToArray();
         }
 
-        public IEnumerable<int> Coordinates { get; }
+        public IEnumerable<int> CoordinatesValues { get; }
 
         public abstract IEnumerable<ICoordinate> Environment { get; }
 
@@ -32,13 +32,13 @@ namespace GraphLib.Coordinates.Abstractions
 
         public override int GetHashCode()
         {
-            return Coordinates.Aggregate((x, y) => x ^ y);
+            return CoordinatesValues.Aggregate((x, y) => x ^ y);
         }
 
         public override string ToString()
         {
             var information = new StringBuilder("(");
-            var coordinatesInString = Coordinates.
+            var coordinatesInString = CoordinatesValues.
                 Select(coordinate => coordinate.ToString());
 
             for (int i = 0; i < coordinatesInString.Count() - 1; i++)

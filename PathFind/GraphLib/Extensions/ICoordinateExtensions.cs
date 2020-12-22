@@ -10,13 +10,13 @@ namespace GraphLib.Extensions
     {
         public static int ToIndex(this ICoordinate self, params int[] dimensions)
         {
-            if (self.Coordinates.Count() != dimensions.Length + 1)
+            if (self.CoordinatesValues.Count() != dimensions.Length + 1)
             {
                 throw new ArgumentException("Not enough arguments");
             }
 
-            var coordinates = self.Coordinates.ToArray();
-            int index = coordinates.Last();
+            var coordinatesValues = self.CoordinatesValues.ToArray();
+            int index = coordinatesValues.Last();
 
             for (int i = 0; i < dimensions.Length - 1; i++)
             {
@@ -26,7 +26,7 @@ namespace GraphLib.Extensions
                 }
             }
 
-            return dimensions.Zip(coordinates, (x, y) => x * y).Sum() + index;
+            return dimensions.Zip(coordinatesValues, (x, y) => x * y).Sum() + index;
         }
 
         internal static int ToIndex(this ICoordinate self, IGraph graph)
@@ -34,20 +34,20 @@ namespace GraphLib.Extensions
             return self.ToIndex(graph.DimensionsSizes.Skip(1).ToArray());
         }
 
-        internal static bool IsEqual(this ICoordinate self, ICoordinate coordinates)
+        internal static bool IsEqual(this ICoordinate self, ICoordinate coordinate)
         {
-            if (self == null || coordinates == null)
+            if (self == null || coordinate == null)
             {
                 return false;
             }
 
-            return self.Coordinates.SequenceEqual(coordinates.Coordinates);
+            return self.CoordinatesValues.SequenceEqual(coordinate.CoordinatesValues);
         }
 
-        internal static bool IsWithinGraph(this ICoordinate coordinates, IGraph graph)
+        internal static bool IsWithinGraph(this ICoordinate coordinate, IGraph graph)
         {
             var dimensionComparer = new DimensionComparer();
-            return coordinates.Coordinates.SequenceEqual(graph.DimensionsSizes, dimensionComparer);
+            return coordinate.CoordinatesValues.SequenceEqual(graph.DimensionsSizes, dimensionComparer);
         }
     }
 }

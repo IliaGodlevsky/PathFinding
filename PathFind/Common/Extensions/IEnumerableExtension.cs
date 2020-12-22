@@ -20,5 +20,10 @@ namespace Common.Extensions
 
             return collection;
         }
+
+        public static int MaxOrDefault(this IEnumerable<int> collection)
+        {
+            return collection.Any() ? collection.Max() : default;
+        }
     }
 }

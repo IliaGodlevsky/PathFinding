@@ -76,7 +76,7 @@ namespace GraphLib.Graphs.Abstractions
             {
                 if (!coordinate.IsDefault)
                 {
-                    if (coordinate.Coordinates.Count() != DimensionsSizes.Count())
+                    if (coordinate.CoordinatesValues.Count() != DimensionsSizes.Count())
                     {
                         throw new ArgumentException("Dimensions of graph and coordinate doesn't match");
                     }
@@ -90,7 +90,7 @@ namespace GraphLib.Graphs.Abstractions
             {
                 if (!coordinate.IsDefault)
                 {
-                    if (coordinate.Coordinates.Count() != DimensionsSizes.Count())
+                    if (coordinate.CoordinatesValues.Count() != DimensionsSizes.Count())
                     {
                         throw new ArgumentException("Dimensions of graph and coordinate doesn't match");
                     }

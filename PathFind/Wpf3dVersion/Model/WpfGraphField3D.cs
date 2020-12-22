@@ -91,7 +91,7 @@ namespace Wpf3dVersion.Model
             params double[] additionalOffset)
         {
             int axisIndex = axis.GetValue();
-            var coordinates = vertex.Position.Coordinates;
+            var coordinates = vertex.Position.CoordinatesValues;
             var vertexOffset = new Offset
             {
                 CoordinateValue = coordinates.ElementAtOrDefault(axisIndex),

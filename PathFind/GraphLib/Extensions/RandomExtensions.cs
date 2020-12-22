@@ -8,7 +8,8 @@ namespace GraphLib.Extensions
     {
         internal static bool IsObstacleChance(this Random rand, int percentOfObstacles)
         {
-            return rand.Next(Range.ObstaclePercentValueRange.UpperRange) < percentOfObstacles;
+            var randomValue = rand.Next(Range.ObstaclePercentValueRange.UpperRange);
+            return randomValue < percentOfObstacles;
         }
 
         internal static VertexCost GetRandomValueCost(this Random rand)

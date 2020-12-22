@@ -6,7 +6,7 @@ namespace GraphLib.Coordinates.Abstractions
 {
     public interface ICoordinate : ICloneable, IDefault
     {
-        IEnumerable<int> Coordinates { get; }
+        IEnumerable<int> CoordinatesValues { get; }
 
         IEnumerable<ICoordinate> Environment { get; }
     }

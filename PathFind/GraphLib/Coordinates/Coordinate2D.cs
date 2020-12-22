@@ -9,9 +9,9 @@ namespace GraphLib.Coordinates
     [Serializable]
     public sealed class Coordinate2D : BaseCoordinate
     {
-        public int X => Coordinates.First();
+        public int X => CoordinatesValues.First();
 
-        public int Y => Coordinates.Last();
+        public int Y => CoordinatesValues.Last();
 
         public override IEnumerable<ICoordinate> Environment
         {

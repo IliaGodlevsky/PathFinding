@@ -8,7 +8,7 @@ namespace GraphLib.Coordinates
     [Serializable]
     public sealed class DefaultCoordinate : ICoordinate
     {
-        public IEnumerable<int> Coordinates => new int[] { };
+        public IEnumerable<int> CoordinatesValues => new int[] { };
 
         public IEnumerable<ICoordinate> Environment => new DefaultCoordinate[] { };
 
