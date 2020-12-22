@@ -13,7 +13,7 @@ namespace GraphLib.Coordinates.Infrastructure
         {
             environment = new List<TCoordinate>();
             selfCoordinates = coordinate.Coordinates.ToArray();
-            neighbourCoordinates = new int[selfCoordinates.Length];
+            environmentCandidate = new int[selfCoordinates.Length];
             middleCoordinate = coordinate;
             limitDepth = selfCoordinates.Length;
         }
@@ -32,24 +32,21 @@ namespace GraphLib.Coordinates.Infrastructure
 
         private void FormEnvironment(int depth = 0)
         {
-            foreach (var i in GetNeighbourCoordinates(depth))
+            var neighbours = GetNeighbourCoordinates(depth);
+            foreach (var coordinate in neighbours)
             {
-                neighbourCoordinates[depth] = i;
+                environmentCandidate[depth] = coordinate;
                 if (CanMoveDeeper(depth))
-                {
                     FormEnvironment(depth + 1);
-                }
                 else
-                {
                     AddNeighbourToEnvironment();
-                }
             }
         }
 
         private void AddNeighbourToEnvironment()
         {
             var activator = GetActivator<TCoordinate>();
-            var coordinate = activator(neighbourCoordinates);
+            var coordinate = activator(environmentCandidate);
 
             if (!middleCoordinate.Equals(coordinate))
             {
@@ -74,7 +71,7 @@ namespace GraphLib.Coordinates.Infrastructure
 
         private readonly TCoordinate middleCoordinate;
 
-        private readonly int[] neighbourCoordinates;
+        private readonly int[] environmentCandidate;
         private readonly int[] selfCoordinates;
 
         private readonly List<TCoordinate> environment;
