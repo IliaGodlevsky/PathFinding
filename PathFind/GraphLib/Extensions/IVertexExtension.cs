@@ -28,7 +28,8 @@ namespace GraphLib.Extensions
         /// </summary>
         /// <param name="self"></param>
         /// <param name="toVertex"></param>
-        /// <returns>Chebyshev distance or 0 if one of vertices doesn't have any coordinates values</returns>
+        /// <returns>Chebyshev distance or 0 if one of 
+        /// vertices doesn't have any coordinates values</returns>
         public static double GetChebyshevDistanceTo(this IVertex self, IVertex toVertex)
         {
             return self.Position.CoordinatesValues
