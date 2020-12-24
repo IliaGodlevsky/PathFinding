@@ -8,27 +8,39 @@ namespace GraphLib.Extensions
 {
     public static class ICoordinateExtensions
     {
+        private static int Multiply(int x, int y) => x * y;
+
+        /// <summary>
+        /// Converts coordinates values to index in a multidimensional array
+        /// </summary>
+        /// <param name="self"></param>
+        /// <param name="dimensions">dimensions of array except first dimension</param>
+        /// <returns>Index of coordinate in a multidimensional array</returns>
+        /// <exception cref="ArgumentException">Throws when <paramref name="self"/> 
+        /// coordinates values number is not equal to <paramref name="dimensions"/> -1</exception>
         public static int ToIndex(this ICoordinate self, params int[] dimensions)
         {
             if (self.CoordinatesValues.Count() != dimensions.Length + 1)
             {
-                throw new ArgumentException("Not enough arguments");
+                throw new ArgumentException("Dimensions length must be " +
+                    "one less than the number of coordinate values");
             }
 
-            var coordinatesValues = self.CoordinatesValues.ToArray();
-            int index = coordinatesValues.Last();
-
-            for (int i = 0; i < dimensions.Length - 1; i++)
-            {
-                for (int j = 1 + i; j < dimensions.Length; j++)
-                {
-                    dimensions[i] *= dimensions[j];
-                }
-            }
-
-            return dimensions.Zip(coordinatesValues, (x, y) => x * y).Sum() + index;
+            return dimensions
+                .StepAggregate(Multiply)
+                .Zip(self.CoordinatesValues, Multiply)
+                .Sum() 
+                + self.CoordinatesValues.Last();
         }
 
+        /// <summary>
+        /// Converts coordinates values to index in a graph
+        /// </summary>
+        /// <param name="self"></param>
+        /// <param name="graph"></param>
+        /// <returns>Index of coordinate in a graph</returns>
+        /// /// <exception cref="ArgumentException">Throws when <paramref name="self"/> 
+        /// coordinates values number is not equal to <paramref name="graph"/> size - 1</exception>
         internal static int ToIndex(this ICoordinate self, IGraph graph)
         {
             return self.ToIndex(graph.DimensionsSizes.Skip(1).ToArray());
