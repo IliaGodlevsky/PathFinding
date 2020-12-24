@@ -50,6 +50,7 @@
     <Compile Include="Coordinates\Abstractions\ICoordinate.cs" />
     <Compile Include="Coordinates\DefaultCoordinate.cs" />
     <Compile Include="Extensions\ICoordinateExtensions.cs" />
+    <Compile Include="Extensions\IEnumerableExtensions.cs" />
     <Compile Include="Extensions\IGraphExtensions.cs" />
     <Compile Include="Extensions\IVertexExtension.cs" />
     <Compile Include="Extensions\RandomExtensions.cs" />
