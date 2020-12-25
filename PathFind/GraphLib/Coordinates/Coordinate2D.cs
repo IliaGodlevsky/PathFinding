@@ -1,31 +1,18 @@
 ﻿using GraphLib.Coordinates.Abstractions;
-using GraphLib.Coordinates.Infrastructure;
 using System;
-using System.Collections.Generic;
 using System.Linq;
 
 namespace GraphLib.Coordinates
 {
+    /// <summary>
+    /// A class representing cartesian two-dimensional coordinates
+    /// </summary>
     [Serializable]
-    public sealed class Coordinate2D : BaseCoordinate
+    public sealed class Coordinate2D : BaseCoordinate<Coordinate2D>
     {
         public int X => CoordinatesValues.First();
 
         public int Y => CoordinatesValues.Last();
-
-        public override IEnumerable<ICoordinate> Environment
-        {
-            get
-            {
-                if (coordinateEnvironment == null)
-                {
-                    var environment = new CoordinateEnvironment<Coordinate2D>(this);
-                    coordinateEnvironment = environment.GetEnvironment();
-                }
-
-                return coordinateEnvironment;
-            }
-        }
 
         public Coordinate2D(int x, int y)
             : this(new int[] { x, y })

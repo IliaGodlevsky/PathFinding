@@ -11,7 +11,6 @@ namespace ConsoleVersion.Model
 {
     internal class ConsoleVertex : IVertex
     {
-
         public event EventHandler OnExtremeVertexChosen;
         public event EventHandler OnCostChanged;
         public event EventHandler OnReverse;

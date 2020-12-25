@@ -38,6 +38,7 @@ namespace GraphLib.Coordinates.Infrastructure
             return environment;
         }
 
+        // Recursive method
         private void FormEnvironment(int depth = 0)
         {
             var neighbours = GetNeighbourCoordinates(depth);

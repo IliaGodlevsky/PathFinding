@@ -16,29 +16,37 @@ namespace ConsoleVersion.InputClass
         }
 
         /// <summary>
-        /// 
+        /// Return user's console input in range of values
         /// </summary>
         /// <param name="msg">An input message</param>
         /// <param name="upper">An upper value of input range</param>
         /// <param name="lower">A lower value of input range</param>
-        /// <returns></returns>
+        /// <returns>A number in the range from 
+        /// <paramref name="lower"/> to <paramref name="upper"/></returns>
         public static int InputNumber(string msg, int upper, int lower = 0)
         {
             var range = new ValueRange(upper, lower);
-            Console.Write(msg);
-            string choice = Console.ReadLine();
-            while (IsError(choice, range))
+            string choice;
+            do
             {
                 Console.Write(msg);
                 choice = Console.ReadLine();
             }
+            while (IsError(choice, range));
             return Convert.ToInt32(choice);
         }
 
+        /// <summary>
+        /// Return menu option according to user's input
+        /// </summary>
+        /// <returns><see cref="MenuOption"/></returns>
         public static MenuOption InputOption()
         {
-            var format = ConsoleVersionResources.OptionInputMsg;
-            int option = InputNumber(format, maxMenuValue, minMenuValue);
+            var option = InputNumber(
+                ConsoleVersionResources.OptionInputMsg, 
+                maxMenuValue, 
+                minMenuValue);
+
             return (MenuOption)option;
         }
 
@@ -52,7 +60,8 @@ namespace ConsoleVersion.InputClass
 
         private static bool IsError(string choice, ValueRange range)
         {
-            return !int.TryParse(choice, out var ch) || !range.IsInBounds(ch);
+            return !int.TryParse(choice, out var ch) 
+                || !range.IsInBounds(ch);
         }
 
         private static readonly byte minMenuValue;

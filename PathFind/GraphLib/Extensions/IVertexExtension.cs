@@ -32,11 +32,20 @@ namespace GraphLib.Extensions
         /// vertices doesn't have any coordinates values</returns>
         public static double GetChebyshevDistanceTo(this IVertex self, IVertex toVertex)
         {
+            if (self == null || toVertex == null) 
+            {
+                throw new ArgumentNullException("Argument can't be null");
+            }
+
             return self.Position.CoordinatesValues
                 .Zip(toVertex.Position.CoordinatesValues, (x, y) => Math.Abs(x - y))
                 .MaxOrDefault();
         }
 
+        /// <summary>
+        /// Returns vertex to its start state
+        /// </summary>
+        /// <param name="vertex"></param>
         public static void SetToDefault(this IVertex vertex)
         {
             vertex.IsStart = false;
@@ -104,6 +113,10 @@ namespace GraphLib.Extensions
             return new VertexInfo(self);
         }
 
+        /// <summary>
+        /// Sets <paramref name="self"/> as neighbour of its neighbours
+        /// </summary>
+        /// <param name="self"></param>
         public static void ConnectWithNeighbours(this IVertex self)
         {
             foreach (var neigbour in self.Neighbours)
@@ -115,8 +128,27 @@ namespace GraphLib.Extensions
             }
         }
 
+        /// <summary>
+        /// Sets certain vertices of <paramref name="self"/>'s environment as neighbors
+        /// </summary>
+        /// <param name="self"></param>
+        /// <param name="graph">A graph, where vertex is situated</param>
+        /// <exception cref="ArgumentNullException">Thrown when
+        /// any of parametre is empty</exception>
+        /// <exception cref="ArgumentException">Thrown when <paramref name="graph"/> 
+        /// doesn't contain <paramref name="self"/></exception>
         internal static void SetNeighbours(this IVertex self, IGraph graph)
         {
+            if (graph == null || self == null) 
+            {
+                throw new ArgumentNullException("Argument can't be null");
+            }
+
+            if (!graph.Contains(self))
+            {
+                throw new ArgumentException("Graph doesn't contain this vertex");
+            }
+
             if (!self.IsObstacle)
             {
                 var vertexEnvironment = self.GetEnvironment(graph);
@@ -130,7 +162,7 @@ namespace GraphLib.Extensions
             }
         }
 
-        internal static IEnumerable<IVertex> GetEnvironment(this IVertex self, IGraph graph)
+        private static IEnumerable<IVertex> GetEnvironment(this IVertex self, IGraph graph)
         {
             foreach (var coordinate in self.Position.Environment)
             {

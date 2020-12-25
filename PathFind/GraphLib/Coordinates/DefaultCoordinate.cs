@@ -5,6 +5,9 @@ using System.Collections.Generic;
 
 namespace GraphLib.Coordinates
 {
+    /// <summary>
+    /// An empty coordinate with default realization
+    /// </summary>
     [Serializable]
     public sealed class DefaultCoordinate : ICoordinate
     {
