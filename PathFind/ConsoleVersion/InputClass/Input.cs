@@ -15,6 +15,13 @@ namespace ConsoleVersion.InputClass
             maxMenuValue = menuValues.Last();
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="msg">An input message</param>
+        /// <param name="upper">An upper value of input range</param>
+        /// <param name="lower">A lower value of input range</param>
+        /// <returns></returns>
         public static int InputNumber(string msg, int upper, int lower = 0)
         {
             var range = new ValueRange(upper, lower);

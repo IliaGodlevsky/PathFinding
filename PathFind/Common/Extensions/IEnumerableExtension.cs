@@ -8,6 +8,11 @@ namespace Common.Extensions
     {
         public static IEnumerable<T> DistinctBy<T, TKey>(this IEnumerable<T> items, Func<T, TKey> property)
         {
+            if (items == null || property == null) 
+            {
+                throw new ArgumentException("Bad incoming arguments");
+            }
+
             return items.GroupBy(property).Select(item => item.First());
         }
 

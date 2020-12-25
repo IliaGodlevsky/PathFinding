@@ -2,6 +2,9 @@
 
 namespace ConsoleVersion.Enums
 {
+    /// <summary>
+    /// Enums for creating a console menu
+    /// </summary>
     internal enum MenuOption : byte
     {
         [Description("Quit program")]
@@ -25,8 +28,8 @@ namespace ConsoleVersion.Enums
         [Description("Reverse vertex")]
         Reverse,
 
-        [Description("Change vertex value")]
-        ChangeValue,
+        [Description("Change vertex cost")]
+        ChangeCost,
 
         [Description("Make weighted")]
         MakeWeighted,

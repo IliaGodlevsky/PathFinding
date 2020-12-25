@@ -27,7 +27,7 @@ namespace ConsoleVersion.View
                 { MenuOption.CreateGraph, mainModel.CreateNewGraph },
                 { MenuOption.RefreshGraph, mainModel.ClearGraph },
                 { MenuOption.Reverse, mainModel.ReverseVertex },
-                { MenuOption.ChangeValue, mainModel.ChangeVertexCost },
+                { MenuOption.ChangeCost, mainModel.ChangeVertexCost },
                 { MenuOption.MakeWeighted, () => { mainModel.Graph.ToWeighted(); } },
                 { MenuOption.MakeUnweigted, () => { mainModel.Graph.ToUnweighted(); } }
             };
