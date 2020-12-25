@@ -129,7 +129,7 @@ namespace GraphLib.Extensions
         }
 
         /// <summary>
-        /// Sets certain vertices of <paramref name="self"/>'s environment as neighbors
+        /// Sets certain vertices of <paramref name="self"/>'s environment as its neighbors
         /// </summary>
         /// <param name="self"></param>
         /// <param name="graph">A graph, where vertex is situated</param>
