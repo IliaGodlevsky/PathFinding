@@ -16,7 +16,6 @@ namespace Wpf3dVersion.ViewModel
 
         public double SimpleVertexColorOpacity { get; set; }
 
-
         public RelayCommand ConfirmOpacityChange { get; }
 
         public RelayCommand CancelOpacityChange { get; }

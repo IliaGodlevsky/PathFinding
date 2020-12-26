@@ -1,15 +1,8 @@
-﻿using Common.Extensions;
-using ConsoleVersion.Enums;
-using ConsoleVersion.InputClass;
-using ConsoleVersion.View.Interface;
+﻿using ConsoleVersion.View.Interface;
 using ConsoleVersion.ViewModel;
-using GraphLib.Extensions;
 using System;
-using System.Linq;
-using System.Text;
+using System.Collections.Generic;
 using Console = Colorful.Console;
-using MenuActions = System.Collections.Generic.
-    Dictionary<ConsoleVersion.Enums.MenuOption, System.Action>;
 
 namespace ConsoleVersion.View
 {
@@ -18,64 +11,29 @@ namespace ConsoleVersion.View
         public MainView()
         {
             mainModel = new MainViewModel();
-
-            menuActions = new MenuActions()
-            {
-                { MenuOption.PathFind, mainModel.FindPath },
-                { MenuOption.SaveGraph, mainModel.SaveGraph },
-                { MenuOption.LoadGraph, mainModel.LoadGraph },
-                { MenuOption.CreateGraph, mainModel.CreateNewGraph },
-                { MenuOption.RefreshGraph, mainModel.ClearGraph },
-                { MenuOption.Reverse, mainModel.ReverseVertex },
-                { MenuOption.ChangeCost, mainModel.ChangeVertexCost },
-                { MenuOption.MakeWeighted, () => { mainModel.Graph.ToWeighted(); } },
-                { MenuOption.MakeUnweigted, () => { mainModel.Graph.ToUnweighted(); } }
-            };
-
-            menu = GetMenu();
+            menuActions = mainModel.GetMenuActions();
+            menu = mainModel.CreateMenu();
         }
 
         public void Start()
         {
             var menuOption = GetMenuOption();
 
-            while (menuOption != MenuOption.Quit)
+            while (menuOption != MainViewModel.QuitCommand)
             {
                 menuActions[menuOption]();
                 menuOption = GetMenuOption();
             }
         }
 
-        private MenuOption GetMenuOption()
+        private string GetMenuOption()
         {
             mainModel.DisplayGraph();
             Console.WriteLine(menu);
-            return Input.InputOption();
+            return mainModel.GetMethodDescription();
         }
 
-        private string GetMenu()
-        {
-            var menu = new StringBuilder();
-
-            var menuOptions = Enum.GetValues(typeof(MenuOption)).OfType<MenuOption>();
-            foreach (var menuOption in menuOptions)
-            {
-                int enumValue = menuOption.GetValue();
-                string viewElement = enumValue.IsEven() ? newLine : largeSpace + tab;
-                string enumDescription = menuOption.GetDescription();
-                string format = ConsoleVersionResources.MenuFormat;
-                string menuItem = string.Format(format, enumValue, enumDescription);
-                menu.Append(viewElement).Append(menuItem);
-            }
-
-            return menu.ToString();
-        }
-
-        private const string newLine = "\n";
-        private const string largeSpace = "   ";
-        private const string tab = "\t";
-
-        private readonly MenuActions menuActions;
+        private readonly Dictionary<string, Action> menuActions;
         private readonly MainViewModel mainModel;
         private readonly string menu;
     }

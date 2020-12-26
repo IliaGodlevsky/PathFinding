@@ -4,25 +4,25 @@ namespace Wpf3dVersion.Factories
 {
     internal static class Model3DFactory
     {
-        internal static Model3D CreateCubicModel3D(double size, Material material)
+        internal static Model3D CreateCubicModel3D(double modelSize, Material modelMaterial)
         {
             var model = new Model3DGroup();
 
             var p0 = new Point3D(0, 0, 0);
-            var p1 = new Point3D(size, 0, 0);
-            var p2 = new Point3D(size, 0, size);
-            var p3 = new Point3D(0, 0, size);
-            var p4 = new Point3D(0, size, size);
-            var p5 = new Point3D(size, size, size);
-            var p6 = new Point3D(size, size, 0);
-            var p7 = new Point3D(0, size, 0);
+            var p1 = new Point3D(modelSize, 0, 0);
+            var p2 = new Point3D(modelSize, 0, modelSize);
+            var p3 = new Point3D(0, 0, modelSize);
+            var p4 = new Point3D(0, modelSize, modelSize);
+            var p5 = new Point3D(modelSize, modelSize, modelSize);
+            var p6 = new Point3D(modelSize, modelSize, 0);
+            var p7 = new Point3D(0, modelSize, 0);
 
-            model.Children.Add(CreateRectangleModel(p4, p3, p2, p5, material));
-            model.Children.Add(CreateRectangleModel(p5, p2, p1, p6, material));
-            model.Children.Add(CreateRectangleModel(p7, p6, p1, p0, material));
-            model.Children.Add(CreateRectangleModel(p7, p0, p3, p4, material));
-            model.Children.Add(CreateRectangleModel(p7, p4, p5, p6, material));
-            model.Children.Add(CreateRectangleModel(p0, p1, p2, p3, material));
+            model.Children.Add(CreateRectangleModel(p4, p3, p2, p5, modelMaterial));
+            model.Children.Add(CreateRectangleModel(p5, p2, p1, p6, modelMaterial));
+            model.Children.Add(CreateRectangleModel(p7, p6, p1, p0, modelMaterial));
+            model.Children.Add(CreateRectangleModel(p7, p0, p3, p4, modelMaterial));
+            model.Children.Add(CreateRectangleModel(p7, p4, p5, p6, modelMaterial));
+            model.Children.Add(CreateRectangleModel(p0, p1, p2, p3, modelMaterial));
 
             return model;
         }

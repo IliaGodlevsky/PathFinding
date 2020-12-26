@@ -44,7 +44,6 @@
   <ItemGroup>
     <Compile Include="Extensions\MayBe.cs" />
     <Compile Include="ObjectActivator.cs" />
-    <Compile Include="EventArguments\PathfindingResultEventArgs.cs" />
     <Compile Include="Extensions\EnumExtensions.cs" />
     <Compile Include="Extensions\IEnumerableExtension.cs" />
     <Compile Include="Extensions\IntExtensions.cs" />

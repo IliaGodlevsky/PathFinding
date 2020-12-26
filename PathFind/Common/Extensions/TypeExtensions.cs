@@ -15,7 +15,7 @@ namespace Common.Extensions
             return self.GetConstructor(parametres);
         }
 
-        public static TAttribute GetAttribute<TAttribute>(this Type self, bool inherit = false) where TAttribute : Attribute
+        public static TAttribute GetAttribute<TAttribute>(this MemberInfo self, bool inherit = false) where TAttribute : Attribute
         {
             return (TAttribute)Attribute.GetCustomAttribute(self, typeof(TAttribute), inherit);
         }

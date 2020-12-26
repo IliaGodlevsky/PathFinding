@@ -11,7 +11,7 @@ namespace GraphLib.Coordinates.Abstractions
     public interface ICoordinate : ICloneable, IDefault
     {
         /// <summary>
-        /// An array of coordinate values of the object
+        /// An array of coordinates values of the object
         /// </summary>
         IEnumerable<int> CoordinatesValues { get; }
 

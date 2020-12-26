@@ -1,20 +1,11 @@
 ﻿using Common.ValueRanges;
-using ConsoleVersion.Enums;
 using GraphLib.Coordinates;
 using System;
-using System.Linq;
 
 namespace ConsoleVersion.InputClass
 {
     internal static class Input
     {
-        static Input()
-        {
-            var menuValues = Enum.GetValues(typeof(MenuOption)).Cast<byte>();
-            minMenuValue = menuValues.First();
-            maxMenuValue = menuValues.Last();
-        }
-
         /// <summary>
         /// Return user's console input in range of values
         /// </summary>
@@ -31,23 +22,9 @@ namespace ConsoleVersion.InputClass
             {
                 Console.Write(msg);
                 choice = Console.ReadLine();
-            }
-            while (IsError(choice, range));
+            } while (IsError(choice, range));
+
             return Convert.ToInt32(choice);
-        }
-
-        /// <summary>
-        /// Return menu option according to user's input
-        /// </summary>
-        /// <returns><see cref="MenuOption"/></returns>
-        public static MenuOption InputOption()
-        {
-            var option = InputNumber(
-                ConsoleVersionResources.OptionInputMsg, 
-                maxMenuValue, 
-                minMenuValue);
-
-            return (MenuOption)option;
         }
 
         public static Coordinate2D InputPoint(int width, int height)
@@ -64,7 +41,7 @@ namespace ConsoleVersion.InputClass
                 || !range.IsInBounds(ch);
         }
 
-        private static readonly byte minMenuValue;
-        private static readonly byte maxMenuValue;
+        private static readonly int minMenuValue;
+        private static readonly int maxMenuValue;
     }
 }

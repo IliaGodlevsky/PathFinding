@@ -1,6 +1,5 @@
 ﻿using System;
 using System.ComponentModel;
-using System.Linq;
 
 namespace Common.Extensions
 {
@@ -8,29 +7,18 @@ namespace Common.Extensions
     {
         public static string GetDescription(this Enum enumValue)
         {
-            var description = enumValue.ToString();
-            var fieldInfo = enumValue.GetType().GetField(description);
-
-            if (fieldInfo != null)
-            {
-                var attrs = fieldInfo.GetCustomAttributes(typeof(DescriptionAttribute), inherit: false);
-                if (attrs?.Any() == true)
-                {
-                    description = ((DescriptionAttribute)attrs.First()).Description;
-                }
-            }
-
-            return description;
+            var enumValueName = enumValue.ToString();
+            var fieldInfo = enumValue.GetType().GetField(enumValueName);
+            var attribute = fieldInfo.GetAttribute<DescriptionAttribute>();
+          
+            return attribute?.Description ?? enumValueName;
         }
 
-        public static int GetValue(this Enum enumValue)
+        public static TResultType GetValue<TResultType>(this Enum enumValue)
+            where TResultType : struct, IConvertible
         {
-            var names = Enum.GetNames(enumValue.GetType()).Cast<string>().ToList();
-            var enumValueIndex = names.IndexOf(enumValue.ToString());
-            var values = Enum.GetValues(enumValue.GetType());
-            var value = values.GetValue(enumValueIndex);
-
-            return Convert.ToInt32(value);
+            var value = Enum.Parse(enumValue.GetType(), enumValue.ToString());
+            return (TResultType)Convert.ChangeType(value, typeof(TResultType));
         }
     }
 }
