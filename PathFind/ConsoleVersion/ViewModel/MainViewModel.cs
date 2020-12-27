@@ -114,12 +114,9 @@ namespace ConsoleVersion.ViewModel
         {
             var menu = new StringBuilder("\n");
             int menuItemNumber = 0;
-            foreach(var method in GetMenuMethods())
+            foreach(var description in GetMenuMethods().Select(GetDescription))
             {
-                var attribute = method.GetAttribute<MenuAttribute>();
-                var description = attribute.Description;
-                var menuItem = string.Format(ConsoleVersionResources.MenuFormat, ++menuItemNumber, description);
-                menu.AppendLine(menuItem);
+                menu.AppendFormatLine(ConsoleVersionResources.MenuFormat, ++menuItemNumber, description);
             }
             return menu.ToString();
         }
@@ -130,8 +127,7 @@ namespace ConsoleVersion.ViewModel
             foreach (var method in GetMenuMethods())
             {
                 var action = (Action)method.CreateDelegate(typeof(Action), this);
-                var attribute = method.GetAttribute<MenuAttribute>();
-                var description = attribute.Description;
+                var description = GetDescription(method);
                 dictionary.Add(description, action);
             }
             MethodsDescriptions = dictionary.Keys.ToArray();
@@ -171,6 +167,11 @@ namespace ConsoleVersion.ViewModel
                 .OrderBy(ByPriority);
         }
 
+        private string GetDescription(MethodInfo method)
+        {
+            var attribute = method.GetAttribute<MenuAttribute>();
+            return attribute.Description;
+        }
 
         private string GetPath()
         {
