@@ -40,8 +40,5 @@ namespace ConsoleVersion.InputClass
             return !int.TryParse(choice, out var ch) 
                 || !range.IsInBounds(ch);
         }
-
-        private static readonly int minMenuValue;
-        private static readonly int maxMenuValue;
     }
 }
