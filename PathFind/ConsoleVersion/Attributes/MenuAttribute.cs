@@ -3,7 +3,7 @@ using System;
 
 namespace ConsoleVersion.Attributes
 {
-    [AttributeUsage(AttributeTargets.Method, AllowMultiple = true, Inherited = false)]
+    [AttributeUsage(AttributeTargets.Method, AllowMultiple = false, Inherited = false)]
     internal class MenuAttribute : Attribute
     {
         public MenuAttribute(string description, 
@@ -14,6 +14,7 @@ namespace ConsoleVersion.Attributes
         }
 
         public MenuItemPriority MenuItemPriority { get; private set; }
+
         public string Description { get; private set; }
     }
 }
