@@ -49,6 +49,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Attributes\MenuAttribute.cs" />
+    <Compile Include="Enums\MenuItemPriority.cs" />
     <Compile Include="Model\ConsoleGraphFieldFactory.cs" />
     <Compile Include="ViewModel\GraphCreatingViewModel.cs" />
     <Compile Include="ViewModel\MainViewModel.cs" />

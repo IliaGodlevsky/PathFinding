@@ -1,4 +1,6 @@
 ﻿using Common.Extensions;
+using ConsoleVersion.Attributes;
+using ConsoleVersion.Enums;
 using ConsoleVersion.InputClass;
 using ConsoleVersion.Model;
 using ConsoleVersion.View;
@@ -7,9 +9,9 @@ using GraphLib.Graphs;
 using GraphViewModel;
 using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.Drawing;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using Console = Colorful.Console;
 
@@ -18,7 +20,6 @@ namespace ConsoleVersion.ViewModel
     internal class MainViewModel : MainModel
     {
         private string[] MethodsDescriptions { get; set; }
-        public const string QuitCommand = "Quit";
 
         public MainViewModel() : base()
         {
@@ -27,19 +28,19 @@ namespace ConsoleVersion.ViewModel
             InfoConverter = (info) => new ConsoleVertex(info);
         }
 
-        [Description("Make unweighted")]
+        [Menu("Make unweighted")]
         public void MakeGraphUnweighted()
         {
             Graph.ToUnweighted();
         }
 
-        [Description("Make weighted")]
+        [Menu("Make weighted")]
         public void MakeGraphWeighted()
         {
             Graph.ToWeighted();
         }
 
-        [Description("Create new graph")]
+        [Menu("Create new graph", MenuItemPriority.First)]
         public override void CreateNewGraph()
         {
             var model = new GraphCreatingViewModel(this);
@@ -48,7 +49,7 @@ namespace ConsoleVersion.ViewModel
             view.Start();
         }
 
-        [Description("Find path")]
+        [Menu("Find path", MenuItemPriority.High)]
         public override void FindPath()
         {
             var model = new PathFindingViewModel(this);
@@ -58,7 +59,7 @@ namespace ConsoleVersion.ViewModel
             view.Start();
         }
 
-        [Description("Reverse vertes")]
+        [Menu("Reverse vertes")]
         public void ReverseVertex()
         {
             var upperPossibleXValue = (Graph as Graph2D).Width - 1;
@@ -69,7 +70,7 @@ namespace ConsoleVersion.ViewModel
             (Graph[point] as ConsoleVertex).Reverse();
         }
 
-        [Description("Change vertex cost")]
+        [Menu("Change vertex cost", MenuItemPriority.Low)]
         public void ChangeVertexCost()
         {
             if (!Graph.IsDefault)
@@ -90,19 +91,19 @@ namespace ConsoleVersion.ViewModel
             }
         }
 
-        [Description("Save graph")]
+        [Menu("Save graph")]
         public override void SaveGraph()
         {
             base.SaveGraph();
         }
 
-        [Description("Load graph")]
+        [Menu("Load graph")]
         public override void LoadGraph()
         {
             base.LoadGraph();
         }
 
-        [Description(QuitCommand)]
+        [Menu("Quit programm", MenuItemPriority.Last)]
         public void Quit()
         {
             Environment.Exit(0);
@@ -120,16 +121,13 @@ namespace ConsoleVersion.ViewModel
 
         public string CreateMenu()
         {
-            var methods = typeof(MainViewModel)
-                .GetMethods()
-                .Where(method => method.GetAttribute<DescriptionAttribute>() != null)
-                .ToArray();
+            var methods = GetMenuMethods().ToArray();
 
             var menu = new StringBuilder();
 
             for (int i = 0; i < methods.Length; i++)
             {
-                var attribute = methods[i].GetAttribute<DescriptionAttribute>();
+                var attribute = methods[i].GetAttribute<MenuAttribute>();
                 var description = attribute.Description;
                 var menuItem = string.Format(ConsoleVersionResources.MenuFormat, i + 1, description);
                 menu.AppendLine(menuItem);
@@ -141,14 +139,12 @@ namespace ConsoleVersion.ViewModel
         public Dictionary<string, Action> GetMenuActions()
         {
             var dictionary = new Dictionary<string, Action>();
-            var methods = typeof(MainViewModel)
-                .GetMethods()
-                .Where(method => method.GetAttribute<DescriptionAttribute>() != null);
+            var methods = GetMenuMethods();
 
             foreach (var method in methods)
             {
                 var action = (Action)method.CreateDelegate(typeof(Action), this);
-                var attribute = method.GetAttribute<DescriptionAttribute>();
+                var attribute = method.GetAttribute<MenuAttribute>();
                 var description = attribute.Description;
                 dictionary.Add(description, action);
             }
@@ -176,6 +172,15 @@ namespace ConsoleVersion.ViewModel
             return GetPath();
         }
 
+        private IEnumerable<MethodInfo> GetMenuMethods()
+        {
+            return typeof(MainViewModel)
+                .GetMethods()
+                .Where(method => method.GetAttribute<MenuAttribute>() != null)
+                .OrderBy(method => method.GetAttribute<MenuAttribute>().MenuItemPriority.GetValue<int>());
+        }
+
+
         private string GetPath()
         {
             Console.Write("Enter path: ");
@@ -187,6 +192,6 @@ namespace ConsoleVersion.ViewModel
             DisplayGraph();
             Console.WriteLine(message);
             Console.ReadLine();
-        }        
+        }
     }
 }

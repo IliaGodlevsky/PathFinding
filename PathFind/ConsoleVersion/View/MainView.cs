@@ -18,8 +18,7 @@ namespace ConsoleVersion.View
         public void Start()
         {
             var menuOption = GetMenuOption();
-
-            while (menuOption != MainViewModel.QuitCommand)
+            while (true)
             {
                 menuActions[menuOption]();
                 menuOption = GetMenuOption();
