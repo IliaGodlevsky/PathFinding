@@ -28,7 +28,7 @@ namespace ConsoleVersion.ViewModel
             InfoConverter = (info) => new ConsoleVertex(info);
         }
 
-        [Menu("Make unweighted")] 
+        [Menu("Make unweighted")]
         public void MakeGraphUnweighted() => Graph.ToUnweighted();
 
         [Menu("Make weighted")] 
@@ -112,36 +112,29 @@ namespace ConsoleVersion.ViewModel
 
         public string CreateMenu()
         {
-            var methods = GetMenuMethods().ToArray();
-
             var menu = new StringBuilder("\n");
-
-            for (int i = 0; i < methods.Length; i++)
+            int menuItemNumber = 0;
+            foreach(var method in GetMenuMethods())
             {
-                var attribute = methods[i].GetAttribute<MenuAttribute>();
+                var attribute = method.GetAttribute<MenuAttribute>();
                 var description = attribute.Description;
-                var menuItem = string.Format(ConsoleVersionResources.MenuFormat, i + 1, description);
+                var menuItem = string.Format(ConsoleVersionResources.MenuFormat, ++menuItemNumber, description);
                 menu.AppendLine(menuItem);
             }
-
             return menu.ToString();
         }
 
         public Dictionary<string, Action> GetMenuActions()
         {
             var dictionary = new Dictionary<string, Action>();
-            var methods = GetMenuMethods();
-
-            foreach (var method in methods)
+            foreach (var method in GetMenuMethods())
             {
                 var action = (Action)method.CreateDelegate(typeof(Action), this);
                 var attribute = method.GetAttribute<MenuAttribute>();
                 var description = attribute.Description;
                 dictionary.Add(description, action);
             }
-
             MethodsDescriptions = dictionary.Keys.ToArray();
-
             return dictionary;
         }
 
