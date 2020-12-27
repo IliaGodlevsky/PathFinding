@@ -28,17 +28,11 @@ namespace ConsoleVersion.ViewModel
             InfoConverter = (info) => new ConsoleVertex(info);
         }
 
-        [Menu("Make unweighted")]
-        public void MakeGraphUnweighted()
-        {
-            Graph.ToUnweighted();
-        }
+        [Menu("Make unweighted")] 
+        public void MakeGraphUnweighted() => Graph.ToUnweighted();
 
-        [Menu("Make weighted")]
-        public void MakeGraphWeighted()
-        {
-            Graph.ToWeighted();
-        }
+        [Menu("Make weighted")] 
+        public void MakeGraphWeighted() => Graph.ToWeighted();
 
         [Menu("Create new graph", MenuItemPriority.First)]
         public override void CreateNewGraph()
@@ -62,18 +56,21 @@ namespace ConsoleVersion.ViewModel
         [Menu("Reverse vertes")]
         public void ReverseVertex()
         {
-            var upperPossibleXValue = (Graph as Graph2D).Width - 1;
-            var upperPossibleYValue = (Graph as Graph2D).Length - 1;
+            if (Graph.Any())
+            {
+                var upperPossibleXValue = (Graph as Graph2D).Width - 1;
+                var upperPossibleYValue = (Graph as Graph2D).Length - 1;
 
-            var point = Input.InputPoint(upperPossibleXValue, upperPossibleYValue);
+                var point = Input.InputPoint(upperPossibleXValue, upperPossibleYValue);
 
-            (Graph[point] as ConsoleVertex).Reverse();
+                (Graph[point] as ConsoleVertex).Reverse();
+            }
         }
 
         [Menu("Change vertex cost", MenuItemPriority.Low)]
         public void ChangeVertexCost()
         {
-            if (!Graph.IsDefault)
+            if (Graph.Any())
             {
                 var graph2D = Graph as Graph2D;
 
@@ -91,29 +88,17 @@ namespace ConsoleVersion.ViewModel
             }
         }
 
-        [Menu("Clear graph", MenuItemPriority.High)]
-        public override void ClearGraph()
-        {
-            base.ClearGraph();
-        }
+        [Menu("Clear graph", MenuItemPriority.High)] 
+        public override void ClearGraph() => base.ClearGraph();
 
-        [Menu("Save graph")]
-        public override void SaveGraph()
-        {
-            base.SaveGraph();
-        }
+        [Menu("Save graph")] 
+        public override void SaveGraph() => base.SaveGraph();
 
         [Menu("Load graph")]
-        public override void LoadGraph()
-        {
-            base.LoadGraph();
-        }
+        public override void LoadGraph() => base.LoadGraph();
 
-        [Menu("Quit programm", MenuItemPriority.Last)]
-        public void Quit()
-        {
-            Environment.Exit(0);
-        }
+        [Menu("Quit programm", MenuItemPriority.Last)] 
+        public void Quit() => Environment.Exit(0);
 
         public void DisplayGraph()
         {
