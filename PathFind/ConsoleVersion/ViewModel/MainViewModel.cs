@@ -114,9 +114,11 @@ namespace ConsoleVersion.ViewModel
         {
             var menu = new StringBuilder("\n");
             int menuItemNumber = 0;
-            foreach(var description in GetMenuMethods().Select(GetDescription))
+            var descriptions = GetMenuMethods().Select(GetDescription);
+            string format = ConsoleVersionResources.MenuFormat;
+            foreach (var description in descriptions)
             {
-                menu.AppendFormatLine(ConsoleVersionResources.MenuFormat, ++menuItemNumber, description);
+                menu.AppendFormatLine(format, ++menuItemNumber, description);
             }
             return menu.ToString();
         }
