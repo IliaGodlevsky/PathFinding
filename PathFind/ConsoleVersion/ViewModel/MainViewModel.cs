@@ -88,10 +88,10 @@ namespace ConsoleVersion.ViewModel
             }
         }
 
-        [Menu("Clear graph", MenuItemPriority.High)] 
+        [Menu("Clear graph", MenuItemPriority.High)]
         public override void ClearGraph() => base.ClearGraph();
 
-        [Menu("Save graph")] 
+        [Menu("Save graph")]
         public override void SaveGraph() => base.SaveGraph();
 
         [Menu("Load graph")]
