@@ -91,6 +91,12 @@ namespace ConsoleVersion.ViewModel
             }
         }
 
+        [Menu("Clear graph", MenuItemPriority.High)]
+        public override void ClearGraph()
+        {
+            base.ClearGraph();
+        }
+
         [Menu("Save graph")]
         public override void SaveGraph()
         {
@@ -123,7 +129,7 @@ namespace ConsoleVersion.ViewModel
         {
             var methods = GetMenuMethods().ToArray();
 
-            var menu = new StringBuilder();
+            var menu = new StringBuilder("\n");
 
             for (int i = 0; i < methods.Length; i++)
             {
@@ -159,6 +165,7 @@ namespace ConsoleVersion.ViewModel
             var option = Input.InputNumber(
                 ConsoleVersionResources.OptionInputMsg,
                 MethodsDescriptions.Length, 1) - 1;
+
             return MethodsDescriptions[option];
         }
 
@@ -174,10 +181,16 @@ namespace ConsoleVersion.ViewModel
 
         private IEnumerable<MethodInfo> GetMenuMethods()
         {
+            bool IsMenuMethod(MethodInfo method) 
+                => method.GetAttribute<MenuAttribute>() != null;
+
+            int ByPriority(MethodInfo method) 
+                => method.GetAttribute<MenuAttribute>().MenuItemPriority.GetValue<int>();
+
             return typeof(MainViewModel)
                 .GetMethods()
-                .Where(method => method.GetAttribute<MenuAttribute>() != null)
-                .OrderBy(method => method.GetAttribute<MenuAttribute>().MenuItemPriority.GetValue<int>());
+                .Where(IsMenuMethod)
+                .OrderBy(ByPriority);
         }
 
 
