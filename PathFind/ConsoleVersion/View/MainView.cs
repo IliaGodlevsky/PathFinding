@@ -12,7 +12,7 @@ namespace ConsoleVersion.View
         {
             mainModel = new MainViewModel();
             menuActions = mainModel.GetMenuActions();
-            menu = mainModel.CreateMenu();
+            menu = mainModel.CreateMenu(columns: 3);
         }
 
         public void Start()
