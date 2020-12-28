@@ -28,13 +28,13 @@ namespace ConsoleVersion.ViewModel
             InfoConverter = (info) => new ConsoleVertex(info);
         }
 
-        [Menu("Make unweighted")]
+        [MenuItem("Make unweighted")]
         public void MakeGraphUnweighted() => Graph.ToUnweighted();
 
-        [Menu("Make weighted")] 
+        [MenuItem("Make weighted")] 
         public void MakeGraphWeighted() => Graph.ToWeighted();
 
-        [Menu("Create new graph", MenuItemPriority.First)]
+        [MenuItem("Create new graph", MenuItemPriority.First)]
         public override void CreateNewGraph()
         {
             var model = new GraphCreatingViewModel(this);
@@ -43,7 +43,7 @@ namespace ConsoleVersion.ViewModel
             view.Start();
         }
 
-        [Menu("Find path", MenuItemPriority.High)]
+        [MenuItem("Find path", MenuItemPriority.High)]
         public override void FindPath()
         {
             var model = new PathFindingViewModel(this);
@@ -53,7 +53,7 @@ namespace ConsoleVersion.ViewModel
             view.Start();
         }
 
-        [Menu("Reverse vertex")]
+        [MenuItem("Reverse vertex")]
         public void ReverseVertex()
         {
             if (Graph.Any())
@@ -67,7 +67,7 @@ namespace ConsoleVersion.ViewModel
             }
         }
 
-        [Menu("Change vertex cost", MenuItemPriority.Low)]
+        [MenuItem("Change vertex cost", MenuItemPriority.Low)]
         public void ChangeVertexCost()
         {
             if (Graph.Any())
@@ -88,16 +88,16 @@ namespace ConsoleVersion.ViewModel
             }
         }
 
-        [Menu("Clear graph", MenuItemPriority.High)]
+        [MenuItem("Clear graph", MenuItemPriority.High)]
         public override void ClearGraph() => base.ClearGraph();
 
-        [Menu("Save graph")]
+        [MenuItem("Save graph")]
         public override void SaveGraph() => base.SaveGraph();
 
-        [Menu("Load graph")]
+        [MenuItem("Load graph")]
         public override void LoadGraph() => base.LoadGraph();
 
-        [Menu("Quit programm", MenuItemPriority.Last)]
+        [MenuItem("Quit programm", MenuItemPriority.Last)]
         public void Quit() => Environment.Exit(0);
 
         public void DisplayGraph()
@@ -166,10 +166,10 @@ namespace ConsoleVersion.ViewModel
         private IEnumerable<MethodInfo> GetMenuMethods()
         {
             bool IsMenuMethod(MethodInfo method) 
-                => method.GetAttribute<MenuAttribute>() != null;
+                => method.GetAttribute<MenuItemAttribute>() != null;
 
             int ByPriority(MethodInfo method) 
-                => method.GetAttribute<MenuAttribute>().MenuItemPriority.GetValue<int>();
+                => method.GetAttribute<MenuItemAttribute>().MenuItemPriority.GetValue<int>();
 
             return typeof(MainViewModel)
                 .GetMethods()
@@ -179,8 +179,8 @@ namespace ConsoleVersion.ViewModel
 
         private string GetDescription(MethodInfo method)
         {
-            var attribute = method.GetAttribute<MenuAttribute>();
-            return attribute.Description;
+            var attribute = method.GetAttribute<MenuItemAttribute>();
+            return attribute.MenuItemName;
         }
 
         private string GetPath()
