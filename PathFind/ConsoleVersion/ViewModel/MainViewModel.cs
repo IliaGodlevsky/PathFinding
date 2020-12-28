@@ -97,7 +97,7 @@ namespace ConsoleVersion.ViewModel
         [Menu("Load graph")]
         public override void LoadGraph() => base.LoadGraph();
 
-        [Menu("Quit programm", MenuItemPriority.Last)] 
+        [Menu("Quit programm", MenuItemPriority.Last)]
         public void Quit() => Environment.Exit(0);
 
         public void DisplayGraph()
