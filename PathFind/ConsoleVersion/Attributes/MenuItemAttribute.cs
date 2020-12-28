@@ -9,10 +9,10 @@ namespace ConsoleVersion.Attributes
     [AttributeUsage(AttributeTargets.Method, AllowMultiple = false, Inherited = false)]
     internal class MenuItemAttribute : Attribute
     {
-        public MenuItemAttribute(string description, 
+        public MenuItemAttribute(string menuItemName, 
             MenuItemPriority menuItemPriority = MenuItemPriority.Normal)
         {
-            MenuItemName = description;
+            MenuItemName = menuItemName;
             MenuItemPriority = menuItemPriority;
         }
 
