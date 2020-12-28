@@ -144,7 +144,7 @@ namespace ConsoleVersion.ViewModel
             return dictionary;
         }
 
-        public string GetMethodDescription()
+        public string ChooseMethodDescription()
         {
             var option = Input.InputNumber(
                 ConsoleVersionResources.OptionInputMsg,
