@@ -53,7 +53,7 @@ namespace ConsoleVersion.ViewModel
             view.Start();
         }
 
-        [Menu("Reverse vertes")]
+        [Menu("Reverse vertex")]
         public void ReverseVertex()
         {
             if (Graph.Any())
@@ -110,22 +110,29 @@ namespace ConsoleVersion.ViewModel
             Console.WriteLine(PathFindingStatistics);
         }
 
-        public string CreateMenu()
+        public string CreateMenu(int columns = 2)
         {
             var menu = new StringBuilder("\n");
+
             int menuItemNumber = 0;
             var descriptions = GetMenuMethods().Select(GetDescription);
+            var longestDescriptionLength = descriptions.Max(str => str.Length);
             var format = ConsoleVersionResources.MenuFormat;
+
             foreach (var description in descriptions)
             {
-                menu.AppendFormatLine(format, ++menuItemNumber, description);
+                var paddedDescription = description.PadRight(longestDescriptionLength);
+                var separator = (menuItemNumber + 1) % columns == 0 ? "\n" : " ";
+                menu.AppendFormat(format + separator, ++menuItemNumber, paddedDescription);
             }
+
             return menu.ToString();
         }
 
         public Dictionary<string, Action> GetMenuActions()
         {
             var dictionary = new Dictionary<string, Action>();
+
             foreach (var method in GetMenuMethods())
             {
                 var action = (Action)method.CreateDelegate(typeof(Action), this);
@@ -133,6 +140,7 @@ namespace ConsoleVersion.ViewModel
                 dictionary.Add(description, action);
             }
             MethodsDescriptions = dictionary.Keys.ToArray();
+
             return dictionary;
         }
 
