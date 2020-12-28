@@ -29,7 +29,7 @@ namespace ConsoleVersion.View
         {
             mainModel.DisplayGraph();
             Console.WriteLine(menu);
-            return mainModel.GetMethodDescription();
+            return mainModel.ChooseMethodDescription();
         }
 
         private readonly Dictionary<string, Action> menuActions;
