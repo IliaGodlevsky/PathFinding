@@ -66,7 +66,7 @@ namespace Wpf3dVersion.Model
         public void StretchAlongAxis(Axis axis, double distanceBetween,
             params double[] additionalOffset)
         {
-            int axisIndex = axis.GetValue();
+            int axisIndex = axis.GetValue<int>();
             DistanceBetweenSetters[axisIndex](distanceBetween, this);
             StretchAlongAxes(axis);
 
@@ -90,7 +90,7 @@ namespace Wpf3dVersion.Model
         private void LocateVertex(Axis axis, WpfVertex3D vertex,
             params double[] additionalOffset)
         {
-            int axisIndex = axis.GetValue();
+            int axisIndex = axis.GetValue<int>();
             var coordinates = vertex.Position.CoordinatesValues;
             var vertexOffset = new Offset
             {
