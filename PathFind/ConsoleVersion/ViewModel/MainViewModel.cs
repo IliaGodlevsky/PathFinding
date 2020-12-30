@@ -1,5 +1,4 @@
-﻿using Common.Extensions;
-using ConsoleVersion.Attributes;
+﻿using ConsoleVersion.Attributes;
 using ConsoleVersion.Enums;
 using ConsoleVersion.InputClass;
 using ConsoleVersion.Model;
@@ -8,19 +7,14 @@ using GraphLib.Extensions;
 using GraphLib.Graphs;
 using GraphViewModel;
 using System;
-using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
-using System.Reflection;
-using System.Text;
 using Console = Colorful.Console;
 
 namespace ConsoleVersion.ViewModel
 {
     internal class MainViewModel : MainModel
     {
-        private string[] MethodsDescriptions { get; set; }
-
         public MainViewModel() : base()
         {
             VertexEventHolder = new ConsoleVertexEventHolder();
@@ -110,49 +104,6 @@ namespace ConsoleVersion.ViewModel
             Console.WriteLine(PathFindingStatistics);
         }
 
-        public string CreateMenu(int columns = 2)
-        {
-            var menu = new StringBuilder("\n");
-
-            int menuItemNumber = 0;
-            var menuItemsNames = GetMenuMethods().Select(GetMenuItemName);
-            var longestNameLength = menuItemsNames.Max(str => str.Length);
-            var format = ConsoleVersionResources.MenuFormat;
-
-            foreach (var name in menuItemsNames)
-            {
-                var paddedName = name.PadRight(longestNameLength);
-                var separator = (menuItemNumber + 1) % columns == 0 ? "\n" : " ";
-                menu.AppendFormat(format + separator, ++menuItemNumber, paddedName);
-            }
-
-            return menu.ToString();
-        }
-
-        public Dictionary<string, Action> GetMenuActions()
-        {
-            var dictionary = new Dictionary<string, Action>();
-
-            foreach (var method in GetMenuMethods())
-            {
-                var action = (Action)method.CreateDelegate(typeof(Action), this);
-                var description = GetMenuItemName(method);
-                dictionary.Add(description, action);
-            }
-            MethodsDescriptions = dictionary.Keys.ToArray();
-
-            return dictionary;
-        }
-
-        public string ChooseMethodDescription()
-        {
-            var option = Input.InputNumber(
-                ConsoleVersionResources.OptionInputMsg,
-                MethodsDescriptions.Length, 1) - 1;
-
-            return MethodsDescriptions[option];
-        }
-
         protected override string GetSavingPath()
         {
             return GetPath();
@@ -161,26 +112,6 @@ namespace ConsoleVersion.ViewModel
         protected override string GetLoadingPath()
         {
             return GetPath();
-        }
-
-        private IEnumerable<MethodInfo> GetMenuMethods()
-        {
-            bool IsMenuMethod(MethodInfo method) 
-                => method.GetAttribute<MenuItemAttribute>() != null;
-
-            int ByPriority(MethodInfo method) 
-                => method.GetAttribute<MenuItemAttribute>().MenuItemPriority.GetValue<int>();
-
-            return typeof(MainViewModel)
-                .GetMethods()
-                .Where(IsMenuMethod)
-                .OrderBy(ByPriority);
-        }
-
-        private string GetMenuItemName(MethodInfo method)
-        {
-            var attribute = method.GetAttribute<MenuItemAttribute>();
-            return attribute.MenuItemName;
         }
 
         private string GetPath()
