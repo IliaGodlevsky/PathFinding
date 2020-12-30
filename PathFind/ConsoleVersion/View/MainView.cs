@@ -1,7 +1,9 @@
-﻿using ConsoleVersion.View.Interface;
+﻿using ConsoleVersion.InputClass;
+using ConsoleVersion.View.Interface;
 using ConsoleVersion.ViewModel;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using Console = Colorful.Console;
 
 namespace ConsoleVersion.View
@@ -11,8 +13,10 @@ namespace ConsoleVersion.View
         public MainView()
         {
             mainModel = new MainViewModel();
-            menuActions = mainModel.GetMenuActions();
-            menu = mainModel.CreateMenu(columns: 3);
+            menuViewModel = new MenuViewModel<MainViewModel>(mainModel);
+            menuActions = menuViewModel.GetMenuActions<Action>();
+            menuItemsNames = menuActions.Keys.ToArray();
+            menu = menuViewModel.CreateMenu(columns: 3);
         }
 
         public void Start()
@@ -29,11 +33,18 @@ namespace ConsoleVersion.View
         {
             mainModel.DisplayGraph();
             Console.WriteLine(menu);
-            return mainModel.ChooseMethodDescription();
+            var option = Input.InputNumber(
+                ConsoleVersionResources.OptionInputMsg,
+                menuItemsNames.Length, 1) - 1;
+
+            return menuItemsNames[option];
         }
 
+
+        private readonly string[] menuItemsNames;
         private readonly Dictionary<string, Action> menuActions;
         private readonly MainViewModel mainModel;
+        private readonly MenuViewModel<MainViewModel> menuViewModel;
         private readonly string menu;
     }
 }
