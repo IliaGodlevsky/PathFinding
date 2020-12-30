@@ -1,5 +1,6 @@
 ﻿using Common.Extensions;
 using ConsoleVersion.Attributes;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
@@ -34,16 +35,15 @@ namespace ConsoleVersion.ViewModel
             return menu.ToString();
         }
 
-        public Dictionary<string, TAction> GetMenuActions<TAction>()
-            where TAction : class
+        public Dictionary<string, Action> GetMenuActions()
         {
-            var menuActions = new Dictionary<string, TAction>();
+            var menuActions = new Dictionary<string, Action>();
 
             foreach (var method in GetMenuMethods())
             {
-                var action = method.CreateDelegate(typeof(TAction), mainModel);
+                var action = (Action)method.CreateDelegate(typeof(Action), mainModel);
                 var description = GetMenuItemName(method);
-                menuActions.Add(description, action as TAction);
+                menuActions.Add(description, action);
             }
 
             return menuActions;
