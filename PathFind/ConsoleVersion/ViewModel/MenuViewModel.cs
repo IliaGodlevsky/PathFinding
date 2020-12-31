@@ -8,21 +8,19 @@ using System.Text;
 
 namespace ConsoleVersion.ViewModel
 {
-    internal class MenuViewModel<TViewModel>
-        where TViewModel : class
+    internal class MenuViewModel
     {
-        public MenuViewModel(TViewModel mainViewModel)
+        public MenuViewModel(MainViewModel mainViewModel)
         {
             mainModel = mainViewModel;
         }
 
-        public string CreateMenu(int columns = 2)
+        public static string CreateMenu(IEnumerable<string> menuItemsNames, int columns = 2)
         {
             var menu = new StringBuilder("\n");
 
             int menuItemNumber = 0;
-            var menuItemsNames = GetMenuMethods().Select(GetMenuItemName);
-            var longestNameLength = menuItemsNames.Max(str => str.Length);
+            var longestNameLength = menuItemsNames.Max(str => str.Length) + 1;
             var format = ConsoleVersionResources.MenuFormat;
 
             foreach (var name in menuItemsNames)
@@ -41,9 +39,11 @@ namespace ConsoleVersion.ViewModel
 
             foreach (var method in GetMenuMethods())
             {
-                var action = (Action)method.CreateDelegate(typeof(Action), mainModel);
-                var description = GetMenuItemName(method);
-                menuActions.Add(description, action);
+                if (method.TryCreateDelegate(mainModel, out Action action))
+                {
+                    var description = GetMenuItemName(method);
+                    menuActions.Add(description, action);
+                }
             }
 
             return menuActions;
@@ -59,7 +59,7 @@ namespace ConsoleVersion.ViewModel
 
         private bool IsMenuMethod(MethodInfo method)
         {
-            return method.GetAttribute<MenuItemAttribute>() != null;
+            return Attribute.IsDefined(method, typeof(MenuItemAttribute));
         }
 
         private int GetMenuItemPriority(MethodInfo method)
@@ -73,6 +73,6 @@ namespace ConsoleVersion.ViewModel
             return attribute.MenuItemName;
         }
 
-        private readonly TViewModel mainModel;
+        private readonly MainViewModel mainModel;
     }
 }

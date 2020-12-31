@@ -15,9 +15,26 @@ namespace Common.Extensions
             return self.GetConstructor(parametres);
         }
 
-        public static TAttribute GetAttribute<TAttribute>(this MemberInfo self, bool inherit = false) where TAttribute : Attribute
+        public static TAttribute GetAttribute<TAttribute>(this MemberInfo self, bool inherit = false) 
+            where TAttribute : Attribute
         {
             return (TAttribute)Attribute.GetCustomAttribute(self, typeof(TAttribute), inherit);
+        }
+
+        public static bool TryCreateDelegate<TDelegate>(this MethodInfo self, 
+            object target, out TDelegate del)
+            where TDelegate : Delegate
+        {
+            try
+            {
+                del = (TDelegate)self.CreateDelegate(typeof(TDelegate), target);
+                return true;
+            }
+            catch
+            {
+                del = null;
+                return false;
+            }
         }
     }
 }

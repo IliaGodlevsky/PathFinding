@@ -13,10 +13,9 @@ namespace ConsoleVersion.View
         public MainView()
         {
             mainModel = new MainViewModel();
-            menuViewModel = new MenuViewModel<MainViewModel>(mainModel);
+            menuViewModel = new MenuViewModel(mainModel);
             menuActions = menuViewModel.GetMenuActions();
-            menuItemsNames = menuActions.Keys.ToArray();
-            menu = menuViewModel.CreateMenu(columns: 3);
+            menu = MenuViewModel.CreateMenu(menuActions.Keys);
         }
 
         public void Start()
@@ -30,21 +29,19 @@ namespace ConsoleVersion.View
         }
 
         private string GetMenuOption()
-        {
+        { 
             mainModel.DisplayGraph();
             Console.WriteLine(menu);
             var option = Input.InputNumber(
                 ConsoleVersionResources.OptionInputMsg,
-                menuItemsNames.Length, 1) - 1;
+                menuActions.Keys.Count, 1) - 1;
 
-            return menuItemsNames[option];
+            return menuActions.Keys.ElementAt(option);
         }
 
-
-        private readonly string[] menuItemsNames;
         private readonly Dictionary<string, Action> menuActions;
         private readonly MainViewModel mainModel;
-        private readonly MenuViewModel<MainViewModel> menuViewModel;
+        private readonly MenuViewModel menuViewModel;
         private readonly string menu;
     }
 }
