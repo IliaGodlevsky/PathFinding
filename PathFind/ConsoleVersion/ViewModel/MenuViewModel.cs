@@ -45,8 +45,8 @@ namespace ConsoleVersion.ViewModel
             {
                 if (method.TryCreateDelegate(mainModel, out TAction action))
                 {
-                    var description = GetMenuItemName(method);
-                    menuActions.Add(description, action);
+                    string menuItemName = GetMenuItemName(method);
+                    menuActions.Add(menuItemName, action);
                 }
             }
 
