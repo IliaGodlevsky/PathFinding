@@ -32,7 +32,7 @@ namespace ConsoleVersion.View
         { 
             mainModel.DisplayGraph();
             Console.WriteLine(menu);
-            var option = Input.InputNumber(
+            int option = Input.InputNumber(
                 ConsoleVersionResources.OptionInputMsg,
                 menuActions.Keys.Count, 1) - 1;
 
