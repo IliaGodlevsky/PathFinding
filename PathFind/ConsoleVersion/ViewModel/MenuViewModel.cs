@@ -17,29 +17,33 @@ namespace ConsoleVersion.ViewModel
 
         public static string CreateMenu(IEnumerable<string> menuItemsNames, int columns = 2)
         {
-            var menu = new StringBuilder("\n");
+            StringBuilder menu = new StringBuilder("\n");
 
             int menuItemNumber = 0;
-            var longestNameLength = menuItemsNames.Max(str => str.Length) + 1;
-            var format = ConsoleVersionResources.MenuFormat;
+            int menuItemNumberPad = (int)Math.Log10(menuItemsNames.Count()) + 1;
+            int longestNameLength = menuItemsNames.Max(str => str.Length) + 1;
+            string format = ConsoleVersionResources.MenuFormat;
 
             foreach (var name in menuItemsNames)
             {
-                var paddedName = name.PadRight(longestNameLength);
-                var separator = (menuItemNumber + 1) % columns == 0 ? "\n" : " ";
-                menu.AppendFormat(format + separator, ++menuItemNumber, paddedName);
+                string paddedName = name.PadRight(longestNameLength);
+                string separator = (menuItemNumber + 1) % columns == 0 ? "\n" : " ";
+                string stringedNenuItemNumber = (++menuItemNumber).ToString();
+                var paddedMenuItemNumber = stringedNenuItemNumber.PadLeft(menuItemNumberPad);
+                menu.AppendFormat(format + separator, paddedMenuItemNumber, paddedName);
             }
 
             return menu.ToString();
         }
 
-        public Dictionary<string, Action> GetMenuActions()
+        public Dictionary<string, TAction> GetMenuActions<TAction>()
+            where TAction : Delegate
         {
-            var menuActions = new Dictionary<string, Action>();
+            var menuActions = new Dictionary<string, TAction>();
 
             foreach (var method in GetMenuMethods())
             {
-                if (method.TryCreateDelegate(mainModel, out Action action))
+                if (method.TryCreateDelegate(mainModel, out TAction action))
                 {
                     var description = GetMenuItemName(method);
                     menuActions.Add(description, action);
