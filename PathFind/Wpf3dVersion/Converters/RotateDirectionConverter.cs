@@ -10,14 +10,14 @@ namespace Wpf3dVersion.Converters
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
             if ((bool)value == true)
-                return RotateDirection.Forward;
+                return RotationDirection.Forward;
             else
-                return RotateDirection.Backward;
+                return RotationDirection.Backward;
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            if ((RotateDirection)value == RotateDirection.Forward)
+            if ((RotationDirection)value == RotationDirection.Forward)
                 return true;
             else
                 return false;

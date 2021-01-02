@@ -3,28 +3,35 @@ using System.Windows;
 using System.Windows.Media.Animation;
 using System.Windows.Media.Media3D;
 using Wpf3dVersion.Enums;
+using Wpf3dVersion.Model.Interface;
 
 namespace Wpf3dVersion.Model
 {
-    internal class AnimatedAxisRotation
+    internal class AnimatedAxisRotator : IAnimator
     {
         public static double StartAngle => 0;
+
         public static double EndAngle => 360;
 
-        public AnimatedAxisRotation(AxisAngleRotation3D axis, RotateDirection direction)
+        public AnimatedAxisRotator(AxisAngleRotation3D axis, RotationDirection direction)
         {
             this.axis = axis;
             this.direction = direction;
         }
 
-        public void RotateAxisAnimated()
+        public void ApplyAnimation()
         {
-            DoubleAnimation animation;
+            DoubleAnimation animation = null;
 
-            if (direction == RotateDirection.Forward)
-                animation = CreateAnimation(axis.Angle, EndAngle, FillBehavior.HoldEnd);
-            else
-                animation = CreateAnimation(axis.Angle, StartAngle, FillBehavior.Stop);
+            switch (direction)
+            {
+                case RotationDirection.Forward: 
+                    animation = CreateAnimation(axis.Angle, EndAngle, FillBehavior.HoldEnd);
+                    break;
+                case RotationDirection.Backward:
+                    animation = CreateAnimation(axis.Angle, StartAngle, FillBehavior.Stop); 
+                    break;
+            }
 
             axis.BeginAnimation(AxisAngleRotation3D.AngleProperty, animation);
         }
@@ -32,25 +39,29 @@ namespace Wpf3dVersion.Model
         private DoubleAnimation CreateAnimation(double from,
             double to, FillBehavior fillBehavior)
         {
-            return new DoubleAnimation
-            {
-                To = to,
-                From = from,
-                FillBehavior = fillBehavior,
-                Duration = GetAnimationDuration()
-            };
+            var duration = CalculateAnimationDuration();
+            return new DoubleAnimation(from, to, duration, fillBehavior);
         }
 
-        private Duration GetAnimationDuration()
+        private Duration CalculateAnimationDuration()
         {
-            var duration = InitialDuration;
+            switch (direction)
+            {
+                case RotationDirection.Forward:
+                    return new Duration(TimeSpan.FromMilliseconds(CalculateForwardAnimationDuration()));
+                case RotationDirection.Backward:
+                    return new Duration(TimeSpan.FromMilliseconds(CalculateBackwardAnimationDuration()));
+            }
+        }
 
-            if (direction == RotateDirection.Forward)
-                duration *= (AngleAmplitude - axis.Angle) / AngleAmplitude;
-            else
-                duration *= axis.Angle / AngleAmplitude;
+        private double CalculateForwardAnimationDuration()
+        {
+            return InitialDuration * (AngleAmplitude - axis.Angle) / AngleAmplitude;
+        }
 
-            return new Duration(TimeSpan.FromMilliseconds(duration));
+        private double CalculateBackwardAnimationDuration()
+        {
+            return InitialDuration * axis.Angle / AngleAmplitude;
         }
 
         private double AngleAmplitude => EndAngle - StartAngle;
@@ -58,6 +69,6 @@ namespace Wpf3dVersion.Model
         private double InitialDuration => 3000;
 
         private readonly AxisAngleRotation3D axis;
-        private readonly RotateDirection direction;
+        private readonly RotationDirection direction;
     }
 }

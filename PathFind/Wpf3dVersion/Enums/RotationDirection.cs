@@ -1,6 +1,6 @@
 ﻿namespace Wpf3dVersion.Enums
 {
-    internal enum RotateDirection
+    internal enum RotationDirection
     {
         Forward = 0,
         Backward = 1

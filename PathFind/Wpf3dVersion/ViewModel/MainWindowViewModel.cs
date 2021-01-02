@@ -205,25 +205,25 @@ namespace Wpf3dVersion.ViewModel
         private void ExecuteAutoRotateXAxisCommand(object direction)
         {
             var currentWindow = Application.Current.MainWindow as MainWindow;
-            var axisRotate = new AnimatedAxisRotation(currentWindow.xAxis,
-                (RotateDirection)direction);
-            axisRotate.RotateAxisAnimated();
+            var axisRotate = new AnimatedAxisRotator(currentWindow.xAxis,
+                (RotationDirection)direction);
+            axisRotate.ApplyAnimation();
         }
 
         private void ExecuteAutoRotateYAxisCommand(object direction)
         {
             var currentWindow = Application.Current.MainWindow as MainWindow;
-            var axisRotate = new AnimatedAxisRotation(currentWindow.yAxis,
-                (RotateDirection)direction);
-            axisRotate.RotateAxisAnimated();
+            var axisRotate = new AnimatedAxisRotator(currentWindow.yAxis,
+                (RotationDirection)direction);
+            axisRotate.ApplyAnimation();
         }
 
         private void ExecuteAutoRotateZAxisCommand(object direction)
         {
             var currentWindow = Application.Current.MainWindow as MainWindow;
-            var axisRotate = new AnimatedAxisRotation(currentWindow.zAxis,
-                (RotateDirection)direction);
-            axisRotate.RotateAxisAnimated();
+            var axisRotate = new AnimatedAxisRotator(currentWindow.zAxis,
+                (RotationDirection)direction);
+            axisRotate.ApplyAnimation();
         }
 
         private void OnPathNotFound(string message)

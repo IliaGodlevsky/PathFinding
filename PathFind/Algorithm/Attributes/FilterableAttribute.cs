@@ -3,9 +3,9 @@
 namespace Algorithm.Attributes
 {
     /// <summary>
-    /// Indicates that the class should be ignored when fetching classes from an assembly
+    /// Indicates that a class should be ignored when fetching classes from an assembly
     /// </summary>
-    [AttributeUsage(AttributeTargets.All, AllowMultiple = true, Inherited = false)]
+    [AttributeUsage(AttributeTargets.Class, AllowMultiple = false, Inherited = false)]
     internal sealed class FilterableAttribute : Attribute
     {
 
