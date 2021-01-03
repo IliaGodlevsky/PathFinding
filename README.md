@@ -31,7 +31,6 @@
  
  ![Console](https://github.com/IliaGodlevsky/PathFinding/blob/master/PathFind/img/ConsoleVersion.jpg)
 
- Install [Colorful.Console](http://colorfulconsole.com/) package from to run the Console Version of program correctly
  
  ***
  
