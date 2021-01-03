@@ -45,13 +45,19 @@ namespace Wpf3dVersion.Model
 
         private Duration CalculateAnimationDuration()
         {
+            var duration = default(double);
+
             switch (direction)
             {
                 case RotationDirection.Forward:
-                    return new Duration(TimeSpan.FromMilliseconds(CalculateForwardAnimationDuration()));
+                    duration = CalculateForwardAnimationDuration();
+                    break;
                 case RotationDirection.Backward:
-                    return new Duration(TimeSpan.FromMilliseconds(CalculateBackwardAnimationDuration()));
+                    duration = CalculateBackwardAnimationDuration();
+                    break;
             }
+
+            return new Duration(TimeSpan.FromMilliseconds(duration));
         }
 
         private double CalculateForwardAnimationDuration()
