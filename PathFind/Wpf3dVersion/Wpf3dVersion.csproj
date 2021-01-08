@@ -63,7 +63,7 @@
     <Compile Include="Enums\Axis.cs" />
     <Compile Include="Enums\RotationDirection.cs" />
     <Compile Include="Factories\Model3DFactory.cs" />
-    <Compile Include="Model\AnimatedAxisRotation.cs" />
+    <Compile Include="Model\AnimatedAxisRotator.cs" />
     <Compile Include="Model\Interface\IAnimator.cs" />
     <Compile Include="Model\Offset.cs" />
     <Compile Include="Resources\Resource.Designer.cs">
