@@ -13,6 +13,11 @@ namespace GraphLib.Extensions
 {
     public static class IVertexExtension
     {
+        private static int GetAbsSub(int first, int second)
+        {
+            return first - second;
+        }
+
         public static bool IsValidToBeExtreme(this IVertex vertex)
         {
             return vertex.IsSimpleVertex() && !vertex.IsIsolated();
@@ -38,7 +43,7 @@ namespace GraphLib.Extensions
             }
 
             return self.Position.CoordinatesValues
-                .Zip(toVertex.Position.CoordinatesValues, (x, y) => Math.Abs(x - y))
+                .Zip(toVertex.Position.CoordinatesValues, GetAbsSub)
                 .MaxOrDefault();
         }
 

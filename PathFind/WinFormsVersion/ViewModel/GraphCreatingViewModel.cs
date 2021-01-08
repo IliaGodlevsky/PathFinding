@@ -1,12 +1,15 @@
-﻿using GraphLib.ViewModel;
+﻿using Common.Interfaces;
+using GraphLib.ViewModel;
 using GraphViewModel.Interfaces;
 using System;
 using WinFormsVersion.Model;
 
 namespace WinFormsVersion.ViewModel
 {
-    internal class GraphCreatingViewModel : GraphCreatingModel
+    internal class GraphCreatingViewModel : GraphCreatingModel, IViewModel
     {
+        public event EventHandler OnWindowClosed;
+
         public GraphCreatingViewModel(IMainModel model) : base(model)
         {
 
@@ -15,12 +18,12 @@ namespace WinFormsVersion.ViewModel
         public void CreateGraph(object sender, EventArgs e)
         {
             CreateGraph(() => new WinFormsVertex());
-            (model as MainWindowViewModel).Window?.Close();
+            OnWindowClosed?.Invoke(this, new EventArgs());
         }
 
         public void CancelCreateGraph(object sender, EventArgs e)
         {
-            (model as MainWindowViewModel)?.Window.Close();
+            OnWindowClosed?.Invoke(this, new EventArgs());
         }
     }
 }

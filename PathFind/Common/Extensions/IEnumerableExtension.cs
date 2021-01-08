@@ -6,6 +6,13 @@ namespace Common.Extensions
 {
     public static class IEnumerableExtension
     {
+        private static readonly Random rand;
+
+        static IEnumerableExtension()
+        {
+            rand = new Random();
+        }
+
         public static IEnumerable<T> DistinctBy<T, TKey>(this IEnumerable<T> items, Func<T, TKey> property)
         {
             if (items == null || property == null) 
@@ -13,7 +20,14 @@ namespace Common.Extensions
                 throw new ArgumentException("Bad incoming arguments");
             }
 
-            return items.GroupBy(property).Select(item => item.First());
+            return items.GroupBy(property)
+                .Select(item => item.First());
+        }
+
+        public static TSource GetRandomElement<TSource>(this IEnumerable<TSource> collection)
+        {
+            var randomIndex = rand.Next(collection.Count());
+            return collection.ElementAt(randomIndex);
         }
 
         public static IEnumerable<T> ForEach<T>(this IEnumerable<T> collection, Action<T> action)

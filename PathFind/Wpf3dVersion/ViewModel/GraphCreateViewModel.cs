@@ -1,4 +1,5 @@
-﻿using GraphLib.Coordinates;
+﻿using Common.Interfaces;
+using GraphLib.Coordinates;
 using GraphLib.Coordinates.Abstractions;
 using GraphLib.Graphs;
 using GraphLib.Graphs.Factories;
@@ -14,8 +15,10 @@ using Wpf3dVersion.Model;
 
 namespace Wpf3dVersion.ViewModel
 {
-    internal class GraphCreatingViewModel : GraphCreatingModel
+    internal class GraphCreatingViewModel : GraphCreatingModel, IViewModel
     {
+        public event EventHandler OnWindowClosed;
+
         public int Height { get; set; }
 
         public RelayCommand ConfirmCreateGraphCommand { get; }
@@ -24,8 +27,8 @@ namespace Wpf3dVersion.ViewModel
 
         public GraphCreatingViewModel(IMainModel model) : base(model)
         {
-            ConfirmCreateGraphCommand = new RelayCommand(ExecuteConfirmCreateGraphCommand, obj => true);
-            CancelCreateGraphCommand = new RelayCommand(obj => CloseWindow(), obj => true);
+            ConfirmCreateGraphCommand = new RelayCommand(ExecuteConfirmCreateGraphCommand);
+            CancelCreateGraphCommand = new RelayCommand(obj => CloseWindow());
         }
 
         public override void CreateGraph(Func<IVertex> vertexFactory)
@@ -59,7 +62,7 @@ namespace Wpf3dVersion.ViewModel
 
         private void CloseWindow()
         {
-            (model as MainWindowViewModel).Window.Close();
+            OnWindowClosed?.Invoke(this, new EventArgs());
         }
     }
 }

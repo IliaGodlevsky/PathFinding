@@ -1,21 +1,25 @@
-﻿using GraphLib.ViewModel;
+﻿using Common.Interfaces;
+using GraphLib.ViewModel;
 using GraphViewModel.Interfaces;
+using System;
 using WpfVersion.Infrastructure;
 using WpfVersion.Model;
 using WpfVersion.Model.Vertex;
 
 namespace WpfVersion.ViewModel
 {
-    internal class GraphCreatingViewModel : GraphCreatingModel
+    internal class GraphCreatingViewModel : GraphCreatingModel, IViewModel
     {
+        public event EventHandler OnWindowClosed;
+
         public RelayCommand ConfirmCreateGraphCommand { get; }
 
         public RelayCommand CancelCreateGraphCommand { get; }
 
         public GraphCreatingViewModel(IMainModel model) : base(model)
         {
-            ConfirmCreateGraphCommand = new RelayCommand(ExecuteConfirmCreateGraphCommand, obj => true);
-            CancelCreateGraphCommand = new RelayCommand(obj => CloseWindow(), obj => true);
+            ConfirmCreateGraphCommand = new RelayCommand(ExecuteConfirmCreateGraphCommand);
+            CancelCreateGraphCommand = new RelayCommand(obj => CloseWindow());
         }
 
         private void ExecuteConfirmCreateGraphCommand(object param)
@@ -23,12 +27,12 @@ namespace WpfVersion.ViewModel
             base.CreateGraph(() => new WpfVertex());
 
             CloseWindow();
-            WindowAdjust.Adjust(model.Graph);
+            WindowService.Adjust(model.Graph);
         }
 
         private void CloseWindow()
         {
-            (model as MainWindowViewModel)?.Window.Close();
+            OnWindowClosed?.Invoke(this, new EventArgs());
         }
     }
 }

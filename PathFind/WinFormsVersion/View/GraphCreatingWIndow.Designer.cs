@@ -1,6 +1,6 @@
 ﻿namespace WinFormsVersion.View
 {
-    partial class GraphCreatingWIndow
+    partial class GraphCreatingWindow
     {
         /// <summary>
         /// Required designer variable.

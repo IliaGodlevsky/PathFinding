@@ -65,7 +65,7 @@
     <Compile Include="Infrastructure\RelayCommand.cs" />
     <Compile Include="Model\WpfVertexEventHolder.cs" />
     <Compile Include="Model\WpfVertex.cs" />
-    <Compile Include="Model\WindowAdjust.cs" />
+    <Compile Include="Model\WindowService.cs" />
     <Compile Include="Model\WpfGraphField.cs" />
     <Compile Include="Model\WpfGraphFieldFactory.cs" />
     <Compile Include="ViewModel\GraphCreatingViewModel.cs" />

@@ -1,11 +1,15 @@
-﻿using GraphViewModel.Interfaces;
+﻿using Common.Interfaces;
+using GraphViewModel.Interfaces;
+using System;
 using Wpf3dVersion.Infrastructure;
 using Wpf3dVersion.Model;
 
 namespace Wpf3dVersion.ViewModel
 {
-    internal class OpacityChangeViewModel : IModel
+    internal class OpacityChangeViewModel : IModel, IViewModel
     {
+        public event EventHandler OnWindowClosed;
+
         public double ObstacleColorOpacity { get; set; }
 
         public double VisitedVertexColorOpacity { get; set; }
@@ -31,8 +35,8 @@ namespace Wpf3dVersion.ViewModel
             SimpleVertexColorOpacity = WpfVertex3D.SimpleVertexBrush.Opacity;
 
             Model = model as MainWindowViewModel;
-            ConfirmOpacityChange = new RelayCommand(ExecuteChangeVertexOpacity, obj => true);
-            CancelOpacityChange = new RelayCommand(ExecuteCloseChangeVertexOpacity, obj => true);
+            ConfirmOpacityChange = new RelayCommand(ExecuteChangeVertexOpacity);
+            CancelOpacityChange = new RelayCommand(ExecuteCloseChangeVertexOpacity);
         }
 
         private void ExecuteChangeVertexOpacity(object param)
@@ -43,12 +47,12 @@ namespace Wpf3dVersion.ViewModel
             WpfVertex3D.PathVertexBrush.Opacity = PathVertexColorOpacity;
             WpfVertex3D.VisitedVertexBrush.Opacity = VisitedVertexColorOpacity;
 
-            Model?.Window?.Close();
+            OnWindowClosed?.Invoke(this, new EventArgs());
         }
 
         private void ExecuteCloseChangeVertexOpacity(object param)
         {
-            Model?.Window?.Close();
+            OnWindowClosed?.Invoke(this, new EventArgs());
         }
     }
 }

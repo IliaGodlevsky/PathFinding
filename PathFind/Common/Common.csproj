@@ -42,7 +42,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Extensions\MayBe.cs" />
+    <Compile Include="Interfaces\IViewModel.cs" />
     <Compile Include="ObjectActivator.cs" />
     <Compile Include="Extensions\EnumExtensions.cs" />
     <Compile Include="Extensions\IEnumerableExtension.cs" />

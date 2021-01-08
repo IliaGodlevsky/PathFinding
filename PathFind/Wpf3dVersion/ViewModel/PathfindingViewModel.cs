@@ -1,13 +1,17 @@
 ﻿using Algorithm.AlgorithmCreating;
+using Common.Interfaces;
 using GraphLib.ViewModel;
 using GraphViewModel.Interfaces;
+using System;
 using System.Linq;
 using Wpf3dVersion.Infrastructure;
 
 namespace Wpf3dVersion.ViewModel
 {
-    internal class PathFindingViewModel : PathFindingModel
+    internal class PathFindingViewModel : PathFindingModel, IViewModel
     {
+        public event EventHandler OnWindowClosed;
+
         public RelayCommand ConfirmPathFindAlgorithmChoice { get; }
 
         public RelayCommand CancelPathFindAlgorithmChoice { get; }
@@ -17,13 +21,13 @@ namespace Wpf3dVersion.ViewModel
             ConfirmPathFindAlgorithmChoice = new RelayCommand(
                 ExecuteConfirmPathFindAlgorithmChoice,
                 CanExecuteConfirmPathFindAlgorithmChoice);
-            CancelPathFindAlgorithmChoice = new RelayCommand(obj => CloseWindow(), obj => true);
+            CancelPathFindAlgorithmChoice = new RelayCommand(obj => CloseWindow());
             pauseProvider.PauseEvent += () => System.Windows.Forms.Application.DoEvents();
         }
 
         private void CloseWindow()
         {
-            (mainViewModel as MainWindowViewModel)?.Window?.Close();
+            OnWindowClosed?.Invoke(this, new EventArgs());
         }
 
         private void ExecuteConfirmPathFindAlgorithmChoice(object param)

@@ -166,5 +166,6 @@
     <Content Include="Resources\Images\open.png" />
     <Content Include="Resources\Images\find.png" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

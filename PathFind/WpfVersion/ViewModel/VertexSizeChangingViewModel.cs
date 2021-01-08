@@ -1,8 +1,11 @@
 ﻿using Common;
+using Common.Extensions;
+using Common.Interfaces;
 using GraphLib.Vertex.Interface;
 using GraphViewModel.Interfaces;
 using System;
 using System.Linq;
+using System.Windows;
 using System.Windows.Controls;
 using WpfVersion.Infrastructure;
 using WpfVersion.Model;
@@ -10,9 +13,11 @@ using WpfVersion.Model.Vertex;
 
 namespace WpfVersion.ViewModel
 {
-    internal class VertexSizeChangingViewModel : IModel
+    internal class VertexSizeChangingViewModel : IModel, IViewModel
     {
-        public int Size { get; set; }
+        public event EventHandler OnWindowClosed;
+
+        public int VerticesSize { get; set; }
 
         public MainWindowViewModel Model { get; set; }
 
@@ -24,35 +29,41 @@ namespace WpfVersion.ViewModel
         {
             Model = model;
 
-            ExecuteChangeVertexSize = new RelayCommand(ChangeVertexSize, obj => true);
+            ExecuteChangeVertexSize = new RelayCommand(ChangeVerticesSize, obj => true);
             ExecuteCancel = new RelayCommand(obj => CloseWindow(), obj => true);
 
-            if (Model.Graph.Size > 0)
+            if (Model.Graph.Any())
             {
-                Size = Convert.ToInt32((Model.Graph.First() as WpfVertex).Width);
+                VerticesSize = GetSampleSizeToChange();
             }
+        }
+
+        private int GetSampleSizeToChange()
+        {
+            var randomVertex = Model.Graph.GetRandomElement() as WpfVertex;
+            return Convert.ToInt32(randomVertex.Width);
         }
 
         private void CloseWindow()
         {
-            Model.Window.Close();
+            OnWindowClosed?.Invoke(this, new EventArgs());
         }
 
         private void ChangeSize(IVertex vertex)
         {
             var temp = vertex as WpfVertex;
-            temp.Dispatcher.InvokeAsync(() =>
+            Application.Current.Dispatcher.Invoke(() =>
             {
-                temp.Width = Size;
-                temp.Height = Size;
-                temp.FontSize = Size * VertexParametres.TextToSizeRatio;
+                temp.Width = VerticesSize;
+                temp.Height = VerticesSize;
+                temp.FontSize = VerticesSize * VertexParametres.TextToSizeRatio;
             });
         }
 
-        private void ChangeVertexSize(object param)
+        private void ChangeVerticesSize(object param)
         {
-            VertexParametres.VertexSize = Size;
-            Model.Graph.AsParallel().ForAll(ChangeSize);
+            VertexParametres.VertexSize = VerticesSize;
+            Model.Graph.ForEach(ChangeSize);
             (Model.GraphField as Canvas).Children.Clear();
             var fieldFactory = new WpfGraphFieldFactory();
             Model.GraphField = fieldFactory.CreateGraphField(Model.Graph);

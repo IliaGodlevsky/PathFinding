@@ -1,4 +1,5 @@
 ﻿using Common;
+using Common.Interfaces;
 using GraphLib.Extensions;
 using GraphLib.GraphField;
 using GraphLib.Graphs;
@@ -56,7 +57,6 @@ namespace WinFormsVersion.ViewModel
             }
         }
 
-        public Form Window { get; set; }
         public MainWindow MainWindow { get; set; }
 
         public MainWindowViewModel() : base()
@@ -76,15 +76,15 @@ namespace WinFormsVersion.ViewModel
             model.OnPathNotFound += OnPathNotFound;
             var form = new PathFindingWindow(model);
 
-            PrepareWindow(form);
+            PrepareWindow(model, form);
         }
 
         public override void CreateNewGraph()
         {
             var model = new GraphCreatingViewModel(this);
-            var form = new GraphCreatingWIndow(model);
+            var form = new GraphCreatingWindow(model);
 
-            PrepareWindow(form);
+            PrepareWindow(model, form);
         }
 
         public void Dispose()
@@ -103,7 +103,6 @@ namespace WinFormsVersion.ViewModel
         public void LoadGraph(object sender, EventArgs e)
         {
             base.LoadGraph();
-            Window?.Close();
         }
 
         public void ClearGraph(object sender, EventArgs e)
@@ -148,11 +147,11 @@ namespace WinFormsVersion.ViewModel
             return open.ShowDialog() == DialogResult.OK ? open.FileName : string.Empty;
         }
 
-        private void PrepareWindow(Form window)
+        private void PrepareWindow(IViewModel model, Form window)
         {
-            Window = window;
-            Window.StartPosition = FormStartPosition.CenterScreen;
-            Window.Show();
+            model.OnWindowClosed += (sender, args) => window.Close();
+            window.StartPosition = FormStartPosition.CenterScreen;
+            window.Show();
         }
 
         private bool CanStartPathFinding()

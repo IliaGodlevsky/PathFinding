@@ -34,7 +34,7 @@
             Grid.Column="2"></TextBox>
         
         <Slider Margin="5" x:Name="sizeSlider" 
-                Value="{Binding Path = Size}" 
+                Value="{Binding Path = VerticesSize}" 
                 MinWidth="100" 
                 Grid.Column="1"></Slider>
         

@@ -1,4 +1,5 @@
 ﻿using Algorithm.AlgorithmCreating;
+using Common.Interfaces;
 using GraphLib.ViewModel;
 using GraphViewModel.Interfaces;
 using System;
@@ -7,8 +8,10 @@ using System.Windows.Forms;
 
 namespace WinFormsVersion.ViewModel
 {
-    internal class PathFindingViewModel : PathFindingModel
+    internal class PathFindingViewModel : PathFindingModel, IViewModel
     {
+        public event EventHandler OnWindowClosed;
+
         public PathFindingViewModel(IMainModel model) : base(model)
         {
             pauseProvider.PauseEvent += () => Application.DoEvents();
@@ -18,14 +21,14 @@ namespace WinFormsVersion.ViewModel
         {
             if (CanExecuteConfirmPathFindAlgorithmChoice())
             {
-                (mainViewModel as MainWindowViewModel).Window.Close();
+                OnWindowClosed?.Invoke(this, new EventArgs());
                 FindPath();
             }
         }
 
         public void CancelPathFind(object sender, EventArgs e)
         {
-            (mainViewModel as MainWindowViewModel).Window.Close();
+            OnWindowClosed?.Invoke(this, new EventArgs());
         }
 
         private bool CanExecuteConfirmPathFindAlgorithmChoice()

@@ -4,11 +4,11 @@ using WinFormsVersion.ViewModel;
 
 namespace WinFormsVersion.View
 {
-    internal partial class GraphCreatingWIndow : Form
+    internal partial class GraphCreatingWindow : Form
     {
         public GraphCreatingViewModel Model { get; set; }
 
-        public GraphCreatingWIndow(GraphCreatingViewModel model)
+        public GraphCreatingWindow(GraphCreatingViewModel model)
         {
             InitializeComponent();
 

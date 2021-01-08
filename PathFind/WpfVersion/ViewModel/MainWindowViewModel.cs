@@ -1,7 +1,7 @@
-﻿using GraphLib.Extensions;
+﻿using Common.Interfaces;
+using GraphLib.Extensions;
 using GraphLib.GraphField;
 using GraphViewModel;
-using GraphViewModel.Interfaces;
 using Microsoft.Win32;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
@@ -22,8 +22,6 @@ namespace WpfVersion.ViewModel
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
-
-        public Window Window { get; set; }
 
         private string graphParametres;
         public override string GraphParametres
@@ -47,7 +45,7 @@ namespace WpfVersion.ViewModel
             {
                 graphField = value;
                 OnPropertyChanged();
-                WindowAdjust.Adjust(Graph);
+                WindowService.Adjust(Graph);
             }
         }
 
@@ -73,12 +71,12 @@ namespace WpfVersion.ViewModel
             InfoConverter = (dto) => new WpfVertex(dto);
 
             StartPathFindCommand = new RelayCommand(ExecuteStartPathFindCommand, CanExecuteStartFindPathCommand);
-            CreateNewGraphCommand = new RelayCommand(ExecuteCreateNewGraphCommand, AlwaysExecutable);
+            CreateNewGraphCommand = new RelayCommand(ExecuteCreateNewGraphCommand);
             ClearGraphCommand = new RelayCommand(ExecuteClearGraphCommand, CanExecuteGraphOperation);
             SaveGraphCommand = new RelayCommand(ExecuteSaveGraphCommand, CanExecuteGraphOperation);
-            LoadGraphCommand = new RelayCommand(ExecuteLoadGraphCommand, AlwaysExecutable);
+            LoadGraphCommand = new RelayCommand(ExecuteLoadGraphCommand);
             ChangeVertexSize = new RelayCommand(ExecuteChangeVertexSize, CanExecuteGraphOperation);
-            ShowVertexCost = new RelayCommand(ExecuteShowVertexCostCommand, AlwaysExecutable);
+            ShowVertexCost = new RelayCommand(ExecuteShowVertexCostCommand);
         }
 
         public void ExecuteShowVertexCostCommand(object parametre)
@@ -132,12 +130,12 @@ namespace WpfVersion.ViewModel
             return;
         }
 
-        private void PrepareWindow(IModel model, Window window)
+        private void PrepareWindow(IViewModel model, Window window)
         {
-            Window = window;
-            Window.DataContext = model;
-            Window.WindowStartupLocation = WindowStartupLocation.CenterScreen;
-            Window.Show();
+            window.DataContext = model;
+            model.OnWindowClosed += (sender, args) => window.Close();
+            window.WindowStartupLocation = WindowStartupLocation.CenterScreen;
+            window.Show();
         }
 
         private string GetPath(FileDialog dialog)
@@ -174,11 +172,6 @@ namespace WpfVersion.ViewModel
         private void ExecuteCreateNewGraphCommand(object param)
         {
             CreateNewGraph();
-        }
-
-        private bool AlwaysExecutable(object param)
-        {
-            return true;
         }
 
         private bool CanExecuteGraphOperation(object param)
