@@ -2,9 +2,9 @@
 using GraphLib.Vertex.Interface;
 using System;
 using System.Windows.Input;
-using WpfVersion.Model.Vertex;
+using WPFVersion.Model.Vertex;
 
-namespace WpfVersion.Model.EventHolder
+namespace WPFVersion.Model.EventHolder
 {
     internal class WpfVertexEventHolder : BaseVertexEventHolder
     {

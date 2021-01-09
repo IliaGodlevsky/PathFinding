@@ -3,7 +3,7 @@ using GraphLib.Graphs;
 using GraphLib.Graphs.Abstractions;
 using System.Windows;
 
-namespace WpfVersion.Model
+namespace WPFVersion.Model
 {
     internal static class WindowService
     {

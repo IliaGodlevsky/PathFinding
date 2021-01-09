@@ -1,0 +1,73 @@
+﻿<Window x:Class="WPFVersion3D.View.PathFindWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:converters="clr-namespace:WPFVersion3D.Converters"
+        xmlns:algo="clr-namespace:Algorithm.AlgorithmCreating;assembly=Algorithm"
+        xmlns:range="clr-namespace:Common.ValueRanges;assembly=Common"
+        mc:Ignorable="d"
+        Title="PathFindWindow" 
+        SizeToContent="WidthAndHeight">
+    <Window.Resources>
+        <converters:StringToRangedDoubleConverter x:Key="sliderValueConverter"></converters:StringToRangedDoubleConverter>
+        <converters:ToStringConverter x:Key="algorithmKeyConverter"></converters:ToStringConverter>
+    </Window.Resources>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"></RowDefinition>
+            <RowDefinition Height="*"></RowDefinition>
+            <RowDefinition Height="Auto"></RowDefinition>
+        </Grid.RowDefinitions>
+        
+        <StackPanel HorizontalAlignment="Center"  Orientation="Horizontal" Grid.Row="2">
+            <Button Command="{Binding ConfirmPathFindAlgorithmChoice}"  Margin ="5" Content="Start"></Button>
+            <Button Command="{Binding CancelPathFindAlgorithmChoice}" Margin ="5" Content="Cancel"></Button>
+        </StackPanel>
+
+        <ListBox ItemsSource="{Binding Source={x:Static algo:AlgorithmFactory.AlgorithmsDescriptions } }"
+                 x:Name="algoListBox" BorderThickness="0" Margin="5"
+                 SelectedItem="{Binding Path = AlgorithmKey}">
+            <ListBox.ItemTemplate>
+                <DataTemplate>
+                    <TextBlock Margin="3" Text="{Binding Converter={StaticResource algorithmKeyConverter}}"/>
+                </DataTemplate>
+            </ListBox.ItemTemplate>
+        </ListBox>
+        
+        <Grid Grid.Row="1">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"></RowDefinition>
+                <RowDefinition Height="Auto"></RowDefinition>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto"></ColumnDefinition>
+                <ColumnDefinition Width="*"></ColumnDefinition>
+            </Grid.ColumnDefinitions>
+            
+            <TextBlock Grid.ColumnSpan="2" 
+                       Margin="5" 
+                       Grid.Row="0" 
+                       Text="Algorithm speed" 
+                       HorizontalAlignment="Center" 
+                       Grid.Column="0"/>
+            
+            <Slider Grid.Row="1" 
+                    Value ="{Binding Path=DelayTime}"
+                    x:Name="delayTimeSlider" 
+                    MinWidth="160" 
+                    Margin="5"></Slider>
+            
+            <TextBox MaxWidth="25" 
+                     Grid.Row="1" 
+                     Text ="{Binding ElementName=delayTimeSlider, 
+                Path=Value, 
+                Converter = {StaticResource sliderValueConverter}, 
+                ConverterParameter={x:Static range:Range.DelayValueRange},
+                Mode = TwoWay, 
+                UpdateSourceTrigger = PropertyChanged}" 
+                     Grid.Column="1" 
+                     Margin="5"></TextBox>
+        </Grid>
+    </Grid>
+</Window>

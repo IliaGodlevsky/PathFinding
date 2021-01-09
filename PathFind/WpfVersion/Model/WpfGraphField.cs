@@ -4,9 +4,9 @@ using GraphLib.GraphField;
 using GraphLib.Vertex.Interface;
 using System;
 using System.Windows.Controls;
-using WpfVersion.Model.Vertex;
+using WPFVersion.Model.Vertex;
 
-namespace WpfVersion.Model
+namespace WPFVersion.Model
 {
     internal class WpfGraphField : Canvas, IGraphField
     {

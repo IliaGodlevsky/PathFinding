@@ -1,7 +1,7 @@
 ﻿using Common.ValueRanges;
 using System.Windows;
 
-namespace WpfVersion.View.Windows
+namespace WPFVersion.View.Windows
 {
     /// <summary>
     /// Логика взаимодействия для GraphParametresWindow.xaml

@@ -1,7 +1,7 @@
 ﻿using GraphLib.GraphField;
 using GraphLib.GraphFieldCreating;
 
-namespace WpfVersion.Model
+namespace WPFVersion.Model
 {
     internal class WpfGraphFieldFactory : GraphFieldFactory
     {

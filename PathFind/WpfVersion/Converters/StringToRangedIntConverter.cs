@@ -3,7 +3,7 @@ using System;
 using System.Globalization;
 using System.Windows.Data;
 
-namespace WpfVersion.Converters
+namespace WPFVersion.Converters
 {
     internal class StringToRangedIntConverter : IValueConverter
     {

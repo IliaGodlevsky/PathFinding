@@ -1,6 +1,6 @@
 ﻿using System.Windows;
 
-namespace WpfVersion
+namespace WPFVersion
 {
     /// <summary>
     /// Логика взаимодействия для App.xaml

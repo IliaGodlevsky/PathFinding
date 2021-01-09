@@ -5,9 +5,9 @@ VisualStudioVersion = 16.0.30011.22
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ConsoleVersion", "ConsoleVersion\ConsoleVersion.csproj", "{21737C42-9926-4992-BBFC-F2BEA9B4561A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WinFormsVersion", "WinFormsVersion\WinFormsVersion.csproj", "{5E9A04B8-B760-4D2F-A50D-ABF1062EEB66}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WindowsFormsVersion", "WinFormsVersion\WindowsFormsVersion.csproj", "{5E9A04B8-B760-4D2F-A50D-ABF1062EEB66}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WpfVersion", "WpfVersion\WpfVersion.csproj", "{040A5D8B-F84B-4595-9DCB-932976F90EE0}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WPFVersion", "WpfVersion\WPFVersion.csproj", "{040A5D8B-F84B-4595-9DCB-932976F90EE0}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Algorithm", "Algorithm\Algorithm.csproj", "{89A82EE3-E5C7-4C6A-B61E-9F43507C218C}"
 EndProject
@@ -25,7 +25,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Service", "Service", "{A500
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Logic", "Logic", "{C2095ABE-A68C-4A85-82E8-D12C8D5FB2AD}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Wpf3dVersion", "Wpf3dVersion\Wpf3dVersion.csproj", "{C50DAB38-75A5-47F5-A6A0-1165BBE5E283}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WPFVersion3D", "Wpf3dVersion\WPFVersion3D.csproj", "{C50DAB38-75A5-47F5-A6A0-1165BBE5E283}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Algorithm.Test", "Algorithm.Test\Algorithm.Test.csproj", "{86DCDF96-3F02-47E1-B1D3-0FBA65878E2E}"
 EndProject

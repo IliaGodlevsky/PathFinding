@@ -4,9 +4,9 @@ using GraphLib.ViewModel;
 using GraphViewModel.Interfaces;
 using System;
 using System.Linq;
-using WpfVersion.Infrastructure;
+using WPFVersion.Infrastructure;
 
-namespace WpfVersion.ViewModel
+namespace WPFVersion.ViewModel
 {
     internal class PathFindingViewModel : PathFindingModel, IViewModel
     {

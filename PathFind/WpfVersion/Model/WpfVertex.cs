@@ -8,7 +8,7 @@ using System.Collections.Generic;
 using System.Windows.Controls;
 using System.Windows.Media;
 
-namespace WpfVersion.Model.Vertex
+namespace WPFVersion.Model.Vertex
 {
     internal class WpfVertex : Label, IVertex
     {

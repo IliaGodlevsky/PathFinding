@@ -6,13 +6,13 @@ using Microsoft.Win32;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using System.Windows;
-using WpfVersion.Infrastructure;
-using WpfVersion.Model;
-using WpfVersion.Model.EventHolder;
-using WpfVersion.Model.Vertex;
-using WpfVersion.View.Windows;
+using WPFVersion.Infrastructure;
+using WPFVersion.Model;
+using WPFVersion.Model.EventHolder;
+using WPFVersion.Model.Vertex;
+using WPFVersion.View.Windows;
 
-namespace WpfVersion.ViewModel
+namespace WPFVersion.ViewModel
 {
     internal class MainWindowViewModel : MainModel, INotifyPropertyChanged
     {

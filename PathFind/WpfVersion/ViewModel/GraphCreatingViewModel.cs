@@ -2,11 +2,11 @@
 using GraphLib.ViewModel;
 using GraphViewModel.Interfaces;
 using System;
-using WpfVersion.Infrastructure;
-using WpfVersion.Model;
-using WpfVersion.Model.Vertex;
+using WPFVersion.Infrastructure;
+using WPFVersion.Model;
+using WPFVersion.Model.Vertex;
 
-namespace WpfVersion.ViewModel
+namespace WPFVersion.ViewModel
 {
     internal class GraphCreatingViewModel : GraphCreatingModel, IViewModel
     {

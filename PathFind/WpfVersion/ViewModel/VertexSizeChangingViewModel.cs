@@ -7,11 +7,11 @@ using System;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
-using WpfVersion.Infrastructure;
-using WpfVersion.Model;
-using WpfVersion.Model.Vertex;
+using WPFVersion.Infrastructure;
+using WPFVersion.Model;
+using WPFVersion.Model.Vertex;
 
-namespace WpfVersion.ViewModel
+namespace WPFVersion.ViewModel
 {
     internal class VertexSizeChangingViewModel : IModel, IViewModel
     {
