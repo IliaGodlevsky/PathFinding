@@ -28,7 +28,7 @@ namespace ConsoleVersion.ViewModel
         [MenuItem("Make weighted")] 
         public void MakeGraphWeighted() => Graph.ToWeighted();
 
-        [MenuItem("Create new graph", MenuItemPriority.First)]
+        [MenuItem("Create new graph", MenuItemPriority.Highest)]
         public override void CreateNewGraph()
         {
             var model = new GraphCreatingViewModel(this);
@@ -91,7 +91,7 @@ namespace ConsoleVersion.ViewModel
         [MenuItem("Load graph")]
         public override void LoadGraph() => base.LoadGraph();
 
-        [MenuItem("Quit programm", MenuItemPriority.Last)]
+        [MenuItem("Quit programm", MenuItemPriority.Lowest)]
         public void Quit() => Environment.Exit(0);
 
         public void DisplayGraph()

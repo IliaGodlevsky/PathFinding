@@ -3,6 +3,7 @@ using ConsoleVersion.View.Interface;
 using ConsoleVersion.ViewModel;
 using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Linq;
 using Console = Colorful.Console;
 
@@ -13,8 +14,7 @@ namespace ConsoleVersion.View
         public MainView()
         {
             mainModel = new MainViewModel();
-            menuViewModel = new MenuViewModel(mainModel);
-            menuActions = menuViewModel.GetMenuActions<Action>();
+            menuActions = MenuViewModel.GetMenuMethodsAsDelegates<Action>(mainModel);
             menu = MenuViewModel.CreateMenu(menuActions.Keys);
         }
 
@@ -29,7 +29,7 @@ namespace ConsoleVersion.View
         }
 
         private string GetMenuOption()
-        { 
+        {
             mainModel.DisplayGraph();
             Console.WriteLine(menu);
             int option = Input.InputNumber(
@@ -41,7 +41,6 @@ namespace ConsoleVersion.View
 
         private readonly Dictionary<string, Action> menuActions;
         private readonly MainViewModel mainModel;
-        private readonly MenuViewModel menuViewModel;
         private readonly string menu;
     }
 }
