@@ -2,8 +2,19 @@
 
 namespace WPFVersion3D.Factories
 {
+    /// <summary>
+    /// Creates geometric 3D models
+    /// </summary>
     internal static class Model3DFactory
     {
+        /// <summary>
+        /// Creates cubic 3D model of <paramref name="modelSize"/> 
+        /// size and from <paramref name="modelMaterial"/> material
+        /// </summary>
+        /// <param name="modelSize"></param>
+        /// <param name="modelMaterial"></param>
+        /// <returns>A cubic 3D model with edge of size <paramref name="modelSize"/> 
+        /// and from <paramref name="modelMaterial"/> material</returns>
         internal static Model3D CreateCubicModel3D(double modelSize, Material modelMaterial)
         {
             var model = new Model3DGroup();

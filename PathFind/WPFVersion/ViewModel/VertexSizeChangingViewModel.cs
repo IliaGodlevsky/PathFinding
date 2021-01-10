@@ -7,6 +7,7 @@ using System;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Input;
 using WPFVersion.Infrastructure;
 using WPFVersion.Model;
 using WPFVersion.Model.Vertex;
@@ -21,16 +22,15 @@ namespace WPFVersion.ViewModel
 
         public MainWindowViewModel Model { get; set; }
 
-        public RelayCommand ExecuteChangeVertexSize { get; }
-
-        public RelayCommand ExecuteCancel { get; }
+        public ICommand ExecuteChangeVertexSize { get; }
+        public ICommand ExecuteCancel { get; }
 
         public VertexSizeChangingViewModel(MainWindowViewModel model)
         {
             Model = model;
 
-            ExecuteChangeVertexSize = new RelayCommand(ChangeVerticesSize, obj => true);
-            ExecuteCancel = new RelayCommand(obj => CloseWindow(), obj => true);
+            ExecuteChangeVertexSize = new RelayCommand(ExecuteChangeVerticesSizeCommand);
+            ExecuteCancel = new RelayCommand(obj => CloseWindow());
 
             if (Model.Graph.Any())
             {
@@ -60,13 +60,18 @@ namespace WPFVersion.ViewModel
             });
         }
 
-        private void ChangeVerticesSize(object param)
+        private void CreateNewGraphField()
         {
-            VertexParametres.VertexSize = VerticesSize;
-            Model.Graph.ForEach(ChangeSize);
             (Model.GraphField as Canvas).Children.Clear();
             var fieldFactory = new WpfGraphFieldFactory();
             Model.GraphField = fieldFactory.CreateGraphField(Model.Graph);
+        }
+
+        private void ExecuteChangeVerticesSizeCommand(object param)
+        {
+            VertexParametres.VertexSize = VerticesSize;
+            Model.Graph.ForEach(ChangeSize);
+            CreateNewGraphField();
             CloseWindow();
         }
     }

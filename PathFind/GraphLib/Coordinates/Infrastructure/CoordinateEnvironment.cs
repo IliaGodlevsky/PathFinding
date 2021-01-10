@@ -65,12 +65,8 @@ namespace GraphLib.Coordinates.Infrastructure
 
         private IEnumerable<int> GetNeighbourCoordinates(int depth)
         {
-            return new int[]
-            {
-                selfCoordinatesValue[depth] - 1,
-                selfCoordinatesValue[depth],
-                selfCoordinatesValue[depth] + 1
-            };
+            for (int i = -1; i <= 1; i++) 
+                yield return selfCoordinatesValue[depth] + i;
         }
 
         private bool CanMoveDeeper(int depth)

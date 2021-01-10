@@ -53,7 +53,7 @@ namespace GraphLib.Extensions
         }
 
         /// <summary>
-        /// Compares to coordinates
+        /// Compares two coordinates
         /// </summary>
         /// <param name="self"></param>
         /// <param name="coordinate"></param>

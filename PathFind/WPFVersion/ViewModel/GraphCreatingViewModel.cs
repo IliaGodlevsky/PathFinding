@@ -2,6 +2,7 @@
 using GraphLib.ViewModel;
 using GraphViewModel.Interfaces;
 using System;
+using System.Windows.Input;
 using WPFVersion.Infrastructure;
 using WPFVersion.Model;
 using WPFVersion.Model.Vertex;
@@ -12,9 +13,8 @@ namespace WPFVersion.ViewModel
     {
         public event EventHandler OnWindowClosed;
 
-        public RelayCommand ConfirmCreateGraphCommand { get; }
-
-        public RelayCommand CancelCreateGraphCommand { get; }
+        public ICommand ConfirmCreateGraphCommand { get; }
+        public ICommand CancelCreateGraphCommand { get; }
 
         public GraphCreatingViewModel(IMainModel model) : base(model)
         {

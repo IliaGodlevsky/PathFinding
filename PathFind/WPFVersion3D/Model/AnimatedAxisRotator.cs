@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Windows;
 using System.Windows.Media.Animation;
 using System.Windows.Media.Media3D;
@@ -7,6 +8,11 @@ using WPFVersion3D.Model.Interface;
 
 namespace WPFVersion3D.Model
 {
+    /// <summary>
+    /// A class for animated rotation 
+    /// of <see cref="AxisAngleRotation3D"/>
+    /// in selected <see cref="RotationDirection"/>
+    /// </summary>
     internal class AnimatedAxisRotator : IAnimator
     {
         public static double StartAngle => 0;
@@ -17,22 +23,23 @@ namespace WPFVersion3D.Model
         {
             this.axis = axis;
             this.direction = direction;
+
+            DurationCalculateFunctions = new Dictionary<RotationDirection, Func<double>>()
+            {
+                { RotationDirection.Backward, CalculateBackwardAnimationDuration },
+                { RotationDirection.Forward, CalculateForwardAnimationDuration }
+            };
+
+            AnimationCreationFunctions = new Dictionary<RotationDirection, Func<DoubleAnimation>>()
+            {
+                { RotationDirection.Backward, () => CreateAnimation(axis.Angle, StartAngle, FillBehavior.Stop) },
+                { RotationDirection.Forward, () => CreateAnimation(axis.Angle, EndAngle, FillBehavior.HoldEnd) },
+            };
         }
 
         public void ApplyAnimation()
         {
-            DoubleAnimation animation = null;
-
-            switch (direction)
-            {
-                case RotationDirection.Forward: 
-                    animation = CreateAnimation(axis.Angle, EndAngle, FillBehavior.HoldEnd);
-                    break;
-                case RotationDirection.Backward:
-                    animation = CreateAnimation(axis.Angle, StartAngle, FillBehavior.Stop); 
-                    break;
-            }
-
+            var animation = AnimationCreationFunctions[direction]();
             axis.BeginAnimation(AxisAngleRotation3D.AngleProperty, animation);
         }
 
@@ -45,30 +52,13 @@ namespace WPFVersion3D.Model
 
         private Duration CalculateAnimationDuration()
         {
-            var duration = default(double);
-
-            switch (direction)
-            {
-                case RotationDirection.Forward:
-                    duration = CalculateForwardAnimationDuration();
-                    break;
-                case RotationDirection.Backward:
-                    duration = CalculateBackwardAnimationDuration();
-                    break;
-            }
-
+            var duration = DurationCalculateFunctions[direction]();
             return new Duration(TimeSpan.FromMilliseconds(duration));
         }
 
-        private double CalculateForwardAnimationDuration()
-        {
-            return InitialDuration * (AngleAmplitude - axis.Angle) / AngleAmplitude;
-        }
+        private double CalculateForwardAnimationDuration() => InitialDuration * (AngleAmplitude - axis.Angle) / AngleAmplitude;
 
-        private double CalculateBackwardAnimationDuration()
-        {
-            return InitialDuration * axis.Angle / AngleAmplitude;
-        }
+        private double CalculateBackwardAnimationDuration() => InitialDuration * axis.Angle / AngleAmplitude;
 
         private double AngleAmplitude => EndAngle - StartAngle;
 
@@ -76,5 +66,8 @@ namespace WPFVersion3D.Model
 
         private readonly AxisAngleRotation3D axis;
         private readonly RotationDirection direction;
+
+        private Dictionary<RotationDirection, Func<double>> DurationCalculateFunctions { get; set; }
+        private Dictionary<RotationDirection, Func<DoubleAnimation>> AnimationCreationFunctions { get; set; }
     }
 }

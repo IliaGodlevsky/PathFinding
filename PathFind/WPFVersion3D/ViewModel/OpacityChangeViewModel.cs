@@ -1,6 +1,7 @@
 ﻿using Common.Interfaces;
 using GraphViewModel.Interfaces;
 using System;
+using System.Windows.Input;
 using WPFVersion3D.Infrastructure;
 using WPFVersion3D.Model;
 
@@ -11,18 +12,13 @@ namespace WPFVersion3D.ViewModel
         public event EventHandler OnWindowClosed;
 
         public double ObstacleColorOpacity { get; set; }
-
         public double VisitedVertexColorOpacity { get; set; }
-
         public double EnqueuedVertexColorOpacity { get; set; }
-
         public double PathVertexColorOpacity { get; set; }
-
         public double SimpleVertexColorOpacity { get; set; }
 
-        public RelayCommand ConfirmOpacityChange { get; }
-
-        public RelayCommand CancelOpacityChange { get; }
+        public ICommand ConfirmOpacityChange { get; }
+        public ICommand CancelOpacityChange { get; }
 
         public MainWindowViewModel Model { get; set; }
 

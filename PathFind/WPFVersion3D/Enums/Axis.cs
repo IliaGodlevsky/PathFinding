@@ -1,5 +1,8 @@
 ﻿namespace WPFVersion3D.Enums
 {
+    /// <summary>
+    /// Three-dimensional cartesian coordinate axes
+    /// </summary>
     internal enum Axis
     {
         Abscissa = 0,

@@ -4,15 +4,14 @@ using GraphLib.GraphField;
 using GraphLib.Graphs;
 using GraphLib.Graphs.Serialization;
 using GraphViewModel;
-using GraphViewModel.Interfaces;
 using Microsoft.Win32;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using System.Windows;
+using System.Windows.Input;
 using WPFVersion3D.Enums;
 using WPFVersion3D.Infrastructure;
 using WPFVersion3D.Model;
-using WPFVersion3D.Model.Interface;
 using WPFVersion3D.Resources;
 using WPFVersion3D.View;
 
@@ -58,23 +57,15 @@ namespace WPFVersion3D.ViewModel
             }
         }
 
-        public RelayCommand StartPathFindCommand { get; }
-
-        public RelayCommand CreateNewGraphCommand { get; }
-
-        public RelayCommand ClearGraphCommand { get; }
-
-        public RelayCommand SaveGraphCommand { get; }
-
-        public RelayCommand LoadGraphCommand { get; }
-
-        public RelayCommand ChangeOpacityCommand { get; }
-
-        public RelayCommand AutoRotateXAxisCommand { get; }
-
-        public RelayCommand AutoRotateYAxisCommand { get; }
-
-        public RelayCommand AutoRotateZAxisCommand { get; }
+        public ICommand StartPathFindCommand { get; }
+        public ICommand CreateNewGraphCommand { get; }
+        public ICommand ClearGraphCommand { get; }
+        public ICommand SaveGraphCommand { get; }
+        public ICommand LoadGraphCommand { get; }
+        public ICommand ChangeOpacityCommand { get; }
+        public ICommand AutoRotateXAxisCommand { get; }
+        public ICommand AutoRotateYAxisCommand { get; }
+        public ICommand AutoRotateZAxisCommand { get; }
 
         public MainWindowViewModel()
         {
@@ -96,6 +87,8 @@ namespace WPFVersion3D.ViewModel
             Serializer = new GraphSerializer<Graph3D>();
 
             graphParamFormat = Resource.GraphParamFormat;
+
+            MainWindow = Application.Current.MainWindow as MainWindow;
         }
 
         public override void FindPath()
@@ -152,6 +145,8 @@ namespace WPFVersion3D.ViewModel
             return GetPath(new OpenFileDialog());
         }
 
+        private MainWindow MainWindow { get; set; }
+
         private void ExecuteSaveGraphCommand(object param)
         {
             base.SaveGraph();
@@ -203,24 +198,18 @@ namespace WPFVersion3D.ViewModel
         }
 
         private void ExecuteRotationAroundXAxisCommand(object direction)
-        {
-            var currentWindow = Application.Current.MainWindow as MainWindow;
-            new AnimatedAxisRotator(currentWindow.xAxis, (RotationDirection)direction)
-                .ApplyAnimation();
+        {           
+            new AnimatedAxisRotator(MainWindow.xAxis, (RotationDirection)direction).ApplyAnimation();
         }
 
         private void ExecuteRotationAroundYAxisCommand(object direction)
         {
-            var currentWindow = Application.Current.MainWindow as MainWindow;
-            new AnimatedAxisRotator(currentWindow.yAxis, (RotationDirection)direction)
-                .ApplyAnimation();
+            new AnimatedAxisRotator(MainWindow.yAxis, (RotationDirection)direction).ApplyAnimation();
         }
 
         private void ExecuteRotationAroundZAxisCommand(object direction)
-        {
-            var currentWindow = Application.Current.MainWindow as MainWindow;
-            new AnimatedAxisRotator(currentWindow.zAxis, (RotationDirection)direction)
-                .ApplyAnimation();
+        {           
+            new AnimatedAxisRotator(MainWindow.zAxis, (RotationDirection)direction).ApplyAnimation();
         }
 
         private void OnPathNotFound(string message)

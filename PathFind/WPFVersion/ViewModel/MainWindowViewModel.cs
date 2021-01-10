@@ -6,6 +6,7 @@ using Microsoft.Win32;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using System.Windows;
+using System.Windows.Input;
 using WPFVersion.Infrastructure;
 using WPFVersion.Model;
 using WPFVersion.Model.EventHolder;
@@ -49,19 +50,13 @@ namespace WPFVersion.ViewModel
             }
         }
 
-        public RelayCommand StartPathFindCommand { get; }
-
-        public RelayCommand CreateNewGraphCommand { get; }
-
-        public RelayCommand ClearGraphCommand { get; }
-
-        public RelayCommand SaveGraphCommand { get; }
-
-        public RelayCommand LoadGraphCommand { get; }
-
-        public RelayCommand ChangeVertexSize { get; }
-
-        public RelayCommand ShowVertexCost { get; }
+        public ICommand StartPathFindCommand { get; }
+        public ICommand CreateNewGraphCommand { get; }
+        public ICommand ClearGraphCommand { get; }
+        public ICommand SaveGraphCommand { get; }
+        public ICommand LoadGraphCommand { get; }
+        public ICommand ChangeVertexSize { get; }
+        public ICommand ShowVertexCost { get; }
 
         public MainWindowViewModel()
         {

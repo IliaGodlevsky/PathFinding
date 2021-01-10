@@ -44,7 +44,7 @@ namespace GraphLib.Extensions
 
             return self.Position.CoordinatesValues
                 .Zip(toVertex.Position.CoordinatesValues, GetAbsSub)
-                .MaxOrDefault();
+                .MaxOrDefault();      
         }
 
         /// <summary>

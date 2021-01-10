@@ -8,7 +8,7 @@ using System.Text;
 namespace GraphLib.Coordinates.Abstractions
 {
     /// <summary>
-    /// Provides base functionnality to coordinate classes
+    /// Provides base functionality to coordinate classes
     /// </summary>
     [Serializable]
     public abstract class BaseCoordinate<TCoordinate> : ICoordinate 

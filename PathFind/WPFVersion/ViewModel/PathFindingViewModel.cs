@@ -4,6 +4,7 @@ using GraphLib.ViewModel;
 using GraphViewModel.Interfaces;
 using System;
 using System.Linq;
+using System.Windows.Input;
 using WPFVersion.Infrastructure;
 
 namespace WPFVersion.ViewModel
@@ -12,9 +13,8 @@ namespace WPFVersion.ViewModel
     {
         public event EventHandler OnWindowClosed;
 
-        public RelayCommand ConfirmPathFindAlgorithmChoice { get; }
-
-        public RelayCommand CancelPathFindAlgorithmChoice { get; }
+        public ICommand ConfirmPathFindAlgorithmChoice { get; }
+        public ICommand CancelPathFindAlgorithmChoice { get; }
 
         public PathFindingViewModel(IMainModel model) : base(model)
         {

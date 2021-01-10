@@ -10,6 +10,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Windows;
+using System.Windows.Input;
 using WPFVersion3D.Infrastructure;
 using WPFVersion3D.Model;
 
@@ -21,9 +22,8 @@ namespace WPFVersion3D.ViewModel
 
         public int Height { get; set; }
 
-        public RelayCommand ConfirmCreateGraphCommand { get; }
-
-        public RelayCommand CancelCreateGraphCommand { get; }
+        public ICommand ConfirmCreateGraphCommand { get; }
+        public ICommand CancelCreateGraphCommand { get; }
 
         public GraphCreatingViewModel(IMainModel model) : base(model)
         {

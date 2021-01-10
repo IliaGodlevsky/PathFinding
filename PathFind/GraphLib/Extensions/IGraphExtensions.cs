@@ -6,6 +6,10 @@ namespace GraphLib.Extensions
 {
     public static class IGraphExtensions
     {
+        /// <summary>
+        /// Removes all actions, that was performed over the vertices
+        /// </summary>
+        /// <param name="graph"></param>
         public static void Refresh(this IGraph graph)
         {
             graph.RemoveExtremeVertices();
