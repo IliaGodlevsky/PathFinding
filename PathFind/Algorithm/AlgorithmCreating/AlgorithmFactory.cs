@@ -38,7 +38,7 @@ namespace Algorithm.AlgorithmCreating
         {
             if (Algorithms.TryGetValue(algorithmDescription, out Type algoType))
             {
-                var activator = (ActivatorHandler<IAlgorithm>)GetActivator(algoType);
+                var activator = (ActivatorHandler<IAlgorithm>)GetRegisteredActivator(algoType);
                 return activator(graph);
             }
             return new DefaultAlgorithm();
