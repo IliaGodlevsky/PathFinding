@@ -10,6 +10,16 @@ namespace Common.Extensions
             return Assembly.Load(self.Assembly.GetName());
         }
 
+        /// <summary>
+        /// Returns public constructor paramtres 
+        /// that are identical to <paramref name="parametres"/>
+        /// </summary>
+        /// <param name="self"></param>
+        /// <param name="parametres"></param>
+        /// <returns>A public constructor if such exists with specified 
+        /// <paramref name="parametres"/> of <see cref="null"/> if doesn't</returns>
+        /// <exception cref="ArgumentNullException"></exception>
+        /// <exception cref="ArgumentException"></exception>
         public static ConstructorInfo GetConstructor(this Type self, params Type[] parametres)
         {
             return self.GetConstructor(parametres);

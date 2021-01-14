@@ -80,7 +80,10 @@ namespace Common
             return (ActivatorHandler<T>)GetActivator(typeof(T));
         }
 
-        private static Dictionary<Type, Delegate> Activators { get; set; }
+        /// <summary>
+        /// A dictionary of registed activators for objects
+        /// </summary>
+        private static IDictionary<Type, Delegate> Activators { get; set; }
 
         private static Delegate CreateActivator<TReturnType>(ConstructorInfo ctor) where TReturnType : class
         {

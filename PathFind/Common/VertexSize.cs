@@ -1,8 +1,5 @@
 ﻿namespace Common
 {
-    /// <summary>
-    /// size in pts
-    /// </summary>
     public static class VertexParametres
     {
         static VertexParametres()
@@ -11,6 +8,9 @@
             VertexSize = 24;
         }
 
+        /// <summary>
+        /// Ratio of the text size to vertex size
+        /// </summary>
         public static float TextToSizeRatio { get; }
 
         private static int vertexSize;

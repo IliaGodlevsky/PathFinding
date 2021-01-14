@@ -18,7 +18,7 @@ namespace Algorithm.Algorithms
 
         public DepthFirstAlgorithm(IGraph graph) : base(graph)
         {
-            GreedyFunction = vertex => vertex.GetChebyshevDistanceTo(graph.Start);
+            GreedyFunction = vertex => vertex.CalculateChebyshevDistanceTo(graph.Start);
             visitedVertices = new Stack<IVertex>();
         }
 
@@ -39,10 +39,13 @@ namespace Algorithm.Algorithms
             get
             {
                 var neighbours = CurrentVertex.GetUnvisitedNeighbours();
+                bool IsLeastCostVertex(IVertex vertex) 
+                    => GreedyFunction(vertex) == neighbours.Min(GreedyFunction);
+
                 return neighbours
                     .ForEach(RaiseOnVertexEnqueuedEvent)
                     .ToList()
-                    .FindOrDefault(vert => GreedyFunction(vert) == neighbours.Min(vertex => GreedyFunction(vertex)));
+                    .FindOrDefault(IsLeastCostVertex);
             }
         }
 

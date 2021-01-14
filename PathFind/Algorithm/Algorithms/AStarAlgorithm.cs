@@ -13,7 +13,7 @@ namespace Algorithm.Algorithms
 
         public AStarAlgorithm(IGraph graph) : base(graph)
         {
-            HeuristicFunction = vertex => vertex.GetChebyshevDistanceTo(graph.End);
+            HeuristicFunction = vertex => vertex.CalculateChebyshevDistanceTo(graph.End);
         }
 
         protected override double GetVertexRelaxedCost(IVertex neighbour)

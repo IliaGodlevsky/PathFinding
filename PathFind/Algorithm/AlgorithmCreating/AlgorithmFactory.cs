@@ -44,11 +44,11 @@ namespace Algorithm.AlgorithmCreating
             return new DefaultAlgorithm();
         }
 
-        private static Dictionary<string, Type> Algorithms { get; set; }
+        private static IDictionary<string, Type> Algorithms { get; set; }
 
         private static Type AlgorithmsInterface { get; set; }
 
-        private static Dictionary<string, Type> CreateAlgorithmsDictionary()
+        private static IDictionary<string, Type> CreateAlgorithmsDictionary()
         {
             return AlgorithmsInterface
                 .GetAssembly()

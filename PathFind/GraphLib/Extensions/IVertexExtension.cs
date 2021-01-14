@@ -13,9 +13,9 @@ namespace GraphLib.Extensions
 {
     public static class IVertexExtension
     {
-        private static int GetAbsSub(int first, int second)
+        private static int CalculateAbsSub(int first, int second)
         {
-            return first - second;
+            return Math.Abs(first - second);
         }
 
         public static bool IsValidToBeExtreme(this IVertex vertex)
@@ -35,7 +35,7 @@ namespace GraphLib.Extensions
         /// <param name="toVertex"></param>
         /// <returns>Chebyshev distance or 0 if one of 
         /// vertices doesn't have any coordinates values</returns>
-        public static double GetChebyshevDistanceTo(this IVertex self, IVertex toVertex)
+        public static double CalculateChebyshevDistanceTo(this IVertex self, IVertex toVertex)
         {
             if (self == null || toVertex == null) 
             {
@@ -43,7 +43,7 @@ namespace GraphLib.Extensions
             }
 
             return self.Position.CoordinatesValues
-                .Zip(toVertex.Position.CoordinatesValues, GetAbsSub)
+                .Zip(toVertex.Position.CoordinatesValues, CalculateAbsSub)
                 .MaxOrDefault();      
         }
 

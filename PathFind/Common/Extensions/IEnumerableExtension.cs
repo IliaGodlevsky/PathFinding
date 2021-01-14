@@ -44,5 +44,10 @@ namespace Common.Extensions
         {
             return collection.Any() ? collection.Max() : default;
         }
+
+        public static double MaxOrDefault(this IEnumerable<double> collection)
+        {
+            return collection.Any() ? collection.Max() : default;
+        }
     }
 }

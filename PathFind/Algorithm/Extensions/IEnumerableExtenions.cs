@@ -1,5 +1,7 @@
-﻿using GraphLib.Vertex;
+﻿using Algorithm.Handlers;
+using GraphLib.Vertex;
 using GraphLib.Vertex.Interface;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -29,6 +31,12 @@ namespace Algorithm.Extensions
         internal static IEnumerable<T> Except<T>(this IEnumerable<T> collection, params T[] objects)
         {
             return collection.Except(objects.AsEnumerable());
+        }
+
+        internal static double Min(this IEnumerable<IVertex> collection, HeuristicHandler heuristicFunction)
+        {
+            Func<IVertex, double> selector = vertex => heuristicFunction(vertex);
+            return collection.Min(selector);
         }
     }
 }
