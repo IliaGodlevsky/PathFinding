@@ -88,7 +88,7 @@ namespace Common
         /// <returns>Activator handler for <paramref name="type"></paramref></returns>
         /// <exception cref="KeyNotFoundException">Thrown when activator 
         /// doesn't exist for <paramref name="type"></paramref></exception>
-        public static Delegate GetActivator(Type type)
+        public static Delegate GetRegisteredActivator(Type type)
         {
             if (Activators.TryGetValue(type, out Delegate activator))
             {
@@ -107,7 +107,7 @@ namespace Common
         /// doesn't exist for <typeparamref name="T"/></exception>
         public static ActivatorHandler<T> GetActivator<T>() where T : class
         {
-            return (ActivatorHandler<T>)GetActivator(typeof(T));
+            return (ActivatorHandler<T>)GetRegisteredActivator(typeof(T));
         }
 
         /// <summary>
