@@ -14,9 +14,13 @@ namespace GraphLib.Coordinates.Abstractions
     public abstract class BaseCoordinate<TCoordinate> : ICoordinate 
         where TCoordinate: class, ICoordinate
     {
-        public BaseCoordinate(params int[] coordinates)
+        public BaseCoordinate(int numberOfDimensions, params int[] coordinates)
         {
             CoordinatesValues = coordinates.ToArray();
+            if (CoordinatesValues.Count() != numberOfDimensions)
+            {
+                throw new ArgumentOutOfRangeException("Number of dimensions must be equal to coordinates numbers");
+            }
         }
 
         public IEnumerable<int> CoordinatesValues { get; }
@@ -69,6 +73,8 @@ namespace GraphLib.Coordinates.Abstractions
         }
 
         public abstract object Clone();
+
+        protected readonly int NumberOfDimensions;
 
         private IEnumerable<ICoordinate> coordinateEnvironment;
     }

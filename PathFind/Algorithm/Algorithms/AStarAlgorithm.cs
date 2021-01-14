@@ -1,7 +1,7 @@
-﻿using GraphLib.Extensions;
+﻿using Algorithm.Handlers;
+using GraphLib.Extensions;
 using GraphLib.Graphs.Abstractions;
 using GraphLib.Vertex.Interface;
-using System;
 using System.ComponentModel;
 
 namespace Algorithm.Algorithms
@@ -9,7 +9,7 @@ namespace Algorithm.Algorithms
     [Description("A* algorithm")]
     public class AStarAlgorithm : DijkstraAlgorithm
     {
-        public Func<IVertex, double> HeuristicFunction { protected get; set; }
+        public HeuristicHandler HeuristicFunction { protected get; set; }
 
         public AStarAlgorithm(IGraph graph) : base(graph)
         {

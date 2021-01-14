@@ -17,12 +17,9 @@ namespace GraphLib.Coordinates
         public int Z => CoordinatesValues.Last();
 
         public Coordinate3D(params int[] coordinates)
-            : base(coordinates)
+            : base(numberOfDimensions: 3, coordinates)
         {
-            if (coordinates.Length != 3)
-            {
-                throw new ArgumentException("Must be three coordinates");
-            }
+            
         }
 
         public Coordinate3D(int x, int y, int z)

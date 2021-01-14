@@ -21,12 +21,9 @@ namespace GraphLib.Coordinates
         }
 
         public Coordinate2D(params int[] coordinates)
-            : base(coordinates)
+            : base(numberOfDimensions: 2, coordinates)
         {
-            if (coordinates.Length != 2)
-            {
-                throw new ArgumentException("Must be two coordinates");
-            }
+
         }
 
         public override object Clone()

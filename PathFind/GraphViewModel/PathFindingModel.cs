@@ -39,6 +39,11 @@ namespace GraphLib.ViewModel
             algorithm.OnStarted += OnAlgorithmStarted;
 
             algorithm.FindPath();
+
+            algorithm.OnVertexEnqueued -= OnVertexEnqueued;
+            algorithm.OnVertexVisited -= OnVertexVisited;
+            algorithm.OnFinished -= OnAlgorithmFinished;
+            algorithm.OnStarted -= OnAlgorithmStarted;
         }
 
         protected virtual void OnVertexVisited(IVertex vertex)

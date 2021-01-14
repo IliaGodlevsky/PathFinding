@@ -1,10 +1,10 @@
 ﻿using Algorithm.Algorithms.Abstractions;
 using Algorithm.Extensions;
+using Algorithm.Handlers;
 using Common.Extensions;
 using GraphLib.Extensions;
 using GraphLib.Graphs.Abstractions;
 using GraphLib.Vertex.Interface;
-using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
@@ -14,7 +14,7 @@ namespace Algorithm.Algorithms
     [Description("Depth-first algorithm")]
     public class DepthFirstAlgorithm : BaseAlgorithm
     {
-        public Func<IVertex, double> GreedyFunction { private get; set; }
+        public HeuristicHandler GreedyFunction { private get; set; }
 
         public DepthFirstAlgorithm(IGraph graph) : base(graph)
         {
@@ -42,7 +42,7 @@ namespace Algorithm.Algorithms
                 return neighbours
                     .ForEach(RaiseOnVertexEnqueuedEvent)
                     .ToList()
-                    .FindOrDefault(vert => GreedyFunction(vert) == neighbours.Min(GreedyFunction));
+                    .FindOrDefault(vert => GreedyFunction(vert) == neighbours.Min(vertex => GreedyFunction(vertex)));
             }
         }
 
