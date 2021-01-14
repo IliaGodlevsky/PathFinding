@@ -21,6 +21,36 @@ namespace Common
         }
 
         /// <summary>
+        /// Creates a <see cref="Delegate"/>, that represents lambda 
+        /// expression, from constructor <paramref name="ctor"/>
+        /// </summary>
+        /// <typeparam name="TReturnType"></typeparam>
+        /// <param name="ctor"></param>
+        /// <returns>A <see cref="Delegate"/>, that represents a 
+        /// lambda expression, from constructor <paramref name="ctor"/> that can 
+        /// create an instance of <typeparamref name="TReturnType"/></returns>
+        public static Delegate CreateActivator<TReturnType>(ConstructorInfo ctor) where TReturnType : class
+        {
+            var ctorParameters = ctor.GetParameters();
+            var parameter = Expression.Parameter(typeof(object[]), "args");
+            var argsExpression = new Expression[ctorParameters.Length];
+
+            for (int i = 0; i < ctorParameters.Length; i++)
+            {
+                var index = Expression.Constant(i);
+                var parameterType = ctorParameters[i].ParameterType;
+                var parameterAccessorExpression = Expression.ArrayIndex(parameter, index);
+                var parameterCastExpression = Expression.Convert(parameterAccessorExpression, parameterType);
+                argsExpression[i] = parameterCastExpression;
+            }
+
+            var newExpression = Expression.New(ctor, argsExpression);
+            var lambda = Expression.Lambda(typeof(ActivatorHandler<TReturnType>), newExpression, parameter);
+
+            return lambda.Compile();
+        }
+
+        /// <summary>
         /// Registers constructor that will return <typeparamref name="TReturnType"/>
         /// </summary>
         /// <typeparam name="TReturnType"></typeparam>
@@ -84,35 +114,5 @@ namespace Common
         /// A dictionary of registed activators for objects
         /// </summary>
         private static IDictionary<Type, Delegate> Activators { get; set; }
-
-        /// <summary>
-        /// Creates a <see cref="Delegate"/>, that represents lambda 
-        /// expression, from constructor <paramref name="ctor"/>
-        /// </summary>
-        /// <typeparam name="TReturnType"></typeparam>
-        /// <param name="ctor"></param>
-        /// <returns>A <see cref="Delegate"/>, that represents a 
-        /// lambda expression, from constructor <paramref name="ctor"/> that can 
-        /// create an instance of <typeparamref name="TReturnType"/></returns>
-        private static Delegate CreateActivator<TReturnType>(ConstructorInfo ctor) where TReturnType : class
-        {
-            var ctorParameters = ctor.GetParameters();
-            var parameter = Expression.Parameter(typeof(object[]), "args");
-            var argsExpression = new Expression[ctorParameters.Length];
-
-            for (int i = 0; i < ctorParameters.Length; i++)
-            {
-                var index = Expression.Constant(i);
-                var parameterType = ctorParameters[i].ParameterType;
-                var parameterAccessorExpression = Expression.ArrayIndex(parameter, index);
-                var parameterCastExpression = Expression.Convert(parameterAccessorExpression, parameterType);
-                argsExpression[i] = parameterCastExpression;
-            }
-
-            var newExpression = Expression.New(ctor, argsExpression);
-            var lambda = Expression.Lambda(typeof(ActivatorHandler<TReturnType>), newExpression, parameter);
-
-            return lambda.Compile();
-        }
     }
 }
