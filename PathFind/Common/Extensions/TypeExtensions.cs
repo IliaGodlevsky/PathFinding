@@ -36,8 +36,8 @@ namespace Common.Extensions
         /// <param name="self"></param>
         /// <param name="target"></param>
         /// <param name="del"></param>
-        /// <returns><see cref="true"/> if creation of the 
-        /// object was successful and false if wasn't</returns>
+        /// <returns><see cref="true"/> if the creation of the 
+        /// <typeparamref name="TDelegate"/> was successful and false if wasn't</returns>
         public static bool TryCreateDelegate<TDelegate>(this MethodInfo self, 
             object target, out TDelegate del)
             where TDelegate : Delegate
