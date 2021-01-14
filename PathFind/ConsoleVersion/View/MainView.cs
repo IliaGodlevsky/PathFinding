@@ -14,8 +14,8 @@ namespace ConsoleVersion.View
         public MainView()
         {
             mainModel = new MainViewModel();
-            menuActions = MenuViewModel.GetMenuMethodsAsDelegates<Action>(mainModel);
-            menu = MenuViewModel.CreateMenu(menuActions.Keys);
+            menuActions = Menu.GetMenuMethodsAsDelegates<Action>(mainModel);
+            menu = Menu.CreateMenu(menuActions.Keys);
         }
 
         public void Start()

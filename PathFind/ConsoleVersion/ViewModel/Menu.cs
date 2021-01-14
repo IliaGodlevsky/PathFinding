@@ -8,7 +8,7 @@ using System.Text;
 
 namespace ConsoleVersion.ViewModel
 {
-    internal static class MenuViewModel
+    internal static class Menu
     {
         /// <summary>
         /// Creates a menu from <paramref name="menuItemsNames"/>
