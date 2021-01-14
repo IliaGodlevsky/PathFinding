@@ -6,8 +6,14 @@ using System.Collections.Generic;
 
 namespace GraphLib.Graphs.Abstractions
 {
+    /// <summary>
+    /// 
+    /// </summary>
     public interface IGraph : IEnumerable<IVertex>, IDefault
     {
+        /// <summary>
+        /// Returns a collection of <see cref="Info.VertexInfo"/>
+        /// </summary>
         VertexInfoCollection VertexInfoCollection { get; }
 
         IVertex this[ICoordinate coordinate] { get; set; }

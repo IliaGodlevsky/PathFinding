@@ -1,9 +1,10 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:vertex="clr-namespace:WPFVersion.Model"
                     x:Name="TemplateDictionary">
-    <ControlTemplate x:Key="vertexTemplate" TargetType="Label">
+    <ControlTemplate x:Key="vertexTemplate" TargetType="vertex:WpfVertex">
         <Grid>
-            <Rectangle Fill="{TemplateBinding Background}" Stroke="{TemplateBinding Foreground}" />
+            <Rectangle Fill="{TemplateBinding Background}" Stroke="{TemplateBinding Foreground}"/>
             <Border BorderBrush="White" BorderThickness="1"></Border>
             <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center" />
         </Grid>

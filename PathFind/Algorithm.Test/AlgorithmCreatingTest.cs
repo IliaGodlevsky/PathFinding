@@ -18,7 +18,7 @@ namespace Algorithm.Test
             var algorithms = GetAlgorithms(keys);
 
             Assert.AreEqual(keys.Count(), algorithms.Count());
-            Assert.IsTrue(algorithms.All(algo => !algo.IsDefault));
+            Assert.IsTrue(algorithms.All(IsNotDefault));
         }
 
         [TestMethod]
@@ -28,21 +28,19 @@ namespace Algorithm.Test
 
             var algorithms = GetAlgorithms(keys);
 
-            Assert.AreEqual(keys.Count(), algorithms.Count());
-            Assert.IsTrue(algorithms.All(algo => algo.IsDefault));
+            Assert.IsTrue(algorithms.All(IsDefault));
         }
 
         [Ignore]
-        private List<IAlgorithm> GetAlgorithms(string[] keys)
+        private IEnumerable<IAlgorithm> GetAlgorithms(string[] keys)
         {
-            var algorithms = new List<IAlgorithm>();
-
             foreach (var key in keys)
             {
-                algorithms.Add(AlgorithmFactory.CreateAlgorithm(key, new NullGraph()));
+                yield return AlgorithmFactory.CreateAlgorithm(key, new NullGraph());
             }
-
-            return algorithms;
         }
+
+        private bool IsDefault(IAlgorithm algo) => algo.IsDefault;
+        private bool IsNotDefault(IAlgorithm algo) => !IsDefault(algo);
     }
 }

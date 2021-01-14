@@ -5,9 +5,6 @@ namespace WPFVersion3D.Infrastructure
 {
     internal class RelayCommand : ICommand
     {
-        private readonly Action<object> execute;
-        private readonly Func<object, bool> canExecute;
-
         public event EventHandler CanExecuteChanged
         {
             add { CommandManager.RequerySuggested += value; }
@@ -30,5 +27,8 @@ namespace WPFVersion3D.Infrastructure
         {
             execute(parameter);
         }
+
+        private readonly Action<object> execute;
+        private readonly Func<object, bool> canExecute;
     }
 }

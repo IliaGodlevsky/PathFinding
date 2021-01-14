@@ -1,10 +1,12 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Windows;
 using System.Windows.Media.Animation;
 using System.Windows.Media.Media3D;
 using WPFVersion3D.Enums;
 using WPFVersion3D.Model.Interface;
+using DurationCalculateFunction = System.Collections.Generic.Dictionary<WPFVersion3D.Enums.RotationDirection, System.Func<double>>;
+using AnimationCreateFunction = System.Collections.Generic.Dictionary<WPFVersion3D.Enums.RotationDirection,
+    System.Func<System.Windows.Media.Animation.DoubleAnimation>>;
 
 namespace WPFVersion3D.Model
 {
@@ -24,13 +26,13 @@ namespace WPFVersion3D.Model
             this.axis = axis;
             this.direction = direction;
 
-            DurationCalculateFunctions = new Dictionary<RotationDirection, Func<double>>()
+            DurationCalculateFunctions = new DurationCalculateFunction()
             {
                 { RotationDirection.Backward, CalculateBackwardAnimationDuration },
                 { RotationDirection.Forward, CalculateForwardAnimationDuration }
             };
 
-            AnimationCreationFunctions = new Dictionary<RotationDirection, Func<DoubleAnimation>>()
+            AnimationCreateFunctions = new AnimationCreateFunction()
             {
                 { RotationDirection.Backward, () => CreateAnimation(axis.Angle, StartAngle, FillBehavior.Stop) },
                 { RotationDirection.Forward, () => CreateAnimation(axis.Angle, EndAngle, FillBehavior.HoldEnd) },
@@ -39,7 +41,7 @@ namespace WPFVersion3D.Model
 
         public void ApplyAnimation()
         {
-            var animation = AnimationCreationFunctions[direction]();
+            var animation = AnimationCreateFunctions[direction]();
             axis.BeginAnimation(AxisAngleRotation3D.AngleProperty, animation);
         }
 
@@ -56,9 +58,11 @@ namespace WPFVersion3D.Model
             return new Duration(TimeSpan.FromMilliseconds(duration));
         }
 
-        private double CalculateForwardAnimationDuration() => InitialDuration * (AngleAmplitude - axis.Angle) / AngleAmplitude;
+        private double CalculateForwardAnimationDuration() 
+            => InitialDuration * (AngleAmplitude - axis.Angle) / AngleAmplitude;
 
-        private double CalculateBackwardAnimationDuration() => InitialDuration * axis.Angle / AngleAmplitude;
+        private double CalculateBackwardAnimationDuration() 
+            => InitialDuration * axis.Angle / AngleAmplitude;
 
         private double AngleAmplitude => EndAngle - StartAngle;
 
@@ -67,7 +71,7 @@ namespace WPFVersion3D.Model
         private readonly AxisAngleRotation3D axis;
         private readonly RotationDirection direction;
 
-        private Dictionary<RotationDirection, Func<double>> DurationCalculateFunctions { get; set; }
-        private Dictionary<RotationDirection, Func<DoubleAnimation>> AnimationCreationFunctions { get; set; }
+        private DurationCalculateFunction DurationCalculateFunctions { get; set; }
+        private AnimationCreateFunction AnimationCreateFunctions { get; set; }
     }
 }

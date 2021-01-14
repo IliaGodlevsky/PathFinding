@@ -58,18 +58,21 @@
                 <ToggleButton Command="{Binding AutoRotateXAxisCommand}"
                               CommandParameter="{Binding IsChecked, RelativeSource = {RelativeSource Self},
                               Converter={StaticResource directionConverter}}" 
-                              Margin="5" Grid.Column="3" Grid.Row="1" Content="Rotate"></ToggleButton>
-                
+                              Margin="5" Grid.Column="3" Grid.Row="1"
+                              Template ="{StaticResource RotationToggleButtonTemplate}"/>
+
                 <ToggleButton Command="{Binding AutoRotateYAxisCommand}"
                               CommandParameter="{Binding IsChecked, RelativeSource = {RelativeSource Self},
                               Converter={StaticResource directionConverter}}" 
-                              Margin="5" Grid.Column="3" Grid.Row="2" Content="Rotate"></ToggleButton>
-                
+                              Margin="5" Grid.Column="3" Grid.Row="2"
+                              Template ="{StaticResource RotationToggleButtonTemplate}"/>
+
                 <ToggleButton Command="{Binding AutoRotateZAxisCommand}"
                               CommandParameter="{Binding IsChecked, RelativeSource = {RelativeSource Self},
                               Converter={StaticResource directionConverter}}" 
-                              Margin="5" Grid.Column="3" Grid.Row="3" Content="Rotate"></ToggleButton>
-                
+                              Margin="5" Grid.Column="3" Grid.Row="3"
+                              Template ="{StaticResource RotationToggleButtonTemplate}"/>
+
                 <TextBlock Margin="5" Text="Zoom"/>
                 <TextBlock Grid.Row="1" Margin="5" Text="X axis rotate"/>
                 <TextBlock Grid.Row="2" Margin="5" Text="Y axis rotate"/>
@@ -185,7 +188,7 @@
                 <Image Style ="{StaticResource ImageStyle}" Source="/Resources/Images/opacity.png"/>
             </Button>
         </ToolBar>
-        <Viewport3D Grid.Row="2">
+        <Viewport3D Grid.Row="2" Margin="5" Grid.RowSpan="2">
             <Viewport3D.Camera>
                 <PerspectiveCamera x:Name="camera" 
                     LookDirection="{Binding RelativeSource={RelativeSource Self}, 

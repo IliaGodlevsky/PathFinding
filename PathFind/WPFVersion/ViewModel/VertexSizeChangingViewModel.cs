@@ -10,7 +10,6 @@ using System.Windows.Controls;
 using System.Windows.Input;
 using WPFVersion.Infrastructure;
 using WPFVersion.Model;
-using WPFVersion.Model.Vertex;
 
 namespace WPFVersion.ViewModel
 {
@@ -22,15 +21,15 @@ namespace WPFVersion.ViewModel
 
         public MainWindowViewModel Model { get; set; }
 
-        public ICommand ExecuteChangeVertexSize { get; }
-        public ICommand ExecuteCancel { get; }
+        public ICommand ExecuteChangeVertexSizeCommand { get; }
+        public ICommand ExecuteCancelCommand { get; }
 
         public VertexSizeChangingViewModel(MainWindowViewModel model)
         {
             Model = model;
 
-            ExecuteChangeVertexSize = new RelayCommand(ExecuteChangeVerticesSizeCommand);
-            ExecuteCancel = new RelayCommand(obj => CloseWindow());
+            ExecuteChangeVertexSizeCommand = new RelayCommand(ExecuteChangeVerticesSizeCommand);
+            ExecuteCancelCommand = new RelayCommand(obj => CloseWindow());
 
             if (Model.Graph.Any())
             {

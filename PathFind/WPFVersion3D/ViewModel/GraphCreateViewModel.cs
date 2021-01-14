@@ -10,6 +10,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Windows;
+using System.Windows.Controls.Primitives;
 using System.Windows.Input;
 using WPFVersion3D.Infrastructure;
 using WPFVersion3D.Model;
@@ -33,9 +34,9 @@ namespace WPFVersion3D.ViewModel
 
         public override void CreateGraph(Func<IVertex> vertexFactory)
         {
-            var graphfactory = new GraphFactory<Graph3D>(ObstaclePercent, Width, Length, Height);
+            var graphFactory = new GraphFactory<Graph3D>(ObstaclePercent, Width, Length, Height);
 
-            var graph = graphfactory.CreateGraph(vertexFactory, CreateCoordinate3D);
+            var graph = graphFactory.CreateGraph(vertexFactory, CreateCoordinate3D);
 
             model.ConnectNewGraph(graph);
         }

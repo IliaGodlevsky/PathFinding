@@ -2,7 +2,6 @@
 using GraphLib.Vertex.Interface;
 using System;
 using System.Windows.Input;
-using WPFVersion.Model.Vertex;
 
 namespace WPFVersion.Model.EventHolder
 {

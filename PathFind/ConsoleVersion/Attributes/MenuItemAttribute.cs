@@ -18,6 +18,9 @@ namespace ConsoleVersion.Attributes
 
         public MenuItemPriority MenuItemPriority { get; private set; }
 
+        /// <summary>
+        /// The name of a menu item that will be shown in the menu
+        /// </summary>
         public string MenuItemName { get; private set; }
     }
 }

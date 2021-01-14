@@ -1,7 +1,7 @@
 ﻿namespace ConsoleVersion.Enums
 {
     /// <summary>
-    /// Represents the priority of menu items in menu
+    /// Represents the priority of a menu item in the menu
     /// </summary>
     internal enum MenuItemPriority
     {

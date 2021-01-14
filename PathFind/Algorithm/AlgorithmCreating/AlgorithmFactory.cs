@@ -20,8 +20,9 @@ namespace Algorithm.AlgorithmCreating
 
         static AlgorithmFactory()
         {
-            AlgorithmsDictionary = CreateAlgorithmsDictionary();
-            AlgorithmsDescriptions = AlgorithmsDictionary.Keys.OrderBy(key => key);
+            AlgorithmsInterface = typeof(IAlgorithm);
+            Algorithms = CreateAlgorithmsDictionary();
+            AlgorithmsDescriptions = Algorithms.Keys.OrderBy(key => key);
         }
 
         /// <summary>
@@ -35,7 +36,7 @@ namespace Algorithm.AlgorithmCreating
         /// doesn't exist for algorithm with <paramref name="algorithmDescription"></paramref> key</exception>
         public static IAlgorithm CreateAlgorithm(string algorithmDescription, IGraph graph)
         {
-            if (AlgorithmsDictionary.TryGetValue(algorithmDescription, out Type algoType))
+            if (Algorithms.TryGetValue(algorithmDescription, out Type algoType))
             {
                 var activator = (ActivatorHandler<IAlgorithm>)GetActivator(algoType);
                 return activator(graph);
@@ -43,11 +44,13 @@ namespace Algorithm.AlgorithmCreating
             return new DefaultAlgorithm();
         }
 
-        private static Dictionary<string, Type> AlgorithmsDictionary { get; set; }
+        private static Dictionary<string, Type> Algorithms { get; set; }
+
+        private static Type AlgorithmsInterface { get; set; }
 
         private static Dictionary<string, Type> CreateAlgorithmsDictionary()
         {
-            return typeof(IAlgorithm)
+            return AlgorithmsInterface
                 .GetAssembly()
                 .GetTypes()
                 .Where(IsValidAlgorithm)

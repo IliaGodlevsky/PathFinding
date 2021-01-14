@@ -42,8 +42,8 @@
                     Grid.ColumnSpan="3" 
                     Orientation="Horizontal"
                     HorizontalAlignment="Center">
-            <Button Command="{Binding ExecuteChangeVertexSize}" Margin ="5" Content="Ok"></Button>
-            <Button Command="{Binding ExecuteCancel}" Margin="5" Content="Cancel"></Button>
+            <Button Command="{Binding ExecuteChangeVertexSizeCommand}" Margin ="5" Content="Ok"></Button>
+            <Button Command="{Binding ExecuteCancelCommand}" Margin="5" Content="Cancel"></Button>
         </StackPanel>
     </Grid>
 </Window>

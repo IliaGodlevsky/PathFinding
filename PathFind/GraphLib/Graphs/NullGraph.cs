@@ -9,6 +9,9 @@ using System.Linq;
 
 namespace GraphLib.Graphs
 {
+    /// <summary>
+    /// Respresents an empty graph, without any vertices
+    /// </summary>
     public sealed class NullGraph : IGraph
     {
         public NullGraph()

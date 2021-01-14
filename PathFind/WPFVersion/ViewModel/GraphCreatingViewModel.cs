@@ -5,7 +5,6 @@ using System;
 using System.Windows.Input;
 using WPFVersion.Infrastructure;
 using WPFVersion.Model;
-using WPFVersion.Model.Vertex;
 
 namespace WPFVersion.ViewModel
 {

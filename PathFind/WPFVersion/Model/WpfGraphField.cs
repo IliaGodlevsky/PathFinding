@@ -4,7 +4,6 @@ using GraphLib.GraphField;
 using GraphLib.Vertex.Interface;
 using System;
 using System.Windows.Controls;
-using WPFVersion.Model.Vertex;
 
 namespace WPFVersion.Model
 {

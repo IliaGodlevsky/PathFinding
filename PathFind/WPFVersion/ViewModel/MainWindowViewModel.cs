@@ -10,7 +10,6 @@ using System.Windows.Input;
 using WPFVersion.Infrastructure;
 using WPFVersion.Model;
 using WPFVersion.Model.EventHolder;
-using WPFVersion.Model.Vertex;
 using WPFVersion.View.Windows;
 
 namespace WPFVersion.ViewModel
