@@ -55,7 +55,7 @@
     <Compile Include="Model\ConsoleGraphFieldFactory.cs" />
     <Compile Include="ViewModel\GraphCreatingViewModel.cs" />
     <Compile Include="ViewModel\MainViewModel.cs" />
-    <Compile Include="ViewModel\MenuViewModel.cs" />
+    <Compile Include="View\Menu.cs" />
     <Compile Include="ViewModel\PathFindingViewModel.cs" />
     <Compile Include="View\ConsoleGraphField.cs" />
     <Compile Include="View\GraphCreateView.cs" />
