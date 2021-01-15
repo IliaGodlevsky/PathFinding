@@ -6,6 +6,9 @@ using System.Linq;
 
 namespace GraphLib.Graphs.Infrastructure
 {
+    /// <summary>
+    /// A class, that provides pathfinding information from <see cref="IGraph"/>
+    /// </summary>
     public sealed class GraphPath
     {
         public IEnumerable<IVertex> Path { get; private set; }
