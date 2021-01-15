@@ -15,19 +15,19 @@
  
  **_Visualization of algorithms realized on:_**
   
- 1. [WPF](https://github.com/IliaGodlevsky/PathFinding/tree/master/PathFind/WpfVersion)
+ 1. [WPF 2D Version](https://github.com/IliaGodlevsky/PathFinding/tree/master/PathFind/WPFVersion)
  
  ![Wpf](https://github.com/IliaGodlevsky/PathFinding/blob/master/PathFind/img/Wpf.jpg)
 
- 2. [WPF 3D Version](https://github.com/IliaGodlevsky/PathFinding/tree/master/PathFind/Wpf3dVersion)
+ 2. [WPF 3D Version](https://github.com/IliaGodlevsky/PathFinding/tree/master/PathFind/WPFVersion3D)
  
  ![3D](https://github.com/IliaGodlevsky/PathFinding/blob/master/PathFind/img/Wpf3D.jpg)
  
- 3. [WinForms](https://github.com/IliaGodlevsky/PathFinding/tree/master/PathFind/WinFormsVersion)
+ 3. [Windows Forms 2D Version](https://github.com/IliaGodlevsky/PathFinding/tree/master/PathFind/WindowsFormsVersion)
  
  ![WinForms](https://github.com/IliaGodlevsky/PathFinding/blob/master/PathFind/img/WinFormsVersion.jpg)
  
- 4. [Console](https://github.com/IliaGodlevsky/PathFinding/tree/master/PathFind/ConsoleVersion)
+ 4. [Console 2D Version](https://github.com/IliaGodlevsky/PathFinding/tree/master/PathFind/ConsoleVersion)
  
  ![Console](https://github.com/IliaGodlevsky/PathFinding/blob/master/PathFind/img/ConsoleVersion.jpg)
 
@@ -35,7 +35,5 @@
  ***
  
  Comming soon: 
- 
- 1. ASP.NET MVC version
- 
- 2. Unity version
+  
+ 1. Unity version
