@@ -9,18 +9,17 @@ namespace ConsoleVersion.Attributes
     [AttributeUsage(AttributeTargets.Method, AllowMultiple = false, Inherited = false)]
     internal class MenuItemAttribute : Attribute
     {
-        public MenuItemAttribute(string menuItemName, 
-            MenuItemPriority menuItemPriority = MenuItemPriority.Normal)
+        public MenuItemAttribute(string header, MenuItemPriority priority = MenuItemPriority.Normal)
         {
-            MenuItemName = menuItemName;
-            MenuItemPriority = menuItemPriority;
+            Header = header;
+            Priority = priority;
         }
 
-        public MenuItemPriority MenuItemPriority { get; private set; }
+        public MenuItemPriority Priority { get; private set; }
 
         /// <summary>
-        /// The name of a menu item that will be shown in the menu
+        /// The header of a menu item that will be shown in the menu
         /// </summary>
-        public string MenuItemName { get; private set; }
+        public string Header { get; private set; }
     }
 }

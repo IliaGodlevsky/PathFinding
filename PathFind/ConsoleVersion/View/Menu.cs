@@ -69,8 +69,8 @@ namespace ConsoleVersion.ViewModel
             {
                 if (method.TryCreateDelegate(target, out TAction action))
                 {
-                    string menuItemName = GetMenuItemName(method);
-                    menuActions.Add(menuItemName, action);
+                    var header = GetMenuItemHeader(method);
+                    menuActions.Add(header, action);
                 }
             }
 
@@ -98,13 +98,13 @@ namespace ConsoleVersion.ViewModel
         private static int GetMenuItemPriority(MethodInfo method)
         {
             var attribute = method.GetAttribute<MenuItemAttribute>();
-            return attribute.MenuItemPriority.GetValue<int>();
+            return attribute.Priority.GetValue<int>();
         }
 
-        private static string GetMenuItemName(MethodInfo method)
+        private static string GetMenuItemHeader(MethodInfo method)
         {
             var attribute = method.GetAttribute<MenuItemAttribute>();
-            return attribute.MenuItemName;
+            return attribute.Header;
         }
 
         private static string CreateSeparator(int currentMenuItemNumber, int columns)
