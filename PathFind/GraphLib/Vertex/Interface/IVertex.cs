@@ -6,7 +6,7 @@ using System.Collections.Generic;
 namespace GraphLib.Vertex.Interface
 {
     /// <summary>
-    /// Represents an object that can be used to find a path in a graph
+    /// Represents a vertex of graph
     /// </summary>
     public interface IVertex : IDefault
     {
