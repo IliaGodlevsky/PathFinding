@@ -3,7 +3,6 @@ using ConsoleVersion.View.Interface;
 using ConsoleVersion.ViewModel;
 using System;
 using System.Collections.Generic;
-using System.Drawing;
 using System.Linq;
 using Console = Colorful.Console;
 
