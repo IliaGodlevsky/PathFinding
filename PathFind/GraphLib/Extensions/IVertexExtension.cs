@@ -1,5 +1,4 @@
-﻿using Common.Extensions;
-using GraphLib.Coordinates.Abstractions;
+﻿using GraphLib.Coordinates.Abstractions;
 using GraphLib.Graphs.Abstractions;
 using GraphLib.Info;
 using GraphLib.Vertex;
@@ -13,11 +12,6 @@ namespace GraphLib.Extensions
 {
     public static class IVertexExtension
     {
-        private static int CalculateAbsSub(int first, int second)
-        {
-            return Math.Abs(first - second);
-        }
-
         public static bool IsValidToBeExtreme(this IVertex vertex)
         {
             return vertex.IsSimpleVertex() && !vertex.IsIsolated();
@@ -26,25 +20,6 @@ namespace GraphLib.Extensions
         public static bool IsIsolated(this IVertex vertex)
         {
             return vertex.IsObstacle || !vertex.Neighbours.Any();
-        }
-
-        /// <summary>
-        /// Returns chebyshev distance to <paramref name="toVertex"/>
-        /// </summary>
-        /// <param name="self"></param>
-        /// <param name="toVertex"></param>
-        /// <returns>Chebyshev distance or 0 if one of 
-        /// vertices doesn't have any coordinates values</returns>
-        public static double CalculateChebyshevDistanceTo(this IVertex self, IVertex toVertex)
-        {
-            if (self == null || toVertex == null) 
-            {
-                throw new ArgumentNullException("Argument can't be null");
-            }
-
-            return self.Position.CoordinatesValues
-                .Zip(toVertex.Position.CoordinatesValues, CalculateAbsSub)
-                .MaxOrDefault();      
         }
 
         /// <summary>

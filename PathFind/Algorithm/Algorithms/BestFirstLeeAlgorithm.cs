@@ -1,8 +1,8 @@
 ﻿using Algorithm.Algorithms;
-using GraphLib.Extensions;
+using Algorithm.Extensions;
+using Algorithm.Handlers;
 using GraphLib.Graphs.Abstractions;
 using GraphLib.Vertex.Interface;
-using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
@@ -12,7 +12,7 @@ namespace Algorithm.PathFindingAlgorithms
     [Description("Lee algorithm (heuristic)")]
     public class BestFirstLeeAlgorithm : LeeAlgorithm
     {
-        public Func<IVertex, double> HeuristicFunction { protected get; set; }
+        public HeuristicHandler HeuristicFunction { protected get; set; }
 
         public BestFirstLeeAlgorithm(IGraph graph) : base(graph)
         {

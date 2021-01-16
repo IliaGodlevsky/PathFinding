@@ -1,5 +1,5 @@
-﻿using Algorithm.Handlers;
-using GraphLib.Extensions;
+﻿using Algorithm.Extensions;
+using Algorithm.Handlers;
 using GraphLib.Graphs.Abstractions;
 using GraphLib.Vertex.Interface;
 using System.ComponentModel;

@@ -44,6 +44,7 @@
   <ItemGroup>
     <Compile Include="AlgorithmCreating\AlgorithmFactory.cs" />
     <Compile Include="Attributes\FilterableAttribute.cs" />
+    <Compile Include="Extensions\IVertexExtensions.cs" />
     <Compile Include="Handlers\HeuristicHandler.cs" />
     <Compile Include="Extensions\IEnumerableExtenions.cs" />
     <Compile Include="Extensions\ListExtension.cs" />

@@ -1,4 +1,4 @@
-﻿using GraphLib.Extensions;
+﻿using Algorithm.Extensions;
 using GraphLib.Graphs.Abstractions;
 using System.ComponentModel;
 
