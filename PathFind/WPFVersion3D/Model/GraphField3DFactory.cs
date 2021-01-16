@@ -11,11 +11,7 @@ namespace WPFVersion3D.Model
         {
             var graph3D = graph as Graph3D;
 
-            int width = graph3D.Width;
-            int length = graph3D.Length;
-            int height = graph3D.Height;
-
-            var field = GetField(width, length, height);
+            var field = GetField(graph3D.Width, graph3D.Length, graph3D.Height);
 
             foreach (var vertex in graph)
             {
