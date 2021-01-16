@@ -19,6 +19,7 @@ namespace Algorithm.Extensions
         /// <param name="toVertex"></param>
         /// <returns>Chebyshev distance or 0 if one of 
         /// vertices doesn't have any coordinates values</returns>
+        /// <remarks><a href="https://en.wikipedia.org/wiki/Chebyshev_distance"/></remarks>
         public static double CalculateChebyshevDistanceTo(this IVertex self, IVertex toVertex)
         {
             if (self == null || toVertex == null)
