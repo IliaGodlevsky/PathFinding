@@ -17,9 +17,9 @@ namespace ConsoleVersion.ViewModel
     {
         public MainViewModel() : base()
         {
-            VertexEventHolder = new ConsoleVertexEventHolder();
-            FieldFactory = new ConsoleGraphFieldFactory();
-            InfoConverter = (info) => new ConsoleVertex(info);
+            VertexEventHolder = new VertexEventHolder();
+            FieldFactory = new GraphFieldFactory();
+            InfoConverter = (info) => new Vertex(info);
         }
 
         [MenuItem("Make unweighted")]
@@ -57,7 +57,7 @@ namespace ConsoleVersion.ViewModel
 
                 var point = Input.InputPoint(upperPossibleXValue, upperPossibleYValue);
 
-                (Graph[point] as ConsoleVertex).Reverse();
+                (Graph[point] as Vertex).Reverse();
             }
         }
 
@@ -78,7 +78,7 @@ namespace ConsoleVersion.ViewModel
                     point = Input.InputPoint(upperPossibleXValue, upperPossibleYValue);
                 }
 
-                (Graph[point] as ConsoleVertex).ChangeCost();
+                (Graph[point] as Vertex).ChangeCost();
             }
         }
 

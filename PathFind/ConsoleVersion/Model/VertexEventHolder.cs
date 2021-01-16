@@ -7,11 +7,11 @@ using System;
 
 namespace ConsoleVersion.Model
 {
-    internal class ConsoleVertexEventHolder : BaseVertexEventHolder
+    internal class VertexEventHolder : BaseVertexEventHolder
     {
         public override void ChangeVertexCost(object sender, EventArgs e)
         {
-            var vertex = sender as ConsoleVertex;
+            var vertex = sender as Vertex;
 
             if (!vertex.IsObstacle)
             {
@@ -31,9 +31,9 @@ namespace ConsoleVersion.Model
 
         protected override void SubscribeToEvents(IVertex vertex)
         {
-            (vertex as ConsoleVertex).OnCostChanged += ChangeVertexCost;
-            (vertex as ConsoleVertex).OnExtremeVertexChosen += ChooseExtremeVertices;
-            (vertex as ConsoleVertex).OnReverse += Reverse;
+            (vertex as Vertex).OnCostChanged += ChangeVertexCost;
+            (vertex as Vertex).OnExtremeVertexChosen += ChooseExtremeVertices;
+            (vertex as Vertex).OnReverse += Reverse;
         }
     }
 }

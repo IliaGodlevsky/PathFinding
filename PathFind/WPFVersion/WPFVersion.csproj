@@ -63,11 +63,11 @@
     <Compile Include="Converters\StringToRangedDoubleConverter.cs" />
     <Compile Include="Converters\StringToRangedIntConverter.cs" />
     <Compile Include="Infrastructure\RelayCommand.cs" />
-    <Compile Include="Model\WpfVertexEventHolder.cs" />
-    <Compile Include="Model\WpfVertex.cs" />
+    <Compile Include="Model\VertexEventHolder.cs" />
+    <Compile Include="Model\Vertex.cs" />
     <Compile Include="Model\WindowService.cs" />
-    <Compile Include="Model\WpfGraphField.cs" />
-    <Compile Include="Model\WpfGraphFieldFactory.cs" />
+    <Compile Include="Model\GraphField.cs" />
+    <Compile Include="Model\GraphFieldFactory.cs" />
     <Compile Include="ViewModel\GraphCreatingViewModel.cs" />
     <Compile Include="ViewModel\PathFindingViewModel.cs" />
     <Compile Include="ViewModel\MainWindowViewModel.cs" />

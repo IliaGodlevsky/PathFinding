@@ -123,10 +123,10 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Converters\InvertPointConverter.cs" />
-    <Compile Include="Model\WpfVertex3D.cs" />
-    <Compile Include="Model\WpfGraphField3D.cs" />
-    <Compile Include="Model\WpfGraphField3DFactory.cs" />
-    <Compile Include="Model\WpfVertex3DEventHolder.cs" />
+    <Compile Include="Model\Vertex3D.cs" />
+    <Compile Include="Model\GraphField3D.cs" />
+    <Compile Include="Model\GraphField3DFactory.cs" />
+    <Compile Include="Model\Vertex3DEventHolder.cs" />
     <Compile Include="Converters\NummberToPointConverter.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>

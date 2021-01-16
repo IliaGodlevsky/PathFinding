@@ -59,10 +59,10 @@ namespace WPFVersion.ViewModel
 
         public MainWindowViewModel()
         {
-            GraphField = new WpfGraphField();
-            VertexEventHolder = new WpfVertexEventHolder();
-            FieldFactory = new WpfGraphFieldFactory();
-            InfoConverter = (dto) => new WpfVertex(dto);
+            GraphField = new GraphField();
+            VertexEventHolder = new VertexEventHolder();
+            FieldFactory = new GraphFieldFactory();
+            InfoConverter = (dto) => new Vertex(dto);
 
             StartPathFindCommand = new RelayCommand(ExecuteStartPathFindCommand, CanExecuteStartFindPathCommand);
             CreateNewGraphCommand = new RelayCommand(ExecuteCreateNewGraphCommand);

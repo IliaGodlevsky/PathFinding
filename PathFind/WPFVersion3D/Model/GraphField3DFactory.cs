@@ -5,7 +5,7 @@ using GraphLib.Graphs.Abstractions;
 
 namespace WPFVersion3D.Model
 {
-    public class WpfGraphField3DFactory : GraphFieldFactory
+    public class GraphField3DFactory : BaseGraphFieldFactory
     {
         public override IGraphField CreateGraphField(IGraph graph)
         {
@@ -27,12 +27,12 @@ namespace WPFVersion3D.Model
 
         protected override IGraphField GetField()
         {
-            return new WpfGraphField3D();
+            return new GraphField3D();
         }
 
-        private WpfGraphField3D GetField(int width, int length, int height)
+        private GraphField3D GetField(int width, int length, int height)
         {
-            return new WpfGraphField3D(width, length, height);
+            return new GraphField3D(width, length, height);
         }
     }
 }

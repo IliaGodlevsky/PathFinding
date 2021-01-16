@@ -19,7 +19,7 @@ namespace WindowsFormsVersion.Model
         {
             if (vertex.Position is Coordinate2D coordinate)
             {
-                var winFormsVertex = vertex as WinFormsVertex;
+                var winFormsVertex = vertex as Vertex;
 
                 var xCoordinate = coordinate.X * VertexParametres.SizeBetweenVertices;
                 var yCoordinate = coordinate.Y * VertexParametres.SizeBetweenVertices;

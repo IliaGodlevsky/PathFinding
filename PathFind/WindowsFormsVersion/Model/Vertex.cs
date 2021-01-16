@@ -10,9 +10,9 @@ using System.Windows.Forms;
 
 namespace WindowsFormsVersion.Model
 {
-    internal class WinFormsVertex : Label, IVertex
+    internal class Vertex : Label, IVertex
     {
-        public WinFormsVertex() : base()
+        public Vertex() : base()
         {
             var fontSizeRatio = (VertexParametres.TextToSizeRatio * 0.75f);
             float fontSize = VertexParametres.VertexSize * fontSizeRatio;
@@ -23,7 +23,7 @@ namespace WindowsFormsVersion.Model
             this.Initialize();
         }
 
-        public WinFormsVertex(VertexInfo info) : this()
+        public Vertex(VertexInfo info) : this()
         {
             this.Initialize(info);
         }

@@ -196,7 +196,7 @@
                                     Converter={StaticResource invertPointConverter}}" 
                     Position="600,600,600"/>
             </Viewport3D.Camera>
-            <model:WpfGraphField3D x:Name="GraphField">
+            <model:GraphField3D x:Name="GraphField">
                 <ModelVisual3D.Content>
                     <Model3DGroup>
                         <DirectionalLight Direction="{Binding ElementName=camera, Path=LookDirection}" 
@@ -222,7 +222,7 @@
                         </RotateTransform3D>
                     </Transform3DGroup>
                 </ModelVisual3D.Transform>
-            </model:WpfGraphField3D>
+            </model:GraphField3D>
         </Viewport3D>
         <StatusBar Grid.Row="3">
             <TextBlock Text = "{Binding PathFindingStatistics}"/>

@@ -3,7 +3,7 @@ using GraphLib.Graphs.Abstractions;
 
 namespace GraphLib.GraphFieldCreating
 {
-    public abstract class GraphFieldFactory
+    public abstract class BaseGraphFieldFactory
     {
         protected abstract IGraphField GetField();
 

@@ -19,7 +19,7 @@ namespace ConsoleVersion.View
 
         public void Start()
         {
-            Model.CreateGraph(() => new ConsoleVertex());
+            Model.CreateGraph(() => new Vertex());
         }
     }
 }

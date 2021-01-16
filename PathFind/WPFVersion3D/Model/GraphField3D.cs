@@ -4,12 +4,12 @@ using GraphLib.Vertex.Interface;
 using System.Linq;
 using System.Windows.Media.Media3D;
 using WPFVersion3D.Enums;
-using DistanceBetweenSetCallback = System.Action<double, WPFVersion3D.Model.WpfGraphField3D>;
+using DistanceBetweenSetCallback = System.Action<double, WPFVersion3D.Model.GraphField3D>;
 using OffsetAction = System.Action<System.Windows.Media.Media3D.TranslateTransform3D, double>;
 
 namespace WPFVersion3D.Model
 {
-    internal class WpfGraphField3D : ModelVisual3D, IGraphField
+    internal class GraphField3D : ModelVisual3D, IGraphField
     {
         public double DistanceBetweenVerticesAtXAxis { get; set; }
 
@@ -17,14 +17,14 @@ namespace WPFVersion3D.Model
 
         public double DistanceBetweenVerticesAtZAxis { get; set; }
 
-        public WpfGraphField3D(int width, int length, int height) : this()
+        public GraphField3D(int width, int length, int height) : this()
         {
             Width = width;
             Length = length;
             Height = height;
         }
 
-        public WpfGraphField3D()
+        public GraphField3D()
         {
             DistanceBetweenVerticesAtXAxis = 0;
             DistanceBetweenVerticesAtYAxis = 0;
@@ -33,7 +33,7 @@ namespace WPFVersion3D.Model
 
         public void Add(IVertex vertex)
         {
-            WpfVertex3D vertex3D = vertex as WpfVertex3D;
+            Vertex3D vertex3D = vertex as Vertex3D;
 
             foreach (var axis in Axes)
             {
@@ -46,7 +46,7 @@ namespace WPFVersion3D.Model
         public void CenterGraph(params double[] additionalOffset)
         {
             var axisOffsets = new double[DimensionSizes.Length];
-            foreach (WpfVertex3D vertex in Children)
+            foreach (Vertex3D vertex in Children)
             {
                 for (int i = 0; i < DimensionSizes.Length; i++)
                 {
@@ -78,7 +78,7 @@ namespace WPFVersion3D.Model
 
         private void StretchAlongAxes(params Axis[] axes)
         {
-            foreach (WpfVertex3D vertex in Children)
+            foreach (Vertex3D vertex in Children)
             {
                 foreach (var axis in axes)
                 {
@@ -87,7 +87,7 @@ namespace WPFVersion3D.Model
             }
         }
 
-        private void LocateVertex(Axis axis, WpfVertex3D vertex,
+        private void LocateVertex(Axis axis, Vertex3D vertex,
             params double[] additionalOffset)
         {
             int axisIndex = axis.GetValue<int>();

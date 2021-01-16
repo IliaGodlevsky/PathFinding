@@ -6,7 +6,7 @@ using GraphLib.Graphs.Abstractions;
 
 namespace ConsoleVersion.Model
 {
-    internal class ConsoleGraphFieldFactory : GraphFieldFactory
+    internal class GraphFieldFactory : BaseGraphFieldFactory
     {
         protected override IGraphField GetField()
         {

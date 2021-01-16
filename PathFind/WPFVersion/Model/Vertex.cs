@@ -4,17 +4,13 @@ using GraphLib.Extensions;
 using GraphLib.Info;
 using GraphLib.Vertex.Cost;
 using GraphLib.Vertex.Interface;
-using System;
 using System.Collections.Generic;
-using System.Threading.Tasks;
-using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
-using System.Windows.Media.Animation;
 
 namespace WPFVersion.Model
 {
-    internal class WpfVertex : Label, IVertex
+    internal class Vertex : Label, IVertex
     {
         public static SolidColorBrush VisitedVertexColor { get; set; }
         public static SolidColorBrush PathVertexColor { get; set; }
@@ -22,7 +18,7 @@ namespace WPFVersion.Model
         public static SolidColorBrush EndVertexColor { get; set; }
         public static SolidColorBrush EnqueuedVertexColor { get; set; }
 
-        static WpfVertex()
+        static Vertex()
         {
             VisitedVertexColor = new SolidColorBrush(Colors.CadetBlue);
             PathVertexColor = new SolidColorBrush(Colors.Yellow);
@@ -31,7 +27,7 @@ namespace WPFVersion.Model
             EnqueuedVertexColor = new SolidColorBrush(Colors.Magenta);
         }
 
-        public WpfVertex() : base()
+        public Vertex() : base()
         {
             Dispatcher.Invoke(() =>
             {
@@ -42,7 +38,7 @@ namespace WPFVersion.Model
             this.Initialize();
         }
 
-        public WpfVertex(VertexInfo info) : this()
+        public Vertex(VertexInfo info) : this()
         {
             this.Initialize(info);
         }

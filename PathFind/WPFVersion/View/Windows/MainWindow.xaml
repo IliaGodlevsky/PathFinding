@@ -19,9 +19,9 @@
             <RowDefinition Height="*"></RowDefinition>
             <RowDefinition Height="auto"></RowDefinition>
         </Grid.RowDefinitions>
-        <model:WpfGraphField Margin="3" Grid.Row="2" x:Name="graphField" Width="Auto" Height = "Auto">
+        <model:GraphField Margin="3" Grid.Row="2" x:Name="graphField" Width="Auto" Height = "Auto">
             <ContentPresenter Content="{Binding GraphField}"></ContentPresenter>
-        </model:WpfGraphField>
+        </model:GraphField>
         <ToolBar Grid.Row="0">
             <Button Command="{Binding LoadGraphCommand}">
                 <Image Style ="{StaticResource ImageStyle}" Source="/Resources/Images/open.png"></Image>

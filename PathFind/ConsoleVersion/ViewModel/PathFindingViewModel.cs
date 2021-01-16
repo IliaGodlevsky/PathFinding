@@ -87,7 +87,7 @@ namespace ConsoleVersion.ViewModel
             for (int i = 0; i < chooseMessages.Length; i++)
             {
                 var point = ChoosePoint(chooseMessages[i]);
-                var vertex = mainViewModel.Graph[point] as ConsoleVertex;
+                var vertex = mainViewModel.Graph[point] as Vertex;
                 vertex.SetAsExtremeVertex();
             }
         }

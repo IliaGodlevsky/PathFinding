@@ -9,18 +9,18 @@ using System.Drawing;
 
 namespace ConsoleVersion.Model
 {
-    internal class ConsoleVertex : IVertex
+    internal class Vertex : IVertex
     {
         public event EventHandler OnExtremeVertexChosen;
         public event EventHandler OnCostChanged;
         public event EventHandler OnReverse;
 
-        public ConsoleVertex()
+        public Vertex()
         {
             this.Initialize();
         }
 
-        public ConsoleVertex(VertexInfo info) : this()
+        public Vertex(VertexInfo info) : this()
         {
             this.Initialize(info);
         }

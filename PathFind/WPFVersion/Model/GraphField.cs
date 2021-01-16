@@ -7,13 +7,13 @@ using System.Windows.Controls;
 
 namespace WPFVersion.Model
 {
-    internal class WpfGraphField : Canvas, IGraphField
+    internal class GraphField : Canvas, IGraphField
     {
         public void Add(IVertex vertex)
         {
             if (vertex.Position is Coordinate2D coordinates)
             {
-                var wpfVertex = vertex as WpfVertex;
+                var wpfVertex = vertex as Vertex;
                 Children.Add(wpfVertex);
 
                 SetLeft(wpfVertex, VertexParametres.SizeBetweenVertices * coordinates.X);

@@ -6,7 +6,7 @@ using WindowsFormsVersion.Model;
 
 namespace WindowsFormsVersion.EventHolder
 {
-    internal class WinFormsVertexEventHolder : BaseVertexEventHolder
+    internal class VertexEventHolder : BaseVertexEventHolder
     {
         protected override int GetWheelDelta(EventArgs e)
         {
@@ -26,9 +26,9 @@ namespace WindowsFormsVersion.EventHolder
             if (vertex.IsDefault)
                 return;
 
-            (vertex as WinFormsVertex).MouseClick += ChooseExtremeVertices;
-            (vertex as WinFormsVertex).MouseClick += Reverse;
-            (vertex as WinFormsVertex).MouseWheel += ChangeVertexCost;
+            (vertex as Vertex).MouseClick += ChooseExtremeVertices;
+            (vertex as Vertex).MouseClick += Reverse;
+            (vertex as Vertex).MouseWheel += ChangeVertexCost;
         }
 
         public override void ChooseExtremeVertices(object sender, EventArgs e)

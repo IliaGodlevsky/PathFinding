@@ -19,7 +19,7 @@ namespace ConsoleVersion.View
 
         public ConsoleGraphField()
         {
-            vertices = new List<ConsoleVertex>();
+            vertices = new List<Vertex>();
         }
 
         public void Add(IVertex vertex)
@@ -29,7 +29,7 @@ namespace ConsoleVersion.View
                 throw new ArgumentException("Must be 2D coordinates");
             }
 
-            vertices.Add(vertex as ConsoleVertex);
+            vertices.Add(vertex as Vertex);
         }
 
         public void ShowGraphWithFrames()
@@ -137,7 +137,7 @@ namespace ConsoleVersion.View
             }
         }
 
-        private void ShowVertex(ConsoleVertex vertex)
+        private void ShowVertex(Vertex vertex)
         {
             Console.Write(vertex.Text + BigSpace, vertex.Colour);
         }
@@ -165,7 +165,7 @@ namespace ConsoleVersion.View
             Left
         }
 
-        private readonly List<ConsoleVertex> vertices;
+        private readonly List<Vertex> vertices;
 
         private const string NewLine = "\n";
         private const string Space = " ";

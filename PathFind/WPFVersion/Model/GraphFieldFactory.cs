@@ -3,11 +3,11 @@ using GraphLib.GraphFieldCreating;
 
 namespace WPFVersion.Model
 {
-    internal class WpfGraphFieldFactory : GraphFieldFactory
+    internal class GraphFieldFactory : BaseGraphFieldFactory
     {
         protected override IGraphField GetField()
         {
-            return new WpfGraphField();
+            return new GraphField();
         }
     }
 }

@@ -39,7 +39,7 @@ namespace WPFVersion.ViewModel
 
         private int GetSampleSizeToChange()
         {
-            var randomVertex = Model.Graph.GetRandomElement() as WpfVertex;
+            var randomVertex = Model.Graph.GetRandomElement() as Vertex;
             return Convert.ToInt32(randomVertex.Width);
         }
 
@@ -50,7 +50,7 @@ namespace WPFVersion.ViewModel
 
         private void ChangeSize(IVertex vertex)
         {
-            var temp = vertex as WpfVertex;
+            var temp = vertex as Vertex;
             Application.Current.Dispatcher.Invoke(() =>
             {
                 temp.Width = VerticesSize;
@@ -62,7 +62,7 @@ namespace WPFVersion.ViewModel
         private void CreateNewGraphField()
         {
             (Model.GraphField as Canvas).Children.Clear();
-            var fieldFactory = new WpfGraphFieldFactory();
+            var fieldFactory = new GraphFieldFactory();
             Model.GraphField = fieldFactory.CreateGraphField(Model.Graph);
         }
 

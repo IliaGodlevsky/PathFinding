@@ -17,7 +17,7 @@ namespace WindowsFormsVersion.ViewModel
 
         public void CreateGraph(object sender, EventArgs e)
         {
-            CreateGraph(() => new WinFormsVertex());
+            CreateGraph(() => new Vertex());
             OnWindowClosed?.Invoke(this, new EventArgs());
         }
 

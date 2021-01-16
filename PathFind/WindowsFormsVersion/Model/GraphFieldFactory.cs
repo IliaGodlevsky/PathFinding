@@ -4,7 +4,7 @@ using System.Drawing;
 
 namespace WindowsFormsVersion.Model
 {
-    internal class WinFormsGraphFieldFactory : GraphFieldFactory
+    internal class GraphFieldFactory : GraphLib.GraphFieldCreating.BaseGraphFieldFactory
     {
         protected override IGraphField GetField()
         {

@@ -4,7 +4,7 @@ using System;
 
 namespace WPFVersion3D.Model
 {
-    public class WpfVertex3DEventHolder : BaseVertexEventHolder
+    public class Vertex3DEventHolder : BaseVertexEventHolder
     {
         protected override int GetWheelDelta(EventArgs e)
         {
@@ -13,9 +13,9 @@ namespace WPFVersion3D.Model
 
         protected override void SubscribeToEvents(IVertex vertex)
         {
-            (vertex as WpfVertex3D).MouseLeftButtonDown += ChooseExtremeVertices;
-            (vertex as WpfVertex3D).MouseRightButtonDown += Reverse;
-            (vertex as WpfVertex3D).MouseWheel += ChangeVertexCost;
+            (vertex as Vertex3D).MouseLeftButtonDown += ChooseExtremeVertices;
+            (vertex as Vertex3D).MouseRightButtonDown += Reverse;
+            (vertex as Vertex3D).MouseWheel += ChangeVertexCost;
         }
     }
 }

@@ -61,10 +61,10 @@ namespace WindowsFormsVersion.ViewModel
 
         public MainWindowViewModel() : base()
         {
-            VertexEventHolder = new WinFormsVertexEventHolder();
+            VertexEventHolder = new VertexEventHolder();
             graphField = new WinFormsGraphField();
-            FieldFactory = new WinFormsGraphFieldFactory();
-            InfoConverter = (dto) => new WinFormsVertex(dto);
+            FieldFactory = new GraphFieldFactory();
+            InfoConverter = (dto) => new Vertex(dto);
         }
 
         public override void FindPath()

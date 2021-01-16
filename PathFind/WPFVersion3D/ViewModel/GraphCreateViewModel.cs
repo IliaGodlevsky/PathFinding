@@ -48,10 +48,10 @@ namespace WPFVersion3D.ViewModel
 
         private void ExecuteConfirmCreateGraphCommand(object param)
         {
-            CreateGraph(() => new WpfVertex3D());
+            CreateGraph(() => new Vertex3D());
 
             var mainWindow = Application.Current.MainWindow as MainWindow;
-            var field = model.GraphField as WpfGraphField3D;
+            var field = model.GraphField as GraphField3D;
 
             field.CenterGraph();
 

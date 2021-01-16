@@ -23,7 +23,7 @@ namespace WPFVersion.ViewModel
 
         private void ExecuteConfirmCreateGraphCommand(object param)
         {
-            base.CreateGraph(() => new WpfVertex());
+            base.CreateGraph(() => new Vertex());
 
             CloseWindow();
             WindowService.Adjust(model.Graph);

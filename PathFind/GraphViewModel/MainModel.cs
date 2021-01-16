@@ -28,7 +28,7 @@ namespace GraphViewModel
 
         public IGraphSerializer Serializer { get; set; }
 
-        public GraphFieldFactory FieldFactory { get; set; }
+        public BaseGraphFieldFactory FieldFactory { get; set; }
 
         public Func<VertexInfo, IVertex> InfoConverter { get; set; }
 

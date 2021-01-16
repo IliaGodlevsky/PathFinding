@@ -5,7 +5,7 @@ using System.Windows.Input;
 
 namespace WPFVersion.Model.EventHolder
 {
-    internal class WpfVertexEventHolder : BaseVertexEventHolder
+    internal class VertexEventHolder : BaseVertexEventHolder
     {
         protected override int GetWheelDelta(EventArgs e)
         {
@@ -14,9 +14,9 @@ namespace WPFVersion.Model.EventHolder
 
         protected override void SubscribeToEvents(IVertex vertex)
         {
-            (vertex as WpfVertex).MouseLeftButtonDown += ChooseExtremeVertices;
-            (vertex as WpfVertex).MouseRightButtonDown += Reverse;
-            (vertex as WpfVertex).MouseWheel += ChangeVertexCost;
+            (vertex as Vertex).MouseLeftButtonDown += ChooseExtremeVertices;
+            (vertex as Vertex).MouseRightButtonDown += Reverse;
+            (vertex as Vertex).MouseWheel += ChangeVertexCost;
         }
     }
 }

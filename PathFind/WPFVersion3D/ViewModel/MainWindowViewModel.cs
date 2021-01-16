@@ -48,7 +48,7 @@ namespace WPFVersion3D.ViewModel
             set
             {
                 graphField = value;
-                var field = graphField as WpfGraphField3D;
+                var field = graphField as GraphField3D;
                 var currentWindow = Application.Current.MainWindow as MainWindow;
                 currentWindow?.GraphField?.Children.Clear();
                 currentWindow?.GraphField?.Children.Add(field);
@@ -69,10 +69,10 @@ namespace WPFVersion3D.ViewModel
 
         public MainWindowViewModel()
         {
-            GraphField = new WpfGraphField3D();
-            VertexEventHolder = new WpfVertex3DEventHolder();
-            FieldFactory = new WpfGraphField3DFactory();
-            InfoConverter = (info) => new WpfVertex3D(info);
+            GraphField = new GraphField3D();
+            VertexEventHolder = new Vertex3DEventHolder();
+            FieldFactory = new GraphField3DFactory();
+            InfoConverter = (info) => new Vertex3D(info);
 
             StartPathFindCommand = new RelayCommand(ExecuteStartPathFindCommand, CanExecuteStartFindPathCommand);
             CreateNewGraphCommand = new RelayCommand(ExecuteCreateNewGraphCommand);
@@ -107,17 +107,17 @@ namespace WPFVersion3D.ViewModel
 
         public void XAxisSliderValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
         {
-            (graphField as WpfGraphField3D).StretchAlongAxis(Axis.Abscissa, e.NewValue, 1, 0, 0);
+            (graphField as GraphField3D).StretchAlongAxis(Axis.Abscissa, e.NewValue, 1, 0, 0);
         }
 
         public void YAxisSliderValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
         {
-            (graphField as WpfGraphField3D).StretchAlongAxis(Axis.Ordinate, e.NewValue, 0, 1, 0);
+            (graphField as GraphField3D).StretchAlongAxis(Axis.Ordinate, e.NewValue, 0, 1, 0);
         }
 
         public void ZAxisSliderValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
         {
-            (graphField as WpfGraphField3D).StretchAlongAxis(Axis.Applicate, e.NewValue, 0, 0, 1);
+            (graphField as GraphField3D).StretchAlongAxis(Axis.Applicate, e.NewValue, 0, 0, 1);
         }
 
         private void ChangeVerticesOpacity()

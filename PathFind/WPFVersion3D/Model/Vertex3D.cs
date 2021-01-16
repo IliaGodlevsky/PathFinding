@@ -14,9 +14,9 @@ using WPFVersion3D.Factories;
 
 namespace WPFVersion3D.Model
 {
-    public class WpfVertex3D : UIElement3D, IVertex
+    public class Vertex3D : UIElement3D, IVertex
     {
-        public WpfVertex3D()
+        public Vertex3D()
         {
             Dispatcher.Invoke(() =>
             {
@@ -28,7 +28,7 @@ namespace WPFVersion3D.Model
             this.Initialize();
         }
 
-        public WpfVertex3D(VertexInfo info) : this()
+        public Vertex3D(VertexInfo info) : this()
         {
             this.Initialize(info);
         }
@@ -41,7 +41,7 @@ namespace WPFVersion3D.Model
         public static SolidColorBrush EndVertexBrush { get; set; }
         public static SolidColorBrush EnqueuedVertexBrush { get; set; }
 
-        static WpfVertex3D()
+        static Vertex3D()
         {
 
             VisitedVertexBrush = new SolidColorBrush(Colors.CadetBlue) { Opacity = 0.15 };
@@ -55,25 +55,25 @@ namespace WPFVersion3D.Model
             ModelProperty = DependencyProperty.Register(
                 nameof(Model),
                 typeof(Model3D),
-                typeof(WpfVertex3D),
+                typeof(Vertex3D),
                 new PropertyMetadata(ModelPropertyChanged));
 
             MaterialProperty = DependencyProperty.Register(
                 nameof(Material),
                 typeof(Material),
-                typeof(WpfVertex3D),
+                typeof(Vertex3D),
                 new PropertyMetadata(VisualPropertyChanged));
 
             SizeProperty = DependencyProperty.Register(
                 nameof(Size),
                 typeof(double),
-                typeof(WpfVertex3D),
+                typeof(Vertex3D),
                 new UIPropertyMetadata(VisualPropertyChanged));
 
             BrushProperty = DependencyProperty.Register(
                 nameof(Brush),
                 typeof(Brush),
-                typeof(WpfVertex3D),
+                typeof(Vertex3D),
                 new PropertyMetadata(BrushPropertyChanged));
         }
 
@@ -190,7 +190,7 @@ namespace WPFVersion3D.Model
         protected static void ModelPropertyChanged(DependencyObject depObj,
             DependencyPropertyChangedEventArgs prop)
         {
-            WpfVertex3D vert = (WpfVertex3D)depObj;
+            Vertex3D vert = (Vertex3D)depObj;
             vert.Visual3DModel = vert.Model;
         }
 

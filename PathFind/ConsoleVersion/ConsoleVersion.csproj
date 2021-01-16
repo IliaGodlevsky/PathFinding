@@ -32,7 +32,7 @@
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <LangVersion>7.1</LangVersion>
+    <LangVersion>7.3</LangVersion>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Colorful.Console, Version=1.2.11.0, Culture=neutral, processorArchitecture=MSIL">
@@ -52,7 +52,7 @@
   <ItemGroup>
     <Compile Include="Attributes\MenuItemAttribute.cs" />
     <Compile Include="Enums\MenuItemPriority.cs" />
-    <Compile Include="Model\ConsoleGraphFieldFactory.cs" />
+    <Compile Include="Model\GraphFieldFactory.cs" />
     <Compile Include="ViewModel\GraphCreatingViewModel.cs" />
     <Compile Include="ViewModel\MainViewModel.cs" />
     <Compile Include="View\Menu.cs" />
@@ -67,8 +67,8 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>ConsoleVersionResources.resx</DependentUpon>
     </Compile>
-    <Compile Include="Model\ConsoleVertexEventHolder.cs" />
-    <Compile Include="Model\ConsoleVertex.cs" />
+    <Compile Include="Model\VertexEventHolder.cs" />
+    <Compile Include="Model\Vertex.cs" />
     <Compile Include="View\Interface\IView.cs" />
     <Compile Include="View\MainView.cs" />
     <Compile Include="View\PathFindView.cs" />
