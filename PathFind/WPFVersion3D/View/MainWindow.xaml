@@ -5,13 +5,22 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
         xmlns:converters="clr-namespace:WPFVersion3D.Converters" 
         xmlns:model="clr-namespace:WPFVersion3D.Model"
+        xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
+        xmlns:axis="clr-namespace:WPFVersion3D.Enums"
+        xmlns:sys="clr-namespace:System;assembly=mscorlib" xmlns:viewmodel="clr-namespace:WPFVersion3D.ViewModel"
         mc:Ignorable="d"
         Title="3D pathfinding" Height="350" Width="450">
+    <Window.DataContext>
+        <viewmodel:MainWindowViewModel></viewmodel:MainWindowViewModel>
+    </Window.DataContext>
+    
     <Window.Resources>
         <converters:InvertPointConverter x:Key="invertPointConverter"/>
         <converters:NummberToPointConverter x:Key="coordinateToDistance"/>
         <converters:StringToDoubleConverter x:Key="stringToDoubleConverter"/>
-        <converters:RotateDirectionConverter x:Key="directionConverter"></converters:RotateDirectionConverter>
+        <converters:AnimatedAxisRotatorConverter x:Key="animatedAxisRotatorConverter"/>
+        <converters:GraphStretchValueConverter x:Key="stretchValueConverter"/>
+        <converters:DoubleToStringConverter x:Key="doubleToStringConverter"/>
 
         <Style TargetType="TextBox" x:Key="TextBoxStyle">
             <Setter Property="MinWidth" Value="40"></Setter>
@@ -36,7 +45,7 @@
         </Grid.ColumnDefinitions>
         <Expander Grid.Column="1" Grid.RowSpan="4">
             <Grid>
-                
+
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition></ColumnDefinition>
                     <ColumnDefinition></ColumnDefinition>
@@ -55,21 +64,24 @@
                     <RowDefinition Height="auto"></RowDefinition>
                 </Grid.RowDefinitions>
 
-                <ToggleButton Command="{Binding AutoRotateXAxisCommand}"
+                <ToggleButton Command="{Binding AnimatedAxisRotateCommand}"
                               CommandParameter="{Binding IsChecked, RelativeSource = {RelativeSource Self},
-                              Converter={StaticResource directionConverter}}" 
+                              Converter={StaticResource animatedAxisRotatorConverter}, 
+                              ConverterParameter= {x:Reference Name=xAxis}}" 
                               Margin="5" Grid.Column="3" Grid.Row="1"
                               Template ="{StaticResource RotationToggleButtonTemplate}"/>
 
-                <ToggleButton Command="{Binding AutoRotateYAxisCommand}"
+                <ToggleButton Command="{Binding AnimatedAxisRotateCommand}"
                               CommandParameter="{Binding IsChecked, RelativeSource = {RelativeSource Self},
-                              Converter={StaticResource directionConverter}}" 
+                              Converter={StaticResource animatedAxisRotatorConverter}, 
+                              ConverterParameter= {x:Reference Name=yAxis}}" 
                               Margin="5" Grid.Column="3" Grid.Row="2"
                               Template ="{StaticResource RotationToggleButtonTemplate}"/>
 
-                <ToggleButton Command="{Binding AutoRotateZAxisCommand}"
+                <ToggleButton Command="{Binding AnimatedAxisRotateCommand}"
                               CommandParameter="{Binding IsChecked, RelativeSource = {RelativeSource Self},
-                              Converter={StaticResource directionConverter}}" 
+                              Converter={StaticResource animatedAxisRotatorConverter},
+                              ConverterParameter= {x:Reference Name=zAxis}}" 
                               Margin="5" Grid.Column="3" Grid.Row="3"
                               Template ="{StaticResource RotationToggleButtonTemplate}"/>
 
@@ -79,14 +91,14 @@
                 <TextBlock Grid.Row="3" Margin="5" Text="Z axis rotate"/>
                 <TextBlock Grid.ColumnSpan="3" HorizontalAlignment="Center" 
                            Grid.Row="4" Margin="5" Text="Distance between vertices"/>
-                
+
                 <TextBox Style="{StaticResource TextBoxStyle}" Grid.Column="2" Grid.Row="0" 
                          Text="{Binding ElementName=zoomSlider, 
                                 Path=Value, 
                                 Converter={StaticResource stringToDoubleConverter}, 
                                 Mode=TwoWay,
                                 UpdateSourceTrigger=PropertyChanged}"/>
-                
+
                 <TextBlock Grid.Row="5" Margin="5" Text="X axis"/>
                 <TextBlock Grid.Row="6" Margin="5" Text="Y axis"/>
                 <TextBlock Grid.Row="7" Margin="5" Text="Z axis"/>
@@ -108,27 +120,6 @@
                 <TextBox Style="{StaticResource TextBoxStyle}" Grid.Column="2" Grid.Row="3" 
                          Text="{Binding ElementName=zAxisSlider, 
                                 Path=Value, 
-                                Converter={StaticResource stringToDoubleConverter}, 
-                                Mode=TwoWay,
-                                UpdateSourceTrigger=PropertyChanged}"/>
-
-                <TextBox Style="{StaticResource TextBoxStyle}" Grid.Column="2" Grid.Row="5"
-                         Text="{Binding ElementName=distanceBetweenAtXAxisSlider, 
-                                Path=Value,
-                                Converter={StaticResource stringToDoubleConverter}, 
-                                Mode=TwoWay,
-                                UpdateSourceTrigger=PropertyChanged}"/>
-
-                <TextBox Style="{StaticResource TextBoxStyle}" Grid.Column="2" Grid.Row="6"
-                         Text="{Binding ElementName=distanceBetweenAtYAxisSlider, 
-                                Path=Value,
-                                Converter={StaticResource stringToDoubleConverter}, 
-                                Mode=TwoWay,
-                                UpdateSourceTrigger=PropertyChanged}"/>
-
-                <TextBox Style="{StaticResource TextBoxStyle}" Grid.Column="2" Grid.Row="7"
-                         Text="{Binding ElementName=distanceBetweenAtZAxisSlider, 
-                                Path=Value,
                                 Converter={StaticResource stringToDoubleConverter}, 
                                 Mode=TwoWay,
                                 UpdateSourceTrigger=PropertyChanged}"/>
@@ -157,14 +148,105 @@
                         Grid.Row="3" 
                         Value="{Binding ElementName=zAxis, Path=Angle}"/>
 
-                <Slider x:Name="distanceBetweenAtXAxisSlider" Grid.Column="1" 
-                        Style="{StaticResource SliderStyle}" Maximum="60" Grid.Row="5"/>
+                <TextBox x:Name="xAxisTb" Style="{StaticResource TextBoxStyle}" Grid.Column="2" Grid.Row="5"/>
 
-                <Slider x:Name="distanceBetweenAtYAxisSlider" Grid.Column="1" 
-                        Style="{StaticResource SliderStyle}" Maximum="60" Grid.Row="6"/>
+                <TextBox x:Name="yAxisTb" Style="{StaticResource TextBoxStyle}" Grid.Column="2" Grid.Row="6"/>
 
-                <Slider x:Name="distanceBetweenAtZAxisSlider" Grid.Column="1" 
-                        Style="{StaticResource SliderStyle}" Maximum="60" Grid.Row="7"/>
+                <TextBox x:Name="zAxisTb" Style="{StaticResource TextBoxStyle}" Grid.Column="2" Grid.Row="7"/>
+                
+                <Slider x:Name="xAxisStretchAlongSlider" Value="{Binding ElementName=xAxisTb, 
+                                Path=Text, 
+                                NotifyOnSourceUpdated=True,
+                                Mode=TwoWay, 
+                                UpdateSourceTrigger=PropertyChanged, 
+                                Converter={StaticResource doubleToStringConverter}}" Grid.Column="1" 
+                        Style="{StaticResource SliderStyle}" Maximum="60" Grid.Row="5">
+                    <i:Interaction.Triggers>
+                        <i:EventTrigger EventName="SourceUpdated">
+                            <i:InvokeCommandAction Command="{Binding StretchGraphAlongAxisCommand}">
+                                <i:InvokeCommandAction.CommandParameter>
+                                    <MultiBinding Converter="{StaticResource stretchValueConverter}">
+                                        <Binding Source="{x:Static axis:Axis.Abscissa}" Mode="OneWay"></Binding>
+                                        <Binding RelativeSource="{RelativeSource FindAncestor, AncestorType=Slider }" 
+                                                 Path="Value" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged"></Binding>
+                                        <Binding>
+                                            <Binding.Source>
+                                                <x:Array Type="{x:Type sys:Double}">
+                                                    <sys:Double>1</sys:Double>
+                                                    <sys:Double>0</sys:Double>
+                                                    <sys:Double>0</sys:Double>
+                                                </x:Array>
+                                            </Binding.Source>
+                                        </Binding>
+                                    </MultiBinding>
+                                </i:InvokeCommandAction.CommandParameter>
+                            </i:InvokeCommandAction>
+                        </i:EventTrigger>
+                    </i:Interaction.Triggers>
+                </Slider>
+
+                <Slider Value="{Binding ElementName=yAxisTb, 
+                                Path=Text, 
+                                NotifyOnSourceUpdated=True,
+                                Mode=TwoWay, 
+                                UpdateSourceTrigger=PropertyChanged, 
+                                Converter={StaticResource doubleToStringConverter}}" Grid.Column="1" 
+                        Style="{StaticResource SliderStyle}" Maximum="60" Grid.Row="6">
+                    <i:Interaction.Triggers>
+                        <i:EventTrigger EventName="SourceUpdated">
+                            <i:InvokeCommandAction Command="{Binding StretchGraphAlongAxisCommand}">
+                                <i:InvokeCommandAction.CommandParameter>
+                                    <MultiBinding Converter="{StaticResource stretchValueConverter}">
+                                        <Binding Source="{x:Static axis:Axis.Ordinate}" Mode="OneWay"></Binding>
+                                        <Binding RelativeSource="{RelativeSource FindAncestor, AncestorType=Slider }" 
+                                                 Path="Value" NotifyOnSourceUpdated="True" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged"></Binding>
+                                        <Binding>
+                                            <Binding.Source>
+                                                <x:Array Type="{x:Type sys:Double}">
+                                                    <sys:Double>0</sys:Double>
+                                                    <sys:Double>1</sys:Double>
+                                                    <sys:Double>0</sys:Double>
+                                                </x:Array>
+                                            </Binding.Source>
+                                        </Binding>
+                                    </MultiBinding>
+                                </i:InvokeCommandAction.CommandParameter>
+                            </i:InvokeCommandAction>
+                        </i:EventTrigger>
+                    </i:Interaction.Triggers>
+                </Slider>
+
+                <Slider Value="{Binding ElementName=zAxisTb, 
+                                Path=Text, 
+                                NotifyOnSourceUpdated=True,
+                                Mode=TwoWay, 
+                                UpdateSourceTrigger=PropertyChanged, 
+                                Converter={StaticResource doubleToStringConverter}}" Grid.Column="1" 
+                        Style="{StaticResource SliderStyle}"
+                        Maximum="60" Grid.Row="7">
+                    <i:Interaction.Triggers>
+                        <i:EventTrigger EventName="SourceUpdated">
+                            <i:InvokeCommandAction Command="{Binding StretchGraphAlongAxisCommand}">
+                                <i:InvokeCommandAction.CommandParameter>
+                                    <MultiBinding Converter="{StaticResource stretchValueConverter}">
+                                        <Binding Source="{x:Static axis:Axis.Applicate}" Mode="OneWay"></Binding>
+                                        <Binding RelativeSource="{RelativeSource FindAncestor, AncestorType=Slider }" 
+                                                 Path="Value" NotifyOnSourceUpdated="True" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged"></Binding>
+                                        <Binding>
+                                            <Binding.Source>
+                                                <x:Array Type="{x:Type sys:Double}">
+                                                    <sys:Double>0</sys:Double>
+                                                    <sys:Double>0</sys:Double>
+                                                    <sys:Double>1</sys:Double>
+                                                </x:Array>
+                                            </Binding.Source>
+                                        </Binding>
+                                    </MultiBinding>
+                                </i:InvokeCommandAction.CommandParameter>
+                            </i:InvokeCommandAction>
+                        </i:EventTrigger>
+                    </i:Interaction.Triggers>
+                </Slider>
 
             </Grid>
         </Expander>

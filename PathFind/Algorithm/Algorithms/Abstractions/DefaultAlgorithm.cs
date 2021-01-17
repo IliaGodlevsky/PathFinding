@@ -1,4 +1,6 @@
 ﻿using Algorithm.Attributes;
+using Algorithm.EventArguments;
+using Algorithm.Handlers;
 using GraphLib.Graphs;
 using GraphLib.Graphs.Abstractions;
 using GraphLib.Vertex;
@@ -10,10 +12,10 @@ namespace Algorithm.Algorithms.Abstractions
     [Filterable]
     public sealed class DefaultAlgorithm : IAlgorithm
     {
-        public event Action OnStarted;
-        public event Action<IVertex> OnVertexVisited;
-        public event Action OnFinished;
-        public event Action<IVertex> OnVertexEnqueued;
+        public event AlgorithmEventHandler OnStarted;
+        public event AlgorithmEventHandler OnVertexVisited;
+        public event AlgorithmEventHandler OnFinished;
+        public event AlgorithmEventHandler OnVertexEnqueued;
 
         public IGraph Graph
         {
@@ -35,10 +37,10 @@ namespace Algorithm.Algorithms.Abstractions
 
         public void FindPath()
         {
-            OnStarted?.Invoke();
-            OnVertexVisited?.Invoke(new DefaultVertex());
-            OnVertexEnqueued?.Invoke(new DefaultVertex());
-            OnFinished?.Invoke();
+            OnStarted?.Invoke(this, new AlgorithmEventArgs());
+            OnVertexVisited?.Invoke(this, new AlgorithmEventArgs());
+            OnVertexEnqueued?.Invoke(this, new AlgorithmEventArgs());
+            OnFinished?.Invoke(this, new AlgorithmEventArgs());
         }
     }
 }

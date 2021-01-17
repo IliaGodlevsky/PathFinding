@@ -26,9 +26,9 @@ namespace WPFVersion3D.Model
 
         public GraphField3D()
         {
-            DistanceBetweenVerticesAtXAxis = 0;
-            DistanceBetweenVerticesAtYAxis = 0;
-            DistanceBetweenVerticesAtZAxis = 0;
+            DistanceBetweenVerticesAtXAxis = 2;
+            DistanceBetweenVerticesAtYAxis = 2;
+            DistanceBetweenVerticesAtZAxis = 2;
         }
 
         public void Add(IVertex vertex)

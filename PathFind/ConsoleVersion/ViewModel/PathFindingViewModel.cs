@@ -29,7 +29,7 @@ namespace ConsoleVersion.ViewModel
 
         public override void FindPath()
         {
-            if (graph.Any())
+            if (mainViewModel.Graph.Any())
             {
                 var mainModel = mainViewModel as MainViewModel;
 
@@ -51,21 +51,21 @@ namespace ConsoleVersion.ViewModel
             }
         }
 
-        protected override void OnAlgorithmStarted()
+        protected override void OnAlgorithmStarted(object sender, EventArgs e)
         {
             IsPathfindingEnded = false;
-            base.OnAlgorithmStarted();
+            base.OnAlgorithmStarted(sender, e);
 
             thread = new Thread(DisplayGraphDuringPathfinding);
             thread.Start();
         }
 
-        protected override void OnAlgorithmFinished()
+        protected override void OnAlgorithmFinished(object sender, EventArgs e)
         {
             IsPathfindingEnded = true;
             thread.Join();
 
-            base.OnAlgorithmFinished();
+            base.OnAlgorithmFinished(sender, e);
         }
 
         private int GetAlgorithmKeyIndex()
@@ -96,12 +96,12 @@ namespace ConsoleVersion.ViewModel
         {
             Console.WriteLine(message);
 
-            var upperPosibleXValue = (graph as Graph2D).Width - 1;
-            var upperPosibleYValue = (graph as Graph2D).Length - 1;
+            var upperPosibleXValue = (mainViewModel.Graph as Graph2D).Width - 1;
+            var upperPosibleYValue = (mainViewModel.Graph as Graph2D).Length - 1;
 
             var point = Input.InputPoint(upperPosibleXValue, upperPosibleYValue);
 
-            while (!graph[point].IsValidToBeExtreme())
+            while (!mainViewModel.Graph[point].IsValidToBeExtreme())
             {
                 point = Input.InputPoint(upperPosibleXValue, upperPosibleYValue);
             }

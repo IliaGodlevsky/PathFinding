@@ -1,10 +1,9 @@
 ﻿using Algorithm.AlgorithmCreating;
+using Algorithm.EventArguments;
 using Common.Extensions;
 using GraphLib.Extensions;
-using GraphLib.Graphs.Abstractions;
 using GraphLib.Graphs.Infrastructure;
 using GraphLib.PauseMaking;
-using GraphLib.Vertex.Interface;
 using GraphViewModel.Interfaces;
 using GraphViewModel.Resources;
 using System;
@@ -24,14 +23,13 @@ namespace GraphLib.ViewModel
         {
             pauseProvider = new PauseProvider();
             this.mainViewModel = mainViewModel;
-            graph = mainViewModel.Graph;
             DelayTime = 4;
         }
 
         public virtual void FindPath()
         {
             var algorithm = AlgorithmFactory.
-                CreateAlgorithm(AlgorithmKey, graph);
+                CreateAlgorithm(AlgorithmKey, mainViewModel.Graph);
 
             algorithm.OnVertexEnqueued += OnVertexEnqueued;
             algorithm.OnVertexVisited += OnVertexVisited;
@@ -46,48 +44,57 @@ namespace GraphLib.ViewModel
             algorithm.OnStarted -= OnAlgorithmStarted;
         }
 
-        protected virtual void OnVertexVisited(IVertex vertex)
+        protected virtual void OnVertexVisited(object sender, EventArgs e)
         {
-            if (vertex.IsSimpleVertex())
+            if (e is AlgorithmEventArgs args)
             {
-                vertex.MarkAsVisited();
-            }
+                if (args.Vertex.IsSimpleVertex())
+                {
+                    args.Vertex.MarkAsVisited();
+                }
 
-            mainViewModel.PathFindingStatistics = GetIntermediateStatistics(timer,
-                steps: 0, pathLength: 0, graph.NumberOfVisitedVertices);
+                mainViewModel.PathFindingStatistics = GetIntermediateStatistics(timer,
+                    steps: 0, pathLength: 0, args.Graph.NumberOfVisitedVertices);
 
-            pauseProvider.Pause(DelayTime);
-        }
-
-        protected virtual void OnVertexEnqueued(IVertex vertex)
-        {
-            if (vertex.IsSimpleVertex())
-            {
-                vertex.MarkAsEnqueued();
+                pauseProvider.Pause(DelayTime);
             }
         }
 
-        protected virtual void OnAlgorithmFinished()
+        protected virtual void OnVertexEnqueued(object sender, EventArgs e)
         {
-            timer.Stop();
-
-            var path = new GraphPath(graph);
-
-
-            mainViewModel.PathFindingStatistics = GetIntermediateStatistics(timer,
-                path.PathLength, path.PathCost, graph.NumberOfVisitedVertices);
-
-            if (path.IsExtracted)
+            if (e is AlgorithmEventArgs args)
             {
-                path.HighlightPath();
-            }
-            else
-            {
-                OnPathNotFound?.Invoke("Couln't find path");
+                if (args.Vertex.IsSimpleVertex())
+                {
+                    args.Vertex.MarkAsEnqueued();
+                }
             }
         }
 
-        protected virtual void OnAlgorithmStarted()
+        protected virtual void OnAlgorithmFinished(object sender, EventArgs e)
+        {
+            if (e is AlgorithmEventArgs args)
+            {
+                timer.Stop();
+
+                var path = new GraphPath(args.Graph);
+
+
+                mainViewModel.PathFindingStatistics = GetIntermediateStatistics(timer,
+                    path.PathLength, path.PathCost, args.Graph.NumberOfVisitedVertices);
+
+                if (path.IsExtracted)
+                {
+                    path.HighlightPath();
+                }
+                else
+                {
+                    OnPathNotFound?.Invoke("Couln't find path");
+                }
+            }
+        }
+
+        protected virtual void OnAlgorithmStarted(object sender, EventArgs e)
         {
             timer = new Stopwatch();
             timer.Start();
@@ -106,7 +113,6 @@ namespace GraphLib.ViewModel
 
         protected PauseProvider pauseProvider;
         protected IMainModel mainViewModel;
-        protected IGraph graph;
 
         private Stopwatch timer;
     }

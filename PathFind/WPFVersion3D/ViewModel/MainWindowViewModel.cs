@@ -5,6 +5,7 @@ using GraphLib.Graphs;
 using GraphLib.Graphs.Serialization;
 using GraphViewModel;
 using Microsoft.Win32;
+using System;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using System.Windows;
@@ -63,9 +64,8 @@ namespace WPFVersion3D.ViewModel
         public ICommand SaveGraphCommand { get; }
         public ICommand LoadGraphCommand { get; }
         public ICommand ChangeOpacityCommand { get; }
-        public ICommand AutoRotateXAxisCommand { get; }
-        public ICommand AutoRotateYAxisCommand { get; }
-        public ICommand AutoRotateZAxisCommand { get; }
+        public ICommand AnimatedAxisRotateCommand { get; }
+        public ICommand StretchGraphAlongAxisCommand { get; }
 
         public MainWindowViewModel()
         {
@@ -80,15 +80,12 @@ namespace WPFVersion3D.ViewModel
             SaveGraphCommand = new RelayCommand(ExecuteSaveGraphCommand, CanExecuteGraphOperation);
             LoadGraphCommand = new RelayCommand(ExecuteLoadGraphCommand);
             ChangeOpacityCommand = new RelayCommand(ExecuteChangeOpacity, CanExecuteGraphOperation);
-            AutoRotateXAxisCommand = new RelayCommand(ExecuteRotationAroundXAxisCommand);
-            AutoRotateYAxisCommand = new RelayCommand(ExecuteRotationAroundYAxisCommand);
-            AutoRotateZAxisCommand = new RelayCommand(ExecuteRotationAroundZAxisCommand);
+            AnimatedAxisRotateCommand = new RelayCommand(ExecuteAnimatedAxisRotateCommand);
+            StretchGraphAlongAxisCommand = new RelayCommand(ExecuteStretchGraphAlongAxisCommand);
 
             Serializer = new GraphSerializer<Graph3D>();
 
             graphParamFormat = Resource.GraphParamFormat;
-
-            MainWindow = Application.Current.MainWindow as MainWindow;
         }
 
         public override void FindPath()
@@ -103,21 +100,6 @@ namespace WPFVersion3D.ViewModel
         public override void CreateNewGraph()
         {
             PrepareWindow(new GraphCreatingViewModel(this), new GraphCreateWindow());
-        }
-
-        public void XAxisSliderValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
-        {
-            (graphField as GraphField3D).StretchAlongAxis(Axis.Abscissa, e.NewValue, 1, 0, 0);
-        }
-
-        public void YAxisSliderValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
-        {
-            (graphField as GraphField3D).StretchAlongAxis(Axis.Ordinate, e.NewValue, 0, 1, 0);
-        }
-
-        public void ZAxisSliderValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
-        {
-            (graphField as GraphField3D).StretchAlongAxis(Axis.Applicate, e.NewValue, 0, 0, 1);
         }
 
         private void ChangeVerticesOpacity()
@@ -144,8 +126,6 @@ namespace WPFVersion3D.ViewModel
         {
             return GetPath(new OpenFileDialog());
         }
-
-        private MainWindow MainWindow { get; set; }
 
         private void ExecuteSaveGraphCommand(object param)
         {
@@ -197,19 +177,16 @@ namespace WPFVersion3D.ViewModel
                 : string.Empty;
         }
 
-        private void ExecuteRotationAroundXAxisCommand(object direction)
-        {           
-            new AnimatedAxisRotator(MainWindow.xAxis, (RotationDirection)direction).ApplyAnimation();
-        }
-
-        private void ExecuteRotationAroundYAxisCommand(object direction)
+        private void ExecuteAnimatedAxisRotateCommand(object param)
         {
-            new AnimatedAxisRotator(MainWindow.yAxis, (RotationDirection)direction).ApplyAnimation();
+            var rotator = (AnimatedAxisRotator)param;
+            rotator.ApplyAnimation();
         }
 
-        private void ExecuteRotationAroundZAxisCommand(object direction)
-        {           
-            new AnimatedAxisRotator(MainWindow.zAxis, (RotationDirection)direction).ApplyAnimation();
+        private void ExecuteStretchGraphAlongAxisCommand(object param)
+        {
+            var parametres = (Tuple<Axis, double, double[]>)param;
+            (graphField as GraphField3D).StretchAlongAxis(parametres.Item1, parametres.Item2, parametres.Item3);
         }
 
         private void OnPathNotFound(string message)

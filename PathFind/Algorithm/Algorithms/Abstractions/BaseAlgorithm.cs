@@ -1,15 +1,16 @@
-﻿using GraphLib.Graphs.Abstractions;
+﻿using Algorithm.EventArguments;
+using Algorithm.Handlers;
+using GraphLib.Graphs.Abstractions;
 using GraphLib.Vertex.Interface;
-using System;
 
 namespace Algorithm.Algorithms.Abstractions
 {
     public abstract class BaseAlgorithm : IAlgorithm
     {
-        public event Action OnStarted;
-        public event Action<IVertex> OnVertexVisited;
-        public event Action OnFinished;
-        public event Action<IVertex> OnVertexEnqueued;
+        public event AlgorithmEventHandler OnStarted;
+        public event AlgorithmEventHandler OnVertexVisited;
+        public event AlgorithmEventHandler OnFinished;
+        public event AlgorithmEventHandler OnVertexEnqueued;
 
         public IGraph Graph { get; protected set; }
 
@@ -30,22 +31,22 @@ namespace Algorithm.Algorithms.Abstractions
 
         protected void RaiseOnAlgorithmStartedEvent()
         {
-            OnStarted?.Invoke();
+            OnStarted?.Invoke(this, new AlgorithmEventArgs(Graph));
         }
 
         protected void RaiseOnAlgorithmFinishedEvent()
         {
-            OnFinished?.Invoke();
+            OnFinished?.Invoke(this, new AlgorithmEventArgs(Graph));
         }
 
         protected void RaiseOnVertexVisitedEvent()
         {
-            OnVertexVisited?.Invoke(CurrentVertex);
+            OnVertexVisited?.Invoke(this, new AlgorithmEventArgs(Graph, CurrentVertex));
         }
 
         protected void RaiseOnVertexEnqueuedEvent(IVertex vertex)
         {
-            OnVertexEnqueued?.Invoke(vertex);
+            OnVertexEnqueued?.Invoke(this, new AlgorithmEventArgs(Graph, vertex));
         }
 
         protected virtual void PrepareForPathfinding()
