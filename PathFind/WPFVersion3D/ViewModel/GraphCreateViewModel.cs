@@ -50,13 +50,9 @@ namespace WPFVersion3D.ViewModel
         {
             CreateGraph(() => new Vertex3D());
 
-            var mainWindow = Application.Current.MainWindow as MainWindow;
             var field = model.GraphField as GraphField3D;
 
             field.CenterGraph();
-
-            mainWindow.GraphField.Children.Clear();
-            mainWindow.GraphField.Children.Add(field);
 
             CloseWindow();
         }

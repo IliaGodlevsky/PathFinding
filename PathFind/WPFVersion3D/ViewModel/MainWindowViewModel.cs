@@ -5,7 +5,6 @@ using GraphLib.Graphs;
 using GraphLib.Graphs.Serialization;
 using GraphViewModel;
 using Microsoft.Win32;
-using System;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using System.Windows;
@@ -13,9 +12,9 @@ using System.Windows.Input;
 using WPFVersion3D.Enums;
 using WPFVersion3D.Infrastructure;
 using WPFVersion3D.Model;
+using WPFVersion3D.Model.Interface;
 using WPFVersion3D.Resources;
 using WPFVersion3D.View;
-
 
 namespace WPFVersion3D.ViewModel
 {
@@ -53,8 +52,6 @@ namespace WPFVersion3D.ViewModel
                 var currentWindow = Application.Current.MainWindow as MainWindow;
                 currentWindow?.GraphField?.Children.Clear();
                 currentWindow?.GraphField?.Children.Add(field);
-                field.CenterGraph();
-                OnPropertyChanged();
             }
         }
 
@@ -65,7 +62,6 @@ namespace WPFVersion3D.ViewModel
         public ICommand LoadGraphCommand { get; }
         public ICommand ChangeOpacityCommand { get; }
         public ICommand AnimatedAxisRotateCommand { get; }
-        public ICommand StretchGraphAlongAxisCommand { get; }
 
         public MainWindowViewModel()
         {
@@ -81,7 +77,6 @@ namespace WPFVersion3D.ViewModel
             LoadGraphCommand = new RelayCommand(ExecuteLoadGraphCommand);
             ChangeOpacityCommand = new RelayCommand(ExecuteChangeOpacity, CanExecuteGraphOperation);
             AnimatedAxisRotateCommand = new RelayCommand(ExecuteAnimatedAxisRotateCommand);
-            StretchGraphAlongAxisCommand = new RelayCommand(ExecuteStretchGraphAlongAxisCommand);
 
             Serializer = new GraphSerializer<Graph3D>();
 
@@ -100,6 +95,21 @@ namespace WPFVersion3D.ViewModel
         public override void CreateNewGraph()
         {
             PrepareWindow(new GraphCreatingViewModel(this), new GraphCreateWindow());
+        }
+
+        public void StretchAlongXAxis(object sender, RoutedPropertyChangedEventArgs<double>e)
+        {
+            (graphField as GraphField3D).StretchAlongAxis(Axis.Abscissa, e.NewValue, 1, 0, 0);
+        }
+
+        public void StretchAlongYAxis(object sender, RoutedPropertyChangedEventArgs<double> e)
+        {
+            (graphField as GraphField3D).StretchAlongAxis(Axis.Ordinate, e.NewValue, 0, 1, 0);
+        }
+
+        public void StretchAlongZAxis(object sender, RoutedPropertyChangedEventArgs<double> e)
+        {
+            (graphField as GraphField3D).StretchAlongAxis(Axis.Applicate, e.NewValue, 0, 0, 1);
         }
 
         private void ChangeVerticesOpacity()
@@ -179,14 +189,8 @@ namespace WPFVersion3D.ViewModel
 
         private void ExecuteAnimatedAxisRotateCommand(object param)
         {
-            var rotator = (AnimatedAxisRotator)param;
+            var rotator = (IAnimator)param;
             rotator.ApplyAnimation();
-        }
-
-        private void ExecuteStretchGraphAlongAxisCommand(object param)
-        {
-            var parametres = (Tuple<Axis, double, double[]>)param;
-            (graphField as GraphField3D).StretchAlongAxis(parametres.Item1, parametres.Item2, parametres.Item3);
         }
 
         private void OnPathNotFound(string message)

@@ -11,14 +11,24 @@ namespace WPFVersion3D.Converters
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            var axisAngleRotation = parameter as AxisAngleRotation3D;
-            var direction = (bool)value == true ? RotationDirection.Forward : RotationDirection.Backward;
-            return new AnimatedAxisRotator(axisAngleRotation, direction);
+            if (IsValidParametres(value, parameter))
+            {
+                var axisAngleRotation = parameter as AxisAngleRotation3D;
+                var direction = ((bool)value) ? RotationDirection.Forward : RotationDirection.Backward;
+                return new AnimatedAxisRotator(axisAngleRotation, direction);
+            }
+
+            return new object();
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            return null;
+            return new object();
+        }
+
+        private bool IsValidParametres(object value, object parametres)
+        {
+            return (value is bool) && (parametres as AxisAngleRotation3D != null);
         }
     }
 }

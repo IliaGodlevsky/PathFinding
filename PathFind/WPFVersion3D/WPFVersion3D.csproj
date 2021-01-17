@@ -63,8 +63,6 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="Converters\DoubleToStringConverter.cs" />
-    <Compile Include="Converters\GraphStretchValueConverter.cs" />
     <Compile Include="Converters\MaterialOpacityValueConverter.cs" />
     <Compile Include="Converters\AnimatedAxisRotatorConverter.cs" />
     <Compile Include="Converters\StringToDoubleConverter.cs" />

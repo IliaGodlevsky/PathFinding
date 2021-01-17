@@ -1,4 +1,5 @@
-﻿<Window x:Class="WPFVersion3D.MainWindow"
+﻿<Window x:Name="Window" 
+        x:Class="WPFVersion3D.MainWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
@@ -7,7 +8,9 @@
         xmlns:model="clr-namespace:WPFVersion3D.Model"
         xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
         xmlns:axis="clr-namespace:WPFVersion3D.Enums"
-        xmlns:sys="clr-namespace:System;assembly=mscorlib" xmlns:viewmodel="clr-namespace:WPFVersion3D.ViewModel"
+        xmlns:sys="clr-namespace:System;assembly=mscorlib" 
+        xmlns:viewmodel="clr-namespace:WPFVersion3D.ViewModel" 
+        xmlns:ei="http://schemas.microsoft.com/expression/2010/interactions"
         mc:Ignorable="d"
         Title="3D pathfinding" Height="350" Width="450">
     <Window.DataContext>
@@ -19,8 +22,6 @@
         <converters:NummberToPointConverter x:Key="coordinateToDistance"/>
         <converters:StringToDoubleConverter x:Key="stringToDoubleConverter"/>
         <converters:AnimatedAxisRotatorConverter x:Key="animatedAxisRotatorConverter"/>
-        <converters:GraphStretchValueConverter x:Key="stretchValueConverter"/>
-        <converters:DoubleToStringConverter x:Key="doubleToStringConverter"/>
 
         <Style TargetType="TextBox" x:Key="TextBoxStyle">
             <Setter Property="MinWidth" Value="40"></Setter>
@@ -148,102 +149,54 @@
                         Grid.Row="3" 
                         Value="{Binding ElementName=zAxis, Path=Angle}"/>
 
-                <TextBox x:Name="xAxisTb" Style="{StaticResource TextBoxStyle}" Grid.Column="2" Grid.Row="5"/>
+                <TextBox Text="{Binding ElementName=xAxisStretchAxis, 
+                    Path=Value, 
+                    UpdateSourceTrigger=PropertyChanged, 
+                    Mode=TwoWay,
+                    Converter={StaticResource stringToDoubleConverter}}" 
+                    Style="{StaticResource TextBoxStyle}" Grid.Column="2" Grid.Row="5"/>
 
-                <TextBox x:Name="yAxisTb" Style="{StaticResource TextBoxStyle}" Grid.Column="2" Grid.Row="6"/>
+                <TextBox Text="{Binding ElementName=yAxisStretchSlider, 
+                    Path=Value, 
+                    UpdateSourceTrigger=PropertyChanged, 
+                    Mode=TwoWay,
+                    Converter={StaticResource stringToDoubleConverter}}" 
+                    Style="{StaticResource TextBoxStyle}" Grid.Column="2" Grid.Row="6"/>
 
-                <TextBox x:Name="zAxisTb" Style="{StaticResource TextBoxStyle}" Grid.Column="2" Grid.Row="7"/>
+                <TextBox Text="{Binding ElementName=zAxisStretchSlider, 
+                    Path=Value, 
+                    UpdateSourceTrigger=PropertyChanged, 
+                    Mode=TwoWay,
+                    Converter={StaticResource stringToDoubleConverter}}"
+                    Style="{StaticResource TextBoxStyle}" Grid.Column="2" Grid.Row="7"/>
                 
-                <Slider x:Name="xAxisStretchAlongSlider" Value="{Binding ElementName=xAxisTb, 
-                                Path=Text, 
-                                NotifyOnSourceUpdated=True,
-                                Mode=TwoWay, 
-                                UpdateSourceTrigger=PropertyChanged, 
-                                Converter={StaticResource doubleToStringConverter}}" Grid.Column="1" 
+                <Slider x:Name="xAxisStretchAxis" Grid.Column="1" 
                         Style="{StaticResource SliderStyle}" Maximum="60" Grid.Row="5">
                     <i:Interaction.Triggers>
-                        <i:EventTrigger EventName="SourceUpdated">
-                            <i:InvokeCommandAction Command="{Binding StretchGraphAlongAxisCommand}">
-                                <i:InvokeCommandAction.CommandParameter>
-                                    <MultiBinding Converter="{StaticResource stretchValueConverter}">
-                                        <Binding Source="{x:Static axis:Axis.Abscissa}" Mode="OneWay"></Binding>
-                                        <Binding RelativeSource="{RelativeSource FindAncestor, AncestorType=Slider }" 
-                                                 Path="Value" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged"></Binding>
-                                        <Binding>
-                                            <Binding.Source>
-                                                <x:Array Type="{x:Type sys:Double}">
-                                                    <sys:Double>1</sys:Double>
-                                                    <sys:Double>0</sys:Double>
-                                                    <sys:Double>0</sys:Double>
-                                                </x:Array>
-                                            </Binding.Source>
-                                        </Binding>
-                                    </MultiBinding>
-                                </i:InvokeCommandAction.CommandParameter>
-                            </i:InvokeCommandAction>
+                        <i:EventTrigger EventName="ValueChanged">
+                            <ei:CallMethodAction TargetObject="{Binding Path=DataContext, ElementName=Window}" 
+                                                 MethodName="StretchAlongXAxis"></ei:CallMethodAction>
                         </i:EventTrigger>
                     </i:Interaction.Triggers>
                 </Slider>
 
-                <Slider Value="{Binding ElementName=yAxisTb, 
-                                Path=Text, 
-                                NotifyOnSourceUpdated=True,
-                                Mode=TwoWay, 
-                                UpdateSourceTrigger=PropertyChanged, 
-                                Converter={StaticResource doubleToStringConverter}}" Grid.Column="1" 
+                <Slider x:Name="yAxisStretchSlider" Grid.Column="1" 
                         Style="{StaticResource SliderStyle}" Maximum="60" Grid.Row="6">
                     <i:Interaction.Triggers>
-                        <i:EventTrigger EventName="SourceUpdated">
-                            <i:InvokeCommandAction Command="{Binding StretchGraphAlongAxisCommand}">
-                                <i:InvokeCommandAction.CommandParameter>
-                                    <MultiBinding Converter="{StaticResource stretchValueConverter}">
-                                        <Binding Source="{x:Static axis:Axis.Ordinate}" Mode="OneWay"></Binding>
-                                        <Binding RelativeSource="{RelativeSource FindAncestor, AncestorType=Slider }" 
-                                                 Path="Value" NotifyOnSourceUpdated="True" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged"></Binding>
-                                        <Binding>
-                                            <Binding.Source>
-                                                <x:Array Type="{x:Type sys:Double}">
-                                                    <sys:Double>0</sys:Double>
-                                                    <sys:Double>1</sys:Double>
-                                                    <sys:Double>0</sys:Double>
-                                                </x:Array>
-                                            </Binding.Source>
-                                        </Binding>
-                                    </MultiBinding>
-                                </i:InvokeCommandAction.CommandParameter>
-                            </i:InvokeCommandAction>
+                        <i:EventTrigger EventName="ValueChanged">
+                            <ei:CallMethodAction TargetObject="{Binding Path=DataContext, ElementName=Window}" 
+                                                 MethodName="StretchAlongYAxis"></ei:CallMethodAction>
                         </i:EventTrigger>
                     </i:Interaction.Triggers>
                 </Slider>
 
-                <Slider Value="{Binding ElementName=zAxisTb, 
-                                Path=Text, 
-                                NotifyOnSourceUpdated=True,
-                                Mode=TwoWay, 
-                                UpdateSourceTrigger=PropertyChanged, 
-                                Converter={StaticResource doubleToStringConverter}}" Grid.Column="1" 
+                <Slider x:Name="zAxisStretchSlider"  Grid.Column="1" 
                         Style="{StaticResource SliderStyle}"
                         Maximum="60" Grid.Row="7">
                     <i:Interaction.Triggers>
-                        <i:EventTrigger EventName="SourceUpdated">
-                            <i:InvokeCommandAction Command="{Binding StretchGraphAlongAxisCommand}">
-                                <i:InvokeCommandAction.CommandParameter>
-                                    <MultiBinding Converter="{StaticResource stretchValueConverter}">
-                                        <Binding Source="{x:Static axis:Axis.Applicate}" Mode="OneWay"></Binding>
-                                        <Binding RelativeSource="{RelativeSource FindAncestor, AncestorType=Slider }" 
-                                                 Path="Value" NotifyOnSourceUpdated="True" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged"></Binding>
-                                        <Binding>
-                                            <Binding.Source>
-                                                <x:Array Type="{x:Type sys:Double}">
-                                                    <sys:Double>0</sys:Double>
-                                                    <sys:Double>0</sys:Double>
-                                                    <sys:Double>1</sys:Double>
-                                                </x:Array>
-                                            </Binding.Source>
-                                        </Binding>
-                                    </MultiBinding>
-                                </i:InvokeCommandAction.CommandParameter>
-                            </i:InvokeCommandAction>
+                        <i:EventTrigger EventName="ValueChanged">
+                            <ei:CallMethodAction TargetObject="{Binding Path=DataContext, ElementName=Window}" 
+                                                 MethodName="StretchAlongZAxis"></ei:CallMethodAction>
                         </i:EventTrigger>
                     </i:Interaction.Triggers>
                 </Slider>
@@ -278,33 +231,35 @@
                                     Converter={StaticResource invertPointConverter}}" 
                     Position="600,600,600"/>
             </Viewport3D.Camera>
-            <model:GraphField3D x:Name="GraphField">
-                <ModelVisual3D.Content>
-                    <Model3DGroup>
-                        <DirectionalLight Direction="{Binding ElementName=camera, Path=LookDirection}" 
+            <Viewport3D.Children>
+                <model:GraphField3D x:Name="GraphField">
+                    <ModelVisual3D.Content>
+                        <Model3DGroup>
+                            <DirectionalLight Direction="{Binding ElementName=camera, Path=LookDirection}" 
                                           Color="White"/>
-                    </Model3DGroup>
-                </ModelVisual3D.Content>
-                <ModelVisual3D.Transform>
-                    <Transform3DGroup>
-                        <RotateTransform3D>
-                            <RotateTransform3D.Rotation>
-                                <AxisAngleRotation3D x:Name="xAxis" Axis="1 0 0"/>
-                            </RotateTransform3D.Rotation>
-                        </RotateTransform3D>
-                        <RotateTransform3D>
-                            <RotateTransform3D.Rotation>
-                                <AxisAngleRotation3D x:Name="yAxis" Axis="0 1 0"/>
-                            </RotateTransform3D.Rotation>
-                        </RotateTransform3D>
-                        <RotateTransform3D>
-                            <RotateTransform3D.Rotation>
-                                <AxisAngleRotation3D x:Name="zAxis" Axis="0 0 1"/>
-                            </RotateTransform3D.Rotation>
-                        </RotateTransform3D>
-                    </Transform3DGroup>
-                </ModelVisual3D.Transform>
-            </model:GraphField3D>
+                        </Model3DGroup>
+                    </ModelVisual3D.Content>
+                    <ModelVisual3D.Transform>
+                        <Transform3DGroup>
+                            <RotateTransform3D>
+                                <RotateTransform3D.Rotation>
+                                    <AxisAngleRotation3D x:Name="xAxis" Axis="1 0 0"/>
+                                </RotateTransform3D.Rotation>
+                            </RotateTransform3D>
+                            <RotateTransform3D>
+                                <RotateTransform3D.Rotation>
+                                    <AxisAngleRotation3D x:Name="yAxis" Axis="0 1 0"/>
+                                </RotateTransform3D.Rotation>
+                            </RotateTransform3D>
+                            <RotateTransform3D>
+                                <RotateTransform3D.Rotation>
+                                    <AxisAngleRotation3D x:Name="zAxis" Axis="0 0 1"/>
+                                </RotateTransform3D.Rotation>
+                            </RotateTransform3D>
+                        </Transform3DGroup>
+                    </ModelVisual3D.Transform>
+                </model:GraphField3D>
+            </Viewport3D.Children>
         </Viewport3D>
         <StatusBar Grid.Row="3">
             <TextBlock Text = "{Binding PathFindingStatistics}"/>
