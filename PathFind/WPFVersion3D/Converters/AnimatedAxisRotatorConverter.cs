@@ -18,7 +18,7 @@ namespace WPFVersion3D.Converters
                 return new AnimatedAxisRotator(axisAngleRotation, direction);
             }
 
-            return new object();
+            throw new ArgumentException();
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
