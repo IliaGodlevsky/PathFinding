@@ -7,8 +7,6 @@
         xmlns:converters="clr-namespace:WPFVersion3D.Converters" 
         xmlns:model="clr-namespace:WPFVersion3D.Model"
         xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
-        xmlns:axis="clr-namespace:WPFVersion3D.Enums"
-        xmlns:sys="clr-namespace:System;assembly=mscorlib" 
         xmlns:viewmodel="clr-namespace:WPFVersion3D.ViewModel" 
         xmlns:ei="http://schemas.microsoft.com/expression/2010/interactions"
         mc:Ignorable="d"
