@@ -45,6 +45,8 @@ namespace GraphLib.ViewModel
             algorithm.OnVertexVisited -= OnVertexVisited;
             algorithm.OnFinished -= OnAlgorithmFinished;
             algorithm.OnStarted -= OnAlgorithmStarted;
+
+            intermitter.OnIntermitted -= OnAlgorithmIntermitted;
         }
 
         protected abstract void OnAlgorithmIntermitted();
