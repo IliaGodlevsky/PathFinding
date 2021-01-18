@@ -5,6 +5,7 @@ using GraphViewModel.Interfaces;
 using System;
 using System.Linq;
 using System.Windows.Input;
+using System.Windows.Threading;
 using WPFVersion3D.Infrastructure;
 
 namespace WPFVersion3D.ViewModel
@@ -22,7 +23,23 @@ namespace WPFVersion3D.ViewModel
                 ExecuteConfirmPathFindAlgorithmChoice,
                 CanExecuteConfirmPathFindAlgorithmChoice);
             CancelPathFindAlgorithmChoice = new RelayCommand(obj => CloseWindow());
-            pauseProvider.PauseEvent += () => System.Windows.Forms.Application.DoEvents();
+            pauseProvider.IntermitEvent += DoEvents;
+        }
+
+        private void DoEvents()
+        {
+            var frame = new DispatcherFrame();
+
+            var callback = new DispatcherOperationCallback(arg => 
+            {
+                ((DispatcherFrame)arg).Continue = false;
+                return null;
+            });
+
+            var priority = DispatcherPriority.Background;
+
+            Dispatcher.CurrentDispatcher.BeginInvoke(priority, callback, frame);
+            Dispatcher.PushFrame(frame);
         }
 
         private void CloseWindow()

@@ -28,6 +28,7 @@ namespace WPFVersion3D.Factories
             var p6 = new Point3D(modelSize, modelSize, 0);
             var p7 = new Point3D(0, modelSize, 0);
 
+
             model.Children.Add(CreateRectangleModel(p4, p3, p2, p5, modelMaterial));
             model.Children.Add(CreateRectangleModel(p5, p2, p1, p6, modelMaterial));
             model.Children.Add(CreateRectangleModel(p7, p6, p1, p0, modelMaterial));

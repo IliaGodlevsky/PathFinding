@@ -7,7 +7,9 @@ using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
 using System.Runtime.CompilerServices;
+using System.Windows;
 using System.Windows.Input;
+using System.Windows.Threading;
 using WPFVersion.Infrastructure;
 
 namespace WPFVersion.ViewModel
@@ -43,7 +45,23 @@ namespace WPFVersion.ViewModel
 
             AlgorithmKeys = new ObservableCollection<string>(AlgorithmFactory.AlgorithmsDescriptions);
             
-            pauseProvider.PauseEvent += () => System.Windows.Forms.Application.DoEvents();
+            pauseProvider.IntermitEvent += DoEvents;
+        }
+
+        private void DoEvents()
+        {
+            var frame = new DispatcherFrame();
+
+            var callback = new DispatcherOperationCallback(arg =>
+            {
+                ((DispatcherFrame)arg).Continue = false;
+                return null;
+            });
+
+            var priority = DispatcherPriority.Background;
+
+            Dispatcher.CurrentDispatcher.BeginInvoke(priority, callback, frame);
+            Dispatcher.PushFrame(frame);
         }
 
         private void CloseWindow()
