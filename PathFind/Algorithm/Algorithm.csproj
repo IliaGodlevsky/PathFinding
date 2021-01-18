@@ -64,6 +64,8 @@
     <Compile Include="Algorithms\LeeAlgorithm.cs" />
     <Compile Include="Algorithms\Abstractions\DefaultAlgorithm.cs" />
     <Compile Include="Extensions\TypeExtensions.cs" />
+    <Compile Include="Intermitting\Interface\IIntermit.cs" />
+    <Compile Include="Intermitting\AlgorithmIntermit.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

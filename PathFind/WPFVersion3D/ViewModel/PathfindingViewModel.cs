@@ -23,14 +23,13 @@ namespace WPFVersion3D.ViewModel
                 ExecuteConfirmPathFindAlgorithmChoice,
                 CanExecuteConfirmPathFindAlgorithmChoice);
             CancelPathFindAlgorithmChoice = new RelayCommand(obj => CloseWindow());
-            pauseProvider.IntermitEvent += DoEvents;
         }
 
-        private void DoEvents()
+        protected override void OnAlgorithmIntermitted()
         {
             var frame = new DispatcherFrame();
 
-            var callback = new DispatcherOperationCallback(arg => 
+            var callback = new DispatcherOperationCallback(arg =>
             {
                 ((DispatcherFrame)arg).Continue = false;
                 return null;

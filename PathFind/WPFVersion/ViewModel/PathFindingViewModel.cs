@@ -7,7 +7,6 @@ using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
 using System.Runtime.CompilerServices;
-using System.Windows;
 using System.Windows.Input;
 using System.Windows.Threading;
 using WPFVersion.Infrastructure;
@@ -44,11 +43,9 @@ namespace WPFVersion.ViewModel
             CancelPathFindAlgorithmChoice = new RelayCommand(obj => CloseWindow());
 
             AlgorithmKeys = new ObservableCollection<string>(AlgorithmFactory.AlgorithmsDescriptions);
-            
-            pauseProvider.IntermitEvent += DoEvents;
         }
 
-        private void DoEvents()
+        protected override void OnAlgorithmIntermitted()
         {
             var frame = new DispatcherFrame();
 

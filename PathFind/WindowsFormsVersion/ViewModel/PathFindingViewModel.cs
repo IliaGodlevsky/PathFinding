@@ -14,7 +14,7 @@ namespace WindowsFormsVersion.ViewModel
 
         public PathFindingViewModel(IMainModel model) : base(model)
         {
-            pauseProvider.PauseEvent += () => Application.DoEvents();
+
         }
 
         public void PathFind(object sender, EventArgs e)
@@ -24,6 +24,11 @@ namespace WindowsFormsVersion.ViewModel
                 OnWindowClosed?.Invoke(this, new EventArgs());
                 FindPath();
             }
+        }
+
+        protected override void OnAlgorithmIntermitted()
+        {
+            Application.DoEvents();
         }
 
         public void CancelPathFind(object sender, EventArgs e)

@@ -51,6 +51,11 @@ namespace ConsoleVersion.ViewModel
             }
         }
 
+        protected override void OnAlgorithmIntermitted()
+        {
+            return;
+        }
+
         protected override void OnAlgorithmStarted(object sender, EventArgs e)
         {
             IsPathfindingEnded = false;

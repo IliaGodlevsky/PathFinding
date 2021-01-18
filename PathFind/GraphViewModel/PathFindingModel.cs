@@ -1,9 +1,10 @@
 ﻿using Algorithm.AlgorithmCreating;
 using Algorithm.EventArguments;
+using Algorithm.Intermitting;
+using Algorithm.Intermitting.Interface;
 using Common.Extensions;
 using GraphLib.Extensions;
 using GraphLib.Graphs.Infrastructure;
-using GraphLib.PauseMaking;
 using GraphViewModel.Interfaces;
 using GraphViewModel.Resources;
 using System;
@@ -20,16 +21,18 @@ namespace GraphLib.ViewModel
         public string AlgorithmKey { get; set; }
 
         public PathFindingModel(IMainModel mainViewModel)
-        {
-            pauseProvider = new PauseProvider();
+        {            
             this.mainViewModel = mainViewModel;
-            DelayTime = 4;
+            DelayTime = 4;            
         }
 
         public virtual void FindPath()
         {
             var algorithm = AlgorithmFactory.
                 CreateAlgorithm(AlgorithmKey, mainViewModel.Graph);
+
+            intermitter = new AlgorithmIntermit(DelayTime);
+            intermitter.OnIntermitted += OnAlgorithmIntermitted;
 
             algorithm.OnVertexEnqueued += OnVertexEnqueued;
             algorithm.OnVertexVisited += OnVertexVisited;
@@ -44,6 +47,8 @@ namespace GraphLib.ViewModel
             algorithm.OnStarted -= OnAlgorithmStarted;
         }
 
+        protected abstract void OnAlgorithmIntermitted();
+
         protected virtual void OnVertexVisited(object sender, EventArgs e)
         {
             if (e is AlgorithmEventArgs args)
@@ -56,7 +61,7 @@ namespace GraphLib.ViewModel
                 mainViewModel.PathFindingStatistics = GetIntermediateStatistics(timer,
                     steps: 0, pathLength: 0, args.Graph.NumberOfVisitedVertices);
 
-                pauseProvider.Pause(DelayTime);
+                intermitter.Intermit();
             }
         }
 
@@ -111,7 +116,7 @@ namespace GraphLib.ViewModel
             return AlgorithmKey + "   " + timerInfo + "   " + graphInfo;
         }
 
-        protected PauseProvider pauseProvider;
+        protected IIntermit intermitter;
         protected IMainModel mainViewModel;
 
         private Stopwatch timer;
