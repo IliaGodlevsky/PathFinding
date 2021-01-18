@@ -3,12 +3,12 @@ using System.Windows;
 using System.Windows.Media.Animation;
 using System.Windows.Media.Media3D;
 using WPFVersion3D.Enums;
-using WPFVersion3D.Model.Interface;
 using DurationCalculateFunction = System.Collections.Generic.Dictionary<WPFVersion3D.Enums.RotationDirection, System.Func<double>>;
 using AnimationCreateFunction = System.Collections.Generic.Dictionary<WPFVersion3D.Enums.RotationDirection,
     System.Func<System.Windows.Media.Animation.DoubleAnimation>>;
+using WPFVersion3D.Infrastructure.Animations.Interface;
 
-namespace WPFVersion3D.Model
+namespace WPFVersion3D.Infrastructure.Animations
 {
     /// <summary>
     /// A class for animated rotation 
@@ -58,10 +58,10 @@ namespace WPFVersion3D.Model
             return new Duration(TimeSpan.FromMilliseconds(duration));
         }
 
-        private double CalculateForwardAnimationDuration() 
+        private double CalculateForwardAnimationDuration()
             => InitialDuration * (AngleAmplitude - axis.Angle) / AngleAmplitude;
 
-        private double CalculateBackwardAnimationDuration() 
+        private double CalculateBackwardAnimationDuration()
             => InitialDuration * axis.Angle / AngleAmplitude;
 
         private double AngleAmplitude => EndAngle - StartAngle;

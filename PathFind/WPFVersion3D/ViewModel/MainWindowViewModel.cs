@@ -11,8 +11,8 @@ using System.Windows;
 using System.Windows.Input;
 using WPFVersion3D.Enums;
 using WPFVersion3D.Infrastructure;
+using WPFVersion3D.Infrastructure.Animations.Interface;
 using WPFVersion3D.Model;
-using WPFVersion3D.Model.Interface;
 using WPFVersion3D.Resources;
 using WPFVersion3D.View;
 
@@ -49,6 +49,7 @@ namespace WPFVersion3D.ViewModel
             {
                 graphField = value;
                 var field = graphField as GraphField3D;
+                field.CenterGraph();
                 var currentWindow = Application.Current.MainWindow as MainWindow;
                 currentWindow?.GraphField?.Children.Clear();
                 currentWindow?.GraphField?.Children.Add(field);

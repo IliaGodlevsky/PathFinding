@@ -1,4 +1,5 @@
 ﻿using Algorithm.Algorithms.Abstractions;
+using Algorithm.EventArguments;
 using Algorithm.Extensions;
 using Common.Extensions;
 using GraphLib.Extensions;
@@ -27,7 +28,8 @@ namespace Algorithm.Algorithms
                 SpreadWaves();
                 CurrentVertex = NextVertex;
                 CurrentVertex.IsVisited = true;
-                RaiseOnVertexVisitedEvent();
+                var args = new AlgorithmEventArgs(Graph, CurrentVertex);
+                RaiseOnVertexVisitedEvent(args);
             } while (!IsDestination);
             CompletePathfinding();
         }
@@ -73,7 +75,8 @@ namespace Algorithm.Algorithms
 
             foreach (var neighbour in neighbours)
             {
-                RaiseOnVertexEnqueuedEvent(neighbour);
+                var args = new AlgorithmEventArgs(Graph, neighbour);
+                RaiseOnVertexEnqueuedEvent(args);
                 verticesQueue.Enqueue(neighbour);
             }
 

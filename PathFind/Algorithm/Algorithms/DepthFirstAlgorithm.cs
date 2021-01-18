@@ -1,4 +1,5 @@
 ﻿using Algorithm.Algorithms.Abstractions;
+using Algorithm.EventArguments;
 using Algorithm.Extensions;
 using Algorithm.Handlers;
 using Common.Extensions;
@@ -43,7 +44,7 @@ namespace Algorithm.Algorithms
                     => GreedyFunction(vertex) == neighbours.Min(GreedyFunction);
 
                 return neighbours
-                    .ForEach(RaiseOnVertexEnqueuedEvent)
+                    .ForEach(Enqueu)
                     .ToList()
                     .FindOrDefault(IsLeastCostVertex);
             }
@@ -58,8 +59,15 @@ namespace Algorithm.Algorithms
         private void VisitCurrentVertex()
         {
             CurrentVertex.IsVisited = true;
-            RaiseOnVertexVisitedEvent();
+            var args = new AlgorithmEventArgs(Graph, CurrentVertex);
+            RaiseOnVertexVisitedEvent(args);
             visitedVertices.Push(CurrentVertex);
+        }
+
+        private void Enqueu(IVertex vertex)
+        {
+            var args = new AlgorithmEventArgs(Graph, vertex);
+            RaiseOnVertexEnqueuedEvent(args);
         }
 
         private void ProcessCurrentVertex()

@@ -29,36 +29,36 @@ namespace Algorithm.Algorithms.Abstractions
 
         protected virtual bool IsDestination => CurrentVertex.IsEnd;
 
-        protected void RaiseOnAlgorithmStartedEvent()
+        protected void RaiseOnAlgorithmStartedEvent(AlgorithmEventArgs e)
         {
-            OnStarted?.Invoke(this, new AlgorithmEventArgs(Graph));
+            OnStarted?.Invoke(this, e);
         }
 
-        protected void RaiseOnAlgorithmFinishedEvent()
+        protected void RaiseOnAlgorithmFinishedEvent(AlgorithmEventArgs e)
         {
-            OnFinished?.Invoke(this, new AlgorithmEventArgs(Graph));
+            OnFinished?.Invoke(this, e);
         }
 
-        protected void RaiseOnVertexVisitedEvent()
+        protected void RaiseOnVertexVisitedEvent(AlgorithmEventArgs e)
         {
-            OnVertexVisited?.Invoke(this, new AlgorithmEventArgs(Graph, CurrentVertex));
+            OnVertexVisited?.Invoke(this, e);
         }
 
-        protected void RaiseOnVertexEnqueuedEvent(IVertex vertex)
+        protected void RaiseOnVertexEnqueuedEvent(AlgorithmEventArgs e)
         {
-            OnVertexEnqueued?.Invoke(this, new AlgorithmEventArgs(Graph, vertex));
+            OnVertexEnqueued?.Invoke(this, e);
         }
 
         protected virtual void PrepareForPathfinding()
         {
-            RaiseOnAlgorithmStartedEvent();
+            RaiseOnAlgorithmStartedEvent(new AlgorithmEventArgs());
             CurrentVertex = Graph.Start;
             CurrentVertex.IsVisited = true;
         }
 
         protected virtual void CompletePathfinding()
         {
-            RaiseOnAlgorithmFinishedEvent();
+            RaiseOnAlgorithmFinishedEvent(new AlgorithmEventArgs(Graph));
         }
     }
 }
