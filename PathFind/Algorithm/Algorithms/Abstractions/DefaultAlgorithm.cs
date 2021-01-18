@@ -3,9 +3,6 @@ using Algorithm.EventArguments;
 using Algorithm.Handlers;
 using GraphLib.Graphs;
 using GraphLib.Graphs.Abstractions;
-using GraphLib.Vertex;
-using GraphLib.Vertex.Interface;
-using System;
 
 namespace Algorithm.Algorithms.Abstractions
 {
