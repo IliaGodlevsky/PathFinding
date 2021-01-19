@@ -1,24 +1,22 @@
-﻿namespace Common.ValueRanges
+﻿using System.Collections.Generic;
+
+namespace Common.ValueRanges
 {
     public class ValueRange
     {
         public int UpperRange { get; }
         public int LowerRange { get; }
 
-        public ValueRange(int upper, int lower)
+        public ValueRange(int upperValueRange, int lowerValueRange)
         {
-            if (upper < lower)
-            {
-                int temp = upper;
-                upper = lower;
-                lower = temp;
-            }
+            SwapIf(ref upperValueRange, 
+                ref lowerValueRange, Comparer<int>.Default);
 
-            UpperRange = upper;
-            LowerRange = lower;
+            UpperRange = upperValueRange;
+            LowerRange = lowerValueRange;
         }
 
-        public int ReturnInBounds(int value)
+        public int ReturnInRange(int value)
         {
             if (value > UpperRange)
             {
@@ -32,10 +30,26 @@
             return value;
         }
 
-        public bool IsInBounds(int value)
+        /// <summary>
+        /// Checks whether values is in range of value inclusively
+        /// </summary>
+        /// <param name="value"></param>
+        /// <returns>true if <paramref name="value"/> 
+        /// is in range inclusively and false if not</returns>
+        public bool IsInRage(int value)
         {
-            return value <= UpperRange &&
-                value >= LowerRange;
+            return value <= UpperRange && value >= LowerRange;
+        }
+
+        public static void SwapIf<TSource>(ref TSource greaterValue, 
+            ref TSource lowerValue, IComparer<TSource> comparer)
+        {
+            if (comparer.Compare(greaterValue, lowerValue) < 0)
+            {
+                var temp = greaterValue;
+                greaterValue = lowerValue;
+                lowerValue = temp;
+            }
         }
     }
 }

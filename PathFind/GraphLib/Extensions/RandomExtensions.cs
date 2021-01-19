@@ -9,7 +9,7 @@ namespace GraphLib.Extensions
         internal static bool IsObstacleChance(this Random rand, int percentOfObstacles)
         {
             var percentRange = new ValueRange(100, 0);
-            percentOfObstacles = percentRange.ReturnInBounds(percentOfObstacles);
+            percentOfObstacles = percentRange.ReturnInRange(percentOfObstacles);
             var randomValue = rand.Next(Range.ObstaclePercentValueRange.UpperRange);
             return randomValue < percentOfObstacles;
         }

@@ -21,7 +21,7 @@ namespace GraphLib.EventHolder
                 {
                     int delta = GetWheelDelta(e) > 0 ? 1 : -1;
                     int newCost = vertex.Cost + delta;
-                    int boundedCost = Range.VertexCostRange.ReturnInBounds(newCost);
+                    int boundedCost = Range.VertexCostRange.ReturnInRange(newCost);
                     vertex.Cost = new VertexCost(boundedCost);
                 }
             }

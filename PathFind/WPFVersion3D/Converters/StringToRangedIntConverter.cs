@@ -19,7 +19,7 @@ namespace WPFVersion3D.Converters
             {
                 if (int.TryParse(value.ToString(), out result))
                 {
-                    if (!range.IsInBounds(result))
+                    if (!range.IsInRage(result))
                     {
                         result = range.LowerRange;
                     }

@@ -21,7 +21,7 @@ namespace WPFVersion.Converters
                 if (double.TryParse(value.ToString(), out result))
                 {
                     var sliderValue = System.Convert.ToInt32(result);
-                    if ((parameter as ValueRange).IsInBounds(sliderValue))
+                    if ((parameter as ValueRange).IsInRage(sliderValue))
                     {
                         result = sliderValue;
                     }
