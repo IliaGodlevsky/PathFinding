@@ -9,6 +9,7 @@ using GraphViewModel.Interfaces;
 using GraphViewModel.Resources;
 using System;
 using System.Diagnostics;
+using System.Windows.Threading;
 
 namespace GraphLib.ViewModel
 {
@@ -23,7 +24,7 @@ namespace GraphLib.ViewModel
         public PathFindingModel(IMainModel mainViewModel)
         {            
             this.mainViewModel = mainViewModel;
-            DelayTime = 4;            
+            DelayTime = 4;          
         }
 
         public virtual void FindPath()
@@ -85,7 +86,6 @@ namespace GraphLib.ViewModel
                 timer.Stop();
 
                 var path = new GraphPath(args.Graph);
-
 
                 mainViewModel.PathFindingStatistics = GetIntermediateStatistics(timer,
                     path.PathLength, path.PathCost, args.Graph.NumberOfVisitedVertices);
