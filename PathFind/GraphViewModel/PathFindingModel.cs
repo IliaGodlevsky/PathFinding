@@ -9,7 +9,6 @@ using GraphViewModel.Interfaces;
 using GraphViewModel.Resources;
 using System;
 using System.Diagnostics;
-using System.Windows.Threading;
 
 namespace GraphLib.ViewModel
 {
