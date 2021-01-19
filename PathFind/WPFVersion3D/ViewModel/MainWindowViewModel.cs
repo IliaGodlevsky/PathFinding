@@ -115,7 +115,7 @@ namespace WPFVersion3D.ViewModel
 
         private void ChangeVerticesOpacity()
         {
-            PrepareWindow(new OpacityChangeViewModel(this), new OpacityChangeWindow());
+            PrepareWindow(new OpacityChangeViewModel(), new OpacityChangeWindow());
         }
 
         public void Dispose()

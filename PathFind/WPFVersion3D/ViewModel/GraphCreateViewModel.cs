@@ -1,6 +1,5 @@
 ﻿using Common.Interfaces;
 using GraphLib.Coordinates;
-using GraphLib.Coordinates.Abstractions;
 using GraphLib.Graphs;
 using GraphLib.Graphs.Factories;
 using GraphLib.Vertex.Interface;
@@ -9,8 +8,6 @@ using GraphViewModel.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Windows;
-using System.Windows.Controls.Primitives;
 using System.Windows.Input;
 using WPFVersion3D.Infrastructure;
 using WPFVersion3D.Model;

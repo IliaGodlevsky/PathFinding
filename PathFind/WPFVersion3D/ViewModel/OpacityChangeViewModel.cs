@@ -20,9 +20,7 @@ namespace WPFVersion3D.ViewModel
         public ICommand ConfirmOpacityChange { get; }
         public ICommand CancelOpacityChange { get; }
 
-        public MainWindowViewModel Model { get; set; }
-
-        public OpacityChangeViewModel(IMainModel model)
+        public OpacityChangeViewModel()
         {
             ObstacleColorOpacity = Vertex3D.ObstacleVertexBrush.Opacity;
             VisitedVertexColorOpacity = Vertex3D.VisitedVertexBrush.Opacity;
@@ -30,7 +28,6 @@ namespace WPFVersion3D.ViewModel
             PathVertexColorOpacity = Vertex3D.PathVertexBrush.Opacity;
             SimpleVertexColorOpacity = Vertex3D.SimpleVertexBrush.Opacity;
 
-            Model = model as MainWindowViewModel;
             ConfirmOpacityChange = new RelayCommand(ExecuteChangeVertexOpacity);
             CancelOpacityChange = new RelayCommand(ExecuteCloseChangeVertexOpacity);
         }
