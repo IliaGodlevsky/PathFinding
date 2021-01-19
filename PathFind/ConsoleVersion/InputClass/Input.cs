@@ -45,7 +45,7 @@ namespace ConsoleVersion.InputClass
         private static bool IsValidInput(string userInput, ValueRange rangeOfValidInput)
         {
             return !(!int.TryParse(userInput, out var ch) 
-                || !rangeOfValidInput.IsInRage(ch));
+                || !rangeOfValidInput.IsInRange(ch));
         }
     }
 }

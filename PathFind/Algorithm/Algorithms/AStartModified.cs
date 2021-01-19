@@ -61,7 +61,7 @@ namespace Algorithm.Algorithms
             set
             {
                 persentOfFarthestVerticesToDelete = value;
-                if (!percentRange.IsInRage(persentOfFarthestVerticesToDelete))
+                if (!percentRange.IsInRange(persentOfFarthestVerticesToDelete))
                 {
                     persentOfFarthestVerticesToDelete =
                         percentRange.ReturnInRange(persentOfFarthestVerticesToDelete);

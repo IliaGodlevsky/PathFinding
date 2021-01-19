@@ -36,7 +36,7 @@ namespace Common.ValueRanges
         /// <param name="value"></param>
         /// <returns>true if <paramref name="value"/> 
         /// is in range inclusively and false if not</returns>
-        public bool IsInRage(int value)
+        public bool IsInRange(int value)
         {
             return value <= UpperRange && value >= LowerRange;
         }

@@ -20,7 +20,7 @@ namespace WPFVersion.Converters
             {
                 if (int.TryParse(value.ToString(), out result))
                 {
-                    if (!range.IsInRage(result))
+                    if (!range.IsInRange(result))
                     {
                         result = range.LowerRange;
                     }
