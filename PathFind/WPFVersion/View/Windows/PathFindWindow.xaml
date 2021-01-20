@@ -27,7 +27,9 @@
                  SelectedItem="{Binding Path = AlgorithmKey}">
             <ListBox.ItemTemplate>
                 <DataTemplate>
-                    <TextBlock Margin="3" Text="{Binding Converter={StaticResource algorithmKeyConverter}}"/>
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock Margin="3" Text="{Binding Converter={StaticResource algorithmKeyConverter}}"/>
+                    </StackPanel>
                 </DataTemplate>
             </ListBox.ItemTemplate>
         </ListBox>

@@ -14,7 +14,8 @@ namespace ConsoleVersion.InputClass
         /// <param name="lowerRangeValue">A lower value of input range</param>
         /// <returns>A number in the range from 
         /// <paramref name="lowerRangeValue"/> to <paramref name="upperRangeValue"/></returns>
-        public static int InputNumber(string accompanyingMessage, int upperRangeValue, int lowerRangeValue = 0)
+        public static int InputNumber(string accompanyingMessage, 
+            int upperRangeValue, int lowerRangeValue = 0)
         {
             var rangeOfValidInput = new ValueRange(upperRangeValue, lowerRangeValue);
             string userInput;
