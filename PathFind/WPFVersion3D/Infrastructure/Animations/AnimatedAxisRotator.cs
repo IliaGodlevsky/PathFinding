@@ -73,7 +73,5 @@ namespace WPFVersion3D.Infrastructure.Animations
 
         private readonly AxisAngleRotation3D axis;
         private readonly RotationDirection direction;
-
-
     }
 }
