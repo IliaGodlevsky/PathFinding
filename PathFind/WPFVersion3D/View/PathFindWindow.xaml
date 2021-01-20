@@ -7,11 +7,10 @@
         xmlns:algo="clr-namespace:Algorithm.AlgorithmCreating;assembly=Algorithm"
         xmlns:range="clr-namespace:Common.ValueRanges;assembly=Common"
         mc:Ignorable="d"
-        Title="PathFindWindow" 
+        Title="Algorithms" 
         SizeToContent="WidthAndHeight">
     <Window.Resources>
         <converters:StringToRangedDoubleConverter x:Key="sliderValueConverter"></converters:StringToRangedDoubleConverter>
-        <converters:ToStringConverter x:Key="algorithmKeyConverter"></converters:ToStringConverter>
     </Window.Resources>
     <Grid>
         <Grid.RowDefinitions>
@@ -30,7 +29,7 @@
                  SelectedItem="{Binding Path = AlgorithmKey}">
             <ListBox.ItemTemplate>
                 <DataTemplate>
-                    <TextBlock Margin="3" Text="{Binding Converter={StaticResource algorithmKeyConverter}}"/>
+                    <TextBlock Margin="3" Text="{Binding}"/>
                 </DataTemplate>
             </ListBox.ItemTemplate>
         </ListBox>
