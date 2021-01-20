@@ -66,12 +66,14 @@ namespace WPFVersion3D.Infrastructure.Animations
 
         private double AngleAmplitude => EndAngle - StartAngle;
 
+        private DurationCalculateFunction DurationCalculateFunctions { get; set; }
+        private AnimationCreateFunction AnimationCreateFunctions { get; set; }
+
         private double InitialDuration => 3000;
 
         private readonly AxisAngleRotation3D axis;
         private readonly RotationDirection direction;
 
-        private DurationCalculateFunction DurationCalculateFunctions { get; set; }
-        private AnimationCreateFunction AnimationCreateFunctions { get; set; }
+
     }
 }
