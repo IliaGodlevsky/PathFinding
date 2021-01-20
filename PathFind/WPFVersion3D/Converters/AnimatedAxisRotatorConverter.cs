@@ -23,7 +23,7 @@ namespace WPFVersion3D.Converters
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            return (RotationDirection)value == RotationDirection.Forward ? true : false;
+            return (RotationDirection)value == RotationDirection.Forward;
         }
 
         private bool IsValidParametres(object value, object parametres)
