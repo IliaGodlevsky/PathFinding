@@ -11,8 +11,8 @@ namespace WPFVersion.View.Windows
         public PathFindWindow()
         {
             InitializeComponent();
-            delayTimeSlider.Minimum = Range.DelayValueRange.LowerRange;
-            delayTimeSlider.Maximum = Range.DelayValueRange.UpperRange;
+            delayTimeSlider.Minimum = Range.DelayValueRange.LowerValueOfRange;
+            delayTimeSlider.Maximum = Range.DelayValueRange.UpperValueOfRange;
         }
     }
 }

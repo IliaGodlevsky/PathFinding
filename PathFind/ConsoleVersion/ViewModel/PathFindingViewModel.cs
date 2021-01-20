@@ -44,8 +44,8 @@ namespace ConsoleVersion.ViewModel
 
                 DelayTime = Input.InputNumber(
                     ConsoleVersionResources.DelayTimeInputMsg,
-                    Range.DelayValueRange.UpperRange,
-                    Range.DelayValueRange.LowerRange);
+                    Range.DelayValueRange.UpperValueOfRange,
+                    Range.DelayValueRange.LowerValueOfRange);
 
                 base.FindPath();
             }

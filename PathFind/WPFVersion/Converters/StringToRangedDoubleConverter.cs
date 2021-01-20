@@ -27,7 +27,7 @@ namespace WPFVersion.Converters
                     }
                     else
                     {
-                        result = (parameter as ValueRange).UpperRange;
+                        result = (parameter as ValueRange).UpperValueOfRange;
                     }
                 }
             }

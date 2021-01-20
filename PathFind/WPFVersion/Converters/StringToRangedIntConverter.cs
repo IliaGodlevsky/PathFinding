@@ -22,7 +22,7 @@ namespace WPFVersion.Converters
                 {
                     if (!range.IsInRange(result))
                     {
-                        result = range.LowerRange;
+                        result = range.LowerValueOfRange;
                     }
                 }
             }

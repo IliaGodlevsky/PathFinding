@@ -17,8 +17,8 @@ namespace ConsoleVersion.Model
             {
                 var cost = Input.InputNumber(
                     ConsoleVersionResources.VertexCostInputMsg,
-                      Range.VertexCostRange.UpperRange,
-                      Range.VertexCostRange.LowerRange);
+                      Range.VertexCostRange.UpperValueOfRange,
+                      Range.VertexCostRange.LowerValueOfRange);
 
                 vertex.Cost = new VertexCost(cost);
             }

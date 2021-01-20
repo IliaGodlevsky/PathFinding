@@ -10,7 +10,7 @@ namespace GraphLib.Extensions
         {
             var percentRange = new ValueRange(100, 0);
             percentOfObstacles = percentRange.ReturnInRange(percentOfObstacles);
-            var randomValue = rand.Next(Range.ObstaclePercentValueRange.UpperRange);
+            var randomValue = rand.Next(Range.ObstaclePercentValueRange.UpperValueOfRange);
             return randomValue < percentOfObstacles;
         }
 
@@ -21,8 +21,8 @@ namespace GraphLib.Extensions
         /// <returns></returns>
         internal static VertexCost GetRandomValueCost(this Random rand)
         {
-            var cost = rand.Next(Range.VertexCostRange.UpperRange)
-                + Range.VertexCostRange.LowerRange;
+            var cost = rand.Next(Range.VertexCostRange.UpperValueOfRange)
+                + Range.VertexCostRange.LowerValueOfRange;
 
             return new VertexCost(cost);
         }

@@ -21,7 +21,7 @@ namespace WPFVersion3D.Converters
                 {
                     if (!range.IsInRange(result))
                     {
-                        result = range.LowerRange;
+                        result = range.LowerValueOfRange;
                     }
                 }
             }

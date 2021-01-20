@@ -29,14 +29,14 @@ namespace WindowsFormsVersion.View
             {
                 e.Value = ConvertFromString(
                     e.Value.ToString(),
-                    Range.WidthValueRange.LowerRange);
+                    Range.WidthValueRange.LowerValueOfRange);
             }
 
             void StringToHeight(object sender, ConvertEventArgs e)
             {
                 e.Value = ConvertFromString(
                     e.Value.ToString(),
-                    Range.HeightValueRange.LowerRange);
+                    Range.HeightValueRange.LowerValueOfRange);
             }
 
             void IntToString(object sender, ConvertEventArgs e)
@@ -70,8 +70,8 @@ namespace WindowsFormsVersion.View
                 DataSourceUpdateMode.OnPropertyChanged);
             obstacleSlider.DataBindings.Add(bindTextBoxAndSlider);
 
-            obstacleSlider.Maximum = Range.ObstaclePercentValueRange.UpperRange;
-            obstacleSlider.Minimum = Range.ObstaclePercentValueRange.LowerRange;
+            obstacleSlider.Maximum = Range.ObstaclePercentValueRange.UpperValueOfRange;
+            obstacleSlider.Minimum = Range.ObstaclePercentValueRange.LowerValueOfRange;
 
             var bindObstaclePercent = new Binding(
                 nameof(obstacleTextBox.Text),

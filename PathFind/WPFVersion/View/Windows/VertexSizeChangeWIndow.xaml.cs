@@ -11,8 +11,8 @@ namespace WPFVersion.View.Windows
         public VertexSizeChangeWindow()
         {
             InitializeComponent();
-            sizeSlider.Minimum = Range.VertexSizeRange.LowerRange;
-            sizeSlider.Maximum = Range.VertexSizeRange.UpperRange;
+            sizeSlider.Minimum = Range.VertexSizeRange.LowerValueOfRange;
+            sizeSlider.Maximum = Range.VertexSizeRange.UpperValueOfRange;
         }
     }
 }

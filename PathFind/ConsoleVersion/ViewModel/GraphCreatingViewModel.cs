@@ -24,18 +24,18 @@ namespace ConsoleVersion.ViewModel
         {
             ObstaclePercent = Input.InputNumber(
                 ObstaclePercentInputMessage,
-                Range.ObstaclePercentValueRange.UpperRange,
-                Range.ObstaclePercentValueRange.LowerRange);
+                Range.ObstaclePercentValueRange.UpperValueOfRange,
+                Range.ObstaclePercentValueRange.LowerValueOfRange);
 
             Width = Input.InputNumber(
                 WidthInputMessage,
-                Range.WidthValueRange.UpperRange,
-                Range.WidthValueRange.LowerRange);
+                Range.WidthValueRange.UpperValueOfRange,
+                Range.WidthValueRange.LowerValueOfRange);
 
             Length = Input.InputNumber(
                 HeightInputMessage,
-                Range.HeightValueRange.UpperRange,
-                Range.HeightValueRange.LowerRange);
+                Range.HeightValueRange.UpperValueOfRange,
+                Range.HeightValueRange.LowerValueOfRange);
 
             base.CreateGraph(generator);
         }

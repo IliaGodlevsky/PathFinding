@@ -27,7 +27,7 @@ namespace WPFVersion3D.Converters
                     }
                     else
                     {
-                        result = sliderValueRange.UpperRange;
+                        result = sliderValueRange.UpperValueOfRange;
                     }
                 }
             }
