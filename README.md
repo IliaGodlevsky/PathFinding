@@ -9,7 +9,7 @@
  
  3. [A* algorithm](https://github.com/IliaGodlevsky/PathFinding/blob/master/PathFind/Algorithm/Algorithms/AStarAlgorithm.cs) ([with modification](https://github.com/IliaGodlevsky/PathFinding/blob/master/PathFind/Algorithm/Algorithms/AStartModified.cs))
   
- 4. [Greedy algorithm](https://github.com/IliaGodlevsky/PathFinding/blob/master/PathFind/Algorithm/Algorithms/AStartModified.cs)
+ 4. [Greedy algorithm](https://github.com/IliaGodlevsky/PathFinding/blob/master/PathFind/Algorithm/Algorithms/DepthFirstAlgorithm.cs)
  
  ***
  
