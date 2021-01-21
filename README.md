@@ -3,13 +3,13 @@
  
  **_Realized 4 pathfinding algorithms_**:
  
- 1. [Lee algorithm](https://github.com/IliaGodlevsky/PathFinding/blob/master/PathFind/Algorithm/PathFindingAlgorithms/LeeAlgorithm.cs)
+ 1. [Lee algorithm](https://github.com/IliaGodlevsky/PathFinding/blob/master/PathFind/Algorithm/Algorithms/LeeAlgorithm.cs)
  
- 2. [Dijkstra algorithm](https://github.com/IliaGodlevsky/PathFinding/blob/master/PathFind/Algorithm/PathFindingAlgorithms/DijkstraAlgorithm.cs)
+ 2. [Dijkstra algorithm](https://github.com/IliaGodlevsky/PathFinding/blob/master/PathFind/Algorithm/Algorithms/DijkstraAlgorithm.cs)
  
- 3. [A* algorithm](https://github.com/IliaGodlevsky/PathFinding/blob/master/PathFind/Algorithm/PathFindingAlgorithms/AStarAlgorithm.cs) ([with modification](https://github.com/IliaGodlevsky/PathFinding/blob/master/PathFind/GraphLibrary/PathFindingAlgorithm/AStartModified.cs))
+ 3. [A* algorithm](https://github.com/IliaGodlevsky/PathFinding/blob/master/PathFind/Algorithm/Algorithms/AStarAlgorithm.cs) ([with modification](https://github.com/IliaGodlevsky/PathFinding/blob/master/PathFind/GraphLibrary/Algorithms/AStartModified.cs))
   
- 4. [Greedy algorithm](https://github.com/IliaGodlevsky/PathFinding/blob/master/PathFind/Algorithm/PathFindingAlgorithms/AStartModified.cs)
+ 4. [Greedy algorithm](https://github.com/IliaGodlevsky/PathFinding/blob/master/PathFind/Algorithm/Algorithms/AStartModified.cs)
  
  ***
  
