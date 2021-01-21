@@ -12,6 +12,6 @@ namespace GraphLib.Graphs.Serialization.Interfaces
         void SaveGraph(IGraph graph, string path);
 
         IGraph LoadGraph(string path,
-            Func<VertexInfo, IVertex> vertexFactory);
+            Func<VertexSerializationInfo, IVertex> vertexFactory);
     }
 }

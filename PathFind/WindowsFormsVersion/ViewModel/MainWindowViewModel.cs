@@ -64,7 +64,7 @@ namespace WindowsFormsVersion.ViewModel
             VertexEventHolder = new VertexEventHolder();
             graphField = new WinFormsGraphField();
             FieldFactory = new GraphFieldFactory();
-            InfoConverter = (dto) => new Vertex(dto);
+            SerializationInfoConverter = (serializationInfo) => new Vertex(serializationInfo);
         }
 
         public override void FindPath()

@@ -28,7 +28,7 @@ namespace WPFVersion3D.Model
             this.Initialize();
         }
 
-        public Vertex3D(VertexInfo info) : this()
+        public Vertex3D(VertexSerializationInfo info) : this()
         {
             this.Initialize(info);
         }

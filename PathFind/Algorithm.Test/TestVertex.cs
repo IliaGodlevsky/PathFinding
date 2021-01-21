@@ -14,7 +14,7 @@ namespace Algorithm.Test
             this.Initialize();
         }
 
-        public TestVertex(VertexInfo info) : this()
+        public TestVertex(VertexSerializationInfo info) : this()
         {
             this.Initialize(info);
         }

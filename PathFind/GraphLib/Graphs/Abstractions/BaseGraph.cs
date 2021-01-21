@@ -45,8 +45,8 @@ namespace GraphLib.Graphs.Abstractions
             set { start = value; start.IsStart = true; }
         }
 
-        public VertexInfoCollection VertexInfoCollection
-            => new VertexInfoCollection(vertices, DimensionsSizes.ToArray());
+        public GraphSerializationInfo SerializationInfo
+            => new GraphSerializationInfo(vertices, DimensionsSizes.ToArray());
 
         public IEnumerable<int> DimensionsSizes { get; private set; }
 

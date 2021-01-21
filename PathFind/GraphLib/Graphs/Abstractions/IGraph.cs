@@ -12,9 +12,9 @@ namespace GraphLib.Graphs.Abstractions
     public interface IGraph : IEnumerable<IVertex>, IDefault
     {
         /// <summary>
-        /// Returns a collection of <see cref="Info.VertexInfo"/>
+        /// Returns a collection of <see cref="Info.VertexSerializationInfo"/>
         /// </summary>
-        VertexInfoCollection VertexInfoCollection { get; }
+        GraphSerializationInfo SerializationInfo { get; }
 
         IVertex this[ICoordinate coordinate] { get; set; }
 

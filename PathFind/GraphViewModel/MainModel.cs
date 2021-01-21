@@ -30,7 +30,7 @@ namespace GraphViewModel
 
         public BaseGraphFieldFactory FieldFactory { get; set; }
 
-        public Func<VertexInfo, IVertex> InfoConverter { get; set; }
+        public Func<VertexSerializationInfo, IVertex> SerializationInfoConverter { get; set; }
 
         public MainModel()
         {
@@ -48,7 +48,7 @@ namespace GraphViewModel
         public virtual void LoadGraph()
         {
             var loadPath = GetLoadingPath();
-            var newGraph = Serializer.LoadGraph(loadPath, InfoConverter);
+            var newGraph = Serializer.LoadGraph(loadPath, SerializationInfoConverter);
             ConnectNewGraph(newGraph);
         }
 

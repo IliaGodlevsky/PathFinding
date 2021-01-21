@@ -43,7 +43,7 @@ namespace GraphLib.Extensions
             vertex.IsObstacle = false;
         }
 
-        public static void Initialize(this IVertex vertex, VertexInfo info)
+        public static void Initialize(this IVertex vertex, VertexSerializationInfo info)
         {
             vertex.Position = (ICoordinate)info.Position.Clone();
             vertex.Cost = (VertexCost)info.Cost.Clone();
@@ -88,9 +88,9 @@ namespace GraphLib.Extensions
             self.Neighbours.Clear();
         }
 
-        internal static VertexInfo GetInfo(this IVertex self)
+        internal static VertexSerializationInfo GetSerializationInfo(this IVertex self)
         {
-            return new VertexInfo(self);
+            return new VertexSerializationInfo(self);
         }
 
         /// <summary>

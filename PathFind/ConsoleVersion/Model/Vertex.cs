@@ -20,7 +20,7 @@ namespace ConsoleVersion.Model
             this.Initialize();
         }
 
-        public Vertex(VertexInfo info) : this()
+        public Vertex(VertexSerializationInfo info) : this()
         {
             this.Initialize(info);
         }

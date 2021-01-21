@@ -38,8 +38,8 @@ namespace GraphLib.Graphs
 
         public IVertex Start { get => defaultVertex; set => _ = value; }
 
-        public VertexInfoCollection VertexInfoCollection
-            => new VertexInfoCollection(array, DimensionsSizes.ToArray());
+        public GraphSerializationInfo SerializationInfo
+            => new GraphSerializationInfo(array, DimensionsSizes.ToArray());
 
         public IEnumerable<int> DimensionsSizes => new int[] { };
 

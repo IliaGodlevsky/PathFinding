@@ -19,7 +19,7 @@ namespace ConsoleVersion.ViewModel
         {
             VertexEventHolder = new VertexEventHolder();
             FieldFactory = new GraphFieldFactory();
-            InfoConverter = (info) => new Vertex(info);
+            SerializationInfoConverter = (serializationInfo) => new Vertex(serializationInfo);
         }
 
         [MenuItem("Make unweighted")]

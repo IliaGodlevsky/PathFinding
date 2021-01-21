@@ -62,7 +62,7 @@ namespace WPFVersion.ViewModel
             GraphField = new GraphField();
             VertexEventHolder = new VertexEventHolder();
             FieldFactory = new GraphFieldFactory();
-            InfoConverter = (dto) => new Vertex(dto);
+            SerializationInfoConverter = (serializationInfo) => new Vertex(serializationInfo);
 
             StartPathFindCommand = new RelayCommand(ExecuteStartPathFindCommand, CanExecuteStartFindPathCommand);
             CreateNewGraphCommand = new RelayCommand(ExecuteCreateNewGraphCommand);

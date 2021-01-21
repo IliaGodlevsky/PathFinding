@@ -6,9 +6,9 @@ using System;
 namespace GraphLib.Info
 {
     [Serializable]
-    public sealed class VertexInfo
+    public sealed class VertexSerializationInfo
     {
-        public VertexInfo(IVertex vertex)
+        public VertexSerializationInfo(IVertex vertex)
         {
             IsObstacle = vertex.IsObstacle;
             Cost = (VertexCost)vertex.Cost.Clone();

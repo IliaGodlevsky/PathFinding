@@ -31,13 +31,13 @@ namespace GraphLib.Graphs.Serialization
         }
 
         public IGraph LoadGraph(string path,
-            Func<VertexInfo, IVertex> vertexConvertMethod)
+            Func<VertexSerializationInfo, IVertex> vertexConvertMethod)
         {
             try
             {
                 using (var stream = new FileStream(path, FileMode.Open))
                 {
-                    var verticesInfo = (VertexInfoCollection)formatter.Deserialize(stream);
+                    var verticesInfo = (GraphSerializationInfo)formatter.Deserialize(stream);
                     var dimensions = verticesInfo.DimensionsSizes.ToArray();
 
                     var activator = GetActivator<TGraph>();
@@ -68,7 +68,7 @@ namespace GraphLib.Graphs.Serialization
             {
                 using (var stream = new FileStream(path, FileMode.OpenOrCreate))
                 {
-                    formatter.Serialize(stream, graph.VertexInfoCollection);
+                    formatter.Serialize(stream, graph.SerializationInfo);
                 }
             }
             catch (Exception ex)

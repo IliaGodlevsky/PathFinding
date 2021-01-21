@@ -9,19 +9,19 @@ using System.Linq;
 namespace GraphLib.Graphs.Serialization.Infrastructure.Info.Collections
 {
     [Serializable]
-    public sealed class VertexInfoCollection : IEnumerable<VertexInfo>
+    public sealed class GraphSerializationInfo : IEnumerable<VertexSerializationInfo>
     {
-        public VertexInfoCollection(IEnumerable<IVertex> vertices,
+        public GraphSerializationInfo(IEnumerable<IVertex> vertices,
             params int[] dimensionsSizes)
         {
             DimensionsSizes = dimensionsSizes.ToArray();
-            verticesDto = vertices.Select(vertex => vertex.GetInfo()).ToArray();
+            verticesDto = vertices.Select(vertex => vertex.GetSerializationInfo()).ToArray();
         }
 
         public IEnumerable<int> DimensionsSizes { get; private set; }
 
 
-        public IEnumerator<VertexInfo> GetEnumerator()
+        public IEnumerator<VertexSerializationInfo> GetEnumerator()
         {
             return verticesDto.GetEnumerator();
         }
@@ -31,6 +31,6 @@ namespace GraphLib.Graphs.Serialization.Infrastructure.Info.Collections
             return verticesDto.GetEnumerator();
         }
 
-        private readonly IEnumerable<VertexInfo> verticesDto;
+        private readonly IEnumerable<VertexSerializationInfo> verticesDto;
     }
 }
