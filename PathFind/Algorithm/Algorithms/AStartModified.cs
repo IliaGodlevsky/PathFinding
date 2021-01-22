@@ -15,9 +15,9 @@ namespace Algorithm.Algorithms
         public AStarModified(IGraph graph) : base(graph)
         {
             deletedVertices = new List<IVertex>();
-            percentRange = new ValueRange(99, 0);
-            var partOfVertexToDelete = Math.Floor(Math.Log(graph.Size + 1, 4));
-            PersentOfFarthestVerticesToDelete = Convert.ToInt32(partOfVertexToDelete);
+            percentValueRange = new ValueRange(99, 0);
+            PercentOfFarthestVerticesToDelete 
+                = CalculatePercentOfFarthestVerticesToDelete();
         }
 
         public override void FindPath()
@@ -32,7 +32,8 @@ namespace Algorithm.Algorithms
             {
                 IVertex next = new DefaultVertex();
                 verticesQueue.Sort(CompareByHeuristic);
-                var verticesToDelete = verticesQueue.Take(VerticesCountToDelete);
+                var verticesToDelete 
+                    = verticesQueue.Take(VerticesCountToDelete);
                 deletedVertices.AddRange(verticesToDelete);
                 verticesQueue.RemoveRange(0, VerticesCountToDelete);
                 next = base.NextVertex;
@@ -51,25 +52,31 @@ namespace Algorithm.Algorithms
         }
 
         private int VerticesCountToDelete =>
-            verticesQueue.Count * PersentOfFarthestVerticesToDelete / 100;
+            verticesQueue.Count * PercentOfFarthestVerticesToDelete / 100;
 
-        private int persentOfFarthestVerticesToDelete;
+        private int percentOfFarthestVerticesToDelete;
 
-        private int PersentOfFarthestVerticesToDelete
+        private int PercentOfFarthestVerticesToDelete
         {
-            get => persentOfFarthestVerticesToDelete;
+            get => percentOfFarthestVerticesToDelete;
             set
             {
-                persentOfFarthestVerticesToDelete = value;
-                if (!percentRange.IsInRange(persentOfFarthestVerticesToDelete))
+                percentOfFarthestVerticesToDelete = value;
+                if (!percentValueRange.IsInRange(percentOfFarthestVerticesToDelete))
                 {
-                    persentOfFarthestVerticesToDelete =
-                        percentRange.ReturnInRange(persentOfFarthestVerticesToDelete);
+                    percentOfFarthestVerticesToDelete =
+                        percentValueRange.ReturnInRange(percentOfFarthestVerticesToDelete);
                 }
             }
         }
 
-        private readonly ValueRange percentRange;
+        private int CalculatePercentOfFarthestVerticesToDelete()
+        {
+            var partOfVertexToDelete = Math.Floor(Math.Log(Graph.Size + 1, 4));
+            return Convert.ToInt32(partOfVertexToDelete);
+        }
+
+        private readonly ValueRange percentValueRange;
         private readonly List<IVertex> deletedVertices;
     }
 }
