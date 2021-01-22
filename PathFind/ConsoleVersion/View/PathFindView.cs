@@ -1,9 +1,6 @@
 ﻿using Algorithm.AlgorithmCreating;
-using Common.Extensions;
 using ConsoleVersion.View.Interface;
 using ConsoleVersion.ViewModel;
-using System.Linq;
-using System.Text;
 
 namespace ConsoleVersion.View
 {
@@ -15,7 +12,8 @@ namespace ConsoleVersion.View
         {
             Model = model;
 
-            Model.AlgorithmKeyInputMessage = AlgorithmsList + ConsoleVersionResources.ChooseAlrorithm;
+            var algorithmList = Menu.CreateMenu(AlgorithmFactory.AlgorithmsDescriptions, 1);
+            Model.AlgorithmKeyInputMessage = algorithmList + ConsoleVersionResources.ChooseAlrorithm;
             Model.StartVertexInputMessage = "\n" + ConsoleVersionResources.StartVertexPointInputMsg;
             Model.EndVertexInputMessage = ConsoleVersionResources.EndVertexCoordinateInputMsg;
         }
@@ -23,23 +21,6 @@ namespace ConsoleVersion.View
         public void Start()
         {
             Model.FindPath();
-        }
-
-        private string AlgorithmsList
-        {
-            get
-            {
-                var algorithmList = new StringBuilder("\n");
-                var algorithmKeys = AlgorithmFactory.AlgorithmsDescriptions.ToArray();
-
-                for (int i = 0; i < algorithmKeys.Length; i++)
-                {
-                    string format = ConsoleVersionResources.MenuFormat;
-                    algorithmList.AppendFormatLine(format, i + 1, algorithmKeys[i]);
-                }
-
-                return algorithmList.ToString();
-            }
         }
     }
 }

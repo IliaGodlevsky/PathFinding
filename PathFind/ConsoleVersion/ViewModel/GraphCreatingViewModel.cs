@@ -1,5 +1,8 @@
 ﻿using Common.ValueRanges;
 using ConsoleVersion.InputClass;
+using ConsoleVersion.View;
+using GraphLib.Coordinates;
+using GraphLib.Graphs;
 using GraphLib.Vertex.Interface;
 using GraphLib.ViewModel;
 using GraphViewModel.Interfaces;
@@ -38,6 +41,16 @@ namespace ConsoleVersion.ViewModel
                 Range.HeightValueRange.LowerValueOfRange);
 
             base.CreateGraph(generator);
+
+            int graphParametresLineWidth = 1;
+            int abscissaLineWidth = 2;
+            int numberOfAbscissaLines = 2;
+
+            int statisticsOffset = graphParametresLineWidth 
+                + abscissaLineWidth * numberOfAbscissaLines;
+
+            MainView.PathfindingStatisticsConsoleStartCoordinate
+                = new Coordinate2D(0, (model.Graph as Graph2D).Length + statisticsOffset);
         }
     }
 }

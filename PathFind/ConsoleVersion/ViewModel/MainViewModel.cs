@@ -82,9 +82,6 @@ namespace ConsoleVersion.ViewModel
             }
         }
 
-        [MenuItem("Clear graph", MenuItemPriority.High)]
-        public override void ClearGraph() => base.ClearGraph();
-
         [MenuItem("Save graph")]
         public override void SaveGraph() => base.SaveGraph();
 
@@ -97,7 +94,7 @@ namespace ConsoleVersion.ViewModel
         public void DisplayGraph()
         {
             Console.Clear();
-            Console.ForegroundColor = Color.White;
+            Console.ForegroundColor = Color.White;            
             Console.WriteLine(GraphParametres);
             var field = GraphField as ConsoleGraphField;
             field?.ShowGraphWithFrames();

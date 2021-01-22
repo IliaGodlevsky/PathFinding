@@ -1,6 +1,7 @@
 ﻿using ConsoleVersion.Model;
 using ConsoleVersion.View.Interface;
 using ConsoleVersion.ViewModel;
+using GraphLib.Coordinates;
 
 namespace ConsoleVersion.View
 {
@@ -19,7 +20,7 @@ namespace ConsoleVersion.View
 
         public void Start()
         {
-            Model.CreateGraph(() => new Vertex());
+            Model.CreateGraph(() => new Vertex());          
         }
     }
 }

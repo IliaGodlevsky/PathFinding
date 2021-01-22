@@ -126,7 +126,9 @@ namespace ConsoleVersion.View
                     var coordinate = new Coordinate2D(width, length);
                     int index = coordinate.ToIndex(Length);
 
-                    ShowVertex(vertices[index]);
+                    var vertex = vertices[index];
+
+                    ShowVertex(vertex);
 
                     if (IsEndOfRow(width))
                     {

@@ -1,7 +1,9 @@
 ﻿using Algorithm.AlgorithmCreating;
+using Algorithm.EventArguments;
 using Common.ValueRanges;
 using ConsoleVersion.InputClass;
 using ConsoleVersion.Model;
+using ConsoleVersion.View;
 using GraphLib.Coordinates;
 using GraphLib.Extensions;
 using GraphLib.Graphs;
@@ -9,12 +11,13 @@ using GraphLib.ViewModel;
 using GraphViewModel.Interfaces;
 using System;
 using System.Linq;
-using System.Threading;
 
 namespace ConsoleVersion.ViewModel
 {
     internal class PathFindingViewModel : PathFindingModel
     {
+        public static Coordinate2D ConsoleCoordinates { get; set; }
+
         public string AlgorithmKeyInputMessage { private get; set; }
 
         public string EndVertexInputMessage { private get; set; }
@@ -48,6 +51,10 @@ namespace ConsoleVersion.ViewModel
                     Range.DelayValueRange.LowerValueOfRange);
 
                 base.FindPath();
+
+                Console.ReadLine();
+                mainModel.ClearGraph();
+                Console.CursorVisible = true;
             }
         }
 
@@ -56,21 +63,18 @@ namespace ConsoleVersion.ViewModel
             return;
         }
 
-        protected override void OnAlgorithmStarted(object sender, EventArgs e)
+        protected override void OnVertexVisited(object sender, EventArgs e)
         {
-            IsPathfindingEnded = false;
-            base.OnAlgorithmStarted(sender, e);
-
-            thread = new Thread(DisplayGraphDuringPathfinding);
-            thread.Start();
+            base.OnVertexVisited(sender, e);
+            var coordinate = MainView.PathfindingStatisticsConsoleStartCoordinate;
+            Console.SetCursorPosition(coordinate.X, coordinate.Y);
+            Console.Write(mainViewModel.PathFindingStatistics);          
         }
 
-        protected override void OnAlgorithmFinished(object sender, EventArgs e)
+        protected override void OnAlgorithmStarted(object sender, EventArgs e)
         {
-            IsPathfindingEnded = true;
-            thread.Join();
-
-            base.OnAlgorithmFinished(sender, e);
+            base.OnAlgorithmStarted(sender, e);
+            Console.CursorVisible = false;
         }
 
         private int GetAlgorithmKeyIndex()
@@ -93,7 +97,10 @@ namespace ConsoleVersion.ViewModel
             {
                 var point = ChoosePoint(chooseMessages[i]);
                 var vertex = mainViewModel.Graph[point] as Vertex;
+                var cursorLeft = Console.CursorLeft;
+                var cursorTop = Console.CursorTop;
                 vertex.SetAsExtremeVertex();
+                Console.SetCursorPosition(cursorLeft, cursorTop);
             }
         }
 
@@ -113,20 +120,6 @@ namespace ConsoleVersion.ViewModel
 
             return point;
         }
-
-        private void DisplayGraphDuringPathfinding()
-        {
-            var mainModel = mainViewModel as MainViewModel;
-            while (!IsPathfindingEnded)
-            {
-                Thread.Sleep(millisecondsTimeout: 135);
-                mainModel.DisplayGraph();
-            }
-        }
-
-        private bool IsPathfindingEnded { get; set; }
-
-        private Thread thread;
 
         private readonly int maxAlgorithmKeysNumber;
         private readonly int minAlgorithmKeysNumber;

@@ -1,4 +1,6 @@
-﻿using GraphLib.Coordinates.Abstractions;
+﻿using ConsoleVersion.View;
+using GraphLib.Coordinates;
+using GraphLib.Coordinates.Abstractions;
 using GraphLib.Extensions;
 using GraphLib.Info;
 using GraphLib.Vertex.Cost;
@@ -76,11 +78,13 @@ namespace ConsoleVersion.Model
         public void MarkAsEnd()
         {
             Colour = Color.FromKnownColor(KnownColor.Red);
+            ColorizeVertex();
         }
 
         public void MarkAsSimpleVertex()
         {
             Colour = Color.FromKnownColor(KnownColor.White);
+            ColorizeVertex();
         }
 
         public void MarkAsObstacle()
@@ -92,21 +96,25 @@ namespace ConsoleVersion.Model
         public void MarkAsPath()
         {
             Colour = Color.FromKnownColor(KnownColor.Yellow);
+            ColorizeVertex();
         }
 
         public void MarkAsStart()
         {
             Colour = Color.FromKnownColor(KnownColor.Green);
+            ColorizeVertex();
         }
 
         public void MarkAsVisited()
         {
             Colour = Color.FromKnownColor(KnownColor.Blue);
+            ColorizeVertex();
         }
 
         public void MarkAsEnqueued()
         {
             Colour = Color.FromKnownColor(KnownColor.Magenta);
+            ColorizeVertex();
         }
 
         public void MakeUnweighted()
@@ -119,6 +127,35 @@ namespace ConsoleVersion.Model
         {
             cost.MakeWeighted();
             Text = cost.ToString("#");
+        }
+
+        private Coordinate2D consoleCoordinate;
+
+        private Coordinate2D ConsoleCoordinate
+        {
+            get
+            {
+                if (consoleCoordinate == null)
+                {
+                    if (Position != null)
+                    {
+                        var position = Position as Coordinate2D;
+                        var left = MainView.GraphFieldBodyConsoleStartCoordinate.X + position.X * 3;
+                        var top = MainView.GraphFieldBodyConsoleStartCoordinate.Y + position.Y;
+                        consoleCoordinate = new Coordinate2D(left, top);
+                    }
+                }
+                return consoleCoordinate;
+            }
+        }
+
+        private void ColorizeVertex()
+        {
+            if (ConsoleCoordinate != null)
+            {
+                Console.SetCursorPosition(ConsoleCoordinate.X, ConsoleCoordinate.Y);
+                Colorful.Console.Write(Text, Colour);
+            }
         }
     }
 }

@@ -1,6 +1,7 @@
 ﻿using ConsoleVersion.InputClass;
 using ConsoleVersion.View.Interface;
 using ConsoleVersion.ViewModel;
+using GraphLib.Coordinates;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,6 +11,15 @@ namespace ConsoleVersion.View
 {
     internal class MainView : IView
     {
+        public static Coordinate2D GraphFieldBodyConsoleStartCoordinate { get; set; }       
+
+        public static Coordinate2D PathfindingStatisticsConsoleStartCoordinate { get; set; }
+
+        static MainView()
+        {
+            GraphFieldBodyConsoleStartCoordinate = new Coordinate2D(3, 3);
+        }
+
         public MainView()
         {
             mainModel = new MainViewModel();
