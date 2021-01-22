@@ -25,18 +25,15 @@ namespace ConsoleVersion.ViewModel
 
         public override void CreateGraph(Func<IVertex> generator)
         {
-            ObstaclePercent = Input.InputNumber(
-                ObstaclePercentInputMessage,
+            ObstaclePercent = Input.InputNumber(ObstaclePercentInputMessage,
                 Range.ObstaclePercentValueRange.UpperValueOfRange,
                 Range.ObstaclePercentValueRange.LowerValueOfRange);
 
-            Width = Input.InputNumber(
-                WidthInputMessage,
+            Width = Input.InputNumber(WidthInputMessage,
                 Range.WidthValueRange.UpperValueOfRange,
                 Range.WidthValueRange.LowerValueOfRange);
 
-            Length = Input.InputNumber(
-                HeightInputMessage,
+            Length = Input.InputNumber(HeightInputMessage,
                 Range.HeightValueRange.UpperValueOfRange,
                 Range.HeightValueRange.LowerValueOfRange);
 
