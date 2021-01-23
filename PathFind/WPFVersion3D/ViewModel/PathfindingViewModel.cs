@@ -3,7 +3,6 @@ using Common.Interfaces;
 using GraphLib.ViewModel;
 using GraphViewModel.Interfaces;
 using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
@@ -27,13 +26,6 @@ namespace WPFVersion3D.ViewModel
 
         public ICommand ConfirmPathFindAlgorithmChoice { get; }
         public ICommand CancelPathFindAlgorithmChoice { get; }
-
-        private ObservableCollection<string> algorithmKeys;
-        public override IEnumerable<string> AlgorithmKeys
-        {
-            get => algorithmKeys;
-            set { algorithmKeys = new ObservableCollection<string>(value); OnPropertyChanged(); }
-        }
 
         public PathFindingViewModel(IMainModel model) : base(model)
         {

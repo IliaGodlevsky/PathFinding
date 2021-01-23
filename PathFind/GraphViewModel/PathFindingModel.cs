@@ -21,7 +21,7 @@ namespace GraphLib.ViewModel
 
         public string AlgorithmKey { get; set; }
 
-        public virtual IEnumerable<string> AlgorithmKeys { get; set; }
+        public virtual IList<string> AlgorithmKeys { get; set; }
 
         public PathFindingModel(IMainModel mainViewModel)
         {            

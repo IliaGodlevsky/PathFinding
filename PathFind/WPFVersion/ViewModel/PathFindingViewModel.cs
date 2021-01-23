@@ -3,7 +3,6 @@ using Common.Interfaces;
 using GraphLib.ViewModel;
 using GraphViewModel.Interfaces;
 using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
@@ -23,13 +22,6 @@ namespace WPFVersion.ViewModel
         protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = "")
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
-        }
-
-        private ObservableCollection<string> algorithmKeys;
-        public override IEnumerable<string> AlgorithmKeys 
-        {
-            get => algorithmKeys;
-            set { algorithmKeys = new ObservableCollection<string>(value); OnPropertyChanged(); }
         }
 
         public ICommand ConfirmPathFindAlgorithmChoice { get; }

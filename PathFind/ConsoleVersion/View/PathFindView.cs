@@ -1,6 +1,7 @@
 ﻿using Algorithm.AlgorithmCreating;
 using ConsoleVersion.View.Interface;
 using ConsoleVersion.ViewModel;
+using System.Linq;
 
 namespace ConsoleVersion.View
 {
@@ -12,7 +13,7 @@ namespace ConsoleVersion.View
         {
             Model = model;
 
-            model.AlgorithmKeys = AlgorithmFactory.AlgorithmsDescriptions;
+            model.AlgorithmKeys = AlgorithmFactory.AlgorithmsDescriptions.ToArray();
             var algorithmMenu = Menu.CreateMenu(model.AlgorithmKeys);
             Model.AlgorithmKeyInputMessage = algorithmMenu + ConsoleVersionResources.ChooseAlrorithm;
             Model.StartVertexInputMessage = "\n" + ConsoleVersionResources.StartVertexPointInputMsg;
