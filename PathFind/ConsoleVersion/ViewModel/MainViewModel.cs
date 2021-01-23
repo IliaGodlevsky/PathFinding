@@ -3,6 +3,7 @@ using ConsoleVersion.Enums;
 using ConsoleVersion.InputClass;
 using ConsoleVersion.Model;
 using ConsoleVersion.View;
+using GraphLib.Coordinates;
 using GraphLib.Extensions;
 using GraphLib.Graphs;
 using GraphViewModel;
@@ -86,7 +87,12 @@ namespace ConsoleVersion.ViewModel
         public override void SaveGraph() => base.SaveGraph();
 
         [MenuItem("Load graph")]
-        public override void LoadGraph() => base.LoadGraph();
+        public override void LoadGraph()
+        {
+            base.LoadGraph();
+            MainView.PathfindingStatisticsConsoleStartCoordinate
+                = new Coordinate2D(0, (Graph as Graph2D).Length + 5);
+        }
 
         [MenuItem("Quit programm", MenuItemPriority.Lowest)]
         public void Quit() => Environment.Exit(0);
@@ -96,7 +102,7 @@ namespace ConsoleVersion.ViewModel
             Console.Clear();
             Console.ForegroundColor = Color.White;            
             Console.WriteLine(GraphParametres);
-            var field = GraphField as ConsoleGraphField;
+            var field = GraphField as GraphField;
             field?.ShowGraphWithFrames();
             Console.WriteLine(PathFindingStatistics);
         }

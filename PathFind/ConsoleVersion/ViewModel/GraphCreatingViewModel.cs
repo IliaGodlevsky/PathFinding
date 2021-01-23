@@ -39,15 +39,8 @@ namespace ConsoleVersion.ViewModel
 
             base.CreateGraph(generator);
 
-            int graphParametresLineWidth = 1;
-            int abscissaLineWidth = 2;
-            int numberOfAbscissaLines = 2;
-
-            int statisticsOffset = graphParametresLineWidth 
-                + abscissaLineWidth * numberOfAbscissaLines;
-
             MainView.PathfindingStatisticsConsoleStartCoordinate
-                = new Coordinate2D(0, (model.Graph as Graph2D).Length + statisticsOffset);
+                = new Coordinate2D(0, (model.Graph as Graph2D).Length + 5);
         }
     }
 }

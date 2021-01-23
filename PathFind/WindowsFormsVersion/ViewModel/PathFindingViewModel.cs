@@ -3,6 +3,7 @@ using Common.Interfaces;
 using GraphLib.ViewModel;
 using GraphViewModel.Interfaces;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Windows.Forms;
 
@@ -14,7 +15,7 @@ namespace WindowsFormsVersion.ViewModel
 
         public PathFindingViewModel(IMainModel model) : base(model)
         {
-
+            AlgorithmKeys = new List<string>(AlgorithmFactory.AlgorithmsDescriptions);
         }
 
         public void PathFind(object sender, EventArgs e)

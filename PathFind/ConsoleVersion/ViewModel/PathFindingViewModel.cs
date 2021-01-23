@@ -1,5 +1,4 @@
 ﻿using Algorithm.AlgorithmCreating;
-using Algorithm.EventArguments;
 using Common.ValueRanges;
 using ConsoleVersion.InputClass;
 using ConsoleVersion.Model;
@@ -66,9 +65,13 @@ namespace ConsoleVersion.ViewModel
         protected override void OnVertexVisited(object sender, EventArgs e)
         {
             base.OnVertexVisited(sender, e);
-            var coordinate = MainView.PathfindingStatisticsConsoleStartCoordinate;
-            Console.SetCursorPosition(coordinate.X, coordinate.Y);
-            Console.Write(mainViewModel.PathFindingStatistics);          
+            UpdatePathfindingStatistics();
+        }
+
+        protected override void OnAlgorithmFinished(object sender, EventArgs e)
+        {
+            base.OnAlgorithmFinished(sender, e);
+            UpdatePathfindingStatistics();
         }
 
         protected override void OnAlgorithmStarted(object sender, EventArgs e)
@@ -119,6 +122,13 @@ namespace ConsoleVersion.ViewModel
             }
 
             return point;
+        }
+
+        private void UpdatePathfindingStatistics()
+        {
+            var coordinate = MainView.PathfindingStatisticsConsoleStartCoordinate;
+            Console.SetCursorPosition(coordinate.X, coordinate.Y);
+            Console.Write(mainViewModel.PathFindingStatistics);
         }
 
         private readonly int maxAlgorithmKeysNumber;

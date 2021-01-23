@@ -8,6 +8,7 @@ using GraphLib.Vertex.Interface;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
+using Console = Colorful.Console;
 
 namespace ConsoleVersion.Model
 {
@@ -139,9 +140,11 @@ namespace ConsoleVersion.Model
                 {
                     if (Position != null)
                     {
+                        const int DistanceBetweenVertices = 3;
                         var position = Position as Coordinate2D;
-                        var left = MainView.GraphFieldBodyConsoleStartCoordinate.X + position.X * 3;
-                        var top = MainView.GraphFieldBodyConsoleStartCoordinate.Y + position.Y;
+                        var consolePosition = MainView.GraphFieldBodyConsoleStartCoordinate;
+                        var left = consolePosition.X + position.X * DistanceBetweenVertices;
+                        var top = consolePosition.Y + position.Y;
                         consoleCoordinate = new Coordinate2D(left, top);
                     }
                 }
@@ -154,7 +157,7 @@ namespace ConsoleVersion.Model
             if (ConsoleCoordinate != null)
             {
                 Console.SetCursorPosition(ConsoleCoordinate.X, ConsoleCoordinate.Y);
-                Colorful.Console.Write(Text, Colour);
+                Console.Write(Text, Colour);
             }
         }
     }

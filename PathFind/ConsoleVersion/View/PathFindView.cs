@@ -12,8 +12,9 @@ namespace ConsoleVersion.View
         {
             Model = model;
 
-            var algorithmList = Menu.CreateMenu(AlgorithmFactory.AlgorithmsDescriptions, 1);
-            Model.AlgorithmKeyInputMessage = algorithmList + ConsoleVersionResources.ChooseAlrorithm;
+            model.AlgorithmKeys = AlgorithmFactory.AlgorithmsDescriptions;
+            var algorithmMenu = Menu.CreateMenu(model.AlgorithmKeys);
+            Model.AlgorithmKeyInputMessage = algorithmMenu + ConsoleVersionResources.ChooseAlrorithm;
             Model.StartVertexInputMessage = "\n" + ConsoleVersionResources.StartVertexPointInputMsg;
             Model.EndVertexInputMessage = ConsoleVersionResources.EndVertexCoordinateInputMsg;
         }

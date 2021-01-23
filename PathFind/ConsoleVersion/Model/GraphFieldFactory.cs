@@ -10,7 +10,7 @@ namespace ConsoleVersion.Model
     {
         protected override IGraphField GetField()
         {
-            return new ConsoleGraphField();
+            return new GraphField();
         }
 
         /// <summary>
@@ -20,7 +20,7 @@ namespace ConsoleVersion.Model
         /// <returns>Graph field</returns>
         public override IGraphField CreateGraphField(IGraph graph)
         {
-            var field = base.CreateGraphField(graph) as ConsoleGraphField;
+            var field = base.CreateGraphField(graph) as GraphField;
             var graph2d = graph as Graph2D;
 
             field.Width = graph2d.Width;

@@ -11,7 +11,7 @@ namespace ConsoleVersion.View
 {
     internal class MainView : IView
     {
-        public static Coordinate2D GraphFieldBodyConsoleStartCoordinate { get; set; }       
+        public static Coordinate2D GraphFieldBodyConsoleStartCoordinate { get; set; }
 
         public static Coordinate2D PathfindingStatisticsConsoleStartCoordinate { get; set; }
 
@@ -24,7 +24,7 @@ namespace ConsoleVersion.View
         {
             mainModel = new MainViewModel();
             menuActions = Menu.GetMenuMethodsAsDelegates<Action>(mainModel);
-            menu = Menu.CreateMenu(menuActions.Keys);
+            menu = Menu.CreateMenu(menuActions.Keys, 3);
         }
 
         public void Start()

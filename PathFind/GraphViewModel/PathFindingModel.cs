@@ -8,6 +8,7 @@ using GraphLib.Graphs.Infrastructure;
 using GraphViewModel.Interfaces;
 using GraphViewModel.Resources;
 using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 
 namespace GraphLib.ViewModel
@@ -20,10 +21,12 @@ namespace GraphLib.ViewModel
 
         public string AlgorithmKey { get; set; }
 
+        public virtual IEnumerable<string> AlgorithmKeys { get; set; }
+
         public PathFindingModel(IMainModel mainViewModel)
         {            
             this.mainViewModel = mainViewModel;
-            DelayTime = 4;          
+            DelayTime = 4;
         }
 
         public virtual void FindPath()
@@ -32,7 +35,6 @@ namespace GraphLib.ViewModel
                 CreateAlgorithm(AlgorithmKey, mainViewModel.Graph);
 
             intermitter = new AlgorithmIntermit(DelayTime);
-            intermitter.OnIntermitted += OnAlgorithmIntermitted;
 
             algorithm.OnVertexEnqueued += OnVertexEnqueued;
             algorithm.OnVertexVisited += OnVertexVisited;
@@ -45,8 +47,6 @@ namespace GraphLib.ViewModel
             algorithm.OnVertexVisited -= OnVertexVisited;
             algorithm.OnFinished -= OnAlgorithmFinished;
             algorithm.OnStarted -= OnAlgorithmStarted;
-
-            intermitter.OnIntermitted -= OnAlgorithmIntermitted;
         }
 
         protected abstract void OnAlgorithmIntermitted();
@@ -64,6 +64,7 @@ namespace GraphLib.ViewModel
                     steps: 0, pathLength: 0, args.Graph.NumberOfVisitedVertices);
 
                 intermitter.Intermit();
+                OnAlgorithmIntermitted();
             }
         }
 

@@ -11,13 +11,13 @@ using Console = Colorful.Console;
 
 namespace ConsoleVersion.View
 {
-    internal class ConsoleGraphField : IGraphField
+    internal class GraphField : IGraphField
     {
         public int Width { get; set; }
 
         public int Length { get; set; }
 
-        public ConsoleGraphField()
+        public GraphField()
         {
             vertices = new List<Vertex>();
         }

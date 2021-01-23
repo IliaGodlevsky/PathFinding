@@ -3,26 +3,47 @@ using Common.Interfaces;
 using GraphLib.ViewModel;
 using GraphViewModel.Interfaces;
 using System;
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.ComponentModel;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Windows.Input;
 using System.Windows.Threading;
 using WPFVersion3D.Infrastructure;
 
 namespace WPFVersion3D.ViewModel
 {
-    internal class PathFindingViewModel : PathFindingModel, IViewModel
+    internal class PathFindingViewModel : PathFindingModel, IViewModel, INotifyPropertyChanged
     {
         public event EventHandler OnWindowClosed;
 
+        public event PropertyChangedEventHandler PropertyChanged;
+
+        protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = "")
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        }
+
         public ICommand ConfirmPathFindAlgorithmChoice { get; }
         public ICommand CancelPathFindAlgorithmChoice { get; }
+
+        private ObservableCollection<string> algorithmKeys;
+        public override IEnumerable<string> AlgorithmKeys
+        {
+            get => algorithmKeys;
+            set { algorithmKeys = new ObservableCollection<string>(value); OnPropertyChanged(); }
+        }
 
         public PathFindingViewModel(IMainModel model) : base(model)
         {
             ConfirmPathFindAlgorithmChoice = new RelayCommand(
                 ExecuteConfirmPathFindAlgorithmChoice,
                 CanExecuteConfirmPathFindAlgorithmChoice);
+
             CancelPathFindAlgorithmChoice = new RelayCommand(obj => CloseWindow());
+
+            AlgorithmKeys = new ObservableCollection<string>(AlgorithmFactory.AlgorithmsDescriptions);
         }
 
         protected override void OnAlgorithmIntermitted()
