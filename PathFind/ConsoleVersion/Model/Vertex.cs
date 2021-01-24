@@ -149,10 +149,9 @@ namespace ConsoleVersion.Model
                 {
                     if (Position != null)
                     {
-                        const int DistanceBetweenVertices = 3;
                         var position = Position as Coordinate2D;
                         var consolePosition = MainView.GraphFieldPosition;
-                        var left = consolePosition.X + position.X * DistanceBetweenVertices;
+                        var left = consolePosition.X + position.X * MainView.LateralDistanceBetweenVertices;
                         var top = consolePosition.Y + position.Y;
                         consoleCoordinate = new Coordinate2D(left, top);
                     }
