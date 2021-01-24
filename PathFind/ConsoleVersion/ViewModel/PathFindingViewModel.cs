@@ -82,6 +82,8 @@ namespace ConsoleVersion.ViewModel
 
         private int GetAlgorithmKeyIndex()
         {
+            var position = MainView.MainMenuPosition;
+            Console.SetCursorPosition(position.X, position.Y);
             return Input.InputNumber(
                 AlgorithmKeyInputMessage,
                 maxAlgorithmKeysNumber,
@@ -95,15 +97,16 @@ namespace ConsoleVersion.ViewModel
                 StartVertexInputMessage,
                 EndVertexInputMessage
             };
-
+            var position = MainView.MainMenuPosition;
+            Console.SetCursorPosition(position.X, position.Y);
             for (int i = 0; i < chooseMessages.Length; i++)
-            {
+            {               
                 var point = ChoosePoint(chooseMessages[i]);
+                var left = Console.CursorLeft;
+                var top = Console.CursorTop;
                 var vertex = mainViewModel.Graph[point] as Vertex;
-                var cursorLeft = Console.CursorLeft;
-                var cursorTop = Console.CursorTop;
                 vertex.SetAsExtremeVertex();
-                Console.SetCursorPosition(cursorLeft, cursorTop);
+                Console.SetCursorPosition(left, top);
             }
         }
 

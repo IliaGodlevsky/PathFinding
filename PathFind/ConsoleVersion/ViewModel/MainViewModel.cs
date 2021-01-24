@@ -36,6 +36,7 @@ namespace ConsoleVersion.ViewModel
             var view = new GraphCreateView(model);
 
             view.Start();
+            Console.Clear();
         }
 
         [MenuItem("Find path", MenuItemPriority.High)]
@@ -84,14 +85,16 @@ namespace ConsoleVersion.ViewModel
         }
 
         [MenuItem("Save graph")]
-        public override void SaveGraph() => base.SaveGraph();
+        public override void SaveGraph()
+        {
+            base.SaveGraph();
+        }
 
         [MenuItem("Load graph")]
         public override void LoadGraph()
         {
             base.LoadGraph();
-            MainView.PathfindingStatisticsConsoleStartCoordinate
-                = new Coordinate2D(0, (Graph as Graph2D).Length + 5);
+            MainView.SetMenuPositions(Graph as Graph2D);
         }
 
         [MenuItem("Quit programm", MenuItemPriority.Lowest)]
@@ -100,7 +103,8 @@ namespace ConsoleVersion.ViewModel
         public void DisplayGraph()
         {
             Console.Clear();
-            Console.ForegroundColor = Color.White;            
+            Console.ForegroundColor = Color.White;
+            Console.SetCursorPosition(0, 0);
             Console.WriteLine(GraphParametres);
             var field = GraphField as GraphField;
             field?.ShowGraphWithFrames();

@@ -35,24 +35,22 @@ namespace ConsoleVersion.View
         public void ShowGraphWithFrames()
         {
             Console.ForegroundColor = Color.White;
-            Console.Write(GetFramedAbscissa(FramedAbscissaView.FrameUnder));
-            ShowGraph();
-            Console.Write(GetFramedAbscissa(FramedAbscissaView.FrameOver));
+            DrawAbscissa();
+            DrawOrdinate();
+            DrawGraph();
         }
 
         private string Abscissa
         {
             get
             {
-                var abscissa = new StringBuilder(LargeSpace);
+                var abscissa = new StringBuilder();
 
                 for (var i = 0; i < Width; i++)
                 {
                     var offset = !IsOffsetIndex(i) ? BigSpace : Space;
                     abscissa.Append(i + offset);
                 }
-
-                abscissa.Append(LargeSpace);
                 return abscissa.ToString();
             }
         }
@@ -61,7 +59,7 @@ namespace ConsoleVersion.View
         {
             get
             {
-                var frame = new StringBuilder(LargeSpace);
+                var frame = new StringBuilder();
 
                 for (var i = 0; i < Width; i++)
                 {
@@ -72,55 +70,33 @@ namespace ConsoleVersion.View
             }
         }
 
-        private string GetFramedAbscissa(FramedAbscissaView framedAbscissaView)
-        {
-            var framedAbscissaComponents = new List<string>()
-            {
-                Abscissa,
-                HorizontalFrame
-            };
-
-            var framedAbscissa = new StringBuilder();
-
-            if (framedAbscissaView == FramedAbscissaView.FrameOver)
-            {
-                framedAbscissaComponents.Reverse();
-            }
-
-            foreach (var component in framedAbscissaComponents)
-            {
-                framedAbscissa.AppendLine(component);
-            }
-
-            return framedAbscissa.ToString();
-        }
-
-        private string DrawOrdinate(int currentLength, TableSide tableSide)
-        {
-            string ordinate;
-            if (tableSide == TableSide.Right)
-            {
-                ordinate = verticalFrame + currentLength + NewLine;
-            }
-            else if (!IsOffsetIndex(currentLength))
-            {
-                ordinate = currentLength + Space + verticalFrame;
-            }
-            else
-            {
-                ordinate = currentLength + verticalFrame;
-            }
-
-            return ordinate;
-        }
-
-        private void ShowGraph()
+        private void DrawOrdinate()
         {
             for (int length = 0; length < Length; length++)
             {
-                string ordinate = DrawOrdinate(length, TableSide.Left);
-                Console.Write(ordinate);
+                Console.SetCursorPosition(0, 3 + length);
+                Console.Write(length.ToString().PadLeft(2) + verticalFrame);
+                Console.SetCursorPosition(3 + Width * 3, 3 + length);
+                Console.Write(verticalFrame + length.ToString());
+            }
+        }
 
+        private void DrawAbscissa()
+        {
+            Console.SetCursorPosition(3, 1);
+            Console.Write(Abscissa);
+            Console.SetCursorPosition(3, 2);
+            Console.Write(HorizontalFrame);
+            Console.SetCursorPosition(3, Length + 3);
+            Console.Write(HorizontalFrame);
+            Console.SetCursorPosition(3, Length + 4);
+            Console.Write(Abscissa);
+        }
+
+        private void DrawGraph()
+        {
+            for (int length = 0; length < Length; length++)
+            {                
                 for (int width = 0; width < Width; width++)
                 {
                     var coordinate = new Coordinate2D(width, length);
@@ -128,25 +104,9 @@ namespace ConsoleVersion.View
 
                     var vertex = vertices[index];
 
-                    ShowVertex(vertex);
-
-                    if (IsEndOfRow(width))
-                    {
-                        ordinate = DrawOrdinate(length, TableSide.Right);
-                        Console.Write(ordinate);
-                    }
+                    vertex.Show();
                 }
             }
-        }
-
-        private void ShowVertex(Vertex vertex)
-        {
-            Console.Write(vertex.Text + BigSpace, vertex.Colour);
-        }
-
-        private bool IsEndOfRow(int currentWidth)
-        {
-            return currentWidth == Width - 1;
         }
 
         private bool IsOffsetIndex(int currentIndex)
@@ -154,22 +114,8 @@ namespace ConsoleVersion.View
             return currentIndex >= 10;
         }
 
-        private enum FramedAbscissaView
-        {
-            FrameOver,
-            FrameUnder
-
-        }
-
-        private enum TableSide
-        {
-            Right,
-            Left
-        }
-
         private readonly List<Vertex> vertices;
 
-        private const string NewLine = "\n";
         private const string Space = " ";
         private const string BigSpace = "  ";
         private const string LargeSpace = "   ";

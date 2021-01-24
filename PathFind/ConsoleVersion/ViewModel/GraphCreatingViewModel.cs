@@ -39,8 +39,7 @@ namespace ConsoleVersion.ViewModel
 
             base.CreateGraph(generator);
 
-            MainView.PathfindingStatisticsConsoleStartCoordinate
-                = new Coordinate2D(0, (model.Graph as Graph2D).Length + 5);
+            MainView.SetMenuPositions(model.Graph as Graph2D);
         }
     }
 }

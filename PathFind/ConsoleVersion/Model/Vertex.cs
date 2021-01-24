@@ -130,6 +130,11 @@ namespace ConsoleVersion.Model
             Text = cost.ToString("#");
         }
 
+        public void Show()
+        {
+            ColorizeVertex();
+        }
+
         private Coordinate2D consoleCoordinate;
 
         private Coordinate2D ConsoleCoordinate
