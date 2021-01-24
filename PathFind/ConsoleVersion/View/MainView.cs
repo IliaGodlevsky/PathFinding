@@ -2,6 +2,8 @@
 using ConsoleVersion.View.Interface;
 using ConsoleVersion.ViewModel;
 using GraphLib.Coordinates;
+using GraphLib.Graphs;
+using GraphLib.Graphs.Abstractions;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,13 +13,34 @@ namespace ConsoleVersion.View
 {
     internal class MainView : IView
     {
-        public static Coordinate2D GraphFieldBodyConsoleStartCoordinate { get; set; }
+        public const int HeightOfAbscissaView = 2;
+        public const int HeightOfGraphParametresView = 1;
+        public const int WidthOfOrdinateView = 3;
+        public const int LateralDistanceBetweenVertices = 3;
+        public const int YCoordinatePadding = 2;
 
-        public static Coordinate2D PathfindingStatisticsConsoleStartCoordinate { get; set; }
+        public static Coordinate2D GraphFieldPosition { get; set; }
+
+        public static Coordinate2D PathfindingStatisticsPosition { get; set; }
+
+        public static void UpdatePositionOfVisualElements(IGraph graph)
+        {
+            if (graph.Any())
+            {
+                var graph2D = graph as Graph2D;
+
+                int pathfindingStatistsicsOffset = graph2D.Length
+                    + HeightOfAbscissaView * 2 + HeightOfGraphParametresView;
+
+                PathfindingStatisticsPosition
+                  = new Coordinate2D(0, pathfindingStatistsicsOffset);
+            }
+        }
 
         static MainView()
         {
-            GraphFieldBodyConsoleStartCoordinate = new Coordinate2D(3, 3);
+            GraphFieldPosition 
+                = new Coordinate2D(WidthOfOrdinateView, HeightOfAbscissaView + HeightOfGraphParametresView);
         }
 
         public MainView()

@@ -1,8 +1,6 @@
 ﻿using Common.ValueRanges;
 using ConsoleVersion.InputClass;
 using ConsoleVersion.View;
-using GraphLib.Coordinates;
-using GraphLib.Graphs;
 using GraphLib.Vertex.Interface;
 using GraphLib.ViewModel;
 using GraphViewModel.Interfaces;
@@ -39,8 +37,7 @@ namespace ConsoleVersion.ViewModel
 
             base.CreateGraph(generator);
 
-            MainView.PathfindingStatisticsConsoleStartCoordinate
-                = new Coordinate2D(0, (model.Graph as Graph2D).Length + 5);
+            MainView.UpdatePositionOfVisualElements(model.Graph);
         }
     }
 }

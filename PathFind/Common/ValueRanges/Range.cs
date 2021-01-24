@@ -18,8 +18,8 @@
         {
             ObstaclePercentValueRange = new ValueRange(99, 0);
             DelayValueRange = new ValueRange(35, 0);
-            WidthValueRange = new ValueRange(200, 0);
-            HeightValueRange = new ValueRange(100, 0);
+            WidthValueRange = new ValueRange(80, 0);
+            HeightValueRange = new ValueRange(50, 0);
             VertexCostRange = new ValueRange(9, 1);
             VertexSizeRange = new ValueRange(30, 5);
         }

@@ -90,8 +90,7 @@ namespace ConsoleVersion.ViewModel
         public override void LoadGraph()
         {
             base.LoadGraph();
-            MainView.PathfindingStatisticsConsoleStartCoordinate
-                = new Coordinate2D(0, (Graph as Graph2D).Length + 5);
+            MainView.UpdatePositionOfVisualElements(Graph);
         }
 
         [MenuItem("Quit programm", MenuItemPriority.Lowest)]
@@ -105,6 +104,11 @@ namespace ConsoleVersion.ViewModel
             var field = GraphField as GraphField;
             field?.ShowGraphWithFrames();
             Console.WriteLine(PathFindingStatistics);
+            if (MainView.PathfindingStatisticsPosition is Coordinate2D position)
+            {
+                Console.SetCursorPosition(position.X, position.Y + 1);
+            }
+            Console.CursorVisible = true;
         }
 
         protected override string GetSavingPath()

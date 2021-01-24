@@ -130,6 +130,15 @@ namespace ConsoleVersion.Model
             Text = cost.ToString("#");
         }
 
+        public void ColorizeVertex()
+        {
+            if (ConsoleCoordinate != null)
+            {
+                Console.SetCursorPosition(ConsoleCoordinate.X, ConsoleCoordinate.Y);
+                Console.Write(Text, Colour);
+            }
+        }
+
         private Coordinate2D consoleCoordinate;
 
         private Coordinate2D ConsoleCoordinate
@@ -142,7 +151,7 @@ namespace ConsoleVersion.Model
                     {
                         const int DistanceBetweenVertices = 3;
                         var position = Position as Coordinate2D;
-                        var consolePosition = MainView.GraphFieldBodyConsoleStartCoordinate;
+                        var consolePosition = MainView.GraphFieldPosition;
                         var left = consolePosition.X + position.X * DistanceBetweenVertices;
                         var top = consolePosition.Y + position.Y;
                         consoleCoordinate = new Coordinate2D(left, top);
@@ -150,15 +159,6 @@ namespace ConsoleVersion.Model
                 }
                 return consoleCoordinate;
             }
-        }
-
-        private void ColorizeVertex()
-        {
-            if (ConsoleCoordinate != null)
-            {
-                Console.SetCursorPosition(ConsoleCoordinate.X, ConsoleCoordinate.Y);
-                Console.Write(Text, Colour);
-            }
-        }
+        }       
     }
 }

@@ -126,7 +126,7 @@ namespace ConsoleVersion.ViewModel
 
         private void UpdatePathfindingStatistics()
         {
-            var coordinate = MainView.PathfindingStatisticsConsoleStartCoordinate;
+            var coordinate = MainView.PathfindingStatisticsPosition;
             Console.SetCursorPosition(coordinate.X, coordinate.Y);
             Console.Write(mainViewModel.PathFindingStatistics);
         }
