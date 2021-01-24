@@ -40,6 +40,11 @@ namespace ConsoleVersion.View
             DrawGraph();
         }
 
+        public void DrawGraph()
+        {
+            vertices.ForEach(vertex => vertex.ColorizeVertex());
+        }
+
         private void DrawOrdinate()
         {
             int padding = MainView.YCoordinatePadding;
@@ -60,11 +65,6 @@ namespace ConsoleVersion.View
             Console.Write(GetFramedAbscissa(FramedAbscissaView.FrameOver));
         }
 
-        private void DrawGraph()
-        {
-            vertices.ForEach(vertex => vertex.ColorizeVertex());
-        }
-
         private void DrawLeftYCoodrinate(int yCoodrinatePadding, int currentLength)
         {
             var cursorTop = MainView.HeightOfAbscissaView + 1 + currentLength;
@@ -76,11 +76,16 @@ namespace ConsoleVersion.View
         private void DrawRightYCoordinate(int yCoodrinatePadding, int currentLength)
         {
             var cursorTop = MainView.HeightOfAbscissaView + 1 + currentLength;
-            var cursorLeft = Width * MainView.LateralDistanceBetweenVertices
-                    + MainView.WidthOfOrdinateView - 2;
+            var cursorLeft = GetCursorLeftPositionCloseToRigthVerticalFrame();
             Console.SetCursorPosition(cursorLeft, cursorTop);
             var yCoordinate = currentLength.ToString().PadRight(yCoodrinatePadding);
             Console.Write(VerticalFrameComponent + yCoordinate);
+        }
+
+        private int GetCursorLeftPositionCloseToRigthVerticalFrame()
+        {
+            return Width* MainView.LateralDistanceBetweenVertices
+                   + MainView.WidthOfOrdinateView - 2;
         }
 
         private string Abscissa
