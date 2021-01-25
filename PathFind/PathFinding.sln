@@ -29,6 +29,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WindowsFormsVersion", "Wind
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WPFVersion3D", "WPFVersion3D\WPFVersion3D.csproj", "{C50DAB38-75A5-47F5-A6A0-1165BBE5E283}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GraphLib.Test", "GraphLib.Test\GraphLib.Test.csproj", "{EF6094DF-3320-4011-B998-10E24158B1F8}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -71,6 +73,10 @@ Global
 		{C50DAB38-75A5-47F5-A6A0-1165BBE5E283}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C50DAB38-75A5-47F5-A6A0-1165BBE5E283}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C50DAB38-75A5-47F5-A6A0-1165BBE5E283}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EF6094DF-3320-4011-B998-10E24158B1F8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EF6094DF-3320-4011-B998-10E24158B1F8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EF6094DF-3320-4011-B998-10E24158B1F8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EF6094DF-3320-4011-B998-10E24158B1F8}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -84,6 +90,7 @@ Global
 		{86DCDF96-3F02-47E1-B1D3-0FBA65878E2E} = {C2095ABE-A68C-4A85-82E8-D12C8D5FB2AD}
 		{5E9A04B8-B760-4D2F-A50D-ABF1062EEB66} = {8786CE26-2414-4E8F-BC64-825BED0390E9}
 		{C50DAB38-75A5-47F5-A6A0-1165BBE5E283} = {8786CE26-2414-4E8F-BC64-825BED0390E9}
+		{EF6094DF-3320-4011-B998-10E24158B1F8} = {FC422D56-6D0C-48D8-9F47-A6B3B43623B3}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {97B689F4-F324-4048-A586-6D7150C9C419}

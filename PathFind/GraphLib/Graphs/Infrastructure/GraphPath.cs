@@ -69,7 +69,6 @@ namespace GraphLib.Graphs.Infrastructure
         private GraphPath()
         {
             Path = new IVertex[] { };
-            IsExtracted = false;
         }
 
         private IEnumerable<IVertex> GetPath(IVertex end)
