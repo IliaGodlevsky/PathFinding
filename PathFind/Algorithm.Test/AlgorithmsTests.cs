@@ -10,7 +10,7 @@ using System.Linq;
 namespace Algorithm.Test
 {
     [TestClass]
-    public class PathFindingAlgorithmsTests
+    public class AlgorithmsTests
     {
         [Ignore]
         private Graph2D CreateGraph2D()
