@@ -104,5 +104,17 @@ namespace GraphLib.Test
 
             Assert.IsFalse(areEqual);
         }
+
+        [TestMethod]
+        public void Clone_Coordinate2D_ReturnsANewInstanceOfCoordinate2DClass()
+        {
+            ICoordinate coordinate = new Coordinate2D(5, 5);
+
+            var clone = coordinate.Clone();
+
+            Assert.IsInstanceOfType(clone, typeof(Coordinate2D));
+            Assert.IsTrue(clone.Equals(coordinate));
+            Assert.AreNotSame(clone, coordinate);
+        }
     }
 }
