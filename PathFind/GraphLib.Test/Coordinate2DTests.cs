@@ -13,20 +13,20 @@ namespace GraphLib.Test
 
         [ExpectedException(typeof(ArgumentOutOfRangeException))]
         [TestMethod]
-        public void Constructor_3CoordinateValues_ThrowsArgumentOutOfRangeException()
+        public void Constructor_ThreeCoordinateValues_ThrowsArgumentOutOfRangeException()
         {
             _ = new Coordinate2D(1, 2, 3);
         }
 
         [ExpectedException(typeof(ArgumentOutOfRangeException))]
         [TestMethod]
-        public void Constructor_1CoordinateValues_ThrowsArgumentOutOfRangeException()
+        public void Constructor_OneCoordinateValue_ThrowsArgumentOutOfRangeException()
         {
             _ = new Coordinate2D(1);
         }
 
         [TestMethod]
-        public void Constructor_2CoordinateValues_ReturnsInstanceOfCoordinate2DClass()
+        public void Constructor_TwoCoordinateValues_ReturnsInstanceOfCoordinate2DClass()
         {
             ICoordinate coordinate = new Coordinate2D(2, 2);
 
