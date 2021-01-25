@@ -11,17 +11,29 @@ namespace GraphLib.Graphs.Infrastructure
     /// </summary>
     public sealed class GraphPath
     {
+        /// <summary>
+        /// Returns extracted path
+        /// </summary>
         public IEnumerable<IVertex> Path { get; private set; }
 
+        /// <summary>
+        /// Shows whether the path was extracted from the graph
+        /// </summary>
         public bool IsExtracted { get; private set; }
 
+        /// <summary>
+        /// Returns the number of vertices in the path
+        /// </summary>
         public int PathLength { get; private set; }
 
+        /// <summary>
+        /// Returns the sum of costs of the vertices in the path
+        /// </summary>
         public int PathCost { get; private set; }
 
         public GraphPath(IGraph graph) : this()
         {
-            ExtractPath(graph);
+            TryExtractPath(graph);
         }
 
         public void HighlightPath()
@@ -35,7 +47,13 @@ namespace GraphLib.Graphs.Infrastructure
             }
         }
 
-        public void ExtractPath(IGraph graph)
+        /// <summary>
+        /// Tries to extract a path from the graph
+        /// </summary>
+        /// <param name="graph"></param>
+        /// <returns><see cref="true"/> if extracting is 
+        /// successed and <see cref="false"/> if not</returns>
+        public bool TryExtractPath(IGraph graph)
         {
             if (graph.IsExtremeVerticesVisited())
             {
@@ -44,11 +62,14 @@ namespace GraphLib.Graphs.Infrastructure
                 PathLength = Path.Count();
                 IsExtracted = Path.Any();
             }
+
+            return IsExtracted;
         }
 
         private GraphPath()
         {
             Path = new IVertex[] { };
+            IsExtracted = false;
         }
 
         private IEnumerable<IVertex> GetPath(IVertex end)

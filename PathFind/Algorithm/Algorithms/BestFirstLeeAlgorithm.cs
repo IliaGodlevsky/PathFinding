@@ -35,5 +35,11 @@ namespace Algorithm.PathFindingAlgorithms
         {
             return base.CreateWave() + HeuristicFunction(CurrentVertex);
         }
+
+        protected override void CompletePathfinding()
+        {
+            base.CompletePathfinding();
+            HeuristicFunction = null;
+        }
     }
 }

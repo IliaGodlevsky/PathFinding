@@ -54,6 +54,7 @@ namespace Algorithm.Algorithms
         {
             visitedVertices.Clear();
             base.CompletePathfinding();
+            GreedyFunction = null;
         }
 
         private void VisitCurrentVertex()

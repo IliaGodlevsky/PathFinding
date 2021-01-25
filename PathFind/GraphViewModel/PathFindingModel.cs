@@ -43,10 +43,7 @@ namespace GraphLib.ViewModel
 
             algorithm.FindPath();
 
-            algorithm.OnVertexEnqueued -= OnVertexEnqueued;
-            algorithm.OnVertexVisited -= OnVertexVisited;
-            algorithm.OnFinished -= OnAlgorithmFinished;
-            algorithm.OnStarted -= OnAlgorithmStarted;
+            OnPathNotFound = null;
         }
 
         protected abstract void OnAlgorithmIntermitted();

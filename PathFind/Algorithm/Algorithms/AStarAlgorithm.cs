@@ -20,5 +20,11 @@ namespace Algorithm.Algorithms
         {
             return base.GetVertexRelaxedCost(neighbour) + HeuristicFunction(CurrentVertex);
         }
+
+        protected override void CompletePathfinding()
+        {
+            base.CompletePathfinding();
+            HeuristicFunction = null;
+        }
     }
 }

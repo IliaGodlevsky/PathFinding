@@ -34,10 +34,7 @@ namespace Algorithm.Test
         [Ignore]
         private IEnumerable<IAlgorithm> GetAlgorithms(string[] keys)
         {
-            foreach (var key in keys)
-            {
-                yield return AlgorithmFactory.CreateAlgorithm(key, new NullGraph());
-            }
+            return keys.Select(key => AlgorithmFactory.CreateAlgorithm(key, new NullGraph()));
         }
 
         private bool IsDefault(IAlgorithm algo) => algo.IsDefault;
