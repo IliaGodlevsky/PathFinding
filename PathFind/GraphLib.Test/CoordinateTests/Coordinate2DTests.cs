@@ -4,7 +4,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using System.Linq;
 
-namespace GraphLib.Test
+namespace GraphLib.Test.CoordinateTests
 {
     [TestClass]
     public class Coordinate2DTests
