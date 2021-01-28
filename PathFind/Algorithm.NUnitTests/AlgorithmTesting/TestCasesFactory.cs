@@ -1,70 +1,79 @@
 ﻿using Algorithm.Algorithms;
-using Algorithm.Algorithms.Abstractions;
 using Algorithm.PathFindingAlgorithms;
 using GraphLib.Coordinates;
 using GraphLib.Graphs;
-using GraphLib.Graphs.Abstractions;
 using GraphLib.Graphs.Factories;
+using GraphLib.Graphs.Factories.Interfaces;
 using NUnit.Framework;
 using System.Collections;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace Algorithm.NUnitTests.AlgorithmTesting
 {
     internal class TestCasesFactory
     {
-        private static readonly IGraph graph2D;
-        private static readonly IGraph graph3D;
-
-        private static readonly IAlgorithm leeAlgorithm;
-        private static readonly IAlgorithm bestFirstLeeAlgorithm;
-        private static readonly IAlgorithm dijkstraAlgorithm;
-        private static readonly IAlgorithm aStarAlgorithm;
-        private static readonly IAlgorithm aStarModified;
-        private static readonly IAlgorithm depthFirstAlgorithm;
-        private static readonly IAlgorithm costGreedyAlgorithm;
-        private static readonly IAlgorithm distanceGreedyAlgoritm;
+        private static readonly IGraphFactory graph2DFactory;
+        private static readonly IGraphFactory graph3DFactory;
 
         static TestCasesFactory()
         {
-            var graph2DFactory = new GraphFactory<Graph2D>(0, 15, 15);
-            var graph3DFactory = new GraphFactory<Graph3D>(0, 7, 7, 7);
-
-            graph2D = graph2DFactory.CreateGraph(() => new TestVertex(), coordinates => new Coordinate2D(coordinates.ToArray()));
-            graph3D = graph3DFactory.CreateGraph(() => new TestVertex(), coordinates => new Coordinate3D(coordinates.ToArray()));
-
-            leeAlgorithm = new LeeAlgorithm();
-            bestFirstLeeAlgorithm = new BestFirstLeeAlgorithm();
-            dijkstraAlgorithm = new DijkstraAlgorithm();
-            aStarAlgorithm = new AStarAlgorithm();
-            aStarModified = new AStarModified();
-            depthFirstAlgorithm = new DepthFirstAlgorithm();
-            costGreedyAlgorithm = new CostGreedyAlgorithm();
-            distanceGreedyAlgoritm = new DistanceGreedyAlgoritm();
+            graph2DFactory = new GraphFactory<Graph2D>(0, 15, 15);
+            graph3DFactory = new GraphFactory<Graph3D>(0, 7, 7, 7);
         }
 
         internal static IEnumerable AlgorithmTestCases
         {
             get
             {
-                yield return new TestCaseData(graph2D, leeAlgorithm);
-                yield return new TestCaseData(graph2D, bestFirstLeeAlgorithm);
-                yield return new TestCaseData(graph2D, dijkstraAlgorithm);
-                yield return new TestCaseData(graph2D, aStarAlgorithm);
-                yield return new TestCaseData(graph2D, aStarModified);
-                yield return new TestCaseData(graph2D, depthFirstAlgorithm);
-                yield return new TestCaseData(graph2D, costGreedyAlgorithm);
-                yield return new TestCaseData(graph2D, distanceGreedyAlgoritm);
+                yield return new TestCaseData(graph2DFactory.CreateGraph(CreateVertex, CreateCoordinate2D), new LeeAlgorithm());
+                yield return new TestCaseData(graph2DFactory.CreateGraph(CreateVertex, CreateCoordinate2D), new BestFirstLeeAlgorithm());
+                yield return new TestCaseData(graph2DFactory.CreateGraph(CreateVertex, CreateCoordinate2D), new DijkstraAlgorithm());
+                yield return new TestCaseData(graph2DFactory.CreateGraph(CreateVertex, CreateCoordinate2D), new AStarAlgorithm());
+                yield return new TestCaseData(graph2DFactory.CreateGraph(CreateVertex, CreateCoordinate2D), new AStarModified());
+                yield return new TestCaseData(graph2DFactory.CreateGraph(CreateVertex, CreateCoordinate2D), new DepthFirstAlgorithm());
+                yield return new TestCaseData(graph2DFactory.CreateGraph(CreateVertex, CreateCoordinate2D), new CostGreedyAlgorithm());
+                yield return new TestCaseData(graph2DFactory.CreateGraph(CreateVertex, CreateCoordinate2D), new DistanceGreedyAlgoritm());
 
-                yield return new TestCaseData(graph3D, leeAlgorithm);
-                yield return new TestCaseData(graph3D, bestFirstLeeAlgorithm);
-                yield return new TestCaseData(graph3D, dijkstraAlgorithm);
-                yield return new TestCaseData(graph3D, aStarAlgorithm);
-                yield return new TestCaseData(graph3D, aStarModified);
-                yield return new TestCaseData(graph3D, depthFirstAlgorithm);
-                yield return new TestCaseData(graph3D, costGreedyAlgorithm);
-                yield return new TestCaseData(graph3D, distanceGreedyAlgoritm);
+                yield return new TestCaseData(graph3DFactory.CreateGraph(CreateVertex, CreateCoordinate3D), new LeeAlgorithm());
+                yield return new TestCaseData(graph3DFactory.CreateGraph(CreateVertex, CreateCoordinate3D), new BestFirstLeeAlgorithm());
+                yield return new TestCaseData(graph3DFactory.CreateGraph(CreateVertex, CreateCoordinate3D), new DijkstraAlgorithm());
+                yield return new TestCaseData(graph3DFactory.CreateGraph(CreateVertex, CreateCoordinate3D), new AStarAlgorithm());
+                yield return new TestCaseData(graph3DFactory.CreateGraph(CreateVertex, CreateCoordinate3D), new AStarModified());
+                yield return new TestCaseData(graph3DFactory.CreateGraph(CreateVertex, CreateCoordinate3D), new DepthFirstAlgorithm());
+                yield return new TestCaseData(graph3DFactory.CreateGraph(CreateVertex, CreateCoordinate3D), new CostGreedyAlgorithm());
+                yield return new TestCaseData(graph3DFactory.CreateGraph(CreateVertex, CreateCoordinate3D), new DistanceGreedyAlgoritm());
             }
+        }
+
+        internal static IEnumerable Algorithms
+        {
+            get
+            {
+                yield return new TestCaseData(new LeeAlgorithm());
+                yield return new TestCaseData(new BestFirstLeeAlgorithm());
+                yield return new TestCaseData(new DijkstraAlgorithm());
+                yield return new TestCaseData(new AStarAlgorithm());
+                yield return new TestCaseData(new AStarModified());
+                yield return new TestCaseData(new DepthFirstAlgorithm());
+                yield return new TestCaseData(new CostGreedyAlgorithm());
+                yield return new TestCaseData(new DistanceGreedyAlgoritm());
+            }
+        }
+
+        private static TestVertex CreateVertex()
+        {
+            return new TestVertex();
+        }
+
+        private static Coordinate2D CreateCoordinate2D(IEnumerable<int>coordinates)
+        {
+            return new Coordinate2D(coordinates.ToArray());
+        }
+
+        private static Coordinate3D CreateCoordinate3D(IEnumerable<int> coordinate)
+        {
+            return new Coordinate3D(coordinate.ToArray());
         }
     }
 }
