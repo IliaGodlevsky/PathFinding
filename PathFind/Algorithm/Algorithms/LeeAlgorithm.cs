@@ -3,6 +3,7 @@ using Algorithm.EventArguments;
 using Algorithm.Extensions;
 using Common.Extensions;
 using GraphLib.Extensions;
+using GraphLib.Graphs;
 using GraphLib.Graphs.Abstractions;
 using GraphLib.Vertex.Interface;
 using System.Collections.Generic;
@@ -14,6 +15,11 @@ namespace Algorithm.Algorithms
     [Description("Lee algorithm")]
     public class LeeAlgorithm : BaseAlgorithm
     {
+        public LeeAlgorithm() : this(new NullGraph())
+        {
+
+        }
+
         public LeeAlgorithm(IGraph graph) : base(graph)
         {
             verticesQueue = new Queue<IVertex>();
@@ -34,6 +40,12 @@ namespace Algorithm.Algorithms
             CompletePathfinding();
         }
 
+        public override void Reset()
+        {
+            base.Reset();
+            verticesQueue.Clear();
+        }
+
         protected override IVertex NextVertex
         {
             get
@@ -44,12 +56,6 @@ namespace Algorithm.Algorithms
 
                 return verticesQueue.DequeueOrDefault();
             }
-        }
-
-        protected override void CompletePathfinding()
-        {
-            verticesQueue.Clear();
-            base.CompletePathfinding();
         }
 
         protected virtual double CreateWave()

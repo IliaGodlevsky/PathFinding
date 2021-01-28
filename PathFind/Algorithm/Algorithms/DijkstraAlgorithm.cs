@@ -3,6 +3,7 @@ using Algorithm.EventArguments;
 using Algorithm.Extensions;
 using Common.Extensions;
 using GraphLib.Extensions;
+using GraphLib.Graphs;
 using GraphLib.Graphs.Abstractions;
 using GraphLib.Vertex.Interface;
 using System.Collections.Generic;
@@ -14,6 +15,11 @@ namespace Algorithm.Algorithms
     [Description("Dijkstra's algorithm")]
     public class DijkstraAlgorithm : BaseAlgorithm
     {
+        public DijkstraAlgorithm() : this(new NullGraph())
+        {
+
+        }
+
         public DijkstraAlgorithm(IGraph graph) : base(graph)
         {
             verticesQueue = new List<IVertex>();
@@ -32,6 +38,12 @@ namespace Algorithm.Algorithms
                 RaiseOnVertexVisitedEvent(args);
             } while (!IsDestination);
             CompletePathfinding();
+        }
+
+        public override void Reset()
+        {
+            base.Reset();
+            verticesQueue.Clear();
         }
 
         protected virtual double GetVertexRelaxedCost(IVertex neighbour)
@@ -56,12 +68,6 @@ namespace Algorithm.Algorithms
         {
             base.PrepareForPathfinding();
             SetVerticesAccumulatedCost();
-        }
-
-        protected override void CompletePathfinding()
-        {
-            verticesQueue.Clear();
-            base.CompletePathfinding();
         }
 
         protected List<IVertex> verticesQueue;

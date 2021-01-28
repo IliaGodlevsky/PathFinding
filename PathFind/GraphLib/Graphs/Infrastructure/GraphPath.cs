@@ -60,7 +60,7 @@ namespace GraphLib.Graphs.Infrastructure
                 Path = GetPath(graph.End);
                 PathCost = Path.Sum(vertex => (int)vertex.Cost);
                 PathLength = Path.Count();
-                IsExtracted = Path.Any();
+                IsExtracted = Path.FirstOrDefault(vertex => vertex.IsEnd == true) != null;
             }
 
             return IsExtracted;

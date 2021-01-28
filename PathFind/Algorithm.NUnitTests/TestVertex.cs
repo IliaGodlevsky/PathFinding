@@ -5,7 +5,7 @@ using GraphLib.Vertex.Cost;
 using GraphLib.Vertex.Interface;
 using System.Collections.Generic;
 
-namespace Algorithm.Test
+namespace Algorithm.NUnitTests
 {
     internal class TestVertex : IVertex
     {

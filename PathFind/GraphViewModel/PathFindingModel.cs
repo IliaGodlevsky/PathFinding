@@ -42,6 +42,7 @@ namespace GraphLib.ViewModel
             algorithm.OnStarted += OnAlgorithmStarted;
 
             algorithm.FindPath();
+            algorithm.Reset();
 
             OnPathNotFound = null;
         }

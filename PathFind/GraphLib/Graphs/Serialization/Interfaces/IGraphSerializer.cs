@@ -2,6 +2,7 @@
 using GraphLib.Info;
 using GraphLib.Vertex.Interface;
 using System;
+using System.IO;
 
 namespace GraphLib.Graphs.Serialization.Interfaces
 {
@@ -9,9 +10,9 @@ namespace GraphLib.Graphs.Serialization.Interfaces
     {
         event Action<string> OnExceptionCaught;
 
-        void SaveGraph(IGraph graph, string path);
+        void SaveGraph(IGraph graph, Stream stream);
 
-        IGraph LoadGraph(string path,
+        IGraph LoadGraph(Stream stream,
             Func<VertexSerializationInfo, IVertex> vertexFactory);
     }
 }

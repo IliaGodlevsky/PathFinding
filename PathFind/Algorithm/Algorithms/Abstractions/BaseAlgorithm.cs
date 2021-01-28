@@ -1,5 +1,6 @@
 ﻿using Algorithm.EventArguments;
 using Algorithm.Handlers;
+using GraphLib.Graphs;
 using GraphLib.Graphs.Abstractions;
 using GraphLib.Vertex.Interface;
 
@@ -12,13 +13,23 @@ namespace Algorithm.Algorithms.Abstractions
         public event AlgorithmEventHandler OnFinished;
         public event AlgorithmEventHandler OnVertexEnqueued;
 
-        public IGraph Graph { get; protected set; }
+        public virtual IGraph Graph { get; set; }
 
         public bool IsDefault => false;
+
+        public BaseAlgorithm() : this(new NullGraph())
+        {
+
+        }
 
         public BaseAlgorithm(IGraph graph)
         {
             Graph = graph;
+        }
+
+        public virtual void Reset()
+        {
+            Graph = new NullGraph();
         }
 
         public abstract void FindPath();

@@ -11,6 +11,7 @@ using GraphLib.Vertex.Interface;
 using GraphViewModel.Interfaces;
 using GraphViewModel.Resources;
 using System;
+using System.IO;
 
 namespace GraphViewModel
 {
@@ -42,14 +43,18 @@ namespace GraphViewModel
         public virtual void SaveGraph()
         {
             var savePath = GetSavingPath();
-            Serializer.SaveGraph(Graph, savePath);
+            using (var stream = new FileStream(savePath, FileMode.OpenOrCreate))
+                Serializer.SaveGraph(Graph, stream);
         }
 
         public virtual void LoadGraph()
         {
             var loadPath = GetLoadingPath();
-            var newGraph = Serializer.LoadGraph(loadPath, SerializationInfoConverter);
-            ConnectNewGraph(newGraph);
+            using (var stream = new FileStream(loadPath, FileMode.Open))
+            {
+                var newGraph = Serializer.LoadGraph(stream, SerializationInfoConverter);
+                ConnectNewGraph(newGraph);
+            }
         }
 
         public virtual void ClearGraph()

@@ -12,6 +12,8 @@
     <FileAlignment>512</FileAlignment>
     <Deterministic>true</Deterministic>
     <TargetFrameworkProfile />
+    <NuGetPackageImportStamp>
+    </NuGetPackageImportStamp>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -35,8 +37,8 @@
     <LangVersion>7.3</LangVersion>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Colorful.Console, Version=1.2.11.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Colorful.Console.1.2.11\lib\net461\Colorful.Console.dll</HintPath>
+    <Reference Include="Colorful.Console, Version=1.2.15.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Colorful.Console.1.2.15\lib\net461\Colorful.Console.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />

@@ -4,6 +4,7 @@ using Algorithm.Extensions;
 using Algorithm.Handlers;
 using Common.Extensions;
 using GraphLib.Extensions;
+using GraphLib.Graphs;
 using GraphLib.Graphs.Abstractions;
 using GraphLib.Vertex.Interface;
 using System.Collections.Generic;
@@ -15,11 +16,26 @@ namespace Algorithm.Algorithms
     [Description("Depth-first algorithm")]
     public class DepthFirstAlgorithm : BaseAlgorithm
     {
-        public HeuristicHandler GreedyFunction { private get; set; }
+        public HeuristicHandler GreedyFunction { get; set; }
+
+        private IGraph graph;
+        public override IGraph Graph 
+        { 
+            get => graph;
+            set 
+            { 
+                graph = value; 
+                GreedyFunction = vertex => vertex.CalculateChebyshevDistanceTo(graph.Start);
+            }
+        }
+
+        public DepthFirstAlgorithm() : this(new NullGraph())
+        {
+
+        }
 
         public DepthFirstAlgorithm(IGraph graph) : base(graph)
-        {
-            GreedyFunction = vertex => vertex.CalculateChebyshevDistanceTo(graph.Start);
+        {           
             visitedVertices = new Stack<IVertex>();
         }
 
@@ -35,6 +51,13 @@ namespace Algorithm.Algorithms
             CompletePathfinding();
         }
 
+        public override void Reset()
+        {
+            base.Reset();
+            visitedVertices.Clear();
+            GreedyFunction = null;
+        }
+
         protected override IVertex NextVertex
         {
             get
@@ -48,13 +71,6 @@ namespace Algorithm.Algorithms
                     .ToList()
                     .FindOrDefault(IsLeastCostVertex);
             }
-        }
-
-        protected override void CompletePathfinding()
-        {
-            visitedVertices.Clear();
-            base.CompletePathfinding();
-            GreedyFunction = null;
         }
 
         private void VisitCurrentVertex()

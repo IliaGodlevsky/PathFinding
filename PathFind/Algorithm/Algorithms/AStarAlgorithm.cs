@@ -9,22 +9,38 @@ namespace Algorithm.Algorithms
     [Description("A* algorithm")]
     public class AStarAlgorithm : DijkstraAlgorithm
     {
-        public HeuristicHandler HeuristicFunction { protected get; set; }
+        public HeuristicHandler HeuristicFunction { get; set; }
+
+        private IGraph graph;
+        public override IGraph Graph
+        {
+            get => graph;
+            set 
+            { 
+                graph = value; 
+                HeuristicFunction = vertex => vertex.CalculateChebyshevDistanceTo(Graph.End); 
+            }
+        }
+
+        public AStarAlgorithm() : base()
+        {
+
+        }
 
         public AStarAlgorithm(IGraph graph) : base(graph)
         {
-            HeuristicFunction = vertex => vertex.CalculateChebyshevDistanceTo(graph.End);
+            
+        }
+
+        public override void Reset()
+        {
+            base.Reset();
+            HeuristicFunction = null;
         }
 
         protected override double GetVertexRelaxedCost(IVertex neighbour)
         {
             return base.GetVertexRelaxedCost(neighbour) + HeuristicFunction(CurrentVertex);
-        }
-
-        protected override void CompletePathfinding()
-        {
-            base.CompletePathfinding();
-            HeuristicFunction = null;
         }
     }
 }

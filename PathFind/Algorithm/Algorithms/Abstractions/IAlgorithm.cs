@@ -29,11 +29,17 @@ namespace Algorithm.Algorithms.Abstractions
         /// <summary>
         /// A graph, where the pathfinding performes
         /// </summary>
-        IGraph Graph { get; }
+        IGraph Graph { get; set; }
 
         /// <summary>
         /// Starts pathfinding
         /// </summary>
         void FindPath();
+
+        /// <summary>
+        /// Drops all information of the algorithm to the state in what
+        /// it was when the algorithm was created with default ctor
+        /// </summary>
+        void Reset();
     }
 }

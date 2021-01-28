@@ -39,5 +39,10 @@ namespace Algorithm.Algorithms.Abstractions
             OnVertexEnqueued?.Invoke(this, new AlgorithmEventArgs());
             OnFinished?.Invoke(this, new AlgorithmEventArgs());
         }
+
+        public void Reset()
+        {
+            
+        }
     }
 }

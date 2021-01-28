@@ -1,4 +1,5 @@
 ﻿using Common.ValueRanges;
+using GraphLib.Graphs;
 using GraphLib.Graphs.Abstractions;
 using GraphLib.Vertex;
 using GraphLib.Vertex.Interface;
@@ -12,6 +13,11 @@ namespace Algorithm.Algorithms
     [Description("A* algorithm (modified)")]
     public class AStarModified : AStarAlgorithm
     {
+        public AStarModified() : this(new NullGraph())
+        {
+
+        }
+
         public AStarModified(IGraph graph) : base(graph)
         {
             deletedVertices = new List<IVertex>();
@@ -20,12 +26,11 @@ namespace Algorithm.Algorithms
                 = CalculatePercentOfFarthestVerticesToDelete();
         }
 
-        public override void FindPath()
+        public override void Reset()
         {
-            base.FindPath();
+            base.Reset();
             deletedVertices.Clear();
         }
-
         protected override IVertex NextVertex
         {
             get
@@ -44,6 +49,12 @@ namespace Algorithm.Algorithms
                 }
                 return next;
             }
+        }
+
+        protected override void CompletePathfinding()
+        {
+            deletedVertices.Clear();
+            base.CompletePathfinding();          
         }
 
         private int CompareByHeuristic(IVertex v1, IVertex v2)

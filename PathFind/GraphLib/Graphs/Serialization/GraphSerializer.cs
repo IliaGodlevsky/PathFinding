@@ -30,30 +30,28 @@ namespace GraphLib.Graphs.Serialization
             RegisterConstructor<TGraph>(ctor);
         }
 
-        public IGraph LoadGraph(string path,
+        public IGraph LoadGraph(Stream stream,
             Func<VertexSerializationInfo, IVertex> vertexConvertMethod)
         {
             try
-            {
-                using (var stream = new FileStream(path, FileMode.Open))
+            {                
+                var verticesInfo = (GraphSerializationInfo)formatter.Deserialize(stream);
+                var dimensions = verticesInfo.DimensionsSizes.ToArray();
+
+                var activator = GetActivator<TGraph>();
+
+                var graph = activator(dimensions);
+
+                for (int i = 0; i < verticesInfo.Count(); i++)
                 {
-                    var verticesInfo = (GraphSerializationInfo)formatter.Deserialize(stream);
-                    var dimensions = verticesInfo.DimensionsSizes.ToArray();
-
-                    var activator = GetActivator<TGraph>();
-
-                    var graph = activator(dimensions);
-
-                    for (int i = 0; i < verticesInfo.Count(); i++)
-                    {
-                        var vertexInfo = verticesInfo.ElementAt(i);
-                        graph[i] = vertexConvertMethod(vertexInfo);
-                    }
-
-                    graph.ConnectVertices();
-
-                    return graph;
+                    var vertexInfo = verticesInfo.ElementAt(i);
+                    graph[i] = vertexConvertMethod(vertexInfo);
                 }
+
+                graph.ConnectVertices();
+
+                return graph;
+
             }
             catch (Exception ex)
             {
@@ -62,14 +60,11 @@ namespace GraphLib.Graphs.Serialization
             }
         }
 
-        public void SaveGraph(IGraph graph, string path)
+        public void SaveGraph(IGraph graph, Stream stream)
         {
             try
             {
-                using (var stream = new FileStream(path, FileMode.OpenOrCreate))
-                {
-                    formatter.Serialize(stream, graph.SerializationInfo);
-                }
+                formatter.Serialize(stream, graph.SerializationInfo);
             }
             catch (Exception ex)
             {

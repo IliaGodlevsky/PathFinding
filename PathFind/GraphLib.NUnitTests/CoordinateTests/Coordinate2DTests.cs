@@ -1,89 +1,92 @@
 ﻿using GraphLib.Coordinates;
 using GraphLib.Coordinates.Abstractions;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+using NUnit.Framework;
 using System;
 using System.Linq;
 
-namespace GraphLib.Test.CoordinateTests
+namespace GraphLib.NUnitTests
 {
-    [TestClass]
+    [TestFixture]
     public class Coordinate2DTests
     {
         private const int NeighboursOfCoordinate2D = 8;
 
-        [ExpectedException(typeof(ArgumentOutOfRangeException))]
-        [TestMethod]
-        public void Constructor_ThreeCoordinateValues_ThrowsArgumentOutOfRangeException()
+        [TestCase(1)]
+        [TestCase(1,2,3)]
+        [TestCase()]
+        public void Constructor_InvalidNumberOfCoordinateValues_ThrowsArgumentOutOfRangeException(params int[] coordinates)
         {
-            _ = new Coordinate2D(1, 2, 3);
+            Assert.Throws<ArgumentOutOfRangeException>(() => new Coordinate2D(coordinates));
         }
 
-        [ExpectedException(typeof(ArgumentOutOfRangeException))]
-        [TestMethod]
-        public void Constructor_OneCoordinateValue_ThrowsArgumentOutOfRangeException()
+        [TestCase(2, 2)]
+        [TestCase(3, 4)]
+        [TestCase(4, 5)]
+        public void Constructor_TwoCoordinateValues_ReturnsInstanceOfCoordinate2DClass(int x, int y)
         {
-            _ = new Coordinate2D(1);
+            ICoordinate coordinate = new Coordinate2D(x, y);
+
+            Assert.IsInstanceOf(typeof(Coordinate2D), coordinate);
         }
 
-        [TestMethod]
-        public void Constructor_TwoCoordinateValues_ReturnsInstanceOfCoordinate2DClass()
+        [TestCase(2, 2)]
+        [TestCase(3, 4)]
+        [TestCase(4, 5)]
+        public void Environment_TwoCoordinateValues_Return8Coordinates(int x, int y)
         {
-            ICoordinate coordinate = new Coordinate2D(2, 2);
-
-            Assert.IsInstanceOfType(coordinate, typeof(Coordinate2D));
-        }
-
-        [TestMethod]
-        public void Environment_Coordinate2DX5_Y5_ReturnEightCoordinates()
-        {
-            ICoordinate coordinate = new Coordinate2D(5, 5);
+            ICoordinate coordinate = new Coordinate2D(x, y);
 
             var environment = coordinate.Environment;
 
             Assert.IsTrue(environment.Count() == NeighboursOfCoordinate2D);
         }
 
-        [TestMethod]
-        public void Environment_CoordinateValues5And5_ReturnUniqueCoordinates()
+        [TestCase(12, 2)]
+        [TestCase(3, 34)]
+        [TestCase(4, 57)]
+        public void Environment_TwoCoordinateValues_ReturnUniqueCoordinates(int x, int y)
         {
-            ICoordinate coordinate = new Coordinate2D(5, 5);
+            ICoordinate coordinate = new Coordinate2D(x, y);
 
             var environment = coordinate.Environment;
 
             Assert.IsTrue(environment.Distinct().Count() == NeighboursOfCoordinate2D);
         }
 
-        [TestMethod]
-        public void Environment_Coordinate2DX5Y5_ReturnEightCoordinatesWithoutX5Y5()
+        [TestCase(0, 12)]
+        [TestCase(100, 4)]
+        [TestCase(40, 5)]
+        public void Environment_Coordinate2DX5Y5_ReturnCoordinatesWithoutSelf(int x, int y)
         {
-            ICoordinate coordinate = new Coordinate2D(5, 5);
+            ICoordinate coordinate = new Coordinate2D(x, y);
 
             var environment = coordinate.Environment;
 
             Assert.IsFalse(environment.Contains(coordinate));
         }
 
-        [ExpectedException(typeof(ArgumentException))]
-        [TestMethod]
+        [Test]
         public void Equals_ComparesIntAndCoordinate2D_ThrowsArgumentException()
         {
             ICoordinate coordinate = new Coordinate2D(0, 0);
 
-            coordinate.Equals(5);
+            Assert.Throws<ArgumentException>(() => coordinate.Equals(5));
         }
 
-        [TestMethod]
-        public void Equals_ComparesEqualCoordinate2D_ReturnsTrue()
+        [TestCase(6, 6, 6, 6)]
+        [TestCase(0, 0, 0, 0)]
+        [TestCase(10, 10, 10, 10)]
+        public void Equals_ComparesEqualCoordinate2D_ReturnsTrue(int x1, int y1, int x2, int y2)
         {
-            ICoordinate first = new Coordinate2D(6, 6);
-            ICoordinate second = new Coordinate2D(6, 6);
+            ICoordinate first = new Coordinate2D(x1, y1);
+            ICoordinate second = new Coordinate2D(x2, y2);
 
             var areEqual = first.Equals(second);
 
             Assert.IsTrue(areEqual);
         }
 
-        [TestMethod]
+        [Test]
         public void Equals_ComparesNotEqualCoordinate2D_ReturnsFalse()
         {
             ICoordinate first = new Coordinate2D(5, 5);
@@ -94,7 +97,7 @@ namespace GraphLib.Test.CoordinateTests
             Assert.IsFalse(areEqual);
         }
 
-        [TestMethod]
+        [Test]
         public void Equals_Compares2DAnd3DCoordinates_ReturnsFalse()
         {
             ICoordinate coordinate2D = new Coordinate2D(3, 3);
@@ -105,14 +108,14 @@ namespace GraphLib.Test.CoordinateTests
             Assert.IsFalse(areEqual);
         }
 
-        [TestMethod]
+        [Test]
         public void Clone_Coordinate2D_ReturnsANewInstanceOfCoordinate2DClass()
         {
             ICoordinate coordinate = new Coordinate2D(5, 5);
 
             var clone = coordinate.Clone();
 
-            Assert.IsInstanceOfType(clone, typeof(Coordinate2D));
+            Assert.IsInstanceOf(typeof(Coordinate2D), clone);
             Assert.IsTrue(clone.Equals(coordinate));
             Assert.AreNotSame(clone, coordinate);
         }

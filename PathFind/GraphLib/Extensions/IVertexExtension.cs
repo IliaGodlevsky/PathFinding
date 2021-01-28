@@ -67,7 +67,7 @@ namespace GraphLib.Extensions
 
         public static IEnumerable<IVertex> GetUnvisitedNeighbours(this IVertex self)
         {
-            return self.Neighbours.Where(vertex => !vertex.IsVisited);
+            return self.Neighbours.Where(vertex => !vertex.IsVisited && !vertex.IsObstacle);
         }
 
         internal static void Refresh(this IVertex vertex)
@@ -106,6 +106,14 @@ namespace GraphLib.Extensions
                     neigbour.Neighbours.Add(self);
                 }
             }
+        }
+
+        public static bool IsEqual(this IVertex self, IVertex vertex)
+        {
+            bool hasEqualCost = (int)self.Cost == (int)vertex.Cost;
+            bool hasEqualPosition = self.Position.IsEqual(vertex.Position);
+            bool hasEqualState = self.IsObstacle == vertex.IsObstacle;
+            return hasEqualCost && hasEqualPosition && hasEqualState;
         }
 
         /// <summary>
