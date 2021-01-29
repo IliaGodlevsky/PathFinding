@@ -17,13 +17,13 @@ namespace GraphLib.Tests.Tests.CoordinateTests
             coordinateMock = new Mock<ICoordinate>();
         }
 
-        [TestCase(new int[] { 2,}, ExpectedResult = 2)]
-        [TestCase(new int[] { 2, 3 }, ExpectedResult = 8)]
-        [TestCase(new int[] { 2, 3, 4 }, ExpectedResult = 26)]
-        [TestCase(new int[] { 2, 3, 4, 5 }, ExpectedResult = 80)]
-        [TestCase(new int[] { 2, 3, 4, 5, 6 }, ExpectedResult = 242)]
-        [TestCase(new int[] { 2, 3, 4, 5, 6, 7 }, ExpectedResult = 728)]
-        [TestCase(new int[] { 2, 3, 4, 5, 6, 7, 8 }, ExpectedResult = 2186)]
+        [TestCase(new int[] { 2,},                      ExpectedResult = 2)]
+        [TestCase(new int[] { 2, 3 },                   ExpectedResult = 8)]
+        [TestCase(new int[] { 2, 3, 4 },                ExpectedResult = 26)]
+        [TestCase(new int[] { 2, 3, 4, 5 },             ExpectedResult = 80)]
+        [TestCase(new int[] { 2, 3, 4, 5, 6 },          ExpectedResult = 242)]
+        [TestCase(new int[] { 2, 3, 4, 5, 6, 7 },       ExpectedResult = 728)]
+        [TestCase(new int[] { 2, 3, 4, 5, 6, 7, 8 },    ExpectedResult = 2186)]
         public int GetEnvironment_CoordinatesWithVariousDimensionsNumber_ReturnValidNumberOfNeighbours(int [] coordinateValues)
         {
             coordinateMock.Setup(coordinate => coordinate.CoordinatesValues).Returns(coordinateValues);

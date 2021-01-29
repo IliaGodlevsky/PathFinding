@@ -17,7 +17,7 @@ namespace Algorithm.Tests.AlgorithmCreatingTesting
             graphMock = new Mock<IGraph>(MockBehavior.Loose);
         }
 
-        [Test, TestCaseSource("AlgorithmKeys")]
+        [Test, TestCaseSource(nameof(AlgorithmKeys))]
         public void CreateAlgorithm_ValidKey_ReturnsAlgorithm(string key)
         {
             var algorithm = AlgorithmFactory.CreateAlgorithm(key, graphMock.Object);
