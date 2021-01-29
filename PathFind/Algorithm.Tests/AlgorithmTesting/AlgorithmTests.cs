@@ -10,7 +10,7 @@ namespace Algorithm.Tests.AlgorithmTesting
     internal class AlgorithmTests
     {
         [TestCaseSource(typeof(TestCasesFactory),
-            nameof(TestCasesFactory.AlgorithmTestCases))]
+            nameof(TestCasesFactory.AlgorithmWithGraphsTestCases))]
         public void FindPath_NotNullGraph_Success(IGraph graph,
             IAlgorithm algorithm)
         {
@@ -23,7 +23,7 @@ namespace Algorithm.Tests.AlgorithmTesting
         }
 
         [TestCaseSource(typeof(TestCasesFactory),
-            nameof(TestCasesFactory.Algorithms))]
+            nameof(TestCasesFactory.AlgorithmsTestCases))]
         public void FindPath_NullGraph_Failed(IAlgorithm algorithm)
         {
             IGraph graph = new NullGraph();
