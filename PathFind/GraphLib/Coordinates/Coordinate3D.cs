@@ -8,7 +8,7 @@ namespace GraphLib.Coordinates
     ///  A class representing cartesian three-dimensional coordinates
     /// </summary>
     [Serializable]
-    public sealed class Coordinate3D : BaseCoordinate<Coordinate3D>
+    public sealed class Coordinate3D : BaseCoordinate
     {
         public int X => CoordinatesValues.First();
 
@@ -31,6 +31,11 @@ namespace GraphLib.Coordinates
         public override object Clone()
         {
             return new Coordinate3D(X, Y, Z);
+        }
+
+        protected override ICoordinate CreateInstance(int[] values)
+        {
+            return new Coordinate3D(values);
         }
     }
 }

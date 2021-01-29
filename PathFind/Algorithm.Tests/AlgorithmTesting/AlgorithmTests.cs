@@ -3,7 +3,6 @@ using GraphLib.Graphs;
 using GraphLib.Graphs.Abstractions;
 using GraphLib.Graphs.Infrastructure;
 using NUnit.Framework;
-using System.Linq;
 
 namespace Algorithm.Tests.AlgorithmTesting
 {
@@ -15,8 +14,6 @@ namespace Algorithm.Tests.AlgorithmTesting
         public void FindPath_NotNullGraph_Success(IGraph graph,
             IAlgorithm algorithm)
         {
-            graph.Start = graph.First();
-            graph.End = graph.Last();
             algorithm.Graph = graph;
 
             algorithm.FindPath();

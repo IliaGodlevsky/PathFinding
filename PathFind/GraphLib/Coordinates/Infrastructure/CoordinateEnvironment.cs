@@ -1,8 +1,6 @@
-﻿using Common.Extensions;
-using GraphLib.Coordinates.Abstractions;
+﻿using GraphLib.Coordinates.Abstractions;
 using System.Collections.Generic;
 using System.Linq;
-using static Common.ObjectActivator;
 
 namespace GraphLib.Coordinates.Infrastructure
 {
@@ -10,29 +8,22 @@ namespace GraphLib.Coordinates.Infrastructure
     /// A class that finds the neighbors of the specified coordinate
     /// </summary>
     /// <typeparam name="TCoordinate"></typeparam>
-    public sealed class CoordinateEnvironment<TCoordinate>
-        where TCoordinate : class, ICoordinate
+    public sealed class CoordinateEnvironment
     {
-        public CoordinateEnvironment(TCoordinate coordinate)
+        public CoordinateEnvironment(ICoordinate coordinate)
         {
-            environment = new List<TCoordinate>();
+            environment = new List<int[]>();
             selfCoordinatesValue = coordinate.CoordinatesValues.ToArray();
             currentCoordinatesValues = new int[selfCoordinatesValue.Length];
-            middleCoordinate = coordinate;
+            middleCoordinateCoordinates = coordinate.CoordinatesValues.ToArray();
             limitDepth = selfCoordinatesValue.Length;
-        }
-
-        static CoordinateEnvironment()
-        {
-            var ctor = typeof(TCoordinate).GetConstructor(typeof(int[]));
-            RegisterConstructor<TCoordinate>(ctor);
         }
 
         /// <summary>
         /// Returns an array of the coordinate neighbours
         /// </summary>
         /// <returns>An array of the coordinate neighbours</returns>
-        public IEnumerable<ICoordinate> GetEnvironment()
+        public IEnumerable<int[]> GetEnvironment()
         {
             FormEnvironment();
             return environment;
@@ -54,12 +45,9 @@ namespace GraphLib.Coordinates.Infrastructure
 
         private void AddNeighbourToEnvironment()
         {
-            var activator = GetActivator<TCoordinate>();
-            var coordinate = activator(currentCoordinatesValues);
-
-            if (!middleCoordinate.Equals(coordinate))
+            if (!middleCoordinateCoordinates.SequenceEqual(currentCoordinatesValues))
             {
-                environment.Add(coordinate);
+                environment.Add(currentCoordinatesValues.ToArray());
             }
         }
 
@@ -74,12 +62,12 @@ namespace GraphLib.Coordinates.Infrastructure
             return depth < limitDepth - 1;
         }
 
-        private readonly TCoordinate middleCoordinate;
+        private readonly int[] middleCoordinateCoordinates;
 
         private readonly int[] currentCoordinatesValues;
         private readonly int[] selfCoordinatesValue;
 
-        private readonly List<TCoordinate> environment;
+        private readonly List<int[]> environment;
         private readonly int limitDepth;
     }
 }

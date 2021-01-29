@@ -5,7 +5,6 @@ using GraphLib.Graphs.Factories;
 using GraphLib.Graphs.Serialization;
 using GraphLib.Info;
 using GraphLib.Tests.Extensions;
-using GraphLib.Tests.Extensions;
 using NUnit.Framework;
 using System.Collections.Generic;
 using System.IO;

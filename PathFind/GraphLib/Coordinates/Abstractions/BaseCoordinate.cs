@@ -11,8 +11,7 @@ namespace GraphLib.Coordinates.Abstractions
     /// Provides base functionality to coordinate classes
     /// </summary>
     [Serializable]
-    public abstract class BaseCoordinate<TCoordinate> : ICoordinate 
-        where TCoordinate: class, ICoordinate
+    public abstract class BaseCoordinate : ICoordinate
     {
         public BaseCoordinate(int numberOfDimensions, params int[] coordinates)
         {
@@ -25,14 +24,16 @@ namespace GraphLib.Coordinates.Abstractions
 
         public IEnumerable<int> CoordinatesValues { get; }
 
-        public IEnumerable<ICoordinate> Environment 
+        public IEnumerable<ICoordinate> Environment
         {
             get
             {
                 if (coordinateEnvironment == null)
                 {
-                    var environment = new CoordinateEnvironment<TCoordinate>(this as TCoordinate);
-                    coordinateEnvironment = environment.GetEnvironment();
+                    var environment = new CoordinateEnvironment(this);
+                    coordinateEnvironment = environment
+                        .GetEnvironment()
+                        .Select(CreateInstance);
                 }
 
                 return coordinateEnvironment;
@@ -74,8 +75,10 @@ namespace GraphLib.Coordinates.Abstractions
 
         public abstract object Clone();
 
+        protected abstract ICoordinate CreateInstance(int[] values);
+
         protected readonly int NumberOfDimensions;
 
-        private IEnumerable<ICoordinate> coordinateEnvironment;
+        protected IEnumerable<ICoordinate> coordinateEnvironment;
     }
 }

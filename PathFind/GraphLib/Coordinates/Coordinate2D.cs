@@ -8,7 +8,7 @@ namespace GraphLib.Coordinates
     /// A class representing cartesian two-dimensional coordinates
     /// </summary>
     [Serializable]
-    public sealed class Coordinate2D : BaseCoordinate<Coordinate2D>
+    public sealed class Coordinate2D : BaseCoordinate
     {
         public int X => CoordinatesValues.First();
 
@@ -29,6 +29,11 @@ namespace GraphLib.Coordinates
         public override object Clone()
         {
             return new Coordinate2D(X, Y);
+        }
+
+        protected override ICoordinate CreateInstance(int[] values)
+        {
+            return new Coordinate2D(values);
         }
     }
 }

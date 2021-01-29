@@ -2,15 +2,12 @@
 using GraphLib.Coordinates.Abstractions;
 using NUnit.Framework;
 using System;
-using System.Linq;
 
 namespace GraphLib.Tests.Tests.CoordinateTests
 {
     [TestFixture]
     public class Coordinate3DTests
     {
-        private const int NeighboursOfCoordinate3D = 26;
-
         [TestCase(1)]
         [TestCase(1, 2)]
         [TestCase()]
@@ -28,42 +25,6 @@ namespace GraphLib.Tests.Tests.CoordinateTests
             ICoordinate coordinate = new Coordinate3D(x, y, z);
 
             Assert.IsInstanceOf(typeof(Coordinate3D), coordinate);
-        }
-
-        [TestCase(2, 2, 10)]
-        [TestCase(30, 4, 70)]
-        [TestCase(454, 5, 150)]
-        public void Environment_ThreeCoordinateValues_Return26Coordinates(int x, int y, int z)
-        {
-            ICoordinate coordinate = new Coordinate3D(x, y, z);
-
-            var environment = coordinate.Environment;
-
-            Assert.IsTrue(environment.Count() == NeighboursOfCoordinate3D);
-        }
-
-        [TestCase(12, 2, 12)]
-        [TestCase(13, 4, 7)]
-        [TestCase(4, 15, 15)]
-        public void Environment_ThreeCoordinateValues_ReturnUniqueCoordinates(int x, int y, int z)
-        {
-            ICoordinate coordinate = new Coordinate3D(x, y, z);
-
-            var environment = coordinate.Environment;
-
-            Assert.IsTrue(environment.Distinct().Count() == NeighboursOfCoordinate3D);
-        }
-
-        [TestCase(21, 2, 12)]
-        [TestCase(34, 41, 77)]
-        [TestCase(40, 5, 15)]
-        public void Environment_ThreeCoordinateValues_Return26CoordinatesWithoutSelf(int x, int y, int z)
-        {
-            ICoordinate coordinate = new Coordinate3D(x, y, z);
-
-            var environment = coordinate.Environment;
-
-            Assert.IsFalse(environment.Contains(coordinate));
         }
 
         [Test]

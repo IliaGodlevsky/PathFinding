@@ -37,42 +37,6 @@ namespace GraphLib.Tests.Tests.CoordinateTests
             Assert.IsInstanceOf(typeof(Coordinate2D), coordinate);
         }
 
-        [TestCase(2, 2)]
-        [TestCase(3, 4)]
-        [TestCase(4, 5)]
-        public void Environment_ValidCoordinateValuesNumber_Return8Coordinates(int x, int y)
-        {
-            ICoordinate coordinate = new Coordinate2D(x, y);
-
-            var environment = coordinate.Environment;
-
-            Assert.IsTrue(environment.Count() == NeighboursOfCoordinate2D);
-        }
-
-        [TestCase(12, 2)]
-        [TestCase(3, 34)]
-        [TestCase(4, 57)]
-        public void Environment_ValidCoordinateValuesNumber_ReturnUniqueCoordinates(int x, int y)
-        {
-            ICoordinate coordinate = new Coordinate2D(x, y);
-
-            var environment = coordinate.Environment;
-
-            Assert.IsTrue(environment.Distinct().Count() == NeighboursOfCoordinate2D);
-        }
-
-        [TestCase(0, 12)]
-        [TestCase(100, 4)]
-        [TestCase(40, 5)]
-        public void Environment_ValidCoordinateValuesNumber_ReturnCoordinatesWithoutSelf(int x, int y)
-        {
-            ICoordinate coordinate = new Coordinate2D(x, y);
-
-            var environment = coordinate.Environment;
-
-            Assert.IsFalse(environment.Contains(coordinate));
-        }
-
         [Test]
         public void Equals_IntAsArgument_ThrowsArgumentException()
         {
