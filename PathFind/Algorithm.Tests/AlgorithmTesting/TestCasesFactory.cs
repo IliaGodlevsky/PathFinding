@@ -23,7 +23,7 @@ namespace Algorithm.Tests.AlgorithmTesting
             graph3DFactory = new GraphFactory<Graph3D>(0, 7, 7, 7);
         }
 
-        internal static IEnumerable AlgorithmTestCases
+        internal static IEnumerable AlgorithmWithGraphsTestCases
         {
             get
             {
@@ -47,7 +47,7 @@ namespace Algorithm.Tests.AlgorithmTesting
             }
         }
 
-        internal static IEnumerable Algorithms
+        internal static IEnumerable AlgorithmsTestCases
         {
             get
             {
