@@ -1,4 +1,5 @@
-﻿using GraphLib.Graphs.Abstractions;
+﻿using Common.Extensions;
+using GraphLib.Graphs.Abstractions;
 using GraphLib.Vertex;
 using System.Linq;
 
@@ -59,6 +60,14 @@ namespace GraphLib.Extensions
                 && !self.Start.IsDefault
                 && self.Any()
                 && !self.Start.IsVisited;
+        }
+
+        public static bool IsEqual(this IGraph self, IGraph graph)
+        {
+            bool hasEqualSizes = self.Size == graph.Size;
+            bool hasEqualNumberOfObstacles = graph.ObstacleNumber == self.ObstacleNumber;
+            bool hasEqualVertices = self.Match(graph, (a, b) => a.IsEqual(b));
+            return hasEqualSizes && hasEqualNumberOfObstacles && hasEqualVertices;
         }
     }
 }

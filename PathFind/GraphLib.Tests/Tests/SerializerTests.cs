@@ -1,10 +1,10 @@
 ﻿using GraphLib.Coordinates;
+using GraphLib.Extensions;
 using GraphLib.Graphs;
 using GraphLib.Graphs.Abstractions;
 using GraphLib.Graphs.Factories;
 using GraphLib.Graphs.Serialization;
 using GraphLib.Info;
-using GraphLib.Tests.Extensions;
 using NUnit.Framework;
 using System.Collections.Generic;
 using System.IO;
