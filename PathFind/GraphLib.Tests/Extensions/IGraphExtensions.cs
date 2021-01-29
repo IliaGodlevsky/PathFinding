@@ -12,10 +12,8 @@ namespace GraphLib.Tests.Extensions
             IEqualityComparer<IVertex> comparer = new VertexComparer();
             bool hasEqualSizes = self.Size == graph.Size;
             bool hasEqualNumberOfObstacles = graph.ObstacleNumber == self.ObstacleNumber;
-            bool hasEqualObstaclePercent = graph.ObstaclePercent == self.ObstaclePercent;
             bool hasEqualVertices = self.SequenceEqual(graph, comparer);
-            return hasEqualSizes && hasEqualNumberOfObstacles
-                && hasEqualVertices && hasEqualObstaclePercent;
+            return hasEqualSizes && hasEqualNumberOfObstacles && hasEqualVertices;
         }
     }
 
