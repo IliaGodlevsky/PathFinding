@@ -27,7 +27,7 @@ namespace GraphLib.Tests.Tests.CoordinateTests
         public int GetEnvironment_CoordinatesWithVariousDimensionsNumber_ReturnValidNumberOfNeighbours(int [] coordinateValues)
         {
             coordinateMock.Setup(coordinate => coordinate.CoordinatesValues).Returns(coordinateValues);
-            CoordinateEnvironment coordinateEnvironment = new CoordinateEnvironment(coordinateMock.Object);
+            var coordinateEnvironment = new CoordinateEnvironment(coordinateMock.Object);
 
             var environment = coordinateEnvironment.GetEnvironment();
 
@@ -44,7 +44,7 @@ namespace GraphLib.Tests.Tests.CoordinateTests
         public void GetEnvironment_CoordinatesWithVariousDimensionsNumber_ReturnNeighboursWithoutSelf(int[] coordinateValues)
         {
             coordinateMock.Setup(coordinate => coordinate.CoordinatesValues).Returns(coordinateValues);
-            CoordinateEnvironment coordinateEnvironment = new CoordinateEnvironment(coordinateMock.Object);
+            var coordinateEnvironment = new CoordinateEnvironment(coordinateMock.Object);
 
             var environment = coordinateEnvironment.GetEnvironment();
             bool hasSelf = environment.Any(values => values.SequenceEqual(coordinateValues));
