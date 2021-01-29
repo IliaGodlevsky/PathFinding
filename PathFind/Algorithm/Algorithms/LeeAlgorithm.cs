@@ -50,9 +50,9 @@ namespace Algorithm.Algorithms
         {
             get
             {
-                var notVisitedVertices = verticesQueue.
-                    Where(vertex => !vertex.IsVisited);
-                verticesQueue = new Queue<IVertex>(notVisitedVertices);
+                verticesQueue = verticesQueue.
+                    Where(vertex => !vertex.IsVisited).
+                    ToQueue();
 
                 return verticesQueue.DequeueOrDefault();
             }
@@ -86,9 +86,9 @@ namespace Algorithm.Algorithms
                 verticesQueue.Enqueue(neighbour);
             }
 
-            var distinctedVertices = verticesQueue.
-                DistinctBy(vert => vert.Position);
-            verticesQueue = new Queue<IVertex>(distinctedVertices);
+            verticesQueue = verticesQueue
+                .DistinctBy(vert => vert.Position)
+                .ToQueue();
         }
 
         protected Queue<IVertex> verticesQueue;

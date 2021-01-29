@@ -25,5 +25,10 @@ namespace Algorithm.Extensions
             double selector(IVertex vertex) => heuristicFunction(vertex);
             return collection.Min((Func<IVertex, double>)selector);
         }
+
+        public static Queue<T> ToQueue<T>(this IEnumerable<T> collection)
+        {
+            return new Queue<T>(collection);
+        }
     }
 }

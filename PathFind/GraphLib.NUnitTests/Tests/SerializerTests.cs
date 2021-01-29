@@ -4,13 +4,14 @@ using GraphLib.Graphs.Abstractions;
 using GraphLib.Graphs.Factories;
 using GraphLib.Graphs.Serialization;
 using GraphLib.Info;
-using GraphLib.Test.Extensions;
+using GraphLib.Tests.Extensions;
+using GraphLib.Tests.Extensions;
 using NUnit.Framework;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 
-namespace GraphLib.NUnitTests
+namespace GraphLib.Tests.Tests
 {
     [TestFixture]
     public class SerializerTests

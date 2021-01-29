@@ -4,10 +4,10 @@ using Algorithm.Extensions;
 using System;
 using System.Collections.Generic;
 
-namespace Algorithm.NUnitTests.ExtensionsTests
+namespace Algorithm.Tests.ExtensionsTests
 {
     [TestFixture]
-    class IEnumerableExtensionsTests
+    class FirstOrDefaultTests
     {
         [SetUp]
         public void SetUp()

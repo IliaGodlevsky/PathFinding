@@ -4,6 +4,10 @@
     <TargetFramework>netcoreapp3.1</TargetFramework>
 
     <IsPackable>false</IsPackable>
+
+    <RootNamespace>Algorithm.Tests</RootNamespace>
+
+    <AssemblyName>Algorithm.Tests</AssemblyName>
   </PropertyGroup>
 
   <ItemGroup>

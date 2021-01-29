@@ -35,8 +35,8 @@ namespace ConsoleVersion.View
         {
             Console.ForegroundColor = Color.White;
             Console.CursorVisible = false;
-            DrawAbscissa();
-            DrawOrdinate();
+            DrawAbscissaFrames();
+            DrawOrdinateFrames();
             DrawGraph();
         }
 
@@ -45,7 +45,7 @@ namespace ConsoleVersion.View
             vertices.ForEach(vertex => vertex.ColorizeVertex());
         }
 
-        private void DrawOrdinate()
+        private void DrawOrdinateFrames()
         {
             int padding = MainView.YCoordinatePadding;
             for (int length = 0; length < Length; length++)
@@ -55,14 +55,18 @@ namespace ConsoleVersion.View
             }
         }
 
-        private void DrawAbscissa()
+        private void DrawAbscissaFrame(int topOffset, FramedAbscissaView view)
+        {
+            Console.SetCursorPosition(0, topOffset);
+            Console.Write(GetFramedAbscissa(view));
+        }
+
+        private void DrawAbscissaFrames()
         {
             int cursorTop = MainView.HeightOfGraphParametresView;
-            Console.SetCursorPosition(0, cursorTop);
-            Console.Write(GetFramedAbscissa(FramedAbscissaView.FrameUnder));
+            DrawAbscissaFrame(cursorTop, FramedAbscissaView.FrameUnder);
             cursorTop += Length + MainView.HeightOfAbscissaView;
-            Console.SetCursorPosition(0, cursorTop);
-            Console.Write(GetFramedAbscissa(FramedAbscissaView.FrameOver));
+            DrawAbscissaFrame(cursorTop, FramedAbscissaView.FrameOver);
         }
 
         private void DrawLeftYCoodrinate(int yCoodrinatePadding, int currentLength)
@@ -84,7 +88,7 @@ namespace ConsoleVersion.View
 
         private int GetCursorLeftPositionCloseToRigthVerticalFrame()
         {
-            return Width* MainView.LateralDistanceBetweenVertices
+            return Width * MainView.LateralDistanceBetweenVertices
                    + MainView.WidthOfOrdinateView - 2;
         }
 

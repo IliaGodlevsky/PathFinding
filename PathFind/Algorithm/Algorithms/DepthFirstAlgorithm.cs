@@ -18,17 +18,6 @@ namespace Algorithm.Algorithms
     {
         public HeuristicHandler GreedyFunction { get; set; }
 
-        private IGraph graph;
-        public override IGraph Graph 
-        { 
-            get => graph;
-            set 
-            { 
-                graph = value; 
-                GreedyFunction = vertex => vertex.CalculateChebyshevDistanceTo(graph.Start);
-            }
-        }
-
         public DepthFirstAlgorithm() : this(new NullGraph())
         {
 
@@ -37,6 +26,7 @@ namespace Algorithm.Algorithms
         public DepthFirstAlgorithm(IGraph graph) : base(graph)
         {           
             visitedVertices = new Stack<IVertex>();
+            GreedyFunction = vertex => vertex.CalculateChebyshevDistanceTo(Graph.Start);
         }
 
         public override void FindPath()
@@ -67,7 +57,7 @@ namespace Algorithm.Algorithms
                     => GreedyFunction(vertex) == neighbours.Min(GreedyFunction);
 
                 return neighbours
-                    .ForEach(Enqueu)
+                    .ForEach(Enqueue)
                     .ToList()
                     .FindOrDefault(IsLeastCostVertex);
             }
@@ -81,7 +71,7 @@ namespace Algorithm.Algorithms
             visitedVertices.Push(CurrentVertex);
         }
 
-        private void Enqueu(IVertex vertex)
+        private void Enqueue(IVertex vertex)
         {
             var args = new AlgorithmEventArgs(Graph, vertex);
             RaiseOnVertexEnqueuedEvent(args);

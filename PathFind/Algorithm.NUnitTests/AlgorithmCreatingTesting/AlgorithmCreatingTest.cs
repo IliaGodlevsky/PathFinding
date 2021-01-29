@@ -4,7 +4,7 @@ using Moq;
 using NUnit.Framework;
 using System.Collections;
 
-namespace Algorithm.NUnitTests.AlgorithmCreatingTesting
+namespace Algorithm.Tests.AlgorithmCreatingTesting
 {
     [TestFixture]
     internal class AlgorithmCreatingTest

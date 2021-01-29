@@ -4,7 +4,7 @@ using NUnit.Framework;
 using System;
 using System.Linq;
 
-namespace GraphLib.NUnitTests
+namespace GraphLib.Tests.Tests.CoordinateTests
 {
     [TestFixture]
     public class Coordinate3DTests
@@ -23,7 +23,7 @@ namespace GraphLib.NUnitTests
         [TestCase(2, 2, 1)]
         [TestCase(3, 4, 7)]
         [TestCase(4, 5, 15)]
-        public void Constructor_ThreeCoordinateValues_ReturnsInstanceOfCoordinate3DClass(int x, int y, int z)
+        public void Constructor_ValidCoordinateValuesNumber_ReturnsInstanceOfCoordinate3DClass(int x, int y, int z)
         {
             ICoordinate coordinate = new Coordinate3D(x, y, z);
 

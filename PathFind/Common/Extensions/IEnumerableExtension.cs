@@ -89,5 +89,32 @@ namespace Common.Extensions
         {
             return collection.Any() ? collection.Max() : default;
         }
+
+        public static bool Match<T>(this IEnumerable<T> collection, IEnumerable<T> second, Func<T, T, bool> comparer)
+        {
+            if (collection.Count() != second.Count())
+            {
+                return false;
+            }
+
+            if (!collection.Any() && !second.Any())
+            {
+                return true;
+            }
+
+            int limit = second.Count();
+
+            for (int i = 0; i < limit; i++)
+            {
+                T a = collection.ElementAt(i);
+                T b = second.ElementAt(i);
+                if (!comparer(a, b))
+                {
+                    return false;
+                }
+            }
+
+            return true;
+        }
     }
 }

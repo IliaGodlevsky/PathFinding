@@ -1,6 +1,6 @@
 ﻿using GraphLib.Vertex.Interface;
 
-namespace GraphLib.Test.Extensions
+namespace GraphLib.Tests.Extensions
 {
     public static class IVertexExtensions
     {

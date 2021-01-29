@@ -3,7 +3,7 @@ using GraphLib.Vertex.Interface;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace GraphLib.Test.Extensions
+namespace GraphLib.Tests.Extensions
 {
     public static class IGraphExtensions
     {
@@ -14,7 +14,7 @@ namespace GraphLib.Test.Extensions
             bool hasEqualNumberOfObstacles = graph.ObstacleNumber == self.ObstacleNumber;
             bool hasEqualObstaclePercent = graph.ObstaclePercent == self.ObstaclePercent;
             bool hasEqualVertices = self.SequenceEqual(graph, comparer);
-            return hasEqualSizes && hasEqualNumberOfObstacles 
+            return hasEqualSizes && hasEqualNumberOfObstacles
                 && hasEqualVertices && hasEqualObstaclePercent;
         }
     }

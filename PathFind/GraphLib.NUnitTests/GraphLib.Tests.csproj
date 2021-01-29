@@ -6,6 +6,10 @@
     <IsPackable>false</IsPackable>
 
     <OutputType>Library</OutputType>
+
+    <RootNamespace>GraphLib.Tests</RootNamespace>
+
+    <AssemblyName>GraphLib.Tests</AssemblyName>
   </PropertyGroup>
 
   <ItemGroup>

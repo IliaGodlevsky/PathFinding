@@ -1,5 +1,6 @@
 ﻿using Algorithm.Extensions;
 using Algorithm.Handlers;
+using GraphLib.Graphs;
 using GraphLib.Graphs.Abstractions;
 using GraphLib.Vertex.Interface;
 using System.ComponentModel;
@@ -11,25 +12,14 @@ namespace Algorithm.Algorithms
     {
         public HeuristicHandler HeuristicFunction { get; set; }
 
-        private IGraph graph;
-        public override IGraph Graph
-        {
-            get => graph;
-            set 
-            { 
-                graph = value; 
-                HeuristicFunction = vertex => vertex.CalculateChebyshevDistanceTo(Graph.End); 
-            }
-        }
-
-        public AStarAlgorithm() : base()
+        public AStarAlgorithm() : this(new NullGraph())
         {
 
         }
 
         public AStarAlgorithm(IGraph graph) : base(graph)
         {
-            
+            HeuristicFunction = vertex => vertex.CalculateChebyshevDistanceTo(Graph.End);
         }
 
         public override void Reset()

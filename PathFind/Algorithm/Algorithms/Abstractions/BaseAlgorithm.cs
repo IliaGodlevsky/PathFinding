@@ -13,7 +13,7 @@ namespace Algorithm.Algorithms.Abstractions
         public event AlgorithmEventHandler OnFinished;
         public event AlgorithmEventHandler OnVertexEnqueued;
 
-        public virtual IGraph Graph { get; set; }
+        public IGraph Graph { get; set; }
 
         public bool IsDefault => false;
 
@@ -30,6 +30,10 @@ namespace Algorithm.Algorithms.Abstractions
         public virtual void Reset()
         {
             Graph = new NullGraph();
+            OnStarted = null;
+            OnFinished = null;
+            OnVertexEnqueued = null;
+            OnVertexVisited = null;
         }
 
         public abstract void FindPath();

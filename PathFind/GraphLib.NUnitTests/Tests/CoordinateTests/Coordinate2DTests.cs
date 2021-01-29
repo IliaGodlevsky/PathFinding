@@ -1,18 +1,26 @@
 ﻿using GraphLib.Coordinates;
 using GraphLib.Coordinates.Abstractions;
+using Moq;
 using NUnit.Framework;
 using System;
 using System.Linq;
 
-namespace GraphLib.NUnitTests
+namespace GraphLib.Tests.Tests.CoordinateTests
 {
     [TestFixture]
     public class Coordinate2DTests
     {
         private const int NeighboursOfCoordinate2D = 8;
+        private Mock<ICoordinate> coordinateMock;
+
+        [SetUp]
+        public void SetUp()
+        {
+            coordinateMock = new Mock<ICoordinate>();
+        }
 
         [TestCase(1)]
-        [TestCase(1,2,3)]
+        [TestCase(1, 2, 3)]
         [TestCase()]
         public void Constructor_InvalidNumberOfCoordinateValues_ThrowsArgumentOutOfRangeException(params int[] coordinates)
         {
@@ -22,7 +30,7 @@ namespace GraphLib.NUnitTests
         [TestCase(2, 2)]
         [TestCase(3, 4)]
         [TestCase(4, 5)]
-        public void Constructor_TwoCoordinateValues_ReturnsInstanceOfCoordinate2DClass(int x, int y)
+        public void Constructor_ValidCoordinateValuesNumber_ReturnsInstanceOfCoordinate2DClass(int x, int y)
         {
             ICoordinate coordinate = new Coordinate2D(x, y);
 
@@ -32,7 +40,7 @@ namespace GraphLib.NUnitTests
         [TestCase(2, 2)]
         [TestCase(3, 4)]
         [TestCase(4, 5)]
-        public void Environment_TwoCoordinateValues_Return8Coordinates(int x, int y)
+        public void Environment_ValidCoordinateValuesNumber_Return8Coordinates(int x, int y)
         {
             ICoordinate coordinate = new Coordinate2D(x, y);
 
@@ -44,7 +52,7 @@ namespace GraphLib.NUnitTests
         [TestCase(12, 2)]
         [TestCase(3, 34)]
         [TestCase(4, 57)]
-        public void Environment_TwoCoordinateValues_ReturnUniqueCoordinates(int x, int y)
+        public void Environment_ValidCoordinateValuesNumber_ReturnUniqueCoordinates(int x, int y)
         {
             ICoordinate coordinate = new Coordinate2D(x, y);
 
@@ -56,7 +64,7 @@ namespace GraphLib.NUnitTests
         [TestCase(0, 12)]
         [TestCase(100, 4)]
         [TestCase(40, 5)]
-        public void Environment_Coordinate2DX5Y5_ReturnCoordinatesWithoutSelf(int x, int y)
+        public void Environment_ValidCoordinateValuesNumber_ReturnCoordinatesWithoutSelf(int x, int y)
         {
             ICoordinate coordinate = new Coordinate2D(x, y);
 
@@ -66,17 +74,17 @@ namespace GraphLib.NUnitTests
         }
 
         [Test]
-        public void Equals_ComparesIntAndCoordinate2D_ThrowsArgumentException()
+        public void Equals_IntAsArgument_ThrowsArgumentException()
         {
             ICoordinate coordinate = new Coordinate2D(0, 0);
 
-            Assert.Throws<ArgumentException>(() => coordinate.Equals(5));
+            Assert.Throws<ArgumentException>(() => coordinate.Equals(default(int)));
         }
 
         [TestCase(6, 6, 6, 6)]
         [TestCase(0, 0, 0, 0)]
         [TestCase(10, 10, 10, 10)]
-        public void Equals_ComparesEqualCoordinate2D_ReturnsTrue(int x1, int y1, int x2, int y2)
+        public void Equals_ComparesEqualCoordinates2D_ReturnsTrue(int x1, int y1, int x2, int y2)
         {
             ICoordinate first = new Coordinate2D(x1, y1);
             ICoordinate second = new Coordinate2D(x2, y2);
@@ -87,7 +95,7 @@ namespace GraphLib.NUnitTests
         }
 
         [Test]
-        public void Equals_ComparesNotEqualCoordinate2D_ReturnsFalse()
+        public void Equals_ComparesNotEqualCoordinates2D_ReturnsFalse()
         {
             ICoordinate first = new Coordinate2D(5, 5);
             ICoordinate second = new Coordinate2D(6, 6);
@@ -97,13 +105,19 @@ namespace GraphLib.NUnitTests
             Assert.IsFalse(areEqual);
         }
 
-        [Test]
-        public void Equals_Compares2DAnd3DCoordinates_ReturnsFalse()
-        {
-            ICoordinate coordinate2D = new Coordinate2D(3, 3);
-            ICoordinate coordinate3D = new Coordinate3D(3, 3, 3);
 
-            var areEqual = coordinate2D.Equals(coordinate3D);
+        [TestCase(3, 13, 10, 15)]
+        [TestCase(3)]
+        [TestCase(3, 3, 3)]
+        [TestCase()]
+        [TestCase(7, 11, 1, 15, 77)]
+        public void Equals_Compares2DAndNot2DCoordinate_ReturnsFalse(params int[] coordinates)
+        {
+            coordinateMock.Setup(coordinate => coordinate.CoordinatesValues).Returns(coordinates);
+
+            ICoordinate coordinate2D = new Coordinate2D(3, 3);
+
+            var areEqual = coordinate2D.Equals(coordinateMock.Object);
 
             Assert.IsFalse(areEqual);
         }

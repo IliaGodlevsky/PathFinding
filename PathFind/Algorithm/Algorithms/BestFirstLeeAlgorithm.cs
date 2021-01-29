@@ -15,17 +15,6 @@ namespace Algorithm.PathFindingAlgorithms
     {
         public HeuristicHandler HeuristicFunction { get; set; }
 
-        private IGraph graph;
-        public override IGraph Graph
-        {
-            get => graph;
-            set 
-            { 
-                graph = value; 
-                HeuristicFunction = vertex => vertex.CalculateChebyshevDistanceTo(Graph.End); 
-            }
-        }
-
         public BestFirstLeeAlgorithm() : this(new NullGraph())
         {
 
@@ -33,7 +22,7 @@ namespace Algorithm.PathFindingAlgorithms
 
         public BestFirstLeeAlgorithm(IGraph graph) : base(graph)
         {
-            
+            HeuristicFunction = vertex => vertex.CalculateChebyshevDistanceTo(Graph.End);
         }
 
         public override void Reset()
@@ -46,9 +35,9 @@ namespace Algorithm.PathFindingAlgorithms
         {
             get
             {
-                var orderedVertices = verticesQueue.
-                    OrderBy(vertex => vertex.AccumulatedCost);
-                verticesQueue = new Queue<IVertex>(orderedVertices);
+                verticesQueue = verticesQueue
+                    .OrderBy(vertex => vertex.AccumulatedCost)
+                    .ToQueue();
 
                 return base.NextVertex;
             }

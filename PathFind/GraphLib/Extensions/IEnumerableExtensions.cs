@@ -16,16 +16,17 @@ namespace GraphLib.Extensions
         /// <param name="func"></param>
         /// <returns>Result of aggregation</returns>
         /// <exception cref="ArgumentNullException">Thrown when any of arguments is null</exception>
+        /// <exception cref="InvalidOperationException"></exception>
         internal static IEnumerable<T> StepAggregate<T>(this IEnumerable<T> collection, Func<T, T, T> func)
         {
-            if (collection == null || func == null)
-            {
-                throw new ArgumentNullException("Argument can't be null");
-            }
+            return collection.Select((arr, i) => arr.Skip(i).Aggregate(func));
+        }
 
+        private static IEnumerable<T> Select<T>(this IEnumerable<T> collection, Func<IEnumerable<T>, int, T> func)
+        {
             for (int i = 0; i < collection.Count(); i++)
             {
-                yield return collection.Skip(i).Aggregate(func);
+                yield return func(collection, i);
             }
         }
     }

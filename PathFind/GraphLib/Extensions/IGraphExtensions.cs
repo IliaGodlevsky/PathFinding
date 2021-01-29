@@ -48,7 +48,7 @@ namespace GraphLib.Extensions
                 && !self.End.IsDefault && !self.Start.IsDefault;
         }
 
-        internal static void ConnectVertices(this IGraph self)
+        public static void ConnectVertices(this IGraph self)
         {
             self.AsParallel().ForAll(vertex => vertex.SetNeighbours(self));
         }

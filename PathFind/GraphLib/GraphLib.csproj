@@ -44,7 +44,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Comparers\DimensionComparer.cs" />
     <Compile Include="Coordinates\Infrastructure\CoordinateEnvironment.cs" />
     <Compile Include="Coordinates\Coordinate2D.cs" />
     <Compile Include="Coordinates\Coordinate3D.cs" />

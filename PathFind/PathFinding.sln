@@ -27,9 +27,9 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WindowsFormsVersion", "Wind
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WPFVersion3D", "WPFVersion3D\WPFVersion3D.csproj", "{C50DAB38-75A5-47F5-A6A0-1165BBE5E283}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GraphLib.NUnitTests", "GraphLib.NUnitTests\GraphLib.NUnitTests.csproj", "{10B49085-25BD-48B0-8247-C645819479CC}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GraphLib.Tests", "GraphLib.NUnitTests\GraphLib.Tests.csproj", "{10B49085-25BD-48B0-8247-C645819479CC}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Algorithm.NUnitTests", "Algorithm.NUnitTests\Algorithm.NUnitTests.csproj", "{5AB215CD-08DC-4482-95BF-A03F31A5679F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Algorithm.Tests", "Algorithm.NUnitTests\Algorithm.Tests.csproj", "{5AB215CD-08DC-4482-95BF-A03F31A5679F}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

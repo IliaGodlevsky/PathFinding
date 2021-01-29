@@ -34,9 +34,9 @@ namespace Algorithm.Extensions
                 throw new ArgumentException("Vertex coordinate was set to null");
             }
 
-            if (self.Position.GetType() != toVertex.Position.GetType())
+            if (self.Position.CoordinatesValues.Count() != toVertex.Position.CoordinatesValues.Count())
             {
-                throw new ArgumentException("Can't calculate distance between vertices with different coordinates types");
+                throw new ArgumentException("Can't calculate distance between vertices with different coordinates count");
             }
 
             return self.Position.CoordinatesValues

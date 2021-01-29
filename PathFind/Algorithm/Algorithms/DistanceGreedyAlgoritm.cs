@@ -8,17 +8,6 @@ namespace Algorithm.Algorithms
     [Description("Distance greedy algorithm")]
     public class DistanceGreedyAlgoritm : DepthFirstAlgorithm
     {
-        private IGraph graph;
-        public override IGraph Graph
-        { 
-            get => graph;
-            set 
-            {
-                graph = value; 
-                GreedyFunction = vertex => vertex.CalculateChebyshevDistanceTo(Graph.End); 
-            }
-        }
-
         public DistanceGreedyAlgoritm() : this(new NullGraph())
         {
 
@@ -26,7 +15,7 @@ namespace Algorithm.Algorithms
 
         public DistanceGreedyAlgoritm(IGraph graph) : base(graph)
         {
-            
+            GreedyFunction = vertex => vertex.CalculateChebyshevDistanceTo(Graph.End);
         }
     }
 }
