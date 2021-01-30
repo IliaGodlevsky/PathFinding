@@ -13,10 +13,9 @@ namespace GraphLib.Coordinates.Infrastructure
         public CoordinateEnvironment(ICoordinate coordinate)
         {
             environment = new List<int[]>();
-            selfCoordinatesValue = coordinate.CoordinatesValues.ToArray();
-            currentCoordinatesValues = new int[selfCoordinatesValue.Length];
-            middleCoordinateCoordinates = coordinate.CoordinatesValues.ToArray();
-            limitDepth = selfCoordinatesValue.Length;
+            selfCoordinatesValues = coordinate.CoordinatesValues.ToArray();
+            currentCoordinatesValues = new int[selfCoordinatesValues.Length];
+            limitDepth = selfCoordinatesValues.Length;
         }
 
         /// <summary>
@@ -32,29 +31,25 @@ namespace GraphLib.Coordinates.Infrastructure
         // Recursive method
         private void FormEnvironment(int depth = 0)
         {
-            var neighbours = GetNeighbourCoordinates(depth);
-            foreach (var coordinate in neighbours)
+            foreach (var coordinate in GetNeighbourCoordinates(depth))
             {
                 currentCoordinatesValues[depth] = coordinate;
                 if (CanMoveDeeper(depth))
+                {
                     FormEnvironment(depth + 1);
-                else
-                    AddNeighbourToEnvironment();
-            }
-        }
-
-        private void AddNeighbourToEnvironment()
-        {
-            if (!middleCoordinateCoordinates.SequenceEqual(currentCoordinatesValues))
-            {
-                environment.Add(currentCoordinatesValues.ToArray());
+                }
+                else if (!selfCoordinatesValues
+                    .SequenceEqual(currentCoordinatesValues))
+                {
+                    environment.Add(currentCoordinatesValues.ToArray());
+                }
             }
         }
 
         private IEnumerable<int> GetNeighbourCoordinates(int depth)
         {
             for (int i = -1; i <= 1; i++) 
-                yield return selfCoordinatesValue[depth] + i;
+                yield return selfCoordinatesValues[depth] + i;
         }
 
         private bool CanMoveDeeper(int depth)
@@ -62,10 +57,8 @@ namespace GraphLib.Coordinates.Infrastructure
             return depth < limitDepth - 1;
         }
 
-        private readonly int[] middleCoordinateCoordinates;
-
         private readonly int[] currentCoordinatesValues;
-        private readonly int[] selfCoordinatesValue;
+        private readonly int[] selfCoordinatesValues;
 
         private readonly List<int[]> environment;
         private readonly int limitDepth;

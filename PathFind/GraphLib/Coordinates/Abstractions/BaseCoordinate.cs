@@ -18,7 +18,7 @@ namespace GraphLib.Coordinates.Abstractions
             CoordinatesValues = coordinates.ToArray();
             if (CoordinatesValues.Count() != numberOfDimensions)
             {
-                throw new ArgumentOutOfRangeException("Number of dimensions must be equal to coordinates numbers");
+                throw new ArgumentOutOfRangeException("Number of dimensions must be equal to coordinates number of dimensions");
             }
         }
 
@@ -60,24 +60,22 @@ namespace GraphLib.Coordinates.Abstractions
         public override string ToString()
         {
             var information = new StringBuilder("(");
-            var coordinatesInString = CoordinatesValues.
+            var coordinatesInStringRepresentation = CoordinatesValues.
                 Select(coordinate => coordinate.ToString());
 
-            for (int i = 0; i < coordinatesInString.Count() - 1; i++)
+            for (int i = 0; i < coordinatesInStringRepresentation.Count() - 1; i++)
             {
-                information.Append(coordinatesInString.
+                information.Append(coordinatesInStringRepresentation.
                     ElementAt(i)).Append(",");
             }
 
-            information.Append(coordinatesInString.Last()).Append(")");
+            information.Append(coordinatesInStringRepresentation.Last()).Append(")");
             return information.ToString();
         }
 
         public abstract object Clone();
 
         protected abstract ICoordinate CreateInstance(int[] values);
-
-        protected readonly int NumberOfDimensions;
 
         protected IEnumerable<ICoordinate> coordinateEnvironment;
     }

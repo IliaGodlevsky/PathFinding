@@ -55,11 +55,11 @@ namespace WPFVersion.Model
         private VertexCost cost;
         public VertexCost Cost
         {
-            get { return cost; }
+            get => cost;
             set
             {
-                cost = (VertexCost)value.Clone();
-                Dispatcher.Invoke(() => Content = cost.ToString(string.Empty));
+                cost = value;
+                Dispatcher.Invoke(() => Content = cost.ToString());
             }
         }
 
@@ -133,7 +133,7 @@ namespace WPFVersion.Model
         public void MakeWeighted()
         {
             cost.MakeWeighted();
-            Dispatcher.Invoke(() => Content = cost.ToString(string.Empty));
+            Dispatcher.Invoke(() => Content = cost.ToString());
         }
     }
 }

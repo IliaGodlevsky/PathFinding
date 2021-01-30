@@ -17,7 +17,7 @@ namespace GraphLib.Extensions
         /// <param name="dimensions">dimensions of array except first dimension</param>
         /// <returns>Index of coordinate in a multidimensional array</returns>
         /// <exception cref="ArgumentException">Throws when <paramref name="self"/> 
-        /// coordinates values number is not equal to <paramref name="dimensions"/> - 1</exception>
+        /// coordinates values number is not equal to <paramref name="dimensions"/></exception>
         /// <exception cref="ArgumentNullException">Thrown when any of arguments is null</exception>
         /// <exception cref="ArgumentOutOfRangeException"></exception>
         internal static int ToIndex(this ICoordinate self, params int[] dimensions)
@@ -52,7 +52,7 @@ namespace GraphLib.Extensions
         /// <param name="graph"></param>
         /// <returns>Index of coordinate in a graph</returns>
         /// /// <exception cref="ArgumentException">Throws when <paramref name="self"/> 
-        /// coordinates values number is not equal to <paramref name="graph"/> size - 1</exception>
+        /// coordinates values number is not equal to <paramref name="graph"/> size</exception>
         public static int ToIndex(this ICoordinate self, IGraph graph)
         {
             return self.ToIndex(graph.DimensionsSizes.ToArray());

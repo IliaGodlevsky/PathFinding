@@ -3,50 +3,44 @@
 namespace GraphLib.Vertex.Cost
 {
     [Serializable]
-    public sealed class VertexCost : ICloneable, IComparable<int>
+    enum CostStatus
     {
-        public VertexCost(int currentCost)
+        Unweighted,
+        Weighted
+    }
+
+    [Serializable]
+    public struct VertexCost : ICloneable
+    {
+        public int CurrentCost { get; private set; }
+
+        public VertexCost(int startCost)
         {
-            CurrentCost = currentCost;
-            WeightedCost = currentCost;
-            IsWeighted = true;
+            CurrentCost = startCost;
+            WeightedCost = startCost;
+            CostStatus = CostStatus.Weighted;
         }
 
         public void MakeWeighted()
         {
             CurrentCost = WeightedCost;
-            IsWeighted = true;
+            CostStatus = CostStatus.Weighted;
         }
 
         public void MakeUnWeighted()
         {
             CurrentCost = UnweightedCost;
-            IsWeighted = false;
+            CostStatus = CostStatus.Unweighted;
         }
 
-        public static int operator +(VertexCost cost, int currentCost)
+        public string ToString(string unweightedSign = " ")
         {
-            return cost.CurrentCost + currentCost;
-        }
-
-        public static int operator +(int currentCost, VertexCost cost)
-        {
-            return cost + currentCost;
-        }
-
-        public static int operator +(VertexCost cost1, VertexCost cost2)
-        {
-            return cost1.CurrentCost + cost2.CurrentCost;
-        }
-
-        public static explicit operator int(VertexCost cost)
-        {
-            return cost.CurrentCost;
-        }
-
-        public string ToString(string unweightedSign)
-        {
-            return IsWeighted ? CurrentCost.ToString() : unweightedSign;
+            switch(CostStatus)
+            {
+                case CostStatus.Weighted:   return CurrentCost.ToString();
+                case CostStatus.Unweighted: return unweightedSign;
+                default:                    throw new Exception();
+            }
         }
 
         public object Clone()
@@ -55,23 +49,11 @@ namespace GraphLib.Vertex.Cost
             {
                 CurrentCost = CurrentCost,
                 WeightedCost = WeightedCost,
-                IsWeighted = IsWeighted
+                CostStatus = CostStatus
             };
         }
 
-        public int CompareTo(int other)
-        {
-            return CurrentCost.CompareTo(other);
-        }
-
-        private VertexCost()
-        {
-
-        }
-
-        private bool IsWeighted { get; set; }
-
-        private int CurrentCost { get; set; }
+        private CostStatus CostStatus { get; set; }
 
         private int UnweightedCost => 1;
 

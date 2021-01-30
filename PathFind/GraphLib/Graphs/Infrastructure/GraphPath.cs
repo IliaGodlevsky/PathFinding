@@ -58,7 +58,7 @@ namespace GraphLib.Graphs.Infrastructure
             if (graph.IsExtremeVerticesVisited())
             {
                 Path = GetPath(graph.End);
-                PathCost = Path.Sum(vertex => (int)vertex.Cost);
+                PathCost = Path.Sum(vertex => vertex.Cost.CurrentCost);
                 PathLength = Path.Count();
                 IsExtracted = Path.FirstOrDefault(vertex => vertex.IsEnd == true) != null;
             }

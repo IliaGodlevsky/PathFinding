@@ -90,7 +90,7 @@ namespace WindowsFormsVersion.Model
         public void MakeWeighted()
         {
             cost.MakeWeighted();
-            Text = cost.ToString(string.Empty);
+            Text = cost.ToString();
         }
 
         private VertexCost cost;
@@ -99,8 +99,8 @@ namespace WindowsFormsVersion.Model
             get => cost;
             set
             {
-                cost = (VertexCost)value.Clone();
-                Text = cost.ToString(string.Empty);
+                cost = value;
+                Text = cost.ToString();
             }
         }
 

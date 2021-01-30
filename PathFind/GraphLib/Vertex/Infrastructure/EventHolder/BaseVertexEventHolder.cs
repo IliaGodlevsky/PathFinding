@@ -20,7 +20,7 @@ namespace GraphLib.EventHolder
                 if (!vertex.IsObstacle)
                 {
                     int delta = GetWheelDelta(e) > 0 ? 1 : -1;
-                    int newCost = vertex.Cost + delta;
+                    int newCost = vertex.Cost.CurrentCost + delta;
                     int boundedCost = Range.VertexCostRange.ReturnInRange(newCost);
                     vertex.Cost = new VertexCost(boundedCost);
                 }

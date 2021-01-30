@@ -110,7 +110,7 @@ namespace GraphLib.Extensions
 
         public static bool IsEqual(this IVertex self, IVertex vertex)
         {
-            bool hasEqualCost = (int)self.Cost == (int)vertex.Cost;
+            bool hasEqualCost = self.Cost.CurrentCost == vertex.Cost.CurrentCost;
             bool hasEqualPosition = self.Position.IsEqual(vertex.Position);
             bool hasEqualState = self.IsObstacle == vertex.IsObstacle;
             return hasEqualCost && hasEqualPosition && hasEqualState;

@@ -48,7 +48,7 @@ namespace Algorithm.Algorithms
 
         protected virtual double GetVertexRelaxedCost(IVertex neighbour)
         {
-            return (int)neighbour.Cost + CurrentVertex.AccumulatedCost;
+            return neighbour.Cost.CurrentCost + CurrentVertex.AccumulatedCost;
         }
 
         protected override IVertex NextVertex
