@@ -13,7 +13,7 @@ namespace Algorithm.Algorithms.Abstractions
         public event AlgorithmEventHandler OnFinished;
         public event AlgorithmEventHandler OnVertexEnqueued;
 
-        public IGraph Graph { get; set; }
+        public virtual IGraph Graph { get; set; }
 
         public bool IsDefault => false;
 

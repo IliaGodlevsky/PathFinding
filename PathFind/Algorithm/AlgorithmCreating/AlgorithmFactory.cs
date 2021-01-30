@@ -34,12 +34,12 @@ namespace Algorithm.AlgorithmCreating
         /// <see cref="DefaultAlgorithm"></see> when doesn't</returns>
         /// <exception cref="KeyNotFoundException">Thrown when activator 
         /// doesn't exist for algorithm with <paramref name="algorithmDescription"></paramref> key</exception>
-        public static IAlgorithm CreateAlgorithm(string algorithmDescription, IGraph graph)
+        public static IAlgorithm CreateAlgorithm(string algorithmDescription)
         {
             if (Algorithms.TryGetValue(algorithmDescription, out Type algoType))
             {
                 var activator = (ActivatorHandler<IAlgorithm>)GetRegisteredActivator(algoType);
-                return activator(graph);
+                return activator();
             }
             return new DefaultAlgorithm();
         }
@@ -60,7 +60,7 @@ namespace Algorithm.AlgorithmCreating
 
         private static void RegisterConstructor(Type type)
         {
-            var ctor = type.GetConstructor(typeof(IGraph));
+            var ctor = type.GetConstructor();
             RegisterConstructor<IAlgorithm>(ctor);
         }
 

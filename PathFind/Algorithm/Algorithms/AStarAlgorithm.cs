@@ -12,6 +12,13 @@ namespace Algorithm.Algorithms
     {
         public HeuristicHandler HeuristicFunction { get; set; }
 
+        private IGraph graph;
+        public override IGraph Graph
+        {
+            get => graph;
+            set { graph = value; HeuristicFunction = vertex => vertex.CalculateChebyshevDistanceTo(graph.End); }
+        }
+
         public AStarAlgorithm() : this(new NullGraph())
         {
 
@@ -19,7 +26,7 @@ namespace Algorithm.Algorithms
 
         public AStarAlgorithm(IGraph graph) : base(graph)
         {
-            HeuristicFunction = vertex => vertex.CalculateChebyshevDistanceTo(Graph.End);
+            
         }
 
         public override void Reset()

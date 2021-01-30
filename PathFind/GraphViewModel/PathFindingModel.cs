@@ -32,7 +32,9 @@ namespace GraphLib.ViewModel
         public virtual void FindPath()
         {
             var algorithm = AlgorithmFactory.
-                CreateAlgorithm(AlgorithmKey, mainViewModel.Graph);
+                CreateAlgorithm(AlgorithmKey);
+
+            algorithm.Graph = mainViewModel.Graph;
 
             intermitter = new AlgorithmIntermit(DelayTime);
 

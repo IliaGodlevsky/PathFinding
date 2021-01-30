@@ -40,9 +40,9 @@ namespace Algorithm.Algorithms
             CompletePathfinding();
         }
 
-        public override void Reset()
+        protected override void CompletePathfinding()
         {
-            base.Reset();
+            base.CompletePathfinding();
             verticesQueue.Clear();
         }
 

@@ -40,12 +40,6 @@ namespace Algorithm.Algorithms
             CompletePathfinding();
         }
 
-        public override void Reset()
-        {
-            base.Reset();
-            verticesQueue.Clear();
-        }
-
         protected virtual double GetVertexRelaxedCost(IVertex neighbour)
         {
             return neighbour.Cost.CurrentCost + CurrentVertex.AccumulatedCost;
@@ -62,6 +56,12 @@ namespace Algorithm.Algorithms
 
                 return verticesQueue.FirstOrDefault();
             }
+        }
+
+        protected override void CompletePathfinding()
+        {
+            base.CompletePathfinding();
+            verticesQueue.Clear();
         }
 
         protected override void PrepareForPathfinding()

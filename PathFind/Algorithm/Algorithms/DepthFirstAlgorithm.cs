@@ -18,6 +18,13 @@ namespace Algorithm.Algorithms
     {
         public HeuristicHandler GreedyFunction { get; set; }
 
+        private IGraph graph;
+        public override IGraph Graph
+        {
+            get => graph;
+            set { graph = value; GreedyFunction = vertex => vertex.CalculateChebyshevDistanceTo(graph.Start); }
+        }
+
         public DepthFirstAlgorithm() : this(new NullGraph())
         {
 
@@ -26,7 +33,6 @@ namespace Algorithm.Algorithms
         public DepthFirstAlgorithm(IGraph graph) : base(graph)
         {           
             visitedVertices = new Stack<IVertex>();
-            GreedyFunction = vertex => vertex.CalculateChebyshevDistanceTo(Graph.Start);
         }
 
         public override void FindPath()
@@ -44,8 +50,13 @@ namespace Algorithm.Algorithms
         public override void Reset()
         {
             base.Reset();
-            visitedVertices.Clear();
             GreedyFunction = null;
+        }
+
+        protected override void CompletePathfinding()
+        {
+            base.CompletePathfinding();
+            visitedVertices.Clear();
         }
 
         protected override IVertex NextVertex

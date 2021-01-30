@@ -13,6 +13,17 @@ namespace Algorithm.Algorithms
     [Description("A* algorithm (modified)")]
     public class AStarModified : AStarAlgorithm
     {
+        public override IGraph Graph 
+        { 
+            get => base.Graph;
+            set 
+            { 
+                base.Graph = value;
+                PercentOfFarthestVerticesToDelete 
+                    = CalculatePercentOfFarthestVerticesToDelete();
+            } 
+        }
+
         public AStarModified() : this(new NullGraph())
         {
 
@@ -21,16 +32,8 @@ namespace Algorithm.Algorithms
         public AStarModified(IGraph graph) : base(graph)
         {
             deletedVertices = new List<IVertex>();
-            percentValueRange = new ValueRange(99, 0);
-            PercentOfFarthestVerticesToDelete 
-                = CalculatePercentOfFarthestVerticesToDelete();
         }
 
-        public override void Reset()
-        {
-            base.Reset();
-            deletedVertices.Clear();
-        }
         protected override IVertex NextVertex
         {
             get
@@ -52,9 +55,9 @@ namespace Algorithm.Algorithms
         }
 
         protected override void CompletePathfinding()
-        {
+        {            
+            base.CompletePathfinding();
             deletedVertices.Clear();
-            base.CompletePathfinding();          
         }
 
         private int CompareByHeuristic(IVertex v1, IVertex v2)
@@ -87,7 +90,7 @@ namespace Algorithm.Algorithms
             return Convert.ToInt32(partOfVertexToDelete);
         }
 
-        private readonly ValueRange percentValueRange;
+        private readonly ValueRange percentValueRange = new ValueRange(99, 0);
         private readonly List<IVertex> deletedVertices;
     }
 }
