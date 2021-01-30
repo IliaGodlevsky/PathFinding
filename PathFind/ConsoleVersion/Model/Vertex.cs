@@ -44,8 +44,8 @@ namespace ConsoleVersion.Model
             get { return cost; }
             set
             {
-                cost = (VertexCost)value.Clone();
-                Text = cost.ToString("#");
+                cost = value;
+                Text = cost.ToString(UnweightedSign);
             }
         }
 
@@ -121,13 +121,13 @@ namespace ConsoleVersion.Model
         public void MakeUnweighted()
         {
             cost.MakeUnWeighted();
-            Text = cost.ToString("#");
+            Text = cost.ToString(UnweightedSign);
         }
 
         public void MakeWeighted()
         {
             cost.MakeWeighted();
-            Text = cost.ToString("#");
+            Text = cost.ToString(UnweightedSign);
         }
 
         public void ColorizeVertex()
@@ -158,6 +158,8 @@ namespace ConsoleVersion.Model
                 }
                 return consoleCoordinate;
             }
-        }       
+        }
+
+        private const string UnweightedSign = "#";
     }
 }

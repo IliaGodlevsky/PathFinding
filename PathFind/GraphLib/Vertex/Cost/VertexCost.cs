@@ -3,14 +3,7 @@
 namespace GraphLib.Vertex.Cost
 {
     [Serializable]
-    enum CostStatus
-    {
-        Unweighted,
-        Weighted
-    }
-
-    [Serializable]
-    public struct VertexCost : ICloneable
+    public struct VertexCost
     {
         public int CurrentCost { get; private set; }
 
@@ -18,45 +11,45 @@ namespace GraphLib.Vertex.Cost
         {
             CurrentCost = startCost;
             WeightedCost = startCost;
-            CostStatus = CostStatus.Weighted;
+            Status = CostStatus.Weighted;
         }
 
         public void MakeWeighted()
         {
             CurrentCost = WeightedCost;
-            CostStatus = CostStatus.Weighted;
+            Status = CostStatus.Weighted;
         }
 
         public void MakeUnWeighted()
         {
             CurrentCost = UnweightedCost;
-            CostStatus = CostStatus.Unweighted;
+            Status = CostStatus.Unweighted;
         }
 
-        public string ToString(string unweightedSign = " ")
+        public string ToString(string unweightedSign = "")
         {
-            switch(CostStatus)
+            switch(Status)
             {
-                case CostStatus.Weighted:   return CurrentCost.ToString();
-                case CostStatus.Unweighted: return unweightedSign;
-                default:                    throw new Exception();
+                case CostStatus.Weighted:
+                    return CurrentCost.ToString();
+                case CostStatus.Unweighted:
+                    return unweightedSign;
+                default:
+                    throw new Exception("Status isn't processed");
             }
         }
-
-        public object Clone()
-        {
-            return new VertexCost()
-            {
-                CurrentCost = CurrentCost,
-                WeightedCost = WeightedCost,
-                CostStatus = CostStatus
-            };
-        }
-
-        private CostStatus CostStatus { get; set; }
 
         private int UnweightedCost => 1;
 
         private int WeightedCost { get; set; }
+
+        [Serializable] 
+        private enum CostStatus 
+        { 
+            Unweighted, 
+            Weighted 
+        }
+
+        private CostStatus Status { get; set; }
     }
 }

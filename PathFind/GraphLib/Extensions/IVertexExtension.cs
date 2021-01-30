@@ -46,7 +46,7 @@ namespace GraphLib.Extensions
         public static void Initialize(this IVertex vertex, VertexSerializationInfo info)
         {
             vertex.Position = (ICoordinate)info.Position.Clone();
-            vertex.Cost = (VertexCost)info.Cost.Clone();
+            vertex.Cost = info.Cost;
             vertex.IsObstacle = info.IsObstacle;
 
             if (vertex.IsObstacle)

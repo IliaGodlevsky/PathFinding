@@ -26,7 +26,7 @@ namespace GraphLib.Tests.Tests.CoordinateTests
         [TestCase(new int[] { 10, 9, 10, 10 },  new int[] { 8, 10, 10, 10 },    ExpectedResult = false)]
         [TestCase(new int[] { 0, 1, 0 },        new int[] { 1, 0 },             ExpectedResult = false)]
         [TestCase(new int[] { 10, 9 },          new int[] { 8, 10, 10, 10 },    ExpectedResult = false)]
-        public bool IsEqual_ComparesCoordinatesWithCoordinateValues_ReturnsValidCondition(
+        public bool IsEqual_ComparesCoordinatesWithVariousCoordinateValues_ReturnsValidCondition(
             int [] firstCoordinateValues, int[] secondCoordinateValues)
         {
             first = new Mock<ICoordinate>();

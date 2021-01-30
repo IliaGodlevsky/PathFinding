@@ -43,18 +43,28 @@ namespace GraphViewModel
         public virtual void SaveGraph()
         {
             var savePath = GetSavingPath();
-            using (var stream = new FileStream(savePath, FileMode.OpenOrCreate))
-                Serializer.SaveGraph(Graph, stream);
+            try
+            {
+                using (var stream = new FileStream(savePath, FileMode.OpenOrCreate))
+                {
+                    Serializer.SaveGraph(Graph, stream);
+                }
+            }
+            catch { }
         }
 
         public virtual void LoadGraph()
         {
             var loadPath = GetLoadingPath();
-            using (var stream = new FileStream(loadPath, FileMode.Open))
+            try
             {
-                var newGraph = Serializer.LoadGraph(stream, SerializationInfoConverter);
-                ConnectNewGraph(newGraph);
+                using (var stream = new FileStream(loadPath, FileMode.Open))
+                {
+                    var newGraph = Serializer.LoadGraph(stream, SerializationInfoConverter);
+                    ConnectNewGraph(newGraph);
+                }
             }
+            catch { }
         }
 
         public virtual void ClearGraph()
@@ -86,7 +96,5 @@ namespace GraphViewModel
         protected abstract string GetSavingPath();
 
         protected abstract string GetLoadingPath();
-
-
     }
 }

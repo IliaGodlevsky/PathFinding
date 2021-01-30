@@ -10,14 +10,6 @@ namespace GraphLib.Tests.Tests.CoordinateTests
     [TestFixture]
     public class Coordinate2DTests
     {
-        private Mock<ICoordinate> coordinateMock;
-
-        [SetUp]
-        public void SetUp()
-        {
-            coordinateMock = new Mock<ICoordinate>();
-        }
-
         [TestCase(1)]
         [TestCase(1, 2, 3)]
         [TestCase()]
