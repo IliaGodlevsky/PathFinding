@@ -15,8 +15,8 @@ namespace ConsoleVersion.ViewModel
 
         public string HeightInputMessage { private get; set; }
 
-        public GraphCreatingViewModel(IMainModel model, 
-            IGraphFactory graphFactory) : base(model, graphFactory)
+        public GraphCreatingViewModel(IMainModel model,
+            IGraphFiller graphFactory) : base(model, graphFactory)
         {
 
         }

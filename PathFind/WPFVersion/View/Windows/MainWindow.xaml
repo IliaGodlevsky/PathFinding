@@ -9,9 +9,6 @@
         ResizeMode="CanResize"        
         WindowStartupLocation="CenterScreen"
         Icon="../../Resources/Images/mainwindow2.png">
-    <Window.DataContext>
-        <viewmodel:MainWindowViewModel x:Name ="ViewModel"></viewmodel:MainWindowViewModel>
-    </Window.DataContext>
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="auto"></RowDefinition>

@@ -1,13 +1,10 @@
-﻿using GraphLib.EventHolder.Interface;
-using GraphLib.GraphField;
+﻿using GraphLib.GraphField;
 using GraphLib.Graphs.Abstractions;
 
 namespace GraphViewModel.Interfaces
 {
     public interface IMainModel : IModel
     {
-        IVertexEventHolder VertexEventHolder { get; set; }
-
         string GraphParametres { get; set; }
 
         IGraphField GraphField { get; set; }

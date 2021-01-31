@@ -1,10 +1,10 @@
 ﻿using Common.Interfaces;
-using GraphLib.Coordinates.Infrastructure.Factories;
+using GraphLib.EventHolder.Interface;
 using GraphLib.Extensions;
 using GraphLib.GraphField;
-using GraphLib.Graphs;
-using GraphLib.Graphs.Factories;
-using GraphLib.Graphs.Serialization;
+using GraphLib.GraphFieldCreating;
+using GraphLib.Graphs.Factories.Interfaces;
+using GraphLib.Graphs.Serialization.Interfaces;
 using GraphViewModel;
 using Microsoft.Win32;
 using System.ComponentModel;
@@ -66,12 +66,12 @@ namespace WPFVersion3D.ViewModel
         public ICommand ChangeOpacityCommand { get; }
         public ICommand AnimatedAxisRotateCommand { get; }
 
-        public MainWindowViewModel()
+        public MainWindowViewModel(BaseGraphFieldFactory fieldFactory,
+            IVertexEventHolder eventHolder,
+            IGraphSerializer graphSerializer,
+            IGraphFiller graphFactory) : base(fieldFactory, eventHolder, graphSerializer, graphFactory)
         {
-            GraphField = new GraphField3D();
-            VertexEventHolder = new Vertex3DEventHolder();
-            FieldFactory = new GraphField3DFactory();
-            SerializationInfoConverter = (serializationInfo) => new Vertex3D(serializationInfo);
+            graphParamFormat = Resource.GraphParamFormat;
 
             StartPathFindCommand = new RelayCommand(ExecuteStartPathFindCommand, CanExecuteStartFindPathCommand);
             CreateNewGraphCommand = new RelayCommand(ExecuteCreateNewGraphCommand);
@@ -80,10 +80,6 @@ namespace WPFVersion3D.ViewModel
             LoadGraphCommand = new RelayCommand(ExecuteLoadGraphCommand);
             ChangeOpacityCommand = new RelayCommand(ExecuteChangeOpacity, CanExecuteGraphOperation);
             AnimatedAxisRotateCommand = new RelayCommand(ExecuteAnimatedAxisRotateCommand);
-
-            Serializer = new GraphSerializer<Graph3D>();
-
-            graphParamFormat = Resource.GraphParamFormat;
         }
 
         public override void FindPath()
@@ -97,13 +93,10 @@ namespace WPFVersion3D.ViewModel
 
         public override void CreateNewGraph()
         {
-            var vertexFactory = new Vertex3DFactory();
-            var coordinateFactory = new Coordinate3DFactory();
-            var graphFactory = new GraphFactory<Graph3D>(vertexFactory, coordinateFactory);
-            PrepareWindow(new GraphCreatingViewModel(this, graphFactory), new GraphCreateWindow());
+            PrepareWindow(new GraphCreatingViewModel(this, graphFiller), new GraphCreateWindow());
         }
 
-        public void StretchAlongXAxis(object sender, RoutedPropertyChangedEventArgs<double>e)
+        public void StretchAlongXAxis(object sender, RoutedPropertyChangedEventArgs<double> e)
         {
             (graphField as GraphField3D).StretchAlongAxis(Axis.Abscissa, e.NewValue, 1, 0, 0);
         }

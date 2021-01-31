@@ -26,7 +26,7 @@ namespace Common.Extensions
         public static IEnumerable<T> DistinctBy<T, TKey>(
             this IEnumerable<T> collection, Func<T, TKey> selector)
         {
-            if (collection == null || selector == null) 
+            if (collection == null || selector == null)
             {
                 throw new ArgumentNullException("Bad incoming arguments");
             }

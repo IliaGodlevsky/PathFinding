@@ -2,7 +2,6 @@
 using GraphLib.Graphs.Abstractions;
 using GraphLib.Info;
 using GraphLib.Vertex;
-using GraphLib.Vertex.Cost;
 using GraphLib.Vertex.Interface;
 using System;
 using System.Collections.Generic;
@@ -127,7 +126,7 @@ namespace GraphLib.Extensions
         /// doesn't contain <paramref name="self"/></exception>
         internal static void SetNeighbours(this IVertex self, IGraph graph)
         {
-            if (graph == null || self == null) 
+            if (graph == null || self == null)
             {
                 throw new ArgumentNullException("Argument can't be null");
             }

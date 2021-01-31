@@ -1,17 +1,18 @@
 ﻿using Common;
 using Common.Interfaces;
-using GraphLib.Coordinates.Infrastructure.Factories;
+using GraphLib.EventHolder.Interface;
 using GraphLib.Extensions;
 using GraphLib.GraphField;
+using GraphLib.GraphFieldCreating;
 using GraphLib.Graphs;
-using GraphLib.Graphs.Factories;
+using GraphLib.Graphs.Factories.Interfaces;
+using GraphLib.Graphs.Serialization.Interfaces;
 using GraphViewModel;
 using System;
 using System.ComponentModel;
 using System.Drawing;
 using System.Runtime.CompilerServices;
 using System.Windows.Forms;
-using WindowsFormsVersion.EventHolder;
 using WindowsFormsVersion.Extensions;
 using WindowsFormsVersion.Forms;
 using WindowsFormsVersion.Model;
@@ -61,12 +62,12 @@ namespace WindowsFormsVersion.ViewModel
 
         public MainWindow MainWindow { get; set; }
 
-        public MainWindowViewModel() : base()
+        public MainWindowViewModel(BaseGraphFieldFactory fieldFactory,
+            IVertexEventHolder eventHolder,
+            IGraphSerializer graphSerializer,
+            IGraphFiller graphFactory) : base(fieldFactory, eventHolder, graphSerializer, graphFactory)
         {
-            VertexEventHolder = new VertexEventHolder();
-            graphField = new WinFormsGraphField();
-            FieldFactory = new GraphFieldFactory();
-            SerializationInfoConverter = (serializationInfo) => new Vertex(serializationInfo);
+
         }
 
         public override void FindPath()
@@ -83,10 +84,7 @@ namespace WindowsFormsVersion.ViewModel
 
         public override void CreateNewGraph()
         {
-            var vertexFactory = new VertexFactory();
-            var coordinateFactory = new Coordinate2DFactory();
-            var graphFactory = new GraphFactory<Graph2D>(vertexFactory, coordinateFactory);
-            var model = new GraphCreatingViewModel(this, graphFactory);
+            var model = new GraphCreatingViewModel(this, graphFiller);
             var form = new GraphCreatingWindow(model);
 
             PrepareWindow(model, form);

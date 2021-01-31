@@ -1,9 +1,7 @@
 ﻿using GraphLib.Coordinates;
 using GraphLib.Coordinates.Abstractions;
-using Moq;
 using NUnit.Framework;
 using System;
-using System.Linq;
 
 namespace GraphLib.Tests.Tests.CoordinateTests
 {

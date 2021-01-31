@@ -1,9 +1,10 @@
 ﻿using Common.Interfaces;
-using GraphLib.Coordinates.Infrastructure.Factories;
+using GraphLib.EventHolder.Interface;
 using GraphLib.Extensions;
 using GraphLib.GraphField;
-using GraphLib.Graphs;
-using GraphLib.Graphs.Factories;
+using GraphLib.GraphFieldCreating;
+using GraphLib.Graphs.Factories.Interfaces;
+using GraphLib.Graphs.Serialization.Interfaces;
 using GraphViewModel;
 using Microsoft.Win32;
 using System.ComponentModel;
@@ -12,7 +13,6 @@ using System.Windows;
 using System.Windows.Input;
 using WPFVersion.Infrastructure;
 using WPFVersion.Model;
-using WPFVersion.Model.EventHolder;
 using WPFVersion.View.Windows;
 
 namespace WPFVersion.ViewModel
@@ -60,13 +60,11 @@ namespace WPFVersion.ViewModel
         public ICommand ChangeVertexSize { get; }
         public ICommand ShowVertexCost { get; }
 
-        public MainWindowViewModel()
+        public MainWindowViewModel(BaseGraphFieldFactory fieldFactory,
+            IVertexEventHolder eventHolder,
+            IGraphSerializer graphSerializer,
+            IGraphFiller graphFactory) : base(fieldFactory, eventHolder, graphSerializer, graphFactory)
         {
-            GraphField = new GraphField();
-            VertexEventHolder = new VertexEventHolder();
-            FieldFactory = new GraphFieldFactory();
-            SerializationInfoConverter = (serializationInfo) => new Vertex(serializationInfo);
-
             StartPathFindCommand = new RelayCommand(ExecuteStartPathFindCommand, CanExecuteStartFindPathCommand);
             CreateNewGraphCommand = new RelayCommand(ExecuteCreateNewGraphCommand);
             ClearGraphCommand = new RelayCommand(ExecuteClearGraphCommand, CanExecuteGraphOperation);
@@ -99,10 +97,7 @@ namespace WPFVersion.ViewModel
 
         public override void CreateNewGraph()
         {
-            var vertexFactory = new VertexFactory();
-            var coordinateFactory = new Coordinate2DFactory();
-            var graphFactory = new GraphFactory<Graph2D>(vertexFactory, coordinateFactory);
-            PrepareWindow(new GraphCreatingViewModel(this, graphFactory), 
+            PrepareWindow(new GraphCreatingViewModel(this, graphFiller),
                 new GraphCreatesWindow());
         }
 

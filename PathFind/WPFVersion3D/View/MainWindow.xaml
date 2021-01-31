@@ -8,14 +8,9 @@
         xmlns:model="clr-namespace:WPFVersion3D.Model"
         xmlns:animation="clr-namespace:WPFVersion3D.Infrastructure.Animations"
         xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
-        xmlns:viewmodel="clr-namespace:WPFVersion3D.ViewModel" 
         xmlns:ei="http://schemas.microsoft.com/expression/2010/interactions"
         mc:Ignorable="d"
         Title="3D pathfinding" Height="350" Width="450">
-    <Window.DataContext>
-        <viewmodel:MainWindowViewModel></viewmodel:MainWindowViewModel>
-    </Window.DataContext>
-    
     <Window.Resources>
         <converters:InvertPointConverter x:Key="invertPointConverter"/>
         <converters:NummberToPointConverter x:Key="coordinateToDistance"/>

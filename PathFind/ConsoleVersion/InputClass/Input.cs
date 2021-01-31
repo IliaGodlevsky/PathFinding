@@ -14,7 +14,7 @@ namespace ConsoleVersion.InputClass
         /// <param name="lowerRangeValue">A lower value of input range</param>
         /// <returns>A number in the range from 
         /// <paramref name="lowerRangeValue"/> to <paramref name="upperRangeValue"/></returns>
-        public static int InputNumber(string accompanyingMessage, 
+        public static int InputNumber(string accompanyingMessage,
             int upperRangeValue, int lowerRangeValue = 0)
         {
             var rangeOfValidInput = new ValueRange(upperRangeValue, lowerRangeValue);
@@ -45,7 +45,7 @@ namespace ConsoleVersion.InputClass
 
         private static bool IsValidInput(string userInput, ValueRange rangeOfValidInput)
         {
-            return !(!int.TryParse(userInput, out var ch) 
+            return !(!int.TryParse(userInput, out var ch)
                 || !rangeOfValidInput.IsInRange(ch));
         }
     }

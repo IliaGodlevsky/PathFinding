@@ -33,7 +33,7 @@ namespace Common.Extensions
         /// <param name="inherit"></param>
         /// <returns>Attribute of type <typeparamref name="TAttribute"/> 
         /// if it exists and <see cref="null"/> if it doesn't</returns>
-        public static TAttribute GetAttribute<TAttribute>(this MemberInfo self, bool inherit = false) 
+        public static TAttribute GetAttribute<TAttribute>(this MemberInfo self, bool inherit = false)
             where TAttribute : Attribute
         {
             return (TAttribute)Attribute.GetCustomAttribute(self, typeof(TAttribute), inherit);
@@ -48,7 +48,7 @@ namespace Common.Extensions
         /// <param name="del"></param>
         /// <returns><see cref="true"/> if the creation of the 
         /// <typeparamref name="TDelegate"/> was successful and false if wasn't</returns>
-        public static bool TryCreateDelegate<TDelegate>(this MethodInfo self, 
+        public static bool TryCreateDelegate<TDelegate>(this MethodInfo self,
             object target, out TDelegate del)
             where TDelegate : Delegate
         {

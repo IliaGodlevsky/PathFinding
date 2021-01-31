@@ -24,7 +24,7 @@ namespace GraphLib.ViewModel
         public virtual IList<string> AlgorithmKeys { get; set; }
 
         public PathFindingModel(IMainModel mainViewModel)
-        {            
+        {
             this.mainViewModel = mainViewModel;
             DelayTime = 4;
         }

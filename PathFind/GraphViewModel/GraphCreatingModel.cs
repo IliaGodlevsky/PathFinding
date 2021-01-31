@@ -11,8 +11,8 @@ namespace GraphLib.ViewModel
 
         public int ObstaclePercent { get; set; }
 
-        public GraphCreatingModel(IMainModel model, 
-            IGraphFactory graphFactory)
+        public GraphCreatingModel(IMainModel model,
+            IGraphFiller graphFactory)
         {
             this.model = model;
             this.graphFactory = graphFactory;
@@ -26,6 +26,6 @@ namespace GraphLib.ViewModel
         }
 
         protected IMainModel model;
-        protected IGraphFactory graphFactory;
+        protected IGraphFiller graphFactory;
     }
 }

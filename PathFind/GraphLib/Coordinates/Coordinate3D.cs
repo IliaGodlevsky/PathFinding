@@ -19,7 +19,7 @@ namespace GraphLib.Coordinates
         public Coordinate3D(params int[] coordinates)
             : base(numberOfDimensions: 3, coordinates)
         {
-            
+
         }
 
         public Coordinate3D(int x, int y, int z)

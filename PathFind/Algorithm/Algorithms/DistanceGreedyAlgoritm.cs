@@ -22,7 +22,7 @@ namespace Algorithm.Algorithms
 
         public DistanceGreedyAlgoritm(IGraph graph) : base(graph)
         {
-            
+
         }
     }
 }

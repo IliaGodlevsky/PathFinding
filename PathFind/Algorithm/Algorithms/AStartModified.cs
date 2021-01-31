@@ -13,15 +13,15 @@ namespace Algorithm.Algorithms
     [Description("A* algorithm (modified)")]
     public class AStarModified : AStarAlgorithm
     {
-        public override IGraph Graph 
-        { 
+        public override IGraph Graph
+        {
             get => base.Graph;
-            set 
-            { 
+            set
+            {
                 base.Graph = value;
-                PercentOfFarthestVerticesToDelete 
+                PercentOfFarthestVerticesToDelete
                     = CalculatePercentOfFarthestVerticesToDelete();
-            } 
+            }
         }
 
         public AStarModified() : this(new NullGraph())
@@ -40,7 +40,7 @@ namespace Algorithm.Algorithms
             {
                 IVertex next = new DefaultVertex();
                 verticesQueue.Sort(CompareByHeuristic);
-                var verticesToDelete 
+                var verticesToDelete
                     = verticesQueue.Take(VerticesCountToDelete);
                 deletedVertices.AddRange(verticesToDelete);
                 verticesQueue.RemoveRange(0, VerticesCountToDelete);
@@ -55,7 +55,7 @@ namespace Algorithm.Algorithms
         }
 
         protected override void CompletePathfinding()
-        {            
+        {
             base.CompletePathfinding();
             deletedVertices.Clear();
         }

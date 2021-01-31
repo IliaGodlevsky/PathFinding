@@ -4,10 +4,12 @@ using ConsoleVersion.InputClass;
 using ConsoleVersion.Model;
 using ConsoleVersion.View;
 using GraphLib.Coordinates;
-using GraphLib.Coordinates.Infrastructure.Factories;
+using GraphLib.EventHolder.Interface;
 using GraphLib.Extensions;
+using GraphLib.GraphFieldCreating;
 using GraphLib.Graphs;
-using GraphLib.Graphs.Factories;
+using GraphLib.Graphs.Factories.Interfaces;
+using GraphLib.Graphs.Serialization.Interfaces;
 using GraphViewModel;
 using System;
 using System.Drawing;
@@ -18,26 +20,24 @@ namespace ConsoleVersion.ViewModel
 {
     internal class MainViewModel : MainModel
     {
-        public MainViewModel() : base()
+        public MainViewModel(BaseGraphFieldFactory fieldFactory,
+            IVertexEventHolder eventHolder,
+            IGraphSerializer graphSerializer,
+            IGraphFiller graphFactory) : base(fieldFactory, eventHolder, graphSerializer, graphFactory)
         {
-            VertexEventHolder = new VertexEventHolder();
-            FieldFactory = new GraphFieldFactory();
-            SerializationInfoConverter = (serializationInfo) => new Vertex(serializationInfo);
+
         }
 
         [MenuItem("Make unweighted")]
         public void MakeGraphUnweighted() => Graph.ToUnweighted();
 
-        [MenuItem("Make weighted")] 
+        [MenuItem("Make weighted")]
         public void MakeGraphWeighted() => Graph.ToWeighted();
 
         [MenuItem("Create new graph", MenuItemPriority.Highest)]
         public override void CreateNewGraph()
         {
-            var vertexFactory = new VertexFactory();
-            var coordinateFactory = new Coordinate2DFactory();
-            var graphFactory = new GraphFactory<Graph2D>(vertexFactory, coordinateFactory);
-            var model = new GraphCreatingViewModel(this, graphFactory);
+            var model = new GraphCreatingViewModel(this, graphFiller);
             var view = new GraphCreateView(model);
 
             view.Start();
@@ -104,7 +104,7 @@ namespace ConsoleVersion.ViewModel
         public void DisplayGraph()
         {
             Console.Clear();
-            Console.ForegroundColor = Color.White;            
+            Console.ForegroundColor = Color.White;
             Console.WriteLine(GraphParametres);
             var field = GraphField as GraphField;
             field?.ShowGraphWithFrames();

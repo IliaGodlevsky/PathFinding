@@ -1,11 +1,26 @@
-﻿using System.Windows;
+﻿using Autofac;
+using GraphViewModel.Interfaces;
+using System.Windows;
+using WPFVersion3D.Configure;
 
 namespace WPFVersion3D
 {
-    /// <summary>
-    /// Логика взаимодействия для App.xaml
-    /// </summary>
     public partial class App : Application
     {
+        protected override void OnStartup(StartupEventArgs e)
+        {
+            base.OnStartup(e);
+
+            var container = ContainerConfigure.ConfigureContainer();
+
+            var viewModel = container.Resolve<IMainModel>();
+
+            var mainWindow = new MainWindow
+            {
+                DataContext = viewModel
+            };
+
+            mainWindow.Show();
+        }
     }
 }

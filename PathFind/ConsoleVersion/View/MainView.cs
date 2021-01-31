@@ -4,6 +4,7 @@ using ConsoleVersion.ViewModel;
 using GraphLib.Coordinates;
 using GraphLib.Graphs;
 using GraphLib.Graphs.Abstractions;
+using GraphViewModel.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -39,13 +40,13 @@ namespace ConsoleVersion.View
 
         static MainView()
         {
-            GraphFieldPosition 
+            GraphFieldPosition
                 = new Coordinate2D(WidthOfOrdinateView, HeightOfAbscissaView + HeightOfGraphParametresView);
         }
 
-        public MainView()
+        public MainView(IMainModel model)
         {
-            mainModel = new MainViewModel();
+            mainModel = model as MainViewModel;
             menuActions = Menu.GetMenuMethodsAsDelegates<Action>(mainModel);
             menu = Menu.CreateMenu(menuActions.Keys, 3);
         }

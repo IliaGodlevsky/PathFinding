@@ -4,7 +4,6 @@ using Algorithm.Handlers;
 using GraphLib.Graphs;
 using GraphLib.Graphs.Abstractions;
 using GraphLib.Vertex.Interface;
-using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
 
@@ -29,7 +28,7 @@ namespace Algorithm.PathFindingAlgorithms
 
         public BestFirstLeeAlgorithm(IGraph graph) : base(graph)
         {
-            
+
         }
 
         public override void Reset()

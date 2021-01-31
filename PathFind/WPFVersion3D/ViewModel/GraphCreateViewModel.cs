@@ -1,14 +1,8 @@
 ﻿using Common.Interfaces;
-using GraphLib.Coordinates;
-using GraphLib.Graphs;
-using GraphLib.Graphs.Factories;
 using GraphLib.Graphs.Factories.Interfaces;
-using GraphLib.Vertex.Interface;
 using GraphLib.ViewModel;
 using GraphViewModel.Interfaces;
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Windows.Input;
 using WPFVersion3D.Infrastructure;
 using WPFVersion3D.Model;
@@ -24,8 +18,8 @@ namespace WPFVersion3D.ViewModel
         public ICommand ConfirmCreateGraphCommand { get; }
         public ICommand CancelCreateGraphCommand { get; }
 
-        public GraphCreatingViewModel(IMainModel model, 
-            IGraphFactory graphFactory) : base(model, graphFactory)
+        public GraphCreatingViewModel(IMainModel model,
+            IGraphFiller graphFactory) : base(model, graphFactory)
         {
             ConfirmCreateGraphCommand = new RelayCommand(ExecuteConfirmCreateGraphCommand);
             CancelCreateGraphCommand = new RelayCommand(obj => CloseWindow());

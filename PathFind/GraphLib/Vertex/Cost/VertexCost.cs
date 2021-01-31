@@ -28,7 +28,7 @@ namespace GraphLib.Vertex.Cost
 
         public string ToString(string unweightedSign = "")
         {
-            switch(Status)
+            switch (Status)
             {
                 case CostStatus.Weighted:
                     return CurrentCost.ToString();
@@ -43,11 +43,11 @@ namespace GraphLib.Vertex.Cost
 
         private int WeightedCost { get; set; }
 
-        [Serializable] 
-        private enum CostStatus 
-        { 
-            Unweighted, 
-            Weighted 
+        [Serializable]
+        private enum CostStatus
+        {
+            Unweighted,
+            Weighted
         }
 
         private CostStatus Status { get; set; }

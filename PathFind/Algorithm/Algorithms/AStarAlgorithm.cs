@@ -26,7 +26,7 @@ namespace Algorithm.Algorithms
 
         public AStarAlgorithm(IGraph graph) : base(graph)
         {
-            
+
         }
 
         public override void Reset()

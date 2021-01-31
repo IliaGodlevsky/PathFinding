@@ -31,7 +31,7 @@ namespace Algorithm.Algorithms
         }
 
         public DepthFirstAlgorithm(IGraph graph) : base(graph)
-        {           
+        {
             visitedVertices = new Stack<IVertex>();
         }
 
@@ -64,7 +64,7 @@ namespace Algorithm.Algorithms
             get
             {
                 var neighbours = CurrentVertex.GetUnvisitedNeighbours();
-                bool IsLeastCostVertex(IVertex vertex) 
+                bool IsLeastCostVertex(IVertex vertex)
                     => GreedyFunction(vertex) == neighbours.Min(GreedyFunction);
 
                 return neighbours

@@ -21,7 +21,7 @@ namespace Algorithm.Algorithms
 
         public CostGreedyAlgorithm(IGraph graph) : base(graph)
         {
-            
+
         }
     }
 }

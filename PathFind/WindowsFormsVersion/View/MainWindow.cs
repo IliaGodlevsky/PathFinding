@@ -1,4 +1,5 @@
-﻿using System;
+﻿using GraphViewModel.Interfaces;
+using System;
 using System.Collections.Generic;
 using System.Windows.Forms;
 using WindowsFormsVersion.ViewModel;
@@ -9,16 +10,14 @@ namespace WindowsFormsVersion.Forms
     {
         private readonly MainWindowViewModel mainModel;
 
-        public MainWindow()
+        public MainWindow(IMainModel model)
         {
             InitializeComponent();
 
             StartPosition = FormStartPosition.CenterScreen;
 
-            mainModel = new MainWindowViewModel
-            {
-                MainWindow = this
-            };
+            mainModel = model as MainWindowViewModel;
+            mainModel.MainWindow = this;
 
             var events = new List<EventHandler>()
             {

@@ -48,7 +48,7 @@ namespace GraphLib.Coordinates.Infrastructure
 
         private IEnumerable<int> GetNeighbourCoordinates(int depth)
         {
-            for (int i = -1; i <= 1; i++) 
+            for (int i = -1; i <= 1; i++)
                 yield return selfCoordinatesValues[depth] + i;
         }
 

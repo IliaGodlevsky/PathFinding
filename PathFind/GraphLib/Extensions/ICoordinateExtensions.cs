@@ -22,7 +22,7 @@ namespace GraphLib.Extensions
         /// <exception cref="ArgumentOutOfRangeException"></exception>
         internal static int ToIndex(this ICoordinate self, params int[] dimensions)
         {
-            if (self == null || dimensions == null) 
+            if (self == null || dimensions == null)
             {
                 throw new ArgumentNullException("Argument can't be null");
             }
@@ -89,7 +89,7 @@ namespace GraphLib.Extensions
         /// <exception cref="ArgumentNullException">Thrown when any of parametres is null</exception>
         public static bool IsWithinGraph(this ICoordinate coordinate, IGraph graph)
         {
-            if (coordinate == null || graph == null) 
+            if (coordinate == null || graph == null)
             {
                 throw new ArgumentNullException("Argument can't be null");
             }

@@ -1,51 +1,42 @@
-﻿using Common.Extensions;
-using GraphLib.Extensions;
+﻿using GraphLib.Extensions;
 using GraphLib.Graphs.Abstractions;
+using GraphLib.Graphs.Factories.Interfaces;
+using GraphLib.Graphs.Serialization.Factories.Interfaces;
 using GraphLib.Graphs.Serialization.Infrastructure.Info.Collections;
 using GraphLib.Graphs.Serialization.Interfaces;
-using GraphLib.Info;
-using GraphLib.Vertex.Interface;
 using System;
 using System.IO;
 using System.Linq;
 using System.Runtime.Serialization;
-using System.Runtime.Serialization.Formatters.Binary;
-using static Common.ObjectActivator;
 
 namespace GraphLib.Graphs.Serialization
 {
-    public class GraphSerializer<TGraph> : IGraphSerializer
-        where TGraph : class, IGraph
+    public class GraphSerializer : IGraphSerializer
     {
         public event Action<string> OnExceptionCaught;
 
-        public GraphSerializer()
+        public GraphSerializer(IFormatter formatter,
+            IVertexSerializationInfoConverter infoConverter,
+            IGraphFactory graphFactory)
         {
-            formatter = new BinaryFormatter();
+            this.formatter = formatter;
+            this.infoConverter = infoConverter;
+            this.graphFactory = graphFactory;
         }
 
-        static GraphSerializer()
-        {
-            var ctor = typeof(TGraph).GetConstructor(typeof(int[]));
-            RegisterConstructor<TGraph>(ctor);
-        }
-
-        public IGraph LoadGraph(Stream stream,
-            Func<VertexSerializationInfo, IVertex> vertexConvertMethod)
+        public IGraph LoadGraph(Stream stream)
         {
             try
-            {                
+            {
                 var verticesInfo = (GraphSerializationInfo)formatter.Deserialize(stream);
                 var dimensions = verticesInfo.DimensionsSizes.ToArray();
 
-                var activator = GetActivator<TGraph>();
-
-                var graph = activator(dimensions);
+                var graph = graphFactory.CreateGraph(dimensions);
 
                 for (int i = 0; i < verticesInfo.Count(); i++)
                 {
                     var vertexInfo = verticesInfo.ElementAt(i);
-                    graph[i] = vertexConvertMethod(vertexInfo);
+                    graph[i] = infoConverter.ConvertFrom(vertexInfo);
                 }
 
                 graph.ConnectVertices();
@@ -73,5 +64,7 @@ namespace GraphLib.Graphs.Serialization
         }
 
         private readonly IFormatter formatter;
+        private readonly IVertexSerializationInfoConverter infoConverter;
+        private readonly IGraphFactory graphFactory;
     }
 }

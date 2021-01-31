@@ -1,11 +1,4 @@
-﻿using GraphLib.Coordinates.Abstractions;
-using GraphLib.Graphs.Abstractions;
-using GraphLib.Vertex.Interface;
-using Moq;
-using NUnit.Framework;
-using System.Collections.Generic;
-
-namespace GraphLib.Tests.Tests.GraphTests.ExtensionsTests
+﻿namespace GraphLib.Tests.Tests.GraphTests.ExtensionsTests
 {
     //[TestFixture]
     //public class ConnectVerticesTests

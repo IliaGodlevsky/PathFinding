@@ -3,7 +3,7 @@ using System;
 
 namespace GraphLib.Graphs.Factories.Interfaces
 {
-    public interface IGraphFactory
+    public interface IGraphFiller
     {
         event Action<string> OnExceptionCaught;
 

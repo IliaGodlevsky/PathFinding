@@ -10,8 +10,8 @@ namespace WindowsFormsVersion.ViewModel
     {
         public event EventHandler OnWindowClosed;
 
-        public GraphCreatingViewModel(IMainModel model, 
-            IGraphFactory graphFactory) : base(model, graphFactory)
+        public GraphCreatingViewModel(IMainModel model,
+            IGraphFiller graphFactory) : base(model, graphFactory)
         {
 
         }

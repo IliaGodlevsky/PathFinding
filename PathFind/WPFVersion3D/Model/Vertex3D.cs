@@ -153,7 +153,7 @@ namespace WPFVersion3D.Model
         }
 
         public void MarkAsSimpleVertex()
-        {           
+        {
             Dispatcher.Invoke(() =>
             {
                 if (!IsObstacle)

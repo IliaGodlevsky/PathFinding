@@ -1,5 +1,4 @@
-﻿using Algorithm.AlgorithmCreating;
-using Common.ValueRanges;
+﻿using Common.ValueRanges;
 using System.Linq;
 using System.Windows.Forms;
 using WindowsFormsVersion.ViewModel;

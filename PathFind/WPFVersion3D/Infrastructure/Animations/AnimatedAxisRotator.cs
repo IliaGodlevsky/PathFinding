@@ -3,10 +3,10 @@ using System.Windows;
 using System.Windows.Media.Animation;
 using System.Windows.Media.Media3D;
 using WPFVersion3D.Enums;
-using DurationCalculateFunction = System.Collections.Generic.Dictionary<WPFVersion3D.Enums.RotationDirection, System.Func<double>>;
+using WPFVersion3D.Infrastructure.Animations.Interface;
 using AnimationCreateFunction = System.Collections.Generic.Dictionary<WPFVersion3D.Enums.RotationDirection,
     System.Func<System.Windows.Media.Animation.DoubleAnimation>>;
-using WPFVersion3D.Infrastructure.Animations.Interface;
+using DurationCalculateFunction = System.Collections.Generic.Dictionary<WPFVersion3D.Enums.RotationDirection, System.Func<double>>;
 
 namespace WPFVersion3D.Infrastructure.Animations
 {

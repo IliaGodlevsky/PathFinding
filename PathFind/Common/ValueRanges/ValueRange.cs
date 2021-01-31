@@ -22,7 +22,7 @@ namespace Common.ValueRanges
         /// then this parameters will be swapped</remarks>
         public ValueRange(int upperValueOfRange, int lowerValueOfRange)
         {
-            SwapIfLess(ref upperValueOfRange, 
+            SwapIfLess(ref upperValueOfRange,
                 ref lowerValueOfRange, Comparer<int>.Default);
 
             UpperValueOfRange = upperValueOfRange;
@@ -73,7 +73,7 @@ namespace Common.ValueRanges
         /// <param name="greaterValue"></param>
         /// <param name="lowerValue"></param>
         /// <param name="comparer"></param>
-        public static void SwapIfLess<TSource>(ref TSource greaterValue, 
+        public static void SwapIfLess<TSource>(ref TSource greaterValue,
             ref TSource lowerValue, IComparer<TSource> comparer)
         {
             if (comparer.Compare(greaterValue, lowerValue) < 0)

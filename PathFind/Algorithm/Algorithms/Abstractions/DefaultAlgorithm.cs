@@ -42,7 +42,7 @@ namespace Algorithm.Algorithms.Abstractions
 
         public void Reset()
         {
-            
+
         }
     }
 }

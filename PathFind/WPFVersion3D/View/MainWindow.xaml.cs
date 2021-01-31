@@ -1,5 +1,4 @@
 ﻿using System.Windows;
-using WPFVersion3D.ViewModel;
 
 namespace WPFVersion3D
 {

@@ -1,6 +1,7 @@
-﻿using System;
+﻿using Autofac;
+using System;
 using System.Windows.Forms;
-using WindowsFormsVersion.Forms;
+using WindowsFormsVersion.Configure;
 
 namespace WindowsFormsVersion
 {
@@ -9,9 +10,13 @@ namespace WindowsFormsVersion
         [STAThread]
         private static void Main()
         {
-            Application.EnableVisualStyles();
-            Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new MainWindow());
+            var container = ContainerConfigure.ConfigureContainer();
+            using (var scope = container.BeginLifetimeScope())
+            {
+                Application.EnableVisualStyles();
+                Application.SetCompatibleTextRenderingDefault(false);
+                Application.Run(scope.Resolve<Form>());
+            }
         }
     }
 }

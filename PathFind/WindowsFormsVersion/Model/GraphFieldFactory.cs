@@ -1,5 +1,4 @@
 ﻿using GraphLib.GraphField;
-using GraphLib.GraphFieldCreating;
 using System.Drawing;
 
 namespace WindowsFormsVersion.Model

@@ -1,13 +1,13 @@
-﻿using GraphLib.Vertex.Interface;
+﻿using Algorithm.Extensions;
+using GraphLib.Vertex.Interface;
 using NUnit.Framework;
-using Algorithm.Extensions;
 using System;
 using System.Collections.Generic;
 
 namespace Algorithm.Tests.ExtensionsTests
 {
     [TestFixture]
-    class FirstOrDefaultTests
+    internal class FirstOrDefaultTests
     {
         [SetUp]
         public void SetUp()

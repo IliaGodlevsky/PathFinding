@@ -4,13 +4,10 @@ using GraphLib.GraphField;
 using GraphLib.GraphFieldCreating;
 using GraphLib.Graphs;
 using GraphLib.Graphs.Abstractions;
-using GraphLib.Graphs.Serialization;
+using GraphLib.Graphs.Factories.Interfaces;
 using GraphLib.Graphs.Serialization.Interfaces;
-using GraphLib.Info;
-using GraphLib.Vertex.Interface;
 using GraphViewModel.Interfaces;
 using GraphViewModel.Resources;
-using System;
 using System.IO;
 
 namespace GraphViewModel
@@ -25,18 +22,18 @@ namespace GraphViewModel
 
         public virtual IGraph Graph { get; protected set; }
 
-        public IVertexEventHolder VertexEventHolder { get; set; }
 
-        public IGraphSerializer Serializer { get; set; }
-
-        public BaseGraphFieldFactory FieldFactory { get; set; }
-
-        public Func<VertexSerializationInfo, IVertex> SerializationInfoConverter { get; set; }
-
-        public MainModel()
+        public MainModel(BaseGraphFieldFactory fieldFactory,
+            IVertexEventHolder eventHolder,
+            IGraphSerializer graphSerializer,
+            IGraphFiller graphFiller)
         {
+            this.eventHolder = eventHolder;
+            serializer = graphSerializer;
+            this.fieldFactory = fieldFactory;
+            this.graphFiller = graphFiller;
+
             Graph = new NullGraph();
-            Serializer = new GraphSerializer<Graph2D>();
             graphParamFormat = ViewModelResources.GraphParametresFormat;
         }
 
@@ -47,7 +44,7 @@ namespace GraphViewModel
             {
                 using (var stream = new FileStream(savePath, FileMode.OpenOrCreate))
                 {
-                    Serializer.SaveGraph(Graph, stream);
+                    serializer.SaveGraph(Graph, stream);
                 }
             }
             catch { }
@@ -60,7 +57,7 @@ namespace GraphViewModel
             {
                 using (var stream = new FileStream(loadPath, FileMode.Open))
                 {
-                    var newGraph = Serializer.LoadGraph(stream, SerializationInfoConverter);
+                    var newGraph = serializer.LoadGraph(stream);
                     ConnectNewGraph(newGraph);
                 }
             }
@@ -79,15 +76,19 @@ namespace GraphViewModel
             if (!graph.IsDefault)
             {
                 Graph = graph;
-                GraphField = FieldFactory.CreateGraphField(Graph);
-                VertexEventHolder.Graph = Graph;
-                VertexEventHolder.SubscribeVertices();
+                GraphField = fieldFactory.CreateGraphField(Graph);
+                eventHolder.Graph = Graph;
+                eventHolder.SubscribeVertices();
                 GraphParametres = Graph.GetFormattedData(graphParamFormat);
                 PathFindingStatistics = string.Empty;
             }
         }
 
         protected string graphParamFormat;
+        protected readonly IGraphFiller graphFiller;
+        private readonly IVertexEventHolder eventHolder;
+        private readonly IGraphSerializer serializer;
+        private readonly BaseGraphFieldFactory fieldFactory;
 
         public abstract void FindPath();
 
