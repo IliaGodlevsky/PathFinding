@@ -29,6 +29,7 @@ namespace WindowsFormsVersion.Configure
             builder.RegisterType<MainWindow>().As<Form>().InstancePerLifetimeScope();
             builder.RegisterType<MainWindowViewModel>().As<IMainModel>().InstancePerLifetimeScope();
             builder.RegisterType<VertexFactory>().As<IVertexFactory>().SingleInstance();
+            builder.RegisterType<PathInput>().As<IPathInput>().SingleInstance();
             builder.RegisterType<Coordinate2DFactory>().As<ICoordinateFactory>().SingleInstance();
             builder.RegisterType<Graph2DFactory>().As<IGraphFactory>().SingleInstance();
             builder.RegisterType<GraphFiller>().As<IGraphFiller>().SingleInstance();

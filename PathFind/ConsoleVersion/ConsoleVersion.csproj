@@ -83,6 +83,7 @@
     <Compile Include="Configure\ContainerConfigure.cs" />
     <Compile Include="Enums\MenuItemPriority.cs" />
     <Compile Include="Model\GraphFieldFactory.cs" />
+    <Compile Include="Model\PathInput.cs" />
     <Compile Include="Model\VertexFactory.cs" />
     <Compile Include="Model\VertexSerializationInfoConverter.cs" />
     <Compile Include="ViewModel\GraphCreatingViewModel.cs" />

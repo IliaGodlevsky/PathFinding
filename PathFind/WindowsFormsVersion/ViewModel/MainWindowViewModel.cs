@@ -65,7 +65,8 @@ namespace WindowsFormsVersion.ViewModel
         public MainWindowViewModel(BaseGraphFieldFactory fieldFactory,
             IVertexEventHolder eventHolder,
             IGraphSerializer graphSerializer,
-            IGraphFiller graphFactory) : base(fieldFactory, eventHolder, graphSerializer, graphFactory)
+            IGraphFiller graphFactory, 
+            IPathInput pathInput) : base(fieldFactory, eventHolder, graphSerializer, graphFactory, pathInput)
         {
 
         }
@@ -136,18 +137,6 @@ namespace WindowsFormsVersion.ViewModel
         protected virtual void OnDispose()
         {
             return;
-        }
-
-        protected override string GetSavingPath()
-        {
-            var save = new SaveFileDialog();
-            return save.ShowDialog() == DialogResult.OK ? save.FileName : string.Empty;
-        }
-
-        protected override string GetLoadingPath()
-        {
-            var open = new OpenFileDialog();
-            return open.ShowDialog() == DialogResult.OK ? open.FileName : string.Empty;
         }
 
         private void PrepareWindow(IViewModel model, Form window)

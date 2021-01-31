@@ -26,12 +26,14 @@ namespace GraphViewModel
         public MainModel(BaseGraphFieldFactory fieldFactory,
             IVertexEventHolder eventHolder,
             IGraphSerializer graphSerializer,
-            IGraphFiller graphFiller)
+            IGraphFiller graphFiller,
+            IPathInput pathInput)
         {
             this.eventHolder = eventHolder;
             serializer = graphSerializer;
             this.fieldFactory = fieldFactory;
             this.graphFiller = graphFiller;
+            this.pathInput = pathInput;
 
             Graph = new NullGraph();
             graphParamFormat = ViewModelResources.GraphParametresFormat;
@@ -39,7 +41,7 @@ namespace GraphViewModel
 
         public virtual void SaveGraph()
         {
-            var savePath = GetSavingPath();
+            var savePath = pathInput.InputSavePath();
             try
             {
                 using (var stream = new FileStream(savePath, FileMode.OpenOrCreate))
@@ -52,7 +54,7 @@ namespace GraphViewModel
 
         public virtual void LoadGraph()
         {
-            var loadPath = GetLoadingPath();
+            var loadPath = pathInput.InputLoadPath();
             try
             {
                 using (var stream = new FileStream(loadPath, FileMode.Open))
@@ -89,13 +91,10 @@ namespace GraphViewModel
         private readonly IVertexEventHolder eventHolder;
         private readonly IGraphSerializer serializer;
         private readonly BaseGraphFieldFactory fieldFactory;
+        private readonly IPathInput pathInput;
 
         public abstract void FindPath();
 
         public abstract void CreateNewGraph();
-
-        protected abstract string GetSavingPath();
-
-        protected abstract string GetLoadingPath();
     }
 }

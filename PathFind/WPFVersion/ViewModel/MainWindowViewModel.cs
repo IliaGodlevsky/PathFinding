@@ -63,7 +63,8 @@ namespace WPFVersion.ViewModel
         public MainWindowViewModel(BaseGraphFieldFactory fieldFactory,
             IVertexEventHolder eventHolder,
             IGraphSerializer graphSerializer,
-            IGraphFiller graphFactory) : base(fieldFactory, eventHolder, graphSerializer, graphFactory)
+            IGraphFiller graphFactory,
+            IPathInput pathInput) : base(fieldFactory, eventHolder, graphSerializer, graphFactory, pathInput)
         {
             StartPathFindCommand = new RelayCommand(ExecuteStartPathFindCommand, CanExecuteStartFindPathCommand);
             CreateNewGraphCommand = new RelayCommand(ExecuteCreateNewGraphCommand);
@@ -111,16 +112,6 @@ namespace WPFVersion.ViewModel
             OnDispose();
         }
 
-        protected override string GetSavingPath()
-        {
-            return GetPath(new SaveFileDialog());
-        }
-
-        protected override string GetLoadingPath()
-        {
-            return GetPath(new OpenFileDialog());
-        }
-
         protected virtual void OnDispose()
         {
             return;
@@ -134,12 +125,6 @@ namespace WPFVersion.ViewModel
             window.Show();
         }
 
-        private string GetPath(FileDialog dialog)
-        {
-            return dialog.ShowDialog() == true
-                ? dialog.FileName
-                : string.Empty;
-        }
         private void ExecuteSaveGraphCommand(object param)
         {
             base.SaveGraph();

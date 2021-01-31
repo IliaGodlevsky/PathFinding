@@ -23,7 +23,8 @@ namespace ConsoleVersion.ViewModel
         public MainViewModel(BaseGraphFieldFactory fieldFactory,
             IVertexEventHolder eventHolder,
             IGraphSerializer graphSerializer,
-            IGraphFiller graphFactory) : base(fieldFactory, eventHolder, graphSerializer, graphFactory)
+            IGraphFiller graphFactory,
+            IPathInput pathInput) : base(fieldFactory, eventHolder, graphSerializer, graphFactory, pathInput)
         {
 
         }
@@ -114,22 +115,6 @@ namespace ConsoleVersion.ViewModel
                 Console.SetCursorPosition(position.X, position.Y + 1);
             }
             Console.CursorVisible = true;
-        }
-
-        protected override string GetSavingPath()
-        {
-            return GetPath();
-        }
-
-        protected override string GetLoadingPath()
-        {
-            return GetPath();
-        }
-
-        private string GetPath()
-        {
-            Console.Write("Enter path: ");
-            return Console.ReadLine();
         }
 
         private void OnPathNotFound(string message)

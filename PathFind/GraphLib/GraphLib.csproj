@@ -76,6 +76,7 @@
     <Compile Include="Graphs\Serialization\Interfaces\IGraphSerializer.cs" />
     <Compile Include="Graphs\NullGraph.cs" />
     <Compile Include="Graphs\Infrastructure\GraphPath.cs" />
+    <Compile Include="Graphs\Serialization\Interfaces\IPathInput.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Vertex\Cost\VertexCost.cs" />
     <Compile Include="Vertex\Infrastructure\EventHolder\BaseVertexEventHolder.cs" />

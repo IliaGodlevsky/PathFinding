@@ -26,6 +26,7 @@ namespace WPFVersion3D.Configure
             builder.RegisterType<MainWindowViewModel>().As<IMainModel>().InstancePerLifetimeScope();
             builder.RegisterType<Vertex3DFactory>().As<IVertexFactory>().SingleInstance();
             builder.RegisterType<Coordinate3DFactory>().As<ICoordinateFactory>().SingleInstance();
+            builder.RegisterType<PathInput>().As<IPathInput>().SingleInstance();
             builder.RegisterType<Graph3DFactory>().As<IGraphFactory>().SingleInstance();
             builder.RegisterType<GraphFiller>().As<IGraphFiller>().SingleInstance();
             builder.RegisterType<GraphSerializer>().As<IGraphSerializer>().SingleInstance();

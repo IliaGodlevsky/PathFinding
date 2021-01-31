@@ -6,7 +6,6 @@ using GraphLib.GraphFieldCreating;
 using GraphLib.Graphs.Factories.Interfaces;
 using GraphLib.Graphs.Serialization.Interfaces;
 using GraphViewModel;
-using Microsoft.Win32;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using System.Windows;
@@ -69,7 +68,8 @@ namespace WPFVersion3D.ViewModel
         public MainWindowViewModel(BaseGraphFieldFactory fieldFactory,
             IVertexEventHolder eventHolder,
             IGraphSerializer graphSerializer,
-            IGraphFiller graphFactory) : base(fieldFactory, eventHolder, graphSerializer, graphFactory)
+            IGraphFiller graphFactory, 
+            IPathInput pathInput) : base(fieldFactory, eventHolder, graphSerializer, graphFactory, pathInput)
         {
             graphParamFormat = Resource.GraphParamFormat;
 
@@ -126,16 +126,6 @@ namespace WPFVersion3D.ViewModel
             return;
         }
 
-        protected override string GetSavingPath()
-        {
-            return GetPath(new SaveFileDialog());
-        }
-
-        protected override string GetLoadingPath()
-        {
-            return GetPath(new OpenFileDialog());
-        }
-
         private void ExecuteSaveGraphCommand(object param)
         {
             base.SaveGraph();
@@ -177,13 +167,6 @@ namespace WPFVersion3D.ViewModel
             window.DataContext = model;
             window.WindowStartupLocation = WindowStartupLocation.CenterScreen;
             window.Show();
-        }
-
-        private string GetPath(FileDialog dialog)
-        {
-            return dialog.ShowDialog() == true
-                ? dialog.FileName
-                : string.Empty;
         }
 
         private void ExecuteAnimatedAxisRotateCommand(object param)
