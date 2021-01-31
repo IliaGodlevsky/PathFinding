@@ -6,7 +6,6 @@ using GraphLib.GraphFieldCreating;
 using GraphLib.Graphs.Factories.Interfaces;
 using GraphLib.Graphs.Serialization.Interfaces;
 using GraphViewModel;
-using Microsoft.Win32;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using System.Windows;
