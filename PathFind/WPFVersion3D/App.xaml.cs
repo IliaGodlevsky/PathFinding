@@ -11,7 +11,7 @@ namespace WPFVersion3D
         {
             base.OnStartup(e);
 
-            var container = ContainerConfigure.ConfigureContainer();
+            var container = ContainerConfigure.Configure();
 
             var viewModel = container.Resolve<IMainModel>();
 

@@ -17,7 +17,7 @@ namespace Common
     {
         static ObjectActivator()
         {
-            Activators = new Dictionary<Type, Delegate>();
+            activators = new Dictionary<Type, Delegate>();
         }
 
         /// <summary>
@@ -33,17 +33,7 @@ namespace Common
         {
             var ctorParameters = ctor.GetParameters();
             var parameter = Expression.Parameter(typeof(object[]), "args");
-            var argsExpression = new Expression[ctorParameters.Length];
-
-            for (int i = 0; i < ctorParameters.Length; i++)
-            {
-                var index = Expression.Constant(i);
-                var parameterType = ctorParameters[i].ParameterType;
-                var parameterAccessorExpression = Expression.ArrayIndex(parameter, index);
-                var parameterCastExpression = Expression.Convert(parameterAccessorExpression, parameterType);
-                argsExpression[i] = parameterCastExpression;
-            }
-
+            var argsExpression = CreateArgumentExpressions(ctorParameters, parameter);
             var newExpression = Expression.New(ctor, argsExpression);
             var lambda = Expression.Lambda(typeof(ActivatorHandler<TReturnType>), newExpression, parameter);
 
@@ -74,7 +64,7 @@ namespace Common
             if (typeof(TReturnType).IsAssignableFrom(ctor.DeclaringType))
             {
                 var activator = CreateActivator<TReturnType>(ctor);
-                Activators[ctor.DeclaringType] = activator;
+                activators[ctor.DeclaringType] = activator;
                 return true;
             }
 
@@ -90,7 +80,7 @@ namespace Common
         /// doesn't exist for <paramref name="type"></paramref></exception>
         public static Delegate GetRegisteredActivator(Type type)
         {
-            if (Activators.TryGetValue(type, out Delegate activator))
+            if (activators.TryGetValue(type, out Delegate activator))
             {
                 return activator;
             }
@@ -110,9 +100,23 @@ namespace Common
             return (ActivatorHandler<T>)GetRegisteredActivator(typeof(T));
         }
 
+        private static IEnumerable<Expression> CreateArgumentExpressions(
+            ParameterInfo[] ctorParametres,
+            ParameterExpression parameter)
+        {
+            for (int i = 0; i < ctorParametres.Length; i++)
+            {
+                var index = Expression.Constant(i);
+                var parameterType = ctorParametres[i].ParameterType;
+                var parameterAccessorExpression = Expression.ArrayIndex(parameter, index);
+                var parameterCastExpression = Expression.Convert(parameterAccessorExpression, parameterType);
+                yield return parameterCastExpression;
+            }
+        }
+
         /// <summary>
         /// A dictionary of registed activators for objects
         /// </summary>
-        private static IDictionary<Type, Delegate> Activators { get; set; }
+        private static readonly IDictionary<Type, Delegate> activators;
     }
 }

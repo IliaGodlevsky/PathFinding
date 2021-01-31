@@ -10,7 +10,7 @@ namespace WindowsFormsVersion
         [STAThread]
         private static void Main()
         {
-            var container = ContainerConfigure.ConfigureContainer();
+            var container = ContainerConfigure.Configure();
             using (var scope = container.BeginLifetimeScope())
             {
                 Application.EnableVisualStyles();

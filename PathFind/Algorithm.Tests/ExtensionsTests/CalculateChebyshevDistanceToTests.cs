@@ -24,9 +24,9 @@ namespace Algorithm.Tests.ExtensionsTests
             secondVertexCoordinateMock = new Mock<ICoordinate>(MockBehavior.Loose);
         }
 
-        [TestCase(new int[] { 9, 15 }, new int[] { 12, 8 }, ExpectedResult = 7)]
-        [TestCase(new int[] { 4, 9, 25 }, new int[] { 11, 13, 24 }, ExpectedResult = 7)]
-        [TestCase(new int[] { 15, 37, 25, 1 }, new int[] { 16, 34, 11, 9 }, ExpectedResult = 14)]
+        [TestCase(new int[] { 9, 15 },          new int[] { 12, 8 },            ExpectedResult = 7)]
+        [TestCase(new int[] { 4, 9, 25 },       new int[] { 11, 13, 24 },       ExpectedResult = 7)]
+        [TestCase(new int[] { 15, 37, 25, 1 },  new int[] { 16, 34, 11, 9 },    ExpectedResult = 14)]
         public double CalculateChebyshevDistanceTo_VerticesWithSameDimensions_ReturnsValidDistance(
             int[] firstVertexCoordinates, int[] secondVertexCoordinates)
         {
@@ -76,9 +76,9 @@ namespace Algorithm.Tests.ExtensionsTests
             Assert.Throws<ArgumentException>(() => first.CalculateChebyshevDistanceTo(second));
         }
 
-        [TestCase(new int[] { 9, 15 }, new int[] { 12, 8, 3 })]
-        [TestCase(new int[] { 4 }, new int[] { 11, 13, 24 })]
-        [TestCase(new int[] { 15, 37, 25, 1 }, new int[] { 16, 34, 11, 9, 15, 17 })]
+        [TestCase(new int[] { 9, 15 },          new int[] { 12, 8, 3 })]
+        [TestCase(new int[] { 4 },              new int[] { 11, 13, 24 })]
+        [TestCase(new int[] { 15, 37, 25, 1 },  new int[] { 16, 34, 11, 9, 15, 17 })]
         public void CalculateChebyshevDistanceTo_DifferentPositionCoorindatesCount_ThrowsArgumentException(
             int[] firstVertexCoordinates, int[] secondVertexCoordinates)
         {

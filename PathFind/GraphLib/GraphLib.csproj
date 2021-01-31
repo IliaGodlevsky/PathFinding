@@ -61,13 +61,13 @@
     <Compile Include="Graphs\Factories\Graph2DFactory.cs" />
     <Compile Include="Graphs\Factories\Graph3DFactory.cs" />
     <Compile Include="Graphs\Factories\GraphFiller.cs" />
-    <Compile Include="Graphs\Factories\Interfaces\IGraphInitializer.cs" />
+    <Compile Include="Graphs\Factories\Interfaces\IGraphFactory.cs" />
     <Compile Include="Graphs\Graph2D.cs" />
     <Compile Include="Graphs\Abstractions\BaseGraph.cs" />
     <Compile Include="Graphs\Abstractions\IGraph.cs" />
     <Compile Include="Graphs\Displaying\GraphField\Factories\BaseGraphFieldFactory.cs" />
     <Compile Include="Graphs\Displaying\GraphField\Interfaces\IGraphField.cs" />
-    <Compile Include="Graphs\Factories\Interfaces\IGraphFactory.cs" />
+    <Compile Include="Graphs\Factories\Interfaces\IGraphFiller.cs" />
     <Compile Include="Graphs\Graph3D.cs" />
     <Compile Include="Graphs\Serialization\Factories\Interfaces\IVertexSerializationInfoConverter.cs" />
     <Compile Include="Graphs\Serialization\GraphSerializer.cs" />

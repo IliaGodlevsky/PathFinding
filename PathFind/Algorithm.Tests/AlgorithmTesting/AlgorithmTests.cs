@@ -9,7 +9,8 @@ namespace Algorithm.Tests.AlgorithmTesting
     [TestFixture]
     internal class AlgorithmTests
     {
-        [TestCaseSource(typeof(TestCasesFactory),
+        [TestCaseSource(
+            typeof(TestCasesFactory),
             nameof(TestCasesFactory.AlgorithmWithGraphsTestCases))]
         public void FindPath_NotNullGraph_Success(IGraph graph,
             IAlgorithm algorithm)
@@ -22,7 +23,8 @@ namespace Algorithm.Tests.AlgorithmTesting
             Assert.IsTrue(path.IsExtracted);
         }
 
-        [TestCaseSource(typeof(TestCasesFactory),
+        [TestCaseSource(
+            typeof(TestCasesFactory),
             nameof(TestCasesFactory.AlgorithmsTestCases))]
         public void FindPath_NullGraph_Failed(IAlgorithm algorithm)
         {

@@ -20,7 +20,7 @@ namespace WPFVersion.Configure
 {
     internal static class ContainerConfigure
     {
-        public static IContainer ConfigureContainer()
+        public static IContainer Configure()
         {
             var builder = new ContainerBuilder();
 

@@ -8,7 +8,7 @@ namespace ConsoleVersion
     {
         private static void Main(string[] args)
         {
-            var container = ContainerConfigure.ConfigureContainer();
+            var container = ContainerConfigure.Configure();
 
             using (var scope = container.BeginLifetimeScope())
             {
