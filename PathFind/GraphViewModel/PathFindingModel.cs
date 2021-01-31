@@ -3,6 +3,7 @@ using Algorithm.EventArguments;
 using Algorithm.Intermitting;
 using Algorithm.Intermitting.Interface;
 using Common.Extensions;
+using Common.ValueRanges;
 using GraphLib.Extensions;
 using GraphLib.Graphs.Infrastructure;
 using GraphViewModel.Interfaces;
@@ -16,6 +17,8 @@ namespace GraphLib.ViewModel
     public abstract class PathFindingModel : IModel
     {
         public event Action<string> OnPathNotFound;
+
+        public ValueRange AlgorithmDelayTimeValueRange { get; protected set; }
 
         public int DelayTime { get; set; } // milliseconds
 

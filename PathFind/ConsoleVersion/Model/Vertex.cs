@@ -7,6 +7,7 @@ using GraphLib.Vertex.Cost;
 using GraphLib.Vertex.Interface;
 using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Drawing;
 using Console = Colorful.Console;
 
@@ -151,7 +152,9 @@ namespace ConsoleVersion.Model
                     {
                         var position = Position as Coordinate2D;
                         var consolePosition = MainView.GraphFieldPosition;
-                        var left = consolePosition.X + position.X * MainView.LateralDistanceBetweenVertices;
+                        int lateralDistanceBetweenVertices 
+                            = Convert.ToInt32(ConfigurationManager.AppSettings["distanceBetweenVertices"]);
+                        var left = consolePosition.X + position.X * lateralDistanceBetweenVertices;
                         var top = consolePosition.Y + position.Y;
                         consoleCoordinate = new Coordinate2D(left, top);
                     }

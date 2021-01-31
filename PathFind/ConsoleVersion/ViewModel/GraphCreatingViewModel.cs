@@ -4,6 +4,8 @@ using ConsoleVersion.View;
 using GraphLib.Graphs.Factories.Interfaces;
 using GraphLib.ViewModel;
 using GraphViewModel.Interfaces;
+using System;
+using System.Configuration;
 
 namespace ConsoleVersion.ViewModel
 {
@@ -18,22 +20,24 @@ namespace ConsoleVersion.ViewModel
         public GraphCreatingViewModel(IMainModel model,
             IGraphFiller graphFactory) : base(model, graphFactory)
         {
+            int upperRangeOfGraphWidth
+                = Convert.ToInt32(ConfigurationManager.AppSettings["upperRangeOfGraphWidth"]);
+            int upperRangeOfGraphLength
+                = Convert.ToInt32(ConfigurationManager.AppSettings["upperRangeOfGraphLength"]);
 
+            GraphWidthValueRange = new ValueRange(upperRangeOfGraphWidth, 0);
+            GraphLengthValueRange = new ValueRange(upperRangeOfGraphLength, 0);
         }
 
         public override void CreateGraph()
         {
             ObstaclePercent = Input.InputNumber(ObstaclePercentInputMessage,
-                Range.ObstaclePercentValueRange.UpperValueOfRange,
-                Range.ObstaclePercentValueRange.LowerValueOfRange);
+                ObstaclePercentValueRange.UpperValueOfRange,
+                ObstaclePercentValueRange.LowerValueOfRange);
 
-            Width = Input.InputNumber(WidthInputMessage,
-                Range.WidthValueRange.UpperValueOfRange,
-                Range.WidthValueRange.LowerValueOfRange);
+            Width = Input.InputNumber(WidthInputMessage, GraphWidthValueRange);
 
-            Length = Input.InputNumber(HeightInputMessage,
-                Range.HeightValueRange.UpperValueOfRange,
-                Range.HeightValueRange.LowerValueOfRange);
+            Length = Input.InputNumber(HeightInputMessage, GraphLengthValueRange);
 
             base.CreateGraph();
 

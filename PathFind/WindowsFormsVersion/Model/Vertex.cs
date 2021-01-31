@@ -1,10 +1,11 @@
-﻿using Common;
-using GraphLib.Coordinates.Abstractions;
+﻿using GraphLib.Coordinates.Abstractions;
 using GraphLib.Extensions;
 using GraphLib.Info;
 using GraphLib.Vertex.Cost;
 using GraphLib.Vertex.Interface;
+using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Drawing;
 using System.Windows.Forms;
 
@@ -14,11 +15,11 @@ namespace WindowsFormsVersion.Model
     {
         public Vertex() : base()
         {
-            var fontSizeRatio = (VertexParametres.TextToSizeRatio * 0.75f);
-            float fontSize = VertexParametres.VertexSize * fontSizeRatio;
+            float fontSizeRatio = float.Parse(ConfigurationManager.AppSettings["textToSizeRatio"]);
+            int vertexSize = Convert.ToInt32(ConfigurationManager.AppSettings["vertexSize"]);
+            float fontSize = vertexSize * fontSizeRatio;
             Font = new Font("Times New Roman", fontSize);
-            var size = VertexParametres.VertexSize;
-            Size = new Size(size, size);
+            Size = new Size(vertexSize, vertexSize);
             TextAlign = ContentAlignment.MiddleCenter;
             this.Initialize();
         }

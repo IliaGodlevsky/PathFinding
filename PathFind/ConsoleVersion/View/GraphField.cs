@@ -4,6 +4,7 @@ using GraphLib.GraphField;
 using GraphLib.Vertex.Interface;
 using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Drawing;
 using System.Text;
 using Console = Colorful.Console;
@@ -88,7 +89,10 @@ namespace ConsoleVersion.View
 
         private int GetCursorLeftPositionCloseToRigthVerticalFrame()
         {
-            return Width * MainView.LateralDistanceBetweenVertices
+            int lateralDistanceBetweenVertices
+                = Convert.ToInt32(ConfigurationManager.AppSettings["distanceBetweenVertices"]);
+
+            return Width * lateralDistanceBetweenVertices
                    + MainView.WidthOfOrdinateView - 2;
         }
 

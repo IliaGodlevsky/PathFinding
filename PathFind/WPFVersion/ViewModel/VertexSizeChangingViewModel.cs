@@ -1,9 +1,9 @@
-﻿using Common;
-using Common.Extensions;
+﻿using Common.Extensions;
 using Common.Interfaces;
 using GraphLib.Vertex.Interface;
 using GraphViewModel.Interfaces;
 using System;
+using System.Configuration;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
@@ -53,9 +53,10 @@ namespace WPFVersion.ViewModel
             var temp = vertex as Vertex;
             Application.Current.Dispatcher.Invoke(() =>
             {
+                double fontSizeRatio = Convert.ToDouble(ConfigurationManager.AppSettings["textToSizeRatio"]);
                 temp.Width = VerticesSize;
                 temp.Height = VerticesSize;
-                temp.FontSize = VerticesSize * VertexParametres.TextToSizeRatio;
+                temp.FontSize = VerticesSize * fontSizeRatio;
             });
         }
 
@@ -68,7 +69,6 @@ namespace WPFVersion.ViewModel
 
         private void ExecuteChangeVerticesSizeCommand(object param)
         {
-            VertexParametres.VertexSize = VerticesSize;
             Model.Graph.ForEach(ChangeSize);
             CreateNewGraphField();
             CloseWindow();

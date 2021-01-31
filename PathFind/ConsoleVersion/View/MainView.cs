@@ -17,7 +17,6 @@ namespace ConsoleVersion.View
         public const int HeightOfAbscissaView = 2;
         public const int HeightOfGraphParametresView = 1;
         public const int WidthOfOrdinateView = 3;
-        public const int LateralDistanceBetweenVertices = 3;
         public const int YCoordinatePadding = 2;
 
         public static Coordinate2D GraphFieldPosition { get; set; }

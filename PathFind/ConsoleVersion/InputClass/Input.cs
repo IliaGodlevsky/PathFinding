@@ -28,6 +28,14 @@ namespace ConsoleVersion.InputClass
             return Convert.ToInt32(userInput);
         }
 
+        public static int InputNumber(string accompanyingMessage, 
+            ValueRange rangeOfValidInput)
+        {
+            return InputNumber(accompanyingMessage, 
+                rangeOfValidInput.UpperValueOfRange, 
+                rangeOfValidInput.LowerValueOfRange);
+        }
+
         /// <summary>
         /// Returns <see cref="Coordinate2D"/> where X belongs to [<paramref name="upperPossibleXValue"/>, 0]
         /// and where Y belongs to [<paramref name="upperPossibleYValue"/>, 0]

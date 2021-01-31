@@ -58,7 +58,6 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ValueRanges\Range.cs" />
     <Compile Include="ValueRanges\ValueRange.cs" />
-    <Compile Include="VertexSize.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

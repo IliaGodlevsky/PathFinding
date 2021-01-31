@@ -9,14 +9,13 @@ using GraphLib.Graphs;
 using GraphLib.ViewModel;
 using GraphViewModel.Interfaces;
 using System;
+using System.Configuration;
 using System.Linq;
 
 namespace ConsoleVersion.ViewModel
 {
     internal class PathFindingViewModel : PathFindingModel
     {
-        public static Coordinate2D ConsoleCoordinates { get; set; }
-
         public string AlgorithmKeyInputMessage { private get; set; }
 
         public string EndVertexInputMessage { private get; set; }
@@ -27,6 +26,10 @@ namespace ConsoleVersion.ViewModel
         {
             maxAlgorithmKeysNumber = AlgorithmFactory.AlgorithmsDescriptions.Count();
             minAlgorithmKeysNumber = 1;
+
+            int algorithmDelayTimeUpperRange
+                    = Convert.ToInt32(ConfigurationManager.AppSettings["algorithmDelayTimeUpperRange"]);
+            AlgorithmDelayTimeValueRange = new ValueRange(algorithmDelayTimeUpperRange, 0);
         }
 
         public override void FindPath()
@@ -46,8 +49,7 @@ namespace ConsoleVersion.ViewModel
 
                 DelayTime = Input.InputNumber(
                     ConsoleVersionResources.DelayTimeInputMsg,
-                    Range.DelayValueRange.UpperValueOfRange,
-                    Range.DelayValueRange.LowerValueOfRange);
+                    AlgorithmDelayTimeValueRange);
 
                 base.FindPath();
 

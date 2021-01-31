@@ -3,16 +3,20 @@ using GraphLib.Coordinates;
 using GraphLib.GraphField;
 using GraphLib.Vertex.Interface;
 using System;
+using System.Configuration;
 using System.Drawing;
 using System.Windows.Forms;
+using WindowsFormsVersion.Model;
 
-namespace WindowsFormsVersion.Model
+namespace WindowsFormsVersion.View
 {
     internal class WinFormsGraphField : UserControl, IGraphField
     {
         public WinFormsGraphField()
         {
-
+            distanceBetweenVertices
+                = Convert.ToInt32(ConfigurationManager.AppSettings["distanceBetweenVertices"])
+                + Convert.ToInt32(ConfigurationManager.AppSettings["vertexSize"]);
         }
 
         public void Add(IVertex vertex)
@@ -21,8 +25,8 @@ namespace WindowsFormsVersion.Model
             {
                 var winFormsVertex = vertex as Vertex;
 
-                var xCoordinate = coordinate.X * VertexParametres.SizeBetweenVertices;
-                var yCoordinate = coordinate.Y * VertexParametres.SizeBetweenVertices;
+                var xCoordinate = coordinate.X * distanceBetweenVertices;
+                var yCoordinate = coordinate.Y * distanceBetweenVertices;
 
                 winFormsVertex.Location = new Point(xCoordinate, yCoordinate);
 
@@ -33,5 +37,7 @@ namespace WindowsFormsVersion.Model
                 throw new ArgumentException("Must be 2D coordinates");
             }
         }
+
+        private readonly int distanceBetweenVertices;
     }
 }

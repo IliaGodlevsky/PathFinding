@@ -1,4 +1,6 @@
-﻿namespace WindowsFormsVersion.Forms
+﻿using WindowsFormsVersion.View;
+
+namespace WindowsFormsVersion.Forms
 {
     partial class MainWindow
     {
@@ -38,7 +40,7 @@
             this.toolStripButton5 = new System.Windows.Forms.ToolStripButton();
             this.unweightedButton = new Syncfusion.Windows.Forms.Tools.ToolStripRadioButton();
             this.weightedButton = new Syncfusion.Windows.Forms.Tools.ToolStripRadioButton();
-            this.winFormsGraphField = new WindowsFormsVersion.Model.WinFormsGraphField();
+            this.winFormsGraphField = new WindowsFormsVersion.View.WinFormsGraphField();
             this.menu.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -164,7 +166,7 @@
         }
 
         #endregion
-        private Model.WinFormsGraphField winFormsGraphField;
+        private WinFormsGraphField winFormsGraphField;
         private System.Windows.Forms.Label statistics;
         private System.Windows.Forms.Label parametres;
         private System.Windows.Forms.ToolStripButton toolStripButton1;

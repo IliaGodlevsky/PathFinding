@@ -10,12 +10,12 @@ using GraphLib.Graphs.Serialization.Interfaces;
 using GraphViewModel;
 using System;
 using System.ComponentModel;
+using System.Configuration;
 using System.Drawing;
 using System.Runtime.CompilerServices;
 using System.Windows.Forms;
 using WindowsFormsVersion.Extensions;
 using WindowsFormsVersion.Forms;
-using WindowsFormsVersion.Model;
 using WindowsFormsVersion.View;
 
 namespace WindowsFormsVersion.ViewModel
@@ -50,7 +50,7 @@ namespace WindowsFormsVersion.ViewModel
             set
             {
                 graphField = value;
-                int size = VertexParametres.SizeBetweenVertices;
+                int size = Convert.ToInt32(ConfigurationManager.AppSettings["vertexSize"]) + 1;
                 var field = graphField as WinFormsGraphField;
 
                 MainWindow.Controls.RemoveBy(ctrl => ctrl.IsGraphField());

@@ -1,10 +1,11 @@
-﻿using Common;
-using GraphLib.Coordinates.Abstractions;
+﻿using GraphLib.Coordinates.Abstractions;
 using GraphLib.Extensions;
 using GraphLib.Info;
 using GraphLib.Vertex.Cost;
 using GraphLib.Vertex.Interface;
+using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Windows.Controls;
 using System.Windows.Media;
 
@@ -31,8 +32,10 @@ namespace WPFVersion.Model
         {
             Dispatcher.Invoke(() =>
             {
-                Width = Height = VertexParametres.VertexSize;
-                FontSize = VertexParametres.VertexSize * VertexParametres.TextToSizeRatio;
+                double fontSizeRatio = Convert.ToDouble(ConfigurationManager.AppSettings["textToSizeRatio"]);
+                int vertexSize = Convert.ToInt32(ConfigurationManager.AppSettings["vertexSize"]);
+                Width = Height = vertexSize;
+                FontSize = vertexSize * fontSizeRatio;
                 Template = (ControlTemplate)TryFindResource("vertexTemplate");
             });
             this.Initialize();

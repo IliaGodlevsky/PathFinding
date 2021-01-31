@@ -1,5 +1,4 @@
-﻿using Common.ValueRanges;
-using System.Windows.Forms;
+﻿using System.Windows.Forms;
 using WindowsFormsVersion.ViewModel;
 
 namespace WindowsFormsVersion.View
@@ -27,16 +26,24 @@ namespace WindowsFormsVersion.View
 
             void StringToWidth(object sender, ConvertEventArgs e)
             {
-                e.Value = ConvertFromString(
+                var value = ConvertFromString(
                     e.Value.ToString(),
-                    Range.WidthValueRange.LowerValueOfRange);
+                    model.GraphWidthValueRange.LowerValueOfRange);
+
+                value = model.GraphWidthValueRange.ReturnInRange(value);
+
+                e.Value = value;
             }
 
             void StringToHeight(object sender, ConvertEventArgs e)
             {
-                e.Value = ConvertFromString(
+                var value = ConvertFromString(
                     e.Value.ToString(),
-                    Range.HeightValueRange.LowerValueOfRange);
+                    model.GraphLengthValueRange.LowerValueOfRange);
+
+                value = model.GraphLengthValueRange.ReturnInRange(value);
+
+                e.Value = value;
             }
 
             void IntToString(object sender, ConvertEventArgs e)
@@ -70,8 +77,8 @@ namespace WindowsFormsVersion.View
                 DataSourceUpdateMode.OnPropertyChanged);
             obstacleSlider.DataBindings.Add(bindTextBoxAndSlider);
 
-            obstacleSlider.Maximum = Range.ObstaclePercentValueRange.UpperValueOfRange;
-            obstacleSlider.Minimum = Range.ObstaclePercentValueRange.LowerValueOfRange;
+            obstacleSlider.Maximum = model.ObstaclePercentValueRange.UpperValueOfRange;
+            obstacleSlider.Minimum = model.ObstaclePercentValueRange.LowerValueOfRange;
 
             var bindObstaclePercent = new Binding(
                 nameof(obstacleTextBox.Text),
