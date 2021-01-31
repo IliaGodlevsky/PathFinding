@@ -15,10 +15,7 @@ namespace ConsoleVersion.Model
 
             if (!vertex.IsObstacle)
             {
-                var cost = Input.InputNumber(
-                    ConsoleVersionResources.VertexCostInputMsg,
-                      Range.VertexCostRange.UpperValueOfRange,
-                      Range.VertexCostRange.LowerValueOfRange);
+                var cost = Input.InputNumber(ConsoleVersionResources.VertexCostInputMsg, Range.VertexCostRange);
 
                 vertex.Cost = new VertexCost(cost);
             }
