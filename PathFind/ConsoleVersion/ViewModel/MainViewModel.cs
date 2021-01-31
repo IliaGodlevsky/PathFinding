@@ -4,8 +4,10 @@ using ConsoleVersion.InputClass;
 using ConsoleVersion.Model;
 using ConsoleVersion.View;
 using GraphLib.Coordinates;
+using GraphLib.Coordinates.Infrastructure.Factories;
 using GraphLib.Extensions;
 using GraphLib.Graphs;
+using GraphLib.Graphs.Factories;
 using GraphViewModel;
 using System;
 using System.Drawing;
@@ -32,7 +34,10 @@ namespace ConsoleVersion.ViewModel
         [MenuItem("Create new graph", MenuItemPriority.Highest)]
         public override void CreateNewGraph()
         {
-            var model = new GraphCreatingViewModel(this);
+            var vertexFactory = new VertexFactory();
+            var coordinateFactory = new Coordinate2DFactory();
+            var graphFactory = new GraphFactory<Graph2D>(vertexFactory, coordinateFactory);
+            var model = new GraphCreatingViewModel(this, graphFactory);
             var view = new GraphCreateView(model);
 
             view.Start();

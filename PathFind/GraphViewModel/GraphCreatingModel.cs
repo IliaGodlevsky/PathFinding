@@ -1,12 +1,5 @@
-﻿using GraphLib.Coordinates;
-using GraphLib.Coordinates.Abstractions;
-using GraphLib.Graphs;
-using GraphLib.Graphs.Factories;
-using GraphLib.Vertex.Interface;
+﻿using GraphLib.Graphs.Factories.Interfaces;
 using GraphViewModel.Interfaces;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 
 namespace GraphLib.ViewModel
 {
@@ -18,25 +11,21 @@ namespace GraphLib.ViewModel
 
         public int ObstaclePercent { get; set; }
 
-        public GraphCreatingModel(IMainModel model)
+        public GraphCreatingModel(IMainModel model, 
+            IGraphFactory graphFactory)
         {
             this.model = model;
+            this.graphFactory = graphFactory;
         }
 
-        public virtual void CreateGraph(Func<IVertex> vertexFactory)
+        public virtual void CreateGraph()
         {
-            var graphfactory = new GraphFactory<Graph2D>(ObstaclePercent, Width, Length);
-
-            ICoordinate CoordinateFactory(IEnumerable<int> coordinates)
-            {
-                return new Coordinate2D(coordinates.ToArray());
-            }
-
-            var graph = graphfactory.CreateGraph(vertexFactory, CoordinateFactory);
+            var graph = graphFactory.CreateGraph(ObstaclePercent, Width, Length);
 
             model.ConnectNewGraph(graph);
         }
 
         protected IMainModel model;
+        protected IGraphFactory graphFactory;
     }
 }

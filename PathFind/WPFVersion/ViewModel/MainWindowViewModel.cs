@@ -1,6 +1,9 @@
 ﻿using Common.Interfaces;
+using GraphLib.Coordinates.Infrastructure.Factories;
 using GraphLib.Extensions;
 using GraphLib.GraphField;
+using GraphLib.Graphs;
+using GraphLib.Graphs.Factories;
 using GraphViewModel;
 using Microsoft.Win32;
 using System.ComponentModel;
@@ -96,7 +99,11 @@ namespace WPFVersion.ViewModel
 
         public override void CreateNewGraph()
         {
-            PrepareWindow(new GraphCreatingViewModel(this), new GraphCreatesWindow());
+            var vertexFactory = new VertexFactory();
+            var coordinateFactory = new Coordinate2DFactory();
+            var graphFactory = new GraphFactory<Graph2D>(vertexFactory, coordinateFactory);
+            PrepareWindow(new GraphCreatingViewModel(this, graphFactory), 
+                new GraphCreatesWindow());
         }
 
         public void ExecuteChangeVertexSize(object param)

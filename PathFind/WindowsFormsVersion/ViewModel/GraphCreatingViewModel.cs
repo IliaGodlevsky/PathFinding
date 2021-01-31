@@ -1,8 +1,8 @@
 ﻿using Common.Interfaces;
+using GraphLib.Graphs.Factories.Interfaces;
 using GraphLib.ViewModel;
 using GraphViewModel.Interfaces;
 using System;
-using WindowsFormsVersion.Model;
 
 namespace WindowsFormsVersion.ViewModel
 {
@@ -10,14 +10,15 @@ namespace WindowsFormsVersion.ViewModel
     {
         public event EventHandler OnWindowClosed;
 
-        public GraphCreatingViewModel(IMainModel model) : base(model)
+        public GraphCreatingViewModel(IMainModel model, 
+            IGraphFactory graphFactory) : base(model, graphFactory)
         {
 
         }
 
         public void CreateGraph(object sender, EventArgs e)
         {
-            CreateGraph(() => new Vertex());
+            CreateGraph();
             OnWindowClosed?.Invoke(this, new EventArgs());
             OnWindowClosed = null;
         }

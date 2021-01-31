@@ -1,8 +1,5 @@
-﻿using GraphLib.Coordinates.Abstractions;
-using GraphLib.Graphs.Abstractions;
-using GraphLib.Vertex.Interface;
+﻿using GraphLib.Graphs.Abstractions;
 using System;
-using System.Collections.Generic;
 
 namespace GraphLib.Graphs.Factories.Interfaces
 {
@@ -10,7 +7,6 @@ namespace GraphLib.Graphs.Factories.Interfaces
     {
         event Action<string> OnExceptionCaught;
 
-        IGraph CreateGraph(Func<IVertex> vertexFactoryMethod,
-            Func<IEnumerable<int>, ICoordinate> coordinateFactoryMethod);
+        IGraph CreateGraph(int obstaclePercent, params int[] graphDimensionSizes);
     }
 }

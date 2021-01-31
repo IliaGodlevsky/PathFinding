@@ -1,7 +1,9 @@
 ﻿using Common.Interfaces;
+using GraphLib.Coordinates.Infrastructure.Factories;
 using GraphLib.Extensions;
 using GraphLib.GraphField;
 using GraphLib.Graphs;
+using GraphLib.Graphs.Factories;
 using GraphLib.Graphs.Serialization;
 using GraphViewModel;
 using Microsoft.Win32;
@@ -95,7 +97,10 @@ namespace WPFVersion3D.ViewModel
 
         public override void CreateNewGraph()
         {
-            PrepareWindow(new GraphCreatingViewModel(this), new GraphCreateWindow());
+            var vertexFactory = new Vertex3DFactory();
+            var coordinateFactory = new Coordinate3DFactory();
+            var graphFactory = new GraphFactory<Graph3D>(vertexFactory, coordinateFactory);
+            PrepareWindow(new GraphCreatingViewModel(this, graphFactory), new GraphCreateWindow());
         }
 
         public void StretchAlongXAxis(object sender, RoutedPropertyChangedEventArgs<double>e)

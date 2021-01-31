@@ -1,4 +1,4 @@
-﻿using GraphLib.Coordinates;
+﻿using GraphLib.Coordinates.Infrastructure.Factories;
 using GraphLib.Extensions;
 using GraphLib.Graphs;
 using GraphLib.Graphs.Abstractions;
@@ -6,9 +6,7 @@ using GraphLib.Graphs.Factories;
 using GraphLib.Graphs.Serialization;
 using GraphLib.Info;
 using NUnit.Framework;
-using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 
 namespace GraphLib.Tests.Tests
 {
@@ -21,11 +19,14 @@ namespace GraphLib.Tests.Tests
         [SetUp]
         public void SetUp()
         {
-            var graph2DFactory = new GraphFactory<Graph2D>(0, 15, 15);
-            var graph3DFactory = new GraphFactory<Graph3D>(0, 7, 8, 9);
+            var vertexFactory = new TestVertexFactory();
+            var coordinate2DFactory = new Coordinate2DFactory();
+            var coordinate3DFactory = new Coordinate3DFactory();
+            var graph2DFactory = new GraphFactory<Graph2D>(vertexFactory, coordinate2DFactory);
+            var graph3DFactory = new GraphFactory<Graph3D>(vertexFactory, coordinate3DFactory);
 
-            graph2D = graph2DFactory.CreateGraph(CreateVertex, CreateCoordinate2D);
-            graph3D = graph3DFactory.CreateGraph(CreateVertex, CreateCoordinate3D);
+            graph2D = graph2DFactory.CreateGraph(0, 15, 15);
+            graph3D = graph3DFactory.CreateGraph(0, 7, 8, 9);
         }
 
         [Test]
@@ -81,21 +82,6 @@ namespace GraphLib.Tests.Tests
         private TestVertex CreateVertex(VertexSerializationInfo info)
         {
             return new TestVertex(info);
-        }
-
-        private TestVertex CreateVertex()
-        {
-            return new TestVertex();
-        }
-
-        private Coordinate2D CreateCoordinate2D(IEnumerable<int> coordinates)
-        {
-            return new Coordinate2D(coordinates.ToArray());
-        }
-
-        private Coordinate3D CreateCoordinate3D(IEnumerable<int> coordinates)
-        {
-            return new Coordinate3D(coordinates.ToArray());
         }
     }
 }

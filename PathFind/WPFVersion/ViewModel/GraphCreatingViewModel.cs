@@ -1,4 +1,5 @@
 ﻿using Common.Interfaces;
+using GraphLib.Graphs.Factories.Interfaces;
 using GraphLib.ViewModel;
 using GraphViewModel.Interfaces;
 using System;
@@ -15,7 +16,8 @@ namespace WPFVersion.ViewModel
         public ICommand ConfirmCreateGraphCommand { get; }
         public ICommand CancelCreateGraphCommand { get; }
 
-        public GraphCreatingViewModel(IMainModel model) : base(model)
+        public GraphCreatingViewModel(IMainModel model, 
+            IGraphFactory graphFactory) : base(model, graphFactory)
         {
             ConfirmCreateGraphCommand = new RelayCommand(ExecuteConfirmCreateGraphCommand);
             CancelCreateGraphCommand = new RelayCommand(obj => CloseWindow());
@@ -23,7 +25,7 @@ namespace WPFVersion.ViewModel
 
         private void ExecuteConfirmCreateGraphCommand(object param)
         {
-            base.CreateGraph(() => new Vertex());
+            CreateGraph();
 
             CloseWindow();
             WindowService.Adjust(model.Graph);

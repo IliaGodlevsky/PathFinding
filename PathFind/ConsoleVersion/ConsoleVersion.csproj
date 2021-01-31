@@ -55,6 +55,7 @@
     <Compile Include="Attributes\MenuItemAttribute.cs" />
     <Compile Include="Enums\MenuItemPriority.cs" />
     <Compile Include="Model\GraphFieldFactory.cs" />
+    <Compile Include="Model\VertexFactory.cs" />
     <Compile Include="ViewModel\GraphCreatingViewModel.cs" />
     <Compile Include="ViewModel\MainViewModel.cs" />
     <Compile Include="View\Menu.cs" />

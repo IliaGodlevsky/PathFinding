@@ -75,6 +75,7 @@
     <Compile Include="Infrastructure\Animations\NullAnimator.cs" />
     <Compile Include="Infrastructure\Animations\Interface\IAnimator.cs" />
     <Compile Include="Model\Offset.cs" />
+    <Compile Include="Model\Vertex3DFactory.cs" />
     <Compile Include="Resources\Resource.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>

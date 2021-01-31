@@ -50,6 +50,9 @@
     <Compile Include="Coordinates\Abstractions\BaseCoordinate.cs" />
     <Compile Include="Coordinates\Abstractions\ICoordinate.cs" />
     <Compile Include="Coordinates\DefaultCoordinate.cs" />
+    <Compile Include="Coordinates\Infrastructure\Factories\Coordinate2DFactory.cs" />
+    <Compile Include="Coordinates\Infrastructure\Factories\Coordinate3DFactory.cs" />
+    <Compile Include="Coordinates\Infrastructure\Factories\Interfaces\ICoordinateFactory.cs" />
     <Compile Include="Extensions\ICoordinateExtensions.cs" />
     <Compile Include="Extensions\IEnumerableExtensions.cs" />
     <Compile Include="Extensions\IGraphExtensions.cs" />
@@ -73,6 +76,7 @@
     <Compile Include="Vertex\Cost\VertexCost.cs" />
     <Compile Include="Vertex\Infrastructure\EventHolder\BaseVertexEventHolder.cs" />
     <Compile Include="Vertex\Infrastructure\EventHolder\Interface\IVertexEventHolder.cs" />
+    <Compile Include="Vertex\Infrastructure\Factories\Interfaces\IVertexFactory.cs" />
     <Compile Include="Vertex\Interface\IVertex.cs" />
     <Compile Include="Vertex\DefaultVertex.cs" />
   </ItemGroup>

@@ -1,9 +1,9 @@
 ﻿using Common.Extensions;
-using GraphLib.Coordinates.Abstractions;
+using GraphLib.Coordinates.Infrastructure.Factories.Interfaces;
 using GraphLib.Extensions;
 using GraphLib.Graphs.Abstractions;
 using GraphLib.Graphs.Factories.Interfaces;
-using GraphLib.Vertex.Interface;
+using GraphLib.Vertex.Infrastructure.Factories.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -16,10 +16,11 @@ namespace GraphLib.Graphs.Factories
     {
         public event Action<string> OnExceptionCaught;
 
-        public GraphFactory(int obstacleChance, params int[] dimensionSizes)
+        public GraphFactory(IVertexFactory vertexFactory, 
+            ICoordinateFactory coordinateFactory)
         {
-            this.obstacleChance = obstacleChance;
-            this.dimensionSizes = dimensionSizes.ToArray();
+            this.vertexFactory = vertexFactory;
+            this.coordinateFactory = coordinateFactory;
         }
 
         static GraphFactory()
@@ -29,23 +30,22 @@ namespace GraphLib.Graphs.Factories
             RegisterConstructor<TGraph>(ctor);
         }
 
-        public IGraph CreateGraph(Func<IVertex> vertexCreateMethod,
-            Func<IEnumerable<int>, ICoordinate> coordinateCreateMethod)
+        public IGraph CreateGraph(int obstaclePercent, params int[] graphDimensionsSizes)
         {
             try
             {
                 var activator = GetActivator<TGraph>();
-                var graph = activator(dimensionSizes);
+                var graph = activator(graphDimensionsSizes);
 
                 for (int index = 0; index < graph.Size; index++)
                 {
-                    var coordinates = ToCoordinates(index, dimensionSizes);
-                    var coordinate = coordinateCreateMethod?.Invoke(coordinates);
+                    var coordinates = ToCoordinates(index, graphDimensionsSizes);
+                    var coordinate = coordinateFactory.CreateCoordinate(coordinates);
 
-                    graph[coordinate] = vertexCreateMethod?.Invoke();
+                    graph[coordinate] = vertexFactory.CreateVertex();
 
                     graph[coordinate].Cost = rand.GetRandomValueCost();
-                    if (rand.IsObstacleChance(obstacleChance))
+                    if (rand.IsObstacleChance(obstaclePercent))
                     {
                         graph[coordinate].MarkAsObstacle();
                     }
@@ -81,8 +81,8 @@ namespace GraphLib.Graphs.Factories
             }
         }
 
-        private readonly int obstacleChance;
-        private readonly int[] dimensionSizes;
+        private ICoordinateFactory coordinateFactory;
+        private IVertexFactory vertexFactory;
 
         private static readonly Random rand;
     }

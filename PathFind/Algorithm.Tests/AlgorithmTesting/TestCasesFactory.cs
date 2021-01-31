@@ -1,26 +1,36 @@
 ﻿using Algorithm.Algorithms;
 using Algorithm.PathFindingAlgorithms;
-using GraphLib.Coordinates;
+using GraphLib.Coordinates.Infrastructure.Factories;
 using GraphLib.Graphs;
 using GraphLib.Graphs.Abstractions;
 using GraphLib.Graphs.Factories;
 using GraphLib.Graphs.Factories.Interfaces;
 using NUnit.Framework;
 using System.Collections;
-using System.Collections.Generic;
 using System.Linq;
 
 namespace Algorithm.Tests.AlgorithmTesting
 {
     internal class TestCasesFactory
     {
+        private const int ObstaclePercent = 0;
+        private const int Width2D = 25;
+        private const int Length2D = 15;
+        private const int Width3D = 7;
+        private const int Length3D = 8;
+        private const int Height3D = 9;
+
         private static readonly IGraphFactory graph2DFactory;
         private static readonly IGraphFactory graph3DFactory;
 
         static TestCasesFactory()
         {
-            graph2DFactory = new GraphFactory<Graph2D>(0, 15, 15);
-            graph3DFactory = new GraphFactory<Graph3D>(0, 7, 7, 7);
+            var vertexFactory = new TestVertexFactory();
+            var coordinate2DFactory = new Coordinate2DFactory();
+            var coordinate3DFactory = new Coordinate3DFactory();
+
+            graph2DFactory = new GraphFactory<Graph2D>(vertexFactory, coordinate2DFactory);
+            graph3DFactory = new GraphFactory<Graph3D>(vertexFactory, coordinate3DFactory);
         }
 
         internal static IEnumerable AlgorithmWithGraphsTestCases
@@ -64,7 +74,7 @@ namespace Algorithm.Tests.AlgorithmTesting
 
         private static IGraph GetGraph2D()
         {
-            var graph = graph2DFactory.CreateGraph(CreateVertex, CreateCoordinate2D);
+            var graph = graph2DFactory.CreateGraph(ObstaclePercent, Width2D, Length2D);
             graph.Start = graph.First();
             graph.End = graph.Last();
             return graph;
@@ -72,25 +82,10 @@ namespace Algorithm.Tests.AlgorithmTesting
 
         private static IGraph GetGraph3D()
         {
-            var graph = graph3DFactory.CreateGraph(CreateVertex, CreateCoordinate3D);
+            var graph = graph3DFactory.CreateGraph(ObstaclePercent, Width3D, Length3D, Height3D);
             graph.Start = graph.First();
             graph.End = graph.Last();
             return graph;
-        }
-
-        private static TestVertex CreateVertex()
-        {
-            return new TestVertex();
-        }
-
-        private static Coordinate2D CreateCoordinate2D(IEnumerable<int>coordinates)
-        {
-            return new Coordinate2D(coordinates.ToArray());
-        }
-
-        private static Coordinate3D CreateCoordinate3D(IEnumerable<int> coordinate)
-        {
-            return new Coordinate3D(coordinate.ToArray());
         }
     }
 }

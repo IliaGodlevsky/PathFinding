@@ -20,7 +20,8 @@ namespace Algorithm.Tests.AlgorithmCreatingTesting
         [Test, TestCaseSource(nameof(AlgorithmKeys))]
         public void CreateAlgorithm_ValidKey_ReturnsAlgorithm(string key)
         {
-            var algorithm = AlgorithmFactory.CreateAlgorithm(key, graphMock.Object);
+            var algorithm = AlgorithmFactory.CreateAlgorithm(key);
+            algorithm.Graph = graphMock.Object;
 
             Assert.IsTrue(!algorithm.IsDefault);
         }
@@ -30,7 +31,8 @@ namespace Algorithm.Tests.AlgorithmCreatingTesting
         [TestCase("Pathfinding algorithm")]
         public void CreateAlgorithm_InvalidKey_ReturnsDefaultAlgorithm(string key)
         {
-            var algorithm = AlgorithmFactory.CreateAlgorithm(key, graphMock.Object);
+            var algorithm = AlgorithmFactory.CreateAlgorithm(key);
+            algorithm.Graph = graphMock.Object;
 
             Assert.IsTrue(algorithm.IsDefault);
         }

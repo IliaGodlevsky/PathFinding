@@ -1,8 +1,10 @@
 ﻿using Common;
 using Common.Interfaces;
+using GraphLib.Coordinates.Infrastructure.Factories;
 using GraphLib.Extensions;
 using GraphLib.GraphField;
 using GraphLib.Graphs;
+using GraphLib.Graphs.Factories;
 using GraphViewModel;
 using System;
 using System.ComponentModel;
@@ -81,7 +83,10 @@ namespace WindowsFormsVersion.ViewModel
 
         public override void CreateNewGraph()
         {
-            var model = new GraphCreatingViewModel(this);
+            var vertexFactory = new VertexFactory();
+            var coordinateFactory = new Coordinate2DFactory();
+            var graphFactory = new GraphFactory<Graph2D>(vertexFactory, coordinateFactory);
+            var model = new GraphCreatingViewModel(this, graphFactory);
             var form = new GraphCreatingWindow(model);
 
             PrepareWindow(model, form);

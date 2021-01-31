@@ -1,10 +1,9 @@
 ﻿using Common.ValueRanges;
 using ConsoleVersion.InputClass;
 using ConsoleVersion.View;
-using GraphLib.Vertex.Interface;
+using GraphLib.Graphs.Factories.Interfaces;
 using GraphLib.ViewModel;
 using GraphViewModel.Interfaces;
-using System;
 
 namespace ConsoleVersion.ViewModel
 {
@@ -16,12 +15,13 @@ namespace ConsoleVersion.ViewModel
 
         public string HeightInputMessage { private get; set; }
 
-        public GraphCreatingViewModel(IMainModel model) : base(model)
+        public GraphCreatingViewModel(IMainModel model, 
+            IGraphFactory graphFactory) : base(model, graphFactory)
         {
 
         }
 
-        public override void CreateGraph(Func<IVertex> generator)
+        public override void CreateGraph()
         {
             ObstaclePercent = Input.InputNumber(ObstaclePercentInputMessage,
                 Range.ObstaclePercentValueRange.UpperValueOfRange,
@@ -35,7 +35,7 @@ namespace ConsoleVersion.ViewModel
                 Range.HeightValueRange.UpperValueOfRange,
                 Range.HeightValueRange.LowerValueOfRange);
 
-            base.CreateGraph(generator);
+            base.CreateGraph();
 
             MainView.UpdatePositionOfVisualElements(model.Graph);
         }

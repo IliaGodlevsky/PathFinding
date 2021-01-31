@@ -2,6 +2,7 @@
 using GraphLib.Coordinates;
 using GraphLib.Graphs;
 using GraphLib.Graphs.Factories;
+using GraphLib.Graphs.Factories.Interfaces;
 using GraphLib.Vertex.Interface;
 using GraphLib.ViewModel;
 using GraphViewModel.Interfaces;
@@ -23,29 +24,23 @@ namespace WPFVersion3D.ViewModel
         public ICommand ConfirmCreateGraphCommand { get; }
         public ICommand CancelCreateGraphCommand { get; }
 
-        public GraphCreatingViewModel(IMainModel model) : base(model)
+        public GraphCreatingViewModel(IMainModel model, 
+            IGraphFactory graphFactory) : base(model, graphFactory)
         {
             ConfirmCreateGraphCommand = new RelayCommand(ExecuteConfirmCreateGraphCommand);
             CancelCreateGraphCommand = new RelayCommand(obj => CloseWindow());
         }
 
-        public override void CreateGraph(Func<IVertex> vertexFactory)
+        public override void CreateGraph()
         {
-            var graphFactory = new GraphFactory<Graph3D>(ObstaclePercent, Width, Length, Height);
-
-            var graph = graphFactory.CreateGraph(vertexFactory, CreateCoordinate3D);
+            var graph = graphFactory.CreateGraph(ObstaclePercent, Width, Length, Height);
 
             model.ConnectNewGraph(graph);
         }
 
-        private Coordinate3D CreateCoordinate3D(IEnumerable<int> coordinates)
-        {
-            return new Coordinate3D(coordinates.ToArray());
-        }
-
         private void ExecuteConfirmCreateGraphCommand(object param)
         {
-            CreateGraph(() => new Vertex3D());
+            CreateGraph();
 
             var field = model.GraphField as GraphField3D;
 
