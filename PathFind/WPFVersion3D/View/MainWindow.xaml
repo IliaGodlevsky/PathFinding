@@ -226,7 +226,7 @@
                     Position="600,600,600"/>
             </Viewport3D.Camera>
             <Viewport3D.Children>
-                <model:GraphField3D GraphChildren="{Binding Path = GraphChildren, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" x:Name="GraphField">
+                <model:GraphField3D x:Name="GraphField">
                     <ModelVisual3D.Content>
                         <DirectionalLight Direction="{Binding ElementName=camera, Path=LookDirection}" 
                                           Color="White"/>
