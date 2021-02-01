@@ -9,17 +9,20 @@ using System.Linq;
 
 namespace GraphLib.Graphs.Factories
 {
+    /// <summary>
+    /// Assembles a graph suitable for use with pathfinding algorithms
+    /// </summary>
     public sealed class GraphAssembler : IGraphAssembler
     {
         public event Action<string> OnExceptionCaught;
 
         public GraphAssembler(IVertexFactory vertexFactory,
             ICoordinateFactory coordinateFactory,
-            IGraphFactory initializer)
+            IGraphFactory graphFactory)
         {
             this.vertexFactory = vertexFactory;
             this.coordinateFactory = coordinateFactory;
-            graphInitializer = initializer;
+            this.graphFactory = graphFactory;
         }
 
         static GraphAssembler()
@@ -27,11 +30,17 @@ namespace GraphLib.Graphs.Factories
             rand = new Random();
         }
 
+        /// <summary>
+        /// Creates graph with the specification indicated int method params
+        /// </summary>
+        /// <param name="obstaclePercent"></param>
+        /// <param name="graphDimensionsSizes"></param>
+        /// <returns>Assembled graph suitable for use with pathfinding algorithms</returns>
         public IGraph CreateGraph(int obstaclePercent, params int[] graphDimensionsSizes)
         {
             try
             {
-                var graph = graphInitializer.CreateGraph(graphDimensionsSizes);
+                var graph = graphFactory.CreateGraph(graphDimensionsSizes);
 
                 for (int index = 0; index < graph.Size; index++)
                 {
@@ -79,7 +88,7 @@ namespace GraphLib.Graphs.Factories
 
         private readonly ICoordinateFactory coordinateFactory;
         private readonly IVertexFactory vertexFactory;
-        private readonly IGraphFactory graphInitializer;
+        private readonly IGraphFactory graphFactory;
 
         private static readonly Random rand;
     }
