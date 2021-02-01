@@ -97,7 +97,6 @@
     <Compile Include="Converters\StringToDoubleConverter.cs" />
     <Compile Include="Enums\Axis.cs" />
     <Compile Include="Enums\RotationDirection.cs" />
-    <Compile Include="Extensions\VisualCollection3DExtensions.cs" />
     <Compile Include="Factories\Model3DFactory.cs" />
     <Compile Include="Infrastructure\Animations\AnimatedAxisRotator.cs" />
     <Compile Include="Infrastructure\Animations\NullAnimator.cs" />
