@@ -1,4 +1,5 @@
-﻿using GraphLib.GraphField;
+﻿using Common.Extensions;
+using GraphLib.GraphField;
 using GraphLib.Graphs.Abstractions;
 
 namespace GraphLib.GraphFieldCreating
@@ -10,11 +11,7 @@ namespace GraphLib.GraphFieldCreating
         public virtual IGraphField CreateGraphField(IGraph graph)
         {
             var graphField = GetField();
-
-            foreach (var vertex in graph)
-            {
-                graphField.Add(vertex);
-            }
+            graph.ForEach(graphField.Add);
 
             return graphField;
         }

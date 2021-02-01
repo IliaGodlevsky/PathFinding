@@ -28,7 +28,7 @@ namespace GraphLib.ViewModel
 
         public virtual void CreateGraph()
         {
-            var graph = graphFactory.CreateGraph(ObstaclePercent, Width, Length);
+            var graph = graphFactory.AssembleGraph(ObstaclePercent, Width, Length);
 
             model.ConnectNewGraph(graph);
         }

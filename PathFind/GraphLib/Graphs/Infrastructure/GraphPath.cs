@@ -1,4 +1,5 @@
-﻿using GraphLib.Extensions;
+﻿using Common.Extensions;
+using GraphLib.Extensions;
 using GraphLib.Graphs.Abstractions;
 using GraphLib.Vertex.Interface;
 using System.Collections.Generic;
@@ -38,13 +39,9 @@ namespace GraphLib.Graphs.Infrastructure
 
         public void HighlightPath()
         {
-            foreach (IVertex vertex in Path)
-            {
-                if (vertex.IsSimpleVertex())
-                {
-                    vertex.MarkAsPath();
-                }
-            }
+            Path
+                .Where(vertex => vertex.IsSimpleVertex())
+                .ForEach(vertex => vertex.MarkAsPath());
         }
 
         /// <summary>

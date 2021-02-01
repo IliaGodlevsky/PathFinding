@@ -66,6 +66,26 @@ namespace Common.Extensions
             return collection;
         }
 
+        public static IEnumerable<T> ForEach<T>(this IEnumerable<T> collection, Action<int> action)
+        {
+            for (int i = 0; i < collection.Count(); i++)
+            {
+                action(i);
+            }
+
+            return collection;
+        }
+
+        public static IEnumerable<T> ForEach<T>(this IEnumerable<T> collection, Action<T, int> action)
+        {
+            for (int i = 0; i < collection.Count(); i++)
+            {
+                action(collection.ElementAt(i), i);
+            }
+
+            return collection;
+        }
+
         /// <summary>
         /// Maximum int value of <paramref name="collection"/> 
         /// or 0 if <paramref name="collection"/> is empty

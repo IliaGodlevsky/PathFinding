@@ -7,6 +7,6 @@ namespace GraphLib.Graphs.Factories.Interfaces
     {
         event Action<string> OnExceptionCaught;
 
-        IGraph CreateGraph(int obstaclePercent, params int[] graphDimensionSizes);
+        IGraph AssembleGraph(int obstaclePercent, params int[] graphDimensionSizes);
     }
 }

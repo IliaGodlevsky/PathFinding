@@ -27,7 +27,7 @@ namespace WPFVersion3D.ViewModel
 
         public override void CreateGraph()
         {
-            var graph = graphFactory.CreateGraph(ObstaclePercent, Width, Length, Height);
+            var graph = graphFactory.AssembleGraph(ObstaclePercent, Width, Length, Height);
 
             model.ConnectNewGraph(graph);
         }

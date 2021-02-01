@@ -1,4 +1,5 @@
-﻿using GraphLib.Coordinates.Abstractions;
+﻿using Common.Extensions;
+using GraphLib.Coordinates.Abstractions;
 using GraphLib.Graphs.Abstractions;
 using GraphLib.Info;
 using GraphLib.Vertex;
@@ -79,11 +80,7 @@ namespace GraphLib.Extensions
 
         internal static void Isolate(this IVertex self)
         {
-            foreach (var neigbour in self.Neighbours)
-            {
-                neigbour.Neighbours.Remove(self);
-            }
-
+            self.Neighbours.ForEach(vertex => vertex.Neighbours.Remove(self));
             self.Neighbours.Clear();
         }
 
@@ -98,13 +95,9 @@ namespace GraphLib.Extensions
         /// <param name="self"></param>
         public static void ConnectWithNeighbours(this IVertex self)
         {
-            foreach (var neigbour in self.Neighbours)
-            {
-                if (self.CanBeNeighbourOf(neigbour))
-                {
-                    neigbour.Neighbours.Add(self);
-                }
-            }
+            self.Neighbours
+                .Where(vertex => self.CanBeNeighbourOf(vertex))
+                .ForEach(vertex => vertex.Neighbours.Add(self));
         }
 
         public static bool IsEqual(this IVertex self, IVertex vertex)
@@ -138,26 +131,17 @@ namespace GraphLib.Extensions
 
             if (!self.IsObstacle)
             {
-                var vertexEnvironment = self.GetEnvironment(graph);
-                foreach (var neighbourCandidate in vertexEnvironment)
-                {
-                    if (neighbourCandidate.CanBeNeighbourOf(self))
-                    {
-                        self.Neighbours.Add(neighbourCandidate);
-                    }
-                }
+                self.GetEnvironment(graph)
+                    .Where(vertex => vertex.CanBeNeighbourOf(self))
+                    .ForEach(vertex => self.Neighbours.Add(vertex));
             }
         }
 
         private static IEnumerable<IVertex> GetEnvironment(this IVertex self, IGraph graph)
         {
-            foreach (var coordinate in self.Position.Environment)
-            {
-                if (coordinate.IsWithinGraph(graph))
-                {
-                    yield return graph[coordinate];
-                }
-            }
+            return self.Position.Environment
+                .Where(coordinate => coordinate.IsWithinGraph(graph))
+                .Select(coordinate => graph[coordinate]);
         }
 
         private static bool CanBeNeighbourOf(this IVertex self, IVertex vertex)

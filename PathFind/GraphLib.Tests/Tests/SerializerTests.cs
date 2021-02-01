@@ -37,8 +37,8 @@ namespace GraphLib.Tests.Tests
             var graph2DFiller = new GraphAssembler(vertexFactory, coordinate2DFactory, graph2DFactory);
             var graph3DFiller = new GraphAssembler(vertexFactory, coordinate3DFactory, graph3DFactory);
 
-            graph2D = graph2DFiller.CreateGraph(0, 15, 15);
-            graph3D = graph3DFiller.CreateGraph(0, 7, 8, 9);
+            graph2D = graph2DFiller.AssembleGraph(0, 15, 15);
+            graph3D = graph3DFiller.AssembleGraph(0, 7, 8, 9);
         }
 
         [Test]

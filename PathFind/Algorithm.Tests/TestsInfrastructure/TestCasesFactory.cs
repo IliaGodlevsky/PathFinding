@@ -77,7 +77,7 @@ namespace Algorithm.Tests.TestsInfrastructure
         private static IGraph GetGraph2D()
         {
             var graph = graph2DFiller
-                .CreateGraph(
+                .AssembleGraph(
                 ObstaclePercent,
                 Width2D,
                 Length2D);
@@ -90,7 +90,7 @@ namespace Algorithm.Tests.TestsInfrastructure
         private static IGraph GetGraph3D()
         {
             var graph = graph3DFiller
-                .CreateGraph(
+                .AssembleGraph(
                 ObstaclePercent,
                 Width3D,
                 Length3D,

@@ -1,4 +1,5 @@
-﻿using GraphLib.Coordinates.Infrastructure.Factories.Interfaces;
+﻿using Common.Extensions;
+using GraphLib.Coordinates.Infrastructure.Factories.Interfaces;
 using GraphLib.Extensions;
 using GraphLib.Graphs.Abstractions;
 using GraphLib.Graphs.Factories.Interfaces;
@@ -36,30 +37,13 @@ namespace GraphLib.Graphs.Factories
         /// <param name="obstaclePercent"></param>
         /// <param name="graphDimensionsSizes"></param>
         /// <returns>Assembled graph suitable for use with pathfinding algorithms</returns>
-        public IGraph CreateGraph(int obstaclePercent, params int[] graphDimensionsSizes)
+        public IGraph AssembleGraph(int obstaclePercent, params int[] graphDimensionsSizes)
         {
             try
             {
                 var graph = graphFactory.CreateGraph(graphDimensionsSizes);
-
-                for (int index = 0; index < graph.Size; index++)
-                {
-                    var coordinates = ToCoordinates(index, graphDimensionsSizes);
-                    var coordinate = coordinateFactory.CreateCoordinate(coordinates);
-
-                    graph[coordinate] = vertexFactory.CreateVertex();
-
-                    graph[coordinate].Cost = rand.GetRandomValueCost();
-                    if (rand.IsObstacleChance(obstaclePercent))
-                    {
-                        graph[coordinate].MarkAsObstacle();
-                    }
-
-                    graph[coordinate].Position = coordinate;
-                }
-
+                graph.ForEach(index => AssembleVertex(graph, index, graphDimensionsSizes, obstaclePercent));
                 graph.ConnectVertices();
-
                 return graph;
             }
             catch (Exception ex)
@@ -67,6 +51,23 @@ namespace GraphLib.Graphs.Factories
                 OnExceptionCaught?.Invoke(ex.Message);
                 return new NullGraph();
             }
+        }
+
+        private void AssembleVertex(IGraph graph, int index, 
+            int[] graphDimensionsSizes, int obstaclePercent)
+        {
+            var coordinates = ToCoordinates(index, graphDimensionsSizes);
+            var coordinate = coordinateFactory.CreateCoordinate(coordinates);
+
+            graph[coordinate] = vertexFactory.CreateVertex();
+
+            graph[coordinate].Cost = rand.GetRandomValueCost();
+            if (rand.IsObstacleChance(obstaclePercent))
+            {
+                graph[coordinate].MarkAsObstacle();
+            }
+
+            graph[coordinate].Position = coordinate;
         }
 
         private IEnumerable<int> ToCoordinates(int index,
