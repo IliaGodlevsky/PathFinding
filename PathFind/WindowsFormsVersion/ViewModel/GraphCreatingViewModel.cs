@@ -13,7 +13,7 @@ namespace WindowsFormsVersion.ViewModel
         public event EventHandler OnWindowClosed;
 
         public GraphCreatingViewModel(IMainModel model,
-            IGraphFiller graphFactory) : base(model, graphFactory)
+            IGraphAssembler graphFactory) : base(model, graphFactory)
         {
             int upperRangeOfGraphWidth
                 = Convert.ToInt32(ConfigurationManager.AppSettings["upperRangeOfGraphWidth"]);

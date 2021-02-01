@@ -60,7 +60,7 @@
     <Compile Include="Extensions\RandomExtensions.cs" />
     <Compile Include="Graphs\Factories\Graph2DFactory.cs" />
     <Compile Include="Graphs\Factories\Graph3DFactory.cs" />
-    <Compile Include="Graphs\Factories\GraphFiller.cs" />
+    <Compile Include="Graphs\Factories\GraphAssembler.cs" />
     <Compile Include="Graphs\Factories\Interfaces\IGraphFactory.cs" />
     <Compile Include="Graphs\Graph2D.cs" />
     <Compile Include="Graphs\Abstractions\BaseGraph.cs" />
@@ -73,7 +73,6 @@
     <Compile Include="Graphs\Serialization\GraphSerializer.cs" />
     <Compile Include="Graphs\Serialization\Infrastructure\Info\Collections\GraphSerializationInfo.cs" />
     <Compile Include="Graphs\Serialization\Infrastructure\Info\VertexSerializationInfo.cs" />
-    <Compile Include="Graphs\Serialization\GraphAssembler.cs" />
     <Compile Include="Graphs\Serialization\Interfaces\IGraphSerializer.cs" />
     <Compile Include="Graphs\NullGraph.cs" />
     <Compile Include="Graphs\Infrastructure\GraphPath.cs" />

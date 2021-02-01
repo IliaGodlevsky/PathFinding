@@ -34,8 +34,8 @@ namespace GraphLib.Tests.Tests
             var vertexFactory = new TestVertexFactory();
             var coordinate2DFactory = new Coordinate2DFactory();
             var coordinate3DFactory = new Coordinate3DFactory();
-            var graph2DFiller = new GraphFiller(vertexFactory, coordinate2DFactory, graph2DFactory);
-            var graph3DFiller = new GraphFiller(vertexFactory, coordinate3DFactory, graph3DFactory);
+            var graph2DFiller = new GraphAssembler(vertexFactory, coordinate2DFactory, graph2DFactory);
+            var graph3DFiller = new GraphAssembler(vertexFactory, coordinate3DFactory, graph3DFactory);
 
             graph2D = graph2DFiller.CreateGraph(0, 15, 15);
             graph3D = graph3DFiller.CreateGraph(0, 7, 8, 9);

@@ -9,11 +9,11 @@ using System.Linq;
 
 namespace GraphLib.Graphs.Factories
 {
-    public sealed class GraphFiller : IGraphFiller
+    public sealed class GraphAssembler : IGraphAssembler
     {
         public event Action<string> OnExceptionCaught;
 
-        public GraphFiller(IVertexFactory vertexFactory,
+        public GraphAssembler(IVertexFactory vertexFactory,
             ICoordinateFactory coordinateFactory,
             IGraphFactory initializer)
         {
@@ -22,7 +22,7 @@ namespace GraphLib.Graphs.Factories
             graphInitializer = initializer;
         }
 
-        static GraphFiller()
+        static GraphAssembler()
         {
             rand = new Random();
         }

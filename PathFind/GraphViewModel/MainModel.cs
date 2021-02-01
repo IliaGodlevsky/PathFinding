@@ -26,7 +26,7 @@ namespace GraphViewModel
         public MainModel(BaseGraphFieldFactory fieldFactory,
             IVertexEventHolder eventHolder,
             IGraphSerializer graphSerializer,
-            IGraphFiller graphFiller,
+            IGraphAssembler graphFiller,
             IPathInput pathInput)
         {
             this.eventHolder = eventHolder;
@@ -91,7 +91,7 @@ namespace GraphViewModel
         }
 
         protected string graphParamFormat;
-        protected readonly IGraphFiller graphFiller;
+        protected readonly IGraphAssembler graphFiller;
         private readonly IVertexEventHolder eventHolder;
         private readonly IGraphSerializer serializer;
         private readonly BaseGraphFieldFactory fieldFactory;

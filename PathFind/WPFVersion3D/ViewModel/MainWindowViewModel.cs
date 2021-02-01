@@ -51,7 +51,6 @@ namespace WPFVersion3D.ViewModel
                 graphField = value;
                 var field = graphField as GraphField3D;
                 field.CenterGraph();
-                //Shame! Shame!
                 var currentWindow = Application.Current.MainWindow as MainWindow;
                 currentWindow?.GraphField?.Children.Clear();
                 currentWindow?.GraphField?.Children.Add(field);
@@ -69,7 +68,7 @@ namespace WPFVersion3D.ViewModel
         public MainWindowViewModel(BaseGraphFieldFactory fieldFactory,
             IVertexEventHolder eventHolder,
             IGraphSerializer graphSerializer,
-            IGraphFiller graphFactory, 
+            IGraphAssembler graphFactory, 
             IPathInput pathInput) : base(fieldFactory, eventHolder, graphSerializer, graphFactory, pathInput)
         {
             graphParamFormat = Resource.GraphParamFormat;

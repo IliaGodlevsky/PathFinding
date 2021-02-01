@@ -19,7 +19,7 @@ namespace GraphLib.ViewModel
         public ValueRange ObstaclePercentValueRange { get; }
 
         public GraphCreatingModel(IMainModel model,
-            IGraphFiller graphFactory)
+            IGraphAssembler graphFactory)
         {
             this.model = model;
             this.graphFactory = graphFactory;
@@ -34,6 +34,6 @@ namespace GraphLib.ViewModel
         }
 
         protected IMainModel model;
-        protected IGraphFiller graphFactory;
+        protected IGraphAssembler graphFactory;
     }
 }

@@ -18,7 +18,7 @@ namespace ConsoleVersion.ViewModel
         public string HeightInputMessage { private get; set; }
 
         public GraphCreatingViewModel(IMainModel model,
-            IGraphFiller graphFactory) : base(model, graphFactory)
+            IGraphAssembler graphFactory) : base(model, graphFactory)
         {
             int upperRangeOfGraphWidth
                 = Convert.ToInt32(ConfigurationManager.AppSettings["upperRangeOfGraphWidth"]);

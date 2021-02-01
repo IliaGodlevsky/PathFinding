@@ -19,8 +19,8 @@ namespace Algorithm.Tests.TestsInfrastructure
         private const int Length3D = 8;
         private const int Height3D = 9;
 
-        private static readonly IGraphFiller graph2DFiller;
-        private static readonly IGraphFiller graph3DFiller;
+        private static readonly IGraphAssembler graph2DFiller;
+        private static readonly IGraphAssembler graph3DFiller;
 
         static TestCasesFactory()
         {
@@ -31,8 +31,8 @@ namespace Algorithm.Tests.TestsInfrastructure
             var graph2DFactory = new Graph2DFactory();
             var graph3DFactory = new Graph3DFactory();
 
-            graph2DFiller = new GraphFiller(vertexFactory, coordinate2DFactory, graph2DFactory);
-            graph3DFiller = new GraphFiller(vertexFactory, coordinate3DFactory, graph3DFactory);
+            graph2DFiller = new GraphAssembler(vertexFactory, coordinate2DFactory, graph2DFactory);
+            graph3DFiller = new GraphAssembler(vertexFactory, coordinate3DFactory, graph3DFactory);
         }
 
         internal static IEnumerable AlgorithmWithGraphsTestCases

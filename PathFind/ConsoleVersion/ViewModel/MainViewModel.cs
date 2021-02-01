@@ -23,7 +23,7 @@ namespace ConsoleVersion.ViewModel
         public MainViewModel(BaseGraphFieldFactory fieldFactory,
             IVertexEventHolder eventHolder,
             IGraphSerializer graphSerializer,
-            IGraphFiller graphFactory,
+            IGraphAssembler graphFactory,
             IPathInput pathInput) : base(fieldFactory, eventHolder, graphSerializer, graphFactory, pathInput)
         {
 
