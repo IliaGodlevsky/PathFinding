@@ -3,14 +3,11 @@ using GraphLib.Extensions;
 using GraphLib.Info;
 using GraphLib.Vertex.Cost;
 using GraphLib.Vertex.Interface;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Reflection;
 using System.Windows;
 using System.Windows.Media;
 using System.Windows.Media.Media3D;
-using WPFVersion3D.Factories;
+using WPFVersion3D.Factories; 
 
 namespace WPFVersion3D.Model
 {
@@ -183,7 +180,6 @@ namespace WPFVersion3D.Model
         {
             Vertex3D vert = (Vertex3D)depObj;
             vert.Material = (Material)prop.NewValue;
-            vert.OnUpdateModel();
         }
 
         protected static void SizePropertyChanged(DependencyObject depObj,
@@ -191,15 +187,13 @@ namespace WPFVersion3D.Model
         {
             Vertex3D vert = (Vertex3D)depObj;
             vert.Size = (double)prop.NewValue;
-            vert.OnUpdateModel();
         }
 
         protected static void ModelPropertyChanged(DependencyObject depObj,
             DependencyPropertyChangedEventArgs prop)
         {
             Vertex3D vert = (Vertex3D)depObj;
-            vert.Visual3DModel = vert.Model;
-            vert.OnUpdateModel();
+            vert.Visual3DModel = (Model3D)prop.NewValue;
         }
 
         protected static void BrushPropertyChanged(DependencyObject depObj,
@@ -207,15 +201,7 @@ namespace WPFVersion3D.Model
         {
             Vertex3D vert = (Vertex3D)depObj;
             vert.Brush = (SolidColorBrush)prop.NewValue;
-            vert.OnUpdateModel();
-        }
-
-        protected override void OnUpdateModel()
-        {
-            if (Material != null)
-            {
-                (Material as DiffuseMaterial).Brush = Brush;
-            }
+            (vert.Material as DiffuseMaterial).Brush = vert.Brush;
         }
     }
 }
