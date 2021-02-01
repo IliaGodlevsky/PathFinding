@@ -51,6 +51,7 @@ namespace WPFVersion3D.ViewModel
                 graphField = value;
                 var field = graphField as GraphField3D;
                 field.CenterGraph();
+                //Shame! Shame!
                 var currentWindow = Application.Current.MainWindow as MainWindow;
                 currentWindow?.GraphField?.Children.Clear();
                 currentWindow?.GraphField?.Children.Add(field);
@@ -116,16 +117,6 @@ namespace WPFVersion3D.ViewModel
             PrepareWindow(new OpacityChangeViewModel(), new OpacityChangeWindow());
         }
 
-        public void Dispose()
-        {
-            OnDispose();
-        }
-
-        protected virtual void OnDispose()
-        {
-            return;
-        }
-
         private void ExecuteSaveGraphCommand(object param)
         {
             base.SaveGraph();
@@ -161,18 +152,18 @@ namespace WPFVersion3D.ViewModel
             CreateNewGraph();
         }
 
+        private void ExecuteAnimatedAxisRotateCommand(object param)
+        {
+            var rotator = (IAnimator)param;
+            rotator.ApplyAnimation();
+        }
+
         private void PrepareWindow(IViewModel model, Window window)
         {
             model.OnWindowClosed += (sender, args) => window.Close();
             window.DataContext = model;
             window.WindowStartupLocation = WindowStartupLocation.CenterScreen;
             window.Show();
-        }
-
-        private void ExecuteAnimatedAxisRotateCommand(object param)
-        {
-            var rotator = (IAnimator)param;
-            rotator.ApplyAnimation();
         }
 
         private void OnPathNotFound(string message)

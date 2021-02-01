@@ -2,7 +2,7 @@
 using NUnit.Framework;
 using System.Collections;
 
-namespace Algorithm.Tests.AlgorithmCreatingTesting
+namespace Algorithm.Tests.Tests.AlgorithmCreatingTesting
 {
     [TestFixture]
     internal class AlgorithmCreatingTest
@@ -15,9 +15,7 @@ namespace Algorithm.Tests.AlgorithmCreatingTesting
             Assert.IsTrue(!algorithm.IsDefault);
         }
 
-        [TestCase("Algorithm A")]
-        [TestCase("A*")]
-        [TestCase("Pathfinding algorithm")]
+        [Test, TestCaseSource(nameof(FakeAlgorithmKeys))]
         public void CreateAlgorithm_InvalidKey_ReturnsDefaultAlgorithm(string key)
         {
             var algorithm = AlgorithmFactory.CreateAlgorithm(key);
@@ -26,5 +24,10 @@ namespace Algorithm.Tests.AlgorithmCreatingTesting
         }
 
         private static readonly IEnumerable AlgorithmKeys = AlgorithmFactory.AlgorithmsDescriptions;
+        private static readonly IEnumerable FakeAlgorithmKeys = new string[] 
+        { 
+            "Key","Double key","Tripple key", "Monster key", "Mega key", 
+            "Ultra key", "Wicked key","Rampage key", "GodlikeKey"
+        };
     }
 }

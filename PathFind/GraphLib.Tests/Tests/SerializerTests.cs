@@ -5,6 +5,7 @@ using GraphLib.Graphs.Abstractions;
 using GraphLib.Graphs.Factories;
 using GraphLib.Graphs.Factories.Interfaces;
 using GraphLib.Graphs.Serialization;
+using GraphLib.Tests.TestInfrastructure;
 using NUnit.Framework;
 using System.IO;
 using System.Runtime.Serialization;

@@ -66,6 +66,10 @@ namespace GraphViewModel
             catch { }
         }
 
+        public abstract void FindPath();
+
+        public abstract void CreateNewGraph();
+
         public virtual void ClearGraph()
         {
             Graph.Refresh();
@@ -92,9 +96,5 @@ namespace GraphViewModel
         private readonly IGraphSerializer serializer;
         private readonly BaseGraphFieldFactory fieldFactory;
         private readonly IPathInput pathInput;
-
-        public abstract void FindPath();
-
-        public abstract void CreateNewGraph();
     }
 }

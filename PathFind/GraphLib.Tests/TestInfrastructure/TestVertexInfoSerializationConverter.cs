@@ -2,7 +2,7 @@
 using GraphLib.Info;
 using GraphLib.Vertex.Interface;
 
-namespace GraphLib.Tests
+namespace GraphLib.Tests.TestInfrastructure
 {
     public class TestVertexInfoSerializationConverter : IVertexSerializationInfoConverter
     {

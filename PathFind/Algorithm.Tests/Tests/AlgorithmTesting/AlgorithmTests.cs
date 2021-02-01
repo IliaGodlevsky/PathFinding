@@ -1,10 +1,11 @@
 ﻿using Algorithm.Algorithms.Abstractions;
+using Algorithm.Tests.TestsInfrastructure;
 using GraphLib.Graphs;
 using GraphLib.Graphs.Abstractions;
 using GraphLib.Graphs.Infrastructure;
 using NUnit.Framework;
 
-namespace Algorithm.Tests.AlgorithmTesting
+namespace Algorithm.Tests.Tests.AlgorithmTesting
 {
     [TestFixture]
     internal class AlgorithmTests

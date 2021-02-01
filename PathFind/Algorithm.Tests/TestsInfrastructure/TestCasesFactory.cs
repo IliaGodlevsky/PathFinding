@@ -8,7 +8,7 @@ using NUnit.Framework;
 using System.Collections;
 using System.Linq;
 
-namespace Algorithm.Tests.AlgorithmTesting
+namespace Algorithm.Tests.TestsInfrastructure
 {
     internal class TestCasesFactory
     {

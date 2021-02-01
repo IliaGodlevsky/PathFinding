@@ -1,10 +1,11 @@
 ﻿using Algorithm.Extensions;
+using Algorithm.Tests.TestsInfrastructure;
 using GraphLib.Vertex.Interface;
 using NUnit.Framework;
 using System;
 using System.Collections.Generic;
 
-namespace Algorithm.Tests.ExtensionsTests
+namespace Algorithm.Tests.Tests.ExtensionsTests
 {
     [TestFixture]
     internal class FirstOrDefaultTests

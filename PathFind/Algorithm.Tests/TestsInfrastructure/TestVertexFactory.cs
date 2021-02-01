@@ -1,7 +1,7 @@
 ﻿using GraphLib.Vertex.Infrastructure.Factories.Interfaces;
 using GraphLib.Vertex.Interface;
 
-namespace Algorithm.Tests
+namespace Algorithm.Tests.TestsInfrastructure
 {
     internal class TestVertexFactory : IVertexFactory
     {
