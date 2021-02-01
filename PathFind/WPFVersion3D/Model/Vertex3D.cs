@@ -62,13 +62,13 @@ namespace WPFVersion3D.Model
                 nameof(Material),
                 typeof(Material),
                 typeof(Vertex3D),
-                new PropertyMetadata(VisualPropertyChanged));
+                new PropertyMetadata(MaterialPropertyChanged));
 
             SizeProperty = DependencyProperty.Register(
                 nameof(Size),
                 typeof(double),
                 typeof(Vertex3D),
-                new UIPropertyMetadata(VisualPropertyChanged));
+                new UIPropertyMetadata(SizePropertyChanged));
 
             BrushProperty = DependencyProperty.Register(
                 nameof(Brush),
@@ -178,13 +178,20 @@ namespace WPFVersion3D.Model
             Dispatcher.Invoke(() => Brush = StartVertexBrush);
         }
 
-        protected static async void VisualPropertyChanged(DependencyObject depObj,
+        protected static void MaterialPropertyChanged(DependencyObject depObj,
             DependencyPropertyChangedEventArgs prop)
         {
-            var flags = BindingFlags.Public | BindingFlags.Instance;
-            var method = depObj.GetType().GetMethod(nameof(InvalidateModel), flags);
-            var delegatedMethod = Delegate.CreateDelegate(typeof(Action), depObj, method);
-            await depObj.Dispatcher.BeginInvoke(delegatedMethod);
+            Vertex3D vert = (Vertex3D)depObj;
+            vert.Material = (Material)prop.NewValue;
+            vert.OnUpdateModel();
+        }
+
+        protected static void SizePropertyChanged(DependencyObject depObj,
+            DependencyPropertyChangedEventArgs prop)
+        {
+            Vertex3D vert = (Vertex3D)depObj;
+            vert.Size = (double)prop.NewValue;
+            vert.OnUpdateModel();
         }
 
         protected static void ModelPropertyChanged(DependencyObject depObj,
@@ -192,34 +199,22 @@ namespace WPFVersion3D.Model
         {
             Vertex3D vert = (Vertex3D)depObj;
             vert.Visual3DModel = vert.Model;
+            vert.OnUpdateModel();
         }
 
-        protected static async void BrushPropertyChanged(DependencyObject depObj,
+        protected static void BrushPropertyChanged(DependencyObject depObj,
             DependencyPropertyChangedEventArgs prop)
         {
-            var flags = BindingFlags.NonPublic | BindingFlags.Instance;
-            var method = depObj.GetType().GetMethod(nameof(OnUpdateModel), flags);
-            var delegatedMethod = Delegate.CreateDelegate(typeof(Action), depObj, method);
-            await depObj.Dispatcher.BeginInvoke(delegatedMethod);
+            Vertex3D vert = (Vertex3D)depObj;
+            vert.Brush = (SolidColorBrush)prop.NewValue;
+            vert.OnUpdateModel();
         }
 
         protected override void OnUpdateModel()
         {
-            GeometryModel3D child = null;
-            if (Model is Model3DGroup modelGroup)
+            if (Material != null)
             {
-                child = modelGroup.Children.FirstOrDefault() as GeometryModel3D;
-            }
-
-            DiffuseMaterial material = null;
-            if (child != null)
-            {
-                material = child.Material as DiffuseMaterial;
-            }
-
-            if (material != null)
-            {
-                material.Brush = Brush;
+                (Material as DiffuseMaterial).Brush = Brush;
             }
         }
     }

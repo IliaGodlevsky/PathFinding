@@ -2,6 +2,7 @@
 using Common.ValueRanges;
 using ConsoleVersion.InputClass;
 using ConsoleVersion.Model;
+using ConsoleVersion.Resource;
 using ConsoleVersion.View;
 using GraphLib.Coordinates;
 using GraphLib.Extensions;
@@ -48,7 +49,7 @@ namespace ConsoleVersion.ViewModel
                 AlgorithmKey = algorithmKeys.ElementAt(algorithmKeyIndex);
 
                 DelayTime = Input.InputNumber(
-                    ConsoleVersionResources.DelayTimeInputMsg,
+                    Resources.DelayTimeInputMsg,
                     AlgorithmDelayTimeValueRange);
 
                 base.FindPath();

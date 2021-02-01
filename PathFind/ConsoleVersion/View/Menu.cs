@@ -1,5 +1,6 @@
 ﻿using Common.Extensions;
 using ConsoleVersion.Attributes;
+using ConsoleVersion.Resource;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -38,7 +39,6 @@ namespace ConsoleVersion.ViewModel
             int menuItemNumber = 0;
             int menuItemNumberPad = Convert.ToInt32(Math.Log10(menuItemsNames.Count())) + 1;
             int longestNameLength = menuItemsNames.Max(str => str.Length) + 1;
-            string format = ConsoleVersionResources.MenuFormat;
 
             foreach (var name in menuItemsNames)
             {
@@ -46,7 +46,7 @@ namespace ConsoleVersion.ViewModel
                 string separator = CreateSeparator(menuItemNumber, columns);
                 string stringedNenuItemNumber = (++menuItemNumber).ToString();
                 string paddedMenuItemNumber = stringedNenuItemNumber.PadLeft(menuItemNumberPad);
-                menu.AppendFormat(format + separator, paddedMenuItemNumber, paddedName);
+                menu.AppendFormat(Resources.MenuFormat + separator, paddedMenuItemNumber, paddedName);
             }
 
             return menu.ToString();

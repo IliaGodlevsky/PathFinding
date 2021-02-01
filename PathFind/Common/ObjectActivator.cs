@@ -108,8 +108,10 @@ namespace Common
             {
                 var index = Expression.Constant(i);
                 var parameterType = ctorParametres[i].ParameterType;
-                var parameterAccessorExpression = Expression.ArrayIndex(parameter, index);
-                var parameterCastExpression = Expression.Convert(parameterAccessorExpression, parameterType);
+                var parameterAccessorExpression 
+                    = Expression.ArrayIndex(parameter, index);
+                var parameterCastExpression 
+                    = Expression.Convert(parameterAccessorExpression, parameterType);
                 yield return parameterCastExpression;
             }
         }

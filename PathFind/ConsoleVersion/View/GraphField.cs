@@ -56,7 +56,7 @@ namespace ConsoleVersion.View
             }
         }
 
-        private void DrawAbscissaFrame(int topOffset, FramedAbscissaView view)
+        private void DrawAbscissaFrame(int topOffset, FramedAbscissaPosition view)
         {
             Console.SetCursorPosition(0, topOffset);
             Console.Write(GetFramedAbscissa(view));
@@ -65,9 +65,9 @@ namespace ConsoleVersion.View
         private void DrawAbscissaFrames()
         {
             int cursorTop = MainView.HeightOfGraphParametresView;
-            DrawAbscissaFrame(cursorTop, FramedAbscissaView.FrameUnder);
+            DrawAbscissaFrame(cursorTop, FramedAbscissaPosition.FrameUnder);
             cursorTop += Length + MainView.HeightOfAbscissaView;
-            DrawAbscissaFrame(cursorTop, FramedAbscissaView.FrameOver);
+            DrawAbscissaFrame(cursorTop, FramedAbscissaPosition.FrameOver);
         }
 
         private void DrawLeftYCoodrinate(int yCoodrinatePadding, int currentLength)
@@ -135,7 +135,7 @@ namespace ConsoleVersion.View
             }
         }
 
-        private string GetFramedAbscissa(FramedAbscissaView framedAbscissaView)
+        private string GetFramedAbscissa(FramedAbscissaPosition framedAbscissaView)
         {
             var framedAbscissaComponents = new List<string>()
             {
@@ -145,7 +145,7 @@ namespace ConsoleVersion.View
 
             var framedAbscissa = new StringBuilder();
 
-            if (framedAbscissaView == FramedAbscissaView.FrameOver)
+            if (framedAbscissaView == FramedAbscissaPosition.FrameOver)
             {
                 framedAbscissaComponents.Reverse();
             }
@@ -163,7 +163,7 @@ namespace ConsoleVersion.View
             return currentIndex >= 10;
         }
 
-        private enum FramedAbscissaView
+        private enum FramedAbscissaPosition
         {
             FrameOver,
             FrameUnder

@@ -11,7 +11,7 @@ using GraphLib.Graphs.Serialization.Interfaces;
 using GraphLib.Vertex.Infrastructure.Factories.Interfaces;
 using GraphViewModel.Interfaces;
 using System.Runtime.Serialization;
-using System.Runtime.Serialization.Formatters.Binary;
+using System.Runtime.Serialization.Formatters.Soap;
 using WPFVersion3D.Model;
 using WPFVersion3D.ViewModel;
 
@@ -32,7 +32,7 @@ namespace WPFVersion3D.Configure
             builder.RegisterType<GraphSerializer>().As<IGraphSerializer>().SingleInstance();
             builder.RegisterType<Vertex3DEventHolder>().As<IVertexEventHolder>().SingleInstance();
             builder.RegisterType<GraphField3DFactory>().As<BaseGraphFieldFactory>().SingleInstance();
-            builder.RegisterType<BinaryFormatter>().As<IFormatter>().SingleInstance();
+            builder.RegisterType<SoapFormatter>().As<IFormatter>().SingleInstance();
             builder.RegisterType<Vertex3DSerializationInfoConverter>().As<IVertexSerializationInfoConverter>().SingleInstance();
 
             return builder.Build();

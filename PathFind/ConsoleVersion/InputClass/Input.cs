@@ -1,4 +1,5 @@
 ﻿using Common.ValueRanges;
+using ConsoleVersion.Resource;
 using GraphLib.Coordinates;
 using System;
 
@@ -45,8 +46,8 @@ namespace ConsoleVersion.InputClass
         /// <returns>An instance of <see cref="Coordinate2D"/></returns>
         public static Coordinate2D InputPoint(int upperPossibleXValue, int upperPossibleYValue)
         {
-            int xCoordinate = InputNumber(ConsoleVersionResources.XCoordinateInputMsg, upperPossibleXValue);
-            int yCoordinate = InputNumber(ConsoleVersionResources.YCoordinateInputMsg, upperPossibleYValue);
+            int xCoordinate = InputNumber(Resources.XCoordinateInputMsg, upperPossibleXValue);
+            int yCoordinate = InputNumber(Resources.YCoordinateInputMsg, upperPossibleYValue);
 
             return new Coordinate2D(xCoordinate, yCoordinate);
         }

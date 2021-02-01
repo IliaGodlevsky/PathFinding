@@ -1,4 +1,5 @@
 ﻿using Algorithm.AlgorithmCreating;
+using ConsoleVersion.Resource;
 using ConsoleVersion.View.Interface;
 using ConsoleVersion.ViewModel;
 using System.Linq;
@@ -15,9 +16,9 @@ namespace ConsoleVersion.View
 
             model.AlgorithmKeys = AlgorithmFactory.AlgorithmsDescriptions.ToArray();
             var algorithmMenu = Menu.CreateMenu(model.AlgorithmKeys);
-            Model.AlgorithmKeyInputMessage = algorithmMenu + ConsoleVersionResources.ChooseAlrorithm;
-            Model.StartVertexInputMessage = "\n" + ConsoleVersionResources.StartVertexPointInputMsg;
-            Model.EndVertexInputMessage = ConsoleVersionResources.EndVertexCoordinateInputMsg;
+            Model.AlgorithmKeyInputMessage = algorithmMenu + Resources.ChooseAlrorithm;
+            Model.StartVertexInputMessage = "\n" + Resources.StartVertexPointInputMsg;
+            Model.EndVertexInputMessage = Resources.EndVertexCoordinateInputMsg;
         }
 
         public void Start()

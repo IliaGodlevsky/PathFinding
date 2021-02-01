@@ -1,12 +1,10 @@
-﻿using GraphLib.Extensions;
-using GraphLib.Graphs.Abstractions;
+﻿using GraphLib.Graphs.Abstractions;
 using GraphLib.Graphs.Factories.Interfaces;
 using GraphLib.Graphs.Serialization.Factories.Interfaces;
 using GraphLib.Graphs.Serialization.Infrastructure.Info.Collections;
 using GraphLib.Graphs.Serialization.Interfaces;
 using System;
 using System.IO;
-using System.Linq;
 using System.Runtime.Serialization;
 
 namespace GraphLib.Graphs.Serialization
@@ -29,20 +27,7 @@ namespace GraphLib.Graphs.Serialization
             try
             {
                 var verticesInfo = (GraphSerializationInfo)formatter.Deserialize(stream);
-                var dimensions = verticesInfo.DimensionsSizes.ToArray();
-
-                var graph = graphFactory.CreateGraph(dimensions);
-
-                for (int i = 0; i < verticesInfo.Count(); i++)
-                {
-                    var vertexInfo = verticesInfo.ElementAt(i);
-                    graph[i] = infoConverter.ConvertFrom(vertexInfo);
-                }
-
-                graph.ConnectVertices();
-
-                return graph;
-
+                return GraphAssembler.AssembleGraph(verticesInfo, graphFactory, infoConverter);
             }
             catch (Exception ex)
             {

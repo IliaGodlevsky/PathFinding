@@ -1,4 +1,5 @@
 ﻿using ConsoleVersion.InputClass;
+using ConsoleVersion.Resource;
 using ConsoleVersion.View.Interface;
 using ConsoleVersion.ViewModel;
 using GraphLib.Coordinates;
@@ -65,7 +66,7 @@ namespace ConsoleVersion.View
             mainModel.DisplayGraph();
             Console.WriteLine(menu);
             int option = Input.InputNumber(
-                ConsoleVersionResources.OptionInputMsg,
+                Resources.OptionInputMsg,
                 menuActions.Keys.Count, 1) - 1;
 
             return menuActions.Keys.ElementAt(option);

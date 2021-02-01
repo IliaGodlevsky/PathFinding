@@ -73,6 +73,7 @@
     <Compile Include="Graphs\Serialization\GraphSerializer.cs" />
     <Compile Include="Graphs\Serialization\Infrastructure\Info\Collections\GraphSerializationInfo.cs" />
     <Compile Include="Graphs\Serialization\Infrastructure\Info\VertexSerializationInfo.cs" />
+    <Compile Include="Graphs\Serialization\GraphAssembler.cs" />
     <Compile Include="Graphs\Serialization\Interfaces\IGraphSerializer.cs" />
     <Compile Include="Graphs\NullGraph.cs" />
     <Compile Include="Graphs\Infrastructure\GraphPath.cs" />

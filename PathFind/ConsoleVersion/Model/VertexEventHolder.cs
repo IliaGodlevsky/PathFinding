@@ -1,5 +1,6 @@
 ﻿using Common.ValueRanges;
 using ConsoleVersion.InputClass;
+using ConsoleVersion.Resource;
 using GraphLib.EventHolder;
 using GraphLib.Vertex.Cost;
 using GraphLib.Vertex.Interface;
@@ -15,7 +16,7 @@ namespace ConsoleVersion.Model
 
             if (!vertex.IsObstacle)
             {
-                var cost = Input.InputNumber(ConsoleVersionResources.VertexCostInputMsg, Range.VertexCostRange);
+                var cost = Input.InputNumber(Resources.VertexCostInputMsg, Range.VertexCostRange);
 
                 vertex.Cost = new VertexCost(cost);
             }
