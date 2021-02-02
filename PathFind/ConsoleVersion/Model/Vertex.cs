@@ -46,7 +46,8 @@ namespace ConsoleVersion.Model
             set
             {
                 cost = value;
-                Text = cost.ToString(UnweightedSign);
+                cost.UnweightedCostView = "#";
+                Text = cost.ToString();
             }
         }
 
@@ -122,13 +123,13 @@ namespace ConsoleVersion.Model
         public void MakeUnweighted()
         {
             cost.MakeUnWeighted();
-            Text = cost.ToString(UnweightedSign);
+            Text = cost.ToString();
         }
 
         public void MakeWeighted()
         {
             cost.MakeWeighted();
-            Text = cost.ToString(UnweightedSign);
+            Text = cost.ToString();
         }
 
         public void ColorizeVertex()

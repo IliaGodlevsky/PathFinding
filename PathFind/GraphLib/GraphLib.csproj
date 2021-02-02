@@ -78,6 +78,9 @@
     <Compile Include="Graphs\Infrastructure\GraphPath.cs" />
     <Compile Include="Graphs\Serialization\Interfaces\IPathInput.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Vertex\Cost\CostStates\Interfaces\ICostState.cs" />
+    <Compile Include="Vertex\Cost\CostStates\UnweightedState.cs" />
+    <Compile Include="Vertex\Cost\CostStates\WeightedState.cs" />
     <Compile Include="Vertex\Cost\VertexCost.cs" />
     <Compile Include="Vertex\Infrastructure\EventHolder\BaseVertexEventHolder.cs" />
     <Compile Include="Vertex\Infrastructure\EventHolder\Interface\IVertexEventHolder.cs" />
