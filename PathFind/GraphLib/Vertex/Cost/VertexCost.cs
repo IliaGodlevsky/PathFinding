@@ -57,6 +57,21 @@ namespace GraphLib.Vertex.Cost
             Status = new UnweightedState();
         }
 
+        public override bool Equals(object obj)
+        {
+            if (obj is VertexCost cost)
+            {
+                return cost.CurrentCost == CurrentCost;
+            }
+
+            throw new ArgumentException("Can't compare objects");
+        }
+
+        public override int GetHashCode()
+        {
+            return CurrentCost.GetHashCode();
+        }
+
         /// <summary>
         /// Returns a string representation 
         /// of <see cref="VertexCost"/>
