@@ -42,7 +42,7 @@ namespace GraphLib.Graphs.Factories
             try
             {
                 var graph = graphFactory.CreateGraph(graphDimensionsSizes);
-                graph.ForEach(index => AssembleVertex(graph, index, graphDimensionsSizes, obstaclePercent));
+                graph.ForEachIndex(index => AssembleVertex(graph, index, graphDimensionsSizes, obstaclePercent));
                 graph.ConnectVertices();
                 return graph;
             }

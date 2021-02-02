@@ -146,8 +146,14 @@ namespace GraphLib.Extensions
 
         private static bool CanBeNeighbourOf(this IVertex self, IVertex vertex)
         {
-            return !self.IsObstacle && !ReferenceEquals(vertex, self)
-                && !vertex.Neighbours.Contains(self);
+            return !self.IsObstacle 
+                && !ReferenceEquals(vertex, self)
+                && !self.IsNeighbourOf(vertex);
+        }
+
+        private static bool IsNeighbourOf(this IVertex self, IVertex vertex)
+        {
+            return vertex.Neighbours.Contains(self);
         }
     }
 }

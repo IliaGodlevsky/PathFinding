@@ -1,4 +1,5 @@
-﻿using GraphLib.Coordinates.Abstractions;
+﻿using Common.Extensions;
+using GraphLib.Coordinates.Abstractions;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -16,6 +17,7 @@ namespace GraphLib.Coordinates.Infrastructure
             selfCoordinatesValues = coordinate.CoordinatesValues.ToArray();
             currentCoordinatesValues = new int[selfCoordinatesValues.Length];
             limitDepth = selfCoordinatesValues.Length;
+            LateralNeighbourCoordinatesOffsets = new[] { -1, 0, 1 };
         }
 
         /// <summary>
@@ -31,31 +33,30 @@ namespace GraphLib.Coordinates.Infrastructure
         // Recursive method
         private void FormEnvironment(int depth = 0)
         {
-            foreach (var coordinate in GetNeighbourCoordinates(depth))
+            LateralNeighbourCoordinatesOffsets
+                .Select(i => selfCoordinatesValues[depth] + i)
+                .ForEach(coordinate => TryMoveDeeper(depth, coordinate));
+        }
+
+        private bool TryMoveDeeper(int depth, int coordinate)
+        {
+            bool canMoveDeeper = depth < limitDepth - 1;
+            currentCoordinatesValues[depth] = coordinate;
+
+            if (canMoveDeeper)
             {
-                currentCoordinatesValues[depth] = coordinate;
-                if (CanMoveDeeper(depth))
-                {
-                    FormEnvironment(depth + 1);
-                }
-                else if (!selfCoordinatesValues
-                    .SequenceEqual(currentCoordinatesValues))
-                {
-                    environment.Add(currentCoordinatesValues.ToArray());
-                }
+                FormEnvironment(depth + 1);
             }
+            else if (!selfCoordinatesValues
+                .SequenceEqual(currentCoordinatesValues))
+            {
+                environment.Add(currentCoordinatesValues.ToArray());
+            }
+
+            return canMoveDeeper;
         }
 
-        private IEnumerable<int> GetNeighbourCoordinates(int depth)
-        {
-            for (int i = -1; i <= 1; i++)
-                yield return selfCoordinatesValues[depth] + i;
-        }
-
-        private bool CanMoveDeeper(int depth)
-        {
-            return depth < limitDepth - 1;
-        }
+        private readonly int[] LateralNeighbourCoordinatesOffsets;
 
         private readonly int[] currentCoordinatesValues;
         private readonly int[] selfCoordinatesValues;

@@ -66,16 +66,6 @@ namespace Common.Extensions
             return collection;
         }
 
-        public static IEnumerable<T> ForEach<T>(this IEnumerable<T> collection, Action<int> action)
-        {
-            for (int i = 0; i < collection.Count(); i++)
-            {
-                action(i);
-            }
-
-            return collection;
-        }
-
         public static IEnumerable<T> ForEach<T>(this IEnumerable<T> collection, Action<T, int> action)
         {
             for (int i = 0; i < collection.Count(); i++)

@@ -98,17 +98,17 @@ namespace WPFVersion3D.ViewModel
 
         public void StretchAlongXAxis(object sender, RoutedPropertyChangedEventArgs<double> e)
         {
-            (graphField as GraphField3D).StretchAlongAxis(Axis.Abscissa, e.NewValue, 1, 0, 0);
+            (GraphField as GraphField3D).StretchAlongAxis(Axis.Abscissa, e.NewValue, 1, 0, 0);
         }
 
         public void StretchAlongYAxis(object sender, RoutedPropertyChangedEventArgs<double> e)
         {
-            (graphField as GraphField3D).StretchAlongAxis(Axis.Ordinate, e.NewValue, 0, 1, 0);
+            (GraphField as GraphField3D).StretchAlongAxis(Axis.Ordinate, e.NewValue, 0, 1, 0);
         }
 
         public void StretchAlongZAxis(object sender, RoutedPropertyChangedEventArgs<double> e)
         {
-            (graphField as GraphField3D).StretchAlongAxis(Axis.Applicate, e.NewValue, 0, 0, 1);
+            (GraphField as GraphField3D).StretchAlongAxis(Axis.Applicate, e.NewValue, 0, 0, 1);
         }
 
         private void ChangeVerticesOpacity()
