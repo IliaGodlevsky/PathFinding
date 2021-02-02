@@ -1,5 +1,4 @@
-﻿using GraphLib.Vertex.Infrastructure.Factories.Interfaces;
-using GraphLib.Vertex.Interface;
+﻿using GraphLib.Interface;
 
 namespace WindowsFormsVersion.Model
 {

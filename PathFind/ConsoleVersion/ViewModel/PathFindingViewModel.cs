@@ -1,12 +1,12 @@
 ﻿using Algorithm.AlgorithmCreating;
-using Common.ValueRanges;
+using Common;
 using ConsoleVersion.InputClass;
 using ConsoleVersion.Model;
 using ConsoleVersion.Resource;
 using ConsoleVersion.View;
-using GraphLib.Coordinates;
 using GraphLib.Extensions;
 using GraphLib.Graphs;
+using GraphLib.NullObjects;
 using GraphLib.ViewModel;
 using GraphViewModel.Interfaces;
 using System;

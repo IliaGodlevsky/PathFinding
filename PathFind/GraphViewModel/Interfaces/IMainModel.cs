@@ -1,5 +1,4 @@
-﻿using GraphLib.GraphField;
-using GraphLib.Graphs.Abstractions;
+﻿using GraphLib.Interface;
 
 namespace GraphViewModel.Interfaces
 {

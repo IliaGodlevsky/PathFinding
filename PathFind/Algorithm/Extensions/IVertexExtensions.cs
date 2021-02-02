@@ -1,5 +1,5 @@
 ﻿using Common.Extensions;
-using GraphLib.Vertex.Interface;
+using GraphLib.Interface;
 using System;
 using System.Linq;
 

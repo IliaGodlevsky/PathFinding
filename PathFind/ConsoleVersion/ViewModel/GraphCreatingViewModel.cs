@@ -1,7 +1,7 @@
-﻿using Common.ValueRanges;
+﻿using Common;
 using ConsoleVersion.InputClass;
 using ConsoleVersion.View;
-using GraphLib.Graphs.Factories.Interfaces;
+using GraphLib.Interface;
 using GraphLib.ViewModel;
 using GraphViewModel.Interfaces;
 using System;

@@ -1,9 +1,7 @@
 ﻿using Algorithm.Algorithms;
 using Algorithm.PathFindingAlgorithms;
-using GraphLib.Coordinates.Infrastructure.Factories;
-using GraphLib.Graphs.Abstractions;
-using GraphLib.Graphs.Factories;
-using GraphLib.Graphs.Factories.Interfaces;
+using GraphLib.Factories;
+using GraphLib.Interface;
 using NUnit.Framework;
 using System.Collections;
 using System.Linq;

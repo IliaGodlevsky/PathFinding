@@ -1,7 +1,6 @@
-﻿using GraphLib.GraphField;
-using GraphLib.GraphFieldCreating;
+﻿using GraphLib.Base;
 using GraphLib.Graphs;
-using GraphLib.Graphs.Abstractions;
+using GraphLib.Interface;
 
 namespace WPFVersion3D.Model
 {

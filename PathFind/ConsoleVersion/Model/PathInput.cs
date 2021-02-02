@@ -1,4 +1,4 @@
-﻿using GraphLib.Graphs.Serialization.Interfaces;
+﻿using GraphLib.Interface;
 using System;
 
 namespace ConsoleVersion.Model

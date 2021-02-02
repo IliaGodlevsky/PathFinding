@@ -1,5 +1,5 @@
-﻿using GraphLib.Vertex;
-using GraphLib.Vertex.Interface;
+﻿using GraphLib.Interface;
+using GraphLib.NullObjects;
 using System;
 using System.Collections.Generic;
 

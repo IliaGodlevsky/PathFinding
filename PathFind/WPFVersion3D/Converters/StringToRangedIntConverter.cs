@@ -1,4 +1,4 @@
-﻿using Common.ValueRanges;
+﻿using Common;
 using System;
 using System.Globalization;
 using System.Windows.Data;

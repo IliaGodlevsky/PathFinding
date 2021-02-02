@@ -44,7 +44,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AlgorithmCreating\AlgorithmFactory.cs" />
+    <Compile Include="Factories\AlgorithmFactory.cs" />
     <Compile Include="Attributes\FilterableAttribute.cs" />
     <Compile Include="EventArguments\AlgorithmEventArgs.cs" />
     <Compile Include="Extensions\IVertexExtensions.cs" />
@@ -61,13 +61,13 @@
     <Compile Include="Algorithms\DepthFirstAlgorithm.cs" />
     <Compile Include="Algorithms\DijkstraAlgorithm.cs" />
     <Compile Include="Algorithms\DistanceGreedyAlgoritm.cs" />
-    <Compile Include="Algorithms\Abstractions\BaseAlgorithm.cs" />
-    <Compile Include="Algorithms\Abstractions\IAlgorithm.cs" />
+    <Compile Include="Base\BaseAlgorithm.cs" />
+    <Compile Include="Interface\IAlgorithm.cs" />
     <Compile Include="Algorithms\LeeAlgorithm.cs" />
-    <Compile Include="Algorithms\Abstractions\DefaultAlgorithm.cs" />
+    <Compile Include="NullObjects\DefaultAlgorithm.cs" />
     <Compile Include="Extensions\TypeExtensions.cs" />
-    <Compile Include="Intermitting\Interface\IIntermit.cs" />
-    <Compile Include="Intermitting\AlgorithmIntermit.cs" />
+    <Compile Include="Interface\IIntermit.cs" />
+    <Compile Include="AlgorithmIntermit.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -80,5 +80,6 @@
       <Name>GraphLib</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

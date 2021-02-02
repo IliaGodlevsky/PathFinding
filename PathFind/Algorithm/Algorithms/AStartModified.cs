@@ -1,8 +1,6 @@
-﻿using Common.ValueRanges;
-using GraphLib.Graphs;
-using GraphLib.Graphs.Abstractions;
-using GraphLib.Vertex;
-using GraphLib.Vertex.Interface;
+﻿using Common;
+using GraphLib.Interface;
+using GraphLib.NullObjects;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;

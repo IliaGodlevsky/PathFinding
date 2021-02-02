@@ -1,5 +1,5 @@
-﻿using Common.ValueRanges;
-using GraphLib.Graphs.Factories.Interfaces;
+﻿using Common;
+using GraphLib.Interface;
 using GraphViewModel.Interfaces;
 
 namespace GraphLib.ViewModel

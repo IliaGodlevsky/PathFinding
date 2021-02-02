@@ -1,6 +1,6 @@
 ﻿using Algorithm.Extensions;
 using Algorithm.Tests.TestsInfrastructure;
-using GraphLib.Vertex.Interface;
+using GraphLib.Interface;
 using NUnit.Framework;
 using System;
 using System.Collections.Generic;

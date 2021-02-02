@@ -1,5 +1,5 @@
-﻿using GraphLib.Coordinates;
-using GraphLib.Coordinates.Abstractions;
+﻿using GraphLib.Interface;
+using GraphLib.NullObjects;
 using NUnit.Framework;
 using System;
 

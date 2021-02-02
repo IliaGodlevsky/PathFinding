@@ -1,6 +1,6 @@
 ﻿using Algorithm.AlgorithmCreating;
+using Common;
 using Common.Interfaces;
-using Common.ValueRanges;
 using GraphLib.ViewModel;
 using GraphViewModel.Interfaces;
 using System;

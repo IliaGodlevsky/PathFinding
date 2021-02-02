@@ -1,6 +1,6 @@
 ﻿using Common.Extensions;
 using Common.Interfaces;
-using GraphLib.Vertex.Interface;
+using GraphLib.Interface;
 using GraphViewModel.Interfaces;
 using System;
 using System.Configuration;

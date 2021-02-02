@@ -1,5 +1,5 @@
 ﻿using GraphLib.Graphs;
-using GraphLib.Graphs.Abstractions;
+using GraphLib.Interface;
 using System;
 using System.Configuration;
 using System.Windows;

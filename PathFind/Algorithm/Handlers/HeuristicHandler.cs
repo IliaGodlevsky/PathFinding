@@ -1,4 +1,4 @@
-﻿using GraphLib.Vertex.Interface;
+﻿using GraphLib.Interface;
 
 namespace Algorithm.Handlers
 {

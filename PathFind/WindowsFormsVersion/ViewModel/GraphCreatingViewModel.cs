@@ -1,6 +1,6 @@
-﻿using Common.Interfaces;
-using Common.ValueRanges;
-using GraphLib.Graphs.Factories.Interfaces;
+﻿using Common;
+using Common.Interfaces;
+using GraphLib.Interface;
 using GraphLib.ViewModel;
 using GraphViewModel.Interfaces;
 using System;

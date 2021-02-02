@@ -1,10 +1,11 @@
-﻿using GraphLib.GraphField;
+﻿using GraphLib.Base;
+using GraphLib.Interface;
 using System.Drawing;
 using WindowsFormsVersion.View;
 
 namespace WindowsFormsVersion.Model
 {
-    internal class GraphFieldFactory : GraphLib.GraphFieldCreating.BaseGraphFieldFactory
+    internal class GraphFieldFactory : BaseGraphFieldFactory
     {
         protected override IGraphField GetField()
         {

@@ -1,11 +1,11 @@
-﻿using Algorithm.AlgorithmCreating;
+﻿using Algorithm;
+using Algorithm.AlgorithmCreating;
 using Algorithm.EventArguments;
-using Algorithm.Intermitting;
-using Algorithm.Intermitting.Interface;
+using Algorithm.Interface;
+using Common;
 using Common.Extensions;
-using Common.ValueRanges;
 using GraphLib.Extensions;
-using GraphLib.Graphs.Infrastructure;
+using GraphLib.Infrastructure;
 using GraphViewModel.Interfaces;
 using GraphViewModel.Resources;
 using System;

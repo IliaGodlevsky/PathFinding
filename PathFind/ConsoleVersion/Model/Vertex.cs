@@ -1,10 +1,9 @@
 ﻿using ConsoleVersion.View;
-using GraphLib.Coordinates;
-using GraphLib.Coordinates.Abstractions;
 using GraphLib.Extensions;
-using GraphLib.Info;
+using GraphLib.Infrastructure;
+using GraphLib.Interface;
+using GraphLib.NullObjects;
 using GraphLib.Vertex.Cost;
-using GraphLib.Vertex.Interface;
 using System;
 using System.Collections.Generic;
 using System.Configuration;

@@ -1,12 +1,8 @@
-﻿using Common;
-using Common.Interfaces;
-using GraphLib.EventHolder.Interface;
+﻿using Common.Interfaces;
+using GraphLib.Base;
 using GraphLib.Extensions;
-using GraphLib.GraphField;
-using GraphLib.GraphFieldCreating;
 using GraphLib.Graphs;
-using GraphLib.Graphs.Factories.Interfaces;
-using GraphLib.Graphs.Serialization.Interfaces;
+using GraphLib.Interface;
 using GraphViewModel;
 using System;
 using System.ComponentModel;

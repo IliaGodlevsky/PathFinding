@@ -1,8 +1,8 @@
-﻿using Algorithm.Algorithms.Abstractions;
+﻿using Algorithm.Interface;
 using Algorithm.Tests.TestsInfrastructure;
-using GraphLib.Graphs;
-using GraphLib.Graphs.Abstractions;
-using GraphLib.Graphs.Infrastructure;
+using GraphLib.Infrastructure;
+using GraphLib.Interface;
+using GraphLib.NullObjects;
 using NUnit.Framework;
 
 namespace Algorithm.Tests.Tests.AlgorithmTesting

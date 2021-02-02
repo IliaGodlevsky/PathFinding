@@ -1,13 +1,12 @@
-﻿using GraphLib.Coordinates.Abstractions;
-using GraphLib.Extensions;
-using GraphLib.Info;
+﻿using GraphLib.Extensions;
+using GraphLib.Infrastructure;
+using GraphLib.Interface;
 using GraphLib.Vertex.Cost;
-using GraphLib.Vertex.Interface;
 using System.Collections.Generic;
 using System.Windows;
 using System.Windows.Media;
 using System.Windows.Media.Media3D;
-using WPFVersion3D.Factories; 
+using WPFVersion3D.Factories;
 
 namespace WPFVersion3D.Model
 {

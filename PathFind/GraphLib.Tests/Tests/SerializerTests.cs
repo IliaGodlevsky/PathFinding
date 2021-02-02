@@ -1,10 +1,8 @@
-﻿using GraphLib.Coordinates.Infrastructure.Factories;
-using GraphLib.Extensions;
-using GraphLib.Graphs;
-using GraphLib.Graphs.Abstractions;
-using GraphLib.Graphs.Factories;
-using GraphLib.Graphs.Factories.Interfaces;
-using GraphLib.Graphs.Serialization;
+﻿using GraphLib.Extensions;
+using GraphLib.Factories;
+using GraphLib.Interface;
+using GraphLib.NullObjects;
+using GraphLib.Serialization;
 using GraphLib.Tests.TestInfrastructure;
 using NUnit.Framework;
 using System.IO;

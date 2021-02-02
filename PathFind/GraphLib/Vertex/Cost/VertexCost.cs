@@ -1,4 +1,5 @@
-﻿using GraphLib.Vertex.Cost.CostStates;
+﻿using GraphLib.Interface;
+using GraphLib.Vertex.Cost.CostStates;
 using System;
 
 namespace GraphLib.Vertex.Cost

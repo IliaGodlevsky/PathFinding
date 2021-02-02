@@ -1,4 +1,4 @@
-﻿using GraphLib.GraphField;
+﻿using GraphLib.Interface;
 using System.Windows.Forms;
 
 namespace WindowsFormsVersion.Extensions

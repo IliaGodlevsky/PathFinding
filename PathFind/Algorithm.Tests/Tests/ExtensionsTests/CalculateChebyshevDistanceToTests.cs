@@ -1,6 +1,5 @@
 ﻿using Algorithm.Extensions;
-using GraphLib.Coordinates.Abstractions;
-using GraphLib.Vertex.Interface;
+using GraphLib.Interface;
 using Moq;
 using NUnit.Framework;
 using System;

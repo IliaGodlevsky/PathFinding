@@ -1,9 +1,8 @@
 ﻿using Algorithm.Algorithms;
 using Algorithm.Extensions;
 using Algorithm.Handlers;
-using GraphLib.Graphs;
-using GraphLib.Graphs.Abstractions;
-using GraphLib.Vertex.Interface;
+using GraphLib.Interface;
+using GraphLib.NullObjects;
 using System.ComponentModel;
 using System.Linq;
 

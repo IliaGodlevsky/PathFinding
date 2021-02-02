@@ -1,8 +1,7 @@
-﻿using GraphLib.Coordinates.Abstractions;
-using GraphLib.Extensions;
-using GraphLib.Info;
+﻿using GraphLib.Extensions;
+using GraphLib.Infrastructure;
+using GraphLib.Interface;
 using GraphLib.Vertex.Cost;
-using GraphLib.Vertex.Interface;
 using System.Collections.Generic;
 
 namespace GraphLib.Tests.TestInfrastructure

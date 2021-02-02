@@ -1,7 +1,5 @@
-﻿using GraphLib.Graphs;
-using GraphLib.Graphs.Abstractions;
-using GraphLib.Vertex;
-using GraphLib.Vertex.Interface;
+﻿using GraphLib.Interface;
+using GraphLib.NullObjects;
 using System;
 
 namespace Algorithm.EventArguments

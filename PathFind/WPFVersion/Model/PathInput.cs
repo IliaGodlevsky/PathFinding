@@ -1,4 +1,4 @@
-﻿using GraphLib.Graphs.Serialization.Interfaces;
+﻿using GraphLib.Interface;
 using Microsoft.Win32;
 
 namespace WPFVersion.Model

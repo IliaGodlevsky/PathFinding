@@ -1,11 +1,10 @@
-﻿using Algorithm.Algorithms.Abstractions;
+﻿using Algorithm.Base;
 using Algorithm.EventArguments;
 using Algorithm.Extensions;
 using Common.Extensions;
 using GraphLib.Extensions;
-using GraphLib.Graphs;
-using GraphLib.Graphs.Abstractions;
-using GraphLib.Vertex.Interface;
+using GraphLib.Interface;
+using GraphLib.NullObjects;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;

@@ -1,7 +1,5 @@
-﻿using Common;
-using GraphLib.Coordinates;
-using GraphLib.GraphField;
-using GraphLib.Vertex.Interface;
+﻿using GraphLib.Interface;
+using GraphLib.NullObjects;
 using System;
 using System.Configuration;
 using System.Drawing;

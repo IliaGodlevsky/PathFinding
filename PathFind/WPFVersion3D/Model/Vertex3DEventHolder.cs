@@ -1,5 +1,5 @@
-﻿using GraphLib.EventHolder;
-using GraphLib.Vertex.Interface;
+﻿using GraphLib.Base;
+using GraphLib.Interface;
 using System;
 
 namespace WPFVersion3D.Model

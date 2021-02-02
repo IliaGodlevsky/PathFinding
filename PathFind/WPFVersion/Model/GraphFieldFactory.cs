@@ -1,5 +1,5 @@
-﻿using GraphLib.GraphField;
-using GraphLib.GraphFieldCreating;
+﻿using GraphLib.Base;
+using GraphLib.Interface;
 
 namespace WPFVersion.Model
 {

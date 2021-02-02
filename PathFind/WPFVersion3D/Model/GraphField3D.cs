@@ -1,6 +1,5 @@
 ﻿using Common.Extensions;
-using GraphLib.GraphField;
-using GraphLib.Vertex.Interface;
+using GraphLib.Interface;
 using System.Linq;
 using System.Windows.Media.Media3D;
 using WPFVersion3D.Enums;

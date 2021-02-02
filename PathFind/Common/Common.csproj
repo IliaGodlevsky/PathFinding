@@ -53,11 +53,11 @@
     <Compile Include="Extensions\StringBuilderExtensions.cs" />
     <Compile Include="Extensions\TypeExtensions.cs" />
     <Compile Include="Interfaces\IDefault.cs" />
-    <Compile Include="Logger\InFileLogger.cs" />
-    <Compile Include="Logger\Interface\ILog.cs" />
+    <Compile Include="InFileLogger.cs" />
+    <Compile Include="Interfaces\ILog.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ValueRanges\Range.cs" />
-    <Compile Include="ValueRanges\ValueRange.cs" />
+    <Compile Include="ValueRange.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

@@ -1,6 +1,6 @@
-﻿using Common.ValueRanges;
+﻿using Common;
 using ConsoleVersion.Resource;
-using GraphLib.Coordinates;
+using GraphLib.NullObjects;
 using System;
 
 namespace ConsoleVersion.InputClass

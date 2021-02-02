@@ -1,5 +1,5 @@
-﻿using GraphLib.Coordinates.Abstractions;
-using GraphLib.Coordinates.Infrastructure;
+﻿using GraphLib.Infrastructure;
+using GraphLib.Interface;
 using Moq;
 using NUnit.Framework;
 using System.Linq;

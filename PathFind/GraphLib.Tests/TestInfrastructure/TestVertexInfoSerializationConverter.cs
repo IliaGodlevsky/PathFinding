@@ -1,6 +1,5 @@
-﻿using GraphLib.Graphs.Serialization.Factories.Interfaces;
-using GraphLib.Info;
-using GraphLib.Vertex.Interface;
+﻿using GraphLib.Infrastructure;
+using GraphLib.Interface;
 
 namespace GraphLib.Tests.TestInfrastructure
 {
