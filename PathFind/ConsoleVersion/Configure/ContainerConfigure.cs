@@ -20,7 +20,7 @@ namespace ConsoleVersion.Configure
         {
             var builder = new ContainerBuilder();
 
-            builder.RegisterType<Application>().As<IApplication>().InstancePerLifetimeScope();
+            builder.RegisterType<Application>().AsSelf().InstancePerLifetimeScope();
             builder.RegisterType<MainView>().As<IView>().InstancePerLifetimeScope();
             builder.RegisterType<MainViewModel>().As<IMainModel>().InstancePerLifetimeScope();
             builder.RegisterType<VertexFactory>().As<IVertexFactory>().SingleInstance();
@@ -32,7 +32,8 @@ namespace ConsoleVersion.Configure
             builder.RegisterType<VertexEventHolder>().As<IVertexEventHolder>().SingleInstance();
             builder.RegisterType<GraphFieldFactory>().As<BaseGraphFieldFactory>().SingleInstance();
             builder.RegisterType<BinaryFormatter>().As<IFormatter>().SingleInstance();
-            builder.RegisterType<VertexSerializationInfoConverter>().As<IVertexSerializationInfoConverter>().SingleInstance();
+            builder.RegisterType<VertexSerializationInfoConverter>()
+                .As<IVertexSerializationInfoConverter>().SingleInstance();
 
             return builder.Build();
         }

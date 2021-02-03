@@ -2,7 +2,7 @@
 
 namespace ConsoleVersion.App
 {
-    internal class Application : IApplication
+    internal class Application
     {
         public Application(IView mainView)
         {

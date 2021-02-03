@@ -12,7 +12,7 @@ namespace ConsoleVersion
 
             using (var scope = container.BeginLifetimeScope())
             {
-                var app = scope.Resolve<IApplication>();
+                var app = scope.Resolve<Application>();
                 app.Run();
             }
         }

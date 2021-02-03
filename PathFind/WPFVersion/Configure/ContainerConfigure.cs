@@ -28,7 +28,8 @@ namespace WPFVersion.Configure
             builder.RegisterType<VertexEventHolder>().As<IVertexEventHolder>().SingleInstance();
             builder.RegisterType<GraphFieldFactory>().As<BaseGraphFieldFactory>().SingleInstance();
             builder.RegisterType<BinaryFormatter>().As<IFormatter>().SingleInstance();
-            builder.RegisterType<VertexSerializationInfoConverter>().As<IVertexSerializationInfoConverter>().SingleInstance();
+            builder.RegisterType<VertexSerializationInfoConverter>()
+                .As<IVertexSerializationInfoConverter>().SingleInstance();
 
             return builder.Build();
         }
