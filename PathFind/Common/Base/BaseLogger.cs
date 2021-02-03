@@ -25,7 +25,7 @@ namespace Common.Base
             string targetSite = $"Target site: {ex.TargetSite.Name}";
             string hResult = $"HResult: {ex.HResult}";
 
-            string log = string.Join("\n", date, exceptionType, stackTrace,
+            string log = string.Join(separator: "\n", date, exceptionType, stackTrace,
                     message, source, targetSite, hResult);
 
             Log(log);
