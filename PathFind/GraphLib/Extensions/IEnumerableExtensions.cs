@@ -22,6 +22,11 @@ namespace GraphLib.Extensions
             return collection.Select((arr, i) => arr.Skip(i).Aggregate(func));
         }
 
+        public static T AggregateOrDefault<T>(this IEnumerable<T> collection, Func<T,T,T> func)
+        {
+            return collection.Any() ? collection.Aggregate(func) : default;
+        }
+
         internal static IEnumerable<T> ForEachIndex<T>(this IEnumerable<T> collection, Action<int> action)
         {
             for (int i = 0; i < collection.Count(); i++)

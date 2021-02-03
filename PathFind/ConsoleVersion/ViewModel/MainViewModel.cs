@@ -1,4 +1,5 @@
-﻿using ConsoleVersion.Attributes;
+﻿using Common;
+using ConsoleVersion.Attributes;
 using ConsoleVersion.Enums;
 using ConsoleVersion.InputClass;
 using ConsoleVersion.Model;
@@ -24,7 +25,8 @@ namespace ConsoleVersion.ViewModel
             IGraphAssembler graphFactory,
             IPathInput pathInput) : base(fieldFactory, eventHolder, graphSerializer, graphFactory, pathInput)
         {
-
+            graphFactory.OnExceptionCaught += OnExceptionCaught;
+            graphSerializer.OnExceptionCaught += OnExceptionCaught;
         }
 
         [MenuItem("Make unweighted")]
@@ -36,20 +38,35 @@ namespace ConsoleVersion.ViewModel
         [MenuItem("Create new graph", MenuItemPriority.Highest)]
         public override void CreateNewGraph()
         {
-            var model = new GraphCreatingViewModel(this, graphFiller);
-            var view = new GraphCreateView(model);
+            try
+            {
+                var model = new GraphCreatingViewModel(this, graphAssembler);
+                var view = new GraphCreateView(model);
 
-            view.Start();
+                view.Start();
+            }
+            catch(Exception ex)
+            {
+                Logger.Instance.Log(ex);
+            }
+            
         }
 
         [MenuItem("Find path", MenuItemPriority.High)]
         public override void FindPath()
         {
-            var model = new PathFindingViewModel(this);
-            model.OnPathNotFound += OnPathNotFound;
-            var view = new PathFindView(model);
+            try
+            {
+                var model = new PathFindingViewModel(this);
+                model.OnPathNotFound += OnPathNotFound;
+                var view = new PathFindView(model);
 
-            view.Start();
+                view.Start();
+            }
+            catch(Exception ex)
+            {
+                Logger.Instance.Log(ex);
+            }
         }
 
         [MenuItem("Reverse vertex")]
@@ -57,8 +74,9 @@ namespace ConsoleVersion.ViewModel
         {
             if (Graph.Any())
             {
-                var upperPossibleXValue = (Graph as Graph2D).Width - 1;
-                var upperPossibleYValue = (Graph as Graph2D).Length - 1;
+                var graph2D = Graph as Graph2D;
+                var upperPossibleXValue = graph2D.Width - 1;
+                var upperPossibleYValue = graph2D.Length - 1;
 
                 var point = Input.InputPoint(upperPossibleXValue, upperPossibleYValue);
 
@@ -72,7 +90,6 @@ namespace ConsoleVersion.ViewModel
             if (Graph.Any())
             {
                 var graph2D = Graph as Graph2D;
-
                 var upperPossibleXValue = graph2D.Width - 1;
                 var upperPossibleYValue = graph2D.Length - 1;
 
@@ -119,6 +136,12 @@ namespace ConsoleVersion.ViewModel
         {
             DisplayGraph();
             Console.WriteLine(message);
+            Console.ReadLine();
+        }
+
+        private void OnExceptionCaught(Exception ex)
+        {
+            Console.WriteLine(ex.Message);
             Console.ReadLine();
         }
     }

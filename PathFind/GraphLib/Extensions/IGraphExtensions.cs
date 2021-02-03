@@ -1,4 +1,5 @@
 ﻿using Common.Extensions;
+using GraphLib.Infrastructure;
 using GraphLib.Interface;
 using GraphLib.NullObjects;
 using System.Linq;
@@ -15,6 +16,31 @@ namespace GraphLib.Extensions
         {
             graph.RemoveExtremeVertices();
             graph.ForEach(vertex => vertex.Refresh());
+        }
+
+        public static int GetSize(this IGraph graph)
+        {
+            return graph.DimensionsSizes.AggregateOrDefault((x, y) => x * y);
+        }
+
+        public static int GetVisitedVerticesCount(this IGraph graph)
+        {
+            return graph.Count(vertex => vertex.IsVisited);
+        }
+
+        public static int GetObstaclesCount(this IGraph graph)
+        {
+            return graph.Count(vertex => vertex.IsObstacle);
+        }
+
+        public static int GetObstaclesPercent(this IGraph graph)
+        {
+            return graph.GetSize() == 0 ? 0 : graph.GetObstaclesCount() * 100 / graph.GetSize();
+        }
+
+        public static GraphSerializationInfo GetGraphSerializationInfo(this IGraph graph)
+        {
+            return new GraphSerializationInfo(graph);
         }
 
         internal static void RemoveExtremeVertices(this IGraph graph)
@@ -54,8 +80,8 @@ namespace GraphLib.Extensions
 
         public static bool IsEqual(this IGraph self, IGraph graph)
         {
-            bool hasEqualSizes = self.Size == graph.Size;
-            bool hasEqualNumberOfObstacles = graph.ObstacleNumber == self.ObstacleNumber;
+            bool hasEqualSizes = self.GetSize() == graph.GetSize();
+            bool hasEqualNumberOfObstacles = graph.GetObstaclesCount() == self.GetObstaclesCount();
             bool hasEqualVertices = self.Match(graph, (a, b) => a.IsEqual(b));
             return hasEqualSizes && hasEqualNumberOfObstacles && hasEqualVertices;
         }

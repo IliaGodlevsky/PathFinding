@@ -1,4 +1,5 @@
 ﻿using Autofac;
+using Common.Interfaces;
 using GraphLib.Base;
 using GraphLib.Factories;
 using GraphLib.Interface;

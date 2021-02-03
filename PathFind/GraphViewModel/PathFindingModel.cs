@@ -34,22 +34,29 @@ namespace GraphLib.ViewModel
 
         public virtual void FindPath()
         {
-            var algorithm = AlgorithmFactory.
-                CreateAlgorithm(AlgorithmKey);
+            try
+            {
+                var algorithm = AlgorithmFactory.
+                    CreateAlgorithm(AlgorithmKey);
 
-            algorithm.Graph = mainViewModel.Graph;
+                algorithm.Graph = mainViewModel.Graph;
 
-            intermitter = new AlgorithmIntermit(DelayTime);
+                intermitter = new AlgorithmIntermit(DelayTime);
 
-            algorithm.OnVertexEnqueued += OnVertexEnqueued;
-            algorithm.OnVertexVisited += OnVertexVisited;
-            algorithm.OnFinished += OnAlgorithmFinished;
-            algorithm.OnStarted += OnAlgorithmStarted;
+                algorithm.OnVertexEnqueued += OnVertexEnqueued;
+                algorithm.OnVertexVisited += OnVertexVisited;
+                algorithm.OnFinished += OnAlgorithmFinished;
+                algorithm.OnStarted += OnAlgorithmStarted;
 
-            algorithm.FindPath();
-            algorithm.Reset();
+                algorithm.FindPath();
+                algorithm.Reset();
 
-            OnPathNotFound = null;
+                OnPathNotFound = null;
+            }
+            catch (Exception ex)
+            {
+                Logger.Instance.Log(ex);
+            }
         }
 
         protected abstract void OnAlgorithmIntermitted();
@@ -64,7 +71,7 @@ namespace GraphLib.ViewModel
                 }
 
                 mainViewModel.PathFindingStatistics = GetIntermediateStatistics(timer,
-                    steps: 0, pathLength: 0, args.Graph.NumberOfVisitedVertices);
+                    steps: 0, pathLength: 0, args.Graph.GetVisitedVerticesCount());
 
                 intermitter.Intermit();
                 OnAlgorithmIntermitted();
@@ -91,7 +98,7 @@ namespace GraphLib.ViewModel
                 var path = new GraphPath(args.Graph);
 
                 mainViewModel.PathFindingStatistics = GetIntermediateStatistics(timer,
-                    path.PathLength, path.PathCost, args.Graph.NumberOfVisitedVertices);
+                    path.PathLength, path.PathCost, args.Graph.GetVisitedVerticesCount());
 
                 if (path.IsExtracted)
                 {

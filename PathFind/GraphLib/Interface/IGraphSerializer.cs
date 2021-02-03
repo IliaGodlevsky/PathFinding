@@ -5,7 +5,7 @@ namespace GraphLib.Interface
 {
     public interface IGraphSerializer
     {
-        event Action<string> OnExceptionCaught;
+        event Action<Exception> OnExceptionCaught;
 
         void SaveGraph(IGraph graph, Stream stream);
 

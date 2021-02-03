@@ -1,9 +1,11 @@
-﻿using GraphLib.Base;
+﻿using Common;
+using GraphLib.Base;
 using GraphLib.Extensions;
 using GraphLib.Interface;
 using GraphLib.NullObjects;
 using GraphViewModel.Interfaces;
 using GraphViewModel.Resources;
+using System;
 using System.IO;
 
 namespace GraphViewModel
@@ -18,17 +20,16 @@ namespace GraphViewModel
 
         public virtual IGraph Graph { get; protected set; }
 
-
         public MainModel(BaseGraphFieldFactory fieldFactory,
             IVertexEventHolder eventHolder,
             IGraphSerializer graphSerializer,
-            IGraphAssembler graphFiller,
+            IGraphAssembler graphAssembler,
             IPathInput pathInput)
         {
             this.eventHolder = eventHolder;
             serializer = graphSerializer;
             this.fieldFactory = fieldFactory;
-            this.graphFiller = graphFiller;
+            this.graphAssembler = graphAssembler;
             this.pathInput = pathInput;
 
             Graph = new NullGraph();
@@ -45,7 +46,10 @@ namespace GraphViewModel
                     serializer.SaveGraph(Graph, stream);
                 }
             }
-            catch { }
+            catch (Exception ex)
+            {
+                Logger.Instance.Log(ex);
+            }
         }
 
         public virtual void LoadGraph()
@@ -59,7 +63,10 @@ namespace GraphViewModel
                     ConnectNewGraph(newGraph);
                 }
             }
-            catch { }
+            catch (Exception ex)
+            {
+                Logger.Instance.Log(ex);
+            }
         }
 
         public abstract void FindPath();
@@ -77,6 +84,7 @@ namespace GraphViewModel
         {
             if (!graph.IsDefault)
             {
+                eventHolder.UnsubscribeVertices();
                 Graph = graph;
                 GraphField = fieldFactory.CreateGraphField(Graph);
                 eventHolder.Graph = Graph;
@@ -87,7 +95,7 @@ namespace GraphViewModel
         }
 
         protected string graphParamFormat;
-        protected readonly IGraphAssembler graphFiller;
+        protected readonly IGraphAssembler graphAssembler;
         private readonly IVertexEventHolder eventHolder;
         private readonly IGraphSerializer serializer;
         private readonly BaseGraphFieldFactory fieldFactory;

@@ -58,9 +58,14 @@ namespace GraphLib.Base
             }
         }
 
+        public void UnsubscribeVertices()
+        {
+            Graph?.AsParallel().ForAll(UnsubscribeFromEvents);
+        }
+
         public void SubscribeVertices()
         {
-            Graph.AsParallel().ForAll(SubscribeToEvents);
+            Graph?.AsParallel().ForAll(SubscribeToEvents);
         }
 
         public virtual void ChooseExtremeVertices(object sender, EventArgs e)
@@ -77,6 +82,8 @@ namespace GraphLib.Base
                 }
             }
         }
+
+        protected abstract void UnsubscribeFromEvents(IVertex vertex);
 
         protected abstract void SubscribeToEvents(IVertex vertex);
 
@@ -110,5 +117,7 @@ namespace GraphLib.Base
         {
             return !Graph.End.IsDefault;
         }
+
+
     }
 }

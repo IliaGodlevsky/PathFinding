@@ -33,5 +33,12 @@ namespace ConsoleVersion.Model
             (vertex as Vertex).OnExtremeVertexChosen += ChooseExtremeVertices;
             (vertex as Vertex).OnReverse += Reverse;
         }
+
+        protected override void UnsubscribeFromEvents(IVertex vertex)
+        {
+            (vertex as Vertex).OnCostChanged -= ChangeVertexCost;
+            (vertex as Vertex).OnExtremeVertexChosen -= ChooseExtremeVertices;
+            (vertex as Vertex).OnReverse -= Reverse;
+        }
     }
 }

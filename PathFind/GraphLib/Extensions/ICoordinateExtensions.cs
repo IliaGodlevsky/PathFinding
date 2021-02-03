@@ -29,7 +29,7 @@ namespace GraphLib.Extensions
             if (self.CoordinatesValues.Count() != dimensions.Length)
             {
                 throw new ArgumentException("Dimensions length must be " +
-                    "equals to the number of coordinate values");
+                    "equals to the number of coordinate values", nameof(dimensions));
             }
 
             if (!self.CoordinatesValues.Match(dimensions, (a, b) => a < b))

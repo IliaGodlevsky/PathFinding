@@ -38,5 +38,15 @@ namespace WindowsFormsVersion.EventHolder
                 base.ChooseExtremeVertices(sender, e);
             }
         }
+
+        protected override void UnsubscribeFromEvents(IVertex vertex)
+        {
+            if (vertex.IsDefault)
+                return;
+
+            (vertex as Vertex).MouseClick -= ChooseExtremeVertices;
+            (vertex as Vertex).MouseClick -= Reverse;
+            (vertex as Vertex).MouseWheel -= ChangeVertexCost;
+        }
     }
 }

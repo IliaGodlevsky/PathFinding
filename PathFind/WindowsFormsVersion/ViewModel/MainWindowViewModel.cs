@@ -1,4 +1,5 @@
-﻿using Common.Interfaces;
+﻿using Common;
+using Common.Interfaces;
 using GraphLib.Base;
 using GraphLib.Extensions;
 using GraphLib.Graphs;
@@ -64,7 +65,8 @@ namespace WindowsFormsVersion.ViewModel
             IGraphAssembler graphFactory, 
             IPathInput pathInput) : base(fieldFactory, eventHolder, graphSerializer, graphFactory, pathInput)
         {
-
+            graphSerializer.OnExceptionCaught += exception => MessageBox.Show(exception.Message);
+            graphFactory.OnExceptionCaught += exception => MessageBox.Show(exception.Message);
         }
 
         public override void FindPath()
@@ -72,19 +74,35 @@ namespace WindowsFormsVersion.ViewModel
             if (!CanStartPathFinding())
                 return;
 
-            var model = new PathFindingViewModel(this);
-            model.OnPathNotFound += OnPathNotFound;
-            var form = new PathFindingWindow(model);
+            try
+            {
+                var model = new PathFindingViewModel(this);
+                model.OnPathNotFound += message => MessageBox.Show(message);
+                var form = new PathFindingWindow(model);
 
-            PrepareWindow(model, form);
+                PrepareWindow(model, form);
+            }
+            catch (Exception ex)
+            {
+                Logger.Instance.Log(ex);
+            }
+
         }
 
         public override void CreateNewGraph()
         {
-            var model = new GraphCreatingViewModel(this, graphFiller);
-            var form = new GraphCreatingWindow(model);
+            try
+            {
+                var model = new GraphCreatingViewModel(this, graphAssembler);
+                var form = new GraphCreatingWindow(model);
 
-            PrepareWindow(model, form);
+                PrepareWindow(model, form);
+            }
+            catch (Exception ex)
+            {
+                Logger.Instance.Log(ex);
+            }
+
         }
 
         public void Dispose()
@@ -145,11 +163,6 @@ namespace WindowsFormsVersion.ViewModel
         private bool CanStartPathFinding()
         {
             return Graph.IsReadyForPathfinding();
-        }
-
-        private void OnPathNotFound(string message)
-        {
-            MessageBox.Show(message);
         }
     }
 }

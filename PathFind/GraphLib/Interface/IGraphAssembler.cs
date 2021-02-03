@@ -4,7 +4,7 @@ namespace GraphLib.Interface
 {
     public interface IGraphAssembler
     {
-        event Action<string> OnExceptionCaught;
+        event Action<Exception> OnExceptionCaught;
 
         IGraph AssembleGraph(int obstaclePercent, params int[] graphDimensionSizes);
     }

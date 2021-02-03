@@ -13,5 +13,7 @@ namespace GraphLib.Interface
         void ChangeVertexCost(object sender, EventArgs e);
 
         void SubscribeVertices();
+
+        void UnsubscribeVertices();
     }
 }

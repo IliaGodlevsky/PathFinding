@@ -44,6 +44,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Base\BaseLogger.cs" />
     <Compile Include="Interfaces\IViewModel.cs" />
     <Compile Include="ObjectActivator.cs" />
     <Compile Include="Extensions\EnumExtensions.cs" />
@@ -53,7 +54,7 @@
     <Compile Include="Extensions\StringBuilderExtensions.cs" />
     <Compile Include="Extensions\TypeExtensions.cs" />
     <Compile Include="Interfaces\IDefault.cs" />
-    <Compile Include="InFileLogger.cs" />
+    <Compile Include="Logging\Logger.cs" />
     <Compile Include="Interfaces\ILog.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ValueRanges\Range.cs" />

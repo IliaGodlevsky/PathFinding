@@ -129,17 +129,12 @@ namespace GraphLib.Extensions
 
             if (!self.IsObstacle)
             {
-                self.GetEnvironment(graph)
+                self.Position.Environment
+                    .Where(coordinate => coordinate.IsWithinGraph(graph))
+                    .Select(coordinate => graph[coordinate])
                     .Where(vertex => vertex.CanBeNeighbourOf(self))
-                    .ForEach(vertex => self.Neighbours.Add(vertex));
+                    .ForEach(self.Neighbours.Add);
             }
-        }
-
-        private static IEnumerable<IVertex> GetEnvironment(this IVertex self, IGraph graph)
-        {
-            return self.Position.Environment
-                .Where(coordinate => coordinate.IsWithinGraph(graph))
-                .Select(coordinate => graph[coordinate]);
         }
 
         private static bool CanBeNeighbourOf(this IVertex self, IVertex vertex)

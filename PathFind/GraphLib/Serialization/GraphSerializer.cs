@@ -2,7 +2,6 @@
 using GraphLib.Extensions;
 using GraphLib.Infrastructure;
 using GraphLib.Interface;
-using GraphLib.NullObjects;
 using System;
 using System.IO;
 using System.Linq;
@@ -12,7 +11,7 @@ namespace GraphLib.Serialization
 {
     public class GraphSerializer : IGraphSerializer
     {
-        public event Action<string> OnExceptionCaught;
+        public event Action<Exception> OnExceptionCaught;
 
         public GraphSerializer(IFormatter formatter,
             IVertexSerializationInfoConverter infoConverter,
@@ -23,6 +22,13 @@ namespace GraphLib.Serialization
             this.graphFactory = graphFactory;
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="stream"></param>
+        /// <returns></returns>
+        /// <exception cref="SerializationException"></exception>
+        /// <exception cref="System.Security.SecurityException"></exception>
         public IGraph LoadGraph(Stream stream)
         {
             try
@@ -34,23 +40,32 @@ namespace GraphLib.Serialization
                 graph.ConnectVertices();
                 return graph;
             }
-            catch (Exception ex)
+            catch(Exception ex)
             {
-                OnExceptionCaught?.Invoke(ex.Message);
-                return new NullGraph();
+                OnExceptionCaught?.Invoke(ex);
+                throw ex;
             }
+
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="stream"></param>
+        /// <returns></returns>
+        /// <exception cref="SerializationException"></exception>
+        /// <exception cref="System.Security.SecurityException"></exception>
         public void SaveGraph(IGraph graph, Stream stream)
         {
             try
             {
-                formatter.Serialize(stream, graph.SerializationInfo);
+                formatter.Serialize(stream, graph.GetGraphSerializationInfo());
             }
-            catch (Exception ex)
+            catch(Exception ex)
             {
-                OnExceptionCaught?.Invoke(ex.Message);
-            }
+                OnExceptionCaught?.Invoke(ex);
+                throw ex;
+            }           
         }
 
         private readonly IFormatter formatter;

@@ -10,11 +10,10 @@ namespace GraphLib.Infrastructure
     [Serializable]
     public sealed class GraphSerializationInfo : IEnumerable<VertexSerializationInfo>
     {
-        public GraphSerializationInfo(IEnumerable<IVertex> vertices,
-            params int[] dimensionsSizes)
+        public GraphSerializationInfo(IGraph graph)
         {
-            DimensionsSizes = dimensionsSizes.ToArray();
-            verticesDto = vertices.Select(vertex => vertex.GetSerializationInfo()).ToArray();
+            DimensionsSizes = graph.DimensionsSizes.ToArray();
+            verticesDto = graph.Select(vertex => vertex.GetSerializationInfo()).ToArray();
         }
 
         public IEnumerable<int> DimensionsSizes { get; private set; }

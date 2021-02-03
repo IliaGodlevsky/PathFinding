@@ -1,8 +1,10 @@
-﻿using Common.Interfaces;
+﻿using Common;
+using Common.Interfaces;
 using GraphLib.Base;
 using GraphLib.Extensions;
 using GraphLib.Interface;
 using GraphViewModel;
+using System;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using System.Windows;
@@ -63,6 +65,9 @@ namespace WPFVersion.ViewModel
             IGraphAssembler            graphFactory,
             IPathInput              pathInput) : base(fieldFactory, eventHolder, graphSerializer, graphFactory, pathInput)
         {
+            graphSerializer.OnExceptionCaught += OnExceptionCaught;
+            graphFactory.OnExceptionCaught += OnExceptionCaught;
+
             StartPathFindCommand    = new RelayCommand(ExecuteStartPathFindCommand, CanExecuteStartFindPathCommand);
             CreateNewGraphCommand   = new RelayCommand(ExecuteCreateNewGraphCommand);
             ClearGraphCommand       = new RelayCommand(ExecuteClearGraphCommand, CanExecuteGraphOperation);
@@ -86,17 +91,30 @@ namespace WPFVersion.ViewModel
 
         public override void FindPath()
         {
-            var viewModel = new PathFindingViewModel(this);
-
-            viewModel.OnPathNotFound += OnPathNotFound;
-
-            PrepareWindow(viewModel, new PathFindWindow());
+            try
+            {
+                var viewModel = new PathFindingViewModel(this);
+                viewModel.OnPathNotFound += OnPathNotFound;
+                PrepareWindow(viewModel, new PathFindWindow());
+            }
+            catch (Exception ex)
+            {
+                Logger.Instance.Log(ex);
+            }
         }
 
         public override void CreateNewGraph()
         {
-            PrepareWindow(new GraphCreatingViewModel(this, graphFiller),
-                new GraphCreatesWindow());
+            try
+            {
+                var model = new GraphCreatingViewModel(this, graphAssembler);
+                var window = new GraphCreatesWindow();
+                PrepareWindow(model, window);
+            }
+            catch (Exception ex)
+            {
+                Logger.Instance.Log(ex);
+            }
         }
 
         public void ExecuteChangeVertexSize(object param)
@@ -160,6 +178,12 @@ namespace WPFVersion.ViewModel
         private void OnPathNotFound(string message)
         {
             MessageBox.Show(message);
+        }
+
+        private void OnExceptionCaught(Exception ex)
+        {
+            MessageBox.Show(ex.Message);
+            Logger.Instance.Log(ex);
         }
     }
 }

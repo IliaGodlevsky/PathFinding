@@ -13,7 +13,7 @@ namespace GraphLib.Factories
     /// </summary>
     public sealed class GraphAssembler : IGraphAssembler
     {
-        public event Action<string> OnExceptionCaught;
+        public event Action<Exception> OnExceptionCaught;
 
         public GraphAssembler(IVertexFactory vertexFactory,
             ICoordinateFactory coordinateFactory,
@@ -35,6 +35,8 @@ namespace GraphLib.Factories
         /// <param name="obstaclePercent"></param>
         /// <param name="graphDimensionsSizes"></param>
         /// <returns>Assembled graph suitable for use with pathfinding algorithms</returns>
+        /// <exception cref="ArgumentException"></exception>
+        /// <exception cref="ArgumentOutOfRangeException"></exception>
         public IGraph AssembleGraph(int obstaclePercent, params int[] graphDimensionsSizes)
         {
             try
@@ -46,8 +48,8 @@ namespace GraphLib.Factories
             }
             catch (Exception ex)
             {
-                OnExceptionCaught?.Invoke(ex.Message);
-                return new NullGraph();
+                OnExceptionCaught?.Invoke(ex);
+                throw ex;
             }
         }
 
@@ -76,7 +78,7 @@ namespace GraphLib.Factories
                 throw new ArgumentException("Dimensions count must be grater than 0");
             }
 
-            var rangeOfValidIndexValues = new ValueRange(graph.Size, 0);
+            var rangeOfValidIndexValues = new ValueRange(graph.GetSize(), 0);
             if (!rangeOfValidIndexValues.IsInRange(index))
             {
                 throw new ArgumentOutOfRangeException("Index is out of range");

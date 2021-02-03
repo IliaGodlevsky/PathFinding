@@ -1,8 +1,10 @@
-﻿using Common.Interfaces;
+﻿using Common;
+using Common.Interfaces;
 using GraphLib.Base;
 using GraphLib.Extensions;
 using GraphLib.Interface;
 using GraphViewModel;
+using System;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using System.Windows;
@@ -65,9 +67,12 @@ namespace WPFVersion3D.ViewModel
         public MainWindowViewModel(BaseGraphFieldFactory fieldFactory,
             IVertexEventHolder eventHolder,
             IGraphSerializer graphSerializer,
-            IGraphAssembler graphFactory, 
+            IGraphAssembler graphFactory,
             IPathInput pathInput) : base(fieldFactory, eventHolder, graphSerializer, graphFactory, pathInput)
         {
+            graphSerializer.OnExceptionCaught += OnExceptionCaught;
+            graphFactory.OnExceptionCaught += OnExceptionCaught;
+
             graphParamFormat = Resource.GraphParamFormat;
 
             StartPathFindCommand = new RelayCommand(ExecuteStartPathFindCommand, CanExecuteStartFindPathCommand);
@@ -81,16 +86,30 @@ namespace WPFVersion3D.ViewModel
 
         public override void FindPath()
         {
-            var viewModel = new PathFindingViewModel(this);
-
-            viewModel.OnPathNotFound += OnPathNotFound;
-
-            PrepareWindow(viewModel, new PathFindWindow());
+            try
+            {
+                var viewModel = new PathFindingViewModel(this);
+                viewModel.OnPathNotFound += OnPathNotFound;
+                PrepareWindow(viewModel, new PathFindWindow());
+            }
+            catch (Exception ex)
+            {
+                Logger.Instance.Log(ex);
+            }
         }
 
         public override void CreateNewGraph()
         {
-            PrepareWindow(new GraphCreatingViewModel(this, graphFiller), new GraphCreateWindow());
+            try
+            {
+                var model = new GraphCreatingViewModel(this, graphAssembler);
+                var window = new GraphCreateWindow();
+                PrepareWindow(model, window);
+            }
+            catch (Exception ex)
+            {
+                Logger.Instance.Log(ex);
+            }
         }
 
         public void StretchAlongXAxis(object sender, RoutedPropertyChangedEventArgs<double> e)
@@ -170,6 +189,12 @@ namespace WPFVersion3D.ViewModel
         private bool CanExecuteGraphOperation(object param)
         {
             return !Graph.IsDefault;
+        }
+
+        private void OnExceptionCaught(Exception ex)
+        {
+            MessageBox.Show(ex.Message);
+            Logger.Instance.Log(ex);
         }
     }
 }

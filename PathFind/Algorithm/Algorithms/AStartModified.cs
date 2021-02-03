@@ -1,4 +1,5 @@
 ﻿using Common;
+using GraphLib.Extensions;
 using GraphLib.Interface;
 using GraphLib.NullObjects;
 using System;
@@ -84,7 +85,7 @@ namespace Algorithm.Algorithms
 
         private int CalculatePercentOfFarthestVerticesToDelete()
         {
-            var partOfVertexToDelete = Math.Floor(Math.Log(Graph.Size + 1, 4));
+            var partOfVertexToDelete = Math.Floor(Math.Log(Graph.GetSize() + 1, 4));
             return Convert.ToInt32(partOfVertexToDelete);
         }
 

@@ -1,5 +1,4 @@
 ﻿using GraphLib.Extensions;
-using GraphLib.Infrastructure;
 using GraphLib.Interface;
 using GraphLib.NullObjects;
 using System;
@@ -15,20 +14,9 @@ namespace GraphLib.Base
         {
             DimensionsSizes = dimensionSizes.ToArray();
 
-            vertices = new IVertex[Size];
+            vertices = new IVertex[this.GetSize()];
             this.RemoveExtremeVertices();
         }
-
-        public int Size => DimensionsSizes.Aggregate((x, y) => x * y);
-
-        public int NumberOfVisitedVertices
-            => vertices.AsParallel().Count(vertex => vertex.IsVisited);
-
-        public int ObstacleNumber
-            => vertices.AsParallel().Count(vertex => vertex.IsObstacle);
-
-        public int ObstaclePercent
-            => Size == 0 ? 0 : ObstacleNumber * 100 / Size;
 
         protected IVertex end;
         public virtual IVertex End
@@ -43,9 +31,6 @@ namespace GraphLib.Base
             get => start;
             set { start = value; start.IsStart = true; }
         }
-
-        public GraphSerializationInfo SerializationInfo
-            => new GraphSerializationInfo(vertices, DimensionsSizes.ToArray());
 
         public IEnumerable<int> DimensionsSizes { get; private set; }
 

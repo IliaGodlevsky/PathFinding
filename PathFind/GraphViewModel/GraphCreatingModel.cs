@@ -1,6 +1,7 @@
 ﻿using Common;
 using GraphLib.Interface;
 using GraphViewModel.Interfaces;
+using System;
 
 namespace GraphLib.ViewModel
 {
@@ -28,10 +29,18 @@ namespace GraphLib.ViewModel
 
         public virtual void CreateGraph()
         {
-            var graph = graphFactory.AssembleGraph(ObstaclePercent, Width, Length);
-
-            model.ConnectNewGraph(graph);
+            try
+            {
+                var graph = graphFactory.AssembleGraph(ObstaclePercent, GraphParametres);
+                model.ConnectNewGraph(graph);
+            }
+            catch(Exception ex)
+            {
+                Logger.Instance.Log(ex);
+            }
         }
+
+        protected virtual int[] GraphParametres => new int[] { Width, Length };
 
         protected IMainModel model;
         protected IGraphAssembler graphFactory;

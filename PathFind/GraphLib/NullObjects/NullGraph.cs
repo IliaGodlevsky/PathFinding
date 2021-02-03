@@ -1,5 +1,4 @@
-﻿using GraphLib.Infrastructure;
-using GraphLib.Interface;
+﻿using GraphLib.Interface;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -25,18 +24,7 @@ namespace GraphLib.NullObjects
 
         public IVertex End { get => defaultVertex; set => _ = value; }
 
-        public int NumberOfVisitedVertices => 0;
-
-        public int ObstacleNumber => 0;
-
-        public int ObstaclePercent => 0;
-
-        public int Size => 0;
-
         public IVertex Start { get => defaultVertex; set => _ = value; }
-
-        public GraphSerializationInfo SerializationInfo
-            => new GraphSerializationInfo(array, DimensionsSizes.ToArray());
 
         public IEnumerable<int> DimensionsSizes => new int[] { };
 
