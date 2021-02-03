@@ -194,7 +194,6 @@ namespace WPFVersion3D.ViewModel
         private void OnExceptionCaught(Exception ex)
         {
             MessageBox.Show(ex.Message);
-            Logger.Instance.Log(ex);
         }
     }
 }
