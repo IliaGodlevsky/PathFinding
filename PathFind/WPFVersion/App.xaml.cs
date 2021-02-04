@@ -1,8 +1,5 @@
 ﻿using Autofac;
-using Common;
 using GraphViewModel.Interfaces;
-using System;
-using System.Configuration;
 using System.Windows;
 using WPFVersion.Configure;
 
@@ -14,12 +11,6 @@ namespace WPFVersion
         {
             base.OnStartup(e);
 
-            string path = ConfigurationManager.AppSettings["logfile"];
-            string cacheLimit = ConfigurationManager.AppSettings["cacheLimit"];
-
-            Logger.Instance.Path = path;
-            Logger.Instance.CacheLimit = Convert.ToInt32(cacheLimit);
-
             var container = ContainerConfigure.Configure();
 
             var viewModel = container.Resolve<IMainModel>();
@@ -30,13 +21,6 @@ namespace WPFVersion
             };
 
             mainWindow.Show();
-        }
-
-        protected override void OnExit(ExitEventArgs e)
-        {
-            base.OnExit(e);
-
-            Logger.Instance.LogCachedLogs();
         }
     }
 }

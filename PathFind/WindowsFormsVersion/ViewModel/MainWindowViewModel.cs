@@ -84,7 +84,7 @@ namespace WindowsFormsVersion.ViewModel
             }
             catch (Exception ex)
             {
-                Logger.Instance.Log(ex);
+                Logger.Instance.Error(ex);
             }
 
         }
@@ -100,7 +100,7 @@ namespace WindowsFormsVersion.ViewModel
             }
             catch (Exception ex)
             {
-                Logger.Instance.Log(ex);
+                Logger.Instance.Error(ex);
             }
 
         }

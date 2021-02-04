@@ -34,9 +34,9 @@ namespace GraphLib.ViewModel
                 var graph = graphFactory.AssembleGraph(ObstaclePercent, GraphParametres);
                 model.ConnectNewGraph(graph);
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
-                Logger.Instance.Log(ex);
+                Logger.Instance.Error(ex);
             }
         }
 

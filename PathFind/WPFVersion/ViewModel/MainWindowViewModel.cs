@@ -99,7 +99,7 @@ namespace WPFVersion.ViewModel
             }
             catch (Exception ex)
             {
-                Logger.Instance.Log(ex);
+                Logger.Instance.Error(ex);
             }
         }
 
@@ -113,7 +113,7 @@ namespace WPFVersion.ViewModel
             }
             catch (Exception ex)
             {
-                Logger.Instance.Log(ex);
+                Logger.Instance.Error(ex);
             }
         }
 

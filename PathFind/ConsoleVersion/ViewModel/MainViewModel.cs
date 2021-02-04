@@ -47,7 +47,7 @@ namespace ConsoleVersion.ViewModel
             }
             catch(Exception ex)
             {
-                Logger.Instance.Log(ex);
+                Logger.Instance.Error(ex);
             }
             
         }
@@ -65,7 +65,7 @@ namespace ConsoleVersion.ViewModel
             }
             catch(Exception ex)
             {
-                Logger.Instance.Log(ex);
+                Logger.Instance.Error(ex);
             }
         }
 
@@ -115,7 +115,10 @@ namespace ConsoleVersion.ViewModel
         }
 
         [MenuItem("Quit programm", MenuItemPriority.Lowest)]
-        public void Quit() => Environment.Exit(0);
+        public void Quit()
+        {
+            Environment.Exit(0);
+        }
 
         public void DisplayGraph()
         {

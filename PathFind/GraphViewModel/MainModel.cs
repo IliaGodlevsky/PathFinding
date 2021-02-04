@@ -48,7 +48,7 @@ namespace GraphViewModel
             }
             catch (Exception ex)
             {
-                Logger.Instance.Log(ex);
+                Logger.Instance.Error(ex);
             }
         }
 
@@ -65,7 +65,7 @@ namespace GraphViewModel
             }
             catch (Exception ex)
             {
-                Logger.Instance.Log(ex);
+                Logger.Instance.Error(ex);
             }
         }
 
