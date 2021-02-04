@@ -11,7 +11,7 @@ namespace ConsoleVersion
     {
         private static void Main(string[] args)
         {
-            string path = "ConsoleVersionLogs.txt";
+            string path = ConfigurationManager.AppSettings["logfile"];
             string cacheLimit = ConfigurationManager.AppSettings["cacheLimit"];
 
             Logger.Instance.Path = path;

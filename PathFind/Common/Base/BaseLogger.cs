@@ -71,10 +71,19 @@ namespace Common.Base
             logCache.ForEach(log => builder.AppendLine(log).Append(LogsSeparator));
             logCache.Clear();
 
-            using (var stream = new StreamWriter(Path, append: true))
+            try
             {
-                stream.Write(builder.ToString());
+                using (var stream = new StreamWriter(Path, append: true))
+                {
+                    stream.Write(builder.ToString());
+                }
             }
+            catch(Exception ex)
+            {
+                string e = ex.Message;
+                var charArray = e.ToCharArray();
+            }
+            
         }
 
         protected BaseLogger()

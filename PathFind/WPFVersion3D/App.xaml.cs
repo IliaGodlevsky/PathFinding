@@ -14,7 +14,7 @@ namespace WPFVersion3D
         {
             base.OnStartup(e);
 
-            string path = "WPFVersion3DLogs.txt";
+            string path = ConfigurationManager.AppSettings["logfile"];
             string cacheLimit = ConfigurationManager.AppSettings["cacheLimit"];
 
             Logger.Instance.Path = path;

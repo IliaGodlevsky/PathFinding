@@ -12,7 +12,7 @@ namespace WindowsFormsVersion
         [STAThread]
         private static void Main()
         {
-            string path = "‪WinformVersionLogs.txt";
+            string path = ConfigurationManager.AppSettings["logfile"];
             string cacheLimit = ConfigurationManager.AppSettings["cacheLimit"];
 
             Logger.Instance.Path = path;

@@ -14,7 +14,7 @@ namespace WPFVersion
         {
             base.OnStartup(e);
 
-            string path = "WPFVersionLogs.txt";
+            string path = ConfigurationManager.AppSettings["logfile"];
             string cacheLimit = ConfigurationManager.AppSettings["cacheLimit"];
 
             Logger.Instance.Path = path;
