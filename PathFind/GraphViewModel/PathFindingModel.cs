@@ -55,7 +55,6 @@ namespace GraphLib.ViewModel
             }
             catch (Exception ex)
             {
-                //var message = "An error occured during the pathfinding";
                 Logger.Instance.Error(ex);
             }
         }
