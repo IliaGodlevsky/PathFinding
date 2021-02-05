@@ -1,19 +1,19 @@
-﻿using GraphLib.Vertex.Cost;
+﻿using GraphLib.VertexCost;
 using NUnit.Framework;
 using System.Collections;
 
 namespace GraphLib.Tests.Tests.VertexTests
 {
     [TestFixture]
-    public class VertexCostTest
+    public class CostTest
     {
         private const int VertexStartCost = 4;
-        private VertexCost vertexCost;
+        private Cost vertexCost;
 
         [SetUp]
         public void Setup()
         {
-            vertexCost = new VertexCost(VertexStartCost);
+            vertexCost = new Cost(VertexStartCost);
         }
 
         [Test]

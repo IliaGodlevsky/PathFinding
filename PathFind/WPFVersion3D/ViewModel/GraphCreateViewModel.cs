@@ -33,7 +33,7 @@ namespace WPFVersion3D.ViewModel
 
             var field = model.GraphField as GraphField3D;
 
-            field.CenterGraph();
+            field?.CenterGraph();
 
             CloseWindow();
         }

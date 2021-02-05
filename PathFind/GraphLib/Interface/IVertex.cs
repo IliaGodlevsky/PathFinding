@@ -1,5 +1,5 @@
 ﻿using Common.Interfaces;
-using GraphLib.Vertex.Cost;
+using GraphLib.VertexCost;
 using System.Collections.Generic;
 
 namespace GraphLib.Interface
@@ -17,7 +17,7 @@ namespace GraphLib.Interface
 
         bool IsVisited { get; set; }
 
-        VertexCost Cost { get; set; }
+        Cost Cost { get; set; }
 
         IList<IVertex> Neighbours { get; set; }
 

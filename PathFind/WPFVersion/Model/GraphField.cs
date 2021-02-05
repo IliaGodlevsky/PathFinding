@@ -10,9 +10,7 @@ namespace WPFVersion.Model
     {
         public GraphField()
         {
-            distanceBetweenVertices
-                    = Convert.ToInt32(ConfigurationManager.AppSettings["distanceBetweenVertices"])
-                    + Convert.ToInt32(ConfigurationManager.AppSettings["vertexSize"]);
+            distanceBetweenVertices = Convert.ToInt32(ConfigurationManager.AppSettings["distanceBetweenVertices"]);
         }
 
         public void Add(IVertex vertex)
@@ -22,12 +20,14 @@ namespace WPFVersion.Model
                 var wpfVertex = vertex as Vertex;
                 Children.Add(wpfVertex);
 
-                SetLeft(wpfVertex, distanceBetweenVertices * coordinates.X);
-                SetTop(wpfVertex, distanceBetweenVertices * coordinates.Y);
+                SetLeft(wpfVertex, (distanceBetweenVertices + wpfVertex.Width) * coordinates.X);
+                SetTop(wpfVertex, (distanceBetweenVertices + wpfVertex.Height) * coordinates.Y);
             }
             else
             {
-                throw new ArgumentException("Must be 2D coordinates");
+                var message = "An error was occured while adding vertex to a graph field\n";
+                message += "Vertex must have 2D coordinate\n";
+                throw new ArgumentException(message, nameof(vertex));
             }
         }
 

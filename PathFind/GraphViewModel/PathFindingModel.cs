@@ -6,6 +6,7 @@ using Common;
 using Common.Extensions;
 using GraphLib.Extensions;
 using GraphLib.Infrastructure;
+using GraphLib.Interface;
 using GraphViewModel.Interfaces;
 using GraphViewModel.Resources;
 using System;
@@ -30,6 +31,7 @@ namespace GraphLib.ViewModel
         {
             this.mainViewModel = mainViewModel;
             DelayTime = 4;
+            timer = new Stopwatch();
         }
 
         public virtual void FindPath()
@@ -38,16 +40,14 @@ namespace GraphLib.ViewModel
             {
                 var algorithm = AlgorithmFactory.
                     CreateAlgorithm(AlgorithmKey);
-
                 algorithm.Graph = mainViewModel.Graph;
-
                 intermitter = new AlgorithmIntermit(DelayTime);
+                intermitter.OnIntermitted += OnAlgorithmIntermitted;
 
                 algorithm.OnVertexEnqueued += OnVertexEnqueued;
                 algorithm.OnVertexVisited += OnVertexVisited;
                 algorithm.OnFinished += OnAlgorithmFinished;
                 algorithm.OnStarted += OnAlgorithmStarted;
-
                 algorithm.FindPath();
                 algorithm.Reset();
 
@@ -69,13 +69,12 @@ namespace GraphLib.ViewModel
                 {
                     args.Vertex.MarkAsVisited();
                 }
-
-                mainViewModel.PathFindingStatistics = GetIntermediateStatistics(timer,
-                    steps: 0, pathLength: 0, args.Graph.GetVisitedVerticesCount());
-
-                intermitter.Intermit();
-                OnAlgorithmIntermitted();
             }
+
+            var intermediateStatistics = GetIntermediateStatistics(timer, mainViewModel.Graph);
+            mainViewModel.PathFindingStatistics = intermediateStatistics;
+
+            intermitter.Intermit();
         }
 
         protected virtual void OnVertexEnqueued(object sender, EventArgs e)
@@ -91,14 +90,14 @@ namespace GraphLib.ViewModel
 
         protected virtual void OnAlgorithmFinished(object sender, EventArgs e)
         {
+            timer.Stop();
+
             if (e is AlgorithmEventArgs args)
             {
-                timer.Stop();
-
                 var path = new GraphPath(args.Graph);
 
-                mainViewModel.PathFindingStatistics = GetIntermediateStatistics(timer,
-                    path.PathLength, path.PathCost, args.Graph.GetVisitedVerticesCount());
+                var finishStatistics = GetIntermediateStatistics(timer, args.Graph, path);
+                mainViewModel.PathFindingStatistics = finishStatistics;
 
                 if (path.IsExtracted)
                 {
@@ -109,28 +108,31 @@ namespace GraphLib.ViewModel
                     OnPathNotFound?.Invoke("Couln't find path");
                 }
             }
+
+            timer.Reset();
         }
 
         protected virtual void OnAlgorithmStarted(object sender, EventArgs e)
         {
-            timer = new Stopwatch();
             timer.Start();
         }
 
-        private string GetIntermediateStatistics(Stopwatch timer,
-            int steps, int pathLength, int visitedVertices)
+        private string GetIntermediateStatistics(Stopwatch timer, 
+            IGraph graph, GraphPath path = null)
         {
-            var graphInfo = string.Format(ViewModelResources.StatisticsFormat,
-                steps, pathLength, visitedVertices);
-
+            var format = ViewModelResources.StatisticsFormat;
+            var pathLength = path == null ? 0 : path.Length;
+            var pathCost = path == null ? 0 : path.Cost;
+            var visitedCount = graph.GetVisitedVerticesCount();
+            var graphInfo = string.Format(format, pathLength, pathCost, visitedCount);
             var timerInfo = timer.GetTimeInformation(ViewModelResources.TimerInfoFormat);
 
-            return AlgorithmKey + "   " + timerInfo + "   " + graphInfo;
+            return $"{AlgorithmKey}    {timerInfo}     {graphInfo}";
         }
 
         protected IIntermit intermitter;
         protected IMainModel mainViewModel;
 
-        private Stopwatch timer;
+        private readonly Stopwatch timer;
     }
 }

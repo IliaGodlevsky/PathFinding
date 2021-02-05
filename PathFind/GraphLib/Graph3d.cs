@@ -1,6 +1,5 @@
 ﻿using GraphLib.Base;
 using GraphLib.Extensions;
-using System;
 using System.Linq;
 
 namespace GraphLib.Graphs
@@ -13,12 +12,10 @@ namespace GraphLib.Graphs
 
         public int Height => DimensionsSizes.Last();
 
-        public Graph3D(params int[] dimensions) : base(dimensions)
+        public Graph3D(params int[] dimensions)
+            : base(numberOfDimensions: 3, dimensions)
         {
-            if (dimensions.Length != 3)
-            {
-                throw new ArgumentException("Number of dimensions doesn't match");
-            }
+
         }
 
         public override string GetFormattedData(string format)

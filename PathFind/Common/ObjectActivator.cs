@@ -88,16 +88,10 @@ namespace Common
             throw new KeyNotFoundException("For this type activator doesn't have any constructor");
         }
 
-        /// <summary>
-        /// Returns activator for <typeparamref name="T"/>
-        /// </summary>
-        /// <typeparam name="T"></typeparam>
-        /// <returns>Activator for <typeparamref name="T"></typeparamref></returns>
-        /// <exception cref="KeyNotFoundException">Thrown when activator 
-        /// doesn't exist for <typeparamref name="T"/></exception>
-        public static ActivatorHandler<T> GetActivator<T>() where T : class
+        public static TResultType CreateInstance<TResultType>(Type type, params object[] arguments) where TResultType : class
         {
-            return (ActivatorHandler<T>)GetRegisteredActivator(typeof(T));
+            var activator = (ActivatorHandler<TResultType>)GetRegisteredActivator(type);
+            return activator(arguments);
         }
 
         private static IEnumerable<Expression> CreateArgumentExpressions(

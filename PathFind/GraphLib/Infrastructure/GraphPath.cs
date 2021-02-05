@@ -24,12 +24,12 @@ namespace GraphLib.Infrastructure
         /// <summary>
         /// Returns the number of vertices in the path
         /// </summary>
-        public int PathLength { get; private set; }
+        public int Length { get; private set; }
 
         /// <summary>
         /// Returns the sum of costs of the vertices in the path
         /// </summary>
-        public int PathCost { get; private set; }
+        public int Cost { get; private set; }
 
         public GraphPath(IGraph graph) : this()
         {
@@ -38,8 +38,7 @@ namespace GraphLib.Infrastructure
 
         public void HighlightPath()
         {
-            Path
-                .Where(vertex => vertex.IsSimpleVertex())
+            Path.Where(vertex => vertex.IsSimpleVertex())
                 .ForEach(vertex => vertex.MarkAsPath());
         }
 
@@ -54,8 +53,8 @@ namespace GraphLib.Infrastructure
             if (graph.IsExtremeVerticesVisited())
             {
                 Path = GetPath(graph.End);
-                PathCost = Path.Sum(vertex => vertex.Cost.CurrentCost);
-                PathLength = Path.Count();
+                Cost = Path.Sum(vertex => vertex.Cost.CurrentCost);
+                Length = Path.Count();
                 IsExtracted = Path.FirstOrDefault(vertex => vertex.IsEnd == true) != null;
             }
 

@@ -120,14 +120,7 @@ namespace ConsoleVersion.View
 
                 for (var i = 0; i < Width; i++)
                 {
-                    if (i == Width - 1)
-                    {
-                        frame.Append("+");
-                    }
-                    else
-                    {
-                        frame.Append(HorizontalFrameComponent);
-                    }
+                    frame.Append(HorizontalFrameComponent);                   
                 }
 
                 return frame.ToString();

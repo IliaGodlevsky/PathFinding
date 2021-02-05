@@ -1,12 +1,12 @@
 ﻿using GraphLib.Interface;
 using System;
 
-namespace GraphLib.Vertex.Cost.CostStates
+namespace GraphLib.VertexCost.CostStates
 {
     [Serializable]
     internal class UnweightedState : ICostState
     {
-        public string ToString(VertexCost cost)
+        public string ToString(Cost cost)
         {
             return cost.UnweightedCostView;
         }

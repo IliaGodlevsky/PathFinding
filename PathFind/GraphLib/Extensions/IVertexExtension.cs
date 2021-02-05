@@ -117,17 +117,20 @@ namespace GraphLib.Extensions
         /// doesn't contain <paramref name="self"/></exception>
         internal static void SetNeighbours(this IVertex self, IGraph graph)
         {
-            if (graph == null || self == null)
+            var message = "An error was occured while setting vertices neighbours\n";
+            if (graph == null)
             {
-                throw new ArgumentNullException("Argument can't be null");
+                message += "Argument was null\n";
+                throw new ArgumentNullException(nameof(graph), message);
             }
 
             if (!graph.Contains(self))
             {
-                throw new ArgumentException("Graph doesn't contain this vertex");
+                message += "Vertex doesn't belong to graph\n";
+                throw new ArgumentException(message, nameof(graph));
             }
 
-            if (!self.IsObstacle)
+            if (!self.IsObstacle && !graph.IsDefault)
             {
                 self.Position.Environment
                     .Where(coordinate => coordinate.IsWithinGraph(graph))

@@ -19,7 +19,10 @@ namespace GraphLib.Base
             CoordinatesValues = coordinates.ToArray();
             if (CoordinatesValues.Count() != numberOfDimensions)
             {
-                throw new ArgumentOutOfRangeException("Number of dimensions must be equal to coordinates number of dimensions");
+                var argumentName = nameof(coordinates);
+                var message = "Number of dimensions must be equal to coordinates number of dimensions\n";
+                message += $"Required value is {numberOfDimensions}";
+                throw new ArgumentOutOfRangeException(argumentName, coordinates.Count(), message);
             }
         }
 

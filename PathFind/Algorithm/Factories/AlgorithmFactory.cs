@@ -1,7 +1,6 @@
 ﻿using Algorithm.Extensions;
 using Algorithm.Interface;
 using Algorithm.NullObjects;
-using Common;
 using Common.Extensions;
 using System;
 using System.Collections.Generic;
@@ -36,12 +35,9 @@ namespace Algorithm.AlgorithmCreating
         /// doesn't exist for algorithm with <paramref name="algorithmDescription"></paramref> key</exception>
         public static IAlgorithm CreateAlgorithm(string algorithmDescription)
         {
-            if (Algorithms.TryGetValue(algorithmDescription, out Type algoType))
-            {
-                var activator = (ActivatorHandler<IAlgorithm>)GetRegisteredActivator(algoType);
-                return activator();
-            }
-            return new DefaultAlgorithm();
+            return Algorithms.TryGetValue(algorithmDescription, out Type algoType)
+                ? CreateInstance<IAlgorithm>(algoType)
+                : new DefaultAlgorithm();
         }
 
         private static IDictionary<string, Type> Algorithms { get; set; }

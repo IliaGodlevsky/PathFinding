@@ -10,9 +10,19 @@ namespace GraphLib.Base
 {
     public abstract class BaseGraph : IGraph
     {
-        public BaseGraph(params int[] dimensionSizes)
+        public BaseGraph(int numberOfDimensions, params int[] dimensionSizes)
         {
             DimensionsSizes = dimensionSizes.ToArray();
+
+            if (dimensionSizes.Length != numberOfDimensions)
+            {
+                var message = $"An error ocurred while creating a {GetType().Name} instance\n";
+                message += $"Required number of dimensions is {numberOfDimensions}\n";
+                message += "Number of dimensions doesn't match the required number of dimensions\n";
+                var actualValue = dimensionSizes.Count();
+
+                throw new ArgumentOutOfRangeException(nameof(dimensionSizes), actualValue, message);
+            }
 
             vertices = new IVertex[this.GetSize()];
             this.RemoveExtremeVertices();
@@ -54,36 +64,39 @@ namespace GraphLib.Base
 
         public abstract string GetFormattedData(string format);
 
+        /// <summary>
+        /// Get or sets vertex according to a <paramref name="coordinate"/>
+        /// </summary>
+        /// <param name="coordinate"></param>
+        /// <returns></returns>
+        /// <exception cref="ArgumentException"></exception>
         public virtual IVertex this[ICoordinate coordinate]
         {
-            get
-            {
-                if (!coordinate.IsDefault)
-                {
-                    if (coordinate.CoordinatesValues.Count() != DimensionsSizes.Count())
-                    {
-                        throw new ArgumentException("Dimensions of graph and coordinate doesn't match");
-                    }
-
-                    return vertices[coordinate.ToIndex(this)];
-                }
-
-                return new DefaultVertex();
-            }
+            get => IsSuitableCoordinate(coordinate)
+                ? vertices[coordinate.ToIndex(this)] : new DefaultVertex();
             set
             {
-                if (!coordinate.IsDefault)
+                if (IsSuitableCoordinate(coordinate))
                 {
-                    if (coordinate.CoordinatesValues.Count() != DimensionsSizes.Count())
-                    {
-                        throw new ArgumentException("Dimensions of graph and coordinate doesn't match");
-                    }
-
                     vertices[coordinate.ToIndex(this)] = value;
                 }
             }
         }
 
         protected readonly IVertex[] vertices;
+
+        private bool IsSuitableCoordinate(ICoordinate coordinate)
+        {
+            if (coordinate.IsDefault)
+            {
+                return false;
+            }
+            if (coordinate.CoordinatesValues.Count() != DimensionsSizes.Count())
+            {
+                var message = "Dimensions of graph and coordinate doesn't match\n";
+                throw new ArgumentException(message, nameof(coordinate));
+            }
+            return true;
+        }
     }
 }

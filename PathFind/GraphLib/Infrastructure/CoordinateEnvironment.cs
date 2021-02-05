@@ -47,8 +47,7 @@ namespace GraphLib.Infrastructure
             {
                 FormEnvironment(depth + 1);
             }
-            else if (!selfCoordinatesValues
-                .SequenceEqual(currentCoordinatesValues))
+            else if (!selfCoordinatesValues.SequenceEqual(currentCoordinatesValues))
             {
                 environment.Add(currentCoordinatesValues.ToArray());
             }

@@ -1,15 +1,14 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 
 namespace Common
 {
     /// <summary>
     /// Represents range of values (inclusively)
     /// </summary>
-    public class ValueRange
+    [Serializable]
+    public sealed class ValueRange
     {
-        public int UpperValueOfRange { get; }
-        public int LowerValueOfRange { get; }
-
         /// <summary>
         /// Creates a new instance of <see cref="ValueRange"/> 
         /// with <paramref name="upperValueOfRange"/> and 
@@ -28,6 +27,14 @@ namespace Common
             UpperValueOfRange = upperValueOfRange;
             LowerValueOfRange = lowerValueOfRange;
         }
+
+        static ValueRange()
+        {
+            random = new Random();
+        }
+
+        public int UpperValueOfRange { get; }
+        public int LowerValueOfRange { get; }
 
         /// <summary>
         /// 
@@ -83,5 +90,12 @@ namespace Common
                 lowerValue = temp;
             }
         }
+
+        public int GetRandomValueFromRange()
+        {
+            return random.Next(LowerValueOfRange, UpperValueOfRange);
+        }
+
+        private static readonly Random random;
     }
 }

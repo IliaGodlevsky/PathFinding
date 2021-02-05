@@ -5,6 +5,7 @@ using GraphLib.NullObjects;
 using GraphLib.Serialization;
 using GraphLib.Tests.TestInfrastructure;
 using NUnit.Framework;
+using System;
 using System.IO;
 using System.Runtime.Serialization;
 using System.Runtime.Serialization.Formatters.Binary;
@@ -74,19 +75,20 @@ namespace GraphLib.Tests.Tests
         }
 
         [Test]
-        public void SaveGraph_LoadGraph_WrongGraphType_ReturnsNullGraph()
+        public void SaveGraph_LoadGraph_WrongGraphType_ThrowsArgumentOutOfRangeException()
         {
             IGraph deserialized = new NullGraph();
             var serializer = new GraphSerializer(formatter, vertexConverter, graph2DFactory);
 
-            using (var stream = new MemoryStream())
+            Assert.Throws<ArgumentOutOfRangeException>(() =>
             {
-                serializer.SaveGraph(graph3D, stream);
-                stream.Position = 0;
-                deserialized = serializer.LoadGraph(stream);
-            }
-
-            Assert.IsTrue(deserialized.IsDefault);
+                using (var stream = new MemoryStream())
+                {
+                    serializer.SaveGraph(graph3D, stream);
+                    stream.Position = 0;
+                    deserialized = serializer.LoadGraph(stream);
+                }
+            });           
         }
     }
 }

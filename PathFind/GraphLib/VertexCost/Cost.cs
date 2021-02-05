@@ -1,52 +1,73 @@
-﻿using GraphLib.Interface;
-using GraphLib.Vertex.Cost.CostStates;
+﻿using Common;
+using GraphLib.Interface;
+using GraphLib.VertexCost.CostStates;
 using System;
 
-namespace GraphLib.Vertex.Cost
+namespace GraphLib.VertexCost
 {
     /// <summary>
     /// Represents a cost of vertex
     /// </summary>
     [Serializable]
-    public struct VertexCost
+    public sealed class Cost
     {
-        public int CurrentCost { get; private set; }
-
-        /// <summary>
-        /// A string representing unweihted 
-        /// state of vertex cost
-        /// </summary>
-        public string UnweightedCostView { get; set; }
-
         /// <summary>
         /// Creates a new instance of 
-        /// <see cref="VertexCost"/>
+        /// <see cref="Cost"/>
         /// with the cost of <paramref name="startCost"/>. 
         /// Weighted cost is set to the same value
         /// </summary>
         /// <param name="startCost"></param>
-        public VertexCost(int startCost)
+        public Cost(int startCost)
         {
+            startCost = CostRange.ReturnInRange(startCost);
             CurrentCost = startCost;
-            WeightedCost = startCost;
+            weightedCost = startCost;
             Status = new WeightedState();
             UnweightedCostView = string.Empty;
         }
 
         /// <summary>
-        /// Sets <see cref="VertexCost"/> 
+        /// Creates a new instance of 
+        /// <see cref="Cost"/>
+        /// with random cost.
+        /// Weighted cost is set to the same value
+        /// </summary>
+        /// <param name="startCost"></param>
+        public Cost() : this(CostRange.GetRandomValueFromRange())
+        {
+
+        }
+
+        static Cost()
+        {
+            CostRange = new ValueRange(9, 1);
+        }
+
+        public static ValueRange CostRange { get; set; }
+
+        public int CurrentCost { get; private set; }
+
+        /// <summary>
+        /// A string representing unweighted 
+        /// state of vertex cost
+        /// </summary>
+        public string UnweightedCostView { get; set; }
+
+        /// <summary>
+        /// Sets <see cref="Cost"/> 
         /// to weighted status. That means that
         /// the current cost of vertex will be 
         /// set to its normal value
         /// </summary>
         public void MakeWeighted()
         {
-            CurrentCost = WeightedCost;
+            CurrentCost = weightedCost;
             Status = new WeightedState();
         }
 
         /// <summary>
-        /// Sets <see cref="VertexCost"/> 
+        /// Sets <see cref="Cost"/> 
         /// to unweighted status.
         /// It means that the current cost of 
         /// vertex will be set to 1
@@ -59,12 +80,14 @@ namespace GraphLib.Vertex.Cost
 
         public override bool Equals(object obj)
         {
-            if (obj is VertexCost cost)
+            if (obj is Cost cost)
             {
                 return cost.CurrentCost == CurrentCost;
             }
 
-            throw new ArgumentException("Can't compare objects");
+            var message = "An error was occured while comparing\n";
+            message += $"an instance of {nameof(Cost)} and {nameof(obj)}\n";
+            throw new ArgumentException(message, nameof(obj));
         }
 
         public override int GetHashCode()
@@ -74,19 +97,18 @@ namespace GraphLib.Vertex.Cost
 
         /// <summary>
         /// Returns a string representation 
-        /// of <see cref="VertexCost"/>
+        /// of <see cref="Cost"/>
         /// </summary>
         /// <returns>A string representation 
-        /// of <see cref="VertexCost"/></returns>
+        /// of <see cref="Cost"/></returns>
         public override string ToString()
         {
             return Status.ToString(this);
         }
 
-        private const int UnweightedCost = 1;
-
-        private int WeightedCost { get; set; }
-
         private ICostState Status { get; set; }
+
+        private const int UnweightedCost = 1;
+        private readonly int weightedCost;
     }
 }

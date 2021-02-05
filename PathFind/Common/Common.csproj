@@ -56,9 +56,7 @@
     <Compile Include="ObjectActivator.cs" />
     <Compile Include="Extensions\EnumExtensions.cs" />
     <Compile Include="Extensions\IEnumerableExtension.cs" />
-    <Compile Include="Extensions\IntExtensions.cs" />
     <Compile Include="Extensions\StopwatchExtension.cs" />
-    <Compile Include="Extensions\StringBuilderExtensions.cs" />
     <Compile Include="Extensions\TypeExtensions.cs" />
     <Compile Include="Interfaces\IDefault.cs" />
     <Compile Include="Logging\Logger.cs" />

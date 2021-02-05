@@ -1,5 +1,5 @@
 ﻿using GraphLib.Interface;
-using GraphLib.Vertex.Cost;
+using GraphLib.VertexCost;
 using System.Collections.Generic;
 
 namespace GraphLib.NullObjects
@@ -19,7 +19,7 @@ namespace GraphLib.NullObjects
 
         public bool IsVisited { get => true; set => _ = value; }
 
-        public VertexCost Cost { get => new VertexCost(default); set => _ = value; }
+        public Cost Cost { get => new Cost(default); set => _ = value; }
 
         public IList<IVertex> Neighbours { get => new List<IVertex>(); set => _ = value; }
 

@@ -1,6 +1,5 @@
 ﻿using GraphLib.Base;
 using GraphLib.Extensions;
-using System;
 using System.Linq;
 
 namespace GraphLib.Graphs
@@ -12,12 +11,9 @@ namespace GraphLib.Graphs
         public int Length => DimensionsSizes.Last();
 
         public Graph2D(params int[] dimensions)
-            : base(dimensions)
+            : base(numberOfDimensions: 2, dimensions)
         {
-            if (dimensions.Length != 2)
-            {
-                throw new ArgumentException("Number of dimensions doesn't match");
-            }
+            
         }
 
         public override string GetFormattedData(string format)

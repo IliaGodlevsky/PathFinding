@@ -31,7 +31,8 @@ namespace Common.Extensions
                 throw new ArgumentNullException("Bad incoming arguments");
             }
 
-            return collection.GroupBy(selector)
+            return collection
+                .GroupBy(selector)
                 .Select(item => item.First());
         }
 

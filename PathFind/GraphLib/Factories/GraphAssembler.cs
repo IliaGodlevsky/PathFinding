@@ -1,9 +1,8 @@
 ﻿using Common;
 using GraphLib.Extensions;
 using GraphLib.Interface;
-using GraphLib.NullObjects;
+using GraphLib.VertexCost;
 using System;
-using System.Collections.Generic;
 using System.Linq;
 
 namespace GraphLib.Factories
@@ -55,13 +54,12 @@ namespace GraphLib.Factories
 
         private void AssembleVertex(IGraph graph, int index, int obstaclePercent)
         {
-            var coordinates = ToCoordinates(index, graph);
-            var coordinate = coordinateFactory.CreateCoordinate(coordinates);
+            var coordinate = ToCoordinate(index, graph);
 
             graph[coordinate] = vertexFactory.CreateVertex();
 
-            graph[coordinate].Cost = rand.GetRandomValueCost();
-            if (rand.IsObstacleChance(obstaclePercent))
+            graph[coordinate].Cost = new Cost();
+            if (IsObstacleChance(obstaclePercent))
             {
                 graph[coordinate].MarkAsObstacle();
             }
@@ -69,7 +67,15 @@ namespace GraphLib.Factories
             graph[coordinate].Position = coordinate;
         }
 
-        private IEnumerable<int> ToCoordinates(int index, IGraph graph)
+        private bool IsObstacleChance(int percentOfObstacles)
+        {
+            var percentRange = new ValueRange(100, 0);
+            percentOfObstacles = percentRange.ReturnInRange(percentOfObstacles);
+            var randomPercent = rand.Next(percentRange.UpperValueOfRange);
+            return randomPercent < percentOfObstacles;
+        }
+
+        private ICoordinate ToCoordinate(int index, IGraph graph)
         {
             var dimensions = graph.DimensionsSizes.ToArray();
 
@@ -84,9 +90,11 @@ namespace GraphLib.Factories
                 throw new ArgumentOutOfRangeException("Index is out of range");
             }
 
-            return Enumerable
+            var coordinates = Enumerable
                 .Range(0, dimensions.Length)
                 .Select(i => GetCoordinateValue(ref index, dimensions[i]));
+
+            return coordinateFactory.CreateCoordinate(coordinates);
         }
 
         private int GetCoordinateValue(ref int index, int dimensionSize)

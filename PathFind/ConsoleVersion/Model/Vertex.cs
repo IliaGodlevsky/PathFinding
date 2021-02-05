@@ -3,7 +3,7 @@ using GraphLib.Extensions;
 using GraphLib.Infrastructure;
 using GraphLib.Interface;
 using GraphLib.NullObjects;
-using GraphLib.Vertex.Cost;
+using GraphLib.VertexCost;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
@@ -38,8 +38,8 @@ namespace ConsoleVersion.Model
 
         public string Text { get; set; }
 
-        private VertexCost cost;
-        public VertexCost Cost
+        private Cost cost;
+        public Cost Cost
         {
             get { return cost; }
             set

@@ -1,7 +1,7 @@
 ﻿using GraphLib.Extensions;
 using GraphLib.Infrastructure;
 using GraphLib.Interface;
-using GraphLib.Vertex.Cost;
+using GraphLib.VertexCost;
 using System.Collections.Generic;
 using System.Windows;
 using System.Windows.Media;
@@ -110,7 +110,7 @@ namespace WPFVersion3D.Model
 
         public bool IsVisited { get; set; }
 
-        public VertexCost Cost { get; set; }
+        public Cost Cost { get; set; }
 
         public IList<IVertex> Neighbours { get; set; }
 

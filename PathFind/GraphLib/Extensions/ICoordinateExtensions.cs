@@ -15,26 +15,30 @@ namespace GraphLib.Extensions
         /// <param name="self"></param>
         /// <param name="dimensions">dimensions of array except first dimension</param>
         /// <returns>Index of coordinate in a multidimensional array</returns>
-        /// <exception cref="ArgumentException">Throws when <paramref name="self"/> 
-        /// coordinates values number is not equal to <paramref name="dimensions"/></exception>
-        /// <exception cref="ArgumentNullException">Thrown when any of arguments is null</exception>
+        /// <exception cref="ArgumentNullException">Thrown when argument is null</exception>
         /// <exception cref="ArgumentOutOfRangeException"></exception>
+        /// <exception cref="Exception"></exception>
         internal static int ToIndex(this ICoordinate self, params int[] dimensions)
         {
-            if (self == null || dimensions == null)
+            var message = "An error occured while converting coordinate to index\n";
+            if (dimensions == null)
             {
-                throw new ArgumentNullException("Argument can't be null");
+                message += "Argument can't be null\n";
+                throw new ArgumentNullException(nameof(dimensions), message);
             }
 
             if (self.CoordinatesValues.Count() != dimensions.Length)
             {
-                throw new ArgumentException("Dimensions length must be " +
-                    "equals to the number of coordinate values", nameof(dimensions));
+                message += "Dimensions length must be equal to the number of coordinate values\n";
+                message += $"{nameof(dimensions)} has {dimensions.Length} length " +
+                    $"and {nameof(self)} has {self.CoordinatesValues.Count()} length\n";
+                throw new ArgumentOutOfRangeException(nameof(dimensions), message);
             }
 
             if (!self.CoordinatesValues.Match(dimensions, (a, b) => a < b))
             {
-                throw new ArgumentOutOfRangeException("Coordinate is out of dimensions range");
+                message += "Coordinate is out of dimensions range\n";
+                throw new Exception(message);
             }
 
             return dimensions
@@ -88,9 +92,9 @@ namespace GraphLib.Extensions
         /// <exception cref="ArgumentNullException">Thrown when any of parametres is null</exception>
         public static bool IsWithinGraph(this ICoordinate coordinate, IGraph graph)
         {
-            if (coordinate == null || graph == null)
+            if (graph == null)
             {
-                throw new ArgumentNullException("Argument can't be null");
+                throw new ArgumentNullException(nameof(graph), "Argument can't be null");
             }
 
             return coordinate.CoordinatesValues.Match(graph.DimensionsSizes, IsWithin);

@@ -9,6 +9,7 @@ using GraphLib.Extensions;
 using GraphLib.Graphs;
 using GraphLib.Interface;
 using GraphLib.NullObjects;
+using GraphLib.VertexCost;
 using GraphViewModel;
 using System;
 using System.Drawing;
@@ -82,6 +83,14 @@ namespace ConsoleVersion.ViewModel
 
                 (Graph[point] as Vertex).Reverse();
             }
+        }
+
+        [MenuItem("Change vertex cost range", MenuItemPriority.Low)]
+        public void ChangeVertexCostValueRange()
+        {
+            string message = "Enter upper vertex cost value: ";
+            var upperValueRange = Input.InputNumber(message, 99, 1);
+            Cost.CostRange = new ValueRange(upperValueRange, 1);
         }
 
         [MenuItem("Change vertex cost", MenuItemPriority.Low)]

@@ -19,6 +19,12 @@ namespace ConsoleVersion.InputClass
             int upperRangeValue, int lowerRangeValue = 0)
         {
             var rangeOfValidInput = new ValueRange(upperRangeValue, lowerRangeValue);
+            return InputNumber(accompanyingMessage, rangeOfValidInput);
+        }
+
+        public static int InputNumber(string accompanyingMessage, 
+            ValueRange rangeOfValidInput)
+        {
             string userInput;
             do
             {
@@ -27,14 +33,6 @@ namespace ConsoleVersion.InputClass
             } while (!IsValidInput(userInput, rangeOfValidInput));
 
             return Convert.ToInt32(userInput);
-        }
-
-        public static int InputNumber(string accompanyingMessage, 
-            ValueRange rangeOfValidInput)
-        {
-            return InputNumber(accompanyingMessage, 
-                rangeOfValidInput.UpperValueOfRange, 
-                rangeOfValidInput.LowerValueOfRange);
         }
 
         /// <summary>

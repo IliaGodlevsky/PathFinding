@@ -1,5 +1,5 @@
 ﻿using GraphLib.Interface;
-using GraphLib.Vertex.Cost;
+using GraphLib.VertexCost;
 using System;
 
 namespace GraphLib.Infrastructure
@@ -16,7 +16,7 @@ namespace GraphLib.Infrastructure
 
         public bool IsObstacle { get; set; }
 
-        public VertexCost Cost { get; set; }
+        public Cost Cost { get; set; }
 
         public ICoordinate Position { get; set; }
     }

@@ -1,7 +1,7 @@
 ﻿using GraphLib.Extensions;
 using GraphLib.Infrastructure;
 using GraphLib.Interface;
-using GraphLib.Vertex.Cost;
+using GraphLib.VertexCost;
 using System.Collections.Generic;
 
 namespace Algorithm.Tests.TestsInfrastructure
@@ -22,7 +22,7 @@ namespace Algorithm.Tests.TestsInfrastructure
         public bool IsObstacle { get; set; }
         public bool IsStart { get; set; }
         public bool IsVisited { get; set; }
-        public VertexCost Cost { get; set; }
+        public Cost Cost { get; set; }
         public IList<IVertex> Neighbours { get; set; }
         public IVertex ParentVertex { get; set; }
         public double AccumulatedCost { get; set; }

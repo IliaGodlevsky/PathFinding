@@ -1,7 +1,7 @@
 ﻿using GraphLib.Extensions;
 using GraphLib.Infrastructure;
 using GraphLib.Interface;
-using GraphLib.Vertex.Cost;
+using GraphLib.VertexCost;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
@@ -54,8 +54,8 @@ namespace WPFVersion.Model
         public bool IsVisited { get; set; }
 
 
-        private VertexCost cost;
-        public VertexCost Cost
+        private Cost cost;
+        public Cost Cost
         {
             get => cost;
             set

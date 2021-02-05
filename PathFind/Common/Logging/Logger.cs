@@ -15,57 +15,39 @@ namespace Common
             }
         }
 
-        public void Trace(string message)
-        {
-            infoLogger.Trace(message);
-        }
+        public void Trace(string message) => Log(message, infoLogger.Trace);
 
-        public void Warn(Exception ex, string message=null)
-        {
-            if (string.IsNullOrEmpty(message))
-            {
-                infoLogger.Warn(ex, string.Empty);
-            }
-            else
-            {
-                infoLogger.Warn(ex, message);
-            }
-        }
+        public void Warn(Exception ex, string message = null) => Log(ex, message, infoLogger.Warn);
 
-        public void Error(Exception ex, string message=null)
-        {
-            if (string.IsNullOrEmpty(message))
-            {
-                errorLogger.Error(ex, string.Empty);
-            }
-            else
-            {
-                errorLogger.Error(ex, message);
-            }
-        }
+        public void Error(Exception ex, string message = null) => Log(ex, message, errorLogger.Error);
 
-        public void Fatal(Exception ex, string message=null)
-        {            
-            if(string.IsNullOrEmpty(message))
-            {
-                errorLogger.Fatal(ex, string.Empty);
-            }
-            else
-            {
-                errorLogger.Fatal(ex, message);
-            }
-        }
+        public void Fatal(Exception ex, string message = null) => Log(ex, message, errorLogger.Fatal);
 
-        public void Info(string message)
-        {
-            infoLogger.Info(message);
-        }
+        public void Info(string message) => Log(message, infoLogger.Info);
 
         public void Debug(string message)
         {
 #if DEBUG
-            debugLogger.Debug(message);
+            Log(message, debugLogger.Debug);
 #endif
+        }
+
+        private void Log(string message, Action<string> action)
+        {
+            action(message);
+        }
+
+        private void Log(Exception ex, string message, 
+            Action<Exception, string> action)
+        {
+            if (string.IsNullOrEmpty(message))
+            {
+                action(ex, string.Empty);
+            }
+            else
+            {
+                action(ex, message);
+            }
         }
 
         private Logger()
