@@ -92,7 +92,7 @@ namespace ConsoleVersion.View
                 = Convert.ToInt32(ConfigurationManager.AppSettings["distanceBetweenVertices"]);
 
             return Width * lateralDistanceBetweenVertices
-                   + MainView.WidthOfOrdinateView - 2;
+                   + MainView.WidthOfOrdinateView - 1;
         }
 
         private string Abscissa
