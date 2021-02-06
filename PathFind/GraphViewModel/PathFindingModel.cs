@@ -1,5 +1,4 @@
 ﻿using Algorithm;
-using Algorithm.AlgorithmCreating;
 using Algorithm.EventArguments;
 using Algorithm.Interface;
 using Common;
@@ -12,6 +11,8 @@ using GraphViewModel.Resources;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+
+using static Algorithm.AlgorithmCreating.AlgorithmFactory;
 
 namespace GraphLib.ViewModel
 {
@@ -38,8 +39,7 @@ namespace GraphLib.ViewModel
         {
             try
             {
-                var algorithm = AlgorithmFactory.
-                    CreateAlgorithm(AlgorithmKey);
+                var algorithm = GetAlgorithm(AlgorithmKey);
                 algorithm.Graph = mainViewModel.Graph;
                 intermitter = new AlgorithmIntermit(DelayTime);
                 intermitter.OnIntermitted += OnAlgorithmIntermitted;

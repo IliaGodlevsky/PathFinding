@@ -70,8 +70,6 @@ namespace GraphLib.Extensions
             self.AsParallel().ForAll(vertex => vertex.SetNeighbours(self));
         }
 
-        
-
         public static bool IsReadyForPathfinding(this IGraph self)
         {
             return !self.End.IsDefault

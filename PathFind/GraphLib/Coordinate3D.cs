@@ -29,11 +29,6 @@ namespace GraphLib.NullObjects
 
         }
 
-        public override object Clone()
-        {
-            return new Coordinate3D(X, Y, Z);
-        }
-
         protected override ICoordinate CreateInstance(int[] values)
         {
             return new Coordinate3D(values);

@@ -10,7 +10,7 @@ namespace GraphLib.Infrastructure
         public VertexSerializationInfo(IVertex vertex)
         {
             IsObstacle = vertex.IsObstacle;
-            Cost = vertex.Cost;
+            Cost = (Cost)vertex.Cost.Clone();
             Position = (ICoordinate)vertex.Position.Clone();
         }
 

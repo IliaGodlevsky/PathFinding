@@ -56,17 +56,25 @@ namespace ConsoleVersion.ViewModel
         [MenuItem("Find path", MenuItemPriority.High)]
         public override void FindPath()
         {
-            try
+            if (HasVerticesToChooseAsExtream())
             {
-                var model = new PathFindingViewModel(this);
-                model.OnPathNotFound += OnPathNotFound;
-                var view = new PathFindView(model);
+                try
+                {
+                    var model = new PathFindingViewModel(this);
+                    model.OnPathNotFound += OnPathNotFound;
+                    var view = new PathFindView(model);
 
-                view.Start();
+                    view.Start();
+                }
+                catch (Exception ex)
+                {
+                    Logger.Instance.Error(ex);
+                }
             }
-            catch(Exception ex)
+            else
             {
-                Logger.Instance.Error(ex);
+                Console.WriteLine("No vertices to choose as extreme vertices");
+                Console.ReadLine();
             }
         }
 
@@ -155,6 +163,12 @@ namespace ConsoleVersion.ViewModel
         {
             Console.WriteLine(ex.Message);
             Console.ReadLine();
+        }
+
+        private bool HasVerticesToChooseAsExtream()
+        {
+            var verticesWithNeighboursCount = Graph.Count(vertex => vertex.Neighbours.Any());
+            return verticesWithNeighboursCount >= 2;
         }
     }
 }

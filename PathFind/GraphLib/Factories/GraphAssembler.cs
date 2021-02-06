@@ -5,6 +5,8 @@ using GraphLib.VertexCost;
 using System;
 using System.Linq;
 
+using static System.Linq.Enumerable;
+
 namespace GraphLib.Factories
 {
     /// <summary>
@@ -21,11 +23,6 @@ namespace GraphLib.Factories
             this.vertexFactory = vertexFactory;
             this.coordinateFactory = coordinateFactory;
             this.graphFactory = graphFactory;
-        }
-
-        static GraphAssembler()
-        {
-            rand = new Random();
         }
 
         /// <summary>
@@ -55,15 +52,12 @@ namespace GraphLib.Factories
         private void AssembleVertex(IGraph graph, int index, int obstaclePercent)
         {
             var coordinate = ToCoordinate(index, graph);
-
             graph[coordinate] = vertexFactory.CreateVertex();
-
             graph[coordinate].Cost = new Cost();
             if (IsObstacleChance(obstaclePercent))
             {
                 graph[coordinate].MarkAsObstacle();
             }
-
             graph[coordinate].Position = coordinate;
         }
 
@@ -71,7 +65,7 @@ namespace GraphLib.Factories
         {
             var percentRange = new ValueRange(100, 0);
             percentOfObstacles = percentRange.ReturnInRange(percentOfObstacles);
-            var randomPercent = rand.Next(percentRange.UpperValueOfRange);
+            var randomPercent = percentRange.GetRandomValueFromRange();
             return randomPercent < percentOfObstacles;
         }
 
@@ -90,8 +84,7 @@ namespace GraphLib.Factories
                 throw new ArgumentOutOfRangeException("Index is out of range");
             }
 
-            var coordinates = Enumerable
-                .Range(0, dimensions.Length)
+            var coordinates = Range(0, dimensions.Length)
                 .Select(i => GetCoordinateValue(ref index, dimensions[i]));
 
             return coordinateFactory.CreateCoordinate(coordinates);
@@ -107,7 +100,5 @@ namespace GraphLib.Factories
         private readonly ICoordinateFactory coordinateFactory;
         private readonly IVertexFactory vertexFactory;
         private readonly IGraphFactory graphFactory;
-
-        private static readonly Random rand;
     }
 }

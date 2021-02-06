@@ -52,6 +52,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Handlers\ActivatorHandler.cs" />
     <Compile Include="Interfaces\IViewModel.cs" />
     <Compile Include="ObjectActivator.cs" />
     <Compile Include="Extensions\EnumExtensions.cs" />

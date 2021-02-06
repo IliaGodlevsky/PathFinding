@@ -27,11 +27,6 @@ namespace GraphLib.NullObjects
 
         }
 
-        public override object Clone()
-        {
-            return new Coordinate2D(X, Y);
-        }
-
         protected override ICoordinate CreateInstance(int[] values)
         {
             return new Coordinate2D(values);

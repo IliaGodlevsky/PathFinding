@@ -9,7 +9,7 @@ namespace GraphLib.VertexCost
     /// Represents a cost of vertex
     /// </summary>
     [Serializable]
-    public sealed class Cost
+    public sealed class Cost : ICloneable
     {
         /// <summary>
         /// Creates a new instance of 
@@ -22,7 +22,7 @@ namespace GraphLib.VertexCost
         {
             startCost = CostRange.ReturnInRange(startCost);
             CurrentCost = startCost;
-            weightedCost = startCost;
+            WeightedCost = startCost;
             Status = new WeightedState();
             UnweightedCostView = string.Empty;
         }
@@ -62,7 +62,7 @@ namespace GraphLib.VertexCost
         /// </summary>
         public void MakeWeighted()
         {
-            CurrentCost = weightedCost;
+            CurrentCost = WeightedCost;
             Status = new WeightedState();
         }
 
@@ -86,7 +86,7 @@ namespace GraphLib.VertexCost
             }
 
             var message = "An error was occured while comparing\n";
-            message += $"an instance of {nameof(Cost)} and {nameof(obj)}\n";
+            message += $"an instance of {nameof(Cost)} and {obj.GetType().Name}\n";
             throw new ArgumentException(message, nameof(obj));
         }
 
@@ -106,9 +106,20 @@ namespace GraphLib.VertexCost
             return Status.ToString(this);
         }
 
+        public object Clone()
+        {
+            return new Cost
+            {
+                CurrentCost = CurrentCost,
+                Status = (ICostState)Status.Clone(),
+                UnweightedCostView = UnweightedCostView,
+                WeightedCost = WeightedCost
+            };
+        }
+
+        private int WeightedCost { get; set; }
         private ICostState Status { get; set; }
 
         private const int UnweightedCost = 1;
-        private readonly int weightedCost;
     }
 }

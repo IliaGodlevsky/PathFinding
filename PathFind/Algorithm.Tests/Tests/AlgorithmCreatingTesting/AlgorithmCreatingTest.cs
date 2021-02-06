@@ -10,7 +10,7 @@ namespace Algorithm.Tests.Tests.AlgorithmCreatingTesting
         [Test, TestCaseSource(nameof(AlgorithmKeys))]
         public void CreateAlgorithm_ValidKey_ReturnsAlgorithm(string key)
         {
-            var algorithm = AlgorithmFactory.CreateAlgorithm(key);
+            var algorithm = AlgorithmFactory.GetAlgorithm(key);
 
             Assert.IsTrue(!algorithm.IsDefault);
         }
@@ -18,7 +18,7 @@ namespace Algorithm.Tests.Tests.AlgorithmCreatingTesting
         [Test, TestCaseSource(nameof(FakeAlgorithmKeys))]
         public void CreateAlgorithm_InvalidKey_ReturnsDefaultAlgorithm(string key)
         {
-            var algorithm = AlgorithmFactory.CreateAlgorithm(key);
+            var algorithm = AlgorithmFactory.GetAlgorithm(key);
 
             Assert.IsTrue(algorithm.IsDefault);
         }

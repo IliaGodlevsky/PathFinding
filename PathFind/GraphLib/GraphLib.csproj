@@ -49,6 +49,7 @@
     <Compile Include="Coordinate3D.cs" />
     <Compile Include="Base\BaseCoordinate.cs" />
     <Compile Include="Interface\ICoordinate.cs" />
+    <Compile Include="Interface\IVertexState.cs" />
     <Compile Include="NullObjects\DefaultCoordinate.cs" />
     <Compile Include="Factories\Coordinate2DFactory.cs" />
     <Compile Include="Factories\Coordinate3DFactory.cs" />

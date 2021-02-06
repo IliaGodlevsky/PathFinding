@@ -66,7 +66,7 @@ namespace Algorithm.Algorithms
         protected override void PrepareForPathfinding()
         {
             base.PrepareForPathfinding();
-            SetVerticesAccumulatedCost();
+            SetVerticesAccumulatedCostToInfifnity();
         }
 
         protected List<IVertex> verticesQueue;
@@ -100,17 +100,11 @@ namespace Algorithm.Algorithms
                 .ToList();
         }
 
-        private void SetVerticesAccumulatedCost(double accumulatedCost
-            = double.PositiveInfinity)
+        private void SetVerticesAccumulatedCostToInfifnity()
         {
-            Graph.ForEach(vertex =>
-            {
-                if (!vertex.IsStart && !vertex.IsObstacle)
-                {
-                    var coordinate = vertex.Position;
-                    Graph[coordinate].AccumulatedCost = accumulatedCost;
-                }
-            });
+            Graph
+                .Where(vertex => !vertex.IsStart && !vertex.IsObstacle)
+                .ForEach(vertex => vertex.AccumulatedCost = double.PositiveInfinity);
         }
     }
 }

@@ -6,6 +6,7 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
+
 using static Common.ObjectActivator;
 
 namespace Algorithm.AlgorithmCreating
@@ -13,7 +14,7 @@ namespace Algorithm.AlgorithmCreating
     public static class AlgorithmFactory
     {
         /// <summary>
-        /// Descriptions of algorithms in alphabeth order
+        /// Descriptions of algorithms
         /// </summary>
         public static IEnumerable<string> AlgorithmsDescriptions { get; private set; }
 
@@ -21,11 +22,11 @@ namespace Algorithm.AlgorithmCreating
         {
             AlgorithmsInterface = typeof(IAlgorithm);
             Algorithms = CreateAlgorithmsDictionary();
-            AlgorithmsDescriptions = Algorithms.Keys.OrderBy(key => key);
+            AlgorithmsDescriptions = Algorithms.Keys.OrderBy(Key);
         }
 
         /// <summary>
-        /// Creates algorithm according to <paramref name="algorithmDescription"></paramref>
+        /// Returns algorithm according to <paramref name="algorithmDescription"></paramref>
         /// </summary>
         /// <param name="algorithmDescription"></param>
         /// <param name="graph"></param>
@@ -33,25 +34,29 @@ namespace Algorithm.AlgorithmCreating
         /// <see cref="DefaultAlgorithm"></see> when doesn't</returns>
         /// <exception cref="KeyNotFoundException">Thrown when activator 
         /// doesn't exist for algorithm with <paramref name="algorithmDescription"></paramref> key</exception>
-        public static IAlgorithm CreateAlgorithm(string algorithmDescription)
+        public static IAlgorithm GetAlgorithm(string algorithmDescription)
         {
-            return Algorithms.TryGetValue(algorithmDescription, out Type algoType)
-                ? CreateInstance<IAlgorithm>(algoType)
-                : new DefaultAlgorithm();
+            return Algorithms.TryGetValue(algorithmDescription, out IAlgorithm algorithm)
+                ? algorithm : new DefaultAlgorithm();
         }
 
-        private static IDictionary<string, Type> Algorithms { get; set; }
+        private static IDictionary<string, IAlgorithm> Algorithms { get; set; }
 
-        private static Type AlgorithmsInterface { get; set; }
+        private static Type AlgorithmsInterface { get; }
 
-        private static IDictionary<string, Type> CreateAlgorithmsDictionary()
+        private static IDictionary<string, IAlgorithm> CreateAlgorithmsDictionary()
         {
             return AlgorithmsInterface
                 .GetAssembly()
                 .GetTypes()
                 .Where(IsValidAlgorithm)
                 .ForEach(RegisterConstructor)
-                .ToDictionary(GetAlgorithmDescription);
+                .ToDictionary(GetAlgorithmDescription, GetInstance);
+        }
+
+        private static IAlgorithm GetInstance(Type algorithmType)
+        {
+            return CreateInstance<IAlgorithm>(algorithmType);
         }
 
         private static void RegisterConstructor(Type type)
@@ -72,5 +77,7 @@ namespace Algorithm.AlgorithmCreating
                 && !type.IsFilterable()
                 && !type.IsAbstract;
         }
+
+        private static string Key(string key) => key;
     }
 }

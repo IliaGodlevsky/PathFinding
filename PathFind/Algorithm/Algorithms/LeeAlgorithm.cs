@@ -64,14 +64,13 @@ namespace Algorithm.Algorithms
 
         private void SpreadWaves()
         {
-            CurrentVertex.GetUnvisitedNeighbours().ForEach(neighbour =>
-            {
-                if (neighbour.AccumulatedCost == 0)
-                {
+            CurrentVertex
+                .GetUnvisitedNeighbours()
+                .Where(neighbour => neighbour.AccumulatedCost == 0)
+                .ForEach(neighbour => {
                     neighbour.AccumulatedCost = CreateWave();
                     neighbour.ParentVertex = CurrentVertex;
-                }
-            });
+                });
         }
 
         private void ExtractNeighbours()

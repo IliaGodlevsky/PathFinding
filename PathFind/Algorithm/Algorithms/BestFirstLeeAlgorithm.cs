@@ -17,7 +17,11 @@ namespace Algorithm.PathFindingAlgorithms
         public override IGraph Graph
         {
             get => graph;
-            set { graph = value; HeuristicFunction = vertex => vertex.CalculateChebyshevDistanceTo(graph.End); }
+            set 
+            { 
+                graph = value; 
+                HeuristicFunction = vertex => vertex.CalculateChebyshevDistanceTo(graph.End); 
+            }
         }
 
         public BestFirstLeeAlgorithm() : this(new NullGraph())

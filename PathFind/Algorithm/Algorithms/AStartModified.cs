@@ -19,7 +19,7 @@ namespace Algorithm.Algorithms
             {
                 base.Graph = value;
                 PercentOfFarthestVerticesToDelete
-                    = CalculatePercentOfFarthestVerticesToDelete();
+                    = CalculatePercentOfFarthestVerticesToDelete;
             }
         }
 
@@ -83,10 +83,13 @@ namespace Algorithm.Algorithms
             }
         }
 
-        private int CalculatePercentOfFarthestVerticesToDelete()
+        private int CalculatePercentOfFarthestVerticesToDelete
         {
-            var partOfVertexToDelete = Math.Floor(Math.Log(Graph.GetSize() + 1, 4));
-            return Convert.ToInt32(partOfVertexToDelete);
+            get
+            {
+                var partOfVertexToDelete = Math.Floor(Math.Log(Graph.GetSize() + 1, 4));
+                return Convert.ToInt32(partOfVertexToDelete);
+            }
         }
 
         private readonly ValueRange percentValueRange = new ValueRange(99, 0);

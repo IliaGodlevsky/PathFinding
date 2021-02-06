@@ -1,5 +1,4 @@
-﻿using Algorithm.AlgorithmCreating;
-using Common;
+﻿using Common;
 using ConsoleVersion.InputClass;
 using ConsoleVersion.Model;
 using ConsoleVersion.Resource;
@@ -13,6 +12,8 @@ using System;
 using System.Configuration;
 using System.Linq;
 
+using static Algorithm.AlgorithmCreating.AlgorithmFactory;
+
 namespace ConsoleVersion.ViewModel
 {
     internal class PathFindingViewModel : PathFindingModel
@@ -25,7 +26,7 @@ namespace ConsoleVersion.ViewModel
 
         public PathFindingViewModel(IMainModel model) : base(model)
         {
-            maxAlgorithmKeysNumber = AlgorithmFactory.AlgorithmsDescriptions.Count();
+            maxAlgorithmKeysNumber = AlgorithmsDescriptions.Count();
             minAlgorithmKeysNumber = 1;
 
             int algorithmDelayTimeUpperRange
@@ -45,7 +46,7 @@ namespace ConsoleVersion.ViewModel
                 mainModel.DisplayGraph();
 
                 var algorithmKeyIndex = GetAlgorithmKeyIndex();
-                var algorithmKeys = AlgorithmFactory.AlgorithmsDescriptions;
+                var algorithmKeys = AlgorithmsDescriptions;
                 AlgorithmKey = algorithmKeys.ElementAt(algorithmKeyIndex);
 
                 DelayTime = Input.InputNumber(

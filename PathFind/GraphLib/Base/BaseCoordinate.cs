@@ -77,7 +77,10 @@ namespace GraphLib.Base
             return information.ToString();
         }
 
-        public abstract object Clone();
+        public virtual object Clone()
+        {
+            return CreateInstance(CoordinatesValues.ToArray());
+        }
 
         protected abstract ICoordinate CreateInstance(int[] values);
 

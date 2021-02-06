@@ -1,18 +1,13 @@
-﻿using System;
+﻿using Common.Handlers;
+using System;
 using System.Collections.Generic;
 using System.Linq.Expressions;
 using System.Reflection;
 
+using static System.Linq.Expressions.Expression;
+
 namespace Common
 {
-    /// <summary>
-    /// A handler for constructor
-    /// </summary>
-    /// <typeparam name="TReturnType"></typeparam>
-    /// <param name="args"></param>
-    /// <returns><typeparamref name="TReturnType"></typeparamref></returns>
-    public delegate TReturnType ActivatorHandler<out TReturnType>(params object[] args) where TReturnType : class;
-
     public static class ObjectActivator
     {
         static ObjectActivator()
@@ -32,10 +27,10 @@ namespace Common
         public static Delegate CreateActivator<TReturnType>(ConstructorInfo ctor) where TReturnType : class
         {
             var ctorParameters = ctor.GetParameters();
-            var parameter = Expression.Parameter(typeof(object[]), "args");
+            var parameter = Parameter(typeof(object[]), "args");
             var argsExpression = CreateArgumentExpressions(ctorParameters, parameter);
-            var newExpression = Expression.New(ctor, argsExpression);
-            var lambda = Expression.Lambda(typeof(ActivatorHandler<TReturnType>), newExpression, parameter);
+            var newExpression = New(ctor, argsExpression);
+            var lambda = Lambda(typeof(ActivatorHandler<TReturnType>), newExpression, parameter);
 
             return lambda.Compile();
         }
@@ -100,10 +95,10 @@ namespace Common
         {
             for (int i = 0; i < ctorParametres.Length; i++)
             {
-                var index = Expression.Constant(i);
+                var index = Constant(i);
                 var parameterType = ctorParametres[i].ParameterType;
-                var parameterAccessorExpression = Expression.ArrayIndex(parameter, index);
-                var parameterCastExpression = Expression.Convert(parameterAccessorExpression, parameterType);
+                var parameterAccessorExpression = ArrayIndex(parameter, index);
+                var parameterCastExpression = Convert(parameterAccessorExpression, parameterType);
                 yield return parameterCastExpression;
             }
         }
