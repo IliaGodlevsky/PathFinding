@@ -24,9 +24,9 @@ namespace GraphLib.NullObjects
 
         public override bool Equals(object pos)
         {
-            if (pos is ICoordinate coordinate)
+            if (pos is ICoordinate)
             {
-                return coordinate.IsEqual(this);
+                return false;
             }
 
             throw new ArgumentException("Invalid value to compare");

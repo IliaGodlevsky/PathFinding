@@ -37,7 +37,7 @@ namespace Algorithm.Algorithms
         public override void FindPath()
         {
             PrepareForPathfinding();
-            while (!IsDestination)
+            while (!IsDestination())
             {
                 PreviousVertex = CurrentVertex;
                 CurrentVertex = NextVertex;

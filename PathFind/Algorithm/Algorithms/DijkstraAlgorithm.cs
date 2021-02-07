@@ -35,7 +35,7 @@ namespace Algorithm.Algorithms
                 CurrentVertex.IsVisited = true;
                 var args = new AlgorithmEventArgs(Graph, CurrentVertex);
                 RaiseOnVertexVisitedEvent(args);
-            } while (!IsDestination);
+            } while (!IsDestination());
             CompletePathfinding();
         }
 

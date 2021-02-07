@@ -93,7 +93,7 @@ namespace ConsoleVersion.ViewModel
             }
         }
 
-        [MenuItem("Change vertex cost range", MenuItemPriority.Low)]
+        [MenuItem("Change cost range", MenuItemPriority.Low)]
         public void ChangeVertexCostValueRange()
         {
             string message = "Enter upper vertex cost value: ";

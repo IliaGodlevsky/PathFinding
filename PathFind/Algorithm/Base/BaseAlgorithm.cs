@@ -42,7 +42,10 @@ namespace Algorithm.Base
 
         protected abstract IVertex NextVertex { get; }
 
-        protected virtual bool IsDestination => CurrentVertex.IsEnd;
+        protected virtual bool IsDestination()
+        {
+            return CurrentVertex.IsEnd && ReferenceEquals(CurrentVertex, Graph.End);
+        }
 
         protected void RaiseOnAlgorithmStartedEvent(AlgorithmEventArgs e)
         {
