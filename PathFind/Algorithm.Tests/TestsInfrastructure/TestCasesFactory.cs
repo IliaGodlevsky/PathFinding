@@ -17,8 +17,8 @@ namespace Algorithm.Tests.TestsInfrastructure
         private const int Length3D = 8;
         private const int Height3D = 9;
 
-        private static readonly IGraphAssembler graph2DFiller;
-        private static readonly IGraphAssembler graph3DFiller;
+        private static readonly IGraphAssembler graph2DAssembler;
+        private static readonly IGraphAssembler graph3DAssembler;
 
         static TestCasesFactory()
         {
@@ -29,8 +29,8 @@ namespace Algorithm.Tests.TestsInfrastructure
             var graph2DFactory = new Graph2DFactory();
             var graph3DFactory = new Graph3DFactory();
 
-            graph2DFiller = new GraphAssembler(vertexFactory, coordinate2DFactory, graph2DFactory);
-            graph3DFiller = new GraphAssembler(vertexFactory, coordinate3DFactory, graph3DFactory);
+            graph2DAssembler = new GraphAssembler(vertexFactory, coordinate2DFactory, graph2DFactory);
+            graph3DAssembler = new GraphAssembler(vertexFactory, coordinate3DFactory, graph3DFactory);
         }
 
         internal static IEnumerable AlgorithmWithGraphsTestCases
@@ -74,11 +74,8 @@ namespace Algorithm.Tests.TestsInfrastructure
 
         private static IGraph GetGraph2D()
         {
-            var graph = graph2DFiller
-                .AssembleGraph(
-                ObstaclePercent,
-                Width2D,
-                Length2D);
+            var graph = graph2DAssembler
+                .AssembleGraph(ObstaclePercent, Width2D, Length2D);
 
             graph.Start = graph.First();
             graph.End = graph.Last();
@@ -87,12 +84,8 @@ namespace Algorithm.Tests.TestsInfrastructure
 
         private static IGraph GetGraph3D()
         {
-            var graph = graph3DFiller
-                .AssembleGraph(
-                ObstaclePercent,
-                Width3D,
-                Length3D,
-                Height3D);
+            var graph = graph3DAssembler
+                .AssembleGraph(ObstaclePercent, Width3D, Length3D, Height3D);
 
             graph.Start = graph.First();
             graph.End = graph.Last();
