@@ -11,7 +11,11 @@ namespace Algorithm.Algorithms
         public override IGraph Graph
         {
             get => graph;
-            set { graph = value; GreedyFunction = vertex => vertex.Cost.CurrentCost; }
+            set 
+            { 
+                graph = value; 
+                GreedyFunction = vertex => vertex.Cost.CurrentCost; 
+            }
         }
 
         public CostGreedyAlgorithm() : this(new NullGraph())

@@ -26,10 +26,12 @@ namespace Common.Extensions
         public static IEnumerable<T> DistinctBy<T, TKey>(
             this IEnumerable<T> collection, Func<T, TKey> selector)
         {
+            #region InvariantsObservance
             if (collection == null || selector == null)
             {
                 throw new ArgumentNullException("Bad incoming arguments");
             }
+            #endregion
 
             return collection
                 .GroupBy(selector)
@@ -103,6 +105,7 @@ namespace Common.Extensions
 
         public static bool Match<T>(this IEnumerable<T> collection, IEnumerable<T> second, Func<T, T, bool> comparer)
         {
+            #region InvariantsObservance
             if (collection.Count() != second.Count())
             {
                 return false;
@@ -112,6 +115,7 @@ namespace Common.Extensions
             {
                 return true;
             }
+            #endregion
 
             int limit = second.Count();
 

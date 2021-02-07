@@ -20,6 +20,7 @@ namespace GraphLib.Extensions
         /// <exception cref="Exception"></exception>
         internal static int ToIndex(this ICoordinate self, params int[] dimensions)
         {
+            #region InvariantsObservance
             var message = "An error occured while converting coordinate to index\n";
             if (dimensions == null)
             {
@@ -40,6 +41,7 @@ namespace GraphLib.Extensions
                 message += "Coordinate is out of dimensions range\n";
                 throw new Exception(message);
             }
+            #endregion
 
             return dimensions
                 .Skip(1)
@@ -72,10 +74,12 @@ namespace GraphLib.Extensions
         /// or any of parametres is null</returns>
         public static bool IsEqual(this ICoordinate self, ICoordinate coordinate)
         {
+            #region InvariantsObservance
             if (self == null || coordinate == null)
             {
                 return false;
             }
+            #endregion
 
             return self.CoordinatesValues.SequenceEqual(coordinate.CoordinatesValues);
         }
@@ -92,10 +96,12 @@ namespace GraphLib.Extensions
         /// <exception cref="ArgumentNullException">Thrown when any of parametres is null</exception>
         public static bool IsWithinGraph(this ICoordinate coordinate, IGraph graph)
         {
+            #region InvariantsObservance
             if (graph == null)
             {
                 throw new ArgumentNullException(nameof(graph), "Argument can't be null");
             }
+            #endregion
 
             return coordinate.CoordinatesValues.Match(graph.DimensionsSizes, IsWithin);
         }

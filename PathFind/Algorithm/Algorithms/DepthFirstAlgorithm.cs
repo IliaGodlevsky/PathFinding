@@ -21,7 +21,11 @@ namespace Algorithm.Algorithms
         public override IGraph Graph
         {
             get => graph;
-            set { graph = value; GreedyFunction = vertex => vertex.CalculateChebyshevDistanceTo(graph.Start); }
+            set 
+            { 
+                graph = value; 
+                GreedyFunction = vertex => vertex.CalculateChebyshevDistanceTo(graph.Start); 
+            }
         }
 
         public DepthFirstAlgorithm() : this(new NullGraph())

@@ -24,6 +24,7 @@ namespace Algorithm.Extensions
         /// <remarks><a href="https://en.wikipedia.org/wiki/Chebyshev_distance"/></remarks>
         public static double CalculateChebyshevDistanceTo(this IVertex self, IVertex toVertex)
         {
+            #region InvariantsObservance
             if (self == null || toVertex == null)
             {
                 throw new ArgumentNullException("Argument can't be null");
@@ -38,6 +39,7 @@ namespace Algorithm.Extensions
             {
                 throw new ArgumentException("Can't calculate distance between vertices with different coordinates count");
             }
+            #endregion
 
             return self.Position.CoordinatesValues
                 .Zip(toVertex.Position.CoordinatesValues, CalculateAbsSub)

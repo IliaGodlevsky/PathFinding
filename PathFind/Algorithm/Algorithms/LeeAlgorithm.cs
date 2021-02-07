@@ -49,9 +49,9 @@ namespace Algorithm.Algorithms
         {
             get
             {
-                verticesQueue = verticesQueue.
-                    Where(vertex => !vertex.IsVisited).
-                    ToQueue();
+                verticesQueue = verticesQueue
+                    .Where(vertex => !vertex.IsVisited)
+                    .ToQueue();
 
                 return verticesQueue.DequeueOrDefault();
             }

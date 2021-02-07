@@ -12,7 +12,11 @@ namespace Algorithm.Algorithms
         public override IGraph Graph
         {
             get => graph;
-            set { graph = value; GreedyFunction = vertex => vertex.CalculateChebyshevDistanceTo(graph.End); }
+            set 
+            { 
+                graph = value; 
+                GreedyFunction = vertex => vertex.CalculateChebyshevDistanceTo(graph.End); 
+            }
         }
 
         public DistanceGreedyAlgoritm() : this(new NullGraph())

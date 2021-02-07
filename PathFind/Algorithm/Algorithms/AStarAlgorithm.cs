@@ -15,7 +15,11 @@ namespace Algorithm.Algorithms
         public override IGraph Graph
         {
             get => graph;
-            set { graph = value; HeuristicFunction = vertex => vertex.CalculateChebyshevDistanceTo(graph.End); }
+            set 
+            { 
+                graph = value; 
+                HeuristicFunction = vertex => vertex.CalculateChebyshevDistanceTo(graph.End); 
+            }
         }
 
         public AStarAlgorithm() : this(new NullGraph())
