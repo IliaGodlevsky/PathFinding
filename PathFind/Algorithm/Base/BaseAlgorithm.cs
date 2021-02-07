@@ -1,6 +1,7 @@
 ﻿using Algorithm.EventArguments;
 using Algorithm.Handlers;
 using Algorithm.Interface;
+using GraphLib.Extensions;
 using GraphLib.Interface;
 using GraphLib.NullObjects;
 
@@ -44,7 +45,7 @@ namespace Algorithm.Base
 
         protected virtual bool IsDestination()
         {
-            return CurrentVertex.IsEnd && ReferenceEquals(CurrentVertex, Graph.End);
+            return CurrentVertex.IsEqual(Graph.End) || CurrentVertex.IsDefault;
         }
 
         protected void RaiseOnAlgorithmStartedEvent(AlgorithmEventArgs e)
