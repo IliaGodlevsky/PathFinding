@@ -65,7 +65,7 @@ namespace GraphLib.ViewModel
         {
             if (e is AlgorithmEventArgs args)
             {
-                if (args.Vertex.IsSimpleVertex())
+                if (args.Vertex.IsRegularVertex())
                 {
                     args.Vertex.MarkAsVisited();
                 }
@@ -81,7 +81,7 @@ namespace GraphLib.ViewModel
         {
             if (e is AlgorithmEventArgs args)
             {
-                if (args.Vertex.IsSimpleVertex())
+                if (args.Vertex.IsRegularVertex())
                 {
                     args.Vertex.MarkAsEnqueued();
                 }

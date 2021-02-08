@@ -38,7 +38,7 @@ namespace GraphLib.Infrastructure
 
         public void HighlightPath()
         {
-            Path.Where(vertex => vertex.IsSimpleVertex())
+            Path.Where(vertex => vertex.IsRegularVertex())
                 .ForEach(vertex => vertex.MarkAsPath());
         }
 

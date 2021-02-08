@@ -91,7 +91,7 @@ namespace WPFVersion.Model
 
         public void MarkAsObstacle()
         {
-            this.WashVertex();
+            IsObstacle = true;
             Dispatcher.Invoke(() => Background = new SolidColorBrush(Colors.Black));
         }
 

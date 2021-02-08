@@ -139,7 +139,7 @@ namespace WPFVersion3D.Model
 
         public void MarkAsObstacle()
         {
-            this.WashVertex();
+            IsObstacle = true;
             Dispatcher.Invoke(() => Brush = ObstacleVertexBrush);
         }
 

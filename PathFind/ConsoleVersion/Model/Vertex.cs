@@ -91,7 +91,7 @@ namespace ConsoleVersion.Model
 
         public void MarkAsObstacle()
         {
-            this.WashVertex();
+            IsObstacle = true;
             Colour = Color.FromKnownColor(KnownColor.Black);
         }
 

@@ -89,7 +89,7 @@ namespace GraphLib.Base
 
         private void MakeObstacle(IVertex vertex)
         {
-            if (vertex.IsSimpleVertex() && !vertex.IsVisited)
+            if (vertex.IsRegularVertex() && !vertex.IsVisited)
             {
                 vertex.Isolate();
                 vertex.IsObstacle = true;

@@ -4,9 +4,10 @@ using GraphLib.Interface;
 using GraphLib.VertexCost;
 using System;
 using System.Collections.Generic;
-using System.Configuration;
 using System.Drawing;
 using System.Windows.Forms;
+
+using static System.Configuration.ConfigurationManager;
 
 namespace WindowsFormsVersion.Model
 {
@@ -14,8 +15,8 @@ namespace WindowsFormsVersion.Model
     {
         public Vertex() : base()
         {
-            float fontSizeRatio = float.Parse(ConfigurationManager.AppSettings["textToSizeRatio"]);
-            int vertexSize = Convert.ToInt32(ConfigurationManager.AppSettings["vertexSize"]);
+            float fontSizeRatio = float.Parse(AppSettings["textToSizeRatio"]);
+            int vertexSize = Convert.ToInt32(AppSettings["vertexSize"]);
             float fontSize = vertexSize * fontSizeRatio;
             Font = new Font("Times New Roman", fontSize);
             Size = new Size(vertexSize, vertexSize);
@@ -44,8 +45,8 @@ namespace WindowsFormsVersion.Model
 
         public void MarkAsObstacle()
         {
+            IsObstacle = true;
             BackColor = Color.FromKnownColor(KnownColor.Black);
-            this.WashVertex();
         }
 
         public void MarkAsSimpleVertex()

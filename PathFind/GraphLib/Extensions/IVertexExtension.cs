@@ -2,6 +2,7 @@
 using GraphLib.Infrastructure;
 using GraphLib.Interface;
 using GraphLib.NullObjects;
+using GraphLib.VertexCost;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,7 +13,7 @@ namespace GraphLib.Extensions
     {
         public static bool IsValidToBeExtreme(this IVertex vertex)
         {
-            return vertex.IsSimpleVertex() && !vertex.IsIsolated();
+            return vertex.IsRegularVertex() && !vertex.IsIsolated();
         }
 
         public static bool IsIsolated(this IVertex vertex)
@@ -44,7 +45,7 @@ namespace GraphLib.Extensions
         public static void Initialize(this IVertex vertex, VertexSerializationInfo info)
         {
             vertex.Position = (ICoordinate)info.Position.Clone();
-            vertex.Cost = info.Cost;
+            vertex.Cost = (Cost)info.Cost.Clone();
             vertex.IsObstacle = info.IsObstacle;
 
             if (vertex.IsObstacle)
@@ -53,12 +54,7 @@ namespace GraphLib.Extensions
             }
         }
 
-        public static void WashVertex(this IVertex vertex)
-        {
-            vertex.IsObstacle = true;
-        }
-
-        public static bool IsSimpleVertex(this IVertex vertex)
+        public static bool IsRegularVertex(this IVertex vertex)
         {
             return !vertex.IsStart && !vertex.IsEnd;
         }
@@ -102,7 +98,7 @@ namespace GraphLib.Extensions
         {
             bool hasEqualCost = self.Cost.Equals(vertex.Cost);
             bool hasEqualPosition = self.Position.Equals(vertex.Position);
-            bool areObstacles = self.IsObstacle && vertex.IsObstacle;
+            bool areObstacles = self.IsObstacle == vertex.IsObstacle;
             return hasEqualCost && hasEqualPosition && areObstacles;
         }
 
