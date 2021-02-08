@@ -12,23 +12,22 @@ namespace Algorithm.EventArguments
         public AlgorithmEventArgs()
         {
             Vertex = new DefaultVertex();
-            Graph = new NullGraph();
         }
 
-        public AlgorithmEventArgs(IGraph graph, IVertex vertex = null)
+        public AlgorithmEventArgs(int visitedVertices, bool isExtremeVertice = false, IVertex vertex = null)
         {
+            IsExtremeVertex = isExtremeVertice;
             Vertex = vertex ?? new DefaultVertex();
-            Graph = graph;
+            VisitedVertices = visitedVertices;
         }
 
         /// <summary>
         /// Provides information about vertex that is being processed
         /// </summary>
-        public IVertex Vertex { get; private set; }
+        public IVertex Vertex { get; }
 
-        /// <summary>
-        /// Provides a information about graph where pathfinding occurs
-        /// </summary>
-        public IGraph Graph { get; private set; }
+        public int VisitedVertices { get; set; }
+
+        public bool IsExtremeVertex { get; }
     }
 }

@@ -9,21 +9,11 @@ namespace GraphLib.Interface
     /// </summary>
     public interface IVertex : IDefault
     {
-        bool IsEnd { get; set; }
-
         bool IsObstacle { get; set; }
-
-        bool IsStart { get; set; }
-
-        bool IsVisited { get; set; }
 
         Cost Cost { get; set; }
 
         IList<IVertex> Neighbours { get; set; }
-
-        IVertex ParentVertex { get; set; }
-
-        double AccumulatedCost { get; set; }
 
         ICoordinate Position { get; set; }
 

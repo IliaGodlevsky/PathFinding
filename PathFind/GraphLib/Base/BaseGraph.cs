@@ -32,14 +32,14 @@ namespace GraphLib.Base
         public virtual IVertex End
         {
             get => end;
-            set { end = value; end.IsEnd = true; }
+            set { end = value; }
         }
 
         protected IVertex start;
         public virtual IVertex Start
         {
             get => start;
-            set { start = value; start.IsStart = true; }
+            set { start = value; }
         }
 
         public IEnumerable<int> DimensionsSizes { get; private set; }

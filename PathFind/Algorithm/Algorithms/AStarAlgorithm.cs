@@ -6,21 +6,11 @@ using System.ComponentModel;
 
 namespace Algorithm.Algorithms
 {
+
     [Description("A* algorithm")]
     public class AStarAlgorithm : DijkstraAlgorithm
     {
         public HeuristicHandler HeuristicFunction { get; set; }
-
-        private IGraph graph;
-        public override IGraph Graph
-        {
-            get => graph;
-            set 
-            { 
-                graph = value; 
-                HeuristicFunction = vertex => vertex.CalculateChebyshevDistanceTo(graph.End); 
-            }
-        }
 
         public AStarAlgorithm() : this(new NullGraph())
         {
@@ -41,6 +31,12 @@ namespace Algorithm.Algorithms
         protected override double GetVertexRelaxedCost(IVertex neighbour)
         {
             return base.GetVertexRelaxedCost(neighbour) + HeuristicFunction(CurrentVertex);
+        }
+
+        protected override void PrepareForPathfinding(IVertex start, IVertex end)
+        {
+            base.PrepareForPathfinding(start, end);
+            HeuristicFunction = vertex => vertex.CalculateChebyshevDistanceTo(End);
         }
     }
 }

@@ -3,8 +3,10 @@ using Algorithm.EventArguments;
 using Algorithm.Extensions;
 using Common.Extensions;
 using GraphLib.Extensions;
+using GraphLib.Infrastructure;
 using GraphLib.Interface;
 using GraphLib.NullObjects;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
@@ -24,24 +26,26 @@ namespace Algorithm.Algorithms
             verticesQueue = new List<IVertex>();
         }
 
-        public override void FindPath()
+        public override GraphPath FindPath(IVertex start, IVertex end)
         {
-            PrepareForPathfinding();
+            PrepareForPathfinding(start, end);
             do
             {
                 ExtractNeighbours();
                 RelaxNeighbours();
                 CurrentVertex = NextVertex;
-                CurrentVertex.IsVisited = true;
-                var args = new AlgorithmEventArgs(Graph, CurrentVertex);
+                visitedVertices.Add(CurrentVertex.Position);
+                var args = new AlgorithmEventArgs(visitedVertices.Count, false ,CurrentVertex);
                 RaiseOnVertexVisitedEvent(args);
             } while (!IsDestination());
             CompletePathfinding();
+
+            return new GraphPath(parentVertices, Start, End);
         }
 
         protected virtual double GetVertexRelaxedCost(IVertex neighbour)
         {
-            return neighbour.Cost.CurrentCost + CurrentVertex.AccumulatedCost;
+            return neighbour.Cost.CurrentCost + accumulatedCosts[CurrentVertex.Position];
         }
 
         protected override IVertex NextVertex
@@ -49,8 +53,8 @@ namespace Algorithm.Algorithms
             get
             {
                 verticesQueue = verticesQueue
-                    .Where(vertex => !vertex.IsVisited)
-                    .OrderBy(vertex => vertex.AccumulatedCost)
+                    .Where(vertex => !visitedVertices.Contains(vertex.Position))
+                    .OrderBy(vertex => accumulatedCosts[vertex.Position])
                     .ToList();
 
                 return verticesQueue.FirstOrDefault();
@@ -63,9 +67,9 @@ namespace Algorithm.Algorithms
             verticesQueue.Clear();
         }
 
-        protected override void PrepareForPathfinding()
+        protected override void PrepareForPathfinding(IVertex start, IVertex end)
         {
-            base.PrepareForPathfinding();
+            base.PrepareForPathfinding(start, end);
             SetVerticesAccumulatedCostToInfifnity();
         }
 
@@ -73,24 +77,25 @@ namespace Algorithm.Algorithms
 
         private void RelaxNeighbours()
         {
-            CurrentVertex.GetUnvisitedNeighbours().ForEach(neighbour =>
+            GetUnvisitedNeighbours(CurrentVertex).ForEach(neighbour =>
             {
                 var relaxedCost = GetVertexRelaxedCost(neighbour);
-                if (neighbour.AccumulatedCost > relaxedCost)
+                if (accumulatedCosts[neighbour.Position] > relaxedCost)
                 {
-                    neighbour.AccumulatedCost = relaxedCost;
-                    neighbour.ParentVertex = CurrentVertex;
+                    accumulatedCosts[neighbour.Position] = relaxedCost;
+                    parentVertices[neighbour.Position] = CurrentVertex;
                 }
             });
         }
 
         private void ExtractNeighbours()
         {
-            var neighbours = CurrentVertex.GetUnvisitedNeighbours();
+            var neighbours = GetUnvisitedNeighbours(CurrentVertex);
 
             foreach (var neighbour in neighbours)
             {
-                var args = new AlgorithmEventArgs(Graph, neighbour);
+                bool isExtremeVertex = neighbour.IsEqual(Start) || neighbour.IsEqual(End);
+                var args = new AlgorithmEventArgs(visitedVertices.Count, isExtremeVertex, neighbour);
                 RaiseOnVertexEnqueuedEvent(args);
                 verticesQueue.Add(neighbour);
             }
@@ -103,8 +108,9 @@ namespace Algorithm.Algorithms
         private void SetVerticesAccumulatedCostToInfifnity()
         {
             Graph
-                .Where(vertex => !vertex.IsStart && !vertex.IsObstacle)
-                .ForEach(vertex => vertex.AccumulatedCost = double.PositiveInfinity);
+                .Where(vertex => !vertex.IsObstacle)
+                .ForEach(vertex => accumulatedCosts[vertex.Position] = double.PositiveInfinity);
+            accumulatedCosts[Start.Position] = 0;
         }
     }
 }

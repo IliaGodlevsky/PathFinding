@@ -25,7 +25,8 @@ namespace GraphLib.Extensions
 
         public static int GetVisitedVerticesCount(this IGraph graph)
         {
-            return graph.Count(vertex => vertex.IsVisited);
+            //return graph.Count(vertex => vertex.IsVisited);
+            return default;
         }
 
         public static int GetObstaclesCount(this IGraph graph)
@@ -59,12 +60,6 @@ namespace GraphLib.Extensions
             graph.ForEach(vertex => vertex.MakeWeighted());
         }
 
-        internal static bool IsExtremeVerticesVisited(this IGraph self)
-        {
-            return self.End.IsVisited && self.Start.IsVisited
-                && !self.End.IsDefault && !self.Start.IsDefault;
-        }
-
         public static void ConnectVertices(this IGraph self)
         {
             self.AsParallel().ForAll(vertex => vertex.SetNeighbours(self));
@@ -74,8 +69,7 @@ namespace GraphLib.Extensions
         {
             return !self.End.IsDefault
                 && !self.Start.IsDefault
-                && self.Any()
-                && !self.Start.IsVisited;
+                && self.Any();
         }
 
         public static bool IsEqual(this IGraph self, IGraph graph)

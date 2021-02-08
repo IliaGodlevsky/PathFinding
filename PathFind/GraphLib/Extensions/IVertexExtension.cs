@@ -1,7 +1,6 @@
 ﻿using Common.Extensions;
 using GraphLib.Infrastructure;
 using GraphLib.Interface;
-using GraphLib.NullObjects;
 using GraphLib.VertexCost;
 using System;
 using System.Collections.Generic;
@@ -13,7 +12,7 @@ namespace GraphLib.Extensions
     {
         public static bool IsValidToBeExtreme(this IVertex vertex)
         {
-            return vertex.IsRegularVertex() && !vertex.IsIsolated();
+            return !vertex.IsIsolated();
         }
 
         public static bool IsIsolated(this IVertex vertex)
@@ -27,11 +26,6 @@ namespace GraphLib.Extensions
         /// <param name="vertex"></param>
         public static void SetToDefault(this IVertex vertex)
         {
-            vertex.IsStart = false;
-            vertex.IsEnd = false;
-            vertex.IsVisited = false;
-            vertex.AccumulatedCost = 0;
-            vertex.ParentVertex = new DefaultVertex();
             vertex.MarkAsSimpleVertex();
         }
 
@@ -52,16 +46,6 @@ namespace GraphLib.Extensions
             {
                 vertex.MarkAsObstacle();
             }
-        }
-
-        public static bool IsRegularVertex(this IVertex vertex)
-        {
-            return !vertex.IsStart && !vertex.IsEnd;
-        }
-
-        public static IEnumerable<IVertex> GetUnvisitedNeighbours(this IVertex self)
-        {
-            return self.Neighbours.Where(vertex => !vertex.IsVisited && !vertex.IsObstacle);
         }
 
         internal static void Refresh(this IVertex vertex)
@@ -145,7 +129,7 @@ namespace GraphLib.Extensions
                 && !self.IsNeighbourOf(vertex);
         }
 
-        private static bool IsNeighbourOf(this IVertex self, IVertex vertex)
+        public static bool IsNeighbourOf(this IVertex self, IVertex vertex)
         {
             return vertex.Neighbours.Contains(self);
         }

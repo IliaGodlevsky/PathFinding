@@ -1,6 +1,6 @@
 ﻿using Algorithm.Extensions;
 using Algorithm.Interface;
-using Algorithm.NullObjects;
+//using Algorithm.NullObjects;
 using Common.Extensions;
 using System;
 using System.Collections.Generic;
@@ -37,7 +37,7 @@ namespace Algorithm.AlgorithmCreating
         public static IAlgorithm GetAlgorithm(string algorithmDescription)
         {
             return Algorithms.TryGetValue(algorithmDescription, out IAlgorithm algorithm)
-                ? algorithm : new DefaultAlgorithm();
+                ? algorithm : null;
         }
 
         private static IDictionary<string, IAlgorithm> Algorithms { get; set; }

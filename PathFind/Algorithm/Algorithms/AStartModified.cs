@@ -18,8 +18,7 @@ namespace Algorithm.Algorithms
             set
             {
                 base.Graph = value;
-                PercentOfFarthestVerticesToDelete
-                    = CalculatePercentOfFarthestVerticesToDelete;
+                PercentOfFarthestVerticesToDelete = 5;
             }
         }
 
@@ -80,15 +79,6 @@ namespace Algorithm.Algorithms
                     percentOfFarthestVerticesToDelete =
                         percentValueRange.ReturnInRange(percentOfFarthestVerticesToDelete);
                 }
-            }
-        }
-
-        private int CalculatePercentOfFarthestVerticesToDelete
-        {
-            get
-            {
-                var partOfVertexToDelete = Math.Floor(Math.Log(Graph.GetSize() + 1, 4));
-                return Convert.ToInt32(partOfVertexToDelete);
             }
         }
 

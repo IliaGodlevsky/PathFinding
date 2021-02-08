@@ -1,5 +1,6 @@
 ﻿using Algorithm.Handlers;
 using Common.Interfaces;
+using GraphLib.Infrastructure;
 using GraphLib.Interface;
 
 namespace Algorithm.Interface
@@ -34,7 +35,7 @@ namespace Algorithm.Interface
         /// <summary>
         /// Starts pathfinding
         /// </summary>
-        void FindPath();
+        GraphPath FindPath(IVertex start, IVertex end);
 
         void Reset();
     }

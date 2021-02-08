@@ -89,13 +89,10 @@ namespace GraphLib.Base
 
         private void MakeObstacle(IVertex vertex)
         {
-            if (vertex.IsRegularVertex() && !vertex.IsVisited)
-            {
-                vertex.Isolate();
-                vertex.IsObstacle = true;
-                vertex.SetToDefault();
-                vertex.MarkAsObstacle();
-            }
+            vertex.Isolate();
+            vertex.IsObstacle = true;
+            vertex.SetToDefault();
+            vertex.MarkAsObstacle();
         }
 
         private void MakeVertex(IVertex vertex)

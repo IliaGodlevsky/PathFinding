@@ -31,33 +31,42 @@ namespace GraphLib.Infrastructure
         /// </summary>
         public int Cost { get; private set; }
 
-        public GraphPath(IGraph graph) : this()
+        public IDictionary<ICoordinate, IVertex> ParentVertices { get; set; }
+
+        public IVertex Start { get; set; }
+
+        public IVertex End { get; set; }
+
+        public GraphPath(IDictionary<ICoordinate, IVertex> parentVertices,  
+            IVertex start, IVertex end) : this()
         {
-            TryExtractPath(graph);
+            ParentVertices = parentVertices;
+            Start = start;
+            End = end;
+            TryExtractPath();
         }
 
         public void HighlightPath()
         {
-            Path.Where(vertex => vertex.IsRegularVertex())
+            Path.Where(vertex => !vertex.IsEqual(End) && !vertex.IsEqual(Start))
                 .ForEach(vertex => vertex.MarkAsPath());
         }
 
         /// <summary>
-        /// Tries to extract a path from the graph
+        /// Tries to extract a path
         /// </summary>
         /// <param name="graph"></param>
         /// <returns><see cref="true"/> if extracting is 
         /// successed and <see cref="false"/> if not</returns>
-        public bool TryExtractPath(IGraph graph)
+        public bool TryExtractPath()
         {
-            if (graph.IsExtremeVerticesVisited())
+            if (ParentVertices.ContainsKey(End.Position))
             {
-                Path = GetPath(graph.End);
+                Path = GetPath();
                 Cost = Path.Sum(vertex => vertex.Cost.CurrentCost);
                 Length = Path.Count();
-                IsExtracted = Path.FirstOrDefault(vertex => vertex.IsEnd == true) != null;
+                IsExtracted = Path.Contains(End);
             }
-
             return IsExtracted;
         }
 
@@ -66,20 +75,21 @@ namespace GraphLib.Infrastructure
             Path = new IVertex[] { };
         }
 
-        private IEnumerable<IVertex> GetPath(IVertex end)
+        private IEnumerable<IVertex> GetPath()
         {
-            var temp = end;
-
+            var temp = End;
+            yield return temp;
             while (!IsStartOfPath(temp))
             {
+                temp = ParentVertices[temp.Position];
                 yield return temp;
-                temp = temp.ParentVertex;
             }
         }
 
         private bool IsStartOfPath(IVertex vertex)
         {
-            return vertex.IsDefault || vertex.IsStart;
+            return vertex.IsDefault 
+                || ParentVertices[vertex.Position].IsEqual(Start);
         }
     }
 }
