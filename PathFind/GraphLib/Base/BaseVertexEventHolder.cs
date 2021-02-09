@@ -112,7 +112,5 @@ namespace GraphLib.Base
         {
             return !Graph.End.IsDefault;
         }
-
-
     }
 }

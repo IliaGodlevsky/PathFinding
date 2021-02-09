@@ -5,6 +5,7 @@ using GraphLib.Extensions;
 using GraphLib.Infrastructure;
 using GraphLib.Interface;
 using GraphLib.NullObjects;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -29,7 +30,7 @@ namespace Algorithm.Base
         public BaseAlgorithm(IGraph graph)
         {
             Graph = graph;
-            visitedVertices = new List<ICoordinate>();
+            visitedVerticesCoordinates = new List<ICoordinate>();
             parentVertices = new Dictionary<ICoordinate, IVertex>();
             accumulatedCosts = new Dictionary<ICoordinate, double>();
         }
@@ -41,11 +42,18 @@ namespace Algorithm.Base
             OnFinished = null;
             OnVertexEnqueued = null;
             OnVertexVisited = null;
-            visitedVertices.Clear();
+            visitedVerticesCoordinates.Clear();
             parentVertices.Clear();
             accumulatedCosts.Clear();
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="start"></param>
+        /// <param name="end"></param>
+        /// <returns></returns>
+        /// <exception cref="Exception"></exception>
         public abstract GraphPath FindPath(IVertex start, IVertex end);
 
         protected IVertex CurrentVertex { get; set; }
@@ -83,24 +91,36 @@ namespace Algorithm.Base
 
         protected virtual void PrepareForPathfinding(IVertex start, IVertex end)
         {
+            if (!Graph.Contains(start, end))
+            {
+                throw new Exception("Vertices doesn't belong to graph");
+            }
             Start = start; End = end;
             RaiseOnAlgorithmStartedEvent(new AlgorithmEventArgs());
             CurrentVertex = Start;
-            visitedVertices.Add(Start.Position);
+            visitedVerticesCoordinates.Add(Start.Position);
         }
 
         protected IEnumerable<IVertex> GetUnvisitedNeighbours(IVertex vertex)
         {
             return vertex.Neighbours
-                .Where(neighbour => !visitedVertices.Contains(neighbour.Position));
+                .Where(neighbour => !visitedVerticesCoordinates.Contains(neighbour.Position));
         }
 
         protected virtual void CompletePathfinding()
         {
-            RaiseOnAlgorithmFinishedEvent(new AlgorithmEventArgs(visitedVertices.Count));
+            RaiseOnAlgorithmFinishedEvent(new AlgorithmEventArgs(visitedVerticesCoordinates.Count));
         }
 
-        protected List<ICoordinate> visitedVertices;
+        protected AlgorithmEventArgs CreateEventArgs(IVertex vertex)
+        {
+            int visitedCount = visitedVerticesCoordinates.Count;
+            bool isExtreme = vertex.IsEqual(Start) 
+                || vertex.IsEqual(End) || vertex.IsDefault;
+            return new AlgorithmEventArgs(visitedCount, isExtreme, vertex);
+        }
+
+        protected List<ICoordinate> visitedVerticesCoordinates;
         protected Dictionary<ICoordinate, IVertex> parentVertices;
         protected Dictionary<ICoordinate, double> accumulatedCosts;
     }

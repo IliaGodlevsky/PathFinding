@@ -1,12 +1,9 @@
 ﻿using Algorithm.Base;
-using Algorithm.EventArguments;
 using Algorithm.Extensions;
 using Common.Extensions;
-using GraphLib.Extensions;
 using GraphLib.Infrastructure;
 using GraphLib.Interface;
 using GraphLib.NullObjects;
-using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
@@ -34,13 +31,13 @@ namespace Algorithm.Algorithms
                 ExtractNeighbours();
                 RelaxNeighbours();
                 CurrentVertex = NextVertex;
-                visitedVertices.Add(CurrentVertex.Position);
-                var args = new AlgorithmEventArgs(visitedVertices.Count, false ,CurrentVertex);
+                visitedVerticesCoordinates.Add(CurrentVertex.Position);
+                var args = CreateEventArgs(CurrentVertex);
                 RaiseOnVertexVisitedEvent(args);
             } while (!IsDestination());
             CompletePathfinding();
 
-            return new GraphPath(parentVertices, Start, End);
+            return new GraphPath(parentVertices, Start, End, visitedVerticesCoordinates.Count);
         }
 
         protected virtual double GetVertexRelaxedCost(IVertex neighbour)
@@ -53,7 +50,7 @@ namespace Algorithm.Algorithms
             get
             {
                 verticesQueue = verticesQueue
-                    .Where(vertex => !visitedVertices.Contains(vertex.Position))
+                    .Where(vertex => !visitedVerticesCoordinates.Contains(vertex.Position))
                     .OrderBy(vertex => accumulatedCosts[vertex.Position])
                     .ToList();
 
@@ -94,8 +91,7 @@ namespace Algorithm.Algorithms
 
             foreach (var neighbour in neighbours)
             {
-                bool isExtremeVertex = neighbour.IsEqual(Start) || neighbour.IsEqual(End);
-                var args = new AlgorithmEventArgs(visitedVertices.Count, isExtremeVertex, neighbour);
+                var args = CreateEventArgs(neighbour);
                 RaiseOnVertexEnqueuedEvent(args);
                 verticesQueue.Add(neighbour);
             }

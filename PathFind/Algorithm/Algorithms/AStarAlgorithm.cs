@@ -6,7 +6,6 @@ using System.ComponentModel;
 
 namespace Algorithm.Algorithms
 {
-
     [Description("A* algorithm")]
     public class AStarAlgorithm : DijkstraAlgorithm
     {
@@ -36,7 +35,10 @@ namespace Algorithm.Algorithms
         protected override void PrepareForPathfinding(IVertex start, IVertex end)
         {
             base.PrepareForPathfinding(start, end);
-            HeuristicFunction = vertex => vertex.CalculateChebyshevDistanceTo(End);
+            if (HeuristicFunction == null)
+            {
+                HeuristicFunction = vertex => vertex.CalculateChebyshevDistanceTo(End);
+            }
         }
     }
 }

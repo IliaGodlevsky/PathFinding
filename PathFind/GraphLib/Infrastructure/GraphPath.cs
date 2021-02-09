@@ -31,6 +31,8 @@ namespace GraphLib.Infrastructure
         /// </summary>
         public int Cost { get; private set; }
 
+        public int VisitedCount { get; private set; }
+
         public IDictionary<ICoordinate, IVertex> ParentVertices { get; set; }
 
         public IVertex Start { get; set; }
@@ -38,11 +40,12 @@ namespace GraphLib.Infrastructure
         public IVertex End { get; set; }
 
         public GraphPath(IDictionary<ICoordinate, IVertex> parentVertices,  
-            IVertex start, IVertex end) : this()
+            IVertex start, IVertex end, int visitedCount) : this()
         {
             ParentVertices = parentVertices;
             Start = start;
             End = end;
+            VisitedCount = visitedCount;
             TryExtractPath();
         }
 

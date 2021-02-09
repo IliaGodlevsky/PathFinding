@@ -79,5 +79,18 @@ namespace GraphLib.Extensions
             bool hasEqualVertices = self.Match(graph, (a, b) => a.IsEqual(b));
             return hasEqualSizes && hasEqualNumberOfObstacles && hasEqualVertices;
         }
+
+        public static bool Contains(this IGraph self, params IVertex[] vertices)
+        {
+            foreach(var vertex in vertices)
+            {
+                if (!self.Any(v => ReferenceEquals(v, vertex)))
+                {
+                    return false;
+                }
+            }
+
+            return true;
+        }
     }
 }

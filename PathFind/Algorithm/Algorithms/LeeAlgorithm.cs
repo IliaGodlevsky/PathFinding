@@ -1,95 +1,108 @@
-﻿//using Algorithm.Base;
-//using Algorithm.EventArguments;
-//using Algorithm.Extensions;
-//using Common.Extensions;
-//using GraphLib.Extensions;
-//using GraphLib.Interface;
-//using GraphLib.NullObjects;
-//using System.Collections.Generic;
-//using System.ComponentModel;
-//using System.Linq;
+﻿using Algorithm.Base;
+using Algorithm.Extensions;
+using Common.Extensions;
+using GraphLib.Infrastructure;
+using GraphLib.Interface;
+using GraphLib.NullObjects;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Linq;
 
-//namespace Algorithm.Algorithms
-//{
-//    [Description("Lee algorithm")]
-//    public class LeeAlgorithm : BaseAlgorithm
-//    {
-//        public LeeAlgorithm() : this(new NullGraph())
-//        {
+namespace Algorithm.Algorithms
+{
+    [Description("Lee algorithm")]
+    public class LeeAlgorithm : BaseAlgorithm
+    {
+        public LeeAlgorithm() : this(new NullGraph())
+        {
 
-//        }
+        }
 
-//        public LeeAlgorithm(IGraph graph) : base(graph)
-//        {
-//            verticesQueue = new Queue<IVertex>();
-//        }
+        public LeeAlgorithm(IGraph graph) : base(graph)
+        {
+            verticesQueue = new Queue<IVertex>();
+        }
 
-//        public override void FindPath()
-//        {
-//            PrepareForPathfinding();
-//            do
-//            {
-//                ExtractNeighbours();
-//                SpreadWaves();
-//                CurrentVertex = NextVertex;
-//                CurrentVertex.IsVisited = true;
-//                var args = new AlgorithmEventArgs(Graph, CurrentVertex);
-//                RaiseOnVertexVisitedEvent(args);
-//            } while (!IsDestination());
-//            CompletePathfinding();
-//        }
+        public override GraphPath FindPath(IVertex start, IVertex end)
+        {
+            PrepareForPathfinding(start, end);
+            do
+            {
+                ExtractNeighbours();
+                SpreadWaves();
+                CurrentVertex = NextVertex;
+                visitedVerticesCoordinates.Add(CurrentVertex.Position);
+                var args = CreateEventArgs(CurrentVertex);
+                RaiseOnVertexVisitedEvent(args);
+            } while (!IsDestination());
+            CompletePathfinding();
 
-//        protected override void CompletePathfinding()
-//        {
-//            base.CompletePathfinding();
-//            verticesQueue.Clear();
-//        }
+            return new GraphPath(parentVertices, Start, End, visitedVerticesCoordinates.Count);
+        }
 
-//        protected override IVertex NextVertex
-//        {
-//            get
-//            {
-//                verticesQueue = verticesQueue
-//                    .Where(vertex => !visitedVertices.ContainsKey(vertex.Position))
-//                    .ToQueue();
+        protected override void PrepareForPathfinding(IVertex start, IVertex end)
+        {
+            base.PrepareForPathfinding(start, end);
+            SetVerticesAccumulatedCostToZero();
+        }
 
-//                return verticesQueue.DequeueOrDefault();
-//            }
-//        }
+        protected override void CompletePathfinding()
+        {
+            base.CompletePathfinding();
+            verticesQueue.Clear();
+        }
 
-//        protected virtual double CreateWave()
-//        {
-//            return CurrentVertex.AccumulatedCost + 1;
-//        }
+        protected override IVertex NextVertex
+        {
+            get
+            {
+                verticesQueue = verticesQueue
+                    .Where(vertex => !visitedVerticesCoordinates.Contains(vertex.Position))
+                    .ToQueue();
 
-//        private void SpreadWaves()
-//        {
-//            CurrentVertex
-//                .GetUnvisitedNeighbours()
-//                .Where(neighbour => neighbour.AccumulatedCost == 0)
-//                .ForEach(neighbour =>
-//                {
-//                    neighbour.AccumulatedCost = CreateWave();
-//                    neighbour.ParentVertex = CurrentVertex;
-//                });
-//        }
+                return verticesQueue.DequeueOrDefault();
+            }
+        }
 
-//        private void ExtractNeighbours()
-//        {
-//            var neighbours = CurrentVertex.GetUnvisitedNeighbours();
+        protected virtual double CreateWave()
+        {
+            return accumulatedCosts[CurrentVertex.Position] + 1;
+        }
 
-//            foreach (var neighbour in neighbours)
-//            {
-//                var args = new AlgorithmEventArgs(Graph, neighbour);
-//                RaiseOnVertexEnqueuedEvent(args);
-//                verticesQueue.Enqueue(neighbour);
-//            }
+        private void SpreadWaves()
+        {
+            GetUnvisitedNeighbours(CurrentVertex)
+                .Where(neighbour => accumulatedCosts[neighbour.Position] == 0)
+                .ForEach(neighbour =>
+                {
+                    accumulatedCosts[neighbour.Position] = CreateWave();
+                    parentVertices[neighbour.Position] = CurrentVertex;
+                });
+        }
 
-//            verticesQueue = verticesQueue
-//                .DistinctBy(vert => vert.Position)
-//                .ToQueue();
-//        }
+        private void ExtractNeighbours()
+        {
+            var neighbours = GetUnvisitedNeighbours(CurrentVertex);
 
-//        protected Queue<IVertex> verticesQueue;
-//    }
-//}
+            foreach (var neighbour in neighbours)
+            {
+                var args = CreateEventArgs(neighbour);
+                RaiseOnVertexEnqueuedEvent(args);
+                verticesQueue.Enqueue(neighbour);
+            }
+
+            verticesQueue = verticesQueue
+                .DistinctBy(vert => vert.Position)
+                .ToQueue();
+        }
+
+        private void SetVerticesAccumulatedCostToZero()
+        {
+            Graph
+                .Where(vertex => !vertex.IsObstacle)
+                .ForEach(vertex => accumulatedCosts[vertex.Position] = 0);
+        }
+
+        protected Queue<IVertex> verticesQueue;
+    }
+}

@@ -52,26 +52,29 @@ namespace GraphLib.ViewModel
                 var start = mainViewModel.Graph.Start;
                 var end = mainViewModel.Graph.End;
                 var path = algorithm.FindPath(start, end);
-
-                var finishStatistics = GetIntermediateStatistics(timer, 0, path);
-                mainViewModel.PathFindingStatistics = finishStatistics;
-
-                if (path.IsExtracted)
-                {
-                    path.HighlightPath();
-                }
-                else
-                {
-                    OnPathNotFound?.Invoke("Couln't find path");
-                }
-
+                ShowPathfindingResults(path);
+                timer.Reset();
                 algorithm.Reset();
-
                 OnPathNotFound = null;
             }
             catch (Exception ex)
             {
                 Logger.Instance.Error(ex);
+            }
+        }
+
+        protected virtual void ShowPathfindingResults(GraphPath path)
+        {
+            var finishStatistics = GetIntermediateStatistics(timer, path);
+            mainViewModel.PathFindingStatistics = finishStatistics;
+
+            if (path.IsExtracted)
+            {
+                path.HighlightPath();
+            }
+            else
+            {
+                OnPathNotFound?.Invoke("Couln't find path");
             }
         }
 
@@ -85,7 +88,7 @@ namespace GraphLib.ViewModel
                 {
                     args.Vertex.MarkAsVisited();
                 }
-                var intermediateStatistics = GetIntermediateStatistics(timer, args.VisitedVertices);
+                var intermediateStatistics = GetIntermediateStatistics(timer);
                 mainViewModel.PathFindingStatistics = intermediateStatistics;
             }
 
@@ -106,8 +109,6 @@ namespace GraphLib.ViewModel
         protected virtual void OnAlgorithmFinished(object sender, EventArgs e)
         {
             timer.Stop();
-
-            timer.Reset();
         }
 
         protected virtual void OnAlgorithmStarted(object sender, EventArgs e)
@@ -115,12 +116,12 @@ namespace GraphLib.ViewModel
             timer.Start();
         }
 
-        private string GetIntermediateStatistics(Stopwatch timer, 
-            int visitedCount, GraphPath path = null)
+        private string GetIntermediateStatistics(Stopwatch timer, GraphPath path = null)
         {
             var format = ViewModelResources.StatisticsFormat;
             var pathLength = path == null ? 0 : path.Length;
             var pathCost = path == null ? 0 : path.Cost;
+            var visitedCount = path == null ? 0 : path.VisitedCount;
             var graphInfo = string.Format(format, pathLength, pathCost, visitedCount);
             var timerInfo = timer.GetTimeInformation(ViewModelResources.TimerInfoFormat);
 
