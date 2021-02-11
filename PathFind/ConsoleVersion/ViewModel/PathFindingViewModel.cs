@@ -115,7 +115,7 @@ namespace ConsoleVersion.ViewModel
             var point = Input.InputPoint(upperPosibleXValue, upperPosibleYValue);
             var vertex = mainViewModel.Graph[point];
 
-            while (EndPoints.CanBeEndPoint(vertex))
+            while (!EndPoints.CanBeEndPoint(vertex))
             {
                 point = Input.InputPoint(upperPosibleXValue, upperPosibleYValue);
                 vertex = mainViewModel.Graph[point];
