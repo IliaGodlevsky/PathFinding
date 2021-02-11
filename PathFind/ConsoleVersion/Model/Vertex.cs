@@ -29,24 +29,18 @@ namespace ConsoleVersion.Model
             this.Initialize(info);
         }
 
-        public bool IsEnd { get; set; }
-
         public bool IsObstacle { get; set; }
-
-        public bool IsStart { get; set; }
-
-        public bool IsVisited { get; set; }
 
         public string Text { get; set; }
 
-        private Cost cost;
-        public Cost Cost
+        private IVertexCost cost;
+        public IVertexCost Cost
         {
             get { return cost; }
             set
             {
                 cost = value;
-                cost.UnweightedCostView = "#";
+                (cost as Cost).UnweightedCostView = "#";
                 Text = cost.ToString();
             }
         }
@@ -54,10 +48,6 @@ namespace ConsoleVersion.Model
         public Color Colour { get; set; }
 
         public IList<IVertex> Neighbours { get; set; }
-
-        public IVertex ParentVertex { get; set; }
-
-        public double AccumulatedCost { get; set; }
 
         public ICoordinate Position { get; set; }
 
@@ -122,13 +112,13 @@ namespace ConsoleVersion.Model
 
         public void MakeUnweighted()
         {
-            cost.MakeUnWeighted();
+            (cost as Cost).MakeUnWeighted();
             Text = cost.ToString();
         }
 
         public void MakeWeighted()
         {
-            cost.MakeWeighted();
+            (cost as Cost).MakeWeighted();
             Text = cost.ToString();
         }
 

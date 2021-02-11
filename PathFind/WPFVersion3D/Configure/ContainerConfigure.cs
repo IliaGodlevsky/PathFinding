@@ -20,6 +20,7 @@ namespace WPFVersion3D.Configure
             builder.RegisterType<EndPoints>().As<BaseEndPoints>().SingleInstance();
             builder.RegisterType<MainWindowViewModel>().As<IMainModel>().InstancePerLifetimeScope().PropertiesAutowired();
             builder.RegisterType<Vertex3DFactory>().As<IVertexFactory>().SingleInstance();
+            builder.RegisterType<CostFactory>().As<IVertexCostFactory>().SingleInstance();
             builder.RegisterType<Coordinate3DFactory>().As<ICoordinateFactory>().SingleInstance();
             builder.RegisterType<PathInput>().As<IPathInput>().SingleInstance();
             builder.RegisterType<Graph3DFactory>().As<IGraphFactory>().SingleInstance();

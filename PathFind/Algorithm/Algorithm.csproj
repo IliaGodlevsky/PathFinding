@@ -49,7 +49,6 @@
     <Compile Include="EventArguments\AlgorithmEventArgs.cs" />
     <Compile Include="Extensions\IVertexExtensions.cs" />
     <Compile Include="Handlers\AlgorithmEventHandler.cs" />
-    <Compile Include="Handlers\HeuristicHandler.cs" />
     <Compile Include="Extensions\IEnumerableExtenions.cs" />
     <Compile Include="Extensions\ListExtension.cs" />
     <Compile Include="Extensions\QueueExtensions.cs" />

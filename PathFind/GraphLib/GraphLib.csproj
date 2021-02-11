@@ -50,11 +50,14 @@
     <Compile Include="Extensions\IGraphExtensions.cs" />
     <Compile Include="Extensions\IGraphPathExtensions.cs" />
     <Compile Include="Extensions\IVertexExtension.cs" />
+    <Compile Include="Factories\CostFactory.cs" />
     <Compile Include="Infrastructure\CoordinateEnvironment.cs" />
     <Compile Include="Coordinate2D.cs" />
     <Compile Include="Coordinate3D.cs" />
     <Compile Include="Base\BaseCoordinate.cs" />
     <Compile Include="Interface\ICoordinate.cs" />
+    <Compile Include="Interface\ICost.cs" />
+    <Compile Include="Interface\ICostFactory.cs" />
     <Compile Include="Interface\IEndPoints.cs" />
     <Compile Include="Interface\IGraphPath.cs" />
     <Compile Include="Interface\IVertexState.cs" />

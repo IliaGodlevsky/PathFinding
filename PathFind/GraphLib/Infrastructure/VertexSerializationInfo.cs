@@ -16,7 +16,7 @@ namespace GraphLib.Infrastructure
 
         public bool IsObstacle { get; set; }
 
-        public Cost Cost { get; set; }
+        public IVertexCost Cost { get; set; }
 
         public ICoordinate Position { get; set; }
     }

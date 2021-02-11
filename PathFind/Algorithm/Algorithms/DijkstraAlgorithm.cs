@@ -101,9 +101,7 @@ namespace Algorithm.Algorithms
                 verticesQueue.Add(neighbour);
             }
 
-            verticesQueue = verticesQueue
-                .DistinctBy(vert => vert.Position)
-                .ToList();
+            verticesQueue = verticesQueue.DistinctBy(GetPosition).ToList();
         }
 
         private void SetVerticesAccumulatedCostToInfifnity()

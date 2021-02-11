@@ -1,7 +1,6 @@
 ﻿using Common;
 using GraphLib.Extensions;
 using GraphLib.Interface;
-using GraphLib.VertexCost;
 using System;
 using System.Linq;
 
@@ -12,17 +11,20 @@ namespace GraphLib.Factories
     /// <summary>
     /// Assembles a graph suitable for use with pathfinding algorithms
     /// </summary>
-    public sealed class GraphAssembler : IGraphAssembler
+    public class GraphAssembler : IGraphAssembler
     {
         public event Action<Exception> OnExceptionCaught;
 
-        public GraphAssembler(IVertexFactory vertexFactory,
+        public GraphAssembler(
+            IVertexFactory vertexFactory,
             ICoordinateFactory coordinateFactory,
-            IGraphFactory graphFactory)
+            IGraphFactory graphFactory,
+            IVertexCostFactory costFactory)
         {
             this.vertexFactory = vertexFactory;
             this.coordinateFactory = coordinateFactory;
             this.graphFactory = graphFactory;
+            this.costFactory = costFactory;
         }
 
         /// <summary>
@@ -33,7 +35,7 @@ namespace GraphLib.Factories
         /// <returns>Assembled graph suitable for use with pathfinding algorithms</returns>
         /// <exception cref="ArgumentException"></exception>
         /// <exception cref="ArgumentOutOfRangeException"></exception>
-        public IGraph AssembleGraph(int obstaclePercent, params int[] graphDimensionsSizes)
+        public IGraph AssembleGraph(int obstaclePercent = 0, params int[] graphDimensionsSizes)
         {
             try
             {
@@ -53,7 +55,7 @@ namespace GraphLib.Factories
         {
             var coordinate = ToCoordinate(index, graph);
             graph[coordinate] = vertexFactory.CreateVertex();
-            graph[coordinate].Cost = new Cost();
+            graph[coordinate].Cost = costFactory.CreateCost();
             if (IsObstacleChance(obstaclePercent))
             {
                 graph[coordinate].MarkAsObstacle();
@@ -75,7 +77,7 @@ namespace GraphLib.Factories
 
             if (!dimensions.Any())
             {
-                throw new ArgumentException("Dimensions count must be grater than 0");
+                throw new ArgumentException("Dimensions count must be greater than 0");
             }
 
             var rangeOfValidIndexValues = new ValueRange(graph.GetSize(), 0);
@@ -97,6 +99,7 @@ namespace GraphLib.Factories
             return coordinate;
         }
 
+        private readonly IVertexCostFactory costFactory;
         private readonly ICoordinateFactory coordinateFactory;
         private readonly IVertexFactory vertexFactory;
         private readonly IGraphFactory graphFactory;

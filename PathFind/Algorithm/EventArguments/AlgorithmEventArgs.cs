@@ -14,7 +14,8 @@ namespace Algorithm.EventArguments
             Vertex = new DefaultVertex();
         }
 
-        public AlgorithmEventArgs(int visitedVertices, bool isEndPoint = false, IVertex vertex = null)
+        public AlgorithmEventArgs(int visitedVertices, 
+            bool isEndPoint = false, IVertex vertex = null)
         {
             IsEndPoint = isEndPoint;
             Vertex = vertex ?? new DefaultVertex();

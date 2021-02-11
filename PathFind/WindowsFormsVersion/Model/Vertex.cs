@@ -29,16 +29,6 @@ namespace WindowsFormsVersion.Model
             this.Initialize(info);
         }
 
-        public bool IsStart { get; set; }
-
-        public bool IsEnd { get; set; }
-
-        public bool IsVisited { get; set; }
-
-        public double AccumulatedCost { get; set; }
-
-        public IVertex ParentVertex { get; set; }
-
         public IList<IVertex> Neighbours { get; set; }
 
         public bool IsObstacle { get; set; }
@@ -85,17 +75,17 @@ namespace WindowsFormsVersion.Model
         public void MakeUnweighted()
         {
             Text = string.Empty;
-            cost.MakeUnWeighted();
+            (cost as Cost).MakeUnWeighted();
         }
 
         public void MakeWeighted()
         {
-            cost.MakeWeighted();
+            (cost as Cost).MakeWeighted();
             Text = cost.ToString();
         }
 
-        private Cost cost;
-        public Cost Cost
+        private IVertexCost cost;
+        public IVertexCost Cost
         {
             get => cost;
             set

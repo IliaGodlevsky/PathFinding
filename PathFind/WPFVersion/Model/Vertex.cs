@@ -45,17 +45,10 @@ namespace WPFVersion.Model
             this.Initialize(info);
         }
 
-        public bool IsEnd { get; set; }
-
         public bool IsObstacle { get; set; }
 
-        public bool IsStart { get; set; }
-
-        public bool IsVisited { get; set; }
-
-
-        private Cost cost;
-        public Cost Cost
+        private IVertexCost cost;
+        public IVertexCost Cost
         {
             get => cost;
             set
@@ -66,10 +59,6 @@ namespace WPFVersion.Model
         }
 
         public IList<IVertex> Neighbours { get; set; }
-
-        public IVertex ParentVertex { get; set; }
-
-        public double AccumulatedCost { get; set; }
 
         private ICoordinate position;
         public ICoordinate Position
@@ -128,13 +117,13 @@ namespace WPFVersion.Model
 
         public void MakeUnweighted()
         {
-            cost.MakeUnWeighted();
+            (cost as Cost).MakeUnWeighted();
             Dispatcher.Invoke(() => Content = string.Empty);
         }
 
         public void MakeWeighted()
         {
-            cost.MakeWeighted();
+            (cost as Cost).MakeWeighted();
             Dispatcher.Invoke(() => Content = cost.ToString());
         }
     }

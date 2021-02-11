@@ -1,7 +1,6 @@
 ﻿using GraphLib.Extensions;
 using GraphLib.Infrastructure;
 using GraphLib.Interface;
-using GraphLib.VertexCost;
 using System.Collections.Generic;
 
 namespace GraphLib.Tests.TestInfrastructure
@@ -18,14 +17,9 @@ namespace GraphLib.Tests.TestInfrastructure
             this.Initialize(info);
         }
 
-        public bool IsEnd { get; set; }
         public bool IsObstacle { get; set; }
-        public bool IsStart { get; set; }
-        public bool IsVisited { get; set; }
-        public Cost Cost { get; set; }
+        public IVertexCost Cost { get; set; }
         public IList<IVertex> Neighbours { get; set; }
-        public IVertex ParentVertex { get; set; }
-        public double AccumulatedCost { get; set; }
         public ICoordinate Position { get; set; }
 
         public bool IsDefault => false;

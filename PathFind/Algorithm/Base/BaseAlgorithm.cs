@@ -46,13 +46,6 @@ namespace Algorithm.Base
             accumulatedCosts.Clear();
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="start"></param>
-        /// <param name="end"></param>
-        /// <returns></returns>
-        /// <exception cref="Exception"></exception>
         public abstract IGraphPath FindPath(IEndPoints endPoints);
 
         protected IVertex CurrentVertex { get; set; }
@@ -100,11 +93,6 @@ namespace Algorithm.Base
             }
         }
 
-        protected IEnumerable<IVertex> GetUnvisitedNeighbours(IVertex vertex)
-        {
-            return vertex.Neighbours.Where(IsNotVisited);
-        }
-
         protected virtual void CompletePathfinding()
         {
             var args = new AlgorithmEventArgs(visitedVertices.Count);
@@ -118,9 +106,19 @@ namespace Algorithm.Base
             return new AlgorithmEventArgs(visitedCount, isEndPoint, vertex);
         }
 
+        protected IEnumerable<IVertex> GetUnvisitedNeighbours(IVertex vertex)
+        {
+            return vertex.Neighbours.Where(IsNotVisited);
+        }
+
         protected bool IsNotVisited(IVertex vertex)
         {
             return !visitedVertices.TryGetValue(vertex.Position, out _);
+        }
+
+        protected ICoordinate GetPosition(IVertex vertex)
+        {
+            return vertex.Position;
         }
 
         protected double GetAccumulatedCost(IVertex vertex)

@@ -19,7 +19,7 @@ namespace GraphLib.NullObjects
 
         public bool IsVisited { get => true; set => _ = value; }
 
-        public Cost Cost { get => new Cost(default); set => _ = value; }
+        public IVertexCost Cost { get => new Cost(default); set => _ = value; }
 
         public IList<IVertex> Neighbours { get => new List<IVertex>(); set => _ = value; }
 

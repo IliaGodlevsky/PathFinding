@@ -1,7 +1,6 @@
 ﻿using GraphLib.Extensions;
 using GraphLib.Infrastructure;
 using GraphLib.Interface;
-using GraphLib.VertexCost;
 using System.Collections.Generic;
 using System.Windows;
 using System.Windows.Media;
@@ -102,21 +101,11 @@ namespace WPFVersion3D.Model
             set => SetValue(BrushProperty, value);
         }
 
-        public bool IsEnd { get; set; }
-
         public bool IsObstacle { get; set; }
 
-        public bool IsStart { get; set; }
-
-        public bool IsVisited { get; set; }
-
-        public Cost Cost { get; set; }
+        public IVertexCost Cost { get; set; }
 
         public IList<IVertex> Neighbours { get; set; }
-
-        public IVertex ParentVertex { get; set; }
-
-        public double AccumulatedCost { get; set; }
 
         public ICoordinate Position { get; set; }
 
@@ -124,12 +113,12 @@ namespace WPFVersion3D.Model
 
         public void MakeUnweighted()
         {
-            Cost.MakeUnWeighted();
+            
         }
 
         public void MakeWeighted()
         {
-            Cost.MakeWeighted();
+            
         }
 
         public void MarkAsEnd()

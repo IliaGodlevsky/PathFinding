@@ -62,7 +62,6 @@ namespace Algorithm.Algorithms
             get
             {
                 verticesQueue = verticesQueue.Where(IsNotVisited).ToQueue();
-
                 return verticesQueue.DequeueOrDefault();
             }
         }
@@ -94,9 +93,7 @@ namespace Algorithm.Algorithms
                 verticesQueue.Enqueue(neighbour);
             }
 
-            verticesQueue = verticesQueue
-                .DistinctBy(vert => vert.Position)
-                .ToQueue();
+            verticesQueue = verticesQueue.DistinctBy(GetPosition).ToQueue();
         }
 
         private void SetVerticesAccumulatedCostToZero()
