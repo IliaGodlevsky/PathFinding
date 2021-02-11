@@ -14,10 +14,6 @@ namespace GraphLib.Interface
 
         IVertex this[int index] { get; set; }
 
-        IVertex Start { get; set; }
-
-        IVertex End { get; set; }
-
         string GetFormattedData(string format);
     }
 }

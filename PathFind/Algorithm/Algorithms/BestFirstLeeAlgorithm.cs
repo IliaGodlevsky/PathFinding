@@ -1,6 +1,5 @@
 ﻿using Algorithm.Algorithms;
 using Algorithm.Extensions;
-using Algorithm.Handlers;
 using GraphLib.Interface;
 using GraphLib.NullObjects;
 using System.ComponentModel;
@@ -11,8 +10,6 @@ namespace Algorithm.PathFindingAlgorithms
     [Description("Lee algorithm (heuristic)")]
     public class BestFirstLeeAlgorithm : LeeAlgorithm
     {
-        public HeuristicHandler HeuristicFunction { get; set; }
-
         public BestFirstLeeAlgorithm() : this(new NullGraph())
         {
 
@@ -23,36 +20,23 @@ namespace Algorithm.PathFindingAlgorithms
 
         }
 
-        public override void Reset()
-        {
-            base.Reset();
-            HeuristicFunction = null;
-        }
-
         protected override IVertex NextVertex
         {
             get
             {
-                verticesQueue = verticesQueue
-                    .OrderBy(vertex => accumulatedCosts[vertex.Position])
-                    .ToQueue();
-
+                verticesQueue = verticesQueue.OrderBy(GetAccumulatedCost).ToQueue();
                 return base.NextVertex;
             }
         }
 
-        protected override void PrepareForPathfinding(IVertex start, IVertex end)
+        protected virtual double CalculateHeuristic(IVertex vertex)
         {
-            base.PrepareForPathfinding(start, end);
-            if (HeuristicFunction == null)
-            {
-                HeuristicFunction = vertex => vertex.CalculateChebyshevDistanceTo(End);
-            }
+            return vertex.CalculateChebyshevDistanceTo(endPoints.End);
         }
 
         protected override double CreateWave()
         {
-            return base.CreateWave() + HeuristicFunction(CurrentVertex);
+            return base.CreateWave() + CalculateHeuristic(CurrentVertex);
         }
     }
 }

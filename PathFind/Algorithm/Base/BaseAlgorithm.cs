@@ -2,7 +2,6 @@
 using Algorithm.Handlers;
 using Algorithm.Interface;
 using GraphLib.Extensions;
-using GraphLib.Infrastructure;
 using GraphLib.Interface;
 using GraphLib.NullObjects;
 using System;
@@ -30,7 +29,7 @@ namespace Algorithm.Base
         public BaseAlgorithm(IGraph graph)
         {
             Graph = graph;
-            visitedVerticesCoordinates = new List<ICoordinate>();
+            visitedVertices = new Dictionary<ICoordinate, IVertex>();
             parentVertices = new Dictionary<ICoordinate, IVertex>();
             accumulatedCosts = new Dictionary<ICoordinate, double>();
         }
@@ -42,7 +41,7 @@ namespace Algorithm.Base
             OnFinished = null;
             OnVertexEnqueued = null;
             OnVertexVisited = null;
-            visitedVerticesCoordinates.Clear();
+            visitedVertices.Clear();
             parentVertices.Clear();
             accumulatedCosts.Clear();
         }
@@ -54,19 +53,15 @@ namespace Algorithm.Base
         /// <param name="end"></param>
         /// <returns></returns>
         /// <exception cref="Exception"></exception>
-        public abstract GraphPath FindPath(IVertex start, IVertex end);
+        public abstract IGraphPath FindPath(IEndPoints endPoints);
 
         protected IVertex CurrentVertex { get; set; }
-
-        protected IVertex Start { get; set; }
-
-        protected IVertex End { get; set; }
 
         protected abstract IVertex NextVertex { get; }
 
         protected virtual bool IsDestination()
         {
-            return CurrentVertex.IsEqual(End) || CurrentVertex.IsDefault;
+            return CurrentVertex.IsEqual(endPoints.End) || CurrentVertex.IsDefault;
         }
 
         protected void RaiseOnAlgorithmStartedEvent(AlgorithmEventArgs e)
@@ -89,39 +84,53 @@ namespace Algorithm.Base
             OnVertexEnqueued?.Invoke(this, e);
         }
 
-        protected virtual void PrepareForPathfinding(IVertex start, IVertex end)
+        protected virtual void PrepareForPathfinding(IEndPoints endPoints)
         {
-            if (!Graph.Contains(start, end))
+            if (Graph.Contains(endPoints))
             {
-                throw new Exception("Vertices doesn't belong to graph");
+                this.endPoints = endPoints;
+                var args = new AlgorithmEventArgs();
+                RaiseOnAlgorithmStartedEvent(args);
+                CurrentVertex = this.endPoints.Start;
+                visitedVertices[CurrentVertex.Position] = CurrentVertex;
             }
-            Start = start; End = end;
-            RaiseOnAlgorithmStartedEvent(new AlgorithmEventArgs());
-            CurrentVertex = Start;
-            visitedVerticesCoordinates.Add(Start.Position);
+            else
+            {
+                throw new Exception("Endpoints doesn't belong to graph");
+            }
         }
 
         protected IEnumerable<IVertex> GetUnvisitedNeighbours(IVertex vertex)
         {
-            return vertex.Neighbours
-                .Where(neighbour => !visitedVerticesCoordinates.Contains(neighbour.Position));
+            return vertex.Neighbours.Where(IsNotVisited);
         }
 
         protected virtual void CompletePathfinding()
         {
-            RaiseOnAlgorithmFinishedEvent(new AlgorithmEventArgs(visitedVerticesCoordinates.Count));
+            var args = new AlgorithmEventArgs(visitedVertices.Count);
+            RaiseOnAlgorithmFinishedEvent(args);
         }
 
         protected AlgorithmEventArgs CreateEventArgs(IVertex vertex)
         {
-            int visitedCount = visitedVerticesCoordinates.Count;
-            bool isExtreme = vertex.IsEqual(Start) 
-                || vertex.IsEqual(End) || vertex.IsDefault;
-            return new AlgorithmEventArgs(visitedCount, isExtreme, vertex);
+            int visitedCount = visitedVertices.Count;
+            bool isEndPoint = endPoints.IsEndPoint(vertex);
+            return new AlgorithmEventArgs(visitedCount, isEndPoint, vertex);
         }
 
-        protected List<ICoordinate> visitedVerticesCoordinates;
+        protected bool IsNotVisited(IVertex vertex)
+        {
+            return !visitedVertices.TryGetValue(vertex.Position, out _);
+        }
+
+        protected double GetAccumulatedCost(IVertex vertex)
+        {
+            return accumulatedCosts[vertex.Position];
+        }
+
+        protected Dictionary<ICoordinate, IVertex> visitedVertices;
         protected Dictionary<ICoordinate, IVertex> parentVertices;
         protected Dictionary<ICoordinate, double> accumulatedCosts;
+        protected IEndPoints endPoints;
     }
 }

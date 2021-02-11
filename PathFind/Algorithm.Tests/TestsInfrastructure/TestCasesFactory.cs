@@ -4,7 +4,6 @@ using GraphLib.Factories;
 using GraphLib.Interface;
 using NUnit.Framework;
 using System.Collections;
-using System.Linq;
 
 namespace Algorithm.Tests.TestsInfrastructure
 {
@@ -42,18 +41,14 @@ namespace Algorithm.Tests.TestsInfrastructure
                 yield return new TestCaseData(GetGraph2D(), new DijkstraAlgorithm());
                 yield return new TestCaseData(GetGraph2D(), new AStarAlgorithm());
                 yield return new TestCaseData(GetGraph2D(), new AStarModified());
-                yield return new TestCaseData(GetGraph2D(), new DepthFirstAlgorithm());
-                yield return new TestCaseData(GetGraph2D(), new CostGreedyAlgorithm());
-                yield return new TestCaseData(GetGraph2D(), new DistanceGreedyAlgoritm());
+                yield return new TestCaseData(GetGraph2D(), new DistanceFirstAlgorithm());
 
                 yield return new TestCaseData(GetGraph3D(), new LeeAlgorithm());
                 yield return new TestCaseData(GetGraph3D(), new BestFirstLeeAlgorithm());
                 yield return new TestCaseData(GetGraph3D(), new DijkstraAlgorithm());
                 yield return new TestCaseData(GetGraph3D(), new AStarAlgorithm());
                 yield return new TestCaseData(GetGraph3D(), new AStarModified());
-                yield return new TestCaseData(GetGraph3D(), new DepthFirstAlgorithm());
-                yield return new TestCaseData(GetGraph3D(), new CostGreedyAlgorithm());
-                yield return new TestCaseData(GetGraph3D(), new DistanceGreedyAlgoritm());
+                yield return new TestCaseData(GetGraph3D(), new DistanceFirstAlgorithm());
             }
         }
 
@@ -66,9 +61,7 @@ namespace Algorithm.Tests.TestsInfrastructure
                 yield return new TestCaseData(new DijkstraAlgorithm());
                 yield return new TestCaseData(new AStarAlgorithm());
                 yield return new TestCaseData(new AStarModified());
-                yield return new TestCaseData(new DepthFirstAlgorithm());
-                yield return new TestCaseData(new CostGreedyAlgorithm());
-                yield return new TestCaseData(new DistanceGreedyAlgoritm());
+                yield return new TestCaseData(new DistanceFirstAlgorithm());
             }
         }
 
@@ -77,8 +70,6 @@ namespace Algorithm.Tests.TestsInfrastructure
             var graph = graph2DAssembler
                 .AssembleGraph(ObstaclePercent, Width2D, Length2D);
 
-            graph.Start = graph.First();
-            graph.End = graph.Last();
             return graph;
         }
 
@@ -87,8 +78,6 @@ namespace Algorithm.Tests.TestsInfrastructure
             var graph = graph3DAssembler
                 .AssembleGraph(ObstaclePercent, Width3D, Length3D, Height3D);
 
-            graph.Start = graph.First();
-            graph.End = graph.Last();
             return graph;
         }
     }

@@ -12,6 +12,8 @@ namespace GraphViewModel
 {
     public abstract class MainModel : IMainModel
     {
+        public BaseEndPoints EndPoints { get; set; }
+
         public virtual string GraphParametres { get; set; }
 
         public virtual string PathFindingStatistics { get; set; }
@@ -78,6 +80,7 @@ namespace GraphViewModel
             Graph.Refresh();
             PathFindingStatistics = string.Empty;
             GraphParametres = Graph.GetFormattedData(graphParamFormat);
+            EndPoints.Reset();
         }
 
         public void ConnectNewGraph(IGraph graph)
@@ -89,6 +92,7 @@ namespace GraphViewModel
                 GraphField = fieldFactory.CreateGraphField(Graph);
                 eventHolder.Graph = Graph;
                 eventHolder.SubscribeVertices();
+                EndPoints.SubscribeToEvents(Graph);
                 GraphParametres = Graph.GetFormattedData(graphParamFormat);
                 PathFindingStatistics = string.Empty;
             }

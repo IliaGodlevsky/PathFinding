@@ -71,22 +71,24 @@ namespace WindowsFormsVersion.ViewModel
 
         public override void FindPath()
         {
-            if (!CanStartPathFinding())
-                return;
-
-            try
+            if (CanStartPathFinding())
             {
-                var model = new PathFindingViewModel(this);
-                model.OnPathNotFound += message => MessageBox.Show(message);
-                var form = new PathFindingWindow(model);
+                try
+                {
+                    var model = new PathFindingViewModel(this)
+                    {
+                        EndPoints = EndPoints
+                    };
+                    model.OnPathNotFound += message => MessageBox.Show(message);
+                    var form = new PathFindingWindow(model);
 
-                PrepareWindow(model, form);
+                    PrepareWindow(model, form);
+                }
+                catch (Exception ex)
+                {
+                    Logger.Instance.Error(ex);
+                }
             }
-            catch (Exception ex)
-            {
-                Logger.Instance.Error(ex);
-            }
-
         }
 
         public override void CreateNewGraph()
@@ -162,7 +164,7 @@ namespace WindowsFormsVersion.ViewModel
 
         private bool CanStartPathFinding()
         {
-            return Graph.IsReadyForPathfinding();
+            return EndPoints.HasEndPointsSet();
         }
     }
 }

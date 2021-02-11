@@ -93,7 +93,10 @@ namespace WPFVersion.ViewModel
         {
             try
             {
-                var viewModel = new PathFindingViewModel(this);
+                var viewModel = new PathFindingViewModel(this)
+                {
+                    EndPoints = EndPoints
+                };
                 viewModel.OnPathNotFound += OnPathNotFound;
                 PrepareWindow(viewModel, new PathFindWindow());
             }
@@ -147,7 +150,7 @@ namespace WPFVersion.ViewModel
 
         private bool CanExecuteStartFindPathCommand(object param)
         {
-            return Graph.IsReadyForPathfinding();
+            return EndPoints.HasEndPointsSet();
         }
 
         private void ExecuteLoadGraphCommand(object param)

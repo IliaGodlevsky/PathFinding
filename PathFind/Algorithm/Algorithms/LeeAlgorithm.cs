@@ -23,27 +23,32 @@ namespace Algorithm.Algorithms
             verticesQueue = new Queue<IVertex>();
         }
 
-        public override GraphPath FindPath(IVertex start, IVertex end)
+        public override IGraphPath FindPath(IEndPoints endpoints)
         {
-            PrepareForPathfinding(start, end);
+            PrepareForPathfinding(endpoints);
             do
             {
                 ExtractNeighbours();
                 SpreadWaves();
                 CurrentVertex = NextVertex;
-                visitedVerticesCoordinates.Add(CurrentVertex.Position);
-                var args = CreateEventArgs(CurrentVertex);
-                RaiseOnVertexVisitedEvent(args);
+                VisitVertex(CurrentVertex);
             } while (!IsDestination());
             CompletePathfinding();
 
-            return new GraphPath(parentVertices, Start, End, visitedVerticesCoordinates.Count);
+            return new GraphPath(parentVertices, endpoints);
         }
 
-        protected override void PrepareForPathfinding(IVertex start, IVertex end)
+        protected override void PrepareForPathfinding(IEndPoints endpoints)
         {
-            base.PrepareForPathfinding(start, end);
+            base.PrepareForPathfinding(endpoints);
             SetVerticesAccumulatedCostToZero();
+        }
+
+        protected virtual void VisitVertex(IVertex vertex)
+        {
+            visitedVertices[vertex.Position] = vertex;
+            var args = CreateEventArgs(vertex);
+            RaiseOnVertexVisitedEvent(args);
         }
 
         protected override void CompletePathfinding()
@@ -56,9 +61,7 @@ namespace Algorithm.Algorithms
         {
             get
             {
-                verticesQueue = verticesQueue
-                    .Where(vertex => !visitedVerticesCoordinates.Contains(vertex.Position))
-                    .ToQueue();
+                verticesQueue = verticesQueue.Where(IsNotVisited).ToQueue();
 
                 return verticesQueue.DequeueOrDefault();
             }
@@ -66,7 +69,7 @@ namespace Algorithm.Algorithms
 
         protected virtual double CreateWave()
         {
-            return accumulatedCosts[CurrentVertex.Position] + 1;
+            return GetAccumulatedCost(CurrentVertex) + 1;
         }
 
         private void SpreadWaves()

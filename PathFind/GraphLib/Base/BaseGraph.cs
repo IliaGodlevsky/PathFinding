@@ -25,21 +25,6 @@ namespace GraphLib.Base
             }
 
             vertices = new IVertex[this.GetSize()];
-            this.RemoveExtremeVertices();
-        }
-
-        protected IVertex end;
-        public virtual IVertex End
-        {
-            get => end;
-            set { end = value; }
-        }
-
-        protected IVertex start;
-        public virtual IVertex Start
-        {
-            get => start;
-            set { start = value; }
         }
 
         public IEnumerable<int> DimensionsSizes { get; private set; }

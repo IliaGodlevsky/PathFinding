@@ -10,7 +10,7 @@ using System.Linq;
 namespace Algorithm.Algorithms
 {
     [Description("A* algorithm (modified)")]
-    public class AStarModified : AStarAlgorithm
+    public sealed class AStarModified : AStarAlgorithm
     {
         public override IGraph Graph
         {
@@ -18,7 +18,8 @@ namespace Algorithm.Algorithms
             set
             {
                 base.Graph = value;
-                PercentOfFarthestVerticesToDelete = 5;
+                PercentOfFarthestVerticesToDelete 
+                    = CalculatePercentOfFarthestVerticesToDelete;
             }
         }
 
@@ -60,7 +61,7 @@ namespace Algorithm.Algorithms
 
         private int CompareByHeuristic(IVertex v1, IVertex v2)
         {
-            return HeuristicFunction(v2).CompareTo(HeuristicFunction(v1));
+            return CalculateHeuristic(v2).CompareTo(CalculateHeuristic(v1));
         }
 
         private int VerticesCountToDelete =>
@@ -79,6 +80,15 @@ namespace Algorithm.Algorithms
                     percentOfFarthestVerticesToDelete =
                         percentValueRange.ReturnInRange(percentOfFarthestVerticesToDelete);
                 }
+            }
+        }
+
+        private int CalculatePercentOfFarthestVerticesToDelete
+        {
+            get
+            {
+                var partOfVertexToDelete = Math.Floor(Math.Log(Graph.GetSize() + 1, 4));
+                return Convert.ToInt32(partOfVertexToDelete);
             }
         }
 

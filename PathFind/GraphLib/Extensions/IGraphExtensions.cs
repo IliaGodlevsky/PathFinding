@@ -1,7 +1,6 @@
 ﻿using Common.Extensions;
 using GraphLib.Infrastructure;
 using GraphLib.Interface;
-using GraphLib.NullObjects;
 using System.Linq;
 
 namespace GraphLib.Extensions
@@ -14,19 +13,12 @@ namespace GraphLib.Extensions
         /// <param name="graph"></param>
         public static void Refresh(this IGraph graph)
         {
-            graph.RemoveExtremeVertices();
             graph.ForEach(vertex => vertex.Refresh());
         }
 
         public static int GetSize(this IGraph graph)
         {
             return graph.DimensionsSizes.AggregateOrDefault((x, y) => x * y);
-        }
-
-        public static int GetVisitedVerticesCount(this IGraph graph)
-        {
-            //return graph.Count(vertex => vertex.IsVisited);
-            return default;
         }
 
         public static int GetObstaclesCount(this IGraph graph)
@@ -44,12 +36,6 @@ namespace GraphLib.Extensions
             return new GraphSerializationInfo(graph);
         }
 
-        internal static void RemoveExtremeVertices(this IGraph graph)
-        {
-            graph.End = new DefaultVertex();
-            graph.Start = new DefaultVertex();
-        }
-
         public static void ToUnweighted(this IGraph graph)
         {
             graph.ForEach(vertex => vertex.MakeUnweighted());
@@ -63,13 +49,6 @@ namespace GraphLib.Extensions
         public static void ConnectVertices(this IGraph self)
         {
             self.AsParallel().ForAll(vertex => vertex.SetNeighbours(self));
-        }
-
-        public static bool IsReadyForPathfinding(this IGraph self)
-        {
-            return !self.End.IsDefault
-                && !self.Start.IsDefault
-                && self.Any();
         }
 
         public static bool IsEqual(this IGraph self, IGraph graph)
@@ -91,6 +70,11 @@ namespace GraphLib.Extensions
             }
 
             return true;
+        }
+
+        public static bool Contains(this IGraph self, IEndPoints endPoints)
+        {
+            return self.Contains(endPoints.Start, endPoints.End);
         }
     }
 }

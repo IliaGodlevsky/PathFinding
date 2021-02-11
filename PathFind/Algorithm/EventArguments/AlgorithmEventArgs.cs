@@ -14,9 +14,9 @@ namespace Algorithm.EventArguments
             Vertex = new DefaultVertex();
         }
 
-        public AlgorithmEventArgs(int visitedVertices, bool isExtremeVertice = false, IVertex vertex = null)
+        public AlgorithmEventArgs(int visitedVertices, bool isEndPoint = false, IVertex vertex = null)
         {
-            IsExtremeVertex = isExtremeVertice;
+            IsEndPoint = isEndPoint;
             Vertex = vertex ?? new DefaultVertex();
             VisitedVertices = visitedVertices;
         }
@@ -28,6 +28,6 @@ namespace Algorithm.EventArguments
 
         public int VisitedVertices { get; set; }
 
-        public bool IsExtremeVertex { get; }
+        public bool IsEndPoint { get; }
     }
 }

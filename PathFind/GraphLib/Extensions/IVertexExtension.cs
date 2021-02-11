@@ -10,7 +10,7 @@ namespace GraphLib.Extensions
 {
     public static class IVertexExtension
     {
-        public static bool IsValidToBeExtreme(this IVertex vertex)
+        public static bool IsValidToBeEndPoint(this IVertex vertex)
         {
             return !vertex.IsIsolated();
         }

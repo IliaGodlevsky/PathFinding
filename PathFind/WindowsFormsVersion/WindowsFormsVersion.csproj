@@ -110,6 +110,7 @@
     <Compile Include="Configure\ContainerConfigure.cs" />
     <Compile Include="Extensions\ConstrolCollectionExtension.cs" />
     <Compile Include="Extensions\ControlExtension.cs" />
+    <Compile Include="Model\EndPoints.cs" />
     <Compile Include="Model\GraphFieldFactory.cs" />
     <Compile Include="Model\PathInput.cs" />
     <Compile Include="Model\VertexFactory.cs" />

@@ -44,20 +44,24 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Base\BaseEndPoints.cs" />
+    <Compile Include="Extensions\ICoordinateExtensions.cs" />
+    <Compile Include="Extensions\IEnumerableExtensions.cs" />
+    <Compile Include="Extensions\IGraphExtensions.cs" />
+    <Compile Include="Extensions\IGraphPathExtensions.cs" />
+    <Compile Include="Extensions\IVertexExtension.cs" />
     <Compile Include="Infrastructure\CoordinateEnvironment.cs" />
     <Compile Include="Coordinate2D.cs" />
     <Compile Include="Coordinate3D.cs" />
     <Compile Include="Base\BaseCoordinate.cs" />
     <Compile Include="Interface\ICoordinate.cs" />
+    <Compile Include="Interface\IEndPoints.cs" />
+    <Compile Include="Interface\IGraphPath.cs" />
     <Compile Include="Interface\IVertexState.cs" />
     <Compile Include="NullObjects\DefaultCoordinate.cs" />
     <Compile Include="Factories\Coordinate2DFactory.cs" />
     <Compile Include="Factories\Coordinate3DFactory.cs" />
     <Compile Include="Interface\ICoordinateFactory.cs" />
-    <Compile Include="Extensions\ICoordinateExtensions.cs" />
-    <Compile Include="Extensions\IEnumerableExtensions.cs" />
-    <Compile Include="Extensions\IGraphExtensions.cs" />
-    <Compile Include="Extensions\IVertexExtension.cs" />
     <Compile Include="Factories\Graph2DFactory.cs" />
     <Compile Include="Factories\Graph3DFactory.cs" />
     <Compile Include="Factories\GraphAssembler.cs" />

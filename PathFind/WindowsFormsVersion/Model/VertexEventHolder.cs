@@ -26,17 +26,8 @@ namespace WindowsFormsVersion.EventHolder
             if (vertex.IsDefault)
                 return;
 
-            (vertex as Vertex).MouseClick += ChooseExtremeVertices;
             (vertex as Vertex).MouseClick += Reverse;
             (vertex as Vertex).MouseWheel += ChangeVertexCost;
-        }
-
-        public override void ChooseExtremeVertices(object sender, EventArgs e)
-        {
-            if ((e as MouseEventArgs).Button == MouseButtons.Left)
-            {
-                base.ChooseExtremeVertices(sender, e);
-            }
         }
 
         protected override void UnsubscribeFromEvents(IVertex vertex)
@@ -44,7 +35,6 @@ namespace WindowsFormsVersion.EventHolder
             if (vertex.IsDefault)
                 return;
 
-            (vertex as Vertex).MouseClick -= ChooseExtremeVertices;
             (vertex as Vertex).MouseClick -= Reverse;
             (vertex as Vertex).MouseWheel -= ChangeVertexCost;
         }

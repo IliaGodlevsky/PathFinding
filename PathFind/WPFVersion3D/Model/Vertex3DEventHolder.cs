@@ -12,15 +12,13 @@ namespace WPFVersion3D.Model
         }
 
         protected override void SubscribeToEvents(IVertex vertex)
-        {
-            (vertex as Vertex3D).MouseLeftButtonDown += ChooseExtremeVertices;
+        {            
             (vertex as Vertex3D).MouseRightButtonDown += Reverse;
             (vertex as Vertex3D).MouseWheel += ChangeVertexCost;
         }
 
         protected override void UnsubscribeFromEvents(IVertex vertex)
         {
-            (vertex as Vertex3D).MouseLeftButtonDown -= ChooseExtremeVertices;
             (vertex as Vertex3D).MouseRightButtonDown -= Reverse;
             (vertex as Vertex3D).MouseWheel -= ChangeVertexCost;
         }

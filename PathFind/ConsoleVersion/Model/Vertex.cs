@@ -8,6 +8,7 @@ using System;
 using System.Collections.Generic;
 using System.Configuration;
 using System.Drawing;
+
 using Console = Colorful.Console;
 
 namespace ConsoleVersion.Model
@@ -162,7 +163,5 @@ namespace ConsoleVersion.Model
                 return consoleCoordinate;
             }
         }
-
-        private const string UnweightedSign = "#";
     }
 }

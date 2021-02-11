@@ -3,7 +3,6 @@ using ConsoleVersion.InputClass;
 using ConsoleVersion.Model;
 using ConsoleVersion.Resource;
 using ConsoleVersion.View;
-using GraphLib.Extensions;
 using GraphLib.Graphs;
 using GraphLib.NullObjects;
 using GraphLib.ViewModel;
@@ -55,6 +54,7 @@ namespace ConsoleVersion.ViewModel
 
                 base.FindPath();
 
+                UpdatePathfindingStatistics();
                 Console.ReadLine();
                 mainModel.ClearGraph();
                 Console.CursorVisible = true;
@@ -69,12 +69,6 @@ namespace ConsoleVersion.ViewModel
         protected override void OnVertexVisited(object sender, EventArgs e)
         {
             base.OnVertexVisited(sender, e);
-            UpdatePathfindingStatistics();
-        }
-
-        protected override void OnAlgorithmFinished(object sender, EventArgs e)
-        {
-            base.OnAlgorithmFinished(sender, e);
             UpdatePathfindingStatistics();
         }
 
@@ -119,10 +113,12 @@ namespace ConsoleVersion.ViewModel
             var upperPosibleYValue = (mainViewModel.Graph as Graph2D).Length - 1;
 
             var point = Input.InputPoint(upperPosibleXValue, upperPosibleYValue);
+            var vertex = mainViewModel.Graph[point];
 
-            while (!mainViewModel.Graph[point].IsValidToBeExtreme())
+            while (EndPoints.CanBeEndPoint(vertex))
             {
                 point = Input.InputPoint(upperPosibleXValue, upperPosibleYValue);
+                vertex = mainViewModel.Graph[point];
             }
 
             return point;

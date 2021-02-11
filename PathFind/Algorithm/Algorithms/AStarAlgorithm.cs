@@ -1,5 +1,4 @@
 ﻿using Algorithm.Extensions;
-using Algorithm.Handlers;
 using GraphLib.Interface;
 using GraphLib.NullObjects;
 using System.ComponentModel;
@@ -9,8 +8,6 @@ namespace Algorithm.Algorithms
     [Description("A* algorithm")]
     public class AStarAlgorithm : DijkstraAlgorithm
     {
-        public HeuristicHandler HeuristicFunction { get; set; }
-
         public AStarAlgorithm() : this(new NullGraph())
         {
 
@@ -21,24 +18,14 @@ namespace Algorithm.Algorithms
 
         }
 
-        public override void Reset()
+        protected virtual double CalculateHeuristic(IVertex vertex)
         {
-            base.Reset();
-            HeuristicFunction = null;
+            return vertex.CalculateChebyshevDistanceTo(endPoints.End);
         }
 
         protected override double GetVertexRelaxedCost(IVertex neighbour)
         {
-            return base.GetVertexRelaxedCost(neighbour) + HeuristicFunction(CurrentVertex);
-        }
-
-        protected override void PrepareForPathfinding(IVertex start, IVertex end)
-        {
-            base.PrepareForPathfinding(start, end);
-            if (HeuristicFunction == null)
-            {
-                HeuristicFunction = vertex => vertex.CalculateChebyshevDistanceTo(End);
-            }
+            return base.GetVertexRelaxedCost(neighbour) + CalculateHeuristic(CurrentVertex);
         }
     }
 }

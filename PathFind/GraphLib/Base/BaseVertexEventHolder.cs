@@ -23,24 +23,6 @@ namespace GraphLib.Base
             }
         }
 
-        public virtual void SetStartVertex(IVertex vertex)
-        {
-            if (vertex.IsValidToBeExtreme())
-            {
-                vertex.MarkAsStart();
-                Graph.Start = vertex;
-            }
-        }
-
-        public virtual void SetDestinationVertex(IVertex vertex)
-        {
-            if (vertex.IsValidToBeExtreme())
-            {
-                vertex.MarkAsEnd();
-                Graph.End = vertex;
-            }
-        }
-
         public virtual void Reverse(object sender, EventArgs e)
         {
             if (sender is IVertex vertex)
@@ -66,21 +48,6 @@ namespace GraphLib.Base
             Graph?.AsParallel().ForAll(SubscribeToEvents);
         }
 
-        public virtual void ChooseExtremeVertices(object sender, EventArgs e)
-        {
-            if (sender is IVertex vertex)
-            {
-                if (!IsStartChosen())
-                {
-                    SetStartVertex(vertex);
-                }
-                else if (IsStartChosen() && !IsEndChosen())
-                {
-                    SetDestinationVertex(vertex);
-                }
-            }
-        }
-
         protected abstract void UnsubscribeFromEvents(IVertex vertex);
 
         protected abstract void SubscribeToEvents(IVertex vertex);
@@ -101,16 +68,6 @@ namespace GraphLib.Base
             vertex.MarkAsSimpleVertex();
             vertex.SetNeighbours(Graph);
             vertex.ConnectWithNeighbours();
-        }
-
-        private bool IsStartChosen()
-        {
-            return !Graph.Start.IsDefault;
-        }
-
-        private bool IsEndChosen()
-        {
-            return !Graph.End.IsDefault;
         }
     }
 }

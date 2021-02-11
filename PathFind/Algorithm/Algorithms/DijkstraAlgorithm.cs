@@ -23,26 +23,31 @@ namespace Algorithm.Algorithms
             verticesQueue = new List<IVertex>();
         }
 
-        public override GraphPath FindPath(IVertex start, IVertex end)
+        public override IGraphPath FindPath(IEndPoints endpoints)
         {
-            PrepareForPathfinding(start, end);
+            PrepareForPathfinding(endpoints);
             do
             {
                 ExtractNeighbours();
                 RelaxNeighbours();
                 CurrentVertex = NextVertex;
-                visitedVerticesCoordinates.Add(CurrentVertex.Position);
-                var args = CreateEventArgs(CurrentVertex);
-                RaiseOnVertexVisitedEvent(args);
+                VisitVertex(CurrentVertex);
             } while (!IsDestination());
             CompletePathfinding();
 
-            return new GraphPath(parentVertices, Start, End, visitedVerticesCoordinates.Count);
+            return new GraphPath(parentVertices, endpoints);
+        }
+
+        protected void VisitVertex(IVertex vertex)
+        {
+            visitedVertices[vertex.Position] = vertex;
+            var args = CreateEventArgs(vertex);
+            RaiseOnVertexVisitedEvent(args);
         }
 
         protected virtual double GetVertexRelaxedCost(IVertex neighbour)
         {
-            return neighbour.Cost.CurrentCost + accumulatedCosts[CurrentVertex.Position];
+            return neighbour.Cost.CurrentCost + GetAccumulatedCost(CurrentVertex);
         }
 
         protected override IVertex NextVertex
@@ -50,8 +55,8 @@ namespace Algorithm.Algorithms
             get
             {
                 verticesQueue = verticesQueue
-                    .Where(vertex => !visitedVerticesCoordinates.Contains(vertex.Position))
-                    .OrderBy(vertex => accumulatedCosts[vertex.Position])
+                    .Where(IsNotVisited)
+                    .OrderBy(GetAccumulatedCost)
                     .ToList();
 
                 return verticesQueue.FirstOrDefault();
@@ -64,9 +69,9 @@ namespace Algorithm.Algorithms
             verticesQueue.Clear();
         }
 
-        protected override void PrepareForPathfinding(IVertex start, IVertex end)
+        protected override void PrepareForPathfinding(IEndPoints endpoints)
         {
-            base.PrepareForPathfinding(start, end);
+            base.PrepareForPathfinding(endpoints);
             SetVerticesAccumulatedCostToInfifnity();
         }
 
@@ -106,7 +111,7 @@ namespace Algorithm.Algorithms
             Graph
                 .Where(vertex => !vertex.IsObstacle)
                 .ForEach(vertex => accumulatedCosts[vertex.Position] = double.PositiveInfinity);
-            accumulatedCosts[Start.Position] = 0;
+            accumulatedCosts[endPoints.Start.Position] = 0;
         }
     }
 }

@@ -17,7 +17,8 @@ namespace WPFVersion3D.Configure
         {
             var builder = new ContainerBuilder();
 
-            builder.RegisterType<MainWindowViewModel>().As<IMainModel>().InstancePerLifetimeScope();
+            builder.RegisterType<EndPoints>().As<BaseEndPoints>().SingleInstance();
+            builder.RegisterType<MainWindowViewModel>().As<IMainModel>().InstancePerLifetimeScope().PropertiesAutowired();
             builder.RegisterType<Vertex3DFactory>().As<IVertexFactory>().SingleInstance();
             builder.RegisterType<Coordinate3DFactory>().As<ICoordinateFactory>().SingleInstance();
             builder.RegisterType<PathInput>().As<IPathInput>().SingleInstance();

@@ -82,12 +82,10 @@ namespace GraphLib.Tests.Tests
 
             Assert.Throws<ArgumentOutOfRangeException>(() =>
             {
-                using (var stream = new MemoryStream())
-                {
-                    serializer.SaveGraph(graph3D, stream);
-                    stream.Position = 0;
-                    deserialized = serializer.LoadGraph(stream);
-                }
+                using var stream = new MemoryStream();
+                serializer.SaveGraph(graph3D, stream);
+                stream.Position = 0;
+                deserialized = serializer.LoadGraph(stream);
             });           
         }
     }

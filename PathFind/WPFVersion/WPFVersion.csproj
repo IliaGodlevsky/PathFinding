@@ -96,6 +96,7 @@
     <Compile Include="Converters\StringToRangedDoubleConverter.cs" />
     <Compile Include="Converters\StringToRangedIntConverter.cs" />
     <Compile Include="Infrastructure\RelayCommand.cs" />
+    <Compile Include="Model\EndPoints.cs" />
     <Compile Include="Model\PathInput.cs" />
     <Compile Include="Model\VertexEventHolder.cs" />
     <Compile Include="Model\Vertex.cs" />

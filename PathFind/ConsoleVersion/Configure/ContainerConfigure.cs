@@ -19,10 +19,11 @@ namespace ConsoleVersion.Configure
         public static IContainer Configure()
         {
             var builder = new ContainerBuilder();
-
+            
             builder.RegisterType<Application>().AsSelf().InstancePerLifetimeScope();
             builder.RegisterType<MainView>().As<IView>().InstancePerLifetimeScope();
-            builder.RegisterType<MainViewModel>().As<IMainModel>().InstancePerLifetimeScope();
+            builder.RegisterType<EndPoints>().As<BaseEndPoints>().SingleInstance();
+            builder.RegisterType<MainViewModel>().As<IMainModel>().InstancePerLifetimeScope().PropertiesAutowired();
             builder.RegisterType<VertexFactory>().As<IVertexFactory>().SingleInstance();
             builder.RegisterType<PathInput>().As<IPathInput>().SingleInstance();
             builder.RegisterType<Coordinate2DFactory>().As<ICoordinateFactory>().SingleInstance();

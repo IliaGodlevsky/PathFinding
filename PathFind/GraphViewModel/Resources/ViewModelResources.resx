@@ -124,7 +124,7 @@
     <value>Width: {0}   Length: {1}   Obstacle percent: {2} ({3}/{4})</value>
   </data>
   <data name="StatisticsFormat" xml:space="preserve">
-    <value>Steps: {0}   Path length: {1}   Visited vertices: {2}</value>
+    <value>Steps: {0}   Path length: {1}   Visited: {2}</value>
   </data>
   <data name="TimerInfoFormat" xml:space="preserve">
     <value>Time: {0}:{1}.{2}</value>

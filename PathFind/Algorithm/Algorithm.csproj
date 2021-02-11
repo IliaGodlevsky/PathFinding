@@ -57,10 +57,8 @@
     <Compile Include="Algorithms\AStarAlgorithm.cs" />
     <Compile Include="Algorithms\AStartModified.cs" />
     <Compile Include="Algorithms\BestFirstLeeAlgorithm.cs" />
-    <Compile Include="Algorithms\CostGreedyAlgorithm.cs" />
-    <Compile Include="Algorithms\DepthFirstAlgorithm.cs" />
+    <Compile Include="Algorithms\DistanceFirstAlgorithm.cs" />
     <Compile Include="Algorithms\DijkstraAlgorithm.cs" />
-    <Compile Include="Algorithms\DistanceGreedyAlgoritm.cs" />
     <Compile Include="Base\BaseAlgorithm.cs" />
     <Compile Include="Interface\IAlgorithm.cs" />
     <Compile Include="Algorithms\LeeAlgorithm.cs" />

@@ -1,7 +1,6 @@
 ﻿using Common;
 using Common.Interfaces;
 using GraphLib.Base;
-using GraphLib.Extensions;
 using GraphLib.Interface;
 using GraphViewModel;
 using System;
@@ -90,6 +89,7 @@ namespace WPFVersion3D.ViewModel
             {
                 var viewModel = new PathFindingViewModel(this);
                 viewModel.OnPathNotFound += OnPathNotFound;
+                viewModel.EndPoints = EndPoints;
                 PrepareWindow(viewModel, new PathFindWindow());
             }
             catch (Exception ex)
@@ -144,7 +144,7 @@ namespace WPFVersion3D.ViewModel
 
         private bool CanExecuteStartFindPathCommand(object param)
         {
-            return Graph.IsReadyForPathfinding();
+            return EndPoints.HasEndPointsSet();
         }
 
         private void ExecuteLoadGraphCommand(object param)

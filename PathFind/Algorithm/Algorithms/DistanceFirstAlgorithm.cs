@@ -1,6 +1,5 @@
 ﻿using Algorithm.Base;
 using Algorithm.Extensions;
-using Algorithm.Handlers;
 using Common.Extensions;
 using GraphLib.Infrastructure;
 using GraphLib.Interface;
@@ -11,24 +10,22 @@ using System.Linq;
 
 namespace Algorithm.Algorithms
 {
-    [Description("Depth-first algorithm")]
-    public class DepthFirstAlgorithm : BaseAlgorithm
+    [Description("Distance-first algorithm")]
+    public class DistanceFirstAlgorithm : BaseAlgorithm
     {
-        public HeuristicHandler GreedyFunction { get; set; }
-
-        public DepthFirstAlgorithm() : this(new NullGraph())
+        public DistanceFirstAlgorithm() : this(new NullGraph())
         {
 
         }
 
-        public DepthFirstAlgorithm(IGraph graph) : base(graph)
+        public DistanceFirstAlgorithm(IGraph graph) : base(graph)
         {
-            visitedVertices = new Stack<IVertex>();
+            visitedVerticesStack = new Stack<IVertex>();
         }
 
-        public override GraphPath FindPath(IVertex start, IVertex end)
+        public override IGraphPath FindPath(IEndPoints endpoints)
         {
-            PrepareForPathfinding(start, end);
+            PrepareForPathfinding(endpoints);
             while (!IsDestination())
             {
                 PreviousVertex = CurrentVertex;
@@ -37,33 +34,18 @@ namespace Algorithm.Algorithms
             }
             CompletePathfinding();
 
-            return new GraphPath(parentVertices, Start, End, visitedVerticesCoordinates.Count);
+            return new GraphPath(parentVertices, endpoints);
         }
 
-        public override void Reset()
+        protected virtual double CalculateHeuristic(IVertex vertex)
         {
-            base.Reset();
-            GreedyFunction = null;
-        }
-
-        protected override void PrepareForPathfinding(IVertex start, IVertex end)
-        {
-            base.PrepareForPathfinding(start, end);
-            TrySetDefaultGreedyFunction();
-        }
-
-        protected virtual void TrySetDefaultGreedyFunction()
-        {
-            if (GreedyFunction == null)
-            {
-                GreedyFunction = vertex => vertex.CalculateChebyshevDistanceTo(Start);
-            }
+            return vertex.CalculateChebyshevDistanceTo(endPoints.End);
         }
 
         protected override void CompletePathfinding()
         {
             base.CompletePathfinding();
-            visitedVertices.Clear();
+            visitedVerticesStack.Clear();
         }
 
         protected override IVertex NextVertex
@@ -72,7 +54,7 @@ namespace Algorithm.Algorithms
             {
                 var neighbours = GetUnvisitedNeighbours(CurrentVertex);
                 bool IsLeastCostVertex(IVertex vertex)
-                    => GreedyFunction(vertex) == neighbours.Min(GreedyFunction);
+                    => CalculateHeuristic(vertex) == neighbours.Min(CalculateHeuristic);
 
                 return neighbours
                     .ForEach(Enqueue)
@@ -83,10 +65,10 @@ namespace Algorithm.Algorithms
 
         private void VisitCurrentVertex()
         {
-            visitedVerticesCoordinates.Add(CurrentVertex.Position);
+            visitedVertices[CurrentVertex.Position] = CurrentVertex;
             var args = CreateEventArgs(CurrentVertex);
             RaiseOnVertexVisitedEvent(args);
-            visitedVertices.Push(CurrentVertex);
+            visitedVerticesStack.Push(CurrentVertex);
         }
 
         private void Enqueue(IVertex vertex)
@@ -99,7 +81,7 @@ namespace Algorithm.Algorithms
         {
             if (CurrentVertex.IsDefault)
             {
-                CurrentVertex = visitedVertices.PopOrDefault();
+                CurrentVertex = visitedVerticesStack.PopOrDefault();
             }
             else
             {
@@ -110,6 +92,6 @@ namespace Algorithm.Algorithms
 
         private IVertex PreviousVertex { get; set; }
 
-        private readonly Stack<IVertex> visitedVertices;
+        private readonly Stack<IVertex> visitedVerticesStack;
     }
 }

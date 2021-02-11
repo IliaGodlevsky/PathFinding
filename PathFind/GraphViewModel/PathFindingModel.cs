@@ -3,8 +3,8 @@ using Algorithm.EventArguments;
 using Algorithm.Interface;
 using Common;
 using Common.Extensions;
+using GraphLib.Base;
 using GraphLib.Extensions;
-using GraphLib.Infrastructure;
 using GraphLib.Interface;
 using GraphViewModel.Interfaces;
 using GraphViewModel.Resources;
@@ -20,9 +20,11 @@ namespace GraphLib.ViewModel
     {
         public event Action<string> OnPathNotFound;
 
+        public BaseEndPoints EndPoints { get; set; }
+
         public ValueRange AlgorithmDelayTimeValueRange { get; protected set; }
 
-        public int DelayTime { get; set; } // milliseconds
+        public int DelayTime { get; set; }
 
         public string AlgorithmKey { get; set; }
 
@@ -41,6 +43,7 @@ namespace GraphLib.ViewModel
             {
                 var algorithm = GetAlgorithm(AlgorithmKey);
                 algorithm.Graph = mainViewModel.Graph;
+
                 intermitter = new AlgorithmIntermit(DelayTime);
                 intermitter.OnIntermitted += OnAlgorithmIntermitted;
 
@@ -49,13 +52,14 @@ namespace GraphLib.ViewModel
                 algorithm.OnFinished += OnAlgorithmFinished;
                 algorithm.OnStarted += OnAlgorithmStarted;
 
-                var start = mainViewModel.Graph.Start;
-                var end = mainViewModel.Graph.End;
-                var path = algorithm.FindPath(start, end);
-                ShowPathfindingResults(path);
-                timer.Reset();
+                var path = algorithm.FindPath(EndPoints);
+
+                var statistics = GetStatistics(timer, visitedVerticesCount, path);
+                mainViewModel.PathFindingStatistics = statistics;
+                TryHighlightPath(path);
+
                 algorithm.Reset();
-                OnPathNotFound = null;
+                EndPoints.Reset();
             }
             catch (Exception ex)
             {
@@ -63,18 +67,17 @@ namespace GraphLib.ViewModel
             }
         }
 
-        protected virtual void ShowPathfindingResults(GraphPath path)
+        protected virtual bool TryHighlightPath(IGraphPath path)
         {
-            var finishStatistics = GetIntermediateStatistics(timer, path);
-            mainViewModel.PathFindingStatistics = finishStatistics;
-
-            if (path.IsExtracted)
+            if (path.IsExtracted())
             {
-                path.HighlightPath();
+                path.HighlightPath(EndPoints);
+                return true;
             }
             else
             {
                 OnPathNotFound?.Invoke("Couln't find path");
+                return false;
             }
         }
 
@@ -84,12 +87,13 @@ namespace GraphLib.ViewModel
         {
             if (e is AlgorithmEventArgs args)
             {
-                if (!args.IsExtremeVertex)
+                if (!args.IsEndPoint)
                 {
                     args.Vertex.MarkAsVisited();
                 }
-                var intermediateStatistics = GetIntermediateStatistics(timer);
-                mainViewModel.PathFindingStatistics = intermediateStatistics;
+
+                var statistics = GetStatistics(timer, args.VisitedVertices);
+                mainViewModel.PathFindingStatistics = statistics;
             }
 
             intermitter.Intermit();
@@ -99,7 +103,7 @@ namespace GraphLib.ViewModel
         {
             if (e is AlgorithmEventArgs args)
             {
-                if (!args.IsExtremeVertex)
+                if (!args.IsEndPoint)
                 {
                     args.Vertex.MarkAsEnqueued();
                 }
@@ -108,21 +112,25 @@ namespace GraphLib.ViewModel
 
         protected virtual void OnAlgorithmFinished(object sender, EventArgs e)
         {
+            if (e is AlgorithmEventArgs args)
+            {
+                visitedVerticesCount = args.VisitedVertices;
+            }
             timer.Stop();
         }
 
         protected virtual void OnAlgorithmStarted(object sender, EventArgs e)
         {
+            timer.Reset();
             timer.Start();
         }
 
-        private string GetIntermediateStatistics(Stopwatch timer, GraphPath path = null)
+        private string GetStatistics(Stopwatch timer, int visitedVertices, IGraphPath path = null)
         {
             var format = ViewModelResources.StatisticsFormat;
-            var pathLength = path == null ? 0 : path.Length;
-            var pathCost = path == null ? 0 : path.Cost;
-            var visitedCount = path == null ? 0 : path.VisitedCount;
-            var graphInfo = string.Format(format, pathLength, pathCost, visitedCount);
+            var pathLength = path == null ? 0 : path.GetPathLength();
+            var pathCost = path == null ? 0 : path.GetPathCost();
+            var graphInfo = string.Format(format, pathLength, pathCost, visitedVertices);
             var timerInfo = timer.GetTimeInformation(ViewModelResources.TimerInfoFormat);
 
             return $"{AlgorithmKey}    {timerInfo}     {graphInfo}";
@@ -132,5 +140,6 @@ namespace GraphLib.ViewModel
         protected IMainModel mainViewModel;
 
         private readonly Stopwatch timer;
+        private int visitedVerticesCount;
     }
 }

@@ -60,7 +60,10 @@ namespace ConsoleVersion.ViewModel
             {
                 try
                 {
-                    var model = new PathFindingViewModel(this);
+                    var model = new PathFindingViewModel(this)
+                    {
+                        EndPoints = EndPoints
+                    };
                     model.OnPathNotFound += OnPathNotFound;
                     var view = new PathFindView(model);
 
