@@ -87,6 +87,7 @@ namespace GraphViewModel
         {
             if (!graph.IsDefault)
             {
+                EndPoints.UnsubscribeFromEvents(Graph);
                 EndPoints.Reset();
                 eventHolder.UnsubscribeVertices();
                 Graph = graph;

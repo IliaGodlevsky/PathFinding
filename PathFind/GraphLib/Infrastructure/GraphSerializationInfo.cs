@@ -13,7 +13,7 @@ namespace GraphLib.Infrastructure
         public GraphSerializationInfo(IGraph graph)
         {
             DimensionsSizes = graph.DimensionsSizes.ToArray();
-            verticesDto = graph.Select(vertex => vertex.GetSerializationInfo()).ToArray();
+            verticesDto = graph.Vertices.Select(vertex => vertex.GetSerializationInfo()).ToArray();
         }
 
         public IEnumerable<int> DimensionsSizes { get; private set; }

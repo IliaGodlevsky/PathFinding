@@ -11,7 +11,7 @@ using static System.Configuration.ConfigurationManager;
 
 namespace WindowsFormsVersion.Model
 {
-    internal class Vertex : Label, IVertex
+    internal class Vertex : Label, IVertex, IMarkableVertex, IWeightableVertex
     {
         public Vertex() : base()
         {
@@ -31,11 +31,20 @@ namespace WindowsFormsVersion.Model
 
         public IList<IVertex> Neighbours { get; set; }
 
-        public bool IsObstacle { get; set; }
+        private bool isObstacle;
+        public bool IsObstacle 
+        {
+            get => isObstacle;
+            set
+            {
+                isObstacle = value;
+                if (isObstacle)
+                    MarkAsObstacle();
+            }
+        }
 
         public void MarkAsObstacle()
         {
-            IsObstacle = true;
             BackColor = Color.FromKnownColor(KnownColor.Black);
         }
 

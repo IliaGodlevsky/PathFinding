@@ -3,7 +3,7 @@ using GraphLib.Infrastructure;
 using GraphLib.Interface;
 using System.Collections.Generic;
 
-namespace GraphLib.Tests.TestInfrastructure
+namespace GraphLib.Tests.TestInfrastructure.Objects
 {
     internal class TestVertex : IVertex
     {
@@ -23,50 +23,5 @@ namespace GraphLib.Tests.TestInfrastructure
         public ICoordinate Position { get; set; }
 
         public bool IsDefault => false;
-
-        public void MakeUnweighted()
-        {
-
-        }
-
-        public void MakeWeighted()
-        {
-
-        }
-
-        public void MarkAsEnd()
-        {
-
-        }
-
-        public void MarkAsEnqueued()
-        {
-
-        }
-
-        public void MarkAsObstacle()
-        {
-
-        }
-
-        public void MarkAsPath()
-        {
-
-        }
-
-        public void MarkAsSimpleVertex()
-        {
-
-        }
-
-        public void MarkAsStart()
-        {
-
-        }
-
-        public void MarkAsVisited()
-        {
-
-        }
     }
 }

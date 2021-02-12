@@ -40,7 +40,9 @@ namespace GraphLib.Factories
             try
             {
                 var graph = graphFactory.CreateGraph(graphDimensionsSizes);
-                graph.ForEachIndex(index => AssembleVertex(graph, index, obstaclePercent));
+                graph.Vertices
+                    .AsParallel()
+                    .ForEachIndex(index => AssembleVertex(graph, index, obstaclePercent));
                 graph.ConnectVertices();
                 return graph;
             }
@@ -55,12 +57,10 @@ namespace GraphLib.Factories
         {
             var coordinate = ToCoordinate(index, graph);
             graph[coordinate] = vertexFactory.CreateVertex();
-            graph[coordinate].Cost = costFactory.CreateCost();
-            if (IsObstacleChance(obstaclePercent))
-            {
-                graph[coordinate].MarkAsObstacle();
-            }
-            graph[coordinate].Position = coordinate;
+            var vertex = graph[coordinate];
+            vertex.Cost = costFactory.CreateCost();
+            vertex.IsObstacle = IsObstacleChance(obstaclePercent);
+            vertex.Position = coordinate;
         }
 
         private bool IsObstacleChance(int percentOfObstacles)

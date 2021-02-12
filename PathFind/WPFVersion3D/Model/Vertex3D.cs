@@ -9,7 +9,7 @@ using WPFVersion3D.Factories;
 
 namespace WPFVersion3D.Model
 {
-    public class Vertex3D : UIElement3D, IVertex
+    public class Vertex3D : UIElement3D, IVertex, IMarkableVertex
     {
         public Vertex3D()
         {
@@ -101,7 +101,17 @@ namespace WPFVersion3D.Model
             set => SetValue(BrushProperty, value);
         }
 
-        public bool IsObstacle { get; set; }
+        private bool isObstacle;
+        public bool IsObstacle 
+        {
+            get => isObstacle;
+            set
+            {
+                isObstacle = value;
+                if (isObstacle)
+                    MarkAsObstacle();
+            }
+        }
 
         public IVertexCost Cost { get; set; }
 
@@ -111,16 +121,6 @@ namespace WPFVersion3D.Model
 
         public bool IsDefault => false;
 
-        public void MakeUnweighted()
-        {
-            
-        }
-
-        public void MakeWeighted()
-        {
-            
-        }
-
         public void MarkAsEnd()
         {
             Dispatcher.Invoke(() => Brush = EndVertexBrush);
@@ -128,7 +128,6 @@ namespace WPFVersion3D.Model
 
         public void MarkAsObstacle()
         {
-            IsObstacle = true;
             Dispatcher.Invoke(() => Brush = ObstacleVertexBrush);
         }
 

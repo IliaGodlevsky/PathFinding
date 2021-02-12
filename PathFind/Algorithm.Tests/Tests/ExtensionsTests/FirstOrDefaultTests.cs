@@ -1,5 +1,5 @@
 ﻿using Algorithm.Extensions;
-using Algorithm.Tests.TestsInfrastructure;
+using Algorithm.Tests.TestsInfrastructure.Objects;
 using GraphLib.Interface;
 using NUnit.Framework;
 using System;
@@ -10,12 +10,6 @@ namespace Algorithm.Tests.Tests.ExtensionsTests
     [TestFixture]
     internal class FirstOrDefaultTests
     {
-        [SetUp]
-        public void SetUp()
-        {
-
-        }
-
         [Test]
         public void FirstOrDefault_NotEmptyCollection_ReturnsValidVertex()
         {

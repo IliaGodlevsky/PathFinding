@@ -31,7 +31,7 @@ namespace WPFVersion.ViewModel
             ExecuteChangeVertexSizeCommand = new RelayCommand(ExecuteChangeVerticesSizeCommand);
             ExecuteCancelCommand = new RelayCommand(obj => CloseWindow());
 
-            if (Model.Graph.Any())
+            if (Model.Graph.Vertices.Any())
             {
                 VerticesSize = GetSampleSizeToChange();
             }
@@ -39,7 +39,7 @@ namespace WPFVersion.ViewModel
 
         private int GetSampleSizeToChange()
         {
-            var randomVertex = Model.Graph.GetRandomElement() as Vertex;
+            var randomVertex = Model.Graph.Vertices.GetRandomElement() as Vertex;
             return Convert.ToInt32(randomVertex.Width);
         }
 
@@ -69,7 +69,7 @@ namespace WPFVersion.ViewModel
 
         private void ExecuteChangeVerticesSizeCommand(object param)
         {
-            Model.Graph.ForEach(ChangeSize);
+            Model.Graph.Vertices.ForEach(ChangeSize);
             CreateNewGraphField();
             CloseWindow();
         }

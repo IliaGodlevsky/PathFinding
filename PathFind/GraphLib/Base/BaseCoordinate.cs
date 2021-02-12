@@ -12,7 +12,7 @@ namespace GraphLib.Base
     /// Provides base functionality to coordinate classes
     /// </summary>
     [Serializable]
-    public abstract class BaseCoordinate : ICoordinate
+    public abstract class BaseCoordinate : ICoordinate, ICloneable
     {
         public BaseCoordinate(int numberOfDimensions, params int[] coordinates)
         {
@@ -58,7 +58,7 @@ namespace GraphLib.Base
 
         public override int GetHashCode()
         {
-            return CoordinatesValues.Aggregate((x, y) => x ^ y);
+            return CoordinatesValues.AggregateOrDefault((x, y) => x ^ y);
         }
 
         public override string ToString()

@@ -26,8 +26,13 @@ namespace GraphLib.Base
 
         public void SubscribeToEvents(IGraph graph)
         {
-            graph.AsParallel().ForAll(SubscribeVertex);
-        }       
+            graph.Vertices.AsParallel().ForAll(SubscribeVertex);
+        }
+
+        public void UnsubscribeFromEvents(IGraph graph)
+        {
+            graph.Vertices.AsParallel().ForAll(UnsubscribeVertex);
+        }
 
         public bool IsEndPoint(IVertex vertex)
         {
@@ -66,13 +71,18 @@ namespace GraphLib.Base
         }
 
         protected abstract void SubscribeVertex(IVertex vertex);
+        protected abstract void UnsubscribeVertex(IVertex vertex);
 
         protected virtual void SetStartVertex(IVertex vertex)
         {
             if (CanBeEndPoint(vertex))
             {
                 Start = vertex;
-                Start.MarkAsStart();
+
+                if (vertex is IMarkableVertex vert)
+                {
+                    vert.MarkAsStart();
+                }
             }
         }
 
@@ -81,7 +91,10 @@ namespace GraphLib.Base
             if (CanBeEndPoint(vertex))
             {
                 End = vertex;
-                End.MarkAsEnd();
+                if (vertex is IMarkableVertex vert)
+                {
+                    vert.MarkAsEnd();
+                }
             }
         }
     }

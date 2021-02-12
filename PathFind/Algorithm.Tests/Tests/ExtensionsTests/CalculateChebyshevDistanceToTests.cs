@@ -19,8 +19,8 @@ namespace Algorithm.Tests.Tests.ExtensionsTests
         {
             firstVertexMock = new Mock<IVertex>(MockBehavior.Loose);
             secondVertexMock = new Mock<IVertex>(MockBehavior.Loose);
-            firstVertexCoordinateMock = new Mock<ICoordinate>(MockBehavior.Loose);
-            secondVertexCoordinateMock = new Mock<ICoordinate>(MockBehavior.Loose);
+            firstVertexCoordinateMock = new Mock<ICoordinate>();
+            secondVertexCoordinateMock = new Mock<ICoordinate>();
         }
 
         [TestCase(new int[] { 9, 15 }, new int[] { 12, 8 }, ExpectedResult = 7)]

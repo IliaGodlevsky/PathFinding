@@ -9,7 +9,7 @@ namespace GraphLib.VertexCost
     /// Represents a cost of vertex
     /// </summary>
     [Serializable]
-    public sealed class Cost : IVertexCost
+    public sealed class Cost : IVertexCost, ICloneable
     {
         /// <summary>
         /// Creates a new instance of 

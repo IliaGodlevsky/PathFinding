@@ -9,5 +9,10 @@ namespace WPFVersion.Model
         {
             (vertex as Vertex).MouseLeftButtonDown += SetEndPoints;
         }
+
+        protected override void UnsubscribeVertex(IVertex vertex)
+        {
+            (vertex as Vertex).MouseLeftButtonDown -= SetEndPoints;
+        }
     }
 }

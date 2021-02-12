@@ -84,7 +84,7 @@ namespace ConsoleVersion.ViewModel
         [MenuItem("Reverse vertex")]
         public void ReverseVertex()
         {
-            if (Graph.Any())
+            if (Graph.Vertices.Any())
             {
                 var graph2D = Graph as Graph2D;
                 var upperPossibleXValue = graph2D.Width - 1;
@@ -107,7 +107,7 @@ namespace ConsoleVersion.ViewModel
         [MenuItem("Change vertex cost", MenuItemPriority.Low)]
         public void ChangeVertexCost()
         {
-            if (Graph.Any())
+            if (Graph.Vertices.Any())
             {
                 var graph2D = Graph as Graph2D;
                 var upperPossibleXValue = graph2D.Width - 1;
@@ -170,7 +170,7 @@ namespace ConsoleVersion.ViewModel
 
         private bool HasVerticesToChooseAsExtream()
         {
-            var verticesWithNeighboursCount = Graph.Count(vertex => vertex.Neighbours.Any());
+            var verticesWithNeighboursCount = Graph.Vertices.Count(vertex => vertex.Neighbours.Any());
             return verticesWithNeighboursCount >= 2;
         }
     }

@@ -13,7 +13,7 @@ using Console = Colorful.Console;
 
 namespace ConsoleVersion.Model
 {
-    internal class Vertex : IVertex
+    internal class Vertex : IVertex, IMarkableVertex, IWeightableVertex
     {
         public event EventHandler OnExtremeVertexChosen;
         public event EventHandler OnCostChanged;
@@ -29,7 +29,19 @@ namespace ConsoleVersion.Model
             this.Initialize(info);
         }
 
-        public bool IsObstacle { get; set; }
+        private bool isObstacle;
+        public bool IsObstacle 
+        {
+            get => isObstacle;
+            set
+            {
+                isObstacle = value;
+                if (isObstacle)
+                {
+                    MarkAsObstacle();
+                }
+            }
+        }
 
         public string Text { get; set; }
 
@@ -82,7 +94,6 @@ namespace ConsoleVersion.Model
 
         public void MarkAsObstacle()
         {
-            IsObstacle = true;
             Colour = Color.FromKnownColor(KnownColor.Black);
         }
 

@@ -10,7 +10,7 @@ namespace GraphLib.Base
         public virtual IGraphField CreateGraphField(IGraph graph)
         {
             var graphField = GetField();
-            graph.ForEach(graphField.Add);
+            graph.Vertices.ForEach(graphField.Add);
 
             return graphField;
         }

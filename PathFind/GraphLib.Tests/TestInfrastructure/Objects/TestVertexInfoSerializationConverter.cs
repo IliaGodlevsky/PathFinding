@@ -1,7 +1,7 @@
 ﻿using GraphLib.Infrastructure;
 using GraphLib.Interface;
 
-namespace GraphLib.Tests.TestInfrastructure
+namespace GraphLib.Tests.TestInfrastructure.Objects
 {
     public class TestVertexInfoSerializationConverter : IVertexSerializationInfoConverter
     {

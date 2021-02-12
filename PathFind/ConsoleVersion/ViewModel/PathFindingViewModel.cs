@@ -4,6 +4,7 @@ using ConsoleVersion.Model;
 using ConsoleVersion.Resource;
 using ConsoleVersion.View;
 using GraphLib.Graphs;
+using GraphLib.Interface;
 using GraphLib.NullObjects;
 using GraphLib.ViewModel;
 using GraphViewModel.Interfaces;
@@ -35,7 +36,7 @@ namespace ConsoleVersion.ViewModel
 
         public override void FindPath()
         {
-            if (mainViewModel.Graph.Any())
+            if (mainViewModel.Graph.Vertices.Any())
             {
                 var mainModel = mainViewModel as MainViewModel;
 
@@ -111,15 +112,13 @@ namespace ConsoleVersion.ViewModel
 
             var upperPosibleXValue = (mainViewModel.Graph as Graph2D).Width - 1;
             var upperPosibleYValue = (mainViewModel.Graph as Graph2D).Length - 1;
-
-            var point = Input.InputPoint(upperPosibleXValue, upperPosibleYValue);
-            var vertex = mainViewModel.Graph[point];
-
-            while (!EndPoints.CanBeEndPoint(vertex))
+            Coordinate2D point; 
+            IVertex vertex;
+            do
             {
                 point = Input.InputPoint(upperPosibleXValue, upperPosibleYValue);
                 vertex = mainViewModel.Graph[point];
-            }
+            } while (!EndPoints.CanBeEndPoint(vertex));
 
             return point;
         }

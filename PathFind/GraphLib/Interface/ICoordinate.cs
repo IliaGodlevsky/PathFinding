@@ -1,5 +1,4 @@
 ﻿using Common.Interfaces;
-using System;
 using System.Collections.Generic;
 
 namespace GraphLib.Interface
@@ -8,7 +7,7 @@ namespace GraphLib.Interface
     /// Makes it possible to have coordinates values and 
     /// makes it possible to find objects around
     /// </summary>
-    public interface ICoordinate : ICloneable, IDefault
+    public interface ICoordinate : IDefault
     {
         /// <summary>
         /// An array of coordinates values of the object

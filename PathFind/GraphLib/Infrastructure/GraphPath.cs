@@ -6,7 +6,7 @@ using System.Linq;
 namespace GraphLib.Infrastructure
 {
     /// <summary>
-    /// A class, that provides pathfinding information from <see cref="IGraph"/>
+    /// A class, that provides about path
     /// </summary>
     public sealed class GraphPath : IGraphPath
     {
@@ -30,12 +30,12 @@ namespace GraphLib.Infrastructure
             if (CanTieEndPoints(parentVertices))
             {
                 var temp = endpoints.End;
-                yield return temp;
-                while (!IsStartOfPath(temp))
+                do
                 {
-                    temp = parentVertices[temp.Position];
                     yield return temp;
-                }
+                    temp = parentVertices[temp.Position];
+                } while (!IsStartOfPath(temp));
+     
             }
         }
 

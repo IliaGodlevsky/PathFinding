@@ -8,8 +8,8 @@ namespace GraphLib.Extensions
     {
         public static void HighlightPath(this IGraphPath self, IEndPoints endpoints)
         {
-            self.Path.Where(vertex => !endpoints.IsEndPoint(vertex))
-                .ForEach(vertex => vertex.MarkAsPath());
+            self.Path.Where(vertex => !endpoints.IsEndPoint(vertex) && vertex is IMarkableVertex)
+                .ForEach(vertex => (vertex as IMarkableVertex).MarkAsPath());
         }
 
         public static int GetPathCost(this IGraphPath self)

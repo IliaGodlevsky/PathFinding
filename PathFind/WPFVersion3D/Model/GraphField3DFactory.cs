@@ -1,4 +1,5 @@
-﻿using GraphLib.Base;
+﻿using Common.Extensions;
+using GraphLib.Base;
 using GraphLib.Graphs;
 using GraphLib.Interface;
 
@@ -11,11 +12,7 @@ namespace WPFVersion3D.Model
             var graph3D = graph as Graph3D;
 
             var field = GetField(graph3D.Width, graph3D.Length, graph3D.Height);
-
-            foreach (var vertex in graph)
-            {
-                field.Add(vertex);
-            }
+            graph.Vertices.ForEach(field.Add);
 
             return field;
         }

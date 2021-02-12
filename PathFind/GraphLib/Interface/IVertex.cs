@@ -15,23 +15,5 @@ namespace GraphLib.Interface
         IList<IVertex> Neighbours { get; set; }
 
         ICoordinate Position { get; set; }
-
-        void MarkAsEnd();
-
-        void MarkAsSimpleVertex();
-
-        void MarkAsObstacle();
-
-        void MarkAsPath();
-
-        void MarkAsStart();
-
-        void MarkAsVisited();
-
-        void MarkAsEnqueued();
-
-        void MakeUnweighted();
-
-        void MakeWeighted();
     }
 }

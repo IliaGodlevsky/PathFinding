@@ -10,7 +10,7 @@ using System.Windows.Media;
 
 namespace WPFVersion.Model
 {
-    internal class Vertex : Label, IVertex
+    internal class Vertex : Label, IVertex, IMarkableVertex, IWeightableVertex
     {
         public static SolidColorBrush VisitedVertexColor { get; set; }
         public static SolidColorBrush PathVertexColor { get; set; }
@@ -45,7 +45,17 @@ namespace WPFVersion.Model
             this.Initialize(info);
         }
 
-        public bool IsObstacle { get; set; }
+        private bool isObstacle;
+        public bool IsObstacle 
+        {
+            get => isObstacle;
+            set
+            {
+                isObstacle = value;
+                if (isObstacle)
+                    MarkAsObstacle();
+            }
+        }
 
         private IVertexCost cost;
         public IVertexCost Cost
@@ -80,7 +90,6 @@ namespace WPFVersion.Model
 
         public void MarkAsObstacle()
         {
-            IsObstacle = true;
             Dispatcher.Invoke(() => Background = new SolidColorBrush(Colors.Black));
         }
 

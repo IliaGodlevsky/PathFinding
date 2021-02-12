@@ -26,7 +26,7 @@ namespace ConsoleVersion.View
 
         public static void UpdatePositionOfVisualElements(IGraph graph)
         {
-            if (graph.Any())
+            if (graph.Vertices.Any())
             {
                 var graph2D = graph as Graph2D;
 

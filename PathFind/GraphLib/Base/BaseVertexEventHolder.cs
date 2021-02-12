@@ -40,12 +40,12 @@ namespace GraphLib.Base
 
         public void UnsubscribeVertices()
         {
-            Graph?.AsParallel().ForAll(UnsubscribeFromEvents);
+            Graph?.Vertices.AsParallel().ForAll(UnsubscribeFromEvents);
         }
 
         public void SubscribeVertices()
         {
-            Graph?.AsParallel().ForAll(SubscribeToEvents);
+            Graph?.Vertices.AsParallel().ForAll(SubscribeToEvents);
         }
 
         protected abstract void UnsubscribeFromEvents(IVertex vertex);
@@ -59,13 +59,19 @@ namespace GraphLib.Base
             vertex.Isolate();
             vertex.IsObstacle = true;
             vertex.SetToDefault();
-            vertex.MarkAsObstacle();
+            if (vertex is IMarkableVertex vert)
+            {
+                vert.MarkAsObstacle();
+            }
         }
 
         private void MakeVertex(IVertex vertex)
         {
             vertex.IsObstacle = false;
-            vertex.MarkAsSimpleVertex();
+            if (vertex is IMarkableVertex vert)
+            {
+                vert.MarkAsSimpleVertex();
+            }
             vertex.SetNeighbours(Graph);
             vertex.ConnectWithNeighbours();
         }

@@ -1,7 +1,6 @@
 ﻿using Common.Extensions;
 using GraphLib.Infrastructure;
 using GraphLib.Interface;
-using GraphLib.VertexCost;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -26,7 +25,10 @@ namespace GraphLib.Extensions
         /// <param name="vertex"></param>
         public static void SetToDefault(this IVertex vertex)
         {
-            vertex.MarkAsSimpleVertex();
+            if (vertex is IMarkableVertex vert)
+            {
+                vert.MarkAsSimpleVertex();
+            }
         }
 
         public static void Initialize(this IVertex vertex)
@@ -38,13 +40,15 @@ namespace GraphLib.Extensions
 
         public static void Initialize(this IVertex vertex, VertexSerializationInfo info)
         {
-            vertex.Position = (ICoordinate)info.Position.Clone();
-            vertex.Cost = (Cost)info.Cost.Clone();
-            vertex.IsObstacle = info.IsObstacle;
-
-            if (vertex.IsObstacle)
+            if (info.Position is ICloneable position && info.Cost is ICloneable cost)
             {
-                vertex.MarkAsObstacle();
+                vertex.Position = (ICoordinate)position.Clone();
+                vertex.Cost = (IVertexCost)cost.Clone();
+                vertex.IsObstacle = info.IsObstacle;
+            }
+            else
+            {
+                throw new Exception();
             }
         }
 
@@ -129,7 +133,7 @@ namespace GraphLib.Extensions
                 && !self.IsNeighbourOf(vertex);
         }
 
-        public static bool IsNeighbourOf(this IVertex self, IVertex vertex)
+        private static bool IsNeighbourOf(this IVertex self, IVertex vertex)
         {
             return vertex.Neighbours.Contains(self);
         }

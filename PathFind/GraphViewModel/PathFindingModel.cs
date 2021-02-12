@@ -87,9 +87,9 @@ namespace GraphLib.ViewModel
         {
             if (e is AlgorithmEventArgs args)
             {
-                if (!args.IsEndPoint)
+                if (!args.IsEndPoint && args.Vertex is IMarkableVertex)
                 {
-                    args.Vertex.MarkAsVisited();
+                    (args.Vertex as IMarkableVertex).MarkAsVisited();
                 }
 
                 var statistics = GetStatistics(timer, args.VisitedVertices);
@@ -103,9 +103,9 @@ namespace GraphLib.ViewModel
         {
             if (e is AlgorithmEventArgs args)
             {
-                if (!args.IsEndPoint)
+                if (!args.IsEndPoint && args.Vertex is IMarkableVertex)
                 {
-                    args.Vertex.MarkAsEnqueued();
+                    (args.Vertex as IMarkableVertex).MarkAsEnqueued();
                 }
             }
         }

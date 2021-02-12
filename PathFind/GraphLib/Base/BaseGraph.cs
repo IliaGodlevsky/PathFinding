@@ -2,7 +2,6 @@
 using GraphLib.Interface;
 using GraphLib.NullObjects;
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -27,6 +26,8 @@ namespace GraphLib.Base
             vertices = new IVertex[this.GetSize()];
         }
 
+        public IEnumerable<IVertex> Vertices => vertices;
+
         public IEnumerable<int> DimensionsSizes { get; private set; }
 
         public bool IsDefault => false;
@@ -35,16 +36,6 @@ namespace GraphLib.Base
         {
             get => vertices[index];
             set => vertices[index] = value;
-        }
-
-        public virtual IEnumerator<IVertex> GetEnumerator()
-        {
-            return vertices.AsEnumerable().GetEnumerator();
-        }
-
-        IEnumerator IEnumerable.GetEnumerator()
-        {
-            return vertices.AsEnumerable().GetEnumerator();
         }
 
         public abstract string GetFormattedData(string format);
@@ -68,7 +59,7 @@ namespace GraphLib.Base
             }
         }
 
-        protected readonly IVertex[] vertices;
+        private readonly IVertex[] vertices;
 
         private bool IsSuitableCoordinate(ICoordinate coordinate)
         {

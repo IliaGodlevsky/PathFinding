@@ -98,7 +98,7 @@ namespace Algorithm.Algorithms
 
         private void SetVerticesAccumulatedCostToZero()
         {
-            Graph
+            Graph.Vertices
                 .Where(vertex => !vertex.IsObstacle)
                 .ForEach(vertex => accumulatedCosts[vertex.Position] = 0);
         }

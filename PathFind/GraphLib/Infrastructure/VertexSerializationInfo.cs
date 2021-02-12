@@ -1,5 +1,4 @@
 ﻿using GraphLib.Interface;
-using GraphLib.VertexCost;
 using System;
 
 namespace GraphLib.Infrastructure
@@ -9,9 +8,17 @@ namespace GraphLib.Infrastructure
     {
         public VertexSerializationInfo(IVertex vertex)
         {
-            IsObstacle = vertex.IsObstacle;
-            Cost = (Cost)vertex.Cost.Clone();
-            Position = (ICoordinate)vertex.Position.Clone();
+            if (vertex.Cost is ICloneable cost 
+                && vertex.Position is ICloneable position)
+            {
+                Cost = (IVertexCost)cost.Clone();
+                Position = (ICoordinate)position.Clone();
+                IsObstacle = vertex.IsObstacle;
+            }
+            else
+            {
+                throw new Exception();
+            }
         }
 
         public bool IsObstacle { get; set; }

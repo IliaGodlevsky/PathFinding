@@ -1,5 +1,4 @@
-﻿using GraphLib.Interface;
-using GraphLib.NullObjects;
+﻿using GraphLib.NullObjects;
 using NUnit.Framework;
 using System;
 
@@ -14,18 +13,6 @@ namespace GraphLib.Tests.Tests.CoordinateTests
         public void Constructor_InvalidNumberOfCoordinateValues_ThrowsArgumentOutOfRangeException(params int[] coordinates)
         {
             Assert.Throws<ArgumentOutOfRangeException>(() => new Coordinate2D(coordinates));
-        }
-
-        [Test]
-        public void Clone_Coordinate2D_ReturnsANewInstanceOfCoordinate2DClass()
-        {
-            ICoordinate coordinate = new Coordinate2D(5, 5);
-
-            var clone = coordinate.Clone();
-
-            Assert.IsInstanceOf(typeof(Coordinate2D), clone);
-            Assert.IsTrue(clone.Equals(coordinate));
-            Assert.AreNotSame(clone, coordinate);
         }
     }
 }

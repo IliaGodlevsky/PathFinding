@@ -9,6 +9,12 @@ namespace ConsoleVersion.Model
         {
             var vert = vertex as Vertex;
             vert.OnExtremeVertexChosen += SetEndPoints;
-        }        
+        }
+
+        protected override void UnsubscribeVertex(IVertex vertex)
+        {
+            var vert = vertex as Vertex;
+            vert.OnExtremeVertexChosen -= SetEndPoints;
+        }
     }
 }

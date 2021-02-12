@@ -19,5 +19,10 @@ namespace WindowsFormsVersion.Model
                 base.SetEndPoints(sender, e);
             }
         }
+
+        protected override void UnsubscribeVertex(IVertex vertex)
+        {
+            (vertex as Vertex).MouseClick -= SetEndPoints;
+        }
     }
 }

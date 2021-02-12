@@ -13,7 +13,7 @@ namespace GraphLib.Extensions
         /// <param name="graph"></param>
         public static void Refresh(this IGraph graph)
         {
-            graph.ForEach(vertex => vertex.Refresh());
+            graph.Vertices.ForEach(vertex => vertex.Refresh());
         }
 
         public static int GetSize(this IGraph graph)
@@ -23,7 +23,7 @@ namespace GraphLib.Extensions
 
         public static int GetObstaclesCount(this IGraph graph)
         {
-            return graph.Count(vertex => vertex.IsObstacle);
+            return graph.Vertices.Count(vertex => vertex.IsObstacle);
         }
 
         public static int GetObstaclesPercent(this IGraph graph)
@@ -38,24 +38,28 @@ namespace GraphLib.Extensions
 
         public static void ToUnweighted(this IGraph graph)
         {
-            graph.ForEach(vertex => vertex.MakeUnweighted());
+            graph.Vertices
+                .Where(vertex=>vertex is IWeightableVertex)
+                .ForEach(vertex => (vertex as IWeightableVertex).MakeUnweighted());
         }
 
         public static void ToWeighted(this IGraph graph)
         {
-            graph.ForEach(vertex => vertex.MakeWeighted());
+            graph.Vertices
+                .Where(vertex => vertex is IWeightableVertex)
+                .ForEach(vertex => (vertex as IWeightableVertex).MakeWeighted());
         }
 
         public static void ConnectVertices(this IGraph self)
         {
-            self.AsParallel().ForAll(vertex => vertex.SetNeighbours(self));
+            self.Vertices.AsParallel().ForAll(vertex => vertex.SetNeighbours(self));
         }
 
         public static bool IsEqual(this IGraph self, IGraph graph)
         {
             bool hasEqualSizes = self.GetSize() == graph.GetSize();
             bool hasEqualNumberOfObstacles = graph.GetObstaclesCount() == self.GetObstaclesCount();
-            bool hasEqualVertices = self.Match(graph, (a, b) => a.IsEqual(b));
+            bool hasEqualVertices = self.Vertices.Match(graph.Vertices, (a, b) => a.IsEqual(b));
             return hasEqualSizes && hasEqualNumberOfObstacles && hasEqualVertices;
         }
 
@@ -63,7 +67,7 @@ namespace GraphLib.Extensions
         {
             foreach(var vertex in vertices)
             {
-                if (!self.Any(v => ReferenceEquals(v, vertex)))
+                if (!self.Vertices.Any(v => ReferenceEquals(v, vertex)))
                 {
                     return false;
                 }

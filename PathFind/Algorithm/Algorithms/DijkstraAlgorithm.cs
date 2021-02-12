@@ -106,7 +106,7 @@ namespace Algorithm.Algorithms
 
         private void SetVerticesAccumulatedCostToInfifnity()
         {
-            Graph
+            Graph.Vertices
                 .Where(vertex => !vertex.IsObstacle)
                 .ForEach(vertex => accumulatedCosts[vertex.Position] = double.PositiveInfinity);
             accumulatedCosts[endPoints.Start.Position] = 0;

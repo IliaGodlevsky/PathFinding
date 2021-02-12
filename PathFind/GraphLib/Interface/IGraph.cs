@@ -6,8 +6,10 @@ namespace GraphLib.Interface
     /// <summary>
     /// 
     /// </summary>
-    public interface IGraph : IEnumerable<IVertex>, IDefault
+    public interface IGraph : IDefault
     {       
+        IEnumerable<IVertex> Vertices { get; }
+
         IEnumerable<int> DimensionsSizes { get; }
 
         IVertex this[ICoordinate coordinate] { get; set; }
