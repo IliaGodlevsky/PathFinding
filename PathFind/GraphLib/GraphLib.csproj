@@ -61,7 +61,6 @@
     <Compile Include="Interface\IEndPoints.cs" />
     <Compile Include="Interface\IGraphPath.cs" />
     <Compile Include="Interface\IMarkableVertex.cs" />
-    <Compile Include="Interface\IVertexState.cs" />
     <Compile Include="Interface\IWeightableVertex.cs" />
     <Compile Include="NullObjects\DefaultCoordinate.cs" />
     <Compile Include="Factories\Coordinate2DFactory.cs" />
