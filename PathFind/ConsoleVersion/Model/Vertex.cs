@@ -1,8 +1,8 @@
 ﻿using ConsoleVersion.View;
+using GraphLib;
 using GraphLib.Extensions;
 using GraphLib.Infrastructure;
 using GraphLib.Interface;
-using GraphLib.NullObjects;
 using GraphLib.VertexCost;
 using System;
 using System.Collections.Generic;

@@ -17,11 +17,5 @@ namespace GraphLib.Graphs
         {
 
         }
-
-        public override string GetFormattedData(string format)
-        {
-            return string.Format(format, Width, Length, Height,
-                this.GetObstaclesPercent(), this.GetObstaclesCount(), this.GetSize());
-        }
     }
 }

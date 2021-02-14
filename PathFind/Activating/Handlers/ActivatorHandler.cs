@@ -1,4 +1,4 @@
-﻿namespace Common.Handlers
+﻿namespace Activating.Handlers
 {
     /// <summary>
     /// A handler for constructor

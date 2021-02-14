@@ -1,9 +1,8 @@
 ﻿using GraphLib.Base;
-using GraphLib.Interface;
 using System;
 using System.Linq;
 
-namespace GraphLib.NullObjects
+namespace GraphLib
 {
     /// <summary>
     /// A class representing cartesian two-dimensional coordinates
@@ -25,11 +24,6 @@ namespace GraphLib.NullObjects
             : base(numberOfDimensions: 2, coordinates)
         {
 
-        }
-
-        protected override ICoordinate CreateInstance(int[] values)
-        {
-            return new Coordinate2D(values);
         }
     }
 }

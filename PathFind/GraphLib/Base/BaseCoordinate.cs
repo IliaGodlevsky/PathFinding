@@ -1,5 +1,4 @@
 ﻿using GraphLib.Extensions;
-using GraphLib.Infrastructure;
 using GraphLib.Interface;
 using System;
 using System.Collections.Generic;
@@ -12,7 +11,7 @@ namespace GraphLib.Base
     /// Provides base functionality to coordinate classes
     /// </summary>
     [Serializable]
-    public abstract class BaseCoordinate : ICoordinate, ICloneable
+    public abstract class BaseCoordinate : ICoordinate
     {
         public BaseCoordinate(int numberOfDimensions, params int[] coordinates)
         {
@@ -27,22 +26,6 @@ namespace GraphLib.Base
         }
 
         public IEnumerable<int> CoordinatesValues { get; }
-
-        public IEnumerable<ICoordinate> Environment
-        {
-            get
-            {
-                if (coordinateEnvironment == null)
-                {
-                    var environment = new CoordinateEnvironment(this);
-                    coordinateEnvironment = environment
-                        .GetEnvironment()
-                        .Select(CreateInstance);
-                }
-
-                return coordinateEnvironment;
-            }
-        }
 
         public bool IsDefault => false;
 
@@ -77,13 +60,7 @@ namespace GraphLib.Base
             return information.ToString();
         }
 
-        public virtual object Clone()
-        {
-            return CreateInstance(CoordinatesValues.ToArray());
-        }
-
-        protected abstract ICoordinate CreateInstance(int[] values);
-
+        [NonSerialized]
         protected IEnumerable<ICoordinate> coordinateEnvironment;
     }
 }

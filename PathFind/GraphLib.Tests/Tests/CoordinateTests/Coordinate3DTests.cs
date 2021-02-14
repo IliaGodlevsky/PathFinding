@@ -1,5 +1,4 @@
-﻿using GraphLib.NullObjects;
-using NUnit.Framework;
+﻿using NUnit.Framework;
 using System;
 
 namespace GraphLib.Tests.Tests.CoordinateTests

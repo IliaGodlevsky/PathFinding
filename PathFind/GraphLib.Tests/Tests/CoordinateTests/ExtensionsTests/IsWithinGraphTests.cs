@@ -9,13 +9,11 @@ namespace GraphLib.Tests.Tests.CoordinateTests.ExtensionsTests
     internal class IsWithinGraphTests
     {
         private Mock<IGraph> graphMock;
-        private Mock<ICoordinate> coordinateMock;
 
         [SetUp]
         public void SetUp()
         {
             graphMock = new Mock<IGraph>();
-            coordinateMock = new Mock<ICoordinate>();
         }
 
         [TestCase(new int[] { 8, 16 }, new int[] { 10, 20 }, ExpectedResult = true)]
@@ -28,13 +26,9 @@ namespace GraphLib.Tests.Tests.CoordinateTests.ExtensionsTests
             int[] coordinateValues,
             int[] graphDimensionSizes)
         {
-            coordinateMock.Setup(coordinate => coordinate.CoordinatesValues).Returns(coordinateValues);
             graphMock.Setup(graph => graph.DimensionsSizes).Returns(graphDimensionSizes);
-            var coordinate = coordinateMock.Object;
-            var graph = graphMock.Object;
 
-            return coordinate.IsWithinGraph(graph);
-
+            return coordinateValues.IsWithinGraph(graphMock.Object);
         }
     }
 }

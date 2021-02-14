@@ -4,17 +4,15 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{89A82EE3-E5C7-4C6A-B61E-9F43507C218C}</ProjectGuid>
+    <ProjectGuid>{E42CF304-ADCE-45BB-A78E-F087E6EB2007}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Algorithm</RootNamespace>
-    <AssemblyName>Algorithm</AssemblyName>
+    <RootNamespace>Activating</RootNamespace>
+    <AssemblyName>Activating</AssemblyName>
     <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <Deterministic>true</Deterministic>
     <TargetFrameworkProfile />
-    <NuGetPackageImportStamp>
-    </NuGetPackageImportStamp>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -44,43 +42,11 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Factories\AlgorithmFactory.cs" />
-    <Compile Include="Attributes\FilterableAttribute.cs" />
-    <Compile Include="EventArguments\AlgorithmEventArgs.cs" />
-    <Compile Include="Extensions\IVertexExtensions.cs" />
-    <Compile Include="Handlers\AlgorithmEventHandler.cs" />
-    <Compile Include="Extensions\IEnumerableExtenions.cs" />
-    <Compile Include="Extensions\ListExtension.cs" />
-    <Compile Include="Extensions\QueueExtensions.cs" />
-    <Compile Include="Extensions\StackExtension.cs" />
-    <Compile Include="Algorithms\AStarAlgorithm.cs" />
-    <Compile Include="Algorithms\AStartModified.cs" />
-    <Compile Include="Algorithms\BestFirstLeeAlgorithm.cs" />
-    <Compile Include="Algorithms\DistanceFirstAlgorithm.cs" />
-    <Compile Include="Algorithms\DijkstraAlgorithm.cs" />
-    <Compile Include="Base\BaseAlgorithm.cs" />
-    <Compile Include="Interface\IAlgorithm.cs" />
-    <Compile Include="Algorithms\LeeAlgorithm.cs" />
-    <Compile Include="NullObjects\DefaultAlgorithm.cs" />
-    <Compile Include="Extensions\TypeExtensions.cs" />
-    <Compile Include="Interface\IIntermit.cs" />
-    <Compile Include="AlgorithmIntermit.cs" />
+    <Compile Include="Comparers\ArrayOfTypesEqualityComparer.cs" />
+    <Compile Include="Comparers\TypeEqualityComparer.cs" />
+    <Compile Include="Handlers\ActivatorHandler.cs" />
+    <Compile Include="ObjectActivator.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\Activating\Activating.csproj">
-      <Project>{e42cf304-adce-45bb-a78e-f087e6eb2007}</Project>
-      <Name>Activating</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Common\Common.csproj">
-      <Project>{a5a743f5-d346-4b2b-b6ac-07152f64e4d9}</Project>
-      <Name>Common</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\GraphLib\GraphLib.csproj">
-      <Project>{eca71c4f-5def-4135-a0b3-25f73170c6c1}</Project>
-      <Name>GraphLib</Name>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

@@ -1,14 +1,13 @@
 ﻿using Algorithm.Extensions;
 using Algorithm.Interface;
 using Algorithm.NullObjects;
-//using Algorithm.NullObjects;
 using Common.Extensions;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
 
-using static Common.ObjectActivator;
+using static Activating.ObjectActivator;
 
 namespace Algorithm.AlgorithmCreating
 {

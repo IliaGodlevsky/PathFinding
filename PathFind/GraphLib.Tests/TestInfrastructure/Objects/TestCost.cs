@@ -4,9 +4,8 @@ using System;
 namespace GraphLib.Tests.TestInfrastructure.Objects
 {
     [Serializable]
-    internal class TestCost : IVertexCost, ICloneable
+    internal class TestCost : IVertexCost
     {
-
         public TestCost(int cost = 1)
         {
             CurrentCost = cost;

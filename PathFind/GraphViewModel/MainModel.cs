@@ -35,17 +35,16 @@ namespace GraphViewModel
             this.pathInput = pathInput;
 
             Graph = new NullGraph();
-            graphParamFormat = ViewModelResources.GraphParametresFormat;
         }
 
-        public virtual void SaveGraph()
+        public virtual async void SaveGraph()
         {
             var savePath = pathInput.InputSavePath();
             try
             {
                 using (var stream = new FileStream(savePath, FileMode.OpenOrCreate))
                 {
-                    serializer.SaveGraph(Graph, stream);
+                    await serializer.SaveGraphAsync(Graph, stream);
                 }
             }
             catch (Exception ex)
@@ -79,7 +78,7 @@ namespace GraphViewModel
         {
             Graph.Refresh();
             PathFindingStatistics = string.Empty;
-            GraphParametres = Graph.GetFormattedData(graphParamFormat);
+            GraphParametres = Graph.GetInformation();
             EndPoints.Reset();
         }
 
@@ -95,12 +94,11 @@ namespace GraphViewModel
                 eventHolder.Graph = Graph;
                 eventHolder.SubscribeVertices();
                 EndPoints.SubscribeToEvents(Graph);
-                GraphParametres = Graph.GetFormattedData(graphParamFormat);
+                GraphParametres = Graph.GetInformation();
                 PathFindingStatistics = string.Empty;
             }
         }
 
-        protected string graphParamFormat;
         protected readonly IGraphAssembler graphAssembler;
         private readonly IVertexEventHolder eventHolder;
         private readonly IGraphSerializer serializer;

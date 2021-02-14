@@ -12,7 +12,6 @@ using WPFVersion3D.Enums;
 using WPFVersion3D.Infrastructure;
 using WPFVersion3D.Infrastructure.Animations.Interface;
 using WPFVersion3D.Model;
-using WPFVersion3D.Resources;
 using WPFVersion3D.View;
 
 namespace WPFVersion3D.ViewModel
@@ -71,8 +70,6 @@ namespace WPFVersion3D.ViewModel
         {
             graphSerializer.OnExceptionCaught += OnExceptionCaught;
             graphFactory.OnExceptionCaught += OnExceptionCaught;
-
-            graphParamFormat = Resource.GraphParamFormat;
 
             StartPathFindCommand = new RelayCommand(ExecuteStartPathFindCommand, CanExecuteStartFindPathCommand);
             CreateNewGraphCommand = new RelayCommand(ExecuteCreateNewGraphCommand);

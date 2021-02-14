@@ -1,9 +1,8 @@
 ﻿using GraphLib.VertexCost;
-using System;
 
 namespace GraphLib.Interface
 {
-    internal interface ICostState : ICloneable
+    internal interface ICostState
     {
         string ToString(Cost cost);
     }

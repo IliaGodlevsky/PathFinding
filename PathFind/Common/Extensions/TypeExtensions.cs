@@ -1,10 +1,17 @@
 ﻿using System;
+using System.IO;
 using System.Reflection;
+using System.Runtime.Serialization.Formatters.Binary;
 
 namespace Common.Extensions
 {
     public static class TypeExtensions
     {
+        public static bool IsSerializable<T>(this T self)
+        {
+            return self.GetType().GetAttribute<SerializableAttribute>() != null;
+        }
+
         public static Assembly GetAssembly(this Type self)
         {
             return Assembly.Load(self.Assembly.GetName());
@@ -61,6 +68,33 @@ namespace Common.Extensions
             {
                 del = null;
                 return false;
+            }
+        }
+
+        /// <summary>
+        /// Creates a deep copy of an object
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="self"></param>
+        /// <returns>A deep copy (new instance) of an object</returns>
+        /// <exception cref="ArgumentException"></exception>
+        /// <exception cref="ArgumentNullException"></exception>
+        /// <remarks>The object <paramref name="self"/> points at 
+        /// must be marked with attribute <see cref="SerializableAttribute"/></remarks>
+        public static T DeepCopy<T>(this T self)
+        {
+            if (!self.IsSerializable())
+                throw new ArgumentException("Type must be serializable");
+
+            if (ReferenceEquals(self, null))
+                throw new ArgumentNullException(nameof(self));
+
+            var formatter = new BinaryFormatter();
+            using (var stream = new MemoryStream())
+            {
+                formatter.Serialize(stream, self);
+                stream.Seek(0, SeekOrigin.Begin);
+                return (T)formatter.Deserialize(stream);
             }
         }
     }

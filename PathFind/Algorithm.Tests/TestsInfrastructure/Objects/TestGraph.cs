@@ -9,10 +9,5 @@ namespace Algorithm.Tests.TestsInfrastructure.Objects
         {
 
         }
-
-        public override string GetFormattedData(string format)
-        {
-            return string.Empty;
-        }
     }
 }

@@ -1,6 +1,4 @@
 ﻿using GraphLib.Extensions;
-using GraphLib.Interface;
-using Moq;
 using NUnit.Framework;
 using System;
 
@@ -9,16 +7,6 @@ namespace GraphLib.Tests.Tests.CoordinateTests.ExtensionsTests
     [TestFixture]
     public class ToIndexTests
     {
-        private Mock<IGraph> graphMock;
-        private Mock<ICoordinate> coordinateMock;
-
-        [SetUp]
-        public void SetUp()
-        {
-            graphMock = new Mock<IGraph>();
-            coordinateMock = new Mock<ICoordinate>();
-        }
-
         [TestCase(new int[] { 1 }, new int[] { 5 }, ExpectedResult = 1)]
         [TestCase(new int[] { 6 }, new int[] { 7 }, ExpectedResult = 6)]
         [TestCase(new int[] { 25 }, new int[] { 35 }, ExpectedResult = 25)]
@@ -38,12 +26,7 @@ namespace GraphLib.Tests.Tests.CoordinateTests.ExtensionsTests
         public int ToIndex_CoordinateIsOfSameDimensionAsTheGraph_ReturnsValidIndex(
             int[] coordinateValues, int[] dimensionSizes)
         {
-            coordinateMock.Setup(coordinate => coordinate.CoordinatesValues).Returns(coordinateValues);
-            graphMock.Setup(graph => graph.DimensionsSizes).Returns(dimensionSizes);
-            var coordinate = coordinateMock.Object;
-            var graph = graphMock.Object;
-
-            return coordinate.ToIndex(graph);
+            return coordinateValues.ToIndex(dimensionSizes);
         }
 
         [TestCase(new int[] { 67, 32 }, new int[] { 67, 32 })]
@@ -52,12 +35,7 @@ namespace GraphLib.Tests.Tests.CoordinateTests.ExtensionsTests
         public void ToIndex_CoordinateIsOutOfGraph_ThrowsException(
             int[] coordinateValues, int[] graphDimensionSizes)
         {
-            coordinateMock.Setup(coordinate => coordinate.CoordinatesValues).Returns(coordinateValues);
-            graphMock.Setup(graph => graph.DimensionsSizes).Returns(graphDimensionSizes);
-            var coordinate = coordinateMock.Object;
-            var graph = graphMock.Object;
-
-            Assert.Throws<Exception>(() => coordinate.ToIndex(graphMock.Object));
+            Assert.Throws<Exception>(() => coordinateValues.ToIndex(graphDimensionSizes));
         }
 
         [TestCase(new int[] { 25, 11 }, new int[] { 4, 7, 8 })]
@@ -66,12 +44,7 @@ namespace GraphLib.Tests.Tests.CoordinateTests.ExtensionsTests
         public void ToIndex_CoordinateIsNotOfSameDimensionAsTheGraph_ThrowsArgumentOutOfRangeException(
             int[] coordinateValues, int[] graphDimensionSizes)
         {
-            coordinateMock.Setup(coordinate => coordinate.CoordinatesValues).Returns(coordinateValues);
-            graphMock.Setup(graph => graph.DimensionsSizes).Returns(graphDimensionSizes);
-            var coordinate = coordinateMock.Object;
-            var graph = graphMock.Object;
-
-            Assert.Throws<ArgumentOutOfRangeException>(() => coordinate.ToIndex(graph));
+            Assert.Throws<ArgumentOutOfRangeException>(() => coordinateValues.ToIndex(graphDimensionSizes));
         }
     }
 }

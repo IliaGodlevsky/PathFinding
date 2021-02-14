@@ -1,9 +1,8 @@
 ﻿using GraphLib.Base;
-using GraphLib.Interface;
 using System;
 using System.Linq;
 
-namespace GraphLib.NullObjects
+namespace GraphLib
 {
     /// <summary>
     ///  A class representing cartesian three-dimensional coordinates
@@ -27,11 +26,6 @@ namespace GraphLib.NullObjects
             : this(new int[] { x, y, z })
         {
 
-        }
-
-        protected override ICoordinate CreateInstance(int[] values)
-        {
-            return new Coordinate3D(values);
         }
     }
 }

@@ -1,5 +1,5 @@
-﻿using GraphLib.Interface;
-using GraphLib.NullObjects;
+﻿using GraphLib;
+using GraphLib.Interface;
 using System;
 using System.Configuration;
 using System.Drawing;

@@ -9,7 +9,7 @@ namespace GraphLib.VertexCost
     /// Represents a cost of vertex
     /// </summary>
     [Serializable]
-    public sealed class Cost : IVertexCost, ICloneable
+    public sealed class Cost : IVertexCost
     {
         /// <summary>
         /// Creates a new instance of 
@@ -104,17 +104,6 @@ namespace GraphLib.VertexCost
         public override string ToString()
         {
             return Status.ToString(this);
-        }
-
-        public object Clone()
-        {
-            return new Cost
-            {
-                CurrentCost = CurrentCost,
-                Status = (ICostState)Status.Clone(),
-                UnweightedCostView = UnweightedCostView,
-                WeightedCost = WeightedCost
-            };
         }
 
         private int WeightedCost { get; set; }

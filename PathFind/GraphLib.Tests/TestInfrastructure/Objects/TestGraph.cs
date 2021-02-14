@@ -9,10 +9,5 @@ namespace GraphLib.Tests.TestInfrastructure.Objects
         {
 
         }
-
-        public override string GetFormattedData(string format)
-        {
-            return string.Empty;
-        }
     }
 }

@@ -40,16 +40,9 @@ namespace GraphLib.Extensions
 
         public static void Initialize(this IVertex vertex, VertexSerializationInfo info)
         {
-            if (info.Position is ICloneable position && info.Cost is ICloneable cost)
-            {
-                vertex.Position = (ICoordinate)position.Clone();
-                vertex.Cost = (IVertexCost)cost.Clone();
-                vertex.IsObstacle = info.IsObstacle;
-            }
-            else
-            {
-                throw new Exception();
-            }
+            vertex.Position = info.Position.DeepCopy();
+            vertex.Cost = info.Cost.DeepCopy();
+            vertex.IsObstacle = info.IsObstacle;
         }
 
         internal static void Refresh(this IVertex vertex)
@@ -118,7 +111,9 @@ namespace GraphLib.Extensions
 
             if (!self.IsObstacle && !graph.IsDefault)
             {
-                self.Position.Environment
+                var environment = new CoordinateEnvironment(self.Position);
+                environment
+                    .GetEnvironment()
                     .Where(coordinate => coordinate.IsWithinGraph(graph))
                     .Select(coordinate => graph[coordinate])
                     .Where(vertex => vertex.CanBeNeighbourOf(self))

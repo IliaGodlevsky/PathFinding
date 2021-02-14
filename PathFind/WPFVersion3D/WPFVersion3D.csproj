@@ -111,11 +111,6 @@
     <Compile Include="Model\PathInput.cs" />
     <Compile Include="Model\Vertex3DFactory.cs" />
     <Compile Include="Model\VertexSerializationInfoConverter.cs" />
-    <Compile Include="Resources\Resource.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Resource.resx</DependentUpon>
-    </Compile>
     <Compile Include="ViewModel\GraphCreateViewModel.cs" />
     <Compile Include="ViewModel\MainWindowViewModel.cs" />
     <Compile Include="ViewModel\OpacityChangeViewModel.cs" />
@@ -190,10 +185,6 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-    <EmbeddedResource Include="Resources\Resource.resx">
-      <Generator>ResXFileCodeGenerator</Generator>
-      <LastGenOutput>Resource.Designer.cs</LastGenOutput>
-    </EmbeddedResource>
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
@@ -213,7 +204,7 @@
       <Name>Common</Name>
     </ProjectReference>
     <ProjectReference Include="..\GraphLib\GraphLib.csproj">
-      <Project>{ECA71C4F-5DEF-4135-A0B3-25F73170C6C1}</Project>
+      <Project>{eca71c4f-5def-4135-a0b3-25f73170c6c1}</Project>
       <Name>GraphLib</Name>
     </ProjectReference>
     <ProjectReference Include="..\GraphViewModel\GraphViewModel.csproj">

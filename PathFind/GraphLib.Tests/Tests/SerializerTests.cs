@@ -50,7 +50,7 @@ namespace GraphLib.Tests.Tests
             using (var stream = new MemoryStream())
             {
                 serializer.SaveGraph(graph, stream);
-                stream.Position = 0;
+                stream.Seek(0, SeekOrigin.Begin);
                 deserialized = serializer.LoadGraph(stream);
             }
 

@@ -95,7 +95,9 @@ namespace Algorithm.Base
 
         protected virtual void CompletePathfinding()
         {
-            var args = new AlgorithmEventArgs(visitedVertices.Count);
+            var visitedCount = visitedVertices
+                .Count(item => !item.Value.IsDefault);
+            var args = new AlgorithmEventArgs(visitedCount);
             RaiseOnAlgorithmFinishedEvent(args);
         }
 

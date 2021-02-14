@@ -2,9 +2,9 @@
 using ConsoleVersion.Resource;
 using ConsoleVersion.View.Interface;
 using ConsoleVersion.ViewModel;
+using GraphLib;
 using GraphLib.Graphs;
 using GraphLib.Interface;
-using GraphLib.NullObjects;
 using GraphViewModel.Interfaces;
 using System;
 using System.Collections.Generic;

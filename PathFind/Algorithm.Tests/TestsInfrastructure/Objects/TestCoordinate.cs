@@ -1,5 +1,4 @@
 ﻿using GraphLib.Base;
-using GraphLib.Interface;
 
 namespace Algorithm.Tests.TestsInfrastructure.Objects
 {
@@ -9,11 +8,6 @@ namespace Algorithm.Tests.TestsInfrastructure.Objects
             base(coordinates.Length, coordinates)
         {
 
-        }
-
-        protected override ICoordinate CreateInstance(int[] values)
-        {
-            return new TestCoordinate(values);
         }
     }
 }

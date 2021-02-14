@@ -1,10 +1,9 @@
 ﻿using Common;
+using Common.Extensions;
 using GraphLib.Extensions;
 using GraphLib.Interface;
 using System;
 using System.Linq;
-
-using static System.Linq.Enumerable;
 
 namespace GraphLib.Factories
 {
@@ -40,9 +39,10 @@ namespace GraphLib.Factories
             try
             {
                 var graph = graphFactory.CreateGraph(graphDimensionsSizes);
-                graph.Vertices
+                Enumerable
+                    .Range(0, graph.GetSize())
                     .AsParallel()
-                    .ForEachIndex(index => AssembleVertex(graph, index, obstaclePercent));
+                    .ForEach(i => AssembleVertex(graph, i, obstaclePercent));
                 graph.ConnectVertices();
                 return graph;
             }
@@ -55,7 +55,8 @@ namespace GraphLib.Factories
 
         private void AssembleVertex(IGraph graph, int index, int obstaclePercent)
         {
-            var coordinate = ToCoordinate(index, graph);
+            var coordinateValues = graph.ToCoordinates(index);
+            var coordinate = coordinateFactory.CreateCoordinate(coordinateValues);
             graph[coordinate] = vertexFactory.CreateVertex();
             var vertex = graph[coordinate];
             vertex.Cost = costFactory.CreateCost();
@@ -69,34 +70,6 @@ namespace GraphLib.Factories
             percentOfObstacles = percentRange.ReturnInRange(percentOfObstacles);
             var randomPercent = percentRange.GetRandomValueFromRange();
             return randomPercent < percentOfObstacles;
-        }
-
-        private ICoordinate ToCoordinate(int index, IGraph graph)
-        {
-            var dimensions = graph.DimensionsSizes.ToArray();
-
-            if (!dimensions.Any())
-            {
-                throw new ArgumentException("Dimensions count must be greater than 0");
-            }
-
-            var rangeOfValidIndexValues = new ValueRange(graph.GetSize(), 0);
-            if (!rangeOfValidIndexValues.IsInRange(index))
-            {
-                throw new ArgumentOutOfRangeException("Index is out of range");
-            }
-
-            var coordinates = Range(0, dimensions.Length)
-                .Select(i => GetCoordinateValue(ref index, dimensions[i]));
-
-            return coordinateFactory.CreateCoordinate(coordinates);
-        }
-
-        private int GetCoordinateValue(ref int index, int dimensionSize)
-        {
-            int coordinate = index % dimensionSize;
-            index /= dimensionSize;
-            return coordinate;
         }
 
         private readonly IVertexCostFactory costFactory;

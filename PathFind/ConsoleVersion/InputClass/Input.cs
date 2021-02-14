@@ -1,6 +1,6 @@
 ﻿using Common;
 using ConsoleVersion.Resource;
-using GraphLib.NullObjects;
+using GraphLib;
 using System;
 
 namespace ConsoleVersion.InputClass

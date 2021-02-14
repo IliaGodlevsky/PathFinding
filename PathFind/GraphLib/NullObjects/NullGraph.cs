@@ -25,6 +25,12 @@ namespace GraphLib.NullObjects
 
         public IEnumerable<IVertex> Vertices => new DefaultVertex[] { };
 
+        public IVertex this[IEnumerable<int> coordinates] 
+        {
+            get => new DefaultVertex();
+            set => _ = value;
+        }
+
         public IVertex this[int index]
         {
             get => new DefaultVertex();

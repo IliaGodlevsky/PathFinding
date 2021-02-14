@@ -1,18 +1,23 @@
-﻿using Common.Handlers;
+﻿using Activating.Comparers;
+using Activating.Handlers;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Linq.Expressions;
 using System.Reflection;
 
 using static System.Linq.Expressions.Expression;
 
-namespace Common
+using ActivatorsSet = System.Collections.Generic.Dictionary<System.Type[], System.Delegate>;
+
+namespace Activating
 {
     public static class ObjectActivator
     {
         static ObjectActivator()
         {
-            activators = new Dictionary<Type, Delegate>();
+            var comparer = new TypeEqualityComparer();
+            activators = new Dictionary<Type, ActivatorsSet>(comparer);
         }
 
         /// <summary>
@@ -22,9 +27,10 @@ namespace Common
         /// <typeparam name="TReturnType"></typeparam>
         /// <param name="ctor"></param>
         /// <returns>A <see cref="Delegate"/>, that represents a 
-        /// lambda expression, from constructor <paramref name="ctor"/> that can 
-        /// create an instance of <typeparamref name="TReturnType"/></returns>
-        public static Delegate CreateActivator<TReturnType>(ConstructorInfo ctor) where TReturnType : class
+        /// lambda expression, from constructor <paramref name="ctor"/>, that can 
+        /// create an instance, that can be assigned to variable 
+        /// of <typeparamref name="TReturnType"/> type</returns>
+        public static ActivatorHandler<TReturnType> CreateActivator<TReturnType>(ConstructorInfo ctor) where TReturnType : class
         {
             var ctorParameters = ctor.GetParameters();
             var parameter = Parameter(typeof(object[]), "args");
@@ -32,7 +38,15 @@ namespace Common
             var newExpression = New(ctor, argsExpression);
             var lambda = Lambda(typeof(ActivatorHandler<TReturnType>), newExpression, parameter);
 
-            return lambda.Compile();
+            return (ActivatorHandler<TReturnType>)lambda.Compile();
+        }
+
+        public static void RegisterConstructors<TReturnType>(Type type) where TReturnType : class
+        {
+            foreach (var ctor in type.GetConstructors())
+            {
+                RegisterConstructor<TReturnType>(ctor);
+            }
         }
 
         /// <summary>
@@ -56,10 +70,13 @@ namespace Common
                 throw new ArgumentException("Can't register constructor of abstract type");
             }
 
-            if (typeof(TReturnType).IsAssignableFrom(ctor.DeclaringType))
+            var typeToActivate = ctor.DeclaringType;
+            if (CanCreateActivator<TReturnType>(typeToActivate))
             {
                 var activator = CreateActivator<TReturnType>(ctor);
-                activators[ctor.DeclaringType] = activator;
+                CreateActivatorsSetIfDoesntExist(typeToActivate);
+                var ctorParams = ctor.GetParameters().Select(param => param.ParameterType).ToArray();
+                AddActivatorIfDoesntExist(typeToActivate, ctorParams, activator);
                 return true;
             }
 
@@ -73,11 +90,16 @@ namespace Common
         /// <returns>Activator handler for <paramref name="type"></paramref></returns>
         /// <exception cref="KeyNotFoundException">Thrown when activator 
         /// doesn't exist for <paramref name="type"></paramref></exception>
-        public static Delegate GetRegisteredActivator(Type type)
+        public static Delegate GetRegisteredActivator(Type type, params object[] ctorParams)
         {
-            if (activators.TryGetValue(type, out Delegate activator))
+            if (activators.TryGetValue(type, out var typeActivators))
             {
-                return activator;
+                var paramTypes = ToTypesArray(ctorParams);
+
+                if (typeActivators.TryGetValue(paramTypes, out var activator))
+                {
+                    return activator;
+                }
             }
 
             throw new KeyNotFoundException("For this type activator doesn't have any constructor");
@@ -85,7 +107,7 @@ namespace Common
 
         public static TResultType CreateInstance<TResultType>(Type type, params object[] arguments) where TResultType : class
         {
-            var activator = (ActivatorHandler<TResultType>)GetRegisteredActivator(type);
+            var activator = (ActivatorHandler<TResultType>)GetRegisteredActivator(type, arguments);
             return activator(arguments);
         }
 
@@ -103,9 +125,41 @@ namespace Common
             }
         }
 
+        private static bool CreateActivatorsSetIfDoesntExist(Type typeToActivate)
+        {
+            if (!activators.TryGetValue(typeToActivate, out _))
+            {
+                var comparer = new ArrayOfTypesEqualityComparer();
+                activators.Add(typeToActivate, new ActivatorsSet(comparer));
+                return true;
+            }
+            return false;
+        }
+
+        private static bool AddActivatorIfDoesntExist(Type typeToActivate, Type[] ctorParams, Delegate activator)
+        {
+            if (!activators[typeToActivate].TryGetValue(ctorParams, out _))
+            {
+                activators[typeToActivate].Add(ctorParams, activator);
+                return true;
+            }
+
+            return false;
+        }
+
+        private static bool CanCreateActivator<TReturnType>(Type typeToActivate) where TReturnType : class
+        {
+            return typeof(TReturnType).IsAssignableFrom(typeToActivate);
+        }
+
+        private static Type[] ToTypesArray(params object[] ctorParams)
+        {
+            return ctorParams.Select(param => param.GetType()).ToArray();
+        }
+
         /// <summary>
         /// A dictionary of registed activators for objects
         /// </summary>
-        private static readonly IDictionary<Type, Delegate> activators;
+        private static readonly Dictionary<Type, ActivatorsSet> activators;
     }
 }

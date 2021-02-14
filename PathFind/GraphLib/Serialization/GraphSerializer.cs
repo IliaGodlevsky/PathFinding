@@ -6,6 +6,7 @@ using System;
 using System.IO;
 using System.Linq;
 using System.Runtime.Serialization;
+using System.Threading.Tasks;
 
 namespace GraphLib.Serialization
 {
@@ -36,7 +37,8 @@ namespace GraphLib.Serialization
                 var verticesInfo = (GraphSerializationInfo)formatter.Deserialize(stream);
                 var dimensions = verticesInfo.DimensionsSizes.ToArray();
                 var graph = graphFactory.CreateGraph(dimensions);
-                verticesInfo.ForEach((info, i) => graph[i] = infoConverter.ConvertFrom(info));
+                verticesInfo
+                    .ForEach((info, i) => graph[i] = infoConverter.ConvertFrom(info));
                 graph.ConnectVertices();
                 return graph;
             }
@@ -66,6 +68,14 @@ namespace GraphLib.Serialization
                 OnExceptionCaught?.Invoke(ex);
                 throw ex;
             }           
+        }
+
+        public Task SaveGraphAsync(IGraph graph, Stream stream)
+        {
+            return Task.Run(() =>
+            {
+                SaveGraph(graph, stream);
+            });
         }
 
         private readonly IFormatter formatter;

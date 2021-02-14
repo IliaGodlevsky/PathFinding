@@ -1,6 +1,6 @@
 ﻿using ConsoleVersion.Model;
+using GraphLib;
 using GraphLib.Interface;
-using GraphLib.NullObjects;
 using System;
 using System.Collections.Generic;
 using System.Configuration;

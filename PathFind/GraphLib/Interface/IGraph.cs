@@ -14,8 +14,8 @@ namespace GraphLib.Interface
 
         IVertex this[ICoordinate coordinate] { get; set; }
 
-        IVertex this[int index] { get; set; }
+        IVertex this[IEnumerable<int> coordinateValues] { get; set; }
 
-        string GetFormattedData(string format);
+        IVertex this[int index] { get; set; }
     }
 }

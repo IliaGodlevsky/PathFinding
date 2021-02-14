@@ -1,12 +1,39 @@
-﻿using Common.Extensions;
+﻿using Common;
+using Common.Extensions;
 using GraphLib.Infrastructure;
 using GraphLib.Interface;
+using System;
+using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 
 namespace GraphLib.Extensions
 {
     public static class IGraphExtensions
     {
+        private static readonly string[] DimensionNames;
+
+        static IGraphExtensions()
+        {
+            DimensionNames = new string[] { "Width", "Length", "Height" };
+        }
+
+        public static string GetInformation(this IGraph self)
+        {
+            var sb = new StringBuilder();
+            var dimensionSizes = self.DimensionsSizes.ToArray();
+
+            for (int i = 0; i < dimensionSizes.Length; i++)
+            {
+                sb.Append($"{ DimensionNames[i] }: { dimensionSizes[i] }   ");
+            }
+
+            sb.Append($"Obstacle percent: { self.GetObstaclesPercent() } ")
+              .Append($"({ self.GetObstaclesCount() }/{ self.GetSize() })");
+
+            return sb.ToString();
+        }
+
         /// <summary>
         /// Removes all actions, that was performed over the vertices
         /// </summary>
@@ -79,6 +106,33 @@ namespace GraphLib.Extensions
         public static bool Contains(this IGraph self, IEndPoints endPoints)
         {
             return self.Contains(endPoints.Start, endPoints.End);
+        }
+
+        public static IEnumerable<int> ToCoordinates(this IGraph self, int index)
+        {
+            var dimensions = self.DimensionsSizes.ToArray();
+
+            if (!dimensions.Any())
+            {
+                throw new ArgumentException("Dimensions count must be greater than 0");
+            }
+
+            var rangeOfValidIndexValues = new ValueRange(self.GetSize(), 0);
+            if (!rangeOfValidIndexValues.IsInRange(index))
+            {
+                throw new ArgumentOutOfRangeException("Index is out of range");
+            }
+
+            return Enumerable
+                .Range(0, dimensions.Length)
+                .Select(i => GetCoordinateValue(ref index, dimensions[i]));
+        }
+
+        private static int GetCoordinateValue(ref int index, int dimensionSize)
+        {
+            int coordinate = index % dimensionSize;
+            index /= dimensionSize;
+            return coordinate;
         }
     }
 }

@@ -70,15 +70,6 @@ namespace GraphViewModel.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Width: {0}   Length: {1}   Obstacle percent: {2} ({3}/{4}).
-        /// </summary>
-        internal static string GraphParametresFormat {
-            get {
-                return ResourceManager.GetString("GraphParametresFormat", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Steps: {0}   Path length: {1}   Visited: {2}.
         /// </summary>
         internal static string StatisticsFormat {
