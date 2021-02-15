@@ -19,8 +19,6 @@ namespace Algorithm.Base
 
         public virtual IGraph Graph { get; set; }
 
-        public bool IsDefault => false;
-
         public BaseAlgorithm() : this(new NullGraph())
         {
 
