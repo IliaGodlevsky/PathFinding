@@ -21,8 +21,6 @@ namespace Algorithm.Common
             set => _ = value;
         }
 
-        public bool IsDefault => true;
-
         public DefaultAlgorithm()
         {
 
