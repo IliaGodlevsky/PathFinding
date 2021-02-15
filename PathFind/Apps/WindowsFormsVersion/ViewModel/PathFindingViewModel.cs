@@ -20,7 +20,7 @@ namespace WindowsFormsVersion.ViewModel
                     = Convert.ToInt32(ConfigurationManager.AppSettings["algorithmDelayTimeUpperRange"]);
 
             AlgorithmDelayTimeValueRange = new ValueRange(algorithmDelayTimeUpperRange, 0);
-            AlgorithmKeys = AlgorithmFactory.AlgorithmsDescriptions.ToList();
+            AlgorithmKeys = AlgorithmsPluginLoader.AlgorithmsDescriptions.ToList();
         }
 
         public void PathFind(object sender, EventArgs e)

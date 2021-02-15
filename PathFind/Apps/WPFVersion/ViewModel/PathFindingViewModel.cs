@@ -35,7 +35,7 @@ namespace WPFVersion.ViewModel
 
             CancelPathFindAlgorithmChoice = new RelayCommand(obj => CloseWindow());
 
-            AlgorithmKeys = new ObservableCollection<string>(AlgorithmFactory.AlgorithmsDescriptions);
+            AlgorithmKeys = new ObservableCollection<string>(AlgorithmsPluginLoader.AlgorithmsDescriptions);
         }
 
         protected override void OnAlgorithmIntermitted()

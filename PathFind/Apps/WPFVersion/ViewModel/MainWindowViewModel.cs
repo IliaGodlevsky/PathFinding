@@ -96,7 +96,7 @@ namespace WPFVersion.ViewModel
         {
             try
             {
-                AlgorithmFactory.LoadAlgorithms(GetAlgorithmsLoadPath());
+                AlgorithmsPluginLoader.LoadAlgorithms(GetAlgorithmsLoadPath());
                 var viewModel = new PathFindingViewModel(this)
                 {
                     EndPoints = EndPoints

@@ -14,7 +14,7 @@ namespace ConsoleVersion.View
         {
             Model = model;
             
-            model.AlgorithmKeys = AlgorithmFactory.AlgorithmsDescriptions.ToArray();
+            model.AlgorithmKeys = AlgorithmsPluginLoader.AlgorithmsDescriptions.ToArray();
             var algorithmMenu = Menu.CreateMenu(model.AlgorithmKeys);
             Model.AlgorithmKeyInputMessage = algorithmMenu + Resources.ChooseAlrorithm;
             Model.StartVertexInputMessage = "\n" + Resources.StartVertexPointInputMsg;

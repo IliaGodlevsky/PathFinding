@@ -12,16 +12,15 @@ using static Activating.ObjectActivator;
 
 namespace Algorithm.Realizations
 {
-    public static class AlgorithmFactory
+    public static class AlgorithmsPluginLoader
     {
         /// <summary>
         /// Descriptions of algorithms
         /// </summary>
         public static IEnumerable<string> AlgorithmsDescriptions => Algorithms.Keys.OrderBy(Key);
 
-        static AlgorithmFactory()
+        static AlgorithmsPluginLoader()
         {
-            AlgorithmsInterface = typeof(AlgorithmFactory);
             Algorithms = new Dictionary<string, IAlgorithm>();
         }
 
@@ -32,8 +31,7 @@ namespace Algorithm.Realizations
                 Algorithms = Directory
                     .GetFiles(path, "*.dll", SearchOption.AllDirectories)
                     .Select(Assembly.LoadFrom)
-                    .SelectMany(assembly => assembly.GetTypes())
-                    .Where(IsValidAlgorithm)
+                    .SelectMany(assembly => assembly.GetTypes().Where(IsValidAlgorithm))
                     .DistinctBy(type => type.FullName)
                     .ForEach(RegisterConstructor)
                     .ToDictionary(GetAlgorithmDescription, GetInstance);
@@ -55,18 +53,6 @@ namespace Algorithm.Realizations
         }
 
         private static IDictionary<string, IAlgorithm> Algorithms { get; set; }
-
-        private static Type AlgorithmsInterface { get; }
-
-        //private static IDictionary<string, IAlgorithm> CreateAlgorithmsDictionary()
-        //{
-        //    return AlgorithmsInterface
-        //        .GetAssembly()
-        //        .GetTypes()
-        //        .Where(IsValidAlgorithm)
-        //        .ForEach(RegisterConstructor)
-        //        .ToDictionary(GetAlgorithmDescription, GetInstance);
-        //}
 
         private static IAlgorithm GetInstance(Type algorithmType)
         {

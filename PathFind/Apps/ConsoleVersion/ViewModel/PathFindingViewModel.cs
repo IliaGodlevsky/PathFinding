@@ -11,7 +11,7 @@ using System;
 using System.Configuration;
 using System.Linq;
 
-using static Algorithm.Realizations.AlgorithmFactory;
+using static Algorithm.Realizations.AlgorithmsPluginLoader;
 
 namespace ConsoleVersion.ViewModel
 {
