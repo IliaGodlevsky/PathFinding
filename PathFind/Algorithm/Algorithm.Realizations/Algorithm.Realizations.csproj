@@ -41,7 +41,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AlgorithmFactory.cs" />
+    <Compile Include="AlgorithmsPluginLoader.cs" />
     <Compile Include="AlgorithmIntermit.cs" />
     <Compile Include="GraphPath.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
