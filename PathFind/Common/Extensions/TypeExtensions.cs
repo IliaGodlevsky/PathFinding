@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Common.Attributes;
+using System;
 using System.IO;
 using System.Reflection;
 using System.Runtime.Serialization.Formatters.Binary;
@@ -7,6 +8,11 @@ namespace Common.Extensions
 {
     public static class TypeExtensions
     {
+        public static bool IsFilterable(this Type self)
+        {
+            return self.GetAttribute<FilterableAttribute>() != null;
+        }
+
         public static bool IsSerializable<T>(this T self)
         {
             return self.GetType().GetAttribute<SerializableAttribute>() != null;
@@ -83,11 +89,13 @@ namespace Common.Extensions
         /// must be marked with attribute <see cref="SerializableAttribute"/></remarks>
         public static T DeepCopy<T>(this T self)
         {
+            if (!(self is object))
+            {
+                throw new ArgumentNullException(nameof(self));
+            }
+
             if (!self.IsSerializable())
                 throw new ArgumentException("Type must be serializable");
-
-            if (ReferenceEquals(self, null))
-                throw new ArgumentNullException(nameof(self));
 
             var formatter = new BinaryFormatter();
             using (var stream = new MemoryStream())

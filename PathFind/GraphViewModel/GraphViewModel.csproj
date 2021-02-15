@@ -9,7 +9,7 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>GraphViewModel</RootNamespace>
     <AssemblyName>GraphViewModel</AssemblyName>
-    <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <Deterministic>true</Deterministic>
     <TargetFrameworkProfile />
@@ -58,24 +58,52 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Algorithm\Algorithm.csproj">
-      <Project>{89A82EE3-E5C7-4C6A-B61E-9F43507C218C}</Project>
-      <Name>Algorithm</Name>
+    <EmbeddedResource Include="Resources\ViewModelResources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>ViewModelResources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Algorithm\Algorithm.Extensions\Algorithm.Extensions.csproj">
+      <Project>{11c8b301-fe40-44a1-a5a2-bc684b6a56a0}</Project>
+      <Name>Algorithm.Extensions</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Algorithm\Algorithm.Infrastructure\Algorithm.Infrastructure.csproj">
+      <Project>{DA2A9A8C-0EF3-4EDB-B026-3FF86DEF9464}</Project>
+      <Name>Algorithm.Infrastructure</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Algorithm\Algorithm.Interfaces\Algorithm.Interfaces.csproj">
+      <Project>{FC4F499E-9AB1-4623-9AD8-CFDE0A07B7D0}</Project>
+      <Name>Algorithm.Interfaces</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Algorithm\Algorithm.Realizations\Algorithm.Realizations.csproj">
+      <Project>{600d74af-a0ae-46aa-bcf5-695650bbe66f}</Project>
+      <Name>Algorithm.Realizations</Name>
     </ProjectReference>
     <ProjectReference Include="..\Common\Common.csproj">
       <Project>{a5a743f5-d346-4b2b-b6ac-07152f64e4d9}</Project>
       <Name>Common</Name>
     </ProjectReference>
-    <ProjectReference Include="..\GraphLib\GraphLib.csproj">
-      <Project>{eca71c4f-5def-4135-a0b3-25f73170c6c1}</Project>
-      <Name>GraphLib</Name>
+    <ProjectReference Include="..\GraphLib\GraphLib.Base\GraphLib.Base.csproj">
+      <Project>{6aa3b516-abfe-4eda-98dd-1ce799da747f}</Project>
+      <Name>GraphLib.Base</Name>
     </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Resources\ViewModelResources.resx">
-      <Generator>ResXFileCodeGenerator</Generator>
-      <LastGenOutput>ViewModelResources.Designer.cs</LastGenOutput>
-    </EmbeddedResource>
+    <ProjectReference Include="..\GraphLib\GraphLib.Common\GraphLib.Common.csproj">
+      <Project>{3cd8330e-9445-4dc4-a1da-ee704f652942}</Project>
+      <Name>GraphLib.Common</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\GraphLib\GraphLib.Extensions\GraphLib.Extensions.csproj">
+      <Project>{93f88f47-1871-44cd-9622-eb8d406c969c}</Project>
+      <Name>GraphLib.Extensions</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\GraphLib\GraphLib.Interfaces\GraphLib.Interfaces.csproj">
+      <Project>{d3c5ccfe-698b-41c7-9a72-5fd0262765e1}</Project>
+      <Name>GraphLib.Interfaces</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\GraphLib\GraphLib.Serialization\GraphLib.Serialization.csproj">
+      <Project>{412839a0-77ff-4b66-85c9-50dc07e8fdb7}</Project>
+      <Name>GraphLib.Serialization</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

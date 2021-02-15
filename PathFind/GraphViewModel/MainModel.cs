@@ -1,12 +1,12 @@
 ﻿using Common;
-using GraphLib.Base;
-using GraphLib.Extensions;
-using GraphLib.Interface;
-using GraphLib.NullObjects;
 using GraphViewModel.Interfaces;
-using GraphViewModel.Resources;
 using System;
 using System.IO;
+using GraphLib.Interface;
+using GraphLib.Base;
+using GraphLib.Serialization.Interfaces;
+using GraphLib.Common.NullObjects;
+using GraphLib.Extensions;
 
 namespace GraphViewModel
 {
@@ -27,7 +27,7 @@ namespace GraphViewModel
             IGraphSerializer graphSerializer,
             IGraphAssembler graphAssembler,
             IPathInput pathInput)
-        {
+        {          
             this.eventHolder = eventHolder;
             serializer = graphSerializer;
             this.fieldFactory = fieldFactory;
@@ -98,6 +98,8 @@ namespace GraphViewModel
                 PathFindingStatistics = string.Empty;
             }
         }
+
+        protected abstract string GetAlgorithmsLoadPath();
 
         protected readonly IGraphAssembler graphAssembler;
         private readonly IVertexEventHolder eventHolder;

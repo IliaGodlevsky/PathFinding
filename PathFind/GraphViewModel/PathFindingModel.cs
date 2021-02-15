@@ -1,10 +1,10 @@
-﻿using Algorithm;
-using Algorithm.EventArguments;
-using Algorithm.Interface;
+﻿using Algorithm.Extensions;
+using Algorithm.Infrastructure.EventArguments;
+using Algorithm.Interfaces;
+using Algorithm.Realizations;
 using Common;
 using Common.Extensions;
 using GraphLib.Base;
-using GraphLib.Extensions;
 using GraphLib.Interface;
 using GraphViewModel.Interfaces;
 using GraphViewModel.Resources;
@@ -12,7 +12,7 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 
-using static Algorithm.AlgorithmCreating.AlgorithmFactory;
+using static Algorithm.Realizations.AlgorithmFactory;
 
 namespace GraphLib.ViewModel
 {
@@ -40,7 +40,7 @@ namespace GraphLib.ViewModel
         public virtual void FindPath()
         {
             try
-            {
+            {              
                 var algorithm = GetAlgorithm(AlgorithmKey);
                 algorithm.Graph = mainViewModel.Graph;
 
