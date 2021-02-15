@@ -1,12 +1,12 @@
 ﻿using Common;
+using GraphLib.Base;
+using GraphLib.Common.NullObjects;
+using GraphLib.Extensions;
+using GraphLib.Interface;
+using GraphLib.Serialization.Interfaces;
 using GraphViewModel.Interfaces;
 using System;
 using System.IO;
-using GraphLib.Interface;
-using GraphLib.Base;
-using GraphLib.Serialization.Interfaces;
-using GraphLib.Common.NullObjects;
-using GraphLib.Extensions;
 
 namespace GraphViewModel
 {
