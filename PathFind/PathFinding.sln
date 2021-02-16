@@ -71,6 +71,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Plugins.AStarAlgorithm", "P
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Plugins.AStarModified", "Plugins\Plugins.AStarModified\Plugins.AStarModified.csproj", "{E24547B4-0824-4D1F-8534-B60F8E6B9393}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Algorithm.Extensions.Tests", "Algorithm.Extensions.Tests\Algorithm.Extensions.Tests.csproj", "{C1DD79B0-56D6-433A-8CDF-43AE1FFDF252}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -193,6 +195,10 @@ Global
 		{E24547B4-0824-4D1F-8534-B60F8E6B9393}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E24547B4-0824-4D1F-8534-B60F8E6B9393}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{E24547B4-0824-4D1F-8534-B60F8E6B9393}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C1DD79B0-56D6-433A-8CDF-43AE1FFDF252}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C1DD79B0-56D6-433A-8CDF-43AE1FFDF252}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C1DD79B0-56D6-433A-8CDF-43AE1FFDF252}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C1DD79B0-56D6-433A-8CDF-43AE1FFDF252}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -225,6 +231,7 @@ Global
 		{79264A03-C0D0-4B7B-AE50-A8DB6F9DD372} = {BD7C7E0F-701A-4B95-AB99-C51E700E81CF}
 		{DC12D8DC-B6D9-4C57-B6E2-A15373B5F07E} = {BD7C7E0F-701A-4B95-AB99-C51E700E81CF}
 		{E24547B4-0824-4D1F-8534-B60F8E6B9393} = {BD7C7E0F-701A-4B95-AB99-C51E700E81CF}
+		{C1DD79B0-56D6-433A-8CDF-43AE1FFDF252} = {C2095ABE-A68C-4A85-82E8-D12C8D5FB2AD}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {97B689F4-F324-4048-A586-6D7150C9C419}
