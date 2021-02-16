@@ -3,8 +3,8 @@ using GraphLib.Interface;
 using System.Linq;
 using System.Windows.Media.Media3D;
 using WPFVersion3D.Enums;
-using DistanceBetweenSetCallback = System.Action<double, WPFVersion3D.Model.GraphField3D>;
-using OffsetAction = System.Action<System.Windows.Media.Media3D.TranslateTransform3D, double>;
+using DistanceBetweenSetterCallback = System.Action<double, WPFVersion3D.Model.GraphField3D>;
+using OffsetSetterAction = System.Action<System.Windows.Media.Media3D.TranslateTransform3D, double>;
 
 namespace WPFVersion3D.Model
 {
@@ -120,14 +120,14 @@ namespace WPFVersion3D.Model
             DistanceBetweenVerticesAtZAxis
         };
 
-        private OffsetAction[] OffsetActions => new OffsetAction[]
+        private OffsetSetterAction[] OffsetActions => new OffsetSetterAction[]
         {
             (transform, offset) => { transform.OffsetX = offset; },
             (transform, offset) => { transform.OffsetY = offset; },
             (transform, offset) => { transform.OffsetZ = offset; }
         };
 
-        private DistanceBetweenSetCallback[] DistanceBetweenSetters => new DistanceBetweenSetCallback[]
+        private DistanceBetweenSetterCallback[] DistanceBetweenSetters => new DistanceBetweenSetterCallback[]
         {
             (distanceBetween, field) => field.DistanceBetweenVerticesAtXAxis = distanceBetween,
             (distanceBetween, field) => field.DistanceBetweenVerticesAtYAxis = distanceBetween,
