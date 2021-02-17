@@ -17,5 +17,20 @@ namespace Algorithm.Extensions
         {
             return !queue.Any() ? new DefaultVertex() : queue.Dequeue();
         }
+
+        public static Queue<T> EnqueueRange<T>(this Queue<T> queue, IEnumerable<T> range)
+        {
+            foreach(var item in range)
+            {
+                queue.Enqueue(item);
+            }
+
+            return queue;
+        }
+
+        public static Queue<IVertex> Except(this Queue<IVertex> queue, IEnumerable<IVertex> range)
+        {
+            return queue.Except<IVertex>(range).ToQueue();
+        }
     }
 }

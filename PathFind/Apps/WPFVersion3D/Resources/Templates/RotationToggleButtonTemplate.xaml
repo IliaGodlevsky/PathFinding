@@ -21,7 +21,7 @@
                 </Ellipse.Fill>
             </Ellipse>
 
-            <Image x:Name="RotateImage" Width="16" Height="16" Source="C:\Users\User\source\repos\PathFinding\PathFind\WPFVersion3D\Resources\Images\rotate.png"/>
+            <Image x:Name="RotateImage" Width="16" Height="16" Source="/Resources\Images\rotate.png"/>
         </Grid>
 
         <ControlTemplate.Triggers>

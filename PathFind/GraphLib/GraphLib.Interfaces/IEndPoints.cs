@@ -1,4 +1,6 @@
-﻿namespace GraphLib.Interface
+﻿using System.Collections.Generic;
+
+namespace GraphLib.Interface
 {
     /// <summary>
     /// 

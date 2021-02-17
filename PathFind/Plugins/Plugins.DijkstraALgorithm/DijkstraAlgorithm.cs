@@ -1,5 +1,6 @@
 ﻿using Algorithm.Base;
 using Algorithm.Interfaces;
+using Algorithm.Extensions;
 using Algorithm.Realizations;
 using Common.Extensions;
 using GraphLib.Common.NullObjects;
@@ -20,7 +21,7 @@ namespace Plugins.DijkstraALgorithm
 
         public DijkstraAlgorithm(IGraph graph) : base(graph)
         {
-            verticesQueue = new List<IVertex>();
+            verticesQueue = new Queue<IVertex>();
         }
 
         public override IGraphPath FindPath(IEndPoints endpoints)
@@ -55,11 +56,10 @@ namespace Plugins.DijkstraALgorithm
             get
             {
                 verticesQueue = verticesQueue
-                    .Where(IsNotVisited)
                     .OrderBy(GetAccumulatedCost)
-                    .ToList();
+                    .ToQueue();
 
-                return verticesQueue.FirstOrDefault();
+                return verticesQueue.DequeueOrDefault();
             }
         }
 
@@ -75,7 +75,7 @@ namespace Plugins.DijkstraALgorithm
             SetVerticesAccumulatedCostToInfifnity();
         }
 
-        protected List<IVertex> verticesQueue;
+        protected Queue<IVertex> verticesQueue;
 
         private void RelaxNeighbours()
         {
@@ -98,10 +98,10 @@ namespace Plugins.DijkstraALgorithm
             {
                 var args = CreateEventArgs(neighbour);
                 RaiseOnVertexEnqueuedEvent(args);
-                verticesQueue.Add(neighbour);
+                verticesQueue.Enqueue(neighbour);
             }
 
-            verticesQueue = verticesQueue.DistinctBy(GetPosition).ToList();
+            verticesQueue = verticesQueue.DistinctBy(GetPosition).ToQueue();
         }
 
         private void SetVerticesAccumulatedCostToInfifnity()

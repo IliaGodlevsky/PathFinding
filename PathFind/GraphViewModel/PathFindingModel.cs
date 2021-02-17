@@ -22,8 +22,6 @@ namespace GraphLib.ViewModel
 
         public BaseEndPoints EndPoints { get; set; }
 
-        public ValueRange AlgorithmDelayTimeValueRange { get; protected set; }
-
         public int DelayTime { get; set; }
 
         public string AlgorithmKey { get; set; }

@@ -2,6 +2,7 @@
 using GraphLib.Extensions;
 using GraphLib.Interface;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace GraphLib.Base
@@ -43,14 +44,24 @@ namespace GraphLib.Base
         {
             if (sender is IVertex vertex)
             {
-                if (Start.IsDefault)
+                if (vertex.IsEqual(Start))
+                {
+                    Start = new DefaultVertex();
+                    (vertex as IMarkableVertex)?.MarkAsSimpleVertex();
+                }
+                else if (vertex.IsEqual(End))
+                {
+                    End = new DefaultVertex();
+                    (vertex as IMarkableVertex)?.MarkAsSimpleVertex();
+                }
+                else if (Start.IsDefault)
                 {
                     SetStartVertex(vertex);
                 }
                 else if (!Start.IsDefault && End.IsDefault)
                 {
                     SetEndVertex(vertex);
-                }
+                }             
             }
         }
 
@@ -96,6 +107,11 @@ namespace GraphLib.Base
                     vert.MarkAsEnd();
                 }
             }
+        }
+
+        protected virtual void SetTransitVertex(IVertex vertex)
+        {
+
         }
     }
 }

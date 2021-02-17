@@ -4,7 +4,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:converters="clr-namespace:WPFVersion.Converters"
-        xmlns:range="clr-namespace:Common.ValueRanges;assembly=Common"
+        xmlns:range="clr-namespace:WPFVersion"
         mc:Ignorable="d"
         Title="VertexSizeChangeWIndow" SizeToContent="WidthAndHeight">
     <Window.Resources>
@@ -25,7 +25,7 @@
         
         <TextBox Text="{Binding ElementName=sizeSlider, Path=Value, 
             Converter={StaticResource sizeConverter}, 
-            ConverterParameter={x:Static range:Range.VertexSizeRange }, 
+            ConverterParameter={x:Static range:Constants.VertexSizeRange }, 
             Mode=TwoWay, 
             UpdateSourceTrigger=PropertyChanged}"
             x:Name="textBox" 

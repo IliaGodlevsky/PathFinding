@@ -33,8 +33,8 @@ namespace WindowsFormsVersion.View
                 true, DataSourceUpdateMode.OnPropertyChanged);
             delaySlider.DataBindings.Add(bindingDelaySliderToDelayTextBox);
 
-            delaySlider.Minimum = model.AlgorithmDelayTimeValueRange.LowerValueOfRange;
-            delaySlider.Maximum = model.AlgorithmDelayTimeValueRange.UpperValueOfRange;
+            delaySlider.Minimum = Constants.AlgorithmDelayTimeValueRange.LowerValueOfRange;
+            delaySlider.Maximum = Constants.AlgorithmDelayTimeValueRange.UpperValueOfRange;
 
             var bindingDelatTextBoxToModel = new Binding(
                 nameof(delayTextBox.Text),

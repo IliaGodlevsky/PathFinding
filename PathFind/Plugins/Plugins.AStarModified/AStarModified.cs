@@ -1,4 +1,5 @@
-﻿using Common;
+﻿using Algorithm.Extensions;
+using Common;
 using GraphLib.Common.NullObjects;
 using GraphLib.Extensions;
 using GraphLib.Interface;
@@ -30,20 +31,22 @@ namespace Plugins.AStarModified
 
         public AStarModified(IGraph graph) : base(graph)
         {
-            deletedVertices = new List<IVertex>();
+            deletedVertices = new Queue<IVertex>();
         }
 
         protected override IVertex NextVertex
         {
             get
             {
-                IVertex next = new DefaultVertex();
-                verticesQueue.Sort(CompareByHeuristic);
-                var verticesToDelete
-                    = verticesQueue.Take(VerticesCountToDelete);
-                deletedVertices.AddRange(verticesToDelete);
-                verticesQueue.RemoveRange(0, VerticesCountToDelete);
-                next = base.NextVertex;
+                verticesQueue = verticesQueue
+                    .OrderByDescending(CalculateHeuristic)
+                    .ToQueue();
+
+                var verticesToDelete = verticesQueue.Take(VerticesCountToDelete);
+                deletedVertices.EnqueueRange(verticesToDelete);
+                verticesQueue = verticesQueue.Except(verticesToDelete);
+
+                IVertex next = base.NextVertex;
                 if (next.IsDefault)
                 {
                     verticesQueue = deletedVertices;
@@ -57,11 +60,6 @@ namespace Plugins.AStarModified
         {
             base.CompletePathfinding();
             deletedVertices.Clear();
-        }
-
-        private int CompareByHeuristic(IVertex v1, IVertex v2)
-        {
-            return CalculateHeuristic(v2).CompareTo(CalculateHeuristic(v1));
         }
 
         private int VerticesCountToDelete =>
@@ -93,6 +91,6 @@ namespace Plugins.AStarModified
         }
 
         private readonly ValueRange percentValueRange = new ValueRange(99, 0);
-        private readonly List<IVertex> deletedVertices;
+        private readonly Queue<IVertex> deletedVertices;
     }
 }

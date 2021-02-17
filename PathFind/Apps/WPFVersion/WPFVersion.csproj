@@ -92,6 +92,7 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Configure\ContainerConfigure.cs" />
+    <Compile Include="Constants.cs" />
     <Compile Include="Converters\ToStringConverter.cs" />
     <Compile Include="Converters\StringToRangedDoubleConverter.cs" />
     <Compile Include="Converters\StringToRangedIntConverter.cs" />

@@ -121,7 +121,7 @@ namespace Algorithm.Base
             return vertex.Position;
         }
 
-        protected double GetAccumulatedCost(IVertex vertex)
+        protected virtual double GetAccumulatedCost(IVertex vertex)
         {
             return accumulatedCosts[vertex.Position];
         }

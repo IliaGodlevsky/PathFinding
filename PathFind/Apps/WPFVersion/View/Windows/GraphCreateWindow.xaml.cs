@@ -1,5 +1,4 @@
-﻿using Common.ValueRanges;
-using System.Windows;
+﻿using System.Windows;
 
 namespace WPFVersion.View.Windows
 {
@@ -11,8 +10,8 @@ namespace WPFVersion.View.Windows
         public GraphCreatesWindow()
         {
             InitializeComponent();
-            obstacleSlider.Minimum = Range.ObstaclePercentValueRange.LowerValueOfRange;
-            obstacleSlider.Maximum = Range.ObstaclePercentValueRange.UpperValueOfRange;
+            obstacleSlider.Minimum = Constants.ObstaclesPercentValueRange.LowerValueOfRange;
+            obstacleSlider.Maximum = Constants.ObstaclesPercentValueRange.UpperValueOfRange;
         }
     }
 }

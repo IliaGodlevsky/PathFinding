@@ -28,9 +28,9 @@ namespace WindowsFormsVersion.View
             {
                 var value = ConvertFromString(
                     e.Value.ToString(),
-                    model.GraphWidthValueRange.LowerValueOfRange);
+                    Constants.GraphWidthValueRange.LowerValueOfRange);
 
-                value = model.GraphWidthValueRange.ReturnInRange(value);
+                value = Constants.GraphWidthValueRange.ReturnInRange(value);
 
                 e.Value = value;
             }
@@ -39,9 +39,9 @@ namespace WindowsFormsVersion.View
             {
                 var value = ConvertFromString(
                     e.Value.ToString(),
-                    model.GraphLengthValueRange.LowerValueOfRange);
+                    Constants.GraphLengthValueRange.LowerValueOfRange);
 
-                value = model.GraphLengthValueRange.ReturnInRange(value);
+                value = Constants.GraphLengthValueRange.ReturnInRange(value);
 
                 e.Value = value;
             }
@@ -77,8 +77,8 @@ namespace WindowsFormsVersion.View
                 DataSourceUpdateMode.OnPropertyChanged);
             obstacleSlider.DataBindings.Add(bindTextBoxAndSlider);
 
-            obstacleSlider.Maximum = model.ObstaclePercentValueRange.UpperValueOfRange;
-            obstacleSlider.Minimum = model.ObstaclePercentValueRange.LowerValueOfRange;
+            obstacleSlider.Maximum = Constants.ObstaclesPercentValueRange.UpperValueOfRange;
+            obstacleSlider.Minimum = Constants.ObstaclesPercentValueRange.LowerValueOfRange;
 
             var bindObstaclePercent = new Binding(
                 nameof(obstacleTextBox.Text),

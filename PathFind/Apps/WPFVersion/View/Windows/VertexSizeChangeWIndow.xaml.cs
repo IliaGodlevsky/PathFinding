@@ -1,5 +1,4 @@
-﻿using Common.ValueRanges;
-using System.Windows;
+﻿using System.Windows;
 
 namespace WPFVersion.View.Windows
 {
@@ -11,8 +10,8 @@ namespace WPFVersion.View.Windows
         public VertexSizeChangeWindow()
         {
             InitializeComponent();
-            sizeSlider.Minimum = Range.VertexSizeRange.LowerValueOfRange;
-            sizeSlider.Maximum = Range.VertexSizeRange.UpperValueOfRange;
+            sizeSlider.Minimum = Constants.VertexSizeRange.LowerValueOfRange;
+            sizeSlider.Maximum = Constants.VertexSizeRange.UpperValueOfRange;
         }
     }
 }

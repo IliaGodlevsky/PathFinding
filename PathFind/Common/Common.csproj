@@ -63,7 +63,6 @@
     <Compile Include="Logging\Logger.cs" />
     <Compile Include="Interfaces\ILog.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="ValueRanges\Range.cs" />
     <Compile Include="ValueRange.cs" />
   </ItemGroup>
   <ItemGroup>

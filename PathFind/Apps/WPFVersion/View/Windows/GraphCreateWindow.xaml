@@ -4,7 +4,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:converters="clr-namespace:WPFVersion.Converters"
-        xmlns:range="clr-namespace:Common.ValueRanges;assembly=Common" 
+        xmlns:range="clr-namespace:WPFVersion"
         mc:Ignorable="d"
         Title="Parametres" SizeToContent="WidthAndHeight">
     <Window.Resources>
@@ -36,7 +36,7 @@
         <TextBox Text = "{Binding ElementName = obstacleSlider, 
             Path = Value, 
             Converter = {StaticResource sliderValueConverter}, 
-            ConverterParameter={x:Static range:Range.ObstaclePercentValueRange}, 
+            ConverterParameter={x:Static range:Constants.ObstaclesPercentValueRange}, 
             Mode = TwoWay, 
             UpdateSourceTrigger = PropertyChanged}"
             x:Name="obstacleTextBox" 
@@ -50,7 +50,7 @@
         <TextBox Text ="{Binding Path = Width, 
             UpdateSourceTrigger=PropertyChanged, 
             Converter={StaticResource stringToIntCOnverter}, 
-            ConverterParameter={x:Static range:Range.WidthValueRange}}" 
+            ConverterParameter={x:Static range:Constants.GraphWidthValueRange}}" 
             Grid.Row="2" Grid.Column="1" 
             Margin="5"></TextBox>
         
@@ -59,7 +59,7 @@
         <TextBox Text="{Binding Path = Length, 
             UpdateSourceTrigger=PropertyChanged,
             Converter={StaticResource stringToIntCOnverter}, 
-            ConverterParameter={x:Static range:Range.HeightValueRange}}" 
+            ConverterParameter={x:Static range:Constants.GraphLengthValueRange}}" 
             Grid.Row="3" Grid.Column="1" Margin="5"></TextBox>
         
         <StackPanel Grid.Row="4" Grid.ColumnSpan="2" Orientation="Horizontal" HorizontalAlignment="Center">

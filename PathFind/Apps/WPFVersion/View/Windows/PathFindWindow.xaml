@@ -4,7 +4,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:converters="clr-namespace:WPFVersion.Converters"
-        xmlns:range="clr-namespace:Common.ValueRanges;assembly=Common"
+        xmlns:range="clr-namespace:WPFVersion"
         mc:Ignorable="d"       
         Title="Algorithms" SizeToContent="WidthAndHeight">
     <Window.Resources>
@@ -58,7 +58,7 @@
                          Text ="{Binding ElementName=delayTimeSlider, 
                          Path=Value, 
                          Converter = {StaticResource sliderValueConverter}, 
-                         ConverterParameter={x:Static range:Range.DelayValueRange}, 
+                         ConverterParameter={x:Static range:Constants.AlgorithmDelayTimeValueRange}, 
                          Mode = TwoWay, 
                          UpdateSourceTrigger = PropertyChanged}" 
                          Grid.Column="1" Margin="5"></TextBox>

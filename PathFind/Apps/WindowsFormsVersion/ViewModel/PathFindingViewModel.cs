@@ -1,10 +1,8 @@
 ﻿using Algorithm.Realizations;
-using Common;
 using Common.Interfaces;
 using GraphLib.ViewModel;
 using GraphViewModel.Interfaces;
 using System;
-using System.Configuration;
 using System.Linq;
 using System.Windows.Forms;
 
@@ -16,10 +14,6 @@ namespace WindowsFormsVersion.ViewModel
 
         public PathFindingViewModel(IMainModel model) : base(model)
         {
-            int algorithmDelayTimeUpperRange
-                    = Convert.ToInt32(ConfigurationManager.AppSettings["algorithmDelayTimeUpperRange"]);
-
-            AlgorithmDelayTimeValueRange = new ValueRange(algorithmDelayTimeUpperRange, 0);
             AlgorithmKeys = AlgorithmsPluginLoader.AlgorithmsDescriptions.ToList();
         }
 

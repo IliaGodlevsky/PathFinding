@@ -52,15 +52,11 @@ namespace GraphLib.Base
 
             for (int i = 0; i < coordinatesInStringRepresentation.Count() - 1; i++)
             {
-                information.Append(coordinatesInStringRepresentation.
-                    ElementAt(i)).Append(",");
+                information.Append(coordinatesInStringRepresentation.ElementAt(i)).Append(",");
             }
 
             information.Append(coordinatesInStringRepresentation.Last()).Append(")");
             return information.ToString();
         }
-
-        [NonSerialized]
-        protected IEnumerable<ICoordinate> coordinateEnvironment;
     }
 }

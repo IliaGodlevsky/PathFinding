@@ -1,5 +1,4 @@
-﻿using Common;
-using ConsoleVersion.InputClass;
+﻿using ConsoleVersion.InputClass;
 using ConsoleVersion.Model;
 using ConsoleVersion.Resource;
 using ConsoleVersion.View;
@@ -8,7 +7,6 @@ using GraphLib.Realizations;
 using GraphLib.ViewModel;
 using GraphViewModel.Interfaces;
 using System;
-using System.Configuration;
 using System.Linq;
 
 using static Algorithm.Realizations.AlgorithmsPluginLoader;
@@ -27,10 +25,6 @@ namespace ConsoleVersion.ViewModel
         {
             maxAlgorithmKeysNumber = AlgorithmsDescriptions.Count();
             minAlgorithmKeysNumber = 1;
-
-            int algorithmDelayTimeUpperRange
-                    = Convert.ToInt32(ConfigurationManager.AppSettings["algorithmDelayTimeUpperRange"]);
-            AlgorithmDelayTimeValueRange = new ValueRange(algorithmDelayTimeUpperRange, 0);
         }
 
         public override void FindPath()
@@ -48,9 +42,7 @@ namespace ConsoleVersion.ViewModel
                 var algorithmKeys = AlgorithmsDescriptions;
                 AlgorithmKey = algorithmKeys.ElementAt(algorithmKeyIndex);
 
-                DelayTime = Input.InputNumber(
-                    Resources.DelayTimeInputMsg,
-                    AlgorithmDelayTimeValueRange);
+                DelayTime = Input.InputNumber(Resources.DelayTimeInputMsg, Constants.AlgorithmDelayTimeValueRange);
 
                 base.FindPath();
 

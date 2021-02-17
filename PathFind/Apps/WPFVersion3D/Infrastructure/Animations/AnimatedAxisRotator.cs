@@ -4,9 +4,9 @@ using System.Windows.Media.Animation;
 using System.Windows.Media.Media3D;
 using WPFVersion3D.Enums;
 using WPFVersion3D.Infrastructure.Animations.Interface;
-using AnimationCreateFunction = System.Collections.Generic.Dictionary<WPFVersion3D.Enums.RotationDirection,
+using AnimationCreationFunctions = System.Collections.Generic.Dictionary<WPFVersion3D.Enums.RotationDirection,
     System.Func<System.Windows.Media.Animation.DoubleAnimation>>;
-using DurationCalculateFunction = System.Collections.Generic.Dictionary<WPFVersion3D.Enums.RotationDirection, System.Func<double>>;
+using DurationCalculationFunctions = System.Collections.Generic.Dictionary<WPFVersion3D.Enums.RotationDirection, System.Func<double>>;
 
 namespace WPFVersion3D.Infrastructure.Animations
 {
@@ -26,13 +26,13 @@ namespace WPFVersion3D.Infrastructure.Animations
             this.axis = axis;
             this.direction = direction;
 
-            DurationCalculateFunctions = new DurationCalculateFunction()
+            DurationCalculationFunctions = new DurationCalculationFunctions()
             {
                 { RotationDirection.Backward, CalculateBackwardAnimationDuration },
                 { RotationDirection.Forward, CalculateForwardAnimationDuration }
             };
 
-            AnimationCreateFunctions = new AnimationCreateFunction()
+            AnimationCreationFunctions = new AnimationCreationFunctions()
             {
                 { RotationDirection.Backward, () => CreateAnimation(axis.Angle, StartAngle, FillBehavior.Stop) },
                 { RotationDirection.Forward, () => CreateAnimation(axis.Angle, EndAngle, FillBehavior.HoldEnd) },
@@ -41,7 +41,7 @@ namespace WPFVersion3D.Infrastructure.Animations
 
         public void ApplyAnimation()
         {
-            var animation = AnimationCreateFunctions[direction]();
+            var animation = AnimationCreationFunctions[direction]();
             axis.BeginAnimation(AxisAngleRotation3D.AngleProperty, animation);
         }
 
@@ -54,7 +54,7 @@ namespace WPFVersion3D.Infrastructure.Animations
 
         private Duration CalculateAnimationDuration()
         {
-            var duration = DurationCalculateFunctions[direction]();
+            var duration = DurationCalculationFunctions[direction]();
             return new Duration(TimeSpan.FromMilliseconds(duration));
         }
 
@@ -66,8 +66,8 @@ namespace WPFVersion3D.Infrastructure.Animations
 
         private double AngleAmplitude => EndAngle - StartAngle;
 
-        private DurationCalculateFunction DurationCalculateFunctions { get; set; }
-        private AnimationCreateFunction AnimationCreateFunctions { get; set; }
+        private DurationCalculationFunctions DurationCalculationFunctions { get; set; }
+        private AnimationCreationFunctions AnimationCreationFunctions { get; set; }
 
         private double InitialDuration => 3000;
 

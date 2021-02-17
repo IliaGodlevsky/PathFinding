@@ -24,19 +24,20 @@ namespace Algorithm.Realizations
             Algorithms = new Dictionary<string, IAlgorithm>();
         }
 
-        public static void LoadAlgorithms(string path)
+        public static void LoadAlgorithms(string path, string searchPattern = "*.dll")
         {
             if (Directory.Exists(path))
             {
                 Algorithms = Directory
-                    .GetFiles(path, "*.dll", SearchOption.AllDirectories)
+                    .GetFiles(path, searchPattern, SearchOption.AllDirectories)
                     .Select(Assembly.LoadFrom)
-                    .SelectMany(assembly => assembly.GetTypes().Where(IsValidAlgorithm))
-                    .DistinctBy(type => type.FullName)
+                    .SelectMany(GetAlgorithmTypes)
+                    .DistinctBy(Name)
                     .ForEach(RegisterConstructor)
                     .ToDictionary(GetAlgorithmDescription, GetInstance);
             }
         }
+
         /// <summary>
         /// Returns algorithm according to <paramref name="algorithmDescription"></paramref>
         /// </summary>
@@ -71,12 +72,19 @@ namespace Algorithm.Realizations
             return attribute?.Description ?? algorithmType.Name;
         }
 
+        private static IEnumerable<Type> GetAlgorithmTypes(Assembly assembly)
+        {
+            return assembly.GetTypes().Where(IsValidAlgorithm);
+        }
+
         private static bool IsValidAlgorithm(Type type)
         {
             return typeof(IAlgorithm).IsAssignableFrom(type)
                 && !type.IsFilterable()
                 && !type.IsAbstract;
         }
+
+        private static string Name(Type type) => type.FullName;
 
         private static string Key(string key) => key;
     }

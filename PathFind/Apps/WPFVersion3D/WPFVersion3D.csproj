@@ -97,6 +97,7 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Configure\ContainerConfigure.cs" />
+    <Compile Include="Constants.cs" />
     <Compile Include="Converters\MaterialOpacityValueConverter.cs" />
     <Compile Include="Converters\AnimatedAxisRotatorConverter.cs" />
     <Compile Include="Converters\StringToDoubleConverter.cs" />
