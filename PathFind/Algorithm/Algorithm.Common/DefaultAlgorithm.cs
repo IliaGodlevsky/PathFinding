@@ -4,6 +4,7 @@ using Algorithm.Interfaces;
 using Common.Attributes;
 using GraphLib.Common.NullObjects;
 using GraphLib.Interface;
+using System.Threading.Tasks;
 
 namespace Algorithm.Common
 {
@@ -43,6 +44,11 @@ namespace Algorithm.Common
         public void Reset()
         {
 
+        }
+
+        public async Task<IGraphPath> FindPathAsync(IEndPoints endPoints)
+        {
+            return await Task.Run(() => FindPath(endPoints));
         }
     }
 }

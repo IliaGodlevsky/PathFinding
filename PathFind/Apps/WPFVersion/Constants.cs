@@ -10,6 +10,10 @@ namespace WPFVersion
         public static ValueRange AlgorithmDelayTimeValueRange { get; }
         public static ValueRange VertexSizeRange { get; }
 
+        public const int DistanceBetweenVertices = 1;
+        public const int VertexSize = 24;
+        public const double TextToSizeRatio = 0.475;
+
         static Constants()
         {
             GraphWidthValueRange = new ValueRange(150, 1);

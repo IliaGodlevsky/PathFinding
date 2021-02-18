@@ -3,9 +3,7 @@ using GraphLib.Interface;
 using GraphLib.Realizations.VertexCost;
 using GraphLib.Serialization;
 using GraphLib.Serialization.Extensions;
-using System;
 using System.Collections.Generic;
-using System.Configuration;
 using System.Windows.Controls;
 using System.Windows.Media;
 
@@ -32,10 +30,8 @@ namespace WPFVersion.Model
         {
             Dispatcher.Invoke(() =>
             {
-                double fontSizeRatio = Convert.ToDouble(ConfigurationManager.AppSettings["textToSizeRatio"]);
-                int vertexSize = Convert.ToInt32(ConfigurationManager.AppSettings["vertexSize"]);
-                Width = Height = vertexSize;
-                FontSize = vertexSize * fontSizeRatio;
+                Width = Height = Constants.VertexSize;
+                FontSize = Constants.VertexSize * Constants.TextToSizeRatio;
                 Template = (ControlTemplate)TryFindResource("vertexTemplate");
             });
             this.Initialize();

@@ -3,7 +3,6 @@ using Common.Interfaces;
 using GraphLib.Interface;
 using GraphViewModel.Interfaces;
 using System;
-using System.Configuration;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
@@ -53,10 +52,9 @@ namespace WPFVersion.ViewModel
             var temp = vertex as Vertex;
             Application.Current.Dispatcher.Invoke(() =>
             {
-                double fontSizeRatio = Convert.ToDouble(ConfigurationManager.AppSettings["textToSizeRatio"]);
                 temp.Width = VerticesSize;
                 temp.Height = VerticesSize;
-                temp.FontSize = VerticesSize * fontSizeRatio;
+                temp.FontSize = VerticesSize * Constants.TextToSizeRatio;
             });
         }
 

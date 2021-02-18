@@ -4,6 +4,7 @@ using GraphLib.Extensions;
 using GraphLib.Interface;
 using System;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace GraphLib.Realizations.Factories
 {
@@ -51,6 +52,11 @@ namespace GraphLib.Realizations.Factories
                 OnExceptionCaught?.Invoke(ex);
                 throw ex;
             }
+        }
+        
+        public async Task<IGraph> AssembleGraphAsync(int obstaclePercent = 0, params int[] graphDimensionSizes)
+        {
+            return await Task.Run(() => AssembleGraph(obstaclePercent, graphDimensionSizes));
         }
 
         private void AssembleVertex(IGraph graph, int index, int obstaclePercent)

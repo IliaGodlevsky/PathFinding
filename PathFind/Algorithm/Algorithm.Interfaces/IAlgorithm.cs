@@ -1,5 +1,6 @@
 ﻿using Algorithm.Infrastructure.Handlers;
 using GraphLib.Interface;
+using System.Threading.Tasks;
 
 namespace Algorithm.Interfaces
 {
@@ -34,6 +35,8 @@ namespace Algorithm.Interfaces
         /// Starts pathfinding
         /// </summary>
         IGraphPath FindPath(IEndPoints endPoints);
+
+        Task<IGraphPath> FindPathAsync(IEndPoints endPoints);
 
         void Reset();
     }

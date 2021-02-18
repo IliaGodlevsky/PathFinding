@@ -7,6 +7,7 @@ using GraphLib.Interface;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace Algorithm.Base
 {
@@ -42,6 +43,11 @@ namespace Algorithm.Base
             visitedVertices.Clear();
             parentVertices.Clear();
             accumulatedCosts.Clear();
+        }
+
+        public virtual async Task<IGraphPath> FindPathAsync(IEndPoints endPoints)
+        {
+            return await Task.Run(() => FindPath(endPoints));
         }
 
         public abstract IGraphPath FindPath(IEndPoints endPoints);

@@ -13,11 +13,7 @@ namespace WPFVersion3D.Converters
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            if (double.TryParse(value.ToString(), out double result))
-            {
-                return result;
-            }
-            return 0;
+            return double.TryParse(value.ToString(), out double result) ? result : (object)default(double);
         }
     }
 }

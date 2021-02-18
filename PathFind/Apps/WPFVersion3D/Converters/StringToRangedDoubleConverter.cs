@@ -14,25 +14,21 @@ namespace WPFVersion3D.Converters
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            double result = 0D;
+            double result = default;
 
-            if (parameter is ValueRange sliderValueRange && value != null)
+            if (IsValidParametres(value, parameter))
             {
-                if (double.TryParse(value.ToString(), out result))
-                {
-                    var sliderValue = System.Convert.ToInt32(result);
-                    if (sliderValueRange.IsInRange(sliderValue))
-                    {
-                        result = sliderValue;
-                    }
-                    else
-                    {
-                        result = sliderValueRange.UpperValueOfRange;
-                    }
-                }
+                var range = parameter as ValueRange;
+                var val = System.Convert.ToInt32(value);
+                result = range.ReturnInRange(val);
             }
 
             return result;
+        }
+
+        private bool IsValidParametres(object value, object parametre)
+        {
+            return double.TryParse(value.ToString(), out _) && parametre is ValueRange;
         }
     }
 }

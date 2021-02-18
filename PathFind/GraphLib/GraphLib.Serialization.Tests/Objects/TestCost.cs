@@ -26,10 +26,5 @@ namespace GraphLib.Serialization.Tests.Objects
         }
 
         public int CurrentCost { get; }
-
-        public object Clone()
-        {
-            return new TestCost(CurrentCost);
-        }
     }
 }

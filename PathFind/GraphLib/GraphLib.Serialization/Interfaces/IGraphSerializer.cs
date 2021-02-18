@@ -14,5 +14,7 @@ namespace GraphLib.Serialization.Interfaces
         void SaveGraph(IGraph graph, Stream stream);
 
         IGraph LoadGraph(Stream stream);
+
+        Task<IGraph> LoadGraphAsync(Stream stream);
     }
 }

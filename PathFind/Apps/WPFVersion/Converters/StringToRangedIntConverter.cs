@@ -14,20 +14,21 @@ namespace WPFVersion.Converters
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            int result = 0;
+            int result = default;
 
-            if (parameter is ValueRange range && value != null)
+            if (IsValidParametres(value, parameter))
             {
-                if (int.TryParse(value.ToString(), out result))
-                {
-                    if (!range.IsInRange(result))
-                    {
-                        result = range.LowerValueOfRange;
-                    }
-                }
+                var range = parameter as ValueRange;
+                result = System.Convert.ToInt32(value);
+                result = range.ReturnInRange(result);
             }
 
             return result;
+        }
+
+        private bool IsValidParametres(object value, object parametre)
+        {
+            return int.TryParse(value.ToString(), out _) && parametre is ValueRange;
         }
     }
 }

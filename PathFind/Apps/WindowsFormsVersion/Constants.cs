@@ -9,6 +9,10 @@ namespace WindowsFormsVersion
         public static ValueRange ObstaclesPercentValueRange { get; }
         public static ValueRange AlgorithmDelayTimeValueRange { get; }
 
+        public const int DistanceBetweenVertices = 1;
+        public const int VertexSize = 24;
+        public const float TextToSizeRatio = 0.35625f;
+
         static Constants()
         {
             GraphWidthValueRange = new ValueRange(67, 1);

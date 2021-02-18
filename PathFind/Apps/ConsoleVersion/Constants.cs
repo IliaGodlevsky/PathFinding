@@ -9,6 +9,8 @@ namespace ConsoleVersion
         public static ValueRange ObstaclesPercentValueRange { get; }
         public static ValueRange AlgorithmDelayTimeValueRange { get; }
 
+        public const int LateralDistanceBetweenVertices = 3;
+
         static Constants()
         {
             GraphWidthValueRange = new ValueRange(80, 1);

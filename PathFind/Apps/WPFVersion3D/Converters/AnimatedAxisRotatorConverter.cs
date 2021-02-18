@@ -28,7 +28,7 @@ namespace WPFVersion3D.Converters
 
         private bool IsValidParametres(object value, object parametres)
         {
-            return (value is bool) && (parametres as AxisAngleRotation3D != null);
+            return value is bool && parametres is AxisAngleRotation3D;
         }
     }
 }

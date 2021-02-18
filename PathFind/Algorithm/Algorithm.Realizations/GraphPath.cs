@@ -30,13 +30,12 @@ namespace Algorithm.Realizations
         {
             if (CanTieEndPoints(parentVertices))
             {
-                var temp = endpoints.End;
+                var vertex = endpoints.End;
                 do
                 {
-                    yield return temp;
-                    temp = parentVertices[temp.Position];
-                } while (!IsStartOfPath(temp));
-
+                    yield return vertex;
+                    vertex = parentVertices[vertex.Position];
+                } while (!HasReachedTheEnd(vertex));
             }
         }
 
@@ -44,6 +43,12 @@ namespace Algorithm.Realizations
         {
             return parentVertices.Any()
                 && parentVertices.TryGetValue(endpoints.End.Position, out _);
+        }
+
+        private bool HasReachedTheEnd(IVertex vertex)
+        {
+            return IsStartOfPath(vertex) 
+                || !vertex.IsNeighbourOf(parentVertices[vertex.Position]);
         }
 
         private bool IsStartOfPath(IVertex vertex)

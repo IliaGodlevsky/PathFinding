@@ -116,7 +116,7 @@ namespace GraphLib.Extensions
                 && !self.IsNeighbourOf(vertex);
         }
 
-        private static bool IsNeighbourOf(this IVertex self, IVertex vertex)
+        public static bool IsNeighbourOf(this IVertex self, IVertex vertex)
         {
             return vertex.Neighbours.Contains(self);
         }

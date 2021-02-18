@@ -63,14 +63,14 @@ namespace ConsoleVersion.ViewModel
             {
                 try
                 {
+                    var pluginPath = GetAlgorithmsLoadPath();
+                    AlgorithmsPluginLoader.LoadAlgorithms(pluginPath);
                     var model = new PathFindingViewModel(this)
                     {
                         EndPoints = EndPoints
                     };
                     model.OnPathNotFound += OnPathNotFound;
-                    var view = new PathFindView(model);
-                    var pluginPath = GetAlgorithmsLoadPath();
-                    AlgorithmsPluginLoader.LoadAlgorithms(pluginPath);
+                    var view = new PathFindView(model);                   
                     view.Start();
                 }
                 catch (Exception ex)

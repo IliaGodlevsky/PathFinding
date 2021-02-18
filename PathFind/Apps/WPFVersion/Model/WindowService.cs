@@ -1,7 +1,5 @@
 ﻿using GraphLib.Interface;
 using GraphLib.Realizations;
-using System;
-using System.Configuration;
 using System.Windows;
 
 namespace WPFVersion.Model
@@ -12,9 +10,7 @@ namespace WPFVersion.Model
         {
             if (!graph.IsDefault)
             {
-                int distanceBetweenVertices
-                          = Convert.ToInt32(ConfigurationManager.AppSettings["distanceBetweenVertices"])
-                          + Convert.ToInt32(ConfigurationManager.AppSettings["vertexSize"]);
+                int distanceBetweenVertices = Constants.DistanceBetweenVertices + Constants.VertexSize;
                 var graph2d = graph as Graph2D;
 
                 var mainWindowDesiredWidth = (graph2d.Width + 2) * distanceBetweenVertices;

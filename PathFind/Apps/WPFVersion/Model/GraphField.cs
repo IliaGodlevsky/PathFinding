@@ -1,7 +1,6 @@
 ﻿using GraphLib.Interface;
 using GraphLib.Realizations;
 using System;
-using System.Configuration;
 using System.Windows.Controls;
 
 namespace WPFVersion.Model
@@ -10,7 +9,7 @@ namespace WPFVersion.Model
     {
         public GraphField()
         {
-            distanceBetweenVertices = Convert.ToInt32(ConfigurationManager.AppSettings["distanceBetweenVertices"]);
+            distanceBetweenVertices = Constants.DistanceBetweenVertices;
         }
 
         public void Add(IVertex vertex)

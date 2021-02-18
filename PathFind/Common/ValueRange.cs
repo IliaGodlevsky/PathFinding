@@ -50,11 +50,11 @@ namespace Common
         {
             if (value > UpperValueOfRange)
             {
-                value = LowerValueOfRange;
+                value = UpperValueOfRange;
             }
             else if (value < LowerValueOfRange)
             {
-                value = UpperValueOfRange;
+                value = LowerValueOfRange;
             }
 
             return value;

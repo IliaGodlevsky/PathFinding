@@ -3,11 +3,9 @@ using GraphLib.Interface;
 using GraphLib.Realizations.VertexCost;
 using GraphLib.Serialization;
 using GraphLib.Serialization.Extensions;
-using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Windows.Forms;
-using static System.Configuration.ConfigurationManager;
 
 namespace WindowsFormsVersion.Model
 {
@@ -15,11 +13,9 @@ namespace WindowsFormsVersion.Model
     {
         public Vertex() : base()
         {
-            float fontSizeRatio = float.Parse(AppSettings["textToSizeRatio"]);
-            int vertexSize = Convert.ToInt32(AppSettings["vertexSize"]);
-            float fontSize = vertexSize * fontSizeRatio;
+            float fontSize = Constants.VertexSize * Constants.TextToSizeRatio;
             Font = new Font("Times New Roman", fontSize);
-            Size = new Size(vertexSize, vertexSize);
+            Size = new Size(Constants.VertexSize, Constants.VertexSize);
             TextAlign = ContentAlignment.MiddleCenter;
             this.Initialize();
         }

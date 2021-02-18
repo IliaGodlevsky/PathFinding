@@ -2,7 +2,6 @@
 using GraphLib.Extensions;
 using GraphLib.Interface;
 using System;
-using System.Collections.Generic;
 using System.Linq;
 
 namespace GraphLib.Base
@@ -46,13 +45,11 @@ namespace GraphLib.Base
             {
                 if (vertex.IsEqual(Start))
                 {
-                    Start = new DefaultVertex();
-                    (vertex as IMarkableVertex)?.MarkAsSimpleVertex();
+                    UnsetStartVertex(vertex);
                 }
                 else if (vertex.IsEqual(End))
                 {
-                    End = new DefaultVertex();
-                    (vertex as IMarkableVertex)?.MarkAsSimpleVertex();
+                    UnsetEndVertex(vertex);
                 }
                 else if (Start.IsDefault)
                 {
@@ -61,7 +58,7 @@ namespace GraphLib.Base
                 else if (!Start.IsDefault && End.IsDefault)
                 {
                     SetEndVertex(vertex);
-                }             
+                }
             }
         }
 
@@ -89,11 +86,7 @@ namespace GraphLib.Base
             if (CanBeEndPoint(vertex))
             {
                 Start = vertex;
-
-                if (vertex is IMarkableVertex vert)
-                {
-                    vert.MarkAsStart();
-                }
+                (vertex as IMarkableVertex)?.MarkAsStart();
             }
         }
 
@@ -102,16 +95,20 @@ namespace GraphLib.Base
             if (CanBeEndPoint(vertex))
             {
                 End = vertex;
-                if (vertex is IMarkableVertex vert)
-                {
-                    vert.MarkAsEnd();
-                }
+                (vertex as IMarkableVertex)?.MarkAsEnd();
             }
         }
 
-        protected virtual void SetTransitVertex(IVertex vertex)
+        protected virtual void UnsetStartVertex(IVertex vertex)
         {
+            Start = new DefaultVertex();
+            (vertex as IMarkableVertex)?.MarkAsSimpleVertex();
+        }
 
+        protected virtual void UnsetEndVertex(IVertex vertex)
+        {
+            End = new DefaultVertex();
+            (vertex as IMarkableVertex)?.MarkAsSimpleVertex();
         }
     }
 }

@@ -1,7 +1,6 @@
 ﻿using GraphLib.Interface;
 using GraphLib.Realizations;
 using System;
-using System.Configuration;
 using System.Drawing;
 using System.Windows.Forms;
 using WindowsFormsVersion.Model;
@@ -12,9 +11,7 @@ namespace WindowsFormsVersion.View
     {
         public WinFormsGraphField()
         {
-            distanceBetweenVertices
-                = Convert.ToInt32(ConfigurationManager.AppSettings["distanceBetweenVertices"])
-                + Convert.ToInt32(ConfigurationManager.AppSettings["vertexSize"]);
+            distanceBetweenVertices = Constants.DistanceBetweenVertices + Constants.VertexSize;
         }
 
         public void Add(IVertex vertex)

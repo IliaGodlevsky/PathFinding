@@ -51,8 +51,13 @@ namespace GraphLib.Serialization
 
         }
 
+        public async Task<IGraph> LoadGraphAsync(Stream stream)
+        {
+            return await Task.Run(() => LoadGraph(stream));
+        }
+
         /// <summary>
-        /// 
+        /// Saves graph in stream
         /// </summary>
         /// <param name="stream"></param>
         /// <returns></returns>
@@ -68,15 +73,12 @@ namespace GraphLib.Serialization
             {
                 OnExceptionCaught?.Invoke(ex);
                 throw ex;
-            }           
+            }
         }
 
-        public Task SaveGraphAsync(IGraph graph, Stream stream)
+        public async Task SaveGraphAsync(IGraph graph, Stream stream)
         {
-            return Task.Run(() =>
-            {
-                SaveGraph(graph, stream);
-            });
+            await Task.Run(() => SaveGraph(graph, stream));
         }
 
         private readonly IFormatter formatter;

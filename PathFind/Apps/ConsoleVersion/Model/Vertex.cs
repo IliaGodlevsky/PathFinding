@@ -153,10 +153,8 @@ namespace ConsoleVersion.Model
                     if (Position != null)
                     {
                         var position = Position as Coordinate2D;
-                        var consolePosition = MainView.GraphFieldPosition;
-                        int lateralDistanceBetweenVertices 
-                            = Convert.ToInt32(ConfigurationManager.AppSettings["distanceBetweenVertices"]);
-                        var left = consolePosition.X + position.X * lateralDistanceBetweenVertices;
+                        var consolePosition = MainView.GraphFieldPosition;                        
+                        var left = consolePosition.X + position.X * Constants.LateralDistanceBetweenVertices;
                         var top = consolePosition.Y + position.Y;
                         consoleCoordinate = new Coordinate2D(left, top);
                     }
