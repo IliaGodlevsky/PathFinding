@@ -40,7 +40,7 @@ namespace WindowsFormsVersion.Forms
             this.toolStripButton5 = new System.Windows.Forms.ToolStripButton();
             this.unweightedButton = new Syncfusion.Windows.Forms.Tools.ToolStripRadioButton();
             this.weightedButton = new Syncfusion.Windows.Forms.Tools.ToolStripRadioButton();
-            this.winFormsGraphField = new WindowsFormsVersion.View.WinFormsGraphField();
+            this.graphField = new WindowsFormsVersion.View.WinFormsGraphField();
             this.menu.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -136,13 +136,13 @@ namespace WindowsFormsVersion.Forms
             this.weightedButton.Name = "weightedButton";
             this.weightedButton.Size = new System.Drawing.Size(26, 28);
             // 
-            // winFormsGraphField
+            // graphField
             // 
-            this.winFormsGraphField.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.winFormsGraphField.Location = new System.Drawing.Point(4, 119);
-            this.winFormsGraphField.Name = "winFormsGraphField";
-            this.winFormsGraphField.Size = new System.Drawing.Size(554, 577);
-            this.winFormsGraphField.TabIndex = 15;
+            this.graphField.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.graphField.Location = new System.Drawing.Point(4, 119);
+            this.graphField.Name = "graphField";
+            this.graphField.Size = new System.Drawing.Size(554, 577);
+            this.graphField.TabIndex = 15;
             // 
             // MainWindow
             // 
@@ -154,7 +154,7 @@ namespace WindowsFormsVersion.Forms
             this.Controls.Add(this.menu);
             this.Controls.Add(this.parametres);
             this.Controls.Add(this.statistics);
-            this.Controls.Add(this.winFormsGraphField);
+            this.Controls.Add(this.graphField);
             this.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.Name = "MainWindow";
             this.Text = "PathFind";
@@ -166,7 +166,7 @@ namespace WindowsFormsVersion.Forms
         }
 
         #endregion
-        private WinFormsGraphField winFormsGraphField;
+        private WinFormsGraphField graphField;
         private System.Windows.Forms.Label statistics;
         private System.Windows.Forms.Label parametres;
         private System.Windows.Forms.ToolStripButton toolStripButton1;

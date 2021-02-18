@@ -49,12 +49,12 @@ namespace WindowsFormsVersion.ViewModel
             set
             {
                 graphField = value;
-                int size = Convert.ToInt32(ConfigurationManager.AppSettings["vertexSize"]) + 1;
                 var field = graphField as WinFormsGraphField;
-
+                var graph = Graph as Graph2D;
+                int width = graph.Width * Constants.VertexSize;
+                int height = graph.Length * Constants.VertexSize;
+                field.Size = new Size(width, height);
                 MainWindow.Controls.RemoveBy(ctrl => ctrl.IsGraphField());
-
-                field.Size = new Size((Graph as Graph2D).Width * size, (Graph as Graph2D).Length * size);
                 MainWindow.Controls.Add(field);
             }
         }

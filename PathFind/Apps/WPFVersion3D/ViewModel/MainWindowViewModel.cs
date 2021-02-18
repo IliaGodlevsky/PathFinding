@@ -46,15 +46,7 @@ namespace WPFVersion3D.ViewModel
         public override IGraphField GraphField
         {
             get { return graphField; }
-            set
-            {
-                graphField = value;
-                var field = graphField as GraphField3D;
-                field.CenterGraph();
-                var currentWindow = Application.Current.MainWindow as MainWindow;
-                currentWindow?.GraphField?.Children.Clear();
-                currentWindow?.GraphField?.Children.Add(field);
-            }
+            set { graphField = value; OnPropertyChanged(); }
         }
 
         public ICommand StartPathFindCommand { get; }

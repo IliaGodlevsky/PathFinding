@@ -23,12 +23,19 @@ namespace WPFVersion3D.Model
             Height = height;
         }
 
+        static GraphField3D()
+        {
+           
+        }
+
         public GraphField3D()
         {
             DistanceBetweenVerticesAtXAxis = 0;
             DistanceBetweenVerticesAtYAxis = 0;
             DistanceBetweenVerticesAtZAxis = 0;
         }
+
+
 
         public void Add(IVertex vertex)
         {

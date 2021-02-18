@@ -13,7 +13,7 @@
         Title="3D pathfinding" Height="350" Width="450">
     <Window.Resources>
         <converters:InvertPointConverter x:Key="invertPointConverter"/>
-        <converters:NummberToPointConverter x:Key="coordinateToDistance"/>
+        <converters:NumberToPointConverter x:Key="coordinateToDistance"/>
         <converters:StringToDoubleConverter x:Key="stringToDoubleConverter"/>
         <converters:AnimatedAxisRotatorConverter x:Key="animatedAxisRotatorConverter"/>
 
@@ -226,7 +226,7 @@
                     Position="600,600,600"/>
             </Viewport3D.Camera>
             <Viewport3D.Children>
-                <model:GraphField3D x:Name="GraphField">
+                <model:GraphField3DContainer GraphField="{Binding GraphField, UpdateSourceTrigger=PropertyChanged}">
                     <ModelVisual3D.Content>
                         <DirectionalLight Direction="{Binding ElementName=camera, Path=LookDirection}" 
                                           Color="White"/>
@@ -250,7 +250,7 @@
                             </RotateTransform3D>
                         </Transform3DGroup>
                     </ModelVisual3D.Transform>
-                </model:GraphField3D>
+                </model:GraphField3DContainer>
             </Viewport3D.Children>
         </Viewport3D>
         <StatusBar Grid.Row="3">
