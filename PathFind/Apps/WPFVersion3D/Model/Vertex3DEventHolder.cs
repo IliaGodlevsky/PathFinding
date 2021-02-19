@@ -1,14 +1,15 @@
 ﻿using GraphLib.Base;
 using GraphLib.Interface;
 using System;
+using System.Windows.Input;
 
 namespace WPFVersion3D.Model
 {
-    public class Vertex3DEventHolder : BaseVertexEventHolder
+    internal class Vertex3DEventHolder : BaseVertexEventHolder
     {
         protected override int GetWheelDelta(EventArgs e)
         {
-            return 0;
+            return (e as MouseWheelEventArgs).Delta;
         }
 
         protected override void SubscribeToEvents(IVertex vertex)

@@ -1,4 +1,4 @@
-﻿using GraphLib.Base;
+﻿using GraphLib.Base.EndPoints;
 using GraphLib.Interface;
 
 namespace WPFVersion3D.Model

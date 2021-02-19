@@ -5,6 +5,7 @@ using ConsoleVersion.View;
 using ConsoleVersion.View.Interface;
 using ConsoleVersion.ViewModel;
 using GraphLib.Base;
+using GraphLib.Base.EndPoints;
 using GraphLib.Interface;
 using GraphLib.Realizations.Factories;
 using GraphLib.Serialization;

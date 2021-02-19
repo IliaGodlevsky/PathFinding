@@ -13,8 +13,7 @@ namespace WPFVersion.Model.EventHolder
         }
 
         protected override void SubscribeToEvents(IVertex vertex)
-        {
-            
+        {            
             (vertex as Vertex).MouseRightButtonDown += Reverse;
             (vertex as Vertex).MouseWheel += ChangeVertexCost;
         }

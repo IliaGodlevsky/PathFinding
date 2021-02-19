@@ -8,7 +8,6 @@ namespace GraphLib.Common
     /// <summary>
     /// A class that finds the neighbors of the specified coordinate
     /// </summary>
-    /// <typeparam name="TCoordinate"></typeparam>
     public sealed class CoordinateEnvironment
     {
         public CoordinateEnvironment(ICoordinate coordinate)

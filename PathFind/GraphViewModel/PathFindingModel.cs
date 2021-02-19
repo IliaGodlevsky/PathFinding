@@ -4,7 +4,7 @@ using Algorithm.Interfaces;
 using Algorithm.Realizations;
 using Common;
 using Common.Extensions;
-using GraphLib.Base;
+using GraphLib.Base.EndPoints;
 using GraphLib.Interface;
 using GraphViewModel.Interfaces;
 using GraphViewModel.Resources;

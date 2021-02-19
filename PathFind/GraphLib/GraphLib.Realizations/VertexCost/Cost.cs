@@ -1,5 +1,4 @@
-﻿using Common;
-using GraphLib.Interface;
+﻿using GraphLib.Base;
 using GraphLib.Realizations.Interfaces;
 using GraphLib.Realizations.VertexCost.CostStates;
 using System;
@@ -10,7 +9,7 @@ namespace GraphLib.Realizations.VertexCost
     /// Represents a cost of vertex
     /// </summary>
     [Serializable]
-    public sealed class Cost : IVertexCost
+    public sealed class Cost : BaseVertexCost
     {
         /// <summary>
         /// Creates a new instance of 
@@ -19,10 +18,8 @@ namespace GraphLib.Realizations.VertexCost
         /// Weighted cost is set to the same value
         /// </summary>
         /// <param name="startCost"></param>
-        public Cost(int startCost)
+        public Cost(int startCost) : base(startCost)
         {
-            startCost = CostRange.ReturnInRange(startCost);
-            CurrentCost = startCost;
             WeightedCost = startCost;
             Status = new WeightedState();
             UnweightedCostView = string.Empty;
@@ -39,15 +36,6 @@ namespace GraphLib.Realizations.VertexCost
         {
 
         }
-
-        static Cost()
-        {
-            CostRange = new ValueRange(9, 1);
-        }
-
-        public static ValueRange CostRange { get; set; }
-
-        public int CurrentCost { get; private set; }
 
         /// <summary>
         /// A string representing unweighted 
@@ -77,23 +65,6 @@ namespace GraphLib.Realizations.VertexCost
         {
             CurrentCost = UnweightedCost;
             Status = new UnweightedState();
-        }
-
-        public override bool Equals(object obj)
-        {
-            if (obj is IVertexCost cost)
-            {
-                return cost.CurrentCost == CurrentCost;
-            }
-
-            var message = "An error was occured while comparing\n";
-            message += $"an instance of {nameof(Cost)} and {obj.GetType().Name}\n";
-            throw new ArgumentException(message, nameof(obj));
-        }
-
-        public override int GetHashCode()
-        {
-            return CurrentCost.GetHashCode();
         }
 
         /// <summary>

@@ -149,7 +149,7 @@ namespace WPFVersion.ViewModel
 
         private bool CanExecuteStartFindPathCommand(object param)
         {
-            return EndPoints.HasEndPointsSet();
+            return EndPoints.HasEndPointsSet;
         }
 
         private void ExecuteLoadGraphCommand(object param)

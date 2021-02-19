@@ -1,4 +1,4 @@
-﻿using GraphLib.Base;
+﻿using GraphLib.Base.EndPoints;
 using GraphLib.Interface;
 using System;
 using System.Windows.Forms;
@@ -12,7 +12,7 @@ namespace WindowsFormsVersion.Model
             (vertex as Vertex).MouseClick += SetEndPoints;
         }
 
-        public override void SetEndPoints(object sender, EventArgs e)
+        protected override void SetEndPoints(object sender, EventArgs e)
         {
             if ((e as MouseEventArgs).Button == MouseButtons.Left)
             {

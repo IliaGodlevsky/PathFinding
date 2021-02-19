@@ -157,7 +157,7 @@ namespace WindowsFormsVersion.ViewModel
 
         private bool CanStartPathFinding()
         {
-            return EndPoints.HasEndPointsSet();
+            return EndPoints.HasEndPointsSet;
         }
 
         protected override string GetAlgorithmsLoadPath()

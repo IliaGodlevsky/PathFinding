@@ -1,30 +1,19 @@
-﻿using GraphLib.Interface;
+﻿using GraphLib.Base;
 using System;
 
 namespace GraphLib.Serialization.Tests.Objects
 {
     [Serializable]
-    internal class TestCost : IVertexCost
+    internal class TestCost : BaseVertexCost
     {
-        public TestCost(int cost = 1)
+        public TestCost(int cost = 1) : base(cost)
         {
-            CurrentCost = cost;
+
         }
 
-        public override bool Equals(object obj)
+        public TestCost() : base()
         {
-            if (obj is IVertexCost cost)
-            {
-                return cost.CurrentCost == CurrentCost;
-            }
-            throw new Exception();
-        }
 
-        public override int GetHashCode()
-        {
-            return CurrentCost.GetHashCode();
         }
-
-        public int CurrentCost { get; }
     }
 }

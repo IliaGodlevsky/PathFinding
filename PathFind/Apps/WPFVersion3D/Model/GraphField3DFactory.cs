@@ -5,7 +5,7 @@ using GraphLib.Realizations;
 
 namespace WPFVersion3D.Model
 {
-    public class GraphField3DFactory : BaseGraphFieldFactory
+    internal class GraphField3DFactory : BaseGraphFieldFactory
     {
         public override IGraphField CreateGraphField(IGraph graph)
         {

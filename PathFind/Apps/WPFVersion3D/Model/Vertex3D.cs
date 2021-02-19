@@ -10,7 +10,7 @@ using WPFVersion3D.Factories;
 
 namespace WPFVersion3D.Model
 {
-    public class Vertex3D : UIElement3D, IVertex, IMarkableVertex
+    internal class Vertex3D : UIElement3D, IVertex, IMarkableVertex
     {
         public Vertex3D()
         {

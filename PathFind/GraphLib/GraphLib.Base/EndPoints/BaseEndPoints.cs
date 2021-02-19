@@ -1,20 +1,29 @@
-﻿using GraphLib.Common.NullObjects;
+﻿using Common.Extensions;
+using GraphLib.Common.NullObjects;
 using GraphLib.Extensions;
 using GraphLib.Interface;
 using System;
 using System.Linq;
 
-namespace GraphLib.Base
+namespace GraphLib.Base.EndPoints
 {
     public abstract class BaseEndPoints : IEndPoints
     {
         public BaseEndPoints()
         {
-            Start = new DefaultVertex();
-            End = new DefaultVertex();
+            Reset();
+            commands = new Command[]
+            {
+                new Command(vertex => Start.IsObstacle,      ChangeStartVertex),
+                new Command(vertex => Start.IsEqual(vertex), UnsetStartVertex),
+                new Command(vertex => Start.IsDefault,       SetStartVertex),
+                new Command(vertex => End.IsObstacle,        ChangeEndVertex),
+                new Command(vertex => End.IsEqual(vertex),   UnsetEndVertex),
+                new Command(vertex => CanSetEndVertex,       SetEndVertex)
+            };
         }
 
-        public BaseEndPoints(IVertex start, IVertex end)
+        public BaseEndPoints(IVertex start, IVertex end) : this()
         {
             Start = start;
             End = end;
@@ -26,12 +35,12 @@ namespace GraphLib.Base
 
         public void SubscribeToEvents(IGraph graph)
         {
-            graph.Vertices.AsParallel().ForAll(SubscribeVertex);
+            graph.Vertices.ForEach(SubscribeVertex);
         }
 
         public void UnsubscribeFromEvents(IGraph graph)
         {
-            graph.Vertices.AsParallel().ForAll(UnsubscribeVertex);
+            graph.Vertices.ForEach(UnsubscribeVertex);
         }
 
         public bool IsEndPoint(IVertex vertex)
@@ -39,26 +48,14 @@ namespace GraphLib.Base
             return vertex.IsEqual(Start) || vertex.IsEqual(End);
         }
 
-        public virtual void SetEndPoints(object sender, EventArgs e)
+        protected virtual void SetEndPoints(object sender, EventArgs e)
         {
             if (sender is IVertex vertex)
             {
-                if (vertex.IsEqual(Start))
-                {
-                    UnsetStartVertex(vertex);
-                }
-                else if (vertex.IsEqual(End))
-                {
-                    UnsetEndVertex(vertex);
-                }
-                else if (Start.IsDefault)
-                {
-                    SetStartVertex(vertex);
-                }
-                else if (!Start.IsDefault && End.IsDefault)
-                {
-                    SetEndVertex(vertex);
-                }
+                commands
+                    .FirstOrDefault(command => command.CanExecute(vertex) == true)
+                    ?.Execute(vertex);
+
             }
         }
 
@@ -73,13 +70,12 @@ namespace GraphLib.Base
             End = new DefaultVertex();
         }
 
-        public bool HasEndPointsSet()
-        {
-            return !Start.IsDefault && !End.IsDefault;
-        }
+        public bool HasEndPointsSet => !Start.IsDefault && !End.IsDefault && !Start.IsObstacle && !End.IsObstacle;
 
         protected abstract void SubscribeVertex(IVertex vertex);
         protected abstract void UnsubscribeVertex(IVertex vertex);
+
+        protected bool CanSetEndVertex => !Start.IsDefault && End.IsDefault;
 
         protected virtual void SetStartVertex(IVertex vertex)
         {
@@ -110,5 +106,19 @@ namespace GraphLib.Base
             End = new DefaultVertex();
             (vertex as IMarkableVertex)?.MarkAsSimpleVertex();
         }
+
+        protected virtual void ChangeStartVertex(IVertex vertex)
+        {
+            Start = new DefaultVertex();
+            SetStartVertex(vertex);
+        }
+
+        protected virtual void ChangeEndVertex(IVertex vertex)
+        {
+            End = new DefaultVertex();
+            SetEndVertex(vertex);
+        }
+
+        private readonly Command[] commands;
     }
 }
