@@ -53,6 +53,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Attributes\FilterableAttribute.cs" />
+    <Compile Include="Command.cs" />
     <Compile Include="Interfaces\IIntermit.cs" />
     <Compile Include="Interfaces\IViewModel.cs" />
     <Compile Include="Extensions\EnumExtensions.cs" />

@@ -1,12 +1,24 @@
-﻿using GraphLib.Extensions;
+﻿using Common;
+using Common.Interfaces;
+using GraphLib.Extensions;
 using GraphLib.Interface;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace GraphLib.Base
 {
     public abstract class BaseVertexEventHolder : IVertexEventHolder
     {
+        public BaseVertexEventHolder()
+        {
+            commands = new Command<IVertex>[]
+            {
+                new Command<IVertex>(vertex => vertex.IsObstacle,  MakeVertex),
+                new Command<IVertex>(vertex => !vertex.IsObstacle, MakeObstacle)
+            };
+        }
+
         public IVertexCostFactory CostFactory { get; set; }
 
         public IGraph Graph { get; set; }
@@ -28,14 +40,7 @@ namespace GraphLib.Base
         {
             if (sender is IVertex vertex)
             {
-                if (vertex.IsObstacle)
-                {
-                    MakeVertex(vertex);
-                }
-                else
-                {
-                    MakeObstacle(vertex);
-                }
+                Command<IVertex>.ExecuteFirstExecutable(commands, vertex);
             }
         }
 
@@ -76,5 +81,7 @@ namespace GraphLib.Base
             vertex.SetNeighbours(Graph);
             vertex.ConnectWithNeighbours();
         }
+
+        private readonly IEnumerable<Command<IVertex>> commands;
     }
 }

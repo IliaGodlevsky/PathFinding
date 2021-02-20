@@ -42,12 +42,11 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="BaseCoordinate.cs" />
-    <Compile Include="EndPoints\BaseEndPoints.cs" />
+    <Compile Include="BaseEndPoints.cs" />
     <Compile Include="BaseGraph.cs" />
     <Compile Include="BaseGraphFieldFactory.cs" />
     <Compile Include="BaseVertexCost.cs" />
     <Compile Include="BaseVertexEventHolder.cs" />
-    <Compile Include="EndPoints\Command.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

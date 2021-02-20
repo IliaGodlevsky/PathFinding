@@ -1,4 +1,4 @@
-﻿using GraphLib.Base.EndPoints;
+﻿using GraphLib.Base;
 using GraphLib.Interface;
 using System;
 using System.Windows.Forms;
