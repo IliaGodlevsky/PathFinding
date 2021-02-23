@@ -1,4 +1,5 @@
-﻿using GraphLib.Base;
+﻿using Common.Extensions;
+using GraphLib.Base;
 using GraphLib.Interface;
 using System;
 using System.Windows.Forms;
@@ -23,7 +24,7 @@ namespace WindowsFormsVersion.EventHolder
 
         protected override void SubscribeToEvents(IVertex vertex)
         {
-            if (vertex.IsDefault)
+            if (vertex.IsDefault())
                 return;
 
             (vertex as Vertex).MouseClick += Reverse;
@@ -32,7 +33,7 @@ namespace WindowsFormsVersion.EventHolder
 
         protected override void UnsubscribeFromEvents(IVertex vertex)
         {
-            if (vertex.IsDefault)
+            if (vertex.IsDefault())
                 return;
 
             (vertex as Vertex).MouseClick -= Reverse;

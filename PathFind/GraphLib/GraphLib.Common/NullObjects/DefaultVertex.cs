@@ -1,8 +1,10 @@
-﻿using GraphLib.Interface;
+﻿using Common.Attributes;
+using GraphLib.Interface;
 using System.Collections.Generic;
 
 namespace GraphLib.Common.NullObjects
 {
+    [Default]
     public sealed class DefaultVertex : IVertex
     {
         public bool IsObstacle { get => true; set { } }

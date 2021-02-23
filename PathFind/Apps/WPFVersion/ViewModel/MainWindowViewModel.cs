@@ -1,5 +1,6 @@
 ﻿using Algorithm.Realizations;
 using Common;
+using Common.Extensions;
 using Common.Interfaces;
 using GraphLib.Base;
 using GraphLib.Extensions;
@@ -174,7 +175,7 @@ namespace WPFVersion.ViewModel
 
         private bool CanExecuteGraphOperation(object param)
         {
-            return !Graph.IsDefault;
+            return !Graph.IsDefault();
         }
 
         private void OnPathNotFound(string message)

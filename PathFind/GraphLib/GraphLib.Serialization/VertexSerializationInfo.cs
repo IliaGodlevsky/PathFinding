@@ -9,8 +9,8 @@ namespace GraphLib.Serialization
     {
         public VertexSerializationInfo(IVertex vertex)
         {
-            Cost = vertex.Cost.DeepCopy();
-            Position = vertex.Position.DeepCopy();
+            Cost = vertex.Cost.TryCopyDeep();
+            Position = vertex.Position.TryCopyDeep();
             IsObstacle = vertex.IsObstacle;
         }
 

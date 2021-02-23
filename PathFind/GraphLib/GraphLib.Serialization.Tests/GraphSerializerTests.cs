@@ -36,9 +36,9 @@ namespace GraphLib.Serialization.Tests
                 costFactory);
         }
 
-        [TestCase(15, new int[] { 13, 14, 15 })]
-        [TestCase(22, new int[] { 67, 32 })]
-        [TestCase(66, new int[] { 17, 18, 11, 13 })]
+        [TestCase(15, new int[] { 11, 9, 10 })]
+        [TestCase(22, new int[] { 25, 25 })]
+        [TestCase(66, new int[] { 4, 3, 7, 5 })]
         public void SaveGraph_LoadGraph_ReturnsEqualGraph(int obstaclePercent, int[] graphParams)
         {
             IGraph deserialized = new NullGraph();

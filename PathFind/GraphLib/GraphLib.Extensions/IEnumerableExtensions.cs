@@ -95,16 +95,6 @@ namespace GraphLib.Extensions
             return collection.Any() ? collection.Aggregate(func) : default;
         }
 
-        internal static IEnumerable<T> ForEachIndex<T>(this IEnumerable<T> collection, Action<int> action)
-        {
-            for (int i = 0; i < collection.Count(); i++)
-            {
-                action(i);
-            }
-
-            return collection;
-        }
-
         private static IEnumerable<T> Select<T>(this IEnumerable<T> collection, Func<IEnumerable<T>, int, T> func)
         {           
             for (int i = 0; i < collection.Count(); i++)

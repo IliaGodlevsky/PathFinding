@@ -24,17 +24,18 @@ namespace Algorithm.Realizations
             Algorithms = new Dictionary<string, IAlgorithm>();
         }
 
-        public static void LoadAlgorithms(string path, string searchPattern = "*.dll")
+        public static void LoadAlgorithms(string path, string searchPattern = "*.dll",
+            SearchOption searchOption = SearchOption.AllDirectories)
         {
             if (Directory.Exists(path))
             {
                 Algorithms = Directory
-                    .GetFiles(path, searchPattern, SearchOption.AllDirectories)
+                    .GetFiles(path, searchPattern, searchOption)
                     .Select(Assembly.LoadFrom)
-                    .SelectMany(GetAlgorithmTypes)
+                    .SelectMany(AlgorithmTypes)
                     .DistinctBy(Name)
                     .ForEach(RegisterConstructor)
-                    .ToDictionary(GetAlgorithmDescription, GetInstance);
+                    .ToDictionary(Description, Instance);
             }
         }
 
@@ -55,7 +56,7 @@ namespace Algorithm.Realizations
 
         private static IDictionary<string, IAlgorithm> Algorithms { get; set; }
 
-        private static IAlgorithm GetInstance(Type algorithmType)
+        private static IAlgorithm Instance(Type algorithmType)
         {
             return CreateInstance<IAlgorithm>(algorithmType);
         }
@@ -66,13 +67,13 @@ namespace Algorithm.Realizations
             RegisterConstructor<IAlgorithm>(ctor);
         }
 
-        private static string GetAlgorithmDescription(Type algorithmType)
+        private static string Description(Type algorithmType)
         {
             var attribute = algorithmType.GetAttribute<DescriptionAttribute>();
             return attribute?.Description ?? algorithmType.Name;
         }
 
-        private static IEnumerable<Type> GetAlgorithmTypes(Assembly assembly)
+        private static IEnumerable<Type> AlgorithmTypes(Assembly assembly)
         {
             return assembly.GetTypes().Where(IsValidAlgorithm);
         }

@@ -30,7 +30,8 @@ namespace Activating
         /// lambda expression, from constructor <paramref name="ctor"/>, that can 
         /// create an instance, that can be assigned to variable 
         /// of <typeparamref name="TReturnType"/> type</returns>
-        public static ActivatorHandler<TReturnType> CreateActivator<TReturnType>(ConstructorInfo ctor) where TReturnType : class
+        public static ActivatorHandler<TReturnType> CreateActivator<TReturnType>(ConstructorInfo ctor) 
+            where TReturnType : class
         {
             var ctorParameters = ctor.GetParameters();
             var parameter = Parameter(typeof(object[]), "args");
@@ -41,7 +42,8 @@ namespace Activating
             return (ActivatorHandler<TReturnType>)lambda.Compile();
         }
 
-        public static void RegisterConstructors<TReturnType>(Type type) where TReturnType : class
+        public static void RegisterConstructors<TReturnType>(Type type) 
+            where TReturnType : class
         {
             foreach (var ctor in type.GetConstructors())
             {
@@ -58,7 +60,8 @@ namespace Activating
         /// declaring type is not assignable to <typeparamref name="TReturnType"/></returns>
         /// <exception cref="ArgumentNullException">Thrown when ctor is null</exception>
         /// <exception cref="ArgumentException">Thrown when ctor declaring type is abstract</exception>
-        public static bool RegisterConstructor<TReturnType>(ConstructorInfo ctor) where TReturnType : class
+        public static bool RegisterConstructor<TReturnType>(ConstructorInfo ctor) 
+            where TReturnType : class
         {
             if (ctor == null)
             {
@@ -105,7 +108,9 @@ namespace Activating
             throw new KeyNotFoundException("For this type activator doesn't have any constructor");
         }
 
-        public static TResultType CreateInstance<TResultType>(Type type, params object[] arguments) where TResultType : class
+        public static TResultType CreateInstance<TResultType>(Type type, 
+            params object[] arguments) 
+            where TResultType : class
         {
             var activator = (ActivatorHandler<TResultType>)GetRegisteredActivator(type, arguments);
             return activator(arguments);
@@ -136,7 +141,8 @@ namespace Activating
             return false;
         }
 
-        private static bool AddActivatorIfDoesntExist(Type typeToActivate, Type[] ctorParams, Delegate activator)
+        private static bool AddActivatorIfDoesntExist(Type typeToActivate, 
+            Type[] ctorParams, Delegate activator)
         {
             if (!activators[typeToActivate].TryGetValue(ctorParams, out _))
             {

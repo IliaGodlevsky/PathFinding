@@ -42,7 +42,8 @@ namespace ConsoleVersion.ViewModel
                 var algorithmKeys = AlgorithmsDescriptions;
                 AlgorithmKey = algorithmKeys.ElementAt(algorithmKeyIndex);
 
-                DelayTime = Input.InputNumber(Resources.DelayTimeInputMsg, Constants.AlgorithmDelayTimeValueRange);
+                DelayTime = Input.InputNumber(Resources.DelayTimeInputMsg,
+                    Constants.AlgorithmDelayTimeValueRange);
 
                 base.FindPath();
 

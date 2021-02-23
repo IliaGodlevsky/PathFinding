@@ -39,15 +39,15 @@ namespace Common.Extensions
         }
 
         /// <summary>
-        /// Returns random element of <paramref name="collection"/>
+        /// Returns random element of <paramref name="self"/>
         /// </summary>
         /// <typeparam name="TSource"></typeparam>
-        /// <param name="collection"></param>
-        /// <returns>Random element of <paramref name="collection"/></returns>
-        public static TSource GetRandomElement<TSource>(this IEnumerable<TSource> collection)
+        /// <param name="self"></param>
+        /// <returns>Random element of <paramref name="self"/></returns>
+        public static TSource GetRandomElement<TSource>(this IEnumerable<TSource> self)
         {
-            var randomIndex = rand.Next(collection.Count());
-            return collection.ElementAt(randomIndex);
+            var index = rand.Next(self.Count());
+            return self.ElementAt(index);
         }
 
         /// <summary>
@@ -59,7 +59,8 @@ namespace Common.Extensions
         /// <param name="action"></param>
         /// <returns>The same <paramref name="collection"/> with elements 
         /// to which <paramref name="action"/> was applied</returns>
-        public static IEnumerable<T> ForEach<T>(this IEnumerable<T> collection, Action<T> action)
+        public static IEnumerable<T> ForEach<T>(this IEnumerable<T> collection, 
+            Action<T> action)
         {
             foreach (var item in collection)
             {
@@ -69,14 +70,23 @@ namespace Common.Extensions
             return collection;
         }
 
-        public static IEnumerable<T> ForEach<T>(this IEnumerable<T> collection, Action<T, int> action)
+        /// <summary>
+        /// Applies delegate <paramref name="action"/> 
+        /// to each element of <paramref name="collection"/>
+        /// adding array index
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="self"></param>
+        /// <param name="action"></param>
+        /// <returns></returns>
+        public static IEnumerable<T> ForEach<T>(this IEnumerable<T> self, 
+            Action<T, int> action)
         {
-            for (int i = 0; i < collection.Count(); i++)
-            {
-                action(collection.ElementAt(i), i);
-            }
+            Enumerable
+                .Range(0, self.Count())
+                .ForEach(i => action(self.ElementAt(i), i));
 
-            return collection;
+            return self;
         }
 
         /// <summary>
@@ -103,33 +113,35 @@ namespace Common.Extensions
             return collection.Any() ? collection.Max() : default;
         }
 
-        public static bool Match<T>(this IEnumerable<T> collection, IEnumerable<T> second, Func<T, T, bool> comparer)
+        /// <summary>
+        /// Applies <paramref name="predicate"/> to corresponding 
+        /// elements of sequencies and returns true if <paramref name="predicate"/> 
+        /// is true for all pairs of elements and false if not
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="self"></param>
+        /// <param name="second"></param>
+        /// <param name="predicate"></param>
+        /// <returns>true if <paramref name="predicate"/> is true 
+        /// for each corresponding elements in two sequencies and false if not</returns>
+        public static bool Match<T>(this IEnumerable<T> self, 
+            IEnumerable<T> second, Func<T, T, bool> predicate)
         {
             #region InvariantsObservance
-            if (collection.Count() != second.Count())
+            if (self.Count() != second.Count())
             {
                 return false;
             }
 
-            if (!collection.Any() && !second.Any())
+            if (!self.Any() && !second.Any())
             {
                 return true;
             }
             #endregion
 
-            int limit = second.Count();
-
-            for (int i = 0; i < limit; i++)
-            {
-                T a = collection.ElementAt(i);
-                T b = second.ElementAt(i);
-                if (!comparer(a, b))
-                {
-                    return false;
-                }
-            }
-
-            return true;
+            return Enumerable
+                .Range(0, second.Count())
+                .All(i => predicate(self.ElementAt(i), second.ElementAt(i)));
         }
     }
 }

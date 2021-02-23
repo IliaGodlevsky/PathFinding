@@ -1,4 +1,5 @@
 ﻿using Common;
+using Common.Extensions;
 using GraphLib.Base;
 using GraphLib.Common.NullObjects;
 using GraphLib.Extensions;
@@ -84,7 +85,7 @@ namespace GraphViewModel
 
         public void ConnectNewGraph(IGraph graph)
         {
-            if (!graph.IsDefault)
+            if (!graph.IsDefault())
             {
                 EndPoints.UnsubscribeFromEvents(Graph);
                 EndPoints.Reset();

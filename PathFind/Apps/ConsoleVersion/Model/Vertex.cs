@@ -7,7 +7,6 @@ using GraphLib.Serialization;
 using GraphLib.Serialization.Extensions;
 using System;
 using System.Collections.Generic;
-using System.Configuration;
 using System.Drawing;
 using Console = Colorful.Console;
 
@@ -62,8 +61,6 @@ namespace ConsoleVersion.Model
         public IList<IVertex> Neighbours { get; set; }
 
         public ICoordinate Position { get; set; }
-
-        public bool IsDefault => false;
 
         public void ChangeCost()
         {

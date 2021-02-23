@@ -78,8 +78,6 @@ namespace WPFVersion.Model
             }
         }
 
-        public bool IsDefault => false;
-
         public void MarkAsEnd()
         {
             Dispatcher.Invoke(() => Background = EndVertexColor);

@@ -12,8 +12,8 @@ namespace GraphLib.Serialization.Extensions
 
         public static void Initialize(this IVertex vertex, VertexSerializationInfo info)
         {
-            vertex.Position = info.Position.DeepCopy();
-            vertex.Cost = info.Cost.DeepCopy();
+            vertex.Position = info.Position.TryCopyDeep();
+            vertex.Cost = info.Cost.TryCopyDeep();
             vertex.IsObstacle = info.IsObstacle;
         }
     }

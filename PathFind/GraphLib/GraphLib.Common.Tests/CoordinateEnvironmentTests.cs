@@ -28,7 +28,7 @@ namespace GraphLib.Common.Tests
             coordinateMock.Setup(coordinate => coordinate.CoordinatesValues).Returns(coordinateValues);
             var coordinateEnvironment = new CoordinateEnvironment(coordinateMock.Object);
 
-            var environment = coordinateEnvironment.GetEnvironment();
+            var environment = coordinateEnvironment.Environment;
 
             return environment.Count();
         }
@@ -45,7 +45,7 @@ namespace GraphLib.Common.Tests
             coordinateMock.Setup(coordinate => coordinate.CoordinatesValues).Returns(coordinateValues);
             var coordinateEnvironment = new CoordinateEnvironment(coordinateMock.Object);
 
-            var environment = coordinateEnvironment.GetEnvironment();
+            var environment = coordinateEnvironment.Environment;
             bool hasSelf = environment.Any(values => values.SequenceEqual(coordinateValues));
 
             Assert.IsFalse(hasSelf);
@@ -63,7 +63,7 @@ namespace GraphLib.Common.Tests
             coordinateMock.Setup(coordinate => coordinate.CoordinatesValues).Returns(coordinateValues);
             var coordinateEnvironment = new CoordinateEnvironment(coordinateMock.Object);
 
-            var environment = coordinateEnvironment.GetEnvironment();
+            var environment = coordinateEnvironment.Environment;
 
             Assert.IsTrue(environment.Select(CreateCoordinateMock).Distinct().Count() == environment.Count());
         }

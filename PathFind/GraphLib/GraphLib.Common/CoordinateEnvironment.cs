@@ -1,5 +1,6 @@
 ﻿using Common.Extensions;
 using GraphLib.Interface;
+using GraphLib.Interfaces;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -8,7 +9,7 @@ namespace GraphLib.Common
     /// <summary>
     /// A class that finds the neighbors of the specified coordinate
     /// </summary>
-    public sealed class CoordinateEnvironment
+    public sealed class CoordinateEnvironment : IEnvironment
     {
         public CoordinateEnvironment(ICoordinate coordinate)
         {
@@ -23,10 +24,13 @@ namespace GraphLib.Common
         /// Returns an array of the coordinate neighbours
         /// </summary>
         /// <returns>An array of the coordinate neighbours</returns>
-        public IEnumerable<int[]> GetEnvironment()
+        public IEnumerable<int[]> Environment
         {
-            FormEnvironment();
-            return environment;
+            get
+            {
+                FormEnvironment();
+                return environment;
+            }
         }
 
         // Recursive method

@@ -1,5 +1,6 @@
 ﻿using Algorithm.Realizations;
 using Common;
+using Common.Extensions;
 using Common.Interfaces;
 using GraphLib.Base;
 using GraphLib.Interface;
@@ -181,7 +182,7 @@ namespace WPFVersion3D.ViewModel
 
         private bool CanExecuteGraphOperation(object param)
         {
-            return !Graph.IsDefault;
+            return !Graph.IsDefault();
         }
 
         private void OnExceptionCaught(Exception ex)

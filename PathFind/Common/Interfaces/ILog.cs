@@ -4,7 +4,16 @@ namespace Common.Interfaces
 {
     public interface ILog
     {
-        void Log(Exception ex);
-        void Log(string format, params object[] paramters);
+        void Trace(string message);
+
+        void Warn(Exception ex, string message = null);
+
+        void Error(Exception ex, string message = null);
+
+        void Fatal(Exception ex, string message = null);
+
+        void Info(string message);
+
+        void Debug(string message);
     }
 }

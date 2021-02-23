@@ -30,8 +30,6 @@ namespace GraphLib.Base
 
         public IEnumerable<int> DimensionsSizes { get; private set; }
 
-        public bool IsDefault => false;
-
         public virtual IVertex this[IEnumerable<int> coordinateValues]
         {
             get => IsSuitableCoordinate(coordinateValues)

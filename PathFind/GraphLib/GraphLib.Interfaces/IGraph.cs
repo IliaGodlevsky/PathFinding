@@ -1,12 +1,11 @@
-﻿using Common.Interfaces;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 
 namespace GraphLib.Interface
 {
     /// <summary>
     /// 
     /// </summary>
-    public interface IGraph : IDefault
+    public interface IGraph
     {       
         IEnumerable<IVertex> Vertices { get; }
 

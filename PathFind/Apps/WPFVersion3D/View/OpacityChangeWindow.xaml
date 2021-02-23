@@ -3,13 +3,18 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:WPFVersion3D.View"
         xmlns:converter="clr-namespace:WPFVersion3D.Converters"
         mc:Ignorable="d"
         Title="OpacityChangeWindow"
         SizeToContent="WidthAndHeight">
     <Window.Resources>
         <converter:MaterialOpacityValueConverter x:Key="opacityConverter"></converter:MaterialOpacityValueConverter>
+        <Style x:Key="SliderStyle" TargetType="Slider">
+            <Setter Property="Margin" Value="5"/>
+            <Setter Property="Minimum" Value="0"/>
+            <Setter Property="Maximum" Value="1"/>
+            <Setter Property="MinWidth" Value="100"/>
+        </Style>
     </Window.Resources>
     <Grid>
         <Grid.ColumnDefinitions>
@@ -31,56 +36,41 @@
         <TextBlock Grid.Row="2" Margin="5" Text="Enqueued color opacity"></TextBlock>
         <TextBlock Grid.Row="3" Margin="5" Text="Path color opacity"></TextBlock>
         <TextBlock Grid.Row="4" Margin="5" Text="Simple vertex color opacity"></TextBlock>
-        
+
         <Slider Value="{Binding Path=ObstacleColorOpacity, 
             Converter={StaticResource opacityConverter}}" 
-                Margin="5" 
+                Style="{StaticResource SliderStyle}"              
                 x:Name="obstacleColorOpacitySlider" 
-                Grid.Column="1" 
-                Minimum="0" 
-                Maximum="1" 
-                MinWidth="100"></Slider>
-        
+                Grid.Column="1"/>
+
         <Slider Value="{Binding Path=VisitedVertexColorOpacity, 
             Converter={StaticResource opacityConverter}}" 
-                Margin="5" 
+                Style="{StaticResource SliderStyle}"
                 x:Name="visitedVertexColorOpacitySlider" 
                 Grid.Column="1" 
-                Grid.Row="1" 
-                Minimum="0" 
-                Maximum="1" 
-                MinWidth="100"></Slider>
-        
+                Grid.Row="1"/>
+
         <Slider Value="{Binding Path=EnqueuedVertexColorOpacity, 
             Converter={StaticResource opacityConverter}}"
-                Margin="5" 
+                Style="{StaticResource SliderStyle}"
                 x:Name="enqueuedVertexColorOpacitySlider" 
                 Grid.Column="1" 
-                Grid.Row="2" 
-                Minimum="0" 
-                Maximum="1" 
-                MinWidth="100"></Slider>
-        
+                Grid.Row="2"/>
+
         <Slider Value="{Binding Path=PathVertexColorOpacity, 
             Converter={StaticResource opacityConverter}}" 
-                Margin="5" 
+                Style="{StaticResource SliderStyle}"               
                 x:Name="pathVertexColorOpacitySlider" 
                 Grid.Column="1" 
-                Grid.Row="3" 
-                Minimum="0" 
-                Maximum="1" 
-                MinWidth="100"></Slider>
-        
+                Grid.Row="3"/>
+
         <Slider Value="{Binding Path=SimpleVertexColorOpacity, 
             Converter={StaticResource opacityConverter}}" 
-                Margin="5" 
+                Style="{StaticResource SliderStyle}"
                 x:Name="simpleVertexColorOpacitySlider"
                 Grid.Column="1"
-                Grid.Row="4" 
-                Minimum="0" 
-                Maximum="1" 
-                MinWidth="100"></Slider>
-        
+                Grid.Row="4"/>
+
         <TextBox Margin="5" 
                  MinWidth="45" 
                  Grid.Column="2" 

@@ -1,5 +1,6 @@
 ﻿using Algorithm.Realizations;
 using Common;
+using Common.Extensions;
 using Common.Interfaces;
 using GraphLib.Base;
 using GraphLib.Extensions;
@@ -112,7 +113,7 @@ namespace WindowsFormsVersion.ViewModel
 
         public void SaveGraph(object sender, EventArgs e)
         {
-            if (!Graph.IsDefault)
+            if (!Graph.IsDefault())
             {
                 base.SaveGraph();
             }

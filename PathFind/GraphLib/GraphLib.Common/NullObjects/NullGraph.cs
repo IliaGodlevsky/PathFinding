@@ -1,4 +1,5 @@
-﻿using GraphLib.Interface;
+﻿using Common.Attributes;
+using GraphLib.Interface;
 using System.Collections.Generic;
 
 namespace GraphLib.Common.NullObjects
@@ -6,6 +7,7 @@ namespace GraphLib.Common.NullObjects
     /// <summary>
     /// Respresents an empty graph, without any vertices
     /// </summary>
+    [Default]
     public sealed class NullGraph : IGraph
     {
         public NullGraph()
@@ -20,8 +22,6 @@ namespace GraphLib.Common.NullObjects
         }
 
         public IEnumerable<int> DimensionsSizes => new int[] { };
-
-        public bool IsDefault => true;
 
         public IEnumerable<IVertex> Vertices => new DefaultVertex[] { };
 

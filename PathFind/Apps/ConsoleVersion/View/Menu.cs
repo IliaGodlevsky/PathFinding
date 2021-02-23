@@ -98,7 +98,7 @@ namespace ConsoleVersion.ViewModel
         private static int GetMenuItemPriority(MethodInfo method)
         {
             var attribute = method.GetAttribute<MenuItemAttribute>();
-            return attribute.Priority.GetValue<int>();
+            return attribute.Priority.Parse<int>();
         }
 
         private static string GetMenuItemHeader(MethodInfo method)

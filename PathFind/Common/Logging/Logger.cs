@@ -1,11 +1,12 @@
-﻿using NLog;
+﻿using Common.Interfaces;
+using NLog;
 using System;
 
 namespace Common
 {
-    public sealed class Logger
+    public sealed class Logger : ILog
     {
-        public static Logger Instance
+        public static ILog Instance
         {
             get
             {
@@ -61,6 +62,6 @@ namespace Common
         private readonly NLog.Logger debugLogger;
         private readonly NLog.Logger errorLogger;
 
-        private static Logger instance = null;
+        private static ILog instance = null;
     }
 }

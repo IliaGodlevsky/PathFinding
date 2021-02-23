@@ -1,4 +1,5 @@
-﻿using GraphLib.Interface;
+﻿using Common.Extensions;
+using GraphLib.Interface;
 using GraphLib.Realizations;
 using System.Windows;
 
@@ -8,7 +9,7 @@ namespace WPFVersion.Model
     {
         public static void Adjust(IGraph graph)
         {
-            if (!graph.IsDefault)
+            if (!graph.IsDefault())
             {
                 int distanceBetweenVertices = Constants.DistanceBetweenVertices + Constants.VertexSize;
                 var graph2d = graph as Graph2D;

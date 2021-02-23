@@ -27,8 +27,6 @@ namespace GraphLib.Base
 
         public IEnumerable<int> CoordinatesValues { get; }
 
-        public bool IsDefault => false;
-
         public override bool Equals(object pos)
         {
             if (pos is ICoordinate coordinate)

@@ -60,15 +60,15 @@ namespace GraphLib.Extensions
         public static void ToUnweighted(this IGraph graph)
         {
             graph.Vertices
-                .Where(vertex=>vertex is IWeightableVertex)
-                .ForEach(vertex => (vertex as IWeightableVertex).MakeUnweighted());
+                .OfType<IWeightableVertex>()
+                .ForEach(vertex => vertex.MakeUnweighted());
         }
 
         public static void ToWeighted(this IGraph graph)
         {
             graph.Vertices
-                .Where(vertex => vertex is IWeightableVertex)
-                .ForEach(vertex => (vertex as IWeightableVertex).MakeWeighted());
+                .OfType<IWeightableVertex>()
+                .ForEach(vertex => vertex.MakeWeighted());
         }
 
         public static void ConnectVertices(this IGraph self)

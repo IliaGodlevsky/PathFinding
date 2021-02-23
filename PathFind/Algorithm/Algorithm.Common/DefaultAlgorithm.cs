@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 
 namespace Algorithm.Common
 {
+    [Default]
     [Filterable]
     public sealed class DefaultAlgorithm : IAlgorithm
     {

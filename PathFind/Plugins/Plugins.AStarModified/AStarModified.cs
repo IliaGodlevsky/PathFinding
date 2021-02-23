@@ -1,5 +1,6 @@
 ﻿using Algorithm.Extensions;
 using Common;
+using Common.Extensions;
 using GraphLib.Common.NullObjects;
 using GraphLib.Extensions;
 using GraphLib.Interface;
@@ -47,7 +48,7 @@ namespace Plugins.AStarModified
                 verticesQueue = verticesQueue.Except(verticesToDelete);
 
                 IVertex next = base.NextVertex;
-                if (next.IsDefault)
+                if (next.IsDefault())
                 {
                     verticesQueue = deletedVertices;
                     next = base.NextVertex;

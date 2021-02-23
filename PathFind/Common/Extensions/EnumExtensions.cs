@@ -16,7 +16,7 @@ namespace Common.Extensions
         /// <exception cref="FormatException"></exception>
         /// <exception cref="OverflowException"></exception>
         /// <exception cref="ArgumentNullException"></exception>
-        public static TResultType GetValue<TResultType>(this Enum enumValue)
+        public static TResultType Parse<TResultType>(this Enum enumValue)
             where TResultType : struct, IConvertible
         {
             var value = Enum.Parse(enumValue.GetType(), enumValue.ToString());

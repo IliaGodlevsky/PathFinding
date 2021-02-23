@@ -1,6 +1,7 @@
 ﻿using Algorithm.Infrastructure.EventArguments;
 using Algorithm.Infrastructure.Handlers;
 using Algorithm.Interfaces;
+using Common.Extensions;
 using GraphLib.Common.NullObjects;
 using GraphLib.Extensions;
 using GraphLib.Interface;
@@ -58,7 +59,8 @@ namespace Algorithm.Base
 
         protected virtual bool IsDestination()
         {
-            return CurrentVertex.IsEqual(endPoints.End) || CurrentVertex.IsDefault;
+            return CurrentVertex.IsEqual(endPoints.End)
+                || CurrentVertex.IsDefault();
         }
 
         protected void RaiseOnAlgorithmStartedEvent(AlgorithmEventArgs e)
@@ -100,7 +102,7 @@ namespace Algorithm.Base
         protected virtual void CompletePathfinding()
         {
             var visitedCount = visitedVertices
-                .Count(item => !item.Value.IsDefault);
+                .Count(item => !item.Value.IsDefault());
             var args = new AlgorithmEventArgs(visitedCount);
             RaiseOnAlgorithmFinishedEvent(args);
         }

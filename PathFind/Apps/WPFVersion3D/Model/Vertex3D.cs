@@ -120,8 +120,6 @@ namespace WPFVersion3D.Model
 
         public ICoordinate Position { get; set; }
 
-        public bool IsDefault => false;
-
         public void MarkAsEnd()
         {
             Dispatcher.Invoke(() => Brush = EndVertexBrush);

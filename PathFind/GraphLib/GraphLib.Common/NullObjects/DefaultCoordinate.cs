@@ -1,4 +1,5 @@
-﻿using GraphLib.Interface;
+﻿using Common.Attributes;
+using GraphLib.Interface;
 using System;
 using System.Collections.Generic;
 
@@ -7,6 +8,7 @@ namespace GraphLib.Common.NullObjects
     /// <summary>
     /// An empty coordinate with default realization
     /// </summary>
+    [Default]
     [Serializable]
     public sealed class DefaultCoordinate : ICoordinate
     {

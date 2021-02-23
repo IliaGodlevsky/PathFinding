@@ -1,26 +1,14 @@
 ﻿using Common.Attributes;
 using System;
-using System.IO;
 using System.Reflection;
-using System.Runtime.Serialization.Formatters.Binary;
 
 namespace Common.Extensions
 {
-    public static class TypeExtensions
+    public static class MemberInfoExtensions
     {
-        public static bool IsFilterable(this Type self)
+        public static bool IsFilterable(this MemberInfo self)
         {
             return self.GetAttribute<FilterableAttribute>() != null;
-        }
-
-        public static bool IsSerializable<T>(this T self)
-        {
-            return self.GetType().GetAttribute<SerializableAttribute>() != null;
-        }
-
-        public static Assembly GetAssembly(this Type self)
-        {
-            return Assembly.Load(self.Assembly.GetName());
         }
 
         /// <summary>
@@ -33,7 +21,7 @@ namespace Common.Extensions
         /// <paramref name="parametres"/> of <see cref="null"/> if doesn't</returns>
         /// <exception cref="ArgumentNullException"></exception>
         /// <exception cref="ArgumentException"></exception>
-        public static ConstructorInfo GetConstructor(this Type self, params Type[] parametres)
+        public static ConstructorInfo GetConstructor(this MemberInfo self, params Type[] parametres)
         {
             return self.GetConstructor(parametres);
         }
@@ -74,35 +62,6 @@ namespace Common.Extensions
             {
                 del = null;
                 return false;
-            }
-        }
-
-        /// <summary>
-        /// Creates a deep copy of an object
-        /// </summary>
-        /// <typeparam name="T"></typeparam>
-        /// <param name="self"></param>
-        /// <returns>A deep copy (new instance) of an object</returns>
-        /// <exception cref="ArgumentException"></exception>
-        /// <exception cref="ArgumentNullException"></exception>
-        /// <remarks>The object <paramref name="self"/> points at 
-        /// must be marked with attribute <see cref="SerializableAttribute"/></remarks>
-        public static T DeepCopy<T>(this T self)
-        {
-            if (!(self is object))
-            {
-                throw new ArgumentNullException(nameof(self));
-            }
-
-            if (!self.IsSerializable())
-                throw new ArgumentException("Type must be serializable");
-
-            var formatter = new BinaryFormatter();
-            using (var stream = new MemoryStream())
-            {
-                formatter.Serialize(stream, self);
-                stream.Seek(0, SeekOrigin.Begin);
-                return (T)formatter.Deserialize(stream);
             }
         }
     }

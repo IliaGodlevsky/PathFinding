@@ -10,8 +10,8 @@
         SizeToContent="WidthAndHeight">
     
     <Window.Resources>
-        <converters:StringToRangedDoubleConverter x:Key="sliderValueConverter"></converters:StringToRangedDoubleConverter>
-        <converters:StringToRangedIntConverter x:Key="stringToIntCOnverter"></converters:StringToRangedIntConverter>
+        <converters:RangedDoubleToStringConverter x:Key="doubleToStringconverter"/>
+        <converters:RangedIntToStringConverter x:Key="intToStringConverter"/>
     </Window.Resources>
     
     <Grid>
@@ -44,7 +44,7 @@
         
         <TextBox Text = "{Binding ElementName = obstacleSlider, 
             Path = Value, 
-            Converter = {StaticResource sliderValueConverter}, 
+            Converter = {StaticResource doubleToStringconverter}, 
             ConverterParameter={x:Static range:Constants.ObstaclePercentValueRange}, 
             Mode = TwoWay, 
             UpdateSourceTrigger = PropertyChanged}"
@@ -59,7 +59,7 @@
         
         <TextBox Text ="{Binding Path = Width, 
             UpdateSourceTrigger=PropertyChanged, 
-            Converter={StaticResource stringToIntCOnverter}, 
+            Converter={StaticResource intToStringConverter}, 
             ConverterParameter={x:Static range:Constants.GraphWidthValueRange}}" 
                  Grid.Row="2" Grid.Column="1" Margin="5"></TextBox>
         
@@ -67,7 +67,7 @@
         
         <TextBox Text="{Binding Path = Length, 
             UpdateSourceTrigger=PropertyChanged,
-            Converter={StaticResource stringToIntCOnverter}, 
+            Converter={StaticResource intToStringConverter}, 
             ConverterParameter={x:Static range:Constants.GraphLengthValueRange}}"
                  Grid.Row="3" Grid.Column="1" Margin="5"></TextBox>
         
@@ -75,7 +75,7 @@
         
         <TextBox Text="{Binding Path = Height, 
             UpdateSourceTrigger=PropertyChanged,
-            Converter={StaticResource stringToIntCOnverter}, 
+            Converter={StaticResource intToStringConverter}, 
             ConverterParameter={x:Static range:Constants.GraphHeightValueRange}}"
                  Grid.Row="4" Grid.Column="1" Margin="5"></TextBox>
         

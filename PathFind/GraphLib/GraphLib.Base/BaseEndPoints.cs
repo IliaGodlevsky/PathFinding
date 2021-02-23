@@ -15,14 +15,12 @@ namespace GraphLib.Base
             Reset();
             commands = new Command<IVertex>[]
             {
-                new Command<IVertex>(vertex => Start.IsObstacle,      ChangeStartVertex),
                 new Command<IVertex>(vertex => Start.IsEqual(vertex), UnsetStartVertex),
-                new Command<IVertex>(vertex => Start.IsDefault,       SetStartVertex),
+                new Command<IVertex>(vertex => Start.IsDefault(),     SetStartVertex),
                 new Command<IVertex>(vertex => Start.IsIsolated(),    ReplaceStartVertex),
-                new Command<IVertex>(vertex => End.IsObstacle,        ChangeEndVertex),
                 new Command<IVertex>(vertex => End.IsEqual(vertex),   UnsetEndVertex),
                 new Command<IVertex>(vertex => CanSetEndVertex,       SetEndVertex),
-                new Command<IVertex>(vertex => End.IsIsolated(),      ReplaceEndVertex),
+                new Command<IVertex>(vertex => End.IsIsolated(),      ReplaceEndVertex)
             };
         }
 
@@ -32,15 +30,14 @@ namespace GraphLib.Base
             End = end;
         }
 
-        public bool HasEndPointsSet 
-            => !Start.IsDefault && !End.IsDefault && !Start.IsObstacle && !End.IsObstacle;
+        public bool HasEndPointsSet => !Start.IsObstacle && !End.IsObstacle;
 
         public IVertex Start { get; private set; }
 
         public IVertex End { get; private set; }
 
         protected bool CanSetEndVertex 
-            => !Start.IsDefault && End.IsDefault;
+            => !Start.IsDefault() && End.IsDefault();
 
         public void SubscribeToEvents(IGraph graph)
         {
@@ -70,7 +67,7 @@ namespace GraphLib.Base
 
         protected virtual void SetEndPoints(object sender, EventArgs e)
         {
-            if (sender is IVertex vertex)
+            if (sender is IVertex vertex && !vertex.IsIsolated())
             {
                 Command<IVertex>.ExecuteFirstExecutable(commands, vertex);
             }
@@ -104,18 +101,6 @@ namespace GraphLib.Base
         {
             (vertex as IMarkableVertex)?.MarkAsSimpleVertex();
             End = new DefaultVertex();
-        }
-
-        protected virtual void ChangeStartVertex(IVertex vertex)
-        {
-            Start = new DefaultVertex();
-            SetStartVertex(vertex);
-        }
-
-        protected virtual void ChangeEndVertex(IVertex vertex)
-        {
-            End = new DefaultVertex();
-            SetEndVertex(vertex);
         }
 
         protected virtual void ReplaceStartVertex(IVertex vertex)

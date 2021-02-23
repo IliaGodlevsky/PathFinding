@@ -80,7 +80,7 @@ namespace Plugins.DistanceFirstAlgorithm
 
         private void ProcessCurrentVertex()
         {
-            if (CurrentVertex.IsDefault)
+            if (CurrentVertex.IsDefault())
             {
                 CurrentVertex = visitedVerticesStack.PopOrDefault();
             }

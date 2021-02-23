@@ -1,4 +1,5 @@
 ﻿using Algorithm.Interfaces;
+using Common.Extensions;
 using GraphLib.Extensions;
 using GraphLib.Interface;
 using System.Collections.Generic;
@@ -53,7 +54,7 @@ namespace Algorithm.Realizations
 
         private bool IsStartOfPath(IVertex vertex)
         {
-            return vertex.IsEqual(endpoints.Start) || vertex.IsDefault;
+            return vertex.IsEqual(endpoints.Start) || vertex.IsDefault();
         }
 
         private readonly IEndPoints endpoints;

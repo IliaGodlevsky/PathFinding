@@ -1,12 +1,11 @@
-﻿using Common.Interfaces;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 
 namespace GraphLib.Interface
 {
     /// <summary>
     /// Represents a vertex of graph
     /// </summary>
-    public interface IVertex : IDefault
+    public interface IVertex
     {
         bool IsObstacle { get; set; }
 

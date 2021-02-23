@@ -97,11 +97,11 @@ namespace GraphLib.Extensions
             }
             #endregion
 
-            if (!self.IsObstacle && !graph.IsDefault)
+            if (!self.IsObstacle && !graph.IsDefault())
             {
                 var environment = new CoordinateEnvironment(self.Position);
                 environment
-                    .GetEnvironment()
+                    .Environment
                     .Where(coordinate => coordinate.IsWithinGraph(graph))
                     .Select(coordinate => graph[coordinate])
                     .Where(vertex => vertex.CanBeNeighbourOf(self))
@@ -109,7 +109,7 @@ namespace GraphLib.Extensions
             }
         }
 
-        private static bool CanBeNeighbourOf(this IVertex self, IVertex vertex)
+        public static bool CanBeNeighbourOf(this IVertex self, IVertex vertex)
         {
             return !self.IsObstacle 
                 && !ReferenceEquals(vertex, self)

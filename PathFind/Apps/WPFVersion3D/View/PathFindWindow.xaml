@@ -9,7 +9,7 @@
         Title="Algorithms" 
         SizeToContent="WidthAndHeight">
     <Window.Resources>
-        <converters:StringToRangedDoubleConverter x:Key="sliderValueConverter"></converters:StringToRangedDoubleConverter>
+        <converters:RangedIntToStringConverter x:Key="intToStringConverter"/>
     </Window.Resources>
     <Grid>
         <Grid.RowDefinitions>
@@ -60,7 +60,7 @@
                      Grid.Row="1" 
                      Text ="{Binding ElementName=delayTimeSlider, 
                 Path=Value, 
-                Converter = {StaticResource sliderValueConverter}, 
+                Converter = {StaticResource intToStringConverter}, 
                 ConverterParameter={x:Static range:Constants.AlgorithmDelayValueRange},
                 Mode = TwoWay, 
                 UpdateSourceTrigger = PropertyChanged}" 

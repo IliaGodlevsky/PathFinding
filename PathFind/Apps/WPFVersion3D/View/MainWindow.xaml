@@ -14,7 +14,7 @@
     <Window.Resources>
         <converters:InvertPointConverter x:Key="invertPointConverter"/>
         <converters:NumberToPointConverter x:Key="coordinateToDistance"/>
-        <converters:StringToDoubleConverter x:Key="stringToDoubleConverter"/>
+        <converters:DoubleToStringConverter x:Key="doubleToString"/>
         <converters:AnimatedAxisRotatorConverter x:Key="animatedAxisRotatorConverter"/>
 
         <Style TargetType="TextBox" x:Key="TextBoxStyle">
@@ -90,7 +90,7 @@
                 <TextBox Style="{StaticResource TextBoxStyle}" Grid.Column="2" Grid.Row="0" 
                          Text="{Binding ElementName=zoomSlider, 
                                 Path=Value, 
-                                Converter={StaticResource stringToDoubleConverter}, 
+                                Converter={StaticResource doubleToString}, 
                                 Mode=TwoWay,
                                 UpdateSourceTrigger=PropertyChanged}"/>
 
@@ -101,21 +101,21 @@
                 <TextBox Style="{StaticResource TextBoxStyle}" Grid.Column="2" Grid.Row="1" 
                          Text="{Binding ElementName=xAxisSlider, 
                                 Path=Value, 
-                                Converter={StaticResource stringToDoubleConverter}, 
+                                Converter={StaticResource doubleToString}, 
                                 Mode=TwoWay,
                                 UpdateSourceTrigger=PropertyChanged}"/>
 
                 <TextBox Style="{StaticResource TextBoxStyle}" Grid.Column="2" Grid.Row="2" 
                          Text="{Binding ElementName=yAxisSlider, 
                                 Path=Value, 
-                                Converter={StaticResource stringToDoubleConverter}, 
+                                Converter={StaticResource doubleToString}, 
                                 Mode=TwoWay,
                                 UpdateSourceTrigger=PropertyChanged}"/>
 
                 <TextBox Style="{StaticResource TextBoxStyle}" Grid.Column="2" Grid.Row="3" 
                          Text="{Binding ElementName=zAxisSlider, 
                                 Path=Value, 
-                                Converter={StaticResource stringToDoubleConverter}, 
+                                Converter={StaticResource doubleToString}, 
                                 Mode=TwoWay,
                                 UpdateSourceTrigger=PropertyChanged}"/>
 
@@ -147,21 +147,21 @@
                     Path=Value, 
                     UpdateSourceTrigger=PropertyChanged, 
                     Mode=TwoWay,
-                    Converter={StaticResource stringToDoubleConverter}}" 
+                    Converter={StaticResource doubleToString}}" 
                     Style="{StaticResource TextBoxStyle}" Grid.Column="2" Grid.Row="5"/>
 
                 <TextBox Text="{Binding ElementName=yAxisStretchSlider, 
                     Path=Value, 
                     UpdateSourceTrigger=PropertyChanged, 
                     Mode=TwoWay,
-                    Converter={StaticResource stringToDoubleConverter}}" 
+                    Converter={StaticResource doubleToString}}" 
                     Style="{StaticResource TextBoxStyle}" Grid.Column="2" Grid.Row="6"/>
 
                 <TextBox Text="{Binding ElementName=zAxisStretchSlider, 
                     Path=Value, 
                     UpdateSourceTrigger=PropertyChanged, 
                     Mode=TwoWay,
-                    Converter={StaticResource stringToDoubleConverter}}"
+                    Converter={StaticResource doubleToString}}"
                     Style="{StaticResource TextBoxStyle}" Grid.Column="2" Grid.Row="7"/>
                 
                 <Slider x:Name="xAxisStretchAxis" Grid.Column="1" 

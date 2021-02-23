@@ -101,7 +101,5 @@ namespace WindowsFormsVersion.Model
         }
 
         public ICoordinate Position { get; set; }
-
-        public bool IsDefault => false;
     }
 }
