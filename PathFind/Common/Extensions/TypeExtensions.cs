@@ -21,7 +21,7 @@ namespace Common.Extensions
         /// <paramref name="parametres"/> of <see cref="null"/> if doesn't</returns>
         /// <exception cref="ArgumentNullException"></exception>
         /// <exception cref="ArgumentException"></exception>
-        public static ConstructorInfo GetConstructor(this MemberInfo self, params Type[] parametres)
+        public static ConstructorInfo GetConstructor(this Type self, params Type[] parametres)
         {
             return self.GetConstructor(parametres);
         }
