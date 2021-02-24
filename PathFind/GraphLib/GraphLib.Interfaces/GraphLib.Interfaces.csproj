@@ -45,7 +45,7 @@
     <Compile Include="ICoordinateFactory.cs" />
     <Compile Include="ICostFactory.cs" />
     <Compile Include="IEndPoints.cs" />
-    <Compile Include="IEnvironment.cs" />
+    <Compile Include="ICoordinateRadar.cs" />
     <Compile Include="IGraph.cs" />
     <Compile Include="IGraphAssembler.cs" />
     <Compile Include="IGraphFactory.cs" />

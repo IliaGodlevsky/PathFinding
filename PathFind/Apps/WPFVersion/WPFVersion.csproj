@@ -220,6 +220,10 @@
       <Project>{6aa3b516-abfe-4eda-98dd-1ce799da747f}</Project>
       <Name>GraphLib.Base</Name>
     </ProjectReference>
+    <ProjectReference Include="..\..\GraphLib\GraphLib.Common\GraphLib.Common.csproj">
+      <Project>{3cd8330e-9445-4dc4-a1da-ee704f652942}</Project>
+      <Name>GraphLib.Common</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\GraphLib\GraphLib.Extensions\GraphLib.Extensions.csproj">
       <Project>{93f88f47-1871-44cd-9622-eb8d406c969c}</Project>
       <Name>GraphLib.Extensions</Name>

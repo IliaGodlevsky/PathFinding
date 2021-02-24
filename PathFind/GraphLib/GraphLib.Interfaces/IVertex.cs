@@ -14,5 +14,7 @@ namespace GraphLib.Interface
         IList<IVertex> Neighbours { get; set; }
 
         ICoordinate Position { get; set; }
+
+        ICoordinateRadar CoordinateRadar { get; }
     }
 }

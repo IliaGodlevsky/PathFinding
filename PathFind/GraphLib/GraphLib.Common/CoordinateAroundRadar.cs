@@ -1,6 +1,5 @@
 ﻿using Common.Extensions;
 using GraphLib.Interface;
-using GraphLib.Interfaces;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -9,9 +8,9 @@ namespace GraphLib.Common
     /// <summary>
     /// A class that finds the neighbors of the specified coordinate
     /// </summary>
-    public sealed class CoordinateEnvironment : IEnvironment
+    public sealed class CoordinateAroundRadar : ICoordinateRadar
     {
-        public CoordinateEnvironment(ICoordinate coordinate)
+        public CoordinateAroundRadar(ICoordinate coordinate)
         {
             environment = new List<int[]>();
             selfCoordinatesValues = coordinate.CoordinatesValues.ToArray();

@@ -6,7 +6,7 @@ using System.Linq;
 namespace GraphLib.Common.Tests
 {
     [TestFixture]
-    public class CoordinateEnvironmentTests
+    public class CoordinateAroundRadarTests
     {
         private Mock<ICoordinate> coordinateMock;
 
@@ -23,10 +23,10 @@ namespace GraphLib.Common.Tests
         [TestCase(new int[] { 2, 3, 4, 5, 6 }, ExpectedResult = 242)]
         [TestCase(new int[] { 2, 3, 4, 5, 6, 7 }, ExpectedResult = 728)]
         [TestCase(new int[] { 2, 3, 4, 5, 6, 7, 8 }, ExpectedResult = 2186)]
-        public int GetEnvironment_CoordinatesWithVariousDimensionsNumber_ReturnValidNumberOfNeighbours(int[] coordinateValues)
+        public int Environment_CoordinatesWithVariousDimensionsNumber_ReturnValidNumberOfNeighbours(int[] coordinateValues)
         {
             coordinateMock.Setup(coordinate => coordinate.CoordinatesValues).Returns(coordinateValues);
-            var coordinateEnvironment = new CoordinateEnvironment(coordinateMock.Object);
+            var coordinateEnvironment = new CoordinateAroundRadar(coordinateMock.Object);
 
             var environment = coordinateEnvironment.Environment;
 
@@ -40,10 +40,10 @@ namespace GraphLib.Common.Tests
         [TestCase(new int[] { 2, 3, 4, 5, 6 })]
         [TestCase(new int[] { 2, 3, 4, 5, 6, 7 })]
         [TestCase(new int[] { 2, 3, 4, 5, 6, 7, 8 })]
-        public void GetEnvironment_CoordinatesWithVariousDimensionsNumber_ReturnNeighboursWithoutSelf(int[] coordinateValues)
+        public void Environment_CoordinatesWithVariousDimensionsNumber_ReturnNeighboursWithoutSelf(int[] coordinateValues)
         {
             coordinateMock.Setup(coordinate => coordinate.CoordinatesValues).Returns(coordinateValues);
-            var coordinateEnvironment = new CoordinateEnvironment(coordinateMock.Object);
+            var coordinateEnvironment = new CoordinateAroundRadar(coordinateMock.Object);
 
             var environment = coordinateEnvironment.Environment;
             bool hasSelf = environment.Any(values => values.SequenceEqual(coordinateValues));
@@ -58,10 +58,10 @@ namespace GraphLib.Common.Tests
         [TestCase(new int[] { 12, 32, 44, 51, 69 })]
         [TestCase(new int[] { 23, 34, 45, 56, 67, 78 })]
         [TestCase(new int[] { 201, 33, 84, 15, 16, 73, 81 })]
-        public void GetEnvironment_CoordinatesWithVariousDimensionsCount_ReturnUniqueCoordinates(int[] coordinateValues)
+        public void Environment_CoordinatesWithVariousDimensionsCount_ReturnUniqueCoordinates(int[] coordinateValues)
         {
             coordinateMock.Setup(coordinate => coordinate.CoordinatesValues).Returns(coordinateValues);
-            var coordinateEnvironment = new CoordinateEnvironment(coordinateMock.Object);
+            var coordinateEnvironment = new CoordinateAroundRadar(coordinateMock.Object);
 
             var environment = coordinateEnvironment.Environment;
 

@@ -44,7 +44,7 @@ namespace GraphLib.Realizations.Factories
                     .Range(0, graph.GetSize())
                     .AsParallel()
                     .ForEach(i => AssembleVertex(graph, i, obstaclePercent));
-                graph.ConnectVertices();
+                graph.ConnectVerticesParallel();
                 return graph;
             }
             catch (Exception ex)
@@ -52,11 +52,6 @@ namespace GraphLib.Realizations.Factories
                 OnExceptionCaught?.Invoke(ex);
                 throw ex;
             }
-        }
-        
-        public async Task<IGraph> AssembleGraphAsync(int obstaclePercent = 0, params int[] graphDimensionSizes)
-        {
-            return await Task.Run(() => AssembleGraph(obstaclePercent, graphDimensionSizes));
         }
 
         private void AssembleVertex(IGraph graph, int index, int obstaclePercent)

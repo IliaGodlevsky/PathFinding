@@ -1,6 +1,6 @@
 ﻿using Algorithm.Base;
-using Algorithm.Interfaces;
 using Algorithm.Extensions;
+using Algorithm.Interfaces;
 using Algorithm.Realizations;
 using Common.Extensions;
 using GraphLib.Common.NullObjects;
@@ -57,6 +57,7 @@ namespace Plugins.DijkstraALgorithm
             {
                 verticesQueue = verticesQueue
                     .OrderBy(GetAccumulatedCost)
+                    .Where(IsNotVisited)
                     .ToQueue();
 
                 return verticesQueue.DequeueOrDefault();

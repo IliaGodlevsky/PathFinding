@@ -1,5 +1,4 @@
 ﻿using Common.Extensions;
-using GraphLib.Common;
 using GraphLib.Interface;
 using System;
 using System.Collections.Generic;
@@ -16,7 +15,7 @@ namespace GraphLib.Extensions
 
         public static bool IsIsolated(this IVertex vertex)
         {
-            return vertex.IsObstacle || !vertex.Neighbours.Any();
+            return vertex.IsObstacle || vertex.Neighbours.All(v => v.IsObstacle);
         }
 
         /// <summary>
@@ -99,7 +98,7 @@ namespace GraphLib.Extensions
 
             if (!self.IsObstacle && !graph.IsDefault())
             {
-                var environment = new CoordinateEnvironment(self.Position);
+                var environment = self.CoordinateRadar;
                 environment
                     .Environment
                     .Where(coordinate => coordinate.IsWithinGraph(graph))

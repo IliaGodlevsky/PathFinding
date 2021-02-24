@@ -41,7 +41,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="CoordinateEnvironment.cs" />
+    <Compile Include="CoordinateAroundRadar.cs" />
     <Compile Include="NullObjects\DefaultCoordinate.cs" />
     <Compile Include="NullObjects\DefaultCost.cs" />
     <Compile Include="NullObjects\DefaultVertex.cs" />

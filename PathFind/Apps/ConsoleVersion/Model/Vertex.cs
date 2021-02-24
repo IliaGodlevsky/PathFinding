@@ -1,4 +1,5 @@
 ﻿using ConsoleVersion.View;
+using GraphLib.Common;
 using GraphLib.Extensions;
 using GraphLib.Interface;
 using GraphLib.Realizations;
@@ -41,6 +42,9 @@ namespace ConsoleVersion.Model
                 }
             }
         }
+
+        public virtual ICoordinateRadar CoordinateRadar 
+            => new CoordinateAroundRadar(Position);
 
         public string Text { get; set; }
 
@@ -158,6 +162,6 @@ namespace ConsoleVersion.Model
                 }
                 return consoleCoordinate;
             }
-        }
+        }       
     }
 }

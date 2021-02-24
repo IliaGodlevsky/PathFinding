@@ -1,4 +1,5 @@
-﻿using GraphLib.Extensions;
+﻿using GraphLib.Common;
+using GraphLib.Extensions;
 using GraphLib.Interface;
 using GraphLib.Realizations.VertexCost;
 using GraphLib.Serialization;
@@ -77,6 +78,9 @@ namespace WPFVersion.Model
                 Dispatcher.Invoke(() => ToolTip = position.ToString());
             }
         }
+
+        public virtual ICoordinateRadar CoordinateRadar
+            => new CoordinateAroundRadar(Position);
 
         public void MarkAsEnd()
         {

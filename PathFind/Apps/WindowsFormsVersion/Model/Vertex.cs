@@ -1,4 +1,5 @@
-﻿using GraphLib.Extensions;
+﻿using GraphLib.Common;
+using GraphLib.Extensions;
 using GraphLib.Interface;
 using GraphLib.Realizations.VertexCost;
 using GraphLib.Serialization;
@@ -25,6 +26,19 @@ namespace WindowsFormsVersion.Model
             this.Initialize(info);
         }
 
+        private IVertexCost cost;
+        public IVertexCost Cost
+        {
+            get => cost;
+            set
+            {
+                cost = value;
+                Text = cost.ToString();
+            }
+        }
+
+        public ICoordinate Position { get; set; }
+
         public IList<IVertex> Neighbours { get; set; }
 
         private bool isObstacle;
@@ -38,6 +52,9 @@ namespace WindowsFormsVersion.Model
                     MarkAsObstacle();
             }
         }
+
+        public virtual ICoordinateRadar CoordinateRadar
+             => new CoordinateAroundRadar(Position);
 
         public void MarkAsObstacle()
         {
@@ -88,18 +105,5 @@ namespace WindowsFormsVersion.Model
             (cost as Cost).MakeWeighted();
             Text = cost.ToString();
         }
-
-        private IVertexCost cost;
-        public IVertexCost Cost
-        {
-            get => cost;
-            set
-            {
-                cost = value;
-                Text = cost.ToString();
-            }
-        }
-
-        public ICoordinate Position { get; set; }
     }
 }

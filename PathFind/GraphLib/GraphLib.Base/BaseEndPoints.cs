@@ -30,7 +30,7 @@ namespace GraphLib.Base
             End = end;
         }
 
-        public bool HasEndPointsSet => !Start.IsObstacle && !End.IsObstacle;
+        public bool HasEndPointsSet => !Start.IsIsolated() && !End.IsIsolated();
 
         public IVertex Start { get; private set; }
 

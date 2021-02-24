@@ -14,7 +14,8 @@ namespace GraphLib.Common.NullObjects
         public IList<IVertex> Neighbours { get => new List<IVertex>(); set { } }
 
         public ICoordinate Position { get => new DefaultCoordinate(); set { } }
-
-        public bool IsDefault => true;
+        
+        public ICoordinateRadar CoordinateRadar 
+            => new CoordinateAroundRadar(Position);
     }
 }

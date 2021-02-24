@@ -116,7 +116,7 @@ namespace Algorithm.Base
 
         protected IEnumerable<IVertex> GetUnvisitedNeighbours(IVertex vertex)
         {
-            return vertex.Neighbours.Where(IsNotVisited);
+            return vertex.Neighbours.Where(IsNotVisited).Where(v => !v.IsObstacle);
         }
 
         protected bool IsNotVisited(IVertex vertex)

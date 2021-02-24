@@ -1,8 +1,8 @@
 ﻿using System.Collections.Generic;
 
-namespace GraphLib.Interfaces
+namespace GraphLib.Interface
 {
-    public interface IEnvironment
+    public interface ICoordinateRadar
     {
         IEnumerable<int[]> Environment { get; }
     }

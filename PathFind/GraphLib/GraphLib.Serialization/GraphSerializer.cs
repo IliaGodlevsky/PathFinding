@@ -40,7 +40,7 @@ namespace GraphLib.Serialization
                 var graph = graphFactory.CreateGraph(dimensions);
                 verticesInfo
                     .ForEach((info, i) => graph[i] = infoConverter.ConvertFrom(info));
-                graph.ConnectVertices();
+                graph.ConnectVerticesParallel();
                 return graph;
             }
             catch(Exception ex)

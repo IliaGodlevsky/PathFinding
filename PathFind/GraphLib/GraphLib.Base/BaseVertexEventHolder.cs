@@ -1,6 +1,4 @@
 ﻿using Common;
-using Common.Interfaces;
-using GraphLib.Extensions;
 using GraphLib.Interface;
 using System;
 using System.Collections.Generic;
@@ -62,24 +60,14 @@ namespace GraphLib.Base
 
         private void MakeObstacle(IVertex vertex)
         {
-            vertex.Isolate();
             vertex.IsObstacle = true;
-            vertex.SetToDefault();
-            if (vertex is IMarkableVertex vert)
-            {
-                vert.MarkAsObstacle();
-            }
+            (vertex as IMarkableVertex)?.MarkAsObstacle();
         }
 
         private void MakeVertex(IVertex vertex)
         {
             vertex.IsObstacle = false;
-            if (vertex is IMarkableVertex vert)
-            {
-                vert.MarkAsSimpleVertex();
-            }
-            vertex.SetNeighbours(Graph);
-            vertex.ConnectWithNeighbours();
+            (vertex as IMarkableVertex)?.MarkAsSimpleVertex();
         }
 
         private readonly IEnumerable<Command<IVertex>> commands;
