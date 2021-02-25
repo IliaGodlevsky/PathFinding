@@ -1,7 +1,6 @@
-﻿using Common;
+﻿using Conditional;
 using GraphLib.Interface;
 using System;
-using System.Collections.Generic;
 using System.Linq;
 
 namespace GraphLib.Base
@@ -10,11 +9,8 @@ namespace GraphLib.Base
     {
         public BaseVertexEventHolder()
         {
-            commands = new Command<IVertex>[]
-            {
-                new Command<IVertex>(vertex => vertex.IsObstacle,  MakeVertex),
-                new Command<IVertex>(vertex => !vertex.IsObstacle, MakeObstacle)
-            };
+            If = new If<IVertex>(vertex => vertex.IsObstacle, MakeVertex)
+                .Else(MakeObstacle);
         }
 
         public IVertexCostFactory CostFactory { get; set; }
@@ -36,20 +32,19 @@ namespace GraphLib.Base
 
         public virtual void Reverse(object sender, EventArgs e)
         {
-            if (sender is IVertex vertex)
-            {
-                Command<IVertex>.ExecuteFirstExecutable(commands, vertex);
-            }
+            bool CanWalk(IVertex vertex) => vertex != null;
+            If.Walk(sender as IVertex, CanWalk);
+            
         }
 
-        public void UnsubscribeVertices()
+        public void UnsubscribeVertices(IGraph graph)
         {
-            Graph?.Vertices.AsParallel().ForAll(UnsubscribeFromEvents);
+            graph.Vertices.AsParallel().ForAll(UnsubscribeFromEvents);
         }
 
-        public void SubscribeVertices()
+        public void SubscribeVertices(IGraph graph)
         {
-            Graph?.Vertices.AsParallel().ForAll(SubscribeToEvents);
+            graph.Vertices.AsParallel().ForAll(SubscribeToEvents);
         }
 
         protected abstract void UnsubscribeFromEvents(IVertex vertex);
@@ -70,6 +65,6 @@ namespace GraphLib.Base
             (vertex as IMarkableVertex)?.MarkAsSimpleVertex();
         }
 
-        private readonly IEnumerable<Command<IVertex>> commands;
+        private If<IVertex> If { get; }
     }
 }

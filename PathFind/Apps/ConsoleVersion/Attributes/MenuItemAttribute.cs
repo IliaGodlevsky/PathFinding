@@ -16,11 +16,11 @@ namespace ConsoleVersion.Attributes
             Priority = priority;
         }
 
-        public MenuItemPriority Priority { get; private set; }
+        public MenuItemPriority Priority { get; }
 
         /// <summary>
         /// The header of a menu item that will be shown in the menu
         /// </summary>
-        public string Header { get; private set; }
+        public string Header { get; }
     }
 }

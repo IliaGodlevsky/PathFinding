@@ -1,5 +1,4 @@
-﻿using ConsoleVersion.InputClass;
-using ConsoleVersion.Resource;
+﻿using Common;
 using ConsoleVersion.View.Interface;
 using ConsoleVersion.ViewModel;
 using GraphLib.Interface;
@@ -8,7 +7,11 @@ using GraphViewModel.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using static ConsoleVersion.InputClass.Input;
+using static ConsoleVersion.Resource.Resources;
+using static ConsoleVersion.ViewModel.Menu;
 using Console = Colorful.Console;
+
 
 namespace ConsoleVersion.View
 {
@@ -40,39 +43,39 @@ namespace ConsoleVersion.View
         static MainView()
         {
             GraphFieldPosition
-                = new Coordinate2D(WidthOfOrdinateView, HeightOfAbscissaView + HeightOfGraphParametresView);
+                = new Coordinate2D(
+                    WidthOfOrdinateView, 
+                    HeightOfAbscissaView + HeightOfGraphParametresView);
         }
 
         public MainView(IMainModel model)
         {
             mainModel = model as MainViewModel;
-            menuActions = Menu.GetMenuMethodsAsDelegates<Action>(mainModel);
-            menu = Menu.CreateMenu(menuActions.Keys, 3);
+            menuActions = GetMenuMethodsAsDelegates<Action>(mainModel);
+            menuActionsKeys = menuActions.Keys.ToArray();
+            menu = CreateMenu(menuActionsKeys, columns: 3);
+            menuValueRange = new ValueRange(menuActionsKeys.Length, 1);
         }
 
         public void Start()
         {
-            var menuOption = GetMenuOption();
-            while (true)
-            {
-                menuActions[menuOption]();
-                menuOption = GetMenuOption();
-            }
+            while (true) menuActions[GetMenuOption()]();
         }
 
         private string GetMenuOption()
         {
             mainModel.DisplayGraph();
             Console.WriteLine(menu);
-            int option = Input.InputNumber(
-                Resources.OptionInputMsg,
-                menuActions.Keys.Count, 1) - 1;
+            int option = InputNumber(OptionInputMsg,
+                menuValueRange) - 1;
 
-            return menuActions.Keys.ElementAt(option);
+            return menuActionsKeys[option];
         }
 
         private readonly Dictionary<string, Action> menuActions;
         private readonly MainViewModel mainModel;
         private readonly string menu;
+        private readonly ValueRange menuValueRange;
+        private readonly string[] menuActionsKeys;
     }
 }

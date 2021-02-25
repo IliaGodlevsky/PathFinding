@@ -80,7 +80,7 @@ namespace WPFVersion3D.ViewModel
         {
             try
             {
-                AlgorithmsPluginLoader.LoadAlgorithms(GetAlgorithmsLoadPath());
+                AlgorithmsFactory.LoadAlgorithms(GetAlgorithmsLoadPath());
                 var viewModel = new PathFindingViewModel(this);
                 viewModel.OnPathNotFound += OnPathNotFound;
                 viewModel.EndPoints = EndPoints;

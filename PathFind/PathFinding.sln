@@ -73,6 +73,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Plugins.AStarModified", "Pl
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Algorithm.Extensions.Tests", "Algorithm\Algorithm.Extensions.Tests\Algorithm.Extensions.Tests.csproj", "{B87E6BFD-6408-4753-86B9-550D88FCB81C}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Conditional", "Conditional\Conditional.csproj", "{7125C12B-8EEA-4906-B427-E0575F060731}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -199,6 +201,10 @@ Global
 		{B87E6BFD-6408-4753-86B9-550D88FCB81C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B87E6BFD-6408-4753-86B9-550D88FCB81C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B87E6BFD-6408-4753-86B9-550D88FCB81C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7125C12B-8EEA-4906-B427-E0575F060731}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7125C12B-8EEA-4906-B427-E0575F060731}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7125C12B-8EEA-4906-B427-E0575F060731}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7125C12B-8EEA-4906-B427-E0575F060731}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

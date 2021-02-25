@@ -66,7 +66,6 @@
   <ItemGroup>
     <Compile Include="Attributes\DefaultAttribute.cs" />
     <Compile Include="Attributes\FilterableAttribute.cs" />
-    <Compile Include="Command.cs" />
     <Compile Include="Extensions\GenericExtensions.cs" />
     <Compile Include="Interfaces\IIntermit.cs" />
     <Compile Include="Interfaces\IViewModel.cs" />
@@ -76,6 +75,7 @@
     <Compile Include="Extensions\TypeExtensions.cs" />
     <Compile Include="Logging\Logger.cs" />
     <Compile Include="Interfaces\ILog.cs" />
+    <Compile Include="ClassLoader.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ValueRange.cs" />
   </ItemGroup>

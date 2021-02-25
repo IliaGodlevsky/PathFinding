@@ -78,7 +78,7 @@ namespace WindowsFormsVersion.ViewModel
             {
                 try
                 {
-                    AlgorithmsPluginLoader.LoadAlgorithms(GetAlgorithmsLoadPath());
+                    AlgorithmsFactory.LoadAlgorithms(GetAlgorithmsLoadPath());
                     var model = new PathFindingViewModel(this)
                     {
                         EndPoints = EndPoints

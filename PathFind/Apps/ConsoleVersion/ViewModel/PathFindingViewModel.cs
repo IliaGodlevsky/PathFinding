@@ -9,7 +9,7 @@ using GraphViewModel.Interfaces;
 using System;
 using System.Linq;
 
-using static Algorithm.Realizations.AlgorithmsPluginLoader;
+using static Algorithm.Realizations.AlgorithmsFactory;
 
 namespace ConsoleVersion.ViewModel
 {

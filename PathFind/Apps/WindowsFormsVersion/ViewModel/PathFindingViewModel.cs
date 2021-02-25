@@ -14,7 +14,7 @@ namespace WindowsFormsVersion.ViewModel
 
         public PathFindingViewModel(IMainModel model) : base(model)
         {
-            AlgorithmKeys = AlgorithmsPluginLoader.AlgorithmsDescriptions.ToList();
+            AlgorithmKeys = AlgorithmsFactory.AlgorithmsDescriptions.ToList();
         }
 
         public void PathFind(object sender, EventArgs e)

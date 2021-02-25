@@ -12,7 +12,7 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 
-using static Algorithm.Realizations.AlgorithmsPluginLoader;
+using static Algorithm.Realizations.AlgorithmsFactory;
 
 namespace GraphLib.ViewModel
 {

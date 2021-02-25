@@ -1,7 +1,8 @@
 ﻿using Common;
-using ConsoleVersion.Resource;
 using GraphLib.Realizations;
 using System;
+
+using static ConsoleVersion.Resource.Resources;
 
 namespace ConsoleVersion.InputClass
 {
@@ -14,7 +15,8 @@ namespace ConsoleVersion.InputClass
         /// <param name="upperRangeValue">An upper value of input range</param>
         /// <param name="lowerRangeValue">A lower value of input range</param>
         /// <returns>A number in the range from 
-        /// <paramref name="lowerRangeValue"/> to <paramref name="upperRangeValue"/></returns>
+        /// <paramref name="lowerRangeValue"/> to 
+        /// <paramref name="upperRangeValue"/></returns>
         public static int InputNumber(string accompanyingMessage,
             int upperRangeValue, int lowerRangeValue = 0)
         {
@@ -36,24 +38,28 @@ namespace ConsoleVersion.InputClass
         }
 
         /// <summary>
-        /// Returns <see cref="Coordinate2D"/> where X belongs to [<paramref name="upperPossibleXValue"/>, 0]
+        /// Returns <see cref="Coordinate2D"/> where X belongs to 
+        /// [<paramref name="upperPossibleXValue"/>, 0]
         /// and where Y belongs to [<paramref name="upperPossibleYValue"/>, 0]
         /// </summary>
-        /// <param name="upperPossibleXValue">An upper value of X coordinate in range where a lower value is 0</param>
-        /// <param name="upperPossibleYValue">An upper value of Y coordinate in range where a lower value is 0</param>
+        /// <param name="upperPossibleXValue">An upper value of X
+        /// coordinate in range where a lower value is 0</param>
+        /// <param name="upperPossibleYValue">An upper value of Y 
+        /// coordinate in range where a lower value is 0</param>
         /// <returns>An instance of <see cref="Coordinate2D"/></returns>
         public static Coordinate2D InputPoint(int upperPossibleXValue, int upperPossibleYValue)
         {
-            int xCoordinate = InputNumber(Resources.XCoordinateInputMsg, upperPossibleXValue);
-            int yCoordinate = InputNumber(Resources.YCoordinateInputMsg, upperPossibleYValue);
+            int xCoordinate = InputNumber(XCoordinateInputMsg, upperPossibleXValue);
+            int yCoordinate = InputNumber(YCoordinateInputMsg, upperPossibleYValue);
 
             return new Coordinate2D(xCoordinate, yCoordinate);
         }
 
-        private static bool IsValidInput(string userInput, ValueRange rangeOfValidInput)
+        private static bool IsValidInput(string userInput, 
+            ValueRange rangeOfValidInput)
         {
-            return int.TryParse(userInput, out var ch)
-                && rangeOfValidInput.IsInRange(ch);
+            return int.TryParse(userInput, out var input)
+                && rangeOfValidInput.IsInRange(input);
         }
     }
 }

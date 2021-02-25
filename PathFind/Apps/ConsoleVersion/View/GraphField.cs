@@ -27,6 +27,11 @@ namespace ConsoleVersion.View
                 throw new ArgumentException("Must be 2D coordinates");
             }
 
+            if (vertex as Vertex == null)
+            {
+                throw new ArgumentException($"Must be {nameof(Vertex)} type");
+            }
+
             vertices.Add(vertex as Vertex);
         }
 

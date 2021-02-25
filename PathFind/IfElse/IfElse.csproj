@@ -4,11 +4,11 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{600D74AF-A0AE-46AA-BCF5-695650BBE66F}</ProjectGuid>
+    <ProjectGuid>{11D9AC17-1467-4C09-B153-5779A3C0AE17}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Algorithm.Realizations</RootNamespace>
-    <AssemblyName>Algorithm.Realizations</AssemblyName>
+    <RootNamespace>IfElse</RootNamespace>
+    <AssemblyName>IfElse</AssemblyName>
     <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <Deterministic>true</Deterministic>
@@ -41,36 +41,11 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AlgorithmsFactory.cs" />
-    <Compile Include="AlgorithmIntermit.cs" />
-    <Compile Include="GraphPath.cs" />
+    <Compile Include="If.cs" />
+    <Compile Include="IfElse.cs" />
+    <Compile Include="Interface\_If.cs" />
+    <Compile Include="Interface\_IfElse.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\..\Activating\Activating.csproj">
-      <Project>{e42cf304-adce-45bb-a78e-f087e6eb2007}</Project>
-      <Name>Activating</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\Common\Common.csproj">
-      <Project>{a5a743f5-d346-4b2b-b6ac-07152f64e4d9}</Project>
-      <Name>Common</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\GraphLib\GraphLib.Extensions\GraphLib.Extensions.csproj">
-      <Project>{93f88f47-1871-44cd-9622-eb8d406c969c}</Project>
-      <Name>GraphLib.Extensions</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\GraphLib\GraphLib.Interfaces\GraphLib.Interfaces.csproj">
-      <Project>{d3c5ccfe-698b-41c7-9a72-5fd0262765e1}</Project>
-      <Name>GraphLib.Interfaces</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Algorithm.Common\Algorithm.Common.csproj">
-      <Project>{df721a89-3e01-4159-b51a-e5723c9fd0ba}</Project>
-      <Name>Algorithm.Common</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Algorithm.Interfaces\Algorithm.Interfaces.csproj">
-      <Project>{fc4f499e-9ab1-4623-9ad8-cfde0a07b7d0}</Project>
-      <Name>Algorithm.Interfaces</Name>
-    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

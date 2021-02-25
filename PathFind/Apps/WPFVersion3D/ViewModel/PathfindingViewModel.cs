@@ -35,7 +35,7 @@ namespace WPFVersion3D.ViewModel
 
             CancelPathFindAlgorithmChoice = new RelayCommand(obj => CloseWindow());
 
-            AlgorithmKeys = new ObservableCollection<string>(AlgorithmsPluginLoader.AlgorithmsDescriptions);
+            AlgorithmKeys = new ObservableCollection<string>(AlgorithmsFactory.AlgorithmsDescriptions);
         }
 
         protected override void OnAlgorithmIntermitted()
@@ -67,7 +67,7 @@ namespace WPFVersion3D.ViewModel
 
         private bool CanExecuteConfirmPathFindAlgorithmChoice(object param)
         {
-            return AlgorithmsPluginLoader.AlgorithmsDescriptions.Any(algo => algo == AlgorithmKey);
+            return AlgorithmsFactory.AlgorithmsDescriptions.Any(algo => algo == AlgorithmKey);
         }
     }
 }

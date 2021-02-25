@@ -93,13 +93,11 @@ namespace Activating
         /// <returns>Activator handler for <paramref name="type"></paramref></returns>
         /// <exception cref="KeyNotFoundException">Thrown when activator 
         /// doesn't exist for <paramref name="type"></paramref></exception>
-        public static Delegate GetRegisteredActivator(Type type, params object[] ctorParams)
+        public static Delegate GetRegisteredActivator(Type type, params Type[] ctorParamsTypes)
         {
             if (activators.TryGetValue(type, out var typeActivators))
             {
-                var paramTypes = ToTypesArray(ctorParams);
-
-                if (typeActivators.TryGetValue(paramTypes, out var activator))
+                if (typeActivators.TryGetValue(ctorParamsTypes, out var activator))
                 {
                     return activator;
                 }
@@ -112,7 +110,8 @@ namespace Activating
             params object[] arguments) 
             where TResultType : class
         {
-            var activator = (ActivatorHandler<TResultType>)GetRegisteredActivator(type, arguments);
+            var paramTypes = ToTypesArray(arguments);
+            var activator = (ActivatorHandler<TResultType>)GetRegisteredActivator(type, paramTypes);
             return activator(arguments);
         }
 
@@ -163,9 +162,6 @@ namespace Activating
             return ctorParams.Select(param => param.GetType()).ToArray();
         }
 
-        /// <summary>
-        /// A dictionary of registed activators for objects
-        /// </summary>
         private static readonly Dictionary<Type, ActivatorsSet> activators;
     }
 }

@@ -54,6 +54,10 @@
       <Project>{a5a743f5-d346-4b2b-b6ac-07152f64e4d9}</Project>
       <Name>Common</Name>
     </ProjectReference>
+    <ProjectReference Include="..\..\Conditional\Conditional.csproj">
+      <Project>{7125c12b-8eea-4906-b427-e0575f060731}</Project>
+      <Name>Conditional</Name>
+    </ProjectReference>
     <ProjectReference Include="..\GraphLib.Common\GraphLib.Common.csproj">
       <Project>{3cd8330e-9445-4dc4-a1da-ee704f652942}</Project>
       <Name>GraphLib.Common</Name>

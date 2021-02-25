@@ -64,7 +64,7 @@ namespace ConsoleVersion.ViewModel
                 try
                 {
                     var pluginPath = GetAlgorithmsLoadPath();
-                    AlgorithmsPluginLoader.LoadAlgorithms(pluginPath);
+                    AlgorithmsFactory.LoadAlgorithms(pluginPath);
                     var model = new PathFindingViewModel(this)
                     {
                         EndPoints = EndPoints
@@ -80,7 +80,7 @@ namespace ConsoleVersion.ViewModel
             }
             else
             {
-                Console.WriteLine("No vertices to choose as extreme vertices");
+                Console.WriteLine("No vertices to choose as endpoint");
                 Console.ReadLine();
             }
         }

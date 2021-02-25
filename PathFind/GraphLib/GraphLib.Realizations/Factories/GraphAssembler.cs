@@ -4,7 +4,6 @@ using GraphLib.Extensions;
 using GraphLib.Interface;
 using System;
 using System.Linq;
-using System.Threading.Tasks;
 
 namespace GraphLib.Realizations.Factories
 {

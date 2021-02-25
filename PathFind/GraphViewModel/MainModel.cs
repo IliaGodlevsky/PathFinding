@@ -89,11 +89,10 @@ namespace GraphViewModel
             {
                 EndPoints.UnsubscribeFromEvents(Graph);
                 EndPoints.Reset();
-                eventHolder.UnsubscribeVertices();
+                eventHolder.UnsubscribeVertices(Graph);
                 Graph = graph;
                 GraphField = fieldFactory.CreateGraphField(Graph);
-                eventHolder.Graph = Graph;
-                eventHolder.SubscribeVertices();
+                eventHolder.SubscribeVertices(Graph);
                 EndPoints.SubscribeToEvents(Graph);
                 GraphParametres = Graph.GetInformation();
                 PathFindingStatistics = string.Empty;

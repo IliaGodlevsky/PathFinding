@@ -1,10 +1,9 @@
-﻿using Common;
-using Common.Extensions;
+﻿using Common.Extensions;
+using Conditional;
 using GraphLib.Common.NullObjects;
 using GraphLib.Extensions;
 using GraphLib.Interface;
 using System;
-using System.Collections.Generic;
 
 namespace GraphLib.Base
 {
@@ -13,15 +12,12 @@ namespace GraphLib.Base
         public BaseEndPoints()
         {
             Reset();
-            commands = new Command<IVertex>[]
-            {
-                new Command<IVertex>(vertex => Start.IsEqual(vertex), UnsetStartVertex),
-                new Command<IVertex>(vertex => Start.IsDefault(),     SetStartVertex),
-                new Command<IVertex>(vertex => Start.IsIsolated(),    ReplaceStartVertex),
-                new Command<IVertex>(vertex => End.IsEqual(vertex),   UnsetEndVertex),
-                new Command<IVertex>(vertex => CanSetEndVertex,       SetEndVertex),
-                new Command<IVertex>(vertex => End.IsIsolated(),      ReplaceEndVertex)
-            };
+            If = new If<IVertex>(Start.IsEqual,         UnsetStartVertex)
+                  .ElseIf(End.IsEqual,                  UnsetEndVertex)
+                  .ElseIf(CanSetStartVertex,            SetStartVertex)
+                  .ElseIf(vertex => Start.IsIsolated(), ReplaceStartVertex)
+                  .ElseIf(CanSetEndVertex,              SetEndVertex)
+                  .ElseIf(vertex => End.IsIsolated(),   ReplaceEndVertex);
         }
 
         public BaseEndPoints(IVertex start, IVertex end) : this()
@@ -36,8 +32,10 @@ namespace GraphLib.Base
 
         public IVertex End { get; private set; }
 
-        protected bool CanSetEndVertex 
-            => !Start.IsDefault() && End.IsDefault();
+        protected bool CanSetStartVertex(IVertex vertex)
+        => Start.IsDefault() && CanBeEndPoint(vertex);
+        protected bool CanSetEndVertex(IVertex vertex)
+            => !Start.IsDefault() && End.IsDefault() && CanBeEndPoint(vertex);
 
         public void SubscribeToEvents(IGraph graph)
         {
@@ -67,28 +65,21 @@ namespace GraphLib.Base
 
         protected virtual void SetEndPoints(object sender, EventArgs e)
         {
-            if (sender is IVertex vertex && !vertex.IsIsolated())
-            {
-                Command<IVertex>.ExecuteFirstExecutable(commands, vertex);
-            }
+            bool CanWalk(IVertex vertex) => vertex?.IsIsolated() == false;
+            If.Walk(sender as IVertex, CanWalk);
         }
 
         protected virtual void SetStartVertex(IVertex vertex)
         {
-            if (CanBeEndPoint(vertex))
-            {
-                Start = vertex;
-                (vertex as IMarkableVertex)?.MarkAsStart();
-            }
+            Start = vertex;
+            (vertex as IMarkableVertex)?.MarkAsStart();
         }
 
         protected virtual void SetEndVertex(IVertex vertex)
         {
-            if (CanBeEndPoint(vertex))
-            {
-                End = vertex;
-                (vertex as IMarkableVertex)?.MarkAsEnd();
-            }
+            End = vertex;
+            (vertex as IMarkableVertex)?.MarkAsEnd();
+
         }
 
         protected virtual void UnsetStartVertex(IVertex vertex)
@@ -118,6 +109,6 @@ namespace GraphLib.Base
         protected abstract void SubscribeVertex(IVertex vertex);
         protected abstract void UnsubscribeVertex(IVertex vertex);
 
-        private readonly IEnumerable<Command<IVertex>> commands;
+        private If<IVertex> If { get; }
     }
 }
