@@ -2,27 +2,30 @@
 
 namespace Conditional
 {
-    internal class ConditionConstruction<T>
+    /// <summary>
+    /// Represents a condition construction 'if'
+    /// </summary>
+    internal class ConditionConstruction
     {
-        public ConditionConstruction(Action<T> body, 
-            Predicate<T> condition = null)
+        public ConditionConstruction(Action<object> body, 
+            Predicate<object> condition = null)
         {
             this.condition = condition;
             this.body = body;
         }
 
-        public bool? IsCondition(T parametre)
+        public bool? IsCondition(object parametre)
         {
             return condition == null
                 || condition?.Invoke(parametre) == true;
         }
 
-        public void ExecuteBody(T paramtre)
+        public void ExecuteBody(object paramtre)
         {
-            body?.Invoke(paramtre);
+            body(paramtre);
         }
 
-        private readonly Predicate<T> condition;
-        private readonly Action<T> body;
+        private readonly Predicate<object> condition;
+        private readonly Action<object> body;
     }
 }

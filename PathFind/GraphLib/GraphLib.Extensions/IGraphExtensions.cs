@@ -77,16 +77,6 @@ namespace GraphLib.Extensions
             self.Vertices.ForEach(vertex => vertex.SetNeighbours(self));
         }
 
-        public static void ConnectVerticesParallel(this IGraph self)
-        {
-            self.Vertices.AsParallel().ForAll(vertex => vertex.SetNeighbours(self));
-        }
-
-        public static async Task ConnectVerticesParallelAsync(this IGraph self)
-        {
-            await Task.Run(() => self.Vertices.AsParallel().ForAll(vertex => vertex.SetNeighbours(self)));
-        }
-
         public static bool IsEqual(this IGraph self, IGraph graph)
         {
             bool hasEqualSizes = self.GetSize() == graph.GetSize();

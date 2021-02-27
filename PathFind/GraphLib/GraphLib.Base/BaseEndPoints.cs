@@ -12,12 +12,12 @@ namespace GraphLib.Base
         public BaseEndPoints()
         {
             Reset();
-            If = new If<IVertex>(Start.IsEqual,         UnsetStartVertex)
-                  .ElseIf(End.IsEqual,                  UnsetEndVertex)
-                  .ElseIf(CanSetStartVertex,            SetStartVertex)
-                  .ElseIf(vertex => Start.IsIsolated(), ReplaceStartVertex)
-                  .ElseIf(CanSetEndVertex,              SetEndVertex)
-                  .ElseIf(vertex => End.IsIsolated(),   ReplaceEndVertex);
+            If = new If(o => Start.IsEqual((IVertex)o),       o => UnsetStartVertex((IVertex)o))
+                  .ElseIf(o => End.IsEqual((IVertex)o),       o => UnsetEndVertex((IVertex)o))
+                  .ElseIf(o => CanSetStartVertex((IVertex)o), o => SetStartVertex((IVertex)o))
+                  .ElseIf(o => Start.IsIsolated(),            o => ReplaceStartVertex((IVertex)o))
+                  .ElseIf(o => CanSetEndVertex((IVertex)o),   o => SetEndVertex((IVertex)o))
+                  .ElseIf(o => End.IsIsolated(),              o => ReplaceEndVertex((IVertex)o));
         }
 
         public BaseEndPoints(IVertex start, IVertex end) : this()
@@ -33,7 +33,7 @@ namespace GraphLib.Base
         public IVertex End { get; private set; }
 
         protected bool CanSetStartVertex(IVertex vertex)
-        => Start.IsDefault() && CanBeEndPoint(vertex);
+            => Start.IsDefault() && CanBeEndPoint(vertex);
         protected bool CanSetEndVertex(IVertex vertex)
             => !Start.IsDefault() && End.IsDefault() && CanBeEndPoint(vertex);
 
@@ -65,8 +65,8 @@ namespace GraphLib.Base
 
         protected virtual void SetEndPoints(object sender, EventArgs e)
         {
-            bool CanWalk(IVertex vertex) => vertex?.IsIsolated() == false;
-            If.Walk(sender as IVertex, CanWalk);
+            If.Walk(sender as IVertex, 
+                obj => (obj as IVertex)?.IsIsolated() == false);
         }
 
         protected virtual void SetStartVertex(IVertex vertex)
@@ -109,6 +109,6 @@ namespace GraphLib.Base
         protected abstract void SubscribeVertex(IVertex vertex);
         protected abstract void UnsubscribeVertex(IVertex vertex);
 
-        private If<IVertex> If { get; }
+        private If If { get; }
     }
 }

@@ -5,10 +5,9 @@ using System.Linq;
 namespace Conditional
 {
     /// <summary>
-    /// Represents a condition construction if else
+    /// Represents a condition construction if else if
     /// </summary>
-    /// <typeparam name="T"></typeparam>
-    public sealed class If<T>
+    public sealed class If
     {
         /// <summary>
         /// Creates a new if construction with <paramref name="condition"/>
@@ -16,37 +15,48 @@ namespace Conditional
         /// </summary>
         /// <param name="condition"></param>
         /// <param name="body"></param>
-        public If(Predicate<T> condition, Action<T> body) : this()
+        public If(Predicate<object> condition, Action<object> body) : this()
         {
-            conditinConstructions.Add(new ConditionConstruction<T>(body, condition));
+            conditionConstructions.Add(new ConditionConstruction(body, condition));
         }
 
         /// <summary>
-        /// Adds a new <see cref="If{T}"></see> condition construction
+        /// Adds a new <see cref="If"></see> condition construction
         /// </summary>
         /// <param name="condition"></param>
         /// <param name="body"></param>
         /// <returns></returns>
-        public If<T> ElseIf(Predicate<T> condition, Action<T> body)
+        /// <exception cref="InvalidOperationException">thrown 
+        /// when add 'else if' statement after else construction</exception>
+        public If ElseIf(Predicate<object> condition, Action<object> body)
         {
-            conditinConstructions.Add(new ConditionConstruction<T>(body, condition));
-            return this;
+            if (!hasElseConstruction)
+            {
+                conditionConstructions.Add(new ConditionConstruction(body, condition));
+                return this;
+            }
+
+            throw new InvalidOperationException(ExceptionMessage);
         }
 
         /// <summary>
-        /// Adds a new <see cref="If{T}"></see> condition construction
+        /// Adds a new <see cref="If"></see> condition construction
         /// without condition (e.a. else)
         /// </summary>
         /// <param name="body"></param>
         /// <returns></returns>
-        public If<T> Else(Action<T> body)
+        /// <exception cref="InvalidOperationException">thrown 
+        /// when 'else' statement adding after else statement</exception>
+        public If Else(Action<object> body)
         {
             if (!hasElseConstruction)
             {
+                var temp = ElseIf(null, body);
                 hasElseConstruction = true;
-                return ElseIf(null, body);
+                return temp;
             }
-            return this;
+
+            throw new InvalidOperationException(ExceptionMessage);
         }
 
         /// <summary>
@@ -54,17 +64,18 @@ namespace Conditional
         /// executes first executable condition
         /// </summary>
         /// <param name="paramtre"></param>
-        public void Walk(T paramtre, Predicate<T> walkCondition = null)
+        public void Walk(object paramtre, Predicate<object> walkCondition = null)
         {
-            bool IsCondition(ConditionConstruction<T> condition)
+            bool IsCondition(ConditionConstruction condition)
                 => condition.IsCondition(paramtre) == true;
 
-            Action<T> body = param => conditinConstructions
-                                        .FirstOrDefault(IsCondition)
-                                        ?.ExecuteBody(param);
+            void Execute(object param) 
+                => conditionConstructions
+                         .FirstOrDefault(IsCondition)
+                         ?.ExecuteBody(param);
 
             var conditionConstruction 
-                = new ConditionConstruction<T>(body, walkCondition);
+                = new ConditionConstruction(Execute, walkCondition);
 
             if (IsCondition(conditionConstruction))
             {
@@ -74,11 +85,14 @@ namespace Conditional
 
         private If()
         {
-            conditinConstructions = new List<ConditionConstruction<T>>();
+            conditionConstructions = new List<ConditionConstruction>();
             hasElseConstruction = false;
         }
 
         private bool hasElseConstruction;
-        private readonly List<ConditionConstruction<T>> conditinConstructions;
+        private readonly List<ConditionConstruction> conditionConstructions;
+
+        private const string ExceptionMessage = "Couldn't add 'if" +
+                " else' statement after 'else' statement";
     }
 }

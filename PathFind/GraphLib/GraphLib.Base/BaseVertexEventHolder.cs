@@ -1,6 +1,7 @@
 ﻿using Conditional;
 using GraphLib.Interface;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace GraphLib.Base
@@ -9,8 +10,14 @@ namespace GraphLib.Base
     {
         public BaseVertexEventHolder()
         {
-            If = new If<IVertex>(vertex => vertex.IsObstacle, MakeVertex)
-                .Else(MakeObstacle);
+            reverseActionDictionary = new Dictionary<bool, Action<IVertex>>()
+            {
+                { true, vertex => (vertex as IMarkableVertex)?.MarkAsObstacle() },
+                { false, vertex => (vertex as IMarkableVertex)?.MarkAsSimpleVertex() }
+            };
+
+            If = new If(o => (o as IVertex).IsObstacle, o => MakeVertex((IVertex)o))
+                   .Else(o => MakeObstacle((IVertex)o));
         }
 
         public IVertexCostFactory CostFactory { get; set; }
@@ -19,22 +26,18 @@ namespace GraphLib.Base
 
         public virtual void ChangeVertexCost(object sender, EventArgs e)
         {
-            if (sender is IVertex vertex)
+            if (sender is IVertex vertex && !vertex.IsObstacle)
             {
-                if (!vertex.IsObstacle)
-                {
-                    int delta = GetWheelDelta(e) > 0 ? 1 : -1;
-                    int newCost = vertex.Cost.CurrentCost + delta;
-                    vertex.Cost = CostFactory.CreateCost(newCost);
-                }
+                int delta = GetWheelDelta(e) > 0 ? 1 : -1;
+                int newCost = vertex.Cost.CurrentCost + delta;
+                vertex.Cost = CostFactory.CreateCost(newCost);
             }
         }
 
         public virtual void Reverse(object sender, EventArgs e)
         {
-            bool CanWalk(IVertex vertex) => vertex != null;
-            If.Walk(sender as IVertex, CanWalk);
-            
+            If.Walk(sender as IVertex, 
+                param => param is IVertex);            
         }
 
         public void UnsubscribeVertices(IGraph graph)
@@ -55,16 +58,16 @@ namespace GraphLib.Base
 
         private void MakeObstacle(IVertex vertex)
         {
-            vertex.IsObstacle = true;
-            (vertex as IMarkableVertex)?.MarkAsObstacle();
+            reverseActionDictionary[vertex.IsObstacle = true](vertex);
         }
 
         private void MakeVertex(IVertex vertex)
         {
-            vertex.IsObstacle = false;
-            (vertex as IMarkableVertex)?.MarkAsSimpleVertex();
+            reverseActionDictionary[vertex.IsObstacle = false](vertex);
         }
 
-        private If<IVertex> If { get; }
+        private Dictionary<bool, Action<IVertex>> reverseActionDictionary;
+
+        private If If { get; }
     }
 }

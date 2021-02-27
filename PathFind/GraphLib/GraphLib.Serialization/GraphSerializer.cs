@@ -40,7 +40,7 @@ namespace GraphLib.Serialization
                 var graph = graphFactory.CreateGraph(dimensions);
                 verticesInfo
                     .ForEach((info, i) => graph[i] = infoConverter.ConvertFrom(info));
-                graph.ConnectVerticesParallel();
+                graph.ConnectVertices();
                 return graph;
             }
             catch(Exception ex)
@@ -49,11 +49,6 @@ namespace GraphLib.Serialization
                 throw ex;
             }
 
-        }
-
-        public async Task<IGraph> LoadGraphAsync(Stream stream)
-        {
-            return await Task.Run(() => LoadGraph(stream));
         }
 
         /// <summary>

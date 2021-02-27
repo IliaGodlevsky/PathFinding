@@ -1,6 +1,7 @@
-﻿using ConsoleVersion.Resource;
-using ConsoleVersion.View.Interface;
+﻿using ConsoleVersion.View.Interface;
 using ConsoleVersion.ViewModel;
+
+using static ConsoleVersion.Resource.Resources;
 
 namespace ConsoleVersion.View
 {
@@ -12,9 +13,9 @@ namespace ConsoleVersion.View
         {
             Model = model;
 
-            Model.ObstaclePercentInputMessage = Resources.ObstaclePercentInputMsg;
-            Model.WidthInputMessage = Resources.WidthInputMsg;
-            Model.HeightInputMessage = Resources.HeightInputMsg;
+            Model.ObstaclePercentInputMessage = ObstaclePercentInputMsg;
+            Model.WidthInputMessage = WidthInputMsg;
+            Model.HeightInputMessage = HeightInputMsg;
         }
 
         public void Start()

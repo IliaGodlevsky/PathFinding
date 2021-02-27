@@ -2,7 +2,6 @@
 using ConsoleVersion.Resource;
 using GraphLib.Base;
 using GraphLib.Interface;
-using GraphLib.Realizations.VertexCost;
 using System;
 
 namespace ConsoleVersion.Model
@@ -17,7 +16,7 @@ namespace ConsoleVersion.Model
             {
                 var cost = Input.InputNumber(Resources.VertexCostInputMsg, BaseVertexCost.CostRange);
 
-                vertex.Cost = new Cost(cost);
+                vertex.Cost = CostFactory.CreateCost(cost);
             }
         }
 

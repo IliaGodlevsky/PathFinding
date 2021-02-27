@@ -24,6 +24,13 @@ namespace ConsoleVersion.InputClass
             return InputNumber(accompanyingMessage, rangeOfValidInput);
         }
 
+        /// <summary>
+        /// Return user's console input in range of values
+        /// </summary>
+        /// <param name="accompanyingMessage"></param>
+        /// <param name="rangeOfValidInput"></param>
+        /// <returns>A number in the range
+        /// <paramref name="rangeOfValidInput"/></returns>
         public static int InputNumber(string accompanyingMessage, 
             ValueRange rangeOfValidInput)
         {

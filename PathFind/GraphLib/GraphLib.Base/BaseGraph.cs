@@ -32,8 +32,12 @@ namespace GraphLib.Base
 
         public virtual IVertex this[IEnumerable<int> coordinateValues]
         {
-            get => IsSuitableCoordinate(coordinateValues)
-                ? vertices[coordinateValues.ToIndex(DimensionsSizes.ToArray())] : new DefaultVertex();
+            get
+            {
+                return IsSuitableCoordinate(coordinateValues)
+               ? vertices[coordinateValues.ToIndex(DimensionsSizes.ToArray())] 
+               : new DefaultVertex();
+            }
             set
             {
                 if (IsSuitableCoordinate(coordinateValues))
@@ -61,8 +65,6 @@ namespace GraphLib.Base
             set => this[coordinate.CoordinatesValues] = value;            
         }
 
-        private readonly IVertex[] vertices;
-
         private bool IsSuitableCoordinate(IEnumerable<int> coordinateValues)
         {
             if (!coordinateValues.Any())
@@ -76,5 +78,7 @@ namespace GraphLib.Base
             }
             return true;
         }
+
+        private readonly IVertex[] vertices;
     }
 }

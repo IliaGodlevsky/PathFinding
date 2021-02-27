@@ -8,15 +8,17 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.Windows.Forms;
 
+using static WindowsFormsVersion.Constants;
+
 namespace WindowsFormsVersion.Model
 {
     internal class Vertex : Label, IVertex, IMarkableVertex, IWeightableVertex
     {
         public Vertex() : base()
         {
-            float fontSize = Constants.VertexSize * Constants.TextToSizeRatio;
+            float fontSize = VertexSize * TextToSizeRatio;
             Font = new Font("Times New Roman", fontSize);
-            Size = new Size(Constants.VertexSize, Constants.VertexSize);
+            Size = new Size(VertexSize, VertexSize);
             TextAlign = ContentAlignment.MiddleCenter;
             this.Initialize();
         }

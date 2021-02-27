@@ -3,6 +3,7 @@ using GraphLib.Interface;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace GraphLib.Extensions
 {
@@ -96,10 +97,10 @@ namespace GraphLib.Extensions
             }
             #endregion
 
-            if (!self.IsObstacle && !graph.IsDefault())
+            if (graph.Vertices.Any())
             {
-                var environment = self.CoordinateRadar;
-                environment
+                self
+                    .CoordinateRadar
                     .Environment
                     .Where(coordinate => coordinate.IsWithinGraph(graph))
                     .Select(coordinate => graph[coordinate])
@@ -110,8 +111,7 @@ namespace GraphLib.Extensions
 
         public static bool CanBeNeighbourOf(this IVertex self, IVertex vertex)
         {
-            return !self.IsObstacle 
-                && !ReferenceEquals(vertex, self)
+            return !ReferenceEquals(vertex, self)
                 && !self.IsNeighbourOf(vertex);
         }
 
