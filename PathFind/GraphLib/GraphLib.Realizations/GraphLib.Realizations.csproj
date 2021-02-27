@@ -56,8 +56,6 @@
     <Compile Include="VertexCost\Cost.cs" />
     <Compile Include="VertexCost\CostStates\UnweightedState.cs" />
     <Compile Include="VertexCost\CostStates\WeightedState.cs" />
-    <Compile Include="VertexStates\ObstacleVertexState.cs" />
-    <Compile Include="VertexStates\RegularVertexState.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\Common\Common.csproj">

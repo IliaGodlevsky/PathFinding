@@ -71,6 +71,13 @@ namespace GraphLib.Serialization
             }
         }
 
+        /// <summary>
+        /// Saves graph in stream asynchronly
+        /// </summary>
+        /// <param name="stream"></param>
+        /// <returns></returns>
+        /// <exception cref="SerializationException"></exception>
+        /// <exception cref="System.Security.SecurityException"></exception>
         public async Task SaveGraphAsync(IGraph graph, Stream stream)
         {
             await Task.Run(() => SaveGraph(graph, stream));

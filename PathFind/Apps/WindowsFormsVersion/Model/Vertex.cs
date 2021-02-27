@@ -55,9 +55,6 @@ namespace WindowsFormsVersion.Model
             }
         }
 
-        public virtual ICoordinateRadar CoordinateRadar
-             => new CoordinateAroundRadar(Position);
-
         public void MarkAsObstacle()
         {
             BackColor = Color.FromKnownColor(KnownColor.Black);

@@ -1,4 +1,5 @@
 ﻿using Common.Extensions;
+using GraphLib.Common;
 using GraphLib.Interface;
 using System;
 using System.Collections.Generic;
@@ -46,23 +47,6 @@ namespace GraphLib.Extensions
             }
         }
 
-        public static void Isolate(this IVertex self)
-        {
-            self.Neighbours.ForEach(vertex => vertex.Neighbours.Remove(self));
-            self.Neighbours.Clear();
-        }
-
-        /// <summary>
-        /// Sets <paramref name="self"/> as neighbour of its neighbours
-        /// </summary>
-        /// <param name="self"></param>
-        public static void ConnectWithNeighbours(this IVertex self)
-        {
-            self.Neighbours
-                .Where(vertex => self.CanBeNeighbourOf(vertex))
-                .ForEach(vertex => vertex.Neighbours.Add(self));
-        }
-
         public static bool IsEqual(this IVertex self, IVertex vertex)
         {
             bool hasEqualCost = self.Cost.Equals(vertex.Cost);
@@ -99,13 +83,13 @@ namespace GraphLib.Extensions
 
             if (graph.Vertices.Any())
             {
-                self
-                    .CoordinateRadar
-                    .Environment
-                    .Where(coordinate => coordinate.IsWithinGraph(graph))
-                    .Select(coordinate => graph[coordinate])
-                    .Where(vertex => vertex.CanBeNeighbourOf(self))
-                    .ForEach(self.Neighbours.Add);
+                var coordinateRadar = new CoordinateAroundRadar(self.Position);
+                self.Neighbours = coordinateRadar
+                                    .Environment
+                                    .Where(coordinate => coordinate.IsWithinGraph(graph))
+                                    .Select(coordinate => graph[coordinate])
+                                    .Where(vertex => vertex.CanBeNeighbourOf(self))
+                                    .ToList();
             }
         }
 

@@ -24,17 +24,21 @@ namespace GraphLib.Realizations.Factories
             this.coordinateFactory = coordinateFactory;
             this.graphFactory = graphFactory;
             this.costFactory = costFactory;
+            percentRange = new ValueRange(100, 0);
         }
 
         /// <summary>
-        /// Creates graph with the specification indicated int method params
+        /// Creates graph with the specification 
+        /// indicated int method params
         /// </summary>
         /// <param name="obstaclePercent"></param>
         /// <param name="graphDimensionsSizes"></param>
-        /// <returns>Assembled graph suitable for use with pathfinding algorithms</returns>
+        /// <returns>Assembled graph suitable for use with 
+        /// pathfinding algorithms</returns>
         /// <exception cref="ArgumentException"></exception>
         /// <exception cref="ArgumentOutOfRangeException"></exception>
-        public IGraph AssembleGraph(int obstaclePercent = 0, params int[] graphDimensionsSizes)
+        public IGraph AssembleGraph(int obstaclePercent = 0, 
+            params int[] graphDimensionsSizes)
         {
             try
             {
@@ -66,7 +70,6 @@ namespace GraphLib.Realizations.Factories
 
         private bool IsObstacleChance(int percentOfObstacles)
         {
-            var percentRange = new ValueRange(100, 0);
             percentOfObstacles = percentRange.ReturnInRange(percentOfObstacles);
             var randomPercent = percentRange.GetRandomValueFromRange();
             return randomPercent < percentOfObstacles;
@@ -76,5 +79,6 @@ namespace GraphLib.Realizations.Factories
         private readonly ICoordinateFactory coordinateFactory;
         private readonly IVertexFactory vertexFactory;
         private readonly IGraphFactory graphFactory;
+        private readonly ValueRange percentRange;
     }
 }

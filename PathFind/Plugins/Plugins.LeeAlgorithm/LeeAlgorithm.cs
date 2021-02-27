@@ -94,7 +94,9 @@ namespace Plugins.LeeAlgorithm
                 verticesQueue.Enqueue(neighbour);
             }
 
-            verticesQueue = verticesQueue.DistinctBy(GetPosition).ToQueue();
+            verticesQueue = verticesQueue
+                .DistinctBy(GetPosition)
+                .ToQueue();
         }
 
         private void SetVerticesAccumulatedCostToZero()

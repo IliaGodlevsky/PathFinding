@@ -43,9 +43,6 @@ namespace ConsoleVersion.Model
             }
         }
 
-        public virtual ICoordinateRadar CoordinateRadar 
-            => new CoordinateAroundRadar(Position);
-
         public string Text { get; set; }
 
         private IVertexCost cost;

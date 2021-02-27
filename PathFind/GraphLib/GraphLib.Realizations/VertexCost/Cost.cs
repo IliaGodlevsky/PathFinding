@@ -31,7 +31,6 @@ namespace GraphLib.Realizations.VertexCost
         /// with random cost.
         /// Weighted cost is set to the same value
         /// </summary>
-        /// <param name="startCost"></param>
         public Cost() : this(CostRange.GetRandomValueFromRange())
         {
 

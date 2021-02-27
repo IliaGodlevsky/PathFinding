@@ -1,5 +1,4 @@
-﻿using GraphLib.Common;
-using GraphLib.Extensions;
+﻿using GraphLib.Extensions;
 using GraphLib.Interface;
 using GraphLib.Serialization;
 using GraphLib.Serialization.Extensions;
@@ -120,9 +119,6 @@ namespace WPFVersion3D.Model
         public IList<IVertex> Neighbours { get; set; }
 
         public ICoordinate Position { get; set; }
-
-        public virtual ICoordinateRadar CoordinateRadar
-            => new CoordinateAroundRadar(Position);
 
         public void MarkAsEnd()
         {

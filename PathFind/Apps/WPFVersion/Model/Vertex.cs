@@ -79,9 +79,6 @@ namespace WPFVersion.Model
             }
         }
 
-        public virtual ICoordinateRadar CoordinateRadar
-            => new CoordinateAroundRadar(Position);
-
         public void MarkAsEnd()
         {
             Dispatcher.Invoke(() => Background = EndVertexColor);

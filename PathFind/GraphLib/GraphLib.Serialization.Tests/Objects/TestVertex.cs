@@ -21,7 +21,5 @@ namespace GraphLib.Serialization.Tests.Objects
         public IVertexCost Cost { get; set; }
         public IList<IVertex> Neighbours { get; set; }
         public ICoordinate Position { get; set; }
-        public virtual ICoordinateRadar CoordinateRadar 
-            => new TestCoordinateRadar();
     }
 }
