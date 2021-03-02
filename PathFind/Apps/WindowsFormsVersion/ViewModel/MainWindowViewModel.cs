@@ -1,7 +1,7 @@
 ﻿using Algorithm.Realizations;
 using Common;
 using Common.Extensions;
-using Common.Interfaces;
+using Common.Interface;
 using GraphLib.Base;
 using GraphLib.Extensions;
 using GraphLib.Interface;

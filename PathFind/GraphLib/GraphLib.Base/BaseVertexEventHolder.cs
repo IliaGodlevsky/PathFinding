@@ -12,8 +12,8 @@ namespace GraphLib.Base
         {
             reverseActionDictionary = new Dictionary<bool, Action<IVertex>>()
             {
-                { true, vertex => (vertex as IMarkableVertex)?.MarkAsObstacle() },
-                { false, vertex => (vertex as IMarkableVertex)?.MarkAsSimpleVertex() }
+                { true, vertex => (vertex as IMarkable)?.MarkAsObstacle() },
+                { false, vertex => (vertex as IMarkable)?.MarkAsRegular() }
             };
 
             If = new If(o => (o as IVertex).IsObstacle, o => MakeVertex((IVertex)o))
@@ -66,7 +66,7 @@ namespace GraphLib.Base
             reverseActionDictionary[vertex.IsObstacle = false](vertex);
         }
 
-        private Dictionary<bool, Action<IVertex>> reverseActionDictionary;
+        private readonly Dictionary<bool, Action<IVertex>> reverseActionDictionary;
 
         private If If { get; }
     }

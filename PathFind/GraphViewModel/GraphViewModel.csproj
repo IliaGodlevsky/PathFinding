@@ -50,6 +50,7 @@
     <Compile Include="Interfaces\IModel.cs" />
     <Compile Include="MainModel.cs" />
     <Compile Include="PathFindingModel.cs" />
+    <Compile Include="BasePluginsWatcher.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Resources\ViewModelResources.Designer.cs">
       <AutoGen>True</AutoGen>

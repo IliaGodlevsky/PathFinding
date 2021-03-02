@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Algorithm.Interfaces
+namespace Common.Interface
 {
     /// <summary>
     /// Presents methods and events for intermitting algorithm

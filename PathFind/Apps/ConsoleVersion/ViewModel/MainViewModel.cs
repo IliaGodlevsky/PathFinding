@@ -105,7 +105,7 @@ namespace ConsoleVersion.ViewModel
         {
             string message = "Enter upper vertex cost value: ";
             var upperValueRange = Input.InputNumber(message, 99, 1);
-            Cost.CostRange = new ValueRange(upperValueRange, 1);
+            BaseVertexCost.CostRange = new ValueRange(upperValueRange, 1);
         }
 
         [MenuItem("Change vertex cost", MenuItemPriority.Low)]

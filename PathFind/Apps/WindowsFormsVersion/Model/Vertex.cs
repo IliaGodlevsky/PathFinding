@@ -1,5 +1,4 @@
-﻿using GraphLib.Common;
-using GraphLib.Extensions;
+﻿using GraphLib.Extensions;
 using GraphLib.Interface;
 using GraphLib.Realizations.VertexCost;
 using GraphLib.Serialization;
@@ -12,7 +11,7 @@ using static WindowsFormsVersion.Constants;
 
 namespace WindowsFormsVersion.Model
 {
-    internal class Vertex : Label, IVertex, IMarkableVertex, IWeightableVertex
+    internal class Vertex : Label, IVertex, IMarkable, IWeightable
     {
         public Vertex() : base()
         {
@@ -60,7 +59,7 @@ namespace WindowsFormsVersion.Model
             BackColor = Color.FromKnownColor(KnownColor.Black);
         }
 
-        public void MarkAsSimpleVertex()
+        public void MarkAsRegular()
         {
             if (!IsObstacle)
             {

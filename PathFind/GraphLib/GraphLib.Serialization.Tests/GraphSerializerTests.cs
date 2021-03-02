@@ -1,5 +1,4 @@
 ﻿using GraphLib.Common.NullObjects;
-using GraphLib.Extensions;
 using GraphLib.Interface;
 using GraphLib.Realizations.Factories;
 using GraphLib.Serialization.Tests.Factories;
@@ -53,7 +52,7 @@ namespace GraphLib.Serialization.Tests
                 deserialized = serializer.LoadGraph(stream);
             }
 
-            Assert.IsTrue(graph.IsEqual(deserialized));
+            Assert.AreEqual(graph, deserialized);
             Assert.AreNotSame(graph, deserialized);
         }
     }

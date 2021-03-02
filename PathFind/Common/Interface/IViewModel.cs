@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Common.Interfaces
+namespace Common.Interface
 {
     public interface IViewModel
     {

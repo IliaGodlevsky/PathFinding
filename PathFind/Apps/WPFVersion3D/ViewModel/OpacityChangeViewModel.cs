@@ -1,4 +1,4 @@
-﻿using Common.Interfaces;
+﻿using Common.Interface;
 using GraphViewModel.Interfaces;
 using System;
 using System.Windows.Input;

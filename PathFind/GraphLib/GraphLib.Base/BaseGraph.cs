@@ -65,6 +65,16 @@ namespace GraphLib.Base
             set => this[coordinate.CoordinatesValues] = value;            
         }
 
+        public override bool Equals(object obj)
+        {
+            if(obj is IGraph graph)
+            {
+                return graph.IsEqual(this);
+            }
+
+            throw new ArgumentException();
+        }
+
         private bool IsSuitableCoordinate(IEnumerable<int> coordinateValues)
         {
             if (!coordinateValues.Any())

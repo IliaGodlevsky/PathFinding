@@ -1,5 +1,5 @@
 ﻿using Algorithm.Realizations;
-using Common.Interfaces;
+using Common.Interface;
 using GraphLib.ViewModel;
 using GraphViewModel.Interfaces;
 using System;
@@ -14,7 +14,7 @@ namespace WindowsFormsVersion.ViewModel
 
         public PathFindingViewModel(IMainModel model) : base(model)
         {
-            AlgorithmKeys = AlgorithmsFactory.AlgorithmsDescriptions.ToList();
+            AlgorithmKeys = AlgorithmsFactory.GetAlgorithmsDescriptions().ToList();
         }
 
         public void PathFind(object sender, EventArgs e)

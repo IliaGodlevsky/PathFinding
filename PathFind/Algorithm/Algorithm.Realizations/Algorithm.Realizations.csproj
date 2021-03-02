@@ -47,10 +47,6 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\Activating\Activating.csproj">
-      <Project>{e42cf304-adce-45bb-a78e-f087e6eb2007}</Project>
-      <Name>Activating</Name>
-    </ProjectReference>
     <ProjectReference Include="..\..\Common\Common.csproj">
       <Project>{a5a743f5-d346-4b2b-b6ac-07152f64e4d9}</Project>
       <Name>Common</Name>

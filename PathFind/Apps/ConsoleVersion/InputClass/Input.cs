@@ -17,6 +17,7 @@ namespace ConsoleVersion.InputClass
         /// <returns>A number in the range from 
         /// <paramref name="lowerRangeValue"/> to 
         /// <paramref name="upperRangeValue"/></returns>
+        /// <exception cref="System.IO.IOException"></exception>
         public static int InputNumber(string accompanyingMessage,
             int upperRangeValue, int lowerRangeValue = 0)
         {
@@ -31,6 +32,7 @@ namespace ConsoleVersion.InputClass
         /// <param name="rangeOfValidInput"></param>
         /// <returns>A number in the range
         /// <paramref name="rangeOfValidInput"/></returns>
+        /// <exception cref="System.IO.IOException"></exception>
         public static int InputNumber(string accompanyingMessage, 
             ValueRange rangeOfValidInput)
         {

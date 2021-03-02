@@ -11,7 +11,7 @@ namespace Algorithm.Extensions
         {
             self.Path
                 .Where(vertex => !endpoints.IsEndPoint(vertex))
-                .OfType<IMarkableVertex>()
+                .OfType<IMarkable>()
                 .ForEach(vertex => vertex.MarkAsPath());
         }
 

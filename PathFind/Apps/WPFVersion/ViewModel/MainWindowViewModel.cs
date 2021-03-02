@@ -1,7 +1,7 @@
 ﻿using Algorithm.Realizations;
 using Common;
 using Common.Extensions;
-using Common.Interfaces;
+using Common.Interface;
 using GraphLib.Base;
 using GraphLib.Extensions;
 using GraphLib.Interface;
@@ -96,13 +96,17 @@ namespace WPFVersion.ViewModel
         public override void FindPath()
         {
             try
-            {
+            {                
                 AlgorithmsFactory.LoadAlgorithms(GetAlgorithmsLoadPath());
                 var viewModel = new PathFindingViewModel(this)
                 {
                     EndPoints = EndPoints
                 };
+                var listener = new PluginsWatcher(viewModel);
+                viewModel.OnWindowClosed += listener.StopWatching;
+                listener.FolderPath = GetAlgorithmsLoadPath();
                 viewModel.OnPathNotFound += OnPathNotFound;
+                listener.StartWatching();
                 PrepareWindow(viewModel, new PathFindWindow());
             }
             catch (Exception ex)
@@ -187,7 +191,5 @@ namespace WPFVersion.ViewModel
         {
             MessageBox.Show(ex.Message);
         }
-
-
     }
 }

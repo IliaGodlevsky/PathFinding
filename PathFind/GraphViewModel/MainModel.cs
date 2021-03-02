@@ -38,7 +38,7 @@ namespace GraphViewModel
             Graph = new NullGraph();
         }
 
-        public virtual async void SaveGraph()
+        public async virtual void SaveGraph()
         {
             var savePath = pathInput.InputSavePath();
             try

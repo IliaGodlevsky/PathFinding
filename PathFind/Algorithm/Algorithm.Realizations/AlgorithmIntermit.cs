@@ -1,4 +1,4 @@
-﻿using Algorithm.Interfaces;
+﻿using Common.Interface;
 using System;
 using System.Diagnostics;
 

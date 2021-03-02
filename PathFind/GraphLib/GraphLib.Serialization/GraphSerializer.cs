@@ -7,6 +7,7 @@ using System;
 using System.IO;
 using System.Linq;
 using System.Runtime.Serialization;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace GraphLib.Serialization
@@ -40,7 +41,7 @@ namespace GraphLib.Serialization
                 var graph = graphFactory.CreateGraph(dimensions);
                 verticesInfo
                     .ForEach((info, i) => graph[i] = infoConverter.ConvertFrom(info));
-                graph.ConnectVertices();
+                graph.ConnectVerticesParallel();
                 return graph;
             }
             catch(Exception ex)

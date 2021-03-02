@@ -5,7 +5,6 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 
 namespace GraphLib.Extensions
 {
@@ -61,20 +60,20 @@ namespace GraphLib.Extensions
         public static void ToUnweighted(this IGraph graph)
         {
             graph.Vertices
-                .OfType<IWeightableVertex>()
+                .OfType<IWeightable>()
                 .ForEach(vertex => vertex.MakeUnweighted());
         }
 
         public static void ToWeighted(this IGraph graph)
         {
             graph.Vertices
-                .OfType<IWeightableVertex>()
+                .OfType<IWeightable>()
                 .ForEach(vertex => vertex.MakeWeighted());
         }
 
-        public static void ConnectVertices(this IGraph self)
+        public static void ConnectVerticesParallel(this IGraph self)
         {
-            self.Vertices.ForEach(vertex => vertex.SetNeighbours(self));
+            self.Vertices.AsParallel().ForAll(vertex => vertex.SetNeighbours(self));
         }
 
         public static bool IsEqual(this IGraph self, IGraph graph)

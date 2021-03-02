@@ -1,4 +1,4 @@
-﻿using Common.Interfaces;
+﻿using Common.Interface;
 using GraphLib.Interface;
 using GraphLib.ViewModel;
 using GraphViewModel.Interfaces;

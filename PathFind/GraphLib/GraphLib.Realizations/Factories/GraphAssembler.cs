@@ -47,7 +47,7 @@ namespace GraphLib.Realizations.Factories
                     .Range(0, graph.GetSize())
                     .AsParallel()
                     .ForEach(i => AssembleVertex(graph, i, obstaclePercent));
-                graph.ConnectVertices();
+                graph.ConnectVerticesParallel();
                 return graph;
             }
             catch (Exception ex)

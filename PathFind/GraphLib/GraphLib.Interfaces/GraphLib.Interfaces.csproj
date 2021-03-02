@@ -50,12 +50,12 @@
     <Compile Include="IGraphAssembler.cs" />
     <Compile Include="IGraphFactory.cs" />
     <Compile Include="IGraphField.cs" />
-    <Compile Include="IMarkableVertex.cs" />
+    <Compile Include="IMarkable.cs" />
     <Compile Include="IVertex.cs" />
     <Compile Include="IVertexCost.cs" />
     <Compile Include="IVertexEventHolder.cs" />
     <Compile Include="IVertexFactory.cs" />
-    <Compile Include="IWeightableVertex.cs" />
+    <Compile Include="IWeightable.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

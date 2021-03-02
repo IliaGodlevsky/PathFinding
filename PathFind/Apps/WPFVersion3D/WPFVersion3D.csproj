@@ -111,6 +111,7 @@
     <Compile Include="Model\GraphField3DContainer.cs" />
     <Compile Include="Model\Offset.cs" />
     <Compile Include="Model\PathInput.cs" />
+    <Compile Include="Model\PluginsWatcher.cs" />
     <Compile Include="Model\Vertex3DCost.cs" />
     <Compile Include="Model\Vertex3DCostFactory.cs" />
     <Compile Include="Model\Vertex3DFactory.cs" />

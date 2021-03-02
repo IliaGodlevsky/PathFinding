@@ -1,5 +1,4 @@
 ﻿using ConsoleVersion.View;
-using GraphLib.Common;
 using GraphLib.Extensions;
 using GraphLib.Interface;
 using GraphLib.Realizations;
@@ -13,7 +12,7 @@ using Console = Colorful.Console;
 
 namespace ConsoleVersion.Model
 {
-    internal class Vertex : IVertex, IMarkableVertex, IWeightableVertex
+    internal class Vertex : IVertex, IMarkable, IWeightable
     {
         public event EventHandler OnExtremeVertexChosen;
         public event EventHandler OnCostChanged;
@@ -84,7 +83,7 @@ namespace ConsoleVersion.Model
             ColorizeVertex();
         }
 
-        public void MarkAsSimpleVertex()
+        public void MarkAsRegular()
         {
             Colour = Color.FromKnownColor(KnownColor.White);
             ColorizeVertex();
@@ -159,6 +158,6 @@ namespace ConsoleVersion.Model
                 }
                 return consoleCoordinate;
             }
-        }       
+        }
     }
 }

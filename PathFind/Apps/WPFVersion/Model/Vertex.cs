@@ -1,5 +1,4 @@
-﻿using GraphLib.Common;
-using GraphLib.Extensions;
+﻿using GraphLib.Extensions;
 using GraphLib.Interface;
 using GraphLib.Realizations.VertexCost;
 using GraphLib.Serialization;
@@ -10,7 +9,7 @@ using System.Windows.Media;
 
 namespace WPFVersion.Model
 {
-    internal class Vertex : Label, IVertex, IMarkableVertex, IWeightableVertex
+    internal class Vertex : Label, IVertex, IMarkable, IWeightable
     {
         public static SolidColorBrush VisitedVertexColor { get; set; }
         public static SolidColorBrush PathVertexColor { get; set; }
@@ -99,7 +98,7 @@ namespace WPFVersion.Model
             Dispatcher.Invoke(() => Background = StartVertexColor);
         }
 
-        public void MarkAsSimpleVertex()
+        public void MarkAsRegular()
         {
             Dispatcher.Invoke(() =>
             {

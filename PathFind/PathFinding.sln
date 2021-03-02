@@ -15,8 +15,6 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Service", "Service", "{A500
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Algorithm", "Algorithm", "{C2095ABE-A68C-4A85-82E8-D12C8D5FB2AD}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Activating", "Activating\Activating.csproj", "{E42CF304-ADCE-45BB-A78E-F087E6EB2007}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Algorithm.Base", "Algorithm\Algorithm.Base\Algorithm.Base.csproj", "{04393071-3BA6-42C5-89D8-A89E3AC34511}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Algorithm.Common", "Algorithm\Algorithm.Common\Algorithm.Common.csproj", "{DF721A89-3E01-4159-B51A-E5723C9FD0BA}"
@@ -89,10 +87,6 @@ Global
 		{16D6E068-2A1C-4903-930F-762681A2802E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{16D6E068-2A1C-4903-930F-762681A2802E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{16D6E068-2A1C-4903-930F-762681A2802E}.Release|Any CPU.Build.0 = Release|Any CPU
-		{E42CF304-ADCE-45BB-A78E-F087E6EB2007}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{E42CF304-ADCE-45BB-A78E-F087E6EB2007}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{E42CF304-ADCE-45BB-A78E-F087E6EB2007}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{E42CF304-ADCE-45BB-A78E-F087E6EB2007}.Release|Any CPU.Build.0 = Release|Any CPU
 		{04393071-3BA6-42C5-89D8-A89E3AC34511}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{04393071-3BA6-42C5-89D8-A89E3AC34511}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{04393071-3BA6-42C5-89D8-A89E3AC34511}.Release|Any CPU.ActiveCfg = Release|Any CPU

@@ -72,25 +72,25 @@ namespace GraphLib.Base
         protected virtual void SetStartVertex(IVertex vertex)
         {
             Start = vertex;
-            (vertex as IMarkableVertex)?.MarkAsStart();
+            (vertex as IMarkable)?.MarkAsStart();
         }
 
         protected virtual void SetEndVertex(IVertex vertex)
         {
             End = vertex;
-            (vertex as IMarkableVertex)?.MarkAsEnd();
+            (vertex as IMarkable)?.MarkAsEnd();
 
         }
 
         protected virtual void UnsetStartVertex(IVertex vertex)
         {
-            (vertex as IMarkableVertex)?.MarkAsSimpleVertex();
+            (vertex as IMarkable)?.MarkAsRegular();
             Start = new DefaultVertex();
         }
 
         protected virtual void UnsetEndVertex(IVertex vertex)
         {
-            (vertex as IMarkableVertex)?.MarkAsSimpleVertex();
+            (vertex as IMarkable)?.MarkAsRegular();
             End = new DefaultVertex();
         }
 

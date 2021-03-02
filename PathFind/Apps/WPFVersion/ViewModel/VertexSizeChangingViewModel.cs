@@ -1,5 +1,5 @@
 ﻿using Common.Extensions;
-using Common.Interfaces;
+using Common.Interface;
 using GraphLib.Interface;
 using GraphViewModel.Interfaces;
 using System;

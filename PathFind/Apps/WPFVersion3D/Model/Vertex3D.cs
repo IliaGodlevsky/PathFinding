@@ -10,7 +10,7 @@ using WPFVersion3D.Factories;
 
 namespace WPFVersion3D.Model
 {
-    internal class Vertex3D : UIElement3D, IVertex, IMarkableVertex
+    internal class Vertex3D : UIElement3D, IVertex, IMarkable
     {
         public Vertex3D()
         {
@@ -135,7 +135,7 @@ namespace WPFVersion3D.Model
             Dispatcher.Invoke(() => Brush = PathVertexBrush);
         }
 
-        public void MarkAsSimpleVertex()
+        public void MarkAsRegular()
         {
             Dispatcher.Invoke(() =>
             {

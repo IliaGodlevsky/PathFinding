@@ -1,49 +1,48 @@
-﻿using Common.Extensions;
-using GraphLib.Common;
+﻿using GraphLib.Common;
 using GraphLib.Interface;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 
 namespace GraphLib.Extensions
 {
     public static class IVertexExtension
     {
-        public static bool IsValidToBeEndPoint(this IVertex vertex)
+        public static bool IsValidToBeEndPoint(this IVertex self)
         {
-            return !vertex.IsIsolated();
+            return !self.IsIsolated();
         }
 
-        public static bool IsIsolated(this IVertex vertex)
+        public static bool IsIsolated(this IVertex self)
         {
-            return vertex.IsObstacle || vertex.Neighbours.All(v => v.IsObstacle);
+            return self.IsObstacle 
+                || self.Neighbours.All(neighbour => neighbour.IsObstacle);
         }
 
         /// <summary>
         /// Returns vertex to its start state
         /// </summary>
-        /// <param name="vertex"></param>
-        public static void SetToDefault(this IVertex vertex)
+        /// <param name="self"></param>
+        public static void SetToDefault(this IVertex self)
         {
-            if (vertex is IMarkableVertex vert)
+            if (self is IMarkable vertex)
             {
-                vert.MarkAsSimpleVertex();
+                vertex.MarkAsRegular();
             }
         }
 
-        public static void Initialize(this IVertex vertex)
+        public static void Initialize(this IVertex self)
         {
-            vertex.Neighbours = new List<IVertex>();
-            vertex.SetToDefault();
-            vertex.IsObstacle = false;
+            self.Neighbours = new List<IVertex>();
+            self.SetToDefault();
+            self.IsObstacle = false;
         }
 
-        internal static void Refresh(this IVertex vertex)
+        internal static void Refresh(this IVertex self)
         {
-            if (!vertex.IsObstacle)
+            if (!self.IsObstacle)
             {
-                vertex.SetToDefault();
+                self.SetToDefault();
             }
         }
 
@@ -56,7 +55,8 @@ namespace GraphLib.Extensions
         }
 
         /// <summary>
-        /// Sets certain vertices of <paramref name="self"/>'s environment as its neighbors
+        /// Sets certain vertices of <paramref name="self"/>'s 
+        /// environment as its neighbors
         /// </summary>
         /// <param name="self"></param>
         /// <param name="graph">A graph, where vertex is situated</param>
@@ -95,8 +95,7 @@ namespace GraphLib.Extensions
 
         public static bool CanBeNeighbourOf(this IVertex self, IVertex vertex)
         {
-            return !ReferenceEquals(vertex, self)
-                && !self.IsNeighbourOf(vertex);
+            return !ReferenceEquals(vertex, self) && !self.IsNeighbourOf(vertex);
         }
 
         public static bool IsNeighbourOf(this IVertex self, IVertex vertex)

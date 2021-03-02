@@ -1,10 +1,10 @@
 ﻿namespace GraphLib.Interface
 {
-    public interface IMarkableVertex
+    public interface IMarkable
     {
         void MarkAsEnd();
 
-        void MarkAsSimpleVertex();
+        void MarkAsRegular();
 
         void MarkAsObstacle();
 

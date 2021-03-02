@@ -1,6 +1,6 @@
 ﻿namespace GraphLib.Interface
 {
-    public interface IWeightableVertex
+    public interface IWeightable
     {
         void MakeUnweighted();
 

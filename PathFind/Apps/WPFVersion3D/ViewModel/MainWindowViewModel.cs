@@ -1,7 +1,7 @@
 ﻿using Algorithm.Realizations;
 using Common;
 using Common.Extensions;
-using Common.Interfaces;
+using Common.Interface;
 using GraphLib.Base;
 using GraphLib.Interface;
 using GraphLib.Serialization.Interfaces;
@@ -81,9 +81,15 @@ namespace WPFVersion3D.ViewModel
             try
             {
                 AlgorithmsFactory.LoadAlgorithms(GetAlgorithmsLoadPath());
-                var viewModel = new PathFindingViewModel(this);
+                var viewModel = new PathFindingViewModel(this)
+                {
+                    EndPoints = EndPoints
+                };
+                var listener = new PluginsWatcher(viewModel);
+                viewModel.OnWindowClosed += listener.StopWatching;
+                listener.FolderPath = GetAlgorithmsLoadPath();
                 viewModel.OnPathNotFound += OnPathNotFound;
-                viewModel.EndPoints = EndPoints;
+                listener.StartWatching();
                 PrepareWindow(viewModel, new PathFindWindow());
             }
             catch (Exception ex)

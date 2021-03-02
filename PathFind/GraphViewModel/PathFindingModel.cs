@@ -4,6 +4,7 @@ using Algorithm.Interfaces;
 using Algorithm.Realizations;
 using Common;
 using Common.Extensions;
+using Common.Interface;
 using GraphLib.Base;
 using GraphLib.Interface;
 using GraphViewModel.Interfaces;
@@ -11,7 +12,6 @@ using GraphViewModel.Resources;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
-
 using static Algorithm.Realizations.AlgorithmsFactory;
 
 namespace GraphLib.ViewModel
@@ -35,7 +35,7 @@ namespace GraphLib.ViewModel
             timer = new Stopwatch();
         }
 
-        public virtual void FindPath()
+        public async virtual void FindPath()
         {
             try
             {              
@@ -50,7 +50,7 @@ namespace GraphLib.ViewModel
                 algorithm.OnFinished += OnAlgorithmFinished;
                 algorithm.OnStarted += OnAlgorithmStarted;
 
-                var path = algorithm.FindPath(EndPoints);
+                var path = await algorithm.FindPathAsync(EndPoints);
 
                 var statistics = GetStatistics(timer, visitedVerticesCount, path);
                 mainViewModel.PathFindingStatistics = statistics;
@@ -74,7 +74,7 @@ namespace GraphLib.ViewModel
             }
             else
             {
-                OnPathNotFound?.Invoke("Couln't find path");
+                OnPathNotFound?.Invoke("Couldn't find path");
                 return false;
             }
         }
@@ -85,9 +85,9 @@ namespace GraphLib.ViewModel
         {
             if (e is AlgorithmEventArgs args)
             {
-                if (!args.IsEndPoint && args.Vertex is IMarkableVertex)
+                if (!args.IsEndPoint && args.Vertex is IMarkable vertex)
                 {
-                    (args.Vertex as IMarkableVertex).MarkAsVisited();
+                    vertex.MarkAsVisited();
                 }
 
                 var statistics = GetStatistics(timer, args.VisitedVertices);
@@ -101,9 +101,9 @@ namespace GraphLib.ViewModel
         {
             if (e is AlgorithmEventArgs args)
             {
-                if (!args.IsEndPoint && args.Vertex is IMarkableVertex)
+                if (!args.IsEndPoint && args.Vertex is IMarkable vertex)
                 {
-                    (args.Vertex as IMarkableVertex).MarkAsEnqueued();
+                    vertex.MarkAsEnqueued();
                 }
             }
         }
@@ -123,6 +123,9 @@ namespace GraphLib.ViewModel
             timer.Start();
         }
 
+        protected IIntermit intermitter;
+        protected IMainModel mainViewModel;
+
         private string GetStatistics(Stopwatch timer, int visitedVertices, IGraphPath path = null)
         {
             var format = ViewModelResources.StatisticsFormat;
@@ -133,9 +136,6 @@ namespace GraphLib.ViewModel
 
             return $"{AlgorithmKey}    {timerInfo}     {graphInfo}";
         }
-
-        protected IIntermit intermitter;
-        protected IMainModel mainViewModel;
 
         private readonly Stopwatch timer;
         private int visitedVerticesCount;

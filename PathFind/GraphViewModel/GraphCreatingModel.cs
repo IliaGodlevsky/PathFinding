@@ -24,7 +24,7 @@ namespace GraphLib.ViewModel
         {
             try
             {
-                var graph =  graphFactory.AssembleGraph(ObstaclePercent, GraphParametres);
+                var graph = graphFactory.AssembleGraph(ObstaclePercent, GraphParametres);
                 model.ConnectNewGraph(graph);
             }
             catch (Exception ex)

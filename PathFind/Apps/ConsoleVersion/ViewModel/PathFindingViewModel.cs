@@ -8,7 +8,6 @@ using GraphLib.ViewModel;
 using GraphViewModel.Interfaces;
 using System;
 using System.Linq;
-
 using static Algorithm.Realizations.AlgorithmsFactory;
 
 namespace ConsoleVersion.ViewModel
@@ -23,7 +22,7 @@ namespace ConsoleVersion.ViewModel
 
         public PathFindingViewModel(IMainModel model) : base(model)
         {
-            maxAlgorithmKeysNumber = AlgorithmsDescriptions.Count();
+            maxAlgorithmKeysNumber = GetAlgorithmsDescriptions().Count();
             minAlgorithmKeysNumber = 1;
         }
 
@@ -39,7 +38,7 @@ namespace ConsoleVersion.ViewModel
                 mainModel.DisplayGraph();
 
                 var algorithmKeyIndex = GetAlgorithmKeyIndex();
-                var algorithmKeys = AlgorithmsDescriptions;
+                var algorithmKeys = GetAlgorithmsDescriptions();
                 AlgorithmKey = algorithmKeys.ElementAt(algorithmKeyIndex);
 
                 DelayTime = Input.InputNumber(Resources.DelayTimeInputMsg,

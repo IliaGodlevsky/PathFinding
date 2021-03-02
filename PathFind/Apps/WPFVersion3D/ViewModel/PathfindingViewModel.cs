@@ -1,8 +1,9 @@
 ﻿using Algorithm.Realizations;
-using Common.Interfaces;
+using Common.Interface;
 using GraphLib.ViewModel;
 using GraphViewModel.Interfaces;
 using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
@@ -27,6 +28,17 @@ namespace WPFVersion3D.ViewModel
         public ICommand ConfirmPathFindAlgorithmChoice { get; }
         public ICommand CancelPathFindAlgorithmChoice { get; }
 
+        private IList<string> algorithmKeys;
+        public override IList<string> AlgorithmKeys
+        {
+            get => algorithmKeys;
+            set
+            {
+                algorithmKeys = value;
+                OnPropertyChanged();
+            }
+        }
+
         public PathFindingViewModel(IMainModel model) : base(model)
         {
             ConfirmPathFindAlgorithmChoice = new RelayCommand(
@@ -35,7 +47,7 @@ namespace WPFVersion3D.ViewModel
 
             CancelPathFindAlgorithmChoice = new RelayCommand(obj => CloseWindow());
 
-            AlgorithmKeys = new ObservableCollection<string>(AlgorithmsFactory.AlgorithmsDescriptions);
+            AlgorithmKeys = new ObservableCollection<string>(AlgorithmsFactory.GetAlgorithmsDescriptions());
         }
 
         protected override void OnAlgorithmIntermitted()
@@ -67,7 +79,7 @@ namespace WPFVersion3D.ViewModel
 
         private bool CanExecuteConfirmPathFindAlgorithmChoice(object param)
         {
-            return AlgorithmsFactory.AlgorithmsDescriptions.Any(algo => algo == AlgorithmKey);
+            return AlgorithmKeys.Any(algo => algo == AlgorithmKey);
         }
     }
 }
