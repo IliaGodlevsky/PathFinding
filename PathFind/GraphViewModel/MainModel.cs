@@ -79,7 +79,7 @@ namespace GraphViewModel
         {
             Graph.Refresh();
             PathFindingStatistics = string.Empty;
-            GraphParametres = Graph.GetInformation();
+            GraphParametres = Graph.ToString();
             EndPoints.Reset();
         }
 
@@ -94,7 +94,7 @@ namespace GraphViewModel
                 GraphField = fieldFactory.CreateGraphField(Graph);
                 eventHolder.SubscribeVertices(Graph);
                 EndPoints.SubscribeToEvents(Graph);
-                GraphParametres = Graph.GetInformation();
+                GraphParametres = Graph.ToString();
                 PathFindingStatistics = string.Empty;
             }
         }

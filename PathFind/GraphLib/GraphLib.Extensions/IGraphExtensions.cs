@@ -4,35 +4,11 @@ using GraphLib.Interface;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 
 namespace GraphLib.Extensions
 {
     public static class IGraphExtensions
     {
-        private static readonly string[] DimensionNames;
-
-        static IGraphExtensions()
-        {
-            DimensionNames = new string[] { "Width", "Length", "Height" };
-        }
-
-        public static string GetInformation(this IGraph self)
-        {
-            var sb = new StringBuilder();
-            var dimensionSizes = self.DimensionsSizes.ToArray();
-
-            for (int i = 0; i < dimensionSizes.Length; i++)
-            {
-                sb.Append($"{ DimensionNames[i] }: { dimensionSizes[i] }   ");
-            }
-
-            sb.Append($"Obstacle percent: { self.GetObstaclesPercent() } ")
-              .Append($"({ self.GetObstaclesCount() }/{ self.GetSize() })");
-
-            return sb.ToString();
-        }
-
         /// <summary>
         /// Removes all actions, that was performed over the vertices
         /// </summary>
@@ -79,9 +55,10 @@ namespace GraphLib.Extensions
         public static bool IsEqual(this IGraph self, IGraph graph)
         {
             bool hasEqualSizes = self.GetSize() == graph.GetSize();
+            bool hasEqualDimensionSizes = self.DimensionsSizes.SequenceEqual(graph.DimensionsSizes);
             bool hasEqualNumberOfObstacles = graph.GetObstaclesCount() == self.GetObstaclesCount();
             bool hasEqualVertices = self.Vertices.Match(graph.Vertices, (a, b) => a.IsEqual(b));
-            return hasEqualSizes && hasEqualNumberOfObstacles && hasEqualVertices;
+            return hasEqualSizes && hasEqualNumberOfObstacles && hasEqualVertices && hasEqualDimensionSizes;
         }
 
         public static bool Contains(this IGraph self, params IVertex[] vertices)

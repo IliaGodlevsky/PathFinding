@@ -120,7 +120,7 @@ namespace ConsoleVersion.Model
 
         public void MakeUnweighted()
         {
-            (cost as Cost).MakeUnWeighted();
+            (cost as Cost).MakeUnweighted();
             Text = cost.ToString();
         }
 

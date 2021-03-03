@@ -1,4 +1,5 @@
 ﻿using GraphLib.Base;
+using GraphLib.Interface;
 using GraphLib.Realizations.Interfaces;
 using GraphLib.Realizations.VertexCost.CostStates;
 using System;
@@ -9,7 +10,7 @@ namespace GraphLib.Realizations.VertexCost
     /// Represents a cost of vertex
     /// </summary>
     [Serializable]
-    public sealed class Cost : BaseVertexCost
+    public sealed class Cost : BaseVertexCost, IWeightable
     {
         /// <summary>
         /// Creates a new instance of 
@@ -60,7 +61,7 @@ namespace GraphLib.Realizations.VertexCost
         /// It means that the current cost of 
         /// vertex will be set to 1
         /// </summary>
-        public void MakeUnWeighted()
+        public void MakeUnweighted()
         {
             CurrentCost = UnweightedCost;
             Status = new UnweightedState();

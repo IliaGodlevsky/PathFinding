@@ -7,9 +7,11 @@ using System.Collections.Generic;
 using System.Windows.Controls;
 using System.Windows.Media;
 
+using static WPFVersion.Constants;
+
 namespace WPFVersion.Model
 {
-    internal class Vertex : Label, IVertex, IMarkable, IWeightable
+    internal class Vertex : ContentControl, IVertex, IMarkable, IWeightable
     {
         public static SolidColorBrush VisitedVertexColor { get; set; }
         public static SolidColorBrush PathVertexColor { get; set; }
@@ -30,8 +32,8 @@ namespace WPFVersion.Model
         {
             Dispatcher.Invoke(() =>
             {
-                Width = Height = Constants.VertexSize;
-                FontSize = Constants.VertexSize * Constants.TextToSizeRatio;
+                Width = Height = VertexSize;
+                FontSize = VertexSize * TextToSizeRatio;
                 Template = (ControlTemplate)TryFindResource("vertexTemplate");
             });
             this.Initialize();
@@ -121,13 +123,13 @@ namespace WPFVersion.Model
 
         public void MakeUnweighted()
         {
-            (cost as Cost).MakeUnWeighted();
+            (cost as IWeightable)?.MakeUnweighted();
             Dispatcher.Invoke(() => Content = string.Empty);
         }
 
         public void MakeWeighted()
         {
-            (cost as Cost).MakeWeighted();
+            (cost as IWeightable)?.MakeWeighted();
             Dispatcher.Invoke(() => Content = cost.ToString());
         }
     }

@@ -19,7 +19,7 @@ namespace GraphLib.Realizations.Tests
         [Test]
         public void MakeUnweighted_CurrentCostIs4_SetsCurrentCostTo1()
         {
-            vertexCost.MakeUnWeighted();
+            vertexCost.MakeUnweighted();
 
             Assert.AreEqual(vertexCost.CurrentCost, 1);
         }
@@ -27,7 +27,7 @@ namespace GraphLib.Realizations.Tests
         [Test]
         public void MakeWeighted_CurrentCostIs1_SetsCurrentCostTo4()
         {
-            vertexCost.MakeUnWeighted();
+            vertexCost.MakeUnweighted();
             vertexCost.MakeWeighted();
 
             Assert.AreEqual(vertexCost.CurrentCost, VertexStartCost);
@@ -37,7 +37,7 @@ namespace GraphLib.Realizations.Tests
         public void ToString_UnweightedVertexCost_ReturnsUnweightedCostView(string view)
         {
             vertexCost.UnweightedCostView = view;
-            vertexCost.MakeUnWeighted();
+            vertexCost.MakeUnweighted();
 
             string str = vertexCost.ToString();
 
