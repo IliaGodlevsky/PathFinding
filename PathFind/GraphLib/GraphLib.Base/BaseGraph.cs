@@ -86,8 +86,10 @@ namespace GraphLib.Base
             var verticesHashCode = Vertices
                 .Select(x => x.GetHashCode())
                 .AggregateOrDefault((x, y) => x ^ y);
+
             var dimensionSizesHashCode = DimensionsSizes
                 .AggregateOrDefault((x, y) => x ^ y);
+
             return verticesHashCode ^ dimensionSizesHashCode;
         }
 

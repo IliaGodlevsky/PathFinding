@@ -30,15 +30,11 @@ namespace GraphViewModel
 
         protected abstract void UpdateAlgorithmsKeys();
 
-        protected IEnumerable<string> GetAddedAlgorithms()
-        {
-            return GetAlgorithmsDescriptions().Except(currentAlgorithms);
-        }
+        protected IEnumerable<string> AddedAlgorithms 
+            => AlgorithmsDescriptions.Except(currentAlgorithms);
 
-        protected IEnumerable<string> GetDeletedAlgorithms()
-        {
-            return currentAlgorithms.Except(GetAlgorithmsDescriptions());
-        }
+        protected IEnumerable<string> DeletedAlgorithms 
+            => currentAlgorithms.Except(AlgorithmsDescriptions);
 
         protected string Name(string key)
         {
@@ -49,7 +45,7 @@ namespace GraphViewModel
         {
             while (!token.IsCancellationRequested)
             {
-                currentAlgorithms = GetAlgorithmsDescriptions();
+                currentAlgorithms = AlgorithmsDescriptions;
                 LoadAlgorithms(FolderPath);
                 UpdateAlgorithmsKeys();
             }

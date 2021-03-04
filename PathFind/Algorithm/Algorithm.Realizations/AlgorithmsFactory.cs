@@ -1,4 +1,5 @@
 ﻿using Algorithm.Common;
+using System.Reflection;
 using Algorithm.Interfaces;
 using Common;
 using Common.Enums;
@@ -8,6 +9,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.IO;
 using System.Linq;
+using System.Runtime.InteropServices;
 
 namespace Algorithm.Realizations
 {
@@ -16,30 +18,39 @@ namespace Algorithm.Realizations
         /// <summary>
         /// Descriptions of algorithms
         /// </summary>
-        public static IEnumerable<string> GetAlgorithmsDescriptions()
-        {
-            return algorithms.Keys.OrderBy(Key);
-        }
+        public static IEnumerable<string> AlgorithmsDescriptions => algorithms.Keys.OrderBy(Key);
 
         /// <summary>
         /// 
         /// </summary>
         /// <param name="path"></param>
-        /// <param name="searchPattern"></param>
         /// <param name="searchOption"></param>
+        /// <exception cref="DirectoryNotFoundException"/>
+        /// <exception cref="ArgumentException"/>
+        /// <exception cref="ArgumentNullException"/>
+        /// <exception cref="ArgumentOutOfRangeException"/>
+        /// <exception cref="UnauthorizedAccessException"/>
+        /// <exception cref="PathTooLongException"/>
+        /// <exception cref="IOException"/>
+        /// <exception cref="NotSupportedException"/>
+        /// <exception cref="TargetInvocationException"/>
+        /// <exception cref="MethodAccessException"/>
+        /// <exception cref="MemberAccessException"/>
+        /// <exception cref="TypeLoadException"/>
+        /// <exception cref="MissingMethodException"/>
+        /// <exception cref="InvalidComObjectException"/>
+        /// <exception cref="COMException"/>
         public static void LoadAlgorithms(
             string path, 
-            string searchPattern = "*.dll",
             SearchOption searchOption = SearchOption.AllDirectories)
         {
-            var loadOption = LoadOption.Hierarchy;
+            LoadOption loadOption = LoadOption.Hierarchy;
             algorithms =
                 ClassLoader<IAlgorithm>
                 .Instance
-                .FetchTypesFromAssembles(
+                .FetchTypes(
                     path,
                     loadOption, 
-                    searchPattern, 
                     searchOption)
                 .Where(IsConcreteType)
                 .ToDictionary(Description, Instance);

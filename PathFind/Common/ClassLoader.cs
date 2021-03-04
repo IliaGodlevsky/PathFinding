@@ -11,25 +11,29 @@ namespace Common
     /// <summary>
     /// 
     /// </summary>
-    public class ClassLoader<TBase> 
-        where TBase : class
+    public class ClassLoader<TBase> where TBase : class
     {
         public static ClassLoader<TBase> Instance
         {
             get
             {
                 if (instance == null)
+                {
                     instance = new ClassLoader<TBase>();
+                }
+
                 return instance;
             }
         }
 
         /// <summary>
-        /// 
+        /// Fetches types from assembles in folder
+        /// that match <paramref name="loadOption"/>
+        /// and that are assignable from or 
+        /// equal to <typeparamref name="TBase"/>
         /// </summary>
-        /// <param name="path"></param>
+        /// <param name="assemblesPath"></param>
         /// <param name="loadOption"></param>
-        /// <param name="searchPattern"></param>
         /// <param name="searchOption"></param>
         /// <returns> An array of types that
         /// match <paramref name="loadOption"/></returns>
@@ -45,15 +49,18 @@ namespace Common
         ///  <exception cref="UnauthorizedAccessException"/>
         ///  <exception cref="PathTooLongException"/>
         ///  <exception cref="IOException"/>
-        public IEnumerable<Type> FetchTypesFromAssembles(
-            string path, 
+        public IEnumerable<Type> FetchTypes(
+            string assemblesPath,
             LoadOption loadOption = LoadOption.Hierarchy,
-            string searchPattern = "*.dll",
             SearchOption searchOption = SearchOption.AllDirectories)
         {
+            string searchPattern = "*.dll";
             this.loadOption = loadOption;
             return Directory
-                  .GetFiles(path, searchPattern, searchOption)
+                  .GetFiles(
+                    assemblesPath, 
+                    searchPattern, 
+                    searchOption)
                   .Select(Assembly.LoadFrom)
                   .SelectMany(Types)
                   .DistinctBy(FullName);
