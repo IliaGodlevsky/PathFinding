@@ -36,5 +36,10 @@ namespace GraphLib.Common.NullObjects
             get => new DefaultVertex();
             set => _ = value;
         }
+
+        public override string ToString()
+        {
+            return string.Empty;
+        }
     }
 }
