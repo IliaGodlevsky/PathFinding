@@ -7,7 +7,7 @@ namespace Conditional
     /// <summary>
     /// Represents a condition construction if else if
     /// </summary>
-    public sealed class If
+    public sealed class If<T>
     {
         /// <summary>
         /// Creates a new if construction with <paramref name="condition"/>
@@ -15,24 +15,24 @@ namespace Conditional
         /// </summary>
         /// <param name="condition"></param>
         /// <param name="body"></param>
-        public If(Predicate<object> condition, Action<object> body) : this()
+        public If(Predicate<T> condition, Action<T> body) : this()
         {
-            conditionConstructions.Add(new ConditionConstruction(body, condition));
+            conditionConstructions.Add(new ConditionConstruction<T>(body, condition));
         }
 
         /// <summary>
-        /// Adds a new <see cref="If"></see> condition construction
+        /// Adds a new <see cref="If{T}"></see> condition construction
         /// </summary>
         /// <param name="condition"></param>
         /// <param name="body"></param>
         /// <returns></returns>
         /// <exception cref="InvalidOperationException">thrown 
         /// when add 'else if' statement after else construction</exception>
-        public If ElseIf(Predicate<object> condition, Action<object> body)
+        public If<T> ElseIf(Predicate<T> condition, Action<T> body)
         {
             if (!hasElseConstruction)
             {
-                conditionConstructions.Add(new ConditionConstruction(body, condition));
+                conditionConstructions.Add(new ConditionConstruction<T>(body, condition));
                 return this;
             }
 
@@ -40,14 +40,14 @@ namespace Conditional
         }
 
         /// <summary>
-        /// Adds a new <see cref="If"></see> condition construction
+        /// Adds a new <see cref="If{T}>"></see> condition construction
         /// without condition (e.a. else)
         /// </summary>
         /// <param name="body"></param>
         /// <returns></returns>
         /// <exception cref="InvalidOperationException">thrown 
         /// when 'else' statement adding after else statement</exception>
-        public If Else(Action<object> body)
+        public If<T> Else(Action<T> body)
         {
             if (!hasElseConstruction)
             {
@@ -64,18 +64,18 @@ namespace Conditional
         /// executes first executable condition
         /// </summary>
         /// <param name="paramtre"></param>
-        public void Walk(object paramtre, Predicate<object> walkCondition = null)
+        public void Walk(T paramtre, Predicate<T> walkCondition = null)
         {
-            bool IsCondition(ConditionConstruction condition)
+            bool IsCondition(ConditionConstruction<T> condition)
                 => condition.IsCondition(paramtre) == true;
 
-            void Execute(object param) 
+            void Execute(T param) 
                 => conditionConstructions
                          .FirstOrDefault(IsCondition)
                          ?.ExecuteBody(param);
 
             var conditionConstruction 
-                = new ConditionConstruction(Execute, walkCondition);
+                = new ConditionConstruction<T>(Execute, walkCondition);
 
             if (IsCondition(conditionConstruction))
             {
@@ -85,12 +85,12 @@ namespace Conditional
 
         private If()
         {
-            conditionConstructions = new List<ConditionConstruction>();
+            conditionConstructions = new List<ConditionConstruction<T>>();
             hasElseConstruction = false;
         }
 
         private bool hasElseConstruction;
-        private readonly List<ConditionConstruction> conditionConstructions;
+        private readonly List<ConditionConstruction<T>> conditionConstructions;
 
         private const string ExceptionMessage = "Couldn't add 'if" +
                 " else' statement after 'else' statement";

@@ -12,12 +12,12 @@ namespace GraphLib.Base
         public BaseEndPoints()
         {
             Reset();
-            If = new If(o => Start.IsEqual((IVertex)o),       o => UnsetStartVertex((IVertex)o))
-                  .ElseIf(o => End.IsEqual((IVertex)o),       o => UnsetEndVertex((IVertex)o))
-                  .ElseIf(o => CanSetStartVertex((IVertex)o), o => SetStartVertex((IVertex)o))
-                  .ElseIf(o => Start.IsIsolated(),            o => ReplaceStartVertex((IVertex)o))
-                  .ElseIf(o => CanSetEndVertex((IVertex)o),   o => SetEndVertex((IVertex)o))
-                  .ElseIf(o => End.IsIsolated(),              o => ReplaceEndVertex((IVertex)o));
+            If = new If<IVertex>(v => Start.IsEqual(v), v => UnsetStartVertex(v))
+                  .ElseIf(v => End.IsEqual(v),          v => UnsetEndVertex(v))
+                  .ElseIf(v => CanSetStartVertex(v),    v => SetStartVertex(v))
+                  .ElseIf(V => Start.IsIsolated(),      v => ReplaceStartVertex(v))
+                  .ElseIf(v => CanSetEndVertex(v),      v => SetEndVertex(v))
+                  .ElseIf(V => End.IsIsolated(),        v => ReplaceEndVertex(v));
         }
 
         public BaseEndPoints(IVertex start, IVertex end) : this()
@@ -109,6 +109,6 @@ namespace GraphLib.Base
         protected abstract void SubscribeVertex(IVertex vertex);
         protected abstract void UnsubscribeVertex(IVertex vertex);
 
-        private If If { get; }
+        private If<IVertex> If { get; }
     }
 }

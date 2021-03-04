@@ -8,22 +8,22 @@
         /// <summary>
         /// Menu item will be in the top of menu
         /// </summary>
-        Highest,
+        Highest = 0,
         /// <summary>
         /// Menu item will be higher the most of menu items in menu
         /// </summary>
-        High,
+        High = 1,
         /// <summary>
         /// Menu item will be somewhere in the middle of menu
         /// </summary>
-        Normal,
+        Normal = 2,
         /// <summary>
         /// Menu item will be lower  the most of menu items in menu
         /// </summary>
-        Low,
+        Low = 3,
         /// <summary>
         /// Menu item will be in the bottom of menu
         /// </summary>
-        Lowest
+        Lowest = 4
     }
 }

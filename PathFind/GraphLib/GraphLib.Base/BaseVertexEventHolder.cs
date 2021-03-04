@@ -16,8 +16,8 @@ namespace GraphLib.Base
                 { false, vertex => (vertex as IMarkable)?.MarkAsRegular() }
             };
 
-            If = new If(o => (o as IVertex).IsObstacle, o => MakeVertex((IVertex)o))
-                   .Else(o => MakeObstacle((IVertex)o));
+            If = new If<IVertex>(v => v.IsObstacle, v => MakeVertex(v))
+                   .Else(v => MakeObstacle(v));
         }
 
         public IVertexCostFactory CostFactory { get; set; }
@@ -68,6 +68,6 @@ namespace GraphLib.Base
 
         private readonly Dictionary<bool, Action<IVertex>> reverseActionDictionary;
 
-        private If If { get; }
+        private If<IVertex> If { get; }
     }
 }
