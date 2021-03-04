@@ -35,12 +35,7 @@ namespace GraphLib.Common.NullObjects
 
         public override int GetHashCode()
         {
-            return 0;
-        }
-
-        public object Clone()
-        {
-            return new DefaultCoordinate();
+            return base.GetHashCode();
         }
     }
 }
