@@ -10,8 +10,8 @@ namespace WindowsFormsVersion.View
         {
             InitializeComponent();
 
-            okButton.Click += model.PathFind;
-            cancelButton.Click += model.CancelPathFind;
+            okButton.Click += model.StartPathfinding;
+            cancelButton.Click += model.CancelPathinding;
 
             var dataSource = model.AlgorithmKeys
                 .Select(key => new { Name = key }).ToArray();
