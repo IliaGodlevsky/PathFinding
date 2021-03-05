@@ -17,7 +17,7 @@ namespace WindowsFormsVersion.ViewModel
             AlgorithmKeys = AlgorithmsFactory.AlgorithmsDescriptions.ToList();
         }
 
-        public void PathFind(object sender, EventArgs e)
+        public void StartPathfinding(object sender, EventArgs e)
         {
             if (CanExecuteConfirmPathFindAlgorithmChoice())
             {
@@ -32,7 +32,7 @@ namespace WindowsFormsVersion.ViewModel
             Application.DoEvents();
         }
 
-        public void CancelPathFind(object sender, EventArgs e)
+        public void CancelPathinding(object sender, EventArgs e)
         {
             OnWindowClosed?.Invoke(this, new EventArgs());
             OnWindowClosed = null;
