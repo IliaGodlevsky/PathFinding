@@ -10,16 +10,18 @@ namespace GraphLib.Realizations.VertexCost
     /// Represents a cost of vertex
     /// </summary>
     [Serializable]
-    public sealed class Cost : BaseVertexCost, IWeightable
+    public sealed class WeightableVertexCost 
+        : BaseVertexCost, IWeightable
     {
         /// <summary>
         /// Creates a new instance of 
-        /// <see cref="Cost"/>
+        /// <see cref="WeightableVertexCost"/>
         /// with the cost of <paramref name="startCost"/>. 
         /// Weighted cost is set to the same value
         /// </summary>
         /// <param name="startCost"></param>
-        public Cost(int startCost) : base(startCost)
+        public WeightableVertexCost(int startCost) 
+            : base(startCost)
         {
             WeightedCost = startCost;
             Status = new WeightedState();
@@ -28,11 +30,12 @@ namespace GraphLib.Realizations.VertexCost
 
         /// <summary>
         /// Creates a new instance of 
-        /// <see cref="Cost"/>
+        /// <see cref="WeightableVertexCost"/>
         /// with random cost.
         /// Weighted cost is set to the same value
         /// </summary>
-        public Cost() : this(CostRange.GetRandomValueFromRange())
+        public WeightableVertexCost() 
+            : this(CostRange.GetRandomValueFromRange())
         {
 
         }
@@ -44,7 +47,7 @@ namespace GraphLib.Realizations.VertexCost
         public string UnweightedCostView { get; set; }
 
         /// <summary>
-        /// Sets <see cref="Cost"/> 
+        /// Sets <see cref="WeightableVertexCost"/> 
         /// to weighted status. That means that
         /// the current cost of vertex will be 
         /// set to its normal value
@@ -56,7 +59,7 @@ namespace GraphLib.Realizations.VertexCost
         }
 
         /// <summary>
-        /// Sets <see cref="Cost"/> 
+        /// Sets <see cref="WeightableVertexCost"/> 
         /// to unweighted status.
         /// It means that the current cost of 
         /// vertex will be set to 1
@@ -69,10 +72,10 @@ namespace GraphLib.Realizations.VertexCost
 
         /// <summary>
         /// Returns a string representation 
-        /// of <see cref="Cost"/>
+        /// of <see cref="WeightableVertexCost"/>
         /// </summary>
         /// <returns>A string representation 
-        /// of <see cref="Cost"/></returns>
+        /// of <see cref="WeightableVertexCost"/></returns>
         public override string ToString()
         {
             return Status.ToString(this);

@@ -35,8 +35,6 @@ namespace WPFVersion3D.Model
             DistanceBetweenVerticesAtZAxis = 0;
         }
 
-
-
         public void Add(IVertex vertex)
         {
             Vertex3D vertex3D = vertex as Vertex3D;

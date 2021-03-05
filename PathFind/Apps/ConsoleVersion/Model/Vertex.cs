@@ -51,7 +51,7 @@ namespace ConsoleVersion.Model
             set
             {
                 cost = value;
-                (cost as Cost).UnweightedCostView = "#";
+                (cost as WeightableVertexCost).UnweightedCostView = "#";
                 Text = cost.ToString();
             }
         }
@@ -120,13 +120,13 @@ namespace ConsoleVersion.Model
 
         public void MakeUnweighted()
         {
-            (cost as Cost).MakeUnweighted();
+            (cost as IWeightable)?.MakeUnweighted();
             Text = cost.ToString();
         }
 
         public void MakeWeighted()
         {
-            (cost as Cost).MakeWeighted();
+            (cost as IWeightable)?.MakeWeighted();
             Text = cost.ToString();
         }
 

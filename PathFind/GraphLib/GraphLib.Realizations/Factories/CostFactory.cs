@@ -7,12 +7,12 @@ namespace GraphLib.Realizations.Factories
     {
         public IVertexCost CreateCost()
         {
-            return new Cost();
+            return new WeightableVertexCost();
         }
 
         public IVertexCost CreateCost(int cost)
         {
-            return new Cost(cost);
+            return new WeightableVertexCost(cost);
         }
     }
 }

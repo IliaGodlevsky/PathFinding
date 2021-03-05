@@ -6,9 +6,11 @@ namespace GraphLib.Realizations.VertexCost.CostStates
     [Serializable]
     internal sealed class UnweightedState : ICostState
     {
-        public string ToString(Cost cost)
+        public string ToString(WeightableVertexCost cost)
         {
             return cost.UnweightedCostView;
         }
+
+
     }
 }

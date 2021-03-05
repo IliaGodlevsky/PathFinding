@@ -8,12 +8,12 @@ namespace GraphLib.Realizations.Tests
     public class CostTest
     {
         private const int VertexStartCost = 4;
-        private Cost vertexCost;
+        private WeightableVertexCost vertexCost;
 
         [SetUp]
         public void Setup()
         {
-            vertexCost = new Cost(VertexStartCost);
+            vertexCost = new WeightableVertexCost(VertexStartCost);
         }
 
         [Test]

@@ -4,6 +4,6 @@ namespace GraphLib.Realizations.Interfaces
 {
     internal interface ICostState
     {
-        string ToString(Cost cost);
+        string ToString(WeightableVertexCost cost);
     }
 }
