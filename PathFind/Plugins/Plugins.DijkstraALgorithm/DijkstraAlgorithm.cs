@@ -57,7 +57,7 @@ namespace Plugins.DijkstraALgorithm
             {
                 verticesQueue = verticesQueue
                     .OrderBy(GetAccumulatedCost)
-                    .Where(IsNotVisited)
+                    .Where(VertexIsNotVisited)
                     .ToQueue();
 
                 return verticesQueue.DequeueOrDefault();
@@ -80,15 +80,7 @@ namespace Plugins.DijkstraALgorithm
 
         private void RelaxNeighbours()
         {
-            GetUnvisitedNeighbours(CurrentVertex).ForEach(neighbour =>
-            {
-                var relaxedCost = GetVertexRelaxedCost(neighbour);
-                if (accumulatedCosts[neighbour.Position] > relaxedCost)
-                {
-                    accumulatedCosts[neighbour.Position] = relaxedCost;
-                    parentVertices[neighbour.Position] = CurrentVertex;
-                }
-            });
+            GetUnvisitedNeighbours(CurrentVertex).ForEach(RelaxVertex);
         }
 
         private void ExtractNeighbours()
@@ -102,15 +94,32 @@ namespace Plugins.DijkstraALgorithm
                 verticesQueue.Enqueue(neighbour);
             }
 
-            verticesQueue = verticesQueue.DistinctBy(GetPosition).ToQueue();
+            verticesQueue = verticesQueue
+                .DistinctBy(GetPosition)
+                .ToQueue();
         }
 
         private void SetVerticesAccumulatedCostToInfifnity()
         {
             Graph.Vertices
-                .Where(vertex => !vertex.IsObstacle)
-                .ForEach(vertex => accumulatedCosts[vertex.Position] = double.PositiveInfinity);
+                .Where(VertexIsNotObstacle)
+                .ForEach(SetVertexAccumulatedCostToInfinity);
             accumulatedCosts[endPoints.Start.Position] = 0;
+        }
+
+        protected void SetVertexAccumulatedCostToInfinity(IVertex vertex)
+        {
+            accumulatedCosts[vertex.Position] = double.PositiveInfinity;
+        }
+
+        protected virtual void RelaxVertex(IVertex vertex)
+        {
+            var relaxedCost = GetVertexRelaxedCost(vertex);
+            if (accumulatedCosts[vertex.Position] > relaxedCost)
+            {
+                accumulatedCosts[vertex.Position] = relaxedCost;
+                parentVertices[vertex.Position] = CurrentVertex;
+            }
         }
     }
 }

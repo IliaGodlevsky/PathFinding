@@ -50,14 +50,14 @@ namespace Common
         {
             if (value > UpperValueOfRange)
             {
-                value = UpperValueOfRange;
+                return UpperValueOfRange;
             }
             else if (value < LowerValueOfRange)
             {
-                value = LowerValueOfRange;
+                return LowerValueOfRange;
             }
-
-            return value;
+            else
+                return value;
         }
 
         /// <summary>
@@ -91,6 +91,12 @@ namespace Common
             }
         }
 
+        /// <summary>
+        /// Returns random value from values between 
+        /// upper value range and lower value range
+        /// </summary>
+        /// <returns>Random value in range between 
+        /// upper value and lower value</returns>
         public int GetRandomValueFromRange()
         {
             return random.Next(LowerValueOfRange, UpperValueOfRange);

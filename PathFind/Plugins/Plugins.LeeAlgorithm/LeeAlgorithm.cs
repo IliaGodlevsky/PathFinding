@@ -62,7 +62,9 @@ namespace Plugins.LeeAlgorithm
         {
             get
             {
-                verticesQueue = verticesQueue.Where(IsNotVisited).ToQueue();
+                verticesQueue = verticesQueue
+                    .Where(VertexIsNotVisited)
+                    .ToQueue();
                 return verticesQueue.DequeueOrDefault();
             }
         }
@@ -72,15 +74,29 @@ namespace Plugins.LeeAlgorithm
             return GetAccumulatedCost(CurrentVertex) + 1;
         }
 
+        protected virtual void SpreadWave(IVertex vertex)
+        {
+            accumulatedCosts[vertex.Position] = CreateWave();
+            parentVertices[vertex.Position] = CurrentVertex;
+        }
+
+        protected bool VertexIsUnwaved(IVertex vertex)
+        {
+            return accumulatedCosts[vertex.Position] == 0;
+        }
+
+        protected void SetVertexAccumulatedCostToZero(IVertex vertex)
+        {
+            accumulatedCosts[vertex.Position] = 0;
+        }
+
+        protected Queue<IVertex> verticesQueue;
+
         private void SpreadWaves()
         {
             GetUnvisitedNeighbours(CurrentVertex)
-                .Where(neighbour => accumulatedCosts[neighbour.Position] == 0)
-                .ForEach(neighbour =>
-                {
-                    accumulatedCosts[neighbour.Position] = CreateWave();
-                    parentVertices[neighbour.Position] = CurrentVertex;
-                });
+                .Where(VertexIsUnwaved)
+                .ForEach(SpreadWave);
         }
 
         private void ExtractNeighbours()
@@ -102,10 +118,8 @@ namespace Plugins.LeeAlgorithm
         private void SetVerticesAccumulatedCostToZero()
         {
             Graph.Vertices
-                .Where(vertex => !vertex.IsObstacle)
-                .ForEach(vertex => accumulatedCosts[vertex.Position] = 0);
+                .Where(VertexIsNotObstacle)
+                .ForEach(SetVertexAccumulatedCostToZero);
         }
-
-        protected Queue<IVertex> verticesQueue;
     }
 }

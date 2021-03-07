@@ -35,10 +35,10 @@ namespace GraphLib.ViewModel
             timer = new Stopwatch();
         }
 
-        public async virtual void FindPath()
+        public virtual void FindPath()
         {
             try
-            {              
+            {
                 var algorithm = GetAlgorithm(AlgorithmKey);
                 algorithm.Graph = mainViewModel.Graph;
 
@@ -50,7 +50,7 @@ namespace GraphLib.ViewModel
                 algorithm.OnFinished += OnAlgorithmFinished;
                 algorithm.OnStarted += OnAlgorithmStarted;
 
-                var path = await algorithm.FindPathAsync(EndPoints);
+                var path = algorithm.FindPath(EndPoints);
 
                 var statistics = GetStatistics(timer, visitedVerticesCount, path);
                 mainViewModel.PathFindingStatistics = statistics;

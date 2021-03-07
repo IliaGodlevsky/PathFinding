@@ -116,12 +116,19 @@ namespace Algorithm.Base
 
         protected IEnumerable<IVertex> GetUnvisitedNeighbours(IVertex vertex)
         {
-            return vertex.Neighbours.Where(IsNotVisited).Where(v => !v.IsObstacle);
+            return vertex.Neighbours
+                .Where(VertexIsNotVisited)
+                .Where(VertexIsNotObstacle);
         }
 
-        protected bool IsNotVisited(IVertex vertex)
+        protected bool VertexIsNotVisited(IVertex vertex)
         {
             return !visitedVertices.TryGetValue(vertex.Position, out _);
+        }
+
+        protected bool VertexIsNotObstacle(IVertex vertex)
+        {
+            return !vertex.IsObstacle;
         }
 
         protected ICoordinate GetPosition(IVertex vertex)

@@ -9,7 +9,9 @@ using System.Reflection;
 namespace Common
 {
     /// <summary>
-    /// 
+    /// A class, that loades types from assembles, 
+    /// that are assignable to <typeparamref name="TBase"/> 
+    /// and match <see cref="LoadOption"/>
     /// </summary>
     public class ClassLoader<TBase> where TBase : class
     {
