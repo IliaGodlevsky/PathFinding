@@ -10,6 +10,8 @@ namespace WPFVersion3D
         public static ValueRange GraphLengthValueRange { get; }
         public static ValueRange GraphHeightValueRange { get; }
 
+        public const double InitialRotationAnimationDuration = 3000; // milliseconds
+
         static Constants()
         {
             ObstaclePercentValueRange = new ValueRange(99, 0);

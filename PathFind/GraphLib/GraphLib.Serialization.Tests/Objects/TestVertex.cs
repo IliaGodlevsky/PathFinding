@@ -5,7 +5,7 @@ using System.Collections.Generic;
 
 namespace GraphLib.Serialization.Tests.Objects
 {
-    internal class TestVertex : IVertex
+    internal sealed class TestVertex : IVertex
     {
         public TestVertex()
         {
@@ -19,7 +19,7 @@ namespace GraphLib.Serialization.Tests.Objects
 
         public bool IsObstacle { get; set; }
         public IVertexCost Cost { get; set; }
-        public IList<IVertex> Neighbours { get; set; }
+        public ICollection<IVertex> Neighbours { get; set; }
         public ICoordinate Position { get; set; }
     }
 }

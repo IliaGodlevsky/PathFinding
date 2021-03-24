@@ -1,8 +1,9 @@
-﻿using Algorithm.Infrastructure.EventArguments;
+﻿using Algorithm.Common;
+using Algorithm.Infrastructure.EventArguments;
 using Algorithm.Infrastructure.Handlers;
 using Algorithm.Interfaces;
 using Common.Extensions;
-using GraphLib.Common.NullObjects;
+using GraphLib.Base;
 using GraphLib.Extensions;
 using GraphLib.Interface;
 using System;
@@ -14,6 +15,8 @@ namespace Algorithm.Base
 {
     public abstract class BaseAlgorithm : IAlgorithm
     {
+        public static IAlgorithm Default => new DefaultAlgorithm();
+
         public event AlgorithmEventHandler OnStarted;
         public event AlgorithmEventHandler OnVertexVisited;
         public event AlgorithmEventHandler OnFinished;
@@ -21,7 +24,7 @@ namespace Algorithm.Base
 
         public virtual IGraph Graph { get; set; }
 
-        public BaseAlgorithm() : this(new NullGraph())
+        public BaseAlgorithm() : this(BaseGraph.NullGraph)
         {
 
         }
@@ -36,7 +39,7 @@ namespace Algorithm.Base
 
         public virtual void Reset()
         {
-            Graph = new NullGraph();
+            Graph = BaseGraph.NullGraph;
             OnStarted = null;
             OnFinished = null;
             OnVertexEnqueued = null;
@@ -92,17 +95,15 @@ namespace Algorithm.Base
                 RaiseOnAlgorithmStartedEvent(args);
                 CurrentVertex = this.endPoints.Start;
                 visitedVertices[CurrentVertex.Position] = CurrentVertex;
+                return;
             }
-            else
-            {
-                throw new Exception("Endpoints doesn't belong to graph");
-            }
+
+            throw new Exception("Endpoints don't belong to graph");
         }
 
         protected virtual void CompletePathfinding()
         {
-            var visitedCount = visitedVertices
-                .Count(item => !item.Value.IsDefault());
+            var visitedCount = visitedVertices.Count(IsNotDefault);
             var args = new AlgorithmEventArgs(visitedCount);
             RaiseOnAlgorithmFinishedEvent(args);
         }
@@ -112,6 +113,11 @@ namespace Algorithm.Base
             int visitedCount = visitedVertices.Count;
             bool isEndPoint = endPoints.IsEndPoint(vertex);
             return new AlgorithmEventArgs(visitedCount, isEndPoint, vertex);
+        }
+
+        protected bool IsNotDefault(KeyValuePair<ICoordinate, IVertex> vertex)
+        {
+            return !vertex.Value.IsDefault();
         }
 
         protected IEnumerable<IVertex> GetUnvisitedNeighbours(IVertex vertex)

@@ -30,10 +30,10 @@ namespace GraphViewModel
 
         protected abstract void UpdateAlgorithmsKeys();
 
-        protected IEnumerable<string> AddedAlgorithms 
+        protected IEnumerable<string> AddedAlgorithms
             => AlgorithmsDescriptions.Except(currentAlgorithms);
 
-        protected IEnumerable<string> DeletedAlgorithms 
+        protected IEnumerable<string> DeletedAlgorithms
             => currentAlgorithms.Except(AlgorithmsDescriptions);
 
         protected string Name(string key)

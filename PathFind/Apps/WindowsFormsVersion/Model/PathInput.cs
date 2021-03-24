@@ -3,7 +3,7 @@ using System.Windows.Forms;
 
 namespace WindowsFormsVersion.Model
 {
-    internal class PathInput : IPathInput
+    internal sealed class PathInput : IPathInput
     {
         public string InputLoadPath()
         {

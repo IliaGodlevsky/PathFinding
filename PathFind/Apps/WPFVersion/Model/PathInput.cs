@@ -3,7 +3,7 @@ using Microsoft.Win32;
 
 namespace WPFVersion.Model
 {
-    internal class PathInput : IPathInput
+    internal sealed class PathInput : IPathInput
     {
         public string InputLoadPath()
         {
@@ -17,7 +17,9 @@ namespace WPFVersion.Model
 
         private string InputPath(FileDialog dialog)
         {
-            return dialog.ShowDialog() == true ? dialog.FileName : string.Empty;
+            return dialog.ShowDialog() == true
+                ? dialog.FileName 
+                : string.Empty;
         }
     }
 }

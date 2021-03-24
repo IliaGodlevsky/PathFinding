@@ -7,7 +7,7 @@ namespace Conditional
     /// </summary>
     internal class ConditionConstruction<T>
     {
-        public ConditionConstruction(Action<T> body, 
+        public ConditionConstruction(Action<T> body,
             Predicate<T> condition = null)
         {
             this.condition = condition;

@@ -20,7 +20,7 @@ namespace Algorithm.Extensions.Tests
             coordinateToMock = new Mock<ICoordinate>();
         }
 
-        [TestCase(new int[] {3, 15 }, new int[] { 4, 6 }, ExpectedResult = 9)]
+        [TestCase(new int[] { 3, 15 }, new int[] { 4, 6 }, ExpectedResult = 9)]
         [TestCase(new int[] { 7, 1, 20 }, new int[] { 5, 9, 1 }, ExpectedResult = 19)]
         [TestCase(new int[] { 5 }, new int[] { 33 }, ExpectedResult = 28)]
         [TestCase(new int[] { 4, 7, 3, 20 }, new int[] { 1, 5, 16, 9 }, ExpectedResult = 13)]

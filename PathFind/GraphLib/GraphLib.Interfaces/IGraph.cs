@@ -6,7 +6,7 @@ namespace GraphLib.Interface
     /// 
     /// </summary>
     public interface IGraph
-    {       
+    {
         IEnumerable<IVertex> Vertices { get; }
 
         IEnumerable<int> DimensionsSizes { get; }

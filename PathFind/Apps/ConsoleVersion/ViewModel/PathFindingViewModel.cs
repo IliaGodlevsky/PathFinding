@@ -103,7 +103,7 @@ namespace ConsoleVersion.ViewModel
 
             var upperPosibleXValue = (mainViewModel.Graph as Graph2D).Width - 1;
             var upperPosibleYValue = (mainViewModel.Graph as Graph2D).Length - 1;
-            Coordinate2D point; 
+            Coordinate2D point;
             IVertex vertex;
             do
             {

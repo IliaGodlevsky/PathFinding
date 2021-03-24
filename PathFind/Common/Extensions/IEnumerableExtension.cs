@@ -59,7 +59,7 @@ namespace Common.Extensions
         /// <param name="action"></param>
         /// <returns>The same <paramref name="collection"/> with elements 
         /// to which <paramref name="action"/> was applied</returns>
-        public static IEnumerable<T> ForEach<T>(this IEnumerable<T> collection, 
+        public static IEnumerable<T> ForEach<T>(this IEnumerable<T> collection,
             Action<T> action)
         {
             foreach (var item in collection)
@@ -79,7 +79,7 @@ namespace Common.Extensions
         /// <param name="self"></param>
         /// <param name="action"></param>
         /// <returns></returns>
-        public static IEnumerable<T> ForEach<T>(this IEnumerable<T> self, 
+        public static IEnumerable<T> ForEach<T>(this IEnumerable<T> self,
             Action<T, int> action)
         {
             Enumerable
@@ -124,7 +124,7 @@ namespace Common.Extensions
         /// <param name="predicate"></param>
         /// <returns>true if <paramref name="predicate"/> is true 
         /// for each corresponding elements in two sequencies and false if not</returns>
-        public static bool Match<T>(this IEnumerable<T> self, 
+        public static bool Match<T>(this IEnumerable<T> self,
             IEnumerable<T> second, Func<T, T, bool> predicate)
         {
             #region InvariantsObservance

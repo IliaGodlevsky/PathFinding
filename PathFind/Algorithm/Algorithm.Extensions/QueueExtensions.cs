@@ -20,7 +20,7 @@ namespace Algorithm.Extensions
 
         public static Queue<T> EnqueueRange<T>(this Queue<T> queue, IEnumerable<T> range)
         {
-            foreach(var item in range)
+            foreach (var item in range)
             {
                 queue.Enqueue(item);
             }

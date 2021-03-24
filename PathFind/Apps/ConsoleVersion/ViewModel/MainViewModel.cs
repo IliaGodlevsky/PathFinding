@@ -9,7 +9,6 @@ using GraphLib.Base;
 using GraphLib.Extensions;
 using GraphLib.Interface;
 using GraphLib.Realizations;
-using GraphLib.Realizations.VertexCost;
 using GraphLib.Serialization.Interfaces;
 using GraphViewModel;
 using System;
@@ -49,11 +48,11 @@ namespace ConsoleVersion.ViewModel
 
                 view.Start();
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 Logger.Instance.Error(ex);
             }
-            
+
         }
 
         [MenuItem("Find path", MenuItemPriority.High)]
@@ -70,7 +69,7 @@ namespace ConsoleVersion.ViewModel
                         EndPoints = EndPoints
                     };
                     model.OnPathNotFound += OnPathNotFound;
-                    var view = new PathFindView(model);                   
+                    var view = new PathFindView(model);
                     view.Start();
                 }
                 catch (Exception ex)

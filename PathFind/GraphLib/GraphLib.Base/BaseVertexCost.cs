@@ -42,6 +42,6 @@ namespace GraphLib.Base
             return CurrentCost.GetHashCode();
         }
 
-        public static ValueRange CostRange { get; set; }        
+        public static ValueRange CostRange { get; set; }
     }
 }

@@ -23,7 +23,7 @@ namespace GraphLib.Base
                     "to coordinates number of dimensions\n";
 
                 message += $"Required value is {numberOfDimensions}";
-                throw new ArgumentOutOfRangeException(argumentName, 
+                throw new ArgumentOutOfRangeException(argumentName,
                     coordinates.Count(), message);
             }
         }

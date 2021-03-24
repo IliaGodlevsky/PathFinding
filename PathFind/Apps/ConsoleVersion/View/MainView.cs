@@ -44,7 +44,7 @@ namespace ConsoleVersion.View
         {
             GraphFieldPosition
                 = new Coordinate2D(
-                    WidthOfOrdinateView, 
+                    WidthOfOrdinateView,
                     HeightOfAbscissaView + HeightOfGraphParametresView);
         }
 

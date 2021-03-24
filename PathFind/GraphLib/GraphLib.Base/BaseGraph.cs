@@ -10,6 +10,8 @@ namespace GraphLib.Base
 {
     public abstract class BaseGraph : IGraph
     {
+        public static IGraph NullGraph => new NullGraph();
+
         public BaseGraph(int numberOfDimensions, params int[] dimensionSizes)
         {
             DimensionsSizes = dimensionSizes.ToArray();
@@ -41,7 +43,7 @@ namespace GraphLib.Base
             get
             {
                 return IsSuitableCoordinate(coordinateValues)
-               ? vertices[coordinateValues.ToIndex(DimensionsSizes.ToArray())] 
+               ? vertices[coordinateValues.ToIndex(DimensionsSizes.ToArray())]
                : new DefaultVertex();
             }
             set

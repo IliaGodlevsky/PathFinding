@@ -2,7 +2,7 @@
 
 namespace WindowsFormsVersion.Model
 {
-    internal class VertexFactory : IVertexFactory
+    internal sealed class VertexFactory : IVertexFactory
     {
         public IVertex CreateVertex()
         {

@@ -4,7 +4,7 @@ using System;
 namespace ConsoleVersion.Model
 {
     internal class PathInput : IPathInput
-    {        
+    {
         public string InputLoadPath()
         {
             return InputPath();

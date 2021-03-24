@@ -12,7 +12,7 @@ namespace Common
             {
                 if (instance == null)
                     instance = new Logger();
-                return instance;                
+                return instance;
             }
         }
 
@@ -38,7 +38,7 @@ namespace Common
             action(message);
         }
 
-        private void Log(Exception ex, string message, 
+        private void Log(Exception ex, string message,
             Action<Exception, string> action)
         {
             if (string.IsNullOrEmpty(message))

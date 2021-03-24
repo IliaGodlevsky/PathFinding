@@ -66,20 +66,24 @@ namespace Conditional
         /// <param name="paramtre"></param>
         public void Walk(T paramtre, Predicate<T> walkCondition = null)
         {
-            bool IsCondition(ConditionConstruction<T> condition)
-                => condition.IsCondition(paramtre) == true;
-
-            void Execute(T param) 
-                => conditionConstructions
-                         .FirstOrDefault(IsCondition)
-                         ?.ExecuteBody(param);
-
-            var conditionConstruction 
-                = new ConditionConstruction<T>(Execute, walkCondition);
-
-            if (IsCondition(conditionConstruction))
+            if (paramtre != null)
             {
-                conditionConstruction?.ExecuteBody(paramtre);
+                bool IsCondition(ConditionConstruction<T> condition)
+                {
+                    return condition.IsCondition(paramtre) == true;
+                }
+
+                void Execute(T param)
+                {
+                    conditionConstructions.FirstOrDefault(IsCondition)?.ExecuteBody(param);
+                }
+
+                var conditionConstruction = new ConditionConstruction<T>(Execute, walkCondition);
+
+                if (IsCondition(conditionConstruction))
+                {
+                    conditionConstruction?.ExecuteBody(paramtre);
+                }
             }
         }
 

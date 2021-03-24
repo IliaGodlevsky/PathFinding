@@ -13,7 +13,7 @@ namespace ConsoleVersion.View
         public PathFindView(PathFindingViewModel model)
         {
             Model = model;
-            
+
             model.AlgorithmKeys = AlgorithmsFactory.AlgorithmsDescriptions.ToArray();
             var algorithmMenu = Menu.CreateMenu(model.AlgorithmKeys);
             Model.AlgorithmKeyInputMessage = algorithmMenu + Resources.ChooseAlrorithm;

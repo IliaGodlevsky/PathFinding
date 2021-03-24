@@ -1,0 +1,82 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{E24547B4-0824-4D1F-8534-B60F8E6B9393}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Plugins.AStarModified</RootNamespace>
+    <AssemblyName>Plugins.AStarModified</AssemblyName>
+    <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <Deterministic>true</Deterministic>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="AStarModified.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\Algorithm\Algorithm.Base\Algorithm.Base.csproj">
+      <Project>{04393071-3BA6-42C5-89D8-A89E3AC34511}</Project>
+      <Name>Algorithm.Base</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Algorithm\Algorithm.Extensions\Algorithm.Extensions.csproj">
+      <Project>{11c8b301-fe40-44a1-a5a2-bc684b6a56a0}</Project>
+      <Name>Algorithm.Extensions</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Common\Common.csproj">
+      <Project>{A5A743F5-D346-4B2B-B6AC-07152F64E4D9}</Project>
+      <Name>Common</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\GraphLib\GraphLib.Common\GraphLib.Common.csproj">
+      <Project>{3cd8330e-9445-4dc4-a1da-ee704f652942}</Project>
+      <Name>GraphLib.Common</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\GraphLib\GraphLib.Extensions\GraphLib.Extensions.csproj">
+      <Project>{93f88f47-1871-44cd-9622-eb8d406c969c}</Project>
+      <Name>GraphLib.Extensions</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\GraphLib\GraphLib.Interfaces\GraphLib.Interfaces.csproj">
+      <Project>{d3c5ccfe-698b-41c7-9a72-5fd0262765e1}</Project>
+      <Name>GraphLib.Interfaces</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Plugins.AStarAlgorithm\Plugins.AStarAlgorithm.csproj">
+      <Project>{dc12d8dc-b6d9-4c57-b6e2-a15373b5f07e}</Project>
+      <Name>Plugins.AStarAlgorithm</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Plugins.DijkstraALgorithm\Plugins.DijkstraALgorithm.csproj">
+      <Project>{5d200d2a-fb7c-4c73-bcb0-5fc946aa3f93}</Project>
+      <Name>Plugins.DijkstraALgorithm</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+</Project>

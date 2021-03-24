@@ -13,7 +13,7 @@ namespace WindowsFormsVersion.ViewModel
         public GraphCreatingViewModel(IMainModel model,
             IGraphAssembler graphFactory) : base(model, graphFactory)
         {
-            
+
         }
 
         public void CreateGraph(object sender, EventArgs e)

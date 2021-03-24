@@ -1,7 +1,6 @@
 ﻿using Common;
 using Common.Extensions;
 using GraphLib.Base;
-using GraphLib.Common.NullObjects;
 using GraphLib.Extensions;
 using GraphLib.Interface;
 using GraphLib.Serialization.Interfaces;
@@ -28,14 +27,14 @@ namespace GraphViewModel
             IGraphSerializer graphSerializer,
             IGraphAssembler graphAssembler,
             IPathInput pathInput)
-        {          
+        {
             this.eventHolder = eventHolder;
             serializer = graphSerializer;
             this.fieldFactory = fieldFactory;
             this.graphAssembler = graphAssembler;
             this.pathInput = pathInput;
 
-            Graph = new NullGraph();
+            Graph = BaseGraph.NullGraph;
         }
 
         public async virtual void SaveGraph()

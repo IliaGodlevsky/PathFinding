@@ -61,6 +61,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App\Application.cs" />
+    <Compile Include="App\IApplication.cs" />
     <Compile Include="Attributes\MenuItemAttribute.cs" />
     <Compile Include="Configure\ContainerConfigure.cs" />
     <Compile Include="Constants.cs" />

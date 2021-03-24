@@ -29,11 +29,11 @@ namespace WPFVersion.ViewModel
         public ICommand CancelPathFindAlgorithmChoice { get; }
 
         private IList<string> algorithmKeys;
-        public override IList<string> AlgorithmKeys 
-        { 
+        public override IList<string> AlgorithmKeys
+        {
             get => algorithmKeys;
-            set 
-            { 
+            set
+            {
                 algorithmKeys = value;
                 OnPropertyChanged();
             }

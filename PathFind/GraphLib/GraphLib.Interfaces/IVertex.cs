@@ -11,7 +11,7 @@ namespace GraphLib.Interface
 
         IVertexCost Cost { get; set; }
 
-        IList<IVertex> Neighbours { get; set; }
+        ICollection<IVertex> Neighbours { get; set; }
 
         ICoordinate Position { get; set; }
     }

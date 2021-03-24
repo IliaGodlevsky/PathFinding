@@ -29,7 +29,7 @@ namespace ConsoleVersion.Model
         }
 
         private bool isObstacle;
-        public bool IsObstacle 
+        public bool IsObstacle
         {
             get => isObstacle;
             set
@@ -58,7 +58,7 @@ namespace ConsoleVersion.Model
 
         public Color Colour { get; set; }
 
-        public IList<IVertex> Neighbours { get; set; }
+        public ICollection<IVertex> Neighbours { get; set; }
 
         public ICoordinate Position { get; set; }
 
@@ -150,7 +150,7 @@ namespace ConsoleVersion.Model
                     if (Position != null)
                     {
                         var position = Position as Coordinate2D;
-                        var consolePosition = MainView.GraphFieldPosition;                        
+                        var consolePosition = MainView.GraphFieldPosition;
                         var left = consolePosition.X + position.X * Constants.LateralDistanceBetweenVertices;
                         var top = consolePosition.Y + position.Y;
                         consoleCoordinate = new Coordinate2D(left, top);

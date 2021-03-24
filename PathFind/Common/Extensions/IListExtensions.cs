@@ -2,9 +2,9 @@
 
 namespace Common.Extensions
 {
-    public static class IListExtensions
+    public static class ICollectionExtensions
     {
-        public static void AddRange<T>(this IList<T> collection, IEnumerable<T> range)
+        public static void AddRange<T>(this ICollection<T> collection, IEnumerable<T> range)
         {
             foreach (var item in range)
             {
@@ -12,7 +12,7 @@ namespace Common.Extensions
             }
         }
 
-        public static void RemoveRange<T>(this IList<T> collection, IEnumerable<T> range)
+        public static void RemoveRange<T>(this ICollection<T> collection, IEnumerable<T> range)
         {
             foreach (var item in range)
             {

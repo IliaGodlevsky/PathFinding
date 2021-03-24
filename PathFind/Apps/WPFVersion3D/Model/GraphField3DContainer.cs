@@ -4,7 +4,7 @@ using System.Windows.Media.Media3D;
 
 namespace WPFVersion3D.Model
 {
-    internal class GraphField3DContainer : ModelVisual3D
+    internal sealed class GraphField3DContainer : ModelVisual3D
     {
         public static readonly DependencyProperty GraphFieldProperty;
 
@@ -23,7 +23,7 @@ namespace WPFVersion3D.Model
             set => SetValue(GraphFieldProperty, value);
         }
 
-        protected static void OnGraphFieldChanged(DependencyObject depObj, 
+        protected static void OnGraphFieldChanged(DependencyObject depObj,
             DependencyPropertyChangedEventArgs args)
         {
             var field = depObj as GraphField3DContainer;

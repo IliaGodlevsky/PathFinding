@@ -49,6 +49,10 @@
       <Project>{a5a743f5-d346-4b2b-b6ac-07152f64e4d9}</Project>
       <Name>Common</Name>
     </ProjectReference>
+    <ProjectReference Include="..\..\GraphLib\GraphLib.Base\GraphLib.Base.csproj">
+      <Project>{6AA3B516-ABFE-4EDA-98DD-1CE799DA747F}</Project>
+      <Name>GraphLib.Base</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\GraphLib\GraphLib.Common\GraphLib.Common.csproj">
       <Project>{3cd8330e-9445-4dc4-a1da-ee704f652942}</Project>
       <Name>GraphLib.Common</Name>
@@ -60,6 +64,10 @@
     <ProjectReference Include="..\..\GraphLib\GraphLib.Interfaces\GraphLib.Interfaces.csproj">
       <Project>{d3c5ccfe-698b-41c7-9a72-5fd0262765e1}</Project>
       <Name>GraphLib.Interfaces</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Algorithm.Common\Algorithm.Common.csproj">
+      <Project>{DF721A89-3E01-4159-B51A-E5723C9FD0BA}</Project>
+      <Name>Algorithm.Common</Name>
     </ProjectReference>
     <ProjectReference Include="..\Algorithm.Infrastructure\Algorithm.Infrastructure.csproj">
       <Project>{da2a9a8c-0ef3-4edb-b026-3ff86def9464}</Project>

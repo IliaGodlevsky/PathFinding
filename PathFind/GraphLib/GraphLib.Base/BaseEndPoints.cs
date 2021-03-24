@@ -13,11 +13,11 @@ namespace GraphLib.Base
         {
             Reset();
             If = new If<IVertex>(v => Start.IsEqual(v), v => UnsetStartVertex(v))
-                  .ElseIf(v => End.IsEqual(v),          v => UnsetEndVertex(v))
-                  .ElseIf(v => CanSetStartVertex(v),    v => SetStartVertex(v))
-                  .ElseIf(V => Start.IsIsolated(),      v => ReplaceStartVertex(v))
-                  .ElseIf(v => CanSetEndVertex(v),      v => SetEndVertex(v))
-                  .ElseIf(V => End.IsIsolated(),        v => ReplaceEndVertex(v));
+                  .ElseIf(v => End.IsEqual(v), v => UnsetEndVertex(v))
+                  .ElseIf(v => CanSetStartVertex(v), v => SetStartVertex(v))
+                  .ElseIf(V => Start.IsIsolated(), v => ReplaceStartVertex(v))
+                  .ElseIf(v => CanSetEndVertex(v), v => SetEndVertex(v))
+                  .ElseIf(V => End.IsIsolated(), v => ReplaceEndVertex(v));
         }
 
         public BaseEndPoints(IVertex start, IVertex end) : this()
@@ -65,8 +65,7 @@ namespace GraphLib.Base
 
         protected virtual void SetEndPoints(object sender, EventArgs e)
         {
-            If.Walk(sender as IVertex, 
-                obj => (obj as IVertex)?.IsIsolated() == false);
+            If.Walk(sender as IVertex, v => v?.IsIsolated() == false);
         }
 
         protected virtual void SetStartVertex(IVertex vertex)

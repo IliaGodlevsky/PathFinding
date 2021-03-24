@@ -2,7 +2,7 @@
 
 namespace WPFVersion3D.Model
 {
-    internal class Vertex3DFactory : IVertexFactory
+    internal sealed class Vertex3DFactory : IVertexFactory
     {
         public IVertex CreateVertex()
         {

@@ -3,7 +3,7 @@ using System.Windows.Input;
 
 namespace WPFVersion3D.Infrastructure
 {
-    internal class RelayCommand : ICommand
+    internal sealed class RelayCommand : ICommand
     {
         public event EventHandler CanExecuteChanged
         {

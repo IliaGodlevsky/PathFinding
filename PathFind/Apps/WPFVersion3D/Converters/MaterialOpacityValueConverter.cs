@@ -4,7 +4,7 @@ using System.Windows.Data;
 
 namespace WPFVersion3D.Converters
 {
-    internal class MaterialOpacityValueConverter : IValueConverter
+    internal sealed class MaterialOpacityValueConverter : IValueConverter
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {

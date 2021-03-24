@@ -5,7 +5,7 @@ using System.Windows.Data;
 
 namespace WPFVersion.Converters
 {
-    internal class StringToRangedDoubleConverter : IValueConverter
+    internal sealed class StringToRangedDoubleConverter : IValueConverter
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {

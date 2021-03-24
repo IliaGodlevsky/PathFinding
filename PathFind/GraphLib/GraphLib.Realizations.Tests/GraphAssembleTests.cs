@@ -1,6 +1,4 @@
-﻿using Common;
-using GraphLib.Common.NullObjects;
-using GraphLib.Extensions;
+﻿using GraphLib.Common.NullObjects;
 using GraphLib.Interface;
 using GraphLib.Realizations.Factories;
 using GraphLib.Realizations.Tests.Factories;
@@ -25,7 +23,7 @@ namespace GraphLib.Realizations.Tests
             vertexFactory = new TestVertexFactory();
             costFactory = new TestCostFactory();
             graphFactory = new TestGraphFactory();
-            graphAssembler = new GraphAssembler(vertexFactory, 
+            graphAssembler = new GraphAssembler(vertexFactory,
                 coordinateFactory, graphFactory, costFactory);
         }
 

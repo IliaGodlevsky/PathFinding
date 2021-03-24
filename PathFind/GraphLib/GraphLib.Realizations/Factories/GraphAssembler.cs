@@ -37,7 +37,7 @@ namespace GraphLib.Realizations.Factories
         /// pathfinding algorithms</returns>
         /// <exception cref="ArgumentException"></exception>
         /// <exception cref="ArgumentOutOfRangeException"></exception>
-        public IGraph AssembleGraph(int obstaclePercent = 0, 
+        public IGraph AssembleGraph(int obstaclePercent = 0,
             params int[] graphDimensionsSizes)
         {
             try

@@ -103,7 +103,7 @@ namespace WPFVersion3D.Model
         }
 
         private bool isObstacle;
-        public bool IsObstacle 
+        public bool IsObstacle
         {
             get => isObstacle;
             set
@@ -116,7 +116,7 @@ namespace WPFVersion3D.Model
 
         public IVertexCost Cost { get; set; }
 
-        public IList<IVertex> Neighbours { get; set; }
+        public ICollection<IVertex> Neighbours { get; set; }
 
         public ICoordinate Position { get; set; }
 

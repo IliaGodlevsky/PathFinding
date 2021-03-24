@@ -5,7 +5,7 @@ using WindowsFormsVersion.View;
 
 namespace WindowsFormsVersion.Model
 {
-    internal class GraphFieldFactory : BaseGraphFieldFactory
+    internal sealed class GraphFieldFactory : BaseGraphFieldFactory
     {
         protected override IGraphField GetField()
         {

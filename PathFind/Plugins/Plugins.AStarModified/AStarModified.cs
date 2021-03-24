@@ -1,7 +1,7 @@
 ﻿using Algorithm.Extensions;
 using Common;
 using Common.Extensions;
-using GraphLib.Common.NullObjects;
+using GraphLib.Base;
 using GraphLib.Extensions;
 using GraphLib.Interface;
 using System;
@@ -25,7 +25,7 @@ namespace Plugins.AStarModified
             }
         }
 
-        public AStarModified() : this(new NullGraph())
+        public AStarModified() : this(BaseGraph.NullGraph)
         {
 
         }

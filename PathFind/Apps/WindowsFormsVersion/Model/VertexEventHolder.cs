@@ -7,7 +7,7 @@ using WindowsFormsVersion.Model;
 
 namespace WindowsFormsVersion.EventHolder
 {
-    internal class VertexEventHolder : BaseVertexEventHolder
+    internal sealed class VertexEventHolder : BaseVertexEventHolder
     {
         protected override int GetWheelDelta(EventArgs e)
         {

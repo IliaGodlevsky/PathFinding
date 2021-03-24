@@ -33,7 +33,7 @@ namespace ConsoleVersion.InputClass
         /// <returns>A number in the range
         /// <paramref name="rangeOfValidInput"/></returns>
         /// <exception cref="System.IO.IOException"></exception>
-        public static int InputNumber(string accompanyingMessage, 
+        public static int InputNumber(string accompanyingMessage,
             ValueRange rangeOfValidInput)
         {
             string userInput;
@@ -64,7 +64,7 @@ namespace ConsoleVersion.InputClass
             return new Coordinate2D(xCoordinate, yCoordinate);
         }
 
-        private static bool IsValidInput(string userInput, 
+        private static bool IsValidInput(string userInput,
             ValueRange rangeOfValidInput)
         {
             return int.TryParse(userInput, out var input)

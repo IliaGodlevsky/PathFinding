@@ -1,9 +1,11 @@
-﻿using ConsoleVersion.Model;
+﻿using Common.Extensions;
+using ConsoleVersion.Model;
 using GraphLib.Interface;
 using GraphLib.Realizations;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
+using System.Linq;
 using System.Text;
 using Console = Colorful.Console;
 
@@ -52,11 +54,11 @@ namespace ConsoleVersion.View
         private void DrawOrdinateFrames()
         {
             int padding = MainView.YCoordinatePadding;
-            for (int length = 0; length < Length; length++)
+            Enumerable.Range(0, Length).ForEach(index =>
             {
-                DrawLeftYCoodrinate(padding, length);
-                DrawRightYCoordinate(padding, length);
-            }
+                DrawLeftYCoodrinate(padding, index);
+                DrawRightYCoordinate(padding, index);
+            });
         }
 
         private void DrawAbscissaFrame(int topOffset, FramedAbscissaPosition view)
@@ -121,7 +123,7 @@ namespace ConsoleVersion.View
 
                 for (var i = 0; i < Width; i++)
                 {
-                    frame.Append(HorizontalFrameComponent);                   
+                    frame.Append(HorizontalFrameComponent);
                 }
 
                 return frame.ToString();

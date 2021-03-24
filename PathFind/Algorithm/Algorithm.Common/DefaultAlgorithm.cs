@@ -2,7 +2,7 @@
 using Algorithm.Infrastructure.Handlers;
 using Algorithm.Interfaces;
 using Common.Attributes;
-using GraphLib.Common.NullObjects;
+using GraphLib.Base;
 using GraphLib.Interface;
 using System.Threading.Tasks;
 
@@ -19,7 +19,7 @@ namespace Algorithm.Common
 
         public IGraph Graph
         {
-            get => new NullGraph();
+            get => BaseGraph.NullGraph;
             set => _ = value;
         }
 

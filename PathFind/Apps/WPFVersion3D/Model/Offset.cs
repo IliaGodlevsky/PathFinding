@@ -1,6 +1,6 @@
 ﻿namespace WPFVersion3D.Model
 {
-    internal class Offset
+    internal sealed class Offset
     {
         public double GraphCenterOffset => AdjustedDimensionSize * AdjustedVertexSize;
 

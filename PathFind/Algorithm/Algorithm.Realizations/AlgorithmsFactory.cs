@@ -1,5 +1,5 @@
-﻿using Algorithm.Common;
-using System.Reflection;
+﻿using Algorithm.Base;
+using Algorithm.Common;
 using Algorithm.Interfaces;
 using Common;
 using Common.Enums;
@@ -9,6 +9,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.Runtime.InteropServices;
 
 namespace Algorithm.Realizations
@@ -41,19 +42,14 @@ namespace Algorithm.Realizations
         /// <exception cref="InvalidComObjectException"/>
         /// <exception cref="COMException"/>
         public static void LoadAlgorithms(
-            string path, 
+            string path,
             SearchOption searchOption = SearchOption.AllDirectories)
         {
             LoadOption loadOption = LoadOption.Hierarchy;
-            algorithms =
-                ClassLoader<IAlgorithm>
-                .Instance
-                .FetchTypes(
-                    path,
-                    loadOption, 
-                    searchOption)
+            algorithms = ClassLoader<IAlgorithm>.Instance
+                .FetchTypes(path, loadOption, searchOption)
                 .Where(IsConcreteType)
-                .ToDictionary(Description, Instance);
+                .ToDictionary(AlgorithmDescription, AlgorithmInstance);
         }
 
         /// <summary>
@@ -71,7 +67,7 @@ namespace Algorithm.Realizations
         public static IAlgorithm GetAlgorithm(string key)
         {
             return algorithms.TryGetValue(key, out IAlgorithm algorithm)
-                ? algorithm : new DefaultAlgorithm();
+                ? algorithm : BaseAlgorithm.Default;
         }
 
         static AlgorithmsFactory()
@@ -79,12 +75,12 @@ namespace Algorithm.Realizations
             algorithms = new Dictionary<string, IAlgorithm>();
         }
 
-        private static IAlgorithm Instance(Type type)
+        private static IAlgorithm AlgorithmInstance(Type type)
         {
             return (IAlgorithm)Activator.CreateInstance(type);
         }
 
-        private static string Description(Type type)
+        private static string AlgorithmDescription(Type type)
         {
             var attribute = type.GetAttribute<DescriptionAttribute>();
             return attribute?.Description ?? type.Name;

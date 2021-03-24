@@ -4,7 +4,7 @@ using System;
 namespace WPFVersion3D.Model
 {
     [Serializable]
-    internal class Vertex3DCost : BaseVertexCost
+    internal sealed class Vertex3DCost : BaseVertexCost
     {
         public Vertex3DCost(int cost) : base(cost)
         {

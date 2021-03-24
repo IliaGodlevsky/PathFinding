@@ -15,7 +15,7 @@ namespace GraphLib.Extensions
 
         public static bool IsIsolated(this IVertex self)
         {
-            return self.IsObstacle 
+            return self.IsObstacle
                 || self.Neighbours.All(neighbour => neighbour.IsObstacle);
         }
 
@@ -81,14 +81,18 @@ namespace GraphLib.Extensions
             }
             #endregion
 
+            bool IsWithingGraph(int[] coordinate) => coordinate.IsWithinGraph(graph);
+            IVertex Vertex(int[] coordinate) => graph[coordinate];
+            bool CanBeNeighbourOf(IVertex vertex) => vertex.CanBeNeighbourOf(self);
+
             if (graph.Vertices.Any())
             {
                 var coordinateRadar = new CoordinateAroundRadar(self.Position);
                 self.Neighbours = coordinateRadar
                                     .Environment
-                                    .Where(coordinate => coordinate.IsWithinGraph(graph))
-                                    .Select(coordinate => graph[coordinate])
-                                    .Where(vertex => vertex.CanBeNeighbourOf(self))
+                                    .Where(IsWithingGraph)
+                                    .Select(Vertex)
+                                    .Where(CanBeNeighbourOf)
                                     .ToList();
             }
         }

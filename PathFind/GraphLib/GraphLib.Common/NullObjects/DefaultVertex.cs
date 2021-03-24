@@ -11,11 +11,8 @@ namespace GraphLib.Common.NullObjects
 
         public IVertexCost Cost { get => new DefaultCost(); set { } }
 
-        public IList<IVertex> Neighbours { get => new List<IVertex>(); set { } }
+        public ICollection<IVertex> Neighbours { get => new List<IVertex>(); set { } }
 
         public ICoordinate Position { get => new DefaultCoordinate(); set { } }
-        
-        public ICoordinateRadar CoordinateRadar 
-            => new CoordinateAroundRadar(Position);
     }
 }

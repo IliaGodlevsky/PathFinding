@@ -1,6 +1,5 @@
 ﻿using GraphLib.Extensions;
 using GraphLib.Interface;
-using GraphLib.Realizations.VertexCost;
 using GraphLib.Serialization;
 using GraphLib.Serialization.Extensions;
 using System.Collections.Generic;
@@ -45,7 +44,7 @@ namespace WPFVersion.Model
         }
 
         private bool isObstacle;
-        public bool IsObstacle 
+        public bool IsObstacle
         {
             get => isObstacle;
             set
@@ -67,7 +66,7 @@ namespace WPFVersion.Model
             }
         }
 
-        public IList<IVertex> Neighbours { get; set; }
+        public ICollection<IVertex> Neighbours { get; set; }
 
         private ICoordinate position;
         public ICoordinate Position

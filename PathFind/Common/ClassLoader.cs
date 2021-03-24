@@ -60,8 +60,8 @@ namespace Common
             this.loadOption = loadOption;
             return Directory
                   .GetFiles(
-                    assemblesPath, 
-                    searchPattern, 
+                    assemblesPath,
+                    searchPattern,
                     searchOption)
                   .Select(Assembly.LoadFrom)
                   .SelectMany(Types)

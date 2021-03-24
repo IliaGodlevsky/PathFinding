@@ -3,7 +3,7 @@ using Algorithm.Extensions;
 using Algorithm.Interfaces;
 using Algorithm.Realizations;
 using Common.Extensions;
-using GraphLib.Common.NullObjects;
+using GraphLib.Base;
 using GraphLib.Interface;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -14,7 +14,7 @@ namespace Plugins.DistanceFirstAlgorithm
     [Description("Distance-first algorithm")]
     public class DistanceFirstAlgorithm : BaseAlgorithm
     {
-        public DistanceFirstAlgorithm() : this(new NullGraph())
+        public DistanceFirstAlgorithm() : this(BaseGraph.NullGraph)
         {
 
         }

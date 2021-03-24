@@ -63,22 +63,22 @@ namespace WPFVersion.ViewModel
         public ICommand ShowVertexCost { get; }
 
         public MainWindowViewModel(
-            BaseGraphFieldFactory   fieldFactory,
-            IVertexEventHolder      eventHolder,
-            IGraphSerializer        graphSerializer,
-            IGraphAssembler            graphFactory,
-            IPathInput              pathInput) : base(fieldFactory, eventHolder, graphSerializer, graphFactory, pathInput)
+            BaseGraphFieldFactory fieldFactory,
+            IVertexEventHolder eventHolder,
+            IGraphSerializer graphSerializer,
+            IGraphAssembler graphFactory,
+            IPathInput pathInput) : base(fieldFactory, eventHolder, graphSerializer, graphFactory, pathInput)
         {
             graphSerializer.OnExceptionCaught += OnExceptionCaught;
             graphFactory.OnExceptionCaught += OnExceptionCaught;
 
-            StartPathFindCommand    = new RelayCommand(ExecuteStartPathFindCommand, CanExecuteStartFindPathCommand);
-            CreateNewGraphCommand   = new RelayCommand(ExecuteCreateNewGraphCommand);
-            ClearGraphCommand       = new RelayCommand(ExecuteClearGraphCommand, CanExecuteGraphOperation);
-            SaveGraphCommand        = new RelayCommand(ExecuteSaveGraphCommand, CanExecuteGraphOperation);
-            LoadGraphCommand        = new RelayCommand(ExecuteLoadGraphCommand);
-            ChangeVertexSize        = new RelayCommand(ExecuteChangeVertexSize, CanExecuteGraphOperation);
-            ShowVertexCost          = new RelayCommand(ExecuteShowVertexCostCommand);
+            StartPathFindCommand = new RelayCommand(ExecuteStartPathFindCommand, CanExecuteStartFindPathCommand);
+            CreateNewGraphCommand = new RelayCommand(ExecuteCreateNewGraphCommand);
+            ClearGraphCommand = new RelayCommand(ExecuteClearGraphCommand, CanExecuteGraphOperation);
+            SaveGraphCommand = new RelayCommand(ExecuteSaveGraphCommand, CanExecuteGraphOperation);
+            LoadGraphCommand = new RelayCommand(ExecuteLoadGraphCommand);
+            ChangeVertexSize = new RelayCommand(ExecuteChangeVertexSize, CanExecuteGraphOperation);
+            ShowVertexCost = new RelayCommand(ExecuteShowVertexCostCommand);
         }
 
         public void ExecuteShowVertexCostCommand(object parametre)
@@ -96,7 +96,7 @@ namespace WPFVersion.ViewModel
         public override void FindPath()
         {
             try
-            {                
+            {
                 AlgorithmsFactory.LoadAlgorithms(GetAlgorithmsLoadPath());
                 var viewModel = new PathFindingViewModel(this)
                 {
@@ -118,7 +118,7 @@ namespace WPFVersion.ViewModel
         public override void CreateNewGraph()
         {
             try
-            {                
+            {
                 var model = new GraphCreatingViewModel(this, graphAssembler);
                 var window = new GraphCreatesWindow();
                 PrepareWindow(model, window);

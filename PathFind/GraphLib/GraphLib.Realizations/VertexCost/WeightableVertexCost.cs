@@ -10,7 +10,7 @@ namespace GraphLib.Realizations.VertexCost
     /// Represents a cost of vertex
     /// </summary>
     [Serializable]
-    public sealed class WeightableVertexCost 
+    public sealed class WeightableVertexCost
         : BaseVertexCost, IWeightable
     {
         /// <summary>
@@ -20,7 +20,7 @@ namespace GraphLib.Realizations.VertexCost
         /// Weighted cost is set to the same value
         /// </summary>
         /// <param name="startCost"></param>
-        public WeightableVertexCost(int startCost) 
+        public WeightableVertexCost(int startCost)
             : base(startCost)
         {
             WeightedCost = startCost;
@@ -34,7 +34,7 @@ namespace GraphLib.Realizations.VertexCost
         /// with random cost.
         /// Weighted cost is set to the same value
         /// </summary>
-        public WeightableVertexCost() 
+        public WeightableVertexCost()
             : this(CostRange.GetRandomValueFromRange())
         {
 

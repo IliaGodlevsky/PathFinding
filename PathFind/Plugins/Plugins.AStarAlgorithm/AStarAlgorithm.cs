@@ -1,5 +1,5 @@
 ﻿using Algorithm.Extensions;
-using GraphLib.Common.NullObjects;
+using GraphLib.Base;
 using GraphLib.Interface;
 using Plugins.DijkstraALgorithm;
 using System.ComponentModel;
@@ -9,7 +9,7 @@ namespace Plugins.AStarAlgorithm
     [Description("A* algorithm")]
     public class AStarAlgorithm : DijkstraAlgorithm
     {
-        public AStarAlgorithm() : this(new NullGraph())
+        public AStarAlgorithm() : this(BaseGraph.NullGraph)
         {
 
         }

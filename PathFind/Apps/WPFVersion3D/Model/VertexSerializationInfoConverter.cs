@@ -4,7 +4,7 @@ using GraphLib.Serialization.Interfaces;
 
 namespace WPFVersion3D.Model
 {
-    internal class Vertex3DSerializationInfoConverter : IVertexSerializationInfoConverter
+    internal sealed class Vertex3DSerializationInfoConverter : IVertexSerializationInfoConverter
     {
         public IVertex ConvertFrom(VertexSerializationInfo info)
         {

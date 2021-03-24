@@ -7,7 +7,6 @@ using System;
 using System.IO;
 using System.Linq;
 using System.Runtime.Serialization;
-using System.Threading;
 using System.Threading.Tasks;
 
 namespace GraphLib.Serialization
@@ -34,17 +33,21 @@ namespace GraphLib.Serialization
         /// <exception cref="System.Security.SecurityException"></exception>
         public IGraph LoadGraph(Stream stream)
         {
+
             try
             {
                 var verticesInfo = (GraphSerializationInfo)formatter.Deserialize(stream);
                 var dimensions = verticesInfo.DimensionsSizes.ToArray();
                 var graph = graphFactory.CreateGraph(dimensions);
-                verticesInfo
-                    .ForEach((info, i) => graph[i] = infoConverter.ConvertFrom(info));
+                void CreateVertexFrom(VertexSerializationInfo info, int vertexIndexInGraph)
+                {
+                    graph[vertexIndexInGraph] = infoConverter.ConvertFrom(info);
+                }
+                verticesInfo.ForEach(CreateVertexFrom);
                 graph.ConnectVerticesParallel();
                 return graph;
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 OnExceptionCaught?.Invoke(ex);
                 throw ex;
@@ -65,7 +68,7 @@ namespace GraphLib.Serialization
             {
                 formatter.Serialize(stream, graph.GetGraphSerializationInfo());
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 OnExceptionCaught?.Invoke(ex);
                 throw ex;

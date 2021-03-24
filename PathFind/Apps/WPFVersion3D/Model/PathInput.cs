@@ -3,7 +3,7 @@ using Microsoft.Win32;
 
 namespace WPFVersion3D.Model
 {
-    internal class PathInput : IPathInput
+    internal sealed class PathInput : IPathInput
     {
         public string InputLoadPath()
         {

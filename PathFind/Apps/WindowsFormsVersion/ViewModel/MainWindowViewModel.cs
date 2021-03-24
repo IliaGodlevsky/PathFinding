@@ -65,7 +65,7 @@ namespace WindowsFormsVersion.ViewModel
         public MainWindowViewModel(BaseGraphFieldFactory fieldFactory,
             IVertexEventHolder eventHolder,
             IGraphSerializer graphSerializer,
-            IGraphAssembler graphFactory, 
+            IGraphAssembler graphFactory,
             IPathInput pathInput) : base(fieldFactory, eventHolder, graphSerializer, graphFactory, pathInput)
         {
             graphSerializer.OnExceptionCaught += exception => MessageBox.Show(exception.Message);

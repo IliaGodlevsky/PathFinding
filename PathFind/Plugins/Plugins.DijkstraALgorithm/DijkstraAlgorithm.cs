@@ -3,7 +3,7 @@ using Algorithm.Extensions;
 using Algorithm.Interfaces;
 using Algorithm.Realizations;
 using Common.Extensions;
-using GraphLib.Common.NullObjects;
+using GraphLib.Base;
 using GraphLib.Interface;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -14,7 +14,7 @@ namespace Plugins.DijkstraALgorithm
     [Description("Dijkstra's algorithm")]
     public class DijkstraAlgorithm : BaseAlgorithm
     {
-        public DijkstraAlgorithm() : this(new NullGraph())
+        public DijkstraAlgorithm() : this(BaseGraph.NullGraph)
         {
 
         }

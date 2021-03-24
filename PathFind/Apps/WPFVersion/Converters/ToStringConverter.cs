@@ -4,7 +4,7 @@ using System.Windows.Data;
 
 namespace WPFVersion.Converters
 {
-    internal class ToStringConverter : IValueConverter
+    internal sealed class ToStringConverter : IValueConverter
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {

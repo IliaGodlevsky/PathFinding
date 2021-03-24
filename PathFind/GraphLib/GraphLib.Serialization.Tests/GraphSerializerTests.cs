@@ -1,4 +1,4 @@
-﻿using GraphLib.Common.NullObjects;
+﻿using GraphLib.Base;
 using GraphLib.Interface;
 using GraphLib.Realizations.Factories;
 using GraphLib.Serialization.Tests.Factories;
@@ -42,8 +42,7 @@ namespace GraphLib.Serialization.Tests
         public void SaveGraph_LoadGraph_ReturnsEqualGraph(
             int obstaclePercent, int[] graphParams)
         {
-            IGraph deserialized = new NullGraph();
-
+            var deserialized = BaseGraph.NullGraph;
             var graph = graphAssembler.AssembleGraph(
                 obstaclePercent, graphParams);
             var serializer = new GraphSerializer(

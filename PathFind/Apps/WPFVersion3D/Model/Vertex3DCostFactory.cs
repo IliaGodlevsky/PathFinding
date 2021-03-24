@@ -2,7 +2,7 @@
 
 namespace WPFVersion3D.Model
 {
-    internal class Vertex3DCostFactory : IVertexCostFactory
+    internal sealed class Vertex3DCostFactory : IVertexCostFactory
     {
         public IVertexCost CreateCost()
         {

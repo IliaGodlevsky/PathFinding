@@ -7,7 +7,7 @@ using WPFVersion3D.Infrastructure.Animations;
 
 namespace WPFVersion3D.Converters
 {
-    internal class AnimatedAxisRotatorConverter : IValueConverter
+    internal sealed class AnimatedAxisRotatorConverter : IValueConverter
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {

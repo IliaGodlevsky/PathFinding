@@ -30,8 +30,7 @@ namespace WPFVersion3D.Configure
             builder.RegisterType<Vertex3DEventHolder>().As<IVertexEventHolder>().SingleInstance().PropertiesAutowired();
             builder.RegisterType<GraphField3DFactory>().As<BaseGraphFieldFactory>().SingleInstance();
             builder.RegisterType<BinaryFormatter>().As<IFormatter>().SingleInstance();
-            builder.RegisterType<Vertex3DSerializationInfoConverter>()
-                .As<IVertexSerializationInfoConverter>().SingleInstance();
+            builder.RegisterType<Vertex3DSerializationInfoConverter>().As<IVertexSerializationInfoConverter>().SingleInstance();
 
             return builder.Build();
         }

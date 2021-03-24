@@ -5,7 +5,7 @@ using System.Windows.Media.Media3D;
 
 namespace WPFVersion3D.Converters
 {
-    internal class NumberToPointConverter : IValueConverter
+    internal sealed class NumberToPointConverter : IValueConverter
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {

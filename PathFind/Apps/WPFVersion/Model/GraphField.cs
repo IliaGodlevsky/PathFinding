@@ -5,7 +5,7 @@ using System.Windows.Controls;
 
 namespace WPFVersion.Model
 {
-    internal class GraphField : Canvas, IGraphField
+    internal sealed class GraphField : Canvas, IGraphField
     {
         public GraphField()
         {

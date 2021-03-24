@@ -40,10 +40,10 @@ namespace WindowsFormsVersion.Model
 
         public ICoordinate Position { get; set; }
 
-        public IList<IVertex> Neighbours { get; set; }
+        public ICollection<IVertex> Neighbours { get; set; }
 
         private bool isObstacle;
-        public bool IsObstacle 
+        public bool IsObstacle
         {
             get => isObstacle;
             set
