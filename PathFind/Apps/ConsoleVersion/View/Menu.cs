@@ -87,7 +87,7 @@ namespace ConsoleVersion.ViewModel
             return target.GetType()
                 .GetMethods()
                 .Where(IsMenuMethod)
-                .OrderBy(GetMenuItemPriority);
+                .OrderByDescending(GetMenuItemPriority);
         }
 
         private static bool IsMenuMethod(MethodInfo method)
