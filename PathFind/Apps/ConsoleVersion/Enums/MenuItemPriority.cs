@@ -6,24 +6,24 @@
     internal enum MenuItemPriority
     {
         /// <summary>
-        /// Menu item will be in the top of menu
+        /// Menu item will be in the bottom of menu
         /// </summary>
-        Highest = 0,
+        Lowest = 0,
         /// <summary>
-        /// Menu item will be higher the most of menu items in menu
+        /// Menu item will be lower the most of menu items in menu
         /// </summary>
-        High = 1,
+        Low = 1,
         /// <summary>
         /// Menu item will be somewhere in the middle of menu
         /// </summary>
         Normal = 2,
         /// <summary>
-        /// Menu item will be lower  the most of menu items in menu
+        /// Menu item will be higher the most of menu items in menu
         /// </summary>
-        Low = 3,
+        High = 3,
         /// <summary>
-        /// Menu item will be in the bottom of menu
+        /// Menu item will be in the top of menu
         /// </summary>
-        Lowest = 4
+        Highest = 4,
     }
 }

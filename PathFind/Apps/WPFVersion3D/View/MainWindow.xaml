@@ -6,7 +6,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
         xmlns:converters="clr-namespace:WPFVersion3D.Converters" 
         xmlns:model="clr-namespace:WPFVersion3D.Model"
-        xmlns:animation="clr-namespace:WPFVersion3D.Infrastructure.Animations"
+        xmlns:animation="clr-namespace:WPFVersion3D.Infrastructure.Animators"
         xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
         xmlns:ei="http://schemas.microsoft.com/expression/2010/interactions"
         mc:Ignorable="d"

@@ -73,10 +73,10 @@
     <Compile Include="Converters\DoubleToStringConverter.cs" />
     <Compile Include="Enums\Axis.cs" />
     <Compile Include="Enums\RotationDirection.cs" />
-    <Compile Include="Factories\Model3DFactory.cs" />
-    <Compile Include="Infrastructure\Animations\AnimatedAxisRotator.cs" />
-    <Compile Include="Infrastructure\Animations\NullAnimator.cs" />
-    <Compile Include="Infrastructure\Animations\Interface\IAnimator.cs" />
+    <Compile Include="Model\Model3DFactory.cs" />
+    <Compile Include="Infrastructure\Animators\Interface\IAnimator.cs" />
+    <Compile Include="Infrastructure\Animators\AnimatedAxisRotator.cs" />
+    <Compile Include="Infrastructure\Animators\NullAnimator.cs" />
     <Compile Include="Model\EndPoints.cs" />
     <Compile Include="Model\GraphField3DContainer.cs" />
     <Compile Include="Model\Offset.cs" />

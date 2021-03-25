@@ -1,6 +1,6 @@
 ﻿using System.Windows.Media.Media3D;
 
-namespace WPFVersion3D.Factories
+namespace WPFVersion3D.Model
 {
     /// <summary>
     /// Creates geometric 3D models

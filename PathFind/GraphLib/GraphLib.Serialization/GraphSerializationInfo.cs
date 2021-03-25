@@ -16,7 +16,7 @@ namespace GraphLib.Serialization
             DimensionsSizes = graph.DimensionsSizes.ToArray();
 
             verticesDto = graph.Vertices
-                .Select(vertex => vertex.GetSerializationInfo())
+                .Select(SerializationInfo)
                 .ToArray();
         }
 
@@ -31,6 +31,11 @@ namespace GraphLib.Serialization
         IEnumerator IEnumerable.GetEnumerator()
         {
             return verticesDto.GetEnumerator();
+        }
+
+        private VertexSerializationInfo SerializationInfo(IVertex vertex)
+        {
+            return vertex.GetSerializationInfo();
         }
 
         private readonly IEnumerable<VertexSerializationInfo> verticesDto;

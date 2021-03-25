@@ -14,7 +14,7 @@ using System.Windows;
 using System.Windows.Input;
 using WPFVersion3D.Enums;
 using WPFVersion3D.Infrastructure;
-using WPFVersion3D.Infrastructure.Animations.Interface;
+using WPFVersion3D.Infrastructure.Animators.Interface;
 using WPFVersion3D.Model;
 using WPFVersion3D.View;
 

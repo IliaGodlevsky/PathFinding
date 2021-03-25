@@ -6,7 +6,6 @@ using System.Collections.Generic;
 using System.Windows;
 using System.Windows.Media;
 using System.Windows.Media.Media3D;
-using WPFVersion3D.Factories;
 
 namespace WPFVersion3D.Model
 {

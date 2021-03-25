@@ -3,7 +3,6 @@ using System.Windows;
 using System.Windows.Media.Animation;
 using System.Windows.Media.Media3D;
 using WPFVersion3D.Enums;
-using WPFVersion3D.Infrastructure.Animations.Interface;
 
 using AnimationCreationFunctions =
     System.Collections.Generic.Dictionary
@@ -14,8 +13,9 @@ using DurationCalculationFunctions =
     <WPFVersion3D.Enums.RotationDirection, System.Func<double>>;
 
 using static WPFVersion3D.Constants;
+using WPFVersion3D.Infrastructure.Animators.Interface;
 
-namespace WPFVersion3D.Infrastructure.Animations
+namespace WPFVersion3D.Infrastructure.Animators
 {
     /// <summary>
     /// A class for animated rotation 

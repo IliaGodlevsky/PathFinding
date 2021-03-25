@@ -12,12 +12,12 @@ namespace GraphLib.Base
         public BaseEndPoints()
         {
             Reset();
-            If = new If<IVertex>(v => Start.IsEqual(v), v => UnsetStartVertex(v))
-                  .ElseIf(v => End.IsEqual(v), v => UnsetEndVertex(v))
-                  .ElseIf(v => CanSetStartVertex(v), v => SetStartVertex(v))
-                  .ElseIf(V => Start.IsIsolated(), v => ReplaceStartVertex(v))
-                  .ElseIf(v => CanSetEndVertex(v), v => SetEndVertex(v))
-                  .ElseIf(V => End.IsIsolated(), v => ReplaceEndVertex(v));
+            If = new If<IVertex>(v => Start.IsEqual(v), UnsetStartVertex)
+                  .ElseIf(v => End.IsEqual(v),          UnsetEndVertex)
+                  .ElseIf(CanSetStartVertex,            SetStartVertex)
+                  .ElseIf(V => Start.IsIsolated(),      ReplaceStartVertex)
+                  .ElseIf(CanSetEndVertex,              SetEndVertex)
+                  .ElseIf(V => End.IsIsolated(),        ReplaceEndVertex);
         }
 
         public BaseEndPoints(IVertex start, IVertex end) : this()
@@ -30,12 +30,7 @@ namespace GraphLib.Base
 
         public IVertex Start { get; private set; }
 
-        public IVertex End { get; private set; }
-
-        protected bool CanSetStartVertex(IVertex vertex)
-            => Start.IsDefault() && CanBeEndPoint(vertex);
-        protected bool CanSetEndVertex(IVertex vertex)
-            => !Start.IsDefault() && End.IsDefault() && CanBeEndPoint(vertex);
+        public IVertex End { get; private set; }        
 
         public void SubscribeToEvents(IGraph graph)
         {
@@ -63,9 +58,20 @@ namespace GraphLib.Base
             return !IsEndPoint(vertex) && vertex.IsValidToBeEndPoint();
         }
 
+        protected bool CanSetStartVertex(IVertex vertex)
+        {
+            return Start.IsDefault() && CanBeEndPoint(vertex);
+        }
+
+        protected bool CanSetEndVertex(IVertex vertex)
+        {
+            return !Start.IsDefault() && End.IsDefault() && CanBeEndPoint(vertex);
+        }
+
         protected virtual void SetEndPoints(object sender, EventArgs e)
         {
-            If.Walk(sender as IVertex, v => v?.IsIsolated() == false);
+            bool IsNotIsolated(IVertex vertex) => vertex?.IsIsolated() == false;
+            If.Walk(paramtre: sender as IVertex, walkCondition: IsNotIsolated);
         }
 
         protected virtual void SetStartVertex(IVertex vertex)

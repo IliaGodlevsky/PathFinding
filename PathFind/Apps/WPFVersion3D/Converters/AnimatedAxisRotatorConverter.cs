@@ -3,7 +3,7 @@ using System.Globalization;
 using System.Windows.Data;
 using System.Windows.Media.Media3D;
 using WPFVersion3D.Enums;
-using WPFVersion3D.Infrastructure.Animations;
+using WPFVersion3D.Infrastructure.Animators;
 
 namespace WPFVersion3D.Converters
 {
