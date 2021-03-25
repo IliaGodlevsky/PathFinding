@@ -22,6 +22,8 @@ namespace ConsoleVersion.ViewModel
 {
     internal class MainViewModel : MainModel
     {
+        private const int ExitCode = 0;
+
         public MainViewModel(BaseGraphFieldFactory fieldFactory,
             IVertexEventHolder eventHolder,
             IGraphSerializer graphSerializer,
@@ -140,7 +142,7 @@ namespace ConsoleVersion.ViewModel
         [MenuItem("Quit programm", MenuItemPriority.Lowest)]
         public void Quit()
         {
-            Environment.Exit(0);
+            Environment.Exit(ExitCode);
         }
 
         public void DisplayGraph()
