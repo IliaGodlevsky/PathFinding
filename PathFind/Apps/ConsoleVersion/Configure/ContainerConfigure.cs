@@ -2,7 +2,6 @@
 using ConsoleVersion.App;
 using ConsoleVersion.Model;
 using ConsoleVersion.View;
-using ConsoleVersion.View.Interface;
 using ConsoleVersion.ViewModel;
 using GraphLib.Base;
 using GraphLib.Interface;
@@ -21,8 +20,8 @@ namespace ConsoleVersion.Configure
         {
             var builder = new ContainerBuilder();
 
-            builder.RegisterType<Application>().As<IApplication>().InstancePerLifetimeScope();
-            builder.RegisterType<MainView>().As<IView>().InstancePerLifetimeScope();
+            builder.RegisterType<Application>().AsSelf().InstancePerLifetimeScope();
+            builder.RegisterType<MainView>().AsSelf().InstancePerLifetimeScope();
             builder.RegisterType<EndPoints>().As<BaseEndPoints>().SingleInstance();
             builder.RegisterType<CostFactory>().As<IVertexCostFactory>().SingleInstance();
             builder.RegisterType<MainViewModel>().As<IMainModel>().InstancePerLifetimeScope().PropertiesAutowired();

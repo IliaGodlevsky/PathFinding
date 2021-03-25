@@ -1,10 +1,10 @@
-﻿using ConsoleVersion.View.Interface;
+﻿using ConsoleVersion.View;
 
 namespace ConsoleVersion.App
 {
-    internal class Application : IApplication
+    internal class Application
     {
-        public Application(IView mainView)
+        public Application(MainView mainView)
         {
             this.mainView = mainView;
         }
@@ -14,6 +14,6 @@ namespace ConsoleVersion.App
             mainView.Start();
         }
 
-        private readonly IView mainView;
+        private readonly MainView mainView;
     }
 }

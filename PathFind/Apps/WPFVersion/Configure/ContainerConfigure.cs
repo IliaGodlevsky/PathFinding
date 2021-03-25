@@ -4,7 +4,6 @@ using GraphLib.Interface;
 using GraphLib.Realizations.Factories;
 using GraphLib.Serialization;
 using GraphLib.Serialization.Interfaces;
-using GraphViewModel.Interfaces;
 using System.Runtime.Serialization;
 using System.Runtime.Serialization.Formatters.Binary;
 using WPFVersion.Model;
@@ -20,7 +19,7 @@ namespace WPFVersion.Configure
             var builder = new ContainerBuilder();
 
             builder.RegisterType<EndPoints>().As<BaseEndPoints>().SingleInstance();
-            builder.RegisterType<MainWindowViewModel>().As<IMainModel>().InstancePerLifetimeScope().PropertiesAutowired();
+            builder.RegisterType<MainWindowViewModel>().AsSelf().InstancePerLifetimeScope().PropertiesAutowired();
             builder.RegisterType<VertexFactory>().As<IVertexFactory>().SingleInstance();
             builder.RegisterType<CostFactory>().As<IVertexCostFactory>().SingleInstance();
             builder.RegisterType<Coordinate2DFactory>().As<ICoordinateFactory>().SingleInstance();

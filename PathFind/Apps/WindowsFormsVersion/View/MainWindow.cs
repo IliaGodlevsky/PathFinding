@@ -10,13 +10,13 @@ namespace WindowsFormsVersion.Forms
     {
         private readonly MainWindowViewModel mainModel;
 
-        public MainWindow(IMainModel model)
+        public MainWindow(MainWindowViewModel model)
         {
             InitializeComponent();
 
             StartPosition = FormStartPosition.CenterScreen;
 
-            mainModel = model as MainWindowViewModel;
+            mainModel = model;
             mainModel.MainWindow = this;
 
             var events = new List<EventHandler>()

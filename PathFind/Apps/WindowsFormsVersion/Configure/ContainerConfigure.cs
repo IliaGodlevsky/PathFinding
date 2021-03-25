@@ -4,7 +4,6 @@ using GraphLib.Interface;
 using GraphLib.Realizations.Factories;
 using GraphLib.Serialization;
 using GraphLib.Serialization.Interfaces;
-using GraphViewModel.Interfaces;
 using System.Runtime.Serialization;
 using System.Runtime.Serialization.Formatters.Binary;
 using System.Windows.Forms;
@@ -23,7 +22,7 @@ namespace WindowsFormsVersion.Configure
 
             builder.RegisterType<MainWindow>().As<Form>().InstancePerLifetimeScope();
             builder.RegisterType<EndPoints>().As<BaseEndPoints>().SingleInstance();
-            builder.RegisterType<MainWindowViewModel>().As<IMainModel>().InstancePerLifetimeScope().PropertiesAutowired();
+            builder.RegisterType<MainWindowViewModel>().AsSelf().InstancePerLifetimeScope().PropertiesAutowired();
             builder.RegisterType<CostFactory>().As<IVertexCostFactory>().SingleInstance();
             builder.RegisterType<VertexFactory>().As<IVertexFactory>().SingleInstance();
             builder.RegisterType<PathInput>().As<IPathInput>().SingleInstance();
