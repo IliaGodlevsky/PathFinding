@@ -16,15 +16,14 @@ namespace GraphLib.Base
         public BaseCoordinate(int numberOfDimensions, params int[] coordinates)
         {
             CoordinatesValues = coordinates.ToArray();
-            if (CoordinatesValues.Count() != numberOfDimensions)
+            int actualLenth = coordinates.Length;
+            if (actualLenth != numberOfDimensions)
             {
                 var argumentName = nameof(coordinates);
                 var message = "Number of dimensions must be equal " +
                     "to coordinates number of dimensions\n";
-
                 message += $"Required value is {numberOfDimensions}";
-                throw new ArgumentOutOfRangeException(argumentName,
-                    coordinates.Count(), message);
+                throw new ArgumentOutOfRangeException(argumentName, actualLenth, message);
             }
         }
 

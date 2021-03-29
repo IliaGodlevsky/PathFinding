@@ -58,11 +58,7 @@ namespace Common
         {
             string searchPattern = "*.dll";
             this.loadOption = loadOption;
-            return Directory
-                  .GetFiles(
-                    assemblesPath,
-                    searchPattern,
-                    searchOption)
+            return Directory.GetFiles(assemblesPath, searchPattern, searchOption)
                   .Select(Assembly.LoadFrom)
                   .SelectMany(Types)
                   .DistinctBy(FullName);
@@ -83,15 +79,27 @@ namespace Common
             return type.FullName;
         }
 
+        private bool IsSameType(Type type)
+        {
+            return type.FullName == baseType.FullName;
+        }
+
+        private bool IsDerived(Type type)
+        {
+            return baseType.IsAssignableFrom(type);
+        }
+
         private ClassLoader()
         {
+            baseType = typeof(TBase);
             filterFunctions = new Dictionary<LoadOption, Func<Type, bool>>
             {
-                { LoadOption.OnlyClass, type => typeof(TBase).FullName == type.FullName },
-                { LoadOption.Hierarchy, type => typeof(TBase).IsAssignableFrom(type) }
+                { LoadOption.OnlyClass, IsSameType },
+                { LoadOption.Hierarchy, IsDerived }
             };
         }
 
+        private readonly Type baseType;
         private readonly Dictionary<LoadOption, Func<Type, bool>> filterFunctions;
         private LoadOption loadOption;
 

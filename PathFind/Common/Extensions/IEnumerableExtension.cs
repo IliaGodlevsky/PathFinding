@@ -50,6 +50,17 @@ namespace Common.Extensions
             return self.ElementAt(index);
         }
 
+        public static IEnumerable<TSource> Which<TSource>(this IEnumerable<TSource> self, 
+            Func<TSource, bool> predicate)
+        {
+            return self.Where(predicate);
+        }
+
+        public static IEnumerable<TSource> Shuffle<TSource>(this IEnumerable<TSource> self)
+        {
+            return self.OrderBy(item => rand.Next());
+        }
+
         /// <summary>
         /// Applies delegate <paramref name="action"/> 
         /// to each element of <paramref name="collection"/>

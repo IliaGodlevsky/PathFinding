@@ -25,12 +25,7 @@ namespace GraphLib.Common.NullObjects
 
         public override bool Equals(object pos)
         {
-            if (pos is ICoordinate)
-            {
-                return false;
-            }
-
-            throw new ArgumentException("Invalid value to compare");
+            return pos is DefaultCoordinate;
         }
 
         public override int GetHashCode()

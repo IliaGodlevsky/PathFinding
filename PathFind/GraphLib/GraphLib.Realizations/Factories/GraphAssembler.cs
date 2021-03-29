@@ -44,9 +44,10 @@ namespace GraphLib.Realizations.Factories
             {
                 var graph = graphFactory.CreateGraph(graphDimensionsSizes);
                 Enumerable
-                    .Range(0, graph.GetSize())
+                    .Range(0, graph.Size)
                     .AsParallel()
                     .ForEach(i => AssembleVertex(graph, i, obstaclePercent));
+                graph.Vertices.Shuffle();
                 graph.ConnectVerticesParallel();
                 return graph;
             }

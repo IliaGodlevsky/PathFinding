@@ -68,7 +68,7 @@ namespace ConsoleVersion.InputClass
             ValueRange rangeOfValidInput)
         {
             return int.TryParse(userInput, out var input)
-                && rangeOfValidInput.IsInRange(input);
+                && rangeOfValidInput.Contains(input);
         }
     }
 }

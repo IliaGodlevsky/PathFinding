@@ -62,7 +62,7 @@
     <Compile Include="Attributes\FilterableAttribute.cs" />
     <Compile Include="Enums\LoadOptions.cs" />
     <Compile Include="Extensions\GenericExtensions.cs" />
-    <Compile Include="Extensions\IListExtensions.cs" />
+    <Compile Include="Extensions\ICollectionExtensions.cs" />
     <Compile Include="Interface\IViewModel.cs" />
     <Compile Include="Interface\ILog.cs" />
     <Compile Include="Interface\IIntermit.cs" />

@@ -97,17 +97,12 @@ namespace GraphLib.Extensions
 
         private static IEnumerable<T> Select<T>(this IEnumerable<T> collection, Func<IEnumerable<T>, int, T> func)
         {
-            for (int i = 0; i < collection.Count(); i++)
-            {
-                yield return func(collection, i);
-            }
+            return Enumerable.Range(0, collection.Count()).Select(i => func(collection, i));
         }
 
         private static bool IsWithin(int coordinate, int graphDimension)
         {
             return coordinate < graphDimension && coordinate >= 0;
         }
-
-
     }
 }

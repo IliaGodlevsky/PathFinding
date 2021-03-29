@@ -1,4 +1,5 @@
-﻿using GraphLib.Common;
+﻿using Common.Extensions;
+using GraphLib.Common;
 using GraphLib.Interface;
 using System;
 using System.Collections.Generic;
@@ -90,9 +91,9 @@ namespace GraphLib.Extensions
                 var coordinateRadar = new CoordinateAroundRadar(self.Position);
                 self.Neighbours = coordinateRadar
                                     .Environment
-                                    .Where(IsWithingGraph)
+                                    .Which(IsWithingGraph)
                                     .Select(Vertex)
-                                    .Where(CanBeNeighbourOf)
+                                    .Which(CanBeNeighbourOf)
                                     .ToList();
             }
         }

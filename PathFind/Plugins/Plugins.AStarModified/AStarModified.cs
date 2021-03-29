@@ -74,7 +74,7 @@ namespace Plugins.AStarModified
             set
             {
                 percentOfFarthestVerticesToDelete = value;
-                if (!percentValueRange.IsInRange(percentOfFarthestVerticesToDelete))
+                if (!percentValueRange.Contains(percentOfFarthestVerticesToDelete))
                 {
                     percentOfFarthestVerticesToDelete =
                         percentValueRange.ReturnInRange(percentOfFarthestVerticesToDelete);
@@ -86,7 +86,7 @@ namespace Plugins.AStarModified
         {
             get
             {
-                var partOfVertexToDelete = Math.Floor(Math.Log(Graph.GetSize() + 1, 4));
+                var partOfVertexToDelete = Math.Floor(Math.Log(Graph.Size + 1, 4));
                 return Convert.ToInt32(partOfVertexToDelete);
             }
         }

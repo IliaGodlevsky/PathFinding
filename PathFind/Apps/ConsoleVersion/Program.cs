@@ -1,6 +1,6 @@
 ﻿using Autofac;
-using ConsoleVersion.App;
 using ConsoleVersion.Configure;
+using ConsoleVersion.View.Interface;
 
 namespace ConsoleVersion
 {
@@ -12,8 +12,8 @@ namespace ConsoleVersion
 
             using (var scope = container.BeginLifetimeScope())
             {
-                var app = scope.Resolve<Application>();
-                app.Run();
+                var mainView = scope.Resolve<IView>();
+                mainView.Start();
             }
         }
     }

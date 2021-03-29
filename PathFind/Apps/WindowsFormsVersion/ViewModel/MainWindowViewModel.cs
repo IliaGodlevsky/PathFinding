@@ -52,8 +52,8 @@ namespace WindowsFormsVersion.ViewModel
                 graphField = value;
                 var field = graphField as WinFormsGraphField;
                 var graph = Graph as Graph2D;
-                int width = graph.Width * Constants.VertexSize;
-                int height = graph.Length * Constants.VertexSize;
+                int width = (graph.Width + Constants.VertexSize) * Constants.VertexSize;
+                int height = (graph.Length + Constants.VertexSize) * Constants.VertexSize;
                 field.Size = new Size(width, height);
                 MainWindow.Controls.RemoveBy(ctrl => ctrl.IsGraphField());
                 MainWindow.Controls.Add(field);

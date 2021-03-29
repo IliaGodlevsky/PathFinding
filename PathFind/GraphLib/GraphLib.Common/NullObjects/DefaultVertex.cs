@@ -14,5 +14,7 @@ namespace GraphLib.Common.NullObjects
         public ICollection<IVertex> Neighbours { get => new List<IVertex>(); set { } }
 
         public ICoordinate Position { get => new DefaultCoordinate(); set { } }
+
+        public bool Equals(IVertex other) => other is DefaultVertex;
     }
 }

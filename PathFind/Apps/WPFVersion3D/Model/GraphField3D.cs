@@ -109,13 +109,14 @@ namespace WPFVersion3D.Model
             var coordinates = vertex.Position.CoordinatesValues;
             var vertexOffset = new Offset
             {
-                CoordinateValue = coordinates.ElementAtOrDefault(axisIndex),
-                VertexSize = vertex.Size,
+                CoordinateValue = coordinates.ElementAtOrDefault(axisIndex),                
                 DistanceBetweenVertices = DistancesBetween.ElementAtOrDefault(axisIndex),
-                AdditionalOffset = additionalOffset.ElementAtOrDefault(axisIndex)
+                AdditionalOffset = additionalOffset.ElementAtOrDefault(axisIndex),
+                VertexSize = vertex.Size
             };
-            var offset = vertexOffset.VertexOffset;
-            offsetActions[axis](vertex.Transform as TranslateTransform3D, offset);
+            double offset = vertexOffset.VertexOffset;
+            var transform = vertex.Transform as TranslateTransform3D;
+            offsetActions[axis](transform, offset);
         }
 
         private int Width { get; set; }

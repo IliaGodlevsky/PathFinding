@@ -29,12 +29,14 @@ namespace ConsoleVersion.View
                 throw new ArgumentException("Must be 2D coordinates");
             }
 
-            if (vertex as Vertex == null)
+            if (vertex is Vertex vertex2D)
+            {
+                vertices.Add(vertex2D);               
+            }
+            else
             {
                 throw new ArgumentException($"Must be {nameof(Vertex)} type");
             }
-
-            vertices.Add(vertex as Vertex);
         }
 
         public void ShowGraphWithFrames()

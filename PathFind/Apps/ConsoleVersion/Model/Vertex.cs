@@ -139,6 +139,11 @@ namespace ConsoleVersion.Model
             }
         }
 
+        public bool Equals(IVertex other)
+        {
+            return other.IsEqual(this);
+        }
+
         private Coordinate2D consoleCoordinate;
 
         private Coordinate2D ConsoleCoordinate

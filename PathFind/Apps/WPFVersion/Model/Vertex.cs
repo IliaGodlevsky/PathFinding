@@ -131,5 +131,10 @@ namespace WPFVersion.Model
             (cost as IWeightable)?.MakeWeighted();
             Dispatcher.Invoke(() => Content = cost.ToString());
         }
+
+        public bool Equals(IVertex other)
+        {
+            return other.IsEqual(this);
+        }
     }
 }

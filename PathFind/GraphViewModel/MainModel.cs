@@ -39,7 +39,7 @@ namespace GraphViewModel
 
         public async virtual void SaveGraph()
         {
-            var savePath = pathInput.InputSavePath();
+            string savePath = pathInput.InputSavePath();
             try
             {
                 using (var stream = new FileStream(savePath, FileMode.OpenOrCreate))
@@ -55,7 +55,7 @@ namespace GraphViewModel
 
         public virtual void LoadGraph()
         {
-            var loadPath = pathInput.InputLoadPath();
+            string loadPath = pathInput.InputLoadPath();
             try
             {
                 using (var stream = new FileStream(loadPath, FileMode.Open))

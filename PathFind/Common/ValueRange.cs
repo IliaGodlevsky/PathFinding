@@ -48,14 +48,10 @@ namespace Common
         /// if <paramref name="value"/> is in range of value</returns>
         public int ReturnInRange(int value)
         {
-            if (value > UpperValueOfRange)
-            {
-                return UpperValueOfRange;
-            }
-            else if (value < LowerValueOfRange)
-            {
-                return LowerValueOfRange;
-            }
+            if (value > UpperValueOfRange)           
+                return UpperValueOfRange;            
+            else if (value < LowerValueOfRange)           
+                return LowerValueOfRange;            
             else
                 return value;
         }
@@ -66,7 +62,7 @@ namespace Common
         /// <param name="value"></param>
         /// <returns>true if <paramref name="value"/> 
         /// is in range inclusively and false if not</returns>
-        public bool IsInRange(int value)
+        public bool Contains(int value)
         {
             return value <= UpperValueOfRange && value >= LowerValueOfRange;
         }

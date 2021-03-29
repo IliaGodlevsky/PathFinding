@@ -38,7 +38,6 @@ namespace WPFVersion3D.Model
 
         static Vertex3D()
         {
-
             VisitedVertexBrush = new SolidColorBrush(Colors.CadetBlue) { Opacity = 0.15 };
             PathVertexBrush = new SolidColorBrush(Colors.Yellow) { Opacity = 0.9 };
             StartVertexBrush = new SolidColorBrush(Colors.Green) { Opacity = 1 };
@@ -118,6 +117,11 @@ namespace WPFVersion3D.Model
         public ICollection<IVertex> Neighbours { get; set; }
 
         public ICoordinate Position { get; set; }
+
+        public bool Equals(IVertex other)
+        {
+            return other.IsEqual(this);
+        }
 
         public void MarkAsEnd()
         {

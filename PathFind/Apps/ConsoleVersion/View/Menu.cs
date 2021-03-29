@@ -34,7 +34,7 @@ namespace ConsoleVersion.ViewModel
                 columns = 1;
             }
 
-            StringBuilder menu = new StringBuilder("\n");
+            var menu = new StringBuilder("\n");
 
             int menuItemNumber = 0;
             int menuItemNumberPad = Convert.ToInt32(Math.Log10(menuItemsNames.Count())) + 1;
@@ -46,7 +46,8 @@ namespace ConsoleVersion.ViewModel
                 string separator = CreateSeparator(menuItemNumber, columns);
                 string stringedNenuItemNumber = (++menuItemNumber).ToString();
                 string paddedMenuItemNumber = stringedNenuItemNumber.PadLeft(menuItemNumberPad);
-                menu.AppendFormat(Resources.MenuFormat + separator, paddedMenuItemNumber, paddedName);
+                string format = Resources.MenuFormat + separator;
+                menu.AppendFormat(format, paddedMenuItemNumber, paddedName);
             }
 
             return menu.ToString();

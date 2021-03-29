@@ -7,6 +7,12 @@ namespace GraphLib.Interface
     /// </summary>
     public interface IGraph
     {
+        int Size { get; }
+
+        int ObstaclePercent { get; }
+
+        int Obstacles { get; }
+
         IEnumerable<IVertex> Vertices { get; }
 
         IEnumerable<int> DimensionsSizes { get; }

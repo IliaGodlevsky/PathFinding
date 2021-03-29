@@ -1,6 +1,7 @@
 ﻿using GraphLib.Extensions;
 using GraphLib.Interface;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 
 namespace GraphLib.Realizations.Tests.Objects
 {
@@ -15,5 +16,10 @@ namespace GraphLib.Realizations.Tests.Objects
         public IVertexCost Cost { get; set; }
         public ICollection<IVertex> Neighbours { get; set; }
         public ICoordinate Position { get; set; }
+
+        public bool Equals([AllowNull] IVertex other)
+        {
+            return other.IsEqual(this);
+        }
     }
 }

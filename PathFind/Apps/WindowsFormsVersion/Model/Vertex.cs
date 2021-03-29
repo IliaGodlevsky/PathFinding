@@ -103,5 +103,10 @@ namespace WindowsFormsVersion.Model
             (cost as WeightableVertexCost).MakeWeighted();
             Text = cost.ToString();
         }
+
+        public bool Equals(IVertex other)
+        {
+            return other.IsEqual(this);
+        }
     }
 }

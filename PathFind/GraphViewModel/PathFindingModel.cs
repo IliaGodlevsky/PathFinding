@@ -133,10 +133,10 @@ namespace GraphLib.ViewModel
             var pathCost = path == null ? 0 : path.GetPathCost();
             var graphInfo = string.Format(format, pathLength, pathCost, visitedVertices);
             var timerInfo = timer.GetTimeInformation(ViewModelResources.TimerInfoFormat);
-
-            return $"{AlgorithmKey}    {timerInfo}     {graphInfo}";
+            return string.Join(separator, AlgorithmKey, timerInfo, graphInfo);
         }
 
+        private const string separator = "   ";
         private readonly Stopwatch timer;
         private int visitedVerticesCount;
     }

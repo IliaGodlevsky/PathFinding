@@ -1,5 +1,6 @@
 ﻿using Common.Attributes;
 using GraphLib.Interface;
+using System;
 using System.Collections.Generic;
 
 namespace GraphLib.Common.NullObjects
@@ -25,6 +26,12 @@ namespace GraphLib.Common.NullObjects
 
         public IEnumerable<IVertex> Vertices => new DefaultVertex[] { };
 
+        public int Size => 0;
+
+        public int ObstaclePercent => 0;
+
+        public int Obstacles => 0;
+
         public IVertex this[IEnumerable<int> coordinates]
         {
             get => new DefaultVertex();
@@ -37,9 +44,19 @@ namespace GraphLib.Common.NullObjects
             set => _ = value;
         }
 
+        public override bool Equals(object obj)
+        {
+            return obj is NullGraph;
+        }
+
         public override string ToString()
         {
             return string.Empty;
+        }
+
+        public override int GetHashCode()
+        {
+            return base.GetHashCode();
         }
     }
 }

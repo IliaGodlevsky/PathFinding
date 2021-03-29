@@ -1,4 +1,5 @@
-﻿using GraphLib.Common.NullObjects;
+﻿using Common.Extensions;
+using GraphLib.Common.NullObjects;
 using GraphLib.Extensions;
 using GraphLib.Interface;
 using System;
@@ -12,21 +13,28 @@ namespace GraphLib.Base
     {
         public static IGraph NullGraph => new NullGraph();
 
+        public int Size { get; }
+
+        public int ObstaclePercent => Size == 0 ? 0 : Obstacles * 100 / Size;
+
+        public int Obstacles => vertices.Count(v => v.IsObstacle);
+
         public BaseGraph(int numberOfDimensions, params int[] dimensionSizes)
         {
             DimensionsSizes = dimensionSizes.ToArray();
 
             if (dimensionSizes.Length != numberOfDimensions)
             {
-                var message = $"An error ocurred while creating a {GetType().Name} instance\n";
+                string message = $"An error ocurred while creating a {GetType().Name} instance\n";
                 message += $"Required number of dimensions is {numberOfDimensions}\n";
                 message += "Number of dimensions doesn't match the required number of dimensions\n";
-                var actualValue = dimensionSizes.Count();
+                int actualValue = dimensionSizes.Count();
 
                 throw new ArgumentOutOfRangeException(nameof(dimensionSizes), actualValue, message);
             }
 
-            vertices = new IVertex[this.GetSize()];
+            Size = DimensionsSizes.AggregateOrDefault((x, y) => x * y);
+            vertices = new IVertex[Size];
         }
 
         static BaseGraph()
@@ -85,28 +93,29 @@ namespace GraphLib.Base
 
         public override int GetHashCode()
         {
-            var verticesHashCode = Vertices
+            int verticesHashCode = Vertices
                 .Select(x => x.GetHashCode())
                 .AggregateOrDefault((x, y) => x ^ y);
 
-            var dimensionSizesHashCode = DimensionsSizes
+            int dimensionSizesHashCode = DimensionsSizes
                 .AggregateOrDefault((x, y) => x ^ y);
 
             return verticesHashCode ^ dimensionSizesHashCode;
         }
 
         public override string ToString()
-        {
+        {            
             var sb = new StringBuilder();
-            var dimensionSizes = DimensionsSizes.ToArray();
-
-            for (int i = 0; i < dimensionSizes.Length; i++)
+            int count = DimensionsSizes.Count();
+            Enumerable.Range(0, count).ForEach(index=>
             {
-                sb.Append($"{ DimensionNames[i] }: { dimensionSizes[i] }   ");
-            }
+                string dimensionName = DimensionNames[index];
+                int dimensionSize = DimensionsSizes.ElementAt(index);
+                sb.Append($"{ dimensionName }: { dimensionSize }   ");
+            });
 
-            sb.Append($"Obstacle percent: { this.GetObstaclesPercent() } ")
-              .Append($"({ this.GetObstaclesCount() }/{ this.GetSize() })");
+            sb.Append($"Obstacle percent: { ObstaclePercent } ")
+              .Append($"({ Obstacles }/{ Size })");
 
             return sb.ToString();
         }

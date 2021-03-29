@@ -10,7 +10,5 @@ namespace GraphLib.Realizations.VertexCost.CostStates
         {
             return cost.UnweightedCostView;
         }
-
-
     }
 }
