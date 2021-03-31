@@ -39,26 +39,28 @@ namespace GraphLib.Base
 
         static BaseGraph()
         {
-            DimensionNames = new string[] { "Width", "Length", "Height" };
+            DimensionNames = new[] { "Width", "Length", "Height" };
         }
 
         public IEnumerable<IVertex> Vertices => vertices;
 
-        public IEnumerable<int> DimensionsSizes { get; private set; }
+        public IEnumerable<int> DimensionsSizes { get; }
 
         public virtual IVertex this[IEnumerable<int> coordinateValues]
         {
             get
             {
-                return IsSuitableCoordinate(coordinateValues)
-               ? vertices[coordinateValues.ToIndex(DimensionsSizes.ToArray())]
+                var coordinates = coordinateValues.ToArray();
+                return IsSuitableCoordinate(coordinates)
+               ? vertices[coordinates.ToIndex(DimensionsSizes.ToArray())]
                : new DefaultVertex();
             }
             set
             {
-                if (IsSuitableCoordinate(coordinateValues))
+                var coordinates = coordinateValues.ToArray();
+                if (IsSuitableCoordinate(coordinates))
                 {
-                    vertices[coordinateValues.ToIndex(DimensionsSizes.ToArray())] = value;
+                    vertices[coordinates.ToIndex(DimensionsSizes.ToArray())] = value;
                 }
             }
         }
@@ -122,11 +124,12 @@ namespace GraphLib.Base
 
         private bool IsSuitableCoordinate(IEnumerable<int> coordinateValues)
         {
-            if (!coordinateValues.Any())
+            var coordinates = coordinateValues.ToArray();
+            if (!coordinates.Any())
             {
                 return false;
             }
-            if (coordinateValues.Count() != DimensionsSizes.Count())
+            if (coordinates.Length != DimensionsSizes.Count())
             {
                 var message = "Dimensions of graph and coordinate doesn't match\n";
                 throw new ArgumentException(message, nameof(coordinateValues));

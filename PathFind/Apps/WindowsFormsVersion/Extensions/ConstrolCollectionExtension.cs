@@ -4,7 +4,7 @@ using static System.Windows.Forms.Control;
 
 namespace WindowsFormsVersion.Extensions
 {
-    internal static class ConstrolCollectionExtension
+    internal static class ControlCollectionExtension
     {
         public static void RemoveBy(this ControlCollection collection,
             Func<Control, bool> predicate)

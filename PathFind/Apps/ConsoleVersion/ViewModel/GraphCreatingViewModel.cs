@@ -4,6 +4,7 @@ using GraphLib.ViewModel;
 using GraphViewModel.Interfaces;
 
 using static ConsoleVersion.InputClass.Input;
+using static ConsoleVersion.Constants;
 
 namespace ConsoleVersion.ViewModel
 {
@@ -23,9 +24,9 @@ namespace ConsoleVersion.ViewModel
 
         public override void CreateGraph()
         {
-            ObstaclePercent = InputNumber(ObstaclePercentInputMessage, Constants.ObstaclesPercentValueRange);
-            Width = InputNumber(WidthInputMessage, Constants.GraphWidthValueRange);
-            Length = InputNumber(HeightInputMessage, Constants.GraphLengthValueRange);
+            ObstaclePercent = InputNumber(ObstaclePercentInputMessage, ObstaclesPercentValueRange);
+            Width = InputNumber(WidthInputMessage, GraphWidthValueRange);
+            Length = InputNumber(HeightInputMessage, GraphLengthValueRange);
 
             base.CreateGraph();
 

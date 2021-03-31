@@ -11,7 +11,7 @@ namespace WindowsFormsVersion.View
             InitializeComponent();
 
             okButton.Click += model.StartPathfinding;
-            cancelButton.Click += model.CancelPathinding;
+            cancelButton.Click += model.CancelPathFinding;
 
             var dataSource = model.AlgorithmKeys
                 .Select(key => new { Name = key }).ToArray();

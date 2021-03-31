@@ -7,14 +7,18 @@ namespace ConsoleVersion.Model
     {
         protected override void SubscribeVertex(IVertex vertex)
         {
-            var vert = vertex as Vertex;
-            vert.OnExtremeVertexChosen += SetEndPoints;
+            if (vertex is Vertex vert)
+            {
+                vert.OnExtremeVertexChosen += SetEndPoints;
+            }
         }
 
         protected override void UnsubscribeVertex(IVertex vertex)
         {
-            var vert = vertex as Vertex;
-            vert.OnExtremeVertexChosen -= SetEndPoints;
+            if (vertex is Vertex vert)
+            {
+                vert.OnExtremeVertexChosen -= SetEndPoints;
+            }
         }
     }
 }

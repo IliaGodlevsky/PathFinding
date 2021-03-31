@@ -7,7 +7,7 @@ using System.Linq;
 
 namespace GraphLib.Extensions
 {
-    public static class IVertexExtension
+    public static class VertexExtension
     {
         public static bool IsValidToBeEndPoint(this IVertex self)
         {
@@ -84,7 +84,7 @@ namespace GraphLib.Extensions
 
             bool IsWithingGraph(int[] coordinate) => coordinate.IsWithinGraph(graph);
             IVertex Vertex(int[] coordinate) => graph[coordinate];
-            bool CanBeNeighbourOf(IVertex vertex) => vertex.CanBeNeighbourOf(self);
+            bool CanBeNeighbour(IVertex vertex) => vertex.CanBeNeighbourOf(self);
 
             if (graph.Vertices.Any())
             {
@@ -93,7 +93,7 @@ namespace GraphLib.Extensions
                                     .Environment
                                     .Which(IsWithingGraph)
                                     .Select(Vertex)
-                                    .Which(CanBeNeighbourOf)
+                                    .Which(CanBeNeighbour)
                                     .ToList();
             }
         }

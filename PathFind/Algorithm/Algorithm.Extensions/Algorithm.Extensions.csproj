@@ -41,9 +41,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="IEnumerableExtenions.cs" />
-    <Compile Include="IGraphPathExtensions.cs" />
-    <Compile Include="IVertexExtensions.cs" />
+    <Compile Include="EnumerableExtensions.cs" />
+    <Compile Include="GraphPathExtensions.cs" />
+    <Compile Include="VertexExtensions.cs" />
     <Compile Include="ListExtension.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="QueueExtensions.cs" />

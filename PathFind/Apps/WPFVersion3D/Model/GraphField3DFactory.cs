@@ -1,4 +1,5 @@
-﻿using Common.Extensions;
+﻿using System;
+using Common.Extensions;
 using GraphLib.Base;
 using GraphLib.Interface;
 using GraphLib.Realizations;
@@ -9,12 +10,15 @@ namespace WPFVersion3D.Model
     {
         public override IGraphField CreateGraphField(IGraph graph)
         {
-            var graph3D = graph as Graph3D;
+            if (graph is Graph3D graph3D)
+            {
+                var field = GetField(graph3D.Width, graph3D.Length, graph3D.Height);
+                graph.Vertices.ForEach(field.Add);
 
-            var field = GetField(graph3D.Width, graph3D.Length, graph3D.Height);
-            graph.Vertices.ForEach(field.Add);
+                return field;
+            }
 
-            return field;
+            throw new ArgumentException(nameof(graph));
         }
 
         protected override IGraphField GetField()

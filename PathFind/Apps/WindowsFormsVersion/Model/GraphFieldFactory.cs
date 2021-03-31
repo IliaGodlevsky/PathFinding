@@ -9,7 +9,7 @@ namespace WindowsFormsVersion.Model
     {
         protected override IGraphField GetField()
         {
-            return new WinFormsGraphField() { Location = new Point(4, 90) };
+            return new WinFormsGraphField { Location = new Point(4, 90) };
         }
     }
 }

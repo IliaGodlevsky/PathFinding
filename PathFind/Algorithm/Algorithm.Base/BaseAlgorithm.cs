@@ -49,9 +49,9 @@ namespace Algorithm.Base
             accumulatedCosts.Clear();
         }
 
-        public virtual async Task<IGraphPath> FindPathAsync(IEndPoints endPoints)
+        public virtual async Task<IGraphPath> FindPathAsync(IEndPoints endpoints)
         {
-            return await Task.Run(() => FindPath(endPoints));
+            return await Task.Run(() => FindPath(endpoints));
         }
 
         public abstract IGraphPath FindPath(IEndPoints endPoints);
@@ -86,19 +86,22 @@ namespace Algorithm.Base
             OnVertexEnqueued?.Invoke(this, e);
         }
 
-        protected virtual void PrepareForPathfinding(IEndPoints endPoints)
+        protected virtual void PrepareForPathfinding(IEndPoints endpoints)
         {
-            if (Graph.Contains(endPoints))
+            if (Graph.Contains(endpoints))
             {
-                this.endPoints = endPoints;
+                endPoints = endpoints;
                 var args = new AlgorithmEventArgs();
                 RaiseOnAlgorithmStartedEvent(args);
-                CurrentVertex = this.endPoints.Start;
+                CurrentVertex = endPoints.Start;
                 visitedVertices[CurrentVertex.Position] = CurrentVertex;
                 return;
             }
 
-            throw new Exception("Endpoints don't belong to graph");
+            string paramName = nameof(endpoints);
+            string graphName = nameof(Graph);
+            string message = $"{paramName} don't belong to {graphName}";
+            throw new ArgumentException(message);
         }
 
         protected virtual void CompletePathfinding()

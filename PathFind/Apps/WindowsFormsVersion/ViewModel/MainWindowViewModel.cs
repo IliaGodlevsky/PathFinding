@@ -32,14 +32,14 @@ namespace WindowsFormsVersion.ViewModel
         private string graphParametres;
         public override string GraphParametres
         {
-            get { return graphParametres; }
+            get => graphParametres;
             set { graphParametres = value; OnPropertyChanged(); }
         }
 
         private string statistics;
         public override string PathFindingStatistics
         {
-            get { return statistics; }
+            get => statistics;
             set { statistics = value; OnPropertyChanged(); }
         }
 
@@ -50,13 +50,14 @@ namespace WindowsFormsVersion.ViewModel
             set
             {
                 graphField = value;
-                var field = graphField as WinFormsGraphField;
-                var graph = Graph as Graph2D;
-                int width = (graph.Width + Constants.VertexSize) * Constants.VertexSize;
-                int height = (graph.Length + Constants.VertexSize) * Constants.VertexSize;
-                field.Size = new Size(width, height);
-                MainWindow.Controls.RemoveBy(ctrl => ctrl.IsGraphField());
-                MainWindow.Controls.Add(field);
+                if (Graph is Graph2D graph2D && graphField is WinFormsGraphField field)
+                {
+                    int width = (graph2D.Width + Constants.VertexSize) * Constants.VertexSize;
+                    int height = (graph2D.Length + Constants.VertexSize) * Constants.VertexSize;
+                    field.Size = new Size(width, height);
+                    MainWindow.Controls.RemoveBy(ctrl => ctrl.IsGraphField());
+                    MainWindow.Controls.Add(field);
+                }
             }
         }
 

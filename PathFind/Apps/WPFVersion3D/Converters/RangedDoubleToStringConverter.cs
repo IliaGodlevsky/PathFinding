@@ -9,7 +9,18 @@ namespace WPFVersion3D.Converters
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            return Math.Round((double)value, 0);
+            double result = default;
+            try
+            {
+                result = System.Convert.ToDouble(value);
+                result = Math.Round(result, 0);
+                return result;
+
+            }
+            catch (Exception)
+            {
+                return result;
+            }
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)

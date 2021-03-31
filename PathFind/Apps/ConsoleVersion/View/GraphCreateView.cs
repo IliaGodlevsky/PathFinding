@@ -7,7 +7,7 @@ namespace ConsoleVersion.View
 {
     internal class GraphCreateView : IView
     {
-        private GraphCreatingViewModel Model { get; set; }
+        private GraphCreatingViewModel Model { get; }
 
         public GraphCreateView(GraphCreatingViewModel model)
         {

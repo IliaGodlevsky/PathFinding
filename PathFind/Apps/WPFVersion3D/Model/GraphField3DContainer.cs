@@ -26,8 +26,7 @@ namespace WPFVersion3D.Model
         private static void OnGraphFieldChanged(DependencyObject depObj,
             DependencyPropertyChangedEventArgs args)
         {
-            var field = depObj as GraphField3DContainer;
-            if (args.NewValue is GraphField3D child)
+            if (args.NewValue is GraphField3D child && depObj is GraphField3DContainer field)
             {
                 field.Children.Clear();
                 field.Children.Add(child);

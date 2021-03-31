@@ -8,7 +8,7 @@ namespace GraphLib.Base
 {
     public abstract class BaseVertexEventHolder : IVertexEventHolder
     {
-        public BaseVertexEventHolder()
+        protected BaseVertexEventHolder()
         {
             reverseActionDictionary = new Dictionary<bool, Action<IVertex>>()
             {
@@ -36,8 +36,7 @@ namespace GraphLib.Base
 
         public virtual void Reverse(object sender, EventArgs e)
         {
-            If.Walk(sender as IVertex,
-                param => param is IVertex);
+            If.Walk(sender as IVertex, param => param != null);
         }
 
         public void UnsubscribeVertices(IGraph graph)

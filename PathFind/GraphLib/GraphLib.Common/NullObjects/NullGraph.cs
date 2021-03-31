@@ -1,21 +1,15 @@
 ﻿using Common.Attributes;
 using GraphLib.Interface;
-using System;
 using System.Collections.Generic;
 
 namespace GraphLib.Common.NullObjects
 {
     /// <summary>
-    /// Respresents an empty graph, without any vertices
+    /// Represents an empty graph, without any vertices
     /// </summary>
     [Default]
     public sealed class NullGraph : IGraph
     {
-        public NullGraph()
-        {
-
-        }
-
         public IVertex this[ICoordinate position]
         {
             get => new DefaultVertex();

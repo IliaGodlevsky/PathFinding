@@ -6,7 +6,7 @@ using System.Linq;
 
 namespace Algorithm.Extensions
 {
-    public static class IEnumerableExtenions
+    public static class EnumerableExtensions
     {
         /// <summary>
         /// Returns first element if collection isn't empty and <see cref="DefaultVertex"/> if is

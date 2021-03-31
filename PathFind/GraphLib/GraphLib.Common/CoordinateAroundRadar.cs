@@ -16,7 +16,7 @@ namespace GraphLib.Common
             selfCoordinatesValues = coordinate.CoordinatesValues.ToArray();
             currentCoordinatesValues = new int[selfCoordinatesValues.Length];
             limitDepth = selfCoordinatesValues.Length;
-            LateralNeighbourCoordinatesOffsets = new[] { -1, 0, 1 };
+            lateralNeighbourCoordinatesOffsets = new[] { -1, 0, 1 };
         }
 
         /// <summary>
@@ -35,12 +35,12 @@ namespace GraphLib.Common
         // Recursive method
         private void FormEnvironment(int depth = 0)
         {
-            LateralNeighbourCoordinatesOffsets
+            lateralNeighbourCoordinatesOffsets
                 .Select(i => selfCoordinatesValues[depth] + i)
                 .ForEach(coordinate => TryMoveDeeper(depth, coordinate));
         }
 
-        private bool TryMoveDeeper(int depth, int coordinate)
+        private void TryMoveDeeper(int depth, int coordinate)
         {
             bool canMoveDeeper = depth < limitDepth - 1;
             currentCoordinatesValues[depth] = coordinate;
@@ -53,11 +53,9 @@ namespace GraphLib.Common
             {
                 environment.Add(currentCoordinatesValues.ToArray());
             }
-
-            return canMoveDeeper;
         }
 
-        private readonly int[] LateralNeighbourCoordinatesOffsets;
+        private readonly int[] lateralNeighbourCoordinatesOffsets;
 
         private readonly int[] currentCoordinatesValues;
         private readonly int[] selfCoordinatesValues;

@@ -7,7 +7,7 @@ using System.Linq;
 
 namespace GraphLib.Extensions
 {
-    public static class IGraphExtensions
+    public static class GraphExtensions
     {
         /// <summary>
         /// Removes all actions, that was performed over the vertices
@@ -72,7 +72,7 @@ namespace GraphLib.Extensions
             var rangeOfValidIndexValues = new ValueRange(self.Size, 0);
             if (!rangeOfValidIndexValues.Contains(index))
             {
-                throw new ArgumentOutOfRangeException("Index is out of range");
+                throw new ArgumentOutOfRangeException(nameof(index));
             }
 
             int Coordinates(int i) => GetCoordinateValue(ref index, dimensions[i]);

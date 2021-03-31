@@ -9,15 +9,15 @@ namespace WPFVersion3D.Converters
 {
     internal sealed class AnimatedAxisRotatorConverter : IValueConverter
     {
-        private readonly RotationDirection backward = RotationDirection.Backward;
-        private readonly RotationDirection forward = RotationDirection.Forward;
+        private const RotationDirection Backward = RotationDirection.Backward;
+        private const RotationDirection Forward = RotationDirection.Forward;
 
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
             if (IsValidParametres(value, parameter))
             {
                 var axisAngleRotation = parameter as AxisAngleRotation3D;
-                var direction = ((bool)value) ? forward : backward;
+                var direction = ((bool)value) ? Forward : Backward;
                 return new AnimatedAxisRotator(axisAngleRotation, direction);
             }
 
@@ -26,7 +26,7 @@ namespace WPFVersion3D.Converters
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            return (RotationDirection)value == forward;
+            return value is RotationDirection rotationDirection && rotationDirection == Forward;
         }
 
         private bool IsValidParametres(object value, object parametres)

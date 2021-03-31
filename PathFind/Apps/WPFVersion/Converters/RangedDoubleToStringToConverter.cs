@@ -5,22 +5,33 @@ using System.Windows.Data;
 
 namespace WPFVersion.Converters
 {
-    internal sealed class StringToRangedIntConverter : IValueConverter
+    internal sealed class RangedDoubleToStringToConverter : IValueConverter
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            return value.ToString();
+            double result = default;
+            try
+            {
+                result = System.Convert.ToDouble(value);
+                result = Math.Round(result, 0);
+                return result;
+
+            }
+            catch (Exception)
+            {
+                return result;
+            }
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            int result = default;
+            double result = default;
 
             if (IsValidParametres(value, parameter))
             {
                 var range = parameter as ValueRange;
-                result = System.Convert.ToInt32(value);
-                result = range.ReturnInRange(result);
+                var val = System.Convert.ToInt32(value);
+                result = range.ReturnInRange(val);
             }
 
             return result;
@@ -28,7 +39,7 @@ namespace WPFVersion.Converters
 
         private bool IsValidParametres(object value, object parametre)
         {
-            return int.TryParse(value.ToString(), out _) && parametre is ValueRange;
+            return double.TryParse(value.ToString(), out _) && parametre is ValueRange;
         }
     }
 }

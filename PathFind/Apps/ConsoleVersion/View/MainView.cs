@@ -28,24 +28,18 @@ namespace ConsoleVersion.View
 
         public static void UpdatePositionOfVisualElements(IGraph graph)
         {
-            if (graph.Vertices.Any())
+            if (graph.Vertices.Any() && graph is Graph2D graph2D)
             {
-                var graph2D = graph as Graph2D;
-
-                int pathfindingStatistsicsOffset = graph2D.Length
-                    + HeightOfAbscissaView * 2 + HeightOfGraphParametresView;
-
-                PathfindingStatisticsPosition
-                  = new Coordinate2D(0, pathfindingStatistsicsOffset);
+                int pathFindingStatisticsOffset = graph2D.Length + HeightOfAbscissaView * 2 + HeightOfGraphParametresView;
+                PathfindingStatisticsPosition = new Coordinate2D(0, pathFindingStatisticsOffset);
             }
         }
 
         static MainView()
         {
-            GraphFieldPosition
-                = new Coordinate2D(
-                    WidthOfOrdinateView,
-                    HeightOfAbscissaView + HeightOfGraphParametresView);
+            int x = WidthOfOrdinateView;
+            int y = HeightOfAbscissaView + HeightOfGraphParametresView;
+            GraphFieldPosition = new Coordinate2D(x, y);
         }
 
         public MainView(IMainModel model)

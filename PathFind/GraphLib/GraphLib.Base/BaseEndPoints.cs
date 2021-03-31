@@ -9,21 +9,15 @@ namespace GraphLib.Base
 {
     public abstract class BaseEndPoints : IEndPoints
     {
-        public BaseEndPoints()
+        protected BaseEndPoints()
         {
             Reset();
             If = new If<IVertex>(v => Start.IsEqual(v), UnsetStartVertex)
                   .ElseIf(v => End.IsEqual(v),          UnsetEndVertex)
                   .ElseIf(CanSetStartVertex,            SetStartVertex)
-                  .ElseIf(V => Start.IsIsolated(),      ReplaceStartVertex)
+                  .ElseIf(v => Start.IsIsolated(),      ReplaceStartVertex)
                   .ElseIf(CanSetEndVertex,              SetEndVertex)
-                  .ElseIf(V => End.IsIsolated(),        ReplaceEndVertex);
-        }
-
-        public BaseEndPoints(IVertex start, IVertex end) : this()
-        {
-            Start = start;
-            End = end;
+                  .ElseIf(v => End.IsIsolated(),        ReplaceEndVertex);
         }
 
         public bool HasEndPointsSet => !Start.IsIsolated() && !End.IsIsolated();
@@ -71,7 +65,7 @@ namespace GraphLib.Base
         protected virtual void SetEndPoints(object sender, EventArgs e)
         {
             bool IsNotIsolated(IVertex vertex) => vertex?.IsIsolated() == false;
-            If.Walk(paramtre: sender as IVertex, walkCondition: IsNotIsolated);
+            If.Walk(parametre: sender as IVertex, walkCondition: IsNotIsolated);
         }
 
         protected virtual void SetStartVertex(IVertex vertex)

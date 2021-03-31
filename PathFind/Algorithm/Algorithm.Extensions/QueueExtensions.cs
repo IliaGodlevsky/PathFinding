@@ -11,7 +11,7 @@ namespace Algorithm.Extensions
         /// Removes vertex from the begining of queue and return it
         /// </summary>
         /// <param name="queue"></param>
-        /// <returns>First vertex if coolection isn't empty and <see cref="DefaultVertex"/> if is</returns>
+        /// <returns>First vertex if collection isn't empty and <see cref="DefaultVertex"/> if is</returns>
         /// <exception cref="System.ArgumentNullException"></exception>
         public static IVertex DequeueOrDefault(this Queue<IVertex> queue)
         {

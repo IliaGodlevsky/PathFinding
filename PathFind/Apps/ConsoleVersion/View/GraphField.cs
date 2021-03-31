@@ -24,9 +24,9 @@ namespace ConsoleVersion.View
 
         public void Add(IVertex vertex)
         {
-            if (vertex.Position as Coordinate2D == null)
+            if (!(vertex.Position is Coordinate2D))
             {
-                throw new ArgumentException("Must be 2D coordinates");
+                throw new ArgumentException($"Must be of {nameof(Coordinate2D)} type");
             }
 
             if (vertex is Vertex vertex2D)
@@ -164,12 +164,6 @@ namespace ConsoleVersion.View
         {
             FrameOver,
             FrameUnder
-        }
-
-        private enum TableSide
-        {
-            Right,
-            Left
         }
 
         private readonly List<Vertex> vertices;

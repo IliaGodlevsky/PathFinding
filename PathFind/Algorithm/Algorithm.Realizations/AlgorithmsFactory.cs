@@ -45,7 +45,7 @@ namespace Algorithm.Realizations
             string path,
             SearchOption searchOption = SearchOption.AllDirectories)
         {
-            LoadOption loadOption = LoadOption.Hierarchy;
+            var loadOption = LoadOption.Hierarchy;
             algorithms = ClassLoader<IAlgorithm>.Instance
                 .FetchTypes(path, loadOption, searchOption)
                 .Where(IsConcreteType)
@@ -57,7 +57,6 @@ namespace Algorithm.Realizations
         /// <paramref name="key"></paramref>
         /// </summary>
         /// <param name="key"></param>
-        /// <param name="graph"></param>
         /// <returns>An instance of algorithm if 
         /// <paramref name="key"></paramref> exists and
         /// <see cref="DefaultAlgorithm"></see> when doesn't</returns>

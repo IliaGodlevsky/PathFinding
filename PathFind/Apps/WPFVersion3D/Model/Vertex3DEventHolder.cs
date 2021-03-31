@@ -9,19 +9,25 @@ namespace WPFVersion3D.Model
     {
         protected override int GetWheelDelta(EventArgs e)
         {
-            return (e as MouseWheelEventArgs).Delta;
+            return e is MouseWheelEventArgs args ? args.Delta : default;
         }
 
         protected override void SubscribeToEvents(IVertex vertex)
         {
-            (vertex as Vertex3D).MouseRightButtonDown += Reverse;
-            (vertex as Vertex3D).MouseWheel += ChangeVertexCost;
+            if (vertex is Vertex3D vertex3D)
+            {
+                vertex3D.MouseRightButtonDown += Reverse;
+                vertex3D.MouseWheel += ChangeVertexCost;
+            }
         }
 
         protected override void UnsubscribeFromEvents(IVertex vertex)
         {
-            (vertex as Vertex3D).MouseRightButtonDown -= Reverse;
-            (vertex as Vertex3D).MouseWheel -= ChangeVertexCost;
+            if (vertex is Vertex3D vertex3D)
+            {
+                vertex3D.MouseRightButtonDown -= Reverse;
+                vertex3D.MouseWheel -= ChangeVertexCost;
+            }
         }
     }
 }

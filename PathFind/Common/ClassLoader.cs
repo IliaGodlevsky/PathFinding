@@ -46,7 +46,7 @@ namespace Common
         ///  white spaces of contains unallowed symbols</exception>
         ///  <exception cref="ArgumentNullException"/>
         ///  <exception cref="ArgumentOutOfRangeException">thrown
-        ///  where <paramref name="searchPattern"/>doensn't belong to
+        ///  when <paramref name="searchOption"/>doesn't belong to
         ///  <see cref="SearchOption"/></exception>
         ///  <exception cref="UnauthorizedAccessException"/>
         ///  <exception cref="PathTooLongException"/>

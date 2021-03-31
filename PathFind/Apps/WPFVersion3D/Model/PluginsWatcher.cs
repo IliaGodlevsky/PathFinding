@@ -17,8 +17,8 @@ namespace WPFVersion3D.Model
         {
             Application.Current.Dispatcher.Invoke(() =>
             {
-                var addedAlgorithms = AddedAlgorithms;
-                var deletedAlgorithms = DeletedAlgorithms;
+                var addedAlgorithms = AddedAlgorithms.ToArray();
+                var deletedAlgorithms = DeletedAlgorithms.ToArray();
                 if (addedAlgorithms.Any())
                 {
                     viewModel.AlgorithmKeys.AddRange(addedAlgorithms);

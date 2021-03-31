@@ -47,12 +47,15 @@ namespace ConsoleVersion.Model
         private IVertexCost cost;
         public IVertexCost Cost
         {
-            get { return cost; }
+            get => cost;
             set
             {
-                cost = value;
-                (cost as WeightableVertexCost).UnweightedCostView = "#";
-                Text = cost.ToString();
+                if (value is WeightableVertexCost vertexCost)
+                {
+                    vertexCost.UnweightedCostView = "#";
+                    Text = vertexCost.ToString();
+                    cost = vertexCost;
+                }
             }
         }
 
@@ -156,9 +159,12 @@ namespace ConsoleVersion.Model
                     {
                         var position = Position as Coordinate2D;
                         var consolePosition = MainView.GraphFieldPosition;
-                        var left = consolePosition.X + position.X * Constants.LateralDistanceBetweenVertices;
-                        var top = consolePosition.Y + position.Y;
-                        consoleCoordinate = new Coordinate2D(left, top);
+                        if (consolePosition != null)
+                        {
+                            var left = consolePosition.X + position.X * Constants.LateralDistanceBetweenVertices;
+                            var top = consolePosition.Y + position.Y;
+                            consoleCoordinate = new Coordinate2D(left, top);
+                        }
                     }
                 }
                 return consoleCoordinate;

@@ -41,10 +41,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="ICoordinateExtensions.cs" />
-    <Compile Include="IEnumerableExtensions.cs" />
-    <Compile Include="IGraphExtensions.cs" />
-    <Compile Include="IVertexExtension.cs" />
+    <Compile Include="CoordinateExtensions.cs" />
+    <Compile Include="EnumerableExtensions.cs" />
+    <Compile Include="GraphExtensions.cs" />
+    <Compile Include="VertexExtension.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

@@ -14,18 +14,16 @@ namespace WPFVersion.Model
 
         public void Add(IVertex vertex)
         {
-            if (vertex.Position is Coordinate2D coordinates)
+            if (vertex is Vertex wpfVertex && wpfVertex.Position is Coordinate2D coordinates)
             {
-                var wpfVertex = vertex as Vertex;
                 Children.Add(wpfVertex);
-
                 SetLeft(wpfVertex, (distanceBetweenVertices + wpfVertex.Width) * coordinates.X);
                 SetTop(wpfVertex, (distanceBetweenVertices + wpfVertex.Height) * coordinates.Y);
             }
             else
             {
-                var message = "An error was occured while adding vertex to a graph field\n";
-                message += "Vertex must have 2D coordinate\n";
+                var message = "An error was occurred while adding vertex to a graph field\n";
+                message += "Vertex must be 2D coordinate\n";
                 throw new ArgumentException(message, nameof(vertex));
             }
         }

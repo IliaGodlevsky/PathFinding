@@ -16,10 +16,8 @@ namespace WindowsFormsVersion.View
 
         public void Add(IVertex vertex)
         {
-            if (vertex.Position is Coordinate2D coordinate)
+            if (vertex.Position is Coordinate2D coordinate && vertex is Vertex winFormsVertex)
             {
-                var winFormsVertex = vertex as Vertex;
-
                 var xCoordinate = coordinate.X * distanceBetweenVertices;
                 var yCoordinate = coordinate.Y * distanceBetweenVertices;
 
@@ -29,7 +27,8 @@ namespace WindowsFormsVersion.View
             }
             else
             {
-                throw new ArgumentException("Must be 2D coordinates");
+                string message = $"Must be 2D vertex";
+                throw new ArgumentException(message);
             }
         }
 

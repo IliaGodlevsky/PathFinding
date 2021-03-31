@@ -8,8 +8,8 @@
         mc:Ignorable="d"
         Title="Parametres" SizeToContent="WidthAndHeight">
     <Window.Resources>
-        <converters:StringToRangedDoubleConverter x:Key="sliderValueConverter"></converters:StringToRangedDoubleConverter>
-        <converters:StringToRangedIntConverter x:Key="stringToIntCOnverter"></converters:StringToRangedIntConverter>
+        <converters:RangedDoubleToStringToConverter x:Key="sliderValueConverter"></converters:RangedDoubleToStringToConverter>
+        <converters:RangeIntToStringConverter x:Key="stringToIntCOnverter"></converters:RangeIntToStringConverter>
     </Window.Resources>
     <Grid>
         <Grid.ColumnDefinitions>

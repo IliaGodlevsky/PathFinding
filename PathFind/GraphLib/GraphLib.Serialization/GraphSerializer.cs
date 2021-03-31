@@ -58,6 +58,7 @@ namespace GraphLib.Serialization
         /// <summary>
         /// Saves graph in stream
         /// </summary>
+        /// <param name="graph"></param>
         /// <param name="stream"></param>
         /// <returns></returns>
         /// <exception cref="SerializationException"></exception>
@@ -78,6 +79,7 @@ namespace GraphLib.Serialization
         /// <summary>
         /// Saves graph in stream asynchronly
         /// </summary>
+        /// <param name="graph"></param>
         /// <param name="stream"></param>
         /// <returns></returns>
         /// <exception cref="SerializationException"></exception>

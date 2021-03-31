@@ -5,7 +5,7 @@ using System.Linq;
 
 namespace Algorithm.Extensions
 {
-    public static class IGraphPathExtensions
+    public static class GraphPathExtensions
     {
         public static void HighlightPath(this IGraphPath self, IEndPoints endpoints)
         {

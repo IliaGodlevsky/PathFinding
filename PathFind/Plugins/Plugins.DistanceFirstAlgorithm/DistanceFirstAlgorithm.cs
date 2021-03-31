@@ -53,9 +53,12 @@ namespace Plugins.DistanceFirstAlgorithm
         {
             get
             {
-                var neighbours = GetUnvisitedNeighbours(CurrentVertex);
+                var neighbours = GetUnvisitedNeighbours(CurrentVertex).ToArray();
+
                 bool IsLeastCostVertex(IVertex vertex)
-                    => CalculateHeuristic(vertex) == neighbours.Min(CalculateHeuristic);
+                {
+                    return CalculateHeuristic(vertex) == neighbours.Min(CalculateHeuristic);
+                }
 
                 return neighbours
                     .ForEach(Enqueue)

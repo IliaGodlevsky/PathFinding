@@ -14,7 +14,7 @@ namespace WPFVersion.Model
 
         public static void Adjust(IGraph graph)
         {
-            if (!graph.IsDefault())
+            if (graph?.IsDefault() == false)
             {
                 int distanceBetweenVertices = DistanceBetweenVertices + VertexSize;
 
@@ -23,8 +23,12 @@ namespace WPFVersion.Model
                     var mainWindowDesiredWidth = (graph2d.Width + WidthOffset) * distanceBetweenVertices;
                     var mainWindowDesiredHeight = (graph2d.Length + LengthOffset) * distanceBetweenVertices;
 
-                    Application.Current.MainWindow.Width = mainWindowDesiredWidth;
-                    Application.Current.MainWindow.Height = mainWindowDesiredHeight;
+                    var window = Application.Current?.MainWindow;
+                    if (window != null)
+                    {
+                        window.Width = mainWindowDesiredWidth;
+                        window.Height = mainWindowDesiredHeight;
+                    }
                 }
             }
         }

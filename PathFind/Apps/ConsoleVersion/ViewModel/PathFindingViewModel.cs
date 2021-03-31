@@ -28,10 +28,8 @@ namespace ConsoleVersion.ViewModel
 
         public override void FindPath()
         {
-            if (mainViewModel.Graph.Vertices.Any())
+            if (mainViewModel.Graph.Vertices.Any() && mainViewModel is MainViewModel mainModel)
             {
-                var mainModel = mainViewModel as MainViewModel;
-
                 mainModel.ClearGraph();
                 mainModel.DisplayGraph();
                 ChooseExtremeVertex();
@@ -46,7 +44,7 @@ namespace ConsoleVersion.ViewModel
 
                 base.FindPath();
 
-                UpdatePathfindingStatistics();
+                UpdatePathFindingStatistics();
                 Console.ReadLine();
                 mainModel.ClearGraph();
                 Console.CursorVisible = true;
@@ -55,13 +53,12 @@ namespace ConsoleVersion.ViewModel
 
         protected override void OnAlgorithmIntermitted()
         {
-            return;
         }
 
         protected override void OnVertexVisited(object sender, EventArgs e)
         {
             base.OnVertexVisited(sender, e);
-            UpdatePathfindingStatistics();
+            UpdatePathFindingStatistics();
         }
 
         protected override void OnAlgorithmStarted(object sender, EventArgs e)
@@ -80,7 +77,7 @@ namespace ConsoleVersion.ViewModel
 
         private void ChooseExtremeVertex()
         {
-            var chooseMessages = new string[]
+            var chooseMessages = new[]
             {
                 StartVertexInputMessage,
                 EndVertexInputMessage
@@ -92,29 +89,36 @@ namespace ConsoleVersion.ViewModel
                 var vertex = mainViewModel.Graph[point] as Vertex;
                 var cursorLeft = Console.CursorLeft;
                 var cursorTop = Console.CursorTop;
-                vertex.SetAsExtremeVertex();
+                vertex?.SetAsExtremeVertex();
                 Console.SetCursorPosition(cursorLeft, cursorTop);
             }
         }
 
         private Coordinate2D ChoosePoint(string message)
         {
-            Console.WriteLine(message);
-
-            var upperPosibleXValue = (mainViewModel.Graph as Graph2D).Width - 1;
-            var upperPosibleYValue = (mainViewModel.Graph as Graph2D).Length - 1;
-            Coordinate2D point;
-            IVertex vertex;
-            do
+            if (mainViewModel.Graph is Graph2D graph2D)
             {
-                point = Input.InputPoint(upperPosibleXValue, upperPosibleYValue);
-                vertex = mainViewModel.Graph[point];
-            } while (!EndPoints.CanBeEndPoint(vertex));
+                Console.WriteLine(message);
+                var upperPossibleXValue = graph2D.Width - 1;
+                var upperPossibleYValue = graph2D.Length - 1;
+                Coordinate2D point;
+                IVertex vertex;
+                do
+                {
+                    point = Input.InputPoint(upperPossibleXValue, upperPossibleYValue);
+                    vertex = mainViewModel.Graph[point];
+                } while (!EndPoints.CanBeEndPoint(vertex));
 
-            return point;
+                return point;
+            }
+
+            string paramName = nameof(mainViewModel.Graph);
+            string requiredTypeName = nameof(Graph2D);
+            string exceptionMessage = $"{paramName} is not of type {requiredTypeName}";
+            throw new Exception(exceptionMessage);
         }
 
-        private void UpdatePathfindingStatistics()
+        private void UpdatePathFindingStatistics()
         {
             var coordinate = MainView.PathfindingStatisticsPosition;
             Console.SetCursorPosition(coordinate.X, coordinate.Y);

@@ -44,8 +44,8 @@ namespace ConsoleVersion.ViewModel
             {
                 string paddedName = name.PadRight(longestNameLength);
                 string separator = CreateSeparator(menuItemNumber, columns);
-                string stringedNenuItemNumber = (++menuItemNumber).ToString();
-                string paddedMenuItemNumber = stringedNenuItemNumber.PadLeft(menuItemNumberPad);
+                string stringedMenuItemNumber = (++menuItemNumber).ToString();
+                string paddedMenuItemNumber = stringedMenuItemNumber.PadLeft(menuItemNumberPad);
                 string format = Resources.MenuFormat + separator;
                 menu.AppendFormat(format, paddedMenuItemNumber, paddedName);
             }

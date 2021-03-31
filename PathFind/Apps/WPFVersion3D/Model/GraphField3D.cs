@@ -49,7 +49,11 @@ namespace WPFVersion3D.Model
 
         public void Add(IVertex vertex)
         {
-            Vertex3D vertex3D = vertex as Vertex3D;
+            if (!(vertex is Vertex3D vertex3D))
+            {
+                string message = $"Argument is not of type {nameof(Vertex3D)}";
+                throw new ArgumentException(message);
+            }
 
             foreach (var axis in axes)
             {
@@ -62,7 +66,8 @@ namespace WPFVersion3D.Model
         public void CenterGraph(params double[] additionalOffset)
         {
             var axisOffsets = new double[DimensionSizes.Length];
-            foreach (Vertex3D vertex in Children)
+            var vertices = Children.Cast<Vertex3D>();
+            foreach (var vertex in vertices)
             {
                 for (int i = 0; i < DimensionSizes.Length; i++)
                 {
@@ -93,8 +98,10 @@ namespace WPFVersion3D.Model
 
         private void StretchAlongAxes(params Axis[] axes)
         {
-            foreach (Vertex3D vertex in Children)
+            var vertices = Children.Cast<Vertex3D>();
+            foreach (var vertex in vertices)
             {
+                
                 foreach (var axis in axes)
                 {
                     LocateVertex(axis, vertex);
@@ -115,7 +122,15 @@ namespace WPFVersion3D.Model
                 VertexSize = vertex.Size
             };
             double offset = vertexOffset.VertexOffset;
-            var transform = vertex.Transform as TranslateTransform3D;
+
+            if (!(vertex.Transform is TranslateTransform3D transform))
+            {
+                string paramName = nameof(vertex.Transform);
+                string requiredType = nameof(TranslateTransform3D);
+                string message = $"{paramName} is not of type {requiredType}";
+                throw new Exception(message);
+            }
+
             offsetActions[axis](transform, offset);
         }
 

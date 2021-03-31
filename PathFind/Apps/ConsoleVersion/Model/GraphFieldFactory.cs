@@ -1,4 +1,5 @@
-﻿using ConsoleVersion.View;
+﻿using System;
+using ConsoleVersion.View;
 using GraphLib.Base;
 using GraphLib.Interface;
 using GraphLib.Realizations;
@@ -19,8 +20,16 @@ namespace ConsoleVersion.Model
         /// <returns>Graph field</returns>
         public override IGraphField CreateGraphField(IGraph graph)
         {
-            var field = base.CreateGraphField(graph) as GraphField;
-            var graph2d = graph as Graph2D;
+            if (!(graph is Graph2D graph2d))
+            {
+                throw new ArgumentException(nameof(graph));
+            }
+
+            if (!(base.CreateGraphField(graph) is GraphField field))
+            {
+                string message = $"{nameof(field)} is not of type {nameof(GraphField)}";
+                throw new Exception(message);
+            }
 
             field.Width = graph2d.Width;
             field.Length = graph2d.Length;

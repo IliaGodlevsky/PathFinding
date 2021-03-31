@@ -17,7 +17,7 @@ namespace WindowsFormsVersion.Model
 
         private string InputPath(FileDialog fileDialog)
         {
-            return fileDialog.ShowDialog() == DialogResult.OK ? fileDialog.FileName : string.Empty;
+            return fileDialog?.ShowDialog() == DialogResult.OK ? fileDialog.FileName : string.Empty;
         }
     }
 }

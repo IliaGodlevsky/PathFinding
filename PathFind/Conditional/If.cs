@@ -40,7 +40,7 @@ namespace Conditional
         }
 
         /// <summary>
-        /// Adds a new <see cref="If{T}>"></see> condition construction
+        /// Adds a new <see cref="If{T}"></see> condition construction
         /// without condition (e.a. else)
         /// </summary>
         /// <param name="body"></param>
@@ -63,14 +63,15 @@ namespace Conditional
         /// Walks through all condition constructions and
         /// executes first executable condition
         /// </summary>
-        /// <param name="paramtre"></param>
-        public void Walk(T paramtre, Predicate<T> walkCondition = null)
+        /// <param name="parametre"></param>
+        /// <param name="walkCondition"></param>
+        public void Walk(T parametre, Predicate<T> walkCondition = null)
         {
-            if (paramtre != null)
+            if (parametre != null)
             {
                 bool IsCondition(ConditionConstruction<T> condition)
                 {
-                    return condition.IsCondition(paramtre) == true;
+                    return condition.IsCondition(parametre) == true;
                 }
 
                 void Execute(T param)
@@ -82,7 +83,7 @@ namespace Conditional
 
                 if (IsCondition(conditionConstruction))
                 {
-                    conditionConstruction?.ExecuteBody(paramtre);
+                    conditionConstruction.ExecuteBody(parametre);
                 }
             }
         }

@@ -97,17 +97,17 @@ namespace WPFVersion.ViewModel
         {
             try
             {
-                AlgorithmsFactory.LoadAlgorithms(GetAlgorithmsLoadPath());
-                var viewModel = new PathFindingViewModel(this)
-                {
-                    EndPoints = EndPoints
-                };
+                string loadPath = GetAlgorithmsLoadPath();
+                AlgorithmsFactory.LoadAlgorithms(loadPath);
+                var viewModel = new PathFindingViewModel(this);
                 var listener = new PluginsWatcher(viewModel);
-                viewModel.OnWindowClosed += listener.StopWatching;
-                listener.FolderPath = GetAlgorithmsLoadPath();
+                var window = new PathFindWindow();
+                window.Closing += listener.StopWatching;
                 viewModel.OnPathNotFound += OnPathNotFound;
+                viewModel.EndPoints = EndPoints;
+                listener.FolderPath = loadPath;
                 listener.StartWatching();
-                PrepareWindow(viewModel, new PathFindWindow());
+                PrepareWindow(viewModel, window);
             }
             catch (Exception ex)
             {

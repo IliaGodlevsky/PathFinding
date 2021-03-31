@@ -12,10 +12,9 @@ namespace ConsoleVersion.Model
         {
             var vertex = sender as Vertex;
 
-            if (!vertex.IsObstacle)
+            if (vertex?.IsObstacle == false)
             {
                 var cost = Input.InputNumber(Resources.VertexCostInputMsg, BaseVertexCost.CostRange);
-
                 vertex.Cost = CostFactory.CreateCost(cost);
             }
         }
@@ -27,14 +26,20 @@ namespace ConsoleVersion.Model
 
         protected override void SubscribeToEvents(IVertex vertex)
         {
-            (vertex as Vertex).OnCostChanged += ChangeVertexCost;
-            (vertex as Vertex).OnReverse += Reverse;
+            if (vertex is Vertex vert)
+            {
+                vert.OnCostChanged += ChangeVertexCost;
+                vert.OnReverse += Reverse;
+            }
         }
 
         protected override void UnsubscribeFromEvents(IVertex vertex)
         {
-            (vertex as Vertex).OnCostChanged -= ChangeVertexCost;
-            (vertex as Vertex).OnReverse -= Reverse;
+            if (vertex is Vertex vert)
+            {
+                vert.OnCostChanged -= ChangeVertexCost;
+                vert.OnReverse -= Reverse;
+            }
         }
     }
 }

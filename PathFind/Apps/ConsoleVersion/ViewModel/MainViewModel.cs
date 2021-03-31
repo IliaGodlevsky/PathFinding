@@ -89,15 +89,17 @@ namespace ConsoleVersion.ViewModel
         [MenuItem("Reverse vertex")]
         public void ReverseVertex()
         {
-            if (Graph.Vertices.Any())
+            if (Graph.Vertices.Any() && Graph is Graph2D graph2D)
             {
-                var graph2D = Graph as Graph2D;
                 var upperPossibleXValue = graph2D.Width - 1;
                 var upperPossibleYValue = graph2D.Length - 1;
 
                 var point = Input.InputPoint(upperPossibleXValue, upperPossibleYValue);
 
-                (Graph[point] as Vertex).Reverse();
+                if (Graph[point] is Vertex vertex)
+                {
+                    vertex.Reverse();
+                }
             }
         }
 
@@ -112,20 +114,20 @@ namespace ConsoleVersion.ViewModel
         [MenuItem("Change vertex cost", MenuItemPriority.Low)]
         public void ChangeVertexCost()
         {
-            if (Graph.Vertices.Any())
+            if (Graph.Vertices.Any() && Graph is Graph2D graph2D)
             {
-                var graph2D = Graph as Graph2D;
                 var upperPossibleXValue = graph2D.Width - 1;
                 var upperPossibleYValue = graph2D.Length - 1;
 
                 var point = Input.InputPoint(upperPossibleXValue, upperPossibleYValue);
 
-                while (Graph[point].IsObstacle)
+                var vertex = Graph[point];
+                while (vertex.IsObstacle)
                 {
                     point = Input.InputPoint(upperPossibleXValue, upperPossibleYValue);
+                    vertex = Graph[point];
                 }
-
-                (Graph[point] as Vertex).ChangeCost();
+                (vertex as Vertex)?.ChangeCost();
             }
         }
 
@@ -139,7 +141,7 @@ namespace ConsoleVersion.ViewModel
             MainView.UpdatePositionOfVisualElements(Graph);
         }
 
-        [MenuItem("Quit programm", MenuItemPriority.Lowest)]
+        [MenuItem("Quit program", MenuItemPriority.Lowest)]
         public void Quit()
         {
             Environment.Exit(ExitCode);

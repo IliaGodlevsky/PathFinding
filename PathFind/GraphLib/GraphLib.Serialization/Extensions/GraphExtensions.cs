@@ -2,7 +2,7 @@
 
 namespace GraphLib.Serialization.Extensions
 {
-    public static class IGraphExtensions
+    public static class GraphExtensions
     {
         public static GraphSerializationInfo GetGraphSerializationInfo(this IGraph graph)
         {

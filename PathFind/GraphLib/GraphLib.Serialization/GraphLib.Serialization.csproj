@@ -41,8 +41,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Extensions\IGraphExtensions.cs" />
-    <Compile Include="Extensions\IVertexExtension.cs" />
+    <Compile Include="Extensions\GraphExtensions.cs" />
+    <Compile Include="Extensions\VertexExtension.cs" />
     <Compile Include="GraphSerializationInfo.cs" />
     <Compile Include="GraphSerializer.cs" />
     <Compile Include="Interfaces\IGraphSerializer.cs" />

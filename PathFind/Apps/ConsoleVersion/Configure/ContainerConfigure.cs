@@ -20,8 +20,8 @@ namespace ConsoleVersion.Configure
         {
             var builder = new ContainerBuilder();
 
-            builder.RegisterType<MainView>().As<IView>().InstancePerRequest();
-            builder.RegisterType<MainViewModel>().As<IMainModel>().InstancePerRequest().PropertiesAutowired();
+            builder.RegisterType<MainView>().As<IView>().InstancePerLifetimeScope();
+            builder.RegisterType<MainViewModel>().As<IMainModel>().InstancePerLifetimeScope().PropertiesAutowired();
             builder.RegisterType<EndPoints>().As<BaseEndPoints>().SingleInstance();
             builder.RegisterType<CostFactory>().As<IVertexCostFactory>().SingleInstance();          
             builder.RegisterType<VertexFactory>().As<IVertexFactory>().SingleInstance();

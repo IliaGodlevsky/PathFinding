@@ -21,10 +21,11 @@ namespace WindowsFormsVersion.ViewModel
         {
             if (CanExecuteConfirmPathFindAlgorithmChoice())
             {
-                OnWindowClosed?.Invoke(this, new EventArgs());
+                var args = new EventArgs();
+                OnWindowClosed?.Invoke(this, args);
                 FindPath();
+                OnWindowClosed = null;
             }
-            OnWindowClosed = null;
         }
 
         protected override void OnAlgorithmIntermitted()
@@ -32,15 +33,16 @@ namespace WindowsFormsVersion.ViewModel
             Application.DoEvents();
         }
 
-        public void CancelPathinding(object sender, EventArgs e)
+        public void CancelPathFinding(object sender, EventArgs e)
         {
-            OnWindowClosed?.Invoke(this, new EventArgs());
+            var args = new EventArgs();
+            OnWindowClosed?.Invoke(this, args);
             OnWindowClosed = null;
         }
 
         private bool CanExecuteConfirmPathFindAlgorithmChoice()
         {
-            return AlgorithmKeys.Any(algo => algo == AlgorithmKey);
+            return AlgorithmKeys.Contains(AlgorithmKey);
         }
     }
 }

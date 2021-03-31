@@ -14,15 +14,6 @@ namespace GraphLib.Common.NullObjects
     {
         public IEnumerable<int> CoordinatesValues => new int[] { };
 
-        public IEnumerable<ICoordinate> Environment => new DefaultCoordinate[] { };
-
-        public bool IsDefault => true;
-
-        public DefaultCoordinate()
-        {
-
-        }
-
         public override bool Equals(object pos)
         {
             return pos is DefaultCoordinate;

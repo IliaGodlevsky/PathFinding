@@ -5,7 +5,7 @@ using System.Linq;
 
 namespace Algorithm.Extensions
 {
-    public static class IVertexExtensions
+    public static class VertexExtensions
     {
         private static int CalculateAbsSub(int first, int second)
         {
@@ -27,7 +27,7 @@ namespace Algorithm.Extensions
             #region InvariantsObservance
             if (self == null || toVertex == null)
             {
-                throw new ArgumentNullException("Argument can't be null");
+                throw new ArgumentNullException();
             }
 
             if (self.Position == null || toVertex.Position == null)

@@ -1,27 +1,33 @@
-﻿using GraphLib.Base;
-using GraphLib.Interface;
-using System;
+﻿using System;
 using System.Windows.Input;
+using GraphLib.Base;
+using GraphLib.Interface;
 
-namespace WPFVersion.Model.EventHolder
+namespace WPFVersion.Model
 {
     internal sealed class VertexEventHolder : BaseVertexEventHolder
     {
         protected override int GetWheelDelta(EventArgs e)
         {
-            return (e as MouseWheelEventArgs).Delta;
+            return e is MouseWheelEventArgs args ? args.Delta : default;
         }
 
         protected override void SubscribeToEvents(IVertex vertex)
         {
-            (vertex as Vertex).MouseRightButtonDown += Reverse;
-            (vertex as Vertex).MouseWheel += ChangeVertexCost;
+            if (vertex is Vertex vert)
+            {
+                vert.MouseRightButtonDown += Reverse;
+                vert.MouseWheel += ChangeVertexCost;
+            }
         }
 
         protected override void UnsubscribeFromEvents(IVertex vertex)
         {
-            (vertex as Vertex).MouseRightButtonDown -= Reverse;
-            (vertex as Vertex).MouseWheel -= ChangeVertexCost;
+            if (vertex is Vertex vert)
+            {
+                vert.MouseRightButtonDown -= Reverse;
+                vert.MouseWheel -= ChangeVertexCost;
+            }
         }
     }
 }

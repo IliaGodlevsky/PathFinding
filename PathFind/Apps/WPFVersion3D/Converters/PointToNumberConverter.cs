@@ -5,7 +5,7 @@ using System.Windows.Media.Media3D;
 
 namespace WPFVersion3D.Converters
 {
-    internal sealed class InvertPointConverter : IValueConverter
+    internal sealed class PointToNumberConverter : IValueConverter
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
@@ -13,18 +13,26 @@ namespace WPFVersion3D.Converters
             try
             {
                 result = (Point3D) System.Convert.ChangeType(value, typeof(Point3D));
-                var zeroPoint = new Point3D(0, 0, 0);
-                return zeroPoint - result;
+                return result.Z;
             }
             catch (Exception)
             {
-                return result;
+                return result.Z;
             }
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            return Convert(value, targetType, parameter, culture);
+            double result = default;
+            try
+            {
+                result = System.Convert.ToDouble(value);
+                return new Point3D(result, result, result);
+            }
+            catch (Exception)
+            {
+                return new Point3D(result, result, result);
+            }
         }
     }
 }

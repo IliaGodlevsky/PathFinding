@@ -1,6 +1,7 @@
 ﻿using GraphLib.Base;
 using GraphLib.Interface;
 using System;
+using System.Runtime.CompilerServices;
 using System.Windows.Forms;
 
 namespace WindowsFormsVersion.Model
@@ -9,12 +10,15 @@ namespace WindowsFormsVersion.Model
     {
         protected override void SubscribeVertex(IVertex vertex)
         {
-            (vertex as Vertex).MouseClick += SetEndPoints;
+            if (vertex is Vertex vert)
+            {
+                vert.MouseClick += SetEndPoints;
+            }
         }
 
         protected override void SetEndPoints(object sender, EventArgs e)
         {
-            if ((e as MouseEventArgs).Button == MouseButtons.Left)
+            if ((e as MouseEventArgs)?.Button == MouseButtons.Left)
             {
                 base.SetEndPoints(sender, e);
             }
@@ -22,7 +26,10 @@ namespace WindowsFormsVersion.Model
 
         protected override void UnsubscribeVertex(IVertex vertex)
         {
-            (vertex as Vertex).MouseClick -= SetEndPoints;
+            if (vertex is Vertex vert)
+            {
+                vert.MouseClick -= SetEndPoints;
+            }
         }
     }
 }

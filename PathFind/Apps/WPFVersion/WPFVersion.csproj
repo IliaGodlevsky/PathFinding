@@ -70,8 +70,8 @@
     <Compile Include="Configure\ContainerConfigure.cs" />
     <Compile Include="Constants.cs" />
     <Compile Include="Converters\ToStringConverter.cs" />
-    <Compile Include="Converters\StringToRangedDoubleConverter.cs" />
-    <Compile Include="Converters\StringToRangedIntConverter.cs" />
+    <Compile Include="Converters\RangedDoubleToStringToConverter.cs" />
+    <Compile Include="Converters\RangeIntToStringConverter.cs" />
     <Compile Include="Infrastructure\RelayCommand.cs" />
     <Compile Include="Model\EndPoints.cs" />
     <Compile Include="Model\PathInput.cs" />

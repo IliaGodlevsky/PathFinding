@@ -8,7 +8,7 @@
         mc:Ignorable="d"       
         Title="Algorithms" SizeToContent="WidthAndHeight">
     <Window.Resources>
-        <converters:StringToRangedDoubleConverter x:Key="sliderValueConverter"/>
+        <converters:RangedDoubleToStringToConverter x:Key="SliderValueConverter"/>
     </Window.Resources>
     <Grid>
         <Grid.RowDefinitions>
@@ -57,7 +57,7 @@
                 <TextBox MaxWidth="35" Grid.Row="1" 
                          Text ="{Binding ElementName=delayTimeSlider, 
                          Path=Value, 
-                         Converter = {StaticResource sliderValueConverter}, 
+                         Converter = {StaticResource SliderValueConverter}, 
                          ConverterParameter={x:Static range:Constants.AlgorithmDelayTimeValueRange}, 
                          Mode = TwoWay, 
                          UpdateSourceTrigger = PropertyChanged}" 

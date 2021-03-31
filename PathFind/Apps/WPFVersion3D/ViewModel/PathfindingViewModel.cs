@@ -6,7 +6,6 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
-using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Windows.Input;
 using System.Windows.Threading;
@@ -45,7 +44,7 @@ namespace WPFVersion3D.ViewModel
                 ExecuteConfirmPathFindAlgorithmChoice,
                 CanExecuteConfirmPathFindAlgorithmChoice);
 
-            CancelPathFindAlgorithmChoice = new RelayCommand(obj => CloseWindow());
+            CancelPathFindAlgorithmChoice = new RelayCommand(ExecuteCloseWindowCommand);
 
             AlgorithmKeys = new ObservableCollection<string>(AlgorithmsFactory.AlgorithmsDescriptions);
         }
@@ -66,20 +65,21 @@ namespace WPFVersion3D.ViewModel
             Dispatcher.PushFrame(frame);
         }
 
-        private void CloseWindow()
+        private void ExecuteCloseWindowCommand(object param)
         {
-            OnWindowClosed?.Invoke(this, new EventArgs());
+            var args = new EventArgs();
+            OnWindowClosed?.Invoke(this, args);
         }
 
         private void ExecuteConfirmPathFindAlgorithmChoice(object param)
         {
-            CloseWindow();
+            ExecuteCloseWindowCommand(null);
             base.FindPath();
         }
 
         private bool CanExecuteConfirmPathFindAlgorithmChoice(object param)
         {
-            return AlgorithmKeys.Any(algo => algo == AlgorithmKey);
+            return AlgorithmKeys.Contains(AlgorithmKey);
         }
     }
 }

@@ -7,7 +7,6 @@ using GraphLib.Serialization.Interfaces;
 using System.Runtime.Serialization;
 using System.Runtime.Serialization.Formatters.Binary;
 using WPFVersion.Model;
-using WPFVersion.Model.EventHolder;
 using WPFVersion.ViewModel;
 
 namespace WPFVersion.Configure

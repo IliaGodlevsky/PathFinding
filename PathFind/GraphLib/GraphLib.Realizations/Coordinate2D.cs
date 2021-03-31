@@ -15,7 +15,7 @@ namespace GraphLib.Realizations
         public int Y => CoordinatesValues.Last();
 
         public Coordinate2D(int x, int y)
-            : this(new int[] { x, y })
+            : this(new [] { x, y })
         {
 
         }

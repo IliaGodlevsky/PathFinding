@@ -80,17 +80,17 @@ namespace WPFVersion3D.ViewModel
         {
             try
             {
-                AlgorithmsFactory.LoadAlgorithms(GetAlgorithmsLoadPath());
-                var viewModel = new PathFindingViewModel(this)
-                {
-                    EndPoints = EndPoints
-                };
+                string loadPath = GetAlgorithmsLoadPath();
+                AlgorithmsFactory.LoadAlgorithms(loadPath);
+                var viewModel = new PathFindingViewModel(this);
                 var listener = new PluginsWatcher(viewModel);
-                viewModel.OnWindowClosed += listener.StopWatching;
-                listener.FolderPath = GetAlgorithmsLoadPath();
+                var window = new PathFindWindow();
+                window.Closing += listener.StopWatching;
                 viewModel.OnPathNotFound += OnPathNotFound;
+                viewModel.EndPoints = EndPoints;
+                listener.FolderPath = loadPath;
                 listener.StartWatching();
-                PrepareWindow(viewModel, new PathFindWindow());
+                PrepareWindow(viewModel, window);
             }
             catch (Exception ex)
             {
@@ -114,17 +114,17 @@ namespace WPFVersion3D.ViewModel
 
         public void StretchAlongXAxis(object sender, RoutedPropertyChangedEventArgs<double> e)
         {
-            (GraphField as GraphField3D).StretchAlongAxis(Axis.Abscissa, e.NewValue, 1, 0, 0);
+            (GraphField as GraphField3D)?.StretchAlongAxis(Axis.Abscissa, e.NewValue, 1, 0, 0);
         }
 
         public void StretchAlongYAxis(object sender, RoutedPropertyChangedEventArgs<double> e)
         {
-            (GraphField as GraphField3D).StretchAlongAxis(Axis.Ordinate, e.NewValue, 0, 1, 0);
+            (GraphField as GraphField3D)?.StretchAlongAxis(Axis.Ordinate, e.NewValue, 0, 1, 0);
         }
 
         public void StretchAlongZAxis(object sender, RoutedPropertyChangedEventArgs<double> e)
         {
-            (GraphField as GraphField3D).StretchAlongAxis(Axis.Applicate, e.NewValue, 0, 0, 1);
+            (GraphField as GraphField3D)?.StretchAlongAxis(Axis.Applicate, e.NewValue, 0, 0, 1);
         }
 
         private void ChangeVerticesOpacity()

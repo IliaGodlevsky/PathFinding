@@ -7,12 +7,18 @@ namespace WPFVersion3D.Model
     {
         protected override void SubscribeVertex(IVertex vertex)
         {
-            (vertex as Vertex3D).MouseLeftButtonDown += SetEndPoints;
+            if (vertex is Vertex3D vertex3D)
+            {
+                vertex3D.MouseLeftButtonDown += SetEndPoints;
+            }
         }
 
         protected override void UnsubscribeVertex(IVertex vertex)
         {
-            (vertex as Vertex3D).MouseLeftButtonDown -= SetEndPoints;
+            if (vertex is Vertex3D vertex3D)
+            {
+                vertex3D.MouseLeftButtonDown -= SetEndPoints;
+            }
         }
     }
 }

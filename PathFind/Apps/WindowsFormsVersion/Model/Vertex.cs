@@ -95,12 +95,12 @@ namespace WindowsFormsVersion.Model
         public void MakeUnweighted()
         {
             Text = string.Empty;
-            (cost as WeightableVertexCost).MakeUnweighted();
+            (cost as WeightableVertexCost)?.MakeUnweighted();
         }
 
         public void MakeWeighted()
         {
-            (cost as WeightableVertexCost).MakeWeighted();
+            (cost as WeightableVertexCost)?.MakeWeighted();
             Text = cost.ToString();
         }
 

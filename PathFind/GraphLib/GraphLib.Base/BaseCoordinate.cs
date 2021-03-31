@@ -16,14 +16,14 @@ namespace GraphLib.Base
         public BaseCoordinate(int numberOfDimensions, params int[] coordinates)
         {
             CoordinatesValues = coordinates.ToArray();
-            int actualLenth = coordinates.Length;
-            if (actualLenth != numberOfDimensions)
+            int actualLength = coordinates.Length;
+            if (actualLength != numberOfDimensions)
             {
                 var argumentName = nameof(coordinates);
                 var message = "Number of dimensions must be equal " +
                     "to coordinates number of dimensions\n";
                 message += $"Required value is {numberOfDimensions}";
-                throw new ArgumentOutOfRangeException(argumentName, actualLenth, message);
+                throw new ArgumentOutOfRangeException(argumentName, actualLength, message);
             }
         }
 
@@ -48,12 +48,13 @@ namespace GraphLib.Base
         {
             var information = new StringBuilder("(");
             var coordinatesInStringRepresentation = CoordinatesValues.
-                Select(coordinate => coordinate.ToString());
+                Select(coordinate => coordinate.ToString())
+                .ToArray();
 
-            for (int i = 0; i < coordinatesInStringRepresentation.Count() - 1; i++)
+            for (int i = 0; i < coordinatesInStringRepresentation.Length - 1; i++)
             {
                 information
-                    .Append(coordinatesInStringRepresentation.ElementAt(i))
+                    .Append(coordinatesInStringRepresentation[i])
                     .Append(",");
             }
 

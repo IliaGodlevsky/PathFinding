@@ -3,7 +3,7 @@ using System.Linq;
 
 namespace GraphLib.Extensions
 {
-    public static class ICoordinateExtensions
+    public static class CoordinateExtensions
     {
         /// <summary>
         /// Compares two coordinates

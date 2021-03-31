@@ -1,22 +1,20 @@
-﻿using Common.Extensions;
+﻿using System;
+using System.Windows.Forms;
 using GraphLib.Base;
 using GraphLib.Interface;
-using System;
-using System.Windows.Forms;
-using WindowsFormsVersion.Model;
 
-namespace WindowsFormsVersion.EventHolder
+namespace WindowsFormsVersion.Model
 {
     internal sealed class VertexEventHolder : BaseVertexEventHolder
     {
         protected override int GetWheelDelta(EventArgs e)
         {
-            return (e as MouseEventArgs).Delta;
+            return e is MouseEventArgs args ? args.Delta : default;
         }
 
         public override void Reverse(object sender, EventArgs e)
         {
-            if ((e as MouseEventArgs).Button == MouseButtons.Right)
+            if ((e as MouseEventArgs)?.Button == MouseButtons.Right)
             {
                 base.Reverse(sender, e);
             }
@@ -24,20 +22,20 @@ namespace WindowsFormsVersion.EventHolder
 
         protected override void SubscribeToEvents(IVertex vertex)
         {
-            if (vertex.IsDefault())
-                return;
-
-            (vertex as Vertex).MouseClick += Reverse;
-            (vertex as Vertex).MouseWheel += ChangeVertexCost;
+            if (vertex is Vertex vert)
+            {
+                vert.MouseClick += Reverse;
+                vert.MouseWheel += ChangeVertexCost;
+            }
         }
 
         protected override void UnsubscribeFromEvents(IVertex vertex)
         {
-            if (vertex.IsDefault())
-                return;
-
-            (vertex as Vertex).MouseClick -= Reverse;
-            (vertex as Vertex).MouseWheel -= ChangeVertexCost;
+            if (vertex is Vertex vert)
+            {
+                vert.MouseClick -= Reverse;
+                vert.MouseWheel -= ChangeVertexCost;
+            }
         }
     }
 }

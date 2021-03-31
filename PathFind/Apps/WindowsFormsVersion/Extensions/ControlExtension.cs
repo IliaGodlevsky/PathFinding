@@ -7,7 +7,7 @@ namespace WindowsFormsVersion.Extensions
     {
         public static bool IsGraphField(this Control control)
         {
-            return (control as IGraphField) != null;
+            return control is IGraphField;
         }
     }
 }

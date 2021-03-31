@@ -3,7 +3,7 @@ using GraphLib.Interface;
 
 namespace GraphLib.Serialization.Extensions
 {
-    public static class IVertexExtension
+    public static class VertexExtension
     {
         internal static VertexSerializationInfo GetSerializationInfo(this IVertex self)
         {

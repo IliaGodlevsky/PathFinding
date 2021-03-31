@@ -20,20 +20,21 @@ namespace WPFVersion.ViewModel
             IGraphAssembler graphFactory) : base(model, graphFactory)
         {
             ConfirmCreateGraphCommand = new RelayCommand(ExecuteConfirmCreateGraphCommand);
-            CancelCreateGraphCommand = new RelayCommand(obj => CloseWindow());
+            CancelCreateGraphCommand = new RelayCommand(ExecuteCloseWindowCommand);
         }
 
         private void ExecuteConfirmCreateGraphCommand(object param)
         {
             CreateGraph();
 
-            CloseWindow();
+            ExecuteCloseWindowCommand(null);
             WindowService.Adjust(model.Graph);
         }
 
-        private void CloseWindow()
+        private void ExecuteCloseWindowCommand(object param)
         {
-            OnWindowClosed?.Invoke(this, new EventArgs());
+            var args = new EventArgs();
+            OnWindowClosed?.Invoke(this, args);
         }
     }
 }

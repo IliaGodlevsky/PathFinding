@@ -12,7 +12,7 @@ namespace GraphViewModel
     {
         public string FolderPath { private get; set; }
 
-        public BasePluginsWatcher()
+        protected BasePluginsWatcher()
         {
             tokenSource = new CancellationTokenSource();
         }

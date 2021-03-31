@@ -32,8 +32,8 @@ namespace GraphLib.Base
                 return cost.CurrentCost == CurrentCost;
             }
 
-            var message = "An error was occured while comparing\n";
-            message += $"an instance of {GetType().Name} and {obj.GetType().Name}\n";
+            var message = "An error was occurred while comparing\n";
+            message += $"an instance of {GetType().Name} and {obj?.GetType().Name}\n";
             throw new ArgumentException(message, nameof(obj));
         }
 

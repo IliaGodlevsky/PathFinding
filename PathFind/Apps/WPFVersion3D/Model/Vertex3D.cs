@@ -190,7 +190,7 @@ namespace WPFVersion3D.Model
         {
             Vertex3D vert = (Vertex3D)depObj;
             vert.Brush = (SolidColorBrush)prop.NewValue;
-            (vert.Material as DiffuseMaterial).Brush = vert.Brush;
+            ((DiffuseMaterial) vert.Material).Brush = vert.Brush;
         }
     }
 }

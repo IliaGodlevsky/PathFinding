@@ -6,14 +6,21 @@ namespace WPFVersion3D.Converters
 {
     internal sealed class MaterialOpacityValueConverter : IValueConverter
     {
+        private readonly IValueConverter doubleToStringConverter;
+
+        public MaterialOpacityValueConverter()
+        {
+            doubleToStringConverter = new DoubleToStringConverter();
+        }
+
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            return Math.Round((double)value, 2);
+            return doubleToStringConverter.Convert(value, targetType, parameter, culture);
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            return Math.Round((double)value, 2);
+            return Convert(value, targetType, parameter, culture);
         }
     }
 }
