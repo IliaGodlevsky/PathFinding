@@ -7,20 +7,16 @@ namespace WPFVersion3D.Converters
 {
     internal sealed class RangedDoubleToStringConverter : IValueConverter
     {
+        private readonly DoubleToStringConverter doubleToStringConverter;
+
+        public RangedDoubleToStringConverter()
+        {
+            doubleToStringConverter = new DoubleToStringConverter {Precision = 0};
+        }
+
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            double result = default;
-            try
-            {
-                result = System.Convert.ToDouble(value);
-                result = Math.Round(result, 0);
-                return result;
-
-            }
-            catch (Exception)
-            {
-                return result;
-            }
+            return doubleToStringConverter.Convert(value, targetType, parameter, culture);
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)

@@ -37,35 +37,30 @@
         <TextBlock Grid.Row="3" Margin="5" Text="Path color opacity"></TextBlock>
         <TextBlock Grid.Row="4" Margin="5" Text="Simple vertex color opacity"></TextBlock>
 
-        <Slider Value="{Binding Path=ObstacleColorOpacity, 
-            Converter={StaticResource opacityConverter}}" 
+        <Slider Value="{Binding Path=ObstacleColorOpacity}" 
                 Style="{StaticResource SliderStyle}"              
                 x:Name="obstacleColorOpacitySlider" 
                 Grid.Column="1"/>
 
-        <Slider Value="{Binding Path=VisitedVertexColorOpacity, 
-            Converter={StaticResource opacityConverter}}" 
+        <Slider Value="{Binding Path=VisitedVertexColorOpacity}" 
                 Style="{StaticResource SliderStyle}"
                 x:Name="visitedVertexColorOpacitySlider" 
                 Grid.Column="1" 
                 Grid.Row="1"/>
 
-        <Slider Value="{Binding Path=EnqueuedVertexColorOpacity, 
-            Converter={StaticResource opacityConverter}}"
+        <Slider Value="{Binding Path=EnqueuedVertexColorOpacity}"
                 Style="{StaticResource SliderStyle}"
                 x:Name="enqueuedVertexColorOpacitySlider" 
                 Grid.Column="1" 
                 Grid.Row="2"/>
 
-        <Slider Value="{Binding Path=PathVertexColorOpacity, 
-            Converter={StaticResource opacityConverter}}" 
+        <Slider Value="{Binding Path=PathVertexColorOpacity}" 
                 Style="{StaticResource SliderStyle}"               
                 x:Name="pathVertexColorOpacitySlider" 
                 Grid.Column="1" 
                 Grid.Row="3"/>
 
-        <Slider Value="{Binding Path=SimpleVertexColorOpacity, 
-            Converter={StaticResource opacityConverter}}" 
+        <Slider Value="{Binding Path=SimpleVertexColorOpacity}" 
                 Style="{StaticResource SliderStyle}"
                 x:Name="simpleVertexColorOpacitySlider"
                 Grid.Column="1"
@@ -76,6 +71,7 @@
                  Grid.Column="2" 
                  Grid.Row="0" 
                  Text="{Binding ElementName=obstacleColorOpacitySlider, 
+            Converter={StaticResource opacityConverter},
             Path=Value, 
             Mode=TwoWay, 
             UpdateSourceTrigger=PropertyChanged}"></TextBox>
@@ -85,6 +81,7 @@
                  Grid.Column="2"
                  Grid.Row="1" 
                  Text="{Binding ElementName=visitedVertexColorOpacitySlider, 
+            Converter={StaticResource opacityConverter},
             Path=Value, 
             Mode=TwoWay, 
             UpdateSourceTrigger=PropertyChanged}"></TextBox>
@@ -94,6 +91,7 @@
                  Grid.Column="2" 
                  Grid.Row="2" 
                  Text="{Binding ElementName=enqueuedVertexColorOpacitySlider, 
+            Converter={StaticResource opacityConverter},
             Path=Value, 
             Mode=TwoWay, 
             UpdateSourceTrigger=PropertyChanged}"></TextBox>
@@ -103,6 +101,7 @@
                  Grid.Column="2" 
                  Grid.Row="3" 
                  Text="{Binding ElementName=pathVertexColorOpacitySlider, 
+            Converter={StaticResource opacityConverter},
             Path=Value, 
             Mode=TwoWay, 
             UpdateSourceTrigger=PropertyChanged}"></TextBox>
@@ -112,6 +111,7 @@
                  Grid.Column="2" 
                  Grid.Row="4" 
                  Text="{Binding ElementName=simpleVertexColorOpacitySlider, 
+            Converter={StaticResource opacityConverter},
             Path=Value, 
             Mode=TwoWay, 
             UpdateSourceTrigger=PropertyChanged}"></TextBox>

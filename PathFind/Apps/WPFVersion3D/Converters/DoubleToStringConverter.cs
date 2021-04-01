@@ -6,13 +6,16 @@ namespace WPFVersion3D.Converters
 {
     internal sealed class DoubleToStringConverter : IValueConverter
     {
+        public int Precision { get; set; } = 2;
+
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
             double result = default;
             try
             {
+                value = ChangeDotToComma(value?.ToString());
                 result = System.Convert.ToDouble(value);
-                result = Math.Round(result, digits: 2);
+                result = Math.Round(result, Precision);
                 return result;
 
             }
@@ -24,7 +27,12 @@ namespace WPFVersion3D.Converters
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            return double.TryParse(value?.ToString(), out var result) ? result : default;
+            return Convert(value, targetType, parameter, culture);
+        }
+
+        private string ChangeDotToComma(string value)
+        {
+            return value?.Replace('.', ',');
         }
     }
 }

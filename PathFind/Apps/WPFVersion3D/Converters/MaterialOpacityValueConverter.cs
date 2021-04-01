@@ -20,7 +20,7 @@ namespace WPFVersion3D.Converters
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            return Convert(value, targetType, parameter, culture);
+            return doubleToStringConverter.ConvertBack(value, targetType, parameter, culture);
         }
     }
 }

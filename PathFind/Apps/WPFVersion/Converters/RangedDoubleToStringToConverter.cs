@@ -15,7 +15,6 @@ namespace WPFVersion.Converters
                 result = System.Convert.ToDouble(value);
                 result = Math.Round(result, 0);
                 return result;
-
             }
             catch (Exception)
             {
@@ -39,7 +38,7 @@ namespace WPFVersion.Converters
 
         private bool IsValidParametres(object value, object parametre)
         {
-            return double.TryParse(value.ToString(), out _) && parametre is ValueRange;
+            return double.TryParse(value?.ToString(), out _) && parametre is ValueRange;
         }
     }
 }
