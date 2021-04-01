@@ -12,7 +12,7 @@ namespace WPFVersion3D.Converters
             try
             {
                 result = System.Convert.ToDouble(value);
-                result = Math.Round(result, 2);
+                result = Math.Round(result, digits: 2);
                 return result;
 
             }
