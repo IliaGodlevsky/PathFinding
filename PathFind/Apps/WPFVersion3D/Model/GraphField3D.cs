@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Windows.Media.Media3D;
+using Common.Extensions;
 using WPFVersion3D.Enums;
 using DistanceBetweenVerticesSetterCallback = System.Action<double, WPFVersion3D.Model.GraphField3D>;
 using OffsetSetterAction = System.Action<System.Windows.Media.Media3D.TranslateTransform3D, double>;
@@ -98,11 +99,11 @@ namespace WPFVersion3D.Model
 
         private void StretchAlongAxes(params Axis[] axes)
         {
+            var uniqueAxes = axes.Distinct().ToArray();
             var vertices = Children.Cast<Vertex3D>();
             foreach (var vertex in vertices)
             {
-                
-                foreach (var axis in axes)
+                foreach (var axis in uniqueAxes)
                 {
                     LocateVertex(axis, vertex);
                 }
@@ -134,11 +135,11 @@ namespace WPFVersion3D.Model
             offsetActions[axis](transform, offset);
         }
 
-        private int Width { get; set; }
+        private int Width { get; }
 
-        private int Length { get; set; }
+        private int Length { get; }
 
-        private int Height { get; set; }
+        private int Height { get; }
 
         private int[] DimensionSizes => new int[]
         {

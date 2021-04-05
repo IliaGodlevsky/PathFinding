@@ -2,6 +2,7 @@
 using GraphLib.Interface;
 using GraphViewModel.Interfaces;
 using System;
+using Common.Logging;
 
 namespace GraphLib.ViewModel
 {

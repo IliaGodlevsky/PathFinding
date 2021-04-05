@@ -5,6 +5,7 @@ using GraphViewModel.Interfaces;
 using System;
 using System.Linq;
 using System.Windows.Forms;
+using GraphViewModel;
 
 namespace WindowsFormsVersion.ViewModel
 {

@@ -106,20 +106,25 @@ namespace GraphLib.Base
         }
 
         public override string ToString()
-        {            
-            var sb = new StringBuilder();
-            int count = DimensionsSizes.Count();
-            Enumerable.Range(0, count).ForEach(index=>
+        {
+            var graphParameters = new StringBuilder();
+            
+            void AppendToGraphParameters(int index)
             {
                 string dimensionName = DimensionNames[index];
                 int dimensionSize = DimensionsSizes.ElementAt(index);
-                sb.Append($"{ dimensionName }: { dimensionSize }   ");
-            });
+                graphParameters.Append($"{dimensionName}: {dimensionSize}   ");
+            }
 
-            sb.Append($"Obstacle percent: { ObstaclePercent } ")
-              .Append($"({ Obstacles }/{ Size })");
+            int from = 0, to = DimensionsSizes.Count();
+            Enumerable.Range(from, to).ForEach(AppendToGraphParameters);
 
-            return sb.ToString();
+            string obstaclePercentInfo = $"Obstacle percent: {ObstaclePercent} ";
+            string obstaclesToSizeRatio = $"({Obstacles}/{Size})";
+            string parameters = $"{obstaclePercentInfo}{obstaclesToSizeRatio}";
+            graphParameters.Append(parameters);
+
+            return graphParameters.ToString();
         }
 
         private bool IsSuitableCoordinate(IEnumerable<int> coordinateValues)

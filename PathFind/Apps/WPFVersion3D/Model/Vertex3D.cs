@@ -7,6 +7,8 @@ using System.Windows;
 using System.Windows.Media;
 using System.Windows.Media.Media3D;
 
+using static WPFVersion3D.Constants;
+
 namespace WPFVersion3D.Model
 {
     internal class Vertex3D : UIElement3D, IVertex, IMarkable
@@ -15,7 +17,7 @@ namespace WPFVersion3D.Model
         {
             Dispatcher.Invoke(() =>
             {
-                Size = 5;
+                Size = InitialVertexSize;
                 Material = new DiffuseMaterial();
                 Model = Model3DFactory.CreateCubicModel3D(Size, Material);
                 Transform = new TranslateTransform3D();
@@ -38,13 +40,13 @@ namespace WPFVersion3D.Model
 
         static Vertex3D()
         {
-            VisitedVertexBrush = new SolidColorBrush(Colors.CadetBlue) { Opacity = 0.15 };
-            PathVertexBrush = new SolidColorBrush(Colors.Yellow) { Opacity = 0.9 };
-            StartVertexBrush = new SolidColorBrush(Colors.Green) { Opacity = 1 };
-            EndVertexBrush = new SolidColorBrush(Colors.Red) { Opacity = 1 };
-            EnqueuedVertexBrush = new SolidColorBrush(Colors.Magenta) { Opacity = 0.15 };
-            ObstacleVertexBrush = new SolidColorBrush(Colors.Black) { Opacity = 0.2 };
-            SimpleVertexBrush = new SolidColorBrush(Colors.White) { Opacity = 0.25 };
+            VisitedVertexBrush = new SolidColorBrush(Colors.CadetBlue) { Opacity = InitialVisitedVertexOpacity };
+            PathVertexBrush = new SolidColorBrush(Colors.Yellow)       { Opacity = InitialPathVertexOpacity };
+            StartVertexBrush = new SolidColorBrush(Colors.Green)       { Opacity = InitialStartVertexOpacity };
+            EndVertexBrush = new SolidColorBrush(Colors.Red)           { Opacity = InitialEndVertexOpacity };
+            EnqueuedVertexBrush = new SolidColorBrush(Colors.Magenta)  { Opacity = InitialEnqueuedVertexOpacity };
+            ObstacleVertexBrush = new SolidColorBrush(Colors.Black)    { Opacity = InitialObstacleVertexOpacity };
+            SimpleVertexBrush = new SolidColorBrush(Colors.White)      { Opacity = InitialRegularVertexOpacity };
 
             ModelProperty = DependencyProperty.Register(
                 nameof(Model),
@@ -175,7 +177,10 @@ namespace WPFVersion3D.Model
             DependencyPropertyChangedEventArgs prop)
         {
             Vertex3D vert = (Vertex3D)depObj;
-            vert.Size = (double)prop.NewValue;
+            double size = (double) prop.NewValue;
+            var material = vert.Material;
+            vert.Size = size;
+            vert.Model = Model3DFactory.CreateCubicModel3D(size, material);
         }
 
         protected static void ModelPropertyChanged(DependencyObject depObj,

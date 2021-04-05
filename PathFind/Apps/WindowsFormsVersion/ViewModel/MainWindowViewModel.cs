@@ -17,6 +17,7 @@ using System.Windows.Forms;
 using WindowsFormsVersion.Extensions;
 using WindowsFormsVersion.Forms;
 using WindowsFormsVersion.View;
+using Common.Logging;
 
 namespace WindowsFormsVersion.ViewModel
 {

@@ -15,7 +15,7 @@ using System;
 using System.Configuration;
 using System.Drawing;
 using System.Linq;
-
+using Common.Logging;
 using Console = Colorful.Console;
 
 namespace ConsoleVersion.ViewModel

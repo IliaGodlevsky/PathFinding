@@ -13,7 +13,7 @@ namespace WPFVersion3D.Converters
             double result = default;
             try
             {
-                value = ChangeDotToComma(value?.ToString());
+                value = value?.ToString().Replace('.', ',');
                 result = System.Convert.ToDouble(value);
                 result = Math.Round(result, Precision);
                 return result;
@@ -28,11 +28,6 @@ namespace WPFVersion3D.Converters
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
         {
             return Convert(value, targetType, parameter, culture);
-        }
-
-        private string ChangeDotToComma(string value)
-        {
-            return value?.Replace('.', ',');
         }
     }
 }

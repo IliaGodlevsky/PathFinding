@@ -15,10 +15,10 @@ namespace WPFVersion.Model
 
         protected override void UpdateAlgorithmsKeys()
         {
-            Application.Current.Dispatcher.Invoke(() =>
+            Application.Current?.Dispatcher?.Invoke(() =>
             {
-                var addedAlgorithms = AddedAlgorithms.ToArray();
-                var deletedAlgorithms = DeletedAlgorithms.ToArray();
+                var addedAlgorithms = GetAddedAlgorithms().ToArray();
+                var deletedAlgorithms = GetDeletedAlgorithms().ToArray();
                 if (addedAlgorithms.Any())
                 {
                     viewModel.AlgorithmKeys.AddRange(addedAlgorithms);

@@ -63,9 +63,10 @@
     <Compile Include="Enums\LoadOptions.cs" />
     <Compile Include="Extensions\GenericExtensions.cs" />
     <Compile Include="Extensions\ICollectionExtensions.cs" />
+    <Compile Include="Interface\IIntermittent.cs" />
     <Compile Include="Interface\IViewModel.cs" />
     <Compile Include="Interface\ILog.cs" />
-    <Compile Include="Interface\IIntermit.cs" />
+    <Compile Include="Interface\ISuspendable.cs" />
     <Compile Include="Extensions\EnumExtensions.cs" />
     <Compile Include="Extensions\IEnumerableExtension.cs" />
     <Compile Include="Extensions\StopwatchExtension.cs" />

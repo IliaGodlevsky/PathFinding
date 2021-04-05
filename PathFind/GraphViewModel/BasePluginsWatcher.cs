@@ -25,16 +25,20 @@ namespace GraphViewModel
         public void StartWatching()
         {
             token = tokenSource.Token;
-            Task.Run(WatchFolder);
+            Task.Run(WatchFolder, token);
         }
 
         protected abstract void UpdateAlgorithmsKeys();
 
-        protected IEnumerable<string> AddedAlgorithms
-            => AlgorithmsDescriptions.Except(currentAlgorithms);
+        protected IEnumerable<string> GetAddedAlgorithms()
+        {
+            return AlgorithmsDescriptions.Except(currentAlgorithms);
+        } 
 
-        protected IEnumerable<string> DeletedAlgorithms
-            => currentAlgorithms.Except(AlgorithmsDescriptions);
+        protected IEnumerable<string> GetDeletedAlgorithms()
+        {
+            return currentAlgorithms.Except(AlgorithmsDescriptions);
+        }
 
         protected string Name(string key)
         {

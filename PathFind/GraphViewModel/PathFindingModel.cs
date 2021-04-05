@@ -1,20 +1,20 @@
-﻿using Algorithm.Extensions;
+﻿using System;
+using System.Collections.Generic;
+using System.Diagnostics;
+using Algorithm.Extensions;
 using Algorithm.Infrastructure.EventArguments;
 using Algorithm.Interfaces;
 using Algorithm.Realizations;
-using Common;
 using Common.Extensions;
 using Common.Interface;
+using Common.Logging;
 using GraphLib.Base;
 using GraphLib.Interface;
 using GraphViewModel.Interfaces;
 using GraphViewModel.Resources;
-using System;
-using System.Collections.Generic;
-using System.Diagnostics;
 using static Algorithm.Realizations.AlgorithmsFactory;
 
-namespace GraphLib.ViewModel
+namespace GraphViewModel
 {
     public abstract class PathFindingModel : IModel
     {
@@ -42,8 +42,8 @@ namespace GraphLib.ViewModel
                 var algorithm = GetAlgorithm(AlgorithmKey);
                 algorithm.Graph = mainViewModel.Graph;
 
-                intermitter = new AlgorithmIntermit(DelayTime);
-                intermitter.OnIntermitted += OnAlgorithmIntermitted;
+                intermitter = new Pause();
+                intermitter.OnInterrupted += OnAlgorithmIntermitted;
 
                 algorithm.OnVertexEnqueued += OnVertexEnqueued;
                 algorithm.OnVertexVisited += OnVertexVisited;
@@ -94,7 +94,7 @@ namespace GraphLib.ViewModel
                 mainViewModel.PathFindingStatistics = statistics;
             }
 
-            intermitter.Intermit();
+            intermitter.Suspend(DelayTime);
         }
 
         protected virtual void OnVertexEnqueued(object sender, EventArgs e)
@@ -123,20 +123,20 @@ namespace GraphLib.ViewModel
             timer.Start();
         }
 
-        protected IIntermit intermitter;
+        protected ISuspendable intermitter;
         protected IMainModel mainViewModel;
 
         private string GetStatistics(Stopwatch timer, int visitedVertices, IGraphPath path = null)
         {
             var format = ViewModelResources.StatisticsFormat;
-            var pathLength = path == null ? 0 : path.GetPathLength();
-            var pathCost = path == null ? 0 : path.GetPathCost();
+            var pathLength = path?.GetPathLength() ?? 0;
+            var pathCost = path?.GetPathCost() ?? 0;
             var graphInfo = string.Format(format, pathLength, pathCost, visitedVertices);
             var timerInfo = timer.GetTimeInformation(ViewModelResources.TimerInfoFormat);
-            return string.Join(separator, AlgorithmKey, timerInfo, graphInfo);
+            return string.Join(Separator, AlgorithmKey, timerInfo, graphInfo);
         }
 
-        private const string separator = "   ";
+        private const string Separator = "   ";
         private readonly Stopwatch timer;
         private int visitedVerticesCount;
     }

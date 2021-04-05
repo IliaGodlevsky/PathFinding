@@ -42,7 +42,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AlgorithmsFactory.cs" />
-    <Compile Include="AlgorithmIntermit.cs" />
+    <Compile Include="Pause.cs" />
     <Compile Include="GraphPath.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

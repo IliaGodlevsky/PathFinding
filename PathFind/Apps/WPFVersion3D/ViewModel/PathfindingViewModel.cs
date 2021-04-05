@@ -9,6 +9,7 @@ using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using System.Windows.Input;
 using System.Windows.Threading;
+using GraphViewModel;
 using WPFVersion3D.Infrastructure;
 
 namespace WPFVersion3D.ViewModel

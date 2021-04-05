@@ -13,6 +13,7 @@ using System.Configuration;
 using System.Runtime.CompilerServices;
 using System.Windows;
 using System.Windows.Input;
+using Common.Logging;
 using WPFVersion.Infrastructure;
 using WPFVersion.Model;
 using WPFVersion.View.Windows;

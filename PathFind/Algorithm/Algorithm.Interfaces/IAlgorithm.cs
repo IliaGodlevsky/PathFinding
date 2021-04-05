@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 namespace Algorithm.Interfaces
 {
     /// <summary>
-    /// A base interface for all the pathfinding algorithms
+    /// A base interface for all path finding algorithms
     /// </summary>
     public interface IAlgorithm
     {
@@ -32,7 +32,7 @@ namespace Algorithm.Interfaces
         IGraph Graph { get; set; }
 
         /// <summary>
-        /// Starts pathfinding
+        /// Starts path finding
         /// </summary>
         IGraphPath FindPath(IEndPoints endPoints);
 

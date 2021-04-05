@@ -17,7 +17,7 @@ namespace WPFVersion3D.Converters
             if (IsValidParametres(value, parameter))
             {
                 var axisAngleRotation = parameter as AxisAngleRotation3D;
-                var direction = ((bool)value) ? Forward : Backward;
+                var direction = (bool)value ? Forward : Backward;
                 return new AnimatedAxisRotator(axisAngleRotation, direction);
             }
 

@@ -8,6 +8,7 @@ using GraphLib.ViewModel;
 using GraphViewModel.Interfaces;
 using System;
 using System.Linq;
+using GraphViewModel;
 using static Algorithm.Realizations.AlgorithmsFactory;
 
 namespace ConsoleVersion.ViewModel

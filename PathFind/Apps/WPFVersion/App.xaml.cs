@@ -1,5 +1,4 @@
 ﻿using Autofac;
-using GraphViewModel.Interfaces;
 using System.Windows;
 using WPFVersion.Configure;
 using WPFVersion.ViewModel;
@@ -13,14 +12,8 @@ namespace WPFVersion
             base.OnStartup(e);
 
             var container = ContainerConfigure.Configure();
-
             var viewModel = container.Resolve<MainWindowViewModel>();
-
-            var mainWindow = new MainWindow
-            {
-                DataContext = viewModel
-            };
-
+            var mainWindow = new MainWindow { DataContext = viewModel };
             mainWindow.Show();
         }
     }

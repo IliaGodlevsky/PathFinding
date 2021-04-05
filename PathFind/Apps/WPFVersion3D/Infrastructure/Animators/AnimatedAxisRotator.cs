@@ -12,8 +12,8 @@ using DurationCalculationFunctions =
     System.Collections.Generic.Dictionary
     <WPFVersion3D.Enums.RotationDirection, System.Func<double>>;
 
-using static WPFVersion3D.Constants;
 using WPFVersion3D.Infrastructure.Animators.Interface;
+using static WPFVersion3D.Constants;
 
 namespace WPFVersion3D.Infrastructure.Animators
 {
@@ -75,10 +75,10 @@ namespace WPFVersion3D.Infrastructure.Animators
             return InitialRotationAnimationDuration * axis.Angle / AngleAmplitude;
         }
 
-        private double AngleAmplitude => EndAngle - StartAngle;
+        private static double AngleAmplitude => EndAngle - StartAngle;
 
-        private DurationCalculationFunctions DurationCalculationFunctions { get; set; }
-        private AnimationCreationFunctions AnimationCreationFunctions { get; set; }
+        private DurationCalculationFunctions DurationCalculationFunctions { get; }
+        private AnimationCreationFunctions AnimationCreationFunctions { get; }
 
         private readonly AxisAngleRotation3D axis;
         private readonly RotationDirection direction;
