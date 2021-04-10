@@ -15,8 +15,9 @@ using System;
 using System.Configuration;
 using System.Drawing;
 using System.Linq;
-using Common.Logging;
 using Console = Colorful.Console;
+using GraphLib.Exceptions;
+using Algorithm.Common.Exceptions;
 
 namespace ConsoleVersion.ViewModel
 {
@@ -30,8 +31,7 @@ namespace ConsoleVersion.ViewModel
             IGraphAssembler graphFactory,
             IPathInput pathInput) : base(fieldFactory, eventHolder, graphSerializer, graphFactory, pathInput)
         {
-            graphFactory.OnExceptionCaught += OnExceptionCaught;
-            graphSerializer.OnExceptionCaught += OnExceptionCaught;
+
         }
 
         [MenuItem("Make unweighted")]
@@ -46,43 +46,40 @@ namespace ConsoleVersion.ViewModel
             try
             {
                 var model = new GraphCreatingViewModel(this, graphAssembler);
+                model.OnExceptionCaught += OnExceptionCaught;
                 var view = new GraphCreateView(model);
-
                 view.Start();
             }
             catch (Exception ex)
             {
-                Logger.Instance.Error(ex);
+                OnErrorExceptionCaught(ex);
             }
-
         }
 
         [MenuItem("Find path", MenuItemPriority.High)]
         public override void FindPath()
         {
-            if (HasVerticesToChooseAsExtream())
+            try
             {
-                try
-                {
-                    var pluginPath = GetAlgorithmsLoadPath();
-                    AlgorithmsFactory.LoadAlgorithms(pluginPath);
-                    var model = new PathFindingViewModel(this)
-                    {
-                        EndPoints = EndPoints
-                    };
-                    model.OnPathNotFound += OnPathNotFound;
-                    var view = new PathFindView(model);
-                    view.Start();
-                }
-                catch (Exception ex)
-                {
-                    Logger.Instance.Error(ex);
-                }
+                string pluginPath = GetAlgorithmsLoadPath();
+                AlgorithmsFactory.LoadAlgorithms(pluginPath);
+                var model = new PathFindingViewModel(this);
+                model.OnExceptionCaught += OnExceptionCaught;
+                model.EndPoints = EndPoints;
+                var view = new PathFindView(model);
+                view.Start();
             }
-            else
+            catch (NoVerticesToChooseAsEndPointsException ex)
             {
-                Console.WriteLine("No vertices to choose as endpoint");
-                Console.ReadLine();
+                OnNotFatalExceptionCaught(ex);
+            }
+            catch (NoAlgorithmsLoadedException ex)
+            {
+                OnNotFatalExceptionCaught(ex);
+            }
+            catch (Exception ex)
+            {
+                OnErrorExceptionCaught(ex);
             }
         }
 
@@ -162,28 +159,22 @@ namespace ConsoleVersion.ViewModel
             Console.CursorVisible = true;
         }
 
-        private void OnPathNotFound(string message)
+        protected override void OnExceptionCaught(string message)
         {
             DisplayGraph();
             Console.WriteLine(message);
             Console.ReadLine();
         }
 
-        private void OnExceptionCaught(Exception ex)
-        {
-            Console.WriteLine(ex.Message);
-            Console.ReadLine();
-        }
-
-        private bool HasVerticesToChooseAsExtream()
-        {
-            var verticesWithNeighboursCount = Graph.Vertices.Count(vertex => vertex.Neighbours.Any());
-            return verticesWithNeighboursCount >= 2;
-        }
-
         protected override string GetAlgorithmsLoadPath()
         {
             return ConfigurationManager.AppSettings["pluginsPath"];
+        }
+
+        protected override void OnExceptionCaught(Exception ex, string additaionalMessage = "")
+        {
+            Console.WriteLine(ex.Message + additaionalMessage);
+            Console.ReadLine();
         }
     }
 }

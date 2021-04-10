@@ -1,5 +1,4 @@
 ﻿using Algorithm.Realizations;
-using Common;
 using Common.Extensions;
 using Common.Interface;
 using GraphLib.Base;
@@ -17,7 +16,6 @@ using System.Windows.Forms;
 using WindowsFormsVersion.Extensions;
 using WindowsFormsVersion.Forms;
 using WindowsFormsVersion.View;
-using Common.Logging;
 
 namespace WindowsFormsVersion.ViewModel
 {
@@ -70,8 +68,7 @@ namespace WindowsFormsVersion.ViewModel
             IGraphAssembler graphFactory,
             IPathInput pathInput) : base(fieldFactory, eventHolder, graphSerializer, graphFactory, pathInput)
         {
-            graphSerializer.OnExceptionCaught += exception => MessageBox.Show(exception.Message);
-            graphFactory.OnExceptionCaught += exception => MessageBox.Show(exception.Message);
+
         }
 
         public override void FindPath()
@@ -80,19 +77,17 @@ namespace WindowsFormsVersion.ViewModel
             {
                 try
                 {
-                    AlgorithmsFactory.LoadAlgorithms(GetAlgorithmsLoadPath());
-                    var model = new PathFindingViewModel(this)
-                    {
-                        EndPoints = EndPoints
-                    };
-                    model.OnPathNotFound += message => MessageBox.Show(message);
+                    string loadPath = GetAlgorithmsLoadPath();
+                    AlgorithmsFactory.LoadAlgorithms(loadPath);
+                    var model = new PathFindingViewModel(this);
+                    model.OnExceptionCaught += OnExceptionCaught;
+                    model.EndPoints = EndPoints;
                     var form = new PathFindingWindow(model);
-
                     PrepareWindow(model, form);
                 }
                 catch (Exception ex)
                 {
-                    Logger.Instance.Error(ex);
+                    OnNotFatalExceptionCaught(ex);
                 }
             }
         }
@@ -103,14 +98,13 @@ namespace WindowsFormsVersion.ViewModel
             {
                 var model = new GraphCreatingViewModel(this, graphAssembler);
                 var form = new GraphCreatingWindow(model);
-
+                model.OnExceptionCaught += OnExceptionCaught;
                 PrepareWindow(model, form);
             }
             catch (Exception ex)
             {
-                Logger.Instance.Error(ex);
+                OnErrorExceptionCaught(ex);
             }
-
         }
 
         public void SaveGraph(object sender, EventArgs e)
@@ -166,6 +160,16 @@ namespace WindowsFormsVersion.ViewModel
         protected override string GetAlgorithmsLoadPath()
         {
             return ConfigurationManager.AppSettings["pluginsPath"];
+        }
+
+        protected override void OnExceptionCaught(string message)
+        {
+            MessageBox.Show(message);
+        }
+
+        protected override void OnExceptionCaught(Exception ex, string additaionalMessage = "")
+        {
+            MessageBox.Show(ex.Message + additaionalMessage);
         }
     }
 }

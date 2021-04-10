@@ -142,6 +142,15 @@ namespace ConsoleVersion.Resource {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Try to load saved graph.
+        /// </summary>
+        internal static string TryToLoadSavedGraph {
+            get {
+                return ResourceManager.GetString("TryToLoadSavedGraph", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Enter new top value: .
         /// </summary>
         internal static string VertexCostInputMsg {

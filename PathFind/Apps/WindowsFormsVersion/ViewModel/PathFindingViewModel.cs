@@ -1,6 +1,5 @@
 ﻿using Algorithm.Realizations;
 using Common.Interface;
-using GraphLib.ViewModel;
 using GraphViewModel.Interfaces;
 using System;
 using System.Linq;
@@ -22,22 +21,20 @@ namespace WindowsFormsVersion.ViewModel
         {
             if (CanExecuteConfirmPathFindAlgorithmChoice())
             {
-                var args = new EventArgs();
-                OnWindowClosed?.Invoke(this, args);
+                OnWindowClosed?.Invoke(this, EventArgs.Empty);
                 FindPath();
                 OnWindowClosed = null;
             }
         }
 
-        protected override void OnAlgorithmIntermitted()
+        protected override void ColorizeProcessedVertices()
         {
             Application.DoEvents();
         }
 
         public void CancelPathFinding(object sender, EventArgs e)
         {
-            var args = new EventArgs();
-            OnWindowClosed?.Invoke(this, args);
+            OnWindowClosed?.Invoke(this, EventArgs.Empty);
             OnWindowClosed = null;
         }
 

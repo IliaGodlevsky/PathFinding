@@ -1,5 +1,6 @@
 ﻿using NUnit.Framework;
 using System;
+using GraphLib.Exceptions;
 
 namespace GraphLib.Realizations.Tests
 {
@@ -12,7 +13,7 @@ namespace GraphLib.Realizations.Tests
         [TestCase(1, 2, 3, 4)]
         public void Constructor_InvalidNumberOfCoordinateValues_ThrowsArgumentOutOfRangeException(params int[] coordinates)
         {
-            Assert.Throws<ArgumentOutOfRangeException>(() => new Coordinate3D(coordinates));
+            Assert.Throws<WrongNumberOfDimensionsException>(() => new Coordinate3D(coordinates));
         }
     }
 }

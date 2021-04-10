@@ -10,8 +10,8 @@ namespace WindowsFormsVersion.ViewModel
     {
         public event EventHandler OnWindowClosed;
 
-        public GraphCreatingViewModel(IMainModel model,
-            IGraphAssembler graphFactory) : base(model, graphFactory)
+        public GraphCreatingViewModel(IMainModel model, IGraphAssembler graphFactory) 
+            : base(model, graphFactory)
         {
 
         }
@@ -19,14 +19,12 @@ namespace WindowsFormsVersion.ViewModel
         public void CreateGraph(object sender, EventArgs e)
         {
             CreateGraph();
-            OnWindowClosed?.Invoke(this, new EventArgs());
-            OnWindowClosed = null;
+            OnWindowClosed?.Invoke(this, EventArgs.Empty);
         }
 
         public void CancelCreateGraph(object sender, EventArgs e)
         {
-            OnWindowClosed?.Invoke(this, new EventArgs());
-            OnWindowClosed = null;
+            OnWindowClosed?.Invoke(this, EventArgs.Empty);
         }
     }
 }

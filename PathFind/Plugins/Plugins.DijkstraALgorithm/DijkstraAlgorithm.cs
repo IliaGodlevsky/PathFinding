@@ -1,4 +1,5 @@
-﻿using Algorithm.Base;
+﻿using System;
+using Algorithm.Base;
 using Algorithm.Extensions;
 using Algorithm.Interfaces;
 using Algorithm.Realizations;
@@ -8,6 +9,7 @@ using GraphLib.Interface;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
+using Algorithm.Common;
 
 namespace Plugins.DijkstraALgorithm
 {
@@ -27,6 +29,7 @@ namespace Plugins.DijkstraALgorithm
         public override IGraphPath FindPath(IEndPoints endpoints)
         {
             PrepareForPathfinding(endpoints);
+
             do
             {
                 ExtractNeighbours();
@@ -34,6 +37,7 @@ namespace Plugins.DijkstraALgorithm
                 CurrentVertex = NextVertex;
                 VisitVertex(CurrentVertex);
             } while (!IsDestination());
+
             CompletePathfinding();
 
             return new GraphPath(parentVertices, endpoints);

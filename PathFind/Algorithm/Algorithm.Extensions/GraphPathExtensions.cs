@@ -7,7 +7,7 @@ namespace Algorithm.Extensions
 {
     public static class GraphPathExtensions
     {
-        public static void HighlightPath(this IGraphPath self, IEndPoints endpoints)
+        public static void Highlight(this IGraphPath self, IEndPoints endpoints)
         {
             self.Path
                 .Where(vertex => !endpoints.IsEndPoint(vertex))

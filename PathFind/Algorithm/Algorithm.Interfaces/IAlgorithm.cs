@@ -1,13 +1,14 @@
 ﻿using Algorithm.Infrastructure.Handlers;
 using GraphLib.Interface;
 using System.Threading.Tasks;
+using Common.Interface;
 
 namespace Algorithm.Interfaces
 {
     /// <summary>
     /// A base interface for all path finding algorithms
     /// </summary>
-    public interface IAlgorithm
+    public interface IAlgorithm : IInterrupted
     {
         /// <summary>
         /// Occurs when the algorithm starts pathfinding
@@ -25,6 +26,7 @@ namespace Algorithm.Interfaces
         /// Occurs when the algorithm adds vertex to process queue
         /// </summary>
         event AlgorithmEventHandler OnVertexEnqueued;
+
 
         /// <summary>
         /// A graph, where the pathfinding performes

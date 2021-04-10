@@ -63,7 +63,7 @@
     <Compile Include="Enums\LoadOptions.cs" />
     <Compile Include="Extensions\GenericExtensions.cs" />
     <Compile Include="Extensions\ICollectionExtensions.cs" />
-    <Compile Include="Interface\IIntermittent.cs" />
+    <Compile Include="Interface\IInterrupted.cs" />
     <Compile Include="Interface\IViewModel.cs" />
     <Compile Include="Interface\ILog.cs" />
     <Compile Include="Interface\ISuspendable.cs" />
@@ -74,6 +74,7 @@
     <Compile Include="Logging\Logger.cs" />
     <Compile Include="ClassLoader.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Interrupter.cs" />
     <Compile Include="ValueRange.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -85,5 +86,6 @@
     </None>
     <None Include="packages.config" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

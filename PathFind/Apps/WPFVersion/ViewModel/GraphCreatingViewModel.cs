@@ -16,8 +16,8 @@ namespace WPFVersion.ViewModel
         public ICommand ConfirmCreateGraphCommand { get; }
         public ICommand CancelCreateGraphCommand { get; }
 
-        public GraphCreatingViewModel(IMainModel model,
-            IGraphAssembler graphFactory) : base(model, graphFactory)
+        public GraphCreatingViewModel(IMainModel model, IGraphAssembler graphFactory) 
+            : base(model, graphFactory)
         {
             ConfirmCreateGraphCommand = new RelayCommand(ExecuteConfirmCreateGraphCommand);
             CancelCreateGraphCommand = new RelayCommand(ExecuteCloseWindowCommand);
@@ -33,8 +33,7 @@ namespace WPFVersion.ViewModel
 
         private void ExecuteCloseWindowCommand(object param)
         {
-            var args = new EventArgs();
-            OnWindowClosed?.Invoke(this, args);
+            OnWindowClosed?.Invoke(this, EventArgs.Empty);
         }
     }
 }

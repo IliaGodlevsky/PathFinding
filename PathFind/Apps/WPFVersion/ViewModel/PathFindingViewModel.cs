@@ -1,6 +1,4 @@
-﻿using Algorithm.Realizations;
-using Common.Interface;
-using GraphLib.ViewModel;
+﻿using Common.Interface;
 using GraphViewModel.Interfaces;
 using System;
 using System.Collections.Generic;
@@ -12,12 +10,13 @@ using System.Windows.Threading;
 using GraphViewModel;
 using WPFVersion.Infrastructure;
 
+using static Algorithm.Realizations.AlgorithmsFactory;
+
 namespace WPFVersion.ViewModel
 {
     internal class PathFindingViewModel : PathFindingModel, IViewModel, INotifyPropertyChanged
     {
         public event EventHandler OnWindowClosed;
-
         public event PropertyChangedEventHandler PropertyChanged;
 
         protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = "")
@@ -47,10 +46,37 @@ namespace WPFVersion.ViewModel
 
             CancelPathFindAlgorithmChoice = new RelayCommand(ExecuteCloseWindowCommand);
 
-            AlgorithmKeys = new ObservableCollection<string>(AlgorithmsFactory.AlgorithmsDescriptions);
+            AlgorithmKeys = new ObservableCollection<string>(AlgorithmsDescriptions);
         }
 
-        protected override void OnAlgorithmIntermitted()
+        private void InterruptAlgorithm(object sender, EventArgs e)
+        {
+            algorithm.Interrupt();
+        }
+
+        protected override void OnAlgorithmStarted(object sender, EventArgs e)
+        {
+            if (mainViewModel is MainWindowViewModel mainModel)
+            {
+                mainModel.CanInterruptAlgorithm = true;
+                mainModel.OnAlgorithmInterrupted += InterruptAlgorithm;
+            }
+
+            base.OnAlgorithmStarted(sender, e);
+        }
+
+        protected override void OnAlgorithmFinished(object sender, EventArgs e)
+        {
+            base.OnAlgorithmFinished(sender, e);
+
+            if (mainViewModel is MainWindowViewModel mainModel)
+            {
+                mainModel.CanInterruptAlgorithm = false;
+                mainModel.OnAlgorithmInterrupted -= InterruptAlgorithm;
+            }
+        }
+
+        protected override void ColorizeProcessedVertices()
         {
             var frame = new DispatcherFrame();
 
@@ -68,8 +94,7 @@ namespace WPFVersion.ViewModel
 
         private void ExecuteCloseWindowCommand(object param)
         {
-            var args = new EventArgs();
-            OnWindowClosed?.Invoke(this, args);
+            OnWindowClosed?.Invoke(this, EventArgs.Empty);
         }
 
         private void ExecuteConfirmPathFindAlgorithmChoice(object param)

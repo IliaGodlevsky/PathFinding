@@ -3,7 +3,6 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Windows.Media.Media3D;
-using Common.Extensions;
 using WPFVersion3D.Enums;
 using DistanceBetweenVerticesSetterCallback = System.Action<double, WPFVersion3D.Model.GraphField3D>;
 using OffsetSetterAction = System.Action<System.Windows.Media.Media3D.TranslateTransform3D, double>;
@@ -17,6 +16,8 @@ namespace WPFVersion3D.Model
         public double DistanceBetweenVerticesAtYAxis { get; set; }
 
         public double DistanceBetweenVerticesAtZAxis { get; set; }
+
+        public IEnumerable<IVertex> Vertices => Children.OfType<IVertex>();
 
         public GraphField3D(int width, int length, int height) : this()
         {
@@ -62,6 +63,11 @@ namespace WPFVersion3D.Model
             }
 
             Children.Add(vertex3D);
+        }
+
+        public void Clear()
+        {
+            Children.Clear();
         }
 
         public void CenterGraph(params double[] additionalOffset)

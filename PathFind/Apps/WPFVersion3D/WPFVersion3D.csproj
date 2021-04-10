@@ -169,6 +169,10 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\Algorithm\Algorithm.Common\Algorithm.Common.csproj">
+      <Project>{DF721A89-3E01-4159-B51A-E5723C9FD0BA}</Project>
+      <Name>Algorithm.Common</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\Algorithm\Algorithm.Realizations\Algorithm.Realizations.csproj">
       <Project>{600d74af-a0ae-46aa-bcf5-695650bbe66f}</Project>
       <Name>Algorithm.Realizations</Name>
@@ -176,6 +180,10 @@
     <ProjectReference Include="..\..\Common\Common.csproj">
       <Project>{A5A743F5-D346-4B2B-B6AC-07152F64E4D9}</Project>
       <Name>Common</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\GraphLib.Exceptions\GraphLib.Exceptions.csproj">
+      <Project>{B6DA5928-65EC-42C0-B012-F25F8F023271}</Project>
+      <Name>GraphLib.Exceptions</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\GraphLib\GraphLib.Base\GraphLib.Base.csproj">
       <Project>{6aa3b516-abfe-4eda-98dd-1ce799da747f}</Project>

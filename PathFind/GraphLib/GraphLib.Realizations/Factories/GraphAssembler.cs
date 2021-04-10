@@ -4,6 +4,7 @@ using GraphLib.Extensions;
 using GraphLib.Interface;
 using System;
 using System.Linq;
+using GraphLib.Exceptions;
 
 namespace GraphLib.Realizations.Factories
 {
@@ -12,8 +13,6 @@ namespace GraphLib.Realizations.Factories
     /// </summary>
     public class GraphAssembler : IGraphAssembler
     {
-        public event Action<Exception> OnExceptionCaught;
-
         public GraphAssembler(
             IVertexFactory vertexFactory,
             ICoordinateFactory coordinateFactory,
@@ -36,26 +35,18 @@ namespace GraphLib.Realizations.Factories
         /// <returns>Assembled graph suitable for use with 
         /// pathfinding algorithms</returns>
         /// <exception cref="ArgumentException"></exception>
-        /// <exception cref="ArgumentOutOfRangeException"></exception>
+        /// <exception cref="WrongNumberOfDimensionsException"></exception>
         public IGraph AssembleGraph(int obstaclePercent = 0,
             params int[] graphDimensionsSizes)
         {
-            try
-            {
-                var graph = graphFactory.CreateGraph(graphDimensionsSizes);
-                Enumerable
-                    .Range(0, graph.Size)
-                    .AsParallel()
-                    .ForEach(i => AssembleVertex(graph, i, obstaclePercent));
-                graph.Vertices.Shuffle();
-                graph.ConnectVerticesParallel();
-                return graph;
-            }
-            catch (Exception ex)
-            {
-                OnExceptionCaught?.Invoke(ex);
-                throw ex;
-            }
+            var graph = graphFactory.CreateGraph(graphDimensionsSizes);
+            Enumerable
+                .Range(0, graph.Size)
+                .AsParallel()
+                .ForEach(i => AssembleVertex(graph, i, obstaclePercent));
+            graph.Vertices.Shuffle();
+            graph.ConnectVerticesParallel();
+            return graph;
         }
 
         private void AssembleVertex(IGraph graph, int index, int obstaclePercent)

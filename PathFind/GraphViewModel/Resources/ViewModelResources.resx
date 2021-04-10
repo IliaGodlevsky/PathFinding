@@ -117,7 +117,13 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="AlgorithmInterruptedMsg" xml:space="preserve">
+    <value>Algorithm was interrupted</value>
+  </data>
   <data name="BadResultMsg" xml:space="preserve">
+    <value>Couldn't find path</value>
+  </data>
+  <data name="PathWasNotFoundMsg" xml:space="preserve">
     <value>Couldn't find path</value>
   </data>
   <data name="StatisticsFormat" xml:space="preserve">

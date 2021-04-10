@@ -61,11 +61,29 @@ namespace GraphViewModel.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Algorithm was interrupted.
+        /// </summary>
+        internal static string AlgorithmInterruptedMsg {
+            get {
+                return ResourceManager.GetString("AlgorithmInterruptedMsg", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Couldn&apos;t find path.
         /// </summary>
         internal static string BadResultMsg {
             get {
                 return ResourceManager.GetString("BadResultMsg", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Couldn&apos;t find path.
+        /// </summary>
+        internal static string PathWasNotFoundMsg {
+            get {
+                return ResourceManager.GetString("PathWasNotFoundMsg", resourceCulture);
             }
         }
         

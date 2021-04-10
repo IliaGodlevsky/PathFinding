@@ -1,5 +1,4 @@
-﻿using Common;
-using Common.Extensions;
+﻿using Common.Extensions;
 using GraphLib.Base;
 using GraphLib.Extensions;
 using GraphLib.Interface;
@@ -23,7 +22,7 @@ namespace GraphViewModel
 
         public virtual IGraph Graph { get; protected set; }
 
-        public MainModel(BaseGraphFieldFactory fieldFactory,
+        protected MainModel(BaseGraphFieldFactory fieldFactory,
             IVertexEventHolder eventHolder,
             IGraphSerializer graphSerializer,
             IGraphAssembler graphAssembler,
@@ -38,7 +37,7 @@ namespace GraphViewModel
             Graph = BaseGraph.NullGraph;
         }
 
-        public async virtual void SaveGraph()
+        public virtual async void SaveGraph()
         {
             string savePath = pathInput.InputSavePath();
             try
@@ -50,7 +49,7 @@ namespace GraphViewModel
             }
             catch (Exception ex)
             {
-                Logger.Instance.Error(ex);
+                OnErrorExceptionCaught(ex);
             }
         }
 
@@ -67,7 +66,7 @@ namespace GraphViewModel
             }
             catch (Exception ex)
             {
-                Logger.Instance.Error(ex);
+                OnErrorExceptionCaught(ex);
             }
         }
 
@@ -100,11 +99,27 @@ namespace GraphViewModel
         }
 
         protected abstract string GetAlgorithmsLoadPath();
+        protected abstract void OnExceptionCaught(string message);
+
+        protected abstract void OnExceptionCaught(Exception ex, string additaionalMessage = "");
+
+        protected virtual void OnErrorExceptionCaught(Exception ex, string additionalMessage = "")
+        {
+            OnExceptionCaught(ex, additionalMessage);
+            Logger.Instance.Error(ex);
+        }
+
+        protected virtual void OnNotFatalExceptionCaught(Exception ex, string additionalMessage = "")
+        {
+            OnExceptionCaught(ex, additionalMessage);
+            Logger.Instance.Warn(ex);
+        }
+
 
         protected readonly IGraphAssembler graphAssembler;
+        protected readonly BaseGraphFieldFactory fieldFactory;
         private readonly IVertexEventHolder eventHolder;
         private readonly IGraphSerializer serializer;
-        private readonly BaseGraphFieldFactory fieldFactory;
         private readonly IPathInput pathInput;
     }
 }

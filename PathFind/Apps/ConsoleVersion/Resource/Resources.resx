@@ -144,6 +144,9 @@
   <data name="StartVertexPointInputMsg" xml:space="preserve">
     <value>Start point: </value>
   </data>
+  <data name="TryToLoadSavedGraph" xml:space="preserve">
+    <value>Try to load saved graph</value>
+  </data>
   <data name="VertexCostInputMsg" xml:space="preserve">
     <value>Enter new top value: </value>
   </data>

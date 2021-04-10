@@ -7,7 +7,7 @@ namespace Common.Interface
     /// </summary>
     public interface ISuspendable
     {
-        event Action OnInterrupted;
+        event Action OnSuspended;
 
         void Suspend(int duration);
     }

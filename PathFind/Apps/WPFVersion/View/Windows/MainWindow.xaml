@@ -38,6 +38,10 @@
             <Button Command ="{Binding ChangeVertexSize}">
                 <Image Style ="{StaticResource ImageStyle}" Source="/Resources/Images/change.png"></Image>
             </Button>
+            <Button Command ="{Binding InterruptAlgorithmCommand}">
+                <Image Style ="{StaticResource ImageStyle}" Source="/Resources/Images/interrupt.png"></Image>
+            </Button>
+
             <ToggleButton Command="{Binding ShowVertexCost}"
                          CommandParameter="{Binding IsChecked, RelativeSource = {RelativeSource Self}}"
                         x:Name="fontButton" IsChecked="True">

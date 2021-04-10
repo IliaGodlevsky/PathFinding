@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using GraphLib.Exceptions;
 
 namespace GraphLib.Base
 {
@@ -13,17 +14,17 @@ namespace GraphLib.Base
     [Serializable]
     public abstract class BaseCoordinate : ICoordinate
     {
-        public BaseCoordinate(int numberOfDimensions, params int[] coordinates)
+        protected BaseCoordinate(int numberOfDimensions, params int[] coordinates)
         {
             CoordinatesValues = coordinates.ToArray();
             int actualLength = coordinates.Length;
             if (actualLength != numberOfDimensions)
             {
-                var argumentName = nameof(coordinates);
-                var message = "Number of dimensions must be equal " +
-                    "to coordinates number of dimensions\n";
+                string argumentName = nameof(coordinates);
+                string message = "Number of dimensions must be equal ";
+                message += "to coordinates number of dimensions\n";
                 message += $"Required value is {numberOfDimensions}";
-                throw new ArgumentOutOfRangeException(argumentName, actualLength, message);
+                throw new WrongNumberOfDimensionsException(argumentName, actualLength, message);
             }
         }
 

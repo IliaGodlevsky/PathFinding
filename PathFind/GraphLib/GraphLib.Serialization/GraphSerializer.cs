@@ -13,8 +13,6 @@ namespace GraphLib.Serialization
 {
     public sealed class GraphSerializer : IGraphSerializer
     {
-        public event Action<Exception> OnExceptionCaught;
-
         public GraphSerializer(IFormatter formatter,
             IVertexSerializationInfoConverter infoConverter,
             IGraphFactory graphFactory)
@@ -33,26 +31,18 @@ namespace GraphLib.Serialization
         /// <exception cref="System.Security.SecurityException"></exception>
         public IGraph LoadGraph(Stream stream)
         {
+            var verticesInfo = (GraphSerializationInfo) formatter.Deserialize(stream);
+            var dimensions = verticesInfo.DimensionsSizes.ToArray();
+            var graph = graphFactory.CreateGraph(dimensions);
 
-            try
+            void CreateVertexFrom(VertexSerializationInfo info, int vertexIndexInGraph)
             {
-                var verticesInfo = (GraphSerializationInfo)formatter.Deserialize(stream);
-                var dimensions = verticesInfo.DimensionsSizes.ToArray();
-                var graph = graphFactory.CreateGraph(dimensions);
-                void CreateVertexFrom(VertexSerializationInfo info, int vertexIndexInGraph)
-                {
-                    graph[vertexIndexInGraph] = infoConverter.ConvertFrom(info);
-                }
-                verticesInfo.ForEach(CreateVertexFrom);
-                graph.ConnectVerticesParallel();
-                return graph;
-            }
-            catch (Exception ex)
-            {
-                OnExceptionCaught?.Invoke(ex);
-                throw ex;
+                graph[vertexIndexInGraph] = infoConverter.ConvertFrom(info);
             }
 
+            verticesInfo.ForEach(CreateVertexFrom);
+            graph.ConnectVerticesParallel();
+            return graph;
         }
 
         /// <summary>
@@ -65,15 +55,7 @@ namespace GraphLib.Serialization
         /// <exception cref="System.Security.SecurityException"></exception>
         public void SaveGraph(IGraph graph, Stream stream)
         {
-            try
-            {
-                formatter.Serialize(stream, graph.GetGraphSerializationInfo());
-            }
-            catch (Exception ex)
-            {
-                OnExceptionCaught?.Invoke(ex);
-                throw ex;
-            }
+            formatter.Serialize(stream, graph.GetGraphSerializationInfo());
         }
 
         /// <summary>

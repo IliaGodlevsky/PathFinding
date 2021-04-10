@@ -1,17 +1,17 @@
-﻿using Common.Interface;
-using System;
+﻿using System;
 using System.Diagnostics;
+using Common.Interface;
 
-namespace Algorithm.Realizations
+namespace Common
 {
     /// <summary>
     /// Waits for some amount of time
     /// </summary>
-    public class Pause : ISuspendable
+    public class Interrupter : ISuspendable
     {
-        public event Action OnInterrupted;
+        public event Action OnSuspended;
 
-        public Pause()
+        public Interrupter()
         {
             timer = new Stopwatch();
         }
@@ -23,7 +23,7 @@ namespace Algorithm.Realizations
 
             while (timer.ElapsedMilliseconds < waitDuration)
             {
-                OnInterrupted?.Invoke();
+                OnSuspended?.Invoke();
             }
 
             timer.Stop();

@@ -1,9 +1,6 @@
-﻿using Common.Extensions;
-using GraphLib.Interface;
+﻿using GraphLib.Interface;
 using GraphLib.Realizations;
 using System.Windows;
-
-using static WPFVersion.Constants;
 
 namespace WPFVersion.Model
 {
@@ -12,25 +9,30 @@ namespace WPFVersion.Model
         private const int WidthOffset = 2;
         private const int LengthOffset = 6;
 
+        private const int DistanceBetweenVertices 
+            = Constants.DistanceBetweenVertices + Constants.VertexSize;
+
         public static void Adjust(IGraph graph)
         {
-            if (graph?.IsDefault() == false)
+            if (graph is Graph2D graph2D)
             {
-                int distanceBetweenVertices = DistanceBetweenVertices + VertexSize;
-
-                if (graph is Graph2D graph2d)
+                var window = Application.Current?.MainWindow;
+                if (window != null)
                 {
-                    var mainWindowDesiredWidth = (graph2d.Width + WidthOffset) * distanceBetweenVertices;
-                    var mainWindowDesiredHeight = (graph2d.Length + LengthOffset) * distanceBetweenVertices;
-
-                    var window = Application.Current?.MainWindow;
-                    if (window != null)
-                    {
-                        window.Width = mainWindowDesiredWidth;
-                        window.Height = mainWindowDesiredHeight;
-                    }
+                    window.Width = CountDesiredWindowWidth(graph2D);
+                    window.Height = CountDesiredWindowHeight(graph2D);
                 }
             }
+        }
+
+        private static int CountDesiredWindowWidth(Graph2D graph)
+        {
+            return (graph.Width + WidthOffset) * DistanceBetweenVertices;
+        }
+
+        private static int CountDesiredWindowHeight(Graph2D graph)
+        {
+            return (graph.Length + LengthOffset) * DistanceBetweenVertices;
         }
     }
 }

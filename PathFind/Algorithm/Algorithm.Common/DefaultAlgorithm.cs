@@ -1,4 +1,5 @@
-﻿using Algorithm.Infrastructure.EventArguments;
+﻿using System;
+using Algorithm.Infrastructure.EventArguments;
 using Algorithm.Infrastructure.Handlers;
 using Algorithm.Interfaces;
 using Common.Attributes;
@@ -16,6 +17,7 @@ namespace Algorithm.Common
         public event AlgorithmEventHandler OnVertexVisited;
         public event AlgorithmEventHandler OnFinished;
         public event AlgorithmEventHandler OnVertexEnqueued;
+        public event EventHandler OnInterrupted;
 
         public IGraph Graph
         {
@@ -50,6 +52,11 @@ namespace Algorithm.Common
         public async Task<IGraphPath> FindPathAsync(IEndPoints endPoints)
         {
             return await Task.Run(() => FindPath(endPoints));
+        }
+
+        public void Interrupt()
+        {
+            OnInterrupted?.Invoke(this, EventArgs.Empty);
         }
     }
 }

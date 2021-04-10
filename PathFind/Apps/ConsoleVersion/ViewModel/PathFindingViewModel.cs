@@ -1,15 +1,18 @@
-﻿using ConsoleVersion.InputClass;
-using ConsoleVersion.Model;
-using ConsoleVersion.Resource;
+﻿using ConsoleVersion.Model;
 using ConsoleVersion.View;
 using GraphLib.Interface;
 using GraphLib.Realizations;
-using GraphLib.ViewModel;
 using GraphViewModel.Interfaces;
 using System;
 using System.Linq;
+using Common.Logging;
 using GraphViewModel;
+
 using static Algorithm.Realizations.AlgorithmsFactory;
+using static ConsoleVersion.Resource.Resources;
+using static ConsoleVersion.InputClass.Input;
+using static ConsoleVersion.Constants;
+using GraphLib.Exceptions;
 
 namespace ConsoleVersion.ViewModel
 {
@@ -29,31 +32,44 @@ namespace ConsoleVersion.ViewModel
 
         public override void FindPath()
         {
-            if (mainViewModel.Graph.Vertices.Any() && mainViewModel is MainViewModel mainModel)
+            bool canFindPath = HasAnyVerticesToChooseAsEndPoints();
+            if (canFindPath && mainViewModel is MainViewModel mainModel)
             {
-                mainModel.ClearGraph();
-                mainModel.DisplayGraph();
-                ChooseExtremeVertex();
-                mainModel.DisplayGraph();
-
-                var algorithmKeyIndex = GetAlgorithmKeyIndex();
-                var algorithmKeys = AlgorithmsDescriptions;
-                AlgorithmKey = algorithmKeys.ElementAt(algorithmKeyIndex);
-
-                DelayTime = Input.InputNumber(Resources.DelayTimeInputMsg,
-                    Constants.AlgorithmDelayTimeValueRange);
-
-                base.FindPath();
-
-                UpdatePathFindingStatistics();
-                Console.ReadLine();
-                mainModel.ClearGraph();
-                Console.CursorVisible = true;
+                try
+                {
+                    mainModel.ClearGraph();
+                    mainModel.DisplayGraph();
+                    ChooseExtremeVertex();
+                    mainModel.DisplayGraph();
+                    int algorithmKeyIndex = GetAlgorithmKeyIndex();
+                    var algorithmKeys = AlgorithmsDescriptions;
+                    AlgorithmKey = algorithmKeys.ElementAt(algorithmKeyIndex);
+                    DelayTime = InputNumber(DelayTimeInputMsg, AlgorithmDelayTimeValueRange);
+                    base.FindPath();
+                    UpdatePathFindingStatistics();
+                    Console.ReadLine();
+                    mainModel.ClearGraph();
+                    Console.CursorVisible = true;
+                    
+                }
+                catch (Exception ex)
+                {
+                    RaiseOnExceptionCaught(ex.Message);
+                    Logger.Instance.Error(ex);
+                }
             }
+            else
+            {
+                string message = "No vertices to choose as end points\n";
+                throw new NoVerticesToChooseAsEndPointsException(message, mainViewModel.Graph);
+            }
+
+
         }
 
-        protected override void OnAlgorithmIntermitted()
+        protected override void ColorizeProcessedVertices()
         {
+
         }
 
         protected override void OnVertexVisited(object sender, EventArgs e)
@@ -70,7 +86,7 @@ namespace ConsoleVersion.ViewModel
 
         private int GetAlgorithmKeyIndex()
         {
-            return Input.InputNumber(
+            return InputNumber(
                 AlgorithmKeyInputMessage,
                 maxAlgorithmKeysNumber,
                 minAlgorithmKeysNumber) - 1;
@@ -78,20 +94,16 @@ namespace ConsoleVersion.ViewModel
 
         private void ChooseExtremeVertex()
         {
-            var chooseMessages = new[]
-            {
-                StartVertexInputMessage,
-                EndVertexInputMessage
-            };
+            var chooseMessages = new[] { StartVertexInputMessage, EndVertexInputMessage };
 
-            for (int i = 0; i < chooseMessages.Length; i++)
+            foreach (var message in chooseMessages)
             {
-                var point = ChoosePoint(chooseMessages[i]);
+                var point = ChoosePoint(message);
                 var vertex = mainViewModel.Graph[point] as Vertex;
-                var cursorLeft = Console.CursorLeft;
-                var cursorTop = Console.CursorTop;
+                int cursorLeft = Console.CursorLeft;
+                int cursorRight = Console.CursorTop;
                 vertex?.SetAsExtremeVertex();
-                Console.SetCursorPosition(cursorLeft, cursorTop);
+                Console.SetCursorPosition(cursorLeft, cursorRight);
             }
         }
 
@@ -106,7 +118,7 @@ namespace ConsoleVersion.ViewModel
                 IVertex vertex;
                 do
                 {
-                    point = Input.InputPoint(upperPossibleXValue, upperPossibleYValue);
+                    point = InputPoint(upperPossibleXValue, upperPossibleYValue);
                     vertex = mainViewModel.Graph[point];
                 } while (!EndPoints.CanBeEndPoint(vertex));
 
@@ -116,7 +128,7 @@ namespace ConsoleVersion.ViewModel
             string paramName = nameof(mainViewModel.Graph);
             string requiredTypeName = nameof(Graph2D);
             string exceptionMessage = $"{paramName} is not of type {requiredTypeName}";
-            throw new Exception(exceptionMessage);
+            throw new WrongGraphTypeException(exceptionMessage);
         }
 
         private void UpdatePathFindingStatistics()
@@ -125,6 +137,18 @@ namespace ConsoleVersion.ViewModel
             Console.SetCursorPosition(coordinate.X, coordinate.Y);
             Console.Write(mainViewModel.PathFindingStatistics);
         }
+
+        public  bool HasAnyVerticesToChooseAsEndPoints()
+        {
+            bool IsNotObstacle(IVertex vertex) => !vertex.IsObstacle;
+            bool HasNotObstacleNeighbours(IVertex vertex) => vertex.Neighbours.Any(IsNotObstacle);
+
+            var regularVertices = mainViewModel.Graph.Vertices.Where(IsNotObstacle);
+            int availiableVerticesToChooseAsEndPoint = regularVertices.Count(HasNotObstacleNeighbours);
+            return availiableVerticesToChooseAsEndPoint >= RequiredNumberOfVerticesToStartPathFinding;
+        }
+
+        private const int RequiredNumberOfVerticesToStartPathFinding = 2;
 
         private readonly int maxAlgorithmKeysNumber;
         private readonly int minAlgorithmKeysNumber;

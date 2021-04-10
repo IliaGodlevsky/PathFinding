@@ -10,6 +10,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Algorithm.Common.Exceptions;
 
 namespace Algorithm.Base
 {
@@ -21,20 +22,31 @@ namespace Algorithm.Base
         public event AlgorithmEventHandler OnVertexVisited;
         public event AlgorithmEventHandler OnFinished;
         public event AlgorithmEventHandler OnVertexEnqueued;
+        public event EventHandler OnInterrupted;
 
         public virtual IGraph Graph { get; set; }
 
-        public BaseAlgorithm() : this(BaseGraph.NullGraph)
+        protected BaseAlgorithm() : this(BaseGraph.NullGraph)
         {
 
         }
 
-        public BaseAlgorithm(IGraph graph)
+        protected BaseAlgorithm(IGraph graph)
         {
             Graph = graph;
             visitedVertices = new Dictionary<ICoordinate, IVertex>();
             parentVertices = new Dictionary<ICoordinate, IVertex>();
             accumulatedCosts = new Dictionary<ICoordinate, double>();
+        }
+
+        /// <summary>
+        /// Stops path finding
+        /// </summary>
+        public virtual void Interrupt()
+        {
+            isInterruptRequested = true;
+            var args = CreateEventArgs(CurrentVertex);
+            OnInterrupted?.Invoke(this, args);
         }
 
         public virtual void Reset()
@@ -44,9 +56,11 @@ namespace Algorithm.Base
             OnFinished = null;
             OnVertexEnqueued = null;
             OnVertexVisited = null;
+            OnInterrupted = null;
             visitedVertices.Clear();
             parentVertices.Clear();
             accumulatedCosts.Clear();
+            isInterruptRequested = false;
         }
 
         public virtual async Task<IGraphPath> FindPathAsync(IEndPoints endpoints)
@@ -54,6 +68,11 @@ namespace Algorithm.Base
             return await Task.Run(() => FindPath(endpoints));
         }
 
+        /// <summary>
+        /// Finds the shortest path between <paramref name="endPoints"/>
+        /// </summary>
+        /// <param name="endPoints"></param>
+        /// <returns>An array of vertices, that represent the shortest path</returns>
         public abstract IGraphPath FindPath(IEndPoints endPoints);
 
         protected IVertex CurrentVertex { get; set; }
@@ -63,7 +82,8 @@ namespace Algorithm.Base
         protected virtual bool IsDestination()
         {
             return CurrentVertex.IsEqual(endPoints.End)
-                || CurrentVertex.IsDefault();
+                || CurrentVertex.IsDefault()
+                || isInterruptRequested;
         }
 
         protected void RaiseOnAlgorithmStartedEvent(AlgorithmEventArgs e)
@@ -86,26 +106,32 @@ namespace Algorithm.Base
             OnVertexEnqueued?.Invoke(this, e);
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="endpoints"></param>
+        /// <exception cref="EndPointsDontBelongToGraphException"></exception>
         protected virtual void PrepareForPathfinding(IEndPoints endpoints)
         {
             if (Graph.Contains(endpoints))
             {
                 endPoints = endpoints;
-                var args = new AlgorithmEventArgs();
-                RaiseOnAlgorithmStartedEvent(args);
                 CurrentVertex = endPoints.Start;
                 visitedVertices[CurrentVertex.Position] = CurrentVertex;
+                var args = CreateEventArgs(CurrentVertex);
+                RaiseOnAlgorithmStartedEvent(args);
                 return;
             }
 
             string paramName = nameof(endpoints);
             string graphName = nameof(Graph);
             string message = $"{paramName} don't belong to {graphName}";
-            throw new ArgumentException(message);
+            throw new EndPointsDontBelongToGraphException(message);
         }
 
         protected virtual void CompletePathfinding()
         {
+            isInterruptRequested = false;
             var visitedCount = visitedVertices.Count(IsNotDefault);
             var args = new AlgorithmEventArgs(visitedCount);
             RaiseOnAlgorithmFinishedEvent(args);
@@ -153,6 +179,9 @@ namespace Algorithm.Base
         protected Dictionary<ICoordinate, IVertex> visitedVertices;
         protected Dictionary<ICoordinate, IVertex> parentVertices;
         protected Dictionary<ICoordinate, double> accumulatedCosts;
+
         protected IEndPoints endPoints;
+
+        private bool isInterruptRequested;
     }
 }

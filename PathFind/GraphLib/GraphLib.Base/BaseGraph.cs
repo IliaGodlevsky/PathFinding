@@ -6,6 +6,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using GraphLib.Exceptions;
 
 namespace GraphLib.Base
 {
@@ -19,18 +20,18 @@ namespace GraphLib.Base
 
         public int Obstacles => vertices.Count(v => v.IsObstacle);
 
-        public BaseGraph(int numberOfDimensions, params int[] dimensionSizes)
+        protected BaseGraph(int numberOfDimensions, params int[] dimensionSizes)
         {
             DimensionsSizes = dimensionSizes.ToArray();
 
             if (dimensionSizes.Length != numberOfDimensions)
             {
-                string message = $"An error ocurred while creating a {GetType().Name} instance\n";
+                string message = $"An error occurred while creating a {GetType().Name} instance\n";
                 message += $"Required number of dimensions is {numberOfDimensions}\n";
-                message += "Number of dimensions doesn't match the required number of dimensions\n";
-                int actualValue = dimensionSizes.Count();
+                message += "Number of dimensions doesn't match the required number of dimensions";
+                int actualValue = DimensionsSizes.Count();
 
-                throw new ArgumentOutOfRangeException(nameof(dimensionSizes), actualValue, message);
+                throw new WrongNumberOfDimensionsException(nameof(dimensionSizes), actualValue, message);
             }
 
             Size = DimensionsSizes.AggregateOrDefault((x, y) => x * y);

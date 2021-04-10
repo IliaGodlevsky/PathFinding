@@ -50,7 +50,7 @@ namespace WPFVersion3D.ViewModel
             AlgorithmKeys = new ObservableCollection<string>(AlgorithmsFactory.AlgorithmsDescriptions);
         }
 
-        protected override void OnAlgorithmIntermitted()
+        protected override void ColorizeProcessedVertices()
         {
             var frame = new DispatcherFrame();
 

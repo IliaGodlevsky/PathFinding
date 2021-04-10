@@ -11,6 +11,7 @@ using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Runtime.InteropServices;
+using Algorithm.Common.Exceptions;
 
 namespace Algorithm.Realizations
 {
@@ -41,6 +42,7 @@ namespace Algorithm.Realizations
         /// <exception cref="MissingMethodException"/>
         /// <exception cref="InvalidComObjectException"/>
         /// <exception cref="COMException"/>
+        /// <exception cref="NoAlgorithmsLoadedException"/>
         public static void LoadAlgorithms(
             string path,
             SearchOption searchOption = SearchOption.AllDirectories)
@@ -50,6 +52,12 @@ namespace Algorithm.Realizations
                 .FetchTypes(path, loadOption, searchOption)
                 .Where(IsConcreteType)
                 .ToDictionary(AlgorithmDescription, AlgorithmInstance);
+
+            if (!algorithms.Any())
+            {
+                string message = $"No algorithms were loaded. Try to add some in {path}";
+                throw new NoAlgorithmsLoadedException(message);
+            }
         }
 
         /// <summary>

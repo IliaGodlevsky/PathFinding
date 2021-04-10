@@ -62,6 +62,10 @@
       <Project>{a5a743f5-d346-4b2b-b6ac-07152f64e4d9}</Project>
       <Name>Common</Name>
     </ProjectReference>
+    <ProjectReference Include="..\..\GraphLib.Exceptions\GraphLib.Exceptions.csproj">
+      <Project>{B6DA5928-65EC-42C0-B012-F25F8F023271}</Project>
+      <Name>GraphLib.Exceptions</Name>
+    </ProjectReference>
     <ProjectReference Include="..\GraphLib.Base\GraphLib.Base.csproj">
       <Project>{6aa3b516-abfe-4eda-98dd-1ce799da747f}</Project>
       <Name>GraphLib.Base</Name>

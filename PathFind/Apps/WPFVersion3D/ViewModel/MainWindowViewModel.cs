@@ -1,5 +1,4 @@
 ﻿using Algorithm.Realizations;
-using Common;
 using Common.Extensions;
 using Common.Interface;
 using GraphLib.Base;
@@ -12,7 +11,8 @@ using System.Configuration;
 using System.Runtime.CompilerServices;
 using System.Windows;
 using System.Windows.Input;
-using Common.Logging;
+using Algorithm.Common.Exceptions;
+using GraphLib.Exceptions;
 using WPFVersion3D.Enums;
 using WPFVersion3D.Infrastructure;
 using WPFVersion3D.Infrastructure.Animators.Interface;
@@ -33,21 +33,21 @@ namespace WPFVersion3D.ViewModel
         private string graphParametres;
         public override string GraphParametres
         {
-            get { return graphParametres; }
+            get => graphParametres;
             set { graphParametres = value; OnPropertyChanged(); }
         }
 
         private string statistics;
         public override string PathFindingStatistics
         {
-            get { return statistics; }
+            get => statistics;
             set { statistics = value; OnPropertyChanged(); }
         }
 
         private IGraphField graphField;
         public override IGraphField GraphField
         {
-            get { return graphField; }
+            get => graphField;
             set { graphField = value; OnPropertyChanged(); }
         }
 
@@ -65,9 +65,6 @@ namespace WPFVersion3D.ViewModel
             IGraphAssembler graphFactory,
             IPathInput pathInput) : base(fieldFactory, eventHolder, graphSerializer, graphFactory, pathInput)
         {
-            graphSerializer.OnExceptionCaught += OnExceptionCaught;
-            graphFactory.OnExceptionCaught += OnExceptionCaught;
-
             StartPathFindCommand = new RelayCommand(ExecuteStartPathFindCommand, CanExecuteStartFindPathCommand);
             CreateNewGraphCommand = new RelayCommand(ExecuteCreateNewGraphCommand);
             ClearGraphCommand = new RelayCommand(ExecuteClearGraphCommand, CanExecuteGraphOperation);
@@ -87,15 +84,27 @@ namespace WPFVersion3D.ViewModel
                 var listener = new PluginsWatcher(viewModel);
                 var window = new PathFindWindow();
                 window.Closing += listener.StopWatching;
-                viewModel.OnPathNotFound += OnPathNotFound;
+                viewModel.OnExceptionCaught += OnExceptionCaught;
                 viewModel.EndPoints = EndPoints;
                 listener.FolderPath = loadPath;
                 listener.StartWatching();
                 PrepareWindow(viewModel, window);
             }
+            catch (NoAlgorithmsLoadedException ex)
+            {
+                OnNotFatalExceptionCaught(ex);
+            }
+            catch (WrongGraphTypeException ex)
+            {
+                OnErrorExceptionCaught(ex);
+            }
+            catch (AlgorithmInterruptedException ex)
+            {
+                OnNotFatalExceptionCaught(ex);
+            }
             catch (Exception ex)
             {
-                Logger.Instance.Error(ex);
+                OnNotFatalExceptionCaught(ex);
             }
         }
 
@@ -105,11 +114,12 @@ namespace WPFVersion3D.ViewModel
             {
                 var model = new GraphCreatingViewModel(this, graphAssembler);
                 var window = new GraphCreateWindow();
+                model.OnExceptionCaught += OnExceptionCaught;
                 PrepareWindow(model, window);
             }
             catch (Exception ex)
             {
-                Logger.Instance.Error(ex);
+                OnNotFatalExceptionCaught(ex);
             }
         }
 
@@ -182,19 +192,19 @@ namespace WPFVersion3D.ViewModel
             window.Show();
         }
 
-        private void OnPathNotFound(string message)
+        protected override void OnExceptionCaught(string message)
         {
             MessageBox.Show(message);
+        }
+
+        protected override void OnExceptionCaught(Exception ex, string additaionalMessage = "")
+        {
+            MessageBox.Show(ex.Message, additaionalMessage);
         }
 
         private bool CanExecuteGraphOperation(object param)
         {
             return !Graph.IsDefault();
-        }
-
-        private void OnExceptionCaught(Exception ex)
-        {
-            MessageBox.Show(ex.Message);
         }
 
         protected override string GetAlgorithmsLoadPath()

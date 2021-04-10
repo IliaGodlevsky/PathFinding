@@ -17,6 +17,8 @@ namespace ConsoleVersion.View
 
         public int Length { get; set; }
 
+        public IEnumerable<IVertex> Vertices => vertices;
+
         public GraphField()
         {
             vertices = new List<Vertex>();
@@ -37,6 +39,11 @@ namespace ConsoleVersion.View
             {
                 throw new ArgumentException($"Must be {nameof(Vertex)} type");
             }
+        }
+
+        public void Clear()
+        {
+            vertices.Clear();
         }
 
         public void ShowGraphWithFrames()

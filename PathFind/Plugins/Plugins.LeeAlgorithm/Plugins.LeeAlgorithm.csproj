@@ -49,6 +49,10 @@
       <Project>{04393071-3ba6-42c5-89d8-a89e3ac34511}</Project>
       <Name>Algorithm.Base</Name>
     </ProjectReference>
+    <ProjectReference Include="..\..\Algorithm\Algorithm.Common\Algorithm.Common.csproj">
+      <Project>{DF721A89-3E01-4159-B51A-E5723C9FD0BA}</Project>
+      <Name>Algorithm.Common</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\Algorithm\Algorithm.Extensions\Algorithm.Extensions.csproj">
       <Project>{11c8b301-fe40-44a1-a5a2-bc684b6a56a0}</Project>
       <Name>Algorithm.Extensions</Name>
