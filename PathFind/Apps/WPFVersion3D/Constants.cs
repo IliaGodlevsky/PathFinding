@@ -1,5 +1,4 @@
-﻿using System.Windows.Media.Animation;
-using Common;
+﻿using Common;
 
 namespace WPFVersion3D
 {

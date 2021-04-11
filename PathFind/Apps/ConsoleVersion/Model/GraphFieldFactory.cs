@@ -1,8 +1,8 @@
-﻿using System;
-using ConsoleVersion.View;
+﻿using ConsoleVersion.View;
 using GraphLib.Base;
 using GraphLib.Interface;
 using GraphLib.Realizations;
+using System;
 
 namespace ConsoleVersion.Model
 {

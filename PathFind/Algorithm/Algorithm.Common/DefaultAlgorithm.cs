@@ -1,10 +1,10 @@
-﻿using System;
-using Algorithm.Infrastructure.EventArguments;
+﻿using Algorithm.Infrastructure.EventArguments;
 using Algorithm.Infrastructure.Handlers;
 using Algorithm.Interfaces;
 using Common.Attributes;
 using GraphLib.Base;
 using GraphLib.Interface;
+using System;
 using System.Threading.Tasks;
 
 namespace Algorithm.Common

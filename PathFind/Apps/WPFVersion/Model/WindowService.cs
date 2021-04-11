@@ -9,7 +9,7 @@ namespace WPFVersion.Model
         private const int WidthOffset = 2;
         private const int LengthOffset = 6;
 
-        private const int DistanceBetweenVertices 
+        private const int DistanceBetweenVertices
             = Constants.DistanceBetweenVertices + Constants.VertexSize;
 
         public static void Adjust(IGraph graph)

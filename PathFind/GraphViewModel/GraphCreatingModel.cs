@@ -1,7 +1,7 @@
-﻿using GraphLib.Interface;
+﻿using Common.Logging;
+using GraphLib.Interface;
 using GraphViewModel.Interfaces;
 using System;
-using Common.Logging;
 
 namespace GraphLib.ViewModel
 {
@@ -40,7 +40,7 @@ namespace GraphLib.ViewModel
             }
         }
 
-        protected virtual int[] GraphParametres => new [] { Width, Length };
+        protected virtual int[] GraphParametres => new[] { Width, Length };
 
         protected IMainModel model;
         protected IGraphAssembler graphFactory;

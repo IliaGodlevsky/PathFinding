@@ -123,7 +123,7 @@ namespace WPFVersion3D.Model
             var coordinates = vertex.Position.CoordinatesValues;
             var vertexOffset = new Offset
             {
-                CoordinateValue = coordinates.ElementAtOrDefault(axisIndex),                
+                CoordinateValue = coordinates.ElementAtOrDefault(axisIndex),
                 DistanceBetweenVertices = DistancesBetween.ElementAtOrDefault(axisIndex),
                 AdditionalOffset = additionalOffset.ElementAtOrDefault(axisIndex),
                 VertexSize = vertex.Size
@@ -159,7 +159,7 @@ namespace WPFVersion3D.Model
             DistanceBetweenVerticesAtZAxis
         };
 
-        private readonly Dictionary<Axis,OffsetSetterAction> offsetActions;
+        private readonly Dictionary<Axis, OffsetSetterAction> offsetActions;
         private readonly Dictionary<Axis, DistanceBetweenVerticesSetterCallback> distanceBetweenVerticesSetters;
         private readonly Axis[] axes;
     }

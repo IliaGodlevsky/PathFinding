@@ -1,5 +1,7 @@
 ﻿using Algorithm.Base;
 using Algorithm.Common;
+using Algorithm.Common.Exceptions;
+using Algorithm.Extensions;
 using Algorithm.Interfaces;
 using Common;
 using Common.Enums;
@@ -11,8 +13,6 @@ using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Runtime.InteropServices;
-using Algorithm.Common.Exceptions;
-using Algorithm.Extensions;
 
 namespace Algorithm.Realizations
 {
@@ -44,7 +44,7 @@ namespace Algorithm.Realizations
         /// <exception cref="InvalidComObjectException"/>
         /// <exception cref="COMException"/>
         /// <exception cref="NoAlgorithmsLoadedException"/>
-        public static void LoadAlgorithms(string path, 
+        public static void LoadAlgorithms(string path,
             SearchOption searchOption = SearchOption.AllDirectories)
         {
             algorithms = ClassLoader<IAlgorithm>

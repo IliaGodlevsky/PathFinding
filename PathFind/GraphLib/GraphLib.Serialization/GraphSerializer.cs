@@ -3,7 +3,6 @@ using GraphLib.Extensions;
 using GraphLib.Interface;
 using GraphLib.Serialization.Extensions;
 using GraphLib.Serialization.Interfaces;
-using System;
 using System.IO;
 using System.Linq;
 using System.Runtime.Serialization;
@@ -31,7 +30,7 @@ namespace GraphLib.Serialization
         /// <exception cref="System.Security.SecurityException"></exception>
         public IGraph LoadGraph(Stream stream)
         {
-            var verticesInfo = (GraphSerializationInfo) formatter.Deserialize(stream);
+            var verticesInfo = (GraphSerializationInfo)formatter.Deserialize(stream);
             var dimensions = verticesInfo.DimensionsSizes.ToArray();
             var graph = graphFactory.CreateGraph(dimensions);
 

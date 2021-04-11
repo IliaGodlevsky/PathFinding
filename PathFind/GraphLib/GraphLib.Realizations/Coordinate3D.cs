@@ -23,7 +23,7 @@ namespace GraphLib.Realizations
         }
 
         public Coordinate3D(int x, int y, int z)
-            : this(new [] { x, y, z })
+            : this(new[] { x, y, z })
         {
 
         }

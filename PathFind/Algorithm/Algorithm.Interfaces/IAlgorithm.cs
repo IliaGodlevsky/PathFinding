@@ -1,7 +1,7 @@
 ﻿using Algorithm.Infrastructure.Handlers;
+using Common.Interface;
 using GraphLib.Interface;
 using System.Threading.Tasks;
-using Common.Interface;
 
 namespace Algorithm.Interfaces
 {

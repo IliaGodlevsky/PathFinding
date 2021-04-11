@@ -1,5 +1,6 @@
 ﻿using Algorithm.Realizations;
 using Common.Interface;
+using GraphViewModel;
 using GraphViewModel.Interfaces;
 using System;
 using System.Collections.Generic;
@@ -8,7 +9,6 @@ using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using System.Windows.Input;
 using System.Windows.Threading;
-using GraphViewModel;
 using WPFVersion3D.Infrastructure;
 
 namespace WPFVersion3D.ViewModel

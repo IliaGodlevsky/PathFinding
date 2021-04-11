@@ -1,6 +1,5 @@
-﻿using NUnit.Framework;
-using System;
-using GraphLib.Exceptions;
+﻿using GraphLib.Exceptions;
+using NUnit.Framework;
 
 namespace GraphLib.Realizations.Tests
 {

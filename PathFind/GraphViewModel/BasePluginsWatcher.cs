@@ -33,7 +33,7 @@ namespace GraphViewModel
         protected IEnumerable<string> GetAddedAlgorithms()
         {
             return AlgorithmsDescriptions.Except(currentAlgorithms);
-        } 
+        }
 
         protected IEnumerable<string> GetDeletedAlgorithms()
         {

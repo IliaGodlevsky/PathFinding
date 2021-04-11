@@ -1,8 +1,8 @@
 ﻿using Common.Extensions;
+using GraphLib.Exceptions;
 using GraphLib.Interface;
 using System;
 using System.Linq;
-using GraphLib.Exceptions;
 
 namespace Algorithm.Extensions
 {

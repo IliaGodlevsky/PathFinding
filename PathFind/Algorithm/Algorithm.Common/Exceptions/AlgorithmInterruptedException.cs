@@ -11,7 +11,7 @@ namespace Algorithm.Common.Exceptions
 
         }
 
-        public AlgorithmInterruptedException(string message) 
+        public AlgorithmInterruptedException(string message)
             : base(message)
         {
 

@@ -1,10 +1,10 @@
 ﻿using Algorithm.Realizations;
 using Common.Interface;
+using GraphViewModel;
 using GraphViewModel.Interfaces;
 using System;
 using System.Linq;
 using System.Windows.Forms;
-using GraphViewModel;
 
 namespace WindowsFormsVersion.ViewModel
 {

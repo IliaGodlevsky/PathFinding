@@ -11,7 +11,7 @@ namespace WPFVersion3D.Converters
 
         public RangedDoubleToStringConverter()
         {
-            doubleToStringConverter = new DoubleToStringConverter {Precision = 0};
+            doubleToStringConverter = new DoubleToStringConverter { Precision = 0 };
         }
 
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)

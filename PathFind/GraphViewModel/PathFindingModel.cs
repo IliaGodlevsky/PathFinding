@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using Algorithm.Common;
+﻿using Algorithm.Common;
 using Algorithm.Common.Exceptions;
 using Algorithm.Extensions;
 using Algorithm.Infrastructure.EventArguments;
@@ -13,7 +10,9 @@ using Common.Logging;
 using GraphLib.Base;
 using GraphLib.Interface;
 using GraphViewModel.Interfaces;
-
+using System;
+using System.Collections.Generic;
+using System.Diagnostics;
 using static Algorithm.Realizations.AlgorithmsFactory;
 using static GraphViewModel.Resources.ViewModelResources;
 
@@ -149,7 +148,7 @@ namespace GraphViewModel
         {
             int pathLength = path?.GetPathLength() ?? 0;
             int pathCost = path?.GetPathCost() ?? 0;
-            string graphInfo = string.Format(StatisticsFormat, 
+            string graphInfo = string.Format(StatisticsFormat,
                 pathLength, pathCost, visitedVerticesCount);
             string timerInfo = timer.GetTimeInformation(TimerInfoFormat);
             return string.Join(Separator, AlgorithmKey, timerInfo, graphInfo);

@@ -50,7 +50,7 @@ namespace Common.Extensions
             return self.ElementAt(index);
         }
 
-        public static IEnumerable<TSource> Which<TSource>(this IEnumerable<TSource> self, 
+        public static IEnumerable<TSource> Which<TSource>(this IEnumerable<TSource> self,
             Func<TSource, bool> predicate)
         {
             return self.Where(predicate);

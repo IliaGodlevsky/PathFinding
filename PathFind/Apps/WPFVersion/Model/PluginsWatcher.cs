@@ -1,5 +1,4 @@
 ﻿using Common.Extensions;
-using GraphLib.ViewModel;
 using GraphViewModel;
 using System.Linq;
 using System.Windows;

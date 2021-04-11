@@ -1,7 +1,6 @@
 ﻿using GraphLib.Base;
 using GraphLib.Interface;
 using System;
-using System.Runtime.CompilerServices;
 using System.Windows.Forms;
 
 namespace WindowsFormsVersion.Model

@@ -1,7 +1,7 @@
-﻿using System;
-using System.Windows.Input;
-using GraphLib.Base;
+﻿using GraphLib.Base;
 using GraphLib.Interface;
+using System;
+using System.Windows.Input;
 
 namespace WPFVersion.Model
 {

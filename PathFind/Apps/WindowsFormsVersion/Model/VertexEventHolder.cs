@@ -1,7 +1,7 @@
-﻿using System;
-using System.Windows.Forms;
-using GraphLib.Base;
+﻿using GraphLib.Base;
 using GraphLib.Interface;
+using System;
+using System.Windows.Forms;
 
 namespace WindowsFormsVersion.Model
 {

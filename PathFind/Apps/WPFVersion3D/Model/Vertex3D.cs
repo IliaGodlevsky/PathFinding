@@ -41,12 +41,12 @@ namespace WPFVersion3D.Model
         static Vertex3D()
         {
             VisitedVertexBrush = new SolidColorBrush(Colors.CadetBlue) { Opacity = InitialVisitedVertexOpacity };
-            PathVertexBrush = new SolidColorBrush(Colors.Yellow)       { Opacity = InitialPathVertexOpacity };
-            StartVertexBrush = new SolidColorBrush(Colors.Green)       { Opacity = InitialStartVertexOpacity };
-            EndVertexBrush = new SolidColorBrush(Colors.Red)           { Opacity = InitialEndVertexOpacity };
-            EnqueuedVertexBrush = new SolidColorBrush(Colors.Magenta)  { Opacity = InitialEnqueuedVertexOpacity };
-            ObstacleVertexBrush = new SolidColorBrush(Colors.Black)    { Opacity = InitialObstacleVertexOpacity };
-            SimpleVertexBrush = new SolidColorBrush(Colors.White)      { Opacity = InitialRegularVertexOpacity };
+            PathVertexBrush = new SolidColorBrush(Colors.Yellow) { Opacity = InitialPathVertexOpacity };
+            StartVertexBrush = new SolidColorBrush(Colors.Green) { Opacity = InitialStartVertexOpacity };
+            EndVertexBrush = new SolidColorBrush(Colors.Red) { Opacity = InitialEndVertexOpacity };
+            EnqueuedVertexBrush = new SolidColorBrush(Colors.Magenta) { Opacity = InitialEnqueuedVertexOpacity };
+            ObstacleVertexBrush = new SolidColorBrush(Colors.Black) { Opacity = InitialObstacleVertexOpacity };
+            SimpleVertexBrush = new SolidColorBrush(Colors.White) { Opacity = InitialRegularVertexOpacity };
 
             ModelProperty = DependencyProperty.Register(
                 nameof(Model),
@@ -177,7 +177,7 @@ namespace WPFVersion3D.Model
             DependencyPropertyChangedEventArgs prop)
         {
             Vertex3D vert = (Vertex3D)depObj;
-            double size = (double) prop.NewValue;
+            double size = (double)prop.NewValue;
             var material = vert.Material;
             vert.Size = size;
             vert.Model = Model3DFactory.CreateCubicModel3D(size, material);
@@ -195,7 +195,7 @@ namespace WPFVersion3D.Model
         {
             Vertex3D vert = (Vertex3D)depObj;
             vert.Brush = (SolidColorBrush)prop.NewValue;
-            ((DiffuseMaterial) vert.Material).Brush = vert.Brush;
+            ((DiffuseMaterial)vert.Material).Brush = vert.Brush;
         }
     }
 }

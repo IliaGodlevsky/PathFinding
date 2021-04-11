@@ -18,7 +18,7 @@ namespace WPFVersion.Model
         private string InputPath(FileDialog dialog)
         {
             return dialog?.ShowDialog() == true
-                ? dialog.FileName 
+                ? dialog.FileName
                 : string.Empty;
         }
     }

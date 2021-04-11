@@ -1,7 +1,7 @@
-﻿using System.Collections.Generic;
-using System.Linq;
+﻿using Algorithm.Common.Exceptions;
 using Algorithm.Interfaces;
-using Algorithm.Common.Exceptions;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace Algorithm.Extensions
 {

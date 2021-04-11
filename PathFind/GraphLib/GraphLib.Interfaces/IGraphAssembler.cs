@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace GraphLib.Interface
+﻿namespace GraphLib.Interface
 {
     public interface IGraphAssembler
     {

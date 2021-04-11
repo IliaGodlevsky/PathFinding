@@ -1,10 +1,10 @@
-﻿using GraphLib.Extensions;
+﻿using GraphLib.Exceptions;
+using GraphLib.Extensions;
 using GraphLib.Interface;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using GraphLib.Exceptions;
 
 namespace GraphLib.Base
 {

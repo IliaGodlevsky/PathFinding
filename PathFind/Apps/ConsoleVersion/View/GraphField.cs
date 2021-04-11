@@ -33,7 +33,7 @@ namespace ConsoleVersion.View
 
             if (vertex is Vertex vertex2D)
             {
-                vertices.Add(vertex2D);               
+                vertices.Add(vertex2D);
             }
             else
             {

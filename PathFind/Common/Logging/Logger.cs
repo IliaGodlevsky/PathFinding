@@ -1,6 +1,6 @@
-﻿using System;
-using Common.Interface;
+﻿using Common.Interface;
 using NLog;
+using System;
 
 namespace Common.Logging
 {

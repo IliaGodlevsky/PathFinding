@@ -1,4 +1,5 @@
 ﻿using Common.Extensions;
+using Common.Logging;
 using GraphLib.Base;
 using GraphLib.Extensions;
 using GraphLib.Interface;
@@ -6,7 +7,6 @@ using GraphLib.Serialization.Interfaces;
 using GraphViewModel.Interfaces;
 using System;
 using System.IO;
-using Common.Logging;
 
 namespace GraphViewModel
 {

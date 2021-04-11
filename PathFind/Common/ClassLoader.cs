@@ -15,7 +15,7 @@ namespace Common
     /// </summary>
     public sealed class ClassLoader<TBase> where TBase : class
     {
-        public static ClassLoader<TBase> Instance 
+        public static ClassLoader<TBase> Instance
             => instance ?? (instance = new ClassLoader<TBase>());
 
         /// <summary>

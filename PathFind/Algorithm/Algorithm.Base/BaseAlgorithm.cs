@@ -1,4 +1,5 @@
 ﻿using Algorithm.Common;
+using Algorithm.Common.Exceptions;
 using Algorithm.Infrastructure.EventArguments;
 using Algorithm.Infrastructure.Handlers;
 using Algorithm.Interfaces;
@@ -10,7 +11,6 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Algorithm.Common.Exceptions;
 
 namespace Algorithm.Base
 {

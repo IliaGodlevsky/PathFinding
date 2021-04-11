@@ -1,18 +1,17 @@
-﻿using ConsoleVersion.Model;
+﻿using Common.Logging;
+using ConsoleVersion.Model;
 using ConsoleVersion.View;
+using GraphLib.Exceptions;
 using GraphLib.Interface;
 using GraphLib.Realizations;
+using GraphViewModel;
 using GraphViewModel.Interfaces;
 using System;
 using System.Linq;
-using Common.Logging;
-using GraphViewModel;
-
 using static Algorithm.Realizations.AlgorithmsFactory;
-using static ConsoleVersion.Resource.Resources;
-using static ConsoleVersion.InputClass.Input;
 using static ConsoleVersion.Constants;
-using GraphLib.Exceptions;
+using static ConsoleVersion.InputClass.Input;
+using static ConsoleVersion.Resource.Resources;
 
 namespace ConsoleVersion.ViewModel
 {
@@ -50,7 +49,7 @@ namespace ConsoleVersion.ViewModel
                     Console.ReadLine();
                     mainModel.ClearGraph();
                     Console.CursorVisible = true;
-                    
+
                 }
                 catch (Exception ex)
                 {
@@ -138,7 +137,7 @@ namespace ConsoleVersion.ViewModel
             Console.Write(mainViewModel.PathFindingStatistics);
         }
 
-        public  bool HasAnyVerticesToChooseAsEndPoints()
+        public bool HasAnyVerticesToChooseAsEndPoints()
         {
             bool IsNotObstacle(IVertex vertex) => !vertex.IsObstacle;
             bool HasNotObstacleNeighbours(IVertex vertex) => vertex.Neighbours.Any(IsNotObstacle);

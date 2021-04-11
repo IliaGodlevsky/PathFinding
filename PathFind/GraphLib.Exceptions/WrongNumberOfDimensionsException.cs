@@ -16,7 +16,7 @@ namespace GraphLib.Exceptions
 
         }
 
-        public WrongNumberOfDimensionsException(string paramName, string message) 
+        public WrongNumberOfDimensionsException(string paramName, string message)
             : base(paramName, message)
         {
 

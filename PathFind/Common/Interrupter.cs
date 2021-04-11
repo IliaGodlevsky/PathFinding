@@ -1,6 +1,6 @@
-﻿using System;
+﻿using Common.Interface;
+using System;
 using System.Diagnostics;
-using Common.Interface;
 
 namespace Common
 {

@@ -13,18 +13,18 @@ namespace GraphLib.Base
         {
             Reset();
             If = new If<IVertex>(v => Start.IsEqual(v), UnsetStartVertex)
-                  .ElseIf(v => End.IsEqual(v),          UnsetEndVertex)
-                  .ElseIf(CanSetStartVertex,            SetStartVertex)
-                  .ElseIf(v => Start.IsIsolated(),      ReplaceStartVertex)
-                  .ElseIf(CanSetEndVertex,              SetEndVertex)
-                  .ElseIf(v => End.IsIsolated(),        ReplaceEndVertex);
+                  .ElseIf(v => End.IsEqual(v), UnsetEndVertex)
+                  .ElseIf(CanSetStartVertex, SetStartVertex)
+                  .ElseIf(v => Start.IsIsolated(), ReplaceStartVertex)
+                  .ElseIf(CanSetEndVertex, SetEndVertex)
+                  .ElseIf(v => End.IsIsolated(), ReplaceEndVertex);
         }
 
         public bool HasEndPointsSet => !Start.IsIsolated() && !End.IsIsolated();
 
         public IVertex Start { get; private set; }
 
-        public IVertex End { get; private set; }        
+        public IVertex End { get; private set; }
 
         public void SubscribeToEvents(IGraph graph)
         {

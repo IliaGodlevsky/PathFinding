@@ -1,8 +1,8 @@
-﻿using System;
-using Common.Extensions;
+﻿using Common.Extensions;
 using GraphLib.Base;
 using GraphLib.Interface;
 using GraphLib.Realizations;
+using System;
 
 namespace WPFVersion3D.Model
 {

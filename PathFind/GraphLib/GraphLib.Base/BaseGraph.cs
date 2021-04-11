@@ -1,12 +1,12 @@
 ﻿using Common.Extensions;
 using GraphLib.Common.NullObjects;
+using GraphLib.Exceptions;
 using GraphLib.Extensions;
 using GraphLib.Interface;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using GraphLib.Exceptions;
 
 namespace GraphLib.Base
 {
@@ -109,7 +109,7 @@ namespace GraphLib.Base
         public override string ToString()
         {
             var graphParameters = new StringBuilder();
-            
+
             void AppendToGraphParameters(int index)
             {
                 string dimensionName = DimensionNames[index];

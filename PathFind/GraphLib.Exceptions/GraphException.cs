@@ -1,6 +1,6 @@
-﻿using System;
+﻿using GraphLib.Interface;
+using System;
 using System.Runtime.Serialization;
-using GraphLib.Interface;
 
 namespace GraphLib.Exceptions
 {

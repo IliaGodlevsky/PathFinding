@@ -12,7 +12,7 @@ namespace WPFVersion3D.Converters
             Point3D result = default;
             try
             {
-                result = (Point3D) System.Convert.ChangeType(value, typeof(Point3D));
+                result = (Point3D)System.Convert.ChangeType(value, typeof(Point3D));
                 return result.Z;
             }
             catch (Exception)
