@@ -1,5 +1,4 @@
-﻿using System;
-using Algorithm.Base;
+﻿using Algorithm.Base;
 using Algorithm.Extensions;
 using Algorithm.Interfaces;
 using Algorithm.Realizations;
@@ -9,7 +8,6 @@ using GraphLib.Interface;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
-using Algorithm.Common;
 
 namespace Plugins.DijkstraALgorithm
 {

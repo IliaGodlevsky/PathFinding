@@ -12,6 +12,7 @@ using System.Linq;
 using System.Reflection;
 using System.Runtime.InteropServices;
 using Algorithm.Common.Exceptions;
+using Algorithm.Extensions;
 
 namespace Algorithm.Realizations
 {
@@ -43,21 +44,15 @@ namespace Algorithm.Realizations
         /// <exception cref="InvalidComObjectException"/>
         /// <exception cref="COMException"/>
         /// <exception cref="NoAlgorithmsLoadedException"/>
-        public static void LoadAlgorithms(
-            string path,
+        public static void LoadAlgorithms(string path, 
             SearchOption searchOption = SearchOption.AllDirectories)
         {
-            var loadOption = LoadOption.Hierarchy;
-            algorithms = ClassLoader<IAlgorithm>.Instance
-                .FetchTypes(path, loadOption, searchOption)
+            algorithms = ClassLoader<IAlgorithm>
+                .Instance
+                .FetchTypes(path, LoadOption.Hierarchy, searchOption)
                 .Where(IsConcreteType)
-                .ToDictionary(AlgorithmDescription, AlgorithmInstance);
-
-            if (!algorithms.Any())
-            {
-                string message = $"No algorithms were loaded. Try to add some in {path}";
-                throw new NoAlgorithmsLoadedException(message);
-            }
+                .ToDictionary(AlgorithmDescription, AlgorithmInstance)
+                .CheckForEmptiness();
         }
 
         /// <summary>
@@ -73,7 +68,7 @@ namespace Algorithm.Realizations
         /// <paramref name="key"></paramref> key</exception>
         public static IAlgorithm GetAlgorithm(string key)
         {
-            return algorithms.TryGetValue(key, out IAlgorithm algorithm)
+            return algorithms.TryGetValue(key, out var algorithm)
                 ? algorithm : BaseAlgorithm.Default;
         }
 

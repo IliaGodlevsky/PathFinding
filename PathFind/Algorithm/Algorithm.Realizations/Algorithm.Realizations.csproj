@@ -66,6 +66,10 @@
       <Project>{df721a89-3e01-4159-b51a-e5723c9fd0ba}</Project>
       <Name>Algorithm.Common</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Algorithm.Extensions\Algorithm.Extensions.csproj">
+      <Project>{11C8B301-FE40-44A1-A5A2-BC684B6A56A0}</Project>
+      <Name>Algorithm.Extensions</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Algorithm.Interfaces\Algorithm.Interfaces.csproj">
       <Project>{fc4f499e-9ab1-4623-9ad8-cfde0a07b7d0}</Project>
       <Name>Algorithm.Interfaces</Name>

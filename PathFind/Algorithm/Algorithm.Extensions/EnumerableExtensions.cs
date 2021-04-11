@@ -1,27 +1,31 @@
-﻿using GraphLib.Common.NullObjects;
-using GraphLib.Interface;
-using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
+using Algorithm.Interfaces;
+using Algorithm.Common.Exceptions;
 
 namespace Algorithm.Extensions
 {
     public static class EnumerableExtensions
     {
-        /// <summary>
-        /// Returns first element if collection isn't empty and <see cref="DefaultVertex"/> if is
-        /// </summary>
-        /// <param name="collection"></param>
-        /// <returns>First element of collection or <see cref="DefaultVertex"/> if collection is empty</returns>
-        /// <exception cref="ArgumentNullException">Thrown if <paramref name="collection"/> is null</exception>
-        public static IVertex FirstOrDefault(this IEnumerable<IVertex> collection)
-        {
-            return collection.FirstOrDefault<IVertex>() ?? new DefaultVertex();
-        }
-
         public static Queue<T> ToQueue<T>(this IEnumerable<T> collection)
         {
             return new Queue<T>(collection);
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="self"></param>
+        /// <returns></returns>
+        /// <exception cref="NoAlgorithmsLoadedException"/>
+        public static Dictionary<string, IAlgorithm> CheckForEmptiness(this Dictionary<string, IAlgorithm> self)
+        {
+            if (!self.Any())
+            {
+                string message = "No algorithms were loaded";
+                throw new NoAlgorithmsLoadedException(message);
+            }
+            return self;
         }
     }
 }

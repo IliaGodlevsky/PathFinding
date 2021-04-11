@@ -2,7 +2,6 @@
 using Common.Extensions;
 using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.IO;
 using System.Linq;
 using System.Reflection;
@@ -10,24 +9,14 @@ using System.Reflection;
 namespace Common
 {
     /// <summary>
-    /// A class, that loades types from assembles, 
+    /// A class, that loads types from assembles, 
     /// that are assignable to <typeparamref name="TBase"/> 
     /// and match <see cref="LoadOption"/>
     /// </summary>
-    public class ClassLoader<TBase> where TBase : class
+    public sealed class ClassLoader<TBase> where TBase : class
     {
-        public static ClassLoader<TBase> Instance
-        {
-            get
-            {
-                if (instance == null)
-                {
-                    instance = new ClassLoader<TBase>();
-                }
-
-                return instance;
-            }
-        }
+        public static ClassLoader<TBase> Instance 
+            => instance ?? (instance = new ClassLoader<TBase>());
 
         /// <summary>
         /// Fetches types from assembles in folder

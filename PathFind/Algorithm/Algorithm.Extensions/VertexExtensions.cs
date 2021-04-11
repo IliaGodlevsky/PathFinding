@@ -2,6 +2,7 @@
 using GraphLib.Interface;
 using System;
 using System.Linq;
+using GraphLib.Exceptions;
 
 namespace Algorithm.Extensions
 {
@@ -37,7 +38,8 @@ namespace Algorithm.Extensions
 
             if (self.Position.CoordinatesValues.Count() != toVertex.Position.CoordinatesValues.Count())
             {
-                throw new ArgumentException("Can't calculate distance between vertices with different coordinates count");
+                string message = "Can't calculate distance between vertices with different coordinates count";
+                throw new WrongNumberOfDimensionsException(message);
             }
             #endregion
 

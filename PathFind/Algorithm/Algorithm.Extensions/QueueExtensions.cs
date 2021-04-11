@@ -8,7 +8,7 @@ namespace Algorithm.Extensions
     public static class QueueExtensions
     {
         /// <summary>
-        /// Removes vertex from the begining of queue and return it
+        /// Removes vertex from the beginning of queue and returns it
         /// </summary>
         /// <param name="queue"></param>
         /// <returns>First vertex if collection isn't empty and <see cref="DefaultVertex"/> if is</returns>

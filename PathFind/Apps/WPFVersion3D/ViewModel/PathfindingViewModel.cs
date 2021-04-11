@@ -1,6 +1,5 @@
 ﻿using Algorithm.Realizations;
 using Common.Interface;
-using GraphLib.ViewModel;
 using GraphViewModel.Interfaces;
 using System;
 using System.Collections.Generic;
@@ -17,7 +16,6 @@ namespace WPFVersion3D.ViewModel
     internal class PathFindingViewModel : PathFindingModel, IViewModel, INotifyPropertyChanged
     {
         public event EventHandler OnWindowClosed;
-
         public event PropertyChangedEventHandler PropertyChanged;
 
         protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = "")
@@ -68,8 +66,7 @@ namespace WPFVersion3D.ViewModel
 
         private void ExecuteCloseWindowCommand(object param)
         {
-            var args = new EventArgs();
-            OnWindowClosed?.Invoke(this, args);
+            OnWindowClosed?.Invoke(this, EventArgs.Empty);
         }
 
         private void ExecuteConfirmPathFindAlgorithmChoice(object param)
