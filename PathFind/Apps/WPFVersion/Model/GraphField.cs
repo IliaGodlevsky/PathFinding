@@ -9,7 +9,7 @@ namespace WPFVersion.Model
 {
     internal sealed class GraphField : Canvas, IGraphField
     {
-        public IEnumerable<IVertex> Vertices => Children.OfType<IVertex>();
+        public IReadOnlyCollection<IVertex> Vertices => Children.OfType<IVertex>().ToArray();
 
         public GraphField()
         {

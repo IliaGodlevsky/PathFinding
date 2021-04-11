@@ -17,7 +17,7 @@ namespace ConsoleVersion.View
 
         public int Length { get; set; }
 
-        public IEnumerable<IVertex> Vertices => vertices;
+        public IReadOnlyCollection<IVertex> Vertices => vertices;
 
         public GraphField()
         {

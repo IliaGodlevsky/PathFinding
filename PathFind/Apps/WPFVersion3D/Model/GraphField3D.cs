@@ -17,7 +17,7 @@ namespace WPFVersion3D.Model
 
         public double DistanceBetweenVerticesAtZAxis { get; set; }
 
-        public IEnumerable<IVertex> Vertices => Children.OfType<IVertex>();
+        public IReadOnlyCollection<IVertex> Vertices => Children.OfType<IVertex>().ToArray();
 
         public GraphField3D(int width, int length, int height) : this()
         {
@@ -106,7 +106,7 @@ namespace WPFVersion3D.Model
         private void StretchAlongAxes(params Axis[] axes)
         {
             var uniqueAxes = axes.Distinct().ToArray();
-            var vertices = Children.Cast<Vertex3D>();
+            var vertices = Vertices.Cast<Vertex3D>();
             foreach (var vertex in vertices)
             {
                 foreach (var axis in uniqueAxes)

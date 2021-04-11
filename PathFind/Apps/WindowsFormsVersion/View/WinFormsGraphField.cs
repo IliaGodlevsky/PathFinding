@@ -11,7 +11,7 @@ namespace WindowsFormsVersion.View
 {
     internal class WinFormsGraphField : UserControl, IGraphField
     {
-        public IEnumerable<IVertex> Vertices => Controls.OfType<IVertex>();
+        public IReadOnlyCollection<IVertex> Vertices => Controls.OfType<IVertex>().ToArray();
 
         public WinFormsGraphField()
         {

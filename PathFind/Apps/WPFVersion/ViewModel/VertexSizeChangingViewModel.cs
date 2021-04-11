@@ -20,16 +20,16 @@ namespace WPFVersion.ViewModel
 
         public MainWindowViewModel Model { get; set; }
 
-        public ICommand ExecuteChangeVertexSizeCommand { get; }
-        public ICommand ExecuteCancelCommand { get; }
+        public ICommand ChangeVertexSizeCommand { get; }
+        public ICommand CancelCommand { get; }
 
         public VertexSizeChangingViewModel(MainWindowViewModel model, BaseGraphFieldFactory fieldFactory)
         {
             Model = model;
             this.fieldFactory = fieldFactory;
 
-            ExecuteChangeVertexSizeCommand = new RelayCommand(ExecuteChangeVerticesSizeCommand);
-            ExecuteCancelCommand = new RelayCommand(obj => CloseWindow());
+            ChangeVertexSizeCommand = new RelayCommand(ExecuteChangeVerticesSizeCommand);
+            CancelCommand = new RelayCommand(ExecuteCancelCommand);
 
             if (Model.Graph.Vertices.Any())
             {
@@ -45,11 +45,6 @@ namespace WPFVersion.ViewModel
                 return Convert.ToInt32(vertex.Width);
             }
             return Constants.VertexSize;
-        }
-
-        private void CloseWindow()
-        {
-            OnWindowClosed?.Invoke(this, EventArgs.Empty);
         }
 
         private void ChangeSize(IVertex vertex)
@@ -75,7 +70,12 @@ namespace WPFVersion.ViewModel
         {
             Model.Graph.Vertices.ForEach(ChangeSize);
             CreateNewGraphField();
-            CloseWindow();
+            OnWindowClosed?.Invoke(this, EventArgs.Empty);
+        }
+
+        private void ExecuteCancelCommand(object param)
+        {
+            OnWindowClosed?.Invoke(this, EventArgs.Empty);
         }
 
         private readonly BaseGraphFieldFactory fieldFactory;
