@@ -8,9 +8,15 @@ namespace Common.Interface
 
         void Warn(Exception ex, string message = null);
 
+        void Warn(string message);
+
         void Error(Exception ex, string message = null);
 
+        void Error(string message);
+
         void Fatal(Exception ex, string message = null);
+
+        void Fatal(string message);
 
         void Info(string message);
 

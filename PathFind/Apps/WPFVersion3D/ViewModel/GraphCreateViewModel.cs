@@ -24,7 +24,7 @@ namespace WPFVersion3D.ViewModel
             CancelCreateGraphCommand = new RelayCommand(obj => CloseWindow());
         }
 
-        protected override int[] GraphParametres => new[] { Width, Length, Height };
+        protected override int[] GraphParametres => new [] { Width, Length, Height };
 
         private void ExecuteConfirmCreateGraphCommand(object param)
         {

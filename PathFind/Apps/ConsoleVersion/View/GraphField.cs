@@ -11,7 +11,7 @@ using Console = Colorful.Console;
 
 namespace ConsoleVersion.View
 {
-    internal class GraphField : IGraphField
+    internal sealed class GraphField : IGraphField
     {
         public int Width { get; set; }
 

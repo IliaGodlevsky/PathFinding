@@ -55,19 +55,17 @@ namespace WPFVersion.ViewModel
 
         protected override void OnAlgorithmStarted(object sender, EventArgs e)
         {
+            base.OnAlgorithmStarted(sender, e);
             if (mainViewModel is MainWindowViewModel mainModel)
             {
                 mainModel.CanInterruptAlgorithm = true;
                 mainModel.OnAlgorithmInterrupted += InterruptAlgorithm;
             }
-
-            base.OnAlgorithmStarted(sender, e);
         }
 
         protected override void OnAlgorithmFinished(object sender, EventArgs e)
         {
             base.OnAlgorithmFinished(sender, e);
-
             if (mainViewModel is MainWindowViewModel mainModel)
             {
                 mainModel.CanInterruptAlgorithm = false;

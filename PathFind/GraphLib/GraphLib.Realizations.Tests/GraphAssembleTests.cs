@@ -3,7 +3,6 @@ using GraphLib.Interface;
 using GraphLib.Realizations.Factories;
 using GraphLib.Realizations.Tests.Factories;
 using NUnit.Framework;
-using System;
 using System.Linq;
 
 namespace GraphLib.Realizations.Tests

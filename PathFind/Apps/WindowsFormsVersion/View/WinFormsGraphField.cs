@@ -9,7 +9,7 @@ using WindowsFormsVersion.Model;
 
 namespace WindowsFormsVersion.View
 {
-    internal class WinFormsGraphField : UserControl, IGraphField
+    internal sealed class WinFormsGraphField : UserControl, IGraphField
     {
         public IReadOnlyCollection<IVertex> Vertices => Controls.OfType<IVertex>().ToArray();
 

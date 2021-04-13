@@ -1,13 +1,13 @@
-﻿using Common.Logging;
-using GraphLib.Interface;
+﻿using GraphLib.Interface;
 using GraphViewModel.Interfaces;
 using System;
+using Common.Logging;
 
 namespace GraphLib.ViewModel
 {
     public abstract class GraphCreatingModel : IModel
     {
-        public event Action<string> OnExceptionCaught;
+        public event Action<string> OnEventHappened;
 
         public int Width { get; set; }
 
@@ -21,9 +21,9 @@ namespace GraphLib.ViewModel
             this.graphFactory = graphFactory;
         }
 
-        protected void RaiseOnExceptionCaught(string message)
+        protected void RaiseOnEventHappened(string message)
         {
-            OnExceptionCaught?.Invoke(message);
+            OnEventHappened?.Invoke(message);
         }
 
         public virtual void CreateGraph()
@@ -35,12 +35,12 @@ namespace GraphLib.ViewModel
             }
             catch (Exception ex)
             {
-                RaiseOnExceptionCaught(ex.Message);
+                RaiseOnEventHappened(ex.Message);
                 Logger.Instance.Error(ex);
             }
         }
 
-        protected virtual int[] GraphParametres => new[] { Width, Length };
+        protected virtual int[] GraphParametres => new [] { Width, Length };
 
         protected IMainModel model;
         protected IGraphAssembler graphFactory;

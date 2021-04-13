@@ -1,5 +1,4 @@
 ﻿using Common.Extensions;
-using Common.Logging;
 using GraphLib.Base;
 using GraphLib.Extensions;
 using GraphLib.Interface;
@@ -7,6 +6,7 @@ using GraphLib.Serialization.Interfaces;
 using GraphViewModel.Interfaces;
 using System;
 using System.IO;
+using Common.Logging;
 
 namespace GraphViewModel
 {
@@ -49,7 +49,8 @@ namespace GraphViewModel
             }
             catch (Exception ex)
             {
-                OnErrorExceptionCaught(ex);
+                OnExceptionCaught(ex);
+                Logger.Instance.Warn(ex);
             }
         }
 
@@ -66,7 +67,8 @@ namespace GraphViewModel
             }
             catch (Exception ex)
             {
-                OnErrorExceptionCaught(ex);
+                OnExceptionCaught(ex);
+                Logger.Instance.Warn(ex);
             }
         }
 
@@ -99,21 +101,8 @@ namespace GraphViewModel
         }
 
         protected abstract string GetAlgorithmsLoadPath();
-        protected abstract void OnExceptionCaught(string message);
-
+        protected abstract void OnExternalEventHappened(string message);
         protected abstract void OnExceptionCaught(Exception ex, string additaionalMessage = "");
-
-        protected virtual void OnErrorExceptionCaught(Exception ex, string additionalMessage = "")
-        {
-            OnExceptionCaught(ex, additionalMessage);
-            Logger.Instance.Error(ex);
-        }
-
-        protected virtual void OnNotFatalExceptionCaught(Exception ex, string additionalMessage = "")
-        {
-            OnExceptionCaught(ex, additionalMessage);
-            Logger.Instance.Warn(ex);
-        }
 
 
         protected readonly IGraphAssembler graphAssembler;

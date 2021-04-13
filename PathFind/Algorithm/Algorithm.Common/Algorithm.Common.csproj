@@ -43,7 +43,6 @@
   <ItemGroup>
     <Compile Include="DefaultAlgorithm.cs" />
     <Compile Include="Exceptions\AlgorithmInterruptedException.cs" />
-    <Compile Include="Exceptions\EndPointsDontBelongToGraphException.cs" />
     <Compile Include="Exceptions\NoAlgorithmsLoadedException.cs" />
     <Compile Include="NullGraphPath.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

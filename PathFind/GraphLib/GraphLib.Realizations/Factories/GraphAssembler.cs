@@ -1,10 +1,10 @@
 ﻿using Common;
 using Common.Extensions;
-using GraphLib.Exceptions;
 using GraphLib.Extensions;
 using GraphLib.Interface;
 using System;
 using System.Linq;
+using GraphLib.Exceptions;
 
 namespace GraphLib.Realizations.Factories
 {

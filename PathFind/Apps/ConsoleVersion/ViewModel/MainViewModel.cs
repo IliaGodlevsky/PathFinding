@@ -1,5 +1,4 @@
-﻿using Algorithm.Common.Exceptions;
-using Algorithm.Realizations;
+﻿using Algorithm.Realizations;
 using Common;
 using ConsoleVersion.Attributes;
 using ConsoleVersion.Enums;
@@ -7,7 +6,6 @@ using ConsoleVersion.InputClass;
 using ConsoleVersion.Model;
 using ConsoleVersion.View;
 using GraphLib.Base;
-using GraphLib.Exceptions;
 using GraphLib.Extensions;
 using GraphLib.Interface;
 using GraphLib.Realizations;
@@ -18,6 +16,9 @@ using System.Configuration;
 using System.Drawing;
 using System.Linq;
 using Console = Colorful.Console;
+using GraphLib.Exceptions;
+using Algorithm.Common.Exceptions;
+using Common.Logging;
 
 namespace ConsoleVersion.ViewModel
 {
@@ -46,13 +47,14 @@ namespace ConsoleVersion.ViewModel
             try
             {
                 var model = new GraphCreatingViewModel(this, graphAssembler);
-                model.OnExceptionCaught += OnExceptionCaught;
+                model.OnEventHappened += OnExternalEventHappened;
                 var view = new GraphCreateView(model);
                 view.Start();
             }
             catch (Exception ex)
             {
-                OnErrorExceptionCaught(ex);
+                OnExceptionCaught(ex);
+                Logger.Instance.Error(ex);
             }
         }
 
@@ -64,22 +66,25 @@ namespace ConsoleVersion.ViewModel
                 string pluginPath = GetAlgorithmsLoadPath();
                 AlgorithmsFactory.LoadAlgorithms(pluginPath);
                 var model = new PathFindingViewModel(this);
-                model.OnExceptionCaught += OnExceptionCaught;
+                model.OnEventHappened += OnExternalEventHappened;
                 model.EndPoints = EndPoints;
                 var view = new PathFindView(model);
                 view.Start();
             }
             catch (NoVerticesToChooseAsEndPointsException ex)
             {
-                OnNotFatalExceptionCaught(ex);
+                OnExceptionCaught(ex);
+                Logger.Instance.Warn(ex);
             }
             catch (NoAlgorithmsLoadedException ex)
             {
-                OnNotFatalExceptionCaught(ex);
+                OnExceptionCaught(ex);
+                Logger.Instance.Info(ex.Message);
             }
             catch (Exception ex)
             {
-                OnErrorExceptionCaught(ex);
+                OnExceptionCaught(ex);
+                Logger.Instance.Error(ex);
             }
         }
 
@@ -159,7 +164,7 @@ namespace ConsoleVersion.ViewModel
             Console.CursorVisible = true;
         }
 
-        protected override void OnExceptionCaught(string message)
+        protected override void OnExternalEventHappened(string message)
         {
             DisplayGraph();
             Console.WriteLine(message);

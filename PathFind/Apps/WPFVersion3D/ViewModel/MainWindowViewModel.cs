@@ -3,7 +3,6 @@ using Algorithm.Realizations;
 using Common.Extensions;
 using Common.Interface;
 using GraphLib.Base;
-using GraphLib.Exceptions;
 using GraphLib.Interface;
 using GraphLib.Serialization.Interfaces;
 using GraphViewModel;
@@ -13,6 +12,7 @@ using System.Configuration;
 using System.Runtime.CompilerServices;
 using System.Windows;
 using System.Windows.Input;
+using Common.Logging;
 using WPFVersion3D.Enums;
 using WPFVersion3D.Infrastructure;
 using WPFVersion3D.Infrastructure.Animators.Interface;
@@ -84,7 +84,7 @@ namespace WPFVersion3D.ViewModel
                 var listener = new PluginsWatcher(viewModel);
                 var window = new PathFindWindow();
                 window.Closing += listener.StopWatching;
-                viewModel.OnExceptionCaught += OnExceptionCaught;
+                viewModel.OnEventHappened += OnExternalEventHappened;
                 viewModel.EndPoints = EndPoints;
                 listener.FolderPath = loadPath;
                 listener.StartWatching();
@@ -92,19 +92,13 @@ namespace WPFVersion3D.ViewModel
             }
             catch (NoAlgorithmsLoadedException ex)
             {
-                OnNotFatalExceptionCaught(ex);
-            }
-            catch (WrongGraphTypeException ex)
-            {
-                OnErrorExceptionCaught(ex);
-            }
-            catch (AlgorithmInterruptedException ex)
-            {
-                OnNotFatalExceptionCaught(ex);
+                OnExceptionCaught(ex);
+                Logger.Instance.Warn(ex);
             }
             catch (Exception ex)
             {
-                OnNotFatalExceptionCaught(ex);
+                OnExceptionCaught(ex);
+                Logger.Instance.Error(ex);
             }
         }
 
@@ -114,12 +108,13 @@ namespace WPFVersion3D.ViewModel
             {
                 var model = new GraphCreatingViewModel(this, graphAssembler);
                 var window = new GraphCreateWindow();
-                model.OnExceptionCaught += OnExceptionCaught;
+                model.OnEventHappened += OnExternalEventHappened;
                 PrepareWindow(model, window);
             }
             catch (Exception ex)
             {
-                OnNotFatalExceptionCaught(ex);
+                OnExceptionCaught(ex);
+                Logger.Instance.Error(ex);
             }
         }
 
@@ -140,7 +135,9 @@ namespace WPFVersion3D.ViewModel
 
         private void ChangeVerticesOpacity()
         {
-            PrepareWindow(new OpacityChangeViewModel(), new OpacityChangeWindow());
+            var model = new OpacityChangeViewModel();
+            var window = new OpacityChangeWindow();
+            PrepareWindow(model, window);
         }
 
         private void ExecuteSaveGraphCommand(object param)
@@ -180,8 +177,8 @@ namespace WPFVersion3D.ViewModel
 
         private void ExecuteAnimatedAxisRotateCommand(object param)
         {
-            var rotator = (IAnimator)param;
-            rotator.ApplyAnimation();
+            var rotator = param as IAnimator;
+            rotator?.ApplyAnimation();
         }
 
         private void PrepareWindow(IViewModel model, Window window)
@@ -192,7 +189,7 @@ namespace WPFVersion3D.ViewModel
             window.Show();
         }
 
-        protected override void OnExceptionCaught(string message)
+        protected override void OnExternalEventHappened(string message)
         {
             MessageBox.Show(message);
         }

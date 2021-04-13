@@ -16,6 +16,8 @@ using System.Windows.Forms;
 using WindowsFormsVersion.Extensions;
 using WindowsFormsVersion.Forms;
 using WindowsFormsVersion.View;
+using Algorithm.Common.Exceptions;
+using Common.Logging;
 
 namespace WindowsFormsVersion.ViewModel
 {
@@ -80,14 +82,20 @@ namespace WindowsFormsVersion.ViewModel
                     string loadPath = GetAlgorithmsLoadPath();
                     AlgorithmsFactory.LoadAlgorithms(loadPath);
                     var model = new PathFindingViewModel(this);
-                    model.OnExceptionCaught += OnExceptionCaught;
+                    model.OnEventHappened += OnExternalEventHappened;
                     model.EndPoints = EndPoints;
                     var form = new PathFindingWindow(model);
                     PrepareWindow(model, form);
                 }
+                catch (NoAlgorithmsLoadedException ex)
+                {
+                    OnExceptionCaught(ex);
+                    Logger.Instance.Warn(ex);
+                }
                 catch (Exception ex)
                 {
-                    OnNotFatalExceptionCaught(ex);
+                    OnExceptionCaught(ex);
+                    Logger.Instance.Error(ex);
                 }
             }
         }
@@ -98,12 +106,13 @@ namespace WindowsFormsVersion.ViewModel
             {
                 var model = new GraphCreatingViewModel(this, graphAssembler);
                 var form = new GraphCreatingWindow(model);
-                model.OnExceptionCaught += OnExceptionCaught;
+                model.OnEventHappened += OnExternalEventHappened;
                 PrepareWindow(model, form);
             }
             catch (Exception ex)
             {
-                OnErrorExceptionCaught(ex);
+                OnExceptionCaught(ex);
+                Logger.Instance.Error(ex);
             }
         }
 
@@ -162,7 +171,7 @@ namespace WindowsFormsVersion.ViewModel
             return ConfigurationManager.AppSettings["pluginsPath"];
         }
 
-        protected override void OnExceptionCaught(string message)
+        protected override void OnExternalEventHappened(string message)
         {
             MessageBox.Show(message);
         }

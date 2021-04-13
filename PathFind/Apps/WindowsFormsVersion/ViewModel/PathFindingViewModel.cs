@@ -23,7 +23,6 @@ namespace WindowsFormsVersion.ViewModel
             {
                 OnWindowClosed?.Invoke(this, EventArgs.Empty);
                 FindPath();
-                OnWindowClosed = null;
             }
         }
 
@@ -35,7 +34,6 @@ namespace WindowsFormsVersion.ViewModel
         public void CancelPathFinding(object sender, EventArgs e)
         {
             OnWindowClosed?.Invoke(this, EventArgs.Empty);
-            OnWindowClosed = null;
         }
 
         private bool CanExecuteConfirmPathFindAlgorithmChoice()

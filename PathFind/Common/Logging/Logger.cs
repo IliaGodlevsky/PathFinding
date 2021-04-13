@@ -10,12 +10,17 @@ namespace Common.Logging
 
         public void Trace(string message)
         {
-            Log(message, infoLogger.Trace);
+            Log(message, traceLogger.Trace);
         }
 
         public void Warn(Exception ex, string message = null)
         {
-            Log(ex, message, infoLogger.Warn);
+            Log(ex, message, errorLogger.Warn);
+        }
+
+        public void Warn(string message)
+        {
+            errorLogger.Warn(message);
         }
 
         public void Error(Exception ex, string message = null)
@@ -23,9 +28,19 @@ namespace Common.Logging
             Log(ex, message, errorLogger.Error);
         }
 
+        public void Error(string message)
+        {
+            errorLogger.Error(message);
+        }
+
         public void Fatal(Exception ex, string message = null)
         {
             Log(ex, message, errorLogger.Fatal);
+        }
+
+        public void Fatal(string message)
+        {
+            errorLogger.Fatal(message);
         }
 
         public void Info(string message)
@@ -56,11 +71,13 @@ namespace Common.Logging
             infoLogger = LogManager.GetLogger("Info");
             errorLogger = LogManager.GetLogger("Error");
             debugLogger = LogManager.GetLogger("Debug");
+            traceLogger = LogManager.GetLogger("Trace");
         }
 
-        private readonly NLog.Logger infoLogger;
-        private readonly NLog.Logger debugLogger;
-        private readonly NLog.Logger errorLogger;
+        private readonly ILogger infoLogger;
+        private readonly ILogger debugLogger;
+        private readonly ILogger errorLogger;
+        private readonly ILogger traceLogger;
 
         private static ILog instance;
     }

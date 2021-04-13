@@ -1,5 +1,4 @@
-﻿using Algorithm.Common.Exceptions;
-using Algorithm.Realizations;
+﻿using Algorithm.Realizations;
 using Common.Extensions;
 using Common.Interface;
 using GraphLib.Base;
@@ -10,9 +9,13 @@ using GraphViewModel;
 using System;
 using System.ComponentModel;
 using System.Configuration;
+using System.Diagnostics;
 using System.Runtime.CompilerServices;
+using System.ServiceModel.ComIntegration;
 using System.Windows;
 using System.Windows.Input;
+using Algorithm.Common.Exceptions;
+using Common.Logging;
 using WPFVersion.Infrastructure;
 using WPFVersion.Model;
 using WPFVersion.View.Windows;
@@ -71,7 +74,7 @@ namespace WPFVersion.ViewModel
             IVertexEventHolder eventHolder,
             IGraphSerializer graphSerializer,
             IGraphAssembler graphFactory,
-            IPathInput pathInput)
+            IPathInput pathInput) 
             : base(fieldFactory, eventHolder, graphSerializer, graphFactory, pathInput)
         {
             StartPathFindCommand = new RelayCommand(ExecuteStartPathFindCommand, CanExecuteStartFindPathCommand);
@@ -96,13 +99,16 @@ namespace WPFVersion.ViewModel
 
         public void ExecuteShowVertexCostCommand(object parametre)
         {
-            if ((bool)parametre)
+            if (parametre is bool mustDisplayCost)
             {
-                Graph.ToWeighted();
-            }
-            else
-            {
-                Graph.ToUnweighted();
+                if (mustDisplayCost)
+                {
+                    Graph.ToWeighted();
+                }
+                else
+                {
+                    Graph.ToUnweighted();
+                }
             }
         }
 
@@ -116,7 +122,7 @@ namespace WPFVersion.ViewModel
                 var listener = new PluginsWatcher(viewModel);
                 var window = new PathFindWindow();
                 window.Closing += listener.StopWatching;
-                viewModel.OnExceptionCaught += OnExceptionCaught;
+                viewModel.OnEventHappened += OnExternalEventHappened;
                 viewModel.EndPoints = EndPoints;
                 listener.FolderPath = loadPath;
                 listener.StartWatching();
@@ -124,11 +130,13 @@ namespace WPFVersion.ViewModel
             }
             catch (NoAlgorithmsLoadedException ex)
             {
-                OnNotFatalExceptionCaught(ex);
+                OnExceptionCaught(ex);
+                Logger.Instance.Warn(ex);
             }
             catch (Exception ex)
             {
-                OnNotFatalExceptionCaught(ex);
+                OnExceptionCaught(ex);
+                Logger.Instance.Error(ex);
             }
         }
 
@@ -138,12 +146,13 @@ namespace WPFVersion.ViewModel
             {
                 var model = new GraphCreatingViewModel(this, graphAssembler);
                 var window = new GraphCreatesWindow();
-                model.OnExceptionCaught += OnExceptionCaught;
+                model.OnEventHappened += OnExternalEventHappened;
                 PrepareWindow(model, window);
             }
             catch (Exception ex)
             {
-                OnErrorExceptionCaught(ex);
+                OnExceptionCaught(ex);
+                Logger.Instance.Error(ex);
             }
         }
 
@@ -154,7 +163,7 @@ namespace WPFVersion.ViewModel
             PrepareWindow(model, window);
         }
 
-        protected override void OnExceptionCaught(string message)
+        protected override void OnExternalEventHappened(string message)
         {
             MessageBox.Show(message);
         }

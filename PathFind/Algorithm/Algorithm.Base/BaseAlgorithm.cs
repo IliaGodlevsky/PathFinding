@@ -110,7 +110,7 @@ namespace Algorithm.Base
         /// 
         /// </summary>
         /// <param name="endpoints"></param>
-        /// <exception cref="EndPointsDontBelongToGraphException"></exception>
+        /// <exception cref="ArgumentException"></exception>
         protected virtual void PrepareForPathfinding(IEndPoints endpoints)
         {
             if (Graph.Contains(endpoints))
@@ -126,7 +126,7 @@ namespace Algorithm.Base
             string paramName = nameof(endpoints);
             string graphName = nameof(Graph);
             string message = $"{paramName} don't belong to {graphName}";
-            throw new EndPointsDontBelongToGraphException(message);
+            throw new ArgumentException(message);
         }
 
         protected virtual void CompletePathfinding()

@@ -13,6 +13,7 @@ using GraphViewModel.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using GraphLib.Extensions;
 using static Algorithm.Realizations.AlgorithmsFactory;
 using static GraphViewModel.Resources.ViewModelResources;
 
@@ -20,7 +21,7 @@ namespace GraphViewModel
 {
     public abstract class PathFindingModel : IModel
     {
-        public event Action<string> OnExceptionCaught;
+        public event Action<string> OnEventHappened;
 
         public BaseEndPoints EndPoints { get; set; }
 
@@ -52,12 +53,11 @@ namespace GraphViewModel
             }
             catch (AlgorithmInterruptedException ex)
             {
-                RaiseOnExceptionCaught(ex.Message);
-                Logger.Instance.Info(ex.Message);
+                RaiseOnEventHappened(ex.Message);
             }
             catch (Exception ex)
             {
-                timer.Stop();
+                RaiseOnEventHappened(ex.Message);
                 Logger.Instance.Error(ex);
             }
             finally
@@ -67,9 +67,9 @@ namespace GraphViewModel
             }
         }
 
-        protected void RaiseOnExceptionCaught(string message)
+        protected void RaiseOnEventHappened(string message)
         {
-            OnExceptionCaught?.Invoke(message);
+            OnEventHappened?.Invoke(message);
         }
 
         protected abstract void ColorizeProcessedVertices();
@@ -106,7 +106,9 @@ namespace GraphViewModel
 
         protected virtual void OnAlgorithmInterrupted(object sender, EventArgs e)
         {
-            OnAlgorithmFinished(sender, e);
+            timer.Stop();
+            string message = $"Algorithm {AlgorithmKey} was interrupted";
+            Logger.Instance.Info(message);
             throw new AlgorithmInterruptedException(AlgorithmInterruptedMsg);
         }
 
@@ -115,7 +117,10 @@ namespace GraphViewModel
             if (e is AlgorithmEventArgs args)
             {
                 visitedVerticesCount = args.VisitedVertices;
+                string message = $"Algorithm { AlgorithmKey } was finished";
+                Logger.Instance.Info(message);
             }
+
             timer.Stop();
         }
 
@@ -129,12 +134,17 @@ namespace GraphViewModel
             }
             else
             {
-                OnExceptionCaught?.Invoke(PathWasNotFoundMsg);
+                OnEventHappened?.Invoke(PathWasNotFoundMsg);
+                Logger.Instance.Info(PathWasNotFoundMsg);
             }
         }
 
         protected virtual void OnAlgorithmStarted(object sender, EventArgs e)
         {
+            string message = $"Algorithm {AlgorithmKey} was started. ";
+            message += $"Start vertex: {EndPoints.Start.GetInforamtion()};";
+            message += $"End vertex: {EndPoints.End.GetInforamtion()}";
+            Logger.Instance.Info(message);
             timer.Reset();
             timer.Start();
         }

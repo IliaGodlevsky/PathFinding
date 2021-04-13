@@ -14,6 +14,14 @@ namespace GraphLib.Extensions
             return !self.IsIsolated();
         }
 
+        public static string GetInforamtion(this IVertex self)
+        {
+            string cost = self.Cost.CurrentCost.ToString();
+            string position = self.Position.ToString();
+            string neighboursCount = self.Neighbours.Count.ToString();
+            return $"Cost: {cost}; position: {position}; neighbours: {neighboursCount}";
+        }
+
         public static bool IsIsolated(this IVertex self)
         {
             return self.IsObstacle
@@ -105,7 +113,8 @@ namespace GraphLib.Extensions
 
         public static bool IsNeighbourOf(this IVertex self, IVertex vertex)
         {
-            return vertex.Neighbours.Contains(self);
+            bool IsAtSamePosition(IVertex v) => v.Position.IsEqual(self.Position);
+            return vertex.Neighbours.Any(IsAtSamePosition);
         }
     }
 }

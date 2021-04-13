@@ -49,11 +49,10 @@ namespace ConsoleVersion.ViewModel
                     Console.ReadLine();
                     mainModel.ClearGraph();
                     Console.CursorVisible = true;
-
                 }
                 catch (Exception ex)
                 {
-                    RaiseOnExceptionCaught(ex.Message);
+                    RaiseOnEventHappened(ex.Message);
                     Logger.Instance.Error(ex);
                 }
             }

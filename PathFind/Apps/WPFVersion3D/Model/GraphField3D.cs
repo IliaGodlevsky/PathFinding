@@ -39,8 +39,8 @@ namespace WPFVersion3D.Model
 
             distanceBetweenVerticesSetters = new Dictionary<Axis, DistanceBetweenVerticesSetterCallback>
             {
-                { Axis.Abscissa, (distanceBetween, field) => field.DistanceBetweenVerticesAtXAxis = distanceBetween },
-                { Axis.Ordinate, (distanceBetween, field) => field.DistanceBetweenVerticesAtYAxis = distanceBetween },
+                { Axis.Abscissa,  (distanceBetween, field) => field.DistanceBetweenVerticesAtXAxis = distanceBetween },
+                { Axis.Ordinate,  (distanceBetween, field) => field.DistanceBetweenVerticesAtYAxis = distanceBetween },
                 { Axis.Applicate, (distanceBetween, field) => field.DistanceBetweenVerticesAtZAxis = distanceBetween }
             };
 
