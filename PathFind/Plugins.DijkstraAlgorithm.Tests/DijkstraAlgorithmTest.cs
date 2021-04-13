@@ -62,12 +62,13 @@ namespace Plugins.DijkstraAlgorithm.Tests
         {
             var algorithm = new DijkstrasAlgorithm(graphMock.Object);
 
+            int GetVertexCost(IVertex vertex) => vertex.Cost.CurrentCost;
             var graphPath = algorithm.FindPath(endPointsMock.Object);
             var path = graphPath.Path.ToArray();
-            int pathCost = path.Sum(vertex => vertex.Cost.CurrentCost);
-            int expectedPathCost = expectedPath.Sum(vertex => vertex.Cost.CurrentCost);
-            int[] costs = path.Select(vertex => vertex.Cost.CurrentCost).ToArray();
-            int[] expectedPathVerticesCosts = expectedPath.Select(vertex => vertex.Cost.CurrentCost).ToArray();
+            int pathCost = path.Sum(GetVertexCost);
+            int expectedPathCost = expectedPath.Sum(GetVertexCost);
+            int[] costs = path.Select(GetVertexCost).ToArray();
+            int[] expectedPathVerticesCosts = expectedPath.Select(GetVertexCost).ToArray();
             var comparer = new VertexComparer();
 
             Assert.IsTrue(costs.SequenceEqual(expectedPathVerticesCosts));
