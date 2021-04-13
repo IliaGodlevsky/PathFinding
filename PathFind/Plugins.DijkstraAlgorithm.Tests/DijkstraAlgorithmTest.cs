@@ -61,8 +61,8 @@ namespace Plugins.DijkstraAlgorithm.Tests
         public void FindPath_EndpointsBelongToGraph_ReturnsShortestGraph()
         {
             var algorithm = new DijkstrasAlgorithm(graphMock.Object);
-
             int GetVertexCost(IVertex vertex) => vertex.Cost.CurrentCost;
+
             var graphPath = algorithm.FindPath(endPointsMock.Object);
             var path = graphPath.Path.ToArray();
             int pathCost = path.Sum(GetVertexCost);
