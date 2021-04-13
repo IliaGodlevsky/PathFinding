@@ -17,8 +17,8 @@ namespace Plugins.DijkstraAlgorithm.Tests
 
         private readonly Mock<IGraph> graphMock;
         private readonly Mock<IEndPoints> endPointsMock;
-        private readonly List<IVertex> fakePath;
-        private readonly Dictionary<ICoordinate, IVertex> fakeVertices;
+        private readonly List<IVertex> expectedPath;
+        private readonly Dictionary<ICoordinate, IVertex> graphVerticesImitation;
 
         private List<IVertex> vertex1Neighbours;
         private List<IVertex> vertex2Neighbours;
@@ -32,9 +32,9 @@ namespace Plugins.DijkstraAlgorithm.Tests
 
         public DijkstraAlgorithmTest()
         {
-            fakePath = new List<IVertex>();
+            expectedPath = new List<IVertex>();
             endPointsMock = new Mock<IEndPoints>();
-            fakeVertices = new Dictionary<ICoordinate, IVertex>();
+            graphVerticesImitation = new Dictionary<ICoordinate, IVertex>();
             graphMock = new Mock<IGraph>();
             endPointsMock = new Mock<IEndPoints>();
 
@@ -44,11 +44,11 @@ namespace Plugins.DijkstraAlgorithm.Tests
             MockGraph();
             MockEndPoints();
 
-            fakePath.AddRange(new []
+            expectedPath.AddRange(new []
             {
-                fakeVertices.ElementAt(5).Value, 
-                fakeVertices.ElementAt(7).Value, 
-                fakeVertices.ElementAt(6).Value
+                graphVerticesImitation.ElementAt(6).Value, 
+                graphVerticesImitation.ElementAt(7).Value, 
+                graphVerticesImitation.ElementAt(5).Value
             });
         }
 
@@ -65,9 +65,14 @@ namespace Plugins.DijkstraAlgorithm.Tests
             var graphPath = algorithm.FindPath(endPointsMock.Object);
             var path = graphPath.Path.ToArray();
             int pathCost = path.Sum(vertex => vertex.Cost.CurrentCost);
-            int fakePathCost = fakePath.Sum(vertex => vertex.Cost.CurrentCost);
+            int expectedPathCost = expectedPath.Sum(vertex => vertex.Cost.CurrentCost);
+            int[] costs = path.Select(vertex => vertex.Cost.CurrentCost).ToArray();
+            int[] expectedPathVerticesCosts = expectedPath.Select(vertex => vertex.Cost.CurrentCost).ToArray();
+            var comparer = new VertexComparer();
 
-            Assert.AreEqual(pathCost, fakePathCost);
+            Assert.IsTrue(costs.SequenceEqual(expectedPathVerticesCosts));
+            Assert.AreEqual(pathCost, expectedPathCost);
+            Assert.IsTrue(path.SequenceEqual(expectedPath, comparer));
         }
 
         [Test]
@@ -88,17 +93,17 @@ namespace Plugins.DijkstraAlgorithm.Tests
         {
             graphMock
                 .Setup(g => g[It.IsAny<ICoordinate>()])
-                .Returns<ICoordinate>(index => fakeVertices[index]);
+                .Returns<ICoordinate>(index => graphVerticesImitation[index]);
 
             graphMock
                 .Setup(g => g.Vertices)
-                .Returns(fakeVertices.Values);
+                .Returns(graphVerticesImitation.Values);
         }
 
         private void MockEndPoints()
         {
-            endPointsMock.Setup(e => e.Start).Returns(fakeVertices.ElementAt(StartVertexIndex).Value);
-            endPointsMock.Setup(e => e.End).Returns(fakeVertices.ElementAt(EndVertexIndex).Value);
+            endPointsMock.Setup(e => e.Start).Returns(graphVerticesImitation.ElementAt(StartVertexIndex).Value);
+            endPointsMock.Setup(e => e.End).Returns(graphVerticesImitation.ElementAt(EndVertexIndex).Value);
             endPointsMock.Setup(e => e.IsEndPoint(It.IsAny<IVertex>())).Returns<IVertex>(IsEndPoint);
         }
 
@@ -260,15 +265,37 @@ namespace Plugins.DijkstraAlgorithm.Tests
             vertex9Neighbours.Add(vertex8.Object);
             vertex9Neighbours.Add(vertex5.Object);
 
-            fakeVertices.Add(coordinate1.Object, vertex1.Object);
-            fakeVertices.Add(coordinate2.Object, vertex2.Object);
-            fakeVertices.Add(coordinate3.Object, vertex3.Object);
-            fakeVertices.Add(coordinate4.Object, vertex4.Object);
-            fakeVertices.Add(coordinate5.Object, vertex5.Object);
-            fakeVertices.Add(coordinate6.Object, vertex6.Object);
-            fakeVertices.Add(coordinate7.Object, vertex7.Object);
-            fakeVertices.Add(coordinate8.Object, vertex8.Object);
-            fakeVertices.Add(coordinate9.Object, vertex9.Object);
+            graphVerticesImitation.Add(coordinate1.Object, vertex1.Object);
+            graphVerticesImitation.Add(coordinate2.Object, vertex2.Object);
+            graphVerticesImitation.Add(coordinate3.Object, vertex3.Object);
+            graphVerticesImitation.Add(coordinate4.Object, vertex4.Object);
+            graphVerticesImitation.Add(coordinate5.Object, vertex5.Object);
+            graphVerticesImitation.Add(coordinate6.Object, vertex6.Object);
+            graphVerticesImitation.Add(coordinate7.Object, vertex7.Object);
+            graphVerticesImitation.Add(coordinate8.Object, vertex8.Object);
+            graphVerticesImitation.Add(coordinate9.Object, vertex9.Object);
+        }
+
+        private class VertexComparer : IEqualityComparer<IVertex>
+        {
+            public bool Equals(IVertex x, IVertex y)
+            {
+                if (x == null || y == null)
+                {
+                    return false;
+                }
+
+                return x.Position.CoordinatesValues.SequenceEqual(y.Position.CoordinatesValues)
+                       && x.Cost.CurrentCost == y.Cost.CurrentCost;
+            }
+
+            public int GetHashCode(IVertex obj)
+            {
+                return obj.Position.CoordinatesValues
+                           .Select(i => i.GetHashCode())
+                           .Aggregate((x, y) => x.GetHashCode() ^ y.GetHashCode()) ^
+                       obj.Cost.CurrentCost.GetHashCode();
+            }
         }
     }
 }
