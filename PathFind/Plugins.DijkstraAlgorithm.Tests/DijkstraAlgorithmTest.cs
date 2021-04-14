@@ -86,8 +86,8 @@ namespace Plugins.DijkstraAlgorithm.Tests
             var path = graphPath.Path.ToArray();
             int pathCost = path.Sum(GetVertexCost);
             int expectedPathCost = expectedPath.Sum(GetVertexCost);
-            int[] costs = path.Select(GetVertexCost).ToArray();
-            int[] expectedPathVerticesCosts = expectedPath.Select(GetVertexCost).ToArray();
+            var costs = path.Select(GetVertexCost).ToArray();
+            var expectedPathVerticesCosts = expectedPath.Select(GetVertexCost).ToArray();
             var comparer = new VertexComparer();
 
             Assert.IsTrue(costs.SequenceEqual(expectedPathVerticesCosts));
