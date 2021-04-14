@@ -9,12 +9,33 @@ using DijkstrasAlgorithm = Plugins.DijkstraALgorithm.DijkstraAlgorithm;
 
 namespace Plugins.DijkstraAlgorithm.Tests
 {
+     /*
+        Graph: 
+        1   2   3
+        4   5   1
+        7   1   9
+        Start - 3
+        End - 7
+     */
     [TestFixture]
     public class DijkstraAlgorithmTest
     {
+        #region Constants
         private const int StartVertexIndex = 2;
         private const int EndVertexIndex = 6;
 
+        private const int Vertex1Cost = 1;
+        private const int Vertex2Cost = 2;
+        private const int Vertex3Cost = 3;
+        private const int Vertex4Cost = 4;
+        private const int Vertex5Cost = 5;
+        private const int Vertex6Cost = 1;
+        private const int Vertex7Cost = 7;
+        private const int Vertex8Cost = 1;
+        private const int Vertex9Cost = 9;
+        #endregion
+
+        #region Private fields
         private readonly Mock<IGraph> graphMock;
         private readonly Mock<IEndPoints> endPointsMock;
         private readonly List<IVertex> expectedPath;
@@ -29,6 +50,7 @@ namespace Plugins.DijkstraAlgorithm.Tests
         private List<IVertex> vertex7Neighbours;
         private List<IVertex> vertex8Neighbours;
         private List<IVertex> vertex9Neighbours;
+        #endregion
 
         public DijkstraAlgorithmTest()
         {
@@ -39,8 +61,8 @@ namespace Plugins.DijkstraAlgorithm.Tests
             endPointsMock = new Mock<IEndPoints>();
 
             InitilizeFakeNeighbours();
-            InitFakeVertices();
 
+            MockVertices();
             MockGraph();
             MockEndPoints();
 
@@ -52,11 +74,12 @@ namespace Plugins.DijkstraAlgorithm.Tests
             });
         }
 
+        #region Test Methods
+
         [Test]
         public void FindPath_EndpointsBelongToGraph_ReturnsShortestGraph()
         {
             var algorithm = new DijkstrasAlgorithm(graphMock.Object);
-            int GetVertexCost(IVertex vertex) => vertex.Cost.CurrentCost;
 
             var graphPath = algorithm.FindPath(endPointsMock.Object);
             var path = graphPath.Path.ToArray();
@@ -85,6 +108,9 @@ namespace Plugins.DijkstraAlgorithm.Tests
             Assert.Throws<ArgumentException>(() => algorithm.FindPath(endPointsMock.Object));
         }
 
+        #endregion
+
+        #region Mocking
         private void MockGraph()
         {
             graphMock
@@ -103,55 +129,30 @@ namespace Plugins.DijkstraAlgorithm.Tests
             endPointsMock.Setup(e => e.IsEndPoint(It.IsAny<IVertex>())).Returns<IVertex>(IsEndPoint);
         }
 
-        private bool IsEndPoint(IVertex vertex)
+        private void MockVertices()
         {
-            var vertexCoordinates = vertex.Position.CoordinatesValues.ToArray();
-            var startVertexCoordinates = endPointsMock.Object.Start.Position.CoordinatesValues.ToArray();
-            var endVertexCoordinates = endPointsMock.Object.End.Position.CoordinatesValues.ToArray();
-            bool isEnd = vertexCoordinates.SequenceEqual(endVertexCoordinates);
-            bool isStart = vertexCoordinates.SequenceEqual(startVertexCoordinates);
-            return isStart || isEnd;
-        }
-
-        private void InitilizeFakeNeighbours()
-        {
-            vertex1Neighbours = new List<IVertex>();
-            vertex2Neighbours = new List<IVertex>();
-            vertex3Neighbours = new List<IVertex>();
-            vertex4Neighbours = new List<IVertex>();
-            vertex5Neighbours = new List<IVertex>();
-            vertex6Neighbours = new List<IVertex>();
-            vertex7Neighbours = new List<IVertex>();
-            vertex8Neighbours = new List<IVertex>();
-            vertex9Neighbours = new List<IVertex>();
-        }
-
-        private void InitFakeVertices()
-        {
-            // Graph: 
-            // 1   2   3
-            // 4   5   1
-            // 7   1   9
-            // Start - 3 End - 7
+            #region Vertices cost mocks setup
             var vertexCost1 = new Mock<IVertexCost>();
-            vertexCost1.Setup(cost => cost.CurrentCost).Returns(1);
+            vertexCost1.Setup(cost => cost.CurrentCost).Returns(Vertex1Cost);
             var vertexCost2 = new Mock<IVertexCost>();
-            vertexCost2.Setup(cost => cost.CurrentCost).Returns(2);
+            vertexCost2.Setup(cost => cost.CurrentCost).Returns(Vertex2Cost);
             var vertexCost3 = new Mock<IVertexCost>();
-            vertexCost3.Setup(cost => cost.CurrentCost).Returns(3);
+            vertexCost3.Setup(cost => cost.CurrentCost).Returns(Vertex3Cost);
             var vertexCost4 = new Mock<IVertexCost>();
-            vertexCost4.Setup(cost => cost.CurrentCost).Returns(4);
+            vertexCost4.Setup(cost => cost.CurrentCost).Returns(Vertex4Cost);
             var vertexCost5 = new Mock<IVertexCost>();
-            vertexCost5.Setup(cost => cost.CurrentCost).Returns(5);
+            vertexCost5.Setup(cost => cost.CurrentCost).Returns(Vertex5Cost);
             var vertexCost6 = new Mock<IVertexCost>();
-            vertexCost6.Setup(cost => cost.CurrentCost).Returns(1);
+            vertexCost6.Setup(cost => cost.CurrentCost).Returns(Vertex6Cost);
             var vertexCost7 = new Mock<IVertexCost>();
-            vertexCost7.Setup(cost => cost.CurrentCost).Returns(7);
+            vertexCost7.Setup(cost => cost.CurrentCost).Returns(Vertex7Cost);
             var vertexCost8 = new Mock<IVertexCost>();
-            vertexCost8.Setup(cost => cost.CurrentCost).Returns(1);
+            vertexCost8.Setup(cost => cost.CurrentCost).Returns(Vertex8Cost);
             var vertexCost9 = new Mock<IVertexCost>();
-            vertexCost9.Setup(cost => cost.CurrentCost).Returns(9);
+            vertexCost9.Setup(cost => cost.CurrentCost).Returns(Vertex9Cost);
+            #endregion
 
+            #region Coordinates mocks setup
             var coordinate1 = new Mock<ICoordinate>();
             coordinate1.Setup(c => c.CoordinatesValues).Returns(new [] {0, 0});
             var coordinate2 = new Mock<ICoordinate>();
@@ -170,7 +171,9 @@ namespace Plugins.DijkstraAlgorithm.Tests
             coordinate8.Setup(c => c.CoordinatesValues).Returns(new[] { 2, 1 });
             var coordinate9 = new Mock<ICoordinate>();
             coordinate9.Setup(c => c.CoordinatesValues).Returns(new[] { 2, 2 });
+            #endregion
 
+            #region Vertices mocks setup
             var vertex1 = new Mock<IVertex>();
             vertex1.Setup(vertex => vertex.Position).Returns(coordinate1.Object);
             vertex1.Setup(vertex => vertex.Cost).Returns(vertexCost1.Object);
@@ -216,7 +219,9 @@ namespace Plugins.DijkstraAlgorithm.Tests
             vertex9.Setup(vertex => vertex.Cost).Returns(vertexCost9.Object);
             vertex9.Setup(vertex => vertex.Neighbours).Returns(vertex9Neighbours);
             vertex9.Setup(vertex => vertex.IsObstacle).Returns(false);
+            #endregion
 
+            #region Forming neighbourhood
             vertex1Neighbours.Add(vertex2.Object);
             vertex1Neighbours.Add(vertex4.Object);
             vertex1Neighbours.Add(vertex5.Object);
@@ -265,6 +270,7 @@ namespace Plugins.DijkstraAlgorithm.Tests
             vertex9Neighbours.Add(vertex6.Object);
             vertex9Neighbours.Add(vertex8.Object);
             vertex9Neighbours.Add(vertex5.Object);
+            #endregion
 
             graphVerticesImitation.Add(coordinate1.Object, vertex1.Object);
             graphVerticesImitation.Add(coordinate2.Object, vertex2.Object);
@@ -276,7 +282,40 @@ namespace Plugins.DijkstraAlgorithm.Tests
             graphVerticesImitation.Add(coordinate8.Object, vertex8.Object);
             graphVerticesImitation.Add(coordinate9.Object, vertex9.Object);
         }
+        #endregion
 
+        #region Helper methods
+        private void InitilizeFakeNeighbours()
+        {
+            vertex1Neighbours = new List<IVertex>();
+            vertex2Neighbours = new List<IVertex>();
+            vertex3Neighbours = new List<IVertex>();
+            vertex4Neighbours = new List<IVertex>();
+            vertex5Neighbours = new List<IVertex>();
+            vertex6Neighbours = new List<IVertex>();
+            vertex7Neighbours = new List<IVertex>();
+            vertex8Neighbours = new List<IVertex>();
+            vertex9Neighbours = new List<IVertex>();
+        }
+
+        private bool IsEndPoint(IVertex vertex)
+        {
+            var vertexCoordinates = vertex.Position.CoordinatesValues.ToArray();
+            var startVertexCoordinates = endPointsMock.Object.Start.Position.CoordinatesValues.ToArray();
+            var endVertexCoordinates = endPointsMock.Object.End.Position.CoordinatesValues.ToArray();
+            bool isEnd = vertexCoordinates.SequenceEqual(endVertexCoordinates);
+            bool isStart = vertexCoordinates.SequenceEqual(startVertexCoordinates);
+            return isStart || isEnd;
+        }
+
+        private static int GetVertexCost(IVertex vertex)
+        {
+            return vertex.Cost.CurrentCost;
+        }
+
+        #endregion
+
+        #region Helper classes
         private class VertexComparer : IEqualityComparer<IVertex>
         {
             public bool Equals(IVertex x, IVertex y)
@@ -298,5 +337,6 @@ namespace Plugins.DijkstraAlgorithm.Tests
                        obj.Cost.CurrentCost.GetHashCode();
             }
         }
+        #endregion
     }
 }
