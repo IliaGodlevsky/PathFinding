@@ -52,11 +52,6 @@ namespace Plugins.DijkstraAlgorithm.Tests
             });
         }
 
-        // Graph: 
-        // 1   2   3
-        // 4   5   1
-        // 7   1   9
-        // Start - 3 End - 7
         [Test]
         public void FindPath_EndpointsBelongToGraph_ReturnsShortestGraph()
         {
@@ -133,6 +128,11 @@ namespace Plugins.DijkstraAlgorithm.Tests
 
         private void InitFakeVertices()
         {
+            // Graph: 
+            // 1   2   3
+            // 4   5   1
+            // 7   1   9
+            // Start - 3 End - 7
             var vertexCost1 = new Mock<IVertexCost>();
             vertexCost1.Setup(cost => cost.CurrentCost).Returns(1);
             var vertexCost2 = new Mock<IVertexCost>();
@@ -172,50 +172,50 @@ namespace Plugins.DijkstraAlgorithm.Tests
             coordinate9.Setup(c => c.CoordinatesValues).Returns(new[] { 2, 2 });
 
             var vertex1 = new Mock<IVertex>();
-            vertex1.Setup(v => v.Position).Returns(coordinate1.Object);
-            vertex1.Setup(v => v.Cost).Returns(vertexCost1.Object);
-            vertex1.Setup(v => v.Neighbours).Returns(vertex1Neighbours);
-            vertex1.Setup(v => v.IsObstacle).Returns(false);
+            vertex1.Setup(vertex => vertex.Position).Returns(coordinate1.Object);
+            vertex1.Setup(vertex => vertex.Cost).Returns(vertexCost1.Object);
+            vertex1.Setup(vertex => vertex.Neighbours).Returns(vertex1Neighbours);
+            vertex1.Setup(vertex => vertex.IsObstacle).Returns(false);
             var vertex2 = new Mock<IVertex>();
-            vertex2.Setup(v => v.Position).Returns(coordinate2.Object);
-            vertex2.Setup(v => v.Cost).Returns(vertexCost2.Object);
-            vertex2.Setup(v => v.Neighbours).Returns(vertex2Neighbours);
-            vertex2.Setup(v => v.IsObstacle).Returns(false);
+            vertex2.Setup(vertex => vertex.Position).Returns(coordinate2.Object);
+            vertex2.Setup(vertex => vertex.Cost).Returns(vertexCost2.Object);
+            vertex2.Setup(vertex => vertex.Neighbours).Returns(vertex2Neighbours);
+            vertex2.Setup(vertex => vertex.IsObstacle).Returns(false);
             var vertex3 = new Mock<IVertex>();
-            vertex3.Setup(v => v.Position).Returns(coordinate3.Object);
-            vertex3.Setup(v => v.Cost).Returns(vertexCost3.Object);
-            vertex3.Setup(v => v.Neighbours).Returns(vertex3Neighbours);
-            vertex3.Setup(v => v.IsObstacle).Returns(false);
+            vertex3.Setup(vertex => vertex.Position).Returns(coordinate3.Object);
+            vertex3.Setup(vertex => vertex.Cost).Returns(vertexCost3.Object);
+            vertex3.Setup(vertex => vertex.Neighbours).Returns(vertex3Neighbours);
+            vertex3.Setup(vertex => vertex.IsObstacle).Returns(false);
             var vertex4 = new Mock<IVertex>();
-            vertex4.Setup(v => v.Position).Returns(coordinate4.Object);
-            vertex4.Setup(v => v.Cost).Returns(vertexCost4.Object);
-            vertex4.Setup(v => v.Neighbours).Returns(vertex4Neighbours);
-            vertex4.Setup(v => v.IsObstacle).Returns(false);
+            vertex4.Setup(vertex => vertex.Position).Returns(coordinate4.Object);
+            vertex4.Setup(vertex => vertex.Cost).Returns(vertexCost4.Object);
+            vertex4.Setup(vertex => vertex.Neighbours).Returns(vertex4Neighbours);
+            vertex4.Setup(vertex => vertex.IsObstacle).Returns(false);
             var vertex5 = new Mock<IVertex>();
-            vertex5.Setup(v => v.Position).Returns(coordinate5.Object);
-            vertex5.Setup(v => v.Cost).Returns(vertexCost5.Object);
-            vertex5.Setup(v => v.Neighbours).Returns(vertex5Neighbours);
-            vertex5.Setup(v => v.IsObstacle).Returns(false);
+            vertex5.Setup(vertex => vertex.Position).Returns(coordinate5.Object);
+            vertex5.Setup(vertex => vertex.Cost).Returns(vertexCost5.Object);
+            vertex5.Setup(vertex => vertex.Neighbours).Returns(vertex5Neighbours);
+            vertex5.Setup(vertex => vertex.IsObstacle).Returns(false);
             var vertex6 = new Mock<IVertex>();
-            vertex6.Setup(v => v.Position).Returns(coordinate6.Object);
-            vertex6.Setup(v => v.Cost).Returns(vertexCost6.Object);
-            vertex6.Setup(v => v.Neighbours).Returns(vertex6Neighbours);
-            vertex6.Setup(v => v.IsObstacle).Returns(false);
+            vertex6.Setup(vertex => vertex.Position).Returns(coordinate6.Object);
+            vertex6.Setup(vertex => vertex.Cost).Returns(vertexCost6.Object);
+            vertex6.Setup(vertex => vertex.Neighbours).Returns(vertex6Neighbours);
+            vertex6.Setup(vertex => vertex.IsObstacle).Returns(false);
             var vertex7 = new Mock<IVertex>();
-            vertex7.Setup(v => v.Position).Returns(coordinate7.Object);
-            vertex7.Setup(v => v.Cost).Returns(vertexCost7.Object);
-            vertex7.Setup(v => v.Neighbours).Returns(vertex7Neighbours);
-            vertex7.Setup(v => v.IsObstacle).Returns(false);
+            vertex7.Setup(vertex => vertex.Position).Returns(coordinate7.Object);
+            vertex7.Setup(vertex => vertex.Cost).Returns(vertexCost7.Object);
+            vertex7.Setup(vertex => vertex.Neighbours).Returns(vertex7Neighbours);
+            vertex7.Setup(vertex => vertex.IsObstacle).Returns(false);
             var vertex8 = new Mock<IVertex>();
-            vertex8.Setup(v => v.Position).Returns(coordinate8.Object);
-            vertex8.Setup(v => v.Cost).Returns(vertexCost8.Object);
-            vertex8.Setup(v => v.Neighbours).Returns(vertex8Neighbours);
-            vertex8.Setup(v => v.IsObstacle).Returns(false);
+            vertex8.Setup(vertex => vertex.Position).Returns(coordinate8.Object);
+            vertex8.Setup(vertex => vertex.Cost).Returns(vertexCost8.Object);
+            vertex8.Setup(vertex => vertex.Neighbours).Returns(vertex8Neighbours);
+            vertex8.Setup(vertex => vertex.IsObstacle).Returns(false);
             var vertex9 = new Mock<IVertex>();
-            vertex9.Setup(v => v.Position).Returns(coordinate9.Object);
-            vertex9.Setup(v => v.Cost).Returns(vertexCost9.Object);
-            vertex9.Setup(v => v.Neighbours).Returns(vertex9Neighbours);
-            vertex9.Setup(v => v.IsObstacle).Returns(false);
+            vertex9.Setup(vertex => vertex.Position).Returns(coordinate9.Object);
+            vertex9.Setup(vertex => vertex.Cost).Returns(vertexCost9.Object);
+            vertex9.Setup(vertex => vertex.Neighbours).Returns(vertex9Neighbours);
+            vertex9.Setup(vertex => vertex.IsObstacle).Returns(false);
 
             vertex1Neighbours.Add(vertex2.Object);
             vertex1Neighbours.Add(vertex4.Object);
