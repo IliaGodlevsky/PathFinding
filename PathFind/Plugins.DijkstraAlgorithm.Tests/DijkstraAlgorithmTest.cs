@@ -14,8 +14,9 @@ namespace Plugins.DijkstraAlgorithm.Tests
         1   2   3
         4   5   1
         7   1   9
-        Start - 3
-        End - 7
+        Start: 3
+        End: 7
+        Path: 1-1-7
      */
     [TestFixture]
     public class DijkstraAlgorithmTest
