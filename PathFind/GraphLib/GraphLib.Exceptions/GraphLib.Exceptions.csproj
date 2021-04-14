@@ -48,7 +48,7 @@
     <Compile Include="WrongNumberOfDimensionsException.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\GraphLib\GraphLib.Interfaces\GraphLib.Interfaces.csproj">
+    <ProjectReference Include="..\GraphLib.Interfaces\GraphLib.Interfaces.csproj">
       <Project>{D3C5CCFE-698B-41C7-9A72-5FD0262765E1}</Project>
       <Name>GraphLib.Interfaces</Name>
     </ProjectReference>

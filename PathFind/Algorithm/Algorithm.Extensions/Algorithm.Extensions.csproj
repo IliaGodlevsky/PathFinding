@@ -54,13 +54,13 @@
       <Project>{a5a743f5-d346-4b2b-b6ac-07152f64e4d9}</Project>
       <Name>Common</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\GraphLib.Exceptions\GraphLib.Exceptions.csproj">
-      <Project>{B6DA5928-65EC-42C0-B012-F25F8F023271}</Project>
-      <Name>GraphLib.Exceptions</Name>
-    </ProjectReference>
     <ProjectReference Include="..\..\GraphLib\GraphLib.Common\GraphLib.Common.csproj">
       <Project>{3cd8330e-9445-4dc4-a1da-ee704f652942}</Project>
       <Name>GraphLib.Common</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\GraphLib\GraphLib.Exceptions\GraphLib.Exceptions.csproj">
+      <Project>{B6DA5928-65EC-42C0-B012-F25F8F023271}</Project>
+      <Name>GraphLib.Exceptions</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\GraphLib\GraphLib.Interfaces\GraphLib.Interfaces.csproj">
       <Project>{d3c5ccfe-698b-41c7-9a72-5fd0262765e1}</Project>
