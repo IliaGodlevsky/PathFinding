@@ -80,6 +80,21 @@ namespace Plugins.DijkstraALgorithm
 
         protected Queue<IVertex> verticesQueue;
 
+        protected void SetVertexAccumulatedCostToInfinity(IVertex vertex)
+        {
+            accumulatedCosts[vertex.Position] = double.PositiveInfinity;
+        }
+
+        protected virtual void RelaxVertex(IVertex vertex)
+        {
+            var relaxedCost = GetVertexRelaxedCost(vertex);
+            if (accumulatedCosts[vertex.Position] > relaxedCost)
+            {
+                accumulatedCosts[vertex.Position] = relaxedCost;
+                parentVertices[vertex.Position] = CurrentVertex;
+            }
+        }
+
         private void RelaxNeighbours()
         {
             GetUnvisitedNeighbours(CurrentVertex).ForEach(RelaxVertex);
@@ -107,21 +122,6 @@ namespace Plugins.DijkstraALgorithm
                 .Where(VertexIsNotObstacle)
                 .ForEach(SetVertexAccumulatedCostToInfinity);
             accumulatedCosts[endPoints.Start.Position] = 0;
-        }
-
-        protected void SetVertexAccumulatedCostToInfinity(IVertex vertex)
-        {
-            accumulatedCosts[vertex.Position] = double.PositiveInfinity;
-        }
-
-        protected virtual void RelaxVertex(IVertex vertex)
-        {
-            var relaxedCost = GetVertexRelaxedCost(vertex);
-            if (accumulatedCosts[vertex.Position] > relaxedCost)
-            {
-                accumulatedCosts[vertex.Position] = relaxedCost;
-                parentVertices[vertex.Position] = CurrentVertex;
-            }
         }
     }
 }
