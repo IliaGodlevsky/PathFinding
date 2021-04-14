@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFramework>netcoreapp3.1</TargetFramework>
@@ -14,8 +14,9 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\GraphLib.Common\GraphLib.Common.csproj" />
-    <ProjectReference Include="..\GraphLib.Interfaces\GraphLib.Interfaces.csproj" />
+    <ProjectReference Include="..\..\Algorithm\Algorithm.Extensions\Algorithm.Extensions.csproj" />
+    <ProjectReference Include="..\..\GraphLib\GraphLib.Exceptions\GraphLib.Exceptions.csproj" />
+    <ProjectReference Include="..\..\GraphLib\GraphLib.Interfaces\GraphLib.Interfaces.csproj" />
   </ItemGroup>
 
 </Project>

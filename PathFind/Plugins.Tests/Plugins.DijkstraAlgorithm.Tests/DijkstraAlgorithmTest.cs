@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Common.Attributes;
 using GraphLib.Interface;
 using Moq;
 using NUnit.Framework;
@@ -18,6 +19,7 @@ namespace Plugins.DijkstraAlgorithm.Tests
         End: 7
         Path: 1-1-7
      */
+    [Filterable]
     [TestFixture]
     public class DijkstraAlgorithmTest
     {
