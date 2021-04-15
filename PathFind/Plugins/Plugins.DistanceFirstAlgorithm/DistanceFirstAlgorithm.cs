@@ -4,7 +4,7 @@ using Algorithm.Interfaces;
 using Algorithm.Realizations;
 using Common.Extensions;
 using GraphLib.Base;
-using GraphLib.Interface;
+using GraphLib.Interfaces;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;

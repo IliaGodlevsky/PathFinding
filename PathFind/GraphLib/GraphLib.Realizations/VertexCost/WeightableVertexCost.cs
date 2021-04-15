@@ -1,5 +1,5 @@
 ﻿using GraphLib.Base;
-using GraphLib.Interface;
+using GraphLib.Interfaces;
 using GraphLib.Realizations.Interfaces;
 using GraphLib.Realizations.VertexCost.CostStates;
 using System;

@@ -1,4 +1,4 @@
-﻿using GraphLib.Interface;
+﻿using GraphLib.Interfaces;
 using System.Windows;
 using System.Windows.Media.Media3D;
 

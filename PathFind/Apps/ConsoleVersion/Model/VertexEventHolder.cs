@@ -1,7 +1,7 @@
 ﻿using ConsoleVersion.InputClass;
 using ConsoleVersion.Resource;
 using GraphLib.Base;
-using GraphLib.Interface;
+using GraphLib.Interfaces;
 using System;
 
 namespace ConsoleVersion.Model

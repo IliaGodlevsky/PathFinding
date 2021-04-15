@@ -2,7 +2,7 @@
 using Conditional;
 using GraphLib.Common.NullObjects;
 using GraphLib.Extensions;
-using GraphLib.Interface;
+using GraphLib.Interfaces;
 using System;
 
 namespace GraphLib.Base

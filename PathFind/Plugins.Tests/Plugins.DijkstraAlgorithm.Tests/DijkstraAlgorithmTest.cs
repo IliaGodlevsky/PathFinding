@@ -1,25 +1,22 @@
+using GraphLib.Interfaces;
+using Moq;
+using NUnit.Framework;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Common.Attributes;
-using GraphLib.Interface;
-using Moq;
-using NUnit.Framework;
-
 using DijkstrasAlgorithm = Plugins.DijkstraALgorithm.DijkstraAlgorithm;
 
 namespace Plugins.DijkstraAlgorithm.Tests
 {
-     /*
-        Graph: 
-        1   2   3
-        4   5   1
-        7   1   9
-        Start: 3
-        End: 7
-        Path: 1-1-7
-     */
-    [Filterable]
+    /*
+       Graph: 
+       1   2   3
+       4   5   1
+       7   1   9
+       Start: 3
+       End: 7
+       Path: 1-1-7
+    */
     [TestFixture]
     public class DijkstraAlgorithmTest
     {
@@ -39,6 +36,7 @@ namespace Plugins.DijkstraAlgorithm.Tests
         #endregion
 
         #region Private fields
+        private readonly Mock<IEndPoints> foreignEndPointsMock;
         private readonly Mock<IGraph> graphMock;
         private readonly Mock<IEndPoints> endPointsMock;
         private readonly List<IVertex> expectedPath;
@@ -55,24 +53,33 @@ namespace Plugins.DijkstraAlgorithm.Tests
         private List<IVertex> vertex9Neighbours;
         #endregion
 
+        #region Properties
+        private IEndPoints EndPoints => endPointsMock.Object;
+
+        private IEndPoints ForeignEndPoints => foreignEndPointsMock.Object;
+
+        private IGraph Graph => graphMock.Object;
+        #endregion
+
         public DijkstraAlgorithmTest()
         {
+            foreignEndPointsMock = new Mock<IEndPoints>();
             expectedPath = new List<IVertex>();
             endPointsMock = new Mock<IEndPoints>();
             graphVerticesImitation = new Dictionary<ICoordinate, IVertex>();
             graphMock = new Mock<IGraph>();
-            endPointsMock = new Mock<IEndPoints>();
 
             InitilizeFakeNeighbours();
 
             MockVertices();
             MockGraph();
             MockEndPoints();
+            MockForeignEndPoints();
 
-            expectedPath.AddRange(new []
+            expectedPath.AddRange(new[]
             {
-                graphVerticesImitation.ElementAt(6).Value, 
-                graphVerticesImitation.ElementAt(7).Value, 
+                graphVerticesImitation.ElementAt(6).Value,
+                graphVerticesImitation.ElementAt(7).Value,
                 graphVerticesImitation.ElementAt(5).Value
             });
         }
@@ -80,11 +87,11 @@ namespace Plugins.DijkstraAlgorithm.Tests
         #region Test Methods
 
         [Test]
-        public void FindPath_EndpointsBelongToGraph_ReturnsShortestGraph()
+        public void FindPath_EndpointsBelongToGraph_ReturnsShortestPath()
         {
-            var algorithm = new DijkstrasAlgorithm(graphMock.Object);
+            var algorithm = new DijkstrasAlgorithm(Graph);
 
-            var graphPath = algorithm.FindPath(endPointsMock.Object);
+            var graphPath = algorithm.FindPath(EndPoints);
             var path = graphPath.Path.ToArray();
             int pathCost = path.Sum(GetVertexCost);
             int expectedPathCost = expectedPath.Sum(GetVertexCost);
@@ -100,20 +107,23 @@ namespace Plugins.DijkstraAlgorithm.Tests
         [Test]
         public void FindPath_EndPointsDoesntBelongToGraph_TrowsArgumentException()
         {
-            var endPointsMock = new Mock<IEndPoints>();
-            var endVertex = new Mock<IVertex>();
-            var startVertex = new Mock<IVertex>();
-            endPointsMock.Setup(e => e.Start).Returns(startVertex.Object);
-            endPointsMock.Setup(e => e.End).Returns(endVertex.Object);
+            var algorithm = new DijkstrasAlgorithm(Graph);
 
-            var algorithm = new DijkstrasAlgorithm(graphMock.Object);
-
-            Assert.Throws<ArgumentException>(() => algorithm.FindPath(endPointsMock.Object));
+            Assert.Throws<ArgumentException>(() => algorithm.FindPath(ForeignEndPoints));
         }
 
         #endregion
 
         #region Mocking
+
+        private void MockForeignEndPoints()
+        {
+            var endVertex = new Mock<IVertex>();
+            var startVertex = new Mock<IVertex>();
+            foreignEndPointsMock.Setup(e => e.Start).Returns(startVertex.Object);
+            foreignEndPointsMock.Setup(e => e.End).Returns(endVertex.Object);
+        }
+
         private void MockGraph()
         {
             graphMock
@@ -157,7 +167,7 @@ namespace Plugins.DijkstraAlgorithm.Tests
 
             #region Coordinates mocks setup
             var coordinate1 = new Mock<ICoordinate>();
-            coordinate1.Setup(c => c.CoordinatesValues).Returns(new [] {0, 0});
+            coordinate1.Setup(c => c.CoordinatesValues).Returns(new[] { 0, 0 });
             var coordinate2 = new Mock<ICoordinate>();
             coordinate2.Setup(c => c.CoordinatesValues).Returns(new[] { 0, 1 });
             var coordinate3 = new Mock<ICoordinate>();
@@ -263,7 +273,7 @@ namespace Plugins.DijkstraAlgorithm.Tests
             vertex7Neighbours.Add(vertex4.Object);
             vertex7Neighbours.Add(vertex5.Object);
             vertex7Neighbours.Add(vertex8.Object);
-            
+
             vertex8Neighbours.Add(vertex4.Object);
             vertex8Neighbours.Add(vertex7.Object);
             vertex8Neighbours.Add(vertex5.Object);

@@ -1,21 +1,19 @@
-﻿using Algorithm.Realizations;
+﻿using Algorithm.Common.Exceptions;
+using Algorithm.Realizations;
 using Common.Extensions;
 using Common.Interface;
+using Common.Logging;
 using GraphLib.Base;
 using GraphLib.Extensions;
-using GraphLib.Interface;
+using GraphLib.Interfaces;
 using GraphLib.Serialization.Interfaces;
 using GraphViewModel;
 using System;
 using System.ComponentModel;
 using System.Configuration;
-using System.Diagnostics;
 using System.Runtime.CompilerServices;
-using System.ServiceModel.ComIntegration;
 using System.Windows;
 using System.Windows.Input;
-using Algorithm.Common.Exceptions;
-using Common.Logging;
 using WPFVersion.Infrastructure;
 using WPFVersion.Model;
 using WPFVersion.View.Windows;
@@ -74,7 +72,7 @@ namespace WPFVersion.ViewModel
             IVertexEventHolder eventHolder,
             IGraphSerializer graphSerializer,
             IGraphAssembler graphFactory,
-            IPathInput pathInput) 
+            IPathInput pathInput)
             : base(fieldFactory, eventHolder, graphSerializer, graphFactory, pathInput)
         {
             StartPathFindCommand = new RelayCommand(ExecuteStartPathFindCommand, CanExecuteStartFindPathCommand);

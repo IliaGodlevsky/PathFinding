@@ -1,4 +1,4 @@
-﻿using GraphLib.Interface;
+﻿using GraphLib.Interfaces;
 using System.Collections.Generic;
 
 namespace Algorithm.Interfaces

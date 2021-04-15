@@ -1,12 +1,11 @@
 ﻿using Algorithm.Common;
-using Algorithm.Common.Exceptions;
 using Algorithm.Infrastructure.EventArguments;
 using Algorithm.Infrastructure.Handlers;
 using Algorithm.Interfaces;
 using Common.Extensions;
 using GraphLib.Base;
 using GraphLib.Extensions;
-using GraphLib.Interface;
+using GraphLib.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Linq;

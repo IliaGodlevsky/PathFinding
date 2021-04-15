@@ -1,9 +1,11 @@
-﻿using Algorithm.Realizations;
+﻿using Algorithm.Common.Exceptions;
+using Algorithm.Realizations;
 using Common.Extensions;
 using Common.Interface;
+using Common.Logging;
 using GraphLib.Base;
 using GraphLib.Extensions;
-using GraphLib.Interface;
+using GraphLib.Interfaces;
 using GraphLib.Realizations;
 using GraphLib.Serialization.Interfaces;
 using GraphViewModel;
@@ -16,8 +18,6 @@ using System.Windows.Forms;
 using WindowsFormsVersion.Extensions;
 using WindowsFormsVersion.Forms;
 using WindowsFormsVersion.View;
-using Algorithm.Common.Exceptions;
-using Common.Logging;
 
 namespace WindowsFormsVersion.ViewModel
 {

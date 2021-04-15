@@ -1,4 +1,4 @@
-﻿using GraphLib.Interface;
+﻿using GraphLib.Interfaces;
 using Moq;
 using NUnit.Framework;
 using System.Linq;
@@ -16,13 +16,13 @@ namespace GraphLib.Common.Tests
             coordinateMock = new Mock<ICoordinate>();
         }
 
-        [TestCase(new [] { 2, }, ExpectedResult = 2)]
-        [TestCase(new [] { 2, 3 }, ExpectedResult = 8)]
-        [TestCase(new [] { 2, 3, 4 }, ExpectedResult = 26)]
-        [TestCase(new [] { 2, 3, 4, 5 }, ExpectedResult = 80)]
-        [TestCase(new [] { 2, 3, 4, 5, 6 }, ExpectedResult = 242)]
-        [TestCase(new [] { 2, 3, 4, 5, 6, 7 }, ExpectedResult = 728)]
-        [TestCase(new [] { 2, 3, 4, 5, 6, 7, 8 }, ExpectedResult = 2186)]
+        [TestCase(new[] { 2, }, ExpectedResult = 2)]
+        [TestCase(new[] { 2, 3 }, ExpectedResult = 8)]
+        [TestCase(new[] { 2, 3, 4 }, ExpectedResult = 26)]
+        [TestCase(new[] { 2, 3, 4, 5 }, ExpectedResult = 80)]
+        [TestCase(new[] { 2, 3, 4, 5, 6 }, ExpectedResult = 242)]
+        [TestCase(new[] { 2, 3, 4, 5, 6, 7 }, ExpectedResult = 728)]
+        [TestCase(new[] { 2, 3, 4, 5, 6, 7, 8 }, ExpectedResult = 2186)]
         public int Environment_CoordinatesWithVariousDimensionsNumber_ReturnValidNumberOfNeighbours(int[] coordinateValues)
         {
             coordinateMock.Setup(coordinate => coordinate.CoordinatesValues).Returns(coordinateValues);
@@ -33,13 +33,13 @@ namespace GraphLib.Common.Tests
             return environment.Count();
         }
 
-        [TestCase(new [] { 2, })]
-        [TestCase(new [] { 2, 3 })]
-        [TestCase(new [] { 2, 3, 4 })]
-        [TestCase(new [] { 2, 3, 4, 5 })]
-        [TestCase(new [] { 2, 3, 4, 5, 6 })]
-        [TestCase(new [] { 2, 3, 4, 5, 6, 7 })]
-        [TestCase(new [] { 2, 3, 4, 5, 6, 7, 8 })]
+        [TestCase(new[] { 2, })]
+        [TestCase(new[] { 2, 3 })]
+        [TestCase(new[] { 2, 3, 4 })]
+        [TestCase(new[] { 2, 3, 4, 5 })]
+        [TestCase(new[] { 2, 3, 4, 5, 6 })]
+        [TestCase(new[] { 2, 3, 4, 5, 6, 7 })]
+        [TestCase(new[] { 2, 3, 4, 5, 6, 7, 8 })]
         public void Environment_CoordinatesWithVariousDimensionsNumber_ReturnNeighboursWithoutSelf(int[] coordinateValues)
         {
             coordinateMock.Setup(coordinate => coordinate.CoordinatesValues).Returns(coordinateValues);
@@ -51,13 +51,13 @@ namespace GraphLib.Common.Tests
             Assert.IsFalse(hasSelf);
         }
 
-        [TestCase(new [] { 3, })]
-        [TestCase(new [] { 1, 7 })]
-        [TestCase(new [] { 100, 25, 33 })]
-        [TestCase(new [] { 20, 13, 34, 58 })]
-        [TestCase(new [] { 12, 32, 44, 51, 69 })]
-        [TestCase(new [] { 23, 34, 45, 56, 67, 78 })]
-        [TestCase(new [] { 201, 33, 84, 15, 16, 73, 81 })]
+        [TestCase(new[] { 3, })]
+        [TestCase(new[] { 1, 7 })]
+        [TestCase(new[] { 100, 25, 33 })]
+        [TestCase(new[] { 20, 13, 34, 58 })]
+        [TestCase(new[] { 12, 32, 44, 51, 69 })]
+        [TestCase(new[] { 23, 34, 45, 56, 67, 78 })]
+        [TestCase(new[] { 201, 33, 84, 15, 16, 73, 81 })]
         public void Environment_CoordinatesWithVariousDimensionsCount_ReturnUniqueCoordinates(int[] coordinateValues)
         {
             coordinateMock.Setup(coordinate => coordinate.CoordinatesValues).Returns(coordinateValues);

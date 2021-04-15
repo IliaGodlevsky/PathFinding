@@ -1,7 +1,7 @@
-﻿using System;
-using GraphLib.Interface;
+﻿using GraphLib.Interfaces;
 using Moq;
 using NUnit.Framework;
+using System;
 
 namespace GraphLib.Extensions.Tests
 {
@@ -31,8 +31,8 @@ namespace GraphLib.Extensions.Tests
             return coordinateValues.IsWithinGraph(graphMock.Object);
         }
 
-        [TestCase(new [] { 33, 52, 100 })]
-        [TestCase(new [] { 33, 1, 100, 69 })]
+        [TestCase(new[] { 33, 52, 100 })]
+        [TestCase(new[] { 33, 1, 100, 69 })]
         public void IsWithinGraph_GraphIsNull_ThrowsArgumentNullException(int[] coordinateValues)
         {
             IGraph graph = null;
@@ -40,7 +40,7 @@ namespace GraphLib.Extensions.Tests
             Assert.Throws<ArgumentNullException>(() => coordinateValues.IsWithinGraph(graph));
         }
 
-        [TestCase(new[] { 1 }, new [] { 5 }, ExpectedResult = 1)]
+        [TestCase(new[] { 1 }, new[] { 5 }, ExpectedResult = 1)]
         [TestCase(new[] { 6 }, new[] { 7 }, ExpectedResult = 6)]
         [TestCase(new[] { 25 }, new[] { 35 }, ExpectedResult = 25)]
         [TestCase(new[] { 2 }, new[] { 3 }, ExpectedResult = 2)]

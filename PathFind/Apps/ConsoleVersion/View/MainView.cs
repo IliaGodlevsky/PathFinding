@@ -1,7 +1,7 @@
 ﻿using Common;
 using ConsoleVersion.View.Interface;
 using ConsoleVersion.ViewModel;
-using GraphLib.Interface;
+using GraphLib.Interfaces;
 using GraphLib.Realizations;
 using GraphViewModel.Interfaces;
 using System;

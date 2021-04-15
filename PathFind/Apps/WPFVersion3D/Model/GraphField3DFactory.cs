@@ -1,6 +1,6 @@
 ﻿using Common.Extensions;
 using GraphLib.Base;
-using GraphLib.Interface;
+using GraphLib.Interfaces;
 using GraphLib.Realizations;
 using System;
 

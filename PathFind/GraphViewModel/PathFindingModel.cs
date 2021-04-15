@@ -8,12 +8,12 @@ using Common.Extensions;
 using Common.Interface;
 using Common.Logging;
 using GraphLib.Base;
-using GraphLib.Interface;
+using GraphLib.Extensions;
+using GraphLib.Interfaces;
 using GraphViewModel.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
-using GraphLib.Extensions;
 using static Algorithm.Realizations.AlgorithmsFactory;
 using static GraphViewModel.Resources.ViewModelResources;
 

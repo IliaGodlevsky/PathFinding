@@ -1,4 +1,4 @@
-﻿using GraphLib.Interface;
+﻿using GraphLib.Interfaces;
 using GraphLib.Realizations.Tests.Objects;
 
 namespace GraphLib.Realizations.Tests.Factories

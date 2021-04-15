@@ -1,6 +1,6 @@
 ﻿using Autofac;
 using GraphLib.Base;
-using GraphLib.Interface;
+using GraphLib.Interfaces;
 using GraphLib.Realizations.Factories;
 using GraphLib.Serialization;
 using GraphLib.Serialization.Interfaces;

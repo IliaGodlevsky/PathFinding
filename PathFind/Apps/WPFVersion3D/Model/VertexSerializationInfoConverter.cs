@@ -1,4 +1,4 @@
-﻿using GraphLib.Interface;
+﻿using GraphLib.Interfaces;
 using GraphLib.Serialization;
 using GraphLib.Serialization.Interfaces;
 

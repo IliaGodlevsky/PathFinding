@@ -3,7 +3,7 @@ using Algorithm.Infrastructure.Handlers;
 using Algorithm.Interfaces;
 using Common.Attributes;
 using GraphLib.Base;
-using GraphLib.Interface;
+using GraphLib.Interfaces;
 using System;
 using System.Threading.Tasks;
 

@@ -1,6 +1,6 @@
 ﻿using Algorithm.Extensions;
 using GraphLib.Base;
-using GraphLib.Interface;
+using GraphLib.Interfaces;
 using System.ComponentModel;
 using System.Linq;
 

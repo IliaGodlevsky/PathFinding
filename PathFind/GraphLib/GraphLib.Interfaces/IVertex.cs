@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace GraphLib.Interface
+namespace GraphLib.Interfaces
 {
     /// <summary>
     /// Represents a vertex of graph

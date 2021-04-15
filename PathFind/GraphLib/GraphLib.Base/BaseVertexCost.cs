@@ -1,5 +1,5 @@
 ﻿using Common;
-using GraphLib.Interface;
+using GraphLib.Interfaces;
 using System;
 
 namespace GraphLib.Base

@@ -1,6 +1,6 @@
 ﻿using ConsoleVersion.View;
 using GraphLib.Extensions;
-using GraphLib.Interface;
+using GraphLib.Interfaces;
 using GraphLib.Realizations;
 using GraphLib.Realizations.VertexCost;
 using GraphLib.Serialization;

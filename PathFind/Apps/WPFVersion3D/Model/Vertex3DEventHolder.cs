@@ -1,5 +1,5 @@
 ﻿using GraphLib.Base;
-using GraphLib.Interface;
+using GraphLib.Interfaces;
 using System;
 using System.Windows.Input;
 

@@ -1,6 +1,6 @@
 ﻿using Common.Extensions;
 using GraphLib.Common;
-using GraphLib.Interface;
+using GraphLib.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Linq;

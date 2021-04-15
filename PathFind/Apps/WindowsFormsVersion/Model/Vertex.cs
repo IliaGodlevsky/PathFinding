@@ -1,12 +1,11 @@
 ﻿using GraphLib.Extensions;
-using GraphLib.Interface;
+using GraphLib.Interfaces;
 using GraphLib.Realizations.VertexCost;
 using GraphLib.Serialization;
 using GraphLib.Serialization.Extensions;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Windows.Forms;
-
 using static WindowsFormsVersion.Constants;
 
 namespace WindowsFormsVersion.Model

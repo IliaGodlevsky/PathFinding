@@ -1,6 +1,6 @@
 ﻿using Algorithm.Infrastructure.Handlers;
 using Common.Interface;
-using GraphLib.Interface;
+using GraphLib.Interfaces;
 using System.Threading.Tasks;
 
 namespace Algorithm.Interfaces

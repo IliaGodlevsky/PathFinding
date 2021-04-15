@@ -1,12 +1,11 @@
 ﻿using ConsoleVersion.View;
 using GraphLib.Exceptions;
-using GraphLib.Interface;
+using GraphLib.Interfaces;
 using GraphLib.Realizations;
 using GraphLib.ViewModel;
 using GraphViewModel.Interfaces;
-
-using static ConsoleVersion.InputClass.Input;
 using static ConsoleVersion.Constants;
+using static ConsoleVersion.InputClass.Input;
 
 namespace ConsoleVersion.ViewModel
 {
@@ -32,7 +31,7 @@ namespace ConsoleVersion.ViewModel
 
             base.CreateGraph();
 
-            if(!(model.Graph is Graph2D))
+            if (!(model.Graph is Graph2D))
             {
                 string message = "An error occurred while creating graph\n";
                 message += $"Graph must be {nameof(Graph2D)} type";

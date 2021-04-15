@@ -2,7 +2,7 @@
 using GraphLib.Common.NullObjects;
 using GraphLib.Exceptions;
 using GraphLib.Extensions;
-using GraphLib.Interface;
+using GraphLib.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Linq;

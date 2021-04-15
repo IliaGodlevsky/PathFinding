@@ -1,7 +1,7 @@
 ﻿using Common.Extensions;
 using Common.Interface;
 using GraphLib.Base;
-using GraphLib.Interface;
+using GraphLib.Interfaces;
 using GraphViewModel.Interfaces;
 using System;
 using System.Linq;

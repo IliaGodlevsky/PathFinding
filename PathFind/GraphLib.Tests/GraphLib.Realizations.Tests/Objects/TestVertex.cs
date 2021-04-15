@@ -1,5 +1,5 @@
 ﻿using GraphLib.Extensions;
-using GraphLib.Interface;
+using GraphLib.Interfaces;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 

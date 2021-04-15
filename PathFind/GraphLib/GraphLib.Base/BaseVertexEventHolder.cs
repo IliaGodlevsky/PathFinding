@@ -1,5 +1,5 @@
 ﻿using Conditional;
-using GraphLib.Interface;
+using GraphLib.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -16,8 +16,8 @@ namespace GraphLib.Base
                 { false, vertex => (vertex as IMarkable)?.MarkAsRegular() }
             };
 
-            If = new If<IVertex>(v => v.IsObstacle, v => MakeVertex(v))
-                   .Else(v => MakeObstacle(v));
+            If = new If<IVertex>(v => v.IsObstacle, MakeVertex)
+                   .Else(MakeObstacle);
         }
 
         public IVertexCostFactory CostFactory { get; set; }

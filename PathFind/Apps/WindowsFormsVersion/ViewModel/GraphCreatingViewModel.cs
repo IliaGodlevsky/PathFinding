@@ -1,5 +1,5 @@
 ﻿using Common.Interface;
-using GraphLib.Interface;
+using GraphLib.Interfaces;
 using GraphLib.ViewModel;
 using GraphViewModel.Interfaces;
 using System;
@@ -10,7 +10,7 @@ namespace WindowsFormsVersion.ViewModel
     {
         public event EventHandler OnWindowClosed;
 
-        public GraphCreatingViewModel(IMainModel model, IGraphAssembler graphFactory) 
+        public GraphCreatingViewModel(IMainModel model, IGraphAssembler graphFactory)
             : base(model, graphFactory)
         {
 

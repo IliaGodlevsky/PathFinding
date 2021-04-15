@@ -1,5 +1,5 @@
 using GraphLib.Exceptions;
-using GraphLib.Interface;
+using GraphLib.Interfaces;
 using Moq;
 using NUnit.Framework;
 using System;

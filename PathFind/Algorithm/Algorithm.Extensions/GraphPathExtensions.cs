@@ -1,6 +1,6 @@
 ﻿using Algorithm.Interfaces;
 using Common.Extensions;
-using GraphLib.Interface;
+using GraphLib.Interfaces;
 using System.Linq;
 
 namespace Algorithm.Extensions

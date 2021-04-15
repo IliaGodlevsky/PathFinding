@@ -2,7 +2,7 @@
 using Common;
 using Common.Extensions;
 using GraphLib.Base;
-using GraphLib.Interface;
+using GraphLib.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;

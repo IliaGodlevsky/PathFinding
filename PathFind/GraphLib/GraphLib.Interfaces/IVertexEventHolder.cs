@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace GraphLib.Interface
+namespace GraphLib.Interfaces
 {
     public interface IVertexEventHolder
     {

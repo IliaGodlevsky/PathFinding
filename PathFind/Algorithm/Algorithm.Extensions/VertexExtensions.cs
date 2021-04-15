@@ -1,6 +1,6 @@
 ﻿using Common.Extensions;
 using GraphLib.Exceptions;
-using GraphLib.Interface;
+using GraphLib.Interfaces;
 using System;
 using System.Linq;
 

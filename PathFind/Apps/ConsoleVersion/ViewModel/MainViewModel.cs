@@ -1,13 +1,16 @@
-﻿using Algorithm.Realizations;
+﻿using Algorithm.Common.Exceptions;
+using Algorithm.Realizations;
 using Common;
+using Common.Logging;
 using ConsoleVersion.Attributes;
 using ConsoleVersion.Enums;
 using ConsoleVersion.InputClass;
 using ConsoleVersion.Model;
 using ConsoleVersion.View;
 using GraphLib.Base;
+using GraphLib.Exceptions;
 using GraphLib.Extensions;
-using GraphLib.Interface;
+using GraphLib.Interfaces;
 using GraphLib.Realizations;
 using GraphLib.Serialization.Interfaces;
 using GraphViewModel;
@@ -16,9 +19,6 @@ using System.Configuration;
 using System.Drawing;
 using System.Linq;
 using Console = Colorful.Console;
-using GraphLib.Exceptions;
-using Algorithm.Common.Exceptions;
-using Common.Logging;
 
 namespace ConsoleVersion.ViewModel
 {

@@ -1,5 +1,5 @@
 ﻿using Common.Interface;
-using GraphLib.Interface;
+using GraphLib.Interfaces;
 using GraphLib.ViewModel;
 using GraphViewModel.Interfaces;
 using System;
@@ -24,7 +24,7 @@ namespace WPFVersion3D.ViewModel
             CancelCreateGraphCommand = new RelayCommand(obj => CloseWindow());
         }
 
-        protected override int[] GraphParametres => new [] { Width, Length, Height };
+        protected override int[] GraphParametres => new[] { Width, Length, Height };
 
         private void ExecuteConfirmCreateGraphCommand(object param)
         {

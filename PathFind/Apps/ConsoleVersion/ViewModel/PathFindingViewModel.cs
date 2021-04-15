@@ -2,7 +2,7 @@
 using ConsoleVersion.Model;
 using ConsoleVersion.View;
 using GraphLib.Exceptions;
-using GraphLib.Interface;
+using GraphLib.Interfaces;
 using GraphLib.Realizations;
 using GraphViewModel;
 using GraphViewModel.Interfaces;

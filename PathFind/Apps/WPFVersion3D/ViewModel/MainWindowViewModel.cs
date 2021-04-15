@@ -2,8 +2,9 @@
 using Algorithm.Realizations;
 using Common.Extensions;
 using Common.Interface;
+using Common.Logging;
 using GraphLib.Base;
-using GraphLib.Interface;
+using GraphLib.Interfaces;
 using GraphLib.Serialization.Interfaces;
 using GraphViewModel;
 using System;
@@ -12,7 +13,6 @@ using System.Configuration;
 using System.Runtime.CompilerServices;
 using System.Windows;
 using System.Windows.Input;
-using Common.Logging;
 using WPFVersion3D.Enums;
 using WPFVersion3D.Infrastructure;
 using WPFVersion3D.Infrastructure.Animators.Interface;
