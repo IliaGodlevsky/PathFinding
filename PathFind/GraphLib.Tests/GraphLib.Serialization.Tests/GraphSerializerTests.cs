@@ -36,13 +36,13 @@ namespace GraphLib.Serialization.Tests
                 costFactory);
         }
 
-        [TestCase(15, new int[] { 11, 9, 10 })]
-        [TestCase(22, new int[] { 25, 25 })]
-        [TestCase(66, new int[] { 4, 3, 7, 5 })]
+        [TestCase(15, new [] { 11, 9, 10 })]
+        [TestCase(22, new [] { 25, 25 })]
+        [TestCase(66, new [] { 4, 3, 7, 5 })]
         public void SaveGraph_LoadGraph_ReturnsEqualGraph(
             int obstaclePercent, int[] graphParams)
         {
-            var deserialized = BaseGraph.NullGraph;
+            IGraph deserialized;
             var graph = graphAssembler.AssembleGraph(
                 obstaclePercent, graphParams);
             var serializer = new GraphSerializer(

@@ -7,6 +7,7 @@ using GraphLib.Serialization.Interfaces;
 using GraphViewModel.Interfaces;
 using System;
 using System.IO;
+using System.Threading.Tasks;
 
 namespace GraphViewModel
 {
@@ -44,7 +45,7 @@ namespace GraphViewModel
             {
                 using (var stream = new FileStream(savePath, FileMode.OpenOrCreate))
                 {
-                    await serializer.SaveGraphAsync(Graph, stream);
+                    await Task.Run(() => serializer.SaveGraph(Graph, stream));
                 }
             }
             catch (Exception ex)
