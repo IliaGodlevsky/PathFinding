@@ -42,7 +42,9 @@ namespace Plugins.AStarModified
                     .OrderByDescending(CalculateHeuristic)
                     .ToQueue();
 
-                var verticesToDelete = verticesQueue.Take(VerticesCountToDelete);
+                var verticesToDelete = verticesQueue
+                    .Take(VerticesCountToDelete)
+                    .ToArray();
                 deletedVertices.EnqueueRange(verticesToDelete);
                 verticesQueue = verticesQueue.Except(verticesToDelete);
 
