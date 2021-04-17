@@ -2,7 +2,7 @@
 {
     public enum LoadOption
     {
-        OnlyClass = 1,
-        Hierarchy = 2
+        OnlyClass = 0,
+        Hierarchy = 1
     }
 }

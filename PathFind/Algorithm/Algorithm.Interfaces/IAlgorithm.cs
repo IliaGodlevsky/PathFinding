@@ -1,14 +1,14 @@
-﻿using Algorithm.Infrastructure.Handlers;
+﻿using System;
+using Algorithm.Infrastructure.Handlers;
 using Common.Interface;
 using GraphLib.Interfaces;
-using System.Threading.Tasks;
 
 namespace Algorithm.Interfaces
 {
     /// <summary>
     /// A base interface for all path finding algorithms
     /// </summary>
-    public interface IAlgorithm : IInterrupted
+    public interface IAlgorithm : IInterrupted, IDisposable
     {
         /// <summary>
         /// Occurs when the algorithm starts pathfinding
@@ -27,19 +27,9 @@ namespace Algorithm.Interfaces
         /// </summary>
         event AlgorithmEventHandler OnVertexEnqueued;
 
-
-        /// <summary>
-        /// A graph, where the pathfinding performes
-        /// </summary>
-        IGraph Graph { get; set; }
-
         /// <summary>
         /// Starts path finding
         /// </summary>
         IGraphPath FindPath(IEndPoints endPoints);
-
-        Task<IGraphPath> FindPathAsync(IEndPoints endPoints);
-
-        void Reset();
     }
 }

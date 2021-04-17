@@ -2,7 +2,7 @@
 
 namespace Common.Extensions
 {
-    public static class ICollectionExtensions
+    public static class CollectionExtensions
     {
         public static void AddRange<T>(this ICollection<T> collection, IEnumerable<T> range)
         {

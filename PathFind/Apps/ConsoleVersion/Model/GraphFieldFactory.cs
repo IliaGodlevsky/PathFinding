@@ -6,7 +6,7 @@ using System;
 
 namespace ConsoleVersion.Model
 {
-    internal class GraphFieldFactory : BaseGraphFieldFactory
+    internal sealed class GraphFieldFactory : BaseGraphFieldFactory
     {
         protected override IGraphField GetField()
         {

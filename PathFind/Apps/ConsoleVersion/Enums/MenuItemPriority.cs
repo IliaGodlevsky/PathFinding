@@ -1,4 +1,6 @@
-﻿namespace ConsoleVersion.Enums
+﻿using System;
+
+namespace ConsoleVersion.Enums
 {
     /// <summary>
     /// Represents the priority of a menu item in the menu
@@ -24,6 +26,6 @@
         /// <summary>
         /// Menu item will be in the top of menu
         /// </summary>
-        Highest = 4,
+        Highest = 4
     }
 }

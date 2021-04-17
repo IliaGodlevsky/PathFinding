@@ -15,7 +15,7 @@ using static ConsoleVersion.Resource.Resources;
 
 namespace ConsoleVersion.ViewModel
 {
-    internal class PathFindingViewModel : PathFindingModel
+    internal sealed class PathFindingViewModel : PathFindingModel
     {
         public string AlgorithmKeyInputMessage { private get; set; }
 

@@ -3,7 +3,6 @@ using Algorithm.Extensions;
 using Algorithm.Interfaces;
 using Algorithm.Realizations;
 using Common.Extensions;
-using GraphLib.Base;
 using GraphLib.Interfaces;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -14,11 +13,6 @@ namespace Plugins.LeeAlgorithm
     [Description("Lee algorithm")]
     public class LeeAlgorithm : BaseAlgorithm
     {
-        public LeeAlgorithm() : this(BaseGraph.NullGraph)
-        {
-
-        }
-
         public LeeAlgorithm(IGraph graph) : base(graph)
         {
             verticesQueue = new Queue<IVertex>();
@@ -117,7 +111,7 @@ namespace Plugins.LeeAlgorithm
 
         private void SetVerticesAccumulatedCostToZero()
         {
-            Graph.Vertices
+            graph.Vertices
                 .Where(VertexIsNotObstacle)
                 .ForEach(SetVertexAccumulatedCostToZero);
         }

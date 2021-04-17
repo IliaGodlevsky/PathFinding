@@ -1,5 +1,4 @@
 ﻿using Algorithm.Extensions;
-using GraphLib.Base;
 using GraphLib.Interfaces;
 using System.ComponentModel;
 using System.Linq;
@@ -9,11 +8,6 @@ namespace Plugins.BestFirstLeeAlgorithm
     [Description("Lee algorithm (heuristic)")]
     public class BestFirstLeeAlgorithm : LeeAlgorithm.LeeAlgorithm
     {
-        public BestFirstLeeAlgorithm() : this(BaseGraph.NullGraph)
-        {
-
-        }
-
         public BestFirstLeeAlgorithm(IGraph graph) : base(graph)
         {
 

@@ -3,7 +3,7 @@ using System;
 
 namespace ConsoleVersion.Model
 {
-    internal class PathInput : IPathInput
+    internal sealed class PathInput : IPathInput
     {
         public string InputLoadPath()
         {

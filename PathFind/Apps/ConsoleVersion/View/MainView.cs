@@ -9,13 +9,13 @@ using System.Collections.Generic;
 using System.Linq;
 using static ConsoleVersion.InputClass.Input;
 using static ConsoleVersion.Resource.Resources;
-using static ConsoleVersion.ViewModel.Menu;
+using static ConsoleVersion.View.Menu;
 using Console = Colorful.Console;
 
 
 namespace ConsoleVersion.View
 {
-    internal class MainView : IView
+    internal sealed class MainView : IView
     {
         public const int HeightOfAbscissaView = 2;
         public const int HeightOfGraphParametresView = 1;

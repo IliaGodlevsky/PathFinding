@@ -4,13 +4,18 @@ using System.Linq;
 
 namespace Common.Extensions
 {
-    public static class IEnumerableExtension
+    public static class EnumerableExtension
     {
         private static readonly Random rand;
 
-        static IEnumerableExtension()
+        static EnumerableExtension()
         {
             rand = new Random();
+        }
+
+        public static bool IsEmpty<T>(this IEnumerable<T> self)
+        {
+            return !self.Any();
         }
 
         /// <summary>

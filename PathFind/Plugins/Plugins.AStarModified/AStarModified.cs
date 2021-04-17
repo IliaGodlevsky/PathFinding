@@ -1,7 +1,6 @@
 ﻿using Algorithm.Extensions;
 using Common;
 using Common.Extensions;
-using GraphLib.Base;
 using GraphLib.Interfaces;
 using System;
 using System.Collections.Generic;
@@ -13,24 +12,10 @@ namespace Plugins.AStarModified
     [Description("A* algorithm (modified)")]
     public sealed class AStarModified : AStarAlgorithm.AStarAlgorithm
     {
-        public override IGraph Graph
-        {
-            get => base.Graph;
-            set
-            {
-                base.Graph = value;
-                PercentOfFarthestVerticesToDelete
-                    = CalculatePercentOfFarthestVerticesToDelete;
-            }
-        }
-
-        public AStarModified() : this(BaseGraph.NullGraph)
-        {
-
-        }
-
         public AStarModified(IGraph graph) : base(graph)
         {
+            PercentOfFarthestVerticesToDelete
+                = CalculatePercentOfFarthestVerticesToDelete;
             deletedVertices = new Queue<IVertex>();
         }
 
@@ -87,7 +72,7 @@ namespace Plugins.AStarModified
         {
             get
             {
-                var partOfVertexToDelete = Math.Floor(Math.Log(Graph.Size + 1, 4));
+                var partOfVertexToDelete = Math.Floor(Math.Log(graph.Size + 1, 4));
                 return Convert.ToInt32(partOfVertexToDelete);
             }
         }

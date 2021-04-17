@@ -1,13 +1,14 @@
-﻿using Common.Extensions;
-using ConsoleVersion.Attributes;
-using ConsoleVersion.Resource;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using System.Text;
+using Common.Extensions;
+using ConsoleVersion.Attributes;
+using ConsoleVersion.Enums;
+using ConsoleVersion.Resource;
 
-namespace ConsoleVersion.ViewModel
+namespace ConsoleVersion.View
 {
     internal static class Menu
     {
@@ -22,7 +23,7 @@ namespace ConsoleVersion.ViewModel
         /// string if <paramref name="menuItemsNames"/> array is empty</returns>
         /// <remarks>If <paramref name="columns"/> is less or equal than 
         /// 0 <paramref name="columns"/> will be set to 1</remarks>
-        public static string CreateMenu(IEnumerable<string> menuItemsNames, int columns = 2)
+        public static string CreateMenu(string[] menuItemsNames, int columns = 2)
         {
             if (!menuItemsNames.Any())
             {
@@ -37,7 +38,7 @@ namespace ConsoleVersion.ViewModel
             var menu = new StringBuilder("\n");
 
             int menuItemNumber = 0;
-            int menuItemNumberPad = Convert.ToInt32(Math.Log10(menuItemsNames.Count())) + 1;
+            int menuItemNumberPad = Convert.ToInt32(Math.Log10(menuItemsNames.Length)) + 1;
             int longestNameLength = menuItemsNames.Max(str => str.Length) + 1;
 
             foreach (var name in menuItemsNames)
@@ -85,7 +86,8 @@ namespace ConsoleVersion.ViewModel
         /// <returns>An array of <see cref="MethodInfo"/></returns>
         private static IEnumerable<MethodInfo> GetMenuMethods(object target)
         {
-            return target.GetType()
+            return target
+                .GetType()
                 .GetMethods()
                 .Where(IsMenuMethod)
                 .OrderByDescending(GetMenuItemPriority);
@@ -96,10 +98,10 @@ namespace ConsoleVersion.ViewModel
             return Attribute.IsDefined(method, typeof(MenuItemAttribute));
         }
 
-        private static int GetMenuItemPriority(MethodInfo method)
+        private static MenuItemPriority GetMenuItemPriority(MethodInfo method)
         {
             var attribute = method.GetAttribute<MenuItemAttribute>();
-            return attribute.Priority.Parse<int>();
+            return attribute.Priority;
         }
 
         private static string GetMenuItemHeader(MethodInfo method)

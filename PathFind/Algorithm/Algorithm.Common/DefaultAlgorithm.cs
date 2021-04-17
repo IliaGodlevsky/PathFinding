@@ -2,10 +2,8 @@
 using Algorithm.Infrastructure.Handlers;
 using Algorithm.Interfaces;
 using Common.Attributes;
-using GraphLib.Base;
 using GraphLib.Interfaces;
 using System;
-using System.Threading.Tasks;
 
 namespace Algorithm.Common
 {
@@ -19,22 +17,6 @@ namespace Algorithm.Common
         public event AlgorithmEventHandler OnVertexEnqueued;
         public event EventHandler OnInterrupted;
 
-        public IGraph Graph
-        {
-            get => BaseGraph.NullGraph;
-            set => _ = value;
-        }
-
-        public DefaultAlgorithm()
-        {
-
-        }
-
-        public DefaultAlgorithm(IGraph graph)
-        {
-            Graph = graph;
-        }
-
         public IGraphPath FindPath(IEndPoints endpoints)
         {
             OnStarted?.Invoke(this, new AlgorithmEventArgs());
@@ -44,19 +26,14 @@ namespace Algorithm.Common
             return new NullGraphPath();
         }
 
-        public void Reset()
-        {
-
-        }
-
-        public async Task<IGraphPath> FindPathAsync(IEndPoints endPoints)
-        {
-            return await Task.Run(() => FindPath(endPoints));
-        }
-
         public void Interrupt()
         {
             OnInterrupted?.Invoke(this, EventArgs.Empty);
+        }
+
+        public void Dispose()
+        {
+            
         }
     }
 }

@@ -6,7 +6,7 @@ using System;
 
 namespace ConsoleVersion.Model
 {
-    internal class VertexEventHolder : BaseVertexEventHolder
+    internal sealed class VertexEventHolder : BaseVertexEventHolder
     {
         public override void ChangeVertexCost(object sender, EventArgs e)
         {

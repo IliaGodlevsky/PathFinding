@@ -4,12 +4,13 @@ using GraphLib.Interfaces;
 using GraphLib.Realizations;
 using GraphLib.ViewModel;
 using GraphViewModel.Interfaces;
+
 using static ConsoleVersion.Constants;
 using static ConsoleVersion.InputClass.Input;
 
 namespace ConsoleVersion.ViewModel
 {
-    internal class GraphCreatingViewModel : GraphCreatingModel
+    internal sealed class GraphCreatingViewModel : GraphCreatingModel
     {
         public string ObstaclePercentInputMessage { private get; set; }
 
@@ -17,8 +18,8 @@ namespace ConsoleVersion.ViewModel
 
         public string HeightInputMessage { private get; set; }
 
-        public GraphCreatingViewModel(IMainModel model,
-            IGraphAssembler graphFactory) : base(model, graphFactory)
+        public GraphCreatingViewModel(IMainModel model, IGraphAssembler graphFactory) 
+            : base(model, graphFactory)
         {
 
         }

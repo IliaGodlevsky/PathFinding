@@ -3,13 +3,12 @@ using Algorithm.Infrastructure.EventArguments;
 using Algorithm.Infrastructure.Handlers;
 using Algorithm.Interfaces;
 using Common.Extensions;
-using GraphLib.Base;
 using GraphLib.Extensions;
 using GraphLib.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
+using GraphLib.Common.NullObjects;
 
 namespace Algorithm.Base
 {
@@ -23,19 +22,18 @@ namespace Algorithm.Base
         public event AlgorithmEventHandler OnVertexEnqueued;
         public event EventHandler OnInterrupted;
 
-        public virtual IGraph Graph { get; set; }
-
-        protected BaseAlgorithm() : this(BaseGraph.NullGraph)
+        private BaseAlgorithm()
         {
-
-        }
-
-        protected BaseAlgorithm(IGraph graph)
-        {
-            Graph = graph;
+            graph = new NullGraph();
             visitedVertices = new Dictionary<ICoordinate, IVertex>();
             parentVertices = new Dictionary<ICoordinate, IVertex>();
             accumulatedCosts = new Dictionary<ICoordinate, double>();
+        }
+
+        protected BaseAlgorithm(IGraph graph) : this()
+        {
+            this.graph = graph;
+            
         }
 
         /// <summary>
@@ -48,9 +46,8 @@ namespace Algorithm.Base
             OnInterrupted?.Invoke(this, args);
         }
 
-        public virtual void Reset()
+        protected virtual void Reset()
         {
-            Graph = BaseGraph.NullGraph;
             OnStarted = null;
             OnFinished = null;
             OnVertexEnqueued = null;
@@ -62,15 +59,11 @@ namespace Algorithm.Base
             isInterruptRequested = false;
         }
 
-        public virtual async Task<IGraphPath> FindPathAsync(IEndPoints endpoints)
-        {
-            return await Task.Run(() => FindPath(endpoints));
-        }
-
         /// <summary>
         /// Finds the shortest path between <paramref name="endPoints"/>
         /// </summary>
         /// <param name="endPoints"></param>
+        /// <param name="graph"></param>
         /// <returns>An array of vertices, that represent the shortest path</returns>
         public abstract IGraphPath FindPath(IEndPoints endPoints);
 
@@ -112,7 +105,7 @@ namespace Algorithm.Base
         /// <exception cref="ArgumentException"></exception>
         protected virtual void PrepareForPathfinding(IEndPoints endpoints)
         {
-            if (Graph.Contains(endpoints))
+            if (graph.Contains(endpoints))
             {
                 endPoints = endpoints;
                 CurrentVertex = endPoints.Start;
@@ -123,7 +116,7 @@ namespace Algorithm.Base
             }
 
             string paramName = nameof(endpoints);
-            string graphName = nameof(Graph);
+            string graphName = nameof(this.graph);
             string message = $"{paramName} don't belong to {graphName}";
             throw new ArgumentException(message);
         }
@@ -175,10 +168,16 @@ namespace Algorithm.Base
             return accumulatedCosts[vertex.Position];
         }
 
+        public void Dispose()
+        {
+            Reset();
+        }
+
         protected Dictionary<ICoordinate, IVertex> visitedVertices;
         protected Dictionary<ICoordinate, IVertex> parentVertices;
         protected Dictionary<ICoordinate, double> accumulatedCosts;
 
+        protected IGraph graph;
         protected IEndPoints endPoints;
 
         private bool isInterruptRequested;

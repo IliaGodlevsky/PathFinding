@@ -1,4 +1,5 @@
-﻿using Algorithm.Common.Exceptions;
+﻿using System;
+using Algorithm.Common.Exceptions;
 using Algorithm.Interfaces;
 using System.Collections.Generic;
 using System.Linq;
@@ -18,7 +19,7 @@ namespace Algorithm.Extensions
         /// <param name="self"></param>
         /// <returns></returns>
         /// <exception cref="NoAlgorithmsLoadedException"/>
-        public static Dictionary<string, IAlgorithm> CheckForEmptiness(this Dictionary<string, IAlgorithm> self)
+        public static Dictionary<string, Type> CheckForEmptiness(this Dictionary<string, Type> self)
         {
             if (!self.Any())
             {

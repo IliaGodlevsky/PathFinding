@@ -13,6 +13,7 @@ using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Runtime.InteropServices;
+using GraphLib.Interfaces;
 
 namespace Algorithm.Realizations
 {
@@ -21,7 +22,7 @@ namespace Algorithm.Realizations
         /// <summary>
         /// Descriptions of algorithms
         /// </summary>
-        public static IEnumerable<string> AlgorithmsDescriptions => algorithms.Keys.OrderBy(Key);
+        public static IEnumerable<string> AlgorithmsDescriptions => algorithmsTypes.Keys.OrderBy(Key);
 
         /// <summary>
         /// 
@@ -47,11 +48,11 @@ namespace Algorithm.Realizations
         public static void LoadAlgorithms(string path,
             SearchOption searchOption = SearchOption.AllDirectories)
         {
-            algorithms = ClassLoader<IAlgorithm>
+            algorithmsTypes = ClassLoader<IAlgorithm>
                 .Instance
                 .FetchTypes(path, LoadOption.Hierarchy, searchOption)
                 .Where(IsConcreteType)
-                .ToDictionary(AlgorithmDescription, AlgorithmInstance)
+                .ToDictionary(AlgorithmDescription)
                 .CheckForEmptiness();
         }
 
@@ -60,26 +61,23 @@ namespace Algorithm.Realizations
         /// <paramref name="key"></paramref>
         /// </summary>
         /// <param name="key"></param>
+        /// <param name="graph"></param>
         /// <returns>An instance of algorithm if 
         /// <paramref name="key"></paramref> exists and
         /// <see cref="DefaultAlgorithm"></see> when doesn't</returns>
         /// <exception cref="KeyNotFoundException">Thrown when activator 
         /// doesn't exist for algorithm with 
         /// <paramref name="key"></paramref> key</exception>
-        public static IAlgorithm GetAlgorithm(string key)
+        public static IAlgorithm GetAlgorithm(string key, IGraph graph)
         {
-            return algorithms.TryGetValue(key, out var algorithm)
-                ? algorithm : BaseAlgorithm.Default;
+            return algorithmsTypes.TryGetValue(key, out var type)
+                ? (IAlgorithm)Activator.CreateInstance(type, graph) 
+                : BaseAlgorithm.Default;
         }
 
         static AlgorithmsFactory()
         {
-            algorithms = new Dictionary<string, IAlgorithm>();
-        }
-
-        private static IAlgorithm AlgorithmInstance(Type type)
-        {
-            return (IAlgorithm)Activator.CreateInstance(type);
+            algorithmsTypes = new Dictionary<string, Type>();
         }
 
         private static string AlgorithmDescription(Type type)
@@ -98,6 +96,6 @@ namespace Algorithm.Realizations
             return key;
         }
 
-        private static Dictionary<string, IAlgorithm> algorithms;
+        private static Dictionary<string, Type> algorithmsTypes;
     }
 }

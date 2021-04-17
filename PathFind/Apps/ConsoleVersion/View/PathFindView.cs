@@ -6,7 +6,7 @@ using System.Linq;
 
 namespace ConsoleVersion.View
 {
-    internal class PathFindView : IView
+    internal sealed class PathFindView : IView
     {
         public PathFindingViewModel Model { get; }
 
@@ -15,7 +15,7 @@ namespace ConsoleVersion.View
             Model = model;
 
             model.AlgorithmKeys = AlgorithmsFactory.AlgorithmsDescriptions.ToArray();
-            var algorithmMenu = Menu.CreateMenu(model.AlgorithmKeys);
+            var algorithmMenu = Menu.CreateMenu(model.AlgorithmKeys.ToArray());
             Model.AlgorithmKeyInputMessage = algorithmMenu + Resources.ChooseAlrorithm;
             Model.StartVertexInputMessage = "\n" + Resources.StartVertexPointInputMsg;
             Model.EndVertexInputMessage = Resources.EndVertexCoordinateInputMsg;

@@ -4,7 +4,7 @@ using GraphLib.Serialization.Interfaces;
 
 namespace ConsoleVersion.Model
 {
-    internal class VertexSerializationInfoConverter : IVertexSerializationInfoConverter
+    internal sealed class VertexSerializationInfoConverter : IVertexSerializationInfoConverter
     {
         public IVertex ConvertFrom(VertexSerializationInfo info)
         {

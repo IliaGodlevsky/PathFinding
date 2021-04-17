@@ -6,8 +6,8 @@ namespace ConsoleVersion.Attributes
     /// <summary>
     /// Indicates that a method can be used to create a menu item
     /// </summary>
-    [AttributeUsage(AttributeTargets.Method, AllowMultiple = false, Inherited = false)]
-    internal class MenuItemAttribute : Attribute
+    [AttributeUsage(AttributeTargets.Method, Inherited = false)]
+    internal sealed class MenuItemAttribute : Attribute
     {
         public MenuItemAttribute(string header,
             MenuItemPriority priority = MenuItemPriority.Normal)
@@ -16,6 +16,9 @@ namespace ConsoleVersion.Attributes
             Priority = priority;
         }
 
+        /// <summary>
+        /// The relative position of the menu item in the menu list
+        /// </summary>
         public MenuItemPriority Priority { get; }
 
         /// <summary>

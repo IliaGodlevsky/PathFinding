@@ -38,15 +38,16 @@ namespace Algorithm.Realizations
 
         private IEnumerable<IVertex> UnwindVertices(IVertex start)
         {
-            bool hasValue;
+            bool hasValue, hasReachedTheEnd;
             var vertex = start;
             do
             {
                 yield return vertex;
                 hasValue = TryGetValue(vertex, out var value);
                 vertex = value;
+                hasReachedTheEnd = HasReachedTheEnd(vertex);
             }
-            while (hasValue && !HasReachedTheEnd(vertex));
+            while (hasValue && !hasReachedTheEnd);
         }
 
         private bool CanTieEndPoints(IDictionary<ICoordinate, IVertex> parentVertices)
@@ -59,7 +60,8 @@ namespace Algorithm.Realizations
             if (TryGetValue(vertex, out var parentVertex))
             {
                 bool isNeighbourOf = vertex.IsNeighbourOf(parentVertex);
-                return IsStartOfPath(vertex) || !isNeighbourOf;
+                bool isStartOfPath = IsStartOfPath(vertex);
+                return isStartOfPath || !isNeighbourOf;
             }
 
             return true;

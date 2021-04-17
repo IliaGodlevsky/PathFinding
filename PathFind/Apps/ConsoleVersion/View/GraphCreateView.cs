@@ -5,7 +5,7 @@ using static ConsoleVersion.Resource.Resources;
 
 namespace ConsoleVersion.View
 {
-    internal class GraphCreateView : IView
+    internal sealed class GraphCreateView : IView
     {
         private GraphCreatingViewModel Model { get; }
 

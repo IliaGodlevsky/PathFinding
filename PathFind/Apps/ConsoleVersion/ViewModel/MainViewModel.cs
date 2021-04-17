@@ -20,9 +20,11 @@ using System.Drawing;
 using System.Linq;
 using Console = Colorful.Console;
 
+using static ConsoleVersion.InputClass.Input;
+
 namespace ConsoleVersion.ViewModel
 {
-    internal class MainViewModel : MainModel
+    internal sealed class MainViewModel : MainModel
     {
         private const int ExitCode = 0;
 
@@ -96,7 +98,7 @@ namespace ConsoleVersion.ViewModel
                 var upperPossibleXValue = graph2D.Width - 1;
                 var upperPossibleYValue = graph2D.Length - 1;
 
-                var point = Input.InputPoint(upperPossibleXValue, upperPossibleYValue);
+                var point = InputPoint(upperPossibleXValue, upperPossibleYValue);
 
                 if (Graph[point] is Vertex vertex)
                 {
@@ -109,7 +111,7 @@ namespace ConsoleVersion.ViewModel
         public void ChangeVertexCostValueRange()
         {
             string message = "Enter upper vertex cost value: ";
-            var upperValueRange = Input.InputNumber(message, 99, 1);
+            var upperValueRange = InputNumber(message, 99, 1);
             BaseVertexCost.CostRange = new ValueRange(upperValueRange, 1);
         }
 
@@ -121,12 +123,12 @@ namespace ConsoleVersion.ViewModel
                 var upperPossibleXValue = graph2D.Width - 1;
                 var upperPossibleYValue = graph2D.Length - 1;
 
-                var point = Input.InputPoint(upperPossibleXValue, upperPossibleYValue);
+                var point = InputPoint(upperPossibleXValue, upperPossibleYValue);
 
                 var vertex = Graph[point];
                 while (vertex.IsObstacle)
                 {
-                    point = Input.InputPoint(upperPossibleXValue, upperPossibleYValue);
+                    point = InputPoint(upperPossibleXValue, upperPossibleYValue);
                     vertex = Graph[point];
                 }
                 (vertex as Vertex)?.ChangeCost();
@@ -151,17 +153,36 @@ namespace ConsoleVersion.ViewModel
 
         public void DisplayGraph()
         {
-            Console.Clear();
+            try
+            {
+                Console.Clear();
+                DisplayMainScreen();
+                if (MainView.PathfindingStatisticsPosition is Coordinate2D position)
+                {
+                    Console.SetCursorPosition(position.X, position.Y + 1);
+                }
+                Console.CursorVisible = true;
+            }
+            catch (ArgumentOutOfRangeException ex)
+            {
+                Console.Clear();
+                OnExceptionCaught(ex);
+                Logger.Instance.Warn(ex);
+            }
+            catch (Exception ex)
+            {
+                Console.Clear();
+                OnExceptionCaught(ex);
+                Logger.Instance.Error(ex);
+            }
+        }
+
+        private void DisplayMainScreen()
+        {
             Console.ForegroundColor = Color.White;
             Console.WriteLine(GraphParametres);
-            var field = GraphField as GraphField;
-            field?.ShowGraphWithFrames();
+            (GraphField as GraphField)?.ShowGraphWithFrames();
             Console.WriteLine(PathFindingStatistics);
-            if (MainView.PathfindingStatisticsPosition is Coordinate2D position)
-            {
-                Console.SetCursorPosition(position.X, position.Y + 1);
-            }
-            Console.CursorVisible = true;
         }
 
         protected override void OnExternalEventHappened(string message)

@@ -62,13 +62,12 @@
     <Compile Include="Attributes\FilterableAttribute.cs" />
     <Compile Include="Enums\LoadOptions.cs" />
     <Compile Include="Extensions\GenericExtensions.cs" />
-    <Compile Include="Extensions\ICollectionExtensions.cs" />
+    <Compile Include="Extensions\CollectionExtensions.cs" />
     <Compile Include="Interface\IInterrupted.cs" />
     <Compile Include="Interface\IViewModel.cs" />
     <Compile Include="Interface\ILog.cs" />
     <Compile Include="Interface\ISuspendable.cs" />
-    <Compile Include="Extensions\EnumExtensions.cs" />
-    <Compile Include="Extensions\IEnumerableExtension.cs" />
+    <Compile Include="Extensions\EnumerableExtension.cs" />
     <Compile Include="Extensions\StopwatchExtension.cs" />
     <Compile Include="Extensions\TypeExtensions.cs" />
     <Compile Include="Logging\Logger.cs" />

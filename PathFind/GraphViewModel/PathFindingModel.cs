@@ -14,6 +14,7 @@ using GraphViewModel.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+
 using static Algorithm.Realizations.AlgorithmsFactory;
 using static GraphViewModel.Resources.ViewModelResources;
 
@@ -38,14 +39,14 @@ namespace GraphViewModel
             timer = new Stopwatch();
             path = new NullGraphPath();
             algorithm = new DefaultAlgorithm();
+            graph = mainViewModel.Graph;
         }
 
         public virtual void FindPath()
         {
             try
             {
-                algorithm = GetAlgorithm(AlgorithmKey);
-                algorithm.Graph = mainViewModel.Graph;
+                algorithm = GetAlgorithm(AlgorithmKey, graph);
                 interrupter = new Interrupter();
                 SubscribeOnAlgorithmEvents();
                 path = algorithm.FindPath(EndPoints);
@@ -62,7 +63,7 @@ namespace GraphViewModel
             }
             finally
             {
-                algorithm.Reset();
+                algorithm.Dispose();
                 EndPoints.Reset();
             }
         }
@@ -176,6 +177,6 @@ namespace GraphViewModel
         private int visitedVerticesCount;
         private const string Separator = "   ";
         private readonly Stopwatch timer;
-
+        private readonly IGraph graph;
     }
 }

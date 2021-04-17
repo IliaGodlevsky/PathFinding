@@ -3,7 +3,6 @@ using Algorithm.Extensions;
 using Algorithm.Interfaces;
 using Algorithm.Realizations;
 using Common.Extensions;
-using GraphLib.Base;
 using GraphLib.Interfaces;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -14,11 +13,6 @@ namespace Plugins.DijkstraALgorithm
     [Description("Dijkstra's algorithm")]
     public class DijkstraAlgorithm : BaseAlgorithm
     {
-        public DijkstraAlgorithm() : this(BaseGraph.NullGraph)
-        {
-
-        }
-
         public DijkstraAlgorithm(IGraph graph) : base(graph)
         {
             verticesQueue = new Queue<IVertex>();
@@ -118,7 +112,7 @@ namespace Plugins.DijkstraALgorithm
 
         private void SetVerticesAccumulatedCostToInfifnity()
         {
-            Graph.Vertices
+            graph.Vertices
                 .Where(VertexIsNotObstacle)
                 .ForEach(SetVertexAccumulatedCostToInfinity);
             accumulatedCosts[endPoints.Start.Position] = 0;
