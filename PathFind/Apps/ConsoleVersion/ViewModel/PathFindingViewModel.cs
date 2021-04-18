@@ -1,4 +1,5 @@
-﻿using Common.Logging;
+﻿using AssembleClassesLib.Interface;
+using Common.Logging;
 using ConsoleVersion.Model;
 using ConsoleVersion.View;
 using GraphLib.Exceptions;
@@ -8,7 +9,6 @@ using GraphViewModel;
 using GraphViewModel.Interfaces;
 using System;
 using System.Linq;
-using static Algorithm.Realizations.AlgorithmsFactory;
 using static ConsoleVersion.Constants;
 using static ConsoleVersion.InputClass.Input;
 using static ConsoleVersion.Resource.Resources;
@@ -23,9 +23,10 @@ namespace ConsoleVersion.ViewModel
 
         public string StartVertexInputMessage { private get; set; }
 
-        public PathFindingViewModel(IMainModel model) : base(model)
+        public PathFindingViewModel(IAssembleClasses pluginsLoader, IMainModel model)
+            : base(pluginsLoader, model)
         {
-            maxAlgorithmKeysNumber = AlgorithmsDescriptions.Count();
+            maxAlgorithmKeysNumber = pluginsLoader.ClassesNames.Length;
             minAlgorithmKeysNumber = 1;
         }
 
@@ -41,7 +42,7 @@ namespace ConsoleVersion.ViewModel
                     ChooseExtremeVertex();
                     mainModel.DisplayGraph();
                     int algorithmKeyIndex = GetAlgorithmKeyIndex();
-                    var algorithmKeys = AlgorithmsDescriptions;
+                    var algorithmKeys = assembleClasses.ClassesNames;
                     AlgorithmKey = algorithmKeys.ElementAt(algorithmKeyIndex);
                     DelayTime = InputNumber(DelayTimeInputMsg, AlgorithmDelayTimeValueRange);
                     base.FindPath();

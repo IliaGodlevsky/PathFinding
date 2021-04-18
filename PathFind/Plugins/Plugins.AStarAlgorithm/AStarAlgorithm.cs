@@ -1,11 +1,11 @@
 ﻿using Algorithm.Extensions;
 using GraphLib.Interfaces;
 using Plugins.DijkstraALgorithm;
-using System.ComponentModel;
+using AssembleClassesLib.Attributes;
 
 namespace Plugins.AStarAlgorithm
 {
-    [Description("A* algorithm")]
+    [ClassName("A* algorithm")]
     public class AStarAlgorithm : DijkstraAlgorithm
     {
         public AStarAlgorithm(IGraph graph) : base(graph)

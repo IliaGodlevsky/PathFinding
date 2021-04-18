@@ -50,7 +50,6 @@
     <Compile Include="Interfaces\IModel.cs" />
     <Compile Include="MainModel.cs" />
     <Compile Include="PathFindingModel.cs" />
-    <Compile Include="BasePluginsWatcher.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Resources\ViewModelResources.Designer.cs">
       <AutoGen>True</AutoGen>
@@ -84,6 +83,10 @@
     <ProjectReference Include="..\Algorithm\Algorithm.Realizations\Algorithm.Realizations.csproj">
       <Project>{600d74af-a0ae-46aa-bcf5-695650bbe66f}</Project>
       <Name>Algorithm.Realizations</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\AssembleClassesLib\AssembleClassesLib.csproj">
+      <Project>{89EAEACE-ADD0-4B2F-B78C-5DB74AD01D8D}</Project>
+      <Name>AssembleClassesLib</Name>
     </ProjectReference>
     <ProjectReference Include="..\Common\Common.csproj">
       <Project>{a5a743f5-d346-4b2b-b6ac-07152f64e4d9}</Project>

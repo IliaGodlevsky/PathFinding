@@ -2,15 +2,15 @@
 using Algorithm.Extensions;
 using Algorithm.Interfaces;
 using Algorithm.Realizations;
+using AssembleClassesLib.Attributes;
 using Common.Extensions;
 using GraphLib.Interfaces;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.Linq;
 
 namespace Plugins.DijkstraALgorithm
 {
-    [Description("Dijkstra's algorithm")]
+    [ClassName("Dijkstra's algorithm")]
     public class DijkstraAlgorithm : BaseAlgorithm
     {
         public DijkstraAlgorithm(IGraph graph) : base(graph)

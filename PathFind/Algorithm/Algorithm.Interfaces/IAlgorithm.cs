@@ -1,14 +1,14 @@
-﻿using System;
-using Algorithm.Infrastructure.Handlers;
+﻿using Algorithm.Infrastructure.Handlers;
 using Common.Interface;
 using GraphLib.Interfaces;
+using System;
 
 namespace Algorithm.Interfaces
 {
     /// <summary>
     /// A base interface for all path finding algorithms
     /// </summary>
-    public interface IAlgorithm : IInterrupted, IDisposable
+    public interface IAlgorithm : IInterruptable, IDisposable
     {
         /// <summary>
         /// Occurs when the algorithm starts pathfinding

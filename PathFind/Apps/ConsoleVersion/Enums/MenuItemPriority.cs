@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace ConsoleVersion.Enums
+﻿namespace ConsoleVersion.Enums
 {
     /// <summary>
     /// Represents the priority of a menu item in the menu

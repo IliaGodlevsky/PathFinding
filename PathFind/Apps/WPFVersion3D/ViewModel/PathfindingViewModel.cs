@@ -1,14 +1,16 @@
-﻿using Algorithm.Realizations;
+﻿using Algorithm.Interfaces;
+using AssembleClassesLib.Interface;
 using Common.Interface;
 using GraphViewModel;
 using GraphViewModel.Interfaces;
 using System;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
+using System.Windows;
 using System.Windows.Input;
 using System.Windows.Threading;
+using AssembleClassesLib.EventArguments;
 using WPFVersion3D.Infrastructure;
 
 namespace WPFVersion3D.ViewModel
@@ -37,15 +39,22 @@ namespace WPFVersion3D.ViewModel
             }
         }
 
-        public PathFindingViewModel(IMainModel model) : base(model)
+        public PathFindingViewModel(IAssembleClasses pluginsLoader, IMainModel model)
+            : base(pluginsLoader, model)
         {
             ConfirmPathFindAlgorithmChoice = new RelayCommand(
                 ExecuteConfirmPathFindAlgorithmChoice,
                 CanExecuteConfirmPathFindAlgorithmChoice);
 
             CancelPathFindAlgorithmChoice = new RelayCommand(ExecuteCloseWindowCommand);
+        }
 
-            AlgorithmKeys = new ObservableCollection<string>(AlgorithmsFactory.AlgorithmsDescriptions);
+        public override void UpdateAlgorithmKeys(object sender, AssembleClassesEventArgs e)
+        {
+            Application.Current?.Dispatcher?.Invoke(() =>
+            {
+                base.UpdateAlgorithmKeys(sender, e);
+            });
         }
 
         protected override void ColorizeProcessedVertices()

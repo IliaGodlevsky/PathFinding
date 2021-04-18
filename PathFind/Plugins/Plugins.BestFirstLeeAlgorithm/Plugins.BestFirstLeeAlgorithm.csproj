@@ -53,6 +53,10 @@
       <Project>{11c8b301-fe40-44a1-a5a2-bc684b6a56a0}</Project>
       <Name>Algorithm.Extensions</Name>
     </ProjectReference>
+    <ProjectReference Include="..\..\AssembleClassesLib\AssembleClassesLib.csproj">
+      <Project>{89EAEACE-ADD0-4B2F-B78C-5DB74AD01D8D}</Project>
+      <Name>AssembleClassesLib</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\Common\Common.csproj">
       <Project>{A5A743F5-D346-4B2B-B6AC-07152F64E4D9}</Project>
       <Name>Common</Name>

@@ -1,5 +1,4 @@
-﻿using Algorithm.Realizations;
-using ConsoleVersion.Resource;
+﻿using ConsoleVersion.Resource;
 using ConsoleVersion.View.Interface;
 using ConsoleVersion.ViewModel;
 using System.Linq;
@@ -13,8 +12,6 @@ namespace ConsoleVersion.View
         public PathFindView(PathFindingViewModel model)
         {
             Model = model;
-
-            model.AlgorithmKeys = AlgorithmsFactory.AlgorithmsDescriptions.ToArray();
             var algorithmMenu = Menu.CreateMenu(model.AlgorithmKeys.ToArray());
             Model.AlgorithmKeyInputMessage = algorithmMenu + Resources.ChooseAlrorithm;
             Model.StartVertexInputMessage = "\n" + Resources.StartVertexPointInputMsg;

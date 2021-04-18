@@ -1,10 +1,8 @@
-﻿using Algorithm.Common.Exceptions;
-using Algorithm.Realizations;
+﻿using Algorithm.Realizations;
 using Common;
 using Common.Logging;
 using ConsoleVersion.Attributes;
 using ConsoleVersion.Enums;
-using ConsoleVersion.InputClass;
 using ConsoleVersion.Model;
 using ConsoleVersion.View;
 using GraphLib.Base;
@@ -18,9 +16,9 @@ using System;
 using System.Configuration;
 using System.Drawing;
 using System.Linq;
-using Console = Colorful.Console;
-
+using AssembleClassesLib.Interface;
 using static ConsoleVersion.InputClass.Input;
+using Console = Colorful.Console;
 
 namespace ConsoleVersion.ViewModel
 {
@@ -66,8 +64,9 @@ namespace ConsoleVersion.ViewModel
             try
             {
                 string pluginPath = GetAlgorithmsLoadPath();
-                AlgorithmsFactory.LoadAlgorithms(pluginPath);
-                var model = new PathFindingViewModel(this);
+                var assembleClasses = new ConcreteAssembleAlgorithmClasses(pluginPath);
+                assembleClasses.LoadClasses();
+                var model = new PathFindingViewModel(assembleClasses, this);
                 model.OnEventHappened += OnExternalEventHappened;
                 model.EndPoints = EndPoints;
                 var view = new PathFindView(model);
@@ -77,11 +76,6 @@ namespace ConsoleVersion.ViewModel
             {
                 OnExceptionCaught(ex);
                 Logger.Instance.Warn(ex);
-            }
-            catch (NoAlgorithmsLoadedException ex)
-            {
-                OnExceptionCaught(ex);
-                Logger.Instance.Info(ex.Message);
             }
             catch (Exception ex)
             {

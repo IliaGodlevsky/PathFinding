@@ -33,7 +33,7 @@ namespace Algorithm.Common
 
         public void Dispose()
         {
-            
+
         }
     }
 }

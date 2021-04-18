@@ -1,15 +1,17 @@
-﻿using Common.Interface;
+﻿using Algorithm.Interfaces;
+using AssembleClassesLib.Interface;
+using Common.Interface;
 using GraphViewModel;
 using GraphViewModel.Interfaces;
 using System;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
+using System.Windows;
 using System.Windows.Input;
 using System.Windows.Threading;
+using AssembleClassesLib.EventArguments;
 using WPFVersion.Infrastructure;
-using static Algorithm.Realizations.AlgorithmsFactory;
 
 namespace WPFVersion.ViewModel
 {
@@ -37,15 +39,22 @@ namespace WPFVersion.ViewModel
             }
         }
 
-        public PathFindingViewModel(IMainModel model) : base(model)
+        public PathFindingViewModel(IAssembleClasses pluginsLoader, IMainModel model)
+            : base(pluginsLoader, model)
         {
             ConfirmPathFindAlgorithmChoice = new RelayCommand(
                 ExecuteConfirmPathFindAlgorithmChoice,
                 CanExecuteConfirmPathFindAlgorithmChoice);
 
             CancelPathFindAlgorithmChoice = new RelayCommand(ExecuteCloseWindowCommand);
+        }
 
-            AlgorithmKeys = new ObservableCollection<string>(AlgorithmsDescriptions);
+        public override void UpdateAlgorithmKeys(object sender, AssembleClassesEventArgs e)
+        {
+            Application.Current?.Dispatcher?.Invoke(() =>
+            {
+                base.UpdateAlgorithmKeys(sender, e);
+            });
         }
 
         private void InterruptAlgorithm(object sender, EventArgs e)

@@ -3,12 +3,12 @@ using Algorithm.Infrastructure.EventArguments;
 using Algorithm.Infrastructure.Handlers;
 using Algorithm.Interfaces;
 using Common.Extensions;
+using GraphLib.Common.NullObjects;
 using GraphLib.Extensions;
 using GraphLib.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using GraphLib.Common.NullObjects;
 
 namespace Algorithm.Base
 {
@@ -33,7 +33,7 @@ namespace Algorithm.Base
         protected BaseAlgorithm(IGraph graph) : this()
         {
             this.graph = graph;
-            
+
         }
 
         /// <summary>

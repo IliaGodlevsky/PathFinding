@@ -60,7 +60,6 @@
   <ItemGroup>
     <Compile Include="Attributes\DefaultAttribute.cs" />
     <Compile Include="Attributes\FilterableAttribute.cs" />
-    <Compile Include="Enums\LoadOptions.cs" />
     <Compile Include="Extensions\GenericExtensions.cs" />
     <Compile Include="Extensions\CollectionExtensions.cs" />
     <Compile Include="Interface\IInterrupted.cs" />
@@ -71,7 +70,6 @@
     <Compile Include="Extensions\StopwatchExtension.cs" />
     <Compile Include="Extensions\TypeExtensions.cs" />
     <Compile Include="Logging\Logger.cs" />
-    <Compile Include="ClassLoader.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Interrupter.cs" />
     <Compile Include="ValueRange.cs" />

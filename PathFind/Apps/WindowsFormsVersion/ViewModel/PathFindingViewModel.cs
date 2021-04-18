@@ -1,9 +1,8 @@
-﻿using Algorithm.Realizations;
+﻿using AssembleClassesLib.Interface;
 using Common.Interface;
 using GraphViewModel;
 using GraphViewModel.Interfaces;
 using System;
-using System.Linq;
 using System.Windows.Forms;
 
 namespace WindowsFormsVersion.ViewModel
@@ -12,9 +11,10 @@ namespace WindowsFormsVersion.ViewModel
     {
         public event EventHandler OnWindowClosed;
 
-        public PathFindingViewModel(IMainModel model) : base(model)
+        public PathFindingViewModel(IAssembleClasses pluginsLoader, IMainModel model)
+            : base(pluginsLoader, model)
         {
-            AlgorithmKeys = AlgorithmsFactory.AlgorithmsDescriptions.ToList();
+
         }
 
         public void StartPathfinding(object sender, EventArgs e)

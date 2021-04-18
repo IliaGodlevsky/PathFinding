@@ -3,6 +3,7 @@ using Algorithm.Common.Exceptions;
 using Algorithm.Extensions;
 using Algorithm.Infrastructure.EventArguments;
 using Algorithm.Interfaces;
+using AssembleClassesLib.Interface;
 using Common;
 using Common.Extensions;
 using Common.Interface;
@@ -14,8 +15,8 @@ using GraphViewModel.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
-
-using static Algorithm.Realizations.AlgorithmsFactory;
+using System.Linq;
+using AssembleClassesLib.EventArguments;
 using static GraphViewModel.Resources.ViewModelResources;
 
 namespace GraphViewModel
@@ -32,21 +33,23 @@ namespace GraphViewModel
 
         public virtual IList<string> AlgorithmKeys { get; set; }
 
-        protected PathFindingModel(IMainModel mainViewModel)
+        protected PathFindingModel(IAssembleClasses algorithms, IMainModel mainViewModel)
         {
+            AlgorithmKeys = algorithms.ClassesNames.ToList();
             this.mainViewModel = mainViewModel;
             DelayTime = 4;
             timer = new Stopwatch();
             path = new NullGraphPath();
             algorithm = new DefaultAlgorithm();
             graph = mainViewModel.Graph;
+            assembleClasses = algorithms;
         }
 
         public virtual void FindPath()
         {
             try
             {
-                algorithm = GetAlgorithm(AlgorithmKey, graph);
+                algorithm = (IAlgorithm)assembleClasses.Get(AlgorithmKey, graph);
                 interrupter = new Interrupter();
                 SubscribeOnAlgorithmEvents();
                 path = algorithm.FindPath(EndPoints);
@@ -65,6 +68,26 @@ namespace GraphViewModel
             {
                 algorithm.Dispose();
                 EndPoints.Reset();
+            }
+        }
+
+        public virtual void UpdateAlgorithmKeys(object sender, AssembleClassesEventArgs e)
+        {
+            var currentLoadedPluginsKeys = e.LoadedPluginsKeys;
+            var addedAlgorithms = currentLoadedPluginsKeys.Except(AlgorithmKeys).ToArray();
+            var deletedAlgorithms = AlgorithmKeys.Except(currentLoadedPluginsKeys).ToArray();
+
+            if (addedAlgorithms.Any())
+            {
+                AlgorithmKeys.AddRange(addedAlgorithms);
+            }
+            if (deletedAlgorithms.Any())
+            {
+                AlgorithmKeys.RemoveRange(deletedAlgorithms);
+            }
+            if (addedAlgorithms.Any() || deletedAlgorithms.Any())
+            {
+                AlgorithmKeys = AlgorithmKeys.OrderBy(key => key).ToList();
             }
         }
 
@@ -154,6 +177,7 @@ namespace GraphViewModel
         protected IMainModel mainViewModel;
         protected IAlgorithm algorithm;
         protected IGraphPath path;
+        protected readonly IAssembleClasses assembleClasses;
 
         private string GetStatistics(Stopwatch timer, IGraphPath path = null)
         {
@@ -178,5 +202,6 @@ namespace GraphViewModel
         private const string Separator = "   ";
         private readonly Stopwatch timer;
         private readonly IGraph graph;
+
     }
 }

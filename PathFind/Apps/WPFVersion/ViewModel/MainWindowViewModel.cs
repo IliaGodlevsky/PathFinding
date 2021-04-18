@@ -1,5 +1,4 @@
-﻿using Algorithm.Common.Exceptions;
-using Algorithm.Realizations;
+﻿using Algorithm.Realizations;
 using Common.Extensions;
 using Common.Interface;
 using Common.Logging;
@@ -14,6 +13,9 @@ using System.Configuration;
 using System.Runtime.CompilerServices;
 using System.Windows;
 using System.Windows.Input;
+using Algorithm.Interfaces;
+using AssembleClassesLib;
+using Common;
 using WPFVersion.Infrastructure;
 using WPFVersion.Model;
 using WPFVersion.View.Windows;
@@ -115,21 +117,17 @@ namespace WPFVersion.ViewModel
             try
             {
                 string loadPath = GetAlgorithmsLoadPath();
-                AlgorithmsFactory.LoadAlgorithms(loadPath);
-                var viewModel = new PathFindingViewModel(this);
-                var listener = new PluginsWatcher(viewModel);
+                var assembleClasses
+                    = new UpdatableAssembleClasses(
+                        new ConcreteAssembleAlgorithmClasses(loadPath));
+                var viewModel = new PathFindingViewModel(assembleClasses, this);
                 var window = new PathFindWindow();
-                window.Closing += listener.StopWatching;
+                assembleClasses.OnClassesLoaded += viewModel.UpdateAlgorithmKeys;
+                assembleClasses.LoadClasses();
+                window.Closing += (sender, args) => assembleClasses.Interrupt();
                 viewModel.OnEventHappened += OnExternalEventHappened;
                 viewModel.EndPoints = EndPoints;
-                listener.FolderPath = loadPath;
-                listener.StartWatching();
                 PrepareWindow(viewModel, window);
-            }
-            catch (NoAlgorithmsLoadedException ex)
-            {
-                OnExceptionCaught(ex);
-                Logger.Instance.Warn(ex);
             }
             catch (Exception ex)
             {

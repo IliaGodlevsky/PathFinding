@@ -2,7 +2,7 @@
 
 namespace Common.Interface
 {
-    public interface IInterrupted
+    public interface IInterruptable
     {
         event EventHandler OnInterrupted;
 

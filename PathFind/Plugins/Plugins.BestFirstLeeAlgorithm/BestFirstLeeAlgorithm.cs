@@ -1,11 +1,11 @@
 ﻿using Algorithm.Extensions;
+using AssembleClassesLib.Attributes;
 using GraphLib.Interfaces;
-using System.ComponentModel;
 using System.Linq;
 
 namespace Plugins.BestFirstLeeAlgorithm
 {
-    [Description("Lee algorithm (heuristic)")]
+    [ClassName("Lee algorithm (heuristic)")]
     public class BestFirstLeeAlgorithm : LeeAlgorithm.LeeAlgorithm
     {
         public BestFirstLeeAlgorithm(IGraph graph) : base(graph)

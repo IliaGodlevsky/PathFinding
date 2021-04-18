@@ -1,5 +1,4 @@
-﻿using Algorithm.Common.Exceptions;
-using Algorithm.Realizations;
+﻿using Algorithm.Realizations;
 using Common.Extensions;
 using Common.Interface;
 using Common.Logging;
@@ -80,17 +79,13 @@ namespace WindowsFormsVersion.ViewModel
                 try
                 {
                     string loadPath = GetAlgorithmsLoadPath();
-                    AlgorithmsFactory.LoadAlgorithms(loadPath);
-                    var model = new PathFindingViewModel(this);
+                    var assembleClasses = new ConcreteAssembleAlgorithmClasses(loadPath);
+                    assembleClasses.LoadClasses();
+                    var model = new PathFindingViewModel(assembleClasses, this);
                     model.OnEventHappened += OnExternalEventHappened;
                     model.EndPoints = EndPoints;
                     var form = new PathFindingWindow(model);
                     PrepareWindow(model, form);
-                }
-                catch (NoAlgorithmsLoadedException ex)
-                {
-                    OnExceptionCaught(ex);
-                    Logger.Instance.Warn(ex);
                 }
                 catch (Exception ex)
                 {

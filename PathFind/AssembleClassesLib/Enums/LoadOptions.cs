@@ -1,4 +1,4 @@
-﻿namespace Common.Enums
+﻿namespace AssembleClassesLib.Enums
 {
     public enum LoadOption
     {

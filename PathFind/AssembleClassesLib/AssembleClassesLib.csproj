@@ -4,11 +4,11 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{DF721A89-3E01-4159-B51A-E5723C9FD0BA}</ProjectGuid>
+    <ProjectGuid>{89EAEACE-ADD0-4B2F-B78C-5DB74AD01D8D}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Algorithm.Common</RootNamespace>
-    <AssemblyName>Algorithm.Common</AssemblyName>
+    <RootNamespace>AssembleClassesLib</RootNamespace>
+    <AssemblyName>AssembleClassesLib</AssemblyName>
     <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <Deterministic>true</Deterministic>
@@ -41,35 +41,19 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="DefaultAlgorithm.cs" />
-    <Compile Include="Exceptions\AlgorithmInterruptedException.cs" />
-    <Compile Include="NullGraphPath.cs" />
+    <Compile Include="AssembleClasses.cs" />
+    <Compile Include="Attributes\ClassNameAttribute.cs" />
+    <Compile Include="Enums\LoadOptions.cs" />
+    <Compile Include="EventArguments\AssembleClassesEventArgs.cs" />
+    <Compile Include="EventHandlers\AssembleClassesEventHandler.cs" />
+    <Compile Include="Interface\IAssembleClasses.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="UpdatableAssembleClasses.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\Common\Common.csproj">
+    <ProjectReference Include="..\Common\Common.csproj">
       <Project>{a5a743f5-d346-4b2b-b6ac-07152f64e4d9}</Project>
       <Name>Common</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\GraphLib\GraphLib.Base\GraphLib.Base.csproj">
-      <Project>{6AA3B516-ABFE-4EDA-98DD-1CE799DA747F}</Project>
-      <Name>GraphLib.Base</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\GraphLib\GraphLib.Common\GraphLib.Common.csproj">
-      <Project>{3cd8330e-9445-4dc4-a1da-ee704f652942}</Project>
-      <Name>GraphLib.Common</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\GraphLib\GraphLib.Interfaces\GraphLib.Interfaces.csproj">
-      <Project>{d3c5ccfe-698b-41c7-9a72-5fd0262765e1}</Project>
-      <Name>GraphLib.Interfaces</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Algorithm.Infrastructure\Algorithm.Infrastructure.csproj">
-      <Project>{da2a9a8c-0ef3-4edb-b026-3ff86def9464}</Project>
-      <Name>Algorithm.Infrastructure</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Algorithm.Interfaces\Algorithm.Interfaces.csproj">
-      <Project>{fc4f499e-9ab1-4623-9ad8-cfde0a07b7d0}</Project>
-      <Name>Algorithm.Interfaces</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup />

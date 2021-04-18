@@ -1,15 +1,15 @@
 ﻿using Algorithm.Extensions;
+using AssembleClassesLib.Attributes;
 using Common;
 using Common.Extensions;
 using GraphLib.Interfaces;
 using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.Linq;
 
 namespace Plugins.AStarModified
 {
-    [Description("A* algorithm (modified)")]
+    [ClassName("A* algorithm (modified)")]
     public sealed class AStarModified : AStarAlgorithm.AStarAlgorithm
     {
         public AStarModified(IGraph graph) : base(graph)

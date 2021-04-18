@@ -2,15 +2,15 @@
 using Algorithm.Extensions;
 using Algorithm.Interfaces;
 using Algorithm.Realizations;
+using AssembleClassesLib.Attributes;
 using Common.Extensions;
 using GraphLib.Interfaces;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.Linq;
 
 namespace Plugins.LeeAlgorithm
 {
-    [Description("Lee algorithm")]
+    [ClassName("Lee algorithm")]
     public class LeeAlgorithm : BaseAlgorithm
     {
         public LeeAlgorithm(IGraph graph) : base(graph)

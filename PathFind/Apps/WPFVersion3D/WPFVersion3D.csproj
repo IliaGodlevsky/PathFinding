@@ -81,7 +81,6 @@
     <Compile Include="Model\GraphField3DContainer.cs" />
     <Compile Include="Model\Offset.cs" />
     <Compile Include="Model\PathInput.cs" />
-    <Compile Include="Model\PluginsWatcher.cs" />
     <Compile Include="Model\Vertex3DCost.cs" />
     <Compile Include="Model\Vertex3DCostFactory.cs" />
     <Compile Include="Model\Vertex3DFactory.cs" />
@@ -173,9 +172,17 @@
       <Project>{DF721A89-3E01-4159-B51A-E5723C9FD0BA}</Project>
       <Name>Algorithm.Common</Name>
     </ProjectReference>
+    <ProjectReference Include="..\..\Algorithm\Algorithm.Interfaces\Algorithm.Interfaces.csproj">
+      <Project>{FC4F499E-9AB1-4623-9AD8-CFDE0A07B7D0}</Project>
+      <Name>Algorithm.Interfaces</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\Algorithm\Algorithm.Realizations\Algorithm.Realizations.csproj">
       <Project>{600d74af-a0ae-46aa-bcf5-695650bbe66f}</Project>
       <Name>Algorithm.Realizations</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\AssembleClassesLib\AssembleClassesLib.csproj">
+      <Project>{89EAEACE-ADD0-4B2F-B78C-5DB74AD01D8D}</Project>
+      <Name>AssembleClassesLib</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\Common\Common.csproj">
       <Project>{A5A743F5-D346-4B2B-B6AC-07152F64E4D9}</Project>

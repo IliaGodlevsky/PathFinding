@@ -1,5 +1,4 @@
-﻿using Algorithm.Common.Exceptions;
-using Algorithm.Realizations;
+﻿using Algorithm.Realizations;
 using Common.Extensions;
 using Common.Interface;
 using Common.Logging;
@@ -13,6 +12,8 @@ using System.Configuration;
 using System.Runtime.CompilerServices;
 using System.Windows;
 using System.Windows.Input;
+using Algorithm.Interfaces;
+using AssembleClassesLib;
 using WPFVersion3D.Enums;
 using WPFVersion3D.Infrastructure;
 using WPFVersion3D.Infrastructure.Animators.Interface;
@@ -63,7 +64,8 @@ namespace WPFVersion3D.ViewModel
             IVertexEventHolder eventHolder,
             IGraphSerializer graphSerializer,
             IGraphAssembler graphFactory,
-            IPathInput pathInput) : base(fieldFactory, eventHolder, graphSerializer, graphFactory, pathInput)
+            IPathInput pathInput) 
+            : base(fieldFactory, eventHolder, graphSerializer, graphFactory, pathInput)
         {
             StartPathFindCommand = new RelayCommand(ExecuteStartPathFindCommand, CanExecuteStartFindPathCommand);
             CreateNewGraphCommand = new RelayCommand(ExecuteCreateNewGraphCommand);
@@ -79,21 +81,17 @@ namespace WPFVersion3D.ViewModel
             try
             {
                 string loadPath = GetAlgorithmsLoadPath();
-                AlgorithmsFactory.LoadAlgorithms(loadPath);
-                var viewModel = new PathFindingViewModel(this);
-                var listener = new PluginsWatcher(viewModel);
+                var pluginsLoader
+                    = new UpdatableAssembleClasses(
+                        new ConcreteAssembleAlgorithmClasses(loadPath));
+                var viewModel = new PathFindingViewModel(pluginsLoader, this);
                 var window = new PathFindWindow();
-                window.Closing += listener.StopWatching;
+                window.Closing += (sender, args) => pluginsLoader.Interrupt();
+                pluginsLoader.OnClassesLoaded += viewModel.UpdateAlgorithmKeys;
+                pluginsLoader.LoadClasses();
                 viewModel.OnEventHappened += OnExternalEventHappened;
                 viewModel.EndPoints = EndPoints;
-                listener.FolderPath = loadPath;
-                listener.StartWatching();
                 PrepareWindow(viewModel, window);
-            }
-            catch (NoAlgorithmsLoadedException ex)
-            {
-                OnExceptionCaught(ex);
-                Logger.Instance.Warn(ex);
             }
             catch (Exception ex)
             {

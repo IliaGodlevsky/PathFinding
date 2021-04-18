@@ -2,16 +2,16 @@
 using Algorithm.Extensions;
 using Algorithm.Interfaces;
 using Algorithm.Realizations;
+using AssembleClassesLib.Attributes;
 using Common.Extensions;
 using GraphLib.Base;
 using GraphLib.Interfaces;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.Linq;
 
 namespace Plugins.DistanceFirstAlgorithm
 {
-    [Description("Distance-first algorithm")]
+    [ClassName("Distance-first algorithm")]
     public class DistanceFirstAlgorithm : BaseAlgorithm
     {
         public DistanceFirstAlgorithm() : this(BaseGraph.NullGraph)
