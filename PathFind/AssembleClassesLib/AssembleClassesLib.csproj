@@ -41,14 +41,15 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AssembleClasses.cs" />
+    <Compile Include="Interface\INotifingAssembleClasses.cs" />
+    <Compile Include="Realizations\AssembleClasses.cs" />
     <Compile Include="Attributes\ClassNameAttribute.cs" />
-    <Compile Include="Enums\LoadOptions.cs" />
     <Compile Include="EventArguments\AssembleClassesEventArgs.cs" />
     <Compile Include="EventHandlers\AssembleClassesEventHandler.cs" />
     <Compile Include="Interface\IAssembleClasses.cs" />
+    <Compile Include="Realizations\NotifingAssembleClasses.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="UpdatableAssembleClasses.cs" />
+    <Compile Include="Realizations\UpdatableAssembleClasses.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Common\Common.csproj">

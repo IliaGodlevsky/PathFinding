@@ -1,16 +1,12 @@
-﻿using System;
-using AssembleClassesLib.EventHandlers;
+﻿using System.Collections.Generic;
 
 namespace AssembleClassesLib.Interface
 {
-    public interface IAssembleClasses : IDisposable
+    public interface IAssembleClasses
     {
-        event AssembleClassesEventHandler OnClassesLoaded;
+        IReadOnlyCollection<string> ClassesNames { get; }
 
-        string[] ClassesNames { get; }
-
-        object Get(string name, 
-            params object[] ctorParametres);
+        object Get(string name, params object[] ctorParametres);
 
         void LoadClasses();
     }

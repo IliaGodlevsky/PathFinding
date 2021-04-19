@@ -1,4 +1,5 @@
 ﻿using Algorithm.Realizations;
+using AssembleClassesLib.Realizations;
 using Common.Extensions;
 using Common.Interface;
 using Common.Logging;
@@ -12,8 +13,6 @@ using System.Configuration;
 using System.Runtime.CompilerServices;
 using System.Windows;
 using System.Windows.Input;
-using Algorithm.Interfaces;
-using AssembleClassesLib;
 using WPFVersion3D.Enums;
 using WPFVersion3D.Infrastructure;
 using WPFVersion3D.Infrastructure.Animators.Interface;
@@ -64,7 +63,7 @@ namespace WPFVersion3D.ViewModel
             IVertexEventHolder eventHolder,
             IGraphSerializer graphSerializer,
             IGraphAssembler graphFactory,
-            IPathInput pathInput) 
+            IPathInput pathInput)
             : base(fieldFactory, eventHolder, graphSerializer, graphFactory, pathInput)
         {
             StartPathFindCommand = new RelayCommand(ExecuteStartPathFindCommand, CanExecuteStartFindPathCommand);
@@ -81,14 +80,15 @@ namespace WPFVersion3D.ViewModel
             try
             {
                 string loadPath = GetAlgorithmsLoadPath();
-                var pluginsLoader
-                    = new UpdatableAssembleClasses(
-                        new ConcreteAssembleAlgorithmClasses(loadPath));
-                var viewModel = new PathFindingViewModel(pluginsLoader, this);
+                var algorithmClasses = new ConcreteAssembleAlgorithmClasses(loadPath);
+                algorithmClasses.LoadClasses();
+                var notifyableAssembleClasses = new NotifingAssembleClasses(algorithmClasses);
+                var updatableAssembleClasses = new UpdatableAssembleClasses(notifyableAssembleClasses);
+                var viewModel = new PathFindingViewModel(updatableAssembleClasses, this);
                 var window = new PathFindWindow();
-                window.Closing += (sender, args) => pluginsLoader.Interrupt();
-                pluginsLoader.OnClassesLoaded += viewModel.UpdateAlgorithmKeys;
-                pluginsLoader.LoadClasses();
+                notifyableAssembleClasses.OnClassesLoaded += viewModel.UpdateAlgorithmKeys;
+                updatableAssembleClasses.LoadClasses();
+                window.Closing += (sender, args) => updatableAssembleClasses.Interrupt();
                 viewModel.OnEventHappened += OnExternalEventHappened;
                 viewModel.EndPoints = EndPoints;
                 PrepareWindow(viewModel, window);

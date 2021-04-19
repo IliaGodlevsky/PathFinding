@@ -3,6 +3,7 @@ using Algorithm.Common.Exceptions;
 using Algorithm.Extensions;
 using Algorithm.Infrastructure.EventArguments;
 using Algorithm.Interfaces;
+using AssembleClassesLib.EventArguments;
 using AssembleClassesLib.Interface;
 using Common;
 using Common.Extensions;
@@ -16,7 +17,6 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
-using AssembleClassesLib.EventArguments;
 using static GraphViewModel.Resources.ViewModelResources;
 
 namespace GraphViewModel
@@ -73,7 +73,7 @@ namespace GraphViewModel
 
         public virtual void UpdateAlgorithmKeys(object sender, AssembleClassesEventArgs e)
         {
-            var currentLoadedPluginsKeys = e.LoadedPluginsKeys;
+            var currentLoadedPluginsKeys = e.ClassesNames.ToArray();
             var addedAlgorithms = currentLoadedPluginsKeys.Except(AlgorithmKeys).ToArray();
             var deletedAlgorithms = AlgorithmKeys.Except(currentLoadedPluginsKeys).ToArray();
 

@@ -1,4 +1,5 @@
 ﻿using Algorithm.Realizations;
+using AssembleClassesLib.Realizations;
 using Common.Extensions;
 using Common.Interface;
 using Common.Logging;
@@ -13,9 +14,6 @@ using System.Configuration;
 using System.Runtime.CompilerServices;
 using System.Windows;
 using System.Windows.Input;
-using Algorithm.Interfaces;
-using AssembleClassesLib;
-using Common;
 using WPFVersion.Infrastructure;
 using WPFVersion.Model;
 using WPFVersion.View.Windows;
@@ -117,14 +115,15 @@ namespace WPFVersion.ViewModel
             try
             {
                 string loadPath = GetAlgorithmsLoadPath();
-                var assembleClasses
-                    = new UpdatableAssembleClasses(
-                        new ConcreteAssembleAlgorithmClasses(loadPath));
-                var viewModel = new PathFindingViewModel(assembleClasses, this);
+                var algorithmClasses = new ConcreteAssembleAlgorithmClasses(loadPath);
+                algorithmClasses.LoadClasses();
+                var notifingAssembleClasses = new NotifingAssembleClasses(algorithmClasses);
+                var updatableAssembleClasses = new UpdatableAssembleClasses(notifingAssembleClasses);
+                var viewModel = new PathFindingViewModel(updatableAssembleClasses, this);
                 var window = new PathFindWindow();
-                assembleClasses.OnClassesLoaded += viewModel.UpdateAlgorithmKeys;
-                assembleClasses.LoadClasses();
-                window.Closing += (sender, args) => assembleClasses.Interrupt();
+                notifingAssembleClasses.OnClassesLoaded += viewModel.UpdateAlgorithmKeys;
+                updatableAssembleClasses.LoadClasses();
+                window.Closing += (sender, args) => updatableAssembleClasses.Interrupt();
                 viewModel.OnEventHappened += OnExternalEventHappened;
                 viewModel.EndPoints = EndPoints;
                 PrepareWindow(viewModel, window);

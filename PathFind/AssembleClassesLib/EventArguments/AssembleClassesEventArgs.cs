@@ -1,14 +1,15 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace AssembleClassesLib.EventArguments
 {
-    public class AssembleClassesEventArgs : EventArgs
+    public sealed class AssembleClassesEventArgs : EventArgs
     {
-        public string[] LoadedPluginsKeys { get; }
+        public IEnumerable<string> ClassesNames { get; }
 
-        public AssembleClassesEventArgs(string[] loadedPluginsNames)
+        public AssembleClassesEventArgs(IEnumerable<string> loadedPluginsNames)
         {
-            LoadedPluginsKeys = loadedPluginsNames;
+            ClassesNames = loadedPluginsNames;
         }
     }
 }

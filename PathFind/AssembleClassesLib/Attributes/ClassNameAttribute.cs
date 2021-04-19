@@ -3,7 +3,7 @@
 namespace AssembleClassesLib.Attributes
 {
     [AttributeUsage(AttributeTargets.Class, Inherited = false)]
-    public class ClassNameAttribute : Attribute
+    public sealed class ClassNameAttribute : Attribute
     {
         public string Name { get; }
 

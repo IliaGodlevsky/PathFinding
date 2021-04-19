@@ -26,7 +26,7 @@ namespace ConsoleVersion.ViewModel
         public PathFindingViewModel(IAssembleClasses pluginsLoader, IMainModel model)
             : base(pluginsLoader, model)
         {
-            maxAlgorithmKeysNumber = pluginsLoader.ClassesNames.Length;
+            maxAlgorithmKeysNumber = pluginsLoader.ClassesNames.Count;
             minAlgorithmKeysNumber = 1;
         }
 

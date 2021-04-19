@@ -22,28 +22,18 @@ namespace Algorithm.Base
         public event AlgorithmEventHandler OnVertexEnqueued;
         public event EventHandler OnInterrupted;
 
-        private BaseAlgorithm()
-        {
-            graph = new NullGraph();
-            visitedVertices = new Dictionary<ICoordinate, IVertex>();
-            parentVertices = new Dictionary<ICoordinate, IVertex>();
-            accumulatedCosts = new Dictionary<ICoordinate, double>();
-        }
+        public abstract IGraphPath FindPath(IEndPoints endPoints);
 
-        protected BaseAlgorithm(IGraph graph) : this()
-        {
-            this.graph = graph;
-
-        }
-
-        /// <summary>
-        /// Stops path finding
-        /// </summary>
         public virtual void Interrupt()
         {
             isInterruptRequested = true;
             var args = CreateEventArgs(CurrentVertex);
             OnInterrupted?.Invoke(this, args);
+        }
+
+        protected BaseAlgorithm(IGraph graph) : this()
+        {
+            this.graph = graph;
         }
 
         protected virtual void Reset()
@@ -58,14 +48,6 @@ namespace Algorithm.Base
             accumulatedCosts.Clear();
             isInterruptRequested = false;
         }
-
-        /// <summary>
-        /// Finds the shortest path between <paramref name="endPoints"/>
-        /// </summary>
-        /// <param name="endPoints"></param>
-        /// <param name="graph"></param>
-        /// <returns>An array of vertices, that represent the shortest path</returns>
-        public abstract IGraphPath FindPath(IEndPoints endPoints);
 
         protected IVertex CurrentVertex { get; set; }
 
@@ -116,14 +98,13 @@ namespace Algorithm.Base
             }
 
             string paramName = nameof(endpoints);
-            string graphName = nameof(this.graph);
+            string graphName = nameof(graph);
             string message = $"{paramName} don't belong to {graphName}";
             throw new ArgumentException(message);
         }
 
         protected virtual void CompletePathfinding()
         {
-            isInterruptRequested = false;
             var visitedCount = visitedVertices.Count(IsNotDefault);
             var args = new AlgorithmEventArgs(visitedCount);
             RaiseOnAlgorithmFinishedEvent(args);
@@ -179,6 +160,14 @@ namespace Algorithm.Base
 
         protected IGraph graph;
         protected IEndPoints endPoints;
+
+        private BaseAlgorithm()
+        {
+            graph = new NullGraph();
+            visitedVertices = new Dictionary<ICoordinate, IVertex>();
+            parentVertices = new Dictionary<ICoordinate, IVertex>();
+            accumulatedCosts = new Dictionary<ICoordinate, double>();
+        }
 
         private bool isInterruptRequested;
     }

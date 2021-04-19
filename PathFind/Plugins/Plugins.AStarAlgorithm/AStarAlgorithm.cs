@@ -1,7 +1,7 @@
 ﻿using Algorithm.Extensions;
+using AssembleClassesLib.Attributes;
 using GraphLib.Interfaces;
 using Plugins.DijkstraALgorithm;
-using AssembleClassesLib.Attributes;
 
 namespace Plugins.AStarAlgorithm
 {

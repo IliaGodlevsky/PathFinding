@@ -1,24 +1,20 @@
-﻿using System;
+﻿using AssembleClassesLib.Attributes;
+using AssembleClassesLib.Interface;
+using Common.Extensions;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Runtime.InteropServices;
-using AssembleClassesLib.Attributes;
-using AssembleClassesLib.EventArguments;
-using AssembleClassesLib.EventHandlers;
-using AssembleClassesLib.Interface;
-using Common.Extensions;
 
-namespace AssembleClassesLib
+namespace AssembleClassesLib.Realizations
 {
     /// <summary>
-    /// A class, that loads types from assembles
+    /// A class, that loads types from assemble(s)
     /// </summary>
     public class AssembleClasses : IAssembleClasses
     {
-        public event AssembleClassesEventHandler OnClassesLoaded;
-
         public AssembleClasses(string loadPath, SearchOption searchOption)
         {
             types = new Dictionary<string, Type>();
@@ -27,12 +23,7 @@ namespace AssembleClassesLib
             ClassesNames = new string[] { };
         }
 
-        public virtual void Dispose()
-        {
-            OnClassesLoaded = null;
-        }
-
-        public string[] ClassesNames { get; protected set; }
+        public IReadOnlyCollection<string> ClassesNames { get; protected set; }
 
         public virtual object Get(string key, params object[] parametres)
         {
@@ -59,12 +50,10 @@ namespace AssembleClassesLib
         /// <exception cref="MissingMethodException"/>
         /// <exception cref="InvalidComObjectException"/>
         /// <exception cref="COMException"/>
-        public virtual void LoadClasses()
+        public void LoadClasses()
         {
             LoadClassesFromAssemble();
             ClassesNames = types.Keys.OrderBy(Key).ToArray();
-            var args = new AssembleClassesEventArgs(ClassesNames);
-            OnClassesLoaded?.Invoke(this, args);
         }
 
         protected virtual void LoadClassesFromAssemble()
@@ -73,10 +62,10 @@ namespace AssembleClassesLib
                 .Select(Assembly.LoadFrom)
                 .SelectMany(Types)
                 .DistinctBy(FullName)
-                .ToDictionary(Description);
+                .ToDictionary(ClassName);
         }
 
-        protected string Key(string key)
+        private string Key(string key)
         {
             return key;
         }
@@ -91,7 +80,7 @@ namespace AssembleClassesLib
             return type.FullName;
         }
 
-        private string Description(Type type)
+        private string ClassName(Type type)
         {
             var attribute = type.GetAttribute<ClassNameAttribute>();
             return attribute?.Name ?? type.FullName;

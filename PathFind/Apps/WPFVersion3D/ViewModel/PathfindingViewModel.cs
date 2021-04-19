@@ -1,4 +1,4 @@
-﻿using Algorithm.Interfaces;
+﻿using AssembleClassesLib.EventArguments;
 using AssembleClassesLib.Interface;
 using Common.Interface;
 using GraphViewModel;
@@ -10,7 +10,6 @@ using System.Runtime.CompilerServices;
 using System.Windows;
 using System.Windows.Input;
 using System.Windows.Threading;
-using AssembleClassesLib.EventArguments;
 using WPFVersion3D.Infrastructure;
 
 namespace WPFVersion3D.ViewModel

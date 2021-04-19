@@ -1,17 +1,17 @@
-﻿using System;
-using System.Threading;
-using System.Threading.Tasks;
-using AssembleClassesLib.EventArguments;
-using AssembleClassesLib.EventHandlers;
+﻿using AssembleClassesLib.EventArguments;
 using AssembleClassesLib.Interface;
 using Common.Interface;
+using System;
+using System.Collections.Generic;
+using System.Threading;
+using System.Threading.Tasks;
 
-namespace AssembleClassesLib
+namespace AssembleClassesLib.Realizations
 {
-    public sealed class UpdatableAssembleClasses : IAssembleClasses, IInterruptable
+    public sealed class UpdatableAssembleClasses
+        : IAssembleClasses, IInterruptable, IDisposable
     {
         public event EventHandler OnInterrupted;
-        public event AssembleClassesEventHandler OnClassesLoaded;
 
         public UpdatableAssembleClasses(IAssembleClasses assembleClasses)
         {
@@ -21,7 +21,7 @@ namespace AssembleClassesLib
             token = tokenSource.Token;
         }
 
-        public string[] ClassesNames { get; private set; }
+        public IReadOnlyCollection<string> ClassesNames { get; private set; }
 
         public object Get(string key, params object[] parametres)
         {
@@ -36,8 +36,6 @@ namespace AssembleClassesLib
                 {
                     assembleClasses.LoadClasses();
                     ClassesNames = assembleClasses.ClassesNames;
-                    var args = new AssembleClassesEventArgs(ClassesNames);
-                    OnClassesLoaded?.Invoke(this, args);
                 }
             }, token);
         }
@@ -47,7 +45,6 @@ namespace AssembleClassesLib
             tokenSource.Cancel();
             var args = new AssembleClassesEventArgs(ClassesNames);
             OnInterrupted?.Invoke(this, args);
-            Dispose();
         }
 
         public void Dispose()
@@ -55,7 +52,6 @@ namespace AssembleClassesLib
             tokenSource.Cancel();
             tokenSource.Dispose();
             OnInterrupted = null;
-            OnClassesLoaded = null;
         }
 
         private readonly IAssembleClasses assembleClasses;
