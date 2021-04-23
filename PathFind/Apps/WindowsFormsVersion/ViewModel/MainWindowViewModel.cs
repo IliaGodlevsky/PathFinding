@@ -81,9 +81,8 @@ namespace WindowsFormsVersion.ViewModel
                     string loadPath = GetAlgorithmsLoadPath();
                     var assembleClasses = new ConcreteAssembleAlgorithmClasses(loadPath);
                     assembleClasses.LoadClasses();
-                    var model = new PathFindingViewModel(assembleClasses, this);
+                    var model = new PathFindingViewModel(assembleClasses, this, EndPoints);
                     model.OnEventHappened += OnExternalEventHappened;
-                    model.EndPoints = EndPoints;
                     var form = new PathFindingWindow(model);
                     PrepareWindow(model, form);
                 }

@@ -43,7 +43,9 @@ namespace Algorithm.Extensions
             }
             #endregion
 
-            return self.Position.CoordinatesValues
+            return self
+                .Position
+                .CoordinatesValues
                 .Zip(toVertex.Position.CoordinatesValues, CalculateAbsSub)
                 .MaxOrDefault();
         }

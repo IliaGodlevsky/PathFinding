@@ -11,6 +11,7 @@ using GraphViewModel;
 using System;
 using System.ComponentModel;
 using System.Configuration;
+using System.IO;
 using System.Runtime.CompilerServices;
 using System.Windows;
 using System.Windows.Input;
@@ -119,14 +120,23 @@ namespace WPFVersion.ViewModel
                 algorithmClasses.LoadClasses();
                 var notifingAssembleClasses = new NotifingAssembleClasses(algorithmClasses);
                 var updatableAssembleClasses = new UpdatableAssembleClasses(notifingAssembleClasses);
-                var viewModel = new PathFindingViewModel(updatableAssembleClasses, this);
+                var viewModel = new PathFindingViewModel(updatableAssembleClasses, this, EndPoints);
                 var window = new PathFindWindow();
                 notifingAssembleClasses.OnClassesLoaded += viewModel.UpdateAlgorithmKeys;
+                updatableAssembleClasses.OnExceptionCaught += (ex, msg) =>
+                {
+                    OnExceptionCaught(ex, msg);
+                    Logger.Instance.Warn(ex);
+                };
                 updatableAssembleClasses.LoadClasses();
                 window.Closing += (sender, args) => updatableAssembleClasses.Interrupt();
                 viewModel.OnEventHappened += OnExternalEventHappened;
-                viewModel.EndPoints = EndPoints;
                 PrepareWindow(viewModel, window);
+            }
+            catch (SystemException ex)
+            {
+                OnExceptionCaught(ex);
+                Logger.Instance.Warn(ex);
             }
             catch (Exception ex)
             {

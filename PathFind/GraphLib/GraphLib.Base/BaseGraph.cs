@@ -18,7 +18,7 @@ namespace GraphLib.Base
 
         public int ObstaclePercent => Size == 0 ? 0 : Obstacles * 100 / Size;
 
-        public int Obstacles => vertices.Count(v => v.IsObstacle);
+        public int Obstacles => vertices.Values.Count(v => v.IsObstacle);
 
         protected BaseGraph(int numberOfDimensions, params int[] dimensionSizes)
         {
@@ -35,7 +35,7 @@ namespace GraphLib.Base
             }
 
             Size = DimensionsSizes.AggregateOrDefault((x, y) => x * y);
-            vertices = new IVertex[Size];
+            vertices = new Dictionary<ICoordinate, IVertex>(Size);
         }
 
         static BaseGraph()
@@ -43,34 +43,9 @@ namespace GraphLib.Base
             DimensionNames = new[] { "Width", "Length", "Height" };
         }
 
-        public IEnumerable<IVertex> Vertices => vertices;
+        public IEnumerable<IVertex> Vertices => vertices.Values;
 
         public IEnumerable<int> DimensionsSizes { get; }
-
-        public virtual IVertex this[IEnumerable<int> coordinateValues]
-        {
-            get
-            {
-                var coordinates = coordinateValues.ToArray();
-                return IsSuitableCoordinate(coordinates)
-               ? vertices[coordinates.ToIndex(DimensionsSizes.ToArray())]
-               : new DefaultVertex();
-            }
-            set
-            {
-                var coordinates = coordinateValues.ToArray();
-                if (IsSuitableCoordinate(coordinates))
-                {
-                    vertices[coordinates.ToIndex(DimensionsSizes.ToArray())] = value;
-                }
-            }
-        }
-
-        public virtual IVertex this[int index]
-        {
-            get => vertices[index];
-            set => vertices[index] = value;
-        }
 
         /// <summary>
         /// Get or sets vertex according to a <paramref name="coordinate"/>
@@ -80,8 +55,16 @@ namespace GraphLib.Base
         /// <exception cref="ArgumentException"></exception>
         public virtual IVertex this[ICoordinate coordinate]
         {
-            get => this[coordinate.CoordinatesValues];
-            set => this[coordinate.CoordinatesValues] = value;
+            get => IsSuitableCoordinate(coordinate) 
+                   && vertices.TryGetValue(coordinate, out var vertex)
+                    ? vertex : new DefaultVertex();
+            set
+            {
+                if (IsSuitableCoordinate(coordinate))
+                {
+                    vertices[coordinate] = value;
+                }
+            }
         }
 
         public override bool Equals(object obj)
@@ -128,9 +111,9 @@ namespace GraphLib.Base
             return graphParameters.ToString();
         }
 
-        private bool IsSuitableCoordinate(IEnumerable<int> coordinateValues)
+        private bool IsSuitableCoordinate(ICoordinate coordinate)
         {
-            var coordinates = coordinateValues.ToArray();
+            var coordinates = coordinate.CoordinatesValues.ToArray();
             if (!coordinates.Any())
             {
                 return false;
@@ -138,13 +121,13 @@ namespace GraphLib.Base
             if (coordinates.Length != DimensionsSizes.Count())
             {
                 var message = "Dimensions of graph and coordinate doesn't match\n";
-                throw new ArgumentException(message, nameof(coordinateValues));
+                throw new ArgumentException(message, nameof(coordinate));
             }
             return true;
         }
 
         protected static readonly string[] DimensionNames;
 
-        private readonly IVertex[] vertices;
+        private readonly Dictionary<ICoordinate, IVertex> vertices;
     }
 }

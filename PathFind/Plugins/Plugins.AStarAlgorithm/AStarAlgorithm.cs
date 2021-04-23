@@ -8,7 +8,8 @@ namespace Plugins.AStarAlgorithm
     [ClassName("A* algorithm")]
     public class AStarAlgorithm : DijkstraAlgorithm
     {
-        public AStarAlgorithm(IGraph graph) : base(graph)
+        public AStarAlgorithm(IGraph graph, IEndPoints endPoints) 
+            : base(graph, endPoints)
         {
 
         }

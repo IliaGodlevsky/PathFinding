@@ -10,6 +10,7 @@ using System.Runtime.CompilerServices;
 using System.Windows;
 using System.Windows.Input;
 using System.Windows.Threading;
+using GraphLib.Base;
 using WPFVersion.Infrastructure;
 
 namespace WPFVersion.ViewModel
@@ -38,8 +39,9 @@ namespace WPFVersion.ViewModel
             }
         }
 
-        public PathFindingViewModel(IAssembleClasses pluginsLoader, IMainModel model)
-            : base(pluginsLoader, model)
+        public PathFindingViewModel(IAssembleClasses pluginsLoader, 
+            IMainModel model, BaseEndPoints endPoints)
+            : base(pluginsLoader, model, endPoints)
         {
             ConfirmPathFindAlgorithmChoice = new RelayCommand(
                 ExecuteConfirmPathFindAlgorithmChoice,

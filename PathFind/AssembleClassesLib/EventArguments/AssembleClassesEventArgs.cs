@@ -7,9 +7,9 @@ namespace AssembleClassesLib.EventArguments
     {
         public IEnumerable<string> ClassesNames { get; }
 
-        public AssembleClassesEventArgs(IEnumerable<string> loadedPluginsNames)
+        public AssembleClassesEventArgs(IEnumerable<string> classesNames)
         {
-            ClassesNames = loadedPluginsNames;
+            ClassesNames = classesNames;
         }
     }
 }

@@ -1,19 +1,14 @@
 ﻿using Common.Extensions;
-using GraphLib.Common;
 using GraphLib.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using GraphLib.Common.NullObjects;
 
 namespace GraphLib.Extensions
 {
     public static class VertexExtension
     {
-        public static bool IsValidToBeEndPoint(this IVertex self)
-        {
-            return !self.IsIsolated();
-        }
-
         public static string GetInforamtion(this IVertex self)
         {
             string cost = self.Cost.CurrentCost.ToString();
@@ -45,6 +40,8 @@ namespace GraphLib.Extensions
             self.Neighbours = new List<IVertex>();
             self.SetToDefault();
             self.IsObstacle = false;
+            self.Position = new DefaultCoordinate();
+            self.Cost = new DefaultCost();
         }
 
         internal static void Refresh(this IVertex self)
@@ -59,8 +56,8 @@ namespace GraphLib.Extensions
         {
             bool hasEqualCost = self.Cost.Equals(vertex.Cost);
             bool hasEqualPosition = self.Position.Equals(vertex.Position);
-            bool areObstacles = self.IsObstacle == vertex.IsObstacle;
-            return hasEqualCost && hasEqualPosition && areObstacles;
+            bool hasSameObstacleStatus = self.IsObstacle == vertex.IsObstacle;
+            return hasEqualCost && hasEqualPosition && hasSameObstacleStatus;
         }
 
         /// <summary>
@@ -76,6 +73,7 @@ namespace GraphLib.Extensions
         public static void SetNeighbours(this IVertex self, IGraph graph)
         {
             #region InvariantsObservance
+
             var message = "An error was occured while setting vertices neighbours\n";
             if (graph == null)
             {
@@ -88,33 +86,27 @@ namespace GraphLib.Extensions
                 message += "Vertex doesn't belong to graph\n";
                 throw new ArgumentException(message, nameof(graph));
             }
+
+            if (!graph.Vertices.Any())
+            {
+                return;
+            }
+
             #endregion
 
-            bool IsWithingGraph(int[] coordinate) => coordinate.IsWithinGraph(graph);
-            IVertex Vertex(int[] coordinate) => graph[coordinate];
-            bool CanBeNeighbour(IVertex vertex) => vertex.CanBeNeighbourOf(self);
-
-            if (graph.Vertices.Any())
-            {
-                var coordinateRadar = new CoordinateAroundRadar(self.Position);
-                self.Neighbours = coordinateRadar
-                                    .Environment
-                                    .Which(IsWithingGraph)
-                                    .Select(Vertex)
-                                    .Which(CanBeNeighbour)
-                                    .ToList();
-            }
-        }
-
-        public static bool CanBeNeighbourOf(this IVertex self, IVertex vertex)
-        {
-            return !ReferenceEquals(vertex, self) && !self.IsNeighbourOf(vertex);
-        }
-
-        public static bool IsNeighbourOf(this IVertex self, IVertex vertex)
-        {
-            bool IsAtSamePosition(IVertex v) => v.Position.IsEqual(self.Position);
-            return vertex.Neighbours.Any(IsAtSamePosition);
+            ICoordinate Coordinate(IEnumerable<int> coordinates) => new Coordinate(coordinates);
+            IVertex Vertex(ICoordinate coordinate) => graph[coordinate];
+            bool IsWithingGraph(ICoordinate coordinate) => coordinate.IsWithinGraph(graph);
+            bool CanBeNeighbour(IVertex vertex) => graph.CanBeNeighbourOf(vertex, self);
+            
+            self.Neighbours = self
+                .CoordinateRadar
+                .Environment
+                .Select(Coordinate)
+                .Which(IsWithingGraph)
+                .Select(Vertex)
+                .Which(CanBeNeighbour)
+                .ToList();
         }
     }
 }

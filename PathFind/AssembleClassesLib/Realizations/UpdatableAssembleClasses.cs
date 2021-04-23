@@ -12,13 +12,18 @@ namespace AssembleClassesLib.Realizations
         : IAssembleClasses, IInterruptable, IDisposable
     {
         public event EventHandler OnInterrupted;
+        public event Action<Exception, string> OnExceptionCaught;
 
-        public UpdatableAssembleClasses(IAssembleClasses assembleClasses)
+        public UpdatableAssembleClasses(AssembleClasses assembleClasses)
+           : this((IAssembleClasses)assembleClasses)
         {
-            this.assembleClasses = assembleClasses;
-            ClassesNames = assembleClasses.ClassesNames;
-            tokenSource = new CancellationTokenSource();
-            token = tokenSource.Token;
+            
+        }
+
+        public UpdatableAssembleClasses(INotifingAssembleClasses assembleClasses)
+            : this((IAssembleClasses)assembleClasses)
+        {
+
         }
 
         public IReadOnlyCollection<string> ClassesNames { get; private set; }
@@ -34,8 +39,15 @@ namespace AssembleClassesLib.Realizations
             {
                 while (!token.IsCancellationRequested)
                 {
-                    assembleClasses.LoadClasses();
-                    ClassesNames = assembleClasses.ClassesNames;
+                    try
+                    {
+                        assembleClasses.LoadClasses();
+                        ClassesNames = assembleClasses.ClassesNames;
+                    }
+                    catch (Exception ex)
+                    {
+                        OnExceptionCaught?.Invoke(ex, string.Empty);
+                    }
                 }
             }, token);
         }
@@ -52,6 +64,14 @@ namespace AssembleClassesLib.Realizations
             tokenSource.Cancel();
             tokenSource.Dispose();
             OnInterrupted = null;
+        }
+
+        private UpdatableAssembleClasses(IAssembleClasses assembleClasses)
+        {
+            this.assembleClasses = assembleClasses;
+            ClassesNames = assembleClasses.ClassesNames;
+            tokenSource = new CancellationTokenSource();
+            token = tokenSource.Token;
         }
 
         private readonly IAssembleClasses assembleClasses;

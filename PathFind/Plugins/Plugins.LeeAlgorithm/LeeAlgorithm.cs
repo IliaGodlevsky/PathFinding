@@ -7,20 +7,23 @@ using Common.Extensions;
 using GraphLib.Interfaces;
 using System.Collections.Generic;
 using System.Linq;
+using Algorithm.Base.CompanionClasses;
+using Algorithm.Сompanions;
 
 namespace Plugins.LeeAlgorithm
 {
     [ClassName("Lee algorithm")]
     public class LeeAlgorithm : BaseAlgorithm
     {
-        public LeeAlgorithm(IGraph graph) : base(graph)
+        public LeeAlgorithm(IGraph graph, IEndPoints endPoints) 
+            : base(graph, endPoints)
         {
             verticesQueue = new Queue<IVertex>();
         }
 
-        public override IGraphPath FindPath(IEndPoints endpoints)
+        public override IGraphPath FindPath()
         {
-            PrepareForPathfinding(endpoints);
+            PrepareForPathfinding();
             do
             {
                 ExtractNeighbours();
@@ -30,18 +33,18 @@ namespace Plugins.LeeAlgorithm
             } while (!IsDestination());
             CompletePathfinding();
 
-            return new GraphPath(parentVertices, endpoints);
+            return new GraphPath(parentVertices, endPoints, graph);
         }
 
-        protected override void PrepareForPathfinding(IEndPoints endpoints)
+        protected override void PrepareForPathfinding()
         {
-            base.PrepareForPathfinding(endpoints);
-            SetVerticesAccumulatedCostToZero();
+            base.PrepareForPathfinding();
+            accumulatedCosts = new AccumulatedCosts(graph, 0);
         }
 
         protected virtual void VisitVertex(IVertex vertex)
         {
-            visitedVertices[vertex.Position] = vertex;
+            visitedVertices.Add(vertex);
             var args = CreateEventArgs(vertex);
             RaiseOnVertexVisitedEvent(args);
         }
@@ -57,7 +60,7 @@ namespace Plugins.LeeAlgorithm
             get
             {
                 verticesQueue = verticesQueue
-                    .Where(VertexIsNotVisited)
+                    .Where(visitedVertices.IsNotVisited)
                     .ToQueue();
                 return verticesQueue.DequeueOrDefault();
             }
@@ -65,37 +68,33 @@ namespace Plugins.LeeAlgorithm
 
         protected virtual double CreateWave()
         {
-            return GetAccumulatedCost(CurrentVertex) + 1;
+            return accumulatedCosts.GetAccumulatedCost(CurrentVertex) + 1;
         }
 
         protected virtual void SpreadWave(IVertex vertex)
         {
-            accumulatedCosts[vertex.Position] = CreateWave();
-            parentVertices[vertex.Position] = CurrentVertex;
+            accumulatedCosts.Reevaluate(vertex, CreateWave());
+            parentVertices.Add(vertex, CurrentVertex);
         }
 
         protected bool VertexIsUnwaved(IVertex vertex)
         {
-            return accumulatedCosts[vertex.Position] == 0;
-        }
-
-        protected void SetVertexAccumulatedCostToZero(IVertex vertex)
-        {
-            accumulatedCosts[vertex.Position] = 0;
+            return accumulatedCosts.GetAccumulatedCost(vertex) == 0;
         }
 
         protected Queue<IVertex> verticesQueue;
 
         private void SpreadWaves()
         {
-            GetUnvisitedNeighbours(CurrentVertex)
+            visitedVertices
+                .GetUnvisitedNeighbours(CurrentVertex)
                 .Where(VertexIsUnwaved)
                 .ForEach(SpreadWave);
         }
 
         private void ExtractNeighbours()
         {
-            var neighbours = GetUnvisitedNeighbours(CurrentVertex);
+            var neighbours = visitedVertices.GetUnvisitedNeighbours(CurrentVertex);
 
             foreach (var neighbour in neighbours)
             {
@@ -105,15 +104,8 @@ namespace Plugins.LeeAlgorithm
             }
 
             verticesQueue = verticesQueue
-                .DistinctBy(GetPosition)
+                .DistinctBy(Position)
                 .ToQueue();
-        }
-
-        private void SetVerticesAccumulatedCostToZero()
-        {
-            graph.Vertices
-                .Where(VertexIsNotObstacle)
-                .ForEach(SetVertexAccumulatedCostToZero);
         }
     }
 }

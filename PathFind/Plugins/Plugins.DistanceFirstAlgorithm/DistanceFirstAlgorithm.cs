@@ -4,7 +4,6 @@ using Algorithm.Interfaces;
 using Algorithm.Realizations;
 using AssembleClassesLib.Attributes;
 using Common.Extensions;
-using GraphLib.Base;
 using GraphLib.Interfaces;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,19 +13,15 @@ namespace Plugins.DistanceFirstAlgorithm
     [ClassName("Distance-first algorithm")]
     public class DistanceFirstAlgorithm : BaseAlgorithm
     {
-        public DistanceFirstAlgorithm() : this(BaseGraph.NullGraph)
-        {
-
-        }
-
-        public DistanceFirstAlgorithm(IGraph graph) : base(graph)
+        public DistanceFirstAlgorithm(IGraph graph, IEndPoints endPoints) 
+            : base(graph, endPoints)
         {
             visitedVerticesStack = new Stack<IVertex>();
         }
 
-        public override IGraphPath FindPath(IEndPoints endpoints)
+        public override IGraphPath FindPath()
         {
-            PrepareForPathfinding(endpoints);
+            PrepareForPathfinding();
             while (!IsDestination())
             {
                 PreviousVertex = CurrentVertex;
@@ -35,7 +30,7 @@ namespace Plugins.DistanceFirstAlgorithm
             }
             CompletePathfinding();
 
-            return new GraphPath(parentVertices, endpoints);
+            return new GraphPath(parentVertices, endPoints, graph);
         }
 
         protected virtual double CalculateHeuristic(IVertex vertex)
@@ -53,7 +48,8 @@ namespace Plugins.DistanceFirstAlgorithm
         {
             get
             {
-                var neighbours = GetUnvisitedNeighbours(CurrentVertex).ToArray();
+                var neighbours = visitedVertices
+                    .GetUnvisitedNeighbours(CurrentVertex).ToArray();
 
                 bool IsLeastCostVertex(IVertex vertex)
                 {
@@ -69,7 +65,7 @@ namespace Plugins.DistanceFirstAlgorithm
 
         private void VisitCurrentVertex()
         {
-            visitedVertices[CurrentVertex.Position] = CurrentVertex;
+            visitedVertices.Add(CurrentVertex);
             var args = CreateEventArgs(CurrentVertex);
             RaiseOnVertexVisitedEvent(args);
             visitedVerticesStack.Push(CurrentVertex);
@@ -90,7 +86,7 @@ namespace Plugins.DistanceFirstAlgorithm
             else
             {
                 VisitCurrentVertex();
-                parentVertices[CurrentVertex.Position] = PreviousVertex;
+                parentVertices.Add(CurrentVertex, PreviousVertex);
             }
         }
 

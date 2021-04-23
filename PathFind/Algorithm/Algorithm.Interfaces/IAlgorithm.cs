@@ -1,6 +1,5 @@
 ﻿using Algorithm.Infrastructure.Handlers;
 using Common.Interface;
-using GraphLib.Interfaces;
 using System;
 
 namespace Algorithm.Interfaces
@@ -30,6 +29,6 @@ namespace Algorithm.Interfaces
         /// <summary>
         /// Starts path finding
         /// </summary>
-        IGraphPath FindPath(IEndPoints endPoints);
+        IGraphPath FindPath();
     }
 }

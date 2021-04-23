@@ -51,19 +51,15 @@ namespace Common.Extensions
         /// <returns>Random element of <paramref name="self"/></returns>
         public static TSource GetRandomElement<TSource>(this IEnumerable<TSource> self)
         {
-            var index = rand.Next(self.Count());
-            return self.ElementAt(index);
+            var collection = self.ToArray();
+            var index = rand.Next(collection.Length);
+            return collection[index];
         }
 
         public static IEnumerable<TSource> Which<TSource>(this IEnumerable<TSource> self,
             Func<TSource, bool> predicate)
         {
             return self.Where(predicate);
-        }
-
-        public static IEnumerable<TSource> Shuffle<TSource>(this IEnumerable<TSource> self)
-        {
-            return self.OrderBy(item => rand.Next());
         }
 
         /// <summary>
@@ -86,23 +82,21 @@ namespace Common.Extensions
             return collection;
         }
 
-        /// <summary>
-        /// Applies delegate <paramref name="action"/> 
-        /// to each element of <paramref name="collection"/>
-        /// adding array index
-        /// </summary>
-        /// <typeparam name="T"></typeparam>
-        /// <param name="self"></param>
-        /// <param name="action"></param>
-        /// <returns></returns>
-        public static IEnumerable<T> ForEach<T>(this IEnumerable<T> self,
-            Action<T, int> action)
+        public static IEnumerable<T> Except<T>(this IEnumerable<T> collection, params T[] items)
         {
-            Enumerable
-                .Range(0, self.Count())
-                .ForEach(i => action(self.ElementAt(i), i));
+            return collection.Except(items.AsEnumerable());
+        }
 
-            return self;
+        public static IEnumerable<T> ForEach<T>(this IEnumerable<T> collection, Action<T, int> action)
+        {
+            var temp = collection.ToArray();
+
+            for (int i = 0; i < temp.Length; i++)
+            {
+                action(temp[i], i);
+            }
+
+            return temp;
         }
 
         /// <summary>
@@ -113,18 +107,6 @@ namespace Common.Extensions
         /// <returns>Maximum int value or 0 if 
         /// <paramref name="collection"/> is empty</returns>
         public static int MaxOrDefault(this IEnumerable<int> collection)
-        {
-            return collection.Any() ? collection.Max() : default;
-        }
-
-        /// <summary>
-        /// Maximum double value of <paramref name="collection"/> 
-        /// or 0 if <paramref name="collection"/> is empty
-        /// </summary>
-        /// <param name="collection"></param>
-        /// <returns>Maximum double value or 0 if 
-        /// <paramref name="collection"/> is empty</returns>
-        public static double MaxOrDefault(this IEnumerable<double> collection)
         {
             return collection.Any() ? collection.Max() : default;
         }

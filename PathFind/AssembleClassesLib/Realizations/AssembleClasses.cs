@@ -25,9 +25,9 @@ namespace AssembleClassesLib.Realizations
 
         public IReadOnlyCollection<string> ClassesNames { get; protected set; }
 
-        public virtual object Get(string key, params object[] parametres)
+        public virtual object Get(string name, params object[] parametres)
         {
-            return types.TryGetValue(key, out var type)
+            return types.TryGetValue(name, out var type)
                 ? Activator.CreateInstance(type, parametres)
                 : default;
         }
@@ -87,8 +87,9 @@ namespace AssembleClassesLib.Realizations
         }
 
         protected Dictionary<string, Type> types;
-        private const string SearchPattern = "*.dll";
         private readonly string loadPath;
         private readonly SearchOption searchOption;
+
+        private const string SearchPattern = "*.dll";
     }
 }

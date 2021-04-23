@@ -18,9 +18,5 @@ namespace GraphLib.Interfaces
         IEnumerable<int> DimensionsSizes { get; }
 
         IVertex this[ICoordinate coordinate] { get; set; }
-
-        IVertex this[IEnumerable<int> coordinateValues] { get; set; }
-
-        IVertex this[int index] { get; set; }
     }
 }

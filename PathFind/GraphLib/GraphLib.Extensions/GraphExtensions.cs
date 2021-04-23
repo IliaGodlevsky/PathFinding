@@ -2,7 +2,6 @@
 using Common.Extensions;
 using GraphLib.Interfaces;
 using System;
-using System.Collections.Generic;
 using System.Linq;
 
 namespace GraphLib.Extensions
@@ -16,6 +15,17 @@ namespace GraphLib.Extensions
         public static void Refresh(this IGraph graph)
         {
             graph.Vertices.ForEach(vertex => vertex.Refresh());
+        }
+
+        public static bool AreNeighbours(this IGraph self, IVertex first, IVertex second)
+        {
+            bool IsAtSamePosition(IVertex v) => v.Position.IsEqual(first.Position);
+            return second.Neighbours.Any(IsAtSamePosition) && self.Contains(first, second);
+        }
+
+        public static bool CanBeNeighbourOf(this IGraph self, IVertex first, IVertex second)
+        {
+            return !ReferenceEquals(first, second) && !self.AreNeighbours(first, second);
         }
 
         public static void ToUnweighted(this IGraph graph)
@@ -32,6 +42,11 @@ namespace GraphLib.Extensions
                 .ForEach(vertex => vertex.MakeWeighted());
         }
 
+        public static bool IsEmpty(this IGraph self)
+        {
+            return !self.Vertices.Any();
+        }
+
         public static bool IsEqual(this IGraph self, IGraph graph)
         {
             bool hasEqualDimensionSizes = self.DimensionsSizes.SequenceEqual(graph.DimensionsSizes);
@@ -40,9 +55,9 @@ namespace GraphLib.Extensions
             return hasEqualNumberOfObstacles && hasEqualVertices && hasEqualDimensionSizes;
         }
 
-        public static void ConnectVerticesParallel(this IGraph self)
+        public static void ConnectVertices(this IGraph self)
         {
-            self.Vertices.AsParallel().ForAll(vertex => vertex.SetNeighbours(self));
+            self.Vertices.ForEach(vertex => vertex.SetNeighbours(self));
         }
 
         public static bool Contains(this IGraph self, params IVertex[] vertices)
@@ -60,30 +75,37 @@ namespace GraphLib.Extensions
             return self.Contains(endPoints.Start, endPoints.End);
         }
 
-        public static IEnumerable<int> ToCoordinates(this IGraph self, int index)
+        public static int[] ToCoordinates(this IGraph self, int index)
         {
             var dimensions = self.DimensionsSizes.ToArray();
 
+            #region Invariant observance
             if (!dimensions.Any())
             {
                 throw new ArgumentException("Dimensions count must be greater than 0");
             }
 
-            var rangeOfValidIndexValues = new ValueRange(self.Size, 0);
-            if (!rangeOfValidIndexValues.Contains(index))
+            var rangeOfValidIndices = new ValueRange(self.Size, 0);
+            if (!rangeOfValidIndices.Contains(index))
             {
                 throw new ArgumentOutOfRangeException(nameof(index));
             }
+            #endregion
 
-            int Coordinates(int i) => GetCoordinateValue(ref index, dimensions[i]);
-            return Enumerable.Range(0, dimensions.Length).Select(Coordinates);
-        }
+            #region Helper methods
+            int GetCoordinateValue(int dimensionSize)
+            {
+                int coordinate = index % dimensionSize;
+                index /= dimensionSize;
+                return coordinate;
+            }
+            int Coordinates(int i) => GetCoordinateValue(dimensions[i]);
+            #endregion
 
-        private static int GetCoordinateValue(ref int index, int dimensionSize)
-        {
-            int coordinate = index % dimensionSize;
-            index /= dimensionSize;
-            return coordinate;
+            return Enumerable
+                .Range(0, dimensions.Length)
+                .Select(Coordinates)
+                .ToArray();
         }
     }
 }

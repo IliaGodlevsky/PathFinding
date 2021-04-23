@@ -8,6 +8,7 @@ using GraphLib.Serialization.Extensions;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
+using GraphLib.Common;
 using Console = Colorful.Console;
 
 namespace ConsoleVersion.Model
@@ -41,6 +42,8 @@ namespace ConsoleVersion.Model
                 }
             }
         }
+
+        public ICoordinateRadar CoordinateRadar => new CoordinateAroundRadar(Position);
 
         public string Text { get; set; }
 

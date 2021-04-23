@@ -45,6 +45,10 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\Algorithm.Сompanions\Algorithm.Сompanions.csproj">
+      <Project>{8A717526-D82A-4409-B3B4-5979820253AF}</Project>
+      <Name>Algorithm.Сompanions</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\Algorithm\Algorithm.Base\Algorithm.Base.csproj">
       <Project>{04393071-3ba6-42c5-89d8-a89e3ac34511}</Project>
       <Name>Algorithm.Base</Name>
@@ -84,6 +88,10 @@
     <ProjectReference Include="..\..\GraphLib\GraphLib.Common\GraphLib.Common.csproj">
       <Project>{3cd8330e-9445-4dc4-a1da-ee704f652942}</Project>
       <Name>GraphLib.Common</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\GraphLib\GraphLib.Extensions\GraphLib.Extensions.csproj">
+      <Project>{93F88F47-1871-44CD-9622-EB8D406C969C}</Project>
+      <Name>GraphLib.Extensions</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\GraphLib\GraphLib.Interfaces\GraphLib.Interfaces.csproj">
       <Project>{d3c5ccfe-698b-41c7-9a72-5fd0262765e1}</Project>

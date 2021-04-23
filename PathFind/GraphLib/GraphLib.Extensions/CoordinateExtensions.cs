@@ -1,5 +1,7 @@
-﻿using GraphLib.Interfaces;
+﻿using System;
+using GraphLib.Interfaces;
 using System.Linq;
+using Common.Extensions;
 
 namespace GraphLib.Extensions
 {
@@ -24,6 +26,43 @@ namespace GraphLib.Extensions
             #endregion
 
             return self.CoordinatesValues.SequenceEqual(coordinate.CoordinatesValues);
+        }
+
+        /// <summary>
+        /// Checks whether coordinate is within graph
+        /// </summary>
+        /// <param name="self"></param>
+        /// <param name="graph"></param>
+        /// <returns>true if <paramref name="self"/> coordinates 
+        /// values is not greater than the corresponding dimension if graph 
+        /// and is not lesser than 0; false if it is or coordinate has more or 
+        /// less coordinates values than <paramref name="graph"/> has dimensions</returns>
+        /// <exception cref="ArgumentNullException">Thrown when any of parametres is null</exception>
+        public static bool IsWithinGraph(this ICoordinate self, IGraph graph)
+        {
+            bool IsWithin(int coordinate, int graphDimension)
+                => coordinate < graphDimension && coordinate >= 0;
+
+            return IsWithinGraph(self, graph, IsWithin);
+        }
+
+        /// <summary>
+        /// Checks whether coordinate is within graph according to <paramref name="predicate"/>
+        /// </summary>
+        /// <param name="self"></param>
+        /// <param name="graph"></param>
+        /// <param name="predicate"></param>
+        /// <exception cref="ArgumentNullException">Thrown when any of parametres is null</exception>
+        public static bool IsWithinGraph(this ICoordinate self, IGraph graph, Func<int, int, bool> predicate)
+        {
+            #region InvariantsObservance
+            if (graph == null)
+            {
+                throw new ArgumentNullException(nameof(graph), "Argument can't be null");
+            }
+            #endregion
+
+            return self.CoordinatesValues.Match(graph.DimensionsSizes, predicate);
         }
     }
 }

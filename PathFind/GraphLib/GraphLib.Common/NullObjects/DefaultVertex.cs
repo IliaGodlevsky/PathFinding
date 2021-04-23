@@ -16,5 +16,7 @@ namespace GraphLib.Common.NullObjects
         public ICoordinate Position { get => new DefaultCoordinate(); set { } }
 
         public bool Equals(IVertex other) => other is DefaultVertex;
+
+        public ICoordinateRadar CoordinateRadar => new DefaultCoordinateRadar();
     }
 }

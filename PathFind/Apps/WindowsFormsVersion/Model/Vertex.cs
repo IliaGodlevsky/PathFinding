@@ -6,6 +6,7 @@ using GraphLib.Serialization.Extensions;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Windows.Forms;
+using GraphLib.Common;
 using static WindowsFormsVersion.Constants;
 
 namespace WindowsFormsVersion.Model
@@ -36,6 +37,8 @@ namespace WindowsFormsVersion.Model
                 Text = cost.ToString();
             }
         }
+
+        public ICoordinateRadar CoordinateRadar => new CoordinateAroundRadar(Position);
 
         public ICoordinate Position { get; set; }
 

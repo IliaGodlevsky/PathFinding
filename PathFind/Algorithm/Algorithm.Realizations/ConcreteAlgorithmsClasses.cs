@@ -53,8 +53,8 @@ namespace Algorithm.Realizations
 
         private bool IsConcreteAlgorithm(KeyValuePair<string, Type> algo)
         {
-            return !algo.Value.IsFilterable()
-                   && !algo.Value.IsAbstract
+            return !algo.Value.IsFilterable() 
+                   && !algo.Value.IsAbstract 
                    && baseType.IsAssignableFrom(algo.Value);
         }
 

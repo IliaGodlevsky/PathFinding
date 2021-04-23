@@ -5,6 +5,7 @@ using GraphLib.Serialization.Extensions;
 using System.Collections.Generic;
 using System.Windows.Controls;
 using System.Windows.Media;
+using GraphLib.Common;
 using static WPFVersion.Constants;
 
 namespace WPFVersion.Model
@@ -53,6 +54,8 @@ namespace WPFVersion.Model
                     MarkAsObstacle();
             }
         }
+
+        public ICoordinateRadar CoordinateRadar => new CoordinateAroundRadar(Position);
 
         private IVertexCost cost;
         public IVertexCost Cost

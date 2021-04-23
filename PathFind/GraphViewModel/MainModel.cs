@@ -7,7 +7,7 @@ using GraphLib.Serialization.Interfaces;
 using GraphViewModel.Interfaces;
 using System;
 using System.IO;
-using System.Threading.Tasks;
+using GraphLib.Serialization.Exceptions;
 
 namespace GraphViewModel
 {
@@ -31,6 +31,11 @@ namespace GraphViewModel
         {
             this.eventHolder = eventHolder;
             serializer = graphSerializer;
+            graphSerializer.OnExceptionCaught += (ex, msg) =>
+            {
+                OnExceptionCaught(ex, msg);
+                Logger.Instance.Warn(ex);
+            };
             this.fieldFactory = fieldFactory;
             this.graphAssembler = graphAssembler;
             this.pathInput = pathInput;
@@ -46,18 +51,7 @@ namespace GraphViewModel
             {
                 using (var stream = new FileStream(savePath, FileMode.OpenOrCreate))
                 {
-                    await Task.Run(() =>
-                    {
-                        try
-                        {
-                            serializer.SaveGraph(Graph, stream);
-                        }
-                        catch (Exception ex)
-                        {
-                            OnExceptionCaught(ex);
-                            Logger.Instance.Warn(ex);
-                        }
-                    });
+                    await serializer.SaveGraphAsync(Graph, stream);
                 }
             }
             catch (Exception ex)
@@ -116,7 +110,6 @@ namespace GraphViewModel
         protected abstract string GetAlgorithmsLoadPath();
         protected abstract void OnExternalEventHappened(string message);
         protected abstract void OnExceptionCaught(Exception ex, string additaionalMessage = "");
-
 
         protected readonly IGraphAssembler graphAssembler;
         protected readonly BaseGraphFieldFactory fieldFactory;

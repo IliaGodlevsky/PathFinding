@@ -7,16 +7,17 @@ namespace Common
     /// <summary>
     /// Waits for some amount of time
     /// </summary>
-    public class Interrupter : ISuspendable
+    public sealed class Interrupter : ISuspendable
     {
         public event Action OnSuspended;
 
-        public Interrupter()
+        public Interrupter(int waitDuration)
         {
             timer = new Stopwatch();
+            this.waitDuration = waitDuration;
         }
 
-        public void Suspend(int waitDuration)
+        public void Suspend()
         {
             timer.Reset();
             timer.Start();
@@ -30,5 +31,6 @@ namespace Common
         }
 
         private readonly Stopwatch timer;
+        private readonly int waitDuration;
     }
 }

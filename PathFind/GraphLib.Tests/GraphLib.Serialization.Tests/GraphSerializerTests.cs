@@ -6,6 +6,7 @@ using NUnit.Framework;
 using System.IO;
 using System.Runtime.Serialization;
 using System.Runtime.Serialization.Formatters.Binary;
+using GraphLib.Serialization.Exceptions;
 
 namespace GraphLib.Serialization.Tests
 {
@@ -17,8 +18,9 @@ namespace GraphLib.Serialization.Tests
         private readonly IGraphFactory graphFactory;
         private readonly IVertexFactory vertexFactory;
         private readonly ICoordinateFactory coordinateFactory;
+        private readonly ICoordinateFactory notSerializableCoordinateFactory;
         private readonly IVertexCostFactory costFactory;
-        private readonly IGraphAssembler graphAssembler;
+        private IGraphAssembler graphAssembler;
 
         public GraphSerializerTests()
         {
@@ -26,14 +28,12 @@ namespace GraphLib.Serialization.Tests
             graphFactory = new TestGraphFactory();
             vertexConverter = new TestVertexInfoSerializationConverter();
             vertexFactory = new TestVertexFactory();
+            notSerializableCoordinateFactory = new NotSerializableCoordinateFactory();
             coordinateFactory = new TestCoordinateFactory();
             costFactory = new TestCostFactory();
-            graphAssembler = new GraphAssembler(
-                vertexFactory,
-                coordinateFactory,
-                graphFactory,
-                costFactory);
         }
+
+
 
         [TestCase(15, new[] { 11, 9, 10 })]
         [TestCase(22, new[] { 25, 25 })]
@@ -41,6 +41,12 @@ namespace GraphLib.Serialization.Tests
         public void SaveGraph_LoadGraph_ReturnsEqualGraph(
             int obstaclePercent, int[] graphParams)
         {
+            graphAssembler = new GraphAssembler(
+                vertexFactory,
+                coordinateFactory,
+                graphFactory,
+                costFactory);
+
             IGraph deserialized;
             var graph = graphAssembler.AssembleGraph(
                 obstaclePercent, graphParams);
@@ -56,6 +62,31 @@ namespace GraphLib.Serialization.Tests
 
             Assert.AreEqual(graph, deserialized);
             Assert.AreNotSame(graph, deserialized);
+        }
+
+        [TestCase(22, new[] { 14, 11 })]
+        public void SaveGraph_LoadGraph_NotSerializableCoordinate_ThrowsCantSerializeGraphException(
+            int obstaclePercent, int[] graphParams)
+        {
+            graphAssembler = new GraphAssembler(
+                vertexFactory,
+                notSerializableCoordinateFactory,
+                graphFactory,
+                costFactory);
+            var graph = graphAssembler.AssembleGraph(
+                obstaclePercent, graphParams);
+            var serializer = new GraphSerializer(
+                formatter, vertexConverter, graphFactory);
+
+            Assert.Throws<CantSerializeGraphException>(() =>
+            {
+                using var stream = new MemoryStream();
+                {
+                    serializer.SaveGraph(graph, stream);
+                    stream.Seek(0, SeekOrigin.Begin);
+                    serializer.LoadGraph(stream);
+                }
+            });
         }
     }
 }

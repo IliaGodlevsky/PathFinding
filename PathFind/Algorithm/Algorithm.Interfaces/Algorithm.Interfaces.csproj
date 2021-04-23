@@ -41,6 +41,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="IAccumulatedCosts.cs" />
     <Compile Include="IAlgorithm.cs" />
     <Compile Include="IGraphPath.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

@@ -1,14 +1,13 @@
-﻿using Algorithm.Common;
+﻿using Algorithm.Base.CompanionClasses;
+using Algorithm.Common;
 using Algorithm.Infrastructure.EventArguments;
 using Algorithm.Infrastructure.Handlers;
 using Algorithm.Interfaces;
 using Common.Extensions;
-using GraphLib.Common.NullObjects;
 using GraphLib.Extensions;
 using GraphLib.Interfaces;
 using System;
-using System.Collections.Generic;
-using System.Linq;
+using Algorithm.Сompanions;
 
 namespace Algorithm.Base
 {
@@ -22,7 +21,7 @@ namespace Algorithm.Base
         public event AlgorithmEventHandler OnVertexEnqueued;
         public event EventHandler OnInterrupted;
 
-        public abstract IGraphPath FindPath(IEndPoints endPoints);
+        public abstract IGraphPath FindPath();
 
         public virtual void Interrupt()
         {
@@ -31,9 +30,11 @@ namespace Algorithm.Base
             OnInterrupted?.Invoke(this, args);
         }
 
-        protected BaseAlgorithm(IGraph graph) : this()
+        protected BaseAlgorithm(IGraph graph, IEndPoints endPoints) 
+            : this()
         {
             this.graph = graph;
+            this.endPoints = new EndPoints(endPoints);
         }
 
         protected virtual void Reset()
@@ -45,7 +46,6 @@ namespace Algorithm.Base
             OnInterrupted = null;
             visitedVertices.Clear();
             parentVertices.Clear();
-            accumulatedCosts.Clear();
             isInterruptRequested = false;
         }
 
@@ -56,8 +56,8 @@ namespace Algorithm.Base
         protected virtual bool IsDestination()
         {
             return CurrentVertex.IsEqual(endPoints.End)
-                || CurrentVertex.IsDefault()
-                || isInterruptRequested;
+                   || CurrentVertex.IsDefault()
+                   || isInterruptRequested;
         }
 
         protected void RaiseOnAlgorithmStartedEvent(AlgorithmEventArgs e)
@@ -80,73 +80,34 @@ namespace Algorithm.Base
             OnVertexEnqueued?.Invoke(this, e);
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="endpoints"></param>
-        /// <exception cref="ArgumentException"></exception>
-        protected virtual void PrepareForPathfinding(IEndPoints endpoints)
+        protected virtual void PrepareForPathfinding()
         {
-            if (graph.Contains(endpoints))
+            if (graph.Contains(endPoints))
             {
-                endPoints = endpoints;
                 CurrentVertex = endPoints.Start;
-                visitedVertices[CurrentVertex.Position] = CurrentVertex;
+                visitedVertices.Add(CurrentVertex);
                 var args = CreateEventArgs(CurrentVertex);
                 RaiseOnAlgorithmStartedEvent(args);
                 return;
             }
 
-            string paramName = nameof(endpoints);
-            string graphName = nameof(graph);
-            string message = $"{paramName} don't belong to {graphName}";
-            throw new ArgumentException(message);
+            throw new ArgumentException($"{nameof(endPoints)} don't belong to {nameof(graph)}");
         }
 
         protected virtual void CompletePathfinding()
         {
-            var visitedCount = visitedVertices.Count(IsNotDefault);
-            var args = new AlgorithmEventArgs(visitedCount);
+            var args = CreateEventArgs(CurrentVertex);
             RaiseOnAlgorithmFinishedEvent(args);
         }
 
         protected AlgorithmEventArgs CreateEventArgs(IVertex vertex)
         {
-            int visitedCount = visitedVertices.Count;
-            bool isEndPoint = endPoints.IsEndPoint(vertex);
-            return new AlgorithmEventArgs(visitedCount, isEndPoint, vertex);
+            return new AlgorithmEventArgs(visitedVertices.Count, endPoints, vertex);
         }
 
-        protected bool IsNotDefault(KeyValuePair<ICoordinate, IVertex> vertex)
-        {
-            return !vertex.Value.IsDefault();
-        }
-
-        protected IEnumerable<IVertex> GetUnvisitedNeighbours(IVertex vertex)
-        {
-            return vertex.Neighbours
-                .Where(VertexIsNotVisited)
-                .Where(VertexIsNotObstacle);
-        }
-
-        protected bool VertexIsNotVisited(IVertex vertex)
-        {
-            return !visitedVertices.TryGetValue(vertex.Position, out _);
-        }
-
-        protected bool VertexIsNotObstacle(IVertex vertex)
-        {
-            return !vertex.IsObstacle;
-        }
-
-        protected ICoordinate GetPosition(IVertex vertex)
+        protected ICoordinate Position(IVertex vertex)
         {
             return vertex.Position;
-        }
-
-        protected virtual double GetAccumulatedCost(IVertex vertex)
-        {
-            return accumulatedCosts[vertex.Position];
         }
 
         public void Dispose()
@@ -154,19 +115,17 @@ namespace Algorithm.Base
             Reset();
         }
 
-        protected Dictionary<ICoordinate, IVertex> visitedVertices;
-        protected Dictionary<ICoordinate, IVertex> parentVertices;
-        protected Dictionary<ICoordinate, double> accumulatedCosts;
+        protected readonly VisitedVertices visitedVertices;
+        protected readonly ParentVertices parentVertices;
+        protected IAccumulatedCosts accumulatedCosts;
 
-        protected IGraph graph;
-        protected IEndPoints endPoints;
+        protected readonly IGraph graph;
+        protected readonly EndPoints endPoints;
 
         private BaseAlgorithm()
         {
-            graph = new NullGraph();
-            visitedVertices = new Dictionary<ICoordinate, IVertex>();
-            parentVertices = new Dictionary<ICoordinate, IVertex>();
-            accumulatedCosts = new Dictionary<ICoordinate, double>();
+            visitedVertices = new VisitedVertices();
+            parentVertices = new ParentVertices();
         }
 
         private bool isInterruptRequested;

@@ -17,6 +17,7 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
+
 using static GraphViewModel.Resources.ViewModelResources;
 
 namespace GraphViewModel
@@ -25,15 +26,14 @@ namespace GraphViewModel
     {
         public event Action<string> OnEventHappened;
 
-        public BaseEndPoints EndPoints { get; set; }
-
         public int DelayTime { get; set; }
 
         public string AlgorithmKey { get; set; }
 
         public virtual IList<string> AlgorithmKeys { get; set; }
 
-        protected PathFindingModel(IAssembleClasses algorithms, IMainModel mainViewModel)
+        protected PathFindingModel(IAssembleClasses algorithms, 
+            IMainModel mainViewModel, BaseEndPoints endPoints)
         {
             AlgorithmKeys = algorithms.ClassesNames.ToList();
             this.mainViewModel = mainViewModel;
@@ -43,16 +43,16 @@ namespace GraphViewModel
             algorithm = new DefaultAlgorithm();
             graph = mainViewModel.Graph;
             assembleClasses = algorithms;
+            this.endPoints = endPoints;
         }
 
         public virtual void FindPath()
         {
             try
             {
-                algorithm = (IAlgorithm)assembleClasses.Get(AlgorithmKey, graph);
-                interrupter = new Interrupter();
+                algorithm = (IAlgorithm) assembleClasses.Get(AlgorithmKey, graph, endPoints);
                 SubscribeOnAlgorithmEvents();
-                path = algorithm.FindPath(EndPoints);
+                path = algorithm.FindPath();
                 Summarize();
             }
             catch (AlgorithmInterruptedException ex)
@@ -67,7 +67,7 @@ namespace GraphViewModel
             finally
             {
                 algorithm.Dispose();
-                EndPoints.Reset();
+                endPoints.Reset();
             }
         }
 
@@ -76,7 +76,6 @@ namespace GraphViewModel
             var currentLoadedPluginsKeys = e.ClassesNames.ToArray();
             var addedAlgorithms = currentLoadedPluginsKeys.Except(AlgorithmKeys).ToArray();
             var deletedAlgorithms = AlgorithmKeys.Except(currentLoadedPluginsKeys).ToArray();
-
             if (addedAlgorithms.Any())
             {
                 AlgorithmKeys.AddRange(addedAlgorithms);
@@ -106,15 +105,12 @@ namespace GraphViewModel
                 {
                     vertex.MarkAsVisited();
                 }
-
                 visitedVerticesCount = args.VisitedVertices;
                 string statistics = GetStatistics(timer);
                 mainViewModel.PathFindingStatistics = statistics;
             }
-
             ColorizeProcessedVertices();
-
-            interrupter.Suspend(DelayTime);
+            interrupter.Suspend();
         }
 
         protected virtual void OnVertexEnqueued(object sender, EventArgs e)
@@ -152,7 +148,7 @@ namespace GraphViewModel
         {
             if (path.IsExtracted())
             {
-                path.Highlight(EndPoints);
+                path.Highlight(endPoints);
                 string statistics = GetStatistics(timer, path);
                 mainViewModel.PathFindingStatistics = statistics;
             }
@@ -165,16 +161,18 @@ namespace GraphViewModel
 
         protected virtual void OnAlgorithmStarted(object sender, EventArgs e)
         {
+            interrupter = new Interrupter(DelayTime);
             string message = $"Algorithm {AlgorithmKey} was started. ";
-            message += $"Start vertex: {EndPoints.Start.GetInforamtion()};";
-            message += $"End vertex: {EndPoints.End.GetInforamtion()}";
+            message += $"Start vertex: {endPoints.Start.GetInforamtion()};";
+            message += $"End vertex: {endPoints.End.GetInforamtion()}";
             Logger.Instance.Info(message);
             timer.Reset();
             timer.Start();
         }
 
+        protected readonly BaseEndPoints endPoints;
         protected ISuspendable interrupter;
-        protected IMainModel mainViewModel;
+        protected readonly IMainModel mainViewModel;
         protected IAlgorithm algorithm;
         protected IGraphPath path;
         protected readonly IAssembleClasses assembleClasses;
@@ -202,6 +200,5 @@ namespace GraphViewModel
         private const string Separator = "   ";
         private readonly Stopwatch timer;
         private readonly IGraph graph;
-
     }
 }

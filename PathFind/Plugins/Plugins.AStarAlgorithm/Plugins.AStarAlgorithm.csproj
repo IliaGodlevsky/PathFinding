@@ -45,6 +45,10 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\Algorithm.Сompanions\Algorithm.Сompanions.csproj">
+      <Project>{8A717526-D82A-4409-B3B4-5979820253AF}</Project>
+      <Name>Algorithm.Сompanions</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\Algorithm\Algorithm.Base\Algorithm.Base.csproj">
       <Project>{04393071-3ba6-42c5-89d8-a89e3ac34511}</Project>
       <Name>Algorithm.Base</Name>

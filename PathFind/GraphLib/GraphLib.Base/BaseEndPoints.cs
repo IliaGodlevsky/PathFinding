@@ -49,7 +49,7 @@ namespace GraphLib.Base
 
         public bool CanBeEndPoint(IVertex vertex)
         {
-            return !IsEndPoint(vertex) && vertex.IsValidToBeEndPoint();
+            return !IsEndPoint(vertex) && !vertex.IsIsolated();
         }
 
         protected bool CanSetStartVertex(IVertex vertex)

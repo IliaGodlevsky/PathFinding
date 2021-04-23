@@ -46,6 +46,7 @@
     <Compile Include="ICostFactory.cs" />
     <Compile Include="IEndPoints.cs" />
     <Compile Include="ICoordinateRadar.cs" />
+    <Compile Include="IEndPointsFactory.cs" />
     <Compile Include="IGraph.cs" />
     <Compile Include="IGraphAssembler.cs" />
     <Compile Include="IGraphFactory.cs" />
@@ -54,6 +55,7 @@
     <Compile Include="IVertex.cs" />
     <Compile Include="IVertexCost.cs" />
     <Compile Include="IVertexEventHolder.cs" />
+    <Compile Include="IVertexEventHolderFactory.cs" />
     <Compile Include="IVertexFactory.cs" />
     <Compile Include="IWeightable.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

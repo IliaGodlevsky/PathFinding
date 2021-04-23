@@ -9,6 +9,6 @@ namespace Common.Interface
     {
         event Action OnSuspended;
 
-        void Suspend(int duration);
+        void Suspend();
     }
 }

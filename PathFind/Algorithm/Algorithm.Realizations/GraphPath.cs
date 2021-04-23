@@ -1,85 +1,72 @@
 ﻿using Algorithm.Interfaces;
-using Common.Extensions;
 using GraphLib.Extensions;
 using GraphLib.Interfaces;
 using System.Collections.Generic;
 using System.Linq;
+using Algorithm.Сompanions;
+using Common.Extensions;
+
 
 namespace Algorithm.Realizations
 {
-    /// <summary>
-    /// A class, that provides about path
-    /// </summary>
     public sealed class GraphPath : IGraphPath
     {
-        private IEnumerable<IVertex> Empty => Enumerable.Empty<IVertex>();
+        private IVertex[] Empty => new IVertex[] { };
 
-        public IEnumerable<IVertex> Path { get; }
+        public IEnumerable<IVertex> Path
+        {
+            get
+            {
+                if (path == null)
+                {
+                    path = UnwindPath().ToArray();
+                    if (!IsPathFormed())
+                    {
+                        path = Empty;
+                    }
+                    path = path.Except(endPoints.Start).ToArray();
+                }
 
-        public GraphPath(IDictionary<ICoordinate, IVertex> parentVertices,
-            IEndPoints endpoints) : this()
+                return path;
+            }
+        }
+
+        public GraphPath(ParentVertices parentVertices, 
+            IEndPoints endPoints, IGraph graph) : this()
         {
             this.parentVertices = parentVertices;
-            this.endpoints = endpoints;
-            Path = TieEndPoints();
+            this.graph = graph;
+            this.endPoints = endPoints;
         }
 
         private GraphPath()
         {
-            Path = Empty;
+           
         }
 
-        private IEnumerable<IVertex> TieEndPoints()
+        private IEnumerable<IVertex> UnwindPath()
         {
-            return CanTieEndPoints(parentVertices)
-                ? UnwindVertices(endpoints.End)
-                : Empty;
-        }
-
-        private IEnumerable<IVertex> UnwindVertices(IVertex start)
-        {
-            bool hasValue, hasReachedTheEnd;
-            var vertex = start;
-            do
+            var vertex = endPoints.End;
+            yield return vertex;
+            var parent = parentVertices.GetParent(vertex);
+            while (graph.AreNeighbours(vertex, parent))
             {
-                yield return vertex;
-                hasValue = TryGetValue(vertex, out var value);
-                vertex = value;
-                hasReachedTheEnd = HasReachedTheEnd(vertex);
+                yield return parent;
+                vertex = parent;
+                parent = parentVertices.GetParent(vertex);
             }
-            while (hasValue && !hasReachedTheEnd);
         }
 
-        private bool CanTieEndPoints(IDictionary<ICoordinate, IVertex> parentVertices)
+        private bool IsPathFormed()
         {
-            return parentVertices.Any() && TryGetValue(endpoints.End, out _);
+            return path.Length >= RequiredNumberOfVerticesForCompletePath;
         }
 
-        private bool HasReachedTheEnd(IVertex vertex)
-        {
-            if (TryGetValue(vertex, out var parentVertex))
-            {
-                bool isNeighbourOf = vertex.IsNeighbourOf(parentVertex);
-                bool isStartOfPath = IsStartOfPath(vertex);
-                return isStartOfPath || !isNeighbourOf;
-            }
+        private const int RequiredNumberOfVerticesForCompletePath = 2;
 
-            return true;
-        }
-
-        private bool TryGetValue(IVertex vertex, out IVertex value)
-        {
-            var position = vertex.Position;
-            return parentVertices.TryGetValue(position, out value);
-        }
-
-        private bool IsStartOfPath(IVertex vertex)
-        {
-            bool isStartVertex = vertex.IsEqual(endpoints.Start);
-            return isStartVertex || vertex.IsDefault();
-        }
-
-        private readonly IEndPoints endpoints;
-        private readonly IDictionary<ICoordinate, IVertex> parentVertices;
+        private readonly ParentVertices parentVertices;
+        private readonly IGraph graph;
+        private readonly IEndPoints endPoints;
+        private IVertex[] path;
     }
 }

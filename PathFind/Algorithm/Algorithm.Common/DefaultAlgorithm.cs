@@ -2,7 +2,6 @@
 using Algorithm.Infrastructure.Handlers;
 using Algorithm.Interfaces;
 using Common.Attributes;
-using GraphLib.Interfaces;
 using System;
 
 namespace Algorithm.Common
@@ -17,7 +16,7 @@ namespace Algorithm.Common
         public event AlgorithmEventHandler OnVertexEnqueued;
         public event EventHandler OnInterrupted;
 
-        public IGraphPath FindPath(IEndPoints endpoints)
+        public IGraphPath FindPath()
         {
             OnStarted?.Invoke(this, new AlgorithmEventArgs());
             OnVertexVisited?.Invoke(this, new AlgorithmEventArgs());

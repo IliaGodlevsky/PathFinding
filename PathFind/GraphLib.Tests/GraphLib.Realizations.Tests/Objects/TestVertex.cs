@@ -2,6 +2,7 @@
 using GraphLib.Interfaces;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
+using GraphLib.Common;
 
 namespace GraphLib.Realizations.Tests.Objects
 {
@@ -16,6 +17,7 @@ namespace GraphLib.Realizations.Tests.Objects
         public IVertexCost Cost { get; set; }
         public ICollection<IVertex> Neighbours { get; set; }
         public ICoordinate Position { get; set; }
+        public ICoordinateRadar CoordinateRadar => new CoordinateAroundRadar(Position);
 
         public bool Equals([AllowNull] IVertex other)
         {

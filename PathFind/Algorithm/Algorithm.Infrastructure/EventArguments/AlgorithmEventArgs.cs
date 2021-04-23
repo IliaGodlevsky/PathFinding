@@ -5,7 +5,7 @@ using System;
 namespace Algorithm.Infrastructure.EventArguments
 {
     /// <summary>
-    /// Represents data for events associated with pathfinding
+    /// Represents data for events associated with path finding
     /// </summary>
     public class AlgorithmEventArgs : EventArgs
     {
@@ -15,9 +15,13 @@ namespace Algorithm.Infrastructure.EventArguments
         }
 
         public AlgorithmEventArgs(int visitedVertices,
-            bool isEndPoint = false, IVertex vertex = null)
+            IEndPoints endPoints = null, IVertex vertex = null)
         {
-            IsEndPoint = isEndPoint;
+            if (vertex != null)
+            {
+                IsEndPoint = endPoints?.IsEndPoint(vertex) == true;
+            }
+
             Vertex = vertex ?? new DefaultVertex();
             VisitedVertices = visitedVertices;
         }
@@ -27,7 +31,7 @@ namespace Algorithm.Infrastructure.EventArguments
         /// </summary>
         public IVertex Vertex { get; }
 
-        public int VisitedVertices { get; set; }
+        public int VisitedVertices { get; }
 
         public bool IsEndPoint { get; }
     }

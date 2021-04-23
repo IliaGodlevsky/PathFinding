@@ -43,6 +43,7 @@
   <ItemGroup>
     <Compile Include="CoordinateAroundRadar.cs" />
     <Compile Include="NullObjects\DefaultCoordinate.cs" />
+    <Compile Include="NullObjects\DefaultCoordinateRadar.cs" />
     <Compile Include="NullObjects\DefaultCost.cs" />
     <Compile Include="NullObjects\DefaultVertex.cs" />
     <Compile Include="NullObjects\NullGraph.cs" />

@@ -22,8 +22,6 @@ namespace GraphLib.Base
 
         public IVertexCostFactory CostFactory { get; set; }
 
-        public IGraph Graph { get; set; }
-
         public virtual void ChangeVertexCost(object sender, EventArgs e)
         {
             if (sender is IVertex vertex && !vertex.IsObstacle)

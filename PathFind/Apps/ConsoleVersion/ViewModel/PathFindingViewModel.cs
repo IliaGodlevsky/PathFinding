@@ -9,6 +9,7 @@ using GraphViewModel;
 using GraphViewModel.Interfaces;
 using System;
 using System.Linq;
+using GraphLib.Base;
 using static ConsoleVersion.Constants;
 using static ConsoleVersion.InputClass.Input;
 using static ConsoleVersion.Resource.Resources;
@@ -23,8 +24,9 @@ namespace ConsoleVersion.ViewModel
 
         public string StartVertexInputMessage { private get; set; }
 
-        public PathFindingViewModel(IAssembleClasses pluginsLoader, IMainModel model)
-            : base(pluginsLoader, model)
+        public PathFindingViewModel(IAssembleClasses pluginsLoader,
+            IMainModel model, BaseEndPoints endPoints)
+            : base(pluginsLoader, model, endPoints)
         {
             maxAlgorithmKeysNumber = pluginsLoader.ClassesNames.Count;
             minAlgorithmKeysNumber = 1;
@@ -119,7 +121,7 @@ namespace ConsoleVersion.ViewModel
                 {
                     point = InputPoint(upperPossibleXValue, upperPossibleYValue);
                     vertex = mainViewModel.Graph[point];
-                } while (!EndPoints.CanBeEndPoint(vertex));
+                } while (!endPoints.CanBeEndPoint(vertex));
 
                 return point;
             }

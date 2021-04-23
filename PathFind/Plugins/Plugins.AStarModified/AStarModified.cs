@@ -12,7 +12,8 @@ namespace Plugins.AStarModified
     [ClassName("A* algorithm (modified)")]
     public sealed class AStarModified : AStarAlgorithm.AStarAlgorithm
     {
-        public AStarModified(IGraph graph) : base(graph)
+        public AStarModified(IGraph graph, IEndPoints endPoints) 
+            : base(graph, endPoints)
         {
             PercentOfFarthestVerticesToDelete
                 = CalculatePercentOfFarthestVerticesToDelete;
@@ -31,9 +32,9 @@ namespace Plugins.AStarModified
                     .Take(VerticesCountToDelete)
                     .ToArray();
                 deletedVertices.EnqueueRange(verticesToDelete);
-                verticesQueue = verticesQueue.Except(verticesToDelete);
+                verticesQueue = verticesQueue.Except(verticesToDelete.AsEnumerable());
 
-                IVertex next = base.NextVertex;
+                var next = base.NextVertex;
                 if (next.IsDefault())
                 {
                     verticesQueue = deletedVertices;

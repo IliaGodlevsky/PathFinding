@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Windows;
 using System.Windows.Media;
 using System.Windows.Media.Media3D;
+using GraphLib.Common;
 using static WPFVersion3D.Constants;
 
 namespace WPFVersion3D.Model
@@ -112,6 +113,8 @@ namespace WPFVersion3D.Model
                     MarkAsObstacle();
             }
         }
+
+        public ICoordinateRadar CoordinateRadar => new CoordinateAroundRadar(Position);
 
         public IVertexCost Cost { get; set; }
 

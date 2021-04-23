@@ -7,20 +7,23 @@ using Common.Extensions;
 using GraphLib.Interfaces;
 using System.Collections.Generic;
 using System.Linq;
+using Algorithm.Base.CompanionClasses;
+using Algorithm.Сompanions;
 
 namespace Plugins.DijkstraALgorithm
 {
     [ClassName("Dijkstra's algorithm")]
     public class DijkstraAlgorithm : BaseAlgorithm
     {
-        public DijkstraAlgorithm(IGraph graph) : base(graph)
+        public DijkstraAlgorithm(IGraph graph, IEndPoints endPoints) 
+            : base(graph, endPoints)
         {
             verticesQueue = new Queue<IVertex>();
         }
 
-        public override IGraphPath FindPath(IEndPoints endpoints)
+        public override IGraphPath FindPath()
         {
-            PrepareForPathfinding(endpoints);
+            PrepareForPathfinding();
 
             do
             {
@@ -32,19 +35,19 @@ namespace Plugins.DijkstraALgorithm
 
             CompletePathfinding();
 
-            return new GraphPath(parentVertices, endpoints);
+            return new GraphPath(parentVertices, endPoints, graph);
         }
 
         protected void VisitVertex(IVertex vertex)
         {
-            visitedVertices[vertex.Position] = vertex;
+            visitedVertices.Add(vertex);
             var args = CreateEventArgs(vertex);
             RaiseOnVertexVisitedEvent(args);
         }
 
         protected virtual double GetVertexRelaxedCost(IVertex neighbour)
         {
-            return neighbour.Cost.CurrentCost + GetAccumulatedCost(CurrentVertex);
+            return neighbour.Cost.CurrentCost + accumulatedCosts.GetAccumulatedCost(CurrentVertex);
         }
 
         protected override IVertex NextVertex
@@ -52,8 +55,8 @@ namespace Plugins.DijkstraALgorithm
             get
             {
                 verticesQueue = verticesQueue
-                    .OrderBy(GetAccumulatedCost)
-                    .Where(VertexIsNotVisited)
+                    .OrderBy(accumulatedCosts.GetAccumulatedCost)
+                    .Where(visitedVertices.IsNotVisited)
                     .ToQueue();
 
                 return verticesQueue.DequeueOrDefault();
@@ -66,37 +69,34 @@ namespace Plugins.DijkstraALgorithm
             verticesQueue.Clear();
         }
 
-        protected override void PrepareForPathfinding(IEndPoints endpoints)
+        protected override void PrepareForPathfinding()
         {
-            base.PrepareForPathfinding(endpoints);
-            SetVerticesAccumulatedCostToInfifnity();
+            base.PrepareForPathfinding();
+            accumulatedCosts =
+                new AccumulatedCostsWithExcept(
+                    new AccumulatedCosts(graph, double.PositiveInfinity), endPoints.Start);
         }
 
         protected Queue<IVertex> verticesQueue;
 
-        protected void SetVertexAccumulatedCostToInfinity(IVertex vertex)
-        {
-            accumulatedCosts[vertex.Position] = double.PositiveInfinity;
-        }
-
         protected virtual void RelaxVertex(IVertex vertex)
         {
             var relaxedCost = GetVertexRelaxedCost(vertex);
-            if (accumulatedCosts[vertex.Position] > relaxedCost)
+            if (accumulatedCosts.Compare(vertex, relaxedCost) > 0)
             {
-                accumulatedCosts[vertex.Position] = relaxedCost;
-                parentVertices[vertex.Position] = CurrentVertex;
+                accumulatedCosts.Reevaluate(vertex, relaxedCost);
+                parentVertices.Add(vertex, CurrentVertex);
             }
         }
 
         private void RelaxNeighbours()
         {
-            GetUnvisitedNeighbours(CurrentVertex).ForEach(RelaxVertex);
+            visitedVertices.GetUnvisitedNeighbours(CurrentVertex).ForEach(RelaxVertex);
         }
 
         private void ExtractNeighbours()
         {
-            var neighbours = GetUnvisitedNeighbours(CurrentVertex);
+            var neighbours = visitedVertices.GetUnvisitedNeighbours(CurrentVertex);
 
             foreach (var neighbour in neighbours)
             {
@@ -106,16 +106,8 @@ namespace Plugins.DijkstraALgorithm
             }
 
             verticesQueue = verticesQueue
-                .DistinctBy(GetPosition)
+                .DistinctBy(Position)
                 .ToQueue();
-        }
-
-        private void SetVerticesAccumulatedCostToInfifnity()
-        {
-            graph.Vertices
-                .Where(VertexIsNotObstacle)
-                .ForEach(SetVertexAccumulatedCostToInfinity);
-            accumulatedCosts[endPoints.Start.Position] = 0;
         }
     }
 }

@@ -7,6 +7,7 @@ using System;
 using System.Linq;
 using System.Windows;
 using System.Windows.Input;
+using GraphLib.Extensions;
 using WPFVersion.Infrastructure;
 using WPFVersion.Model;
 
@@ -31,7 +32,7 @@ namespace WPFVersion.ViewModel
             ChangeVertexSizeCommand = new RelayCommand(ExecuteChangeVerticesSizeCommand);
             CancelCommand = new RelayCommand(ExecuteCancelCommand);
 
-            if (Model.Graph.Vertices.Any())
+            if (!Model.Graph.IsEmpty())
             {
                 VerticesSize = GetSampleSizeToChange();
             }
@@ -60,16 +61,11 @@ namespace WPFVersion.ViewModel
             }
         }
 
-        private void CreateNewGraphField()
-        {
-            Model.GraphField.Clear();
-            Model.GraphField = fieldFactory.CreateGraphField(Model.Graph);
-        }
-
         private void ExecuteChangeVerticesSizeCommand(object param)
         {
             Model.Graph.Vertices.ForEach(ChangeSize);
-            CreateNewGraphField();
+            Model.GraphField.Clear();
+            Model.GraphField = fieldFactory.CreateGraphField(Model.Graph);
             OnWindowClosed?.Invoke(this, EventArgs.Empty);
         }
 

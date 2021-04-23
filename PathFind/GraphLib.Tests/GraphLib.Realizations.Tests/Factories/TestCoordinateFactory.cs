@@ -1,15 +1,13 @@
 ﻿using GraphLib.Interfaces;
 using GraphLib.Realizations.Tests.Objects;
-using System.Collections.Generic;
-using System.Linq;
 
 namespace GraphLib.Realizations.Tests.Factories
 {
     internal class TestCoordinateFactory : ICoordinateFactory
     {
-        public ICoordinate CreateCoordinate(IEnumerable<int> coordinates)
+        public ICoordinate CreateCoordinate(int[] coordinates)
         {
-            return new TestCoordinate(coordinates.ToArray());
+            return new TestCoordinate(coordinates);
         }
     }
 }

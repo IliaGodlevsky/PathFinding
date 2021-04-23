@@ -65,9 +65,8 @@ namespace ConsoleVersion.ViewModel
                 string pluginPath = GetAlgorithmsLoadPath();
                 var assembleClasses = new ConcreteAssembleAlgorithmClasses(pluginPath);
                 assembleClasses.LoadClasses();
-                var model = new PathFindingViewModel(assembleClasses, this);
+                var model = new PathFindingViewModel(assembleClasses, this, EndPoints);
                 model.OnEventHappened += OnExternalEventHappened;
-                model.EndPoints = EndPoints;
                 var view = new PathFindView(model);
                 view.Start();
             }

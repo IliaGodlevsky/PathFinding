@@ -32,12 +32,6 @@ namespace GraphLib.Common.NullObjects
             set => _ = value;
         }
 
-        public IVertex this[int index]
-        {
-            get => new DefaultVertex();
-            set => _ = value;
-        }
-
         public override bool Equals(object obj)
         {
             return obj is NullGraph;

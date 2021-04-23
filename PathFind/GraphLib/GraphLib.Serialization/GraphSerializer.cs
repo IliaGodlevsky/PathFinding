@@ -1,4 +1,5 @@
-﻿using Common.Extensions;
+﻿using System;
+using Common.Extensions;
 using GraphLib.Extensions;
 using GraphLib.Interfaces;
 using GraphLib.Serialization.Extensions;
@@ -7,11 +8,14 @@ using System.IO;
 using System.Linq;
 using System.Runtime.Serialization;
 using System.Threading.Tasks;
+using GraphLib.Serialization.Exceptions;
 
 namespace GraphLib.Serialization
 {
     public sealed class GraphSerializer : IGraphSerializer
     {
+        public event Action<Exception, string> OnExceptionCaught;
+
         public GraphSerializer(IFormatter formatter,
             IVertexSerializationInfoConverter infoConverter,
             IGraphFactory graphFactory)
@@ -26,22 +30,29 @@ namespace GraphLib.Serialization
         /// </summary>
         /// <param name="stream"></param>
         /// <returns></returns>
-        /// <exception cref="SerializationException"></exception>
-        /// <exception cref="System.Security.SecurityException"></exception>
+        /// <exception cref="CantSerializeGraphException"></exception>
         public IGraph LoadGraph(Stream stream)
         {
-            var verticesInfo = (GraphSerializationInfo)formatter.Deserialize(stream);
-            var dimensions = verticesInfo.DimensionsSizes.ToArray();
-            var graph = graphFactory.CreateGraph(dimensions);
-
-            void CreateVertexFrom(VertexSerializationInfo info, int vertexIndexInGraph)
+            try
             {
-                graph[vertexIndexInGraph] = infoConverter.ConvertFrom(info);
-            }
+                var verticesInfo = (GraphSerializationInfo) formatter.Deserialize(stream);
+                var dimensions = verticesInfo.DimensionsSizes.ToArray();
+                var graph = graphFactory.CreateGraph(dimensions);
 
-            verticesInfo.ForEach(CreateVertexFrom);
-            graph.ConnectVerticesParallel();
-            return graph;
+                void CreateVertexFrom(VertexSerializationInfo info)
+                {
+                    graph[info.Position] = infoConverter.ConvertFrom(info);
+                }
+
+                verticesInfo.ForEach(CreateVertexFrom);
+                graph.ConnectVertices();
+                return graph;
+            }
+            catch (SystemException ex)
+            {
+                throw new CantSerializeGraphException(ex.Message, ex);
+            }
+            
         }
 
         /// <summary>
@@ -49,25 +60,36 @@ namespace GraphLib.Serialization
         /// </summary>
         /// <param name="graph"></param>
         /// <param name="stream"></param>
-        /// <returns></returns>
-        /// <exception cref="SerializationException"></exception>
-        /// <exception cref="System.Security.SecurityException"></exception>
+        /// <exception cref="CantSerializeGraphException"></exception>
         public void SaveGraph(IGraph graph, Stream stream)
         {
-            formatter.Serialize(stream, graph.GetGraphSerializationInfo());
+            try
+            {
+                formatter.Serialize(stream, graph.GetGraphSerializationInfo());
+            }
+            catch (SystemException ex)
+            {
+                throw new CantSerializeGraphException(ex.Message, ex);
+            }
         }
-
         /// <summary>
-        /// Saves graph in stream asynchronly
+        /// Saves graph in stream async
         /// </summary>
         /// <param name="graph"></param>
         /// <param name="stream"></param>
-        /// <returns></returns>
-        /// <exception cref="SerializationException"></exception>
-        /// <exception cref="System.Security.SecurityException"></exception>
         public async Task SaveGraphAsync(IGraph graph, Stream stream)
         {
-            await Task.Run(() => SaveGraph(graph, stream));
+            await Task.Run(() =>
+            {
+                try
+                {
+                    SaveGraph(graph, stream);
+                }
+                catch (CantSerializeGraphException ex)
+                {
+                    OnExceptionCaught?.Invoke(ex, string.Empty);
+                }
+            });
         }
 
         private readonly IFormatter formatter;

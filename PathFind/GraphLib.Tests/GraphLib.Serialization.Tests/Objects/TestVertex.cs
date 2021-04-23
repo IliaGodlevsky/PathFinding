@@ -3,6 +3,7 @@ using GraphLib.Interfaces;
 using GraphLib.Serialization.Extensions;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
+using GraphLib.Common;
 
 namespace GraphLib.Serialization.Tests.Objects
 {
@@ -22,6 +23,7 @@ namespace GraphLib.Serialization.Tests.Objects
         public IVertexCost Cost { get; set; }
         public ICollection<IVertex> Neighbours { get; set; }
         public ICoordinate Position { get; set; }
+        public ICoordinateRadar CoordinateRadar => new CoordinateAroundRadar(Position);
 
         public bool Equals([AllowNull] IVertex other)
         {

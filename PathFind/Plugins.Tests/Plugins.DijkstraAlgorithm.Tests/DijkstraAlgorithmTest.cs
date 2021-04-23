@@ -89,9 +89,9 @@ namespace Plugins.DijkstraAlgorithm.Tests
         [Test]
         public void FindPath_EndpointsBelongToGraph_ReturnsShortestPath()
         {
-            var algorithm = new DijkstrasAlgorithm(Graph);
+            var algorithm = new DijkstrasAlgorithm(Graph, EndPoints);
 
-            var graphPath = algorithm.FindPath(EndPoints);
+            var graphPath = algorithm.FindPath();
             var path = graphPath.Path.ToArray();
             int pathCost = path.Sum(GetVertexCost);
             int expectedPathCost = expectedPath.Sum(GetVertexCost);
@@ -107,9 +107,9 @@ namespace Plugins.DijkstraAlgorithm.Tests
         [Test]
         public void FindPath_EndPointsDoesntBelongToGraph_TrowsArgumentException()
         {
-            var algorithm = new DijkstrasAlgorithm(Graph);
+            var algorithm = new DijkstrasAlgorithm(Graph, ForeignEndPoints);
 
-            Assert.Throws<ArgumentException>(() => algorithm.FindPath(ForeignEndPoints));
+            Assert.Throws<ArgumentException>(() => algorithm.FindPath());
         }
 
         #endregion
