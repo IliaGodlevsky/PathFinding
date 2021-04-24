@@ -55,7 +55,7 @@ namespace GraphLib.Base
         /// <exception cref="ArgumentException"></exception>
         public virtual IVertex this[ICoordinate coordinate]
         {
-            get => IsSuitableCoordinate(coordinate) 
+            get => IsSuitableCoordinate(coordinate)
                    && vertices.TryGetValue(coordinate, out var vertex)
                     ? vertex : new DefaultVertex();
             set

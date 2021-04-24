@@ -3,6 +3,7 @@ using AssembleClassesLib.Attributes;
 using Common;
 using Common.Extensions;
 using GraphLib.Interfaces;
+using GraphLib.Realizations.StepRules;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,8 +13,14 @@ namespace Plugins.AStarModified
     [ClassName("A* algorithm (modified)")]
     public sealed class AStarModified : AStarAlgorithm.AStarAlgorithm
     {
-        public AStarModified(IGraph graph, IEndPoints endPoints) 
-            : base(graph, endPoints)
+        public AStarModified(IGraph graph, IEndPoints endPoints)
+            : this(graph, endPoints, new DefaultStepRule())
+        {
+
+        }
+
+        public AStarModified(IGraph graph, IEndPoints endPoints, IStepRule stepRule)
+            : base(graph, endPoints, stepRule)
         {
             PercentOfFarthestVerticesToDelete
                 = CalculatePercentOfFarthestVerticesToDelete;

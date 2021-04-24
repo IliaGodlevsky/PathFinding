@@ -2,7 +2,8 @@
 using ConsoleVersion.View.Interface;
 using ConsoleVersion.ViewModel;
 using GraphLib.Interfaces;
-using GraphLib.Realizations;
+using GraphLib.Realizations.Coordinates;
+using GraphLib.Realizations.Graphs;
 using GraphViewModel.Interfaces;
 using System;
 using System.Collections.Generic;

@@ -1,12 +1,12 @@
 ﻿using GraphLib.Interfaces;
 using GraphLib.Realizations.Factories;
+using GraphLib.Serialization.Exceptions;
 using GraphLib.Serialization.Tests.Factories;
 using GraphLib.Serialization.Tests.Objects;
 using NUnit.Framework;
 using System.IO;
 using System.Runtime.Serialization;
 using System.Runtime.Serialization.Formatters.Binary;
-using GraphLib.Serialization.Exceptions;
 
 namespace GraphLib.Serialization.Tests
 {

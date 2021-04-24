@@ -1,4 +1,5 @@
 ﻿using GraphLib.Interfaces;
+using GraphLib.Realizations.Coordinates;
 
 namespace GraphLib.Realizations.Factories
 {

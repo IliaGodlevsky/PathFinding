@@ -1,6 +1,7 @@
 ﻿using AssembleClassesLib.EventArguments;
 using AssembleClassesLib.Interface;
 using Common.Interface;
+using GraphLib.Base;
 using GraphViewModel;
 using GraphViewModel.Interfaces;
 using System;
@@ -10,7 +11,6 @@ using System.Runtime.CompilerServices;
 using System.Windows;
 using System.Windows.Input;
 using System.Windows.Threading;
-using GraphLib.Base;
 using WPFVersion3D.Infrastructure;
 
 namespace WPFVersion3D.ViewModel
@@ -39,7 +39,7 @@ namespace WPFVersion3D.ViewModel
             }
         }
 
-        public PathFindingViewModel(IAssembleClasses pluginsLoader, 
+        public PathFindingViewModel(IAssembleClasses pluginsLoader,
             IMainModel model, BaseEndPoints endPoints)
             : base(pluginsLoader, model, endPoints)
         {

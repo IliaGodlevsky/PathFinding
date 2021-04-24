@@ -8,7 +8,7 @@ namespace Plugins.BestFirstLeeAlgorithm
     [ClassName("Lee algorithm (heuristic)")]
     public class BestFirstLeeAlgorithm : LeeAlgorithm.LeeAlgorithm
     {
-        public BestFirstLeeAlgorithm(IGraph graph, IEndPoints endPoints) 
+        public BestFirstLeeAlgorithm(IGraph graph, IEndPoints endPoints)
             : base(graph, endPoints)
         {
 

@@ -7,7 +7,6 @@ using GraphLib.Serialization.Interfaces;
 using GraphViewModel.Interfaces;
 using System;
 using System.IO;
-using GraphLib.Serialization.Exceptions;
 
 namespace GraphViewModel
 {

@@ -1,14 +1,14 @@
-﻿using System;
-using Common.Extensions;
+﻿using Common.Extensions;
 using GraphLib.Extensions;
 using GraphLib.Interfaces;
+using GraphLib.Serialization.Exceptions;
 using GraphLib.Serialization.Extensions;
 using GraphLib.Serialization.Interfaces;
+using System;
 using System.IO;
 using System.Linq;
 using System.Runtime.Serialization;
 using System.Threading.Tasks;
-using GraphLib.Serialization.Exceptions;
 
 namespace GraphLib.Serialization
 {
@@ -35,7 +35,7 @@ namespace GraphLib.Serialization
         {
             try
             {
-                var verticesInfo = (GraphSerializationInfo) formatter.Deserialize(stream);
+                var verticesInfo = (GraphSerializationInfo)formatter.Deserialize(stream);
                 var dimensions = verticesInfo.DimensionsSizes.ToArray();
                 var graph = graphFactory.CreateGraph(dimensions);
 
@@ -52,7 +52,7 @@ namespace GraphLib.Serialization
             {
                 throw new CantSerializeGraphException(ex.Message, ex);
             }
-            
+
         }
 
         /// <summary>

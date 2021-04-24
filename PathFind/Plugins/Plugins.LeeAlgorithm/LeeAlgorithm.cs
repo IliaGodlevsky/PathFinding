@@ -1,52 +1,26 @@
 ﻿using Algorithm.Base;
 using Algorithm.Extensions;
-using Algorithm.Interfaces;
-using Algorithm.Realizations;
+using Algorithm.Сompanions;
 using AssembleClassesLib.Attributes;
 using Common.Extensions;
 using GraphLib.Interfaces;
-using System.Collections.Generic;
 using System.Linq;
-using Algorithm.Base.CompanionClasses;
-using Algorithm.Сompanions;
 
 namespace Plugins.LeeAlgorithm
 {
     [ClassName("Lee algorithm")]
-    public class LeeAlgorithm : BaseAlgorithm
+    public class LeeAlgorithm : BaseWaveAlgorithm
     {
-        public LeeAlgorithm(IGraph graph, IEndPoints endPoints) 
+        public LeeAlgorithm(IGraph graph, IEndPoints endPoints)
             : base(graph, endPoints)
         {
-            verticesQueue = new Queue<IVertex>();
-        }
 
-        public override IGraphPath FindPath()
-        {
-            PrepareForPathfinding();
-            do
-            {
-                ExtractNeighbours();
-                SpreadWaves();
-                CurrentVertex = NextVertex;
-                VisitVertex(CurrentVertex);
-            } while (!IsDestination());
-            CompletePathfinding();
-
-            return new GraphPath(parentVertices, endPoints, graph);
         }
 
         protected override void PrepareForPathfinding()
         {
             base.PrepareForPathfinding();
             accumulatedCosts = new AccumulatedCosts(graph, 0);
-        }
-
-        protected virtual void VisitVertex(IVertex vertex)
-        {
-            visitedVertices.Add(vertex);
-            var args = CreateEventArgs(vertex);
-            RaiseOnVertexVisitedEvent(args);
         }
 
         protected override void CompletePathfinding()
@@ -66,12 +40,13 @@ namespace Plugins.LeeAlgorithm
             }
         }
 
+        #region Relaxing
         protected virtual double CreateWave()
         {
             return accumulatedCosts.GetAccumulatedCost(CurrentVertex) + 1;
         }
 
-        protected virtual void SpreadWave(IVertex vertex)
+        protected virtual void RelaxNeighbour(IVertex vertex)
         {
             accumulatedCosts.Reevaluate(vertex, CreateWave());
             parentVertices.Add(vertex, CurrentVertex);
@@ -82,30 +57,13 @@ namespace Plugins.LeeAlgorithm
             return accumulatedCosts.GetAccumulatedCost(vertex) == 0;
         }
 
-        protected Queue<IVertex> verticesQueue;
-
-        private void SpreadWaves()
+        protected override void RelaxNeighbours()
         {
             visitedVertices
                 .GetUnvisitedNeighbours(CurrentVertex)
                 .Where(VertexIsUnwaved)
-                .ForEach(SpreadWave);
+                .ForEach(RelaxNeighbour);
         }
-
-        private void ExtractNeighbours()
-        {
-            var neighbours = visitedVertices.GetUnvisitedNeighbours(CurrentVertex);
-
-            foreach (var neighbour in neighbours)
-            {
-                var args = CreateEventArgs(neighbour);
-                RaiseOnVertexEnqueuedEvent(args);
-                verticesQueue.Enqueue(neighbour);
-            }
-
-            verticesQueue = verticesQueue
-                .DistinctBy(Position)
-                .ToQueue();
-        }
+        #endregion
     }
 }

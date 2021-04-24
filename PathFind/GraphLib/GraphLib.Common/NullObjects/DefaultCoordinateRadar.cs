@@ -1,5 +1,5 @@
-﻿using System.Collections.Generic;
-using GraphLib.Interfaces;
+﻿using GraphLib.Interfaces;
+using System.Collections.Generic;
 
 namespace GraphLib.Common.NullObjects
 {

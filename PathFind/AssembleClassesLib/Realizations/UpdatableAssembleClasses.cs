@@ -17,7 +17,7 @@ namespace AssembleClassesLib.Realizations
         public UpdatableAssembleClasses(AssembleClasses assembleClasses)
            : this((IAssembleClasses)assembleClasses)
         {
-            
+
         }
 
         public UpdatableAssembleClasses(INotifingAssembleClasses assembleClasses)

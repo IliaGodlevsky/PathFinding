@@ -1,9 +1,9 @@
-﻿using GraphLib.Extensions;
+﻿using GraphLib.Common;
+using GraphLib.Extensions;
 using GraphLib.Interfaces;
 using GraphLib.Serialization.Extensions;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
-using GraphLib.Common;
 
 namespace GraphLib.Serialization.Tests.Objects
 {

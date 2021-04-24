@@ -1,4 +1,5 @@
 ﻿using GraphLib.Exceptions;
+using GraphLib.Realizations.Coordinates;
 using NUnit.Framework;
 
 namespace GraphLib.Realizations.Tests

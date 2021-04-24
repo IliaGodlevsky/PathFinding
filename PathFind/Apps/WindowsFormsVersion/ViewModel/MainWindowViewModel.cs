@@ -5,7 +5,7 @@ using Common.Logging;
 using GraphLib.Base;
 using GraphLib.Extensions;
 using GraphLib.Interfaces;
-using GraphLib.Realizations;
+using GraphLib.Realizations.Graphs;
 using GraphLib.Serialization.Interfaces;
 using GraphViewModel;
 using System;

@@ -1,5 +1,5 @@
-﻿using System;
-using GraphLib.Interfaces;
+﻿using GraphLib.Interfaces;
+using System;
 using System.IO;
 using System.Threading.Tasks;
 

@@ -1,5 +1,5 @@
 ﻿using GraphLib.Interfaces;
-using GraphLib.Realizations;
+using GraphLib.Realizations.Coordinates;
 using System;
 using System.Collections.Generic;
 using System.Drawing;

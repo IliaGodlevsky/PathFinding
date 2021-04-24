@@ -15,11 +15,6 @@ namespace Algorithm.Extensions
                 .ForEach(vertex => vertex.MarkAsPath());
         }
 
-        public static int GetPathCost(this IGraphPath self)
-        {
-            return self.Path.Sum(vertex => vertex.Cost.CurrentCost);
-        }
-
         public static int GetPathLength(this IGraphPath self)
         {
             return self.Path.Count();

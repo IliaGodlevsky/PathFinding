@@ -1,7 +1,7 @@
 ﻿using GraphLib.Base;
 using System.Linq;
 
-namespace GraphLib.Realizations
+namespace GraphLib.Realizations.Graphs
 {
     public sealed class Graph3D : BaseGraph
     {

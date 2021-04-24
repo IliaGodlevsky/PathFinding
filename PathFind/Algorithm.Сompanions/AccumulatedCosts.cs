@@ -1,9 +1,9 @@
-﻿using System.Collections.Generic;
-using System.Linq;
-using Algorithm.Base.CompanionClasses;
+﻿using Algorithm.Interfaces;
 using Common.Extensions;
 using GraphLib.Extensions;
 using GraphLib.Interfaces;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace Algorithm.Сompanions
 {

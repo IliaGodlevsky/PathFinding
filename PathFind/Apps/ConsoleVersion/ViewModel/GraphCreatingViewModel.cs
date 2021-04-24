@@ -1,7 +1,7 @@
 ﻿using ConsoleVersion.View;
 using GraphLib.Exceptions;
 using GraphLib.Interfaces;
-using GraphLib.Realizations;
+using GraphLib.Realizations.Graphs;
 using GraphLib.ViewModel;
 using GraphViewModel.Interfaces;
 

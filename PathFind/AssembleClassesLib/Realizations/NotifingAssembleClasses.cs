@@ -1,7 +1,7 @@
-﻿using System.Collections.Generic;
-using AssembleClassesLib.EventArguments;
+﻿using AssembleClassesLib.EventArguments;
 using AssembleClassesLib.EventHandlers;
 using AssembleClassesLib.Interface;
+using System.Collections.Generic;
 
 namespace AssembleClassesLib.Realizations
 {

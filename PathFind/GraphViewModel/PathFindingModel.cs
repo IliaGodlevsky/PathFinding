@@ -17,7 +17,6 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
-
 using static GraphViewModel.Resources.ViewModelResources;
 
 namespace GraphViewModel
@@ -32,7 +31,7 @@ namespace GraphViewModel
 
         public virtual IList<string> AlgorithmKeys { get; set; }
 
-        protected PathFindingModel(IAssembleClasses algorithms, 
+        protected PathFindingModel(IAssembleClasses algorithms,
             IMainModel mainViewModel, BaseEndPoints endPoints)
         {
             AlgorithmKeys = algorithms.ClassesNames.ToList();
@@ -50,7 +49,7 @@ namespace GraphViewModel
         {
             try
             {
-                algorithm = (IAlgorithm) assembleClasses.Get(AlgorithmKey, graph, endPoints);
+                algorithm = (IAlgorithm)assembleClasses.Get(AlgorithmKey, graph, endPoints);
                 SubscribeOnAlgorithmEvents();
                 path = algorithm.FindPath();
                 Summarize();
@@ -180,7 +179,7 @@ namespace GraphViewModel
         private string GetStatistics(Stopwatch timer, IGraphPath path = null)
         {
             int pathLength = path?.GetPathLength() ?? 0;
-            int pathCost = path?.GetPathCost() ?? 0;
+            int pathCost = path?.PathCost ?? 0;
             string graphInfo = string.Format(StatisticsFormat,
                 pathLength, pathCost, visitedVerticesCount);
             string timerInfo = timer.GetTimeInformation(TimerInfoFormat);

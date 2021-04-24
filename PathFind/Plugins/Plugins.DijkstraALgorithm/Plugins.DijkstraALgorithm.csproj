@@ -93,6 +93,10 @@
       <Project>{d3c5ccfe-698b-41c7-9a72-5fd0262765e1}</Project>
       <Name>GraphLib.Interfaces</Name>
     </ProjectReference>
+    <ProjectReference Include="..\..\GraphLib\GraphLib.Realizations\GraphLib.Realizations.csproj">
+      <Project>{B80C5250-3D81-4742-B8A5-84AE39122BA9}</Project>
+      <Name>GraphLib.Realizations</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

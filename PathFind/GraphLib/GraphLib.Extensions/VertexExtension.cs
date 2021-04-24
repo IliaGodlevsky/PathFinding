@@ -1,9 +1,9 @@
 ﻿using Common.Extensions;
+using GraphLib.Common.NullObjects;
 using GraphLib.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using GraphLib.Common.NullObjects;
 
 namespace GraphLib.Extensions
 {
@@ -98,7 +98,7 @@ namespace GraphLib.Extensions
             IVertex Vertex(ICoordinate coordinate) => graph[coordinate];
             bool IsWithingGraph(ICoordinate coordinate) => coordinate.IsWithinGraph(graph);
             bool CanBeNeighbour(IVertex vertex) => graph.CanBeNeighbourOf(vertex, self);
-            
+
             self.Neighbours = self
                 .CoordinateRadar
                 .Environment

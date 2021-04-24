@@ -82,23 +82,6 @@ namespace Common.Extensions
             return collection;
         }
 
-        public static IEnumerable<T> Except<T>(this IEnumerable<T> collection, params T[] items)
-        {
-            return collection.Except(items.AsEnumerable());
-        }
-
-        public static IEnumerable<T> ForEach<T>(this IEnumerable<T> collection, Action<T, int> action)
-        {
-            var temp = collection.ToArray();
-
-            for (int i = 0; i < temp.Length; i++)
-            {
-                action(temp[i], i);
-            }
-
-            return temp;
-        }
-
         /// <summary>
         /// Maximum int value of <paramref name="collection"/> 
         /// or 0 if <paramref name="collection"/> is empty

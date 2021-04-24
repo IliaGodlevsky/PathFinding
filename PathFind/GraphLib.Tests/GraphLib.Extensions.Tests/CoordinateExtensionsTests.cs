@@ -1,7 +1,7 @@
-﻿using System;
-using GraphLib.Interfaces;
+﻿using GraphLib.Interfaces;
 using Moq;
 using NUnit.Framework;
+using System;
 
 namespace GraphLib.Extensions.Tests
 {

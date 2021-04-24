@@ -52,6 +52,7 @@
     <Compile Include="IGraphFactory.cs" />
     <Compile Include="IGraphField.cs" />
     <Compile Include="IMarkable.cs" />
+    <Compile Include="IStepRule.cs" />
     <Compile Include="IVertex.cs" />
     <Compile Include="IVertexCost.cs" />
     <Compile Include="IVertexEventHolder.cs" />

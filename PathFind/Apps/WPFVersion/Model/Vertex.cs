@@ -1,11 +1,11 @@
-﻿using GraphLib.Extensions;
+﻿using GraphLib.Common;
+using GraphLib.Extensions;
 using GraphLib.Interfaces;
 using GraphLib.Serialization;
 using GraphLib.Serialization.Extensions;
 using System.Collections.Generic;
 using System.Windows.Controls;
 using System.Windows.Media;
-using GraphLib.Common;
 using static WPFVersion.Constants;
 
 namespace WPFVersion.Model

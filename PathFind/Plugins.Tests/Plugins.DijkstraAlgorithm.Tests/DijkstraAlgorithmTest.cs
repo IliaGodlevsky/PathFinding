@@ -1,4 +1,5 @@
 using GraphLib.Interfaces;
+using GraphLib.Realizations.StepRules;
 using Moq;
 using NUnit.Framework;
 using System;
@@ -11,11 +12,10 @@ namespace Plugins.DijkstraAlgorithm.Tests
     /*
        Graph: 
        1   2   3
-       4   5   1
+       9   3   1
        7   1   9
        Start: 3
        End: 7
-       Path: 1-1-7
     */
     [TestFixture]
     public class DijkstraAlgorithmTest
@@ -27,8 +27,8 @@ namespace Plugins.DijkstraAlgorithm.Tests
         private const int Vertex1Cost = 1;
         private const int Vertex2Cost = 2;
         private const int Vertex3Cost = 3;
-        private const int Vertex4Cost = 4;
-        private const int Vertex5Cost = 5;
+        private const int Vertex4Cost = 9;
+        private const int Vertex5Cost = 3;
         private const int Vertex6Cost = 1;
         private const int Vertex7Cost = 7;
         private const int Vertex8Cost = 1;
@@ -39,7 +39,8 @@ namespace Plugins.DijkstraAlgorithm.Tests
         private readonly Mock<IEndPoints> foreignEndPointsMock;
         private readonly Mock<IGraph> graphMock;
         private readonly Mock<IEndPoints> endPointsMock;
-        private readonly List<IVertex> expectedPath;
+        private readonly List<IVertex> expectedPathWithDefaultStepRule;
+        private readonly List<IVertex> expectedPathWithHeightStepRule;
         private readonly Dictionary<ICoordinate, IVertex> graphVerticesImitation;
 
         private List<IVertex> vertex1Neighbours;
@@ -64,7 +65,9 @@ namespace Plugins.DijkstraAlgorithm.Tests
         public DijkstraAlgorithmTest()
         {
             foreignEndPointsMock = new Mock<IEndPoints>();
-            expectedPath = new List<IVertex>();
+            expectedPathWithDefaultStepRule = new List<IVertex>();
+            expectedPathWithHeightStepRule = new List<IVertex>();
+
             endPointsMock = new Mock<IEndPoints>();
             graphVerticesImitation = new Dictionary<ICoordinate, IVertex>();
             graphMock = new Mock<IGraph>();
@@ -76,32 +79,49 @@ namespace Plugins.DijkstraAlgorithm.Tests
             MockEndPoints();
             MockForeignEndPoints();
 
-            expectedPath.AddRange(new[]
+            expectedPathWithDefaultStepRule.AddRange(new[]
             {
                 graphVerticesImitation.ElementAt(6).Value,
                 graphVerticesImitation.ElementAt(7).Value,
                 graphVerticesImitation.ElementAt(5).Value
+            });
+
+            expectedPathWithHeightStepRule.AddRange(new[]
+            {
+                graphVerticesImitation.ElementAt(6).Value,
+                graphVerticesImitation.ElementAt(4).Value,
             });
         }
 
         #region Test Methods
 
         [Test]
-        public void FindPath_EndpointsBelongToGraph_ReturnsShortestPath()
+        public void FindPath_EndpointsBelongToGraphAndStepRuleIsDefault_ReturnsShortestPath()
         {
+            int expectedPathCost = 9;
             var algorithm = new DijkstrasAlgorithm(Graph, EndPoints);
 
             var graphPath = algorithm.FindPath();
-            var path = graphPath.Path.ToArray();
-            int pathCost = path.Sum(GetVertexCost);
-            int expectedPathCost = expectedPath.Sum(GetVertexCost);
-            var costs = path.Select(GetVertexCost).ToArray();
-            var expectedPathVerticesCosts = expectedPath.Select(GetVertexCost).ToArray();
             var comparer = new VertexComparer();
 
-            Assert.IsTrue(costs.SequenceEqual(expectedPathVerticesCosts));
-            Assert.AreEqual(pathCost, expectedPathCost);
-            Assert.IsTrue(path.SequenceEqual(expectedPath, comparer));
+            Assert.IsTrue(graphPath.Path.SequenceEqual(expectedPathWithDefaultStepRule, comparer));
+            Assert.AreEqual(expectedPathCost, graphPath.PathCost);
+
+        }
+
+        [Test]
+        public void FindPath_EndpointsBelongToGraphAndStepRuleIsHeight_ReturnsShortestPath()
+        {
+            int expectedPathCost = 6;
+            var stepRule = new HeightStepRule();
+            var algorithm = new DijkstrasAlgorithm(Graph, EndPoints, stepRule);
+
+            var graphPath = algorithm.FindPath();
+            var comparer = new VertexComparer();
+
+            Assert.IsTrue(graphPath.Path.SequenceEqual(expectedPathWithHeightStepRule, comparer));
+            Assert.AreEqual(expectedPathCost, graphPath.PathCost);
+
         }
 
         [Test]

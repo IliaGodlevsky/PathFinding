@@ -2,52 +2,35 @@
 using Algorithm.Extensions;
 using Algorithm.Interfaces;
 using Algorithm.Realizations;
+using Algorithm.Сompanions;
 using AssembleClassesLib.Attributes;
 using Common.Extensions;
 using GraphLib.Interfaces;
-using System.Collections.Generic;
+using GraphLib.Realizations.StepRules;
 using System.Linq;
-using Algorithm.Base.CompanionClasses;
-using Algorithm.Сompanions;
 
 namespace Plugins.DijkstraALgorithm
 {
     [ClassName("Dijkstra's algorithm")]
-    public class DijkstraAlgorithm : BaseAlgorithm
+    public class DijkstraAlgorithm : BaseWaveAlgorithm
     {
-        public DijkstraAlgorithm(IGraph graph, IEndPoints endPoints) 
+
+        public DijkstraAlgorithm(IGraph graph, IEndPoints endPoints)
+            : this(graph, endPoints, new DefaultStepRule())
+        {
+
+        }
+
+        public DijkstraAlgorithm(IGraph graph,
+            IEndPoints endPoints, IStepRule stepRule)
             : base(graph, endPoints)
         {
-            verticesQueue = new Queue<IVertex>();
+            this.stepRule = stepRule;
         }
 
-        public override IGraphPath FindPath()
+        protected override IGraphPath CreateGraphPath()
         {
-            PrepareForPathfinding();
-
-            do
-            {
-                ExtractNeighbours();
-                RelaxNeighbours();
-                CurrentVertex = NextVertex;
-                VisitVertex(CurrentVertex);
-            } while (!IsDestination());
-
-            CompletePathfinding();
-
-            return new GraphPath(parentVertices, endPoints, graph);
-        }
-
-        protected void VisitVertex(IVertex vertex)
-        {
-            visitedVertices.Add(vertex);
-            var args = CreateEventArgs(vertex);
-            RaiseOnVertexVisitedEvent(args);
-        }
-
-        protected virtual double GetVertexRelaxedCost(IVertex neighbour)
-        {
-            return neighbour.Cost.CurrentCost + accumulatedCosts.GetAccumulatedCost(CurrentVertex);
+            return new GraphPath(parentVertices, endPoints, graph, stepRule);
         }
 
         protected override IVertex NextVertex
@@ -77,8 +60,7 @@ namespace Plugins.DijkstraALgorithm
                     new AccumulatedCosts(graph, double.PositiveInfinity), endPoints.Start);
         }
 
-        protected Queue<IVertex> verticesQueue;
-
+        #region Relaxing
         protected virtual void RelaxVertex(IVertex vertex)
         {
             var relaxedCost = GetVertexRelaxedCost(vertex);
@@ -89,25 +71,22 @@ namespace Plugins.DijkstraALgorithm
             }
         }
 
-        private void RelaxNeighbours()
+        protected virtual double GetVertexRelaxedCost(IVertex neighbour)
         {
-            visitedVertices.GetUnvisitedNeighbours(CurrentVertex).ForEach(RelaxVertex);
+            var cost = stepRule.StepCost(neighbour, CurrentVertex);
+            return cost + accumulatedCosts.GetAccumulatedCost(CurrentVertex);
         }
 
-        private void ExtractNeighbours()
+        protected override void RelaxNeighbours()
         {
-            var neighbours = visitedVertices.GetUnvisitedNeighbours(CurrentVertex);
-
-            foreach (var neighbour in neighbours)
-            {
-                var args = CreateEventArgs(neighbour);
-                RaiseOnVertexEnqueuedEvent(args);
-                verticesQueue.Enqueue(neighbour);
-            }
-
-            verticesQueue = verticesQueue
-                .DistinctBy(Position)
-                .ToQueue();
+            visitedVertices
+                .GetUnvisitedNeighbours(CurrentVertex)
+                .ForEach(RelaxVertex);
         }
+        #endregion
+
+        protected readonly IStepRule stepRule;
+
+
     }
 }

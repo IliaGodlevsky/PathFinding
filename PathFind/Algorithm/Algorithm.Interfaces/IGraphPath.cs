@@ -6,5 +6,7 @@ namespace Algorithm.Interfaces
     public interface IGraphPath
     {
         IEnumerable<IVertex> Path { get; }
+
+        int PathCost { get; }
     }
 }

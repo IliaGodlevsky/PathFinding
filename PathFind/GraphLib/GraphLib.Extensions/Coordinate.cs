@@ -1,6 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using GraphLib.Interfaces;
+using System.Collections.Generic;
 using System.Linq;
-using GraphLib.Interfaces;
 
 namespace GraphLib.Extensions
 {

@@ -1,5 +1,4 @@
-﻿using Algorithm.Base;
-using Algorithm.Common;
+﻿using Algorithm.Common;
 using Algorithm.Interfaces;
 using AssembleClassesLib.Realizations;
 using Common.Extensions;
@@ -23,7 +22,7 @@ namespace Algorithm.Realizations
         /// <see cref="DefaultAlgorithm"></see> when doesn't</returns>
         public override object Get(string key, params object[] parametres)
         {
-            return base.Get(key, parametres) ?? BaseAlgorithm.Default;
+            return base.Get(key, parametres) ?? new DefaultAlgorithm();
         }
 
         public ConcreteAssembleAlgorithmClasses(string path,
@@ -53,8 +52,8 @@ namespace Algorithm.Realizations
 
         private bool IsConcreteAlgorithm(KeyValuePair<string, Type> algo)
         {
-            return !algo.Value.IsFilterable() 
-                   && !algo.Value.IsAbstract 
+            return !algo.Value.IsFilterable()
+                   && !algo.Value.IsAbstract
                    && baseType.IsAssignableFrom(algo.Value);
         }
 

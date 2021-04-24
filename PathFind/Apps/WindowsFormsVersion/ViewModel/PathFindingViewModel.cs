@@ -1,10 +1,10 @@
 ﻿using AssembleClassesLib.Interface;
 using Common.Interface;
+using GraphLib.Base;
 using GraphViewModel;
 using GraphViewModel.Interfaces;
 using System;
 using System.Windows.Forms;
-using GraphLib.Base;
 
 namespace WindowsFormsVersion.ViewModel
 {
@@ -12,7 +12,7 @@ namespace WindowsFormsVersion.ViewModel
     {
         public event EventHandler OnWindowClosed;
 
-        public PathFindingViewModel(IAssembleClasses pluginsLoader, 
+        public PathFindingViewModel(IAssembleClasses pluginsLoader,
             IMainModel model, BaseEndPoints endPoints)
             : base(pluginsLoader, model, endPoints)
         {

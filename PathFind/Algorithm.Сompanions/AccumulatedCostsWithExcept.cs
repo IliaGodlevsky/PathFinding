@@ -1,4 +1,4 @@
-﻿using Algorithm.Base.CompanionClasses;
+﻿using Algorithm.Interfaces;
 using Common.Extensions;
 using GraphLib.Interfaces;
 
@@ -6,7 +6,7 @@ namespace Algorithm.Сompanions
 {
     public sealed class AccumulatedCostsWithExcept : IAccumulatedCosts
     {
-        public AccumulatedCostsWithExcept(IAccumulatedCosts accumulatedCosts, 
+        public AccumulatedCostsWithExcept(IAccumulatedCosts accumulatedCosts,
             params IVertex[] except)
         {
             this.accumulatedCosts = accumulatedCosts;

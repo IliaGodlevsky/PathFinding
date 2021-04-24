@@ -1,5 +1,5 @@
 ﻿using GraphLib.Interfaces;
-using GraphLib.Realizations;
+using GraphLib.Realizations.Graphs;
 using System.Windows;
 
 namespace WPFVersion.Model

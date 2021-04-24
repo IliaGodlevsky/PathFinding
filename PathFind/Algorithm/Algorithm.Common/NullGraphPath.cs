@@ -10,5 +10,7 @@ namespace Algorithm.Common
     public sealed class NullGraphPath : IGraphPath
     {
         public IEnumerable<IVertex> Path => new DefaultVertex[] { };
+
+        public int PathCost => default;
     }
 }

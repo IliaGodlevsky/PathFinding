@@ -1,8 +1,8 @@
-﻿using GraphLib.Extensions;
+﻿using GraphLib.Common;
+using GraphLib.Extensions;
 using GraphLib.Interfaces;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
-using GraphLib.Common;
 
 namespace GraphLib.Realizations.Tests.Objects
 {

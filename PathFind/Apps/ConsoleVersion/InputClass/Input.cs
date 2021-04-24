@@ -1,7 +1,6 @@
 ﻿using Common;
-using GraphLib.Realizations;
+using GraphLib.Realizations.Coordinates;
 using System;
-
 using static ConsoleVersion.Resource.Resources;
 
 namespace ConsoleVersion.InputClass

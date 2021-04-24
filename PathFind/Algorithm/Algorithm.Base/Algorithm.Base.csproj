@@ -42,6 +42,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="BaseAlgorithm.cs" />
+    <Compile Include="BaseGreedyAlgorithm.cs" />
+    <Compile Include="BaseWaveAlgorithm.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -69,9 +71,17 @@
       <Project>{d3c5ccfe-698b-41c7-9a72-5fd0262765e1}</Project>
       <Name>GraphLib.Interfaces</Name>
     </ProjectReference>
+    <ProjectReference Include="..\..\GraphLib\GraphLib.Realizations\GraphLib.Realizations.csproj">
+      <Project>{B80C5250-3D81-4742-B8A5-84AE39122BA9}</Project>
+      <Name>GraphLib.Realizations</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Algorithm.Common\Algorithm.Common.csproj">
       <Project>{DF721A89-3E01-4159-B51A-E5723C9FD0BA}</Project>
       <Name>Algorithm.Common</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Algorithm.Extensions\Algorithm.Extensions.csproj">
+      <Project>{11C8B301-FE40-44A1-A5A2-BC684B6A56A0}</Project>
+      <Name>Algorithm.Extensions</Name>
     </ProjectReference>
     <ProjectReference Include="..\Algorithm.Infrastructure\Algorithm.Infrastructure.csproj">
       <Project>{da2a9a8c-0ef3-4edb-b026-3ff86def9464}</Project>
@@ -80,6 +90,10 @@
     <ProjectReference Include="..\Algorithm.Interfaces\Algorithm.Interfaces.csproj">
       <Project>{fc4f499e-9ab1-4623-9ad8-cfde0a07b7d0}</Project>
       <Name>Algorithm.Interfaces</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Algorithm.Realizations\Algorithm.Realizations.csproj">
+      <Project>{600D74AF-A0AE-46AA-BCF5-695650BBE66F}</Project>
+      <Name>Algorithm.Realizations</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup />

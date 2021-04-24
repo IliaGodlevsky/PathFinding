@@ -1,13 +1,12 @@
-﻿using Algorithm.Base.CompanionClasses;
-using Algorithm.Common;
+﻿using Algorithm.Common;
 using Algorithm.Infrastructure.EventArguments;
 using Algorithm.Infrastructure.Handlers;
 using Algorithm.Interfaces;
+using Algorithm.Сompanions;
 using Common.Extensions;
 using GraphLib.Extensions;
 using GraphLib.Interfaces;
 using System;
-using Algorithm.Сompanions;
 
 namespace Algorithm.Base
 {
@@ -30,7 +29,7 @@ namespace Algorithm.Base
             OnInterrupted?.Invoke(this, args);
         }
 
-        protected BaseAlgorithm(IGraph graph, IEndPoints endPoints) 
+        protected BaseAlgorithm(IGraph graph, IEndPoints endPoints)
             : this()
         {
             this.graph = graph;

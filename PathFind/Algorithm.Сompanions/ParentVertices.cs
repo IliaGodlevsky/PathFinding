@@ -1,6 +1,6 @@
-﻿using System.Collections.Generic;
-using GraphLib.Common.NullObjects;
+﻿using GraphLib.Common.NullObjects;
 using GraphLib.Interfaces;
+using System.Collections.Generic;
 
 namespace Algorithm.Сompanions
 {
@@ -18,12 +18,9 @@ namespace Algorithm.Сompanions
 
         public IVertex GetParent(IVertex child)
         {
-            if (HasParent(child))
-            {
-                return parentVertices[child.Position];
-            }
-
-            return new DefaultVertex();
+            return HasParent(child)
+                ? parentVertices[child.Position]
+                : new DefaultVertex();
         }
 
         public bool HasParent(IVertex child)

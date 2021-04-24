@@ -1,13 +1,12 @@
 ﻿using Common.Extensions;
 using Common.Interface;
 using GraphLib.Base;
+using GraphLib.Extensions;
 using GraphLib.Interfaces;
 using GraphViewModel.Interfaces;
 using System;
-using System.Linq;
 using System.Windows;
 using System.Windows.Input;
-using GraphLib.Extensions;
 using WPFVersion.Infrastructure;
 using WPFVersion.Model;
 

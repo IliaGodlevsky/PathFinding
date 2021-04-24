@@ -1,7 +1,7 @@
-﻿using System;
+﻿using Common.Extensions;
 using GraphLib.Interfaces;
+using System;
 using System.Linq;
-using Common.Extensions;
 
 namespace GraphLib.Extensions
 {

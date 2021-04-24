@@ -2,14 +2,15 @@
 using Common.Logging;
 using ConsoleVersion.Model;
 using ConsoleVersion.View;
+using GraphLib.Base;
 using GraphLib.Exceptions;
 using GraphLib.Interfaces;
-using GraphLib.Realizations;
+using GraphLib.Realizations.Coordinates;
+using GraphLib.Realizations.Graphs;
 using GraphViewModel;
 using GraphViewModel.Interfaces;
 using System;
 using System.Linq;
-using GraphLib.Base;
 using static ConsoleVersion.Constants;
 using static ConsoleVersion.InputClass.Input;
 using static ConsoleVersion.Resource.Resources;

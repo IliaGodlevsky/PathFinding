@@ -1,14 +1,14 @@
 ﻿using ConsoleVersion.View;
+using GraphLib.Common;
 using GraphLib.Extensions;
 using GraphLib.Interfaces;
-using GraphLib.Realizations;
+using GraphLib.Realizations.Coordinates;
 using GraphLib.Realizations.VertexCost;
 using GraphLib.Serialization;
 using GraphLib.Serialization.Extensions;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
-using GraphLib.Common;
 using Console = Colorful.Console;
 
 namespace ConsoleVersion.Model

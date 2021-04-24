@@ -2,7 +2,7 @@
 using System;
 using System.Linq;
 
-namespace GraphLib.Realizations
+namespace GraphLib.Realizations.Coordinates
 {
     /// <summary>
     /// A class representing cartesian two-dimensional coordinates
