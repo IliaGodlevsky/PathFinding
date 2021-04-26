@@ -57,6 +57,14 @@
       <Project>{11c8b301-fe40-44a1-a5a2-bc684b6a56a0}</Project>
       <Name>Algorithm.Extensions</Name>
     </ProjectReference>
+    <ProjectReference Include="..\..\Algorithm\Algorithm.Interfaces\Algorithm.Interfaces.csproj">
+      <Project>{FC4F499E-9AB1-4623-9AD8-CFDE0A07B7D0}</Project>
+      <Name>Algorithm.Interfaces</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Algorithm\Algorithm.Realizations\Algorithm.Realizations.csproj">
+      <Project>{600D74AF-A0AE-46AA-BCF5-695650BBE66F}</Project>
+      <Name>Algorithm.Realizations</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\AssembleClassesLib\AssembleClassesLib.csproj">
       <Project>{89EAEACE-ADD0-4B2F-B78C-5DB74AD01D8D}</Project>
       <Name>AssembleClassesLib</Name>

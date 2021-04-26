@@ -1,5 +1,6 @@
 ﻿using Conditional;
 using GraphLib.Interfaces;
+using GraphLib.Interfaces.Factories;
 using System;
 using System.Collections.Generic;
 using System.Linq;

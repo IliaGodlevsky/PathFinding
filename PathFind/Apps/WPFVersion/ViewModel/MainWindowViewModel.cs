@@ -6,6 +6,7 @@ using Common.Logging;
 using GraphLib.Base;
 using GraphLib.Extensions;
 using GraphLib.Interfaces;
+using GraphLib.Interfaces.Factories;
 using GraphLib.Serialization.Interfaces;
 using GraphViewModel;
 using System;

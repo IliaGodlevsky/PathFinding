@@ -3,6 +3,7 @@ using Common.Extensions;
 using GraphLib.Exceptions;
 using GraphLib.Extensions;
 using GraphLib.Interfaces;
+using GraphLib.Interfaces.Factories;
 using System;
 using System.Linq;
 
@@ -17,12 +18,14 @@ namespace GraphLib.Realizations.Factories
             IVertexFactory vertexFactory,
             ICoordinateFactory coordinateFactory,
             IGraphFactory graphFactory,
-            IVertexCostFactory costFactory)
+            IVertexCostFactory costFactory,
+            ICoordinateRadarFactory radarFactory)
         {
             this.vertexFactory = vertexFactory;
             this.coordinateFactory = coordinateFactory;
             this.graphFactory = graphFactory;
             this.costFactory = costFactory;
+            this.radarFactory = radarFactory;
             percentRange = new ValueRange(100, 0);
         }
 
@@ -42,7 +45,6 @@ namespace GraphLib.Realizations.Factories
             var graph = graphFactory.CreateGraph(graphDimensionsSizes);
             Enumerable
                 .Range(0, graph.Size)
-                .AsParallel()
                 .ForEach(i => AssembleVertex(graph, i, obstaclePercent));
             graph.ConnectVertices();
             return graph;
@@ -52,11 +54,11 @@ namespace GraphLib.Realizations.Factories
         {
             var coordinateValues = graph.ToCoordinates(index);
             var coordinate = coordinateFactory.CreateCoordinate(coordinateValues);
-            graph[coordinate] = vertexFactory.CreateVertex();
+            var coordinateRadar = radarFactory.CreateCoordinateRadar(coordinate);
+            graph[coordinate] = vertexFactory.CreateVertex(coordinateRadar, coordinate);
             var vertex = graph[coordinate];
             vertex.Cost = costFactory.CreateCost();
             vertex.IsObstacle = IsObstacleChance(obstaclePercent);
-            vertex.Position = coordinate;
         }
 
         private bool IsObstacleChance(int percentOfObstacles)
@@ -70,6 +72,7 @@ namespace GraphLib.Realizations.Factories
         private readonly ICoordinateFactory coordinateFactory;
         private readonly IVertexFactory vertexFactory;
         private readonly IGraphFactory graphFactory;
+        private readonly ICoordinateRadarFactory radarFactory;
         private readonly ValueRange percentRange;
     }
 }

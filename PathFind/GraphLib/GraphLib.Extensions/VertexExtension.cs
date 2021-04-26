@@ -40,7 +40,6 @@ namespace GraphLib.Extensions
             self.Neighbours = new List<IVertex>();
             self.SetToDefault();
             self.IsObstacle = false;
-            self.Position = new DefaultCoordinate();
             self.Cost = new DefaultCost();
         }
 

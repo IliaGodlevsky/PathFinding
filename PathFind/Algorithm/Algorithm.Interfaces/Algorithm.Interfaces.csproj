@@ -43,7 +43,9 @@
   <ItemGroup>
     <Compile Include="IAccumulatedCosts.cs" />
     <Compile Include="IAlgorithm.cs" />
+    <Compile Include="IHeuristicFunction.cs" />
     <Compile Include="IGraphPath.cs" />
+    <Compile Include="IStepRule.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

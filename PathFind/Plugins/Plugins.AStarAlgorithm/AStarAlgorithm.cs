@@ -1,7 +1,8 @@
-﻿using Algorithm.Extensions;
+﻿using Algorithm.Interfaces;
+using Algorithm.Realizations.HeuristicFunctions;
+using Algorithm.Realizations.StepRules;
 using AssembleClassesLib.Attributes;
 using GraphLib.Interfaces;
-using GraphLib.Realizations.StepRules;
 using Plugins.DijkstraALgorithm;
 
 namespace Plugins.AStarAlgorithm
@@ -10,25 +11,35 @@ namespace Plugins.AStarAlgorithm
     public class AStarAlgorithm : DijkstraAlgorithm
     {
         public AStarAlgorithm(IGraph graph, IEndPoints endPoints)
-            : this(graph, endPoints, new DefaultStepRule())
+            : this(graph, endPoints, new DefaultStepRule(), new ChebyshevDistance())
+        {
+
+        }
+
+        public AStarAlgorithm(IGraph graph, IEndPoints endPoints, IStepRule stepRule, IHeuristicFunction function)
+            : base(graph, endPoints, stepRule)
+        {
+            heuristicFunction = function;
+        }
+
+        public AStarAlgorithm(IGraph graph, IEndPoints endPoints, IHeuristicFunction function)
+            : this(graph, endPoints, new DefaultStepRule(), function)
         {
 
         }
 
         public AStarAlgorithm(IGraph graph, IEndPoints endPoints, IStepRule stepRule)
-            : base(graph, endPoints, stepRule)
+            : this(graph, endPoints, stepRule, new ChebyshevDistance())
         {
 
-        }
-
-        protected virtual double CalculateHeuristic(IVertex vertex)
-        {
-            return vertex.CalculateChebyshevDistanceTo(endPoints.End);
         }
 
         protected override double GetVertexRelaxedCost(IVertex neighbour)
         {
-            return base.GetVertexRelaxedCost(neighbour) + CalculateHeuristic(CurrentVertex);
+            return base.GetVertexRelaxedCost(neighbour)
+                   + heuristicFunction.Calculate(CurrentVertex, endPoints.End);
         }
+
+        protected readonly IHeuristicFunction heuristicFunction;
     }
 }

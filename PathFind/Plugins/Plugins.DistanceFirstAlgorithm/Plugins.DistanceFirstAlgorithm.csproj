@@ -77,10 +77,6 @@
       <Project>{89EAEACE-ADD0-4B2F-B78C-5DB74AD01D8D}</Project>
       <Name>AssembleClassesLib</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\Common\Common.csproj">
-      <Project>{A5A743F5-D346-4B2B-B6AC-07152F64E4D9}</Project>
-      <Name>Common</Name>
-    </ProjectReference>
     <ProjectReference Include="..\..\GraphLib\GraphLib.Base\GraphLib.Base.csproj">
       <Project>{6AA3B516-ABFE-4EDA-98DD-1CE799DA747F}</Project>
       <Name>GraphLib.Base</Name>

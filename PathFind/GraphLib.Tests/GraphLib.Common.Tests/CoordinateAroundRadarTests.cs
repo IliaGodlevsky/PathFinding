@@ -1,4 +1,5 @@
-﻿using GraphLib.Interfaces;
+﻿using GraphLib.Common.CoordinateRadars;
+using GraphLib.Interfaces;
 using Moq;
 using NUnit.Framework;
 using System.Linq;

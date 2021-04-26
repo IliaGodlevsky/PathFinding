@@ -41,7 +41,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="CoordinateAroundRadar.cs" />
+    <Compile Include="CoordinateRadars\CardinalCoordinateRadar.cs" />
+    <Compile Include="CoordinateRadars\CoordinateAroundRadar.cs" />
     <Compile Include="NullObjects\DefaultCoordinate.cs" />
     <Compile Include="NullObjects\DefaultCoordinateRadar.cs" />
     <Compile Include="NullObjects\DefaultCost.cs" />
@@ -59,5 +60,6 @@
       <Name>GraphLib.Interfaces</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

@@ -1,4 +1,5 @@
 ﻿using GraphLib.Interfaces;
+using GraphLib.Interfaces.Factories;
 using GraphLib.Serialization.Tests.Objects;
 
 namespace GraphLib.Serialization.Tests.Factories

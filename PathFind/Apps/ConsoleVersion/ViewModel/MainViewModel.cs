@@ -9,6 +9,7 @@ using GraphLib.Base;
 using GraphLib.Exceptions;
 using GraphLib.Extensions;
 using GraphLib.Interfaces;
+using GraphLib.Interfaces.Factories;
 using GraphLib.Realizations.Coordinates;
 using GraphLib.Realizations.Graphs;
 using GraphLib.Serialization.Interfaces;

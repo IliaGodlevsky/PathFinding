@@ -1,5 +1,5 @@
 ﻿using Common.Logging;
-using GraphLib.Interfaces;
+using GraphLib.Interfaces.Factories;
 using GraphViewModel.Interfaces;
 using System;
 

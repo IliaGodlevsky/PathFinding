@@ -1,4 +1,5 @@
-﻿using Algorithm.Base;
+﻿using System.Collections.Generic;
+using Algorithm.Base;
 using Algorithm.Extensions;
 using Algorithm.Сompanions;
 using AssembleClassesLib.Attributes;
@@ -57,12 +58,9 @@ namespace Plugins.LeeAlgorithm
             return accumulatedCosts.GetAccumulatedCost(vertex) == 0;
         }
 
-        protected override void RelaxNeighbours()
+        protected override void RelaxNeighbours(IEnumerable<IVertex> neighbours)
         {
-            visitedVertices
-                .GetUnvisitedNeighbours(CurrentVertex)
-                .Where(VertexIsUnwaved)
-                .ForEach(RelaxNeighbour);
+            neighbours.Where(VertexIsUnwaved).ForEach(RelaxNeighbour);
         }
         #endregion
     }

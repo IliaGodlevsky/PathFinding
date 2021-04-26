@@ -1,4 +1,5 @@
 ﻿using GraphLib.Interfaces;
+using GraphLib.Interfaces.Factories;
 using GraphLib.Realizations.Factories;
 using GraphLib.Serialization.Exceptions;
 using GraphLib.Serialization.Tests.Factories;
@@ -20,17 +21,20 @@ namespace GraphLib.Serialization.Tests
         private readonly ICoordinateFactory coordinateFactory;
         private readonly ICoordinateFactory notSerializableCoordinateFactory;
         private readonly IVertexCostFactory costFactory;
+        private readonly ICoordinateRadarFactory radarFactory;
         private IGraphAssembler graphAssembler;
 
         public GraphSerializerTests()
         {
             formatter = new BinaryFormatter();
             graphFactory = new TestGraphFactory();
-            vertexConverter = new TestVertexInfoSerializationConverter();
+            radarFactory = new CoordinateAroundRadarFactory();
+            vertexConverter = new TestVertexInfoSerializationConverter(radarFactory);
             vertexFactory = new TestVertexFactory();
             notSerializableCoordinateFactory = new NotSerializableCoordinateFactory();
             coordinateFactory = new TestCoordinateFactory();
             costFactory = new TestCostFactory();
+
         }
 
 
@@ -45,7 +49,8 @@ namespace GraphLib.Serialization.Tests
                 vertexFactory,
                 coordinateFactory,
                 graphFactory,
-                costFactory);
+                costFactory,
+                radarFactory);
 
             IGraph deserialized;
             var graph = graphAssembler.AssembleGraph(
@@ -72,7 +77,9 @@ namespace GraphLib.Serialization.Tests
                 vertexFactory,
                 notSerializableCoordinateFactory,
                 graphFactory,
-                costFactory);
+                costFactory,
+                radarFactory);
+
             var graph = graphAssembler.AssembleGraph(
                 obstaclePercent, graphParams);
             var serializer = new GraphSerializer(

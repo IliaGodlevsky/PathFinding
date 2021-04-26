@@ -1,5 +1,4 @@
-﻿using GraphLib.Common;
-using GraphLib.Extensions;
+﻿using GraphLib.Extensions;
 using GraphLib.Interfaces;
 using GraphLib.Serialization;
 using GraphLib.Serialization.Extensions;
@@ -13,7 +12,8 @@ namespace WPFVersion3D.Model
 {
     internal class Vertex3D : UIElement3D, IVertex, IMarkable
     {
-        public Vertex3D()
+        public Vertex3D(ICoordinateRadar radar,
+            ICoordinate coordinate)
         {
             Dispatcher.Invoke(() =>
             {
@@ -23,9 +23,13 @@ namespace WPFVersion3D.Model
                 Transform = new TranslateTransform3D();
             });
             this.Initialize();
+            Position = coordinate;
+            CoordinateRadar = radar;
+
         }
 
-        public Vertex3D(VertexSerializationInfo info) : this()
+        public Vertex3D(VertexSerializationInfo info, ICoordinateRadar radar) :
+            this(radar, info.Position)
         {
             this.Initialize(info);
         }
@@ -114,13 +118,13 @@ namespace WPFVersion3D.Model
             }
         }
 
-        public ICoordinateRadar CoordinateRadar => new CoordinateAroundRadar(Position);
+        public virtual ICoordinateRadar CoordinateRadar { get; }
 
         public IVertexCost Cost { get; set; }
 
         public ICollection<IVertex> Neighbours { get; set; }
 
-        public ICoordinate Position { get; set; }
+        public ICoordinate Position { get; }
 
         public bool Equals(IVertex other)
         {

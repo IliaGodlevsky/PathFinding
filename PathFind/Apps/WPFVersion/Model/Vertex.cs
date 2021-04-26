@@ -1,5 +1,4 @@
-﻿using GraphLib.Common;
-using GraphLib.Extensions;
+﻿using GraphLib.Extensions;
 using GraphLib.Interfaces;
 using GraphLib.Serialization;
 using GraphLib.Serialization.Extensions;
@@ -27,7 +26,8 @@ namespace WPFVersion.Model
             EnqueuedVertexColor = new SolidColorBrush(Colors.Magenta);
         }
 
-        public Vertex() : base()
+        public Vertex(ICoordinateRadar radar,
+            ICoordinate coordinate) : base()
         {
             Dispatcher.Invoke(() =>
             {
@@ -36,9 +36,13 @@ namespace WPFVersion.Model
                 Template = (ControlTemplate)TryFindResource("vertexTemplate");
             });
             this.Initialize();
+            Position = coordinate;
+            CoordinateRadar = radar;
+
         }
 
-        public Vertex(VertexSerializationInfo info) : this()
+        public Vertex(VertexSerializationInfo info, ICoordinateRadar radar)
+            : this(radar, info.Position)
         {
             this.Initialize(info);
         }
@@ -55,7 +59,7 @@ namespace WPFVersion.Model
             }
         }
 
-        public ICoordinateRadar CoordinateRadar => new CoordinateAroundRadar(Position);
+        public virtual ICoordinateRadar CoordinateRadar { get; }
 
         private IVertexCost cost;
         public IVertexCost Cost
@@ -74,7 +78,7 @@ namespace WPFVersion.Model
         public ICoordinate Position
         {
             get => position;
-            set
+            private set
             {
                 position = value;
                 Dispatcher.Invoke(() => ToolTip = position.ToString());

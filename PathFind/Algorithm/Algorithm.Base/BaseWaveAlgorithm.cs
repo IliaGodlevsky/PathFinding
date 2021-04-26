@@ -4,13 +4,14 @@ using Algorithm.Realizations;
 using Common.Extensions;
 using GraphLib.Interfaces;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Algorithm.Base
 {
     public abstract class BaseWaveAlgorithm : BaseAlgorithm
     {
-        protected BaseWaveAlgorithm(IGraph graph, IEndPoints endPoints) :
-            base(graph, endPoints)
+        protected BaseWaveAlgorithm(IGraph graph, IEndPoints endPoints)
+            : base(graph, endPoints)
         {
             verticesQueue = new Queue<IVertex>();
         }
@@ -20,8 +21,11 @@ namespace Algorithm.Base
             PrepareForPathfinding();
             do
             {
-                ExtractNeighbours();
-                RelaxNeighbours();
+                var neighbours 
+                    = GetCurrentVertexNeighbours()
+                        .ToArray();
+                ExtractNeighbours(neighbours);
+                RelaxNeighbours(neighbours);
                 CurrentVertex = NextVertex;
                 VisitVertex(CurrentVertex);
             } while (!IsDestination());
@@ -42,12 +46,10 @@ namespace Algorithm.Base
             RaiseOnVertexVisitedEvent(args);
         }
 
-        protected abstract void RelaxNeighbours();
+        protected abstract void RelaxNeighbours(IEnumerable<IVertex> vertex);
 
-        protected virtual void ExtractNeighbours()
+        protected virtual void ExtractNeighbours(IEnumerable<IVertex> neighbours)
         {
-            var neighbours = visitedVertices.GetUnvisitedNeighbours(CurrentVertex);
-
             foreach (var neighbour in neighbours)
             {
                 var args = CreateEventArgs(neighbour);
@@ -61,5 +63,10 @@ namespace Algorithm.Base
         }
 
         protected Queue<IVertex> verticesQueue;
+
+        private IEnumerable<IVertex> GetCurrentVertexNeighbours()
+        {
+            return visitedVertices.GetUnvisitedNeighbours(CurrentVertex);
+        }
     }
 }

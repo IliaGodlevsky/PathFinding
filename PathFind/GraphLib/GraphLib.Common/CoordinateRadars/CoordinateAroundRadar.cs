@@ -3,7 +3,7 @@ using GraphLib.Interfaces;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace GraphLib.Common
+namespace GraphLib.Common.CoordinateRadars
 {
     /// <summary>
     /// A class that finds the neighbors of the specified coordinate

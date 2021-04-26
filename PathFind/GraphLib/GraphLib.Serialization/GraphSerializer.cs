@@ -1,6 +1,7 @@
 ﻿using Common.Extensions;
 using GraphLib.Extensions;
 using GraphLib.Interfaces;
+using GraphLib.Interfaces.Factories;
 using GraphLib.Serialization.Exceptions;
 using GraphLib.Serialization.Extensions;
 using GraphLib.Serialization.Interfaces;

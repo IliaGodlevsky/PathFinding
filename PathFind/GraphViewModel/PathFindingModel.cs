@@ -17,6 +17,7 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
+
 using static GraphViewModel.Resources.ViewModelResources;
 
 namespace GraphViewModel
@@ -105,7 +106,7 @@ namespace GraphViewModel
                     vertex.MarkAsVisited();
                 }
                 visitedVerticesCount = args.VisitedVertices;
-                string statistics = GetStatistics(timer);
+                string statistics = GetStatistics();
                 mainViewModel.PathFindingStatistics = statistics;
             }
             ColorizeProcessedVertices();
@@ -148,7 +149,7 @@ namespace GraphViewModel
             if (path.IsExtracted())
             {
                 path.Highlight(endPoints);
-                string statistics = GetStatistics(timer, path);
+                string statistics = GetStatistics();
                 mainViewModel.PathFindingStatistics = statistics;
             }
             else
@@ -176,10 +177,10 @@ namespace GraphViewModel
         protected IGraphPath path;
         protected readonly IAssembleClasses assembleClasses;
 
-        private string GetStatistics(Stopwatch timer, IGraphPath path = null)
+        private string GetStatistics()
         {
             int pathLength = path?.GetPathLength() ?? 0;
-            int pathCost = path?.PathCost ?? 0;
+            double pathCost = path?.PathCost ?? 0;
             string graphInfo = string.Format(StatisticsFormat,
                 pathLength, pathCost, visitedVerticesCount);
             string timerInfo = timer.GetTimeInformation(TimerInfoFormat);

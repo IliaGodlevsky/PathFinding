@@ -1,12 +1,13 @@
 ﻿using GraphLib.Interfaces;
+using GraphLib.Interfaces.Factories;
 
 namespace WPFVersion.Model
 {
     internal sealed class VertexFactory : IVertexFactory
     {
-        public IVertex CreateVertex()
+        public IVertex CreateVertex(ICoordinateRadar coordinateRadar, ICoordinate coordinate)
         {
-            return new Vertex();
+            return new Vertex(coordinateRadar, coordinate);
         }
     }
 }

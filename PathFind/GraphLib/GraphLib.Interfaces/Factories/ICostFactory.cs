@@ -1,4 +1,4 @@
-﻿namespace GraphLib.Interfaces
+﻿namespace GraphLib.Interfaces.Factories
 {
     public interface IVertexCostFactory
     {

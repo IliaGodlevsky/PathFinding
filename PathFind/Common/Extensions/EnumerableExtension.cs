@@ -82,6 +82,16 @@ namespace Common.Extensions
             return collection;
         }
 
+        public static double SumOrDefault(this IEnumerable<int> collection)
+        {
+            return collection.Any() ? collection.Sum() : default;
+        }
+
+        public static double SumOrDefault(this IEnumerable<double> collection)
+        {
+            return collection.Any() ? collection.Sum() : default;
+        }
+
         /// <summary>
         /// Maximum int value of <paramref name="collection"/> 
         /// or 0 if <paramref name="collection"/> is empty
@@ -90,6 +100,11 @@ namespace Common.Extensions
         /// <returns>Maximum int value or 0 if 
         /// <paramref name="collection"/> is empty</returns>
         public static int MaxOrDefault(this IEnumerable<int> collection)
+        {
+            return collection.Any() ? collection.Max() : default;
+        }
+
+        public static double MaxOrDefault(this IEnumerable<double> collection)
         {
             return collection.Any() ? collection.Max() : default;
         }

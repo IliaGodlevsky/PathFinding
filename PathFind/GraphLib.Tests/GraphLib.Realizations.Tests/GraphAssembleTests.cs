@@ -1,5 +1,4 @@
-﻿using GraphLib.Common.NullObjects;
-using GraphLib.Interfaces;
+﻿using GraphLib.Interfaces.Factories;
 using GraphLib.Realizations.Factories;
 using GraphLib.Realizations.Tests.Factories;
 using NUnit.Framework;
@@ -14,6 +13,7 @@ namespace GraphLib.Realizations.Tests
         private readonly IVertexFactory vertexFactory;
         private readonly IVertexCostFactory costFactory;
         private readonly IGraphFactory graphFactory;
+        private readonly ICoordinateRadarFactory radarFactory;
         private readonly IGraphAssembler graphAssembler;
 
         public GraphAssemblerTests()
@@ -22,8 +22,9 @@ namespace GraphLib.Realizations.Tests
             vertexFactory = new TestVertexFactory();
             costFactory = new TestCostFactory();
             graphFactory = new TestGraphFactory();
+            radarFactory = new CoordinateAroundRadarFactory();
             graphAssembler = new GraphAssembler(vertexFactory,
-                coordinateFactory, graphFactory, costFactory);
+                coordinateFactory, graphFactory, costFactory, radarFactory);
         }
 
         [TestCase(15, new int[] { 15 })]
@@ -35,7 +36,6 @@ namespace GraphLib.Realizations.Tests
             var graph = graphAssembler.AssembleGraph(obstaclePercent, dimensionSizes);
 
             Assert.IsTrue(graph.DimensionsSizes.SequenceEqual(dimensionSizes));
-            Assert.IsFalse(graph is NullGraph);
         }
     }
 }

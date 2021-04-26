@@ -1,5 +1,4 @@
-﻿using GraphLib.Common;
-using GraphLib.Extensions;
+﻿using GraphLib.Extensions;
 using GraphLib.Interfaces;
 using GraphLib.Realizations.VertexCost;
 using GraphLib.Serialization;
@@ -13,16 +12,19 @@ namespace WindowsFormsVersion.Model
 {
     internal class Vertex : Label, IVertex, IMarkable, IWeightable
     {
-        public Vertex() : base()
+        public Vertex(ICoordinateRadar coordinateRadar, ICoordinate coordinate) : base()
         {
             float fontSize = VertexSize * TextToSizeRatio;
             Font = new Font("Times New Roman", fontSize);
             Size = new Size(VertexSize, VertexSize);
             TextAlign = ContentAlignment.MiddleCenter;
             this.Initialize();
+            Position = coordinate;
+            CoordinateRadar = coordinateRadar;
         }
 
-        public Vertex(VertexSerializationInfo info) : this()
+        public Vertex(VertexSerializationInfo info, ICoordinateRadar coordinateRadar)
+            : this(coordinateRadar, info.Position)
         {
             this.Initialize(info);
         }
@@ -38,9 +40,9 @@ namespace WindowsFormsVersion.Model
             }
         }
 
-        public ICoordinateRadar CoordinateRadar => new CoordinateAroundRadar(Position);
+        public virtual ICoordinateRadar CoordinateRadar { get; }
 
-        public ICoordinate Position { get; set; }
+        public ICoordinate Position { get; }
 
         public ICollection<IVertex> Neighbours { get; set; }
 

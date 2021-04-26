@@ -11,6 +11,6 @@ namespace Algorithm.Common
     {
         public IEnumerable<IVertex> Path => new DefaultVertex[] { };
 
-        public int PathCost => default;
+        public double PathCost => default;
     }
 }

@@ -1,12 +1,13 @@
-﻿using Algorithm.Base;
+﻿using System.Collections.Generic;
+using Algorithm.Base;
 using Algorithm.Extensions;
 using Algorithm.Interfaces;
 using Algorithm.Realizations;
+using Algorithm.Realizations.StepRules;
 using Algorithm.Сompanions;
 using AssembleClassesLib.Attributes;
 using Common.Extensions;
 using GraphLib.Interfaces;
-using GraphLib.Realizations.StepRules;
 using System.Linq;
 
 namespace Plugins.DijkstraALgorithm
@@ -14,15 +15,13 @@ namespace Plugins.DijkstraALgorithm
     [ClassName("Dijkstra's algorithm")]
     public class DijkstraAlgorithm : BaseWaveAlgorithm
     {
-
         public DijkstraAlgorithm(IGraph graph, IEndPoints endPoints)
-            : this(graph, endPoints, new DefaultStepRule())
+            : this(graph, endPoints, new WalkStepRule(new LandscapeStepRule()))
         {
 
         }
 
-        public DijkstraAlgorithm(IGraph graph,
-            IEndPoints endPoints, IStepRule stepRule)
+        public DijkstraAlgorithm(IGraph graph, IEndPoints endPoints, IStepRule stepRule)
             : base(graph, endPoints)
         {
             this.stepRule = stepRule;
@@ -73,20 +72,16 @@ namespace Plugins.DijkstraALgorithm
 
         protected virtual double GetVertexRelaxedCost(IVertex neighbour)
         {
-            var cost = stepRule.StepCost(neighbour, CurrentVertex);
-            return cost + accumulatedCosts.GetAccumulatedCost(CurrentVertex);
+            return stepRule.CountStepCost(neighbour, CurrentVertex)
+                   + accumulatedCosts.GetAccumulatedCost(CurrentVertex);
         }
 
-        protected override void RelaxNeighbours()
+        protected override void RelaxNeighbours(IEnumerable<IVertex> neighbours)
         {
-            visitedVertices
-                .GetUnvisitedNeighbours(CurrentVertex)
-                .ForEach(RelaxVertex);
+            neighbours.ForEach(RelaxVertex);
         }
         #endregion
 
         protected readonly IStepRule stepRule;
-
-
     }
 }

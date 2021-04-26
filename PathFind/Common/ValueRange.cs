@@ -30,7 +30,7 @@ namespace Common
 
         static ValueRange()
         {
-            random = new Random();
+            Random = new Random();
         }
 
         public int UpperValueOfRange { get; }
@@ -50,10 +50,9 @@ namespace Common
         {
             if (value > UpperValueOfRange)
                 return UpperValueOfRange;
-            else if (value < LowerValueOfRange)
+            if (value < LowerValueOfRange)
                 return LowerValueOfRange;
-            else
-                return value;
+            return value;
         }
 
         /// <summary>
@@ -95,9 +94,9 @@ namespace Common
         /// upper value and lower value</returns>
         public int GetRandomValueFromRange()
         {
-            return random.Next(LowerValueOfRange, UpperValueOfRange);
+            return Random.Next(LowerValueOfRange, UpperValueOfRange);
         }
 
-        private static readonly Random random;
+        private static readonly Random Random;
     }
 }

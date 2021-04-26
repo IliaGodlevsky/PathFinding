@@ -1,7 +1,8 @@
 ﻿using Algorithm.Base;
+using Algorithm.Interfaces;
+using Algorithm.Realizations.StepRules;
 using AssembleClassesLib.Attributes;
 using GraphLib.Interfaces;
-using GraphLib.Realizations.StepRules;
 
 namespace Plugins.CostGreedyAlgorithm
 {
@@ -23,8 +24,7 @@ namespace Plugins.CostGreedyAlgorithm
 
         protected override double GreedyHeuristic(IVertex vertex)
         {
-            var cost = stepRule.StepCost(vertex, CurrentVertex);
-            return cost;
+            return stepRule.CountStepCost(vertex, CurrentVertex);
         }
 
         private readonly IStepRule stepRule;

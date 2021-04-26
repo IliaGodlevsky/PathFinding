@@ -1,4 +1,6 @@
 ﻿using Algorithm.Extensions;
+using Algorithm.Interfaces;
+using Algorithm.Realizations.HeuristicFunctions;
 using AssembleClassesLib.Attributes;
 using GraphLib.Interfaces;
 using System.Linq;
@@ -8,8 +10,16 @@ namespace Plugins.BestFirstLeeAlgorithm
     [ClassName("Lee algorithm (heuristic)")]
     public class BestFirstLeeAlgorithm : LeeAlgorithm.LeeAlgorithm
     {
-        public BestFirstLeeAlgorithm(IGraph graph, IEndPoints endPoints)
+        public BestFirstLeeAlgorithm(IGraph graph,
+            IEndPoints endPoints, IHeuristicFunction function)
             : base(graph, endPoints)
+        {
+            heuristicFunction = function;
+        }
+
+        public BestFirstLeeAlgorithm(IGraph graph,
+            IEndPoints endPoints)
+            : this(graph, endPoints, new ChebyshevDistance())
         {
 
         }
@@ -25,12 +35,14 @@ namespace Plugins.BestFirstLeeAlgorithm
 
         protected virtual double CalculateHeuristic(IVertex vertex)
         {
-            return vertex.CalculateChebyshevDistanceTo(endPoints.End);
+            return heuristicFunction.Calculate(vertex, endPoints.End);
         }
 
         protected override double CreateWave()
         {
             return base.CreateWave() + CalculateHeuristic(CurrentVertex);
         }
+
+        private readonly IHeuristicFunction heuristicFunction;
     }
 }

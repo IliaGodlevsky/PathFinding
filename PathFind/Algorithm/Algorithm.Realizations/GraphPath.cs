@@ -1,8 +1,8 @@
 ﻿using Algorithm.Interfaces;
+using Algorithm.Realizations.StepRules;
 using Algorithm.Сompanions;
 using GraphLib.Extensions;
 using GraphLib.Interfaces;
-using GraphLib.Realizations.StepRules;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -18,27 +18,19 @@ namespace Algorithm.Realizations
             {
                 if (path == null)
                 {
-                    path = UnwindPath().ToArray();
+                    path = FormPath().ToArray();
                     if (!IsPathFormed())
                     {
                         path = Empty;
                     }
-                    else
-                    {
-                        PathCost = Enumerable
-                            .Range(0, path.Length - 1)
-                            .ToArray()
-                            .Sum(i => stepRule.StepCost(path[i], path[i + 1]));
-                    }
-
+                    PathCost = IsPathFormed() ? FormPathCost() : default;
                     path = path.Where(IsNotStart).ToArray();
                 }
-
                 return path;
             }
         }
 
-        public int PathCost { get; private set; }
+        public double PathCost { get; private set; }
 
         public GraphPath(ParentVertices parentVertices, IEndPoints endPoints, IGraph graph)
             : this(parentVertices, endPoints, graph, new DefaultStepRule())
@@ -55,7 +47,7 @@ namespace Algorithm.Realizations
             this.stepRule = stepRule;
         }
 
-        private IEnumerable<IVertex> UnwindPath()
+        private IEnumerable<IVertex> FormPath()
         {
             var vertex = endPoints.End;
             yield return vertex;
@@ -66,6 +58,15 @@ namespace Algorithm.Realizations
                 vertex = parent;
                 parent = parentVertices.GetParent(vertex);
             }
+        }
+
+        private double FormPathCost()
+        {
+            double GetCost(int i) => stepRule.CountStepCost(path[i], path[i + 1]);
+
+            return Enumerable
+                .Range(0, path.Length - 1)
+                .Sum(GetCost);
         }
 
         private bool IsPathFormed()

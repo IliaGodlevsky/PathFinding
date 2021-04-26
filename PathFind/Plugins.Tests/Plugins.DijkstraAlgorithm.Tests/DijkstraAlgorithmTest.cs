@@ -1,5 +1,5 @@
+using Algorithm.Realizations.StepRules;
 using GraphLib.Interfaces;
-using GraphLib.Realizations.StepRules;
 using Moq;
 using NUnit.Framework;
 using System;
@@ -99,21 +99,21 @@ namespace Plugins.DijkstraAlgorithm.Tests
         public void FindPath_EndpointsBelongToGraphAndStepRuleIsDefault_ReturnsShortestPath()
         {
             int expectedPathCost = 9;
-            var algorithm = new DijkstrasAlgorithm(Graph, EndPoints);
+            var stepRule = new DefaultStepRule();
+            var algorithm = new DijkstrasAlgorithm(Graph, EndPoints, stepRule);
 
             var graphPath = algorithm.FindPath();
             var comparer = new VertexComparer();
 
             Assert.IsTrue(graphPath.Path.SequenceEqual(expectedPathWithDefaultStepRule, comparer));
             Assert.AreEqual(expectedPathCost, graphPath.PathCost);
-
         }
 
         [Test]
-        public void FindPath_EndpointsBelongToGraphAndStepRuleIsHeight_ReturnsShortestPath()
+        public void FindPath_EndpointsBelongToGraphAndStepRuleIsLandscape_ReturnsShortestPath()
         {
-            int expectedPathCost = 6;
-            var stepRule = new HeightStepRule();
+            int expectedPathCost = 4;
+            var stepRule = new LandscapeStepRule();
             var algorithm = new DijkstrasAlgorithm(Graph, EndPoints, stepRule);
 
             var graphPath = algorithm.FindPath();
@@ -121,7 +121,6 @@ namespace Plugins.DijkstraAlgorithm.Tests
 
             Assert.IsTrue(graphPath.Path.SequenceEqual(expectedPathWithHeightStepRule, comparer));
             Assert.AreEqual(expectedPathCost, graphPath.PathCost);
-
         }
 
         [Test]

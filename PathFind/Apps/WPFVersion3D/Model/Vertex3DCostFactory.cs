@@ -1,4 +1,5 @@
 ﻿using GraphLib.Interfaces;
+using GraphLib.Interfaces.Factories;
 
 namespace WPFVersion3D.Model
 {

@@ -43,7 +43,8 @@
   <ItemGroup>
     <Compile Include="Coordinates\Coordinate2D.cs" />
     <Compile Include="Coordinates\Coordinate3D.cs" />
-    <Compile Include="StepRules\DefaultStepRule.cs" />
+    <Compile Include="Factories\CardinalCoordinateAroundRadar.cs" />
+    <Compile Include="Factories\CoordinateAroundRadarFactory.cs" />
     <Compile Include="Factories\Coordinate2DFactory.cs" />
     <Compile Include="Factories\Coordinate3DFactory.cs" />
     <Compile Include="Factories\CostFactory.cs" />
@@ -52,7 +53,6 @@
     <Compile Include="Factories\GraphAssembler.cs" />
     <Compile Include="Graphs\Graph2D.cs" />
     <Compile Include="Graphs\Graph3D.cs" />
-    <Compile Include="StepRules\HeightStepRule.cs" />
     <Compile Include="Interfaces\ICostState.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="VertexCost\WeightableVertexCost.cs" />

@@ -1,5 +1,4 @@
-﻿using GraphLib.Common;
-using GraphLib.Extensions;
+﻿using GraphLib.Extensions;
 using GraphLib.Interfaces;
 using GraphLib.Serialization.Extensions;
 using System.Collections.Generic;
@@ -9,12 +8,15 @@ namespace GraphLib.Serialization.Tests.Objects
 {
     internal sealed class TestVertex : IVertex
     {
-        public TestVertex()
+        public TestVertex(ICoordinateRadar radar, ICoordinate coorndinate)
         {
             this.Initialize();
+            Position = coorndinate;
+            CoordinateRadar = radar;
         }
 
-        public TestVertex(VertexSerializationInfo info) : this()
+        public TestVertex(VertexSerializationInfo info, ICoordinateRadar radar) :
+            this(radar, info.Position)
         {
             this.Initialize(info);
         }
@@ -22,8 +24,8 @@ namespace GraphLib.Serialization.Tests.Objects
         public bool IsObstacle { get; set; }
         public IVertexCost Cost { get; set; }
         public ICollection<IVertex> Neighbours { get; set; }
-        public ICoordinate Position { get; set; }
-        public ICoordinateRadar CoordinateRadar => new CoordinateAroundRadar(Position);
+        public ICoordinate Position { get; }
+        public ICoordinateRadar CoordinateRadar { get; }
 
         public bool Equals([AllowNull] IVertex other)
         {

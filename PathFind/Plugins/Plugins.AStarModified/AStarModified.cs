@@ -1,9 +1,11 @@
 ﻿using Algorithm.Extensions;
+using Algorithm.Interfaces;
+using Algorithm.Realizations.HeuristicFunctions;
+using Algorithm.Realizations.StepRules;
 using AssembleClassesLib.Attributes;
 using Common;
 using Common.Extensions;
 using GraphLib.Interfaces;
-using GraphLib.Realizations.StepRules;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,17 +16,29 @@ namespace Plugins.AStarModified
     public sealed class AStarModified : AStarAlgorithm.AStarAlgorithm
     {
         public AStarModified(IGraph graph, IEndPoints endPoints)
-            : this(graph, endPoints, new DefaultStepRule())
+            : this(graph, endPoints, new DefaultStepRule(), new ChebyshevDistance())
+        {
+
+        }
+
+        public AStarModified(IGraph graph, IEndPoints endPoints, IStepRule stepRule, IHeuristicFunction function)
+            : base(graph, endPoints, stepRule, function)
+        {
+            PercentOfFarthestVerticesToDelete
+                = CalculatePercentOfFarthestVerticesToDelete;
+            deletedVertices = new Queue<IVertex>();
+        }
+
+        public AStarModified(IGraph graph, IEndPoints endPoints, IHeuristicFunction function)
+            : base(graph, endPoints, new DefaultStepRule(), function)
         {
 
         }
 
         public AStarModified(IGraph graph, IEndPoints endPoints, IStepRule stepRule)
-            : base(graph, endPoints, stepRule)
+            : base(graph, endPoints, stepRule, new ChebyshevDistance())
         {
-            PercentOfFarthestVerticesToDelete
-                = CalculatePercentOfFarthestVerticesToDelete;
-            deletedVertices = new Queue<IVertex>();
+
         }
 
         protected override IVertex NextVertex
@@ -55,6 +69,11 @@ namespace Plugins.AStarModified
         {
             base.CompletePathfinding();
             deletedVertices.Clear();
+        }
+
+        private double CalculateHeuristic(IVertex vertex)
+        {
+            return heuristicFunction.Calculate(vertex, endPoints.End);
         }
 
         private int VerticesCountToDelete =>

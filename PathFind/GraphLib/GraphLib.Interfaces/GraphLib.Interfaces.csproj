@@ -42,22 +42,20 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ICoordinate.cs" />
-    <Compile Include="ICoordinateFactory.cs" />
-    <Compile Include="ICostFactory.cs" />
+    <Compile Include="Factories\ICoordinateFactory.cs" />
+    <Compile Include="Factories\ICoordinateRadarFactory.cs" />
+    <Compile Include="Factories\ICostFactory.cs" />
     <Compile Include="IEndPoints.cs" />
     <Compile Include="ICoordinateRadar.cs" />
-    <Compile Include="IEndPointsFactory.cs" />
     <Compile Include="IGraph.cs" />
-    <Compile Include="IGraphAssembler.cs" />
-    <Compile Include="IGraphFactory.cs" />
+    <Compile Include="Factories\IGraphAssembler.cs" />
+    <Compile Include="Factories\IGraphFactory.cs" />
     <Compile Include="IGraphField.cs" />
     <Compile Include="IMarkable.cs" />
-    <Compile Include="IStepRule.cs" />
     <Compile Include="IVertex.cs" />
     <Compile Include="IVertexCost.cs" />
     <Compile Include="IVertexEventHolder.cs" />
-    <Compile Include="IVertexEventHolderFactory.cs" />
-    <Compile Include="IVertexFactory.cs" />
+    <Compile Include="Factories\IVertexFactory.cs" />
     <Compile Include="IWeightable.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -67,5 +65,6 @@
       <Name>Common</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
