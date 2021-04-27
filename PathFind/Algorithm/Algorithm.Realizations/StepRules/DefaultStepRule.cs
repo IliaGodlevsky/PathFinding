@@ -8,7 +8,7 @@ namespace Algorithm.Realizations.StepRules
 
     public sealed class DefaultStepRule : IStepRule
     {
-        public double CountStepCost(IVertex neighbour, IVertex current)
+        public double CalculateStepCost(IVertex neighbour, IVertex current)
         {
             return neighbour.Cost.CurrentCost;
         }

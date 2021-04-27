@@ -1,10 +1,11 @@
 ﻿using Common.Extensions;
 using System;
 using System.Collections.Generic;
+using Algorithm.Interfaces;
 
 namespace Algorithm.Realizations.HeuristicFunctions
 {
-    public sealed class ManhattanDistance : BaseHeuristicFunction
+    public sealed class ManhattanDistance : BaseHeuristic, IHeuristic
     {
         protected override double Aggregate(IEnumerable<double> collection)
         {

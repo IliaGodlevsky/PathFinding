@@ -21,9 +21,7 @@ namespace Algorithm.Base
             PrepareForPathfinding();
             do
             {
-                var neighbours 
-                    = GetCurrentVertexNeighbours()
-                        .ToArray();
+                var neighbours = GetCurrentVertexNeighbours();
                 ExtractNeighbours(neighbours);
                 RelaxNeighbours(neighbours);
                 CurrentVertex = NextVertex;
@@ -46,9 +44,9 @@ namespace Algorithm.Base
             RaiseOnVertexVisitedEvent(args);
         }
 
-        protected abstract void RelaxNeighbours(IEnumerable<IVertex> vertex);
+        protected abstract void RelaxNeighbours(IVertex[] vertex);
 
-        protected virtual void ExtractNeighbours(IEnumerable<IVertex> neighbours)
+        protected virtual void ExtractNeighbours(IVertex[] neighbours)
         {
             foreach (var neighbour in neighbours)
             {
@@ -64,9 +62,10 @@ namespace Algorithm.Base
 
         protected Queue<IVertex> verticesQueue;
 
-        private IEnumerable<IVertex> GetCurrentVertexNeighbours()
+        private IVertex[] GetCurrentVertexNeighbours()
         {
-            return visitedVertices.GetUnvisitedNeighbours(CurrentVertex);
+            return visitedVertices
+                .GetUnvisitedNeighbours(CurrentVertex).ToArray();
         }
     }
 }

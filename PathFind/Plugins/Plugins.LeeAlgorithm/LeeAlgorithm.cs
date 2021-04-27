@@ -58,7 +58,7 @@ namespace Plugins.LeeAlgorithm
             return accumulatedCosts.GetAccumulatedCost(vertex) == 0;
         }
 
-        protected override void RelaxNeighbours(IEnumerable<IVertex> neighbours)
+        protected override void RelaxNeighbours(IVertex[] neighbours)
         {
             neighbours.Where(VertexIsUnwaved).ForEach(RelaxNeighbour);
         }

@@ -1,14 +1,17 @@
 ﻿using System;
 using System.Collections.Generic;
+using Algorithm.Interfaces;
 using Common.Extensions;
 
 namespace Algorithm.Realizations.HeuristicFunctions
 {
-    public sealed class EuclidianDistance : BaseHeuristicFunction
+    public sealed class EuclidianDistance : BaseHeuristic, IHeuristic
     {
+        private const int Precision = 1;
+
         protected override double Aggregate(IEnumerable<double> collection)
         {
-            return Math.Sqrt(collection.SumOrDefault());
+            return Math.Round(Math.Sqrt(collection.SumOrDefault()), Precision);
         }
 
         protected override double ZipMethod(int first, int second)

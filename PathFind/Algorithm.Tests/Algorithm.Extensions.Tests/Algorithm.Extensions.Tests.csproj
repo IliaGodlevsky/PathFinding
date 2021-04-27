@@ -15,6 +15,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\Algorithm\Algorithm.Extensions\Algorithm.Extensions.csproj" />
+    <ProjectReference Include="..\..\Algorithm\Algorithm.Realizations\Algorithm.Realizations.csproj" />
     <ProjectReference Include="..\..\GraphLib\GraphLib.Exceptions\GraphLib.Exceptions.csproj" />
     <ProjectReference Include="..\..\GraphLib\GraphLib.Interfaces\GraphLib.Interfaces.csproj" />
   </ItemGroup>

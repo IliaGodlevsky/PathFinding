@@ -8,7 +8,7 @@ namespace Algorithm.Realizations.StepRules
     [Description("Landscape step rule")]
     public sealed class LandscapeStepRule : IStepRule
     {
-        public double CountStepCost(IVertex neighbour, IVertex current)
+        public double CalculateStepCost(IVertex neighbour, IVertex current)
         {
             return Math.Abs(neighbour.Cost.CurrentCost - current.Cost.CurrentCost);
         }

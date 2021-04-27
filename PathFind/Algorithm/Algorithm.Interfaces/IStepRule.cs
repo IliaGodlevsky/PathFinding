@@ -4,6 +4,6 @@ namespace Algorithm.Interfaces
 {
     public interface IStepRule
     {
-        double CountStepCost(IVertex neighbour, IVertex current);
+        double CalculateStepCost(IVertex neighbour, IVertex current);
     }
 }

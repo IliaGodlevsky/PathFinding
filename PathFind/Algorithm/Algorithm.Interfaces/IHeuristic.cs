@@ -2,7 +2,7 @@
 
 namespace Algorithm.Interfaces
 {
-    public interface IHeuristicFunction
+    public interface IHeuristic
     {
         double Calculate(IVertex first, IVertex second);
     }

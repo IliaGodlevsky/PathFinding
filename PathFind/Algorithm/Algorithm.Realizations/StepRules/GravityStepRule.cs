@@ -6,21 +6,12 @@ using System.ComponentModel;
 namespace Algorithm.Realizations.StepRules
 {
     [Description("Gravity step rule")]
-    public sealed class GravityStepRule : IStepRule
+    public sealed class DensityStepRule : IStepRule
     {
-        public double CountStepCost(IVertex neighbour, IVertex current)
+        public double CalculateStepCost(IVertex neighbour, IVertex current)
         {
-            var cost = Math.Abs(current.Cost.CurrentCost - neighbour.Cost.CurrentCost);
-            if (current.Cost.CurrentCost < neighbour.Cost.CurrentCost)
-            {
-                return cost * 2;
-            }
-            if (current.Cost.CurrentCost == neighbour.Cost.CurrentCost)
-            {
-                return cost;
-            }
-
-            return Math.Round((double) cost / 2, 0);
+            var cost = current.Cost.CurrentCost - neighbour.Cost.CurrentCost;
+            return cost < 0 ? Math.Abs(cost * 2) : Math.Round((double) cost / 2, 0);
         }
     }
 }

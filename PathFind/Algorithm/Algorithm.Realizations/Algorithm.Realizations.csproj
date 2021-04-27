@@ -41,7 +41,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="HeuristicFunctions\BaseHeuristicFunction.cs" />
+    <Compile Include="HeuristicFunctions\BaseHeuristic.cs" />
     <Compile Include="HeuristicFunctions\ChebyshevDistance.cs" />
     <Compile Include="ConcreteAlgorithmsClasses.cs" />
     <Compile Include="GraphPath.cs" />

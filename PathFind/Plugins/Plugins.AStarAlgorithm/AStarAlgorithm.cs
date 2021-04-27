@@ -16,13 +16,13 @@ namespace Plugins.AStarAlgorithm
 
         }
 
-        public AStarAlgorithm(IGraph graph, IEndPoints endPoints, IStepRule stepRule, IHeuristicFunction function)
+        public AStarAlgorithm(IGraph graph, IEndPoints endPoints, IStepRule stepRule, IHeuristic function)
             : base(graph, endPoints, stepRule)
         {
             heuristicFunction = function;
         }
 
-        public AStarAlgorithm(IGraph graph, IEndPoints endPoints, IHeuristicFunction function)
+        public AStarAlgorithm(IGraph graph, IEndPoints endPoints, IHeuristic function)
             : this(graph, endPoints, new DefaultStepRule(), function)
         {
 
@@ -40,6 +40,6 @@ namespace Plugins.AStarAlgorithm
                    + heuristicFunction.Calculate(CurrentVertex, endPoints.End);
         }
 
-        protected readonly IHeuristicFunction heuristicFunction;
+        protected readonly IHeuristic heuristicFunction;
     }
 }

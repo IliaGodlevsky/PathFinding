@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using Algorithm.Base;
+﻿using Algorithm.Base;
 using Algorithm.Extensions;
 using Algorithm.Interfaces;
 using Algorithm.Realizations;
@@ -16,7 +15,7 @@ namespace Plugins.DijkstraALgorithm
     public class DijkstraAlgorithm : BaseWaveAlgorithm
     {
         public DijkstraAlgorithm(IGraph graph, IEndPoints endPoints)
-            : this(graph, endPoints, new WalkStepRule(new LandscapeStepRule()))
+            : this(graph, endPoints, new DefaultStepRule())
         {
 
         }
@@ -72,11 +71,11 @@ namespace Plugins.DijkstraALgorithm
 
         protected virtual double GetVertexRelaxedCost(IVertex neighbour)
         {
-            return stepRule.CountStepCost(neighbour, CurrentVertex)
+            return stepRule.CalculateStepCost(neighbour, CurrentVertex)
                    + accumulatedCosts.GetAccumulatedCost(CurrentVertex);
         }
 
-        protected override void RelaxNeighbours(IEnumerable<IVertex> neighbours)
+        protected override void RelaxNeighbours(IVertex[] neighbours)
         {
             neighbours.ForEach(RelaxVertex);
         }

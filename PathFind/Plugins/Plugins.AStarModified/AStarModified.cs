@@ -21,7 +21,7 @@ namespace Plugins.AStarModified
 
         }
 
-        public AStarModified(IGraph graph, IEndPoints endPoints, IStepRule stepRule, IHeuristicFunction function)
+        public AStarModified(IGraph graph, IEndPoints endPoints, IStepRule stepRule, IHeuristic function)
             : base(graph, endPoints, stepRule, function)
         {
             PercentOfFarthestVerticesToDelete
@@ -29,8 +29,8 @@ namespace Plugins.AStarModified
             deletedVertices = new Queue<IVertex>();
         }
 
-        public AStarModified(IGraph graph, IEndPoints endPoints, IHeuristicFunction function)
-            : base(graph, endPoints, new DefaultStepRule(), function)
+        public AStarModified(IGraph graph, IEndPoints endPoints, IHeuristic function)
+            : this(graph, endPoints, new DefaultStepRule(), function)
         {
 
         }

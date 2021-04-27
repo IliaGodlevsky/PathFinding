@@ -129,7 +129,7 @@ namespace WPFVersion.ViewModel
                     Logger.Instance.Warn(ex);
                 };
                 updatableAssembleClasses.LoadClasses();
-                window.Closing += (sender, args) => updatableAssembleClasses.Interrupt();
+                window.Closing += (s, e) => updatableAssembleClasses.Interrupt();
                 viewModel.OnEventHappened += OnExternalEventHappened;
                 PrepareWindow(viewModel, window);
             }

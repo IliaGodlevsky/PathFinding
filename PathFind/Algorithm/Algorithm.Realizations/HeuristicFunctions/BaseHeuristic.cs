@@ -1,13 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using Algorithm.Interfaces;
 using GraphLib.Exceptions;
 using GraphLib.Interfaces;
 
 namespace Algorithm.Realizations.HeuristicFunctions
 {
-    public abstract class BaseHeuristicFunction : IHeuristicFunction
+    public abstract class BaseHeuristic
     {
         public double Calculate(IVertex first, IVertex second)
         {

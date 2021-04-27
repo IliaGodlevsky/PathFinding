@@ -12,9 +12,9 @@ namespace Algorithm.Realizations.StepRules
             this.stepRule = stepRule;
         }
 
-        public double CountStepCost(IVertex neighbour, IVertex current)
+        public double CalculateStepCost(IVertex neighbour, IVertex current)
         {
-            return stepRule.CountStepCost(neighbour, current) + 1;
+            return stepRule.CalculateStepCost(neighbour, current) + 1;
         }
 
         private readonly IStepRule stepRule;

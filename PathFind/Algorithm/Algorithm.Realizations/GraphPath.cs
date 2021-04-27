@@ -38,8 +38,8 @@ namespace Algorithm.Realizations
 
         }
 
-        public GraphPath(ParentVertices parentVertices, IEndPoints endPoints,
-            IGraph graph, IStepRule stepRule)
+        public GraphPath(ParentVertices parentVertices, 
+            IEndPoints endPoints, IGraph graph, IStepRule stepRule)
         {
             this.parentVertices = parentVertices;
             this.graph = graph;
@@ -62,7 +62,8 @@ namespace Algorithm.Realizations
 
         private double FormPathCost()
         {
-            double GetCost(int i) => stepRule.CountStepCost(path[i], path[i + 1]);
+            double GetCost(int i) 
+                => stepRule.CalculateStepCost(path[i], path[i + 1]);
 
             return Enumerable
                 .Range(0, path.Length - 1)
