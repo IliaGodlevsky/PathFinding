@@ -30,8 +30,9 @@ namespace Algorithm.Base
         }
 
         protected BaseAlgorithm(IGraph graph, IEndPoints endPoints)
-            : this()
         {
+            visitedVertices = new VisitedVertices();
+            parentVertices = new ParentVertices();
             this.graph = graph;
             this.endPoints = new EndPoints(endPoints);
         }
@@ -120,12 +121,6 @@ namespace Algorithm.Base
 
         protected readonly IGraph graph;
         protected readonly EndPoints endPoints;
-
-        private BaseAlgorithm()
-        {
-            visitedVertices = new VisitedVertices();
-            parentVertices = new ParentVertices();
-        }
 
         private bool isInterruptRequested;
     }
