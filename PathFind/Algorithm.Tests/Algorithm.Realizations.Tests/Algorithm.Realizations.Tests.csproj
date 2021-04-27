@@ -1,7 +1,7 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>netcoreapp3.1</TargetFramework>
+    <TargetFramework>net48</TargetFramework>
 
     <IsPackable>false</IsPackable>
   </PropertyGroup>
@@ -14,9 +14,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\Algorithm\Algorithm.Extensions\Algorithm.Extensions.csproj" />
     <ProjectReference Include="..\..\Algorithm\Algorithm.Realizations\Algorithm.Realizations.csproj" />
-    <ProjectReference Include="..\..\GraphLib\GraphLib.Exceptions\GraphLib.Exceptions.csproj" />
     <ProjectReference Include="..\..\GraphLib\GraphLib.Interfaces\GraphLib.Interfaces.csproj" />
   </ItemGroup>
 

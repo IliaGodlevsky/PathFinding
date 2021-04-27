@@ -1,6 +1,6 @@
 ﻿using Algorithm.Base;
 using Algorithm.Interfaces;
-using Algorithm.Realizations.HeuristicFunctions;
+using Algorithm.Realizations.Heuristic;
 using AssembleClassesLib.Attributes;
 using GraphLib.Interfaces;
 

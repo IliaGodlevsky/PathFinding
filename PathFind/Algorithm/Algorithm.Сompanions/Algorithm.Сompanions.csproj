@@ -49,23 +49,23 @@
     <Compile Include="VisitedVertices.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Algorithm\Algorithm.Interfaces\Algorithm.Interfaces.csproj">
+    <ProjectReference Include="..\Algorithm.Interfaces\Algorithm.Interfaces.csproj">
       <Project>{FC4F499E-9AB1-4623-9AD8-CFDE0A07B7D0}</Project>
       <Name>Algorithm.Interfaces</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Common\Common.csproj">
+    <ProjectReference Include="..\..\Common\Common.csproj">
       <Project>{A5A743F5-D346-4B2B-B6AC-07152F64E4D9}</Project>
       <Name>Common</Name>
     </ProjectReference>
-    <ProjectReference Include="..\GraphLib\GraphLib.Common\GraphLib.Common.csproj">
+    <ProjectReference Include="..\..\GraphLib\GraphLib.Common\GraphLib.Common.csproj">
       <Project>{3CD8330E-9445-4DC4-A1DA-EE704F652942}</Project>
       <Name>GraphLib.Common</Name>
     </ProjectReference>
-    <ProjectReference Include="..\GraphLib\GraphLib.Extensions\GraphLib.Extensions.csproj">
+    <ProjectReference Include="..\..\GraphLib\GraphLib.Extensions\GraphLib.Extensions.csproj">
       <Project>{93f88f47-1871-44cd-9622-eb8d406c969c}</Project>
       <Name>GraphLib.Extensions</Name>
     </ProjectReference>
-    <ProjectReference Include="..\GraphLib\GraphLib.Interfaces\GraphLib.Interfaces.csproj">
+    <ProjectReference Include="..\..\GraphLib\GraphLib.Interfaces\GraphLib.Interfaces.csproj">
       <Project>{D3C5CCFE-698B-41C7-9A72-5FD0262765E1}</Project>
       <Name>GraphLib.Interfaces</Name>
     </ProjectReference>

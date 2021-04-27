@@ -41,12 +41,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="HeuristicFunctions\BaseHeuristic.cs" />
-    <Compile Include="HeuristicFunctions\ChebyshevDistance.cs" />
+    <Compile Include="Heuristic\BaseHeuristic.cs" />
+    <Compile Include="Heuristic\ChebyshevDistance.cs" />
     <Compile Include="ConcreteAlgorithmsClasses.cs" />
     <Compile Include="GraphPath.cs" />
-    <Compile Include="HeuristicFunctions\EuclidianDistance.cs" />
-    <Compile Include="HeuristicFunctions\ManhattanDistance.cs" />
+    <Compile Include="Heuristic\EuclidianDistance.cs" />
+    <Compile Include="Heuristic\ManhattanDistance.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="StepRules\DefaultStepRule.cs" />
     <Compile Include="StepRules\GravityStepRule.cs" />
@@ -54,10 +54,6 @@
     <Compile Include="StepRules\WalkStepRule.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\Algorithm.Сompanions\Algorithm.Сompanions.csproj">
-      <Project>{8A717526-D82A-4409-B3B4-5979820253AF}</Project>
-      <Name>Algorithm.Сompanions</Name>
-    </ProjectReference>
     <ProjectReference Include="..\..\AssembleClassesLib\AssembleClassesLib.csproj">
       <Project>{89EAEACE-ADD0-4B2F-B78C-5DB74AD01D8D}</Project>
       <Name>AssembleClassesLib</Name>
@@ -93,6 +89,10 @@
     <ProjectReference Include="..\Algorithm.Interfaces\Algorithm.Interfaces.csproj">
       <Project>{fc4f499e-9ab1-4623-9ad8-cfde0a07b7d0}</Project>
       <Name>Algorithm.Interfaces</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Algorithm.Сompanions\Algorithm.Сompanions.csproj">
+      <Project>{8A717526-D82A-4409-B3B4-5979820253AF}</Project>
+      <Name>Algorithm.Сompanions</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

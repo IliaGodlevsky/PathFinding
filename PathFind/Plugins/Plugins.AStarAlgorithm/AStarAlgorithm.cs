@@ -1,5 +1,5 @@
 ﻿using Algorithm.Interfaces;
-using Algorithm.Realizations.HeuristicFunctions;
+using Algorithm.Realizations.Heuristic;
 using Algorithm.Realizations.StepRules;
 using AssembleClassesLib.Attributes;
 using GraphLib.Interfaces;

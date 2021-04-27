@@ -64,7 +64,7 @@ namespace GraphLib.Extensions
         {
             bool IsInGraph(IVertex vertex)
             {
-                return ReferenceEquals(self[vertex.Position], vertex);
+                return self.Vertices.Any(v => ReferenceEquals(v, vertex));
             }
             
             return vertices.All(IsInGraph);

@@ -1,9 +1,9 @@
-﻿using Common.Extensions;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using Algorithm.Interfaces;
+using Common.Extensions;
 
-namespace Algorithm.Realizations.HeuristicFunctions
+namespace Algorithm.Realizations.Heuristic
 {
     public sealed class ChebyshevDistance : BaseHeuristic, IHeuristic
     {

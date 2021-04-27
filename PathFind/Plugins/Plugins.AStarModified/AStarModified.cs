@@ -1,6 +1,5 @@
 ﻿using Algorithm.Extensions;
 using Algorithm.Interfaces;
-using Algorithm.Realizations.HeuristicFunctions;
 using Algorithm.Realizations.StepRules;
 using AssembleClassesLib.Attributes;
 using Common;
@@ -9,6 +8,7 @@ using GraphLib.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Algorithm.Realizations.Heuristic;
 
 namespace Plugins.AStarModified
 {

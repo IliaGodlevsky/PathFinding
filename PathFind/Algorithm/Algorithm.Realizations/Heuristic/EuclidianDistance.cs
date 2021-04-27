@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using Algorithm.Interfaces;
 using Common.Extensions;
 
-namespace Algorithm.Realizations.HeuristicFunctions
+namespace Algorithm.Realizations.Heuristic
 {
     public sealed class EuclidianDistance : BaseHeuristic, IHeuristic
     {

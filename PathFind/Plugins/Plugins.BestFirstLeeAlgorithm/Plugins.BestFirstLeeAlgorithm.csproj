@@ -45,10 +45,6 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\Algorithm.Сompanions\Algorithm.Сompanions.csproj">
-      <Project>{8A717526-D82A-4409-B3B4-5979820253AF}</Project>
-      <Name>Algorithm.Сompanions</Name>
-    </ProjectReference>
     <ProjectReference Include="..\..\Algorithm\Algorithm.Base\Algorithm.Base.csproj">
       <Project>{04393071-3ba6-42c5-89d8-a89e3ac34511}</Project>
       <Name>Algorithm.Base</Name>
@@ -64,6 +60,10 @@
     <ProjectReference Include="..\..\Algorithm\Algorithm.Realizations\Algorithm.Realizations.csproj">
       <Project>{600D74AF-A0AE-46AA-BCF5-695650BBE66F}</Project>
       <Name>Algorithm.Realizations</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Algorithm\Algorithm.Сompanions\Algorithm.Сompanions.csproj">
+      <Project>{8A717526-D82A-4409-B3B4-5979820253AF}</Project>
+      <Name>Algorithm.Сompanions</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\AssembleClassesLib\AssembleClassesLib.csproj">
       <Project>{89EAEACE-ADD0-4B2F-B78C-5DB74AD01D8D}</Project>

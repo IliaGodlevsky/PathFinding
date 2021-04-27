@@ -4,7 +4,7 @@ using System.Linq;
 using GraphLib.Exceptions;
 using GraphLib.Interfaces;
 
-namespace Algorithm.Realizations.HeuristicFunctions
+namespace Algorithm.Realizations.Heuristic
 {
     public abstract class BaseHeuristic
     {

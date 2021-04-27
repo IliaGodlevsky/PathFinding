@@ -1,11 +1,11 @@
 ﻿using System;
-using Algorithm.Realizations.HeuristicFunctions;
+using Algorithm.Realizations.Heuristic;
 using GraphLib.Exceptions;
 using GraphLib.Interfaces;
 using Moq;
 using NUnit.Framework;
 
-namespace Algorithm.Extensions.Tests
+namespace Algorithm.Realizations.Tests
 {
     [TestFixture]
     public class ManhattanDistanceTest
