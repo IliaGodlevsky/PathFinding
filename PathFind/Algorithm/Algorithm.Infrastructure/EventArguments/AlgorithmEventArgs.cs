@@ -9,9 +9,10 @@ namespace Algorithm.Infrastructure.EventArguments
     /// </summary>
     public class AlgorithmEventArgs : EventArgs
     {
-        public AlgorithmEventArgs()
+        public AlgorithmEventArgs() 
+            : this(default)
         {
-            Vertex = new DefaultVertex();
+            
         }
 
         public AlgorithmEventArgs(int visitedVertices,
@@ -19,7 +20,7 @@ namespace Algorithm.Infrastructure.EventArguments
         {
             if (vertex != null)
             {
-                IsEndPoint = endPoints?.IsEndPoint(vertex) == true;
+                IsEndPoint = endPoints?.IsEndPoint(vertex) ?? false;
             }
 
             Vertex = vertex ?? new DefaultVertex();
