@@ -51,9 +51,9 @@ namespace Common.Extensions
             }
         }
 
-        public static bool IsDefault<T>(this T self)
+        public static bool IsNullObject<T>(this T self)
         {
-            return self.HasAttribute<DefaultAttribute, T>();
+            return self.HasAttribute<NullAttribute, T>();
         }
     }
 }

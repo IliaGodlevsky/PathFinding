@@ -6,10 +6,10 @@ using System.Collections.Generic;
 
 namespace Algorithm.Common
 {
-    [Default]
+    [Null]
     public sealed class NullGraphPath : IGraphPath
     {
-        public IEnumerable<IVertex> Path => new DefaultVertex[] { };
+        public IEnumerable<IVertex> Path => new NullVertex[] { };
 
         public double PathCost => default;
     }

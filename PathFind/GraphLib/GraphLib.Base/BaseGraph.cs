@@ -57,7 +57,7 @@ namespace GraphLib.Base
         {
             get => IsSuitableCoordinate(coordinate)
                    && vertices.TryGetValue(coordinate, out var vertex)
-                    ? vertex : new DefaultVertex();
+                    ? vertex : new NullVertex();
             set
             {
                 if (IsSuitableCoordinate(coordinate))

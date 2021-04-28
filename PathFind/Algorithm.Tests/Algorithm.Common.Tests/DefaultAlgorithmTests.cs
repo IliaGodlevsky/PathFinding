@@ -9,11 +9,11 @@ namespace Algorithm.Common.Tests
         [Test]
         public void FindPath_ReturnsNullGraphPath()
         {
-            var algorithm = new DefaultAlgorithm();
+            var algorithm = new NullAlgorithm();
 
             var path = algorithm.FindPath();
 
-            Assert.IsTrue(path.IsDefault());
+            Assert.IsTrue(path.IsNullObject());
         }
     }
 }

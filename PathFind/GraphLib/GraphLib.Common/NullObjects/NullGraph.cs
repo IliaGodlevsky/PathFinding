@@ -7,18 +7,18 @@ namespace GraphLib.Common.NullObjects
     /// <summary>
     /// Represents an empty graph, without any vertices
     /// </summary>
-    [Default]
+    [Null]
     public sealed class NullGraph : IGraph
     {
         public IVertex this[ICoordinate position]
         {
-            get => new DefaultVertex();
+            get => new NullVertex();
             set => _ = value;
         }
 
         public IEnumerable<int> DimensionsSizes => new int[] { };
 
-        public IEnumerable<IVertex> Vertices => new DefaultVertex[] { };
+        public IEnumerable<IVertex> Vertices => new NullVertex[] { };
 
         public int Size => 0;
 
@@ -28,7 +28,7 @@ namespace GraphLib.Common.NullObjects
 
         public IVertex this[IEnumerable<int> coordinates]
         {
-            get => new DefaultVertex();
+            get => new NullVertex();
             set => _ = value;
         }
 

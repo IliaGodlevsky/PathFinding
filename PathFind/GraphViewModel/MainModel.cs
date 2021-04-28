@@ -93,7 +93,7 @@ namespace GraphViewModel
 
         public void ConnectNewGraph(IGraph graph)
         {
-            if (!graph.IsDefault())
+            if (!graph.IsNullObject())
             {
                 EndPoints.UnsubscribeFromEvents(Graph);
                 EndPoints.Reset();

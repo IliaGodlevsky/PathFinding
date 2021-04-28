@@ -38,8 +38,8 @@ namespace GraphLib.Base
 
         public void Reset()
         {
-            Start = new DefaultVertex();
-            End = new DefaultVertex();
+            Start = new NullVertex();
+            End = new NullVertex();
         }
 
         public bool IsEndPoint(IVertex vertex)
@@ -54,12 +54,12 @@ namespace GraphLib.Base
 
         protected bool CanSetStartVertex(IVertex vertex)
         {
-            return Start.IsDefault() && CanBeEndPoint(vertex);
+            return Start.IsNullObject() && CanBeEndPoint(vertex);
         }
 
         protected bool CanSetEndVertex(IVertex vertex)
         {
-            return !Start.IsDefault() && End.IsDefault() && CanBeEndPoint(vertex);
+            return !Start.IsNullObject() && End.IsNullObject() && CanBeEndPoint(vertex);
         }
 
         protected virtual void SetEndPoints(object sender, EventArgs e)
@@ -84,13 +84,13 @@ namespace GraphLib.Base
         protected virtual void UnsetStartVertex(IVertex vertex)
         {
             (vertex as IMarkable)?.MarkAsRegular();
-            Start = new DefaultVertex();
+            Start = new NullVertex();
         }
 
         protected virtual void UnsetEndVertex(IVertex vertex)
         {
             (vertex as IMarkable)?.MarkAsRegular();
-            End = new DefaultVertex();
+            End = new NullVertex();
         }
 
         protected virtual void ReplaceStartVertex(IVertex vertex)

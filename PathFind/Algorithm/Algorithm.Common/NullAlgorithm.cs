@@ -6,9 +6,9 @@ using System;
 
 namespace Algorithm.Common
 {
-    [Default]
+    [Null]
     [Filterable]
-    public sealed class DefaultAlgorithm : IAlgorithm
+    public sealed class NullAlgorithm : IAlgorithm
     {
         public event AlgorithmEventHandler OnStarted;
         public event AlgorithmEventHandler OnVertexVisited;

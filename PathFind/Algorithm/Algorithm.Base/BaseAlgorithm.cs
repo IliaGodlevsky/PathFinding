@@ -12,7 +12,7 @@ namespace Algorithm.Base
 {
     public abstract class BaseAlgorithm : IAlgorithm
     {
-        public static IAlgorithm Default => new DefaultAlgorithm();
+        public static IAlgorithm Default => new NullAlgorithm();
 
         public event AlgorithmEventHandler OnStarted;
         public event AlgorithmEventHandler OnVertexVisited;
@@ -56,7 +56,7 @@ namespace Algorithm.Base
         protected virtual bool IsDestination()
         {
             return CurrentVertex.IsEqual(endPoints.End)
-                   || CurrentVertex.IsDefault()
+                   || CurrentVertex.IsNullObject()
                    || isInterruptRequested;
         }
 

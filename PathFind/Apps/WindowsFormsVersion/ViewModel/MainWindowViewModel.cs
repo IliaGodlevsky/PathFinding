@@ -113,7 +113,7 @@ namespace WindowsFormsVersion.ViewModel
 
         public void SaveGraph(object sender, EventArgs e)
         {
-            if (!Graph.IsDefault())
+            if (!Graph.IsNullObject())
             {
                 base.SaveGraph();
             }

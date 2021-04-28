@@ -23,7 +23,7 @@ namespace Algorithm.Infrastructure.EventArguments
                 IsEndPoint = endPoints?.IsEndPoint(vertex) ?? false;
             }
 
-            Vertex = vertex ?? new DefaultVertex();
+            Vertex = vertex ?? new NullVertex();
             VisitedVertices = visitedVertices;
         }
 

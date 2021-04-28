@@ -209,7 +209,7 @@ namespace WPFVersion3D.ViewModel
 
         private bool CanExecuteGraphOperation(object param)
         {
-            return !Graph.IsDefault();
+            return !Graph.IsNullObject();
         }
 
         protected override string GetAlgorithmsLoadPath()

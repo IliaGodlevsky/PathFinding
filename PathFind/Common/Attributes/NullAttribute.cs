@@ -7,7 +7,7 @@ namespace Common.Attributes
     /// (default) realization of hierarchy of classes
     /// </summary>
     [AttributeUsage(AttributeTargets.Class, Inherited = false)]
-    public sealed class DefaultAttribute : Attribute
+    public sealed class NullAttribute : Attribute
     {
 
     }

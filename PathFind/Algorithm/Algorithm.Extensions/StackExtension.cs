@@ -9,7 +9,7 @@ namespace Algorithm.Extensions
     {
         public static IVertex PopOrDefault(this Stack<IVertex> stack)
         {
-            return !stack.Any() ? new DefaultVertex() : stack.Pop();
+            return !stack.Any() ? new NullVertex() : stack.Pop();
         }
     }
 }

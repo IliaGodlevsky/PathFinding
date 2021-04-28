@@ -3,14 +3,14 @@ using GraphLib.Interfaces;
 
 namespace GraphLib.Common.NullObjects
 {
-    [Default]
-    public sealed class DefaultCost : IVertexCost
+    [Null]
+    public sealed class NullCost : IVertexCost
     {
         public int CurrentCost => default;
 
         public override bool Equals(object obj)
         {
-            return obj is DefaultCost;
+            return obj is NullCost;
         }
 
         public override int GetHashCode()

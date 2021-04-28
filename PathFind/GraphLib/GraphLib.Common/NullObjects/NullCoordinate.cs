@@ -8,15 +8,15 @@ namespace GraphLib.Common.NullObjects
     /// <summary>
     /// An empty coordinate with default realization
     /// </summary>
-    [Default]
+    [Null]
     [Serializable]
-    public sealed class DefaultCoordinate : ICoordinate
+    public sealed class NullCoordinate : ICoordinate
     {
         public IEnumerable<int> CoordinatesValues => new int[] { };
 
         public override bool Equals(object pos)
         {
-            return pos is DefaultCoordinate;
+            return pos is NullCoordinate;
         }
 
         public override int GetHashCode()

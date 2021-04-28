@@ -19,7 +19,7 @@ namespace Algorithm.Сompanions
         {
             return vertex.IsEqual(Start)
                    || vertex.IsEqual(End)
-                   || vertex.IsDefault();
+                   || vertex.IsNullObject();
         }
     }
 }

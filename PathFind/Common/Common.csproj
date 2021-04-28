@@ -58,7 +58,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Attributes\DefaultAttribute.cs" />
+    <Compile Include="Attributes\NullAttribute.cs" />
     <Compile Include="Attributes\FilterableAttribute.cs" />
     <Compile Include="Extensions\GenericExtensions.cs" />
     <Compile Include="Extensions\CollectionExtensions.cs" />

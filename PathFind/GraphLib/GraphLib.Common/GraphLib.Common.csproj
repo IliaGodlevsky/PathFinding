@@ -43,10 +43,10 @@
   <ItemGroup>
     <Compile Include="CoordinateRadars\CardinalCoordinateRadar.cs" />
     <Compile Include="CoordinateRadars\CoordinateAroundRadar.cs" />
-    <Compile Include="NullObjects\DefaultCoordinate.cs" />
-    <Compile Include="NullObjects\DefaultCoordinateRadar.cs" />
-    <Compile Include="NullObjects\DefaultCost.cs" />
-    <Compile Include="NullObjects\DefaultVertex.cs" />
+    <Compile Include="NullObjects\NullCoordinate.cs" />
+    <Compile Include="NullObjects\NullCoordinateRadar.cs" />
+    <Compile Include="NullObjects\NullCost.cs" />
+    <Compile Include="NullObjects\NullVertex.cs" />
     <Compile Include="NullObjects\NullGraph.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

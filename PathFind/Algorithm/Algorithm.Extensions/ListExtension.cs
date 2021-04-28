@@ -12,11 +12,11 @@ namespace Algorithm.Extensions
         /// </summary>
         /// <param name="list"></param>
         /// <param name="match"></param>
-        /// <returns>Suitable vertex or <see cref="DefaultVertex"/> if not found</returns>
+        /// <returns>Suitable vertex or <see cref="NullVertex"/> if not found</returns>
         /// <exception cref="ArgumentNullException"></exception>
         public static IVertex FindOrDefault(this List<IVertex> list, Predicate<IVertex> match)
         {
-            return list.Find(match) ?? new DefaultVertex();
+            return list.Find(match) ?? new NullVertex();
         }
     }
 }

@@ -16,7 +16,7 @@ namespace Algorithm.Сompanions
 
         public void Add(IVertex vertex)
         {
-            if (!vertex.IsDefault())
+            if (!vertex.IsNullObject())
             {
                 visitedVertices[vertex.Position] = vertex;
             }

@@ -40,7 +40,7 @@ namespace GraphLib.Extensions
             self.Neighbours = new List<IVertex>();
             self.SetToDefault();
             self.IsObstacle = false;
-            self.Cost = new DefaultCost();
+            self.Cost = new NullCost();
         }
 
         internal static void Refresh(this IVertex self)

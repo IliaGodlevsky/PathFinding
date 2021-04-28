@@ -40,7 +40,7 @@ namespace GraphViewModel
             DelayTime = 4;
             timer = new Stopwatch();
             path = new NullGraphPath();
-            algorithm = new DefaultAlgorithm();
+            algorithm = new NullAlgorithm();
             graph = mainViewModel.Graph;
             assembleClasses = algorithms;
             this.endPoints = endPoints;

@@ -11,11 +11,11 @@ namespace Algorithm.Extensions
         /// Removes vertex from the beginning of queue and returns it
         /// </summary>
         /// <param name="queue"></param>
-        /// <returns>First vertex if collection isn't empty and <see cref="DefaultVertex"/> if is</returns>
+        /// <returns>First vertex if collection isn't empty and <see cref="NullVertex"/> if is</returns>
         /// <exception cref="System.ArgumentNullException"></exception>
         public static IVertex DequeueOrDefault(this Queue<IVertex> queue)
         {
-            return !queue.Any() ? new DefaultVertex() : queue.Dequeue();
+            return !queue.Any() ? new NullVertex() : queue.Dequeue();
         }
 
         public static Queue<T> EnqueueRange<T>(this Queue<T> queue, IEnumerable<T> range)

@@ -223,7 +223,7 @@ namespace WPFVersion.ViewModel
 
         private bool CanExecuteGraphOperation(object param)
         {
-            return !Graph.IsDefault();
+            return !Graph.IsNullObject();
         }
     }
 }

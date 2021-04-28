@@ -19,10 +19,10 @@ namespace Algorithm.Realizations
         /// <param name="parametres"></param>
         /// <returns>An instance of algorithm if 
         /// <paramref name="key"></paramref> exists and
-        /// <see cref="DefaultAlgorithm"></see> when doesn't</returns>
+        /// <see cref="NullAlgorithm"></see> when doesn't</returns>
         public override object Get(string key, params object[] parametres)
         {
-            return base.Get(key, parametres) ?? new DefaultAlgorithm();
+            return base.Get(key, parametres) ?? new NullAlgorithm();
         }
 
         public ConcreteAssembleAlgorithmClasses(string path,
