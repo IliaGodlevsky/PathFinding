@@ -27,8 +27,12 @@ namespace GraphLib.Common.CoordinateRadars
         {
             get
             {
-                FormEnvironment();
-                return environment;
+                if (neighbours == null)
+                {
+                    FormEnvironment();
+                    neighbours = environment;
+                }
+                return neighbours;
             }
         }
 
@@ -55,12 +59,13 @@ namespace GraphLib.Common.CoordinateRadars
             }
         }
 
-        private readonly int[] lateralNeighbourCoordinatesOffsets;
+        private readonly int limitDepth;
 
+        private readonly int[] lateralNeighbourCoordinatesOffsets;
         private readonly int[] currentCoordinatesValues;
         private readonly int[] selfCoordinatesValues;
-
         private readonly List<int[]> environment;
-        private readonly int limitDepth;
+        
+        private IEnumerable<int[]> neighbours;
     }
 }
