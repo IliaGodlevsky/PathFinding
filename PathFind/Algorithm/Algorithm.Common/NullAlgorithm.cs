@@ -3,6 +3,7 @@ using Algorithm.Infrastructure.Handlers;
 using Algorithm.Interfaces;
 using Common.Attributes;
 using System;
+using AssembleClassesLib.Attributes;
 
 namespace Algorithm.Common
 {

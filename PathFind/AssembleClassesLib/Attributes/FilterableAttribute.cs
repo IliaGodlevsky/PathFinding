@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Common.Attributes
+namespace AssembleClassesLib.Attributes
 {
     /// <summary>
     /// Indicates that a class should be ignored when fetching classes from an assembly

@@ -59,7 +59,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Attributes\NullAttribute.cs" />
-    <Compile Include="Attributes\FilterableAttribute.cs" />
     <Compile Include="Extensions\GenericExtensions.cs" />
     <Compile Include="Extensions\CollectionExtensions.cs" />
     <Compile Include="Interface\IInterrupted.cs" />

@@ -1,16 +1,10 @@
-﻿using Common.Attributes;
-using System;
+﻿using System;
 using System.Reflection;
 
 namespace Common.Extensions
 {
     public static class MemberInfoExtensions
     {
-        public static bool IsFilterable(this MemberInfo self)
-        {
-            return self.GetAttribute<FilterableAttribute>() != null;
-        }
-
         /// <summary>
         /// Returns attribute that specified as <typeparamref name="TAttribute"/>
         /// </summary>

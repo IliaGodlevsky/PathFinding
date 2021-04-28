@@ -41,6 +41,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Attributes\FilterableAttribute.cs" />
+    <Compile Include="Extensions\MemberInfoExtensions.cs" />
     <Compile Include="Interface\INotifingAssembleClasses.cs" />
     <Compile Include="Realizations\AssembleClasses.cs" />
     <Compile Include="Attributes\ClassNameAttribute.cs" />
