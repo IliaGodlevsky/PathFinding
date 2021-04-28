@@ -6,30 +6,30 @@ using System.Collections.Generic;
 using System.Windows;
 using System.Windows.Media;
 using System.Windows.Media.Media3D;
+using WPFVersion3D.Interface;
 using static WPFVersion3D.Constants;
 
 namespace WPFVersion3D.Model
 {
     internal class Vertex3D : UIElement3D, IVertex, IMarkable
     {
-        public Vertex3D(ICoordinateRadar radar,
-            ICoordinate coordinate)
+        public Vertex3D(ICoordinateRadar radar, ICoordinate coordinate, IModel3DFactory modelFactory)
         {
+            this.modelFactory = modelFactory;
+            Position = coordinate;
+            CoordinateRadar = radar;
             Dispatcher.Invoke(() =>
             {
                 Size = InitialVertexSize;
                 Material = new DiffuseMaterial();
-                Model = Model3DFactory.CreateCubicModel3D(Size, Material);
                 Transform = new TranslateTransform3D();
+                Model = modelFactory.CreateModel3D(Size, Material);
             });
             this.Initialize();
-            Position = coordinate;
-            CoordinateRadar = radar;
-
         }
 
-        public Vertex3D(VertexSerializationInfo info, ICoordinateRadar radar) :
-            this(radar, info.Position)
+        public Vertex3D(VertexSerializationInfo info, ICoordinateRadar radar, IModel3DFactory modelFactory) :
+            this(radar, info.Position, modelFactory)
         {
             this.Initialize(info);
         }
@@ -186,7 +186,7 @@ namespace WPFVersion3D.Model
             double size = (double)prop.NewValue;
             var material = vert.Material;
             vert.Size = size;
-            vert.Model = Model3DFactory.CreateCubicModel3D(size, material);
+            vert.Model = vert.modelFactory.CreateModel3D(size, material);
         }
 
         protected static void ModelPropertyChanged(DependencyObject depObj,
@@ -203,5 +203,7 @@ namespace WPFVersion3D.Model
             vert.Brush = (SolidColorBrush)prop.NewValue;
             ((DiffuseMaterial)vert.Material).Brush = vert.Brush;
         }
+
+        private readonly IModel3DFactory modelFactory;
     }
 }

@@ -73,7 +73,8 @@
     <Compile Include="Converters\DoubleToStringConverter.cs" />
     <Compile Include="Enums\Axis.cs" />
     <Compile Include="Enums\RotationDirection.cs" />
-    <Compile Include="Model\Model3DFactory.cs" />
+    <Compile Include="Interface\IModel3DFactory.cs" />
+    <Compile Include="Model\CubicModel3DFactory.cs" />
     <Compile Include="Infrastructure\Animators\Interface\IAnimator.cs" />
     <Compile Include="Infrastructure\Animators\AnimatedAxisRotator.cs" />
     <Compile Include="Infrastructure\Animators\NullAnimator.cs" />
@@ -264,5 +265,6 @@
       <Version>2.0.20525</Version>
     </PackageReference>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
