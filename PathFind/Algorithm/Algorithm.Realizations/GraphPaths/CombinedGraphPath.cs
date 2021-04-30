@@ -40,8 +40,8 @@ namespace Algorithm.Realizations.GraphPaths
                         .Append(endPoints.End)
                         .DistinctBy(vertex => vertex.Position)
                         .ToArray();
-                   
-                    PathCost = fromStartPath.PathCost + fromEndPath.PathCost + AdjustPathCost(intersect);                        
+
+                    PathCost = fromStartPath.PathCost + fromEndPath.PathCost + AdjustPathCost(intersect);
                 }
                 return path;
             }
