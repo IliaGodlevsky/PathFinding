@@ -16,7 +16,6 @@ using System.Threading.Tasks;
 
 namespace Plugins.BidirectLeeAlgorithm
 {
-    [Filterable]
     [ClassName("Lee algorithm (bidirect)")]
     public sealed class BidirectLeeAlgorithm : BaseAlgorithm
     {
