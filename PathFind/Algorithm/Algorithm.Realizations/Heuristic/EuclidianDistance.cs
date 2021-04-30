@@ -1,7 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using Algorithm.Interfaces;
+﻿using Algorithm.Interfaces;
 using Common.Extensions;
+using System;
+using System.Collections.Generic;
 
 namespace Algorithm.Realizations.Heuristic
 {

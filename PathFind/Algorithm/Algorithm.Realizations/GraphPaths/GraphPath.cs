@@ -6,7 +6,7 @@ using GraphLib.Interfaces;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace Algorithm.Realizations
+namespace Algorithm.Realizations.GraphPaths
 {
     public sealed class GraphPath : IGraphPath
     {
@@ -38,7 +38,7 @@ namespace Algorithm.Realizations
 
         }
 
-        public GraphPath(ParentVertices parentVertices, 
+        public GraphPath(ParentVertices parentVertices,
             IEndPoints endPoints, IGraph graph, IStepRule stepRule)
         {
             this.parentVertices = parentVertices;
@@ -62,7 +62,7 @@ namespace Algorithm.Realizations
 
         private double FormPathCost()
         {
-            double GetCost(int i) 
+            double GetCost(int i)
                 => stepRule.CalculateStepCost(path[i], path[i + 1]);
 
             return Enumerable

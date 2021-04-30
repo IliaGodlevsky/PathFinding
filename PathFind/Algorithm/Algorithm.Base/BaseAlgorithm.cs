@@ -51,8 +51,6 @@ namespace Algorithm.Base
 
         protected IVertex CurrentVertex { get; set; }
 
-        protected abstract IVertex NextVertex { get; }
-
         protected virtual bool IsDestination()
         {
             return CurrentVertex.IsEqual(endPoints.End)
@@ -100,7 +98,7 @@ namespace Algorithm.Base
             RaiseOnAlgorithmFinishedEvent(args);
         }
 
-        protected AlgorithmEventArgs CreateEventArgs(IVertex vertex)
+        protected virtual AlgorithmEventArgs CreateEventArgs(IVertex vertex)
         {
             return new AlgorithmEventArgs(visitedVertices.Count, endPoints, vertex);
         }

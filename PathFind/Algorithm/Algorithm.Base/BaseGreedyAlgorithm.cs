@@ -1,6 +1,6 @@
 ﻿using Algorithm.Extensions;
 using Algorithm.Interfaces;
-using Algorithm.Realizations;
+using Algorithm.Realizations.GraphPaths;
 using Common.Extensions;
 using GraphLib.Interfaces;
 using System.Collections.Generic;
@@ -14,7 +14,7 @@ namespace Algorithm.Base
            : base(graph, endPoints)
         {
             visitedVerticesStack = new Stack<IVertex>();
-        }
+        }       
 
         public override IGraphPath FindPath()
         {
@@ -38,7 +38,7 @@ namespace Algorithm.Base
             visitedVerticesStack.Clear();
         }
 
-        protected override IVertex NextVertex
+        protected IVertex NextVertex
         {
             get
             {

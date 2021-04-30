@@ -1,8 +1,8 @@
-﻿using System;
+﻿using GraphLib.Exceptions;
+using GraphLib.Interfaces;
+using System;
 using System.Collections.Generic;
 using System.Linq;
-using GraphLib.Exceptions;
-using GraphLib.Interfaces;
 
 namespace Algorithm.Realizations.Heuristic
 {

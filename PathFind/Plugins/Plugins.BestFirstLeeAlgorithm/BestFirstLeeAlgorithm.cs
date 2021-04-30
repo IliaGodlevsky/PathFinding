@@ -1,9 +1,9 @@
 ﻿using Algorithm.Extensions;
 using Algorithm.Interfaces;
+using Algorithm.Realizations.Heuristic;
 using AssembleClassesLib.Attributes;
 using GraphLib.Interfaces;
 using System.Linq;
-using Algorithm.Realizations.Heuristic;
 
 namespace Plugins.BestFirstLeeAlgorithm
 {

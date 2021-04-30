@@ -1,6 +1,6 @@
 ﻿using Algorithm.Extensions;
 using Algorithm.Interfaces;
-using Algorithm.Realizations;
+using Algorithm.Realizations.GraphPaths;
 using Common.Extensions;
 using GraphLib.Interfaces;
 using System.Collections.Generic;
@@ -15,6 +15,8 @@ namespace Algorithm.Base
         {
             verticesQueue = new Queue<IVertex>();
         }
+
+        protected abstract IVertex NextVertex { get; }
 
         public override IGraphPath FindPath()
         {

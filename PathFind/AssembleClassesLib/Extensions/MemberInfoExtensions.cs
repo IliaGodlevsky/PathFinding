@@ -1,6 +1,6 @@
-﻿using System.Reflection;
-using AssembleClassesLib.Attributes;
+﻿using AssembleClassesLib.Attributes;
 using Common.Extensions;
+using System.Reflection;
 
 namespace AssembleClassesLib.Extensions
 {

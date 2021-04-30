@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using Algorithm.Base;
+﻿using Algorithm.Base;
 using Algorithm.Extensions;
 using Algorithm.Сompanions;
 using AssembleClassesLib.Attributes;
@@ -37,6 +36,7 @@ namespace Plugins.LeeAlgorithm
                 verticesQueue = verticesQueue
                     .Where(visitedVertices.IsNotVisited)
                     .ToQueue();
+
                 return verticesQueue.DequeueOrDefault();
             }
         }
@@ -60,7 +60,9 @@ namespace Plugins.LeeAlgorithm
 
         protected override void RelaxNeighbours(IVertex[] neighbours)
         {
-            neighbours.Where(VertexIsUnwaved).ForEach(RelaxNeighbour);
+            neighbours
+                .Where(VertexIsUnwaved)
+                .ForEach(RelaxNeighbour);
         }
         #endregion
     }

@@ -1,5 +1,7 @@
 ﻿using Common.Extensions;
+using GraphLib.Common.NullObjects;
 using GraphLib.Interfaces;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -9,7 +11,7 @@ namespace Algorithm.Сompanions
     {
         public VisitedVertices()
         {
-            visitedVertices = new Dictionary<ICoordinate, IVertex>();
+            visitedVertices = new ConcurrentDictionary<ICoordinate, IVertex>();
         }
 
         public int Count => visitedVertices.Count;
@@ -27,6 +29,13 @@ namespace Algorithm.Сompanions
             return !visitedVertices.TryGetValue(vertex.Position, out _);
         }
 
+        public IVertex Intersect(VisitedVertices visitedVertices)
+        {
+            return visitedVertices.visitedVertices
+                    .Intersect(this.visitedVertices)
+                    .FirstOrDefault().Value ?? new NullVertex();
+        }
+
         public IEnumerable<IVertex> GetUnvisitedNeighbours(IVertex vertex)
         {
             return vertex.Neighbours.Where(IsNotObstacleAndNotVisited);
@@ -42,6 +51,6 @@ namespace Algorithm.Сompanions
             return IsNotVisited(vertex) && !vertex.IsObstacle;
         }
 
-        private readonly Dictionary<ICoordinate, IVertex> visitedVertices;
+        private readonly ConcurrentDictionary<ICoordinate, IVertex> visitedVertices;
     }
 }

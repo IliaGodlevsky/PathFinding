@@ -9,13 +9,13 @@ namespace Plugins.CostGreedyAlgorithm
     [ClassName("Cost greedy algorithm")]
     public sealed class CostGreedyAlgorithm : BaseGreedyAlgorithm
     {
-        public CostGreedyAlgorithm(IGraph graph, IEndPoints endPoints) 
+        public CostGreedyAlgorithm(IGraph graph, IEndPoints endPoints)
             : this(graph, endPoints, new DefaultStepRule())
         {
 
         }
 
-        public CostGreedyAlgorithm(IGraph graph, IEndPoints endPoints, IStepRule stepRule) 
+        public CostGreedyAlgorithm(IGraph graph, IEndPoints endPoints, IStepRule stepRule)
             : base(graph, endPoints)
         {
             this.stepRule = stepRule;

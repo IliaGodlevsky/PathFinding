@@ -1,7 +1,7 @@
 ﻿using Algorithm.Base;
 using Algorithm.Extensions;
 using Algorithm.Interfaces;
-using Algorithm.Realizations;
+using Algorithm.Realizations.GraphPaths;
 using Algorithm.Realizations.StepRules;
 using Algorithm.Сompanions;
 using AssembleClassesLib.Attributes;

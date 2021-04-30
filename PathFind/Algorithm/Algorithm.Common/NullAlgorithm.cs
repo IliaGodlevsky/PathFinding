@@ -1,9 +1,9 @@
 ﻿using Algorithm.Infrastructure.EventArguments;
 using Algorithm.Infrastructure.Handlers;
 using Algorithm.Interfaces;
+using AssembleClassesLib.Attributes;
 using Common.Attributes;
 using System;
-using AssembleClassesLib.Attributes;
 
 namespace Algorithm.Common
 {

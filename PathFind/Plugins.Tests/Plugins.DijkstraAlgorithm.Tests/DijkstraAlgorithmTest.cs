@@ -141,8 +141,8 @@ namespace Plugins.DijkstraAlgorithm.Tests
             var startVertex = new Mock<IVertex>();
             var startVertexCoordinate = new Mock<ICoordinate>();
             var endVertexCoordinate = new Mock<ICoordinate>();
-            startVertexCoordinate.Setup(c => c.CoordinatesValues).Returns(new[] {0, 0});
-            endVertexCoordinate.Setup(c => c.CoordinatesValues).Returns(new[] {0, 1});
+            startVertexCoordinate.Setup(c => c.CoordinatesValues).Returns(new[] { 0, 0 });
+            endVertexCoordinate.Setup(c => c.CoordinatesValues).Returns(new[] { 0, 1 });
             startVertex.Setup(v => v.Position).Returns(startVertexCoordinate.Object);
             endVertex.Setup(v => v.Position).Returns(endVertexCoordinate.Object);
             foreignEndPointsMock.Setup(e => e.Start).Returns(startVertex.Object);

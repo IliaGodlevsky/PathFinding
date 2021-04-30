@@ -11,7 +11,7 @@ namespace Algorithm.Realizations.StepRules
         public double CalculateStepCost(IVertex neighbour, IVertex current)
         {
             var cost = current.Cost.CurrentCost - neighbour.Cost.CurrentCost;
-            return cost < 0 ? Math.Abs(cost * 2) : Math.Round((double) cost / 2, 0);
+            return cost < 0 ? Math.Abs(cost * 2) : Math.Round((double)cost / 2, 0);
         }
     }
 }

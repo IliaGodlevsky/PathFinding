@@ -9,6 +9,12 @@ namespace Algorithm.Сompanions
         public IVertex End { get; }
         public IVertex Start { get; }
 
+        public EndPoints(IVertex start, IVertex end)
+        {
+            Start = start;
+            End = end;
+        }
+
         public EndPoints(IEndPoints endPoints)
         {
             End = endPoints.End;

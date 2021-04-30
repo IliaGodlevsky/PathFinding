@@ -9,10 +9,10 @@ namespace Algorithm.Infrastructure.EventArguments
     /// </summary>
     public class AlgorithmEventArgs : EventArgs
     {
-        public AlgorithmEventArgs() 
+        public AlgorithmEventArgs()
             : this(default)
         {
-            
+
         }
 
         public AlgorithmEventArgs(int visitedVertices,

@@ -65,7 +65,7 @@ namespace GraphLib.Common.CoordinateRadars
         private readonly int[] currentCoordinatesValues;
         private readonly int[] selfCoordinatesValues;
         private readonly List<int[]> environment;
-        
+
         private IEnumerable<int[]> neighbours;
     }
 }
