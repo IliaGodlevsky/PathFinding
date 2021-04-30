@@ -16,6 +16,7 @@ using System.Threading.Tasks;
 
 namespace Plugins.BidirectLeeAlgorithm
 {
+    [Filterable]
     [ClassName("Lee algorithm (bidirect)")]
     public sealed class BidirectLeeAlgorithm : BaseAlgorithm
     {
@@ -43,7 +44,8 @@ namespace Plugins.BidirectLeeAlgorithm
             } while (!IsDestination());
             CompletePathfinding();
 
-            return CreateGraphPath();
+            return new CombinedGraphPath(firstPath, 
+                secondPath, endPoints);
         }
 
         private void GetUnvisitedNeighbours()
@@ -125,11 +127,6 @@ namespace Plugins.BidirectLeeAlgorithm
                    || SecondCurrentVertex.IsEqual(endPoints.Start)
                    || SecondCurrentVertex.IsNullObject()
                    || !isNull;
-        }
-
-        private IGraphPath CreateGraphPath()
-        {
-            return new CombinedGraphPath(firstPath, secondPath, endPoints);
         }
 
         private void VisitVertex(VisitedVertices visitedVertices, IVertex vertex)
