@@ -141,7 +141,8 @@ namespace Plugins.BidirectLeeAlgorithm
 
         private IVertex SecondCurrentVertex { get; set; }
 
-        private void ExtractNeighbours(ref Queue<IVertex> verticesQueue, IVertex[] neighbours)
+        private void ExtractNeighbours(ref Queue<IVertex> verticesQueue,
+            IVertex[] neighbours)
         {
             foreach (var neighbour in neighbours)
             {
@@ -159,7 +160,8 @@ namespace Plugins.BidirectLeeAlgorithm
             IVertex currentVertex)
         {
             return visitedVertices
-                .GetUnvisitedNeighbours(currentVertex).ToArray();
+                .GetUnvisitedNeighbours(currentVertex)
+                .ToArray();
         }
 
         protected override void PrepareForPathfinding()
@@ -197,8 +199,8 @@ namespace Plugins.BidirectLeeAlgorithm
             return accumulatedCosts.GetAccumulatedCost(currentVertex) + 1;
         }
 
-        private void RelaxNeighbour(IVertex vertex, IVertex currentVertex, IAccumulatedCosts cost, 
-            ParentVertices parentVertices)
+        private void RelaxNeighbour(IVertex vertex, IVertex currentVertex, 
+            IAccumulatedCosts cost, ParentVertices parentVertices)
         {
             cost.Reevaluate(vertex, CreateWave(cost, currentVertex));
             parentVertices.Add(vertex, currentVertex);
