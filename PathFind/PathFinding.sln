@@ -95,6 +95,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Algorithm.Common.Tests", "A
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Plugins.BidirectLeeAlgorithm", "Plugins\Plugins.BidirectLeeAlgorithm\Plugins.BidirectLeeAlgorithm.csproj", "{4D7041AF-DA16-48AC-A6F6-CB8B7509FD1C}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Plugins.BidirectDijkstraAlgorithm", "Plugins\Plugins.BidirectDijkstraAlgorithm\Plugins.BidirectDijkstraAlgorithm.csproj", "{A45905DD-E505-4B9D-99C8-19BD03A099E8}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -253,6 +255,10 @@ Global
 		{4D7041AF-DA16-48AC-A6F6-CB8B7509FD1C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{4D7041AF-DA16-48AC-A6F6-CB8B7509FD1C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{4D7041AF-DA16-48AC-A6F6-CB8B7509FD1C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A45905DD-E505-4B9D-99C8-19BD03A099E8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A45905DD-E505-4B9D-99C8-19BD03A099E8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A45905DD-E505-4B9D-99C8-19BD03A099E8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A45905DD-E505-4B9D-99C8-19BD03A099E8}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -293,6 +299,7 @@ Global
 		{6017E08E-C81E-4507-A2AA-838F15299606} = {31567AE5-07C5-4655-B00C-22DCCF9684CF}
 		{D75ED66C-EAD6-4B43-88E6-2FE30254A6AD} = {31567AE5-07C5-4655-B00C-22DCCF9684CF}
 		{4D7041AF-DA16-48AC-A6F6-CB8B7509FD1C} = {BD7C7E0F-701A-4B95-AB99-C51E700E81CF}
+		{A45905DD-E505-4B9D-99C8-19BD03A099E8} = {BD7C7E0F-701A-4B95-AB99-C51E700E81CF}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {97B689F4-F324-4048-A586-6D7150C9C419}
