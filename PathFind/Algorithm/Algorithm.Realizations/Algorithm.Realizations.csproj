@@ -41,7 +41,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="GraphPaths\CombinedGraphPath.cs" />
     <Compile Include="Heuristic\BaseHeuristic.cs" />
     <Compile Include="Heuristic\ChebyshevDistance.cs" />
     <Compile Include="ConcreteAlgorithmsClasses.cs" />
