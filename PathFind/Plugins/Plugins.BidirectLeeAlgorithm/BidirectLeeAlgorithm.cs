@@ -43,15 +43,13 @@ namespace Plugins.BidirectLeeAlgorithm
             } while (!IsDestination());
             CompletePathfinding();
 
-            return new CombinedGraphPath(firstPath, 
-                secondPath, endPoints);
+            return graphPath;
         }
 
         private void GetUnvisitedNeighbours()
         {
             neighbours = GetCurrentVertexNeighbours(
                 visitedVertices, CurrentVertex);
-
             secondNeighbours = GetCurrentVertexNeighbours(
                 secondVisitedVertices, SecondCurrentVertex);
         }
@@ -64,20 +62,14 @@ namespace Plugins.BidirectLeeAlgorithm
 
         private void RelaxCurrentVertexNeighbours()
         {
-            RelaxNeighbours(neighbours, CurrentVertex,
-                    accumulatedCosts, parentVertices);
-
-            RelaxNeighbours(secondNeighbours, SecondCurrentVertex,
-                secondAccumulatedCosts, secondParentVertices);
+            RelaxNeighbours(neighbours, CurrentVertex, accumulatedCosts, parentVertices);
+            RelaxNeighbours(secondNeighbours, SecondCurrentVertex, secondAccumulatedCosts, secondParentVertices);
         }
 
         private void NextCurrentVertex()
         {
-            CurrentVertex = GetNextVertex(ref verticesQueue, 
-                visitedVertices);
-
-            SecondCurrentVertex = GetNextVertex(ref secondVerticesQueue, 
-                secondVisitedVertices);
+            CurrentVertex = GetNextVertex(ref verticesQueue, visitedVertices);
+            SecondCurrentVertex = GetNextVertex(ref secondVerticesQueue, secondVisitedVertices);
         }
 
         private void VisitCurrentVertex()
@@ -118,14 +110,15 @@ namespace Plugins.BidirectLeeAlgorithm
             {
                 var firstEndPoints = new EndPoints(endPoints.Start, intersect);
                 var secondEndPoints = new EndPoints(endPoints.End, intersect);
-                firstPath = new GraphPath(parentVertices, firstEndPoints, graph);
-                secondPath = new GraphPath(secondParentVertices, secondEndPoints, graph);
+                var firstPath = new GraphPath(parentVertices, firstEndPoints, graph);
+                var secondPath = new GraphPath(secondParentVertices, secondEndPoints, graph);
+                graphPath = new CombinedGraphPath(firstPath, secondPath, secondEndPoints);
+                return true;
             }
 
             return base.IsDestination() 
-                   || SecondCurrentVertex.IsEqual(endPoints.Start)
-                   || SecondCurrentVertex.IsNullObject()
-                   || !isNull;
+                || SecondCurrentVertex.IsEqual(endPoints.Start) 
+                || SecondCurrentVertex.IsNullObject();
         }
 
         private void VisitVertex(VisitedVertices visitedVertices, IVertex vertex)
@@ -195,7 +188,7 @@ namespace Plugins.BidirectLeeAlgorithm
             return accumulatedCosts.GetAccumulatedCost(currentVertex) + 1;
         }
 
-        private void RelaxNeighbour(IVertex vertex, IVertex currentVertex, 
+        private void RelaxNeighbour(IVertex vertex, IVertex currentVertex,
             IAccumulatedCosts cost, ParentVertices parentVertices)
         {
             cost.Reevaluate(vertex, CreateWave(cost, currentVertex));
@@ -210,7 +203,7 @@ namespace Plugins.BidirectLeeAlgorithm
         private void RelaxNeighbours(IVertex[] neighbours, IVertex currentVertex, 
             IAccumulatedCosts costs, ParentVertices parentVertices)
         {
-            foreach(var neighbour in neighbours)
+            foreach (var neighbour in neighbours)
             {
                 if (VertexIsUnwaved(costs, neighbour))
                 {
@@ -221,18 +214,13 @@ namespace Plugins.BidirectLeeAlgorithm
 
         private Queue<IVertex> verticesQueue;
         private Queue<IVertex> secondVerticesQueue;
-
         private readonly VisitedVertices secondVisitedVertices;
         private IAccumulatedCosts secondAccumulatedCosts;
         private readonly ParentVertices secondParentVertices;
-
         private IVertex[] neighbours;
         private IVertex[] secondNeighbours;
-
-        private IGraphPath firstPath = new NullGraphPath();
-        private IGraphPath secondPath = new NullGraphPath();
         private IVertex intersect = new NullVertex();
-
+        private IGraphPath graphPath = new NullGraphPath();
         private bool isCheckingIntersectionStopped;
     }
 }
