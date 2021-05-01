@@ -1,7 +1,6 @@
 ﻿using Algorithm.Interfaces;
 using Algorithm.Realizations.StepRules;
 using Common.Extensions;
-using GraphLib.Common.NullObjects;
 using GraphLib.Interfaces;
 using System.Collections.Generic;
 using System.Linq;
@@ -17,12 +16,12 @@ namespace Algorithm.Realizations.GraphPaths
         }
 
         public CombinedGraphPath(IGraphPath fromStartPath, IGraphPath fromEndPath,
-            IEndPoints endPoints, IStepRule stepRule)
+            IEndPoints fromEndEndPoints, IStepRule stepRule)
         {
             this.fromStartPath = fromStartPath;
             this.fromEndPath = fromEndPath;
             this.stepRule = stepRule;
-            this.endPoints = endPoints;
+            endPoints = fromEndEndPoints;
         }
 
         public IEnumerable<IVertex> Path
@@ -31,30 +30,28 @@ namespace Algorithm.Realizations.GraphPaths
             {
                 if (path == null)
                 {
-                    var intersect = fromStartPath.Path
-                        .Intersect(fromStartPath.Path)
-                        .FirstOrDefault() ?? new NullVertex();
-
                     path = fromStartPath.Path
                         .Concat(fromEndPath.Path)
-                        .Append(endPoints.End)
-                        .DistinctBy(vertex => vertex.Position)
+                        .Append(endPoints.Start)
+                        .DistinctBy(Position)
                         .ToArray();
 
                     PathCost = fromStartPath.PathCost 
-                        + fromEndPath.PathCost + AdjustPathCost(intersect);
+                        + fromEndPath.PathCost + AdjustPathCost();
                 }
                 return path;
             }
         }
 
-        private double AdjustPathCost(IVertex intersect)
+        public double PathCost { get; private set; }
+
+        private double AdjustPathCost()
         {
-            return stepRule.CalculateStepCost(endPoints.End, endPoints.End)
-                        - stepRule.CalculateStepCost(intersect, intersect);
+            return stepRule.CalculateStepCost(endPoints.Start, endPoints.Start)
+                   - stepRule.CalculateStepCost(endPoints.End, endPoints.End);
         }
 
-        public double PathCost { get; private set; }
+        private ICoordinate Position(IVertex vertex) => vertex.Position;
 
         private readonly IGraphPath fromStartPath;
         private readonly IGraphPath fromEndPath;
