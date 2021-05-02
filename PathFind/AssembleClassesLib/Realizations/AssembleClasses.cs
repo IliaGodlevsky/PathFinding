@@ -23,6 +23,24 @@ namespace AssembleClassesLib.Realizations
             ClassesNames = new string[] { };
         }
 
+        public AssembleClasses(string loadPath, IAssembleSearchOption searchOption)
+            : this(loadPath, searchOption.SearchOption)
+        {
+
+        }
+
+        public AssembleClasses(IAssembleLoadPath loadPath, IAssembleSearchOption searchOption)
+            : this(loadPath.LoadPath, searchOption.SearchOption)
+        {
+
+        }
+
+        public AssembleClasses(IAssembleLoadPath loadPath, SearchOption searchOption)
+            : this(loadPath.LoadPath, searchOption)
+        {
+
+        }
+
         public IReadOnlyCollection<string> ClassesNames { get; protected set; }
 
         public virtual object Get(string name, params object[] parametres)

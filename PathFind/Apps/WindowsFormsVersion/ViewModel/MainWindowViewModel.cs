@@ -1,4 +1,5 @@
 ﻿using Algorithm.Realizations;
+using AssembleClassesLib.Interface;
 using Common.Extensions;
 using Common.Interface;
 using Common.Logging;
@@ -68,7 +69,10 @@ namespace WindowsFormsVersion.ViewModel
             IVertexEventHolder eventHolder,
             IGraphSerializer graphSerializer,
             IGraphAssembler graphFactory,
-            IPathInput pathInput) : base(fieldFactory, eventHolder, graphSerializer, graphFactory, pathInput)
+            IPathInput pathInput,
+            IAssembleClasses assembleClasses) 
+            : base(fieldFactory, eventHolder, graphSerializer, 
+                  graphFactory, pathInput, assembleClasses)
         {
 
         }
@@ -79,8 +83,6 @@ namespace WindowsFormsVersion.ViewModel
             {
                 try
                 {
-                    string loadPath = GetAlgorithmsLoadPath();
-                    var assembleClasses = new ConcreteAssembleAlgorithmClasses(loadPath);
                     assembleClasses.LoadClasses();
                     var model = new PathFindingViewModel(assembleClasses, this, EndPoints);
                     model.OnEventHappened += OnExternalEventHappened;
@@ -159,11 +161,6 @@ namespace WindowsFormsVersion.ViewModel
         private bool CanStartPathFinding()
         {
             return EndPoints.HasEndPointsSet;
-        }
-
-        protected override string GetAlgorithmsLoadPath()
-        {
-            return ConfigurationManager.AppSettings["pluginsPath"];
         }
 
         protected override void OnExternalEventHappened(string message)

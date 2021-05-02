@@ -1,6 +1,7 @@
 ﻿using Algorithm.Common;
 using Algorithm.Interfaces;
 using AssembleClassesLib.Extensions;
+using AssembleClassesLib.Interface;
 using AssembleClassesLib.Realizations;
 using System;
 using System.Collections.Generic;
@@ -30,6 +31,25 @@ namespace Algorithm.Realizations
             : base(path, searchOption)
         {
             baseType = typeof(IAlgorithm);
+        }
+
+        public ConcreteAssembleAlgorithmClasses(IAssembleLoadPath path, 
+            SearchOption searchOption = SearchOption.AllDirectories)
+            :this(path.LoadPath, searchOption)
+        {
+
+        }
+
+        public ConcreteAssembleAlgorithmClasses(IAssembleLoadPath path, IAssembleSearchOption searchOption)
+            : this(path.LoadPath, searchOption.SearchOption)
+        {
+
+        }
+
+        public ConcreteAssembleAlgorithmClasses(string path, IAssembleSearchOption searchOption)
+            : this(path, searchOption.SearchOption)
+        {
+
         }
 
         protected override void LoadClassesFromAssemble()

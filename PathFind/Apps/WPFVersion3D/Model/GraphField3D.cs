@@ -3,9 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Windows.Media.Media3D;
-using WPFVersion3D.Enums;
-using DistanceBetweenVerticesSetterCallback = System.Action<double, WPFVersion3D.Model.GraphField3D>;
-using OffsetSetterAction = System.Action<System.Windows.Media.Media3D.TranslateTransform3D, double>;
+using WPFVersion3D.Axes;
 
 namespace WPFVersion3D.Model
 {
@@ -19,30 +17,18 @@ namespace WPFVersion3D.Model
 
         public IReadOnlyCollection<IVertex> Vertices => Children.OfType<IVertex>().ToArray();
 
-        public GraphField3D(int width, int length, int height) : this()
+        public GraphField3D(int width, int length, int height)
         {
+            axes = new IAxis[] 
+            { 
+                new Abscissa(), 
+                new Ordinate(), 
+                new Applicate() 
+            };
+
             Width = width;
             Length = length;
             Height = height;
-        }
-
-        public GraphField3D()
-        {
-            axes = Enum.GetValues(typeof(Axis)).Cast<Axis>().ToArray();
-
-            offsetActions = new Dictionary<Axis, OffsetSetterAction>
-            {
-                { Axis.Abscissa, (transform, offset) => { transform.OffsetX = offset; } },
-                { Axis.Ordinate, (transform, offset) => { transform.OffsetY = offset; } },
-                { Axis.Applicate,(transform, offset) => { transform.OffsetZ = offset; } }
-            };
-
-            distanceBetweenVerticesSetters = new Dictionary<Axis, DistanceBetweenVerticesSetterCallback>
-            {
-                { Axis.Abscissa,  (distanceBetween, field) => field.DistanceBetweenVerticesAtXAxis = distanceBetween },
-                { Axis.Ordinate,  (distanceBetween, field) => field.DistanceBetweenVerticesAtYAxis = distanceBetween },
-                { Axis.Applicate, (distanceBetween, field) => field.DistanceBetweenVerticesAtZAxis = distanceBetween }
-            };
 
             DistanceBetweenVerticesAtXAxis = 0;
             DistanceBetweenVerticesAtYAxis = 0;
@@ -91,10 +77,10 @@ namespace WPFVersion3D.Model
             }
         }
 
-        public void StretchAlongAxis(Axis axis, double distanceBetween,
+        public void StretchAlongAxis(IAxis axis, double distanceBetween,
             params double[] additionalOffset)
         {
-            distanceBetweenVerticesSetters[axis](distanceBetween, this);
+            axis.SetDistanceBeetween(distanceBetween, this);
             StretchAlongAxes(axis);
 
             if (distanceBetween == 0)
@@ -103,7 +89,7 @@ namespace WPFVersion3D.Model
                 CenterGraph(additionalOffset);
         }
 
-        private void StretchAlongAxes(params Axis[] axes)
+        private void StretchAlongAxes(params IAxis[] axes)
         {
             var uniqueAxes = axes.Distinct().ToArray();
             var vertices = Vertices.Cast<Vertex3D>();
@@ -116,16 +102,15 @@ namespace WPFVersion3D.Model
             }
         }
 
-        private void LocateVertex(Axis axis, Vertex3D vertex,
+        private void LocateVertex(IAxis axis, Vertex3D vertex,
             params double[] additionalOffset)
         {
-            int axisIndex = Array.IndexOf(axes, axis);
             var coordinates = vertex.Position.CoordinatesValues;
             var vertexOffset = new Offset
             {
-                CoordinateValue = coordinates.ElementAtOrDefault(axisIndex),
-                DistanceBetweenVertices = DistancesBetween.ElementAtOrDefault(axisIndex),
-                AdditionalOffset = additionalOffset.ElementAtOrDefault(axisIndex),
+                CoordinateValue = coordinates.ElementAtOrDefault(axis.IndexNumber),
+                DistanceBetweenVertices = DistancesBetween.ElementAtOrDefault(axis.IndexNumber),
+                AdditionalOffset = additionalOffset.ElementAtOrDefault(axis.IndexNumber),
                 VertexSize = vertex.Size
             };
             double offset = vertexOffset.VertexOffset;
@@ -138,7 +123,7 @@ namespace WPFVersion3D.Model
                 throw new Exception(message);
             }
 
-            offsetActions[axis](transform, offset);
+            axis.Offset(transform, offset);
         }
 
         private int Width { get; }
@@ -159,8 +144,6 @@ namespace WPFVersion3D.Model
             DistanceBetweenVerticesAtZAxis
         };
 
-        private readonly Dictionary<Axis, OffsetSetterAction> offsetActions;
-        private readonly Dictionary<Axis, DistanceBetweenVerticesSetterCallback> distanceBetweenVerticesSetters;
-        private readonly Axis[] axes;
+        private readonly IAxis[] axes;
     }
 }

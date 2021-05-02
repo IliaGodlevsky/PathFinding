@@ -32,7 +32,7 @@ namespace Algorithm.Realizations.Tests
         [TestCase(new[] { 7, 1, 20 }, new[] { 5, 9, 1 }, ExpectedResult = 29)]
         [TestCase(new[] { 5 }, new[] { 33 }, ExpectedResult = 28)]
         [TestCase(new[] { 4, 7, 3, 20 }, new[] { 1, 5, 16, 9 }, ExpectedResult = 29)]
-        public double CalculateChebyshevDistanceTo_EqualNumberOfCoordinateValues_ReturnsValidValue(
+        public double Calculate_EqualNumberOfCoordinateValues_ReturnsValidValue(
             int[] fromVertexCoordinateValues, int[] toVertexCoordinateValues)
         {
             coordinateFromMock.Setup(coordinate => coordinate.CoordinatesValues).Returns(fromVertexCoordinateValues);
@@ -47,24 +47,24 @@ namespace Algorithm.Realizations.Tests
         [TestCase(new[] { 7, 1, 20 }, new[] { 9, 1 })]
         [TestCase(new[] { 5, 1 }, new[] { 33 })]
         [TestCase(new[] { 4, 7, 3, 20 }, new[] { 1, 16, 9 })]
-        public void CalculateChebyshevDistanceTo_NotEqualNumberOfCoordinateValues_ThrowsWrongNumberOfDimensionsException(
+        public void Calculate_NotEqualNumberOfCoordinateValues_ThrowsWrongNumberOfDimensionsException(
             int[] fromVertexCoordinateValues, int[] toVertexCoordinateValues)
         {
             coordinateFromMock.Setup(coordinate => coordinate.CoordinatesValues).Returns(fromVertexCoordinateValues);
             vertexFromMock.Setup(vertex => vertex.Position).Returns(coordinateFromMock.Object);
             coordinateToMock.Setup(coordinate => coordinate.CoordinatesValues).Returns(toVertexCoordinateValues);
             vertexToMock.Setup(vertex => vertex.Position).Returns(coordinateToMock.Object);
-            void CalculateChebyshevDistance() => manhattanDistance.Calculate(FirstVertex, SecondVertex);
+            void Calculate() => manhattanDistance.Calculate(FirstVertex, SecondVertex);
 
-            Assert.Throws<WrongNumberOfDimensionsException>(CalculateChebyshevDistance);
+            Assert.Throws<WrongNumberOfDimensionsException>(Calculate);
         }
 
         [Test]
-        public void CalculateChebyshevDistanceTo_CoordinatesAreNull_ThrowsArgumentException()
+        public void Calculate_CoordinatesAreNull_ThrowsArgumentException()
         {
-            void CalculateChebyshevDistance() => manhattanDistance.Calculate(FirstVertex, SecondVertex);
+            void Calculate() => manhattanDistance.Calculate(FirstVertex, SecondVertex);
 
-            Assert.Throws<ArgumentException>(CalculateChebyshevDistance);
+            Assert.Throws<ArgumentException>(Calculate);
         }
     }
 }

@@ -66,6 +66,7 @@
     <Compile Include="Enums\MenuItemPriority.cs" />
     <Compile Include="Model\EndPoints.cs" />
     <Compile Include="Model\GraphFieldFactory.cs" />
+    <Compile Include="Model\AssembleLoadPath.cs" />
     <Compile Include="Model\PathInput.cs" />
     <Compile Include="Model\VertexFactory.cs" />
     <Compile Include="Model\VertexSerializationInfoConverter.cs" />
@@ -169,5 +170,6 @@
       <Version>5.0.1</Version>
     </PackageReference>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

@@ -1,4 +1,7 @@
-﻿using Autofac;
+﻿using Algorithm.Realizations;
+using AssembleClassesLib.Interface;
+using AssembleClassesLib.Realizations;
+using Autofac;
 using GraphLib.Base;
 using GraphLib.Interfaces;
 using GraphLib.Interfaces.Factories;
@@ -7,6 +10,7 @@ using GraphLib.Serialization;
 using GraphLib.Serialization.Interfaces;
 using System.Runtime.Serialization;
 using System.Runtime.Serialization.Formatters.Soap;
+using WPFVersion3D.Axes;
 using WPFVersion3D.Interface;
 using WPFVersion3D.Model;
 using WPFVersion3D.ViewModel;
@@ -34,6 +38,10 @@ namespace WPFVersion3D.Configure
             builder.RegisterType<CardinalCoordinateAroundRadarFactory>().As<ICoordinateRadarFactory>().SingleInstance();
             builder.RegisterType<Vertex3DSerializationInfoConverter>().As<IVertexSerializationInfoConverter>().SingleInstance();
             builder.RegisterType<CubicModel3DFactory>().As<IModel3DFactory>().SingleInstance();
+            builder.RegisterType<ConcreteAssembleAlgorithmClasses>().As<IAssembleClasses>()
+                .SingleInstance().UsingConstructor(typeof(IAssembleLoadPath), typeof(IAssembleSearchOption));
+            builder.RegisterType<AssembleLoadPath>().As<IAssembleLoadPath>().SingleInstance();
+            builder.RegisterType<AllDirectories>().As<IAssembleSearchOption>().SingleInstance();
 
             return builder.Build();
         }

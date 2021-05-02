@@ -66,12 +66,15 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Axes\Abscissa.cs" />
+    <Compile Include="Axes\Applicate.cs" />
+    <Compile Include="Axes\Ordinate.cs" />
+    <Compile Include="Interface\IAxis.cs" />
     <Compile Include="Configure\ContainerConfigure.cs" />
     <Compile Include="Constants.cs" />
     <Compile Include="Converters\MaterialOpacityValueConverter.cs" />
     <Compile Include="Converters\AnimatedAxisRotatorConverter.cs" />
     <Compile Include="Converters\DoubleToStringConverter.cs" />
-    <Compile Include="Enums\Axis.cs" />
     <Compile Include="Enums\RotationDirection.cs" />
     <Compile Include="Interface\IModel3DFactory.cs" />
     <Compile Include="Model\CubicModel3DFactory.cs" />
@@ -80,6 +83,7 @@
     <Compile Include="Infrastructure\Animators\NullAnimator.cs" />
     <Compile Include="Model\EndPoints.cs" />
     <Compile Include="Model\GraphField3DContainer.cs" />
+    <Compile Include="Model\AssembleLoadPath.cs" />
     <Compile Include="Model\Offset.cs" />
     <Compile Include="Model\PathInput.cs" />
     <Compile Include="Model\Vertex3DCost.cs" />

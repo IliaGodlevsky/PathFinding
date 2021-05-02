@@ -1,4 +1,5 @@
 ﻿using Algorithm.Realizations;
+using AssembleClassesLib.Interface;
 using AssembleClassesLib.Realizations;
 using Common.Extensions;
 using Common.Interface;
@@ -73,8 +74,10 @@ namespace WPFVersion.ViewModel
             IVertexEventHolder eventHolder,
             IGraphSerializer graphSerializer,
             IGraphAssembler graphFactory,
-            IPathInput pathInput)
-            : base(fieldFactory, eventHolder, graphSerializer, graphFactory, pathInput)
+            IPathInput pathInput, 
+            IAssembleClasses assembleClasses)
+            : base(fieldFactory, eventHolder, graphSerializer, 
+                  graphFactory, pathInput, assembleClasses)
         {
             StartPathFindCommand = new RelayCommand(ExecuteStartPathFindCommand, CanExecuteStartFindPathCommand);
             CreateNewGraphCommand = new RelayCommand(ExecuteCreateNewGraphCommand);
@@ -114,11 +117,9 @@ namespace WPFVersion.ViewModel
         public override void FindPath()
         {
             try
-            {
-                string loadPath = GetAlgorithmsLoadPath();
-                var algorithmClasses = new ConcreteAssembleAlgorithmClasses(loadPath);
-                algorithmClasses.LoadClasses();
-                var notifingAssembleClasses = new NotifingAssembleClasses(algorithmClasses);
+            {                
+                assembleClasses.LoadClasses();
+                var notifingAssembleClasses = new NotifingAssembleClasses((AssembleClasses)assembleClasses);
                 var updatableAssembleClasses = new UpdatableAssembleClasses(notifingAssembleClasses);
                 var viewModel = new PathFindingViewModel(updatableAssembleClasses, this, EndPoints);
                 var window = new PathFindWindow();
@@ -176,11 +177,6 @@ namespace WPFVersion.ViewModel
         protected override void OnExceptionCaught(Exception ex, string additaionalMessage = "")
         {
             MessageBox.Show(ex.Message, additaionalMessage);
-        }
-
-        protected override string GetAlgorithmsLoadPath()
-        {
-            return ConfigurationManager.AppSettings["pluginsPath"];
         }
 
         private void PrepareWindow(IViewModel model, Window window)

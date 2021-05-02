@@ -1,6 +1,8 @@
-﻿using Common.Extensions;
+﻿using AssembleClassesLib.Interface;
+using Common.Extensions;
 using Common.Logging;
 using GraphLib.Base;
+using GraphLib.Common.NullObjects;
 using GraphLib.Extensions;
 using GraphLib.Interfaces;
 using GraphLib.Interfaces.Factories;
@@ -27,7 +29,8 @@ namespace GraphViewModel
             IVertexEventHolder eventHolder,
             IGraphSerializer graphSerializer,
             IGraphAssembler graphAssembler,
-            IPathInput pathInput)
+            IPathInput pathInput,
+            IAssembleClasses assembleClasses)
         {
             this.eventHolder = eventHolder;
             serializer = graphSerializer;
@@ -39,8 +42,9 @@ namespace GraphViewModel
             this.fieldFactory = fieldFactory;
             this.graphAssembler = graphAssembler;
             this.pathInput = pathInput;
+            this.assembleClasses = assembleClasses;
 
-            Graph = BaseGraph.NullGraph;
+            Graph = new NullGraph();
         }
 
         public virtual async void SaveGraph()
@@ -107,7 +111,6 @@ namespace GraphViewModel
             }
         }
 
-        protected abstract string GetAlgorithmsLoadPath();
         protected abstract void OnExternalEventHappened(string message);
         protected abstract void OnExceptionCaught(Exception ex, string additaionalMessage = "");
 
@@ -116,5 +119,6 @@ namespace GraphViewModel
         private readonly IVertexEventHolder eventHolder;
         private readonly IGraphSerializer serializer;
         private readonly IPathInput pathInput;
+        protected readonly IAssembleClasses assembleClasses;
     }
 }

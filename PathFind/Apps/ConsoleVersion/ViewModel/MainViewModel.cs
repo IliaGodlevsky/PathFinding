@@ -1,4 +1,5 @@
 ﻿using Algorithm.Realizations;
+using AssembleClassesLib.Interface;
 using Common;
 using Common.Logging;
 using ConsoleVersion.Attributes;
@@ -31,7 +32,10 @@ namespace ConsoleVersion.ViewModel
             IVertexEventHolder eventHolder,
             IGraphSerializer graphSerializer,
             IGraphAssembler graphFactory,
-            IPathInput pathInput) : base(fieldFactory, eventHolder, graphSerializer, graphFactory, pathInput)
+            IPathInput pathInput,
+            IAssembleClasses assembleClasses) 
+            : base(fieldFactory, eventHolder, graphSerializer, 
+                  graphFactory, pathInput, assembleClasses)
         {
 
         }
@@ -64,8 +68,6 @@ namespace ConsoleVersion.ViewModel
         {
             try
             {
-                string pluginPath = GetAlgorithmsLoadPath();
-                var assembleClasses = new ConcreteAssembleAlgorithmClasses(pluginPath);
                 assembleClasses.LoadClasses();
                 var model = new PathFindingViewModel(assembleClasses, this, EndPoints);
                 model.OnEventHappened += OnExternalEventHappened;
@@ -184,11 +186,6 @@ namespace ConsoleVersion.ViewModel
             DisplayGraph();
             Console.WriteLine(message);
             Console.ReadLine();
-        }
-
-        protected override string GetAlgorithmsLoadPath()
-        {
-            return ConfigurationManager.AppSettings["pluginsPath"];
         }
 
         protected override void OnExceptionCaught(Exception ex, string additaionalMessage = "")

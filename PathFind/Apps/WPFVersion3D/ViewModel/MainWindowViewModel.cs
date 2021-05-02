@@ -1,4 +1,5 @@
 ﻿using Algorithm.Realizations;
+using AssembleClassesLib.Interface;
 using AssembleClassesLib.Realizations;
 using Common.Extensions;
 using Common.Interface;
@@ -14,6 +15,7 @@ using System.Configuration;
 using System.Runtime.CompilerServices;
 using System.Windows;
 using System.Windows.Input;
+using WPFVersion3D.Axes;
 using WPFVersion3D.Enums;
 using WPFVersion3D.Infrastructure;
 using WPFVersion3D.Infrastructure.Animators.Interface;
@@ -64,8 +66,10 @@ namespace WPFVersion3D.ViewModel
             IVertexEventHolder eventHolder,
             IGraphSerializer graphSerializer,
             IGraphAssembler graphFactory,
-            IPathInput pathInput)
-            : base(fieldFactory, eventHolder, graphSerializer, graphFactory, pathInput)
+            IPathInput pathInput,
+            IAssembleClasses assembleClasses)
+            : base(fieldFactory, eventHolder, graphSerializer, 
+                  graphFactory, pathInput, assembleClasses)
         {
             StartPathFindCommand = new RelayCommand(ExecuteStartPathFindCommand, CanExecuteStartFindPathCommand);
             CreateNewGraphCommand = new RelayCommand(ExecuteCreateNewGraphCommand);
@@ -80,10 +84,8 @@ namespace WPFVersion3D.ViewModel
         {
             try
             {
-                string loadPath = GetAlgorithmsLoadPath();
-                var algorithmClasses = new ConcreteAssembleAlgorithmClasses(loadPath);
-                algorithmClasses.LoadClasses();
-                var notifyableAssembleClasses = new NotifingAssembleClasses(algorithmClasses);
+                assembleClasses.LoadClasses();
+                var notifyableAssembleClasses = new NotifingAssembleClasses((AssembleClasses)assembleClasses);
                 var updatableAssembleClasses = new UpdatableAssembleClasses(notifyableAssembleClasses);
                 var viewModel = new PathFindingViewModel(updatableAssembleClasses, this, EndPoints);
                 var window = new PathFindWindow();
@@ -128,17 +130,17 @@ namespace WPFVersion3D.ViewModel
 
         public void StretchAlongXAxis(object sender, RoutedPropertyChangedEventArgs<double> e)
         {
-            (GraphField as GraphField3D)?.StretchAlongAxis(Axis.Abscissa, e.NewValue, 1, 0, 0);
+            (GraphField as GraphField3D)?.StretchAlongAxis(new Abscissa(), e.NewValue, 1, 0, 0);
         }
 
         public void StretchAlongYAxis(object sender, RoutedPropertyChangedEventArgs<double> e)
         {
-            (GraphField as GraphField3D)?.StretchAlongAxis(Axis.Ordinate, e.NewValue, 0, 1, 0);
+            (GraphField as GraphField3D)?.StretchAlongAxis(new Ordinate(), e.NewValue, 0, 1, 0);
         }
 
         public void StretchAlongZAxis(object sender, RoutedPropertyChangedEventArgs<double> e)
         {
-            (GraphField as GraphField3D)?.StretchAlongAxis(Axis.Applicate, e.NewValue, 0, 0, 1);
+            (GraphField as GraphField3D)?.StretchAlongAxis(new Applicate(), e.NewValue, 0, 0, 1);
         }
 
         private void ChangeVerticesOpacity()
@@ -210,11 +212,6 @@ namespace WPFVersion3D.ViewModel
         private bool CanExecuteGraphOperation(object param)
         {
             return !Graph.IsNullObject();
-        }
-
-        protected override string GetAlgorithmsLoadPath()
-        {
-            return ConfigurationManager.AppSettings["pluginsPath"];
         }
     }
 }

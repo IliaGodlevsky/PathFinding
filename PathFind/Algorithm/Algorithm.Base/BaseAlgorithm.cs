@@ -1,5 +1,4 @@
-﻿using Algorithm.Common;
-using Algorithm.Infrastructure.EventArguments;
+﻿using Algorithm.Infrastructure.EventArguments;
 using Algorithm.Infrastructure.Handlers;
 using Algorithm.Interfaces;
 using Algorithm.Сompanions;
@@ -12,8 +11,6 @@ namespace Algorithm.Base
 {
     public abstract class BaseAlgorithm : IAlgorithm
     {
-        public static IAlgorithm Default => new NullAlgorithm();
-
         public event AlgorithmEventHandler OnStarted;
         public event AlgorithmEventHandler OnVertexVisited;
         public event AlgorithmEventHandler OnFinished;
