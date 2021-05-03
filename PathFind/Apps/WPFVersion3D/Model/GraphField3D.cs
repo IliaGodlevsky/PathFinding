@@ -66,10 +66,10 @@ namespace WPFVersion3D.Model
                 {
                     var graphOffset = new Offset
                     {
-                        DimensionSize = DimensionSizes.ElementAtOrDefault(i),
+                        DimensionSize = DimensionSizes[i],
                         VertexSize = vertex.Size,
                         AdditionalOffset = additionalOffset.ElementAtOrDefault(i),
-                        DistanceBetweenVertices = DistancesBetween.ElementAtOrDefault(i)
+                        DistanceBetweenVertices = DistancesBetween[i]
                     };
                     axisOffsets[i] = graphOffset.GraphCenterOffset;
                     LocateVertex(axes[i], vertex, axisOffsets);
@@ -84,18 +84,21 @@ namespace WPFVersion3D.Model
             StretchAlongAxes(axis);
 
             if (distanceBetween == 0)
+            {
                 CenterGraph(0, 0, 0);
+            }
             else
+            {
                 CenterGraph(additionalOffset);
+            }
         }
 
         private void StretchAlongAxes(params IAxis[] axes)
         {
-            var uniqueAxes = axes.Distinct().ToArray();
             var vertices = Vertices.Cast<Vertex3D>();
             foreach (var vertex in vertices)
             {
-                foreach (var axis in uniqueAxes)
+                foreach (var axis in axes)
                 {
                     LocateVertex(axis, vertex);
                 }
@@ -105,11 +108,11 @@ namespace WPFVersion3D.Model
         private void LocateVertex(IAxis axis, Vertex3D vertex,
             params double[] additionalOffset)
         {
-            var coordinates = vertex.Position.CoordinatesValues;
+            var coordinates = vertex.Position.CoordinatesValues.ToArray();
             var vertexOffset = new Offset
             {
-                CoordinateValue = coordinates.ElementAtOrDefault(axis.IndexNumber),
-                DistanceBetweenVertices = DistancesBetween.ElementAtOrDefault(axis.IndexNumber),
+                CoordinateValue = coordinates[axis.IndexNumber],
+                DistanceBetweenVertices = DistancesBetween[axis.IndexNumber],
                 AdditionalOffset = additionalOffset.ElementAtOrDefault(axis.IndexNumber),
                 VertexSize = vertex.Size
             };
@@ -132,16 +135,13 @@ namespace WPFVersion3D.Model
 
         private int Height { get; }
 
-        private int[] DimensionSizes => new[]
-        {
-            Width, Length, Height
-        };
+        private int[] DimensionSizes => new[] { Width, Length, Height };
 
-        private double[] DistancesBetween => new[]
-        {
-            DistanceBetweenVerticesAtXAxis,
-            DistanceBetweenVerticesAtYAxis,
-            DistanceBetweenVerticesAtZAxis
+        private double[] DistancesBetween => new[] 
+        { 
+            DistanceBetweenVerticesAtXAxis, 
+            DistanceBetweenVerticesAtYAxis, 
+            DistanceBetweenVerticesAtZAxis 
         };
 
         private readonly IAxis[] axes;
