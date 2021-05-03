@@ -19,7 +19,7 @@ namespace WPFVersion3D.Infrastructure.Animators
     /// of <see cref="AxisAngleRotation3D"/>
     /// in selected <see cref="RotationDirection"/>
     /// </summary>
-    internal class AnimatedAxisRotator : IAnimator
+    internal sealed class AnimatedAxisRotator : IAnimator
     {
         public static double StartAngle => 0;
 
