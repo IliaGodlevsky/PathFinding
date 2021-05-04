@@ -93,6 +93,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Algorithm.Realizations.Test
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Algorithm.Common.Tests", "Algorithm.Tests\Algorithm.Common.Tests\Algorithm.Common.Tests.csproj", "{D75ED66C-EAD6-4B43-88E6-2FE30254A6AD}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AssembleClassesLib.Tests", "AssembleClassesLib.Tests\AssembleClassesLib.Tests.csproj", "{DB1BDAEC-ED1D-47E5-B67A-A3B59BF0EF52}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -247,6 +249,10 @@ Global
 		{D75ED66C-EAD6-4B43-88E6-2FE30254A6AD}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D75ED66C-EAD6-4B43-88E6-2FE30254A6AD}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D75ED66C-EAD6-4B43-88E6-2FE30254A6AD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DB1BDAEC-ED1D-47E5-B67A-A3B59BF0EF52}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DB1BDAEC-ED1D-47E5-B67A-A3B59BF0EF52}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DB1BDAEC-ED1D-47E5-B67A-A3B59BF0EF52}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DB1BDAEC-ED1D-47E5-B67A-A3B59BF0EF52}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

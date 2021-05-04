@@ -26,12 +26,6 @@ namespace GraphLib.Common.NullObjects
 
         public int Obstacles => 0;
 
-        public IVertex this[IEnumerable<int> coordinates]
-        {
-            get => new NullVertex();
-            set => _ = value;
-        }
-
         public override bool Equals(object obj)
         {
             return obj is NullGraph;

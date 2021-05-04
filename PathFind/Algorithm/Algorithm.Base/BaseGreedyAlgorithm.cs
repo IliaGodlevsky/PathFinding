@@ -14,7 +14,7 @@ namespace Algorithm.Base
            : base(graph, endPoints)
         {
             visitedVerticesStack = new Stack<IVertex>();
-        }       
+        }
 
         public override IGraphPath FindPath()
         {

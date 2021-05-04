@@ -19,11 +19,11 @@ namespace WPFVersion3D.Model
 
         public GraphField3D(int width, int length, int height)
         {
-            axes = new IAxis[] 
-            { 
-                new Abscissa(), 
-                new Ordinate(), 
-                new Applicate() 
+            axes = new IAxis[]
+            {
+                new Abscissa(),
+                new Ordinate(),
+                new Applicate()
             };
 
             Width = width;
@@ -137,11 +137,11 @@ namespace WPFVersion3D.Model
 
         private int[] DimensionSizes => new[] { Width, Length, Height };
 
-        private double[] DistancesBetween => new[] 
-        { 
-            DistanceBetweenVerticesAtXAxis, 
-            DistanceBetweenVerticesAtYAxis, 
-            DistanceBetweenVerticesAtZAxis 
+        private double[] DistancesBetween => new[]
+        {
+            DistanceBetweenVerticesAtXAxis,
+            DistanceBetweenVerticesAtYAxis,
+            DistanceBetweenVerticesAtZAxis
         };
 
         private readonly IAxis[] axes;

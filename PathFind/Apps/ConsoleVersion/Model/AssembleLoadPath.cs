@@ -10,6 +10,6 @@ namespace ConsoleVersion.Model
         public AssembleLoadPath()
         {
             LoadPath = ConfigurationManager.AppSettings["pluginsPath"];
-        }       
+        }
     }
 }

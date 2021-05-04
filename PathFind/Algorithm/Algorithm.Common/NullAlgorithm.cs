@@ -8,7 +8,7 @@ using System;
 namespace Algorithm.Common
 {
     [Null]
-    [Filterable]
+    [NotLoadable]
     public sealed class NullAlgorithm : IAlgorithm
     {
         public event AlgorithmEventHandler OnStarted;
@@ -33,7 +33,11 @@ namespace Algorithm.Common
 
         public void Dispose()
         {
-
+            OnStarted = null;
+            OnVertexVisited = null;
+            OnVertexEnqueued = null;
+            OnFinished = null;
+            OnInterrupted = null;
         }
     }
 }

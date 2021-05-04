@@ -6,9 +6,14 @@ namespace AssembleClassesLib.Extensions
 {
     public static class MemberInfoExtensions
     {
-        public static bool IsFilterable(this MemberInfo self)
+        public static bool IsNotLoadable(this MemberInfo self)
         {
-            return self.GetAttribute<FilterableAttribute>() != null;
+            return self.GetAttribute<NotLoadableAttribute>() != null;
+        }
+
+        public static bool IsLoadable(this MemberInfo self)
+        {
+            return self.GetAttribute<LoadableAttribute>() != null;
         }
     }
 }

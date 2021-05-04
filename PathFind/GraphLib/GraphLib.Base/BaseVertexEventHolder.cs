@@ -9,8 +9,9 @@ namespace GraphLib.Base
 {
     public abstract class BaseVertexEventHolder : IVertexEventHolder
     {
-        protected BaseVertexEventHolder()
+        protected BaseVertexEventHolder(IVertexCostFactory costFactory)
         {
+            this.costFactory = costFactory;
             reverseActionDictionary = new Dictionary<bool, Action<IVertex>>()
             {
                 { true, vertex => (vertex as IMarkable)?.MarkAsObstacle() },
@@ -21,7 +22,7 @@ namespace GraphLib.Base
                    .Else(MakeObstacle);
         }
 
-        public IVertexCostFactory CostFactory { get; set; }
+        protected readonly IVertexCostFactory costFactory;
 
         public virtual void ChangeVertexCost(object sender, EventArgs e)
         {
@@ -29,7 +30,7 @@ namespace GraphLib.Base
             {
                 int delta = GetWheelDelta(e) > 0 ? 1 : -1;
                 int newCost = vertex.Cost.CurrentCost + delta;
-                vertex.Cost = CostFactory.CreateCost(newCost);
+                vertex.Cost = costFactory.CreateCost(newCost);
             }
         }
 

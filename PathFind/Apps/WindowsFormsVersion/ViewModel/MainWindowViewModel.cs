@@ -1,5 +1,4 @@
-﻿using Algorithm.Realizations;
-using AssembleClassesLib.Interface;
+﻿using AssembleClassesLib.Interface;
 using Common.Extensions;
 using Common.Interface;
 using Common.Logging;
@@ -12,7 +11,6 @@ using GraphLib.Serialization.Interfaces;
 using GraphViewModel;
 using System;
 using System.ComponentModel;
-using System.Configuration;
 using System.Drawing;
 using System.Runtime.CompilerServices;
 using System.Windows.Forms;
@@ -70,8 +68,8 @@ namespace WindowsFormsVersion.ViewModel
             IGraphSerializer graphSerializer,
             IGraphAssembler graphFactory,
             IPathInput pathInput,
-            IAssembleClasses assembleClasses) 
-            : base(fieldFactory, eventHolder, graphSerializer, 
+            IAssembleClasses assembleClasses)
+            : base(fieldFactory, eventHolder, graphSerializer,
                   graphFactory, pathInput, assembleClasses)
         {
 

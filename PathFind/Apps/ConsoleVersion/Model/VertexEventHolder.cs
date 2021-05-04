@@ -1,21 +1,30 @@
-﻿using ConsoleVersion.InputClass;
-using ConsoleVersion.Resource;
-using GraphLib.Base;
+﻿using GraphLib.Base;
 using GraphLib.Interfaces;
+using GraphLib.Interfaces.Factories;
 using System;
+using static ConsoleVersion.InputClass.Input;
+using static ConsoleVersion.Resource.Resources;
+using static GraphLib.Base.BaseVertexCost;
 
 namespace ConsoleVersion.Model
 {
     internal sealed class VertexEventHolder : BaseVertexEventHolder
     {
+        public VertexEventHolder(IVertexCostFactory costFactory)
+            : base(costFactory)
+        {
+
+        }
+
         public override void ChangeVertexCost(object sender, EventArgs e)
         {
-            var vertex = sender as Vertex;
-
-            if (vertex?.IsObstacle == false)
+            if (sender is Vertex vertex)
             {
-                var cost = Input.InputNumber(Resources.VertexCostInputMsg, BaseVertexCost.CostRange);
-                vertex.Cost = CostFactory.CreateCost(cost);
+                if (!vertex.IsObstacle)
+                {
+                    var cost = InputNumber(VertexCostInputMsg, CostRange);
+                    vertex.Cost = costFactory.CreateCost(cost);
+                }
             }
         }
 

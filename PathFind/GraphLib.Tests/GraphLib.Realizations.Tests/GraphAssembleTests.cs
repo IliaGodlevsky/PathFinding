@@ -1,8 +1,11 @@
 ﻿using GraphLib.Interfaces.Factories;
 using GraphLib.Realizations.Factories;
 using GraphLib.Realizations.Tests.Factories;
+using GraphLib.Realizations.Tests.Objects;
+using Common.Extensions;
 using NUnit.Framework;
 using System.Linq;
+using GraphLib.Interfaces;
 
 namespace GraphLib.Realizations.Tests
 {
@@ -29,13 +32,29 @@ namespace GraphLib.Realizations.Tests
 
         [TestCase(15, new int[] { 15 })]
         [TestCase(10, new int[] { 10, 15 })]
-        [TestCase(10, new int[] { 7, 12, 10 })]
-        [TestCase(33, new int[] { 7, 12, 10, 4 })]
+        [TestCase(10, new int[] { 7, 10, 7 })]
+        [TestCase(33, new int[] { 7, 4, 7, 4 })]
         public void AssembleGraph_ReturnsNotNullGraph(int obstaclePercent, int[] dimensionSizes)
         {
             var graph = graphAssembler.AssembleGraph(obstaclePercent, dimensionSizes);
 
+            bool CoordinatesAreUnique()
+            {
+                var uniqueVertices = graph.Vertices
+                    .DistinctBy(vertex => vertex.Position)
+                    .ToArray();
+
+                return uniqueVertices.Length == graph.Size;
+            }
+
+            bool IsTestVertexType(IVertex vertex)
+            {
+                return vertex?.GetType() == typeof(TestVertex);
+            }
+
             Assert.IsTrue(graph.DimensionsSizes.SequenceEqual(dimensionSizes));
+            Assert.IsTrue(graph.Vertices.All(IsTestVertexType));
+            Assert.IsTrue(CoordinatesAreUnique());
         }
     }
 }

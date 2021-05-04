@@ -39,9 +39,9 @@ namespace GraphLib.Serialization.Tests
 
 
 
-        [TestCase(15, new[] { 11, 9, 10 })]
-        [TestCase(22, new[] { 25, 25 })]
-        [TestCase(66, new[] { 4, 3, 7, 5 })]
+        [TestCase(15, new[] { 8, 9, 7 })]
+        [TestCase(22, new[] { 15, 15 })]
+        [TestCase(66, new[] { 4, 3, 4, 2 })]
         public void SaveGraph_LoadGraph_ReturnsEqualGraph(
             int obstaclePercent, int[] graphParams)
         {

@@ -1,5 +1,6 @@
 ﻿using AssembleClassesLib.EventArguments;
 using AssembleClassesLib.Interface;
+using AssembleClassesLib.Realizations.AssembleClassesImpl;
 using Common.Interface;
 using System;
 using System.Collections.Generic;

@@ -49,11 +49,11 @@ namespace Common.Extensions
         /// <typeparam name="TSource"></typeparam>
         /// <param name="self"></param>
         /// <returns>Random element of <paramref name="self"/></returns>
-        public static TSource GetRandomElement<TSource>(this IEnumerable<TSource> self)
+        public static TSource GetRandomElementOrDefault<TSource>(this IEnumerable<TSource> self)
         {
             var collection = self.ToArray();
             var index = rand.Next(collection.Length);
-            return collection[index];
+            return collection.ElementAtOrDefault(index);
         }
 
         public static IEnumerable<TSource> Which<TSource>(this IEnumerable<TSource> self,

@@ -1,6 +1,6 @@
-﻿using Algorithm.Realizations;
-using AssembleClassesLib.Interface;
+﻿using AssembleClassesLib.Interface;
 using AssembleClassesLib.Realizations;
+using AssembleClassesLib.Realizations.AssembleClassesImpl;
 using Common.Extensions;
 using Common.Interface;
 using Common.Logging;
@@ -12,7 +12,6 @@ using GraphLib.Serialization.Interfaces;
 using GraphViewModel;
 using System;
 using System.ComponentModel;
-using System.Configuration;
 using System.Runtime.CompilerServices;
 using System.Windows;
 using System.Windows.Input;
@@ -74,9 +73,9 @@ namespace WPFVersion.ViewModel
             IVertexEventHolder eventHolder,
             IGraphSerializer graphSerializer,
             IGraphAssembler graphFactory,
-            IPathInput pathInput, 
+            IPathInput pathInput,
             IAssembleClasses assembleClasses)
-            : base(fieldFactory, eventHolder, graphSerializer, 
+            : base(fieldFactory, eventHolder, graphSerializer,
                   graphFactory, pathInput, assembleClasses)
         {
             StartPathFindCommand = new RelayCommand(ExecuteStartPathFindCommand, CanExecuteStartFindPathCommand);
@@ -117,18 +116,14 @@ namespace WPFVersion.ViewModel
         public override void FindPath()
         {
             try
-            {                
+            {
                 assembleClasses.LoadClasses();
                 var notifingAssembleClasses = new NotifingAssembleClasses((AssembleClasses)assembleClasses);
                 var updatableAssembleClasses = new UpdatableAssembleClasses(notifingAssembleClasses);
                 var viewModel = new PathFindingViewModel(updatableAssembleClasses, this, EndPoints);
                 var window = new PathFindWindow();
                 notifingAssembleClasses.OnClassesLoaded += viewModel.UpdateAlgorithmKeys;
-                updatableAssembleClasses.OnExceptionCaught += (ex, msg) =>
-                {
-                    OnExceptionCaught(ex, msg);
-                    Logger.Instance.Warn(ex);
-                };
+                updatableAssembleClasses.OnExceptionCaught += OnWarningCaught;
                 updatableAssembleClasses.LoadClasses();
                 window.Closing += (s, e) => updatableAssembleClasses.Interrupt();
                 viewModel.OnEventHappened += OnExternalEventHappened;
@@ -215,6 +210,12 @@ namespace WPFVersion.ViewModel
         private void ExecuteCreateNewGraphCommand(object param)
         {
             CreateNewGraph();
+        }
+
+        private void OnWarningCaught(Exception ex, string message)
+        {
+            OnExceptionCaught(ex, message);
+            Logger.Instance.Warn(ex);
         }
 
         private bool CanExecuteGraphOperation(object param)

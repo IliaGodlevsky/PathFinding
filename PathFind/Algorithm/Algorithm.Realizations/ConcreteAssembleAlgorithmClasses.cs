@@ -1,8 +1,7 @@
 ﻿using Algorithm.Common;
 using Algorithm.Interfaces;
-using AssembleClassesLib.Extensions;
 using AssembleClassesLib.Interface;
-using AssembleClassesLib.Realizations;
+using AssembleClassesLib.Realizations.AssembleClassesImpl;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -26,28 +25,30 @@ namespace Algorithm.Realizations
             return base.Get(key, parametres) ?? new NullAlgorithm();
         }
 
-        public ConcreteAssembleAlgorithmClasses(string path,
+        public ConcreteAssembleAlgorithmClasses(string path, ILoadMethod loadMethod,
             SearchOption searchOption = SearchOption.AllDirectories)
-            : base(path, searchOption)
+            : base(path, searchOption, loadMethod)
         {
             baseType = typeof(IAlgorithm);
         }
 
-        public ConcreteAssembleAlgorithmClasses(IAssembleLoadPath path, 
+        public ConcreteAssembleAlgorithmClasses(IAssembleLoadPath path, ILoadMethod loadMethod,
             SearchOption searchOption = SearchOption.AllDirectories)
-            :this(path.LoadPath, searchOption)
+            : this(path.LoadPath, loadMethod, searchOption)
         {
 
         }
 
-        public ConcreteAssembleAlgorithmClasses(IAssembleLoadPath path, IAssembleSearchOption searchOption)
-            : this(path.LoadPath, searchOption.SearchOption)
+        public ConcreteAssembleAlgorithmClasses(IAssembleLoadPath path, ILoadMethod loadMethod,
+            IAssembleSearchOption searchOption)
+            : this(path.LoadPath, loadMethod, searchOption.SearchOption)
         {
 
         }
 
-        public ConcreteAssembleAlgorithmClasses(string path, IAssembleSearchOption searchOption)
-            : this(path, searchOption.SearchOption)
+        public ConcreteAssembleAlgorithmClasses(string path, ILoadMethod loadMethod,
+            IAssembleSearchOption searchOption)
+            : this(path, loadMethod, searchOption.SearchOption)
         {
 
         }
@@ -72,8 +73,7 @@ namespace Algorithm.Realizations
 
         private bool IsConcreteAlgorithm(KeyValuePair<string, Type> algo)
         {
-            return !algo.Value.IsFilterable()
-                   && !algo.Value.IsAbstract
+            return !algo.Value.IsAbstract
                    && baseType.IsAssignableFrom(algo.Value);
         }
 

@@ -53,7 +53,7 @@ namespace Plugins.AStarModified
                     .Take(VerticesCountToDelete)
                     .ToArray();
                 deletedVertices.EnqueueRange(verticesToDelete);
-                verticesQueue = verticesQueue.Except(verticesToDelete.AsEnumerable());
+                verticesQueue = verticesQueue.Except(verticesToDelete);
 
                 var next = base.NextVertex;
                 if (next.IsNullObject())

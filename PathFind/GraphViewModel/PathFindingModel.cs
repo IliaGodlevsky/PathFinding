@@ -109,8 +109,11 @@ namespace GraphViewModel
                 string statistics = GetStatistics();
                 mainViewModel.PathFindingStatistics = statistics;
             }
-            ColorizeProcessedVertices();
-            interrupter.Suspend();
+            if (DelayTime > 0)
+            {
+                ColorizeProcessedVertices();
+                interrupter.Suspend();
+            }
         }
 
         protected virtual void OnVertexEnqueued(object sender, EventArgs e)

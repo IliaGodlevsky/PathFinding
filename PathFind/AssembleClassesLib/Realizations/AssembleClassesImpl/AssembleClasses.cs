@@ -1,4 +1,5 @@
 ﻿using AssembleClassesLib.Attributes;
+using AssembleClassesLib.Extensions;
 using AssembleClassesLib.Interface;
 using Common.Extensions;
 using System;
@@ -8,35 +9,36 @@ using System.Linq;
 using System.Reflection;
 using System.Runtime.InteropServices;
 
-namespace AssembleClassesLib.Realizations
+namespace AssembleClassesLib.Realizations.AssembleClassesImpl
 {
     /// <summary>
     /// A class, that loads types from assemble(s)
     /// </summary>
     public class AssembleClasses : IAssembleClasses
     {
-        public AssembleClasses(string loadPath, SearchOption searchOption)
+        public AssembleClasses(string loadPath, SearchOption searchOption, ILoadMethod loadMethod)
         {
             types = new Dictionary<string, Type>();
             this.loadPath = loadPath;
             this.searchOption = searchOption;
             ClassesNames = new string[] { };
+            this.loadMethod = loadMethod;
         }
 
-        public AssembleClasses(string loadPath, IAssembleSearchOption searchOption)
-            : this(loadPath, searchOption.SearchOption)
+        public AssembleClasses(string loadPath, IAssembleSearchOption searchOption, ILoadMethod loadMethod)
+            : this(loadPath, searchOption.SearchOption, loadMethod)
         {
 
         }
 
-        public AssembleClasses(IAssembleLoadPath loadPath, IAssembleSearchOption searchOption)
-            : this(loadPath.LoadPath, searchOption.SearchOption)
+        public AssembleClasses(IAssembleLoadPath loadPath, IAssembleSearchOption searchOption, ILoadMethod loadMethod)
+            : this(loadPath.LoadPath, searchOption.SearchOption, loadMethod)
         {
 
         }
 
-        public AssembleClasses(IAssembleLoadPath loadPath, SearchOption searchOption)
-            : this(loadPath.LoadPath, searchOption)
+        public AssembleClasses(IAssembleLoadPath loadPath, SearchOption searchOption, ILoadMethod loadMethod)
+            : this(loadPath.LoadPath, searchOption, loadMethod)
         {
 
         }
@@ -77,8 +79,9 @@ namespace AssembleClassesLib.Realizations
         protected virtual void LoadClassesFromAssemble()
         {
             types = Directory.GetFiles(loadPath, SearchPattern, searchOption)
-                .Select(Assembly.LoadFrom)
+                .Select(loadMethod.Load)
                 .SelectMany(Types)
+                .Where(IsLoadable)
                 .DistinctBy(FullName)
                 .ToDictionary(ClassName);
         }
@@ -104,9 +107,15 @@ namespace AssembleClassesLib.Realizations
             return attribute?.Name ?? type.FullName;
         }
 
+        private bool IsLoadable(Type type)
+        {
+            return !type.IsNotLoadable();
+        }
+
         protected Dictionary<string, Type> types;
         private readonly string loadPath;
         private readonly SearchOption searchOption;
+        private readonly ILoadMethod loadMethod;
 
         private const string SearchPattern = "*.dll";
     }

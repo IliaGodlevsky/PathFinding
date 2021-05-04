@@ -1,6 +1,6 @@
-﻿using Algorithm.Realizations;
-using AssembleClassesLib.Interface;
+﻿using AssembleClassesLib.Interface;
 using AssembleClassesLib.Realizations;
+using AssembleClassesLib.Realizations.AssembleClassesImpl;
 using Common.Extensions;
 using Common.Interface;
 using Common.Logging;
@@ -11,12 +11,10 @@ using GraphLib.Serialization.Interfaces;
 using GraphViewModel;
 using System;
 using System.ComponentModel;
-using System.Configuration;
 using System.Runtime.CompilerServices;
 using System.Windows;
 using System.Windows.Input;
 using WPFVersion3D.Axes;
-using WPFVersion3D.Enums;
 using WPFVersion3D.Infrastructure;
 using WPFVersion3D.Infrastructure.Animators.Interface;
 using WPFVersion3D.Model;
@@ -68,7 +66,7 @@ namespace WPFVersion3D.ViewModel
             IGraphAssembler graphFactory,
             IPathInput pathInput,
             IAssembleClasses assembleClasses)
-            : base(fieldFactory, eventHolder, graphSerializer, 
+            : base(fieldFactory, eventHolder, graphSerializer,
                   graphFactory, pathInput, assembleClasses)
         {
             StartPathFindCommand = new RelayCommand(ExecuteStartPathFindCommand, CanExecuteStartFindPathCommand);

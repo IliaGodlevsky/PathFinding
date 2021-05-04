@@ -1,5 +1,4 @@
-﻿using Algorithm.Realizations;
-using AssembleClassesLib.Interface;
+﻿using AssembleClassesLib.Interface;
 using Common;
 using Common.Logging;
 using ConsoleVersion.Attributes;
@@ -16,7 +15,6 @@ using GraphLib.Realizations.Graphs;
 using GraphLib.Serialization.Interfaces;
 using GraphViewModel;
 using System;
-using System.Configuration;
 using System.Drawing;
 using System.Linq;
 using static ConsoleVersion.InputClass.Input;
@@ -33,8 +31,8 @@ namespace ConsoleVersion.ViewModel
             IGraphSerializer graphSerializer,
             IGraphAssembler graphFactory,
             IPathInput pathInput,
-            IAssembleClasses assembleClasses) 
-            : base(fieldFactory, eventHolder, graphSerializer, 
+            IAssembleClasses assembleClasses)
+            : base(fieldFactory, eventHolder, graphSerializer,
                   graphFactory, pathInput, assembleClasses)
         {
 

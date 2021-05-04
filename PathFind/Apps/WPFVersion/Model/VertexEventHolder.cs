@@ -1,5 +1,6 @@
 ﻿using GraphLib.Base;
 using GraphLib.Interfaces;
+using GraphLib.Interfaces.Factories;
 using System;
 using System.Windows.Input;
 
@@ -7,6 +8,10 @@ namespace WPFVersion.Model
 {
     internal sealed class VertexEventHolder : BaseVertexEventHolder
     {
+        public VertexEventHolder(IVertexCostFactory costFactory) : base(costFactory)
+        {
+        }
+
         protected override int GetWheelDelta(EventArgs e)
         {
             return e is MouseWheelEventArgs args ? args.Delta : default;

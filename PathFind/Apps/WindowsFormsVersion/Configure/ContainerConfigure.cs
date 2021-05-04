@@ -1,6 +1,7 @@
 ﻿using Algorithm.Realizations;
 using AssembleClassesLib.Interface;
 using AssembleClassesLib.Realizations;
+using AssembleClassesLib.Realizations.LoadMethods;
 using Autofac;
 using GraphLib.Base;
 using GraphLib.Interfaces;
@@ -38,10 +39,11 @@ namespace WindowsFormsVersion.Configure
             builder.RegisterType<BinaryFormatter>().As<IFormatter>().SingleInstance();
             builder.RegisterType<CoordinateAroundRadarFactory>().As<ICoordinateRadarFactory>().SingleInstance();
             builder.RegisterType<VertexSerializationInfoConverter>().As<IVertexSerializationInfoConverter>().SingleInstance();
-            builder.RegisterType<ConcreteAssembleAlgorithmClasses>().As<IAssembleClasses>()
-                .SingleInstance().UsingConstructor(typeof(IAssembleLoadPath), typeof(IAssembleSearchOption));
+            builder.RegisterType<ConcreteAssembleAlgorithmClasses>().As<IAssembleClasses>().SingleInstance()
+                 .UsingConstructor(typeof(IAssembleLoadPath), typeof(ILoadMethod), typeof(IAssembleSearchOption));
             builder.RegisterType<AssembleLoadPath>().As<IAssembleLoadPath>().SingleInstance();
             builder.RegisterType<AllDirectories>().As<IAssembleSearchOption>().SingleInstance();
+            builder.RegisterType<LoadFrom>().As<ILoadMethod>().SingleInstance();
 
             return builder.Build();
         }

@@ -3,7 +3,7 @@ using AssembleClassesLib.EventHandlers;
 using AssembleClassesLib.Interface;
 using System.Collections.Generic;
 
-namespace AssembleClassesLib.Realizations
+namespace AssembleClassesLib.Realizations.AssembleClassesImpl
 {
     public sealed class NotifingAssembleClasses : INotifingAssembleClasses
     {

@@ -43,7 +43,7 @@
   <ItemGroup>
     <Compile Include="Heuristic\BaseHeuristic.cs" />
     <Compile Include="Heuristic\ChebyshevDistance.cs" />
-    <Compile Include="ConcreteAlgorithmsClasses.cs" />
+    <Compile Include="ConcreteAssembleAlgorithmClasses.cs" />
     <Compile Include="GraphPaths\GraphPath.cs" />
     <Compile Include="Heuristic\EuclidianDistance.cs" />
     <Compile Include="Heuristic\ManhattanDistance.cs" />
