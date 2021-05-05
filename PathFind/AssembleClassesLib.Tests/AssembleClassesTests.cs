@@ -11,7 +11,7 @@ using System.Linq;
 namespace AssembleClassesLib.Tests
 {
     [NotLoadable]
-    public class AssembleClassesTests
+    internal class AssembleClassesTests
     {
         private readonly IAssembleLoadPath loadPath;
         private readonly IAssembleSearchOption searchOption;
