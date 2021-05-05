@@ -15,7 +15,8 @@ namespace AssembleClassesLib.Tests.Infrastructure
             {
                 if (string.IsNullOrEmpty(loadPath))
                 {
-                    string codeBase = Assembly.GetExecutingAssembly().CodeBase;
+                    var assembly = Assembly.GetExecutingAssembly();
+                    string codeBase = assembly.CodeBase;
                     var uri = new UriBuilder(codeBase);
                     string path = Uri.UnescapeDataString(uri.Path);
                     loadPath = Path.GetDirectoryName(path);
