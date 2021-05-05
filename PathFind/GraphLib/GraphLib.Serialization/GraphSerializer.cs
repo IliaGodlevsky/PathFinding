@@ -45,7 +45,7 @@ namespace GraphLib.Serialization
                     graph[info.Position] = infoConverter.ConvertFrom(info);
                 }
 
-                verticesInfo.ForEach(CreateVertexFrom);
+                verticesInfo.VerticesInfo.ForEach(CreateVertexFrom);
                 graph.ConnectVertices();
                 return graph;
             }

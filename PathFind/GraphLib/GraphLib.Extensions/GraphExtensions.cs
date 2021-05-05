@@ -99,6 +99,7 @@ namespace GraphLib.Extensions
                 index /= dimensionSize;
                 return coordinate;
             }
+
             int Coordinates(int i) => GetCoordinateValue(dimensions[i]);
             #endregion
 

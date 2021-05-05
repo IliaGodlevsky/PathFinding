@@ -13,11 +13,6 @@ namespace Common.Extensions
             rand = new Random();
         }
 
-        public static bool IsEmpty<T>(this IEnumerable<T> self)
-        {
-            return !self.Any();
-        }
-
         /// <summary>
         /// Distincts <paramref name="collection"/> by <paramref name="selector"/>
         /// </summary>
@@ -38,9 +33,11 @@ namespace Common.Extensions
             }
             #endregion
 
+            T FirstOfTheGroup(IGrouping<TKey, T> item) => item.First();
+
             return collection
                 .GroupBy(selector)
-                .Select(item => item.First());
+                .Select(FirstOfTheGroup);
         }
 
         /// <summary>
@@ -49,7 +46,7 @@ namespace Common.Extensions
         /// <typeparam name="TSource"></typeparam>
         /// <param name="self"></param>
         /// <returns>Random element of <paramref name="self"/></returns>
-        public static TSource GetRandomElementOrDefault<TSource>(this IEnumerable<TSource> self)
+        public static TSource RandomElementOrDefault<TSource>(this IEnumerable<TSource> self)
         {
             var collection = self.ToArray();
             var index = rand.Next(collection.Length);

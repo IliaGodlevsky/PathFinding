@@ -39,7 +39,7 @@ namespace WPFVersion.ViewModel
 
         private int GetSampleSizeToChange()
         {
-            var randomVertex = Model.Graph.Vertices.GetRandomElementOrDefault();
+            var randomVertex = Model.Graph.Vertices.RandomElementOrDefault();
             if (randomVertex is Vertex vertex)
             {
                 return Convert.ToInt32(vertex.Width);

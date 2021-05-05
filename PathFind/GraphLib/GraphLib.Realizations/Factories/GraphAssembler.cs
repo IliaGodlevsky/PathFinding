@@ -39,26 +39,24 @@ namespace GraphLib.Realizations.Factories
         /// pathfinding algorithms</returns>
         /// <exception cref="ArgumentException"></exception>
         /// <exception cref="WrongNumberOfDimensionsException"></exception>
-        public IGraph AssembleGraph(int obstaclePercent = 0,
-            params int[] graphDimensionsSizes)
+        public IGraph AssembleGraph(int obstaclePercent = 0, params int[] graphDimensionsSizes)
         {
             var graph = graphFactory.CreateGraph(graphDimensionsSizes);
-            Enumerable
-                .Range(0, graph.Size)
-                .ForEach(i => AssembleVertex(graph, i, obstaclePercent));
+
+            void AssembleVertex(int index)
+            {
+                var coordinateValues = graph.ToCoordinates(index);
+                var coordinate = coordinateFactory.CreateCoordinate(coordinateValues);
+                var coordinateRadar = radarFactory.CreateCoordinateRadar(coordinate);
+                graph[coordinate] = vertexFactory.CreateVertex(coordinateRadar, coordinate);
+                var vertex = graph[coordinate];
+                vertex.Cost = costFactory.CreateCost();
+                vertex.IsObstacle = IsObstacleChance(obstaclePercent);
+            }
+
+            Enumerable.Range(0, graph.Size).ForEach(AssembleVertex);
             graph.ConnectVertices();
             return graph;
-        }
-
-        private void AssembleVertex(IGraph graph, int index, int obstaclePercent)
-        {
-            var coordinateValues = graph.ToCoordinates(index);
-            var coordinate = coordinateFactory.CreateCoordinate(coordinateValues);
-            var coordinateRadar = radarFactory.CreateCoordinateRadar(coordinate);
-            graph[coordinate] = vertexFactory.CreateVertex(coordinateRadar, coordinate);
-            var vertex = graph[coordinate];
-            vertex.Cost = costFactory.CreateCost();
-            vertex.IsObstacle = IsObstacleChance(obstaclePercent);
         }
 
         private bool IsObstacleChance(int percentOfObstacles)
