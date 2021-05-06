@@ -55,12 +55,12 @@ namespace Common.Logging
 #endif
         }
 
-        private static void Log(string message, Action<string> action)
+        private void Log(string message, Action<string> action)
         {
             action(message);
         }
 
-        private static void Log(Exception ex, string message,
+        private void Log(Exception ex, string message,
             Action<Exception, string> action)
         {
             action(ex, string.IsNullOrEmpty(message) ? string.Empty : message);
