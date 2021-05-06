@@ -34,10 +34,7 @@ namespace GraphLib.Serialization.Tests
             notSerializableCoordinateFactory = new NotSerializableCoordinateFactory();
             coordinateFactory = new TestCoordinateFactory();
             costFactory = new TestCostFactory();
-
         }
-
-
 
         [TestCase(15, new[] { 8, 9, 7 })]
         [TestCase(22, new[] { 15, 15 })]
@@ -87,7 +84,7 @@ namespace GraphLib.Serialization.Tests
 
             Assert.Throws<CantSerializeGraphException>(() =>
             {
-                using var stream = new MemoryStream();
+                using (var stream = new MemoryStream())
                 {
                     serializer.SaveGraph(graph, stream);
                     stream.Seek(0, SeekOrigin.Begin);
