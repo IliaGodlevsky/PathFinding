@@ -52,6 +52,7 @@ namespace Plugins.AStarModified
                 var verticesToDelete = verticesQueue
                     .Take(VerticesCountToDelete)
                     .ToArray();
+
                 deletedVertices.EnqueueRange(verticesToDelete);
                 verticesQueue = verticesQueue.Except(verticesToDelete);
 
