@@ -81,7 +81,7 @@ namespace AssembleClassesLib.Realizations.AssembleClassesImpl
             types = Directory.GetFiles(loadPath, SearchPattern, searchOption)
                 .Select(loadMethod.Load)
                 .SelectMany(Types)
-                .Where(IsLoadable)
+                .Where(CanBeLoaded)
                 .DistinctBy(FullName)
                 .ToDictionary(ClassName);
         }
@@ -107,7 +107,7 @@ namespace AssembleClassesLib.Realizations.AssembleClassesImpl
             return attribute?.Name ?? type.FullName;
         }
 
-        private bool IsLoadable(Type type)
+        private bool CanBeLoaded(Type type)
         {
             return !type.IsNotLoadable();
         }
