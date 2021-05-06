@@ -17,7 +17,7 @@ namespace AssembleClassesLib.Tests.Infrastructure
                 {
                     var assembly = Assembly.GetExecutingAssembly();
                     string codeBase = assembly.CodeBase;
-                    var uri = new UriBuilder(codeBase);
+                    UriBuilder uri = new UriBuilder(codeBase);
                     string path = Uri.UnescapeDataString(uri.Path);
                     loadPath = Path.GetDirectoryName(path);
                 }
