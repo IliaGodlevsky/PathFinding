@@ -12,7 +12,7 @@ namespace GraphLib.Serialization.Extensions
 
         public static void Initialize(this IVertex vertex, VertexSerializationInfo info)
         {
-            vertex.Cost = info.Cost.TryCopyDeep();
+            vertex.Cost = info.Cost;
             vertex.IsObstacle = info.IsObstacle;
         }
     }
