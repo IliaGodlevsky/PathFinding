@@ -1,4 +1,3 @@
-using AssembleClassesLib.Attributes;
 using AssembleClassesLib.Interface;
 using AssembleClassesLib.Realizations;
 using AssembleClassesLib.Realizations.AssembleClassesImpl;
@@ -10,20 +9,17 @@ using System.Linq;
 
 namespace AssembleClassesLib.Tests
 {
-    [NotLoadable]
+    [TestFixture]
     internal class AssembleClassesTests
     {
-        private readonly IAssembleLoadPath loadPath;
-        private readonly IAssembleSearchOption searchOption;
         private readonly IAssembleClasses assembleClasses;
-        private readonly ILoadMethod loadMethod;
 
         public AssembleClassesTests()
         {
-            loadPath = new AssempleLoadPath();
-            searchOption = new TopDirectoryOnly();
-            loadMethod = new LoadFrom();
-            assembleClasses = new AssembleClasses(loadPath, searchOption, loadMethod);
+            assembleClasses = new AssembleClasses(
+                new AssempleLoadPath(), 
+                new TopDirectoryOnly(), 
+                new LoadFrom());
         }
 
         [Test]
@@ -40,7 +36,6 @@ namespace AssembleClassesLib.Tests
             assembleClasses.LoadClasses();
             var classes = assembleClasses.ClassesNames;
 
-            Assert.IsFalse(classes.Contains(nameof(AssembleClassesTests)));
             Assert.IsFalse(classes.Contains(nameof(AssempleLoadPath)));
         }
 
@@ -64,6 +59,16 @@ namespace AssembleClassesLib.Tests
             var testObject = assembleClasses.Get(typeof(TestObject3).FullName, 0);
 
             Assert.IsTrue(testObject != null);
+        }
+
+        [Test]
+        public void Get_ClassNameDoesntExist_ReturnsNull()
+        {
+            assembleClasses.LoadClasses();
+
+            var obj = assembleClasses.Get(typeof(AssempleLoadPath).FullName);
+
+            Assert.IsTrue(obj == null);
         }
     }
 }
