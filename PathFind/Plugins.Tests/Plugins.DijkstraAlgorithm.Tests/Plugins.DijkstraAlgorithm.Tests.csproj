@@ -17,6 +17,7 @@
   <ItemGroup>
     <ProjectReference Include="..\..\Algorithm\Algorithm.Interfaces\Algorithm.Interfaces.csproj" />
     <ProjectReference Include="..\..\GraphLib\GraphLib.Interfaces\GraphLib.Interfaces.csproj" />
+    <ProjectReference Include="..\..\GraphLib\GraphLib.Serialization\GraphLib.Serialization.csproj" />
     <ProjectReference Include="..\..\Plugins\Plugins.DijkstraALgorithm\Plugins.DijkstraALgorithm.csproj" />
   </ItemGroup>
 

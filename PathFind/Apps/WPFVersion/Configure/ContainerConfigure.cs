@@ -34,7 +34,7 @@ namespace WPFVersion.Configure
             builder.RegisterType<VertexEventHolder>().As<IVertexEventHolder>().SingleInstance().PropertiesAutowired();
             builder.RegisterType<GraphFieldFactory>().As<BaseGraphFieldFactory>().SingleInstance();
             builder.RegisterType<BinaryFormatter>().As<IFormatter>().SingleInstance();
-            builder.RegisterType<CardinalCoordinateAroundRadarFactory>().As<ICoordinateRadarFactory>().SingleInstance();
+            builder.RegisterType<CoordinateAroundRadarFactory>().As<ICoordinateRadarFactory>().SingleInstance();
             builder.RegisterType<VertexSerializationInfoConverter>().As<IVertexSerializationInfoConverter>().SingleInstance();
             builder.RegisterType<ConcreteAssembleAlgorithmClasses>().As<IAssembleClasses>().SingleInstance()
                 .UsingConstructor(typeof(IAssembleLoadPath), typeof(ILoadMethod), typeof(IAssembleSearchOption));
