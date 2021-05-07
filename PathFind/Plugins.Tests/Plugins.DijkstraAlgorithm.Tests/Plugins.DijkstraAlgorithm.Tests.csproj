@@ -19,6 +19,7 @@
     <ProjectReference Include="..\..\GraphLib\GraphLib.Interfaces\GraphLib.Interfaces.csproj" />
     <ProjectReference Include="..\..\GraphLib\GraphLib.Serialization\GraphLib.Serialization.csproj" />
     <ProjectReference Include="..\..\Plugins\Plugins.DijkstraALgorithm\Plugins.DijkstraALgorithm.csproj" />
+    <ProjectReference Include="..\Plugins.BaseAlgorithmUnitTest\Plugins.BaseAlgorithmUnitTest.csproj" />
   </ItemGroup>
 
 </Project>

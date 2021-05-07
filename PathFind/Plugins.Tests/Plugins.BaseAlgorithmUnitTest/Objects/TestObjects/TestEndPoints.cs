@@ -1,7 +1,8 @@
-﻿using GraphLib.Extensions;
+﻿using GraphLib.Common.NullObjects;
+using GraphLib.Extensions;
 using GraphLib.Interfaces;
 
-namespace Plugins.DijkstraAlgorithm.Tests.Objects.TestObjects
+namespace Plugins.BaseAlgorithmUnitTest.Objects.TestObjects
 {
     internal sealed class TestEndPoints : IEndPoints
     {
@@ -9,6 +10,12 @@ namespace Plugins.DijkstraAlgorithm.Tests.Objects.TestObjects
         {
             End = end;
             Start = start;
+        }
+
+        public TestEndPoints()
+        {
+            Start = new NullVertex();
+            End = new NullVertex();
         }
 
         public IVertex End { get; }

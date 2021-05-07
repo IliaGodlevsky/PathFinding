@@ -51,7 +51,7 @@ namespace AssembleClassesLib.Realizations.AssembleClassesImpl
             return algo.Value;
         }
 
-        private bool IsLoadable(KeyValuePair<string,Type> type)
+        private bool IsLoadable(KeyValuePair<string, Type> type)
         {
             return type.Value.IsLoadable();
         }

@@ -1,8 +1,8 @@
 ﻿using GraphLib.Interfaces;
 using GraphLib.Interfaces.Factories;
-using Plugins.DijkstraAlgorithm.Tests.Objects.TestObjects;
+using Plugins.BaseAlgorithmUnitTest.Objects.TestObjects;
 
-namespace Plugins.DijkstraAlgorithm.Tests.Objects.Factories
+namespace Plugins.BaseAlgorithmUnitTest.Objects.Factories
 {
     internal sealed class TestGraphFactory : IGraphFactory
     {

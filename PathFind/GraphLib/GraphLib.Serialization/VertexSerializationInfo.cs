@@ -1,5 +1,4 @@
-﻿using Common.Extensions;
-using GraphLib.Interfaces;
+﻿using GraphLib.Interfaces;
 using System;
 
 namespace GraphLib.Serialization

@@ -3,15 +3,11 @@ using GraphLib.Interfaces;
 using NUnit.Framework;
 using Plugins.BaseAlgorithmUnitTest;
 
-using DijkstrasAlgorithm = Plugins.DijkstraALgorithm.DijkstraAlgorithm;
-
-namespace Plugins.DijkstraAlgorithm.Tests
+namespace Plugins.AStarALgorithm.Tests
 {
     [TestFixture]
-    public class DijkstraAlgorithmTest : AlgorithmTest
+    public class AStarAlgorithmTests : AlgorithmTest
     {
-        #region Test Methods
-
         [Test]
         public override void FindPath_EndpointsBelongToGraphAndStepRuleIsDefault_ReturnsShortestPath()
         {
@@ -26,19 +22,17 @@ namespace Plugins.DijkstraAlgorithm.Tests
 
         protected override IAlgorithm CreateAlgorithm(IGraph graph, IEndPoints endPoints)
         {
-            return new DijkstrasAlgorithm(graph, endPoints);
+            return new AStarAlgorithm.AStarAlgorithm(graph, endPoints);
         }
 
         protected override int GetExpectedCost()
         {
-            return 200;
+            return 229;
         }
 
         protected override int GetExpectedLength()
         {
-            return 91;
+            return 79;
         }
-
-        #endregion
     }
 }

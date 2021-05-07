@@ -1,10 +1,8 @@
 ﻿using GraphLib.Extensions;
 using GraphLib.Interfaces;
-using GraphLib.Serialization;
-using GraphLib.Serialization.Extensions;
 using System.Collections.Generic;
 
-namespace Plugins.DijkstraAlgorithm.Tests.Objects.TestObjects
+namespace Plugins.BaseAlgorithmUnitTest.Objects.TestObjects
 {
     internal sealed class TestVertex : IVertex
     {
@@ -13,12 +11,6 @@ namespace Plugins.DijkstraAlgorithm.Tests.Objects.TestObjects
             this.Initialize();
             CoordinateRadar = radar;
             Position = coordinate;
-        }
-
-        public TestVertex(VertexSerializationInfo info, ICoordinateRadar radar)
-            : this(radar, info.Position)
-        {
-            this.Initialize(info);
         }
 
         public bool IsObstacle { get; set; }

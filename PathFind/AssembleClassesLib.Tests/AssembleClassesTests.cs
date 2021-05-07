@@ -17,8 +17,8 @@ namespace AssembleClassesLib.Tests
         public AssembleClassesTests()
         {
             assembleClasses = new AssembleClasses(
-                new AssempleLoadPath(), 
-                new TopDirectoryOnly(), 
+                new AssempleLoadPath(),
+                new TopDirectoryOnly(),
                 new LoadFrom());
         }
 

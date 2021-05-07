@@ -89,8 +89,8 @@ namespace AssembleClassesLib.Realizations.AssembleClassesImpl
         private string[] GetFiles()
         {
             return Directory.GetFiles(
-                loadPath, 
-                SearchPattern, 
+                loadPath,
+                SearchPattern,
                 searchOption);
         }
 

@@ -16,6 +16,7 @@ using GraphLib.Serialization.Interfaces;
 using GraphViewModel;
 using System;
 using System.Drawing;
+using System.IO;
 using System.Linq;
 using static ConsoleVersion.InputClass.Input;
 using Console = Colorful.Console;
@@ -58,6 +59,63 @@ namespace ConsoleVersion.ViewModel
             {
                 OnExceptionCaught(ex);
                 Logger.Instance.Error(ex);
+            }
+        }
+
+        [MenuItem("Make cost matrix", MenuItemPriority.Highest)]
+        public void MakeCostMatrix()
+        {
+            var graph = Graph as Graph2D;
+            using (var stream = new StreamWriter("CostMatrix.txt"))
+            {
+                for (int i = 0; i < graph.Width; i++)
+                {
+                    for (int j = 0; j < graph.Length; j++)
+                    {
+                        if (j == 0)
+                        {
+                            stream.Write("{");
+                        }
+
+                        if (j < graph.Length - 1)
+                        {
+                            stream.Write(graph[new Coordinate2D(i, j)].Cost.CurrentCost + ",");
+                        }
+                        else
+                        {
+                            stream.WriteLine(graph[new Coordinate2D(i, j)].Cost.CurrentCost + "},");
+                        }
+
+                    }
+                }
+            }
+        }
+
+        [MenuItem("Make obstacle matrix", MenuItemPriority.Highest)]
+        public void MakeObstacleMatrix()
+        {
+            var graph = Graph as Graph2D;
+            using (var stream = new StreamWriter("ObstacleMatrix.txt"))
+            {
+                for (int i = 0; i < graph.Width; i++)
+                {
+                    for (int j = 0; j < graph.Length; j++)
+                    {
+                        if (j == 0)
+                        {
+                            stream.Write("{");
+                        }
+                        if (j < graph.Length - 1)
+                        {
+                            stream.Write(graph[new Coordinate2D(i, j)].IsObstacle ? "O" + "," : "I" + ",");
+                        }
+                        else
+                        {
+                            stream.WriteLine(graph[new Coordinate2D(i, j)].IsObstacle ? "O" + "}," : "I" + "}");
+                        }
+
+                    }
+                }
             }
         }
 

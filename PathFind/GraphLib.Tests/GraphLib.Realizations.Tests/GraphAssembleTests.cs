@@ -1,11 +1,11 @@
-﻿using GraphLib.Interfaces.Factories;
+﻿using Common.Extensions;
+using GraphLib.Interfaces;
+using GraphLib.Interfaces.Factories;
 using GraphLib.Realizations.Factories;
 using GraphLib.Realizations.Tests.Factories;
 using GraphLib.Realizations.Tests.Objects;
-using Common.Extensions;
 using NUnit.Framework;
 using System.Linq;
-using GraphLib.Interfaces;
 
 namespace GraphLib.Realizations.Tests
 {
