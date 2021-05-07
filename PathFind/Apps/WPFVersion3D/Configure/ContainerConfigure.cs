@@ -30,7 +30,7 @@ namespace WPFVersion3D.Configure
             builder.RegisterType<Coordinate3DFactory>().As<ICoordinateFactory>().SingleInstance();
             builder.RegisterType<PathInput>().As<IPathInput>().SingleInstance();
             builder.RegisterType<Graph3DFactory>().As<IGraphFactory>().SingleInstance();
-            builder.RegisterType<GraphAssembler>().As<IGraphAssembler>().SingleInstance();
+            builder.RegisterType<GraphAssemble>().As<IGraphAssemble>().SingleInstance();
             builder.RegisterType<GraphSerializer>().As<IGraphSerializer>().SingleInstance();
             builder.RegisterType<Vertex3DEventHolder>().As<IVertexEventHolder>().SingleInstance().PropertiesAutowired();
             builder.RegisterType<GraphField3DFactory>().As<BaseGraphFieldFactory>().SingleInstance();

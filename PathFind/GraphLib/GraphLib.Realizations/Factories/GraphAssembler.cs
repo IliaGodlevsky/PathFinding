@@ -12,9 +12,9 @@ namespace GraphLib.Realizations.Factories
     /// <summary>
     /// Assembles a graph suitable for use with pathfinding algorithms
     /// </summary>
-    public class GraphAssembler : IGraphAssembler
+    public class GraphAssemble : IGraphAssemble
     {
-        public GraphAssembler(
+        public GraphAssemble(
             IVertexFactory vertexFactory,
             ICoordinateFactory coordinateFactory,
             IGraphFactory graphFactory,

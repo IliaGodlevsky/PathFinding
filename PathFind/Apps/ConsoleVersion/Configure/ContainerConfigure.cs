@@ -33,7 +33,7 @@ namespace ConsoleVersion.Configure
             builder.RegisterType<PathInput>().As<IPathInput>().SingleInstance();
             builder.RegisterType<Coordinate2DFactory>().As<ICoordinateFactory>().SingleInstance();
             builder.RegisterType<Graph2DFactory>().As<IGraphFactory>().SingleInstance();
-            builder.RegisterType<GraphAssembler>().As<IGraphAssembler>().SingleInstance();
+            builder.RegisterType<GraphAssemble>().As<IGraphAssemble>().SingleInstance();
             builder.RegisterType<GraphSerializer>().As<IGraphSerializer>().SingleInstance();
             builder.RegisterType<VertexEventHolder>().As<IVertexEventHolder>().SingleInstance().PropertiesAutowired();
             builder.RegisterType<GraphFieldFactory>().As<BaseGraphFieldFactory>().SingleInstance();

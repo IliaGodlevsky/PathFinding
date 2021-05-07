@@ -22,7 +22,7 @@ namespace GraphLib.Serialization.Tests
         private readonly ICoordinateFactory notSerializableCoordinateFactory;
         private readonly IVertexCostFactory costFactory;
         private readonly ICoordinateRadarFactory radarFactory;
-        private IGraphAssembler graphAssembler;
+        private IGraphAssemble graphAssembler;
 
         public GraphSerializerTests()
         {
@@ -42,7 +42,7 @@ namespace GraphLib.Serialization.Tests
         public void SaveGraph_LoadGraph_ReturnsEqualGraph(
             int obstaclePercent, int[] graphParams)
         {
-            graphAssembler = new GraphAssembler(
+            graphAssembler = new GraphAssemble(
                 vertexFactory,
                 coordinateFactory,
                 graphFactory,
@@ -70,7 +70,7 @@ namespace GraphLib.Serialization.Tests
         public void SaveGraph_LoadGraph_NotSerializableCoordinate_ThrowsCantSerializeGraphException(
             int obstaclePercent, int[] graphParams)
         {
-            graphAssembler = new GraphAssembler(
+            graphAssembler = new GraphAssemble(
                 vertexFactory,
                 notSerializableCoordinateFactory,
                 graphFactory,
@@ -84,12 +84,10 @@ namespace GraphLib.Serialization.Tests
 
             Assert.Throws<CantSerializeGraphException>(() =>
             {
-                using (var stream = new MemoryStream())
-                {
-                    serializer.SaveGraph(graph, stream);
-                    stream.Seek(0, SeekOrigin.Begin);
-                    serializer.LoadGraph(stream);
-                }
+                using var stream = new MemoryStream();
+                serializer.SaveGraph(graph, stream);
+                stream.Seek(0, SeekOrigin.Begin);
+                serializer.LoadGraph(stream);
             });
         }
     }

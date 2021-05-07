@@ -346,11 +346,6 @@ namespace Plugins.DijkstraAlgorithm.Tests
             return isStart || isEnd;
         }
 
-        private static int GetVertexCost(IVertex vertex)
-        {
-            return vertex.Cost.CurrentCost;
-        }
-
         #endregion
 
         #region Helper classes

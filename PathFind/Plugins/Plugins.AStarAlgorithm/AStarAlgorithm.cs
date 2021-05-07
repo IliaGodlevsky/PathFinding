@@ -19,7 +19,7 @@ namespace Plugins.AStarAlgorithm
         public AStarAlgorithm(IGraph graph, IEndPoints endPoints, IStepRule stepRule, IHeuristic function)
             : base(graph, endPoints, stepRule)
         {
-            heuristicFunction = function;
+            heuristic = function;
         }
 
         public AStarAlgorithm(IGraph graph, IEndPoints endPoints, IHeuristic function)
@@ -37,9 +37,9 @@ namespace Plugins.AStarAlgorithm
         protected override double GetVertexRelaxedCost(IVertex neighbour)
         {
             return base.GetVertexRelaxedCost(neighbour)
-                   + heuristicFunction.Calculate(CurrentVertex, endPoints.End);
+                   + heuristic.Calculate(CurrentVertex, endPoints.End);
         }
 
-        protected readonly IHeuristic heuristicFunction;
+        protected readonly IHeuristic heuristic;
     }
 }

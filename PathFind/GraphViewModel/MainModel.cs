@@ -28,7 +28,7 @@ namespace GraphViewModel
         protected MainModel(BaseGraphFieldFactory fieldFactory,
             IVertexEventHolder eventHolder,
             IGraphSerializer graphSerializer,
-            IGraphAssembler graphAssembler,
+            IGraphAssemble graphAssembler,
             IPathInput pathInput,
             IAssembleClasses assembleClasses)
         {
@@ -114,7 +114,7 @@ namespace GraphViewModel
         protected abstract void OnExternalEventHappened(string message);
         protected abstract void OnExceptionCaught(Exception ex, string additaionalMessage = "");
 
-        protected readonly IGraphAssembler graphAssembler;
+        protected readonly IGraphAssemble graphAssembler;
         protected readonly BaseGraphFieldFactory fieldFactory;
         private readonly IVertexEventHolder eventHolder;
         private readonly IGraphSerializer serializer;

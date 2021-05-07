@@ -18,7 +18,7 @@ namespace WPFVersion3D.ViewModel
         public ICommand ConfirmCreateGraphCommand { get; }
         public ICommand CancelCreateGraphCommand { get; }
 
-        public GraphCreatingViewModel(IMainModel model, IGraphAssembler graphFactory) : base(model, graphFactory)
+        public GraphCreatingViewModel(IMainModel model, IGraphAssemble graphFactory) : base(model, graphFactory)
         {
             ConfirmCreateGraphCommand = new RelayCommand(ExecuteConfirmCreateGraphCommand);
             CancelCreateGraphCommand = new RelayCommand(obj => CloseWindow());

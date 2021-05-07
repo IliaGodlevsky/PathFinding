@@ -48,7 +48,7 @@
     <Compile Include="IEndPoints.cs" />
     <Compile Include="ICoordinateRadar.cs" />
     <Compile Include="IGraph.cs" />
-    <Compile Include="Factories\IGraphAssembler.cs" />
+    <Compile Include="Factories\IGraphAssemble.cs" />
     <Compile Include="Factories\IGraphFactory.cs" />
     <Compile Include="IGraphField.cs" />
     <Compile Include="IMarkable.cs" />

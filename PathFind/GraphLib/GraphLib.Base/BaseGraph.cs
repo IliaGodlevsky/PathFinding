@@ -11,9 +11,7 @@ using System.Text;
 namespace GraphLib.Base
 {
     public abstract class BaseGraph : IGraph
-    {
-        public static IGraph NullGraph => new NullGraph();
-
+    { 
         public int Size { get; }
 
         public int ObstaclePercent => Size == 0 ? 0 : Obstacles * 100 / Size;

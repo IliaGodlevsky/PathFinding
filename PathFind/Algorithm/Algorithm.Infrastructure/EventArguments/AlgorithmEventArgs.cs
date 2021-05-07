@@ -27,9 +27,6 @@ namespace Algorithm.Infrastructure.EventArguments
             VisitedVertices = visitedVertices;
         }
 
-        /// <summary>
-        /// Provides information about vertex that is being processed
-        /// </summary>
         public IVertex Vertex { get; }
 
         public int VisitedVertices { get; }

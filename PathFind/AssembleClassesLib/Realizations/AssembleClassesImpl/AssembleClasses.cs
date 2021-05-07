@@ -21,8 +21,8 @@ namespace AssembleClassesLib.Realizations.AssembleClassesImpl
             types = new Dictionary<string, Type>();
             this.loadPath = loadPath;
             this.searchOption = searchOption;
-            ClassesNames = new string[] { };
             this.loadMethod = loadMethod;
+            ClassesNames = new string[] { };
         }
 
         public AssembleClasses(string loadPath, IAssembleSearchOption searchOption, ILoadMethod loadMethod)
@@ -78,12 +78,20 @@ namespace AssembleClassesLib.Realizations.AssembleClassesImpl
 
         protected virtual void LoadClassesFromAssemble()
         {
-            types = Directory.GetFiles(loadPath, SearchPattern, searchOption)
+            types = GetFiles()
                 .Select(loadMethod.Load)
                 .SelectMany(Types)
                 .Where(CanBeLoaded)
                 .DistinctBy(FullName)
                 .ToDictionary(ClassName);
+        }
+
+        private string[] GetFiles()
+        {
+            return Directory.GetFiles(
+                loadPath, 
+                SearchPattern, 
+                searchOption);
         }
 
         private string Key(string key)

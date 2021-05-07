@@ -17,7 +17,7 @@ namespace GraphLib.Realizations.Tests
         private readonly IVertexCostFactory costFactory;
         private readonly IGraphFactory graphFactory;
         private readonly ICoordinateRadarFactory radarFactory;
-        private readonly IGraphAssembler graphAssembler;
+        private readonly IGraphAssemble graphAssembler;
 
         public GraphAssemblerTests()
         {
@@ -26,7 +26,7 @@ namespace GraphLib.Realizations.Tests
             costFactory = new TestCostFactory();
             graphFactory = new TestGraphFactory();
             radarFactory = new CoordinateAroundRadarFactory();
-            graphAssembler = new GraphAssembler(vertexFactory,
+            graphAssembler = new GraphAssemble(vertexFactory,
                 coordinateFactory, graphFactory, costFactory, radarFactory);
         }
 

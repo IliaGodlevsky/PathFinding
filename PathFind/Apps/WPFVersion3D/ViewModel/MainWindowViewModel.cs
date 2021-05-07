@@ -63,7 +63,7 @@ namespace WPFVersion3D.ViewModel
         public MainWindowViewModel(BaseGraphFieldFactory fieldFactory,
             IVertexEventHolder eventHolder,
             IGraphSerializer graphSerializer,
-            IGraphAssembler graphFactory,
+            IGraphAssemble graphFactory,
             IPathInput pathInput,
             IAssembleClasses assembleClasses)
             : base(fieldFactory, eventHolder, graphSerializer,

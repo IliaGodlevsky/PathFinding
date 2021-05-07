@@ -15,7 +15,7 @@ namespace GraphLib.ViewModel
 
         public int ObstaclePercent { get; set; }
 
-        protected GraphCreatingModel(IMainModel model, IGraphAssembler graphFactory)
+        protected GraphCreatingModel(IMainModel model, IGraphAssemble graphFactory)
         {
             this.model = model;
             this.graphFactory = graphFactory;
@@ -43,6 +43,6 @@ namespace GraphLib.ViewModel
         protected virtual int[] GraphParametres => new[] { Width, Length };
 
         protected IMainModel model;
-        protected IGraphAssembler graphFactory;
+        protected IGraphAssemble graphFactory;
     }
 }
