@@ -39,7 +39,7 @@ namespace Plugins.BaseAlgorithmUnitTest
 
         #region Test Methods
 
-        public virtual void FindPath_EndpointsBelongToGraphAndStepRuleIsDefault_ReturnsShortestPath()
+        public virtual void FindPath_EndpointsBelongToGraph_ReturnsShortestPath()
         {
             int expectedLength = GetExpectedLength();
             int expectedCost = GetExpectedCost();

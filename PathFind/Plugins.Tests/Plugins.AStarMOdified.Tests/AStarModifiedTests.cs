@@ -9,9 +9,9 @@ namespace Plugins.AStarMOdified.Tests
     public class AStarModifiedTests : AlgorithmTest
     {
         [Test]
-        public override void FindPath_EndpointsBelongToGraphAndStepRuleIsDefault_ReturnsShortestPath()
+        public override void FindPath_EndpointsBelongToGraph_ReturnsShortestPath()
         {
-            base.FindPath_EndpointsBelongToGraphAndStepRuleIsDefault_ReturnsShortestPath();
+            base.FindPath_EndpointsBelongToGraph_ReturnsShortestPath();
         }
 
         [Test]
