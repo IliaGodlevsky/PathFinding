@@ -29,13 +29,6 @@ namespace Algorithm.Сompanions
             return !visitedVertices.TryGetValue(vertex.Position, out _);
         }
 
-        public IVertex Intersect(VisitedVertices visitedVertices)
-        {
-            return visitedVertices.visitedVertices
-                    .Intersect(this.visitedVertices)
-                    .FirstOrDefault().Value ?? new NullVertex();
-        }
-
         public IEnumerable<IVertex> GetUnvisitedNeighbours(IVertex vertex)
         {
             return vertex.Neighbours.Where(IsNotObstacleAndNotVisited);
