@@ -8,18 +8,6 @@ namespace Plugins.AStarALgorithm.Tests
     [TestFixture]
     public class AStarAlgorithmTests : AlgorithmTest
     {
-        [Test]
-        public override void FindPath_EndpointsBelongToGraph_ReturnsShortestPath()
-        {
-            base.FindPath_EndpointsBelongToGraph_ReturnsShortestPath();
-        }
-
-        [Test]
-        public override void FindPath_EndPointsDoesntBelongToGraph_TrowsArgumentException()
-        {
-            base.FindPath_EndPointsDoesntBelongToGraph_TrowsArgumentException();
-        }
-
         protected override IAlgorithm CreateAlgorithm(IGraph graph, IEndPoints endPoints)
         {
             return new AStarAlgorithm.AStarAlgorithm(graph, endPoints);
