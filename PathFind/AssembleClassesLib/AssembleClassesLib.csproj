@@ -48,6 +48,7 @@
     <Compile Include="Interface\ILoadMethod.cs" />
     <Compile Include="Interface\INotifingAssembleClasses.cs" />
     <Compile Include="Interface\IAssembleSearchOption.cs" />
+    <Compile Include="Realizations\AssembleClassesImpl\NullAssembleClasses.cs" />
     <Compile Include="Realizations\AssembleClassesImpl\OnlyLoadableAssembleClasses.cs" />
     <Compile Include="Realizations\LoadMethods\Load.cs" />
     <Compile Include="Realizations\LoadMethods\LoadFile.cs" />

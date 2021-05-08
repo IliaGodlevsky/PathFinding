@@ -36,26 +36,32 @@ namespace AssembleClassesLib.Realizations
 
         public void LoadClasses()
         {
-            Task.Run(() =>
+            if (!isStarted)
             {
-                while (!token.IsCancellationRequested)
+                token = tokenSource.Token;
+                isStarted = true;
+                Task.Run(() =>
                 {
-                    try
+                    while (!token.IsCancellationRequested)
                     {
-                        assembleClasses.LoadClasses();
-                        ClassesNames = assembleClasses.ClassesNames;
+                        try
+                        {
+                            assembleClasses.LoadClasses();
+                            ClassesNames = assembleClasses.ClassesNames;
+                        }
+                        catch (Exception ex)
+                        {
+                            OnExceptionCaught?.Invoke(ex, string.Empty);
+                        }
                     }
-                    catch (Exception ex)
-                    {
-                        OnExceptionCaught?.Invoke(ex, string.Empty);
-                    }
-                }
-            }, token);
+                }, token);
+            }
         }
 
         public void Interrupt()
         {
             tokenSource.Cancel();
+            isStarted = false;
             var args = new AssembleClassesEventArgs(ClassesNames);
             OnInterrupted?.Invoke(this, args);
         }
@@ -65,6 +71,7 @@ namespace AssembleClassesLib.Realizations
             tokenSource.Cancel();
             tokenSource.Dispose();
             OnInterrupted = null;
+            isStarted = false;
         }
 
         private UpdatableAssembleClasses(IAssembleClasses assembleClasses)
@@ -72,11 +79,12 @@ namespace AssembleClassesLib.Realizations
             this.assembleClasses = assembleClasses;
             ClassesNames = assembleClasses.ClassesNames;
             tokenSource = new CancellationTokenSource();
-            token = tokenSource.Token;
+            isStarted = false;
         }
 
         private readonly IAssembleClasses assembleClasses;
-        private readonly CancellationToken token;
         private readonly CancellationTokenSource tokenSource;
+        private CancellationToken token;
+        private bool isStarted;
     }
 }
