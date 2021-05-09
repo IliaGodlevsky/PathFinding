@@ -1,16 +1,14 @@
 ﻿using GraphLib.Interfaces;
 using Plugins.BaseAlgorithmUnitTest.Objects.TestObjects;
 
-namespace Plugins.BaseAlgorithmUnitTest.Objects.Factories.Matrices
+namespace Plugins.BaseAlgorithmUnitTest.Objects.Factories.Matrix
 {
-    internal abstract class BaseMatrix<T>
+    internal abstract class BaseMatrix<T> : IMatrix
     {
         protected BaseMatrix(IGraph graph)
         {
             this.graph = graph;
         }
-
-        protected abstract void Assign(IVertex vertex, T value);
 
         public void Overlay()
         {
@@ -23,6 +21,8 @@ namespace Plugins.BaseAlgorithmUnitTest.Objects.Factories.Matrices
                 }
             }
         }
+
+        protected abstract void Assign(IVertex vertex, T value);
 
         protected T[,] matrix;
         protected readonly IGraph graph;

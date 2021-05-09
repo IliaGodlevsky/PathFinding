@@ -1,6 +1,6 @@
 ﻿using GraphLib.Interfaces;
 
-namespace Plugins.BaseAlgorithmUnitTest.Objects.Factories.Matrices
+namespace Plugins.BaseAlgorithmUnitTest.Objects.Factories.Matrix
 {
     internal sealed class ObstacleMatrix : BaseMatrix<bool>
     {

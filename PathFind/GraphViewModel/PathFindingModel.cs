@@ -68,6 +68,7 @@ namespace GraphViewModel
             {
                 algorithm.Dispose();
                 endPoints.Reset();
+                OnEventHappened = null;
             }
         }
 

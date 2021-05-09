@@ -45,7 +45,7 @@ namespace Plugins.BaseAlgorithmUnitTest
         {
             int expectedLength = GetExpectedLength();
             int expectedCost = GetExpectedCost();
-            var graph = testAssemble.AssembleGraph();
+            var graph = testAssemble.AssembleGraph(0, Constants.Width, Constants.Length);
             var start = graph.Vertices.First();
             var end = graph.Vertices.Last();
             var endPoints = new TestEndPoints(start, end);
@@ -62,7 +62,7 @@ namespace Plugins.BaseAlgorithmUnitTest
         [Test]
         public void FindPath_EndPointsDoesntBelongToGraph_TrowsArgumentException()
         {
-            var graph = testAssemble.AssembleGraph();
+            var graph = testAssemble.AssembleGraph(0, Constants.Width, Constants.Length);
             var endPoints = new TestEndPoints();
 
             var algorithm = CreateAlgorithm(graph, endPoints);

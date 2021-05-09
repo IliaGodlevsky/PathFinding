@@ -102,6 +102,7 @@ namespace WPFVersion.ViewModel
         private void ExecuteCloseWindowCommand(object param)
         {
             OnWindowClosed?.Invoke(this, EventArgs.Empty);
+            OnWindowClosed = null;
         }
 
         private void ExecuteConfirmPathFindAlgorithmChoice(object param)

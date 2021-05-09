@@ -38,6 +38,10 @@ namespace GraphLib.ViewModel
                 RaiseOnEventHappened(ex.Message);
                 Logger.Instance.Error(ex);
             }
+            finally
+            {
+                OnEventHappened = null;
+            }
         }
 
         protected virtual int[] GraphParametres => new[] { Width, Length };

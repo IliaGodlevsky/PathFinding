@@ -1,7 +1,7 @@
 ﻿using GraphLib.Interfaces;
 using Plugins.BaseAlgorithmUnitTest.Objects.TestObjects;
 
-namespace Plugins.BaseAlgorithmUnitTest.Objects.Factories.Matrices
+namespace Plugins.BaseAlgorithmUnitTest.Objects.Factories.Matrix
 {
     internal sealed class CostMatrix : BaseMatrix<int>
     {

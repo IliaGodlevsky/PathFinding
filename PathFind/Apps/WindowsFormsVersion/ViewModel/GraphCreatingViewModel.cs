@@ -20,11 +20,13 @@ namespace WindowsFormsVersion.ViewModel
         {
             CreateGraph();
             OnWindowClosed?.Invoke(this, EventArgs.Empty);
+            OnWindowClosed = null;
         }
 
         public void CancelCreateGraph(object sender, EventArgs e)
         {
             OnWindowClosed?.Invoke(this, EventArgs.Empty);
+            OnWindowClosed = null;
         }
     }
 }

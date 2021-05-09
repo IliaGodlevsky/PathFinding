@@ -34,11 +34,7 @@ namespace GraphViewModel
         {
             this.eventHolder = eventHolder;
             serializer = graphSerializer;
-            graphSerializer.OnExceptionCaught += (ex, msg) =>
-            {
-                OnExceptionCaught(ex, msg);
-                Logger.Instance.Warn(ex);
-            };
+            graphSerializer.OnExceptionCaught += OnWarnExceptionCaught;
             this.fieldFactory = fieldFactory;
             this.graphAssembler = graphAssembler;
             this.pathInput = pathInput;
@@ -114,11 +110,18 @@ namespace GraphViewModel
         protected abstract void OnExternalEventHappened(string message);
         protected abstract void OnExceptionCaught(Exception ex, string additaionalMessage = "");
 
+        protected void OnWarnExceptionCaught(Exception ex, string additaionalMessage = "")
+        {
+            OnExceptionCaught(ex, additaionalMessage);
+            Logger.Instance.Warn(ex);
+        }
+
         protected readonly IGraphAssemble graphAssembler;
-        protected readonly BaseGraphFieldFactory fieldFactory;
+        protected readonly BaseGraphFieldFactory fieldFactory;       
+        protected readonly IAssembleClasses assembleClasses;
+
         private readonly IVertexEventHolder eventHolder;
         private readonly IGraphSerializer serializer;
         private readonly IPathInput pathInput;
-        protected readonly IAssembleClasses assembleClasses;
     }
 }

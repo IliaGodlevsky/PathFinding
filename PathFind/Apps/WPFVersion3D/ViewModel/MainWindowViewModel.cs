@@ -81,27 +81,22 @@ namespace WPFVersion3D.ViewModel
         public override void FindPath()
         {
             try
-            {
-                assembleClasses.LoadClasses();
+            {               
                 var notifyableAssembleClasses = new NotifingAssembleClasses((AssembleClasses)assembleClasses);
                 var updatableAssembleClasses = new UpdatableAssembleClasses(notifyableAssembleClasses);
+                void Interrupt(object sender, EventArgs e) => updatableAssembleClasses.Interrupt();
                 var viewModel = new PathFindingViewModel(updatableAssembleClasses, this, EndPoints);
                 var window = new PathFindWindow();
                 notifyableAssembleClasses.OnClassesLoaded += viewModel.UpdateAlgorithmKeys;
-                updatableAssembleClasses.OnExceptionCaught += (ex, msg) =>
-                {
-                    OnExceptionCaught(ex, msg);
-                    Logger.Instance.Warn(ex);
-                };
+                updatableAssembleClasses.OnExceptionCaught += OnWarnExceptionCaught;
                 updatableAssembleClasses.LoadClasses();
-                window.Closing += (s, e) => updatableAssembleClasses.Interrupt();
+                window.Closing += Interrupt;
                 viewModel.OnEventHappened += OnExternalEventHappened;
                 PrepareWindow(viewModel, window);
             }
             catch (SystemException ex)
             {
-                OnExceptionCaught(ex);
-                Logger.Instance.Warn(ex);
+                OnWarnExceptionCaught(ex);
             }
             catch (Exception ex)
             {

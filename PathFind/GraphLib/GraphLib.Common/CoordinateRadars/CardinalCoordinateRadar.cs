@@ -12,13 +12,17 @@ namespace GraphLib.Common.CoordinateRadars
             coordinateRadar = new CoordinateAroundRadar(coordinate);
         }
 
-        public IEnumerable<int[]> Environment
-            => environment ?? (environment = coordinateRadar.Environment.Where(IsCardinal));
+        public IEnumerable<int[]> Environment => environment ?? FormEnvironment();
 
         private bool IsCardinal(int[] coordinates)
         {
             bool IsSubNotZero(int i) => coordinates[i] - coordinatesValues[i] != 0;
             return Enumerable.Range(0, coordinates.Length).Count(IsSubNotZero) == 1;
+        }
+
+        private IEnumerable<int[]> FormEnvironment()
+        {
+            return environment = coordinateRadar.Environment.Where(IsCardinal);
         }
 
         private readonly int[] coordinatesValues;

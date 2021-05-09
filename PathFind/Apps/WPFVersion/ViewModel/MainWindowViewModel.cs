@@ -117,22 +117,21 @@ namespace WPFVersion.ViewModel
         {
             try
             {
-                assembleClasses.LoadClasses();
                 var notifingAssembleClasses = new NotifingAssembleClasses((AssembleClasses)assembleClasses);
                 var updatableAssembleClasses = new UpdatableAssembleClasses(notifingAssembleClasses);
+                void Interrupt(object sender, EventArgs e) => updatableAssembleClasses.Interrupt();
                 var viewModel = new PathFindingViewModel(updatableAssembleClasses, this, EndPoints);
                 var window = new PathFindWindow();
                 notifingAssembleClasses.OnClassesLoaded += viewModel.UpdateAlgorithmKeys;
-                updatableAssembleClasses.OnExceptionCaught += OnWarningCaught;
+                updatableAssembleClasses.OnExceptionCaught += OnWarnExceptionCaught;
                 updatableAssembleClasses.LoadClasses();
-                window.Closing += (s, e) => updatableAssembleClasses.Interrupt();
+                window.Closing += Interrupt;
                 viewModel.OnEventHappened += OnExternalEventHappened;
                 PrepareWindow(viewModel, window);
             }
             catch (SystemException ex)
             {
-                OnExceptionCaught(ex);
-                Logger.Instance.Warn(ex);
+                OnWarnExceptionCaught(ex);
             }
             catch (Exception ex)
             {
@@ -210,12 +209,6 @@ namespace WPFVersion.ViewModel
         private void ExecuteCreateNewGraphCommand(object param)
         {
             CreateNewGraph();
-        }
-
-        private void OnWarningCaught(Exception ex, string message)
-        {
-            OnExceptionCaught(ex, message);
-            Logger.Instance.Warn(ex);
         }
 
         private bool CanExecuteGraphOperation(object param)

@@ -46,6 +46,7 @@ namespace WPFVersion3D.ViewModel
         private void ExecuteCloseChangeVertexOpacity(object param)
         {
             OnWindowClosed?.Invoke(this, EventArgs.Empty);
+            OnWindowClosed = null;
         }
     }
 }

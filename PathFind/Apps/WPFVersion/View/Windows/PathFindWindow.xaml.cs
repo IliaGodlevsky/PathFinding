@@ -7,6 +7,7 @@ namespace WPFVersion.View.Windows
     /// </summary>
     public partial class PathFindWindow : Window
     {
+
         public PathFindWindow()
         {
             InitializeComponent();

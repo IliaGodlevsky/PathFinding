@@ -40,6 +40,7 @@ namespace WPFVersion3D.ViewModel
         private void CloseWindow()
         {
             OnWindowClosed?.Invoke(this, EventArgs.Empty);
+            OnWindowClosed = null;
         }
     }
 }
