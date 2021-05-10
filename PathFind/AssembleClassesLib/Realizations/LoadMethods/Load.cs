@@ -3,9 +3,9 @@ using System.Reflection;
 
 namespace AssembleClassesLib.Realizations.LoadMethods
 {
-    public sealed class Load : ILoadMethod
+    public sealed class Load : IAssembleLoadMethod
     {
-        Assembly ILoadMethod.Load(string assemblyPath)
+        Assembly IAssembleLoadMethod.Load(string assemblyPath)
         {
             return Assembly.Load(assemblyPath);
         }

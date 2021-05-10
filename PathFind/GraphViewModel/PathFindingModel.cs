@@ -8,7 +8,6 @@ using AssembleClassesLib.Interface;
 using Common;
 using Common.Extensions;
 using Common.Interface;
-using Common.Logging;
 using GraphLib.Base;
 using GraphLib.Extensions;
 using GraphLib.Interfaces;
@@ -32,7 +31,7 @@ namespace GraphViewModel
 
         public virtual IList<string> AlgorithmKeys { get; set; }
 
-        protected PathFindingModel(IAssembleClasses algorithms,
+        protected PathFindingModel(ILog log, IAssembleClasses algorithms,
             IMainModel mainViewModel, BaseEndPoints endPoints)
         {
             AlgorithmKeys = algorithms.ClassesNames.ToList();
@@ -44,6 +43,7 @@ namespace GraphViewModel
             graph = mainViewModel.Graph;
             assembleClasses = algorithms;
             this.endPoints = endPoints;
+            this.log = log;
         }
 
         public virtual void FindPath()
@@ -62,7 +62,7 @@ namespace GraphViewModel
             catch (Exception ex)
             {
                 RaiseOnEventHappened(ex.Message);
-                Logger.Instance.Error(ex);
+                log.Error(ex);
             }
             finally
             {
@@ -132,7 +132,7 @@ namespace GraphViewModel
         {
             timer.Stop();
             string message = $"Algorithm {AlgorithmKey} was interrupted";
-            Logger.Instance.Info(message);
+            log.Info(message);
             throw new AlgorithmInterruptedException(AlgorithmInterruptedMsg);
         }
 
@@ -142,7 +142,7 @@ namespace GraphViewModel
             {
                 visitedVerticesCount = args.VisitedVertices;
                 string message = $"Algorithm { AlgorithmKey } was finished";
-                Logger.Instance.Info(message);
+                log.Info(message);
             }
 
             timer.Stop();
@@ -159,7 +159,7 @@ namespace GraphViewModel
             else
             {
                 OnEventHappened?.Invoke(PathWasNotFoundMsg);
-                Logger.Instance.Info(PathWasNotFoundMsg);
+                log.Info(PathWasNotFoundMsg);
             }
         }
 
@@ -169,7 +169,7 @@ namespace GraphViewModel
             string message = $"Algorithm {AlgorithmKey} was started. ";
             message += $"Start vertex: {endPoints.Start.GetInforamtion()};";
             message += $"End vertex: {endPoints.End.GetInforamtion()}";
-            Logger.Instance.Info(message);
+            log.Info(message);
             timer.Reset();
             timer.Start();
         }
@@ -177,6 +177,7 @@ namespace GraphViewModel
         protected readonly BaseEndPoints endPoints;
         protected ISuspendable interrupter;
         protected readonly IMainModel mainViewModel;
+        protected readonly ILog log;
         protected IAlgorithm algorithm;
         protected IGraphPath path;
         protected readonly IAssembleClasses assembleClasses;

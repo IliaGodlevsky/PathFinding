@@ -1,4 +1,5 @@
-﻿using ConsoleVersion.View;
+﻿using Common.Interface;
+using ConsoleVersion.View;
 using GraphLib.Exceptions;
 using GraphLib.Interfaces.Factories;
 using GraphLib.Realizations.Graphs;
@@ -18,8 +19,8 @@ namespace ConsoleVersion.ViewModel
 
         public string HeightInputMessage { private get; set; }
 
-        public GraphCreatingViewModel(IMainModel model, IGraphAssemble graphFactory)
-            : base(model, graphFactory)
+        public GraphCreatingViewModel(ILog log, IMainModel model, IGraphAssemble graphFactory)
+            : base(log, model, graphFactory)
         {
 
         }

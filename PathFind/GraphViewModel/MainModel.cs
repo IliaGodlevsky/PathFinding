@@ -1,5 +1,6 @@
 ﻿using AssembleClassesLib.Interface;
 using Common.Extensions;
+using Common.Interface;
 using Common.Logging;
 using GraphLib.Base;
 using GraphLib.Common.NullObjects;
@@ -30,15 +31,17 @@ namespace GraphViewModel
             IGraphSerializer graphSerializer,
             IGraphAssemble graphAssembler,
             IPathInput pathInput,
-            IAssembleClasses assembleClasses)
+            IAssembleClasses assembleClasses,
+            Logs log)
         {
             this.eventHolder = eventHolder;
             serializer = graphSerializer;
-            graphSerializer.OnExceptionCaught += OnWarnExceptionCaught;
+            graphSerializer.OnExceptionCaught += log.Warn;
             this.fieldFactory = fieldFactory;
             this.graphAssembler = graphAssembler;
             this.pathInput = pathInput;
             this.assembleClasses = assembleClasses;
+            this.log = log;
 
             Graph = new NullGraph();
         }
@@ -56,8 +59,7 @@ namespace GraphViewModel
             }
             catch (Exception ex)
             {
-                OnExceptionCaught(ex);
-                Logger.Instance.Warn(ex);
+                log.Warn(ex);
             }
         }
 
@@ -74,8 +76,7 @@ namespace GraphViewModel
             }
             catch (Exception ex)
             {
-                OnExceptionCaught(ex);
-                Logger.Instance.Warn(ex);
+                log.Warn(ex);
             }
         }
 
@@ -108,20 +109,15 @@ namespace GraphViewModel
         }
 
         protected abstract void OnExternalEventHappened(string message);
-        protected abstract void OnExceptionCaught(Exception ex, string additaionalMessage = "");
-
-        protected void OnWarnExceptionCaught(Exception ex, string additaionalMessage = "")
-        {
-            OnExceptionCaught(ex, additaionalMessage);
-            Logger.Instance.Warn(ex);
-        }
 
         protected readonly IGraphAssemble graphAssembler;
-        protected readonly BaseGraphFieldFactory fieldFactory;       
+        protected readonly BaseGraphFieldFactory fieldFactory;
         protected readonly IAssembleClasses assembleClasses;
+        protected readonly ILog log;
 
         private readonly IVertexEventHolder eventHolder;
         private readonly IGraphSerializer serializer;
         private readonly IPathInput pathInput;
+
     }
 }

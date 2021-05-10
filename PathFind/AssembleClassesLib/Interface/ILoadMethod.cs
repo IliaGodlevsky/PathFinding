@@ -2,7 +2,7 @@
 
 namespace AssembleClassesLib.Interface
 {
-    public interface ILoadMethod
+    public interface IAssembleLoadMethod
     {
         Assembly Load(string assemblyPath);
     }

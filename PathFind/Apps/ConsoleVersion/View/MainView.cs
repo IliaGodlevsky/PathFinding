@@ -1,6 +1,7 @@
 ﻿using Common;
 using ConsoleVersion.View.Interface;
 using ConsoleVersion.ViewModel;
+using GraphLib.Extensions;
 using GraphLib.Interfaces;
 using GraphLib.Realizations.Coordinates;
 using GraphLib.Realizations.Graphs;
@@ -29,7 +30,7 @@ namespace ConsoleVersion.View
 
         public static void UpdatePositionOfVisualElements(IGraph graph)
         {
-            if (graph.Vertices.Any() && graph is Graph2D graph2D)
+            if (graph.HasVertices() && graph is Graph2D graph2D)
             {
                 int pathFindingStatisticsOffset = graph2D.Length + HeightOfAbscissaView * 2 + HeightOfGraphParametresView;
                 PathfindingStatisticsPosition = new Coordinate2D(0, pathFindingStatisticsOffset);

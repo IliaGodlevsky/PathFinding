@@ -68,9 +68,10 @@ namespace WindowsFormsVersion.ViewModel
             IGraphSerializer graphSerializer,
             IGraphAssemble graphFactory,
             IPathInput pathInput,
-            IAssembleClasses assembleClasses)
+            IAssembleClasses assembleClasses,
+            Logs log)
             : base(fieldFactory, eventHolder, graphSerializer,
-                  graphFactory, pathInput, assembleClasses)
+                  graphFactory, pathInput, assembleClasses, log)
         {
 
         }
@@ -82,15 +83,14 @@ namespace WindowsFormsVersion.ViewModel
                 try
                 {
                     assembleClasses.LoadClasses();
-                    var model = new PathFindingViewModel(assembleClasses, this, EndPoints);
+                    var model = new PathFindingViewModel(log, assembleClasses, this, EndPoints);
                     model.OnEventHappened += OnExternalEventHappened;
                     var form = new PathFindingWindow(model);
                     PrepareWindow(model, form);
                 }
                 catch (Exception ex)
                 {
-                    OnExceptionCaught(ex);
-                    Logger.Instance.Error(ex);
+                    log.Error(ex);
                 }
             }
         }
@@ -99,15 +99,14 @@ namespace WindowsFormsVersion.ViewModel
         {
             try
             {
-                var model = new GraphCreatingViewModel(this, graphAssembler);
+                var model = new GraphCreatingViewModel(log, this, graphAssembler);
                 var form = new GraphCreatingWindow(model);
                 model.OnEventHappened += OnExternalEventHappened;
                 PrepareWindow(model, form);
             }
             catch (Exception ex)
             {
-                OnExceptionCaught(ex);
-                Logger.Instance.Error(ex);
+                log.Error(ex);
             }
         }
 
@@ -164,11 +163,6 @@ namespace WindowsFormsVersion.ViewModel
         protected override void OnExternalEventHappened(string message)
         {
             MessageBox.Show(message);
-        }
-
-        protected override void OnExceptionCaught(Exception ex, string additaionalMessage = "")
-        {
-            MessageBox.Show(ex.Message + additaionalMessage);
         }
     }
 }

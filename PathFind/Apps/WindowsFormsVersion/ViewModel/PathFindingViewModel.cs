@@ -12,9 +12,9 @@ namespace WindowsFormsVersion.ViewModel
     {
         public event EventHandler OnWindowClosed;
 
-        public PathFindingViewModel(IAssembleClasses pluginsLoader,
+        public PathFindingViewModel(ILog log, IAssembleClasses pluginsLoader,
             IMainModel model, BaseEndPoints endPoints)
-            : base(pluginsLoader, model, endPoints)
+            : base(log, pluginsLoader, model, endPoints)
         {
 
         }

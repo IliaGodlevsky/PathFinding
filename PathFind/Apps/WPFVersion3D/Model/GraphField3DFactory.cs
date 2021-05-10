@@ -1,5 +1,6 @@
 ﻿using Common.Extensions;
 using GraphLib.Base;
+using GraphLib.Extensions;
 using GraphLib.Interfaces;
 using GraphLib.Realizations.Graphs;
 using System;
@@ -12,8 +13,8 @@ namespace WPFVersion3D.Model
         {
             if (graph is Graph3D graph3D)
             {
-                var field = GetField(graph3D.Width, graph3D.Length, graph3D.Height);
-                graph.Vertices.ForEach(field.Add);
+                var field = GetField(graph3D);
+                graph.ForEach(field.Add);
 
                 return field;
             }
@@ -26,9 +27,10 @@ namespace WPFVersion3D.Model
             return new GraphField3D(0, 0, 0);
         }
 
-        private GraphField3D GetField(int width, int length, int height)
+        private GraphField3D GetField(Graph3D graph3D)
         {
-            return new GraphField3D(width, length, height);
+            return new GraphField3D(graph3D.Width,
+                graph3D.Length, graph3D.Height);
         }
     }
 }

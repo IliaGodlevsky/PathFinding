@@ -14,12 +14,12 @@ namespace GraphLib.Extensions
         /// <param name="graph"></param>
         public static void Refresh(this IGraph graph)
         {
-            graph.Vertices.ForEach(vertex => vertex.Refresh());
+            graph.ForEach(vertex => vertex.Refresh());
         }
 
         public static bool AreNeighbours(this IGraph self, IVertex first, IVertex second)
         {
-            bool IsAtSamePosition(IVertex v) => v.Position.IsEqual(first.Position);
+            bool IsAtSamePosition(IVertex vertex) => vertex.Position.IsEqual(first.Position);
             return second.Neighbours.Any(IsAtSamePosition) && self.Contains(first, second);
         }
 
@@ -47,6 +47,17 @@ namespace GraphLib.Extensions
             return !self.Vertices.Any();
         }
 
+        public static bool HasVertices(this IGraph self)
+        {
+            return !self.IsEmpty();
+        }
+
+        public static IGraph ForEach(this IGraph self, Action<IVertex> action)
+        {
+            self.Vertices.ForEach(action);
+            return self;
+        }
+
         public static bool IsEqual(this IGraph self, IGraph graph)
         {
             bool hasEqualDimensionSizes = self.DimensionsSizes.SequenceEqual(graph.DimensionsSizes);
@@ -57,7 +68,7 @@ namespace GraphLib.Extensions
 
         public static void ConnectVertices(this IGraph self)
         {
-            self.Vertices.ForEach(vertex => vertex.SetNeighbours(self));
+            self.ForEach(vertex => vertex.SetNeighbours(self));
         }
 
         public static bool Contains(this IGraph self, params IVertex[] vertices)

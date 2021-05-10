@@ -16,31 +16,14 @@ namespace AssembleClassesLib.Realizations.AssembleClassesImpl
     /// </summary>
     public class AssembleClasses : IAssembleClasses
     {
-        public AssembleClasses(string loadPath, SearchOption searchOption, ILoadMethod loadMethod)
+        public AssembleClasses(IAssembleLoadPath loadPath,
+            IAssembleSearchOption searchOption, IAssembleLoadMethod loadMethod)
         {
             types = new Dictionary<string, Type>();
-            this.loadPath = loadPath;
-            this.searchOption = searchOption;
+            this.loadPath = loadPath.LoadPath;
+            this.searchOption = searchOption.SearchOption;
             this.loadMethod = loadMethod;
             ClassesNames = new string[] { };
-        }
-
-        public AssembleClasses(string loadPath, IAssembleSearchOption searchOption, ILoadMethod loadMethod)
-            : this(loadPath, searchOption.SearchOption, loadMethod)
-        {
-
-        }
-
-        public AssembleClasses(IAssembleLoadPath loadPath, IAssembleSearchOption searchOption, ILoadMethod loadMethod)
-            : this(loadPath.LoadPath, searchOption.SearchOption, loadMethod)
-        {
-
-        }
-
-        public AssembleClasses(IAssembleLoadPath loadPath, SearchOption searchOption, ILoadMethod loadMethod)
-            : this(loadPath.LoadPath, searchOption, loadMethod)
-        {
-
         }
 
         public IReadOnlyCollection<string> ClassesNames { get; protected set; }
@@ -123,7 +106,7 @@ namespace AssembleClassesLib.Realizations.AssembleClassesImpl
         protected Dictionary<string, Type> types;
         private readonly string loadPath;
         private readonly SearchOption searchOption;
-        private readonly ILoadMethod loadMethod;
+        private readonly IAssembleLoadMethod loadMethod;
 
         private const string SearchPattern = "*.dll";
     }

@@ -9,7 +9,7 @@
 
         public void Overlay()
         {
-            foreach(var matrix in matrices)
+            foreach (var matrix in matrices)
             {
                 matrix.Overlay();
             }

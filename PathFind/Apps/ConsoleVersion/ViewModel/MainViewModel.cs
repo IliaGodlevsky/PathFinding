@@ -16,8 +16,6 @@ using GraphLib.Serialization.Interfaces;
 using GraphViewModel;
 using System;
 using System.Drawing;
-using System.IO;
-using System.Linq;
 using static ConsoleVersion.InputClass.Input;
 using Console = Colorful.Console;
 
@@ -27,14 +25,15 @@ namespace ConsoleVersion.ViewModel
     {
         private const int ExitCode = 0;
 
-        public MainViewModel(BaseGraphFieldFactory fieldFactory,
+        public MainViewModel(
+            BaseGraphFieldFactory fieldFactory,
             IVertexEventHolder eventHolder,
             IGraphSerializer graphSerializer,
             IGraphAssemble graphFactory,
             IPathInput pathInput,
-            IAssembleClasses assembleClasses)
-            : base(fieldFactory, eventHolder, graphSerializer,
-                  graphFactory, pathInput, assembleClasses)
+            IAssembleClasses assembleClasses,
+            Logs log)
+            : base(fieldFactory, eventHolder, graphSerializer, graphFactory, pathInput, assembleClasses, log)
         {
 
         }
@@ -50,15 +49,14 @@ namespace ConsoleVersion.ViewModel
         {
             try
             {
-                var model = new GraphCreatingViewModel(this, graphAssembler);
+                var model = new GraphCreatingViewModel(log, this, graphAssembler);
                 model.OnEventHappened += OnExternalEventHappened;
                 var view = new GraphCreateView(model);
                 view.Start();
             }
             catch (Exception ex)
             {
-                OnExceptionCaught(ex);
-                Logger.Instance.Error(ex);
+                log.Error(ex);
             }
         }
 
@@ -68,27 +66,25 @@ namespace ConsoleVersion.ViewModel
             try
             {
                 assembleClasses.LoadClasses();
-                var model = new PathFindingViewModel(assembleClasses, this, EndPoints);
+                var model = new PathFindingViewModel(log, assembleClasses, this, EndPoints);
                 model.OnEventHappened += OnExternalEventHappened;
                 var view = new PathFindView(model);
                 view.Start();
             }
             catch (NoVerticesToChooseAsEndPointsException ex)
             {
-                OnExceptionCaught(ex);
-                Logger.Instance.Warn(ex);
+                log.Warn(ex);
             }
             catch (Exception ex)
             {
-                OnExceptionCaught(ex);
-                Logger.Instance.Error(ex);
+                log.Error(ex);
             }
         }
 
         [MenuItem("Reverse vertex")]
         public void ReverseVertex()
         {
-            if (Graph.Vertices.Any() && Graph is Graph2D graph2D)
+            if (Graph.HasVertices() && Graph is Graph2D graph2D)
             {
                 var upperPossibleXValue = graph2D.Width - 1;
                 var upperPossibleYValue = graph2D.Length - 1;
@@ -113,7 +109,7 @@ namespace ConsoleVersion.ViewModel
         [MenuItem("Change vertex cost", MenuItemPriority.Low)]
         public void ChangeVertexCost()
         {
-            if (Graph.Vertices.Any() && Graph is Graph2D graph2D)
+            if (Graph.HasVertices() && Graph is Graph2D graph2D)
             {
                 var upperPossibleXValue = graph2D.Width - 1;
                 var upperPossibleYValue = graph2D.Length - 1;
@@ -161,14 +157,12 @@ namespace ConsoleVersion.ViewModel
             catch (ArgumentOutOfRangeException ex)
             {
                 Console.Clear();
-                OnExceptionCaught(ex);
-                Logger.Instance.Warn(ex);
+                log.Warn(ex);
             }
             catch (Exception ex)
             {
                 Console.Clear();
-                OnExceptionCaught(ex);
-                Logger.Instance.Error(ex);
+                log.Error(ex);
             }
         }
 
@@ -184,12 +178,6 @@ namespace ConsoleVersion.ViewModel
         {
             DisplayGraph();
             Console.WriteLine(message);
-            Console.ReadLine();
-        }
-
-        protected override void OnExceptionCaught(Exception ex, string additaionalMessage = "")
-        {
-            Console.WriteLine(ex.Message + additaionalMessage);
             Console.ReadLine();
         }
     }

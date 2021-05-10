@@ -1,9 +1,9 @@
 ﻿using Conditional;
+using GraphLib.Extensions;
 using GraphLib.Interfaces;
 using GraphLib.Interfaces.Factories;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 
 namespace GraphLib.Base
 {
@@ -41,12 +41,12 @@ namespace GraphLib.Base
 
         public void UnsubscribeVertices(IGraph graph)
         {
-            graph.Vertices.AsParallel().ForAll(UnsubscribeFromEvents);
+            graph.ForEach(UnsubscribeFromEvents);
         }
 
         public void SubscribeVertices(IGraph graph)
         {
-            graph.Vertices.AsParallel().ForAll(SubscribeToEvents);
+            graph.ForEach(SubscribeToEvents);
         }
 
         protected abstract void UnsubscribeFromEvents(IVertex vertex);

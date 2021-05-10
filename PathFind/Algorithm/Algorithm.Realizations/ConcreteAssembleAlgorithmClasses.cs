@@ -4,7 +4,6 @@ using AssembleClassesLib.Interface;
 using AssembleClassesLib.Realizations.AssembleClassesImpl;
 using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
 
 namespace Algorithm.Realizations
@@ -25,32 +24,11 @@ namespace Algorithm.Realizations
             return base.Get(key, parametres) ?? new NullAlgorithm();
         }
 
-        public ConcreteAssembleAlgorithmClasses(string path, ILoadMethod loadMethod,
-            SearchOption searchOption = SearchOption.AllDirectories)
+        public ConcreteAssembleAlgorithmClasses(IAssembleLoadPath path,
+            IAssembleSearchOption searchOption, IAssembleLoadMethod loadMethod)
             : base(path, searchOption, loadMethod)
         {
             baseType = typeof(IAlgorithm);
-        }
-
-        public ConcreteAssembleAlgorithmClasses(IAssembleLoadPath path, ILoadMethod loadMethod,
-            SearchOption searchOption = SearchOption.AllDirectories)
-            : this(path.LoadPath, loadMethod, searchOption)
-        {
-
-        }
-
-        public ConcreteAssembleAlgorithmClasses(IAssembleLoadPath path, ILoadMethod loadMethod,
-            IAssembleSearchOption searchOption)
-            : this(path.LoadPath, loadMethod, searchOption.SearchOption)
-        {
-
-        }
-
-        public ConcreteAssembleAlgorithmClasses(string path, ILoadMethod loadMethod,
-            IAssembleSearchOption searchOption)
-            : this(path, loadMethod, searchOption.SearchOption)
-        {
-
         }
 
         protected override void LoadClassesFromAssemble()

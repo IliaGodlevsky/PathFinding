@@ -1,4 +1,4 @@
-﻿using Common.Logging;
+﻿using Common.Interface;
 using GraphLib.Interfaces.Factories;
 using GraphViewModel.Interfaces;
 using System;
@@ -15,10 +15,11 @@ namespace GraphLib.ViewModel
 
         public int ObstaclePercent { get; set; }
 
-        protected GraphCreatingModel(IMainModel model, IGraphAssemble graphFactory)
+        protected GraphCreatingModel(ILog log, IMainModel model, IGraphAssemble graphFactory)
         {
             this.model = model;
             this.graphFactory = graphFactory;
+            this.log = log;
         }
 
         protected void RaiseOnEventHappened(string message)
@@ -36,7 +37,7 @@ namespace GraphLib.ViewModel
             catch (Exception ex)
             {
                 RaiseOnEventHappened(ex.Message);
-                Logger.Instance.Error(ex);
+                log.Error(ex);
             }
             finally
             {
@@ -46,7 +47,8 @@ namespace GraphLib.ViewModel
 
         protected virtual int[] GraphParametres => new[] { Width, Length };
 
-        protected IMainModel model;
-        protected IGraphAssemble graphFactory;
+        protected readonly IMainModel model;
+        protected readonly IGraphAssemble graphFactory;
+        protected readonly ILog log;
     }
 }

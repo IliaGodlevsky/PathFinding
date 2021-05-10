@@ -86,7 +86,7 @@ namespace GraphLib.Extensions
                 throw new ArgumentException(message, nameof(graph));
             }
 
-            if (!graph.Vertices.Any())
+            if (graph.IsEmpty())
             {
                 return;
             }

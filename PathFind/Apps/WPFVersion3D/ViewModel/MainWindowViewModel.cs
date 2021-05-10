@@ -65,9 +65,10 @@ namespace WPFVersion3D.ViewModel
             IGraphSerializer graphSerializer,
             IGraphAssemble graphFactory,
             IPathInput pathInput,
-            IAssembleClasses assembleClasses)
+            IAssembleClasses assembleClasses,
+            Logs log)
             : base(fieldFactory, eventHolder, graphSerializer,
-                  graphFactory, pathInput, assembleClasses)
+                  graphFactory, pathInput, assembleClasses, log)
         {
             StartPathFindCommand = new RelayCommand(ExecuteStartPathFindCommand, CanExecuteStartFindPathCommand);
             CreateNewGraphCommand = new RelayCommand(ExecuteCreateNewGraphCommand);
@@ -81,14 +82,14 @@ namespace WPFVersion3D.ViewModel
         public override void FindPath()
         {
             try
-            {               
+            {
                 var notifyableAssembleClasses = new NotifingAssembleClasses((AssembleClasses)assembleClasses);
                 var updatableAssembleClasses = new UpdatableAssembleClasses(notifyableAssembleClasses);
                 void Interrupt(object sender, EventArgs e) => updatableAssembleClasses.Interrupt();
-                var viewModel = new PathFindingViewModel(updatableAssembleClasses, this, EndPoints);
+                var viewModel = new PathFindingViewModel(log, updatableAssembleClasses, this, EndPoints);
                 var window = new PathFindWindow();
                 notifyableAssembleClasses.OnClassesLoaded += viewModel.UpdateAlgorithmKeys;
-                updatableAssembleClasses.OnExceptionCaught += OnWarnExceptionCaught;
+                updatableAssembleClasses.OnExceptionCaught += log.Warn;
                 updatableAssembleClasses.LoadClasses();
                 window.Closing += Interrupt;
                 viewModel.OnEventHappened += OnExternalEventHappened;
@@ -96,12 +97,11 @@ namespace WPFVersion3D.ViewModel
             }
             catch (SystemException ex)
             {
-                OnWarnExceptionCaught(ex);
+                log.Warn(ex);
             }
             catch (Exception ex)
             {
-                OnExceptionCaught(ex);
-                Logger.Instance.Error(ex);
+                log.Error(ex);
             }
         }
 
@@ -109,15 +109,14 @@ namespace WPFVersion3D.ViewModel
         {
             try
             {
-                var model = new GraphCreatingViewModel(this, graphAssembler);
+                var model = new GraphCreatingViewModel(log, this, graphAssembler);
                 var window = new GraphCreateWindow();
                 model.OnEventHappened += OnExternalEventHappened;
                 PrepareWindow(model, window);
             }
             catch (Exception ex)
             {
-                OnExceptionCaught(ex);
-                Logger.Instance.Error(ex);
+                log.Error(ex);
             }
         }
 
@@ -195,11 +194,6 @@ namespace WPFVersion3D.ViewModel
         protected override void OnExternalEventHappened(string message)
         {
             MessageBox.Show(message);
-        }
-
-        protected override void OnExceptionCaught(Exception ex, string additaionalMessage = "")
-        {
-            MessageBox.Show(ex.Message, additaionalMessage);
         }
 
         private bool CanExecuteGraphOperation(object param)

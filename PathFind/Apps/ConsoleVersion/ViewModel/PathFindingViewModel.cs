@@ -1,5 +1,5 @@
 ﻿using AssembleClassesLib.Interface;
-using Common.Logging;
+using Common.Interface;
 using ConsoleVersion.Model;
 using ConsoleVersion.View;
 using GraphLib.Base;
@@ -25,9 +25,9 @@ namespace ConsoleVersion.ViewModel
 
         public string StartVertexInputMessage { private get; set; }
 
-        public PathFindingViewModel(IAssembleClasses pluginsLoader,
+        public PathFindingViewModel(ILog log, IAssembleClasses pluginsLoader,
             IMainModel model, BaseEndPoints endPoints)
-            : base(pluginsLoader, model, endPoints)
+            : base(log, pluginsLoader, model, endPoints)
         {
             maxAlgorithmKeysNumber = pluginsLoader.ClassesNames.Count;
             minAlgorithmKeysNumber = 1;
@@ -57,7 +57,7 @@ namespace ConsoleVersion.ViewModel
                 catch (Exception ex)
                 {
                     RaiseOnEventHappened(ex.Message);
-                    Logger.Instance.Error(ex);
+                    log.Error(ex);
                 }
             }
             else

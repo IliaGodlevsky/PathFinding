@@ -4,18 +4,16 @@ using System;
 
 namespace Common.Logging
 {
-    public sealed class Logger : ILog
+    public sealed class FileLog : ILog
     {
-        public static ILog Instance => instance ?? (instance = new Logger());
-
         public void Trace(string message)
         {
-            Log(message, traceLogger.Trace);
+            Write(message, traceLogger.Trace);
         }
 
         public void Warn(Exception ex, string message = null)
         {
-            Log(ex, message, errorLogger.Warn);
+            Write(ex, message, errorLogger.Warn);
         }
 
         public void Warn(string message)
@@ -25,7 +23,7 @@ namespace Common.Logging
 
         public void Error(Exception ex, string message = null)
         {
-            Log(ex, message, errorLogger.Error);
+            Write(ex, message, errorLogger.Error);
         }
 
         public void Error(string message)
@@ -35,7 +33,7 @@ namespace Common.Logging
 
         public void Fatal(Exception ex, string message = null)
         {
-            Log(ex, message, errorLogger.Fatal);
+            Write(ex, message, errorLogger.Fatal);
         }
 
         public void Fatal(string message)
@@ -45,28 +43,28 @@ namespace Common.Logging
 
         public void Info(string message)
         {
-            Log(message, infoLogger.Info);
+            Write(message, infoLogger.Info);
         }
 
         public void Debug(string message)
         {
 #if DEBUG
-            Log(message, debugLogger.Debug);
+            Write(message, debugLogger.Debug);
 #endif
         }
 
-        private void Log(string message, Action<string> action)
+        private void Write(string message, Action<string> action)
         {
             action(message);
         }
 
-        private void Log(Exception ex, string message,
+        private void Write(Exception ex, string message,
             Action<Exception, string> action)
         {
             action(ex, string.IsNullOrEmpty(message) ? string.Empty : message);
         }
 
-        private Logger()
+        public FileLog()
         {
             infoLogger = LogManager.GetLogger("Info");
             errorLogger = LogManager.GetLogger("Error");
@@ -78,7 +76,5 @@ namespace Common.Logging
         private readonly ILogger debugLogger;
         private readonly ILogger errorLogger;
         private readonly ILogger traceLogger;
-
-        private static ILog instance;
     }
 }

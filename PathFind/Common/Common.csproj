@@ -68,7 +68,9 @@
     <Compile Include="Extensions\EnumerableExtension.cs" />
     <Compile Include="Extensions\StopwatchExtension.cs" />
     <Compile Include="Extensions\TypeExtensions.cs" />
-    <Compile Include="Logging\Logger.cs" />
+    <Compile Include="Logging\Log.cs" />
+    <Compile Include="Logging\Logs.cs" />
+    <Compile Include="Logging\NullLog.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Interrupter.cs" />
     <Compile Include="ValueRange.cs" />

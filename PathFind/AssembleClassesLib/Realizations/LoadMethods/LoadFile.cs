@@ -3,7 +3,7 @@ using System.Reflection;
 
 namespace AssembleClassesLib.Realizations.LoadMethods
 {
-    public sealed class LoadFile : ILoadMethod
+    public sealed class LoadFile : IAssembleLoadMethod
     {
         public Assembly Load(string assemblyPath)
         {

@@ -68,12 +68,9 @@ namespace Common
         /// <summary>
         /// Swaps values if <paramref name="greaterValue"/> 
         /// is lower than <paramref name="lowerValue"/> 
-        /// according to <paramref name="comparer"/>
         /// </summary>
-        /// <typeparam name="TSource"></typeparam>
         /// <param name="greaterValue"></param>
         /// <param name="lowerValue"></param>
-        /// <param name="comparer"></param>
         private void SwapIfLess(ref int greaterValue, ref int lowerValue)
         {
             if (Comparer<int>.Default.Compare(greaterValue, lowerValue) < 0)

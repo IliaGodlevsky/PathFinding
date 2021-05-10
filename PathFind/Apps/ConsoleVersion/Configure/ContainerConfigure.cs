@@ -3,6 +3,8 @@ using AssembleClassesLib.Interface;
 using AssembleClassesLib.Realizations;
 using AssembleClassesLib.Realizations.LoadMethods;
 using Autofac;
+using Common.Interface;
+using Common.Logging;
 using ConsoleVersion.Model;
 using ConsoleVersion.View;
 using ConsoleVersion.View.Interface;
@@ -25,6 +27,9 @@ namespace ConsoleVersion.Configure
         {
             var builder = new ContainerBuilder();
 
+            builder.RegisterType<FileLog>().As<ILog>().SingleInstance();
+            builder.RegisterType<ConsoleLog>().As<ILog>().SingleInstance();
+            builder.RegisterType<Logs>().AsSelf().SingleInstance();
             builder.RegisterType<MainView>().As<IView>().InstancePerLifetimeScope();
             builder.RegisterType<MainViewModel>().As<IMainModel>().InstancePerLifetimeScope().PropertiesAutowired();
             builder.RegisterType<EndPoints>().As<BaseEndPoints>().SingleInstance();
@@ -40,11 +45,10 @@ namespace ConsoleVersion.Configure
             builder.RegisterType<BinaryFormatter>().As<IFormatter>().SingleInstance();
             builder.RegisterType<CoordinateAroundRadarFactory>().As<ICoordinateRadarFactory>().SingleInstance();
             builder.RegisterType<VertexSerializationInfoConverter>().As<IVertexSerializationInfoConverter>().SingleInstance();
-            builder.RegisterType<ConcreteAssembleAlgorithmClasses>().As<IAssembleClasses>().SingleInstance()
-                .UsingConstructor(typeof(IAssembleLoadPath), typeof(ILoadMethod), typeof(IAssembleSearchOption));
+            builder.RegisterType<ConcreteAssembleAlgorithmClasses>().As<IAssembleClasses>().SingleInstance();
             builder.RegisterType<AssembleLoadPath>().As<IAssembleLoadPath>().SingleInstance();
             builder.RegisterType<AllDirectories>().As<IAssembleSearchOption>().SingleInstance();
-            builder.RegisterType<LoadFrom>().As<ILoadMethod>().SingleInstance();
+            builder.RegisterType<LoadFrom>().As<IAssembleLoadMethod>().SingleInstance();
 
             return builder.Build();
         }

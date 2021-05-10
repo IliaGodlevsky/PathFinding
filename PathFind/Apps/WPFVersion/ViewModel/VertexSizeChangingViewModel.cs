@@ -31,7 +31,7 @@ namespace WPFVersion.ViewModel
             ChangeVertexSizeCommand = new RelayCommand(ExecuteChangeVerticesSizeCommand);
             CancelCommand = new RelayCommand(ExecuteCancelCommand);
 
-            if (!Model.Graph.IsEmpty())
+            if (Model.Graph.HasVertices())
             {
                 VerticesSize = GetSampleSizeToChange();
             }
@@ -62,7 +62,7 @@ namespace WPFVersion.ViewModel
 
         private void ExecuteChangeVerticesSizeCommand(object param)
         {
-            Model.Graph.Vertices.ForEach(ChangeSize);
+            Model.Graph.ForEach(ChangeSize);
             Model.GraphField.Clear();
             Model.GraphField = fieldFactory.CreateGraphField(Model.Graph);
             OnWindowClosed?.Invoke(this, EventArgs.Empty);
@@ -71,6 +71,7 @@ namespace WPFVersion.ViewModel
         private void ExecuteCancelCommand(object param)
         {
             OnWindowClosed?.Invoke(this, EventArgs.Empty);
+            OnWindowClosed = null;
         }
 
         private readonly BaseGraphFieldFactory fieldFactory;

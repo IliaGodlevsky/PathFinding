@@ -39,9 +39,9 @@ namespace WPFVersion3D.ViewModel
             }
         }
 
-        public PathFindingViewModel(IAssembleClasses pluginsLoader,
+        public PathFindingViewModel(ILog log, IAssembleClasses pluginsLoader,
             IMainModel model, BaseEndPoints endPoints)
-            : base(pluginsLoader, model, endPoints)
+            : base(log, pluginsLoader, model, endPoints)
         {
             ConfirmPathFindAlgorithmChoice = new RelayCommand(
                 ExecuteConfirmPathFindAlgorithmChoice,

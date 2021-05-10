@@ -28,12 +28,12 @@ namespace GraphLib.Base
 
         public void SubscribeToEvents(IGraph graph)
         {
-            graph.Vertices.ForEach(SubscribeVertex);
+            graph.ForEach(SubscribeVertex);
         }
 
         public void UnsubscribeFromEvents(IGraph graph)
         {
-            graph.Vertices.ForEach(UnsubscribeVertex);
+            graph.ForEach(UnsubscribeVertex);
         }
 
         public void Reset()

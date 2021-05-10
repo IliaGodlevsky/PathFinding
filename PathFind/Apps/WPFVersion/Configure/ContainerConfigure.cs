@@ -3,6 +3,8 @@ using AssembleClassesLib.Interface;
 using AssembleClassesLib.Realizations;
 using AssembleClassesLib.Realizations.LoadMethods;
 using Autofac;
+using Common.Interface;
+using Common.Logging;
 using GraphLib.Base;
 using GraphLib.Interfaces;
 using GraphLib.Interfaces.Factories;
@@ -22,6 +24,9 @@ namespace WPFVersion.Configure
         {
             var builder = new ContainerBuilder();
 
+            builder.RegisterType<FileLog>().As<ILog>().SingleInstance();
+            builder.RegisterType<MessageBoxLog>().As<ILog>().SingleInstance();
+            builder.RegisterType<Logs>().AsSelf().SingleInstance();
             builder.RegisterType<EndPoints>().As<BaseEndPoints>().SingleInstance();
             builder.RegisterType<MainWindowViewModel>().AsSelf().InstancePerLifetimeScope().PropertiesAutowired();
             builder.RegisterType<VertexFactory>().As<IVertexFactory>().SingleInstance();
@@ -36,11 +41,10 @@ namespace WPFVersion.Configure
             builder.RegisterType<BinaryFormatter>().As<IFormatter>().SingleInstance();
             builder.RegisterType<CoordinateAroundRadarFactory>().As<ICoordinateRadarFactory>().SingleInstance();
             builder.RegisterType<VertexSerializationInfoConverter>().As<IVertexSerializationInfoConverter>().SingleInstance();
-            builder.RegisterType<ConcreteAssembleAlgorithmClasses>().As<IAssembleClasses>().SingleInstance()
-                .UsingConstructor(typeof(IAssembleLoadPath), typeof(ILoadMethod), typeof(IAssembleSearchOption));
+            builder.RegisterType<ConcreteAssembleAlgorithmClasses>().As<IAssembleClasses>().SingleInstance();
             builder.RegisterType<AssembleLoadPath>().As<IAssembleLoadPath>().SingleInstance();
             builder.RegisterType<AllDirectories>().As<IAssembleSearchOption>().SingleInstance();
-            builder.RegisterType<LoadFrom>().As<ILoadMethod>().SingleInstance();
+            builder.RegisterType<LoadFrom>().As<IAssembleLoadMethod>().SingleInstance();
 
             return builder.Build();
         }
