@@ -27,10 +27,6 @@ namespace ConsoleVersion.Configure
         {
             var builder = new ContainerBuilder();
 
-            builder.RegisterType<FileLog>().As<ILog>().SingleInstance();
-            builder.RegisterType<ConsoleLog>().As<ILog>().SingleInstance();
-            builder.RegisterType<Logs>().AsSelf().SingleInstance();
-
             builder.RegisterType<MainView>().As<IView>().InstancePerLifetimeScope();
             builder.RegisterType<MainViewModel>().As<IMainModel>().InstancePerLifetimeScope().PropertiesAutowired();
 
@@ -38,6 +34,10 @@ namespace ConsoleVersion.Configure
             builder.RegisterType<PathInput>().As<IPathInput>().SingleInstance();
             builder.RegisterType<VertexEventHolder>().As<IVertexEventHolder>().SingleInstance();
             builder.RegisterType<GraphFieldFactory>().As<BaseGraphFieldFactory>().SingleInstance();
+
+            builder.RegisterType<FileLog>().As<ILog>().SingleInstance();
+            builder.RegisterType<ConsoleLog>().As<ILog>().SingleInstance();
+            builder.RegisterType<Logs>().AsSelf().SingleInstance();
 
             builder.RegisterType<GraphAssemble>().As<IGraphAssemble>().SingleInstance();
             builder.RegisterType<CostFactory>().As<IVertexCostFactory>().SingleInstance();

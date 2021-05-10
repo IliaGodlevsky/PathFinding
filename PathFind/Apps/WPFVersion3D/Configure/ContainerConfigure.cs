@@ -25,16 +25,16 @@ namespace WPFVersion3D.Configure
         {
             var builder = new ContainerBuilder();
 
-            builder.RegisterType<FileLog>().As<ILog>().SingleInstance();
-            builder.RegisterType<MessageBoxLog>().As<ILog>().SingleInstance();
-            builder.RegisterType<Logs>().AsSelf().SingleInstance();
-
             builder.RegisterType<MainWindowViewModel>().AsSelf().InstancePerLifetimeScope().PropertiesAutowired();
 
             builder.RegisterType<EndPoints>().As<BaseEndPoints>().SingleInstance();
             builder.RegisterType<PathInput>().As<IPathInput>().SingleInstance();
             builder.RegisterType<Vertex3DEventHolder>().As<IVertexEventHolder>().SingleInstance();
             builder.RegisterType<GraphField3DFactory>().As<BaseGraphFieldFactory>().SingleInstance();
+
+            builder.RegisterType<FileLog>().As<ILog>().SingleInstance();
+            builder.RegisterType<MessageBoxLog>().As<ILog>().SingleInstance();
+            builder.RegisterType<Logs>().AsSelf().SingleInstance();
 
             builder.RegisterType<GraphAssemble>().As<IGraphAssemble>().SingleInstance();
             builder.RegisterType<Vertex3DFactory>().As<IVertexFactory>().SingleInstance();

@@ -24,16 +24,17 @@ namespace WPFVersion.Configure
         {
             var builder = new ContainerBuilder();
 
-            builder.RegisterType<FileLog>().As<ILog>().SingleInstance();
-            builder.RegisterType<MessageBoxLog>().As<ILog>().SingleInstance();
-            builder.RegisterType<Logs>().AsSelf().SingleInstance();
-
             builder.RegisterType<MainWindowViewModel>().AsSelf().InstancePerLifetimeScope().PropertiesAutowired();
 
             builder.RegisterType<EndPoints>().As<BaseEndPoints>().SingleInstance();
             builder.RegisterType<VertexEventHolder>().As<IVertexEventHolder>().SingleInstance();
             builder.RegisterType<PathInput>().As<IPathInput>().SingleInstance();
             builder.RegisterType<GraphFieldFactory>().As<BaseGraphFieldFactory>().SingleInstance();
+
+            builder.RegisterType<EmailLog>().As<ILog>().SingleInstance();
+            builder.RegisterType<FileLog>().As<ILog>().SingleInstance();
+            builder.RegisterType<MessageBoxLog>().As<ILog>().SingleInstance();
+            builder.RegisterType<Logs>().AsSelf().SingleInstance();
 
             builder.RegisterType<GraphAssemble>().As<IGraphAssemble>().SingleInstance();
             builder.RegisterType<VertexFactory>().As<IVertexFactory>().SingleInstance();

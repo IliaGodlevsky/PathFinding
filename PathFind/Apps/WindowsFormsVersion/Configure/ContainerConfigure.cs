@@ -26,10 +26,6 @@ namespace WindowsFormsVersion.Configure
         {
             var builder = new ContainerBuilder();
 
-            builder.RegisterType<FileLog>().As<ILog>().SingleInstance();
-            builder.RegisterType<MessageBoxLog>().As<ILog>().SingleInstance();
-            builder.RegisterType<Logs>().AsSelf().SingleInstance();
-
             builder.RegisterType<MainWindow>().As<Form>().InstancePerLifetimeScope();
             builder.RegisterType<MainWindowViewModel>().AsSelf().InstancePerLifetimeScope().PropertiesAutowired();
 
@@ -37,6 +33,10 @@ namespace WindowsFormsVersion.Configure
             builder.RegisterType<PathInput>().As<IPathInput>().SingleInstance();
             builder.RegisterType<GraphFieldFactory>().As<BaseGraphFieldFactory>().SingleInstance();
             builder.RegisterType<VertexEventHolder>().As<IVertexEventHolder>().SingleInstance();
+
+            builder.RegisterType<FileLog>().As<ILog>().SingleInstance();
+            builder.RegisterType<MessageBoxLog>().As<ILog>().SingleInstance();
+            builder.RegisterType<Logs>().AsSelf().SingleInstance();
 
             builder.RegisterType<GraphAssemble>().As<IGraphAssemble>().SingleInstance();
             builder.RegisterType<CostFactory>().As<IVertexCostFactory>().SingleInstance();
