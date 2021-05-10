@@ -28,21 +28,26 @@ namespace WPFVersion3D.Configure
             builder.RegisterType<FileLog>().As<ILog>().SingleInstance();
             builder.RegisterType<MessageBoxLog>().As<ILog>().SingleInstance();
             builder.RegisterType<Logs>().AsSelf().SingleInstance();
-            builder.RegisterType<EndPoints>().As<BaseEndPoints>().SingleInstance();
+
             builder.RegisterType<MainWindowViewModel>().AsSelf().InstancePerLifetimeScope().PropertiesAutowired();
+
+            builder.RegisterType<EndPoints>().As<BaseEndPoints>().SingleInstance();
+            builder.RegisterType<PathInput>().As<IPathInput>().SingleInstance();
+            builder.RegisterType<Vertex3DEventHolder>().As<IVertexEventHolder>().SingleInstance();
+            builder.RegisterType<GraphField3DFactory>().As<BaseGraphFieldFactory>().SingleInstance();
+
+            builder.RegisterType<GraphAssemble>().As<IGraphAssemble>().SingleInstance();
             builder.RegisterType<Vertex3DFactory>().As<IVertexFactory>().SingleInstance();
             builder.RegisterType<Vertex3DCostFactory>().As<IVertexCostFactory>().SingleInstance();
             builder.RegisterType<Coordinate3DFactory>().As<ICoordinateFactory>().SingleInstance();
-            builder.RegisterType<PathInput>().As<IPathInput>().SingleInstance();
             builder.RegisterType<Graph3DFactory>().As<IGraphFactory>().SingleInstance();
-            builder.RegisterType<GraphAssemble>().As<IGraphAssemble>().SingleInstance();
-            builder.RegisterType<GraphSerializer>().As<IGraphSerializer>().SingleInstance();
-            builder.RegisterType<Vertex3DEventHolder>().As<IVertexEventHolder>().SingleInstance().PropertiesAutowired();
-            builder.RegisterType<GraphField3DFactory>().As<BaseGraphFieldFactory>().SingleInstance();
-            builder.RegisterType<BinaryFormatter>().As<IFormatter>().SingleInstance();
             builder.RegisterType<CardinalCoordinateAroundRadarFactory>().As<ICoordinateRadarFactory>().SingleInstance();
-            builder.RegisterType<Vertex3DSerializationInfoConverter>().As<IVertexSerializationInfoConverter>().SingleInstance();
             builder.RegisterType<CubicModel3DFactory>().As<IModel3DFactory>().SingleInstance();
+
+            builder.RegisterType<GraphSerializer>().As<IGraphSerializer>().SingleInstance();
+            builder.RegisterType<BinaryFormatter>().As<IFormatter>().SingleInstance();
+            builder.RegisterType<Vertex3DSerializationInfoConverter>().As<IVertexSerializationInfoConverter>().SingleInstance();
+
             builder.RegisterType<ConcreteAssembleAlgorithmClasses>().As<IAssembleClasses>().SingleInstance();
             builder.RegisterType<AssembleLoadPath>().As<IAssembleLoadPath>().SingleInstance();
             builder.RegisterType<AllDirectories>().As<IAssembleSearchOption>().SingleInstance();

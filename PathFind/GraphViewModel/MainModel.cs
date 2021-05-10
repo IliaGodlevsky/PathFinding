@@ -48,17 +48,9 @@ namespace GraphViewModel
         public virtual async void SaveGraph()
         {
             string savePath = pathInput.InputSavePath();
-
-            try
+            using (var stream = new FileStream(savePath, FileMode.OpenOrCreate))
             {
-                using (var stream = new FileStream(savePath, FileMode.OpenOrCreate))
-                {
-                    await serializer.SaveGraphAsync(Graph, stream);
-                }
-            }
-            catch (Exception ex)
-            {
-                log.Warn(ex);
+                await serializer.SaveGraphAsync(Graph, stream);
             }
         }
 

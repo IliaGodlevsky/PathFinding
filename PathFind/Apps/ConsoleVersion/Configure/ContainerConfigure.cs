@@ -30,21 +30,26 @@ namespace ConsoleVersion.Configure
             builder.RegisterType<FileLog>().As<ILog>().SingleInstance();
             builder.RegisterType<ConsoleLog>().As<ILog>().SingleInstance();
             builder.RegisterType<Logs>().AsSelf().SingleInstance();
+
             builder.RegisterType<MainView>().As<IView>().InstancePerLifetimeScope();
             builder.RegisterType<MainViewModel>().As<IMainModel>().InstancePerLifetimeScope().PropertiesAutowired();
+
             builder.RegisterType<EndPoints>().As<BaseEndPoints>().SingleInstance();
+            builder.RegisterType<PathInput>().As<IPathInput>().SingleInstance();
+            builder.RegisterType<VertexEventHolder>().As<IVertexEventHolder>().SingleInstance();
+            builder.RegisterType<GraphFieldFactory>().As<BaseGraphFieldFactory>().SingleInstance();
+
+            builder.RegisterType<GraphAssemble>().As<IGraphAssemble>().SingleInstance();
             builder.RegisterType<CostFactory>().As<IVertexCostFactory>().SingleInstance();
             builder.RegisterType<VertexFactory>().As<IVertexFactory>().SingleInstance();
-            builder.RegisterType<PathInput>().As<IPathInput>().SingleInstance();
             builder.RegisterType<Coordinate2DFactory>().As<ICoordinateFactory>().SingleInstance();
             builder.RegisterType<Graph2DFactory>().As<IGraphFactory>().SingleInstance();
-            builder.RegisterType<GraphAssemble>().As<IGraphAssemble>().SingleInstance();
-            builder.RegisterType<GraphSerializer>().As<IGraphSerializer>().SingleInstance();
-            builder.RegisterType<VertexEventHolder>().As<IVertexEventHolder>().SingleInstance().PropertiesAutowired();
-            builder.RegisterType<GraphFieldFactory>().As<BaseGraphFieldFactory>().SingleInstance();
-            builder.RegisterType<BinaryFormatter>().As<IFormatter>().SingleInstance();
             builder.RegisterType<CoordinateAroundRadarFactory>().As<ICoordinateRadarFactory>().SingleInstance();
+
+            builder.RegisterType<GraphSerializer>().As<IGraphSerializer>().SingleInstance();
+            builder.RegisterType<BinaryFormatter>().As<IFormatter>().SingleInstance();
             builder.RegisterType<VertexSerializationInfoConverter>().As<IVertexSerializationInfoConverter>().SingleInstance();
+
             builder.RegisterType<ConcreteAssembleAlgorithmClasses>().As<IAssembleClasses>().SingleInstance();
             builder.RegisterType<AssembleLoadPath>().As<IAssembleLoadPath>().SingleInstance();
             builder.RegisterType<AllDirectories>().As<IAssembleSearchOption>().SingleInstance();
