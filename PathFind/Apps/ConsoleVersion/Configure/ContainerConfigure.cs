@@ -3,8 +3,6 @@ using AssembleClassesLib.Interface;
 using AssembleClassesLib.Realizations;
 using AssembleClassesLib.Realizations.LoadMethods;
 using Autofac;
-using Common.Interface;
-using Common.Logging;
 using ConsoleVersion.Model;
 using ConsoleVersion.View;
 using ConsoleVersion.View.Interface;
@@ -16,6 +14,8 @@ using GraphLib.Realizations.Factories;
 using GraphLib.Serialization;
 using GraphLib.Serialization.Interfaces;
 using GraphViewModel.Interfaces;
+using Logging;
+using Logging.Interface;
 using System.Runtime.Serialization;
 using System.Runtime.Serialization.Formatters.Binary;
 

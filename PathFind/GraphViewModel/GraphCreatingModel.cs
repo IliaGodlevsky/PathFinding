@@ -1,6 +1,6 @@
-﻿using Common.Interface;
-using GraphLib.Interfaces.Factories;
+﻿using GraphLib.Interfaces.Factories;
 using GraphViewModel.Interfaces;
+using Logging.Interface;
 using System;
 
 namespace GraphLib.ViewModel

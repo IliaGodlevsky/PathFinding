@@ -112,6 +112,10 @@
       <Project>{412839a0-77ff-4b66-85c9-50dc07e8fdb7}</Project>
       <Name>GraphLib.Serialization</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Logging\Logging.csproj">
+      <Project>{37085E09-A2DA-4930-B219-1A3E385C5385}</Project>
+      <Name>Logging</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

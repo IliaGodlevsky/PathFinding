@@ -12,6 +12,7 @@ using GraphLib.Base;
 using GraphLib.Extensions;
 using GraphLib.Interfaces;
 using GraphViewModel.Interfaces;
+using Logging.Interface;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;

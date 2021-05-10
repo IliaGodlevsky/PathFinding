@@ -1,7 +1,6 @@
 ﻿using AssembleClassesLib.Interface;
 using Common.Extensions;
 using Common.Interface;
-using Common.Logging;
 using GraphLib.Base;
 using GraphLib.Extensions;
 using GraphLib.Interfaces;
@@ -9,6 +8,7 @@ using GraphLib.Interfaces.Factories;
 using GraphLib.Realizations.Graphs;
 using GraphLib.Serialization.Interfaces;
 using GraphViewModel;
+using Logging;
 using System;
 using System.ComponentModel;
 using System.Drawing;

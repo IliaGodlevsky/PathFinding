@@ -1,7 +1,5 @@
 ﻿using AssembleClassesLib.Interface;
 using Common.Extensions;
-using Common.Interface;
-using Common.Logging;
 using GraphLib.Base;
 using GraphLib.Common.NullObjects;
 using GraphLib.Extensions;
@@ -9,6 +7,7 @@ using GraphLib.Interfaces;
 using GraphLib.Interfaces.Factories;
 using GraphLib.Serialization.Interfaces;
 using GraphViewModel.Interfaces;
+using Logging.Interface;
 using System;
 using System.IO;
 
@@ -32,7 +31,7 @@ namespace GraphViewModel
             IGraphAssemble graphAssembler,
             IPathInput pathInput,
             IAssembleClasses assembleClasses,
-            Logs log)
+            ILog log)
         {
             this.eventHolder = eventHolder;
             serializer = graphSerializer;

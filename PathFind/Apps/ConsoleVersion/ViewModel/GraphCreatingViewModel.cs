@@ -1,11 +1,10 @@
-﻿using Common.Interface;
-using ConsoleVersion.View;
+﻿using ConsoleVersion.View;
 using GraphLib.Exceptions;
 using GraphLib.Interfaces.Factories;
 using GraphLib.Realizations.Graphs;
 using GraphLib.ViewModel;
 using GraphViewModel.Interfaces;
-
+using Logging.Interface;
 using static ConsoleVersion.Constants;
 using static ConsoleVersion.InputClass.Input;
 

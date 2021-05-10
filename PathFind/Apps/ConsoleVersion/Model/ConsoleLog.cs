@@ -1,4 +1,4 @@
-﻿using Common.Interface;
+﻿using Logging.Interface;
 using System;
 
 namespace ConsoleVersion.Model

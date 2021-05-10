@@ -1,8 +1,8 @@
-﻿using Common.Interface;
+﻿using Logging.Interface;
 using NLog;
 using System;
 
-namespace Common.Logging
+namespace Logging
 {
     public sealed class FileLog : ILog
     {

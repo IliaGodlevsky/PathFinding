@@ -1,6 +1,5 @@
 ﻿using AssembleClassesLib.Interface;
 using Common;
-using Common.Logging;
 using ConsoleVersion.Attributes;
 using ConsoleVersion.Enums;
 using ConsoleVersion.Model;
@@ -14,6 +13,7 @@ using GraphLib.Realizations.Coordinates;
 using GraphLib.Realizations.Graphs;
 using GraphLib.Serialization.Interfaces;
 using GraphViewModel;
+using Logging;
 using System;
 using System.Drawing;
 using static ConsoleVersion.InputClass.Input;

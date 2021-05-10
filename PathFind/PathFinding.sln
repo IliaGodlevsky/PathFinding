@@ -95,11 +95,13 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Algorithm.Common.Tests", "A
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AssembleClassesLib.Tests", "AssembleClassesLib.Tests\AssembleClassesLib.Tests.csproj", "{DB1BDAEC-ED1D-47E5-B67A-A3B59BF0EF52}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Plugins.AStarALgorithm.Tests", "Plugins.Tests\Plugins.AStarAlgorithm.Tests\Plugins.AStarALgorithm.Tests.csproj", "{5EE5AC7B-0104-439F-8182-5EC009A5C6B5}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Plugins.AStarALgorithm.Tests", "Plugins.Tests\Plugins.AStarAlgorithm.Tests\Plugins.AStarALgorithm.Tests.csproj", "{5EE5AC7B-0104-439F-8182-5EC009A5C6B5}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Plugins.BaseAlgorithmUnitTest", "Plugins.Tests\Plugins.BaseAlgorithmUnitTest\Plugins.BaseAlgorithmUnitTest.csproj", "{9CB3C347-6E85-419F-9E3E-67A30584E4CE}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Plugins.BaseAlgorithmUnitTest", "Plugins.Tests\Plugins.BaseAlgorithmUnitTest\Plugins.BaseAlgorithmUnitTest.csproj", "{9CB3C347-6E85-419F-9E3E-67A30584E4CE}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Plugins.AStarMOdified.Tests", "Plugins.Tests\Plugins.AStarMOdified.Tests\Plugins.AStarMOdified.Tests.csproj", "{90525DFC-ABC2-42F0-9879-7D6AE93C72A1}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Plugins.AStarMOdified.Tests", "Plugins.Tests\Plugins.AStarMOdified.Tests\Plugins.AStarMOdified.Tests.csproj", "{90525DFC-ABC2-42F0-9879-7D6AE93C72A1}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Logging", "Logging\Logging.csproj", "{37085E09-A2DA-4930-B219-1A3E385C5385}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -271,6 +273,10 @@ Global
 		{90525DFC-ABC2-42F0-9879-7D6AE93C72A1}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{90525DFC-ABC2-42F0-9879-7D6AE93C72A1}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{90525DFC-ABC2-42F0-9879-7D6AE93C72A1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{37085E09-A2DA-4930-B219-1A3E385C5385}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{37085E09-A2DA-4930-B219-1A3E385C5385}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{37085E09-A2DA-4930-B219-1A3E385C5385}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{37085E09-A2DA-4930-B219-1A3E385C5385}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

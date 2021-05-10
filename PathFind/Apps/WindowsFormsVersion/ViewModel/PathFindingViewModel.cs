@@ -3,6 +3,7 @@ using Common.Interface;
 using GraphLib.Base;
 using GraphViewModel;
 using GraphViewModel.Interfaces;
+using Logging.Interface;
 using System;
 using System.Windows.Forms;
 

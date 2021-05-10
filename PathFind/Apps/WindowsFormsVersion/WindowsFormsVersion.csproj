@@ -178,6 +178,10 @@
       <Project>{16D6E068-2A1C-4903-930F-762681A2802E}</Project>
       <Name>GraphViewModel</Name>
     </ProjectReference>
+    <ProjectReference Include="..\..\Logging\Logging.csproj">
+      <Project>{37085E09-A2DA-4930-B219-1A3E385C5385}</Project>
+      <Name>Logging</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <Content Include="Resources\Images\save.png" />

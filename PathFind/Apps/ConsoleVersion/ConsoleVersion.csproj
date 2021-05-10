@@ -153,6 +153,10 @@
       <Project>{16d6e068-2a1c-4903-930f-762681a2802e}</Project>
       <Name>GraphViewModel</Name>
     </ProjectReference>
+    <ProjectReference Include="..\..\Logging\Logging.csproj">
+      <Project>{37085E09-A2DA-4930-B219-1A3E385C5385}</Project>
+      <Name>Logging</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Autofac">

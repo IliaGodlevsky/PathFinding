@@ -2,6 +2,7 @@
 using GraphLib.Interfaces.Factories;
 using GraphLib.ViewModel;
 using GraphViewModel.Interfaces;
+using Logging.Interface;
 using System;
 
 namespace WindowsFormsVersion.ViewModel

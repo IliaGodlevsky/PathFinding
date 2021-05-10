@@ -1,5 +1,4 @@
 ﻿using AssembleClassesLib.Interface;
-using Common.Interface;
 using ConsoleVersion.Model;
 using ConsoleVersion.View;
 using GraphLib.Base;
@@ -9,6 +8,7 @@ using GraphLib.Realizations.Coordinates;
 using GraphLib.Realizations.Graphs;
 using GraphViewModel;
 using GraphViewModel.Interfaces;
+using Logging.Interface;
 using System;
 using System.Linq;
 using static ConsoleVersion.Constants;
