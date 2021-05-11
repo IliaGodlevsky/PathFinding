@@ -9,7 +9,7 @@ using GraphLib.Interfaces;
 using GraphLib.Interfaces.Factories;
 using GraphLib.Serialization.Interfaces;
 using GraphViewModel;
-using Logging;
+using Logging.Loggers;
 using System;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
@@ -127,7 +127,6 @@ namespace WPFVersion.ViewModel
                 updatableAssembleClasses.OnExceptionCaught += log.Warn;
                 updatableAssembleClasses.LoadClasses();
                 window.Closing += Interrupt;
-                viewModel.OnEventHappened += OnExternalEventHappened;
                 PrepareWindow(viewModel, window);
             }
             catch (SystemException ex)
@@ -146,7 +145,6 @@ namespace WPFVersion.ViewModel
             {
                 var model = new GraphCreatingViewModel(log, this, graphAssembler);
                 var window = new GraphCreatesWindow();
-                model.OnEventHappened += OnExternalEventHappened;
                 PrepareWindow(model, window);
             }
             catch (Exception ex)
@@ -160,11 +158,6 @@ namespace WPFVersion.ViewModel
             var model = new VertexSizeChangingViewModel(this, fieldFactory);
             var window = new VertexSizeChangeWindow();
             PrepareWindow(model, window);
-        }
-
-        protected override void OnExternalEventHappened(string message)
-        {
-            MessageBox.Show(message);
         }
 
         private void PrepareWindow(IViewModel model, Window window)

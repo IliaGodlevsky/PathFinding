@@ -8,7 +8,7 @@ using GraphLib.Interfaces.Factories;
 using GraphLib.Realizations.Graphs;
 using GraphLib.Serialization.Interfaces;
 using GraphViewModel;
-using Logging;
+using Logging.Loggers;
 using System;
 using System.ComponentModel;
 using System.Drawing;
@@ -84,7 +84,6 @@ namespace WindowsFormsVersion.ViewModel
                 {
                     assembleClasses.LoadClasses();
                     var model = new PathFindingViewModel(log, assembleClasses, this, EndPoints);
-                    model.OnEventHappened += OnExternalEventHappened;
                     var form = new PathFindingWindow(model);
                     PrepareWindow(model, form);
                 }
@@ -101,7 +100,6 @@ namespace WindowsFormsVersion.ViewModel
             {
                 var model = new GraphCreatingViewModel(log, this, graphAssembler);
                 var form = new GraphCreatingWindow(model);
-                model.OnEventHappened += OnExternalEventHappened;
                 PrepareWindow(model, form);
             }
             catch (Exception ex)
@@ -158,11 +156,6 @@ namespace WindowsFormsVersion.ViewModel
         private bool CanStartPathFinding()
         {
             return EndPoints.HasEndPointsSet;
-        }
-
-        protected override void OnExternalEventHappened(string message)
-        {
-            MessageBox.Show(message);
         }
     }
 }

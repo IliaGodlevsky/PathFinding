@@ -64,7 +64,6 @@
     <Compile Include="Configure\ContainerConfigure.cs" />
     <Compile Include="Constants.cs" />
     <Compile Include="Enums\MenuItemPriority.cs" />
-    <Compile Include="Model\ConsoleLog.cs" />
     <Compile Include="Model\EndPoints.cs" />
     <Compile Include="Model\GraphFieldFactory.cs" />
     <Compile Include="Model\AssembleLoadPath.cs" />

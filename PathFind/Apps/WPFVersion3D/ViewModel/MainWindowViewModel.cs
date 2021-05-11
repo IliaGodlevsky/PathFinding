@@ -8,7 +8,7 @@ using GraphLib.Interfaces;
 using GraphLib.Interfaces.Factories;
 using GraphLib.Serialization.Interfaces;
 using GraphViewModel;
-using Logging;
+using Logging.Loggers;
 using System;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
@@ -92,7 +92,6 @@ namespace WPFVersion3D.ViewModel
                 updatableAssembleClasses.OnExceptionCaught += log.Warn;
                 updatableAssembleClasses.LoadClasses();
                 window.Closing += Interrupt;
-                viewModel.OnEventHappened += OnExternalEventHappened;
                 PrepareWindow(viewModel, window);
             }
             catch (SystemException ex)
@@ -111,7 +110,6 @@ namespace WPFVersion3D.ViewModel
             {
                 var model = new GraphCreatingViewModel(log, this, graphAssembler);
                 var window = new GraphCreateWindow();
-                model.OnEventHappened += OnExternalEventHappened;
                 PrepareWindow(model, window);
             }
             catch (Exception ex)
@@ -189,11 +187,6 @@ namespace WPFVersion3D.ViewModel
             window.DataContext = model;
             window.WindowStartupLocation = WindowStartupLocation.CenterScreen;
             window.Show();
-        }
-
-        protected override void OnExternalEventHappened(string message)
-        {
-            MessageBox.Show(message);
         }
 
         private bool CanExecuteGraphOperation(object param)

@@ -2,7 +2,7 @@
 using NLog;
 using System;
 
-namespace Logging
+namespace Logging.Loggers
 {
     public sealed class FileLog : ILog
     {

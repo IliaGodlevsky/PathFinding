@@ -9,8 +9,8 @@ using GraphLib.Interfaces.Factories;
 using GraphLib.Realizations.Factories;
 using GraphLib.Serialization;
 using GraphLib.Serialization.Interfaces;
-using Logging;
 using Logging.Interface;
+using Logging.Loggers;
 using System.Runtime.Serialization;
 using System.Runtime.Serialization.Formatters.Binary;
 using WPFVersion.Model;
@@ -31,7 +31,6 @@ namespace WPFVersion.Configure
             builder.RegisterType<PathInput>().As<IPathInput>().SingleInstance();
             builder.RegisterType<GraphFieldFactory>().As<BaseGraphFieldFactory>().SingleInstance();
 
-            builder.RegisterType<EmailLog>().As<ILog>().SingleInstance();
             builder.RegisterType<FileLog>().As<ILog>().SingleInstance();
             builder.RegisterType<MessageBoxLog>().As<ILog>().SingleInstance();
             builder.RegisterType<Logs>().AsSelf().SingleInstance();

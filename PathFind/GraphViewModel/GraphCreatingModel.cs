@@ -7,8 +7,6 @@ namespace GraphLib.ViewModel
 {
     public abstract class GraphCreatingModel : IModel
     {
-        public event Action<string> OnEventHappened;
-
         public int Width { get; set; }
 
         public int Length { get; set; }
@@ -22,11 +20,6 @@ namespace GraphLib.ViewModel
             this.log = log;
         }
 
-        protected void RaiseOnEventHappened(string message)
-        {
-            OnEventHappened?.Invoke(message);
-        }
-
         public virtual void CreateGraph()
         {
             try
@@ -36,12 +29,7 @@ namespace GraphLib.ViewModel
             }
             catch (Exception ex)
             {
-                RaiseOnEventHappened(ex.Message);
                 log.Error(ex);
-            }
-            finally
-            {
-                OnEventHappened = null;
             }
         }
 

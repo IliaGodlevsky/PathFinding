@@ -56,7 +56,6 @@ namespace ConsoleVersion.ViewModel
                 }
                 catch (Exception ex)
                 {
-                    RaiseOnEventHappened(ex.Message);
                     log.Error(ex);
                 }
             }

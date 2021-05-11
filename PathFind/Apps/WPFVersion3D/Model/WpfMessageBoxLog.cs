@@ -4,7 +4,7 @@ using System.Windows;
 
 namespace WPFVersion3D.Model
 {
-    internal sealed class MessageBoxLog : ILog
+    internal sealed class WpfMessageBoxLog : ILog
     {
         public void Debug(string message)
         {
@@ -43,7 +43,7 @@ namespace WPFVersion3D.Model
 
         public void Warn(Exception ex, string message = null)
         {
-            MessageBox.Show(ex.Message + "\n" + message);
+            System.Windows.Forms.MessageBox.Show(ex.Message + "\n" + message);
         }
 
         public void Warn(string message)

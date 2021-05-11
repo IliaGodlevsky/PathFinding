@@ -24,8 +24,6 @@ namespace GraphViewModel
 {
     public abstract class PathFindingModel : IModel
     {
-        public event Action<string> OnEventHappened;
-
         public int DelayTime { get; set; }
 
         public string AlgorithmKey { get; set; }
@@ -58,18 +56,16 @@ namespace GraphViewModel
             }
             catch (AlgorithmInterruptedException ex)
             {
-                RaiseOnEventHappened(ex.Message);
+                log.Warn(ex);
             }
             catch (Exception ex)
             {
-                RaiseOnEventHappened(ex.Message);
                 log.Error(ex);
             }
             finally
             {
                 algorithm.Dispose();
                 endPoints.Reset();
-                OnEventHappened = null;
             }
         }
 
@@ -90,11 +86,6 @@ namespace GraphViewModel
             {
                 AlgorithmKeys = AlgorithmKeys.OrderBy(key => key).ToList();
             }
-        }
-
-        protected void RaiseOnEventHappened(string message)
-        {
-            OnEventHappened?.Invoke(message);
         }
 
         protected abstract void ColorizeProcessedVertices();
@@ -159,8 +150,7 @@ namespace GraphViewModel
             }
             else
             {
-                OnEventHappened?.Invoke(PathWasNotFoundMsg);
-                log.Info(PathWasNotFoundMsg);
+                log.Warn(PathWasNotFoundMsg);
             }
         }
 

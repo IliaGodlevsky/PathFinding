@@ -1,7 +1,7 @@
 ﻿using Logging.Interface;
 using System;
 
-namespace Logging
+namespace Logging.Loggers
 {
     public sealed class Logs : ILog
     {

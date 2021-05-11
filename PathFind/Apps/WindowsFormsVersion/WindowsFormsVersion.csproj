@@ -63,7 +63,6 @@
     <Compile Include="Model\EndPoints.cs" />
     <Compile Include="Model\GraphFieldFactory.cs" />
     <Compile Include="Model\AssembleLoadPath.cs" />
-    <Compile Include="Model\MessageBoxLog.cs" />
     <Compile Include="Model\PathInput.cs" />
     <Compile Include="Model\VertexFactory.cs" />
     <Compile Include="Model\VertexSerializationInfoConverter.cs" />

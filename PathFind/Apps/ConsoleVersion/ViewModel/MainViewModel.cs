@@ -9,11 +9,10 @@ using GraphLib.Exceptions;
 using GraphLib.Extensions;
 using GraphLib.Interfaces;
 using GraphLib.Interfaces.Factories;
-using GraphLib.Realizations.Coordinates;
 using GraphLib.Realizations.Graphs;
 using GraphLib.Serialization.Interfaces;
 using GraphViewModel;
-using Logging;
+using Logging.Loggers;
 using System;
 using System.Drawing;
 using static ConsoleVersion.InputClass.Input;
@@ -33,7 +32,8 @@ namespace ConsoleVersion.ViewModel
             IPathInput pathInput,
             IAssembleClasses assembleClasses,
             Logs log)
-            : base(fieldFactory, eventHolder, graphSerializer, graphFactory, pathInput, assembleClasses, log)
+            : base(fieldFactory, eventHolder, graphSerializer, 
+                  graphFactory, pathInput, assembleClasses, log)
         {
 
         }
@@ -50,7 +50,6 @@ namespace ConsoleVersion.ViewModel
             try
             {
                 var model = new GraphCreatingViewModel(log, this, graphAssembler);
-                model.OnEventHappened += OnExternalEventHappened;
                 var view = new GraphCreateView(model);
                 view.Start();
             }
@@ -67,7 +66,6 @@ namespace ConsoleVersion.ViewModel
             {
                 assembleClasses.LoadClasses();
                 var model = new PathFindingViewModel(log, assembleClasses, this, EndPoints);
-                model.OnEventHappened += OnExternalEventHappened;
                 var view = new PathFindView(model);
                 view.Start();
             }
@@ -148,7 +146,8 @@ namespace ConsoleVersion.ViewModel
             {
                 Console.Clear();
                 DisplayMainScreen();
-                if (MainView.PathfindingStatisticsPosition is Coordinate2D position)
+                var position = MainView.PathfindingStatisticsPosition;
+                if (position != null)
                 {
                     Console.SetCursorPosition(position.X, position.Y + 1);
                 }
@@ -172,13 +171,6 @@ namespace ConsoleVersion.ViewModel
             Console.WriteLine(GraphParametres);
             (GraphField as GraphField)?.ShowGraphWithFrames();
             Console.WriteLine(PathFindingStatistics);
-        }
-
-        protected override void OnExternalEventHappened(string message)
-        {
-            DisplayGraph();
-            Console.WriteLine(message);
-            Console.ReadLine();
         }
     }
 }

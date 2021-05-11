@@ -99,8 +99,6 @@ namespace GraphViewModel
             }
         }
 
-        protected abstract void OnExternalEventHappened(string message);
-
         protected readonly IGraphAssemble graphAssembler;
         protected readonly BaseGraphFieldFactory fieldFactory;
         protected readonly IAssembleClasses assembleClasses;
@@ -109,6 +107,5 @@ namespace GraphViewModel
         private readonly IVertexEventHolder eventHolder;
         private readonly IGraphSerializer serializer;
         private readonly IPathInput pathInput;
-
     }
 }

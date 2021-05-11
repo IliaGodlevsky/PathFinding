@@ -14,8 +14,8 @@ using GraphLib.Realizations.Factories;
 using GraphLib.Serialization;
 using GraphLib.Serialization.Interfaces;
 using GraphViewModel.Interfaces;
-using Logging;
 using Logging.Interface;
+using Logging.Loggers;
 using System.Runtime.Serialization;
 using System.Runtime.Serialization.Formatters.Binary;
 
