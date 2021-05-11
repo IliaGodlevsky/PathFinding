@@ -2,7 +2,7 @@
 
 namespace WPFVersion3D
 {
-    public static class Constants
+    internal static class Constants
     {
         public static ValueRange ObstaclePercentValueRange { get; }
         public static ValueRange AlgorithmDelayValueRange { get; }
@@ -10,7 +10,7 @@ namespace WPFVersion3D
         public static ValueRange GraphLengthValueRange { get; }
         public static ValueRange GraphHeightValueRange { get; }
 
-        public const double InitialRotationAnimationDuration = 3000; // milliseconds
+        public const double InitialRotationAnimationDuration = 3000;
 
         public const int InitialVertexSize = 5;
 
