@@ -2,7 +2,7 @@
 
 namespace ConsoleVersion
 {
-    public static class Constants
+    internal static class Constants
     {
         public static ValueRange GraphWidthValueRange { get; }
         public static ValueRange GraphLengthValueRange { get; }
