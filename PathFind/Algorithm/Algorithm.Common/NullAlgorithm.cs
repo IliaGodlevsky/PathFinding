@@ -2,7 +2,7 @@
 using Algorithm.Infrastructure.Handlers;
 using Algorithm.Interfaces;
 using AssembleClassesLib.Attributes;
-using Common.Attributes;
+using NullObject.Attributes;
 using System;
 
 namespace Algorithm.Common

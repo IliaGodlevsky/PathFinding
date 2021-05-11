@@ -14,6 +14,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\Algorithm\Algorithm.Common\Algorithm.Common.csproj" />
+    <ProjectReference Include="..\..\NullObject\NullObject.csproj" />
   </ItemGroup>
 
 </Project>

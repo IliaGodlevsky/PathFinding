@@ -1,4 +1,4 @@
-using Common.Extensions;
+using NullObject.Extensions;
 using NUnit.Framework;
 
 namespace Algorithm.Common.Tests

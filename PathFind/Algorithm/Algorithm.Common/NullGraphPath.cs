@@ -1,7 +1,7 @@
 ﻿using Algorithm.Interfaces;
-using Common.Attributes;
 using GraphLib.Common.NullObjects;
 using GraphLib.Interfaces;
+using NullObject.Attributes;
 using System.Collections.Generic;
 
 namespace Algorithm.Common

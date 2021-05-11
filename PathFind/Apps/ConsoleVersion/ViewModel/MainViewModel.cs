@@ -32,7 +32,7 @@ namespace ConsoleVersion.ViewModel
             IPathInput pathInput,
             IAssembleClasses assembleClasses,
             Logs log)
-            : base(fieldFactory, eventHolder, graphSerializer, 
+            : base(fieldFactory, eventHolder, graphSerializer,
                   graphFactory, pathInput, assembleClasses, log)
         {
 

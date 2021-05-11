@@ -1,5 +1,5 @@
-﻿using Common.Extensions;
-using GraphLib.Interfaces;
+﻿using GraphLib.Interfaces;
+using NullObject.Extensions;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;

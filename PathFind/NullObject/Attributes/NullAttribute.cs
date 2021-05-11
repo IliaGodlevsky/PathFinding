@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Common.Attributes
+namespace NullObject.Attributes
 {
     /// <summary>
     /// Indicates, that the class is used as an optional 

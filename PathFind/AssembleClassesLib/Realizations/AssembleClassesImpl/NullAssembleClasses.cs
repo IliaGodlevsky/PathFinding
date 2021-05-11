@@ -1,5 +1,5 @@
 ﻿using AssembleClassesLib.Interface;
-using Common.Attributes;
+using NullObject.Attributes;
 using System.Collections.Generic;
 
 namespace AssembleClassesLib.Realizations.AssembleClassesImpl

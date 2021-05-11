@@ -1,5 +1,5 @@
-﻿using Common.Attributes;
-using GraphLib.Interfaces;
+﻿using GraphLib.Interfaces;
+using NullObject.Attributes;
 using System;
 using System.Collections.Generic;
 

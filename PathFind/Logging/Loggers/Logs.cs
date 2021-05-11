@@ -10,6 +10,11 @@ namespace Logging.Loggers
             this.logs = logs;
         }
 
+        public Logs() : this(new NullLog())
+        {
+
+        }
+
         public void Debug(string message)
         {
             foreach (var log in logs)

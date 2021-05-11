@@ -41,7 +41,7 @@ namespace Plugins.BaseAlgorithmUnitTest
         #region Test Methods
 
         [Test]
-        public void FindPath_EndpointsBelongToGraph_ReturnsShortestPath()
+        public virtual void FindPath_EndpointsBelongToGraph_ReturnsShortestPath()
         {
             int expectedLength = GetExpectedLength();
             int expectedCost = GetExpectedCost();
@@ -60,7 +60,7 @@ namespace Plugins.BaseAlgorithmUnitTest
         }
 
         [Test]
-        public void FindPath_EndPointsDoesntBelongToGraph_TrowsArgumentException()
+        public virtual void FindPath_EndPointsDoesntBelongToGraph_TrowsArgumentException()
         {
             var graph = testAssemble.AssembleGraph(0, Constants.Width, Constants.Length);
             var endPoints = new TestEndPoints();

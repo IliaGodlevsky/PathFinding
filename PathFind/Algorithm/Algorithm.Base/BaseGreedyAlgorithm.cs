@@ -3,6 +3,7 @@ using Algorithm.Interfaces;
 using Algorithm.Realizations.GraphPaths;
 using Common.Extensions;
 using GraphLib.Interfaces;
+using NullObject.Extensions;
 using System.Collections.Generic;
 using System.Linq;
 

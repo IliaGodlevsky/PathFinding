@@ -3,6 +3,7 @@ using Conditional;
 using GraphLib.Common.NullObjects;
 using GraphLib.Extensions;
 using GraphLib.Interfaces;
+using NullObject.Extensions;
 using System;
 
 namespace GraphLib.Base

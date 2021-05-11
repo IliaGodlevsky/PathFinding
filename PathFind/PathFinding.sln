@@ -103,6 +103,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Plugins.AStarMOdified.Tests
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Logging", "Logging\Logging.csproj", "{37085E09-A2DA-4930-B219-1A3E385C5385}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NullObject", "NullObject\NullObject.csproj", "{51D677FD-7A82-4282-8A2E-51DEBE39E695}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -277,6 +279,10 @@ Global
 		{37085E09-A2DA-4930-B219-1A3E385C5385}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{37085E09-A2DA-4930-B219-1A3E385C5385}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{37085E09-A2DA-4930-B219-1A3E385C5385}.Release|Any CPU.Build.0 = Release|Any CPU
+		{51D677FD-7A82-4282-8A2E-51DEBE39E695}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{51D677FD-7A82-4282-8A2E-51DEBE39E695}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{51D677FD-7A82-4282-8A2E-51DEBE39E695}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{51D677FD-7A82-4282-8A2E-51DEBE39E695}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

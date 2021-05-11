@@ -2,9 +2,9 @@
 using Algorithm.Infrastructure.Handlers;
 using Algorithm.Interfaces;
 using Algorithm.Сompanions;
-using Common.Extensions;
 using GraphLib.Extensions;
 using GraphLib.Interfaces;
+using NullObject.Extensions;
 using System;
 
 namespace Algorithm.Base

@@ -1,8 +1,10 @@
 ﻿using Logging.Interface;
+using NullObject.Attributes;
 using System;
 
-namespace Logging
+namespace Logging.Loggers
 {
+    [Null]
     public sealed class NullLog : ILog
     {
         public void Debug(string message)

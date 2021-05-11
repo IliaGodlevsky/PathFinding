@@ -10,8 +10,15 @@ namespace Plugins.DijkstraAlgorithm.Tests
     [TestFixture]
     public class DijkstraAlgorithmTest : AlgorithmTest
     {
-        #region Test Methods
+        private const int DijkstraAlgorithmTimeoutToFinishPathfinding = 2100;
 
+        #region Test Methods
+        [Test]
+        [Timeout(DijkstraAlgorithmTimeoutToFinishPathfinding)]
+        public override void FindPath_EndpointsBelongToGraph_ReturnsShortestPath()
+        {
+            base.FindPath_EndpointsBelongToGraph_ReturnsShortestPath();
+        }
         protected override IAlgorithm CreateAlgorithm(IGraph graph, IEndPoints endPoints)
         {
             return new DijkstrasAlgorithm(graph, endPoints);
@@ -26,7 +33,6 @@ namespace Plugins.DijkstraAlgorithm.Tests
         {
             return 91;
         }
-
         #endregion
     }
 }

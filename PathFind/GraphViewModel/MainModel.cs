@@ -1,5 +1,4 @@
 ﻿using AssembleClassesLib.Interface;
-using Common.Extensions;
 using GraphLib.Base;
 using GraphLib.Common.NullObjects;
 using GraphLib.Extensions;
@@ -8,6 +7,7 @@ using GraphLib.Interfaces.Factories;
 using GraphLib.Serialization.Interfaces;
 using GraphViewModel.Interfaces;
 using Logging.Interface;
+using NullObject.Extensions;
 using System;
 using System.IO;
 
