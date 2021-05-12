@@ -18,7 +18,7 @@ namespace Algorithm.Realizations.Heuristic
 
             if (first.Position == null || second.Position == null)
             {
-                throw new ArgumentException("Vertex coordinate was set to null");
+                throw new ArgumentException("Vertex coordinate was null");
             }
 
             if (first.Position.CoordinatesValues.Count() != second.Position.CoordinatesValues.Count())

@@ -94,7 +94,7 @@ namespace AssembleClassesLib.Realizations.AssembleClassesImpl
 
         private string ClassName(Type type)
         {
-            var attribute = type.GetAttribute<ClassNameAttribute>();
+            var attribute = type.GetAttributeOrNull<ClassNameAttribute>();
             return attribute?.Name ?? type.FullName;
         }
 

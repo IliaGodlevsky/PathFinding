@@ -7,7 +7,12 @@ namespace NullObject.Extensions
     {
         public static bool IsNullObject(this object self)
         {
-            return self.GetType().GetAttribute<NullAttribute>() != null;
+            if (self == null)
+            {
+                return true;
+            }
+
+            return self.GetType().GetAttributeOrNull<NullAttribute>() != null;
         }
     }
 }

@@ -28,8 +28,14 @@ namespace Conditional
         /// <returns></returns>
         /// <exception cref="InvalidOperationException">thrown 
         /// when add 'else if' statement after else construction</exception>
+        /// <exception cref="ArgumentNullException"/>
         public If<T> ElseIf(Predicate<T> condition, Action<T> body)
         {
+            if (body == null)
+            {
+                throw new ArgumentNullException(nameof(body));
+            }
+
             if (!hasElseConstruction)
             {
                 conditionConstructions.Add(new ConditionConstruction<T>(body, condition));
@@ -47,16 +53,12 @@ namespace Conditional
         /// <returns></returns>
         /// <exception cref="InvalidOperationException">thrown 
         /// when 'else' statement adding after else statement</exception>
+        /// /// <exception cref="ArgumentNullException"/>
         public If<T> Else(Action<T> body)
         {
-            if (!hasElseConstruction)
-            {
-                var temp = ElseIf(null, body);
-                hasElseConstruction = true;
-                return temp;
-            }
-
-            throw new InvalidOperationException(ExceptionMessage);
+            var temp = ElseIf(null, body);
+            hasElseConstruction = true;
+            return temp;
         }
 
         /// <summary>
@@ -67,24 +69,17 @@ namespace Conditional
         /// <param name="walkCondition"></param>
         public void Walk(T parametre, Predicate<T> walkCondition = null)
         {
-            if (parametre != null)
+            if (walkCondition == null 
+                || walkCondition?.Invoke(parametre) == true)
             {
                 bool IsCondition(ConditionConstruction<T> condition)
                 {
                     return condition.IsCondition(parametre) == true;
                 }
 
-                void Execute(T param)
-                {
-                    conditionConstructions.FirstOrDefault(IsCondition)?.ExecuteBody(param);
-                }
-
-                var conditionConstruction = new ConditionConstruction<T>(Execute, walkCondition);
-
-                if (IsCondition(conditionConstruction))
-                {
-                    conditionConstruction.ExecuteBody(parametre);
-                }
+                conditionConstructions
+                    .FirstOrDefault(IsCondition)
+                    ?.ExecuteBody(parametre);
             }
         }
 

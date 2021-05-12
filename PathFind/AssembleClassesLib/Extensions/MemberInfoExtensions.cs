@@ -8,12 +8,12 @@ namespace AssembleClassesLib.Extensions
     {
         public static bool IsNotLoadable(this MemberInfo self)
         {
-            return self.GetAttribute<NotLoadableAttribute>() != null;
+            return self.GetAttributeOrNull<NotLoadableAttribute>() != null;
         }
 
         public static bool IsLoadable(this MemberInfo self)
         {
-            return self.GetAttribute<LoadableAttribute>() != null;
+            return self.GetAttributeOrNull<LoadableAttribute>() != null;
         }
     }
 }

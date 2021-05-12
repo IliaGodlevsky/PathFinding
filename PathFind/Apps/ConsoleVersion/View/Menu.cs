@@ -100,13 +100,13 @@ namespace ConsoleVersion.View
 
         private static MenuItemPriority GetMenuItemPriority(MethodInfo method)
         {
-            var attribute = method.GetAttribute<MenuItemAttribute>();
+            var attribute = method.GetAttributeOrNull<MenuItemAttribute>();
             return attribute.Priority;
         }
 
         private static string GetMenuItemHeader(MethodInfo method)
         {
-            var attribute = method.GetAttribute<MenuItemAttribute>();
+            var attribute = method.GetAttributeOrNull<MenuItemAttribute>();
             return attribute.Header;
         }
 

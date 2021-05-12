@@ -13,7 +13,7 @@ namespace Common.Extensions
         /// <param name="inherit"></param>
         /// <returns>Attribute of type <typeparamref name="TAttribute"/> 
         /// if it exists and <see cref="null"/> if it doesn't</returns>
-        public static TAttribute GetAttribute<TAttribute>(this MemberInfo self, bool inherit = false)
+        public static TAttribute GetAttributeOrNull<TAttribute>(this MemberInfo self, bool inherit = false)
             where TAttribute : Attribute
         {
             return (TAttribute)Attribute.GetCustomAttribute(self, typeof(TAttribute), inherit);

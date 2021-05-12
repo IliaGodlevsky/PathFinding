@@ -8,6 +8,7 @@ namespace Algorithm.Realizations.Heuristic
     public sealed class EuclidianDistance : BaseHeuristic, IHeuristic
     {
         private const int Precision = 1;
+        private const double Power = 2;
 
         protected override double Aggregate(IEnumerable<double> collection)
         {
@@ -16,7 +17,7 @@ namespace Algorithm.Realizations.Heuristic
 
         protected override double ZipMethod(int first, int second)
         {
-            return Math.Pow(first - second, 2);
+            return Math.Pow(first - second, Power);
         }
     }
 }
