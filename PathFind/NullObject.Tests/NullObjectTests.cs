@@ -4,7 +4,7 @@ using NUnit.Framework;
 
 namespace NullObject.Tests
 {
-    
+
     class NotNullObject
     {
 

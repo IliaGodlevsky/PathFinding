@@ -55,7 +55,7 @@ namespace Plugins.DijkstraALgorithm
             base.PrepareForPathfinding();
             accumulatedCosts =
                 new AccumulatedCostsWithExcept(
-                    new AccumulatedCosts(graph, double.PositiveInfinity), endPoints.Start);
+                    new AccumulatedCosts(graph, double.PositiveInfinity), endPoints.Source);
         }
 
         #region Relaxing

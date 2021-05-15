@@ -1,5 +1,5 @@
-﻿using Common.Interface;
-using GraphLib.Interfaces.Factories;
+﻿using AssembleClassesLib.Interface;
+using Common.Interface;
 using GraphLib.ViewModel;
 using GraphViewModel.Interfaces;
 using Logging.Interface;
@@ -11,23 +11,32 @@ namespace WindowsFormsVersion.ViewModel
     {
         public event EventHandler OnWindowClosed;
 
-        public GraphCreatingViewModel(ILog log, IMainModel model, IGraphAssemble graphFactory)
-            : base(log, model, graphFactory)
+        public GraphCreatingViewModel(ILog log, IMainModel model,
+            IAssembleClasses graphFactories)
+            : base(log, model, graphFactories)
         {
 
         }
 
         public void CreateGraph(object sender, EventArgs e)
         {
-            CreateGraph();
-            OnWindowClosed?.Invoke(this, EventArgs.Empty);
-            OnWindowClosed = null;
+            if (CanExecuteConfirmGraphAssembleChoice())
+            {
+                CreateGraph();
+                OnWindowClosed?.Invoke(this, EventArgs.Empty);
+                OnWindowClosed = null;
+            }
         }
 
         public void CancelCreateGraph(object sender, EventArgs e)
         {
             OnWindowClosed?.Invoke(this, EventArgs.Empty);
             OnWindowClosed = null;
+        }
+
+        private bool CanExecuteConfirmGraphAssembleChoice()
+        {
+            return GraphAssembleKeys.Contains(GraphAssembleKey);
         }
     }
 }

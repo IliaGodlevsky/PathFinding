@@ -1,5 +1,5 @@
-﻿using Common.Interface;
-using GraphLib.Interfaces.Factories;
+﻿using AssembleClassesLib.Interface;
+using Common.Interface;
 using GraphLib.ViewModel;
 using GraphViewModel.Interfaces;
 using Logging.Interface;
@@ -19,10 +19,11 @@ namespace WPFVersion3D.ViewModel
         public ICommand ConfirmCreateGraphCommand { get; }
         public ICommand CancelCreateGraphCommand { get; }
 
-        public GraphCreatingViewModel(ILog log, IMainModel model, IGraphAssemble graphFactory)
-            : base(log, model, graphFactory)
+        public GraphCreatingViewModel(ILog log, IMainModel model, IAssembleClasses graphFactories)
+            : base(log, model, graphFactories)
         {
-            ConfirmCreateGraphCommand = new RelayCommand(ExecuteConfirmCreateGraphCommand);
+            ConfirmCreateGraphCommand = new RelayCommand(ExecuteConfirmCreateGraphCommand,
+                CanExecuteConfirmCreateGraphCommand);
             CancelCreateGraphCommand = new RelayCommand(obj => CloseWindow());
         }
 
@@ -43,6 +44,11 @@ namespace WPFVersion3D.ViewModel
         {
             OnWindowClosed?.Invoke(this, EventArgs.Empty);
             OnWindowClosed = null;
+        }
+
+        private bool CanExecuteConfirmCreateGraphCommand(object sender)
+        {
+            return GraphAssembleKeys.Contains(GraphAssembleKey);
         }
     }
 }

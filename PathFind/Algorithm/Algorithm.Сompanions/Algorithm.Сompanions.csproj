@@ -47,7 +47,6 @@
     <Compile Include="IAccumulatedCosts.cs" />
     <Compile Include="ParentVertices.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="VisitedVertices.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\Common\Common.csproj">
@@ -63,7 +62,7 @@
       <Name>GraphLib.Extensions</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\GraphLib\GraphLib.Interfaces\GraphLib.Interfaces.csproj">
-      <Project>{D3C5CCFE-698B-41C7-9A72-5FD0262765E1}</Project>
+      <Project>{d3c5ccfe-698b-41c7-9a72-5fd0262765e1}</Project>
       <Name>GraphLib.Interfaces</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\NullObject\NullObject.csproj">

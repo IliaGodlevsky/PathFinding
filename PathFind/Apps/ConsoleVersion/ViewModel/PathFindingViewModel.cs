@@ -21,9 +21,9 @@ namespace ConsoleVersion.ViewModel
     {
         public string AlgorithmKeyInputMessage { private get; set; }
 
-        public string EndVertexInputMessage { private get; set; }
+        public string TargetVertexInputMessage { private get; set; }
 
-        public string StartVertexInputMessage { private get; set; }
+        public string SourceVertexInputMessage { private get; set; }
 
         public PathFindingViewModel(ILog log, IAssembleClasses pluginsLoader,
             IMainModel model, BaseEndPoints endPoints)
@@ -95,7 +95,7 @@ namespace ConsoleVersion.ViewModel
 
         private void ChooseExtremeVertex()
         {
-            var chooseMessages = new[] { StartVertexInputMessage, EndVertexInputMessage };
+            var chooseMessages = new[] { SourceVertexInputMessage, TargetVertexInputMessage };
 
             foreach (var message in chooseMessages)
             {

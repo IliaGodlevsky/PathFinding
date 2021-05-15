@@ -2,6 +2,7 @@
 using GraphLib.Interfaces;
 using GraphLib.Serialization;
 using GraphLib.Serialization.Extensions;
+using NullObject.Extensions;
 using System.Collections.Generic;
 using System.Windows.Controls;
 using System.Windows.Media;
@@ -111,7 +112,10 @@ namespace WPFVersion.Model
             {
                 if (!IsObstacle)
                 {
-                    Background = new SolidColorBrush(Colors.White);
+                    if (!cost.IsNullObject())
+                    {
+                        Background = new SolidColorBrush(Colors.White);
+                    }
                 }
             });
         }

@@ -13,7 +13,7 @@ namespace Conditional.Tests
 
         public ConditionalTests()
         {
-           
+
         }
 
         [Test]
@@ -65,6 +65,18 @@ namespace Conditional.Tests
             {
                 If.Else(ElseBody)
                 .ElseIf(t => t.IsSomethingElse, ElseBody);
+            });
+        }
+
+        [Test]
+        public void ElseIfTest_BodyIsNull_ThrowsArgumentNullException()
+        {
+            var to = new TestObject();
+            var If = new If<TestObject>(t => t.IsSomething, IsSomethingBody);
+
+            Assert.Throws<ArgumentNullException>(() =>
+            {
+                If.ElseIf(null, null);
             });
         }
 

@@ -25,6 +25,7 @@ namespace WindowsFormsVersion.ViewModel
             if (CanExecuteConfirmPathFindAlgorithmChoice())
             {
                 OnWindowClosed?.Invoke(this, EventArgs.Empty);
+                OnWindowClosed = null;
                 FindPath();
             }
         }

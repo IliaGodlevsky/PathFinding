@@ -70,6 +70,15 @@ namespace ConsoleVersion.Resource {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Choose graph assemble: .
+        /// </summary>
+        internal static string ChooseGraphAssemble {
+            get {
+                return ResourceManager.GetString("ChooseGraphAssemble", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Choose vertex to reverse: .
         /// </summary>
         internal static string ChooseVertexToReverseMsg {

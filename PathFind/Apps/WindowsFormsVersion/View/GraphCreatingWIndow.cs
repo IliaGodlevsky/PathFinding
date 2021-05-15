@@ -1,4 +1,5 @@
-﻿using System.Windows.Forms;
+﻿using System.Linq;
+using System.Windows.Forms;
 using WindowsFormsVersion.ViewModel;
 
 namespace WindowsFormsVersion.View
@@ -16,6 +17,18 @@ namespace WindowsFormsVersion.View
             okButton.Click += Model.CreateGraph;
             cancelButton.Click += Model.CancelCreateGraph;
 
+            var dataSource = model.GraphAssembleKeys
+                .Select(key => new { Name = key }).ToArray();
+            graphAssemblesListBox.DataSource = dataSource;
+
+            var algoKey = dataSource.First();
+            graphAssemblesListBox.ValueMember = nameof(algoKey.Name);
+
+            var graphAssembleBinding = new Binding(
+                nameof(graphAssemblesListBox.SelectedValue),
+                model,
+                nameof(model.GraphAssembleKey));
+            graphAssemblesListBox.DataBindings.Add(graphAssembleBinding);
 
             int ConvertFromString(string str, int alternativeResult)
             {

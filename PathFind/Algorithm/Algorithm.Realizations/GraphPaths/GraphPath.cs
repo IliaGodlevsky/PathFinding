@@ -49,7 +49,7 @@ namespace Algorithm.Realizations.GraphPaths
 
         private IEnumerable<IVertex> FormPath()
         {
-            var vertex = endPoints.End;
+            var vertex = endPoints.Target;
             yield return vertex;
             var parent = parentVertices.GetParent(vertex);
             while (graph.AreNeighbours(vertex, parent))
@@ -77,7 +77,7 @@ namespace Algorithm.Realizations.GraphPaths
 
         private bool IsNotStart(IVertex vertex)
         {
-            return !endPoints.Start.IsEqual(vertex);
+            return !endPoints.Source.IsEqual(vertex);
         }
 
         private const int RequiredNumberOfVerticesForCompletePath = 2;

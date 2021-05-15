@@ -14,8 +14,8 @@ namespace ConsoleVersion.View
             Model = model;
             var algorithmMenu = Menu.CreateMenu(model.AlgorithmKeys.ToArray());
             Model.AlgorithmKeyInputMessage = algorithmMenu + Resources.ChooseAlrorithm;
-            Model.StartVertexInputMessage = "\n" + Resources.StartVertexPointInputMsg;
-            Model.EndVertexInputMessage = Resources.EndVertexCoordinateInputMsg;
+            Model.SourceVertexInputMessage = "\n" + Resources.StartVertexPointInputMsg;
+            Model.TargetVertexInputMessage = Resources.EndVertexCoordinateInputMsg;
         }
 
         public void Start()

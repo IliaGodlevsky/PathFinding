@@ -23,7 +23,7 @@ namespace Plugins.DistanceFirstAlgorithm
 
         protected override double GreedyHeuristic(IVertex vertex)
         {
-            return heuristic.Calculate(vertex, endPoints.End);
+            return heuristic.Calculate(vertex, endPoints.Target);
         }
 
         private readonly IHeuristic heuristic;

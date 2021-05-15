@@ -23,7 +23,7 @@ namespace Plugins.DepthFirstAlgorithm
 
         protected override double GreedyHeuristic(IVertex vertex)
         {
-            return heuristic.Calculate(vertex, endPoints.Start);
+            return heuristic.Calculate(vertex, endPoints.Source);
         }
 
         private readonly IHeuristic heuristic;

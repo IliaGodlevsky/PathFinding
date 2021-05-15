@@ -41,6 +41,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="IAverageCost.cs" />
     <Compile Include="ICoordinate.cs" />
     <Compile Include="Factories\ICoordinateFactory.cs" />
     <Compile Include="Factories\ICoordinateRadarFactory.cs" />
@@ -56,6 +57,7 @@
     <Compile Include="IVertexCost.cs" />
     <Compile Include="IVertexEventHolder.cs" />
     <Compile Include="Factories\IVertexFactory.cs" />
+    <Compile Include="IVisitedVertices.cs" />
     <Compile Include="IWeightable.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

@@ -57,7 +57,7 @@
       <Name>GraphLib.Interfaces</Name>
     </ProjectReference>
     <ProjectReference Include="..\Algorithm.Infrastructure\Algorithm.Infrastructure.csproj">
-      <Project>{da2a9a8c-0ef3-4edb-b026-3ff86def9464}</Project>
+      <Project>{DA2A9A8C-0EF3-4EDB-B026-3FF86DEF9464}</Project>
       <Name>Algorithm.Infrastructure</Name>
     </ProjectReference>
   </ItemGroup>

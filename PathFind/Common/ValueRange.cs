@@ -89,8 +89,10 @@ namespace Common
         /// upper value and lower value</returns>
         public int GetRandomValueFromRange()
         {
-            return Random.Next(LowerValueOfRange, UpperValueOfRange);
+            return Random.Next(LowerValueOfRange, UpperValueOfRange + 1);
         }
+
+        public int Amplitude => UpperValueOfRange - LowerValueOfRange;
 
         private static readonly Random Random;
     }

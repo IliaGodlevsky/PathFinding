@@ -1,7 +1,8 @@
 ﻿using Common.Extensions;
 using GraphLib.Interfaces;
 using GraphLib.Interfaces.Factories;
-using GraphLib.Realizations.Factories;
+using GraphLib.Realizations.Factories.CoordinateRadarFactories;
+using GraphLib.Realizations.Factories.GraphAssembles;
 using GraphLib.Realizations.Tests.Factories;
 using GraphLib.Realizations.Tests.Objects;
 using NUnit.Framework;

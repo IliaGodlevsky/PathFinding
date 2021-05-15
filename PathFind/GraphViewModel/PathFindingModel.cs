@@ -158,8 +158,8 @@ namespace GraphViewModel
         {
             interrupter = new Interrupter(DelayTime);
             string message = $"Algorithm {AlgorithmKey} was started. ";
-            message += $"Start vertex: {endPoints.Start.GetInforamtion()};";
-            message += $"End vertex: {endPoints.End.GetInforamtion()}";
+            message += $"Start vertex: {endPoints.Source.GetInforamtion()};";
+            message += $"End vertex: {endPoints.Target.GetInforamtion()}";
             log.Info(message);
             timer.Reset();
             timer.Start();

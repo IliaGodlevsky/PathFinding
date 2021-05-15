@@ -1,12 +1,12 @@
-﻿using AssembleClassesLib.Interface;
+﻿using Algorithm.Realizations;
 using AssembleClassesLib.Realizations;
 using AssembleClassesLib.Realizations.AssembleClassesImpl;
 using Common.Interface;
 using GraphLib.Base;
 using GraphLib.Interfaces;
-using GraphLib.Interfaces.Factories;
-using GraphLib.Serialization.Interfaces;
+using GraphLib.Realizations;
 using GraphViewModel;
+using GraphViewModel.Interfaces;
 using Logging.Loggers;
 using NullObject.Extensions;
 using System;
@@ -60,15 +60,15 @@ namespace WPFVersion3D.ViewModel
         public ICommand ChangeOpacityCommand { get; }
         public ICommand AnimatedAxisRotateCommand { get; }
 
-        public MainWindowViewModel(BaseGraphFieldFactory fieldFactory,
+        public MainWindowViewModel(
+            BaseGraphFieldFactory fieldFactory,
             IVertexEventHolder eventHolder,
-            IGraphSerializer graphSerializer,
-            IGraphAssemble graphFactory,
-            IPathInput pathInput,
-            IAssembleClasses assembleClasses,
+            ISaveLoadGraph saveLoad,
+            ConcreteGraphAssembleClasses graphFactories,
+            ConcreteAssembleAlgorithmClasses assembleClasses,
             Logs log)
-            : base(fieldFactory, eventHolder, graphSerializer,
-                  graphFactory, pathInput, assembleClasses, log)
+            : base(fieldFactory, eventHolder, saveLoad,
+                  graphFactories, assembleClasses, log)
         {
             StartPathFindCommand = new RelayCommand(ExecuteStartPathFindCommand, CanExecuteStartFindPathCommand);
             CreateNewGraphCommand = new RelayCommand(ExecuteCreateNewGraphCommand);
@@ -108,7 +108,7 @@ namespace WPFVersion3D.ViewModel
         {
             try
             {
-                var model = new GraphCreatingViewModel(log, this, graphAssembler);
+                var model = new GraphCreatingViewModel(log, this, graphFactories);
                 var window = new GraphCreateWindow();
                 PrepareWindow(model, window);
             }

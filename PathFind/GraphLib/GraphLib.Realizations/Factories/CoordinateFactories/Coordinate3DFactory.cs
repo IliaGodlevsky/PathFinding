@@ -2,13 +2,13 @@
 using GraphLib.Interfaces.Factories;
 using GraphLib.Realizations.Coordinates;
 
-namespace GraphLib.Realizations.Factories
+namespace GraphLib.Realizations.Factories.CoordinateFactories
 {
-    public sealed class Coordinate2DFactory : ICoordinateFactory
+    public sealed class Coordinate3DFactory : ICoordinateFactory
     {
         public ICoordinate CreateCoordinate(int[] coordinates)
         {
-            return new Coordinate2D(coordinates);
+            return new Coordinate3D(coordinates);
         }
     }
 }

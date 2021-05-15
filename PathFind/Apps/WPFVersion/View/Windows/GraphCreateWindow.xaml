@@ -22,6 +22,7 @@
             <RowDefinition Height="Auto"></RowDefinition>
             <RowDefinition Height="Auto"></RowDefinition>
             <RowDefinition Height="Auto"></RowDefinition>
+            <RowDefinition Height="Auto"></RowDefinition>
         </Grid.RowDefinitions>
         
         <TextBlock Margin="5" Text="Obstacle percent" Grid.Row="0" Grid.ColumnSpan="2" 
@@ -61,8 +62,18 @@
             Converter={StaticResource stringToIntCOnverter}, 
             ConverterParameter={x:Static range:Constants.GraphLengthValueRange}}" 
             Grid.Row="3" Grid.Column="1" Margin="5"></TextBox>
-        
-        <StackPanel Grid.Row="4" Grid.ColumnSpan="2" Orientation="Horizontal" HorizontalAlignment="Center">
+        <ListBox Grid.Row="4" Grid.ColumnSpan="2" ItemsSource="{Binding GraphAssembleKeys }" 
+                 x:Name="algoListBox" BorderThickness="0" Margin="5"
+                 SelectedItem="{Binding Path = GraphAssembleKey}">
+            <ListBox.ItemTemplate>
+                <DataTemplate>
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock Margin="3" Text="{Binding}"/>
+                    </StackPanel>
+                </DataTemplate>
+            </ListBox.ItemTemplate>
+        </ListBox>
+        <StackPanel Grid.Row="5" Grid.ColumnSpan="2" Orientation="Horizontal" HorizontalAlignment="Center">
             <Button Command ="{Binding ConfirmCreateGraphCommand}" Margin="5" Content="OK"></Button>
             <Button Command="{Binding CancelCreateGraphCommand}" Margin="5" Content="Cancel"></Button>
         </StackPanel>

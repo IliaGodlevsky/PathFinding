@@ -105,9 +105,9 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Logging", "Logging\Logging.
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NullObject", "NullObject\NullObject.csproj", "{51D677FD-7A82-4282-8A2E-51DEBE39E695}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Conditional.Tests", "Conditional.Tests\Conditional.Tests.csproj", "{D3104355-4F78-41B5-82FD-6CAFFF775A45}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Conditional.Tests", "Conditional.Tests\Conditional.Tests.csproj", "{D3104355-4F78-41B5-82FD-6CAFFF775A45}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NullObject.Tests", "NullObject.Tests\NullObject.Tests.csproj", "{666D186C-5D2A-4AA3-8671-BEEF51C6DF77}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NullObject.Tests", "NullObject.Tests\NullObject.Tests.csproj", "{666D186C-5D2A-4AA3-8671-BEEF51C6DF77}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

@@ -6,25 +6,25 @@ namespace Algorithm.Сompanions
 {
     public readonly struct EndPoints : IEndPoints
     {
-        public IVertex End { get; }
-        public IVertex Start { get; }
+        public IVertex Target { get; }
+        public IVertex Source { get; }
 
         public EndPoints(IVertex start, IVertex end)
         {
-            Start = start;
-            End = end;
+            Source = start;
+            Target = end;
         }
 
         public EndPoints(IEndPoints endPoints)
         {
-            End = endPoints.End;
-            Start = endPoints.Start;
+            Target = endPoints.Target;
+            Source = endPoints.Source;
         }
 
         public bool IsEndPoint(IVertex vertex)
         {
-            return vertex.IsEqual(Start)
-                   || vertex.IsEqual(End)
+            return vertex.IsEqual(Source)
+                   || vertex.IsEqual(Target)
                    || vertex.IsNullObject();
         }
     }

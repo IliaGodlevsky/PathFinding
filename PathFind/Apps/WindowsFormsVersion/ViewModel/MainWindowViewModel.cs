@@ -1,12 +1,12 @@
-﻿using AssembleClassesLib.Interface;
+﻿using Algorithm.Realizations;
 using Common.Interface;
 using GraphLib.Base;
 using GraphLib.Extensions;
 using GraphLib.Interfaces;
-using GraphLib.Interfaces.Factories;
+using GraphLib.Realizations;
 using GraphLib.Realizations.Graphs;
-using GraphLib.Serialization.Interfaces;
 using GraphViewModel;
+using GraphViewModel.Interfaces;
 using Logging.Loggers;
 using NullObject.Extensions;
 using System;
@@ -65,13 +65,12 @@ namespace WindowsFormsVersion.ViewModel
 
         public MainWindowViewModel(BaseGraphFieldFactory fieldFactory,
             IVertexEventHolder eventHolder,
-            IGraphSerializer graphSerializer,
-            IGraphAssemble graphFactory,
-            IPathInput pathInput,
-            IAssembleClasses assembleClasses,
+            ISaveLoadGraph saveLoad,
+            ConcreteGraphAssembleClasses graphFactories,
+            ConcreteAssembleAlgorithmClasses assembleClasses,
             Logs log)
-            : base(fieldFactory, eventHolder, graphSerializer,
-                  graphFactory, pathInput, assembleClasses, log)
+            : base(fieldFactory, eventHolder, saveLoad,
+                  graphFactories, assembleClasses, log)
         {
 
         }
@@ -98,7 +97,7 @@ namespace WindowsFormsVersion.ViewModel
         {
             try
             {
-                var model = new GraphCreatingViewModel(log, this, graphAssembler);
+                var model = new GraphCreatingViewModel(log, this, graphFactories);
                 var form = new GraphCreatingWindow(model);
                 PrepareWindow(model, form);
             }

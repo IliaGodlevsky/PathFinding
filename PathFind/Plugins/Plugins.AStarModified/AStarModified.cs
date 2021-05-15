@@ -74,7 +74,7 @@ namespace Plugins.AStarModified
 
         private double CalculateHeuristic(IVertex vertex)
         {
-            return heuristic.Calculate(vertex, endPoints.End);
+            return heuristic.Calculate(vertex, endPoints.Target);
         }
 
         private int VerticesCountToDelete =>

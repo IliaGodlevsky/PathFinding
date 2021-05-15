@@ -1,6 +1,7 @@
 ﻿using GraphLib.Interfaces;
 using GraphLib.Interfaces.Factories;
-using GraphLib.Realizations.Factories;
+using GraphLib.Realizations.Factories.CoordinateRadarFactories;
+using GraphLib.Realizations.Factories.GraphAssembles;
 using GraphLib.Serialization.Exceptions;
 using GraphLib.Serialization.Tests.Factories;
 using GraphLib.Serialization.Tests.Objects;

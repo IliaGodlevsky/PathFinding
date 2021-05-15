@@ -19,8 +19,8 @@ namespace GraphLib.Extensions
 
         public static bool IsIsolated(this IVertex self)
         {
-            return self.IsObstacle
-                || self.Neighbours.All(neighbour => neighbour.IsObstacle);
+            bool IsObstacle(IVertex vertex) => vertex.IsObstacle;
+            return self.IsObstacle || self.Neighbours.All(IsObstacle);
         }
 
         /// <summary>
@@ -38,9 +38,9 @@ namespace GraphLib.Extensions
         public static void Initialize(this IVertex self)
         {
             self.Neighbours = new List<IVertex>();
-            self.SetToDefault();
             self.IsObstacle = false;
             self.Cost = new NullCost();
+            self.SetToDefault();
         }
 
         internal static void Refresh(this IVertex self)
@@ -94,9 +94,9 @@ namespace GraphLib.Extensions
             #endregion
 
             ICoordinate Coordinate(IEnumerable<int> coordinates) => new Coordinate(coordinates);
-            IVertex Vertex(ICoordinate coordinate) => graph[coordinate];
             bool IsWithingGraph(ICoordinate coordinate) => coordinate.IsWithinGraph(graph);
             bool CanBeNeighbour(IVertex vertex) => graph.CanBeNeighbourOf(vertex, self);
+            IVertex Vertex(ICoordinate coordinate) => graph[coordinate];
 
             self.Neighbours = self
                 .CoordinateRadar

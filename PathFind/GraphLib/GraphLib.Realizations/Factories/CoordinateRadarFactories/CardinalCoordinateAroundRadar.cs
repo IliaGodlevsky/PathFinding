@@ -2,13 +2,13 @@
 using GraphLib.Interfaces;
 using GraphLib.Interfaces.Factories;
 
-namespace GraphLib.Realizations.Factories
+namespace GraphLib.Realizations.Factories.CoordinateRadarFactories
 {
-    public sealed class CoordinateAroundRadarFactory : ICoordinateRadarFactory
+    public sealed class CardinalCoordinateAroundRadarFactory : ICoordinateRadarFactory
     {
         public ICoordinateRadar CreateCoordinateRadar(ICoordinate coordinate)
         {
-            return new CoordinateAroundRadar(coordinate);
+            return new CardinalCoordinateAroundRadar(coordinate);
         }
     }
 }

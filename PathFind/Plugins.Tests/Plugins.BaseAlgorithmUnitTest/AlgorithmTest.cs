@@ -1,7 +1,8 @@
 using Algorithm.Interfaces;
 using GraphLib.Interfaces;
 using GraphLib.Interfaces.Factories;
-using GraphLib.Realizations.Factories;
+using GraphLib.Realizations.Factories.CoordinateRadarFactories;
+using GraphLib.Realizations.Factories.GraphAssembles;
 using NUnit.Framework;
 using Plugins.BaseAlgorithmUnitTest.Objects.Factories;
 using Plugins.BaseAlgorithmUnitTest.Objects.TestObjects;

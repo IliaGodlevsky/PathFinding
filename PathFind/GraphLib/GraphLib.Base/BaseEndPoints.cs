@@ -13,19 +13,19 @@ namespace GraphLib.Base
         protected BaseEndPoints()
         {
             Reset();
-            If = new If<IVertex>(v => Start.IsEqual(v), UnsetStartVertex)
-                  .ElseIf(v => End.IsEqual(v), UnsetEndVertex)
-                  .ElseIf(CanSetStartVertex, SetStartVertex)
-                  .ElseIf(v => Start.IsIsolated(), ReplaceStartVertex)
-                  .ElseIf(CanSetEndVertex, SetEndVertex)
-                  .ElseIf(v => End.IsIsolated(), ReplaceEndVertex);
+            If = new If<IVertex>(v => Source.IsEqual(v), UnsetSource)
+                  .ElseIf(v => Target.IsEqual(v), UnsetTarget)
+                  .ElseIf(CanSetSource, SetSource)
+                  .ElseIf(v => Source.IsIsolated(), ReplaceSource)
+                  .ElseIf(CanSetTarget, SetTarget)
+                  .ElseIf(v => Target.IsIsolated(), ReplaceTarget);
         }
 
-        public bool HasEndPointsSet => !Start.IsIsolated() && !End.IsIsolated();
+        public bool HasEndPointsSet => !Source.IsIsolated() && !Target.IsIsolated();
 
-        public IVertex Start { get; private set; }
+        public IVertex Source { get; private set; }
 
-        public IVertex End { get; private set; }
+        public IVertex Target { get; private set; }
 
         public void SubscribeToEvents(IGraph graph)
         {
@@ -39,13 +39,13 @@ namespace GraphLib.Base
 
         public void Reset()
         {
-            Start = new NullVertex();
-            End = new NullVertex();
+            Source = new NullVertex();
+            Target = new NullVertex();
         }
 
         public bool IsEndPoint(IVertex vertex)
         {
-            return vertex.IsEqual(Start) || vertex.IsEqual(End);
+            return vertex.IsEqual(Source) || vertex.IsEqual(Target);
         }
 
         public bool CanBeEndPoint(IVertex vertex)
@@ -53,14 +53,14 @@ namespace GraphLib.Base
             return !IsEndPoint(vertex) && !vertex.IsIsolated();
         }
 
-        protected bool CanSetStartVertex(IVertex vertex)
+        protected bool CanSetSource(IVertex vertex)
         {
-            return Start.IsNullObject() && CanBeEndPoint(vertex);
+            return Source.IsNullObject() && CanBeEndPoint(vertex);
         }
 
-        protected bool CanSetEndVertex(IVertex vertex)
+        protected bool CanSetTarget(IVertex vertex)
         {
-            return !Start.IsNullObject() && End.IsNullObject() && CanBeEndPoint(vertex);
+            return !Source.IsNullObject() && Target.IsNullObject() && CanBeEndPoint(vertex);
         }
 
         protected virtual void SetEndPoints(object sender, EventArgs e)
@@ -69,41 +69,41 @@ namespace GraphLib.Base
             If.Walk(parametre: sender as IVertex, walkCondition: IsNotIsolated);
         }
 
-        protected virtual void SetStartVertex(IVertex vertex)
+        protected virtual void SetSource(IVertex vertex)
         {
-            Start = vertex;
+            Source = vertex;
             (vertex as IMarkable)?.MarkAsStart();
         }
 
-        protected virtual void SetEndVertex(IVertex vertex)
+        protected virtual void SetTarget(IVertex vertex)
         {
-            End = vertex;
+            Target = vertex;
             (vertex as IMarkable)?.MarkAsEnd();
 
         }
 
-        protected virtual void UnsetStartVertex(IVertex vertex)
+        protected virtual void UnsetSource(IVertex vertex)
         {
             (vertex as IMarkable)?.MarkAsRegular();
-            Start = new NullVertex();
+            Source = new NullVertex();
         }
 
-        protected virtual void UnsetEndVertex(IVertex vertex)
+        protected virtual void UnsetTarget(IVertex vertex)
         {
             (vertex as IMarkable)?.MarkAsRegular();
-            End = new NullVertex();
+            Target = new NullVertex();
         }
 
-        protected virtual void ReplaceStartVertex(IVertex vertex)
+        protected virtual void ReplaceSource(IVertex vertex)
         {
-            UnsetStartVertex(Start);
-            SetStartVertex(vertex);
+            UnsetSource(Source);
+            SetSource(vertex);
         }
 
-        protected virtual void ReplaceEndVertex(IVertex vertex)
+        protected virtual void ReplaceTarget(IVertex vertex)
         {
-            UnsetEndVertex(End);
-            SetEndVertex(vertex);
+            UnsetTarget(Target);
+            SetTarget(vertex);
         }
 
         protected abstract void SubscribeVertex(IVertex vertex);

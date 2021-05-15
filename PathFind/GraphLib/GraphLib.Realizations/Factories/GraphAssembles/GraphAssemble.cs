@@ -1,4 +1,5 @@
-﻿using Common;
+﻿using AssembleClassesLib.Attributes;
+using Common;
 using Common.Extensions;
 using GraphLib.Exceptions;
 using GraphLib.Extensions;
@@ -7,8 +8,9 @@ using GraphLib.Interfaces.Factories;
 using System;
 using System.Linq;
 
-namespace GraphLib.Realizations.Factories
+namespace GraphLib.Realizations.Factories.GraphAssembles
 {
+    [ClassName("Random graph assemble")]
     /// <summary>
     /// Assembles a graph suitable for use with pathfinding algorithms
     /// </summary>
@@ -39,7 +41,7 @@ namespace GraphLib.Realizations.Factories
         /// pathfinding algorithms</returns>
         /// <exception cref="ArgumentException"></exception>
         /// <exception cref="WrongNumberOfDimensionsException"></exception>
-        public IGraph AssembleGraph(int obstaclePercent = 0, params int[] graphDimensionsSizes)
+        public virtual IGraph AssembleGraph(int obstaclePercent = 0, params int[] graphDimensionsSizes)
         {
             var graph = graphFactory.CreateGraph(graphDimensionsSizes);
 
@@ -54,7 +56,9 @@ namespace GraphLib.Realizations.Factories
                 vertex.IsObstacle = IsObstacleChance(obstaclePercent);
             }
 
-            Enumerable.Range(0, graph.Size).ForEach(AssembleVertex);
+            Enumerable
+                .Range(0, graph.Size)
+                .ForEach(AssembleVertex);
             graph.ConnectVertices();
             return graph;
         }
@@ -66,11 +70,11 @@ namespace GraphLib.Realizations.Factories
             return randomPercent < percentOfObstacles;
         }
 
-        private readonly IVertexCostFactory costFactory;
-        private readonly ICoordinateFactory coordinateFactory;
-        private readonly IVertexFactory vertexFactory;
-        private readonly IGraphFactory graphFactory;
-        private readonly ICoordinateRadarFactory radarFactory;
-        private readonly ValueRange percentRange;
+        protected readonly IVertexCostFactory costFactory;
+        protected readonly ICoordinateFactory coordinateFactory;
+        protected readonly IVertexFactory vertexFactory;
+        protected readonly IGraphFactory graphFactory;
+        protected readonly ICoordinateRadarFactory radarFactory;
+        protected readonly ValueRange percentRange;
     }
 }

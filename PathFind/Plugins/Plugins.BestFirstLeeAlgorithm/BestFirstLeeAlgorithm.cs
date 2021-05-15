@@ -36,7 +36,7 @@ namespace Plugins.BestFirstLeeAlgorithm
 
         protected override double CreateWave()
         {
-            return base.CreateWave() + heuristic.Calculate(CurrentVertex, endPoints.End);
+            return base.CreateWave() + heuristic.Calculate(CurrentVertex, endPoints.Target);
         }
 
         private readonly IHeuristic heuristic;

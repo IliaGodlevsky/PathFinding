@@ -83,7 +83,7 @@ namespace GraphLib.Extensions
 
         public static bool Contains(this IGraph self, IEndPoints endPoints)
         {
-            return self.Contains(endPoints.Start, endPoints.End);
+            return self.Contains(endPoints.Source, endPoints.Target);
         }
 
         public static int[] ToCoordinates(this IGraph self, int index)

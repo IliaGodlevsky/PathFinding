@@ -2,9 +2,9 @@
 {
     public interface IEndPoints
     {
-        IVertex End { get; }
+        IVertex Target { get; }
 
-        IVertex Start { get; }
+        IVertex Source { get; }
 
         bool IsEndPoint(IVertex vertex);
     }

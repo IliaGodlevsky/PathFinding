@@ -6,9 +6,16 @@ using Autofac;
 using GraphLib.Base;
 using GraphLib.Interfaces;
 using GraphLib.Interfaces.Factories;
+using GraphLib.Realizations;
 using GraphLib.Realizations.Factories;
+using GraphLib.Realizations.Factories.CoordinateFactories;
+using GraphLib.Realizations.Factories.CoordinateRadarFactories;
+using GraphLib.Realizations.Factories.GraphAssembles;
+using GraphLib.Realizations.Factories.GraphFactories;
 using GraphLib.Serialization;
 using GraphLib.Serialization.Interfaces;
+using GraphViewModel;
+using GraphViewModel.Interfaces;
 using Logging.Interface;
 using Logging.Loggers;
 using System.Runtime.Serialization;
@@ -35,6 +42,8 @@ namespace WPFVersion.Configure
             builder.RegisterType<MessageBoxLog>().As<ILog>().SingleInstance();
             builder.RegisterType<Logs>().AsSelf().SingleInstance();
 
+            builder.RegisterType<ConcreteGraphAssembleClasses>().AsSelf().SingleInstance();
+            builder.RegisterType<SmoothedGraphAssemble>().As<IGraphAssemble>().SingleInstance();
             builder.RegisterType<GraphAssemble>().As<IGraphAssemble>().SingleInstance();
             builder.RegisterType<VertexFactory>().As<IVertexFactory>().SingleInstance();
             builder.RegisterType<CostFactory>().As<IVertexCostFactory>().SingleInstance();
@@ -42,11 +51,12 @@ namespace WPFVersion.Configure
             builder.RegisterType<Graph2DFactory>().As<IGraphFactory>().SingleInstance();
             builder.RegisterType<CoordinateAroundRadarFactory>().As<ICoordinateRadarFactory>().SingleInstance();
 
+            builder.RegisterType<SaveLoadGraph>().As<ISaveLoadGraph>().SingleInstance();
             builder.RegisterType<GraphSerializer>().As<IGraphSerializer>().SingleInstance();
             builder.RegisterType<BinaryFormatter>().As<IFormatter>().SingleInstance();
             builder.RegisterType<VertexSerializationInfoConverter>().As<IVertexSerializationInfoConverter>().SingleInstance();
 
-            builder.RegisterType<ConcreteAssembleAlgorithmClasses>().As<IAssembleClasses>().SingleInstance();
+            builder.RegisterType<ConcreteAssembleAlgorithmClasses>().AsSelf().SingleInstance();
             builder.RegisterType<AssembleLoadPath>().As<IAssembleLoadPath>().SingleInstance();
             builder.RegisterType<AllDirectories>().As<IAssembleSearchOption>().SingleInstance();
             builder.RegisterType<LoadFrom>().As<IAssembleLoadMethod>().SingleInstance();

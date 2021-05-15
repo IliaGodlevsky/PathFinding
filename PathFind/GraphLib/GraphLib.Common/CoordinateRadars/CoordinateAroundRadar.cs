@@ -12,7 +12,6 @@ namespace GraphLib.Common.CoordinateRadars
     {
         public CoordinateAroundRadar(ICoordinate coordinate)
         {
-            environment = new List<int[]>();
             selfCoordinatesValues = coordinate.CoordinatesValues.ToArray();
             currentCoordinatesValues = new int[selfCoordinatesValues.Length];
             limitDepth = selfCoordinatesValues.Length;
@@ -27,12 +26,12 @@ namespace GraphLib.Common.CoordinateRadars
         {
             get
             {
-                if (neighbours == null)
+                if (environment == null)
                 {
+                    environment = new List<int[]>();
                     FormEnvironment();
-                    neighbours = environment;
                 }
-                return neighbours;
+                return environment;
             }
         }
 
@@ -64,8 +63,6 @@ namespace GraphLib.Common.CoordinateRadars
         private readonly int[] lateralNeighbourCoordinatesOffsets;
         private readonly int[] currentCoordinatesValues;
         private readonly int[] selfCoordinatesValues;
-        private readonly List<int[]> environment;
-
-        private IEnumerable<int[]> neighbours;
+        private List<int[]> environment;
     }
 }

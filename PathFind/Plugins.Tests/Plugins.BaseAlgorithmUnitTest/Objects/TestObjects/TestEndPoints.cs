@@ -8,23 +8,23 @@ namespace Plugins.BaseAlgorithmUnitTest.Objects.TestObjects
     {
         public TestEndPoints(IVertex start, IVertex end)
         {
-            End = end;
-            Start = start;
+            Target = end;
+            Source = start;
         }
 
         public TestEndPoints()
         {
-            Start = new NullVertex();
-            End = new NullVertex();
+            Source = new NullVertex();
+            Target = new NullVertex();
         }
 
-        public IVertex End { get; }
+        public IVertex Target { get; }
 
-        public IVertex Start { get; }
+        public IVertex Source { get; }
 
         public bool IsEndPoint(IVertex vertex)
         {
-            return vertex.IsEqual(End) || vertex.IsEqual(Start);
+            return vertex.IsEqual(Target) || vertex.IsEqual(Source);
         }
     }
 }

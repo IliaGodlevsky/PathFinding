@@ -3,13 +3,10 @@ using GraphLib.Base;
 using GraphLib.Common.NullObjects;
 using GraphLib.Extensions;
 using GraphLib.Interfaces;
-using GraphLib.Interfaces.Factories;
-using GraphLib.Serialization.Interfaces;
 using GraphViewModel.Interfaces;
 using Logging.Interface;
 using NullObject.Extensions;
 using System;
-using System.IO;
 
 namespace GraphViewModel
 {
@@ -27,48 +24,48 @@ namespace GraphViewModel
 
         protected MainModel(BaseGraphFieldFactory fieldFactory,
             IVertexEventHolder eventHolder,
-            IGraphSerializer graphSerializer,
-            IGraphAssemble graphAssembler,
-            IPathInput pathInput,
+            ISaveLoadGraph saveLoad,
+            IAssembleClasses graphFactories,
             IAssembleClasses assembleClasses,
             ILog log)
         {
             this.eventHolder = eventHolder;
-            serializer = graphSerializer;
-            graphSerializer.OnExceptionCaught += log.Warn;
+            this.saveLoad = saveLoad;
             this.fieldFactory = fieldFactory;
-            this.graphAssembler = graphAssembler;
-            this.pathInput = pathInput;
+            this.graphFactories = graphFactories;
             this.assembleClasses = assembleClasses;
             this.log = log;
+
+            this.graphFactories.LoadClasses();
 
             Graph = new NullGraph();
         }
 
         public virtual async void SaveGraph()
         {
-            string savePath = pathInput.InputSavePath();
-            using (var stream = new FileStream(savePath, FileMode.OpenOrCreate))
-            {
-                await serializer.SaveGraphAsync(Graph, stream);
-            }
-        }
-
-        public virtual void LoadGraph()
-        {
-            string loadPath = pathInput.InputLoadPath();
             try
             {
-                using (var stream = new FileStream(loadPath, FileMode.Open))
-                {
-                    var newGraph = serializer.LoadGraph(stream);
-                    ConnectNewGraph(newGraph);
-                }
+                await saveLoad.SaveGraphAsync(Graph);
             }
             catch (Exception ex)
             {
                 log.Warn(ex);
             }
+
+        }
+
+        public virtual void LoadGraph()
+        {
+            try
+            {
+                var newGraph = saveLoad.LoadGraph();
+                ConnectNewGraph(newGraph);
+            }
+            catch (Exception ex)
+            {
+                log.Warn(ex);
+            }
+
         }
 
         public abstract void FindPath();
@@ -99,13 +96,12 @@ namespace GraphViewModel
             }
         }
 
-        protected readonly IGraphAssemble graphAssembler;
+        protected readonly IAssembleClasses graphFactories;
         protected readonly BaseGraphFieldFactory fieldFactory;
         protected readonly IAssembleClasses assembleClasses;
         protected readonly ILog log;
 
         private readonly IVertexEventHolder eventHolder;
-        private readonly IGraphSerializer serializer;
-        private readonly IPathInput pathInput;
+        private readonly ISaveLoadGraph saveLoad;
     }
 }

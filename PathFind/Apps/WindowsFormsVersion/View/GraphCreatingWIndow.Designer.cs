@@ -37,13 +37,14 @@
             this.obstacleTextBox = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
             this.obstacleSlider = new System.Windows.Forms.TrackBar();
+            this.graphAssemblesListBox = new System.Windows.Forms.ListBox();
             ((System.ComponentModel.ISupportInitialize)(this.obstacleSlider)).BeginInit();
             this.SuspendLayout();
             // 
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(51, 23);
+            this.label3.Location = new System.Drawing.Point(69, 23);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(130, 20);
             this.label3.TabIndex = 17;
@@ -52,7 +53,7 @@
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(85, 151);
+            this.label2.Location = new System.Drawing.Point(99, 151);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(56, 20);
             this.label2.TabIndex = 16;
@@ -60,7 +61,7 @@
             // 
             // cancelButton
             // 
-            this.cancelButton.Location = new System.Drawing.Point(133, 194);
+            this.cancelButton.Location = new System.Drawing.Point(157, 320);
             this.cancelButton.Name = "cancelButton";
             this.cancelButton.Size = new System.Drawing.Size(75, 31);
             this.cancelButton.TabIndex = 15;
@@ -69,7 +70,7 @@
             // 
             // okButton
             // 
-            this.okButton.Location = new System.Drawing.Point(31, 194);
+            this.okButton.Location = new System.Drawing.Point(21, 320);
             this.okButton.Name = "okButton";
             this.okButton.Size = new System.Drawing.Size(75, 30);
             this.okButton.TabIndex = 14;
@@ -78,21 +79,21 @@
             // 
             // heightTextBox
             // 
-            this.heightTextBox.Location = new System.Drawing.Point(161, 148);
+            this.heightTextBox.Location = new System.Drawing.Point(183, 148);
             this.heightTextBox.Name = "heightTextBox";
             this.heightTextBox.Size = new System.Drawing.Size(49, 26);
             this.heightTextBox.TabIndex = 13;
             // 
             // widthTextBox
             // 
-            this.widthTextBox.Location = new System.Drawing.Point(161, 105);
+            this.widthTextBox.Location = new System.Drawing.Point(185, 105);
             this.widthTextBox.Name = "widthTextBox";
             this.widthTextBox.Size = new System.Drawing.Size(47, 26);
             this.widthTextBox.TabIndex = 12;
             // 
             // obstacleTextBox
             // 
-            this.obstacleTextBox.Location = new System.Drawing.Point(161, 56);
+            this.obstacleTextBox.Location = new System.Drawing.Point(185, 55);
             this.obstacleTextBox.Name = "obstacleTextBox";
             this.obstacleTextBox.Size = new System.Drawing.Size(47, 26);
             this.obstacleTextBox.TabIndex = 11;
@@ -100,7 +101,7 @@
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(85, 108);
+            this.label1.Location = new System.Drawing.Point(105, 108);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(50, 20);
             this.label1.TabIndex = 10;
@@ -111,14 +112,24 @@
             this.obstacleSlider.Location = new System.Drawing.Point(15, 46);
             this.obstacleSlider.Maximum = 0;
             this.obstacleSlider.Name = "obstacleSlider";
-            this.obstacleSlider.Size = new System.Drawing.Size(140, 69);
+            this.obstacleSlider.Size = new System.Drawing.Size(164, 69);
             this.obstacleSlider.TabIndex = 9;
             // 
-            // CreateGraphWindow
+            // graphAssemblesListBox
+            // 
+            this.graphAssemblesListBox.FormattingEnabled = true;
+            this.graphAssemblesListBox.ItemHeight = 20;
+            this.graphAssemblesListBox.Location = new System.Drawing.Point(21, 198);
+            this.graphAssemblesListBox.Name = "graphAssemblesListBox";
+            this.graphAssemblesListBox.Size = new System.Drawing.Size(211, 104);
+            this.graphAssemblesListBox.TabIndex = 19;
+            // 
+            // GraphCreatingWindow
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(236, 244);
+            this.ClientSize = new System.Drawing.Size(240, 363);
+            this.Controls.Add(this.graphAssemblesListBox);
             this.Controls.Add(this.label3);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.cancelButton);
@@ -128,7 +139,7 @@
             this.Controls.Add(this.obstacleTextBox);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.obstacleSlider);
-            this.Name = "CreateGraphWindow";
+            this.Name = "GraphCreatingWindow";
             this.Text = "CreateGraphWindow";
             ((System.ComponentModel.ISupportInitialize)(this.obstacleSlider)).EndInit();
             this.ResumeLayout(false);
@@ -147,5 +158,6 @@
         private System.Windows.Forms.TextBox obstacleTextBox;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.TrackBar obstacleSlider;
+        private System.Windows.Forms.ListBox graphAssemblesListBox;
     }
 }

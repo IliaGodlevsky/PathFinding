@@ -1,4 +1,4 @@
-﻿using AssembleClassesLib.Interface;
+﻿using Algorithm.Realizations;
 using Common;
 using ConsoleVersion.Attributes;
 using ConsoleVersion.Enums;
@@ -8,10 +8,10 @@ using GraphLib.Base;
 using GraphLib.Exceptions;
 using GraphLib.Extensions;
 using GraphLib.Interfaces;
-using GraphLib.Interfaces.Factories;
+using GraphLib.Realizations;
 using GraphLib.Realizations.Graphs;
-using GraphLib.Serialization.Interfaces;
 using GraphViewModel;
+using GraphViewModel.Interfaces;
 using Logging.Loggers;
 using System;
 using System.Drawing;
@@ -27,13 +27,12 @@ namespace ConsoleVersion.ViewModel
         public MainViewModel(
             BaseGraphFieldFactory fieldFactory,
             IVertexEventHolder eventHolder,
-            IGraphSerializer graphSerializer,
-            IGraphAssemble graphFactory,
-            IPathInput pathInput,
-            IAssembleClasses assembleClasses,
+            ISaveLoadGraph saveLoad,
+            ConcreteGraphAssembleClasses graphFactories,
+            ConcreteAssembleAlgorithmClasses algorithms,
             Logs log)
-            : base(fieldFactory, eventHolder, graphSerializer,
-                  graphFactory, pathInput, assembleClasses, log)
+            : base(fieldFactory, eventHolder, saveLoad,
+                  graphFactories, algorithms, log)
         {
 
         }
@@ -49,7 +48,7 @@ namespace ConsoleVersion.ViewModel
         {
             try
             {
-                var model = new GraphCreatingViewModel(log, this, graphAssembler);
+                var model = new GraphCreatingViewModel(log, this, graphFactories);
                 var view = new GraphCreateView(model);
                 view.Start();
             }

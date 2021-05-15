@@ -4,9 +4,9 @@ using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace Algorithm.Сompanions
+namespace GraphLib.Realizations.VisitedVerticesImpl
 {
-    public sealed class VisitedVertices
+    public sealed class VisitedVertices : IVisitedVertices
     {
         public VisitedVertices()
         {
@@ -30,17 +30,12 @@ namespace Algorithm.Сompanions
 
         public IEnumerable<IVertex> GetUnvisitedNeighbours(IVertex vertex)
         {
-            return vertex.Neighbours.Where(IsNotObstacleAndNotVisited);
+            return vertex.Neighbours.Where(IsNotVisited);
         }
 
         public void Clear()
         {
             visitedVertices.Clear();
-        }
-
-        private bool IsNotObstacleAndNotVisited(IVertex vertex)
-        {
-            return IsNotVisited(vertex) && !vertex.IsObstacle;
         }
 
         private readonly ConcurrentDictionary<ICoordinate, IVertex> visitedVertices;

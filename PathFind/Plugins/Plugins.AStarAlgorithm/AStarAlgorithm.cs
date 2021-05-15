@@ -37,7 +37,7 @@ namespace Plugins.AStarAlgorithm
         protected override double GetVertexRelaxedCost(IVertex neighbour)
         {
             return base.GetVertexRelaxedCost(neighbour)
-                   + heuristic.Calculate(CurrentVertex, endPoints.End);
+                   + heuristic.Calculate(CurrentVertex, endPoints.Target);
         }
 
         protected readonly IHeuristic heuristic;

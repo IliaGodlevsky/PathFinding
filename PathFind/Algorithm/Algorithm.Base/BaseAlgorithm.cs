@@ -4,6 +4,7 @@ using Algorithm.Interfaces;
 using Algorithm.Сompanions;
 using GraphLib.Extensions;
 using GraphLib.Interfaces;
+using GraphLib.Realizations.VisitedVerticesImpl;
 using NullObject.Extensions;
 using System;
 
@@ -28,7 +29,10 @@ namespace Algorithm.Base
 
         protected BaseAlgorithm(IGraph graph, IEndPoints endPoints)
         {
-            visitedVertices = new VisitedVertices();
+            visitedVertices =
+                new VisitedVerticesWithoutObstacles(
+                    new VisitedVertices()
+                    );
             parentVertices = new ParentVertices();
             this.graph = graph;
             this.endPoints = new EndPoints(endPoints);
@@ -50,7 +54,7 @@ namespace Algorithm.Base
 
         protected virtual bool IsDestination()
         {
-            return CurrentVertex.IsEqual(endPoints.End)
+            return CurrentVertex.IsEqual(endPoints.Target)
                    || CurrentVertex.IsNullObject()
                    || isInterruptRequested;
         }
@@ -79,7 +83,7 @@ namespace Algorithm.Base
         {
             if (graph.Contains(endPoints))
             {
-                CurrentVertex = endPoints.Start;
+                CurrentVertex = endPoints.Source;
                 visitedVertices.Add(CurrentVertex);
                 var args = CreateEventArgs(CurrentVertex);
                 RaiseOnAlgorithmStartedEvent(args);
@@ -110,7 +114,7 @@ namespace Algorithm.Base
             Reset();
         }
 
-        protected readonly VisitedVertices visitedVertices;
+        protected readonly VisitedVerticesWithoutObstacles visitedVertices;
         protected readonly ParentVertices parentVertices;
         protected IAccumulatedCosts accumulatedCosts;
 
