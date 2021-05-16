@@ -4,13 +4,14 @@ using System;
 namespace GraphLib.Serialization
 {
     [Serializable]
-    public sealed class VertexSerializationInfo
+    public class VertexSerializationInfo
     {
         public VertexSerializationInfo(IVertex vertex)
         {
             Cost = vertex.Cost;
             Position = vertex.Position;
             IsObstacle = vertex.IsObstacle;
+            CoordinateRadar = vertex.CoordinateRadar;
         }
 
         public bool IsObstacle { get; set; }
@@ -18,5 +19,7 @@ namespace GraphLib.Serialization
         public IVertexCost Cost { get; set; }
 
         public ICoordinate Position { get; set; }
+
+        public ICoordinateRadar CoordinateRadar { get; set; }
     }
 }

@@ -28,8 +28,8 @@ namespace WPFVersion3D.Model
             this.Initialize();
         }
 
-        public Vertex3D(VertexSerializationInfo info, ICoordinateRadar radar, IModel3DFactory modelFactory) :
-            this(radar, info.Position, modelFactory)
+        public Vertex3D(VertexSerializationInfo info, IModel3DFactory modelFactory) :
+            this(info.CoordinateRadar, info.Position, modelFactory)
         {
             this.Initialize(info);
         }

@@ -14,8 +14,6 @@ namespace GraphLib.Serialization
 {
     public sealed class GraphSerializer : IGraphSerializer
     {
-        public event Action<Exception, string> OnExceptionCaught;
-
         public GraphSerializer(IFormatter formatter,
             IVertexSerializationInfoConverter infoConverter,
             IGraphFactory graphFactory)
@@ -42,6 +40,7 @@ namespace GraphLib.Serialization
                 void CreateVertexFrom(VertexSerializationInfo info)
                 {
                     graph[info.Position] = infoConverter.ConvertFrom(info);
+
                 }
 
                 verticesInfo

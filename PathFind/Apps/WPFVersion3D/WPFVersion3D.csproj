@@ -90,7 +90,7 @@
     <Compile Include="Model\Vertex3DCost.cs" />
     <Compile Include="Model\Vertex3DCostFactory.cs" />
     <Compile Include="Model\Vertex3DFactory.cs" />
-    <Compile Include="Model\VertexSerializationInfoConverter.cs" />
+    <Compile Include="Model\Vertex3DSerializationInfoConverter.cs" />
     <Compile Include="ViewModel\GraphCreateViewModel.cs" />
     <Compile Include="ViewModel\MainWindowViewModel.cs" />
     <Compile Include="ViewModel\OpacityChangeViewModel.cs" />

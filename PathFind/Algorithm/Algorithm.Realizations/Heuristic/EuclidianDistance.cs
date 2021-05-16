@@ -12,7 +12,10 @@ namespace Algorithm.Realizations.Heuristic
 
         protected override double Aggregate(IEnumerable<double> collection)
         {
-            return Math.Round(Math.Sqrt(collection.SumOrDefault()), Precision);
+            var sum = collection.SumOrDefault();
+            sum = Math.Sqrt(sum);
+            sum = Math.Round(sum, Precision);
+            return sum;
         }
 
         protected override double ZipMethod(int first, int second)

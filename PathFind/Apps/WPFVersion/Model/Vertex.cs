@@ -10,7 +10,7 @@ using static WPFVersion.Constants;
 
 namespace WPFVersion.Model
 {
-    internal class Vertex : ContentControl, IVertex, IMarkable, IWeightable
+    internal class Vertex : Label, IVertex, IMarkable, IWeightable
     {
         public static SolidColorBrush VisitedVertexColor { get; set; }
         public static SolidColorBrush PathVertexColor { get; set; }
@@ -42,8 +42,8 @@ namespace WPFVersion.Model
 
         }
 
-        public Vertex(VertexSerializationInfo info, ICoordinateRadar radar)
-            : this(radar, info.Position)
+        public Vertex(VertexSerializationInfo info)
+            : this(info.CoordinateRadar, info.Position)
         {
             this.Initialize(info);
         }

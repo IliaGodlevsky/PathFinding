@@ -23,8 +23,8 @@ namespace WindowsFormsVersion.Model
             CoordinateRadar = coordinateRadar;
         }
 
-        public Vertex(VertexSerializationInfo info, ICoordinateRadar coordinateRadar)
-            : this(coordinateRadar, info.Position)
+        public Vertex(VertexSerializationInfo info)
+            : this(info.CoordinateRadar, info.Position)
         {
             this.Initialize(info);
         }

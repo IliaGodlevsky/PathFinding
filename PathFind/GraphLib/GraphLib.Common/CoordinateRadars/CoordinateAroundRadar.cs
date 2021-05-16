@@ -1,10 +1,12 @@
 ﻿using Common.Extensions;
 using GraphLib.Interfaces;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
 namespace GraphLib.Common.CoordinateRadars
 {
+    [Serializable]
     /// <summary>
     /// A class that finds the neighbors of the specified coordinate
     /// </summary>
@@ -63,6 +65,7 @@ namespace GraphLib.Common.CoordinateRadars
         private readonly int[] lateralNeighbourCoordinatesOffsets;
         private readonly int[] currentCoordinatesValues;
         private readonly int[] selfCoordinatesValues;
+
         private List<int[]> environment;
     }
 }

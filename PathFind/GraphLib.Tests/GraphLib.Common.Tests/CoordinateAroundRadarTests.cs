@@ -17,21 +17,24 @@ namespace GraphLib.Common.Tests
             coordinateMock = new Mock<ICoordinate>();
         }
 
-        [TestCase(new[] { 2, }, ExpectedResult = 2)]
-        [TestCase(new[] { 2, 3 }, ExpectedResult = 8)]
-        [TestCase(new[] { 2, 3, 4 }, ExpectedResult = 26)]
-        [TestCase(new[] { 2, 3, 4, 5 }, ExpectedResult = 80)]
-        [TestCase(new[] { 2, 3, 4, 5, 6 }, ExpectedResult = 242)]
-        [TestCase(new[] { 2, 3, 4, 5, 6, 7 }, ExpectedResult = 728)]
-        [TestCase(new[] { 2, 3, 4, 5, 6, 7, 8 }, ExpectedResult = 2186)]
-        public int Environment_CoordinatesWithVariousDimensionsNumber_ReturnValidNumberOfNeighbours(int[] coordinateValues)
+        [TestCase(new[] { 2 })]
+        [TestCase(new[] { 2, 3 })]
+        [TestCase(new[] { 2, 3, 4 })]
+        [TestCase(new[] { 2, 3, 4, 5 })]
+        [TestCase(new[] { 2, 3, 4, 5, 6 })]
+        [TestCase(new[] { 2, 3, 4, 5, 6, 7 })]
+        [TestCase(new[] { 2, 3, 4, 5, 6, 7, 8 })]
+        public void Environment_CoordinatesWithVariousDimensionsNumber_ReturnValidNumberOfNeighbours(int[] coordinateValues)
         {
+            const int Self = 1;
+            int dimensions = coordinateValues.Length;
+            int expectedResult = Pow(3, dimensions) - Self;
             coordinateMock.Setup(coordinate => coordinate.CoordinatesValues).Returns(coordinateValues);
             var coordinateEnvironment = new CoordinateAroundRadar(coordinateMock.Object);
 
             var environment = coordinateEnvironment.Environment;
 
-            return environment.Count();
+            Assert.AreEqual(expectedResult, environment.Count());
         }
 
         [TestCase(new[] { 2, })]
@@ -74,6 +77,13 @@ namespace GraphLib.Common.Tests
             var mock = new Mock<ICoordinate>();
             mock.Setup(coordinate => coordinate.CoordinatesValues).Returns(coordinates.ToArray());
             return mock;
+        }
+
+        private int Pow(int number, int power)
+        {
+            return Enumerable
+                  .Repeat(number, power)
+                  .Aggregate(1, (a, b) => a * b);
         }
     }
 }

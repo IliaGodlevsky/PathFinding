@@ -18,7 +18,7 @@ using GraphViewModel.Interfaces;
 using Logging.Interface;
 using Logging.Loggers;
 using System.Runtime.Serialization;
-using System.Runtime.Serialization.Formatters.Binary;
+using System.Runtime.Serialization.Formatters.Soap;
 using WPFVersion3D.Interface;
 using WPFVersion3D.Model;
 using WPFVersion3D.ViewModel;
@@ -54,7 +54,7 @@ namespace WPFVersion3D.Configure
 
             builder.RegisterType<SaveLoadGraph>().As<ISaveLoadGraph>().SingleInstance();
             builder.RegisterType<GraphSerializer>().As<IGraphSerializer>().SingleInstance();
-            builder.RegisterType<BinaryFormatter>().As<IFormatter>().SingleInstance();
+            builder.RegisterType<SoapFormatter>().As<IFormatter>().SingleInstance();
             builder.RegisterType<Vertex3DSerializationInfoConverter>().As<IVertexSerializationInfoConverter>().SingleInstance();
 
             builder.RegisterType<ConcreteAssembleAlgorithmClasses>().AsSelf().SingleInstance();

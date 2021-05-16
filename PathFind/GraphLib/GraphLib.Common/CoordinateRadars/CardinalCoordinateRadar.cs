@@ -1,9 +1,12 @@
-﻿using GraphLib.Interfaces;
+﻿using GraphLib.Common.Extensions;
+using GraphLib.Interfaces;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
 namespace GraphLib.Common.CoordinateRadars
 {
+    [Serializable]
     public sealed class CardinalCoordinateAroundRadar : ICoordinateRadar
     {
         public CardinalCoordinateAroundRadar(ICoordinate coordinate)
@@ -16,8 +19,7 @@ namespace GraphLib.Common.CoordinateRadars
 
         private bool IsCardinal(int[] coordinates)
         {
-            bool IsSubNotZero(int i) => coordinates[i] - coordinatesValues[i] != 0;
-            return Enumerable.Range(0, coordinates.Length).Count(IsSubNotZero) == 1;
+            return coordinates.IsCardinal(coordinatesValues);
         }
 
         private IEnumerable<int[]> FormEnvironment()

@@ -1,4 +1,5 @@
 ﻿using Common.Extensions;
+using GraphLib.Exceptions;
 using GraphLib.Interfaces;
 using System;
 using System.Linq;

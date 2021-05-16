@@ -1,11 +1,9 @@
 ﻿using Algorithm.Interfaces;
 using GraphLib.Interfaces;
 using System;
-using System.ComponentModel;
 
 namespace Algorithm.Realizations.StepRules
 {
-    [Description("Landscape step rule")]
     public sealed class LandscapeStepRule : IStepRule
     {
         public double CalculateStepCost(IVertex neighbour, IVertex current)

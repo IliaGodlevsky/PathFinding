@@ -1,4 +1,5 @@
 ﻿using Common.Extensions;
+using GraphLib.Common.Extensions;
 using GraphLib.Common.NullObjects;
 using GraphLib.Interfaces;
 using System;
@@ -33,6 +34,13 @@ namespace GraphLib.Extensions
             {
                 vertex.MarkAsRegular();
             }
+        }
+
+        public static bool IsCardinal(this IVertex vertex, IVertex neighbour)
+        {
+            var vertexCoordinates = vertex.Position.CoordinatesValues.ToArray();
+            var neighbourCoordinates = neighbour.Position.CoordinatesValues.ToArray();
+            return vertexCoordinates.IsCardinal(neighbourCoordinates);
         }
 
         public static void Initialize(this IVertex self)

@@ -1,22 +1,22 @@
 ﻿using Algorithm.Interfaces;
 using GraphLib.Interfaces;
-using System.ComponentModel;
 
 namespace Algorithm.Realizations.StepRules
 {
-    [Description("Walk step rule")]
     public sealed class WalkStepRule : IStepRule
     {
-        public WalkStepRule(IStepRule stepRule)
+        public WalkStepRule(IStepRule stepRule, int walkStepCost = 1)
         {
             this.stepRule = stepRule;
+            this.walkStepCost = walkStepCost;
         }
 
         public double CalculateStepCost(IVertex neighbour, IVertex current)
         {
-            return stepRule.CalculateStepCost(neighbour, current) + 1;
+            return stepRule.CalculateStepCost(neighbour, current) + walkStepCost;
         }
 
         private readonly IStepRule stepRule;
+        private readonly int walkStepCost;
     }
 }

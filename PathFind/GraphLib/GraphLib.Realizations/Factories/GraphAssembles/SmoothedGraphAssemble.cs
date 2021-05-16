@@ -24,7 +24,6 @@ namespace GraphLib.Realizations.Factories.GraphAssembles
                   graphFactory, costFactory, radarFactory)
         {
             this.averageCost = averageCost;
-            visitedVertices = new VisitedVertices();
         }
 
         public SmoothedGraphAssemble(
@@ -41,13 +40,13 @@ namespace GraphLib.Realizations.Factories.GraphAssembles
 
         public override IGraph AssembleGraph(int obstaclePercent, params int[] graphDimensionSizes)
         {
-            visitedVertices.Clear();
+            var visitedVertices = new VisitedVertices();
             return base
                 .AssembleGraph(obstaclePercent, graphDimensionSizes)
-                .ForEach(SmoothOut);            
+                .ForEach(vertex => SmoothOut(vertex, visitedVertices));
         }
 
-        private void SmoothOut(IVertex vertex)
+        private void SmoothOut(IVertex vertex, IVisitedVertices visitedVertices)
         {
             visitedVertices.Add(vertex);
             var unvisitedNeighbours = visitedVertices.GetUnvisitedNeighbours(vertex).ToList();
@@ -61,6 +60,5 @@ namespace GraphLib.Realizations.Factories.GraphAssembles
         }
 
         protected readonly IAverageCost averageCost;
-        private readonly IVisitedVertices visitedVertices;
     }
 }
