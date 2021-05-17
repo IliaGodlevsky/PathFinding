@@ -3,7 +3,7 @@ using System;
 
 namespace GraphLib.Realizations.AverageCosts
 {
-    internal sealed class MeanCost : IAverageCost
+    public sealed class MeanCost : IAverageCost
     {
         public int Calculate(IVertex neighbour, IVertex vertex)
         {

@@ -69,8 +69,7 @@ namespace Conditional
         /// <param name="walkCondition"></param>
         public void Walk(T parametre, Predicate<T> walkCondition = null)
         {
-            if (walkCondition == null
-                || walkCondition?.Invoke(parametre) == true)
+            if (walkCondition == null || walkCondition?.Invoke(parametre) == true)
             {
                 bool IsCondition(ConditionConstruction<T> condition)
                 {

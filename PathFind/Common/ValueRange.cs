@@ -92,8 +92,6 @@ namespace Common
             return Random.Next(LowerValueOfRange, UpperValueOfRange + 1);
         }
 
-        public int Amplitude => UpperValueOfRange - LowerValueOfRange;
-
         private static readonly Random Random;
     }
 }
