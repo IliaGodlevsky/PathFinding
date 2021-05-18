@@ -6,10 +6,10 @@ namespace Plugins.BaseAlgorithmUnitTest.Objects.TestObjects
 {
     internal sealed class TestEndPoints : IEndPoints
     {
-        public TestEndPoints(IVertex start, IVertex end)
+        public TestEndPoints(IVertex source, IVertex target)
         {
-            Target = end;
-            Source = start;
+            Target = target;
+            Source = source;
         }
 
         public TestEndPoints()

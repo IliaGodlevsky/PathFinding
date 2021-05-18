@@ -33,7 +33,8 @@ namespace Common.Tests
         [TestCase(25, 11, 15, ExpectedResult = true)]
         [TestCase(98, 43, 40, ExpectedResult = false)]
         [TestCase(100, 0, -1, ExpectedResult = false)]
-        public bool Contains_ValueIsInValueRange_ReturnsRightCondition(int upperValue, int lowerValue, int testValue)
+        public bool Contains_ValueIsInValueRange_ReturnsRightCondition(int upperValue, 
+            int lowerValue, int testValue)
         {
             var range = new ValueRange(upperValue, lowerValue);
 
@@ -71,7 +72,8 @@ namespace Common.Tests
         [TestCase(25, 11, -100)]
         [TestCase(98, 43, -4)]
         [TestCase(100, 0, -1)]
-        public void ReturnInRange_ValueIsLesserThanUpperValue_ReturnsLowerValue(int upperValue,int lowerValue, int outOfRangeValue)
+        public void ReturnInRange_ValueIsLesserThanUpperValue_ReturnsLowerValue(int upperValue,
+            int lowerValue, int outOfRangeValue)
         {
             var range = new ValueRange(upperValue, lowerValue);
 
@@ -84,7 +86,8 @@ namespace Common.Tests
         [TestCase(25, 11, 18)]
         [TestCase(98, 43, 76)]
         [TestCase(100, 0, 45)]
-        public void ReturnInRange_ValueIsInRange_ReturnsUnchangedValue(int upperValue, int lowerValue, int withinRangeValue)
+        public void ReturnInRange_ValueIsInRange_ReturnsUnchangedValue(int upperValue, 
+            int lowerValue, int withinRangeValue)
         {
             var range = new ValueRange(upperValue, lowerValue);
 

@@ -5,9 +5,9 @@ namespace Plugins.BaseAlgorithmUnitTest.Objects.Factories.Matrix
 {
     internal sealed class CostMatrix : BaseMatrix<int>
     {
-        public CostMatrix(IGraph graph) : base(graph)
+        public CostMatrix(TestGraph graph) : base(graph)
         {
-            matrix = new int[Constants.Width, Constants.Length]
+            matrix = new int[,]
             {
                 {1,5,8,3,6,1,3,3,8,6,1,6,6,8,2,7,3,8,8,4,4,2,5,1,7,2,4,1,1,3,2,1,1,5,5,7,2,4,8,3,2,6,4,1,6},
                 {6,4,8,1,8,3,7,4,6,3,6,4,1,8,8,4,1,1,2,6,1,3,3,6,8,6,3,8,6,6,6,2,6,7,7,2,4,1,7,8,2,6,2,5,6},

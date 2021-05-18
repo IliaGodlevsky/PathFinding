@@ -1,5 +1,4 @@
-﻿using Common.Extensions;
-using GraphLib.Interfaces;
+﻿using GraphLib.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,7 +14,7 @@ namespace GraphLib.Common.CoordinateRadars
         public CoordinateAroundRadar(ICoordinate coordinate)
         {
             selfCoordinatesValues = coordinate.CoordinatesValues.ToArray();
-            currentCoordinatesValues = new int[selfCoordinatesValues.Length];
+            resultCoordinatesValues = new int[selfCoordinatesValues.Length];
             limitDepth = selfCoordinatesValues.Length;
             lateralNeighbourCoordinatesOffsets = new[] { -1, 0, 1 };
         }
@@ -39,31 +38,32 @@ namespace GraphLib.Common.CoordinateRadars
 
         // Recursive method
         private void FormEnvironment(int depth = 0)
-        {
-            lateralNeighbourCoordinatesOffsets
-                .Select(i => selfCoordinatesValues[depth] + i)
-                .ForEach(coordinate => TryMoveDeeper(depth, coordinate));
+        {           
+            foreach (var offset in lateralNeighbourCoordinatesOffsets)
+            {
+                TryMoveDeeper(depth, selfCoordinatesValues[depth] + offset);
+            }
         }
 
         private void TryMoveDeeper(int depth, int coordinate)
         {
             bool canMoveDeeper = depth < limitDepth - 1;
-            currentCoordinatesValues[depth] = coordinate;
+            resultCoordinatesValues[depth] = coordinate;
 
             if (canMoveDeeper)
             {
                 FormEnvironment(depth + 1);
             }
-            else if (!selfCoordinatesValues.SequenceEqual(currentCoordinatesValues))
+            else if (!selfCoordinatesValues.SequenceEqual(resultCoordinatesValues))
             {
-                environment.Add(currentCoordinatesValues.ToArray());
+                environment.Add(resultCoordinatesValues.ToArray());
             }
         }
 
         private readonly int limitDepth;
 
         private readonly int[] lateralNeighbourCoordinatesOffsets;
-        private readonly int[] currentCoordinatesValues;
+        private readonly int[] resultCoordinatesValues;
         private readonly int[] selfCoordinatesValues;
 
         private List<int[]> environment;

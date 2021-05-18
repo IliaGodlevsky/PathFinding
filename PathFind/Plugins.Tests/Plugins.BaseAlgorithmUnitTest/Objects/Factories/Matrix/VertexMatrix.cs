@@ -1,11 +1,10 @@
-﻿using GraphLib.Interfaces;
-using Plugins.BaseAlgorithmUnitTest.Objects.TestObjects;
+﻿using Plugins.BaseAlgorithmUnitTest.Objects.TestObjects;
 
 namespace Plugins.BaseAlgorithmUnitTest.Objects.Factories.Matrix
 {
-    internal abstract class BaseMatrix<T> : IMatrix
+    internal sealed class VertexMatrix : IMatrix
     {
-        protected BaseMatrix(TestGraph graph)
+        public VertexMatrix(TestGraph graph)
         {
             this.graph = graph;
         }
@@ -17,14 +16,12 @@ namespace Plugins.BaseAlgorithmUnitTest.Objects.Factories.Matrix
                 for (int y = 0; y < graph.Length; y++)
                 {
                     var coordinate = new TestCoordinate(x, y);
-                    Assign(graph[coordinate], matrix[x, y]);
+                    var coordinateRadar = new TestCoordinateAroundRadar(coordinate);
+                    graph[coordinate] = new TestVertex(coordinateRadar, coordinate);
                 }
             }
         }
 
-        protected abstract void Assign(IVertex vertex, T value);
-
-        protected T[,] matrix;
-        protected readonly TestGraph graph;
+        private readonly TestGraph graph;
     }
 }

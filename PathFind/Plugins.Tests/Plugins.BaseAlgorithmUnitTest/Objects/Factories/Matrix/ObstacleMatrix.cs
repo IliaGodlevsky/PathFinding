@@ -1,4 +1,5 @@
 ﻿using GraphLib.Interfaces;
+using Plugins.BaseAlgorithmUnitTest.Objects.TestObjects;
 
 namespace Plugins.BaseAlgorithmUnitTest.Objects.Factories.Matrix
 {
@@ -7,10 +8,10 @@ namespace Plugins.BaseAlgorithmUnitTest.Objects.Factories.Matrix
         private const bool O = true;
         private const bool I = false;
 
-        public ObstacleMatrix(IGraph graph)
+        public ObstacleMatrix(TestGraph graph)
             : base(graph)
         {
-            matrix = new bool[Constants.Width, Constants.Length]
+            matrix = new bool[,]
             {
                 {I,I,I,I,I,I,I,I,I,I,I,I,O,I,I,I,I,I,I,I,I,I,I,I,I,I,I,I,I,I,O,I,I,I,O,O,O,I,I,I,I,I,I,I,I},
                 {I,I,I,I,I,I,I,I,I,O,I,I,I,I,I,O,I,I,I,O,I,I,I,I,I,I,I,I,I,I,I,I,I,I,I,I,I,I,I,I,I,I,I,I,I},

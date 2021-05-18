@@ -19,6 +19,7 @@ namespace Plugins.DijkstraAlgorithm.Tests
         {
             base.FindPath_EndpointsBelongToGraph_ReturnsShortestPath();
         }
+
         protected override IAlgorithm CreateAlgorithm(IGraph graph, IEndPoints endPoints)
         {
             return new DijkstrasAlgorithm(graph, endPoints);

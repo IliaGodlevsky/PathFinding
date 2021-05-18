@@ -1,8 +1,5 @@
 using Algorithm.Interfaces;
 using GraphLib.Interfaces;
-using GraphLib.Interfaces.Factories;
-using GraphLib.Realizations.Factories.CoordinateRadarFactories;
-using GraphLib.Realizations.Factories.GraphAssembles;
 using NUnit.Framework;
 using Plugins.BaseAlgorithmUnitTest.Objects.Factories;
 using Plugins.BaseAlgorithmUnitTest.Objects.TestObjects;
@@ -14,29 +11,11 @@ namespace Plugins.BaseAlgorithmUnitTest
     [TestFixture]
     public abstract class AlgorithmTest
     {
-        private readonly ICoordinateRadarFactory radarFactory;
-        private readonly IVertexCostFactory costFactory;
-        private readonly IGraphFactory graphFactory;
-        private readonly ICoordinateFactory coordinateFactory;
-        private readonly IVertexFactory vertexFactory;
-        private readonly IGraphAssemble graphAssemble;
         private readonly TestGraphAssemble testAssemble;
 
         public AlgorithmTest()
         {
-            radarFactory = new CoordinateAroundRadarFactory();
-            graphFactory = new TestGraphFactory();
-            vertexFactory = new TestVertexFactory();
-            costFactory = new TestVertexCostFactory();
-            coordinateFactory = new TestCoordinateFactory();
-
-            graphAssemble = new GraphAssemble(vertexFactory,
-                coordinateFactory,
-                graphFactory,
-                costFactory,
-                radarFactory);
-
-            testAssemble = new TestGraphAssemble(graphAssemble);
+            testAssemble = new TestGraphAssemble();
         }
 
         #region Test Methods
@@ -44,20 +23,14 @@ namespace Plugins.BaseAlgorithmUnitTest
         [Test]
         public virtual void FindPath_EndpointsBelongToGraph_ReturnsShortestPath()
         {
-            int expectedLength = GetExpectedLength();
-            int expectedCost = GetExpectedCost();
             var graph = testAssemble.AssembleGraph(0, Constants.Width, Constants.Length);
-            var start = graph.Vertices.First();
-            var end = graph.Vertices.Last();
-            var endPoints = new TestEndPoints(start, end);
+            var endPoints = new TestEndPoints(graph.Vertices.First(), graph.Vertices.Last());
             var algorithm = CreateAlgorithm(graph, endPoints);
 
             var graphPath = algorithm.FindPath();
-            var realLength = graphPath.Path.Count();
-            var realCost = graphPath.PathCost;
 
-            Assert.AreEqual(realLength, expectedLength);
-            Assert.AreEqual(realCost, expectedCost);
+            Assert.AreEqual(GetExpectedLength(), graphPath.Path.Count());
+            Assert.AreEqual(GetExpectedCost(), graphPath.PathCost);
         }
 
         [Test]

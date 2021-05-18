@@ -6,7 +6,7 @@ namespace Plugins.BaseAlgorithmUnitTest.Objects.TestObjects
 {
     internal sealed class TestVertex : IVertex
     {
-        public TestVertex(ICoordinateRadar radar, ICoordinate coordinate)
+        public TestVertex(TestCoordinateAroundRadar radar, TestCoordinate coordinate)
         {
             this.Initialize();
             CoordinateRadar = radar;

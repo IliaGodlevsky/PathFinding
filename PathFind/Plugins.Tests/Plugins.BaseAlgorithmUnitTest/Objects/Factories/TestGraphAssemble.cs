@@ -1,24 +1,24 @@
-﻿using GraphLib.Interfaces;
+﻿using GraphLib.Extensions;
+using GraphLib.Interfaces;
 using GraphLib.Interfaces.Factories;
 using Plugins.BaseAlgorithmUnitTest.Objects.Factories.Matrix;
+using Plugins.BaseAlgorithmUnitTest.Objects.TestObjects;
 
 namespace Plugins.BaseAlgorithmUnitTest.Objects.Factories
 {
     internal sealed class TestGraphAssemble : IGraphAssemble
     {
-        public TestGraphAssemble(IGraphAssemble graphAssemble)
+        public IGraph AssembleGraph(int obstaclePercent, 
+            params int[] sizes)
         {
-            this.graphAssemble = graphAssemble;
-        }
-
-        public IGraph AssembleGraph(int obstaclePercent, params int[] graphDimensionSizes)
-        {
-            var graph = graphAssemble.AssembleGraph(obstaclePercent, graphDimensionSizes);
-            IMatrix matrices = new Matrices(new ObstacleMatrix(graph), new CostMatrix(graph));
+            var graph = new TestGraph(sizes);
+            var matrices = new Matrices(
+                new VertexMatrix(graph), 
+                new CostMatrix(graph), 
+                new ObstacleMatrix(graph));
             matrices.Overlay();
+            graph.ConnectVertices();
             return graph;
         }
-
-        private readonly IGraphAssemble graphAssemble;
     }
 }
