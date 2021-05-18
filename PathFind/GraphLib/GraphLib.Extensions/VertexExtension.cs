@@ -103,7 +103,7 @@ namespace GraphLib.Extensions
 
             ICoordinate Coordinate(IEnumerable<int> coordinates) => new Coordinate(coordinates);
             bool IsWithingGraph(ICoordinate coordinate) => coordinate.IsWithinGraph(graph);
-            bool CanBeNeighbour(IVertex vertex) => graph.CanBeNeighbourOf(vertex, self);
+            bool CanBeNeighbours(IVertex vertex) => graph.CanBeNeighbours(vertex, self);
             IVertex Vertex(ICoordinate coordinate) => graph[coordinate];
 
             self.Neighbours = self
@@ -112,7 +112,7 @@ namespace GraphLib.Extensions
                 .Select(Coordinate)
                 .Which(IsWithingGraph)
                 .Select(Vertex)
-                .Which(CanBeNeighbour)
+                .Which(CanBeNeighbours)
                 .ToList();
         }
     }
