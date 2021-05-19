@@ -3,7 +3,7 @@ using Common.Extensions;
 using GraphLib.Extensions;
 using GraphLib.Interfaces;
 using GraphLib.Interfaces.Factories;
-using GraphLib.Realizations.AverageCosts;
+using GraphLib.Realizations.MeanCosts;
 using GraphLib.Realizations.VisitedVerticesImpl;
 using System;
 using System.Linq;
@@ -19,7 +19,7 @@ namespace GraphLib.Realizations.Factories.GraphAssembles
            IGraphFactory graphFactory,
            IVertexCostFactory costFactory,
            ICoordinateRadarFactory radarFactory,
-           IAverageCost averageCost)
+           IMeanCost averageCost)
             : base(vertexFactory, coordinateFactory,
                   graphFactory, costFactory, radarFactory)
         {
@@ -49,7 +49,7 @@ namespace GraphLib.Realizations.Factories.GraphAssembles
         private void SmoothOut(IVertex vertex, IVisitedVertices visitedVertices)
         {
             visitedVertices.Add(vertex);
-            var unvisitedNeighbours = visitedVertices.GetUnvisitedNeighbours(vertex).ToList();
+            var unvisitedNeighbours = visitedVertices.GetUnvisitedNeighbours(vertex);
             int AverageCost(IVertex neighbour) => averageCost.Calculate(neighbour, vertex);
             if (unvisitedNeighbours.Any())
             {
@@ -59,6 +59,6 @@ namespace GraphLib.Realizations.Factories.GraphAssembles
             }
         }
 
-        protected readonly IAverageCost averageCost;
+        protected readonly IMeanCost averageCost;
     }
 }

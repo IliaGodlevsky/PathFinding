@@ -41,7 +41,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="IAverageCost.cs" />
+    <Compile Include="IMeanCost.cs" />
     <Compile Include="ICoordinate.cs" />
     <Compile Include="Factories\ICoordinateFactory.cs" />
     <Compile Include="Factories\ICoordinateRadarFactory.cs" />

@@ -1,9 +1,9 @@
 ﻿using GraphLib.Interfaces;
 using System;
 
-namespace GraphLib.Realizations.AverageCosts
+namespace GraphLib.Realizations.MeanCosts
 {
-    public sealed class RootMeanSquareCost : IAverageCost
+    public sealed class RootMeanSquareCost : IMeanCost
     {
         public int Calculate(IVertex neighbour, IVertex vertex)
         {
