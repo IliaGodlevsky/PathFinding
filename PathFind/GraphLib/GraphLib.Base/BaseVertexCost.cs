@@ -1,4 +1,4 @@
-﻿using Common;
+﻿using Common.ValueRanges;
 using GraphLib.Interfaces;
 using System;
 
@@ -22,7 +22,7 @@ namespace GraphLib.Base
 
         static BaseVertexCost()
         {
-            CostRange = new ValueRange(9, 1);
+            CostRange = new InclusiveValueRange(9, 1);
         }
 
         public override bool Equals(object obj)
@@ -42,6 +42,6 @@ namespace GraphLib.Base
             return CurrentCost.GetHashCode();
         }
 
-        public static ValueRange CostRange { get; set; }
+        public static InclusiveValueRange CostRange { get; set; }
     }
 }

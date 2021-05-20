@@ -1,16 +1,24 @@
-﻿using GraphLib.Interfaces;
+﻿using GraphLib.Extensions;
+using GraphLib.Interfaces;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace GraphLib.Extensions
+namespace GraphLib.Realizations.Coordinates
 {
-    internal readonly struct Coordinate : ICoordinate
+    [Serializable]
+    internal sealed class Coordinate : ICoordinate
     {
         public IEnumerable<int> CoordinatesValues { get; }
 
-        public Coordinate(IEnumerable<int> coordinates)
+        public Coordinate(int[] coordinates)
         {
             CoordinatesValues = coordinates.ToArray();
+        }
+
+        public Coordinate(ICoordinate coordinate)
+        {
+            CoordinatesValues = coordinate.CoordinatesValues.ToArray();
         }
 
         public override bool Equals(object pos)

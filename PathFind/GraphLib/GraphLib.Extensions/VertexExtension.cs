@@ -38,9 +38,7 @@ namespace GraphLib.Extensions
 
         public static bool IsCardinal(this IVertex vertex, IVertex neighbour)
         {
-            var vertexCoordinates = vertex.Position.CoordinatesValues.ToArray();
-            var neighbourCoordinates = neighbour.Position.CoordinatesValues.ToArray();
-            return vertexCoordinates.IsCardinal(neighbourCoordinates);
+            return vertex.Position.IsCardinal(neighbour.Position);
         }
 
         public static void Initialize(this IVertex self)
@@ -100,8 +98,7 @@ namespace GraphLib.Extensions
             }
 
             #endregion
-
-            ICoordinate Coordinate(IEnumerable<int> coordinates) => new Coordinate(coordinates);
+          
             bool IsWithingGraph(ICoordinate coordinate) => coordinate.IsWithinGraph(graph);
             bool CanBeNeighbours(IVertex vertex) => graph.CanBeNeighbours(vertex, self);
             IVertex Vertex(ICoordinate coordinate) => graph[coordinate];
@@ -109,7 +106,6 @@ namespace GraphLib.Extensions
             self.Neighbours = self
                 .CoordinateRadar
                 .Environment
-                .Select(Coordinate)
                 .Which(IsWithingGraph)
                 .Select(Vertex)
                 .Which(CanBeNeighbours)

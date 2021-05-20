@@ -1,14 +1,15 @@
-﻿using Common;
+﻿using Common.ValueRanges;
 
 namespace WPFVersion3D
 {
     internal static class Constants
     {
-        public static ValueRange ObstaclePercentValueRange { get; }
-        public static ValueRange AlgorithmDelayValueRange { get; }
-        public static ValueRange GraphWidthValueRange { get; }
-        public static ValueRange GraphLengthValueRange { get; }
-        public static ValueRange GraphHeightValueRange { get; }
+        public static IValueRange ObstaclePercentValueRange { get; }
+        public static IValueRange AlgorithmDelayValueRange { get; }
+        public static IValueRange GraphWidthValueRange { get; }
+        public static IValueRange GraphLengthValueRange { get; }
+        public static IValueRange GraphHeightValueRange { get; }
+        public static ValueRanges GraphParamsValueRanges { get; }
 
         public const double InitialRotationAnimationDuration = 3000;
 
@@ -24,11 +25,15 @@ namespace WPFVersion3D
 
         static Constants()
         {
-            ObstaclePercentValueRange = new ValueRange(99, 0);
-            AlgorithmDelayValueRange = new ValueRange(35, 0);
-            GraphWidthValueRange = new ValueRange(30, 0);
-            GraphLengthValueRange = new ValueRange(30, 0);
-            GraphHeightValueRange = new ValueRange(30, 0);
+            ObstaclePercentValueRange = new LowInclusiveValueRange(100, 0);
+            AlgorithmDelayValueRange = new InclusiveValueRange(35, 0);
+            GraphWidthValueRange = new UpInclusiveValueRange(30, 0);
+            GraphLengthValueRange = new UpInclusiveValueRange(30, 0);
+            GraphHeightValueRange = new UpInclusiveValueRange(30, 0);
+            GraphParamsValueRanges = new ValueRanges(GraphWidthValueRange, 
+                GraphLengthValueRange, 
+                GraphHeightValueRange
+                );
         }
     }
 }

@@ -41,7 +41,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Coordinate.cs" />
     <Compile Include="CoordinateExtensions.cs" />
     <Compile Include="EnumerableExtensions.cs" />
     <Compile Include="GraphExtensions.cs" />

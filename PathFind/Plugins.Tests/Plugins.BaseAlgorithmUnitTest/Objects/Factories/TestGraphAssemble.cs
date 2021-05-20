@@ -8,13 +8,13 @@ namespace Plugins.BaseAlgorithmUnitTest.Objects.Factories
 {
     internal sealed class TestGraphAssemble : IGraphAssemble
     {
-        public IGraph AssembleGraph(int obstaclePercent, 
+        public IGraph AssembleGraph(int obstaclePercent,
             params int[] sizes)
         {
             var graph = new TestGraph(sizes);
             var matrices = new Matrices(
-                new VertexMatrix(graph), 
-                new CostMatrix(graph), 
+                new VertexMatrix(graph),
+                new CostMatrix(graph),
                 new ObstacleMatrix(graph));
             matrices.Overlay();
             graph.ConnectVertices();

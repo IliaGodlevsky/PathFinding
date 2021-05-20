@@ -14,6 +14,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\GraphLib\GraphLib.Base\GraphLib.Base.csproj" />
     <ProjectReference Include="..\..\GraphLib\GraphLib.Extensions\GraphLib.Extensions.csproj" />
     <ProjectReference Include="..\..\GraphLib\GraphLib.Interfaces\GraphLib.Interfaces.csproj" />
   </ItemGroup>

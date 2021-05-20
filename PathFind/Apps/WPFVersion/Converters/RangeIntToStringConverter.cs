@@ -1,4 +1,4 @@
-﻿using Common;
+﻿using Common.ValueRanges;
 using System;
 using System.Globalization;
 using System.Windows.Data;
@@ -18,7 +18,7 @@ namespace WPFVersion.Converters
 
             if (IsValidParametres(value, parameter))
             {
-                var range = parameter as ValueRange;
+                var range = parameter as IValueRange;
                 result = System.Convert.ToInt32(value);
                 result = range.ReturnInRange(result);
             }
@@ -28,7 +28,7 @@ namespace WPFVersion.Converters
 
         private bool IsValidParametres(object value, object parametre)
         {
-            return int.TryParse(value.ToString(), out _) && parametre is ValueRange;
+            return int.TryParse(value.ToString(), out _) && parametre is IValueRange;
         }
     }
 }

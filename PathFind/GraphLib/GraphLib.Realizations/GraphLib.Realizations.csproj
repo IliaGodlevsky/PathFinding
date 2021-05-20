@@ -41,6 +41,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CoordinateRadars\CardinalCoordinateRadar.cs" />
+    <Compile Include="CoordinateRadars\CoordinateAroundRadar.cs" />
+    <Compile Include="Coordinates\Coordinate.cs" />
     <Compile Include="MeanCosts\GeometricMeanCost.cs" />
     <Compile Include="MeanCosts\MeanCost.cs" />
     <Compile Include="MeanCosts\RootMeanSquareCost.cs" />

@@ -6,7 +6,7 @@ namespace Common.Tests
     [TestFixture]
     public class EnumerableExtensionsTests
     {
-        [TestCase(new int[]{1, 2, 7, 100, 15, 33, -1}, new int[] { 1, 2, 7, 100, 15, 33, -1 })]
+        [TestCase(new int[] { 1, 2, 7, 100, 15, 33, -1 }, new int[] { 1, 2, 7, 100, 15, 33, -1 })]
         public void Match_ArraysAreEqual_ComparesForEquality_ReturnsTrue(int[] firstArray, int[] secondArray)
         {
             bool matches = firstArray.Match(secondArray, (a, b) => a == b);

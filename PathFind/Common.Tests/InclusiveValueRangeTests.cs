@@ -1,9 +1,10 @@
+using Common.ValueRanges;
 using NUnit.Framework;
 
 namespace Common.Tests
 {
     [TestFixture]
-    public class ValueRangeTests
+    public class InclusiveValueRangeTests
     {
         [TestCase(5, 0)]
         [TestCase(2, 1)]
@@ -11,7 +12,7 @@ namespace Common.Tests
         [TestCase(1, 0)]
         public void Constructor_UpperValueIsGreaterThanLower_ConstructsCorrectly(int upperValue, int lowerValue)
         {
-            var range = new ValueRange(upperValue, lowerValue);
+            var range = new InclusiveValueRange(upperValue, lowerValue);
 
             Assert.AreEqual(upperValue, range.UpperValueOfRange);
             Assert.AreEqual(lowerValue, range.LowerValueOfRange);
@@ -23,7 +24,7 @@ namespace Common.Tests
         [TestCase(0, 1)]
         public void Constructor_UpperValueIsLesserThanLower_ConstructsCorrectly(int upperValue, int lowerValue)
         {
-            var range = new ValueRange(upperValue, lowerValue);
+            var range = new InclusiveValueRange(upperValue, lowerValue);
 
             Assert.AreEqual(lowerValue, range.UpperValueOfRange);
             Assert.AreEqual(upperValue, range.LowerValueOfRange);
@@ -33,10 +34,10 @@ namespace Common.Tests
         [TestCase(25, 11, 15, ExpectedResult = true)]
         [TestCase(98, 43, 40, ExpectedResult = false)]
         [TestCase(100, 0, -1, ExpectedResult = false)]
-        public bool Contains_ValueIsInValueRange_ReturnsRightCondition(int upperValue, 
+        public bool Contains_ValueIsInValueRange_ReturnsRightCondition(int upperValue,
             int lowerValue, int testValue)
         {
-            var range = new ValueRange(upperValue, lowerValue);
+            var range = new InclusiveValueRange(upperValue, lowerValue);
 
             return range.Contains(testValue);
         }
@@ -47,7 +48,7 @@ namespace Common.Tests
         [TestCase(100, 0)]
         public void GetRandomValueFromRange_ReturnsValueInRange(int upperValue, int lowerValue)
         {
-            var range = new ValueRange(upperValue, lowerValue);
+            var range = new InclusiveValueRange(upperValue, lowerValue);
 
             var randomValue = range.GetRandomValueFromRange();
 
@@ -58,10 +59,10 @@ namespace Common.Tests
         [TestCase(25, 11, 27)]
         [TestCase(98, 43, 100)]
         [TestCase(100, 0, 104)]
-        public void ReturnInRange_ValueIsGreaterThanUpperValue_ReturnsUpperValue(int upperValue, 
+        public void ReturnInRange_ValueIsGreaterThanUpperValue_ReturnsUpperValue(int upperValue,
             int lowerValue, int outOfRangeValue)
         {
-            var range = new ValueRange(upperValue, lowerValue);
+            var range = new InclusiveValueRange(upperValue, lowerValue);
 
             var valueInRange = range.ReturnInRange(outOfRangeValue);
 
@@ -75,7 +76,7 @@ namespace Common.Tests
         public void ReturnInRange_ValueIsLesserThanUpperValue_ReturnsLowerValue(int upperValue,
             int lowerValue, int outOfRangeValue)
         {
-            var range = new ValueRange(upperValue, lowerValue);
+            var range = new InclusiveValueRange(upperValue, lowerValue);
 
             var valueInRange = range.ReturnInRange(outOfRangeValue);
 
@@ -86,14 +87,14 @@ namespace Common.Tests
         [TestCase(25, 11, 18)]
         [TestCase(98, 43, 76)]
         [TestCase(100, 0, 45)]
-        public void ReturnInRange_ValueIsInRange_ReturnsUnchangedValue(int upperValue, 
+        public void ReturnInRange_ValueIsInRange_ReturnsUnchangedValue(int upperValue,
             int lowerValue, int withinRangeValue)
         {
-            var range = new ValueRange(upperValue, lowerValue);
+            var range = new InclusiveValueRange(upperValue, lowerValue);
 
             var valueInRange = range.ReturnInRange(withinRangeValue);
 
             Assert.AreEqual(valueInRange, withinRangeValue);
-        }       
+        }
     }
 }

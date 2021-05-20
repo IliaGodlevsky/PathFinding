@@ -1,13 +1,13 @@
-﻿using GraphLib.Common.CoordinateRadars;
-using GraphLib.Interfaces;
+﻿using GraphLib.Interfaces;
+using GraphLib.Realizations.CoordinateRadars;
 using Moq;
 using NUnit.Framework;
 using System.Linq;
 
-namespace GraphLib.Common.Tests
+namespace GraphLib.Realizations.Tests
 {
     [TestFixture]
-    public class CoordinateAroundRadarTests
+    public class CardinalCoordinateAroundRadarTest
     {
         private Mock<ICoordinate> coordinateMock;
 
@@ -26,18 +26,17 @@ namespace GraphLib.Common.Tests
         [TestCase(new[] { 2, 3, 4, 5, 6, 7, 8 })]
         public void Environment_CoordinatesWithVariousDimensionsNumber_ReturnValidNumberOfNeighbours(int[] coordinateValues)
         {
-            const int Self = 1;
             int dimensions = coordinateValues.Length;
-            int expectedResult = Pow(3, dimensions) - Self;
+            int expectedResult = 2 * dimensions;
             coordinateMock.Setup(coordinate => coordinate.CoordinatesValues).Returns(coordinateValues);
-            var coordinateEnvironment = new CoordinateAroundRadar(coordinateMock.Object);
+            var coordinateEnvironment = new CardinalCoordinateAroundRadar(coordinateMock.Object);
 
-            var environment = coordinateEnvironment.Environment;
+            var environment = coordinateEnvironment.Environment.ToArray();
 
-            Assert.AreEqual(expectedResult, environment.Count());
+            Assert.AreEqual(expectedResult, environment.Length);
         }
 
-        [TestCase(new[] { 2, })]
+        [TestCase(new[] { 2 })]
         [TestCase(new[] { 2, 3 })]
         [TestCase(new[] { 2, 3, 4 })]
         [TestCase(new[] { 2, 3, 4, 5 })]
@@ -47,15 +46,15 @@ namespace GraphLib.Common.Tests
         public void Environment_CoordinatesWithVariousDimensionsNumber_ReturnNeighboursWithoutSelf(int[] coordinateValues)
         {
             coordinateMock.Setup(coordinate => coordinate.CoordinatesValues).Returns(coordinateValues);
-            var coordinateEnvironment = new CoordinateAroundRadar(coordinateMock.Object);
+            var coordinateEnvironment = new CardinalCoordinateAroundRadar(coordinateMock.Object);
 
             var environment = coordinateEnvironment.Environment;
-            bool hasSelf = environment.Any(values => values.SequenceEqual(coordinateValues));
+            bool hasSelf = environment.Any(values => values.Equals(coordinateMock.Object));
 
             Assert.IsFalse(hasSelf);
         }
 
-        [TestCase(new[] { 3, })]
+        [TestCase(new[] { 3 })]
         [TestCase(new[] { 1, 7 })]
         [TestCase(new[] { 100, 25, 33 })]
         [TestCase(new[] { 20, 13, 34, 58 })]
@@ -65,25 +64,11 @@ namespace GraphLib.Common.Tests
         public void Environment_CoordinatesWithVariousDimensionsCount_ReturnUniqueCoordinates(int[] coordinateValues)
         {
             coordinateMock.Setup(coordinate => coordinate.CoordinatesValues).Returns(coordinateValues);
-            var coordinateEnvironment = new CoordinateAroundRadar(coordinateMock.Object);
+            var coordinateEnvironment = new CardinalCoordinateAroundRadar(coordinateMock.Object);
 
             var environment = coordinateEnvironment.Environment.ToArray();
 
-            Assert.IsTrue(environment.Select(CreateCoordinateMock).Distinct().Count() == environment.Count());
-        }
-
-        private Mock<ICoordinate> CreateCoordinateMock(int[] coordinates)
-        {
-            var mock = new Mock<ICoordinate>();
-            mock.Setup(coordinate => coordinate.CoordinatesValues).Returns(coordinates.ToArray());
-            return mock;
-        }
-
-        private int Pow(int number, int power)
-        {
-            return Enumerable
-                  .Repeat(number, power)
-                  .Aggregate(1, (a, b) => a * b);
+            Assert.IsTrue(environment.Distinct().Count() == environment.Count());
         }
     }
 }

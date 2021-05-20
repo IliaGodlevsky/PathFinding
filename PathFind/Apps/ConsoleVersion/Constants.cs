@@ -1,22 +1,22 @@
-﻿using Common;
+﻿using Common.ValueRanges;
 
 namespace ConsoleVersion
 {
     internal static class Constants
     {
-        public static ValueRange GraphWidthValueRange { get; }
-        public static ValueRange GraphLengthValueRange { get; }
-        public static ValueRange ObstaclesPercentValueRange { get; }
-        public static ValueRange AlgorithmDelayTimeValueRange { get; }
+        public static IValueRange GraphWidthValueRange { get; }
+        public static IValueRange GraphLengthValueRange { get; }
+        public static IValueRange ObstaclesPercentValueRange { get; }
+        public static IValueRange AlgorithmDelayTimeValueRange { get; }
 
         public const int LateralDistanceBetweenVertices = 3;
 
         static Constants()
         {
-            GraphWidthValueRange = new ValueRange(80, 1);
-            GraphLengthValueRange = new ValueRange(50, 1);
-            ObstaclesPercentValueRange = new ValueRange(99, 0);
-            AlgorithmDelayTimeValueRange = new ValueRange(35, 0);
+            GraphWidthValueRange = new UpInclusiveValueRange(80, 0);
+            GraphLengthValueRange = new UpInclusiveValueRange(50, 1);
+            ObstaclesPercentValueRange = new LowInclusiveValueRange(100, 0);
+            AlgorithmDelayTimeValueRange = new InclusiveValueRange(35, 0);
         }
     }
 }

@@ -1,14 +1,16 @@
-﻿using Common;
+﻿using Common.ValueRanges;
 
 namespace WPFVersion
 {
     internal static class Constants
     {
-        public static ValueRange GraphWidthValueRange { get; }
-        public static ValueRange GraphLengthValueRange { get; }
-        public static ValueRange ObstaclesPercentValueRange { get; }
-        public static ValueRange AlgorithmDelayTimeValueRange { get; }
-        public static ValueRange VertexSizeRange { get; }
+        public static IValueRange GraphWidthValueRange { get; }
+        public static IValueRange GraphLengthValueRange { get; }
+        public static IValueRange ObstaclesPercentValueRange { get; }
+        public static IValueRange AlgorithmDelayTimeValueRange { get; }
+        public static IValueRange VertexSizeRange { get; }
+
+        public static ValueRanges GraphParamsValueRanges { get; }
 
         public const int DistanceBetweenVertices = 1;
         public const int VertexSize = 24;
@@ -16,11 +18,12 @@ namespace WPFVersion
 
         static Constants()
         {
-            GraphWidthValueRange = new ValueRange(150, 1);
-            GraphLengthValueRange = new ValueRange(75, 1);
-            ObstaclesPercentValueRange = new ValueRange(99, 0);
-            AlgorithmDelayTimeValueRange = new ValueRange(35, 0);
-            VertexSizeRange = new ValueRange(30, 5);
+            GraphWidthValueRange = new UpInclusiveValueRange(150, 0);
+            GraphLengthValueRange = new UpInclusiveValueRange(75, 0);
+            GraphParamsValueRanges = new ValueRanges(GraphWidthValueRange, GraphLengthValueRange);
+            ObstaclesPercentValueRange = new LowInclusiveValueRange(100, 0);
+            AlgorithmDelayTimeValueRange = new InclusiveValueRange(35, 0);
+            VertexSizeRange = new InclusiveValueRange(30, 5);
         }
     }
 }

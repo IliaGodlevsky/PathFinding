@@ -1,5 +1,5 @@
 ﻿using Algorithm.Realizations;
-using Common;
+using Common.ValueRanges;
 using ConsoleVersion.Attributes;
 using ConsoleVersion.Enums;
 using ConsoleVersion.Model;
@@ -100,7 +100,7 @@ namespace ConsoleVersion.ViewModel
         {
             string message = "Enter upper vertex cost value: ";
             var upperValueRange = InputNumber(message, 99, 1);
-            BaseVertexCost.CostRange = new ValueRange(upperValueRange, 1);
+            BaseVertexCost.CostRange = new InclusiveValueRange(upperValueRange, 1);
         }
 
         [MenuItem("Change vertex cost", MenuItemPriority.Low)]

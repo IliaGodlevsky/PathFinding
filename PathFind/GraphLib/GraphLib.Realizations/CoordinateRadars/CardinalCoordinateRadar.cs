@@ -1,34 +1,37 @@
 ﻿using GraphLib.Common.Extensions;
+using GraphLib.Extensions;
 using GraphLib.Interfaces;
+using GraphLib.Realizations.Coordinates;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace GraphLib.Common.CoordinateRadars
+namespace GraphLib.Realizations.CoordinateRadars
 {
     [Serializable]
     public sealed class CardinalCoordinateAroundRadar : ICoordinateRadar
     {
         public CardinalCoordinateAroundRadar(ICoordinate coordinate)
         {
-            coordinatesValues = coordinate.CoordinatesValues.ToArray();
+            coordinatesValues = new Coordinate(coordinate);
             coordinateRadar = new CoordinateAroundRadar(coordinate);
         }
 
-        public IEnumerable<int[]> Environment => environment ?? FormEnvironment();
+        public IEnumerable<ICoordinate> Environment => environment ?? FormEnvironment();
 
-        private bool IsCardinal(int[] coordinates)
+        private bool IsCardinal(ICoordinate coordinate)
         {
-            return coordinates.IsCardinal(coordinatesValues);
+            return coordinate.IsCardinal(coordinatesValues);
         }
 
-        private IEnumerable<int[]> FormEnvironment()
+        private IEnumerable<ICoordinate> FormEnvironment()
         {
             return environment = coordinateRadar.Environment.Where(IsCardinal);
         }
 
-        private readonly int[] coordinatesValues;
+        private readonly Coordinate coordinatesValues;
         private readonly ICoordinateRadar coordinateRadar;
-        private IEnumerable<int[]> environment;
+
+        private IEnumerable<ICoordinate> environment;
     }
 }

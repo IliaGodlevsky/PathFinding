@@ -1,5 +1,6 @@
 ﻿using Common.Extensions;
-using GraphLib.Exceptions;
+using Common.ValueRanges;
+using GraphLib.Common.Extensions;
 using GraphLib.Interfaces;
 using System;
 using System.Linq;
@@ -29,6 +30,13 @@ namespace GraphLib.Extensions
             return self.CoordinatesValues.SequenceEqual(coordinate.CoordinatesValues);
         }
 
+        public static bool IsCardinal(this ICoordinate coordinate, ICoordinate neighbour)
+        {
+            var vertexCoordinates = coordinate.CoordinatesValues.ToArray();
+            var neighbourCoordinates = neighbour.CoordinatesValues.ToArray();
+            return vertexCoordinates.IsCardinal(neighbourCoordinates);
+        }
+
         /// <summary>
         /// Checks whether coordinate is within graph
         /// </summary>
@@ -42,7 +50,10 @@ namespace GraphLib.Extensions
         public static bool IsWithinGraph(this ICoordinate self, IGraph graph)
         {
             bool IsWithin(int coordinate, int graphDimension)
-                => coordinate < graphDimension && coordinate >= 0;
+            {
+                IValueRange range = new LowInclusiveValueRange(graphDimension, 0);
+                return range.Contains(coordinate);
+            }
 
             return IsWithinGraph(self, graph, IsWithin);
         }

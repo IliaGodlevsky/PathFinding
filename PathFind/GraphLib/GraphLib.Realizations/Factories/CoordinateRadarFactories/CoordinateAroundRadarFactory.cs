@@ -1,6 +1,6 @@
-﻿using GraphLib.Common.CoordinateRadars;
-using GraphLib.Interfaces;
+﻿using GraphLib.Interfaces;
 using GraphLib.Interfaces.Factories;
+using GraphLib.Realizations.CoordinateRadars;
 
 namespace GraphLib.Realizations.Factories.CoordinateRadarFactories
 {

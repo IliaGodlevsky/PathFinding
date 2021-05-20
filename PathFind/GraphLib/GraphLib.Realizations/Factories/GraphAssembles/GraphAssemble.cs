@@ -1,6 +1,6 @@
 ﻿using AssembleClassesLib.Attributes;
-using Common;
 using Common.Extensions;
+using Common.ValueRanges;
 using GraphLib.Exceptions;
 using GraphLib.Extensions;
 using GraphLib.Interfaces;
@@ -28,7 +28,7 @@ namespace GraphLib.Realizations.Factories.GraphAssembles
             this.graphFactory = graphFactory;
             this.costFactory = costFactory;
             this.radarFactory = radarFactory;
-            percentRange = new ValueRange(100, 0);
+            percentRange = new InclusiveValueRange(100, 0);
         }
 
         /// <summary>
@@ -75,6 +75,6 @@ namespace GraphLib.Realizations.Factories.GraphAssembles
         protected readonly IVertexFactory vertexFactory;
         protected readonly IGraphFactory graphFactory;
         protected readonly ICoordinateRadarFactory radarFactory;
-        protected readonly ValueRange percentRange;
+        protected readonly InclusiveValueRange percentRange;
     }
 }

@@ -11,8 +11,8 @@ namespace Plugins.BaseAlgorithmUnitTest.Objects.TestObjects
             this.coordinate = coordinate;
         }
 
-        public IEnumerable<int[]> Environment
-        {            
+        public IEnumerable<ICoordinate> Environment
+        {
             get
             {
                 if (environment == null)
@@ -23,7 +23,7 @@ namespace Plugins.BaseAlgorithmUnitTest.Objects.TestObjects
             }
         }
 
-        private IEnumerable<int[]> FormEnvironment()
+        private IEnumerable<TestCoordinate> FormEnvironment()
         {
             int X = coordinate.X;
             int Y = coordinate.Y;
@@ -33,13 +33,13 @@ namespace Plugins.BaseAlgorithmUnitTest.Objects.TestObjects
                 {
                     if (x != X || y != Y)
                     {
-                        yield return new int[] { x, y };
+                        yield return new TestCoordinate(x, y);
                     }
                 }
             }
         }
 
-        private List<int[]> environment;
+        private List<TestCoordinate> environment;
         private readonly TestCoordinate coordinate;
     }
 }

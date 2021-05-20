@@ -1,4 +1,4 @@
-﻿using Common;
+﻿using Common.ValueRanges;
 using ConsoleVersion.View.Interface;
 using ConsoleVersion.ViewModel;
 using GraphLib.Extensions;
@@ -50,7 +50,7 @@ namespace ConsoleVersion.View
             menuActions = GetMenuMethodsAsDelegates<Action>(mainModel);
             menuActionsKeys = menuActions.Keys.ToArray();
             menu = CreateMenu(menuActionsKeys, columns: 3);
-            menuValueRange = new ValueRange(menuActionsKeys.Length, 1);
+            menuValueRange = new UpInclusiveValueRange(menuActionsKeys.Length, 0);
         }
 
         public void Start()
@@ -71,7 +71,7 @@ namespace ConsoleVersion.View
         private readonly Dictionary<string, Action> menuActions;
         private readonly MainViewModel mainModel;
         private readonly string menu;
-        private readonly ValueRange menuValueRange;
+        private readonly IValueRange menuValueRange;
         private readonly string[] menuActionsKeys;
     }
 }

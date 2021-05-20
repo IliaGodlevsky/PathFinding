@@ -1,9 +1,10 @@
 ﻿using GraphLib.Interfaces;
+using GraphLib.Realizations.Coordinates;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace GraphLib.Common.CoordinateRadars
+namespace GraphLib.Realizations.CoordinateRadars
 {
     [Serializable]
     /// <summary>
@@ -23,13 +24,13 @@ namespace GraphLib.Common.CoordinateRadars
         /// Returns an array of the coordinate neighbours
         /// </summary>
         /// <returns>An array of the coordinate neighbours</returns>
-        public IEnumerable<int[]> Environment
+        public IEnumerable<ICoordinate> Environment
         {
             get
             {
                 if (environment == null)
                 {
-                    environment = new List<int[]>();
+                    environment = new List<ICoordinate>();
                     FormEnvironment();
                 }
                 return environment;
@@ -38,7 +39,7 @@ namespace GraphLib.Common.CoordinateRadars
 
         // Recursive method
         private void FormEnvironment(int depth = 0)
-        {           
+        {
             foreach (var offset in lateralNeighbourCoordinatesOffsets)
             {
                 TryMoveDeeper(depth, selfCoordinatesValues[depth] + offset);
@@ -56,7 +57,7 @@ namespace GraphLib.Common.CoordinateRadars
             }
             else if (!selfCoordinatesValues.SequenceEqual(resultCoordinatesValues))
             {
-                environment.Add(resultCoordinatesValues.ToArray());
+                environment.Add(new Coordinate(resultCoordinatesValues));
             }
         }
 
@@ -66,6 +67,6 @@ namespace GraphLib.Common.CoordinateRadars
         private readonly int[] resultCoordinatesValues;
         private readonly int[] selfCoordinatesValues;
 
-        private List<int[]> environment;
+        private List<ICoordinate> environment;
     }
 }

@@ -1,5 +1,5 @@
-﻿using Common;
-using Common.Extensions;
+﻿using Common.Extensions;
+using Common.ValueRanges;
 using GraphLib.Interfaces;
 using System;
 using System.Linq;
@@ -96,7 +96,7 @@ namespace GraphLib.Extensions
                 throw new ArgumentException("Dimensions count must be greater than 0");
             }
 
-            var rangeOfValidIndices = new ValueRange(self.Size, 0);
+            IValueRange rangeOfValidIndices = new LowInclusiveValueRange(self.Size, 0);
             if (!rangeOfValidIndices.Contains(index))
             {
                 throw new ArgumentOutOfRangeException(nameof(index));

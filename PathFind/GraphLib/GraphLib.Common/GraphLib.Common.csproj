@@ -41,8 +41,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="CoordinateRadars\CardinalCoordinateRadar.cs" />
-    <Compile Include="CoordinateRadars\CoordinateAroundRadar.cs" />
     <Compile Include="Extensions\EnumerableExtensions.cs" />
     <Compile Include="NullObjects\NullCoordinate.cs" />
     <Compile Include="NullObjects\NullCoordinateRadar.cs" />

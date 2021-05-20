@@ -3,7 +3,7 @@ using Algorithm.Interfaces;
 using Algorithm.Realizations.Heuristic;
 using Algorithm.Realizations.StepRules;
 using AssembleClassesLib.Attributes;
-using Common;
+using Common.ValueRanges;
 using GraphLib.Interfaces;
 using NullObject.Extensions;
 using System;
@@ -105,7 +105,7 @@ namespace Plugins.AStarModified
             }
         }
 
-        private readonly ValueRange percentValueRange = new ValueRange(99, 0);
+        private readonly InclusiveValueRange percentValueRange = new InclusiveValueRange(99, 0);
         private readonly Queue<IVertex> deletedVertices;
     }
 }

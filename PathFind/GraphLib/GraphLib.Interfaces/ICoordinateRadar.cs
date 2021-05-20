@@ -4,6 +4,6 @@ namespace GraphLib.Interfaces
 {
     public interface ICoordinateRadar
     {
-        IEnumerable<int[]> Environment { get; }
+        IEnumerable<ICoordinate> Environment { get; }
     }
 }

@@ -48,7 +48,8 @@ namespace WPFVersion3D.ViewModel
 
         private bool CanExecuteConfirmCreateGraphCommand(object sender)
         {
-            return GraphAssembleKeys.Contains(GraphAssembleKey);
+            return GraphAssembleKeys.Contains(GraphAssembleKey)
+                && Constants.GraphParamsValueRanges.Contains(GraphParametres);
         }
     }
 }

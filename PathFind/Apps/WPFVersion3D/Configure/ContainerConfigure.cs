@@ -43,7 +43,6 @@ namespace WPFVersion3D.Configure
             builder.RegisterType<Logs>().AsSelf().SingleInstance();
 
             builder.RegisterType<ConcreteGraphAssembleClasses>().AsSelf().SingleInstance();
-            builder.RegisterType<SmoothedGraphAssemble>().As<IGraphAssemble>().SingleInstance();
             builder.RegisterType<GraphAssemble>().As<IGraphAssemble>().SingleInstance();
             builder.RegisterType<Vertex3DFactory>().As<IVertexFactory>().SingleInstance();
             builder.RegisterType<Vertex3DCostFactory>().As<IVertexCostFactory>().SingleInstance();
