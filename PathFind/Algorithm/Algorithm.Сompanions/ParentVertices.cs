@@ -1,5 +1,5 @@
-﻿using GraphLib.Common.NullObjects;
-using GraphLib.Interfaces;
+﻿using GraphLib.Interfaces;
+using GraphLib.NullRealizations.NullObjects;
 using System.Collections.Generic;
 
 namespace Algorithm.Сompanions

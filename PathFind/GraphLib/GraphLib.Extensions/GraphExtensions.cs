@@ -91,10 +91,6 @@ namespace GraphLib.Extensions
             var dimensions = self.DimensionsSizes.ToArray();
 
             #region Invariant observance
-            if (!dimensions.Any())
-            {
-                throw new ArgumentException("Dimensions count must be greater than 0");
-            }
 
             IValueRange rangeOfValidIndices = new LowInclusiveValueRange(self.Size, 0);
             if (!rangeOfValidIndices.Contains(index))

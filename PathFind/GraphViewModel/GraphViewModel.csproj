@@ -98,10 +98,6 @@
       <Project>{6aa3b516-abfe-4eda-98dd-1ce799da747f}</Project>
       <Name>GraphLib.Base</Name>
     </ProjectReference>
-    <ProjectReference Include="..\GraphLib\GraphLib.Common\GraphLib.Common.csproj">
-      <Project>{3cd8330e-9445-4dc4-a1da-ee704f652942}</Project>
-      <Name>GraphLib.Common</Name>
-    </ProjectReference>
     <ProjectReference Include="..\GraphLib\GraphLib.Extensions\GraphLib.Extensions.csproj">
       <Project>{93f88f47-1871-44cd-9622-eb8d406c969c}</Project>
       <Name>GraphLib.Extensions</Name>
@@ -109,6 +105,14 @@
     <ProjectReference Include="..\GraphLib\GraphLib.Interfaces\GraphLib.Interfaces.csproj">
       <Project>{d3c5ccfe-698b-41c7-9a72-5fd0262765e1}</Project>
       <Name>GraphLib.Interfaces</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\GraphLib\GraphLib.NullRealizations\GraphLib.NullRealizations.csproj">
+      <Project>{FA595CBF-C9AA-4D4F-AFF7-19E571C91D00}</Project>
+      <Name>GraphLib.NullRealizations</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\GraphLib\GraphLib.Realizations\GraphLib.Realizations.csproj">
+      <Project>{B80C5250-3D81-4742-B8A5-84AE39122BA9}</Project>
+      <Name>GraphLib.Realizations</Name>
     </ProjectReference>
     <ProjectReference Include="..\GraphLib\GraphLib.Serialization\GraphLib.Serialization.csproj">
       <Project>{412839a0-77ff-4b66-85c9-50dc07e8fdb7}</Project>

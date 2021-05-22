@@ -30,8 +30,8 @@ namespace WPFVersion3D
             GraphWidthValueRange = new UpInclusiveValueRange(30, 0);
             GraphLengthValueRange = new UpInclusiveValueRange(30, 0);
             GraphHeightValueRange = new UpInclusiveValueRange(30, 0);
-            GraphParamsValueRanges = new ValueRanges(GraphWidthValueRange, 
-                GraphLengthValueRange, 
+            GraphParamsValueRanges = new ValueRanges(GraphWidthValueRange,
+                GraphLengthValueRange,
                 GraphHeightValueRange
                 );
         }

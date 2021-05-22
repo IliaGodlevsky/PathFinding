@@ -14,6 +14,12 @@ namespace Common.ValueRanges
             rangesCount = ranges.Length;
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="values"></param>
+        /// <returns></returns>
+        /// <remarks>Sensitive to number of incoming values</remarks>
         public bool Contains(params int[] values)
         {
             if (values.Length != ranges.Length)

@@ -2,7 +2,6 @@
 using ConsoleVersion.Model;
 using GraphLib.Interfaces;
 using GraphLib.Realizations.Coordinates;
-using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
@@ -26,18 +25,9 @@ namespace ConsoleVersion.View
 
         public void Add(IVertex vertex)
         {
-            if (!(vertex.Position is Coordinate2D))
-            {
-                throw new ArgumentException($"Must be of {nameof(Coordinate2D)} type");
-            }
-
-            if (vertex is Vertex vertex2D)
+            if (vertex is Vertex vertex2D && vertex.Position is Coordinate2D)
             {
                 vertices.Add(vertex2D);
-            }
-            else
-            {
-                throw new ArgumentException($"Must be {nameof(Vertex)} type");
             }
         }
 

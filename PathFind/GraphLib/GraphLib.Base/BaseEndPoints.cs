@@ -1,8 +1,8 @@
 ﻿using Common.Extensions;
 using Conditional;
-using GraphLib.Common.NullObjects;
 using GraphLib.Extensions;
 using GraphLib.Interfaces;
+using GraphLib.NullRealizations.NullObjects;
 using NullObject.Extensions;
 using System;
 

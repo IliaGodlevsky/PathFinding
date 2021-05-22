@@ -1,7 +1,7 @@
 ﻿using Common.Extensions;
-using GraphLib.Common.Extensions;
-using GraphLib.Common.NullObjects;
 using GraphLib.Interfaces;
+using GraphLib.NullRealizations.NullObjects;
+using NullObject.Extensions;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -20,8 +20,13 @@ namespace GraphLib.Extensions
 
         public static bool IsIsolated(this IVertex self)
         {
-            bool IsObstacle(IVertex vertex) => vertex.IsObstacle;
-            return self.IsObstacle || self.Neighbours.All(IsObstacle);
+            bool IsObstacleOrNullObject(IVertex vertex)
+            {
+                return vertex.IsObstacle && vertex.IsNullObject();
+            }
+
+            return IsObstacleOrNullObject(self)
+                || self.Neighbours.All(IsObstacleOrNullObject);
         }
 
         /// <summary>
@@ -98,7 +103,7 @@ namespace GraphLib.Extensions
             }
 
             #endregion
-          
+
             bool IsWithingGraph(ICoordinate coordinate) => coordinate.IsWithinGraph(graph);
             bool CanBeNeighbours(IVertex vertex) => graph.CanBeNeighbours(vertex, self);
             IVertex Vertex(ICoordinate coordinate) => graph[coordinate];

@@ -5,7 +5,7 @@ namespace Common.ValueRanges
     [Serializable]
     public sealed class UpInclusiveValueRange : BaseValueRange, IValueRange
     {
-        public UpInclusiveValueRange(int upperValueOfRange, int lowerValueOfRange) 
+        public UpInclusiveValueRange(int upperValueOfRange, int lowerValueOfRange)
             : base(upperValueOfRange, lowerValueOfRange + 1)
         {
             if (upperValueOfRange == lowerValueOfRange)

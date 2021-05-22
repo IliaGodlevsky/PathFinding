@@ -58,7 +58,6 @@
     <Compile Include="Factories\GraphFactories\Graph2DFactory.cs" />
     <Compile Include="Factories\GraphFactories\Graph3DFactory.cs" />
     <Compile Include="Factories\GraphAssembles\GraphAssemble.cs" />
-    <Compile Include="Factories\GraphAssembles\NullGraphAssemble.cs" />
     <Compile Include="Factories\GraphAssembles\SmoothedGraphAssemble.cs" />
     <Compile Include="Graphs\Graph2D.cs" />
     <Compile Include="Graphs\Graph3D.cs" />
@@ -91,10 +90,6 @@
       <Project>{6aa3b516-abfe-4eda-98dd-1ce799da747f}</Project>
       <Name>GraphLib.Base</Name>
     </ProjectReference>
-    <ProjectReference Include="..\GraphLib.Common\GraphLib.Common.csproj">
-      <Project>{3cd8330e-9445-4dc4-a1da-ee704f652942}</Project>
-      <Name>GraphLib.Common</Name>
-    </ProjectReference>
     <ProjectReference Include="..\GraphLib.Exceptions\GraphLib.Exceptions.csproj">
       <Project>{B6DA5928-65EC-42C0-B012-F25F8F023271}</Project>
       <Name>GraphLib.Exceptions</Name>
@@ -106,6 +101,10 @@
     <ProjectReference Include="..\GraphLib.Interfaces\GraphLib.Interfaces.csproj">
       <Project>{d3c5ccfe-698b-41c7-9a72-5fd0262765e1}</Project>
       <Name>GraphLib.Interfaces</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\GraphLib.NullRealizations\GraphLib.NullRealizations.csproj">
+      <Project>{FA595CBF-C9AA-4D4F-AFF7-19E571C91D00}</Project>
+      <Name>GraphLib.NullRealizations</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup />

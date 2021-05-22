@@ -1,6 +1,5 @@
 ﻿using GraphLib.Interfaces;
 using GraphLib.Realizations.Coordinates;
-using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
@@ -28,11 +27,6 @@ namespace WindowsFormsVersion.View
                 winFormsVertex.Location = new Point(xCoordinate, yCoordinate);
 
                 Controls.Add(winFormsVertex);
-            }
-            else
-            {
-                string message = $"Must be 2D vertex";
-                throw new ArgumentException(message);
             }
         }
 

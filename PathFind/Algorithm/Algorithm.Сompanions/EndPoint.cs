@@ -4,7 +4,7 @@ using NullObject.Extensions;
 
 namespace Algorithm.Сompanions
 {
-    public readonly struct EndPoints : IEndPoints
+    public sealed class EndPoints : IEndPoints
     {
         public IVertex Target { get; }
         public IVertex Source { get; }

@@ -30,7 +30,8 @@ namespace GraphLib.Realizations.VisitedVerticesImpl
 
         public IEnumerable<IVertex> GetUnvisitedNeighbours(IVertex vertex)
         {
-            return vertex.Neighbours.Where(IsNotVisited);
+            return vertex.Neighbours
+                .Where(IsNotVisited);
         }
 
         public void Clear()

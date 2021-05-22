@@ -59,13 +59,13 @@
       <Project>{6AA3B516-ABFE-4EDA-98DD-1CE799DA747F}</Project>
       <Name>GraphLib.Base</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\GraphLib\GraphLib.Common\GraphLib.Common.csproj">
-      <Project>{3cd8330e-9445-4dc4-a1da-ee704f652942}</Project>
-      <Name>GraphLib.Common</Name>
-    </ProjectReference>
     <ProjectReference Include="..\..\GraphLib\GraphLib.Interfaces\GraphLib.Interfaces.csproj">
       <Project>{d3c5ccfe-698b-41c7-9a72-5fd0262765e1}</Project>
       <Name>GraphLib.Interfaces</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\GraphLib\GraphLib.NullRealizations\GraphLib.NullRealizations.csproj">
+      <Project>{FA595CBF-C9AA-4D4F-AFF7-19E571C91D00}</Project>
+      <Name>GraphLib.NullRealizations</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\NullObject\NullObject.csproj">
       <Project>{51D677FD-7A82-4282-8A2E-51DEBE39E695}</Project>
@@ -78,6 +78,10 @@
     <ProjectReference Include="..\Algorithm.Interfaces\Algorithm.Interfaces.csproj">
       <Project>{fc4f499e-9ab1-4623-9ad8-cfde0a07b7d0}</Project>
       <Name>Algorithm.Interfaces</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Algorithm.Сompanions\Algorithm.Сompanions.csproj">
+      <Project>{8A717526-D82A-4409-B3B4-5979820253AF}</Project>
+      <Name>Algorithm.Сompanions</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup />

@@ -1,4 +1,5 @@
 ﻿using GraphLib.Interfaces;
+using GraphLib.NullRealizations.NullObjects;
 using GraphLib.Realizations.CoordinateRadars;
 using Moq;
 using NUnit.Framework;
@@ -70,6 +71,16 @@ namespace GraphLib.Realizations.Tests
             var environment = coordinateEnvironment.Environment.ToArray();
 
             Assert.IsTrue(environment.Distinct().Count() == environment.Count());
+        }
+
+        [Test]
+        public void Environment_NullCoordinate_ReturnEmptyEnvironment()
+        {
+            var coordinateEnvironment = new CoordinateAroundRadar(new NullCoordinate());
+
+            var environment = coordinateEnvironment.Environment.ToArray();
+
+            Assert.IsFalse(environment.Any());
         }
 
         private int Pow(int number, int power)

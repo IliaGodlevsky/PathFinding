@@ -1,4 +1,5 @@
 ﻿using GraphLib.Interfaces;
+using GraphLib.Realizations.Coordinates;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -37,18 +38,15 @@ namespace WPFVersion3D.Model
 
         public void Add(IVertex vertex)
         {
-            if (!(vertex is Vertex3D vertex3D))
+            if (vertex is Vertex3D vertex3D && vertex.Position is Coordinate3D)
             {
-                string message = $"Argument is not of type {nameof(Vertex3D)}";
-                throw new ArgumentException(message);
-            }
+                foreach (var axis in axes)
+                {
+                    LocateVertex(axis, vertex3D);
+                }
 
-            foreach (var axis in axes)
-            {
-                LocateVertex(axis, vertex3D);
+                Children.Add(vertex3D);
             }
-
-            Children.Add(vertex3D);
         }
 
         public void Clear()

@@ -1,8 +1,8 @@
 ﻿using Common.Extensions;
-using GraphLib.Common.NullObjects;
 using GraphLib.Exceptions;
 using GraphLib.Extensions;
 using GraphLib.Interfaces;
+using GraphLib.NullRealizations.NullObjects;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -123,6 +123,8 @@ namespace GraphLib.Base
             }
             return true;
         }
+
+
 
         protected static readonly string[] DimensionNames;
 

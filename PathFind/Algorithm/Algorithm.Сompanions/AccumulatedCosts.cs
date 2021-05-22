@@ -1,6 +1,7 @@
 ﻿using Common.Extensions;
 using GraphLib.Extensions;
 using GraphLib.Interfaces;
+using NullObject.Extensions;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -42,7 +43,10 @@ namespace Algorithm.Сompanions
 
         private void SetAccumulatedCostToStartCost(IVertex vertex)
         {
-            accumulatedCosts[vertex.Position] = startCost;
+            if (!vertex.IsNullObject())
+            {
+                accumulatedCosts[vertex.Position] = startCost;
+            }
         }
 
         private readonly Dictionary<ICoordinate, double> accumulatedCosts;

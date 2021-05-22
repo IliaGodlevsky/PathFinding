@@ -1,5 +1,4 @@
-﻿using GraphLib.Common.Extensions;
-using GraphLib.Extensions;
+﻿using GraphLib.Extensions;
 using GraphLib.Interfaces;
 using GraphLib.Realizations.Coordinates;
 using System;
@@ -32,6 +31,7 @@ namespace GraphLib.Realizations.CoordinateRadars
         private readonly Coordinate coordinatesValues;
         private readonly ICoordinateRadar coordinateRadar;
 
+        [NonSerialized]
         private IEnumerable<ICoordinate> environment;
     }
 }

@@ -17,6 +17,11 @@ namespace Algorithm.Common
         public event AlgorithmEventHandler OnVertexEnqueued;
         public event EventHandler OnInterrupted;
 
+        public NullAlgorithm()
+        {
+
+        }
+
         public IGraphPath FindPath()
         {
             OnStarted?.Invoke(this, new AlgorithmEventArgs());

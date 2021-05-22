@@ -77,10 +77,6 @@
       <Project>{6aa3b516-abfe-4eda-98dd-1ce799da747f}</Project>
       <Name>GraphLib.Base</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\GraphLib\GraphLib.Common\GraphLib.Common.csproj">
-      <Project>{3cd8330e-9445-4dc4-a1da-ee704f652942}</Project>
-      <Name>GraphLib.Common</Name>
-    </ProjectReference>
     <ProjectReference Include="..\..\GraphLib\GraphLib.Interfaces\GraphLib.Interfaces.csproj">
       <Project>{d3c5ccfe-698b-41c7-9a72-5fd0262765e1}</Project>
       <Name>GraphLib.Interfaces</Name>

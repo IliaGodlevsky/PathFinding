@@ -31,6 +31,10 @@ namespace GraphLib.Realizations.CoordinateRadars
                 if (environment == null)
                 {
                     environment = new List<ICoordinate>();
+                    if (limitDepth <= 0)
+                    {
+                        return environment;
+                    }
                     FormEnvironment();
                 }
                 return environment;
@@ -55,10 +59,17 @@ namespace GraphLib.Realizations.CoordinateRadars
             {
                 FormEnvironment(depth + 1);
             }
-            else if (!selfCoordinatesValues.SequenceEqual(resultCoordinatesValues))
+            else
             {
-                environment.Add(new Coordinate(resultCoordinatesValues));
+                var seldCoordinates = new Coordinate(selfCoordinatesValues);
+                var resultCoordinates = new Coordinate(resultCoordinatesValues);
+                if (!seldCoordinates.Equals(resultCoordinates))
+                {
+                    environment.Add(resultCoordinates);
+                }
             }
+
+
         }
 
         private readonly int limitDepth;
@@ -67,6 +78,7 @@ namespace GraphLib.Realizations.CoordinateRadars
         private readonly int[] resultCoordinatesValues;
         private readonly int[] selfCoordinatesValues;
 
+        [NonSerialized]
         private List<ICoordinate> environment;
     }
 }

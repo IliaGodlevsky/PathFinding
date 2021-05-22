@@ -1,4 +1,4 @@
-﻿using GraphLib.Extensions.Tests.TestObjects;
+﻿using GraphLib.TestRealizations;
 using NUnit.Framework;
 using System;
 using System.Linq;

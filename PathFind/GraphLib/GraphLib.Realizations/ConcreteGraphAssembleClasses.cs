@@ -2,7 +2,7 @@
 using AssembleClassesLib.Interface;
 using Common.Extensions;
 using GraphLib.Interfaces.Factories;
-using GraphLib.Realizations.Factories.GraphAssembles;
+using GraphLib.NullRealizations.NullFactories;
 using System;
 using System.Collections.Generic;
 using System.Linq;

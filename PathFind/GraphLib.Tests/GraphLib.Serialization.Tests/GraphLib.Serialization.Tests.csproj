@@ -15,6 +15,7 @@
   <ItemGroup>
     <ProjectReference Include="..\..\GraphLib\GraphLib.Realizations\GraphLib.Realizations.csproj" />
     <ProjectReference Include="..\..\GraphLib\GraphLib.Serialization\GraphLib.Serialization.csproj" />
+    <ProjectReference Include="..\..\GraphLib\GraphLib.TestRealizations\GraphLib.TestRealizations.csproj" />
   </ItemGroup>
 
 </Project>
