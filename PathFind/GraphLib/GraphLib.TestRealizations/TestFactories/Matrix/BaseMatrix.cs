@@ -1,6 +1,7 @@
 ﻿using GraphLib.Interfaces;
 using GraphLib.Realizations.Coordinates;
 using GraphLib.Realizations.Graphs;
+using System.Linq;
 
 namespace GraphLib.TestRealizations.TestFactories.Matrix
 {

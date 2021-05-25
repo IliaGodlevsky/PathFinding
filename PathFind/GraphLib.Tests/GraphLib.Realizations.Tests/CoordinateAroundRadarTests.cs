@@ -1,6 +1,6 @@
 ﻿using GraphLib.Interfaces;
 using GraphLib.NullRealizations.NullObjects;
-using GraphLib.Realizations.CoordinateRadars;
+using GraphLib.Realizations.NeighboursCoordinates;
 using Moq;
 using NUnit.Framework;
 using System.Linq;
@@ -31,9 +31,9 @@ namespace GraphLib.Realizations.Tests
             int dimensions = coordinateValues.Length;
             int expectedResult = Pow(3, dimensions) - Self;
             coordinateMock.Setup(coordinate => coordinate.CoordinatesValues).Returns(coordinateValues);
-            var coordinateEnvironment = new CoordinateAroundRadar(coordinateMock.Object);
+            var coordinateEnvironment = new AroundNeighboursCoordinates(coordinateMock.Object);
 
-            var environment = coordinateEnvironment.Environment;
+            var environment = coordinateEnvironment.Coordinates;
 
             Assert.AreEqual(expectedResult, environment.Count());
         }
@@ -48,9 +48,9 @@ namespace GraphLib.Realizations.Tests
         public void Environment_CoordinatesWithVariousDimensionsNumber_ReturnNeighboursWithoutSelf(int[] coordinateValues)
         {
             coordinateMock.Setup(coordinate => coordinate.CoordinatesValues).Returns(coordinateValues);
-            var coordinateEnvironment = new CoordinateAroundRadar(coordinateMock.Object);
+            var coordinateEnvironment = new AroundNeighboursCoordinates(coordinateMock.Object);
 
-            var environment = coordinateEnvironment.Environment;
+            var environment = coordinateEnvironment.Coordinates;
             bool hasSelf = environment.Any(values => values.Equals(coordinateMock.Object));
 
             Assert.IsFalse(hasSelf);
@@ -66,9 +66,9 @@ namespace GraphLib.Realizations.Tests
         public void Environment_CoordinatesWithVariousDimensionsCount_ReturnUniqueCoordinates(int[] coordinateValues)
         {
             coordinateMock.Setup(coordinate => coordinate.CoordinatesValues).Returns(coordinateValues);
-            var coordinateEnvironment = new CoordinateAroundRadar(coordinateMock.Object);
+            var coordinateEnvironment = new AroundNeighboursCoordinates(coordinateMock.Object);
 
-            var environment = coordinateEnvironment.Environment.ToArray();
+            var environment = coordinateEnvironment.Coordinates.ToArray();
 
             Assert.IsTrue(environment.Distinct().Count() == environment.Count());
         }
@@ -76,9 +76,9 @@ namespace GraphLib.Realizations.Tests
         [Test]
         public void Environment_NullCoordinate_ReturnEmptyEnvironment()
         {
-            var coordinateEnvironment = new CoordinateAroundRadar(new NullCoordinate());
+            var coordinateEnvironment = new AroundNeighboursCoordinates(new NullCoordinate());
 
-            var environment = coordinateEnvironment.Environment.ToArray();
+            var environment = coordinateEnvironment.Coordinates.ToArray();
 
             Assert.IsFalse(environment.Any());
         }

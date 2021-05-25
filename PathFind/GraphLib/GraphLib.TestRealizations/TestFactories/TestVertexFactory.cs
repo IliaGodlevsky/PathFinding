@@ -6,7 +6,7 @@ namespace GraphLib.TestRealizations.TestFactories
 {
     public class TestVertexFactory : IVertexFactory
     {
-        public IVertex CreateVertex(ICoordinateRadar coordinateRadar, ICoordinate coordinate)
+        public IVertex CreateVertex(INeighboursCoordinates coordinateRadar, ICoordinate coordinate)
         {
             return new TestVertex(coordinateRadar, coordinate);
         }

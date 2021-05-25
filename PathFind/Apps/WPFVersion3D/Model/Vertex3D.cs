@@ -13,11 +13,11 @@ namespace WPFVersion3D.Model
 {
     internal class Vertex3D : UIElement3D, IVertex, IMarkable
     {
-        public Vertex3D(ICoordinateRadar radar, ICoordinate coordinate, IModel3DFactory modelFactory)
+        public Vertex3D(INeighboursCoordinates radar, ICoordinate coordinate, IModel3DFactory modelFactory)
         {
             this.modelFactory = modelFactory;
             Position = coordinate;
-            CoordinateRadar = radar;
+            NeighboursCoordinates = radar;
             Dispatcher.Invoke(() =>
             {
                 Size = InitialVertexSize;
@@ -118,7 +118,7 @@ namespace WPFVersion3D.Model
             }
         }
 
-        public virtual ICoordinateRadar CoordinateRadar { get; }
+        public virtual INeighboursCoordinates NeighboursCoordinates { get; }
 
         public IVertexCost Cost { get; set; }
 

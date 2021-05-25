@@ -16,5 +16,10 @@ namespace GraphLib.TestRealizations.TestObjects
         {
 
         }
+
+        public override string ToString()
+        {
+            return CurrentCost.ToString();
+        }
     }
 }

@@ -54,7 +54,7 @@ namespace GraphLib.Extensions
                 return range.Contains(coordinate);
             }
 
-            return IsWithinGraph(self, graph, IsWithin);
+            return self.IsWithinGraph(graph, IsWithin);
         }
 
         /// <summary>

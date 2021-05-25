@@ -11,7 +11,7 @@ namespace WPFVersion3D.Model
             model3Dfactory = modelFactory;
         }
 
-        public IVertex CreateVertex(ICoordinateRadar coordinateRadar, ICoordinate coordinate)
+        public IVertex CreateVertex(INeighboursCoordinates coordinateRadar, ICoordinate coordinate)
         {
             return new Vertex3D(coordinateRadar, coordinate, model3Dfactory);
         }

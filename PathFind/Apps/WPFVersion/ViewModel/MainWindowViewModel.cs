@@ -69,7 +69,7 @@ namespace WPFVersion.ViewModel
         public ICommand InterruptAlgorithmCommand { get; }
 
         public MainWindowViewModel(
-            BaseGraphFieldFactory fieldFactory,
+            IGraphFieldFactory fieldFactory,
             IVertexEventHolder eventHolder,
             ISaveLoadGraph saveLoad,
             ConcreteGraphAssembleClasses graphFactories,

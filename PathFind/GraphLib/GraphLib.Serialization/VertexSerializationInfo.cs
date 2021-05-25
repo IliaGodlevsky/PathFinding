@@ -11,7 +11,7 @@ namespace GraphLib.Serialization
             Cost = vertex.Cost;
             Position = vertex.Position;
             IsObstacle = vertex.IsObstacle;
-            CoordinateRadar = vertex.CoordinateRadar;
+            CoordinateRadar = vertex.NeighboursCoordinates;
         }
 
         public bool IsObstacle { get; set; }
@@ -20,6 +20,6 @@ namespace GraphLib.Serialization
 
         public ICoordinate Position { get; set; }
 
-        public ICoordinateRadar CoordinateRadar { get; set; }
+        public INeighboursCoordinates CoordinateRadar { get; set; }
     }
 }

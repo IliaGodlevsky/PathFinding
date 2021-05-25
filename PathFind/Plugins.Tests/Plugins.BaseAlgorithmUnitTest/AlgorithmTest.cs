@@ -1,7 +1,6 @@
 using Algorithm.Interfaces;
 using GraphLib.Interfaces;
 using GraphLib.NullRealizations.NullObjects;
-using GraphLib.TestRealizations;
 using GraphLib.TestRealizations.TestFactories;
 using GraphLib.TestRealizations.TestObjects;
 using NUnit.Framework;
@@ -27,7 +26,7 @@ namespace Plugins.BaseAlgorithmUnitTest
         [Test]
         public virtual void FindPath_EndpointsBelongToGraph_ReturnsShortestPath()
         {
-            var graph = testgraph2DAssemble.AssembleGraph(0, Constants.Width, Constants.Length);
+            var graph = testgraph2DAssemble.AssembleGraph();
             var endPoints = new TestEndPoints(graph.Vertices.First(), graph.Vertices.Last());
             var algorithm = CreateAlgorithm(graph, endPoints);
 
@@ -40,7 +39,7 @@ namespace Plugins.BaseAlgorithmUnitTest
         [Test]
         public virtual void FindPath_EndPointsDoesntBelongToGraph_TrowsArgumentException()
         {
-            var graph = testgraph2DAssemble.AssembleGraph(0, Constants.Width, Constants.Length);
+            var graph = testgraph2DAssemble.AssembleGraph();
             var endPoints = new TestEndPoints();
 
             var algorithm = CreateAlgorithm(graph, endPoints);
@@ -77,8 +76,6 @@ namespace Plugins.BaseAlgorithmUnitTest
             Assert.IsTrue(graphPath.Path.Any());
             Assert.IsTrue(graphPath.PathCost > 0);
         }
-
-
 
         protected abstract IAlgorithm CreateAlgorithm(IGraph graph, IEndPoints endPoints);
 

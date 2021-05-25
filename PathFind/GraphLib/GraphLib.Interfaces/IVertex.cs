@@ -16,6 +16,6 @@ namespace GraphLib.Interfaces
 
         ICoordinate Position { get; }
 
-        ICoordinateRadar CoordinateRadar { get; }
+        INeighboursCoordinates NeighboursCoordinates { get; }
     }
 }

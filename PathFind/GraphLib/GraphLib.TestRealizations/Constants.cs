@@ -1,14 +1,15 @@
 ﻿namespace GraphLib.TestRealizations
 {
-    public static class Constants
+    internal static class Constants
     {
         static Constants()
         {
             TestGraph2DDimensionSizes = new[] { Width, Length };
         }
 
-        public const int Width = 80;
-        public const int Length = 45;
+        private const int Width = 80;
+        private const int Length = 45;
+
         public static int[] TestGraph2DDimensionSizes { get; }
     }
 }

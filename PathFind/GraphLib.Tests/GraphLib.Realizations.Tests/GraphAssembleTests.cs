@@ -17,7 +17,7 @@ namespace GraphLib.Realizations.Tests
         private readonly IVertexFactory vertexFactory;
         private readonly IVertexCostFactory costFactory;
         private readonly IGraphFactory graphFactory;
-        private readonly ICoordinateRadarFactory radarFactory;
+        private readonly INeighboursCoordinatesFactory radarFactory;
         private readonly IGraphAssemble graphAssembler;
 
         public GraphAssemblerTests()

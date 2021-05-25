@@ -1,14 +1,14 @@
 ﻿using GraphLib.Interfaces;
 using GraphLib.Interfaces.Factories;
-using GraphLib.Realizations.CoordinateRadars;
+using GraphLib.Realizations.NeighboursCoordinates;
 
 namespace GraphLib.Realizations.Factories.CoordinateRadarFactories
 {
-    public sealed class CoordinateAroundRadarFactory : ICoordinateRadarFactory
+    public sealed class CoordinateAroundRadarFactory : INeighboursCoordinatesFactory
     {
-        public ICoordinateRadar CreateCoordinateRadar(ICoordinate coordinate)
+        public INeighboursCoordinates CreateCoordinateRadar(ICoordinate coordinate)
         {
-            return new CoordinateAroundRadar(coordinate);
+            return new AroundNeighboursCoordinates(coordinate);
         }
     }
 }

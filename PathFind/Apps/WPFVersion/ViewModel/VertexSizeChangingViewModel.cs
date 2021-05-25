@@ -1,6 +1,5 @@
 ﻿using Common.Extensions;
 using Common.Interface;
-using GraphLib.Base;
 using GraphLib.Extensions;
 using GraphLib.Interfaces;
 using GraphViewModel.Interfaces;
@@ -23,7 +22,8 @@ namespace WPFVersion.ViewModel
         public ICommand ChangeVertexSizeCommand { get; }
         public ICommand CancelCommand { get; }
 
-        public VertexSizeChangingViewModel(MainWindowViewModel model, BaseGraphFieldFactory fieldFactory)
+        public VertexSizeChangingViewModel(MainWindowViewModel model, 
+            IGraphFieldFactory fieldFactory)
         {
             Model = model;
             this.fieldFactory = fieldFactory;
@@ -74,6 +74,6 @@ namespace WPFVersion.ViewModel
             OnWindowClosed = null;
         }
 
-        private readonly BaseGraphFieldFactory fieldFactory;
+        private readonly IGraphFieldFactory fieldFactory;
     }
 }

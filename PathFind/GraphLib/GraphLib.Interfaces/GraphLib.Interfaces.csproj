@@ -41,13 +41,14 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="IGraphFieldFactory.cs" />
     <Compile Include="IMeanCost.cs" />
     <Compile Include="ICoordinate.cs" />
     <Compile Include="Factories\ICoordinateFactory.cs" />
-    <Compile Include="Factories\ICoordinateRadarFactory.cs" />
+    <Compile Include="Factories\INeighboursCoordinatesFactory.cs" />
     <Compile Include="Factories\ICostFactory.cs" />
     <Compile Include="IEndPoints.cs" />
-    <Compile Include="ICoordinateRadar.cs" />
+    <Compile Include="INeighboursAround.cs" />
     <Compile Include="IGraph.cs" />
     <Compile Include="Factories\IGraphAssemble.cs" />
     <Compile Include="Factories\IGraphFactory.cs" />

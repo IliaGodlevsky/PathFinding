@@ -5,7 +5,7 @@ namespace WPFVersion.Model
 {
     internal sealed class VertexFactory : IVertexFactory
     {
-        public IVertex CreateVertex(ICoordinateRadar coordinateRadar, ICoordinate coordinate)
+        public IVertex CreateVertex(INeighboursCoordinates coordinateRadar, ICoordinate coordinate)
         {
             return new Vertex(coordinateRadar, coordinate);
         }

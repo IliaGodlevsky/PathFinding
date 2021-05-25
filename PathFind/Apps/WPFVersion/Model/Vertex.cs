@@ -27,7 +27,7 @@ namespace WPFVersion.Model
             EnqueuedVertexColor = new SolidColorBrush(Colors.Magenta);
         }
 
-        public Vertex(ICoordinateRadar radar,
+        public Vertex(INeighboursCoordinates radar,
             ICoordinate coordinate) : base()
         {
             Dispatcher.Invoke(() =>
@@ -38,7 +38,7 @@ namespace WPFVersion.Model
             });
             this.Initialize();
             Position = coordinate;
-            CoordinateRadar = radar;
+            NeighboursCoordinates = radar;
 
         }
 
@@ -60,7 +60,7 @@ namespace WPFVersion.Model
             }
         }
 
-        public virtual ICoordinateRadar CoordinateRadar { get; }
+        public virtual INeighboursCoordinates NeighboursCoordinates { get; }
 
         private IVertexCost cost;
         public IVertexCost Cost

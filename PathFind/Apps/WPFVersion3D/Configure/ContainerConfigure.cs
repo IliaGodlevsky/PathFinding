@@ -33,10 +33,9 @@ namespace WPFVersion3D.Configure
 
             builder.RegisterType<MainWindowViewModel>().AsSelf().InstancePerLifetimeScope().PropertiesAutowired();
 
-            builder.RegisterType<EndPoints>().As<BaseEndPoints>().SingleInstance();
-            builder.RegisterType<PathInput>().As<IPathInput>().SingleInstance();
+            builder.RegisterType<EndPoints>().As<BaseEndPoints>().SingleInstance();            
             builder.RegisterType<Vertex3DEventHolder>().As<IVertexEventHolder>().SingleInstance();
-            builder.RegisterType<GraphField3DFactory>().As<BaseGraphFieldFactory>().SingleInstance();
+            builder.RegisterType<GraphField3DFactory>().As<IGraphFieldFactory>().SingleInstance();
 
             builder.RegisterType<FileLog>().As<ILog>().SingleInstance();
             builder.RegisterType<MessageBoxLog>().As<ILog>().SingleInstance();
@@ -48,10 +47,11 @@ namespace WPFVersion3D.Configure
             builder.RegisterType<Vertex3DCostFactory>().As<IVertexCostFactory>().SingleInstance();
             builder.RegisterType<Coordinate3DFactory>().As<ICoordinateFactory>().SingleInstance();
             builder.RegisterType<Graph3DFactory>().As<IGraphFactory>().SingleInstance();
-            builder.RegisterType<CardinalCoordinateAroundRadarFactory>().As<ICoordinateRadarFactory>().SingleInstance();
+            builder.RegisterType<CardinalCoordinateAroundRadarFactory>().As<INeighboursCoordinatesFactory>().SingleInstance();
             builder.RegisterType<CubicModel3DFactory>().As<IModel3DFactory>().SingleInstance();
 
             builder.RegisterType<SaveLoadGraph>().As<ISaveLoadGraph>().SingleInstance();
+            builder.RegisterType<PathInput>().As<IPathInput>().SingleInstance();
             builder.RegisterType<GraphSerializer>().As<IGraphSerializer>().SingleInstance();
             builder.RegisterType<SoapFormatter>().As<IFormatter>().SingleInstance();
             builder.RegisterType<Vertex3DSerializationInfoConverter>().As<IVertexSerializationInfoConverter>().SingleInstance();

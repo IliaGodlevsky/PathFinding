@@ -4,7 +4,7 @@ using GraphLib.Interfaces;
 
 namespace GraphLib.Base
 {
-    public abstract class BaseGraphFieldFactory
+    public abstract class BaseGraphFieldFactory : IGraphFieldFactory
     {
         protected abstract IGraphField GetField();
 

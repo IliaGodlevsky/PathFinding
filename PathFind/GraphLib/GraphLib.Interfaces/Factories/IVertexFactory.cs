@@ -2,6 +2,6 @@
 {
     public interface IVertexFactory
     {
-        IVertex CreateVertex(ICoordinateRadar coordinateRadar, ICoordinate coordinate);
+        IVertex CreateVertex(INeighboursCoordinates coordinateRadar, ICoordinate coordinate);
     }
 }

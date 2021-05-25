@@ -84,7 +84,7 @@
       <Name>GraphLib.NullRealizations</Name>
     </ProjectReference>
     <ProjectReference Include="..\GraphLib.Realizations\GraphLib.Realizations.csproj">
-      <Project>{B80C5250-3D81-4742-B8A5-84AE39122BA9}</Project>
+      <Project>{b80c5250-3d81-4742-b8a5-84ae39122ba9}</Project>
       <Name>GraphLib.Realizations</Name>
     </ProjectReference>
     <ProjectReference Include="..\GraphLib.Serialization\GraphLib.Serialization.csproj">

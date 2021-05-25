@@ -61,7 +61,7 @@ namespace WPFVersion3D.ViewModel
         public ICommand AnimatedAxisRotateCommand { get; }
 
         public MainWindowViewModel(
-            BaseGraphFieldFactory fieldFactory,
+            IGraphFieldFactory fieldFactory,
             IVertexEventHolder eventHolder,
             ISaveLoadGraph saveLoad,
             ConcreteGraphAssembleClasses graphFactories,

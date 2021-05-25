@@ -5,7 +5,6 @@ using GraphLib.Interfaces;
 using GraphLib.NullRealizations.NullObjects;
 using GraphViewModel.Interfaces;
 using Logging.Interface;
-using NullObject.Extensions;
 using System;
 
 namespace GraphViewModel
@@ -22,7 +21,7 @@ namespace GraphViewModel
 
         public virtual IGraph Graph { get; protected set; }
 
-        protected MainModel(BaseGraphFieldFactory fieldFactory,
+        protected MainModel(IGraphFieldFactory fieldFactory,
             IVertexEventHolder eventHolder,
             ISaveLoadGraph saveLoad,
             IAssembleClasses graphFactories,
@@ -82,22 +81,19 @@ namespace GraphViewModel
 
         public void ConnectNewGraph(IGraph graph)
         {
-            if (!graph.IsNullObject())
-            {
-                EndPoints.UnsubscribeFromEvents(Graph);
-                EndPoints.Reset();
-                eventHolder.UnsubscribeVertices(Graph);
-                Graph = graph;
-                GraphField = fieldFactory.CreateGraphField(Graph);
-                eventHolder.SubscribeVertices(Graph);
-                EndPoints.SubscribeToEvents(Graph);
-                GraphParametres = Graph.ToString();
-                PathFindingStatistics = string.Empty;
-            }
+            EndPoints.UnsubscribeFromEvents(Graph);
+            EndPoints.Reset();
+            eventHolder.UnsubscribeVertices(Graph);
+            Graph = graph;
+            GraphField = fieldFactory.CreateGraphField(Graph);
+            eventHolder.SubscribeVertices(Graph);
+            EndPoints.SubscribeToEvents(Graph);
+            GraphParametres = Graph.ToString();
+            PathFindingStatistics = string.Empty;
         }
 
         protected readonly IAssembleClasses graphFactories;
-        protected readonly BaseGraphFieldFactory fieldFactory;
+        protected readonly IGraphFieldFactory fieldFactory;
         protected readonly IAssembleClasses assembleClasses;
         protected readonly ILog log;
 

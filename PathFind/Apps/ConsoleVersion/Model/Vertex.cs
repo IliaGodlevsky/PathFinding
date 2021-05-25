@@ -15,15 +15,15 @@ namespace ConsoleVersion.Model
 {
     internal class Vertex : IVertex, IMarkable, IWeightable
     {
-        public event EventHandler OnExtremeVertexChosen;
-        public event EventHandler OnCostChanged;
-        public event EventHandler OnReverse;
+        public event EventHandler OnVertexCostChanged;
+        public event EventHandler OnEndPointChosen;
+        public event EventHandler OnVertexReversed;
 
-        public Vertex(ICoordinateRadar coordinateRadar,
+        public Vertex(INeighboursCoordinates coordinateRadar,
             ICoordinate coordinate)
         {
             this.Initialize();
-            CoordinateRadar = coordinateRadar;
+            NeighboursCoordinates = coordinateRadar;
             Position = coordinate;
         }
 
@@ -47,7 +47,7 @@ namespace ConsoleVersion.Model
             }
         }
 
-        public ICoordinateRadar CoordinateRadar { get; }
+        public INeighboursCoordinates NeighboursCoordinates { get; }
 
         public string Text { get; set; }
 
@@ -74,17 +74,17 @@ namespace ConsoleVersion.Model
 
         public void ChangeCost()
         {
-            OnCostChanged?.Invoke(this, new EventArgs());
+            OnVertexCostChanged?.Invoke(this, new EventArgs());
         }
 
         public void Reverse()
         {
-            OnReverse?.Invoke(this, new EventArgs());
+            OnVertexReversed?.Invoke(this, new EventArgs());
         }
 
         public void SetAsExtremeVertex()
         {
-            OnExtremeVertexChosen?.Invoke(this, new EventArgs());
+            OnEndPointChosen?.Invoke(this, new EventArgs());
         }
 
         public void MarkAsEnd()

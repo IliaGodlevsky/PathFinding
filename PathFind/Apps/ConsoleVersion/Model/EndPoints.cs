@@ -9,7 +9,7 @@ namespace ConsoleVersion.Model
         {
             if (vertex is Vertex vert)
             {
-                vert.OnExtremeVertexChosen += SetEndPoints;
+                vert.OnEndPointChosen += SetEndPoints;
             }
         }
 
@@ -17,7 +17,7 @@ namespace ConsoleVersion.Model
         {
             if (vertex is Vertex vert)
             {
-                vert.OnExtremeVertexChosen -= SetEndPoints;
+                vert.OnEndPointChosen -= SetEndPoints;
             }
         }
     }

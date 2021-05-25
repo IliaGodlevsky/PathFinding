@@ -37,8 +37,8 @@ namespace ConsoleVersion.Model
         {
             if (vertex is Vertex vert)
             {
-                vert.OnCostChanged += ChangeVertexCost;
-                vert.OnReverse += Reverse;
+                vert.OnVertexCostChanged += ChangeVertexCost;
+                vert.OnVertexReversed += Reverse;
             }
         }
 
@@ -46,8 +46,8 @@ namespace ConsoleVersion.Model
         {
             if (vertex is Vertex vert)
             {
-                vert.OnCostChanged -= ChangeVertexCost;
-                vert.OnReverse -= Reverse;
+                vert.OnVertexCostChanged -= ChangeVertexCost;
+                vert.OnVertexReversed -= Reverse;
             }
         }
     }

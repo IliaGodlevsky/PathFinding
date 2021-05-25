@@ -13,7 +13,7 @@ namespace GraphLib.Extensions.Tests
     [TestFixture]
     public class VertexExtensionsTests
     {
-        private readonly IGraphAssemble graphAssembler;
+        private readonly TestGraph2DAssemble graphAssembler;
 
         public VertexExtensionsTests()
         {
@@ -24,7 +24,7 @@ namespace GraphLib.Extensions.Tests
         public void SetNeighbours_ReturnsRightNumberOfNeighbours()
         {
             const int expectedNumberOfNeighbours = 8;
-            var graph = graphAssembler.AssembleGraph(0, Constants.TestGraph2DDimensionSizes);
+            var graph = graphAssembler.AssembleGraph();
             var vertex = graph[new Coordinate2D(5, 7)];
             vertex.Neighbours.Clear();
 
@@ -36,8 +36,8 @@ namespace GraphLib.Extensions.Tests
         [Test]
         public void SetNeighbours_VertexFromOtherGraph_ThrowsArgumentException()
         {
-            var graph = graphAssembler.AssembleGraph(0, Constants.TestGraph2DDimensionSizes);
-            var otherGraph = graphAssembler.AssembleGraph(0, Constants.TestGraph2DDimensionSizes);
+            var graph = graphAssembler.AssembleGraph();
+            var otherGraph = graphAssembler.AssembleGraph();
             var vertex = graph.Vertices.ElementAt(45);
 
             Assert.Throws<ArgumentException>(() => vertex.SetNeighbours(otherGraph));
@@ -57,7 +57,7 @@ namespace GraphLib.Extensions.Tests
         public void SetNeighbours_NullVertex_ReturnsRightNumberOfNeighbours()
         {
             const int expectedNumberOfNeighbours = 1;
-            var graph = graphAssembler.AssembleGraph(0, Constants.TestGraph2DDimensionSizes);
+            var graph = graphAssembler.AssembleGraph();
             graph[new TestCoordinate(0, 0)] = new NullVertex();
 
             NullVertex vertex = (NullVertex)graph.Vertices.First();

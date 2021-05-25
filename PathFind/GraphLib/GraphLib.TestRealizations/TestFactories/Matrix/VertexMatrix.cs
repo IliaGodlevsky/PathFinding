@@ -1,4 +1,4 @@
-﻿using GraphLib.Realizations.CoordinateRadars;
+﻿using GraphLib.Realizations.NeighboursCoordinates;
 using GraphLib.Realizations.Coordinates;
 using GraphLib.Realizations.Graphs;
 using GraphLib.TestRealizations.TestObjects;
@@ -13,13 +13,13 @@ namespace GraphLib.TestRealizations.TestFactories.Matrix
         }
 
         public void Overlay()
-        {
+        {         
             for (int x = 0; x < graph.Width; x++)
             {
                 for (int y = 0; y < graph.Length; y++)
                 {
                     var coordinate = new Coordinate2D(x, y);
-                    var coordinateRadar = new CoordinateAroundRadar(coordinate);
+                    var coordinateRadar = new AroundNeighboursCoordinates(coordinate);
                     graph[coordinate] = new TestVertex(coordinateRadar, coordinate);
                 }
             }

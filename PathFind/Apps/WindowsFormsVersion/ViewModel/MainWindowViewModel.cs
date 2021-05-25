@@ -63,7 +63,7 @@ namespace WindowsFormsVersion.ViewModel
 
         public MainWindow MainWindow { get; set; }
 
-        public MainWindowViewModel(BaseGraphFieldFactory fieldFactory,
+        public MainWindowViewModel(IGraphFieldFactory fieldFactory,
             IVertexEventHolder eventHolder,
             ISaveLoadGraph saveLoad,
             ConcreteGraphAssembleClasses graphFactories,

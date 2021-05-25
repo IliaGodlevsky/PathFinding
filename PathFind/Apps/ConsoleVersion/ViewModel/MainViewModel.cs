@@ -25,7 +25,7 @@ namespace ConsoleVersion.ViewModel
         private const int ExitCode = 0;
 
         public MainViewModel(
-            BaseGraphFieldFactory fieldFactory,
+            IGraphFieldFactory fieldFactory,
             IVertexEventHolder eventHolder,
             ISaveLoadGraph saveLoad,
             ConcreteGraphAssembleClasses graphFactories,

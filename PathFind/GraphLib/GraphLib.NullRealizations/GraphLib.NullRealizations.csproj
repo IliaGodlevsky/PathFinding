@@ -43,13 +43,17 @@
   <ItemGroup>
     <Compile Include="NullFactories\NullGraphAssemble.cs" />
     <Compile Include="NullObjects\NullCoordinate.cs" />
-    <Compile Include="NullObjects\NullCoordinateRadar.cs" />
+    <Compile Include="NullObjects\NullNeighboursCoordinates.cs" />
     <Compile Include="NullObjects\NullCost.cs" />
     <Compile Include="NullObjects\NullGraph.cs" />
     <Compile Include="NullObjects\NullVertex.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\AssembleClassesLib\AssembleClassesLib.csproj">
+      <Project>{89EAEACE-ADD0-4B2F-B78C-5DB74AD01D8D}</Project>
+      <Name>AssembleClassesLib</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\NullObject\NullObject.csproj">
       <Project>{51D677FD-7A82-4282-8A2E-51DEBE39E695}</Project>
       <Name>NullObject</Name>

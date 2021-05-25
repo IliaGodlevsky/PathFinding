@@ -1,5 +1,5 @@
 ﻿using GraphLib.Interfaces;
-using GraphLib.Realizations.CoordinateRadars;
+using GraphLib.Realizations.NeighboursCoordinates;
 using Moq;
 using NUnit.Framework;
 using System.Linq;
@@ -29,9 +29,9 @@ namespace GraphLib.Realizations.Tests
             int dimensions = coordinateValues.Length;
             int expectedResult = 2 * dimensions;
             coordinateMock.Setup(coordinate => coordinate.CoordinatesValues).Returns(coordinateValues);
-            var coordinateEnvironment = new CardinalCoordinateAroundRadar(coordinateMock.Object);
+            var coordinateEnvironment = new CardinalNeighboursCoordinates(coordinateMock.Object);
 
-            var environment = coordinateEnvironment.Environment.ToArray();
+            var environment = coordinateEnvironment.Coordinates.ToArray();
 
             Assert.AreEqual(expectedResult, environment.Length);
         }
@@ -46,9 +46,9 @@ namespace GraphLib.Realizations.Tests
         public void Environment_CoordinatesWithVariousDimensionsNumber_ReturnNeighboursWithoutSelf(int[] coordinateValues)
         {
             coordinateMock.Setup(coordinate => coordinate.CoordinatesValues).Returns(coordinateValues);
-            var coordinateEnvironment = new CardinalCoordinateAroundRadar(coordinateMock.Object);
+            var coordinateEnvironment = new CardinalNeighboursCoordinates(coordinateMock.Object);
 
-            var environment = coordinateEnvironment.Environment;
+            var environment = coordinateEnvironment.Coordinates;
             bool hasSelf = environment.Any(values => values.Equals(coordinateMock.Object));
 
             Assert.IsFalse(hasSelf);
@@ -64,9 +64,9 @@ namespace GraphLib.Realizations.Tests
         public void Environment_CoordinatesWithVariousDimensionsCount_ReturnUniqueCoordinates(int[] coordinateValues)
         {
             coordinateMock.Setup(coordinate => coordinate.CoordinatesValues).Returns(coordinateValues);
-            var coordinateEnvironment = new CardinalCoordinateAroundRadar(coordinateMock.Object);
+            var coordinateEnvironment = new CardinalNeighboursCoordinates(coordinateMock.Object);
 
-            var environment = coordinateEnvironment.Environment.ToArray();
+            var environment = coordinateEnvironment.Coordinates.ToArray();
 
             Assert.IsTrue(environment.Distinct().Count() == environment.Count());
         }

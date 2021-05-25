@@ -109,8 +109,8 @@ namespace GraphLib.Extensions
             IVertex Vertex(ICoordinate coordinate) => graph[coordinate];
 
             self.Neighbours = self
-                .CoordinateRadar
-                .Environment
+                .NeighboursCoordinates
+                .Coordinates
                 .Which(IsWithingGraph)
                 .Select(Vertex)
                 .Which(CanBeNeighbours)

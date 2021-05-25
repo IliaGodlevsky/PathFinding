@@ -8,10 +8,10 @@ namespace GraphLib.TestRealizations.TestObjects
 {
     public sealed class TestVertex : IVertex
     {
-        public TestVertex(ICoordinateRadar radar, ICoordinate coordinate)
+        public TestVertex(INeighboursCoordinates radar, ICoordinate coordinate)
         {
             this.Initialize();
-            CoordinateRadar = radar;
+            NeighboursCoordinates = radar;
             Position = coordinate;
         }
 
@@ -29,7 +29,7 @@ namespace GraphLib.TestRealizations.TestObjects
 
         public ICoordinate Position { get; }
 
-        public ICoordinateRadar CoordinateRadar { get; }
+        public INeighboursCoordinates NeighboursCoordinates { get; }
 
         public bool Equals(IVertex other)
         {

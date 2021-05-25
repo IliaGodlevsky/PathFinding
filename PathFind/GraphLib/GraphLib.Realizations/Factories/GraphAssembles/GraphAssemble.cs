@@ -21,7 +21,7 @@ namespace GraphLib.Realizations.Factories.GraphAssembles
             ICoordinateFactory coordinateFactory,
             IGraphFactory graphFactory,
             IVertexCostFactory costFactory,
-            ICoordinateRadarFactory radarFactory)
+            INeighboursCoordinatesFactory radarFactory)
         {
             this.vertexFactory = vertexFactory;
             this.coordinateFactory = coordinateFactory;
@@ -74,7 +74,7 @@ namespace GraphLib.Realizations.Factories.GraphAssembles
         protected readonly ICoordinateFactory coordinateFactory;
         protected readonly IVertexFactory vertexFactory;
         protected readonly IGraphFactory graphFactory;
-        protected readonly ICoordinateRadarFactory radarFactory;
+        protected readonly INeighboursCoordinatesFactory radarFactory;
         protected readonly InclusiveValueRange percentRange;
     }
 }

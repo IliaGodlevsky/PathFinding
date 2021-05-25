@@ -18,6 +18,7 @@ using GraphLib.Realizations.Factories.GraphAssembles;
 using GraphLib.Realizations.Factories.GraphFactories;
 using GraphLib.Serialization;
 using GraphLib.Serialization.Interfaces;
+using GraphLib.TestRealizations.TestFactories;
 using GraphViewModel;
 using GraphViewModel.Interfaces;
 using Logging.Interface;
@@ -36,10 +37,9 @@ namespace ConsoleVersion.Configure
             builder.RegisterType<MainView>().As<IView>().InstancePerLifetimeScope();
             builder.RegisterType<MainViewModel>().As<IMainModel>().InstancePerLifetimeScope().PropertiesAutowired();
 
-            builder.RegisterType<EndPoints>().As<BaseEndPoints>().SingleInstance();
-            builder.RegisterType<PathInput>().As<IPathInput>().SingleInstance();
+            builder.RegisterType<EndPoints>().As<BaseEndPoints>().SingleInstance();            
             builder.RegisterType<VertexEventHolder>().As<IVertexEventHolder>().SingleInstance();
-            builder.RegisterType<GraphFieldFactory>().As<BaseGraphFieldFactory>().SingleInstance();
+            builder.RegisterType<GraphFieldFactory>().As<IGraphFieldFactory>().SingleInstance();
 
             builder.RegisterType<FileLog>().As<ILog>().SingleInstance();
             builder.RegisterType<ConsoleLog>().As<ILog>().SingleInstance();
@@ -52,9 +52,10 @@ namespace ConsoleVersion.Configure
             builder.RegisterType<VertexFactory>().As<IVertexFactory>().SingleInstance();
             builder.RegisterType<Coordinate2DFactory>().As<ICoordinateFactory>().SingleInstance();
             builder.RegisterType<Graph2DFactory>().As<IGraphFactory>().SingleInstance();
-            builder.RegisterType<CoordinateAroundRadarFactory>().As<ICoordinateRadarFactory>().SingleInstance();
+            builder.RegisterType<CoordinateAroundRadarFactory>().As<INeighboursCoordinatesFactory>().SingleInstance();
 
             builder.RegisterType<SaveLoadGraph>().As<ISaveLoadGraph>().SingleInstance();
+            builder.RegisterType<PathInput>().As<IPathInput>().SingleInstance();
             builder.RegisterType<GraphSerializer>().As<IGraphSerializer>().SingleInstance();
             builder.RegisterType<BinaryFormatter>().As<IFormatter>().SingleInstance();
             builder.RegisterType<VertexSerializationInfoConverter>().As<IVertexSerializationInfoConverter>().SingleInstance();

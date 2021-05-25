@@ -22,7 +22,7 @@ namespace GraphLib.NullRealizations.NullObjects
 
         public bool Equals(IVertex other) => other is NullVertex;
 
-        public ICoordinateRadar CoordinateRadar => new NullCoordinateRadar();
+        public INeighboursCoordinates NeighboursCoordinates => new NullNeighboursCoordinates();
 
         private readonly List<IVertex> neighbours;
     }

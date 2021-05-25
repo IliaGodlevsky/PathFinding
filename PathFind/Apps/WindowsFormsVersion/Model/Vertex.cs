@@ -12,7 +12,7 @@ namespace WindowsFormsVersion.Model
 {
     internal class Vertex : Label, IVertex, IMarkable, IWeightable
     {
-        public Vertex(ICoordinateRadar coordinateRadar, ICoordinate coordinate) : base()
+        public Vertex(INeighboursCoordinates coordinateRadar, ICoordinate coordinate) : base()
         {
             float fontSize = VertexSize * TextToSizeRatio;
             Font = new Font("Times New Roman", fontSize);
@@ -20,7 +20,7 @@ namespace WindowsFormsVersion.Model
             TextAlign = ContentAlignment.MiddleCenter;
             this.Initialize();
             Position = coordinate;
-            CoordinateRadar = coordinateRadar;
+            NeighboursCoordinates = coordinateRadar;
         }
 
         public Vertex(VertexSerializationInfo info)
@@ -40,7 +40,7 @@ namespace WindowsFormsVersion.Model
             }
         }
 
-        public virtual ICoordinateRadar CoordinateRadar { get; }
+        public virtual INeighboursCoordinates NeighboursCoordinates { get; }
 
         public ICoordinate Position { get; }
 

@@ -18,7 +18,7 @@ namespace GraphLib.Realizations.Factories.GraphAssembles
            ICoordinateFactory coordinateFactory,
            IGraphFactory graphFactory,
            IVertexCostFactory costFactory,
-           ICoordinateRadarFactory radarFactory,
+           INeighboursCoordinatesFactory radarFactory,
            IMeanCost averageCost)
             : base(vertexFactory, coordinateFactory,
                   graphFactory, costFactory, radarFactory)
@@ -31,7 +31,7 @@ namespace GraphLib.Realizations.Factories.GraphAssembles
            ICoordinateFactory coordinateFactory,
            IGraphFactory graphFactory,
            IVertexCostFactory costFactory,
-           ICoordinateRadarFactory radarFactory)
+           INeighboursCoordinatesFactory radarFactory)
             : this(vertexFactory, coordinateFactory,
                   graphFactory, costFactory, radarFactory, new MeanCost())
         {

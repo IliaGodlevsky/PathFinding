@@ -1,7 +1,5 @@
 ﻿using AssembleClassesLib.Interface;
 using ConsoleVersion.View;
-using GraphLib.Exceptions;
-using GraphLib.Realizations.Graphs;
 using GraphLib.ViewModel;
 using GraphViewModel.Interfaces;
 using Logging.Interface;
@@ -39,13 +37,6 @@ namespace ConsoleVersion.ViewModel
             Length = InputNumber(HeightInputMessage, GraphLengthValueRange);
 
             base.CreateGraph();
-
-            if (!(model.Graph is Graph2D))
-            {
-                string message = "An error occurred while creating graph\n";
-                message += $"Graph must be {nameof(Graph2D)} type";
-                throw new WrongGraphTypeException(message, model.Graph);
-            }
 
             MainView.UpdatePositionOfVisualElements(model.Graph);
         }

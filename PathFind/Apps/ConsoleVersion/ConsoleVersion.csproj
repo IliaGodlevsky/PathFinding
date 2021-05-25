@@ -144,6 +144,10 @@
       <Project>{412839a0-77ff-4b66-85c9-50dc07e8fdb7}</Project>
       <Name>GraphLib.Serialization</Name>
     </ProjectReference>
+    <ProjectReference Include="..\..\GraphLib\GraphLib.TestRealizations\GraphLib.TestRealizations.csproj">
+      <Project>{8DF766E8-189D-4845-917D-DD60EABF556A}</Project>
+      <Name>GraphLib.TestRealizations</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\GraphViewModel\GraphViewModel.csproj">
       <Project>{16d6e068-2a1c-4903-930f-762681a2802e}</Project>
       <Name>GraphViewModel</Name>
