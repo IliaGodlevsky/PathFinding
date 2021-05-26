@@ -1,7 +1,7 @@
 ﻿using Common.Extensions;
 using GraphLib.Interfaces;
 using GraphLib.Interfaces.Factories;
-using GraphLib.Realizations.Factories.CoordinateRadarFactories;
+using GraphLib.Realizations.Factories.NeighboursCoordinatesFactories;
 using GraphLib.Realizations.Factories.GraphAssembles;
 using GraphLib.TestRealizations.TestFactories;
 using GraphLib.TestRealizations.TestObjects;
@@ -26,7 +26,7 @@ namespace GraphLib.Realizations.Tests
             vertexFactory = new TestVertexFactory();
             costFactory = new TestCostFactory();
             graphFactory = new TestGraphFactory();
-            radarFactory = new CoordinateAroundRadarFactory();
+            radarFactory = new AroundNeighboursCoordinatesFactory();
             graphAssembler = new GraphAssemble(vertexFactory,
                 coordinateFactory, graphFactory, costFactory, radarFactory);
         }

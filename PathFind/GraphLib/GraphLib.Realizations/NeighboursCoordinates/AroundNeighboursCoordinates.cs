@@ -3,6 +3,9 @@ using GraphLib.Realizations.Coordinates;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.Serialization;
+
+using static System.Linq.Enumerable;
 
 namespace GraphLib.Realizations.NeighboursCoordinates
 {
@@ -10,75 +13,63 @@ namespace GraphLib.Realizations.NeighboursCoordinates
     /// <summary>
     /// A class that finds the neighbors of the specified coordinate
     /// </summary>
-    public sealed class AroundNeighboursCoordinates : INeighboursCoordinates
+    public sealed class AroundNeighboursCoordinates : INeighboursCoordinates, ISerializable
     {
         public AroundNeighboursCoordinates(ICoordinate coordinate)
-        {
+        {            
             selfCoordinatesValues = coordinate.CoordinatesValues.ToArray();
             resultCoordinatesValues = new int[selfCoordinatesValues.Length];
             limitDepth = selfCoordinatesValues.Length;
             lateralNeighbourCoordinatesOffsets = new[] { -1, 0, 1 };
+            neighboursCoordinates = new Lazy<IEnumerable<ICoordinate>>(
+                () => limitDepth == 0 ? Empty<ICoordinate>() : DetectNeighbourCoordinates());
+        }
+
+        public void GetObjectData(SerializationInfo info, StreamingContext context)
+        {
+            info.AddValue(nameof(selfCoordinatesValues), selfCoordinatesValues, typeof(int[]));
         }
 
         /// <summary>
         /// Returns an array of the coordinate neighbours
         /// </summary>
         /// <returns>An array of the coordinate neighbours</returns>
-        public IEnumerable<ICoordinate> Coordinates
-        {
-            get
-            {
-                if (neighboursCoordinates == null)
-                {
-                    neighboursCoordinates = new List<ICoordinate>();
-                    if (limitDepth <= 0)
-                    {
-                        return neighboursCoordinates;
-                    }
-                    FormNeighboursCoordinates();
-                }
-                return neighboursCoordinates;
-            }
-        }
+        public IEnumerable<ICoordinate> Coordinates => neighboursCoordinates.Value;
 
         // Recursive method
-        private void FormNeighboursCoordinates(int depth = 0)
+        private IEnumerable<ICoordinate> DetectNeighbourCoordinates(int depth = 0)
         {
+            var neighbourCoordinates = new List<ICoordinate>();
             foreach (var offset in lateralNeighbourCoordinatesOffsets)
             {
-                TryMoveDeeper(depth, selfCoordinatesValues[depth] + offset);
-            }
-        }
-
-        private void TryMoveDeeper(int depth, int coordinate)
-        {
-            bool canMoveDeeper = depth < limitDepth - 1;
-            resultCoordinatesValues[depth] = coordinate;
-
-            if (canMoveDeeper)
-            {
-                FormNeighboursCoordinates(depth + 1);
-            }
-            else
-            {
-                var seldCoordinates = new Coordinate(selfCoordinatesValues);
-                var resultCoordinates = new Coordinate(resultCoordinatesValues);
-                if (!seldCoordinates.Equals(resultCoordinates))
+                resultCoordinatesValues[depth] = selfCoordinatesValues[depth] + offset;
+                if (depth < limitDepth - 1)
                 {
-                    neighboursCoordinates.Add(resultCoordinates);
+                    neighbourCoordinates.AddRange(DetectNeighbourCoordinates(depth + 1));
+                }
+                else if (!selfCoordinatesValues.SequenceEqual(resultCoordinatesValues))
+                {
+                    neighbourCoordinates.Add(new Coordinate(resultCoordinatesValues));
                 }
             }
-
-
+            return neighbourCoordinates;
         }
 
-        private readonly int limitDepth;
+        private AroundNeighboursCoordinates(SerializationInfo info, StreamingContext context)
+            : this(new Coordinate((int[])info.GetValue(nameof(selfCoordinatesValues), typeof(int[]))))
+        {
+            
+        }
 
-        private readonly int[] lateralNeighbourCoordinatesOffsets;
-        private readonly int[] resultCoordinatesValues;
         private readonly int[] selfCoordinatesValues;
 
         [NonSerialized]
-        private List<ICoordinate> neighboursCoordinates;
+        private readonly int limitDepth;
+        [NonSerialized]
+        private readonly int[] lateralNeighbourCoordinatesOffsets;
+        [NonSerialized]
+        private readonly int[] resultCoordinatesValues;
+        [NonSerialized]
+        private readonly Lazy<IEnumerable<ICoordinate>> neighboursCoordinates;
     }
 }

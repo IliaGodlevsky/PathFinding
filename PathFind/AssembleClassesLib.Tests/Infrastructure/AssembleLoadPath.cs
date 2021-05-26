@@ -9,22 +9,20 @@ namespace AssembleClassesLib.Tests.Infrastructure
     [NotLoadable]
     internal sealed class AssempleLoadPath : IAssembleLoadPath
     {
-        public string LoadPath
+        public AssempleLoadPath()
         {
-            get
+            loadPath = new Lazy<string>(() =>
             {
-                if (string.IsNullOrEmpty(loadPath))
-                {
-                    var assembly = Assembly.GetExecutingAssembly();
-                    string codeBase = assembly.CodeBase;
-                    UriBuilder uri = new UriBuilder(codeBase);
-                    string path = Uri.UnescapeDataString(uri.Path);
-                    loadPath = Path.GetDirectoryName(path);
-                }
-                return loadPath;
-            }
+                var assembly = Assembly.GetExecutingAssembly();
+                string codeBase = assembly.CodeBase;
+                UriBuilder uri = new UriBuilder(codeBase);
+                string path = Uri.UnescapeDataString(uri.Path);
+                return Path.GetDirectoryName(path);
+            });
         }
 
-        private string loadPath;
+        public string LoadPath => loadPath.Value;
+
+        private readonly Lazy<string> loadPath;
     }
 }

@@ -13,9 +13,9 @@ using GraphLib.Interfaces.Factories;
 using GraphLib.Realizations;
 using GraphLib.Realizations.Factories;
 using GraphLib.Realizations.Factories.CoordinateFactories;
-using GraphLib.Realizations.Factories.CoordinateRadarFactories;
 using GraphLib.Realizations.Factories.GraphAssembles;
 using GraphLib.Realizations.Factories.GraphFactories;
+using GraphLib.Realizations.Factories.NeighboursCoordinatesFactories;
 using GraphLib.Serialization;
 using GraphLib.Serialization.Interfaces;
 using GraphLib.TestRealizations.TestFactories;
@@ -52,7 +52,7 @@ namespace ConsoleVersion.Configure
             builder.RegisterType<VertexFactory>().As<IVertexFactory>().SingleInstance();
             builder.RegisterType<Coordinate2DFactory>().As<ICoordinateFactory>().SingleInstance();
             builder.RegisterType<Graph2DFactory>().As<IGraphFactory>().SingleInstance();
-            builder.RegisterType<CoordinateAroundRadarFactory>().As<INeighboursCoordinatesFactory>().SingleInstance();
+            builder.RegisterType<AroundNeighboursCoordinatesFactory>().As<INeighboursCoordinatesFactory>().SingleInstance();
 
             builder.RegisterType<SaveLoadGraph>().As<ISaveLoadGraph>().SingleInstance();
             builder.RegisterType<PathInput>().As<IPathInput>().SingleInstance();

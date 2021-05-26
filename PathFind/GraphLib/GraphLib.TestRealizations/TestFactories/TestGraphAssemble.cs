@@ -1,4 +1,4 @@
-﻿using GraphLib.Realizations.Factories.CoordinateRadarFactories;
+﻿using GraphLib.Realizations.Factories.NeighboursCoordinatesFactories;
 using GraphLib.Realizations.Factories.GraphAssembles;
 
 namespace GraphLib.TestRealizations.TestFactories
@@ -10,7 +10,7 @@ namespace GraphLib.TestRealizations.TestFactories
                   new TestCoordinateFactory(),
                   new TestGraphFactory(),
                   new TestCostFactory(),
-                  new CoordinateAroundRadarFactory())
+                  new AroundNeighboursCoordinatesFactory())
         {
 
         }

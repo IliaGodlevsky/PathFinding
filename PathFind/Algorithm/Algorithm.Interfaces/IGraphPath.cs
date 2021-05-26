@@ -7,6 +7,8 @@ namespace Algorithm.Interfaces
     {
         IEnumerable<IVertex> Path { get; }
 
+        int PathLength { get; }
+
         double PathCost { get; }
     }
 }

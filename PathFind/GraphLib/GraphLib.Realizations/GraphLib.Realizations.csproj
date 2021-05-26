@@ -50,8 +50,8 @@
     <Compile Include="ConcreteGraphAssembleClasses.cs" />
     <Compile Include="Coordinates\Coordinate2D.cs" />
     <Compile Include="Coordinates\Coordinate3D.cs" />
-    <Compile Include="Factories\CoordinateRadarFactories\CardinalCoordinateAroundRadar.cs" />
-    <Compile Include="Factories\CoordinateRadarFactories\CoordinateAroundRadarFactory.cs" />
+    <Compile Include="Factories\NeighboursCoordinatesFactories\CardinalNeighboursCoordinatesFactory.cs" />
+    <Compile Include="Factories\NeighboursCoordinatesFactories\AroundNeighboursCoordinatesFactory.cs" />
     <Compile Include="Factories\CoordinateFactories\Coordinate2DFactory.cs" />
     <Compile Include="Factories\CoordinateFactories\Coordinate3DFactory.cs" />
     <Compile Include="Factories\CostFactory.cs" />

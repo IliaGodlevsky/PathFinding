@@ -53,6 +53,21 @@ namespace Common.Extensions
             return collection.ElementAtOrDefault(index);
         }
 
+        public static bool Contains<T>(this IEnumerable<T> self, params T[] items)
+        {
+            bool IsInCollection(T item)
+            {
+                return self.Any(selfItem => ReferenceEquals(selfItem, item));
+            }
+
+            return items.All(IsInCollection);
+        }
+
+        public static IEnumerable<T> Except<T>(this IEnumerable<T> self, params T[] items)
+        {
+            return self.Except(items.AsEnumerable());
+        }
+
         public static IEnumerable<TSource> Which<TSource>(this IEnumerable<TSource> self,
             Func<TSource, bool> predicate)
         {

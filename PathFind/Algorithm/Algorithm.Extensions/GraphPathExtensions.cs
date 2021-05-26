@@ -15,11 +15,6 @@ namespace Algorithm.Extensions
                 .ForEach(vertex => vertex.MarkAsPath());
         }
 
-        public static int GetPathLength(this IGraphPath self)
-        {
-            return self.Path.Count();
-        }
-
         public static bool IsExtracted(this IGraphPath self)
         {
             return self.Path.Any();

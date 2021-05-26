@@ -16,7 +16,7 @@ namespace GraphLib.TestRealizations.TestObjects
         }
 
         public TestVertex(VertexSerializationInfo info)
-            : this(info.CoordinateRadar, info.Position)
+            : this(info.NeighboursCoordinates, info.Position)
         {
             this.Initialize(info);
         }

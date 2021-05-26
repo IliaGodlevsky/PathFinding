@@ -73,12 +73,7 @@ namespace GraphLib.Extensions
 
         public static bool Contains(this IGraph self, params IVertex[] vertices)
         {
-            bool IsInGraph(IVertex vertex)
-            {
-                return self.Vertices.Any(v => ReferenceEquals(v, vertex));
-            }
-
-            return vertices.All(IsInGraph);
+            return self.Vertices.Contains(vertices);
         }
 
         public static bool Contains(this IGraph self, IEndPoints endPoints)

@@ -8,7 +8,7 @@ using GraphLib.Interfaces;
 using GraphLib.Interfaces.Factories;
 using GraphLib.Realizations;
 using GraphLib.Realizations.Factories.CoordinateFactories;
-using GraphLib.Realizations.Factories.CoordinateRadarFactories;
+using GraphLib.Realizations.Factories.NeighboursCoordinatesFactories;
 using GraphLib.Realizations.Factories.GraphAssembles;
 using GraphLib.Realizations.Factories.GraphFactories;
 using GraphLib.Serialization;
@@ -47,7 +47,7 @@ namespace WPFVersion3D.Configure
             builder.RegisterType<Vertex3DCostFactory>().As<IVertexCostFactory>().SingleInstance();
             builder.RegisterType<Coordinate3DFactory>().As<ICoordinateFactory>().SingleInstance();
             builder.RegisterType<Graph3DFactory>().As<IGraphFactory>().SingleInstance();
-            builder.RegisterType<CardinalCoordinateAroundRadarFactory>().As<INeighboursCoordinatesFactory>().SingleInstance();
+            builder.RegisterType<CardinalNeighboursCoordinatesFactory>().As<INeighboursCoordinatesFactory>().SingleInstance();
             builder.RegisterType<CubicModel3DFactory>().As<IModel3DFactory>().SingleInstance();
 
             builder.RegisterType<SaveLoadGraph>().As<ISaveLoadGraph>().SingleInstance();

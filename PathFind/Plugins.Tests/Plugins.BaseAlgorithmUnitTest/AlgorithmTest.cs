@@ -32,7 +32,7 @@ namespace Plugins.BaseAlgorithmUnitTest
 
             var graphPath = algorithm.FindPath();
 
-            Assert.AreEqual(GetExpectedLength(), graphPath.Path.Count());
+            Assert.AreEqual(GetExpectedLength(), graphPath.PathLength);
             Assert.AreEqual(GetExpectedCost(), graphPath.PathCost);
         }
 
@@ -56,7 +56,7 @@ namespace Plugins.BaseAlgorithmUnitTest
 
             var graphPath = algorithm.FindPath();
 
-            Assert.AreEqual(default(int), graphPath.Path.Count());
+            Assert.AreEqual(default(int), graphPath.PathLength);
             Assert.AreEqual(default(double), graphPath.PathCost);
         }
 

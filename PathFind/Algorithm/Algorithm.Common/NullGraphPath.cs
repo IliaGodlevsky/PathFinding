@@ -9,8 +9,15 @@ namespace Algorithm.Common
     [Null]
     public sealed class NullGraphPath : IGraphPath
     {
-        public IEnumerable<IVertex> Path => new NullVertex[] { new NullVertex() };
+        public NullGraphPath()
+        {
+            Path = new NullVertex[] { new NullVertex() };
+        }
+
+        public IEnumerable<IVertex> Path { get; }
 
         public double PathCost => default;
+
+        public int PathLength => default;
     }
 }

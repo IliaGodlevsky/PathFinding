@@ -24,7 +24,7 @@ namespace WindowsFormsVersion.Model
         }
 
         public Vertex(VertexSerializationInfo info)
-            : this(info.CoordinateRadar, info.Position)
+            : this(info.NeighboursCoordinates, info.Position)
         {
             this.Initialize(info);
         }

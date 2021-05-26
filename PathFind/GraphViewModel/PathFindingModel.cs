@@ -175,7 +175,7 @@ namespace GraphViewModel
 
         private string GetStatistics()
         {
-            int pathLength = path?.GetPathLength() ?? 0;
+            int pathLength = path?.PathLength ?? 0;
             double pathCost = path?.PathCost ?? 0;
             string graphInfo = string.Format(StatisticsFormat,
                 pathLength, pathCost, visitedVerticesCount);

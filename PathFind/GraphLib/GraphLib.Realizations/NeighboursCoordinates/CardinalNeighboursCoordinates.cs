@@ -4,34 +4,48 @@ using GraphLib.Realizations.Coordinates;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.Serialization;
 
 namespace GraphLib.Realizations.NeighboursCoordinates
 {
     [Serializable]
-    public sealed class CardinalNeighboursCoordinates : INeighboursCoordinates
+    public sealed class CardinalNeighboursCoordinates : INeighboursCoordinates, ISerializable
     {
+        public IEnumerable<ICoordinate> Coordinates => coordinates.Value;
+
         public CardinalNeighboursCoordinates(ICoordinate coordinate)
         {
+            coordinates = new Lazy<IEnumerable<ICoordinate>>(DetectNeighboursCoordinates);
             coordinatesValues = new Coordinate(coordinate);
-            neighboursCoordinates = new AroundNeighboursCoordinates(coordinate);
+            neighboursCoordinates = new AroundNeighboursCoordinates(coordinatesValues);
         }
 
-        public IEnumerable<ICoordinate> Coordinates => coordinates ?? FormNeighboursCoordinates();
+        public void GetObjectData(SerializationInfo info, StreamingContext context)
+        {
+            info.AddValue(nameof(coordinatesValues), coordinatesValues, typeof(Coordinate));
+        }
+
+        private CardinalNeighboursCoordinates(SerializationInfo info, StreamingContext context)
+            : this((Coordinate)info.GetValue(nameof(coordinatesValues), typeof(Coordinate)))
+        {
+            
+        }
 
         private bool IsCardinal(ICoordinate coordinate)
         {
             return coordinate.IsCardinal(coordinatesValues);
         }
 
-        private IEnumerable<ICoordinate> FormNeighboursCoordinates()
+        private IEnumerable<ICoordinate> DetectNeighboursCoordinates()
         {
-            return coordinates = neighboursCoordinates.Coordinates.Where(IsCardinal);
+            return neighboursCoordinates.Coordinates.Where(IsCardinal);
         }
 
         private readonly Coordinate coordinatesValues;
-        private readonly INeighboursCoordinates neighboursCoordinates;
 
         [NonSerialized]
-        private IEnumerable<ICoordinate> coordinates;
+        private readonly INeighboursCoordinates neighboursCoordinates;
+        [NonSerialized]
+        private readonly Lazy<IEnumerable<ICoordinate>> coordinates;
     }
 }

@@ -1,8 +1,10 @@
 ﻿using Algorithm.Interfaces;
 using Algorithm.Realizations.StepRules;
 using Algorithm.Сompanions;
+using Common.Extensions;
 using GraphLib.Extensions;
 using GraphLib.Interfaces;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -10,27 +12,11 @@ namespace Algorithm.Realizations.GraphPaths
 {
     public sealed class GraphPath : IGraphPath
     {
-        private IVertex[] Empty => new IVertex[] { };
+        public IEnumerable<IVertex> Path => path.Value;
 
-        public IEnumerable<IVertex> Path
-        {
-            get
-            {
-                if (path == null)
-                {
-                    path = FormPath().ToArray();
-                    if (!IsPathFormed())
-                    {
-                        path = Empty;
-                    }
-                    PathCost = IsPathFormed() ? FormPathCost() : default;
-                    path = path.Where(IsNotStart).ToArray();
-                }
-                return path;
-            }
-        }
+        public double PathCost => pathCost.Value;
 
-        public double PathCost { get; private set; }
+        public int PathLength => pathLength.Value;
 
         public GraphPath(ParentVertices parentVertices, IEndPoints endPoints, IGraph graph)
             : this(parentVertices, endPoints, graph, new DefaultStepRule())
@@ -41,13 +27,26 @@ namespace Algorithm.Realizations.GraphPaths
         public GraphPath(ParentVertices parentVertices,
             IEndPoints endPoints, IGraph graph, IStepRule stepRule)
         {
+            path = new Lazy<IEnumerable<IVertex>>(GetPath);
+            pathCost = new Lazy<double>(ExtractPathCost);
+            pathLength = new Lazy<int>(() => Path.Count() - 1);
             this.parentVertices = parentVertices;
             this.graph = graph;
             this.endPoints = endPoints;
             this.stepRule = stepRule;
         }
 
-        private IEnumerable<IVertex> FormPath()
+        private IEnumerable<IVertex> GetPath()
+        {
+            var path = ExtractPath();
+            if (!path.Contains(endPoints.Source, endPoints.Target))
+            {
+                path = Enumerable.Empty<IVertex>();
+            }
+            return path;
+        }
+
+        private IEnumerable<IVertex> ExtractPath()
         {
             var vertex = endPoints.Target;
             yield return vertex;
@@ -60,33 +59,25 @@ namespace Algorithm.Realizations.GraphPaths
             }
         }
 
-        private double FormPathCost()
+        private double ExtractPathCost()
         {
+            var path = Path.ToArray();
+
             double GetCost(int i)
-                => stepRule.CalculateStepCost(path[i], path[i + 1]);
+            {
+                return stepRule.CalculateStepCost(path[i], path[i + 1]);
+            }
 
-            return Enumerable
-                .Range(0, path.Length - 1)
-                .Sum(GetCost);
+            return Enumerable.Range(0, path.Length - 1).Sum(GetCost);
         }
-
-        private bool IsPathFormed()
-        {
-            return path.Length >= RequiredNumberOfVerticesForCompletePath;
-        }
-
-        private bool IsNotStart(IVertex vertex)
-        {
-            return !endPoints.Source.IsEqual(vertex);
-        }
-
-        private const int RequiredNumberOfVerticesForCompletePath = 2;
 
         private readonly ParentVertices parentVertices;
         private readonly IGraph graph;
         private readonly IEndPoints endPoints;
         private readonly IStepRule stepRule;
 
-        private IVertex[] path;
+        private readonly Lazy<int> pathLength;
+        private readonly Lazy<double> pathCost;
+        private readonly Lazy<IEnumerable<IVertex>> path;
     }
 }
