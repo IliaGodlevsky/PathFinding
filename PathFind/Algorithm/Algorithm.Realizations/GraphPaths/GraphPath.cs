@@ -39,7 +39,7 @@ namespace Algorithm.Realizations.GraphPaths
         private IEnumerable<IVertex> GetPath()
         {
             var path = ExtractPath();
-            if (!path.Contains(endPoints.Source, endPoints.Target))
+            if (!path.ContainsElems(endPoints.Source, endPoints.Target))
             {
                 path = Enumerable.Empty<IVertex>();
             }

@@ -53,11 +53,11 @@ namespace Common.Extensions
             return collection.ElementAtOrDefault(index);
         }
 
-        public static bool Contains<T>(this IEnumerable<T> self, params T[] items)
+        public static bool ContainsElems<T>(this IEnumerable<T> self, params T[] items)
         {
             bool IsInCollection(T item)
             {
-                return self.Any(selfItem => ReferenceEquals(selfItem, item));
+                return self.Any(selfItems => ReferenceEquals(selfItems, item));
             }
 
             return items.All(IsInCollection);

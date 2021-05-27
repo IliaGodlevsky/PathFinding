@@ -73,7 +73,7 @@ namespace Plugins.BaseAlgorithmUnitTest
 
             var graphPath = algorithm.FindPath();
 
-            Assert.IsTrue(graphPath.Path.Any());
+            Assert.IsTrue(graphPath.PathLength > 0);
             Assert.IsTrue(graphPath.PathCost > 0);
         }
 

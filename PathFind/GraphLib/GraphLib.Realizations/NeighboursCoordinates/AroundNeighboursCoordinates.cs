@@ -1,4 +1,5 @@
-﻿using GraphLib.Interfaces;
+﻿using Common.Extensions;
+using GraphLib.Interfaces;
 using GraphLib.Realizations.Coordinates;
 using System;
 using System.Collections.Generic;
@@ -21,8 +22,7 @@ namespace GraphLib.Realizations.NeighboursCoordinates
             resultCoordinatesValues = new int[selfCoordinatesValues.Length];
             limitDepth = selfCoordinatesValues.Length;
             lateralNeighbourCoordinatesOffsets = new[] { -1, 0, 1 };
-            neighboursCoordinates = new Lazy<IEnumerable<ICoordinate>>(
-                () => limitDepth == 0 ? Empty<ICoordinate>() : DetectNeighbourCoordinates());
+            neighboursCoordinates = new Lazy<IEnumerable<ICoordinate>>(GetNeighboursCoordinates);
         }
 
         public void GetObjectData(SerializationInfo info, StreamingContext context)
@@ -36,6 +36,12 @@ namespace GraphLib.Realizations.NeighboursCoordinates
         /// <returns>An array of the coordinate neighbours</returns>
         public IEnumerable<ICoordinate> Coordinates => neighboursCoordinates.Value;
 
+        private AroundNeighboursCoordinates(SerializationInfo info, StreamingContext context)
+            : this(new Coordinate((int[])info.GetValue(nameof(selfCoordinatesValues), typeof(int[]))))
+        {
+
+        }
+
         // Recursive method
         private IEnumerable<ICoordinate> DetectNeighbourCoordinates(int depth = 0)
         {
@@ -47,7 +53,7 @@ namespace GraphLib.Realizations.NeighboursCoordinates
                 {
                     neighbourCoordinates.AddRange(DetectNeighbourCoordinates(depth + 1));
                 }
-                else if (!selfCoordinatesValues.SequenceEqual(resultCoordinatesValues))
+                else
                 {
                     neighbourCoordinates.Add(new Coordinate(resultCoordinatesValues));
                 }
@@ -55,10 +61,10 @@ namespace GraphLib.Realizations.NeighboursCoordinates
             return neighbourCoordinates;
         }
 
-        private AroundNeighboursCoordinates(SerializationInfo info, StreamingContext context)
-            : this(new Coordinate((int[])info.GetValue(nameof(selfCoordinatesValues), typeof(int[]))))
+        private IEnumerable<ICoordinate> GetNeighboursCoordinates()
         {
-            
+            var selfCoordinate = new Coordinate(selfCoordinatesValues);
+            return limitDepth == 0 ? Empty<ICoordinate>() : DetectNeighbourCoordinates().Except(selfCoordinate);
         }
 
         private readonly int[] selfCoordinatesValues;

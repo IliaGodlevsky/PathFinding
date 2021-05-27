@@ -73,7 +73,7 @@ namespace GraphLib.Extensions
 
         public static bool Contains(this IGraph self, params IVertex[] vertices)
         {
-            return self.Vertices.Contains(vertices);
+            return self.Vertices.ContainsElems(vertices);
         }
 
         public static bool Contains(this IGraph self, IEndPoints endPoints)
