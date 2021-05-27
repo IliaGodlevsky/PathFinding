@@ -25,11 +25,11 @@ namespace WPFVersion3D
 
         static Constants()
         {
-            ObstaclePercentValueRange = new LowInclusiveValueRange(100, 0);
+            ObstaclePercentValueRange = new InclusiveValueRange(99, 0);
             AlgorithmDelayValueRange = new InclusiveValueRange(35, 0);
-            GraphWidthValueRange = new UpInclusiveValueRange(30, 0);
-            GraphLengthValueRange = new UpInclusiveValueRange(30, 0);
-            GraphHeightValueRange = new UpInclusiveValueRange(30, 0);
+            GraphWidthValueRange = new InclusiveValueRange(30, 1);
+            GraphLengthValueRange = new InclusiveValueRange(30, 1);
+            GraphHeightValueRange = new InclusiveValueRange(30, 1);
             GraphParamsValueRanges = new ValueRanges(GraphWidthValueRange,
                 GraphLengthValueRange,
                 GraphHeightValueRange

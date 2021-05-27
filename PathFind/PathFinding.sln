@@ -111,7 +111,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GraphLib.TestRealizations",
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GraphLib.NullRealizations", "GraphLib\GraphLib.NullRealizations\GraphLib.NullRealizations.csproj", "{FA595CBF-C9AA-4D4F-AFF7-19E571C91D00}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GraphLib.NullRealization.Tests", "GraphLib.Tests\GraphLib.NullRealization.Tests\GraphLib.NullRealization.Tests.csproj", "{E458E202-5F99-482B-AE2E-7E661ACCDBBA}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GraphLib.NullRealization.Tests", "GraphLib.Tests\GraphLib.NullRealization.Tests\GraphLib.NullRealization.Tests.csproj", "{E458E202-5F99-482B-AE2E-7E661ACCDBBA}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

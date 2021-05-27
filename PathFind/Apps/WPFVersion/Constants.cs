@@ -18,10 +18,10 @@ namespace WPFVersion
 
         static Constants()
         {
-            GraphWidthValueRange = new UpInclusiveValueRange(150, 0);
-            GraphLengthValueRange = new UpInclusiveValueRange(75, 0);
+            GraphWidthValueRange = new InclusiveValueRange(150, 1);
+            GraphLengthValueRange = new InclusiveValueRange(75, 1);
             GraphParamsValueRanges = new ValueRanges(GraphWidthValueRange, GraphLengthValueRange);
-            ObstaclesPercentValueRange = new LowInclusiveValueRange(100, 0);
+            ObstaclesPercentValueRange = new InclusiveValueRange(99, 0);
             AlgorithmDelayTimeValueRange = new InclusiveValueRange(35, 0);
             VertexSizeRange = new InclusiveValueRange(30, 5);
         }

@@ -50,7 +50,7 @@ namespace ConsoleVersion.View
             menuActions = GetMenuMethodsAsDelegates<Action>(mainModel);
             menuActionsKeys = menuActions.Keys.ToArray();
             menu = CreateMenu(menuActionsKeys, columns: 3);
-            menuValueRange = new UpInclusiveValueRange(menuActionsKeys.Length, 0);
+            menuValueRange = new InclusiveValueRange(menuActionsKeys.Length, 1);
         }
 
         public void Start()

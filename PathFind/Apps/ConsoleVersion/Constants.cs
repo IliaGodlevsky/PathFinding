@@ -13,9 +13,9 @@ namespace ConsoleVersion
 
         static Constants()
         {
-            GraphWidthValueRange = new UpInclusiveValueRange(80, 0);
-            GraphLengthValueRange = new UpInclusiveValueRange(50, 1);
-            ObstaclesPercentValueRange = new LowInclusiveValueRange(100, 0);
+            GraphWidthValueRange = new InclusiveValueRange(80, 1);
+            GraphLengthValueRange = new InclusiveValueRange(50, 1);
+            ObstaclesPercentValueRange = new InclusiveValueRange(99, 0);
             AlgorithmDelayTimeValueRange = new InclusiveValueRange(35, 0);
         }
     }
