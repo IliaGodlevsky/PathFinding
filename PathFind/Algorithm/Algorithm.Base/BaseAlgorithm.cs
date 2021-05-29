@@ -114,12 +114,12 @@ namespace Algorithm.Base
             Reset();
         }
 
-        protected readonly VisitedVerticesWithoutObstacles visitedVertices;
+        protected readonly IVisitedVertices visitedVertices;
         protected readonly ParentVertices parentVertices;
         protected IAccumulatedCosts accumulatedCosts;
 
         protected readonly IGraph graph;
-        protected readonly EndPoints endPoints;
+        protected readonly IEndPoints endPoints;
 
         private bool isInterruptRequested;
     }

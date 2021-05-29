@@ -10,6 +10,7 @@ using System.Collections.Generic;
 using System.Drawing;
 
 using Console = Colorful.Console;
+using static ConsoleVersion.Constants;
 
 namespace ConsoleVersion.Model
 {
@@ -19,12 +20,12 @@ namespace ConsoleVersion.Model
         public event EventHandler OnEndPointChosen;
         public event EventHandler OnVertexReversed;
 
-        public Vertex(INeighboursCoordinates coordinateRadar,
-            ICoordinate coordinate)
-        {
-            this.Initialize();
+        public Vertex(INeighboursCoordinates coordinateRadar, ICoordinate coordinate)
+        {            
             NeighboursCoordinates = coordinateRadar;
             Position = coordinate;
+            consoleCoordinates = new Lazy<Coordinate2D>(GetConsoleCoordinates);
+            this.Initialize();
         }
 
         public Vertex(VertexSerializationInfo info)
@@ -74,17 +75,17 @@ namespace ConsoleVersion.Model
 
         public void ChangeCost()
         {
-            OnVertexCostChanged?.Invoke(this, new EventArgs());
+            OnVertexCostChanged?.Invoke(this, EventArgs.Empty);
         }
 
         public void Reverse()
         {
-            OnVertexReversed?.Invoke(this, new EventArgs());
+            OnVertexReversed?.Invoke(this, EventArgs.Empty);
         }
 
         public void SetAsExtremeVertex()
         {
-            OnEndPointChosen?.Invoke(this, new EventArgs());
+            OnEndPointChosen?.Invoke(this, EventArgs.Empty);
         }
 
         public void MarkAsEnd()
@@ -142,11 +143,8 @@ namespace ConsoleVersion.Model
 
         public void ColorizeVertex()
         {
-            if (ConsoleCoordinate != null)
-            {
-                Console.SetCursorPosition(ConsoleCoordinate.X, ConsoleCoordinate.Y);
-                Console.Write(Text, Colour);
-            }
+            Console.SetCursorPosition(ConsoleCoordinate.X, ConsoleCoordinate.Y);
+            Console.Write(Text, Colour);   
         }
 
         public bool Equals(IVertex other)
@@ -154,28 +152,17 @@ namespace ConsoleVersion.Model
             return other.IsEqual(this);
         }
 
-        private Coordinate2D consoleCoordinate;
-
-        private Coordinate2D ConsoleCoordinate
+        private Coordinate2D GetConsoleCoordinates()
         {
-            get
-            {
-                if (consoleCoordinate == null)
-                {
-                    if (Position != null)
-                    {
-                        var position = Position as Coordinate2D;
-                        var consolePosition = MainView.GraphFieldPosition;
-                        if (consolePosition != null)
-                        {
-                            var left = consolePosition.X + position.X * Constants.LateralDistanceBetweenVertices;
-                            var top = consolePosition.Y + position.Y;
-                            consoleCoordinate = new Coordinate2D(left, top);
-                        }
-                    }
-                }
-                return consoleCoordinate;
-            }
+            var position = Position as Coordinate2D;
+            var consolePosition = MainView.GraphFieldPosition;
+            var left = consolePosition.X + position.X * LateralDistanceBetweenVertices;
+            var top = consolePosition.Y + position.Y;
+            return new Coordinate2D(left, top);
         }
+
+        private Coordinate2D ConsoleCoordinate => consoleCoordinates.Value;
+
+        private readonly Lazy<Coordinate2D> consoleCoordinates;
     }
 }

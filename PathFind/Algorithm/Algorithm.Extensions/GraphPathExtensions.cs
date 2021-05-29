@@ -15,7 +15,7 @@ namespace Algorithm.Extensions
                 .ForEach(vertex => vertex.MarkAsPath());
         }
 
-        public static bool IsExtracted(this IGraphPath self)
+        public static bool HasPath(this IGraphPath self)
         {
             return self.Path.Any();
         }

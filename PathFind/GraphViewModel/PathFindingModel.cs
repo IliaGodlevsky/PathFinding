@@ -142,7 +142,7 @@ namespace GraphViewModel
 
         protected virtual void Summarize()
         {
-            if (path.IsExtracted())
+            if (path.HasPath())
             {
                 path.Highlight(endPoints);
                 string statistics = GetStatistics();

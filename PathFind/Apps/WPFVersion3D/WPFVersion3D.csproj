@@ -84,7 +84,6 @@
     <Compile Include="Model\EndPoints.cs" />
     <Compile Include="Model\GraphField3DContainer.cs" />
     <Compile Include="Model\AssembleLoadPath.cs" />
-    <Compile Include="Model\WpfMessageBoxLog.cs" />
     <Compile Include="Model\Offset.cs" />
     <Compile Include="Model\PathInput.cs" />
     <Compile Include="Model\Vertex3DCost.cs" />

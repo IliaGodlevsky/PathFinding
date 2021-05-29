@@ -2,6 +2,7 @@
 using ConsoleVersion.Model;
 using GraphLib.Interfaces;
 using GraphLib.Realizations.Coordinates;
+using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
@@ -21,6 +22,8 @@ namespace ConsoleVersion.View
         public GraphField()
         {
             vertices = new List<Vertex>();
+            horizontalFrame = new Lazy<string>(GetHorizontalFrame);
+            abscissa = new Lazy<string>(GetAbscissa);
         }
 
         public void Add(IVertex vertex)
@@ -97,44 +100,38 @@ namespace ConsoleVersion.View
                    + MainView.WidthOfOrdinateView - 1;
         }
 
-        private string Abscissa
+        private string GetAbscissa()
         {
-            get
+            var abscissa = new StringBuilder(LargeSpace);
+
+            for (var i = 0; i < Width; i++)
             {
-                var abscissa = new StringBuilder(LargeSpace);
-
-                for (var i = 0; i < Width; i++)
-                {
-                    var offset = !IsOffsetIndex(i) ? BigSpace : Space;
-                    abscissa.Append(i + offset);
-                }
-
-                abscissa.Append(LargeSpace);
-                return abscissa.ToString();
+                var offset = !IsOffsetIndex(i) ? BigSpace : Space;
+                abscissa.Append(i + offset);
             }
+
+            abscissa.Append(LargeSpace);
+            return abscissa.ToString();
         }
 
-        private string HorizontalFrame
+        private string GetHorizontalFrame()
         {
-            get
+            var frame = new StringBuilder(LargeSpace);
+
+            for (var i = 0; i < Width; i++)
             {
-                var frame = new StringBuilder(LargeSpace);
-
-                for (var i = 0; i < Width; i++)
-                {
-                    frame.Append(HorizontalFrameComponent);
-                }
-
-                return frame.ToString();
+                frame.Append(HorizontalFrameComponent);
             }
+
+            return frame.ToString();
         }
 
         private string GetFramedAbscissa(FramedAbscissaPosition framedAbscissaView)
         {
             var framedAbscissaComponents = new List<string>()
             {
-                Abscissa,
-                HorizontalFrame
+                abscissa.Value,
+                horizontalFrame.Value
             };
 
             var framedAbscissa = new StringBuilder();
@@ -164,6 +161,9 @@ namespace ConsoleVersion.View
         }
 
         private readonly List<Vertex> vertices;
+
+        private readonly Lazy<string> horizontalFrame;
+        private readonly Lazy<string> abscissa;
 
         private const string Space = " ";
         private const string BigSpace = "  ";

@@ -1,6 +1,6 @@
 ﻿using Common.Extensions;
 using GraphLib.Interfaces;
-using GraphLib.Realizations.Coordinates;
+using GraphLib.Realizations.Extensions;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,18 +10,18 @@ using static System.Linq.Enumerable;
 
 namespace GraphLib.Realizations.NeighboursCoordinates
 {
-    [Serializable]
     /// <summary>
     /// A class that finds the neighbors of the specified coordinate
     /// </summary>
+    [Serializable] 
     public sealed class AroundNeighboursCoordinates : INeighboursCoordinates, ISerializable
     {
         public AroundNeighboursCoordinates(ICoordinate coordinate)
         {            
             selfCoordinatesValues = coordinate.CoordinatesValues.ToArray();
-            resultCoordinatesValues = new int[selfCoordinatesValues.Length];
             limitDepth = selfCoordinatesValues.Length;
-            lateralNeighbourCoordinatesOffsets = new[] { -1, 0, 1 };
+            resultCoordinatesValues = new int[limitDepth];
+            lateralNeighbourCoordinatesOffsets = limitDepth == 0 ? Empty<int>() : new[] { -1, 0, 1 };
             neighboursCoordinates = new Lazy<IEnumerable<ICoordinate>>(GetNeighboursCoordinates);
         }
 
@@ -37,12 +37,16 @@ namespace GraphLib.Realizations.NeighboursCoordinates
         public IEnumerable<ICoordinate> Coordinates => neighboursCoordinates.Value;
 
         private AroundNeighboursCoordinates(SerializationInfo info, StreamingContext context)
-            : this(new Coordinate((int[])info.GetValue(nameof(selfCoordinatesValues), typeof(int[]))))
+            : this(((int[])info.GetValue(nameof(selfCoordinatesValues), typeof(int[]))).ToCoordinate())
         {
 
         }
 
-        // Recursive method
+        /// <summary>
+        /// Detects neighbours coordinates around the central coordinate
+        /// </summary>
+        /// <param name="depth">The depth of the recursive dive</param>
+        /// <returns>An array of neighbours coordinates around the central one</returns>
         private IEnumerable<ICoordinate> DetectNeighbourCoordinates(int depth = 0)
         {
             var neighbourCoordinates = new List<ICoordinate>();
@@ -55,7 +59,7 @@ namespace GraphLib.Realizations.NeighboursCoordinates
                 }
                 else
                 {
-                    neighbourCoordinates.Add(new Coordinate(resultCoordinatesValues));
+                    neighbourCoordinates.Add(resultCoordinatesValues.ToCoordinate());
                 }
             }
             return neighbourCoordinates;
@@ -63,19 +67,13 @@ namespace GraphLib.Realizations.NeighboursCoordinates
 
         private IEnumerable<ICoordinate> GetNeighboursCoordinates()
         {
-            var selfCoordinate = new Coordinate(selfCoordinatesValues);
-            return limitDepth == 0 ? Empty<ICoordinate>() : DetectNeighbourCoordinates().Except(selfCoordinate);
+            return DetectNeighbourCoordinates().Except(selfCoordinatesValues.ToCoordinate());
         }
-
-        private readonly int[] selfCoordinatesValues;
-
-        [NonSerialized]
+       
         private readonly int limitDepth;
-        [NonSerialized]
-        private readonly int[] lateralNeighbourCoordinatesOffsets;
-        [NonSerialized]
+        private readonly int[] selfCoordinatesValues;
         private readonly int[] resultCoordinatesValues;
-        [NonSerialized]
+        private readonly IEnumerable<int> lateralNeighbourCoordinatesOffsets;
         private readonly Lazy<IEnumerable<ICoordinate>> neighboursCoordinates;
     }
 }

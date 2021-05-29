@@ -22,11 +22,10 @@ namespace GraphLib.Extensions
         {
             bool IsObstacleOrNullObject(IVertex vertex)
             {
-                return vertex.IsObstacle && vertex.IsNullObject();
+                return vertex.IsObstacle || vertex.IsNullObject();
             }
 
-            return IsObstacleOrNullObject(self)
-                || self.Neighbours.All(IsObstacleOrNullObject);
+            return IsObstacleOrNullObject(self) || self.Neighbours.All(IsObstacleOrNullObject);
         }
 
         /// <summary>

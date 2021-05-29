@@ -23,8 +23,7 @@ namespace Common.Extensions
         /// <returns>A distincted <paramref name="collection"/></returns>
         /// <exception cref="ArgumentNullException">Thrown when <paramref name="collection"/> 
         /// is null or <paramref name="selector"/> is null</exception>
-        public static IEnumerable<T> DistinctBy<T, TKey>(
-            this IEnumerable<T> collection, Func<T, TKey> selector)
+        public static IEnumerable<T> DistinctBy<T, TKey>(this IEnumerable<T> collection, Func<T, TKey> selector)
         {
             #region InvariantsObservance
             if (collection == null || selector == null)
@@ -83,8 +82,7 @@ namespace Common.Extensions
         /// <param name="action"></param>
         /// <returns>The same <paramref name="collection"/> with elements 
         /// to which <paramref name="action"/> was applied</returns>
-        public static IEnumerable<T> ForEach<T>(this IEnumerable<T> collection,
-            Action<T> action)
+        public static IEnumerable<T> ForEach<T>(this IEnumerable<T> collection, Action<T> action)
         {
             foreach (var item in collection)
             {
@@ -132,8 +130,7 @@ namespace Common.Extensions
         /// <param name="predicate"></param>
         /// <returns>true if <paramref name="predicate"/> is true 
         /// for each corresponding elements in two sequencies and false if not</returns>
-        public static bool Match<T>(this IEnumerable<T> self,
-            IEnumerable<T> second, Func<T, T, bool> predicate)
+        public static bool Match<T>(this IEnumerable<T> self, IEnumerable<T> second, Func<T, T, bool> predicate)
         {
             #region InvariantsObservance
             if (self.Count() != second.Count())

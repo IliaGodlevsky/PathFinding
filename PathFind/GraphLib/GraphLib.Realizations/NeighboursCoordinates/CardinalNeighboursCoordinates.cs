@@ -8,7 +8,7 @@ using System.Runtime.Serialization;
 
 namespace GraphLib.Realizations.NeighboursCoordinates
 {
-    [Serializable]
+    [Serializable] 
     public sealed class CardinalNeighboursCoordinates : INeighboursCoordinates, ISerializable
     {
         public IEnumerable<ICoordinate> Coordinates => coordinates.Value;
@@ -42,10 +42,7 @@ namespace GraphLib.Realizations.NeighboursCoordinates
         }
 
         private readonly Coordinate coordinatesValues;
-
-        [NonSerialized]
         private readonly INeighboursCoordinates neighboursCoordinates;
-        [NonSerialized]
         private readonly Lazy<IEnumerable<ICoordinate>> coordinates;
     }
 }
