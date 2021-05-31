@@ -83,7 +83,7 @@ namespace WPFVersion3D.Model
 
             if (distanceBetween == 0)
             {
-                CenterGraph(0, 0, 0);
+                CenterGraph();
             }
             else
             {

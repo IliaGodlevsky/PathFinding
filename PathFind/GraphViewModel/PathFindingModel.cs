@@ -73,7 +73,7 @@ namespace GraphViewModel
         {
             var currentLoadedPluginsKeys = e.ClassesNames.ToArray();
             var addedAlgorithms = currentLoadedPluginsKeys.Except(AlgorithmKeys).ToArray();
-            var deletedAlgorithms = AlgorithmKeys.Except(currentLoadedPluginsKeys).ToArray();
+            var deletedAlgorithms = AlgorithmKeys.Except(currentLoadedPluginsKeys.AsEnumerable()).ToArray();
             if (addedAlgorithms.Any())
             {
                 AlgorithmKeys.AddRange(addedAlgorithms);

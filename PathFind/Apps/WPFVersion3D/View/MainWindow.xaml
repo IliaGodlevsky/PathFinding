@@ -6,7 +6,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
         xmlns:converters="clr-namespace:WPFVersion3D.Converters" 
         xmlns:model="clr-namespace:WPFVersion3D.Model"
-        xmlns:animation="clr-namespace:WPFVersion3D.Infrastructure.Animators"
+        xmlns:range="clr-namespace:WPFVersion3D"
         xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
         xmlns:ei="http://schemas.microsoft.com/expression/2010/interactions"
         mc:Ignorable="d"
@@ -23,7 +23,7 @@
         </Style>
         <Style TargetType="Slider" x:Key="SliderStyle">
             <Setter Property="MinWidth" Value="100"></Setter>
-            <Setter Property="Minimum" Value="{x:Static animation:AnimatedAxisRotator.StartAngle}"></Setter>
+            <Setter Property="Minimum" Value="{x:Static range:Constants.StartAngle}"></Setter>
             <Setter Property="Margin" Value="5"></Setter>
         </Style>
     </Window.Resources>
@@ -127,19 +127,19 @@
 
                 <Slider x:Name="xAxisSlider" Grid.Column="1" 
                         Style="{StaticResource SliderStyle}" 
-                        Maximum="{x:Static animation:AnimatedAxisRotator.EndAngle}" 
+                        Maximum="{x:Static range:Constants.EndAngle}" 
                         Grid.Row="1" 
                         Value="{Binding ElementName=xAxis, Path=Angle}"/>
 
                 <Slider x:Name="yAxisSlider" Grid.Column="1" 
                         Style="{StaticResource SliderStyle}" 
-                        Maximum="{x:Static animation:AnimatedAxisRotator.EndAngle}" 
+                        Maximum="{x:Static range:Constants.EndAngle}" 
                         Grid.Row="2" 
                         Value="{Binding ElementName=yAxis, Path=Angle}"/>
 
                 <Slider x:Name="zAxisSlider" Grid.Column="1" 
                         Style="{StaticResource SliderStyle}" 
-                        Maximum="{x:Static animation:AnimatedAxisRotator.EndAngle}" 
+                        Maximum="{x:Static range:Constants.EndAngle}" 
                         Grid.Row="3" 
                         Value="{Binding ElementName=zAxis, Path=Angle}"/>
 

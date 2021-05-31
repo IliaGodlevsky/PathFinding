@@ -1,10 +1,10 @@
-﻿using GraphLib.Exceptions;
+﻿using Common.Extensions;
+using GraphLib.Exceptions;
 using GraphLib.Extensions;
 using GraphLib.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 
 namespace GraphLib.Base
 {
@@ -42,25 +42,26 @@ namespace GraphLib.Base
 
         public override int GetHashCode()
         {
-            return CoordinatesValues.AggregateOrDefault((x, y) => x ^ y);
+            if (!hashCode.HasValue)
+            {
+                hashCode = CoordinatesValues.AggregateOrDefault(IntExtensions.Xor);
+            }
+            return hashCode.Value;
         }
 
         public override string ToString()
         {
-            var information = new StringBuilder("(");
-            var coordinatesInStringRepresentation = CoordinatesValues.
-                Select(coordinate => coordinate.ToString())
-                .ToArray();
-
-            for (int i = 0; i < coordinatesInStringRepresentation.Length - 1; i++)
+            if (string.IsNullOrEmpty(toString))
             {
-                information
-                    .Append(coordinatesInStringRepresentation[i])
-                    .Append(",");
+                var str = string.Join(",", CoordinatesValues);
+                toString = $"({str})";
             }
-
-            information.Append(coordinatesInStringRepresentation.Last()).Append(")");
-            return information.ToString();
+            return toString;
         }
+
+        [NonSerialized]
+        private string toString;
+        [NonSerialized]
+        private int? hashCode;
     }
 }

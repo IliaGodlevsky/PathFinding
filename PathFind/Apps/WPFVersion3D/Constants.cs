@@ -15,6 +15,11 @@ namespace WPFVersion3D
 
         public const int InitialVertexSize = 5;
 
+        public const double StartAngle = 0;
+        public const double EndAngle = 360;
+
+        public static double AngleAmplitude { get; }
+
         public const double InitialVisitedVertexOpacity = 0.15;
         public const double InitialEnqueuedVertexOpacity = 0.15;
         public const double InitialPathVertexOpacity = 0.9;
@@ -30,7 +35,9 @@ namespace WPFVersion3D
             GraphWidthValueRange = new InclusiveValueRange(30, 1);
             GraphLengthValueRange = new InclusiveValueRange(30, 1);
             GraphHeightValueRange = new InclusiveValueRange(30, 1);
-            GraphParamsValueRanges = new ValueRanges(GraphWidthValueRange,
+            AngleAmplitude = EndAngle - StartAngle;
+            GraphParamsValueRanges = new ValueRanges(
+                GraphWidthValueRange,
                 GraphLengthValueRange,
                 GraphHeightValueRange
                 );

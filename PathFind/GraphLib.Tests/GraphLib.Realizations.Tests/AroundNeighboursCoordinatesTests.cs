@@ -4,6 +4,7 @@ using GraphLib.Realizations.NeighboursCoordinates;
 using Moq;
 using NUnit.Framework;
 using System.Linq;
+using Common.Extensions;
 
 namespace GraphLib.Realizations.Tests
 {
@@ -30,13 +31,13 @@ namespace GraphLib.Realizations.Tests
         {
             const int Self = 1;
             int dimensions = coordinateValues.Length;
-            int expectedResult = Pow(3, dimensions) - Self;
+            long expectedResult = 3.Pow(dimensions) - Self;
             coordinateMock.Setup(coordinate => coordinate.CoordinatesValues).Returns(coordinateValues);
             var coordinateEnvironment = new AroundNeighboursCoordinates(coordinateMock.Object);
 
             var environment = coordinateEnvironment.Coordinates;
 
-            Assert.AreEqual(expectedResult, environment.Count());
+            Assert.AreEqual(expectedResult, environment.LongCount());
         }
 
         [TestCase(new int[] { })]
@@ -85,13 +86,6 @@ namespace GraphLib.Realizations.Tests
             var environment = coordinateEnvironment.Coordinates.ToArray();
 
             Assert.IsFalse(environment.Any());
-        }
-
-        private int Pow(int number, int power)
-        {
-            return Enumerable
-                  .Repeat(number, power)
-                  .Aggregate(1, (a, b) => a * b);
         }
     }
 }

@@ -55,17 +55,20 @@ namespace ConsoleVersion.View
 
         public void Start()
         {
-            while (true) menuActions[GetMenuOption()]();
+            while (true) menuActions[MenuOption]();
         }
 
-        private string GetMenuOption()
+        private string MenuOption
         {
-            mainModel.DisplayGraph();
-            Console.WriteLine(menu);
-            int option = InputNumber(OptionInputMsg,
-                menuValueRange) - 1;
+            get
+            {
+                mainModel.DisplayGraph();
+                Console.WriteLine(menu);
+                int option = InputNumber(OptionInputMsg,
+                    menuValueRange) - 1;
 
-            return menuActionsKeys[option];
+                return menuActionsKeys[option];
+            }
         }
 
         private readonly Dictionary<string, Action> menuActions;

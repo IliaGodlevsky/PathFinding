@@ -10,8 +10,7 @@ namespace GraphLib.Realizations.VertexCost
     /// Represents a cost of vertex
     /// </summary>
     [Serializable]
-    public sealed class WeightableVertexCost
-        : BaseVertexCost, IWeightable
+    public sealed class WeightableVertexCost : BaseVertexCost, IWeightable
     {
         /// <summary>
         /// Creates a new instance of 
@@ -42,7 +41,7 @@ namespace GraphLib.Realizations.VertexCost
 
         /// <summary>
         /// A string representing unweighted 
-        /// state of vertex cost
+        /// state view of vertex cost
         /// </summary>
         public string UnweightedCostView { get; set; }
 

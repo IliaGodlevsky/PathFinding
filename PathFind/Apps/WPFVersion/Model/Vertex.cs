@@ -17,6 +17,8 @@ namespace WPFVersion.Model
         public static SolidColorBrush StartVertexColor { get; set; }
         public static SolidColorBrush EndVertexColor { get; set; }
         public static SolidColorBrush EnqueuedVertexColor { get; set; }
+        public static SolidColorBrush ObstacleVertexColor { get; set; }
+        public static SolidColorBrush RegularVertexColor { get; set; }
 
         static Vertex()
         {
@@ -25,6 +27,8 @@ namespace WPFVersion.Model
             StartVertexColor = new SolidColorBrush(Colors.Green);
             EndVertexColor = new SolidColorBrush(Colors.Red);
             EnqueuedVertexColor = new SolidColorBrush(Colors.Magenta);
+            ObstacleVertexColor = new SolidColorBrush(Colors.Black);
+            RegularVertexColor = new SolidColorBrush(Colors.White);
         }
 
         public Vertex(INeighboursCoordinates radar,
@@ -35,10 +39,10 @@ namespace WPFVersion.Model
                 Width = Height = VertexSize;
                 FontSize = VertexSize * TextToSizeRatio;
                 Template = (ControlTemplate)TryFindResource("vertexTemplate");
-            });
-            this.Initialize();
+            });           
             Position = coordinate;
             NeighboursCoordinates = radar;
+            this.Initialize();
 
         }
 
@@ -93,7 +97,7 @@ namespace WPFVersion.Model
 
         public void MarkAsObstacle()
         {
-            Dispatcher.Invoke(() => Background = new SolidColorBrush(Colors.Black));
+            Dispatcher.Invoke(() => Background = ObstacleVertexColor);
         }
 
         public void MarkAsPath()
@@ -112,10 +116,7 @@ namespace WPFVersion.Model
             {
                 if (!IsObstacle)
                 {
-                    if (!cost.IsNullObject())
-                    {
-                        Background = new SolidColorBrush(Colors.White);
-                    }
+                    Background = RegularVertexColor;
                 }
             });
         }

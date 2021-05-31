@@ -14,6 +14,7 @@ namespace GraphLib.Realizations.Coordinates
         public Coordinate(int[] coordinates)
         {
             CoordinatesValues = coordinates.ToArray();
+            hashCode = new Lazy<int>(() => CoordinatesValues.AggregateOrDefault((x, y) => x ^ y));
         }
 
         public Coordinate(ICoordinate coordinate)
@@ -28,7 +29,9 @@ namespace GraphLib.Realizations.Coordinates
 
         public override int GetHashCode()
         {
-            return CoordinatesValues.AggregateOrDefault((x, y) => x ^ y);
+            return hashCode.Value;
         }
+
+        private readonly Lazy<int> hashCode;
     }
 }
