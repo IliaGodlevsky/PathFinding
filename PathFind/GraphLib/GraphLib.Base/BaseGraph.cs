@@ -33,7 +33,7 @@ namespace GraphLib.Base
                 throw new WrongNumberOfDimensionsException(nameof(dimensionSizes), actualValue, message);
             }
 
-            Size = DimensionsSizes.AggregateOrDefault((x, y) => x * y);
+            Size = DimensionsSizes.AggregateOrDefault(IntExtensions.Multiply);
             vertices = new Dictionary<ICoordinate, IVertex>(Size);
         }
 

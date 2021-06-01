@@ -11,7 +11,7 @@ namespace GraphLib.Realizations.Tests
         [TestCase(1, 2)]
         [TestCase()]
         [TestCase(1, 2, 3, 4)]
-        public void Constructor_InvalidNumberOfCoordinateValues_ThrowsArgumentOutOfRangeException(params int[] coordinates)
+        public void Constructor_InvalidNumberOfCoordinateValues_ThrowsWrongNumberOfDimensionsException(params int[] coordinates)
         {
             Assert.Throws<WrongNumberOfDimensionsException>(() => new Coordinate3D(coordinates));
         }

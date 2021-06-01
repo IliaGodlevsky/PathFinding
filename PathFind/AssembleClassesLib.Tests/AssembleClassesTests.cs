@@ -1,9 +1,8 @@
 using AssembleClassesLib.Interface;
-using AssembleClassesLib.Realizations;
-using AssembleClassesLib.Realizations.AssembleClassesImpl;
-using AssembleClassesLib.Realizations.LoadMethods;
+using AssembleClassesLib.Tests.Configure;
 using AssembleClassesLib.Tests.Infrastructure;
 using AssembleClassesLib.Tests.TestObjects;
+using Autofac;
 using NUnit.Framework;
 using System.Linq;
 
@@ -16,10 +15,8 @@ namespace AssembleClassesLib.Tests
 
         public AssembleClassesTests()
         {
-            assembleClasses = new AssembleClasses(
-                new AssempleLoadPath(),
-                new TopDirectoryOnly(),
-                new LoadFrom());
+            var container = ContainerConfigure.Configure();
+            assembleClasses = container.Resolve<IAssembleClasses>();
         }
 
         [Test]

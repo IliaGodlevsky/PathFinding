@@ -6,7 +6,7 @@ namespace GraphLib.Realizations.Factories.NeighboursCoordinatesFactories
 {
     public sealed class CardinalNeighboursCoordinatesFactory : INeighboursCoordinatesFactory
     {
-        public INeighboursCoordinates CreateCoordinateRadar(ICoordinate coordinate)
+        public INeighboursCoordinates CreateNeighboursCoordinates(ICoordinate coordinate)
         {
             return new CardinalNeighboursCoordinates(coordinate);
         }

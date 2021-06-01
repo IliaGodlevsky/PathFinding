@@ -1,7 +1,5 @@
-﻿using GraphLib.Interfaces.Factories;
-using GraphLib.NullRealizations.NullObjects;
+﻿using GraphLib.NullRealizations.NullObjects;
 using GraphLib.Realizations.Coordinates;
-using GraphLib.TestRealizations;
 using GraphLib.TestRealizations.TestFactories;
 using GraphLib.TestRealizations.TestObjects;
 using NUnit.Framework;
@@ -30,7 +28,7 @@ namespace GraphLib.Extensions.Tests
 
             vertex.SetNeighbours(graph);
 
-            Assert.AreEqual(expectedNumberOfNeighbours, vertex.Neighbours.Count());
+            Assert.AreEqual(expectedNumberOfNeighbours, vertex.Neighbours.Count);
         }
 
         [Test]
@@ -64,7 +62,7 @@ namespace GraphLib.Extensions.Tests
 
             vertex.SetNeighbours(graph);
 
-            Assert.AreEqual(expectedNumberOfNeighbours, vertex.Neighbours.Count());
+            Assert.AreEqual(expectedNumberOfNeighbours, vertex.Neighbours.Count);
         }
 
         [Test]
@@ -76,7 +74,7 @@ namespace GraphLib.Extensions.Tests
 
             vertex.SetNeighbours(graph);
 
-            Assert.AreEqual(expectedNumberOfNeighbours, vertex.Neighbours.Count());
+            Assert.AreEqual(expectedNumberOfNeighbours, vertex.Neighbours.Count);
         }
     }
 }

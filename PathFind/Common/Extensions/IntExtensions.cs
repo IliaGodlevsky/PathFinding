@@ -15,5 +15,10 @@ namespace Common.Extensions
                   .Repeat(value, power)
                   .Aggregate(1, (a, b) => a * b);
         }
+
+        public static int Multiply(this int value, int value2)
+        {
+            return value * value2;
+        }
     }
 }

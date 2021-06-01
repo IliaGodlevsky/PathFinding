@@ -1,18 +1,19 @@
-﻿using NUnit.Framework;
+﻿using GraphLib.Realizations.VertexCost;
+using NUnit.Framework;
 using System.Collections;
 
 namespace GraphLib.Realizations.Tests
 {
     [TestFixture]
-    public class WeightableVertexCost
+    public class WeightableVertexCostTests
     {
         private const int VertexStartCost = 4;
-        private VertexCost.WeightableVertexCost vertexCost;
+        private WeightableVertexCost vertexCost;
 
         [SetUp]
         public void Setup()
         {
-            vertexCost = new VertexCost.WeightableVertexCost(VertexStartCost);
+            vertexCost = new WeightableVertexCost(VertexStartCost);
         }
 
         [Test]

@@ -49,7 +49,7 @@ namespace GraphLib.Realizations.Factories.GraphAssembles
             {
                 var coordinateValues = graph.ToCoordinates(index);
                 var coordinate = coordinateFactory.CreateCoordinate(coordinateValues);
-                var coordinateRadar = radarFactory.CreateCoordinateRadar(coordinate);
+                var coordinateRadar = radarFactory.CreateNeighboursCoordinates(coordinate);
                 graph[coordinate] = vertexFactory.CreateVertex(coordinateRadar, coordinate);
                 var vertex = graph[coordinate];
                 vertex.Cost = costFactory.CreateCost();

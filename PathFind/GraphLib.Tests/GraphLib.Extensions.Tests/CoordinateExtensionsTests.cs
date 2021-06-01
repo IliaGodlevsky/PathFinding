@@ -1,6 +1,5 @@
 ﻿using GraphLib.Interfaces;
-using GraphLib.TestRealizations;
-using GraphLib.TestRealizations.TestObjects;
+using Moq;
 using NUnit.Framework;
 using System;
 
@@ -9,6 +8,18 @@ namespace GraphLib.Extensions.Tests
     [TestFixture]
     public class CoordinateExtensionsTests
     {
+        private Mock<IGraph> graphMock;
+        private Mock<ICoordinate> coordinateMock;
+        private Mock<ICoordinate> secondCoordinateMock;
+
+        [SetUp]
+        public void Setup()
+        {
+            graphMock = new Mock<IGraph>();
+            coordinateMock = new Mock<ICoordinate>();
+            secondCoordinateMock = new Mock<ICoordinate>();
+        }
+
         [TestCase(new[] { 6, 6 }, new[] { 6, 6 }, ExpectedResult = true)]
         [TestCase(new[] { 0, 0, 0 }, new[] { 0, 0, 0 }, ExpectedResult = true)]
         [TestCase(new[] { 10, 10, 10, 10 }, new[] { 10, 10, 10, 10 }, ExpectedResult = true)]
@@ -20,10 +31,10 @@ namespace GraphLib.Extensions.Tests
         public bool IsEqual_ComparesCoordinatesWithVariousCoordinateValues_ReturnsValidCondition(
             int[] firstCoordinateValues, int[] secondCoordinateValues)
         {
-            TestCoordinate first = new TestCoordinate(firstCoordinateValues);
-            TestCoordinate second = new TestCoordinate(secondCoordinateValues);
+            coordinateMock.Setup(c => c.CoordinatesValues).Returns(firstCoordinateValues);
+            secondCoordinateMock.Setup(c => c.CoordinatesValues).Returns(secondCoordinateValues);
 
-            return first.IsEqual(second);
+            return coordinateMock.Object.IsEqual(secondCoordinateMock.Object);
         }
 
         [Test]
@@ -47,10 +58,10 @@ namespace GraphLib.Extensions.Tests
             int[] coordinateValues,
             int[] graphDimensionSizes)
         {
-            TestGraph graph = new TestGraph(graphDimensionSizes);
-            TestCoordinate coordinate = new TestCoordinate(coordinateValues);
+            graphMock.Setup(g => g.DimensionsSizes).Returns(graphDimensionSizes);
+            coordinateMock.Setup(c => c.CoordinatesValues).Returns(coordinateValues);
 
-            return coordinate.IsWithinGraph(graph);
+            return coordinateMock.Object.IsWithinGraph(graphMock.Object);
         }
 
         [TestCase(new[] { 33, 52, 100 })]
@@ -58,9 +69,9 @@ namespace GraphLib.Extensions.Tests
         public void IsWithinGraph_GraphIsNull_ThrowsArgumentNullException(int[] coordinateValues)
         {
             IGraph graph = null;
-            TestCoordinate coordinate = new TestCoordinate(coordinateValues);
+            coordinateMock.Setup(c => c.CoordinatesValues).Returns(coordinateValues);
 
-            Assert.Throws<ArgumentNullException>(() => coordinate.IsWithinGraph(graph));
+            Assert.Throws<ArgumentNullException>(() => coordinateMock.Object.IsWithinGraph(graph));
         }
     }
 }

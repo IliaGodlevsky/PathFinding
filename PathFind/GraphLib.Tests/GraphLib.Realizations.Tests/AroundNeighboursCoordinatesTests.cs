@@ -1,24 +1,17 @@
 ﻿using GraphLib.Interfaces;
 using GraphLib.NullRealizations.NullObjects;
 using GraphLib.Realizations.NeighboursCoordinates;
-using Moq;
 using NUnit.Framework;
 using System.Linq;
 using Common.Extensions;
+using Autofac.Extras.Moq;
+using Autofac;
 
 namespace GraphLib.Realizations.Tests
 {
     [TestFixture]
     public class AroundNeighboursCoordinatesTests
     {
-        private Mock<ICoordinate> coordinateMock;
-
-        [SetUp]
-        public void SetUp()
-        {
-            coordinateMock = new Mock<ICoordinate>();
-        }
-
         [TestCase(new int[] { })]
         [TestCase(new[] { 2 })]
         [TestCase(new[] { 2, 3 })]
@@ -32,12 +25,15 @@ namespace GraphLib.Realizations.Tests
             const int Self = 1;
             int dimensions = coordinateValues.Length;
             long expectedResult = 3.Pow(dimensions) - Self;
-            coordinateMock.Setup(coordinate => coordinate.CoordinatesValues).Returns(coordinateValues);
-            var coordinateEnvironment = new AroundNeighboursCoordinates(coordinateMock.Object);
+            using (var mock = AutoMock.GetLoose())
+            {
+                mock.Mock<ICoordinate>().Setup(c => c.CoordinatesValues).Returns(coordinateValues);
+                var neighboursCoordinate = mock.Create<AroundNeighboursCoordinates>();
 
-            var environment = coordinateEnvironment.Coordinates;
+                var environment = neighboursCoordinate.Coordinates;
 
-            Assert.AreEqual(expectedResult, environment.LongCount());
+                Assert.AreEqual(expectedResult, environment.LongCount());
+            }
         }
 
         [TestCase(new int[] { })]
@@ -50,13 +46,17 @@ namespace GraphLib.Realizations.Tests
         [TestCase(new[] { 2, 3, 4, 5, 6, 7, 8 })]
         public void Coordinates_CoordinatesWithVariousDimensionsNumber_ReturnNeighboursWithoutSelf(int[] coordinateValues)
         {
-            coordinateMock.Setup(coordinate => coordinate.CoordinatesValues).Returns(coordinateValues);
-            var coordinateEnvironment = new AroundNeighboursCoordinates(coordinateMock.Object);
+            using (var mock = AutoMock.GetLoose())
+            {
+                mock.Mock<ICoordinate>().Setup(c => c.CoordinatesValues).Returns(coordinateValues);
+                var neighboursCoordinate = mock.Create<AroundNeighboursCoordinates>();
 
-            var environment = coordinateEnvironment.Coordinates;
-            bool hasSelf = environment.Any(values => values.Equals(coordinateMock.Object));
+                var environment = neighboursCoordinate.Coordinates;
+                var coordinate = mock.Container.Resolve<ICoordinate>();
+                bool hasSelf = environment.Any(values => values.Equals(coordinate));
 
-            Assert.IsFalse(hasSelf);
+                Assert.IsFalse(hasSelf);
+            }
         }
 
         [TestCase(new int[] { })]
@@ -70,12 +70,17 @@ namespace GraphLib.Realizations.Tests
         [TestCase(new[] { 201, 33, 84, 15, 16, 73, 81, 11 })]
         public void Coordinates_CoordinatesWithVariousDimensionsCount_ReturnUniqueCoordinates(int[] coordinateValues)
         {
-            coordinateMock.Setup(coordinate => coordinate.CoordinatesValues).Returns(coordinateValues);
-            var coordinateEnvironment = new AroundNeighboursCoordinates(coordinateMock.Object);
+            using (var mock = AutoMock.GetLoose())
+            {
+                mock.Mock<ICoordinate>()
+                    .Setup(c => c.CoordinatesValues)
+                    .Returns(coordinateValues);
+                var neighboursCoordinate = mock.Create<AroundNeighboursCoordinates>();
 
-            var environment = coordinateEnvironment.Coordinates.ToArray();
+                var environment = neighboursCoordinate.Coordinates.ToArray();
 
-            Assert.IsTrue(environment.Distinct().Count() == environment.Count());
+                Assert.IsTrue(environment.Distinct().Count() == environment.Length);
+            }
         }
 
         [Test]

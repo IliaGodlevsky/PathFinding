@@ -18,7 +18,6 @@ using GraphLib.Realizations.Factories.GraphFactories;
 using GraphLib.Realizations.Factories.NeighboursCoordinatesFactories;
 using GraphLib.Serialization;
 using GraphLib.Serialization.Interfaces;
-using GraphLib.TestRealizations.TestFactories;
 using GraphViewModel;
 using GraphViewModel.Interfaces;
 using Logging.Interface;

@@ -2,6 +2,6 @@
 {
     public interface INeighboursCoordinatesFactory
     {
-        INeighboursCoordinates CreateCoordinateRadar(ICoordinate coordinate);
+        INeighboursCoordinates CreateNeighboursCoordinates(ICoordinate coordinate);
     }
 }
