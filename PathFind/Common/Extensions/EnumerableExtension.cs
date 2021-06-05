@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Conditional;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -131,16 +132,16 @@ namespace Common.Extensions
         /// <returns>true if <paramref name="predicate"/> is true 
         /// for each corresponding elements in two sequencies and false if not</returns>
         public static bool Match<T>(this IEnumerable<T> self, IEnumerable<T> second, Func<T, T, bool> predicate)
-        {
+        {            
             #region InvariantsObservance
             if (self.Count() != second.Count())
             {
                 return false;
             }
 
-            if (!self.Any() && !second.Any())
+            if (!self.Any() || !second.Any())
             {
-                return true;
+                return false;
             }
             #endregion
 

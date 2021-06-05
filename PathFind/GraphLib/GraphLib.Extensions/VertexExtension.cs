@@ -1,4 +1,5 @@
 ﻿using Common.Extensions;
+using Conditional;
 using GraphLib.Interfaces;
 using GraphLib.NullRealizations.NullObjects;
 using NullObject.Extensions;
@@ -14,8 +15,7 @@ namespace GraphLib.Extensions
         {
             string cost = self.Cost.CurrentCost.ToString();
             string position = self.Position.ToString();
-            string neighboursCount = self.Neighbours.Count.ToString();
-            return $"Cost: {cost}; position: {position}; neighbours: {neighboursCount}";
+            return $"[Cost: {cost}; position: {position}]";
         }
 
         public static bool IsIsolated(this IVertex self)
@@ -43,6 +43,11 @@ namespace GraphLib.Extensions
         public static bool IsCardinal(this IVertex vertex, IVertex neighbour)
         {
             return vertex.Position.IsCardinal(neighbour.Position);
+        }
+
+        public static bool IsClose(this IVertex vertex, IVertex neighbour)
+        {
+            return vertex.Position.IsClose(neighbour.Position);
         }
 
         public static void Initialize(this IVertex self)
@@ -81,39 +86,27 @@ namespace GraphLib.Extensions
         /// doesn't contain <paramref name="self"/></exception>
         public static void SetNeighbours(this IVertex self, IGraph graph)
         {
-            #region InvariantsObservance
+            string message = "Vertex doesn't belong to graph\n";
+            new If<IGraph>()
+                .ElseIfThrow<ArgumentNullException>(g => g == null, nameof(graph))
+                .ElseIfThrow<ArgumentNullException>(g => self == null, nameof(self))
+                .ElseIfThrow<ArgumentException>(g => !g.Contains(self), message, nameof(self))
+                .Else(g =>
+                {
+                    bool IsWithingGraph(ICoordinate coordinate) => coordinate.IsWithinGraph(g);
+                    bool CanBeNeighbours(IVertex vertex) => g.CanBeNeighbours(vertex, self);
+                    IVertex Vertex(ICoordinate coordinate) => g[coordinate];
 
-            var message = "An error was occured while setting vertices neighbours\n";
-            if (graph == null)
-            {
-                message += "Argument was null\n";
-                throw new ArgumentNullException(nameof(graph), message);
-            }
-
-            if (!graph.Contains(self))
-            {
-                message += "Vertex doesn't belong to graph\n";
-                throw new ArgumentException(message, nameof(graph));
-            }
-
-            if (graph.IsEmpty())
-            {
-                return;
-            }
-
-            #endregion
-
-            bool IsWithingGraph(ICoordinate coordinate) => coordinate.IsWithinGraph(graph);
-            bool CanBeNeighbours(IVertex vertex) => graph.CanBeNeighbours(vertex, self);
-            IVertex Vertex(ICoordinate coordinate) => graph[coordinate];
-
-            self.Neighbours = self
-                .NeighboursCoordinates
-                .Coordinates
-                .Which(IsWithingGraph)
-                .Select(Vertex)
-                .Which(CanBeNeighbours)
-                .ToList();
+                    self.Neighbours = self
+                        .NeighboursCoordinates
+                        .Coordinates
+                        .Which(IsWithingGraph)
+                        .Select(Vertex)
+                        .Which(CanBeNeighbours)
+                        .ToList();
+                })
+                .WalkThroughConditions(graph)
+                .Dispose();
         }
     }
 }

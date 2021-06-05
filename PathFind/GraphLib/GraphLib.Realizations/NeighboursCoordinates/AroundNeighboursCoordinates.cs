@@ -13,7 +13,7 @@ namespace GraphLib.Realizations.NeighboursCoordinates
     /// <summary>
     /// A class that finds the neighbors of the specified coordinate
     /// </summary>
-    [Serializable] 
+    [Serializable]
     public sealed class AroundNeighboursCoordinates : INeighboursCoordinates, ISerializable
     {
         public AroundNeighboursCoordinates(ICoordinate coordinate)
@@ -21,7 +21,7 @@ namespace GraphLib.Realizations.NeighboursCoordinates
             selfCoordinatesValues = coordinate.CoordinatesValues.ToArray();
             limitDepth = selfCoordinatesValues.Length;
             resultCoordinatesValues = new int[limitDepth];
-            lateralOffsetMatrix = limitDepth == 0 ? Empty<int>() : new[] { -1, 0, 1 };
+            lateralOffsetMatrix = limitDepth == 0 ? new int[] { } : new[] { -1, 0, 1 };
             neighboursCoordinates = new Lazy<IEnumerable<ICoordinate>>(GetNeighboursCoordinates);
         }
 
@@ -73,7 +73,7 @@ namespace GraphLib.Realizations.NeighboursCoordinates
         private readonly int limitDepth;
         private readonly int[] selfCoordinatesValues;
         private readonly int[] resultCoordinatesValues;
-        private readonly IEnumerable<int> lateralOffsetMatrix;
+        private readonly int[] lateralOffsetMatrix;
         private readonly Lazy<IEnumerable<ICoordinate>> neighboursCoordinates;
     }
 }

@@ -66,7 +66,7 @@ namespace GraphLib.Base
         protected virtual void SetEndPoints(object sender, EventArgs e)
         {
             bool IsNotIsolated(IVertex vertex) => vertex?.IsIsolated() == false;
-            If.Walk(parametre: sender as IVertex, walkCondition: IsNotIsolated);
+            If.WalkThroughConditions(parametre: sender as IVertex, IsNotIsolated);
         }
 
         protected virtual void SetSource(IVertex vertex)

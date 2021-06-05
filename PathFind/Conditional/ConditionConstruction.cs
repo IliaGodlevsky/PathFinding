@@ -1,11 +1,13 @@
-﻿using System;
+﻿using Conditional.Interfaces;
+using System;
 
 namespace Conditional
 {
     /// <summary>
     /// Represents a condition construction 'if'
     /// </summary>
-    internal class ConditionConstruction<T>
+    internal sealed class ConditionConstruction<T> 
+        : IConditionConstruction<T>, IDisposable
     {
         public ConditionConstruction(Action<T> body,
             Predicate<T> condition = null)
@@ -22,10 +24,16 @@ namespace Conditional
 
         public void ExecuteBody(T paramtre)
         {
-            body(paramtre);
+            body?.Invoke(paramtre);
         }
 
-        private readonly Predicate<T> condition;
-        private readonly Action<T> body;
+        public void Dispose()
+        {
+            condition = null;
+            body = null;
+        }
+
+        private Predicate<T> condition;
+        private Action<T> body;
     }
 }

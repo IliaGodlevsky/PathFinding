@@ -26,7 +26,7 @@ namespace Conditional.Tests
                 IsSomething = true
             };
 
-            If.Walk(to);
+            If.WalkThroughConditions(to);
 
             Assert.IsTrue(to.SomethingCount == SomethingBodyWorkedCode);
         }
@@ -38,7 +38,7 @@ namespace Conditional.Tests
             var If = new If<TestObject>(t => t.IsSomething, IsSomethingBody)
                 .Else(ElseBody);
 
-            If.Walk(to);
+            If.WalkThroughConditions(to);
 
             Assert.IsTrue(to.SomethingCount == ElseBodyWorkedCode);
         }
@@ -50,7 +50,7 @@ namespace Conditional.Tests
             var If = new If<TestObject>(t => t.IsSomething, IsSomethingBody)
                 .Else(ElseBody);
 
-            If.Walk(to, t => t.IsSomethingElse == true);
+            If.WalkThroughConditions(to, t => t.IsSomethingElse == true);
 
             Assert.IsTrue(to.SomethingCount == NoBodyWorkedCode);
         }

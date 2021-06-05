@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Conditional.Interfaces;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -7,7 +8,7 @@ namespace Conditional
     /// <summary>
     /// Represents a condition construction if else if
     /// </summary>
-    public sealed class If<T>
+    public sealed class If<T> : IDisposable
     {
         /// <summary>
         /// Creates a new if construction with <paramref name="condition"/>
@@ -15,13 +16,25 @@ namespace Conditional
         /// </summary>
         /// <param name="condition"></param>
         /// <param name="body"></param>
-        public If(Predicate<T> condition, Action<T> body) : this()
+        public If(Predicate<T> condition, Action<T> body) 
+            : this(new ConditionConstruction<T>(body, condition))
         {
-            conditionConstructions.Add(new ConditionConstruction<T>(body, condition));
+            
+        }
+
+        public If(IConditionConstruction<T> conditionConstruction) : this()
+        {
+            ElseIf(conditionConstruction);
+        }
+
+        public If()
+        {
+            conditionConstructions = new List<IConditionConstruction<T>>();
+            hasElseConstruction = false;
         }
 
         /// <summary>
-        /// Adds a new <see cref="If{T}"></see> condition construction
+        /// Adds a new condition construction
         /// </summary>
         /// <param name="condition"></param>
         /// <param name="body"></param>
@@ -36,9 +49,14 @@ namespace Conditional
                 throw new ArgumentNullException(nameof(body));
             }
 
+            return ElseIf(new ConditionConstruction<T>(body, condition));
+        }
+
+        public If<T> ElseIf(IConditionConstruction<T> conditionConstruction)
+        {
             if (!hasElseConstruction)
             {
-                conditionConstructions.Add(new ConditionConstruction<T>(body, condition));
+                conditionConstructions.Add(conditionConstruction);
                 return this;
             }
 
@@ -46,7 +64,28 @@ namespace Conditional
         }
 
         /// <summary>
-        /// Adds a new <see cref="If{T}"></see> condition construction
+        /// Add a new condition, that will throw exception if condition is true
+        /// </summary>
+        /// <typeparam name="TException"></typeparam>
+        /// <param name="condition"></param>
+        /// <param name="exceptionParams"></param>
+        /// <returns></returns>
+        public If<T> ElseIfThrow<TException>(Predicate<T> condition, params object[] exceptionParams)
+            where TException : Exception
+        {
+            return ElseIf(new ExceptionConditionConstruction<TException, T>(condition, exceptionParams));
+        }
+
+        public If<T> ElseThrow<TException>(params object[] exceptionParams)
+            where TException : Exception
+        {
+            var self = ElseIfThrow<TException>(null, exceptionParams);
+            hasElseConstruction = true;
+            return self;
+        }
+
+        /// <summary>
+        /// Adds a new condition construction
         /// without condition (e.a. else)
         /// </summary>
         /// <param name="body"></param>
@@ -67,11 +106,11 @@ namespace Conditional
         /// </summary>
         /// <param name="parametre"></param>
         /// <param name="walkCondition"></param>
-        public void Walk(T parametre, Predicate<T> walkCondition = null)
+        public If<T> WalkThroughConditions(T parametre, Predicate<T> walkCondition = null)
         {
             if (walkCondition == null || walkCondition?.Invoke(parametre) == true)
             {
-                bool IsCondition(ConditionConstruction<T> condition)
+                bool IsCondition(IConditionConstruction<T> condition)
                 {
                     return condition.IsCondition(parametre) == true;
                 }
@@ -80,18 +119,19 @@ namespace Conditional
                     .FirstOrDefault(IsCondition)
                     ?.ExecuteBody(parametre);
             }
+            return this;
         }
 
-        private If()
+        public void Dispose()
         {
-            conditionConstructions = new List<ConditionConstruction<T>>();
-            hasElseConstruction = false;
+            var disposables = conditionConstructions.OfType<IDisposable>();
+            Array.ForEach(disposables.ToArray(), item => item.Dispose());
+            conditionConstructions.Clear();
         }
 
         private bool hasElseConstruction;
-        private readonly List<ConditionConstruction<T>> conditionConstructions;
+        private readonly ICollection<IConditionConstruction<T>> conditionConstructions;
 
-        private const string ExceptionMessage = "Couldn't add 'if" +
-                " else' statement after 'else' statement";
+        private const string ExceptionMessage = "Couldn't add 'if else' statement after 'else' statement";
     }
 }

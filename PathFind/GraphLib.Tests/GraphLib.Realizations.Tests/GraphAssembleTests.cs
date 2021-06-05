@@ -22,60 +22,58 @@ namespace GraphLib.Realizations.Tests
         [TestCase(33, new int[] { 7, 4, 7, 4 })]
         public void AssembleGraph_ReturnsValidGraph(int obstaclePercent, int[] dimensionSizes)
         {
-            using (var mock = AutoMock.GetLoose())
-            {
-                mock.Mock<ICoordinateFactory>().Setup(x => x.CreateCoordinate(It.IsAny<int[]>()))
-                    .Returns<int[]>(x => new TestCoordinate(x));
+            using var mock = AutoMock.GetLoose();
+            mock.Mock<ICoordinateFactory>()
+                .Setup(x => x.CreateCoordinate(It.IsAny<int[]>()))
+                .Returns<int[]>(x => new TestCoordinate(x));
+            mock.Mock<INeighboursCoordinatesFactory>()
+                .Setup(x => x.CreateNeighboursCoordinates(It.IsAny<ICoordinate>()))
+                .Returns<ICoordinate>(x => new AroundNeighboursCoordinates(x));
+            mock.Mock<IVertexFactory>()
+                .Setup(x => x.CreateVertex(It.IsAny<INeighboursCoordinates>(), It.IsAny<ICoordinate>()))
+                .Returns<INeighboursCoordinates, ICoordinate>((nc, c) => new TestVertex(nc, c));
+            mock.Mock<IGraphFactory>()
+                .Setup(x => x.CreateGraph(It.IsAny<int[]>()))
+                .Returns<int[]>(d => new TestGraph(d));
+            mock.Mock<IVertexCostFactory>()
+                .Setup(x => x.CreateCost())
+                .Returns(() => new TestVertexCost());
 
-                mock.Mock<INeighboursCoordinatesFactory>().Setup(x => x.CreateNeighboursCoordinates(It.IsAny<ICoordinate>()))
-                    .Returns<ICoordinate>(x => new AroundNeighboursCoordinates(x));
+            var assemble = mock.Create<GraphAssemble>();
 
-                mock.Mock<IVertexFactory>().Setup(x => x.CreateVertex(It.IsAny<INeighboursCoordinates>(), It.IsAny<ICoordinate>()))
-                    .Returns<INeighboursCoordinates, ICoordinate>((nc, c) => new TestVertex(nc, c));
+            var graph = assemble.AssembleGraph(obstaclePercent, dimensionSizes);
 
-                mock.Mock<IGraphFactory>().Setup(x => x.CreateGraph(It.IsAny<int[]>()))
-                    .Returns<int[]>(d => new TestGraph(d));
-
-                mock.Mock<IVertexCostFactory>().Setup(x => x.CreateCost())
-                    .Returns(() => new TestVertexCost());
-
-                var assemble = mock.Create<GraphAssemble>();
-
-                var graph = assemble.AssembleGraph(obstaclePercent, dimensionSizes);
-
-                Assert.IsTrue(graph.DimensionsSizes.SequenceEqual(dimensionSizes));
-                Assert.IsTrue(graph.Vertices.All(IsTestVertexType));
-                Assert.IsTrue(CoordinatesAreUnique(graph));
-            }
+            Assert.IsTrue(graph.DimensionsSizes.SequenceEqual(dimensionSizes));
+            Assert.IsTrue(graph.Vertices.All(IsTestVertexType));
+            Assert.IsTrue(CoordinatesAreUnique(graph));
         }
 
         [Test]
         public void AssembleGraph_NullRealizations_ReturnsNullGraph()
         {
-            using (var mock = AutoMock.GetLoose())
-            {
-                mock.Mock<ICoordinateFactory>().Setup(x => x.CreateCoordinate(It.IsAny<int[]>()))
-                    .Returns<int[]>(x => new NullCoordinate());
+            using var mock = AutoMock.GetLoose();
+            mock.Mock<ICoordinateFactory>()
+                .Setup(x => x.CreateCoordinate(It.IsAny<int[]>()))
+                .Returns<int[]>(x => new NullCoordinate());
+            mock.Mock<INeighboursCoordinatesFactory>()
+                .Setup(x => x.CreateNeighboursCoordinates(It.IsAny<ICoordinate>()))
+                .Returns<ICoordinate>(x => new NullNeighboursCoordinates());
+            mock.Mock<IVertexFactory>()
+                .Setup(x => x.CreateVertex(It.IsAny<INeighboursCoordinates>(), It.IsAny<ICoordinate>()))
+                .Returns<INeighboursCoordinates, ICoordinate>((nc, c) => new NullVertex());
+            mock.Mock<IGraphFactory>()
+                .Setup(x => x.CreateGraph(It.IsAny<int[]>()))
+                .Returns<int[]>(d => new NullGraph());
+            mock.Mock<IVertexCostFactory>()
+                .Setup(x => x.CreateCost())
+                .Returns(() => new NullCost());
 
-                mock.Mock<INeighboursCoordinatesFactory>().Setup(x => x.CreateNeighboursCoordinates(It.IsAny<ICoordinate>()))
-                    .Returns<ICoordinate>(x => new NullNeighboursCoordinates());
+            var assemble = mock.Create<GraphAssemble>();
 
-                mock.Mock<IVertexFactory>().Setup(x => x.CreateVertex(It.IsAny<INeighboursCoordinates>(), It.IsAny<ICoordinate>()))
-                    .Returns<INeighboursCoordinates, ICoordinate>((nc, c) => new NullVertex());
+            IGraph graph = null;
 
-                mock.Mock<IGraphFactory>().Setup(x => x.CreateGraph(It.IsAny<int[]>()))
-                    .Returns<int[]>(d => new NullGraph());
-
-                mock.Mock<IVertexCostFactory>().Setup(x => x.CreateCost())
-                    .Returns(() => new NullCost());
-
-                var assemble = mock.Create<GraphAssemble>();
-
-                IGraph graph = null;
-
-                Assert.DoesNotThrow(() => graph = assemble.AssembleGraph(0));
-                Assert.IsTrue(graph.Vertices.All(IsNullVertex));
-            }
+            Assert.DoesNotThrow(() => graph = assemble.AssembleGraph(0));
+            Assert.IsTrue(graph.Vertices.All(IsNullVertex));
         }
 
         private bool CoordinatesAreUnique(IGraph graph)

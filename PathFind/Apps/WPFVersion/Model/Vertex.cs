@@ -43,7 +43,6 @@ namespace WPFVersion.Model
             Position = coordinate;
             NeighboursCoordinates = radar;
             this.Initialize();
-
         }
 
         public Vertex(VertexSerializationInfo info)
@@ -134,7 +133,7 @@ namespace WPFVersion.Model
         public void MakeUnweighted()
         {
             (cost as IWeightable)?.MakeUnweighted();
-            Dispatcher.Invoke(() => Content = string.Empty);
+            Dispatcher.Invoke(() => Content = cost.ToString());
         }
 
         public void MakeWeighted()

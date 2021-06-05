@@ -10,7 +10,7 @@ namespace Algorithm.Extensions
         public static void Highlight(this IGraphPath self, IEndPoints endpoints)
         {
             self.Path
-                .Where(vertex => !endpoints.IsEndPoint(vertex))
+                .Except(endpoints.Source, endpoints.Target)
                 .OfType<IMarkable>()
                 .ForEach(vertex => vertex.MarkAsPath());
         }

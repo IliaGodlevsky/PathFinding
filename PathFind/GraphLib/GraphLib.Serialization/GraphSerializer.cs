@@ -40,7 +40,6 @@ namespace GraphLib.Serialization
                 void CreateVertexFrom(VertexSerializationInfo info)
                 {
                     graph[info.Position] = infoConverter.ConvertFrom(info);
-
                 }
 
                 verticesInfo
@@ -50,11 +49,10 @@ namespace GraphLib.Serialization
                 graph.ConnectVertices();
                 return graph;
             }
-            catch (SystemException ex)
+            catch (Exception ex)
             {
                 throw new CantSerializeGraphException(ex.Message, ex);
             }
-
         }
 
         /// <summary>
@@ -69,7 +67,7 @@ namespace GraphLib.Serialization
             {
                 formatter.Serialize(stream, graph.GetGraphSerializationInfo());
             }
-            catch (SystemException ex)
+            catch (Exception ex)
             {
                 throw new CantSerializeGraphException(ex.Message, ex);
             }

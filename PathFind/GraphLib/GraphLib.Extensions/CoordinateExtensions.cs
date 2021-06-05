@@ -1,5 +1,6 @@
 ﻿using Common.Extensions;
 using Common.ValueRanges;
+using Conditional;
 using GraphLib.Interfaces;
 using System;
 using System.Linq;
@@ -36,6 +37,13 @@ namespace GraphLib.Extensions
             return vertexCoordinates.IsCardinal(neighbourCoordinates);
         }
 
+        public static bool IsClose(this ICoordinate self, ICoordinate neighbour)
+        {
+            var selfCoordinateValues = self.CoordinatesValues.ToArray();
+            var neighbourCoordinateValues = neighbour.CoordinatesValues.ToArray();
+            return selfCoordinateValues.IsClose(neighbourCoordinateValues);
+        }
+
         /// <summary>
         /// Checks whether coordinate is within graph
         /// </summary>
@@ -69,7 +77,7 @@ namespace GraphLib.Extensions
             #region InvariantsObservance
             if (graph == null)
             {
-                throw new ArgumentNullException(nameof(graph), "Argument can't be null");
+                throw new ArgumentNullException(nameof(graph));
             }
             #endregion
 

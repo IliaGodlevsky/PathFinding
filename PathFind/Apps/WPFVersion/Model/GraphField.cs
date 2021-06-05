@@ -1,18 +1,21 @@
 ﻿using GraphLib.Interfaces;
 using GraphLib.Realizations.Coordinates;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Windows.Controls;
+
+using static WPFVersion.Constants;
 
 namespace WPFVersion.Model
 {
     internal sealed class GraphField : Canvas, IGraphField
     {
-        public IReadOnlyCollection<IVertex> Vertices => Children.OfType<IVertex>().ToArray();
+        public IReadOnlyCollection<IVertex> Vertices => vertices.Value;
 
         public GraphField()
         {
-            distanceBetweenVertices = Constants.DistanceBetweenVertices;
+            vertices = new Lazy<IReadOnlyCollection<IVertex>>(() => Children.OfType<IVertex>().ToArray());
         }
 
         public void Add(IVertex vertex)
@@ -20,8 +23,8 @@ namespace WPFVersion.Model
             if (vertex is Vertex wpfVertex && wpfVertex.Position is Coordinate2D coordinates)
             {
                 Children.Add(wpfVertex);
-                SetLeft(wpfVertex, (distanceBetweenVertices + wpfVertex.Width) * coordinates.X);
-                SetTop(wpfVertex, (distanceBetweenVertices + wpfVertex.Height) * coordinates.Y);
+                SetLeft(wpfVertex, (DistanceBetweenVertices + wpfVertex.Width) * coordinates.X);
+                SetTop(wpfVertex, (DistanceBetweenVertices + wpfVertex.Height) * coordinates.Y);
             }
         }
 
@@ -30,6 +33,6 @@ namespace WPFVersion.Model
             Children.Clear();
         }
 
-        private readonly int distanceBetweenVertices;
+        private readonly Lazy<IReadOnlyCollection<IVertex>> vertices;
     }
 }

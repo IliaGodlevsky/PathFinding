@@ -2,6 +2,8 @@
 using GraphLib.Realizations.Graphs;
 using System.Windows;
 
+using static WPFVersion.Constants;
+
 namespace WPFVersion.Model
 {
     internal static class WindowService
@@ -9,8 +11,7 @@ namespace WPFVersion.Model
         private const int WidthOffset = 2;
         private const int LengthOffset = 6;
 
-        private const int DistanceBetweenVertices
-            = Constants.DistanceBetweenVertices + Constants.VertexSize;
+        private const int DistanceBetweenVertices = Constants.DistanceBetweenVertices + VertexSize;
 
         public static void Adjust(IGraph graph)
         {

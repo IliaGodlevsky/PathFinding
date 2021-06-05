@@ -36,7 +36,7 @@ namespace GraphLib.Base
 
         public virtual void Reverse(object sender, EventArgs e)
         {
-            If.Walk(sender as IVertex, param => param != null);
+            If.WalkThroughConditions(sender as IVertex, param => param != null);
         }
 
         public void UnsubscribeVertices(IGraph graph)
