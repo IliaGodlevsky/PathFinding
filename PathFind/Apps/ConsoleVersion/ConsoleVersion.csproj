@@ -64,6 +64,7 @@
     <Compile Include="Configure\ContainerConfigure.cs" />
     <Compile Include="Constants.cs" />
     <Compile Include="Enums\MenuItemPriority.cs" />
+    <Compile Include="InputClass\Input.cs" />
     <Compile Include="Model\EndPoints.cs" />
     <Compile Include="Model\GraphFieldFactory.cs" />
     <Compile Include="Model\AssembleLoadPath.cs" />
@@ -76,7 +77,6 @@
     <Compile Include="ViewModel\PathFindingViewModel.cs" />
     <Compile Include="View\GraphField.cs" />
     <Compile Include="View\GraphCreateView.cs" />
-    <Compile Include="InputClass\Input.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Resource\Resources.Designer.cs">
@@ -88,6 +88,7 @@
     <Compile Include="Model\Vertex.cs" />
     <Compile Include="View\Interface\IView.cs" />
     <Compile Include="View\MainView.cs" />
+    <Compile Include="View\MenuList.cs" />
     <Compile Include="View\PathFindView.cs" />
   </ItemGroup>
   <ItemGroup>

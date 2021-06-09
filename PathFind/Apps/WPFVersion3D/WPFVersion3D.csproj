@@ -70,6 +70,7 @@
     <Compile Include="Axes\Applicate.cs" />
     <Compile Include="Axes\Ordinate.cs" />
     <Compile Include="Infrastructure\Animators\BackwardAnimatedAxisRotator.cs" />
+    <Compile Include="Infrastructure\Animators\BaseAnimatedAxisRotator.cs" />
     <Compile Include="Interface\IAxis.cs" />
     <Compile Include="Configure\ContainerConfigure.cs" />
     <Compile Include="Constants.cs" />

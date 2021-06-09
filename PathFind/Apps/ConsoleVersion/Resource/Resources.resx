@@ -132,6 +132,9 @@
   <data name="EndVertexCoordinateInputMsg" xml:space="preserve">
     <value>End point: </value>
   </data>
+  <data name="ExitAppMsg" xml:space="preserve">
+    <value>Exit app &lt;1 - yes/0 - no&gt;?: </value>
+  </data>
   <data name="HeightInputMsg" xml:space="preserve">
     <value>Enter height of graph: </value>
   </data>

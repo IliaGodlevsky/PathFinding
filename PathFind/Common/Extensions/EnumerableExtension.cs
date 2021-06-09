@@ -1,5 +1,4 @@
-﻿using Conditional;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -68,12 +67,6 @@ namespace Common.Extensions
             return self.Except(items.AsEnumerable());
         }
 
-        public static IEnumerable<TSource> Which<TSource>(this IEnumerable<TSource> self,
-            Func<TSource, bool> predicate)
-        {
-            return self.Where(predicate);
-        }
-
         /// <summary>
         /// Applies delegate <paramref name="action"/> 
         /// to each element of <paramref name="collection"/>
@@ -132,7 +125,7 @@ namespace Common.Extensions
         /// <returns>true if <paramref name="predicate"/> is true 
         /// for each corresponding elements in two sequencies and false if not</returns>
         public static bool Match<T>(this IEnumerable<T> self, IEnumerable<T> second, Func<T, T, bool> predicate)
-        {            
+        {
             #region InvariantsObservance
             if (self.Count() != second.Count())
             {
@@ -148,6 +141,12 @@ namespace Common.Extensions
             return Enumerable
                 .Range(0, second.Count())
                 .All(i => predicate(self.ElementAt(i), second.ElementAt(i)));
+        }
+
+        public static Dictionary<TKey, TValue> ToDictionary<TKey, TValue>
+            (this IEnumerable<KeyValuePair<TKey, TValue>> collection)
+        {
+            return collection.ToDictionary(item => item.Key, item => item.Value);
         }
     }
 }

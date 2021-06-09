@@ -22,7 +22,7 @@ namespace WPFVersion.ViewModel
         public ICommand ChangeVertexSizeCommand { get; }
         public ICommand CancelCommand { get; }
 
-        public VertexSizeChangingViewModel(MainWindowViewModel model, 
+        public VertexSizeChangingViewModel(MainWindowViewModel model,
             IGraphFieldFactory fieldFactory)
         {
             Model = model;

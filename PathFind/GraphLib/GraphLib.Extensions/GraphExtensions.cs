@@ -19,9 +19,9 @@ namespace GraphLib.Extensions
 
         public static bool AreNeighbours(this IGraph self, IVertex candidate, IVertex vert)
         {
-            bool IsAtSamePosition(IVertex vertex) => vertex.Position.IsEqual(candidate.Position);            
+            bool IsAtSamePosition(IVertex vertex) => vertex.Position.IsEqual(candidate.Position);
             return candidate.IsClose(vert)
-                && vert.Neighbours.Any(IsAtSamePosition) 
+                && vert.Neighbours.Any(IsAtSamePosition)
                 && self.Contains(candidate, vert);
         }
 

@@ -32,7 +32,7 @@ namespace WPFVersion3D.Converters
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            return value is IAnimator animator 
+            return value is IAnimator animator
                 && animator is ForwardAnimatedAxisRotator;
         }
 

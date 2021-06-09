@@ -3,11 +3,11 @@ using System;
 
 namespace Conditional
 {
-    internal sealed class ExceptionConditionConstruction<TException, T> 
+    internal sealed class ExceptionConditionConstruction<TException, T>
         : IConditionConstruction<T>, IDisposable
         where TException : Exception
     {
-        public ExceptionConditionConstruction(Predicate<T> condition, 
+        public ExceptionConditionConstruction(Predicate<T> condition,
             params object[] exceptionParams)
         {
             this.condition = condition;
@@ -21,7 +21,7 @@ namespace Conditional
             {
                 exception = (TException)Activator.CreateInstance(typeof(TException), exceptionParametres);
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 throw new Exception($"{nameof(ExceptionConditionConstruction<TException, T>)} " +
                     $"tried to throw an exception of type {nameof(TException)}, but something was " +
@@ -32,7 +32,7 @@ namespace Conditional
 
         public bool? IsCondition(T parametre)
         {
-            return condition == null 
+            return condition == null
                 || condition?.Invoke(parametre) == true;
         }
 

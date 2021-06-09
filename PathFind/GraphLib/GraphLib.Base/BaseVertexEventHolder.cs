@@ -12,14 +12,14 @@ namespace GraphLib.Base
         protected BaseVertexEventHolder(IVertexCostFactory costFactory)
         {
             this.costFactory = costFactory;
-            reverseActionDictionary = new Dictionary<bool, Action<IVertex>>()
+            reverseActionDictionary = new Dictionary<bool, Action<IMarkable>>()
             {
-                { true, vertex => (vertex as IMarkable)?.MarkAsObstacle() },
-                { false, vertex => (vertex as IMarkable)?.MarkAsRegular() }
+                { true, vertex => vertex.MarkAsObstacle() },
+                { false, vertex => vertex.MarkAsRegular() }
             };
 
-            If = new If<IVertex>(v => v.IsObstacle, MakeVertex)
-                   .Else(MakeObstacle);
+            conditional = new Conditional<IVertex>(MakeVertex, v => v.IsObstacle)
+                   .PerformIf(MakeObstacle);
         }
 
         protected readonly IVertexCostFactory costFactory;
@@ -36,7 +36,7 @@ namespace GraphLib.Base
 
         public virtual void Reverse(object sender, EventArgs e)
         {
-            If.WalkThroughConditions(sender as IVertex, param => param != null);
+            conditional.PerformFirstSuitable(sender as IVertex, param => param != null);
         }
 
         public void UnsubscribeVertices(IGraph graph)
@@ -57,16 +57,21 @@ namespace GraphLib.Base
 
         private void MakeObstacle(IVertex vertex)
         {
-            reverseActionDictionary[vertex.IsObstacle = true](vertex);
+            if (vertex is IMarkable markable)
+            {
+                reverseActionDictionary[vertex.IsObstacle = true](markable);
+            }
         }
 
         private void MakeVertex(IVertex vertex)
         {
-            reverseActionDictionary[vertex.IsObstacle = false](vertex);
+            if (vertex is IMarkable markable)
+            {
+                reverseActionDictionary[vertex.IsObstacle = false](markable);
+            }
         }
 
-        private readonly Dictionary<bool, Action<IVertex>> reverseActionDictionary;
-
-        private If<IVertex> If { get; }
+        private readonly Dictionary<bool, Action<IMarkable>> reverseActionDictionary;
+        private readonly Conditional<IVertex> conditional;
     }
 }

@@ -1,8 +1,8 @@
 ﻿using ConsoleVersion.View;
 using GraphLib.Base;
 using GraphLib.Interfaces;
+using GraphLib.Realizations.Graphs;
 using System;
-using System.Linq;
 
 namespace ConsoleVersion.Model
 {
@@ -20,9 +20,9 @@ namespace ConsoleVersion.Model
         /// <returns>Graph field</returns>
         public override IGraphField CreateGraphField(IGraph graph)
         {
-            if (!(graph is IGraph))
+            if (!(graph is Graph2D graph2D))
             {
-                string message = $"{nameof(graph)} is not of type {nameof(IGraph)}";
+                string message = $"{nameof(graph)} is not of type {nameof(Graph2D)}";
                 throw new ArgumentException(nameof(graph));
             }
 
@@ -32,8 +32,8 @@ namespace ConsoleVersion.Model
                 throw new Exception(message);
             }
 
-            field.Width = graph.DimensionsSizes.ElementAtOrDefault(0);
-            field.Length = graph.DimensionsSizes.ElementAtOrDefault(1);
+            field.Width = graph2D.Width;
+            field.Length = graph2D.Length;
 
             return field;
         }

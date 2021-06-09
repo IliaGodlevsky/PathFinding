@@ -13,12 +13,12 @@ namespace GraphLib.Base
         protected BaseEndPoints()
         {
             Reset();
-            If = new If<IVertex>(v => Source.IsEqual(v), UnsetSource)
-                  .ElseIf(v => Target.IsEqual(v), UnsetTarget)
-                  .ElseIf(CanSetSource, SetSource)
-                  .ElseIf(v => Source.IsIsolated(), ReplaceSource)
-                  .ElseIf(CanSetTarget, SetTarget)
-                  .ElseIf(v => Target.IsIsolated(), ReplaceTarget);
+            conditional = new Conditional<IVertex>(UnsetSource, v => Source.IsEqual(v))
+                  .PerformIf(UnsetTarget, v => Target.IsEqual(v))
+                  .PerformIf(SetSource, CanSetSource)
+                  .PerformIf(ReplaceSource, v => Source.IsIsolated())
+                  .PerformIf(SetTarget, CanSetTarget)
+                  .PerformIf(ReplaceTarget, v => Target.IsIsolated());
         }
 
         public bool HasEndPointsSet => !Source.IsIsolated() && !Target.IsIsolated();
@@ -66,7 +66,7 @@ namespace GraphLib.Base
         protected virtual void SetEndPoints(object sender, EventArgs e)
         {
             bool IsNotIsolated(IVertex vertex) => vertex?.IsIsolated() == false;
-            If.WalkThroughConditions(parametre: sender as IVertex, IsNotIsolated);
+            conditional.PerformFirstSuitable(sender as IVertex, IsNotIsolated);
         }
 
         protected virtual void SetSource(IVertex vertex)
@@ -79,7 +79,6 @@ namespace GraphLib.Base
         {
             Target = vertex;
             (vertex as IMarkable)?.MarkAsEnd();
-
         }
 
         protected virtual void UnsetSource(IVertex vertex)
@@ -109,6 +108,6 @@ namespace GraphLib.Base
         protected abstract void SubscribeVertex(IVertex vertex);
         protected abstract void UnsubscribeVertex(IVertex vertex);
 
-        private If<IVertex> If { get; }
+        private readonly Conditional<IVertex> conditional;
     }
 }

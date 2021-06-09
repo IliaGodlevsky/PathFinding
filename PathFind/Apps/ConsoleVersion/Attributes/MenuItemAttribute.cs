@@ -9,13 +9,6 @@ namespace ConsoleVersion.Attributes
     [AttributeUsage(AttributeTargets.Method, Inherited = false)]
     internal sealed class MenuItemAttribute : Attribute
     {
-        public MenuItemAttribute(string header,
-            MenuItemPriority priority = MenuItemPriority.Normal)
-        {
-            Header = header;
-            Priority = priority;
-        }
-
         /// <summary>
         /// The relative position of the menu item in the menu list
         /// </summary>
@@ -25,5 +18,12 @@ namespace ConsoleVersion.Attributes
         /// The header of a menu item that will be shown in the menu
         /// </summary>
         public string Header { get; }
+
+        public MenuItemAttribute(string header,
+            MenuItemPriority priority = MenuItemPriority.Normal)
+        {
+            Header = header;
+            Priority = priority;
+        }
     }
 }

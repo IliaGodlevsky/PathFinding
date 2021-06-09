@@ -1,6 +1,4 @@
-﻿using Common.Extensions;
-using Conditional;
-using GraphLib.Interfaces;
+﻿using GraphLib.Interfaces;
 using GraphLib.NullRealizations.NullObjects;
 using NullObject.Extensions;
 using System;
@@ -86,27 +84,26 @@ namespace GraphLib.Extensions
         /// doesn't contain <paramref name="self"/></exception>
         public static void SetNeighbours(this IVertex self, IGraph graph)
         {
-            string message = "Vertex doesn't belong to graph\n";
-            new If<IGraph>()
-                .ElseIfThrow<ArgumentNullException>(g => g == null, nameof(graph))
-                .ElseIfThrow<ArgumentNullException>(g => self == null, nameof(self))
-                .ElseIfThrow<ArgumentException>(g => !g.Contains(self), message, nameof(self))
-                .Else(g =>
-                {
-                    bool IsWithingGraph(ICoordinate coordinate) => coordinate.IsWithinGraph(g);
-                    bool CanBeNeighbours(IVertex vertex) => g.CanBeNeighbours(vertex, self);
-                    IVertex Vertex(ICoordinate coordinate) => g[coordinate];
+            if (self is null)
+            {
+                throw new ArgumentNullException(nameof(self));
+            }
+            if (graph is null)
+            {
+                throw new ArgumentNullException(nameof(graph));
+            }
+            if (!graph.Contains(self))
+            {
+                throw new ArgumentException("Vertex doesn't belong to graph\n", nameof(self));
+            }
 
-                    self.Neighbours = self
-                        .NeighboursCoordinates
-                        .Coordinates
-                        .Which(IsWithingGraph)
-                        .Select(Vertex)
-                        .Which(CanBeNeighbours)
-                        .ToList();
-                })
-                .WalkThroughConditions(graph)
-                .Dispose();
+            self.Neighbours = self
+                .NeighboursCoordinates
+                .Coordinates
+                .Where(coordinate => coordinate.IsWithinGraph(graph))
+                .Select(coordinate => graph[coordinate])
+                .Where(vertex => graph.CanBeNeighbours(vertex, self))
+                .ToList();
         }
     }
 }

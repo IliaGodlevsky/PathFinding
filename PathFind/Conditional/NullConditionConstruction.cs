@@ -6,7 +6,7 @@ namespace Conditional
     {
         public void ExecuteBody(object paramtre)
         {
-            
+
         }
 
         public bool? IsCondition(object parametre)

@@ -22,7 +22,7 @@ namespace GraphLib.Realizations.Tests
         {
             int dimensions = coordinateValues.Length;
             int expectedResult = 2 * dimensions;
-            using(var mock = AutoMock.GetLoose())
+            using (var mock = AutoMock.GetLoose())
             {
                 mock.Mock<ICoordinate>().Setup(c => c.CoordinatesValues).Returns(coordinateValues);
                 var neighboursCoordinate = mock.Create<CardinalNeighboursCoordinates>();

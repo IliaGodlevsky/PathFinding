@@ -8,7 +8,7 @@ using System.Runtime.Serialization;
 
 namespace GraphLib.Realizations.NeighboursCoordinates
 {
-    [Serializable] 
+    [Serializable]
     public sealed class CardinalNeighboursCoordinates : INeighboursCoordinates, ISerializable
     {
         public IEnumerable<ICoordinate> Coordinates => coordinates.Value;
@@ -28,7 +28,7 @@ namespace GraphLib.Realizations.NeighboursCoordinates
         private CardinalNeighboursCoordinates(SerializationInfo info, StreamingContext context)
             : this((Coordinate)info.GetValue(nameof(coordinatesValues), typeof(Coordinate)))
         {
-            
+
         }
 
         private bool IsCardinal(ICoordinate coordinate)

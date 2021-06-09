@@ -1,15 +1,15 @@
-﻿using Common.Extensions;
+﻿using Autofac.Extras.Moq;
+using Common.Extensions;
 using GraphLib.Interfaces;
 using GraphLib.Interfaces.Factories;
-using GraphLib.TestRealizations.TestObjects;
-using NUnit.Framework;
-using System.Linq;
-using Autofac.Extras.Moq;
-using Moq;
+using GraphLib.NullRealizations.NullObjects;
+using GraphLib.Realizations.Factories.GraphAssembles;
 using GraphLib.Realizations.NeighboursCoordinates;
 using GraphLib.TestRealizations;
-using GraphLib.Realizations.Factories.GraphAssembles;
-using GraphLib.NullRealizations.NullObjects;
+using GraphLib.TestRealizations.TestObjects;
+using Moq;
+using NUnit.Framework;
+using System.Linq;
 
 namespace GraphLib.Realizations.Tests
 {
@@ -92,7 +92,7 @@ namespace GraphLib.Realizations.Tests
 
         private bool IsNullVertex(IVertex vertex)
         {
-            return vertex.GetType()== typeof(NullVertex);
+            return vertex.GetType() == typeof(NullVertex);
         }
     }
 }

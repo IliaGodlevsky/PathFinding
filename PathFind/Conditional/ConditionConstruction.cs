@@ -6,7 +6,7 @@ namespace Conditional
     /// <summary>
     /// Represents a condition construction 'if'
     /// </summary>
-    internal sealed class ConditionConstruction<T> 
+    internal sealed class ConditionConstruction<T>
         : IConditionConstruction<T>, IDisposable
     {
         public ConditionConstruction(Action<T> body,

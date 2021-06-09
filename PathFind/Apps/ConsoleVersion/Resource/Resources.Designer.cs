@@ -106,6 +106,15 @@ namespace ConsoleVersion.Resource {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Exit app &lt;1 - yes/0 - no&gt;?: .
+        /// </summary>
+        internal static string ExitAppMsg {
+            get {
+                return ResourceManager.GetString("ExitAppMsg", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Enter height of graph: .
         /// </summary>
         internal static string HeightInputMsg {

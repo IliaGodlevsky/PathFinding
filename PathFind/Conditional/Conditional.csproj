@@ -45,7 +45,7 @@
     <Compile Include="ConditionConstruction.cs" />
     <Compile Include="ExceptionConditionConstruction.cs" />
     <Compile Include="Interfaces\IConditionConstruction.cs" />
-    <Compile Include="If.cs" />
+    <Compile Include="Conditional.cs" />
     <Compile Include="NullConditionConstruction.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

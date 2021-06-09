@@ -12,7 +12,7 @@ namespace Algorithm.Realizations.GraphPaths
 {
     public sealed class GraphPath : IGraphPath
     {
-        public IEnumerable<IVertex> Path => path.Value;
+        public IVertex[] Path => path.Value;
 
         public double PathCost => pathCost.Value;
 
@@ -27,7 +27,7 @@ namespace Algorithm.Realizations.GraphPaths
         public GraphPath(ParentVertices parentVertices,
             IEndPoints endPoints, IGraph graph, IStepRule stepRule)
         {
-            path = new Lazy<IEnumerable<IVertex>>(GetPath);
+            path = new Lazy<IVertex[]>(GetPath);
             pathCost = new Lazy<double>(ExtractPathCost);
             pathLength = new Lazy<int>(() => Path.Count() - 1);
             this.parentVertices = parentVertices;
@@ -36,12 +36,12 @@ namespace Algorithm.Realizations.GraphPaths
             this.stepRule = stepRule;
         }
 
-        private IEnumerable<IVertex> GetPath()
+        private IVertex[] GetPath()
         {
-            var path = ExtractPath();
+            var path = ExtractPath().ToArray();
             if (!path.ContainsElems(endPoints.Source, endPoints.Target))
             {
-                path = Enumerable.Empty<IVertex>();
+                path = new IVertex[] { };
             }
             return path;
         }
@@ -61,14 +61,12 @@ namespace Algorithm.Realizations.GraphPaths
 
         private double ExtractPathCost()
         {
-            var path = Path.ToArray();
-
             double GetCost(int i)
             {
-                return stepRule.CalculateStepCost(path[i], path[i + 1]);
+                return stepRule.CalculateStepCost(Path[i], Path[i + 1]);
             }
 
-            return Enumerable.Range(0, path.Length - 1).Sum(GetCost);
+            return Enumerable.Range(0, Path.Length - 1).Sum(GetCost);
         }
 
         private readonly ParentVertices parentVertices;
@@ -78,6 +76,6 @@ namespace Algorithm.Realizations.GraphPaths
 
         private readonly Lazy<int> pathLength;
         private readonly Lazy<double> pathCost;
-        private readonly Lazy<IEnumerable<IVertex>> path;
+        private readonly Lazy<IVertex[]> path;
     }
 }

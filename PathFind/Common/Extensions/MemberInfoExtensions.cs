@@ -25,21 +25,20 @@ namespace Common.Extensions
         /// <typeparam name="TDelegate"></typeparam>
         /// <param name="self"></param>
         /// <param name="target"></param>
-        /// <param name="del"></param>
+        /// <param name="action"></param>
         /// <returns><see cref="true"/> if the creation of the 
         /// <typeparamref name="TDelegate"/> was successful and false if wasn't</returns>
-        public static bool TryCreateDelegate<TDelegate>(this MethodInfo self,
-            object target, out TDelegate del)
-            where TDelegate : Delegate
+        public static bool TryCreateDelegate<TDelegate>(this MethodInfo self, object target, 
+            out TDelegate action) where TDelegate : Delegate
         {
             try
-            {
-                del = (TDelegate)self.CreateDelegate(typeof(TDelegate), target);
+            {             
+                action = (TDelegate)self.CreateDelegate(typeof(TDelegate), target);
                 return true;
             }
             catch
             {
-                del = null;
+                action = null;
                 return false;
             }
         }

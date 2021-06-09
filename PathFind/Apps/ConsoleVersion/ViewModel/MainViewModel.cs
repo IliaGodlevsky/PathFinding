@@ -15,6 +15,8 @@ using GraphViewModel.Interfaces;
 using Logging.Loggers;
 using System;
 using System.Drawing;
+
+using static ConsoleVersion.Resource.Resources;
 using static ConsoleVersion.InputClass.Input;
 using Console = Colorful.Console;
 
@@ -22,7 +24,10 @@ namespace ConsoleVersion.ViewModel
 {
     internal sealed class MainViewModel : MainModel
     {
-        private const int ExitCode = 0;
+        private const int Yes = 1;
+        private const int No = 0;
+
+        public bool IsAppClosureRequested { get; private set; }
 
         public MainViewModel(
             IGraphFieldFactory fieldFactory,
@@ -34,14 +39,20 @@ namespace ConsoleVersion.ViewModel
             : base(fieldFactory, eventHolder, saveLoad,
                   graphFactories, algorithms, log)
         {
-
+            IsAppClosureRequested = false;
         }
 
         [MenuItem("Make unweighted")]
-        public void MakeGraphUnweighted() => Graph.ToUnweighted();
+        public void MakeGraphUnweighted()
+        {
+            Graph.ToUnweighted();
+        }
 
         [MenuItem("Make weighted")]
-        public void MakeGraphWeighted() => Graph.ToWeighted();
+        public void MakeGraphWeighted()
+        {
+            Graph.ToWeighted();
+        }
 
         [MenuItem("Create new graph", MenuItemPriority.Highest)]
         public override void CreateNewGraph()
@@ -124,7 +135,10 @@ namespace ConsoleVersion.ViewModel
         }
 
         [MenuItem("Save graph")]
-        public override void SaveGraph() => base.SaveGraph();
+        public override void SaveGraph()
+        {
+            base.SaveGraph();
+        }
 
         [MenuItem("Load graph")]
         public override void LoadGraph()
@@ -136,7 +150,8 @@ namespace ConsoleVersion.ViewModel
         [MenuItem("Quit program", MenuItemPriority.Lowest)]
         public void Quit()
         {
-            Environment.Exit(ExitCode);
+            int input = InputNumber(ExitAppMsg, Yes, No);
+            IsAppClosureRequested = input == Yes;
         }
 
         public void DisplayGraph()

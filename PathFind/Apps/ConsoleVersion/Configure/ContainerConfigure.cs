@@ -36,7 +36,7 @@ namespace ConsoleVersion.Configure
             builder.RegisterType<MainView>().As<IView>().InstancePerLifetimeScope();
             builder.RegisterType<MainViewModel>().As<IMainModel>().InstancePerLifetimeScope().PropertiesAutowired();
 
-            builder.RegisterType<EndPoints>().As<BaseEndPoints>().SingleInstance();            
+            builder.RegisterType<EndPoints>().As<BaseEndPoints>().SingleInstance();
             builder.RegisterType<VertexEventHolder>().As<IVertexEventHolder>().SingleInstance();
             builder.RegisterType<GraphFieldFactory>().As<IGraphFieldFactory>().SingleInstance();
 

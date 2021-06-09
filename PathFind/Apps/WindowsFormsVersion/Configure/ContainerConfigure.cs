@@ -36,7 +36,7 @@ namespace WindowsFormsVersion.Configure
             builder.RegisterType<MainWindow>().As<Form>().InstancePerLifetimeScope();
             builder.RegisterType<MainWindowViewModel>().AsSelf().InstancePerLifetimeScope().PropertiesAutowired();
 
-            builder.RegisterType<EndPoints>().As<BaseEndPoints>().SingleInstance();            
+            builder.RegisterType<EndPoints>().As<BaseEndPoints>().SingleInstance();
             builder.RegisterType<GraphFieldFactory>().As<IGraphFieldFactory>().SingleInstance();
             builder.RegisterType<VertexEventHolder>().As<IVertexEventHolder>().SingleInstance();
 

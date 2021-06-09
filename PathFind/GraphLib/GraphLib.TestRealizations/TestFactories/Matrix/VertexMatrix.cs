@@ -1,6 +1,6 @@
-﻿using GraphLib.Realizations.NeighboursCoordinates;
-using GraphLib.Realizations.Coordinates;
+﻿using GraphLib.Realizations.Coordinates;
 using GraphLib.Realizations.Graphs;
+using GraphLib.Realizations.NeighboursCoordinates;
 using GraphLib.TestRealizations.TestObjects;
 
 namespace GraphLib.TestRealizations.TestFactories.Matrix
@@ -13,7 +13,7 @@ namespace GraphLib.TestRealizations.TestFactories.Matrix
         }
 
         public void Overlay()
-        {         
+        {
             for (int x = 0; x < graph.Width; x++)
             {
                 for (int y = 0; y < graph.Length; y++)

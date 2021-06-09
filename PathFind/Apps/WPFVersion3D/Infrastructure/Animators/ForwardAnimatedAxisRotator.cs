@@ -8,30 +8,23 @@ using static WPFVersion3D.Constants;
 
 namespace WPFVersion3D.Infrastructure.Animators
 {
-    internal sealed class ForwardAnimatedAxisRotator : IAnimator
+    internal sealed class ForwardAnimatedAxisRotator : BaseAnimatedAxisRotator, IAnimator
     {
-        public ForwardAnimatedAxisRotator(AxisAngleRotation3D axis)
+        public ForwardAnimatedAxisRotator(AxisAngleRotation3D axis) : base(axis)
         {
-            this.axis = axis;
+            
         }
 
-        public void ApplyAnimation()
+        protected override AnimationTimeline CreateAnimation()
         {
-            axis.BeginAnimation(AxisAngleRotation3D.AngleProperty, CreateAnimation());
-        }
-
-        private DoubleAnimation CreateAnimation()
-        {
-            var duration = CalculateAnimationDuration(axis);
+            var duration = CalculateAnimationDuration();
             return new DoubleAnimation(axis.Angle, EndAngle, duration, FillBehavior.HoldEnd);
         }
 
-        private Duration CalculateAnimationDuration(AxisAngleRotation3D axis)
+        protected override Duration CalculateAnimationDuration()
         {
             var duration = InitialRotationAnimationDuration * (AngleAmplitude - axis.Angle) / AngleAmplitude;
             return new Duration(TimeSpan.FromMilliseconds(duration));
         }
-
-        private readonly AxisAngleRotation3D axis;
     }
 }

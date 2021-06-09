@@ -2,7 +2,6 @@
 using GraphLib.Interfaces;
 using GraphLib.Serialization;
 using GraphLib.Serialization.Extensions;
-using NullObject.Extensions;
 using System.Collections.Generic;
 using System.Windows.Controls;
 using System.Windows.Media;
@@ -31,15 +30,14 @@ namespace WPFVersion.Model
             RegularVertexColor = new SolidColorBrush(Colors.White);
         }
 
-        public Vertex(INeighboursCoordinates radar,
-            ICoordinate coordinate) : base()
+        public Vertex(INeighboursCoordinates radar, ICoordinate coordinate) : base()
         {
             Dispatcher.Invoke(() =>
             {
                 Width = Height = VertexSize;
                 FontSize = VertexSize * TextToSizeRatio;
                 Template = (ControlTemplate)TryFindResource("vertexTemplate");
-            });           
+            });
             Position = coordinate;
             NeighboursCoordinates = radar;
             this.Initialize();
@@ -59,7 +57,9 @@ namespace WPFVersion.Model
             {
                 isObstacle = value;
                 if (isObstacle)
+                {
                     MarkAsObstacle();
+                }
             }
         }
 

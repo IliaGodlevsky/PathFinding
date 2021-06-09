@@ -7,6 +7,7 @@ using System.Windows;
 using System.Windows.Media;
 using System.Windows.Media.Media3D;
 using WPFVersion3D.Interface;
+
 using static WPFVersion3D.Constants;
 
 namespace WPFVersion3D.Model
@@ -114,7 +115,9 @@ namespace WPFVersion3D.Model
             {
                 isObstacle = value;
                 if (isObstacle)
+                {
                     MarkAsObstacle();
+                }
             }
         }
 

@@ -17,7 +17,7 @@ namespace GraphLib.Realizations.NeighboursCoordinates
     public sealed class AroundNeighboursCoordinates : INeighboursCoordinates, ISerializable
     {
         public AroundNeighboursCoordinates(ICoordinate coordinate)
-        {            
+        {
             selfCoordinatesValues = coordinate.CoordinatesValues.ToArray();
             limitDepth = selfCoordinatesValues.Length;
             resultCoordinatesValues = new int[limitDepth];
@@ -69,7 +69,7 @@ namespace GraphLib.Realizations.NeighboursCoordinates
         {
             return DetectNeighboursCoordinates().Except(selfCoordinatesValues.ToCoordinate());
         }
-       
+
         private readonly int limitDepth;
         private readonly int[] selfCoordinatesValues;
         private readonly int[] resultCoordinatesValues;

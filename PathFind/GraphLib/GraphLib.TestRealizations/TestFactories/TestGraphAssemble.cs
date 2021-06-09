@@ -1,5 +1,5 @@
-﻿using GraphLib.Realizations.Factories.NeighboursCoordinatesFactories;
-using GraphLib.Realizations.Factories.GraphAssembles;
+﻿using GraphLib.Realizations.Factories.GraphAssembles;
+using GraphLib.Realizations.Factories.NeighboursCoordinatesFactories;
 
 namespace GraphLib.TestRealizations.TestFactories
 {

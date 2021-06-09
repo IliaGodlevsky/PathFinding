@@ -12,8 +12,7 @@ namespace ConsoleVersion.View
         public GraphCreateView(GraphCreatingViewModel model)
         {
             Model = model;
-
-            var graphAssembleMenu = Menu.CreateMenu(model.GraphAssembleKeys.ToArray(), 1);
+            string graphAssembleMenu = new MenuList(model.GraphAssembleKeys.ToArray(), 1).ToString();
             Model.GraphAssembleInpuMessage = graphAssembleMenu + ChooseGraphAssemble;
             Model.ObstaclePercentInputMessage = ObstaclePercentInputMsg;
             Model.WidthInputMessage = WidthInputMsg;

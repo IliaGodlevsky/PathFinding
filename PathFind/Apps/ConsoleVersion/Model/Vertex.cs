@@ -10,6 +10,7 @@ using System.Collections.Generic;
 using System.Drawing;
 
 using Console = Colorful.Console;
+
 using static ConsoleVersion.Constants;
 
 namespace ConsoleVersion.Model
@@ -21,7 +22,7 @@ namespace ConsoleVersion.Model
         public event EventHandler OnVertexReversed;
 
         public Vertex(INeighboursCoordinates coordinateRadar, ICoordinate coordinate)
-        {            
+        {
             NeighboursCoordinates = coordinateRadar;
             Position = coordinate;
             consoleCoordinates = new Lazy<Coordinate2D>(GetConsoleCoordinates);
@@ -50,8 +51,6 @@ namespace ConsoleVersion.Model
 
         public INeighboursCoordinates NeighboursCoordinates { get; }
 
-        public string Text { get; set; }
-
         private IVertexCost cost;
         public IVertexCost Cost
         {
@@ -62,12 +61,10 @@ namespace ConsoleVersion.Model
                 {
                     vertexCost.UnweightedCostView = "#";
                     Text = vertexCost.ToString();
-                    cost = vertexCost;
                 }
+                cost = value;
             }
         }
-
-        public Color Colour { get; set; }
 
         public ICollection<IVertex> Neighbours { get; set; }
 
@@ -144,7 +141,7 @@ namespace ConsoleVersion.Model
         public void ColorizeVertex()
         {
             Console.SetCursorPosition(ConsoleCoordinate.X, ConsoleCoordinate.Y);
-            Console.Write(Text, Colour);   
+            Console.Write(Text, Colour);
         }
 
         public bool Equals(IVertex other)
@@ -161,6 +158,8 @@ namespace ConsoleVersion.Model
             return new Coordinate2D(left, top);
         }
 
+        private string Text { get; set; }
+        private Color Colour { get; set; }
         private Coordinate2D ConsoleCoordinate => consoleCoordinates.Value;
 
         private readonly Lazy<Coordinate2D> consoleCoordinates;

@@ -34,7 +34,7 @@ namespace WPFVersion.Configure
             builder.RegisterType<MainWindowViewModel>().AsSelf().InstancePerLifetimeScope().PropertiesAutowired();
 
             builder.RegisterType<EndPoints>().As<BaseEndPoints>().SingleInstance();
-            builder.RegisterType<VertexEventHolder>().As<IVertexEventHolder>().SingleInstance();            
+            builder.RegisterType<VertexEventHolder>().As<IVertexEventHolder>().SingleInstance();
             builder.RegisterType<GraphFieldFactory>().As<IGraphFieldFactory>().SingleInstance();
 
             builder.RegisterType<FileLog>().As<ILog>().SingleInstance();

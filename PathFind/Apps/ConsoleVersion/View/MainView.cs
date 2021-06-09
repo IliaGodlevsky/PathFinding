@@ -7,11 +7,10 @@ using GraphLib.Realizations.Coordinates;
 using GraphLib.Realizations.Graphs;
 using GraphViewModel.Interfaces;
 using System;
-using System.Collections.Generic;
-using System.Linq;
+
 using static ConsoleVersion.InputClass.Input;
 using static ConsoleVersion.Resource.Resources;
-using static ConsoleVersion.View.Menu;
+
 using Console = Colorful.Console;
 
 
@@ -45,36 +44,30 @@ namespace ConsoleVersion.View
         }
 
         public MainView(IMainModel model)
-        {
-            mainModel = model as MainViewModel;
-            menuActions = GetMenuMethodsAsDelegates<Action>(mainModel);
-            menuActionsKeys = menuActions.Keys.ToArray();
-            menu = CreateMenu(menuActionsKeys, columns: 3);
-            menuValueRange = new InclusiveValueRange(menuActionsKeys.Length, 1);
+        {           
+            mainModel = model as MainViewModel ?? throw new ArgumentException(nameof(model));
+            menu = new Menu<Action>(model);
+            menuList = new MenuList(menu.MenuActionsNames, columns: 3);
+            menuValueRange = new InclusiveValueRange(menu.MenuActionsNames.Length, 1);
         }
 
         public void Start()
         {
-            while (true) menuActions[MenuOption]();
-        }
-
-        private string MenuOption
-        {
-            get
+            while (!mainModel.IsAppClosureRequested)
             {
                 mainModel.DisplayGraph();
-                Console.WriteLine(menu);
-                int option = InputNumber(OptionInputMsg,
+                Console.WriteLine(menuList);
+                int menuItemIndex = InputNumber(
+                    OptionInputMsg, 
                     menuValueRange) - 1;
-
-                return menuActionsKeys[option];
+                var menuItem = menu.MenuActionsNames[menuItemIndex];
+                menu.MenuActions[menuItem].Invoke();
             }
         }
 
-        private readonly Dictionary<string, Action> menuActions;
+        private readonly Menu<Action> menu;
+        private readonly MenuList menuList;
         private readonly MainViewModel mainModel;
-        private readonly string menu;
         private readonly IValueRange menuValueRange;
-        private readonly string[] menuActionsKeys;
     }
 }

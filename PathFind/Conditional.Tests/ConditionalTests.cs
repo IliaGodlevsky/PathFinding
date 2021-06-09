@@ -17,66 +17,41 @@ namespace Conditional.Tests
         }
 
         [Test]
-        public void WalkTest()
+        public void PerformFirstSuitableTest()
         {
-            var If = new If<TestObject>(t => t.IsSomething, IsSomethingBody)
-                .ElseIf(t => t.IsSomethingElse, IsSomethingElseBody);
+            var If = new Conditional<TestObject>(IsSomethingBody, t => t.IsSomething)
+                .PerformIf(IsSomethingElseBody, t => t.IsSomethingElse);
             var to = new TestObject
             {
                 IsSomething = true
             };
 
-            If.WalkThroughConditions(to);
+            If.PerformFirstSuitable(to);
 
             Assert.IsTrue(to.SomethingCount == SomethingBodyWorkedCode);
         }
 
         [Test]
-        public void WalkTestWithElse()
+        public void PerformFirstSuitableTestWithFalseWalkCondition()
         {
             var to = new TestObject();
-            var If = new If<TestObject>(t => t.IsSomething, IsSomethingBody)
-                .Else(ElseBody);
+            var If = new Conditional<TestObject>(IsSomethingBody, t => t.IsSomething)
+                .PerformIf(ElseBody);
 
-            If.WalkThroughConditions(to);
-
-            Assert.IsTrue(to.SomethingCount == ElseBodyWorkedCode);
-        }
-
-        [Test]
-        public void WalkTestWithFalseWalkCondition()
-        {
-            var to = new TestObject();
-            var If = new If<TestObject>(t => t.IsSomething, IsSomethingBody)
-                .Else(ElseBody);
-
-            If.WalkThroughConditions(to, t => t.IsSomethingElse == true);
+            If.PerformFirstSuitable(to, t => t.IsSomethingElse == true);
 
             Assert.IsTrue(to.SomethingCount == NoBodyWorkedCode);
-        }
-
-        [Test]
-        public void ElseIfTestAfterElse_ThrowsInvalidOperationException()
-        {
-            var to = new TestObject();
-            var If = new If<TestObject>(t => t.IsSomething, IsSomethingBody);
-
-            Assert.Throws<InvalidOperationException>(() =>
-            {
-                If.Else(ElseBody)
-                .ElseIf(t => t.IsSomethingElse, ElseBody);
-            });
         }
 
         [Test]
         public void ElseIfTest_BodyIsNull_ThrowsArgumentNullException()
         {
             var to = new TestObject();
-            var If = new If<TestObject>(t => t.IsSomething, IsSomethingBody);
+            var If = new Conditional<TestObject>();
 
             Assert.Throws<ArgumentNullException>(() =>
             {
-                If.ElseIf(null, null);
+                If.PerformIf(null, null);
             });
         }
 

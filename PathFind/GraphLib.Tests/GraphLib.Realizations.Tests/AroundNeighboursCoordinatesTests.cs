@@ -1,12 +1,12 @@
-﻿using GraphLib.Interfaces;
+﻿using Autofac;
+using Autofac.Extras.Moq;
+using Common.Extensions;
+using GraphLib.Extensions;
+using GraphLib.Interfaces;
 using GraphLib.NullRealizations.NullObjects;
 using GraphLib.Realizations.NeighboursCoordinates;
 using NUnit.Framework;
 using System.Linq;
-using Common.Extensions;
-using Autofac.Extras.Moq;
-using Autofac;
-using GraphLib.Extensions;
 
 namespace GraphLib.Realizations.Tests
 {

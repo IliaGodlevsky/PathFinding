@@ -8,9 +8,9 @@ using GraphLib.Interfaces;
 using GraphLib.Interfaces.Factories;
 using GraphLib.Realizations;
 using GraphLib.Realizations.Factories.CoordinateFactories;
-using GraphLib.Realizations.Factories.NeighboursCoordinatesFactories;
 using GraphLib.Realizations.Factories.GraphAssembles;
 using GraphLib.Realizations.Factories.GraphFactories;
+using GraphLib.Realizations.Factories.NeighboursCoordinatesFactories;
 using GraphLib.Serialization;
 using GraphLib.Serialization.Interfaces;
 using GraphViewModel;
@@ -33,7 +33,7 @@ namespace WPFVersion3D.Configure
 
             builder.RegisterType<MainWindowViewModel>().AsSelf().InstancePerLifetimeScope().PropertiesAutowired();
 
-            builder.RegisterType<EndPoints>().As<BaseEndPoints>().SingleInstance();            
+            builder.RegisterType<EndPoints>().As<BaseEndPoints>().SingleInstance();
             builder.RegisterType<Vertex3DEventHolder>().As<IVertexEventHolder>().SingleInstance();
             builder.RegisterType<GraphField3DFactory>().As<IGraphFieldFactory>().SingleInstance();
 

@@ -17,7 +17,7 @@ namespace GraphLib.TestRealizations.TestFactories
             var graph = new Graph2D(TestGraph2DDimensionSizes);
             var matrices = new Matrices(
                 new VertexMatrix(graph),
-                new CostMatrix(graph), 
+                new CostMatrix(graph),
                 new ObstacleMatrix(graph));
             matrices.Overlay();
             graph.ConnectVertices();
