@@ -10,17 +10,17 @@ namespace ConsoleVersion.View
 {    
     internal sealed class Menu<TAction> where TAction : Delegate
     {
-        public Dictionary<string, TAction> MenuActions => menuActions.Value;
+        public IDictionary<string, TAction> MenuActions => menuActions.Value;
         public string[] MenuActionsNames => menuActionsNames.Value;
 
         public Menu(object target)
         {
             this.target = target;
-            menuActions = new Lazy<Dictionary<string, TAction>>(GetMenuActions);
+            menuActions = new Lazy<IDictionary<string, TAction>>(GetMenuActions);
             menuActionsNames = new Lazy<string[]>(MenuActions.Keys.ToArray);
         }
 
-        private Dictionary<string, TAction> GetMenuActions()
+        private IDictionary<string, TAction> GetMenuActions()
         {
             return target
                 .GetType()
@@ -28,14 +28,15 @@ namespace ConsoleVersion.View
                 .Where(IsMenuAction)
                 .OrderByDescending(GetMenuActionPriority)
                 .SelectMany(CreateActionPair)
-                .ToDictionary();
+                .AsDictionary();
         }
 
         private IEnumerable<KeyValuePair<string, TAction>> CreateActionPair(MethodInfo methodInfo)
         {
             if (methodInfo.TryCreateDelegate(target, out TAction action))
             {
-                var header = GetMenuItemHeader(methodInfo);
+                var attribute = methodInfo.GetAttributeOrNull<MenuItemAttribute>();               
+                var header = attribute?.Header ?? methodInfo.Name;
                 yield return new KeyValuePair<string, TAction>(header, action);
             }
         }
@@ -51,15 +52,9 @@ namespace ConsoleVersion.View
             return attribute?.Priority ?? default;
         }
 
-        private string GetMenuItemHeader(MethodInfo method)
-        {
-            var attribute = method.GetAttributeOrNull<MenuItemAttribute>();
-            return attribute?.Header ?? method.Name;
-        }
-
         private readonly object target;
 
-        private readonly Lazy<Dictionary<string, TAction>> menuActions;
+        private readonly Lazy<IDictionary<string, TAction>> menuActions;
         private readonly Lazy<string[]> menuActionsNames;
     }
 }

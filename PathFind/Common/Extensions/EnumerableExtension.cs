@@ -124,26 +124,27 @@ namespace Common.Extensions
         /// <param name="predicate"></param>
         /// <returns>true if <paramref name="predicate"/> is true 
         /// for each corresponding elements in two sequencies and false if not</returns>
-        public static bool Match<T>(this IEnumerable<T> self, IEnumerable<T> second, Func<T, T, bool> predicate)
+        public static bool Match<T>(this IEnumerable<T> self, 
+            IEnumerable<T> second, Func<T, T, bool> predicate)
         {
+            var firstArray = self.ToArray();
+            var secondArray = second.ToArray();
             #region InvariantsObservance
-            if (self.Count() != second.Count())
+            if (firstArray.Length != secondArray.Length)
             {
                 return false;
             }
 
-            if (!self.Any() || !second.Any())
+            if (!firstArray.Any() || !secondArray.Any())
             {
                 return false;
             }
             #endregion
-
-            return Enumerable
-                .Range(0, second.Count())
-                .All(i => predicate(self.ElementAt(i), second.ElementAt(i)));
+            bool Matches(int i) => predicate(firstArray[i], secondArray[i]);
+            return Enumerable.Range(0, secondArray.Length).All(Matches);
         }
 
-        public static Dictionary<TKey, TValue> ToDictionary<TKey, TValue>
+        public static Dictionary<TKey, TValue> AsDictionary<TKey, TValue>
             (this IEnumerable<KeyValuePair<TKey, TValue>> collection)
         {
             return collection.ToDictionary(item => item.Key, item => item.Value);
