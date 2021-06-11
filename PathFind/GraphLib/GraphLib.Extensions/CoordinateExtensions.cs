@@ -64,6 +64,11 @@ namespace GraphLib.Extensions
             return self.IsWithinGraph(graph, IsWithin);
         }
 
+        public static bool HaveEqualDimensionsNumber(this ICoordinate self, ICoordinate coordinate)
+        {
+            return self.CoordinatesValues.HaveEqualLength(coordinate.CoordinatesValues);
+        }
+
         /// <summary>
         /// Checks whether coordinate is within graph according to <paramref name="predicate"/>
         /// </summary>

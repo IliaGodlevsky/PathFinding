@@ -6,7 +6,8 @@ using GraphLib.Extensions;
 using GraphLib.Interfaces;
 using GraphLib.Interfaces.Factories;
 using System;
-using System.Linq;
+
+using static System.Linq.Enumerable;
 
 namespace GraphLib.Realizations.Factories.GraphAssembles
 {
@@ -51,14 +52,11 @@ namespace GraphLib.Realizations.Factories.GraphAssembles
                 var coordinate = coordinateFactory.CreateCoordinate(coordinateValues);
                 var coordinateRadar = radarFactory.CreateNeighboursCoordinates(coordinate);
                 graph[coordinate] = vertexFactory.CreateVertex(coordinateRadar, coordinate);
-                var vertex = graph[coordinate];
-                vertex.Cost = costFactory.CreateCost();
-                vertex.IsObstacle = IsObstacleChance(obstaclePercent);
+                graph[coordinate].Cost = costFactory.CreateCost();
+                graph[coordinate].IsObstacle = IsObstacleChance(obstaclePercent);
             }
 
-            Enumerable
-                .Range(0, graph.Size)
-                .ForEach(AssembleVertex);
+            Range(0, graph.Size).ForEach(AssembleVertex);
             graph.ConnectVertices();
             return graph;
         }

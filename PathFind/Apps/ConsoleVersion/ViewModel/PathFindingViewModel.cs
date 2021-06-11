@@ -2,6 +2,7 @@
 using ConsoleVersion.Model;
 using ConsoleVersion.View;
 using GraphLib.Base;
+using GraphLib.Extensions;
 using GraphLib.Exceptions;
 using GraphLib.Interfaces;
 using GraphLib.Realizations.Coordinates;
@@ -141,12 +142,9 @@ namespace ConsoleVersion.ViewModel
 
         public bool HasAnyVerticesToChooseAsEndPoints()
         {
-            bool IsNotObstacle(IVertex vertex) => !vertex.IsObstacle;
-            bool HasNotObstacleNeighbours(IVertex vertex) => vertex.Neighbours.Any(IsNotObstacle);
-
-            var regularVertices = mainViewModel.Graph.Vertices.Where(IsNotObstacle);
-            int availiableVerticesToChooseAsEndPoint = regularVertices.Count(HasNotObstacleNeighbours);
-            return availiableVerticesToChooseAsEndPoint >= RequiredNumberOfVerticesToStartPathFinding;
+            var regularVertices = mainViewModel.Graph.GetNotObstacles();
+            int availiableVerticesCount = regularVertices.Count(vertex => !vertex.IsIsolated());
+            return availiableVerticesCount >= RequiredNumberOfVerticesToStartPathFinding;
         }
 
         private const int RequiredNumberOfVerticesToStartPathFinding = 2;

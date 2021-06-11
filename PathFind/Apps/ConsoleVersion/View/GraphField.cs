@@ -13,17 +13,26 @@ namespace ConsoleVersion.View
 {
     internal sealed class GraphField : IGraphField
     {
-        public int Width { get; set; }
+        private int Width { get; }
 
-        public int Length { get; set; }
+        private int Length { get; }
 
         public IReadOnlyCollection<IVertex> Vertices => vertices;
+
+        public GraphField(int width, int length)
+            : this()
+        {
+            Width = width;
+            Length = length;
+        }
 
         public GraphField()
         {
             vertices = new List<Vertex>();
             horizontalFrame = new Lazy<string>(GetHorizontalFrame);
             abscissa = new Lazy<string>(GetAbscissa);
+            frameOverFramedAbscissa = new Lazy<string>(() => GetFramedAbscissa(FramedAbscissaPosition.FrameOver));
+            framedUnderFramedAbscissa = new Lazy<string>(() => GetFramedAbscissa(FramedAbscissaPosition.FrameUnder));
         }
 
         public void Add(IVertex vertex)
@@ -63,18 +72,18 @@ namespace ConsoleVersion.View
             });
         }
 
-        private void DrawAbscissaFrame(int topOffset, FramedAbscissaPosition view)
+        private void DrawAbscissaFrame(int topOffset, string framedAbscissa)
         {
             Console.SetCursorPosition(0, topOffset);
-            Console.Write(GetFramedAbscissa(view));
+            Console.Write(framedAbscissa);
         }
 
         private void DrawAbscissaFrames()
         {
             int cursorTop = MainView.HeightOfGraphParametresView;
-            DrawAbscissaFrame(cursorTop, FramedAbscissaPosition.FrameUnder);
+            DrawAbscissaFrame(cursorTop, framedUnderFramedAbscissa.Value);
             cursorTop += Length + MainView.HeightOfAbscissaView;
-            DrawAbscissaFrame(cursorTop, FramedAbscissaPosition.FrameOver);
+            DrawAbscissaFrame(cursorTop, frameOverFramedAbscissa.Value);
         }
 
         private void DrawLeftYCoodrinate(int yCoodrinatePadding, int currentLength)
@@ -164,6 +173,8 @@ namespace ConsoleVersion.View
 
         private readonly Lazy<string> horizontalFrame;
         private readonly Lazy<string> abscissa;
+        private readonly Lazy<string> frameOverFramedAbscissa;
+        private readonly Lazy<string> framedUnderFramedAbscissa;
 
         private const string Space = " ";
         private const string BigSpace = "  ";

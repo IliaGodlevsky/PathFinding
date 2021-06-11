@@ -130,7 +130,7 @@ namespace Common.Extensions
             var firstArray = self.ToArray();
             var secondArray = second.ToArray();
             #region InvariantsObservance
-            if (firstArray.Length != secondArray.Length)
+            if (!self.HaveEqualLength(second))
             {
                 return false;
             }
@@ -142,6 +142,11 @@ namespace Common.Extensions
             #endregion
             bool Matches(int i) => predicate(firstArray[i], secondArray[i]);
             return Enumerable.Range(0, secondArray.Length).All(Matches);
+        }
+
+        public static bool HaveEqualLength<T>(this IEnumerable<T> self, IEnumerable<T> collection)
+        {
+            return self.Count() == collection.Count();
         }
 
         public static Dictionary<TKey, TValue> AsDictionary<TKey, TValue>

@@ -1,7 +1,6 @@
 ﻿using Algorithm.Interfaces;
 using Algorithm.Realizations.StepRules;
 using Algorithm.Сompanions;
-using Common.Extensions;
 using GraphLib.Extensions;
 using GraphLib.Interfaces;
 using System;
@@ -29,7 +28,7 @@ namespace Algorithm.Realizations.GraphPaths
         {
             path = new Lazy<IVertex[]>(GetPath);
             pathCost = new Lazy<double>(ExtractPathCost);
-            pathLength = new Lazy<int>(() => Path.Count() - 1);
+            pathLength = new Lazy<int>(GetPathLength);
             this.parentVertices = parentVertices;
             this.graph = graph;
             this.endPoints = endPoints;
@@ -39,7 +38,7 @@ namespace Algorithm.Realizations.GraphPaths
         private IVertex[] GetPath()
         {
             var path = ExtractPath().ToArray();
-            if (!path.ContainsElems(endPoints.Source, endPoints.Target))
+            if (!path.Contains(endPoints.Source))
             {
                 path = new IVertex[] { };
             }
@@ -61,12 +60,26 @@ namespace Algorithm.Realizations.GraphPaths
 
         private double ExtractPathCost()
         {
+            if (Path.Length == 0)
+            {
+                return default;
+            }
+
             double GetCost(int i)
             {
                 return stepRule.CalculateStepCost(Path[i], Path[i + 1]);
             }
 
             return Enumerable.Range(0, Path.Length - 1).Sum(GetCost);
+        }
+
+        private int GetPathLength()
+        {
+            if (Path.Length == 0)
+            {
+                return default;
+            }
+            return Path.Length - 1;
         }
 
         private readonly ParentVertices parentVertices;

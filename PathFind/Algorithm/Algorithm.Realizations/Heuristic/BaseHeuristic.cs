@@ -1,4 +1,5 @@
 ﻿using GraphLib.Exceptions;
+using GraphLib.Extensions;
 using GraphLib.Interfaces;
 using System;
 using System.Collections.Generic;
@@ -16,12 +17,7 @@ namespace Algorithm.Realizations.Heuristic
                 throw new ArgumentNullException();
             }
 
-            if (first.Position == null || second.Position == null)
-            {
-                throw new ArgumentException("Vertex coordinate was null");
-            }
-
-            if (first.Position.CoordinatesValues.Count() != second.Position.CoordinatesValues.Count())
+            if (first.HaveEqualDimensionsNumber(second))
             {
                 string message = "Can't calculate distance between vertices with different coordinates count";
                 throw new WrongNumberOfDimensionsException(message);

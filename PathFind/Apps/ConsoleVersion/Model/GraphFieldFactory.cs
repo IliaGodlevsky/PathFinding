@@ -1,5 +1,6 @@
 ﻿using ConsoleVersion.View;
 using GraphLib.Base;
+using GraphLib.Extensions;
 using GraphLib.Interfaces;
 using GraphLib.Realizations.Graphs;
 using System;
@@ -26,16 +27,10 @@ namespace ConsoleVersion.Model
                 throw new ArgumentException(nameof(graph));
             }
 
-            if (!(base.CreateGraphField(graph) is GraphField field))
-            {
-                string message = $"{nameof(field)} is not of type {nameof(GraphField)}";
-                throw new Exception(message);
-            }
+            var graphField = new GraphField(graph2D.Width, graph2D.Length);
+            graph.ForEach(graphField.Add);
 
-            field.Width = graph2D.Width;
-            field.Length = graph2D.Length;
-
-            return field;
+            return graphField;
         }
     }
 }

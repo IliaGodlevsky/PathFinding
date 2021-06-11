@@ -48,6 +48,11 @@ namespace GraphLib.Extensions
             return vertex.Position.IsClose(neighbour.Position);
         }
 
+        public static bool HaveEqualDimensionsNumber(this IVertex self, IVertex vertex)
+        {
+            return self.Position.HaveEqualDimensionsNumber(vertex.Position);
+        }
+
         public static void Initialize(this IVertex self)
         {
             self.Neighbours = new List<IVertex>();

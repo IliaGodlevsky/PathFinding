@@ -55,11 +55,13 @@ namespace GraphLib.Realizations.NeighboursCoordinates
                 resultCoordinatesValues[depth] = selfCoordinatesValues[depth] + offset;
                 if (depth < limitDepth - 1)
                 {
-                    neighbourCoordinates.AddRange(DetectNeighboursCoordinates(depth + 1));
+                    var coordinates = DetectNeighboursCoordinates(depth + 1);
+                    neighbourCoordinates.AddRange(coordinates);
                 }
                 else
                 {
-                    neighbourCoordinates.Add(resultCoordinatesValues.ToCoordinate());
+                    var coordinate = resultCoordinatesValues.ToCoordinate();
+                    neighbourCoordinates.Add(coordinate);
                 }
             }
             return neighbourCoordinates;

@@ -27,15 +27,15 @@ namespace ConsoleVersion.View
                 .GetMethods()
                 .Where(IsMenuAction)
                 .OrderByDescending(GetMenuActionPriority)
-                .SelectMany(CreateActionPair)
+                .SelectMany(CreateNameActionPair)
                 .AsDictionary();
         }
 
-        private IEnumerable<KeyValuePair<string, TAction>> CreateActionPair(MethodInfo methodInfo)
+        private IEnumerable<KeyValuePair<string, TAction>> CreateNameActionPair(MethodInfo methodInfo)
         {
             if (methodInfo.TryCreateDelegate(target, out TAction action))
             {
-                var attribute = methodInfo.GetAttributeOrNull<MenuItemAttribute>();               
+                var attribute = methodInfo.GetAttributeOrNull<MenuItemAttribute>();
                 var header = attribute?.Header ?? methodInfo.Name;
                 yield return new KeyValuePair<string, TAction>(header, action);
             }

@@ -68,9 +68,10 @@ namespace GraphLib.Extensions
             return hasEqualNumberOfObstacles && hasEqualVertices && hasEqualDimensionSizes;
         }
 
-        public static void ConnectVertices(this IGraph self)
+        public static IGraph ConnectVertices(this IGraph self)
         {
             self.ForEach(vertex => vertex.SetNeighbours(self));
+            return self;
         }
 
         public static bool Contains(this IGraph self, params IVertex[] vertices)
@@ -81,6 +82,16 @@ namespace GraphLib.Extensions
         public static bool Contains(this IGraph self, IEndPoints endPoints)
         {
             return self.Contains(endPoints.Source, endPoints.Target);
+        }
+
+        public static IVertex[] GetObstacles(this IGraph self)
+        {
+            return self.Vertices.GetObstacles();
+        }
+
+        public static IVertex[] GetNotObstacles(this IGraph self)
+        {
+            return self.Vertices.GetNotObstacles();
         }
 
         public static int[] ToCoordinates(this IGraph self, int index)

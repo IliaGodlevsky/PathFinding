@@ -1,6 +1,6 @@
-﻿using GraphLib.Interfaces;
+﻿using GraphLib.Extensions;
+using GraphLib.Interfaces;
 using System.Collections.Generic;
-using System.Linq;
 
 namespace GraphLib.Realizations.VisitedVerticesImpl
 {
@@ -27,17 +27,12 @@ namespace GraphLib.Realizations.VisitedVerticesImpl
         {
             return visitedVertices
                 .GetUnvisitedNeighbours(vertex)
-                .Where(IsNotObstacle);
+                .GetNotObstacles();
         }
 
         public void Clear()
         {
             visitedVertices.Clear();
-        }
-
-        private bool IsNotObstacle(IVertex vertex)
-        {
-            return !vertex.IsObstacle;
         }
 
         private readonly IVisitedVertices visitedVertices;
