@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+﻿using System;
 
 namespace GraphLib.Interfaces
 {
@@ -10,6 +10,6 @@ namespace GraphLib.Interfaces
         /// <summary>
         /// An array of coordinates values of the object
         /// </summary>
-        IEnumerable<int> CoordinatesValues { get; }
+        int[] CoordinatesValues { get; }
     }
 }

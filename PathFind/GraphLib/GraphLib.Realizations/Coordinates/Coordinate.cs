@@ -1,7 +1,6 @@
 ﻿using GraphLib.Extensions;
 using GraphLib.Interfaces;
 using System;
-using System.Collections.Generic;
 using System.Linq;
 
 namespace GraphLib.Realizations.Coordinates
@@ -9,7 +8,7 @@ namespace GraphLib.Realizations.Coordinates
     [Serializable]
     internal sealed class Coordinate : ICoordinate
     {
-        public IEnumerable<int> CoordinatesValues { get; }
+        public int[] CoordinatesValues { get; }
 
         public Coordinate(int[] coordinates)
         {
@@ -18,8 +17,9 @@ namespace GraphLib.Realizations.Coordinates
         }
 
         public Coordinate(ICoordinate coordinate)
+            : this(coordinate.CoordinatesValues.ToArray())
         {
-            CoordinatesValues = coordinate.CoordinatesValues.ToArray();
+            
         }
 
         public override bool Equals(object pos)

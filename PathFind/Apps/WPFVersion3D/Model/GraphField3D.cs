@@ -31,6 +31,8 @@ namespace WPFVersion3D.Model
             Length = length;
             Height = height;
 
+            DimensionSizes = new[] { Width, Length, Height };
+
             DistanceBetweenVerticesAtXAxis = 0;
             DistanceBetweenVerticesAtYAxis = 0;
             DistanceBetweenVerticesAtZAxis = 0;
@@ -106,12 +108,12 @@ namespace WPFVersion3D.Model
         private void LocateVertex(IAxis axis, Vertex3D vertex,
             params double[] additionalOffset)
         {
-            var coordinates = vertex.Position.CoordinatesValues.ToArray();
+            var coordinates = vertex.Position.CoordinatesValues;
             var vertexOffset = new Offset
             {
-                CoordinateValue = coordinates[axis.IndexNumber],
-                DistanceBetweenVertices = DistancesBetween[axis.IndexNumber],
-                AdditionalOffset = additionalOffset.ElementAtOrDefault(axis.IndexNumber),
+                CoordinateValue = coordinates[axis.Index],
+                DistanceBetweenVertices = DistancesBetween[axis.Index],
+                AdditionalOffset = additionalOffset.ElementAtOrDefault(axis.Index),
                 VertexSize = vertex.Size
             };
             double offset = vertexOffset.VertexOffset;
@@ -133,7 +135,7 @@ namespace WPFVersion3D.Model
 
         private int Height { get; }
 
-        private int[] DimensionSizes => new[] { Width, Length, Height };
+        private int[] DimensionSizes { get; } 
 
         private double[] DistancesBetween => new[]
         {

@@ -5,7 +5,7 @@ namespace WPFVersion3D.Axes
 {
     internal sealed class Abscissa : IAxis
     {
-        public int IndexNumber => 0;
+        public int Index => 0;
 
         public void Offset(TranslateTransform3D transfrom, double offset)
         {

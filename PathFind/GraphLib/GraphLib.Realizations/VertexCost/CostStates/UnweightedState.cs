@@ -10,5 +10,10 @@ namespace GraphLib.Realizations.VertexCost.CostStates
         {
             return cost.UnweightedCostView;
         }
+
+        public object Clone()
+        {
+            return new UnweightedState();
+        }
     }
 }

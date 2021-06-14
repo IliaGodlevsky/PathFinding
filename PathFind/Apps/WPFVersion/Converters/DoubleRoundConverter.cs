@@ -1,11 +1,10 @@
-﻿using Common.ValueRanges;
-using System;
+﻿using System;
 using System.Globalization;
 using System.Windows.Data;
 
 namespace WPFVersion.Converters
 {
-    internal sealed class RangedDoubleToStringToConverter : IValueConverter
+    internal sealed class DoubleRoundConverter : IValueConverter
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
@@ -13,7 +12,7 @@ namespace WPFVersion.Converters
             try
             {
                 result = System.Convert.ToDouble(value);
-                result = Math.Round(result, 0);
+                result = Math.Round(result, 2);
                 return result;
             }
             catch (Exception)
@@ -26,24 +25,18 @@ namespace WPFVersion.Converters
         {
             double result = default;
 
-            if (IsValidParametres(value, parameter))
+            if (IsValidParametres(value))
             {
-                value = value?.ToString().Replace('.', ',');
-                var range = parameter as IValueRange;
                 var val = System.Convert.ToDouble(value);
-                if (val > range.UpperValueOfRange)
-                    val = range.UpperValueOfRange;
-                if (val < range.LowerValueOfRange)
-                    val = range.LowerValueOfRange;
                 result = val;
             }
 
             return result;
         }
 
-        private bool IsValidParametres(object value, object parametre)
+        private bool IsValidParametres(object value)
         {
-            return double.TryParse(value?.ToString(), out _) && parametre is IValueRange;
+            return double.TryParse(value?.ToString(), out _);
         }
     }
 }

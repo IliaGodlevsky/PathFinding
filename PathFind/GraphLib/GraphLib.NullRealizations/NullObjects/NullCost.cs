@@ -19,5 +19,10 @@ namespace GraphLib.NullRealizations.NullObjects
         {
             return CurrentCost.GetHashCode();
         }
+
+        public object Clone()
+        {
+            return new NullCost();
+        }
     }
 }

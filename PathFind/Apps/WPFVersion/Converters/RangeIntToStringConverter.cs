@@ -28,7 +28,7 @@ namespace WPFVersion.Converters
 
         private bool IsValidParametres(object value, object parametre)
         {
-            return int.TryParse(value.ToString(), out _) && parametre is IValueRange;
+            return int.TryParse(value?.ToString(), out _) && parametre is IValueRange;
         }
     }
 }

@@ -22,7 +22,7 @@ namespace GraphLib.NullRealizations.NullObjects
             set => _ = value;
         }
 
-        public IEnumerable<int> DimensionsSizes => new int[] { };
+        public int[] DimensionsSizes => new int[] { };
 
         public IEnumerable<IVertex> Vertices => vertices;
 

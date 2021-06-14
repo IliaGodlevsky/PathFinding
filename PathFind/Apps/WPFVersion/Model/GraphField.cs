@@ -1,9 +1,10 @@
-﻿using GraphLib.Interfaces;
+﻿using Common.Extensions;
+using GraphLib.Interfaces;
 using GraphLib.Realizations.Coordinates;
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Windows.Controls;
+using System.Windows.Media;
 
 using static WPFVersion.Constants;
 
@@ -11,11 +12,13 @@ namespace WPFVersion.Model
 {
     internal sealed class GraphField : Canvas, IGraphField
     {
-        public IReadOnlyCollection<IVertex> Vertices => vertices.Value;
+        public double VerticesSize { get; set; }
+
+        public IReadOnlyCollection<IVertex> Vertices => Children.Cast<IVertex>().ToArray();
 
         public GraphField()
         {
-            vertices = new Lazy<IReadOnlyCollection<IVertex>>(() => Children.OfType<IVertex>().ToArray());
+            VerticesSize = VertexSize;
         }
 
         public void Add(IVertex vertex)
@@ -33,6 +36,18 @@ namespace WPFVersion.Model
             Children.Clear();
         }
 
-        private readonly Lazy<IReadOnlyCollection<IVertex>> vertices;
+        public void Rearrange(double vertexSize)
+        {
+            VerticesSize = vertexSize;
+            double scale = VerticesSize / VertexSize;
+            var scaleTransform = new ScaleTransform
+            {
+                ScaleX = scale,
+                ScaleY = scale
+            };
+            var groupTransform = new TransformGroup();
+            groupTransform.Children.AddRange(scaleTransform);
+            RenderTransform = groupTransform;
+        }
     }
 }

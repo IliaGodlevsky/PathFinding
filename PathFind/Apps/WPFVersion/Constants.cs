@@ -9,6 +9,7 @@ namespace WPFVersion
         public static IValueRange ObstaclesPercentValueRange { get; }
         public static IValueRange AlgorithmDelayTimeValueRange { get; }
         public static IValueRange VertexSizeRange { get; }
+        public static IValueRange OffsetValueRange { get; }
 
         public static ValueRanges GraphParamsValueRanges { get; }
 
@@ -23,7 +24,8 @@ namespace WPFVersion
             GraphParamsValueRanges = new ValueRanges(GraphWidthValueRange, GraphLengthValueRange);
             ObstaclesPercentValueRange = new InclusiveValueRange(99, 0);
             AlgorithmDelayTimeValueRange = new InclusiveValueRange(35, 0);
-            VertexSizeRange = new InclusiveValueRange(30, 5);
+            VertexSizeRange = new InclusiveValueRange(24, 5);
+            OffsetValueRange = new InclusiveValueRange(-1000, 1000);
         }
     }
 }

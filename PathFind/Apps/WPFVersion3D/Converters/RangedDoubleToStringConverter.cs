@@ -26,8 +26,12 @@ namespace WPFVersion3D.Converters
             if (IsValidParametres(value, parameter))
             {
                 var range = parameter as IValueRange;
-                var val = System.Convert.ToInt32(value);
-                result = range.ReturnInRange(val);
+                var val = System.Convert.ToDouble(value);
+                if (val > range.UpperValueOfRange)
+                    val = range.UpperValueOfRange;
+                if (val < range.LowerValueOfRange)
+                    val = range.LowerValueOfRange;
+                result = val;
             }
 
             return result;

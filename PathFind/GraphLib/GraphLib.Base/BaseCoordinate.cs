@@ -3,7 +3,6 @@ using GraphLib.Exceptions;
 using GraphLib.Extensions;
 using GraphLib.Interfaces;
 using System;
-using System.Collections.Generic;
 using System.Linq;
 
 namespace GraphLib.Base
@@ -28,7 +27,7 @@ namespace GraphLib.Base
             }
         }
 
-        public IEnumerable<int> CoordinatesValues { get; }
+        public int[] CoordinatesValues { get; }
 
         public override bool Equals(object pos)
         {

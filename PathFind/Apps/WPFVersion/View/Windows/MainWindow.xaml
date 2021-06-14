@@ -3,56 +3,108 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
-        xmlns:model="clr-namespace:WPFVersion.Model"
+        xmlns:model="clr-namespace:WPFVersion.Model" 
+        xmlns:converters="clr-namespace:WPFVersion.Converters"
+        xmlns:range="clr-namespace:WPFVersion"
         mc:Ignorable="d"
+        Background="White"
         Title="Path find"
         ResizeMode="CanResize"        
         WindowStartupLocation="CenterScreen"
         Icon="../../Resources/Images/mainwindow2.png">
-    <Grid>
+    <Window.Resources>
+        <converters:DoubleRoundConverter x:Key="doubleConverter"/>
+        <converters:RangedDoubleToStringToConverter x:Key="rangedIntConverter"/>
+    </Window.Resources>
+    <Grid Background="White">
         <Grid.RowDefinitions>
+            <RowDefinition Height="auto"></RowDefinition>
             <RowDefinition Height="auto"></RowDefinition>
             <RowDefinition Height="auto"></RowDefinition>
             <RowDefinition Height="*"></RowDefinition>
             <RowDefinition Height="auto"></RowDefinition>
         </Grid.RowDefinitions>
-        <model:GraphField Margin="3" Grid.Row="2" x:Name="graphField" Width="Auto" Height = "Auto">
+        <model:GraphField Panel.ZIndex="0" Margin="3" Grid.Row="3" x:Name="graphField" >
+            <model:GraphField.RenderTransform>
+                <TransformGroup>
+                    <ScaleTransform 
+                        ScaleX="{Binding ElementName=scaleSlider, Path=Value}"
+                        ScaleY="{Binding ElementName=scaleSlider, Path=Value}">
+                    </ScaleTransform>
+                    <TranslateTransform 
+                        X="{Binding ElementName=xSlider, Path=Value}"
+                        Y="{Binding ElementName=ySlider, Path=Value}">
+                    </TranslateTransform>
+                </TransformGroup>
+            </model:GraphField.RenderTransform>
             <ContentPresenter Content="{Binding GraphField}"/>
         </model:GraphField>
-        <ToolBar Grid.Row="0">
-            <Button Command="{Binding LoadGraphCommand}">
-                <Image Style ="{StaticResource ImageStyle}" Source="/Resources/Images/open.png"></Image>
-            </Button>
-            <Button Command="{Binding SaveGraphCommand}">
-                <Image Style ="{StaticResource ImageStyle}" Source="/Resources/Images/save.png"></Image>
-            </Button>
-            <Button Command="{Binding CreateNewGraphCommand}">
-                <Image Style ="{StaticResource ImageStyle}" Source="/Resources/Images/new.png"></Image>
-            </Button>
-            <Button Command="{Binding ClearGraphCommand}">
-                <Image Style ="{StaticResource ImageStyle}" Source="/Resources/Images/clear.png"></Image>
-            </Button>
-            <Button Command ="{Binding StartPathFindCommand}">
-                <Image Style ="{StaticResource ImageStyle}" Source="/Resources/Images/start.png"></Image>
-            </Button>
-            <Button Command ="{Binding ChangeVertexSize}">
-                <Image Style ="{StaticResource ImageStyle}" Source="/Resources/Images/change.png"></Image>
-            </Button>
-            <Button Command ="{Binding InterruptAlgorithmCommand}">
-                <Image Style ="{StaticResource ImageStyle}" Source="/Resources/Images/interrupt.png"></Image>
-            </Button>
+        <StackPanel Background="White" Grid.Row="0" Grid.RowSpan="3">
+            <ToolBar Background="White" Grid.Row="0">
+                <Button Command="{Binding LoadGraphCommand}">
+                    <Image Style ="{StaticResource ImageStyle}" Source="/Resources/Images/open.png"></Image>
+                </Button>
+                <Button Command="{Binding SaveGraphCommand}">
+                    <Image Style ="{StaticResource ImageStyle}" Source="/Resources/Images/save.png"></Image>
+                </Button>
+                <Button Command="{Binding CreateNewGraphCommand}">
+                    <Image Style ="{StaticResource ImageStyle}" Source="/Resources/Images/new.png"></Image>
+                </Button>
+                <Button Command="{Binding ClearGraphCommand}">
+                    <Image Style ="{StaticResource ImageStyle}" Source="/Resources/Images/clear.png"></Image>
+                </Button>
+                <Button Command ="{Binding StartPathFindCommand}">
+                    <Image Style ="{StaticResource ImageStyle}" Source="/Resources/Images/start.png"></Image>
+                </Button>
+                <Button Command ="{Binding InterruptAlgorithmCommand}">
+                    <Image Style ="{StaticResource ImageStyle}" Source="/Resources/Images/interrupt.png"></Image>
+                </Button>
 
-            <ToggleButton Command="{Binding ShowVertexCost}"
+                <ToggleButton Command="{Binding ShowVertexCost}"
                          CommandParameter="{Binding IsChecked, RelativeSource = {RelativeSource Self}}"
                         x:Name="fontButton" IsChecked="True">
-                <Image Style="{StaticResource ImageStyle}" Source ="/Resources/Images/show.png"></Image>
-            </ToggleButton>
-        </ToolBar>
-        <StatusBar Grid.Row="3">
+                    <Image Style="{StaticResource ImageStyle}" Source ="/Resources/Images/show.png"></Image>
+                </ToggleButton>
+            </ToolBar>
+            <StatusBar Background="White" Grid.Row="1">
+                <TextBlock Text="{Binding GraphParametres}"></TextBlock>
+            </StatusBar>
+            <Expander Background="White" Panel.ZIndex="1" Grid.Row="2" Margin="5" >
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition></RowDefinition>
+                        <RowDefinition></RowDefinition>
+                        <RowDefinition></RowDefinition>
+                        <RowDefinition></RowDefinition>
+                        <RowDefinition></RowDefinition>
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"></ColumnDefinition>
+                        <ColumnDefinition Width="auto"></ColumnDefinition>
+                    </Grid.ColumnDefinitions>
+                    <TextBlock HorizontalAlignment="Center" Grid.ColumnSpan="2" Margin="1" Text="Scaling"/>
+                    <Slider Margin="1" MinWidth="150" Grid.Row="1" Grid.Column="0" 
+                        x:Name="scaleSlider" Value="1" Minimum="0.1" Maximum="2" ></Slider>
+                    <TextBox Text="{Binding ElementName=scaleSlider, Path=Value, 
+                    Converter={StaticResource doubleConverter}, Mode=TwoWay}" 
+                         Margin="1" MinWidth="25" Grid.Row="1" Grid.Column="1"></TextBox>
+                    <TextBlock Margin="1" HorizontalAlignment="Center" Grid.Row="2" Text="Offset"></TextBlock>
+                    <TextBox Text="{Binding ElementName=xSlider, Path=Value,
+                    Converter={StaticResource rangedIntConverter}, 
+                    ConverterParameter={x:Static range:Constants.OffsetValueRange },
+                    Mode=TwoWay}" Margin="1" MinWidth="25" Grid.Column="1" Grid.Row="3"></TextBox>
+                    <TextBox Text="{Binding ElementName=ySlider, Path=Value,
+                    Converter={StaticResource rangedIntConverter}, 
+                    ConverterParameter={x:Static range:Constants.OffsetValueRange },
+                    Mode=TwoWay}" Margin="2" MinWidth="25" Grid.Column="1" Grid.Row="4"></TextBox>
+                    <Slider MinWidth="150" Margin="1" x:Name="xSlider" Grid.Row="3" Grid.Column="0"></Slider>
+                    <Slider MinWidth="150" Margin="1" x:Name="ySlider" Grid.Row="4" Grid.Column="0"></Slider>
+                </Grid>
+            </Expander>
+        </StackPanel>
+
+        <StatusBar Background="White" Grid.Row="4">
             <TextBlock Text = "{Binding PathFindingStatistics}"></TextBlock>
-        </StatusBar>
-        <StatusBar Grid.Row="1">
-            <TextBlock Text="{Binding GraphParametres}"></TextBlock>
         </StatusBar>
     </Grid>
 </Window>

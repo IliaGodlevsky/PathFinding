@@ -17,7 +17,12 @@ namespace Algorithm.Realizations.Heuristic
                 throw new ArgumentNullException();
             }
 
-            if (first.HaveEqualDimensionsNumber(second))
+            if (first.Position == null || second.Position == null)
+            {
+                throw new ArgumentException();
+            }
+
+            if (!first.HaveEqualDimensionsNumber(second))
             {
                 string message = "Can't calculate distance between vertices with different coordinates count";
                 throw new WrongNumberOfDimensionsException(message);

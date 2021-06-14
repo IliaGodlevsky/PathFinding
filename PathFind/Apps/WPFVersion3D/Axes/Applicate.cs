@@ -5,7 +5,7 @@ namespace WPFVersion3D.Axes
 {
     internal sealed class Applicate : IAxis
     {
-        public int IndexNumber => 2;
+        public int Index => 2;
 
         public void Offset(TranslateTransform3D transfrom, double offset)
         {

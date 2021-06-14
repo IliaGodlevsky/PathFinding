@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 
 namespace Common.Extensions
 {
@@ -10,6 +11,11 @@ namespace Common.Extensions
             {
                 collection.Add(item);
             }
+        }
+
+        public static void AddRange<T>(this ICollection<T> collection, params T[] items)
+        {
+            collection.AddRange(items.AsEnumerable());
         }
 
         public static void RemoveRange<T>(this ICollection<T> collection, IEnumerable<T> range)

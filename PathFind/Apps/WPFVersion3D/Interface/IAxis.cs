@@ -5,7 +5,7 @@ namespace WPFVersion3D.Axes
 {
     internal interface IAxis
     {
-        int IndexNumber { get; }
+        int Index { get; }
 
         void SetDistanceBeetween(double distance, GraphField3D field);
 

@@ -15,5 +15,10 @@ namespace WPFVersion3D.Model
         {
 
         }
+
+        public override object Clone()
+        {
+            return new Vertex3DCost(CurrentCost);
+        }
     }
 }

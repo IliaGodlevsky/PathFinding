@@ -80,6 +80,16 @@ namespace GraphLib.Realizations.VertexCost
             return Status.ToString(this);
         }
 
+        public override object Clone()
+        {
+            return new WeightableVertexCost(CurrentCost)
+            {
+                WeightedCost = WeightedCost,
+                Status = (ICostState)Status.Clone(),
+                UnweightedCostView = UnweightedCostView
+            };
+        }
+
         private int WeightedCost { get; set; }
         private ICostState Status { get; set; }
 

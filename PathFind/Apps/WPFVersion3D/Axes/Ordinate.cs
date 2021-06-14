@@ -5,7 +5,7 @@ namespace WPFVersion3D.Axes
 {
     internal sealed class Ordinate : IAxis
     {
-        public int IndexNumber => 1;
+        public int Index => 1;
 
         public void Offset(TranslateTransform3D transfrom, double offset)
         {

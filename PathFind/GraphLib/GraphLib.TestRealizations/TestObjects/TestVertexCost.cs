@@ -21,5 +21,10 @@ namespace GraphLib.TestRealizations.TestObjects
         {
             return CurrentCost.ToString();
         }
+
+        public override object Clone()
+        {
+            return new TestVertexCost(CurrentCost);
+        }
     }
 }

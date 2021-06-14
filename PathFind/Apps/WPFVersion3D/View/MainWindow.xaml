@@ -40,7 +40,7 @@
         </Grid.ColumnDefinitions>
         <Expander Grid.Column="1" Grid.RowSpan="4">
             <Grid>
-
+                
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition></ColumnDefinition>
                     <ColumnDefinition></ColumnDefinition>
@@ -102,22 +102,19 @@
                          Text="{Binding ElementName=xAxisSlider, 
                                 Path=Value, 
                                 Converter={StaticResource stringToDouble}, 
-                                Mode=TwoWay,
-                                UpdateSourceTrigger=PropertyChanged}"/>
+                                Mode=TwoWay}"/>
 
                 <TextBox Style="{StaticResource TextBoxStyle}" Grid.Column="2" Grid.Row="2" 
                          Text="{Binding ElementName=yAxisSlider, 
                                 Path=Value, 
                                 Converter={StaticResource stringToDouble}, 
-                                Mode=TwoWay,
-                                UpdateSourceTrigger=PropertyChanged}"/>
+                                Mode=TwoWay}"/>
 
                 <TextBox Style="{StaticResource TextBoxStyle}" Grid.Column="2" Grid.Row="3" 
                          Text="{Binding ElementName=zAxisSlider, 
                                 Path=Value, 
                                 Converter={StaticResource stringToDouble}, 
-                                Mode=TwoWay,
-                                UpdateSourceTrigger=PropertyChanged}"/>
+                                Mode=TwoWay}"/>
 
                 <Slider x:Name="zoomSlider" Grid.Column="1" 
                         Style="{StaticResource SliderStyle}" Maximum="1000" Grid.Row="0" 
@@ -144,22 +141,19 @@
                         Value="{Binding ElementName=zAxis, Path=Angle}"/>
 
                 <TextBox Text="{Binding ElementName=xAxisStretchAxis, 
-                    Path=Value, 
-                    UpdateSourceTrigger=PropertyChanged, 
+                    Path=Value,                    
                     Mode=TwoWay,
                     Converter={StaticResource stringToDouble}}" 
                     Style="{StaticResource TextBoxStyle}" Grid.Column="2" Grid.Row="5"/>
 
                 <TextBox Text="{Binding ElementName=yAxisStretchSlider, 
-                    Path=Value, 
-                    UpdateSourceTrigger=PropertyChanged, 
+                    Path=Value,
                     Mode=TwoWay,
                     Converter={StaticResource stringToDouble}}" 
                     Style="{StaticResource TextBoxStyle}" Grid.Column="2" Grid.Row="6"/>
 
                 <TextBox Text="{Binding ElementName=zAxisStretchSlider, 
-                    Path=Value, 
-                    UpdateSourceTrigger=PropertyChanged, 
+                    Path=Value,
                     Mode=TwoWay,
                     Converter={StaticResource stringToDouble}}"
                     Style="{StaticResource TextBoxStyle}" Grid.Column="2" Grid.Row="7"/>

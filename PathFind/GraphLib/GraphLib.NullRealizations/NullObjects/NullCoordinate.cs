@@ -12,7 +12,7 @@ namespace GraphLib.NullRealizations.NullObjects
     [Serializable]
     public sealed class NullCoordinate : ICoordinate
     {
-        public IEnumerable<int> CoordinatesValues => new int[] { };
+        public int[] CoordinatesValues => new int[] { };
 
         public override bool Equals(object pos)
         {

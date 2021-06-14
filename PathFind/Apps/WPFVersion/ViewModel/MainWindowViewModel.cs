@@ -63,7 +63,6 @@ namespace WPFVersion.ViewModel
         public ICommand ClearGraphCommand { get; }
         public ICommand SaveGraphCommand { get; }
         public ICommand LoadGraphCommand { get; }
-        public ICommand ChangeVertexSize { get; }
         public ICommand ShowVertexCost { get; }
         public ICommand InterruptAlgorithmCommand { get; }
 
@@ -81,8 +80,7 @@ namespace WPFVersion.ViewModel
             CreateNewGraphCommand = new RelayCommand(ExecuteCreateNewGraphCommand);
             ClearGraphCommand = new RelayCommand(ExecuteClearGraphCommand, CanExecuteGraphOperation);
             SaveGraphCommand = new RelayCommand(ExecuteSaveGraphCommand, CanExecuteGraphOperation);
-            LoadGraphCommand = new RelayCommand(ExecuteLoadGraphCommand);
-            ChangeVertexSize = new RelayCommand(ExecuteChangeVertexSize, CanExecuteGraphOperation);
+            LoadGraphCommand = new RelayCommand(ExecuteLoadGraphCommand);            
             ShowVertexCost = new RelayCommand(ExecuteShowVertexCostCommand);
             InterruptAlgorithmCommand = new RelayCommand(ExecuteInterruptAlgorithmCommand, CanExecuteInterruptAlgorithmCommand);
         }
@@ -149,13 +147,6 @@ namespace WPFVersion.ViewModel
             {
                 log.Error(ex);
             }
-        }
-
-        public void ExecuteChangeVertexSize(object param)
-        {
-            var model = new VertexSizeChangingViewModel(this, fieldFactory);
-            var window = new VertexSizeChangeWindow();
-            PrepareWindow(model, window);
         }
 
         private void PrepareWindow(IViewModel model, Window window)

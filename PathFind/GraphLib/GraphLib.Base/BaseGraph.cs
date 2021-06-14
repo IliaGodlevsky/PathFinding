@@ -13,11 +13,16 @@ namespace GraphLib.Base
 {
     public abstract class BaseGraph : IGraph
     {
+
         public int Size { get; }
 
         public int ObstaclePercent => Size == 0 ? 0 : Obstacles * 100 / Size;
 
         public int Obstacles => Vertices.Count(v => v.IsObstacle);
+
+        public IEnumerable<IVertex> Vertices => vertices.Values;
+
+        public int[] DimensionsSizes { get; }
 
         protected BaseGraph(int numberOfDimensions, params int[] dimensionSizes)
         {
@@ -41,10 +46,6 @@ namespace GraphLib.Base
         {
             DimensionNames = new[] { "Width", "Length", "Height" };
         }
-
-        public IEnumerable<IVertex> Vertices => vertices.Values;
-
-        public IEnumerable<int> DimensionsSizes { get; }
 
         /// <summary>
         /// Get or sets vertex according to a <paramref name="coordinate"/>
@@ -98,12 +99,12 @@ namespace GraphLib.Base
 
         private bool IsSuitableCoordinate(ICoordinate coordinate)
         {
-            var coordinates = coordinate.CoordinatesValues.ToArray();
+            var coordinates = coordinate.CoordinatesValues;
             if (!coordinates.Any())
             {
                 return false;
             }
-            if (coordinates.Length != DimensionsSizes.Count())
+            if (!coordinates.HaveEqualLength(DimensionsSizes))
             {
                 var message = "Dimensions of graph and coordinate doesn't match\n";
                 throw new WrongNumberOfDimensionsException(nameof(coordinate), message);
@@ -112,7 +113,6 @@ namespace GraphLib.Base
         }
 
         protected static readonly string[] DimensionNames;
-
         private readonly Dictionary<ICoordinate, IVertex> vertices;
     }
 }

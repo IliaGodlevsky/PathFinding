@@ -8,7 +8,7 @@ namespace GraphLib.Serialization
     {
         public VertexSerializationInfo(IVertex vertex)
         {
-            Cost = vertex.Cost;
+            Cost = (IVertexCost)vertex.Cost.Clone();
             Position = vertex.Position;
             IsObstacle = vertex.IsObstacle;
             NeighboursCoordinates = vertex.NeighboursCoordinates;

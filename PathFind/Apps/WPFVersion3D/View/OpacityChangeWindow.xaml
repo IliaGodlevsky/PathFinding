@@ -73,8 +73,7 @@
                  Text="{Binding ElementName=obstacleColorOpacitySlider, 
             Converter={StaticResource opacityConverter},
             Path=Value, 
-            Mode=TwoWay, 
-            UpdateSourceTrigger=PropertyChanged}"></TextBox>
+            Mode=TwoWay}"></TextBox>
         
         <TextBox Margin="5" 
                  MinWidth="45" 
@@ -83,8 +82,7 @@
                  Text="{Binding ElementName=visitedVertexColorOpacitySlider, 
             Converter={StaticResource opacityConverter},
             Path=Value, 
-            Mode=TwoWay, 
-            UpdateSourceTrigger=PropertyChanged}"></TextBox>
+            Mode=TwoWay}"></TextBox>
         
         <TextBox Margin="5" 
                  MinWidth="45" 
@@ -93,8 +91,7 @@
                  Text="{Binding ElementName=enqueuedVertexColorOpacitySlider, 
             Converter={StaticResource opacityConverter},
             Path=Value, 
-            Mode=TwoWay, 
-            UpdateSourceTrigger=PropertyChanged}"></TextBox>
+            Mode=TwoWay}"></TextBox>
         
         <TextBox Margin="5" 
                  MinWidth="45" 
@@ -103,8 +100,7 @@
                  Text="{Binding ElementName=pathVertexColorOpacitySlider, 
             Converter={StaticResource opacityConverter},
             Path=Value, 
-            Mode=TwoWay, 
-            UpdateSourceTrigger=PropertyChanged}"></TextBox>
+            Mode=TwoWay}"></TextBox>
         
         <TextBox Margin="5" 
                  MinWidth="45" 
@@ -113,8 +109,7 @@
                  Text="{Binding ElementName=simpleVertexColorOpacitySlider, 
             Converter={StaticResource opacityConverter},
             Path=Value, 
-            Mode=TwoWay, 
-            UpdateSourceTrigger=PropertyChanged}"></TextBox>
+            Mode=TwoWay}"></TextBox>
         
         <StackPanel HorizontalAlignment="Center"  Orientation="Horizontal" Grid.Row="5" Grid.ColumnSpan="3">
             <Button Command="{Binding ConfirmOpacityChange}"  Margin ="5" Content="Ok"></Button>
