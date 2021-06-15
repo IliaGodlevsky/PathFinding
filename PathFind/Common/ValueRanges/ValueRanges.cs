@@ -8,7 +8,7 @@ namespace Common.ValueRanges
     /// </summary>
     /// <remarks>Sensitive to the order of elements</remarks>
     public sealed class ValueRanges<T>
-        where T : struct, IComparable, IComparable<T>
+        where T : IComparable, IComparable<T>
     {
         public ValueRanges(params IValueRange<T>[] ranges)
         {

@@ -1,15 +1,17 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using Common.Extensions;
+using System;
 
 namespace Common.ValueRanges
 {
     /// <summary>
     /// Represents range of values (inclusively)
     /// </summary>
-    [Serializable]
-    public sealed class InclusiveValueRange<T> : IValueRange<T>
-        where T : IComparable, IComparable<T>
+    public readonly struct InclusiveValueRange<T> 
+        : IValueRange<T> where T : IComparable, IComparable<T>
     {
+        public T UpperValueOfRange { get; }
+        public T LowerValueOfRange { get; }
+
         /// <summary>
         /// Creates a new instance of <see cref="InclusiveValueRange"/> 
         /// with <paramref name="upperValueOfRange"/> and 
@@ -28,26 +30,13 @@ namespace Common.ValueRanges
             LowerValueOfRange = lowerValueOfRange;
         }
 
-        public T UpperValueOfRange { get; }
-        public T LowerValueOfRange { get; }
-
-        private void SwapIfLess(ref T greaterValue, ref T lowerValue)
-        {
-            if (Comparer<T>.Default.Compare(greaterValue, lowerValue) < 0)
-            {
-                T temp = greaterValue;
-                greaterValue = lowerValue;
-                lowerValue = temp;
-            }
-        }
-
         public T ReturnInRange(T value)
         {
-            if (value.CompareTo(UpperValueOfRange) == 1)
+            if (value.IsGreater(UpperValueOfRange))
             {
                 value = UpperValueOfRange;
             }
-            if (value.CompareTo(LowerValueOfRange) == -1)
+            if (value.IsLess(LowerValueOfRange))
             {
                 value = LowerValueOfRange;
             }
@@ -56,8 +45,17 @@ namespace Common.ValueRanges
 
         public bool Contains(T value)
         {
-            return value.CompareTo(UpperValueOfRange) <= 0
-                && value.CompareTo(LowerValueOfRange) >= 0;
+            return value.IsBetween(UpperValueOfRange, LowerValueOfRange);
+        }
+
+        private static void SwapIfLess(ref T greaterValue, ref T lowerValue)
+        {
+            if (greaterValue.IsLess(lowerValue))
+            {
+                T temp = greaterValue;
+                greaterValue = lowerValue;
+                lowerValue = temp;
+            }
         }
     }
 }

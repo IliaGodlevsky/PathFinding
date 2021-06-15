@@ -11,9 +11,7 @@ namespace Common.Extensions
 
         public static long Pow(this int value, int power)
         {
-            return Enumerable
-                  .Repeat(value, power)
-                  .Aggregate(1, (a, b) => a * b);
+            return power < 0 ? default : (long)Enumerable.Repeat(value, power).Aggregate(1, Multiply);
         }
 
         public static int Multiply(this int value, int value2)
