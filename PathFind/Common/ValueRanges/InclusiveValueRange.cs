@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Security.Cryptography;
 
 namespace Common.ValueRanges
 {
@@ -8,7 +7,8 @@ namespace Common.ValueRanges
     /// Represents range of values (inclusively)
     /// </summary>
     [Serializable]
-    public sealed class InclusiveValueRange : IValueRange
+    public sealed class InclusiveValueRange<T> : IValueRange<T>
+        where T : IComparable, IComparable<T>
     {
         /// <summary>
         /// Creates a new instance of <see cref="InclusiveValueRange"/> 
@@ -20,7 +20,7 @@ namespace Common.ValueRanges
         /// <remarks>If <paramref name="upperValueOfRange"/> 
         /// is less than <paramref name="lowerValueOfRange"/>
         /// then this parameters will be swapped</remarks>
-        public InclusiveValueRange(int upperValueOfRange, int lowerValueOfRange)
+        public InclusiveValueRange(T upperValueOfRange, T lowerValueOfRange)
         {
             SwapIfLess(ref upperValueOfRange, ref lowerValueOfRange);
 
@@ -28,43 +28,36 @@ namespace Common.ValueRanges
             LowerValueOfRange = lowerValueOfRange;
         }
 
-        static InclusiveValueRange()
-        {
-            Random = new Random();
-        }
+        public T UpperValueOfRange { get; }
+        public T LowerValueOfRange { get; }
 
-        public int UpperValueOfRange { get; }
-        public int LowerValueOfRange { get; }
-
-        private void SwapIfLess(ref int greaterValue, ref int lowerValue)
+        private void SwapIfLess(ref T greaterValue, ref T lowerValue)
         {
-            if (Comparer<int>.Default.Compare(greaterValue, lowerValue) < 0)
+            if (Comparer<T>.Default.Compare(greaterValue, lowerValue) < 0)
             {
-                var temp = greaterValue;
+                T temp = greaterValue;
                 greaterValue = lowerValue;
                 lowerValue = temp;
             }
         }
 
-        public int ReturnInRange(int value)
+        public T ReturnInRange(T value)
         {
-            if (value > UpperValueOfRange)
+            if (value.CompareTo(UpperValueOfRange) == 1)
+            {
                 value = UpperValueOfRange;
-            if (value < LowerValueOfRange)
+            }
+            if (value.CompareTo(LowerValueOfRange) == -1)
+            {
                 value = LowerValueOfRange;
+            }
             return value;
         }
 
-        public bool Contains(int value)
+        public bool Contains(T value)
         {
-            return value <= UpperValueOfRange && value >= LowerValueOfRange;
+            return value.CompareTo(UpperValueOfRange) <= 0
+                && value.CompareTo(LowerValueOfRange) >= 0;
         }
-
-        public int GetRandomValueFromRange()
-        {
-            return Random.Next(LowerValueOfRange, UpperValueOfRange + 1);
-        }
-
-        private static readonly Random Random;
     }
 }

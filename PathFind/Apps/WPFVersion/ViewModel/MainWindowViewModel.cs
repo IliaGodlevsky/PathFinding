@@ -80,7 +80,7 @@ namespace WPFVersion.ViewModel
             CreateNewGraphCommand = new RelayCommand(ExecuteCreateNewGraphCommand);
             ClearGraphCommand = new RelayCommand(ExecuteClearGraphCommand, CanExecuteGraphOperation);
             SaveGraphCommand = new RelayCommand(ExecuteSaveGraphCommand, CanExecuteGraphOperation);
-            LoadGraphCommand = new RelayCommand(ExecuteLoadGraphCommand);            
+            LoadGraphCommand = new RelayCommand(ExecuteLoadGraphCommand);
             ShowVertexCost = new RelayCommand(ExecuteShowVertexCostCommand);
             InterruptAlgorithmCommand = new RelayCommand(ExecuteInterruptAlgorithmCommand, CanExecuteInterruptAlgorithmCommand);
         }

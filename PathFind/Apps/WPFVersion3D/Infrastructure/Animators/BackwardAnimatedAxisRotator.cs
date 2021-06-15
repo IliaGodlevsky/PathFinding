@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Common.Extensions;
+using System;
 using System.Windows;
 using System.Windows.Media.Animation;
 using System.Windows.Media.Media3D;
@@ -12,18 +13,18 @@ namespace WPFVersion3D.Infrastructure.Animators
     {
         public BackwardAnimatedAxisRotator(AxisAngleRotation3D axis) : base(axis)
         {
-            
+
         }
 
         protected override AnimationTimeline CreateAnimation()
         {
             var duration = CalculateAnimationDuration();
-            return new DoubleAnimation(axis.Angle, StartAngle, duration, FillBehavior.Stop);
+            return new DoubleAnimation(axis.Angle, AngleValueRange.LowerValueOfRange, duration, FillBehavior.Stop);
         }
 
         protected override Duration CalculateAnimationDuration()
         {
-            var duration = InitialRotationAnimationDuration * axis.Angle / AngleAmplitude;
+            var duration = InitialRotationAnimationDuration * axis.Angle / AngleValueRange.Amplitude();
             return new Duration(TimeSpan.FromMilliseconds(duration));
         }
     }

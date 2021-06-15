@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace GraphLib.Interfaces
+﻿namespace GraphLib.Interfaces
 {
     /// <summary>
     /// Makes it possible to have coordinates values

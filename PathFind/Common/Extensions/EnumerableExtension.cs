@@ -124,7 +124,7 @@ namespace Common.Extensions
         /// <param name="predicate"></param>
         /// <returns>true if <paramref name="predicate"/> is true 
         /// for each corresponding elements in two sequencies and false if not</returns>
-        public static bool Match<T>(this IEnumerable<T> self, 
+        public static bool Match<T>(this IEnumerable<T> self,
             IEnumerable<T> second, Func<T, T, bool> predicate)
         {
             var firstArray = self.ToArray();

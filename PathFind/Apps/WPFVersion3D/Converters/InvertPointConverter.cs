@@ -9,16 +9,15 @@ namespace WPFVersion3D.Converters
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            Point3D result = default;
             try
             {
-                result = (Point3D)System.Convert.ChangeType(value, typeof(Point3D));
+                var result = (Point3D)System.Convert.ChangeType(value, typeof(Point3D));
                 var zeroPoint = new Point3D(0, 0, 0);
                 return zeroPoint - result;
             }
             catch (Exception)
             {
-                return result;
+                return Binding.DoNothing;
             }
         }
 

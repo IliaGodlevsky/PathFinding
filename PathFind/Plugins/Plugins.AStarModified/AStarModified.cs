@@ -105,7 +105,7 @@ namespace Plugins.AStarModified
             }
         }
 
-        private readonly InclusiveValueRange percentValueRange = new InclusiveValueRange(99, 0);
+        private readonly InclusiveValueRange<int> percentValueRange = new InclusiveValueRange<int>(99, 0);
         private readonly Queue<IVertex> deletedVertices;
     }
 }

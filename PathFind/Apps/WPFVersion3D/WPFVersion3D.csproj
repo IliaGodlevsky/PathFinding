@@ -73,9 +73,8 @@
     <Compile Include="Interface\IAxis.cs" />
     <Compile Include="Configure\ContainerConfigure.cs" />
     <Compile Include="Constants.cs" />
-    <Compile Include="Converters\MaterialOpacityValueConverter.cs" />
     <Compile Include="Converters\AnimatedAxisRotatorConverter.cs" />
-    <Compile Include="Converters\DoubleToStringConverter.cs" />
+    <Compile Include="Converters\PrecisedDoubleToStringConverter.cs" />
     <Compile Include="Interface\IModel3DFactory.cs" />
     <Compile Include="Model\CubicModel3DFactory.cs" />
     <Compile Include="Infrastructure\Animators\Interface\IAnimator.cs" />
@@ -86,10 +85,15 @@
     <Compile Include="Model\AssembleLoadPath.cs" />
     <Compile Include="Model\Offset.cs" />
     <Compile Include="Model\PathInput.cs" />
+    <Compile Include="Model\RangedSlider.cs" />
     <Compile Include="Model\Vertex3DCost.cs" />
     <Compile Include="Model\Vertex3DCostFactory.cs" />
     <Compile Include="Model\Vertex3DFactory.cs" />
     <Compile Include="Model\Vertex3DSerializationInfoConverter.cs" />
+    <Compile Include="ValidationRules\NonDoubleInputValidationRule.cs" />
+    <Compile Include="ValidationRules\NonInt32InputValidationRule.cs" />
+    <Compile Include="ValidationRules\RangedDoubleValidationRule.cs" />
+    <Compile Include="ValidationRules\RangedIntValidationRule.cs" />
     <Compile Include="ViewModel\GraphCreateViewModel.cs" />
     <Compile Include="ViewModel\MainWindowViewModel.cs" />
     <Compile Include="ViewModel\OpacityChangeViewModel.cs" />
@@ -120,9 +124,7 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Converters\ToStringConverter.cs" />
-    <Compile Include="Converters\RangedDoubleToStringConverter.cs" />
-    <Compile Include="Converters\RangedIntToStringConverter.cs" />
+    <Compile Include="Converters\IntToStringConverter.cs" />
     <Compile Include="Infrastructure\RelayCommand.cs" />
     <Compile Include="View\GraphCreateWindow.xaml.cs">
       <DependentUpon>GraphCreateWindow.xaml</DependentUpon>
@@ -273,5 +275,6 @@
       <Version>2.0.20525</Version>
     </PackageReference>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

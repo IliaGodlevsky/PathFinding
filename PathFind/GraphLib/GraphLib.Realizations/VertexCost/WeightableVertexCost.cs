@@ -1,4 +1,5 @@
-﻿using GraphLib.Base;
+﻿using Common.Extensions;
+using GraphLib.Base;
 using GraphLib.Interfaces;
 using GraphLib.Realizations.Interfaces;
 using GraphLib.Realizations.VertexCost.CostStates;
@@ -34,7 +35,7 @@ namespace GraphLib.Realizations.VertexCost
         /// Weighted cost is set to the same value
         /// </summary>
         public WeightableVertexCost()
-            : this(CostRange.GetRandomValueFromRange())
+            : this(CostRange.GetRandomValue())
         {
 
         }

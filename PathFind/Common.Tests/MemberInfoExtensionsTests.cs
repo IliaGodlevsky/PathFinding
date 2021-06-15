@@ -22,9 +22,9 @@ namespace Common.Tests
                 return obj.GetHashCode();
             }
         }
-        
+
         class PredicateMethods
-        {           
+        {
             public bool SomePredicate(object obj)
             {
                 return obj.Equals(obj);

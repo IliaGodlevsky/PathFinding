@@ -2,8 +2,8 @@
 using ConsoleVersion.Model;
 using ConsoleVersion.View;
 using GraphLib.Base;
-using GraphLib.Extensions;
 using GraphLib.Exceptions;
+using GraphLib.Extensions;
 using GraphLib.Interfaces;
 using GraphLib.Realizations.Coordinates;
 using GraphLib.Realizations.Graphs;

@@ -4,11 +4,13 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:converters="clr-namespace:WPFVersion.Converters"
-        xmlns:range="clr-namespace:WPFVersion"
+        xmlns:range="clr-namespace:WPFVersion" 
+        xmlns:model="clr-namespace:WPFVersion.Model" 
+        xmlns:rules="clr-namespace:WPFVersion.ValidationRules"
         mc:Ignorable="d"       
         Title="Algorithms" SizeToContent="WidthAndHeight">
     <Window.Resources>
-        <converters:RangedDoubleToStringToConverter x:Key="SliderValueConverter"/>
+        <converters:IntToStringConverter x:Key="SliderValueConverter"/>
     </Window.Resources>
     <Grid>
         <Grid.RowDefinitions>
@@ -16,17 +18,28 @@
             <RowDefinition Height="*"></RowDefinition>
             <RowDefinition Height="Auto"></RowDefinition>
         </Grid.RowDefinitions>
-        <StackPanel HorizontalAlignment="Center"  Orientation="Horizontal" Grid.Row="2">
-            <Button Command="{Binding ConfirmPathFindAlgorithmChoice}"  Margin ="5" Content="Start"></Button>
-            <Button Command="{Binding CancelPathFindAlgorithmChoice}" Margin ="5" Content="Cancel"></Button>
+        <StackPanel HorizontalAlignment="Center"  
+                    Orientation="Horizontal" 
+                    Grid.Row="2">
+            <Button Command="{Binding ConfirmPathFindAlgorithmChoice}"  
+                    Margin ="5" 
+                    Content="Start">
+            </Button>
+            <Button Command="{Binding CancelPathFindAlgorithmChoice}" 
+                    Margin ="5" 
+                    Content="Cancel">
+            </Button>
         </StackPanel>
         <ListBox ItemsSource="{Binding AlgorithmKeys }" 
-                 x:Name="algoListBox" BorderThickness="0" Margin="5"
+                 x:Name="algoListBox" 
+                 BorderThickness="0" 
+                 Margin="5"
                  SelectedItem="{Binding Path = AlgorithmKey}">
             <ListBox.ItemTemplate>
                 <DataTemplate>
                     <StackPanel Orientation="Horizontal">
-                        <TextBlock Margin="3" Text="{Binding}"/>
+                        <TextBlock Margin="3" 
+                                   Text="{Binding}"/>
                     </StackPanel>
                 </DataTemplate>
             </ListBox.ItemTemplate>
@@ -48,20 +61,27 @@
                            HorizontalAlignment="Center" 
                            Grid.Column="0"/>
             
-                <Slider Grid.Row="1" 
+                <model:RangedSlider Grid.Row="1" 
                         Value ="{Binding Path=DelayTime}" 
                         x:Name="delayTimeSlider" 
-                        MinWidth="160" 
-                        Margin="5"></Slider>
+                        MinWidth="160"
+                        ValueRange="{x:Static range:Constants.AlgorithmDelayTimeValueRange}"
+                        Margin="5"></model:RangedSlider>
             
                 <TextBox MaxWidth="35" Grid.Row="1" 
-                         Text ="{Binding ElementName=delayTimeSlider, 
-                         Path=Value, 
-                         Converter = {StaticResource SliderValueConverter}, 
-                         ConverterParameter={x:Static range:Constants.AlgorithmDelayTimeValueRange}, 
-                         Mode = TwoWay, 
-                         UpdateSourceTrigger = PropertyChanged}" 
-                         Grid.Column="1" Margin="5"></TextBox>
+                         Grid.Column="1" Margin="5">
+                <TextBox.Text>
+                    <Binding Mode="TwoWay" 
+                             Path="Value" 
+                             ElementName="delayTimeSlider" 
+                             UpdateSourceTrigger = "PropertyChanged"        
+                             Converter="{StaticResource SliderValueConverter}">
+                        <Binding.ValidationRules>
+                            <rules:NonInt32InputValidationRule/>
+                        </Binding.ValidationRules>
+                    </Binding>
+                </TextBox.Text>
+            </TextBox>
         </Grid>
        
     </Grid>

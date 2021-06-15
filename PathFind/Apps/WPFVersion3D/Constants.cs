@@ -4,21 +4,20 @@ namespace WPFVersion3D
 {
     internal static class Constants
     {
-        public static IValueRange ObstaclePercentValueRange { get; }
-        public static IValueRange AlgorithmDelayValueRange { get; }
-        public static IValueRange GraphWidthValueRange { get; }
-        public static IValueRange GraphLengthValueRange { get; }
-        public static IValueRange GraphHeightValueRange { get; }
-        public static ValueRanges GraphParamsValueRanges { get; }
+        public static InclusiveValueRange<double> DistanceBetweenVerticesValueRange { get; }
+        public static InclusiveValueRange<double> OpacityValueRange { get; }
+        public static InclusiveValueRange<double> AngleValueRange { get; }
+        public static InclusiveValueRange<double> ObstaclePercentValueRange { get; }
+        public static InclusiveValueRange<double> AlgorithmDelayValueRange { get; }
+        public static InclusiveValueRange<double> ZoomValueRange { get; }
+        public static InclusiveValueRange<int> GraphWidthValueRange { get; }
+        public static InclusiveValueRange<int> GraphLengthValueRange { get; }
+        public static InclusiveValueRange<int> GraphHeightValueRange { get; }
+        public static ValueRanges<int> GraphParamsValueRanges { get; }
 
         public const double InitialRotationAnimationDuration = 3000;
 
         public const int InitialVertexSize = 5;
-
-        public const double StartAngle = 0;
-        public const double EndAngle = 360;
-
-        public static double AngleAmplitude { get; }
 
         public const double InitialVisitedVertexOpacity = 0.15;
         public const double InitialEnqueuedVertexOpacity = 0.15;
@@ -30,13 +29,16 @@ namespace WPFVersion3D
 
         static Constants()
         {
-            ObstaclePercentValueRange = new InclusiveValueRange(99, 0);
-            AlgorithmDelayValueRange = new InclusiveValueRange(35, 0);
-            GraphWidthValueRange = new InclusiveValueRange(30, 1);
-            GraphLengthValueRange = new InclusiveValueRange(30, 1);
-            GraphHeightValueRange = new InclusiveValueRange(30, 1);
-            AngleAmplitude = EndAngle - StartAngle;
-            GraphParamsValueRanges = new ValueRanges(
+            DistanceBetweenVerticesValueRange = new InclusiveValueRange<double>(70, 0);
+            ZoomValueRange = new InclusiveValueRange<double>(1000, 0);
+            OpacityValueRange = new InclusiveValueRange<double>(1, 0);
+            AngleValueRange = new InclusiveValueRange<double>(360, 0);
+            ObstaclePercentValueRange = new InclusiveValueRange<double>(99, 0);
+            AlgorithmDelayValueRange = new InclusiveValueRange<double>(35, 0);
+            GraphWidthValueRange = new InclusiveValueRange<int>(25, 1);
+            GraphLengthValueRange = GraphWidthValueRange;
+            GraphHeightValueRange = GraphLengthValueRange;
+            GraphParamsValueRanges = new ValueRanges<int>(
                 GraphWidthValueRange,
                 GraphLengthValueRange,
                 GraphHeightValueRange

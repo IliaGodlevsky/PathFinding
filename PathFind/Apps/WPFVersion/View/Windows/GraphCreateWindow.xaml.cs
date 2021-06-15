@@ -10,8 +10,6 @@ namespace WPFVersion.View.Windows
         public GraphCreatesWindow()
         {
             InitializeComponent();
-            obstacleSlider.Minimum = Constants.ObstaclesPercentValueRange.LowerValueOfRange;
-            obstacleSlider.Maximum = Constants.ObstaclesPercentValueRange.UpperValueOfRange;
         }
     }
 }

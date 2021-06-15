@@ -7,7 +7,7 @@ using System.Linq;
 using System.Reflection;
 
 namespace ConsoleVersion.View
-{    
+{
     internal sealed class Menu<TAction> where TAction : Delegate
     {
         public IDictionary<string, TAction> MenuActions => menuActions.Value;

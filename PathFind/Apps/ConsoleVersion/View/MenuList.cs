@@ -11,7 +11,7 @@ namespace ConsoleVersion.View
     {
         public MenuList(ICollection<string> menuItemsNames, int columns = 2)
         {
-            columnsValueRange = new InclusiveValueRange(10, 1);
+            columnsValueRange = new InclusiveValueRange<int>(10, 1);
             this.columns = columnsValueRange.ReturnInRange(columns);
             this.menuItemsNames = menuItemsNames;
             menuList = new Lazy<string>(CreateMenu);
@@ -31,7 +31,7 @@ namespace ConsoleVersion.View
             int longestNameLength = menuItemsNames.Max(str => str.Length) + 1;
 
             foreach (var name in menuItemsNames)
-            {               
+            {
                 string separator = CreateSeparator(menuItemNumber);
                 string paddedName = name.PadRight(longestNameLength);
                 string stringedMenuItemNumber = (++menuItemNumber).ToString();
@@ -52,6 +52,6 @@ namespace ConsoleVersion.View
 
         private readonly int columns;
         private readonly ICollection<string> menuItemsNames;
-        private readonly IValueRange columnsValueRange;
+        private readonly IValueRange<int> columnsValueRange;
     }
 }

@@ -20,7 +20,7 @@ namespace ConsoleVersion.InputClass
         public static int InputNumber(string accompanyingMessage,
             int upperRangeValue, int lowerRangeValue = 0)
         {
-            var rangeOfValidInput = new InclusiveValueRange(upperRangeValue, lowerRangeValue);
+            var rangeOfValidInput = new InclusiveValueRange<int>(upperRangeValue, lowerRangeValue);
             return InputNumber(accompanyingMessage, rangeOfValidInput);
         }
 
@@ -33,7 +33,7 @@ namespace ConsoleVersion.InputClass
         /// <paramref name="rangeOfValidInput"/></returns>
         /// <exception cref="System.IO.IOException"></exception>
         public static int InputNumber(string accompanyingMessage,
-            IValueRange rangeOfValidInput)
+            IValueRange<int> rangeOfValidInput)
         {
             string userInput;
             do
@@ -64,7 +64,7 @@ namespace ConsoleVersion.InputClass
         }
 
         private static bool IsValidInput(string userInput,
-            IValueRange rangeOfValidInput)
+            IValueRange<int> rangeOfValidInput)
         {
             return int.TryParse(userInput, out var input)
                 && rangeOfValidInput.Contains(input);

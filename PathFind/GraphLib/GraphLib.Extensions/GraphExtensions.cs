@@ -100,7 +100,7 @@ namespace GraphLib.Extensions
 
             #region Invariant observance
 
-            IValueRange rangeOfValidIndices = new InclusiveValueRange(self.Size - 1, 0);
+            var rangeOfValidIndices = new InclusiveValueRange<int>(self.Size - 1, 0);
             if (!rangeOfValidIndices.Contains(index))
             {
                 throw new ArgumentOutOfRangeException(nameof(index));

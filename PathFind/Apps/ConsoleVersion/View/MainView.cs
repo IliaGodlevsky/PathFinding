@@ -44,11 +44,11 @@ namespace ConsoleVersion.View
         }
 
         public MainView(IMainModel model)
-        {           
+        {
             mainModel = model as MainViewModel ?? throw new ArgumentException(nameof(model));
             menu = new Menu<Action>(model);
             menuList = new MenuList(menu.MenuActionsNames, columns: 3);
-            menuValueRange = new InclusiveValueRange(menu.MenuActionsNames.Length, 1);
+            menuValueRange = new InclusiveValueRange<int>(menu.MenuActionsNames.Length, 1);
         }
 
         public void Start()
@@ -58,7 +58,7 @@ namespace ConsoleVersion.View
                 mainModel.DisplayGraph();
                 Console.WriteLine(menuList);
                 int menuItemIndex = InputNumber(
-                    OptionInputMsg, 
+                    OptionInputMsg,
                     menuValueRange) - 1;
                 var menuItem = menu.MenuActionsNames[menuItemIndex];
                 menu.MenuActions[menuItem].Invoke();
@@ -68,6 +68,6 @@ namespace ConsoleVersion.View
         private readonly Menu<Action> menu;
         private readonly MenuList menuList;
         private readonly MainViewModel mainModel;
-        private readonly IValueRange menuValueRange;
+        private readonly IValueRange<int> menuValueRange;
     }
 }

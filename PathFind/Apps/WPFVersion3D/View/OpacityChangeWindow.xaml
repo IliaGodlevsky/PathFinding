@@ -3,16 +3,17 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:converter="clr-namespace:WPFVersion3D.Converters"
+        xmlns:converter="clr-namespace:WPFVersion3D.Converters" 
+        xmlns:model="clr-namespace:WPFVersion3D.Model"
+        xmlns:range="clr-namespace:WPFVersion3D" 
+        xmlns:validationrules="clr-namespace:WPFVersion3D.ValidationRules"
         mc:Ignorable="d"
         Title="OpacityChangeWindow"
         SizeToContent="WidthAndHeight">
     <Window.Resources>
-        <converter:MaterialOpacityValueConverter x:Key="opacityConverter"></converter:MaterialOpacityValueConverter>
+        <converter:PrecisedDoubleToStringConverter Precision="2" x:Key="opacityConverter"/>
         <Style x:Key="SliderStyle" TargetType="Slider">
             <Setter Property="Margin" Value="5"/>
-            <Setter Property="Minimum" Value="0"/>
-            <Setter Property="Maximum" Value="1"/>
             <Setter Property="MinWidth" Value="100"/>
         </Style>
     </Window.Resources>
@@ -37,79 +38,129 @@
         <TextBlock Grid.Row="3" Margin="5" Text="Path color opacity"></TextBlock>
         <TextBlock Grid.Row="4" Margin="5" Text="Simple vertex color opacity"></TextBlock>
 
-        <Slider Value="{Binding Path=ObstacleColorOpacity}" 
-                Style="{StaticResource SliderStyle}"              
-                x:Name="obstacleColorOpacitySlider" 
-                Grid.Column="1"/>
+        <model:RangedSlider 
+            Value="{Binding Path=ObstacleColorOpacity}" 
+            Style="{StaticResource SliderStyle}"              
+            x:Name="obstacleColorOpacitySlider"
+            ValueRange="{x:Static range:Constants.OpacityValueRange}"
+            Grid.Column="1"/>
 
-        <Slider Value="{Binding Path=VisitedVertexColorOpacity}" 
-                Style="{StaticResource SliderStyle}"
-                x:Name="visitedVertexColorOpacitySlider" 
-                Grid.Column="1" 
-                Grid.Row="1"/>
+        <model:RangedSlider 
+            Value="{Binding Path=VisitedVertexColorOpacity}" 
+            Style="{StaticResource SliderStyle}"
+            ValueRange="{x:Static range:Constants.OpacityValueRange}"
+            x:Name="visitedVertexColorOpacitySlider" 
+            Grid.Column="1" 
+            Grid.Row="1"/>
 
-        <Slider Value="{Binding Path=EnqueuedVertexColorOpacity}"
-                Style="{StaticResource SliderStyle}"
-                x:Name="enqueuedVertexColorOpacitySlider" 
-                Grid.Column="1" 
-                Grid.Row="2"/>
+        <model:RangedSlider 
+            ValueRange="{x:Static range:Constants.OpacityValueRange}"
+            Value="{Binding Path=EnqueuedVertexColorOpacity}"
+            Style="{StaticResource SliderStyle}"
+            x:Name="enqueuedVertexColorOpacitySlider" 
+            Grid.Column="1" 
+            Grid.Row="2"/>
 
-        <Slider Value="{Binding Path=PathVertexColorOpacity}" 
-                Style="{StaticResource SliderStyle}"               
-                x:Name="pathVertexColorOpacitySlider" 
-                Grid.Column="1" 
-                Grid.Row="3"/>
+        <model:RangedSlider 
+            Value="{Binding Path=PathVertexColorOpacity}" 
+            Style="{StaticResource SliderStyle}"
+            ValueRange="{x:Static range:Constants.OpacityValueRange}"
+            x:Name="pathVertexColorOpacitySlider" 
+            Grid.Column="1" 
+            Grid.Row="3"/>
 
-        <Slider Value="{Binding Path=SimpleVertexColorOpacity}" 
-                Style="{StaticResource SliderStyle}"
-                x:Name="simpleVertexColorOpacitySlider"
-                Grid.Column="1"
-                Grid.Row="4"/>
+        <model:RangedSlider 
+            ValueRange="{x:Static range:Constants.OpacityValueRange}"
+            Value="{Binding Path=SimpleVertexColorOpacity}" 
+            Style="{StaticResource SliderStyle}"
+            x:Name="simpleVertexColorOpacitySlider"
+            Grid.Column="1"
+            Grid.Row="4"/>
 
         <TextBox Margin="5" 
                  MinWidth="45" 
                  Grid.Column="2" 
-                 Grid.Row="0" 
-                 Text="{Binding ElementName=obstacleColorOpacitySlider, 
-            Converter={StaticResource opacityConverter},
-            Path=Value, 
-            Mode=TwoWay}"></TextBox>
+                 Grid.Row="0" >
+            <TextBox.Text>
+                <Binding Path="Value" 
+                         ElementName="obstacleColorOpacitySlider" 
+                         Converter="{StaticResource opacityConverter}"
+                         Mode="TwoWay"
+                         UpdateSourceTrigger="PropertyChanged">
+                    <Binding.ValidationRules>
+                        <validationrules:NonDoubleInputValidationRule/>
+                    </Binding.ValidationRules>
+                </Binding>
+            </TextBox.Text>
+        </TextBox>
         
         <TextBox Margin="5" 
                  MinWidth="45" 
                  Grid.Column="2"
-                 Grid.Row="1" 
-                 Text="{Binding ElementName=visitedVertexColorOpacitySlider, 
-            Converter={StaticResource opacityConverter},
-            Path=Value, 
-            Mode=TwoWay}"></TextBox>
+                 Grid.Row="1">
+            <TextBox.Text>
+                <Binding Path="Value" 
+                         ElementName="visitedVertexColorOpacitySlider" 
+                         Converter="{StaticResource opacityConverter}"
+                         Mode="TwoWay"
+                         UpdateSourceTrigger="PropertyChanged">
+                    <Binding.ValidationRules>
+                        <validationrules:NonDoubleInputValidationRule/>
+                    </Binding.ValidationRules>
+                </Binding>
+            </TextBox.Text>
+        </TextBox>
         
         <TextBox Margin="5" 
                  MinWidth="45" 
                  Grid.Column="2" 
-                 Grid.Row="2" 
-                 Text="{Binding ElementName=enqueuedVertexColorOpacitySlider, 
-            Converter={StaticResource opacityConverter},
-            Path=Value, 
-            Mode=TwoWay}"></TextBox>
+                 Grid.Row="2">
+            <TextBox.Text>
+                <Binding Path="Value" 
+                         ElementName="enqueuedVertexColorOpacitySlider" 
+                         Converter="{StaticResource opacityConverter}"
+                         Mode="TwoWay"
+                         UpdateSourceTrigger="PropertyChanged">
+                    <Binding.ValidationRules>
+                        <validationrules:NonDoubleInputValidationRule/>
+                    </Binding.ValidationRules>
+                </Binding>
+            </TextBox.Text>
+        </TextBox>
         
         <TextBox Margin="5" 
                  MinWidth="45" 
                  Grid.Column="2" 
-                 Grid.Row="3" 
-                 Text="{Binding ElementName=pathVertexColorOpacitySlider, 
-            Converter={StaticResource opacityConverter},
-            Path=Value, 
-            Mode=TwoWay}"></TextBox>
+                 Grid.Row="3">
+            <TextBox.Text>
+                <Binding Path="Value" 
+                         ElementName="pathVertexColorOpacitySlider" 
+                         Converter="{StaticResource opacityConverter}"
+                         Mode="TwoWay"
+                         UpdateSourceTrigger="PropertyChanged">
+                    <Binding.ValidationRules>
+                        <validationrules:NonDoubleInputValidationRule/>
+                    </Binding.ValidationRules>
+                </Binding>
+            </TextBox.Text>
+        </TextBox>
         
         <TextBox Margin="5" 
                  MinWidth="45" 
                  Grid.Column="2" 
-                 Grid.Row="4" 
-                 Text="{Binding ElementName=simpleVertexColorOpacitySlider, 
-            Converter={StaticResource opacityConverter},
-            Path=Value, 
-            Mode=TwoWay}"></TextBox>
+                 Grid.Row="4">
+            <TextBox.Text>
+                <Binding Path="Value" 
+                         ElementName="simpleVertexColorOpacitySlider" 
+                         Converter="{StaticResource opacityConverter}"
+                         Mode="TwoWay"
+                         UpdateSourceTrigger="PropertyChanged">
+                    <Binding.ValidationRules>
+                        <validationrules:NonDoubleInputValidationRule/>
+                    </Binding.ValidationRules>
+                </Binding>
+            </TextBox.Text>
+        </TextBox>
         
         <StackPanel HorizontalAlignment="Center"  Orientation="Horizontal" Grid.Row="5" Grid.ColumnSpan="3">
             <Button Command="{Binding ConfirmOpacityChange}"  Margin ="5" Content="Ok"></Button>

@@ -4,16 +4,21 @@ using System.Windows.Data;
 
 namespace WPFVersion.Converters
 {
-    internal sealed class ToStringConverter : IValueConverter
+    internal sealed class IntToStringConverter : IValueConverter
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            return value?.ToString();
+            return ConvertBack(value, targetType, parameter, culture);
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            return string.Empty;
+            return IsValidParametres(value) ? System.Convert.ToInt32(value) : Binding.DoNothing;
+        }
+
+        private bool IsValidParametres(object value)
+        {
+            return int.TryParse(value?.ToString(), out _);
         }
     }
 }

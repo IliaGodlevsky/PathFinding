@@ -15,14 +15,15 @@ namespace GraphLib.Base
             CurrentCost = cost;
         }
 
-        protected BaseVertexCost() : this(CostRange.GetRandomValueFromRange())
+        protected BaseVertexCost()
         {
-
+            CurrentCost = Random.Next(CostRange.LowerValueOfRange, CostRange.UpperValueOfRange + 1);
         }
 
         static BaseVertexCost()
         {
-            CostRange = new InclusiveValueRange(9, 1);
+            CostRange = new InclusiveValueRange<int>(9, 1);
+            Random = new Random();
         }
 
         public override bool Equals(object obj)
@@ -44,6 +45,7 @@ namespace GraphLib.Base
 
         public abstract object Clone();
 
-        public static InclusiveValueRange CostRange { get; set; }
+        public static InclusiveValueRange<int> CostRange { get; set; }
+        private readonly static Random Random;
     }
 }

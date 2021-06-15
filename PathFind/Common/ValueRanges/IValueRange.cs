@@ -1,14 +1,15 @@
-﻿namespace Common.ValueRanges
+﻿using System;
+
+namespace Common.ValueRanges
 {
-    public interface IValueRange
+    public interface IValueRange<T>
+        where T : IComparable, IComparable<T>
     {
-        int UpperValueOfRange { get; }
-        int LowerValueOfRange { get; }
+        T UpperValueOfRange { get; }
+        T LowerValueOfRange { get; }
 
-        int ReturnInRange(int value);
+        T ReturnInRange(T value);
 
-        bool Contains(int value);
-
-        int GetRandomValueFromRange();
+        bool Contains(T value);
     }
 }

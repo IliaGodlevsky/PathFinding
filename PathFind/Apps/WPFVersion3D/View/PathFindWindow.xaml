@@ -4,12 +4,14 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:converters="clr-namespace:WPFVersion3D.Converters"
-        xmlns:range="clr-namespace:WPFVersion3D"
+        xmlns:range="clr-namespace:WPFVersion3D" 
+        xmlns:rules="clr-namespace:WPFVersion3D.ValidationRules" 
+        xmlns:model="clr-namespace:WPFVersion3D.Model"
         mc:Ignorable="d"
         Title="Algorithms" 
         SizeToContent="WidthAndHeight">
     <Window.Resources>
-        <converters:RangedIntToStringConverter x:Key="intToStringConverter"/>
+        <converters:IntToStringConverter x:Key="intToStringConverter"/>
     </Window.Resources>
     <Grid>
         <Grid.RowDefinitions>
@@ -50,22 +52,29 @@
                        HorizontalAlignment="Center" 
                        Grid.Column="0"/>
             
-            <Slider Grid.Row="1" 
+            <model:RangedSlider Grid.Row="1" 
                     Value ="{Binding Path=DelayTime}"
                     x:Name="delayTimeSlider" 
                     MinWidth="160" 
-                    Margin="5"></Slider>
+                    ValueRange="{x:Static range:Constants.AlgorithmDelayValueRange}"
+                    Margin="5"></model:RangedSlider>
             
             <TextBox MaxWidth="25" 
-                     Grid.Row="1" 
-                     Text ="{Binding ElementName=delayTimeSlider, 
-                Path=Value, 
-                Converter = {StaticResource intToStringConverter}, 
-                ConverterParameter={x:Static range:Constants.AlgorithmDelayValueRange},
-                Mode = TwoWay, 
-                UpdateSourceTrigger = PropertyChanged}" 
+                     Grid.Row="1"                      
                      Grid.Column="1" 
-                     Margin="5"></TextBox>
+                     Margin="5">
+                <TextBox.Text>
+                <Binding Mode="TwoWay" 
+                             Path="Value" 
+                             ElementName="delayTimeSlider" 
+                             UpdateSourceTrigger = "PropertyChanged"        
+                             Converter="{StaticResource intToStringConverter}">
+                    <Binding.ValidationRules>
+                        <rules:NonInt32InputValidationRule/>
+                    </Binding.ValidationRules>
+                </Binding>
+                </TextBox.Text>
+            </TextBox>
         </Grid>
     </Grid>
 </Window>

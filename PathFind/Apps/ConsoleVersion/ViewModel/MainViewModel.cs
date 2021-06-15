@@ -15,9 +15,8 @@ using GraphViewModel.Interfaces;
 using Logging.Loggers;
 using System;
 using System.Drawing;
-
-using static ConsoleVersion.Resource.Resources;
 using static ConsoleVersion.InputClass.Input;
+using static ConsoleVersion.Resource.Resources;
 using Console = Colorful.Console;
 
 namespace ConsoleVersion.ViewModel
@@ -111,7 +110,7 @@ namespace ConsoleVersion.ViewModel
         {
             string message = "Enter upper vertex cost value: ";
             var upperValueRange = InputNumber(message, 99, 1);
-            BaseVertexCost.CostRange = new InclusiveValueRange(upperValueRange, 1);
+            BaseVertexCost.CostRange = new InclusiveValueRange<int>(upperValueRange, 1);
         }
 
         [MenuItem("Change vertex cost", MenuItemPriority.Low)]

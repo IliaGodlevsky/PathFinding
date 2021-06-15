@@ -28,11 +28,11 @@ namespace Common.Extensions
         /// <param name="action"></param>
         /// <returns><see cref="true"/> if the creation of the 
         /// <typeparamref name="TDelegate"/> was successful and false if wasn't</returns>
-        public static bool TryCreateDelegate<TDelegate>(this MethodInfo self, object target, 
+        public static bool TryCreateDelegate<TDelegate>(this MethodInfo self, object target,
             out TDelegate action) where TDelegate : Delegate
         {
             try
-            {             
+            {
                 action = (TDelegate)self.CreateDelegate(typeof(TDelegate), target);
                 return true;
             }

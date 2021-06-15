@@ -8,13 +8,16 @@
         xmlns:model="clr-namespace:WPFVersion3D.Model"
         xmlns:range="clr-namespace:WPFVersion3D"
         xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
-        xmlns:ei="http://schemas.microsoft.com/expression/2010/interactions"
+        xmlns:ei="http://schemas.microsoft.com/expression/2010/interactions" 
+        xmlns:validationrules="clr-namespace:WPFVersion3D.ValidationRules"
         mc:Ignorable="d"
-        Title="3D pathfinding" Height="350" Width="450">
+        Title="3D pathfinding" 
+        Height="350" 
+        Width="450">
     <Window.Resources>
         <converters:InvertPointConverter x:Key="invertPointConverter"/>
         <converters:PointToNumberConverter x:Key="coordinateToDistance"/>
-        <converters:DoubleToStringConverter x:Key="stringToDouble"/>
+        <converters:PrecisedDoubleToStringConverter Precision="2" x:Key="doubleConverter2"/>
         <converters:AnimatedAxisRotatorConverter x:Key="animatedAxisRotatorConverter"/>
 
         <Style TargetType="TextBox" x:Key="TextBoxStyle">
@@ -23,7 +26,6 @@
         </Style>
         <Style TargetType="Slider" x:Key="SliderStyle">
             <Setter Property="MinWidth" Value="100"></Setter>
-            <Setter Property="Minimum" Value="{x:Static range:Constants.StartAngle}"></Setter>
             <Setter Property="Margin" Value="5"></Setter>
         </Style>
     </Window.Resources>
@@ -87,107 +89,180 @@
                 <TextBlock Grid.ColumnSpan="3" HorizontalAlignment="Center" 
                            Grid.Row="4" Margin="5" Text="Distance between vertices"/>
 
-                <TextBox Style="{StaticResource TextBoxStyle}" Grid.Column="2" Grid.Row="0" 
-                         Text="{Binding ElementName=zoomSlider, 
-                                Path=Value, 
-                                Converter={StaticResource stringToDouble}, 
-                                Mode=TwoWay,
-                                UpdateSourceTrigger=PropertyChanged}"/>
+                <TextBox Style="{StaticResource TextBoxStyle}" 
+                         Grid.Column="2" 
+                         Grid.Row="0">
+                    <TextBox.Text>
+                        <Binding Path="Value" 
+                                 ElementName="zoomSlider" 
+                                 Converter="{StaticResource doubleConverter2}"
+                                 Mode="TwoWay"
+                                 UpdateSourceTrigger="PropertyChanged">
+                            <Binding.ValidationRules>
+                                <validationrules:NonInt32InputValidationRule/>
+                            </Binding.ValidationRules>
+                        </Binding>
+                    </TextBox.Text>
+                </TextBox>
 
                 <TextBlock Grid.Row="5" Margin="5" Text="X axis"/>
                 <TextBlock Grid.Row="6" Margin="5" Text="Y axis"/>
                 <TextBlock Grid.Row="7" Margin="5" Text="Z axis"/>
 
-                <TextBox Style="{StaticResource TextBoxStyle}" Grid.Column="2" Grid.Row="1" 
-                         Text="{Binding ElementName=xAxisSlider, 
-                                Path=Value, 
-                                Converter={StaticResource stringToDouble}, 
-                                Mode=TwoWay}"/>
+                <TextBox Style="{StaticResource TextBoxStyle}" 
+                         Grid.Column="2" 
+                         Grid.Row="1">
+                    <TextBox.Text>
+                        <Binding Path="Value" 
+                                 ElementName="xAxisSlider" 
+                                 Converter="{StaticResource doubleConverter2}"
+                                 Mode="TwoWay">
+                            <Binding.ValidationRules>
+                                <validationrules:NonDoubleInputValidationRule/>
+                            </Binding.ValidationRules>
+                        </Binding>
+                    </TextBox.Text>
+                </TextBox>
 
-                <TextBox Style="{StaticResource TextBoxStyle}" Grid.Column="2" Grid.Row="2" 
-                         Text="{Binding ElementName=yAxisSlider, 
-                                Path=Value, 
-                                Converter={StaticResource stringToDouble}, 
-                                Mode=TwoWay}"/>
+                <TextBox Style="{StaticResource TextBoxStyle}" 
+                         Grid.Column="2" 
+                         Grid.Row="2"                          >
+                    <TextBox.Text>
+                        <Binding Path="Value" 
+                                 ElementName="yAxisSlider" 
+                                 Converter="{StaticResource doubleConverter2}"
+                                 Mode="TwoWay">
+                            <Binding.ValidationRules>
+                                <validationrules:NonDoubleInputValidationRule/>
+                            </Binding.ValidationRules>
+                        </Binding>
+                    </TextBox.Text>
+                </TextBox>
 
-                <TextBox Style="{StaticResource TextBoxStyle}" Grid.Column="2" Grid.Row="3" 
-                         Text="{Binding ElementName=zAxisSlider, 
-                                Path=Value, 
-                                Converter={StaticResource stringToDouble}, 
-                                Mode=TwoWay}"/>
+                <TextBox Style="{StaticResource TextBoxStyle}" 
+                         Grid.Column="2" 
+                         Grid.Row="3">
+                    <TextBox.Text>
+                        <Binding Path="Value" 
+                                 ElementName="zAxisSlider" 
+                                 Converter="{StaticResource doubleConverter2}"
+                                 Mode="TwoWay">
+                            <Binding.ValidationRules>
+                                <validationrules:NonDoubleInputValidationRule/>
+                            </Binding.ValidationRules>
+                        </Binding>
+                    </TextBox.Text>
+                </TextBox>
 
-                <Slider x:Name="zoomSlider" Grid.Column="1" 
-                        Style="{StaticResource SliderStyle}" Maximum="1000" Grid.Row="0" 
+                <model:RangedSlider x:Name="zoomSlider" 
+                                    Grid.Column="1" 
+                        Style="{StaticResource SliderStyle}" 
+                        ValueRange="{x:Static range:Constants.ZoomValueRange}" Grid.Row="0" 
                         Value="{Binding ElementName=camera,     
                                 Path=Position, 
                                 Converter={StaticResource coordinateToDistance}}"/>
 
-                <Slider x:Name="xAxisSlider" Grid.Column="1" 
+                <model:RangedSlider x:Name="xAxisSlider" Grid.Column="1" 
                         Style="{StaticResource SliderStyle}" 
-                        Maximum="{x:Static range:Constants.EndAngle}" 
+                        ValueRange="{x:Static range:Constants.AngleValueRange}" 
                         Grid.Row="1" 
                         Value="{Binding ElementName=xAxis, Path=Angle}"/>
 
-                <Slider x:Name="yAxisSlider" Grid.Column="1" 
+                <model:RangedSlider x:Name="yAxisSlider" Grid.Column="1" 
                         Style="{StaticResource SliderStyle}" 
-                        Maximum="{x:Static range:Constants.EndAngle}" 
+                        ValueRange="{x:Static range:Constants.AngleValueRange}" 
                         Grid.Row="2" 
                         Value="{Binding ElementName=yAxis, Path=Angle}"/>
 
-                <Slider x:Name="zAxisSlider" Grid.Column="1" 
+                <model:RangedSlider x:Name="zAxisSlider" Grid.Column="1" 
                         Style="{StaticResource SliderStyle}" 
-                        Maximum="{x:Static range:Constants.EndAngle}" 
+                        ValueRange="{x:Static range:Constants.AngleValueRange}" 
                         Grid.Row="3" 
                         Value="{Binding ElementName=zAxis, Path=Angle}"/>
 
-                <TextBox Text="{Binding ElementName=xAxisStretchAxis, 
-                    Path=Value,                    
-                    Mode=TwoWay,
-                    Converter={StaticResource stringToDouble}}" 
-                    Style="{StaticResource TextBoxStyle}" Grid.Column="2" Grid.Row="5"/>
+                <TextBox Style="{StaticResource TextBoxStyle}" 
+                         Grid.Column="2" 
+                         Grid.Row="5">
+                    <TextBox.Text>
+                        <Binding Path="Value" 
+                                 ElementName="xAxisStretchAxis" 
+                                 Converter="{StaticResource doubleConverter2}"
+                                 Mode="TwoWay">
+                            <Binding.ValidationRules>
+                                <validationrules:NonDoubleInputValidationRule/>
+                            </Binding.ValidationRules>
+                        </Binding>
+                    </TextBox.Text>
+                </TextBox>
 
-                <TextBox Text="{Binding ElementName=yAxisStretchSlider, 
-                    Path=Value,
-                    Mode=TwoWay,
-                    Converter={StaticResource stringToDouble}}" 
-                    Style="{StaticResource TextBoxStyle}" Grid.Column="2" Grid.Row="6"/>
+                <TextBox Style="{StaticResource TextBoxStyle}" 
+                         Grid.Column="2" 
+                         Grid.Row="6">
+                    <TextBox.Text>
+                        <Binding Path="Value" 
+                                 ElementName="yAxisStretchSlider" 
+                                 Converter="{StaticResource doubleConverter2}"
+                                 Mode="TwoWay">
+                            <Binding.ValidationRules>
+                                <validationrules:NonDoubleInputValidationRule/>
+                            </Binding.ValidationRules>
+                        </Binding>
+                    </TextBox.Text>
+                </TextBox>
 
-                <TextBox Text="{Binding ElementName=zAxisStretchSlider, 
-                    Path=Value,
-                    Mode=TwoWay,
-                    Converter={StaticResource stringToDouble}}"
-                    Style="{StaticResource TextBoxStyle}" Grid.Column="2" Grid.Row="7"/>
+                <TextBox Style="{StaticResource TextBoxStyle}" 
+                         Grid.Column="2" 
+                         Grid.Row="7">
+                    <TextBox.Text>
+                        <Binding Path="Value" 
+                                 ElementName="zAxisStretchSlider" 
+                                 Converter="{StaticResource doubleConverter2}"
+                                 Mode="TwoWay">
+                            <Binding.ValidationRules>
+                                <validationrules:NonDoubleInputValidationRule/>
+                            </Binding.ValidationRules>
+                        </Binding>
+                    </TextBox.Text>
+                </TextBox>
                 
-                <Slider x:Name="xAxisStretchAxis" Grid.Column="1" 
-                        Style="{StaticResource SliderStyle}" Maximum="60" Grid.Row="5">
+                <model:RangedSlider x:Name="xAxisStretchAxis" 
+                                    Grid.Column="1" 
+                                    Style="{StaticResource SliderStyle}"
+                                    ValueRange="{x:Static range:Constants.DistanceBetweenVerticesValueRange}" 
+                                    Grid.Row="5">
                     <i:Interaction.Triggers>
                         <i:EventTrigger EventName="ValueChanged">
                             <ei:CallMethodAction TargetObject="{Binding Path=DataContext, ElementName=Window}" 
                                                  MethodName="StretchAlongXAxis"></ei:CallMethodAction>
                         </i:EventTrigger>
                     </i:Interaction.Triggers>
-                </Slider>
+                </model:RangedSlider>
 
-                <Slider x:Name="yAxisStretchSlider" Grid.Column="1" 
-                        Style="{StaticResource SliderStyle}" Maximum="60" Grid.Row="6">
+                <model:RangedSlider x:Name="yAxisStretchSlider" 
+                                    Grid.Column="1" 
+                                    Style="{StaticResource SliderStyle}" 
+                                    ValueRange="{x:Static range:Constants.DistanceBetweenVerticesValueRange}" 
+                                    Grid.Row="6">
                     <i:Interaction.Triggers>
                         <i:EventTrigger EventName="ValueChanged">
                             <ei:CallMethodAction TargetObject="{Binding Path=DataContext, ElementName=Window}" 
                                                  MethodName="StretchAlongYAxis"></ei:CallMethodAction>
                         </i:EventTrigger>
                     </i:Interaction.Triggers>
-                </Slider>
+                </model:RangedSlider>
 
-                <Slider x:Name="zAxisStretchSlider"  Grid.Column="1" 
-                        Style="{StaticResource SliderStyle}"
-                        Maximum="60" Grid.Row="7">
+                <model:RangedSlider x:Name="zAxisStretchSlider"  
+                                    Grid.Column="1" 
+                                    Style="{StaticResource SliderStyle}" 
+                                    ValueRange="{x:Static range:Constants.DistanceBetweenVerticesValueRange}"
+                                    Grid.Row="7">
                     <i:Interaction.Triggers>
                         <i:EventTrigger EventName="ValueChanged">
                             <ei:CallMethodAction TargetObject="{Binding Path=DataContext, ElementName=Window}" 
                                                  MethodName="StretchAlongZAxis"></ei:CallMethodAction>
                         </i:EventTrigger>
                     </i:Interaction.Triggers>
-                </Slider>
+                </model:RangedSlider>
 
             </Grid>
         </Expander>

@@ -8,10 +8,8 @@ using GraphLib.Serialization.Extensions;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
-
-using Console = Colorful.Console;
-
 using static ConsoleVersion.Constants;
+using Console = Colorful.Console;
 
 namespace ConsoleVersion.Model
 {

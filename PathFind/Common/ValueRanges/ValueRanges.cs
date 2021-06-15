@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 
 namespace Common.ValueRanges
 {
@@ -6,9 +7,10 @@ namespace Common.ValueRanges
     /// 
     /// </summary>
     /// <remarks>Sensitive to the order of elements</remarks>
-    public sealed class ValueRanges
+    public sealed class ValueRanges<T>
+        where T : struct, IComparable, IComparable<T>
     {
-        public ValueRanges(params IValueRange[] ranges)
+        public ValueRanges(params IValueRange<T>[] ranges)
         {
             this.ranges = ranges;
             rangesCount = ranges.Length;
@@ -20,7 +22,7 @@ namespace Common.ValueRanges
         /// <param name="values"></param>
         /// <returns></returns>
         /// <remarks>Sensitive to number of incoming values</remarks>
-        public bool Contains(params int[] values)
+        public bool Contains(params T[] values)
         {
             if (values.Length != ranges.Length)
             {
@@ -35,7 +37,7 @@ namespace Common.ValueRanges
             return Enumerable.Range(0, rangesCount).All(Contains);
         }
 
-        private readonly IValueRange[] ranges;
+        private readonly IValueRange<T>[] ranges;
         private readonly int rangesCount;
     }
 }

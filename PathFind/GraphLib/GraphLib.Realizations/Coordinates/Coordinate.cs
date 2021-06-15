@@ -19,7 +19,7 @@ namespace GraphLib.Realizations.Coordinates
         public Coordinate(ICoordinate coordinate)
             : this(coordinate.CoordinatesValues.ToArray())
         {
-            
+
         }
 
         public override bool Equals(object pos)

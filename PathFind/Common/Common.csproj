@@ -57,6 +57,7 @@
   <ItemGroup>
     <Compile Include="Extensions\CollectionExtensions.cs" />
     <Compile Include="Extensions\IntExtensions.cs" />
+    <Compile Include="Extensions\ValueRangeExtensions.cs" />
     <Compile Include="Interface\IInterrupted.cs" />
     <Compile Include="Interface\IViewModel.cs" />
     <Compile Include="Interface\ISuspendable.cs" />

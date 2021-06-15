@@ -4,14 +4,14 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:converters="clr-namespace:WPFVersion3D.Converters"
-        xmlns:range="clr-namespace:WPFVersion3D" 
+        xmlns:range="clr-namespace:WPFVersion3D" xmlns:rules="clr-namespace:WPFVersion3D.ValidationRules" xmlns:model="clr-namespace:WPFVersion3D.Model"
         mc:Ignorable="d"
         Title="GraphCreateWindow"
         SizeToContent="WidthAndHeight">
     
     <Window.Resources>
-        <converters:RangedDoubleToStringConverter x:Key="doubleToStringconverter"/>
-        <converters:RangedIntToStringConverter x:Key="intToStringConverter"/>
+        <converters:PrecisedDoubleToStringConverter x:Key="doubleToStringconverter"/>
+        <converters:IntToStringConverter x:Key="intToStringConverter"/>
     </Window.Resources>
     
     <Grid>
@@ -36,49 +36,82 @@
                    HorizontalAlignment="Center">
         </TextBlock>
         
-        <Slider Value = "{Binding Path = ObstaclePercent}" 
-                x:Name="obstacleSlider" 
-                MinWidth="100" 
-                Margin="5" 
-                Grid.Row="1">
-        </Slider>
+        <model:RangedSlider Value = "{Binding Path = ObstaclePercent}"
+                            ValueRange="{x:Static range:Constants.ObstaclePercentValueRange}"
+                            x:Name="obstacleSlider" 
+                            MinWidth="100" 
+                            Margin="5" 
+                            Grid.Row="1">
+        </model:RangedSlider>
         
-        <TextBox Text = "{Binding ElementName = obstacleSlider, 
-            Path = Value, 
-            Converter = {StaticResource doubleToStringconverter}, 
-            ConverterParameter={x:Static range:Constants.ObstaclePercentValueRange}, 
-            Mode = TwoWay, 
-            UpdateSourceTrigger = PropertyChanged}"
-                 x:Name="obstacleTextBox" 
+        <TextBox x:Name="obstacleTextBox" 
                  MinWidth="40" 
                  Margin="5" 
                  Grid.Row="1" 
                  Grid.Column="1">
+            <TextBox.Text>
+                <Binding Mode="TwoWay" 
+                         Path="Value"
+                         ElementName="obstacleSlider"
+                         Converter="{StaticResource intToStringConverter}"
+                         UpdateSourceTrigger="PropertyChanged">
+                    <Binding.ValidationRules>
+                        <rules:NonInt32InputValidationRule/>
+                    </Binding.ValidationRules>
+                </Binding>
+            </TextBox.Text>
         </TextBox>
         
         <TextBlock Grid.Row="2" Text="Graph width" Margin="5"></TextBlock>
         
-        <TextBox Text ="{Binding Path = Width, 
-            UpdateSourceTrigger=PropertyChanged, 
-            Converter={StaticResource intToStringConverter}, 
-            ConverterParameter={x:Static range:Constants.GraphWidthValueRange}}" 
-                 Grid.Row="2" Grid.Column="1" Margin="5"></TextBox>
+        <TextBox Grid.Row="2" 
+                 Grid.Column="1" 
+                 Margin="5">
+            <TextBox.Text>
+                <Binding Mode="TwoWay" 
+                         Path="Width" 
+                         Converter="{StaticResource intToStringConverter}">
+                    <Binding.ValidationRules>
+                        <rules:RangedIntValidationRule 
+                            ValueRange="{x:Static range:Constants.GraphWidthValueRange}"/>
+                    </Binding.ValidationRules>
+                </Binding>
+            </TextBox.Text>
+        </TextBox>
         
         <TextBlock Grid.Row ="3" Text="Graph length" Margin="5"></TextBlock>
         
-        <TextBox Text="{Binding Path = Length, 
-            UpdateSourceTrigger=PropertyChanged,
-            Converter={StaticResource intToStringConverter}, 
-            ConverterParameter={x:Static range:Constants.GraphLengthValueRange}}"
-                 Grid.Row="3" Grid.Column="1" Margin="5"></TextBox>
+        <TextBox Grid.Row="3" 
+                 Grid.Column="1" 
+                 Margin="5">
+            <TextBox.Text>
+                <Binding Mode="TwoWay" 
+                         Path="Length" 
+                         Converter="{StaticResource intToStringConverter}">
+                    <Binding.ValidationRules>
+                        <rules:RangedIntValidationRule 
+                            ValueRange="{x:Static range:Constants.GraphLengthValueRange}"/>
+                    </Binding.ValidationRules>
+                </Binding>
+            </TextBox.Text>
+        </TextBox>
         
         <TextBlock Grid.Row ="4" Text="Graph height" Margin="5"></TextBlock>
         
-        <TextBox Text="{Binding Path = Height, 
-            UpdateSourceTrigger=PropertyChanged,
-            Converter={StaticResource intToStringConverter}, 
-            ConverterParameter={x:Static range:Constants.GraphHeightValueRange}}"
-                 Grid.Row="4" Grid.Column="1" Margin="5"></TextBox>
+        <TextBox Grid.Row="4" 
+                 Grid.Column="1" 
+                 Margin="5">
+            <TextBox.Text>
+                <Binding Mode="TwoWay" 
+                         Path="Height" 
+                         Converter="{StaticResource intToStringConverter}">
+                    <Binding.ValidationRules>
+                        <rules:RangedIntValidationRule 
+                            ValueRange="{x:Static range:Constants.GraphHeightValueRange}"/>
+                    </Binding.ValidationRules>
+                </Binding>
+            </TextBox.Text>
+        </TextBox>
         <ListBox Grid.Row="5" Grid.ColumnSpan="2" ItemsSource="{Binding GraphAssembleKeys }" 
                  x:Name="algoListBox" BorderThickness="0" Margin="5"
                  SelectedItem="{Binding Path = GraphAssembleKey}">

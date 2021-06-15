@@ -35,7 +35,6 @@ namespace WPFVersion.Model
             Dispatcher.Invoke(() =>
             {
                 Width = Height = VertexSize;
-                FontSize = VertexSize * TextToSizeRatio;
                 Template = (ControlTemplate)TryFindResource("vertexTemplate");
             });
             Position = coordinate;

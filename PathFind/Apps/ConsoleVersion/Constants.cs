@@ -4,19 +4,19 @@ namespace ConsoleVersion
 {
     internal static class Constants
     {
-        public static IValueRange GraphWidthValueRange { get; }
-        public static IValueRange GraphLengthValueRange { get; }
-        public static IValueRange ObstaclesPercentValueRange { get; }
-        public static IValueRange AlgorithmDelayTimeValueRange { get; }
+        public static InclusiveValueRange<int> GraphWidthValueRange { get; }
+        public static InclusiveValueRange<int> GraphLengthValueRange { get; }
+        public static InclusiveValueRange<int> ObstaclesPercentValueRange { get; }
+        public static InclusiveValueRange<int> AlgorithmDelayTimeValueRange { get; }
 
         public const int LateralDistanceBetweenVertices = 3;
 
         static Constants()
         {
-            GraphWidthValueRange = new InclusiveValueRange(80, 1);
-            GraphLengthValueRange = new InclusiveValueRange(50, 1);
-            ObstaclesPercentValueRange = new InclusiveValueRange(99, 0);
-            AlgorithmDelayTimeValueRange = new InclusiveValueRange(35, 0);
+            GraphWidthValueRange = new InclusiveValueRange<int>(80, 1);
+            GraphLengthValueRange = new InclusiveValueRange<int>(50, 1);
+            ObstaclesPercentValueRange = new InclusiveValueRange<int>(99, 0);
+            AlgorithmDelayTimeValueRange = new InclusiveValueRange<int>(35, 0);
         }
     }
 }

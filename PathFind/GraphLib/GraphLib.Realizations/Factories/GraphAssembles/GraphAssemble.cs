@@ -29,7 +29,7 @@ namespace GraphLib.Realizations.Factories.GraphAssembles
             this.graphFactory = graphFactory;
             this.costFactory = costFactory;
             this.radarFactory = radarFactory;
-            percentRange = new InclusiveValueRange(100, 0);
+            percentRange = new InclusiveValueRange<int>(99, 0);
         }
 
         /// <summary>
@@ -64,7 +64,7 @@ namespace GraphLib.Realizations.Factories.GraphAssembles
         private bool IsObstacleChance(int percentOfObstacles)
         {
             percentOfObstacles = percentRange.ReturnInRange(percentOfObstacles);
-            var randomPercent = percentRange.GetRandomValueFromRange();
+            var randomPercent = percentRange.GetRandomValue();
             return randomPercent < percentOfObstacles;
         }
 
@@ -73,6 +73,6 @@ namespace GraphLib.Realizations.Factories.GraphAssembles
         protected readonly IVertexFactory vertexFactory;
         protected readonly IGraphFactory graphFactory;
         protected readonly INeighboursCoordinatesFactory radarFactory;
-        protected readonly InclusiveValueRange percentRange;
+        protected readonly InclusiveValueRange<int> percentRange;
     }
 }

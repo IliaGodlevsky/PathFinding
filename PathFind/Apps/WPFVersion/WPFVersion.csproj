@@ -67,14 +67,13 @@
     </ApplicationDefinition>
     <Compile Include="Configure\ContainerConfigure.cs" />
     <Compile Include="Constants.cs" />
-    <Compile Include="Converters\DoubleRoundConverter.cs" />
-    <Compile Include="Converters\ToStringConverter.cs" />
-    <Compile Include="Converters\RangedDoubleToStringToConverter.cs" />
-    <Compile Include="Converters\RangeIntToStringConverter.cs" />
+    <Compile Include="Converters\PrecisedDoubleToStringConverter.cs" />
+    <Compile Include="Converters\IntToStringConverter.cs" />
     <Compile Include="Infrastructure\RelayCommand.cs" />
     <Compile Include="Model\EndPoints.cs" />
     <Compile Include="Model\AssembleLoadPath.cs" />
     <Compile Include="Model\PathInput.cs" />
+    <Compile Include="Model\RangedSlider.cs" />
     <Compile Include="Model\VertexEventHolder.cs" />
     <Compile Include="Model\Vertex.cs" />
     <Compile Include="Model\VertexFactory.cs" />
@@ -82,6 +81,10 @@
     <Compile Include="Model\WindowService.cs" />
     <Compile Include="Model\GraphField.cs" />
     <Compile Include="Model\GraphFieldFactory.cs" />
+    <Compile Include="ValidationRules\NonDoubleInputValidationRule.cs" />
+    <Compile Include="ValidationRules\NonInt32InputValidationRule.cs" />
+    <Compile Include="ValidationRules\RangedDoubleValidationRule.cs" />
+    <Compile Include="ValidationRules\RangedIntValidationRule.cs" />
     <Compile Include="ViewModel\GraphCreatingViewModel.cs" />
     <Compile Include="ViewModel\PathFindingViewModel.cs" />
     <Compile Include="ViewModel\MainWindowViewModel.cs" />

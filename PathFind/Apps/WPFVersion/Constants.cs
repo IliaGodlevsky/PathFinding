@@ -4,28 +4,27 @@ namespace WPFVersion
 {
     internal static class Constants
     {
-        public static IValueRange GraphWidthValueRange { get; }
-        public static IValueRange GraphLengthValueRange { get; }
-        public static IValueRange ObstaclesPercentValueRange { get; }
-        public static IValueRange AlgorithmDelayTimeValueRange { get; }
-        public static IValueRange VertexSizeRange { get; }
-        public static IValueRange OffsetValueRange { get; }
+        public static InclusiveValueRange<double> ScaleValueRange { get; }
+        public static InclusiveValueRange<int> GraphWidthValueRange { get; }
+        public static InclusiveValueRange<int> GraphLengthValueRange { get; }
+        public static InclusiveValueRange<double> ObstaclesPercentValueRange { get; }
+        public static InclusiveValueRange<double> AlgorithmDelayTimeValueRange { get; }
+        public static InclusiveValueRange<double> OffsetValueRange { get; }
 
-        public static ValueRanges GraphParamsValueRanges { get; }
+        public static ValueRanges<int> GraphParamsValueRanges { get; }
 
         public const int DistanceBetweenVertices = 1;
         public const int VertexSize = 24;
-        public const double TextToSizeRatio = 0.475;
 
         static Constants()
         {
-            GraphWidthValueRange = new InclusiveValueRange(150, 1);
-            GraphLengthValueRange = new InclusiveValueRange(75, 1);
-            GraphParamsValueRanges = new ValueRanges(GraphWidthValueRange, GraphLengthValueRange);
-            ObstaclesPercentValueRange = new InclusiveValueRange(99, 0);
-            AlgorithmDelayTimeValueRange = new InclusiveValueRange(35, 0);
-            VertexSizeRange = new InclusiveValueRange(24, 5);
-            OffsetValueRange = new InclusiveValueRange(-1000, 1000);
+            ScaleValueRange = new InclusiveValueRange<double>(2.5, 0.1);
+            GraphWidthValueRange = new InclusiveValueRange<int>(150, 1);
+            GraphLengthValueRange = new InclusiveValueRange<int>(75, 1);
+            GraphParamsValueRanges = new ValueRanges<int>(GraphWidthValueRange, GraphLengthValueRange);
+            ObstaclesPercentValueRange = new InclusiveValueRange<double>(99, 0);
+            AlgorithmDelayTimeValueRange = new InclusiveValueRange<double>(35, 0);
+            OffsetValueRange = new InclusiveValueRange<double>(-1000, 1000);
         }
     }
 }

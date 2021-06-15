@@ -4,11 +4,11 @@ namespace WindowsFormsVersion
 {
     internal static class Constants
     {
-        public static IValueRange GraphWidthValueRange { get; }
-        public static IValueRange GraphLengthValueRange { get; }
-        public static IValueRange ObstaclesPercentValueRange { get; }
-        public static IValueRange AlgorithmDelayTimeValueRange { get; }
-        public static ValueRanges GraphParamsValueRanges { get; }
+        public static InclusiveValueRange<int> GraphWidthValueRange { get; }
+        public static InclusiveValueRange<int> GraphLengthValueRange { get; }
+        public static InclusiveValueRange<int> ObstaclesPercentValueRange { get; }
+        public static InclusiveValueRange<int> AlgorithmDelayTimeValueRange { get; }
+        public static ValueRanges<int> GraphParamsValueRanges { get; }
 
         public const int DistanceBetweenVertices = 1;
         public const int VertexSize = 24;
@@ -16,11 +16,11 @@ namespace WindowsFormsVersion
 
         static Constants()
         {
-            GraphWidthValueRange = new InclusiveValueRange(67, 1);
-            GraphLengthValueRange = new InclusiveValueRange(32, 1);
-            ObstaclesPercentValueRange = new InclusiveValueRange(99, 0);
-            AlgorithmDelayTimeValueRange = new InclusiveValueRange(35, 0);
-            GraphParamsValueRanges = new ValueRanges(GraphWidthValueRange, GraphLengthValueRange);
+            GraphWidthValueRange = new InclusiveValueRange<int>(67, 1);
+            GraphLengthValueRange = new InclusiveValueRange<int>(32, 1);
+            ObstaclesPercentValueRange = new InclusiveValueRange<int>(99, 0);
+            AlgorithmDelayTimeValueRange = new InclusiveValueRange<int>(35, 0);
+            GraphParamsValueRanges = new ValueRanges<int>(GraphWidthValueRange, GraphLengthValueRange);
         }
     }
 }

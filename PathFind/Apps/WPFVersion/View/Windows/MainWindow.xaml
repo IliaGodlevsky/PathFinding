@@ -5,7 +5,8 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
         xmlns:model="clr-namespace:WPFVersion.Model" 
         xmlns:converters="clr-namespace:WPFVersion.Converters"
-        xmlns:range="clr-namespace:WPFVersion"
+        xmlns:range="clr-namespace:WPFVersion" 
+        xmlns:rules="clr-namespace:WPFVersion.ValidationRules"
         mc:Ignorable="d"
         Background="White"
         Title="Path find"
@@ -13,8 +14,9 @@
         WindowStartupLocation="CenterScreen"
         Icon="../../Resources/Images/mainwindow2.png">
     <Window.Resources>
-        <converters:DoubleRoundConverter x:Key="doubleConverter"/>
-        <converters:RangedDoubleToStringToConverter x:Key="rangedIntConverter"/>
+        <!--Number suffix in a key name is a round precision-->
+        <converters:PrecisedDoubleToStringConverter Precision="2" x:Key="doubleConverter2"/>
+        <converters:PrecisedDoubleToStringConverter Precision="0" x:Key="doubleConverter0"/>
     </Window.Resources>
     <Grid Background="White">
         <Grid.RowDefinitions>
@@ -83,22 +85,51 @@
                         <ColumnDefinition Width="auto"></ColumnDefinition>
                     </Grid.ColumnDefinitions>
                     <TextBlock HorizontalAlignment="Center" Grid.ColumnSpan="2" Margin="1" Text="Scaling"/>
-                    <Slider Margin="1" MinWidth="150" Grid.Row="1" Grid.Column="0" 
-                        x:Name="scaleSlider" Value="1" Minimum="0.1" Maximum="2" ></Slider>
-                    <TextBox Text="{Binding ElementName=scaleSlider, Path=Value, 
-                    Converter={StaticResource doubleConverter}, Mode=TwoWay}" 
-                         Margin="1" MinWidth="25" Grid.Row="1" Grid.Column="1"></TextBox>
+                    <model:RangedSlider 
+                        Margin="1" 
+                        MinWidth="150" 
+                        Grid.Row="1" 
+                        Grid.Column="0" 
+                        x:Name="scaleSlider" 
+                        Value="1" 
+                        ValueRange="{x:Static range:Constants.ScaleValueRange}"/>
+                    <TextBox Margin="1" MinWidth="25" Grid.Row="1" Grid.Column="1">
+                        <TextBox.Text>
+                            <Binding Mode="TwoWay" 
+                                     Path="Value" 
+                                     ElementName="scaleSlider" 
+                                     Converter="{StaticResource doubleConverter2}">
+                                <Binding.ValidationRules>
+                                    <rules:NonDoubleInputValidationRule/>
+                                </Binding.ValidationRules>
+                            </Binding>
+                        </TextBox.Text>
+                    </TextBox>
                     <TextBlock Margin="1" HorizontalAlignment="Center" Grid.Row="2" Text="Offset"></TextBlock>
-                    <TextBox Text="{Binding ElementName=xSlider, Path=Value,
-                    Converter={StaticResource rangedIntConverter}, 
-                    ConverterParameter={x:Static range:Constants.OffsetValueRange },
-                    Mode=TwoWay}" Margin="1" MinWidth="25" Grid.Column="1" Grid.Row="3"></TextBox>
-                    <TextBox Text="{Binding ElementName=ySlider, Path=Value,
-                    Converter={StaticResource rangedIntConverter}, 
-                    ConverterParameter={x:Static range:Constants.OffsetValueRange },
-                    Mode=TwoWay}" Margin="2" MinWidth="25" Grid.Column="1" Grid.Row="4"></TextBox>
-                    <Slider MinWidth="150" Margin="1" x:Name="xSlider" Grid.Row="3" Grid.Column="0"></Slider>
-                    <Slider MinWidth="150" Margin="1" x:Name="ySlider" Grid.Row="4" Grid.Column="0"></Slider>
+                    <TextBox Margin="1" MinWidth="25" Grid.Column="1" Grid.Row="3">
+                        <TextBox.Text>
+                            <Binding Mode="TwoWay" Path="Value" ElementName="xSlider" 
+                                     Converter="{StaticResource doubleConverter0}">
+                                <Binding.ValidationRules>
+                                    <rules:NonInt32InputValidationRule/>
+                                </Binding.ValidationRules>
+                            </Binding>
+                        </TextBox.Text>
+                    </TextBox>
+                    <TextBox Margin="2" MinWidth="25" Grid.Column="1" Grid.Row="4">
+                        <TextBox.Text>
+                            <Binding Mode="TwoWay" Path="Value" ElementName="ySlider" 
+                                     Converter="{StaticResource doubleConverter0}">
+                                <Binding.ValidationRules>
+                                    <rules:NonInt32InputValidationRule/>
+                                </Binding.ValidationRules>
+                            </Binding>
+                        </TextBox.Text>
+                    </TextBox>
+                    <model:RangedSlider MinWidth="150" Margin="1" x:Name="xSlider" Grid.Row="3" Grid.Column="0" 
+                                        ValueRange="{x:Static range:Constants.OffsetValueRange}"></model:RangedSlider>
+                    <model:RangedSlider MinWidth="150" Margin="1" x:Name="ySlider" Grid.Row="4" Grid.Column="0"
+                                        ValueRange="{x:Static range:Constants.OffsetValueRange}"></model:RangedSlider>
                 </Grid>
             </Expander>
         </StackPanel>

@@ -135,7 +135,7 @@ namespace WPFVersion3D.Model
 
         private int Height { get; }
 
-        private int[] DimensionSizes { get; } 
+        private int[] DimensionSizes { get; }
 
         private double[] DistancesBetween => new[]
         {

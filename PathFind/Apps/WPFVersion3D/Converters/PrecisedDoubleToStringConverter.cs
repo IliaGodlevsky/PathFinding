@@ -4,24 +4,22 @@ using System.Windows.Data;
 
 namespace WPFVersion3D.Converters
 {
-    internal sealed class DoubleToStringConverter : IValueConverter
+    internal sealed class PrecisedDoubleToStringConverter : IValueConverter
     {
-        public int Precision { get; set; } = 2;
+        public int Precision { get; set; }
 
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            double result = default;
             try
             {
                 value = value?.ToString().Replace('.', ',');
-                result = System.Convert.ToDouble(value);
+                var result = System.Convert.ToDouble(value);
                 result = Math.Round(result, Precision);
                 return result;
-
             }
             catch (Exception)
             {
-                return result;
+                return Binding.DoNothing;
             }
         }
 
