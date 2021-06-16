@@ -7,6 +7,7 @@ using Algorithm.Сompanions;
 using AssembleClassesLib.Attributes;
 using Common.Extensions;
 using GraphLib.Interfaces;
+using GraphLib.Extensions;
 using System.Linq;
 
 namespace Plugins.DijkstraALgorithm
@@ -53,9 +54,10 @@ namespace Plugins.DijkstraALgorithm
         protected override void PrepareForPathfinding()
         {
             base.PrepareForPathfinding();
-            accumulatedCosts =
-                new AccumulatedCostsWithExcept(
-                    new AccumulatedCosts(graph, double.PositiveInfinity), endPoints.Source);
+
+            var vertices = graph.Vertices.Except(endPoints.Source).GetNotObstacles();
+            accumulatedCosts = new AccumulatedCosts(vertices, double.PositiveInfinity);
+            accumulatedCosts.Reevaluate(endPoints.Source, 0);
         }
 
         #region Relaxing

@@ -3,6 +3,7 @@ using Algorithm.Extensions;
 using Algorithm.Сompanions;
 using AssembleClassesLib.Attributes;
 using Common.Extensions;
+using GraphLib.Extensions;
 using GraphLib.Interfaces;
 using System.Linq;
 
@@ -20,7 +21,8 @@ namespace Plugins.LeeAlgorithm
         protected override void PrepareForPathfinding()
         {
             base.PrepareForPathfinding();
-            accumulatedCosts = new AccumulatedCosts(graph, 0);
+            var vertices = graph.Vertices.GetNotObstacles();
+            accumulatedCosts = new AccumulatedCosts(vertices, 0);
         }
 
         protected override void CompletePathfinding()

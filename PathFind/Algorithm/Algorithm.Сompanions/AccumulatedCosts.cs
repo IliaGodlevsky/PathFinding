@@ -3,20 +3,16 @@ using GraphLib.Extensions;
 using GraphLib.Interfaces;
 using NullObject.Extensions;
 using System.Collections.Generic;
-using System.Linq;
 
 namespace Algorithm.Сompanions
 {
     public sealed class AccumulatedCosts : IAccumulatedCosts
     {
-        public AccumulatedCosts(IGraph graph, double startCost)
+        public AccumulatedCosts(IEnumerable<IVertex> graph, double startCost)
         {
             accumulatedCosts = new Dictionary<ICoordinate, double>();
             this.startCost = startCost;
-            graph
-                .Vertices
-                .Where(vertex => !vertex.IsObstacle)
-                .ForEach(SetAccumulatedCostToStartCost);
+            graph.ForEach(SetAccumulatedCostToStartCost);
         }
 
         public void Reevaluate(IVertex vertex, double accumulatedCost)

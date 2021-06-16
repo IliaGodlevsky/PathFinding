@@ -42,7 +42,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AccumulatedCosts.cs" />
-    <Compile Include="AccumulatedCostsWithExcept.cs" />
     <Compile Include="EndPoint.cs" />
     <Compile Include="IAccumulatedCosts.cs" />
     <Compile Include="ParentVertices.cs" />
