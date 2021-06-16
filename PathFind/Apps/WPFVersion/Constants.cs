@@ -4,7 +4,7 @@ namespace WPFVersion
 {
     internal static class Constants
     {
-        public static InclusiveValueRange<double> ScaleValueRange { get; }
+        public static InclusiveValueRange<double> GraphFieldScaleValueRange { get; }
         public static InclusiveValueRange<int> GraphWidthValueRange { get; }
         public static InclusiveValueRange<int> GraphLengthValueRange { get; }
         public static InclusiveValueRange<double> ObstaclesPercentValueRange { get; }
@@ -18,7 +18,7 @@ namespace WPFVersion
 
         static Constants()
         {
-            ScaleValueRange = new InclusiveValueRange<double>(2.5, 0.1);
+            GraphFieldScaleValueRange = new InclusiveValueRange<double>(2.5, 0.1);
             GraphWidthValueRange = new InclusiveValueRange<int>(150, 1);
             GraphLengthValueRange = new InclusiveValueRange<int>(75, 1);
             GraphParamsValueRanges = new ValueRanges<int>(GraphWidthValueRange, GraphLengthValueRange);

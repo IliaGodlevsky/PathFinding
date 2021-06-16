@@ -15,6 +15,7 @@ using GraphViewModel.Interfaces;
 using Logging.Loggers;
 using System;
 using System.Drawing;
+
 using static ConsoleVersion.InputClass.Input;
 using static ConsoleVersion.Resource.Resources;
 using Console = Colorful.Console;
@@ -41,19 +42,19 @@ namespace ConsoleVersion.ViewModel
             IsAppClosureRequested = false;
         }
 
-        [MenuItem("Make unweighted")]
+        [MenuItem(Constants.MakeUnwieghted)]
         public void MakeGraphUnweighted()
         {
             Graph.ToUnweighted();
         }
 
-        [MenuItem("Make weighted")]
+        [MenuItem(Constants.MakeWeighted)]
         public void MakeGraphWeighted()
         {
             Graph.ToWeighted();
         }
 
-        [MenuItem("Create new graph", MenuItemPriority.Highest)]
+        [MenuItem(Constants.CreateNewGraph, MenuItemPriority.Highest)]
         public override void CreateNewGraph()
         {
             try
@@ -68,7 +69,7 @@ namespace ConsoleVersion.ViewModel
             }
         }
 
-        [MenuItem("Find path", MenuItemPriority.High)]
+        [MenuItem(Constants.FindPath, MenuItemPriority.High)]
         public override void FindPath()
         {
             try
@@ -88,7 +89,7 @@ namespace ConsoleVersion.ViewModel
             }
         }
 
-        [MenuItem("Reverse vertex")]
+        [MenuItem(Constants.ReverseVertex)]
         public void ReverseVertex()
         {
             if (Graph.HasVertices() && Graph is Graph2D graph2D)
@@ -105,7 +106,7 @@ namespace ConsoleVersion.ViewModel
             }
         }
 
-        [MenuItem("Change cost range", MenuItemPriority.Low)]
+        [MenuItem(Constants.ChangeCostRange, MenuItemPriority.Low)]
         public void ChangeVertexCostValueRange()
         {
             string message = "Enter upper vertex cost value: ";
@@ -113,7 +114,7 @@ namespace ConsoleVersion.ViewModel
             BaseVertexCost.CostRange = new InclusiveValueRange<int>(upperValueRange, 1);
         }
 
-        [MenuItem("Change vertex cost", MenuItemPriority.Low)]
+        [MenuItem(Constants.ChangeVertexCost, MenuItemPriority.Low)]
         public void ChangeVertexCost()
         {
             if (Graph.HasVertices() && Graph is Graph2D graph2D)
@@ -133,20 +134,20 @@ namespace ConsoleVersion.ViewModel
             }
         }
 
-        [MenuItem("Save graph")]
+        [MenuItem(Constants.SaveGraph)]
         public override void SaveGraph()
         {
             base.SaveGraph();
         }
 
-        [MenuItem("Load graph")]
+        [MenuItem(Constants.LoadGraph)]
         public override void LoadGraph()
         {
             base.LoadGraph();
             MainView.UpdatePositionOfVisualElements(Graph);
         }
 
-        [MenuItem("Quit program", MenuItemPriority.Lowest)]
+        [MenuItem(Constants.QuitProgramm, MenuItemPriority.Lowest)]
         public void Quit()
         {
             int input = InputNumber(ExitAppMsg, Yes, No);

@@ -92,7 +92,7 @@
                         Grid.Column="0" 
                         x:Name="scaleSlider" 
                         Value="1" 
-                        ValueRange="{x:Static range:Constants.ScaleValueRange}"/>
+                        ValueRange="{x:Static range:Constants.GraphFieldScaleValueRange}"/>
                     <TextBox Margin="1" MinWidth="25" Grid.Row="1" Grid.Column="1">
                         <TextBox.Text>
                             <Binding Mode="TwoWay" 
