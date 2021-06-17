@@ -4,7 +4,6 @@ using GraphLib.Extensions;
 using GraphLib.Interfaces;
 using GraphLib.Interfaces.Factories;
 using GraphLib.Realizations.MeanCosts;
-using GraphLib.Realizations.VisitedVerticesImpl;
 using System;
 using System.Linq;
 

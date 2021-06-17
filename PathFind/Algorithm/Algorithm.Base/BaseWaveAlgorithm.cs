@@ -2,6 +2,7 @@
 using Algorithm.Interfaces;
 using Algorithm.Realizations.GraphPaths;
 using Common.Extensions;
+using GraphLib.Extensions;
 using GraphLib.Interfaces;
 using System.Collections.Generic;
 using System.Linq;
@@ -67,7 +68,9 @@ namespace Algorithm.Base
         private IVertex[] GetCurrentVertexNeighbours()
         {
             return visitedVertices
-                .GetUnvisitedNeighbours(CurrentVertex).ToArray();
+                .GetUnvisitedNeighbours(CurrentVertex)
+                .GetNotObstacles()
+                .ToArray();
         }
     }
 }

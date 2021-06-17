@@ -7,7 +7,6 @@ using GraphLib.Serialization.Extensions;
 using GraphLib.Serialization.Interfaces;
 using System;
 using System.IO;
-using System.Linq;
 using System.Runtime.Serialization;
 
 namespace GraphLib.Serialization

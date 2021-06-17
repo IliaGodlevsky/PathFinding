@@ -19,7 +19,7 @@ namespace WPFVersion3D.Infrastructure.Animators
         protected override AnimationTimeline CreateAnimation()
         {
             var duration = CalculateAnimationDuration();
-            return new DoubleAnimation(axis.Angle, AngleValueRange.LowerValueOfRange, 
+            return new DoubleAnimation(axis.Angle, AngleValueRange.LowerValueOfRange,
                 duration, FillBehavior.Stop);
         }
 

@@ -6,8 +6,8 @@ using Algorithm.Realizations.StepRules;
 using Algorithm.Сompanions;
 using AssembleClassesLib.Attributes;
 using Common.Extensions;
-using GraphLib.Interfaces;
 using GraphLib.Extensions;
+using GraphLib.Interfaces;
 using System.Linq;
 
 namespace Plugins.DijkstraALgorithm

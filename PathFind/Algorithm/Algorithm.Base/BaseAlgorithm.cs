@@ -4,7 +4,7 @@ using Algorithm.Interfaces;
 using Algorithm.Сompanions;
 using GraphLib.Extensions;
 using GraphLib.Interfaces;
-using GraphLib.Realizations.VisitedVerticesImpl;
+using GraphLib.Realizations;
 using NullObject.Extensions;
 using System;
 
@@ -29,10 +29,7 @@ namespace Algorithm.Base
 
         protected BaseAlgorithm(IGraph graph, IEndPoints endPoints)
         {
-            visitedVertices =
-                new VisitedVerticesWithoutObstacles(
-                    new VisitedVertices()
-                    );
+            visitedVertices = new VisitedVertices();
             parentVertices = new ParentVertices();
             this.graph = graph;
             this.endPoints = new EndPoints(endPoints);

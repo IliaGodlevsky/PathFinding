@@ -4,7 +4,7 @@ using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace GraphLib.Realizations.VisitedVerticesImpl
+namespace GraphLib.Realizations
 {
     public sealed class VisitedVertices : IVisitedVertices
     {

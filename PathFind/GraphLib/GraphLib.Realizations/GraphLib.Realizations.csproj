@@ -67,8 +67,7 @@
     <Compile Include="VertexCost\WeightableVertexCost.cs" />
     <Compile Include="VertexCost\CostStates\UnweightedState.cs" />
     <Compile Include="VertexCost\CostStates\WeightedState.cs" />
-    <Compile Include="VisitedVerticesImpl\VisitedVertices.cs" />
-    <Compile Include="VisitedVerticesImpl\VisitedVerticesWithoutObstacles.cs" />
+    <Compile Include="VisitedVertices.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\Algorithm\Algorithm.Сompanions\Algorithm.Сompanions.csproj">

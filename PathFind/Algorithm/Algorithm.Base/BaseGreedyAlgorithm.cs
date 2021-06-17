@@ -2,6 +2,7 @@
 using Algorithm.Interfaces;
 using Algorithm.Realizations.GraphPaths;
 using Common.Extensions;
+using GraphLib.Extensions;
 using GraphLib.Interfaces;
 using NullObject.Extensions;
 using System.Collections.Generic;
@@ -44,7 +45,9 @@ namespace Algorithm.Base
             get
             {
                 var neighbours = visitedVertices
-                    .GetUnvisitedNeighbours(CurrentVertex).ToArray();
+                    .GetUnvisitedNeighbours(CurrentVertex)
+                    .GetNotObstacles()
+                    .ToArray();
 
                 bool IsLeastCostVertex(IVertex vertex)
                 {
