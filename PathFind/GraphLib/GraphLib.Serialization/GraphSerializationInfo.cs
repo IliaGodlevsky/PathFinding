@@ -18,13 +18,13 @@ namespace GraphLib.Serialization
                 .ToArray();
         }
 
-        public IEnumerable<int> DimensionsSizes { get; private set; }
+        public int[] DimensionsSizes { get; private set; }
 
         private VertexSerializationInfo SerializationInfo(IVertex vertex)
         {
             return vertex.GetSerializationInfo();
         }
 
-        public IReadOnlyCollection<VertexSerializationInfo> VerticesInfo { get; }
+        public VertexSerializationInfo[] VerticesInfo { get; }
     }
 }

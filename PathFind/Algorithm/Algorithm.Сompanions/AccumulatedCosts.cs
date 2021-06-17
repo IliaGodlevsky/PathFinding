@@ -22,19 +22,19 @@ namespace Algorithm.Сompanions
 
         public double GetAccumulatedCost(IVertex vertex)
         {
-            if (accumulatedCosts.TryGetValue(vertex.Position, out double cost))
+            if (accumulatedCosts.TryGetValue(vertex.Position, out var cost))
             {
                 return cost;
             }
 
-            throw new KeyNotFoundException($"Could not find cost of {vertex.GetInforamtion()}");
+            string message = $"Could not find cost of {vertex.GetInforamtion()}";
+            throw new KeyNotFoundException(message);
         }
 
         public int Compare(IVertex vertex, double accumulatedCost)
         {
-            var comparer = Comparer<double>.Default;
             var vertexAccumulatedCost = GetAccumulatedCost(vertex);
-            return comparer.Compare(vertexAccumulatedCost, accumulatedCost);
+            return vertexAccumulatedCost.CompareTo(accumulatedCost);
         }
 
         private void SetAccumulatedCostToStartCost(IVertex vertex)

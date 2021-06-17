@@ -34,17 +34,14 @@ namespace GraphLib.Serialization
             try
             {
                 var verticesInfo = (GraphSerializationInfo)formatter.Deserialize(stream);
-                var dimensions = verticesInfo.DimensionsSizes.ToArray();
-                var graph = graphFactory.CreateGraph(dimensions);
+                var graph = graphFactory.CreateGraph(verticesInfo.DimensionsSizes);
 
                 void CreateVertexFrom(VertexSerializationInfo info)
                 {
                     graph[info.Position] = infoConverter.ConvertFrom(info);
                 }
 
-                verticesInfo
-                    .VerticesInfo
-                    .ForEach(CreateVertexFrom);
+                verticesInfo.VerticesInfo.ForEach(CreateVertexFrom);
 
                 graph.ConnectVertices();
                 return graph;
