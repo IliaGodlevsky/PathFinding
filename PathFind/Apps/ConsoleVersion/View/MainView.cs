@@ -47,7 +47,7 @@ namespace ConsoleVersion.View
         {
             mainModel = model as MainViewModel ?? throw new ArgumentException(nameof(model));
             menu = new Menu<Action>(model);
-            menuList = new MenuList(menu.MenuActionsNames, columns: 3);
+            menuList = new MenuList(menu.MenuActionsNames, columns: 2);
             menuValueRange = new InclusiveValueRange<int>(menu.MenuActionsNames.Length, 1);
         }
 

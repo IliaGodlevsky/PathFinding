@@ -1,9 +1,7 @@
-﻿using System.Collections.Generic;
-
-namespace GraphLib.Interfaces
+﻿namespace GraphLib.Interfaces
 {
     public interface INeighboursCoordinates
     {
-        IEnumerable<ICoordinate> Coordinates { get; }
+        ICoordinate[] Coordinates { get; }
     }
 }

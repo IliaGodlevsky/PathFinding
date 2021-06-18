@@ -14,12 +14,7 @@ namespace Algorithm.Realizations.StepRules
         public double CalculateStepCost(IVertex neighbour, IVertex current)
         {
             var stepCost = stepRule.CalculateStepCost(neighbour, current);
-            if (!current.IsCardinal(neighbour))
-            {
-                return stepCost * 2;
-            }
-
-            return stepCost;
+            return !current.IsCardinal(neighbour) ? stepCost * 2 : stepCost;
         }
 
         private readonly IStepRule stepRule;

@@ -1,7 +1,6 @@
 ﻿using GraphLib.Interfaces;
 using NullObject.Attributes;
 using System;
-using System.Collections.Generic;
 
 namespace GraphLib.NullRealizations.NullObjects
 {
@@ -14,7 +13,7 @@ namespace GraphLib.NullRealizations.NullObjects
             coordinates = new NullCoordinate[] { new NullCoordinate() };
         }
 
-        public IEnumerable<ICoordinate> Coordinates => coordinates;
+        public ICoordinate[] Coordinates => coordinates;
 
         private readonly NullCoordinate[] coordinates;
     }

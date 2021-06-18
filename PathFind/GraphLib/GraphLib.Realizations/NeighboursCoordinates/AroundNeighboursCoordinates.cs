@@ -22,7 +22,7 @@ namespace GraphLib.Realizations.NeighboursCoordinates
             limitDepth = selfCoordinatesValues.Length;
             resultCoordinatesValues = new int[limitDepth];
             lateralOffsetMatrix = limitDepth == 0 ? new int[] { } : new[] { -1, 0, 1 };
-            neighboursCoordinates = new Lazy<IEnumerable<ICoordinate>>(GetNeighboursCoordinates);
+            neighboursCoordinates = new Lazy<ICoordinate[]>(GetNeighboursCoordinates);
         }
 
         public void GetObjectData(SerializationInfo info, StreamingContext context)
@@ -34,7 +34,7 @@ namespace GraphLib.Realizations.NeighboursCoordinates
         /// Returns an array of the coordinate neighbours
         /// </summary>
         /// <returns>An array of the coordinate neighbours</returns>
-        public IEnumerable<ICoordinate> Coordinates => neighboursCoordinates.Value;
+        public ICoordinate[] Coordinates => neighboursCoordinates.Value;
 
         private AroundNeighboursCoordinates(SerializationInfo info, StreamingContext context)
             : this(((int[])info.GetValue(nameof(selfCoordinatesValues), typeof(int[]))).ToCoordinate())
@@ -47,7 +47,7 @@ namespace GraphLib.Realizations.NeighboursCoordinates
         /// </summary>
         /// <param name="depth">The depth of the recursive dive</param>
         /// <returns>An array of neighbours coordinates around the central one</returns>
-        private IEnumerable<ICoordinate> DetectNeighboursCoordinates(int depth = 0)
+        private List<ICoordinate> DetectNeighboursCoordinates(int depth = 0)
         {
             var neighbourCoordinates = new List<ICoordinate>();
             foreach (var offset in lateralOffsetMatrix)
@@ -67,15 +67,17 @@ namespace GraphLib.Realizations.NeighboursCoordinates
             return neighbourCoordinates;
         }
 
-        private IEnumerable<ICoordinate> GetNeighboursCoordinates()
+        private ICoordinate[] GetNeighboursCoordinates()
         {
-            return DetectNeighboursCoordinates().Except(selfCoordinatesValues.ToCoordinate());
+            return DetectNeighboursCoordinates()
+                .Except(selfCoordinatesValues.ToCoordinate())
+                .ToArray();
         }
 
         private readonly int limitDepth;
         private readonly int[] selfCoordinatesValues;
         private readonly int[] resultCoordinatesValues;
         private readonly int[] lateralOffsetMatrix;
-        private readonly Lazy<IEnumerable<ICoordinate>> neighboursCoordinates;
+        private readonly Lazy<ICoordinate[]> neighboursCoordinates;
     }
 }

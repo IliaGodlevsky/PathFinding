@@ -138,9 +138,6 @@
   <data name="HeightInputMsg" xml:space="preserve">
     <value>Enter height of graph: </value>
   </data>
-  <data name="MenuFormat" xml:space="preserve">
-    <value>{0}. {1}</value>
-  </data>
   <data name="ObstaclePercentInputMsg" xml:space="preserve">
     <value>Enter percent of obstacles: </value>
   </data>

@@ -1,5 +1,4 @@
 ﻿using Common.ValueRanges;
-using ConsoleVersion.Resource;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,11 +8,12 @@ namespace ConsoleVersion.View
 {
     internal sealed class MenuList
     {
-        public MenuList(ICollection<string> menuItemsNames, int columns = 2)
+        public MenuList(IEnumerable<string> menuItemsNames, int columns = 2)
         {
-            columnsValueRange = new InclusiveValueRange<int>(10, 1);
+            this.menuItemsNames = menuItemsNames.ToArray();
+            menuItemsCount = this.menuItemsNames.Length;
+            columnsValueRange = new InclusiveValueRange<int>(menuItemsCount, 1);
             this.columns = columnsValueRange.ReturnInRange(columns);
-            this.menuItemsNames = menuItemsNames;
             menuList = new Lazy<string>(CreateMenu);
         }
 
@@ -27,8 +27,9 @@ namespace ConsoleVersion.View
             var menu = new StringBuilder("\n");
 
             int menuItemNumber = 0;
-            int menuItemNumberPad = Convert.ToInt32(Math.Log10(menuItemsNames.Count)) + 1;
-            int longestNameLength = menuItemsNames.Max(str => str.Length) + 1;
+            int menuItemNumberPad = CalculateMenuItemNumberPad();
+            int longestNameLength = menuItemsCount > 0 
+                ? menuItemsNames.Max(str => str.Length) + 1 : 0;
 
             foreach (var name in menuItemsNames)
             {
@@ -36,7 +37,7 @@ namespace ConsoleVersion.View
                 string paddedName = name.PadRight(longestNameLength);
                 string stringedMenuItemNumber = (++menuItemNumber).ToString();
                 string paddedMenuItemNumber = stringedMenuItemNumber.PadLeft(menuItemNumberPad);
-                string format = Resources.MenuFormat + separator;
+                string format = Format + separator;
                 menu.AppendFormat(format, paddedMenuItemNumber, paddedName);
             }
 
@@ -48,10 +49,22 @@ namespace ConsoleVersion.View
             return (currentMenuItemNumber + 1) % columns == 0 ? "\n" : " ";
         }
 
-        private readonly Lazy<string> menuList;
-
-        private readonly int columns;
-        private readonly ICollection<string> menuItemsNames;
+        private int CalculateMenuItemNumberPad()
+        {
+            // 0 to 99 - 1,
+            // 100 to 999 - 2,
+            // 1000 to 9999 - 3
+            // and so on...
+            double menuNumberPad = menuItemsCount > 0 ? Math.Log10(menuItemsCount) : -1;
+            return Convert.ToInt32(menuNumberPad) + 1;
+        }
+              
+        private readonly string[] menuItemsNames;
         private readonly IValueRange<int> columnsValueRange;
+        private readonly Lazy<string> menuList;
+        private readonly int menuItemsCount;
+        private readonly int columns;
+
+        private const string Format = "{0}. {1}";
     }
 }

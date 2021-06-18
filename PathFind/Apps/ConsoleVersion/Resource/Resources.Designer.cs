@@ -124,15 +124,6 @@ namespace ConsoleVersion.Resource {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to {0}. {1}.
-        /// </summary>
-        internal static string MenuFormat {
-            get {
-                return ResourceManager.GetString("MenuFormat", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Enter percent of obstacles: .
         /// </summary>
         internal static string ObstaclePercentInputMsg {
