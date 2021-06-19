@@ -1,4 +1,5 @@
-﻿using Common.ValueRanges;
+﻿using Common.Extensions;
+using Common.ValueRanges;
 using GraphLib.Interfaces;
 using System;
 
@@ -16,14 +17,14 @@ namespace GraphLib.Base
         }
 
         protected BaseVertexCost()
+            : this(CostRange.GetRandomValue())
         {
-            CurrentCost = Random.Next(CostRange.LowerValueOfRange, CostRange.UpperValueOfRange + 1);
+
         }
 
         static BaseVertexCost()
         {
             CostRange = new InclusiveValueRange<int>(9, 1);
-            Random = new Random();
         }
 
         public override bool Equals(object obj)
@@ -46,6 +47,5 @@ namespace GraphLib.Base
         public abstract object Clone();
 
         public static InclusiveValueRange<int> CostRange { get; set; }
-        private readonly static Random Random;
     }
 }

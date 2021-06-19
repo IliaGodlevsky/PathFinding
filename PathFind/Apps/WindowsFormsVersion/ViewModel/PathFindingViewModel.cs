@@ -30,7 +30,7 @@ namespace WindowsFormsVersion.ViewModel
             }
         }
 
-        protected override void ColorizeProcessedVertices()
+        protected override void ColorizeProcessedVertices(object sender, EventArgs e)
         {
             Application.DoEvents();
         }

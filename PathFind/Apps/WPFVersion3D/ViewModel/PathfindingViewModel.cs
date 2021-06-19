@@ -59,7 +59,7 @@ namespace WPFVersion3D.ViewModel
             });
         }
 
-        protected override void ColorizeProcessedVertices()
+        protected override void ColorizeProcessedVertices(object sender, EventArgs e)
         {
             var frame = new DispatcherFrame();
 

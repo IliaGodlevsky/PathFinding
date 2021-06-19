@@ -65,11 +65,9 @@ namespace ConsoleVersion.ViewModel
                 string message = "No vertices to choose as end points\n";
                 throw new NoVerticesToChooseAsEndPointsException(message, mainViewModel.Graph);
             }
-
-
         }
 
-        protected override void ColorizeProcessedVertices()
+        protected override void ColorizeProcessedVertices(object sender, EventArgs e)
         {
 
         }

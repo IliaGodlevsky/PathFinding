@@ -28,7 +28,7 @@ namespace ConsoleVersion.View
 
             int menuItemNumber = 0;
             int menuItemNumberPad = CalculateMenuItemNumberPad();
-            int longestNameLength = menuItemsCount > 0 
+            int longestNameLength = menuItemsCount > 0
                 ? menuItemsNames.Max(str => str.Length) + 1 : 0;
 
             foreach (var name in menuItemsNames)
@@ -58,7 +58,7 @@ namespace ConsoleVersion.View
             double menuNumberPad = menuItemsCount > 0 ? Math.Log10(menuItemsCount) : -1;
             return Convert.ToInt32(menuNumberPad) + 1;
         }
-              
+
         private readonly string[] menuItemsNames;
         private readonly IValueRange<int> columnsValueRange;
         private readonly Lazy<string> menuList;
