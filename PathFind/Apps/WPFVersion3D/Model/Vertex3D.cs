@@ -95,9 +95,9 @@ namespace WPFVersion3D.Model
             set => SetValue(ModelProperty, value);
         }
 
-        public Material Material
+        public DiffuseMaterial Material
         {
-            get => (Material)GetValue(MaterialProperty);
+            get => (DiffuseMaterial)GetValue(MaterialProperty);
             set => SetValue(MaterialProperty, value);
         }
 
@@ -179,7 +179,7 @@ namespace WPFVersion3D.Model
             DependencyPropertyChangedEventArgs prop)
         {
             Vertex3D vert = (Vertex3D)depObj;
-            vert.Material = (Material)prop.NewValue;
+            vert.Material = (DiffuseMaterial)prop.NewValue;
         }
 
         protected static void SizePropertyChanged(DependencyObject depObj,

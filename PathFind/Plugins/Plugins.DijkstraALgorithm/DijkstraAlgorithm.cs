@@ -29,7 +29,7 @@ namespace Plugins.DijkstraALgorithm
 
         protected override IGraphPath CreateGraphPath()
         {
-            return new GraphPath(parentVertices, endPoints, graph, stepRule);
+            return new GraphPath(parentVertices, endPoints, stepRule);
         }
 
         protected override IVertex NextVertex

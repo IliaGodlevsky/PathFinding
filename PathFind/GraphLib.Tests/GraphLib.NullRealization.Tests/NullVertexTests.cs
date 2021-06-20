@@ -49,5 +49,38 @@ namespace GraphLib.Common.Tests
 
             Assert.DoesNotThrow(() => vertex.SetNeighbours(graph));
         }
+
+        [Test]
+        public void IsNeighbour_DoesnotThrow()
+        {
+            NullGraph graph = new NullGraph();
+
+            NullVertex candidate = new NullVertex();
+            NullVertex vertex = (NullVertex)graph.Vertices.First();
+
+            Assert.DoesNotThrow(() => vertex.IsNeighbour(candidate));
+        }
+
+        [Test]
+        public void IsNeighbour_VerticesDoesntBelongToGraph_ReturnFalse()
+        {
+            var graph = new NullGraph();
+
+            NullVertex candidate = new NullVertex();
+            NullVertex vertex = (NullVertex)graph.Vertices.First();
+
+            Assert.IsFalse(vertex.IsNeighbour(candidate));
+        }
+
+        [Test]
+        public void CanBeNeighbour_VerticesBelongToGraph_ReturnsFalse()
+        {
+            var graph = new NullGraph();
+
+            NullVertex candidate = (NullVertex)graph.Vertices.Last();
+            NullVertex vertex = (NullVertex)graph.Vertices.First();
+
+            Assert.IsFalse(vertex.CanBeNeighbour(candidate));
+        }
     }
 }

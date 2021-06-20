@@ -26,6 +26,17 @@ namespace GraphLib.Extensions
             return IsObstacleOrNullObject(self) || self.Neighbours.All(IsObstacleOrNullObject);
         }
 
+        public static bool IsNeighbour(this IVertex self, IVertex candidate)
+        {
+            bool IsAtSamePosition(IVertex vertex) => vertex.Position.IsEqual(candidate.Position);
+            return candidate.IsClose(self) && self.Neighbours.Any(IsAtSamePosition);
+        }
+
+        public static bool CanBeNeighbour(this IVertex self, IVertex candidate)
+        {
+            return !ReferenceEquals(candidate, self) && !self.IsNeighbour(candidate);
+        }
+
         /// <summary>
         /// Returns vertex to its start state
         /// </summary>
@@ -107,7 +118,7 @@ namespace GraphLib.Extensions
                 .Coordinates
                 .Where(coordinate => coordinate.IsWithinGraph(graph))
                 .Select(coordinate => graph[coordinate])
-                .Where(vertex => graph.CanBeNeighbours(vertex, self))
+                .Where(vertex => self.CanBeNeighbour(vertex))
                 .ToList();
         }
     }

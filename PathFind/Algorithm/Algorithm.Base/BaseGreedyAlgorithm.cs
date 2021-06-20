@@ -29,7 +29,7 @@ namespace Algorithm.Base
             }
             CompletePathfinding();
 
-            return new GraphPath(parentVertices, endPoints, graph);
+            return new GraphPath(parentVertices, endPoints);
         }
 
         protected abstract double GreedyHeuristic(IVertex vertex);

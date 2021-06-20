@@ -17,19 +17,6 @@ namespace GraphLib.Extensions
             graph.ForEach(vertex => vertex.Refresh());
         }
 
-        public static bool AreNeighbours(this IGraph self, IVertex candidate, IVertex vert)
-        {
-            bool IsAtSamePosition(IVertex vertex) => vertex.Position.IsEqual(candidate.Position);
-            return candidate.IsClose(vert)
-                && vert.Neighbours.Any(IsAtSamePosition)
-                && self.Contains(candidate, vert);
-        }
-
-        public static bool CanBeNeighbours(this IGraph self, IVertex candidate, IVertex vertex)
-        {
-            return !ReferenceEquals(candidate, vertex) && !self.AreNeighbours(candidate, vertex);
-        }
-
         public static void ToUnweighted(this IGraph graph)
         {
             graph.Vertices

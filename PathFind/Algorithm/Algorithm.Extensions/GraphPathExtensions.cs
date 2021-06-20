@@ -14,10 +14,5 @@ namespace Algorithm.Extensions
                 .OfType<IMarkable>()
                 .ForEach(vertex => vertex.MarkAsPath());
         }
-
-        public static bool HasPath(this IGraphPath self)
-        {
-            return self.Path.Any();
-        }
     }
 }

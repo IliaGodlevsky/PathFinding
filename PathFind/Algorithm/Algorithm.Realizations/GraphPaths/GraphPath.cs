@@ -17,20 +17,19 @@ namespace Algorithm.Realizations.GraphPaths
 
         public int PathLength => pathLength.Value;
 
-        public GraphPath(ParentVertices parentVertices, IEndPoints endPoints, IGraph graph)
-            : this(parentVertices, endPoints, graph, new DefaultStepRule())
+        public GraphPath(ParentVertices parentVertices, IEndPoints endPoints)
+            : this(parentVertices, endPoints, new DefaultStepRule())
         {
 
         }
 
         public GraphPath(ParentVertices parentVertices,
-            IEndPoints endPoints, IGraph graph, IStepRule stepRule)
+            IEndPoints endPoints, IStepRule stepRule)
         {
             path = new Lazy<IVertex[]>(GetPath);
             pathCost = new Lazy<double>(ExtractPathCost);
             pathLength = new Lazy<int>(GetPathLength);
             this.parentVertices = parentVertices;
-            this.graph = graph;
             this.endPoints = endPoints;
             this.stepRule = stepRule;
         }
@@ -50,7 +49,7 @@ namespace Algorithm.Realizations.GraphPaths
             var vertex = endPoints.Target;
             yield return vertex;
             var parent = parentVertices.GetParent(vertex);
-            while (graph.AreNeighbours(vertex, parent))
+            while (parent.IsNeighbour(vertex))
             {
                 yield return parent;
                 vertex = parent;
@@ -83,7 +82,6 @@ namespace Algorithm.Realizations.GraphPaths
         }
 
         private readonly ParentVertices parentVertices;
-        private readonly IGraph graph;
         private readonly IEndPoints endPoints;
         private readonly IStepRule stepRule;
 

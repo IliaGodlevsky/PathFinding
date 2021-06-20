@@ -47,7 +47,7 @@ namespace Algorithm.Realizations.Tests
         {
             int expectedPathLength = expectedPraphPathCoordinates.Length - 1;
             const int expectedPathCost = 25;
-            var graphPath = new GraphPath(parentVertices, endPoints, graph);
+            var graphPath = new GraphPath(parentVertices, endPoints);
 
             double pathCost = graphPath.PathCost;
             int pathLength = graphPath.PathLength;

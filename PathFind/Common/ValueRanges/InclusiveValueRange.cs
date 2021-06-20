@@ -13,7 +13,7 @@ namespace Common.ValueRanges
         public T LowerValueOfRange { get; }
 
         /// <summary>
-        /// Creates a new instance of <see cref="InclusiveValueRange"/> 
+        /// Creates a new instance of <see cref="InclusiveValueRange{T}"/> 
         /// with <paramref name="upperValueOfRange"/> and 
         /// <paramref name="lowerValueOfRange"/> as extreme values of the range
         /// </summary>

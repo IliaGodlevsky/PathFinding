@@ -37,7 +37,7 @@ namespace Algorithm.Base
 
         protected virtual IGraphPath CreateGraphPath()
         {
-            return new GraphPath(parentVertices, endPoints, graph);
+            return new GraphPath(parentVertices, endPoints);
         }
 
         protected virtual void VisitVertex(IVertex vertex)

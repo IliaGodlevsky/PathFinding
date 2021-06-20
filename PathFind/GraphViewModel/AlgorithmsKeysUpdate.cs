@@ -1,5 +1,4 @@
 ﻿using AssembleClassesLib.EventArguments;
-using Common.Extensions;
 using System.Linq;
 
 namespace GraphViewModel
@@ -13,31 +12,17 @@ namespace GraphViewModel
 
         public void UpdateAlgorithmKeys(object sender, AssembleClassesEventArgs e)
         {
-            var currentLoadedPluginsKeys = e.ClassesNames
-                .ToArray();
-
-            var addedAlgorithms = currentLoadedPluginsKeys
-                .Except(model.AlgorithmKeys)
-                .ToArray();
-
-            var deletedAlgorithms = model.AlgorithmKeys
-                .Except(currentLoadedPluginsKeys.AsEnumerable())
-                .ToArray();
-
-            if (addedAlgorithms.Any())
+            var orderedAlgorithmNames = e.ClassesNames.OrderBy(Name);
+            var orderedAlgorithmKeys = model.AlgorithmKeys.OrderBy(Name);
+            if (!orderedAlgorithmNames.SequenceEqual(orderedAlgorithmKeys))
             {
-                model.AlgorithmKeys.AddRange(addedAlgorithms);
+                model.AlgorithmKeys = orderedAlgorithmNames.ToList();
             }
-            if (deletedAlgorithms.Any())
-            {
-                model.AlgorithmKeys.RemoveRange(deletedAlgorithms);
-            }
-            if (addedAlgorithms.Any() || deletedAlgorithms.Any())
-            {
-                model.AlgorithmKeys = model.AlgorithmKeys
-                    .OrderBy(key => key)
-                    .ToList();
-            }
+        }
+
+        private string Name(string name)
+        {
+            return name;
         }
 
         private readonly PathFindingModel model;
