@@ -7,11 +7,11 @@ using System.Linq;
 
 namespace Algorithm.Realizations.Heuristic
 {
-    public abstract class BaseHeuristic
+    public abstract class AbstractDistance
     {
-        public double Calculate(IVertex first, IVertex second)
+        public double CalculateDistance(IVertex first, IVertex second)
         {
-            #region InvariantsObservance
+            #region Invariants Observance
             if (first == null || second == null)
             {
                 throw new ArgumentNullException();
@@ -24,7 +24,8 @@ namespace Algorithm.Realizations.Heuristic
 
             if (!first.HaveEqualDimensionsNumber(second))
             {
-                string message = "Can't calculate distance between vertices with different coordinates count";
+                string message = "Can't calculate distance between " +
+                    "vertices with different coordinates count";
                 throw new WrongNumberOfDimensionsException(message);
             }
             #endregion

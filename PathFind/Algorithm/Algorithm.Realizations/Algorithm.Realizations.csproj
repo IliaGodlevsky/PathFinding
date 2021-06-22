@@ -41,7 +41,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Heuristic\BaseHeuristic.cs" />
+    <Compile Include="Heuristic\AbstractDistance.cs" />
     <Compile Include="Heuristic\ChebyshevDistance.cs" />
     <Compile Include="ConcreteAssembleAlgorithmClasses.cs" />
     <Compile Include="GraphPaths\GraphPath.cs" />
@@ -49,8 +49,6 @@
     <Compile Include="Heuristic\ManhattanDistance.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="StepRules\DefaultStepRule.cs" />
-    <Compile Include="StepRules\DiagonalExpensiveStepRule.cs" />
-    <Compile Include="StepRules\DensityStepRule.cs" />
     <Compile Include="StepRules\LandscapeStepRule.cs" />
     <Compile Include="StepRules\WalkStepRule.cs" />
   </ItemGroup>

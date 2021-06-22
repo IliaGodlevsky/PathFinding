@@ -16,7 +16,7 @@ namespace Plugins.DijkstraALgorithm
     public class DijkstraAlgorithm : BaseWaveAlgorithm
     {
         public DijkstraAlgorithm(IGraph graph, IEndPoints endPoints)
-            : this(graph, endPoints, new DefaultStepRule())
+            : this(graph, endPoints, new LandscapeStepRule())
         {
 
         }
