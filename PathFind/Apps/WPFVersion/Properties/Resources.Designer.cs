@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace WPFVersion3D.Properties {
+namespace WPFVersion.Properties {
     using System;
     
     

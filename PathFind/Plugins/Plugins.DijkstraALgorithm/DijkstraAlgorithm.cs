@@ -16,7 +16,7 @@ namespace Plugins.DijkstraALgorithm
     public class DijkstraAlgorithm : BaseWaveAlgorithm
     {
         public DijkstraAlgorithm(IGraph graph, IEndPoints endPoints)
-            : this(graph, endPoints, new LandscapeStepRule())
+            : this(graph, endPoints, new DefaultStepRule())
         {
 
         }
@@ -55,7 +55,7 @@ namespace Plugins.DijkstraALgorithm
         {
             base.PrepareForPathfinding();
 
-            var vertices = graph.Vertices.Except(endPoints.Source).GetNotObstacles();
+            var vertices = graph.Vertices.Except(endPoints.Source).FilterObstacles();
             accumulatedCosts = new AccumulatedCosts(vertices, double.PositiveInfinity);
             accumulatedCosts.Reevaluate(endPoints.Source, 0);
         }

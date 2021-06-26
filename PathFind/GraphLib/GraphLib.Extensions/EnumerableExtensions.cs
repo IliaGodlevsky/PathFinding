@@ -43,7 +43,7 @@ namespace GraphLib.Extensions
             return collection.Where(vertex => vertex.IsObstacle).ToArray();
         }
 
-        public static IVertex[] GetNotObstacles(this IEnumerable<IVertex> collection)
+        public static IVertex[] FilterObstacles(this IEnumerable<IVertex> collection)
         {
             return collection.Where(vertex => !vertex.IsObstacle).ToArray();
         }

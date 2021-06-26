@@ -78,7 +78,7 @@ namespace GraphLib.Extensions
 
         public static IVertex[] GetNotObstacles(this IGraph self)
         {
-            return self.Vertices.GetNotObstacles();
+            return self.Vertices.FilterObstacles();
         }
 
         public static int[] ToCoordinates(this IGraph self, int index)
