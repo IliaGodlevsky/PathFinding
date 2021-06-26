@@ -46,7 +46,7 @@ namespace Algorithm.Base
             {
                 var neighbours = visitedVertices
                     .GetUnvisitedNeighbours(CurrentVertex)
-                    .GetNotObstacles()
+                    .FilterObstacles()
                     .ToArray();
 
                 bool IsLeastCostVertex(IVertex vertex)

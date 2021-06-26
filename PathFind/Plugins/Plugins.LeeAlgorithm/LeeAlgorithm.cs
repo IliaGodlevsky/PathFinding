@@ -21,7 +21,7 @@ namespace Plugins.LeeAlgorithm
         protected override void PrepareForPathfinding()
         {
             base.PrepareForPathfinding();
-            var vertices = graph.Vertices.GetNotObstacles();
+            var vertices = graph.Vertices.FilterObstacles();
             accumulatedCosts = new AccumulatedCosts(vertices, 0);
         }
 

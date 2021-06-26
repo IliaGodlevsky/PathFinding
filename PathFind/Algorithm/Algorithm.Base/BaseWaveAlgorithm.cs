@@ -69,7 +69,7 @@ namespace Algorithm.Base
         {
             return visitedVertices
                 .GetUnvisitedNeighbours(CurrentVertex)
-                .GetNotObstacles()
+                .FilterObstacles()
                 .ToArray();
         }
     }
