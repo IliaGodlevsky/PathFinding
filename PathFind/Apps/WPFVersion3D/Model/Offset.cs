@@ -18,6 +18,6 @@
 
         private double AdjustedVertexSize => VertexSize + DistanceBetweenVertices;
 
-        private double AdjustedDimensionSize => (-DimensionSize + AdditionalOffset) / 2;
+        private double AdjustedDimensionSize => (AdditionalOffset - DimensionSize) / 2;
     }
 }

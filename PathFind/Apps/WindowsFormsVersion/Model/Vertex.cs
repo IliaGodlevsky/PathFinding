@@ -54,7 +54,9 @@ namespace WindowsFormsVersion.Model
             {
                 isObstacle = value;
                 if (isObstacle)
+                {
                     MarkAsObstacle();
+                }
             }
         }
 

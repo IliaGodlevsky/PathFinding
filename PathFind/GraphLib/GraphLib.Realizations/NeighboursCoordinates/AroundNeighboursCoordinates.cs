@@ -6,8 +6,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.Serialization;
 
-using static System.Linq.Enumerable;
-
 namespace GraphLib.Realizations.NeighboursCoordinates
 {
     /// <summary>
@@ -46,6 +44,7 @@ namespace GraphLib.Realizations.NeighboursCoordinates
         /// Detects neighbours coordinates around the central coordinate
         /// </summary>
         /// <param name="depth">The depth of the recursive dive</param>
+        /// <remarks>Recursive method</remarks>
         /// <returns>An array of neighbours coordinates around the central one</returns>
         private List<ICoordinate> DetectNeighboursCoordinates(int depth = 0)
         {

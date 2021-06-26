@@ -1,5 +1,6 @@
 ﻿using GraphLib.Interfaces;
 using GraphLib.NullRealizations.NullObjects;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 
 namespace Algorithm.Сompanions
@@ -8,7 +9,7 @@ namespace Algorithm.Сompanions
     {
         public ParentVertices()
         {
-            parentVertices = new Dictionary<ICoordinate, IVertex>();
+            parentVertices = new ConcurrentDictionary<ICoordinate, IVertex>();
         }
 
         public void Add(IVertex child, IVertex parent)
@@ -33,6 +34,6 @@ namespace Algorithm.Сompanions
             parentVertices.Clear();
         }
 
-        private readonly Dictionary<ICoordinate, IVertex> parentVertices;
+        private readonly IDictionary<ICoordinate, IVertex> parentVertices;
     }
 }

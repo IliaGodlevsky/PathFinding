@@ -9,8 +9,15 @@ using System.Linq;
 
 namespace Algorithm.Realizations.GraphPaths
 {
+    /// <summary>
+    /// A class that contains the 
+    /// result of pathfinding process
+    /// </summary>
     public sealed class GraphPath : IGraphPath
     {
+        /// <summary>
+        /// A chain of vertices, that represent path
+        /// </summary>
         public IVertex[] Path => path.Value;
 
         public double PathCost => pathCost.Value;

@@ -10,6 +10,9 @@ using System.Linq;
 
 namespace Algorithm.Base
 {
+    /// <summary>
+    /// A base class for all Greedy algorithms
+    /// </summary>
     public abstract class BaseGreedyAlgorithm : BaseAlgorithm
     {
         protected BaseGreedyAlgorithm(IGraph graph, IEndPoints endPoints)
@@ -32,6 +35,11 @@ namespace Algorithm.Base
             return new GraphPath(parentVertices, endPoints);
         }
 
+        /// <summary>
+        /// A greedy function (heuristic) for algorithm
+        /// </summary>
+        /// <param name="vertex"></param>
+        /// <returns></returns>
         protected abstract double GreedyHeuristic(IVertex vertex);
 
         protected override void CompletePathfinding()
@@ -40,6 +48,10 @@ namespace Algorithm.Base
             visitedVerticesStack.Clear();
         }
 
+        /// <summary>
+        /// Gets next vertex according 
+        /// to <see cref="GreedyHeuristic(IVertex)"/> function
+        /// </summary>
         protected IVertex NextVertex
         {
             get

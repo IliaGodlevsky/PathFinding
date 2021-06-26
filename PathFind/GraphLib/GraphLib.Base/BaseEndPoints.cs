@@ -5,6 +5,7 @@ using GraphLib.Interfaces;
 using GraphLib.NullRealizations.NullObjects;
 using NullObject.Extensions;
 using System;
+using System.Threading.Tasks;
 
 namespace GraphLib.Base
 {
@@ -29,12 +30,12 @@ namespace GraphLib.Base
 
         public void SubscribeToEvents(IGraph graph)
         {
-            graph.ForEach(SubscribeVertex);
+            Task.Run(() => graph.ForEach(SubscribeVertex));
         }
 
         public void UnsubscribeFromEvents(IGraph graph)
         {
-            graph.ForEach(UnsubscribeVertex);
+            Task.Run(() => graph.ForEach(UnsubscribeVertex));
         }
 
         public void Reset()

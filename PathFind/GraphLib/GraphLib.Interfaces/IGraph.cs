@@ -5,7 +5,7 @@ namespace GraphLib.Interfaces
     /// <summary>
     /// 
     /// </summary>
-    public interface IGraph
+     public interface IGraph
     {
         int Size { get; }
 

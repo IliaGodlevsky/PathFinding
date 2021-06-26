@@ -6,6 +6,10 @@ using System.Collections.Generic;
 
 namespace Algorithm.Realizations.Heuristic
 {
+    /// <summary>
+    /// Calculates chebyshev distance between to vertices
+    /// </summary>
+    /// <remarks><see cref="https://en.wikipedia.org/wiki/Chebyshev_distance"/></remarks>
     public sealed class ChebyshevDistance : AbstractDistance, IHeuristic
     {
         public double Calculate(IVertex first, IVertex second)
