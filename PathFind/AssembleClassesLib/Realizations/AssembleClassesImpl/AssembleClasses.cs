@@ -55,12 +55,6 @@ namespace AssembleClassesLib.Realizations.AssembleClassesImpl
         /// <exception cref="COMException"/>
         public void LoadClasses()
         {
-            LoadClassesFromAssemble();
-            ClassesNames = types.Keys.OrderBy(Key).ToArray();
-        }
-
-        protected virtual void LoadClassesFromAssemble()
-        {
             types = GetFiles()
                 .Select(loadMethod.Load)
                 .SelectMany(Types)
@@ -68,6 +62,7 @@ namespace AssembleClassesLib.Realizations.AssembleClassesImpl
                 .Where(CanBeLoaded)
                 .DistinctBy(FullName)
                 .ToDictionary(ClassName);
+            ClassesNames = types.Keys.OrderBy(Key).ToArray();
         }
 
         protected virtual bool IsRequiredType(Type type)
@@ -109,10 +104,10 @@ namespace AssembleClassesLib.Realizations.AssembleClassesImpl
             return !type.IsNotLoadable();
         }
 
-        protected IDictionary<string, Type> types;
-        protected readonly string loadPath;
+        private IDictionary<string, Type> types;
+        private readonly string loadPath;
         private readonly SearchOption searchOption;
-        protected readonly IAssembleLoadMethod loadMethod;
+        private readonly IAssembleLoadMethod loadMethod;
 
         private const string SearchPattern = "*.dll";
     }

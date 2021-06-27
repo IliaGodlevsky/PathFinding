@@ -23,7 +23,7 @@ namespace WPFVersion3D.Model
 
         protected override string[] GetFiles()
         {
-            return new string[] { loadPath };
+            return new string[] { string.Empty };
         }
 
         protected override bool IsRequiredType(Type type)
