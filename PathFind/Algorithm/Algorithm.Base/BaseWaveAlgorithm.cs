@@ -1,6 +1,7 @@
 ﻿using Algorithm.Extensions;
 using Algorithm.Interfaces;
 using Algorithm.Realizations.GraphPaths;
+using AssembleClassesLib.Attributes;
 using Common.Extensions;
 using GraphLib.Extensions;
 using GraphLib.Interfaces;
@@ -9,6 +10,7 @@ using System.Linq;
 
 namespace Algorithm.Base
 {
+    [NotLoadable]
     public abstract class BaseWaveAlgorithm : BaseAlgorithm
     {
         protected BaseWaveAlgorithm(IGraph graph, IEndPoints endPoints)

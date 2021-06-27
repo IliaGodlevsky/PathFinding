@@ -9,16 +9,16 @@ namespace Algorithm.Сompanions
         public IVertex Target { get; }
         public IVertex Source { get; }
 
-        public EndPoints(IVertex start, IVertex end)
+        public EndPoints(IVertex source, IVertex target)
         {
-            Source = start;
-            Target = end;
+            Source = source;
+            Target = target;
         }
 
         public EndPoints(IEndPoints endPoints)
+            : this(endPoints.Source, endPoints.Target)
         {
-            Target = endPoints.Target;
-            Source = endPoints.Source;
+
         }
 
         public bool IsEndPoint(IVertex vertex)

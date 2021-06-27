@@ -16,7 +16,9 @@ namespace WPFVersion3D.Model
 
         public double DistanceBetweenVerticesAtZAxis { get; set; }
 
-        public IReadOnlyCollection<IVertex> Vertices => Children.OfType<IVertex>().ToArray();
+        public IReadOnlyCollection<IVertex> Vertices => Vertices3D;
+
+        private IReadOnlyCollection<Vertex3D> Vertices3D => Children.OfType<Vertex3D>().ToArray();
 
         public GraphField3D(int width, int length, int height)
         {
@@ -59,8 +61,7 @@ namespace WPFVersion3D.Model
         public void CenterGraph(params double[] additionalOffset)
         {
             var axisOffsets = new double[DimensionSizes.Length];
-            var vertices = Children.Cast<Vertex3D>();
-            foreach (var vertex in vertices)
+            foreach (var vertex in Vertices3D)
             {
                 for (int i = 0; i < DimensionSizes.Length; i++)
                 {
@@ -95,8 +96,7 @@ namespace WPFVersion3D.Model
 
         private void StretchAlongAxes(params IAxis[] axes)
         {
-            var vertices = Vertices.Cast<Vertex3D>();
-            foreach (var vertex in vertices)
+            foreach (var vertex in Vertices3D)
             {
                 foreach (var axis in axes)
                 {

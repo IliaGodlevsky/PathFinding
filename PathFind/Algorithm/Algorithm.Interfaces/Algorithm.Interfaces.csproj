@@ -48,6 +48,10 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\AssembleClassesLib\AssembleClassesLib.csproj">
+      <Project>{89EAEACE-ADD0-4B2F-B78C-5DB74AD01D8D}</Project>
+      <Name>AssembleClassesLib</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\Common\Common.csproj">
       <Project>{a5a743f5-d346-4b2b-b6ac-07152f64e4d9}</Project>
       <Name>Common</Name>

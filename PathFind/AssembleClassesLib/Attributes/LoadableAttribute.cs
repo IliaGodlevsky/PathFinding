@@ -2,7 +2,7 @@
 
 namespace AssembleClassesLib.Attributes
 {
-    [AttributeUsage(AttributeTargets.Class, Inherited = false)]
+    [AttributeUsage(AttributeTargets.Class | AttributeTargets.Interface | AttributeTargets.Struct, Inherited = false)]
     public sealed class LoadableAttribute : Attribute
     {
     }

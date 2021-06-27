@@ -64,12 +64,18 @@ namespace AssembleClassesLib.Realizations.AssembleClassesImpl
             types = GetFiles()
                 .Select(loadMethod.Load)
                 .SelectMany(Types)
+                .Where(IsRequiredType)
                 .Where(CanBeLoaded)
                 .DistinctBy(FullName)
                 .ToDictionary(ClassName);
         }
 
-        private string[] GetFiles()
+        protected virtual bool IsRequiredType(Type type)
+        {
+            return true;
+        }
+
+        protected virtual string[] GetFiles()
         {
             return Directory.GetFiles(
                 loadPath,

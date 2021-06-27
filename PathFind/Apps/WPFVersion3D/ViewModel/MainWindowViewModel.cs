@@ -83,7 +83,7 @@ namespace WPFVersion3D.ViewModel
             LoadGraphCommand = new RelayCommand(ExecuteLoadGraphCommand);
             ChangeOpacityCommand = new RelayCommand(ExecuteChangeOpacity, CanExecuteGraphOperation);
             AnimatedAxisRotateCommand = new RelayCommand(ExecuteAnimatedAxisRotateCommand);
-            var speeds = new SpeedAssembleClasses();
+            var speeds = new SpeedClasses();
             speeds.LoadClasses();
             AnimationSpeeds = speeds.OfType<IAnimationSpeed>()
                 .OrderByDescending(item => item.GetOrder())

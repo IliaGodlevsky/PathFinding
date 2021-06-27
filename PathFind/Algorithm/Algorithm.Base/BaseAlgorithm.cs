@@ -3,6 +3,7 @@ using Algorithm.Infrastructure.Handlers;
 using Algorithm.Interfaces;
 using Algorithm.Сompanions;
 using Algorithm.Сompanions.Interface;
+using AssembleClassesLib.Attributes;
 using GraphLib.Extensions;
 using GraphLib.Interfaces;
 using GraphLib.Realizations;
@@ -11,6 +12,7 @@ using System;
 
 namespace Algorithm.Base
 {
+    [NotLoadable]
     /// <summary>
     /// A base class for all pathfinding algorithms
     /// </summary>

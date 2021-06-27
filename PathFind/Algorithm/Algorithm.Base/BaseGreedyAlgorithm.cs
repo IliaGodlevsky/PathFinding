@@ -1,6 +1,7 @@
 ﻿using Algorithm.Extensions;
 using Algorithm.Interfaces;
 using Algorithm.Realizations.GraphPaths;
+using AssembleClassesLib.Attributes;
 using Common.Extensions;
 using GraphLib.Extensions;
 using GraphLib.Interfaces;
@@ -10,6 +11,7 @@ using System.Linq;
 
 namespace Algorithm.Base
 {
+    [NotLoadable]
     /// <summary>
     /// A base class for all Greedy algorithms
     /// </summary>

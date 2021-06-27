@@ -1,9 +1,11 @@
 ﻿using Algorithm.Infrastructure.Handlers;
+using AssembleClassesLib.Attributes;
 using Common.Interface;
 using System;
 
 namespace Algorithm.Interfaces
 {
+    [NotLoadable]
     /// <summary>
     /// A base interface for all path finding algorithms
     /// </summary>

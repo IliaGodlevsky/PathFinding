@@ -3,8 +3,6 @@ using Algorithm.Interfaces;
 using AssembleClassesLib.Interface;
 using AssembleClassesLib.Realizations.AssembleClassesImpl;
 using System;
-using System.Collections.Generic;
-using System.Linq;
 
 namespace Algorithm.Realizations
 {
@@ -31,28 +29,9 @@ namespace Algorithm.Realizations
             baseType = typeof(IAlgorithm);
         }
 
-        protected override void LoadClassesFromAssemble()
+        protected override bool IsRequiredType(Type type)
         {
-            base.LoadClassesFromAssemble();
-            types = types
-                .Where(IsConcreteAlgorithm)
-                .ToDictionary(ClassName, Type);
-        }
-
-        private string ClassName(KeyValuePair<string, Type> algo)
-        {
-            return algo.Key;
-        }
-
-        private Type Type(KeyValuePair<string, Type> algo)
-        {
-            return algo.Value;
-        }
-
-        private bool IsConcreteAlgorithm(KeyValuePair<string, Type> algo)
-        {
-            return !algo.Value.IsAbstract
-                   && baseType.IsAssignableFrom(algo.Value);
+            return baseType.IsAssignableFrom(type);
         }
 
         private readonly Type baseType;

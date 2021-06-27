@@ -20,7 +20,8 @@ namespace Algorithm.Realizations.Heuristic
         /// </summary>
         /// <param name="first"></param>
         /// <param name="second"></param>
-        /// <returns>Distance between two vertices</returns>
+        /// <returns>Distance between 
+        /// two vertices</returns>
         public double CalculateDistance(IVertex first, IVertex second)
         {
             #region Invariants Observance
@@ -49,14 +50,17 @@ namespace Algorithm.Realizations.Heuristic
         }
 
         /// <summary>
-        /// An aggregate function for zipped array of vertices' coordinates
+        /// An aggregate function for 
+        /// zipped array of vertices' coordinates
         /// </summary>
         /// <param name="collection"></param>
-        /// <returns>An aggregation result of aggregating the <paramref name="collection"/></returns>
+        /// <returns>An aggregation result of aggregating 
+        /// the <paramref name="collection"/></returns>
         protected abstract double Aggregate(IEnumerable<double> collection);
 
         /// <summary>
-        /// A method for zipping sequences of vertices' coordinates
+        /// A method for zipping sequences 
+        /// of vertices' coordinates
         /// </summary>
         /// <param name="first"></param>
         /// <param name="second"></param>

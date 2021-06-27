@@ -68,6 +68,7 @@
     <Compile Include="Axes\Abscissa.cs" />
     <Compile Include="Axes\Applicate.cs" />
     <Compile Include="Axes\Ordinate.cs" />
+    <Compile Include="Infrastructure\AnimationSpeed\NullSpeed.cs" />
     <Compile Include="Infrastructure\AnimationSpeed\RandomSpeed.cs" />
     <Compile Include="Infrastructure\Animators\BackwardAnimatedAxisRotator.cs" />
     <Compile Include="Infrastructure\Animators\BaseAnimatedAxisRotator.cs" />
@@ -94,7 +95,7 @@
     <Compile Include="Model\Offset.cs" />
     <Compile Include="Model\PathInput.cs" />
     <Compile Include="Model\RangedSlider.cs" />
-    <Compile Include="Model\SpeedAssembleClasses.cs" />
+    <Compile Include="Model\SpeedClasses.cs" />
     <Compile Include="Model\EmptyLoadPath.cs" />
     <Compile Include="Model\Vertex3DCost.cs" />
     <Compile Include="Model\Vertex3DCostFactory.cs" />
