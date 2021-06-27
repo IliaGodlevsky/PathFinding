@@ -1,6 +1,8 @@
 ﻿using Algorithm.Realizations;
+using AssembleClassesLib.Extensions;
 using AssembleClassesLib.Realizations;
 using AssembleClassesLib.Realizations.AssembleClassesImpl;
+using Common.Extensions;
 using Common.Interface;
 using GraphLib.Interfaces;
 using GraphLib.Realizations;
@@ -9,13 +11,16 @@ using GraphViewModel.Interfaces;
 using Logging.Loggers;
 using NullObject.Extensions;
 using System;
+using System.Collections.Generic;
 using System.ComponentModel;
+using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Windows;
 using System.Windows.Input;
 using WPFVersion3D.Axes;
 using WPFVersion3D.Infrastructure;
-using WPFVersion3D.Infrastructure.Animators.Interface;
+using WPFVersion3D.Infrastructure.AnimationSpeed;
+using WPFVersion3D.Interface;
 using WPFVersion3D.Model;
 using WPFVersion3D.View;
 
@@ -51,6 +56,8 @@ namespace WPFVersion3D.ViewModel
             set { graphField = value; OnPropertyChanged(); }
         }
 
+        public IDictionary<string, IAnimationSpeed> AnimationSpeeds { get; }
+
         public ICommand StartPathFindCommand { get; }
         public ICommand CreateNewGraphCommand { get; }
         public ICommand ClearGraphCommand { get; }
@@ -76,6 +83,11 @@ namespace WPFVersion3D.ViewModel
             LoadGraphCommand = new RelayCommand(ExecuteLoadGraphCommand);
             ChangeOpacityCommand = new RelayCommand(ExecuteChangeOpacity, CanExecuteGraphOperation);
             AnimatedAxisRotateCommand = new RelayCommand(ExecuteAnimatedAxisRotateCommand);
+            var speeds = new SpeedAssembleClasses();
+            speeds.LoadClasses();
+            AnimationSpeeds = speeds.OfType<IAnimationSpeed>()
+                .OrderByDescending(item => item.GetOrder())
+                .ToDictionary(item => item.GetClassName());
         }
 
         public override void FindPath()

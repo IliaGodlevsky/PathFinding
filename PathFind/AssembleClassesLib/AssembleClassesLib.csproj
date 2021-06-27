@@ -41,9 +41,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Attributes\ClassOrderAttribute.cs" />
     <Compile Include="Attributes\LoadableAttribute.cs" />
     <Compile Include="Attributes\NotLoadableAttribute.cs" />
+    <Compile Include="Extensions\IAssembleClassesExtensions.cs" />
     <Compile Include="Extensions\MemberInfoExtensions.cs" />
+    <Compile Include="Extensions\ObjectExtensions.cs" />
     <Compile Include="Interface\IAssembleLoadPath.cs" />
     <Compile Include="Interface\ILoadMethod.cs" />
     <Compile Include="Interface\INotifingAssembleClasses.cs" />

@@ -18,7 +18,7 @@
         <converters:InvertPointConverter x:Key="invertPointConverter"/>
         <converters:PointToNumberConverter x:Key="coordinateToDistance"/>
         <converters:PrecisedDoubleToStringConverter Precision="2" x:Key="doubleConverter2"/>
-        <converters:AnimatedAxisRotatorConverter x:Key="animatedAxisRotatorConverter"/>
+        <converters:AnimatedAxisRotatorMultiConverter x:Key="animatedAxisRotatorConverter"/>
 
         <Style TargetType="TextBox" x:Key="TextBoxStyle">
             <Setter Property="MinWidth" Value="40"></Setter>
@@ -42,7 +42,6 @@
         </Grid.ColumnDefinitions>
         <Expander Grid.Column="1" Grid.RowSpan="4">
             <Grid>
-                
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition></ColumnDefinition>
                     <ColumnDefinition></ColumnDefinition>
@@ -59,35 +58,72 @@
                     <RowDefinition Height="auto"></RowDefinition>
                     <RowDefinition Height="auto"></RowDefinition>
                     <RowDefinition Height="auto"></RowDefinition>
+                    <RowDefinition Height="auto"></RowDefinition>
                 </Grid.RowDefinitions>
 
-                <ToggleButton Command="{Binding AnimatedAxisRotateCommand}"
-                              CommandParameter="{Binding IsChecked, RelativeSource = {RelativeSource Self},
-                              Converter={StaticResource animatedAxisRotatorConverter}, 
-                              ConverterParameter= {x:Reference Name=xAxis}}" 
-                              Margin="5" Grid.Column="3" Grid.Row="1"
-                              Template ="{StaticResource RotationToggleButtonTemplate}"/>
+                <TextBlock Margin="5" 
+                           Grid.Row ="1" 
+                           Text="Rotation speed: "/>
 
-                <ToggleButton Command="{Binding AnimatedAxisRotateCommand}"
-                              CommandParameter="{Binding IsChecked, RelativeSource = {RelativeSource Self},
-                              Converter={StaticResource animatedAxisRotatorConverter}, 
-                              ConverterParameter= {x:Reference Name=yAxis}}" 
-                              Margin="5" Grid.Column="3" Grid.Row="2"
-                              Template ="{StaticResource RotationToggleButtonTemplate}"/>
+                <ComboBox HorizontalAlignment="Left" 
+                          MinWidth="150"
+                          Margin="5" 
+                          Grid.Column="1" 
+                          Grid.ColumnSpan="3" 
+                          Grid.Row="1" 
+                          x:Name="RotationSpeeds" 
+                          ItemsSource="{Binding AnimationSpeeds}"
+                          DisplayMemberPath="Key"
+                          SelectedValuePath="Value"
+                          SelectedIndex="0"/>
 
-                <ToggleButton Command="{Binding AnimatedAxisRotateCommand}"
-                              CommandParameter="{Binding IsChecked, RelativeSource = {RelativeSource Self},
-                              Converter={StaticResource animatedAxisRotatorConverter},
-                              ConverterParameter= {x:Reference Name=zAxis}}" 
+                <ToggleButton Command="{Binding AnimatedAxisRotateCommand}"                                                           
+                              Margin="5" 
+                              Grid.Column="3" 
+                              Grid.Row="2"
+                              Template ="{StaticResource RotationToggleButtonTemplate}">
+                    <ToggleButton.CommandParameter>
+                        <MultiBinding Converter="{StaticResource animatedAxisRotatorConverter}" 
+                                      ConverterParameter="{x:Reference Name=xAxis}">
+                            <Binding Path="IsChecked" RelativeSource="{RelativeSource Self}"></Binding>
+                            <Binding ElementName="RotationSpeeds" Path="SelectedValue"></Binding>
+                        </MultiBinding>
+                    </ToggleButton.CommandParameter>
+                </ToggleButton>
+
+                <ToggleButton Command="{Binding AnimatedAxisRotateCommand}"                                                           
                               Margin="5" Grid.Column="3" Grid.Row="3"
-                              Template ="{StaticResource RotationToggleButtonTemplate}"/>
+                              Template ="{StaticResource RotationToggleButtonTemplate}">
+                    <ToggleButton.CommandParameter>
+                        <MultiBinding Converter="{StaticResource animatedAxisRotatorConverter}" 
+                                      ConverterParameter="{x:Reference Name=yAxis}">
+                            <Binding Path="IsChecked" RelativeSource="{RelativeSource Self}"/>
+                            <Binding ElementName="RotationSpeeds" Path="SelectedValue"/>
+                        </MultiBinding>
+                    </ToggleButton.CommandParameter>
+                </ToggleButton>
+
+                <ToggleButton Command="{Binding AnimatedAxisRotateCommand}"                                                           
+                              Margin="5" Grid.Column="3" Grid.Row="4"
+                              Template ="{StaticResource RotationToggleButtonTemplate}">
+                    <ToggleButton.CommandParameter>
+                        <MultiBinding Converter="{StaticResource animatedAxisRotatorConverter}" 
+                                      ConverterParameter="{x:Reference Name=zAxis}">
+                            <Binding Path="IsChecked" RelativeSource="{RelativeSource Self}"/>
+                            <Binding ElementName="RotationSpeeds" Path="SelectedValue"/>
+                        </MultiBinding>
+                    </ToggleButton.CommandParameter>
+                </ToggleButton>
 
                 <TextBlock Margin="5" Text="Zoom"/>
-                <TextBlock Grid.Row="1" Margin="5" Text="X axis rotate"/>
-                <TextBlock Grid.Row="2" Margin="5" Text="Y axis rotate"/>
-                <TextBlock Grid.Row="3" Margin="5" Text="Z axis rotate"/>
-                <TextBlock Grid.ColumnSpan="3" HorizontalAlignment="Center" 
-                           Grid.Row="4" Margin="5" Text="Distance between vertices"/>
+                <TextBlock Grid.Row="2" Margin="5" Text="X axis rotate"/>
+                <TextBlock Grid.Row="3" Margin="5" Text="Y axis rotate"/>
+                <TextBlock Grid.Row="4" Margin="5" Text="Z axis rotate"/>
+                <TextBlock Grid.ColumnSpan="3" 
+                           HorizontalAlignment="Center" 
+                           Grid.Row="5" 
+                           Margin="5" 
+                           Text="Distance between vertices"/>
 
                 <TextBox Style="{StaticResource TextBoxStyle}" 
                          Grid.Column="2" 
@@ -105,13 +141,13 @@
                     </TextBox.Text>
                 </TextBox>
 
-                <TextBlock Grid.Row="5" Margin="5" Text="X axis"/>
-                <TextBlock Grid.Row="6" Margin="5" Text="Y axis"/>
-                <TextBlock Grid.Row="7" Margin="5" Text="Z axis"/>
+                <TextBlock Grid.Row="6" Margin="5" Text="X axis"/>
+                <TextBlock Grid.Row="7" Margin="5" Text="Y axis"/>
+                <TextBlock Grid.Row="8" Margin="5" Text="Z axis"/>
 
                 <TextBox Style="{StaticResource TextBoxStyle}" 
                          Grid.Column="2" 
-                         Grid.Row="1">
+                         Grid.Row="2">
                     <TextBox.Text>
                         <Binding Path="Value" 
                                  ElementName="xAxisSlider" 
@@ -126,7 +162,7 @@
 
                 <TextBox Style="{StaticResource TextBoxStyle}" 
                          Grid.Column="2" 
-                         Grid.Row="2"                          >
+                         Grid.Row="3"                          >
                     <TextBox.Text>
                         <Binding Path="Value" 
                                  ElementName="yAxisSlider" 
@@ -141,7 +177,7 @@
 
                 <TextBox Style="{StaticResource TextBoxStyle}" 
                          Grid.Column="2" 
-                         Grid.Row="3">
+                         Grid.Row="4">
                     <TextBox.Text>
                         <Binding Path="Value" 
                                  ElementName="zAxisSlider" 
@@ -165,24 +201,24 @@
                 <model:RangedSlider x:Name="xAxisSlider" Grid.Column="1" 
                         Style="{StaticResource SliderStyle}" 
                         ValueRange="{x:Static range:Constants.AngleValueRange}" 
-                        Grid.Row="1" 
+                        Grid.Row="2" 
                         Value="{Binding ElementName=xAxis, Path=Angle}"/>
 
                 <model:RangedSlider x:Name="yAxisSlider" Grid.Column="1" 
                         Style="{StaticResource SliderStyle}" 
                         ValueRange="{x:Static range:Constants.AngleValueRange}" 
-                        Grid.Row="2" 
+                        Grid.Row="3" 
                         Value="{Binding ElementName=yAxis, Path=Angle}"/>
 
                 <model:RangedSlider x:Name="zAxisSlider" Grid.Column="1" 
                         Style="{StaticResource SliderStyle}" 
                         ValueRange="{x:Static range:Constants.AngleValueRange}" 
-                        Grid.Row="3" 
+                        Grid.Row="4" 
                         Value="{Binding ElementName=zAxis, Path=Angle}"/>
 
                 <TextBox Style="{StaticResource TextBoxStyle}" 
                          Grid.Column="2" 
-                         Grid.Row="5">
+                         Grid.Row="6">
                     <TextBox.Text>
                         <Binding Path="Value" 
                                  ElementName="xAxisStretchAxis" 
@@ -197,7 +233,7 @@
 
                 <TextBox Style="{StaticResource TextBoxStyle}" 
                          Grid.Column="2" 
-                         Grid.Row="6">
+                         Grid.Row="7">
                     <TextBox.Text>
                         <Binding Path="Value" 
                                  ElementName="yAxisStretchSlider" 
@@ -212,7 +248,7 @@
 
                 <TextBox Style="{StaticResource TextBoxStyle}" 
                          Grid.Column="2" 
-                         Grid.Row="7">
+                         Grid.Row="8">
                     <TextBox.Text>
                         <Binding Path="Value" 
                                  ElementName="zAxisStretchSlider" 
@@ -229,7 +265,7 @@
                                     Grid.Column="1" 
                                     Style="{StaticResource SliderStyle}"
                                     ValueRange="{x:Static range:Constants.DistanceBetweenVerticesValueRange}" 
-                                    Grid.Row="5">
+                                    Grid.Row="6">
                     <i:Interaction.Triggers>
                         <i:EventTrigger EventName="ValueChanged">
                             <ei:CallMethodAction TargetObject="{Binding Path=DataContext, ElementName=Window}" 
@@ -242,7 +278,7 @@
                                     Grid.Column="1" 
                                     Style="{StaticResource SliderStyle}" 
                                     ValueRange="{x:Static range:Constants.DistanceBetweenVerticesValueRange}" 
-                                    Grid.Row="6">
+                                    Grid.Row="7">
                     <i:Interaction.Triggers>
                         <i:EventTrigger EventName="ValueChanged">
                             <ei:CallMethodAction TargetObject="{Binding Path=DataContext, ElementName=Window}" 
@@ -255,7 +291,7 @@
                                     Grid.Column="1" 
                                     Style="{StaticResource SliderStyle}" 
                                     ValueRange="{x:Static range:Constants.DistanceBetweenVerticesValueRange}"
-                                    Grid.Row="7">
+                                    Grid.Row="8">
                     <i:Interaction.Triggers>
                         <i:EventTrigger EventName="ValueChanged">
                             <ei:CallMethodAction TargetObject="{Binding Path=DataContext, ElementName=Window}" 

@@ -12,7 +12,7 @@ namespace Algorithm.Realizations.Heuristic
     /// <remarks><see cref="https://en.wikipedia.org/wiki/Euclidean_distance"/></remarks>
     public sealed class EuclidianDistance : AbstractDistance, IHeuristic
     {
-        private const int Precision = 2;
+        private const int Precision = 1;
         private const double Power = 2;
 
         public double Calculate(IVertex first, IVertex second)

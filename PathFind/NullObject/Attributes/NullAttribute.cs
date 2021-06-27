@@ -3,10 +3,10 @@
 namespace NullObject.Attributes
 {
     /// <summary>
-    /// Indicates, that the class is used as an optional 
+    /// Indicates, that a class is used as an optional 
     /// (default) realization of hierarchy of classes
     /// </summary>
-    [AttributeUsage(AttributeTargets.Class, Inherited = false)]
+    [AttributeUsage(AttributeTargets.Class | AttributeTargets.Struct, Inherited = false)]
     public sealed class NullAttribute : Attribute
     {
 

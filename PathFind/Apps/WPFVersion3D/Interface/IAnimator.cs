@@ -1,4 +1,4 @@
-﻿namespace WPFVersion3D.Infrastructure.Animators.Interface
+﻿namespace WPFVersion3D.Interface
 {
     /// <summary>
     /// Represents an interface of animation classes

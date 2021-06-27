@@ -4,7 +4,7 @@
     {
         public double GraphCenterOffset => AdjustedDimensionSize * AdjustedVertexSize;
 
-        public double VertexOffset => AdjustedVertexSize * CoordinateValue + AdditionalOffset;
+        public double VertexOffset => (AdjustedVertexSize * CoordinateValue) + AdditionalOffset;
 
         public int CoordinateValue { private get; set; }
 

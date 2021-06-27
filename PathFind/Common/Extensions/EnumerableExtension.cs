@@ -149,7 +149,7 @@ namespace Common.Extensions
             return self.Count() == collection.Count();
         }
 
-        public static Dictionary<TKey, TValue> AsDictionary<TKey, TValue>
+        public static IDictionary<TKey, TValue> AsDictionary<TKey, TValue>
             (this IEnumerable<KeyValuePair<TKey, TValue>> collection)
         {
             return collection.ToDictionary(item => item.Key, item => item.Value);

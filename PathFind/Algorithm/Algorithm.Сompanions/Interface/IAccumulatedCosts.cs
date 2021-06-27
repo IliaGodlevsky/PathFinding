@@ -1,6 +1,6 @@
 ﻿using GraphLib.Interfaces;
 
-namespace Algorithm.Сompanions
+namespace Algorithm.Сompanions.Interface
 {
     public interface IAccumulatedCosts
     {

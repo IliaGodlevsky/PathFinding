@@ -3,8 +3,7 @@ using System;
 using System.Windows;
 using System.Windows.Media.Animation;
 using System.Windows.Media.Media3D;
-using WPFVersion3D.Infrastructure.Animators.Interface;
-
+using WPFVersion3D.Interface;
 using static WPFVersion3D.Constants;
 
 namespace WPFVersion3D.Infrastructure.Animators
@@ -16,6 +15,11 @@ namespace WPFVersion3D.Infrastructure.Animators
 
         }
 
+        public BackwardAnimatedAxisRotator(AxisAngleRotation3D axis, IAnimationSpeed speed) 
+            : base(axis, speed)
+        {
+        }
+
         protected override AnimationTimeline CreateAnimation()
         {
             var duration = CalculateAnimationDuration();
@@ -25,7 +29,7 @@ namespace WPFVersion3D.Infrastructure.Animators
 
         protected override Duration CalculateAnimationDuration()
         {
-            var duration = InitialRotationAnimationDuration * axis.Angle / AngleValueRange.Amplitude();
+            var duration = speed.Speed * axis.Angle / AngleValueRange.Amplitude();
             return new Duration(TimeSpan.FromMilliseconds(duration));
         }
     }

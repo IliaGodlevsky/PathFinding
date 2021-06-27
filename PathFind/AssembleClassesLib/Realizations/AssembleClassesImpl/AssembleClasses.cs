@@ -103,10 +103,10 @@ namespace AssembleClassesLib.Realizations.AssembleClassesImpl
             return !type.IsNotLoadable();
         }
 
-        protected Dictionary<string, Type> types;
-        private readonly string loadPath;
+        protected IDictionary<string, Type> types;
+        protected readonly string loadPath;
         private readonly SearchOption searchOption;
-        private readonly IAssembleLoadMethod loadMethod;
+        protected readonly IAssembleLoadMethod loadMethod;
 
         private const string SearchPattern = "*.dll";
     }

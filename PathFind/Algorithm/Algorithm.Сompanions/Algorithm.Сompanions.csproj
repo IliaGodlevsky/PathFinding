@@ -43,7 +43,8 @@
   <ItemGroup>
     <Compile Include="AccumulatedCosts.cs" />
     <Compile Include="EndPoint.cs" />
-    <Compile Include="IAccumulatedCosts.cs" />
+    <Compile Include="Interface\IAccumulatedCosts.cs" />
+    <Compile Include="Interface\IParentVertices.cs" />
     <Compile Include="ParentVertices.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

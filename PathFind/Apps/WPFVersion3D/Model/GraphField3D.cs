@@ -20,7 +20,7 @@ namespace WPFVersion3D.Model
 
         public GraphField3D(int width, int length, int height)
         {
-            axes = new IAxis[]
+            coordinateSystem = new IAxis[]
             {
                 new Abscissa(),
                 new Ordinate(),
@@ -42,7 +42,7 @@ namespace WPFVersion3D.Model
         {
             if (vertex is Vertex3D vertex3D && vertex.Position is Coordinate3D)
             {
-                foreach (var axis in axes)
+                foreach (var axis in coordinateSystem)
                 {
                     LocateVertex(axis, vertex3D);
                 }
@@ -72,7 +72,7 @@ namespace WPFVersion3D.Model
                         DistanceBetweenVertices = DistancesBetween[i]
                     };
                     axisOffsets[i] = graphOffset.GraphCenterOffset;
-                    LocateVertex(axes[i], vertex, axisOffsets);
+                    LocateVertex(coordinateSystem[i], vertex, axisOffsets);
                 }
             }
         }
@@ -144,6 +144,6 @@ namespace WPFVersion3D.Model
             DistanceBetweenVerticesAtZAxis
         };
 
-        private readonly IAxis[] axes;
+        private readonly IAxis[] coordinateSystem;
     }
 }

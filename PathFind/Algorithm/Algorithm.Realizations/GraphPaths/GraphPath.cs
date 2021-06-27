@@ -1,6 +1,7 @@
 ﻿using Algorithm.Interfaces;
 using Algorithm.Realizations.StepRules;
 using Algorithm.Сompanions;
+using Algorithm.Сompanions.Interface;
 using GraphLib.Extensions;
 using GraphLib.Interfaces;
 using System;
@@ -88,7 +89,7 @@ namespace Algorithm.Realizations.GraphPaths
             return Path.Length - 1;
         }
 
-        private readonly ParentVertices parentVertices;
+        private readonly IParentVertices parentVertices;
         private readonly IEndPoints endPoints;
         private readonly IStepRule stepRule;
 

@@ -15,8 +15,6 @@ namespace WPFVersion3D
         public static InclusiveValueRange<int> GraphHeightValueRange { get; }
         public static ValueRanges<int> GraphParamsValueRanges { get; }
 
-        public const double InitialRotationAnimationDuration = 3000;
-
         public const int InitialVertexSize = 5;
 
         public const double InitialVisitedVertexOpacity = 0.15;

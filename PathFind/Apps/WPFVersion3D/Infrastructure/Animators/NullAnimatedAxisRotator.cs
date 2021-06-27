@@ -1,5 +1,5 @@
 ﻿using NullObject.Attributes;
-using WPFVersion3D.Infrastructure.Animators.Interface;
+using WPFVersion3D.Interface;
 
 namespace WPFVersion3D.Infrastructure.Animators
 {

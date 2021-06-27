@@ -2,6 +2,7 @@
 using Algorithm.Infrastructure.Handlers;
 using Algorithm.Interfaces;
 using Algorithm.Сompanions;
+using Algorithm.Сompanions.Interface;
 using GraphLib.Extensions;
 using GraphLib.Interfaces;
 using GraphLib.Realizations;

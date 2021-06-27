@@ -1,7 +1,9 @@
-﻿using Common.Extensions;
+﻿using Algorithm.Сompanions.Interface;
+using Common.Extensions;
 using GraphLib.Extensions;
 using GraphLib.Interfaces;
 using NullObject.Extensions;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 
 namespace Algorithm.Сompanions
@@ -10,7 +12,7 @@ namespace Algorithm.Сompanions
     {
         public AccumulatedCosts(IEnumerable<IVertex> graph, double startCost)
         {
-            accumulatedCosts = new Dictionary<ICoordinate, double>();
+            accumulatedCosts = new ConcurrentDictionary<ICoordinate, double>();
             this.startCost = startCost;
             graph.ForEach(SetAccumulatedCostToStartCost);
         }
@@ -45,7 +47,7 @@ namespace Algorithm.Сompanions
             }
         }
 
-        private readonly Dictionary<ICoordinate, double> accumulatedCosts;
+        private readonly IDictionary<ICoordinate, double> accumulatedCosts;
         private readonly double startCost;
     }
 }
