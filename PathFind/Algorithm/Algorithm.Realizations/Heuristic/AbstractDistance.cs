@@ -43,9 +43,7 @@ namespace Algorithm.Realizations.Heuristic
             }
             #endregion
 
-            var firstCoordinateValues = first.Position.CoordinatesValues;
-            var secondCoordinateValues = second.Position.CoordinatesValues;
-            var zippedArray = firstCoordinateValues.Zip(secondCoordinateValues, ZipMethod);
+            var zippedArray = first.GetCoordinates().Zip(second.GetCoordinates(), ZipMethod);
             return Aggregate(zippedArray);
         }
 

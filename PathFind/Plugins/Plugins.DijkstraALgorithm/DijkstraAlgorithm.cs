@@ -57,7 +57,7 @@ namespace Plugins.DijkstraALgorithm
 
             var vertices = graph.Vertices.Except(endPoints.Source).FilterObstacles();
             accumulatedCosts = new AccumulatedCosts(vertices, double.PositiveInfinity);
-            accumulatedCosts.Reevaluate(endPoints.Source, 0);
+            accumulatedCosts.Reevaluate(endPoints.Source, default);
         }
 
         #region Relaxing

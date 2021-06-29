@@ -5,6 +5,6 @@ namespace WPFVersion3D.Interface
     [NotLoadable]
     internal interface IAnimationSpeed
     {
-        double Speed { get; }
+        double Milliseconds { get; }
     }
 }

@@ -7,6 +7,6 @@ namespace WPFVersion3D.Infrastructure.AnimationSpeed
     [ClassName("Medium")]
     internal sealed class MediumSpeed : IAnimationSpeed
     {
-        public double Speed => 1200;
+        public double Milliseconds => 1200;
     }
 }

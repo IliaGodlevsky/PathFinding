@@ -25,13 +25,13 @@ namespace Algorithm.Realizations.GraphPaths
 
         public int PathLength => pathLength.Value;
 
-        public GraphPath(ParentVertices parentVertices, IEndPoints endPoints)
+        public GraphPath(IParentVertices parentVertices, IEndPoints endPoints)
             : this(parentVertices, endPoints, new DefaultStepRule())
         {
 
         }
 
-        public GraphPath(ParentVertices parentVertices,
+        public GraphPath(IParentVertices parentVertices,
             IEndPoints endPoints, IStepRule stepRule)
         {
             path = new Lazy<IVertex[]>(GetPath);

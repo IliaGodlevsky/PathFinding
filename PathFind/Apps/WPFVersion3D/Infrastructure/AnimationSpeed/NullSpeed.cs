@@ -8,6 +8,6 @@ namespace WPFVersion3D.Infrastructure.AnimationSpeed
     [NotLoadable]
     internal sealed class NullSpeed : IAnimationSpeed
     {
-        public double Speed => 1;
+        public double Milliseconds => 1;
     }
 }

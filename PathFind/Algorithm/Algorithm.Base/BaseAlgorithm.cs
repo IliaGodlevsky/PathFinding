@@ -79,7 +79,7 @@ namespace Algorithm.Base
         /// whether it can go on the pathifing
         /// process
         /// </summary>
-        /// <returns>true - if algorithm is done ot if it is 
+        /// <returns>true - if algorithm is done or if it is 
         /// is not able to go on the pathfinding process</returns>
         protected virtual bool IsDestination()
         {
@@ -166,7 +166,7 @@ namespace Algorithm.Base
         }
 
         protected readonly IVisitedVertices visitedVertices;
-        protected readonly ParentVertices parentVertices;
+        protected readonly IParentVertices parentVertices;
         protected IAccumulatedCosts accumulatedCosts;
 
         protected readonly IGraph graph;

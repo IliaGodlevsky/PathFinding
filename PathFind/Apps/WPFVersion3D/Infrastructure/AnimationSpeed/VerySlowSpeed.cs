@@ -7,6 +7,6 @@ namespace WPFVersion3D.Infrastructure.AnimationSpeed
     [ClassName("Very slow")]
     internal sealed class VerySlowSpeed : IAnimationSpeed
     {
-        public double Speed => 4800;
+        public double Milliseconds => 4800;
     }
 }

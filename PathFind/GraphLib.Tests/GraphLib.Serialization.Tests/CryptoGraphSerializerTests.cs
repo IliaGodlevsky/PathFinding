@@ -9,7 +9,7 @@ using System.IO;
 namespace GraphLib.Serialization.Tests
 {
     [TestFixture]
-    internal class GraphSerializerTests
+    internal class CryptoGraphSerializerTests
     {
         [TestCase(11, new[] { 8, 9, 7 })]
         [TestCase(22, new[] { 15, 15 })]
@@ -17,7 +17,7 @@ namespace GraphLib.Serialization.Tests
         [TestCase(44, new[] { 4, 3, 4, 2, 2 })]
         public void SaveGraph_LoadGraph_ReturnsEqualGraph(int obstaclePercent, int[] graphParams)
         {
-            var container = ContainerConfigure.GraphSerializerConfigure();
+            var container = ContainerConfigure.CryptoGraphSerializerConfigure();
             using (var scope = container.BeginLifetimeScope())
             {
                 var assembler = scope.Resolve<IGraphAssemble>();
@@ -36,7 +36,5 @@ namespace GraphLib.Serialization.Tests
                 Assert.AreNotSame(graph, deserialized);
             }
         }
-
-
     }
 }

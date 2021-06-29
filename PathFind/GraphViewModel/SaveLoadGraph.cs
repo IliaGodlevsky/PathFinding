@@ -1,11 +1,11 @@
 ﻿using GraphLib.Interfaces;
 using GraphLib.Serialization.Exceptions;
+using GraphLib.Serialization.Extensions;
 using GraphLib.Serialization.Interfaces;
 using GraphViewModel.Interfaces;
 using Logging.Interface;
 using Logging.Loggers;
 using System;
-using System.IO;
 using System.Threading.Tasks;
 
 namespace GraphViewModel
@@ -23,20 +23,13 @@ namespace GraphViewModel
         public IGraph LoadGraph()
         {
             string loadPath = pathInput.InputLoadPath();
-            using (var stream = new FileStream(loadPath, FileMode.Open))
-            {
-                var newGraph = graphSerializer.LoadGraph(stream);
-                return newGraph;
-            }
+            return graphSerializer.LoadFromFile(loadPath);
         }
 
         public void SaveGraph(IGraph graph)
         {
             string savePath = pathInput.InputSavePath();
-            using (var stream = new FileStream(savePath, FileMode.OpenOrCreate))
-            {
-                graphSerializer.SaveGraph(graph, stream);
-            }
+            graphSerializer.SaveToFile(graph, savePath);
         }
 
         public async Task SaveGraphAsync(IGraph graph)
@@ -46,10 +39,7 @@ namespace GraphViewModel
             {
                 try
                 {
-                    using (var stream = new FileStream(savePath, FileMode.OpenOrCreate))
-                    {
-                        graphSerializer.SaveGraph(graph, stream);
-                    }
+                    graphSerializer.SaveToFile(graph, savePath);
                 }
                 catch (CantSerializeGraphException ex)
                 {

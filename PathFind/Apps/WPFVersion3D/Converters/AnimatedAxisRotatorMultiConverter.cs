@@ -8,13 +8,16 @@ using System.Windows.Media.Media3D;
 using WPFVersion3D.Infrastructure.Animators;
 using WPFVersion3D.Interface;
 
+using AnimatorFatory = System.Func<System.Windows.Media.Media3D.AxisAngleRotation3D,
+    WPFVersion3D.Interface.IAnimationSpeed, WPFVersion3D.Interface.IAnimator>;
+
 namespace WPFVersion3D.Converters
 {
     internal sealed class AnimatedAxisRotatorMultiConverter : IMultiValueConverter
     {
         public AnimatedAxisRotatorMultiConverter()
         {
-            animatorFactories = new Dictionary<bool, Func<AxisAngleRotation3D, IAnimationSpeed, IAnimator>>()
+            animatorFactories = new Dictionary<bool?, AnimatorFatory>()
             {
                 { true,  CreateForwardAxisRotator },
                 { false, CreateBackwardAxisRotator }
@@ -24,7 +27,7 @@ namespace WPFVersion3D.Converters
         public object Convert(object[] values, Type targetType, object parameter, CultureInfo culture)
         {
             var animationSpeed = values.OfType<IAnimationSpeed>().FirstOrDefault();
-            var type = values.OfType<bool>().FirstOrDefault();
+            var type = values.OfType<bool?>().FirstOrDefault();
             if (IsValidParametres(parameter, animationSpeed, type))
             {
                 var axisAngleRotation = parameter as AxisAngleRotation3D;
@@ -55,6 +58,6 @@ namespace WPFVersion3D.Converters
             return new BackwardAnimatedAxisRotator(axis, speed);
         }
 
-        private readonly Dictionary<bool, Func<AxisAngleRotation3D, IAnimationSpeed, IAnimator>> animatorFactories;
+        private readonly Dictionary<bool?, AnimatorFatory> animatorFactories;
     }
 }

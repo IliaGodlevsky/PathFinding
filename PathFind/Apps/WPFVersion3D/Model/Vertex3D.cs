@@ -204,7 +204,7 @@ namespace WPFVersion3D.Model
         {
             Vertex3D vert = (Vertex3D)depObj;
             vert.Brush = (SolidColorBrush)prop.NewValue;
-            ((DiffuseMaterial)vert.Material).Brush = vert.Brush;
+            vert.Material.Brush = vert.Brush;
         }
 
         private readonly IModel3DFactory modelFactory;

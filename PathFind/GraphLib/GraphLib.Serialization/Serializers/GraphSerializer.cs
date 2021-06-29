@@ -9,7 +9,7 @@ using System;
 using System.IO;
 using System.Runtime.Serialization;
 
-namespace GraphLib.Serialization
+namespace GraphLib.Serialization.Serializers
 {
     public sealed class GraphSerializer : IGraphSerializer
     {

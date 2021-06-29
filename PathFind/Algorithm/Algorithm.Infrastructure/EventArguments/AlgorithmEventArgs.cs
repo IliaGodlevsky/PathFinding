@@ -18,12 +18,8 @@ namespace Algorithm.Infrastructure.EventArguments
         public AlgorithmEventArgs(int visitedVertices,
             IEndPoints endPoints = null, IVertex vertex = null)
         {
-            if (vertex != null)
-            {
-                IsEndPoint = endPoints?.IsEndPoint(vertex) ?? false;
-            }
-
             Vertex = vertex ?? new NullVertex();
+            IsEndPoint = endPoints?.IsEndPoint(Vertex) ?? false;
             VisitedVertices = visitedVertices;
         }
 

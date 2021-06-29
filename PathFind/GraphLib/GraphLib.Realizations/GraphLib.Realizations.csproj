@@ -107,6 +107,5 @@
       <Name>GraphLib.NullRealizations</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

@@ -1,4 +1,5 @@
-﻿using GraphLib.Interfaces;
+﻿using GraphLib.Extensions;
+using GraphLib.Interfaces;
 using GraphLib.Realizations.Coordinates;
 using System;
 using System.Collections.Generic;
@@ -108,7 +109,7 @@ namespace WPFVersion3D.Model
         private void LocateVertex(IAxis axis, Vertex3D vertex,
             params double[] additionalOffset)
         {
-            var coordinates = vertex.Position.CoordinatesValues;
+            var coordinates = vertex.GetCoordinates();
             var vertexOffset = new Offset
             {
                 CoordinateValue = coordinates[axis.Index],

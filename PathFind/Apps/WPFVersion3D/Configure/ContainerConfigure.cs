@@ -11,14 +11,15 @@ using GraphLib.Realizations.Factories.CoordinateFactories;
 using GraphLib.Realizations.Factories.GraphAssembles;
 using GraphLib.Realizations.Factories.GraphFactories;
 using GraphLib.Realizations.Factories.NeighboursCoordinatesFactories;
-using GraphLib.Serialization;
 using GraphLib.Serialization.Interfaces;
+using GraphLib.Serialization.Serializers;
 using GraphViewModel;
 using GraphViewModel.Interfaces;
 using Logging.Interface;
 using Logging.Loggers;
 using System.Runtime.Serialization;
 using System.Runtime.Serialization.Formatters.Soap;
+using System.Security.Cryptography;
 using WPFVersion3D.Interface;
 using WPFVersion3D.Model;
 using WPFVersion3D.ViewModel;
@@ -52,7 +53,8 @@ namespace WPFVersion3D.Configure
 
             builder.RegisterType<SaveLoadGraph>().As<ISaveLoadGraph>().SingleInstance();
             builder.RegisterType<PathInput>().As<IPathInput>().SingleInstance();
-            builder.RegisterType<GraphSerializer>().As<IGraphSerializer>().SingleInstance();
+            builder.RegisterType<CryptoGraphSerializer>().As<IGraphSerializer>().SingleInstance();
+            builder.RegisterType<AesCryptoServiceProvider>().As<SymmetricAlgorithm>().SingleInstance();
             builder.RegisterType<SoapFormatter>().As<IFormatter>().SingleInstance();
             builder.RegisterType<Vertex3DSerializationInfoConverter>().As<IVertexSerializationInfoConverter>().SingleInstance();
 

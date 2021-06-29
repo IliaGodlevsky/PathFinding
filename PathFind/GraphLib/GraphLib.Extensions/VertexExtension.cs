@@ -32,6 +32,11 @@ namespace GraphLib.Extensions
             return candidate.IsClose(self) && self.Neighbours.Any(IsAtSamePosition);
         }
 
+        public static int[] GetCoordinates(this IVertex self)
+        {
+            return self.Position.CoordinatesValues.ToArray();
+        }
+
         public static bool CanBeNeighbour(this IVertex self, IVertex candidate)
         {
             return !ReferenceEquals(candidate, self) && !self.IsNeighbour(candidate);

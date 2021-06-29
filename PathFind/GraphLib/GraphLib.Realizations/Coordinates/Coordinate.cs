@@ -32,6 +32,7 @@ namespace GraphLib.Realizations.Coordinates
             return hashCode.Value;
         }
 
+        [NonSerialized]
         private readonly Lazy<int> hashCode;
     }
 }
