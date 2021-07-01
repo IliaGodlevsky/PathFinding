@@ -42,6 +42,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Extensions\GraphSerializerExtensions.cs" />
+    <Compile Include="Serializers\CompressGraphSerializer.cs" />
     <Compile Include="Serializers\CryptoGraphSerializer.cs" />
     <Compile Include="Exceptions\CantSerializeGraphException.cs" />
     <Compile Include="Extensions\GraphExtensions.cs" />

@@ -55,6 +55,7 @@ namespace WPFVersion3D.Configure
             builder.RegisterType<PathInput>().As<IPathInput>().SingleInstance();
             builder.RegisterType<GraphSerializer>().As<IGraphSerializer>().SingleInstance();
             builder.RegisterDecorator<CryptoGraphSerializer, IGraphSerializer>();
+            builder.RegisterDecorator<CompressGraphSerializer, IGraphSerializer>();
             builder.RegisterType<AesCryptoServiceProvider>().As<SymmetricAlgorithm>().SingleInstance();
             builder.RegisterType<SoapFormatter>().As<IFormatter>().SingleInstance();
             builder.RegisterType<Vertex3DSerializationInfoConverter>().As<IVertexSerializationInfoConverter>().SingleInstance();
