@@ -1,11 +1,9 @@
 ﻿using GraphLib.Interfaces;
-using GraphLib.Interfaces.Factories;
 using GraphLib.Serialization.Exceptions;
 using GraphLib.Serialization.Interfaces;
 using System;
 using System.IO;
 using System.Linq;
-using System.Runtime.Serialization;
 using System.Security.Cryptography;
 using System.Text;
 
@@ -13,12 +11,10 @@ namespace GraphLib.Serialization.Serializers
 {
     public sealed class CryptoGraphSerializer : IGraphSerializer
     {
-        public CryptoGraphSerializer(IFormatter formatter,
-            IVertexSerializationInfoConverter infoConverter,
-            IGraphFactory graphFactory,
+        public CryptoGraphSerializer(IGraphSerializer serializer,
             SymmetricAlgorithm algorithm)
         {
-            serializer = new GraphSerializer(formatter, infoConverter, graphFactory);
+            this.serializer = serializer;
             this.algorithm = algorithm;
             int keyLength = algorithm.Key.Length;
             int IVLength = algorithm.IV.Length;
@@ -98,7 +94,7 @@ namespace GraphLib.Serialization.Serializers
 
         private readonly byte[] key;
         private readonly byte[] IV;
-        private readonly GraphSerializer serializer;
+        private readonly IGraphSerializer serializer;
         private readonly SymmetricAlgorithm algorithm;
     }
 }

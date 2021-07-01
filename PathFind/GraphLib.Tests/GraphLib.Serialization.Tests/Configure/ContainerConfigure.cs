@@ -30,7 +30,8 @@ namespace GraphLib.Serialization.Tests.Configure
             var builder = new ContainerBuilder();
 
             builder.RegisterType<TestGraphAssemble>().As<IGraphAssemble>().SingleInstance();
-            builder.RegisterType<CryptoGraphSerializer>().As<IGraphSerializer>().SingleInstance();
+            builder.RegisterType<GraphSerializer>().As<IGraphSerializer>().SingleInstance();
+            builder.RegisterDecorator<CryptoGraphSerializer, IGraphSerializer>();
             builder.RegisterType<DESCryptoServiceProvider>().As<SymmetricAlgorithm>().SingleInstance();
             builder.RegisterType<BinaryFormatter>().As<IFormatter>().SingleInstance();
             builder.RegisterType<TestVertexInfoSerializationConverter>()
