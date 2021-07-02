@@ -25,9 +25,9 @@ namespace WPFVersion3D.Model
         {
             coordinateSystem = new IAxis[]
             {
-                new Abscissa(),
+                new Applicate(),
                 new Ordinate(),
-                new Applicate()
+                new Abscissa()
             };
 
             Width = width;
