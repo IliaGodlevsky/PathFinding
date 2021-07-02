@@ -203,9 +203,9 @@ namespace WPFVersion3D.ViewModel
 
         private IDictionary<string, IAnimationSpeed> GetAnimationSpeeds()
         {
-            var speeds = new SpeedClasses();
-            speeds.LoadClasses();
-            return speeds.FetchObjectsOfType<IAnimationSpeed>()
+            var animationSpeeds = new AnimationSpeedClasses();
+            animationSpeeds.LoadClasses();
+            return animationSpeeds.GetOfType<IAnimationSpeed>()
                 .OrderByDescending(item => item.GetOrder())
                 .ToDictionary(item => item.GetClassName());
         }

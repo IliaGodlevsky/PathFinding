@@ -5,7 +5,7 @@ namespace AssembleClassesLib.Extensions
 {
     public static class IAssembleClassesExtensions
     {
-        public static IEnumerable<T> FetchObjectsOfType<T>(this IAssembleClasses assembleClasses, 
+        public static IEnumerable<T> GetOfType<T>(this IAssembleClasses assembleClasses, 
             params object[] ctorParams)
         {
             foreach (var name in assembleClasses.ClassesNames)

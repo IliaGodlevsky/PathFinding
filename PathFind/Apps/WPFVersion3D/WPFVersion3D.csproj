@@ -96,7 +96,7 @@
     <Compile Include="Model\Offset.cs" />
     <Compile Include="Model\PathInput.cs" />
     <Compile Include="Model\RangedSlider.cs" />
-    <Compile Include="Model\SpeedClasses.cs" />
+    <Compile Include="Model\AnimationSpeedClasses.cs" />
     <Compile Include="Model\EmptyLoadPath.cs" />
     <Compile Include="Model\Vertex3DCost.cs" />
     <Compile Include="Model\Vertex3DCostFactory.cs" />

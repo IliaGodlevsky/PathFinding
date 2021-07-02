@@ -6,9 +6,9 @@ using WPFVersion3D.Interface;
 
 namespace WPFVersion3D.Model
 {
-    internal sealed class SpeedClasses : AssembleClasses
+    internal sealed class AnimationSpeedClasses : AssembleClasses
     {
-        public SpeedClasses() 
+        public AnimationSpeedClasses() 
             : base(new EmptyLoadPath(), 
                   new AllDirectories(), 
                   new AnimationSpeedLoadMethod())
