@@ -24,8 +24,8 @@ namespace Plugins.AStarModified
         public AStarModified(IGraph graph, IEndPoints endPoints, IStepRule stepRule, IHeuristic function)
             : base(graph, endPoints, stepRule, function)
         {
-            PercentOfFarthestVerticesToDelete
-                = CalculatePercentOfFarthestVerticesToDelete;
+            percentValueRange = new InclusiveValueRange<int>(99, 0);
+            percentOfFarthestVerticesToDelete = new Lazy<int>(CalculatePercentOfFarthestVerticesToDelete);
             deletedVertices = new Queue<IVertex>();
         }
 
@@ -36,7 +36,7 @@ namespace Plugins.AStarModified
         }
 
         public AStarModified(IGraph graph, IEndPoints endPoints, IStepRule stepRule)
-            : base(graph, endPoints, stepRule, new ChebyshevDistance())
+            : this(graph, endPoints, stepRule, new ChebyshevDistance())
         {
 
         }
@@ -77,35 +77,19 @@ namespace Plugins.AStarModified
             return heuristic.Calculate(vertex, endPoints.Target);
         }
 
-        private int VerticesCountToDelete =>
-            verticesQueue.Count * PercentOfFarthestVerticesToDelete / 100;
+        private int VerticesCountToDelete => verticesQueue.Count * percentOfFarthestVerticesToDelete.Value / 100;
 
-        private int percentOfFarthestVerticesToDelete;
-
-        private int PercentOfFarthestVerticesToDelete
+        private int CalculatePercentOfFarthestVerticesToDelete()
         {
-            get => percentOfFarthestVerticesToDelete;
-            set
-            {
-                percentOfFarthestVerticesToDelete = value;
-                if (!percentValueRange.Contains(percentOfFarthestVerticesToDelete))
-                {
-                    percentOfFarthestVerticesToDelete =
-                        percentValueRange.ReturnInRange(percentOfFarthestVerticesToDelete);
-                }
-            }
+            // this formula was found empirically (it means: in what power you need 
+            // to raise the base of the logarithm to get the size of the graph)
+            var percentOfVerticesToDelete = Math.Floor(Math.Log(graph.Size + 1, 4));
+            var partOfVertexToDelete = Convert.ToInt32(percentOfVerticesToDelete);
+            return percentValueRange.ReturnInRange(partOfVertexToDelete);
         }
 
-        private int CalculatePercentOfFarthestVerticesToDelete
-        {
-            get
-            {
-                var partOfVertexToDelete = Math.Floor(Math.Log(graph.Size + 1, 4));
-                return Convert.ToInt32(partOfVertexToDelete);
-            }
-        }
-
-        private readonly InclusiveValueRange<int> percentValueRange = new InclusiveValueRange<int>(99, 0);
+        private readonly InclusiveValueRange<int> percentValueRange;
+        private readonly Lazy<int> percentOfFarthestVerticesToDelete;
         private readonly Queue<IVertex> deletedVertices;
     }
 }

@@ -16,10 +16,8 @@ namespace GraphLib.Serialization.Serializers
         {
             this.serializer = serializer;
             this.algorithm = algorithm;
-            int keyLength = algorithm.Key.Length;
-            int IVLength = algorithm.IV.Length;
-            key = Encoding.ASCII.GetBytes(new string(CryptoString.Take(keyLength).ToArray()));
-            IV = Encoding.ASCII.GetBytes(new string(CryptoString.Take(IVLength).ToArray()));
+            key = new Lazy<byte[]>(() => GetCryptoStringBytes(algorithm.Key.Length));
+            IV = new Lazy<byte[]>(() => GetCryptoStringBytes(algorithm.IV.Length));
         }
 
         public CryptoGraphSerializer(IGraphSerializer serializer)
@@ -40,7 +38,7 @@ namespace GraphLib.Serialization.Serializers
             try
             {
                 algorithm.Padding = PaddingMode.None;
-                using (var decryptor = algorithm.CreateDecryptor(key, IV))
+                using (var decryptor = algorithm.CreateDecryptor(key.Value, IV.Value))
                 {
                     using (var cryptoStream = new CryptoStream(stream, decryptor, CryptoStreamMode.Read, leaveOpen: true))
                     {
@@ -66,7 +64,7 @@ namespace GraphLib.Serialization.Serializers
             try
             {
                 algorithm.Padding = PaddingMode.PKCS7;
-                using (var encryptor = algorithm.CreateEncryptor(key, IV))
+                using (var encryptor = algorithm.CreateEncryptor(key.Value, IV.Value))
                 {
                     using (var cryptoStream = new CryptoStream(stream, encryptor, CryptoStreamMode.Write, leaveOpen: true)) 
                     {
@@ -80,6 +78,13 @@ namespace GraphLib.Serialization.Serializers
             }
         }
 
+        private byte[] GetCryptoStringBytes(int length)
+        {
+            var cryptoStringChunk = new string(CryptoString.Take(length).ToArray());
+            return Encoding.ASCII.GetBytes(cryptoStringChunk);
+        }
+
+        // 256 bytes
         private const string CryptoString = 
             "8~SBmlph7sfHLi?O" +
             "d}CPrU5k{uNMAnYT" +
@@ -98,8 +103,8 @@ namespace GraphLib.Serialization.Serializers
             "$dsBuoR|LSYb~Z?z" +
             "0JrLM73m%nCgQ1sL";
 
-        private readonly byte[] key;
-        private readonly byte[] IV;
+        private readonly Lazy<byte[]> key;
+        private readonly Lazy<byte[]> IV;
         private readonly IGraphSerializer serializer;
         private readonly SymmetricAlgorithm algorithm;
     }

@@ -11,9 +11,9 @@ namespace WPFVersion3D.Infrastructure.AnimationSpeed
     {
         public RandomSpeed()
         {
-            var high = new VeryHighSpeed();
-            var slow = new VerySlowSpeed();
-            speedRange = new InclusiveValueRange<double>(slow.Milliseconds, high.Milliseconds);
+            var high = new VeryHighSpeed().Milliseconds;
+            var slow = new VerySlowSpeed().Milliseconds;
+            speedRange = new InclusiveValueRange<double>(slow, high);
         }
 
         public double Milliseconds => speedRange.GetRandomValue();

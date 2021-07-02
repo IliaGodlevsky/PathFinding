@@ -3,7 +3,7 @@
 namespace Common.ValueRanges
 {
     public interface IValueRange<T>
-        where T : IComparable, IComparable<T>
+        where T : IComparable<T>
     {
         T UpperValueOfRange { get; }
         T LowerValueOfRange { get; }

@@ -7,7 +7,7 @@ namespace Common.ValueRanges
     /// Represents range of values (inclusively)
     /// </summary>
     public readonly struct InclusiveValueRange<T>
-        : IValueRange<T> where T : IComparable, IComparable<T>
+        : IValueRange<T> where T : IComparable<T>
     {
         public T UpperValueOfRange { get; }
         public T LowerValueOfRange { get; }

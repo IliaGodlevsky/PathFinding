@@ -12,6 +12,7 @@ using System.Linq;
 
 namespace Plugins.DijkstraALgorithm
 {
+
     [ClassName("Dijkstra's algorithm")]
     public class DijkstraAlgorithm : BaseWaveAlgorithm
     {

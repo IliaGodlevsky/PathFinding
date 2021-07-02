@@ -10,7 +10,9 @@ namespace GraphLib.Serialization
     {
         public GraphSerializationInfo(IGraph graph)
         {
-            DimensionsSizes = graph.DimensionsSizes.ToArray();
+            DimensionsSizes = graph
+                .DimensionsSizes
+                .ToArray();
 
             VerticesInfo = graph.Vertices
                 .Select(SerializationInfo)
