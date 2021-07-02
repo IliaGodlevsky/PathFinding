@@ -28,7 +28,6 @@ namespace GraphLib.Serialization.Serializers
                 using (var compressionStream = new GZipStream(stream, CompressionMode.Decompress, leaveOpen: true)) 
                 {
                     graph = serializer.LoadGraph(compressionStream);
-                    compressionStream.Close();
                 }
 
                 return graph;
@@ -52,7 +51,6 @@ namespace GraphLib.Serialization.Serializers
                 using (var compressionStream = new GZipStream(stream, CompressionMode.Compress, leaveOpen: true))
                 {
                     serializer.SaveGraph(graph, compressionStream);
-                    compressionStream.Close();
                 }
             }
             catch (Exception ex)

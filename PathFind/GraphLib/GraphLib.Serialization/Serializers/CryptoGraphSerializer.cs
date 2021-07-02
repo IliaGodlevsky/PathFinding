@@ -22,6 +22,12 @@ namespace GraphLib.Serialization.Serializers
             IV = Encoding.ASCII.GetBytes(new string(CryptoString.Take(IVLength).ToArray()));
         }
 
+        public CryptoGraphSerializer(IGraphSerializer serializer)
+            : this(serializer, new AesCryptoServiceProvider())
+        {
+
+        }
+
         /// <summary>
         /// 
         /// </summary>

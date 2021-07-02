@@ -18,8 +18,7 @@ using GraphViewModel.Interfaces;
 using Logging.Interface;
 using Logging.Loggers;
 using System.Runtime.Serialization;
-using System.Runtime.Serialization.Formatters.Soap;
-using System.Security.Cryptography;
+using System.Web.UI;
 using WPFVersion3D.Interface;
 using WPFVersion3D.Model;
 using WPFVersion3D.ViewModel;
@@ -54,10 +53,9 @@ namespace WPFVersion3D.Configure
             builder.RegisterType<SaveLoadGraph>().As<ISaveLoadGraph>().SingleInstance();
             builder.RegisterType<PathInput>().As<IPathInput>().SingleInstance();
             builder.RegisterType<GraphSerializer>().As<IGraphSerializer>().SingleInstance();
-            builder.RegisterDecorator<CryptoGraphSerializer, IGraphSerializer>();
             builder.RegisterDecorator<CompressGraphSerializer, IGraphSerializer>();
-            builder.RegisterType<AesCryptoServiceProvider>().As<SymmetricAlgorithm>().SingleInstance();
-            builder.RegisterType<SoapFormatter>().As<IFormatter>().SingleInstance();
+            builder.RegisterDecorator<CryptoGraphSerializer, IGraphSerializer>();            
+            builder.RegisterType<ObjectStateFormatter>().As<IFormatter>().SingleInstance();
             builder.RegisterType<Vertex3DSerializationInfoConverter>().As<IVertexSerializationInfoConverter>().SingleInstance();
 
             builder.RegisterType<ConcreteAssembleAlgorithmClasses>().AsSelf().SingleInstance();

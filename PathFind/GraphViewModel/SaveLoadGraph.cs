@@ -23,13 +23,13 @@ namespace GraphViewModel
         public IGraph LoadGraph()
         {
             string loadPath = pathInput.InputLoadPath();
-            return graphSerializer.LoadFromFile(loadPath);
+            return graphSerializer.LoadGraphFromFile(loadPath);
         }
 
         public void SaveGraph(IGraph graph)
         {
             string savePath = pathInput.InputSavePath();
-            graphSerializer.SaveToFile(graph, savePath);
+            graphSerializer.SaveGraphToFile(graph, savePath);
         }
 
         public async Task SaveGraphAsync(IGraph graph)
@@ -39,7 +39,7 @@ namespace GraphViewModel
             {
                 try
                 {
-                    graphSerializer.SaveToFile(graph, savePath);
+                    graphSerializer.SaveGraphToFile(graph, savePath);
                 }
                 catch (CantSerializeGraphException ex)
                 {

@@ -19,7 +19,6 @@ using System.Windows;
 using System.Windows.Input;
 using WPFVersion3D.Axes;
 using WPFVersion3D.Infrastructure;
-using WPFVersion3D.Infrastructure.AnimationSpeed;
 using WPFVersion3D.Interface;
 using WPFVersion3D.Model;
 using WPFVersion3D.View;
@@ -83,7 +82,7 @@ namespace WPFVersion3D.ViewModel
             LoadGraphCommand = new RelayCommand(ExecuteLoadGraphCommand);
             ChangeOpacityCommand = new RelayCommand(ExecuteChangeOpacity, CanExecuteGraphOperation);
             AnimatedAxisRotateCommand = new RelayCommand(ExecuteAnimatedAxisRotateCommand);
-            animationSpeeds = new Lazy<IDictionary<string, IAnimationSpeed>>(GetAnimationSpeedы);
+            animationSpeeds = new Lazy<IDictionary<string, IAnimationSpeed>>(GetAnimationSpeeds);
         }
 
         public override void FindPath()
@@ -165,6 +164,7 @@ namespace WPFVersion3D.ViewModel
         private void ExecuteLoadGraphCommand(object param)
         {
             base.LoadGraph();
+            (graphField as GraphField3D)?.CenterGraph();
         }
 
         private void ExecuteClearGraphCommand(object param)
@@ -201,11 +201,11 @@ namespace WPFVersion3D.ViewModel
             return !Graph.IsNullObject();
         }
 
-        private IDictionary<string, IAnimationSpeed> GetAnimationSpeedы()
+        private IDictionary<string, IAnimationSpeed> GetAnimationSpeeds()
         {
             var speeds = new SpeedClasses();
             speeds.LoadClasses();
-            return speeds.OfType<IAnimationSpeed>()
+            return speeds.FetchObjectsOfType<IAnimationSpeed>()
                 .OrderByDescending(item => item.GetOrder())
                 .ToDictionary(item => item.GetClassName());
         }
