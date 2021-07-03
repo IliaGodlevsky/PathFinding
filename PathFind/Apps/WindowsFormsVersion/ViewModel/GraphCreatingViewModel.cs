@@ -37,7 +37,8 @@ namespace WindowsFormsVersion.ViewModel
         private bool CanExecuteConfirmGraphAssembleChoice()
         {
             return GraphAssembleKeys.Contains(GraphAssembleKey)
-                && Constants.GraphParamsValueRanges.Contains(GraphParametres);
+                && Constants.GraphWidthValueRange.Contains(Width)
+                && Constants.GraphLengthValueRange.Contains(Length);
         }
     }
 }

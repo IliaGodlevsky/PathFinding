@@ -1,7 +1,6 @@
 ﻿using GraphLib.Extensions;
 using GraphLib.Interfaces;
 using GraphLib.Realizations.Coordinates;
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Windows.Media.Media3D;
@@ -118,16 +117,7 @@ namespace WPFVersion3D.Model
                 VertexSize = vertex.Size
             };
             double offset = vertexOffset.VertexOffset;
-
-            if (!(vertex.Transform is TranslateTransform3D transform))
-            {
-                string paramName = nameof(vertex.Transform);
-                string requiredType = nameof(TranslateTransform3D);
-                string message = $"{paramName} is not of type {requiredType}";
-                throw new Exception(message);
-            }
-
-            axis.Offset(transform, offset);
+            axis.Offset(vertex.Transform as TranslateTransform3D, offset);
         }
 
         private int Width { get; }

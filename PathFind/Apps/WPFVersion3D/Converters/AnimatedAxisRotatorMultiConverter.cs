@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
+using System.Windows.Controls;
 using System.Windows.Data;
 using System.Windows.Media.Media3D;
 using WPFVersion3D.Infrastructure.Animators;
@@ -26,8 +27,8 @@ namespace WPFVersion3D.Converters
 
         public object Convert(object[] values, Type targetType, object parameter, CultureInfo culture)
         {
-            var animationSpeed = values.OfType<IAnimationSpeed>().FirstOrDefault();
-            var type = values.OfType<bool?>().FirstOrDefault();
+            var animationSpeed = values?.OfType<IAnimationSpeed>().FirstOrDefault();
+            var type = values?.OfType<bool?>().FirstOrDefault();
             if (IsValidParametres(parameter, animationSpeed, type))
             {
                 var axisAngleRotation = parameter as AxisAngleRotation3D;

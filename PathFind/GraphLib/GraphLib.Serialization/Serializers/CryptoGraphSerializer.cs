@@ -1,5 +1,6 @@
 ﻿using GraphLib.Interfaces;
 using GraphLib.Serialization.Exceptions;
+using GraphLib.Serialization.Extensions;
 using GraphLib.Serialization.Interfaces;
 using System;
 using System.IO;
@@ -80,7 +81,7 @@ namespace GraphLib.Serialization.Serializers
 
         private byte[] GetCryptoStringBytes(int length)
         {
-            var cryptoStringChunk = new string(CryptoString.Take(length).ToArray());
+            var cryptoStringChunk = CryptoString.Take(length).AsString();
             return Encoding.ASCII.GetBytes(cryptoStringChunk);
         }
 

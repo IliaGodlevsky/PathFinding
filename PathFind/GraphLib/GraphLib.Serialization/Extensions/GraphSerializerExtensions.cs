@@ -6,25 +6,21 @@ namespace GraphLib.Serialization.Extensions
 {
     public static class GraphSerializerExtensions
     {
-        public static void SaveGraphToFile(this IGraphSerializer self, IGraph graph, string fileName)
+        public static void SaveGraphToFile(this IGraphSerializer self, IGraph graph, string filePath)
         {
-            using (var stream = new FileStream(fileName, DefineFileMode(fileName), FileAccess.Write))
+            var fileMode = File.Exists(filePath) ? FileMode.Truncate : FileMode.Create;
+            using (var fileStream = new FileStream(filePath, fileMode, FileAccess.Write))
             {
-                self.SaveGraph(graph, stream);
+                self.SaveGraph(graph, fileStream);
             }
         }
 
-        public static IGraph LoadGraphFromFile(this IGraphSerializer self, string fileName)
+        public static IGraph LoadGraphFromFile(this IGraphSerializer self, string filePath)
         {
-            using (var stream = new FileStream(fileName, FileMode.Open, FileAccess.Read))
+            using (var fileStream = new FileStream(filePath, FileMode.Open, FileAccess.Read))
             {
-                return self.LoadGraph(stream);
+                return self.LoadGraph(fileStream);
             }
-        }
-
-        private static FileMode DefineFileMode(string filePath)
-        {
-            return File.Exists(filePath) ? FileMode.Truncate : FileMode.Create;
         }
     }
 }

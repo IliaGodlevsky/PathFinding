@@ -11,13 +11,14 @@
         xmlns:ei="http://schemas.microsoft.com/expression/2010/interactions" 
         xmlns:validationrules="clr-namespace:WPFVersion3D.ValidationRules"
         mc:Ignorable="d"
-        Title="3D pathfinding" 
+        Title="3D pathfinding"
         Height="350" 
         Width="450">
     <Window.Resources>
         <converters:InvertPointConverter x:Key="invertPointConverter"/>
         <converters:PointToNumberConverter x:Key="coordinateToDistance"/>
         <converters:PrecisedDoubleToStringConverter Precision="2" x:Key="doubleConverter2"/>
+        <converters:PrecisedDoubleToStringConverter Precision="0" x:Key="doubleConverter"/>
         <converters:AnimatedAxisRotatorMultiConverter x:Key="animatedAxisRotatorConverter"/>
 
         <Style TargetType="TextBox" x:Key="TextBoxStyle">

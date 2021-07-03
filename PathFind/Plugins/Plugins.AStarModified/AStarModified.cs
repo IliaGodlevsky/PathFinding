@@ -81,11 +81,13 @@ namespace Plugins.AStarModified
 
         private int CalculatePercentOfFarthestVerticesToDelete()
         {
+            const int LogarithmBase = 4;
+            int graphSize = graph.Size + 1;
             // this formula was found empirically (it means: in what power you need 
             // to raise the base of the logarithm to get the size of the graph)
-            var percentOfVerticesToDelete = Math.Floor(Math.Log(graph.Size + 1, 4));
-            var partOfVertexToDelete = Convert.ToInt32(percentOfVerticesToDelete);
-            return percentValueRange.ReturnInRange(partOfVertexToDelete);
+            var percentOfVerticesToDelete = Math.Floor(Math.Log(graphSize, LogarithmBase));
+            var partOfVerticesToDelete = Convert.ToInt32(percentOfVerticesToDelete);
+            return percentValueRange.ReturnInRange(partOfVerticesToDelete);
         }
 
         private readonly InclusiveValueRange<int> percentValueRange;

@@ -32,15 +32,15 @@ namespace GraphLib.Serialization.Serializers
         {
             try
             {
-                var verticesInfo = (GraphSerializationInfo)formatter.Deserialize(stream);
-                var graph = graphFactory.CreateGraph(verticesInfo.DimensionsSizes);
+                var graphInfo = (GraphSerializationInfo)formatter.Deserialize(stream);
+                var graph = graphFactory.CreateGraph(graphInfo.DimensionsSizes);
 
                 void CreateVertexFrom(VertexSerializationInfo info)
                 {
                     graph[info.Position] = infoConverter.ConvertFrom(info);
                 }
 
-                verticesInfo.VerticesInfo.ForEach(CreateVertexFrom);
+                graphInfo.VerticesInfo.ForEach(CreateVertexFrom);
 
                 graph.ConnectVertices();
                 return graph;

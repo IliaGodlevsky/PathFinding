@@ -13,7 +13,6 @@ namespace WPFVersion3D
         public static InclusiveValueRange<int> GraphWidthValueRange { get; }
         public static InclusiveValueRange<int> GraphLengthValueRange { get; }
         public static InclusiveValueRange<int> GraphHeightValueRange { get; }
-        public static ValueRanges<int> GraphParamsValueRanges { get; }
 
         public const int InitialVertexSize = 5;
 
@@ -36,11 +35,6 @@ namespace WPFVersion3D
             GraphWidthValueRange = new InclusiveValueRange<int>(25, 1);
             GraphLengthValueRange = GraphWidthValueRange;
             GraphHeightValueRange = GraphLengthValueRange;
-            GraphParamsValueRanges = new ValueRanges<int>(
-                GraphWidthValueRange,
-                GraphLengthValueRange,
-                GraphHeightValueRange
-                );
         }
     }
 }
