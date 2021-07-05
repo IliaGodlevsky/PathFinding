@@ -46,6 +46,7 @@ namespace WPFVersion3D.Configure
 
             builder.RegisterType<FileLog>().As<ILog>().SingleInstance();
             builder.RegisterType<MessageBoxLog>().As<ILog>().SingleInstance();
+            builder.RegisterType<MailLog>().As<ILog>().SingleInstance();
             builder.RegisterComposite<Logs, ILog>().SingleInstance();
 
             builder.RegisterType<GraphAssemble>().Named<IGraphAssemble>(GraphAssembleName).As<IGraphAssemble>().SingleInstance();

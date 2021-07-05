@@ -36,7 +36,6 @@ namespace GraphViewModel
             this.graphAssembles = graphAssembles;
             this.algorithmClasses = algorithmClasses;
             this.log = log;
-
             Graph = new NullGraph();
         }
 
@@ -50,7 +49,6 @@ namespace GraphViewModel
             {
                 log.Warn(ex);
             }
-
         }
 
         public virtual void LoadGraph()
@@ -64,7 +62,6 @@ namespace GraphViewModel
             {
                 log.Warn(ex);
             }
-
         }
 
         public abstract void FindPath();

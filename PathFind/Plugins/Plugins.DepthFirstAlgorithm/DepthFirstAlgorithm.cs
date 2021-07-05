@@ -16,14 +16,14 @@ namespace Plugins.DepthFirstAlgorithm
         }
 
         public DepthFirstAlgorithm(IGraph graph, IEndPoints endPoints)
-            : this(graph, endPoints, new CanberraDistance())
+            : this(graph, endPoints, new ManhattanDistance())
         {
 
         }
 
         protected override double GreedyHeuristic(IVertex vertex)
         {
-            return heuristic.Calculate(vertex, endPoints.Target);
+            return heuristic.Calculate(vertex, endPoints.Source);
         }
 
         private readonly IHeuristic heuristic;
