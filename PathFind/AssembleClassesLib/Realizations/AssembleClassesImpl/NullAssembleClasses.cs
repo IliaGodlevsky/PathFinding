@@ -22,7 +22,7 @@ namespace AssembleClassesLib.Realizations.AssembleClassesImpl
 
         public void LoadClasses()
         {
-
+            
         }
 
         private readonly object nullObject;

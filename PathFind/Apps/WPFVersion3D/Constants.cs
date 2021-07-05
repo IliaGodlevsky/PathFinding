@@ -15,6 +15,8 @@ namespace WPFVersion3D
         public static InclusiveValueRange<int> GraphHeightValueRange { get; }
 
         public const int InitialVertexSize = 5;
+        public const double DistanceBase = 14;
+        public const double ZoomBase = 200;
 
         public const double InitialVisitedVertexOpacity = 0.15;
         public const double InitialEnqueuedVertexOpacity = 0.15;
@@ -26,13 +28,13 @@ namespace WPFVersion3D
 
         static Constants()
         {
-            DistanceBetweenVerticesValueRange = new InclusiveValueRange<double>(70, 0);
-            ZoomValueRange = new InclusiveValueRange<double>(1000, 0);
+            DistanceBetweenVerticesValueRange = new InclusiveValueRange<double>(DistanceBase * InitialVertexSize, 0);
+            ZoomValueRange = new InclusiveValueRange<double>(ZoomBase * InitialVertexSize, 0);
             OpacityValueRange = new InclusiveValueRange<double>(1, 0);
             AngleValueRange = new InclusiveValueRange<double>(360, 0);
             ObstaclePercentValueRange = new InclusiveValueRange<double>(99, 0);
             AlgorithmDelayValueRange = new InclusiveValueRange<double>(35, 0);
-            GraphWidthValueRange = new InclusiveValueRange<int>(25, 1);
+            GraphWidthValueRange = new InclusiveValueRange<int>(60, 1);
             GraphLengthValueRange = GraphWidthValueRange;
             GraphHeightValueRange = GraphLengthValueRange;
         }

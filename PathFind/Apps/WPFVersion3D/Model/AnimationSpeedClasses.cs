@@ -8,9 +8,9 @@ namespace WPFVersion3D.Model
 {
     internal sealed class AnimationSpeedClasses : AssembleClasses
     {
-        public AnimationSpeedClasses() 
-            : base(new EmptyLoadPath(), 
-                  new AllDirectories(), 
+        public AnimationSpeedClasses()
+            : base(new EmptyLoadPath(),
+                  new AllDirectories(),
                   new AnimationSpeedLoadMethod())
         {
             speedType = typeof(IAnimationSpeed);

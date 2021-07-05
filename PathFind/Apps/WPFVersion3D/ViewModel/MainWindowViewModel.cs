@@ -1,19 +1,17 @@
-﻿using Algorithm.Realizations;
-using AssembleClassesLib.Extensions;
+﻿using AssembleClassesLib.Extensions;
+using AssembleClassesLib.Interface;
 using AssembleClassesLib.Realizations;
 using AssembleClassesLib.Realizations.AssembleClassesImpl;
-using Common.Extensions;
 using Common.Interface;
 using GraphLib.Interfaces;
-using GraphLib.Realizations;
+using GraphLib.Interfaces.Factories;
 using GraphViewModel;
 using GraphViewModel.Interfaces;
-using Logging.Loggers;
+using Logging.Interface;
 using NullObject.Extensions;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Windows;
 using System.Windows.Input;
@@ -69,11 +67,11 @@ namespace WPFVersion3D.ViewModel
             IGraphFieldFactory fieldFactory,
             IVertexEventHolder eventHolder,
             ISaveLoadGraph saveLoad,
-            ConcreteGraphAssembleClasses graphFactories,
-            ConcreteAssembleAlgorithmClasses assembleClasses,
-            Logs log)
+            IEnumerable<IGraphAssemble> graphAssembles,
+            IAssembleClasses assembleClasses,
+            ILog log)
             : base(fieldFactory, eventHolder, saveLoad,
-                  graphFactories, assembleClasses, log)
+                  graphAssembles, assembleClasses, log)
         {
             StartPathFindCommand = new RelayCommand(ExecuteStartPathFindCommand, CanExecuteStartFindPathCommand);
             CreateNewGraphCommand = new RelayCommand(ExecuteCreateNewGraphCommand);
@@ -89,7 +87,7 @@ namespace WPFVersion3D.ViewModel
         {
             try
             {
-                var notifyableAssembleClasses = new NotifingAssembleClasses((AssembleClasses)assembleClasses);
+                var notifyableAssembleClasses = new NotifingAssembleClasses((AssembleClasses)algorithmClasses);
                 var updatableAssembleClasses = new UpdatableAssembleClasses(notifyableAssembleClasses);
                 void Interrupt(object sender, EventArgs e) => updatableAssembleClasses.Interrupt();
                 var viewModel = new PathFindingViewModel(log, updatableAssembleClasses, this, EndPoints);
@@ -114,7 +112,7 @@ namespace WPFVersion3D.ViewModel
         {
             try
             {
-                var model = new GraphCreatingViewModel(log, this, graphFactories);
+                var model = new GraphCreatingViewModel(log, this, graphAssembles);
                 var window = new GraphCreateWindow();
                 PrepareWindow(model, window);
             }
@@ -203,11 +201,9 @@ namespace WPFVersion3D.ViewModel
 
         private IDictionary<string, IAnimationSpeed> GetAnimationSpeeds()
         {
-            var animationSpeeds = new AnimationSpeedClasses();
-            animationSpeeds.LoadClasses();
-            return animationSpeeds.GetOfType<IAnimationSpeed>()
-                .OrderByDescending(item => item.GetOrder())
-                .ToDictionary(item => item.GetClassName());
+            var speeds = new AnimationSpeedClasses();
+            speeds.LoadClasses();
+            return speeds.AsNameInstanceDictionary<IAnimationSpeed>();
         }
 
         private readonly Lazy<IDictionary<string, IAnimationSpeed>> animationSpeeds;

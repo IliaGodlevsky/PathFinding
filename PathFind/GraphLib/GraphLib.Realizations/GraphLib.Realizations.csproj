@@ -48,7 +48,6 @@
     <Compile Include="MeanCosts\GeometricMeanCost.cs" />
     <Compile Include="MeanCosts\MeanCost.cs" />
     <Compile Include="MeanCosts\RootMeanSquareCost.cs" />
-    <Compile Include="ConcreteGraphAssembleClasses.cs" />
     <Compile Include="Coordinates\Coordinate2D.cs" />
     <Compile Include="Coordinates\Coordinate3D.cs" />
     <Compile Include="Factories\NeighboursCoordinatesFactories\CardinalNeighboursCoordinatesFactory.cs" />

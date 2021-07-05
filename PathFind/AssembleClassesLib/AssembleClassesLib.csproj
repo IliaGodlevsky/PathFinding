@@ -44,6 +44,7 @@
     <Compile Include="Attributes\ClassOrderAttribute.cs" />
     <Compile Include="Attributes\LoadableAttribute.cs" />
     <Compile Include="Attributes\NotLoadableAttribute.cs" />
+    <Compile Include="Extensions\EnumerableExtensions.cs" />
     <Compile Include="Extensions\IAssembleClassesExtensions.cs" />
     <Compile Include="Extensions\MemberInfoExtensions.cs" />
     <Compile Include="Extensions\ObjectExtensions.cs" />

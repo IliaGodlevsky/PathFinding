@@ -15,7 +15,7 @@ namespace WPFVersion3D.Infrastructure.Animators
 
         }
 
-        public ForwardAnimatedAxisRotator(AxisAngleRotation3D axis, IAnimationSpeed speed) 
+        public ForwardAnimatedAxisRotator(AxisAngleRotation3D axis, IAnimationSpeed speed)
             : base(axis, speed)
         {
 

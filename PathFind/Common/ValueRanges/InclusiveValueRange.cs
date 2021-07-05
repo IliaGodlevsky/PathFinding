@@ -4,7 +4,7 @@ using System;
 namespace Common.ValueRanges
 {
     /// <summary>
-    /// Represents range of values (inclusively)
+    /// Represents inclusive range of values
     /// </summary>
     public readonly struct InclusiveValueRange<T>
         : IValueRange<T> where T : IComparable<T>

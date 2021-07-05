@@ -3,8 +3,14 @@ using WPFVersion3D.Model;
 
 namespace WPFVersion3D.Axes
 {
+    /// <summary>
+    /// Interface for 3D cartesian coordinates
+    /// </summary>
     internal interface IAxis
     {
+        /// <summary>
+        /// Coordinate axis ordinal
+        /// </summary>
         int Index { get; }
 
         void SetDistanceBeetween(double distance, GraphField3D field);

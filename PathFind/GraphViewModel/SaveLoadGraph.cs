@@ -4,7 +4,6 @@ using GraphLib.Serialization.Extensions;
 using GraphLib.Serialization.Interfaces;
 using GraphViewModel.Interfaces;
 using Logging.Interface;
-using Logging.Loggers;
 using System;
 using System.Threading.Tasks;
 
@@ -12,7 +11,7 @@ namespace GraphViewModel
 {
     public sealed class SaveLoadGraph : ISaveLoadGraph
     {
-        public SaveLoadGraph(Logs log, IGraphSerializer graphSerializer,
+        public SaveLoadGraph(ILog log, IGraphSerializer graphSerializer,
             IPathInput pathInput)
         {
             this.graphSerializer = graphSerializer;
@@ -24,12 +23,6 @@ namespace GraphViewModel
         {
             string loadPath = pathInput.InputLoadPath();
             return graphSerializer.LoadGraphFromFile(loadPath);
-        }
-
-        public void SaveGraph(IGraph graph)
-        {
-            string savePath = pathInput.InputSavePath();
-            graphSerializer.SaveGraphToFile(graph, savePath);
         }
 
         public async Task SaveGraphAsync(IGraph graph)

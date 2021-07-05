@@ -10,7 +10,7 @@ namespace Algorithm.Realizations.Heuristic
     /// Calculates euclidian distance between two vertices
     /// </summary>
     /// <remarks><see cref="https://en.wikipedia.org/wiki/Euclidean_distance"/></remarks>
-    public sealed class EuclidianDistance : AbstractDistance, IHeuristic
+    public sealed class EuclidianDistance : Distance, IHeuristic
     {
         private const int Precision = 1;
         private const double Power = 2;

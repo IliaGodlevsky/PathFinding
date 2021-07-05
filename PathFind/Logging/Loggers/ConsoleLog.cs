@@ -56,8 +56,13 @@ namespace Logging.Loggers
 
         private void Write(string message, Action<string> action, LogLevel logLevel)
         {
+            bool isLogLevelAnaibled = consoleLogger.IsEnabled(logLevel);
+            if (isLogLevelAnaibled)
+            {
+                Console.Clear();
+            }
             action(message);
-            if (consoleLogger.IsEnabled(logLevel))
+            if (isLogLevelAnaibled)
             {
                 Console.ReadLine();
             }

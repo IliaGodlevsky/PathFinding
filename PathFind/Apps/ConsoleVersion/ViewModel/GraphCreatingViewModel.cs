@@ -1,8 +1,9 @@
-﻿using AssembleClassesLib.Interface;
-using ConsoleVersion.View;
+﻿using ConsoleVersion.View;
+using GraphLib.Interfaces.Factories;
 using GraphLib.ViewModel;
 using GraphViewModel.Interfaces;
 using Logging.Interface;
+using System.Collections.Generic;
 using System.Linq;
 using static ConsoleVersion.Constants;
 using static ConsoleVersion.InputClass.Input;
@@ -19,18 +20,19 @@ namespace ConsoleVersion.ViewModel
 
         public string HeightInputMessage { private get; set; }
 
-        public GraphCreatingViewModel(ILog log, IMainModel model, IAssembleClasses graphFactories)
-            : base(log, model, graphFactories)
+        public GraphCreatingViewModel(ILog log, IMainModel model, IEnumerable<IGraphAssemble> graphAssembles)
+            : base(log, model, graphAssembles)
         {
-            maxGraphAssembleKeyNumber = graphFactories.ClassesNames.Count;
+            maxGraphAssembleKeyNumber = graphAssembles.Count();
             minGraphAssembleKeyNumber = 1;
         }
 
         public override void CreateGraph()
         {
             int graphAssembleIndex = GetGraphAssembleIndex();
-            var graphAssembleKeys = graphAssembleClasses.ClassesNames;
-            GraphAssembleKey = graphAssembleKeys.ElementAt(graphAssembleIndex);
+            var graphAssembleKeys = GraphAssembles.Keys.ToArray();
+            string selectedGraphAssembleKey = graphAssembleKeys[graphAssembleIndex];
+            SelectedGraphAssemble = GraphAssembles[selectedGraphAssembleKey];
 
             ObstaclePercent = InputNumber(ObstaclePercentInputMessage, ObstaclesPercentValueRange);
             Width = InputNumber(WidthInputMessage, GraphWidthValueRange);

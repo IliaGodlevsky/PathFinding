@@ -41,8 +41,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AesCrypto.cs" />
     <Compile Include="Extensions\EnumerableExtensions.cs" />
     <Compile Include="Extensions\GraphSerializerExtensions.cs" />
+    <Compile Include="Interfaces\ICrypto.cs" />
     <Compile Include="Serializers\CompressGraphSerializer.cs" />
     <Compile Include="Serializers\CryptoGraphSerializer.cs" />
     <Compile Include="Exceptions\CantSerializeGraphException.cs" />
@@ -70,6 +72,5 @@
       <Name>GraphLib.Interfaces</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

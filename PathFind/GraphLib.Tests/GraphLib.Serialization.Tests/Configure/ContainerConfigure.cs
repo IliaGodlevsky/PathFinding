@@ -40,6 +40,6 @@ namespace GraphLib.Serialization.Tests.Configure
 
             return builder.Build();
         }
-        
+
     }
 }

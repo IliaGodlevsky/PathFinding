@@ -2,10 +2,12 @@
 using GraphLib.Base;
 using GraphLib.Extensions;
 using GraphLib.Interfaces;
+using GraphLib.Interfaces.Factories;
 using GraphLib.NullRealizations.NullObjects;
 using GraphViewModel.Interfaces;
 using Logging.Interface;
 using System;
+using System.Collections.Generic;
 
 namespace GraphViewModel
 {
@@ -24,18 +26,16 @@ namespace GraphViewModel
         protected MainModel(IGraphFieldFactory fieldFactory,
             IVertexEventHolder eventHolder,
             ISaveLoadGraph saveLoad,
-            IAssembleClasses graphFactories,
-            IAssembleClasses assembleClasses,
+            IEnumerable<IGraphAssemble> graphAssembles,
+            IAssembleClasses algorithmClasses,
             ILog log)
         {
             this.eventHolder = eventHolder;
             this.saveLoad = saveLoad;
             this.fieldFactory = fieldFactory;
-            this.graphFactories = graphFactories;
-            this.assembleClasses = assembleClasses;
+            this.graphAssembles = graphAssembles;
+            this.algorithmClasses = algorithmClasses;
             this.log = log;
-
-            this.graphFactories.LoadClasses();
 
             Graph = new NullGraph();
         }
@@ -92,9 +92,9 @@ namespace GraphViewModel
             PathFindingStatistics = string.Empty;
         }
 
-        protected readonly IAssembleClasses graphFactories;
+        protected readonly IEnumerable<IGraphAssemble> graphAssembles;
         protected readonly IGraphFieldFactory fieldFactory;
-        protected readonly IAssembleClasses assembleClasses;
+        protected readonly IAssembleClasses algorithmClasses;
         protected readonly ILog log;
 
         private readonly IVertexEventHolder eventHolder;

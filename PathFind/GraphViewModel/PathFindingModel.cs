@@ -32,7 +32,7 @@ namespace GraphViewModel
 
         protected PathFindingModel(ILog log, IAssembleClasses algorithms,
             IMainModel mainViewModel, BaseEndPoints endPoints)
-        {            
+        {
             this.mainViewModel = mainViewModel;
             this.endPoints = endPoints;
             this.log = log;
@@ -40,8 +40,8 @@ namespace GraphViewModel
             AlgorithmKeys = algorithms.ClassesNames.ToList();
             DelayTime = 4;
             graph = mainViewModel.Graph;
-            assembleClasses = algorithms;  
-            
+            assembleClasses = algorithms;
+
             keysUpdate = new AlgorithmsKeysUpdate(this);
             timer = new Stopwatch();
             vertexMark = new VertexMark();

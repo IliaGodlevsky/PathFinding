@@ -1,14 +1,15 @@
-﻿using Algorithm.Realizations;
+﻿using AssembleClassesLib.Interface;
 using Common.Interface;
 using GraphLib.Extensions;
 using GraphLib.Interfaces;
-using GraphLib.Realizations;
+using GraphLib.Interfaces.Factories;
 using GraphLib.Realizations.Graphs;
 using GraphViewModel;
 using GraphViewModel.Interfaces;
-using Logging.Loggers;
+using Logging.Interface;
 using NullObject.Extensions;
 using System;
+using System.Collections.Generic;
 using System.ComponentModel;
 using System.Drawing;
 using System.Runtime.CompilerServices;
@@ -65,9 +66,9 @@ namespace WindowsFormsVersion.ViewModel
         public MainWindowViewModel(IGraphFieldFactory fieldFactory,
             IVertexEventHolder eventHolder,
             ISaveLoadGraph saveLoad,
-            ConcreteGraphAssembleClasses graphFactories,
-            ConcreteAssembleAlgorithmClasses assembleClasses,
-            Logs log)
+            IEnumerable<IGraphAssemble> graphFactories,
+            IAssembleClasses assembleClasses,
+            ILog log)
             : base(fieldFactory, eventHolder, saveLoad,
                   graphFactories, assembleClasses, log)
         {
@@ -80,8 +81,8 @@ namespace WindowsFormsVersion.ViewModel
             {
                 try
                 {
-                    assembleClasses.LoadClasses();
-                    var model = new PathFindingViewModel(log, assembleClasses, this, EndPoints);
+                    algorithmClasses.LoadClasses();
+                    var model = new PathFindingViewModel(log, algorithmClasses, this, EndPoints);
                     var form = new PathFindingWindow(model);
                     PrepareWindow(model, form);
                 }
@@ -96,7 +97,7 @@ namespace WindowsFormsVersion.ViewModel
         {
             try
             {
-                var model = new GraphCreatingViewModel(log, this, graphFactories);
+                var model = new GraphCreatingViewModel(log, this, graphAssembles);
                 var form = new GraphCreatingWindow(model);
                 PrepareWindow(model, form);
             }

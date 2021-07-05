@@ -12,7 +12,7 @@ namespace Algorithm.Realizations.Heuristic
     /// Contains methods for calculating distance
     /// between two <see cref="IVertex"/> classes
     /// </summary>
-    public abstract class AbstractDistance
+    public abstract class Distance
     {
         /// <summary>
         /// Calculates distance between 

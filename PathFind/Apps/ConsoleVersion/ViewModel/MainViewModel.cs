@@ -1,4 +1,4 @@
-﻿using Algorithm.Realizations;
+﻿using AssembleClassesLib.Interface;
 using Common.ValueRanges;
 using ConsoleVersion.Attributes;
 using ConsoleVersion.Enums;
@@ -8,12 +8,13 @@ using GraphLib.Base;
 using GraphLib.Exceptions;
 using GraphLib.Extensions;
 using GraphLib.Interfaces;
-using GraphLib.Realizations;
+using GraphLib.Interfaces.Factories;
 using GraphLib.Realizations.Graphs;
 using GraphViewModel;
 using GraphViewModel.Interfaces;
-using Logging.Loggers;
+using Logging.Interface;
 using System;
+using System.Collections.Generic;
 using System.Drawing;
 
 using static ConsoleVersion.InputClass.Input;
@@ -33,11 +34,11 @@ namespace ConsoleVersion.ViewModel
             IGraphFieldFactory fieldFactory,
             IVertexEventHolder eventHolder,
             ISaveLoadGraph saveLoad,
-            ConcreteGraphAssembleClasses graphFactories,
-            ConcreteAssembleAlgorithmClasses algorithms,
-            Logs log)
+            IEnumerable<IGraphAssemble> graphAssembles,
+            IAssembleClasses algorithms,
+            ILog log)
             : base(fieldFactory, eventHolder, saveLoad,
-                  graphFactories, algorithms, log)
+                  graphAssembles, algorithms, log)
         {
             IsAppClosureRequested = false;
         }
@@ -59,7 +60,7 @@ namespace ConsoleVersion.ViewModel
         {
             try
             {
-                var model = new GraphCreatingViewModel(log, this, graphFactories);
+                var model = new GraphCreatingViewModel(log, this, graphAssembles);
                 var view = new GraphCreateView(model);
                 view.Start();
             }
@@ -74,8 +75,8 @@ namespace ConsoleVersion.ViewModel
         {
             try
             {
-                assembleClasses.LoadClasses();
-                var model = new PathFindingViewModel(log, assembleClasses, this, EndPoints);
+                algorithmClasses.LoadClasses();
+                var model = new PathFindingViewModel(log, algorithmClasses, this, EndPoints);
                 var view = new PathFindView(model);
                 view.Start();
             }

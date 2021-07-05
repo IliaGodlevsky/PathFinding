@@ -22,8 +22,10 @@ namespace Algorithm.Realizations
             return base.Get(key, parametres) ?? new NullAlgorithm();
         }
 
-        public ConcreteAssembleAlgorithmClasses(IAssembleLoadPath path,
-            IAssembleSearchOption searchOption, IAssembleLoadMethod loadMethod)
+        public ConcreteAssembleAlgorithmClasses(
+            IAssembleLoadPath path,
+            IAssembleSearchOption searchOption,
+            IAssembleLoadMethod loadMethod)
             : base(path, searchOption, loadMethod)
         {
             baseType = typeof(IAlgorithm);

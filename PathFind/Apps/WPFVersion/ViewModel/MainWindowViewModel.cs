@@ -1,15 +1,16 @@
-﻿using Algorithm.Realizations;
+﻿using AssembleClassesLib.Interface;
 using AssembleClassesLib.Realizations;
 using AssembleClassesLib.Realizations.AssembleClassesImpl;
 using Common.Interface;
 using GraphLib.Extensions;
 using GraphLib.Interfaces;
-using GraphLib.Realizations;
+using GraphLib.Interfaces.Factories;
 using GraphViewModel;
 using GraphViewModel.Interfaces;
-using Logging.Loggers;
+using Logging.Interface;
 using NullObject.Extensions;
 using System;
+using System.Collections.Generic;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using System.Windows;
@@ -70,11 +71,11 @@ namespace WPFVersion.ViewModel
             IGraphFieldFactory fieldFactory,
             IVertexEventHolder eventHolder,
             ISaveLoadGraph saveLoad,
-            ConcreteGraphAssembleClasses graphFactories,
-            ConcreteAssembleAlgorithmClasses assembleClasses,
-            Logs log)
+            IEnumerable<IGraphAssemble> graphAssembles,
+            IAssembleClasses assembleClasses,
+            ILog log)
             : base(fieldFactory, eventHolder, saveLoad,
-                  graphFactories, assembleClasses, log)
+                  graphAssembles, assembleClasses, log)
         {
             StartPathFindCommand = new RelayCommand(ExecuteStartPathFindCommand, CanExecuteStartFindPathCommand);
             CreateNewGraphCommand = new RelayCommand(ExecuteCreateNewGraphCommand);
@@ -114,7 +115,7 @@ namespace WPFVersion.ViewModel
         {
             try
             {
-                var notifingAssembleClasses = new NotifingAssembleClasses((AssembleClasses)assembleClasses);
+                var notifingAssembleClasses = new NotifingAssembleClasses((AssembleClasses)algorithmClasses);
                 var updatableAssembleClasses = new UpdatableAssembleClasses(notifingAssembleClasses);
                 void Interrupt(object sender, EventArgs e) => updatableAssembleClasses.Interrupt();
                 var viewModel = new PathFindingViewModel(log, updatableAssembleClasses, this, EndPoints);
@@ -139,7 +140,7 @@ namespace WPFVersion.ViewModel
         {
             try
             {
-                var model = new GraphCreatingViewModel(log, this, graphFactories);
+                var model = new GraphCreatingViewModel(log, this, graphAssembles);
                 var window = new GraphCreatesWindow();
                 PrepareWindow(model, window);
             }

@@ -6,7 +6,6 @@ using Autofac;
 using GraphLib.Base;
 using GraphLib.Interfaces;
 using GraphLib.Interfaces.Factories;
-using GraphLib.Realizations;
 using GraphLib.Realizations.Factories;
 using GraphLib.Realizations.Factories.CoordinateFactories;
 using GraphLib.Realizations.Factories.GraphAssembles;
@@ -29,6 +28,14 @@ namespace WindowsFormsVersion.Configure
 {
     internal static class ContainerConfigure
     {
+        private const string GraphAssembleName = nameof(GraphAssembleName);
+        private static SmoothedGraphAssemble RegisterSmoothedGraphAssemble(IComponentContext context)
+        {
+            var randomGraphAssemble = context.ResolveNamed<IGraphAssemble>(GraphAssembleName);
+            var costFactory = context.Resolve<IVertexCostFactory>();
+            return new SmoothedGraphAssemble(randomGraphAssemble, costFactory);
+        }
+
         public static IContainer Configure()
         {
             var builder = new ContainerBuilder();
@@ -42,11 +49,10 @@ namespace WindowsFormsVersion.Configure
 
             builder.RegisterType<FileLog>().As<ILog>().SingleInstance();
             builder.RegisterType<MessageBoxLog>().As<ILog>().SingleInstance();
-            builder.RegisterType<Logs>().AsSelf().SingleInstance();
+            builder.RegisterComposite<Logs, ILog>().SingleInstance();
 
-            builder.RegisterType<ConcreteGraphAssembleClasses>().AsSelf().SingleInstance();
-            builder.RegisterType<SmoothedGraphAssemble>().As<IGraphAssemble>().SingleInstance();
-            builder.RegisterType<GraphAssemble>().As<IGraphAssemble>().SingleInstance();
+            builder.RegisterType<GraphAssemble>().Named<IGraphAssemble>(GraphAssembleName).As<IGraphAssemble>().SingleInstance();
+            builder.Register(RegisterSmoothedGraphAssemble).As<IGraphAssemble>().SingleInstance();
             builder.RegisterType<CostFactory>().As<IVertexCostFactory>().SingleInstance();
             builder.RegisterType<VertexFactory>().As<IVertexFactory>().SingleInstance();
             builder.RegisterType<Coordinate2DFactory>().As<ICoordinateFactory>().SingleInstance();
@@ -56,10 +62,11 @@ namespace WindowsFormsVersion.Configure
             builder.RegisterType<SaveLoadGraph>().As<ISaveLoadGraph>().SingleInstance();
             builder.RegisterType<PathInput>().As<IPathInput>().SingleInstance();
             builder.RegisterType<GraphSerializer>().As<IGraphSerializer>().SingleInstance();
+            builder.RegisterDecorator<CryptoGraphSerializer, IGraphSerializer>();
             builder.RegisterType<BinaryFormatter>().As<IFormatter>().SingleInstance();
             builder.RegisterType<VertexSerializationInfoConverter>().As<IVertexSerializationInfoConverter>().SingleInstance();
 
-            builder.RegisterType<ConcreteAssembleAlgorithmClasses>().AsSelf().SingleInstance();
+            builder.RegisterType<ConcreteAssembleAlgorithmClasses>().As<IAssembleClasses>().SingleInstance();
             builder.RegisterType<AssembleLoadPath>().As<IAssembleLoadPath>().SingleInstance();
             builder.RegisterType<AllDirectories>().As<IAssembleSearchOption>().SingleInstance();
             builder.RegisterType<LoadFrom>().As<IAssembleLoadMethod>().SingleInstance();

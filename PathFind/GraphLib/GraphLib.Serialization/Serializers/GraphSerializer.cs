@@ -22,28 +22,16 @@ namespace GraphLib.Serialization.Serializers
             this.graphFactory = graphFactory;
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="stream"></param>
-        /// <returns></returns>
-        /// <exception cref="CantSerializeGraphException"></exception>
         public IGraph LoadGraph(Stream stream)
         {
             try
             {
                 var graphInfo = (GraphSerializationInfo)formatter.Deserialize(stream);
                 var graph = graphFactory.CreateGraph(graphInfo.DimensionsSizes);
-
                 void CreateVertexFrom(VertexSerializationInfo info)
-                {
-                    graph[info.Position] = infoConverter.ConvertFrom(info);
-                }
-
+                    => graph[info.Position] = infoConverter.ConvertFrom(info);
                 graphInfo.VerticesInfo.ForEach(CreateVertexFrom);
-
-                graph.ConnectVertices();
-                return graph;
+                return graph.ConnectVertices();
             }
             catch (Exception ex)
             {
@@ -51,12 +39,6 @@ namespace GraphLib.Serialization.Serializers
             }
         }
 
-        /// <summary>
-        /// Saves graph in stream
-        /// </summary>
-        /// <param name="graph"></param>
-        /// <param name="stream"></param>
-        /// <exception cref="CantSerializeGraphException"></exception>
         public void SaveGraph(IGraph graph, Stream stream)
         {
             try

@@ -3,7 +3,6 @@ using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
-using System.Windows.Controls;
 using System.Windows.Data;
 using System.Windows.Media.Media3D;
 using WPFVersion3D.Infrastructure.Animators;
@@ -45,7 +44,7 @@ namespace WPFVersion3D.Converters
 
         private bool IsValidParametres(object paramter, params object[] values)
         {
-            return values.All(value => !value.IsNullObject())
+            return !values.Any(ObjectExtensions.IsNullObject)
                 && paramter is AxisAngleRotation3D;
         }
 

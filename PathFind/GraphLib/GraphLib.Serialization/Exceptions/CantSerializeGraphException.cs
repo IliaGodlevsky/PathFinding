@@ -18,7 +18,7 @@ namespace GraphLib.Serialization.Exceptions
 
         }
 
-        public CantSerializeGraphException(SerializationInfo info, StreamingContext context)
+        protected CantSerializeGraphException(SerializationInfo info, StreamingContext context)
             : base(info, context)
         {
 

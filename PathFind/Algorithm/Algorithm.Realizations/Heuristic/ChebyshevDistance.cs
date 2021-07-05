@@ -10,7 +10,7 @@ namespace Algorithm.Realizations.Heuristic
     /// Calculates chebyshev distance between to vertices
     /// </summary>
     /// <remarks><see cref="https://en.wikipedia.org/wiki/Chebyshev_distance"/></remarks>
-    public sealed class ChebyshevDistance : AbstractDistance, IHeuristic
+    public sealed class ChebyshevDistance : Distance, IHeuristic
     {
         public double Calculate(IVertex first, IVertex second)
         {

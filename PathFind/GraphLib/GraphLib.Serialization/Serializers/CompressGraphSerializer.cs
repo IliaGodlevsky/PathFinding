@@ -14,22 +14,15 @@ namespace GraphLib.Serialization.Serializers
             this.serializer = serializer;
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="stream"></param>
-        /// <returns></returns>
-        /// <exception cref="CantSerializeGraphException"></exception>
         public IGraph LoadGraph(Stream stream)
         {
             IGraph graph = null;
             try
             {
-                using (var compressionStream = new GZipStream(stream, CompressionMode.Decompress, leaveOpen: true)) 
+                using (var compressionStream = new GZipStream(stream, CompressionMode.Decompress, leaveOpen: true))
                 {
                     graph = serializer.LoadGraph(compressionStream);
                 }
-
                 return graph;
             }
             catch (Exception ex)
@@ -39,11 +32,10 @@ namespace GraphLib.Serialization.Serializers
         }
 
         /// <summary>
-        /// Saves graph in stream
+        /// Saves graph in stream and compresses it
         /// </summary>
         /// <param name="graph"></param>
         /// <param name="stream"></param>
-        /// <exception cref="CantSerializeGraphException"></exception>
         public void SaveGraph(IGraph graph, Stream stream)
         {
             try

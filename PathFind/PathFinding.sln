@@ -113,7 +113,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GraphLib.NullRealizations",
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GraphLib.NullRealization.Tests", "GraphLib.Tests\GraphLib.NullRealization.Tests\GraphLib.NullRealization.Tests.csproj", "{E458E202-5F99-482B-AE2E-7E661ACCDBBA}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Plugins.DistanceFirstALgorithm.Tests", "Plugins.Tests\Plugins.DistanceFirstALgorithm.Tests\Plugins.DistanceFirstALgorithm.Tests.csproj", "{0B816B0E-2FEA-43D0-A639-E371EA0723F1}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Plugins.DistanceFirstALgorithm.Tests", "Plugins.Tests\Plugins.DistanceFirstALgorithm.Tests\Plugins.DistanceFirstALgorithm.Tests.csproj", "{0B816B0E-2FEA-43D0-A639-E371EA0723F1}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

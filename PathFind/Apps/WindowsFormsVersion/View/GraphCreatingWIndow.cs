@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using GraphLib.Interfaces.Factories;
+using System.Linq;
 using System.Windows.Forms;
 using WindowsFormsVersion.ViewModel;
 
@@ -17,17 +18,19 @@ namespace WindowsFormsVersion.View
             okButton.Click += Model.CreateGraph;
             cancelButton.Click += Model.CancelCreateGraph;
 
-            var dataSource = model.GraphAssembleKeys
-                .Select(key => new { Name = key }).ToArray();
-            graphAssemblesListBox.DataSource = dataSource;
 
-            var algoKey = dataSource.First();
-            graphAssemblesListBox.ValueMember = nameof(algoKey.Name);
+            var source = model.GraphAssembles.ToArray();
+            graphAssemblesListBox.DataSource = source;
+
+            graphAssemblesListBox.ValueMember = "Value";
+            graphAssemblesListBox.DisplayMember = "Key";
 
             var graphAssembleBinding = new Binding(
                 nameof(graphAssemblesListBox.SelectedValue),
                 model,
-                nameof(model.GraphAssembleKey));
+                nameof(model.SelectedGraphAssemble),
+                true);
+            graphAssembleBinding.Parse += GraphAssembleToInterface;
             graphAssemblesListBox.DataBindings.Add(graphAssembleBinding);
 
             int ConvertFromString(string str, int alternativeResult)
@@ -45,6 +48,12 @@ namespace WindowsFormsVersion.View
 
                 value = Constants.GraphWidthValueRange.ReturnInRange(value);
 
+                e.Value = value;
+            }
+
+            void GraphAssembleToInterface(object sender, ConvertEventArgs e)
+            {
+                var value = (IGraphAssemble)e.Value;
                 e.Value = value;
             }
 

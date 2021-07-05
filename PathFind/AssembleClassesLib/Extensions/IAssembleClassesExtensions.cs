@@ -1,11 +1,12 @@
 ﻿using AssembleClassesLib.Interface;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace AssembleClassesLib.Extensions
 {
     public static class IAssembleClassesExtensions
     {
-        public static IEnumerable<T> GetOfType<T>(this IAssembleClasses assembleClasses, 
+        public static IEnumerable<T> GetOfType<T>(this IAssembleClasses assembleClasses,
             params object[] ctorParams)
         {
             foreach (var name in assembleClasses.ClassesNames)
@@ -15,6 +16,14 @@ namespace AssembleClassesLib.Extensions
                     yield return value;
                 }
             }
+        }
+
+        public static IDictionary<string, T> AsNameInstanceDictionary<T>(this IAssembleClasses assembleClasses)
+        {
+            return assembleClasses
+                .GetOfType<T>()
+                .OrderByDescending(item=>item.GetOrder())
+                .AsNameInstanceDictionary();
         }
     }
 }

@@ -112,13 +112,17 @@
                 </Binding>
             </TextBox.Text>
         </TextBox>
-        <ListBox Grid.Row="5" Grid.ColumnSpan="2" ItemsSource="{Binding GraphAssembleKeys }" 
-                 x:Name="algoListBox" BorderThickness="0" Margin="5"
-                 SelectedItem="{Binding Path = GraphAssembleKey}">
+        <ListBox SelectedValuePath="Value" 
+                 SelectedValue="{Binding SelectedGraphAssemble}" 
+                 Grid.Row="5" 
+                 Grid.ColumnSpan="2" 
+                 ItemsSource="{Binding GraphAssembles }" 
+                 x:Name="algoListBox" 
+                 BorderThickness="0" Margin="5">
             <ListBox.ItemTemplate>
                 <DataTemplate>
                     <StackPanel Orientation="Horizontal">
-                        <TextBlock Margin="3" Text="{Binding}"/>
+                        <TextBlock Margin="3" Text="{Binding Key}"/>
                     </StackPanel>
                 </DataTemplate>
             </ListBox.ItemTemplate>

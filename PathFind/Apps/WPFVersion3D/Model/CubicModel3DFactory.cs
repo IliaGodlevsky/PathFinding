@@ -3,12 +3,21 @@ using WPFVersion3D.Interface;
 
 namespace WPFVersion3D.Model
 {
+    /// <summary>
+    /// A class that responds for 
+    /// creating a cubic <see cref="Model3D"/>
+    /// </summary>
     internal sealed class CubicModel3DFactory : IModel3DFactory
     {
         /// <summary>
-        /// Creates cubic 3D model
+        /// Creates cubic <see cref="Model3D"/>
         /// </summary>
-        /// <returns>A cubic 3D model </returns>
+        /// <param name="material">a material 
+        /// from cube will consists of</param>
+        /// <param name="modelSize">a size of all 
+        /// edges of the cube</param>
+        /// <returns>A cubic <see cref="Model3D"/> 
+        /// with size <paramref name="modelSize"/></returns>
         public Model3D CreateModel3D(double modelSize, Material material)
         {
             var model = new Model3DGroup();

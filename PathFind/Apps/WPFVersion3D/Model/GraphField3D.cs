@@ -94,14 +94,11 @@ namespace WPFVersion3D.Model
             }
         }
 
-        private void StretchAlongAxes(params IAxis[] axes)
+        private void StretchAlongAxes(IAxis axis)
         {
             foreach (var vertex in Vertices3D)
             {
-                foreach (var axis in axes)
-                {
-                    LocateVertex(axis, vertex);
-                }
+                LocateVertex(axis, vertex);
             }
         }
 

@@ -1,9 +1,10 @@
-﻿using AssembleClassesLib.Interface;
-using Common.Interface;
+﻿using Common.Interface;
+using GraphLib.Interfaces.Factories;
 using GraphLib.ViewModel;
 using GraphViewModel.Interfaces;
 using Logging.Interface;
 using System;
+using System.Collections.Generic;
 
 namespace WindowsFormsVersion.ViewModel
 {
@@ -12,8 +13,8 @@ namespace WindowsFormsVersion.ViewModel
         public event EventHandler OnWindowClosed;
 
         public GraphCreatingViewModel(ILog log, IMainModel model,
-            IAssembleClasses graphFactories)
-            : base(log, model, graphFactories)
+            IEnumerable<IGraphAssemble> graphAssembles)
+            : base(log, model, graphAssembles)
         {
 
         }
@@ -36,7 +37,7 @@ namespace WindowsFormsVersion.ViewModel
 
         private bool CanExecuteConfirmGraphAssembleChoice()
         {
-            return GraphAssembleKeys.Contains(GraphAssembleKey)
+            return SelectedGraphAssemble != null
                 && Constants.GraphWidthValueRange.Contains(Width)
                 && Constants.GraphLengthValueRange.Contains(Length);
         }

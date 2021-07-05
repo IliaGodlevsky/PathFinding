@@ -7,8 +7,8 @@ namespace AssembleClassesLib.Extensions
     {
         public static string GetClassName(this object self)
         {
-            return self?.GetType().GetAttributeOrNull<ClassNameAttribute>()?.Name 
-                ?? self?.GetType().FullName 
+            return self?.GetType().GetAttributeOrNull<ClassNameAttribute>()?.Name
+                ?? self?.GetType().FullName
                 ?? string.Empty;
         }
 

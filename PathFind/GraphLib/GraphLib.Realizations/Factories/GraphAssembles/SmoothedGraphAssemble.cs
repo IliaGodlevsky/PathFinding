@@ -10,37 +10,30 @@ using System.Linq;
 namespace GraphLib.Realizations.Factories.GraphAssembles
 {
     [ClassName("Smoothed graph assemble")]
-    public class SmoothedGraphAssemble : GraphAssemble
+    public class SmoothedGraphAssemble : IGraphAssemble
     {
         public SmoothedGraphAssemble(
-           IVertexFactory vertexFactory,
-           ICoordinateFactory coordinateFactory,
-           IGraphFactory graphFactory,
+           IGraphAssemble graphAssemble,
            IVertexCostFactory costFactory,
-           INeighboursCoordinatesFactory radarFactory,
            IMeanCost averageCost)
-            : base(vertexFactory, coordinateFactory,
-                  graphFactory, costFactory, radarFactory)
         {
+            this.graphAssemble = graphAssemble;
+            this.costFactory = costFactory;
             this.averageCost = averageCost;
         }
 
         public SmoothedGraphAssemble(
-           IVertexFactory vertexFactory,
-           ICoordinateFactory coordinateFactory,
-           IGraphFactory graphFactory,
-           IVertexCostFactory costFactory,
-           INeighboursCoordinatesFactory radarFactory)
-            : this(vertexFactory, coordinateFactory,
-                  graphFactory, costFactory, radarFactory, new MeanCost())
+           IGraphAssemble graphAssemble,
+           IVertexCostFactory costFactory)
+            : this(graphAssemble, costFactory, new MeanCost())
         {
 
         }
 
-        public override IGraph AssembleGraph(int obstaclePercent, params int[] graphDimensionSizes)
+        public IGraph AssembleGraph(int obstaclePercent, params int[] graphDimensionSizes)
         {
             var visitedVertices = new VisitedVertices();
-            return base
+            return graphAssemble
                 .AssembleGraph(obstaclePercent, graphDimensionSizes)
                 .ForEach(vertex => SmoothOut(vertex, visitedVertices));
         }
@@ -58,6 +51,8 @@ namespace GraphLib.Realizations.Factories.GraphAssembles
             }
         }
 
+        private readonly IGraphAssemble graphAssemble;
+        private readonly IVertexCostFactory costFactory;
         protected readonly IMeanCost averageCost;
     }
 }

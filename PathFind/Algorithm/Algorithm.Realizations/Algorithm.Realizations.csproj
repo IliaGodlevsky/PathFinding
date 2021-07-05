@@ -41,11 +41,11 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Heuristic\AbstractDistance.cs" />
     <Compile Include="Heuristic\CanberraDistance.cs" />
     <Compile Include="Heuristic\ChebyshevDistance.cs" />
     <Compile Include="ConcreteAssembleAlgorithmClasses.cs" />
     <Compile Include="GraphPaths\GraphPath.cs" />
+    <Compile Include="Heuristic\Distance.cs" />
     <Compile Include="Heuristic\EuclidianDistance.cs" />
     <Compile Include="Heuristic\ManhattanDistance.cs" />
     <Compile Include="Heuristic\NullHeuristic.cs" />

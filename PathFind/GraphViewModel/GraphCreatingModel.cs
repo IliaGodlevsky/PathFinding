@@ -1,10 +1,9 @@
-﻿using AssembleClassesLib.Interface;
+﻿using AssembleClassesLib.Extensions;
 using GraphLib.Interfaces.Factories;
 using GraphViewModel.Interfaces;
 using Logging.Interface;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 
 namespace GraphLib.ViewModel
 {
@@ -18,13 +17,16 @@ namespace GraphLib.ViewModel
 
         public string GraphAssembleKey { get; set; }
 
-        public IList<string> GraphAssembleKeys { get; set; }
+        public IDictionary<string, IGraphAssemble> GraphAssembles { get; }
 
-        protected GraphCreatingModel(ILog log, IMainModel model, IAssembleClasses graphFactories)
+        public virtual IGraphAssemble SelectedGraphAssemble { get; set; }
+
+        protected GraphCreatingModel(ILog log, IMainModel model,
+            IEnumerable<IGraphAssemble> graphAssembles)
         {
-            GraphAssembleKeys = graphFactories.ClassesNames.ToList();
+            GraphAssembles = graphAssembles.AsNameInstanceDictionary();
             this.model = model;
-            graphAssembleClasses = graphFactories;
+            this.graphAssembles = graphAssembles;
             this.log = log;
         }
 
@@ -32,8 +34,7 @@ namespace GraphLib.ViewModel
         {
             try
             {
-                var graphAssemble = (IGraphAssemble)graphAssembleClasses.Get(GraphAssembleKey);
-                var graph = graphAssemble.AssembleGraph(ObstaclePercent, GraphParametres);
+                var graph = SelectedGraphAssemble.AssembleGraph(ObstaclePercent, GraphParametres);
                 model.ConnectNewGraph(graph);
             }
             catch (Exception ex)
@@ -45,7 +46,7 @@ namespace GraphLib.ViewModel
         protected virtual int[] GraphParametres => new[] { Width, Length };
 
         protected readonly IMainModel model;
-        protected readonly IAssembleClasses graphAssembleClasses;
+        protected readonly IEnumerable<IGraphAssemble> graphAssembles;
         protected readonly ILog log;
     }
 }

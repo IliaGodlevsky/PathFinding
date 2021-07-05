@@ -6,11 +6,11 @@ namespace Common.Extensions
 {
     public static class EnumerableExtension
     {
-        private static readonly Random rand;
+        private static readonly Random Random;
 
         static EnumerableExtension()
         {
-            rand = new Random();
+            Random = new Random();
         }
 
         /// <summary>
@@ -48,7 +48,7 @@ namespace Common.Extensions
         public static TSource RandomElementOrDefault<TSource>(this IEnumerable<TSource> self)
         {
             var collection = self.ToArray();
-            var index = rand.Next(collection.Length);
+            var index = Random.Next(collection.Length);
             return collection.ElementAtOrDefault(index);
         }
 
