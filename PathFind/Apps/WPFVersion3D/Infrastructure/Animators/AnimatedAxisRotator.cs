@@ -6,21 +6,21 @@ using WPFVersion3D.Interface;
 
 namespace WPFVersion3D.Infrastructure.Animators
 {
-    internal abstract class BaseAnimatedAxisRotator : IAnimator
+    internal abstract class AnimatedAxisRotator : IAnimatedAxisRotator
     {
-        protected BaseAnimatedAxisRotator(AxisAngleRotation3D axis, IAnimationSpeed speed)
+        protected AnimatedAxisRotator(AxisAngleRotation3D axis, IAnimationSpeed speed)
         {
             this.axis = axis;
             this.speed = speed;
         }
 
-        protected BaseAnimatedAxisRotator(AxisAngleRotation3D axis)
+        protected AnimatedAxisRotator(AxisAngleRotation3D axis)
              : this(axis, new SlowSpeed())
         {
 
         }
 
-        public void ApplyAnimation()
+        public void RotateAxis()
         {
             axis.BeginAnimation(AxisAngleRotation3D.AngleProperty, CreateAnimation());
         }

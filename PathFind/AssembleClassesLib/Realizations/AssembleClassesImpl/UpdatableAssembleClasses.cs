@@ -9,8 +9,7 @@ using System.Threading.Tasks;
 
 namespace AssembleClassesLib.Realizations
 {
-    public sealed class UpdatableAssembleClasses
-        : IAssembleClasses, IInterruptable, IDisposable
+    public sealed class UpdatableAssembleClasses : IAssembleClasses, IInterruptable, IDisposable
     {
         public event EventHandler OnInterrupted;
         public event Action<Exception, string> OnExceptionCaught;

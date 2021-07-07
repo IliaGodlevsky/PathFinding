@@ -11,10 +11,11 @@ using System.Linq;
 
 namespace Algorithm.Base
 {
-    [NotLoadable]
     /// <summary>
-    /// A base class for all Greedy algorithms
+    /// A base class for all Greedy algorithms.
+    /// This is an abstract class
     /// </summary>
+    [NotLoadable]
     public abstract class BaseGreedyAlgorithm : BaseAlgorithm
     {
         protected BaseGreedyAlgorithm(IGraph graph, IEndPoints endPoints)
@@ -23,7 +24,7 @@ namespace Algorithm.Base
             visitedVerticesStack = new Stack<IVertex>();
         }
 
-        public override IGraphPath FindPath()
+        public override sealed IGraphPath FindPath()
         {
             PrepareForPathfinding();
             while (!IsDestination())

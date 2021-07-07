@@ -20,7 +20,7 @@ namespace Common.Extensions
         }
 
         /// <summary>
-        /// Creates delegate of type <typeparamref name="TDelegate"/> from the method 
+        /// Creates a delegate of type <typeparamref name="TDelegate"/> from the method 
         /// </summary>
         /// <typeparam name="TDelegate"></typeparam>
         /// <param name="self"></param>

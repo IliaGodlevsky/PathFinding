@@ -11,9 +11,12 @@ using static Common.Extensions.IntExtensions;
 
 namespace GraphLib.Base
 {
+    /// <summary>
+    /// A base graph for all graph classes.
+    /// This is an abstract class
+    /// </summary>
     public abstract class BaseGraph : IGraph
     {
-
         public int Size { get; }
 
         public int ObstaclePercent => Size == 0 ? 0 : Obstacles * 100 / Size;
@@ -88,7 +91,6 @@ namespace GraphLib.Base
 
             return verticesHashCode.Xor(dimensionSizesHashCode);
         }
-
         public override string ToString()
         {
             string Zip(string name, int size) => $"{name}: {size}";

@@ -5,10 +5,12 @@ using System;
 
 namespace Algorithm.Interfaces
 {
-    [NotLoadable]
+
     /// <summary>
-    /// A base interface for all path finding algorithms
+    /// Provides events and methods for 
+    /// pathfinding algorithm
     /// </summary>
+    [NotLoadable]
     public interface IAlgorithm : IInterruptable, IDisposable
     {
         /// <summary>

@@ -182,8 +182,8 @@ namespace WPFVersion3D.ViewModel
 
         private void ExecuteAnimatedAxisRotateCommand(object param)
         {
-            var rotator = param as IAnimator;
-            rotator?.ApplyAnimation();
+            var rotator = param as IAnimatedAxisRotator;
+            rotator?.RotateAxis();
         }
 
         private void PrepareWindow(IViewModel model, Window window)

@@ -9,7 +9,7 @@ using WPFVersion3D.Infrastructure.Animators;
 using WPFVersion3D.Interface;
 
 using AnimatorFatory = System.Func<System.Windows.Media.Media3D.AxisAngleRotation3D,
-    WPFVersion3D.Interface.IAnimationSpeed, WPFVersion3D.Interface.IAnimator>;
+    WPFVersion3D.Interface.IAnimationSpeed, WPFVersion3D.Interface.IAnimatedAxisRotator>;
 
 namespace WPFVersion3D.Converters
 {
@@ -48,12 +48,12 @@ namespace WPFVersion3D.Converters
                 && paramter is AxisAngleRotation3D;
         }
 
-        private IAnimator CreateForwardAxisRotator(AxisAngleRotation3D axis, IAnimationSpeed speed)
+        private IAnimatedAxisRotator CreateForwardAxisRotator(AxisAngleRotation3D axis, IAnimationSpeed speed)
         {
             return new ForwardAnimatedAxisRotator(axis, speed);
         }
 
-        private IAnimator CreateBackwardAxisRotator(AxisAngleRotation3D axis, IAnimationSpeed speed)
+        private IAnimatedAxisRotator CreateBackwardAxisRotator(AxisAngleRotation3D axis, IAnimationSpeed speed)
         {
             return new BackwardAnimatedAxisRotator(axis, speed);
         }

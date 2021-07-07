@@ -73,12 +73,12 @@ namespace WindowsFormsVersion.Model
             }
         }
 
-        public void MarkAsStart()
+        public void MarkAsSource()
         {
             BackColor = Color.FromKnownColor(KnownColor.Green);
         }
 
-        public void MarkAsEnd()
+        public void MarkAsTarget()
         {
             BackColor = Color.FromKnownColor(KnownColor.Red);
         }

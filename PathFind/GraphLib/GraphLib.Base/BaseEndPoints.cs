@@ -73,13 +73,13 @@ namespace GraphLib.Base
         protected virtual void SetSource(IVertex vertex)
         {
             Source = vertex;
-            (vertex as IMarkable)?.MarkAsStart();
+            (vertex as IMarkable)?.MarkAsSource();
         }
 
         protected virtual void SetTarget(IVertex vertex)
         {
             Target = vertex;
-            (vertex as IMarkable)?.MarkAsEnd();
+            (vertex as IMarkable)?.MarkAsTarget();
         }
 
         protected virtual void UnsetSource(IVertex vertex)

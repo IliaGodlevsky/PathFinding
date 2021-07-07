@@ -6,14 +6,15 @@ namespace AssembleClassesLib.Extensions
 {
     public static class MemberInfoExtensions
     {
+        /// <summary>
+        /// Checks, whether 
+        /// <see cref="MemberInfo"/> is loadable
+        /// </summary>
+        /// <param name="self"></param>
+        /// <returns></returns>
         public static bool IsNotLoadable(this MemberInfo self)
         {
             return self.GetAttributeOrNull<NotLoadableAttribute>() != null;
-        }
-
-        public static bool IsLoadable(this MemberInfo self)
-        {
-            return self.GetAttributeOrNull<LoadableAttribute>() != null;
         }
     }
 }

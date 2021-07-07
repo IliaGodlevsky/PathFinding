@@ -8,7 +8,7 @@ using static WPFVersion3D.Constants;
 
 namespace WPFVersion3D.Infrastructure.Animators
 {
-    internal sealed class BackwardAnimatedAxisRotator : BaseAnimatedAxisRotator, IAnimator
+    internal sealed class BackwardAnimatedAxisRotator : AnimatedAxisRotator, IAnimatedAxisRotator
     {
         public BackwardAnimatedAxisRotator(AxisAngleRotation3D axis) : base(axis)
         {
@@ -18,6 +18,7 @@ namespace WPFVersion3D.Infrastructure.Animators
         public BackwardAnimatedAxisRotator(AxisAngleRotation3D axis, IAnimationSpeed speed)
             : base(axis, speed)
         {
+
         }
 
         protected override AnimationTimeline CreateAnimation()

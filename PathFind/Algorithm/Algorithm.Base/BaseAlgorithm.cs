@@ -12,10 +12,11 @@ using System;
 
 namespace Algorithm.Base
 {
-    [NotLoadable]
     /// <summary>
-    /// A base class for all pathfinding algorithms
+    /// A base class for all pathfinding algorithms.
+    /// This an abstract class
     /// </summary>
+    [NotLoadable]
     public abstract class BaseAlgorithm : IAlgorithm
     {
         public event AlgorithmEventHandler OnStarted;

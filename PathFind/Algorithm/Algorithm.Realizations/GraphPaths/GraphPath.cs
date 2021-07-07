@@ -11,13 +11,11 @@ namespace Algorithm.Realizations.GraphPaths
 {
     /// <summary>
     /// A class that contains the 
-    /// result of pathfinding process
+    /// result of pathfinding process.
+    /// This class can't be inherited
     /// </summary>
     public sealed class GraphPath : IGraphPath
     {
-        /// <summary>
-        /// A chain of vertices, that represent path
-        /// </summary>
         public IVertex[] Path => path.Value;
 
         public double PathCost => pathCost.Value;

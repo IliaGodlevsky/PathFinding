@@ -43,8 +43,8 @@
   <ItemGroup>
     <Compile Include="BaseAlgorithm.cs" />
     <Compile Include="BaseGreedyAlgorithm.cs" />
-    <Compile Include="BaseWaveAlgorithm.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="BaseWaveAlgorithm.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\AssembleClassesLib\AssembleClassesLib.csproj">

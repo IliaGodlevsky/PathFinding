@@ -3,8 +3,8 @@
     /// <summary>
     /// Represents an interface of animation classes
     /// </summary>
-    internal interface IAnimator
+    internal interface IAnimatedAxisRotator
     {
-        void ApplyAnimation();
+        void RotateAxis();
     }
 }

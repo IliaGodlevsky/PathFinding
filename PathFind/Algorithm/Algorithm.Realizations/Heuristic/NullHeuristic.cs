@@ -4,6 +4,10 @@ using NullObject.Attributes;
 
 namespace Algorithm.Realizations.Heuristic
 {
+    /// <summary>
+    /// Represents a null analog for <see cref="IHeuristic"/>
+    /// interface. This class can't be inherited
+    /// </summary>
     [Null]
     public sealed class NullHeuristic : IHeuristic
     {

@@ -12,6 +12,13 @@ using System.Linq;
 
 namespace Plugins.AStarModified
 {
+    /// <summary>
+    /// A modified version of A* algorithm
+    /// </summary>
+    /// <remarks>The modification is that the algorithm 
+    /// removes the most distant vertices from its horisont 
+    /// of search and searches only among vertices, that are 
+    /// the closest to the target vertex</remarks>
     [ClassName("A* algorithm (modified)")]
     public sealed class AStarModified : AStarAlgorithm.AStarAlgorithm
     {

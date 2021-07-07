@@ -39,12 +39,12 @@ namespace GraphLib.Base
             conditional.PerformFirstSuitable(sender as IVertex, param => param != null);
         }
 
-        public void UnsubscribeVertices(IGraph graph)
+        public virtual void UnsubscribeVertices(IGraph graph)
         {
             graph.ForEach(UnsubscribeFromEvents);
         }
 
-        public void SubscribeVertices(IGraph graph)
+        public virtual void SubscribeVertices(IGraph graph)
         {
             graph.ForEach(SubscribeToEvents);
         }

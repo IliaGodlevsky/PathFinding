@@ -7,6 +7,10 @@ using Plugins.DijkstraALgorithm;
 
 namespace Plugins.AStarAlgorithm
 {
+    /// <summary>
+    /// A realization of the A* algorithm
+    /// </summary>
+    /// <remarks><see cref="https://en.wikipedia.org/wiki/A*_search_algorithm"/></remarks>
     [ClassName("A* algorithm")]
     public class AStarAlgorithm : DijkstraAlgorithm
     {

@@ -10,7 +10,8 @@ namespace Algorithm.Realizations.Heuristic
     /// <summary>
     /// A base class for all distance classes.
     /// Contains methods for calculating distance
-    /// between two <see cref="IVertex"/> classes
+    /// between two <see cref="IVertex"/> classes.
+    /// This is an abstract class
     /// </summary>
     public abstract class Distance
     {
@@ -22,6 +23,9 @@ namespace Algorithm.Realizations.Heuristic
         /// <param name="second"></param>
         /// <returns>Distance between 
         /// two vertices</returns>
+        /// <exception cref="ArgumentException"/>
+        /// <exception cref="ArgumentNullException"/>
+        /// <exception cref="WrongNumberOfDimensionsException"/>
         public double CalculateDistance(IVertex first, IVertex second)
         {
             #region Invariants Observance

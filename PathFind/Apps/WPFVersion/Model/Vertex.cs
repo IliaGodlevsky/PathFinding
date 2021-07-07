@@ -88,7 +88,7 @@ namespace WPFVersion.Model
             }
         }
 
-        public void MarkAsEnd()
+        public void MarkAsTarget()
         {
             Dispatcher.Invoke(() => Background = EndVertexColor);
         }
@@ -103,7 +103,7 @@ namespace WPFVersion.Model
             Dispatcher.Invoke(() => Background = PathVertexColor);
         }
 
-        public void MarkAsStart()
+        public void MarkAsSource()
         {
             Dispatcher.Invoke(() => Background = StartVertexColor);
         }

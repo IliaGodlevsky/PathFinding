@@ -83,7 +83,7 @@ namespace ConsoleVersion.Model
             OnEndPointChosen?.Invoke(this, EventArgs.Empty);
         }
 
-        public void MarkAsEnd()
+        public void MarkAsTarget()
         {
             Colour = Color.FromKnownColor(KnownColor.Red);
             ColorizeVertex();
@@ -106,7 +106,7 @@ namespace ConsoleVersion.Model
             ColorizeVertex();
         }
 
-        public void MarkAsStart()
+        public void MarkAsSource()
         {
             Colour = Color.FromKnownColor(KnownColor.Green);
             ColorizeVertex();

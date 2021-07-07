@@ -4,6 +4,10 @@ using NullObject.Attributes;
 
 namespace Algorithm.Realizations.StepRules
 {
+    /// <summary>
+    /// A step rule that represents a null (default) 
+    /// analog for <see cref="IStepRule"/> interface
+    /// </summary>
     [Null]
     public sealed class NullStepRule : IStepRule
     {

@@ -10,6 +10,11 @@ using System.Linq;
 
 namespace Algorithm.Base
 {
+    /// <summary>
+    /// A base class for all wave algorithms, such as 
+    /// Dijkstra's algorithm, Lee algorithm or A* algorithm.
+    /// This is an abstract class
+    /// </summary>
     [NotLoadable]
     public abstract class BaseWaveAlgorithm : BaseAlgorithm
     {
@@ -21,12 +26,12 @@ namespace Algorithm.Base
 
         protected abstract IVertex NextVertex { get; }
 
-        public override IGraphPath FindPath()
+        public override sealed IGraphPath FindPath()
         {
             PrepareForPathfinding();
             do
             {
-                var neighbours = GetCurrentVertexNeighbours();
+                var neighbours = GetCurrentVertexUnvisitedNeighbours();
                 ExtractNeighbours(neighbours);
                 RelaxNeighbours(neighbours);
                 CurrentVertex = NextVertex;
@@ -67,7 +72,7 @@ namespace Algorithm.Base
 
         protected Queue<IVertex> verticesQueue;
 
-        private IVertex[] GetCurrentVertexNeighbours()
+        private IVertex[] GetCurrentVertexUnvisitedNeighbours()
         {
             return visitedVertices
                 .GetUnvisitedNeighbours(CurrentVertex)

@@ -6,6 +6,14 @@ namespace AssembleClassesLib.Extensions
 {
     public static class IAssembleClassesExtensions
     {
+        /// <summary>
+        /// Returns a collection of instances of <typeparamref name="T"/> 
+        /// from <paramref name="assembleClasses"/>
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="assembleClasses"></param>
+        /// <param name="ctorParams"></param>
+        /// <returns></returns>
         public static IEnumerable<T> GetOfType<T>(this IAssembleClasses assembleClasses,
             params object[] ctorParams)
         {
@@ -18,11 +26,19 @@ namespace AssembleClassesLib.Extensions
             }
         }
 
-        public static IDictionary<string, T> AsNameInstanceDictionary<T>(this IAssembleClasses assembleClasses)
+        /// <summary>
+        /// Returns a dictionary where class name is key and class instance is value
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="assembleClasses"></param>
+        /// <returns></returns>
+        public static IDictionary<string, T> AsNameInstanceDictionary<T>(
+            this IAssembleClasses assembleClasses,
+            params object[] ctorParams)
         {
             return assembleClasses
-                .GetOfType<T>()
-                .OrderByDescending(item=>item.GetOrder())
+                .GetOfType<T>(ctorParams)
+                .OrderByDescending(item => item.GetOrder())
                 .AsNameInstanceDictionary();
         }
     }

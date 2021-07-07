@@ -134,7 +134,7 @@ namespace WPFVersion3D.Model
             return other.IsEqual(this);
         }
 
-        public void MarkAsEnd()
+        public void MarkAsTarget()
         {
             Dispatcher.Invoke(() => Brush = EndVertexBrush);
         }
@@ -170,7 +170,7 @@ namespace WPFVersion3D.Model
             Dispatcher.Invoke(() => Brush = EnqueuedVertexBrush);
         }
 
-        public void MarkAsStart()
+        public void MarkAsSource()
         {
             Dispatcher.Invoke(() => Brush = StartVertexBrush);
         }

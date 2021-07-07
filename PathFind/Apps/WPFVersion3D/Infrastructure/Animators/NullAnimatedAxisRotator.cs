@@ -4,9 +4,9 @@ using WPFVersion3D.Interface;
 namespace WPFVersion3D.Infrastructure.Animators
 {
     [Null]
-    internal sealed class NullAnimatedAxisRotator : IAnimator
+    internal sealed class NullAnimatedAxisRotator : IAnimatedAxisRotator
     {
-        public void ApplyAnimation()
+        public void RotateAxis()
         {
 
         }

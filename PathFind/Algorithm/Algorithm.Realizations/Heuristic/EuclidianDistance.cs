@@ -7,7 +7,8 @@ using System.Collections.Generic;
 namespace Algorithm.Realizations.Heuristic
 {
     /// <summary>
-    /// Calculates euclidian distance between two vertices
+    /// Calculates euclidian distance between two vertices.
+    /// This class can't be inherited
     /// </summary>
     /// <remarks><see cref="https://en.wikipedia.org/wiki/Euclidean_distance"/></remarks>
     public sealed class EuclidianDistance : Distance, IHeuristic
