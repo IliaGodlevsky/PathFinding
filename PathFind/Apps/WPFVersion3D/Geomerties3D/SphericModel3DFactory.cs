@@ -98,7 +98,7 @@ namespace WPFVersion3D.Geomerties3D
 
             double x = radius * (snt * cnp + 1);
             double y = radius * (cnt + 1);
-            double z = radius * (-snt * snp + 1);
+            double z = radius * (1 - snt * snp);
 
             return new Point3D(x, y, z);
         }
