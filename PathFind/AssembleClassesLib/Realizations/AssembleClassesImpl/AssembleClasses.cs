@@ -16,8 +16,10 @@ namespace AssembleClassesLib.Realizations.AssembleClassesImpl
     /// </summary>
     public class AssembleClasses : IAssembleClasses
     {
-        public AssembleClasses(IAssembleLoadPath loadPath,
-            IAssembleSearchOption searchOption, IAssembleLoadMethod loadMethod)
+        public AssembleClasses(
+            IAssembleLoadPath loadPath,
+            IAssembleSearchOption searchOption, 
+            IAssembleLoadMethod loadMethod)
         {
             types = new Dictionary<string, Type>();
             this.loadPath = loadPath.LoadPath;

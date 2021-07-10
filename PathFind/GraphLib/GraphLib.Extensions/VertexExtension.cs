@@ -100,7 +100,7 @@ namespace GraphLib.Extensions
         /// <param name="self"></param>
         /// <param name="graph">A graph, where vertex is situated</param>
         /// <exception cref="ArgumentNullException">Thrown when
-        /// any of parametre is empty</exception>
+        /// any of parametre is null</exception>
         /// <exception cref="ArgumentException">Thrown when <paramref name="graph"/> 
         /// doesn't contain <paramref name="self"/></exception>
         public static void SetNeighbours(this IVertex self, IGraph graph)

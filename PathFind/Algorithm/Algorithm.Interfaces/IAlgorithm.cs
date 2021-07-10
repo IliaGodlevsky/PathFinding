@@ -1,6 +1,6 @@
 ﻿using Algorithm.Infrastructure.Handlers;
 using AssembleClassesLib.Attributes;
-using Common.Interface;
+using Interruptable.Interface;
 using System;
 
 namespace Algorithm.Interfaces

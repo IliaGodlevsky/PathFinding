@@ -12,6 +12,9 @@ using GraphLib.Interfaces.Factories;
 using GraphLib.Realizations.Graphs;
 using GraphViewModel;
 using GraphViewModel.Interfaces;
+using Interruptable.EventArguments;
+using Interruptable.EventHandlers;
+using Interruptable.Interface;
 using Logging.Interface;
 using System;
 using System.Collections.Generic;
@@ -23,10 +26,12 @@ using Console = Colorful.Console;
 
 namespace ConsoleVersion.ViewModel
 {
-    internal sealed class MainViewModel : MainModel
+    internal sealed class MainViewModel : MainModel, IInterruptable
     {
         private const int Yes = 1;
         private const int No = 0;
+
+        public event InterruptEventHanlder OnInterrupted;
 
         public bool IsAppClosureRequested { get; private set; }
 
@@ -149,10 +154,11 @@ namespace ConsoleVersion.ViewModel
         }
 
         [MenuItem(Constants.QuitProgramm, MenuItemPriority.Lowest)]
-        public void Quit()
+        public void Interrupt()
         {
             int input = InputNumber(ExitAppMsg, Yes, No);
             IsAppClosureRequested = input == Yes;
+            OnInterrupted?.Invoke(this, new InterruptEventArgs());
         }
 
         public void DisplayGraph()
@@ -170,12 +176,10 @@ namespace ConsoleVersion.ViewModel
             }
             catch (ArgumentOutOfRangeException ex)
             {
-                Console.Clear();
                 log.Warn(ex);
             }
             catch (Exception ex)
             {
-                Console.Clear();
                 log.Error(ex);
             }
         }

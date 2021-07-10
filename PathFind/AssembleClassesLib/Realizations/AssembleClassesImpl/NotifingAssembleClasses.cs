@@ -9,7 +9,7 @@ namespace AssembleClassesLib.Realizations.AssembleClassesImpl
     {
         public event AssembleClassesEventHandler OnClassesLoaded;
 
-        public NotifingAssembleClasses(AssembleClasses assembleClasses)
+        public NotifingAssembleClasses(IAssembleClasses assembleClasses)
         {
             this.assembleClasses = assembleClasses;
             ClassesNames = assembleClasses.ClassesNames;

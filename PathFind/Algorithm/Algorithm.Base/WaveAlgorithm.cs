@@ -16,9 +16,9 @@ namespace Algorithm.Base
     /// This is an abstract class
     /// </summary>
     [NotLoadable]
-    public abstract class BaseWaveAlgorithm : BaseAlgorithm
+    public abstract class WaveAlgorithm : Algorithm
     {
-        protected BaseWaveAlgorithm(IGraph graph, IEndPoints endPoints)
+        protected WaveAlgorithm(IGraph graph, IEndPoints endPoints)
             : base(graph, endPoints)
         {
             verticesQueue = new Queue<IVertex>();

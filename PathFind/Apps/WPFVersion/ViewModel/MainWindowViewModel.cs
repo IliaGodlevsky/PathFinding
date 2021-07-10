@@ -115,14 +115,20 @@ namespace WPFVersion.ViewModel
         {
             try
             {
-                var notifingAssembleClasses = new NotifingAssembleClasses((AssembleClasses)algorithmClasses);
+                var notifingAssembleClasses = new NotifingAssembleClasses(algorithmClasses);
                 var updatableAssembleClasses = new UpdatableAssembleClasses(notifingAssembleClasses);
-                void Interrupt(object sender, EventArgs e) => updatableAssembleClasses.Interrupt();
                 var viewModel = new PathFindingViewModel(log, updatableAssembleClasses, this, EndPoints);
                 var window = new PathFindWindow();
                 notifingAssembleClasses.OnClassesLoaded += viewModel.UpdateAlgorithmKeys;
                 updatableAssembleClasses.OnExceptionCaught += log.Warn;
                 updatableAssembleClasses.LoadClasses();
+                void Interrupt(object sender, EventArgs e)
+                {
+                    updatableAssembleClasses.Interrupt();
+                    window.Closing -= Interrupt;
+                    notifingAssembleClasses.OnClassesLoaded -= viewModel.UpdateAlgorithmKeys;
+                    updatableAssembleClasses.OnExceptionCaught -= log.Warn;
+                }
                 window.Closing += Interrupt;
                 PrepareWindow(viewModel, window);
             }

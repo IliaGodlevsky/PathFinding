@@ -6,6 +6,7 @@ using Autofac;
 using GraphLib.Base;
 using GraphLib.Interfaces;
 using GraphLib.Interfaces.Factories;
+using GraphLib.NullRealizations.NullFactories;
 using GraphLib.Realizations.Factories;
 using GraphLib.Realizations.Factories.CoordinateFactories;
 using GraphLib.Realizations.Factories.GraphAssembles;
@@ -47,6 +48,7 @@ namespace WPFVersion.Configure
 
             builder.RegisterType<FileLog>().As<ILog>().SingleInstance();
             builder.RegisterType<MessageBoxLog>().As<ILog>().SingleInstance();
+            builder.RegisterType<MailLog>().As<ILog>().SingleInstance();
             builder.RegisterComposite<Logs, ILog>().SingleInstance();
 
             builder.RegisterType<GraphAssemble>().Named<IGraphAssemble>(GraphAssembleName).As<IGraphAssemble>().SingleInstance();

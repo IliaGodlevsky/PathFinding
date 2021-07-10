@@ -7,7 +7,7 @@ using GraphLib.Interfaces;
 namespace Plugins.DepthFirstAlgorithm
 {
     [ClassName("Depth first algorithm")]
-    public sealed class DepthFirstAlgorithm : BaseGreedyAlgorithm
+    public sealed class DepthFirstAlgorithm : GreedyAlgorithm
     {
         public DepthFirstAlgorithm(IGraph graph, IEndPoints endPoints, IHeuristic heuristic)
             : base(graph, endPoints)

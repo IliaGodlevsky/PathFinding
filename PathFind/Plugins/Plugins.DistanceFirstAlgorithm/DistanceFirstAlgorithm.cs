@@ -7,9 +7,10 @@ using GraphLib.Interfaces;
 namespace Plugins.DistanceFirstAlgorithm
 {
     [ClassName("Distance-first algorithm")]
-    public class DistanceFirstAlgorithm : BaseGreedyAlgorithm
+    public class DistanceFirstAlgorithm : GreedyAlgorithm
     {
-        public DistanceFirstAlgorithm(IGraph graph, IEndPoints endPoints, IHeuristic heuristic)
+        public DistanceFirstAlgorithm(IGraph graph,
+            IEndPoints endPoints, IHeuristic heuristic)
             : base(graph, endPoints)
         {
             this.heuristic = heuristic;

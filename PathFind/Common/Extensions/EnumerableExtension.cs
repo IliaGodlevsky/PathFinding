@@ -86,6 +86,16 @@ namespace Common.Extensions
             return collection;
         }
 
+        public static T[] ForEach<T>(Action<T> action, params T[] items)
+        {
+            foreach(var item in items)
+            {
+                action(item);
+            }
+
+            return items.ToArray();
+        }
+
         public static double SumOrDefault(this IEnumerable<int> collection)
         {
             return collection.Any() ? collection.Sum() : default;

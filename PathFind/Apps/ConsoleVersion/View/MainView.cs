@@ -46,6 +46,7 @@ namespace ConsoleVersion.View
         public MainView(IMainModel model)
         {
             mainModel = model as MainViewModel ?? throw new ArgumentException(nameof(model));
+            mainModel.OnInterrupted += OnProgrammStopped;
             menu = new Menu<Action>(model);
             menuList = new MenuList(menu.MenuActionsNames, columns: 2);
             menuValueRange = new InclusiveValueRange<int>(menu.MenuActionsNames.Length, 1);
@@ -63,6 +64,13 @@ namespace ConsoleVersion.View
                 var menuItem = menu.MenuActionsNames[menuItemIndex];
                 menu.MenuActions[menuItem].Invoke();
             }
+        }
+
+        private void OnProgrammStopped(object sender, EventArgs e)
+        {
+            Console.WriteLine("Good bye");
+            Console.WriteLine("See my other pathfinding\nprojects on Windows forms and WPF", System.Drawing.Color.Red);
+            Console.ReadLine();
         }
 
         private readonly Menu<Action> menu;

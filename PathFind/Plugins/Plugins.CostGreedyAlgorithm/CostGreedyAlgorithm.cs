@@ -7,7 +7,7 @@ using GraphLib.Interfaces;
 namespace Plugins.CostGreedyAlgorithm
 {
     [ClassName("Cost greedy algorithm")]
-    public sealed class CostGreedyAlgorithm : BaseGreedyAlgorithm
+    public sealed class CostGreedyAlgorithm : GreedyAlgorithm
     {
         public CostGreedyAlgorithm(IGraph graph, IEndPoints endPoints)
             : this(graph, endPoints, new DefaultStepRule())

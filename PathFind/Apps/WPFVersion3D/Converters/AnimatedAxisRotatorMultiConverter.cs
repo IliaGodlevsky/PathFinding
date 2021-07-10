@@ -27,14 +27,12 @@ namespace WPFVersion3D.Converters
         public object Convert(object[] values, Type targetType, object parameter, CultureInfo culture)
         {
             var animationSpeed = values?.OfType<IAnimationSpeed>().FirstOrDefault();
-            var type = values?.OfType<bool?>().FirstOrDefault();
-            if (IsValidParametres(parameter, animationSpeed, type))
-            {
-                var axisAngleRotation = parameter as AxisAngleRotation3D;
-                return animatorFactories[type](axisAngleRotation, animationSpeed);
-            }
+            var axisAngleRotation = parameter as AxisAngleRotation3D;
+            bool? type = values?.OfType<bool?>().FirstOrDefault();
 
-            return new NullAnimatedAxisRotator();
+            return IsValidParametres(animationSpeed, type, axisAngleRotation)
+                ? animatorFactories[type](axisAngleRotation, animationSpeed)
+                : new NullAnimatedAxisRotator();
         }
 
         public object[] ConvertBack(object value, Type[] targetTypes, object parameter, CultureInfo culture)
@@ -42,10 +40,9 @@ namespace WPFVersion3D.Converters
             return new object[] { Binding.DoNothing, Binding.DoNothing };
         }
 
-        private bool IsValidParametres(object paramter, params object[] values)
+        private bool IsValidParametres(params object[] values)
         {
-            return !values.Any(ObjectExtensions.IsNullObject)
-                && paramter is AxisAngleRotation3D;
+            return !values.Any(ObjectExtensions.IsNullObject);
         }
 
         private IAnimatedAxisRotator CreateForwardAxisRotator(AxisAngleRotation3D axis, IAnimationSpeed speed)

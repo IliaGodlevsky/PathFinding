@@ -50,6 +50,7 @@ namespace ConsoleVersion.Configure
 
             builder.RegisterType<FileLog>().As<ILog>().SingleInstance();
             builder.RegisterType<ConsoleLog>().As<ILog>().SingleInstance();
+            builder.RegisterType<MailLog>().As<ILog>().SingleInstance();
             builder.RegisterComposite<Logs, ILog>().SingleInstance();
 
             builder.RegisterType<GraphAssemble>().As<IGraphAssemble>().SingleInstance().Named<IGraphAssemble>(GraphAssemble);

@@ -34,9 +34,6 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Autofac, Version=6.1.0.0, Culture=neutral, PublicKeyToken=17863af14b0044da, processorArchitecture=MSIL">
-      <HintPath>..\packages\Autofac.6.1.0\lib\netstandard2.0\Autofac.dll</HintPath>
-    </Reference>
     <Reference Include="Microsoft.Bcl.AsyncInterfaces, Version=1.0.0.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.Bcl.AsyncInterfaces.1.1.0\lib\net461\Microsoft.Bcl.AsyncInterfaces.dll</HintPath>
     </Reference>
@@ -78,7 +75,6 @@
     <Compile Include="Extensions\GenericExtensions.cs" />
     <Compile Include="Extensions\IntExtensions.cs" />
     <Compile Include="Extensions\ValueRangeExtensions.cs" />
-    <Compile Include="Interface\IInterrupted.cs" />
     <Compile Include="Interface\IViewModel.cs" />
     <Compile Include="Interface\ISuspendable.cs" />
     <Compile Include="Extensions\EnumerableExtension.cs" />

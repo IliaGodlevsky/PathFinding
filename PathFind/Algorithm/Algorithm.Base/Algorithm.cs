@@ -7,6 +7,8 @@ using AssembleClassesLib.Attributes;
 using GraphLib.Extensions;
 using GraphLib.Interfaces;
 using GraphLib.Realizations;
+using Interruptable.EventArguments;
+using Interruptable.EventHandlers;
 using NullObject.Extensions;
 using System;
 
@@ -14,10 +16,10 @@ namespace Algorithm.Base
 {
     /// <summary>
     /// A base class for all pathfinding algorithms.
-    /// This an abstract class
+    /// This is an abstract class
     /// </summary>
     [NotLoadable]
-    public abstract class BaseAlgorithm : IAlgorithm
+    public abstract class Algorithm : IAlgorithm
     {
         public event AlgorithmEventHandler OnStarted;
         public event AlgorithmEventHandler OnVertexVisited;
@@ -26,7 +28,7 @@ namespace Algorithm.Base
         /// <summary>
         /// Occurs when algorithms is requested to be interrupted
         /// </summary>
-        public event EventHandler OnInterrupted;
+        public event InterruptEventHanlder OnInterrupted;
 
         /// <summary>
         /// Finds path in graph
@@ -41,11 +43,10 @@ namespace Algorithm.Base
         public virtual void Interrupt()
         {
             isInterruptRequested = true;
-            var args = CreateEventArgs(CurrentVertex);
-            OnInterrupted?.Invoke(this, args);
+            OnInterrupted?.Invoke(this, new InterruptEventArgs());
         }
 
-        protected BaseAlgorithm(IGraph graph, IEndPoints endPoints)
+        protected Algorithm(IGraph graph, IEndPoints endPoints)
         {
             visitedVertices = new VisitedVertices();
             parentVertices = new ParentVertices();

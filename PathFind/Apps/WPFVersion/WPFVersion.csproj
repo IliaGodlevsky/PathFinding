@@ -209,6 +209,10 @@
       <Project>{d3c5ccfe-698b-41c7-9a72-5fd0262765e1}</Project>
       <Name>GraphLib.Interfaces</Name>
     </ProjectReference>
+    <ProjectReference Include="..\..\GraphLib\GraphLib.NullRealizations\GraphLib.NullRealizations.csproj">
+      <Project>{FA595CBF-C9AA-4D4F-AFF7-19E571C91D00}</Project>
+      <Name>GraphLib.NullRealizations</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\GraphLib\GraphLib.Realizations\GraphLib.Realizations.csproj">
       <Project>{b80c5250-3d81-4742-b8a5-84ae39122ba9}</Project>
       <Name>GraphLib.Realizations</Name>
@@ -224,6 +228,10 @@
     <ProjectReference Include="..\..\GraphViewModel\GraphViewModel.csproj">
       <Project>{16d6e068-2a1c-4903-930f-762681a2802e}</Project>
       <Name>GraphViewModel</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Interruptable\Interruptable.csproj">
+      <Project>{97260353-B5E4-414B-A789-C4B5568089DC}</Project>
+      <Name>Interruptable</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\Logging\Logging.csproj">
       <Project>{37085E09-A2DA-4930-B219-1A3E385C5385}</Project>

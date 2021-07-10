@@ -1,6 +1,6 @@
-﻿using System;
+﻿using Interruptable.EventHandlers;
 
-namespace Common.Interface
+namespace Interruptable.Interface
 {
     /// <summary>
     /// Indicates that a main process 
@@ -12,7 +12,7 @@ namespace Common.Interface
         /// Occures, when object's 
         /// main process is interrupted
         /// </summary>
-        event EventHandler OnInterrupted;
+        event InterruptEventHanlder OnInterrupted;
 
         /// <summary>
         /// Interrupts main process of the object 

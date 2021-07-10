@@ -16,7 +16,7 @@ namespace Plugins.DijkstraALgorithm
     /// Realization of Dijkstra's algorithm
     /// </summary>
     [ClassName("Dijkstra's algorithm")]
-    public class DijkstraAlgorithm : BaseWaveAlgorithm
+    public class DijkstraAlgorithm : WaveAlgorithm
     {
         public DijkstraAlgorithm(IGraph graph, IEndPoints endPoints)
             : this(graph, endPoints, new DefaultStepRule())

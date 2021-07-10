@@ -10,21 +10,21 @@ namespace AssembleClassesLib.Realizations.AssembleClassesImpl
         public NullAssembleClasses()
         {
             ClassesNames = new string[] { };
-            nullObject = new object();
+            instance = new object();
         }
 
         public IReadOnlyCollection<string> ClassesNames { get; }
 
         public object Get(string name, params object[] ctorParametres)
         {
-            return nullObject;
+            return instance;
         }
 
         public void LoadClasses()
         {
-            
+
         }
 
-        private readonly object nullObject;
+        private readonly object instance;
     }
 }

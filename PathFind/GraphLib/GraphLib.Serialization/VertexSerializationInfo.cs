@@ -14,12 +14,12 @@ namespace GraphLib.Serialization
             NeighboursCoordinates = vertex.NeighboursCoordinates;
         }
 
-        public bool IsObstacle { get; set; }
+        public bool IsObstacle { get;}
 
-        public IVertexCost Cost { get; set; }
+        public IVertexCost Cost { get; }
 
-        public ICoordinate Position { get; set; }
+        public ICoordinate Position { get; }
 
-        public INeighboursCoordinates NeighboursCoordinates { get; set; }
+        public INeighboursCoordinates NeighboursCoordinates { get; }
     }
 }

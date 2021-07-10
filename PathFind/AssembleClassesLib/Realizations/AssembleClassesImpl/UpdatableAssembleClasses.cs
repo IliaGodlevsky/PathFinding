@@ -1,7 +1,7 @@
-﻿using AssembleClassesLib.EventArguments;
-using AssembleClassesLib.Interface;
-using AssembleClassesLib.Realizations.AssembleClassesImpl;
-using Common.Interface;
+﻿using AssembleClassesLib.Interface;
+using Interruptable.EventArguments;
+using Interruptable.EventHandlers;
+using Interruptable.Interface;
 using System;
 using System.Collections.Generic;
 using System.Threading;
@@ -11,19 +11,15 @@ namespace AssembleClassesLib.Realizations
 {
     public sealed class UpdatableAssembleClasses : IAssembleClasses, IInterruptable, IDisposable
     {
-        public event EventHandler OnInterrupted;
+        public event InterruptEventHanlder OnInterrupted;
         public event Action<Exception, string> OnExceptionCaught;
 
-        public UpdatableAssembleClasses(AssembleClasses assembleClasses)
-           : this((IAssembleClasses)assembleClasses)
+        public UpdatableAssembleClasses(IAssembleClasses assembleClasses)
         {
-
-        }
-
-        public UpdatableAssembleClasses(INotifingAssembleClasses assembleClasses)
-            : this((IAssembleClasses)assembleClasses)
-        {
-
+            this.assembleClasses = assembleClasses;
+            ClassesNames = assembleClasses.ClassesNames;
+            tokenSource = new CancellationTokenSource();
+            isStarted = false;
         }
 
         public IReadOnlyCollection<string> ClassesNames { get; private set; }
@@ -61,8 +57,7 @@ namespace AssembleClassesLib.Realizations
         {
             tokenSource.Cancel();
             isStarted = false;
-            var args = new AssembleClassesEventArgs(ClassesNames);
-            OnInterrupted?.Invoke(this, args);
+            OnInterrupted?.Invoke(this, new InterruptEventArgs());
         }
 
         public void Dispose()
@@ -73,13 +68,7 @@ namespace AssembleClassesLib.Realizations
             isStarted = false;
         }
 
-        private UpdatableAssembleClasses(IAssembleClasses assembleClasses)
-        {
-            this.assembleClasses = assembleClasses;
-            ClassesNames = assembleClasses.ClassesNames;
-            tokenSource = new CancellationTokenSource();
-            isStarted = false;
-        }
+
 
         private readonly IAssembleClasses assembleClasses;
         private readonly CancellationTokenSource tokenSource;

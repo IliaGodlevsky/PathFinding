@@ -16,9 +16,9 @@ namespace Algorithm.Base
     /// This is an abstract class
     /// </summary>
     [NotLoadable]
-    public abstract class BaseGreedyAlgorithm : BaseAlgorithm
+    public abstract class GreedyAlgorithm : Algorithm
     {
-        protected BaseGreedyAlgorithm(IGraph graph, IEndPoints endPoints)
+        protected GreedyAlgorithm(IGraph graph, IEndPoints endPoints)
            : base(graph, endPoints)
         {
             visitedVerticesStack = new Stack<IVertex>();
@@ -61,8 +61,7 @@ namespace Algorithm.Base
             {
                 var neighbours = visitedVertices
                     .GetUnvisitedNeighbours(CurrentVertex)
-                    .FilterObstacles()
-                    .ToArray();
+                    .FilterObstacles();
 
                 bool IsLeastCostVertex(IVertex vertex)
                 {
@@ -82,6 +81,7 @@ namespace Algorithm.Base
             var args = CreateEventArgs(CurrentVertex);
             RaiseOnVertexVisitedEvent(args);
             visitedVerticesStack.Push(CurrentVertex);
+            parentVertices.Add(CurrentVertex, PreviousVertex);
         }
 
         private void Enqueue(IVertex vertex)
@@ -99,7 +99,6 @@ namespace Algorithm.Base
             else
             {
                 VisitCurrentVertex();
-                parentVertices.Add(CurrentVertex, PreviousVertex);
             }
         }
 

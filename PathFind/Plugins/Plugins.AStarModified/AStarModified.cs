@@ -20,7 +20,7 @@ namespace Plugins.AStarModified
     /// of search and searches only among vertices, that are 
     /// the closest to the target vertex</remarks>
     [ClassName("A* algorithm (modified)")]
-    public sealed class AStarModified : AStarAlgorithm.AStarAlgorithm
+    public class AStarModified : AStarAlgorithm.AStarAlgorithm
     {
         public AStarModified(IGraph graph, IEndPoints endPoints)
             : this(graph, endPoints, new DefaultStepRule(), new ChebyshevDistance())
@@ -79,7 +79,7 @@ namespace Plugins.AStarModified
             deletedVertices.Clear();
         }
 
-        private double CalculateHeuristic(IVertex vertex)
+        protected virtual double CalculateHeuristic(IVertex vertex)
         {
             return heuristic.Calculate(vertex, endPoints.Target);
         }

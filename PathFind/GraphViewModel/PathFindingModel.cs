@@ -12,6 +12,7 @@ using GraphLib.Base;
 using GraphLib.Extensions;
 using GraphLib.Interfaces;
 using GraphViewModel.Interfaces;
+using Interruptable.EventArguments;
 using Logging.Interface;
 using System;
 using System.Collections.Generic;
@@ -90,9 +91,9 @@ namespace GraphViewModel
             }
         }
 
-        protected virtual void OnAlgorithmInterrupted(object sender, EventArgs e)
+        protected virtual void OnAlgorithmInterrupted(object sender, InterruptEventArgs e)
         {
-            string message = $"Algorithm {AlgorithmKey} was interrupted";
+            string message = $"Algorithm {AlgorithmKey} was interrupted at {e.When:f}";
             log.Info(message);
             throw new AlgorithmInterruptedException(AlgorithmInterruptedMsg);
         }

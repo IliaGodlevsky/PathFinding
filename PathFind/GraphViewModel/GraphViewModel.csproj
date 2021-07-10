@@ -120,6 +120,10 @@
       <Project>{412839a0-77ff-4b66-85c9-50dc07e8fdb7}</Project>
       <Name>GraphLib.Serialization</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Interruptable\Interruptable.csproj">
+      <Project>{97260353-B5E4-414B-A789-C4B5568089DC}</Project>
+      <Name>Interruptable</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Logging\Logging.csproj">
       <Project>{37085E09-A2DA-4930-B219-1A3E385C5385}</Project>
       <Name>Logging</Name>

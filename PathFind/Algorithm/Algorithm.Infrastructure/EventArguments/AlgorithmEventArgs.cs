@@ -9,6 +9,8 @@ namespace Algorithm.Infrastructure.EventArguments
     /// </summary>
     public class AlgorithmEventArgs : EventArgs
     {
+        public static new AlgorithmEventArgs Empty => new AlgorithmEventArgs();
+
         public AlgorithmEventArgs()
             : this(default)
         {

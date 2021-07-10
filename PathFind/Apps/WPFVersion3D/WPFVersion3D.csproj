@@ -69,6 +69,7 @@
     <Compile Include="Axes\Abscissa.cs" />
     <Compile Include="Axes\Applicate.cs" />
     <Compile Include="Axes\Ordinate.cs" />
+    <Compile Include="Model\RectangleModel3DFactory.cs" />
     <Compile Include="Infrastructure\AnimationSpeed\NullSpeed.cs" />
     <Compile Include="Infrastructure\AnimationSpeed\RandomSpeed.cs" />
     <Compile Include="Infrastructure\Animators\BackwardAnimatedAxisRotator.cs" />
@@ -86,7 +87,7 @@
     <Compile Include="Converters\PrecisedDoubleToStringConverter.cs" />
     <Compile Include="Interface\IModel3DFactory.cs" />
     <Compile Include="Model\AnimationSpeedLoadMethod.cs" />
-    <Compile Include="Model\CubicModel3DFactory.cs" />
+    <Compile Include="Geomerties3D\CubicModel3DFactory.cs" />
     <Compile Include="Interface\IAnimatedAxisRotator.cs" />
     <Compile Include="Infrastructure\Animators\ForwardAnimatedAxisRotator.cs" />
     <Compile Include="Infrastructure\Animators\NullAnimatedAxisRotator.cs" />
@@ -98,6 +99,7 @@
     <Compile Include="Model\RangedSlider.cs" />
     <Compile Include="Model\AnimationSpeedClasses.cs" />
     <Compile Include="Model\EmptyLoadPath.cs" />
+    <Compile Include="Geomerties3D\SphericModel3DFactory.cs" />
     <Compile Include="Model\Vertex3DCost.cs" />
     <Compile Include="Model\Vertex3DCostFactory.cs" />
     <Compile Include="Model\Vertex3DFactory.cs" />
@@ -230,6 +232,10 @@
     <ProjectReference Include="..\..\GraphViewModel\GraphViewModel.csproj">
       <Project>{16D6E068-2A1C-4903-930F-762681A2802E}</Project>
       <Name>GraphViewModel</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Interruptable\Interruptable.csproj">
+      <Project>{97260353-B5E4-414B-A789-C4B5568089DC}</Project>
+      <Name>Interruptable</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\Logging\Logging.csproj">
       <Project>{37085E09-A2DA-4930-B219-1A3E385C5385}</Project>

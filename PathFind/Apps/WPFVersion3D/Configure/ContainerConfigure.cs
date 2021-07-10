@@ -18,6 +18,7 @@ using Logging.Interface;
 using Logging.Loggers;
 using System.Runtime.Serialization;
 using System.Web.UI;
+using WPFVersion3D.Geomerties3D;
 using WPFVersion3D.Interface;
 using WPFVersion3D.Model;
 using WPFVersion3D.ViewModel;

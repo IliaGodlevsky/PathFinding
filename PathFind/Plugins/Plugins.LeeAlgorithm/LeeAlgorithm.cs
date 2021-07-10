@@ -10,7 +10,7 @@ using System.Linq;
 namespace Plugins.LeeAlgorithm
 {
     [ClassName("Lee algorithm")]
-    public class LeeAlgorithm : BaseWaveAlgorithm
+    public class LeeAlgorithm : WaveAlgorithm
     {
         public LeeAlgorithm(IGraph graph, IEndPoints endPoints)
             : base(graph, endPoints)

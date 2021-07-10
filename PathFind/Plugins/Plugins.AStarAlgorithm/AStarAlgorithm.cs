@@ -20,7 +20,8 @@ namespace Plugins.AStarAlgorithm
 
         }
 
-        public AStarAlgorithm(IGraph graph, IEndPoints endPoints, IStepRule stepRule, IHeuristic function)
+        public AStarAlgorithm(IGraph graph, IEndPoints endPoints,
+            IStepRule stepRule, IHeuristic function)
             : base(graph, endPoints, stepRule)
         {
             heuristic = function;

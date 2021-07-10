@@ -2,11 +2,16 @@
 using Algorithm.Infrastructure.Handlers;
 using Algorithm.Interfaces;
 using AssembleClassesLib.Attributes;
+using Interruptable.EventArguments;
+using Interruptable.EventHandlers;
 using NullObject.Attributes;
-using System;
 
 namespace Algorithm.Common
 {
+    /// <summary>
+    /// Represents a null analog for 
+    /// <see cref="IAlgorithm"/> interface
+    /// </summary>
     [Null]
     [NotLoadable]
     public sealed class NullAlgorithm : IAlgorithm
@@ -15,7 +20,7 @@ namespace Algorithm.Common
         public event AlgorithmEventHandler OnVertexVisited;
         public event AlgorithmEventHandler OnFinished;
         public event AlgorithmEventHandler OnVertexEnqueued;
-        public event EventHandler OnInterrupted;
+        public event InterruptEventHanlder OnInterrupted;
 
         public NullAlgorithm()
         {
@@ -24,16 +29,16 @@ namespace Algorithm.Common
 
         public IGraphPath FindPath()
         {
-            OnStarted?.Invoke(this, new AlgorithmEventArgs());
-            OnVertexVisited?.Invoke(this, new AlgorithmEventArgs());
-            OnVertexEnqueued?.Invoke(this, new AlgorithmEventArgs());
-            OnFinished?.Invoke(this, new AlgorithmEventArgs());
+            OnStarted?.Invoke(this, AlgorithmEventArgs.Empty);
+            OnVertexVisited?.Invoke(this, AlgorithmEventArgs.Empty);
+            OnVertexEnqueued?.Invoke(this, AlgorithmEventArgs.Empty);
+            OnFinished?.Invoke(this, AlgorithmEventArgs.Empty);
             return new NullGraphPath();
         }
 
         public void Interrupt()
         {
-            OnInterrupted?.Invoke(this, EventArgs.Empty);
+            OnInterrupted?.Invoke(this, new InterruptEventArgs());
         }
 
         public void Dispose()

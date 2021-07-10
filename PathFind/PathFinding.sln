@@ -115,6 +115,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GraphLib.NullRealization.Te
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Plugins.DistanceFirstALgorithm.Tests", "Plugins.Tests\Plugins.DistanceFirstALgorithm.Tests\Plugins.DistanceFirstALgorithm.Tests.csproj", "{0B816B0E-2FEA-43D0-A639-E371EA0723F1}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Interruptable", "Interruptable\Interruptable.csproj", "{97260353-B5E4-414B-A789-C4B5568089DC}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -313,6 +315,10 @@ Global
 		{0B816B0E-2FEA-43D0-A639-E371EA0723F1}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0B816B0E-2FEA-43D0-A639-E371EA0723F1}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{0B816B0E-2FEA-43D0-A639-E371EA0723F1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{97260353-B5E4-414B-A789-C4B5568089DC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{97260353-B5E4-414B-A789-C4B5568089DC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{97260353-B5E4-414B-A789-C4B5568089DC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{97260353-B5E4-414B-A789-C4B5568089DC}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
