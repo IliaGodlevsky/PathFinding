@@ -5,7 +5,7 @@ using System.Windows.Media.Media3D;
 using WPFVersion3D.Interface;
 using WPFVersion3D.Model;
 
-namespace WPFVersion3D.Geomerties3D
+namespace WPFVersion3D.Model3DFactories
 {
     /// <summary>
     /// A class, that responds for creating 
@@ -73,9 +73,9 @@ namespace WPFVersion3D.Geomerties3D
             var points = new Point3D[Latitudes, Meridians];
             for (int latitude = 0; latitude < Latitudes; latitude++)
             {
+                double theta = latitude * PI / (Latitudes - 1);
                 for (int meridian = 0; meridian < Meridians; meridian++)
                 {
-                    double theta = latitude * PI / (Latitudes - 1);
                     double phi = meridian * PI2 / (Meridians - 1);
                     points[latitude, meridian] = GetPosition(radius, theta, phi);
                 }

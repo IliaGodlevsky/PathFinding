@@ -86,7 +86,7 @@ namespace Algorithm.Base
         protected virtual bool IsDestination()
         {
             return CurrentVertex.IsEqual(endPoints.Target)
-                   || CurrentVertex.IsNullObject()
+                   || CurrentVertex.IsNull()
                    || isInterruptRequested;
         }
 

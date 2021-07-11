@@ -64,7 +64,7 @@ namespace Plugins.AStarModified
                 verticesQueue = verticesQueue.Except(verticesToDelete);
 
                 var next = base.NextVertex;
-                if (next.IsNullObject())
+                if (next.IsNull())
                 {
                     verticesQueue = deletedVertices;
                     next = base.NextVertex;

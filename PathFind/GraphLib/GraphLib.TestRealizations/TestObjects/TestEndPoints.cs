@@ -26,7 +26,7 @@ namespace GraphLib.TestRealizations.TestObjects
         {
             return vertex.IsEqual(Source)
                    || vertex.IsEqual(Target)
-                   || vertex.IsNullObject();
+                   || vertex.IsNull();
         }
     }
 }

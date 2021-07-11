@@ -5,7 +5,7 @@ using System.Windows.Media.Media3D;
 using WPFVersion3D.Interface;
 using WPFVersion3D.Model;
 
-namespace WPFVersion3D.Geomerties3D
+namespace WPFVersion3D.Model3DFactories
 {
     /// <summary>
     /// A class that responds for 

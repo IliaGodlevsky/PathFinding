@@ -13,7 +13,7 @@ namespace Algorithm.Common.Tests
 
             var path = algorithm.FindPath();
 
-            Assert.IsTrue(path.IsNullObject());
+            Assert.IsTrue(path.IsNull());
         }
     }
 }

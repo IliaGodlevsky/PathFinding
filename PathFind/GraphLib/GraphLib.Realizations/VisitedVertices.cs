@@ -17,7 +17,7 @@ namespace GraphLib.Realizations
 
         public void Add(IVertex vertex)
         {
-            if (!vertex.IsNullObject())
+            if (!vertex.IsNull())
             {
                 visitedVertices[vertex.Position] = vertex;
             }

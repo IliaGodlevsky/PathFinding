@@ -20,7 +20,7 @@ namespace GraphLib.Extensions
         {
             bool IsObstacleOrNullObject(IVertex vertex)
             {
-                return vertex.IsObstacle || vertex.IsNullObject();
+                return vertex.IsObstacle || vertex.IsNull();
             }
 
             return IsObstacleOrNullObject(self) || self.Neighbours.All(IsObstacleOrNullObject);

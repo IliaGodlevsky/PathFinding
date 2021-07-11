@@ -24,7 +24,7 @@ namespace NullObject.Tests
         {
             var nullObject = new NullObject();
 
-            bool isNull = nullObject.IsNullObject();
+            bool isNull = nullObject.IsNull();
 
             Assert.IsTrue(isNull);
         }
@@ -34,7 +34,7 @@ namespace NullObject.Tests
         {
             var nullObject = new NotNullObject();
 
-            bool isNull = nullObject.IsNullObject();
+            bool isNull = nullObject.IsNull();
 
             Assert.IsFalse(isNull);
         }
@@ -44,7 +44,7 @@ namespace NullObject.Tests
         {
             object nullObject = null;
 
-            bool isNull = nullObject.IsNullObject();
+            bool isNull = nullObject.IsNull();
 
             Assert.IsTrue(isNull);
         }

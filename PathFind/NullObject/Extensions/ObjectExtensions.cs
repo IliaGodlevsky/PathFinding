@@ -5,7 +5,7 @@ namespace NullObject.Extensions
 {
     public static class ObjectExtensions
     {
-        public static bool IsNullObject(this object self)
+        public static bool IsNull(this object self)
         {
             if (self == null)
             {

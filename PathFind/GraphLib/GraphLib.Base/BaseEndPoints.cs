@@ -56,12 +56,12 @@ namespace GraphLib.Base
 
         protected bool CanSetSource(IVertex vertex)
         {
-            return Source.IsNullObject() && CanBeEndPoint(vertex);
+            return Source.IsNull() && CanBeEndPoint(vertex);
         }
 
         protected bool CanSetTarget(IVertex vertex)
         {
-            return !Source.IsNullObject() && Target.IsNullObject() && CanBeEndPoint(vertex);
+            return !Source.IsNull() && Target.IsNull() && CanBeEndPoint(vertex);
         }
 
         protected virtual void SetEndPoints(object sender, EventArgs e)

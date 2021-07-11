@@ -92,7 +92,7 @@ namespace Algorithm.Base
 
         private void ProcessCurrentVertex()
         {
-            if (CurrentVertex.IsNullObject())
+            if (CurrentVertex.IsNull())
             {
                 CurrentVertex = visitedVerticesStack.PopOrDefault();
             }

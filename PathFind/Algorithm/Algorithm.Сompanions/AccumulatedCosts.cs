@@ -41,7 +41,7 @@ namespace Algorithm.Сompanions
 
         private void SetAccumulatedCostToStartCost(IVertex vertex)
         {
-            if (!vertex.IsNullObject())
+            if (!vertex.IsNull())
             {
                 accumulatedCosts[vertex.Position] = startCost;
             }

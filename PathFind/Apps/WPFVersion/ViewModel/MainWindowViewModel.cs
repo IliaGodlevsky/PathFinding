@@ -196,7 +196,7 @@ namespace WPFVersion.ViewModel
 
         private bool CanExecuteGraphOperation(object param)
         {
-            return !Graph.IsNullObject();
+            return !Graph.IsNull();
         }
     }
 }

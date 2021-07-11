@@ -18,9 +18,9 @@ using Logging.Interface;
 using Logging.Loggers;
 using System.Runtime.Serialization;
 using System.Web.UI;
-using WPFVersion3D.Geomerties3D;
 using WPFVersion3D.Interface;
 using WPFVersion3D.Model;
+using WPFVersion3D.Model3DFactories;
 using WPFVersion3D.ViewModel;
 
 namespace WPFVersion3D.Configure
@@ -57,7 +57,7 @@ namespace WPFVersion3D.Configure
             builder.RegisterType<Coordinate3DFactory>().As<ICoordinateFactory>().SingleInstance();
             builder.RegisterType<Graph3DFactory>().As<IGraphFactory>().SingleInstance();
             builder.RegisterType<CardinalNeighboursCoordinatesFactory>().As<INeighboursCoordinatesFactory>().SingleInstance();
-            builder.RegisterType<SphericModel3DFactory>().As<IModel3DFactory>().SingleInstance();
+            builder.RegisterType<CubicModel3DFactory>().As<IModel3DFactory>().SingleInstance();
 
             builder.RegisterType<SaveLoadGraph>().As<ISaveLoadGraph>().SingleInstance();
             builder.RegisterType<PathInput>().As<IPathInput>().SingleInstance();

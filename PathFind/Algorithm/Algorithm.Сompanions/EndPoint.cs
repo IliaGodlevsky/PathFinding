@@ -25,7 +25,7 @@ namespace Algorithm.Сompanions
         {
             return vertex.IsEqual(Source)
                    || vertex.IsEqual(Target)
-                   || vertex.IsNullObject();
+                   || vertex.IsNull();
         }
     }
 }

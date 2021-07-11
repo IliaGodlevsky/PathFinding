@@ -202,7 +202,7 @@ namespace WPFVersion3D.ViewModel
 
         private bool CanExecuteGraphOperation(object param)
         {
-            return !Graph.IsNullObject();
+            return !Graph.IsNull();
         }
 
         private IDictionary<string, IAnimationSpeed> GetAnimationSpeeds()
