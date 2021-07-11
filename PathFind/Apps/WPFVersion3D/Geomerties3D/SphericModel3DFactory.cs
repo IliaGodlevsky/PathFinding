@@ -13,8 +13,8 @@ namespace WPFVersion3D.Geomerties3D
     /// </summary>
     internal sealed class SphericModel3DFactory : IModel3DFactory
     {
-        private const int Segments = 20;
-        private const int Rings = 15;
+        private const int Meridians = 15;
+        private const int Latitudes = 20;
 
         private const int PI = 180;
         private const int PI2 = 360;
@@ -29,8 +29,8 @@ namespace WPFVersion3D.Geomerties3D
         {
             var sphere = new Model3DGroup();
             var points = GetPoints3D(diametre / 2);
-            var squareModels = GetRectangleModels(points, material);
-            sphere.Children.AddRange(squareModels);
+            var rectangles = GetRectangleModels(points, material);
+            sphere.Children.AddRange(rectangles);
             return sphere;
         }
 
@@ -45,14 +45,14 @@ namespace WPFVersion3D.Geomerties3D
         {
             var reactangleFactory = new RectangleModel3DFactory();
 
-            for (int segment = 0; segment < Segments - 1; segment++)
+            for (int latitude = 0; latitude < Latitudes - 1; latitude++)
             {
-                for (int ring = 0; ring < Rings - 1; ring++)
+                for (int meridian = 0; meridian < Meridians - 1; meridian++)
                 {
-                    var p0 = points[segment, ring];
-                    var p1 = points[segment + 1, ring];
-                    var p2 = points[segment + 1, ring + 1];
-                    var p3 = points[segment, ring + 1];
+                    var p0 = points[latitude, meridian];
+                    var p1 = points[latitude + 1, meridian];
+                    var p2 = points[latitude + 1, meridian + 1];
+                    var p3 = points[latitude, meridian + 1];
                     yield return reactangleFactory
                         .CreateRectangleModel(p0, p1, p2, p3, material);
                 }
@@ -66,16 +66,18 @@ namespace WPFVersion3D.Geomerties3D
         /// <param name="radius"></param>
         /// <returns>An array of points 
         /// for sphere segments</returns>
+        /// <remarks>Each intersection of a latitude and
+        /// a meridian is a point, that will be returned</remarks>
         private Point3D[,] GetPoints3D(double radius)
         {
-            var points = new Point3D[Segments, Rings];
-            for (int segment = 0; segment < Segments; segment++)
+            var points = new Point3D[Latitudes, Meridians];
+            for (int latitude = 0; latitude < Latitudes; latitude++)
             {
-                for (int ring = 0; ring < Rings; ring++)
+                for (int meridian = 0; meridian < Meridians; meridian++)
                 {
-                    double theta = segment * PI / (Segments - 1);
-                    double phi = ring * PI2 / (Rings - 1);
-                    points[segment, ring] = GetPosition(radius, theta, phi);
+                    double theta = latitude * PI / (Latitudes - 1);
+                    double phi = meridian * PI2 / (Meridians - 1);
+                    points[latitude, meridian] = GetPosition(radius, theta, phi);
                 }
             }
 

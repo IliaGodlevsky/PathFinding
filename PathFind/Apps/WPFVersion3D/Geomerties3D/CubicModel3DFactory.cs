@@ -26,8 +26,8 @@ namespace WPFVersion3D.Geomerties3D
         {
             var cube = new Model3DGroup();
             var points = GetPoints(cubeEdgeSize).ToArray();
-            var models = GetRectangleModels3D(points, material);
-            cube.Children.AddRange(models);
+            var rectangles = GetRectangleModels3D(points, material);
+            cube.Children.AddRange(rectangles);
             return cube;
         }
 

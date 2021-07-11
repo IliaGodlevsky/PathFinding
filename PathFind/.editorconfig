@@ -1,0 +1,4 @@
+﻿[*.{cs,vb}]
+
+# IDE0048: Добавить круглые скобки для ясности
+dotnet_diagnostic.IDE0048.severity = none
