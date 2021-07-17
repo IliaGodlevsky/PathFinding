@@ -1,13 +1,14 @@
-﻿using Common.ValueRanges;
+﻿using Common.Extensions;
+using Common.ValueRanges;
 using ConsoleVersion.View.Interface;
 using ConsoleVersion.ViewModel;
+using GraphLib.Base;
 using GraphLib.Extensions;
 using GraphLib.Interfaces;
 using GraphLib.Realizations.Coordinates;
 using GraphLib.Realizations.Graphs;
 using GraphViewModel.Interfaces;
 using System;
-
 using static ConsoleVersion.InputClass.Input;
 using static ConsoleVersion.Resource.Resources;
 
@@ -20,8 +21,23 @@ namespace ConsoleVersion.View
     {
         public const int HeightOfAbscissaView = 2;
         public const int HeightOfGraphParametresView = 1;
-        public const int WidthOfOrdinateView = 3;
-        public const int YCoordinatePadding = 2;
+
+        public static int GetYCoordinatePadding()
+        {
+            return GetWidthOfOrdinateView() - 1;
+        }
+
+        public static int GetWidthOfOrdinateView()
+        {
+            return Constants.GraphLengthValueRange.UpperValueOfRange.GetFlooredLog10() + 2;
+        }
+
+        public static int GetLateralDistanceBetweenVertices()
+        {
+            int costWidth = BaseVertexCost.CostRange.UpperValueOfRange.GetFlooredLog10();
+            int width = Constants.GraphWidthValueRange.UpperValueOfRange.GetFlooredLog10();
+            return (costWidth > width ? costWidth : width) + 2;
+        }
 
         public static Coordinate2D GraphFieldPosition { get; set; }
 
@@ -38,7 +54,7 @@ namespace ConsoleVersion.View
 
         static MainView()
         {
-            int x = WidthOfOrdinateView;
+            int x = GetWidthOfOrdinateView();
             int y = HeightOfAbscissaView + HeightOfGraphParametresView;
             GraphFieldPosition = new Coordinate2D(x, y);
         }
@@ -61,7 +77,7 @@ namespace ConsoleVersion.View
                 int menuItemIndex = InputNumber(
                     OptionInputMsg,
                     menuValueRange) - 1;
-                var menuItem = menu.MenuActionsNames[menuItemIndex];
+                string menuItem = menu.MenuActionsNames[menuItemIndex];
                 menu.MenuActions[menuItem].Invoke();
             }
         }
@@ -69,13 +85,12 @@ namespace ConsoleVersion.View
         private void OnProgrammStopped(object sender, EventArgs e)
         {
             Console.WriteLine("Good bye");
-            Console.WriteLine("See my other pathfinding\nprojects on Windows forms and WPF", System.Drawing.Color.Red);
             Console.ReadLine();
         }
 
         private readonly Menu<Action> menu;
         private readonly MenuList menuList;
         private readonly MainViewModel mainModel;
-        private readonly IValueRange<int> menuValueRange;
+        private readonly InclusiveValueRange<int> menuValueRange;
     }
 }

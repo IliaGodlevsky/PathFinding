@@ -1,5 +1,5 @@
 ﻿using AssembleClassesLib.Attributes;
-using Common.Extensions;
+using System;
 using System.Reflection;
 
 namespace AssembleClassesLib.Extensions
@@ -14,7 +14,7 @@ namespace AssembleClassesLib.Extensions
         /// <returns></returns>
         public static bool IsNotLoadable(this MemberInfo self)
         {
-            return self.GetAttributeOrNull<NotLoadableAttribute>() != null;
+            return Attribute.IsDefined(self, typeof(NotLoadableAttribute));
         }
     }
 }

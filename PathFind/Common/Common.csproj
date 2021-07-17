@@ -74,6 +74,7 @@
     <Compile Include="Extensions\CollectionExtensions.cs" />
     <Compile Include="Extensions\GenericExtensions.cs" />
     <Compile Include="Extensions\IntExtensions.cs" />
+    <Compile Include="Extensions\StringBuilderExtensions.cs" />
     <Compile Include="Extensions\ValueRangeExtensions.cs" />
     <Compile Include="Interface\IViewModel.cs" />
     <Compile Include="Interface\ISuspendable.cs" />
@@ -86,9 +87,6 @@
     <Compile Include="ValueRanges\IValueRange.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="..\.editorconfig">
-      <Link>.editorconfig</Link>
-    </None>
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>

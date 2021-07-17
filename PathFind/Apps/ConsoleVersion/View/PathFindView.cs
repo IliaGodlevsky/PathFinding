@@ -1,7 +1,6 @@
 ﻿using ConsoleVersion.Resource;
 using ConsoleVersion.View.Interface;
 using ConsoleVersion.ViewModel;
-using System.Linq;
 
 namespace ConsoleVersion.View
 {
@@ -12,7 +11,7 @@ namespace ConsoleVersion.View
         public PathFindView(PathFindingViewModel model)
         {
             Model = model;
-            string algorithmMenu = new MenuList(model.AlgorithmKeys.ToArray()).ToString();
+            string algorithmMenu = new MenuList(model.AlgorithmKeys).ToString();
             Model.AlgorithmKeyInputMessage = algorithmMenu + Resources.ChooseAlrorithm;
             Model.SourceVertexInputMessage = "\n" + Resources.StartVertexPointInputMsg;
             Model.TargetVertexInputMessage = Resources.EndVertexCoordinateInputMsg;

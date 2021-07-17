@@ -24,7 +24,7 @@ namespace WPFVersion3D.Model3DFactories
             return torus;
         }
 
-        private Point3D GetPosition(double bigRadius, 
+        private Point3D GetPosition(double bigRadius,
             double smallRadius, double theta, double phi)
         {
             double snu = Math.Sin(theta * Math.PI / PI);

@@ -3,8 +3,8 @@
     /// <summary>
     /// An interface, that provides 
     /// methods and properties 
-    /// for start and end points 
-    /// of pathfinding process
+    /// for start and end vertices
+    /// for pathfinding process
     /// </summary>
     public interface IEndPoints
     {

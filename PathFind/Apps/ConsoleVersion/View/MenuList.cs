@@ -1,4 +1,5 @@
-﻿using Common.ValueRanges;
+﻿using Common.Extensions;
+using Common.ValueRanges;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,8 +11,8 @@ namespace ConsoleVersion.View
     {
         public MenuList(IEnumerable<string> menuItemsNames, int columns = 2)
         {
-            this.menuItemsNames = menuItemsNames.ToArray();
-            menuItemsCount = this.menuItemsNames.Length;
+            this.menuItemsNames = menuItemsNames;
+            menuItemsCount = this.menuItemsNames.Count();
             columnsValueRange = new InclusiveValueRange<int>(menuItemsCount, 1);
             this.columns = columnsValueRange.ReturnInRange(columns);
             menuList = new Lazy<string>(CreateMenu);
@@ -24,7 +25,7 @@ namespace ConsoleVersion.View
 
         private string CreateMenu()
         {
-            var menu = new StringBuilder("\n");
+            var menu = new StringBuilder(NewLine);
 
             int menuItemNumber = 0;
             int menuItemNumberPad = CalculateMenuItemNumberPad();
@@ -46,7 +47,7 @@ namespace ConsoleVersion.View
 
         private string CreateSeparator(int currentMenuItemNumber)
         {
-            return (currentMenuItemNumber + 1) % columns == 0 ? "\n" : " ";
+            return (currentMenuItemNumber + 1) % columns == 0 ? NewLine : Space;
         }
 
         private int CalculateMenuItemNumberPad()
@@ -55,16 +56,17 @@ namespace ConsoleVersion.View
             // 100 to 999 - 2,
             // 1000 to 9999 - 3
             // and so on...
-            double menuNumberPad = menuItemsCount > 0 ? Math.Log10(menuItemsCount) : -1;
-            return Convert.ToInt32(menuNumberPad) + 1;
+            return menuItemsCount.GetFlooredLog10() + 1;
         }
 
-        private readonly string[] menuItemsNames;
-        private readonly IValueRange<int> columnsValueRange;
+        private readonly IEnumerable<string> menuItemsNames;
+        private readonly InclusiveValueRange<int> columnsValueRange;
         private readonly Lazy<string> menuList;
         private readonly int menuItemsCount;
         private readonly int columns;
 
+        private const string NewLine = "\n";
+        private const string Space = " ";
         private const string Format = "{0}. {1}";
     }
 }

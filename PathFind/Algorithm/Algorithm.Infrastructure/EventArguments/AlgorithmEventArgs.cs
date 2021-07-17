@@ -11,7 +11,7 @@ namespace Algorithm.Infrastructure.EventArguments
     {
         public static new AlgorithmEventArgs Empty => new AlgorithmEventArgs();
 
-        public AlgorithmEventArgs()
+        private AlgorithmEventArgs()
             : this(default)
         {
 

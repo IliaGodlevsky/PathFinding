@@ -51,7 +51,7 @@ namespace Algorithm.Base
             visitedVertices = new VisitedVertices();
             parentVertices = new ParentVertices();
             this.graph = graph;
-            this.endPoints = new EndPoints(endPoints);
+            this.endPoints = endPoints;
         }
 
         /// <summary>
@@ -85,9 +85,9 @@ namespace Algorithm.Base
         /// is not able to go on the pathfinding process</returns>
         protected virtual bool IsDestination()
         {
-            return CurrentVertex.IsEqual(endPoints.Target)
-                   || CurrentVertex.IsNull()
-                   || isInterruptRequested;
+            return endPoints.Target.IsEqual(CurrentVertex)
+                || CurrentVertex.IsNull()
+                || isInterruptRequested;
         }
 
         /// <summary>

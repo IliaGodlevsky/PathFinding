@@ -1,5 +1,4 @@
 using Algorithm.Realizations.Heuristic;
-using GraphLib.Exceptions;
 using GraphLib.Interfaces;
 using Moq;
 using NUnit.Framework;
@@ -41,22 +40,6 @@ namespace Algorithm.Realizations.Tests
             vertexToMock.Setup(vertex => vertex.Position).Returns(coordinateToMock.Object);
 
             return chebyshevDistance.Calculate(FirstVertex, SecondVertex);
-        }
-
-        [TestCase(new[] { 3, 15 }, new[] { 4 })]
-        [TestCase(new[] { 7, 1, 20 }, new[] { 9, 1 })]
-        [TestCase(new[] { 5, 1 }, new[] { 33 })]
-        [TestCase(new[] { 4, 7, 3, 20 }, new[] { 1, 16, 9 })]
-        public void Calculate_NotEqualNumberOfCoordinateValues_ThrowsWrongNumberOfDimensionsException(
-            int[] fromVertexCoordinateValues, int[] toVertexCoordinateValues)
-        {
-            coordinateFromMock.Setup(coordinate => coordinate.CoordinatesValues).Returns(fromVertexCoordinateValues);
-            vertexFromMock.Setup(vertex => vertex.Position).Returns(coordinateFromMock.Object);
-            coordinateToMock.Setup(coordinate => coordinate.CoordinatesValues).Returns(toVertexCoordinateValues);
-            vertexToMock.Setup(vertex => vertex.Position).Returns(coordinateToMock.Object);
-            void CalculateChebyshevDistance() => chebyshevDistance.Calculate(FirstVertex, SecondVertex);
-
-            Assert.Throws<WrongNumberOfDimensionsException>(CalculateChebyshevDistance);
         }
 
         [Test]

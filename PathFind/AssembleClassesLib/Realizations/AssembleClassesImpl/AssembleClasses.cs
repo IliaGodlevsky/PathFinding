@@ -18,7 +18,7 @@ namespace AssembleClassesLib.Realizations.AssembleClassesImpl
     {
         public AssembleClasses(
             IAssembleLoadPath loadPath,
-            IAssembleSearchOption searchOption, 
+            IAssembleSearchOption searchOption,
             IAssembleLoadMethod loadMethod)
         {
             types = new Dictionary<string, Type>();

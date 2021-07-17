@@ -20,8 +20,6 @@ namespace ConsoleVersion
         public static InclusiveValueRange<int> ObstaclesPercentValueRange { get; }
         public static InclusiveValueRange<int> AlgorithmDelayTimeValueRange { get; }
 
-        public const int LateralDistanceBetweenVertices = 3;
-
         static Constants()
         {
             GraphWidthValueRange = new InclusiveValueRange<int>(80, 1);

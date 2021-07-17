@@ -38,13 +38,6 @@ namespace Algorithm.Realizations.Heuristic
             {
                 throw new ArgumentException();
             }
-
-            if (!first.HaveEqualDimensionsNumber(second))
-            {
-                string message = "Can't calculate distance between " +
-                    "vertices with different coordinates count";
-                throw new WrongNumberOfDimensionsException(message);
-            }
             #endregion
 
             return Aggregate(first.GetCoordinates().Zip(second.GetCoordinates(), ZipMethod));

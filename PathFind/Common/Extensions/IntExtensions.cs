@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 
 namespace Common.Extensions
 {
@@ -17,6 +18,13 @@ namespace Common.Extensions
         public static int Multiply(this int value, int value2)
         {
             return value * value2;
+        }
+
+        public static int GetFlooredLog10(this int value)
+        {
+            if (value == 0)
+                value = 1;
+            return Convert.ToInt32(Math.Floor(Math.Log10(value)));
         }
     }
 }

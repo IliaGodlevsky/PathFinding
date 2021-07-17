@@ -5,7 +5,7 @@ namespace WPFVersion3D.Interface
     /// <summary>
     /// An interface that responds
     /// for creating a <see cref="Model3D"/> 
-    /// of regular geometric figure
+    /// of regular geometric figures
     /// </summary>
     internal interface IModel3DFactory
     {

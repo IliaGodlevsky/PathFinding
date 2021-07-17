@@ -140,7 +140,7 @@ namespace ConsoleVersion.ViewModel
 
         public bool HasAnyVerticesToChooseAsEndPoints()
         {
-            var regularVertices = mainViewModel.Graph.GetNotObstacles();
+            var regularVertices = mainViewModel.Graph.Vertices.FilterObstacles();
             int availiableVerticesCount = regularVertices.Count(vertex => !vertex.IsIsolated());
             return availiableVerticesCount >= RequiredNumberOfVerticesToStartPathFinding;
         }

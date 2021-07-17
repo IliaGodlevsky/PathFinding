@@ -1,6 +1,5 @@
 ﻿using ConsoleVersion.View.Interface;
 using ConsoleVersion.ViewModel;
-using System.Linq;
 using static ConsoleVersion.Resource.Resources;
 
 namespace ConsoleVersion.View
@@ -12,7 +11,8 @@ namespace ConsoleVersion.View
         public GraphCreateView(GraphCreatingViewModel model)
         {
             Model = model;
-            string graphAssembleMenu = new MenuList(model.GraphAssembles.Keys.ToArray(), 1).ToString();
+            var keys = model.GraphAssembles.Keys;
+            string graphAssembleMenu = new MenuList(keys, 1).ToString();
             Model.GraphAssembleInpuMessage = graphAssembleMenu + ChooseGraphAssemble;
             Model.ObstaclePercentInputMessage = ObstaclePercentInputMsg;
             Model.WidthInputMessage = WidthInputMsg;

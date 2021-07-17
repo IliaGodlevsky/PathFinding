@@ -1,5 +1,5 @@
-﻿using Common.Extensions;
-using NullObject.Attributes;
+﻿using NullObject.Attributes;
+using System;
 
 namespace NullObject.Extensions
 {
@@ -7,12 +7,7 @@ namespace NullObject.Extensions
     {
         public static bool IsNull(this object self)
         {
-            if (self == null)
-            {
-                return true;
-            }
-
-            return self.GetType().GetAttributeOrNull<NullAttribute>() != null;
+            return self == null || Attribute.IsDefined(self.GetType(), typeof(NullAttribute));
         }
     }
 }

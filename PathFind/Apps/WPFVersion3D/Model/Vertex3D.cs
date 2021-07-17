@@ -21,10 +21,9 @@ namespace WPFVersion3D.Model
             NeighboursCoordinates = radar;
             Dispatcher.Invoke(() =>
             {
-                Size = InitialVertexSize;
                 Material = new DiffuseMaterial();
                 Transform = new TranslateTransform3D();
-                Model = modelFactory.CreateModel3D(Size, Material);
+                Size = InitialVertexSize;
             });
             this.Initialize();
         }

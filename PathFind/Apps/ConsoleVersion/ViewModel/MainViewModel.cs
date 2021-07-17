@@ -100,8 +100,8 @@ namespace ConsoleVersion.ViewModel
         {
             if (Graph.HasVertices() && Graph is Graph2D graph2D)
             {
-                var upperPossibleXValue = graph2D.Width - 1;
-                var upperPossibleYValue = graph2D.Length - 1;
+                int upperPossibleXValue = graph2D.Width - 1;
+                int upperPossibleYValue = graph2D.Length - 1;
 
                 var point = InputPoint(upperPossibleXValue, upperPossibleYValue);
 
@@ -158,7 +158,10 @@ namespace ConsoleVersion.ViewModel
         {
             int input = InputNumber(ExitAppMsg, Yes, No);
             IsAppClosureRequested = input == Yes;
-            OnInterrupted?.Invoke(this, new InterruptEventArgs());
+            if (IsAppClosureRequested)
+            {
+                OnInterrupted?.Invoke(this, new InterruptEventArgs());
+            }
         }
 
         public void DisplayGraph()

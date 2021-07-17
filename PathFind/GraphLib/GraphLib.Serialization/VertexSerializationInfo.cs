@@ -14,7 +14,7 @@ namespace GraphLib.Serialization
             NeighboursCoordinates = vertex.NeighboursCoordinates;
         }
 
-        public bool IsObstacle { get;}
+        public bool IsObstacle { get; }
 
         public IVertexCost Cost { get; }
 

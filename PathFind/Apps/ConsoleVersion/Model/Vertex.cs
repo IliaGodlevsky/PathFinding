@@ -8,7 +8,7 @@ using GraphLib.Serialization.Extensions;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
-using static ConsoleVersion.Constants;
+using System.Linq;
 using Console = Colorful.Console;
 
 namespace ConsoleVersion.Model
@@ -23,7 +23,6 @@ namespace ConsoleVersion.Model
         {
             NeighboursCoordinates = coordinateRadar;
             Position = coordinate;
-            consoleCoordinates = new Lazy<Coordinate2D>(GetConsoleCoordinates);
             this.Initialize();
         }
 
@@ -149,17 +148,17 @@ namespace ConsoleVersion.Model
 
         private Coordinate2D GetConsoleCoordinates()
         {
-            var position = Position as Coordinate2D;
             var consolePosition = MainView.GraphFieldPosition;
-            var left = consolePosition.X + position.X * LateralDistanceBetweenVertices;
-            var top = consolePosition.Y + position.Y;
+            int lateralDistance = MainView.GetLateralDistanceBetweenVertices();
+            int x = Position.CoordinatesValues.FirstOrDefault();
+            int y = Position.CoordinatesValues.LastOrDefault();
+            int left = consolePosition.X + x * lateralDistance;
+            int top = consolePosition.Y + y;
             return new Coordinate2D(left, top);
         }
 
         private string Text { get; set; }
         private Color Colour { get; set; }
-        private Coordinate2D ConsoleCoordinate => consoleCoordinates.Value;
-
-        private readonly Lazy<Coordinate2D> consoleCoordinates;
+        private Coordinate2D ConsoleCoordinate => GetConsoleCoordinates();
     }
 }
