@@ -2,6 +2,8 @@
 using Common.ValueRanges;
 using ConsoleVersion.Attributes;
 using ConsoleVersion.Enums;
+using ConsoleVersion.EventArguments;
+using ConsoleVersion.EventHandlers;
 using ConsoleVersion.Model;
 using ConsoleVersion.View;
 using GraphLib.Base;
@@ -22,6 +24,7 @@ using System.Drawing;
 
 using static ConsoleVersion.InputClass.Input;
 using static ConsoleVersion.Resource.Resources;
+using static GraphLib.Base.BaseVertexCost;
 using Console = Colorful.Console;
 
 namespace ConsoleVersion.ViewModel
@@ -31,6 +34,8 @@ namespace ConsoleVersion.ViewModel
         private const int Yes = 1;
         private const int No = 0;
 
+        public event CostRangeChangedEventHandler OnCostRangeChanged;
+        public event NewGraphCreatedEventHandler OnNewGraphCreated;
         public event InterruptEventHanlder OnInterrupted;
 
         public bool IsAppClosureRequested { get; private set; }
@@ -68,6 +73,8 @@ namespace ConsoleVersion.ViewModel
                 var model = new GraphCreatingViewModel(log, this, graphAssembles);
                 var view = new GraphCreateView(model);
                 view.Start();
+                var args = new NewGraphCreatedEventArgs(Graph);
+                OnNewGraphCreated?.Invoke(this, args);
             }
             catch (Exception ex)
             {
@@ -115,9 +122,9 @@ namespace ConsoleVersion.ViewModel
         [MenuItem(Constants.ChangeCostRange, MenuItemPriority.Low)]
         public void ChangeVertexCostValueRange()
         {
-            string message = "Enter upper vertex cost value: ";
-            var upperValueRange = InputNumber(message, 99, 1);
-            BaseVertexCost.CostRange = new InclusiveValueRange<int>(upperValueRange, 1);
+            CostRange = InputRange(Constants.CostRange);
+            var args = new CostRangeChangedEventArgs(CostRange);
+            OnCostRangeChanged?.Invoke(this, args);
         }
 
         [MenuItem(Constants.ChangeVertexCost, MenuItemPriority.Low)]
@@ -150,7 +157,8 @@ namespace ConsoleVersion.ViewModel
         public override void LoadGraph()
         {
             base.LoadGraph();
-            MainView.UpdatePositionOfVisualElements(Graph);
+            OnCostRangeChanged?.Invoke(this, new CostRangeChangedEventArgs(CostRange));
+            OnNewGraphCreated?.Invoke(this, new NewGraphCreatedEventArgs(Graph));
         }
 
         [MenuItem(Constants.QuitProgramm, MenuItemPriority.Lowest)]

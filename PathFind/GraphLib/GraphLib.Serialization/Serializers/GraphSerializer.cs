@@ -1,4 +1,5 @@
 ﻿using Common.Extensions;
+using GraphLib.Base;
 using GraphLib.Extensions;
 using GraphLib.Interfaces;
 using GraphLib.Interfaces.Factories;
@@ -31,6 +32,7 @@ namespace GraphLib.Serialization.Serializers
                 void CreateVertexFrom(VertexSerializationInfo info)
                     => graph[info.Position] = infoConverter.ConvertFrom(info);
                 graphInfo.VerticesInfo.ForEach(CreateVertexFrom);
+                BaseVertexCost.CostRange = graphInfo.CostRange;
                 return graph.ConnectVertices();
             }
             catch (Exception ex)

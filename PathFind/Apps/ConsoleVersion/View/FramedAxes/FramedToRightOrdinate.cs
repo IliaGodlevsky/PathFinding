@@ -17,14 +17,7 @@ namespace ConsoleVersion.View.FramedAxes
             return yCoordinate.ToString().PadRight(yCoordinatePadding);
         }
 
-        public override string GetFramedAxis()
-        {
-            return new StringBuilder()
-                .AppendLineRepeat(GetStringToAppend, graphLength)
-                .ToString();
-        }
-
-        private string GetStringToAppend(int yCoordinate)
+        protected override string GetStringToAppend(int yCoordinate)
         {
             string paddedCoordinate = GetPaddedYCoordinate(yCoordinate);
             return string.Join(string.Empty, GetOffset(),
@@ -36,8 +29,7 @@ namespace ConsoleVersion.View.FramedAxes
             return new string(Space, OffsetNumber);
         }
 
-        private int LateralDistance => MainView.GetLateralDistanceBetweenVertices();
-        private int WidthOfOrdinateView => MainView.GetWidthOfOrdinateView();
+        private int WidthOfOrdinateView => MainView.WidthOfOrdinateView;
         private int OffsetNumber => graphWidth * LateralDistance + WidthOfOrdinateView;
 
         private readonly int graphWidth;

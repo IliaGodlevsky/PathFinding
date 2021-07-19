@@ -1,12 +1,24 @@
-﻿namespace ConsoleVersion.View.Abstraction
+﻿using Common.Extensions;
+using System.Text;
+
+namespace ConsoleVersion.View.Abstraction
 {
     internal abstract class FramedOrdinate : FramedAxis
     {
         protected FramedOrdinate(int graphLength) : base()
         {
             this.graphLength = graphLength;
-            yCoordinatePadding = MainView.GetYCoordinatePadding();
+            yCoordinatePadding = MainView.YCoordinatePadding;
         }
+
+        public override string GetFramedAxis()
+        {
+            return new StringBuilder()
+                .AppendLineRepeat(GetStringToAppend, graphLength)
+                .ToString();
+        }
+
+        protected abstract string GetStringToAppend(int yCoordinate);
 
         protected abstract string GetPaddedYCoordinate(int yCoordinate);
 

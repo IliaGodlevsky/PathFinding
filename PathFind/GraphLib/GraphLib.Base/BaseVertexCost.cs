@@ -8,7 +8,7 @@ namespace GraphLib.Base
     [Serializable]
     public abstract class BaseVertexCost : IVertexCost
     {
-        public virtual int CurrentCost { get; protected set; }
+        public int CurrentCost { get; protected set; }
 
         protected BaseVertexCost(int cost)
         {

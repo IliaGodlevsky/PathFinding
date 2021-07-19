@@ -11,5 +11,7 @@
         protected abstract string GetOffset();
 
         protected const char Space = ' ';
+
+        protected int LateralDistance => MainView.GetLateralDistanceBetweenVertices();
     }
 }

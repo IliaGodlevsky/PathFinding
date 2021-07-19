@@ -23,6 +23,7 @@ namespace ConsoleVersion.View.Abstraction
         {
             return new StringBuilder(LargeSpace)
                 .AppendRepeat(HorizontalFrameComponent, graphWidth)
+                .Append(CoordinateDelimiter)
                 .ToString();
         }
 
@@ -31,22 +32,20 @@ namespace ConsoleVersion.View.Abstraction
             return string.Join(string.Empty, index, GetSpace(index));
         }
 
-        private string LargeSpace => new string(Space, MainView.GetWidthOfOrdinateView());
+        private string LargeSpace => new string(Space, MainView.WidthOfOrdinateView);
         private string HorizontalFrameComponent
         {
             get
             {
-                int count = MainView.GetLateralDistanceBetweenVertices() - 1;
-                var frameComponent = new string(FrameComponent, count);
+                var frameComponent = new string(FrameComponent, LateralDistance - 1);
                 return string.Join(string.Empty, CoordinateDelimiter, frameComponent);
             }
         }
 
         private string GetSpace(int index)
         {
-            int indexLog = index.GetFlooredLog10();
-            int graphWidthLog = MainView.GetLateralDistanceBetweenVertices() - 2;
-            int count = Math.Abs(graphWidthLog - indexLog) + 1;
+            int indexLog = index.ToString().Length;
+            int count = Math.Abs(LateralDistance - indexLog);
             return new string(Space, count);
         }
 

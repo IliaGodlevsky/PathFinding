@@ -52,11 +52,7 @@ namespace ConsoleVersion.View
 
         private int CalculateMenuItemNumberPad()
         {
-            // 0 to 99 - 1,
-            // 100 to 999 - 2,
-            // 1000 to 9999 - 3
-            // and so on...
-            return menuItemsCount.GetFlooredLog10() + 1;
+            return menuItemsCount.ToString().Length;
         }
 
         private readonly IEnumerable<string> menuItemsNames;

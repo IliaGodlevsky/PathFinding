@@ -78,12 +78,6 @@ namespace ConsoleVersion.ViewModel
             UpdatePathFindingStatistics();
         }
 
-        protected override void OnAlgorithmStarted(object sender, EventArgs e)
-        {
-            base.OnAlgorithmStarted(sender, e);
-            Console.CursorVisible = false;
-        }
-
         private int GetAlgorithmKeyIndex()
         {
             return InputNumber(

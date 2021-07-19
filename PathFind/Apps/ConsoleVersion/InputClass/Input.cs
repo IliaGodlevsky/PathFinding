@@ -63,6 +63,14 @@ namespace ConsoleVersion.InputClass
             return new Coordinate2D(xCoordinate, yCoordinate);
         }
 
+        public static InclusiveValueRange<int> InputRange(InclusiveValueRange<int> rangeOfValiInput)
+        {
+            int upperValueOfRange = InputNumber(UpperValueOfRangeMsg, rangeOfValiInput);
+            int lowerValueOfRange = InputNumber(LowerValueOfRangeMsg, rangeOfValiInput);
+
+            return new InclusiveValueRange<int>(upperValueOfRange, lowerValueOfRange);
+        }
+
         private static bool IsValidInput(string userInput,
             IValueRange<int> rangeOfValidInput)
         {

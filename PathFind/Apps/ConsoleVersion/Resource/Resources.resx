@@ -138,6 +138,9 @@
   <data name="HeightInputMsg" xml:space="preserve">
     <value>Enter height of graph: </value>
   </data>
+  <data name="LowerValueOfRangeMsg" xml:space="preserve">
+    <value>Enter lower vertices cost value: </value>
+  </data>
   <data name="ObstaclePercentInputMsg" xml:space="preserve">
     <value>Enter percent of obstacles: </value>
   </data>
@@ -149,6 +152,9 @@
   </data>
   <data name="TryToLoadSavedGraph" xml:space="preserve">
     <value>Try to load saved graph</value>
+  </data>
+  <data name="UpperValueOfRangeMsg" xml:space="preserve">
+    <value>Enter upper vertices cost value: </value>
   </data>
   <data name="VertexCostInputMsg" xml:space="preserve">
     <value>Enter new top value: </value>

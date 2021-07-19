@@ -39,8 +39,6 @@ namespace ConsoleVersion.ViewModel
             Length = InputNumber(HeightInputMessage, GraphLengthValueRange);
 
             base.CreateGraph();
-
-            MainView.UpdatePositionOfVisualElements(model.Graph);
         }
 
         private int GetGraphAssembleIndex()

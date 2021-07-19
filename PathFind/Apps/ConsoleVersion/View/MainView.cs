@@ -1,5 +1,6 @@
 ﻿using Common.Extensions;
 using Common.ValueRanges;
+using ConsoleVersion.EventArguments;
 using ConsoleVersion.View.Interface;
 using ConsoleVersion.ViewModel;
 using GraphLib.Base;
@@ -8,7 +9,10 @@ using GraphLib.Interfaces;
 using GraphLib.Realizations.Coordinates;
 using GraphLib.Realizations.Graphs;
 using GraphViewModel.Interfaces;
+using Interruptable.EventArguments;
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using static ConsoleVersion.InputClass.Input;
 using static ConsoleVersion.Resource.Resources;
 
@@ -22,39 +26,56 @@ namespace ConsoleVersion.View
         public const int HeightOfAbscissaView = 2;
         public const int HeightOfGraphParametresView = 1;
 
-        public static int GetYCoordinatePadding()
-        {
-            return GetWidthOfOrdinateView() - 1;
-        }
+        public static int YCoordinatePadding => WidthOfOrdinateView - 1;
 
-        public static int GetWidthOfOrdinateView()
-        {
-            return Constants.GraphLengthValueRange.UpperValueOfRange.GetFlooredLog10() + 2;
-        }
+        public static int WidthOfOrdinateView => Constants.GraphLengthValueRange.UpperValueOfRange.ToString().Length + 1;
 
         public static int GetLateralDistanceBetweenVertices()
         {
-            int costWidth = BaseVertexCost.CostRange.UpperValueOfRange.GetFlooredLog10();
-            int width = Constants.GraphWidthValueRange.UpperValueOfRange.GetFlooredLog10();
-            return (costWidth > width ? costWidth : width) + 2;
+            int currentCostWidth = currentMaxValueOfRange.ToString().Length;
+            var previousCostWidth = previousMaxValueOfRange.ToString().Length;
+            int costWidth = Math.Max(currentCostWidth, previousCostWidth);
+            int width = Constants.GraphWidthValueRange.UpperValueOfRange.ToString().Length;
+            return (costWidth >= width ? costWidth + 2 : width + width - costWidth);
         }
 
-        public static Coordinate2D GraphFieldPosition { get; set; }
-
-        public static Coordinate2D PathfindingStatisticsPosition { get; set; }
-
-        public static void UpdatePositionOfVisualElements(IGraph graph)
+        private void OnProgrammStopped(object sender, InterruptEventArgs e)
         {
-            if (graph.HasVertices() && graph is Graph2D graph2D)
+            var workTime = e.When - startTime;
+            string format = @"dd\.hh\:mm\:ss";
+            string time = workTime.ToString(format);
+            string message = $"Work time: {time}\n";
+            message += "Thank you and good bye";
+            Console.WriteLine(message);
+            Console.ReadLine();
+        }
+
+        private static void OnNewGraphCreated(object sender, NewGraphCreatedEventArgs e)
+        {
+            previousMaxValueOfRange = currentMaxValueOfRange;
+            if (e.NewGraph.HasVertices() && e.NewGraph is Graph2D graph2D)
             {
                 int pathFindingStatisticsOffset = graph2D.Length + HeightOfAbscissaView * 2 + HeightOfGraphParametresView;
                 PathfindingStatisticsPosition = new Coordinate2D(0, pathFindingStatisticsOffset);
             }
         }
 
+        private static void OnCostRangeChanged(object sender, CostRangeChangedEventArgs e)
+        {
+            int upperValueRange = e.NewValueRange.UpperValueOfRange;
+            int lowerValueRange = e.NewValueRange.LowerValueOfRange;
+            int max = Math.Max(upperValueRange, Math.Abs(lowerValueRange));
+            previousMaxValueOfRange = Math.Max(currentMaxValueOfRange, previousMaxValueOfRange);
+            currentMaxValueOfRange = max;
+        }
+
+        public static Coordinate2D GraphFieldPosition { get; set; }
+
+        public static Coordinate2D PathfindingStatisticsPosition { get; set; }
+
         static MainView()
         {
-            int x = GetWidthOfOrdinateView();
+            int x = WidthOfOrdinateView;
             int y = HeightOfAbscissaView + HeightOfGraphParametresView;
             GraphFieldPosition = new Coordinate2D(x, y);
         }
@@ -63,13 +84,18 @@ namespace ConsoleVersion.View
         {
             mainModel = model as MainViewModel ?? throw new ArgumentException(nameof(model));
             mainModel.OnInterrupted += OnProgrammStopped;
-            menu = new Menu<Action>(model);
+            mainModel.OnCostRangeChanged += OnCostRangeChanged;
+            mainModel.OnNewGraphCreated += OnNewGraphCreated;
+            menu = new Menu<Action>(mainModel);
             menuList = new MenuList(menu.MenuActionsNames, columns: 2);
             menuValueRange = new InclusiveValueRange<int>(menu.MenuActionsNames.Length, 1);
+            var args = new CostRangeChangedEventArgs(BaseVertexCost.CostRange);
+            OnCostRangeChanged(this, args);
+            startTime = DateTime.Now;
         }
 
         public void Start()
-        {
+        {           
             while (!mainModel.IsAppClosureRequested)
             {
                 mainModel.DisplayGraph();
@@ -82,15 +108,13 @@ namespace ConsoleVersion.View
             }
         }
 
-        private void OnProgrammStopped(object sender, EventArgs e)
-        {
-            Console.WriteLine("Good bye");
-            Console.ReadLine();
-        }
-
         private readonly Menu<Action> menu;
         private readonly MenuList menuList;
         private readonly MainViewModel mainModel;
         private readonly InclusiveValueRange<int> menuValueRange;
+
+        private static int previousMaxValueOfRange;
+        private static int currentMaxValueOfRange;
+        private readonly DateTime startTime;
     }
 }
