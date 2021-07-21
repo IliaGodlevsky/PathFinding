@@ -6,7 +6,7 @@ namespace ConsoleVersion.View
 {
     internal sealed class AxisView : IAxisView
     {
-        public AxisView(FramedAxis axis,
+        public AxisView(IFramedAxis axis,
             int cursorTop)
         {
             this.cursorTop = cursorTop;
@@ -19,7 +19,7 @@ namespace ConsoleVersion.View
             Console.Write(axis.GetFramedAxis());
         }
 
-        private readonly FramedAxis axis;
+        private readonly IFramedAxis axis;
         private readonly int cursorTop;
     }
 }
