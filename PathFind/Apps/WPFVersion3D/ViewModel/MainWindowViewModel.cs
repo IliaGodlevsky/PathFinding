@@ -2,6 +2,7 @@
 using AssembleClassesLib.Interface;
 using AssembleClassesLib.Realizations;
 using AssembleClassesLib.Realizations.AssembleClassesImpl;
+using Common.Extensions;
 using Common.Interface;
 using GraphLib.Interfaces;
 using GraphLib.Interfaces.Factories;
@@ -12,10 +13,13 @@ using NullObject.Extensions;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Windows;
 using System.Windows.Input;
+using WPFVersion3D.Attributes;
 using WPFVersion3D.Axes;
+using WPFVersion3D.Enums;
 using WPFVersion3D.Infrastructure;
 using WPFVersion3D.Interface;
 using WPFVersion3D.Model;
@@ -53,7 +57,7 @@ namespace WPFVersion3D.ViewModel
             set { graphField = value; OnPropertyChanged(); }
         }
 
-        public IDictionary<string, IAnimationSpeed> AnimationSpeeds => animationSpeeds.Value;
+        public IDictionary<string, BaseSpeed> AnimationSpeeds => animationSpeeds.Value;
 
         public ICommand StartPathFindCommand { get; }
         public ICommand CreateNewGraphCommand { get; }
@@ -80,7 +84,7 @@ namespace WPFVersion3D.ViewModel
             LoadGraphCommand = new RelayCommand(ExecuteLoadGraphCommand);
             ChangeOpacityCommand = new RelayCommand(ExecuteChangeOpacity, CanExecuteGraphOperation);
             AnimatedAxisRotateCommand = new RelayCommand(ExecuteAnimatedAxisRotateCommand);
-            animationSpeeds = new Lazy<IDictionary<string, IAnimationSpeed>>(GetAnimationSpeeds);
+            animationSpeeds = new Lazy<IDictionary<string, BaseSpeed>>(GetSpeedDictionary);
         }
 
         public override void FindPath()
@@ -205,13 +209,14 @@ namespace WPFVersion3D.ViewModel
             return !Graph.IsNull();
         }
 
-        private IDictionary<string, IAnimationSpeed> GetAnimationSpeeds()
+        private IDictionary<string, BaseSpeed> GetSpeedDictionary()
         {
-            var speeds = new AnimationSpeedClasses();
-            speeds.LoadClasses();
-            return speeds.AsNameInstanceDictionary<IAnimationSpeed>();
+            return Enum
+                .GetValues(typeof(AnimationSpeed))
+                .Cast<AnimationSpeed>()
+                .ToDictionary(item => item.GetDescription(), item => item.GetAttributeOrNull<BaseSpeed>());
         }
 
-        private readonly Lazy<IDictionary<string, IAnimationSpeed>> animationSpeeds;
+        private readonly Lazy<IDictionary<string, BaseSpeed>> animationSpeeds;
     }
 }

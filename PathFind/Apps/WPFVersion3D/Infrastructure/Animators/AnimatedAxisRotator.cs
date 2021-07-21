@@ -1,7 +1,7 @@
 ﻿using System.Windows;
 using System.Windows.Media.Animation;
 using System.Windows.Media.Media3D;
-using WPFVersion3D.Infrastructure.AnimationSpeed;
+using WPFVersion3D.Attributes;
 using WPFVersion3D.Interface;
 
 namespace WPFVersion3D.Infrastructure.Animators
@@ -15,7 +15,7 @@ namespace WPFVersion3D.Infrastructure.Animators
         }
 
         protected AnimatedAxisRotator(AxisAngleRotation3D axis)
-             : this(axis, new SlowSpeed())
+             : this(axis, new Speed(4800))
         {
 
         }
