@@ -1,6 +1,4 @@
-﻿using Common.Extensions;
-using ConsoleVersion.View.Abstraction;
-using System.Text;
+﻿using ConsoleVersion.View.Abstraction;
 
 namespace ConsoleVersion.View.FramedAxes
 {
@@ -20,14 +18,10 @@ namespace ConsoleVersion.View.FramedAxes
         protected override string GetStringToAppend(int yCoordinate)
         {
             string paddedCoordinate = GetPaddedYCoordinate(yCoordinate);
-            return string.Join(string.Empty, GetOffset(),
-                VerticalFrameComponent, paddedCoordinate);
+            return string.Concat(Offset, VerticalFrameComponent, paddedCoordinate);
         }
 
-        protected override string GetOffset()
-        {
-            return new string(Space, OffsetNumber);
-        }
+        protected override string Offset => new string(Space, OffsetNumber);
 
         private int WidthOfOrdinateView => MainView.WidthOfOrdinateView;
         private int OffsetNumber => graphWidth * LateralDistance + WidthOfOrdinateView;

@@ -1,6 +1,4 @@
-﻿using Common.Extensions;
-using ConsoleVersion.View.Abstraction;
-using System.Text;
+﻿using ConsoleVersion.View.Abstraction;
 
 namespace ConsoleVersion.View.FramedAxes
 {
@@ -20,12 +18,9 @@ namespace ConsoleVersion.View.FramedAxes
         protected override string GetStringToAppend(int yCoordinate)
         {
             string paddedCoordinate = GetPaddedYCoordinate(yCoordinate);
-            return string.Join(string.Empty, paddedCoordinate, VerticalFrameComponent);
+            return string.Concat(paddedCoordinate, VerticalFrameComponent);
         }
 
-        protected override string GetOffset()
-        {
-            return string.Empty;
-        }
+        protected override string Offset => string.Empty;
     }
 }

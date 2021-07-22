@@ -42,7 +42,7 @@ namespace Algorithm.Base
         /// </summary>
         public virtual void Interrupt()
         {
-            isInterruptRequested = true;
+            IsInterruptRequested = true;
             OnInterrupted?.Invoke(this, new InterruptEventArgs());
         }
 
@@ -66,13 +66,15 @@ namespace Algorithm.Base
             OnInterrupted = null;
             visitedVertices.Clear();
             parentVertices.Clear();
-            isInterruptRequested = false;
+            IsInterruptRequested = false;
         }
 
         /// <summary>
         /// The vertex, that the algorithm is currently visiting
         /// </summary>
         protected IVertex CurrentVertex { get; set; }
+
+        public bool IsInterruptRequested { get; private set; }
 
 
         /// <summary>
@@ -87,7 +89,7 @@ namespace Algorithm.Base
         {
             return endPoints.Target.IsEqual(CurrentVertex)
                 || CurrentVertex.IsNull()
-                || isInterruptRequested;
+                || IsInterruptRequested;
         }
 
         /// <summary>
@@ -173,7 +175,5 @@ namespace Algorithm.Base
 
         protected readonly IGraph graph;
         protected readonly IEndPoints endPoints;
-
-        private bool isInterruptRequested;
     }
 }

@@ -22,19 +22,8 @@ namespace WPFVersion3D.Model
 
         public GraphField3D(int width, int length, int height)
         {
-            coordinateSystem = new IAxis[]
-            {
-                new Applicate(),
-                new Ordinate(),
-                new Abscissa()
-            };
-
-            Width = width;
-            Length = length;
-            Height = height;
-
-            DimensionSizes = new[] { Width, Length, Height };
-
+            coordinateSystem = new IAxis[] { new Applicate(), new Ordinate(), new Abscissa() };
+            DimensionSizes = new[] { width, length, height };
             DistanceBetweenVerticesAtXAxis = 0;
             DistanceBetweenVerticesAtYAxis = 0;
             DistanceBetweenVerticesAtZAxis = 0;
@@ -82,7 +71,7 @@ namespace WPFVersion3D.Model
             params double[] additionalOffset)
         {
             axis.SetDistanceBeetween(distanceBetween, this);
-            StretchAlongAxes(axis);
+            StretchAlongAxis(axis);
 
             if (distanceBetween == 0)
             {
@@ -94,7 +83,7 @@ namespace WPFVersion3D.Model
             }
         }
 
-        private void StretchAlongAxes(IAxis axis)
+        private void StretchAlongAxis(IAxis axis)
         {
             foreach (var vertex in Vertices3D)
             {
@@ -116,12 +105,6 @@ namespace WPFVersion3D.Model
             double offset = vertexOffset.VertexOffset;
             axis.Offset(vertex.Transform as TranslateTransform3D, offset);
         }
-
-        private int Width { get; }
-
-        private int Length { get; }
-
-        private int Height { get; }
 
         private int[] DimensionSizes { get; }
 

@@ -1,5 +1,4 @@
-﻿using ConsoleVersion.View.Abstraction;
-using ConsoleVersion.View.Interface;
+﻿using ConsoleVersion.View.Interface;
 using Console = Colorful.Console;
 
 namespace ConsoleVersion.View

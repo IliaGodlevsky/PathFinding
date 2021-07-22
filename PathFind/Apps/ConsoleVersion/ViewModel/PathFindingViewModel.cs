@@ -1,4 +1,5 @@
-﻿using AssembleClassesLib.Interface;
+﻿using Algorithm.Infrastructure.EventArguments;
+using AssembleClassesLib.Interface;
 using ConsoleVersion.Model;
 using ConsoleVersion.View;
 using GraphLib.Base;
@@ -67,12 +68,11 @@ namespace ConsoleVersion.ViewModel
             }
         }
 
-        protected override void ColorizeProcessedVertices(object sender, EventArgs e)
+        protected override void ColorizeProcessedVertices(object sender, AlgorithmEventArgs e)
         {
-
         }
 
-        protected override void OnVertexVisited(object sender, EventArgs e)
+        protected override void OnVertexVisited(object sender, AlgorithmEventArgs e)
         {
             base.OnVertexVisited(sender, e);
             UpdatePathFindingStatistics();

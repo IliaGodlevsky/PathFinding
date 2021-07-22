@@ -1,18 +1,14 @@
-﻿using Common.Extensions;
-using Common.ValueRanges;
+﻿using Common.ValueRanges;
 using ConsoleVersion.EventArguments;
 using ConsoleVersion.View.Interface;
 using ConsoleVersion.ViewModel;
 using GraphLib.Base;
 using GraphLib.Extensions;
-using GraphLib.Interfaces;
 using GraphLib.Realizations.Coordinates;
 using GraphLib.Realizations.Graphs;
 using GraphViewModel.Interfaces;
 using Interruptable.EventArguments;
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using static ConsoleVersion.InputClass.Input;
 using static ConsoleVersion.Resource.Resources;
 
@@ -95,8 +91,8 @@ namespace ConsoleVersion.View
         }
 
         public void Start()
-        {           
-            while (!mainModel.IsAppClosureRequested)
+        {
+            while (!mainModel.IsInterruptRequested)
             {
                 mainModel.DisplayGraph();
                 Console.WriteLine(menuList);

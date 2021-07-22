@@ -9,7 +9,6 @@ using Common;
 using Common.Extensions;
 using Common.Interface;
 using GraphLib.Base;
-using GraphLib.Extensions;
 using GraphLib.Interfaces;
 using GraphViewModel.Interfaces;
 using Interruptable.EventArguments;
@@ -80,32 +79,22 @@ namespace GraphViewModel
             keysUpdate.UpdateAlgorithmKeys(sender, e);
         }
 
-        protected abstract void ColorizeProcessedVertices(object sender, EventArgs e);
+        protected abstract void ColorizeProcessedVertices(object sender, AlgorithmEventArgs e);
 
-        protected virtual void OnVertexVisited(object sender, EventArgs e)
+        protected virtual void OnVertexVisited(object sender, AlgorithmEventArgs e)
         {
-            if (e is AlgorithmEventArgs args)
-            {
-                visitedVerticesCount = args.VisitedVertices;
-                mainViewModel.PathFindingStatistics = GetStatistics();
-            }
+            visitedVerticesCount = e.VisitedVertices;
+            mainViewModel.PathFindingStatistics = GetStatistics();
         }
 
         protected virtual void OnAlgorithmInterrupted(object sender, InterruptEventArgs e)
         {
-            string message = $"Algorithm {AlgorithmKey} was interrupted at {e.When:f}";
-            log.Info(message);
             throw new AlgorithmInterruptedException(AlgorithmInterruptedMsg);
         }
 
-        protected virtual void OnAlgorithmFinished(object sender, EventArgs e)
+        protected virtual void OnAlgorithmFinished(object sender, AlgorithmEventArgs e)
         {
-            if (e is AlgorithmEventArgs args)
-            {
-                visitedVerticesCount = args.VisitedVertices;
-                string message = $"Algorithm { AlgorithmKey } was finished";
-                log.Info(message);
-            }
+            visitedVerticesCount = e.VisitedVertices;
         }
 
         protected virtual void Summarize()
@@ -121,13 +110,9 @@ namespace GraphViewModel
             }
         }
 
-        protected virtual void OnAlgorithmStarted(object sender, EventArgs e)
+        protected virtual void OnAlgorithmStarted(object sender, AlgorithmEventArgs e)
         {
             interrupter = new Interrupter(DelayTime);
-            string message = $"Algorithm {AlgorithmKey} was started. ";
-            message += $"Start vertex: {endPoints.Source.GetInforamtion()};";
-            message += $"End vertex: {endPoints.Target.GetInforamtion()}";
-            log.Info(message);
         }
 
         private string GetStatistics()

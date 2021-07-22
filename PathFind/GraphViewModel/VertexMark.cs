@@ -1,30 +1,23 @@
 ﻿using Algorithm.Infrastructure.EventArguments;
 using GraphLib.Interfaces;
-using System;
 
 namespace GraphViewModel
 {
     public sealed class VertexMark
     {
-        public void OnVertexVisited(object sender, EventArgs e)
+        public void OnVertexVisited(object sender, AlgorithmEventArgs e)
         {
-            if (e is AlgorithmEventArgs args)
+            if (!e.IsEndPoint && e.Vertex is IMarkable vertex)
             {
-                if (!args.IsEndPoint && args.Vertex is IMarkable vertex)
-                {
-                    vertex.MarkAsVisited();
-                }
+                vertex.MarkAsVisited();
             }
         }
 
-        public void OnVertexEnqueued(object sender, EventArgs e)
+        public void OnVertexEnqueued(object sender, AlgorithmEventArgs e)
         {
-            if (e is AlgorithmEventArgs args)
+            if (!e.IsEndPoint && e.Vertex is IMarkable vertex)
             {
-                if (!args.IsEndPoint && args.Vertex is IMarkable vertex)
-                {
-                    vertex.MarkAsEnqueued();
-                }
+                vertex.MarkAsEnqueued();
             }
         }
     }

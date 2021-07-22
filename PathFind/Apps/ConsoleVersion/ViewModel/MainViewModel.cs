@@ -1,12 +1,10 @@
 ﻿using AssembleClassesLib.Interface;
-using Common.ValueRanges;
 using ConsoleVersion.Attributes;
 using ConsoleVersion.Enums;
 using ConsoleVersion.EventArguments;
 using ConsoleVersion.EventHandlers;
 using ConsoleVersion.Model;
 using ConsoleVersion.View;
-using GraphLib.Base;
 using GraphLib.Exceptions;
 using GraphLib.Extensions;
 using GraphLib.Interfaces;
@@ -38,7 +36,7 @@ namespace ConsoleVersion.ViewModel
         public event NewGraphCreatedEventHandler OnNewGraphCreated;
         public event InterruptEventHanlder OnInterrupted;
 
-        public bool IsAppClosureRequested { get; private set; }
+        public bool IsInterruptRequested { get; private set; }
 
         public MainViewModel(
             IGraphFieldFactory fieldFactory,
@@ -50,7 +48,7 @@ namespace ConsoleVersion.ViewModel
             : base(fieldFactory, eventHolder, saveLoad,
                   graphAssembles, algorithms, log)
         {
-            IsAppClosureRequested = false;
+            IsInterruptRequested = false;
         }
 
         [MenuItem(Constants.MakeUnwieghted)]
@@ -165,8 +163,8 @@ namespace ConsoleVersion.ViewModel
         public void Interrupt()
         {
             int input = InputNumber(ExitAppMsg, Yes, No);
-            IsAppClosureRequested = input == Yes;
-            if (IsAppClosureRequested)
+            IsInterruptRequested = input == Yes;
+            if (IsInterruptRequested)
             {
                 OnInterrupted?.Invoke(this, new InterruptEventArgs());
             }
