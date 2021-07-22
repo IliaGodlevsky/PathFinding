@@ -14,12 +14,6 @@ namespace WPFVersion3D.Infrastructure.Animators
             this.speed = speed;
         }
 
-        protected AnimatedAxisRotator(AxisAngleRotation3D axis)
-             : this(axis, new Speed(4800))
-        {
-
-        }
-
         public void RotateAxis()
         {
             axis.BeginAnimation(AxisAngleRotation3D.AngleProperty, CreateAnimation());

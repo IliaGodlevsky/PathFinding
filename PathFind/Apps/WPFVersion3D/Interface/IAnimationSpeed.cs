@@ -6,7 +6,6 @@ namespace WPFVersion3D.Interface
     /// An interface that responds for 
     /// graph field rotation speed
     /// </summary>
-    [NotLoadable]
     internal interface IAnimationSpeed
     {
         double Milliseconds { get; }

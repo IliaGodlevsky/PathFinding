@@ -211,10 +211,13 @@ namespace WPFVersion3D.ViewModel
 
         private IDictionary<string, BaseSpeed> GetSpeedDictionary()
         {
+            string Description(AnimationSpeed speed) => speed.GetDescription();
+            BaseSpeed Speed(AnimationSpeed speed) => speed.GetAttributeOrNull<BaseSpeed>();
+
             return Enum
                 .GetValues(typeof(AnimationSpeed))
                 .Cast<AnimationSpeed>()
-                .ToDictionary(item => item.GetDescription(), item => item.GetAttributeOrNull<BaseSpeed>());
+                .ToDictionary(Description, Speed);
         }
 
         private readonly Lazy<IDictionary<string, BaseSpeed>> animationSpeeds;

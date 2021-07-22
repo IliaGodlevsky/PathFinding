@@ -13,11 +13,11 @@ using Interruptable.EventArguments;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+
 using static ConsoleVersion.InputClass.Input;
 using static ConsoleVersion.Resource.Resources;
 
 using Console = Colorful.Console;
-
 
 namespace ConsoleVersion.View
 {
@@ -33,21 +33,10 @@ namespace ConsoleVersion.View
         public static int GetLateralDistanceBetweenVertices()
         {
             int currentCostWidth = currentMaxValueOfRange.ToString().Length;
-            var previousCostWidth = previousMaxValueOfRange.ToString().Length;
+            int previousCostWidth = previousMaxValueOfRange.ToString().Length;
             int costWidth = Math.Max(currentCostWidth, previousCostWidth);
             int width = Constants.GraphWidthValueRange.UpperValueOfRange.ToString().Length;
             return (costWidth >= width ? costWidth + 2 : width + width - costWidth);
-        }
-
-        private void OnProgrammStopped(object sender, InterruptEventArgs e)
-        {
-            var workTime = e.When - startTime;
-            string format = @"dd\.hh\:mm\:ss";
-            string time = workTime.ToString(format);
-            string message = $"Work time: {time}\n";
-            message += "Thank you and good bye";
-            Console.WriteLine(message);
-            Console.ReadLine();
         }
 
         private static void OnNewGraphCreated(object sender, NewGraphCreatedEventArgs e)
@@ -83,7 +72,6 @@ namespace ConsoleVersion.View
         public MainView(IMainModel model)
         {
             mainModel = model as MainViewModel ?? throw new ArgumentException(nameof(model));
-            mainModel.OnInterrupted += OnProgrammStopped;
             mainModel.OnCostRangeChanged += OnCostRangeChanged;
             mainModel.OnNewGraphCreated += OnNewGraphCreated;
             menu = new Menu<Action>(mainModel);

@@ -5,23 +5,28 @@ namespace WPFVersion3D.Enums
 {
     internal enum AnimationSpeed
     {
-        [Speed(milliseconds: 4800)]
         [Description("Slowest")]
+        [Speed(milliseconds: 4800)]
         Slowest,
-        [Speed(milliseconds: 2400)]
+
         [Description("Slow")]
+        [Speed(milliseconds: 2400)]
         Slow,
-        [Speed(milliseconds: 1200)]
+
         [Description("Medium")]
+        [Speed(milliseconds: 1200)]
         Medium,
-        [Speed(milliseconds: 600)]
+
         [Description("High")]
+        [Speed(milliseconds: 600)]
         High,
-        [Speed(milliseconds: 300)]
+
         [Description("Highest")]
+        [Speed(milliseconds: 300)]
         Highest,
-        [RandomSpeed(from: 300, to: 4800)]
+
         [Description("Random")]
+        [RandomSpeed(300, 4800)]
         Random
     }
 }
