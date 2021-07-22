@@ -10,7 +10,7 @@ namespace ConsoleVersion.View.Abstraction
     {
         public abstract string GetFramedAxis();
 
-        protected abstract string GetOffset();
+        protected abstract string Offset { get; }
 
         protected const char Space = ' ';
 

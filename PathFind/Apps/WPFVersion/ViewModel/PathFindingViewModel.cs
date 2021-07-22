@@ -1,4 +1,5 @@
-﻿using AssembleClassesLib.EventArguments;
+﻿using Algorithm.Infrastructure.EventArguments;
+using AssembleClassesLib.EventArguments;
 using AssembleClassesLib.Interface;
 using Common.Interface;
 using GraphLib.Base;
@@ -64,7 +65,7 @@ namespace WPFVersion.ViewModel
             algorithm.Interrupt();
         }
 
-        protected override void OnAlgorithmStarted(object sender, EventArgs e)
+        protected override void OnAlgorithmStarted(object sender, AlgorithmEventArgs e)
         {
             base.OnAlgorithmStarted(sender, e);
             if (mainViewModel is MainWindowViewModel mainModel)
@@ -74,7 +75,7 @@ namespace WPFVersion.ViewModel
             }
         }
 
-        protected override void OnAlgorithmFinished(object sender, EventArgs e)
+        protected override void OnAlgorithmFinished(object sender, AlgorithmEventArgs e)
         {
             base.OnAlgorithmFinished(sender, e);
             if (mainViewModel is MainWindowViewModel mainModel)
@@ -84,7 +85,7 @@ namespace WPFVersion.ViewModel
             }
         }
 
-        protected override void ColorizeProcessedVertices(object sender, EventArgs e)
+        protected override void ColorizeProcessedVertices(object sender, AlgorithmEventArgs e)
         {
             var frame = new DispatcherFrame();
 

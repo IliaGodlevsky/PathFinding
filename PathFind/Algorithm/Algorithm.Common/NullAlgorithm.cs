@@ -16,6 +16,8 @@ namespace Algorithm.Common
     [NotLoadable]
     public sealed class NullAlgorithm : IAlgorithm
     {
+        public bool IsInterruptRequested => true;
+
         public event AlgorithmEventHandler OnStarted;
         public event AlgorithmEventHandler OnVertexVisited;
         public event AlgorithmEventHandler OnFinished;

@@ -13,9 +13,10 @@ namespace ConsoleVersion.View.Abstraction
 
         protected string GetAbscissa()
         {
-            return new StringBuilder(LargeSpace)
+            string largeSpace = LargeSpace;
+            return new StringBuilder(largeSpace)
                 .AppendRepeat(GetStringToAppend, graphWidth)
-                .Append(LargeSpace)
+                .Append(largeSpace)
                 .ToString();
         }
 
@@ -29,7 +30,7 @@ namespace ConsoleVersion.View.Abstraction
 
         private string GetStringToAppend(int index)
         {
-            return string.Join(string.Empty, index, GetSpace(index));
+            return string.Concat(index, GetSpace(index));
         }
 
         private string LargeSpace => new string(Space, MainView.WidthOfOrdinateView);
@@ -38,7 +39,7 @@ namespace ConsoleVersion.View.Abstraction
             get
             {
                 var frameComponent = new string(FrameComponent, LateralDistance - 1);
-                return string.Join(string.Empty, CoordinateDelimiter, frameComponent);
+                return string.Concat(CoordinateDelimiter, frameComponent);
             }
         }
 

@@ -1,4 +1,5 @@
-﻿using AssembleClassesLib.Interface;
+﻿using Algorithm.Infrastructure.EventArguments;
+using AssembleClassesLib.Interface;
 using Common.Interface;
 using GraphLib.Base;
 using GraphViewModel;
@@ -30,7 +31,7 @@ namespace WindowsFormsVersion.ViewModel
             }
         }
 
-        protected override void ColorizeProcessedVertices(object sender, EventArgs e)
+        protected override void ColorizeProcessedVertices(object sender, AlgorithmEventArgs e)
         {
             Application.DoEvents();
         }

@@ -10,16 +10,13 @@ namespace ConsoleVersion.View.FramedAxes
             this.graphLength = graphLength;
         }
 
-        protected override string GetOffset()
-        {
-            return new string(Endl, graphLength + 1);
-        }
+        protected override string Offset => new string(Endl, graphLength + 1);
 
         public override string GetFramedAxis()
         {
             string frame = GetHorizontalFrame();
             string abscissa = GetAbscissa();
-            return string.Join(NewLine, GetOffset(), frame, abscissa);
+            return string.Join(NewLine, Offset, frame, abscissa);
         }
 
         private readonly int graphLength;

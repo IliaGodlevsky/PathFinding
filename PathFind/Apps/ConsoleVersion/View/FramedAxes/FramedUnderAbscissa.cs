@@ -17,9 +17,6 @@ namespace ConsoleVersion.View.FramedAxes
             return string.Join(NewLine, abscissa, frame);
         }
 
-        protected override string GetOffset()
-        {
-            return string.Empty;
-        }
+        protected override string Offset => string.Empty;
     }
 }

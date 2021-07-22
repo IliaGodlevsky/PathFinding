@@ -22,6 +22,8 @@ namespace AssembleClassesLib.Realizations
             isStarted = false;
         }
 
+        public bool IsInterruptRequested => token.IsCancellationRequested;
+
         public IReadOnlyCollection<string> ClassesNames { get; private set; }
 
         public object Get(string key, params object[] parametres)
@@ -37,7 +39,7 @@ namespace AssembleClassesLib.Realizations
                 isStarted = true;
                 Task.Run(() =>
                 {
-                    while (!token.IsCancellationRequested)
+                    while (!IsInterruptRequested)
                     {
                         try
                         {
@@ -67,8 +69,6 @@ namespace AssembleClassesLib.Realizations
             OnInterrupted = null;
             isStarted = false;
         }
-
-
 
         private readonly IAssembleClasses assembleClasses;
         private readonly CancellationTokenSource tokenSource;

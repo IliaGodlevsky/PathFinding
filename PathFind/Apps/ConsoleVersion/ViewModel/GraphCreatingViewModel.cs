@@ -1,5 +1,4 @@
-﻿using ConsoleVersion.View;
-using GraphLib.Interfaces.Factories;
+﻿using GraphLib.Interfaces.Factories;
 using GraphLib.ViewModel;
 using GraphViewModel.Interfaces;
 using Logging.Interface;

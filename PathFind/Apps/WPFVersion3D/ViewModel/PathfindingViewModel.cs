@@ -1,4 +1,5 @@
-﻿using AssembleClassesLib.EventArguments;
+﻿using Algorithm.Infrastructure.EventArguments;
+using AssembleClassesLib.EventArguments;
 using AssembleClassesLib.Interface;
 using Common.Interface;
 using GraphLib.Base;
@@ -59,7 +60,7 @@ namespace WPFVersion3D.ViewModel
             });
         }
 
-        protected override void ColorizeProcessedVertices(object sender, EventArgs e)
+        protected override void ColorizeProcessedVertices(object sender, AlgorithmEventArgs e)
         {
             var frame = new DispatcherFrame();
 
