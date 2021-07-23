@@ -12,7 +12,8 @@ namespace WPFVersion.Converters
         {
             try
             {
-                value = value?.ToString().Replace('.', ',');
+                string separator = culture.NumberFormat.NumberDecimalSeparator;
+                value = value?.ToString().Replace(".", separator);
                 var result = System.Convert.ToDouble(value);
                 result = Math.Round(result, Precision);
                 return result;
@@ -27,7 +28,8 @@ namespace WPFVersion.Converters
         {
             if (IsValidParametres(value))
             {
-                value = value?.ToString().Replace('.', ',');
+                string separator = culture.NumberFormat.NumberDecimalSeparator;
+                value = value?.ToString().Replace(".", separator);
                 return System.Convert.ToDouble(value);
             }
 

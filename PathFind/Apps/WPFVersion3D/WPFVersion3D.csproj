@@ -68,7 +68,7 @@
     </ApplicationDefinition>
     <Compile Include="Attributes\BaseSpeed.cs" />
     <Compile Include="Attributes\RandomSpeed.cs" />
-    <Compile Include="Attributes\SpeedAttribute.cs" />
+    <Compile Include="Attributes\Speed.cs" />
     <Compile Include="Axes\Abscissa.cs" />
     <Compile Include="Axes\Applicate.cs" />
     <Compile Include="Axes\Ordinate.cs" />

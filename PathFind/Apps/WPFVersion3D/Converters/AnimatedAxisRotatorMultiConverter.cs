@@ -42,7 +42,7 @@ namespace WPFVersion3D.Converters
 
         private bool IsValidParametres(params object[] values)
         {
-            return !values.Any(ObjectExtensions.IsNull);
+            return !values.ContainsNulls();
         }
 
         private IAnimatedAxisRotator CreateForwardAxisRotator(AxisAngleRotation3D axis, IAnimationSpeed speed)

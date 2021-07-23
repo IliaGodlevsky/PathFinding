@@ -1,5 +1,7 @@
 ﻿using NullObject.Attributes;
 using System;
+using System.Collections;
+using System.Linq;
 
 namespace NullObject.Extensions
 {

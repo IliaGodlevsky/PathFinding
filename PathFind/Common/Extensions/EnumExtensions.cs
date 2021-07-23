@@ -14,10 +14,10 @@ namespace Common.Extensions
         public static TAttribute GetAttributeOrNull<TAttribute>(this Enum value)
             where TAttribute : Attribute
         {
-            string fieldName = value.ToString();
-            var field = value.GetType().GetField(fieldName);
-
-            return field.GetAttributeOrNull<TAttribute>();
+            return value
+                .GetType()
+                .GetField(value.ToString())
+                ?.GetAttributeOrNull<TAttribute>();
         }
     }
 }
