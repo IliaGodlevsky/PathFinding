@@ -1,5 +1,4 @@
-﻿using Common.Extensions;
-using ConsoleVersion.Model;
+﻿using ConsoleVersion.Model;
 using ConsoleVersion.View.FramedAxes;
 using ConsoleVersion.View.Interface;
 using GraphLib.Interfaces;
@@ -7,44 +6,32 @@ using System.Collections.Generic;
 
 namespace ConsoleVersion.View
 {
-    internal sealed class GraphField : IGraphField
+    internal sealed class GraphField : IGraphField, IDisplayable
     {
-        public IReadOnlyCollection<IVertex> Vertices => vertices;
+        public GraphField(int width, int length)
+        {
+            displayables = new List<IDisplayable>
+            {
+                new FramedOverAbscissa(width, length),
+                new FramedUnderAbscissa(width),
+                new FramedToRightOrdinate(width, length),
+                new FramedToLeftOrdinate(length)
+            };
+        }
 
         public void Add(IVertex vertex)
         {
             if (vertex is Vertex vertex2D)
             {
-                vertices.Add(vertex2D);
+                displayables.Add(vertex2D);
             }
         }
 
-        public void Clear()
+        public void Display()
         {
-            vertices.Clear();
+            displayables.ForEach(item => item.Display());
         }
 
-        public void ShowGraphWithFrames()
-        {
-            axesView.ForEach(view => view.Show());
-            vertices.ForEach(vertex => vertex.ColorizeVertex());
-        }
-
-        public GraphField(int width, int length)
-        {
-            vertices = new List<Vertex>();
-            int abscissaCursorTop = MainView.HeightOfGraphParametresView;
-            int ordinateCursorTop = MainView.HeightOfAbscissaView + 1;
-            axesView = new AxisView[]
-            {
-                new AxisView(new FramedOverAbscissa(width, length), abscissaCursorTop),
-                new AxisView(new FramedUnderAbscissa(width), abscissaCursorTop),
-                new AxisView(new FramedToRightOrdinate(width, length), ordinateCursorTop),
-                new AxisView(new FramedToLeftOrdinate(length), ordinateCursorTop)
-            };
-        }
-
-        private readonly List<Vertex> vertices;
-        private readonly IAxisView[] axesView;
+        private readonly List<IDisplayable> displayables;
     }
 }

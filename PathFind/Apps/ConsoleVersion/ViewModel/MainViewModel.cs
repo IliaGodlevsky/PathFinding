@@ -5,6 +5,7 @@ using ConsoleVersion.EventArguments;
 using ConsoleVersion.EventHandlers;
 using ConsoleVersion.Model;
 using ConsoleVersion.View;
+using ConsoleVersion.View.Interface;
 using GraphLib.Exceptions;
 using GraphLib.Extensions;
 using GraphLib.Interfaces;
@@ -197,7 +198,7 @@ namespace ConsoleVersion.ViewModel
         {
             Console.ForegroundColor = Color.White;
             Console.WriteLine(GraphParametres);
-            (GraphField as GraphField)?.ShowGraphWithFrames();
+            (GraphField as IDisplayable)?.Display();
             Console.WriteLine(PathFindingStatistics);
         }
     }

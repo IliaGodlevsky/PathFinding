@@ -1,4 +1,5 @@
-﻿using Common.Extensions;
+﻿using Colorful;
+using Common.Extensions;
 using System.Text;
 
 namespace ConsoleVersion.View.Abstraction
@@ -9,6 +10,12 @@ namespace ConsoleVersion.View.Abstraction
         {
             this.graphLength = graphLength;
             yCoordinatePadding = MainView.YCoordinatePadding;
+        }
+
+        public override void Display()
+        {
+            Console.SetCursorPosition(0, MainView.HeightOfAbscissaView + 1);
+            Console.Write(GetFramedAxis());
         }
 
         public override string GetFramedAxis()

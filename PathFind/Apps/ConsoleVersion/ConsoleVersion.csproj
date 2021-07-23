@@ -69,6 +69,7 @@
     <Compile Include="EventHandlers\NewGraphCreatedEventHandler.cs" />
     <Compile Include="EventHandlers\CostRangeChangedEventHandler.cs" />
     <Compile Include="InputClass\Input.cs" />
+    <Compile Include="View\Interface\IDisplayable.cs" />
     <Compile Include="Model\EndPoints.cs" />
     <Compile Include="Model\GraphFieldFactory.cs" />
     <Compile Include="Model\AssembleLoadPath.cs" />
@@ -84,7 +85,6 @@
     <Compile Include="View\FramedAxes\FramedToLeftOrdinate.cs" />
     <Compile Include="View\FramedAxes\FramedToRightOrdinate.cs" />
     <Compile Include="View\FramedAxes\FramedUnderAbscissa.cs" />
-    <Compile Include="View\Interface\IAxisView.cs" />
     <Compile Include="View\Interface\IFramedAxis.cs" />
     <Compile Include="View\Menu.cs" />
     <Compile Include="ViewModel\PathFindingViewModel.cs" />
@@ -102,7 +102,6 @@
     <Compile Include="View\Interface\IView.cs" />
     <Compile Include="View\MainView.cs" />
     <Compile Include="View\MenuList.cs" />
-    <Compile Include="View\AxisView.cs" />
     <Compile Include="View\PathFindView.cs" />
   </ItemGroup>
   <ItemGroup>

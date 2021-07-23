@@ -1,4 +1,5 @@
 ﻿using ConsoleVersion.View;
+using ConsoleVersion.View.Interface;
 using GraphLib.Extensions;
 using GraphLib.Interfaces;
 using GraphLib.Realizations.Coordinates;
@@ -14,7 +15,7 @@ using Console = Colorful.Console;
 
 namespace ConsoleVersion.Model
 {
-    internal class Vertex : IVertex, IMarkable, IWeightable
+    internal class Vertex : IVertex, IMarkable, IWeightable, IDisplayable
     {
         public event EventHandler OnVertexCostChanged;
         public event EventHandler OnEndPointChosen;
@@ -86,13 +87,13 @@ namespace ConsoleVersion.Model
         public void MarkAsTarget()
         {
             Colour = Color.FromKnownColor(KnownColor.Red);
-            ColorizeVertex();
+            Display();
         }
 
         public void MarkAsRegular()
         {
             Colour = Color.FromKnownColor(KnownColor.White);
-            ColorizeVertex();
+            Display();
         }
 
         public void MarkAsObstacle()
@@ -103,25 +104,25 @@ namespace ConsoleVersion.Model
         public void MarkAsPath()
         {
             Colour = Color.FromKnownColor(KnownColor.Yellow);
-            ColorizeVertex();
+            Display();
         }
 
         public void MarkAsSource()
         {
             Colour = Color.FromKnownColor(KnownColor.Green);
-            ColorizeVertex();
+            Display();
         }
 
         public void MarkAsVisited()
         {
             Colour = Color.FromKnownColor(KnownColor.Blue);
-            ColorizeVertex();
+            Display();
         }
 
         public void MarkAsEnqueued()
         {
             Colour = Color.FromKnownColor(KnownColor.Magenta);
-            ColorizeVertex();
+            Display();
         }
 
         public void MakeUnweighted()
@@ -136,7 +137,7 @@ namespace ConsoleVersion.Model
             Text = cost.ToString();
         }
 
-        public void ColorizeVertex()
+        public void Display()
         {
             Console.SetCursorPosition(ConsoleCoordinate.X, ConsoleCoordinate.Y);
             Console.Write(Text, Colour);
