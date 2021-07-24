@@ -120,7 +120,7 @@ namespace ConsoleVersion.ViewModel
         [MenuItem(Constants.ChangeCostRange, MenuItemPriority.Low)]
         public void ChangeVertexCostValueRange()
         {
-            CostRange = InputRange(Constants.CostRange);
+            CostRange = InputRange(Constants.VerticesCostRange);
             var args = new CostRangeChangedEventArgs(CostRange);
             OnCostRangeChanged?.Invoke(this, args);
         }

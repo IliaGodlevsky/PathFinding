@@ -7,7 +7,7 @@ namespace Common.ValueRanges
     /// Represents inclusive range of values
     /// </summary>
     [Serializable]
-    public class InclusiveValueRange<T>
+    public sealed class InclusiveValueRange<T>
         : IValueRange<T> where T : IComparable<T>
     {
         public T UpperValueOfRange { get; }
@@ -49,7 +49,7 @@ namespace Common.ValueRanges
             return value.IsBetween(UpperValueOfRange, LowerValueOfRange);
         }
 
-        private static void SwapIfLess(ref T greaterValue, ref T lowerValue)
+        private void SwapIfLess(ref T greaterValue, ref T lowerValue)
         {
             if (greaterValue.IsLess(lowerValue))
             {
