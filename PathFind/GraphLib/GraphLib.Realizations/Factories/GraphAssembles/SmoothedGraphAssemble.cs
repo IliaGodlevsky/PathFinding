@@ -1,15 +1,15 @@
-﻿using AssembleClassesLib.Attributes;
-using Common.Extensions;
+﻿using Common.Extensions;
 using GraphLib.Extensions;
 using GraphLib.Interfaces;
 using GraphLib.Interfaces.Factories;
 using GraphLib.Realizations.MeanCosts;
 using System;
+using System.ComponentModel;
 using System.Linq;
 
 namespace GraphLib.Realizations.Factories.GraphAssembles
 {
-    [ClassName("Smoothed graph assemble")]
+    [Description("Smoothed graph assemble")]
     public class SmoothedGraphAssemble : IGraphAssemble
     {
         public SmoothedGraphAssemble(

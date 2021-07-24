@@ -1,20 +1,19 @@
-﻿using AssembleClassesLib.Attributes;
-using Common.Extensions;
+﻿using Common.Extensions;
 using Common.ValueRanges;
 using GraphLib.Exceptions;
 using GraphLib.Extensions;
 using GraphLib.Interfaces;
 using GraphLib.Interfaces.Factories;
 using System;
-
+using System.ComponentModel;
 using static System.Linq.Enumerable;
 
 namespace GraphLib.Realizations.Factories.GraphAssembles
 {
-    [ClassName("Random graph assemble")]
     /// <summary>
     /// Assembles a graph suitable for use with pathfinding algorithms
     /// </summary>
+    [Description("Random graph assemble")]
     public class GraphAssemble : IGraphAssemble
     {
         public GraphAssemble(

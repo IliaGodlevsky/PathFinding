@@ -1,5 +1,4 @@
 ﻿using Algorithm.Infrastructure.EventArguments;
-using AssembleClassesLib.Interface;
 using ConsoleVersion.Model;
 using ConsoleVersion.View;
 using GraphLib.Base;
@@ -27,11 +26,10 @@ namespace ConsoleVersion.ViewModel
 
         public string SourceVertexInputMessage { private get; set; }
 
-        public PathFindingViewModel(ILog log, IAssembleClasses pluginsLoader,
-            IMainModel model, BaseEndPoints endPoints)
-            : base(log, pluginsLoader, model, endPoints)
+        public PathFindingViewModel(ILog log, IMainModel model, BaseEndPoints endPoints)
+            : base(log, model, endPoints)
         {
-            maxAlgorithmKeysNumber = pluginsLoader.ClassesNames.Count;
+            maxAlgorithmKeysNumber = Algorithms.Keys.Count;
             minAlgorithmKeysNumber = 1;
         }
 
@@ -47,8 +45,8 @@ namespace ConsoleVersion.ViewModel
                     ChooseExtremeVertex();
                     mainModel.DisplayGraph();
                     int algorithmKeyIndex = GetAlgorithmKeyIndex();
-                    var algorithmKeys = assembleClasses.ClassesNames;
-                    AlgorithmKey = algorithmKeys.ElementAt(algorithmKeyIndex);
+                    var algorithmKey = Algorithms.Keys.ElementAt(algorithmKeyIndex);
+                    Algorithm = Algorithms[algorithmKey];
                     DelayTime = InputNumber(DelayTimeInputMsg, AlgorithmDelayTimeValueRange);
                     base.FindPath();
                     UpdatePathFindingStatistics();

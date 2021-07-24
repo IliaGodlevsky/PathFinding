@@ -3,7 +3,6 @@ using Algorithm.Infrastructure.Handlers;
 using Algorithm.Interfaces;
 using Algorithm.Сompanions;
 using Algorithm.Сompanions.Interface;
-using AssembleClassesLib.Attributes;
 using GraphLib.Extensions;
 using GraphLib.Interfaces;
 using GraphLib.Realizations;
@@ -18,7 +17,6 @@ namespace Algorithm.Base
     /// A base class for all pathfinding algorithms.
     /// This is an abstract class
     /// </summary>
-    [NotLoadable]
     public abstract class Algorithm : IAlgorithm
     {
         public event AlgorithmEventHandler OnStarted;

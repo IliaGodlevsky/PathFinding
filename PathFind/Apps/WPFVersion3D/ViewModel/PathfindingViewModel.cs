@@ -1,16 +1,12 @@
 ﻿using Algorithm.Infrastructure.EventArguments;
-using AssembleClassesLib.EventArguments;
-using AssembleClassesLib.Interface;
 using Common.Interface;
 using GraphLib.Base;
 using GraphViewModel;
 using GraphViewModel.Interfaces;
 using Logging.Interface;
 using System;
-using System.Collections.Generic;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
-using System.Windows;
 using System.Windows.Input;
 using System.Windows.Threading;
 using WPFVersion3D.Infrastructure;
@@ -30,34 +26,14 @@ namespace WPFVersion3D.ViewModel
         public ICommand ConfirmPathFindAlgorithmChoice { get; }
         public ICommand CancelPathFindAlgorithmChoice { get; }
 
-        private IList<string> algorithmKeys;
-        public override IList<string> AlgorithmKeys
-        {
-            get => algorithmKeys;
-            set
-            {
-                algorithmKeys = value;
-                OnPropertyChanged();
-            }
-        }
-
-        public PathFindingViewModel(ILog log, IAssembleClasses pluginsLoader,
-            IMainModel model, BaseEndPoints endPoints)
-            : base(log, pluginsLoader, model, endPoints)
+        public PathFindingViewModel(ILog log, IMainModel model, BaseEndPoints endPoints)
+            : base(log, model, endPoints)
         {
             ConfirmPathFindAlgorithmChoice = new RelayCommand(
                 ExecuteConfirmPathFindAlgorithmChoice,
                 CanExecuteConfirmPathFindAlgorithmChoice);
 
             CancelPathFindAlgorithmChoice = new RelayCommand(ExecuteCloseWindowCommand);
-        }
-
-        public override void UpdateAlgorithmKeys(object sender, AssembleClassesEventArgs e)
-        {
-            Application.Current?.Dispatcher?.Invoke(() =>
-            {
-                base.UpdateAlgorithmKeys(sender, e);
-            });
         }
 
         protected override void ColorizeProcessedVertices(object sender, AlgorithmEventArgs e)
@@ -90,7 +66,7 @@ namespace WPFVersion3D.ViewModel
 
         private bool CanExecuteConfirmPathFindAlgorithmChoice(object param)
         {
-            return AlgorithmKeys.Contains(AlgorithmKey);
+            return Algorithms.Values.Contains(Algorithm);
         }
     }
 }

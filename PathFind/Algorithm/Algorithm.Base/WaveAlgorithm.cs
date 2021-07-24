@@ -1,7 +1,6 @@
 ﻿using Algorithm.Extensions;
 using Algorithm.Interfaces;
 using Algorithm.Realizations.GraphPaths;
-using AssembleClassesLib.Attributes;
 using Common.Extensions;
 using GraphLib.Extensions;
 using GraphLib.Interfaces;
@@ -15,7 +14,6 @@ namespace Algorithm.Base
     /// Dijkstra's algorithm, Lee algorithm or A* algorithm.
     /// This is an abstract class
     /// </summary>
-    [NotLoadable]
     public abstract class WaveAlgorithm : Algorithm
     {
         protected WaveAlgorithm(IGraph graph, IEndPoints endPoints)

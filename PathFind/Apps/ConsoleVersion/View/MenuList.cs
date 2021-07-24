@@ -1,5 +1,6 @@
 ﻿using Common.Extensions;
 using Common.ValueRanges;
+using ConsoleVersion.View.Interface;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,7 +8,7 @@ using System.Text;
 
 namespace ConsoleVersion.View
 {
-    internal sealed class MenuList
+    internal sealed class MenuList : IDisplayable
     {
         public MenuList(IEnumerable<string> menuItemsNames, int columns = 2)
         {
@@ -18,6 +19,11 @@ namespace ConsoleVersion.View
             this.columns = columnsValueRange.ReturnInRange(columns);
             LongestNameLength = menuItemsCount > 0 ? menuItemsNames.Max(str => str.Length) + 1 : 0;
             menuList = new Lazy<string>(CreateMenu);
+        }
+
+        public void Display()
+        {
+            Console.Write(this);
         }
 
         public override string ToString()
@@ -45,7 +51,7 @@ namespace ConsoleVersion.View
 
         private readonly string[] menuItemsNames;
         private readonly Lazy<string> menuList;
-        
+
         private readonly int menuItemsCount;
         private readonly int columns;
 

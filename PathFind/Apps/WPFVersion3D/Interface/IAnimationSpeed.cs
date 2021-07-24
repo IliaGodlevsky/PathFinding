@@ -1,6 +1,4 @@
-﻿using AssembleClassesLib.Attributes;
-
-namespace WPFVersion3D.Interface
+﻿namespace WPFVersion3D.Interface
 {
     /// <summary>
     /// An interface that responds for 

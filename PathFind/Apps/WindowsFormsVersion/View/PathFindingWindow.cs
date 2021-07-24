@@ -13,17 +13,16 @@ namespace WindowsFormsVersion.View
             okButton.Click += model.StartPathfinding;
             cancelButton.Click += model.CancelPathFinding;
 
-            var dataSource = model.AlgorithmKeys
-                .Select(key => new { Name = key }).ToArray();
+            var dataSource = model.Algorithms.ToArray();
             algorithmListBox.DataSource = dataSource;
 
-            var algoKey = dataSource.First();
-            algorithmListBox.ValueMember = nameof(algoKey.Name);
+            algorithmListBox.ValueMember = "Value";
+            algorithmListBox.DisplayMember = "Key";
 
             var algorithmBinding = new Binding(
                 nameof(algorithmListBox.SelectedValue),
                 model,
-                nameof(model.AlgorithmKey));
+                nameof(model.Algorithm));
             algorithmListBox.DataBindings.Add(algorithmBinding);
 
             var bindingDelaySliderToDelayTextBox = new Binding(

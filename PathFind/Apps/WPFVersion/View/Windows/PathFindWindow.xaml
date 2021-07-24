@@ -30,16 +30,16 @@
                     Content="Cancel">
             </Button>
         </StackPanel>
-        <ListBox ItemsSource="{Binding AlgorithmKeys }" 
+        <ListBox ItemsSource="{Binding Algorithms }" 
+                 SelectedValuePath="Value"
                  x:Name="algoListBox" 
                  BorderThickness="0" 
                  Margin="5"
-                 SelectedItem="{Binding Path = AlgorithmKey}">
+                 SelectedValue="{Binding Path = Algorithm}">
             <ListBox.ItemTemplate>
                 <DataTemplate>
                     <StackPanel Orientation="Horizontal">
-                        <TextBlock Margin="3" 
-                                   Text="{Binding}"/>
+                        <TextBlock Margin="3" Text="{Binding Path=Key}"/>
                     </StackPanel>
                 </DataTemplate>
             </ListBox.ItemTemplate>

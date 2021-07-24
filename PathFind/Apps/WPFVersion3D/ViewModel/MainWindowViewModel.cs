@@ -1,7 +1,4 @@
-﻿using AssembleClassesLib.Interface;
-using AssembleClassesLib.Realizations;
-using AssembleClassesLib.Realizations.AssembleClassesImpl;
-using Common.Extensions;
+﻿using Common.Extensions;
 using Common.Interface;
 using GraphLib.Interfaces;
 using GraphLib.Interfaces.Factories;
@@ -71,10 +68,9 @@ namespace WPFVersion3D.ViewModel
             IVertexEventHolder eventHolder,
             ISaveLoadGraph saveLoad,
             IEnumerable<IGraphAssemble> graphAssembles,
-            IAssembleClasses assembleClasses,
             ILog log)
             : base(fieldFactory, eventHolder, saveLoad,
-                  graphAssembles, assembleClasses, log)
+                  graphAssembles, log)
         {
             StartPathFindCommand = new RelayCommand(ExecuteStartPathFindCommand, CanExecuteStartFindPathCommand);
             CreateNewGraphCommand = new RelayCommand(ExecuteCreateNewGraphCommand);
@@ -90,20 +86,9 @@ namespace WPFVersion3D.ViewModel
         {
             try
             {
-                var notifyableAssembleClasses = new NotifingAssembleClasses((AssembleClasses)algorithmClasses);
-                var updatableAssembleClasses = new UpdatableAssembleClasses(notifyableAssembleClasses);
-                var viewModel = new PathFindingViewModel(log, updatableAssembleClasses, this, EndPoints);
+                var viewModel = new PathFindingViewModel(log, this, EndPoints);
                 var window = new PathFindWindow();
-                notifyableAssembleClasses.OnClassesLoaded += viewModel.UpdateAlgorithmKeys;
-                updatableAssembleClasses.OnExceptionCaught += log.Warn;
-                updatableAssembleClasses.LoadClasses();
-                void Interrupt(object sender, EventArgs e)
-                {
-                    updatableAssembleClasses.Interrupt();
-                    window.Closing -= Interrupt;
-                    notifyableAssembleClasses.OnClassesLoaded -= viewModel.UpdateAlgorithmKeys;
-                    updatableAssembleClasses.OnExceptionCaught -= log.Warn;
-                }
+                void Interrupt(object sender, EventArgs e) => window.Closing -= Interrupt;
                 window.Closing += Interrupt;
                 PrepareWindow(viewModel, window);
             }
@@ -210,7 +195,7 @@ namespace WPFVersion3D.ViewModel
 
         private IDictionary<string, BaseSpeed> GetSpeedDictionary()
         {
-            string Description(AnimationSpeed speed) => speed.GetDescription();
+            string Description(AnimationSpeed speed) => ((Enum)speed).GetDescription();
             BaseSpeed Speed(AnimationSpeed speed) => speed.GetAttributeOrNull<BaseSpeed>();
 
             return Enum

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.ComponentModel;
 
 namespace Common.Extensions
 {
@@ -38,6 +39,14 @@ namespace Common.Extensions
             where T : IComparable<T>
         {
             return value.IsLessOrEqual(upper) && value.IsGreaterOrEqual(lower);
+        }
+
+        public static string GetDescription<T>(this T self)
+        {
+            return self
+                .GetType()
+                .GetAttributeOrNull<DescriptionAttribute>()
+                ?.Description ?? self.GetType().Name;
         }
     }
 }

@@ -1,5 +1,4 @@
-﻿using AssembleClassesLib.Interface;
-using Common.Interface;
+﻿using Common.Interface;
 using GraphLib.Extensions;
 using GraphLib.Interfaces;
 using GraphLib.Interfaces.Factories;
@@ -67,10 +66,9 @@ namespace WindowsFormsVersion.ViewModel
             IVertexEventHolder eventHolder,
             ISaveLoadGraph saveLoad,
             IEnumerable<IGraphAssemble> graphFactories,
-            IAssembleClasses assembleClasses,
             ILog log)
             : base(fieldFactory, eventHolder, saveLoad,
-                  graphFactories, assembleClasses, log)
+                  graphFactories, log)
         {
 
         }
@@ -81,8 +79,7 @@ namespace WindowsFormsVersion.ViewModel
             {
                 try
                 {
-                    algorithmClasses.LoadClasses();
-                    var model = new PathFindingViewModel(log, algorithmClasses, this, EndPoints);
+                    var model = new PathFindingViewModel(log, this, EndPoints);
                     var form = new PathFindingWindow(model);
                     PrepareWindow(model, form);
                 }

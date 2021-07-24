@@ -11,8 +11,6 @@ using System;
 using static ConsoleVersion.InputClass.Input;
 using static ConsoleVersion.Resource.Resources;
 
-using Console = Colorful.Console;
-
 namespace ConsoleVersion.View
 {
     internal sealed class MainView : IView
@@ -22,7 +20,8 @@ namespace ConsoleVersion.View
 
         public static int YCoordinatePadding => WidthOfOrdinateView - 1;
 
-        public static int WidthOfOrdinateView => Constants.GraphLengthValueRange.UpperValueOfRange.ToString().Length + 1;
+        public static int WidthOfOrdinateView
+            => Constants.GraphLengthValueRange.UpperValueOfRange.ToString().Length + 1;
 
         public static int GetLateralDistanceBetweenVertices()
         {
@@ -80,10 +79,9 @@ namespace ConsoleVersion.View
             while (!mainModel.IsInterruptRequested)
             {
                 mainModel.DisplayGraph();
-                Console.WriteLine(menuList);
+                menuList.Display();
                 int menuItemIndex = InputNumber(
-                    OptionInputMsg,
-                    menuValueRange) - 1;
+                    OptionInputMsg, menuValueRange) - 1;
                 string menuItem = menu.MenuActionsNames[menuItemIndex];
                 menu.MenuActions[menuItem].Invoke();
             }

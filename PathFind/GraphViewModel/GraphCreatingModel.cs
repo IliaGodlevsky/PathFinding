@@ -1,4 +1,4 @@
-﻿using AssembleClassesLib.Extensions;
+﻿using Common.Extensions;
 using GraphLib.Interfaces.Factories;
 using GraphViewModel.Interfaces;
 using Logging.Interface;

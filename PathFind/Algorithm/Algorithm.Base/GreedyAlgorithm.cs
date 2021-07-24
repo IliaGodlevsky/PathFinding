@@ -1,7 +1,6 @@
 ﻿using Algorithm.Extensions;
 using Algorithm.Interfaces;
 using Algorithm.Realizations.GraphPaths;
-using AssembleClassesLib.Attributes;
 using Common.Extensions;
 using GraphLib.Extensions;
 using GraphLib.Interfaces;
@@ -15,7 +14,6 @@ namespace Algorithm.Base
     /// A base class for all Greedy algorithms.
     /// This is an abstract class
     /// </summary>
-    [NotLoadable]
     public abstract class GreedyAlgorithm : Algorithm
     {
         protected GreedyAlgorithm(IGraph graph, IEndPoints endPoints)

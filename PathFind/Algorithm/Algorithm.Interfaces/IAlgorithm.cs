@@ -1,5 +1,4 @@
 ﻿using Algorithm.Infrastructure.Handlers;
-using AssembleClassesLib.Attributes;
 using Interruptable.Interface;
 using System;
 
@@ -10,7 +9,6 @@ namespace Algorithm.Interfaces
     /// Provides events and methods for 
     /// pathfinding algorithm
     /// </summary>
-    [NotLoadable]
     public interface IAlgorithm : IInterruptable, IDisposable
     {
         /// <summary>

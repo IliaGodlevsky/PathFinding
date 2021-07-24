@@ -62,7 +62,6 @@
     <Compile Include="Extensions\ControlExtension.cs" />
     <Compile Include="Model\EndPoints.cs" />
     <Compile Include="Model\GraphFieldFactory.cs" />
-    <Compile Include="Model\AssembleLoadPath.cs" />
     <Compile Include="Model\PathInput.cs" />
     <Compile Include="Model\VertexFactory.cs" />
     <Compile Include="Model\VertexSerializationInfoConverter.cs" />
@@ -129,6 +128,10 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\Algorithm\Algorithm.Algos\Algorithm.Algos.csproj">
+      <Project>{4DE08169-8512-4E1C-91ED-FD42FFC0AF71}</Project>
+      <Name>Algorithm.Algos</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\Algorithm\Algorithm.Common\Algorithm.Common.csproj">
       <Project>{DF721A89-3E01-4159-B51A-E5723C9FD0BA}</Project>
       <Name>Algorithm.Common</Name>
@@ -144,10 +147,6 @@
     <ProjectReference Include="..\..\Algorithm\Algorithm.Realizations\Algorithm.Realizations.csproj">
       <Project>{600d74af-a0ae-46aa-bcf5-695650bbe66f}</Project>
       <Name>Algorithm.Realizations</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\AssembleClassesLib\AssembleClassesLib.csproj">
-      <Project>{89EAEACE-ADD0-4B2F-B78C-5DB74AD01D8D}</Project>
-      <Name>AssembleClassesLib</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\Common\Common.csproj">
       <Project>{A5A743F5-D346-4B2B-B6AC-07152F64E4D9}</Project>

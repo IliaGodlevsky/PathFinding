@@ -1,5 +1,4 @@
 ﻿using Algorithm.Infrastructure.EventArguments;
-using AssembleClassesLib.Interface;
 using Common.Interface;
 using GraphLib.Base;
 using GraphViewModel;
@@ -14,9 +13,8 @@ namespace WindowsFormsVersion.ViewModel
     {
         public event EventHandler OnWindowClosed;
 
-        public PathFindingViewModel(ILog log, IAssembleClasses pluginsLoader,
-            IMainModel model, BaseEndPoints endPoints)
-            : base(log, pluginsLoader, model, endPoints)
+        public PathFindingViewModel(ILog log, IMainModel model, BaseEndPoints endPoints)
+            : base(log, model, endPoints)
         {
 
         }
@@ -44,7 +42,7 @@ namespace WindowsFormsVersion.ViewModel
 
         private bool CanExecuteConfirmPathFindAlgorithmChoice()
         {
-            return AlgorithmKeys.Contains(AlgorithmKey);
+            return Algorithms.Values.Contains(Algorithm);
         }
     }
 }

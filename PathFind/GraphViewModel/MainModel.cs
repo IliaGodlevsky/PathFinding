@@ -1,5 +1,4 @@
-﻿using AssembleClassesLib.Interface;
-using GraphLib.Base;
+﻿using GraphLib.Base;
 using GraphLib.Extensions;
 using GraphLib.Interfaces;
 using GraphLib.Interfaces.Factories;
@@ -27,14 +26,12 @@ namespace GraphViewModel
             IVertexEventHolder eventHolder,
             ISaveLoadGraph saveLoad,
             IEnumerable<IGraphAssemble> graphAssembles,
-            IAssembleClasses algorithmClasses,
             ILog log)
         {
             this.eventHolder = eventHolder;
             this.saveLoad = saveLoad;
             this.fieldFactory = fieldFactory;
             this.graphAssembles = graphAssembles;
-            this.algorithmClasses = algorithmClasses;
             this.log = log;
             Graph = new NullGraph();
         }
@@ -91,7 +88,6 @@ namespace GraphViewModel
 
         protected readonly IEnumerable<IGraphAssemble> graphAssembles;
         protected readonly IGraphFieldFactory fieldFactory;
-        protected readonly IAssembleClasses algorithmClasses;
         protected readonly ILog log;
 
         private readonly IVertexEventHolder eventHolder;

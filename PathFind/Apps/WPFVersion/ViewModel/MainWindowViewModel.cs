@@ -1,7 +1,4 @@
-﻿using AssembleClassesLib.Interface;
-using AssembleClassesLib.Realizations;
-using AssembleClassesLib.Realizations.AssembleClassesImpl;
-using Common.Interface;
+﻿using Common.Interface;
 using GraphLib.Extensions;
 using GraphLib.Interfaces;
 using GraphLib.Interfaces.Factories;
@@ -72,10 +69,9 @@ namespace WPFVersion.ViewModel
             IVertexEventHolder eventHolder,
             ISaveLoadGraph saveLoad,
             IEnumerable<IGraphAssemble> graphAssembles,
-            IAssembleClasses assembleClasses,
             ILog log)
             : base(fieldFactory, eventHolder, saveLoad,
-                  graphAssembles, assembleClasses, log)
+                  graphAssembles, log)
         {
             StartPathFindCommand = new RelayCommand(ExecuteStartPathFindCommand, CanExecuteStartFindPathCommand);
             CreateNewGraphCommand = new RelayCommand(ExecuteCreateNewGraphCommand);
@@ -115,20 +111,9 @@ namespace WPFVersion.ViewModel
         {
             try
             {
-                var notifingAssembleClasses = new NotifingAssembleClasses(algorithmClasses);
-                var updatableAssembleClasses = new UpdatableAssembleClasses(notifingAssembleClasses);
-                var viewModel = new PathFindingViewModel(log, updatableAssembleClasses, this, EndPoints);
+                var viewModel = new PathFindingViewModel(log, this, EndPoints);
                 var window = new PathFindWindow();
-                notifingAssembleClasses.OnClassesLoaded += viewModel.UpdateAlgorithmKeys;
-                updatableAssembleClasses.OnExceptionCaught += log.Warn;
-                updatableAssembleClasses.LoadClasses();
-                void Interrupt(object sender, EventArgs e)
-                {
-                    updatableAssembleClasses.Interrupt();
-                    window.Closing -= Interrupt;
-                    notifingAssembleClasses.OnClassesLoaded -= viewModel.UpdateAlgorithmKeys;
-                    updatableAssembleClasses.OnExceptionCaught -= log.Warn;
-                }
+                void Interrupt(object sender, EventArgs e) => window.Closing -= Interrupt;
                 window.Closing += Interrupt;
                 PrepareWindow(viewModel, window);
             }

@@ -1,5 +1,4 @@
-﻿using AssembleClassesLib.Interface;
-using ConsoleVersion.Attributes;
+﻿using ConsoleVersion.Attributes;
 using ConsoleVersion.Enums;
 using ConsoleVersion.EventArguments;
 using ConsoleVersion.EventHandlers;
@@ -44,10 +43,9 @@ namespace ConsoleVersion.ViewModel
             IVertexEventHolder eventHolder,
             ISaveLoadGraph saveLoad,
             IEnumerable<IGraphAssemble> graphAssembles,
-            IAssembleClasses algorithms,
             ILog log)
             : base(fieldFactory, eventHolder, saveLoad,
-                  graphAssembles, algorithms, log)
+                  graphAssembles, log)
         {
             IsInterruptRequested = false;
         }
@@ -86,8 +84,7 @@ namespace ConsoleVersion.ViewModel
         {
             try
             {
-                algorithmClasses.LoadClasses();
-                var model = new PathFindingViewModel(log, algorithmClasses, this, EndPoints);
+                var model = new PathFindingViewModel(log, this, EndPoints);
                 var view = new PathFindView(model);
                 view.Start();
             }

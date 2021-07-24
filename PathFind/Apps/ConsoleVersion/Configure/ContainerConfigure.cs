@@ -1,8 +1,4 @@
-﻿using Algorithm.Realizations;
-using AssembleClassesLib.Interface;
-using AssembleClassesLib.Realizations;
-using AssembleClassesLib.Realizations.LoadMethods;
-using Autofac;
+﻿using Autofac;
 using ConsoleVersion.Model;
 using ConsoleVersion.View;
 using ConsoleVersion.View.Interface;
@@ -67,11 +63,6 @@ namespace ConsoleVersion.Configure
             builder.RegisterDecorator<CryptoGraphSerializer, IGraphSerializer>();
             builder.RegisterType<BinaryFormatter>().As<IFormatter>().SingleInstance();
             builder.RegisterType<VertexSerializationInfoConverter>().As<IVertexSerializationInfoConverter>().SingleInstance();
-
-            builder.RegisterType<ConcreteAssembleAlgorithmClasses>().As<IAssembleClasses>().SingleInstance();
-            builder.RegisterType<AssembleLoadPath>().As<IAssembleLoadPath>().SingleInstance();
-            builder.RegisterType<AllDirectories>().As<IAssembleSearchOption>().SingleInstance();
-            builder.RegisterType<LoadFrom>().As<IAssembleLoadMethod>().SingleInstance();
 
             return builder.Build();
         }

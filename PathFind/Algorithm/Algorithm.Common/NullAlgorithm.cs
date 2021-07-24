@@ -1,7 +1,6 @@
 ﻿using Algorithm.Infrastructure.EventArguments;
 using Algorithm.Infrastructure.Handlers;
 using Algorithm.Interfaces;
-using AssembleClassesLib.Attributes;
 using Interruptable.EventArguments;
 using Interruptable.EventHandlers;
 using NullObject.Attributes;
@@ -13,7 +12,6 @@ namespace Algorithm.Common
     /// <see cref="IAlgorithm"/> interface
     /// </summary>
     [Null]
-    [NotLoadable]
     public sealed class NullAlgorithm : IAlgorithm
     {
         public bool IsInterruptRequested => true;

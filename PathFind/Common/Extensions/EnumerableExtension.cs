@@ -164,5 +164,10 @@ namespace Common.Extensions
         {
             return collection.ToDictionary(item => item.Key, item => item.Value);
         }
+
+        public static IDictionary<string, T> AsNameInstanceDictionary<T>(this IEnumerable<T> collection)
+        {
+            return collection.ToDictionary(item => item.GetDescription());
+        }
     }
 }

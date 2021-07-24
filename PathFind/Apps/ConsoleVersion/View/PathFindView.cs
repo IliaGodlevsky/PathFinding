@@ -11,7 +11,7 @@ namespace ConsoleVersion.View
         public PathFindView(PathFindingViewModel model)
         {
             Model = model;
-            string algorithmMenu = new MenuList(model.AlgorithmKeys).ToString();
+            string algorithmMenu = new MenuList(model.Algorithms.Keys).ToString();
             Model.AlgorithmKeyInputMessage = algorithmMenu + Resources.ChooseAlrorithm;
             Model.SourceVertexInputMessage = "\n" + Resources.StartVertexPointInputMsg;
             Model.TargetVertexInputMessage = Resources.EndVertexCoordinateInputMsg;

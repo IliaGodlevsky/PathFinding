@@ -45,7 +45,6 @@
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AlgorithmsKeysUpdate.cs" />
     <Compile Include="GraphCreatingModel.cs" />
     <Compile Include="Interfaces\IMainModel.cs" />
     <Compile Include="Interfaces\IModel.cs" />
@@ -68,6 +67,10 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Algorithm\Algorithm.Algos\Algorithm.Algos.csproj">
+      <Project>{4DE08169-8512-4E1C-91ED-FD42FFC0AF71}</Project>
+      <Name>Algorithm.Algos</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Algorithm\Algorithm.Common\Algorithm.Common.csproj">
       <Project>{DF721A89-3E01-4159-B51A-E5723C9FD0BA}</Project>
       <Name>Algorithm.Common</Name>
@@ -87,10 +90,6 @@
     <ProjectReference Include="..\Algorithm\Algorithm.Realizations\Algorithm.Realizations.csproj">
       <Project>{600d74af-a0ae-46aa-bcf5-695650bbe66f}</Project>
       <Name>Algorithm.Realizations</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\AssembleClassesLib\AssembleClassesLib.csproj">
-      <Project>{89EAEACE-ADD0-4B2F-B78C-5DB74AD01D8D}</Project>
-      <Name>AssembleClassesLib</Name>
     </ProjectReference>
     <ProjectReference Include="..\Common\Common.csproj">
       <Project>{a5a743f5-d346-4b2b-b6ac-07152f64e4d9}</Project>

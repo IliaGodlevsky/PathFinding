@@ -59,7 +59,7 @@ namespace ConsoleVersion.Model
                 if (value is WeightableVertexCost vertexCost)
                 {
                     vertexCost.UnweightedCostView = "#";
-                    Text = vertexCost.ToString();
+                    text = vertexCost.ToString();
                 }
                 cost = value;
             }
@@ -84,64 +84,40 @@ namespace ConsoleVersion.Model
             OnEndPointChosen?.Invoke(this, EventArgs.Empty);
         }
 
-        public void MarkAsTarget()
-        {
-            Colour = Color.FromKnownColor(KnownColor.Red);
-            Display();
-        }
+        public void MarkAsTarget() => Mark(KnownColor.Red);
 
-        public void MarkAsRegular()
-        {
-            Colour = Color.FromKnownColor(KnownColor.White);
-            Display();
-        }
+        public void MarkAsRegular() => Mark(KnownColor.White);
 
         public void MarkAsObstacle()
         {
-            Colour = Color.FromKnownColor(KnownColor.Black);
+            colour = Color.FromKnownColor(KnownColor.Black);
         }
 
-        public void MarkAsPath()
-        {
-            Colour = Color.FromKnownColor(KnownColor.Yellow);
-            Display();
-        }
+        public void MarkAsPath() => Mark(KnownColor.Yellow);
 
-        public void MarkAsSource()
-        {
-            Colour = Color.FromKnownColor(KnownColor.Green);
-            Display();
-        }
+        public void MarkAsSource() => Mark(KnownColor.Green);
 
-        public void MarkAsVisited()
-        {
-            Colour = Color.FromKnownColor(KnownColor.Blue);
-            Display();
-        }
+        public void MarkAsVisited() => Mark(KnownColor.Blue);
 
-        public void MarkAsEnqueued()
-        {
-            Colour = Color.FromKnownColor(KnownColor.Magenta);
-            Display();
-        }
+        public void MarkAsEnqueued() => Mark(KnownColor.Magenta);
 
         public void MakeUnweighted()
         {
             (cost as IWeightable)?.MakeUnweighted();
-            Text = cost.ToString();
+            text = cost.ToString();
         }
 
         public void MakeWeighted()
         {
             (cost as IWeightable)?.MakeWeighted();
-            Text = cost.ToString();
+            text = cost.ToString();
         }
 
         public void Display()
         {
             var consoleCoordinate = GetConsoleCoordinates();
             Console.SetCursorPosition(consoleCoordinate.X, consoleCoordinate.Y);
-            Console.Write(Text, Colour);
+            Console.Write(text, colour);
         }
 
         public bool Equals(IVertex other)
@@ -160,7 +136,13 @@ namespace ConsoleVersion.Model
             return new Coordinate2D(left, top);
         }
 
-        private string Text { get; set; }
-        private Color Colour { get; set; }
+        private void Mark(KnownColor colour)
+        {
+            this.colour = Color.FromKnownColor(colour);
+            Display();
+        }
+
+        private string text;
+        private Color colour;
     }
 }

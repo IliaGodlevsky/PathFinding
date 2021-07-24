@@ -3,8 +3,8 @@ using Algorithm.Common.Exceptions;
 using Algorithm.Extensions;
 using Algorithm.Infrastructure.EventArguments;
 using Algorithm.Interfaces;
-using AssembleClassesLib.EventArguments;
-using AssembleClassesLib.Interface;
+using Algorithm.Realizations;
+using Algorithm.Realizations.Enums;
 using Common;
 using Common.Extensions;
 using Common.Interface;
@@ -26,23 +26,20 @@ namespace GraphViewModel
     {
         public int DelayTime { get; set; }
 
-        public string AlgorithmKey { get; set; }
+        public Algorithms Algorithm { get; set; }
 
-        public virtual IList<string> AlgorithmKeys { get; set; }
+        public virtual IDictionary<string, Algorithms> Algorithms => algorithms.Value;
 
-        protected PathFindingModel(ILog log, IAssembleClasses algorithms,
-            IMainModel mainViewModel, BaseEndPoints endPoints)
+        protected PathFindingModel(ILog log, IMainModel mainViewModel, BaseEndPoints endPoints)
         {
+            algorithms = new Lazy<IDictionary<string, Algorithms>>(GetAlgorithmsDictinary);
             this.mainViewModel = mainViewModel;
             this.endPoints = endPoints;
             this.log = log;
 
-            AlgorithmKeys = algorithms.ClassesNames.ToList();
             DelayTime = 4;
             graph = mainViewModel.Graph;
-            assembleClasses = algorithms;
 
-            keysUpdate = new AlgorithmsKeysUpdate(this);
             timer = new Stopwatch();
             vertexMark = new VertexMark();
             path = new NullGraphPath();
@@ -53,8 +50,8 @@ namespace GraphViewModel
         {
             try
             {
-                algorithm = (IAlgorithm)assembleClasses
-                    .Get(AlgorithmKey, graph, endPoints);
+                algorithm = AlgorithmFactory
+                    .CreateAlgorithm(Algorithm, graph, endPoints);
                 SubscribeOnAlgorithmEvents();
                 path = algorithm.FindPath();
                 Summarize();
@@ -72,11 +69,6 @@ namespace GraphViewModel
                 algorithm.Dispose();
                 endPoints.Reset();
             }
-        }
-
-        public virtual void UpdateAlgorithmKeys(object sender, AssembleClassesEventArgs e)
-        {
-            keysUpdate.UpdateAlgorithmKeys(sender, e);
         }
 
         protected abstract void ColorizeProcessedVertices(object sender, AlgorithmEventArgs e);
@@ -115,12 +107,19 @@ namespace GraphViewModel
             interrupter = new Interrupter(DelayTime);
         }
 
+        protected readonly BaseEndPoints endPoints;
+        protected readonly IMainModel mainViewModel;
+        protected readonly ILog log;
+        protected ISuspendable interrupter;
+        protected IAlgorithm algorithm;
+        protected IGraphPath path;
+
         private string GetStatistics()
         {
             string timerInfo = timer.GetTimeInformation(TimerInfoFormat);
             string graphInfo = string.Format(StatisticsFormat,
                 path.PathLength, path.PathCost, visitedVerticesCount);
-            return string.Join(Separator, AlgorithmKey, timerInfo, graphInfo);
+            return string.Join(Separator, Algorithm.GetDescription(), timerInfo, graphInfo);
         }
 
         private void SubscribeOnAlgorithmEvents()
@@ -139,20 +138,19 @@ namespace GraphViewModel
             algorithm.OnInterrupted += OnAlgorithmInterrupted;
         }
 
-        private const string Separator = "   ";
+        private IDictionary<string, Algorithms> GetAlgorithmsDictinary()
+        {
+            return Enum
+                .GetValues(typeof(Algorithms))
+                .Cast<Algorithms>()
+                .ToDictionary(item => ((Enum)item).GetDescription());
+        }
 
-        protected readonly BaseEndPoints endPoints;
-        protected readonly IMainModel mainViewModel;
-        protected readonly ILog log;
-        protected readonly IAssembleClasses assembleClasses;
+        private const string Separator = "   ";
+        private readonly Lazy<IDictionary<string, Algorithms>> algorithms;
         private readonly VertexMark vertexMark;
         private readonly IGraph graph;
-        private readonly AlgorithmsKeysUpdate keysUpdate;
-
-        protected ISuspendable interrupter;
-        protected IAlgorithm algorithm;
-        protected IGraphPath path;
-        private int visitedVerticesCount;
         private readonly Stopwatch timer;
+        private int visitedVerticesCount;
     }
 }
