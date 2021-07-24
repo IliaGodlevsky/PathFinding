@@ -139,7 +139,8 @@ namespace ConsoleVersion.Model
 
         public void Display()
         {
-            Console.SetCursorPosition(ConsoleCoordinate.X, ConsoleCoordinate.Y);
+            var consoleCoordinate = GetConsoleCoordinates();
+            Console.SetCursorPosition(consoleCoordinate.X, consoleCoordinate.Y);
             Console.Write(Text, Colour);
         }
 
@@ -161,6 +162,5 @@ namespace ConsoleVersion.Model
 
         private string Text { get; set; }
         private Color Colour { get; set; }
-        private Coordinate2D ConsoleCoordinate => GetConsoleCoordinates();
     }
 }

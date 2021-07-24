@@ -36,7 +36,7 @@ namespace WindowsFormsVersion.View
             int ConvertFromString(string str, int alternativeResult)
             {
                 return int.TryParse(str, out int number)
-                    ? int.Parse(str)
+                    ? number
                     : alternativeResult;
             }
 
