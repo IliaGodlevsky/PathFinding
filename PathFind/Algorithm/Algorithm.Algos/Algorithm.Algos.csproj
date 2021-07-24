@@ -42,7 +42,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AlgorithmFactory.cs" />
     <Compile Include="Algos\AStarAlgorithm.cs" />
     <Compile Include="Algos\AStarModified.cs" />
     <Compile Include="Algos\BestFirstLeeAlgorithm.cs" />
@@ -53,6 +52,7 @@
     <Compile Include="Algos\LeeAlgorithm.cs" />
     <Compile Include="Attributes\AlgorithmTypeAttribute.cs" />
     <Compile Include="Enums\Algorithms.cs" />
+    <Compile Include="Extensions\AlgorithmsExtensions.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

@@ -2,7 +2,7 @@
 using Algorithm.Algos.Attributes;
 using System.ComponentModel;
 
-namespace Algorithm.Realizations.Enums
+namespace Algorithm.Algos.Enums
 {
     public enum Algorithms
     {

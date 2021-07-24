@@ -1,10 +1,11 @@
-﻿using Algorithm.Common;
+﻿using Algorithm.Algos.Enums;
+using Algorithm.Algos.Extensions;
+using Algorithm.Common;
 using Algorithm.Common.Exceptions;
 using Algorithm.Extensions;
 using Algorithm.Infrastructure.EventArguments;
 using Algorithm.Interfaces;
 using Algorithm.Realizations;
-using Algorithm.Realizations.Enums;
 using Common;
 using Common.Extensions;
 using Common.Interface;
@@ -50,8 +51,7 @@ namespace GraphViewModel
         {
             try
             {
-                algorithm = AlgorithmFactory
-                    .CreateAlgorithm(Algorithm, graph, endPoints);
+                algorithm = Algorithm.ToInstance(graph, endPoints);
                 SubscribeOnAlgorithmEvents();
                 path = algorithm.FindPath();
                 Summarize();
