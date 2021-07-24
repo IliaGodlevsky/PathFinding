@@ -54,7 +54,6 @@ namespace ConsoleVersion.ViewModel
                     UpdatePathFindingStatistics();
                     Console.ReadLine();
                     mainModel.ClearGraph();
-                    Console.CursorVisible = true;
                 }
                 catch (Exception ex)
                 {

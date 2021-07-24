@@ -7,7 +7,6 @@ using GraphLib.Extensions;
 using GraphLib.Realizations.Coordinates;
 using GraphLib.Realizations.Graphs;
 using GraphViewModel.Interfaces;
-using Interruptable.EventArguments;
 using System;
 using static ConsoleVersion.InputClass.Input;
 using static ConsoleVersion.Resource.Resources;
@@ -70,11 +69,10 @@ namespace ConsoleVersion.View
             mainModel.OnCostRangeChanged += OnCostRangeChanged;
             mainModel.OnNewGraphCreated += OnNewGraphCreated;
             menu = new Menu<Action>(mainModel);
-            menuList = new MenuList(menu.MenuActionsNames, columns: 2);
+            menuList = new MenuList(menu.MenuActionsNames);
             menuValueRange = new InclusiveValueRange<int>(menu.MenuActionsNames.Length, 1);
             var args = new CostRangeChangedEventArgs(BaseVertexCost.CostRange);
             OnCostRangeChanged(this, args);
-            startTime = DateTime.Now;
         }
 
         public void Start()
@@ -98,6 +96,5 @@ namespace ConsoleVersion.View
 
         private static int previousMaxValueOfRange;
         private static int currentMaxValueOfRange;
-        private readonly DateTime startTime;
     }
 }

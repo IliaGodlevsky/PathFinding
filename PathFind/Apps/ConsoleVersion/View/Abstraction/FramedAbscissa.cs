@@ -2,6 +2,8 @@
 using System;
 using System.Text;
 
+using Console = Colorful.Console;
+
 namespace ConsoleVersion.View.Abstraction
 {
     internal abstract class FramedAbscissa : FramedAxis
@@ -9,6 +11,12 @@ namespace ConsoleVersion.View.Abstraction
         protected FramedAbscissa(int graphWidth) : base()
         {
             this.graphWidth = graphWidth;
+        }
+
+        public override void Display()
+        {
+            Console.SetCursorPosition(0, MainView.HeightOfGraphParametresView);
+            Console.Write(GetFramedAxis());
         }
 
         protected string GetAbscissa()

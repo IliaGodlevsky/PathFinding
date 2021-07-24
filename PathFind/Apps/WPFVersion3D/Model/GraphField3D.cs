@@ -1,7 +1,6 @@
 ﻿using GraphLib.Extensions;
 using GraphLib.Interfaces;
 using GraphLib.Realizations.Coordinates;
-using System.Collections.Generic;
 using System.Linq;
 using System.Windows.Media.Media3D;
 using WPFVersion3D.Axes;
@@ -15,10 +14,6 @@ namespace WPFVersion3D.Model
         public double DistanceBetweenVerticesAtYAxis { get; set; }
 
         public double DistanceBetweenVerticesAtZAxis { get; set; }
-
-        public IReadOnlyCollection<IVertex> Vertices => Vertices3D;
-
-        private IReadOnlyCollection<Vertex3D> Vertices3D => Children.OfType<Vertex3D>().ToArray();
 
         public GraphField3D(int width, int length, int height)
         {
@@ -42,15 +37,10 @@ namespace WPFVersion3D.Model
             }
         }
 
-        public void Clear()
-        {
-            Children.Clear();
-        }
-
         public void CenterGraph(params double[] additionalOffset)
         {
             var axisOffsets = new double[DimensionSizes.Length];
-            foreach (var vertex in Vertices3D)
+            foreach (Vertex3D vertex in Children)
             {
                 for (int i = 0; i < DimensionSizes.Length; i++)
                 {
@@ -85,7 +75,7 @@ namespace WPFVersion3D.Model
 
         private void StretchAlongAxis(IAxis axis)
         {
-            foreach (var vertex in Vertices3D)
+            foreach (Vertex3D vertex in Children)
             {
                 LocateVertex(axis, vertex);
             }

@@ -1,4 +1,5 @@
-﻿using Common.ValueRanges;
+﻿using Common.Extensions;
+using Common.ValueRanges;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,10 +11,12 @@ namespace ConsoleVersion.View
     {
         public MenuList(IEnumerable<string> menuItemsNames, int columns = 2)
         {
-            this.menuItemsNames = menuItemsNames;
-            menuItemsCount = this.menuItemsNames.Count();
-            columnsValueRange = new InclusiveValueRange<int>(menuItemsCount, 1);
+            this.menuItemsNames = menuItemsNames.ToArray();
+            menuItemsCount = this.menuItemsNames.Length;
+            MenuItemNumberPad = menuItemsCount.ToString().Length;
+            var columnsValueRange = new InclusiveValueRange<int>(menuItemsCount, 1);
             this.columns = columnsValueRange.ReturnInRange(columns);
+            LongestNameLength = menuItemsCount > 0 ? menuItemsNames.Max(str => str.Length) + 1 : 0;
             menuList = new Lazy<string>(CreateMenu);
         }
 
@@ -24,39 +27,25 @@ namespace ConsoleVersion.View
 
         private string CreateMenu()
         {
-            var menu = new StringBuilder(NewLine);
-
-            int menuItemNumber = 0;
-            int menuItemNumberPad = CalculateMenuItemNumberPad();
-            int longestNameLength = menuItemsCount > 0
-                ? menuItemsNames.Max(str => str.Length) + 1 : 0;
-
-            foreach (var name in menuItemsNames)
-            {
-                string separator = CreateSeparator(menuItemNumber);
-                string paddedName = name.PadRight(longestNameLength);
-                string stringedMenuItemNumber = (++menuItemNumber).ToString();
-                string paddedMenuItemNumber = stringedMenuItemNumber.PadLeft(menuItemNumberPad);
-                string format = Format + separator;
-                menu.AppendFormat(format, paddedMenuItemNumber, paddedName);
-            }
-
-            return menu.ToString();
+            return new StringBuilder(NewLine)
+                .AppendRepeat(GetFormattedMenuItem, menuItemsCount)
+                .ToString();
         }
 
-        private string CreateSeparator(int currentMenuItemNumber)
+        private string GetFormattedMenuItem(int menuItemIndex)
         {
-            return (currentMenuItemNumber + 1) % columns == 0 ? NewLine : Space;
+            string paddedName = menuItemsNames[menuItemIndex].PadRight(LongestNameLength);
+            string paddedMenuItemIndex = (menuItemIndex + 1).ToString().PadLeft(MenuItemNumberPad);
+            string format = Format + ((menuItemIndex + 1) % columns == 0 ? NewLine : Space);
+            return string.Format(format, paddedMenuItemIndex, paddedName);
         }
 
-        private int CalculateMenuItemNumberPad()
-        {
-            return menuItemsCount.ToString().Length;
-        }
+        private int MenuItemNumberPad { get; }
+        private int LongestNameLength { get; }
 
-        private readonly IEnumerable<string> menuItemsNames;
-        private readonly InclusiveValueRange<int> columnsValueRange;
+        private readonly string[] menuItemsNames;
         private readonly Lazy<string> menuList;
+        
         private readonly int menuItemsCount;
         private readonly int columns;
 
