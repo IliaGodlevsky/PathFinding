@@ -119,7 +119,7 @@ namespace GraphViewModel
             string timerInfo = timer.GetTimeInformation(TimerInfoFormat);
             string graphInfo = string.Format(StatisticsFormat,
                 path.PathLength, path.PathCost, visitedVerticesCount);
-            return string.Join(Separator, Algorithm.GetDescription(), timerInfo, graphInfo);
+            return string.Join(Separator, ((Enum)Algorithm).GetDescription(), timerInfo, graphInfo);
         }
 
         private void SubscribeOnAlgorithmEvents()
