@@ -19,12 +19,5 @@ namespace Common.Extensions
         {
             return value * value2;
         }
-
-        public static int GetFlooredLog10(this int value)
-        {
-            if (value == 0)
-                value = 1;
-            return Convert.ToInt32(Math.Floor(Math.Log10(value)));
-        }
     }
 }
