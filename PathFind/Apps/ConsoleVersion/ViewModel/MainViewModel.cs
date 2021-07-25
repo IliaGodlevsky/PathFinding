@@ -5,7 +5,6 @@ using ConsoleVersion.EventHandlers;
 using ConsoleVersion.Model;
 using ConsoleVersion.View;
 using ConsoleVersion.View.Interface;
-using GraphLib.Exceptions;
 using GraphLib.Extensions;
 using GraphLib.Interfaces;
 using GraphLib.Interfaces.Factories;
@@ -19,7 +18,6 @@ using Logging.Interface;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
-
 using static ConsoleVersion.InputClass.Input;
 using static ConsoleVersion.Resource.Resources;
 using static GraphLib.Base.BaseVertexCost;
@@ -87,10 +85,6 @@ namespace ConsoleVersion.ViewModel
                 var model = new PathFindingViewModel(log, this, EndPoints);
                 var view = new PathFindView(model);
                 view.Start();
-            }
-            catch (NoVerticesToChooseAsEndPointsException ex)
-            {
-                log.Warn(ex);
             }
             catch (Exception ex)
             {
@@ -179,7 +173,6 @@ namespace ConsoleVersion.ViewModel
                 {
                     Console.SetCursorPosition(position.X, position.Y + 1);
                 }
-                Console.CursorVisible = true;
             }
             catch (ArgumentOutOfRangeException ex)
             {

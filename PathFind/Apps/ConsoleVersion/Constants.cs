@@ -15,6 +15,12 @@ namespace ConsoleVersion
         public const string LoadGraph = "Load graph";
         public const string QuitProgramm = "Quit program";
 
+        public const string ChooseEndPoints = "Choose end points";
+        public const string ChooseAlgorithm = "Choose algorithm";
+        public const string InputDelayTime = "Input delay time";
+        public const string Cancel = "Cancel";
+        public const string ClearGraph = "Clear graph";
+
         public static InclusiveValueRange<int> GraphWidthValueRange { get; }
         public static InclusiveValueRange<int> GraphLengthValueRange { get; }
         public static InclusiveValueRange<int> ObstaclesPercentValueRange { get; }
