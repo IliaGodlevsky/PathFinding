@@ -1,11 +1,10 @@
-﻿using Algorithm.Algos.Enums;
-using Algorithm.Algos.Extensions;
+﻿using Algorithm.Algos;
+using Algorithm.Algos.Enums;
 using Algorithm.Common;
 using Algorithm.Common.Exceptions;
 using Algorithm.Extensions;
 using Algorithm.Infrastructure.EventArguments;
 using Algorithm.Interfaces;
-using Algorithm.Realizations;
 using Common;
 using Common.Extensions;
 using Common.Interface;
@@ -51,7 +50,8 @@ namespace GraphViewModel
         {
             try
             {
-                algorithm = Algorithm.ToInstance(graph, endPoints);
+                algorithm = AlgoFactory
+                    .CreateAlgorithm(Algorithm, graph, endPoints);
                 SubscribeOnAlgorithmEvents();
                 path = algorithm.FindPath();
                 Summarize();
@@ -91,15 +91,9 @@ namespace GraphViewModel
 
         protected virtual void Summarize()
         {
-            if (path.PathLength > 0)
-            {
-                path.Highlight(endPoints);
-                mainViewModel.PathFindingStatistics = GetStatistics();
-            }
-            else
-            {
-                log.Warn(PathWasNotFoundMsg);
-            }
+            path.Highlight(endPoints);
+            mainViewModel.PathFindingStatistics = 
+                path.PathLength > 0 ? GetStatistics() : PathWasNotFoundMsg;
         }
 
         protected virtual void OnAlgorithmStarted(object sender, AlgorithmEventArgs e)
@@ -117,9 +111,8 @@ namespace GraphViewModel
         private string GetStatistics()
         {
             string timerInfo = timer.GetTimeInformation(TimerInfoFormat);
-            string graphInfo = string.Format(StatisticsFormat,
-                path.PathLength, path.PathCost, visitedVerticesCount);
-            return string.Join(Separator, ((Enum)Algorithm).GetDescription(), timerInfo, graphInfo);
+            string graphInfo = string.Format(StatisticsFormat, path.PathLength, path.PathCost, visitedVerticesCount);
+            return string.Join("\t", ((Enum)Algorithm).GetDescription(), timerInfo, graphInfo);
         }
 
         private void SubscribeOnAlgorithmEvents()
@@ -140,13 +133,10 @@ namespace GraphViewModel
 
         private IDictionary<string, Algorithms> GetAlgorithmsDictinary()
         {
-            return Enum
-                .GetValues(typeof(Algorithms))
-                .Cast<Algorithms>()
+            return Enum.GetValues(typeof(Algorithms)).Cast<Algorithms>()
                 .ToDictionary(item => ((Enum)item).GetDescription());
         }
 
-        private const string Separator = "   ";
         private readonly Lazy<IDictionary<string, Algorithms>> algorithms;
         private readonly VertexMark vertexMark;
         private readonly IGraph graph;

@@ -1,9 +1,7 @@
-﻿using Conditional;
-using GraphLib.Extensions;
+﻿using GraphLib.Extensions;
 using GraphLib.Interfaces;
 using GraphLib.Interfaces.Factories;
 using System;
-using System.Collections.Generic;
 
 namespace GraphLib.Base
 {
@@ -12,14 +10,6 @@ namespace GraphLib.Base
         protected BaseVertexEventHolder(IVertexCostFactory costFactory)
         {
             this.costFactory = costFactory;
-            reverseActionDictionary = new Dictionary<bool, Action<IMarkable>>()
-            {
-                { true, vertex => vertex.MarkAsObstacle() },
-                { false, vertex => vertex.MarkAsRegular() }
-            };
-
-            conditional = new Conditional<IVertex>(MakeVertex, v => v.IsObstacle)
-                   .PerformIf(MakeObstacle);
         }
 
         protected readonly IVertexCostFactory costFactory;
@@ -36,7 +26,19 @@ namespace GraphLib.Base
 
         public virtual void Reverse(object sender, EventArgs e)
         {
-            conditional.PerformFirstSuitable(sender as IVertex, param => param != null);
+            if (sender is IVertex vertex && sender is IMarkable markable)
+            {
+                if (vertex.IsObstacle)
+                {
+                    vertex.IsObstacle = false;
+                    markable.MarkAsRegular();
+                }
+                else
+                {
+                    vertex.IsObstacle = true;
+                    markable.MarkAsObstacle();
+                }
+            }
         }
 
         public virtual void UnsubscribeVertices(IGraph graph)
@@ -54,24 +56,5 @@ namespace GraphLib.Base
         protected abstract void SubscribeToEvents(IVertex vertex);
 
         protected abstract int GetWheelDelta(EventArgs e);
-
-        private void MakeObstacle(IVertex vertex)
-        {
-            if (vertex is IMarkable markable)
-            {
-                reverseActionDictionary[vertex.IsObstacle = true](markable);
-            }
-        }
-
-        private void MakeVertex(IVertex vertex)
-        {
-            if (vertex is IMarkable markable)
-            {
-                reverseActionDictionary[vertex.IsObstacle = false](markable);
-            }
-        }
-
-        private readonly Dictionary<bool, Action<IMarkable>> reverseActionDictionary;
-        private readonly Conditional<IVertex> conditional;
     }
 }

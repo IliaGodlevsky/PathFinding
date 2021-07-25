@@ -90,11 +90,5 @@
   <ItemGroup>
     <None Include="packages.config" />
   </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\Conditional\Conditional.csproj">
-      <Project>{7125c12b-8eea-4906-b427-e0575f060731}</Project>
-      <Name>Conditional</Name>
-    </ProjectReference>
-  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

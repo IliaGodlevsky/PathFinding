@@ -1,10 +1,11 @@
 ﻿using Common.Extensions;
-using Conditional;
 using GraphLib.Extensions;
 using GraphLib.Interfaces;
 using GraphLib.NullRealizations.NullObjects;
 using NullObject.Extensions;
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace GraphLib.Base
@@ -14,12 +15,15 @@ namespace GraphLib.Base
         protected BaseEndPoints()
         {
             Reset();
-            conditional = new Conditional<IVertex>(UnsetSource, v => Source.IsEqual(v))
-                  .PerformIf(UnsetTarget, v => Target.IsEqual(v))
-                  .PerformIf(SetSource, CanSetSource)
-                  .PerformIf(ReplaceSource, v => Source.IsIsolated())
-                  .PerformIf(SetTarget, CanSetTarget)
-                  .PerformIf(ReplaceTarget, v => Target.IsIsolated());
+            conditions = new Dictionary<Predicate<IVertex>, Action<IVertex>>
+            {
+                { v => Source.IsEqual(v), UnsetSource},
+                { v => Target.IsEqual(v), UnsetTarget},
+                { CanSetSource, SetSource },
+                { v => Source.IsIsolated(), ReplaceSource},
+                { CanSetTarget , SetTarget},
+                { v => Target.IsIsolated(), ReplaceTarget}
+            };
         }
 
         public bool HasEndPointsSet => !Source.IsIsolated() && !Target.IsIsolated();
@@ -66,8 +70,11 @@ namespace GraphLib.Base
 
         protected virtual void SetEndPoints(object sender, EventArgs e)
         {
-            bool IsNotIsolated(IVertex vertex) => vertex?.IsIsolated() == false;
-            conditional.PerformFirstSuitable(sender as IVertex, IsNotIsolated);
+            if (sender is IVertex vertex && !vertex.IsIsolated())
+            {
+                var condition = conditions.FirstOrDefault(item => item.Key?.Invoke(vertex) == true);
+                condition.Value?.Invoke(vertex);
+            }
         }
 
         protected virtual void SetSource(IVertex vertex)
@@ -109,6 +116,6 @@ namespace GraphLib.Base
         protected abstract void SubscribeVertex(IVertex vertex);
         protected abstract void UnsubscribeVertex(IVertex vertex);
 
-        private readonly Conditional<IVertex> conditional;
+        private readonly Dictionary<Predicate<IVertex>, Action<IVertex>> conditions;
     }
 }

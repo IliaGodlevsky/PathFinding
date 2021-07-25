@@ -43,8 +43,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WPFVersion", "Apps\WPFVersi
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WPFVersion3D", "Apps\WPFVersion3D\WPFVersion3D.csproj", "{C50DAB38-75A5-47F5-A6A0-1165BBE5E283}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Conditional", "Conditional\Conditional.csproj", "{7125C12B-8EEA-4906-B427-E0575F060731}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GraphLib.Exceptions", "GraphLib\GraphLib.Exceptions\GraphLib.Exceptions.csproj", "{B6DA5928-65EC-42C0-B012-F25F8F023271}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "GraphLib.Tests", "GraphLib.Tests", "{ED325929-9D9B-45CD-9C44-B961A631E8C1}"
@@ -67,8 +65,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Logging", "Logging\Logging.
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NullObject", "NullObject\NullObject.csproj", "{51D677FD-7A82-4282-8A2E-51DEBE39E695}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Conditional.Tests", "Conditional.Tests\Conditional.Tests.csproj", "{D3104355-4F78-41B5-82FD-6CAFFF775A45}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NullObject.Tests", "NullObject.Tests\NullObject.Tests.csproj", "{666D186C-5D2A-4AA3-8671-BEEF51C6DF77}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Common.Tests", "Common.Tests\Common.Tests.csproj", "{41A6D909-5011-45F5-84CC-8E4FAB8B3D10}"
@@ -83,7 +79,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Interruptable", "Interrupta
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Algorithm.Algos", "Algorithm\Algorithm.Algos\Algorithm.Algos.csproj", "{4DE08169-8512-4E1C-91ED-FD42FFC0AF71}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Algorithm.Algos.Tests", "Algorithm.Tests\Algorithm.Algos.Tests\Algorithm.Algos.Tests.csproj", "{B30F66B0-D089-4259-A6A4-D8E560E99A6F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Algorithm.Algos.Tests", "Algorithm.Tests\Algorithm.Algos.Tests\Algorithm.Algos.Tests.csproj", "{B30F66B0-D089-4259-A6A4-D8E560E99A6F}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -159,10 +155,6 @@ Global
 		{C50DAB38-75A5-47F5-A6A0-1165BBE5E283}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C50DAB38-75A5-47F5-A6A0-1165BBE5E283}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C50DAB38-75A5-47F5-A6A0-1165BBE5E283}.Release|Any CPU.Build.0 = Release|Any CPU
-		{7125C12B-8EEA-4906-B427-E0575F060731}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{7125C12B-8EEA-4906-B427-E0575F060731}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{7125C12B-8EEA-4906-B427-E0575F060731}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{7125C12B-8EEA-4906-B427-E0575F060731}.Release|Any CPU.Build.0 = Release|Any CPU
 		{B6DA5928-65EC-42C0-B012-F25F8F023271}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{B6DA5928-65EC-42C0-B012-F25F8F023271}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B6DA5928-65EC-42C0-B012-F25F8F023271}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -199,10 +191,6 @@ Global
 		{51D677FD-7A82-4282-8A2E-51DEBE39E695}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{51D677FD-7A82-4282-8A2E-51DEBE39E695}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{51D677FD-7A82-4282-8A2E-51DEBE39E695}.Release|Any CPU.Build.0 = Release|Any CPU
-		{D3104355-4F78-41B5-82FD-6CAFFF775A45}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{D3104355-4F78-41B5-82FD-6CAFFF775A45}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{D3104355-4F78-41B5-82FD-6CAFFF775A45}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{D3104355-4F78-41B5-82FD-6CAFFF775A45}.Release|Any CPU.Build.0 = Release|Any CPU
 		{666D186C-5D2A-4AA3-8671-BEEF51C6DF77}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{666D186C-5D2A-4AA3-8671-BEEF51C6DF77}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{666D186C-5D2A-4AA3-8671-BEEF51C6DF77}.Release|Any CPU.ActiveCfg = Release|Any CPU

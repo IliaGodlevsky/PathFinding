@@ -42,6 +42,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AlgoFactory.cs" />
     <Compile Include="Algos\AStarAlgorithm.cs" />
     <Compile Include="Algos\AStarModified.cs" />
     <Compile Include="Algos\BestFirstLeeAlgorithm.cs" />
@@ -50,9 +51,7 @@
     <Compile Include="Algos\DijkstraAlgorithm.cs" />
     <Compile Include="Algos\DistanceFirstAlgorithm.cs" />
     <Compile Include="Algos\LeeAlgorithm.cs" />
-    <Compile Include="Attributes\AlgorithmTypeAttribute.cs" />
     <Compile Include="Enums\Algorithms.cs" />
-    <Compile Include="Extensions\AlgorithmsExtensions.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -100,9 +99,6 @@
       <Project>{8A717526-D82A-4409-B3B4-5979820253AF}</Project>
       <Name>Algorithm.Сompanions</Name>
     </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="app.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

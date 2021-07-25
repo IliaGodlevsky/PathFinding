@@ -45,9 +45,11 @@ namespace ConsoleVersion.ViewModel
                     ChooseExtremeVertex();
                     mainModel.DisplayGraph();
                     int algorithmKeyIndex = GetAlgorithmKeyIndex();
-                    var algorithmKey = Algorithms.Keys.ElementAt(algorithmKeyIndex);
+                    var algorithmKey = Algorithms.Keys
+                        .ElementAt(algorithmKeyIndex);
                     Algorithm = Algorithms[algorithmKey];
-                    DelayTime = InputNumber(DelayTimeInputMsg, AlgorithmDelayTimeValueRange);
+                    DelayTime = InputNumber(DelayTimeInputMsg, 
+                        AlgorithmDelayTimeValueRange);
                     base.FindPath();
                     UpdatePathFindingStatistics();
                     Console.ReadLine();
@@ -65,9 +67,13 @@ namespace ConsoleVersion.ViewModel
             }
         }
 
-        protected override void ColorizeProcessedVertices(object sender, AlgorithmEventArgs e)
+        protected override void Summarize()
         {
+            base.Summarize();
+            UpdatePathFindingStatistics();
         }
+
+        protected override void ColorizeProcessedVertices(object sender, AlgorithmEventArgs e) { }
 
         protected override void OnVertexVisited(object sender, AlgorithmEventArgs e)
         {
@@ -110,7 +116,7 @@ namespace ConsoleVersion.ViewModel
                 do
                 {
                     point = InputPoint(upperPossibleXValue, upperPossibleYValue);
-                    vertex = mainViewModel.Graph[point];
+                    vertex = graph2D[point];
                 } while (!endPoints.CanBeEndPoint(vertex));
 
                 return point;
@@ -125,6 +131,8 @@ namespace ConsoleVersion.ViewModel
         private void UpdatePathFindingStatistics()
         {
             var coordinate = MainView.PathfindingStatisticsPosition;
+            Console.SetCursorPosition(coordinate.X, coordinate.Y);
+            Console.Write(new string(' ', Console.BufferWidth));
             Console.SetCursorPosition(coordinate.X, coordinate.Y);
             Console.Write(mainViewModel.PathFindingStatistics);
         }
