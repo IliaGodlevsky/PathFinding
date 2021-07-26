@@ -9,16 +9,6 @@ namespace GraphLib.Interfaces
         /// </summary>
         int Size { get; }
 
-        /// <summary>
-        /// Percent of obstacle vertices in the graph
-        /// </summary>
-        int ObstaclePercent { get; }
-
-        /// <summary>
-        /// Number of obstacle vertices in the graph
-        /// </summary>
-        int Obstacles { get; }
-
         IEnumerable<IVertex> Vertices { get; }
 
         /// <summary>

@@ -28,7 +28,7 @@ namespace GraphViewModel
 
         public Algorithms Algorithm { get; set; }
 
-        public virtual IDictionary<string, Algorithms> Algorithms => algorithms.Value;
+        public IDictionary<string, Algorithms> Algorithms => algorithms.Value;
 
         protected PathFindingModel(ILog log, IMainModel mainViewModel, BaseEndPoints endPoints)
         {
@@ -36,10 +36,8 @@ namespace GraphViewModel
             this.mainViewModel = mainViewModel;
             this.endPoints = endPoints;
             this.log = log;
-
             DelayTime = 4;
             graph = mainViewModel.Graph;
-
             timer = new Stopwatch();
             vertexMark = new VertexMark();
             path = new NullGraphPath();
@@ -50,8 +48,7 @@ namespace GraphViewModel
         {
             try
             {
-                algorithm = AlgoFactory
-                    .CreateAlgorithm(Algorithm, graph, endPoints);
+                algorithm = AlgoFactory.CreateAlgorithm(Algorithm, graph, endPoints);
                 SubscribeOnAlgorithmEvents();
                 path = algorithm.FindPath();
                 Summarize();
@@ -111,7 +108,8 @@ namespace GraphViewModel
         private string GetStatistics()
         {
             string timerInfo = timer.GetTimeInformation(TimerInfoFormat);
-            string graphInfo = string.Format(StatisticsFormat, path.PathLength, path.PathCost, visitedVerticesCount);
+            string graphInfo = string.Format(StatisticsFormat, path.PathLength, 
+                path.PathCost, visitedVerticesCount);
             return string.Join("\t", ((Enum)Algorithm).GetDescription(), timerInfo, graphInfo);
         }
 
@@ -133,8 +131,12 @@ namespace GraphViewModel
 
         private IDictionary<string, Algorithms> GetAlgorithmsDictinary()
         {
-            return Enum.GetValues(typeof(Algorithms)).Cast<Algorithms>()
-                .ToDictionary(item => ((Enum)item).GetDescription());
+            return Enum
+                .GetValues(typeof(Algorithms))
+                .Cast<Algorithms>()
+                .ToDictionary(item => ((Enum)item).GetDescription())
+                .OrderBy(item => item.Key)
+                .AsDictionary();
         }
 
         private readonly Lazy<IDictionary<string, Algorithms>> algorithms;

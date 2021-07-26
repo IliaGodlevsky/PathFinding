@@ -41,6 +41,17 @@ namespace GraphLib.Extensions
             return !self.IsEmpty();
         }
 
+        public static int GetObstaclePercent(this IGraph self)
+        {
+            return self.Size == 0 ? 0 
+                : self.GetObstaclesCount() * 100 / self.Size;
+        }
+
+        public static int GetObstaclesCount(this IGraph self)
+        {
+            return self.Vertices.Count(vertex => vertex.IsObstacle);
+        }
+
         public static IGraph ForEach(this IGraph self, Action<IVertex> action)
         {
             self.Vertices.ForEach(action);
@@ -50,7 +61,7 @@ namespace GraphLib.Extensions
         public static bool IsEqual(this IGraph self, IGraph graph)
         {
             bool hasEqualDimensionSizes = self.DimensionsSizes.SequenceEqual(graph.DimensionsSizes);
-            bool hasEqualNumberOfObstacles = graph.Obstacles == self.Obstacles;
+            bool hasEqualNumberOfObstacles = graph.GetObstaclesCount() == self.GetObstaclesCount();
             bool hasEqualVertices = self.Vertices.Match(graph.Vertices, (a, b) => a.Equals(b));
             return hasEqualNumberOfObstacles && hasEqualVertices && hasEqualDimensionSizes;
         }

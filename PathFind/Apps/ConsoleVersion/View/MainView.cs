@@ -33,7 +33,8 @@ namespace ConsoleVersion.View
             previousMaxValueOfRange = currentMaxValueOfRange;
             if (e.NewGraph.HasVertices() && e.NewGraph is Graph2D graph2D)
             {
-                int pathFindingStatisticsOffset = graph2D.Length + HeightOfAbscissaView * 2 + HeightOfGraphParametresView;
+                int pathFindingStatisticsOffset = graph2D.Length 
+                    + HeightOfAbscissaView * 2 + HeightOfGraphParametresView;
                 PathfindingStatisticsPosition = new Coordinate2D(0, pathFindingStatisticsOffset);
             }
         }

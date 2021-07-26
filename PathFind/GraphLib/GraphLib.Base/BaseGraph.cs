@@ -19,10 +19,6 @@ namespace GraphLib.Base
     {
         public int Size { get; }
 
-        public int ObstaclePercent => Size == 0 ? 0 : Obstacles * 100 / Size;
-
-        public int Obstacles => Vertices.Count(v => v.IsObstacle);
-
         public IEnumerable<IVertex> Vertices => vertices.Values;
 
         public int[] DimensionsSizes { get; }
@@ -33,12 +29,7 @@ namespace GraphLib.Base
 
             if (dimensionSizes.Length != numberOfDimensions)
             {
-                string message = $"An error occurred while creating a {GetType().Name} instance\n";
-                message += $"Required number of dimensions is {numberOfDimensions}\n";
-                message += "Number of dimensions doesn't match the required number of dimensions";
-                int actualValue = DimensionsSizes.Count();
-
-                throw new WrongNumberOfDimensionsException(nameof(dimensionSizes), actualValue, message);
+                throw new WrongNumberOfDimensionsException(nameof(dimensionSizes));
             }
 
             Size = DimensionsSizes.AggregateOrDefault(IntExtensions.Multiply);
@@ -50,20 +41,12 @@ namespace GraphLib.Base
             DimensionNames = new[] { "Width", "Length", "Height" };
         }
 
-        /// <summary>
-        /// Get or sets vertex according to a <paramref name="coordinate"/>
-        /// </summary>
-        /// <param name="coordinate"></param>
-        /// <returns></returns>
-        /// <exception cref="WrongNumberOfDimensionsException"></exception>
         public virtual IVertex this[ICoordinate coordinate]
         {
-            get => IsSuitableCoordinate(coordinate)
-                   && vertices.TryGetValue(coordinate, out var vertex)
-                    ? vertex : new NullVertex();
+            get => vertices.TryGetValue(coordinate, out var vertex) ? vertex : new NullVertex();
             set
             {
-                if (IsSuitableCoordinate(coordinate))
+                if (coordinate.CoordinatesValues.HaveEqualLength(DimensionsSizes))
                 {
                     vertices[coordinate] = value;
                 }
@@ -91,27 +74,19 @@ namespace GraphLib.Base
 
             return verticesHashCode.Xor(dimensionSizesHashCode);
         }
+
         public override string ToString()
-        {
+        {            
+            string format = "Obstacle percent: {0} ({1}/{2})";
+            string largeSpace = "   ";
+            int obstacles = this.GetObstaclesCount();
+            int obstaclesPercent = this.GetObstaclePercent();
             string Zip(string name, int size) => $"{name}: {size}";
             var zipped = DimensionNames.Zip(DimensionsSizes, Zip);
-            var joined = string.Join("   ", zipped);
-            return $"{joined}   Obstacle percent: {ObstaclePercent} ({Obstacles}/{Size})";
-        }
-
-        private bool IsSuitableCoordinate(ICoordinate coordinate)
-        {
-            var coordinates = coordinate.CoordinatesValues;
-            if (!coordinates.Any())
-            {
-                return false;
-            }
-            if (!coordinates.HaveEqualLength(DimensionsSizes))
-            {
-                var message = "Dimensions of graph and coordinate doesn't match\n";
-                throw new WrongNumberOfDimensionsException(nameof(coordinate), message);
-            }
-            return true;
+            string joined = string.Join(largeSpace, zipped);
+            string graphParams = string.Format(format, 
+                obstaclesPercent, obstacles, Size);
+            return string.Join(largeSpace, joined, graphParams);
         }
 
         protected static readonly string[] DimensionNames;
