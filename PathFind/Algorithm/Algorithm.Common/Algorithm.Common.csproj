@@ -42,7 +42,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="NullAlgorithm.cs" />
-    <Compile Include="Exceptions\AlgorithmInterruptedException.cs" />
     <Compile Include="NullGraphPath.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

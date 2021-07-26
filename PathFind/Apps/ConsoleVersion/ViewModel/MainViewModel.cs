@@ -33,6 +33,17 @@ namespace ConsoleVersion.ViewModel
         public event CostRangeChangedEventHandler OnCostRangeChanged;
         public event NewGraphCreatedEventHandler OnNewGraphCreated;
         public event InterruptEventHanlder OnInterrupted;
+        public event StatisticsUpdatedEventHandler OnStatisticsUpdated;
+
+        public override string PathFindingStatistics
+        {
+            get => base.PathFindingStatistics;
+            set
+            {
+                base.PathFindingStatistics = value;
+                OnStatisticsUpdated?.Invoke(this, new StatisticsUpdatedEventArgs(value));
+            }
+        }
 
         public override IGraph Graph
         {
@@ -40,8 +51,7 @@ namespace ConsoleVersion.ViewModel
             protected set
             {
                 base.Graph = value;
-                var args = new NewGraphCreatedEventArgs(value);
-                OnNewGraphCreated?.Invoke(this, args);
+                OnNewGraphCreated?.Invoke(this, new NewGraphCreatedEventArgs(value));
             }
         }
 
@@ -53,8 +63,7 @@ namespace ConsoleVersion.ViewModel
             ISaveLoadGraph saveLoad,
             IEnumerable<IGraphAssemble> graphAssembles,
             ILog log)
-            : base(fieldFactory, eventHolder, saveLoad,
-                  graphAssembles, log)
+            : base(fieldFactory, eventHolder, saveLoad, graphAssembles, log)
         {
             IsInterruptRequested = false;
         }
@@ -152,9 +161,6 @@ namespace ConsoleVersion.ViewModel
             if (IsInterruptRequested)
             {
                 OnInterrupted?.Invoke(this, new InterruptEventArgs());
-                OnNewGraphCreated = null;
-                OnCostRangeChanged = null;
-                OnInterrupted = null;
             }
         }
 

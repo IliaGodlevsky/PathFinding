@@ -66,8 +66,10 @@
     <Compile Include="Enums\MenuItemPriority.cs" />
     <Compile Include="EventArguments\NewGraphCreatedEventArgs.cs" />
     <Compile Include="EventArguments\CostRangeChangedEventArgs.cs" />
+    <Compile Include="EventArguments\StatisticsUpdatedEventArgs.cs" />
     <Compile Include="EventHandlers\NewGraphCreatedEventHandler.cs" />
     <Compile Include="EventHandlers\CostRangeChangedEventHandler.cs" />
+    <Compile Include="EventHandlers\StatisticsUpdatedEventHandler.cs" />
     <Compile Include="InputClass\Input.cs" />
     <Compile Include="View\Abstraction\View.cs" />
     <Compile Include="View\Interface\IDisplayable.cs" />

@@ -48,6 +48,15 @@ namespace ConsoleVersion.View
             currentMaxValueOfRange = max;
         }
 
+        public static void OnStatisticsUpdated(object sender, StatisticsUpdatedEventArgs e)
+        {
+            var coordinate = MainView.PathfindingStatisticsPosition;
+            Console.SetCursorPosition(coordinate.X, coordinate.Y);
+            Console.Write(new string(' ', Console.BufferWidth));
+            Console.SetCursorPosition(coordinate.X, coordinate.Y);
+            Console.Write(e.Statistics);
+        }
+
         public static Coordinate2D GraphFieldPosition { get; set; }
 
         public static Coordinate2D PathfindingStatisticsPosition { get; set; }
@@ -63,6 +72,7 @@ namespace ConsoleVersion.View
         {
             Model.OnCostRangeChanged += OnCostRangeChanged;
             Model.OnNewGraphCreated += OnNewGraphCreated;
+            Model.OnStatisticsUpdated += OnStatisticsUpdated;
             OnNewMenuIteration += Model.DisplayGraph;
             var args = new CostRangeChangedEventArgs(BaseVertexCost.CostRange);
             OnCostRangeChanged(this, args);

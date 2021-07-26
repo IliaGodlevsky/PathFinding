@@ -3,7 +3,6 @@ using Common.ValueRanges;
 using ConsoleVersion.Attributes;
 using ConsoleVersion.Enums;
 using ConsoleVersion.Model;
-using ConsoleVersion.View;
 using GraphLib.Base;
 using GraphLib.Extensions;
 using GraphLib.Interfaces;
@@ -49,7 +48,6 @@ namespace ConsoleVersion.ViewModel
                 try
                 {
                     base.FindPath();
-                    UpdatePathFindingStatistics();
                     Console.ReadLine();
                     mainViewModel.PathFindingStatistics = string.Empty;
                 }
@@ -115,19 +113,7 @@ namespace ConsoleVersion.ViewModel
             mainViewModel.ClearGraph();
         }
 
-        protected override void Summarize()
-        {
-            base.Summarize();
-            UpdatePathFindingStatistics();
-        }
-
         protected override void ColorizeProcessedVertices(object sender, AlgorithmEventArgs e) { }
-
-        protected override void OnVertexVisited(object sender, AlgorithmEventArgs e)
-        {
-            base.OnVertexVisited(sender, e);
-            UpdatePathFindingStatistics();
-        }
 
         private IVertex ChooseVertex(string message)
         {
@@ -143,15 +129,6 @@ namespace ConsoleVersion.ViewModel
                 return vertex;
             }
             return new NullVertex();
-        }
-
-        private void UpdatePathFindingStatistics()
-        {
-            var coordinate = MainView.PathfindingStatisticsPosition;
-            Console.SetCursorPosition(coordinate.X, coordinate.Y);
-            Console.Write(new string(' ', Console.BufferWidth));
-            Console.SetCursorPosition(coordinate.X, coordinate.Y);
-            Console.Write(mainViewModel.PathFindingStatistics);
         }
 
         private bool HasAnyVerticesToChooseAsEndPoints()

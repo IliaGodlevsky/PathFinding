@@ -1,7 +1,6 @@
 ﻿using Algorithm.Algos;
 using Algorithm.Algos.Enums;
 using Algorithm.Common;
-using Algorithm.Common.Exceptions;
 using Algorithm.Extensions;
 using Algorithm.Infrastructure.EventArguments;
 using Algorithm.Interfaces;
@@ -53,10 +52,6 @@ namespace GraphViewModel
                 path = algorithm.FindPath();
                 Summarize();
             }
-            catch (AlgorithmInterruptedException ex)
-            {
-                log.Warn(ex);
-            }
             catch (Exception ex)
             {
                 log.Error(ex);
@@ -78,7 +73,7 @@ namespace GraphViewModel
 
         protected virtual void OnAlgorithmInterrupted(object sender, InterruptEventArgs e)
         {
-            throw new AlgorithmInterruptedException(AlgorithmInterruptedMsg);
+            log.Warn(AlgorithmInterruptedMsg);
         }
 
         protected virtual void OnAlgorithmFinished(object sender, AlgorithmEventArgs e)
