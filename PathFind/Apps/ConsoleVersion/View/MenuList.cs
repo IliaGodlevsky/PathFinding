@@ -23,7 +23,7 @@ namespace ConsoleVersion.View
 
         public void Display()
         {
-            Console.Write(this);
+            Console.WriteLine(this);
         }
 
         public override string ToString()

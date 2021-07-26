@@ -38,7 +38,7 @@ namespace ConsoleVersion.Configure
             var builder = new ContainerBuilder();
 
             builder.RegisterType<MainView>().As<IView>().InstancePerLifetimeScope();
-            builder.RegisterType<MainViewModel>().As<IMainModel>().InstancePerLifetimeScope().PropertiesAutowired();
+            builder.RegisterType<MainViewModel>().AsSelf().InstancePerLifetimeScope().PropertiesAutowired();
 
             builder.RegisterType<EndPoints>().As<BaseEndPoints>().SingleInstance();
             builder.RegisterType<VertexEventHolder>().As<IVertexEventHolder>().SingleInstance();

@@ -92,7 +92,7 @@ namespace GraphViewModel
         protected virtual void Summarize()
         {
             path.Highlight(endPoints);
-            mainViewModel.PathFindingStatistics = 
+            mainViewModel.PathFindingStatistics =
                 path.PathLength > 0 ? GetStatistics() : PathWasNotFoundMsg;
         }
 

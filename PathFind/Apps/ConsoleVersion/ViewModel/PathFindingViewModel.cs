@@ -5,10 +5,9 @@ using ConsoleVersion.Enums;
 using ConsoleVersion.Model;
 using ConsoleVersion.View;
 using GraphLib.Base;
-using GraphLib.Exceptions;
 using GraphLib.Extensions;
 using GraphLib.Interfaces;
-using GraphLib.Realizations.Coordinates;
+using GraphLib.NullRealizations.NullObjects;
 using GraphLib.Realizations.Graphs;
 using GraphViewModel;
 using GraphViewModel.Interfaces;
@@ -59,6 +58,10 @@ namespace ConsoleVersion.ViewModel
                     log.Error(ex);
                 }
             }
+            else
+            {
+                log.Warn("Firstly choose endpoints");
+            }
         }
 
         [MenuItem(Constants.ChooseAlgorithm, MenuItemPriority.High)]
@@ -76,12 +79,13 @@ namespace ConsoleVersion.ViewModel
             DelayTime = InputNumber(DelayTimeInputMsg, AlgorithmDelayTimeValueRange);
         }
 
-        [MenuItem(Constants.Cancel, MenuItemPriority.Lowest)]
+        [MenuItem(Constants.Exit, MenuItemPriority.Lowest)]
         public void Interrupt()
         {
             IsInterruptRequested = true;
             ClearGraph();
             OnInterrupted?.Invoke(this, new InterruptEventArgs());
+            OnInterrupted = null;
         }
 
         [MenuItem(Constants.ChooseEndPoints, MenuItemPriority.High)]
@@ -92,11 +96,10 @@ namespace ConsoleVersion.ViewModel
                 var chooseMessages = new[] { SourceVertexInputMessage, TargetVertexInputMessage };
                 foreach (var message in chooseMessages)
                 {
-                    var point = ChoosePoint(message);
-                    var vertex = mainViewModel.Graph[point] as Vertex;
+                    var vertex = ChooseVertex(message);
                     int cursorLeft = Console.CursorLeft;
                     int cursorRight = Console.CursorTop;
-                    vertex?.SetAsExtremeVertex();
+                    (vertex as Vertex)?.SetAsExtremeVertex();
                     Console.SetCursorPosition(cursorLeft, cursorRight);
                 }
             }
@@ -110,11 +113,6 @@ namespace ConsoleVersion.ViewModel
         public void ClearGraph()
         {
             mainViewModel.ClearGraph();
-        }
-
-        public void DisplayGraph()
-        {
-            (mainViewModel as MainViewModel)?.DisplayGraph();
         }
 
         protected override void Summarize()
@@ -131,28 +129,20 @@ namespace ConsoleVersion.ViewModel
             UpdatePathFindingStatistics();
         }
 
-        private Coordinate2D ChoosePoint(string message)
+        private IVertex ChooseVertex(string message)
         {
             if (mainViewModel.Graph is Graph2D graph2D)
             {
                 Console.WriteLine(message);
-                var upperPossibleXValue = graph2D.Width - 1;
-                var upperPossibleYValue = graph2D.Length - 1;
-                Coordinate2D point;
                 IVertex vertex;
                 do
                 {
-                    point = InputPoint(upperPossibleXValue, upperPossibleYValue);
-                    vertex = graph2D[point];
+                    vertex = InputVertex(graph2D);
                 } while (!endPoints.CanBeEndPoint(vertex));
 
-                return point;
+                return vertex;
             }
-
-            string paramName = nameof(mainViewModel.Graph);
-            string requiredTypeName = nameof(Graph2D);
-            string exceptionMessage = $"{paramName} is not of type {requiredTypeName}";
-            throw new WrongGraphTypeException(exceptionMessage);
+            return new NullVertex();
         }
 
         private void UpdatePathFindingStatistics()

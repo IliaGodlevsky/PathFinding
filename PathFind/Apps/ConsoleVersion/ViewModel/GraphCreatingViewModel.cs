@@ -1,6 +1,12 @@
-﻿using GraphLib.Interfaces.Factories;
+﻿using Common.ValueRanges;
+using ConsoleVersion.Attributes;
+using ConsoleVersion.Enums;
+using GraphLib.Interfaces.Factories;
 using GraphLib.ViewModel;
 using GraphViewModel.Interfaces;
+using Interruptable.EventArguments;
+using Interruptable.EventHandlers;
+using Interruptable.Interface;
 using Logging.Interface;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,8 +15,10 @@ using static ConsoleVersion.InputClass.Input;
 
 namespace ConsoleVersion.ViewModel
 {
-    internal sealed class GraphCreatingViewModel : GraphCreatingModel
+    internal sealed class GraphCreatingViewModel : GraphCreatingModel, IInterruptable
     {
+        public event InterruptEventHanlder OnInterrupted;
+
         public string GraphAssembleInpuMessage { private get; set; }
 
         public string ObstaclePercentInputMessage { private get; set; }
@@ -19,36 +27,65 @@ namespace ConsoleVersion.ViewModel
 
         public string HeightInputMessage { private get; set; }
 
+        public bool IsInterruptRequested { get; private set; }
+
         public GraphCreatingViewModel(ILog log, IMainModel model, IEnumerable<IGraphAssemble> graphAssembles)
             : base(log, model, graphAssembles)
         {
-            maxGraphAssembleKeyNumber = graphAssembles.Count();
-            minGraphAssembleKeyNumber = 1;
+            graphAssembleKeyRange = new InclusiveValueRange<int>(graphAssembles.Count(), 1);
+            IsInterruptRequested = false;
         }
 
+        [MenuItem(Constants.CreateNewGraph, MenuItemPriority.Highest)]
         public override void CreateGraph()
         {
-            int graphAssembleIndex = GetGraphAssembleIndex();
+            if (CanCreateGraph())
+            {
+                base.CreateGraph();
+            }
+            else
+            {
+                log.Warn("Not enough parametres to create graph");
+            }
+        }
+
+        [MenuItem(Constants.ChooseGraphAssemble, MenuItemPriority.High)]
+        public void ChooseGraphAssemble()
+        {
+            int graphAssembleIndex = InputNumber(GraphAssembleInpuMessage, graphAssembleKeyRange) - 1;
             var graphAssembleKeys = GraphAssembles.Keys.ToArray();
             string selectedGraphAssembleKey = graphAssembleKeys[graphAssembleIndex];
             SelectedGraphAssemble = GraphAssembles[selectedGraphAssembleKey];
+        }
 
-            ObstaclePercent = InputNumber(ObstaclePercentInputMessage, ObstaclesPercentValueRange);
+        [MenuItem(Constants.InputGraphParametres, MenuItemPriority.High)]
+        public void InputGraphParametres()
+        {
             Width = InputNumber(WidthInputMessage, GraphWidthValueRange);
             Length = InputNumber(HeightInputMessage, GraphLengthValueRange);
-
-            base.CreateGraph();
         }
 
-        private int GetGraphAssembleIndex()
+        [MenuItem(Constants.InputObstaclePercent, MenuItemPriority.Low)]
+        public void InputObstaclePercent()
         {
-            return InputNumber(
-                GraphAssembleInpuMessage,
-                maxGraphAssembleKeyNumber,
-                minGraphAssembleKeyNumber) - 1;
+            ObstaclePercent = InputNumber(ObstaclePercentInputMessage, ObstaclesPercentValueRange);
         }
 
-        private readonly int maxGraphAssembleKeyNumber;
-        private readonly int minGraphAssembleKeyNumber;
+        [MenuItem(Constants.Exit, MenuItemPriority.Lowest)]
+        public void Interrupt()
+        {
+            IsInterruptRequested = true;
+            OnInterrupted?.Invoke(this, new InterruptEventArgs());
+            OnInterrupted = null;
+        }
+
+        private bool CanCreateGraph()
+        {
+            return SelectedGraphAssemble != null
+                && Constants.GraphWidthValueRange.Contains(Width)
+                && Constants.GraphLengthValueRange.Contains(Length);
+        }
+
+        private readonly InclusiveValueRange<int> graphAssembleKeyRange;
     }
 }

@@ -13,13 +13,16 @@ namespace ConsoleVersion
         public const string ChangeVertexCost = "Change vertex cost";
         public const string SaveGraph = "Save graph";
         public const string LoadGraph = "Load graph";
-        public const string QuitProgramm = "Quit program";
+        public const string Exit = "Exit";
 
         public const string ChooseEndPoints = "Choose end points";
         public const string ChooseAlgorithm = "Choose algorithm";
         public const string InputDelayTime = "Input delay time";
-        public const string Cancel = "Cancel";
         public const string ClearGraph = "Clear graph";
+
+        public const string ChooseGraphAssemble = "Choose graph assemble";
+        public const string InputObstaclePercent = "Input obstacle percent";
+        public const string InputGraphParametres = "Input graph parametres";
 
         public static InclusiveValueRange<int> GraphWidthValueRange { get; }
         public static InclusiveValueRange<int> GraphLengthValueRange { get; }

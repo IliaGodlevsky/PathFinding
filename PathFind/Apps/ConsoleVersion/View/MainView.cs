@@ -1,19 +1,15 @@
-﻿using Common.ValueRanges;
-using ConsoleVersion.EventArguments;
-using ConsoleVersion.View.Interface;
+﻿using ConsoleVersion.EventArguments;
+using ConsoleVersion.View.Abstraction;
 using ConsoleVersion.ViewModel;
 using GraphLib.Base;
 using GraphLib.Extensions;
 using GraphLib.Realizations.Coordinates;
 using GraphLib.Realizations.Graphs;
-using GraphViewModel.Interfaces;
 using System;
-using static ConsoleVersion.InputClass.Input;
-using static ConsoleVersion.Resource.Resources;
 
 namespace ConsoleVersion.View
 {
-    internal sealed class MainView : IView
+    internal sealed class MainView : View<MainViewModel>
     {
         public const int HeightOfAbscissaView = 2;
         public const int HeightOfGraphParametresView = 1;
@@ -62,35 +58,14 @@ namespace ConsoleVersion.View
             GraphFieldPosition = new Coordinate2D(x, y);
         }
 
-        public MainView(IMainModel model)
+        public MainView(MainViewModel model) : base(model)
         {
-            mainModel = model as MainViewModel ?? throw new ArgumentException(nameof(model));
-            mainModel.OnCostRangeChanged += OnCostRangeChanged;
-            mainModel.OnNewGraphCreated += OnNewGraphCreated;
-            menu = new Menu<Action>(mainModel);
-            menuList = new MenuList(menu.MenuActionsNames);
-            menuValueRange = new InclusiveValueRange<int>(menu.MenuActionsNames.Length, 1);
+            Model.OnCostRangeChanged += OnCostRangeChanged;
+            Model.OnNewGraphCreated += OnNewGraphCreated;
+            OnNewMenuIteration += Model.DisplayGraph;
             var args = new CostRangeChangedEventArgs(BaseVertexCost.CostRange);
             OnCostRangeChanged(this, args);
         }
-
-        public void Start()
-        {
-            while (!mainModel.IsInterruptRequested)
-            {
-                mainModel.DisplayGraph();
-                menuList.Display();
-                int menuItemIndex = InputNumber(
-                    OptionInputMsg, menuValueRange) - 1;
-                string menuItem = menu.MenuActionsNames[menuItemIndex];
-                menu.MenuActions[menuItem].Invoke();
-            }
-        }
-
-        private readonly Menu<Action> menu;
-        private readonly MenuList menuList;
-        private readonly MainViewModel mainModel;
-        private readonly InclusiveValueRange<int> menuValueRange;
 
         private static int previousMaxValueOfRange;
         private static int currentMaxValueOfRange;

@@ -34,6 +34,17 @@ namespace ConsoleVersion.ViewModel
         public event NewGraphCreatedEventHandler OnNewGraphCreated;
         public event InterruptEventHanlder OnInterrupted;
 
+        public override IGraph Graph
+        {
+            get => base.Graph;
+            protected set
+            {
+                base.Graph = value;
+                var args = new NewGraphCreatedEventArgs(value);
+                OnNewGraphCreated?.Invoke(this, args);
+            }
+        }
+
         public bool IsInterruptRequested { get; private set; }
 
         public MainViewModel(
@@ -67,9 +78,8 @@ namespace ConsoleVersion.ViewModel
             {
                 var model = new GraphCreatingViewModel(log, this, graphAssembles);
                 var view = new GraphCreateView(model);
+                view.OnNewMenuIteration += DisplayGraph;
                 view.Start();
-                var args = new NewGraphCreatedEventArgs(Graph);
-                OnNewGraphCreated?.Invoke(this, args);
             }
             catch (Exception ex)
             {
@@ -84,6 +94,7 @@ namespace ConsoleVersion.ViewModel
             {
                 var model = new PathFindingViewModel(log, this, EndPoints);
                 var view = new PathFindView(model);
+                view.OnNewMenuIteration += DisplayGraph;
                 view.Start();
             }
             catch (Exception ex)
@@ -97,15 +108,8 @@ namespace ConsoleVersion.ViewModel
         {
             if (Graph.HasVertices() && Graph is Graph2D graph2D)
             {
-                int upperPossibleXValue = graph2D.Width - 1;
-                int upperPossibleYValue = graph2D.Length - 1;
-
-                var point = InputPoint(upperPossibleXValue, upperPossibleYValue);
-
-                if (Graph[point] is Vertex vertex)
-                {
-                    vertex.Reverse();
-                }
+                var vertex = InputVertex(graph2D);
+                (vertex as Vertex)?.Reverse();
             }
         }
 
@@ -122,17 +126,7 @@ namespace ConsoleVersion.ViewModel
         {
             if (Graph.HasVertices() && Graph is Graph2D graph2D)
             {
-                var upperPossibleXValue = graph2D.Width - 1;
-                var upperPossibleYValue = graph2D.Length - 1;
-
-                var point = InputPoint(upperPossibleXValue, upperPossibleYValue);
-
-                var vertex = Graph[point];
-                while (vertex.IsObstacle)
-                {
-                    point = InputPoint(upperPossibleXValue, upperPossibleYValue);
-                    vertex = Graph[point];
-                }
+                var vertex = InputVertex(graph2D);
                 (vertex as Vertex)?.ChangeCost();
             }
         }
@@ -148,10 +142,9 @@ namespace ConsoleVersion.ViewModel
         {
             base.LoadGraph();
             OnCostRangeChanged?.Invoke(this, new CostRangeChangedEventArgs(CostRange));
-            OnNewGraphCreated?.Invoke(this, new NewGraphCreatedEventArgs(Graph));
         }
 
-        [MenuItem(Constants.QuitProgramm, MenuItemPriority.Lowest)]
+        [MenuItem(Constants.Exit, MenuItemPriority.Lowest)]
         public void Interrupt()
         {
             int input = InputNumber(ExitAppMsg, Yes, No);
@@ -159,6 +152,9 @@ namespace ConsoleVersion.ViewModel
             if (IsInterruptRequested)
             {
                 OnInterrupted?.Invoke(this, new InterruptEventArgs());
+                OnNewGraphCreated = null;
+                OnCostRangeChanged = null;
+                OnInterrupted = null;
             }
         }
 

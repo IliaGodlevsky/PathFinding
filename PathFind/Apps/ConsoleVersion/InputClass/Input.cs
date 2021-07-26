@@ -1,5 +1,9 @@
 ﻿using Common.ValueRanges;
+using ConsoleVersion.Model;
+using GraphLib.Interfaces;
+using GraphLib.NullRealizations.NullObjects;
 using GraphLib.Realizations.Coordinates;
+using GraphLib.Realizations.Graphs;
 using System;
 using static ConsoleVersion.Resource.Resources;
 
@@ -69,6 +73,16 @@ namespace ConsoleVersion.InputClass
             int lowerValueOfRange = InputNumber(LowerValueOfRangeMsg, rangeOfValiInput);
 
             return new InclusiveValueRange<int>(upperValueOfRange, lowerValueOfRange);
+        }
+
+        public static IVertex InputVertex(Graph2D graph2D)
+        {
+            var upperPossibleXValue = graph2D.Width - 1;
+            var upperPossibleYValue = graph2D.Length - 1;
+
+            var point = InputPoint(upperPossibleXValue, upperPossibleYValue);
+
+            return (graph2D[point] as Vertex) ?? (IVertex)new NullVertex();
         }
 
         private static bool IsValidInput(string userInput,
