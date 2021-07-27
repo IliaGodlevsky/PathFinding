@@ -27,13 +27,10 @@ namespace ConsoleVersion.ViewModel
 
         public string HeightInputMessage { private get; set; }
 
-        public bool IsInterruptRequested { get; private set; }
-
         public GraphCreatingViewModel(ILog log, IMainModel model, IEnumerable<IGraphAssemble> graphAssembles)
             : base(log, model, graphAssembles)
         {
             graphAssembleKeyRange = new InclusiveValueRange<int>(graphAssembles.Count(), 1);
-            IsInterruptRequested = false;
         }
 
         [MenuItem(Constants.CreateNewGraph, MenuItemPriority.Highest)]
@@ -74,7 +71,6 @@ namespace ConsoleVersion.ViewModel
         [MenuItem(Constants.Exit, MenuItemPriority.Lowest)]
         public void Interrupt()
         {
-            IsInterruptRequested = true;
             OnInterrupted?.Invoke(this, new InterruptEventArgs());
             OnInterrupted = null;
         }

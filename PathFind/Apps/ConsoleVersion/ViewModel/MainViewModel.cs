@@ -55,8 +55,6 @@ namespace ConsoleVersion.ViewModel
             }
         }
 
-        public bool IsInterruptRequested { get; private set; }
-
         public MainViewModel(
             IGraphFieldFactory fieldFactory,
             IVertexEventHolder eventHolder,
@@ -65,7 +63,6 @@ namespace ConsoleVersion.ViewModel
             ILog log)
             : base(fieldFactory, eventHolder, saveLoad, graphAssembles, log)
         {
-            IsInterruptRequested = false;
         }
 
         [MenuItem(Constants.MakeUnwieghted)]
@@ -151,8 +148,8 @@ namespace ConsoleVersion.ViewModel
         public void Interrupt()
         {
             int input = InputNumber(ExitAppMsg, Yes, No);
-            IsInterruptRequested = input == Yes;
-            if (IsInterruptRequested)
+            bool isInterruptRequested = input == Yes;
+            if (isInterruptRequested)
             {
                 OnInterrupted?.Invoke(this, new InterruptEventArgs());
             }

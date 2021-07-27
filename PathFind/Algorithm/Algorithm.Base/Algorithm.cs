@@ -55,7 +55,7 @@ namespace Algorithm.Base
 
         protected IVertex CurrentVertex { get; set; }
 
-        public bool IsInterruptRequested { get; private set; }
+        private bool IsInterruptRequested { get; set; }
 
         protected virtual bool IsDestination()
         {

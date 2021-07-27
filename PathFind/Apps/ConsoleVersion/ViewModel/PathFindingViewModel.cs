@@ -32,8 +32,6 @@ namespace ConsoleVersion.ViewModel
 
         public string SourceVertexInputMessage { private get; set; }
 
-        public bool IsInterruptRequested { get; private set; }
-
         public PathFindingViewModel(ILog log, IMainModel model, BaseEndPoints endPoints)
             : base(log, model, endPoints)
         {
@@ -80,7 +78,6 @@ namespace ConsoleVersion.ViewModel
         [MenuItem(Constants.Exit, MenuItemPriority.Lowest)]
         public void Interrupt()
         {
-            IsInterruptRequested = true;
             ClearGraph();
             OnInterrupted?.Invoke(this, new InterruptEventArgs());
             OnInterrupted = null;

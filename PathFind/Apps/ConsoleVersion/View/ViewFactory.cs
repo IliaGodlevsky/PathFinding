@@ -19,6 +19,8 @@ namespace ConsoleVersion.View
         {
             var model = (TModel)Activator.CreateInstance(typeof(TModel), log, mainModel, parameter);
             var view = (TView)Activator.CreateInstance(typeof(TView), model);
+            view.OnNewMenuIteration += mainModel.DisplayGraph;
+            model.OnInterrupted += view.OnInterrupted;
             return view;
         }
 
@@ -27,8 +29,8 @@ namespace ConsoleVersion.View
             where TModel : IModel, IInterruptable
         {
             var view = (TView)CreateView<TView, TModel>(mainModel, log, parameter);
-            view.OnNewMenuIteration += mainModel.DisplayGraph;
             view.Start();
+            view.OnNewMenuIteration -= mainModel.DisplayGraph;
         }
 
         public static void StartPathFindingView(MainViewModel mainModel, ILog log, BaseEndPoints endPoints)
