@@ -76,7 +76,7 @@ namespace GraphLib.Base
         }
 
         public override string ToString()
-        {            
+        {
             string format = "Obstacle percent: {0} ({1}/{2})";
             string largeSpace = "   ";
             int obstacles = this.GetObstaclesCount();
@@ -84,7 +84,7 @@ namespace GraphLib.Base
             string Zip(string name, int size) => $"{name}: {size}";
             var zipped = DimensionNames.Zip(DimensionsSizes, Zip);
             string joined = string.Join(largeSpace, zipped);
-            string graphParams = string.Format(format, 
+            string graphParams = string.Format(format,
                 obstaclesPercent, obstacles, Size);
             return string.Join(largeSpace, joined, graphParams);
         }

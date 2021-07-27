@@ -103,7 +103,7 @@ namespace GraphViewModel
         private string GetStatistics()
         {
             string timerInfo = timer.GetTimeInformation(TimerInfoFormat);
-            string graphInfo = string.Format(StatisticsFormat, path.PathLength, 
+            string graphInfo = string.Format(StatisticsFormat, path.PathLength,
                 path.PathCost, visitedVerticesCount);
             return string.Join("\t", ((Enum)Algorithm).GetDescription(), timerInfo, graphInfo);
         }

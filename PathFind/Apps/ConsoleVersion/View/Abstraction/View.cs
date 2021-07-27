@@ -13,7 +13,7 @@ namespace ConsoleVersion.View.Abstraction
     {
         public event Action OnNewMenuIteration;
 
-        public TModel Model { get; }
+        protected TModel Model { get; }
 
         protected View(TModel model)
         {

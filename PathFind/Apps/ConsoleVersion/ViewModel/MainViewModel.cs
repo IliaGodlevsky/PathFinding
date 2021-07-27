@@ -85,10 +85,7 @@ namespace ConsoleVersion.ViewModel
         {
             try
             {
-                var model = new GraphCreatingViewModel(log, this, graphAssembles);
-                var view = new GraphCreateView(model);
-                view.OnNewMenuIteration += DisplayGraph;
-                view.Start();
+                ViewFactory.StartGraphCreatingView(this, log, graphAssembles);
             }
             catch (Exception ex)
             {
@@ -101,10 +98,7 @@ namespace ConsoleVersion.ViewModel
         {
             try
             {
-                var model = new PathFindingViewModel(log, this, EndPoints);
-                var view = new PathFindView(model);
-                view.OnNewMenuIteration += DisplayGraph;
-                view.Start();
+                ViewFactory.StartPathFindingView(this, log, EndPoints);
             }
             catch (Exception ex)
             {

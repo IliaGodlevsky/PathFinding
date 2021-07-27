@@ -43,7 +43,7 @@ namespace GraphLib.Extensions
 
         public static int GetObstaclePercent(this IGraph self)
         {
-            return self.Size == 0 ? 0 
+            return self.Size == 0 ? 0
                 : self.GetObstaclesCount() * 100 / self.Size;
         }
 

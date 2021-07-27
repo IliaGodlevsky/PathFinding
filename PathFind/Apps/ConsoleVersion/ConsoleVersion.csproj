@@ -71,6 +71,7 @@
     <Compile Include="EventHandlers\CostRangeChangedEventHandler.cs" />
     <Compile Include="EventHandlers\StatisticsUpdatedEventHandler.cs" />
     <Compile Include="InputClass\Input.cs" />
+    <Compile Include="View\ViewFactory.cs" />
     <Compile Include="View\Abstraction\View.cs" />
     <Compile Include="View\Interface\IDisplayable.cs" />
     <Compile Include="Model\EndPoints.cs" />

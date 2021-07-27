@@ -2,7 +2,6 @@
 using ConsoleVersion.View.Abstraction;
 using ConsoleVersion.ViewModel;
 using GraphLib.Base;
-using GraphLib.Extensions;
 using GraphLib.Realizations.Coordinates;
 using GraphLib.Realizations.Graphs;
 using System;
@@ -25,15 +24,15 @@ namespace ConsoleVersion.View
             int previousCostWidth = previousMaxValueOfRange.ToString().Length;
             int costWidth = Math.Max(currentCostWidth, previousCostWidth);
             int width = Constants.GraphWidthValueRange.UpperValueOfRange.ToString().Length;
-            return (costWidth >= width ? costWidth + 2 : width + width - costWidth);
+            return costWidth >= width ? costWidth + 2 : width + width - costWidth;
         }
 
         private static void OnNewGraphCreated(object sender, NewGraphCreatedEventArgs e)
         {
             previousMaxValueOfRange = currentMaxValueOfRange;
-            if (e.NewGraph.HasVertices() && e.NewGraph is Graph2D graph2D)
+            if (e.NewGraph is Graph2D graph2D)
             {
-                int pathFindingStatisticsOffset = graph2D.Length 
+                int pathFindingStatisticsOffset = graph2D.Length
                     + HeightOfAbscissaView * 2 + HeightOfGraphParametresView;
                 PathfindingStatisticsPosition = new Coordinate2D(0, pathFindingStatisticsOffset);
             }
@@ -48,13 +47,16 @@ namespace ConsoleVersion.View
             currentMaxValueOfRange = max;
         }
 
-        public static void OnStatisticsUpdated(object sender, StatisticsUpdatedEventArgs e)
+        private static void OnStatisticsUpdated(object sender, StatisticsUpdatedEventArgs e)
         {
             var coordinate = MainView.PathfindingStatisticsPosition;
-            Console.SetCursorPosition(coordinate.X, coordinate.Y);
-            Console.Write(new string(' ', Console.BufferWidth));
-            Console.SetCursorPosition(coordinate.X, coordinate.Y);
-            Console.Write(e.Statistics);
+            if (coordinate != null)
+            {
+                Console.SetCursorPosition(coordinate.X, coordinate.Y);
+                Console.Write(new string(' ', Console.BufferWidth));
+                Console.SetCursorPosition(coordinate.X, coordinate.Y);
+                Console.Write(e.Statistics);
+            }
         }
 
         public static Coordinate2D GraphFieldPosition { get; set; }

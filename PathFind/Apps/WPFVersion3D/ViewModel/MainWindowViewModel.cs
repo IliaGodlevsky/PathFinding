@@ -88,8 +88,6 @@ namespace WPFVersion3D.ViewModel
             {
                 var viewModel = new PathFindingViewModel(log, this, EndPoints);
                 var window = new PathFindWindow();
-                void Interrupt(object sender, EventArgs e) => window.Closing -= Interrupt;
-                window.Closing += Interrupt;
                 PrepareWindow(viewModel, window);
             }
             catch (SystemException ex)
