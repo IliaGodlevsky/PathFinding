@@ -7,19 +7,6 @@ namespace Interruptable.Interface
     {
         event InterruptEventHanlder OnInterrupted;
 
-        bool IsInterruptRequested { get; }
-
-        /// <summary>
-        /// Interrupts main process of the object 
-        /// </summary>
-        /// Interrupts main process of the object 
-        /// </summary>
-        /// Interrupts main process of the object 
-        /// </summary>
-        /// Interrupts main process of the object 
-        /// </summary>
-        /// Interrupts main process of the object 
-        /// </summary>
         void Interrupt();
     }
 }
