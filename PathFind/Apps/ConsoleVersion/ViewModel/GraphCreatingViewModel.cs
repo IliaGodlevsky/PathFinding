@@ -33,7 +33,6 @@ namespace ConsoleVersion.ViewModel
             : base(log, model, graphAssembles)
         {
             graphAssembleKeyRange = new InclusiveValueRange<int>(graphAssembles.Count(), 1);
-            IsInterruptRequested = false;
         }
 
         [MenuItem(Constants.CreateNewGraph, MenuItemPriority.Highest)]

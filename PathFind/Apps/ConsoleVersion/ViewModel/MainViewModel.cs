@@ -65,7 +65,6 @@ namespace ConsoleVersion.ViewModel
             ILog log)
             : base(fieldFactory, eventHolder, saveLoad, graphAssembles, log)
         {
-            IsInterruptRequested = false;
         }
 
         [MenuItem(Constants.MakeUnwieghted)]
