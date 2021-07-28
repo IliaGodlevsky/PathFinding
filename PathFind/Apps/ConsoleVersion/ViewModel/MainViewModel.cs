@@ -55,12 +55,8 @@ namespace ConsoleVersion.ViewModel
             }
         }
 
-        public MainViewModel(
-            IGraphFieldFactory fieldFactory,
-            IVertexEventHolder eventHolder,
-            ISaveLoadGraph saveLoad,
-            IEnumerable<IGraphAssemble> graphAssembles,
-            ILog log)
+        public MainViewModel(IGraphFieldFactory fieldFactory, IVertexEventHolder eventHolder,
+            ISaveLoadGraph saveLoad, IEnumerable<IGraphAssemble> graphAssembles, ILog log)
             : base(fieldFactory, eventHolder, saveLoad, graphAssembles, log)
         {
         }
@@ -82,7 +78,11 @@ namespace ConsoleVersion.ViewModel
         {
             try
             {
-                ViewFactory.StartGraphCreatingView(this, log, graphAssembles);
+                var model = new GraphCreatingViewModel(log, this, graphAssembles);
+                var view = new GraphCreateView(model);
+                model.OnInterrupted += view.OnInterrupted;
+                view.OnNewMenuIteration += DisplayGraph;
+                view.Start();
             }
             catch (Exception ex)
             {
@@ -95,7 +95,11 @@ namespace ConsoleVersion.ViewModel
         {
             try
             {
-                ViewFactory.StartPathFindingView(this, log, EndPoints);
+                var model = new PathFindingViewModel(log, this, EndPoints);
+                var view = new PathFindView(model);
+                model.OnInterrupted += view.OnInterrupted;
+                view.OnNewMenuIteration += DisplayGraph;
+                view.Start();
             }
             catch (Exception ex)
             {
