@@ -1,4 +1,5 @@
 ﻿using GraphLib.Interfaces;
+using GraphLib.Serialization.Interfaces;
 
 namespace GraphLib.Serialization.Extensions
 {
@@ -7,6 +8,16 @@ namespace GraphLib.Serialization.Extensions
         internal static GraphSerializationInfo GetGraphSerializationInfo(this IGraph graph)
         {
             return new GraphSerializationInfo(graph);
+        }
+
+        internal static IGraph AssembleFrom(this IGraph self, 
+            GraphSerializationInfo graphInfo, IVertexFromInfoFactory factory)
+        {
+            foreach (var info in graphInfo.VerticesInfo)
+            {
+                self[info.Position] = factory.CreateFrom(info);
+            }
+            return self;
         }
     }
 }

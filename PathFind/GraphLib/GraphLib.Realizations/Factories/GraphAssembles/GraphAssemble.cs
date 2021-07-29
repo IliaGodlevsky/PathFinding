@@ -4,9 +4,10 @@ using GraphLib.Exceptions;
 using GraphLib.Extensions;
 using GraphLib.Interfaces;
 using GraphLib.Interfaces.Factories;
+using GraphLib.Realizations.Extensions;
 using System;
 using System.ComponentModel;
-using static System.Linq.Enumerable;
+using System.Linq;
 
 namespace GraphLib.Realizations.Factories.GraphAssembles
 {
@@ -43,6 +44,7 @@ namespace GraphLib.Realizations.Factories.GraphAssembles
         /// <exception cref="WrongNumberOfDimensionsException"></exception>
         public virtual IGraph AssembleGraph(int obstaclePercent = 0, params int[] graphDimensionsSizes)
         {
+            obstaclePercent = percentRange.ReturnInRange(obstaclePercent);
             var graph = graphFactory.CreateGraph(graphDimensionsSizes);
 
             void AssembleVertex(int index)
@@ -52,19 +54,12 @@ namespace GraphLib.Realizations.Factories.GraphAssembles
                 var coordinateRadar = radarFactory.CreateNeighboursCoordinates(coordinate);
                 graph[coordinate] = vertexFactory.CreateVertex(coordinateRadar, coordinate);
                 graph[coordinate].Cost = costFactory.CreateCost();
-                graph[coordinate].IsObstacle = IsObstacleChance(obstaclePercent);
+                graph[coordinate].IsObstacle = percentRange.IsObstacleChance(obstaclePercent);
             }
 
-            Range(0, graph.Size).ForEach(AssembleVertex);
+            Enumerable.Range(0, graph.Size).ForEach(AssembleVertex);
             graph.ConnectVertices();
             return graph;
-        }
-
-        private bool IsObstacleChance(int percentOfObstacles)
-        {
-            percentOfObstacles = percentRange.ReturnInRange(percentOfObstacles);
-            var randomPercent = percentRange.GetRandomValue();
-            return randomPercent < percentOfObstacles;
         }
 
         protected readonly IVertexCostFactory costFactory;

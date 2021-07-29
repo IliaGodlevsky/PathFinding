@@ -5,9 +5,9 @@ using GraphLib.TestRealizations.TestObjects;
 
 namespace GraphLib.TestRealizations.TestFactories
 {
-    public sealed class TestVertexInfoSerializationConverter : IVertexSerializationInfoConverter
+    public sealed class TestVertexFromInfoFactory : IVertexFromInfoFactory
     {
-        public IVertex ConvertFrom(VertexSerializationInfo info)
+        public IVertex CreateFrom(VertexSerializationInfo info)
         {
             return new TestVertex(info);
         }

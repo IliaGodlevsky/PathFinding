@@ -42,6 +42,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Extensions\EnumerableExtensions.cs" />
+    <Compile Include="Extensions\InclusiveValueRangeExtensions.cs" />
     <Compile Include="NeighboursCoordinates\CardinalNeighboursCoordinates.cs" />
     <Compile Include="NeighboursCoordinates\AroundNeighboursCoordinates.cs" />
     <Compile Include="Coordinates\Coordinate.cs" />

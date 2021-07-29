@@ -6,7 +6,7 @@ namespace ConsoleVersion.Attributes
     /// <summary>
     /// Indicates that a method can be used to create a menu item
     /// </summary>
-    [AttributeUsage(AttributeTargets.Method, Inherited = false)]
+    [AttributeUsage(AttributeTargets.Method)]
     internal sealed class MenuItemAttribute : Attribute
     {
         /// <summary>

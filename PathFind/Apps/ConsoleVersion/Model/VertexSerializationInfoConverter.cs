@@ -4,9 +4,9 @@ using GraphLib.Serialization.Interfaces;
 
 namespace ConsoleVersion.Model
 {
-    internal sealed class VertexSerializationInfoConverter : IVertexSerializationInfoConverter
+    internal sealed class VertexFromInfoFactory : IVertexFromInfoFactory
     {
-        public IVertex ConvertFrom(VertexSerializationInfo info)
+        public IVertex CreateFrom(VertexSerializationInfo info)
         {
             return new Vertex(info);
         }

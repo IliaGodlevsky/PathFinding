@@ -15,11 +15,11 @@ namespace GraphLib.Serialization.Serializers
     public sealed class GraphSerializer : IGraphSerializer
     {
         public GraphSerializer(IFormatter formatter,
-            IVertexSerializationInfoConverter infoConverter,
+            IVertexFromInfoFactory converter,
             IGraphFactory graphFactory)
         {
             this.formatter = formatter;
-            this.infoConverter = infoConverter;
+            this.converter = converter;
             this.graphFactory = graphFactory;
         }
 
@@ -27,13 +27,10 @@ namespace GraphLib.Serialization.Serializers
         {
             try
             {
-                var graphInfo = (GraphSerializationInfo)formatter.Deserialize(stream);
+                var graphInfo = formatter.DeserializeGraphInfo(stream);
                 var graph = graphFactory.CreateGraph(graphInfo.DimensionsSizes);
-                void CreateVertexFrom(VertexSerializationInfo info)
-                    => graph[info.Position] = infoConverter.ConvertFrom(info);
-                graphInfo.VerticesInfo.ForEach(CreateVertexFrom);
                 BaseVertexCost.CostRange = graphInfo.CostRange;
-                return graph.ConnectVertices();
+                return graph.AssembleFrom(graphInfo, converter).ConnectVertices();
             }
             catch (Exception ex)
             {
@@ -54,7 +51,7 @@ namespace GraphLib.Serialization.Serializers
         }
 
         private readonly IFormatter formatter;
-        private readonly IVertexSerializationInfoConverter infoConverter;
+        private readonly IVertexFromInfoFactory converter;
         private readonly IGraphFactory graphFactory;
     }
 }

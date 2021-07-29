@@ -18,8 +18,8 @@ namespace GraphLib.Serialization.Tests.Configure
             builder.RegisterType<TestGraphAssemble>().As<IGraphAssemble>().SingleInstance();
             builder.RegisterType<GraphSerializer>().As<IGraphSerializer>().SingleInstance();
             builder.RegisterType<BinaryFormatter>().As<IFormatter>().SingleInstance();
-            builder.RegisterType<TestVertexInfoSerializationConverter>()
-                .As<IVertexSerializationInfoConverter>().SingleInstance();
+            builder.RegisterType<TestVertexFromInfoFactory>()
+                .As<IVertexFromInfoFactory>().SingleInstance();
             builder.RegisterType<TestGraphFactory>().As<IGraphFactory>().SingleInstance();
 
             return builder.Build();
@@ -34,8 +34,8 @@ namespace GraphLib.Serialization.Tests.Configure
             builder.RegisterDecorator<CryptoGraphSerializer, IGraphSerializer>();
             builder.RegisterType<DESCryptoServiceProvider>().As<SymmetricAlgorithm>().SingleInstance();
             builder.RegisterType<BinaryFormatter>().As<IFormatter>().SingleInstance();
-            builder.RegisterType<TestVertexInfoSerializationConverter>()
-                .As<IVertexSerializationInfoConverter>().SingleInstance();
+            builder.RegisterType<TestVertexFromInfoFactory>()
+                .As<IVertexFromInfoFactory>().SingleInstance();
             builder.RegisterType<TestGraphFactory>().As<IGraphFactory>().SingleInstance();
 
             return builder.Build();

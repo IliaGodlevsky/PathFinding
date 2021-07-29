@@ -61,7 +61,6 @@ namespace Algorithm.Algos.Algos
             accumulatedCosts.Reevaluate(endPoints.Source, default);
         }
 
-        #region Relaxing
         protected virtual void RelaxVertex(IVertex vertex)
         {
             var relaxedCost = GetVertexRelaxedCost(vertex);
@@ -82,7 +81,6 @@ namespace Algorithm.Algos.Algos
         {
             neighbours.ForEach(RelaxVertex);
         }
-        #endregion
 
         protected readonly IStepRule stepRule;
     }

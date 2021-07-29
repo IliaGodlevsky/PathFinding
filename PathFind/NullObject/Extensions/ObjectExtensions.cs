@@ -7,7 +7,7 @@ namespace NullObject.Extensions
     {
         public static bool IsNull(this object self)
         {
-            return self == null || Attribute.IsDefined(self.GetType(), typeof(NullAttribute));
+            return self is null || Attribute.IsDefined(self.GetType(), typeof(NullAttribute));
         }
     }
 }

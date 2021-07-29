@@ -5,14 +5,14 @@ using WPFVersion3D.Interface;
 
 namespace WPFVersion3D.Model
 {
-    internal sealed class Vertex3DSerializationInfoConverter : IVertexSerializationInfoConverter
+    internal sealed class Vertex3DFromInfoConverter : IVertexFromInfoFactory
     {
-        public Vertex3DSerializationInfoConverter(IModel3DFactory model3DFactory)
+        public Vertex3DFromInfoConverter(IModel3DFactory model3DFactory)
         {
             this.model3DFactory = model3DFactory;
         }
 
-        public IVertex ConvertFrom(VertexSerializationInfo info)
+        public IVertex CreateFrom(VertexSerializationInfo info)
         {
             return new Vertex3D(info, model3DFactory);
         }

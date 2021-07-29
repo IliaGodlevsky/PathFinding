@@ -3,7 +3,7 @@
 namespace Algorithm.Infrastructure.Handlers
 {
     /// <summary>
-    /// Represents a method that will handle events that occur during the pathfinding process
+    /// Represents a method that handles events that occur during the pathfinding process
     /// </summary>
     /// <param name="sender"></param>
     /// <param name="e"></param>

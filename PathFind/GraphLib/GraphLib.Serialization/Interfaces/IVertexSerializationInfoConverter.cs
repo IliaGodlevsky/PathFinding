@@ -2,8 +2,8 @@
 
 namespace GraphLib.Serialization.Interfaces
 {
-    public interface IVertexSerializationInfoConverter
+    public interface IVertexFromInfoFactory
     {
-        IVertex ConvertFrom(VertexSerializationInfo info);
+        IVertex CreateFrom(VertexSerializationInfo info);
     }
 }

@@ -5,7 +5,7 @@ using System.Linq;
 
 namespace GraphLib.Realizations.Extensions
 {
-    public static class EnumerableExtensions
+    internal static class EnumerableExtensions
     {
         internal static ICoordinate ToCoordinate(this IEnumerable<int> array)
         {

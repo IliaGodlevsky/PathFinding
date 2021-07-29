@@ -83,6 +83,8 @@ namespace ConsoleVersion.ViewModel
                 model.OnInterrupted += view.OnInterrupted;
                 view.OnNewMenuIteration += DisplayGraph;
                 view.Start();
+                model.OnInterrupted -= view.OnInterrupted;
+                view.OnNewMenuIteration -= DisplayGraph;
             }
             catch (Exception ex)
             {
@@ -100,6 +102,8 @@ namespace ConsoleVersion.ViewModel
                 model.OnInterrupted += view.OnInterrupted;
                 view.OnNewMenuIteration += DisplayGraph;
                 view.Start();
+                model.OnInterrupted -= view.OnInterrupted;
+                view.OnNewMenuIteration -= DisplayGraph;
             }
             catch (Exception ex)
             {
