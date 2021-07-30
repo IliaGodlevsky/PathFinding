@@ -61,7 +61,7 @@ namespace WPFVersion3D.Configure
             builder.RegisterDecorator<CompressGraphSerializer, IGraphSerializer>();
             builder.RegisterDecorator<CryptoGraphSerializer, IGraphSerializer>();
             builder.RegisterType<ObjectStateFormatter>().As<IFormatter>().SingleInstance();
-            builder.RegisterType<Vertex3DFromInfoConverter>().As<IVertexFromInfoFactory>().SingleInstance();
+            builder.RegisterType<Vertex3DFromInfoFactory>().As<IVertexFromInfoFactory>().SingleInstance();
 
             return builder.Build();
         }

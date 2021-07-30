@@ -55,7 +55,7 @@
     <Compile Include="Serializers\GraphSerializer.cs" />
     <Compile Include="Interfaces\IGraphSerializer.cs" />
     <Compile Include="Interfaces\IPathInput.cs" />
-    <Compile Include="Interfaces\IVertexSerializationInfoConverter.cs" />
+    <Compile Include="Interfaces\IVertexFromInfoFactory.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="VertexSerializationInfo.cs" />
   </ItemGroup>

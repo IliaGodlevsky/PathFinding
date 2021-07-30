@@ -5,9 +5,9 @@ using WPFVersion3D.Interface;
 
 namespace WPFVersion3D.Model
 {
-    internal sealed class Vertex3DFromInfoConverter : IVertexFromInfoFactory
+    internal sealed class Vertex3DFromInfoFactory : IVertexFromInfoFactory
     {
-        public Vertex3DFromInfoConverter(IModel3DFactory model3DFactory)
+        public Vertex3DFromInfoFactory(IModel3DFactory model3DFactory)
         {
             this.model3DFactory = model3DFactory;
         }

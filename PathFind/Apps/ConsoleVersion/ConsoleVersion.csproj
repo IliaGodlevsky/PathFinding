@@ -77,7 +77,7 @@
     <Compile Include="Model\GraphFieldFactory.cs" />
     <Compile Include="Model\PathInput.cs" />
     <Compile Include="Model\VertexFactory.cs" />
-    <Compile Include="Model\VertexSerializationInfoConverter.cs" />
+    <Compile Include="Model\VertexFromInfoFactory.cs" />
     <Compile Include="ViewModel\GraphCreatingViewModel.cs" />
     <Compile Include="ViewModel\MainViewModel.cs" />
     <Compile Include="View\Abstraction\FramedAxis.cs" />

@@ -54,7 +54,7 @@
     <Compile Include="TestFactories\TestGraphAssemble.cs" />
     <Compile Include="TestFactories\TestGraphFactory.cs" />
     <Compile Include="TestFactories\TestVertexFactory.cs" />
-    <Compile Include="TestFactories\TestVertexInfoSerializationConverter.cs" />
+    <Compile Include="TestFactories\TestVertexFromInfoFactory.cs" />
     <Compile Include="TestObjects\TestCoordinate.cs" />
     <Compile Include="TestObjects\TestEndPoints.cs" />
     <Compile Include="TestObjects\TestGraph.cs" />
