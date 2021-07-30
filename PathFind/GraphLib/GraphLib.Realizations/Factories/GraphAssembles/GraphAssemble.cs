@@ -22,13 +22,13 @@ namespace GraphLib.Realizations.Factories.GraphAssembles
             ICoordinateFactory coordinateFactory,
             IGraphFactory graphFactory,
             IVertexCostFactory costFactory,
-            INeighboursCoordinatesFactory radarFactory)
+            INeighboursCoordinatesFactory neighboursCoordinates)
         {
             this.vertexFactory = vertexFactory;
             this.coordinateFactory = coordinateFactory;
             this.graphFactory = graphFactory;
             this.costFactory = costFactory;
-            this.radarFactory = radarFactory;
+            this.neighboursCoordinates = neighboursCoordinates;
             percentRange = new InclusiveValueRange<int>(99, 0);
         }
 
@@ -51,22 +51,21 @@ namespace GraphLib.Realizations.Factories.GraphAssembles
             {
                 var coordinateValues = graph.ToCoordinates(index);
                 var coordinate = coordinateFactory.CreateCoordinate(coordinateValues);
-                var coordinateRadar = radarFactory.CreateNeighboursCoordinates(coordinate);
-                graph[coordinate] = vertexFactory.CreateVertex(coordinateRadar, coordinate);
+                var coordinates = neighboursCoordinates.CreateNeighboursCoordinates(coordinate);
+                graph[coordinate] = vertexFactory.CreateVertex(coordinates, coordinate);
                 graph[coordinate].Cost = costFactory.CreateCost();
                 graph[coordinate].IsObstacle = percentRange.IsObstacleChance(obstaclePercent);
             }
 
             Enumerable.Range(0, graph.Size).ForEach(AssembleVertex);
-            graph.ConnectVertices();
-            return graph;
+            return graph.ConnectVertices();
         }
 
         protected readonly IVertexCostFactory costFactory;
         protected readonly ICoordinateFactory coordinateFactory;
         protected readonly IVertexFactory vertexFactory;
         protected readonly IGraphFactory graphFactory;
-        protected readonly INeighboursCoordinatesFactory radarFactory;
+        protected readonly INeighboursCoordinatesFactory neighboursCoordinates;
         protected readonly InclusiveValueRange<int> percentRange;
     }
 }

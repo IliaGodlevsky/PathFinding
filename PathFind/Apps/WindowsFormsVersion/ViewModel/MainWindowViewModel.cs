@@ -18,7 +18,7 @@ using WindowsFormsVersion.Forms;
 using WindowsFormsVersion.View;
 
 namespace WindowsFormsVersion.ViewModel
-{
+{    
     internal class MainWindowViewModel : MainModel, INotifyPropertyChanged
     {
         public event PropertyChangedEventHandler PropertyChanged;

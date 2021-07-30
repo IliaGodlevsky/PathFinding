@@ -1,5 +1,4 @@
-﻿using Common.Extensions;
-using GraphLib.Base;
+﻿using GraphLib.Base;
 using GraphLib.Extensions;
 using GraphLib.Interfaces;
 using GraphLib.Interfaces.Factories;
@@ -27,7 +26,7 @@ namespace GraphLib.Serialization.Serializers
         {
             try
             {
-                var graphInfo = formatter.DeserializeGraphInfo(stream);
+                var graphInfo = formatter.DeserializeGraph(stream);
                 var graph = graphFactory.CreateGraph(graphInfo.DimensionsSizes);
                 BaseVertexCost.CostRange = graphInfo.CostRange;
                 return graph.AssembleFrom(graphInfo, converter).ConnectVertices();
@@ -42,7 +41,7 @@ namespace GraphLib.Serialization.Serializers
         {
             try
             {
-                formatter.Serialize(stream, graph.GetGraphSerializationInfo());
+                formatter.SerializeGraph(graph, stream);
             }
             catch (Exception ex)
             {

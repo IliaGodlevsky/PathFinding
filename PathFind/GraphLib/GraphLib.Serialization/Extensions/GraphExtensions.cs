@@ -10,7 +10,7 @@ namespace GraphLib.Serialization.Extensions
             return new GraphSerializationInfo(graph);
         }
 
-        internal static IGraph AssembleFrom(this IGraph self, 
+        internal static IGraph AssembleFrom(this IGraph self,
             GraphSerializationInfo graphInfo, IVertexFromInfoFactory factory)
         {
             foreach (var info in graphInfo.VerticesInfo)

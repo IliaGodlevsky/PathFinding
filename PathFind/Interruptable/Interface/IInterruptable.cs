@@ -1,5 +1,4 @@
 ﻿using Interruptable.EventHandlers;
-using System.ComponentModel;
 
 namespace Interruptable.Interface
 {

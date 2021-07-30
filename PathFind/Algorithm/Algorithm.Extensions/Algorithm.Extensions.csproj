@@ -41,6 +41,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AlgorithmExtensions.cs" />
     <Compile Include="EnumerableExtensions.cs" />
     <Compile Include="GraphPathExtensions.cs" />
     <Compile Include="ListExtension.cs" />
@@ -64,6 +65,10 @@
     <ProjectReference Include="..\..\GraphLib\GraphLib.NullRealizations\GraphLib.NullRealizations.csproj">
       <Project>{FA595CBF-C9AA-4D4F-AFF7-19E571C91D00}</Project>
       <Name>GraphLib.NullRealizations</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Interruptable\Interruptable.csproj">
+      <Project>{97260353-B5E4-414B-A789-C4B5568089DC}</Project>
+      <Name>Interruptable</Name>
     </ProjectReference>
     <ProjectReference Include="..\Algorithm.Common\Algorithm.Common.csproj">
       <Project>{DF721A89-3E01-4159-B51A-E5723C9FD0BA}</Project>

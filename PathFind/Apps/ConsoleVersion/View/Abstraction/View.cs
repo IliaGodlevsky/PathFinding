@@ -2,7 +2,6 @@
 using ConsoleVersion.View.Interface;
 using GraphViewModel.Interfaces;
 using Interruptable.EventArguments;
-using Interruptable.Interface;
 using System;
 using static ConsoleVersion.InputClass.Input;
 using static ConsoleVersion.Resource.Resources;

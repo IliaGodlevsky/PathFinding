@@ -1,31 +1,33 @@
-﻿using System.ComponentModel;
+﻿using System;
+using System.ComponentModel;
 
 namespace Algorithm.Algos.Enums
 {
+    [Flags]
     public enum Algorithms
     {
         [Description("Lee algorithm")]
         LeeAlgorithm = 1,
 
         [Description("Lee algorithm (heuristic")]
-        BestFirstLeeAlgorithm = 2,
+        BestFirstLeeAlgorithm = 2 << 0,
 
         [Description("Cost-first algorithm")]
-        CostGreedyAlgorithm = 3,
+        CostGreedyAlgorithm = 2 << 1,
 
         [Description("Depth-first algorithm")]
-        DepthFirstAlgorithm = 4,
+        DepthFirstAlgorithm = 2 << 2,
 
         [Description("Distance-first algorithm")]
-        DistanceFirstAlgorithm = 5,
+        DistanceFirstAlgorithm = 2 << 3,
 
         [Description("Dijkstra's algorithm")]
-        DijkstraAlgorithm = 6,
+        DijkstraAlgorithm = 2 << 4,
 
         [Description("A* algorithm")]
-        AStarAlgorithm = 7,
+        AStarAlgorithm = 2 << 5,
 
         [Description("A* algorithm (modified)")]
-        AStarModifiedAlgorithm = 8
+        AStarModifiedAlgorithm = 2 << 6
     }
 }
