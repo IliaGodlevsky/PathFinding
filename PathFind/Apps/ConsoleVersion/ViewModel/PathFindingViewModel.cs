@@ -74,7 +74,7 @@ namespace ConsoleVersion.ViewModel
         [MenuItem(Constants.InputDelayTime)]
         public void InputDelayTime()
         {
-            if (IsProcessDisplayingRequired)
+            if (IsVisualizationRequired)
             {
                 DelayTime = InputNumber(DelayTimeInputMsg, AlgorithmDelayTimeValueRange);
             }
@@ -115,11 +115,11 @@ namespace ConsoleVersion.ViewModel
             mainViewModel.ClearGraph();
         }
 
-        [MenuItem(Constants.Visualization, MenuItemPriority.Low)]
-        public void ChooseIsDisplayingRequired()
+        [MenuItem(Constants.ApplyVisualization, MenuItemPriority.Low)]
+        public void ApplyVisualization()
         {
             int input = InputNumber(VisualizationMsg, Yes, No);
-            IsProcessDisplayingRequired = input == Yes;
+            IsVisualizationRequired = input == Yes;
         }
 
         private IVertex ChooseVertex(string message)

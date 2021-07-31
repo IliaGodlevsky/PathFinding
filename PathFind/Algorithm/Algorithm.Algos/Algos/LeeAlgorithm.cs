@@ -19,7 +19,7 @@ namespace Algorithm.Algos.Algos
         protected override void PrepareForPathfinding()
         {
             base.PrepareForPathfinding();
-            var vertices = graph.Vertices.FilterObstacles();
+            var vertices = graph.GetNotObstacles();
             accumulatedCosts = new AccumulatedCosts(vertices, 0);
         }
 
@@ -41,7 +41,6 @@ namespace Algorithm.Algos.Algos
             }
         }
 
-        #region Relaxing
         protected virtual double CreateWave()
         {
             return accumulatedCosts.GetAccumulatedCost(CurrentVertex) + 1;
@@ -64,6 +63,5 @@ namespace Algorithm.Algos.Algos
                 .Where(VertexIsUnwaved)
                 .ForEach(RelaxNeighbour);
         }
-        #endregion
     }
 }

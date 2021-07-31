@@ -28,7 +28,7 @@ namespace WindowsFormsVersion.View
             var bindingVisualize = new Binding(
                 nameof(visualizeCheckBox.Checked),
                 model,
-                nameof(model.IsProcessDisplayingRequired));
+                nameof(model.IsVisualizationRequired));
             visualizeCheckBox.DataBindings.Add(bindingVisualize);
 
             var bindingDelaySliderToDelayTextBox = new Binding(

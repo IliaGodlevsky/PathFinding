@@ -23,33 +23,33 @@ namespace GraphViewModel
 {
     public abstract class PathFindingModel : IModel
     {
-        public bool IsProcessDisplayingRequired { get; set; }
+        public bool IsVisualizationRequired { get; set; } = true;
 
-        public int DelayTime { get; set; }
+        public int DelayTime { get; set; } = 4;
 
         public Algorithms Algorithm { get; set; }
 
-        public IDictionary<string, Algorithms> Algorithms => algorithms.Value;
+        public IDictionary<string, Algorithms> Algorithms { get; }
 
-        protected PathFindingModel(ILog log, IMainModel mainViewModel, BaseEndPoints endPoints)
+        protected PathFindingModel(ILog log, 
+            IMainModel mainViewModel, BaseEndPoints endPoints)
         {
-            algorithms = new Lazy<IDictionary<string, Algorithms>>(GetAlgorithmsDictinary);
+            Algorithms = GetAlgorithmsDictinary();
             this.mainViewModel = mainViewModel;
             this.endPoints = endPoints;
             this.log = log;
-            DelayTime = 4;
             graph = mainViewModel.Graph;
             timer = new Stopwatch();
             path = new NullGraphPath();
             algorithm = new NullAlgorithm();
-            IsProcessDisplayingRequired = true;
         }
 
         public virtual async void FindPath()
         {
             try
             {
-                algorithm = AlgoFactory.CreateAlgorithm(Algorithm, graph, endPoints);
+                algorithm = AlgoFactory
+                    .CreateAlgorithm(Algorithm, graph, endPoints);
                 SubscribeOnAlgorithmEvents();
                 path = await algorithm.FindPathAsync();
                 Summarize();
@@ -110,23 +110,17 @@ namespace GraphViewModel
             timer.Start();
         }
 
-        protected readonly BaseEndPoints endPoints;
-        protected readonly IMainModel mainViewModel;
-        protected readonly ILog log;
-        protected ISuspendable interrupter;
-        protected IAlgorithm algorithm;
-        protected IGraphPath path;
-
         private string GetStatistics()
         {
             string timerInfo = timer.Elapsed.ToString(@"mm\:ss\.ff");
-            string graphInfo = string.Format(StatisticsFormat, path.PathLength, path.PathCost, visitedVerticesCount);
-            return string.Join("    ", ((Enum)Algorithm).GetDescription(), timerInfo, graphInfo);
+            string algorithmName = ((Enum)Algorithm).GetDescription();
+            string pathfindingInfo = string.Format(StatisticsFormat, PathfindingInfo);
+            return string.Join("    ", algorithmName, timerInfo, pathfindingInfo);
         }
 
         private void SubscribeOnAlgorithmEvents()
         {
-            if (IsProcessDisplayingRequired)
+            if (IsVisualizationRequired)
             {
                 algorithm.OnVertexEnqueued += OnVertexEnqueued;
                 algorithm.OnVertexVisited += OnVertexVisited;
@@ -146,7 +140,15 @@ namespace GraphViewModel
                 .AsDictionary();
         }
 
-        private readonly Lazy<IDictionary<string, Algorithms>> algorithms;
+        private object[] PathfindingInfo 
+            => new object[] { path.PathLength, path.PathCost, visitedVerticesCount };
+
+        protected readonly BaseEndPoints endPoints;
+        protected readonly IMainModel mainViewModel;
+        protected readonly ILog log;
+        protected ISuspendable interrupter;
+        protected IAlgorithm algorithm;
+        protected IGraphPath path;
         private readonly IGraph graph;
         private readonly Stopwatch timer;
         private int visitedVerticesCount;

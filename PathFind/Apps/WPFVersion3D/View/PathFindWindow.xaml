@@ -23,8 +23,8 @@
         </Grid.RowDefinitions>
 
         <StackPanel HorizontalAlignment="Left" Orientation="Horizontal" Grid.Row="2">
-            <CheckBox Margin="5" x:Name="ProcessDisplayRequire" IsChecked="{Binding IsProcessDisplayingRequired}"/>
-            <TextBlock Margin="5" Text="Display pathfinding"/>
+            <CheckBox Margin="5" x:Name="ProcessDisplayRequire" IsChecked="{Binding IsVisualizationRequired}"/>
+            <TextBlock Margin="5" Text="Apply visualization"/>
         </StackPanel>
         <StackPanel HorizontalAlignment="Center"  Orientation="Horizontal" Grid.Row="3">
             <Button Command="{Binding ConfirmPathFindAlgorithmChoice}"  Margin ="5" Content="Start"></Button>

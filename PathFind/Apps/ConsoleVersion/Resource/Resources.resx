@@ -150,9 +150,6 @@
   <data name="StartVertexPointInputMsg" xml:space="preserve">
     <value>Start point: </value>
   </data>
-  <data name="TryToLoadSavedGraph" xml:space="preserve">
-    <value>Try to load saved graph</value>
-  </data>
   <data name="UpperValueOfRangeMsg" xml:space="preserve">
     <value>Enter upper vertices cost value: </value>
   </data>
@@ -160,7 +157,7 @@
     <value>Enter new top value: </value>
   </data>
   <data name="VisualizationMsg" xml:space="preserve">
-    <value>Show pathfingin? &lt;1 - yes/0 - no&gt;: </value>
+    <value>Apply visualization? &lt;1 - yes/0 - no&gt;: </value>
   </data>
   <data name="WidthInputMsg" xml:space="preserve">
     <value>Enter width of graph: </value>

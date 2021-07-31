@@ -160,15 +160,6 @@ namespace ConsoleVersion.Resource {
         }
         
         /// <summary>
-        ///   Ищет локализованную строку, похожую на Try to load saved graph.
-        /// </summary>
-        internal static string TryToLoadSavedGraph {
-            get {
-                return ResourceManager.GetString("TryToLoadSavedGraph", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Ищет локализованную строку, похожую на Enter upper vertices cost value: .
         /// </summary>
         internal static string UpperValueOfRangeMsg {
@@ -187,7 +178,7 @@ namespace ConsoleVersion.Resource {
         }
         
         /// <summary>
-        ///   Ищет локализованную строку, похожую на Show pathfingin? &lt;1 - yes/0 - no&gt;: .
+        ///   Ищет локализованную строку, похожую на Apply visualization? &lt;1 - yes/0 - no&gt;: .
         /// </summary>
         internal static string VisualizationMsg {
             get {

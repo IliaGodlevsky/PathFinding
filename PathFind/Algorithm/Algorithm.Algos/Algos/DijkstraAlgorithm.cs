@@ -56,7 +56,7 @@ namespace Algorithm.Algos.Algos
         {
             base.PrepareForPathfinding();
 
-            var vertices = graph.Vertices.Except(endPoints.Source).FilterObstacles();
+            var vertices = graph.GetNotObstacles().Except(endPoints.Source);
             accumulatedCosts = new AccumulatedCosts(vertices, double.PositiveInfinity);
             accumulatedCosts.Reevaluate(endPoints.Source, default);
         }

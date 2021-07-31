@@ -21,8 +21,8 @@
             <RowDefinition Height="Auto"></RowDefinition>
         </Grid.RowDefinitions>
         <StackPanel HorizontalAlignment="Left" Orientation="Horizontal" Grid.Row="2">
-            <CheckBox Margin="5" x:Name="ProcessDisplayRequire" IsChecked="{Binding IsProcessDisplayingRequired}"/>
-            <TextBlock Margin="5" Text="Display pathfinding"/>
+            <CheckBox Margin="5" x:Name="ProcessDisplayRequire" IsChecked="{Binding IsVisualizationRequired}"/>
+            <TextBlock Margin="5" Text="Apply visualization"/>
         </StackPanel>
         <StackPanel HorizontalAlignment="Center"  
                     Orientation="Horizontal" 
@@ -54,7 +54,7 @@
               Grid.Row="1">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="Auto"></RowDefinition>
-                    <RowDefinition Height="Auto"></RowDefinition>
+                    <RowDefinition Height="*"></RowDefinition>
                 </Grid.RowDefinitions>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="Auto"></ColumnDefinition>
@@ -71,7 +71,7 @@
                 <model:RangedSlider Grid.Row="1" 
                         Value ="{Binding Path=DelayTime}" 
                         x:Name="delayTimeSlider" 
-                        MinWidth="160"
+                        MinWidth="70"
                         ValueRange="{x:Static range:Constants.AlgorithmDelayTimeValueRange}"
                         Margin="5"></model:RangedSlider>
             
