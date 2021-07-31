@@ -3,9 +3,6 @@ using Algorithm.Algos.Enums;
 using Algorithm.Common;
 using Algorithm.Interfaces;
 using GraphLib.Interfaces;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 
 namespace Algorithm.Algos
 {
@@ -42,19 +39,6 @@ namespace Algorithm.Algos
 
                 default:
                     return new NullAlgorithm();
-            }
-        }
-
-        public static IEnumerable<IAlgorithm> CreateAlgorithms(Algorithms algorithm,
-            IGraph graph, IEndPoints endPoints)
-        {
-            var algorithms = Enum.GetValues(typeof(Algorithms)).Cast<Algorithms>();
-            foreach(var algo in algorithms)
-            {
-                if((algo & algorithm) == algo)
-                {
-                    yield return CreateAlgorithm(algo, graph, endPoints);
-                }
             }
         }
     }

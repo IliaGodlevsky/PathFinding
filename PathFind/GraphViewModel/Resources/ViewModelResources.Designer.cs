@@ -95,14 +95,5 @@ namespace GraphViewModel.Resources {
                 return ResourceManager.GetString("StatisticsFormat", resourceCulture);
             }
         }
-        
-        /// <summary>
-        ///   Ищет локализованную строку, похожую на Time: {0}:{1}.{2}.
-        /// </summary>
-        internal static string TimerInfoFormat {
-            get {
-                return ResourceManager.GetString("TimerInfoFormat", resourceCulture);
-            }
-        }
     }
 }

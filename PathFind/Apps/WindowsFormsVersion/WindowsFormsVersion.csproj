@@ -58,6 +58,8 @@
   <ItemGroup>
     <Compile Include="Configure\ContainerConfigure.cs" />
     <Compile Include="Constants.cs" />
+    <Compile Include="EventArguments\StatisticsChangedEventArgs.cs" />
+    <Compile Include="EventHandlers\StatisticsChangedEventHandler.cs" />
     <Compile Include="Extensions\ConstrolCollectionExtension.cs" />
     <Compile Include="Extensions\ControlExtension.cs" />
     <Compile Include="Model\EndPoints.cs" />

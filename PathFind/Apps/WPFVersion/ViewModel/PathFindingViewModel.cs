@@ -8,7 +8,6 @@ using System;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using System.Windows.Input;
-using System.Windows.Threading;
 using WPFVersion.Infrastructure;
 
 namespace WPFVersion.ViewModel
@@ -59,22 +58,6 @@ namespace WPFVersion.ViewModel
                 mainModel.CanInterruptAlgorithm = false;
                 mainModel.OnAlgorithmInterrupted -= InterruptAlgorithm;
             }
-        }
-
-        protected override void ColorizeProcessedVertices(object sender, AlgorithmEventArgs e)
-        {
-            var frame = new DispatcherFrame();
-
-            var callback = new DispatcherOperationCallback(arg =>
-            {
-                ((DispatcherFrame)arg).Continue = false;
-                return null;
-            });
-
-            var priority = DispatcherPriority.Background;
-
-            Dispatcher.CurrentDispatcher.BeginInvoke(priority, callback, frame);
-            Dispatcher.PushFrame(frame);
         }
 
         private void ExecuteCloseWindowCommand(object param)

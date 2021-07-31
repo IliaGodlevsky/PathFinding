@@ -72,6 +72,7 @@
     <Compile Include="Axes\Abscissa.cs" />
     <Compile Include="Axes\Applicate.cs" />
     <Compile Include="Axes\Ordinate.cs" />
+    <Compile Include="Converters\BoolToVisibilityConverter.cs" />
     <Compile Include="Enums\AnimationSpeed.cs" />
     <Compile Include="Model3DFactories\ToricalModel3DFactory.cs" />
     <Compile Include="Model\RectangleModel3DFactory.cs" />

@@ -7,7 +7,7 @@ namespace Algorithm.Extensions
     {
         public static async Task<IGraphPath> FindPathAsync(this IAlgorithm self)
         {
-            return await Task.Run(() => self.FindPath());
+            return await Task.Run(self.FindPath);
         }
     }
 }

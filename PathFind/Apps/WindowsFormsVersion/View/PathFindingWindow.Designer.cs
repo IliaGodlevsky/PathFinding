@@ -34,74 +34,90 @@
             this.delaySlider = new System.Windows.Forms.TrackBar();
             this.delayTextBox = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
+            this.visualizeCheckBox = new System.Windows.Forms.CheckBox();
             ((System.ComponentModel.ISupportInitialize)(this.delaySlider)).BeginInit();
             this.SuspendLayout();
             // 
             // algorithmListBox
             // 
             this.algorithmListBox.FormattingEnabled = true;
-            this.algorithmListBox.Location = new System.Drawing.Point(21, 8);
-            this.algorithmListBox.Margin = new System.Windows.Forms.Padding(2);
+            this.algorithmListBox.ItemHeight = 16;
+            this.algorithmListBox.Location = new System.Drawing.Point(28, 10);
+            this.algorithmListBox.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.algorithmListBox.Name = "algorithmListBox";
-            this.algorithmListBox.Size = new System.Drawing.Size(166, 108);
+            this.algorithmListBox.Size = new System.Drawing.Size(220, 132);
             this.algorithmListBox.TabIndex = 0;
             // 
             // okButton
             // 
-            this.okButton.Location = new System.Drawing.Point(21, 194);
-            this.okButton.Margin = new System.Windows.Forms.Padding(2);
+            this.okButton.Location = new System.Drawing.Point(28, 276);
+            this.okButton.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.okButton.Name = "okButton";
-            this.okButton.Size = new System.Drawing.Size(50, 21);
+            this.okButton.Size = new System.Drawing.Size(67, 26);
             this.okButton.TabIndex = 1;
             this.okButton.Text = "Ok";
             this.okButton.UseVisualStyleBackColor = true;
             // 
             // cancelButton
             // 
-            this.cancelButton.Location = new System.Drawing.Point(137, 194);
-            this.cancelButton.Margin = new System.Windows.Forms.Padding(2);
+            this.cancelButton.Location = new System.Drawing.Point(181, 276);
+            this.cancelButton.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.cancelButton.Name = "cancelButton";
-            this.cancelButton.Size = new System.Drawing.Size(50, 21);
+            this.cancelButton.Size = new System.Drawing.Size(67, 26);
             this.cancelButton.TabIndex = 2;
             this.cancelButton.Text = "Cancel";
             this.cancelButton.UseVisualStyleBackColor = true;
             // 
             // delaySlider
             // 
-            this.delaySlider.Location = new System.Drawing.Point(21, 144);
+            this.delaySlider.Location = new System.Drawing.Point(28, 177);
+            this.delaySlider.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.delaySlider.Name = "delaySlider";
-            this.delaySlider.Size = new System.Drawing.Size(117, 45);
+            this.delaySlider.Size = new System.Drawing.Size(156, 56);
             this.delaySlider.TabIndex = 3;
             // 
             // delayTextBox
             // 
-            this.delayTextBox.Location = new System.Drawing.Point(144, 144);
+            this.delayTextBox.Location = new System.Drawing.Point(192, 177);
+            this.delayTextBox.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.delayTextBox.Name = "delayTextBox";
-            this.delayTextBox.Size = new System.Drawing.Size(43, 20);
+            this.delayTextBox.Size = new System.Drawing.Size(56, 22);
             this.delayTextBox.TabIndex = 4;
             // 
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(67, 118);
+            this.label1.Location = new System.Drawing.Point(89, 145);
+            this.label1.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(82, 13);
+            this.label1.Size = new System.Drawing.Size(110, 17);
             this.label1.TabIndex = 5;
             this.label1.Text = "Algorithm speed";
             // 
-            // PathFindWindow
+            // visualizeCheckBox
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            this.visualizeCheckBox.AutoSize = true;
+            this.visualizeCheckBox.Location = new System.Drawing.Point(33, 229);
+            this.visualizeCheckBox.Name = "visualizeCheckBox";
+            this.visualizeCheckBox.Size = new System.Drawing.Size(160, 21);
+            this.visualizeCheckBox.TabIndex = 6;
+            this.visualizeCheckBox.Text = "Visualize pathfinding";
+            this.visualizeCheckBox.UseVisualStyleBackColor = true;
+            // 
+            // PathFindingWindow
+            // 
+            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(208, 226);
+            this.ClientSize = new System.Drawing.Size(277, 313);
+            this.Controls.Add(this.visualizeCheckBox);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.delayTextBox);
             this.Controls.Add(this.delaySlider);
             this.Controls.Add(this.cancelButton);
             this.Controls.Add(this.okButton);
             this.Controls.Add(this.algorithmListBox);
-            this.Margin = new System.Windows.Forms.Padding(2);
-            this.Name = "PathFindWindow";
+            this.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.Name = "PathFindingWindow";
             this.Text = "PathFindWindow";
             ((System.ComponentModel.ISupportInitialize)(this.delaySlider)).EndInit();
             this.ResumeLayout(false);
@@ -117,5 +133,6 @@
         private System.Windows.Forms.TrackBar delaySlider;
         private System.Windows.Forms.TextBox delayTextBox;
         private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.CheckBox visualizeCheckBox;
     }
 }

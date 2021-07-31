@@ -67,6 +67,7 @@
     </ApplicationDefinition>
     <Compile Include="Configure\ContainerConfigure.cs" />
     <Compile Include="Constants.cs" />
+    <Compile Include="Converters\BoolToVisibilityConverter.cs" />
     <Compile Include="Converters\PrecisedDoubleToStringConverter.cs" />
     <Compile Include="Converters\IntToStringConverter.cs" />
     <Compile Include="Infrastructure\RelayCommand.cs" />

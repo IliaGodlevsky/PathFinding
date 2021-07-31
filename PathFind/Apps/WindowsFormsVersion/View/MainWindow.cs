@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Windows.Forms;
+using WindowsFormsVersion.EventArguments;
 using WindowsFormsVersion.ViewModel;
 
 namespace WindowsFormsVersion.Forms
@@ -18,6 +19,9 @@ namespace WindowsFormsVersion.Forms
             mainModel = model;
             mainModel.MainWindow = this;
 
+            statistics.Text = string.Empty;
+            statistics.Update();
+
             var events = new List<EventHandler>()
             {
                 mainModel.SaveGraph,
@@ -32,11 +36,7 @@ namespace WindowsFormsVersion.Forms
             weightedButton.GroupID = 1;
             unweightedButton.GroupID = 1;
 
-            var bindingStatistics = new Binding(
-                nameof(statistics.Text),
-                mainModel,
-                nameof(mainModel.PathFindingStatistics));
-            statistics.DataBindings.Add(bindingStatistics);
+            mainModel.OnStatisticsChanged += OnStatisticsChanged;
 
             var bindingParametres = new Binding(
                 nameof(parametres.Text),
@@ -48,6 +48,12 @@ namespace WindowsFormsVersion.Forms
             {
                 menu.Items[i].Click += events[i];
             }
+        }
+
+        private void OnStatisticsChanged(object sender, StatisticsChangedEventArgs e)
+        {
+            statistics.Invoke(new Action(() => { statistics.Text = e.Statistics; }));
+            statistics.Invoke(new Action(() => { statistics.Update(); }));
         }
     }
 }

@@ -1,4 +1,5 @@
-﻿using ConsoleVersion.Model;
+﻿using Common.Extensions;
+using ConsoleVersion.Model;
 using ConsoleVersion.View.FramedAxes;
 using ConsoleVersion.View.Interface;
 using GraphLib.Interfaces;
@@ -32,6 +33,6 @@ namespace ConsoleVersion.View
             displayables.ForEach(item => item.Display());
         }
 
-        private readonly List<IDisplayable> displayables;
+        private readonly IList<IDisplayable> displayables;
     }
 }

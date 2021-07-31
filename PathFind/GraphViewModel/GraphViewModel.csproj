@@ -58,7 +58,6 @@
       <DependentUpon>ViewModelResources.resx</DependentUpon>
     </Compile>
     <Compile Include="SaveLoadGraph.cs" />
-    <Compile Include="VertexMark.cs" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Resources\ViewModelResources.resx">

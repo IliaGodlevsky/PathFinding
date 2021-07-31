@@ -12,15 +12,21 @@
         SizeToContent="WidthAndHeight">
     <Window.Resources>
         <converters:IntToStringConverter x:Key="intToStringConverter"/>
+        <converters:BoolToVisibilityConverter x:Key="boolToVisibiltyConverter"/>
     </Window.Resources>
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"></RowDefinition>
-            <RowDefinition Height="*"></RowDefinition>
+            <RowDefinition Height="Auto"></RowDefinition>
+            <RowDefinition Height="Auto"></RowDefinition>
             <RowDefinition Height="Auto"></RowDefinition>
         </Grid.RowDefinitions>
-        
-        <StackPanel HorizontalAlignment="Center"  Orientation="Horizontal" Grid.Row="2">
+
+        <StackPanel HorizontalAlignment="Left" Orientation="Horizontal" Grid.Row="2">
+            <CheckBox Margin="5" x:Name="ProcessDisplayRequire" IsChecked="{Binding IsProcessDisplayingRequired}"/>
+            <TextBlock Margin="5" Text="Display pathfinding"/>
+        </StackPanel>
+        <StackPanel HorizontalAlignment="Center"  Orientation="Horizontal" Grid.Row="3">
             <Button Command="{Binding ConfirmPathFindAlgorithmChoice}"  Margin ="5" Content="Start"></Button>
             <Button Command="{Binding CancelPathFindAlgorithmChoice}" Margin ="5" Content="Cancel"></Button>
         </StackPanel>
@@ -35,8 +41,8 @@
                 </DataTemplate>
             </ListBox.ItemTemplate>
         </ListBox>
-        
-        <Grid Grid.Row="1">
+
+        <Grid Visibility="{Binding ElementName=ProcessDisplayRequire, Path=IsChecked, Converter={StaticResource boolToVisibiltyConverter}}" Grid.Row="1">
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto"></RowDefinition>
                 <RowDefinition Height="Auto"></RowDefinition>

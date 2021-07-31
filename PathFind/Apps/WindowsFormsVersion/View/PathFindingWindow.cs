@@ -25,6 +25,12 @@ namespace WindowsFormsVersion.View
                 nameof(model.Algorithm));
             algorithmListBox.DataBindings.Add(algorithmBinding);
 
+            var bindingVisualize = new Binding(
+                nameof(visualizeCheckBox.Checked),
+                model,
+                nameof(model.IsProcessDisplayingRequired));
+            visualizeCheckBox.DataBindings.Add(bindingVisualize);
+
             var bindingDelaySliderToDelayTextBox = new Binding(
                 nameof(delaySlider.Value),
                 delayTextBox,

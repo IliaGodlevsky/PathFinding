@@ -13,15 +13,18 @@ using System.ComponentModel;
 using System.Drawing;
 using System.Runtime.CompilerServices;
 using System.Windows.Forms;
+using WindowsFormsVersion.EventArguments;
+using WindowsFormsVersion.EventHandlers;
 using WindowsFormsVersion.Extensions;
 using WindowsFormsVersion.Forms;
 using WindowsFormsVersion.View;
 
 namespace WindowsFormsVersion.ViewModel
-{    
+{
     internal class MainWindowViewModel : MainModel, INotifyPropertyChanged
     {
         public event PropertyChangedEventHandler PropertyChanged;
+        public event StatisticsChangedEventHandler OnStatisticsChanged;
 
         protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = "")
         {
@@ -39,7 +42,11 @@ namespace WindowsFormsVersion.ViewModel
         public override string PathFindingStatistics
         {
             get => statistics;
-            set { statistics = value; OnPropertyChanged(); }
+            set
+            {
+                statistics = value;
+                OnStatisticsChanged?.Invoke(this, new StatisticsChangedEventArgs(value));
+            }
         }
 
         private IGraphField graphField;

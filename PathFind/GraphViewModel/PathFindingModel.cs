@@ -23,6 +23,8 @@ namespace GraphViewModel
 {
     public abstract class PathFindingModel : IModel
     {
+        public bool IsProcessDisplayingRequired { get; set; }
+
         public int DelayTime { get; set; }
 
         public Algorithms Algorithm { get; set; }
@@ -38,18 +40,18 @@ namespace GraphViewModel
             DelayTime = 4;
             graph = mainViewModel.Graph;
             timer = new Stopwatch();
-            vertexMark = new VertexMark();
             path = new NullGraphPath();
             algorithm = new NullAlgorithm();
+            IsProcessDisplayingRequired = true;
         }
 
-        public virtual void FindPath()
+        public virtual async void FindPath()
         {
             try
             {
                 algorithm = AlgoFactory.CreateAlgorithm(Algorithm, graph, endPoints);
                 SubscribeOnAlgorithmEvents();
-                path = algorithm.FindPath();
+                path = await algorithm.FindPathAsync();
                 Summarize();
             }
             catch (Exception ex)
@@ -63,22 +65,35 @@ namespace GraphViewModel
             }
         }
 
-        protected abstract void ColorizeProcessedVertices(object sender, AlgorithmEventArgs e);
-
         protected virtual void OnVertexVisited(object sender, AlgorithmEventArgs e)
         {
+            if (!e.IsEndPoint && e.Vertex is IMarkable vertex)
+            {
+                vertex.MarkAsVisited();
+            }
             visitedVerticesCount = e.VisitedVertices;
             mainViewModel.PathFindingStatistics = GetStatistics();
+            interrupter.Suspend();
+        }
+
+        protected virtual void OnVertexEnqueued(object sender, AlgorithmEventArgs e)
+        {
+            if (!e.IsEndPoint && e.Vertex is IMarkable vertex)
+            {
+                vertex.MarkAsEnqueued();
+            }
         }
 
         protected virtual void OnAlgorithmInterrupted(object sender, InterruptEventArgs e)
         {
             log.Warn(AlgorithmInterruptedMsg);
+            timer.Stop();
         }
 
         protected virtual void OnAlgorithmFinished(object sender, AlgorithmEventArgs e)
         {
             visitedVerticesCount = e.VisitedVertices;
+            timer.Stop();
         }
 
         protected virtual void Summarize()
@@ -91,6 +106,8 @@ namespace GraphViewModel
         protected virtual void OnAlgorithmStarted(object sender, AlgorithmEventArgs e)
         {
             interrupter = new Interrupter(DelayTime);
+            timer.Reset();
+            timer.Start();
         }
 
         protected readonly BaseEndPoints endPoints;
@@ -102,25 +119,20 @@ namespace GraphViewModel
 
         private string GetStatistics()
         {
-            string timerInfo = timer.GetTimeInformation(TimerInfoFormat);
-            string graphInfo = string.Format(StatisticsFormat, path.PathLength,
-                path.PathCost, visitedVerticesCount);
-            return string.Join("\t", ((Enum)Algorithm).GetDescription(), timerInfo, graphInfo);
+            string timerInfo = timer.Elapsed.ToString(@"mm\:ss\.ff");
+            string graphInfo = string.Format(StatisticsFormat, path.PathLength, path.PathCost, visitedVerticesCount);
+            return string.Join("    ", ((Enum)Algorithm).GetDescription(), timerInfo, graphInfo);
         }
 
         private void SubscribeOnAlgorithmEvents()
         {
-            algorithm.OnVertexEnqueued += vertexMark.OnVertexEnqueued;
-            algorithm.OnVertexVisited += OnVertexVisited;
-            algorithm.OnVertexVisited += (s, e) => interrupter.Suspend();
-            algorithm.OnVertexVisited += ColorizeProcessedVertices;
-            algorithm.OnVertexVisited += vertexMark.OnVertexVisited;
+            if (IsProcessDisplayingRequired)
+            {
+                algorithm.OnVertexEnqueued += OnVertexEnqueued;
+                algorithm.OnVertexVisited += OnVertexVisited;
+            }
             algorithm.OnFinished += OnAlgorithmFinished;
-            algorithm.OnFinished += (s, e) => timer.Stop();
             algorithm.OnStarted += OnAlgorithmStarted;
-            algorithm.OnStarted += (s, e) => timer.Reset();
-            algorithm.OnStarted += (s, e) => timer.Start();
-            algorithm.OnInterrupted += (s, e) => timer.Stop();
             algorithm.OnInterrupted += OnAlgorithmInterrupted;
         }
 
@@ -135,7 +147,6 @@ namespace GraphViewModel
         }
 
         private readonly Lazy<IDictionary<string, Algorithms>> algorithms;
-        private readonly VertexMark vertexMark;
         private readonly IGraph graph;
         private readonly Stopwatch timer;
         private int visitedVerticesCount;

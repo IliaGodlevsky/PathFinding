@@ -9,7 +9,7 @@ namespace Algorithm.Algos.Enums
         [Description("Lee algorithm")]
         LeeAlgorithm = 1,
 
-        [Description("Lee algorithm (heuristic")]
+        [Description("Lee algorithm (heuristic)")]
         BestFirstLeeAlgorithm = 2 << 0,
 
         [Description("Cost-first algorithm")]

@@ -1,5 +1,4 @@
-﻿using Algorithm.Infrastructure.EventArguments;
-using Common.ValueRanges;
+﻿using Common.ValueRanges;
 using ConsoleVersion.Attributes;
 using ConsoleVersion.Enums;
 using ConsoleVersion.Model;
@@ -24,6 +23,9 @@ namespace ConsoleVersion.ViewModel
 {
     internal sealed class PathFindingViewModel : PathFindingModel, IInterruptable
     {
+        private const int Yes = 1;
+        private const int No = 0;
+
         public event InterruptEventHanlder OnInterrupted;
 
         public string AlgorithmKeyInputMessage { private get; set; }
@@ -72,7 +74,10 @@ namespace ConsoleVersion.ViewModel
         [MenuItem(Constants.InputDelayTime)]
         public void InputDelayTime()
         {
-            DelayTime = InputNumber(DelayTimeInputMsg, AlgorithmDelayTimeValueRange);
+            if (IsProcessDisplayingRequired)
+            {
+                DelayTime = InputNumber(DelayTimeInputMsg, AlgorithmDelayTimeValueRange);
+            }
         }
 
         [MenuItem(Constants.Exit, MenuItemPriority.Lowest)]
@@ -100,7 +105,7 @@ namespace ConsoleVersion.ViewModel
             }
             else
             {
-                log.Warn("No vertices to choose as end points\n");
+                log.Warn("No vertices to choose as end points");
             }
         }
 
@@ -110,7 +115,12 @@ namespace ConsoleVersion.ViewModel
             mainViewModel.ClearGraph();
         }
 
-        protected override void ColorizeProcessedVertices(object sender, AlgorithmEventArgs e) { }
+        [MenuItem(Constants.Visualization, MenuItemPriority.Low)]
+        public void ChooseIsDisplayingRequired()
+        {
+            int input = InputNumber(VisualizationMsg, Yes, No);
+            IsProcessDisplayingRequired = input == Yes;
+        }
 
         private IVertex ChooseVertex(string message)
         {
