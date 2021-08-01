@@ -17,18 +17,14 @@ namespace Algorithm.Infrastructure.EventArguments
 
         }
 
-        public AlgorithmEventArgs(int visitedVertices,
-            IEndPoints endPoints = null, IVertex vertex = null)
+        public AlgorithmEventArgs(int visitedVertices, IVertex vertex = null)
         {
-            Vertex = vertex ?? new NullVertex();
-            IsEndPoint = endPoints?.IsEndPoint(Vertex) ?? false;
+            CurrentVertex = vertex ?? new NullVertex();
             VisitedVertices = visitedVertices;
         }
 
-        public IVertex Vertex { get; }
+        public IVertex CurrentVertex { get; }
 
         public int VisitedVertices { get; }
-
-        public bool IsEndPoint { get; }
     }
 }

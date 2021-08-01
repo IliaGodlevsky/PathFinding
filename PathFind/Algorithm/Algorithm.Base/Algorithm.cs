@@ -106,7 +106,7 @@ namespace Algorithm.Base
 
         protected virtual AlgorithmEventArgs CreateEventArgs(IVertex vertex)
         {
-            return new AlgorithmEventArgs(visitedVertices.Count, endPoints, vertex);
+            return new AlgorithmEventArgs(visitedVertices.Count, vertex);
         }
 
         protected ICoordinate Position(IVertex vertex)

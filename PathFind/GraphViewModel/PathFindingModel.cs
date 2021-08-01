@@ -4,9 +4,7 @@ using Algorithm.Common;
 using Algorithm.Extensions;
 using Algorithm.Infrastructure.EventArguments;
 using Algorithm.Interfaces;
-using Common;
 using Common.Extensions;
-using Common.Interface;
 using GraphLib.Base;
 using GraphLib.Interfaces;
 using GraphViewModel.Interfaces;
@@ -16,7 +14,7 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
-
+using System.Threading;
 using static GraphViewModel.Resources.ViewModelResources;
 
 namespace GraphViewModel
@@ -67,18 +65,18 @@ namespace GraphViewModel
 
         protected virtual void OnVertexVisited(object sender, AlgorithmEventArgs e)
         {
-            if (!e.IsEndPoint && e.Vertex is IMarkable vertex)
+            if (!endPoints.IsEndPoint(e.CurrentVertex) && e.CurrentVertex is IMarkable vertex)
             {
                 vertex.MarkAsVisited();
             }
             visitedVerticesCount = e.VisitedVertices;
             mainViewModel.PathFindingStatistics = GetStatistics();
-            interrupter.Suspend();
+            Thread.Sleep(DelayTime);
         }
 
         protected virtual void OnVertexEnqueued(object sender, AlgorithmEventArgs e)
         {
-            if (!e.IsEndPoint && e.Vertex is IMarkable vertex)
+            if (!endPoints.IsEndPoint(e.CurrentVertex) && e.CurrentVertex is IMarkable vertex)
             {
                 vertex.MarkAsEnqueued();
             }
@@ -105,7 +103,6 @@ namespace GraphViewModel
 
         protected virtual void OnAlgorithmStarted(object sender, AlgorithmEventArgs e)
         {
-            interrupter = new Interrupter(DelayTime);
             timer.Reset();
             timer.Start();
         }
@@ -146,7 +143,6 @@ namespace GraphViewModel
         protected readonly BaseEndPoints endPoints;
         protected readonly IMainModel mainViewModel;
         protected readonly ILog log;
-        protected ISuspendable interrupter;
         protected IAlgorithm algorithm;
         protected IGraphPath path;
         private readonly IGraph graph;
