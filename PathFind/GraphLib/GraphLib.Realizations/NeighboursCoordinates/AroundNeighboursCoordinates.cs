@@ -49,7 +49,7 @@ namespace GraphLib.Realizations.NeighboursCoordinates
         private List<ICoordinate> DetectNeighboursCoordinates(int depth = 0)
         {
             var neighbourCoordinates = new List<ICoordinate>();
-            foreach (var offset in lateralOffsetMatrix)
+            foreach (int offset in lateralOffsetMatrix)
             {
                 resultCoordinatesValues[depth] = selfCoordinatesValues[depth] + offset;
                 if (depth < limitDepth - 1)

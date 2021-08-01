@@ -19,12 +19,10 @@ namespace GraphLib.Extensions
         /// or any of parametres is null</returns>
         public static bool IsEqual(this ICoordinate self, ICoordinate coordinate)
         {
-            #region InvariantsObservance
             if (self == null || coordinate == null)
             {
                 return false;
             }
-            #endregion
 
             return self.CoordinatesValues.SequenceEqual(coordinate.CoordinatesValues);
         }
@@ -78,12 +76,10 @@ namespace GraphLib.Extensions
         /// <exception cref="ArgumentNullException">Thrown when any of parametres is null</exception>
         public static bool IsWithinGraph(this ICoordinate self, IGraph graph, Func<int, int, bool> predicate)
         {
-            #region InvariantsObservance
             if (graph == null)
             {
                 throw new ArgumentNullException(nameof(graph));
             }
-            #endregion
 
             return self.CoordinatesValues.Match(graph.DimensionsSizes, predicate);
         }

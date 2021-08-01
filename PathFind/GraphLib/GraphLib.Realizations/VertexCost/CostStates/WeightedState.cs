@@ -11,7 +11,7 @@ namespace GraphLib.Realizations.VertexCost.CostStates
             return cost.CurrentCost.ToString();
         }
 
-        public object Clone()
+        public ICostState Clone()
         {
             return new WeightedState();
         }

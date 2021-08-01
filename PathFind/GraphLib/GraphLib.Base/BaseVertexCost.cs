@@ -44,7 +44,7 @@ namespace GraphLib.Base
             return CurrentCost.GetHashCode();
         }
 
-        public abstract object Clone();
+        public abstract IVertexCost Clone();
 
         public static InclusiveValueRange<int> CostRange { get; set; }
     }

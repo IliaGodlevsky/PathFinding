@@ -53,6 +53,6 @@ namespace GraphLib.Realizations.Factories.GraphAssembles
 
         private readonly IGraphAssemble graphAssemble;
         private readonly IVertexCostFactory costFactory;
-        protected readonly IMeanCost averageCost;
+        private readonly IMeanCost averageCost;
     }
 }

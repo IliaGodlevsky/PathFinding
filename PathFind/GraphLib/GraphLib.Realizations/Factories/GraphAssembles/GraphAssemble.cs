@@ -42,7 +42,7 @@ namespace GraphLib.Realizations.Factories.GraphAssembles
         /// pathfinding algorithms</returns>
         /// <exception cref="ArgumentException"></exception>
         /// <exception cref="WrongNumberOfDimensionsException"></exception>
-        public virtual IGraph AssembleGraph(int obstaclePercent = 0, params int[] graphDimensionsSizes)
+        public IGraph AssembleGraph(int obstaclePercent = 0, params int[] graphDimensionsSizes)
         {
             obstaclePercent = percentRange.ReturnInRange(obstaclePercent);
             var graph = graphFactory.CreateGraph(graphDimensionsSizes);

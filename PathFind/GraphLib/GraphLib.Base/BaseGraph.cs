@@ -4,6 +4,7 @@ using GraphLib.Extensions;
 using GraphLib.Interfaces;
 using GraphLib.NullRealizations.NullObjects;
 using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -90,6 +91,6 @@ namespace GraphLib.Base
         }
 
         protected static readonly string[] DimensionNames;
-        private readonly Dictionary<ICoordinate, IVertex> vertices;
+        private readonly IDictionary<ICoordinate, IVertex> vertices;
     }
 }

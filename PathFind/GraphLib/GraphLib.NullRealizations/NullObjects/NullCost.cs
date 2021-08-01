@@ -20,7 +20,7 @@ namespace GraphLib.NullRealizations.NullObjects
             return CurrentCost.GetHashCode();
         }
 
-        public object Clone()
+        public IVertexCost Clone()
         {
             return new NullCost();
         }

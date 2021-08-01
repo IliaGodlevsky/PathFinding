@@ -1,4 +1,5 @@
 ﻿using GraphLib.Base;
+using GraphLib.Interfaces;
 using System;
 
 namespace GraphLib.TestRealizations.TestObjects
@@ -22,7 +23,7 @@ namespace GraphLib.TestRealizations.TestObjects
             return CurrentCost.ToString();
         }
 
-        public override object Clone()
+        public override IVertexCost Clone()
         {
             return new TestVertexCost(CurrentCost);
         }

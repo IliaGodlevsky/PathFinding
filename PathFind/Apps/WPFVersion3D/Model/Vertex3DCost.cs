@@ -1,4 +1,5 @@
 ﻿using GraphLib.Base;
+using GraphLib.Interfaces;
 using System;
 
 namespace WPFVersion3D.Model
@@ -16,7 +17,7 @@ namespace WPFVersion3D.Model
 
         }
 
-        public override object Clone()
+        public override IVertexCost Clone()
         {
             return new Vertex3DCost(CurrentCost);
         }

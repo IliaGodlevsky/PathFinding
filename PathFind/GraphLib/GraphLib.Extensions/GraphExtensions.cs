@@ -8,10 +8,6 @@ namespace GraphLib.Extensions
 {
     public static class GraphExtensions
     {
-        /// <summary>
-        /// Removes all actions, that was performed over the vertices
-        /// </summary>
-        /// <param name="graph"></param>
         public static void Refresh(this IGraph graph)
         {
             graph.ForEach(vertex => vertex.Refresh());
@@ -82,11 +78,6 @@ namespace GraphLib.Extensions
             return self.Contains(endPoints.Source, endPoints.Target);
         }
 
-        public static IVertex[] GetObstacles(this IGraph self)
-        {
-            return self.Vertices.GetObstacles();
-        }
-
         public static IVertex[] GetNotObstacles(this IGraph self)
         {
             return self.Vertices.FilterObstacles();
@@ -96,16 +87,12 @@ namespace GraphLib.Extensions
         {
             var dimensions = self.DimensionsSizes.ToArray();
 
-            #region Invariant observance
-
             var rangeOfValidIndices = new InclusiveValueRange<int>(self.Size - 1, 0);
             if (!rangeOfValidIndices.Contains(index))
             {
                 throw new ArgumentOutOfRangeException(nameof(index));
             }
-            #endregion
 
-            #region Helper methods
             int GetCoordinateValue(int dimensionSize)
             {
                 int coordinate = index % dimensionSize;
@@ -114,7 +101,6 @@ namespace GraphLib.Extensions
             }
 
             int Coordinates(int i) => GetCoordinateValue(dimensions[i]);
-            #endregion
 
             return Enumerable
                 .Range(0, dimensions.Length)

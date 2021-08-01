@@ -1,8 +1,9 @@
-﻿using System;
+﻿using Common.Interface;
+using System;
 
 namespace GraphLib.Interfaces
 {
-    public interface IVertexCost : ICloneable
+    public interface IVertexCost : ICloneable<IVertexCost>
     {
         int CurrentCost { get; }
     }

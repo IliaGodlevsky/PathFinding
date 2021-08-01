@@ -10,16 +10,18 @@ namespace GraphLib.Realizations.Coordinates
     [Serializable]
     public sealed class Coordinate3D : BaseCoordinate
     {
-        public int X => CoordinatesValues.First();
+        public int X { get; }
 
-        public int Y => CoordinatesValues.ElementAt(1);
+        public int Y { get; }
 
-        public int Z => CoordinatesValues.Last();
+        public int Z { get; }
 
         public Coordinate3D(params int[] coordinates)
             : base(numberOfDimensions: 3, coordinates)
         {
-
+            X = CoordinatesValues.First();
+            Y = CoordinatesValues.ElementAt(1);
+            Z = CoordinatesValues.Last();
         }
 
         public Coordinate3D(int x, int y, int z)

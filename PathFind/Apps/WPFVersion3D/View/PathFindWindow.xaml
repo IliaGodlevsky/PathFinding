@@ -62,7 +62,7 @@
             <model:RangedSlider Grid.Row="1" 
                     Value ="{Binding Path=DelayTime}"
                     x:Name="delayTimeSlider" 
-                    MinWidth="160" 
+                    MinWidth="100" 
                     ValueRange="{x:Static range:Constants.AlgorithmDelayValueRange}"
                     Margin="5"></model:RangedSlider>
             

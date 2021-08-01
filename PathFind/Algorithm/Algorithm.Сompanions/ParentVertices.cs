@@ -10,7 +10,7 @@ namespace Algorithm.Сompanions
     {
         public ParentVertices()
         {
-            parentVertices = new ConcurrentDictionary<ICoordinate, IVertex>();
+            parentVertices = new Dictionary<ICoordinate, IVertex>();
         }
 
         public void Add(IVertex child, IVertex parent)

@@ -82,7 +82,7 @@ namespace GraphLib.Realizations.VertexCost
             return Status.ToString(this);
         }
 
-        public override object Clone()
+        public override IVertexCost Clone()
         {
             return new WeightableVertexCost(CurrentCost)
             {

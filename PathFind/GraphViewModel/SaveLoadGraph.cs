@@ -42,7 +42,7 @@ namespace GraphViewModel
                 {
                     log.Error(ex);
                 }
-            });
+            }).ConfigureAwait(false);
         }
 
         private readonly IGraphSerializer graphSerializer;
