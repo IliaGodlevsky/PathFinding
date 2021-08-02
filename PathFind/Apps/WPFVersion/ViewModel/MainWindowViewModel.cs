@@ -88,6 +88,7 @@ namespace WPFVersion.ViewModel
             LoadGraphCommand = new RelayCommand(ExecuteLoadGraphCommand);
             ShowVertexCost = new RelayCommand(ExecuteShowVertexCostCommand);
             InterruptAlgorithmCommand = new RelayCommand(ExecuteInterruptAlgorithmCommand, CanExecuteInterruptAlgorithmCommand);
+            PathfindingsStatistics = new ObservableCollection<string>();
         }
 
         public void ExecuteInterruptAlgorithmCommand(object sender)
