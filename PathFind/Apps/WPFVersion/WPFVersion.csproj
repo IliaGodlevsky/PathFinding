@@ -185,10 +185,6 @@
       <Project>{DF721A89-3E01-4159-B51A-E5723C9FD0BA}</Project>
       <Name>Algorithm.Common</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\Algorithm\Algorithm.Extensions\Algorithm.Extensions.csproj">
-      <Project>{11c8b301-fe40-44a1-a5a2-bc684b6a56a0}</Project>
-      <Name>Algorithm.Extensions</Name>
-    </ProjectReference>
     <ProjectReference Include="..\..\Algorithm\Algorithm.Infrastructure\Algorithm.Infrastructure.csproj">
       <Project>{DA2A9A8C-0EF3-4EDB-B026-3FF86DEF9464}</Project>
       <Name>Algorithm.Infrastructure</Name>

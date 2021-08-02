@@ -1,5 +1,4 @@
-﻿using Algorithm.Extensions;
-using Algorithm.Infrastructure.EventArguments;
+﻿using Algorithm.Infrastructure.EventArguments;
 using Common.Interface;
 using GraphLib.Base;
 using GraphViewModel;
@@ -8,7 +7,6 @@ using Logging.Interface;
 using System;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
-using System.Windows;
 using System.Windows.Input;
 using WPFVersion.Infrastructure;
 
@@ -37,15 +35,6 @@ namespace WPFVersion.ViewModel
             CancelPathFindAlgorithmChoice = new RelayCommand(ExecuteCloseWindowCommand);
         }
 
-        protected override void OnVertexVisited(object sender, AlgorithmEventArgs e)
-        {
-            base.OnVertexVisited(sender, e);
-            if (mainViewModel is MainWindowViewModel mainModel)
-            {
-                mainModel.PathfindingsStatistics[statIndex] = GetStatistics();
-            }
-        }
-
         private void InterruptAlgorithm(object sender, EventArgs e)
         {
             algorithm.Interrupt();
@@ -58,12 +47,6 @@ namespace WPFVersion.ViewModel
             {
                 mainModel.CanInterruptAlgorithm = true;
                 mainModel.OnAlgorithmInterrupted += InterruptAlgorithm;
-                Application.Current.Dispatcher.Invoke(() =>
-                {
-                    mainModel?.PathfindingsStatistics.Add(string.Empty);
-                });
-                mainModel?.PathfindingsStatistics.Add(string.Empty);
-                statIndex = mainModel.PathfindingsStatistics.Count - 1;
             }
         }
 
@@ -75,19 +58,6 @@ namespace WPFVersion.ViewModel
                 mainModel.CanInterruptAlgorithm = false;
                 mainModel.OnAlgorithmInterrupted -= InterruptAlgorithm;
             }
-        }
-
-        protected override void Summarize()
-        {
-            path.Highlight(endPoints);
-            if (mainViewModel is MainWindowViewModel mainModel)
-            {
-                Application.Current.Dispatcher.Invoke(() =>
-                {
-                    mainModel.PathfindingsStatistics[statIndex] =
-                    path.PathLength > 0 ? GetStatistics() : "Couldn't find path";
-                });               
-            }            
         }
 
         private void ExecuteCloseWindowCommand(object param)
@@ -106,7 +76,5 @@ namespace WPFVersion.ViewModel
         {
             return Algorithms.Values.Contains(Algorithm);
         }
-
-        private int statIndex;
     }
 }
