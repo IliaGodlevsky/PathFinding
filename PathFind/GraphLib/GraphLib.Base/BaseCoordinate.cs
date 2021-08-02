@@ -36,7 +36,7 @@ namespace GraphLib.Base
                 return coordinate.IsEqual(this);
             }
 
-            throw new ArgumentException("Invalid value to compare");
+            return false;
         }
 
         public override int GetHashCode()
