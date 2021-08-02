@@ -17,8 +17,8 @@ namespace WPFVersion
         static Constants()
         {
             GraphFieldScaleValueRange = new InclusiveValueRange<double>(2.5, 0.1);
-            GraphWidthValueRange = new InclusiveValueRange<int>(150, 1);
-            GraphLengthValueRange = new InclusiveValueRange<int>(75, 1);
+            GraphWidthValueRange = new InclusiveValueRange<int>(200, 1);
+            GraphLengthValueRange = new InclusiveValueRange<int>(100, 1);
             ObstaclesPercentValueRange = new InclusiveValueRange<double>(99, 0);
             AlgorithmDelayTimeValueRange = new InclusiveValueRange<double>(35, 0);
             OffsetValueRange = new InclusiveValueRange<double>(-1000, 1000);

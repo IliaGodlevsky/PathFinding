@@ -8,6 +8,7 @@ using Logging.Interface;
 using NullObject.Extensions;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using System.Windows;
@@ -33,6 +34,13 @@ namespace WPFVersion.ViewModel
         {
             get => graphParametres;
             set { graphParametres = value; OnPropertyChanged(); }
+        }
+
+        private ObservableCollection<string> stats;
+        public IList<string> PathfindingsStatistics 
+        {
+            get => stats ?? (stats = new ObservableCollection<string>());
+            set { stats = new ObservableCollection<string>(value); OnPropertyChanged(); }
         }
 
         private string statistics;
@@ -165,6 +173,7 @@ namespace WPFVersion.ViewModel
         private void ExecuteClearGraphCommand(object param)
         {
             base.ClearGraph();
+            PathfindingsStatistics.Clear();
         }
 
         private void ExecuteStartPathFindCommand(object param)

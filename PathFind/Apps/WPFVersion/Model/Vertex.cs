@@ -104,7 +104,7 @@ namespace WPFVersion.Model
         }
 
         public void MarkAsSource()
-        {
+        {           
             Dispatcher.Invoke(() => Background = StartVertexColor);
         }
 
@@ -121,12 +121,24 @@ namespace WPFVersion.Model
 
         public void MarkAsVisited()
         {
-            Dispatcher.Invoke(() => Background = VisitedVertexColor);
+            Dispatcher.Invoke(() =>
+            {
+                if (Background != PathVertexColor)
+                {
+                    Background = VisitedVertexColor;
+                }
+            });
         }
 
         public void MarkAsEnqueued()
         {
-            Dispatcher.Invoke(() => Background = EnqueuedVertexColor);
+            Dispatcher.Invoke(() =>
+            {
+                if (Background != PathVertexColor)
+                {
+                    Background = EnqueuedVertexColor;
+                }
+            });
         }
 
         public void MakeUnweighted()

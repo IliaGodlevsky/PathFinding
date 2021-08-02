@@ -93,6 +93,7 @@ namespace ConsoleVersion.ViewModel
         {
             if (HasAnyVerticesToChooseAsEndPoints())
             {
+                endPoints.Reset();
                 var chooseMessages = new[] { SourceVertexInputMessage, TargetVertexInputMessage };
                 foreach (var message in chooseMessages)
                 {
@@ -113,6 +114,7 @@ namespace ConsoleVersion.ViewModel
         public void ClearGraph()
         {
             mainViewModel.ClearGraph();
+            endPoints.Reset();
         }
 
         [MenuItem(Constants.ApplyVisualization, MenuItemPriority.Low)]

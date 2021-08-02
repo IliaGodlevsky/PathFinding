@@ -59,7 +59,6 @@ namespace GraphViewModel
             finally
             {
                 algorithm.Dispose();
-                endPoints.Reset();
             }
         }
 
@@ -107,12 +106,12 @@ namespace GraphViewModel
             timer.Start();
         }
 
-        private string GetStatistics()
+        protected string GetStatistics()
         {
-            string timerInfo = timer.Elapsed.ToString(@"mm\:ss\.ff");
-            string algorithmName = ((Enum)Algorithm).GetDescription();
+            string timerInfo = timer.Elapsed.ToString(@"mm\:ss\.ff") + " ";
+            string algorithmName = Algorithms.FirstOrDefault(item => item.Value == Algorithm).Key;
             string pathfindingInfo = string.Format(StatisticsFormat, PathfindingInfo);
-            return string.Join("    ", algorithmName, timerInfo, pathfindingInfo);
+            return string.Join("\t", algorithmName, timerInfo, pathfindingInfo);
         }
 
         private void SubscribeOnAlgorithmEvents()
@@ -129,12 +128,17 @@ namespace GraphViewModel
 
         private IDictionary<string, Algorithms> GetAlgorithmsDictinary()
         {
-            return Enum
+            var dictionary = Enum
                 .GetValues(typeof(Algorithms))
                 .Cast<Algorithms>()
                 .ToDictionary(item => ((Enum)item).GetDescription())
                 .OrderBy(item => item.Key)
                 .AsDictionary();
+
+            var maxLengthAlgorithm = dictionary.Max(item => item.Key.Length);
+            dictionary = dictionary.ToDictionary(item => item.Key.PadRight(maxLengthAlgorithm), item => item.Value);
+
+            return dictionary;
         }
 
         private object[] PathfindingInfo 
