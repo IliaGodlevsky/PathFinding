@@ -135,7 +135,8 @@
         </StackPanel>
 
         <StatusBar Background="White" Grid.Row="4">
-            <TextBlock Text = "{Binding PathFindingStatistics}"></TextBlock>
+            <DataGrid ItemsSource="{Binding PathfindingsStatistics}"></DataGrid>
+            <TextBlock Visibility="Collapsed" Text = "{Binding PathFindingStatistics}"></TextBlock>
         </StatusBar>
     </Grid>
 </Window>

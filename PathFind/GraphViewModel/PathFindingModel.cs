@@ -59,7 +59,6 @@ namespace GraphViewModel
             finally
             {
                 algorithm.Dispose();
-                endPoints.Reset();
             }
         }
 
@@ -107,7 +106,7 @@ namespace GraphViewModel
             timer.Start();
         }
 
-        private string GetStatistics()
+        protected string GetStatistics()
         {
             string timerInfo = timer.Elapsed.ToString(@"mm\:ss\.ff");
             string algorithmName = ((Enum)Algorithm).GetDescription();
