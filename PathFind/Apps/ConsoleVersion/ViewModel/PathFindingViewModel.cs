@@ -65,8 +65,7 @@ namespace ConsoleVersion.ViewModel
         [MenuItem(Constants.ChooseAlgorithm, MenuItemPriority.High)]
         public void ChooseAlgorithm()
         {
-            int algorithmKeyIndex = InputNumber(AlgorithmKeyInputMessage,
-                algorithmKeysValueRange) - 1;
+            int algorithmKeyIndex = InputNumber(AlgorithmKeyInputMessage, algorithmKeysValueRange) - 1;
             var algorithmKey = Algorithms.Keys.ElementAt(algorithmKeyIndex);
             Algorithm = Algorithms[algorithmKey];
         }
@@ -93,6 +92,7 @@ namespace ConsoleVersion.ViewModel
         {
             if (HasAnyVerticesToChooseAsEndPoints())
             {
+                endPoints.Reset();
                 var chooseMessages = new[] { SourceVertexInputMessage, TargetVertexInputMessage };
                 foreach (var message in chooseMessages)
                 {

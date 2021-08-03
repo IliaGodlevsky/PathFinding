@@ -1,6 +1,5 @@
 ﻿using GraphLib.Interfaces;
 using NullObject.Extensions;
-using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -10,7 +9,7 @@ namespace GraphLib.Realizations
     {
         public VisitedVertices()
         {
-            visitedVertices = new ConcurrentDictionary<ICoordinate, IVertex>();
+            visitedVertices = new Dictionary<ICoordinate, IVertex>();
         }
 
         public int Count => visitedVertices.Count;
@@ -38,6 +37,6 @@ namespace GraphLib.Realizations
             visitedVertices.Clear();
         }
 
-        private readonly ConcurrentDictionary<ICoordinate, IVertex> visitedVertices;
+        private readonly IDictionary<ICoordinate, IVertex> visitedVertices;
     }
 }
