@@ -30,7 +30,7 @@ namespace ConsoleVersion.View.Abstraction
             menuValueRange = new InclusiveValueRange<int>(menu.MenuActionsNames.Length, 1);
         }
 
-        public void Start()
+        public virtual void Start()
         {
             while (!IsInterruptRequested)
             {

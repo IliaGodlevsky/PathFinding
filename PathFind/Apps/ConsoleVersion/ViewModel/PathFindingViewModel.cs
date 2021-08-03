@@ -1,4 +1,5 @@
-﻿using Common.ValueRanges;
+﻿using Algorithm.Infrastructure.EventArguments;
+using Common.ValueRanges;
 using ConsoleVersion.Attributes;
 using ConsoleVersion.Enums;
 using ConsoleVersion.Model;
@@ -15,6 +16,7 @@ using Interruptable.Interface;
 using Logging.Interface;
 using System;
 using System.Linq;
+using System.Threading;
 using static ConsoleVersion.Constants;
 using static ConsoleVersion.InputClass.Input;
 using static ConsoleVersion.Resource.Resources;
@@ -26,7 +28,8 @@ namespace ConsoleVersion.ViewModel
         private const int Yes = 1;
         private const int No = 0;
 
-        public event InterruptEventHanlder OnInterrupted;
+        public event InterruptEventHanlder Interrupted;
+        public bool IsPathfindingStarted { get; set; }
 
         public string AlgorithmKeyInputMessage { private get; set; }
 
@@ -47,9 +50,15 @@ namespace ConsoleVersion.ViewModel
             {
                 try
                 {
+                    Console.CursorVisible = false;
+                    IsPathfindingStarted = true;
                     base.FindPath();
-                    Console.ReadLine();
+                    while (IsPathfindingStarted)
+                    {
+                        DetectAlgorithmInterruption();
+                    }
                     mainViewModel.PathFindingStatistics = string.Empty;
+                    Console.CursorVisible = true;
                 }
                 catch (Exception ex)
                 {
@@ -60,6 +69,18 @@ namespace ConsoleVersion.ViewModel
             {
                 log.Warn("Firstly choose endpoints");
             }
+        }
+
+        protected override void OnAlgorithmInterrupted(object sender, InterruptEventArgs e)
+        {
+            base.OnAlgorithmInterrupted(sender, e);
+            IsPathfindingStarted = false;
+        }
+
+        protected override void OnAlgorithmFinished(object sender, AlgorithmEventArgs e)
+        {
+            base.OnAlgorithmFinished(sender, e);
+            IsPathfindingStarted = false;
         }
 
         [MenuItem(Constants.ChooseAlgorithm, MenuItemPriority.High)]
@@ -83,8 +104,8 @@ namespace ConsoleVersion.ViewModel
         public void Interrupt()
         {
             ClearGraph();
-            OnInterrupted?.Invoke(this, new InterruptEventArgs());
-            OnInterrupted = null;
+            Interrupted?.Invoke(this, new InterruptEventArgs());
+            Interrupted = null;
         }
 
         [MenuItem(Constants.ChooseEndPoints, MenuItemPriority.High)]
@@ -136,6 +157,15 @@ namespace ConsoleVersion.ViewModel
                 return vertex;
             }
             return new NullVertex();
+        }
+
+        private void DetectAlgorithmInterruption()
+        {
+            var key = Console.ReadKey(true).Key;
+            if (key == ConsoleKey.End)
+            {
+                algorithm.Interrupt();
+            }
         }
 
         private bool HasAnyVerticesToChooseAsEndPoints()

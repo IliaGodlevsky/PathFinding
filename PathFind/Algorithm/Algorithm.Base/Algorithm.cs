@@ -19,18 +19,18 @@ namespace Algorithm.Base
     /// </summary>
     public abstract class Algorithm : IAlgorithm
     {
-        public event AlgorithmEventHandler OnStarted;
-        public event AlgorithmEventHandler OnVertexVisited;
-        public event AlgorithmEventHandler OnFinished;
-        public event AlgorithmEventHandler OnVertexEnqueued;
-        public event InterruptEventHanlder OnInterrupted;
+        public event AlgorithmEventHandler Started;
+        public event AlgorithmEventHandler VertexVisited;
+        public event AlgorithmEventHandler Finished;
+        public event AlgorithmEventHandler VertexEnqueued;
+        public event InterruptEventHanlder Interrupted;
 
         public abstract IGraphPath FindPath();
 
         public virtual void Interrupt()
         {
             IsInterruptRequested = true;
-            OnInterrupted?.Invoke(this, new InterruptEventArgs());
+            Interrupted?.Invoke(this, new InterruptEventArgs());
         }
 
         protected Algorithm(IGraph graph, IEndPoints endPoints)
@@ -43,11 +43,11 @@ namespace Algorithm.Base
 
         protected virtual void Reset()
         {
-            OnStarted = null;
-            OnFinished = null;
-            OnVertexEnqueued = null;
-            OnVertexVisited = null;
-            OnInterrupted = null;
+            Started = null;
+            Finished = null;
+            VertexEnqueued = null;
+            VertexVisited = null;
+            Interrupted = null;
             visitedVertices.Clear();
             parentVertices.Clear();
             IsInterruptRequested = false;
@@ -66,22 +66,22 @@ namespace Algorithm.Base
 
         protected void RaiseOnAlgorithmStartedEvent(AlgorithmEventArgs e)
         {
-            OnStarted?.Invoke(this, e);
+            Started?.Invoke(this, e);
         }
 
         protected void RaiseOnAlgorithmFinishedEvent(AlgorithmEventArgs e)
         {
-            OnFinished?.Invoke(this, e);
+            Finished?.Invoke(this, e);
         }
 
         protected void RaiseOnVertexVisitedEvent(AlgorithmEventArgs e)
         {
-            OnVertexVisited?.Invoke(this, e);
+            VertexVisited?.Invoke(this, e);
         }
 
         protected void RaiseOnVertexEnqueuedEvent(AlgorithmEventArgs e)
         {
-            OnVertexEnqueued?.Invoke(this, e);
+            VertexEnqueued?.Invoke(this, e);
         }
 
         protected virtual void PrepareForPathfinding()

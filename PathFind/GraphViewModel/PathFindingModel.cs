@@ -118,12 +118,12 @@ namespace GraphViewModel
         {
             if (IsVisualizationRequired)
             {
-                algorithm.OnVertexEnqueued += OnVertexEnqueued;
-                algorithm.OnVertexVisited += OnVertexVisited;
+                algorithm.VertexEnqueued += OnVertexEnqueued;
+                algorithm.VertexVisited += OnVertexVisited;
             }
-            algorithm.OnFinished += OnAlgorithmFinished;
-            algorithm.OnStarted += OnAlgorithmStarted;
-            algorithm.OnInterrupted += OnAlgorithmInterrupted;
+            algorithm.Finished += OnAlgorithmFinished;
+            algorithm.Started += OnAlgorithmStarted;
+            algorithm.Interrupted += OnAlgorithmInterrupted;
         }
 
         private IDictionary<string, Algorithms> GetAlgorithmsDictinary()

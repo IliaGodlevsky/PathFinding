@@ -17,7 +17,7 @@ namespace ConsoleVersion.ViewModel
 {
     internal sealed class GraphCreatingViewModel : GraphCreatingModel, IInterruptable
     {
-        public event InterruptEventHanlder OnInterrupted;
+        public event InterruptEventHanlder Interrupted;
 
         public string GraphAssembleInpuMessage { private get; set; }
 
@@ -71,8 +71,8 @@ namespace ConsoleVersion.ViewModel
         [MenuItem(Constants.Exit, MenuItemPriority.Lowest)]
         public void Interrupt()
         {
-            OnInterrupted?.Invoke(this, new InterruptEventArgs());
-            OnInterrupted = null;
+            Interrupted?.Invoke(this, new InterruptEventArgs());
+            Interrupted = null;
         }
 
         private bool CanCreateGraph()

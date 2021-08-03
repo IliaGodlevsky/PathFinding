@@ -14,11 +14,11 @@ namespace Algorithm.Common
     [Null]
     public sealed class NullAlgorithm : IAlgorithm
     {
-        public event AlgorithmEventHandler OnStarted;
-        public event AlgorithmEventHandler OnVertexVisited;
-        public event AlgorithmEventHandler OnFinished;
-        public event AlgorithmEventHandler OnVertexEnqueued;
-        public event InterruptEventHanlder OnInterrupted;
+        public event AlgorithmEventHandler Started;
+        public event AlgorithmEventHandler VertexVisited;
+        public event AlgorithmEventHandler Finished;
+        public event AlgorithmEventHandler VertexEnqueued;
+        public event InterruptEventHanlder Interrupted;
 
         public NullAlgorithm()
         {
@@ -27,25 +27,25 @@ namespace Algorithm.Common
 
         public IGraphPath FindPath()
         {
-            OnStarted?.Invoke(this, AlgorithmEventArgs.Empty);
-            OnVertexVisited?.Invoke(this, AlgorithmEventArgs.Empty);
-            OnVertexEnqueued?.Invoke(this, AlgorithmEventArgs.Empty);
-            OnFinished?.Invoke(this, AlgorithmEventArgs.Empty);
+            Started?.Invoke(this, AlgorithmEventArgs.Empty);
+            VertexVisited?.Invoke(this, AlgorithmEventArgs.Empty);
+            VertexEnqueued?.Invoke(this, AlgorithmEventArgs.Empty);
+            Finished?.Invoke(this, AlgorithmEventArgs.Empty);
             return new NullGraphPath();
         }
 
         public void Interrupt()
         {
-            OnInterrupted?.Invoke(this, new InterruptEventArgs());
+            Interrupted?.Invoke(this, new InterruptEventArgs());
         }
 
         public void Dispose()
         {
-            OnStarted = null;
-            OnVertexVisited = null;
-            OnVertexEnqueued = null;
-            OnFinished = null;
-            OnInterrupted = null;
+            Started = null;
+            VertexVisited = null;
+            VertexEnqueued = null;
+            Finished = null;
+            Interrupted = null;
         }
     }
 }

@@ -72,10 +72,10 @@ namespace ConsoleVersion.View
 
         public MainView(MainViewModel model) : base(model)
         {
-            Model.OnCostRangeChanged += OnCostRangeChanged;
-            Model.OnNewGraphCreated += OnNewGraphCreated;
-            Model.OnStatisticsUpdated += OnStatisticsUpdated;
-            Model.OnInterrupted += OnInterrupted;
+            Model.CostRangeChanged += OnCostRangeChanged;
+            Model.NewGraphCreated += OnNewGraphCreated;
+            Model.StatisticsUpdated += OnStatisticsUpdated;
+            Model.Interrupted += OnInterrupted;
             OnNewMenuIteration += Model.DisplayGraph;
             var args = new CostRangeChangedEventArgs(BaseVertexCost.CostRange);
             OnCostRangeChanged(this, args);

@@ -10,10 +10,10 @@ namespace Algorithm.Interfaces
     /// </summary>
     public interface IAlgorithm : IInterruptable, IDisposable
     {
-        event AlgorithmEventHandler OnStarted;
-        event AlgorithmEventHandler OnVertexVisited;
-        event AlgorithmEventHandler OnVertexEnqueued;
-        event AlgorithmEventHandler OnFinished;
+        event AlgorithmEventHandler Started;
+        event AlgorithmEventHandler VertexVisited;
+        event AlgorithmEventHandler VertexEnqueued;
+        event AlgorithmEventHandler Finished;
 
         IGraphPath FindPath();
     }

@@ -30,10 +30,10 @@ namespace ConsoleVersion.ViewModel
         private const int Yes = 1;
         private const int No = 0;
 
-        public event CostRangeChangedEventHandler OnCostRangeChanged;
-        public event NewGraphCreatedEventHandler OnNewGraphCreated;
-        public event InterruptEventHanlder OnInterrupted;
-        public event StatisticsUpdatedEventHandler OnStatisticsUpdated;
+        public event CostRangeChangedEventHandler CostRangeChanged;
+        public event NewGraphCreatedEventHandler NewGraphCreated;
+        public event InterruptEventHanlder Interrupted;
+        public event StatisticsUpdatedEventHandler StatisticsUpdated;
 
         public override string PathFindingStatistics
         {
@@ -41,7 +41,7 @@ namespace ConsoleVersion.ViewModel
             set
             {
                 base.PathFindingStatistics = value;
-                OnStatisticsUpdated?.Invoke(this, new StatisticsUpdatedEventArgs(value));
+                StatisticsUpdated?.Invoke(this, new StatisticsUpdatedEventArgs(value));
             }
         }
 
@@ -51,7 +51,7 @@ namespace ConsoleVersion.ViewModel
             protected set
             {
                 base.Graph = value;
-                OnNewGraphCreated?.Invoke(this, new NewGraphCreatedEventArgs(value));
+                NewGraphCreated?.Invoke(this, new NewGraphCreatedEventArgs(value));
             }
         }
 
@@ -59,6 +59,7 @@ namespace ConsoleVersion.ViewModel
             ISaveLoadGraph saveLoad, IEnumerable<IGraphAssemble> graphAssembles, ILog log)
             : base(fieldFactory, eventHolder, saveLoad, graphAssembles, log)
         {
+
         }
 
         [MenuItem(Constants.MakeUnwieghted)]
@@ -80,10 +81,10 @@ namespace ConsoleVersion.ViewModel
             {
                 var model = new GraphCreatingViewModel(log, this, graphAssembles);
                 var view = new GraphCreateView(model);
-                model.OnInterrupted += view.OnInterrupted;
+                model.Interrupted += view.OnInterrupted;
                 view.OnNewMenuIteration += DisplayGraph;
                 view.Start();
-                model.OnInterrupted -= view.OnInterrupted;
+                model.Interrupted -= view.OnInterrupted;
                 view.OnNewMenuIteration -= DisplayGraph;
             }
             catch (Exception ex)
@@ -99,10 +100,10 @@ namespace ConsoleVersion.ViewModel
             {
                 var model = new PathFindingViewModel(log, this, EndPoints);
                 var view = new PathFindView(model);
-                model.OnInterrupted += view.OnInterrupted;
+                model.Interrupted += view.OnInterrupted;
                 view.OnNewMenuIteration += DisplayGraph;
                 view.Start();
-                model.OnInterrupted -= view.OnInterrupted;
+                model.Interrupted -= view.OnInterrupted;
                 view.OnNewMenuIteration -= DisplayGraph;
             }
             catch (Exception ex)
@@ -126,7 +127,7 @@ namespace ConsoleVersion.ViewModel
         {
             CostRange = InputRange(Constants.VerticesCostRange);
             var args = new CostRangeChangedEventArgs(CostRange);
-            OnCostRangeChanged?.Invoke(this, args);
+            CostRangeChanged?.Invoke(this, args);
         }
 
         [MenuItem(Constants.ChangeVertexCost, MenuItemPriority.Low)]
@@ -149,7 +150,7 @@ namespace ConsoleVersion.ViewModel
         public override void LoadGraph()
         {
             base.LoadGraph();
-            OnCostRangeChanged?.Invoke(this, new CostRangeChangedEventArgs(CostRange));
+            CostRangeChanged?.Invoke(this, new CostRangeChangedEventArgs(CostRange));
         }
 
         [MenuItem(Constants.Exit, MenuItemPriority.Lowest)]
@@ -159,7 +160,7 @@ namespace ConsoleVersion.ViewModel
             bool isInterruptRequested = input == Yes;
             if (isInterruptRequested)
             {
-                OnInterrupted?.Invoke(this, new InterruptEventArgs());
+                Interrupted?.Invoke(this, new InterruptEventArgs());
             }
         }
 
