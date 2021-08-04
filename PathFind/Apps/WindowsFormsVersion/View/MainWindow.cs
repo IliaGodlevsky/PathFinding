@@ -36,7 +36,7 @@ namespace WindowsFormsVersion.Forms
             weightedButton.GroupID = 1;
             unweightedButton.GroupID = 1;
 
-            mainModel.OnStatisticsChanged += OnStatisticsChanged;
+            mainModel.StatisticsChanged += OnStatisticsChanged;
 
             var bindingParametres = new Binding(
                 nameof(parametres.Text),

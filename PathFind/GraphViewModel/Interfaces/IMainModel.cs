@@ -8,8 +8,6 @@ namespace GraphViewModel.Interfaces
 
         IGraphField GraphField { get; set; }
 
-        string PathFindingStatistics { get; set; }
-
         IGraph Graph { get; }
 
         void SaveGraph();

@@ -24,12 +24,14 @@ namespace WindowsFormsVersion.ViewModel
     internal class MainWindowViewModel : MainModel, INotifyPropertyChanged
     {
         public event PropertyChangedEventHandler PropertyChanged;
-        public event StatisticsChangedEventHandler OnStatisticsChanged;
+        public event StatisticsChangedEventHandler StatisticsChanged;
 
         protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = "")
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
+
+        public bool IsPathfindingStarted { private get; set; }
 
         private string graphParametres;
         public override string GraphParametres
@@ -39,13 +41,13 @@ namespace WindowsFormsVersion.ViewModel
         }
 
         private string statistics;
-        public override string PathFindingStatistics
+        public string PathFindingStatistics
         {
             get => statistics;
             set
             {
                 statistics = value;
-                OnStatisticsChanged?.Invoke(this, new StatisticsChangedEventArgs(value));
+                StatisticsChanged?.Invoke(this, new StatisticsChangedEventArgs(value));
             }
         }
 
@@ -127,6 +129,13 @@ namespace WindowsFormsVersion.ViewModel
         public void ClearGraph(object sender, EventArgs e)
         {
             base.ClearGraph();
+            PathFindingStatistics = string.Empty;
+        }
+
+        public override void ConnectNewGraph(IGraph graph)
+        {
+            base.ConnectNewGraph(graph);
+            PathFindingStatistics = string.Empty;
         }
 
         public void MakeWeighted(object sender, EventArgs e)
@@ -158,7 +167,7 @@ namespace WindowsFormsVersion.ViewModel
 
         private bool CanStartPathFinding()
         {
-            return EndPoints.HasEndPointsSet;
+            return EndPoints.HasEndPointsSet && !IsPathfindingStarted;
         }
     }
 }

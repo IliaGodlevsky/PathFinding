@@ -16,8 +16,6 @@ namespace GraphViewModel
 
         public virtual string GraphParametres { get; set; }
 
-        public virtual string PathFindingStatistics { get; set; }
-
         public virtual IGraphField GraphField { get; set; }
 
         public virtual IGraph Graph { get; protected set; }
@@ -68,12 +66,11 @@ namespace GraphViewModel
         public virtual void ClearGraph()
         {
             Graph.Refresh();
-            PathFindingStatistics = string.Empty;
             GraphParametres = Graph.ToString();
             EndPoints.Reset();
         }
 
-        public void ConnectNewGraph(IGraph graph)
+        public virtual void ConnectNewGraph(IGraph graph)
         {
             EndPoints.UnsubscribeFromEvents(Graph);
             EndPoints.Reset();
@@ -83,7 +80,6 @@ namespace GraphViewModel
             eventHolder.SubscribeVertices(Graph);
             EndPoints.SubscribeToEvents(Graph);
             GraphParametres = Graph.ToString();
-            PathFindingStatistics = string.Empty;
         }
 
         protected readonly IEnumerable<IGraphAssemble> graphAssembles;

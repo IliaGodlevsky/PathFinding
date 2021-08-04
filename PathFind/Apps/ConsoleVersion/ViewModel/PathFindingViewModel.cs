@@ -41,6 +41,7 @@ namespace ConsoleVersion.ViewModel
             : base(log, model, endPoints)
         {
             algorithmKeysValueRange = new InclusiveValueRange<int>(Algorithms.Keys.Count, 1);
+            mainModel = model as MainViewModel ?? throw new ArgumentException();
         }
 
         [MenuItem(Constants.FindPath, MenuItemPriority.Highest)]
@@ -57,7 +58,7 @@ namespace ConsoleVersion.ViewModel
                     {
                         DetectAlgorithmInterruption();
                     }
-                    mainViewModel.PathFindingStatistics = string.Empty;
+                    mainModel.PathFindingStatistics = string.Empty;
                     Console.CursorVisible = true;
                 }
                 catch (Exception ex)
@@ -69,6 +70,18 @@ namespace ConsoleVersion.ViewModel
             {
                 log.Warn("Firstly choose endpoints");
             }
+        }
+
+        protected override void Summarize()
+        {
+            base.Summarize();
+            mainModel.PathFindingStatistics = path.PathLength > 0 ? GetStatistics() : CouldntFindPathMsg;
+        }
+
+        protected override void OnVertexVisited(object sender, AlgorithmEventArgs e)
+        {
+            base.OnVertexVisited(sender, e);
+            mainModel.PathFindingStatistics = GetStatistics();
         }
 
         protected override void OnAlgorithmInterrupted(object sender, InterruptEventArgs e)
@@ -176,5 +189,6 @@ namespace ConsoleVersion.ViewModel
         }
 
         private readonly InclusiveValueRange<int> algorithmKeysValueRange;
+        private readonly MainViewModel mainModel;
     }
 }

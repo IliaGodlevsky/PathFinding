@@ -7,6 +7,7 @@ using Logging.Interface;
 using System;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
+using System.Windows;
 using System.Windows.Input;
 using WPFVersion.Infrastructure;
 
@@ -47,6 +48,35 @@ namespace WPFVersion.ViewModel
             {
                 mainModel.CanInterruptAlgorithm = true;
                 mainModel.OnAlgorithmInterrupted += InterruptAlgorithm;
+                Application.Current.Dispatcher.Invoke(() =>
+                {
+                    mainModel.Statistics.Add(string.Empty);
+                    statIndex = mainModel.Statistics.Count - 1;
+                });
+            }
+        }
+        protected override void Summarize()
+        {
+            base.Summarize();
+            if (mainViewModel is MainWindowViewModel mainModel)
+            {
+                Application.Current.Dispatcher.Invoke(() =>
+                {
+                    mainModel.Statistics[statIndex] 
+                        = path.PathLength > 0 ? GetStatistics() : CouldntFindPathMsg;
+                });
+            }
+        }
+
+        protected override void OnVertexVisited(object sender, AlgorithmEventArgs e)
+        {
+            base.OnVertexVisited(sender, e);
+            if (mainViewModel is MainWindowViewModel mainModel)
+            {
+                Application.Current.Dispatcher.Invoke(() =>
+                {
+                    mainModel.Statistics[statIndex] = GetStatistics();
+                });
             }
         }
 
@@ -76,5 +106,7 @@ namespace WPFVersion.ViewModel
         {
             return Algorithms.Values.Contains(Algorithm);
         }
+
+        private int statIndex;
     }
 }

@@ -11,7 +11,7 @@ namespace ConsoleVersion.View.Abstraction
     internal abstract class View<TModel> : IView
         where TModel : IModel
     {
-        public event Action OnNewMenuIteration;
+        public event Action NewMenuIteration;
 
         public void OnInterrupted(object sender, InterruptEventArgs e)
         {
@@ -34,7 +34,7 @@ namespace ConsoleVersion.View.Abstraction
         {
             while (!IsInterruptRequested)
             {
-                OnNewMenuIteration?.Invoke();
+                NewMenuIteration?.Invoke();
                 menuList.Display();
                 int menuItemIndex = InputNumber(OptionInputMsg,
                     menuValueRange) - 1;

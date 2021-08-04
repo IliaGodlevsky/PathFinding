@@ -50,6 +50,7 @@ namespace GraphViewModel
                     .CreateAlgorithm(Algorithm, graph, endPoints);
                 SubscribeOnAlgorithmEvents();
                 path = await algorithm.FindPathAsync();
+                path.Highlight(endPoints);
                 Summarize();
             }
             catch (Exception ex)
@@ -69,7 +70,6 @@ namespace GraphViewModel
                 vertex.MarkAsVisited();
             }
             visitedVerticesCount = e.VisitedVertices;
-            mainViewModel.PathFindingStatistics = GetStatistics();
             Thread.Sleep(DelayTime);
         }
 
@@ -95,9 +95,7 @@ namespace GraphViewModel
 
         protected virtual void Summarize()
         {
-            path.Highlight(endPoints);
-            mainViewModel.PathFindingStatistics =
-                path.PathLength > 0 ? GetStatistics() : PathWasNotFoundMsg;
+            
         }
 
         protected virtual void OnAlgorithmStarted(object sender, AlgorithmEventArgs e)
@@ -106,13 +104,15 @@ namespace GraphViewModel
             timer.Start();
         }
 
-        private string GetStatistics()
+        protected string GetStatistics()
         {
             string timerInfo = timer.Elapsed.ToString(@"mm\:ss\.ff");
             string algorithmName = ((Enum)Algorithm).GetDescription();
             string pathfindingInfo = string.Format(StatisticsFormat, PathfindingInfo);
-            return string.Join("    ", algorithmName, timerInfo, pathfindingInfo);
+            return string.Join("\t", algorithmName, timerInfo, pathfindingInfo);
         }
+
+        protected string CouldntFindPathMsg => PathWasNotFoundMsg;
 
         private void SubscribeOnAlgorithmEvents()
         {

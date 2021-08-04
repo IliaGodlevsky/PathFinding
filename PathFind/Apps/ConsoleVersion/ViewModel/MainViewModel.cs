@@ -8,6 +8,7 @@ using ConsoleVersion.View.Interface;
 using GraphLib.Extensions;
 using GraphLib.Interfaces;
 using GraphLib.Interfaces.Factories;
+using GraphLib.Realizations.Coordinates;
 using GraphLib.Realizations.Graphs;
 using GraphViewModel;
 using GraphViewModel.Interfaces;
@@ -27,32 +28,22 @@ namespace ConsoleVersion.ViewModel
 {
     internal sealed class MainViewModel : MainModel, IInterruptable
     {
-        private const int Yes = 1;
-        private const int No = 0;
-
         public event CostRangeChangedEventHandler CostRangeChanged;
         public event NewGraphCreatedEventHandler NewGraphCreated;
         public event InterruptEventHanlder Interrupted;
         public event StatisticsUpdatedEventHandler StatisticsUpdated;
 
-        public override string PathFindingStatistics
+        private string statistics;
+        public string PathFindingStatistics
         {
-            get => base.PathFindingStatistics;
-            set
-            {
-                base.PathFindingStatistics = value;
-                StatisticsUpdated?.Invoke(this, new StatisticsUpdatedEventArgs(value));
-            }
+            get => statistics;
+            set { statistics = value; StatisticsUpdated?.Invoke(this, new StatisticsUpdatedEventArgs(value)); }
         }
 
         public override IGraph Graph
         {
             get => base.Graph;
-            protected set
-            {
-                base.Graph = value;
-                NewGraphCreated?.Invoke(this, new NewGraphCreatedEventArgs(value));
-            }
+            protected set { base.Graph = value; NewGraphCreated?.Invoke(this, new NewGraphCreatedEventArgs(value)); }
         }
 
         public MainViewModel(IGraphFieldFactory fieldFactory, IVertexEventHolder eventHolder,
@@ -82,10 +73,9 @@ namespace ConsoleVersion.ViewModel
                 var model = new GraphCreatingViewModel(log, this, graphAssembles);
                 var view = new GraphCreateView(model);
                 model.Interrupted += view.OnInterrupted;
-                view.OnNewMenuIteration += DisplayGraph;
+                view.NewMenuIteration += DisplayGraph;
                 view.Start();
                 model.Interrupted -= view.OnInterrupted;
-                view.OnNewMenuIteration -= DisplayGraph;
             }
             catch (Exception ex)
             {
@@ -101,10 +91,9 @@ namespace ConsoleVersion.ViewModel
                 var model = new PathFindingViewModel(log, this, EndPoints);
                 var view = new PathFindView(model);
                 model.Interrupted += view.OnInterrupted;
-                view.OnNewMenuIteration += DisplayGraph;
+                view.NewMenuIteration += DisplayGraph;
                 view.Start();
                 model.Interrupted -= view.OnInterrupted;
-                view.OnNewMenuIteration -= DisplayGraph;
             }
             catch (Exception ex)
             {
@@ -140,6 +129,18 @@ namespace ConsoleVersion.ViewModel
             }
         }
 
+        public override void ClearGraph()
+        {
+            base.ClearGraph();
+            PathFindingStatistics = string.Empty;
+        }
+
+        public override void ConnectNewGraph(IGraph graph)
+        {
+            base.ConnectNewGraph(graph);
+            PathFindingStatistics = string.Empty;
+        }
+
         [MenuItem(Constants.SaveGraph)]
         public override void SaveGraph()
         {
@@ -156,8 +157,8 @@ namespace ConsoleVersion.ViewModel
         [MenuItem(Constants.Exit, MenuItemPriority.Lowest)]
         public void Interrupt()
         {
-            int input = InputNumber(ExitAppMsg, Yes, No);
-            bool isInterruptRequested = input == Yes;
+            int input = InputNumber(ExitAppMsg, 1, 0);
+            bool isInterruptRequested = input == 1;
             if (isInterruptRequested)
             {
                 Interrupted?.Invoke(this, new InterruptEventArgs());
@@ -170,8 +171,7 @@ namespace ConsoleVersion.ViewModel
             {
                 Console.Clear();
                 DisplayMainScreen();
-                var position = MainView.PathfindingStatisticsPosition;
-                if (position != null)
+                if (MainView.PathfindingStatisticsPosition is Coordinate2D position)
                 {
                     Console.SetCursorPosition(position.X, position.Y + 1);
                 }

@@ -76,7 +76,7 @@ namespace ConsoleVersion.View
             Model.NewGraphCreated += OnNewGraphCreated;
             Model.StatisticsUpdated += OnStatisticsUpdated;
             Model.Interrupted += OnInterrupted;
-            OnNewMenuIteration += Model.DisplayGraph;
+            NewMenuIteration += Model.DisplayGraph;
             var args = new CostRangeChangedEventArgs(BaseVertexCost.CostRange);
             OnCostRangeChanged(this, args);
         }
