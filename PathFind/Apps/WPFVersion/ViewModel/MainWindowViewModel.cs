@@ -149,7 +149,7 @@ namespace WPFVersion.ViewModel
         private void PrepareWindow(IViewModel model, Window window)
         {
             window.DataContext = model;
-            model.OnWindowClosed += (sender, args) => window.Close();
+            model.WindowClosed += (sender, args) => window.Close();
             window.WindowStartupLocation = WindowStartupLocation.CenterScreen;
             window.Show();
         }

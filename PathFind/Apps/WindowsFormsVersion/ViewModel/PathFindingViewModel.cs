@@ -11,7 +11,7 @@ namespace WindowsFormsVersion.ViewModel
 {
     internal class PathFindingViewModel : PathFindingModel, IViewModel
     {
-        public event EventHandler OnWindowClosed;
+        public event EventHandler WindowClosed;
 
         public PathFindingViewModel(ILog log, IMainModel model, BaseEndPoints endPoints)
             : base(log, model, endPoints)
@@ -39,7 +39,6 @@ namespace WindowsFormsVersion.ViewModel
 
         protected override void Summarize()
         {
-            base.Summarize();
             if (mainViewModel is MainWindowViewModel mainModel)
             {
                 mainModel.PathFindingStatistics 
@@ -69,16 +68,16 @@ namespace WindowsFormsVersion.ViewModel
         {
             if (CanExecuteConfirmPathFindAlgorithmChoice())
             {
-                OnWindowClosed?.Invoke(this, EventArgs.Empty);
-                OnWindowClosed = null;
+                WindowClosed?.Invoke(this, EventArgs.Empty);
+                WindowClosed = null;
                 FindPath();
             }
         }
 
         public void CancelPathFinding(object sender, EventArgs e)
         {
-            OnWindowClosed?.Invoke(this, EventArgs.Empty);
-            OnWindowClosed = null;
+            WindowClosed?.Invoke(this, EventArgs.Empty);
+            WindowClosed = null;
         }
 
         private bool CanExecuteConfirmPathFindAlgorithmChoice()

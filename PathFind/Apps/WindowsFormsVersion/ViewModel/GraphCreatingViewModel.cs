@@ -10,7 +10,7 @@ namespace WindowsFormsVersion.ViewModel
 {
     internal class GraphCreatingViewModel : GraphCreatingModel, IViewModel
     {
-        public event EventHandler OnWindowClosed;
+        public event EventHandler WindowClosed;
 
         public GraphCreatingViewModel(ILog log, IMainModel model,
             IEnumerable<IGraphAssemble> graphAssembles)
@@ -24,15 +24,15 @@ namespace WindowsFormsVersion.ViewModel
             if (CanExecuteConfirmGraphAssembleChoice())
             {
                 CreateGraph();
-                OnWindowClosed?.Invoke(this, EventArgs.Empty);
-                OnWindowClosed = null;
+                WindowClosed?.Invoke(this, EventArgs.Empty);
+                WindowClosed = null;
             }
         }
 
         public void CancelCreateGraph(object sender, EventArgs e)
         {
-            OnWindowClosed?.Invoke(this, EventArgs.Empty);
-            OnWindowClosed = null;
+            WindowClosed?.Invoke(this, EventArgs.Empty);
+            WindowClosed = null;
         }
 
         private bool CanExecuteConfirmGraphAssembleChoice()

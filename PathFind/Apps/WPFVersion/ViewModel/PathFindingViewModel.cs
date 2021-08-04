@@ -15,7 +15,7 @@ namespace WPFVersion.ViewModel
 {
     internal class PathFindingViewModel : PathFindingModel, IViewModel, INotifyPropertyChanged
     {
-        public event EventHandler OnWindowClosed;
+        public event EventHandler WindowClosed;
         public event PropertyChangedEventHandler PropertyChanged;
 
         protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = "")
@@ -57,7 +57,6 @@ namespace WPFVersion.ViewModel
         }
         protected override void Summarize()
         {
-            base.Summarize();
             if (mainViewModel is MainWindowViewModel mainModel)
             {
                 Application.Current.Dispatcher.Invoke(() =>
@@ -92,8 +91,8 @@ namespace WPFVersion.ViewModel
 
         private void ExecuteCloseWindowCommand(object param)
         {
-            OnWindowClosed?.Invoke(this, EventArgs.Empty);
-            OnWindowClosed = null;
+            WindowClosed?.Invoke(this, EventArgs.Empty);
+            WindowClosed = null;
         }
 
         private void ExecuteConfirmPathFindAlgorithmChoice(object param)

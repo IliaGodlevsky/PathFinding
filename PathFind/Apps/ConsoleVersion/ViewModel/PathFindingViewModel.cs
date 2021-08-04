@@ -74,7 +74,6 @@ namespace ConsoleVersion.ViewModel
 
         protected override void Summarize()
         {
-            base.Summarize();
             mainModel.PathFindingStatistics = path.PathLength > 0 ? GetStatistics() : CouldntFindPathMsg;
         }
 

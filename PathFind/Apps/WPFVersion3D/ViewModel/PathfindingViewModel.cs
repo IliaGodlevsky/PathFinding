@@ -1,4 +1,5 @@
-﻿using Common.Interface;
+﻿using Algorithm.Infrastructure.EventArguments;
+using Common.Interface;
 using GraphLib.Base;
 using GraphViewModel;
 using GraphViewModel.Interfaces;
@@ -6,6 +7,7 @@ using Logging.Interface;
 using System;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
+using System.Windows;
 using System.Windows.Input;
 using WPFVersion3D.Infrastructure;
 
@@ -13,7 +15,7 @@ namespace WPFVersion3D.ViewModel
 {
     internal class PathFindingViewModel : PathFindingModel, IViewModel, INotifyPropertyChanged
     {
-        public event EventHandler OnWindowClosed;
+        public event EventHandler WindowClosed;
         public event PropertyChangedEventHandler PropertyChanged;
 
         protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = "")
@@ -34,10 +36,47 @@ namespace WPFVersion3D.ViewModel
             CancelPathFindAlgorithmChoice = new RelayCommand(ExecuteCloseWindowCommand);
         }
 
+        protected override void OnAlgorithmStarted(object sender, AlgorithmEventArgs e)
+        {
+            base.OnAlgorithmStarted(sender, e);
+            if(mainViewModel is MainWindowViewModel model)
+            {
+                Application.Current.Dispatcher.Invoke(() =>
+                {
+                    model.Statistics.Add(string.Empty);
+                    statIndex = model.Statistics.Count - 1;
+                });
+            }
+        }
+
+        protected override void OnVertexVisited(object sender, AlgorithmEventArgs e)
+        {
+            base.OnVertexVisited(sender, e);
+            if (mainViewModel is MainWindowViewModel model)
+            {
+                Application.Current.Dispatcher.Invoke(() =>
+                {
+                    model.Statistics[statIndex] = GetStatistics();
+                });
+            }
+        }
+
+        protected override void Summarize()
+        {
+            if (mainViewModel is MainWindowViewModel model)
+            {
+                Application.Current.Dispatcher.Invoke(() =>
+                {
+                    model.Statistics[statIndex] = path.PathLength > 0
+                        ? GetStatistics() : CouldntFindPathMsg;
+                });
+            }
+        }
+
         private void ExecuteCloseWindowCommand(object param)
         {
-            OnWindowClosed?.Invoke(this, EventArgs.Empty);
-            OnWindowClosed = null;
+            WindowClosed?.Invoke(this, EventArgs.Empty);
+            WindowClosed = null;
         }
 
         private void ExecuteConfirmPathFindAlgorithmChoice(object param)
@@ -50,5 +89,7 @@ namespace WPFVersion3D.ViewModel
         {
             return Algorithms.Values.Contains(Algorithm);
         }
+
+        private int statIndex;
     }
 }

@@ -9,7 +9,7 @@ namespace WPFVersion3D.ViewModel
 {
     internal class OpacityChangeViewModel : IModel, IViewModel
     {
-        public event EventHandler OnWindowClosed;
+        public event EventHandler WindowClosed;
 
         public double ObstacleColorOpacity { get; set; }
         public double VisitedVertexColorOpacity { get; set; }
@@ -40,13 +40,13 @@ namespace WPFVersion3D.ViewModel
             Vertex3D.PathVertexBrush.Opacity = PathVertexColorOpacity;
             Vertex3D.VisitedVertexBrush.Opacity = VisitedVertexColorOpacity;
 
-            OnWindowClosed?.Invoke(this, EventArgs.Empty);
+            WindowClosed?.Invoke(this, EventArgs.Empty);
         }
 
         private void ExecuteCloseChangeVertexOpacity(object param)
         {
-            OnWindowClosed?.Invoke(this, EventArgs.Empty);
-            OnWindowClosed = null;
+            WindowClosed?.Invoke(this, EventArgs.Empty);
+            WindowClosed = null;
         }
     }
 }

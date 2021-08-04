@@ -13,7 +13,7 @@ namespace WPFVersion.ViewModel
 {
     internal class GraphCreatingViewModel : GraphCreatingModel, IViewModel
     {
-        public event EventHandler OnWindowClosed;
+        public event EventHandler WindowClosed;
 
         public ICommand ConfirmCreateGraphCommand { get; }
         public ICommand CancelCreateGraphCommand { get; }
@@ -37,8 +37,8 @@ namespace WPFVersion.ViewModel
 
         private void ExecuteCloseWindowCommand(object param)
         {
-            OnWindowClosed?.Invoke(this, EventArgs.Empty);
-            OnWindowClosed = null;
+            WindowClosed?.Invoke(this, EventArgs.Empty);
+            WindowClosed = null;
         }
 
         private bool CanExecuteConfirmCreateGraphCommand(object sender)

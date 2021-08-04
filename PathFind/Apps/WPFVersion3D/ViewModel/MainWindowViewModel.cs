@@ -8,6 +8,7 @@ using Logging.Interface;
 using NullObject.Extensions;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
 using System.Runtime.CompilerServices;
@@ -39,10 +40,10 @@ namespace WPFVersion3D.ViewModel
             set { graphParametres = value; OnPropertyChanged(); }
         }
 
-        private string statistics;
-        public string PathFindingStatistics
+        public ObservableCollection<string> statistics;
+        public ObservableCollection<string> Statistics
         {
-            get => statistics;
+            get => statistics ?? (statistics = new ObservableCollection<string>());
             set { statistics = value; OnPropertyChanged(); }
         }
 
@@ -114,6 +115,12 @@ namespace WPFVersion3D.ViewModel
             }
         }
 
+        public override void ConnectNewGraph(IGraph graph)
+        {
+            base.ConnectNewGraph(graph);
+            Statistics.Clear();
+        }
+
         public void StretchAlongXAxis(object sender, RoutedPropertyChangedEventArgs<double> e)
         {
             (GraphField as GraphField3D)?.StretchAlongAxis(new Abscissa(), e.NewValue, 1, 0, 0);
@@ -160,6 +167,7 @@ namespace WPFVersion3D.ViewModel
         private void ExecuteClearGraphCommand(object param)
         {
             base.ClearGraph();
+            Statistics.Clear();
         }
 
         private void ExecuteStartPathFindCommand(object param)
@@ -180,7 +188,7 @@ namespace WPFVersion3D.ViewModel
 
         private void PrepareWindow(IViewModel model, Window window)
         {
-            model.OnWindowClosed += (sender, args) => window.Close();
+            model.WindowClosed += (sender, args) => window.Close();
             window.DataContext = model;
             window.WindowStartupLocation = WindowStartupLocation.CenterScreen;
             window.Show();

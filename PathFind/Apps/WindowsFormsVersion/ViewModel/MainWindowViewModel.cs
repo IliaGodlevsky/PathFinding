@@ -160,7 +160,7 @@ namespace WindowsFormsVersion.ViewModel
 
         private void PrepareWindow(IViewModel model, Form window)
         {
-            model.OnWindowClosed += (sender, args) => window.Close();
+            model.WindowClosed += (sender, args) => window.Close();
             window.StartPosition = FormStartPosition.CenterScreen;
             window.Show();
         }

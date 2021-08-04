@@ -360,7 +360,13 @@
             </Viewport3D.Children>
         </Viewport3D>
         <StatusBar Grid.Row="3">
-            <TextBlock Text = "{Binding PathFindingStatistics}"/>
+            <ItemsControl ItemsSource="{Binding Statistics}">
+                <ItemsControl.ItemTemplate>
+                    <DataTemplate>
+                        <TextBlock Text="{Binding}"/>
+                    </DataTemplate>
+                </ItemsControl.ItemTemplate>
+            </ItemsControl>
         </StatusBar>
         <StatusBar Grid.Row="1">
             <TextBlock Text="{Binding GraphParametres}"/>

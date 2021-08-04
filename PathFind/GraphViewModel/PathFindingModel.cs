@@ -93,10 +93,7 @@ namespace GraphViewModel
             timer.Stop();
         }
 
-        protected virtual void Summarize()
-        {
-            
-        }
+        protected abstract void Summarize();
 
         protected virtual void OnAlgorithmStarted(object sender, AlgorithmEventArgs e)
         {
