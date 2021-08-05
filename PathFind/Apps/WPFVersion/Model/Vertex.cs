@@ -104,7 +104,7 @@ namespace WPFVersion.Model
         {
             Dispatcher.Invoke(() => 
             {
-                if (MarkedAsVisited())
+                if (MarkedAsPathed())
                 {
                     Background = AlreadyPathVertex;
                 }
@@ -135,7 +135,7 @@ namespace WPFVersion.Model
         {
             Dispatcher.Invoke(() => 
             {
-                if (MarkedAsVisited())
+                if (!MarkedAsPathed())
                 {
                     Background = VisitedVertexColor;
                 }
@@ -146,7 +146,7 @@ namespace WPFVersion.Model
         {
             Dispatcher.Invoke(() =>
             {
-                if (!MarkedAsVisited())
+                if (!MarkedAsPathed())
                 {
                     Background = EnqueuedVertexColor;
                 }
@@ -170,7 +170,7 @@ namespace WPFVersion.Model
             return other.IsEqual(this);
         }
 
-        private bool MarkedAsVisited()
+        private bool MarkedAsPathed()
         {
             return Background == AlreadyPathVertex || Background == PathVertexColor;
         }
