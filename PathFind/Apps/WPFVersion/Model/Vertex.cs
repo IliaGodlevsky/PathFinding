@@ -18,6 +18,7 @@ namespace WPFVersion.Model
         public static SolidColorBrush EnqueuedVertexColor { get; set; }
         public static SolidColorBrush ObstacleVertexColor { get; set; }
         public static SolidColorBrush RegularVertexColor { get; set; }
+        public static SolidColorBrush AlreadyPathVertex { get; set; }
 
         static Vertex()
         {
@@ -28,6 +29,7 @@ namespace WPFVersion.Model
             EnqueuedVertexColor = new SolidColorBrush(Colors.Magenta);
             ObstacleVertexColor = new SolidColorBrush(Colors.Black);
             RegularVertexColor = new SolidColorBrush(Colors.White);
+            AlreadyPathVertex = new SolidColorBrush(Colors.Orange);
         }
 
         public Vertex(INeighboursCoordinates radar, ICoordinate coordinate) : base()
@@ -100,7 +102,17 @@ namespace WPFVersion.Model
 
         public void MarkAsPath()
         {
-            Dispatcher.Invoke(() => Background = PathVertexColor);
+            Dispatcher.Invoke(() => 
+            {
+                if (MarkedAsVisited())
+                {
+                    Background = AlreadyPathVertex;
+                }
+                else
+                {
+                    Background = PathVertexColor;
+                }
+            });
         }
 
         public void MarkAsSource()
@@ -121,12 +133,24 @@ namespace WPFVersion.Model
 
         public void MarkAsVisited()
         {
-            Dispatcher.Invoke(() => Background = VisitedVertexColor);
+            Dispatcher.Invoke(() => 
+            {
+                if (MarkedAsVisited())
+                {
+                    Background = VisitedVertexColor;
+                }
+            });
         }
 
         public void MarkAsEnqueued()
         {
-            Dispatcher.Invoke(() => Background = EnqueuedVertexColor);
+            Dispatcher.Invoke(() =>
+            {
+                if (!MarkedAsVisited())
+                {
+                    Background = EnqueuedVertexColor;
+                }
+            });
         }
 
         public void MakeUnweighted()
@@ -144,6 +168,11 @@ namespace WPFVersion.Model
         public bool Equals(IVertex other)
         {
             return other.IsEqual(this);
+        }
+
+        private bool MarkedAsVisited()
+        {
+            return Background == AlreadyPathVertex || Background == PathVertexColor;
         }
     }
 }
