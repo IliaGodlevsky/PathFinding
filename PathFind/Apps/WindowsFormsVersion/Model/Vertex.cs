@@ -12,6 +12,27 @@ namespace WindowsFormsVersion.Model
 {
     internal class Vertex : Label, IVertex, IMarkable, IWeightable
     {
+        private static Color RegularVertexColor;
+        private static Color ObstacleVertexColor;
+        private static Color PathVertexColor;
+        private static Color EnqueuedVertexColor;
+        private static Color SourceVertexColor;
+        private static Color TargetVertexColor;
+        private static Color AlreadyPathVertexColor;
+        private static Color VisitedVertexColor;
+
+        static Vertex()
+        {
+            RegularVertexColor = Color.FromKnownColor(KnownColor.WhiteSmoke);
+            ObstacleVertexColor = Color.FromKnownColor(KnownColor.Black);
+            PathVertexColor = Color.FromKnownColor(KnownColor.Yellow);
+            EnqueuedVertexColor = Color.FromKnownColor(KnownColor.Magenta);
+            SourceVertexColor = Color.FromKnownColor(KnownColor.Green);
+            TargetVertexColor = Color.FromKnownColor(KnownColor.Red);
+            AlreadyPathVertexColor = Color.FromKnownColor(KnownColor.Gold);
+            VisitedVertexColor = Color.FromKnownColor(KnownColor.CadetBlue);
+        }
+
         public Vertex(INeighboursCoordinates coordinateRadar, ICoordinate coordinate) : base()
         {
             float fontSize = VertexSize * TextToSizeRatio;
@@ -62,40 +83,53 @@ namespace WindowsFormsVersion.Model
 
         public void MarkAsObstacle()
         {
-            BackColor = Color.FromKnownColor(KnownColor.Black);
+            BackColor = ObstacleVertexColor;
         }
 
         public void MarkAsRegular()
         {
             if (!IsObstacle)
             {
-                BackColor = Color.FromKnownColor(KnownColor.WhiteSmoke);
+                BackColor = RegularVertexColor;
             }
         }
 
         public void MarkAsSource()
         {
-            BackColor = Color.FromKnownColor(KnownColor.Green);
+            BackColor = SourceVertexColor;
         }
 
         public void MarkAsTarget()
         {
-            BackColor = Color.FromKnownColor(KnownColor.Red);
+            BackColor = TargetVertexColor;
         }
 
         public void MarkAsVisited()
         {
-            BackColor = Color.FromKnownColor(KnownColor.CadetBlue);
+            if (!IsMarkedAsPath())
+            {
+                BackColor = VisitedVertexColor;
+            }
         }
 
         public void MarkAsPath()
         {
-            BackColor = Color.FromKnownColor(KnownColor.Yellow);
+            if (IsMarkedAsPath())
+            {
+                BackColor = AlreadyPathVertexColor;
+            }
+            else
+            {
+                BackColor = PathVertexColor;
+            }            
         }
 
         public void MarkAsEnqueued()
         {
-            BackColor = Color.FromKnownColor(KnownColor.Magenta);
+            if (!IsMarkedAsPath())
+            {
+                BackColor = EnqueuedVertexColor;
+            }
         }
 
         public void MakeUnweighted()
@@ -113,6 +147,11 @@ namespace WindowsFormsVersion.Model
         public bool Equals(IVertex other)
         {
             return other.IsEqual(this);
+        }
+
+        private bool IsMarkedAsPath()
+        {
+            return BackColor == PathVertexColor || BackColor == AlreadyPathVertexColor;
         }
     }
 }

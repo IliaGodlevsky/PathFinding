@@ -17,6 +17,27 @@ namespace ConsoleVersion.Model
 {
     internal class Vertex : IVertex, IMarkable, IWeightable, IDisplayable
     {
+        private static Color RegularVertexColor;
+        private static Color ObstacleVertexColor;
+        private static Color PathVertexColor;
+        private static Color EnqueuedVertexColor;
+        private static Color SourceVertexColor;
+        private static Color TargetVertexColor;
+        private static Color AlreadyPathVertexColor;
+        private static Color VisitedVertexColor;
+
+        static Vertex()
+        {
+            RegularVertexColor = Color.FromKnownColor(KnownColor.WhiteSmoke);
+            ObstacleVertexColor = Color.FromKnownColor(KnownColor.Black);
+            PathVertexColor = Color.FromKnownColor(KnownColor.Yellow);
+            EnqueuedVertexColor = Color.FromKnownColor(KnownColor.Magenta);
+            SourceVertexColor = Color.FromKnownColor(KnownColor.Green);
+            TargetVertexColor = Color.FromKnownColor(KnownColor.Red);
+            AlreadyPathVertexColor = Color.FromKnownColor(KnownColor.Orange);
+            VisitedVertexColor = Color.FromKnownColor(KnownColor.Blue);
+        }
+
         public event EventHandler OnVertexCostChanged;
         public event EventHandler OnEndPointChosen;
         public event EventHandler OnVertexReversed;
@@ -84,22 +105,42 @@ namespace ConsoleVersion.Model
             OnEndPointChosen?.Invoke(this, EventArgs.Empty);
         }
 
-        public void MarkAsTarget() => Mark(KnownColor.Red);
+        public void MarkAsTarget() => Mark(TargetVertexColor);
 
-        public void MarkAsRegular() => Mark(KnownColor.White);
+        public void MarkAsRegular() => Mark(RegularVertexColor);
 
-        public void MarkAsObstacle()
+        public void MarkAsObstacle() => Mark(ObstacleVertexColor);
+
+        public void MarkAsPath()
         {
-            colour = Color.FromKnownColor(KnownColor.Black);
+            if (IsMarkedAsPath())
+            {
+                Mark(AlreadyPathVertexColor);
+            }
+            else
+            {
+                Mark(PathVertexColor);
+            }
+            
         }
 
-        public void MarkAsPath() => Mark(KnownColor.Yellow);
+        public void MarkAsSource() => Mark(SourceVertexColor);
 
-        public void MarkAsSource() => Mark(KnownColor.Green);
+        public void MarkAsVisited()
+        {
+            if (!IsMarkedAsPath())
+            {
+                Mark(VisitedVertexColor);
+            }            
+        }
 
-        public void MarkAsVisited() => Mark(KnownColor.Blue);
-
-        public void MarkAsEnqueued() => Mark(KnownColor.Magenta);
+        public void MarkAsEnqueued()
+        {
+            if (!IsMarkedAsPath())
+            {
+                Mark(EnqueuedVertexColor);
+            }
+        }
 
         public void MakeUnweighted()
         {
@@ -136,10 +177,15 @@ namespace ConsoleVersion.Model
             return new Coordinate2D(left, top);
         }
 
-        private void Mark(KnownColor colour)
+        private void Mark(Color color)
         {
-            this.colour = Color.FromKnownColor(colour);
+            this.colour = color;
             Display();
+        }
+
+        private bool IsMarkedAsPath()
+        {
+            return colour == PathVertexColor || colour == AlreadyPathVertexColor;
         }
 
         private string text;

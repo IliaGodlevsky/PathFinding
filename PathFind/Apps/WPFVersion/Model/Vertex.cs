@@ -29,7 +29,7 @@ namespace WPFVersion.Model
             EnqueuedVertexColor = new SolidColorBrush(Colors.Magenta);
             ObstacleVertexColor = new SolidColorBrush(Colors.Black);
             RegularVertexColor = new SolidColorBrush(Colors.White);
-            AlreadyPathVertex = new SolidColorBrush(Colors.Orange);
+            AlreadyPathVertex = new SolidColorBrush(Colors.Gold);
         }
 
         public Vertex(INeighboursCoordinates radar, ICoordinate coordinate) : base()
@@ -104,7 +104,7 @@ namespace WPFVersion.Model
         {
             Dispatcher.Invoke(() => 
             {
-                if (MarkedAsPathed())
+                if (IsMarkedAsPathed())
                 {
                     Background = AlreadyPathVertex;
                 }
@@ -135,7 +135,7 @@ namespace WPFVersion.Model
         {
             Dispatcher.Invoke(() => 
             {
-                if (!MarkedAsPathed())
+                if (!IsMarkedAsPathed())
                 {
                     Background = VisitedVertexColor;
                 }
@@ -146,7 +146,7 @@ namespace WPFVersion.Model
         {
             Dispatcher.Invoke(() =>
             {
-                if (!MarkedAsPathed())
+                if (!IsMarkedAsPathed())
                 {
                     Background = EnqueuedVertexColor;
                 }
@@ -170,7 +170,7 @@ namespace WPFVersion.Model
             return other.IsEqual(this);
         }
 
-        private bool MarkedAsPathed()
+        private bool IsMarkedAsPathed()
         {
             return Background == AlreadyPathVertex || Background == PathVertexColor;
         }
