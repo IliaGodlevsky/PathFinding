@@ -50,12 +50,9 @@ namespace GraphLib.Base
 
         public override string ToString()
         {
-            if (string.IsNullOrEmpty(toString))
-            {
-                var str = string.Join(",", CoordinatesValues);
-                toString = $"({str})";
-            }
-            return toString;
+            return toString = string.IsNullOrEmpty(toString)
+                ? $"({string.Join(",", CoordinatesValues)})"
+                : toString;
         }
 
         [NonSerialized]

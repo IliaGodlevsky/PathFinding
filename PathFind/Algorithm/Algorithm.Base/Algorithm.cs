@@ -43,11 +43,6 @@ namespace Algorithm.Base
 
         protected virtual void Reset()
         {
-            Started = null;
-            Finished = null;
-            VertexEnqueued = null;
-            VertexVisited = null;
-            Interrupted = null;
             visitedVertices.Clear();
             parentVertices.Clear();
             IsInterruptRequested = false;
@@ -116,6 +111,11 @@ namespace Algorithm.Base
 
         public void Dispose()
         {
+            Started = null;
+            Finished = null;
+            VertexEnqueued = null;
+            VertexVisited = null;
+            Interrupted = null;
             Reset();
         }
 

@@ -20,9 +20,12 @@ namespace ConsoleVersion.View.Abstraction
 
         public override string GetFramedAxis()
         {
-            return new StringBuilder()
-                .AppendLineRepeat(GetStringToAppend, graphLength)
-                .ToString();
+            var stringBuilder = new StringBuilder();
+            for (int i = 0; i < graphLength; i++)
+            {
+                stringBuilder.AppendLine(GetStringToAppend(i));
+            }
+            return stringBuilder.ToString();
         }
 
         protected abstract string GetStringToAppend(int yCoordinate);

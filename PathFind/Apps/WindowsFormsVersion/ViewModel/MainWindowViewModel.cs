@@ -1,4 +1,5 @@
 ﻿using Common.Interface;
+using GraphLib.Base;
 using GraphLib.Extensions;
 using GraphLib.Interfaces;
 using GraphLib.Interfaces.Factories;
@@ -71,13 +72,9 @@ namespace WindowsFormsVersion.ViewModel
 
         public MainWindow MainWindow { get; set; }
 
-        public MainWindowViewModel(IGraphFieldFactory fieldFactory,
-            IVertexEventHolder eventHolder,
-            ISaveLoadGraph saveLoad,
-            IEnumerable<IGraphAssemble> graphFactories,
-            ILog log)
-            : base(fieldFactory, eventHolder, saveLoad,
-                  graphFactories, log)
+        public MainWindowViewModel(IGraphFieldFactory fieldFactory, IVertexEventHolder eventHolder,
+            ISaveLoadGraph saveLoad, IEnumerable<IGraphAssemble> graphFactories, BaseEndPoints endPoints, ILog log)
+            : base(fieldFactory, eventHolder, saveLoad, graphFactories, endPoints, log)
         {
 
         }
@@ -88,7 +85,7 @@ namespace WindowsFormsVersion.ViewModel
             {
                 try
                 {
-                    var model = new PathFindingViewModel(log, this, EndPoints);
+                    var model = new PathFindingViewModel(log, this, endPoints);
                     var form = new PathFindingWindow(model);
                     PrepareWindow(model, form);
                 }
@@ -167,7 +164,7 @@ namespace WindowsFormsVersion.ViewModel
 
         private bool CanStartPathFinding()
         {
-            return EndPoints.HasEndPointsSet && !IsPathfindingStarted;
+            return endPoints.HasEndPointsSet && !IsPathfindingStarted;
         }
     }
 }

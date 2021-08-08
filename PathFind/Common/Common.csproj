@@ -75,7 +75,7 @@
     <Compile Include="Extensions\EnumExtensions.cs" />
     <Compile Include="Extensions\GenericExtensions.cs" />
     <Compile Include="Extensions\IntExtensions.cs" />
-    <Compile Include="Extensions\StringBuilderExtensions.cs" />
+    <Compile Include="Extensions\StopwatchExtensions.cs" />
     <Compile Include="Extensions\ValueRangeExtensions.cs" />
     <Compile Include="Interface\ICloneable.cs" />
     <Compile Include="Interface\IViewModel.cs" />

@@ -22,18 +22,22 @@ namespace ConsoleVersion.View.Abstraction
         protected string GetAbscissa()
         {
             string largeSpace = LargeSpace;
-            return new StringBuilder(largeSpace)
-                .AppendRepeat(GetStringToAppend, graphWidth)
-                .Append(largeSpace)
-                .ToString();
+            var stringBuilder = new StringBuilder(largeSpace);
+            for (int i = 0; i < graphWidth; i++)
+            {
+                stringBuilder.Append(GetStringToAppend(i));
+            }
+            return stringBuilder.Append(largeSpace).ToString();
         }
 
         protected string GetHorizontalFrame()
         {
-            return new StringBuilder(LargeSpace)
-                .AppendRepeat(HorizontalFrameComponent, graphWidth)
-                .Append(CoordinateDelimiter)
-                .ToString();
+            var stringBuilder = new StringBuilder(LargeSpace);
+            for (int i = 0; i < graphWidth; i++)
+            {
+                stringBuilder.Append(HorizontalFrameComponent);
+            }
+            return stringBuilder.Append(CoordinateDelimiter).ToString();
         }
 
         private string GetStringToAppend(int index)

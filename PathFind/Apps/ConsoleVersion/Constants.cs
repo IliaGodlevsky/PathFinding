@@ -25,6 +25,9 @@ namespace ConsoleVersion
         public const string InputObstaclePercent = "Input obstacle percent";
         public const string InputGraphParametres = "Input graph parametres";
 
+        public const int Yes = 1;
+        public const int No = 0;
+
         public static InclusiveValueRange<int> GraphWidthValueRange { get; }
         public static InclusiveValueRange<int> GraphLengthValueRange { get; }
         public static InclusiveValueRange<int> ObstaclesPercentValueRange { get; }
@@ -37,7 +40,7 @@ namespace ConsoleVersion
             GraphWidthValueRange = new InclusiveValueRange<int>(80, 1);
             GraphLengthValueRange = new InclusiveValueRange<int>(50, 1);
             ObstaclesPercentValueRange = new InclusiveValueRange<int>(99, 0);
-            AlgorithmDelayTimeValueRange = new InclusiveValueRange<int>(35, 0);
+            AlgorithmDelayTimeValueRange = new InclusiveValueRange<int>(35, 1);
         }
     }
 }

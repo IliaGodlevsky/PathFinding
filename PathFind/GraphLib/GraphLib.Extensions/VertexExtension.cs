@@ -18,18 +18,22 @@ namespace GraphLib.Extensions
 
         public static bool IsIsolated(this IVertex self)
         {
-            bool IsObstacleOrNullObject(IVertex vertex)
+            bool IsObstacleOrNull(IVertex vertex)
             {
                 return vertex.IsObstacle || vertex.IsNull();
             }
 
-            return IsObstacleOrNullObject(self) || self.Neighbours.All(IsObstacleOrNullObject);
+            return IsObstacleOrNull(self) || self.Neighbours.All(IsObstacleOrNull);
         }
 
         public static bool IsNeighbour(this IVertex self, IVertex candidate)
         {
-            bool IsAtSamePosition(IVertex vertex) => vertex.Position.IsEqual(candidate.Position);
-            return candidate.IsClose(self) && self.Neighbours.Any(IsAtSamePosition);
+            bool IsAtSamePosition(IVertex vertex)
+            {
+                return vertex.Position.IsEqual(candidate.Position)
+                    && ReferenceEquals(vertex, candidate);
+            }
+            return self.Neighbours.Any(IsAtSamePosition);
         }
 
         public static int[] GetCoordinates(this IVertex self)
@@ -52,21 +56,6 @@ namespace GraphLib.Extensions
             {
                 vertex.MarkAsRegular();
             }
-        }
-
-        public static bool IsCardinal(this IVertex vertex, IVertex neighbour)
-        {
-            return vertex.Position.IsCardinal(neighbour.Position);
-        }
-
-        public static bool IsClose(this IVertex vertex, IVertex neighbour)
-        {
-            return vertex.Position.IsClose(neighbour.Position);
-        }
-
-        public static bool HaveEqualDimensionsNumber(this IVertex self, IVertex vertex)
-        {
-            return self.Position.HaveEqualDimensionsNumber(vertex.Position);
         }
 
         public static void Initialize(this IVertex self)

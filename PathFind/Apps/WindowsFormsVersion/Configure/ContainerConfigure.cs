@@ -37,7 +37,7 @@ namespace WindowsFormsVersion.Configure
             var builder = new ContainerBuilder();
 
             builder.RegisterType<MainWindow>().As<Form>().InstancePerLifetimeScope();
-            builder.RegisterType<MainWindowViewModel>().AsSelf().InstancePerLifetimeScope().PropertiesAutowired();
+            builder.RegisterType<MainWindowViewModel>().AsSelf().InstancePerLifetimeScope();
 
             builder.RegisterType<EndPoints>().As<BaseEndPoints>().SingleInstance();
             builder.RegisterType<GraphFieldFactory>().As<IGraphFieldFactory>().SingleInstance();

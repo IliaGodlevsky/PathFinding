@@ -3,6 +3,7 @@ using GraphLib.Extensions;
 using GraphLib.Interfaces;
 using GraphLib.Interfaces.Factories;
 using GraphLib.NullRealizations.NullObjects;
+using GraphLib.Serialization.Exceptions;
 using GraphViewModel.Interfaces;
 using Logging.Interface;
 using System;
@@ -12,8 +13,6 @@ namespace GraphViewModel
 {
     public abstract class MainModel : IMainModel
     {
-        public BaseEndPoints EndPoints { get; set; }
-
         public virtual string GraphParametres { get; set; }
 
         public virtual IGraphField GraphField { get; set; }
@@ -24,25 +23,32 @@ namespace GraphViewModel
             IVertexEventHolder eventHolder,
             ISaveLoadGraph saveLoad,
             IEnumerable<IGraphAssemble> graphAssembles,
+            BaseEndPoints endPoints,
             ILog log)
         {
             this.eventHolder = eventHolder;
             this.saveLoad = saveLoad;
             this.fieldFactory = fieldFactory;
             this.graphAssembles = graphAssembles;
+            this.endPoints = endPoints;
             this.log = log;
             Graph = new NullGraph();
         }
 
         public virtual async void SaveGraph()
         {
+            var task = saveLoad.SaveGraphAsync(Graph);
             try
             {
-                await saveLoad.SaveGraphAsync(Graph);
+                await task;
+            }
+            catch (CantSerializeGraphException ex)
+            {
+                log.Warn(ex);
             }
             catch (Exception ex)
             {
-                log.Warn(ex);
+                log.Error(ex);
             }
         }
 
@@ -67,24 +73,25 @@ namespace GraphViewModel
         {
             Graph.Refresh();
             GraphParametres = Graph.ToString();
-            EndPoints.Reset();
+            endPoints.Reset();
         }
 
         public virtual void ConnectNewGraph(IGraph graph)
         {
-            EndPoints.UnsubscribeFromEvents(Graph);
-            EndPoints.Reset();
+            endPoints.UnsubscribeFromEvents(Graph);
+            endPoints.Reset();
             eventHolder.UnsubscribeVertices(Graph);
             Graph = graph;
             GraphField = fieldFactory.CreateGraphField(Graph);
             eventHolder.SubscribeVertices(Graph);
-            EndPoints.SubscribeToEvents(Graph);
+            endPoints.SubscribeToEvents(Graph);
             GraphParametres = Graph.ToString();
         }
 
         protected readonly IEnumerable<IGraphAssemble> graphAssembles;
         protected readonly IGraphFieldFactory fieldFactory;
         protected readonly ILog log;
+        protected readonly BaseEndPoints endPoints;
 
         private readonly IVertexEventHolder eventHolder;
         private readonly ISaveLoadGraph saveLoad;

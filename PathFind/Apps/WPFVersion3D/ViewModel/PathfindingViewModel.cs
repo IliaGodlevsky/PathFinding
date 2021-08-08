@@ -7,6 +7,8 @@ using Logging.Interface;
 using System;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
+using System.Threading;
+using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
 using WPFVersion3D.Infrastructure;
@@ -39,7 +41,7 @@ namespace WPFVersion3D.ViewModel
         protected override void OnAlgorithmStarted(object sender, AlgorithmEventArgs e)
         {
             base.OnAlgorithmStarted(sender, e);
-            if(mainViewModel is MainWindowViewModel model)
+            if (mainViewModel is MainWindowViewModel model)
             {
                 Application.Current.Dispatcher.Invoke(() =>
                 {
@@ -49,9 +51,10 @@ namespace WPFVersion3D.ViewModel
             }
         }
 
-        protected override void OnVertexVisited(object sender, AlgorithmEventArgs e)
+        protected override async void OnVertexVisited(object sender, AlgorithmEventArgs e)
         {
-            base.OnVertexVisited(sender, e);
+            Thread.Sleep(DelayTime);
+            await Task.Run(() => base.OnVertexVisited(sender, e));
             if (mainViewModel is MainWindowViewModel model)
             {
                 Application.Current.Dispatcher.Invoke(() =>
@@ -59,6 +62,11 @@ namespace WPFVersion3D.ViewModel
                     model.Statistics[statIndex] = GetStatistics();
                 });
             }
+        }
+
+        protected override async void OnVertexEnqueued(object sender, AlgorithmEventArgs e)
+        {
+            await Task.Run(() => base.OnVertexEnqueued(sender, e));
         }
 
         protected override void Summarize()

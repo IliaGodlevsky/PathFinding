@@ -34,7 +34,7 @@ namespace GraphLib.Exceptions
 
         }
 
-        public WrongNumberOfDimensionsException(SerializationInfo info, StreamingContext context)
+        protected WrongNumberOfDimensionsException(SerializationInfo info, StreamingContext context)
             : base(info, context)
         {
 

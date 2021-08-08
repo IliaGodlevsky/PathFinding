@@ -7,6 +7,8 @@ using Logging.Interface;
 using System;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
+using System.Threading;
+using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
 using WPFVersion.Infrastructure;
@@ -29,10 +31,8 @@ namespace WPFVersion.ViewModel
         public PathFindingViewModel(ILog log, IMainModel model, BaseEndPoints endPoints)
             : base(log, model, endPoints)
         {
-            ConfirmPathFindAlgorithmChoice = new RelayCommand(
-                ExecuteConfirmPathFindAlgorithmChoice,
+            ConfirmPathFindAlgorithmChoice = new RelayCommand(ExecuteConfirmPathFindAlgorithmChoice, 
                 CanExecuteConfirmPathFindAlgorithmChoice);
-
             CancelPathFindAlgorithmChoice = new RelayCommand(ExecuteCloseWindowCommand);
         }
 
@@ -47,7 +47,7 @@ namespace WPFVersion.ViewModel
             if (mainViewModel is MainWindowViewModel mainModel)
             {
                 mainModel.CanInterruptAlgorithm = true;
-                mainModel.OnAlgorithmInterrupted += InterruptAlgorithm;
+                mainModel.AlgorithmInterrupted += InterruptAlgorithm;
                 Application.Current.Dispatcher.Invoke(() =>
                 {
                     mainModel.Statistics.Add(string.Empty);
@@ -61,22 +61,31 @@ namespace WPFVersion.ViewModel
             {
                 Application.Current.Dispatcher.Invoke(() =>
                 {
-                    mainModel.Statistics[statIndex] 
+                    mainModel.Statistics[statIndex]
                         = path.PathLength > 0 ? GetStatistics() : CouldntFindPathMsg;
                 });
             }
         }
 
-        protected override void OnVertexVisited(object sender, AlgorithmEventArgs e)
+        protected override async void OnVertexVisited(object sender, AlgorithmEventArgs e)
         {
-            base.OnVertexVisited(sender, e);
-            if (mainViewModel is MainWindowViewModel mainModel)
+            Thread.Sleep(DelayTime);
+            await Task.Run(() =>
             {
-                Application.Current.Dispatcher.Invoke(() =>
+                base.OnVertexVisited(sender, e);
+                if (mainViewModel is MainWindowViewModel mainModel)
                 {
-                    mainModel.Statistics[statIndex] = GetStatistics();
-                });
-            }
+                    Application.Current.Dispatcher.Invoke(() =>
+                    {
+                        mainModel.Statistics[statIndex] = GetStatistics();
+                    });
+                }
+            });
+        }
+
+        protected override async void OnVertexEnqueued(object sender, AlgorithmEventArgs e)
+        {
+            await Task.Run(() => base.OnVertexEnqueued(sender, e));
         }
 
         protected override void OnAlgorithmFinished(object sender, AlgorithmEventArgs e)
@@ -85,7 +94,7 @@ namespace WPFVersion.ViewModel
             if (mainViewModel is MainWindowViewModel mainModel)
             {
                 mainModel.CanInterruptAlgorithm = false;
-                mainModel.OnAlgorithmInterrupted -= InterruptAlgorithm;
+                mainModel.AlgorithmInterrupted -= InterruptAlgorithm;
             }
         }
 

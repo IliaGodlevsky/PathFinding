@@ -47,9 +47,9 @@ namespace GraphLib.Realizations.Factories.GraphAssembles
             obstaclePercent = percentRange.ReturnInRange(obstaclePercent);
             var graph = graphFactory.CreateGraph(graphDimensionsSizes);
 
-            void AssembleVertex(int index)
+            for (int i = 0; i < graph.Size; i++)
             {
-                var coordinateValues = graph.ToCoordinates(index);
+                var coordinateValues = graph.ToCoordinates(i);
                 var coordinate = coordinateFactory.CreateCoordinate(coordinateValues);
                 var coordinates = neighboursCoordinates.CreateNeighboursCoordinates(coordinate);
                 graph[coordinate] = vertexFactory.CreateVertex(coordinates, coordinate);
@@ -57,7 +57,6 @@ namespace GraphLib.Realizations.Factories.GraphAssembles
                 graph[coordinate].IsObstacle = percentRange.IsObstacleChance(obstaclePercent);
             }
 
-            Enumerable.Range(0, graph.Size).ForEach(AssembleVertex);
             return graph.ConnectVertices();
         }
 

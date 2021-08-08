@@ -28,6 +28,7 @@ namespace ConsoleVersion.Model
 
         static Vertex()
         {
+            locker = new object();
             RegularVertexColor = Color.FromKnownColor(KnownColor.WhiteSmoke);
             ObstacleVertexColor = Color.FromKnownColor(KnownColor.Black);
             PathVertexColor = Color.FromKnownColor(KnownColor.Yellow);
@@ -121,7 +122,6 @@ namespace ConsoleVersion.Model
             {
                 Mark(PathVertexColor);
             }
-            
         }
 
         public void MarkAsSource() => Mark(SourceVertexColor);
@@ -131,7 +131,7 @@ namespace ConsoleVersion.Model
             if (!IsMarkedAsPath())
             {
                 Mark(VisitedVertexColor);
-            }            
+            }
         }
 
         public void MarkAsEnqueued()
@@ -190,5 +190,6 @@ namespace ConsoleVersion.Model
 
         private string text;
         private Color colour;
+        private static readonly object locker;
     }
 }

@@ -2,6 +2,7 @@
 using GraphLib.Interfaces;
 using GraphLib.Interfaces.Factories;
 using System;
+using System.Threading.Tasks;
 
 namespace GraphLib.Base
 {
@@ -26,7 +27,7 @@ namespace GraphLib.Base
 
         public virtual void Reverse(object sender, EventArgs e)
         {
-            if (sender is IVertex vertex && sender is IMarkable markable)
+            if (sender is IVertex vertex && vertex is IMarkable markable)
             {
                 if (vertex.IsObstacle)
                 {

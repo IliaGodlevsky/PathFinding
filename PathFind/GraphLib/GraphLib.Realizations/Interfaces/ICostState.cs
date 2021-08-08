@@ -1,6 +1,5 @@
 ﻿using Common.Interface;
 using GraphLib.Realizations.VertexCost;
-using System;
 
 namespace GraphLib.Realizations.Interfaces
 {

@@ -102,7 +102,7 @@ namespace WPFVersion.Model
 
         public void MarkAsPath()
         {
-            Dispatcher.Invoke(() => 
+            Dispatcher.Invoke(() =>
             {
                 if (IsMarkedAsPathed())
                 {
@@ -133,7 +133,7 @@ namespace WPFVersion.Model
 
         public void MarkAsVisited()
         {
-            Dispatcher.Invoke(() => 
+            Dispatcher.Invoke(() =>
             {
                 if (!IsMarkedAsPathed())
                 {

@@ -85,27 +85,22 @@ namespace GraphLib.Extensions
 
         public static int[] ToCoordinates(this IGraph self, int index)
         {
-            var dimensions = self.DimensionsSizes.ToArray();
-
-            var rangeOfValidIndices = new InclusiveValueRange<int>(self.Size - 1, 0);
-            if (!rangeOfValidIndices.Contains(index))
+            var rangeOfIndices = new InclusiveValueRange<int>(self.Size - 1, 0);
+            if (!rangeOfIndices.Contains(index))
             {
                 throw new ArgumentOutOfRangeException(nameof(index));
             }
 
-            int GetCoordinateValue(int dimensionSize)
+            var dimensions = self.DimensionsSizes;
+            var coordinates = new int[dimensions.Length];
+
+            for (int i = 0; i < coordinates.Length; i++)
             {
-                int coordinate = index % dimensionSize;
-                index /= dimensionSize;
-                return coordinate;
+                coordinates[i] = index % dimensions[i];
+                index /= dimensions[i];
             }
 
-            int Coordinates(int i) => GetCoordinateValue(dimensions[i]);
-
-            return Enumerable
-                .Range(0, dimensions.Length)
-                .Select(Coordinates)
-                .ToArray();
+            return coordinates;
         }
     }
 }

@@ -33,17 +33,17 @@ namespace ConsoleVersion.View
 
         private string CreateMenu()
         {
-            return new StringBuilder(NewLine)
-                .AppendRepeat(GetFormattedMenuItem, menuItemsCount)
-                .ToString();
-        }
+            var stringBuilder = new StringBuilder(NewLine);
 
-        private string GetFormattedMenuItem(int menuItemIndex)
-        {
-            string paddedName = menuItemsNames[menuItemIndex].PadRight(LongestNameLength);
-            string paddedMenuItemIndex = (menuItemIndex + 1).ToString().PadLeft(MenuItemNumberPad);
-            string format = Format + ((menuItemIndex + 1) % columns == 0 ? NewLine : Space);
-            return string.Format(format, paddedMenuItemIndex, paddedName);
+            for (int i = 0; i < menuItemsCount; i++)
+            {
+                string paddedName = menuItemsNames[i].PadRight(LongestNameLength);
+                string paddedMenuItemIndex = (i + 1).ToString().PadLeft(MenuItemNumberPad);
+                string format = Format + ((i + 1) % columns == 0 ? NewLine : Space);
+                stringBuilder.AppendFormat(format, paddedMenuItemIndex, paddedName);
+            }
+
+            return stringBuilder.ToString();
         }
 
         private int MenuItemNumberPad { get; }

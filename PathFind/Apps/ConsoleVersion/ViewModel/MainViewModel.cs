@@ -5,6 +5,7 @@ using ConsoleVersion.EventHandlers;
 using ConsoleVersion.Model;
 using ConsoleVersion.View;
 using ConsoleVersion.View.Interface;
+using GraphLib.Base;
 using GraphLib.Extensions;
 using GraphLib.Interfaces;
 using GraphLib.Interfaces.Factories;
@@ -47,8 +48,8 @@ namespace ConsoleVersion.ViewModel
         }
 
         public MainViewModel(IGraphFieldFactory fieldFactory, IVertexEventHolder eventHolder,
-            ISaveLoadGraph saveLoad, IEnumerable<IGraphAssemble> graphAssembles, ILog log)
-            : base(fieldFactory, eventHolder, saveLoad, graphAssembles, log)
+            ISaveLoadGraph saveLoad, IEnumerable<IGraphAssemble> graphAssembles, BaseEndPoints endPoints, ILog log)
+            : base(fieldFactory, eventHolder, saveLoad, graphAssembles, endPoints, log)
         {
 
         }
@@ -88,7 +89,7 @@ namespace ConsoleVersion.ViewModel
         {
             try
             {
-                var model = new PathFindingViewModel(log, this, EndPoints);
+                var model = new PathFindingViewModel(log, this, endPoints);
                 var view = new PathFindView(model);
                 model.Interrupted += view.OnInterrupted;
                 view.NewMenuIteration += DisplayGraph;
@@ -157,8 +158,8 @@ namespace ConsoleVersion.ViewModel
         [MenuItem(Constants.Exit, MenuItemPriority.Lowest)]
         public void Interrupt()
         {
-            int input = InputNumber(ExitAppMsg, 1, 0);
-            bool isInterruptRequested = input == 1;
+            int input = InputNumber(ExitAppMsg, Constants.Yes, Constants.No);
+            bool isInterruptRequested = input == Constants.Yes;
             if (isInterruptRequested)
             {
                 Interrupted?.Invoke(this, new InterruptEventArgs());

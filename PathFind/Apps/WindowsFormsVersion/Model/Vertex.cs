@@ -121,7 +121,7 @@ namespace WindowsFormsVersion.Model
             else
             {
                 BackColor = PathVertexColor;
-            }            
+            }
         }
 
         public void MarkAsEnqueued()

@@ -1,5 +1,6 @@
 ﻿using Common.Extensions;
 using Common.Interface;
+using GraphLib.Base;
 using GraphLib.Interfaces;
 using GraphLib.Interfaces.Factories;
 using GraphViewModel;
@@ -64,14 +65,9 @@ namespace WPFVersion3D.ViewModel
         public ICommand ChangeOpacityCommand { get; }
         public ICommand AnimatedAxisRotateCommand { get; }
 
-        public MainWindowViewModel(
-            IGraphFieldFactory fieldFactory,
-            IVertexEventHolder eventHolder,
-            ISaveLoadGraph saveLoad,
-            IEnumerable<IGraphAssemble> graphAssembles,
-            ILog log)
-            : base(fieldFactory, eventHolder, saveLoad,
-                  graphAssembles, log)
+        public MainWindowViewModel(IGraphFieldFactory fieldFactory, IVertexEventHolder eventHolder,
+            ISaveLoadGraph saveLoad, IEnumerable<IGraphAssemble> graphAssembles, BaseEndPoints endPoints, ILog log)
+            : base(fieldFactory, eventHolder, saveLoad, graphAssembles, endPoints, log)
         {
             StartPathFindCommand = new RelayCommand(ExecuteStartPathFindCommand, CanExecuteStartFindPathCommand);
             CreateNewGraphCommand = new RelayCommand(ExecuteCreateNewGraphCommand);
@@ -87,7 +83,7 @@ namespace WPFVersion3D.ViewModel
         {
             try
             {
-                var viewModel = new PathFindingViewModel(log, this, EndPoints);
+                var viewModel = new PathFindingViewModel(log, this, endPoints);
                 var window = new PathFindWindow();
                 PrepareWindow(viewModel, window);
             }
@@ -155,7 +151,7 @@ namespace WPFVersion3D.ViewModel
 
         private bool CanExecuteStartFindPathCommand(object param)
         {
-            return EndPoints.HasEndPointsSet;
+            return endPoints.HasEndPointsSet;
         }
 
         private void ExecuteLoadGraphCommand(object param)
@@ -203,11 +199,7 @@ namespace WPFVersion3D.ViewModel
         {
             string Description(AnimationSpeed speed) => ((Enum)speed).GetDescription();
             BaseSpeed Speed(AnimationSpeed speed) => speed.GetAttributeOrNull<BaseSpeed>();
-
-            return Enum
-                .GetValues(typeof(AnimationSpeed))
-                .Cast<AnimationSpeed>()
-                .ToDictionary(Description, Speed);
+            return EnumExtensions.ToDictionary<string, BaseSpeed, AnimationSpeed>(Description, Speed);
         }
 
         private readonly Lazy<IDictionary<string, BaseSpeed>> animationSpeeds;

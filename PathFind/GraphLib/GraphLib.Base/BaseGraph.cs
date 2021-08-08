@@ -4,7 +4,6 @@ using GraphLib.Extensions;
 using GraphLib.Interfaces;
 using GraphLib.NullRealizations.NullObjects;
 using System;
-using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -66,14 +65,10 @@ namespace GraphLib.Base
 
         public override int GetHashCode()
         {
-            int verticesHashCode = Vertices
-              .Select(x => x.GetHashCode())
-              .AggregateOrDefault(IntExtensions.Xor);
-
-            int dimensionSizesHashCode = DimensionsSizes
-                .AggregateOrDefault(IntExtensions.Xor);
-
-            return verticesHashCode.Xor(dimensionSizesHashCode);
+            return Vertices
+                .Select(x => x.GetHashCode())
+                .AggregateOrDefault(IntExtensions.Xor)
+                .Xor(DimensionsSizes.AggregateOrDefault(IntExtensions.Xor));
         }
 
         public override string ToString()
@@ -90,7 +85,7 @@ namespace GraphLib.Base
             return string.Join(largeSpace, joined, graphParams);
         }
 
-        protected static readonly string[] DimensionNames;
+        protected static string[] DimensionNames { get; }
         private readonly IDictionary<ICoordinate, IVertex> vertices;
     }
 }

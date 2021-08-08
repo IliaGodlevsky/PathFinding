@@ -13,7 +13,6 @@ using Logging.Interface;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
-using System.Linq;
 using System.Threading;
 using static GraphViewModel.Resources.ViewModelResources;
 
@@ -29,13 +28,13 @@ namespace GraphViewModel
 
         public IDictionary<string, Algorithms> Algorithms { get; }
 
-        protected PathFindingModel(ILog log, 
-            IMainModel mainViewModel, BaseEndPoints endPoints)
-        {
-            Algorithms = GetAlgorithmsDictinary();
+        protected PathFindingModel(ILog log, IMainModel mainViewModel,
+            BaseEndPoints endPoints)
+        {          
             this.mainViewModel = mainViewModel;
             this.endPoints = endPoints;
             this.log = log;
+            Algorithms = GetAlgorithmsDictinary();
             graph = mainViewModel.Graph;
             timer = new Stopwatch();
             path = new NullGraphPath();
@@ -46,8 +45,7 @@ namespace GraphViewModel
         {
             try
             {
-                algorithm = AlgoFactory
-                    .CreateAlgorithm(Algorithm, graph, endPoints);
+                algorithm = AlgoFactory.CreateAlgorithm(Algorithm, graph, endPoints);
                 SubscribeOnAlgorithmEvents();
                 path = await algorithm.FindPathAsync();
                 path.Highlight(endPoints);
@@ -69,8 +67,10 @@ namespace GraphViewModel
             {
                 vertex.MarkAsVisited();
             }
-            visitedVerticesCount = e.VisitedVertices;
-            Thread.Sleep(DelayTime);
+            if (visitedVerticesCount < e.VisitedVertices)
+            {
+                visitedVerticesCount = e.VisitedVertices;
+            }
         }
 
         protected virtual void OnVertexEnqueued(object sender, AlgorithmEventArgs e)
@@ -89,7 +89,10 @@ namespace GraphViewModel
 
         protected virtual void OnAlgorithmFinished(object sender, AlgorithmEventArgs e)
         {
-            visitedVerticesCount = e.VisitedVertices;
+            if (visitedVerticesCount < e.VisitedVertices)
+            {
+                visitedVerticesCount = e.VisitedVertices;
+            }
             timer.Stop();
         }
 
@@ -125,15 +128,11 @@ namespace GraphViewModel
 
         private IDictionary<string, Algorithms> GetAlgorithmsDictinary()
         {
-            return Enum
-                .GetValues(typeof(Algorithms))
-                .Cast<Algorithms>()
-                .ToDictionary(item => ((Enum)item).GetDescription())
-                .OrderBy(item => item.Key)
-                .AsDictionary();
+            string Description(Algorithms item) => ((Enum)item).GetDescription();
+            return EnumExtensions.ToOrderedDictionary<string, Algorithms>(Description, item => item.Key);
         }
 
-        private object[] PathfindingInfo 
+        private object[] PathfindingInfo
             => new object[] { path.PathLength, path.PathCost, visitedVerticesCount };
 
         protected readonly BaseEndPoints endPoints;
@@ -142,7 +141,7 @@ namespace GraphViewModel
         protected IAlgorithm algorithm;
         protected IGraphPath path;
         private readonly IGraph graph;
-        private readonly Stopwatch timer;
+        protected readonly Stopwatch timer;
         private int visitedVerticesCount;
     }
 }

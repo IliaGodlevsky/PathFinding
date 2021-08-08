@@ -18,7 +18,7 @@ namespace WindowsFormsVersion
             GraphWidthValueRange = new InclusiveValueRange<int>(67, 1);
             GraphLengthValueRange = new InclusiveValueRange<int>(32, 1);
             ObstaclesPercentValueRange = new InclusiveValueRange<int>(99, 0);
-            AlgorithmDelayTimeValueRange = new InclusiveValueRange<int>(35, 0);
+            AlgorithmDelayTimeValueRange = new InclusiveValueRange<int>(35, 1);
         }
     }
 }

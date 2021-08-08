@@ -1,4 +1,5 @@
 ﻿using Algorithm.Infrastructure.EventArguments;
+using Common.Extensions;
 using Common.ValueRanges;
 using ConsoleVersion.Attributes;
 using ConsoleVersion.Enums;
@@ -25,9 +26,6 @@ namespace ConsoleVersion.ViewModel
 {
     internal sealed class PathFindingViewModel : PathFindingModel, IInterruptable
     {
-        private const int Yes = 1;
-        private const int No = 0;
-
         public event InterruptEventHanlder Interrupted;
         public bool IsPathfindingStarted { get; set; }
 
@@ -79,6 +77,7 @@ namespace ConsoleVersion.ViewModel
 
         protected override void OnVertexVisited(object sender, AlgorithmEventArgs e)
         {
+            timer.Wait(DelayTime);
             base.OnVertexVisited(sender, e);
             mainModel.PathFindingStatistics = GetStatistics();
         }

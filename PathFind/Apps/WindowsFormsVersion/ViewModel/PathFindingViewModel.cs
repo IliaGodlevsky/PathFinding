@@ -1,4 +1,5 @@
 ﻿using Algorithm.Infrastructure.EventArguments;
+using Common.Extensions;
 using Common.Interface;
 using GraphLib.Base;
 using GraphViewModel;
@@ -6,6 +7,8 @@ using GraphViewModel.Interfaces;
 using Interruptable.EventArguments;
 using Logging.Interface;
 using System;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace WindowsFormsVersion.ViewModel
 {
@@ -22,7 +25,7 @@ namespace WindowsFormsVersion.ViewModel
         protected override void OnAlgorithmFinished(object sender, AlgorithmEventArgs e)
         {
             base.OnAlgorithmFinished(sender, e);
-            if(mainViewModel is MainWindowViewModel mainModel)
+            if (mainViewModel is MainWindowViewModel mainModel)
             {
                 mainModel.IsPathfindingStarted = false;
             }
@@ -41,18 +44,19 @@ namespace WindowsFormsVersion.ViewModel
         {
             if (mainViewModel is MainWindowViewModel mainModel)
             {
-                mainModel.PathFindingStatistics 
+                mainModel.PathFindingStatistics
                     = path.PathLength > 0 ? GetStatistics() : CouldntFindPathMsg;
             }
         }
 
         protected override void OnVertexVisited(object sender, AlgorithmEventArgs e)
-        {
+        {            
             base.OnVertexVisited(sender, e);
             if (mainViewModel is MainWindowViewModel mainModel)
             {
                 mainModel.PathFindingStatistics = GetStatistics();
             }
+            timer.Wait(DelayTime);
         }
 
         protected override void OnAlgorithmInterrupted(object sender, InterruptEventArgs e)

@@ -1,4 +1,5 @@
 ﻿using Common.Interface;
+using GraphLib.Base;
 using GraphLib.Extensions;
 using GraphLib.Interfaces;
 using GraphLib.Interfaces.Factories;
@@ -22,7 +23,7 @@ namespace WPFVersion.ViewModel
     internal class MainWindowViewModel : MainModel, INotifyPropertyChanged
     {
         public event PropertyChangedEventHandler PropertyChanged;
-        public event EventHandler OnAlgorithmInterrupted;
+        public event EventHandler AlgorithmInterrupted;
 
         protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = "")
         {
@@ -65,14 +66,9 @@ namespace WPFVersion.ViewModel
         public ICommand ShowVertexCost { get; }
         public ICommand InterruptAlgorithmCommand { get; }
 
-        public MainWindowViewModel(
-            IGraphFieldFactory fieldFactory,
-            IVertexEventHolder eventHolder,
-            ISaveLoadGraph saveLoad,
-            IEnumerable<IGraphAssemble> graphAssembles,
-            ILog log)
-            : base(fieldFactory, eventHolder, saveLoad,
-                  graphAssembles, log)
+        public MainWindowViewModel(IGraphFieldFactory fieldFactory, IVertexEventHolder eventHolder,
+            ISaveLoadGraph saveLoad, IEnumerable<IGraphAssemble> graphAssembles, BaseEndPoints endPoints, ILog log)
+            : base(fieldFactory, eventHolder, saveLoad, graphAssembles, endPoints, log)
         {
             StartPathFindCommand = new RelayCommand(ExecuteStartPathFindCommand, CanExecuteStartFindPathCommand);
             CreateNewGraphCommand = new RelayCommand(ExecuteCreateNewGraphCommand);
@@ -85,7 +81,7 @@ namespace WPFVersion.ViewModel
 
         public void ExecuteInterruptAlgorithmCommand(object sender)
         {
-            OnAlgorithmInterrupted?.Invoke(this, EventArgs.Empty);
+            AlgorithmInterrupted?.Invoke(this, EventArgs.Empty);
         }
 
         public bool CanExecuteInterruptAlgorithmCommand(object sender)
@@ -112,7 +108,7 @@ namespace WPFVersion.ViewModel
         {
             try
             {
-                var viewModel = new PathFindingViewModel(log, this, EndPoints);
+                var viewModel = new PathFindingViewModel(log, this, endPoints);
                 var window = new PathFindWindow();
                 PrepareWindow(viewModel, window);
             }
@@ -161,7 +157,7 @@ namespace WPFVersion.ViewModel
 
         private bool CanExecuteStartFindPathCommand(object param)
         {
-            return EndPoints.HasEndPointsSet;
+            return endPoints.HasEndPointsSet;
         }
 
         private void ExecuteLoadGraphCommand(object param)

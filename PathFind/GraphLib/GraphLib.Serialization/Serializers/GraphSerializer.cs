@@ -18,7 +18,7 @@ namespace GraphLib.Serialization.Serializers
             IGraphFactory graphFactory)
         {
             this.formatter = formatter;
-            this.converter = converter;
+            this.vertexFactory = converter;
             this.graphFactory = graphFactory;
         }
 
@@ -29,7 +29,7 @@ namespace GraphLib.Serialization.Serializers
                 var graphInfo = formatter.DeserializeGraph(stream);
                 var graph = graphFactory.CreateGraph(graphInfo.DimensionsSizes);
                 BaseVertexCost.CostRange = graphInfo.CostRange;
-                return graph.AssembleFrom(graphInfo, converter).ConnectVertices();
+                return graph.AssembleFrom(graphInfo, vertexFactory).ConnectVertices();
             }
             catch (Exception ex)
             {
@@ -50,7 +50,7 @@ namespace GraphLib.Serialization.Serializers
         }
 
         private readonly IFormatter formatter;
-        private readonly IVertexFromInfoFactory converter;
+        private readonly IVertexFromInfoFactory vertexFactory;
         private readonly IGraphFactory graphFactory;
     }
 }

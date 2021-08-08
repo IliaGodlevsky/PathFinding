@@ -40,7 +40,7 @@ namespace WPFVersion3D.ViewModel
             Vertex3D.PathVertexBrush.Opacity = PathVertexColorOpacity;
             Vertex3D.VisitedVertexBrush.Opacity = VisitedVertexColorOpacity;
 
-            WindowClosed?.Invoke(this, EventArgs.Empty);
+            ExecuteCloseChangeVertexOpacity(param);
         }
 
         private void ExecuteCloseChangeVertexOpacity(object param)

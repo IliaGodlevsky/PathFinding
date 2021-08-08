@@ -1,4 +1,5 @@
 ﻿using Algorithm.Interfaces;
+using System;
 using System.Threading.Tasks;
 
 namespace Algorithm.Extensions
@@ -7,7 +8,19 @@ namespace Algorithm.Extensions
     {
         public static async Task<IGraphPath> FindPathAsync(this IAlgorithm self)
         {
-            return await Task.Run(self.FindPath).ConfigureAwait(false);
+            var task = Task.Run(self.FindPath);
+            try
+            {
+                return await task.ConfigureAwait(false);
+            }
+            catch (ArgumentException)
+            {
+                throw;
+            }
+            catch(Exception)
+            {
+                throw;
+            }
         }
     }
 }
