@@ -46,7 +46,7 @@ namespace WPFVersion.ViewModel
             base.OnAlgorithmStarted(sender, e);
             if (mainViewModel is MainWindowViewModel mainModel)
             {
-                mainModel.CanInterruptAlgorithm = true;
+                mainModel.IsAlgorithmStarted = true;
                 mainModel.AlgorithmInterrupted += InterruptAlgorithm;
                 Application.Current.Dispatcher.Invoke(() =>
                 {
@@ -93,7 +93,7 @@ namespace WPFVersion.ViewModel
             base.OnAlgorithmFinished(sender, e);
             if (mainViewModel is MainWindowViewModel mainModel)
             {
-                mainModel.CanInterruptAlgorithm = false;
+                mainModel.IsAlgorithmStarted = false;
                 mainModel.AlgorithmInterrupted -= InterruptAlgorithm;
             }
         }

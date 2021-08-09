@@ -11,7 +11,6 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
-using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Windows;
 using System.Windows.Input;
@@ -117,20 +116,16 @@ namespace WPFVersion3D.ViewModel
             Statistics.Clear();
         }
 
-        public void StretchAlongXAxis(object sender, RoutedPropertyChangedEventArgs<double> e)
+        private void StretchAlongAxis(IAxis axis, double distanceBetween, params double[] offset)
         {
-            (GraphField as GraphField3D)?.StretchAlongAxis(new Abscissa(), e.NewValue, 1, 0, 0);
+            (GraphField as GraphField3D)?.StretchAlongAxis(axis, distanceBetween, offset);
         }
 
-        public void StretchAlongYAxis(object sender, RoutedPropertyChangedEventArgs<double> e)
-        {
-            (GraphField as GraphField3D)?.StretchAlongAxis(new Ordinate(), e.NewValue, 0, 1, 0);
-        }
+        public void StretchAlongXAxis(object sender, RoutedPropertyChangedEventArgs<double> e) => StretchAlongAxis(new Abscissa(), e.NewValue, 1, 0, 0);
 
-        public void StretchAlongZAxis(object sender, RoutedPropertyChangedEventArgs<double> e)
-        {
-            (GraphField as GraphField3D)?.StretchAlongAxis(new Applicate(), e.NewValue, 0, 0, 1);
-        }
+        public void StretchAlongYAxis(object sender, RoutedPropertyChangedEventArgs<double> e) => StretchAlongAxis(new Ordinate(), e.NewValue, 0, 1, 0);
+
+        public void StretchAlongZAxis(object sender, RoutedPropertyChangedEventArgs<double> e) => StretchAlongAxis(new Applicate(), e.NewValue, 0, 0, 1);
 
         private void ChangeVerticesOpacity()
         {
@@ -139,20 +134,11 @@ namespace WPFVersion3D.ViewModel
             PrepareWindow(model, window);
         }
 
-        private void ExecuteSaveGraphCommand(object param)
-        {
-            base.SaveGraph();
-        }
+        private void ExecuteSaveGraphCommand(object param) => base.SaveGraph();
 
-        private void ExecuteChangeOpacity(object param)
-        {
-            ChangeVerticesOpacity();
-        }
+        private void ExecuteChangeOpacity(object param) => ChangeVerticesOpacity();
 
-        private bool CanExecuteStartFindPathCommand(object param)
-        {
-            return endPoints.HasEndPointsSet;
-        }
+        private bool CanExecuteStartFindPathCommand(object param) => endPoints.HasEndPointsSet;
 
         private void ExecuteLoadGraphCommand(object param)
         {
@@ -166,15 +152,9 @@ namespace WPFVersion3D.ViewModel
             Statistics.Clear();
         }
 
-        private void ExecuteStartPathFindCommand(object param)
-        {
-            FindPath();
-        }
+        private void ExecuteStartPathFindCommand(object param) => FindPath();
 
-        private void ExecuteCreateNewGraphCommand(object param)
-        {
-            CreateNewGraph();
-        }
+        private void ExecuteCreateNewGraphCommand(object param) => CreateNewGraph();
 
         private void ExecuteAnimatedAxisRotateCommand(object param)
         {
@@ -190,10 +170,7 @@ namespace WPFVersion3D.ViewModel
             window.Show();
         }
 
-        private bool CanExecuteGraphOperation(object param)
-        {
-            return !Graph.IsNull();
-        }
+        private bool CanExecuteGraphOperation(object param) => !Graph.IsNull();
 
         private IDictionary<string, BaseSpeed> GetSpeedDictionary()
         {

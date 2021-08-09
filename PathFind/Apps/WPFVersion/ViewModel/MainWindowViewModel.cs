@@ -48,15 +48,10 @@ namespace WPFVersion.ViewModel
         public override IGraphField GraphField
         {
             get => graphField;
-            set
-            {
-                graphField = value;
-                OnPropertyChanged();
-                WindowService.Adjust(Graph);
-            }
+            set { graphField = value; OnPropertyChanged(); WindowService.Adjust(Graph); }
         }
 
-        public bool CanInterruptAlgorithm { private get; set; }
+        public bool IsAlgorithmStarted { private get; set; }
 
         public ICommand StartPathFindCommand { get; }
         public ICommand CreateNewGraphCommand { get; }
@@ -71,23 +66,13 @@ namespace WPFVersion.ViewModel
             : base(fieldFactory, eventHolder, saveLoad, graphAssembles, endPoints, log)
         {
             StartPathFindCommand = new RelayCommand(ExecuteStartPathFindCommand, CanExecuteStartFindPathCommand);
-            CreateNewGraphCommand = new RelayCommand(ExecuteCreateNewGraphCommand);
-            ClearGraphCommand = new RelayCommand(ExecuteClearGraphCommand, CanExecuteGraphOperation);
+            CreateNewGraphCommand = new RelayCommand(ExecuteCreateNewGraphCommand, CanExecuteOperation);
+            ClearGraphCommand = new RelayCommand(ExecuteClearGraphCommand, CanExecuteClearGraphOperation);
             SaveGraphCommand = new RelayCommand(ExecuteSaveGraphCommand, CanExecuteGraphOperation);
-            LoadGraphCommand = new RelayCommand(ExecuteLoadGraphCommand);
-            ShowVertexCost = new RelayCommand(ExecuteShowVertexCostCommand);
+            LoadGraphCommand = new RelayCommand(ExecuteLoadGraphCommand, CanExecuteOperation);
+            ShowVertexCost = new RelayCommand(ExecuteShowVertexCostCommand, CanExecuteOperation);
             InterruptAlgorithmCommand = new RelayCommand(ExecuteInterruptAlgorithmCommand, CanExecuteInterruptAlgorithmCommand);
-        }
-
-        public void ExecuteInterruptAlgorithmCommand(object sender)
-        {
-            AlgorithmInterrupted?.Invoke(this, EventArgs.Empty);
-        }
-
-        public bool CanExecuteInterruptAlgorithmCommand(object sender)
-        {
-            return CanInterruptAlgorithm;
-        }
+        }       
 
         public void ExecuteShowVertexCostCommand(object parametre)
         {
@@ -150,20 +135,15 @@ namespace WPFVersion.ViewModel
             window.Show();
         }
 
-        private void ExecuteSaveGraphCommand(object param)
-        {
-            base.SaveGraph();
-        }
+        private void ExecuteInterruptAlgorithmCommand(object sender) => AlgorithmInterrupted?.Invoke(this, EventArgs.Empty);
 
-        private bool CanExecuteStartFindPathCommand(object param)
-        {
-            return endPoints.HasEndPointsSet;
-        }
+        private bool CanExecuteInterruptAlgorithmCommand(object sender) => IsAlgorithmStarted;
 
-        private void ExecuteLoadGraphCommand(object param)
-        {
-            base.LoadGraph();
-        }
+        private void ExecuteSaveGraphCommand(object param) => base.SaveGraph();
+
+        private bool CanExecuteStartFindPathCommand(object param) => endPoints.HasEndPointsSet;
+
+        private void ExecuteLoadGraphCommand(object param) => base.LoadGraph();
 
         private void ExecuteClearGraphCommand(object param)
         {
@@ -171,19 +151,14 @@ namespace WPFVersion.ViewModel
             Statistics.Clear();
         }
 
-        private void ExecuteStartPathFindCommand(object param)
-        {
-            FindPath();
-        }
+        private void ExecuteStartPathFindCommand(object param) => FindPath();
 
-        private void ExecuteCreateNewGraphCommand(object param)
-        {
-            CreateNewGraph();
-        }
+        private void ExecuteCreateNewGraphCommand(object param) => CreateNewGraph();
 
-        private bool CanExecuteGraphOperation(object param)
-        {
-            return !Graph.IsNull();
-        }
+        private bool CanExecuteGraphOperation(object param) => !Graph.IsNull();
+
+        private bool CanExecuteOperation(object param) => !IsAlgorithmStarted;
+
+        private bool CanExecuteClearGraphOperation(object param) => CanExecuteOperation(param) && CanExecuteGraphOperation(param);
     }
 }

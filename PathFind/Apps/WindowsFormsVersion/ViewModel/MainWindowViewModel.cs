@@ -98,15 +98,18 @@ namespace WindowsFormsVersion.ViewModel
 
         public override void CreateNewGraph()
         {
-            try
+            if (!IsPathfindingStarted)
             {
-                var model = new GraphCreatingViewModel(log, this, graphAssembles);
-                var form = new GraphCreatingWindow(model);
-                PrepareWindow(model, form);
-            }
-            catch (Exception ex)
-            {
-                log.Error(ex);
+                try
+                {
+                    var model = new GraphCreatingViewModel(log, this, graphAssembles);
+                    var form = new GraphCreatingWindow(model);
+                    PrepareWindow(model, form);
+                }
+                catch (Exception ex)
+                {
+                    log.Error(ex);
+                }
             }
         }
 
@@ -120,13 +123,19 @@ namespace WindowsFormsVersion.ViewModel
 
         public void LoadGraph(object sender, EventArgs e)
         {
-            base.LoadGraph();
+            if (!IsPathfindingStarted)
+            {
+                base.LoadGraph();
+            }
         }
 
         public void ClearGraph(object sender, EventArgs e)
         {
-            base.ClearGraph();
-            PathFindingStatistics = string.Empty;
+            if (!IsPathfindingStarted)
+            {
+                base.ClearGraph();
+                PathFindingStatistics = string.Empty;
+            }
         }
 
         public override void ConnectNewGraph(IGraph graph)
@@ -137,12 +146,18 @@ namespace WindowsFormsVersion.ViewModel
 
         public void MakeWeighted(object sender, EventArgs e)
         {
-            Graph.ToWeighted();
+            if (!IsPathfindingStarted)
+            {
+                Graph.ToWeighted();
+            }
         }
 
         public void MakeUnweighted(object sender, EventArgs e)
         {
-            Graph.ToUnweighted();
+            if (!IsPathfindingStarted)
+            {
+                Graph.ToUnweighted();
+            }
         }
 
         public void StartPathFind(object sender, EventArgs e)
