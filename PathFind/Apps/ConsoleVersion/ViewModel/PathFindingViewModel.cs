@@ -122,7 +122,7 @@ namespace ConsoleVersion.ViewModel
         [MenuItem(Constants.ChooseEndPoints, MenuItemPriority.High)]
         public void ChooseExtremeVertex()
         {
-            if (HasAnyVerticesToChooseAsEndPoints())
+            if (HasAnyVerticesToChooseAsEndPoints)
             {
                 endPoints.Reset();
                 var chooseMessages = new[] { SourceVertexInputMessage, TargetVertexInputMessage };
@@ -179,12 +179,7 @@ namespace ConsoleVersion.ViewModel
             }
         }
 
-        private bool HasAnyVerticesToChooseAsEndPoints()
-        {
-            var regularVertices = mainViewModel.Graph.Vertices.FilterObstacles();
-            int availiableVerticesCount = regularVertices.Count(vertex => !vertex.IsIsolated());
-            return availiableVerticesCount >= 2;
-        }
+        private bool HasAnyVerticesToChooseAsEndPoints => mainViewModel.Graph.Size - mainViewModel.Graph.GetObstaclesCount() >= 2;
 
         private readonly InclusiveValueRange<int> algorithmKeysValueRange;
         private readonly MainViewModel mainModel;
