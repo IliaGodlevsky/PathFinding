@@ -1,4 +1,5 @@
-﻿using Algorithm.Infrastructure.EventArguments;
+﻿using Algorithm.Algos.Enums;
+using Algorithm.Infrastructure.EventArguments;
 using Common.Interface;
 using GraphLib.Base;
 using GraphViewModel;
@@ -55,6 +56,7 @@ namespace WPFVersion.ViewModel
                 });
             }
         }
+
         protected override void Summarize()
         {
             if (mainViewModel is MainWindowViewModel mainModel)
@@ -112,7 +114,7 @@ namespace WPFVersion.ViewModel
 
         private bool CanExecuteConfirmPathFindAlgorithmChoice(object param)
         {
-            return Algorithms.Values.Contains(Algorithm);
+            return Enum.IsDefined(typeof(Algorithms), Algorithm);
         }
 
         private int statIndex;

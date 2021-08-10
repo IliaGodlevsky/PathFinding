@@ -27,6 +27,7 @@ namespace WPFVersion3D.ViewModel
     internal class MainWindowViewModel : MainModel, INotifyPropertyChanged
     {
         public event PropertyChangedEventHandler PropertyChanged;
+        public event EventHandler AlgorithmInterrupted;
 
         protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = "")
         {
@@ -54,6 +55,8 @@ namespace WPFVersion3D.ViewModel
             set { graphField = value; OnPropertyChanged(); }
         }
 
+        public bool IsAlgorithmStarted { private get; set; }
+
         public IDictionary<string, BaseSpeed> AnimationSpeeds => animationSpeeds.Value;
 
         public ICommand StartPathFindCommand { get; }
@@ -63,18 +66,20 @@ namespace WPFVersion3D.ViewModel
         public ICommand LoadGraphCommand { get; }
         public ICommand ChangeOpacityCommand { get; }
         public ICommand AnimatedAxisRotateCommand { get; }
+        public ICommand InterruptAlgorithmCommand { get; }
 
         public MainWindowViewModel(IGraphFieldFactory fieldFactory, IVertexEventHolder eventHolder,
             ISaveLoadGraph saveLoad, IEnumerable<IGraphAssemble> graphAssembles, BaseEndPoints endPoints, ILog log)
             : base(fieldFactory, eventHolder, saveLoad, graphAssembles, endPoints, log)
         {
             StartPathFindCommand = new RelayCommand(ExecuteStartPathFindCommand, CanExecuteStartFindPathCommand);
-            CreateNewGraphCommand = new RelayCommand(ExecuteCreateNewGraphCommand);
-            ClearGraphCommand = new RelayCommand(ExecuteClearGraphCommand, CanExecuteGraphOperation);
+            CreateNewGraphCommand = new RelayCommand(ExecuteCreateNewGraphCommand, CanExecuteOperation);
+            ClearGraphCommand = new RelayCommand(ExecuteClearGraphCommand, CanExecuteClearGraphOperation);
             SaveGraphCommand = new RelayCommand(ExecuteSaveGraphCommand, CanExecuteGraphOperation);
-            LoadGraphCommand = new RelayCommand(ExecuteLoadGraphCommand);
+            LoadGraphCommand = new RelayCommand(ExecuteLoadGraphCommand, CanExecuteOperation);
             ChangeOpacityCommand = new RelayCommand(ExecuteChangeOpacity, CanExecuteGraphOperation);
             AnimatedAxisRotateCommand = new RelayCommand(ExecuteAnimatedAxisRotateCommand);
+            InterruptAlgorithmCommand = new RelayCommand(ExecuteInterruptAlgorithmCommand, CanExecuteInterruptAlgorithmCommand);
             animationSpeeds = new Lazy<IDictionary<string, BaseSpeed>>(GetSpeedDictionary);
         }
 
@@ -116,16 +121,17 @@ namespace WPFVersion3D.ViewModel
             Statistics.Clear();
         }
 
-        private void StretchAlongAxis(IAxis axis, double distanceBetween, params double[] offset)
-        {
-            (GraphField as GraphField3D)?.StretchAlongAxis(axis, distanceBetween, offset);
-        }
+        private void StretchAlongAxis(IAxis axis, double distanceBetween, params double[] offset) 
+            => (GraphField as GraphField3D)?.StretchAlongAxis(axis, distanceBetween, offset);
 
-        public void StretchAlongXAxis(object sender, RoutedPropertyChangedEventArgs<double> e) => StretchAlongAxis(new Abscissa(), e.NewValue, 1, 0, 0);
+        public void StretchAlongXAxis(object sender, RoutedPropertyChangedEventArgs<double> e) 
+            => StretchAlongAxis(new Abscissa(), e.NewValue, 1, 0, 0);
 
-        public void StretchAlongYAxis(object sender, RoutedPropertyChangedEventArgs<double> e) => StretchAlongAxis(new Ordinate(), e.NewValue, 0, 1, 0);
+        public void StretchAlongYAxis(object sender, RoutedPropertyChangedEventArgs<double> e) 
+            => StretchAlongAxis(new Ordinate(), e.NewValue, 0, 1, 0);
 
-        public void StretchAlongZAxis(object sender, RoutedPropertyChangedEventArgs<double> e) => StretchAlongAxis(new Applicate(), e.NewValue, 0, 0, 1);
+        public void StretchAlongZAxis(object sender, RoutedPropertyChangedEventArgs<double> e) 
+            => StretchAlongAxis(new Applicate(), e.NewValue, 0, 0, 1);
 
         private void ChangeVerticesOpacity()
         {
@@ -156,6 +162,11 @@ namespace WPFVersion3D.ViewModel
 
         private void ExecuteCreateNewGraphCommand(object param) => CreateNewGraph();
 
+        private void ExecuteInterruptAlgorithmCommand(object sender) 
+            => AlgorithmInterrupted?.Invoke(this, EventArgs.Empty);
+
+        private bool CanExecuteInterruptAlgorithmCommand(object sender) => IsAlgorithmStarted;
+
         private void ExecuteAnimatedAxisRotateCommand(object param)
         {
             var rotator = param as IAnimatedAxisRotator;
@@ -170,7 +181,12 @@ namespace WPFVersion3D.ViewModel
             window.Show();
         }
 
+        private bool CanExecuteClearGraphOperation(object param)
+            => CanExecuteGraphOperation(param) && CanExecuteOperation(param);
+
         private bool CanExecuteGraphOperation(object param) => !Graph.IsNull();
+
+        private bool CanExecuteOperation(object param) => !IsAlgorithmStarted;
 
         private IDictionary<string, BaseSpeed> GetSpeedDictionary()
         {
