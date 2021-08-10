@@ -150,8 +150,7 @@ namespace ConsoleVersion.ViewModel
         [MenuItem(Constants.ApplyVisualization, MenuItemPriority.Low)]
         public void ApplyVisualization()
         {
-            int input = InputNumber(VisualizationMsg, Yes, No);
-            IsVisualizationRequired = input == Yes;
+            IsVisualizationRequired = InputNumber(VisualizationMsg, Yes, No) == Yes;
         }
 
         private IVertex ChooseVertex(string message)
