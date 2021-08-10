@@ -7,7 +7,7 @@ namespace Common.Extensions
         public static void Wait(this Stopwatch watch, int milliseconds)
         {
             var currentMilliseconds = watch.ElapsedMilliseconds;
-            while((watch.ElapsedMilliseconds - currentMilliseconds) < milliseconds)
+            while ((watch.ElapsedMilliseconds - currentMilliseconds) < milliseconds)
             {
 
             }

@@ -8,6 +8,7 @@ using Interruptable.EventArguments;
 using Interruptable.EventHandlers;
 using Interruptable.Interface;
 using Logging.Interface;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using static ConsoleVersion.Constants;
@@ -33,12 +34,20 @@ namespace ConsoleVersion.ViewModel
             graphAssembleKeyRange = new InclusiveValueRange<int>(graphAssembles.Count(), 1);
         }
 
-        [MenuItem(Constants.CreateNewGraph, MenuItemPriority.Highest)]
+        [MenuItem(CreateNewGraph, MenuItemPriority.Highest)]
         public override void CreateGraph()
         {
             if (CanCreateGraph())
             {
-                base.CreateGraph();
+                try
+                {
+                    var graph = SelectedGraphAssemble.AssembleGraph(ObstaclePercent, GraphParametres);
+                    model.ConnectNewGraph(graph);
+                }
+                catch (Exception ex)
+                {
+                    log.Error(ex);
+                }
             }
             else
             {
@@ -68,7 +77,7 @@ namespace ConsoleVersion.ViewModel
             ObstaclePercent = InputNumber(ObstaclePercentInputMessage, ObstaclesPercentValueRange);
         }
 
-        [MenuItem(Constants.Exit, MenuItemPriority.Lowest)]
+        [MenuItem(Exit, MenuItemPriority.Lowest)]
         public void Interrupt()
         {
             Interrupted?.Invoke(this, new InterruptEventArgs());
@@ -78,8 +87,8 @@ namespace ConsoleVersion.ViewModel
         private bool CanCreateGraph()
         {
             return SelectedGraphAssemble != null
-                && Constants.GraphWidthValueRange.Contains(Width)
-                && Constants.GraphLengthValueRange.Contains(Length);
+                && GraphWidthValueRange.Contains(Width)
+                && GraphLengthValueRange.Contains(Length);
         }
 
         private readonly InclusiveValueRange<int> graphAssembleKeyRange;

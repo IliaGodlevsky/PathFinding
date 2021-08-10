@@ -1,5 +1,4 @@
-﻿using Common.Extensions;
-using Common.ValueRanges;
+﻿using Common.ValueRanges;
 using ConsoleVersion.View.Interface;
 using System;
 using System.Collections.Generic;

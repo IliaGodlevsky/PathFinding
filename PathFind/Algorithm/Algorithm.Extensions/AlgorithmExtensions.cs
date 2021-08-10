@@ -17,7 +17,7 @@ namespace Algorithm.Extensions
             {
                 throw;
             }
-            catch(Exception)
+            catch (Exception)
             {
                 throw;
             }

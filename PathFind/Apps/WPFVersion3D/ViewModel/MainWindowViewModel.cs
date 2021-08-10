@@ -119,18 +119,19 @@ namespace WPFVersion3D.ViewModel
         {
             base.ConnectNewGraph(graph);
             Statistics.Clear();
+            (graphField as GraphField3D)?.CenterGraph();
         }
 
-        private void StretchAlongAxis(IAxis axis, double distanceBetween, params double[] offset) 
+        private void StretchAlongAxis(IAxis axis, double distanceBetween, params double[] offset)
             => (GraphField as GraphField3D)?.StretchAlongAxis(axis, distanceBetween, offset);
 
-        public void StretchAlongXAxis(object sender, RoutedPropertyChangedEventArgs<double> e) 
+        public void StretchAlongXAxis(object sender, RoutedPropertyChangedEventArgs<double> e)
             => StretchAlongAxis(new Abscissa(), e.NewValue, 1, 0, 0);
 
-        public void StretchAlongYAxis(object sender, RoutedPropertyChangedEventArgs<double> e) 
+        public void StretchAlongYAxis(object sender, RoutedPropertyChangedEventArgs<double> e)
             => StretchAlongAxis(new Ordinate(), e.NewValue, 0, 1, 0);
 
-        public void StretchAlongZAxis(object sender, RoutedPropertyChangedEventArgs<double> e) 
+        public void StretchAlongZAxis(object sender, RoutedPropertyChangedEventArgs<double> e)
             => StretchAlongAxis(new Applicate(), e.NewValue, 0, 0, 1);
 
         private void ChangeVerticesOpacity()
@@ -146,11 +147,7 @@ namespace WPFVersion3D.ViewModel
 
         private bool CanExecuteStartFindPathCommand(object param) => endPoints.HasEndPointsSet;
 
-        private void ExecuteLoadGraphCommand(object param)
-        {
-            base.LoadGraph();
-            (graphField as GraphField3D)?.CenterGraph();
-        }
+        private void ExecuteLoadGraphCommand(object param) => base.LoadGraph();
 
         private void ExecuteClearGraphCommand(object param)
         {
@@ -162,7 +159,7 @@ namespace WPFVersion3D.ViewModel
 
         private void ExecuteCreateNewGraphCommand(object param) => CreateNewGraph();
 
-        private void ExecuteInterruptAlgorithmCommand(object sender) 
+        private void ExecuteInterruptAlgorithmCommand(object sender)
             => AlgorithmInterrupted?.Invoke(this, EventArgs.Empty);
 
         private bool CanExecuteInterruptAlgorithmCommand(object sender) => IsAlgorithmStarted;

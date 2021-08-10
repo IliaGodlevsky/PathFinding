@@ -1,6 +1,8 @@
 ﻿using GraphLib.Interfaces;
+using GraphLib.NullRealizations.NullObjects;
 using GraphLib.Serialization;
 using GraphLib.Serialization.Interfaces;
+using System.Windows;
 
 namespace WPFVersion.Model
 {
@@ -8,7 +10,9 @@ namespace WPFVersion.Model
     {
         public IVertex CreateFrom(VertexSerializationInfo info)
         {
-            return new Vertex(info);
+            IVertex vertex = new NullVertex();
+            Application.Current.Dispatcher.Invoke(() => vertex = new Vertex(info));
+            return vertex;
         }
     }
 }

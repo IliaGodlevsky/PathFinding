@@ -11,6 +11,7 @@ using GraphLib.Interfaces;
 using GraphLib.Interfaces.Factories;
 using GraphLib.Realizations.Coordinates;
 using GraphLib.Realizations.Graphs;
+using GraphLib.Serialization.Exceptions;
 using GraphViewModel;
 using GraphViewModel.Interfaces;
 using Interruptable.EventArguments;
@@ -55,16 +56,10 @@ namespace ConsoleVersion.ViewModel
         }
 
         [MenuItem(Constants.MakeUnwieghted)]
-        public void MakeGraphUnweighted()
-        {
-            Graph.ToUnweighted();
-        }
+        public void MakeGraphUnweighted() => Graph.ToUnweighted();
 
         [MenuItem(Constants.MakeWeighted)]
-        public void MakeGraphWeighted()
-        {
-            Graph.ToWeighted();
-        }
+        public void MakeGraphWeighted() => Graph.ToWeighted();
 
         [MenuItem(Constants.CreateNewGraph, MenuItemPriority.Highest)]
         public override void CreateNewGraph()
@@ -143,24 +138,31 @@ namespace ConsoleVersion.ViewModel
         }
 
         [MenuItem(Constants.SaveGraph)]
-        public override void SaveGraph()
-        {
-            base.SaveGraph();
-        }
+        public override void SaveGraph() => base.SaveGraph();
 
         [MenuItem(Constants.LoadGraph)]
         public override void LoadGraph()
         {
-            base.LoadGraph();
-            CostRangeChanged?.Invoke(this, new CostRangeChangedEventArgs(CostRange));
+            try
+            {
+                var graph = saveLoad.LoadGraphAsync().Result;
+                ConnectNewGraph(graph);
+                CostRangeChanged?.Invoke(this, new CostRangeChangedEventArgs(CostRange));
+            }
+            catch (CantSerializeGraphException ex)
+            {
+                log.Warn(ex);
+            }
+            catch (Exception ex)
+            {
+                log.Error(ex);
+            }
         }
 
         [MenuItem(Constants.Exit, MenuItemPriority.Lowest)]
         public void Interrupt()
         {
-            int input = InputNumber(ExitAppMsg, Constants.Yes, Constants.No);
-            bool isInterruptRequested = input == Constants.Yes;
-            if (isInterruptRequested)
+            if (InputNumber(ExitAppMsg, Constants.Yes, Constants.No) == Constants.Yes)
             {
                 Interrupted?.Invoke(this, new InterruptEventArgs());
             }

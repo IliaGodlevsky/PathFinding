@@ -36,7 +36,5 @@ namespace GraphLib.Serialization.Tests
                 Assert.AreNotSame(graph, deserialized);
             }
         }
-
-
     }
 }

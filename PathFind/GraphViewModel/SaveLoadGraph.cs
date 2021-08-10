@@ -16,10 +16,24 @@ namespace GraphViewModel
             this.pathInput = pathInput;
         }
 
-        public IGraph LoadGraph()
+        public async Task<IGraph> LoadGraphAsync()
         {
             string loadPath = pathInput.InputLoadPath();
-            return graphSerializer.LoadGraphFromFile(loadPath);
+            return await Task.Run(() =>
+            {
+                try
+                {
+                    return graphSerializer.LoadGraphFromFile(loadPath);
+                }
+                catch (CantSerializeGraphException)
+                {
+                    throw;
+                }
+                catch (Exception)
+                {
+                    throw;
+                }
+            }).ConfigureAwait(false);
         }
 
         public async Task SaveGraphAsync(IGraph graph)

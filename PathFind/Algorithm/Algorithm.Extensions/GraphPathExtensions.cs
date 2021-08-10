@@ -18,7 +18,7 @@ namespace Algorithm.Extensions
 
         public static async Task HighlightAsync(this IGraphPath self, IEndPoints endPoints)
         {
-            await Task.Run(() => self.Highlight(endPoints));
+            await Task.Run(() => self.Highlight(endPoints)).ConfigureAwait(false);
         }
     }
 }

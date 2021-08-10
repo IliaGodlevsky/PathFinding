@@ -7,8 +7,6 @@ using GraphViewModel.Interfaces;
 using Interruptable.EventArguments;
 using Logging.Interface;
 using System;
-using System.Threading;
-using System.Threading.Tasks;
 
 namespace WindowsFormsVersion.ViewModel
 {
@@ -50,7 +48,7 @@ namespace WindowsFormsVersion.ViewModel
         }
 
         protected override void OnVertexVisited(object sender, AlgorithmEventArgs e)
-        {            
+        {
             base.OnVertexVisited(sender, e);
             if (mainViewModel is MainWindowViewModel mainModel)
             {

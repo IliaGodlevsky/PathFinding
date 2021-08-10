@@ -2,7 +2,6 @@
 using GraphLib.Interfaces;
 using GraphLib.Interfaces.Factories;
 using System;
-using System.Threading.Tasks;
 
 namespace GraphLib.Base
 {

@@ -7,6 +7,6 @@ namespace GraphViewModel.Interfaces
     {
         Task SaveGraphAsync(IGraph graph);
 
-        IGraph LoadGraph();
+        Task<IGraph> LoadGraphAsync();
     }
 }

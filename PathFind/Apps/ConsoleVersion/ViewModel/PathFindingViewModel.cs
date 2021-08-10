@@ -17,7 +17,6 @@ using Interruptable.Interface;
 using Logging.Interface;
 using System;
 using System.Linq;
-using System.Threading;
 using static ConsoleVersion.Constants;
 using static ConsoleVersion.InputClass.Input;
 using static ConsoleVersion.Resource.Resources;

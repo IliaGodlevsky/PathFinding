@@ -52,11 +52,11 @@ namespace GraphViewModel
             }
         }
 
-        public virtual void LoadGraph()
+        public virtual async void LoadGraph()
         {
             try
             {
-                var newGraph = saveLoad.LoadGraph();
+                var newGraph = await saveLoad.LoadGraphAsync();
                 ConnectNewGraph(newGraph);
             }
             catch (Exception ex)
@@ -92,8 +92,8 @@ namespace GraphViewModel
         protected readonly IGraphFieldFactory fieldFactory;
         protected readonly ILog log;
         protected readonly BaseEndPoints endPoints;
+        protected readonly ISaveLoadGraph saveLoad;
 
         private readonly IVertexEventHolder eventHolder;
-        private readonly ISaveLoadGraph saveLoad;
     }
 }

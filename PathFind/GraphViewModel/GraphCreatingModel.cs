@@ -1,4 +1,5 @@
 ﻿using Common.Extensions;
+using GraphLib.Extensions;
 using GraphLib.Interfaces.Factories;
 using GraphViewModel.Interfaces;
 using Logging.Interface;
@@ -30,11 +31,11 @@ namespace GraphLib.ViewModel
             this.log = log;
         }
 
-        public virtual void CreateGraph()
+        public virtual async void CreateGraph()
         {
             try
             {
-                var graph = SelectedGraphAssemble.AssembleGraph(ObstaclePercent, GraphParametres);
+                var graph = await SelectedGraphAssemble.AssembleGraphAsync(ObstaclePercent, GraphParametres);
                 model.ConnectNewGraph(graph);
             }
             catch (Exception ex)

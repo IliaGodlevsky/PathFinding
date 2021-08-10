@@ -13,7 +13,6 @@ using Logging.Interface;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
-using System.Threading;
 using static GraphViewModel.Resources.ViewModelResources;
 
 namespace GraphViewModel
@@ -30,7 +29,7 @@ namespace GraphViewModel
 
         protected PathFindingModel(ILog log, IMainModel mainViewModel,
             BaseEndPoints endPoints)
-        {          
+        {
             this.mainViewModel = mainViewModel;
             this.endPoints = endPoints;
             this.log = log;
