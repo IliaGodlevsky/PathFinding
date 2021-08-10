@@ -5,27 +5,27 @@ namespace Algorithm.Algos.Enums
     public enum Algorithms
     {
         [Description("Lee algorithm            ")]
-        LeeAlgorithm = 1,
+        LeeAlgorithm = 0,
 
         [Description("Lee algorithm (heuristic)")]
-        BestFirstLeeAlgorithm = 2,
+        BestFirstLeeAlgorithm = 1,
 
         [Description("Cost-first algorithm     ")]
-        CostGreedyAlgorithm = 3,
+        CostGreedyAlgorithm = 2,
 
         [Description("Depth-first algorithm    ")]
-        DepthFirstAlgorithm = 4,
+        DepthFirstAlgorithm = 3,
 
         [Description("Distance-first algorithm ")]
-        DistanceFirstAlgorithm = 5,
+        DistanceFirstAlgorithm = 4,
 
         [Description("Dijkstra's algorithm     ")]
-        DijkstraAlgorithm = 6,
+        DijkstraAlgorithm = 5,
 
         [Description("A* algorithm             ")]
-        AStarAlgorithm = 7,
+        AStarAlgorithm = 6,
 
         [Description("A* algorithm (modified)  ")]
-        AStarModifiedAlgorithm = 8
+        AStarModifiedAlgorithm = 7
     }
 }

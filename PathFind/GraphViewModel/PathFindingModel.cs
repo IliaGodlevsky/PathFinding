@@ -48,7 +48,7 @@ namespace GraphViewModel
                 algorithm = AlgoFactory.CreateAlgorithm(Algorithm, graph, endPoints);
                 SubscribeOnAlgorithmEvents();
                 path = await algorithm.FindPathAsync();
-                path.Highlight(endPoints);
+                await path.HighlightAsync(endPoints);
                 Summarize();
             }
             catch (Exception ex)

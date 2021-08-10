@@ -2,6 +2,7 @@
 using Common.Extensions;
 using GraphLib.Interfaces;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace Algorithm.Extensions
 {
@@ -13,6 +14,11 @@ namespace Algorithm.Extensions
                 .Except(endpoints.Source, endpoints.Target)
                 .OfType<IMarkable>()
                 .ForEach(vertex => vertex.MarkAsPath());
+        }
+
+        public static async Task HighlightAsync(this IGraphPath self, IEndPoints endPoints)
+        {
+            await Task.Run(() => self.Highlight(endPoints));
         }
     }
 }

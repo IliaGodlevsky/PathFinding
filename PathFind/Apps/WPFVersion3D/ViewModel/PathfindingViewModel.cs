@@ -41,12 +41,14 @@ namespace WPFVersion3D.ViewModel
         protected override void OnAlgorithmStarted(object sender, AlgorithmEventArgs e)
         {
             base.OnAlgorithmStarted(sender, e);
-            if (mainViewModel is MainWindowViewModel model)
+            if (mainViewModel is MainWindowViewModel mainModel)
             {
+                mainModel.IsAlgorithmStarted = true;
+                mainModel.AlgorithmInterrupted += InterruptAlgorithm;
                 Application.Current.Dispatcher.Invoke(() =>
                 {
-                    model.Statistics.Add(string.Empty);
-                    statIndex = model.Statistics.Count - 1;
+                    mainModel.Statistics.Add(string.Empty);
+                    statIndex = mainModel.Statistics.Count - 1;
                 });
             }
         }
@@ -61,6 +63,16 @@ namespace WPFVersion3D.ViewModel
                 {
                     model.Statistics[statIndex] = GetStatistics();
                 });
+            }
+        }
+
+        protected override void OnAlgorithmFinished(object sender, AlgorithmEventArgs e)
+        {
+            base.OnAlgorithmFinished(sender, e);
+            if (mainViewModel is MainWindowViewModel mainModel)
+            {
+                mainModel.IsAlgorithmStarted = false;
+                mainModel.AlgorithmInterrupted -= InterruptAlgorithm;
             }
         }
 
@@ -79,6 +91,11 @@ namespace WPFVersion3D.ViewModel
                         ? GetStatistics() : CouldntFindPathMsg;
                 });
             }
+        }
+
+        private void InterruptAlgorithm(object sender, EventArgs e)
+        {
+            algorithm.Interrupt();
         }
 
         private void ExecuteCloseWindowCommand(object param)

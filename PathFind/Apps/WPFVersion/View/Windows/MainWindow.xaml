@@ -30,8 +30,8 @@
             <model:GraphField.RenderTransform>
                 <TransformGroup>
                     <ScaleTransform 
-                        ScaleX="{Binding ElementName=scaleSlider, Path=Value}"
-                        ScaleY="{Binding ElementName=scaleSlider, Path=Value}">
+                        ScaleX="{Binding ElementName=scaleSlider, Path=Value, IsAsync=True}"
+                        ScaleY="{Binding ElementName=scaleSlider, Path=Value, IsAsync=True}">
                     </ScaleTransform>
                     <TranslateTransform 
                         X="{Binding ElementName=xSlider, Path=Value}"

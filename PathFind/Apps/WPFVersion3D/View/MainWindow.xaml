@@ -322,6 +322,9 @@
             <Button Command ="{Binding ChangeOpacityCommand}">
                 <Image Style ="{StaticResource ImageStyle}" Source="/Resources/Images/opacity.png"/>
             </Button>
+            <Button Command ="{Binding InterruptAlgorithmCommand}">
+                <Image Style ="{StaticResource ImageStyle}" Source="/Resources/Images/interrupt.png"></Image>
+            </Button>
         </ToolBar>
         <Viewport3D Grid.Row="2" Margin="5" Grid.RowSpan="2">
             <Viewport3D.Camera>

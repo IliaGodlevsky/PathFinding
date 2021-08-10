@@ -8,7 +8,8 @@
         xmlns:model="clr-namespace:WPFVersion.Model" 
         xmlns:rules="clr-namespace:WPFVersion.ValidationRules"
         mc:Ignorable="d"       
-        Title="Algorithms" SizeToContent="WidthAndHeight">
+        Title="Algorithms" 
+        SizeToContent="WidthAndHeight">
     <Window.Resources>
         <converters:IntToStringConverter x:Key="SliderValueConverter"/>
         <converters:BoolToVisibilityConverter x:Key="boolToVisibiltyConverter"/>
@@ -27,7 +28,7 @@
         <StackPanel HorizontalAlignment="Center"  
                     Orientation="Horizontal" 
                     Grid.Row="3">
-            <Button Command="{Binding ConfirmPathFindAlgorithmChoice}"  
+            <Button Command="{Binding ConfirmPathFindAlgorithmChoice, IsAsync=True}"  
                     Margin ="5" 
                     Content="Start">
             </Button>
@@ -41,7 +42,7 @@
                  x:Name="algoListBox" 
                  BorderThickness="0" 
                  Margin="5"
-                 SelectedValue="{Binding Path = Algorithm}">
+                 SelectedValue="{Binding Path = Algorithm, UpdateSourceTrigger=PropertyChanged}">
             <ListBox.ItemTemplate>
                 <DataTemplate>
                     <StackPanel Orientation="Horizontal">
@@ -50,7 +51,8 @@
                 </DataTemplate>
             </ListBox.ItemTemplate>
         </ListBox>
-        <Grid Visibility="{Binding ElementName=ProcessDisplayRequire, Path=IsChecked, Converter={StaticResource boolToVisibiltyConverter}}" 
+        <Grid Visibility="{Binding ElementName=ProcessDisplayRequire, 
+            Path=IsChecked, Converter={StaticResource boolToVisibiltyConverter}}" 
               Grid.Row="1">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="Auto"></RowDefinition>
