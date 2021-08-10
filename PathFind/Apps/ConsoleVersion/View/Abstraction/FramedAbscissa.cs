@@ -22,9 +22,9 @@ namespace ConsoleVersion.View.Abstraction
         {
             string largeSpace = LargeSpace;
             var stringBuilder = new StringBuilder(largeSpace);
-            for (int i = 0; i < graphWidth; i++)
+            for (int index = 0; index < graphWidth; index++)
             {
-                stringBuilder.Append(GetStringToAppend(i));
+                stringBuilder.Append(GetStringToAppend(index));
             }
             return stringBuilder.Append(largeSpace).ToString();
         }
@@ -32,7 +32,7 @@ namespace ConsoleVersion.View.Abstraction
         protected string GetHorizontalFrame()
         {
             var stringBuilder = new StringBuilder(LargeSpace);
-            for (int i = 0; i < graphWidth; i++)
+            for (int index = 0; index < graphWidth; index++)
             {
                 stringBuilder.Append(HorizontalFrameComponent);
             }

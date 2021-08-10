@@ -38,11 +38,6 @@ namespace GraphLib.Extensions
             return collection.Count(predicate) == 1;
         }
 
-        public static IVertex[] GetObstacles(this IEnumerable<IVertex> collection)
-        {
-            return collection.Where(vertex => vertex.IsObstacle).ToArray();
-        }
-
         public static IVertex[] FilterObstacles(this IEnumerable<IVertex> collection)
         {
             return collection.Where(vertex => !vertex.IsObstacle).ToArray();
