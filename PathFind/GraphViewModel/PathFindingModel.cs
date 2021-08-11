@@ -62,19 +62,19 @@ namespace GraphViewModel
 
         protected virtual void OnVertexVisited(object sender, AlgorithmEventArgs e)
         {
-            if (!endPoints.IsEndPoint(e.CurrentVertex) && e.CurrentVertex is IMarkable vertex)
+            if (!endPoints.IsEndPoint(e.Current) && e.Current is IMarkable vertex)
             {
                 vertex.MarkAsVisited();
             }
-            if (visitedVerticesCount < e.VisitedVertices)
+            if (visitedVerticesCount < e.Visited)
             {
-                visitedVerticesCount = e.VisitedVertices;
+                visitedVerticesCount = e.Visited;
             }
         }
 
         protected virtual void OnVertexEnqueued(object sender, AlgorithmEventArgs e)
         {
-            if (!endPoints.IsEndPoint(e.CurrentVertex) && e.CurrentVertex is IMarkable vertex)
+            if (!endPoints.IsEndPoint(e.Current) && e.Current is IMarkable vertex)
             {
                 vertex.MarkAsEnqueued();
             }
@@ -88,9 +88,9 @@ namespace GraphViewModel
 
         protected virtual void OnAlgorithmFinished(object sender, AlgorithmEventArgs e)
         {
-            if (visitedVerticesCount < e.VisitedVertices)
+            if (visitedVerticesCount < e.Visited)
             {
-                visitedVerticesCount = e.VisitedVertices;
+                visitedVerticesCount = e.Visited;
             }
             timer.Stop();
         }

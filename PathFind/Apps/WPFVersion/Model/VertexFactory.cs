@@ -1,6 +1,5 @@
 ﻿using GraphLib.Interfaces;
 using GraphLib.Interfaces.Factories;
-using GraphLib.NullRealizations.NullObjects;
 using System.Windows;
 
 namespace WPFVersion.Model
@@ -9,9 +8,7 @@ namespace WPFVersion.Model
     {
         public IVertex CreateVertex(INeighboursCoordinates coordinateRadar, ICoordinate coordinate)
         {
-            IVertex vertex = new NullVertex();
-            Application.Current.Dispatcher.Invoke(() => vertex = new Vertex(coordinateRadar, coordinate));
-            return vertex;
+            return Application.Current.Dispatcher.Invoke(() => new Vertex(coordinateRadar, coordinate));
         }
     }
 }

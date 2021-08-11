@@ -35,7 +35,8 @@ namespace GraphLib.ViewModel
         {
             try
             {
-                var graph = await SelectedGraphAssemble.AssembleGraphAsync(ObstaclePercent, GraphParametres);
+                var graph = await SelectedGraphAssemble
+                    .AssembleGraphAsync(ObstaclePercent, GraphParametres);
                 model.ConnectNewGraph(graph);
             }
             catch (Exception ex)
