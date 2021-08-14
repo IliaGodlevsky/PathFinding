@@ -13,12 +13,15 @@ namespace WPFVersion
 
         public const int DistanceBetweenVertices = 1;
         public const int VertexSize = 24;
+        private const int WidthBase = 12;
+        private const int LengthBase = 5;
+        private const int Leverage = 10;
 
         static Constants()
         {
             GraphFieldScaleValueRange = new InclusiveValueRange<double>(2.5, 0.1);
-            GraphWidthValueRange = new InclusiveValueRange<int>(96, 1);
-            GraphLengthValueRange = new InclusiveValueRange<int>(40, 1);
+            GraphWidthValueRange = new InclusiveValueRange<int>(Leverage * WidthBase, 1);
+            GraphLengthValueRange = new InclusiveValueRange<int>(Leverage * LengthBase, 1);
             ObstaclesPercentValueRange = new InclusiveValueRange<double>(99, 0);
             AlgorithmDelayTimeValueRange = new InclusiveValueRange<double>(35, 1);
             OffsetValueRange = new InclusiveValueRange<double>(-1000, 1000);

@@ -34,11 +34,8 @@ namespace WPFVersion.Model
 
         public Vertex(INeighboursCoordinates radar, ICoordinate coordinate) : base()
         {
-            Dispatcher.Invoke(() =>
-            {
-                Width = Height = VertexSize;
-                Template = (ControlTemplate)TryFindResource("vertexTemplate");
-            });
+            Width = Height = VertexSize;
+            Template = (ControlTemplate)TryFindResource("vertexTemplate");
             Position = coordinate;
             NeighboursCoordinates = radar;
             this.Initialize();
@@ -77,7 +74,7 @@ namespace WPFVersion.Model
             }
         }
 
-        public ICollection<IVertex> Neighbours { get; set; }
+        public IReadOnlyCollection<IVertex> Neighbours { get; set; }
 
         private ICoordinate position;
         public ICoordinate Position

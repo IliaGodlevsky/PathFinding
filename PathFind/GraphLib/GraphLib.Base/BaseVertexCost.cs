@@ -29,14 +29,7 @@ namespace GraphLib.Base
 
         public override bool Equals(object obj)
         {
-            if (obj is IVertexCost cost)
-            {
-                return cost.CurrentCost == CurrentCost;
-            }
-
-            var message = "An error was occurred while comparing\n";
-            message += $"an instance of {GetType().Name} and {obj?.GetType().Name}\n";
-            throw new ArgumentException(message, nameof(obj));
+            return obj is IVertexCost cost && cost.CurrentCost == CurrentCost;
         }
 
         public override int GetHashCode()

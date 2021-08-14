@@ -64,8 +64,7 @@ namespace GraphLib.Extensions
 
         public static IGraph ConnectVertices(this IGraph self)
         {
-            self.ForEach(vertex => vertex.SetNeighbours(self));
-            return self;
+            return self.ForEach(vertex => vertex.SetNeighbours(self));
         }
 
         public static bool Contains(this IGraph self, params IVertex[] vertices)

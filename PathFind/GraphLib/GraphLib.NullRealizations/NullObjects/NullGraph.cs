@@ -5,9 +5,6 @@ using System.Linq;
 
 namespace GraphLib.NullRealizations.NullObjects
 {
-    /// <summary>
-    /// Represents an empty graph, without any vertices
-    /// </summary>
     [Null]
     public sealed class NullGraph : IGraph
     {
@@ -26,11 +23,7 @@ namespace GraphLib.NullRealizations.NullObjects
 
         public IEnumerable<IVertex> Vertices => vertices;
 
-        public int Size => 1;
-
-        public int ObstaclePercent => 100;
-
-        public int Obstacles => 1;
+        public int Size => vertices.Length;
 
         public override bool Equals(object obj)
         {

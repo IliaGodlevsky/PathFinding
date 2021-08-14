@@ -11,7 +11,7 @@ namespace ConsoleVersion.View
     {
         public GraphField(int width, int length)
         {
-            displayables = new List<IDisplayable>
+            elements = new List<IDisplayable>
             {
                 new FramedOverAbscissa(width, length),
                 new FramedUnderAbscissa(width),
@@ -24,15 +24,15 @@ namespace ConsoleVersion.View
         {
             if (vertex is Vertex vertex2D)
             {
-                displayables.Add(vertex2D);
+                elements.Add(vertex2D);
             }
         }
 
         public void Display()
         {
-            displayables.ForEach(item => item.Display());
+            elements.ForEach(element => element.Display());
         }
 
-        private readonly IList<IDisplayable> displayables;
+        private readonly IList<IDisplayable> elements;
     }
 }

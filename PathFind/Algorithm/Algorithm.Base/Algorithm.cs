@@ -13,10 +13,6 @@ using System;
 
 namespace Algorithm.Base
 {
-    /// <summary>
-    /// A base class for all pathfinding algorithms.
-    /// This is an abstract class
-    /// </summary>
     public abstract class Algorithm : IAlgorithm
     {
         public event AlgorithmEventHandler Started;
@@ -49,6 +45,7 @@ namespace Algorithm.Base
         }
 
         protected IVertex CurrentVertex { get; set; }
+        protected abstract IVertex NextVertex { get; }
 
         private bool IsInterruptRequested { get; set; }
 
@@ -59,22 +56,22 @@ namespace Algorithm.Base
                 || IsInterruptRequested;
         }
 
-        protected void RaiseOnAlgorithmStartedEvent(AlgorithmEventArgs e)
-        {
-            Started?.Invoke(this, e);
+        protected void RaiseStarted(AlgorithmEventArgs e) 
+        { 
+            Started?.Invoke(this, e); 
         }
 
-        protected void RaiseOnAlgorithmFinishedEvent(AlgorithmEventArgs e)
-        {
+        protected void RaiseFinished(AlgorithmEventArgs e) 
+        { 
             Finished?.Invoke(this, e);
         }
 
-        protected void RaiseOnVertexVisitedEvent(AlgorithmEventArgs e)
+        protected void RaiseVertexVisited(AlgorithmEventArgs e) 
         {
             VertexVisited?.Invoke(this, e);
         }
 
-        protected void RaiseOnVertexEnqueuedEvent(AlgorithmEventArgs e)
+        protected void RaiseVertexEnqueued(AlgorithmEventArgs e) 
         {
             VertexEnqueued?.Invoke(this, e);
         }
@@ -85,29 +82,23 @@ namespace Algorithm.Base
             {
                 CurrentVertex = endPoints.Source;
                 visitedVertices.Add(CurrentVertex);
-                var args = CreateEventArgs(CurrentVertex);
-                RaiseOnAlgorithmStartedEvent(args);
+                RaiseStarted(CreateEventArgs(CurrentVertex));
                 return;
             }
-
             throw new ArgumentException($"{nameof(endPoints)} don't belong to {nameof(graph)}");
         }
 
-        protected virtual void CompletePathfinding()
-        {
-            var args = CreateEventArgs(CurrentVertex);
-            RaiseOnAlgorithmFinishedEvent(args);
+        protected virtual void CompletePathfinding() 
+        { 
+            RaiseFinished(CreateEventArgs(CurrentVertex)); 
         }
 
         protected virtual AlgorithmEventArgs CreateEventArgs(IVertex vertex)
-        {
-            return new AlgorithmEventArgs(visitedVertices.Count, vertex);
+        { 
+            return new AlgorithmEventArgs(visitedVertices.Count, vertex); 
         }
 
-        protected ICoordinate Position(IVertex vertex)
-        {
-            return vertex.Position;
-        }
+        protected ICoordinate Position(IVertex vertex) => vertex.Position;
 
         public void Dispose()
         {

@@ -76,6 +76,10 @@
       <Project>{d3c5ccfe-698b-41c7-9a72-5fd0262765e1}</Project>
       <Name>GraphLib.Interfaces</Name>
     </ProjectReference>
+    <ProjectReference Include="..\GraphLib.NullRealizations\GraphLib.NullRealizations.csproj">
+      <Project>{FA595CBF-C9AA-4D4F-AFF7-19E571C91D00}</Project>
+      <Name>GraphLib.NullRealizations</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

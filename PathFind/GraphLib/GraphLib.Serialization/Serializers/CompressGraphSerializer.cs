@@ -1,4 +1,5 @@
 ﻿using GraphLib.Interfaces;
+using GraphLib.NullRealizations.NullObjects;
 using GraphLib.Serialization.Exceptions;
 using GraphLib.Serialization.Interfaces;
 using System;
@@ -16,7 +17,7 @@ namespace GraphLib.Serialization.Serializers
 
         public IGraph LoadGraph(Stream stream)
         {
-            IGraph graph = null;
+            IGraph graph = new NullGraph();
             try
             {
                 using (var compressionStream = new GZipStream(stream, CompressionMode.Decompress, leaveOpen: true))

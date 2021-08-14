@@ -65,7 +65,7 @@ namespace WindowsFormsVersion.Model
 
         public ICoordinate Position { get; }
 
-        public ICollection<IVertex> Neighbours { get; set; }
+        public IReadOnlyCollection<IVertex> Neighbours { get; set; }
 
         private bool isObstacle;
         public bool IsObstacle

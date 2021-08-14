@@ -14,7 +14,7 @@ namespace WPFVersion3D.Model
 
         protected override int GetWheelDelta(EventArgs e)
         {
-            return e is MouseWheelEventArgs args ? args.Delta : default;
+            return e is MouseWheelEventArgs args ? args.Delta > 0 ? 1 : -1 : default;
         }
 
         protected override void SubscribeToEvents(IVertex vertex)

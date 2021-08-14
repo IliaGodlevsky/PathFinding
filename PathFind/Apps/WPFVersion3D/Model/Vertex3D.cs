@@ -19,12 +19,9 @@ namespace WPFVersion3D.Model
             this.modelFactory = modelFactory;
             Position = coordinate;
             NeighboursCoordinates = radar;
-            Dispatcher.Invoke(() =>
-            {
-                Material = new DiffuseMaterial();
-                Transform = new TranslateTransform3D();
-                Size = InitialVertexSize;
-            });
+            Material = new DiffuseMaterial();
+            Transform = new TranslateTransform3D();
+            Size = InitialVertexSize;
             this.Initialize();
         }
 
@@ -124,7 +121,7 @@ namespace WPFVersion3D.Model
 
         public IVertexCost Cost { get; set; }
 
-        public ICollection<IVertex> Neighbours { get; set; }
+        public IReadOnlyCollection<IVertex> Neighbours { get; set; }
 
         public ICoordinate Position { get; }
 

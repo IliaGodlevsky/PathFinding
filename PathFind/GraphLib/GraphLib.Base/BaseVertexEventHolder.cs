@@ -18,7 +18,7 @@ namespace GraphLib.Base
         {
             if (sender is IVertex vertex && !vertex.IsObstacle)
             {
-                int delta = GetWheelDelta(e) > 0 ? 1 : -1;
+                int delta = GetWheelDelta(e);
                 int newCost = vertex.Cost.CurrentCost + delta;
                 vertex.Cost = costFactory.CreateCost(newCost);
             }

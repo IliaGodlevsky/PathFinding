@@ -1,9 +1,11 @@
-﻿using GraphLib.NullRealizations.NullObjects;
+﻿using GraphLib.Interfaces;
+using GraphLib.NullRealizations.NullObjects;
 using GraphLib.Realizations.Coordinates;
 using GraphLib.TestRealizations.TestFactories;
 using GraphLib.TestRealizations.TestObjects;
 using NUnit.Framework;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace GraphLib.Extensions.Tests
@@ -24,7 +26,7 @@ namespace GraphLib.Extensions.Tests
             const int expectedNumberOfNeighbours = 8;
             var graph = graphAssembler.AssembleGraph();
             var vertex = graph[new Coordinate2D(5, 7)];
-            vertex.Neighbours.Clear();
+            vertex.Neighbours = new List<IVertex>();
 
             vertex.SetNeighbours(graph);
 

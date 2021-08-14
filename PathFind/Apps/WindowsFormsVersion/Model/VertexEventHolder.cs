@@ -14,7 +14,7 @@ namespace WindowsFormsVersion.Model
 
         protected override int GetWheelDelta(EventArgs e)
         {
-            return e is MouseEventArgs args ? args.Delta : default;
+            return e is MouseEventArgs args ? args.Delta > 0 ? 1 : -1 : default;
         }
 
         public override void Reverse(object sender, EventArgs e)

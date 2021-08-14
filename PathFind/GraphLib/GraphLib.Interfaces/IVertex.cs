@@ -24,7 +24,7 @@ namespace GraphLib.Interfaces
         /// <summary>
         /// Neighbours around the vertex
         /// </summary>
-        ICollection<IVertex> Neighbours { get; set; }
+        IReadOnlyCollection<IVertex> Neighbours { get; set; }
 
         INeighboursCoordinates NeighboursCoordinates { get; }
     }

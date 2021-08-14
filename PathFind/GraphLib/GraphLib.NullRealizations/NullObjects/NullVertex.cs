@@ -16,7 +16,7 @@ namespace GraphLib.NullRealizations.NullObjects
 
         public IVertexCost Cost { get => new NullCost(); set { } }
 
-        public ICollection<IVertex> Neighbours { get => neighbours; set { } }
+        public IReadOnlyCollection<IVertex> Neighbours { get => neighbours; set { } }
 
         public ICoordinate Position { get => new NullCoordinate(); set { } }
 

@@ -25,7 +25,7 @@ namespace GraphLib.TestRealizations.TestObjects
 
         public IVertexCost Cost { get; set; }
 
-        public ICollection<IVertex> Neighbours { get; set; }
+        public IReadOnlyCollection<IVertex> Neighbours { get; set; }
 
         public ICoordinate Position { get; }
 

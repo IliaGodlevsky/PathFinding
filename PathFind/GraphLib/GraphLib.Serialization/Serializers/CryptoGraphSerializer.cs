@@ -1,4 +1,5 @@
 ﻿using GraphLib.Interfaces;
+using GraphLib.NullRealizations.NullObjects;
 using GraphLib.Serialization.Exceptions;
 using GraphLib.Serialization.Interfaces;
 using System;
@@ -29,7 +30,7 @@ namespace GraphLib.Serialization.Serializers
 
         public IGraph LoadGraph(Stream stream)
         {
-            IGraph graph = null;
+            IGraph graph = new NullGraph();
             try
             {
                 algorithm.Padding = PaddingMode.None;
@@ -48,11 +49,6 @@ namespace GraphLib.Serialization.Serializers
             }
         }
 
-        /// <summary>
-        /// Saves graph in stream and encrypts it
-        /// </summary>
-        /// <param name="graph"></param>
-        /// <param name="stream"></param>
         public void SaveGraph(IGraph graph, Stream stream)
         {
             try

@@ -10,9 +10,8 @@ namespace ConsoleVersion.View
 {
     internal sealed class MainView : View<MainViewModel>
     {
-        public const int HeightOfAbscissaView = 2;
-        public const int HeightOfGraphParametresView = 1;
-
+        public static int HeightOfAbscissaView => 2;
+        public static int HeightOfGraphParametresView => 1;
         public static int YCoordinatePadding => WidthOfOrdinateView - 1;
 
         public static int WidthOfOrdinateView

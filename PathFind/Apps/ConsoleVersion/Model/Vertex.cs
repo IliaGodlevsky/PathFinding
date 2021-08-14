@@ -17,18 +17,17 @@ namespace ConsoleVersion.Model
 {
     internal class Vertex : IVertex, IMarkable, IWeightable, IDisplayable
     {
-        private static Color RegularVertexColor;
-        private static Color ObstacleVertexColor;
-        private static Color PathVertexColor;
-        private static Color EnqueuedVertexColor;
-        private static Color SourceVertexColor;
-        private static Color TargetVertexColor;
-        private static Color AlreadyPathVertexColor;
-        private static Color VisitedVertexColor;
+        private static readonly Color RegularVertexColor;
+        private static readonly Color ObstacleVertexColor;
+        private static readonly Color PathVertexColor;
+        private static readonly Color EnqueuedVertexColor;
+        private static readonly Color SourceVertexColor;
+        private static readonly Color TargetVertexColor;
+        private static readonly Color AlreadyPathVertexColor;
+        private static readonly Color VisitedVertexColor;
 
         static Vertex()
         {
-            locker = new object();
             RegularVertexColor = Color.FromKnownColor(KnownColor.WhiteSmoke);
             ObstacleVertexColor = Color.FromKnownColor(KnownColor.Black);
             PathVertexColor = Color.FromKnownColor(KnownColor.Yellow);
@@ -87,7 +86,7 @@ namespace ConsoleVersion.Model
             }
         }
 
-        public ICollection<IVertex> Neighbours { get; set; }
+        public IReadOnlyCollection<IVertex> Neighbours { get; set; }
 
         public ICoordinate Position { get; }
 
@@ -190,6 +189,5 @@ namespace ConsoleVersion.Model
 
         private string text;
         private Color colour;
-        private static readonly object locker;
     }
 }

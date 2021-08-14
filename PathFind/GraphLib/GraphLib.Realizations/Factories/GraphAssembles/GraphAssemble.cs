@@ -42,17 +42,17 @@ namespace GraphLib.Realizations.Factories.GraphAssembles
         /// <exception cref="WrongNumberOfDimensionsException"></exception>
         public IGraph AssembleGraph(int obstaclePercent = 0, params int[] graphDimensionsSizes)
         {
-            obstaclePercent = percentRange.ReturnInRange(obstaclePercent);
+            int percentOfObstacles = percentRange.ReturnInRange(obstaclePercent);
             var graph = graphFactory.CreateGraph(graphDimensionsSizes);
 
-            for (int i = 0; i < graph.Size; i++)
+            for (int index = 0; index < graph.Size; index++)
             {
-                var coordinateValues = graph.ToCoordinates(i);
+                var coordinateValues = graph.ToCoordinates(index);
                 var coordinate = coordinateFactory.CreateCoordinate(coordinateValues);
                 var coordinates = neighboursCoordinates.CreateNeighboursCoordinates(coordinate);
                 graph[coordinate] = vertexFactory.CreateVertex(coordinates, coordinate);
                 graph[coordinate].Cost = costFactory.CreateCost();
-                graph[coordinate].IsObstacle = percentRange.IsObstacleChance(obstaclePercent);
+                graph[coordinate].IsObstacle = percentRange.IsObstacleChance(percentOfObstacles);
             }
 
             return graph.ConnectVertices();

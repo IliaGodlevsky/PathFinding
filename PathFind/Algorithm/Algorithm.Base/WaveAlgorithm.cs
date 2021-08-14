@@ -22,8 +22,6 @@ namespace Algorithm.Base
             verticesQueue = new Queue<IVertex>();
         }
 
-        protected abstract IVertex NextVertex { get; }
-
         public override sealed IGraphPath FindPath()
         {
             PrepareForPathfinding();
@@ -49,7 +47,7 @@ namespace Algorithm.Base
         {
             visitedVertices.Add(vertex);
             var args = CreateEventArgs(vertex);
-            RaiseOnVertexVisitedEvent(args);
+            RaiseVertexVisited(args);
         }
 
         protected abstract void RelaxNeighbours(IVertex[] vertex);
@@ -59,7 +57,7 @@ namespace Algorithm.Base
             foreach (var neighbour in neighbours)
             {
                 var args = CreateEventArgs(neighbour);
-                RaiseOnVertexEnqueuedEvent(args);
+                RaiseVertexEnqueued(args);
                 verticesQueue.Enqueue(neighbour);
             }
 

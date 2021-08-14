@@ -53,7 +53,7 @@ namespace Algorithm.Base
         /// Gets next vertex according 
         /// to <see cref="GreedyHeuristic(IVertex)"/> function
         /// </summary>
-        protected IVertex NextVertex
+        protected override IVertex NextVertex
         {
             get
             {
@@ -77,7 +77,7 @@ namespace Algorithm.Base
         {
             visitedVertices.Add(CurrentVertex);
             var args = CreateEventArgs(CurrentVertex);
-            RaiseOnVertexVisitedEvent(args);
+            RaiseVertexVisited(args);
             visitedVerticesStack.Push(CurrentVertex);
             parentVertices.Add(CurrentVertex, PreviousVertex);
         }
@@ -85,7 +85,7 @@ namespace Algorithm.Base
         private void Enqueue(IVertex vertex)
         {
             var args = CreateEventArgs(vertex);
-            RaiseOnVertexEnqueuedEvent(args);
+            RaiseVertexEnqueued(args);
         }
 
         private void ProcessCurrentVertex()

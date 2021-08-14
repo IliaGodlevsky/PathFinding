@@ -60,7 +60,7 @@ namespace GraphLib.Extensions
 
         public static void Initialize(this IVertex self)
         {
-            self.Neighbours = new List<IVertex>();
+            self.Neighbours = new IVertex[] { };
             self.IsObstacle = false;
             self.Cost = new NullCost();
             self.SetToDefault();
