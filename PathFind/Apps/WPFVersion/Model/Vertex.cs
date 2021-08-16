@@ -18,7 +18,8 @@ namespace WPFVersion.Model
         public static SolidColorBrush EnqueuedVertexColor { get; set; }
         public static SolidColorBrush ObstacleVertexColor { get; set; }
         public static SolidColorBrush RegularVertexColor { get; set; }
-        public static SolidColorBrush AlreadyPathVertex { get; set; }
+        public static SolidColorBrush AlreadyPathVertexColor { get; set; }
+        public static SolidColorBrush IntermediateVertexColor { get; set; }
 
         static Vertex()
         {
@@ -29,7 +30,8 @@ namespace WPFVersion.Model
             EnqueuedVertexColor = new SolidColorBrush(Colors.Magenta);
             ObstacleVertexColor = new SolidColorBrush(Colors.Black);
             RegularVertexColor = new SolidColorBrush(Colors.White);
-            AlreadyPathVertex = new SolidColorBrush(Colors.Gold);
+            AlreadyPathVertexColor = new SolidColorBrush(Colors.Gold);
+            IntermediateVertexColor = new SolidColorBrush(Colors.DarkOrange);
         }
 
         public Vertex(INeighboursCoordinates radar, ICoordinate coordinate) : base()
@@ -103,7 +105,7 @@ namespace WPFVersion.Model
             {
                 if (IsMarkedAsPathed())
                 {
-                    Background = AlreadyPathVertex;
+                    Background = AlreadyPathVertexColor;
                 }
                 else
                 {
@@ -169,7 +171,14 @@ namespace WPFVersion.Model
 
         private bool IsMarkedAsPathed()
         {
-            return Background == AlreadyPathVertex || Background == PathVertexColor;
+            return Background == AlreadyPathVertexColor 
+                || Background == PathVertexColor 
+                || Background == IntermediateVertexColor;
+        }
+
+        public void MarkAsIntermediate()
+        {
+            Dispatcher.Invoke(() => Background = IntermediateVertexColor);
         }
     }
 }

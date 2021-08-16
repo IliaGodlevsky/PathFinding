@@ -8,13 +8,13 @@ namespace Algorithm.Algos.Algos
 {
     public class BestFirstLeeAlgorithm : LeeAlgorithm
     {
-        public BestFirstLeeAlgorithm(IGraph graph, IEndPoints endPoints, IHeuristic function)
+        public BestFirstLeeAlgorithm(IGraph graph, IIntermediateEndPoints endPoints, IHeuristic function)
             : base(graph, endPoints)
         {
             heuristic = function;
         }
 
-        public BestFirstLeeAlgorithm(IGraph graph, IEndPoints endPoints)
+        public BestFirstLeeAlgorithm(IGraph graph, IIntermediateEndPoints endPoints)
             : this(graph, endPoints, new ManhattanDistance())
         {
 
@@ -34,7 +34,7 @@ namespace Algorithm.Algos.Algos
 
         protected override double CreateWave()
         {
-            return base.CreateWave() + heuristic.Calculate(CurrentVertex, endPoints.Target);
+            return base.CreateWave() + heuristic.Calculate(CurrentVertex, CurrentEndPoints.Target);
         }
 
         private readonly IHeuristic heuristic;

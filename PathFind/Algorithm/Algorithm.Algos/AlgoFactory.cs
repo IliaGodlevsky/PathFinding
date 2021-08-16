@@ -9,7 +9,7 @@ namespace Algorithm.Algos
     public static class AlgoFactory
     {
         public static IAlgorithm CreateAlgorithm(Algorithms algorithm,
-            IGraph graph, IEndPoints endPoints)
+            IGraph graph, IIntermediateEndPoints endPoints)
         {
             switch (algorithm)
             {

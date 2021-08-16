@@ -11,19 +11,16 @@ namespace Algorithm.Infrastructure.EventArguments
     {
         public static new AlgorithmEventArgs Empty => new AlgorithmEventArgs();
 
-        private AlgorithmEventArgs() : this(default, new NullVertex())
+        private AlgorithmEventArgs() : this(new NullVertex())
         {
 
         }
 
-        public AlgorithmEventArgs(int visited, IVertex current)
+        public AlgorithmEventArgs(IVertex current)
         {
             Current = current;
-            Visited = visited;
         }
 
         public IVertex Current { get; }
-
-        public int Visited { get; }
     }
 }

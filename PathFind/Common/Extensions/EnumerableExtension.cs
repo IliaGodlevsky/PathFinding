@@ -96,6 +96,11 @@ namespace Common.Extensions
             return collection;
         }
 
+        public static bool IsSingle<T>(this IEnumerable<T> collection, Func<T, bool> predicate)
+        {
+            return collection.Count(predicate) == 1;
+        }
+
         public static double SumOrDefault(this IEnumerable<int> collection)
         {
             return collection.Any() ? collection.Sum() : default;

@@ -10,15 +10,15 @@ namespace Algorithm.Algos.Algos
 {
     public class LeeAlgorithm : WaveAlgorithm
     {
-        public LeeAlgorithm(IGraph graph, IEndPoints endPoints)
+        public LeeAlgorithm(IGraph graph, IIntermediateEndPoints endPoints)
             : base(graph, endPoints)
         {
 
         }
 
-        protected override void PrepareForPathfinding()
+        protected override void PrepareForLocalPathfinding(IEndPoints endPoints)
         {
-            base.PrepareForPathfinding();
+            base.PrepareForLocalPathfinding(endPoints);
             var vertices = graph.GetNotObstacles();
             accumulatedCosts = new AccumulatedCosts(vertices, 0);
         }

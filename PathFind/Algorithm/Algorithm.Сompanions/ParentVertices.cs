@@ -14,6 +14,10 @@ namespace Algorithm.Сompanions
 
         public void Add(IVertex child, IVertex parent)
         {
+            if (parent == null || child == null)
+            {
+                return;
+            }
             parentVertices[child.Position] = parent;
         }
 

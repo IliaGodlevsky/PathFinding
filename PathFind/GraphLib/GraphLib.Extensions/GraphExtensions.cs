@@ -77,6 +77,11 @@ namespace GraphLib.Extensions
             return self.Contains(endPoints.Source, endPoints.Target);
         }
 
+        public static bool Contains(this IGraph self, IIntermediateEndPoints endPoints)
+        {
+            return self.Contains((IEndPoints)endPoints) && self.Contains(endPoints.IntermediateVertices.ToArray());
+        }
+
         public static IVertex[] GetNotObstacles(this IGraph self)
         {
             return self.Vertices.FilterObstacles();

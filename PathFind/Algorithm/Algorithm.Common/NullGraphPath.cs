@@ -10,7 +10,7 @@ namespace Algorithm.Common
     {
         public NullGraphPath()
         {
-            Path = new NullVertex[] { new NullVertex() };
+            Path = new NullVertex[] { };
         }
 
         public IVertex[] Path { get; }

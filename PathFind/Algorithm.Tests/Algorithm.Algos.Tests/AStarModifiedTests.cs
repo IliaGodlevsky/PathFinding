@@ -17,7 +17,7 @@ namespace Algorithm.Algos.Tests
             base.FindPath_EndpointsBelongToGraph_ReturnsShortestPath();
         }
 
-        protected override IAlgorithm CreateAlgorithm(IGraph graph, IEndPoints endPoints)
+        protected override IAlgorithm CreateAlgorithm(IGraph graph, IIntermediateEndPoints endPoints)
         {
             return new AStarModified(graph, endPoints);
         }

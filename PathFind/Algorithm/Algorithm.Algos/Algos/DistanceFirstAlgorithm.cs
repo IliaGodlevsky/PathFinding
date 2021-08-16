@@ -8,13 +8,13 @@ namespace Algorithm.Algos.Algos
     public class DistanceFirstAlgorithm : GreedyAlgorithm
     {
         public DistanceFirstAlgorithm(IGraph graph,
-            IEndPoints endPoints, IHeuristic heuristic)
+            IIntermediateEndPoints endPoints, IHeuristic heuristic)
             : base(graph, endPoints)
         {
             this.heuristic = heuristic;
         }
 
-        public DistanceFirstAlgorithm(IGraph graph, IEndPoints endPoints)
+        public DistanceFirstAlgorithm(IGraph graph, IIntermediateEndPoints endPoints)
             : this(graph, endPoints, new EuclidianDistance())
         {
 

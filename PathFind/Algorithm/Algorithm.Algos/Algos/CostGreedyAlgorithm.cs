@@ -7,13 +7,13 @@ namespace Algorithm.Algos.Algos
 {
     public sealed class CostGreedyAlgorithm : GreedyAlgorithm
     {
-        public CostGreedyAlgorithm(IGraph graph, IEndPoints endPoints)
+        public CostGreedyAlgorithm(IGraph graph, IIntermediateEndPoints endPoints)
             : this(graph, endPoints, new DefaultStepRule())
         {
 
         }
 
-        public CostGreedyAlgorithm(IGraph graph, IEndPoints endPoints, IStepRule stepRule)
+        public CostGreedyAlgorithm(IGraph graph, IIntermediateEndPoints endPoints, IStepRule stepRule)
             : base(graph, endPoints)
         {
             this.stepRule = stepRule;

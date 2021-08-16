@@ -33,11 +33,6 @@ namespace GraphLib.Extensions
             return items.Any() ? items.Aggregate(func) : default;
         }
 
-        public static bool IsSingle<T>(this IEnumerable<T> collection, Func<T, bool> predicate)
-        {
-            return collection.Count(predicate) == 1;
-        }
-
         public static IVertex[] FilterObstacles(this IEnumerable<IVertex> collection)
         {
             return collection.Where(vertex => !vertex.IsObstacle).ToArray();

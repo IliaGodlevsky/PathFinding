@@ -38,6 +38,7 @@ namespace WPFVersion3D.Model
         public static SolidColorBrush StartVertexBrush { get; set; }
         public static SolidColorBrush EndVertexBrush { get; set; }
         public static SolidColorBrush EnqueuedVertexBrush { get; set; }
+        public static SolidColorBrush IntermediateVertexColor { get; set; }
 
         static Vertex3D()
         {
@@ -48,6 +49,7 @@ namespace WPFVersion3D.Model
             EnqueuedVertexBrush = new SolidColorBrush(Colors.Magenta) { Opacity = InitialEnqueuedVertexOpacity };
             ObstacleVertexBrush = new SolidColorBrush(Colors.Black) { Opacity = InitialObstacleVertexOpacity };
             SimpleVertexBrush = new SolidColorBrush(Colors.White) { Opacity = InitialRegularVertexOpacity };
+            IntermediateVertexColor = new SolidColorBrush(Colors.OrangeRed) { Opacity = InitialStartVertexOpacity };
 
             ModelProperty = DependencyProperty.Register(
                 nameof(Model),
@@ -201,6 +203,11 @@ namespace WPFVersion3D.Model
             Vertex3D vert = (Vertex3D)depObj;
             vert.Brush = (SolidColorBrush)prop.NewValue;
             vert.Material.Brush = vert.Brush;
+        }
+
+        public void MarkAsIntermediate()
+        {
+            Dispatcher.Invoke(() => Brush = IntermediateVertexColor);
         }
 
         private readonly IModel3DFactory modelFactory;

@@ -16,13 +16,13 @@ namespace Algorithm.Algos.Algos
     /// </summary>
     public class DijkstraAlgorithm : WaveAlgorithm
     {
-        public DijkstraAlgorithm(IGraph graph, IEndPoints endPoints)
+        public DijkstraAlgorithm(IGraph graph, IIntermediateEndPoints endPoints)
             : this(graph, endPoints, new DefaultStepRule())
         {
 
         }
 
-        public DijkstraAlgorithm(IGraph graph, IEndPoints endPoints, IStepRule stepRule)
+        public DijkstraAlgorithm(IGraph graph, IIntermediateEndPoints endPoints, IStepRule stepRule)
             : base(graph, endPoints)
         {
             this.stepRule = stepRule;
@@ -30,7 +30,7 @@ namespace Algorithm.Algos.Algos
 
         protected override IGraphPath CreateGraphPath()
         {
-            return new GraphPath(parentVertices, endPoints, stepRule);
+            return new GraphPath(parentVertices, CurrentEndPoints, stepRule);
         }
 
         protected override IVertex NextVertex
@@ -46,16 +46,9 @@ namespace Algorithm.Algos.Algos
             }
         }
 
-        protected override void CompletePathfinding()
+        protected override void PrepareForLocalPathfinding(IEndPoints endPoints)
         {
-            base.CompletePathfinding();
-            verticesQueue.Clear();
-        }
-
-        protected override void PrepareForPathfinding()
-        {
-            base.PrepareForPathfinding();
-
+            base.PrepareForLocalPathfinding(endPoints);
             var vertices = graph.GetNotObstacles().Except(endPoints.Source);
             accumulatedCosts = new AccumulatedCosts(vertices, double.PositiveInfinity);
             accumulatedCosts.Reevaluate(endPoints.Source, default);

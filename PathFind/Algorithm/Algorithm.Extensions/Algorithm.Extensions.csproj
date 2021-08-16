@@ -58,6 +58,10 @@
       <Project>{B6DA5928-65EC-42C0-B012-F25F8F023271}</Project>
       <Name>GraphLib.Exceptions</Name>
     </ProjectReference>
+    <ProjectReference Include="..\..\GraphLib\GraphLib.Extensions\GraphLib.Extensions.csproj">
+      <Project>{93F88F47-1871-44CD-9622-EB8D406C969C}</Project>
+      <Name>GraphLib.Extensions</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\GraphLib\GraphLib.Interfaces\GraphLib.Interfaces.csproj">
       <Project>{d3c5ccfe-698b-41c7-9a72-5fd0262765e1}</Project>
       <Name>GraphLib.Interfaces</Name>

@@ -187,6 +187,8 @@ namespace ConsoleVersion.Model
             return colour == PathVertexColor || colour == AlreadyPathVertexColor;
         }
 
+        public void MarkAsIntermediate(){}
+
         private string text;
         private Color colour;
     }

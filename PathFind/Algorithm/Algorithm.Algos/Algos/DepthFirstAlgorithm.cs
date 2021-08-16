@@ -7,13 +7,13 @@ namespace Algorithm.Algos.Algos
 {
     public sealed class DepthFirstAlgorithm : GreedyAlgorithm
     {
-        public DepthFirstAlgorithm(IGraph graph, IEndPoints endPoints, IHeuristic heuristic)
+        public DepthFirstAlgorithm(IGraph graph, IIntermediateEndPoints endPoints, IHeuristic heuristic)
             : base(graph, endPoints)
         {
             this.heuristic = heuristic;
         }
 
-        public DepthFirstAlgorithm(IGraph graph, IEndPoints endPoints)
+        public DepthFirstAlgorithm(IGraph graph, IIntermediateEndPoints endPoints)
             : this(graph, endPoints, new ManhattanDistance())
         {
 

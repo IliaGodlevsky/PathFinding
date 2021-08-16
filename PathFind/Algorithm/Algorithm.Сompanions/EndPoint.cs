@@ -23,8 +23,7 @@ namespace Algorithm.Сompanions
 
         public bool IsEndPoint(IVertex vertex)
         {
-            return vertex.IsNull()
-                || vertex.IsEqual(Source)
+            return vertex.IsEqual(Source)
                 || vertex.IsEqual(Target);
         }
     }

@@ -20,13 +20,13 @@ namespace Algorithm.Algos.Algos
     /// the closest to the target vertex</remarks>
     public class AStarModified : AStarAlgorithm
     {
-        public AStarModified(IGraph graph, IEndPoints endPoints)
+        public AStarModified(IGraph graph, IIntermediateEndPoints endPoints)
             : this(graph, endPoints, new DefaultStepRule(), new ChebyshevDistance())
         {
 
         }
 
-        public AStarModified(IGraph graph, IEndPoints endPoints, IStepRule stepRule, IHeuristic function)
+        public AStarModified(IGraph graph, IIntermediateEndPoints endPoints, IStepRule stepRule, IHeuristic function)
             : base(graph, endPoints, stepRule, function)
         {
             percentValueRange = new InclusiveValueRange<int>(99, 0);
@@ -34,13 +34,13 @@ namespace Algorithm.Algos.Algos
             deletedVertices = new Queue<IVertex>();
         }
 
-        public AStarModified(IGraph graph, IEndPoints endPoints, IHeuristic function)
+        public AStarModified(IGraph graph, IIntermediateEndPoints endPoints, IHeuristic function)
             : this(graph, endPoints, new DefaultStepRule(), function)
         {
 
         }
 
-        public AStarModified(IGraph graph, IEndPoints endPoints, IStepRule stepRule)
+        public AStarModified(IGraph graph, IIntermediateEndPoints endPoints, IStepRule stepRule)
             : this(graph, endPoints, stepRule, new ChebyshevDistance())
         {
 
@@ -79,7 +79,7 @@ namespace Algorithm.Algos.Algos
 
         protected virtual double CalculateHeuristic(IVertex vertex)
         {
-            return heuristic.Calculate(vertex, endPoints.Target);
+            return heuristic.Calculate(vertex, CurrentEndPoints.Target);
         }
 
         private int VerticesCountToDelete => verticesQueue.Count * percentOfFarthestVerticesToDelete.Value / 100;

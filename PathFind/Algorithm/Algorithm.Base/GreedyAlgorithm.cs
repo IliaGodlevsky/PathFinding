@@ -1,4 +1,5 @@
 ﻿using Algorithm.Extensions;
+using Algorithm.Infrastructure.EventArguments;
 using Algorithm.Interfaces;
 using Algorithm.Realizations.GraphPaths;
 using Common.Extensions;
@@ -16,7 +17,7 @@ namespace Algorithm.Base
     /// </summary>
     public abstract class GreedyAlgorithm : Algorithm
     {
-        protected GreedyAlgorithm(IGraph graph, IEndPoints endPoints)
+        protected GreedyAlgorithm(IGraph graph, IIntermediateEndPoints endPoints)
            : base(graph, endPoints)
         {
             visitedVerticesStack = new Stack<IVertex>();
@@ -25,7 +26,7 @@ namespace Algorithm.Base
         public override sealed IGraphPath FindPath()
         {
             PrepareForPathfinding();
-            while (!IsDestination())
+            while (!IsDestination(endPoints))
             {
                 PreviousVertex = CurrentVertex;
                 CurrentVertex = NextVertex;
@@ -47,6 +48,13 @@ namespace Algorithm.Base
         {
             base.CompletePathfinding();
             visitedVerticesStack.Clear();
+        }
+
+        protected override void PrepareForPathfinding()
+        {
+            base.PrepareForPathfinding();
+            CurrentVertex = endPoints.Source;
+            visitedVertices.Add(CurrentVertex);
         }
 
         /// <summary>
@@ -75,17 +83,15 @@ namespace Algorithm.Base
 
         private void VisitCurrentVertex()
         {
-            visitedVertices.Add(CurrentVertex);
-            var args = CreateEventArgs(CurrentVertex);
-            RaiseVertexVisited(args);
+            visitedVertices.Add(CurrentVertex);           
+            RaiseVertexVisited(new AlgorithmEventArgs(CurrentVertex));
             visitedVerticesStack.Push(CurrentVertex);
             parentVertices.Add(CurrentVertex, PreviousVertex);
         }
 
         private void Enqueue(IVertex vertex)
         {
-            var args = CreateEventArgs(vertex);
-            RaiseVertexEnqueued(args);
+            RaiseVertexEnqueued(new AlgorithmEventArgs(vertex));
         }
 
         private void ProcessCurrentVertex()

@@ -1,22 +1,20 @@
-﻿using Algorithm.Extensions;
+﻿using Algorithm.Common;
+using Algorithm.Extensions;
+using Algorithm.Infrastructure.EventArguments;
 using Algorithm.Interfaces;
 using Algorithm.Realizations.GraphPaths;
 using Common.Extensions;
 using GraphLib.Extensions;
 using GraphLib.Interfaces;
+using NullObject.Extensions;
 using System.Collections.Generic;
 using System.Linq;
 
 namespace Algorithm.Base
 {
-    /// <summary>
-    /// A base class for all wave algorithms, such as 
-    /// Dijkstra's algorithm, Lee algorithm or A* algorithm.
-    /// This is an abstract class
-    /// </summary>
     public abstract class WaveAlgorithm : Algorithm
     {
-        protected WaveAlgorithm(IGraph graph, IEndPoints endPoints)
+        protected WaveAlgorithm(IGraph graph, IIntermediateEndPoints endPoints)
             : base(graph, endPoints)
         {
             verticesQueue = new Queue<IVertex>();
@@ -24,40 +22,60 @@ namespace Algorithm.Base
 
         public override sealed IGraphPath FindPath()
         {
+            IGraphPath path = new NullGraphPath();
             PrepareForPathfinding();
-            do
+            foreach (var endPoint in endPoints.ToEndPoints())
             {
-                var neighbours = GetCurrentVertexUnvisitedNeighbours();
-                ExtractNeighbours(neighbours);
-                RelaxNeighbours(neighbours);
-                CurrentVertex = NextVertex;
-                VisitVertex(CurrentVertex);
-            } while (!IsDestination());
+                CurrentEndPoints = endPoint;
+                PrepareForLocalPathfinding(endPoint);
+                do
+                {
+                    var neighbours = GetUnvisitedNeighbours(CurrentVertex);
+                    ExtractNeighbours(neighbours);
+                    RelaxNeighbours(neighbours);
+                    CurrentVertex = NextVertex;
+                    VisitVertex(CurrentVertex);
+                } while (!IsDestination(CurrentEndPoints));
+                if (!IsAbleToContinue) break;
+                var foundPath = CreateGraphPath();
+                path = new CombinedGraphPath(path, foundPath);
+                Reset();
+            }
             CompletePathfinding();
+            return !IsAbleToContinue ? new NullGraphPath() : path;
+        }
 
-            return CreateGraphPath();
+        protected override void Reset()
+        {
+            base.Reset();
+            verticesQueue.Clear();
+        }
+
+        protected virtual void PrepareForLocalPathfinding(IEndPoints endPoints)
+        {
+            CurrentVertex = endPoints.Source;
+            VisitVertex(CurrentVertex);
         }
 
         protected virtual IGraphPath CreateGraphPath()
         {
-            return new GraphPath(parentVertices, endPoints);
+            return new GraphPath(parentVertices, CurrentEndPoints);
         }
 
         protected virtual void VisitVertex(IVertex vertex)
         {
             visitedVertices.Add(vertex);
-            var args = CreateEventArgs(vertex);
-            RaiseVertexVisited(args);
+            RaiseVertexVisited(new AlgorithmEventArgs(vertex));
         }
 
         protected abstract void RelaxNeighbours(IVertex[] vertex);
+        protected virtual IEndPoints CurrentEndPoints { get; set; }
 
         protected virtual void ExtractNeighbours(IVertex[] neighbours)
         {
             foreach (var neighbour in neighbours)
             {
-                var args = CreateEventArgs(neighbour);
-                RaiseVertexEnqueued(args);
+                RaiseVertexEnqueued(new AlgorithmEventArgs(neighbour));
                 verticesQueue.Enqueue(neighbour);
             }
 
@@ -68,10 +86,10 @@ namespace Algorithm.Base
 
         protected Queue<IVertex> verticesQueue;
 
-        private IVertex[] GetCurrentVertexUnvisitedNeighbours()
+        private IVertex[] GetUnvisitedNeighbours(IVertex vertex)
         {
             return visitedVertices
-                .GetUnvisitedNeighbours(CurrentVertex)
+                .GetUnvisitedNeighbours(vertex)
                 .FilterObstacles()
                 .ToArray();
         }

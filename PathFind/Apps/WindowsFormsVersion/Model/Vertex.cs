@@ -20,6 +20,7 @@ namespace WindowsFormsVersion.Model
         private static Color TargetVertexColor;
         private static Color AlreadyPathVertexColor;
         private static Color VisitedVertexColor;
+        private static Color IntermediateVertexColor;
 
         static Vertex()
         {
@@ -31,6 +32,7 @@ namespace WindowsFormsVersion.Model
             TargetVertexColor = Color.FromKnownColor(KnownColor.Red);
             AlreadyPathVertexColor = Color.FromKnownColor(KnownColor.Gold);
             VisitedVertexColor = Color.FromKnownColor(KnownColor.CadetBlue);
+            IntermediateVertexColor = Color.FromKnownColor(KnownColor.OrangeRed);
         }
 
         public Vertex(INeighboursCoordinates coordinateRadar, ICoordinate coordinate) : base()
@@ -151,7 +153,14 @@ namespace WindowsFormsVersion.Model
 
         private bool IsMarkedAsPath()
         {
-            return BackColor == PathVertexColor || BackColor == AlreadyPathVertexColor;
+            return BackColor == PathVertexColor 
+                || BackColor == AlreadyPathVertexColor 
+                || BackColor == IntermediateVertexColor;
+        }
+
+        public void MarkAsIntermediate()
+        {
+            BackColor = IntermediateVertexColor;
         }
     }
 }

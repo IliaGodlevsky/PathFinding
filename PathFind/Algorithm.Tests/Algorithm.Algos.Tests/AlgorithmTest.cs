@@ -77,7 +77,7 @@ namespace Algorithm.Algos.Tests
             Assert.IsTrue(graphPath.PathCost > 0);
         }
 
-        protected abstract IAlgorithm CreateAlgorithm(IGraph graph, IEndPoints endPoints);
+        protected abstract IAlgorithm CreateAlgorithm(IGraph graph, IIntermediateEndPoints endPoints);
 
         protected abstract int GetExpectedCost();
         protected abstract int GetExpectedLength();

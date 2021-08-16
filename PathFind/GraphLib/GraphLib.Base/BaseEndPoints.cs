@@ -9,10 +9,11 @@ using System.Linq;
 
 namespace GraphLib.Base
 {
-    public abstract class BaseEndPoints : IEndPoints
+    public abstract class BaseEndPoints : IIntermediateEndPoints
     {
         protected BaseEndPoints()
         {
+            intermediate = new List<IVertex>();
             Reset();
             conditions = new Dictionary<Predicate<IVertex>, Action<IVertex>>
             {
@@ -21,7 +22,9 @@ namespace GraphLib.Base
                 { CanSetSource, SetSource },
                 { v => Source.IsIsolated(), ReplaceSource},
                 { CanSetTarget , SetTarget},
-                { v => Target.IsIsolated(), ReplaceTarget}
+                { v => Target.IsIsolated(), ReplaceTarget},
+                { v => HasEndPointsSet && IsIntermediate(v), UnsetIntermediate},
+                { v => HasEndPointsSet, SetIntermediate}
             };
         }
 
@@ -30,6 +33,8 @@ namespace GraphLib.Base
         public IVertex Source { get; private set; }
 
         public IVertex Target { get; private set; }
+
+        public IReadOnlyCollection<IVertex> IntermediateVertices => intermediate;
 
         public void SubscribeToEvents(IGraph graph)
         {
@@ -45,6 +50,7 @@ namespace GraphLib.Base
         {
             Source = new NullVertex();
             Target = new NullVertex();
+            intermediate.Clear();
         }
 
         public bool IsEndPoint(IVertex vertex)
@@ -88,10 +94,22 @@ namespace GraphLib.Base
             (vertex as IMarkable)?.MarkAsTarget();
         }
 
+        protected virtual void SetIntermediate(IVertex vertex)
+        {
+            intermediate.Add(vertex);
+            (vertex as IMarkable)?.MarkAsIntermediate();
+        }
+
         protected virtual void UnsetSource(IVertex vertex)
         {
             (vertex as IMarkable)?.MarkAsRegular();
             Source = new NullVertex();
+        }
+
+        protected virtual void UnsetIntermediate(IVertex vertex)
+        {
+            intermediate.Remove(vertex);
+            (vertex as IMarkable)?.MarkAsRegular();
         }
 
         protected virtual void UnsetTarget(IVertex vertex)
@@ -112,9 +130,15 @@ namespace GraphLib.Base
             SetTarget(vertex);
         }
 
+        private bool IsIntermediate(IVertex vertex)
+        {
+            return intermediate.Contains(vertex);
+        }
+
         protected abstract void SubscribeVertex(IVertex vertex);
         protected abstract void UnsubscribeVertex(IVertex vertex);
 
+        private readonly List<IVertex> intermediate;
         private readonly Dictionary<Predicate<IVertex>, Action<IVertex>> conditions;
     }
 }

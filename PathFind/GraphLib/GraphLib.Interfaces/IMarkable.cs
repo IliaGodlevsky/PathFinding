@@ -20,5 +20,6 @@
         void MarkAsVisited();
 
         void MarkAsEnqueued();
+        void MarkAsIntermediate();
     }
 }

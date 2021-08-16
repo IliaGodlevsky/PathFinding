@@ -5,11 +5,13 @@ using Algorithm.Сompanions;
 using Algorithm.Сompanions.Interface;
 using GraphLib.Extensions;
 using GraphLib.Interfaces;
+using GraphLib.NullRealizations.NullObjects;
 using GraphLib.Realizations;
 using Interruptable.EventArguments;
 using Interruptable.EventHandlers;
 using NullObject.Extensions;
 using System;
+using System.Linq;
 
 namespace Algorithm.Base
 {
@@ -29,7 +31,7 @@ namespace Algorithm.Base
             Interrupted?.Invoke(this, new InterruptEventArgs());
         }
 
-        protected Algorithm(IGraph graph, IEndPoints endPoints)
+        protected Algorithm(IGraph graph, IIntermediateEndPoints endPoints)
         {
             visitedVertices = new VisitedVertices();
             parentVertices = new ParentVertices();
@@ -49,11 +51,11 @@ namespace Algorithm.Base
 
         private bool IsInterruptRequested { get; set; }
 
-        protected virtual bool IsDestination()
+        protected bool IsAbleToContinue => !CurrentVertex.IsNull() && !IsInterruptRequested;
+
+        protected virtual bool IsDestination(IEndPoints endPoints)
         {
-            return endPoints.Target.IsEqual(CurrentVertex)
-                || CurrentVertex.IsNull()
-                || IsInterruptRequested;
+            return endPoints.Target.IsEqual(CurrentVertex) || !IsAbleToContinue;
         }
 
         protected void RaiseStarted(AlgorithmEventArgs e) 
@@ -80,9 +82,7 @@ namespace Algorithm.Base
         {
             if (graph.Contains(endPoints))
             {
-                CurrentVertex = endPoints.Source;
-                visitedVertices.Add(CurrentVertex);
-                RaiseStarted(CreateEventArgs(CurrentVertex));
+                RaiseStarted(new AlgorithmEventArgs(new NullVertex()));
                 return;
             }
             throw new ArgumentException($"{nameof(endPoints)} don't belong to {nameof(graph)}");
@@ -90,12 +90,7 @@ namespace Algorithm.Base
 
         protected virtual void CompletePathfinding() 
         { 
-            RaiseFinished(CreateEventArgs(CurrentVertex)); 
-        }
-
-        protected virtual AlgorithmEventArgs CreateEventArgs(IVertex vertex)
-        { 
-            return new AlgorithmEventArgs(visitedVertices.Count, vertex); 
+            RaiseFinished(new AlgorithmEventArgs(CurrentVertex)); 
         }
 
         protected ICoordinate Position(IVertex vertex) => vertex.Position;
@@ -115,6 +110,6 @@ namespace Algorithm.Base
         protected IAccumulatedCosts accumulatedCosts;
 
         protected readonly IGraph graph;
-        protected readonly IEndPoints endPoints;
+        protected readonly IIntermediateEndPoints endPoints;
     }
 }

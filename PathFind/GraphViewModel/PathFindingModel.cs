@@ -66,10 +66,7 @@ namespace GraphViewModel
             {
                 vertex.MarkAsVisited();
             }
-            if (visitedVerticesCount < e.Visited)
-            {
-                visitedVerticesCount = e.Visited;
-            }
+            visitedVerticesCount++;
         }
 
         protected virtual void OnVertexEnqueued(object sender, AlgorithmEventArgs e)
@@ -88,10 +85,6 @@ namespace GraphViewModel
 
         protected virtual void OnAlgorithmFinished(object sender, AlgorithmEventArgs e)
         {
-            if (visitedVerticesCount < e.Visited)
-            {
-                visitedVerticesCount = e.Visited;
-            }
             timer.Stop();
         }
 
