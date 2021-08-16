@@ -1,5 +1,6 @@
 ﻿using Algorithm.Interfaces;
 using GraphLib.Interfaces;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace Algorithm.Realizations.GraphPaths
@@ -9,7 +10,7 @@ namespace Algorithm.Realizations.GraphPaths
         public CombinedGraphPath(IGraphPath first, IGraphPath second, params IGraphPath[] other)
         {
             var paths = other.Prepend(second).Prepend(first).ToArray();
-            Path = GetGraphPath(paths);
+            Path = GetGraphPath(paths).ToArray();
             PathLength = GetPathLength(paths);
             PathCost = GetPathCost(paths);
         }
@@ -20,12 +21,11 @@ namespace Algorithm.Realizations.GraphPaths
 
         public double PathCost { get; }
 
-        private IVertex[] GetGraphPath(IGraphPath[] paths)
+        private IEnumerable<IVertex> GetGraphPath(IGraphPath[] paths)
         {
             return paths
                 .Select(x => x.Path)
-                .Aggregate((x, y) => x.Concat(y)
-                .ToArray());
+                .Aggregate<IEnumerable<IVertex>>((x, y) => x.Concat(y));
         }
 
         private double GetPathCost(IGraphPath[] paths)

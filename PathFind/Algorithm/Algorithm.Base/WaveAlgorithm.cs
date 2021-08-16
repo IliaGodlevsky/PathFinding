@@ -6,7 +6,6 @@ using Algorithm.Realizations.GraphPaths;
 using Common.Extensions;
 using GraphLib.Extensions;
 using GraphLib.Interfaces;
-using NullObject.Extensions;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -24,7 +23,7 @@ namespace Algorithm.Base
         {
             IGraphPath path = new NullGraphPath();
             PrepareForPathfinding();
-            foreach (var endPoint in endPoints.ToEndPoints())
+            foreach (var endPoint in endPoints.ToIntermediateEndPoints())
             {
                 CurrentEndPoints = endPoint;
                 PrepareForLocalPathfinding(endPoint);

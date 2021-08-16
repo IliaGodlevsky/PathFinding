@@ -1,5 +1,6 @@
 ﻿using Algorithm.Base;
 using Algorithm.Interfaces;
+using Algorithm.Realizations.GraphPaths;
 using Algorithm.Realizations.StepRules;
 using GraphLib.Interfaces;
 
@@ -17,6 +18,11 @@ namespace Algorithm.Algos.Algos
             : base(graph, endPoints)
         {
             this.stepRule = stepRule;
+        }
+
+        protected override IGraphPath CreateGraphPath()
+        {
+            return new GraphPath(parentVertices, endPoints, stepRule);
         }
 
         protected override double GreedyHeuristic(IVertex vertex)

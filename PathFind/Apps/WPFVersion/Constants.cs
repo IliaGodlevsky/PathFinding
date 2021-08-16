@@ -15,7 +15,7 @@ namespace WPFVersion
         public const int VertexSize = 24;
         private const int WidthBase = 12;
         private const int LengthBase = 5;
-        private const int Leverage = 10;
+        private const int Leverage = 12;
 
         static Constants()
         {

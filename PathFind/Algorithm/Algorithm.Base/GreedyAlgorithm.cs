@@ -34,6 +34,11 @@ namespace Algorithm.Base
             }
             CompletePathfinding();
 
+            return CreateGraphPath();
+        }
+
+        protected virtual IGraphPath CreateGraphPath()
+        {
             return new GraphPath(parentVertices, endPoints);
         }
 

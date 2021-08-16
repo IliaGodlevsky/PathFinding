@@ -1,9 +1,6 @@
 ﻿using GraphLib.Interfaces;
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace GraphLib.Extensions
 {
@@ -33,7 +30,7 @@ namespace GraphLib.Extensions
 
     public static class EndPointsExtensions
     {
-        public static IEnumerable<IEndPoints> ToEndPoints(this IIntermediateEndPoints self)
+        public static IEnumerable<IEndPoints> ToIntermediateEndPoints(this IIntermediateEndPoints self)
         {
             var vertices = self.IntermediateVertices
                 .Prepend(self.Source)
