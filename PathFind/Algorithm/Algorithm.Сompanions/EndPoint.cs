@@ -1,6 +1,5 @@
 ﻿using GraphLib.Extensions;
 using GraphLib.Interfaces;
-using NullObject.Extensions;
 
 namespace Algorithm.Сompanions
 {

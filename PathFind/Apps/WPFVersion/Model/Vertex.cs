@@ -171,8 +171,8 @@ namespace WPFVersion.Model
 
         private bool IsMarkedAsPathed()
         {
-            return Background == AlreadyPathVertexColor 
-                || Background == PathVertexColor 
+            return Background == AlreadyPathVertexColor
+                || Background == PathVertexColor
                 || Background == IntermediateVertexColor;
         }
 

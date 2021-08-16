@@ -153,8 +153,8 @@ namespace WindowsFormsVersion.Model
 
         private bool IsMarkedAsPath()
         {
-            return BackColor == PathVertexColor 
-                || BackColor == AlreadyPathVertexColor 
+            return BackColor == PathVertexColor
+                || BackColor == AlreadyPathVertexColor
                 || BackColor == IntermediateVertexColor;
         }
 

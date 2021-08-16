@@ -58,22 +58,22 @@ namespace Algorithm.Base
             return endPoints.Target.IsEqual(CurrentVertex) || !IsAbleToContinue;
         }
 
-        protected void RaiseStarted(AlgorithmEventArgs e) 
-        { 
-            Started?.Invoke(this, e); 
+        protected void RaiseStarted(AlgorithmEventArgs e)
+        {
+            Started?.Invoke(this, e);
         }
 
-        protected void RaiseFinished(AlgorithmEventArgs e) 
-        { 
+        protected void RaiseFinished(AlgorithmEventArgs e)
+        {
             Finished?.Invoke(this, e);
         }
 
-        protected void RaiseVertexVisited(AlgorithmEventArgs e) 
+        protected void RaiseVertexVisited(AlgorithmEventArgs e)
         {
             VertexVisited?.Invoke(this, e);
         }
 
-        protected void RaiseVertexEnqueued(AlgorithmEventArgs e) 
+        protected void RaiseVertexEnqueued(AlgorithmEventArgs e)
         {
             VertexEnqueued?.Invoke(this, e);
         }
@@ -88,9 +88,9 @@ namespace Algorithm.Base
             throw new ArgumentException($"{nameof(endPoints)} don't belong to {nameof(graph)}");
         }
 
-        protected virtual void CompletePathfinding() 
-        { 
-            RaiseFinished(new AlgorithmEventArgs(CurrentVertex)); 
+        protected virtual void CompletePathfinding()
+        {
+            RaiseFinished(new AlgorithmEventArgs(CurrentVertex));
         }
 
         protected ICoordinate Position(IVertex vertex) => vertex.Position;

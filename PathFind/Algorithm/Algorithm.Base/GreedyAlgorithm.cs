@@ -88,7 +88,7 @@ namespace Algorithm.Base
 
         private void VisitCurrentVertex()
         {
-            visitedVertices.Add(CurrentVertex);           
+            visitedVertices.Add(CurrentVertex);
             RaiseVertexVisited(new AlgorithmEventArgs(CurrentVertex));
             visitedVerticesStack.Push(CurrentVertex);
             parentVertices.Add(CurrentVertex, PreviousVertex);

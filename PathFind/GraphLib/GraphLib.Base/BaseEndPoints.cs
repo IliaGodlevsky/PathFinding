@@ -23,7 +23,7 @@ namespace GraphLib.Base
                 { v => Source.IsIsolated(), ReplaceSource},
                 { CanSetTarget , SetTarget},
                 { v => Target.IsIsolated(), ReplaceTarget},
-                { v => HasEndPointsSet && IsIntermediate(v), UnsetIntermediate},               
+                { v => HasEndPointsSet && IsIntermediate(v), UnsetIntermediate},
                 { v => HasEndPointsSet, SetIntermediate}
             };
         }

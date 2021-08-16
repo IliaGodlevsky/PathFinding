@@ -177,7 +177,7 @@ namespace ConsoleVersion.ViewModel
             }
         }
 
-        private bool HasAnyVerticesToChooseAsEndPoints 
+        private bool HasAnyVerticesToChooseAsEndPoints
             => mainViewModel.Graph.Size - mainViewModel.Graph.GetObstaclesCount() >= 2;
 
         private readonly InclusiveValueRange<int> algorithmKeysValueRange;

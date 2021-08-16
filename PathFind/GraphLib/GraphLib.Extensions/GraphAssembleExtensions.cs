@@ -15,7 +15,7 @@ namespace GraphLib.Extensions
             {
                 return await task.ConfigureAwait(false);
             }
-            catch(Exception)
+            catch (Exception)
             {
                 throw;
             }

@@ -2,7 +2,6 @@
 using GraphLib.NullRealizations.NullObjects;
 using NullObject.Extensions;
 using System;
-using System.Collections.Generic;
 using System.Linq;
 
 namespace GraphLib.Extensions
