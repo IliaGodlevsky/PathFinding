@@ -46,6 +46,7 @@
     <Compile Include="CoordinateExtensions.cs" />
     <Compile Include="EnumerableExtensions.cs" />
     <Compile Include="GraphExtensions.cs" />
+    <Compile Include="Objects\EndPoints.cs" />
     <Compile Include="VertexExtension.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
