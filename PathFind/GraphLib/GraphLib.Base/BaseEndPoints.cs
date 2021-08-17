@@ -55,7 +55,8 @@ namespace GraphLib.Base
 
         public bool IsEndPoint(IVertex vertex)
         {
-            return vertex.IsEqual(Source) || vertex.IsEqual(Target);
+            return vertex.IsEqual(Source) || vertex.IsEqual(Target)
+                || IsIntermediate(vertex);
         }
 
         public bool CanBeEndPoint(IVertex vertex)

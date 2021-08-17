@@ -42,11 +42,7 @@ namespace Algorithm.Realizations.GraphPaths
         private IVertex[] GetPath()
         {
             var path = ExtractPath().Reverse().ToArray();
-            if (!path.Contains(endPoints.Source))
-            {
-                path = new IVertex[] { };
-            }
-            return path;
+            return path.Contains(endPoints.Source) ? path : new IVertex[] { };
         }
 
         private IEnumerable<IVertex> ExtractPath()

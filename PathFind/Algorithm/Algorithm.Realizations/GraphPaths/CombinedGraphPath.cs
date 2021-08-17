@@ -7,10 +7,11 @@ namespace Algorithm.Realizations.GraphPaths
 {
     public sealed class CombinedGraphPath : IGraphPath
     {
-        public CombinedGraphPath(IGraphPath first, IGraphPath second, params IGraphPath[] other)
+        public CombinedGraphPath(IGraphPath first, 
+            IGraphPath second, params IGraphPath[] other)
         {
             var paths = other.Prepend(second).Prepend(first).ToArray();
-            Path = GetGraphPath(paths).ToArray();
+            Path = GetGraphPath(paths);
             PathLength = GetPathLength(paths);
             PathCost = GetPathCost(paths);
         }
@@ -21,11 +22,12 @@ namespace Algorithm.Realizations.GraphPaths
 
         public double PathCost { get; }
 
-        private IEnumerable<IVertex> GetGraphPath(IGraphPath[] paths)
+        private IVertex[] GetGraphPath(IGraphPath[] paths)
         {
             return paths
                 .Select(x => x.Path)
-                .Aggregate<IEnumerable<IVertex>>((x, y) => x.Concat(y));
+                .Aggregate<IEnumerable<IVertex>>((x, y) => x.Concat(y))
+                .ToArray();
         }
 
         private double GetPathCost(IGraphPath[] paths)
