@@ -14,6 +14,7 @@ namespace Algorithm.Extensions
             self.Path
                 .Except(endpoints.Source, endpoints.Target)
                 .Except(endpoints.IntermediateVertices)
+                .Reverse()
                 .OfType<IMarkable>()
                 .ForEach(vertex => vertex.MarkAsPath())
                 .OfType<IVertex>()

@@ -46,17 +46,17 @@ namespace Algorithm.Algos.Algos
             }
         }
 
-        protected override void PrepareForLocalPathfinding(IEndPoints endPoints)
+        protected override void PrepareForLocalPathfinding()
         {
-            base.PrepareForLocalPathfinding(endPoints);
-            var vertices = graph.GetNotObstacles().Except(endPoints.Source);
+            base.PrepareForLocalPathfinding();
+            var vertices = graph.GetNotObstacles().Except(CurrentEndPoints.Source);
             accumulatedCosts = new AccumulatedCosts(vertices, double.PositiveInfinity);
-            accumulatedCosts.Reevaluate(endPoints.Source, default);
+            accumulatedCosts.Reevaluate(CurrentEndPoints.Source, default);
         }
 
         protected virtual void RelaxVertex(IVertex vertex)
         {
-            var relaxedCost = GetVertexRelaxedCost(vertex);
+            double relaxedCost = GetVertexRelaxedCost(vertex);
             if (accumulatedCosts.Compare(vertex, relaxedCost) > 0)
             {
                 accumulatedCosts.Reevaluate(vertex, relaxedCost);

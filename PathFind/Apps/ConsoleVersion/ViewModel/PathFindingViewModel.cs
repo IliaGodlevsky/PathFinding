@@ -72,6 +72,7 @@ namespace ConsoleVersion.ViewModel
         protected override void Summarize()
         {
             mainModel.PathFindingStatistics = path.PathLength > 0 ? GetStatistics() : CouldntFindPathMsg;
+            visitedVerticesCount = 0;
         }
 
         protected override void OnVertexVisited(object sender, AlgorithmEventArgs e)

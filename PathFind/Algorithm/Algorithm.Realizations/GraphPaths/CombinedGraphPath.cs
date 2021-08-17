@@ -25,8 +25,9 @@ namespace Algorithm.Realizations.GraphPaths
         private IVertex[] GetGraphPath(IGraphPath[] paths)
         {
             return paths
-                .Select(x => x.Path)
-                .Aggregate<IEnumerable<IVertex>>((x, y) => x.Concat(y))
+                .Select(x => x.Path.Reverse())
+                .Aggregate((x, y) => x.Concat(y))
+                .Reverse()
                 .ToArray();
         }
 

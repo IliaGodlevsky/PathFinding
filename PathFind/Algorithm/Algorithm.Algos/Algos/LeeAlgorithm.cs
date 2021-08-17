@@ -16,9 +16,9 @@ namespace Algorithm.Algos.Algos
 
         }
 
-        protected override void PrepareForLocalPathfinding(IEndPoints endPoints)
+        protected override void PrepareForLocalPathfinding()
         {
-            base.PrepareForLocalPathfinding(endPoints);
+            base.PrepareForLocalPathfinding();
             var vertices = graph.GetNotObstacles();
             accumulatedCosts = new AccumulatedCosts(vertices, 0);
         }

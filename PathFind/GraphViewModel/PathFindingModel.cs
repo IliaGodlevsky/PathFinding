@@ -134,6 +134,6 @@ namespace GraphViewModel
         protected IGraphPath path;
         private readonly IGraph graph;
         protected readonly Stopwatch timer;
-        private int visitedVerticesCount;
+        protected int visitedVerticesCount;
     }
 }

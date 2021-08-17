@@ -26,7 +26,7 @@ namespace Algorithm.Base
             foreach (var endPoint in endPoints.ToIntermediateEndPoints())
             {
                 CurrentEndPoints = endPoint;
-                PrepareForLocalPathfinding(endPoint);
+                PrepareForLocalPathfinding();
                 do
                 {
                     var neighbours = GetUnvisitedNeighbours(CurrentVertex);
@@ -50,9 +50,9 @@ namespace Algorithm.Base
             verticesQueue.Clear();
         }
 
-        protected virtual void PrepareForLocalPathfinding(IEndPoints endPoints)
+        protected virtual void PrepareForLocalPathfinding()
         {
-            CurrentVertex = endPoints.Source;
+            CurrentVertex = CurrentEndPoints.Source;
             VisitVertex(CurrentVertex);
         }
 
