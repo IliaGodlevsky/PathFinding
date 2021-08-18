@@ -1,4 +1,5 @@
-﻿using GraphLib.Extensions;
+﻿using Common.Extensions;
+using GraphLib.Extensions;
 using GraphLib.Interfaces;
 using GraphLib.Serialization;
 using GraphLib.Serialization.Extensions;
@@ -12,7 +13,7 @@ using static WPFVersion3D.Constants;
 
 namespace WPFVersion3D.Model
 {
-    internal class Vertex3D : UIElement3D, IVertex, IMarkable
+    internal class Vertex3D : UIElement3D, IVertex, IVisualizable
     {
         public Vertex3D(INeighboursCoordinates radar, ICoordinate coordinate, IModel3DFactory modelFactory)
         {
@@ -114,7 +115,7 @@ namespace WPFVersion3D.Model
                 isObstacle = value;
                 if (isObstacle)
                 {
-                    MarkAsObstacle();
+                    VisualizeAsObstacle();
                 }
             }
         }
@@ -132,30 +133,26 @@ namespace WPFVersion3D.Model
             return other.IsEqual(this);
         }
 
-        public bool IsMarkedAsPath => Brush == PathVertexBrush
-                || Brush == PathVertexBrush
-                || Brush == IntermediateVertexColor;
+        public bool IsVisualizedAsPath => Brush.IsOneOf(PathVertexBrush, PathVertexBrush, IntermediateVertexColor);
 
-        public bool IsMarkedAsEndPoint => Brush == StartVertexBrush
-            || Brush == EndVertexBrush
-            || Brush == IntermediateVertexColor;
+        public bool IsVisualizedAsEndPoint => Brush.IsOneOf(StartVertexBrush, EndVertexBrush, IntermediateVertexColor);
 
-        public void MarkAsTarget()
+        public void VisualizeAsTarget()
         {
             Dispatcher.Invoke(() => Brush = EndVertexBrush);
         }
 
-        public void MarkAsObstacle()
+        public void VisualizeAsObstacle()
         {
             Dispatcher.Invoke(() => Brush = ObstacleVertexBrush);
         }
 
-        public void MarkAsPath()
+        public void VisualizeAsPath()
         {
             Dispatcher.Invoke(() => Brush = PathVertexBrush);
         }
 
-        public void MarkAsRegular()
+        public void VisualizeAsRegular()
         {
             Dispatcher.Invoke(() =>
             {
@@ -166,17 +163,17 @@ namespace WPFVersion3D.Model
             });
         }
 
-        public void MarkAsVisited()
+        public void VisualizeAsVisited()
         {
             Dispatcher.Invoke(() => Brush = VisitedVertexBrush);
         }
 
-        public void MarkAsEnqueued()
+        public void VisualizeAsEnqueued()
         {
             Dispatcher.Invoke(() => Brush = EnqueuedVertexBrush);
         }
 
-        public void MarkAsSource()
+        public void VisualizeAsSource()
         {
             Dispatcher.Invoke(() => Brush = StartVertexBrush);
         }
@@ -213,7 +210,7 @@ namespace WPFVersion3D.Model
             vert.Material.Brush = vert.Brush;
         }
 
-        public void MarkAsIntermediate()
+        public void VisualizeAsIntermediate()
         {
             Dispatcher.Invoke(() => Brush = IntermediateVertexColor);
         }

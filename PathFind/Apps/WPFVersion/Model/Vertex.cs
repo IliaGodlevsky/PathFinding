@@ -1,4 +1,5 @@
-﻿using GraphLib.Extensions;
+﻿using Common.Extensions;
+using GraphLib.Extensions;
 using GraphLib.Interfaces;
 using GraphLib.Serialization;
 using GraphLib.Serialization.Extensions;
@@ -9,7 +10,7 @@ using static WPFVersion.Constants;
 
 namespace WPFVersion.Model
 {
-    internal class Vertex : Label, IVertex, IMarkable, IWeightable
+    internal class Vertex : Label, IVertex, IVisualizable, IWeightable
     {
         public static SolidColorBrush VisitedVertexColor { get; set; }
         public static SolidColorBrush PathVertexColor { get; set; }
@@ -58,7 +59,7 @@ namespace WPFVersion.Model
                 isObstacle = value;
                 if (isObstacle)
                 {
-                    MarkAsObstacle();
+                    VisualizeAsObstacle();
                 }
             }
         }
@@ -89,29 +90,25 @@ namespace WPFVersion.Model
             }
         }
 
-        public bool IsMarkedAsPath => Background == AlreadyPathVertexColor
-                || Background == PathVertexColor
-                || Background == IntermediateVertexColor;
+        public bool IsVisualizedAsPath => Background.IsOneOf(AlreadyPathVertexColor, PathVertexColor, IntermediateVertexColor);
 
-        public bool IsMarkedAsEndPoint => Background == StartVertexColor 
-            || Background == EndVertexColor 
-            || Background == IntermediateVertexColor;
+        public bool IsVisualizedAsEndPoint => Background.IsOneOf(StartVertexColor, EndVertexColor, IntermediateVertexColor);
 
-        public void MarkAsTarget()
+        public void VisualizeAsTarget()
         {
             Dispatcher.Invoke(() => Background = EndVertexColor);
         }
 
-        public void MarkAsObstacle()
+        public void VisualizeAsObstacle()
         {
             Dispatcher.Invoke(() => Background = ObstacleVertexColor);
         }
 
-        public void MarkAsPath()
+        public void VisualizeAsPath()
         {
             Dispatcher.Invoke(() =>
             {
-                if (IsMarkedAsPath)
+                if (IsVisualizedAsPath)
                 {
                     Background = AlreadyPathVertexColor;
                 }
@@ -122,12 +119,12 @@ namespace WPFVersion.Model
             });
         }
 
-        public void MarkAsSource()
+        public void VisualizeAsSource()
         {
             Dispatcher.Invoke(() => Background = StartVertexColor);
         }
 
-        public void MarkAsRegular()
+        public void VisualizeAsRegular()
         {
             Dispatcher.Invoke(() =>
             {
@@ -138,22 +135,22 @@ namespace WPFVersion.Model
             });
         }
 
-        public void MarkAsVisited()
+        public void VisualizeAsVisited()
         {
             Dispatcher.Invoke(() =>
             {
-                if (!IsMarkedAsPath)
+                if (!IsVisualizedAsPath)
                 {
                     Background = VisitedVertexColor;
                 }
             });
         }
 
-        public void MarkAsEnqueued()
+        public void VisualizeAsEnqueued()
         {
             Dispatcher.Invoke(() =>
             {
-                if (!IsMarkedAsPath)
+                if (!IsVisualizedAsPath)
                 {
                     Background = EnqueuedVertexColor;
                 }
@@ -177,7 +174,7 @@ namespace WPFVersion.Model
             return other.IsEqual(this);
         }
 
-        public void MarkAsIntermediate()
+        public void VisualizeAsIntermediate()
         {
             Dispatcher.Invoke(() => Background = IntermediateVertexColor);
         }

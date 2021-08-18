@@ -60,6 +60,8 @@ namespace Algorithm.Base
             base.PrepareForPathfinding();
             CurrentVertex = endPoints.Source;
             visitedVertices.Add(CurrentVertex);
+            RaiseVertexVisited(new AlgorithmEventArgs(CurrentVertex));
+            visitedVerticesStack.Push(CurrentVertex);
         }
 
         /// <summary>

@@ -27,18 +27,18 @@ namespace GraphLib.Base
         public virtual void Reverse(object sender, EventArgs e)
         {
             if (sender is IVertex vertex 
-                && vertex is IMarkable markable
-                && !markable.IsMarkedAsEndPoint)
+                && vertex is IVisualizable markable
+                && !markable.IsVisualizedAsEndPoint)
             {
                 if (vertex.IsObstacle)
                 {
                     vertex.IsObstacle = false;
-                    markable.MarkAsRegular();
+                    markable.VisualizeAsRegular();
                 }
                 else
                 {
                     vertex.IsObstacle = true;
-                    markable.MarkAsObstacle();
+                    markable.VisualizeAsObstacle();
                 }
             }
         }

@@ -25,7 +25,7 @@ namespace GraphLib.Base
                 { v => Source.IsIsolated(), ReplaceSource},
                 { CanSetTarget , SetTarget},
                 { v => Target.IsIsolated(), ReplaceTarget},
-                { v => HasEndPointsSet, SetIntermediate}                
+                { v => HasEndPointsSet, SetIntermediate}
             };
         }
 
@@ -74,36 +74,36 @@ namespace GraphLib.Base
         protected virtual void SetSource(IVertex vertex)
         {
             Source = vertex;
-            (vertex as IMarkable)?.MarkAsSource();
+            (vertex as IVisualizable)?.VisualizeAsSource();
         }
 
         protected virtual void SetTarget(IVertex vertex)
         {
             Target = vertex;
-            (vertex as IMarkable)?.MarkAsTarget();
+            (vertex as IVisualizable)?.VisualizeAsTarget();
         }
 
         protected virtual void SetIntermediate(IVertex vertex)
         {
             intermediate.Add(vertex);
-            (vertex as IMarkable)?.MarkAsIntermediate();
+            (vertex as IVisualizable)?.VisualizeAsIntermediate();
         }
 
         protected virtual void UnsetSource(IVertex vertex)
         {
-            (vertex as IMarkable)?.MarkAsRegular();
+            (vertex as IVisualizable)?.VisualizeAsRegular();
             Source = new NullVertex();
         }
 
         protected virtual void UnsetIntermediate(IVertex vertex)
         {
             intermediate.Remove(vertex);
-            (vertex as IMarkable)?.MarkAsRegular();
+            (vertex as IVisualizable)?.VisualizeAsRegular();
         }
 
         protected virtual void UnsetTarget(IVertex vertex)
         {
-            (vertex as IMarkable)?.MarkAsRegular();
+            (vertex as IVisualizable)?.VisualizeAsRegular();
             Target = new NullVertex();
         }
 
@@ -122,12 +122,12 @@ namespace GraphLib.Base
         protected virtual void ReplaceIntermediate(IVertex vertex)
         {
             var isolated = intermediate.FirstOrDefault(v => v.IsIsolated());
-            if(!isolated.IsNull())
+            if (!isolated.IsNull())
             {
                 int isolatedIndex = intermediate.IndexOf(isolated);
                 UnsetIntermediate(isolated);
                 intermediate.Insert(isolatedIndex, vertex);
-                (vertex as IMarkable)?.MarkAsIntermediate();
+                (vertex as IVisualizable)?.VisualizeAsIntermediate();
             }
         }
 

@@ -1,4 +1,5 @@
-﻿using GraphLib.Extensions;
+﻿using Common.Extensions;
+using GraphLib.Extensions;
 using GraphLib.Interfaces;
 using GraphLib.Realizations.VertexCost;
 using GraphLib.Serialization;
@@ -10,7 +11,7 @@ using static WindowsFormsVersion.Constants;
 
 namespace WindowsFormsVersion.Model
 {
-    internal class Vertex : Label, IVertex, IMarkable, IWeightable
+    internal class Vertex : Label, IVertex, IVisualizable, IWeightable
     {
         private static Color RegularVertexColor;
         private static Color ObstacleVertexColor;
@@ -78,17 +79,17 @@ namespace WindowsFormsVersion.Model
                 isObstacle = value;
                 if (isObstacle)
                 {
-                    MarkAsObstacle();
+                    VisualizeAsObstacle();
                 }
             }
         }
 
-        public void MarkAsObstacle()
+        public void VisualizeAsObstacle()
         {
             BackColor = ObstacleVertexColor;
         }
 
-        public void MarkAsRegular()
+        public void VisualizeAsRegular()
         {
             if (!IsObstacle)
             {
@@ -96,27 +97,27 @@ namespace WindowsFormsVersion.Model
             }
         }
 
-        public void MarkAsSource()
+        public void VisualizeAsSource()
         {
             BackColor = SourceVertexColor;
         }
 
-        public void MarkAsTarget()
+        public void VisualizeAsTarget()
         {
             BackColor = TargetVertexColor;
         }
 
-        public void MarkAsVisited()
+        public void VisualizeAsVisited()
         {
-            if (!IsMarkedAsPath)
+            if (!IsVisualizedAsPath)
             {
                 BackColor = VisitedVertexColor;
             }
         }
 
-        public void MarkAsPath()
+        public void VisualizeAsPath()
         {
-            if (IsMarkedAsPath)
+            if (IsVisualizedAsPath)
             {
                 BackColor = AlreadyPathVertexColor;
             }
@@ -126,9 +127,9 @@ namespace WindowsFormsVersion.Model
             }
         }
 
-        public void MarkAsEnqueued()
+        public void VisualizeAsEnqueued()
         {
-            if (!IsMarkedAsPath)
+            if (!IsVisualizedAsPath)
             {
                 BackColor = EnqueuedVertexColor;
             }
@@ -151,17 +152,11 @@ namespace WindowsFormsVersion.Model
             return other.IsEqual(this);
         }
 
-        public bool IsMarkedAsPath =>
-            BackColor == PathVertexColor 
-            || BackColor == AlreadyPathVertexColor
-            || BackColor == IntermediateVertexColor;
+        public bool IsVisualizedAsPath => BackColor.IsOneOf(PathVertexColor, AlreadyPathVertexColor, IntermediateVertexColor);
 
-        public bool IsMarkedAsEndPoint => 
-            BackColor == SourceVertexColor 
-            || BackColor == TargetVertexColor
-            || BackColor == IntermediateVertexColor;
+        public bool IsVisualizedAsEndPoint => BackColor.IsOneOf(SourceVertexColor, TargetVertexColor, IntermediateVertexColor);
 
-        public void MarkAsIntermediate()
+        public void VisualizeAsIntermediate()
         {
             BackColor = IntermediateVertexColor;
         }

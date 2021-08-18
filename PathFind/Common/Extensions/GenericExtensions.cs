@@ -1,5 +1,6 @@
 ﻿using System;
 using System.ComponentModel;
+using System.Linq;
 
 namespace Common.Extensions
 {
@@ -47,6 +48,11 @@ namespace Common.Extensions
                 .GetType()
                 .GetAttributeOrNull<DescriptionAttribute>()
                 ?.Description ?? self.GetType().Name;
+        }
+
+        public static bool IsOneOf<T>(this T self, params T[] objects)
+        {
+            return objects.Any(o => o.Equals(self));
         }
     }
 }

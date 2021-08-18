@@ -29,11 +29,11 @@ namespace Algorithm.Base
                 PrepareForLocalPathfinding();
                 do
                 {
+                    VisitVertex(CurrentVertex);
                     var neighbours = GetUnvisitedNeighbours(CurrentVertex);
                     ExtractNeighbours(neighbours);
                     RelaxNeighbours(neighbours);
                     CurrentVertex = NextVertex;
-                    VisitVertex(CurrentVertex);
                 } while (!IsDestination(CurrentEndPoints));
                 if (!IsAbleToContinue) break;
                 var foundPath = CreateGraphPath();
@@ -53,7 +53,6 @@ namespace Algorithm.Base
         protected virtual void PrepareForLocalPathfinding()
         {
             CurrentVertex = CurrentEndPoints.Source;
-            VisitVertex(CurrentVertex);
         }
 
         protected virtual IGraphPath CreateGraphPath()

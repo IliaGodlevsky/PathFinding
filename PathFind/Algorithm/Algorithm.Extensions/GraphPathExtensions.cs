@@ -15,12 +15,12 @@ namespace Algorithm.Extensions
                 .Except(endpoints.Source, endpoints.Target)
                 .Except(endpoints.IntermediateVertices)
                 .Reverse()
-                .OfType<IMarkable>()
-                .ForEach(vertex => vertex.MarkAsPath())
+                .OfType<IVisualizable>()
+                .ForEach(vertex => vertex.VisualizeAsPath())
                 .OfType<IVertex>()
                 .Where(v => !self.Path.IsSingle(i => i.Equals(v)))
-                .OfType<IMarkable>()
-                .ForEach(vertex => vertex.MarkAsPath());
+                .OfType<IVisualizable>()
+                .ForEach(vertex => vertex.VisualizeAsPath());
         }
 
         public static async Task HighlightAsync(this IGraphPath self, IIntermediateEndPoints endPoints)

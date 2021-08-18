@@ -51,9 +51,9 @@ namespace GraphLib.Extensions
         /// <param name="self"></param>
         public static void SetToDefault(this IVertex self)
         {
-            if (self is IMarkable vertex)
+            if (self is IVisualizable vertex)
             {
-                vertex.MarkAsRegular();
+                vertex.VisualizeAsRegular();
             }
         }
 
