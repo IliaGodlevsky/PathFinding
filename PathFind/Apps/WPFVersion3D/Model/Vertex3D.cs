@@ -132,6 +132,14 @@ namespace WPFVersion3D.Model
             return other.IsEqual(this);
         }
 
+        public bool IsMarkedAsPath => Brush == PathVertexBrush
+                || Brush == PathVertexBrush
+                || Brush == IntermediateVertexColor;
+
+        public bool IsMarkedAsEndPoint => Brush == StartVertexBrush
+            || Brush == EndVertexBrush
+            || Brush == IntermediateVertexColor;
+
         public void MarkAsTarget()
         {
             Dispatcher.Invoke(() => Brush = EndVertexBrush);

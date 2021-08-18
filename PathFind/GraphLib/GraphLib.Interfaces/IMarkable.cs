@@ -22,5 +22,9 @@
         void MarkAsEnqueued();
 
         void MarkAsIntermediate();
+
+        bool IsMarkedAsPath { get; }
+
+        bool IsMarkedAsEndPoint { get; }
     }
 }

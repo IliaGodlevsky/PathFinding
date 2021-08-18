@@ -26,7 +26,9 @@ namespace GraphLib.Base
 
         public virtual void Reverse(object sender, EventArgs e)
         {
-            if (sender is IVertex vertex && vertex is IMarkable markable)
+            if (sender is IVertex vertex 
+                && vertex is IMarkable markable
+                && !markable.IsMarkedAsEndPoint)
             {
                 if (vertex.IsObstacle)
                 {

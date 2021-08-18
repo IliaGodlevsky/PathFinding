@@ -89,6 +89,14 @@ namespace WPFVersion.Model
             }
         }
 
+        public bool IsMarkedAsPath => Background == AlreadyPathVertexColor
+                || Background == PathVertexColor
+                || Background == IntermediateVertexColor;
+
+        public bool IsMarkedAsEndPoint => Background == StartVertexColor 
+            || Background == EndVertexColor 
+            || Background == IntermediateVertexColor;
+
         public void MarkAsTarget()
         {
             Dispatcher.Invoke(() => Background = EndVertexColor);
@@ -103,7 +111,7 @@ namespace WPFVersion.Model
         {
             Dispatcher.Invoke(() =>
             {
-                if (IsMarkedAsPathed())
+                if (IsMarkedAsPath)
                 {
                     Background = AlreadyPathVertexColor;
                 }
@@ -134,7 +142,7 @@ namespace WPFVersion.Model
         {
             Dispatcher.Invoke(() =>
             {
-                if (!IsMarkedAsPathed())
+                if (!IsMarkedAsPath)
                 {
                     Background = VisitedVertexColor;
                 }
@@ -145,7 +153,7 @@ namespace WPFVersion.Model
         {
             Dispatcher.Invoke(() =>
             {
-                if (!IsMarkedAsPathed())
+                if (!IsMarkedAsPath)
                 {
                     Background = EnqueuedVertexColor;
                 }
@@ -167,13 +175,6 @@ namespace WPFVersion.Model
         public bool Equals(IVertex other)
         {
             return other.IsEqual(this);
-        }
-
-        private bool IsMarkedAsPathed()
-        {
-            return Background == AlreadyPathVertexColor
-                || Background == PathVertexColor
-                || Background == IntermediateVertexColor;
         }
 
         public void MarkAsIntermediate()

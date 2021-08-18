@@ -145,7 +145,7 @@ namespace WPFVersion3D.ViewModel
 
         private void ExecuteChangeOpacity(object param) => ChangeVerticesOpacity();
 
-        private bool CanExecuteStartFindPathCommand(object param) => endPoints.HasEndPointsSet;
+        private bool CanExecuteStartFindPathCommand(object param) => !endPoints.HasIsolators;
 
         private void ExecuteLoadGraphCommand(object param) => base.LoadGraph();
 

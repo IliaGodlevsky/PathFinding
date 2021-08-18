@@ -78,7 +78,7 @@ namespace Common.Extensions
         /// to which <paramref name="action"/> was applied</returns>
         public static IEnumerable<T> ForEach<T>(this IEnumerable<T> collection, Action<T> action)
         {
-            foreach (var item in collection)
+            foreach (var item in collection.ToArray())
             {
                 action(item);
             }
@@ -88,7 +88,7 @@ namespace Common.Extensions
 
         public static IEnumerable<T> ForEach<T, TResult>(this IEnumerable<T> collection, Func<T, TResult> action)
         {
-            foreach (var item in collection)
+            foreach (var item in collection.ToArray())
             {
                 action(item);
             }

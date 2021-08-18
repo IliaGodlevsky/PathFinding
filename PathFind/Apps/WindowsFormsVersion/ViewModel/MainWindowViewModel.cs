@@ -179,7 +179,7 @@ namespace WindowsFormsVersion.ViewModel
 
         private bool CanStartPathFinding()
         {
-            return endPoints.HasEndPointsSet && !IsPathfindingStarted;
+            return !endPoints.HasIsolators && !IsPathfindingStarted;
         }
     }
 }

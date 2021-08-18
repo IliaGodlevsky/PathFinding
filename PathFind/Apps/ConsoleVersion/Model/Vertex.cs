@@ -113,7 +113,7 @@ namespace ConsoleVersion.Model
 
         public void MarkAsPath()
         {
-            if (IsMarkedAsPath())
+            if (IsMarkedAsPath)
             {
                 Mark(AlreadyPathVertexColor);
             }
@@ -127,7 +127,7 @@ namespace ConsoleVersion.Model
 
         public void MarkAsVisited()
         {
-            if (!IsMarkedAsPath())
+            if (!IsMarkedAsPath)
             {
                 Mark(VisitedVertexColor);
             }
@@ -135,7 +135,7 @@ namespace ConsoleVersion.Model
 
         public void MarkAsEnqueued()
         {
-            if (!IsMarkedAsPath())
+            if (!IsMarkedAsPath)
             {
                 Mark(EnqueuedVertexColor);
             }
@@ -182,10 +182,9 @@ namespace ConsoleVersion.Model
             Display();
         }
 
-        private bool IsMarkedAsPath()
-        {
-            return colour == PathVertexColor || colour == AlreadyPathVertexColor;
-        }
+        public bool IsMarkedAsPath => colour == PathVertexColor || colour == AlreadyPathVertexColor;
+
+        public bool IsMarkedAsEndPoint => colour == SourceVertexColor || colour == TargetVertexColor;
 
         public void MarkAsIntermediate() { }
 

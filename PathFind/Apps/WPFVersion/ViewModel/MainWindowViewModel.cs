@@ -141,7 +141,7 @@ namespace WPFVersion.ViewModel
 
         private void ExecuteSaveGraphCommand(object param) => base.SaveGraph();
 
-        private bool CanExecuteStartFindPathCommand(object param) => endPoints.HasEndPointsSet;
+        private bool CanExecuteStartFindPathCommand(object param) => !endPoints.HasIsolators;
 
         private void ExecuteLoadGraphCommand(object param) => base.LoadGraph();
 

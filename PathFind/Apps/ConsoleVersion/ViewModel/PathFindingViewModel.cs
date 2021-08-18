@@ -44,7 +44,7 @@ namespace ConsoleVersion.ViewModel
         [MenuItem(Constants.FindPath, MenuItemPriority.Highest)]
         public override void FindPath()
         {
-            if (endPoints.HasEndPointsSet)
+            if (!endPoints.HasIsolators)
             {
                 try
                 {

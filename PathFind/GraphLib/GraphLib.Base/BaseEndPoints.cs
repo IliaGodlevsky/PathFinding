@@ -19,16 +19,19 @@ namespace GraphLib.Base
             {
                 { v => Source.IsEqual(v), UnsetSource},
                 { v => Target.IsEqual(v), UnsetTarget},
+                { CanUnsetIntermediate, UnsetIntermediate },
+                { CanReplaceIntermediate, ReplaceIntermediate },
                 { CanSetSource, SetSource },
                 { v => Source.IsIsolated(), ReplaceSource},
                 { CanSetTarget , SetTarget},
                 { v => Target.IsIsolated(), ReplaceTarget},
-                { v => HasEndPointsSet && IsIntermediate(v), UnsetIntermediate},
-                { v => HasEndPointsSet, SetIntermediate}
+                { v => HasEndPointsSet, SetIntermediate}                
             };
         }
 
-        public bool HasEndPointsSet => !Source.IsIsolated() && !Target.IsIsolated();
+        public bool HasIsolators => !HasEndPointsSet || HasIsolatedIntermediates;
+
+        private bool HasEndPointsSet => !Source.IsIsolated() && !Target.IsIsolated();
 
         public IVertex Source { get; private set; }
 
@@ -36,50 +39,35 @@ namespace GraphLib.Base
 
         public IReadOnlyCollection<IVertex> IntermediateVertices => intermediate;
 
-        public void SubscribeToEvents(IGraph graph)
-        {
-            graph.ForEach(SubscribeVertex);
-        }
+        public void SubscribeToEvents(IGraph graph) => graph.ForEach(SubscribeVertex);
 
-        public void UnsubscribeFromEvents(IGraph graph)
-        {
-            graph.ForEach(UnsubscribeVertex);
-        }
+        public void UnsubscribeFromEvents(IGraph graph) => graph.ForEach(UnsubscribeVertex);
 
         public void Reset()
         {
-            Source = new NullVertex();
-            Target = new NullVertex();
-            intermediate.Clear();
+            UnsetSource(Source);
+            UnsetTarget(Target);
+            IntermediateVertices.ForEach(UnsetIntermediate);
         }
 
-        public bool IsEndPoint(IVertex vertex)
-        {
-            return vertex.IsEqual(Source) || vertex.IsEqual(Target)
-                || IsIntermediate(vertex);
-        }
+        public bool IsEndPoint(IVertex vertex) => vertex.IsEqual(Source) || vertex.IsEqual(Target) || IsIntermediate(vertex);
 
-        public bool CanBeEndPoint(IVertex vertex)
-        {
-            return !IsEndPoint(vertex) && !vertex.IsIsolated();
-        }
+        public bool CanBeEndPoint(IVertex vertex) => !IsEndPoint(vertex) && !vertex.IsIsolated();
 
-        protected bool CanSetSource(IVertex vertex)
-        {
-            return Source.IsNull() && CanBeEndPoint(vertex);
-        }
+        protected bool CanUnsetIntermediate(IVertex vertex) => HasEndPointsSet && IsIntermediate(vertex);
 
-        protected bool CanSetTarget(IVertex vertex)
-        {
-            return !Source.IsNull() && Target.IsNull() && CanBeEndPoint(vertex);
-        }
+        protected bool CanReplaceIntermediate(IVertex vertex) 
+            => HasEndPointsSet && !IsIntermediate(vertex) && HasIsolatedIntermediates;
+
+        protected bool CanSetSource(IVertex vertex) => Source.IsNull() && CanBeEndPoint(vertex);
+
+        protected bool CanSetTarget(IVertex vertex) => !Source.IsNull() && Target.IsNull() && CanBeEndPoint(vertex);
 
         protected virtual void SetEndPoints(object sender, EventArgs e)
         {
             if (sender is IVertex vertex && !vertex.IsIsolated())
             {
-                var condition = conditions.FirstOrDefault(item => item.Key?.Invoke(vertex) == true);
-                condition.Value?.Invoke(vertex);
+                conditions.FirstOrDefault(item => item.Key?.Invoke(vertex) == true).Value?.Invoke(vertex);
             }
         }
 
@@ -131,10 +119,21 @@ namespace GraphLib.Base
             SetTarget(vertex);
         }
 
-        private bool IsIntermediate(IVertex vertex)
+        protected virtual void ReplaceIntermediate(IVertex vertex)
         {
-            return intermediate.Contains(vertex);
+            var isolated = intermediate.FirstOrDefault(v => v.IsIsolated());
+            if(!isolated.IsNull())
+            {
+                int isolatedIndex = intermediate.IndexOf(isolated);
+                UnsetIntermediate(isolated);
+                intermediate.Insert(isolatedIndex, vertex);
+                (vertex as IMarkable)?.MarkAsIntermediate();
+            }
         }
+
+        private bool IsIntermediate(IVertex vertex) => intermediate.Contains(vertex);
+
+        private bool HasIsolatedIntermediates => intermediate.Any(vertex => vertex.IsIsolated());
 
         protected abstract void SubscribeVertex(IVertex vertex);
         protected abstract void UnsubscribeVertex(IVertex vertex);

@@ -12,6 +12,7 @@ namespace GraphLib.Extensions
             var vertices = self.IntermediateVertices
                 .Prepend(self.Source)
                 .Append(self.Target)
+                .FilterObstacles()
                 .ToArray();
 
             for (int i = 0; i < vertices.Length - 1; i++)

@@ -108,7 +108,7 @@ namespace WindowsFormsVersion.Model
 
         public void MarkAsVisited()
         {
-            if (!IsMarkedAsPath())
+            if (!IsMarkedAsPath)
             {
                 BackColor = VisitedVertexColor;
             }
@@ -116,7 +116,7 @@ namespace WindowsFormsVersion.Model
 
         public void MarkAsPath()
         {
-            if (IsMarkedAsPath())
+            if (IsMarkedAsPath)
             {
                 BackColor = AlreadyPathVertexColor;
             }
@@ -128,7 +128,7 @@ namespace WindowsFormsVersion.Model
 
         public void MarkAsEnqueued()
         {
-            if (!IsMarkedAsPath())
+            if (!IsMarkedAsPath)
             {
                 BackColor = EnqueuedVertexColor;
             }
@@ -151,12 +151,15 @@ namespace WindowsFormsVersion.Model
             return other.IsEqual(this);
         }
 
-        private bool IsMarkedAsPath()
-        {
-            return BackColor == PathVertexColor
-                || BackColor == AlreadyPathVertexColor
-                || BackColor == IntermediateVertexColor;
-        }
+        public bool IsMarkedAsPath =>
+            BackColor == PathVertexColor 
+            || BackColor == AlreadyPathVertexColor
+            || BackColor == IntermediateVertexColor;
+
+        public bool IsMarkedAsEndPoint => 
+            BackColor == SourceVertexColor 
+            || BackColor == TargetVertexColor
+            || BackColor == IntermediateVertexColor;
 
         public void MarkAsIntermediate()
         {
