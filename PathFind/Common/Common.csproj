@@ -78,6 +78,7 @@
     <Compile Include="Extensions\StopwatchExtensions.cs" />
     <Compile Include="Extensions\ValueRangeExtensions.cs" />
     <Compile Include="Interface\ICloneable.cs" />
+    <Compile Include="Interface\IConditionConstruction.cs" />
     <Compile Include="Interface\IViewModel.cs" />
     <Compile Include="Extensions\EnumerableExtension.cs" />
     <Compile Include="Extensions\MemberInfoExtensions.cs" />

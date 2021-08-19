@@ -1,4 +1,5 @@
 ﻿using Common.Extensions;
+using GraphLib.Base.Objects;
 using GraphLib.Extensions;
 using GraphLib.Interfaces;
 using GraphLib.NullRealizations.NullObjects;
@@ -15,7 +16,7 @@ namespace GraphLib.Base
         {
             intermediate = new List<IVertex>();
             Reset();
-            conditions = new Dictionary<Predicate<IVertex>, Action<IVertex>>
+            conditions = new ConditionCollection()
             {
                 { v => Source.IsEqual(v), UnsetSource},
                 { v => Target.IsEqual(v), UnsetTarget},
@@ -39,9 +40,15 @@ namespace GraphLib.Base
 
         public IReadOnlyCollection<IVertex> IntermediateVertices => intermediate;
 
-        public void SubscribeToEvents(IGraph graph) => graph.ForEach(SubscribeVertex);
+        public void SubscribeToEvents(IGraph graph)
+        {
+            graph.ForEach(SubscribeVertex);
+        }
 
-        public void UnsubscribeFromEvents(IGraph graph) => graph.ForEach(UnsubscribeVertex);
+        public void UnsubscribeFromEvents(IGraph graph)
+        {
+            graph.ForEach(UnsubscribeVertex);
+        }
 
         public void Reset()
         {
@@ -50,24 +57,41 @@ namespace GraphLib.Base
             IntermediateVertices.ForEach(UnsetIntermediate);
         }
 
-        public bool IsEndPoint(IVertex vertex) => vertex.IsEqual(Source) || vertex.IsEqual(Target) || IsIntermediate(vertex);
+        public bool IsEndPoint(IVertex vertex)
+        {
+            return vertex.IsOneOf(this);
+        }
 
-        public bool CanBeEndPoint(IVertex vertex) => !IsEndPoint(vertex) && !vertex.IsIsolated();
+        public bool CanBeEndPoint(IVertex vertex)
+        {
+            return !IsEndPoint(vertex) && !vertex.IsIsolated();
+        }
 
-        protected bool CanUnsetIntermediate(IVertex vertex) => HasEndPointsSet && IsIntermediate(vertex);
+        protected bool CanUnsetIntermediate(IVertex vertex)
+        {
+            return HasEndPointsSet && IsIntermediate(vertex);
+        }
 
-        protected bool CanReplaceIntermediate(IVertex vertex) 
-            => HasEndPointsSet && !IsIntermediate(vertex) && HasIsolatedIntermediates;
+        protected bool CanReplaceIntermediate(IVertex vertex)
+        {
+            return HasEndPointsSet && !IsIntermediate(vertex) && HasIsolatedIntermediates;
+        }
 
-        protected bool CanSetSource(IVertex vertex) => Source.IsNull() && CanBeEndPoint(vertex);
+        protected bool CanSetSource(IVertex vertex)
+        {
+            return Source.IsNull() && CanBeEndPoint(vertex);
+        }
 
-        protected bool CanSetTarget(IVertex vertex) => !Source.IsNull() && Target.IsNull() && CanBeEndPoint(vertex);
+        protected bool CanSetTarget(IVertex vertex)
+        {
+            return !Source.IsNull() && Target.IsNull() && CanBeEndPoint(vertex);
+        }
 
         protected virtual void SetEndPoints(object sender, EventArgs e)
         {
             if (sender is IVertex vertex && !vertex.IsIsolated())
             {
-                conditions.FirstOrDefault(item => item.Key?.Invoke(vertex) == true).Value?.Invoke(vertex);
+                conditions.PerfromFirstExecutable(vertex);
             }
         }
 
@@ -131,7 +155,10 @@ namespace GraphLib.Base
             }
         }
 
-        private bool IsIntermediate(IVertex vertex) => intermediate.Contains(vertex);
+        private bool IsIntermediate(IVertex vertex)
+        {
+            return intermediate.Contains(vertex);
+        }
 
         private bool HasIsolatedIntermediates => intermediate.Any(vertex => vertex.IsIsolated());
 
@@ -139,6 +166,6 @@ namespace GraphLib.Base
         protected abstract void UnsubscribeVertex(IVertex vertex);
 
         private readonly List<IVertex> intermediate;
-        private readonly Dictionary<Predicate<IVertex>, Action<IVertex>> conditions;
+        private readonly ConditionCollection conditions;
     }
 }

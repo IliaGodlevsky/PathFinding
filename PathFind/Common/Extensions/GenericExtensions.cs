@@ -54,5 +54,10 @@ namespace Common.Extensions
         {
             return objects.Any(o => o.Equals(self));
         }
+
+        public static bool IsOneOf<T>(this T self, Func<T, T, bool> predicate, params T[] objects)
+        {
+            return objects.Any(item => predicate(self, item));
+        }
     }
 }

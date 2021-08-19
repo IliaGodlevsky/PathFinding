@@ -47,6 +47,8 @@
     <Compile Include="BaseGraphFieldFactory.cs" />
     <Compile Include="BaseVertexCost.cs" />
     <Compile Include="BaseVertexEventHolder.cs" />
+    <Compile Include="Objects\ConditionCollection.cs" />
+    <Compile Include="Objects\ConditionConstruction.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -75,5 +77,6 @@
       <Name>GraphLib.NullRealizations</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

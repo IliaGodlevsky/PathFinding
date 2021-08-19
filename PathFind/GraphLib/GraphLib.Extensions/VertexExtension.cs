@@ -81,6 +81,14 @@ namespace GraphLib.Extensions
             return hasEqualCost && hasEqualPosition && hasSameObstacleStatus;
         }
 
+        public static bool IsOneOf(this IVertex self, IIntermediateEndPoints endPoints)
+        {
+            return endPoints.IntermediateVertices
+                .Append(endPoints.Target)
+                .Append(endPoints.Source)
+                .Any(v => v.IsEqual(self));
+        }
+
         /// <summary>
         /// Sets certain vertices of <paramref name="self"/>'s 
         /// environment as its neighbors
