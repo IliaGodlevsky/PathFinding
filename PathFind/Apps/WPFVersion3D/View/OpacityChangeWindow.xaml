@@ -32,11 +32,11 @@
             <RowDefinition></RowDefinition>
         </Grid.RowDefinitions>
         
-        <TextBlock Margin="5" Text="Obstacle color opacity"></TextBlock>
-        <TextBlock Grid.Row="1" Margin="5" Text="Visited color opacity"></TextBlock>
-        <TextBlock Grid.Row="2" Margin="5" Text="Enqueued color opacity"></TextBlock>
-        <TextBlock Grid.Row="3" Margin="5" Text="Path color opacity"></TextBlock>
-        <TextBlock Grid.Row="4" Margin="5" Text="Simple vertex color opacity"></TextBlock>
+        <TextBlock Margin="5" Text="Obstacle vertex color opacity"></TextBlock>
+        <TextBlock Grid.Row="1" Margin="5" Text="Visited vertex color opacity"></TextBlock>
+        <TextBlock Grid.Row="2" Margin="5" Text="Enqueued vertex color opacity"></TextBlock>
+        <TextBlock Grid.Row="3" Margin="5" Text="Path vertex color opacity"></TextBlock>
+        <TextBlock Grid.Row="4" Margin="5" Text="Regular vertex color opacity"></TextBlock>
 
         <model:RangedSlider 
             Value="{Binding Path=ObstacleColorOpacity}" 

@@ -40,6 +40,7 @@ namespace WPFVersion3D.Model
         public static SolidColorBrush EndVertexBrush { get; set; }
         public static SolidColorBrush EnqueuedVertexBrush { get; set; }
         public static SolidColorBrush IntermediateVertexColor { get; set; }
+        public static SolidColorBrush AlreadyPathVertexBrush { get; set; }
 
         static Vertex3D()
         {
@@ -50,7 +51,8 @@ namespace WPFVersion3D.Model
             EnqueuedVertexBrush = new SolidColorBrush(Colors.Magenta) { Opacity = InitialEnqueuedVertexOpacity };
             ObstacleVertexBrush = new SolidColorBrush(Colors.Black) { Opacity = InitialObstacleVertexOpacity };
             SimpleVertexBrush = new SolidColorBrush(Colors.White) { Opacity = InitialRegularVertexOpacity };
-            IntermediateVertexColor = new SolidColorBrush(Colors.OrangeRed) { Opacity = InitialStartVertexOpacity };
+            IntermediateVertexColor = new SolidColorBrush(Colors.DarkOrange) { Opacity = InitialStartVertexOpacity };
+            AlreadyPathVertexBrush = new SolidColorBrush(Colors.Gold) { Opacity = InitialStartVertexOpacity };
 
             ModelProperty = DependencyProperty.Register(
                 nameof(Model),
@@ -133,9 +135,11 @@ namespace WPFVersion3D.Model
             return other.IsEqual(this);
         }
 
-        public bool IsVisualizedAsPath => Brush.IsOneOf(PathVertexBrush, PathVertexBrush, IntermediateVertexColor);
+        public bool IsVisualizedAsPath
+            => Dispatcher.Invoke(() => Brush.IsOneOf(PathVertexBrush, PathVertexBrush, IntermediateVertexColor));
 
-        public bool IsVisualizedAsEndPoint => Brush.IsOneOf(StartVertexBrush, EndVertexBrush, IntermediateVertexColor);
+        public bool IsVisualizedAsEndPoint
+            => Dispatcher.Invoke(() => Brush.IsOneOf(StartVertexBrush, EndVertexBrush, IntermediateVertexColor));
 
         public void VisualizeAsTarget()
         {
@@ -149,7 +153,14 @@ namespace WPFVersion3D.Model
 
         public void VisualizeAsPath()
         {
-            Dispatcher.Invoke(() => Brush = PathVertexBrush);
+            if(IsVisualizedAsPath)
+            {
+                Dispatcher.Invoke(() => Brush = AlreadyPathVertexBrush);
+            }
+            else
+            {
+                Dispatcher.Invoke(() => Brush = PathVertexBrush);
+            }            
         }
 
         public void VisualizeAsRegular()
@@ -165,12 +176,18 @@ namespace WPFVersion3D.Model
 
         public void VisualizeAsVisited()
         {
-            Dispatcher.Invoke(() => Brush = VisitedVertexBrush);
+            if (!IsVisualizedAsPath)
+            {
+                Dispatcher.Invoke(() => Brush = VisitedVertexBrush);
+            }
         }
 
         public void VisualizeAsEnqueued()
         {
-            Dispatcher.Invoke(() => Brush = EnqueuedVertexBrush);
+            if (!IsVisualizedAsPath)
+            {
+                Dispatcher.Invoke(() => Brush = EnqueuedVertexBrush);
+            }
         }
 
         public void VisualizeAsSource()
