@@ -2,7 +2,7 @@
 
 namespace GraphLib.Extensions.Objects
 {
-    internal readonly struct EndPoints : IEndPoints
+    internal sealed class EndPoints : IEndPoints
     {
         public IVertex Target { get; }
         public IVertex Source { get; }
@@ -11,12 +11,6 @@ namespace GraphLib.Extensions.Objects
         {
             Source = source;
             Target = target;
-        }
-
-        public EndPoints(IEndPoints endPoints)
-            : this(endPoints.Source, endPoints.Target)
-        {
-
         }
 
         public bool IsEndPoint(IVertex vertex)

@@ -4,7 +4,7 @@ using System;
 namespace GraphLib.Serialization
 {
     [Serializable]
-    public readonly struct VertexSerializationInfo
+    public sealed class VertexSerializationInfo
     {
         public VertexSerializationInfo(IVertex vertex)
         {

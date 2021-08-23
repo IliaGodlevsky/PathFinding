@@ -8,7 +8,7 @@ using System.Linq;
 namespace GraphLib.Serialization
 {
     [Serializable]
-    public readonly struct GraphSerializationInfo
+    public sealed class GraphSerializationInfo
     {
         public GraphSerializationInfo(IGraph graph)
         {

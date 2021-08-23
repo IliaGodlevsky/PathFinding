@@ -4,7 +4,7 @@ using System;
 
 namespace GraphLib.Base.Objects
 {
-    internal readonly struct ConditionConstruction : IConditionConstruction<IVertex>
+    internal sealed class ConditionConstruction : IConditionConstruction<IVertex>
     {
         public ConditionConstruction(Action<IVertex> body,
             Predicate<IVertex> condition = null)
