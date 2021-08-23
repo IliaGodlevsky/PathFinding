@@ -22,7 +22,7 @@ namespace ConsoleVersion.InputClass
         /// <paramref name="upperRangeValue"/></returns>
         /// <exception cref="System.IO.IOException"></exception>
         public static int InputNumber(string accompanyingMessage,
-            int upperRangeValue, int lowerRangeValue = 0)
+            int upperRangeValue = int.MaxValue, int lowerRangeValue = 0)
         {
             var rangeOfValidInput = new InclusiveValueRange<int>(upperRangeValue, lowerRangeValue);
             return InputNumber(accompanyingMessage, rangeOfValidInput);

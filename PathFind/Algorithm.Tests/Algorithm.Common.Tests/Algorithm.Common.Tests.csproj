@@ -13,7 +13,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\Algorithm\Algorithm.Common\Algorithm.Common.csproj" />
+    <ProjectReference Include="..\..\Algorithm\Algorithms.NullRealizations\Algorithm.NullRealizations.csproj" />
     <ProjectReference Include="..\..\NullObject\NullObject.csproj" />
   </ItemGroup>
 

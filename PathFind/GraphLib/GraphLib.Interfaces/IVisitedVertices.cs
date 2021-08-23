@@ -11,11 +11,6 @@ namespace GraphLib.Interfaces
     public interface IVisitedVertices
     {
         /// <summary>
-        /// Number of visited vertices
-        /// </summary>
-        int Count { get; }
-
-        /// <summary>
         /// Adds vertex to visited
         /// </summary>
         /// <param name="vertex"></param>

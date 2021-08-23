@@ -4,11 +4,11 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{8A717526-D82A-4409-B3B4-5979820253AF}</ProjectGuid>
+    <ProjectGuid>{FE692FCB-46C0-47A1-80ED-EFDCC811CF69}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Algorithm.Сompanions</RootNamespace>
-    <AssemblyName>Algorithm.Сompanions</AssemblyName>
+    <RootNamespace>Algorithm.NullRealizations</RootNamespace>
+    <AssemblyName>Algorithm.NullRealizations</AssemblyName>
     <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <Deterministic>true</Deterministic>
@@ -41,32 +41,36 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AccumulatedCosts.cs" />
-    <Compile Include="Interface\IAccumulatedCosts.cs" />
-    <Compile Include="Interface\IParentVertices.cs" />
-    <Compile Include="ParentVertices.cs" />
+    <Compile Include="NullAlgorithm.cs" />
+    <Compile Include="NullGraphPath.cs" />
+    <Compile Include="NullHeuristic.cs" />
+    <Compile Include="NullStepRule.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\Common\Common.csproj">
-      <Project>{A5A743F5-D346-4B2B-B6AC-07152F64E4D9}</Project>
-      <Name>Common</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\GraphLib\GraphLib.Extensions\GraphLib.Extensions.csproj">
-      <Project>{93f88f47-1871-44cd-9622-eb8d406c969c}</Project>
-      <Name>GraphLib.Extensions</Name>
-    </ProjectReference>
     <ProjectReference Include="..\..\GraphLib\GraphLib.Interfaces\GraphLib.Interfaces.csproj">
-      <Project>{d3c5ccfe-698b-41c7-9a72-5fd0262765e1}</Project>
+      <Project>{D3C5CCFE-698B-41C7-9A72-5FD0262765E1}</Project>
       <Name>GraphLib.Interfaces</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\GraphLib\GraphLib.NullRealizations\GraphLib.NullRealizations.csproj">
       <Project>{FA595CBF-C9AA-4D4F-AFF7-19E571C91D00}</Project>
       <Name>GraphLib.NullRealizations</Name>
     </ProjectReference>
+    <ProjectReference Include="..\..\Interruptable\Interruptable.csproj">
+      <Project>{97260353-B5E4-414B-A789-C4B5568089DC}</Project>
+      <Name>Interruptable</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\NullObject\NullObject.csproj">
       <Project>{51D677FD-7A82-4282-8A2E-51DEBE39E695}</Project>
       <Name>NullObject</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Algorithm.Infrastructure\Algorithm.Infrastructure.csproj">
+      <Project>{DA2A9A8C-0EF3-4EDB-B026-3FF86DEF9464}</Project>
+      <Name>Algorithm.Infrastructure</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Algorithm.Interfaces\Algorithm.Interfaces.csproj">
+      <Project>{FC4F499E-9AB1-4623-9AD8-CFDE0A07B7D0}</Project>
+      <Name>Algorithm.Interfaces</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

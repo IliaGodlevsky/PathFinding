@@ -1,9 +1,9 @@
 ﻿using Algorithm.Algos;
 using Algorithm.Algos.Enums;
-using Algorithm.Common;
 using Algorithm.Extensions;
 using Algorithm.Infrastructure.EventArguments;
 using Algorithm.Interfaces;
+using Algorithm.NullRealizations;
 using Common.Extensions;
 using GraphLib.Base;
 using GraphLib.Interfaces;

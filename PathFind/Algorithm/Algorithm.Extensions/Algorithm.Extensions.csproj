@@ -74,10 +74,6 @@
       <Project>{97260353-B5E4-414B-A789-C4B5568089DC}</Project>
       <Name>Interruptable</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Algorithm.Common\Algorithm.Common.csproj">
-      <Project>{DF721A89-3E01-4159-B51A-E5723C9FD0BA}</Project>
-      <Name>Algorithm.Common</Name>
-    </ProjectReference>
     <ProjectReference Include="..\Algorithm.Interfaces\Algorithm.Interfaces.csproj">
       <Project>{fc4f499e-9ab1-4623-9ad8-cfde0a07b7d0}</Project>
       <Name>Algorithm.Interfaces</Name>

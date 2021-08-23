@@ -1,7 +1,7 @@
 ﻿using Algorithm.Algos.Algos;
 using Algorithm.Algos.Enums;
-using Algorithm.Common;
 using Algorithm.Interfaces;
+using Algorithm.NullRealizations;
 using GraphLib.Interfaces;
 
 namespace Algorithm.Algos

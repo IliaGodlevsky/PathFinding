@@ -8,7 +8,7 @@ using System.Linq;
 namespace GraphLib.Serialization
 {
     [Serializable]
-    public sealed class GraphSerializationInfo
+    public readonly struct GraphSerializationInfo
     {
         public GraphSerializationInfo(IGraph graph)
         {
@@ -17,7 +17,7 @@ namespace GraphLib.Serialization
                 .ToArray();
 
             VerticesInfo = graph.Vertices
-                .Select(SerializationInfo)
+                .Select(v => v.GetSerializationInfo())
                 .ToArray();
 
             CostRange = BaseVertexCost.CostRange;
@@ -26,10 +26,5 @@ namespace GraphLib.Serialization
         public int[] DimensionsSizes { get; }
         public VertexSerializationInfo[] VerticesInfo { get; }
         public InclusiveValueRange<int> CostRange { get; }
-
-        private VertexSerializationInfo SerializationInfo(IVertex vertex)
-        {
-            return vertex.GetSerializationInfo();
-        }
     }
 }

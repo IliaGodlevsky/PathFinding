@@ -2,7 +2,7 @@
 
 namespace GraphLib.Extensions.Objects
 {
-    internal sealed class EndPoints : IEndPoints
+    internal readonly struct EndPoints : IEndPoints
     {
         public IVertex Target { get; }
         public IVertex Source { get; }

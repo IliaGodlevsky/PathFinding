@@ -79,10 +79,6 @@
       <Project>{04393071-3BA6-42C5-89D8-A89E3AC34511}</Project>
       <Name>Algorithm.Base</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Algorithm.Common\Algorithm.Common.csproj">
-      <Project>{DF721A89-3E01-4159-B51A-E5723C9FD0BA}</Project>
-      <Name>Algorithm.Common</Name>
-    </ProjectReference>
     <ProjectReference Include="..\Algorithm.Extensions\Algorithm.Extensions.csproj">
       <Project>{11c8b301-fe40-44a1-a5a2-bc684b6a56a0}</Project>
       <Name>Algorithm.Extensions</Name>
@@ -98,6 +94,10 @@
     <ProjectReference Include="..\Algorithm.Сompanions\Algorithm.Сompanions.csproj">
       <Project>{8A717526-D82A-4409-B3B4-5979820253AF}</Project>
       <Name>Algorithm.Сompanions</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Algorithms.NullRealizations\Algorithm.NullRealizations.csproj">
+      <Project>{FE692FCB-46C0-47A1-80ED-EFDCC811CF69}</Project>
+      <Name>Algorithm.NullRealizations</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

@@ -33,7 +33,7 @@ namespace WindowsFormsVersion.Model
             TargetVertexColor = Color.FromKnownColor(KnownColor.Red);
             AlreadyPathVertexColor = Color.FromKnownColor(KnownColor.Gold);
             VisitedVertexColor = Color.FromKnownColor(KnownColor.CadetBlue);
-            IntermediateVertexColor = Color.FromKnownColor(KnownColor.OrangeRed);
+            IntermediateVertexColor = Color.FromKnownColor(KnownColor.DarkOrange);
         }
 
         public Vertex(INeighboursCoordinates coordinateRadar, ICoordinate coordinate) : base()

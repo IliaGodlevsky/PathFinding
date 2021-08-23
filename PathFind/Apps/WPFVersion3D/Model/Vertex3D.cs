@@ -153,14 +153,14 @@ namespace WPFVersion3D.Model
 
         public void VisualizeAsPath()
         {
-            if(IsVisualizedAsPath)
+            if (IsVisualizedAsPath)
             {
                 Dispatcher.Invoke(() => Brush = AlreadyPathVertexBrush);
             }
             else
             {
                 Dispatcher.Invoke(() => Brush = PathVertexBrush);
-            }            
+            }
         }
 
         public void VisualizeAsRegular()

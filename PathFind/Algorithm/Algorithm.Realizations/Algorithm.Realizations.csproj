@@ -47,11 +47,9 @@
     <Compile Include="Heuristic\Distance.cs" />
     <Compile Include="Heuristic\EuclidianDistance.cs" />
     <Compile Include="Heuristic\ManhattanDistance.cs" />
-    <Compile Include="Heuristic\NullHeuristic.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="StepRules\DefaultStepRule.cs" />
     <Compile Include="StepRules\LandscapeStepRule.cs" />
-    <Compile Include="StepRules\NullStepRule.cs" />
     <Compile Include="StepRules\WalkStepRule.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -78,10 +76,6 @@
     <ProjectReference Include="..\..\NullObject\NullObject.csproj">
       <Project>{51D677FD-7A82-4282-8A2E-51DEBE39E695}</Project>
       <Name>NullObject</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Algorithm.Common\Algorithm.Common.csproj">
-      <Project>{df721a89-3e01-4159-b51a-e5723c9fd0ba}</Project>
-      <Name>Algorithm.Common</Name>
     </ProjectReference>
     <ProjectReference Include="..\Algorithm.Extensions\Algorithm.Extensions.csproj">
       <Project>{11C8B301-FE40-44A1-A5A2-BC684B6A56A0}</Project>

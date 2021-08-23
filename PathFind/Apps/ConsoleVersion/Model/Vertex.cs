@@ -140,9 +140,9 @@ namespace ConsoleVersion.Model
             Mark(RegularVertexColor);
         }
 
-        public void VisualizeAsObstacle() 
-        { 
-            Mark(ObstacleVertexColor); 
+        public void VisualizeAsObstacle()
+        {
+            Mark(ObstacleVertexColor);
         }
 
         public void VisualizeAsPath()
@@ -157,9 +157,9 @@ namespace ConsoleVersion.Model
             }
         }
 
-        public void VisualizeAsSource() 
-        { 
-            Mark(SourceVertexColor); 
+        public void VisualizeAsSource()
+        {
+            Mark(SourceVertexColor);
         }
 
         public void VisualizeAsVisited()
@@ -178,7 +178,10 @@ namespace ConsoleVersion.Model
             }
         }
 
-        public void VisualizeAsIntermediate() { }
+        public void VisualizeAsIntermediate() 
+        { 
+            Mark(IntermediateVertexColor); 
+        }
 
         private static readonly Color RegularVertexColor;
         private static readonly Color ObstacleVertexColor;

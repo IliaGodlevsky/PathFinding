@@ -5,7 +5,7 @@ using System.Collections.Generic;
 
 namespace GraphLib.TestRealizations.TestObjects
 {
-    public sealed class TestEndPoints : IIntermediateEndPoints
+    public readonly struct TestEndPoints : IIntermediateEndPoints
     {
         public IVertex Target { get; }
         public IVertex Source { get; }
@@ -16,12 +16,6 @@ namespace GraphLib.TestRealizations.TestObjects
         {
             Source = source;
             Target = target;
-        }
-
-        public TestEndPoints()
-        {
-            Source = new NullVertex();
-            Target = new NullVertex();
         }
 
         public bool IsEndPoint(IVertex vertex)

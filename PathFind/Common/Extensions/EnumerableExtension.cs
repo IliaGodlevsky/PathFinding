@@ -39,6 +39,11 @@ namespace Common.Extensions
                 .Select(FirstOfTheGroup);
         }
 
+        public static double AverageOrDefault<TSource>(this IEnumerable<TSource> source, Func<TSource, int> selector)
+        {
+            return source.Any() ? source.Average(selector) : default;
+        }
+
         /// <summary>
         /// Returns random element of <paramref name="self"/>
         /// </summary>
@@ -77,16 +82,6 @@ namespace Common.Extensions
         /// <returns>The same <paramref name="collection"/> with elements 
         /// to which <paramref name="action"/> was applied</returns>
         public static IEnumerable<T> ForEach<T>(this IEnumerable<T> collection, Action<T> action)
-        {
-            foreach (var item in collection.ToArray())
-            {
-                action(item);
-            }
-
-            return collection;
-        }
-
-        public static IEnumerable<T> ForEach<T, TResult>(this IEnumerable<T> collection, Func<T, TResult> action)
         {
             foreach (var item in collection.ToArray())
             {

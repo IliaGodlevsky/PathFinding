@@ -40,7 +40,7 @@ namespace Algorithm.Algos.Tests
         public virtual void FindPath_EndPointsDoesntBelongToGraph_TrowsArgumentException()
         {
             var graph = testgraph2DAssemble.AssembleGraph();
-            var endPoints = new TestEndPoints();
+            var endPoints = new TestEndPoints(new NullVertex(), new NullVertex());
 
             var algorithm = CreateAlgorithm(graph, endPoints);
 

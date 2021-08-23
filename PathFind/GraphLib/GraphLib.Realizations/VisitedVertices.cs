@@ -12,8 +12,6 @@ namespace GraphLib.Realizations
             visitedVertices = new Dictionary<ICoordinate, IVertex>();
         }
 
-        public int Count => visitedVertices.Count;
-
         public void Add(IVertex vertex)
         {
             if (!vertex.IsNull())

@@ -124,15 +124,21 @@ namespace ConsoleVersion.ViewModel
         {
             if (HasAnyVerticesToChooseAsEndPoints)
             {
+                string inputMessage = "Input number of intermediate vertices: ";
+                string intermediateInputMessage = "Choose intermediate vertex";
+                int cursorLeft = Console.CursorLeft;
+                int cursorRight = Console.CursorTop;
+                int numberOfIntermediates = InputNumber(inputMessage, NumberOfAvailableIntermediate);
+                var messages = Enumerable.Repeat(intermediateInputMessage, numberOfIntermediates);
                 endPoints.Reset();
-                var chooseMessages = new[] { SourceVertexInputMessage, TargetVertexInputMessage };
+                var chooseMessages = new[] { SourceVertexInputMessage, TargetVertexInputMessage }.Concat(messages);
                 foreach (var message in chooseMessages)
                 {
-                    var vertex = ChooseVertex(message);
-                    int cursorLeft = Console.CursorLeft;
-                    int cursorRight = Console.CursorTop;
-                    (vertex as Vertex)?.SetAsExtremeVertex();
                     Console.SetCursorPosition(cursorLeft, cursorRight);
+                    var vertex = ChooseVertex(message);
+                    cursorLeft = Console.CursorLeft;
+                    cursorRight = Console.CursorTop;
+                    (vertex as Vertex)?.SetAsExtremeVertex();
                 }
             }
             else
@@ -178,8 +184,9 @@ namespace ConsoleVersion.ViewModel
             }
         }
 
-        private bool HasAnyVerticesToChooseAsEndPoints
-            => mainViewModel.Graph.Size - mainViewModel.Graph.GetObstaclesCount() >= 2;
+        private int NumberOfAvailableIntermediate
+            => mainModel.Graph.Size - mainModel.Graph.Vertices.Count(v => v.IsIsolated()) - 2;
+        private bool HasAnyVerticesToChooseAsEndPoints => NumberOfAvailableIntermediate >= 0;
 
         private readonly InclusiveValueRange<int> algorithmKeysValueRange;
         private readonly MainViewModel mainModel;

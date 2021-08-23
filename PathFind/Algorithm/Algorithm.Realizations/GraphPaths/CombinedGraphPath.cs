@@ -1,13 +1,12 @@
 ﻿using Algorithm.Interfaces;
 using GraphLib.Interfaces;
-using System.Collections.Generic;
 using System.Linq;
 
 namespace Algorithm.Realizations.GraphPaths
 {
     public sealed class CombinedGraphPath : IGraphPath
     {
-        public CombinedGraphPath(IGraphPath first, 
+        public CombinedGraphPath(IGraphPath first,
             IGraphPath second, params IGraphPath[] other)
         {
             var paths = other.Prepend(second).Prepend(first).ToArray();

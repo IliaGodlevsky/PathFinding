@@ -2,7 +2,7 @@
 using GraphLib.Interfaces;
 using NullObject.Attributes;
 
-namespace Algorithm.Realizations.Heuristic
+namespace Algorithm.NullRealizations
 {
     /// <summary>
     /// Represents a null analog for <see cref="IHeuristic"/>

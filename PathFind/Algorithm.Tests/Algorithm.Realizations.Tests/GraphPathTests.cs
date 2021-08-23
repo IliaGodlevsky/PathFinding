@@ -37,7 +37,7 @@ namespace Algorithm.Realizations.Tests
             graph = graphAssemble.AssembleGraph(0);
             var source = graph[expectedPraphPathCoordinates.First()];
             var target = graph[expectedPraphPathCoordinates.Last()];
-            endPoints = new EndPoints(source, target);
+            endPoints = new TestEndPoints(source, target);
             parentVertices = new ParentVertices();
             FormParentVertices(parentVertices);
         }

@@ -2,7 +2,7 @@
 using GraphLib.Interfaces;
 using NullObject.Attributes;
 
-namespace Algorithm.Realizations.StepRules
+namespace Algorithm.NullRealizations
 {
     /// <summary>
     /// A step rule that represents a null (default) 
