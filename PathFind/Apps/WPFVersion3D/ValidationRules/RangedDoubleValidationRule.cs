@@ -6,7 +6,7 @@ namespace WPFVersion3D.ValidationRules
 {
     internal sealed class RangedDoubleValidationRule : ValidationRule
     {
-        public IValueRange<double> ValueRange { get; set; }
+        public InclusiveValueRange<double> ValueRange { get; set; }
 
         public override ValidationResult Validate(object value, CultureInfo cultureInfo)
         {
@@ -21,7 +21,7 @@ namespace WPFVersion3D.ValidationRules
         private bool IsValidValue(object value)
         {
             return double.TryParse(value?.ToString(), out var result)
-                && ValueRange?.Contains(result) == true;
+                && ValueRange.Contains(result) == true;
         }
     }
 }

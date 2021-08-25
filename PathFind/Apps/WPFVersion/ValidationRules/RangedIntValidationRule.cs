@@ -6,7 +6,7 @@ namespace WPFVersion.ValidationRules
 {
     internal sealed class RangedIntValidationRule : ValidationRule
     {
-        public IValueRange<int> ValueRange { get; set; }
+        public InclusiveValueRange<int> ValueRange { get; set; }
 
         public override ValidationResult Validate(object value, CultureInfo cultureInfo)
         {
@@ -20,7 +20,7 @@ namespace WPFVersion.ValidationRules
         private bool IsValidValue(object value)
         {
             return int.TryParse(value?.ToString(), out var result)
-                && ValueRange?.Contains(result) == true;
+                && ValueRange.Contains(result) == true;
         }
     }
 }

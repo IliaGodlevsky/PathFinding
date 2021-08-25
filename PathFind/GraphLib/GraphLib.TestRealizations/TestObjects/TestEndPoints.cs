@@ -1,6 +1,5 @@
 ﻿using GraphLib.Extensions;
 using GraphLib.Interfaces;
-using GraphLib.NullRealizations.NullObjects;
 using System.Collections.Generic;
 
 namespace GraphLib.TestRealizations.TestObjects

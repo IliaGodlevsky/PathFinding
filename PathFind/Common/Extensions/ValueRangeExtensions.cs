@@ -17,12 +17,12 @@ namespace Common.Extensions
             return Random.Next(valueRange.LowerValueOfRange, valueRange.UpperValueOfRange + 1);
         }
 
-        public static int Amplitude(this IValueRange<int> valueRange)
+        public static int Amplitude(this InclusiveValueRange<int> valueRange)
         {
             return valueRange.UpperValueOfRange - valueRange.LowerValueOfRange;
         }
 
-        public static double Amplitude(this IValueRange<double> valueRange)
+        public static double Amplitude(this InclusiveValueRange<double> valueRange)
         {
             return valueRange.UpperValueOfRange - valueRange.LowerValueOfRange;
         }

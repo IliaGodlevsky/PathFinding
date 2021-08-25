@@ -37,7 +37,7 @@ namespace ConsoleVersion.InputClass
         /// <paramref name="rangeOfValidInput"/></returns>
         /// <exception cref="System.IO.IOException"></exception>
         public static int InputNumber(string accompanyingMessage,
-            IValueRange<int> rangeOfValidInput)
+            InclusiveValueRange<int> rangeOfValidInput)
         {
             string userInput;
             do
@@ -86,7 +86,7 @@ namespace ConsoleVersion.InputClass
         }
 
         private static bool IsValidInput(string userInput,
-            IValueRange<int> rangeOfValidInput)
+            InclusiveValueRange<int> rangeOfValidInput)
         {
             return int.TryParse(userInput, out var input)
                 && rangeOfValidInput.Contains(input);

@@ -178,9 +178,9 @@ namespace ConsoleVersion.Model
             }
         }
 
-        public void VisualizeAsIntermediate() 
-        { 
-            Mark(IntermediateVertexColor); 
+        public void VisualizeAsIntermediate()
+        {
+            Mark(IntermediateVertexColor);
         }
 
         private static readonly Color RegularVertexColor;
