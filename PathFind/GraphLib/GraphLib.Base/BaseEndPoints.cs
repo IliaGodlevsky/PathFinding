@@ -4,6 +4,7 @@ using GraphLib.Extensions;
 using GraphLib.Interfaces;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 
 namespace GraphLib.Base
@@ -29,11 +30,11 @@ namespace GraphLib.Base
         internal bool HasEndPointsSet => !Source.IsIsolated() && !Target.IsIsolated();
         internal bool IsIntermediate(IVertex vertex) => intermediates.Contains(vertex);
 
-        internal readonly List<IVertex> intermediates;
+        internal readonly Collection<IVertex> intermediates;
 
         protected BaseEndPoints()
         {
-            intermediates = new List<IVertex>();
+            intermediates = new Collection<IVertex>();
             endPointsConditions = new EndPointsConditions(this);
             Reset();
         }

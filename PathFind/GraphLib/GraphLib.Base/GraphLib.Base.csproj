@@ -51,7 +51,7 @@
     <Compile Include="BaseEndPointsConditions\SetIntermediateVertexCondition.cs" />
     <Compile Include="BaseEndPointsConditions\SetSourceVertexCondition.cs" />
     <Compile Include="BaseEndPointsConditions\SetTargetVertexCondition.cs" />
-    <Compile Include="BaseEndPointsConditions\UnserSourceVertexCondition.cs" />
+    <Compile Include="BaseEndPointsConditions\UnsetSourceVertexCondition.cs" />
     <Compile Include="BaseEndPointsConditions\UnsetIntermediateVertexCondition.cs" />
     <Compile Include="BaseEndPointsConditions\UnsetTargetVertexCondition.cs" />
     <Compile Include="BaseGraph.cs" />

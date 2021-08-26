@@ -4,10 +4,10 @@ using GraphLib.NullRealizations.NullObjects;
 
 namespace GraphLib.Base.BaseEndPointsConditions
 {
-    internal sealed class UnserSourceVertexCondition
+    internal sealed class UnsetSourceVertexCondition
         : BaseEndPointsCondition, IEndPointsCondition
     {
-        public UnserSourceVertexCondition(BaseEndPoints endPoints)
+        public UnsetSourceVertexCondition(BaseEndPoints endPoints)
             : base(endPoints)
         {
 

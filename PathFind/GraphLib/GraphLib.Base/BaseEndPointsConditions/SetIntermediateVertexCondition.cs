@@ -2,7 +2,7 @@
 
 namespace GraphLib.Base.BaseEndPointsConditions
 {
-    internal sealed class SetIntermediateVertexCondition 
+    internal sealed class SetIntermediateVertexCondition
         : BaseEndPointsCondition, IEndPointsCondition
     {
         public SetIntermediateVertexCondition(BaseEndPoints endPoints)

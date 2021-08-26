@@ -2,7 +2,7 @@
 
 namespace GraphLib.Base.BaseEndPointsConditions
 {
-    internal sealed class UnsetIntermediateVertexCondition 
+    internal sealed class UnsetIntermediateVertexCondition
         : BaseEndPointsCondition, IEndPointsCondition
     {
         public UnsetIntermediateVertexCondition(BaseEndPoints endPoints)
@@ -12,7 +12,7 @@ namespace GraphLib.Base.BaseEndPointsConditions
 
         public bool IsTrue(IVertex vertex)
         {
-            return endPoints.HasEndPointsSet 
+            return endPoints.HasEndPointsSet
                 && endPoints.IsIntermediate(vertex);
         }
 

@@ -4,7 +4,7 @@ using GraphLib.NullRealizations.NullObjects;
 
 namespace GraphLib.Base.BaseEndPointsConditions
 {
-    internal sealed class UnsetTargetVertexCondition 
+    internal sealed class UnsetTargetVertexCondition
         : BaseEndPointsCondition, IEndPointsCondition
     {
         public UnsetTargetVertexCondition(BaseEndPoints endPoints)

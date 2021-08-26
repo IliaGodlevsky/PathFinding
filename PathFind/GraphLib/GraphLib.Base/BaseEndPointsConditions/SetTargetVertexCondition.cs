@@ -3,7 +3,7 @@ using NullObject.Extensions;
 
 namespace GraphLib.Base.BaseEndPointsConditions
 {
-    internal sealed class SetTargetVertexCondition 
+    internal sealed class SetTargetVertexCondition
         : BaseEndPointsCondition, IEndPointsCondition
     {
         public SetTargetVertexCondition(BaseEndPoints endPoints)

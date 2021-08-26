@@ -2,7 +2,6 @@
 using GraphLib.Extensions;
 using GraphLib.Interfaces;
 using NullObject.Extensions;
-using System.Collections.Generic;
 using System.Linq;
 
 namespace GraphLib.Base.BaseEndPointsConditions
@@ -11,10 +10,10 @@ namespace GraphLib.Base.BaseEndPointsConditions
     {
         public EndPointsConditions(BaseEndPoints endPoints)
         {
-            unsetSourceVertexCondition = new UnserSourceVertexCondition(endPoints);
+            unsetSourceVertexCondition = new UnsetSourceVertexCondition(endPoints);
             unsetTargetVertexCondition = new UnsetTargetVertexCondition(endPoints);
             unsetIntermediateVertexCondition = new UnsetIntermediateVertexCondition(endPoints);
-            conditions = new []
+            conditions = new[]
             {
                 unsetSourceVertexCondition,
                 unsetTargetVertexCondition,
