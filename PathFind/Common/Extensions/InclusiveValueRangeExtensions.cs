@@ -1,13 +1,15 @@
 ﻿using Common.ValueRanges;
 using System;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace Common.Extensions
 {
-    public static class ValueRangeExtensions
+    public static class InclusiveValueRangeExtensions
     {
         private static readonly Random Random;
 
-        static ValueRangeExtensions()
+        static InclusiveValueRangeExtensions()
         {
             Random = new Random();
         }

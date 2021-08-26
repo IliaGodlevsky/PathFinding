@@ -1,4 +1,5 @@
-﻿using Common.Extensions;
+﻿using System.Collections.Generic;
+using Common.Extensions;
 using GraphLib.Extensions;
 using GraphLib.Interfaces;
 using NullObject.Extensions;
@@ -48,6 +49,6 @@ namespace GraphLib.Base.BaseEndPointsConditions
         private readonly IEndPointsCondition unsetIntermediateVertexCondition;
 
         private readonly IIntermediateEndPoints endPoints;
-        private readonly IEndPointsCondition[] conditions;
+        private readonly IEnumerable<IEndPointsCondition> conditions;
     }
 }

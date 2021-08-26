@@ -7,7 +7,7 @@ namespace Common.ValueRanges
     /// Represents inclusive range of values
     /// </summary>
     [Serializable]
-    public readonly struct InclusiveValueRange<T> where T : IComparable<T>
+    public readonly struct InclusiveValueRange<T> where T : struct, IComparable<T>
     {
         public T UpperValueOfRange { get; }
         public T LowerValueOfRange { get; }
@@ -22,7 +22,7 @@ namespace Common.ValueRanges
         /// <remarks>If <paramref name="upperValueOfRange"/> 
         /// is less than <paramref name="lowerValueOfRange"/>
         /// then this parameters will be swapped</remarks>
-        public InclusiveValueRange(T upperValueOfRange, T lowerValueOfRange)
+        public InclusiveValueRange(T upperValueOfRange, T lowerValueOfRange = default)
         {
             SwapIfLess(ref upperValueOfRange, ref lowerValueOfRange);
 

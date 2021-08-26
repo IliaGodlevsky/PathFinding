@@ -39,8 +39,8 @@ namespace ConsoleVersion
             VerticesCostRange = new InclusiveValueRange<int>(99, 1);
             GraphWidthValueRange = new InclusiveValueRange<int>(80, 1);
             GraphLengthValueRange = new InclusiveValueRange<int>(50, 1);
-            ObstaclesPercentValueRange = new InclusiveValueRange<int>(99, 0);
-            AlgorithmDelayTimeValueRange = new InclusiveValueRange<int>(35, 0);
+            ObstaclesPercentValueRange = new InclusiveValueRange<int>(99);
+            AlgorithmDelayTimeValueRange = new InclusiveValueRange<int>(35);
         }
     }
 }

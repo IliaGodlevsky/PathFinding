@@ -55,7 +55,7 @@ namespace GraphLib.Extensions
         {
             bool IsWithin(int coordinate, int graphDimension)
             {
-                var range = new InclusiveValueRange<int>(graphDimension - 1, 0);
+                var range = new InclusiveValueRange<int>(graphDimension - 1);
                 return range.Contains(coordinate);
             }
 

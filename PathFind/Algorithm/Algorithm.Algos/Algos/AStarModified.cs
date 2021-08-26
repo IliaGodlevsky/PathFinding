@@ -29,7 +29,7 @@ namespace Algorithm.Algos.Algos
         public AStarModified(IGraph graph, IIntermediateEndPoints endPoints, IStepRule stepRule, IHeuristic function)
             : base(graph, endPoints, stepRule, function)
         {
-            percentValueRange = new InclusiveValueRange<int>(99, 0);
+            percentValueRange = new InclusiveValueRange<int>(99);
             percentOfFarthestVerticesToDelete = new Lazy<int>(CalculatePercentOfFarthestVerticesToDelete);
             deletedVertices = new Queue<IVertex>();
         }

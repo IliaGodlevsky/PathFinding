@@ -19,8 +19,8 @@ namespace ConsoleVersion.View
 
         public static int GetLateralDistanceBetweenVertices()
         {
-            int currentCostWidth = currentMaxValueOfRange.ToString().Length;
-            int previousCostWidth = previousMaxValueOfRange.ToString().Length;
+            int currentCostWidth = CurrentMaxValueOfRange.ToString().Length;
+            int previousCostWidth = PreviousMaxValueOfRange.ToString().Length;
             int costWidth = Math.Max(currentCostWidth, previousCostWidth);
             int width = Constants.GraphWidthValueRange.UpperValueOfRange.ToString().Length;
             return costWidth >= width ? costWidth + 2 : width + width - costWidth;
@@ -28,7 +28,7 @@ namespace ConsoleVersion.View
 
         private static void OnNewGraphCreated(object sender, NewGraphCreatedEventArgs e)
         {
-            previousMaxValueOfRange = currentMaxValueOfRange;
+            PreviousMaxValueOfRange = CurrentMaxValueOfRange;
             if (e.NewGraph is Graph2D graph2D)
             {
                 int pathFindingStatisticsOffset = graph2D.Length
@@ -42,8 +42,8 @@ namespace ConsoleVersion.View
             int upperValueRange = e.NewValueRange.UpperValueOfRange;
             int lowerValueRange = e.NewValueRange.LowerValueOfRange;
             int max = Math.Max(upperValueRange, Math.Abs(lowerValueRange));
-            previousMaxValueOfRange = Math.Max(currentMaxValueOfRange, previousMaxValueOfRange);
-            currentMaxValueOfRange = max;
+            PreviousMaxValueOfRange = Math.Max(CurrentMaxValueOfRange, PreviousMaxValueOfRange);
+            CurrentMaxValueOfRange = max;
         }
 
         private static void OnStatisticsUpdated(object sender, StatisticsUpdatedEventArgs e)
@@ -80,7 +80,7 @@ namespace ConsoleVersion.View
             OnCostRangeChanged(this, args);
         }
 
-        private static int previousMaxValueOfRange;
-        private static int currentMaxValueOfRange;
+        private static int PreviousMaxValueOfRange;
+        private static int CurrentMaxValueOfRange;
     }
 }
