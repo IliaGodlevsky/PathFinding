@@ -61,19 +61,24 @@ namespace GraphViewModel
         }
 
         protected virtual void OnVertexVisited(object sender, AlgorithmEventArgs e)
-        {
-            if (!endPoints.IsEndPoint(e.Current) && e.Current is IVisualizable vertex)
+        {            
+            if (CanBeVisualized(e.Current))
             {
-                vertex.VisualizeAsVisited();
+                (e.Current as IVisualizable)?.VisualizeAsVisited();
             }
+            visitedVerticesCount++;
+        }
+
+        protected virtual void OnVertexVisitedNoVisualization(object sender, EventArgs e)
+        {
             visitedVerticesCount++;
         }
 
         protected virtual void OnVertexEnqueued(object sender, AlgorithmEventArgs e)
         {
-            if (!endPoints.IsEndPoint(e.Current) && e.Current is IVisualizable vertex)
+            if (CanBeVisualized(e.Current))
             {
-                vertex.VisualizeAsEnqueued();
+                (e.Current as IVisualizable)?.VisualizeAsEnqueued();
             }
         }
 
@@ -113,6 +118,10 @@ namespace GraphViewModel
                 algorithm.VertexEnqueued += OnVertexEnqueued;
                 algorithm.VertexVisited += OnVertexVisited;
             }
+            else
+            {
+                algorithm.VertexVisited += OnVertexVisitedNoVisualization;
+            }
             algorithm.Finished += OnAlgorithmFinished;
             algorithm.Started += OnAlgorithmStarted;
             algorithm.Interrupted += OnAlgorithmInterrupted;
@@ -122,6 +131,12 @@ namespace GraphViewModel
         {
             string Description(Algorithms item) => ((Enum)item).GetDescription();
             return EnumExtensions.ToOrderedDictionary<string, Algorithms>(Description, item => item.Key);
+        }
+
+        private bool CanBeVisualized(IVertex vertex)
+        {
+            return !endPoints.IsEndPoint(vertex)
+                && vertex is IVisualizable;
         }
 
         private object[] PathfindingInfo
