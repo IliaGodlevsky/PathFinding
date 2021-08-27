@@ -4,6 +4,7 @@ using ConsoleVersion.View.FramedAxes;
 using ConsoleVersion.View.Interface;
 using GraphLib.Interfaces;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 
 namespace ConsoleVersion.View
 {
@@ -11,7 +12,7 @@ namespace ConsoleVersion.View
     {
         public GraphField(int width, int length)
         {
-            elements = new List<IDisplayable>
+            elements = new Collection<IDisplayable>
             {
                 new FramedOverAbscissa(width, length),
                 new FramedUnderAbscissa(width),
