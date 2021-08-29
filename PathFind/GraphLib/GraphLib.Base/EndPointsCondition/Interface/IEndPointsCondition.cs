@@ -1,6 +1,6 @@
 ﻿using GraphLib.Interfaces;
 
-namespace GraphLib.Base.BaseEndPointsConditions
+namespace GraphLib.Base.EndPointsCondition.Interface
 {
     public interface IEndPointsCondition
     {

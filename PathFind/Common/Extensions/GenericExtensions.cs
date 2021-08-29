@@ -1,6 +1,7 @@
 ﻿using System;
 using System.ComponentModel;
 using System.Linq;
+using System.Reflection;
 
 namespace Common.Extensions
 {
@@ -36,12 +37,22 @@ namespace Common.Extensions
             return value.IsLessOrEqual(upper) && value.IsGreaterOrEqual(lower);
         }
 
-        public static string GetDescription<T>(this T self)
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="self"></param>
+        /// <returns></returns>
+        /// <remarks>Type name for <see cref="Enum"/> is a field name</remarks>
+        public static string GetDescriptionAttributeValueOrTypeName<T>(this T self)
         {
-            return self
-                .GetType()
-                .GetAttributeOrNull<DescriptionAttribute>()
-                ?.Description ?? self.GetType().Name;
+            MemberInfo type = self.GetType();
+            if (self is Enum e)
+            {
+                type = e.GetType().GetField(e.ToString());
+            }
+            return type.GetAttributeOrNull<DescriptionAttribute>()
+                ?.Description ?? type.Name;
         }
 
         public static bool IsOneOf<T>(this T self, params T[] objects)

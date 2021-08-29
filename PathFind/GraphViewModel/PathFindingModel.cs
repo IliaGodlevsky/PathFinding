@@ -104,7 +104,7 @@ namespace GraphViewModel
         protected string GetStatistics()
         {
             string timerInfo = timer.Elapsed.ToString(@"mm\:ss\.ff");
-            string algorithmName = ((Enum)Algorithm).GetDescription();
+            string algorithmName = Algorithm.GetDescriptionAttributeValueOrTypeName();
             string pathfindingInfo = string.Format(StatisticsFormat, PathfindingInfo);
             return string.Join("\t", algorithmName, timerInfo, pathfindingInfo);
         }
@@ -129,7 +129,7 @@ namespace GraphViewModel
 
         private IDictionary<string, Algorithms> GetAlgorithmsDictinary()
         {
-            string Description(Algorithms item) => ((Enum)item).GetDescription();
+            string Description(Algorithms item) => item.GetDescriptionAttributeValueOrTypeName();
             return EnumExtensions.ToOrderedDictionary<string, Algorithms>(Description, item => item.Key);
         }
 

@@ -1,5 +1,5 @@
 ﻿using Common.Extensions;
-using GraphLib.Base.BaseEndPointsConditions;
+using GraphLib.Base.EndPointsCondition;
 using GraphLib.Extensions;
 using GraphLib.Interfaces;
 using System;
@@ -12,23 +12,13 @@ namespace GraphLib.Base
     public abstract class BaseEndPoints : IIntermediateEndPoints
     {
         public IVertex Source { get; internal set; }
-
         public IVertex Target { get; internal set; }
-
         public IReadOnlyCollection<IVertex> IntermediateVertices => intermediates;
-
-        public bool HasIsolators => !HasEndPointsSet || HasIsolatedIntermediates;
 
         public void SubscribeToEvents(IGraph graph) => graph.ForEach(SubscribeVertex);
         public void UnsubscribeFromEvents(IGraph graph) => graph.ForEach(UnsubscribeVertex);
-
         public void Reset() => endPointsConditions.Reset();
-        public bool IsEndPoint(IVertex vertex) => vertex.IsOneOf(this);
-        public bool CanBeEndPoint(IVertex vertex) => !IsEndPoint(vertex) && !vertex.IsIsolated();
-
-        internal bool HasIsolatedIntermediates => intermediates.Any(vertex => vertex.IsIsolated());
-        internal bool HasEndPointsSet => !Source.IsIsolated() && !Target.IsIsolated();
-        internal bool IsIntermediate(IVertex vertex) => intermediates.Contains(vertex);
+        public bool IsEndPoint(IVertex vertex) => this.GetVertices().Contains(vertex);
 
         internal readonly Collection<IVertex> intermediates;
 

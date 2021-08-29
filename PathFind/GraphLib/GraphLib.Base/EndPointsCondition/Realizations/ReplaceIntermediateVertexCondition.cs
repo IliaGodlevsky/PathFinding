@@ -1,12 +1,14 @@
-﻿using GraphLib.Extensions;
+﻿using GraphLib.Base.EndPointsCondition.Interface;
+using GraphLib.Base.EndPointsInspection.Abstractions;
+using GraphLib.Extensions;
 using GraphLib.Interfaces;
 using NullObject.Extensions;
 using System.Linq;
 
-namespace GraphLib.Base.BaseEndPointsConditions
+namespace GraphLib.Base.EndPointsCondition.Realizations
 {
     internal sealed class ReplaceIntermediateVertexCondition
-        : BaseEndPointsCondition, IEndPointsCondition
+        : BaseIntermediateEndPointsInspection, IEndPointsCondition
     {
         public ReplaceIntermediateVertexCondition(BaseEndPoints endPoints)
             : base(endPoints)
@@ -15,9 +17,9 @@ namespace GraphLib.Base.BaseEndPointsConditions
 
         public bool IsTrue(IVertex vertex)
         {
-            return endPoints.HasEndPointsSet
-                && !endPoints.IsIntermediate(vertex)
-                && endPoints.HasIsolatedIntermediates;
+            return endPoints.HasSourceAndTargetSet()
+                && !IsIntermediate(vertex)
+                && HasIsolatedIntermediates;
         }
 
         public void Execute(IVertex vertex)

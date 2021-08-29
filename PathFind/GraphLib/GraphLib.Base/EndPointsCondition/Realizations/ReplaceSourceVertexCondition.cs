@@ -1,10 +1,12 @@
-﻿using GraphLib.Extensions;
+﻿using GraphLib.Base.EndPointsCondition.Interface;
+using GraphLib.Base.EndPointsInspection.Abstractions;
+using GraphLib.Extensions;
 using GraphLib.Interfaces;
 
-namespace GraphLib.Base.BaseEndPointsConditions
+namespace GraphLib.Base.EndPointsCondition.Realizations
 {
     internal sealed class ReplaceSourceVertexCondition
-        : BaseEndPointsCondition, IEndPointsCondition
+        : BaseEndPointsInspection, IEndPointsCondition
     {
         public ReplaceSourceVertexCondition(BaseEndPoints endPoints)
             : base(endPoints)

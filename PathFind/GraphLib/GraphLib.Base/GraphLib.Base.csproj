@@ -43,22 +43,23 @@
   <ItemGroup>
     <Compile Include="BaseCoordinate.cs" />
     <Compile Include="BaseEndPoints.cs" />
-    <Compile Include="BaseEndPointsConditions\BaseEndPointsCondition.cs" />
-    <Compile Include="BaseEndPointsConditions\IEndPointsCondition.cs" />
-    <Compile Include="BaseEndPointsConditions\ReplaceIntermediateVertexCondition.cs" />
-    <Compile Include="BaseEndPointsConditions\ReplaceSourceVertexCondition.cs" />
-    <Compile Include="BaseEndPointsConditions\ReplaceTargetVertexCondition.cs" />
-    <Compile Include="BaseEndPointsConditions\SetIntermediateVertexCondition.cs" />
-    <Compile Include="BaseEndPointsConditions\SetSourceVertexCondition.cs" />
-    <Compile Include="BaseEndPointsConditions\SetTargetVertexCondition.cs" />
-    <Compile Include="BaseEndPointsConditions\UnsetSourceVertexCondition.cs" />
-    <Compile Include="BaseEndPointsConditions\UnsetIntermediateVertexCondition.cs" />
-    <Compile Include="BaseEndPointsConditions\UnsetTargetVertexCondition.cs" />
+    <Compile Include="EndPointsInspection\Abstractions\BaseEndPointsInspection.cs" />
+    <Compile Include="EndPointsInspection\Abstractions\BaseIntermediateEndPointsInspection.cs" />
+    <Compile Include="EndPointsCondition\Interface\IEndPointsCondition.cs" />
+    <Compile Include="EndPointsCondition\Realizations\ReplaceIntermediateVertexCondition.cs" />
+    <Compile Include="EndPointsCondition\Realizations\ReplaceSourceVertexCondition.cs" />
+    <Compile Include="EndPointsCondition\Realizations\ReplaceTargetVertexCondition.cs" />
+    <Compile Include="EndPointsCondition\Realizations\SetIntermediateVertexCondition.cs" />
+    <Compile Include="EndPointsCondition\Realizations\SetSourceVertexCondition.cs" />
+    <Compile Include="EndPointsCondition\Realizations\SetTargetVertexCondition.cs" />
+    <Compile Include="EndPointsCondition\Realizations\UnsetSourceVertexCondition.cs" />
+    <Compile Include="EndPointsCondition\Realizations\UnsetIntermediateVertexCondition.cs" />
+    <Compile Include="EndPointsCondition\Realizations\UnsetTargetVertexCondition.cs" />
     <Compile Include="BaseGraph.cs" />
     <Compile Include="BaseGraphFieldFactory.cs" />
     <Compile Include="BaseVertexCost.cs" />
     <Compile Include="BaseVertexEventHolder.cs" />
-    <Compile Include="BaseEndPointsConditions\EndPointsConditions.cs" />
+    <Compile Include="EndPointsCondition\EndPointsConditions.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

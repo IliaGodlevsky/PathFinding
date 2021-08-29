@@ -1,11 +1,13 @@
-﻿using GraphLib.Extensions;
+﻿using GraphLib.Base.EndPointsCondition.Interface;
+using GraphLib.Base.EndPointsInspection.Abstractions;
+using GraphLib.Extensions;
 using GraphLib.Interfaces;
 using GraphLib.NullRealizations.NullObjects;
 
-namespace GraphLib.Base.BaseEndPointsConditions
+namespace GraphLib.Base.EndPointsCondition.Realizations
 {
     internal sealed class UnsetTargetVertexCondition
-        : BaseEndPointsCondition, IEndPointsCondition
+        : BaseEndPointsInspection, IEndPointsCondition
     {
         public UnsetTargetVertexCondition(BaseEndPoints endPoints)
             : base(endPoints)
