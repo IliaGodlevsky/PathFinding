@@ -12,7 +12,7 @@ namespace ConsoleVersion.View
     {
         public GraphField(int width, int length)
         {
-            elements = new Collection<IDisplayable>
+            uiElements = new Collection<IDisplayable>
             {
                 new FramedOverAbscissa(width, length),
                 new FramedUnderAbscissa(width),
@@ -25,15 +25,15 @@ namespace ConsoleVersion.View
         {
             if (vertex is Vertex vertex2D)
             {
-                elements.Add(vertex2D);
+                uiElements.Add(vertex2D);
             }
         }
 
         public void Display()
         {
-            elements.ForEach(element => element.Display());
+            uiElements.ForEach(element => element.Display());
         }
 
-        private readonly IList<IDisplayable> elements;
+        private readonly IList<IDisplayable> uiElements;
     }
 }

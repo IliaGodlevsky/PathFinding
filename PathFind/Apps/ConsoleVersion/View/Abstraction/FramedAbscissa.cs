@@ -24,7 +24,7 @@ namespace ConsoleVersion.View.Abstraction
             var stringBuilder = new StringBuilder(largeSpace);
             for (int index = 0; index < graphWidth; index++)
             {
-                stringBuilder.Append(GetStringToAppend(index));
+                stringBuilder.Append(GetAbscissaFragment(index));
             }
             return stringBuilder.Append(largeSpace).ToString();
         }
@@ -34,18 +34,18 @@ namespace ConsoleVersion.View.Abstraction
             var stringBuilder = new StringBuilder(LargeSpace);
             for (int index = 0; index < graphWidth; index++)
             {
-                stringBuilder.Append(HorizontalFrameComponent);
+                stringBuilder.Append(HorizontalFrameFragment);
             }
             return stringBuilder.Append(CoordinateDelimiter).ToString();
         }
 
-        private string GetStringToAppend(int index)
+        private string GetAbscissaFragment(int index)
         {
             return string.Concat(index, GetSpace(index));
         }
 
         private string LargeSpace => new string(Space, MainView.WidthOfOrdinateView);
-        private string HorizontalFrameComponent
+        private string HorizontalFrameFragment
         {
             get
             {
