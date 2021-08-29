@@ -1,4 +1,5 @@
 ﻿using Common.Extensions;
+using Common.ValueRanges;
 using ConsoleVersion.Model;
 using ConsoleVersion.View.FramedAxes;
 using ConsoleVersion.View.Interface;
@@ -19,13 +20,17 @@ namespace ConsoleVersion.View
                 new FramedToRightOrdinate(width, length),
                 new FramedToLeftOrdinate(length)
             };
+            countRange = new InclusiveValueRange<int>(width * length + 3);
         }
 
         public void Add(IVertex vertex)
         {
-            if (vertex is Vertex vertex2D)
+            if (countRange.Contains(elements.Count))
             {
-                uiElements.Add(vertex2D);
+                if (vertex is Vertex vertex2D)
+                {
+                    elements.Add(vertex2D);
+                }
             }
         }
 
@@ -34,6 +39,7 @@ namespace ConsoleVersion.View
             uiElements.ForEach(element => element.Display());
         }
 
-        private readonly IList<IDisplayable> uiElements;
+        private readonly InclusiveValueRange<int> countRange;
+        private readonly ICollection<IDisplayable> elements;
     }
 }

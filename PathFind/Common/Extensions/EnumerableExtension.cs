@@ -150,7 +150,7 @@ namespace Common.Extensions
 
         public static IDictionary<string, T> AsNameInstanceDictionary<T>(this IEnumerable<T> collection)
         {
-            return collection.ToDictionary(item => item.GetDescription());
+            return collection.ToDictionary(item => item.GetDescriptionAttributeValueOrTypeName());
         }
     }
 }

@@ -24,10 +24,16 @@ namespace Common.ValueRanges
         /// then this parameters will be swapped</remarks>
         public InclusiveValueRange(T upperValueOfRange, T lowerValueOfRange = default)
         {
-            SwapIfLess(ref upperValueOfRange, ref lowerValueOfRange);
-
-            UpperValueOfRange = upperValueOfRange;
-            LowerValueOfRange = lowerValueOfRange;
+            if (upperValueOfRange.IsLess(lowerValueOfRange))
+            {
+                UpperValueOfRange = lowerValueOfRange;
+                LowerValueOfRange = upperValueOfRange;
+            }
+            else
+            {
+                UpperValueOfRange = upperValueOfRange;
+                LowerValueOfRange = lowerValueOfRange;
+            }
         }
 
         public T ReturnInRange(T value)
@@ -46,16 +52,6 @@ namespace Common.ValueRanges
         public bool Contains(T value)
         {
             return value.IsBetween(UpperValueOfRange, LowerValueOfRange);
-        }
-
-        private static void SwapIfLess(ref T greaterValue, ref T lowerValue)
-        {
-            if (greaterValue.IsLess(lowerValue))
-            {
-                T temp = greaterValue;
-                greaterValue = lowerValue;
-                lowerValue = temp;
-            }
         }
     }
 }

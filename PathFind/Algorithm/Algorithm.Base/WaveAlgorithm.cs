@@ -23,7 +23,7 @@ namespace Algorithm.Base
         {
             IGraphPath path = new NullGraphPath();
             PrepareForPathfinding();
-            foreach (var endPoint in endPoints.ToIntermediateEndPoints())
+            foreach (var endPoint in endPoints.ToEndPoints())
             {
                 CurrentEndPoints = endPoint;
                 PrepareForLocalPathfinding();

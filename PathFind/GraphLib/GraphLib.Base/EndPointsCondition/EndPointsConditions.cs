@@ -4,8 +4,11 @@ using GraphLib.Extensions;
 using GraphLib.Interfaces;
 using NullObject.Extensions;
 using System.Linq;
+using GraphLib.Base.EndPointsCondition.Interface;
+using GraphLib.Base.EndPointsCondition.Realizations;
+using System;
 
-namespace GraphLib.Base.BaseEndPointsConditions
+namespace GraphLib.Base.EndPointsCondition
 {
     internal sealed class EndPointsConditions
     {
@@ -38,9 +41,16 @@ namespace GraphLib.Base.BaseEndPointsConditions
 
         public void ExecuteTheFirstTrue(IVertex vertex)
         {
+            bool IsTrue(IEndPointsCondition condition)
+            {
+                return condition.IsTrue(vertex);
+            }
+
             if (!vertex.IsNull() && !vertex.IsIsolated())
             {
-                conditions.FirstOrDefault(state => state.IsTrue(vertex))?.Execute(vertex);
+                conditions
+                    .FirstOrDefault(IsTrue)
+                    ?.Execute(vertex);
             }
         }
 

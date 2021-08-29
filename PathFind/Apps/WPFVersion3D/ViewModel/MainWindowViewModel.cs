@@ -1,6 +1,7 @@
 ﻿using Common.Extensions;
 using Common.Interface;
 using GraphLib.Base;
+using GraphLib.Extensions;
 using GraphLib.Interfaces;
 using GraphLib.Interfaces.Factories;
 using GraphViewModel;
@@ -145,7 +146,7 @@ namespace WPFVersion3D.ViewModel
 
         private void ExecuteChangeOpacity(object param) => ChangeVerticesOpacity();
 
-        private bool CanExecuteStartFindPathCommand(object param) => !endPoints.HasIsolators;
+        private bool CanExecuteStartFindPathCommand(object param) => !endPoints.HasIsolators();
 
         private void ExecuteLoadGraphCommand(object param) => base.LoadGraph();
 
@@ -187,7 +188,7 @@ namespace WPFVersion3D.ViewModel
 
         private IDictionary<string, BaseSpeed> GetSpeedDictionary()
         {
-            string Description(AnimationSpeed speed) => ((Enum)speed).GetDescription();
+            string Description(AnimationSpeed speed) => speed.GetDescriptionAttributeValueOrTypeName();
             BaseSpeed Speed(AnimationSpeed speed) => speed.GetAttributeOrNull<BaseSpeed>();
             return EnumExtensions.ToDictionary<string, BaseSpeed, AnimationSpeed>(Description, Speed);
         }

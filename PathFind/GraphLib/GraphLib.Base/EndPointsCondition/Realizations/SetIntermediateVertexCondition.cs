@@ -1,9 +1,12 @@
-﻿using GraphLib.Interfaces;
+﻿using GraphLib.Base.EndPointsCondition.Interface;
+using GraphLib.Base.EndPointsInspection.Abstractions;
+using GraphLib.Extensions;
+using GraphLib.Interfaces;
 
-namespace GraphLib.Base.BaseEndPointsConditions
+namespace GraphLib.Base.EndPointsCondition.Realizations
 {
     internal sealed class SetIntermediateVertexCondition
-        : BaseEndPointsCondition, IEndPointsCondition
+        : BaseEndPointsInspection, IEndPointsCondition
     {
         public SetIntermediateVertexCondition(BaseEndPoints endPoints)
             : base(endPoints)
@@ -18,7 +21,7 @@ namespace GraphLib.Base.BaseEndPointsConditions
 
         public bool IsTrue(IVertex vertex)
         {
-            return endPoints.HasEndPointsSet;
+            return endPoints.HasSourceAndTargetSet();
         }
     }
 }

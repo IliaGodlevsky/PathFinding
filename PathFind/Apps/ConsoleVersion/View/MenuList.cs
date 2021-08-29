@@ -13,16 +13,16 @@ namespace ConsoleVersion.View
         {
             this.menuItemsNames = menuItemsNames.ToArray();
             menuItemsCount = this.menuItemsNames.Length;
-            MenuItemNumberPad = menuItemsCount.ToString().Length;
-            var columnsValueRange = new InclusiveValueRange<int>(menuItemsCount, 1);
-            this.columns = columnsValueRange.ReturnInRange(columns);
-            LongestNameLength = menuItemsCount > 0 ? menuItemsNames.Max(str => str.Length) + 1 : 0;
+            menuItemNumberPad = menuItemsCount.ToString().Length;
+            var columnsRange = new InclusiveValueRange<int>(menuItemsCount, 1);
+            this.columns = columnsRange.ReturnInRange(columns);
+            longestNameLength = new Lazy<int>(GetLongestNameLength);
             menuList = new Lazy<string>(CreateMenu);
         }
 
         public void Display()
         {
-            Console.WriteLine(this);
+            Console.WriteLine(menuList.Value);
         }
 
         public override string ToString()
@@ -30,29 +30,35 @@ namespace ConsoleVersion.View
             return menuList.Value;
         }
 
+        private int GetLongestNameLength()
+        {
+            return menuItemsCount > 0 
+                ? menuItemsNames.Max(str => str.Length) + 1 
+                : default;
+        }
+
         private string CreateMenu()
         {
             var stringBuilder = new StringBuilder(NewLine);
 
-            for (int i = 0; i < menuItemsCount; i++)
+            for (int index = 0; index < menuItemsCount; index++)
             {
-                string paddedName = menuItemsNames[i].PadRight(LongestNameLength);
-                string paddedMenuItemIndex = (i + 1).ToString().PadLeft(MenuItemNumberPad);
-                string format = Format + ((i + 1) % columns == 0 ? NewLine : Space);
+                string paddedName = menuItemsNames[index].PadRight(longestNameLength.Value);
+                string paddedMenuItemIndex = (index + 1).ToString().PadLeft(menuItemNumberPad);
+                string format = Format + ((index + 1) % columns == 0 ? NewLine : Space);
                 stringBuilder.AppendFormat(format, paddedMenuItemIndex, paddedName);
             }
 
             return stringBuilder.ToString();
         }
-
-        private int MenuItemNumberPad { get; }
-        private int LongestNameLength { get; }
-
-        private readonly string[] menuItemsNames;
+        
         private readonly Lazy<string> menuList;
+        private readonly Lazy<int> longestNameLength;
 
         private readonly int menuItemsCount;
         private readonly int columns;
+        private readonly int menuItemNumberPad;
+        private readonly string[] menuItemsNames;
 
         private const string NewLine = "\n";
         private const string Space = " ";
