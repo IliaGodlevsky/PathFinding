@@ -25,11 +25,11 @@ namespace ConsoleVersion.View
 
         public void Add(IVertex vertex)
         {
-            if (countRange.Contains(elements.Count))
+            if (countRange.Contains(uiElements.Count))
             {
                 if (vertex is Vertex vertex2D)
                 {
-                    elements.Add(vertex2D);
+                    uiElements.Add(vertex2D);
                 }
             }
         }
@@ -40,6 +40,6 @@ namespace ConsoleVersion.View
         }
 
         private readonly InclusiveValueRange<int> countRange;
-        private readonly ICollection<IDisplayable> elements;
+        private readonly ICollection<IDisplayable> uiElements;
     }
 }
