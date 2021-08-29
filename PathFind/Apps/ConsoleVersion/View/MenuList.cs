@@ -32,8 +32,8 @@ namespace ConsoleVersion.View
 
         private int GetLongestNameLength()
         {
-            return menuItemsCount > 0 
-                ? menuItemsNames.Max(str => str.Length) + 1 
+            return menuItemsCount > 0
+                ? menuItemsNames.Max(str => str.Length) + 1
                 : default;
         }
 
@@ -51,7 +51,7 @@ namespace ConsoleVersion.View
 
             return stringBuilder.ToString();
         }
-        
+
         private readonly Lazy<string> menuList;
         private readonly Lazy<int> longestNameLength;
 

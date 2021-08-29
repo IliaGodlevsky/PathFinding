@@ -1,12 +1,11 @@
-﻿using System.Collections.Generic;
-using Common.Extensions;
+﻿using Common.Extensions;
+using GraphLib.Base.EndPointsCondition.Interface;
+using GraphLib.Base.EndPointsCondition.Realizations;
 using GraphLib.Extensions;
 using GraphLib.Interfaces;
 using NullObject.Extensions;
+using System.Collections.Generic;
 using System.Linq;
-using GraphLib.Base.EndPointsCondition.Interface;
-using GraphLib.Base.EndPointsCondition.Realizations;
-using System;
 
 namespace GraphLib.Base.EndPointsCondition
 {

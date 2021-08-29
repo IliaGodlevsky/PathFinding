@@ -61,7 +61,7 @@ namespace GraphViewModel
         }
 
         protected virtual void OnVertexVisited(object sender, AlgorithmEventArgs e)
-        {            
+        {
             if (CanBeVisualized(e.Current))
             {
                 (e.Current as IVisualizable)?.VisualizeAsVisited();
