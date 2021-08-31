@@ -1,6 +1,5 @@
 ﻿using GraphLib.Base.EndPointsCondition.Interface;
 using GraphLib.Base.EndPointsInspection.Abstractions;
-using GraphLib.Extensions;
 using GraphLib.Interfaces;
 using NullObject.Extensions;
 using System.Linq;
@@ -10,29 +9,33 @@ namespace GraphLib.Base.EndPointsCondition.Realizations
     internal sealed class ReplaceIntermediateVertexCondition
         : BaseIntermediateEndPointsInspection, IEndPointsCondition
     {
-        public ReplaceIntermediateVertexCondition(BaseEndPoints endPoints)
-            : base(endPoints)
+        public ReplaceIntermediateVertexCondition(BaseEndPoints endPoints) : base(endPoints)
         {
-        }
 
-        public bool IsTrue(IVertex vertex)
-        {
-            return endPoints.HasSourceAndTargetSet()
-                && !IsIntermediate(vertex)
-                && HasIsolatedIntermediates;
         }
 
         public void Execute(IVertex vertex)
         {
-            var isolated = endPoints.intermediates.FirstOrDefault(v => v.IsIsolated());
-            if (!isolated.IsNull())
+            if (endPoints.markedToReplaceIntermediates.Count > 0)
             {
-                int isolatedIndex = endPoints.intermediates.IndexOf(isolated);
-                endPoints.intermediates.Remove(isolated);
-                (isolated as IVisualizable)?.VisualizeAsRegular();
-                endPoints.intermediates.Insert(isolatedIndex, vertex);
-                (vertex as IVisualizable)?.VisualizeAsIntermediate();
+                var toReplace = endPoints.markedToReplaceIntermediates.Dequeue();
+                if (!toReplace.IsNull())
+                {
+                    int toReplaceIndex = endPoints.intermediates.IndexOf(toReplace);
+                    if (endPoints.intermediates.Remove(toReplace) && toReplaceIndex > -1)
+                    {
+                        (toReplace as IVisualizable)?.VisualizeAsRegular();
+                        endPoints.intermediates.Insert(toReplaceIndex, vertex);
+                        (vertex as IVisualizable)?.VisualizeAsIntermediate();
+                    }
+                }
             }
+        }
+
+        public bool IsTrue(IVertex vertex)
+        {
+            return endPoints.markedToReplaceIntermediates.Count > 0
+                && !endPoints.IsEndPoint(vertex);
         }
     }
 }

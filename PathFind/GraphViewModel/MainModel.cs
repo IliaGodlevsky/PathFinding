@@ -83,8 +83,8 @@ namespace GraphViewModel
             eventHolder.UnsubscribeVertices(Graph);
             Graph = graph;
             GraphField = fieldFactory.CreateGraphField(Graph);
-            eventHolder.SubscribeVertices(Graph);
             endPoints.SubscribeToEvents(Graph);
+            eventHolder.SubscribeVertices(Graph);
             GraphParametres = Graph.ToString();
         }
 

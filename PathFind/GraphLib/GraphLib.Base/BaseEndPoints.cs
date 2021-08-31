@@ -1,5 +1,4 @@
-﻿using Common.Extensions;
-using GraphLib.Base.EndPointsCondition;
+﻿using GraphLib.Base.EndPointsCondition;
 using GraphLib.Extensions;
 using GraphLib.Interfaces;
 using System;
@@ -21,10 +20,12 @@ namespace GraphLib.Base
         public bool IsEndPoint(IVertex vertex) => this.GetVertices().Contains(vertex);
 
         internal readonly Collection<IVertex> intermediates;
+        internal readonly Queue<IVertex> markedToReplaceIntermediates;
 
         protected BaseEndPoints()
         {
             intermediates = new Collection<IVertex>();
+            markedToReplaceIntermediates = new Queue<IVertex>();
             endPointsConditions = new EndPointsConditions(this);
             Reset();
         }
@@ -32,6 +33,17 @@ namespace GraphLib.Base
         protected virtual void SetEndPoints(object sender, EventArgs e)
         {
             endPointsConditions.ExecuteTheFirstTrue(sender as IVertex);
+        }
+
+        protected virtual void MarkIntermediateToReplace(object sender, EventArgs e)
+        {
+            if (sender is IVertex vertex 
+                && !vertex.IsOneOf(Source, Target)
+                && intermediates.Contains(vertex)
+                && !vertex.IsIsolated())
+            {
+                markedToReplaceIntermediates.Enqueue(vertex);
+            }
         }
 
         protected abstract void SubscribeVertex(IVertex vertex);

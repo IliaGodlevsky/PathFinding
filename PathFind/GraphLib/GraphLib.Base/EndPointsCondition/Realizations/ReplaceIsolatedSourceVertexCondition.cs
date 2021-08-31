@@ -5,10 +5,10 @@ using GraphLib.Interfaces;
 
 namespace GraphLib.Base.EndPointsCondition.Realizations
 {
-    internal sealed class ReplaceSourceVertexCondition
+    internal sealed class ReplaceIsolatedSourceVertexCondition
         : BaseEndPointsInspection, IEndPointsCondition
     {
-        public ReplaceSourceVertexCondition(BaseEndPoints endPoints)
+        public ReplaceIsolatedSourceVertexCondition(BaseEndPoints endPoints)
             : base(endPoints)
         {
         }

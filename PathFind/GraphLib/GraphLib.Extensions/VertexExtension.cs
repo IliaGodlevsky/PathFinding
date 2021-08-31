@@ -81,6 +81,11 @@ namespace GraphLib.Extensions
             return hasEqualCost && hasEqualPosition && hasSameObstacleStatus;
         }
 
+        public static bool IsOneOf(this IVertex self, params IVertex[] vertices)
+        {
+            return vertices.Any(vertex => vertex.Equals(self));
+        }
+
         public static bool IsOneOf(this IVertex self, IIntermediateEndPoints endPoints)
         {
             return endPoints.IntermediateVertices

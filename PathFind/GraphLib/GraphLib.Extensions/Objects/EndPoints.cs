@@ -15,8 +15,7 @@ namespace GraphLib.Extensions.Objects
 
         public bool IsEndPoint(IVertex vertex)
         {
-            return vertex.IsEqual(Source)
-                || vertex.IsEqual(Target);
+            return vertex.IsOneOf(Source, Target);
         }
     }
 }

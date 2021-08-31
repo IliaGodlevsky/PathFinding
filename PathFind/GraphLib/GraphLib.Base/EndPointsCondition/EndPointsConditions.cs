@@ -21,11 +21,12 @@ namespace GraphLib.Base.EndPointsCondition
                 unsetSourceVertexCondition,
                 unsetTargetVertexCondition,
                 unsetIntermediateVertexCondition,
-                new ReplaceIntermediateVertexCondition(endPoints),
+                new ReplaceIntermediateIsolatedVertexCondition(endPoints),
                 new SetSourceVertexCondition(endPoints),
-                new ReplaceSourceVertexCondition(endPoints),
+                new ReplaceIsolatedSourceVertexCondition(endPoints),
                 new SetTargetVertexCondition(endPoints),
-                new ReplaceTargetVertexCondition(endPoints),
+                new ReplaceIsolatedTargetVertexCondition(endPoints),
+                new ReplaceIntermediateVertexCondition(endPoints),
                 new SetIntermediateVertexCondition(endPoints)
             };
             this.endPoints = endPoints;
@@ -36,28 +37,21 @@ namespace GraphLib.Base.EndPointsCondition
             unsetSourceVertexCondition.Execute(endPoints.Source);
             unsetTargetVertexCondition.Execute(endPoints.Target);
             endPoints.IntermediateVertices.ForEach(unsetIntermediateVertexCondition.Execute);
+            endPoints.markedToReplaceIntermediates.Clear();
         }
 
         public void ExecuteTheFirstTrue(IVertex vertex)
         {
-            bool IsTrue(IEndPointsCondition condition)
-            {
-                return condition.IsTrue(vertex);
-            }
-
             if (!vertex.IsNull() && !vertex.IsIsolated())
             {
-                conditions
-                    .FirstOrDefault(IsTrue)
-                    ?.Execute(vertex);
+                conditions.FirstOrDefault(condition => condition.IsTrue(vertex))?.Execute(vertex);
             }
         }
 
         private readonly IEndPointsCondition unsetSourceVertexCondition;
         private readonly IEndPointsCondition unsetTargetVertexCondition;
         private readonly IEndPointsCondition unsetIntermediateVertexCondition;
-
-        private readonly IIntermediateEndPoints endPoints;
+        private readonly BaseEndPoints endPoints;
         private readonly IEnumerable<IEndPointsCondition> conditions;
     }
 }

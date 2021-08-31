@@ -43,11 +43,12 @@
   <ItemGroup>
     <Compile Include="BaseCoordinate.cs" />
     <Compile Include="BaseEndPoints.cs" />
+    <Compile Include="EndPointsCondition\Realizations\ReplaceIntermediateVertexCondition.cs" />
     <Compile Include="EndPointsInspection\Abstractions\BaseEndPointsInspection.cs" />
     <Compile Include="EndPointsInspection\Abstractions\BaseIntermediateEndPointsInspection.cs" />
     <Compile Include="EndPointsCondition\Interface\IEndPointsCondition.cs" />
-    <Compile Include="EndPointsCondition\Realizations\ReplaceIntermediateVertexCondition.cs" />
-    <Compile Include="EndPointsCondition\Realizations\ReplaceSourceVertexCondition.cs" />
+    <Compile Include="EndPointsCondition\Realizations\ReplaceIntermediateIsolatedVertexCondition.cs" />
+    <Compile Include="EndPointsCondition\Realizations\ReplaceIsolatedSourceVertexCondition.cs" />
     <Compile Include="EndPointsCondition\Realizations\ReplaceTargetVertexCondition.cs" />
     <Compile Include="EndPointsCondition\Realizations\SetIntermediateVertexCondition.cs" />
     <Compile Include="EndPointsCondition\Realizations\SetSourceVertexCondition.cs" />
@@ -63,6 +64,10 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\Algorithm\Algorithm.Extensions\Algorithm.Extensions.csproj">
+      <Project>{11C8B301-FE40-44A1-A5A2-BC684B6A56A0}</Project>
+      <Name>Algorithm.Extensions</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\Common\Common.csproj">
       <Project>{a5a743f5-d346-4b2b-b6ac-07152f64e4d9}</Project>
       <Name>Common</Name>
