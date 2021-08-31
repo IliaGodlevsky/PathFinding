@@ -8,6 +8,13 @@ namespace WPFVersion.Model
 {
     internal sealed class EndPoints : BaseEndPoints
     {
+        private static readonly SolidColorBrush ToReplaceMarkColor;
+
+        static EndPoints()
+        {
+            ToReplaceMarkColor = new SolidColorBrush(new Color { A = 185, B = 0, R = 255, G = 140 });
+        }
+
         protected override void SubscribeVertex(IVertex vertex)
         {
             if (vertex is Vertex vert)
@@ -30,13 +37,11 @@ namespace WPFVersion.Model
         {
             if (e is MouseButtonEventArgs args && args.ChangedButton == MouseButton.Middle)
             {
-                if (sender is Vertex vertex)
-                {
-                    var color = Colors.DarkOrange;
-                    color.A -= 70;
-                    vertex.Background = new SolidColorBrush(color);
-                }
                 base.MarkIntermediateToReplace(sender, e);
+                if (sender is Vertex vertex && markedToReplaceIntermediates.Contains(vertex))
+                {
+                    vertex.Background = ToReplaceMarkColor;
+                }
             }
         }
     }

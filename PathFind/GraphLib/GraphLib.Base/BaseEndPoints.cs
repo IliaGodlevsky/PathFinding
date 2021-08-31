@@ -19,8 +19,8 @@ namespace GraphLib.Base
         public void Reset() => endPointsConditions.Reset();
         public bool IsEndPoint(IVertex vertex) => this.GetVertices().Contains(vertex);
 
-        internal readonly Collection<IVertex> intermediates;
-        internal readonly Queue<IVertex> markedToReplaceIntermediates;
+        internal protected readonly Collection<IVertex> intermediates;
+        internal protected readonly Queue<IVertex> markedToReplaceIntermediates;
 
         protected BaseEndPoints()
         {
@@ -37,10 +37,9 @@ namespace GraphLib.Base
 
         protected virtual void MarkIntermediateToReplace(object sender, EventArgs e)
         {
-            if (sender is IVertex vertex 
-                && !vertex.IsOneOf(Source, Target)
-                && intermediates.Contains(vertex)
-                && !vertex.IsIsolated())
+            if (sender is IVertex vertex && !vertex.IsOneOf(Source, Target)
+                && intermediates.Contains(vertex) && !vertex.IsIsolated()
+                && !markedToReplaceIntermediates.Contains(vertex))
             {
                 markedToReplaceIntermediates.Enqueue(vertex);
             }
