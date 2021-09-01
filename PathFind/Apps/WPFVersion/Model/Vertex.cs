@@ -12,28 +12,16 @@ namespace WPFVersion.Model
 {
     internal class Vertex : Label, IVertex, IVisualizable, IWeightable
     {
-        public static SolidColorBrush VisitedVertexColor { get; set; }
-        public static SolidColorBrush PathVertexColor { get; set; }
-        public static SolidColorBrush StartVertexColor { get; set; }
-        public static SolidColorBrush EndVertexColor { get; set; }
-        public static SolidColorBrush EnqueuedVertexColor { get; set; }
-        public static SolidColorBrush ObstacleVertexColor { get; set; }
-        public static SolidColorBrush RegularVertexColor { get; set; }
-        public static SolidColorBrush AlreadyPathVertexColor { get; set; }
-        public static SolidColorBrush IntermediateVertexColor { get; set; }
-
-        static Vertex()
-        {
-            VisitedVertexColor = new SolidColorBrush(Colors.CadetBlue);
-            PathVertexColor = new SolidColorBrush(Colors.Yellow);
-            StartVertexColor = new SolidColorBrush(Colors.Green);
-            EndVertexColor = new SolidColorBrush(Colors.Red);
-            EnqueuedVertexColor = new SolidColorBrush(Colors.Magenta);
-            ObstacleVertexColor = new SolidColorBrush(Colors.Black);
-            RegularVertexColor = new SolidColorBrush(Colors.White);
-            AlreadyPathVertexColor = new SolidColorBrush(Colors.Gold);
-            IntermediateVertexColor = new SolidColorBrush(Colors.DarkOrange);
-        }
+        public static SolidColorBrush VisitedVertexColor { get; set; } = new SolidColorBrush(Colors.CadetBlue);
+        public static SolidColorBrush PathVertexColor { get; set; } = new SolidColorBrush(Colors.Yellow);
+        public static SolidColorBrush StartVertexColor { get; set; } = new SolidColorBrush(Colors.Green);
+        public static SolidColorBrush EndVertexColor { get; set; } = new SolidColorBrush(Colors.Red);
+        public static SolidColorBrush EnqueuedVertexColor { get; set; } = new SolidColorBrush(Colors.Magenta);
+        public static SolidColorBrush ObstacleVertexColor { get; set; } = new SolidColorBrush(Colors.Black);
+        public static SolidColorBrush RegularVertexColor { get; set; } = new SolidColorBrush(Colors.White);
+        public static SolidColorBrush AlreadyPathVertexColor { get; set; } = new SolidColorBrush(Colors.Gold);
+        public static SolidColorBrush IntermediateVertexColor { get; set; } = new SolidColorBrush(Colors.DarkOrange);
+        public static SolidColorBrush ToReplaceMarkColor { get; set; } = new SolidColorBrush(new Color { A = 185, B = 0, R = 255, G = 140 });
 
         public Vertex(INeighboursCoordinates radar, ICoordinate coordinate) : base()
         {
@@ -90,9 +78,11 @@ namespace WPFVersion.Model
             }
         }
 
-        public bool IsVisualizedAsPath => Background.IsOneOf(AlreadyPathVertexColor, PathVertexColor, IntermediateVertexColor);
+        public bool IsVisualizedAsPath 
+            => Background.IsOneOf(AlreadyPathVertexColor, PathVertexColor, IntermediateVertexColor, ToReplaceMarkColor);
 
-        public bool IsVisualizedAsEndPoint => Background.IsOneOf(StartVertexColor, EndVertexColor, IntermediateVertexColor);
+        public bool IsVisualizedAsEndPoint 
+            => Background.IsOneOf(StartVertexColor, EndVertexColor, IntermediateVertexColor, ToReplaceMarkColor);
 
         public void VisualizeAsTarget()
         {
@@ -177,6 +167,14 @@ namespace WPFVersion.Model
         public void VisualizeAsIntermediate()
         {
             Dispatcher.Invoke(() => Background = IntermediateVertexColor);
+        }
+
+        public void VisualizeAsMarkedToReplaceIntermediate()
+        {
+            if (Background == IntermediateVertexColor)
+            {
+                Dispatcher.Invoke(() => Background = ToReplaceMarkColor);
+            }
         }
     }
 }

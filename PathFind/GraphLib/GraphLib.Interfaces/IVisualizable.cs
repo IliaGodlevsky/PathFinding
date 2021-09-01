@@ -23,6 +23,8 @@
 
         void VisualizeAsIntermediate();
 
+        void VisualizeAsMarkedToReplaceIntermediate();
+
         bool IsVisualizedAsPath { get; }
 
         bool IsVisualizedAsEndPoint { get; }

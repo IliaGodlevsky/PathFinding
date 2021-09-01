@@ -1,17 +1,18 @@
 ﻿using Common.Extensions;
 using GraphLib.Base.EndPointsCondition.Interface;
-using GraphLib.Base.EndPointsCondition.Realizations;
+using GraphLib.Base.EndPointsCondition.Realizations.LeftButtonConditions;
+using GraphLib.Base.EndPointsConditions.Interfaces;
 using GraphLib.Extensions;
 using GraphLib.Interfaces;
 using NullObject.Extensions;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace GraphLib.Base.EndPointsCondition
+namespace GraphLib.Base.EndPointsConditions.Realizations
 {
-    internal sealed class EndPointsConditions
+    internal sealed class LeftButtonEndPointsConditions : IEndPointsConditions
     {
-        public EndPointsConditions(BaseEndPoints endPoints)
+        public LeftButtonEndPointsConditions(BaseEndPoints endPoints)
         {
             unsetSourceVertexCondition = new UnsetSourceVertexCondition(endPoints);
             unsetTargetVertexCondition = new UnsetTargetVertexCondition(endPoints);
@@ -37,7 +38,6 @@ namespace GraphLib.Base.EndPointsCondition
             unsetSourceVertexCondition.Execute(endPoints.Source);
             unsetTargetVertexCondition.Execute(endPoints.Target);
             endPoints.IntermediateVertices.ForEach(unsetIntermediateVertexCondition.Execute);
-            endPoints.markedToReplaceIntermediates.Clear();
         }
 
         public void ExecuteTheFirstTrue(IVertex vertex)

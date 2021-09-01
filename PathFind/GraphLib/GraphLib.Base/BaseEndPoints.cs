@@ -1,4 +1,5 @@
-﻿using GraphLib.Base.EndPointsCondition;
+﻿using GraphLib.Base.EndPointsConditions.Interfaces;
+using GraphLib.Base.EndPointsConditions.Realizations;
 using GraphLib.Extensions;
 using GraphLib.Interfaces;
 using System;
@@ -16,7 +17,11 @@ namespace GraphLib.Base
 
         public void SubscribeToEvents(IGraph graph) => graph.ForEach(SubscribeVertex);
         public void UnsubscribeFromEvents(IGraph graph) => graph.ForEach(UnsubscribeVertex);
-        public void Reset() => endPointsConditions.Reset();
+        public void Reset()
+        {
+            middleButtonConditions.Reset();
+            leftButtonConditions.Reset();
+        }
         public bool IsEndPoint(IVertex vertex) => this.GetVertices().Contains(vertex);
 
         internal protected readonly Collection<IVertex> intermediates;
@@ -26,28 +31,25 @@ namespace GraphLib.Base
         {
             intermediates = new Collection<IVertex>();
             markedToReplaceIntermediates = new Queue<IVertex>();
-            endPointsConditions = new EndPointsConditions(this);
+            leftButtonConditions = new LeftButtonEndPointsConditions(this);
+            middleButtonConditions = new MiddleButtonEndPointsConditions(this);
             Reset();
         }
 
         protected virtual void SetEndPoints(object sender, EventArgs e)
         {
-            endPointsConditions.ExecuteTheFirstTrue(sender as IVertex);
+            leftButtonConditions.ExecuteTheFirstTrue(sender as IVertex);
         }
 
         protected virtual void MarkIntermediateToReplace(object sender, EventArgs e)
         {
-            if (sender is IVertex vertex && !vertex.IsOneOf(Source, Target)
-                && intermediates.Contains(vertex) && !vertex.IsIsolated()
-                && !markedToReplaceIntermediates.Contains(vertex))
-            {
-                markedToReplaceIntermediates.Enqueue(vertex);
-            }
+            middleButtonConditions.ExecuteTheFirstTrue(sender as IVertex);
         }
 
         protected abstract void SubscribeVertex(IVertex vertex);
         protected abstract void UnsubscribeVertex(IVertex vertex);
 
-        private readonly EndPointsConditions endPointsConditions;
+        private readonly IEndPointsConditions middleButtonConditions;
+        private readonly IEndPointsConditions leftButtonConditions;
     }
 }

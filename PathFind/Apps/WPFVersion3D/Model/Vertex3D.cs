@@ -32,28 +32,19 @@ namespace WPFVersion3D.Model
             this.Initialize(info);
         }
 
-        public static SolidColorBrush VisitedVertexBrush { get; set; }
-        public static SolidColorBrush ObstacleVertexBrush { get; set; }
-        public static SolidColorBrush SimpleVertexBrush { get; set; }
-        public static SolidColorBrush PathVertexBrush { get; set; }
-        public static SolidColorBrush StartVertexBrush { get; set; }
-        public static SolidColorBrush EndVertexBrush { get; set; }
-        public static SolidColorBrush EnqueuedVertexBrush { get; set; }
-        public static SolidColorBrush IntermediateVertexColor { get; set; }
-        public static SolidColorBrush AlreadyPathVertexBrush { get; set; }
+        public static SolidColorBrush VisitedVertexBrush { get; set; } = new SolidColorBrush(Colors.Black) { Opacity = InitialObstacleVertexOpacity };
+        public static SolidColorBrush ObstacleVertexBrush { get; set; } = new SolidColorBrush(Colors.Black) { Opacity = InitialObstacleVertexOpacity };
+        public static SolidColorBrush SimpleVertexBrush { get; set; } = new SolidColorBrush(Colors.White) { Opacity = InitialRegularVertexOpacity };
+        public static SolidColorBrush PathVertexBrush { get; set; } = new SolidColorBrush(Colors.Yellow) { Opacity = InitialPathVertexOpacity };
+        public static SolidColorBrush StartVertexBrush { get; set; } = new SolidColorBrush(Colors.Green) { Opacity = InitialStartVertexOpacity };
+        public static SolidColorBrush EndVertexBrush { get; set; } = new SolidColorBrush(Colors.Red) { Opacity = InitialEndVertexOpacity };
+        public static SolidColorBrush EnqueuedVertexBrush { get; set; } = new SolidColorBrush(Colors.Magenta) { Opacity = InitialEnqueuedVertexOpacity };
+        public static SolidColorBrush IntermediateVertexColor { get; set; } = new SolidColorBrush(Colors.DarkOrange) { Opacity = InitialStartVertexOpacity };
+        public static SolidColorBrush AlreadyPathVertexBrush { get; set; } = new SolidColorBrush(Colors.Gold) { Opacity = InitialStartVertexOpacity };
+        public static SolidColorBrush ToReplaceMarkColor { get; set; } = new SolidColorBrush(new Color { A = 185, B = 0, R = 255, G = 140 }) { Opacity = InitialStartVertexOpacity };
 
         static Vertex3D()
         {
-            VisitedVertexBrush = new SolidColorBrush(Colors.CadetBlue) { Opacity = InitialVisitedVertexOpacity };
-            PathVertexBrush = new SolidColorBrush(Colors.Yellow) { Opacity = InitialPathVertexOpacity };
-            StartVertexBrush = new SolidColorBrush(Colors.Green) { Opacity = InitialStartVertexOpacity };
-            EndVertexBrush = new SolidColorBrush(Colors.Red) { Opacity = InitialEndVertexOpacity };
-            EnqueuedVertexBrush = new SolidColorBrush(Colors.Magenta) { Opacity = InitialEnqueuedVertexOpacity };
-            ObstacleVertexBrush = new SolidColorBrush(Colors.Black) { Opacity = InitialObstacleVertexOpacity };
-            SimpleVertexBrush = new SolidColorBrush(Colors.White) { Opacity = InitialRegularVertexOpacity };
-            IntermediateVertexColor = new SolidColorBrush(Colors.DarkOrange) { Opacity = InitialStartVertexOpacity };
-            AlreadyPathVertexBrush = new SolidColorBrush(Colors.Gold) { Opacity = InitialStartVertexOpacity };
-
             ModelProperty = DependencyProperty.Register(
                 nameof(Model),
                 typeof(Model3D),
@@ -136,10 +127,10 @@ namespace WPFVersion3D.Model
         }
 
         public bool IsVisualizedAsPath
-            => Dispatcher.Invoke(() => Brush.IsOneOf(PathVertexBrush, PathVertexBrush, IntermediateVertexColor));
+            => Dispatcher.Invoke(() => Brush.IsOneOf(PathVertexBrush, PathVertexBrush, IntermediateVertexColor, ToReplaceMarkColor));
 
         public bool IsVisualizedAsEndPoint
-            => Dispatcher.Invoke(() => Brush.IsOneOf(StartVertexBrush, EndVertexBrush, IntermediateVertexColor));
+            => Dispatcher.Invoke(() => Brush.IsOneOf(StartVertexBrush, EndVertexBrush, IntermediateVertexColor, ToReplaceMarkColor));
 
         public void VisualizeAsTarget()
         {
@@ -230,6 +221,14 @@ namespace WPFVersion3D.Model
         public void VisualizeAsIntermediate()
         {
             Dispatcher.Invoke(() => Brush = IntermediateVertexColor);
+        }
+
+        public void VisualizeAsMarkedToReplaceIntermediate()
+        {
+            if(Brush== IntermediateVertexColor)
+            {
+                Dispatcher.Invoke(() => Brush = ToReplaceMarkColor);
+            }
         }
 
         private readonly IModel3DFactory modelFactory;

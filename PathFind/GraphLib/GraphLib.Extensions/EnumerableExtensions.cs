@@ -38,5 +38,18 @@ namespace GraphLib.Extensions
         {
             return collection.Where(vertex => !vertex.IsObstacle).ToArray();
         }
+
+        public static bool Remove<T>(this Queue<T> queue, T item)
+        {
+            bool isRemoved = false;
+            if (queue.Contains(item))
+            {
+                var items = new List<T>(queue);
+                queue.Clear();
+                isRemoved = items.Remove(item);
+                items.ForEach(queue.Enqueue);
+            }
+            return isRemoved;
+        }
     }
 }

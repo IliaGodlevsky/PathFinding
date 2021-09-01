@@ -3,7 +3,7 @@ using GraphLib.Base.EndPointsInspection.Abstractions;
 using GraphLib.Extensions;
 using GraphLib.Interfaces;
 
-namespace GraphLib.Base.EndPointsCondition.Realizations
+namespace GraphLib.Base.EndPointsCondition.Realizations.LeftButtonConditions
 {
     internal sealed class ReplaceIsolatedSourceVertexCondition
         : BaseEndPointsInspection, IEndPointsCondition

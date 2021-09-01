@@ -126,9 +126,9 @@ namespace ConsoleVersion.Model
             Display();
         }
 
-        public bool IsVisualizedAsPath => colour.IsOneOf(PathVertexColor, AlreadyPathVertexColor);
+        public bool IsVisualizedAsPath => colour.IsOneOf(PathVertexColor, AlreadyPathVertexColor, IntermediateVertexColor);
 
-        public bool IsVisualizedAsEndPoint => colour.IsOneOf(SourceVertexColor, TargetVertexColor);
+        public bool IsVisualizedAsEndPoint => colour.IsOneOf(SourceVertexColor, TargetVertexColor, IntermediateVertexColor);
 
         public void VisualizeAsTarget()
         {
@@ -183,28 +183,20 @@ namespace ConsoleVersion.Model
             Mark(IntermediateVertexColor);
         }
 
-        private static readonly Color RegularVertexColor;
-        private static readonly Color ObstacleVertexColor;
-        private static readonly Color PathVertexColor;
-        private static readonly Color EnqueuedVertexColor;
-        private static readonly Color SourceVertexColor;
-        private static readonly Color TargetVertexColor;
-        private static readonly Color AlreadyPathVertexColor;
-        private static readonly Color VisitedVertexColor;
-        private static readonly Color IntermediateVertexColor;
-
-        static Vertex()
+        public void VisualizeAsMarkedToReplaceIntermediate()
         {
-            RegularVertexColor = Color.FromKnownColor(KnownColor.WhiteSmoke);
-            ObstacleVertexColor = Color.FromKnownColor(KnownColor.Black);
-            PathVertexColor = Color.FromKnownColor(KnownColor.Yellow);
-            EnqueuedVertexColor = Color.FromKnownColor(KnownColor.Magenta);
-            SourceVertexColor = Color.FromKnownColor(KnownColor.Green);
-            TargetVertexColor = Color.FromKnownColor(KnownColor.Red);
-            AlreadyPathVertexColor = Color.FromKnownColor(KnownColor.Orange);
-            VisitedVertexColor = Color.FromKnownColor(KnownColor.Blue);
-            IntermediateVertexColor = Color.FromKnownColor(KnownColor.DarkOrange);
+            
         }
+
+        private static readonly Color RegularVertexColor = Color.FromKnownColor(KnownColor.WhiteSmoke);
+        private static readonly Color ObstacleVertexColor = Color.FromKnownColor(KnownColor.Black);
+        private static readonly Color PathVertexColor = Color.FromKnownColor(KnownColor.Yellow);
+        private static readonly Color EnqueuedVertexColor = Color.FromKnownColor(KnownColor.Magenta);
+        private static readonly Color SourceVertexColor = Color.FromKnownColor(KnownColor.Green);
+        private static readonly Color TargetVertexColor = Color.FromKnownColor(KnownColor.Red);
+        private static readonly Color AlreadyPathVertexColor = Color.FromKnownColor(KnownColor.Orange);
+        private static readonly Color VisitedVertexColor = Color.FromKnownColor(KnownColor.Blue);
+        private static readonly Color IntermediateVertexColor = Color.FromKnownColor(KnownColor.DarkOrange);
 
         private string text;
         private Color colour;

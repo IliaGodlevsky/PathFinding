@@ -13,28 +13,16 @@ namespace WindowsFormsVersion.Model
 {
     internal class Vertex : Label, IVertex, IVisualizable, IWeightable
     {
-        private static Color RegularVertexColor;
-        private static Color ObstacleVertexColor;
-        private static Color PathVertexColor;
-        private static Color EnqueuedVertexColor;
-        private static Color SourceVertexColor;
-        private static Color TargetVertexColor;
-        private static Color AlreadyPathVertexColor;
-        private static Color VisitedVertexColor;
-        private static Color IntermediateVertexColor;
-
-        static Vertex()
-        {
-            RegularVertexColor = Color.FromKnownColor(KnownColor.WhiteSmoke);
-            ObstacleVertexColor = Color.FromKnownColor(KnownColor.Black);
-            PathVertexColor = Color.FromKnownColor(KnownColor.Yellow);
-            EnqueuedVertexColor = Color.FromKnownColor(KnownColor.Magenta);
-            SourceVertexColor = Color.FromKnownColor(KnownColor.Green);
-            TargetVertexColor = Color.FromKnownColor(KnownColor.Red);
-            AlreadyPathVertexColor = Color.FromKnownColor(KnownColor.Gold);
-            VisitedVertexColor = Color.FromKnownColor(KnownColor.CadetBlue);
-            IntermediateVertexColor = Color.FromKnownColor(KnownColor.DarkOrange);
-        }
+        private static Color RegularVertexColor = Color.FromKnownColor(KnownColor.WhiteSmoke);
+        private static Color ObstacleVertexColor = Color.FromKnownColor(KnownColor.Black);
+        private static Color PathVertexColor = Color.FromKnownColor(KnownColor.Yellow);
+        private static Color EnqueuedVertexColor = Color.FromKnownColor(KnownColor.Magenta);
+        private static Color SourceVertexColor = Color.FromKnownColor(KnownColor.Green);
+        private static Color TargetVertexColor = Color.FromKnownColor(KnownColor.Red);
+        private static Color AlreadyPathVertexColor = Color.FromKnownColor(KnownColor.Gold);
+        private static Color VisitedVertexColor = Color.FromKnownColor(KnownColor.CadetBlue);
+        private static Color IntermediateVertexColor = Color.FromKnownColor(KnownColor.DarkOrange);
+        private static Color ToReplaceMarkColor = Color.FromArgb(alpha: 185, red: 255, green: 140, blue: 0);
 
         public Vertex(INeighboursCoordinates coordinateRadar, ICoordinate coordinate) : base()
         {
@@ -152,13 +140,23 @@ namespace WindowsFormsVersion.Model
             return other.IsEqual(this);
         }
 
-        public bool IsVisualizedAsPath => BackColor.IsOneOf(PathVertexColor, AlreadyPathVertexColor, IntermediateVertexColor);
+        public bool IsVisualizedAsPath 
+            => BackColor.IsOneOf(PathVertexColor, AlreadyPathVertexColor, IntermediateVertexColor, ToReplaceMarkColor);
 
-        public bool IsVisualizedAsEndPoint => BackColor.IsOneOf(SourceVertexColor, TargetVertexColor, IntermediateVertexColor);
+        public bool IsVisualizedAsEndPoint 
+            => BackColor.IsOneOf(SourceVertexColor, TargetVertexColor, IntermediateVertexColor, ToReplaceMarkColor);
 
         public void VisualizeAsIntermediate()
         {
             BackColor = IntermediateVertexColor;
+        }
+
+        public void VisualizeAsMarkedToReplaceIntermediate()
+        {
+            if (BackColor == IntermediateVertexColor)
+            {
+                BackColor = ToReplaceMarkColor;
+            }
         }
     }
 }

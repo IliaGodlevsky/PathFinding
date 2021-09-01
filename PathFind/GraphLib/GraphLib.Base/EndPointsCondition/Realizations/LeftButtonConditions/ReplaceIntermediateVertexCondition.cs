@@ -4,7 +4,7 @@ using GraphLib.Interfaces;
 using NullObject.Extensions;
 using System.Linq;
 
-namespace GraphLib.Base.EndPointsCondition.Realizations
+namespace GraphLib.Base.EndPointsCondition.Realizations.LeftButtonConditions
 {
     internal sealed class ReplaceIntermediateVertexCondition
         : BaseIntermediateEndPointsInspection, IEndPointsCondition

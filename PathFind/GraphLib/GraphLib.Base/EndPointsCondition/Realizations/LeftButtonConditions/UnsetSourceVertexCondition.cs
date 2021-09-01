@@ -4,7 +4,7 @@ using GraphLib.Extensions;
 using GraphLib.Interfaces;
 using GraphLib.NullRealizations.NullObjects;
 
-namespace GraphLib.Base.EndPointsCondition.Realizations
+namespace GraphLib.Base.EndPointsCondition.Realizations.LeftButtonConditions
 {
     internal sealed class UnsetSourceVertexCondition
         : BaseEndPointsInspection, IEndPointsCondition
