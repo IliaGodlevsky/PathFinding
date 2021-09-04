@@ -78,10 +78,10 @@ namespace WPFVersion.Model
             }
         }
 
-        public bool IsVisualizedAsPath 
+        public bool IsVisualizedAsPath
             => Background.IsOneOf(AlreadyPathVertexColor, PathVertexColor, IntermediateVertexColor, ToReplaceMarkColor);
 
-        public bool IsVisualizedAsEndPoint 
+        public bool IsVisualizedAsEndPoint
             => Background.IsOneOf(StartVertexColor, EndVertexColor, IntermediateVertexColor, ToReplaceMarkColor);
 
         public void VisualizeAsTarget()

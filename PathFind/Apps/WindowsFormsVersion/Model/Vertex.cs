@@ -140,10 +140,10 @@ namespace WindowsFormsVersion.Model
             return other.IsEqual(this);
         }
 
-        public bool IsVisualizedAsPath 
+        public bool IsVisualizedAsPath
             => BackColor.IsOneOf(PathVertexColor, AlreadyPathVertexColor, IntermediateVertexColor, ToReplaceMarkColor);
 
-        public bool IsVisualizedAsEndPoint 
+        public bool IsVisualizedAsEndPoint
             => BackColor.IsOneOf(SourceVertexColor, TargetVertexColor, IntermediateVertexColor, ToReplaceMarkColor);
 
         public void VisualizeAsIntermediate()

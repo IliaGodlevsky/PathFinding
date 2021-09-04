@@ -78,7 +78,7 @@ namespace Algorithm.Base
             }
 
             verticesQueue = verticesQueue
-                .DistinctBy(Position)
+                .DistinctBy(vertex => vertex.Position)
                 .ToQueue();
         }
 

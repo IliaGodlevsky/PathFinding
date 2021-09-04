@@ -9,7 +9,7 @@ namespace GraphLib.Serialization.Extensions
             return new VertexSerializationInfo(self);
         }
 
-        public static void Initialize(this IVertex vertex, in VertexSerializationInfo info)
+        public static void Initialize(this IVertex vertex, VertexSerializationInfo info)
         {
             vertex.Cost = info.Cost;
             vertex.IsObstacle = info.IsObstacle;

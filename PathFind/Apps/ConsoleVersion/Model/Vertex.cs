@@ -185,7 +185,7 @@ namespace ConsoleVersion.Model
 
         public void VisualizeAsMarkedToReplaceIntermediate()
         {
-            
+
         }
 
         private static readonly Color RegularVertexColor = Color.FromKnownColor(KnownColor.WhiteSmoke);

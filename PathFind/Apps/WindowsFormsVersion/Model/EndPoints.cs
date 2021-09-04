@@ -1,7 +1,6 @@
 ﻿using GraphLib.Base;
 using GraphLib.Interfaces;
 using System;
-using System.Drawing;
 using System.Windows.Forms;
 
 namespace WindowsFormsVersion.Model
@@ -39,7 +38,7 @@ namespace WindowsFormsVersion.Model
             if (e is MouseEventArgs args && args.Button == MouseButtons.Middle)
             {
                 base.MarkIntermediateToReplace(sender, e);
-            }            
+            }
         }
     }
 }

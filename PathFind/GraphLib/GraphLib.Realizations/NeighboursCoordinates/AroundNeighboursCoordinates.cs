@@ -14,12 +14,15 @@ namespace GraphLib.Realizations.NeighboursCoordinates
     [Serializable]
     public sealed class AroundNeighboursCoordinates : INeighboursCoordinates, ISerializable
     {
+        private static readonly int[] EmptyOffsetMatrix = new int[] { };
+        private static readonly int[] OffsetMatrix = new int[] { -1, 0, 1 };
+
         public AroundNeighboursCoordinates(ICoordinate coordinate)
         {
             selfCoordinatesValues = coordinate.CoordinatesValues.ToArray();
             limitDepth = selfCoordinatesValues.Length;
             resultCoordinatesValues = new int[limitDepth];
-            lateralOffsetMatrix = limitDepth == 0 ? new int[] { } : new[] { -1, 0, 1 };
+            lateralOffsetMatrix = limitDepth == 0 ? EmptyOffsetMatrix : OffsetMatrix;
             neighboursCoordinates = new Lazy<ICoordinate[]>(GetNeighboursCoordinates);
         }
 

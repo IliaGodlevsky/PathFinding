@@ -2,7 +2,6 @@
 using GraphLib.Base.EndPointsInspection.Abstractions;
 using GraphLib.Interfaces;
 using NullObject.Extensions;
-using System.Linq;
 
 namespace GraphLib.Base.EndPointsCondition.Realizations.LeftButtonConditions
 {
@@ -19,15 +18,12 @@ namespace GraphLib.Base.EndPointsCondition.Realizations.LeftButtonConditions
             if (endPoints.markedToReplaceIntermediates.Count > 0)
             {
                 var toReplace = endPoints.markedToReplaceIntermediates.Dequeue();
-                if (!toReplace.IsNull())
+                int toReplaceIndex = endPoints.intermediates.IndexOf(toReplace);
+                if (endPoints.intermediates.Remove(toReplace) && toReplaceIndex > -1)
                 {
-                    int toReplaceIndex = endPoints.intermediates.IndexOf(toReplace);
-                    if (endPoints.intermediates.Remove(toReplace) && toReplaceIndex > -1)
-                    {
-                        (toReplace as IVisualizable)?.VisualizeAsRegular();
-                        endPoints.intermediates.Insert(toReplaceIndex, vertex);
-                        (vertex as IVisualizable)?.VisualizeAsIntermediate();
-                    }
+                    (toReplace as IVisualizable)?.VisualizeAsRegular();
+                    endPoints.intermediates.Insert(toReplaceIndex, vertex);
+                    (vertex as IVisualizable)?.VisualizeAsIntermediate();
                 }
             }
         }

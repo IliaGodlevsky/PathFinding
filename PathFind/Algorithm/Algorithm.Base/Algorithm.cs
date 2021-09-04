@@ -1,4 +1,5 @@
-﻿using Algorithm.Infrastructure.EventArguments;
+﻿using Algorithm.Extensions;
+using Algorithm.Infrastructure.EventArguments;
 using Algorithm.Infrastructure.Handlers;
 using Algorithm.Interfaces;
 using Algorithm.Сompanions;
@@ -92,8 +93,6 @@ namespace Algorithm.Base
         {
             RaiseFinished(new AlgorithmEventArgs(CurrentVertex));
         }
-
-        protected ICoordinate Position(IVertex vertex) => vertex.Position;
 
         public void Dispose()
         {

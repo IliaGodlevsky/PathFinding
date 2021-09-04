@@ -15,7 +15,7 @@ namespace GraphLib.Base.EndPointsConditions.Realizations
         public MiddleButtonEndPointsConditions(BaseEndPoints endPoints)
         {
             cancelMarkToReplace = new CancelMarkToReplaceEndPointsConditions(endPoints);
-            conditions = new []
+            conditions = new[]
             {
                 cancelMarkToReplace,
                 new MarkToReplaceEndPointsCondition(endPoints)

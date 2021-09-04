@@ -2,7 +2,6 @@
 using GraphLib.Interfaces;
 using System;
 using System.Windows.Input;
-using System.Windows.Media;
 
 namespace WPFVersion.Model
 {

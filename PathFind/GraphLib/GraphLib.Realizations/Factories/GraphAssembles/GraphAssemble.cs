@@ -12,7 +12,7 @@ namespace GraphLib.Realizations.Factories.GraphAssembles
     /// <summary>
     /// Assembles a graph suitable for use with pathfinding algorithms
     /// </summary>
-    [Description("Random graph assemble")]
+    [Description("Random cost graph assemble")]
     public class GraphAssemble : IGraphAssemble
     {
         public GraphAssemble(

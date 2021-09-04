@@ -32,7 +32,7 @@ namespace WPFVersion3D.Model
             this.Initialize(info);
         }
 
-        public static SolidColorBrush VisitedVertexBrush { get; set; } = new SolidColorBrush(Colors.Black) { Opacity = InitialObstacleVertexOpacity };
+        public static SolidColorBrush VisitedVertexBrush { get; set; } = new SolidColorBrush(Colors.CadetBlue) { Opacity =InitialVisitedVertexOpacity };
         public static SolidColorBrush ObstacleVertexBrush { get; set; } = new SolidColorBrush(Colors.Black) { Opacity = InitialObstacleVertexOpacity };
         public static SolidColorBrush SimpleVertexBrush { get; set; } = new SolidColorBrush(Colors.White) { Opacity = InitialRegularVertexOpacity };
         public static SolidColorBrush PathVertexBrush { get; set; } = new SolidColorBrush(Colors.Yellow) { Opacity = InitialPathVertexOpacity };
@@ -41,7 +41,7 @@ namespace WPFVersion3D.Model
         public static SolidColorBrush EnqueuedVertexBrush { get; set; } = new SolidColorBrush(Colors.Magenta) { Opacity = InitialEnqueuedVertexOpacity };
         public static SolidColorBrush IntermediateVertexColor { get; set; } = new SolidColorBrush(Colors.DarkOrange) { Opacity = InitialStartVertexOpacity };
         public static SolidColorBrush AlreadyPathVertexBrush { get; set; } = new SolidColorBrush(Colors.Gold) { Opacity = InitialStartVertexOpacity };
-        public static SolidColorBrush ToReplaceMarkColor { get; set; } = new SolidColorBrush(new Color { A = 185, B = 0, R = 255, G = 140 }) { Opacity = InitialStartVertexOpacity };
+        public static SolidColorBrush ToReplaceMarkColor { get; set; } = new SolidColorBrush(Color.FromArgb(a: 185, b: 0, r: 255, g: 140)) { Opacity = InitialStartVertexOpacity };
 
         static Vertex3D()
         {
@@ -225,7 +225,7 @@ namespace WPFVersion3D.Model
 
         public void VisualizeAsMarkedToReplaceIntermediate()
         {
-            if(Brush== IntermediateVertexColor)
+            if (Brush == IntermediateVertexColor)
             {
                 Dispatcher.Invoke(() => Brush = ToReplaceMarkColor);
             }

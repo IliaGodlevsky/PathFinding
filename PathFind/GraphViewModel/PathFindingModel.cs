@@ -1,5 +1,6 @@
 ﻿using Algorithm.Algos;
 using Algorithm.Algos.Enums;
+using Algorithm.Algos.Extensions;
 using Algorithm.Extensions;
 using Algorithm.Infrastructure.EventArguments;
 using Algorithm.Interfaces;
@@ -44,7 +45,7 @@ namespace GraphViewModel
         {
             try
             {
-                algorithm = AlgoFactory.CreateAlgorithm(Algorithm, graph, endPoints);
+                algorithm = Algorithm.ToAlgorithm(graph, endPoints);
                 SubscribeOnAlgorithmEvents();
                 path = await algorithm.FindPathAsync();
                 await path.HighlightAsync(endPoints);
