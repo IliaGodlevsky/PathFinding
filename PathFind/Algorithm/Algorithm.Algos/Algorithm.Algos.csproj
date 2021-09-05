@@ -50,7 +50,6 @@
     <Compile Include="Algos\DijkstraAlgorithm.cs" />
     <Compile Include="Algos\DistanceFirstAlgorithm.cs" />
     <Compile Include="Algos\LeeAlgorithm.cs" />
-    <Compile Include="Attributes\AlgorithmTypeAttribute.cs" />
     <Compile Include="Enums\Algorithms.cs" />
     <Compile Include="Extensions\AlgorithmsEnumExtensions.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

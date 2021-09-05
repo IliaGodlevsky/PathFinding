@@ -25,7 +25,7 @@ namespace GraphLib.ViewModel
         protected GraphCreatingModel(ILog log, IMainModel model,
             IEnumerable<IGraphAssemble> graphAssembles)
         {
-            GraphAssembles = graphAssembles.AsNameInstanceDictionary();
+            GraphAssembles = graphAssembles.ToNameInstanceDictionary();
             this.model = model;
             this.graphAssembles = graphAssembles;
             this.log = log;

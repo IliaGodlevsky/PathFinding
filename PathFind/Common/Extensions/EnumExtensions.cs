@@ -39,7 +39,7 @@ namespace Common.Extensions
             Func<TEnum, TKey> keySelector, Func<KeyValuePair<TKey, TEnum>, TKey> orderSelector)
             where TEnum : Enum
         {
-            return ToDictionary(keySelector).OrderBy(orderSelector).AsDictionary();
+            return ToDictionary(keySelector).OrderBy(orderSelector).ToDictionary();
         }
     }
 }

@@ -1,6 +1,8 @@
 ﻿using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace Common.Extensions
 {
@@ -142,15 +144,36 @@ namespace Common.Extensions
             return self.Count() == collection.Count();
         }
 
-        public static IDictionary<TKey, TValue> AsDictionary<TKey, TValue>
+        public static IDictionary<TKey, TValue> ToDictionary<TKey, TValue>
             (this IEnumerable<KeyValuePair<TKey, TValue>> collection)
         {
             return collection.ToDictionary(item => item.Key, item => item.Value);
         }
 
-        public static IDictionary<string, T> AsNameInstanceDictionary<T>(this IEnumerable<T> collection)
+        public static IDictionary<string, T> ToNameInstanceDictionary<T>(this IEnumerable<T> collection)
         {
             return collection.ToDictionary(item => item.GetDescriptionAttributeValueOrTypeName());
+        }
+
+        public static Task ParallelForEachAsync<T>(this IEnumerable<T> source, 
+            Func<T, Task> body, int degreeOfParallelization = 10)
+        {
+            async Task AwaitPartition(IEnumerator<T> partition)
+            {
+                using (partition)
+                {
+                    while (partition.MoveNext())
+                    {
+                        await body(partition.Current);
+                    }
+                }
+            }
+
+            return Task.WhenAll(Partitioner
+                .Create(source)
+                .GetPartitions(degreeOfParallelization)
+                .AsParallel()
+                .Select(AwaitPartition));
         }
     }
 }

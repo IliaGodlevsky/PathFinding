@@ -28,7 +28,7 @@ namespace ConsoleVersion.View
                 .Where(IsMenuAction)
                 .OrderByDescending(GetMenuActionPriority)
                 .SelectMany(CreateNameActionPair)
-                .AsDictionary();
+                .ToDictionary();
         }
 
         private IEnumerable<KeyValuePair<string, TAction>> CreateNameActionPair(MethodInfo methodInfo)
