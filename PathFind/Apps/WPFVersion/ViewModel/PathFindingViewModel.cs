@@ -4,6 +4,7 @@ using Common.Interface;
 using GraphLib.Base;
 using GraphViewModel;
 using GraphViewModel.Interfaces;
+using Interruptable.EventArguments;
 using Logging.Interface;
 using System;
 using System.ComponentModel;
@@ -42,7 +43,7 @@ namespace WPFVersion.ViewModel
             algorithm.Interrupt();
         }
 
-        protected override void OnAlgorithmStarted(object sender, AlgorithmEventArgs e)
+        protected override void OnAlgorithmStarted(object sender, ProcessEventArgs e)
         {
             base.OnAlgorithmStarted(sender, e);
             if (mainViewModel is MainWindowViewModel mainModel)
@@ -90,7 +91,7 @@ namespace WPFVersion.ViewModel
             await Task.Run(() => base.OnVertexEnqueued(sender, e));
         }
 
-        protected override void OnAlgorithmFinished(object sender, AlgorithmEventArgs e)
+        protected override void OnAlgorithmFinished(object sender, ProcessEventArgs e)
         {
             base.OnAlgorithmFinished(sender, e);
             if (mainViewModel is MainWindowViewModel mainModel)

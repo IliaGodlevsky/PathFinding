@@ -1,4 +1,5 @@
 ﻿using Algorithm.Interfaces;
+using GraphLib.Interfaces;
 using System;
 using System.Threading.Tasks;
 
@@ -13,14 +14,17 @@ namespace Algorithm.Extensions
             {
                 return await task.ConfigureAwait(false);
             }
-            catch (ArgumentException)
-            {
-                throw;
-            }
             catch (Exception)
             {
                 throw;
             }
+        }
+
+        public static async Task<IGraphPath> FindPathAndHighlightAsync(this IAlgorithm self,
+            IIntermediateEndPoints endPoints)
+        {
+            var path = await self.FindPathAsync();
+            return await path.HighlightAsync(endPoints);
         }
     }
 }

@@ -25,7 +25,7 @@ namespace ConsoleVersion.ViewModel
 {
     internal sealed class PathFindingViewModel : PathFindingModel, IInterruptable
     {
-        public event InterruptEventHanlder Interrupted;
+        public event ProcessEventHandler Interrupted;
         public bool IsPathfindingStarted { get; set; }
 
         public string AlgorithmKeyInputMessage { private get; set; }
@@ -82,13 +82,13 @@ namespace ConsoleVersion.ViewModel
             mainModel.PathFindingStatistics = GetStatistics();
         }
 
-        protected override void OnAlgorithmInterrupted(object sender, InterruptEventArgs e)
+        protected override void OnAlgorithmInterrupted(object sender, ProcessEventArgs e)
         {
             base.OnAlgorithmInterrupted(sender, e);
             IsPathfindingStarted = false;
         }
 
-        protected override void OnAlgorithmFinished(object sender, AlgorithmEventArgs e)
+        protected override void OnAlgorithmFinished(object sender, ProcessEventArgs e)
         {
             base.OnAlgorithmFinished(sender, e);
             IsPathfindingStarted = false;
@@ -115,7 +115,7 @@ namespace ConsoleVersion.ViewModel
         public void Interrupt()
         {
             ClearGraph();
-            Interrupted?.Invoke(this, new InterruptEventArgs());
+            Interrupted?.Invoke(this, new ProcessEventArgs());
             Interrupted = null;
         }
 

@@ -32,7 +32,7 @@ namespace WPFVersion3D.Model
             this.Initialize(info);
         }
 
-        public static SolidColorBrush VisitedVertexBrush { get; set; } = new SolidColorBrush(Colors.CadetBlue) { Opacity =InitialVisitedVertexOpacity };
+        public static SolidColorBrush VisitedVertexBrush { get; set; } = new SolidColorBrush(Colors.CadetBlue) { Opacity = InitialVisitedVertexOpacity };
         public static SolidColorBrush ObstacleVertexBrush { get; set; } = new SolidColorBrush(Colors.Black) { Opacity = InitialObstacleVertexOpacity };
         public static SolidColorBrush SimpleVertexBrush { get; set; } = new SolidColorBrush(Colors.White) { Opacity = InitialRegularVertexOpacity };
         public static SolidColorBrush PathVertexBrush { get; set; } = new SolidColorBrush(Colors.Yellow) { Opacity = InitialPathVertexOpacity };

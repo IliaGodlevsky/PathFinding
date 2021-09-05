@@ -8,12 +8,10 @@ namespace Algorithm.Interfaces
     /// Provides events and methods for 
     /// pathfinding algorithm
     /// </summary>
-    public interface IAlgorithm : IInterruptable, IDisposable
+    public interface IAlgorithm : IInterruptableProcess, IDisposable
     {
-        event AlgorithmEventHandler Started;
         event AlgorithmEventHandler VertexVisited;
         event AlgorithmEventHandler VertexEnqueued;
-        event AlgorithmEventHandler Finished;
 
         IGraphPath FindPath();
     }

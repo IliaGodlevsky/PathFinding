@@ -3,6 +3,7 @@ using Common.Interface;
 using GraphLib.Base;
 using GraphViewModel;
 using GraphViewModel.Interfaces;
+using Interruptable.EventArguments;
 using Logging.Interface;
 using System;
 using System.ComponentModel;
@@ -38,7 +39,7 @@ namespace WPFVersion3D.ViewModel
             CancelPathFindAlgorithmChoice = new RelayCommand(ExecuteCloseWindowCommand);
         }
 
-        protected override void OnAlgorithmStarted(object sender, AlgorithmEventArgs e)
+        protected override void OnAlgorithmStarted(object sender, ProcessEventArgs e)
         {
             base.OnAlgorithmStarted(sender, e);
             if (mainViewModel is MainWindowViewModel mainModel)
@@ -66,7 +67,7 @@ namespace WPFVersion3D.ViewModel
             }
         }
 
-        protected override void OnAlgorithmFinished(object sender, AlgorithmEventArgs e)
+        protected override void OnAlgorithmFinished(object sender, ProcessEventArgs e)
         {
             base.OnAlgorithmFinished(sender, e);
             if (mainViewModel is MainWindowViewModel mainModel)

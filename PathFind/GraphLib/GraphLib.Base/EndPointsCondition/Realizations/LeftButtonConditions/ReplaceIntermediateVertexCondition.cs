@@ -1,7 +1,6 @@
 ﻿using GraphLib.Base.EndPointsCondition.Interface;
 using GraphLib.Base.EndPointsInspection.Abstractions;
 using GraphLib.Interfaces;
-using NullObject.Extensions;
 
 namespace GraphLib.Base.EndPointsCondition.Realizations.LeftButtonConditions
 {

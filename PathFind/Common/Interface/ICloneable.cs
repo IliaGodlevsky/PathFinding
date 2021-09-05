@@ -1,6 +1,6 @@
 ﻿namespace Common.Interface
 {
-    public interface ICloneable<T>
+    public interface ICloneable<out T>
     {
         T Clone();
     }

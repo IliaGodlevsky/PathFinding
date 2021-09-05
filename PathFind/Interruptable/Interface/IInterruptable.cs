@@ -4,7 +4,7 @@ namespace Interruptable.Interface
 {
     public interface IInterruptable
     {
-        event InterruptEventHanlder Interrupted;
+        event ProcessEventHandler Interrupted;
 
         void Interrupt();
     }

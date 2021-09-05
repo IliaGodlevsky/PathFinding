@@ -9,7 +9,7 @@ namespace Algorithm.Extensions
 {
     public static class GraphPathExtensions
     {
-        public static void Highlight(this IGraphPath self, IIntermediateEndPoints endpoints)
+        public static IGraphPath Highlight(this IGraphPath self, IIntermediateEndPoints endpoints)
         {
             self.Path
                 .Except(endpoints.Source, endpoints.Target)
@@ -21,11 +21,12 @@ namespace Algorithm.Extensions
                 .Where(v => !self.Path.IsSingle(i => i.Equals(v)))
                 .OfType<IVisualizable>()
                 .ForEach(vertex => vertex.VisualizeAsPath());
+            return self;
         }
 
-        public static async Task HighlightAsync(this IGraphPath self, IIntermediateEndPoints endPoints)
+        public static async Task<IGraphPath> HighlightAsync(this IGraphPath self, IIntermediateEndPoints endPoints)
         {
-            await Task.Run(() => self.Highlight(endPoints)).ConfigureAwait(false);
+            return await Task.Run(() => self.Highlight(endPoints)).ConfigureAwait(false);
         }
     }
 }

@@ -10,12 +10,12 @@ namespace Algorithm.Algos.Extensions
 {
     public static class AlgorithmsEnumExtensions
     {
-        public static IAlgorithm ToAlgorithm(this Algorithms self, 
+        public static IAlgorithm ToAlgorithm(this Algorithms self,
             IGraph graph, IIntermediateEndPoints endPoints)
         {
             var algorithmType = self.GetAttributeOrNull<AlgorithmTypeAttribute>()?.AlgorithmType;
-            return algorithmType != null 
-                ? (IAlgorithm)Activator.CreateInstance(algorithmType, graph, endPoints) 
+            return algorithmType != null
+                ? (IAlgorithm)Activator.CreateInstance(algorithmType, graph, endPoints)
                 : new NullAlgorithm();
         }
     }

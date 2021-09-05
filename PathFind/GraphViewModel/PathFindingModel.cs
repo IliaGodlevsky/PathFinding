@@ -1,5 +1,4 @@
-﻿using Algorithm.Algos;
-using Algorithm.Algos.Enums;
+﻿using Algorithm.Algos.Enums;
 using Algorithm.Algos.Extensions;
 using Algorithm.Extensions;
 using Algorithm.Infrastructure.EventArguments;
@@ -47,8 +46,7 @@ namespace GraphViewModel
             {
                 algorithm = Algorithm.ToAlgorithm(graph, endPoints);
                 SubscribeOnAlgorithmEvents();
-                path = await algorithm.FindPathAsync();
-                await path.HighlightAsync(endPoints);
+                path = await algorithm.FindPathAndHighlightAsync(endPoints);
                 Summarize();
             }
             catch (Exception ex)
@@ -83,23 +81,22 @@ namespace GraphViewModel
             }
         }
 
-        protected virtual void OnAlgorithmInterrupted(object sender, InterruptEventArgs e)
+        protected virtual void OnAlgorithmInterrupted(object sender, ProcessEventArgs e)
         {
             log.Warn(AlgorithmInterruptedMsg);
             timer.Stop();
         }
 
-        protected virtual void OnAlgorithmFinished(object sender, AlgorithmEventArgs e)
+        protected virtual void OnAlgorithmFinished(object sender, ProcessEventArgs e)
         {
             timer.Stop();
         }
 
         protected abstract void Summarize();
 
-        protected virtual void OnAlgorithmStarted(object sender, AlgorithmEventArgs e)
+        protected virtual void OnAlgorithmStarted(object sender, ProcessEventArgs e)
         {
-            timer.Reset();
-            timer.Start();
+            timer.Restart();
         }
 
         protected string GetStatistics()

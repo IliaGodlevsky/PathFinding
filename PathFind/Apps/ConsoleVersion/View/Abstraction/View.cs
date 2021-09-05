@@ -13,7 +13,7 @@ namespace ConsoleVersion.View.Abstraction
     {
         public event Action NewMenuIteration;
 
-        public void OnInterrupted(object sender, InterruptEventArgs e)
+        public void OnInterrupted(object sender, ProcessEventArgs e)
         {
             IsInterruptRequested = true;
         }

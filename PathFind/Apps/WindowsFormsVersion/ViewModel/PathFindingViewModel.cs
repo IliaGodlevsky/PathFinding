@@ -20,7 +20,7 @@ namespace WindowsFormsVersion.ViewModel
 
         }
 
-        protected override void OnAlgorithmFinished(object sender, AlgorithmEventArgs e)
+        protected override void OnAlgorithmFinished(object sender, ProcessEventArgs e)
         {
             base.OnAlgorithmFinished(sender, e);
             if (mainViewModel is MainWindowViewModel mainModel)
@@ -29,7 +29,7 @@ namespace WindowsFormsVersion.ViewModel
             }
         }
 
-        protected override void OnAlgorithmStarted(object sender, AlgorithmEventArgs e)
+        protected override void OnAlgorithmStarted(object sender, ProcessEventArgs e)
         {
             base.OnAlgorithmStarted(sender, e);
             if (mainViewModel is MainWindowViewModel mainModel)
@@ -57,7 +57,7 @@ namespace WindowsFormsVersion.ViewModel
             timer.Wait(DelayTime);
         }
 
-        protected override void OnAlgorithmInterrupted(object sender, InterruptEventArgs e)
+        protected override void OnAlgorithmInterrupted(object sender, ProcessEventArgs e)
         {
             base.OnAlgorithmInterrupted(sender, e);
             if (mainViewModel is MainWindowViewModel mainModel)

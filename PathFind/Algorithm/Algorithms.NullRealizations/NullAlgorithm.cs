@@ -14,11 +14,11 @@ namespace Algorithm.NullRealizations
     [Null]
     public sealed class NullAlgorithm : IAlgorithm
     {
-        public event AlgorithmEventHandler Started;
         public event AlgorithmEventHandler VertexVisited;
-        public event AlgorithmEventHandler Finished;
         public event AlgorithmEventHandler VertexEnqueued;
-        public event InterruptEventHanlder Interrupted;
+        public event ProcessEventHandler Started;
+        public event ProcessEventHandler Finished;
+        public event ProcessEventHandler Interrupted;
 
         public NullAlgorithm()
         {
@@ -27,16 +27,16 @@ namespace Algorithm.NullRealizations
 
         public IGraphPath FindPath()
         {
-            Started?.Invoke(this, AlgorithmEventArgs.Empty);
+            Started?.Invoke(this, new ProcessEventArgs());
             VertexVisited?.Invoke(this, AlgorithmEventArgs.Empty);
             VertexEnqueued?.Invoke(this, AlgorithmEventArgs.Empty);
-            Finished?.Invoke(this, AlgorithmEventArgs.Empty);
+            Finished?.Invoke(this, new ProcessEventArgs());
             return new NullGraphPath();
         }
 
         public void Interrupt()
         {
-            Interrupted?.Invoke(this, new InterruptEventArgs());
+            Interrupted?.Invoke(this, new ProcessEventArgs());
         }
 
         public void Dispose()

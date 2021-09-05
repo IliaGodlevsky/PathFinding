@@ -1,10 +1,9 @@
 ﻿using Algorithm.Interfaces;
-using GraphLib.Interfaces;
 using System;
 
 namespace Algorithm.Algos.Attributes
 {
-    [AttributeUsage(AttributeTargets.Field, AllowMultiple = false, Inherited = false)]
+    [AttributeUsage(AttributeTargets.Field)]
     internal sealed class AlgorithmTypeAttribute : Attribute
     {
         public Type AlgorithmType { get; }

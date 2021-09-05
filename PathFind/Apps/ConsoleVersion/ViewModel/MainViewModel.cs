@@ -32,7 +32,7 @@ namespace ConsoleVersion.ViewModel
     {
         public event CostRangeChangedEventHandler CostRangeChanged;
         public event NewGraphCreatedEventHandler NewGraphCreated;
-        public event InterruptEventHanlder Interrupted;
+        public event ProcessEventHandler Interrupted;
         public event StatisticsUpdatedEventHandler StatisticsUpdated;
 
         private string statistics;
@@ -164,7 +164,7 @@ namespace ConsoleVersion.ViewModel
         {
             if (InputNumber(ExitAppMsg, Constants.Yes, Constants.No) == Constants.Yes)
             {
-                Interrupted?.Invoke(this, new InterruptEventArgs());
+                Interrupted?.Invoke(this, new ProcessEventArgs());
             }
         }
 
