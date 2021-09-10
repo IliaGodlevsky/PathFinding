@@ -13,6 +13,7 @@ using Logging.Interface;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Linq;
 using static GraphViewModel.Resources.ViewModelResources;
 
 namespace GraphViewModel
@@ -25,7 +26,7 @@ namespace GraphViewModel
 
         public Algorithms Algorithm { get; set; }
 
-        public IDictionary<string, Algorithms> Algorithms { get; }
+        public IDictionary<string, Algorithms> Algorithms => algorithms.Value;
 
         protected PathFindingModel(ILog log, IMainModel mainViewModel,
             BaseEndPoints endPoints)
@@ -33,7 +34,8 @@ namespace GraphViewModel
             this.mainViewModel = mainViewModel;
             this.endPoints = endPoints;
             this.log = log;
-            Algorithms = GetAlgorithmsDictinary();
+            algorithms = new Lazy<IDictionary<string, Algorithms>>
+                (EnumExtensions.ToDescriptionAdjustedOrderedDictionary<Algorithms>);
             graph = mainViewModel.Graph;
             timer = new Stopwatch();
             path = new NullGraphPath();
@@ -102,9 +104,9 @@ namespace GraphViewModel
         protected string GetStatistics()
         {
             string timerInfo = timer.Elapsed.ToString(@"mm\:ss\.ff");
-            string algorithmName = Algorithm.GetDescriptionAttributeValueOrTypeName();
+            Algorithms.TryGetKey(Algorithm, out var key);
             string pathfindingInfo = string.Format(StatisticsFormat, PathfindingInfo);
-            return string.Join("\t", algorithmName, timerInfo, pathfindingInfo);
+            return string.Join("\t", key, timerInfo, pathfindingInfo);
         }
 
         protected string CouldntFindPathMsg => PathWasNotFoundMsg;
@@ -125,12 +127,6 @@ namespace GraphViewModel
             algorithm.Interrupted += OnAlgorithmInterrupted;
         }
 
-        private IDictionary<string, Algorithms> GetAlgorithmsDictinary()
-        {
-            string Description(Algorithms item) => item.GetDescriptionAttributeValueOrTypeName();
-            return EnumExtensions.ToOrderedDictionary<string, Algorithms>(Description, item => item.Key);
-        }
-
         private bool CanBeVisualized(IVertex vertex)
         {
             return !endPoints.IsEndPoint(vertex)
@@ -146,6 +142,7 @@ namespace GraphViewModel
         protected IAlgorithm algorithm;
         protected IGraphPath path;
         private readonly IGraph graph;
+        private readonly Lazy<IDictionary<string, Algorithms>> algorithms;
         protected readonly Stopwatch timer;
         protected int visitedVerticesCount;
     }

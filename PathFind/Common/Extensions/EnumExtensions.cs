@@ -15,6 +15,24 @@ namespace Common.Extensions
                 ?.GetAttributeOrNull<TAttribute>();
         }
 
+        public static IDictionary<string, TEnum> ToDescriptionAdjustedOrderedDictionary<TEnum>()
+            where TEnum : Enum
+        {
+            var values = Enum.GetValues(typeof(TEnum)).OfType<TEnum>();
+            var descriptions = values.Select(@enum => @enum.GetDescriptionAttributeValueOrTypeName());
+            int longestDescriptionLength = descriptions.Max(description => description.Length);
+
+            string PadRight(string description) => description.PadRight(longestDescriptionLength);
+            KeyValuePair<string, TEnum> ToKeyValuePair(string key, TEnum value) 
+                => new KeyValuePair<string, TEnum>(key, value);
+
+            return descriptions
+                .Select(PadRight)
+                .Zip(values, ToKeyValuePair)
+                .OrderBy(item => item.Key)
+                .ToDictionary();
+        }
+
         public static IDictionary<TKey, TEnum> ToDictionary<TKey, TEnum>(Func<TEnum, TKey> keySelector)
             where TEnum : Enum
         {
@@ -33,13 +51,6 @@ namespace Common.Extensions
                 .GetValues(typeof(TEnum))
                 .Cast<TEnum>()
                 .ToDictionary(keySelector, valueSelector);
-        }
-
-        public static IDictionary<TKey, TEnum> ToOrderedDictionary<TKey, TEnum>(
-            Func<TEnum, TKey> keySelector, Func<KeyValuePair<TKey, TEnum>, TKey> orderSelector)
-            where TEnum : Enum
-        {
-            return ToDictionary(keySelector).OrderBy(orderSelector).ToDictionary();
         }
     }
 }

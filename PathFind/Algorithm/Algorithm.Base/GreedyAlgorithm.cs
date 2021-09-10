@@ -84,7 +84,7 @@ namespace Algorithm.Base
                 return neighbours
                     .ForEach(Enqueue)
                     .ToList()
-                    .FindOrDefault(IsLeastCostVertex);
+                    .FindOrNullVertex(IsLeastCostVertex);
             }
         }
 
@@ -105,7 +105,7 @@ namespace Algorithm.Base
         {
             if (CurrentVertex.IsNull())
             {
-                CurrentVertex = visitedVerticesStack.PopOrDefault();
+                CurrentVertex = visitedVerticesStack.PopOrNullVertex();
             }
             else
             {

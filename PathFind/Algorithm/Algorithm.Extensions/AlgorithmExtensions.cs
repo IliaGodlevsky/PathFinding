@@ -23,8 +23,7 @@ namespace Algorithm.Extensions
         public static async Task<IGraphPath> FindPathAndHighlightAsync(this IAlgorithm self,
             IIntermediateEndPoints endPoints)
         {
-            var path = await self.FindPathAsync();
-            return await path.HighlightAsync(endPoints);
+            return await (await self.FindPathAsync()).HighlightAsync(endPoints);
         }
     }
 }

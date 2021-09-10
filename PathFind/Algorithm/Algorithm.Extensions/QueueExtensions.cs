@@ -14,7 +14,7 @@ namespace Algorithm.Extensions
         /// <param name="queue"></param>
         /// <returns>First vertex if collection isn't empty and <see cref="NullVertex"/> if is</returns>
         /// <exception cref="System.ArgumentNullException"></exception>
-        public static IVertex DequeueOrDefault(this Queue<IVertex> queue)
+        public static IVertex DequeueOrNullVertex(this Queue<IVertex> queue)
         {
             return queue.Count == 0 ? new NullVertex() : queue.Dequeue();
         }

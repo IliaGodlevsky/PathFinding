@@ -42,7 +42,7 @@ namespace Algorithm.Algos.Algos
                     .Where(visitedVertices.IsNotVisited)
                     .ToQueue();
 
-                return verticesQueue.DequeueOrDefault();
+                return verticesQueue.DequeueOrNullVertex();
             }
         }
 

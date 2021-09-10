@@ -155,25 +155,16 @@ namespace Common.Extensions
             return collection.ToDictionary(item => item.GetDescriptionAttributeValueOrTypeName());
         }
 
-        public static Task ParallelForEachAsync<T>(this IEnumerable<T> source, 
-            Func<T, Task> body, int degreeOfParallelization = 10)
+        public static bool TryGetKey<TKey, TValue>(this IDictionary<TKey, TValue> self, TValue value, out TKey key)
         {
-            async Task AwaitPartition(IEnumerator<T> partition)
+            if (self.Values.Contains(value))
             {
-                using (partition)
-                {
-                    while (partition.MoveNext())
-                    {
-                        await body(partition.Current);
-                    }
-                }
+                key = self.FirstOrDefault(item => item.Value.Equals(value)).Key;
+                return true;
             }
 
-            return Task.WhenAll(Partitioner
-                .Create(source)
-                .GetPartitions(degreeOfParallelization)
-                .AsParallel()
-                .Select(AwaitPartition));
+            key = default;
+            return false;
         }
     }
 }
