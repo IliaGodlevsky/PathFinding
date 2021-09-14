@@ -1,4 +1,5 @@
 ﻿using GraphLib.Base;
+using GraphLib.Extensions;
 using GraphLib.Interfaces;
 
 namespace GraphLib.TestRealizations
@@ -14,12 +15,7 @@ namespace GraphLib.TestRealizations
         public override IGraph Clone()
         {
             var graph = new TestGraph(DimensionsSizes);
-            foreach (var vertex in Vertices)
-            {
-                var temp = vertex.Clone();
-                graph[temp.Position] = temp;
-            }
-            return graph;
+            return graph.CloneVertices(this);
         }
     }
 }

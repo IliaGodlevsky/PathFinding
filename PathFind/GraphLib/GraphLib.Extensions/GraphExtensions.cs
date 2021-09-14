@@ -48,6 +48,17 @@ namespace GraphLib.Extensions
             return self.Vertices.Count(vertex => vertex.IsObstacle);
         }
 
+        public static TGraph CloneVertices<TGraph>(this TGraph self, TGraph graphToClone)
+            where TGraph : IGraph
+        {
+            foreach (var vertex in graphToClone.Vertices)
+            {
+                var clone = vertex.Clone();
+                self[clone.Position] = clone;
+            }
+            return (TGraph)self.ConnectVertices();
+        }
+
         public static IGraph ForEach(this IGraph self, Action<IVertex> action)
         {
             self.Vertices.ForEach(action);

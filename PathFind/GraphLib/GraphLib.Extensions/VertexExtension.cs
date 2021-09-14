@@ -35,6 +35,15 @@ namespace GraphLib.Extensions
             return self.Neighbours.Any(IsAtSamePosition);
         }
 
+        public static TVertex CloneProperties<TVertex>(this TVertex self, TVertex vertexToClone)
+            where TVertex : IVertex
+        {
+            self.IsObstacle = vertexToClone.IsObstacle;
+            self.Cost = vertexToClone.Cost.Clone();
+            self.Neighbours = new IVertex[] { };
+            return self;
+        }
+
         public static int[] GetCoordinates(this IVertex self)
         {
             return self.Position.CoordinatesValues.ToArray();

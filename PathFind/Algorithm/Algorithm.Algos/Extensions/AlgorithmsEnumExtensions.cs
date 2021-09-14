@@ -8,7 +8,7 @@ namespace Algorithm.Algos.Extensions
 {
     public static class AlgorithmsEnumExtensions
     {
-        public static IAlgorithm ToAlgorithm(this Algorithms self, 
+        public static IAlgorithm ToAlgorithm(this Algorithms self,
             IGraph graph, IIntermediateEndPoints endPoints)
         {
             switch (self)

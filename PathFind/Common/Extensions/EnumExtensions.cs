@@ -23,7 +23,7 @@ namespace Common.Extensions
             int longestDescriptionLength = descriptions.Max(description => description.Length);
 
             string PadRight(string description) => description.PadRight(longestDescriptionLength);
-            KeyValuePair<string, TEnum> ToKeyValuePair(string key, TEnum value) 
+            KeyValuePair<string, TEnum> ToKeyValuePair(string key, TEnum value)
                 => new KeyValuePair<string, TEnum>(key, value);
 
             return descriptions

@@ -1,4 +1,5 @@
 ﻿using GraphLib.Base;
+using GraphLib.Extensions;
 using GraphLib.Interfaces;
 using System.Linq;
 
@@ -23,12 +24,7 @@ namespace GraphLib.Realizations.Graphs
         public override IGraph Clone()
         {
             var graph = new Graph3D(DimensionsSizes);
-            foreach (var vertex in Vertices)
-            {
-                var temp = vertex.Clone();
-                graph[temp.Position] = temp;
-            }
-            return graph;
+            return graph.CloneVertices(this);
         }
     }
 }

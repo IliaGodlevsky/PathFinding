@@ -192,13 +192,8 @@ namespace ConsoleVersion.Model
         {
             var neighbourCoordinates = NeighboursCoordinates.Clone();
             var coordinates = Position.Clone();
-            var vertex = new Vertex(neighbourCoordinates, coordinates)
-            {
-                IsObstacle = IsObstacle,
-                Cost = Cost.Clone(),
-                Neighbours = Neighbours.Select(v => v.Clone()).ToArray()
-            };
-            return vertex;
+            var vertex = new Vertex(neighbourCoordinates, coordinates);
+            return vertex.CloneProperties(this);
         }
 
         private static readonly Color RegularVertexColor = Color.FromKnownColor(KnownColor.WhiteSmoke);

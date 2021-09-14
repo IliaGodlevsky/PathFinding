@@ -10,7 +10,7 @@ namespace GraphLib.Realizations.Tests
         private const int ObstaclePercent = 25;
         private TestGraphAssemble graphAssemble;
 
-        [TestCase(new[] { 14, 13} )]
+        [TestCase(new[] { 14, 13 })]
         [TestCase(new[] { 14, 13, 12 })]
         public void GraphCloneTest_VariousDimensions_ReturnsAnotherEqualGraph(int[] dimensionSizes)
         {

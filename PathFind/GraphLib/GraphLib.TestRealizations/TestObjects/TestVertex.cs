@@ -3,7 +3,6 @@ using GraphLib.Interfaces;
 using GraphLib.Serialization;
 using GraphLib.Serialization.Extensions;
 using System.Collections.Generic;
-using System.Linq;
 
 namespace GraphLib.TestRealizations.TestObjects
 {
@@ -41,13 +40,8 @@ namespace GraphLib.TestRealizations.TestObjects
         {
             var neighbourCoordinates = NeighboursCoordinates.Clone();
             var coordinates = Position.Clone();
-            var vertex = new TestVertex(neighbourCoordinates, coordinates)
-            {
-                IsObstacle = IsObstacle,
-                Cost = Cost.Clone(),
-                Neighbours = Neighbours.Select(v => v.Clone()).ToArray()
-            };
-            return vertex;
+            var vertex = new TestVertex(neighbourCoordinates, coordinates);
+            return vertex.CloneProperties(this);
         }
     }
 }
