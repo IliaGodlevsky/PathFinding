@@ -41,6 +41,11 @@ namespace GraphLib.Realizations.NeighboursCoordinates
             return neighboursCoordinates.Coordinates.Where(IsCardinal).ToArray();
         }
 
+        public INeighboursCoordinates Clone()
+        {
+            return new CardinalNeighboursCoordinates(coordinatesValues);
+        }
+
         private readonly ICoordinate coordinatesValues;
         private readonly INeighboursCoordinates neighboursCoordinates;
         private readonly Lazy<ICoordinate[]> coordinates;

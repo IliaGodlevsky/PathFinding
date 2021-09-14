@@ -40,6 +40,11 @@ namespace GraphLib.NullRealizations.NullObjects
             return base.GetHashCode();
         }
 
+        public IGraph Clone()
+        {
+            return new NullGraph();
+        }
+
         private readonly NullVertex[] vertices;
     }
 }

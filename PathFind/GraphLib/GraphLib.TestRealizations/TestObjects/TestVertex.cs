@@ -35,5 +35,13 @@ namespace GraphLib.TestRealizations.TestObjects
         {
             return other.IsEqual(this);
         }
+
+        public IVertex Clone()
+        {
+            var neighbourCoordinates = NeighboursCoordinates.Clone();
+            var coordinates = Position.Clone();
+            var vertex = new TestVertex(neighbourCoordinates, coordinates);
+            return vertex.CloneProperties(this);
+        }
     }
 }

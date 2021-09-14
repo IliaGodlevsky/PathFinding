@@ -1,8 +1,9 @@
-﻿using System.Collections.Generic;
+﻿using Common.Interface;
+using System.Collections.Generic;
 
 namespace GraphLib.Interfaces
 {
-    public interface IGraph
+    public interface IGraph : ICloneable<IGraph>
     {
         /// <summary>
         /// Number of all vertices in the graph

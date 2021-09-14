@@ -13,6 +13,11 @@ namespace GraphLib.NullRealizations.NullObjects
     {
         public int[] CoordinatesValues => new int[] { };
 
+        public ICoordinate Clone()
+        {
+            return new NullCoordinate();
+        }
+
         public override bool Equals(object pos)
         {
             return pos is NullCoordinate;

@@ -231,6 +231,14 @@ namespace WPFVersion3D.Model
             }
         }
 
+        public IVertex Clone()
+        {
+            var neighbourCoordinates = NeighboursCoordinates.Clone();
+            var coordinates = Position.Clone();
+            var vertex = new Vertex3D(neighbourCoordinates, coordinates, modelFactory);
+            return vertex.CloneProperties(this);
+        }
+
         private readonly IModel3DFactory modelFactory;
     }
 }

@@ -176,5 +176,13 @@ namespace WPFVersion.Model
                 Dispatcher.Invoke(() => Background = ToReplaceMarkColor);
             }
         }
+
+        public IVertex Clone()
+        {
+            var neighbourCoordinates = NeighboursCoordinates.Clone();
+            var coordinates = Position.Clone();
+            var vertex = new Vertex(neighbourCoordinates, coordinates);
+            return vertex.CloneProperties(this);
+        }
     }
 }

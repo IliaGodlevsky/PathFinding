@@ -10,9 +10,9 @@ using System.Linq;
 
 namespace GraphLib.Base.EndPointsConditions.Realizations
 {
-    internal sealed class LeftButtonEndPointsConditions : IEndPointsConditions
+    internal sealed class SetEndPointsConditions : IEndPointsConditions
     {
-        public LeftButtonEndPointsConditions(BaseEndPoints endPoints)
+        public SetEndPointsConditions(BaseEndPoints endPoints)
         {
             unsetSourceVertexCondition = new UnsetSourceVertexCondition(endPoints);
             unsetTargetVertexCondition = new UnsetTargetVertexCondition(endPoints);

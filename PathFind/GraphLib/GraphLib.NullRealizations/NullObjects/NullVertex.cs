@@ -22,6 +22,11 @@ namespace GraphLib.NullRealizations.NullObjects
 
         public bool Equals(IVertex other) => other is NullVertex;
 
+        public IVertex Clone()
+        {
+            return new NullVertex();
+        }
+
         public INeighboursCoordinates NeighboursCoordinates => new NullNeighboursCoordinates();
 
         private readonly List<IVertex> neighbours;

@@ -1,5 +1,6 @@
 ﻿using Common.Extensions;
 using GraphLib.Interfaces;
+using GraphLib.Realizations.Coordinates;
 using GraphLib.Realizations.Extensions;
 using System;
 using System.Collections.Generic;
@@ -74,6 +75,11 @@ namespace GraphLib.Realizations.NeighboursCoordinates
             return DetectNeighboursCoordinates()
                 .Except(selfCoordinatesValues.ToCoordinate())
                 .ToArray();
+        }
+
+        public INeighboursCoordinates Clone()
+        {
+            return new AroundNeighboursCoordinates(new Coordinate(selfCoordinatesValues));
         }
 
         private readonly int limitDepth;

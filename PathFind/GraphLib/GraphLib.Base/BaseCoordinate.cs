@@ -55,6 +55,8 @@ namespace GraphLib.Base
                 : toString;
         }
 
+        public abstract ICoordinate Clone();
+
         [NonSerialized]
         private string toString;
         [NonSerialized]
