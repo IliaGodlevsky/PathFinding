@@ -31,8 +31,8 @@ namespace GraphLib.Base
         {
             intermediates = new Collection<IVertex>();
             markedToReplaceIntermediates = new Queue<IVertex>();
-            leftButtonConditions = new LeftButtonEndPointsConditions(this);
-            middleButtonConditions = new MiddleButtonEndPointsConditions(this);
+            leftButtonConditions = new SetEndPointsConditions(this);
+            middleButtonConditions = new MarkIntermediateToReplaceEndPointsConditions(this);
             Reset();
         }
 

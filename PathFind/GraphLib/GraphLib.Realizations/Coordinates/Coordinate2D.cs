@@ -1,4 +1,5 @@
 ﻿using GraphLib.Base;
+using GraphLib.Interfaces;
 using System;
 using System.Linq;
 
@@ -25,6 +26,11 @@ namespace GraphLib.Realizations.Coordinates
         {
             X = CoordinatesValues.First();
             Y = CoordinatesValues.Last();
+        }
+
+        public override ICoordinate Clone()
+        {
+            return new Coordinate2D(X, Y);
         }
     }
 }

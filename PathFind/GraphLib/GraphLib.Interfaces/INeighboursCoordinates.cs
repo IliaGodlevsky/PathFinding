@@ -1,10 +1,12 @@
-﻿namespace GraphLib.Interfaces
+﻿using Common.Interface;
+
+namespace GraphLib.Interfaces
 {
     /// <summary>
     /// An interface, that provides a property for 
     /// all neighbours around some coordinate
     /// </summary>
-    public interface INeighboursCoordinates
+    public interface INeighboursCoordinates : ICloneable<INeighboursCoordinates>
     {
         /// <summary>
         /// <see cref="ICoordinate"/>

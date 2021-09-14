@@ -1,4 +1,5 @@
-﻿using GraphLib.Extensions;
+﻿using Common.Extensions;
+using GraphLib.Extensions;
 using GraphLib.Interfaces;
 using System;
 using System.Linq;
@@ -30,6 +31,11 @@ namespace GraphLib.Realizations.Coordinates
         public override int GetHashCode()
         {
             return hashCode.Value;
+        }
+
+        public ICoordinate Clone()
+        {
+            return new Coordinate(this);
         }
 
         [NonSerialized]

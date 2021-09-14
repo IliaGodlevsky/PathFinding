@@ -4,6 +4,7 @@ using GraphLib.Interfaces;
 using GraphLib.Serialization;
 using GraphLib.Serialization.Extensions;
 using System.Collections.Generic;
+using System.Linq;
 using System.Windows.Controls;
 using System.Windows.Media;
 using static WPFVersion.Constants;
@@ -175,6 +176,19 @@ namespace WPFVersion.Model
             {
                 Dispatcher.Invoke(() => Background = ToReplaceMarkColor);
             }
+        }
+
+        public IVertex Clone()
+        {
+            var neighbourCoordinates = NeighboursCoordinates.Clone();
+            var coordinates = Position.Clone();
+            var vertex = new Vertex(neighbourCoordinates, coordinates)
+            {
+                IsObstacle = IsObstacle,
+                Cost = Cost.Clone(),
+                Neighbours = Neighbours.Select(v => v.Clone()).ToArray()
+            };
+            return vertex;
         }
     }
 }

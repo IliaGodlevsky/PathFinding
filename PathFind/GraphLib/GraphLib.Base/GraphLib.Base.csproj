@@ -44,7 +44,7 @@
     <Compile Include="BaseCoordinate.cs" />
     <Compile Include="BaseEndPoints.cs" />
     <Compile Include="EndPointsConditions\Interfaces\IEndPointsConditions.cs" />
-    <Compile Include="EndPointsConditions\Realizations\MiddleButtonEndPointsConditions.cs" />
+    <Compile Include="EndPointsConditions\Realizations\MarkIntermediateToReplaceEndPointsConditions.cs" />
     <Compile Include="EndPointsCondition\Realizations\LeftButtonConditions\ReplaceIntermediateVertexCondition.cs" />
     <Compile Include="EndPointsCondition\Realizations\MiddleButtonConditions\CancelMarkToReplaceEndPointsConditions.cs" />
     <Compile Include="EndPointsCondition\Realizations\MiddleButtonConditions\MarkToReplaceEndPointsCondition.cs" />
@@ -64,7 +64,7 @@
     <Compile Include="BaseGraphFieldFactory.cs" />
     <Compile Include="BaseVertexCost.cs" />
     <Compile Include="BaseVertexEventHolder.cs" />
-    <Compile Include="EndPointsConditions\Realizations\LeftButtonEndPointsConditions.cs" />
+    <Compile Include="EndPointsConditions\Realizations\SetEndPointsConditions.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

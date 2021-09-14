@@ -43,27 +43,6 @@ namespace GraphLib.Realizations.Tests
         [TestCase(new[] { 2, 3, 4, 5, 6 })]
         [TestCase(new[] { 2, 3, 4, 5, 6, 7 })]
         [TestCase(new[] { 2, 3, 4, 5, 6, 7, 8 })]
-        public void Coordinates_CoordinatesWithVariousDimensionsNumber_ReturnCloseNeighbours(int[] coordinateValues)
-        {
-            using var mock = AutoMock.GetLoose();
-            mock.Mock<ICoordinate>().Setup(c => c.CoordinatesValues).Returns(coordinateValues);
-            var neighboursCoordinate = mock.Create<AroundNeighboursCoordinates>();
-
-            var environment = neighboursCoordinate.Coordinates;
-            var coordinate = mock.Container.Resolve<ICoordinate>();
-            bool allAreClose = environment.All(coordinate.IsClose);
-
-            Assert.IsTrue(allAreClose);
-        }
-
-        [TestCase(new int[] { })]
-        [TestCase(new[] { 2 })]
-        [TestCase(new[] { 2, 3 })]
-        [TestCase(new[] { 2, 3, 4 })]
-        [TestCase(new[] { 2, 3, 4, 5 })]
-        [TestCase(new[] { 2, 3, 4, 5, 6 })]
-        [TestCase(new[] { 2, 3, 4, 5, 6, 7 })]
-        [TestCase(new[] { 2, 3, 4, 5, 6, 7, 8 })]
         public void Coordinates_CoordinatesWithVariousDimensionsNumber_ReturnNeighboursWithoutSelf(int[] coordinateValues)
         {
             using var mock = AutoMock.GetLoose();

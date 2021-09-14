@@ -1,4 +1,5 @@
 ﻿using GraphLib.Base;
+using GraphLib.Interfaces;
 using System.Linq;
 
 namespace GraphLib.Realizations.Graphs
@@ -14,6 +15,17 @@ namespace GraphLib.Realizations.Graphs
         {
             Width = DimensionsSizes.First();
             Length = DimensionsSizes.Last();
+        }
+
+        public override IGraph Clone()
+        {
+            var graph = new Graph2D(DimensionsSizes);
+            foreach(var vertex in Vertices)
+            {
+                var temp = vertex.Clone();
+                graph[temp.Position] = temp;
+            }
+            return graph;
         }
     }
 }

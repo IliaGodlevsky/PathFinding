@@ -4,6 +4,7 @@ using GraphLib.Interfaces;
 using GraphLib.Serialization;
 using GraphLib.Serialization.Extensions;
 using System.Collections.Generic;
+using System.Linq;
 using System.Windows;
 using System.Windows.Media;
 using System.Windows.Media.Media3D;
@@ -229,6 +230,19 @@ namespace WPFVersion3D.Model
             {
                 Dispatcher.Invoke(() => Brush = ToReplaceMarkColor);
             }
+        }
+
+        public IVertex Clone()
+        {
+            var neighbourCoordinates = NeighboursCoordinates.Clone();
+            var coordinates = Position.Clone();
+            var vertex = new Vertex3D(neighbourCoordinates, coordinates, modelFactory)
+            {
+                IsObstacle = IsObstacle,
+                Cost = Cost.Clone(),
+                Neighbours = Neighbours.Select(v => v.Clone()).ToArray()
+            };
+            return vertex;
         }
 
         private readonly IModel3DFactory modelFactory;

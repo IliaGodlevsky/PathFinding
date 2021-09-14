@@ -188,6 +188,19 @@ namespace ConsoleVersion.Model
 
         }
 
+        public IVertex Clone()
+        {
+            var neighbourCoordinates = NeighboursCoordinates.Clone();
+            var coordinates = Position.Clone();
+            var vertex = new Vertex(neighbourCoordinates, coordinates)
+            {
+                IsObstacle = IsObstacle,
+                Cost = Cost.Clone(),
+                Neighbours = Neighbours.Select(v => v.Clone()).ToArray()
+            };
+            return vertex;
+        }
+
         private static readonly Color RegularVertexColor = Color.FromKnownColor(KnownColor.WhiteSmoke);
         private static readonly Color ObstacleVertexColor = Color.FromKnownColor(KnownColor.Black);
         private static readonly Color PathVertexColor = Color.FromKnownColor(KnownColor.Yellow);

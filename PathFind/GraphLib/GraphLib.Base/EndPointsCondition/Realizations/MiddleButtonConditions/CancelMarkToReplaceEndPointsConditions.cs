@@ -1,6 +1,6 @@
-﻿using GraphLib.Base.EndPointsCondition.Interface;
+﻿using Common.Extensions;
+using GraphLib.Base.EndPointsCondition.Interface;
 using GraphLib.Base.EndPointsInspection.Abstractions;
-using GraphLib.Extensions;
 using GraphLib.Interfaces;
 
 namespace GraphLib.Base.EndPointsCondition.Realizations.MiddleButtonConditions

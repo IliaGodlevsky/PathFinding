@@ -6,6 +6,7 @@ using GraphLib.Serialization;
 using GraphLib.Serialization.Extensions;
 using System.Collections.Generic;
 using System.Drawing;
+using System.Linq;
 using System.Windows.Forms;
 using static WindowsFormsVersion.Constants;
 
@@ -157,6 +158,19 @@ namespace WindowsFormsVersion.Model
             {
                 BackColor = ToReplaceMarkColor;
             }
+        }
+
+        public IVertex Clone()
+        {
+            var neighbourCoordinates = NeighboursCoordinates.Clone();
+            var coordinates = Position.Clone();
+            var vertex = new Vertex(neighbourCoordinates, coordinates)
+            {
+                IsObstacle = IsObstacle,
+                Cost = Cost.Clone(),
+                Neighbours = Neighbours.Select(v => v.Clone()).ToArray()
+            };
+            return vertex;
         }
     }
 }
