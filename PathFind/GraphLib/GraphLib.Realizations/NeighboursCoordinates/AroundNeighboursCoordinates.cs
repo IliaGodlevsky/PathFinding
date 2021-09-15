@@ -1,4 +1,5 @@
 ﻿using Common.Extensions;
+using Common.Interface;
 using GraphLib.Interfaces;
 using GraphLib.Realizations.Coordinates;
 using GraphLib.Realizations.Extensions;
@@ -13,7 +14,8 @@ namespace GraphLib.Realizations.NeighboursCoordinates
     /// A class that finds the neighbors of the specified coordinate
     /// </summary>
     [Serializable]
-    public sealed class AroundNeighboursCoordinates : INeighboursCoordinates, ISerializable
+    public sealed class AroundNeighboursCoordinates 
+        : INeighboursCoordinates, ISerializable, ICloneable<INeighboursCoordinates>
     {
         private static readonly int[] EmptyOffsetMatrix = new int[] { };
         private static readonly int[] OffsetMatrix = new int[] { -1, 0, 1 };

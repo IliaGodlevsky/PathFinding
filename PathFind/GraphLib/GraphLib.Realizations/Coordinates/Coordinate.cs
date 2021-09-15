@@ -1,4 +1,5 @@
 ﻿using Common.Extensions;
+using Common.Interface;
 using GraphLib.Extensions;
 using GraphLib.Interfaces;
 using System;
@@ -7,7 +8,7 @@ using System.Linq;
 namespace GraphLib.Realizations.Coordinates
 {
     [Serializable]
-    internal sealed class Coordinate : ICoordinate
+    internal sealed class Coordinate : ICoordinate, ICloneable<ICoordinate>
     {
         public int[] CoordinatesValues { get; }
 

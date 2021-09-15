@@ -1,9 +1,11 @@
 ﻿using Common.Extensions;
+using Common.Interface;
 using GraphLib.Extensions;
 using GraphLib.Interfaces;
 using GraphLib.Realizations.VertexCost;
 using GraphLib.Serialization;
 using GraphLib.Serialization.Extensions;
+using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Windows.Forms;
@@ -11,7 +13,7 @@ using static WindowsFormsVersion.Constants;
 
 namespace WindowsFormsVersion.Model
 {
-    internal class Vertex : Label, IVertex, IVisualizable, IWeightable
+    internal class Vertex : Label, IVertex, IVisualizable, IWeightable, IEquatable<IVertex>, ICloneable<IVertex>
     {
         private static Color RegularVertexColor = Color.FromKnownColor(KnownColor.WhiteSmoke);
         private static Color ObstacleVertexColor = Color.FromKnownColor(KnownColor.Black);

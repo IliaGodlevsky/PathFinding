@@ -3,7 +3,9 @@ using Algorithm.Infrastructure.Handlers;
 using Algorithm.Interfaces;
 using Interruptable.EventArguments;
 using Interruptable.EventHandlers;
+using Interruptable.Interface;
 using NullObject.Attributes;
+using System;
 
 namespace Algorithm.NullRealizations
 {
@@ -12,7 +14,7 @@ namespace Algorithm.NullRealizations
     /// <see cref="IAlgorithm"/> interface
     /// </summary>
     [Null]
-    public sealed class NullAlgorithm : IAlgorithm
+    public sealed class NullAlgorithm : IAlgorithm, IInterruptableProcess, IInterruptable, IDisposable
     {
         public event AlgorithmEventHandler VertexVisited;
         public event AlgorithmEventHandler VertexEnqueued;

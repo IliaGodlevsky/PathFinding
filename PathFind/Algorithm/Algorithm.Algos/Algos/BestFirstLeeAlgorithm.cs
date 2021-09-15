@@ -2,11 +2,14 @@
 using Algorithm.Interfaces;
 using Algorithm.Realizations.Heuristic;
 using GraphLib.Interfaces;
+using Interruptable.Interface;
+using System;
 using System.Linq;
 
 namespace Algorithm.Algos.Algos
 {
-    public class BestFirstLeeAlgorithm : LeeAlgorithm
+    public class BestFirstLeeAlgorithm : LeeAlgorithm,
+        IAlgorithm, IInterruptableProcess, IInterruptable, IDisposable
     {
         public BestFirstLeeAlgorithm(IGraph graph, IIntermediateEndPoints endPoints, IHeuristic function)
             : base(graph, endPoints)

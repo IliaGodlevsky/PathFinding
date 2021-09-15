@@ -16,7 +16,7 @@ using static ConsoleVersion.InputClass.Input;
 
 namespace ConsoleVersion.ViewModel
 {
-    internal sealed class GraphCreatingViewModel : GraphCreatingModel, IInterruptable
+    internal sealed class GraphCreatingViewModel : GraphCreatingModel, IModel, IInterruptable
     {
         public event ProcessEventHandler Interrupted;
 

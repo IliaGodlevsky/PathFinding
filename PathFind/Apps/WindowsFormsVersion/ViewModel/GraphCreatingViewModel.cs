@@ -8,7 +8,7 @@ using System.Collections.Generic;
 
 namespace WindowsFormsVersion.ViewModel
 {
-    internal class GraphCreatingViewModel : GraphCreatingModel, IViewModel
+    internal class GraphCreatingViewModel : GraphCreatingModel, IModel, IViewModel
     {
         public event EventHandler WindowClosed;
 

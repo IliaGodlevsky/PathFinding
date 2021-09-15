@@ -6,7 +6,7 @@ using System.Windows.Forms;
 
 namespace WindowsFormsVersion.Model
 {
-    internal sealed class VertexEventHolder : BaseVertexEventHolder
+    internal sealed class VertexEventHolder : BaseVertexEventHolder, IVertexEventHolder
     {
         public VertexEventHolder(IVertexCostFactory costFactory) : base(costFactory)
         {

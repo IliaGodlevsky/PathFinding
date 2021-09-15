@@ -100,7 +100,7 @@ namespace GraphLib.Extensions
             return endPoints.IntermediateVertices
                 .Append(endPoints.Target)
                 .Append(endPoints.Source)
-                .Any(v => v.IsEqual(self));
+                .Any(v => v.Equals(self));
         }
 
         /// <summary>
@@ -109,20 +109,10 @@ namespace GraphLib.Extensions
         /// </summary>
         /// <param name="self"></param>
         /// <param name="graph">A graph, where vertex is situated</param>
-        /// <exception cref="ArgumentNullException">Thrown when
-        /// any of parametre is null</exception>
         /// <exception cref="ArgumentException">Thrown when <paramref name="graph"/> 
         /// doesn't contain <paramref name="self"/></exception>
         public static void SetNeighbours(this IVertex self, IGraph graph)
         {
-            if (self is null)
-            {
-                throw new ArgumentNullException(nameof(self));
-            }
-            if (graph is null)
-            {
-                throw new ArgumentNullException(nameof(graph));
-            }
             if (!graph.Contains(self))
             {
                 throw new ArgumentException("Vertex doesn't belong to graph\n", nameof(self));

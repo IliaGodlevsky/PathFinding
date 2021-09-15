@@ -1,8 +1,9 @@
 ﻿using ConsoleVersion.View.Abstraction;
+using ConsoleVersion.View.Interface;
 
 namespace ConsoleVersion.View.FramedAxes
 {
-    internal sealed class FramedOverAbscissa : FramedAbscissa
+    internal sealed class FramedOverAbscissa : FramedAbscissa, IFramedAxis, IDisplayable
     {
         public FramedOverAbscissa(int graphWidth,
             int graphLength) : base(graphWidth)

@@ -2,10 +2,13 @@
 using Algorithm.Interfaces;
 using Algorithm.Realizations.Heuristic;
 using GraphLib.Interfaces;
+using Interruptable.Interface;
+using System;
 
 namespace Algorithm.Algos.Algos
 {
-    public sealed class DepthFirstAlgorithm : GreedyAlgorithm
+    public sealed class DepthFirstAlgorithm : GreedyAlgorithm,
+        IAlgorithm, IInterruptableProcess, IInterruptable, IDisposable
     {
         public DepthFirstAlgorithm(IGraph graph, IIntermediateEndPoints endPoints, IHeuristic heuristic)
             : base(graph, endPoints)

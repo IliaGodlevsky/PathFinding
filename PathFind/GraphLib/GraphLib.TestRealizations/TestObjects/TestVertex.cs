@@ -1,12 +1,14 @@
-﻿using GraphLib.Extensions;
+﻿using Common.Interface;
+using GraphLib.Extensions;
 using GraphLib.Interfaces;
 using GraphLib.Serialization;
 using GraphLib.Serialization.Extensions;
+using System;
 using System.Collections.Generic;
 
 namespace GraphLib.TestRealizations.TestObjects
 {
-    public sealed class TestVertex : IVertex
+    public sealed class TestVertex : IVertex, IEquatable<IVertex>, ICloneable<IVertex>
     {
         public TestVertex(INeighboursCoordinates radar, ICoordinate coordinate)
         {

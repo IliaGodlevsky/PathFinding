@@ -1,8 +1,10 @@
 ﻿using Common.Extensions;
+using Common.Interface;
 using GraphLib.Extensions;
 using GraphLib.Interfaces;
 using GraphLib.Serialization;
 using GraphLib.Serialization.Extensions;
+using System;
 using System.Collections.Generic;
 using System.Windows.Controls;
 using System.Windows.Media;
@@ -10,7 +12,7 @@ using static WPFVersion.Constants;
 
 namespace WPFVersion.Model
 {
-    internal class Vertex : Label, IVertex, IVisualizable, IWeightable
+    internal class Vertex : Label, IVertex, IVisualizable, IWeightable, IEquatable<IVertex>, ICloneable<IVertex>
     {
         public static SolidColorBrush VisitedVertexColor { get; set; } = new SolidColorBrush(Colors.CadetBlue);
         public static SolidColorBrush PathVertexColor { get; set; } = new SolidColorBrush(Colors.Yellow);

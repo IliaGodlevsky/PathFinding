@@ -1,11 +1,12 @@
-﻿using GraphLib.Base;
+﻿using Common.Interface;
+using GraphLib.Base;
 using GraphLib.Interfaces;
 using System;
 
 namespace WPFVersion3D.Model
 {
     [Serializable]
-    internal sealed class Vertex3DCost : BaseVertexCost
+    internal sealed class Vertex3DCost : BaseVertexCost, IVertexCost, ICloneable<IVertexCost>
     {
         public Vertex3DCost(int cost) : base(cost)
         {

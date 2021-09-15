@@ -22,7 +22,7 @@ using WindowsFormsVersion.View;
 
 namespace WindowsFormsVersion.ViewModel
 {
-    internal class MainWindowViewModel : MainModel, INotifyPropertyChanged
+    internal class MainWindowViewModel : MainModel, IMainModel, IModel, INotifyPropertyChanged
     {
         public event PropertyChangedEventHandler PropertyChanged;
         public event StatisticsChangedEventHandler StatisticsChanged;

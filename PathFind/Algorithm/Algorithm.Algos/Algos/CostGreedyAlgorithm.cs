@@ -3,10 +3,13 @@ using Algorithm.Interfaces;
 using Algorithm.Realizations.GraphPaths;
 using Algorithm.Realizations.StepRules;
 using GraphLib.Interfaces;
+using Interruptable.Interface;
+using System;
 
 namespace Algorithm.Algos.Algos
 {
-    public sealed class CostGreedyAlgorithm : GreedyAlgorithm
+    public sealed class CostGreedyAlgorithm : GreedyAlgorithm, 
+        IAlgorithm, IInterruptableProcess, IInterruptable, IDisposable
     {
         public CostGreedyAlgorithm(IGraph graph, IIntermediateEndPoints endPoints)
             : this(graph, endPoints, new DefaultStepRule())

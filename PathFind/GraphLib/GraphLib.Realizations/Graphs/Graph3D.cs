@@ -1,11 +1,12 @@
-﻿using GraphLib.Base;
+﻿using Common.Interface;
+using GraphLib.Base;
 using GraphLib.Extensions;
 using GraphLib.Interfaces;
 using System.Linq;
 
 namespace GraphLib.Realizations.Graphs
 {
-    public sealed class Graph3D : BaseGraph
+    public sealed class Graph3D : BaseGraph, IGraph, ICloneable<IGraph>
     {
         public int Width { get; }
 

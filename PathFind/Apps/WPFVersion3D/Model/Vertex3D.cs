@@ -1,8 +1,10 @@
 ﻿using Common.Extensions;
+using Common.Interface;
 using GraphLib.Extensions;
 using GraphLib.Interfaces;
 using GraphLib.Serialization;
 using GraphLib.Serialization.Extensions;
+using System;
 using System.Collections.Generic;
 using System.Windows;
 using System.Windows.Media;
@@ -13,7 +15,7 @@ using static WPFVersion3D.Constants;
 
 namespace WPFVersion3D.Model
 {
-    internal class Vertex3D : UIElement3D, IVertex, IVisualizable
+    internal class Vertex3D : UIElement3D, IVertex, IVisualizable, IEquatable<IVertex>, ICloneable<IVertex>
     {
         public Vertex3D(INeighboursCoordinates radar, ICoordinate coordinate, IModel3DFactory modelFactory)
         {

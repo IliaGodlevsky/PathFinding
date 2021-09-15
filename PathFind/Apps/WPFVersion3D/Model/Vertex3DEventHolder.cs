@@ -6,7 +6,7 @@ using System.Windows.Input;
 
 namespace WPFVersion3D.Model
 {
-    internal sealed class Vertex3DEventHolder : BaseVertexEventHolder
+    internal sealed class Vertex3DEventHolder : BaseVertexEventHolder, IVertexEventHolder
     {
         public Vertex3DEventHolder(IVertexCostFactory costFactory) : base(costFactory)
         {

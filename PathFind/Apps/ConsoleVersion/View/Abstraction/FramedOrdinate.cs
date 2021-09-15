@@ -1,9 +1,10 @@
 ﻿using Colorful;
+using ConsoleVersion.View.Interface;
 using System.Text;
 
 namespace ConsoleVersion.View.Abstraction
 {
-    internal abstract class FramedOrdinate : FramedAxis
+    internal abstract class FramedOrdinate : FramedAxis, IFramedAxis, IDisplayable
     {
         protected FramedOrdinate(int graphLength) : base()
         {

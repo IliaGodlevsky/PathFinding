@@ -4,6 +4,7 @@ using Algorithm.Realizations.Heuristic;
 using Algorithm.Realizations.StepRules;
 using Common.ValueRanges;
 using GraphLib.Interfaces;
+using Interruptable.Interface;
 using NullObject.Extensions;
 using System;
 using System.Collections.Generic;
@@ -18,7 +19,8 @@ namespace Algorithm.Algos.Algos
     /// removes the most distant vertices from its horisont 
     /// of search and searches only among vertices, that are 
     /// the closest to the target vertex</remarks>
-    public class AStarModified : AStarAlgorithm
+    public class AStarModified : AStarAlgorithm,
+        IAlgorithm, IInterruptableProcess, IInterruptable, IDisposable
     {
         public AStarModified(IGraph graph, IIntermediateEndPoints endPoints)
             : this(graph, endPoints, new DefaultStepRule(), new ChebyshevDistance())

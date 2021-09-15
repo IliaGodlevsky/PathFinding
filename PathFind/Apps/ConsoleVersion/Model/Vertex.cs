@@ -1,4 +1,5 @@
 ﻿using Common.Extensions;
+using Common.Interface;
 using ConsoleVersion.View;
 using ConsoleVersion.View.Interface;
 using GraphLib.Extensions;
@@ -16,7 +17,8 @@ using Console = Colorful.Console;
 
 namespace ConsoleVersion.Model
 {
-    internal class Vertex : IVertex, IVisualizable, IWeightable, IDisplayable
+    internal class Vertex : IVertex, IVisualizable, IWeightable, 
+        IDisplayable, IEquatable<IVertex>, ICloneable<IVertex>
     {
         public event EventHandler OnVertexCostChanged;
         public event EventHandler OnEndPointChosen;

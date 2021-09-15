@@ -10,7 +10,7 @@ using System;
 
 namespace WindowsFormsVersion.ViewModel
 {
-    internal class PathFindingViewModel : PathFindingModel, IViewModel
+    internal class PathFindingViewModel : PathFindingModel, IModel, IViewModel
     {
         public event EventHandler WindowClosed;
 

@@ -1,4 +1,5 @@
-﻿using GraphLib.Base;
+﻿using Common.Interface;
+using GraphLib.Base;
 using GraphLib.Interfaces;
 using System;
 using System.Linq;
@@ -9,7 +10,7 @@ namespace GraphLib.Realizations.Coordinates
     /// A class representing cartesian two-dimensional coordinates
     /// </summary>
     [Serializable]
-    public sealed class Coordinate2D : BaseCoordinate
+    public sealed class Coordinate2D : BaseCoordinate, ICoordinate, ICloneable<ICoordinate>
     {
         public int X { get; }
 

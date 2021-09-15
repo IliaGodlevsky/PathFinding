@@ -9,7 +9,7 @@ using System.Linq;
 
 namespace GraphLib.Base
 {
-    public abstract class BaseEndPoints : IIntermediateEndPoints
+    public abstract class BaseEndPoints : IIntermediateEndPoints, IEndPoints
     {
         public IVertex Source { get; internal set; }
         public IVertex Target { get; internal set; }

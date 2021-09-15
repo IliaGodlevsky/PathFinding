@@ -3,7 +3,7 @@ using GraphLib.Interfaces;
 
 namespace WPFVersion.Model
 {
-    internal sealed class GraphFieldFactory : BaseGraphFieldFactory
+    internal sealed class GraphFieldFactory : BaseGraphFieldFactory, IGraphFieldFactory
     {
         protected override IGraphField GetField()
         {

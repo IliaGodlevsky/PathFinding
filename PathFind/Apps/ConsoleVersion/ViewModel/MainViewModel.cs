@@ -28,7 +28,7 @@ using Console = Colorful.Console;
 
 namespace ConsoleVersion.ViewModel
 {
-    internal sealed class MainViewModel : MainModel, IInterruptable
+    internal sealed class MainViewModel : MainModel, IMainModel, IModel, IInterruptable
     {
         public event CostRangeChangedEventHandler CostRangeChanged;
         public event NewGraphCreatedEventHandler NewGraphCreated;

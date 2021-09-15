@@ -7,6 +7,8 @@ using Algorithm.Сompanions;
 using Common.Extensions;
 using GraphLib.Extensions;
 using GraphLib.Interfaces;
+using Interruptable.Interface;
+using System;
 using System.Linq;
 
 namespace Algorithm.Algos.Algos
@@ -14,7 +16,8 @@ namespace Algorithm.Algos.Algos
     /// <summary>
     /// Realization of Dijkstra's algorithm
     /// </summary>
-    public class DijkstraAlgorithm : WaveAlgorithm
+    public class DijkstraAlgorithm : WaveAlgorithm,
+        IAlgorithm, IInterruptableProcess, IInterruptable, IDisposable
     {
         public DijkstraAlgorithm(IGraph graph, IIntermediateEndPoints endPoints)
             : this(graph, endPoints, new DefaultStepRule())
