@@ -20,7 +20,7 @@ using WPFVersion.View.Windows;
 
 namespace WPFVersion.ViewModel
 {
-    internal class MainWindowViewModel : MainModel, INotifyPropertyChanged
+    internal class MainWindowViewModel : MainModel, IMainModel, IModel, INotifyPropertyChanged
     {
         public event PropertyChangedEventHandler PropertyChanged;
         public event EventHandler AlgorithmInterrupted;

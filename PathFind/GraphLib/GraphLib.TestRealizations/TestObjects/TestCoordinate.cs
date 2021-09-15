@@ -1,4 +1,5 @@
 ﻿using GraphLib.Base;
+using GraphLib.Interfaces;
 using System;
 
 namespace GraphLib.TestRealizations.TestObjects
@@ -10,6 +11,11 @@ namespace GraphLib.TestRealizations.TestObjects
             base(coordinates.Length, coordinates)
         {
 
+        }
+
+        public override ICoordinate Clone()
+        {
+            return new TestCoordinate(CoordinatesValues);
         }
     }
 }

@@ -1,8 +1,6 @@
 ﻿using System;
-using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 
 namespace Common.Extensions
 {
@@ -41,6 +39,34 @@ namespace Common.Extensions
                 .Select(FirstOfTheGroup);
         }
 
+        public static bool Remove<T>(this Queue<T> queue, T item)
+        {
+            bool isRemoved = false;
+            if (queue.Contains(item))
+            {
+                var items = new List<T>(queue);
+                queue.Clear();
+                isRemoved = items.Remove(item);
+                items.ForEach(queue.Enqueue);
+            }
+            return isRemoved;
+        }
+
+        /// <summary>
+        /// Applies an accumulation function over the collection 
+        /// or returns default value if collection is empty
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="collection"></param>
+        /// <param name="func"></param>
+        /// <returns>A result of aggregation of the collection</returns>
+        /// <exception cref="ArgumentNullException"></exception>
+        public static T AggregateOrDefault<T>(this IEnumerable<T> collection, Func<T, T, T> func)
+        {
+            var items = collection.ToArray();
+            return items.Any() ? items.Aggregate(func) : default;
+        }
+
         public static double AverageOrDefault<TSource>(this IEnumerable<TSource> source, Func<TSource, int> selector)
         {
             return source.Any() ? source.Average(selector) : default;
@@ -59,7 +85,15 @@ namespace Common.Extensions
             return collection.ElementAtOrDefault(index);
         }
 
-        public static bool ContainsElems<T>(this IEnumerable<T> self, params T[] items)
+        /// <summary>
+        /// Determins, whether the sequence 
+        /// contains all of the <paramref name="items"/>
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="self"></param>
+        /// <param name="items"></param>
+        /// <returns></returns>
+        public static bool ContainsAll<T>(this IEnumerable<T> self, params T[] items)
         {
             bool IsInCollection(T item)
             {

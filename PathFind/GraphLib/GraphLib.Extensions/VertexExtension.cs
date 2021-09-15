@@ -57,6 +57,16 @@ namespace GraphLib.Extensions
             return self.Neighbours.Any(IsAtSamePosition);
         }
 
+       
+        public static TVertex CloneProperties<TVertex>(this TVertex self, TVertex vertexToClone)
+            where TVertex : IVertex
+        {
+            self.IsObstacle = vertexToClone.IsObstacle;
+            self.Cost = vertexToClone.Cost.Clone();
+            self.Neighbours = new IVertex[] { };
+            return self;
+        }
+
         /// <summary>
         /// Returns <paramref name="self"/> as 
         /// an array of <see cref="Int32"/>
@@ -131,6 +141,14 @@ namespace GraphLib.Extensions
         public static bool IsOneOf(this IVertex self, params IVertex[] vertices)
         {
             return vertices.Any(vertex => vertex.Equals(self));
+        }
+
+        public static bool IsOneOf(this IVertex self, IIntermediateEndPoints endPoints)
+        {
+            return endPoints.IntermediateVertices
+                .Append(endPoints.Target)
+                .Append(endPoints.Source)
+                .Any(v => v.Equals(self));
         }
 
         /// <summary>

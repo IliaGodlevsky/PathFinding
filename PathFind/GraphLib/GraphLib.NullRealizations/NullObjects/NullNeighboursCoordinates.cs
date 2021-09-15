@@ -16,5 +16,10 @@ namespace GraphLib.NullRealizations.NullObjects
         public ICoordinate[] Coordinates => coordinates;
 
         private readonly NullCoordinate[] coordinates;
+
+        public INeighboursCoordinates Clone()
+        {
+            return new NullNeighboursCoordinates();
+        }
     }
 }

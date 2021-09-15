@@ -1,10 +1,11 @@
-﻿using GraphLib.Realizations.Interfaces;
+﻿using Common.Interface;
+using GraphLib.Realizations.Interfaces;
 using System;
 
 namespace GraphLib.Realizations.VertexCost.CostStates
 {
     [Serializable]
-    internal sealed class UnweightedState : ICostState
+    internal sealed class UnweightedState : ICostState, ICloneable<ICostState>
     {
         public string ToString(WeightableVertexCost cost)
         {

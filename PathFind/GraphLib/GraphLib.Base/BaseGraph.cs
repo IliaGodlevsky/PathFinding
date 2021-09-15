@@ -1,4 +1,5 @@
 ﻿using Common.Extensions;
+using Common.Interface;
 using GraphLib.Exceptions;
 using GraphLib.Extensions;
 using GraphLib.Interfaces;
@@ -15,7 +16,7 @@ namespace GraphLib.Base
     /// A base graph for all graph classes.
     /// This is an abstract class
     /// </summary>
-    public abstract class BaseGraph : IGraph
+    public abstract class BaseGraph : IGraph, ICloneable<IGraph>
     {
         public int Size { get; }
 
@@ -84,6 +85,8 @@ namespace GraphLib.Base
                 obstaclesPercent, obstacles, Size);
             return string.Join(largeSpace, joined, graphParams);
         }
+
+        public abstract IGraph Clone();
 
         protected static string[] DimensionNames { get; }
         private readonly IDictionary<ICoordinate, IVertex> vertices;

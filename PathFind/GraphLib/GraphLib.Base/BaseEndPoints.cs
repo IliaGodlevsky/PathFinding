@@ -9,7 +9,7 @@ using System.Linq;
 
 namespace GraphLib.Base
 {
-    public abstract class BaseEndPoints : IIntermediateEndPoints
+    public abstract class BaseEndPoints : IIntermediateEndPoints, IEndPoints
     {
         public IVertex Source { get; internal set; }
         public IVertex Target { get; internal set; }
@@ -31,8 +31,8 @@ namespace GraphLib.Base
         {
             intermediates = new Collection<IVertex>();
             markedToReplaceIntermediates = new Queue<IVertex>();
-            leftButtonConditions = new LeftButtonEndPointsConditions(this);
-            middleButtonConditions = new MiddleButtonEndPointsConditions(this);
+            leftButtonConditions = new SetEndPointsConditions(this);
+            middleButtonConditions = new MarkIntermediateToReplaceEndPointsConditions(this);
             Reset();
         }
 

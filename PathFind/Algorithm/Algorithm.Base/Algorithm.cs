@@ -8,13 +8,14 @@ using GraphLib.Interfaces;
 using GraphLib.Realizations;
 using Interruptable.EventArguments;
 using Interruptable.EventHandlers;
+using Interruptable.Interface;
 using NullObject.Extensions;
 using System;
 using System.Linq;
 
 namespace Algorithm.Base
 {
-    public abstract class Algorithm : IAlgorithm
+    public abstract class Algorithm : IAlgorithm, IInterruptableProcess, IInterruptable, IDisposable
     {
         public event AlgorithmEventHandler VertexVisited;
         public event AlgorithmEventHandler VertexEnqueued;

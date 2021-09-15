@@ -1,8 +1,9 @@
 ﻿using ConsoleVersion.View.Abstraction;
+using ConsoleVersion.View.Interface;
 
 namespace ConsoleVersion.View.FramedAxes
 {
-    internal sealed class FramedToLeftOrdinate : FramedOrdinate
+    internal sealed class FramedToLeftOrdinate : FramedOrdinate, IFramedAxis, IDisplayable
     {
         public FramedToLeftOrdinate(int graphLength)
             : base(graphLength)

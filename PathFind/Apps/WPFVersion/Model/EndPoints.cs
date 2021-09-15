@@ -5,7 +5,7 @@ using System.Windows.Input;
 
 namespace WPFVersion.Model
 {
-    internal sealed class EndPoints : BaseEndPoints
+    internal sealed class EndPoints : BaseEndPoints, IIntermediateEndPoints, IEndPoints
     {
         protected override void SubscribeVertex(IVertex vertex)
         {

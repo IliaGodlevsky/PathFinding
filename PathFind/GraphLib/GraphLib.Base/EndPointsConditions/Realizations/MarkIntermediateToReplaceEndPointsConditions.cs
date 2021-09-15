@@ -10,9 +10,9 @@ using System.Linq;
 
 namespace GraphLib.Base.EndPointsConditions.Realizations
 {
-    internal sealed class MiddleButtonEndPointsConditions : IEndPointsConditions
+    internal sealed class MarkIntermediateToReplaceEndPointsConditions : IEndPointsConditions
     {
-        public MiddleButtonEndPointsConditions(BaseEndPoints endPoints)
+        public MarkIntermediateToReplaceEndPointsConditions(BaseEndPoints endPoints)
         {
             cancelMarkToReplace = new CancelMarkToReplaceEndPointsConditions(endPoints);
             conditions = new[]

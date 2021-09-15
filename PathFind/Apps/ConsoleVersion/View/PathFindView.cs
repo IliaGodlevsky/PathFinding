@@ -1,10 +1,11 @@
 ﻿using ConsoleVersion.Resource;
 using ConsoleVersion.View.Abstraction;
+using ConsoleVersion.View.Interface;
 using ConsoleVersion.ViewModel;
 
 namespace ConsoleVersion.View
 {
-    internal sealed class PathFindView : View<PathFindingViewModel>
+    internal sealed class PathFindView : View<PathFindingViewModel>, IView
     {
         public PathFindView(PathFindingViewModel model) : base(model)
         {

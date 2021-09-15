@@ -3,7 +3,6 @@ using Common.ValueRanges;
 using GraphLib.Interfaces;
 using System;
 using System.Linq;
-using System.Threading.Tasks;
 
 namespace GraphLib.Extensions
 {
@@ -49,6 +48,17 @@ namespace GraphLib.Extensions
             return self.Vertices.Count(vertex => vertex.IsObstacle);
         }
 
+        public static TGraph CloneVertices<TGraph>(this TGraph self, TGraph graphToClone)
+            where TGraph : IGraph
+        {
+            foreach (var vertex in graphToClone.Vertices)
+            {
+                var clone = vertex.Clone();
+                self[clone.Position] = clone;
+            }
+            return (TGraph)self.ConnectVertices();
+        }
+
         public static IGraph ForEach(this IGraph self, Action<IVertex> action)
         {
             self.Vertices.ForEach(action);
@@ -70,7 +80,7 @@ namespace GraphLib.Extensions
 
         public static bool Contains(this IGraph self, params IVertex[] vertices)
         {
-            return self.Vertices.ContainsElems(vertices);
+            return self.Vertices.ContainsAll(vertices);
         }
 
         public static bool Contains(this IGraph self, IEndPoints endPoints)
@@ -88,6 +98,13 @@ namespace GraphLib.Extensions
             return self.Vertices.FilterObstacles();
         }
 
+        /// <summary>
+        /// Converts <paramref name="index"/> into an array of 
+        /// cartesian coordinates according to graph dimension sizes
+        /// </summary>
+        /// <param name="self"></param>
+        /// <param name="index"></param>
+        /// <returns>An array of cartesian coordinates</returns>
         public static int[] ToCoordinates(this IGraph self, int index)
         {
             var rangeOfIndices = new InclusiveValueRange<int>(self.Size - 1, 0);

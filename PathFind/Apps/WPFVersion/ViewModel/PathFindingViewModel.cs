@@ -7,8 +7,6 @@ using GraphViewModel.Interfaces;
 using Interruptable.EventArguments;
 using Logging.Interface;
 using System;
-using System.ComponentModel;
-using System.Runtime.CompilerServices;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
@@ -17,15 +15,9 @@ using WPFVersion.Infrastructure;
 
 namespace WPFVersion.ViewModel
 {
-    internal class PathFindingViewModel : PathFindingModel, IViewModel, INotifyPropertyChanged
+    internal class PathFindingViewModel : PathFindingModel, IModel, IViewModel
     {
         public event EventHandler WindowClosed;
-        public event PropertyChangedEventHandler PropertyChanged;
-
-        protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = "")
-        {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
-        }
 
         public ICommand ConfirmPathFindAlgorithmChoice { get; }
         public ICommand CancelPathFindAlgorithmChoice { get; }

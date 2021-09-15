@@ -6,12 +6,15 @@ using Algorithm.Realizations.GraphPaths;
 using Common.Extensions;
 using GraphLib.Extensions;
 using GraphLib.Interfaces;
+using Interruptable.Interface;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
 namespace Algorithm.Base
 {
-    public abstract class WaveAlgorithm : Algorithm
+    public abstract class WaveAlgorithm : Algorithm, 
+        IAlgorithm, IInterruptableProcess, IInterruptable, IDisposable
     {
         protected WaveAlgorithm(IGraph graph, IIntermediateEndPoints endPoints)
             : base(graph, endPoints)

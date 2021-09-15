@@ -1,6 +1,8 @@
-﻿namespace WPFVersion3D.Attributes
+﻿using WPFVersion3D.Interface;
+
+namespace WPFVersion3D.Attributes
 {
-    internal sealed class Speed : BaseSpeed
+    internal sealed class Speed : BaseSpeed, IAnimationSpeed
     {
         public Speed(double milliseconds)
         {

@@ -5,7 +5,7 @@ using System.Windows.Forms;
 
 namespace WindowsFormsVersion.Model
 {
-    internal sealed class EndPoints : BaseEndPoints
+    internal sealed class EndPoints : BaseEndPoints, IIntermediateEndPoints, IEndPoints
     {
         protected override void SubscribeVertex(IVertex vertex)
         {

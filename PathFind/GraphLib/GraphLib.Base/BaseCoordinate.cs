@@ -1,4 +1,5 @@
 ﻿using Common.Extensions;
+using Common.Interface;
 using GraphLib.Exceptions;
 using GraphLib.Extensions;
 using GraphLib.Interfaces;
@@ -11,7 +12,7 @@ namespace GraphLib.Base
     /// Provides base functionality to coordinate classes
     /// </summary>
     [Serializable]
-    public abstract class BaseCoordinate : ICoordinate
+    public abstract class BaseCoordinate : ICoordinate, ICloneable<ICoordinate>
     {
         protected BaseCoordinate(int numberOfDimensions, params int[] coordinates)
         {
@@ -54,6 +55,8 @@ namespace GraphLib.Base
                 ? $"({string.Join(",", CoordinatesValues)})"
                 : toString;
         }
+
+        public abstract ICoordinate Clone();
 
         [NonSerialized]
         private string toString;

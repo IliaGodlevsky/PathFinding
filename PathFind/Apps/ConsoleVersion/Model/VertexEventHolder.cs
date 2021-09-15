@@ -8,7 +8,7 @@ using static GraphLib.Base.BaseVertexCost;
 
 namespace ConsoleVersion.Model
 {
-    internal sealed class VertexEventHolder : BaseVertexEventHolder
+    internal sealed class VertexEventHolder : BaseVertexEventHolder, IVertexEventHolder
     {
         public VertexEventHolder(IVertexCostFactory costFactory)
             : base(costFactory)

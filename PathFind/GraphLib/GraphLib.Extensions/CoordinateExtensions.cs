@@ -34,13 +34,6 @@ namespace GraphLib.Extensions
             return vertexCoordinates.IsCardinal(neighbourCoordinates);
         }
 
-        public static bool IsClose(this ICoordinate self, ICoordinate neighbour)
-        {
-            var selfCoordinateValues = self.CoordinatesValues.ToArray();
-            var neighbourCoordinateValues = neighbour.CoordinatesValues.ToArray();
-            return selfCoordinateValues.IsClose(neighbourCoordinateValues);
-        }
-
         /// <summary>
         /// Checks whether coordinate is within graph
         /// </summary>

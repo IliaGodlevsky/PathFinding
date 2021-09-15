@@ -4,7 +4,7 @@ using WPFVersion3D.Model;
 namespace WPFVersion3D.Axes
 {
     /// <summary>
-    /// Interface for 3D cartesian coordinates
+    /// Interface for 3D cartesian axis
     /// </summary>
     internal interface IAxis
     {

@@ -1,4 +1,5 @@
 ﻿using Common.Extensions;
+using Common.Interface;
 using Common.ValueRanges;
 using GraphLib.Interfaces;
 using System;
@@ -6,7 +7,7 @@ using System;
 namespace GraphLib.Base
 {
     [Serializable]
-    public abstract class BaseVertexCost : IVertexCost
+    public abstract class BaseVertexCost : IVertexCost, ICloneable<IVertexCost>
     {
         public int CurrentCost { get; protected set; }
 

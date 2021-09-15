@@ -1,5 +1,6 @@
 ﻿using ConsoleVersion.EventArguments;
 using ConsoleVersion.View.Abstraction;
+using ConsoleVersion.View.Interface;
 using ConsoleVersion.ViewModel;
 using GraphLib.Base;
 using GraphLib.Realizations.Coordinates;
@@ -8,7 +9,7 @@ using System;
 
 namespace ConsoleVersion.View
 {
-    internal sealed class MainView : View<MainViewModel>
+    internal sealed class MainView : View<MainViewModel>, IView
     {
         public static int HeightOfAbscissaView => 2;
         public static int HeightOfGraphParametresView => 1;

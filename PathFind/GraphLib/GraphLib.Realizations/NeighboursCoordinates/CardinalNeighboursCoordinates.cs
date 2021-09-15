@@ -1,4 +1,5 @@
-﻿using GraphLib.Extensions;
+﻿using Common.Interface;
+using GraphLib.Extensions;
 using GraphLib.Interfaces;
 using GraphLib.Realizations.Coordinates;
 using GraphLib.Realizations.Extensions;
@@ -9,7 +10,8 @@ using System.Runtime.Serialization;
 namespace GraphLib.Realizations.NeighboursCoordinates
 {
     [Serializable]
-    public sealed class CardinalNeighboursCoordinates : INeighboursCoordinates, ISerializable
+    public sealed class CardinalNeighboursCoordinates 
+        : INeighboursCoordinates, ISerializable, ICloneable<INeighboursCoordinates>
     {
         public ICoordinate[] Coordinates => coordinates.Value;
 
@@ -39,6 +41,11 @@ namespace GraphLib.Realizations.NeighboursCoordinates
         private ICoordinate[] DetectNeighboursCoordinates()
         {
             return neighboursCoordinates.Coordinates.Where(IsCardinal).ToArray();
+        }
+
+        public INeighboursCoordinates Clone()
+        {
+            return new CardinalNeighboursCoordinates(coordinatesValues);
         }
 
         private readonly ICoordinate coordinatesValues;

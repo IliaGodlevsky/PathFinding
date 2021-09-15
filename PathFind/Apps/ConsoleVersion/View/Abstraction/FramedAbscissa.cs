@@ -1,11 +1,12 @@
-﻿using System;
+﻿using ConsoleVersion.View.Interface;
+using System;
 using System.Text;
 
 using Console = Colorful.Console;
 
 namespace ConsoleVersion.View.Abstraction
 {
-    internal abstract class FramedAbscissa : FramedAxis
+    internal abstract class FramedAbscissa : FramedAxis, IFramedAxis, IDisplayable
     {
         protected FramedAbscissa(int graphWidth) : base()
         {

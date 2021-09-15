@@ -1,9 +1,10 @@
 ﻿using Common.Extensions;
 using Common.ValueRanges;
+using WPFVersion3D.Interface;
 
 namespace WPFVersion3D.Attributes
 {
-    internal sealed class RandomSpeed : BaseSpeed
+    internal sealed class RandomSpeed : BaseSpeed, IAnimationSpeed
     {
         public RandomSpeed(double from, double to)
         {

@@ -1,9 +1,12 @@
-﻿using GraphLib.Base;
+﻿using Common.Interface;
+using GraphLib.Base;
+using GraphLib.Extensions;
+using GraphLib.Interfaces;
 using System.Linq;
 
 namespace GraphLib.Realizations.Graphs
 {
-    public sealed class Graph3D : BaseGraph
+    public sealed class Graph3D : BaseGraph, IGraph, ICloneable<IGraph>
     {
         public int Width { get; }
 
@@ -17,6 +20,12 @@ namespace GraphLib.Realizations.Graphs
             Width = DimensionsSizes.First();
             Length = DimensionsSizes.ElementAt(1);
             Height = DimensionsSizes.Last();
+        }
+
+        public override IGraph Clone()
+        {
+            var graph = new Graph3D(DimensionsSizes);
+            return graph.CloneVertices(this);
         }
     }
 }

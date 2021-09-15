@@ -1,4 +1,5 @@
 ﻿using Common.Extensions;
+using Common.Interface;
 using GraphLib.Base;
 using GraphLib.Interfaces;
 using GraphLib.Realizations.Interfaces;
@@ -11,8 +12,7 @@ namespace GraphLib.Realizations.VertexCost
     /// Represents a cost of vertex
     /// </summary>
     [Serializable]
-    public sealed class WeightableVertexCost
-        : BaseVertexCost, IWeightable
+    public sealed class WeightableVertexCost : BaseVertexCost, IVertexCost, IWeightable, ICloneable<IVertexCost>
     {
         /// <summary>
         /// Creates a new instance of 
@@ -87,7 +87,7 @@ namespace GraphLib.Realizations.VertexCost
             return new WeightableVertexCost(CurrentCost)
             {
                 WeightedCost = WeightedCost,
-                Status = (ICostState)Status.Clone(),
+                Status = Status.Clone(),
                 UnweightedCostView = UnweightedCostView
             };
         }
