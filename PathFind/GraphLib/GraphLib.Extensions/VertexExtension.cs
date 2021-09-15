@@ -143,14 +143,6 @@ namespace GraphLib.Extensions
             return vertices.Any(vertex => vertex.Equals(self));
         }
 
-        public static bool IsOneOf(this IVertex self, IIntermediateEndPoints endPoints)
-        {
-            return endPoints.IntermediateVertices
-                .Append(endPoints.Target)
-                .Append(endPoints.Source)
-                .Any(v => v.Equals(self));
-        }
-
         /// <summary>
         /// Sets certain vertices of <paramref name="self"/>'s 
         /// environment as its neighbors
