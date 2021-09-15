@@ -6,6 +6,6 @@ namespace GraphLib.Base.EndPointsConditions.Interfaces
     {
         void ExecuteTheFirstTrue(IVertex vertex);
 
-        void Reset();
+        void ResetAllExecutings();
     }
 }

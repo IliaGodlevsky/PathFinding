@@ -8,7 +8,7 @@ using System.Linq;
 
 namespace GraphLib.Realizations.Factories.GraphAssembles
 {
-    [Description("Smoothed graph assemble")]
+    [Description("Smoothed cost graph assemble")]
     public class SmoothedGraphAssemble : IGraphAssemble
     {
         public SmoothedGraphAssemble(

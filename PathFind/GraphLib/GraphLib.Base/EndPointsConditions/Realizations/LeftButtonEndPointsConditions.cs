@@ -33,7 +33,7 @@ namespace GraphLib.Base.EndPointsConditions.Realizations
             this.endPoints = endPoints;
         }
 
-        public void Reset()
+        public void ResetAllExecutings()
         {
             unsetSourceVertexCondition.Execute(endPoints.Source);
             unsetTargetVertexCondition.Execute(endPoints.Target);

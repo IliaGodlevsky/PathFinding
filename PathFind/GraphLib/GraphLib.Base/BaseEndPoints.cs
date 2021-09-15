@@ -19,8 +19,8 @@ namespace GraphLib.Base
         public void UnsubscribeFromEvents(IGraph graph) => graph.ForEach(UnsubscribeVertex);
         public void Reset()
         {
-            middleButtonConditions.Reset();
-            leftButtonConditions.Reset();
+            middleButtonConditions.ResetAllExecutings();
+            leftButtonConditions.ResetAllExecutings();
         }
         public bool IsEndPoint(IVertex vertex) => this.GetVertices().Contains(vertex);
 

@@ -31,7 +31,7 @@ namespace GraphLib.Base.EndPointsConditions.Realizations
             }
         }
 
-        public void Reset()
+        public void ResetAllExecutings()
         {
             endPoints.markedToReplaceIntermediates.ForEach(cancelMarkToReplace.Execute);
         }

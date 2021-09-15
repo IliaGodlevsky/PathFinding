@@ -8,6 +8,12 @@ namespace GraphLib.Extensions
 {
     public static class VertexExtension
     {
+        /// <summary>
+        /// Returns the information about <paramref name="self"/> in format 
+        /// [Cost: <see cref="IVertex.Cost"/>; position: <see cref="IVertex.Position"/>]
+        /// </summary>
+        /// <param name="self"></param>
+        /// <returns>The info about <paramref name="self"/> in format </returns>
         public static string GetInforamtion(this IVertex self)
         {
             string cost = self.Cost.CurrentCost.ToString();
@@ -15,6 +21,13 @@ namespace GraphLib.Extensions
             return $"[Cost: {cost}; position: {position}]";
         }
 
+        /// <summary>
+        /// Determins, whether <paramref name="self"/> is isolated, 
+        /// e.a. all of its neighbours are obstacles or <see cref="NullVertex"/>
+        /// or <paramref name="self"/> is obstacle or <see cref="NullVertex"/>
+        /// </summary>
+        /// <param name="self"></param>
+        /// <returns>true if obstacle is isolated</returns>
         public static bool IsIsolated(this IVertex self)
         {
             bool IsObstacleOrNull(IVertex vertex)
@@ -25,6 +38,15 @@ namespace GraphLib.Extensions
             return IsObstacleOrNull(self) || self.Neighbours.All(IsObstacleOrNull);
         }
 
+        /// <summary>
+        /// Determins, whether <paramref name="candidate"/> 
+        /// is a neighbour of <paramref name="self"/>
+        /// </summary>
+        /// <param name="self"></param>
+        /// <param name="candidate"></param>
+        /// <returns><see cref="true"/> if <paramref name="candidate"/> 
+        /// is a neighbour of <paramref name="self"/>, 
+        /// otherwise - <see cref="false"/></returns>
         public static bool IsNeighbour(this IVertex self, IVertex candidate)
         {
             bool IsAtSamePosition(IVertex vertex)
@@ -35,6 +57,13 @@ namespace GraphLib.Extensions
             return self.Neighbours.Any(IsAtSamePosition);
         }
 
+        /// <summary>
+        /// Returns <paramref name="self"/> as 
+        /// an array of <see cref="Int32"/>
+        /// </summary>
+        /// <param name="self"></param>
+        /// <returns>Coordinates of <paramref name="self"/> as 
+        /// an array of <see cref="Int32"/></returns>
         public static int[] GetCoordinates(this IVertex self)
         {
             return self.Position.CoordinatesValues.ToArray();
@@ -73,6 +102,17 @@ namespace GraphLib.Extensions
             }
         }
 
+        /// <summary>
+        /// Determins, whether <paramref name="self"/> 
+        /// is equal to <paramref name="vertex"/>
+        /// by cost, position and obstacle status
+        /// </summary>
+        /// <param name="self">The vertex, that is compared</param>
+        /// <param name="vertex">The vertex, to 
+        /// which<paramref name="self"/> is compared</param>
+        /// <returns><see cref="true"/> if <paramref name="self"/> is 
+        /// equal to <paramref name="vertex"/>, 
+        ///  otherwise - <see cref="false"/></returns>
         public static bool IsEqual(this IVertex self, IVertex vertex)
         {
             bool hasEqualCost = self.Cost.Equals(vertex.Cost);
@@ -81,17 +121,16 @@ namespace GraphLib.Extensions
             return hasEqualCost && hasEqualPosition && hasSameObstacleStatus;
         }
 
+        /// <summary>
+        /// Determins whether <paramref name="self"/> is equal 
+        /// to any of <paramref name="vertices"/>
+        /// </summary>
+        /// <param name="self"></param>
+        /// <param name="vertices">Array of vertices, to each element </param>
+        /// <returns></returns>
         public static bool IsOneOf(this IVertex self, params IVertex[] vertices)
         {
             return vertices.Any(vertex => vertex.Equals(self));
-        }
-
-        public static bool IsOneOf(this IVertex self, IIntermediateEndPoints endPoints)
-        {
-            return endPoints.IntermediateVertices
-                .Append(endPoints.Target)
-                .Append(endPoints.Source)
-                .Any(v => v.IsEqual(self));
         }
 
         /// <summary>
@@ -100,20 +139,10 @@ namespace GraphLib.Extensions
         /// </summary>
         /// <param name="self"></param>
         /// <param name="graph">A graph, where vertex is situated</param>
-        /// <exception cref="ArgumentNullException">Thrown when
-        /// any of parametre is null</exception>
         /// <exception cref="ArgumentException">Thrown when <paramref name="graph"/> 
         /// doesn't contain <paramref name="self"/></exception>
         public static void SetNeighbours(this IVertex self, IGraph graph)
         {
-            if (self is null)
-            {
-                throw new ArgumentNullException(nameof(self));
-            }
-            if (graph is null)
-            {
-                throw new ArgumentNullException(nameof(graph));
-            }
             if (!graph.Contains(self))
             {
                 throw new ArgumentException("Vertex doesn't belong to graph\n", nameof(self));
