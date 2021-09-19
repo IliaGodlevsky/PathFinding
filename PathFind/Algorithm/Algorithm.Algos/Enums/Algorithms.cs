@@ -4,7 +4,7 @@ using System.ComponentModel;
 namespace Algorithm.Algos.Enums
 {
     [Flags]
-    public enum Algorithms : ulong
+    public enum Algorithms : ulong // enough for 64 values
     {
         [Description("Lee algorithm")]
         LeeAlgorithm = 2 << 0,

@@ -17,8 +17,7 @@ using Console = Colorful.Console;
 
 namespace ConsoleVersion.Model
 {
-    internal class Vertex : IVertex, IVisualizable, IWeightable, 
-        IDisplayable, IEquatable<IVertex>, ICloneable<IVertex>
+    internal class Vertex : IVertex, IVisualizable, IWeightable, IDisplayable, IEquatable<IVertex>, ICloneable<IVertex>
     {
         public event EventHandler OnVertexCostChanged;
         public event EventHandler OnEndPointChosen;
