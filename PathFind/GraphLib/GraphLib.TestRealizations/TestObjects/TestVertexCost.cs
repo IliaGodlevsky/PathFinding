@@ -1,11 +1,12 @@
-﻿using GraphLib.Base;
+﻿using Common.Interface;
+using GraphLib.Base;
 using GraphLib.Interfaces;
 using System;
 
 namespace GraphLib.TestRealizations.TestObjects
 {
     [Serializable]
-    public sealed class TestVertexCost : BaseVertexCost
+    public sealed class TestVertexCost : BaseVertexCost, IVertexCost, ICloneable<IVertexCost>
     {
         public TestVertexCost(int cost)
             : base(cost)

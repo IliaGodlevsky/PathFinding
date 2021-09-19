@@ -45,7 +45,7 @@ namespace GraphLib.Realizations.NeighboursCoordinates
 
         public INeighboursCoordinates Clone()
         {
-            return new CardinalNeighboursCoordinates(coordinatesValues);
+            return new CardinalNeighboursCoordinates(coordinatesValues.Clone());
         }
 
         private readonly ICoordinate coordinatesValues;

@@ -1,4 +1,5 @@
 ﻿using Common.Extensions;
+using Common.Interface;
 using System;
 using System.Collections.Generic;
 using System.Windows.Media.Media3D;
@@ -11,7 +12,7 @@ namespace WPFVersion3D.Model3DFactories
     /// A class, that responds for creating 
     /// of spheric <see cref="Model3D"/>
     /// </summary>
-    internal sealed class SphericModel3DFactory : IModel3DFactory
+    internal sealed class SphericModel3DFactory : IModel3DFactory, ICloneable<IModel3DFactory>
     {
         private const int Meridians = 15;
         private const int Latitudes = 20;
@@ -103,6 +104,11 @@ namespace WPFVersion3D.Model3DFactories
             double z = radius * (1 - snt * snp);
 
             return new Point3D(x, y, z);
+        }
+
+        public IModel3DFactory Clone()
+        {
+            return new SphericModel3DFactory();
         }
     }
 }

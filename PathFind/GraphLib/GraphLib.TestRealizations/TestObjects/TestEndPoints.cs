@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 namespace GraphLib.TestRealizations.TestObjects
 {
-    public readonly struct TestEndPoints : IIntermediateEndPoints
+    public sealed class TestEndPoints : IIntermediateEndPoints, IEndPoints
     {
         public IVertex Target { get; }
         public IVertex Source { get; }

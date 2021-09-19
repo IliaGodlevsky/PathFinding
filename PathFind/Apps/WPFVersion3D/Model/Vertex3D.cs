@@ -237,7 +237,8 @@ namespace WPFVersion3D.Model
         {
             var neighbourCoordinates = NeighboursCoordinates.Clone();
             var coordinates = Position.Clone();
-            var vertex = new Vertex3D(neighbourCoordinates, coordinates, modelFactory);
+            var model3DFactory = modelFactory.Clone();
+            var vertex = new Vertex3D(neighbourCoordinates, coordinates, model3DFactory);
             return vertex.CloneProperties(this);
         }
 

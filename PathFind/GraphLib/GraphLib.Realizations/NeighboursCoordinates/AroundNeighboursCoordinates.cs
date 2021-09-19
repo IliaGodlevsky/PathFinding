@@ -22,6 +22,7 @@ namespace GraphLib.Realizations.NeighboursCoordinates
 
         public AroundNeighboursCoordinates(ICoordinate coordinate)
         {
+            selfCoordinate = coordinate;
             selfCoordinatesValues = coordinate.CoordinatesValues.ToArray();
             limitDepth = selfCoordinatesValues.Length;
             resultCoordinatesValues = new int[limitDepth];
@@ -81,9 +82,10 @@ namespace GraphLib.Realizations.NeighboursCoordinates
 
         public INeighboursCoordinates Clone()
         {
-            return new AroundNeighboursCoordinates(new Coordinate(selfCoordinatesValues));
+            return new AroundNeighboursCoordinates(selfCoordinate.Clone());
         }
 
+        private readonly ICoordinate selfCoordinate;
         private readonly int limitDepth;
         private readonly int[] selfCoordinatesValues;
         private readonly int[] resultCoordinatesValues;

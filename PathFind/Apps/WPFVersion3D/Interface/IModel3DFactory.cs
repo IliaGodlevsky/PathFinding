@@ -1,4 +1,5 @@
-﻿using System.Windows.Media.Media3D;
+﻿using Common.Interface;
+using System.Windows.Media.Media3D;
 
 namespace WPFVersion3D.Interface
 {
@@ -7,7 +8,7 @@ namespace WPFVersion3D.Interface
     /// for creating a <see cref="Model3D"/> 
     /// of regular geometric figures
     /// </summary>
-    internal interface IModel3DFactory
+    internal interface IModel3DFactory : ICloneable<IModel3DFactory>
     {
         /// <summary>
         /// Creates a <see cref="Model3D"/> 

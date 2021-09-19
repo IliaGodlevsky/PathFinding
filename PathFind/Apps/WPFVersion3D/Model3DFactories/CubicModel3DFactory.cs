@@ -1,4 +1,5 @@
 ﻿using Common.Extensions;
+using Common.Interface;
 using System.Collections.Generic;
 using System.Linq;
 using System.Windows.Media.Media3D;
@@ -11,7 +12,7 @@ namespace WPFVersion3D.Model3DFactories
     /// A class that responds for 
     /// creating a cubic <see cref="Model3D"/>
     /// </summary>
-    internal sealed class CubicModel3DFactory : IModel3DFactory
+    internal sealed class CubicModel3DFactory : IModel3DFactory, ICloneable<IModel3DFactory>
     {
         /// <summary>
         /// Creates cubic <see cref="Model3D"/>
@@ -53,6 +54,11 @@ namespace WPFVersion3D.Model3DFactories
             yield return reactangleFactory.CreateRectangleModel(points[7], points[0], points[3], points[4], material);
             yield return reactangleFactory.CreateRectangleModel(points[7], points[4], points[5], points[6], material);
             yield return reactangleFactory.CreateRectangleModel(points[0], points[1], points[2], points[3], material);
+        }
+
+        public IModel3DFactory Clone()
+        {
+            return new CubicModel3DFactory();
         }
     }
 }
