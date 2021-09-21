@@ -146,9 +146,6 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <None Include="App.config" />
-  </ItemGroup>
-  <ItemGroup>
     <Resource Include="Resources\Images\mainwindow.png" />
     <Resource Include="Resources\Images\open.png" />
     <Resource Include="Resources\Images\new.png" />

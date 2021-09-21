@@ -2,10 +2,11 @@
 {
     internal enum MenuItemPriority
     {
-        Lowest = 0,
-        Low = 1,
-        Normal = 2,
-        High = 3,
-        Highest = 4
+        None = 0,
+        Lowest = 1,
+        Low = 2,
+        Normal = 3,
+        High = 4,
+        Highest = 5
     }
 }

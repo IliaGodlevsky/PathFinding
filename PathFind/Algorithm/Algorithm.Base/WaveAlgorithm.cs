@@ -13,7 +13,7 @@ using System.Linq;
 
 namespace Algorithm.Base
 {
-    public abstract class WaveAlgorithm : Algorithm, 
+    public abstract class WaveAlgorithm : Algorithm,
         IAlgorithm, IInterruptableProcess, IInterruptable, IDisposable
     {
         protected WaveAlgorithm(IGraph graph, IIntermediateEndPoints endPoints)

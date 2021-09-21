@@ -1,6 +1,7 @@
-﻿using Common;
-using Common.Extensions;
+﻿using Common.Extensions;
 using Common.Interface;
+using EnumerationValues.Extensions;
+using EnumerationValues.Realizations;
 using GraphLib.Base;
 using GraphLib.Extensions;
 using GraphLib.Interfaces;
@@ -190,9 +191,10 @@ namespace WPFVersion3D.ViewModel
         private Tuple<string, BaseSpeed>[] GetSpeedTupleCollection()
         {
             var enumValues = new EnumValues<AnimationSpeed>();
+            var enumValuesWithoutIgnored = new EnumValuesWithoutIgnored<AnimationSpeed>(enumValues);
             string Description(AnimationSpeed speed) => speed.GetDescriptionAttributeValueOrTypeName();
             BaseSpeed Speed(AnimationSpeed speed) => speed.GetAttributeOrNull<BaseSpeed>();
-            return enumValues.ToTupleCollection(Description, Speed);
+            return enumValuesWithoutIgnored.ToTupleCollection(Description, Speed);
         }
 
         private readonly Lazy<Tuple<string, BaseSpeed>[]> animationSpeeds;

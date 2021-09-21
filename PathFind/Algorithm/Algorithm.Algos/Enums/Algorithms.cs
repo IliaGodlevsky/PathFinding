@@ -1,11 +1,15 @@
-﻿using System;
+﻿using EnumerationValues.Attributes;
+using System;
 using System.ComponentModel;
 
 namespace Algorithm.Algos.Enums
 {
     [Flags]
-    public enum Algorithms : ulong // enough for 64 values
+    public enum Algorithms : ulong // up to 64 values
     {
+        [EnumFetchIgnore]
+        None = 0,
+
         [Description("Lee algorithm")]
         LeeAlgorithm = 2 << 0,
 

@@ -63,7 +63,7 @@ namespace ConsoleVersion.InputClass
         /// <param name="upperPossibleYValue">An upper value of Y 
         /// coordinate in range where a lower value is 0</param>
         /// <returns>An instance of <see cref="Coordinate2D"/></returns>
-        public  Coordinate2D InputPoint(int upperPossibleXValue, int upperPossibleYValue)
+        public Coordinate2D InputPoint(int upperPossibleXValue, int upperPossibleYValue)
         {
             int xCoordinate = InputNumber(XCoordinateInputMsg, upperPossibleXValue);
             int yCoordinate = InputNumber(YCoordinateInputMsg, upperPossibleYValue);

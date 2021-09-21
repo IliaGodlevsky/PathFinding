@@ -10,7 +10,7 @@ using System.Runtime.Serialization;
 namespace GraphLib.Realizations.NeighboursCoordinates
 {
     [Serializable]
-    public sealed class CardinalNeighboursCoordinates 
+    public sealed class CardinalNeighboursCoordinates
         : INeighboursCoordinates, ISerializable, ICloneable<INeighboursCoordinates>
     {
         public ICoordinate[] Coordinates => coordinates.Value;

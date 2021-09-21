@@ -1,7 +1,6 @@
 ﻿using Common.Extensions;
 using Common.Interface;
 using GraphLib.Interfaces;
-using GraphLib.Realizations.Coordinates;
 using GraphLib.Realizations.Extensions;
 using System;
 using System.Collections.Generic;
@@ -14,7 +13,7 @@ namespace GraphLib.Realizations.NeighboursCoordinates
     /// A class that finds the neighbors of the specified coordinate
     /// </summary>
     [Serializable]
-    public sealed class AroundNeighboursCoordinates 
+    public sealed class AroundNeighboursCoordinates
         : INeighboursCoordinates, ISerializable, ICloneable<INeighboursCoordinates>
     {
         private static readonly int[] EmptyOffsetMatrix = new int[] { };

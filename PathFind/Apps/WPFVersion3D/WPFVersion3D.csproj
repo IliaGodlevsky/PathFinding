@@ -181,9 +181,6 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <None Include="App.config" />
-  </ItemGroup>
-  <ItemGroup>
     <ProjectReference Include="..\..\Algorithm\Algorithm.Algos\Algorithm.Algos.csproj">
       <Project>{4DE08169-8512-4E1C-91ED-FD42FFC0AF71}</Project>
       <Name>Algorithm.Algos</Name>
@@ -203,6 +200,10 @@
     <ProjectReference Include="..\..\Common\Common.csproj">
       <Project>{A5A743F5-D346-4B2B-B6AC-07152F64E4D9}</Project>
       <Name>Common</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\EnumerationValues\EnumerationValues.csproj">
+      <Project>{2D990CD3-70C4-4DD2-AD23-9F613446D0D6}</Project>
+      <Name>EnumerationValues</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\GraphLib\GraphLib.Base\GraphLib.Base.csproj">
       <Project>{6aa3b516-abfe-4eda-98dd-1ce799da747f}</Project>

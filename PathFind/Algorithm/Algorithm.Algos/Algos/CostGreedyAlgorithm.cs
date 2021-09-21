@@ -8,7 +8,7 @@ using System;
 
 namespace Algorithm.Algos.Algos
 {
-    public sealed class CostGreedyAlgorithm : GreedyAlgorithm, 
+    public sealed class CostGreedyAlgorithm : GreedyAlgorithm,
         IAlgorithm, IInterruptableProcess, IInterruptable, IDisposable
     {
         public CostGreedyAlgorithm(IGraph graph, IIntermediateEndPoints endPoints)

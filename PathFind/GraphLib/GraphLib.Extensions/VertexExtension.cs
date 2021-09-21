@@ -57,7 +57,7 @@ namespace GraphLib.Extensions
             return self.Neighbours.Any(IsAtSamePosition);
         }
 
-       
+
         public static TVertex CloneProperties<TVertex>(this TVertex self, TVertex vertexToClone)
             where TVertex : IVertex
         {

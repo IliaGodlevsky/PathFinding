@@ -17,7 +17,7 @@ namespace Algorithm.Base
     /// A base class for all Greedy algorithms.
     /// This is an abstract class
     /// </summary>
-    public abstract class GreedyAlgorithm 
+    public abstract class GreedyAlgorithm
         : Algorithm, IAlgorithm, IInterruptableProcess, IInterruptable, IDisposable
     {
         protected GreedyAlgorithm(IGraph graph, IIntermediateEndPoints endPoints)

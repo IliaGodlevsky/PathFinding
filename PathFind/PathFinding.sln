@@ -81,6 +81,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Algorithm.Algos.Tests", "Al
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Algorithm.NullRealizations", "Algorithm\Algorithms.NullRealizations\Algorithm.NullRealizations.csproj", "{FE692FCB-46C0-47A1-80ED-EFDCC811CF69}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EnumerationValues", "EnumerationValues\EnumerationValues.csproj", "{2D990CD3-70C4-4DD2-AD23-9F613446D0D6}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -223,6 +225,10 @@ Global
 		{FE692FCB-46C0-47A1-80ED-EFDCC811CF69}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{FE692FCB-46C0-47A1-80ED-EFDCC811CF69}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{FE692FCB-46C0-47A1-80ED-EFDCC811CF69}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2D990CD3-70C4-4DD2-AD23-9F613446D0D6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2D990CD3-70C4-4DD2-AD23-9F613446D0D6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2D990CD3-70C4-4DD2-AD23-9F613446D0D6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2D990CD3-70C4-4DD2-AD23-9F613446D0D6}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
