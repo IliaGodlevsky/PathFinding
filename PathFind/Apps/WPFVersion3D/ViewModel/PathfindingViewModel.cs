@@ -7,6 +7,7 @@ using Interruptable.EventArguments;
 using Logging.Interface;
 using System;
 using System.ComponentModel;
+using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Threading;
 using System.Threading.Tasks;
@@ -113,7 +114,7 @@ namespace WPFVersion3D.ViewModel
 
         private bool CanExecuteConfirmPathFindAlgorithmChoice(object param)
         {
-            return Algorithms.Values.Contains(Algorithm);
+            return Algorithms.Any(item => item.Item2 == Algorithm);
         }
 
         private int statIndex;

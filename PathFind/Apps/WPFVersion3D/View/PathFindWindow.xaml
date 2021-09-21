@@ -32,12 +32,12 @@
         </StackPanel>
 
         <ListBox ItemsSource="{Binding  Algorithms }"
-                 SelectedValuePath="Value"
+                 SelectedValuePath="Item2"
                  x:Name="algoListBox" BorderThickness="0" Margin="5"
                  SelectedValue="{Binding Path = Algorithm}">
             <ListBox.ItemTemplate>
                 <DataTemplate>
-                    <TextBlock Margin="3" Text="{Binding Path = Key}"/>
+                    <TextBlock Margin="3" Text="{Binding Path = Item1}"/>
                 </DataTemplate>
             </ListBox.ItemTemplate>
         </ListBox>

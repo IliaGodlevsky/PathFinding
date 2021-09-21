@@ -21,7 +21,7 @@ using Logging.Interface;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
-using static ConsoleVersion.InputClass.Input;
+
 using static ConsoleVersion.Resource.Resources;
 using static GraphLib.Base.BaseVertexCost;
 using Console = Colorful.Console;
@@ -98,44 +98,18 @@ namespace ConsoleVersion.ViewModel
         }
 
         [MenuItem(Constants.ReverseVertex)]
-        public void ReverseVertex()
-        {
-            if (Graph.HasVertices() && Graph is Graph2D graph2D)
-            {
-                var vertex = InputVertex(graph2D);
-                (vertex as Vertex)?.Reverse();
-            }
-        }
+        public void ReverseVertex() => PerformActionOnVertex(vertex => vertex?.Reverse());
 
         [MenuItem(Constants.ChangeCostRange, MenuItemPriority.Low)]
         public void ChangeVertexCostValueRange()
         {
-            CostRange = InputRange(Constants.VerticesCostRange);
+            CostRange = Program.Input.InputRange(Constants.VerticesCostRange);
             var args = new CostRangeChangedEventArgs(CostRange);
             CostRangeChanged?.Invoke(this, args);
         }
 
         [MenuItem(Constants.ChangeVertexCost, MenuItemPriority.Low)]
-        public void ChangeVertexCost()
-        {
-            if (Graph.HasVertices() && Graph is Graph2D graph2D)
-            {
-                var vertex = InputVertex(graph2D);
-                (vertex as Vertex)?.ChangeCost();
-            }
-        }
-
-        public override void ClearGraph()
-        {
-            base.ClearGraph();
-            PathFindingStatistics = string.Empty;
-        }
-
-        public override void ConnectNewGraph(IGraph graph)
-        {
-            base.ConnectNewGraph(graph);
-            PathFindingStatistics = string.Empty;
-        }
+        public void ChangeVertexCost() => PerformActionOnVertex(vertex => vertex?.ChangeCost());
 
         [MenuItem(Constants.SaveGraph)]
         public override void SaveGraph() => base.SaveGraph();
@@ -162,10 +136,22 @@ namespace ConsoleVersion.ViewModel
         [MenuItem(Constants.Exit, MenuItemPriority.Lowest)]
         public void Interrupt()
         {
-            if (InputNumber(ExitAppMsg, Constants.Yes, Constants.No) == Constants.Yes)
+            if (Program.Input.InputNumber(ExitAppMsg, Constants.Yes, Constants.No) == Constants.Yes)
             {
                 Interrupted?.Invoke(this, new ProcessEventArgs());
             }
+        }
+
+        public override void ClearGraph()
+        {
+            base.ClearGraph();
+            PathFindingStatistics = string.Empty;
+        }
+
+        public override void ConnectNewGraph(IGraph graph)
+        {
+            base.ConnectNewGraph(graph);
+            PathFindingStatistics = string.Empty;
         }
 
         public void DisplayGraph()
@@ -195,6 +181,15 @@ namespace ConsoleVersion.ViewModel
             Console.WriteLine(GraphParametres);
             (GraphField as IDisplayable)?.Display();
             Console.WriteLine(PathFindingStatistics);
+        }
+
+        private void PerformActionOnVertex(Action<Vertex> function)
+        {
+            if (Graph.HasVertices() && Graph is Graph2D graph2D)
+            {
+                var vertex = Program.Input.InputVertex(graph2D);
+                function(vertex as Vertex);
+            }
         }
     }
 }

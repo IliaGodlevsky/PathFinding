@@ -70,7 +70,8 @@
     <Compile Include="EventHandlers\NewGraphCreatedEventHandler.cs" />
     <Compile Include="EventHandlers\CostRangeChangedEventHandler.cs" />
     <Compile Include="EventHandlers\StatisticsUpdatedEventHandler.cs" />
-    <Compile Include="InputClass\Input.cs" />
+    <Compile Include="InputClass\ValueInput.cs" />
+    <Compile Include="InputClass\Interface\IValueInput.cs" />
     <Compile Include="View\Abstraction\View.cs" />
     <Compile Include="View\Interface\IDisplayable.cs" />
     <Compile Include="Model\EndPoints.cs" />
@@ -105,9 +106,6 @@
     <Compile Include="View\MainView.cs" />
     <Compile Include="View\MenuList.cs" />
     <Compile Include="View\PathFindView.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Resource\Resources.resx">

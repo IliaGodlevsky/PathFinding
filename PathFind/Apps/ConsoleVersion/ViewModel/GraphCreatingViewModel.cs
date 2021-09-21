@@ -12,7 +12,6 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using static ConsoleVersion.Constants;
-using static ConsoleVersion.InputClass.Input;
 
 namespace ConsoleVersion.ViewModel
 {
@@ -58,7 +57,7 @@ namespace ConsoleVersion.ViewModel
         [MenuItem(Constants.ChooseGraphAssemble, MenuItemPriority.High)]
         public void ChooseGraphAssemble()
         {
-            int graphAssembleIndex = InputNumber(GraphAssembleInpuMessage, graphAssembleKeyRange) - 1;
+            int graphAssembleIndex = Program.Input.InputNumber(GraphAssembleInpuMessage, graphAssembleKeyRange) - 1;
             var graphAssembleKeys = GraphAssembles.Keys.ToArray();
             string selectedGraphAssembleKey = graphAssembleKeys[graphAssembleIndex];
             SelectedGraphAssemble = GraphAssembles[selectedGraphAssembleKey];
@@ -67,14 +66,14 @@ namespace ConsoleVersion.ViewModel
         [MenuItem(Constants.InputGraphParametres, MenuItemPriority.High)]
         public void InputGraphParametres()
         {
-            Width = InputNumber(WidthInputMessage, GraphWidthValueRange);
-            Length = InputNumber(HeightInputMessage, GraphLengthValueRange);
+            Width = Program.Input.InputNumber(WidthInputMessage, GraphWidthValueRange);
+            Length = Program.Input.InputNumber(HeightInputMessage, GraphLengthValueRange);
         }
 
         [MenuItem(Constants.InputObstaclePercent, MenuItemPriority.Low)]
         public void InputObstaclePercent()
         {
-            ObstaclePercent = InputNumber(ObstaclePercentInputMessage, ObstaclesPercentValueRange);
+            ObstaclePercent = Program.Input.InputNumber(ObstaclePercentInputMessage, ObstaclesPercentValueRange);
         }
 
         [MenuItem(Exit, MenuItemPriority.Lowest)]

@@ -24,7 +24,7 @@ namespace GraphLib.Serialization
 
         private byte[] CreateCryptoStringBytes(int length)
         {
-            var chunk = CryptoString.Take(length).AsString();
+            var chunk = EnumerableExtensions.ToString(CryptoString.Take(length));
             return Encoding.ASCII.GetBytes(chunk);
         }
 

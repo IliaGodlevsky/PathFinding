@@ -7,6 +7,7 @@ using GraphViewModel.Interfaces;
 using Interruptable.EventArguments;
 using Logging.Interface;
 using System;
+using System.Linq;
 
 namespace WindowsFormsVersion.ViewModel
 {
@@ -84,7 +85,7 @@ namespace WindowsFormsVersion.ViewModel
 
         private bool CanExecuteConfirmPathFindAlgorithmChoice()
         {
-            return Algorithms.Values.Contains(Algorithm);
+            return Algorithms.Any(item => item.Item2 == Algorithm);
         }
     }
 }

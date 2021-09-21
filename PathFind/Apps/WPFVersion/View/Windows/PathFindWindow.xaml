@@ -38,7 +38,7 @@
             </Button>
         </StackPanel>
         <ListBox ItemsSource="{Binding Algorithms }" 
-                 SelectedValuePath="Value"
+                 SelectedValuePath="Item2"
                  x:Name="algoListBox" 
                  BorderThickness="0" 
                  Margin="5"
@@ -46,7 +46,7 @@
             <ListBox.ItemTemplate>
                 <DataTemplate>
                     <StackPanel Orientation="Horizontal">
-                        <TextBlock Margin="3" Text="{Binding Path=Key}"/>
+                        <TextBlock Margin="3" Text="{Binding Path=Item1}"/>
                     </StackPanel>
                 </DataTemplate>
             </ListBox.ItemTemplate>

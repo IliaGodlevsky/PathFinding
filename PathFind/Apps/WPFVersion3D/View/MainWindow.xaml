@@ -74,8 +74,8 @@
                           Grid.Row="1" 
                           x:Name="RotationSpeeds" 
                           ItemsSource="{Binding AnimationSpeeds}"
-                          DisplayMemberPath="Key"
-                          SelectedValuePath="Value"
+                          DisplayMemberPath="Item1"
+                          SelectedValuePath="Item2"
                           SelectedIndex="0"/>
 
                 <ToggleButton Command="{Binding AnimatedAxisRotateCommand}"                                                           

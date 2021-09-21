@@ -3,7 +3,7 @@ using ConsoleVersion.View.Interface;
 using GraphViewModel.Interfaces;
 using Interruptable.EventArguments;
 using System;
-using static ConsoleVersion.InputClass.Input;
+
 using static ConsoleVersion.Resource.Resources;
 
 namespace ConsoleVersion.View.Abstraction
@@ -36,7 +36,7 @@ namespace ConsoleVersion.View.Abstraction
             {
                 NewMenuIteration?.Invoke();
                 menuList.Display();
-                int menuItemIndex = InputNumber(OptionInputMsg,
+                int menuItemIndex = Program.Input.InputNumber(OptionInputMsg,
                     menuValueRange) - 1;
                 string menuItem = menu.MenuActionsNames[menuItemIndex];
                 menu.MenuActions[menuItem].Invoke();

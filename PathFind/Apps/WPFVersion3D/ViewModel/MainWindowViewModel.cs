@@ -1,4 +1,5 @@
-﻿using Common.Extensions;
+﻿using Common;
+using Common.Extensions;
 using Common.Interface;
 using GraphLib.Base;
 using GraphLib.Extensions;
@@ -58,7 +59,7 @@ namespace WPFVersion3D.ViewModel
 
         public bool IsAlgorithmStarted { private get; set; }
 
-        public IDictionary<string, BaseSpeed> AnimationSpeeds => animationSpeeds.Value;
+        public Tuple<string, BaseSpeed>[] AnimationSpeeds => animationSpeeds.Value;
 
         public ICommand StartPathFindCommand { get; }
         public ICommand CreateNewGraphCommand { get; }
@@ -81,7 +82,7 @@ namespace WPFVersion3D.ViewModel
             ChangeOpacityCommand = new RelayCommand(ExecuteChangeOpacity, CanExecuteGraphOperation);
             AnimatedAxisRotateCommand = new RelayCommand(ExecuteAnimatedAxisRotateCommand);
             InterruptAlgorithmCommand = new RelayCommand(ExecuteInterruptAlgorithmCommand, CanExecuteInterruptAlgorithmCommand);
-            animationSpeeds = new Lazy<IDictionary<string, BaseSpeed>>(GetSpeedDictionary);
+            animationSpeeds = new Lazy<Tuple<string, BaseSpeed>[]>(GetSpeedTupleCollection);
         }
 
         public override void FindPath()
@@ -186,13 +187,14 @@ namespace WPFVersion3D.ViewModel
 
         private bool CanExecuteOperation(object param) => !IsAlgorithmStarted;
 
-        private IDictionary<string, BaseSpeed> GetSpeedDictionary()
+        private Tuple<string, BaseSpeed>[] GetSpeedTupleCollection()
         {
+            var enumValues = new EnumValues<AnimationSpeed>();
             string Description(AnimationSpeed speed) => speed.GetDescriptionAttributeValueOrTypeName();
             BaseSpeed Speed(AnimationSpeed speed) => speed.GetAttributeOrNull<BaseSpeed>();
-            return EnumExtensions.ToDictionary<string, BaseSpeed, AnimationSpeed>(Description, Speed);
+            return enumValues.ToTupleCollection(Description, Speed);
         }
 
-        private readonly Lazy<IDictionary<string, BaseSpeed>> animationSpeeds;
+        private readonly Lazy<Tuple<string, BaseSpeed>[]> animationSpeeds;
     }
 }

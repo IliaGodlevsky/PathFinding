@@ -4,6 +4,7 @@ using Algorithm.Extensions;
 using Algorithm.Infrastructure.EventArguments;
 using Algorithm.Interfaces;
 using Algorithm.NullRealizations;
+using Common;
 using Common.Extensions;
 using GraphLib.Base;
 using GraphLib.Interfaces;
@@ -13,6 +14,7 @@ using Logging.Interface;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Linq;
 using static GraphViewModel.Resources.ViewModelResources;
 
 namespace GraphViewModel
@@ -25,7 +27,7 @@ namespace GraphViewModel
 
         public Algorithms Algorithm { get; set; }
 
-        public IDictionary<string, Algorithms> Algorithms => algorithms.Value;
+        public Tuple<string, Algorithms>[] Algorithms => algorithms.Value;
 
         protected PathFindingModel(ILog log, IMainModel mainViewModel,
             BaseEndPoints endPoints)
@@ -33,8 +35,9 @@ namespace GraphViewModel
             this.mainViewModel = mainViewModel;
             this.endPoints = endPoints;
             this.log = log;
-            algorithms = new Lazy<IDictionary<string, Algorithms>>
-                (EnumExtensions.ToDescriptionAdjustedOrderedDictionary<Algorithms>);
+            algorithmsValues = new EnumValues<Algorithms>();
+            algorithms = new Lazy<Tuple<string, Algorithms>[]>
+                (algorithmsValues.ToAdjustedAndOrderedByDescriptionTuples);
             graph = mainViewModel.Graph;
             timer = new Stopwatch();
             path = new NullGraphPath();
@@ -103,9 +106,9 @@ namespace GraphViewModel
         protected string GetStatistics()
         {
             string timerInfo = timer.Elapsed.ToString(@"mm\:ss\.ff");
-            Algorithms.TryGetKey(Algorithm, out var key);
+            var description = Algorithms.FirstOrDefault(item => item.Item2 == Algorithm).Item1;           
             string pathfindingInfo = string.Format(StatisticsFormat, PathfindingInfo);
-            return string.Join("\t", key, timerInfo, pathfindingInfo);
+            return string.Join("\t", description, timerInfo, pathfindingInfo);
         }
 
         protected string CouldntFindPathMsg => PathWasNotFoundMsg;
@@ -141,7 +144,8 @@ namespace GraphViewModel
         protected IAlgorithm algorithm;
         protected IGraphPath path;
         private readonly IGraph graph;
-        private readonly Lazy<IDictionary<string, Algorithms>> algorithms;
+        private readonly EnumValues<Algorithms> algorithmsValues;
+        private readonly Lazy<Tuple<string, Algorithms>[]> algorithms;
         protected readonly Stopwatch timer;
         protected int visitedVerticesCount;
     }

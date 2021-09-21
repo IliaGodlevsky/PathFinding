@@ -18,7 +18,7 @@ using Logging.Interface;
 using System;
 using System.Linq;
 using static ConsoleVersion.Constants;
-using static ConsoleVersion.InputClass.Input;
+
 using static ConsoleVersion.Resource.Resources;
 
 namespace ConsoleVersion.ViewModel
@@ -37,7 +37,7 @@ namespace ConsoleVersion.ViewModel
         public PathFindingViewModel(ILog log, IMainModel model, BaseEndPoints endPoints)
             : base(log, model, endPoints)
         {
-            algorithmKeysValueRange = new InclusiveValueRange<int>(Algorithms.Keys.Count, 1);
+            algorithmKeysValueRange = new InclusiveValueRange<int>(Algorithms.Length, 1);
             mainModel = model as MainViewModel ?? throw new ArgumentException();
         }
 
@@ -97,9 +97,9 @@ namespace ConsoleVersion.ViewModel
         [MenuItem(Constants.ChooseAlgorithm, MenuItemPriority.High)]
         public void ChooseAlgorithm()
         {
-            int algorithmKeyIndex = InputNumber(AlgorithmKeyInputMessage, algorithmKeysValueRange) - 1;
-            var algorithmKey = Algorithms.Keys.ElementAt(algorithmKeyIndex);
-            Algorithm = Algorithms[algorithmKey];
+            int algorithmKeyIndex = Program.Input.InputNumber(AlgorithmKeyInputMessage,
+                algorithmKeysValueRange) - 1;
+            Algorithm = Algorithms.ElementAt(algorithmKeyIndex).Item2;
         }
 
         [MenuItem(Constants.InputDelayTime)]
@@ -107,7 +107,7 @@ namespace ConsoleVersion.ViewModel
         {
             if (IsVisualizationRequired)
             {
-                DelayTime = InputNumber(DelayTimeInputMsg, AlgorithmDelayTimeValueRange);
+                DelayTime = Program.Input.InputNumber(DelayTimeInputMsg, AlgorithmDelayTimeValueRange);
             }
         }
 
@@ -128,7 +128,7 @@ namespace ConsoleVersion.ViewModel
                 string intermediateInputMessage = "Choose intermediate vertex";
                 int cursorLeft = Console.CursorLeft;
                 int cursorRight = Console.CursorTop;
-                int numberOfIntermediates = InputNumber(inputMessage, NumberOfAvailableIntermediate);
+                int numberOfIntermediates = Program.Input.InputNumber(inputMessage, NumberOfAvailableIntermediate);
                 var messages = Enumerable.Repeat(intermediateInputMessage, numberOfIntermediates);
                 endPoints.Reset();
                 var chooseMessages = new[] { SourceVertexInputMessage, TargetVertexInputMessage }.Concat(messages);
@@ -156,7 +156,7 @@ namespace ConsoleVersion.ViewModel
         [MenuItem(Constants.ApplyVisualization, MenuItemPriority.Low)]
         public void ApplyVisualization()
         {
-            IsVisualizationRequired = InputNumber(VisualizationMsg, Yes, No) == Yes;
+            IsVisualizationRequired = Program.Input.InputNumber(VisualizationMsg, Yes, No) == Yes;
         }
 
         private IVertex ChooseVertex(string message)
@@ -167,7 +167,7 @@ namespace ConsoleVersion.ViewModel
                 IVertex vertex;
                 do
                 {
-                    vertex = InputVertex(graph2D);
+                    vertex = Program.Input.InputVertex(graph2D);
                 } while (!endPoints.CanBeEndPoint(vertex));
 
                 return vertex;
@@ -178,9 +178,12 @@ namespace ConsoleVersion.ViewModel
         private void DetectAlgorithmInterruption()
         {
             var key = Console.ReadKey(true).Key;
-            if (key == ConsoleKey.End)
+            switch (key)
             {
-                algorithm.Interrupt();
+                case ConsoleKey.Escape:
+                case ConsoleKey.End:
+                    algorithm.Interrupt();
+                    break;
             }
         }
 
