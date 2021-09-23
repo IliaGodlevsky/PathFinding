@@ -1,4 +1,5 @@
 ﻿using Common.ValueRanges;
+using ConsoleVersion.Enums;
 
 namespace ConsoleVersion
 {
@@ -25,9 +26,7 @@ namespace ConsoleVersion
         public const string InputObstaclePercent = "Input obstacle percent";
         public const string InputGraphParametres = "Input graph parametres";
 
-        public const int Yes = 1;
-        public const int No = 0;
-
+        public static InclusiveValueRange<Answer> AnswerValueRange { get; }
         public static InclusiveValueRange<int> GraphWidthValueRange { get; }
         public static InclusiveValueRange<int> GraphLengthValueRange { get; }
         public static InclusiveValueRange<int> ObstaclesPercentValueRange { get; }
@@ -36,6 +35,7 @@ namespace ConsoleVersion
 
         static Constants()
         {
+            AnswerValueRange = new InclusiveValueRange<Answer>(Answer.Yes, Answer.No);
             VerticesCostRange = new InclusiveValueRange<int>(99, 1);
             GraphWidthValueRange = new InclusiveValueRange<int>(80, 1);
             GraphLengthValueRange = new InclusiveValueRange<int>(50, 1);

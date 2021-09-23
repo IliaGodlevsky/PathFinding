@@ -194,6 +194,10 @@
       <Project>{a5a743f5-d346-4b2b-b6ac-07152f64e4d9}</Project>
       <Name>Common</Name>
     </ProjectReference>
+    <ProjectReference Include="..\..\EnumerationValues\EnumerationValues.csproj">
+      <Project>{2D990CD3-70C4-4DD2-AD23-9F613446D0D6}</Project>
+      <Name>EnumerationValues</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\GraphLib\GraphLib.Base\GraphLib.Base.csproj">
       <Project>{6aa3b516-abfe-4eda-98dd-1ce799da747f}</Project>
       <Name>GraphLib.Base</Name>

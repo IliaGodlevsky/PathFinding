@@ -25,10 +25,6 @@ namespace GraphViewModel
                 {
                     return graphSerializer.LoadGraphFromFile(loadPath);
                 }
-                catch (CantSerializeGraphException)
-                {
-                    throw;
-                }
                 catch (Exception)
                 {
                     throw;
@@ -44,10 +40,6 @@ namespace GraphViewModel
                 try
                 {
                     graphSerializer.SaveGraphToFile(graph, savePath);
-                }
-                catch (CantSerializeGraphException)
-                {
-                    throw;
                 }
                 catch (Exception)
                 {

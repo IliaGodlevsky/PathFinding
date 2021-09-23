@@ -1,4 +1,5 @@
-﻿using GraphLib.Base;
+﻿using ConsoleVersion.Extensions;
+using GraphLib.Base;
 using GraphLib.Interfaces;
 using GraphLib.Interfaces.Factories;
 using System;
@@ -22,7 +23,7 @@ namespace ConsoleVersion.Model
             {
                 if (!vertex.IsObstacle)
                 {
-                    var cost = Program.Input.InputNumber(VertexCostInputMsg, CostRange);
+                    var cost = Program.Input.InputValue(VertexCostInputMsg, CostRange);
                     vertex.Cost = costFactory.CreateCost(cost);
                 }
             }

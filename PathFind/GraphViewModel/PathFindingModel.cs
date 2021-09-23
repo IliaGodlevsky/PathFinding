@@ -5,6 +5,7 @@ using Algorithm.Infrastructure.EventArguments;
 using Algorithm.Interfaces;
 using Algorithm.NullRealizations;
 using EnumerationValues.Extensions;
+using EnumerationValues.Interface;
 using EnumerationValues.Realizations;
 using GraphLib.Base;
 using GraphLib.Interfaces;
@@ -34,9 +35,9 @@ namespace GraphViewModel
             this.mainViewModel = mainViewModel;
             this.endPoints = endPoints;
             this.log = log;
-            var withoutIgnoredEnumValues = new EnumValuesWithoutIgnored<Algorithms>(new EnumValues<Algorithms>());
+            var enumValues = new EnumValuesWithoutIgnored<Algorithms>(new EnumValues<Algorithms>());
             algorithms = new Lazy<Tuple<string, Algorithms>[]>
-                (withoutIgnoredEnumValues.ToAdjustedAndOrderedByDescriptionTuples);
+                (enumValues.ToAdjustedAndOrderedByDescriptionTuples);
             graph = mainViewModel.Graph;
             timer = new Stopwatch();
             path = new NullGraphPath();
@@ -105,7 +106,7 @@ namespace GraphViewModel
         protected string GetStatistics()
         {
             string timerInfo = timer.Elapsed.ToString(@"mm\:ss\.ff");
-            var description = Algorithms.FirstOrDefault(item => item.Item2 == Algorithm).Item1;
+            string description = Algorithms.FirstOrDefault(item => item.Item2 == Algorithm).Item1;
             string pathfindingInfo = string.Format(StatisticsFormat, PathfindingInfo);
             return string.Join("\t", description, timerInfo, pathfindingInfo);
         }

@@ -2,6 +2,7 @@
 using ConsoleVersion.Enums;
 using ConsoleVersion.EventArguments;
 using ConsoleVersion.EventHandlers;
+using ConsoleVersion.Extensions;
 using ConsoleVersion.Model;
 using ConsoleVersion.View;
 using ConsoleVersion.View.Interface;
@@ -136,7 +137,8 @@ namespace ConsoleVersion.ViewModel
         [MenuItem(Constants.Exit, MenuItemPriority.Lowest)]
         public void Interrupt()
         {
-            if (Program.Input.InputNumber(ExitAppMsg, Constants.Yes, Constants.No) == Constants.Yes)
+            var answer = Program.AnswerInput.InputValue(ExitAppMsg, Constants.AnswerValueRange);
+            if (answer == Answer.Yes)
             {
                 Interrupted?.Invoke(this, new ProcessEventArgs());
             }

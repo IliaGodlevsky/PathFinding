@@ -1,12 +1,14 @@
 ﻿using Algorithm.Algos.Enums;
 using Algorithm.Infrastructure.EventArguments;
 using Common.Interface;
+using EnumerationValues.Extensions;
 using GraphLib.Base;
 using GraphViewModel;
 using GraphViewModel.Interfaces;
 using Interruptable.EventArguments;
 using Logging.Interface;
 using System;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
@@ -107,7 +109,7 @@ namespace WPFVersion.ViewModel
 
         private bool CanExecuteConfirmPathFindAlgorithmChoice(object param)
         {
-            return Enum.IsDefined(typeof(Algorithms), Algorithm);
+            return Algorithms.Any(item => item.Item2 == Algorithm);
         }
 
         private int statIndex;

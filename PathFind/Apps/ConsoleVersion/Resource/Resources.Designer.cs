@@ -106,7 +106,7 @@ namespace ConsoleVersion.Resource {
         }
         
         /// <summary>
-        ///   Ищет локализованную строку, похожую на Exit app &lt;1 - yes/0 - no&gt;?: .
+        ///   Ищет локализованную строку, похожую на Exit app &lt;yes/no&gt;?: .
         /// </summary>
         internal static string ExitAppMsg {
             get {
@@ -178,7 +178,7 @@ namespace ConsoleVersion.Resource {
         }
         
         /// <summary>
-        ///   Ищет локализованную строку, похожую на Apply visualization? &lt;1 - yes/0 - no&gt;: .
+        ///   Ищет локализованную строку, похожую на Apply visualization? &lt;yes/no&gt;: .
         /// </summary>
         internal static string VisualizationMsg {
             get {

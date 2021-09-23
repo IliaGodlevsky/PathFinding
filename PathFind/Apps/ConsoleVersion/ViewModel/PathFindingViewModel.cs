@@ -3,6 +3,7 @@ using Common.Extensions;
 using Common.ValueRanges;
 using ConsoleVersion.Attributes;
 using ConsoleVersion.Enums;
+using ConsoleVersion.Extensions;
 using ConsoleVersion.Model;
 using GraphLib.Base;
 using GraphLib.Extensions;
@@ -97,7 +98,7 @@ namespace ConsoleVersion.ViewModel
         [MenuItem(Constants.ChooseAlgorithm, MenuItemPriority.High)]
         public void ChooseAlgorithm()
         {
-            int algorithmKeyIndex = Program.Input.InputNumber(AlgorithmKeyInputMessage,
+            int algorithmKeyIndex = Program.Input.InputValue(AlgorithmKeyInputMessage,
                 algorithmKeysValueRange) - 1;
             Algorithm = Algorithms.ElementAt(algorithmKeyIndex).Item2;
         }
@@ -107,7 +108,7 @@ namespace ConsoleVersion.ViewModel
         {
             if (IsVisualizationRequired)
             {
-                DelayTime = Program.Input.InputNumber(DelayTimeInputMsg, AlgorithmDelayTimeValueRange);
+                DelayTime = Program.Input.InputValue(DelayTimeInputMsg, AlgorithmDelayTimeValueRange);
             }
         }
 
@@ -128,7 +129,7 @@ namespace ConsoleVersion.ViewModel
                 string intermediateInputMessage = "Choose intermediate vertex";
                 int cursorLeft = Console.CursorLeft;
                 int cursorRight = Console.CursorTop;
-                int numberOfIntermediates = Program.Input.InputNumber(inputMessage, NumberOfAvailableIntermediate);
+                int numberOfIntermediates = Program.Input.InputValue(inputMessage, NumberOfAvailableIntermediate);
                 var messages = Enumerable.Repeat(intermediateInputMessage, numberOfIntermediates);
                 endPoints.Reset();
                 var chooseMessages = new[] { SourceVertexInputMessage, TargetVertexInputMessage }.Concat(messages);
@@ -156,7 +157,8 @@ namespace ConsoleVersion.ViewModel
         [MenuItem(Constants.ApplyVisualization, MenuItemPriority.Low)]
         public void ApplyVisualization()
         {
-            IsVisualizationRequired = Program.Input.InputNumber(VisualizationMsg, Yes, No) == Yes;
+            var answer = Program.AnswerInput.InputValue(VisualizationMsg, Constants.AnswerValueRange);
+            IsVisualizationRequired = answer == Answer.Yes;
         }
 
         private IVertex ChooseVertex(string message)

@@ -63,6 +63,7 @@
     <Compile Include="Attributes\MenuItemAttribute.cs" />
     <Compile Include="Configure\ContainerConfigure.cs" />
     <Compile Include="Constants.cs" />
+    <Compile Include="Enums\Answer.cs" />
     <Compile Include="Enums\MenuItemPriority.cs" />
     <Compile Include="EventArguments\NewGraphCreatedEventArgs.cs" />
     <Compile Include="EventArguments\CostRangeChangedEventArgs.cs" />
@@ -70,8 +71,10 @@
     <Compile Include="EventHandlers\NewGraphCreatedEventHandler.cs" />
     <Compile Include="EventHandlers\CostRangeChangedEventHandler.cs" />
     <Compile Include="EventHandlers\StatisticsUpdatedEventHandler.cs" />
-    <Compile Include="InputClass\ValueInput.cs" />
-    <Compile Include="InputClass\Interface\IValueInput.cs" />
+    <Compile Include="Extensions\ValueInputExtensions.cs" />
+    <Compile Include="ValueInput\EnumValueInput.cs" />
+    <Compile Include="ValueInput\Int32ValueInput.cs" />
+    <Compile Include="ValueInput\Interface\IValueInput.cs" />
     <Compile Include="View\Abstraction\View.cs" />
     <Compile Include="View\Interface\IDisplayable.cs" />
     <Compile Include="Model\EndPoints.cs" />

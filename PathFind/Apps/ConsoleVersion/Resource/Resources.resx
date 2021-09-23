@@ -133,7 +133,7 @@
     <value>End point: </value>
   </data>
   <data name="ExitAppMsg" xml:space="preserve">
-    <value>Exit app &lt;1 - yes/0 - no&gt;?: </value>
+    <value>Exit app &lt;yes/no&gt;?: </value>
   </data>
   <data name="HeightInputMsg" xml:space="preserve">
     <value>Enter height of graph: </value>
@@ -157,7 +157,7 @@
     <value>Enter new top value: </value>
   </data>
   <data name="VisualizationMsg" xml:space="preserve">
-    <value>Apply visualization? &lt;1 - yes/0 - no&gt;: </value>
+    <value>Apply visualization? &lt;yes/no&gt;: </value>
   </data>
   <data name="WidthInputMsg" xml:space="preserve">
     <value>Enter width of graph: </value>

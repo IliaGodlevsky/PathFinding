@@ -1,4 +1,5 @@
 ﻿using Common.ValueRanges;
+using ConsoleVersion.Extensions;
 using ConsoleVersion.View.Interface;
 using GraphViewModel.Interfaces;
 using Interruptable.EventArguments;
@@ -36,7 +37,7 @@ namespace ConsoleVersion.View.Abstraction
             {
                 NewMenuIteration?.Invoke();
                 menuList.Display();
-                int menuItemIndex = Program.Input.InputNumber(OptionInputMsg,
+                int menuItemIndex = Program.Input.InputValue(OptionInputMsg,
                     menuValueRange) - 1;
                 string menuItem = menu.MenuActionsNames[menuItemIndex];
                 menu.MenuActions[menuItem].Invoke();
