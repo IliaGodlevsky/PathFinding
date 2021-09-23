@@ -1,7 +1,6 @@
-﻿using ConsoleVersion.ValueInput.Interface;
-using System;
+﻿using System;
 
-namespace ConsoleVersion.ViewModel
+namespace ConsoleVersion.Interface
 {
     internal interface IRequireInt32Input
     {

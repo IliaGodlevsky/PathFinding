@@ -1,6 +1,6 @@
-﻿using ConsoleVersion.Resource;
+﻿using ConsoleVersion.Interface;
+using ConsoleVersion.Resource;
 using ConsoleVersion.View.Abstraction;
-using ConsoleVersion.View.Interface;
 using ConsoleVersion.ViewModel;
 using System.Linq;
 

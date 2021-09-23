@@ -3,10 +3,10 @@ using ConsoleVersion.Enums;
 using ConsoleVersion.EventArguments;
 using ConsoleVersion.EventHandlers;
 using ConsoleVersion.Extensions;
+using ConsoleVersion.Interface;
 using ConsoleVersion.Model;
-using ConsoleVersion.ValueInput.Interface;
 using ConsoleVersion.View;
-using ConsoleVersion.View.Interface;
+using ConsoleVersion.View.Abstraction;
 using GraphLib.Base;
 using GraphLib.Extensions;
 using GraphLib.Interfaces;
@@ -74,9 +74,7 @@ namespace ConsoleVersion.ViewModel
             {
                 var model = new GraphCreatingViewModel(log, this, graphAssembles);
                 var view = new GraphCreateView(model);
-                model.Interrupted += view.OnInterrupted;
-                view.NewMenuIteration += DisplayGraph;
-                model.Int32Input = Int32Input;
+                PrepareViewAndModel(view, model);
                 view.Start();
                 model.Interrupted -= view.OnInterrupted;
             }
@@ -93,10 +91,8 @@ namespace ConsoleVersion.ViewModel
             {
                 var model = new PathFindingViewModel(log, this, endPoints);
                 var view = new PathFindView(model);
-                model.Interrupted += view.OnInterrupted;
-                view.NewMenuIteration += DisplayGraph;
+                PrepareViewAndModel(view, model);
                 model.AnswerInput = AnswerInput;
-                model.Int32Input = Int32Input;
                 view.Start();
                 model.Interrupted -= view.OnInterrupted;
             }
@@ -191,6 +187,15 @@ namespace ConsoleVersion.ViewModel
             Console.WriteLine(GraphParametres);
             (GraphField as IDisplayable)?.Display();
             Console.WriteLine(PathFindingStatistics);
+        }
+
+        private void PrepareViewAndModel<TModel>(View<TModel> view, TModel model)
+            where TModel : IModel, IRequireInt32Input, IInterruptable
+        {
+            model.Interrupted += view.OnInterrupted;
+            view.NewMenuIteration += DisplayGraph;
+            model.Int32Input = Int32Input;
+            view.Int32Input = Int32Input;
         }
 
         private void PerformActionOnVertex(Action<Vertex> function)

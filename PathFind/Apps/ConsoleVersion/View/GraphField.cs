@@ -1,8 +1,8 @@
 ﻿using Common.Extensions;
 using Common.ValueRanges;
+using ConsoleVersion.Interface;
 using ConsoleVersion.Model;
 using ConsoleVersion.View.FramedAxes;
-using ConsoleVersion.View.Interface;
 using GraphLib.Interfaces;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;

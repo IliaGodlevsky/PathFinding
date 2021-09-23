@@ -1,13 +1,11 @@
 ﻿using Common.ValueRanges;
-using ConsoleVersion.ValueInput.Interface;
+using ConsoleVersion.Interface;
 using System;
 
 namespace ConsoleVersion.ValueInput
 {
     internal sealed class Int32ValueInput : IValueInput<int>
     {
-        public static Int32ValueInput Instance => instance.Value;
-
         /// <summary>
         /// Return user's console input in range of values
         /// </summary>
@@ -32,23 +30,11 @@ namespace ConsoleVersion.ValueInput
             return Convert.ToInt32(userInput);
         }
 
-        private static bool IsValidInput(string userInput,
+        private bool IsValidInput(string userInput,
             InclusiveValueRange<int> rangeOfValidInput)
         {
             return int.TryParse(userInput, out var input)
                 && rangeOfValidInput.Contains(input);
         }
-
-        private Int32ValueInput()
-        {
-
-        }
-
-        static Int32ValueInput()
-        {
-            instance = new Lazy<Int32ValueInput>(() => new Int32ValueInput());
-        }
-
-        private static readonly Lazy<Int32ValueInput> instance;
     }
 }

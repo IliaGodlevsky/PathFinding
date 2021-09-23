@@ -1,4 +1,4 @@
-﻿using ConsoleVersion.View.Interface;
+﻿using ConsoleVersion.Interface;
 
 namespace ConsoleVersion.View.Abstraction
 {

@@ -1,5 +1,5 @@
 ﻿using Colorful;
-using ConsoleVersion.View.Interface;
+using ConsoleVersion.Interface;
 using System.Text;
 
 namespace ConsoleVersion.View.Abstraction

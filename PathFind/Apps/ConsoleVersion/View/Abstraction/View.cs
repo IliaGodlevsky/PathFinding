@@ -1,6 +1,6 @@
 ﻿using Common.ValueRanges;
 using ConsoleVersion.Extensions;
-using ConsoleVersion.View.Interface;
+using ConsoleVersion.Interface;
 using GraphViewModel.Interfaces;
 using Interruptable.EventArguments;
 using System;
@@ -9,7 +9,7 @@ using static ConsoleVersion.Resource.Resources;
 
 namespace ConsoleVersion.View.Abstraction
 {
-    internal abstract class View<TModel> : IView
+    internal abstract class View<TModel> : IView, IRequireInt32Input
         where TModel : IModel
     {
         public event Action NewMenuIteration;
@@ -22,6 +22,8 @@ namespace ConsoleVersion.View.Abstraction
         private bool IsInterruptRequested { get; set; }
 
         protected TModel Model { get; }
+
+        public IValueInput<int> Int32Input { get; set; }
 
         protected View(TModel model)
         {
@@ -37,7 +39,7 @@ namespace ConsoleVersion.View.Abstraction
             {
                 NewMenuIteration?.Invoke();
                 menuList.Display();
-                int menuItemIndex = Program.Input.InputValue(OptionInputMsg,
+                int menuItemIndex = Int32Input.InputValue(OptionInputMsg,
                     menuValueRange) - 1;
                 string menuItem = menu.MenuActionsNames[menuItemIndex];
                 menu.MenuActions[menuItem].Invoke();

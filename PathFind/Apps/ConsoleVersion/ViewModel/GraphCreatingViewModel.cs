@@ -2,7 +2,7 @@
 using ConsoleVersion.Attributes;
 using ConsoleVersion.Enums;
 using ConsoleVersion.Extensions;
-using ConsoleVersion.ValueInput.Interface;
+using ConsoleVersion.Interface;
 using GraphLib.Interfaces.Factories;
 using GraphLib.ViewModel;
 using GraphViewModel.Interfaces;

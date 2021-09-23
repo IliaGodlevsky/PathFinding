@@ -1,5 +1,6 @@
 ﻿using Common.Extensions;
-using ConsoleVersion.ValueInput.Interface;
+using Common.ValueRanges;
+using ConsoleVersion.Interface;
 using System;
 
 namespace ConsoleVersion.ValueInput
@@ -7,43 +8,37 @@ namespace ConsoleVersion.ValueInput
     internal sealed class EnumValueInput<TEnum> : IValueInput<TEnum>
         where TEnum : struct, Enum
     {
-        public static EnumValueInput<TEnum> Instance => instance.Value;
-
-        public TEnum InputValue(string accompanyingMessage, TEnum upperRangeValue, 
-            TEnum lowerRangeValue = default)
+        public EnumValueInput()
         {
+            ignoreCase = true;
+            type = typeof(TEnum);
+        }
+
+        public TEnum InputValue(string accompanyingMessage,
+            TEnum upperRangeValue, TEnum lowerRangeValue)
+        {
+            var rangeOfValidInput = new InclusiveValueRange<TEnum>(upperRangeValue, lowerRangeValue);
             string userInput;
             do
             {
                 Console.Write(accompanyingMessage);
                 userInput = Console.ReadLine();
-            } while (!IsValidEnumInput(userInput, upperRangeValue, lowerRangeValue));
+            } while (!IsValidEnumInput(userInput, rangeOfValidInput));
 
             return (TEnum)Enum.Parse(type, userInput, ignoreCase);
         }
 
-        private static bool IsValidEnumInput(string userInput, 
-            TEnum upperValueRange, TEnum lowerValueRange)
+        private bool IsValidEnumInput(string userInput, 
+            InclusiveValueRange<TEnum> rangeOfvalidInput)
         {
             return Enum.TryParse(userInput, ignoreCase, out TEnum input)
                 && Enum.IsDefined(type, input)
-                && input.IsBetween(upperValueRange, lowerValueRange);
+                && rangeOfvalidInput.Contains(input);
         }
 
-        private EnumValueInput()
-        {
 
-        }
 
-        static EnumValueInput()
-        {
-            instance = new Lazy<EnumValueInput<TEnum>>(() => new EnumValueInput<TEnum>());
-            ignoreCase = true;
-            type = typeof(TEnum);
-        }
-
-        private static readonly Type type;
-        private static readonly bool ignoreCase;
-        private static readonly Lazy<EnumValueInput<TEnum>> instance;
+        private readonly Type type;
+        private readonly bool ignoreCase;
     }
 }

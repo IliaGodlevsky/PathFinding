@@ -1,5 +1,5 @@
 ﻿using Common.ValueRanges;
-using ConsoleVersion.View.Interface;
+using ConsoleVersion.Interface;
 using System;
 using System.Collections.Generic;
 using System.Linq;

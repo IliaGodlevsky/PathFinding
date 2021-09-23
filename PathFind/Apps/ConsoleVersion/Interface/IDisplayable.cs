@@ -1,4 +1,4 @@
-﻿namespace ConsoleVersion.View.Interface
+﻿namespace ConsoleVersion.Interface
 {
     /// <summary>
     /// Indicates, that object can be displayed on Console

@@ -1,5 +1,5 @@
-﻿using ConsoleVersion.View.Abstraction;
-using ConsoleVersion.View.Interface;
+﻿using ConsoleVersion.Interface;
+using ConsoleVersion.View.Abstraction;
 using ConsoleVersion.ViewModel;
 using static ConsoleVersion.Resource.Resources;
 

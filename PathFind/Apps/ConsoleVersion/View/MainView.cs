@@ -1,6 +1,6 @@
 ﻿using ConsoleVersion.EventArguments;
+using ConsoleVersion.Interface;
 using ConsoleVersion.View.Abstraction;
-using ConsoleVersion.View.Interface;
 using ConsoleVersion.ViewModel;
 using GraphLib.Base;
 using GraphLib.Realizations.Coordinates;

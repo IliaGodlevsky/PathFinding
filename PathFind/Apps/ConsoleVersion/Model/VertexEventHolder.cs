@@ -1,6 +1,5 @@
 ﻿using ConsoleVersion.Extensions;
-using ConsoleVersion.ValueInput.Interface;
-using ConsoleVersion.ViewModel;
+using ConsoleVersion.Interface;
 using GraphLib.Base;
 using GraphLib.Interfaces;
 using GraphLib.Interfaces.Factories;

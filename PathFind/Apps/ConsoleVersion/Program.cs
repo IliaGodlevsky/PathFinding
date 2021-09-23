@@ -1,6 +1,6 @@
 ﻿using Autofac;
 using ConsoleVersion.Configure;
-using ConsoleVersion.View.Interface;
+using ConsoleVersion.Interface;
 
 namespace ConsoleVersion
 {

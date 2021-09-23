@@ -1,7 +1,7 @@
 ﻿using Common.Extensions;
 using Common.Interface;
+using ConsoleVersion.Interface;
 using ConsoleVersion.View;
-using ConsoleVersion.View.Interface;
 using GraphLib.Extensions;
 using GraphLib.Interfaces;
 using GraphLib.Realizations.Coordinates;

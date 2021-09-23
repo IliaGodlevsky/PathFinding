@@ -1,7 +1,6 @@
 ﻿using ConsoleVersion.Enums;
-using ConsoleVersion.ValueInput.Interface;
 
-namespace ConsoleVersion.ViewModel
+namespace ConsoleVersion.Interface
 {
     internal interface IRequireAnswerInput
     {

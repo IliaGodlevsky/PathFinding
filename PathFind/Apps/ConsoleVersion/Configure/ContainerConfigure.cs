@@ -1,10 +1,9 @@
 ﻿using Autofac;
 using ConsoleVersion.Enums;
+using ConsoleVersion.Interface;
 using ConsoleVersion.Model;
 using ConsoleVersion.ValueInput;
-using ConsoleVersion.ValueInput.Interface;
 using ConsoleVersion.View;
-using ConsoleVersion.View.Interface;
 using ConsoleVersion.ViewModel;
 using GraphLib.Base;
 using GraphLib.Interfaces;
@@ -40,10 +39,10 @@ namespace ConsoleVersion.Configure
         {
             var builder = new ContainerBuilder();
 
-            builder.Register(container => EnumValueInput<Answer>.Instance).As<IValueInput<Answer>>();
-            builder.Register(container => Int32ValueInput.Instance).As<IValueInput<int>>();
+            builder.RegisterType<EnumValueInput<Answer>>().As<IValueInput<Answer>>().SingleInstance();
+            builder.RegisterType<Int32ValueInput>().As<IValueInput<int>>().SingleInstance();
 
-            builder.RegisterType<MainView>().As<IView>().SingleInstance();
+            builder.RegisterType<MainView>().As<IView>().SingleInstance().PropertiesAutowired();
             builder.RegisterType<MainViewModel>().AsSelf().SingleInstance().PropertiesAutowired();
 
             builder.RegisterType<EndPoints>().As<BaseEndPoints>().SingleInstance();

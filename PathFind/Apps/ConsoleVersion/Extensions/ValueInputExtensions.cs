@@ -1,6 +1,6 @@
 ﻿using Common.ValueRanges;
+using ConsoleVersion.Interface;
 using ConsoleVersion.Model;
-using ConsoleVersion.ValueInput.Interface;
 using GraphLib.Interfaces;
 using GraphLib.NullRealizations.NullObjects;
 using GraphLib.Realizations.Coordinates;
@@ -69,6 +69,12 @@ namespace ConsoleVersion.Extensions
             return new InclusiveValueRange<TValue>(upperValueOfRange, lowerValueOfRange);
         }
 
+        /// <summary>
+        /// Inputs vertex coordinates at tries to get it from <paramref name="graph2D"/>
+        /// </summary>
+        /// <param name="self"></param>
+        /// <param name="graph2D"></param>
+        /// <returns></returns>
         public static IVertex InputVertex(this IValueInput<int> self, Graph2D graph2D)
         {
             int upperPossibleXValue = graph2D.Width - 1;
@@ -77,16 +83,6 @@ namespace ConsoleVersion.Extensions
             var point = self.InputPoint(upperPossibleXValue, upperPossibleYValue);
 
             return (graph2D[point] as Vertex) ?? (IVertex)new NullVertex();
-        }
-
-        public static IEnumerable<TValue> InputMany<TValue>(this IValueInput<TValue> self, int number,
-            string message, TValue upperValueOfRange, TValue lowerValueOfRange = default)
-            where TValue : struct, IComparable
-        {
-            while (number-- > 0)
-            {
-                yield return self.InputValue(message, upperValueOfRange, lowerValueOfRange);
-            }
         }
     }
 }

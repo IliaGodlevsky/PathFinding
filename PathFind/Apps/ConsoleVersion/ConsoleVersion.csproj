@@ -74,11 +74,11 @@
     <Compile Include="Extensions\ValueInputExtensions.cs" />
     <Compile Include="ValueInput\EnumValueInput.cs" />
     <Compile Include="ValueInput\Int32ValueInput.cs" />
-    <Compile Include="ValueInput\Interface\IValueInput.cs" />
-    <Compile Include="ViewModel\IRequireAnswerInput.cs" />
-    <Compile Include="ViewModel\IRequireInt32Input.cs" />
+    <Compile Include="Interface\IValueInput.cs" />
+    <Compile Include="Interface\IRequireAnswerInput.cs" />
+    <Compile Include="Interface\IRequireInt32Input.cs" />
     <Compile Include="View\Abstraction\View.cs" />
-    <Compile Include="View\Interface\IDisplayable.cs" />
+    <Compile Include="Interface\IDisplayable.cs" />
     <Compile Include="Model\EndPoints.cs" />
     <Compile Include="Model\GraphFieldFactory.cs" />
     <Compile Include="Model\PathInput.cs" />
@@ -93,7 +93,7 @@
     <Compile Include="View\FramedAxes\FramedToLeftOrdinate.cs" />
     <Compile Include="View\FramedAxes\FramedToRightOrdinate.cs" />
     <Compile Include="View\FramedAxes\FramedUnderAbscissa.cs" />
-    <Compile Include="View\Interface\IFramedAxis.cs" />
+    <Compile Include="Interface\IFramedAxis.cs" />
     <Compile Include="View\Menu.cs" />
     <Compile Include="ViewModel\PathFindingViewModel.cs" />
     <Compile Include="View\GraphField.cs" />
@@ -107,7 +107,7 @@
     </Compile>
     <Compile Include="Model\VertexEventHolder.cs" />
     <Compile Include="Model\Vertex.cs" />
-    <Compile Include="View\Interface\IView.cs" />
+    <Compile Include="Interface\IView.cs" />
     <Compile Include="View\MainView.cs" />
     <Compile Include="View\MenuList.cs" />
     <Compile Include="View\PathFindView.cs" />
