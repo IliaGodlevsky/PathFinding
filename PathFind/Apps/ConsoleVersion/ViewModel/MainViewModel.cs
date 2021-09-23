@@ -4,6 +4,7 @@ using ConsoleVersion.EventArguments;
 using ConsoleVersion.EventHandlers;
 using ConsoleVersion.Extensions;
 using ConsoleVersion.Model;
+using ConsoleVersion.ValueInput.Interface;
 using ConsoleVersion.View;
 using ConsoleVersion.View.Interface;
 using GraphLib.Base;
@@ -29,7 +30,8 @@ using Console = Colorful.Console;
 
 namespace ConsoleVersion.ViewModel
 {
-    internal sealed class MainViewModel : MainModel, IMainModel, IModel, IInterruptable
+    internal sealed class MainViewModel : MainModel, 
+        IMainModel, IModel, IInterruptable, IRequireAnswerInput, IRequireInt32Input
     {
         public event CostRangeChangedEventHandler CostRangeChanged;
         public event NewGraphCreatedEventHandler NewGraphCreated;
@@ -48,6 +50,9 @@ namespace ConsoleVersion.ViewModel
             get => base.Graph;
             protected set { base.Graph = value; NewGraphCreated?.Invoke(this, new NewGraphCreatedEventArgs(value)); }
         }
+
+        public IValueInput<int> Int32Input { get; set; }
+        public IValueInput<Answer> AnswerInput { get; set; }
 
         public MainViewModel(IGraphFieldFactory fieldFactory, IVertexEventHolder eventHolder,
             ISaveLoadGraph saveLoad, IEnumerable<IGraphAssemble> graphAssembles, BaseEndPoints endPoints, ILog log)
@@ -71,6 +76,7 @@ namespace ConsoleVersion.ViewModel
                 var view = new GraphCreateView(model);
                 model.Interrupted += view.OnInterrupted;
                 view.NewMenuIteration += DisplayGraph;
+                model.Int32Input = Int32Input;
                 view.Start();
                 model.Interrupted -= view.OnInterrupted;
             }
@@ -89,6 +95,8 @@ namespace ConsoleVersion.ViewModel
                 var view = new PathFindView(model);
                 model.Interrupted += view.OnInterrupted;
                 view.NewMenuIteration += DisplayGraph;
+                model.AnswerInput = AnswerInput;
+                model.Int32Input = Int32Input;
                 view.Start();
                 model.Interrupted -= view.OnInterrupted;
             }
@@ -104,7 +112,7 @@ namespace ConsoleVersion.ViewModel
         [MenuItem(Constants.ChangeCostRange, MenuItemPriority.Low)]
         public void ChangeVertexCostValueRange()
         {
-            CostRange = Program.Input.InputRange(Constants.VerticesCostRange);
+            CostRange = Int32Input.InputRange(Constants.VerticesCostRange);
             var args = new CostRangeChangedEventArgs(CostRange);
             CostRangeChanged?.Invoke(this, args);
         }
@@ -137,7 +145,7 @@ namespace ConsoleVersion.ViewModel
         [MenuItem(Constants.Exit, MenuItemPriority.Lowest)]
         public void Interrupt()
         {
-            var answer = Program.AnswerInput.InputValue(ExitAppMsg, Constants.AnswerValueRange);
+            var answer = AnswerInput.InputValue(ExitAppMsg, Constants.AnswerValueRange);
             if (answer == Answer.Yes)
             {
                 Interrupted?.Invoke(this, new ProcessEventArgs());
@@ -189,7 +197,7 @@ namespace ConsoleVersion.ViewModel
         {
             if (Graph.HasVertices() && Graph is Graph2D graph2D)
             {
-                var vertex = Program.Input.InputVertex(graph2D);
+                var vertex = Int32Input.InputVertex(graph2D);
                 function(vertex as Vertex);
             }
         }

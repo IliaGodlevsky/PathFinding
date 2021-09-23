@@ -5,6 +5,7 @@ using ConsoleVersion.Attributes;
 using ConsoleVersion.Enums;
 using ConsoleVersion.Extensions;
 using ConsoleVersion.Model;
+using ConsoleVersion.ValueInput.Interface;
 using GraphLib.Base;
 using GraphLib.Extensions;
 using GraphLib.Interfaces;
@@ -24,7 +25,8 @@ using static ConsoleVersion.Resource.Resources;
 
 namespace ConsoleVersion.ViewModel
 {
-    internal sealed class PathFindingViewModel : PathFindingModel, IModel, IInterruptable
+    internal sealed class PathFindingViewModel : PathFindingModel, 
+        IModel, IInterruptable, IRequireInt32Input, IRequireAnswerInput
     {
         public event ProcessEventHandler Interrupted;
         public bool IsPathfindingStarted { get; set; }
@@ -32,6 +34,10 @@ namespace ConsoleVersion.ViewModel
         public string AlgorithmKeyInputMessage { private get; set; }
 
         public string TargetVertexInputMessage { private get; set; }
+
+        public IValueInput<int> Int32Input { get; set; }
+
+        public IValueInput<Answer> AnswerInput { get; set; }
 
         public string SourceVertexInputMessage { private get; set; }
 
@@ -98,7 +104,7 @@ namespace ConsoleVersion.ViewModel
         [MenuItem(Constants.ChooseAlgorithm, MenuItemPriority.High)]
         public void ChooseAlgorithm()
         {
-            int algorithmKeyIndex = Program.Input.InputValue(AlgorithmKeyInputMessage,
+            int algorithmKeyIndex = Int32Input.InputValue(AlgorithmKeyInputMessage,
                 algorithmKeysValueRange) - 1;
             Algorithm = Algorithms.ElementAt(algorithmKeyIndex).Item2;
         }
@@ -108,7 +114,7 @@ namespace ConsoleVersion.ViewModel
         {
             if (IsVisualizationRequired)
             {
-                DelayTime = Program.Input.InputValue(DelayTimeInputMsg, AlgorithmDelayTimeValueRange);
+                DelayTime = Int32Input.InputValue(DelayTimeInputMsg, AlgorithmDelayTimeValueRange);
             }
         }
 
@@ -129,7 +135,7 @@ namespace ConsoleVersion.ViewModel
                 string intermediateInputMessage = "Choose intermediate vertex";
                 int cursorLeft = Console.CursorLeft;
                 int cursorRight = Console.CursorTop;
-                int numberOfIntermediates = Program.Input.InputValue(inputMessage, NumberOfAvailableIntermediate);
+                int numberOfIntermediates = Int32Input.InputValue(inputMessage, NumberOfAvailableIntermediate);
                 var messages = Enumerable.Repeat(intermediateInputMessage, numberOfIntermediates);
                 endPoints.Reset();
                 var chooseMessages = new[] { SourceVertexInputMessage, TargetVertexInputMessage }.Concat(messages);
@@ -157,7 +163,7 @@ namespace ConsoleVersion.ViewModel
         [MenuItem(Constants.ApplyVisualization, MenuItemPriority.Low)]
         public void ApplyVisualization()
         {
-            var answer = Program.AnswerInput.InputValue(VisualizationMsg, Constants.AnswerValueRange);
+            var answer = AnswerInput.InputValue(VisualizationMsg, Constants.AnswerValueRange);
             IsVisualizationRequired = answer == Answer.Yes;
         }
 
@@ -169,7 +175,7 @@ namespace ConsoleVersion.ViewModel
                 IVertex vertex;
                 do
                 {
-                    vertex = Program.Input.InputVertex(graph2D);
+                    vertex = Int32Input.InputVertex(graph2D);
                 } while (!endPoints.CanBeEndPoint(vertex));
 
                 return vertex;

@@ -2,6 +2,7 @@
 using ConsoleVersion.Attributes;
 using ConsoleVersion.Enums;
 using ConsoleVersion.Extensions;
+using ConsoleVersion.ValueInput.Interface;
 using GraphLib.Interfaces.Factories;
 using GraphLib.ViewModel;
 using GraphViewModel.Interfaces;
@@ -16,7 +17,7 @@ using static ConsoleVersion.Constants;
 
 namespace ConsoleVersion.ViewModel
 {
-    internal sealed class GraphCreatingViewModel : GraphCreatingModel, IModel, IInterruptable
+    internal sealed class GraphCreatingViewModel : GraphCreatingModel, IModel, IInterruptable, IRequireInt32Input
     {
         public event ProcessEventHandler Interrupted;
 
@@ -27,6 +28,8 @@ namespace ConsoleVersion.ViewModel
         public string WidthInputMessage { private get; set; }
 
         public string HeightInputMessage { private get; set; }
+
+        public IValueInput<int> Int32Input { get; set; }
 
         public GraphCreatingViewModel(ILog log, IMainModel model, IEnumerable<IGraphAssemble> graphAssembles)
             : base(log, model, graphAssembles)
@@ -58,7 +61,7 @@ namespace ConsoleVersion.ViewModel
         [MenuItem(Constants.ChooseGraphAssemble, MenuItemPriority.High)]
         public void ChooseGraphAssemble()
         {
-            int graphAssembleIndex = Program.Input.InputValue(GraphAssembleInpuMessage, graphAssembleKeyRange) - 1;
+            int graphAssembleIndex = Int32Input.InputValue(GraphAssembleInpuMessage, graphAssembleKeyRange) - 1;
             var graphAssembleKeys = GraphAssembles.Keys.ToArray();
             string selectedGraphAssembleKey = graphAssembleKeys[graphAssembleIndex];
             SelectedGraphAssemble = GraphAssembles[selectedGraphAssembleKey];
@@ -67,14 +70,14 @@ namespace ConsoleVersion.ViewModel
         [MenuItem(Constants.InputGraphParametres, MenuItemPriority.High)]
         public void InputGraphParametres()
         {
-            Width = Program.Input.InputValue(WidthInputMessage, GraphWidthValueRange);
-            Length = Program.Input.InputValue(HeightInputMessage, GraphLengthValueRange);
+            Width = Int32Input.InputValue(WidthInputMessage, GraphWidthValueRange);
+            Length = Int32Input.InputValue(HeightInputMessage, GraphLengthValueRange);
         }
 
         [MenuItem(Constants.InputObstaclePercent, MenuItemPriority.Low)]
         public void InputObstaclePercent()
         {
-            ObstaclePercent = Program.Input.InputValue(ObstaclePercentInputMessage, ObstaclesPercentValueRange);
+            ObstaclePercent = Int32Input.InputValue(ObstaclePercentInputMessage, ObstaclesPercentValueRange);
         }
 
         [MenuItem(Exit, MenuItemPriority.Lowest)]

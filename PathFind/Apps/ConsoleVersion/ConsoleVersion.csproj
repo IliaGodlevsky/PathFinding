@@ -75,6 +75,8 @@
     <Compile Include="ValueInput\EnumValueInput.cs" />
     <Compile Include="ValueInput\Int32ValueInput.cs" />
     <Compile Include="ValueInput\Interface\IValueInput.cs" />
+    <Compile Include="ViewModel\IRequireAnswerInput.cs" />
+    <Compile Include="ViewModel\IRequireInt32Input.cs" />
     <Compile Include="View\Abstraction\View.cs" />
     <Compile Include="View\Interface\IDisplayable.cs" />
     <Compile Include="Model\EndPoints.cs" />

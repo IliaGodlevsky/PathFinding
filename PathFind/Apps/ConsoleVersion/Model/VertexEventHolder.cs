@@ -1,4 +1,6 @@
 ﻿using ConsoleVersion.Extensions;
+using ConsoleVersion.ValueInput.Interface;
+using ConsoleVersion.ViewModel;
 using GraphLib.Base;
 using GraphLib.Interfaces;
 using GraphLib.Interfaces.Factories;
@@ -9,7 +11,7 @@ using static GraphLib.Base.BaseVertexCost;
 
 namespace ConsoleVersion.Model
 {
-    internal sealed class VertexEventHolder : BaseVertexEventHolder, IVertexEventHolder
+    internal sealed class VertexEventHolder : BaseVertexEventHolder, IVertexEventHolder, IRequireInt32Input
     {
         public VertexEventHolder(IVertexCostFactory costFactory)
             : base(costFactory)
@@ -17,13 +19,15 @@ namespace ConsoleVersion.Model
 
         }
 
+        public IValueInput<int> Int32Input { get; set; }
+
         public override void ChangeVertexCost(object sender, EventArgs e)
         {
             if (sender is Vertex vertex)
             {
                 if (!vertex.IsObstacle)
                 {
-                    var cost = Program.Input.InputValue(VertexCostInputMsg, CostRange);
+                    var cost = Int32Input.InputValue(VertexCostInputMsg, CostRange);
                     vertex.Cost = costFactory.CreateCost(cost);
                 }
             }

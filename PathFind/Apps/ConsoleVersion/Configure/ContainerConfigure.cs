@@ -1,5 +1,8 @@
 ﻿using Autofac;
+using ConsoleVersion.Enums;
 using ConsoleVersion.Model;
+using ConsoleVersion.ValueInput;
+using ConsoleVersion.ValueInput.Interface;
 using ConsoleVersion.View;
 using ConsoleVersion.View.Interface;
 using ConsoleVersion.ViewModel;
@@ -37,11 +40,14 @@ namespace ConsoleVersion.Configure
         {
             var builder = new ContainerBuilder();
 
+            builder.Register(container => EnumValueInput<Answer>.Instance).As<IValueInput<Answer>>();
+            builder.Register(container => Int32ValueInput.Instance).As<IValueInput<int>>();
+
             builder.RegisterType<MainView>().As<IView>().SingleInstance();
-            builder.RegisterType<MainViewModel>().AsSelf().SingleInstance();
+            builder.RegisterType<MainViewModel>().AsSelf().SingleInstance().PropertiesAutowired();
 
             builder.RegisterType<EndPoints>().As<BaseEndPoints>().SingleInstance();
-            builder.RegisterType<VertexEventHolder>().As<IVertexEventHolder>().SingleInstance();
+            builder.RegisterType<VertexEventHolder>().As<IVertexEventHolder>().SingleInstance().PropertiesAutowired();
             builder.RegisterType<GraphFieldFactory>().As<IGraphFieldFactory>().SingleInstance();
 
             builder.RegisterType<FileLog>().As<ILog>().SingleInstance();
