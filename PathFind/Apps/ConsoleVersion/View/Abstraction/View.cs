@@ -39,8 +39,7 @@ namespace ConsoleVersion.View.Abstraction
             {
                 NewMenuIteration?.Invoke();
                 menuList.Display();
-                int menuItemIndex = Int32Input.InputValue(OptionInputMsg,
-                    menuValueRange) - 1;
+                int menuItemIndex = Int32Input.InputValue(OptionInputMsg, menuValueRange) - 1;
                 string menuItem = menu.MenuActionsNames[menuItemIndex];
                 menu.MenuActions[menuItem].Invoke();
             }

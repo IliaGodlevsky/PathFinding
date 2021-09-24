@@ -29,14 +29,13 @@ namespace ConsoleVersion.ViewModel
         IModel, IInterruptable, IRequireInt32Input, IRequireAnswerInput
     {
         public event ProcessEventHandler Interrupted;
-        public bool IsPathfindingStarted { get; set; }
+        public bool IsAlgorithmFindingPath { get; set; }
 
         public string AlgorithmKeyInputMessage { private get; set; }
 
         public string TargetVertexInputMessage { private get; set; }
 
         public IValueInput<int> Int32Input { get; set; }
-
         public IValueInput<Answer> AnswerInput { get; set; }
 
         public string SourceVertexInputMessage { private get; set; }
@@ -56,11 +55,11 @@ namespace ConsoleVersion.ViewModel
                 try
                 {
                     Console.CursorVisible = false;
-                    IsPathfindingStarted = true;
+                    IsAlgorithmFindingPath = true;
                     base.FindPath();
-                    while (IsPathfindingStarted)
+                    while (IsAlgorithmFindingPath)
                     {
-                        DetectAlgorithmInterruption();
+                        HookAlgorithmInterruptionKeystrokes();
                     }
                     mainModel.PathFindingStatistics = string.Empty;
                     Console.CursorVisible = true;
@@ -92,13 +91,13 @@ namespace ConsoleVersion.ViewModel
         protected override void OnAlgorithmInterrupted(object sender, ProcessEventArgs e)
         {
             base.OnAlgorithmInterrupted(sender, e);
-            IsPathfindingStarted = false;
+            IsAlgorithmFindingPath = false;
         }
 
         protected override void OnAlgorithmFinished(object sender, ProcessEventArgs e)
         {
             base.OnAlgorithmFinished(sender, e);
-            IsPathfindingStarted = false;
+            IsAlgorithmFindingPath = false;
         }
 
         [MenuItem(Constants.ChooseAlgorithm, MenuItemPriority.High)]
@@ -183,7 +182,7 @@ namespace ConsoleVersion.ViewModel
             return new NullVertex();
         }
 
-        private void DetectAlgorithmInterruption()
+        private void HookAlgorithmInterruptionKeystrokes()
         {
             var key = Console.ReadKey(true).Key;
             switch (key)

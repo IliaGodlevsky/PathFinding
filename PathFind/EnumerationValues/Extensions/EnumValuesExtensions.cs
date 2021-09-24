@@ -1,4 +1,5 @@
 ﻿using Common.Extensions;
+using Common.ValueRanges;
 using EnumerationValues.Interface;
 using System;
 using System.Linq;
@@ -31,6 +32,14 @@ namespace EnumerationValues.Extensions
             where TEnum : Enum
         {
             return self.ToTupleCollection(item1Selector, value => value);
+        }
+
+        public static InclusiveValueRange<TEnum> ToValueRange<TEnum>(this IEnumValues<TEnum> self)
+            where TEnum : struct, Enum
+        {
+            var maxValue = self.Values.Max();
+            var minValue = self.Values.Min();
+            return new InclusiveValueRange<TEnum>(maxValue, minValue);
         }
 
         public static Tuple<T1, T2>[] ToTupleCollection<T1, T2, TEnum>(this IEnumValues<TEnum> self, Func<TEnum, T1> item1Selector,

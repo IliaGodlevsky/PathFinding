@@ -39,8 +39,8 @@ namespace ConsoleVersion.Configure
         {
             var builder = new ContainerBuilder();
 
-            builder.RegisterType<EnumValueInput<Answer>>().As<IValueInput<Answer>>().SingleInstance();
-            builder.RegisterType<Int32ValueInput>().As<IValueInput<int>>().SingleInstance();
+            builder.RegisterType<EnumConsoleValueInput<Answer>>().As<IValueInput<Answer>>().SingleInstance();
+            builder.RegisterType<Int32ConsoleValueInput>().As<IValueInput<int>>().SingleInstance();
 
             builder.RegisterType<MainView>().As<IView>().SingleInstance().PropertiesAutowired();
             builder.RegisterType<MainViewModel>().AsSelf().SingleInstance().PropertiesAutowired();

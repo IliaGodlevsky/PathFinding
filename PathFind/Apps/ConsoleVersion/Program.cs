@@ -4,7 +4,7 @@ using ConsoleVersion.Interface;
 
 namespace ConsoleVersion
 {
-    internal class Program
+    internal static class Program
     {
         private static void Main(string[] args)
         {
