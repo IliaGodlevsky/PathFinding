@@ -42,13 +42,9 @@ namespace GraphViewModel
             {
                 await task;
             }
-            catch (CantSerializeGraphException ex)
-            {
-                log.Warn(ex);
-            }
             catch (Exception ex)
             {
-                log.Error(ex);
+                log.Warn(ex);
             }
         }
 
