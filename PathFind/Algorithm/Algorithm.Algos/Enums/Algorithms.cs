@@ -7,7 +7,7 @@ namespace Algorithm.Algos.Enums
     [Flags]
     public enum Algorithms : ulong // up to 64 values
     {
-        [EnumFetchIgnore]
+        [EnumValuesIgnore]
         None = 0,
 
         [Description("Lee algorithm")]

@@ -1,6 +1,7 @@
 ﻿using Algorithm.Сompanions.Interface;
 using GraphLib.Interfaces;
 using GraphLib.NullRealizations.NullObjects;
+using NullObject.Extensions;
 using System.Collections.Generic;
 
 namespace Algorithm.Сompanions
@@ -14,7 +15,7 @@ namespace Algorithm.Сompanions
 
         public void Add(IVertex child, IVertex parent)
         {
-            if (parent == null || child == null)
+            if (parent.IsNull() || child.IsNull())
             {
                 return;
             }

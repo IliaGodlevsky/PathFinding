@@ -8,7 +8,7 @@ namespace EnumerationValues.Extensions
     {
         public static bool IsIgnored(this Enum value)
         {
-            return value.GetAttributeOrNull<EnumFetchIgnoreAttribute>() != null;
+            return value.GetAttributeOrNull<EnumValuesIgnoreAttribute>() != null;
         }
     }
 }

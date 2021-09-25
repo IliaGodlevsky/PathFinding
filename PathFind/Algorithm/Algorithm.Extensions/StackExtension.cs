@@ -1,7 +1,6 @@
 ﻿using GraphLib.Interfaces;
 using GraphLib.NullRealizations.NullObjects;
 using System.Collections.Generic;
-using System.Linq;
 
 namespace Algorithm.Extensions
 {
@@ -9,7 +8,7 @@ namespace Algorithm.Extensions
     {
         public static IVertex PopOrNullVertex(this Stack<IVertex> stack)
         {
-            return !stack.Any() ? new NullVertex() : stack.Pop();
+            return stack.Count == 0 ? new NullVertex() : stack.Pop();
         }
     }
 }

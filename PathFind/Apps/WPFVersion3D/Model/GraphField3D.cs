@@ -10,14 +10,17 @@ namespace WPFVersion3D.Model
     internal sealed class GraphField3D : ModelVisual3D, IGraphField
     {
         public double DistanceBetweenVerticesAtXAxis { get; set; }
-
         public double DistanceBetweenVerticesAtYAxis { get; set; }
-
         public double DistanceBetweenVerticesAtZAxis { get; set; }
 
         public GraphField3D(int width, int length, int height)
         {
-            coordinateSystem = new IAxis[] { new Applicate(), new Ordinate(), new Abscissa() };
+            coordinateSystem = new IAxis[] 
+            { 
+                new Applicate(), 
+                new Ordinate(), 
+                new Abscissa() 
+            };
             DimensionSizes = new[] { width, length, height };
             DistanceBetweenVerticesAtXAxis = 0;
             DistanceBetweenVerticesAtYAxis = 0;
@@ -28,11 +31,7 @@ namespace WPFVersion3D.Model
         {
             if (vertex is Vertex3D vertex3D && vertex.Position is Coordinate3D)
             {
-                foreach (var axis in coordinateSystem)
-                {
-                    LocateVertex(axis, vertex3D);
-                }
-
+                LocateVertex(coordinateSystem, vertex3D);
                 Children.Add(vertex3D);
             }
         }
@@ -44,16 +43,11 @@ namespace WPFVersion3D.Model
             {
                 for (int i = 0; i < DimensionSizes.Length; i++)
                 {
-                    var graphOffset = new Offset
-                    {
-                        DimensionSize = DimensionSizes[i],
-                        VertexSize = vertex.Size,
-                        AdditionalOffset = additionalOffset.ElementAtOrDefault(i),
-                        DistanceBetweenVertices = DistancesBetween[i]
-                    };
-                    axisOffsets[i] = graphOffset.GraphCenterOffset;
-                    LocateVertex(coordinateSystem[i], vertex, axisOffsets);
+                    double addOffset = additionalOffset.ElementAtOrDefault(i);
+                    var centerOffset = new CenterOffset(DimensionSizes[i], vertex.Size, addOffset, DistancesBetween[i]);
+                    axisOffsets[i] = centerOffset.GetCenterOffset();
                 }
+                LocateVertex(coordinateSystem, vertex, axisOffsets);
             }
         }
 
@@ -81,19 +75,23 @@ namespace WPFVersion3D.Model
             }
         }
 
+        private void LocateVertex(IAxis[] axes, Vertex3D vertex,
+            params double[] additionalOffset)
+        {
+            foreach(var axis in axes)
+            {
+                LocateVertex(axis, vertex, additionalOffset);
+            }
+        }
+
         private void LocateVertex(IAxis axis, Vertex3D vertex,
             params double[] additionalOffset)
         {
             var coordinates = vertex.GetCoordinates();
-            var vertexOffset = new Offset
-            {
-                CoordinateValue = coordinates[axis.Index],
-                DistanceBetweenVertices = DistancesBetween[axis.Index],
-                AdditionalOffset = additionalOffset.ElementAtOrDefault(axis.Index),
-                VertexSize = vertex.Size
-            };
-            double offset = vertexOffset.VertexOffset;
-            axis.Offset(vertex.Transform as TranslateTransform3D, offset);
+            double addOffset = additionalOffset.ElementAtOrDefault(axis.Index);
+            var locationOffset = new LocationOffset(coordinates[axis.Index],
+                DistancesBetween[axis.Index], addOffset, vertex.Size);
+            axis.Offset(vertex.Transform as TranslateTransform3D, locationOffset.GetLocationOffset());
         }
 
         private int[] DimensionSizes { get; }

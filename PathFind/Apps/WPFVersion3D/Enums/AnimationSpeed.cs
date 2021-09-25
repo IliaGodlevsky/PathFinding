@@ -6,7 +6,7 @@ namespace WPFVersion3D.Enums
 {
     internal enum AnimationSpeed
     {
-        [EnumFetchIgnore]
+        [EnumValuesIgnore]
         None = 0,
 
         [Description("Slowest")]

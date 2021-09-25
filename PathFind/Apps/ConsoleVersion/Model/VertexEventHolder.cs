@@ -22,13 +22,10 @@ namespace ConsoleVersion.Model
 
         public override void ChangeVertexCost(object sender, EventArgs e)
         {
-            if (sender is Vertex vertex)
+            if (sender is Vertex vertex && !vertex.IsObstacle)
             {
-                if (!vertex.IsObstacle)
-                {
-                    var cost = Int32Input.InputValue(VertexCostInputMsg, CostRange);
-                    vertex.Cost = costFactory.CreateCost(cost);
-                }
+                var cost = Int32Input.InputValue(VertexCostInputMsg, CostRange);
+                vertex.Cost = costFactory.CreateCost(cost);
             }
         }
 

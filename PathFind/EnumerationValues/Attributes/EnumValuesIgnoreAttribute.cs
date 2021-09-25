@@ -3,7 +3,7 @@
 namespace EnumerationValues.Attributes
 {
     [AttributeUsage(AttributeTargets.Field)]
-    public sealed class EnumFetchIgnoreAttribute : Attribute
+    public sealed class EnumValuesIgnoreAttribute : Attribute
     {
     }
 }
