@@ -60,7 +60,7 @@ namespace WPFVersion3D.ViewModel
 
         public bool IsAlgorithmStarted { private get; set; }
 
-        public Tuple<string, BaseSpeed>[] AnimationSpeeds => animationSpeeds.Value;
+        public Tuple<string, BaseAnimationSpeed>[] AnimationSpeeds => animationSpeeds.Value;
 
         public ICommand StartPathFindCommand { get; }
         public ICommand CreateNewGraphCommand { get; }
@@ -83,7 +83,7 @@ namespace WPFVersion3D.ViewModel
             ChangeOpacityCommand = new RelayCommand(ExecuteChangeOpacity, CanExecuteGraphOperation);
             AnimatedAxisRotateCommand = new RelayCommand(ExecuteAnimatedAxisRotateCommand);
             InterruptAlgorithmCommand = new RelayCommand(ExecuteInterruptAlgorithmCommand, CanExecuteInterruptAlgorithmCommand);
-            animationSpeeds = new Lazy<Tuple<string, BaseSpeed>[]>(GetSpeedTupleCollection);
+            animationSpeeds = new Lazy<Tuple<string, BaseAnimationSpeed>[]>(GetSpeedTupleCollection);
         }
 
         public override void FindPath()
@@ -188,15 +188,15 @@ namespace WPFVersion3D.ViewModel
 
         private bool CanExecuteOperation(object param) => !IsAlgorithmStarted;
 
-        private Tuple<string, BaseSpeed>[] GetSpeedTupleCollection()
+        private Tuple<string, BaseAnimationSpeed>[] GetSpeedTupleCollection()
         {
-            var enumValues = new EnumValues<AnimationSpeed>();
-            var enumValuesWithoutIgnored = new EnumValuesWithoutIgnored<AnimationSpeed>(enumValues);
-            string Description(AnimationSpeed speed) => speed.GetDescriptionAttributeValueOrTypeName();
-            BaseSpeed Speed(AnimationSpeed speed) => speed.GetAttributeOrNull<BaseSpeed>();
+            var enumValues = new EnumValues<AnimationSpeeds>();
+            var enumValuesWithoutIgnored = new EnumValuesWithoutIgnored<AnimationSpeeds>(enumValues);
+            string Description(AnimationSpeeds speed) => speed.GetDescriptionAttributeValueOrTypeName();
+            BaseAnimationSpeed Speed(AnimationSpeeds speed) => speed.GetAttributeOrNull<BaseAnimationSpeed>();
             return enumValuesWithoutIgnored.ToTupleCollection(Description, Speed);
         }
 
-        private readonly Lazy<Tuple<string, BaseSpeed>[]> animationSpeeds;
+        private readonly Lazy<Tuple<string, BaseAnimationSpeed>[]> animationSpeeds;
     }
 }

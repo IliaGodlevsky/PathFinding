@@ -4,11 +4,11 @@ using WPFVersion3D.Interface;
 
 namespace WPFVersion3D.Attributes
 {
-    internal sealed class RandomSpeed : BaseSpeed, IAnimationSpeed
+    internal sealed class RandomAnimationSpeed : BaseAnimationSpeed, IAnimationSpeed
     {
-        public RandomSpeed(double from, double to)
+        public RandomAnimationSpeed(double fromMilliseconds, double toMilliseconds)
         {
-            speedRange = new InclusiveValueRange<double>(from, to);
+            speedRange = new InclusiveValueRange<double>(fromMilliseconds, toMilliseconds);
         }
 
         public override double Milliseconds => speedRange.GetRandomValue();
