@@ -5,7 +5,6 @@ using Algorithm.Infrastructure.EventArguments;
 using Algorithm.Interfaces;
 using Algorithm.NullRealizations;
 using EnumerationValues.Extensions;
-using EnumerationValues.Interface;
 using EnumerationValues.Realizations;
 using GraphLib.Base;
 using GraphLib.Interfaces;

@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace ConsoleVersion.Interface
+﻿namespace ConsoleVersion.Interface
 {
     internal interface IRequireInt32Input
     {

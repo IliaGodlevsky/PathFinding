@@ -18,8 +18,7 @@ namespace GraphLib.TestRealizations.TestFactories
                 new CostMatrix(graph),
                 new ObstacleMatrix(graph));
             matrices.Overlay();
-            graph.ConnectVertices();
-            return graph;
+            return graph.ConnectVertices();
         }
     }
 }

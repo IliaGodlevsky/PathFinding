@@ -16,7 +16,7 @@ namespace ConsoleVersion.ValueInput
             enumValues = new EnumValues<TEnum>();
         }
 
-        protected override bool IsValidInput(string userInput, 
+        protected override bool IsValidInput(string userInput,
             InclusiveValueRange<TEnum> valueRange)
         {
             return Enum.TryParse(userInput, ignoreCase, out TEnum input)

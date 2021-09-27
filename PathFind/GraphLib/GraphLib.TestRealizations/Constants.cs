@@ -7,8 +7,8 @@
             TestGraph2DDimensionSizes = new[] { Width, Length };
         }
 
-        private const int Width = 80;
-        private const int Length = 45;
+        internal const int Width = 80;
+        internal const int Length = 45;
 
         public static int[] TestGraph2DDimensionSizes { get; }
     }

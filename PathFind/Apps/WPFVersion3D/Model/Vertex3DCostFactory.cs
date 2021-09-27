@@ -12,7 +12,7 @@ namespace WPFVersion3D.Model
 
         public IVertexCost CreateCost(int cost)
         {
-            return new Vertex3DCost(cost);
+            return new Vertex3DCost();
         }
     }
 }

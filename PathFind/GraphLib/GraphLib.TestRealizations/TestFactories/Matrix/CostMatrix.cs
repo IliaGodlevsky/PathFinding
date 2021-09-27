@@ -4,11 +4,21 @@ using GraphLib.TestRealizations.TestObjects;
 
 namespace GraphLib.TestRealizations.TestFactories.Matrix
 {
-    internal sealed class CostMatrix : BaseMatrix<int>
+    internal sealed class CostMatrix : BaseMatrix<int>, IMatrix
     {
         public CostMatrix(Graph2D graph) : base(graph)
         {
-            matrix = new int[,]
+
+        }
+
+        protected override void Assign(IVertex vertex, int value)
+        {
+            vertex.Cost = new TestVertexCost(value);
+        }
+
+        protected override int[,] CreateMatrix()
+        {
+            return new int[Constants.Width, Constants.Length]
             {
                 {1,5,8,3,6,1,3,3,8,6,1,6,6,8,2,7,3,8,8,4,4,2,5,1,7,2,4,1,1,3,2,1,1,5,5,7,2,4,8,3,2,6,4,1,6},
                 {6,4,8,1,8,3,7,4,6,3,6,4,1,8,8,4,1,1,2,6,1,3,3,6,8,6,3,8,6,6,6,2,6,7,7,2,4,1,7,8,2,6,2,5,6},
@@ -91,11 +101,6 @@ namespace GraphLib.TestRealizations.TestFactories.Matrix
                 {6,7,5,5,8,8,4,6,2,4,2,6,6,4,4,5,6,8,1,1,7,5,5,6,7,1,7,7,8,1,7,3,4,3,5,7,1,3,5,8,8,8,6,5,4},
                 {4,8,6,2,3,7,4,3,3,3,8,1,3,6,2,2,4,6,6,8,4,1,5,6,7,6,2,6,6,7,4,6,6,3,5,3,8,8,5,7,1,4,6,3,7}
             };
-        }
-
-        protected override void Assign(IVertex vertex, int value)
-        {
-            vertex.Cost = new TestVertexCost(value);
         }
     }
 }

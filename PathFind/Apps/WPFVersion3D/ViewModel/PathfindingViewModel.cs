@@ -1,6 +1,5 @@
 ﻿using Algorithm.Infrastructure.EventArguments;
 using Common.Interface;
-using EnumerationValues.Extensions;
 using GraphLib.Base;
 using GraphViewModel;
 using GraphViewModel.Interfaces;

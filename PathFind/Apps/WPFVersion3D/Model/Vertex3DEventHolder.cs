@@ -2,7 +2,6 @@
 using GraphLib.Interfaces;
 using GraphLib.Interfaces.Factories;
 using System;
-using System.Windows.Input;
 
 namespace WPFVersion3D.Model
 {
@@ -14,7 +13,7 @@ namespace WPFVersion3D.Model
 
         protected override int GetWheelDelta(EventArgs e)
         {
-            return e is MouseWheelEventArgs args ? args.Delta > 0 ? 1 : -1 : default;
+            return 0;
         }
 
         protected override void SubscribeToEvents(IVertex vertex)
@@ -22,7 +21,6 @@ namespace WPFVersion3D.Model
             if (vertex is Vertex3D vertex3D)
             {
                 vertex3D.MouseRightButtonDown += Reverse;
-                vertex3D.MouseWheel += ChangeVertexCost;
             }
         }
 
@@ -31,7 +29,6 @@ namespace WPFVersion3D.Model
             if (vertex is Vertex3D vertex3D)
             {
                 vertex3D.MouseRightButtonDown -= Reverse;
-                vertex3D.MouseWheel -= ChangeVertexCost;
             }
         }
     }

@@ -6,7 +6,6 @@ using GraphLib.NullRealizations.NullObjects;
 using GraphLib.Realizations.Coordinates;
 using GraphLib.Realizations.Graphs;
 using System;
-using System.Collections.Generic;
 using static ConsoleVersion.Resource.Resources;
 
 namespace ConsoleVersion.Extensions
@@ -51,13 +50,13 @@ namespace ConsoleVersion.Extensions
         }
 
         /// <summary>
-        /// Inputs <see cref="InclusiveValueRange{T}"/> using <paramref name="rangeOfValiInput"/>
+        /// Inputs <see cref="InclusiveValueRange{TValue}"/> using <paramref name="rangeOfValiInput"/>
         /// to limit the input
         /// </summary>
         /// <typeparam name="TValue"></typeparam>
         /// <param name="self"></param>
         /// <param name="rangeOfValiInput"></param>
-        /// <returns><see cref="InclusiveValueRange{T}"/> each extremum value of which lays in the
+        /// <returns><see cref="InclusiveValueRange{TValue}"/> each extremum value of which lays in the
         /// <paramref name="rangeOfValiInput"/></returns>
         public static InclusiveValueRange<TValue> InputRange<TValue>(this IValueInput<TValue> self,
             InclusiveValueRange<TValue> rangeOfValiInput)

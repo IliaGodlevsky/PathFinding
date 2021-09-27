@@ -15,11 +15,11 @@ namespace WPFVersion3D.Model
 
         public GraphField3D(int width, int length, int height)
         {
-            coordinateSystem = new IAxis[] 
-            { 
-                new Applicate(), 
-                new Ordinate(), 
-                new Abscissa() 
+            coordinateSystem = new IAxis[]
+            {
+                new Applicate(),
+                new Ordinate(),
+                new Abscissa()
             };
             DimensionSizes = new[] { width, length, height };
             DistanceBetweenVerticesAtXAxis = 0;
@@ -44,8 +44,9 @@ namespace WPFVersion3D.Model
                 for (int i = 0; i < DimensionSizes.Length; i++)
                 {
                     double addOffset = additionalOffset.ElementAtOrDefault(i);
-                    var centerOffset = new CenterOffset(DimensionSizes[i], vertex.Size, addOffset, DistancesBetween[i]);
-                    axisOffsets[i] = centerOffset.GetCenterOffset();
+                    var graphOffset = new GraphAxisCenteringOffset(DimensionSizes[i],
+                        vertex.Size, addOffset, DistancesBetween[i]);
+                    axisOffsets[i] = graphOffset.Offset;
                 }
                 LocateVertex(coordinateSystem, vertex, axisOffsets);
             }
@@ -78,7 +79,7 @@ namespace WPFVersion3D.Model
         private void LocateVertex(IAxis[] axes, Vertex3D vertex,
             params double[] additionalOffset)
         {
-            foreach(var axis in axes)
+            foreach (var axis in axes)
             {
                 LocateVertex(axis, vertex, additionalOffset);
             }
@@ -89,9 +90,9 @@ namespace WPFVersion3D.Model
         {
             var coordinates = vertex.GetCoordinates();
             double addOffset = additionalOffset.ElementAtOrDefault(axis.Index);
-            var locationOffset = new LocationOffset(coordinates[axis.Index],
+            var locationOffset = new VertexAxisOffset(coordinates[axis.Index],
                 DistancesBetween[axis.Index], addOffset, vertex.Size);
-            axis.Offset(vertex.Transform as TranslateTransform3D, locationOffset.GetLocationOffset());
+            axis.Offset(vertex.Transform as TranslateTransform3D, locationOffset.Offset);
         }
 
         private int[] DimensionSizes { get; }

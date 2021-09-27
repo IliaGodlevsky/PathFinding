@@ -30,7 +30,7 @@ using Console = Colorful.Console;
 
 namespace ConsoleVersion.ViewModel
 {
-    internal sealed class MainViewModel : MainModel, 
+    internal sealed class MainViewModel : MainModel,
         IMainModel, IModel, IInterruptable, IRequireAnswerInput, IRequireInt32Input
     {
         public event CostRangeChangedEventHandler CostRangeChanged;

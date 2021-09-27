@@ -25,7 +25,7 @@ using static ConsoleVersion.Resource.Resources;
 
 namespace ConsoleVersion.ViewModel
 {
-    internal sealed class PathFindingViewModel : PathFindingModel, 
+    internal sealed class PathFindingViewModel : PathFindingModel,
         IModel, IInterruptable, IRequireInt32Input, IRequireAnswerInput
     {
         public event ProcessEventHandler Interrupted;
