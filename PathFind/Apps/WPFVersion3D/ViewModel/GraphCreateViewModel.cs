@@ -5,6 +5,7 @@ using GraphViewModel.Interfaces;
 using Logging.Interface;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Windows.Input;
 using WPFVersion3D.Infrastructure;
 using WPFVersion3D.Model;
@@ -24,6 +25,7 @@ namespace WPFVersion3D.ViewModel
             IEnumerable<IGraphAssemble> graphAssembles)
             : base(log, model, graphAssembles)
         {
+            SelectedGraphAssemble = graphAssembles.FirstOrDefault();
             ConfirmCreateGraphCommand = new RelayCommand(ExecuteConfirmCreateGraphCommand,
                 CanExecuteConfirmCreateGraphCommand);
             CancelCreateGraphCommand = new RelayCommand(obj => CloseWindow());

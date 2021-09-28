@@ -70,7 +70,8 @@
             <TextBox.Text>
                 <Binding Mode="TwoWay" 
                          Path="Width" 
-                         Converter="{StaticResource intToStringConverter}">
+                         Converter="{StaticResource intToStringConverter}"
+                         UpdateSourceTrigger="PropertyChanged">
                     <Binding.ValidationRules>
                         <rules:RangedIntValidationRule 
                             ValueRange="{x:Static range:Constants.GraphWidthValueRange}"/>
@@ -87,7 +88,8 @@
             <TextBox.Text>
                 <Binding Mode="TwoWay" 
                          Path="Length" 
-                         Converter="{StaticResource intToStringConverter}">
+                         Converter="{StaticResource intToStringConverter}"
+                         UpdateSourceTrigger="PropertyChanged">
                     <Binding.ValidationRules>
                         <rules:RangedIntValidationRule 
                             ValueRange="{x:Static range:Constants.GraphLengthValueRange}"/>
@@ -97,14 +99,15 @@
         </TextBox>
         
         <TextBlock Grid.Row ="4" Text="Graph height" Margin="5"></TextBlock>
-        
+
         <TextBox Grid.Row="4" 
                  Grid.Column="1" 
                  Margin="5">
             <TextBox.Text>
                 <Binding Mode="TwoWay" 
                          Path="Height" 
-                         Converter="{StaticResource intToStringConverter}">
+                         Converter="{StaticResource intToStringConverter}"
+                         UpdateSourceTrigger="PropertyChanged">
                     <Binding.ValidationRules>
                         <rules:RangedIntValidationRule 
                             ValueRange="{x:Static range:Constants.GraphHeightValueRange}"/>
@@ -112,21 +115,6 @@
                 </Binding>
             </TextBox.Text>
         </TextBox>
-        <ListBox SelectedValuePath="Value" 
-                 SelectedValue="{Binding SelectedGraphAssemble}" 
-                 Grid.Row="5" 
-                 Grid.ColumnSpan="2" 
-                 ItemsSource="{Binding GraphAssembles }" 
-                 x:Name="algoListBox" 
-                 BorderThickness="0" Margin="5">
-            <ListBox.ItemTemplate>
-                <DataTemplate>
-                    <StackPanel Orientation="Horizontal">
-                        <TextBlock Margin="3" Text="{Binding Key}"/>
-                    </StackPanel>
-                </DataTemplate>
-            </ListBox.ItemTemplate>
-        </ListBox>
         <StackPanel Grid.Row="6" Grid.ColumnSpan="2" Orientation="Horizontal" HorizontalAlignment="Center">
             <Button Command ="{Binding ConfirmCreateGraphCommand}" Margin="5" Content="OK"></Button>
             <Button Command="{Binding CancelCreateGraphCommand}" Margin="5" Content="Cancel"></Button>

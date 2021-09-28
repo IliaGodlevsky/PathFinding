@@ -23,14 +23,6 @@ namespace WPFVersion3D.Configure
 {
     internal static class ContainerConfigure
     {
-        private const string GraphAssembleName = nameof(GraphAssembleName);
-        private static SmoothedGraphAssemble RegisterSmoothedGraphAssemble(IComponentContext context)
-        {
-            var randomGraphAssemble = context.ResolveNamed<IGraphAssemble>(GraphAssembleName);
-            var costFactory = context.Resolve<IVertexCostFactory>();
-            return new SmoothedGraphAssemble(randomGraphAssemble, costFactory);
-        }
-
         public static IContainer Configure()
         {
             var builder = new ContainerBuilder();
@@ -46,8 +38,7 @@ namespace WPFVersion3D.Configure
             builder.RegisterType<MailLog>().As<ILog>().SingleInstance();
             builder.RegisterComposite<Logs, ILog>().SingleInstance();
 
-            builder.RegisterType<GraphAssemble>().Named<IGraphAssemble>(GraphAssembleName).As<IGraphAssemble>().SingleInstance();
-            builder.Register(RegisterSmoothedGraphAssemble).As<IGraphAssemble>().SingleInstance();
+            builder.RegisterType<GraphAssemble>().As<IGraphAssemble>().SingleInstance();
             builder.RegisterType<Vertex3DFactory>().As<IVertexFactory>().SingleInstance();
             builder.RegisterType<Vertex3DCostFactory>().As<IVertexCostFactory>().SingleInstance();
             builder.RegisterType<Coordinate3DFactory>().As<ICoordinateFactory>().SingleInstance();
