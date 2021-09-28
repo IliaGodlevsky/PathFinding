@@ -35,8 +35,7 @@ namespace GraphViewModel
             this.endPoints = endPoints;
             this.log = log;
             var enumValues = new EnumValuesWithoutIgnored<Algorithms>(new EnumValues<Algorithms>());
-            algorithms = new Lazy<Tuple<string, Algorithms>[]>
-                (enumValues.ToAdjustedAndOrderedByDescriptionTuples);
+            algorithms = new Lazy<Tuple<string, Algorithms>[]>(enumValues.ToAdjustedAndOrderedByDescriptionTuples);
             graph = mainViewModel.Graph;
             timer = new Stopwatch();
             path = new NullGraphPath();
