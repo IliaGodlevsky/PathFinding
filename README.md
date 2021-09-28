@@ -1,15 +1,23 @@
 # Pathfinding project
  Pathfinding project, C#
  
- **_Realized 4 pathfinding algorithms_**:
+ **_Realized 8 pathfinding algorithms_**:
  
- 1. [Lee algorithm](https://github.com/IliaGodlevsky/PathFinding/tree/master/PathFind/Plugins/Plugins.LeeAlgorithm)
+ 1. [Lee algorithm](https://github.com/IliaGodlevsky/PathFinding/blob/master/PathFind/Algorithm/Algorithm.Algos/Algos/LeeAlgorithm.cs)
+
+ 2. [Heuristic Lee algorithm](https://github.com/IliaGodlevsky/PathFinding/blob/master/PathFind/Algorithm/Algorithm.Algos/Algos/BestFirstLeeAlgorithm.cs)
  
- 2. [Dijkstra algorithm](https://github.com/IliaGodlevsky/PathFinding/tree/master/PathFind/Plugins/Plugins.DijkstraALgorithm)
+ 3. [Dijkstra's algorithm](https://github.com/IliaGodlevsky/PathFinding/blob/master/PathFind/Algorithm/Algorithm.Algos/Algos/DijkstraAlgorithm.cs)
  
- 3. [A* algorithm](https://github.com/IliaGodlevsky/PathFinding/tree/master/PathFind/Plugins/Plugins.AStarAlgorithm) ([with modification](https://github.com/IliaGodlevsky/PathFinding/tree/master/PathFind/Plugins/Plugins.AStarModified))
-  
- 4. [Greedy algorithm](https://github.com/IliaGodlevsky/PathFinding/blob/master/PathFind/Algorithm/Algorithms/DepthFirstAlgorithm.cs)
+ 4. [A* algorithm](https://github.com/IliaGodlevsky/PathFinding/blob/master/PathFind/Algorithm/Algorithm.Algos/Algos/AStarAlgorithm.cs)
+
+ 5. [Modified A* algorithm](https://github.com/IliaGodlevsky/PathFinding/blob/master/PathFind/Algorithm/Algorithm.Algos/Algos/AStarModified.cs)
+ [And a pack of greedy algorithms:]
+ 1. [Distance first algorithm](https://github.com/IliaGodlevsky/PathFinding/blob/master/PathFind/Algorithm/Algorithm.Algos/Algos/DistanceFirstAlgorithm.cs)
+
+ 2. [Depth first algorithm](https://github.com/IliaGodlevsky/PathFinding/blob/master/PathFind/Algorithm/Algorithm.Algos/Algos/DepthFirstAlgorithm.cs)
+
+ 3. [Cost first algorithm](https://github.com/IliaGodlevsky/PathFinding/blob/master/PathFind/Algorithm/Algorithm.Algos/Algos/CostGreedyAlgorithm.cs)
  
  ***
  
