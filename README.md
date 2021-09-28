@@ -13,7 +13,7 @@
 
  5. [Modified A* algorithm](https://github.com/IliaGodlevsky/PathFinding/blob/master/PathFind/Algorithm/Algorithm.Algos/Algos/AStarModified.cs)
 
- [And a pack of greedy algorithms:]
+ And a pack of greedy algorithms:
  
  1. [Distance first algorithm](https://github.com/IliaGodlevsky/PathFinding/blob/master/PathFind/Algorithm/Algorithm.Algos/Algos/DistanceFirstAlgorithm.cs)
 
