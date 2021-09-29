@@ -44,6 +44,4 @@
  
  ***
  
- Comming soon: 
-  
- 1. Unity 3D version
+In not console versions to choose source, target and intermediate vertices click left mouse button on some vertex to mark it as source, next left button click on other element will mark it as target vertex and several clicks on other vertices will mark them as intermediate vertices. Right mouse click on vertex will make it an obstacle, if you click one more time on it, it will become a regular one.
