@@ -48,7 +48,8 @@ namespace GraphViewModel
             {
                 algorithm = Algorithm.ToAlgorithm(graph, endPoints);
                 SubscribeOnAlgorithmEvents();
-                path = await algorithm.FindPathAndHighlightAsync(endPoints);
+                path = await algorithm.FindPathAsync();
+                await path.HighlightAsync(endPoints);
                 Summarize();
             }
             catch (Exception ex)

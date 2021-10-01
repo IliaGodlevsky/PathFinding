@@ -1,4 +1,5 @@
 ﻿using Algorithm.Infrastructure.EventArguments;
+using Common.Extensions;
 using Common.Interface;
 using GraphLib.Base;
 using GraphViewModel;
@@ -64,7 +65,7 @@ namespace WPFVersion.ViewModel
 
         protected override async void OnVertexVisited(object sender, AlgorithmEventArgs e)
         {
-            Thread.Sleep(DelayTime);
+            timer.Wait(DelayTime);
             await Task.Run(() =>
             {
                 base.OnVertexVisited(sender, e);
