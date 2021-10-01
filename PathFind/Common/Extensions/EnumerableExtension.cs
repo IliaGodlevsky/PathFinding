@@ -188,17 +188,5 @@ namespace Common.Extensions
         {
             return collection.ToDictionary(item => item.GetDescriptionAttributeValueOrTypeName());
         }
-
-        public static bool TryGetKey<TKey, TValue>(this IDictionary<TKey, TValue> self, TValue value, out TKey key)
-        {
-            if (self.Values.Contains(value))
-            {
-                key = self.FirstOrDefault(item => item.Value.Equals(value)).Key;
-                return true;
-            }
-
-            key = default;
-            return false;
-        }
     }
 }

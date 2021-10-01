@@ -17,16 +17,28 @@
         <!--Number suffix in a key name is a round precision-->
         <converters:PrecisedDoubleToStringConverter Precision="2" x:Key="doubleConverter2"/>
         <converters:PrecisedDoubleToStringConverter Precision="0" x:Key="doubleConverter0"/>
+        <converters:BoolToVerticesCostsModeConverter x:Key="BoolToVerticesCostModeConverter"/>
     </Window.Resources>
     <Grid Background="White">
         <Grid.RowDefinitions>
             <RowDefinition Height="auto"></RowDefinition>
             <RowDefinition Height="auto"></RowDefinition>
             <RowDefinition Height="auto"></RowDefinition>
+            <RowDefinition Height="auto"></RowDefinition>
             <RowDefinition Height="*"></RowDefinition>
             <RowDefinition Height="auto"></RowDefinition>
         </Grid.RowDefinitions>
-        <model:GraphField Panel.ZIndex="0" Margin="3" Grid.Row="3" x:Name="graphField" >
+        <Menu Margin="2" Grid.Row="0">
+            <MenuItem Header="File" Margin="2">
+                <MenuItem Header="New graph" Command="{Binding CreateNewGraphCommand }"></MenuItem>
+                <MenuItem Header="Save graph" Command="{Binding SaveGraphCommand}"></MenuItem>
+                <MenuItem Header="Load graph" Command="{Binding LoadGraphCommand}"></MenuItem>
+            </MenuItem>
+            <MenuItem Header="Pathfinding" Margin="2"></MenuItem>
+            <MenuItem Header="Service" Margin="2"></MenuItem>
+            <MenuItem Header="About" Margin="2"></MenuItem>
+        </Menu>
+        <model:GraphField Panel.ZIndex="0" Margin="3" Grid.Row="4" x:Name="graphField" >
             <model:GraphField.RenderTransform>
                 <TransformGroup>
                     <ScaleTransform 
@@ -41,37 +53,37 @@
             </model:GraphField.RenderTransform>
             <ContentPresenter Content="{Binding GraphField}"/>
         </model:GraphField>
-        <StackPanel Background="White" Grid.Row="0" Grid.RowSpan="3">
-            <ToolBar Background="White" Grid.Row="0">
-                <Button Command="{Binding LoadGraphCommand}">
-                    <Image Style ="{StaticResource ImageStyle}" Source="/Resources/Images/open.png"></Image>
+        <StackPanel Background="White" Grid.Row="1" Grid.RowSpan="3">
+            <ToolBar Background="White" Grid.Row="1">
+                <Button Style="{StaticResource ImageStyle}" ToolTip="Load graph" Command="{Binding LoadGraphCommand}">
+                    <Image Source="/Resources/Images/open.png"></Image>
                 </Button>
-                <Button Command="{Binding SaveGraphCommand}">
-                    <Image Style ="{StaticResource ImageStyle}" Source="/Resources/Images/save.png"></Image>
+                <Button Style="{StaticResource ImageStyle}" ToolTip="Save graph" Command="{Binding SaveGraphCommand}">
+                    <Image  Source="/Resources/Images/save.png"></Image>
                 </Button>
-                <Button Command="{Binding CreateNewGraphCommand}">
-                    <Image Style ="{StaticResource ImageStyle}" Source="/Resources/Images/new.png"></Image>
+                <Button Style="{StaticResource ImageStyle}" ToolTip="Create new graph" Command="{Binding CreateNewGraphCommand}">
+                    <Image  Source="/Resources/Images/new.png"></Image>
                 </Button>
-                <Button Command="{Binding ClearGraphCommand}">
-                    <Image Style ="{StaticResource ImageStyle}" Source="/Resources/Images/clear.png"></Image>
+                <Button Style="{StaticResource ImageStyle}" ToolTip="Clear graph" Command="{Binding ClearGraphCommand}">
+                    <Image  Source="/Resources/Images/clear.png"></Image>
                 </Button>
-                <Button Command ="{Binding StartPathFindCommand}">
-                    <Image Style ="{StaticResource ImageStyle}" Source="/Resources/Images/start.png"></Image>
+                <Button Style="{StaticResource ImageStyle}" ToolTip="Choose graph" Command ="{Binding StartPathFindCommand}">
+                    <Image  Source="/Resources/Images/start.png"></Image>
                 </Button>
-                <Button Command ="{Binding InterruptAlgorithmCommand}">
-                    <Image Style ="{StaticResource ImageStyle}" Source="/Resources/Images/interrupt.png"></Image>
+                <Button Style="{StaticResource ImageStyle}" ToolTip="Interrupt all algorithms" Command ="{Binding InterruptAlgorithmCommand}">
+                    <Image Source="/Resources/Images/interrupt.png"></Image>
                 </Button>
 
-                <ToggleButton Command="{Binding ShowVertexCost}"
-                         CommandParameter="{Binding IsChecked, RelativeSource = {RelativeSource Self}}"
+                <ToggleButton MaxWidth="21" MaxHeight="21" Margin="3" ToolTip="Delete/Return vertices costs" Command="{Binding ShowVertexCost}"
+                         CommandParameter="{Binding IsChecked, RelativeSource = {RelativeSource Self}, Converter={StaticResource BoolToVerticesCostModeConverter}}"
                         x:Name="fontButton" IsChecked="True">
-                    <Image Style="{StaticResource ImageStyle}" Source ="/Resources/Images/show.png"></Image>
+                    <Image Source ="/Resources/Images/show.png"></Image>
                 </ToggleButton>
             </ToolBar>
-            <StatusBar Background="White" Grid.Row="1">
+            <StatusBar Background="White" Grid.Row="2">
                 <TextBlock Text="{Binding GraphParametres}"></TextBlock>
             </StatusBar>
-            <Expander Background="White" Panel.ZIndex="1" Grid.Row="2" Margin="5" >
+            <Expander Background="White" Panel.ZIndex="1" Grid.Row="3" Margin="5" >
                 <Grid>
                     <Grid.RowDefinitions>
                         <RowDefinition></RowDefinition>
@@ -134,7 +146,7 @@
             </Expander>
         </StackPanel>
 
-        <StatusBar Background="White" Grid.Row="4">
+        <StatusBar Background="White" Grid.Row="5">
             <ItemsControl ItemsSource="{Binding Statistics}">
                 <ItemsControl.ItemTemplate>
                     <DataTemplate>

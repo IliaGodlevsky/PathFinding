@@ -2,6 +2,7 @@
 using Common.Interface;
 using EnumerationValues.Extensions;
 using EnumerationValues.Realizations;
+using GalaSoft.MvvmLight.Messaging;
 using GraphLib.Base;
 using GraphLib.Extensions;
 using GraphLib.Interfaces;
@@ -22,6 +23,7 @@ using WPFVersion3D.Axes;
 using WPFVersion3D.Enums;
 using WPFVersion3D.Infrastructure;
 using WPFVersion3D.Interface;
+using WPFVersion3D.Messages;
 using WPFVersion3D.Model;
 using WPFVersion3D.View;
 
@@ -30,7 +32,6 @@ namespace WPFVersion3D.ViewModel
     internal class MainWindowViewModel : MainModel, INotifyPropertyChanged
     {
         public event PropertyChangedEventHandler PropertyChanged;
-        public event EventHandler AlgorithmInterrupted;
 
         protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = "")
         {
@@ -58,7 +59,8 @@ namespace WPFVersion3D.ViewModel
             set { graphField = value; OnPropertyChanged(); }
         }
 
-        public bool IsAlgorithmStarted { private get; set; }
+        private int StartedAlgorithmsCount { get; set; }
+        private int FinishedAlgorithmsCount { get; set; }
 
         public Tuple<string, BaseAnimationSpeed>[] AnimationSpeeds => animationSpeeds.Value;
 
@@ -84,6 +86,9 @@ namespace WPFVersion3D.ViewModel
             AnimatedAxisRotateCommand = new RelayCommand(ExecuteAnimatedAxisRotateCommand);
             InterruptAlgorithmCommand = new RelayCommand(ExecuteInterruptAlgorithmCommand, CanExecuteInterruptAlgorithmCommand);
             animationSpeeds = new Lazy<Tuple<string, BaseAnimationSpeed>[]>(GetSpeedTupleCollection);
+            Messenger.Default.Register<UpdateAlgorithmStatisticsMessage>(this, Constants.MessageToken, UpdateAlgorithmStatistics);
+            Messenger.Default.Register<AlgorithmStartedMessage>(this, Constants.MessageToken, OnAlgorithmStarted);
+            Messenger.Default.Register<AlgorithmFinishedMessage>(this, Constants.MessageToken, OnAlgorithmFinished);
         }
 
         public override void FindPath()
@@ -122,6 +127,8 @@ namespace WPFVersion3D.ViewModel
         {
             base.ConnectNewGraph(graph);
             Statistics.Clear();
+            FinishedAlgorithmsCount = 0;
+            StartedAlgorithmsCount = 0;
             (graphField as GraphField3D)?.CenterGraph();
         }
 
@@ -144,6 +151,25 @@ namespace WPFVersion3D.ViewModel
             PrepareWindow(model, window);
         }
 
+        private void OnAlgorithmStarted(AlgorithmStartedMessage message)
+        {
+            Application.Current.Dispatcher.Invoke(() =>
+            {
+                Statistics.Add(string.Empty);
+                Messenger.Default.Send(new AlgorithmStatisticsIndexMessage(StartedAlgorithmsCount++), Constants.MessageToken);
+            });
+        }
+
+        private void OnAlgorithmFinished(AlgorithmFinishedMessage message)
+        {
+            FinishedAlgorithmsCount++;
+        }
+
+        private void UpdateAlgorithmStatistics(UpdateAlgorithmStatisticsMessage message)
+        {
+            Application.Current.Dispatcher.Invoke(() => Statistics[message.Index] = message.Statistics);
+        }
+
         private void ExecuteSaveGraphCommand(object param) => base.SaveGraph();
 
         private void ExecuteChangeOpacity(object param) => ChangeVerticesOpacity();
@@ -163,9 +189,11 @@ namespace WPFVersion3D.ViewModel
         private void ExecuteCreateNewGraphCommand(object param) => CreateNewGraph();
 
         private void ExecuteInterruptAlgorithmCommand(object sender)
-            => AlgorithmInterrupted?.Invoke(this, EventArgs.Empty);
+        {
+            Messenger.Default.Send(new InterruptAlgorithmMessage(), Constants.MessageToken);
+        }
 
-        private bool CanExecuteInterruptAlgorithmCommand(object sender) => IsAlgorithmStarted;
+        private bool CanExecuteInterruptAlgorithmCommand(object sender) => StartedAlgorithmsCount != FinishedAlgorithmsCount;
 
         private void ExecuteAnimatedAxisRotateCommand(object param)
         {
@@ -186,7 +214,7 @@ namespace WPFVersion3D.ViewModel
 
         private bool CanExecuteGraphOperation(object param) => !Graph.IsNull();
 
-        private bool CanExecuteOperation(object param) => !IsAlgorithmStarted;
+        private bool CanExecuteOperation(object param) => FinishedAlgorithmsCount == StartedAlgorithmsCount;
 
         private Tuple<string, BaseAnimationSpeed>[] GetSpeedTupleCollection()
         {

@@ -1,5 +1,7 @@
 ﻿using Algorithm.Infrastructure.EventArguments;
+using Common.Extensions;
 using Common.Interface;
+using GalaSoft.MvvmLight.Messaging;
 using GraphLib.Base;
 using GraphViewModel;
 using GraphViewModel.Interfaces;
@@ -7,11 +9,10 @@ using Interruptable.EventArguments;
 using Logging.Interface;
 using System;
 using System.Linq;
-using System.Threading;
 using System.Threading.Tasks;
-using System.Windows;
 using System.Windows.Input;
 using WPFVersion.Infrastructure;
+using WPFVersion.Messages;
 
 namespace WPFVersion.ViewModel
 {
@@ -28,54 +29,38 @@ namespace WPFVersion.ViewModel
             ConfirmPathFindAlgorithmChoice = new RelayCommand(ExecuteConfirmPathFindAlgorithmChoice,
                 CanExecuteConfirmPathFindAlgorithmChoice);
             CancelPathFindAlgorithmChoice = new RelayCommand(ExecuteCloseWindowCommand);
+            Messenger.Default.Register<InterruptAlgorithmMessage>(this, Constants.MessageToken, InterruptAlgorithm);
+            Messenger.Default.Register<AlgorithmStatisticsIndexMessage>(this, Constants.MessageToken, SetAlgorithmIndex);
         }
 
-        private void InterruptAlgorithm(object sender, EventArgs e)
+        private void InterruptAlgorithm(InterruptAlgorithmMessage message)
         {
             algorithm.Interrupt();
+        }
+
+        private void SetAlgorithmIndex(AlgorithmStatisticsIndexMessage message)
+        {
+            Messenger.Default.Unregister<AlgorithmStatisticsIndexMessage>(this, Constants.MessageToken, SetAlgorithmIndex);
+            AlgorithmStatisticsIndex = message.Index;
         }
 
         protected override void OnAlgorithmStarted(object sender, ProcessEventArgs e)
         {
             base.OnAlgorithmStarted(sender, e);
-            if (mainViewModel is MainWindowViewModel mainModel)
-            {
-                mainModel.IsAlgorithmStarted = true;
-                mainModel.AlgorithmInterrupted += InterruptAlgorithm;
-                Application.Current.Dispatcher.Invoke(() =>
-                {
-                    mainModel.Statistics.Add(string.Empty);
-                    statIndex = mainModel.Statistics.Count - 1;
-                });
-            }
+            Messenger.Default.Send(new AlgorithmStartedMessage(), Constants.MessageToken);
         }
 
         protected override void Summarize()
         {
-            if (mainViewModel is MainWindowViewModel mainModel)
-            {
-                Application.Current.Dispatcher.Invoke(() =>
-                {
-                    mainModel.Statistics[statIndex]
-                        = path.PathLength > 0 ? GetStatistics() : CouldntFindPathMsg;
-                });
-            }
+            string stats = path.PathLength > 0 ? GetStatistics() : CouldntFindPathMsg;
+            Messenger.Default.Send(new UpdateAlgorithmStatisticsMessage(AlgorithmStatisticsIndex, stats), Constants.MessageToken);
         }
 
         protected override async void OnVertexVisited(object sender, AlgorithmEventArgs e)
         {
-            Thread.Sleep(DelayTime);
-            await Task.Run(() =>
-            {
-                base.OnVertexVisited(sender, e);
-                if (mainViewModel is MainWindowViewModel mainModel)
-                {
-                    Application.Current.Dispatcher.Invoke(() =>
-                    {
-                        mainModel.Statistics[statIndex] = GetStatistics();
-                    });
-                }
-            });
+            timer.Wait(DelayTime);
+            Messenger.Default.Send(new UpdateAlgorithmStatisticsMessage(AlgorithmStatisticsIndex, GetStatistics()), Constants.MessageToken);
+            await Task.Run(() => base.OnVertexVisited(sender, e));
         }
 
         protected override async void OnVertexEnqueued(object sender, AlgorithmEventArgs e)
@@ -86,11 +71,9 @@ namespace WPFVersion.ViewModel
         protected override void OnAlgorithmFinished(object sender, ProcessEventArgs e)
         {
             base.OnAlgorithmFinished(sender, e);
-            if (mainViewModel is MainWindowViewModel mainModel)
-            {
-                mainModel.IsAlgorithmStarted = false;
-                mainModel.AlgorithmInterrupted -= InterruptAlgorithm;
-            }
+            Messenger.Default.Send(new AlgorithmFinishedMessage(), Constants.MessageToken);
+            Messenger.Default.Unregister<InterruptAlgorithmMessage>(this, Constants.MessageToken, InterruptAlgorithm);
+            Messenger.Default.Unregister<AlgorithmStatisticsIndexMessage>(this, Constants.MessageToken, SetAlgorithmIndex);
         }
 
         private void ExecuteCloseWindowCommand(object param)
@@ -110,6 +93,6 @@ namespace WPFVersion.ViewModel
             return Algorithms.Any(item => item.Item2 == Algorithm);
         }
 
-        private int statIndex;
+        private int AlgorithmStatisticsIndex { get; set; }
     }
 }

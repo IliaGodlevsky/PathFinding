@@ -4,12 +4,12 @@
     {
         static Constants()
         {
-            TestGraph2DDimensionSizes = new[] { Width, Length };
+            DimensionSizes2D = new[] { Width, Length };
         }
 
         public const int Width = 80;
         public const int Length = 45;
 
-        public static int[] TestGraph2DDimensionSizes { get; }
+        public static int[] DimensionSizes2D { get; }
     }
 }
