@@ -12,7 +12,7 @@ namespace GraphLib.TestRealizations.TestFactories
     {
         public IGraph AssembleGraph(int obstaclePercent = 0, params int[] sizes)
         {
-            var graph = new Graph2D(TestGraph2DDimensionSizes);
+            var graph = new Graph2D(DimensionSizes2D);
             var matrices = new Matrices(
                 new VertexMatrix(graph),
                 new CostMatrix(graph),

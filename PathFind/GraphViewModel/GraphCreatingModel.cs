@@ -16,8 +16,6 @@ namespace GraphLib.ViewModel
 
         public int ObstaclePercent { get; set; }
 
-        public string GraphAssembleKey { get; set; }
-
         public IDictionary<string, IGraphAssemble> GraphAssembles { get; }
 
         public virtual IGraphAssemble SelectedGraphAssemble { get; set; }
