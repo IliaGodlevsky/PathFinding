@@ -21,6 +21,7 @@ using System.Windows.Input;
 using WPFVersion3D.Attributes;
 using WPFVersion3D.Axes;
 using WPFVersion3D.Enums;
+using WPFVersion3D.Extensions;
 using WPFVersion3D.Infrastructure;
 using WPFVersion3D.Interface;
 using WPFVersion3D.Messages;
@@ -210,23 +211,12 @@ namespace WPFVersion3D.ViewModel
 
         private void ExecuteInterruptAlgorithmCommand(object param)
         {
-            foreach (var algorithm in Statistics)
-            {
-                if (algorithm.Status == AlgorithmStatus.Started)
-                {
-                    algorithm.Interrupt();
-                    algorithm.Status = AlgorithmStatus.Interrupted;
-                }
-            }
+            Statistics.ForEach(stat => stat.TryInterrupt());
         }
 
         private void ExecuteInterruptCurrentAlgorithmCommand(object param)
         {
-            if (SelectedAlgorithm.Status == AlgorithmStatus.Started)
-            {
-                SelectedAlgorithm.Interrupt();
-                SelectedAlgorithm.Status = AlgorithmStatus.Interrupted;
-            }
+            SelectedAlgorithm.TryInterrupt();
         }
 
         private bool CanExecuteInterruptCurrentAlgorithmCommand(object param)
@@ -234,7 +224,10 @@ namespace WPFVersion3D.ViewModel
             return SelectedAlgorithm != null;
         }
 
-        private bool CanExecuteInterruptAlgorithmCommand(object sender) => StartedAlgorithmsCount != FinishedAlgorithmsCount;
+        private bool CanExecuteInterruptAlgorithmCommand(object sender)
+        {
+            return StartedAlgorithmsCount != FinishedAlgorithmsCount;
+        }
 
         private void ExecuteAnimatedAxisRotateCommand(object param)
         {
@@ -251,11 +244,19 @@ namespace WPFVersion3D.ViewModel
         }
 
         private bool CanExecuteClearGraphOperation(object param)
-            => CanExecuteGraphOperation(param) && CanExecuteOperation(param);
+        {
+            return CanExecuteGraphOperation(param) && CanExecuteOperation(param);
+        }
 
-        private bool CanExecuteGraphOperation(object param) => !Graph.IsNull();
+        private bool CanExecuteGraphOperation(object param) 
+        {
+            return !Graph.IsNull();
+        }
 
-        private bool CanExecuteOperation(object param) => FinishedAlgorithmsCount == StartedAlgorithmsCount;
+        private bool CanExecuteOperation(object param) 
+        {
+            return FinishedAlgorithmsCount == StartedAlgorithmsCount;
+        }
 
         private Tuple<string, BaseAnimationSpeed>[] GetSpeedTupleCollection()
         {

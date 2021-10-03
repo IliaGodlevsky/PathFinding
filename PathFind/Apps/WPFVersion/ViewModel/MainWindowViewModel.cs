@@ -1,4 +1,5 @@
-﻿using Common.Interface;
+﻿using Common.Extensions;
+using Common.Interface;
 using GalaSoft.MvvmLight.Messaging;
 using GraphLib.Base;
 using GraphLib.Extensions;
@@ -16,6 +17,7 @@ using System.Runtime.CompilerServices;
 using System.Windows;
 using System.Windows.Input;
 using WPFVersion.Enums;
+using WPFVersion.Extensions;
 using WPFVersion.Infrastructure;
 using WPFVersion.Messages;
 using WPFVersion.Model;
@@ -142,14 +144,7 @@ namespace WPFVersion.ViewModel
 
         private void ExecuteInterruptAlgorithmCommand(object param)
         {
-            foreach(var algorithm in Statistics)
-            {
-                if (algorithm.Status == AlgorithmStatus.Started)
-                {
-                    algorithm.Interrupt();
-                    algorithm.Status = AlgorithmStatus.Interrupted;
-                }
-            }           
+            Statistics.ForEach(stat => stat.TryInterrupt());
         }
 
         private void ExecuteClearVerticesColors(object param)
@@ -159,11 +154,7 @@ namespace WPFVersion.ViewModel
 
         private void ExecuteInterruptCurrentAlgorithmCommand(object param)
         {
-            if (SelectedAlgorithm.Status == AlgorithmStatus.Started)
-            {
-                SelectedAlgorithm.Interrupt();
-                SelectedAlgorithm.Status = AlgorithmStatus.Interrupted;
-            }
+            SelectedAlgorithm.TryInterrupt();
         }
 
         private bool CanExecuteInterruptCurrentAlgorithmCommand(object param)
@@ -171,7 +162,10 @@ namespace WPFVersion.ViewModel
             return SelectedAlgorithm != null;
         }
 
-        private bool CanExecuteInterruptAlgorithmCommand(object sender) => StartedAlgorithmsCount != FinishedAlgorithmsCount;
+        private bool CanExecuteInterruptAlgorithmCommand(object sender)
+        {
+            return StartedAlgorithmsCount != FinishedAlgorithmsCount;
+        }
 
         private void ExecuteSaveGraphCommand(object param) => base.SaveGraph();
 
@@ -221,8 +215,14 @@ namespace WPFVersion.ViewModel
 
         private bool CanExecuteGraphOperation(object param) => !Graph.IsNull();
 
-        private bool CanExecuteOperation(object param) => StartedAlgorithmsCount == FinishedAlgorithmsCount;
+        private bool CanExecuteOperation(object param)
+        {
+            return StartedAlgorithmsCount == FinishedAlgorithmsCount;
+        }
 
-        private bool CanExecuteClearGraphOperation(object param) => CanExecuteOperation(param) && CanExecuteGraphOperation(param);
+        private bool CanExecuteClearGraphOperation(object param)
+        {
+            return CanExecuteOperation(param) && CanExecuteGraphOperation(param);
+        }
     }
 }

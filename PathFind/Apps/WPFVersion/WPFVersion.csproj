@@ -73,6 +73,7 @@
     <Compile Include="Converters\PrecisedDoubleToStringConverter.cs" />
     <Compile Include="Converters\IntToStringConverter.cs" />
     <Compile Include="Enums\AlgorithmStatus.cs" />
+    <Compile Include="Extensions\AlgorithmViewModelExtensions.cs" />
     <Compile Include="Infrastructure\RelayCommand.cs" />
     <Compile Include="Messages\AlgorithmFinishedMessage.cs" />
     <Compile Include="Messages\AlgorithmStartedMessage.cs" />
