@@ -18,6 +18,8 @@ namespace GraphViewModel.Interfaces
 
         void ClearGraph();
 
+        void ClearColors();
+
         void LoadGraph();
 
         void FindPath();

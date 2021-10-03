@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel;
 
-namespace WPFVersion.Enums
+namespace WPFVersion3D.Enums
 {
     internal enum AlgorithmStatus
     {

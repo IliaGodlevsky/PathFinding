@@ -67,6 +67,7 @@
     </ApplicationDefinition>
     <Compile Include="Configure\ContainerConfigure.cs" />
     <Compile Include="Constants.cs" />
+    <Compile Include="Converters\AlgorithmStatusToStringConverter.cs" />
     <Compile Include="Converters\BoolToVerticesCostsModeConverter.cs" />
     <Compile Include="Converters\BoolToVisibilityConverter.cs" />
     <Compile Include="Converters\PrecisedDoubleToStringConverter.cs" />
@@ -74,7 +75,6 @@
     <Compile Include="Enums\AlgorithmStatus.cs" />
     <Compile Include="Infrastructure\RelayCommand.cs" />
     <Compile Include="Messages\AlgorithmFinishedMessage.cs" />
-    <Compile Include="Messages\AlgorithmInterruptedMessage.cs" />
     <Compile Include="Messages\AlgorithmStartedMessage.cs" />
     <Compile Include="Messages\AlgorithmStatisticsIndexMessage.cs" />
     <Compile Include="Messages\UpdateAlgorithmStatisticsMessage.cs" />
@@ -108,6 +108,10 @@
     <Compile Include="View\Windows\PathFindWindow.xaml.cs">
       <DependentUpon>PathFindWindow.xaml</DependentUpon>
     </Compile>
+    <Page Include="Resources\Images\SvgImages.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Resources\Styles\ImageStyle.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -157,32 +161,7 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Resources\Images\mainwindow.png" />
-    <Resource Include="Resources\Images\open.png" />
-    <Resource Include="Resources\Images\new.png" />
     <Resource Include="Resources\Images\mainwindow2.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Resources\Images\save.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Resources\Images\start.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Resources\Images\clear.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Resources\Images\change.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Resources\Images\path.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Resources\Images\obstacle.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Resources\Images\show.png" />
-    <Resource Include="Resources\Images\hide.png" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\Algorithm\Algorithm.Algos\Algorithm.Algos.csproj">
@@ -270,9 +249,6 @@
     <PackageReference Include="System.Windows.Interactivity.WPF">
       <Version>2.0.20525</Version>
     </PackageReference>
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Resources\Images\interrupt.png" />
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

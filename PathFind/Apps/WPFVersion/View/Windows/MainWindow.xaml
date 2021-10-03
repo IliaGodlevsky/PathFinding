@@ -6,7 +6,9 @@
         xmlns:model="clr-namespace:WPFVersion.Model" 
         xmlns:converters="clr-namespace:WPFVersion.Converters"
         xmlns:range="clr-namespace:WPFVersion" 
-        xmlns:rules="clr-namespace:WPFVersion.ValidationRules"
+        xmlns:rules="clr-namespace:WPFVersion.ValidationRules" 
+        xmlns:viewmodel="clr-namespace:WPFVersion.ViewModel" 
+        d:DataContext="{d:DesignInstance Type=viewmodel:MainWindowViewModel}"
         mc:Ignorable="d"
         Background="White"
         Title="Path find"
@@ -18,6 +20,7 @@
         <converters:PrecisedDoubleToStringConverter Precision="2" x:Key="doubleConverter2"/>
         <converters:PrecisedDoubleToStringConverter Precision="0" x:Key="doubleConverter0"/>
         <converters:BoolToVerticesCostsModeConverter x:Key="BoolToVerticesCostModeConverter"/>
+        <converters:AlgorithmStatusToStringConverter x:Key="StatusToStringConverter"/>
     </Window.Resources>
     <Grid Background="White">
         <Grid.RowDefinitions>
@@ -28,17 +31,7 @@
             <RowDefinition Height="*"></RowDefinition>
             <RowDefinition Height="auto"></RowDefinition>
         </Grid.RowDefinitions>
-        <Menu Margin="2" Grid.Row="0">
-            <MenuItem Header="File" Margin="2">
-                <MenuItem Header="New graph" Command="{Binding CreateNewGraphCommand }"></MenuItem>
-                <MenuItem Header="Save graph" Command="{Binding SaveGraphCommand}"></MenuItem>
-                <MenuItem Header="Load graph" Command="{Binding LoadGraphCommand}"></MenuItem>
-            </MenuItem>
-            <MenuItem Header="Pathfinding" Margin="2"></MenuItem>
-            <MenuItem Header="Service" Margin="2"></MenuItem>
-            <MenuItem Header="About" Margin="2"></MenuItem>
-        </Menu>
-        <model:GraphField Panel.ZIndex="0" Margin="3" Grid.Row="4" x:Name="graphField" >
+        <model:GraphField Panel.ZIndex="0" Margin="3" Grid.Row="4" x:Name="graphField">
             <model:GraphField.RenderTransform>
                 <TransformGroup>
                     <ScaleTransform 
@@ -55,29 +48,29 @@
         </model:GraphField>
         <StackPanel Background="White" Grid.Row="1" Grid.RowSpan="3">
             <ToolBar Background="White" Grid.Row="1">
-                <Button Style="{StaticResource ImageStyle}" ToolTip="Load graph" Command="{Binding LoadGraphCommand}">
-                    <Image Source="/Resources/Images/open.png"></Image>
-                </Button>
-                <Button Style="{StaticResource ImageStyle}" ToolTip="Save graph" Command="{Binding SaveGraphCommand}">
-                    <Image  Source="/Resources/Images/save.png"></Image>
-                </Button>
-                <Button Style="{StaticResource ImageStyle}" ToolTip="Create new graph" Command="{Binding CreateNewGraphCommand}">
-                    <Image  Source="/Resources/Images/new.png"></Image>
-                </Button>
-                <Button Style="{StaticResource ImageStyle}" ToolTip="Clear graph" Command="{Binding ClearGraphCommand}">
-                    <Image  Source="/Resources/Images/clear.png"></Image>
-                </Button>
-                <Button Style="{StaticResource ImageStyle}" ToolTip="Choose graph" Command ="{Binding StartPathFindCommand}">
-                    <Image  Source="/Resources/Images/start.png"></Image>
-                </Button>
-                <Button Style="{StaticResource ImageStyle}" ToolTip="Interrupt all algorithms" Command ="{Binding InterruptAlgorithmCommand}">
-                    <Image Source="/Resources/Images/interrupt.png"></Image>
-                </Button>
-
-                <ToggleButton MaxWidth="21" MaxHeight="21" Margin="3" ToolTip="Delete/Return vertices costs" Command="{Binding ShowVertexCost}"
+                <Button Style="{StaticResource ImageStyle}" Content="{StaticResource LoadGraph}" ToolTip="Load graph" Command="{Binding LoadGraphCommand}"/>
+                <Button Style="{StaticResource ImageStyle}" Content="{StaticResource SaveGraph}" ToolTip="Save graph" Command="{Binding SaveGraphCommand}"/>
+                <Button Style="{StaticResource ImageStyle}" Content="{StaticResource CreateNewGraph}" ToolTip="Create graph" Command="{Binding CreateNewGraphCommand}"/>
+                <Button Style="{StaticResource ImageStyle}" Content="{StaticResource ClearGraph}" ToolTip="Clear graph" Command="{Binding ClearGraphCommand}"/>
+                <Button Style="{StaticResource ImageStyle}" Content="{StaticResource ClearColors}" ToolTip="Clear colors" Command="{Binding ClearVerticesColor}"/>
+                <Button Style="{StaticResource ImageStyle}" Content="{StaticResource FindPath}" ToolTip="Choose graph" Command ="{Binding StartPathFindCommand}"/>
+                <Button Style="{StaticResource ImageStyle}" Content="{StaticResource Interrupt}" ToolTip="Interrupt all" Command ="{Binding InterruptAlgorithmCommand}"/>
+                <ToggleButton MaxWidth="25" MaxHeight="25" Margin="3" ToolTip="Delete/Return vertices costs" Command="{Binding ShowVertexCost}"
                          CommandParameter="{Binding IsChecked, RelativeSource = {RelativeSource Self}, Converter={StaticResource BoolToVerticesCostModeConverter}}"
-                        x:Name="fontButton" IsChecked="True">
-                    <Image Source ="/Resources/Images/show.png"></Image>
+                        x:Name="fontButton" IsChecked="True" Background="White">
+                    <ToggleButton.Style>
+                        <Style TargetType="{x:Type ToggleButton}">
+                            <Setter Property="Content" Value="{StaticResource UnweightGraph}"/>
+                            <Style.Triggers>
+                                <Trigger Property="IsChecked" Value="False">
+                                    <Setter Property="Content" Value="{StaticResource WeightGraph}" />
+                                </Trigger>
+                                <Trigger Property="IsChecked" Value="True">
+                                    <Setter Property="Content" Value="{StaticResource UnweightGraph}" />
+                                </Trigger>
+                            </Style.Triggers>
+                        </Style>
+                    </ToggleButton.Style>
                 </ToggleButton>
             </ToolBar>
             <StatusBar Background="White" Grid.Row="2">
@@ -146,14 +139,54 @@
             </Expander>
         </StackPanel>
 
-        <StatusBar Background="White" Grid.Row="5">
-            <ItemsControl ItemsSource="{Binding Statistics}">
-                <ItemsControl.ItemTemplate>
-                    <DataTemplate>
-                        <TextBlock Text="{Binding}"/>
-                    </DataTemplate>
-                </ItemsControl.ItemTemplate>
-            </ItemsControl>
-        </StatusBar>
+        <Expander Background="White" Grid.Row="5">
+            <ListView HorizontalAlignment="Left" 
+                      BorderBrush="White" 
+                      BorderThickness="0.1" 
+                      SelectedItem="{Binding SelectedAlgorithm}" 
+                      ItemsSource="{Binding Statistics}">
+                <ListView.View>
+                    <GridView>
+                        <GridView.Columns>
+                            <GridViewColumn DisplayMemberBinding="{Binding AlgorithmName}">
+                                <GridViewColumn.Header>
+                                    <TextBlock Text="Name"/>
+                                </GridViewColumn.Header>
+                            </GridViewColumn>
+                            <GridViewColumn DisplayMemberBinding="{Binding Time}">
+                                <GridViewColumn.Header>
+                                    <TextBlock Text="Time"/>
+                                </GridViewColumn.Header>
+                            </GridViewColumn>
+                            <GridViewColumn DisplayMemberBinding="{Binding PathLength}">
+                                <GridViewColumn.Header>
+                                    <TextBlock Text="Path length"/>
+                                </GridViewColumn.Header>
+                            </GridViewColumn>
+                            <GridViewColumn DisplayMemberBinding="{Binding PathCost}">
+                                <GridViewColumn.Header>
+                                    <TextBlock Text="Path cost"/>
+                                </GridViewColumn.Header>
+                            </GridViewColumn>
+                            <GridViewColumn DisplayMemberBinding="{Binding VisitedVerticesCount}">
+                                <GridViewColumn.Header>
+                                    <TextBlock Text="Vertices visited"/>
+                                </GridViewColumn.Header>
+                            </GridViewColumn>
+                            <GridViewColumn DisplayMemberBinding="{Binding Status, Converter={StaticResource StatusToStringConverter}}">
+                                <GridViewColumn.Header>
+                                    <TextBlock Text="Status"/>
+                                </GridViewColumn.Header>
+                            </GridViewColumn>
+                        </GridView.Columns>
+                    </GridView>
+                </ListView.View>
+                <ListView.ContextMenu>
+                    <ContextMenu>
+                        <MenuItem Command="{Binding InterruptSelelctedAlgorithm}" Header="Interrupt"/>
+                    </ContextMenu>
+                </ListView.ContextMenu>
+            </ListView>
+        </Expander>
     </Grid>
 </Window>

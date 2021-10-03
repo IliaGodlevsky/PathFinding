@@ -20,6 +20,7 @@
         <converters:PrecisedDoubleToStringConverter Precision="2" x:Key="doubleConverter2"/>
         <converters:PrecisedDoubleToStringConverter Precision="0" x:Key="doubleConverter"/>
         <converters:AnimatedAxisRotatorMultiConverter x:Key="animatedAxisRotatorConverter"/>
+        <converters:AlgorithmStatusToStringConverter x:Key="StatusToStringConverter"/>
 
         <Style TargetType="TextBox" x:Key="TextBoxStyle">
             <Setter Property="MinWidth" Value="40"></Setter>
@@ -304,27 +305,14 @@
             </Grid>
         </Expander>
         <ToolBar Grid.Row="0">
-            <Button Command="{Binding LoadGraphCommand}">
-                <Image Style ="{StaticResource ImageStyle}" Source="/Resources/Images/open.png"/>
-            </Button>
-            <Button Command="{Binding SaveGraphCommand}">
-                <Image Style ="{StaticResource ImageStyle}" Source="/Resources/Images/save.png"/>
-            </Button>
-            <Button Command="{Binding CreateNewGraphCommand}">
-                <Image Style ="{StaticResource ImageStyle}" Source="/Resources/Images/new.png"/>
-            </Button>
-            <Button Command="{Binding ClearGraphCommand}">
-                <Image Style ="{StaticResource ImageStyle}" Source="/Resources/Images/clear.png"/>
-            </Button>
-            <Button Command ="{Binding StartPathFindCommand}">
-                <Image Style ="{StaticResource ImageStyle}" Source="/Resources/Images/start.png"/>
-            </Button>
-            <Button Command ="{Binding ChangeOpacityCommand}">
-                <Image Style ="{StaticResource ImageStyle}" Source="/Resources/Images/opacity.png"/>
-            </Button>
-            <Button Command ="{Binding InterruptAlgorithmCommand}">
-                <Image Style ="{StaticResource ImageStyle}" Source="/Resources/Images/interrupt.png"></Image>
-            </Button>
+            <Button Style="{StaticResource ImageStyle}" Content="{StaticResource LoadGraph}" ToolTip="Load graph" Command="{Binding LoadGraphCommand}"/>
+            <Button Style="{StaticResource ImageStyle}" Content="{StaticResource SaveGraph}" ToolTip="Save graph" Command="{Binding SaveGraphCommand}"/>
+            <Button Style="{StaticResource ImageStyle}" Content="{StaticResource CreateNewGraph}" ToolTip="Create graph" Command="{Binding CreateNewGraphCommand}"/>
+            <Button Style="{StaticResource ImageStyle}" Content="{StaticResource ClearGraph}" ToolTip="Clear graph" Command="{Binding ClearGraphCommand}"/>
+            <Button Style="{StaticResource ImageStyle}" Content="{StaticResource ClearColors}" ToolTip="Clear colors" Command="{Binding ClearVerticesColor}"/>
+            <Button Style="{StaticResource ImageStyle}" Content="{StaticResource FindPath}" ToolTip="Choose graph" Command ="{Binding StartPathFindCommand}"/>
+            <Button Style="{StaticResource ImageStyle}" Content="{StaticResource Interrupt}" ToolTip="Interrupt all" Command ="{Binding InterruptAlgorithmCommand}"/>
+            <Button Style="{StaticResource ImageStyle}" Content="{StaticResource Transperency}" ToolTip="Change opacity" Command="{Binding ChangeOpacityCommand}"/>
         </ToolBar>
         <Viewport3D Grid.Row="2" Margin="5" Grid.RowSpan="2">
             <Viewport3D.Camera>
@@ -362,15 +350,55 @@
                 </model:GraphField3DContainer>
             </Viewport3D.Children>
         </Viewport3D>
-        <StatusBar Grid.Row="3">
-            <ItemsControl ItemsSource="{Binding Statistics}">
-                <ItemsControl.ItemTemplate>
-                    <DataTemplate>
-                        <TextBlock Text="{Binding}"/>
-                    </DataTemplate>
-                </ItemsControl.ItemTemplate>
-            </ItemsControl>
-        </StatusBar>
+        <Expander Background="White" Grid.Row="3">
+            <ListView HorizontalAlignment="Left" 
+                      BorderBrush="White" 
+                      BorderThickness="0.1" 
+                      SelectedItem="{Binding SelectedAlgorithm}" 
+                      ItemsSource="{Binding Statistics}">
+                <ListView.View>
+                    <GridView>
+                        <GridView.Columns>
+                            <GridViewColumn DisplayMemberBinding="{Binding AlgorithmName}">
+                                <GridViewColumn.Header>
+                                    <TextBlock Text="Name"/>
+                                </GridViewColumn.Header>
+                            </GridViewColumn>
+                            <GridViewColumn DisplayMemberBinding="{Binding Time}">
+                                <GridViewColumn.Header>
+                                    <TextBlock Text="Time"/>
+                                </GridViewColumn.Header>
+                            </GridViewColumn>
+                            <GridViewColumn DisplayMemberBinding="{Binding PathLength}">
+                                <GridViewColumn.Header>
+                                    <TextBlock Text="Path length"/>
+                                </GridViewColumn.Header>
+                            </GridViewColumn>
+                            <GridViewColumn DisplayMemberBinding="{Binding PathCost}">
+                                <GridViewColumn.Header>
+                                    <TextBlock Text="Path cost"/>
+                                </GridViewColumn.Header>
+                            </GridViewColumn>
+                            <GridViewColumn DisplayMemberBinding="{Binding VisitedVerticesCount}">
+                                <GridViewColumn.Header>
+                                    <TextBlock Text="Vertices visited"/>
+                                </GridViewColumn.Header>
+                            </GridViewColumn>
+                            <GridViewColumn DisplayMemberBinding="{Binding Status, Converter={StaticResource StatusToStringConverter}}">
+                                <GridViewColumn.Header>
+                                    <TextBlock Text="Status"/>
+                                </GridViewColumn.Header>
+                            </GridViewColumn>
+                        </GridView.Columns>
+                    </GridView>
+                </ListView.View>
+                <ListView.ContextMenu>
+                    <ContextMenu>
+                        <MenuItem Command="{Binding InterruptSelelctedAlgorithm}" Header="Interrupt"/>
+                    </ContextMenu>
+                </ListView.ContextMenu>
+            </ListView>
+        </Expander>
         <StatusBar Grid.Row="1">
             <TextBlock Text="{Binding GraphParametres}"/>
         </StatusBar>

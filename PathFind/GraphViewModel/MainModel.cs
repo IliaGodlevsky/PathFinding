@@ -66,7 +66,7 @@ namespace GraphViewModel
 
         public virtual void ClearGraph()
         {
-            Graph.Refresh();
+            ClearColors();
             GraphParametres = Graph.ToString();
             endPoints.Reset();
         }
@@ -81,6 +81,18 @@ namespace GraphViewModel
             endPoints.SubscribeToEvents(Graph);
             eventHolder.SubscribeVertices(Graph);
             GraphParametres = Graph.ToString();
+        }
+
+        public void ClearColors()
+        {
+            foreach (var vertex in Graph.Vertices)
+            {
+                if (vertex is IVisualizable visualizable 
+                    && !visualizable.IsVisualizedAsEndPoint)
+                {
+                    visualizable.VisualizeAsRegular();
+                }
+            }
         }
 
         protected readonly IEnumerable<IGraphAssemble> graphAssembles;

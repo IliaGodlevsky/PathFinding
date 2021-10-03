@@ -11,6 +11,7 @@ using System;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Input;
+using WPFVersion.Enums;
 using WPFVersion.Infrastructure;
 using WPFVersion.Messages;
 
@@ -28,14 +29,8 @@ namespace WPFVersion.ViewModel
         {
             ConfirmPathFindAlgorithmChoice = new RelayCommand(ExecuteConfirmPathFindAlgorithmChoice,
                 CanExecuteConfirmPathFindAlgorithmChoice);
-            CancelPathFindAlgorithmChoice = new RelayCommand(ExecuteCloseWindowCommand);
-            Messenger.Default.Register<InterruptAlgorithmMessage>(this, Constants.MessageToken, InterruptAlgorithm);
+            CancelPathFindAlgorithmChoice = new RelayCommand(ExecuteCloseWindowCommand);           
             Messenger.Default.Register<AlgorithmStatisticsIndexMessage>(this, Constants.MessageToken, SetAlgorithmIndex);
-        }
-
-        private void InterruptAlgorithm(InterruptAlgorithmMessage message)
-        {
-            algorithm.Interrupt();
         }
 
         private void SetAlgorithmIndex(AlgorithmStatisticsIndexMessage message)
@@ -47,19 +42,26 @@ namespace WPFVersion.ViewModel
         protected override void OnAlgorithmStarted(object sender, ProcessEventArgs e)
         {
             base.OnAlgorithmStarted(sender, e);
-            Messenger.Default.Send(new AlgorithmStartedMessage(), Constants.MessageToken);
+            string algorithmName = Algorithm.GetDescriptionAttributeValueOrTypeName();
+            var message = new AlgorithmStartedMessage(algorithm, algorithmName);
+            Messenger.Default.Send(message, Constants.MessageToken);
         }
 
         protected override void Summarize()
         {
-            string stats = path.PathLength > 0 ? GetStatistics() : CouldntFindPathMsg;
-            Messenger.Default.Send(new UpdateAlgorithmStatisticsMessage(AlgorithmStatisticsIndex, stats), Constants.MessageToken);
+            var status = path.PathLength > 0 ? AlgorithmStatus.Finished : AlgorithmStatus.PathNotFound;
+            string time = timer.Elapsed.ToString(@"mm\:ss\.ff");
+            var message = new UpdateAlgorithmStatisticsMessage(AlgorithmStatisticsIndex,
+                time, visitedVerticesCount, status, path.PathLength, path.PathCost);
+            Messenger.Default.Send(message, Constants.MessageToken);
         }
 
         protected override async void OnVertexVisited(object sender, AlgorithmEventArgs e)
         {
             timer.Wait(DelayTime);
-            Messenger.Default.Send(new UpdateAlgorithmStatisticsMessage(AlgorithmStatisticsIndex, GetStatistics()), Constants.MessageToken);
+            string time = timer.Elapsed.ToString(@"mm\:ss\.ff");
+            var message = new UpdateAlgorithmStatisticsMessage(AlgorithmStatisticsIndex, time, visitedVerticesCount);
+            Messenger.Default.Send(message, Constants.MessageToken);
             await Task.Run(() => base.OnVertexVisited(sender, e));
         }
 
@@ -71,9 +73,13 @@ namespace WPFVersion.ViewModel
         protected override void OnAlgorithmFinished(object sender, ProcessEventArgs e)
         {
             base.OnAlgorithmFinished(sender, e);
-            Messenger.Default.Send(new AlgorithmFinishedMessage(), Constants.MessageToken);
-            Messenger.Default.Unregister<InterruptAlgorithmMessage>(this, Constants.MessageToken, InterruptAlgorithm);
+            Messenger.Default.Send(new AlgorithmFinishedMessage(AlgorithmStatisticsIndex), Constants.MessageToken);
             Messenger.Default.Unregister<AlgorithmStatisticsIndexMessage>(this, Constants.MessageToken, SetAlgorithmIndex);
+        }
+
+        protected override string GetStatistics()
+        {
+            return base.GetStatistics();
         }
 
         private void ExecuteCloseWindowCommand(object param)

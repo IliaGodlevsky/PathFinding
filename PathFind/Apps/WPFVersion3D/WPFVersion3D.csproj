@@ -72,10 +72,11 @@
     <Compile Include="Axes\Abscissa.cs" />
     <Compile Include="Axes\Applicate.cs" />
     <Compile Include="Axes\Ordinate.cs" />
+    <Compile Include="Converters\AlgorithmStatusToStringConverter.cs" />
     <Compile Include="Converters\BoolToVisibilityConverter.cs" />
+    <Compile Include="Enums\AlgorithmStatus.cs" />
     <Compile Include="Enums\AnimationSpeeds.cs" />
     <Compile Include="Messages\AlgorithmFinishedMessage.cs" />
-    <Compile Include="Messages\AlgorithmInterruptedMessage.cs" />
     <Compile Include="Messages\AlgorithmStartedMessage.cs" />
     <Compile Include="Messages\AlgorithmStatisticsIndexMessage.cs" />
     <Compile Include="Messages\UpdateAlgorithmStatisticsMessage.cs" />
@@ -109,6 +110,7 @@
     <Compile Include="ValidationRules\NonInt32InputValidationRule.cs" />
     <Compile Include="ValidationRules\RangedDoubleValidationRule.cs" />
     <Compile Include="ValidationRules\RangedIntValidationRule.cs" />
+    <Compile Include="ViewModel\AlgorithmViewModel.cs" />
     <Compile Include="ViewModel\GraphCreateViewModel.cs" />
     <Compile Include="ViewModel\MainWindowViewModel.cs" />
     <Compile Include="ViewModel\OpacityChangeViewModel.cs" />
@@ -119,6 +121,10 @@
     <Compile Include="View\PathFindWindow.xaml.cs">
       <DependentUpon>PathFindWindow.xaml</DependentUpon>
     </Compile>
+    <Page Include="Resources\Images\SvgImages.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="Resources\Styles\ImageStyle.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -253,34 +259,7 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Resources\Images\opacity.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Resources\Images\change.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Resources\Images\clear.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Resources\Images\mainwindow.png" />
-  </ItemGroup>
-  <ItemGroup>
     <Resource Include="Resources\Images\mainwindow2.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Resources\Images\new.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Resources\Images\open.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Resources\Images\save.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Resources\Images\start.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Resources\Images\rotate.png" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Autofac">
@@ -303,7 +282,7 @@
     </PackageReference>
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Resources\Images\interrupt.png" />
+    <Resource Include="Resources\Images\rotate.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

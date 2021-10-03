@@ -159,6 +159,12 @@ namespace ConsoleVersion.ViewModel
             mainViewModel.ClearGraph();
         }
 
+        [MenuItem(Constants.ClearColors, MenuItemPriority.Low)]
+        public void ClearColors()
+        {
+            mainViewModel.ClearColors();
+        }
+
         [MenuItem(Constants.ApplyVisualization, MenuItemPriority.Low)]
         public void ApplyVisualization()
         {

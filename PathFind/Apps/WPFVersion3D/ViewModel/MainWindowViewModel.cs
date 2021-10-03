@@ -45,10 +45,12 @@ namespace WPFVersion3D.ViewModel
             set { graphParametres = value; OnPropertyChanged(); }
         }
 
-        public ObservableCollection<string> statistics;
-        public ObservableCollection<string> Statistics
+        public AlgorithmViewModel SelectedAlgorithm { get; set; }
+
+        private ObservableCollection<AlgorithmViewModel> statistics;
+        public ObservableCollection<AlgorithmViewModel> Statistics
         {
-            get => statistics ?? (statistics = new ObservableCollection<string>());
+            get => statistics ?? (statistics = new ObservableCollection<AlgorithmViewModel>());
             set { statistics = value; OnPropertyChanged(); }
         }
 
@@ -64,6 +66,7 @@ namespace WPFVersion3D.ViewModel
 
         public Tuple<string, BaseAnimationSpeed>[] AnimationSpeeds => animationSpeeds.Value;
 
+        public ICommand InterruptSelelctedAlgorithm { get; }
         public ICommand StartPathFindCommand { get; }
         public ICommand CreateNewGraphCommand { get; }
         public ICommand ClearGraphCommand { get; }
@@ -72,11 +75,13 @@ namespace WPFVersion3D.ViewModel
         public ICommand ChangeOpacityCommand { get; }
         public ICommand AnimatedAxisRotateCommand { get; }
         public ICommand InterruptAlgorithmCommand { get; }
+        public ICommand ClearVerticesColor { get; }
 
         public MainWindowViewModel(IGraphFieldFactory fieldFactory, IVertexEventHolder eventHolder,
             ISaveLoadGraph saveLoad, IEnumerable<IGraphAssemble> graphAssembles, BaseEndPoints endPoints, ILog log)
             : base(fieldFactory, eventHolder, saveLoad, graphAssembles, endPoints, log)
         {
+            ClearVerticesColor = new RelayCommand(ExecuteClearVerticesColors, CanExecuteClearGraphOperation);
             StartPathFindCommand = new RelayCommand(ExecuteStartPathFindCommand, CanExecuteStartFindPathCommand);
             CreateNewGraphCommand = new RelayCommand(ExecuteCreateNewGraphCommand, CanExecuteOperation);
             ClearGraphCommand = new RelayCommand(ExecuteClearGraphCommand, CanExecuteClearGraphOperation);
@@ -85,6 +90,7 @@ namespace WPFVersion3D.ViewModel
             ChangeOpacityCommand = new RelayCommand(ExecuteChangeOpacity, CanExecuteGraphOperation);
             AnimatedAxisRotateCommand = new RelayCommand(ExecuteAnimatedAxisRotateCommand);
             InterruptAlgorithmCommand = new RelayCommand(ExecuteInterruptAlgorithmCommand, CanExecuteInterruptAlgorithmCommand);
+            InterruptSelelctedAlgorithm = new RelayCommand(ExecuteInterruptCurrentAlgorithmCommand, CanExecuteInterruptCurrentAlgorithmCommand);
             animationSpeeds = new Lazy<Tuple<string, BaseAnimationSpeed>[]>(GetSpeedTupleCollection);
             Messenger.Default.Register<UpdateAlgorithmStatisticsMessage>(this, Constants.MessageToken, UpdateAlgorithmStatistics);
             Messenger.Default.Register<AlgorithmStartedMessage>(this, Constants.MessageToken, OnAlgorithmStarted);
@@ -155,19 +161,33 @@ namespace WPFVersion3D.ViewModel
         {
             Application.Current.Dispatcher.Invoke(() =>
             {
-                Statistics.Add(string.Empty);
-                Messenger.Default.Send(new AlgorithmStatisticsIndexMessage(StartedAlgorithmsCount++), Constants.MessageToken);
+                Statistics.Add(new AlgorithmViewModel(message.Algorithm, message.AlgorithmName));
+                var msg = new AlgorithmStatisticsIndexMessage(StartedAlgorithmsCount++);
+                Messenger.Default.Send(msg, Constants.MessageToken);
             });
         }
 
         private void OnAlgorithmFinished(AlgorithmFinishedMessage message)
         {
             FinishedAlgorithmsCount++;
+            Statistics[message.Index].Status = AlgorithmStatus.Finished;
         }
 
         private void UpdateAlgorithmStatistics(UpdateAlgorithmStatisticsMessage message)
         {
-            Application.Current.Dispatcher.Invoke(() => Statistics[message.Index] = message.Statistics);
+            Application.Current.Dispatcher.Invoke(() =>
+            {
+                Statistics[message.Index].Time = message.Time;
+                Statistics[message.Index].Status = message.Status;
+                Statistics[message.Index].PathCost = message.PathCost;
+                Statistics[message.Index].PathLength = message.PathLength;
+                Statistics[message.Index].VisitedVerticesCount = message.VisitedVertices;
+            });
+        }
+
+        private void ExecuteClearVerticesColors(object param)
+        {
+            ClearColors();
         }
 
         private void ExecuteSaveGraphCommand(object param) => base.SaveGraph();
@@ -188,9 +208,30 @@ namespace WPFVersion3D.ViewModel
 
         private void ExecuteCreateNewGraphCommand(object param) => CreateNewGraph();
 
-        private void ExecuteInterruptAlgorithmCommand(object sender)
+        private void ExecuteInterruptAlgorithmCommand(object param)
         {
-            Messenger.Default.Send(new InterruptAlgorithmMessage(), Constants.MessageToken);
+            foreach (var algorithm in Statistics)
+            {
+                if (algorithm.Status == AlgorithmStatus.Started)
+                {
+                    algorithm.Interrupt();
+                    algorithm.Status = AlgorithmStatus.Interrupted;
+                }
+            }
+        }
+
+        private void ExecuteInterruptCurrentAlgorithmCommand(object param)
+        {
+            if (SelectedAlgorithm.Status == AlgorithmStatus.Started)
+            {
+                SelectedAlgorithm.Interrupt();
+                SelectedAlgorithm.Status = AlgorithmStatus.Interrupted;
+            }
+        }
+
+        private bool CanExecuteInterruptCurrentAlgorithmCommand(object param)
+        {
+            return SelectedAlgorithm != null;
         }
 
         private bool CanExecuteInterruptAlgorithmCommand(object sender) => StartedAlgorithmsCount != FinishedAlgorithmsCount;

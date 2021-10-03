@@ -101,7 +101,7 @@ namespace GraphViewModel
             timer.Restart();
         }
 
-        protected string GetStatistics()
+        protected virtual string GetStatistics()
         {
             string timerInfo = timer.Elapsed.ToString(@"mm\:ss\.ff");
             string description = Algorithms.FirstOrDefault(item => item.Item2 == Algorithm).Item1;

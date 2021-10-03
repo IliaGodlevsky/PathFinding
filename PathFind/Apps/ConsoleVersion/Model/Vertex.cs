@@ -138,7 +138,10 @@ namespace ConsoleVersion.Model
 
         public void VisualizeAsRegular()
         {
-            Mark(RegularVertexColor);
+            if (!IsObstacle)
+            {
+                Mark(RegularVertexColor);
+            }
         }
 
         public void VisualizeAsObstacle()

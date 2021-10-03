@@ -22,6 +22,7 @@ namespace ConsoleVersion
         public const string ChooseAlgorithm = "Choose algorithm";
         public const string InputDelayTime = "Input delay time";
         public const string ClearGraph = "Clear graph";
+        public const string ClearColors = "Clear colors";
         public const string ApplyVisualization = "Apply visualization";
 
         public const string ChooseGraphAssemble = "Choose graph assemble";

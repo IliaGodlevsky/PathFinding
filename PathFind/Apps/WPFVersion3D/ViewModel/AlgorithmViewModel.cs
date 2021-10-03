@@ -2,9 +2,9 @@
 using GraphViewModel.Interfaces;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
-using WPFVersion.Enums;
+using WPFVersion3D.Enums;
 
-namespace WPFVersion.ViewModel
+namespace WPFVersion3D.ViewModel
 {
     internal class AlgorithmViewModel : INotifyPropertyChanged, IModel
     {
@@ -16,7 +16,7 @@ namespace WPFVersion.ViewModel
         }
 
         private string algorithmName;
-        public string AlgorithmName 
+        public string AlgorithmName
         {
             get => algorithmName;
             private set { algorithmName = value; OnPropertyChanged(); }
