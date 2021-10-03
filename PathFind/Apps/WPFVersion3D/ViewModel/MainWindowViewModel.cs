@@ -15,6 +15,7 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Windows;
 using System.Windows.Input;
@@ -63,7 +64,6 @@ namespace WPFVersion3D.ViewModel
         }
 
         private int StartedAlgorithmsCount { get; set; }
-        private int FinishedAlgorithmsCount { get; set; }
 
         public Tuple<string, BaseAnimationSpeed>[] AnimationSpeeds => animationSpeeds.Value;
 
@@ -134,7 +134,6 @@ namespace WPFVersion3D.ViewModel
         {
             base.ConnectNewGraph(graph);
             Statistics.Clear();
-            FinishedAlgorithmsCount = 0;
             StartedAlgorithmsCount = 0;
             (graphField as GraphField3D)?.CenterGraph();
         }
@@ -170,7 +169,6 @@ namespace WPFVersion3D.ViewModel
 
         private void OnAlgorithmFinished(AlgorithmFinishedMessage message)
         {
-            FinishedAlgorithmsCount++;
             Statistics[message.Index].Status = AlgorithmStatus.Finished;
         }
 
@@ -226,7 +224,7 @@ namespace WPFVersion3D.ViewModel
 
         private bool CanExecuteInterruptAlgorithmCommand(object sender)
         {
-            return StartedAlgorithmsCount != FinishedAlgorithmsCount;
+            return Statistics.Any(stat => stat.Status == AlgorithmStatus.Started);
         }
 
         private void ExecuteAnimatedAxisRotateCommand(object param)
@@ -255,7 +253,7 @@ namespace WPFVersion3D.ViewModel
 
         private bool CanExecuteOperation(object param) 
         {
-            return FinishedAlgorithmsCount == StartedAlgorithmsCount;
+            return Statistics.All(stat => stat.Status == AlgorithmStatus.Finished);
         }
 
         private Tuple<string, BaseAnimationSpeed>[] GetSpeedTupleCollection()

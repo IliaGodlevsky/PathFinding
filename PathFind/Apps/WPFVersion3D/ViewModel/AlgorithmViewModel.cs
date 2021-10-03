@@ -60,7 +60,7 @@ namespace WPFVersion3D.ViewModel
         public AlgorithmViewModel(IAlgorithm algorithm, string algorithmName)
         {
             this.algorithm = algorithm;
-            this.algorithmName = algorithmName;
+            AlgorithmName = algorithmName;
         }
 
         public void Interrupt()
