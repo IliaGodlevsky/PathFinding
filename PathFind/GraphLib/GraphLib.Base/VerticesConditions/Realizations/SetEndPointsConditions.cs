@@ -1,7 +1,7 @@
 ﻿using Common.Extensions;
-using GraphLib.Base.EndPointsCondition.Interface;
-using GraphLib.Base.EndPointsCondition.Realizations.LeftButtonConditions;
 using GraphLib.Base.EndPointsConditions.Interfaces;
+using GraphLib.Base.VertexCondition.Interface;
+using GraphLib.Base.VertexCondition.Realizations.EndPointsConditions;
 using GraphLib.Extensions;
 using GraphLib.Interfaces;
 using NullObject.Extensions;
@@ -10,7 +10,7 @@ using System.Linq;
 
 namespace GraphLib.Base.EndPointsConditions.Realizations
 {
-    internal sealed class SetEndPointsConditions : IEndPointsConditions
+    internal sealed class SetEndPointsConditions : IVerticesConditions
     {
         public SetEndPointsConditions(BaseEndPoints endPoints)
         {
@@ -48,10 +48,10 @@ namespace GraphLib.Base.EndPointsConditions.Realizations
             }
         }
 
-        private readonly IEndPointsCondition unsetSourceVertexCondition;
-        private readonly IEndPointsCondition unsetTargetVertexCondition;
-        private readonly IEndPointsCondition unsetIntermediateVertexCondition;
+        private readonly IVertexCondition unsetSourceVertexCondition;
+        private readonly IVertexCondition unsetTargetVertexCondition;
+        private readonly IVertexCondition unsetIntermediateVertexCondition;
         private readonly BaseEndPoints endPoints;
-        private readonly IEnumerable<IEndPointsCondition> conditions;
+        private readonly IEnumerable<IVertexCondition> conditions;
     }
 }

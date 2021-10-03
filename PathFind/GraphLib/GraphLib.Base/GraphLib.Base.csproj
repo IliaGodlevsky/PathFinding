@@ -43,28 +43,31 @@
   <ItemGroup>
     <Compile Include="BaseCoordinate.cs" />
     <Compile Include="BaseEndPoints.cs" />
-    <Compile Include="EndPointsConditions\Interfaces\IEndPointsConditions.cs" />
-    <Compile Include="EndPointsConditions\Realizations\MarkIntermediateToReplaceEndPointsConditions.cs" />
-    <Compile Include="EndPointsCondition\Realizations\LeftButtonConditions\ReplaceIntermediateVertexCondition.cs" />
-    <Compile Include="EndPointsCondition\Realizations\MiddleButtonConditions\CancelMarkToReplaceEndPointsConditions.cs" />
-    <Compile Include="EndPointsCondition\Realizations\MiddleButtonConditions\MarkToReplaceEndPointsCondition.cs" />
+    <Compile Include="VerticesConditions\Interfaces\IVerticesConditions.cs" />
+    <Compile Include="VerticesConditions\Realizations\MarkIntermediateToReplaceEndPointsConditions.cs" />
+    <Compile Include="VertexCondition\Realizations\VertexRevertCondition\SetVertexAsObstacleCondition.cs" />
+    <Compile Include="VertexCondition\Realizations\EndPointsConditions\ReplaceIntermediateVertexCondition.cs" />
+    <Compile Include="VertexCondition\Realizations\ReplaceIntermediatesConditions\CancelMarkToReplaceEndPointsConditions.cs" />
+    <Compile Include="VertexCondition\Realizations\ReplaceIntermediatesConditions\MarkToReplaceEndPointsCondition.cs" />
     <Compile Include="EndPointsInspection\Abstractions\BaseEndPointsInspection.cs" />
     <Compile Include="EndPointsInspection\Abstractions\BaseIntermediateEndPointsInspection.cs" />
-    <Compile Include="EndPointsCondition\Interface\IEndPointsCondition.cs" />
-    <Compile Include="EndPointsCondition\Realizations\LeftButtonConditions\ReplaceIntermediateIsolatedVertexCondition.cs" />
-    <Compile Include="EndPointsCondition\Realizations\LeftButtonConditions\ReplaceIsolatedSourceVertexCondition.cs" />
-    <Compile Include="EndPointsCondition\Realizations\LeftButtonConditions\ReplaceTargetVertexCondition.cs" />
-    <Compile Include="EndPointsCondition\Realizations\LeftButtonConditions\SetIntermediateVertexCondition.cs" />
-    <Compile Include="EndPointsCondition\Realizations\LeftButtonConditions\SetSourceVertexCondition.cs" />
-    <Compile Include="EndPointsCondition\Realizations\LeftButtonConditions\SetTargetVertexCondition.cs" />
-    <Compile Include="EndPointsCondition\Realizations\LeftButtonConditions\UnsetSourceVertexCondition.cs" />
-    <Compile Include="EndPointsCondition\Realizations\LeftButtonConditions\UnsetIntermediateVertexCondition.cs" />
-    <Compile Include="EndPointsCondition\Realizations\LeftButtonConditions\UnsetTargetVertexCondition.cs" />
+    <Compile Include="VertexCondition\Interface\IVertexCondition.cs" />
+    <Compile Include="VertexCondition\Realizations\EndPointsConditions\ReplaceIntermediateIsolatedVertexCondition.cs" />
+    <Compile Include="VertexCondition\Realizations\EndPointsConditions\ReplaceIsolatedSourceVertexCondition.cs" />
+    <Compile Include="VertexCondition\Realizations\EndPointsConditions\ReplaceTargetVertexCondition.cs" />
+    <Compile Include="VertexCondition\Realizations\EndPointsConditions\SetIntermediateVertexCondition.cs" />
+    <Compile Include="VertexCondition\Realizations\EndPointsConditions\SetSourceVertexCondition.cs" />
+    <Compile Include="VertexCondition\Realizations\EndPointsConditions\SetTargetVertexCondition.cs" />
+    <Compile Include="VertexCondition\Realizations\EndPointsConditions\UnsetSourceVertexCondition.cs" />
+    <Compile Include="VertexCondition\Realizations\EndPointsConditions\UnsetIntermediateVertexCondition.cs" />
+    <Compile Include="VertexCondition\Realizations\EndPointsConditions\UnsetTargetVertexCondition.cs" />
     <Compile Include="BaseGraph.cs" />
     <Compile Include="BaseGraphFieldFactory.cs" />
     <Compile Include="BaseVertexCost.cs" />
     <Compile Include="BaseVertexEventHolder.cs" />
-    <Compile Include="EndPointsConditions\Realizations\SetEndPointsConditions.cs" />
+    <Compile Include="VerticesConditions\Realizations\ReverseVertexConditions.cs" />
+    <Compile Include="VerticesConditions\Realizations\SetEndPointsConditions.cs" />
+    <Compile Include="VertexCondition\Realizations\VertexRevertCondition\SetVertexAsRegularCondition.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

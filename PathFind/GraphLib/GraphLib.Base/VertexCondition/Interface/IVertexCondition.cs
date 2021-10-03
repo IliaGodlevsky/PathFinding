@@ -1,11 +1,11 @@
 ﻿using GraphLib.Interfaces;
 
-namespace GraphLib.Base.EndPointsCondition.Interface
+namespace GraphLib.Base.VertexCondition.Interface
 {
     /// <summary>
     /// Represents a condition construction
     /// </summary>
-    public interface IEndPointsCondition
+    public interface IVertexCondition
     {
         /// <summary>
         /// Determines, whether the stored condition is true

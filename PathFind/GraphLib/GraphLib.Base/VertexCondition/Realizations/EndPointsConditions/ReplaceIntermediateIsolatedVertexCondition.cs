@@ -1,14 +1,14 @@
-﻿using GraphLib.Base.EndPointsCondition.Interface;
-using GraphLib.Base.EndPointsInspection.Abstractions;
+﻿using GraphLib.Base.EndPointsInspection.Abstractions;
+using GraphLib.Base.VertexCondition.Interface;
 using GraphLib.Extensions;
 using GraphLib.Interfaces;
 using NullObject.Extensions;
 using System.Linq;
 
-namespace GraphLib.Base.EndPointsCondition.Realizations.LeftButtonConditions
+namespace GraphLib.Base.VertexCondition.Realizations.EndPointsConditions
 {
     internal sealed class ReplaceIntermediateIsolatedVertexCondition
-        : BaseIntermediateEndPointsInspection, IEndPointsCondition
+        : BaseIntermediateEndPointsInspection, IVertexCondition
     {
         public ReplaceIntermediateIsolatedVertexCondition(BaseEndPoints endPoints)
             : base(endPoints)

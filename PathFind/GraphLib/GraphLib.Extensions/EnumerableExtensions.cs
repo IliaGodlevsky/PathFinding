@@ -24,5 +24,10 @@ namespace GraphLib.Extensions
         {
             return collection.Where(vertex => !vertex.IsObstacle).ToArray();
         }
+
+        public static int ToHashCode(this IEnumerable<int> array)
+        {
+            return array.AggregateOrDefault(IntExtensions.Xor);
+        }
     }
 }

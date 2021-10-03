@@ -1,7 +1,7 @@
 ﻿using Common.Extensions;
-using GraphLib.Base.EndPointsCondition.Interface;
-using GraphLib.Base.EndPointsCondition.Realizations.MiddleButtonConditions;
 using GraphLib.Base.EndPointsConditions.Interfaces;
+using GraphLib.Base.VertexCondition.Interface;
+using GraphLib.Base.VertexCondition.Realizations.ReplaceIntermediatesConditions;
 using GraphLib.Extensions;
 using GraphLib.Interfaces;
 using NullObject.Extensions;
@@ -10,7 +10,7 @@ using System.Linq;
 
 namespace GraphLib.Base.EndPointsConditions.Realizations
 {
-    internal sealed class MarkIntermediateToReplaceEndPointsConditions : IEndPointsConditions
+    internal sealed class MarkIntermediateToReplaceEndPointsConditions : IVerticesConditions
     {
         public MarkIntermediateToReplaceEndPointsConditions(BaseEndPoints endPoints)
         {
@@ -36,8 +36,8 @@ namespace GraphLib.Base.EndPointsConditions.Realizations
             endPoints.markedToReplaceIntermediates.ForEach(cancelMarkToReplace.Execute);
         }
 
-        private readonly IEndPointsCondition cancelMarkToReplace;
-        private readonly IEnumerable<IEndPointsCondition> conditions;
+        private readonly IVertexCondition cancelMarkToReplace;
+        private readonly IEnumerable<IVertexCondition> conditions;
         private readonly BaseEndPoints endPoints;
     }
 }

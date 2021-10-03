@@ -1,12 +1,12 @@
 ﻿using Common.Extensions;
-using GraphLib.Base.EndPointsCondition.Interface;
 using GraphLib.Base.EndPointsInspection.Abstractions;
+using GraphLib.Base.VertexCondition.Interface;
 using GraphLib.Interfaces;
 
-namespace GraphLib.Base.EndPointsCondition.Realizations.MiddleButtonConditions
+namespace GraphLib.Base.VertexCondition.Realizations.ReplaceIntermediatesConditions
 {
     internal sealed class CancelMarkToReplaceEndPointsConditions
-        : BaseIntermediateEndPointsInspection, IEndPointsCondition
+        : BaseIntermediateEndPointsInspection, IVertexCondition
     {
         public CancelMarkToReplaceEndPointsConditions(BaseEndPoints endPoints) : base(endPoints)
         {

@@ -1,5 +1,4 @@
-﻿using Common.Extensions;
-using Common.Interface;
+﻿using Common.Interface;
 using GraphLib.Extensions;
 using GraphLib.Interfaces;
 using System;
@@ -15,11 +14,11 @@ namespace GraphLib.Realizations.Coordinates
         public Coordinate(int[] coordinates)
         {
             CoordinatesValues = coordinates.ToArray();
-            hashCode = new Lazy<int>(() => CoordinatesValues.AggregateOrDefault((x, y) => x ^ y));
+            hashCode = new Lazy<int>(() => CoordinatesValues.ToHashCode());
         }
 
         public Coordinate(ICoordinate coordinate)
-            : this(coordinate.CoordinatesValues.ToArray())
+            : this(coordinate.CoordinatesValues)
         {
 
         }

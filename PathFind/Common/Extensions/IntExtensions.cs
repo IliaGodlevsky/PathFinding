@@ -9,9 +9,9 @@ namespace Common.Extensions
             return value ^ value2;
         }
 
-        public static long Pow(this int value, int power)
+        public static ulong Pow(this int value, int power)
         {
-            return power < 0 ? default : (long)Enumerable.Repeat(value, power).Aggregate(1, Multiply);
+            return power < 0 ? default : (ulong)Enumerable.Repeat(value, power).Aggregate(1, Multiply);
         }
 
         public static int Multiply(this int value, int value2)

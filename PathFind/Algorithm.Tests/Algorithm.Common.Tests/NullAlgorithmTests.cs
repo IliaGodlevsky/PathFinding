@@ -5,7 +5,7 @@ using NUnit.Framework;
 namespace Algorithm.Common.Tests
 {
     [TestFixture]
-    public class DefaultAlgorithmTests
+    public class NullAlgorithmTests
     {
         [Test]
         public void FindPath_ReturnsNullGraphPath()

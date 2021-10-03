@@ -9,6 +9,8 @@ namespace GraphLib.Base
     [Serializable]
     public abstract class BaseVertexCost : IVertexCost, ICloneable<IVertexCost>
     {
+        public static InclusiveValueRange<int> CostRange { get; set; }
+
         public int CurrentCost { get; protected set; }
 
         protected BaseVertexCost(int cost)
@@ -39,7 +41,5 @@ namespace GraphLib.Base
         }
 
         public abstract IVertexCost Clone();
-
-        public static InclusiveValueRange<int> CostRange { get; set; }
     }
 }

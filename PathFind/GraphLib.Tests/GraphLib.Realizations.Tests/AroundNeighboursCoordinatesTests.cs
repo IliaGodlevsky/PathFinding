@@ -24,7 +24,7 @@ namespace GraphLib.Realizations.Tests
         {
             const int Self = 1;
             int dimensions = coordinateValues.Length;
-            var expectedResult = 3.Pow(dimensions) - Self;
+            ulong expectedResult = 3.Pow(dimensions) - Self;
             using var mock = AutoMock.GetLoose();
             mock.Mock<ICoordinate>().Setup(c => c.CoordinatesValues).Returns(coordinateValues);
             var neighboursCoordinate = mock.Create<AroundNeighboursCoordinates>();

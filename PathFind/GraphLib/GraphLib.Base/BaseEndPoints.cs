@@ -49,7 +49,7 @@ namespace GraphLib.Base
         protected abstract void SubscribeVertex(IVertex vertex);
         protected abstract void UnsubscribeVertex(IVertex vertex);
 
-        private readonly IEndPointsConditions middleButtonConditions;
-        private readonly IEndPointsConditions leftButtonConditions;
+        private readonly IVerticesConditions middleButtonConditions;
+        private readonly IVerticesConditions leftButtonConditions;
     }
 }

@@ -2,7 +2,7 @@
 
 namespace GraphLib.Base.EndPointsConditions.Interfaces
 {
-    public interface IEndPointsConditions
+    public interface IVerticesConditions
     {
         void ExecuteTheFirstTrue(IVertex vertex);
 

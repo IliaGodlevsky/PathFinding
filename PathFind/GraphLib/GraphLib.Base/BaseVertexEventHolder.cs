@@ -1,4 +1,6 @@
-﻿using GraphLib.Extensions;
+﻿using GraphLib.Base.EndPointsConditions.Interfaces;
+using GraphLib.Base.VerticesConditions.Realizations;
+using GraphLib.Extensions;
 using GraphLib.Interfaces;
 using GraphLib.Interfaces.Factories;
 using System;
@@ -10,6 +12,7 @@ namespace GraphLib.Base
         protected BaseVertexEventHolder(IVertexCostFactory costFactory)
         {
             this.costFactory = costFactory;
+            conditions = new ReverseVertexConditions();
         }
 
         protected readonly IVertexCostFactory costFactory;
@@ -26,21 +29,7 @@ namespace GraphLib.Base
 
         public virtual void Reverse(object sender, EventArgs e)
         {
-            if (sender is IVertex vertex
-                && vertex is IVisualizable markable
-                && !markable.IsVisualizedAsEndPoint)
-            {
-                if (vertex.IsObstacle)
-                {
-                    vertex.IsObstacle = false;
-                    markable.VisualizeAsRegular();
-                }
-                else
-                {
-                    vertex.IsObstacle = true;
-                    markable.VisualizeAsObstacle();
-                }
-            }
+            conditions.ExecuteTheFirstTrue(sender as IVertex);
         }
 
         public virtual void UnsubscribeVertices(IGraph graph)
@@ -58,5 +47,7 @@ namespace GraphLib.Base
         protected abstract void SubscribeToEvents(IVertex vertex);
 
         protected abstract int GetWheelDelta(EventArgs e);
+
+        private readonly IVerticesConditions conditions;
     }
 }

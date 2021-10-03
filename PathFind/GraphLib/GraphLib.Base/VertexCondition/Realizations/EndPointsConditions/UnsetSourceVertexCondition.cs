@@ -1,13 +1,13 @@
-﻿using GraphLib.Base.EndPointsCondition.Interface;
-using GraphLib.Base.EndPointsInspection.Abstractions;
+﻿using GraphLib.Base.EndPointsInspection.Abstractions;
+using GraphLib.Base.VertexCondition.Interface;
 using GraphLib.Extensions;
 using GraphLib.Interfaces;
 using GraphLib.NullRealizations.NullObjects;
 
-namespace GraphLib.Base.EndPointsCondition.Realizations.LeftButtonConditions
+namespace GraphLib.Base.VertexCondition.Realizations.EndPointsConditions
 {
     internal sealed class UnsetSourceVertexCondition
-        : BaseEndPointsInspection, IEndPointsCondition
+        : BaseEndPointsInspection, IVertexCondition
     {
         public UnsetSourceVertexCondition(BaseEndPoints endPoints)
             : base(endPoints)
