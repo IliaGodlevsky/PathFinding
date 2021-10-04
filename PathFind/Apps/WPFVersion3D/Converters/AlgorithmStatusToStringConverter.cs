@@ -10,7 +10,7 @@ namespace WPFVersion3D.Converters
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            if (value is AlgorithmStatus status)
+            if (value is AlgorithmStatuses status)
             {
                 return status.GetDescriptionAttributeValueOrTypeName();
             }

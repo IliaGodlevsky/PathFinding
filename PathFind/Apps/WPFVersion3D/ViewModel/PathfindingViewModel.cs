@@ -58,10 +58,10 @@ namespace WPFVersion3D.ViewModel
 
         protected override void Summarize()
         {
-            var status = path.PathLength > 0 ? AlgorithmStatus.Finished : AlgorithmStatus.PathNotFound;
+            var status = path.PathLength > 0 ? AlgorithmStatuses.Finished : AlgorithmStatuses.Failed;
             string time = timer.Elapsed.ToString(@"mm\:ss\.ff");
-            var message = new UpdateAlgorithmStatisticsMessage(AlgorithmStatisticsIndex,
-                time, visitedVerticesCount, status, path.PathLength, path.PathCost);
+            var message = new UpdateAlgorithmStatisticsMessage(AlgorithmStatisticsIndex, time, visitedVerticesCount,
+                status, path.PathLength, path.PathCost);
             Messenger.Default.Send(message, Constants.MessageToken);
         }
 
@@ -83,7 +83,6 @@ namespace WPFVersion3D.ViewModel
         {
             base.OnAlgorithmFinished(sender, e);
             Messenger.Default.Send(new AlgorithmFinishedMessage(AlgorithmStatisticsIndex), Constants.MessageToken);
-            Messenger.Default.Unregister<AlgorithmStatisticsIndexMessage>(this, Constants.MessageToken, SetAlgorithmIndex);
         }
 
         private void ExecuteCloseWindowCommand(object param)

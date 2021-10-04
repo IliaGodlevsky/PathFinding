@@ -13,6 +13,7 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Windows;
 using System.Windows.Input;
@@ -59,7 +60,6 @@ namespace WPFVersion.ViewModel
         }
 
         private int StartedAlgorithmsCount { get; set; }
-        private int FinishedAlgorithmsCount { get; set; }
 
         public ICommand InterruptSelelctedAlgorithm { get; }
         public ICommand StartPathFindCommand { get; }
@@ -130,7 +130,6 @@ namespace WPFVersion.ViewModel
         {
             base.ConnectNewGraph(graph);
             Statistics.Clear();
-            FinishedAlgorithmsCount = 0;
             StartedAlgorithmsCount = 0;
         }
 
@@ -154,17 +153,17 @@ namespace WPFVersion.ViewModel
 
         private void ExecuteInterruptCurrentAlgorithmCommand(object param)
         {
-            SelectedAlgorithm.TryInterrupt();
+            SelectedAlgorithm?.TryInterrupt();
         }
 
         private bool CanExecuteInterruptCurrentAlgorithmCommand(object param)
         {
-            return SelectedAlgorithm != null;
+            return SelectedAlgorithm?.IsStarted() == true;
         }
 
         private bool CanExecuteInterruptAlgorithmCommand(object sender)
         {
-            return StartedAlgorithmsCount != FinishedAlgorithmsCount;
+            return Statistics.Any(stat => stat.IsStarted());
         }
 
         private void ExecuteSaveGraphCommand(object param) => base.SaveGraph();
@@ -178,12 +177,10 @@ namespace WPFVersion.ViewModel
             base.ClearGraph();
             Statistics.Clear();
             StartedAlgorithmsCount = 0;
-            FinishedAlgorithmsCount = 0;
         }
 
         private void OnAlgorithmFinished(AlgorithmFinishedMessage message)
         {
-            FinishedAlgorithmsCount++;
             Statistics[message.Index].Status = AlgorithmStatus.Finished;
         }
 
@@ -199,14 +196,7 @@ namespace WPFVersion.ViewModel
 
         private void UpdateAlgorithmStatistics(UpdateAlgorithmStatisticsMessage message)
         {
-            Application.Current.Dispatcher.Invoke(() =>
-            {
-                Statistics[message.Index].Time = message.Time;
-                Statistics[message.Index].Status = message.Status;
-                Statistics[message.Index].PathCost = message.PathCost;
-                Statistics[message.Index].PathLength = message.PathLength;
-                Statistics[message.Index].VisitedVerticesCount = message.VisitedVertices;
-            });
+            Application.Current.Dispatcher.Invoke(() => Statistics[message.Index].RecieveMessage(message));
         }
 
         private void ExecuteStartPathFindCommand(object param) => FindPath();
@@ -217,7 +207,7 @@ namespace WPFVersion.ViewModel
 
         private bool CanExecuteOperation(object param)
         {
-            return StartedAlgorithmsCount == FinishedAlgorithmsCount;
+            return Statistics.All(stat => !stat.IsStarted());
         }
 
         private bool CanExecuteClearGraphOperation(object param)

@@ -63,8 +63,6 @@ namespace WPFVersion3D.ViewModel
             set { graphField = value; OnPropertyChanged(); }
         }
 
-        private int StartedAlgorithmsCount { get; set; }
-
         public Tuple<string, BaseAnimationSpeed>[] AnimationSpeeds => animationSpeeds.Value;
 
         public ICommand InterruptSelelctedAlgorithm { get; }
@@ -134,7 +132,6 @@ namespace WPFVersion3D.ViewModel
         {
             base.ConnectNewGraph(graph);
             Statistics.Clear();
-            StartedAlgorithmsCount = 0;
             (graphField as GraphField3D)?.CenterGraph();
         }
 
@@ -160,28 +157,20 @@ namespace WPFVersion3D.ViewModel
         private void OnAlgorithmStarted(AlgorithmStartedMessage message)
         {
             Application.Current.Dispatcher.Invoke(() =>
-            {
+            {                
                 Statistics.Add(new AlgorithmViewModel(message.Algorithm, message.AlgorithmName));
-                var msg = new AlgorithmStatisticsIndexMessage(StartedAlgorithmsCount++);
-                Messenger.Default.Send(msg, Constants.MessageToken);
+                Messenger.Default.Send(new AlgorithmStatisticsIndexMessage(Statistics.Count - 1), Constants.MessageToken);
             });
         }
 
         private void OnAlgorithmFinished(AlgorithmFinishedMessage message)
         {
-            Statistics[message.Index].Status = AlgorithmStatus.Finished;
+            Statistics[message.Index].Status = AlgorithmStatuses.Finished;
         }
 
         private void UpdateAlgorithmStatistics(UpdateAlgorithmStatisticsMessage message)
         {
-            Application.Current.Dispatcher.Invoke(() =>
-            {
-                Statistics[message.Index].Time = message.Time;
-                Statistics[message.Index].Status = message.Status;
-                Statistics[message.Index].PathCost = message.PathCost;
-                Statistics[message.Index].PathLength = message.PathLength;
-                Statistics[message.Index].VisitedVerticesCount = message.VisitedVertices;
-            });
+            Application.Current.Dispatcher.Invoke(() => statistics[message.Index].RecieveMessage(message));
         }
 
         private void ExecuteClearVerticesColors(object param)
@@ -219,18 +208,17 @@ namespace WPFVersion3D.ViewModel
 
         private bool CanExecuteInterruptCurrentAlgorithmCommand(object param)
         {
-            return SelectedAlgorithm != null;
+            return SelectedAlgorithm?.IsStarted() == true;
         }
 
         private bool CanExecuteInterruptAlgorithmCommand(object sender)
         {
-            return Statistics.Any(stat => stat.Status == AlgorithmStatus.Started);
+            return Statistics.Any(stat => stat.IsStarted());
         }
 
         private void ExecuteAnimatedAxisRotateCommand(object param)
         {
-            var rotator = param as IAnimatedAxisRotator;
-            rotator?.RotateAxis();
+            (param as IAnimatedAxisRotator)?.RotateAxis();
         }
 
         private void PrepareWindow(IViewModel model, Window window)
@@ -253,7 +241,7 @@ namespace WPFVersion3D.ViewModel
 
         private bool CanExecuteOperation(object param) 
         {
-            return Statistics.All(stat => stat.Status == AlgorithmStatus.Finished);
+            return Statistics.All(stat => !stat.IsStarted());
         }
 
         private Tuple<string, BaseAnimationSpeed>[] GetSpeedTupleCollection()

@@ -9,12 +9,12 @@ namespace WPFVersion3D.Messages
         public int VisitedVertices { get; }
         public double PathCost { get; }
         public int PathLength { get; }
-        public AlgorithmStatus Status { get; }
+        public AlgorithmStatuses Status { get; }
 
         public UpdateAlgorithmStatisticsMessage(int index, 
             string time, 
             int visitedVertices, 
-            AlgorithmStatus status = AlgorithmStatus.Started, 
+            AlgorithmStatuses status = AlgorithmStatuses.Started, 
             int pathLength = 0, 
             double pathCost = 0)
         {

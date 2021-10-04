@@ -50,8 +50,8 @@ namespace WPFVersion3D.ViewModel
             set { visitedVerticesCount = value; OnPropertyChanged(); }
         }
 
-        private AlgorithmStatus status;
-        public AlgorithmStatus Status
+        private AlgorithmStatuses status;
+        public AlgorithmStatuses Status
         {
             get => status;
             set { status = value; OnPropertyChanged(); }
@@ -66,7 +66,7 @@ namespace WPFVersion3D.ViewModel
         public void Interrupt()
         {
             algorithm.Interrupt();
-            Status = AlgorithmStatus.Interrupted;
+            Status = AlgorithmStatuses.Interrupted;
         }
 
         private readonly IAlgorithm algorithm;
