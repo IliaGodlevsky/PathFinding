@@ -1,7 +1,9 @@
 ﻿using ConsoleVersion.EventArguments;
 using ConsoleVersion.Interface;
+using ConsoleVersion.Messages;
 using ConsoleVersion.View.Abstraction;
 using ConsoleVersion.ViewModel;
+using GalaSoft.MvvmLight.Messaging;
 using GraphLib.Base;
 using GraphLib.Realizations.Coordinates;
 using GraphLib.Realizations.Graphs;
@@ -47,7 +49,7 @@ namespace ConsoleVersion.View
             CurrentMaxValueOfRange = max;
         }
 
-        private static void OnStatisticsUpdated(object sender, StatisticsUpdatedEventArgs e)
+        private static void OnStatisticsUpdated(UpdateStatisticsMessage message)
         {
             var coordinate = MainView.PathfindingStatisticsPosition;
             if (coordinate != null)
@@ -55,7 +57,7 @@ namespace ConsoleVersion.View
                 Console.SetCursorPosition(coordinate.X, coordinate.Y);
                 Console.Write(new string(' ', Console.BufferWidth));
                 Console.SetCursorPosition(coordinate.X, coordinate.Y);
-                Console.Write(e.Statistics);
+                Console.Write(message.Statistics);
             }
         }
 
@@ -72,9 +74,9 @@ namespace ConsoleVersion.View
 
         public MainView(MainViewModel model) : base(model)
         {
+            Messenger.Default.Register<UpdateStatisticsMessage>(this, Constants.MessageToken, OnStatisticsUpdated);
             Model.CostRangeChanged += OnCostRangeChanged;
             Model.NewGraphCreated += OnNewGraphCreated;
-            Model.StatisticsUpdated += OnStatisticsUpdated;
             Model.Interrupted += OnInterrupted;
             NewMenuIteration += Model.DisplayGraph;
             var args = new CostRangeChangedEventArgs(BaseVertexCost.CostRange);

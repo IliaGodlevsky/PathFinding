@@ -61,7 +61,7 @@ namespace WPFVersion.ViewModel
 
         private int StartedAlgorithmsCount { get; set; }
 
-        public ICommand InterruptSelelctedAlgorithm { get; }
+        public ICommand InterruptSelelctedAlgorithmCommand { get; }
         public ICommand StartPathFindCommand { get; }
         public ICommand CreateNewGraphCommand { get; }
         public ICommand ClearGraphCommand { get; }
@@ -69,13 +69,15 @@ namespace WPFVersion.ViewModel
         public ICommand LoadGraphCommand { get; }
         public ICommand ShowVertexCost { get; }
         public ICommand InterruptAlgorithmCommand { get; }
-        public ICommand ClearVerticesColor { get; }
+        public ICommand ClearVerticesColorCommand { get; }
+        public ICommand RemoveFromStatisticsCommand { get; }
 
         public MainWindowViewModel(IGraphFieldFactory fieldFactory, IVertexEventHolder eventHolder,
             ISaveLoadGraph saveLoad, IEnumerable<IGraphAssemble> graphAssembles, BaseEndPoints endPoints, ILog log)
             : base(fieldFactory, eventHolder, saveLoad, graphAssembles, endPoints, log)
         {
-            ClearVerticesColor = new RelayCommand(ExecuteClearVerticesColors, CanExecuteClearGraphOperation);
+            RemoveFromStatisticsCommand = new RelayCommand(ExecuteRemoveFromStatisticsCommand, CanExecuteRemoveFromStatisticsCommand);
+            ClearVerticesColorCommand = new RelayCommand(ExecuteClearVerticesColors, CanExecuteClearGraphOperation);
             StartPathFindCommand = new RelayCommand(ExecuteStartPathFindCommand, CanExecuteStartFindPathCommand);
             CreateNewGraphCommand = new RelayCommand(ExecuteCreateNewGraphCommand, CanExecuteOperation);
             ClearGraphCommand = new RelayCommand(ExecuteClearGraphCommand, CanExecuteClearGraphOperation);
@@ -83,7 +85,7 @@ namespace WPFVersion.ViewModel
             LoadGraphCommand = new RelayCommand(ExecuteLoadGraphCommand, CanExecuteOperation);
             ShowVertexCost = new RelayCommand(ExecuteShowVertexCostCommand, CanExecuteOperation);
             InterruptAlgorithmCommand = new RelayCommand(ExecuteInterruptAlgorithmCommand, CanExecuteInterruptAlgorithmCommand);
-            InterruptSelelctedAlgorithm = new RelayCommand(ExecuteInterruptCurrentAlgorithmCommand, CanExecuteInterruptCurrentAlgorithmCommand);
+            InterruptSelelctedAlgorithmCommand = new RelayCommand(ExecuteInterruptCurrentAlgorithmCommand, CanExecuteInterruptCurrentAlgorithmCommand);
             Messenger.Default.Register<UpdateAlgorithmStatisticsMessage>(this, Constants.MessageToken, UpdateAlgorithmStatistics);
             Messenger.Default.Register<AlgorithmStartedMessage>(this, Constants.MessageToken, OnAlgorithmStarted);
             Messenger.Default.Register<AlgorithmFinishedMessage>(this, Constants.MessageToken, OnAlgorithmFinished);
@@ -154,6 +156,16 @@ namespace WPFVersion.ViewModel
         private void ExecuteInterruptCurrentAlgorithmCommand(object param)
         {
             SelectedAlgorithm?.TryInterrupt();
+        }
+
+        private void ExecuteRemoveFromStatisticsCommand(object param)
+        {
+            Statistics.Remove(SelectedAlgorithm);
+        }
+
+        private bool CanExecuteRemoveFromStatisticsCommand(object param)
+        {
+            return SelectedAlgorithm?.IsStarted() == false;
         }
 
         private bool CanExecuteInterruptCurrentAlgorithmCommand(object param)

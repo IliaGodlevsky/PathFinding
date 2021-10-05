@@ -8,7 +8,7 @@ namespace WPFVersion3D.Extensions
     {
         public static bool TryInterrupt(this AlgorithmViewModel model)
         {
-            if (model.Status == AlgorithmStatuses.Started)
+            if (model.IsStarted())
             {
                 model.Interrupt();
                 model.Status = AlgorithmStatuses.Interrupted;
@@ -18,7 +18,7 @@ namespace WPFVersion3D.Extensions
             return false;
         }
 
-        public static void RecieveMessage(this AlgorithmViewModel model, in UpdateAlgorithmStatisticsMessage message)
+        public static void RecieveMessage(this AlgorithmViewModel model, UpdateAlgorithmStatisticsMessage message)
         {
             model.Time = message.Time;
             model.Status = message.Status;

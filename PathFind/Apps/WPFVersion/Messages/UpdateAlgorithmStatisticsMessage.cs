@@ -2,7 +2,7 @@
 
 namespace WPFVersion.Messages
 {
-    internal readonly struct UpdateAlgorithmStatisticsMessage
+    internal sealed class UpdateAlgorithmStatisticsMessage
     {
         public int Index { get; }
         public string Time { get; }
@@ -11,11 +11,11 @@ namespace WPFVersion.Messages
         public int PathLength { get; }
         public AlgorithmStatus Status { get; }
 
-        public UpdateAlgorithmStatisticsMessage(int index, 
-            string time, 
-            int visitedVertices, 
-            AlgorithmStatus status = AlgorithmStatus.Started, 
-            int pathLength = 0, 
+        public UpdateAlgorithmStatisticsMessage(int index,
+            string time,
+            int visitedVertices,
+            AlgorithmStatus status = AlgorithmStatus.Started,
+            int pathLength = 0,
             double pathCost = 0)
         {
             Index = index;

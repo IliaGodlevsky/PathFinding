@@ -15,12 +15,7 @@ namespace WPFVersion.ViewModel
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
 
-        private string algorithmName;
-        public string AlgorithmName 
-        {
-            get => algorithmName;
-            private set { algorithmName = value; OnPropertyChanged(); }
-        }
+        public string AlgorithmName { get; }
 
         private string time;
         public string Time
@@ -60,7 +55,7 @@ namespace WPFVersion.ViewModel
         public AlgorithmViewModel(IAlgorithm algorithm, string algorithmName)
         {
             this.algorithm = algorithm;
-            this.algorithmName = algorithmName;
+            AlgorithmName = algorithmName;
         }
 
         public void Interrupt()

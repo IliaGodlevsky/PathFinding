@@ -1,4 +1,5 @@
-﻿using GraphLib.Base;
+﻿using Common.Extensions;
+using GraphLib.Base;
 using GraphLib.Extensions;
 using GraphLib.Interfaces;
 using GraphLib.Interfaces.Factories;
@@ -7,6 +8,7 @@ using GraphViewModel.Interfaces;
 using Logging.Interface;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace GraphViewModel
 {
@@ -85,14 +87,10 @@ namespace GraphViewModel
 
         public void ClearColors()
         {
-            foreach (var vertex in Graph.Vertices)
-            {
-                if (vertex is IVisualizable visualizable 
-                    && !visualizable.IsVisualizedAsEndPoint)
-                {
-                    visualizable.VisualizeAsRegular();
-                }
-            }
+            Graph.Vertices
+                .OfType<IVisualizable>()
+                .Where(vertex => !vertex.IsVisualizedAsEndPoint)
+                .ForEach(vertex => vertex.VisualizeAsRegular());
         }
 
         protected readonly IEnumerable<IGraphAssemble> graphAssembles;

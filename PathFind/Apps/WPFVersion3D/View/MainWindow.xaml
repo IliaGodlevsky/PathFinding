@@ -309,7 +309,7 @@
             <Button Style="{StaticResource ImageStyle}" Content="{StaticResource SaveGraph}" ToolTip="Save graph" Command="{Binding SaveGraphCommand}"/>
             <Button Style="{StaticResource ImageStyle}" Content="{StaticResource CreateNewGraph}" ToolTip="Create graph" Command="{Binding CreateNewGraphCommand}"/>
             <Button Style="{StaticResource ImageStyle}" Content="{StaticResource ClearGraph}" ToolTip="Clear graph" Command="{Binding ClearGraphCommand}"/>
-            <Button Style="{StaticResource ImageStyle}" Content="{StaticResource ClearColors}" ToolTip="Clear colors" Command="{Binding ClearVerticesColor}"/>
+            <Button Style="{StaticResource ImageStyle}" Content="{StaticResource ClearColors}" ToolTip="Clear colors" Command="{Binding ClearVerticesColorCommand}"/>
             <Button Style="{StaticResource ImageStyle}" Content="{StaticResource FindPath}" ToolTip="Choose graph" Command ="{Binding StartPathFindCommand}"/>
             <Button Style="{StaticResource ImageStyle}" Content="{StaticResource Interrupt}" ToolTip="Interrupt all" Command ="{Binding InterruptAlgorithmCommand}"/>
             <Button Style="{StaticResource ImageStyle}" Content="{StaticResource Transperency}" ToolTip="Change opacity" Command="{Binding ChangeOpacityCommand}"/>
@@ -394,7 +394,8 @@
                 </ListView.View>
                 <ListView.ContextMenu>
                     <ContextMenu>
-                        <MenuItem Command="{Binding InterruptSelelctedAlgorithm}" Header="Interrupt"/>
+                        <MenuItem Command="{Binding InterruptSelelctedAlgorithmCommand}" Header="Interrupt"/>
+                        <MenuItem Command="{Binding RemoveFromStatisticsCommand}" Header="Remove"/>
                     </ContextMenu>
                 </ListView.ContextMenu>
             </ListView>

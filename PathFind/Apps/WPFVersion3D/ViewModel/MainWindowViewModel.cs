@@ -1,6 +1,5 @@
 ﻿using Common.Extensions;
 using Common.Interface;
-using EnumerationValues.Extensions;
 using EnumerationValues.Realizations;
 using GalaSoft.MvvmLight.Messaging;
 using GraphLib.Base;
@@ -65,7 +64,7 @@ namespace WPFVersion3D.ViewModel
 
         public Tuple<string, BaseAnimationSpeed>[] AnimationSpeeds => animationSpeeds.Value;
 
-        public ICommand InterruptSelelctedAlgorithm { get; }
+        public ICommand InterruptSelelctedAlgorithmCommand { get; }
         public ICommand StartPathFindCommand { get; }
         public ICommand CreateNewGraphCommand { get; }
         public ICommand ClearGraphCommand { get; }
@@ -74,13 +73,15 @@ namespace WPFVersion3D.ViewModel
         public ICommand ChangeOpacityCommand { get; }
         public ICommand AnimatedAxisRotateCommand { get; }
         public ICommand InterruptAlgorithmCommand { get; }
-        public ICommand ClearVerticesColor { get; }
+        public ICommand ClearVerticesColorCommand { get; }
+        public ICommand RemoveFromStatisticsCommand { get; }
 
         public MainWindowViewModel(IGraphFieldFactory fieldFactory, IVertexEventHolder eventHolder,
             ISaveLoadGraph saveLoad, IEnumerable<IGraphAssemble> graphAssembles, BaseEndPoints endPoints, ILog log)
             : base(fieldFactory, eventHolder, saveLoad, graphAssembles, endPoints, log)
         {
-            ClearVerticesColor = new RelayCommand(ExecuteClearVerticesColors, CanExecuteClearGraphOperation);
+            RemoveFromStatisticsCommand = new RelayCommand(ExecuteRemoveFromStatisticsCommand, CanExecuteRemoveFromStatisticsCommand);
+            ClearVerticesColorCommand = new RelayCommand(ExecuteClearVerticesColors, CanExecuteClearGraphOperation);
             StartPathFindCommand = new RelayCommand(ExecuteStartPathFindCommand, CanExecuteStartFindPathCommand);
             CreateNewGraphCommand = new RelayCommand(ExecuteCreateNewGraphCommand, CanExecuteOperation);
             ClearGraphCommand = new RelayCommand(ExecuteClearGraphCommand, CanExecuteClearGraphOperation);
@@ -89,8 +90,8 @@ namespace WPFVersion3D.ViewModel
             ChangeOpacityCommand = new RelayCommand(ExecuteChangeOpacity, CanExecuteGraphOperation);
             AnimatedAxisRotateCommand = new RelayCommand(ExecuteAnimatedAxisRotateCommand);
             InterruptAlgorithmCommand = new RelayCommand(ExecuteInterruptAlgorithmCommand, CanExecuteInterruptAlgorithmCommand);
-            InterruptSelelctedAlgorithm = new RelayCommand(ExecuteInterruptCurrentAlgorithmCommand, CanExecuteInterruptCurrentAlgorithmCommand);
-            animationSpeeds = new Lazy<Tuple<string, BaseAnimationSpeed>[]>(GetSpeedTupleCollection);
+            InterruptSelelctedAlgorithmCommand = new RelayCommand(ExecuteInterruptCurrentAlgorithmCommand, CanExecuteInterruptCurrentAlgorithmCommand);
+            animationSpeeds = new Lazy<Tuple<string, BaseAnimationSpeed>[]>(new EnumValues<AnimationSpeeds>().ToAnimationSpeedTuples);
             Messenger.Default.Register<UpdateAlgorithmStatisticsMessage>(this, Constants.MessageToken, UpdateAlgorithmStatistics);
             Messenger.Default.Register<AlgorithmStartedMessage>(this, Constants.MessageToken, OnAlgorithmStarted);
             Messenger.Default.Register<AlgorithmFinishedMessage>(this, Constants.MessageToken, OnAlgorithmFinished);
@@ -135,17 +136,14 @@ namespace WPFVersion3D.ViewModel
             (graphField as GraphField3D)?.CenterGraph();
         }
 
-        private void StretchAlongAxis(IAxis axis, double distanceBetween, params double[] offset)
-            => (GraphField as GraphField3D)?.StretchAlongAxis(axis, distanceBetween, offset);
-
         public void StretchAlongXAxis(object sender, RoutedPropertyChangedEventArgs<double> e)
-            => StretchAlongAxis(new Abscissa(), e.NewValue, 1, 0, 0);
+            => (GraphField as GraphField3D)?.StretchAlongAxis(new Abscissa(), e.NewValue, 1, 0, 0);
 
         public void StretchAlongYAxis(object sender, RoutedPropertyChangedEventArgs<double> e)
-            => StretchAlongAxis(new Ordinate(), e.NewValue, 0, 1, 0);
+            => (GraphField as GraphField3D)?.StretchAlongAxis(new Ordinate(), e.NewValue, 0, 1, 0);
 
         public void StretchAlongZAxis(object sender, RoutedPropertyChangedEventArgs<double> e)
-            => StretchAlongAxis(new Applicate(), e.NewValue, 0, 0, 1);
+            => (GraphField as GraphField3D)?.StretchAlongAxis(new Applicate(), e.NewValue, 0, 0, 1);
 
         private void ChangeVerticesOpacity()
         {
@@ -157,7 +155,7 @@ namespace WPFVersion3D.ViewModel
         private void OnAlgorithmStarted(AlgorithmStartedMessage message)
         {
             Application.Current.Dispatcher.Invoke(() =>
-            {                
+            {
                 Statistics.Add(new AlgorithmViewModel(message.Algorithm, message.AlgorithmName));
                 Messenger.Default.Send(new AlgorithmStatisticsIndexMessage(Statistics.Count - 1), Constants.MessageToken);
             });
@@ -206,6 +204,16 @@ namespace WPFVersion3D.ViewModel
             SelectedAlgorithm.TryInterrupt();
         }
 
+        private void ExecuteRemoveFromStatisticsCommand(object param)
+        {
+            Statistics.Remove(SelectedAlgorithm);
+        }
+
+        private bool CanExecuteRemoveFromStatisticsCommand(object param)
+        {
+            return SelectedAlgorithm?.IsStarted() == false;
+        }
+
         private bool CanExecuteInterruptCurrentAlgorithmCommand(object param)
         {
             return SelectedAlgorithm?.IsStarted() == true;
@@ -234,23 +242,14 @@ namespace WPFVersion3D.ViewModel
             return CanExecuteGraphOperation(param) && CanExecuteOperation(param);
         }
 
-        private bool CanExecuteGraphOperation(object param) 
+        private bool CanExecuteGraphOperation(object param)
         {
             return !Graph.IsNull();
         }
 
-        private bool CanExecuteOperation(object param) 
+        private bool CanExecuteOperation(object param)
         {
             return Statistics.All(stat => !stat.IsStarted());
-        }
-
-        private Tuple<string, BaseAnimationSpeed>[] GetSpeedTupleCollection()
-        {
-            var enumValues = new EnumValues<AnimationSpeeds>();
-            var enumValuesWithoutIgnored = new EnumValuesWithoutIgnored<AnimationSpeeds>(enumValues);
-            string Description(AnimationSpeeds speed) => speed.GetDescriptionAttributeValueOrTypeName();
-            BaseAnimationSpeed Speed(AnimationSpeeds speed) => speed.GetAttributeOrNull<BaseAnimationSpeed>();
-            return enumValuesWithoutIgnored.ToTupleCollection(Description, Speed);
         }
 
         private readonly Lazy<Tuple<string, BaseAnimationSpeed>[]> animationSpeeds;

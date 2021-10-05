@@ -74,9 +74,10 @@
     <Compile Include="Axes\Ordinate.cs" />
     <Compile Include="Converters\AlgorithmStatusToStringConverter.cs" />
     <Compile Include="Converters\BoolToVisibilityConverter.cs" />
-    <Compile Include="Enums\AlgorithmStatus.cs" />
+    <Compile Include="Enums\AlgorithmStatuses.cs" />
     <Compile Include="Enums\AnimationSpeeds.cs" />
     <Compile Include="Extensions\AlgorithmViewModelExtensions.cs" />
+    <Compile Include="Extensions\EnumValuesExtensions.cs" />
     <Compile Include="Messages\AlgorithmFinishedMessage.cs" />
     <Compile Include="Messages\AlgorithmStartedMessage.cs" />
     <Compile Include="Messages\AlgorithmStatisticsIndexMessage.cs" />

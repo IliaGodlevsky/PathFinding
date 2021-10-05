@@ -3,9 +3,13 @@ using Common.Extensions;
 using Common.ValueRanges;
 using ConsoleVersion.Attributes;
 using ConsoleVersion.Enums;
+using ConsoleVersion.EventArguments;
+using ConsoleVersion.EventHandlers;
 using ConsoleVersion.Extensions;
 using ConsoleVersion.Interface;
+using ConsoleVersion.Messages;
 using ConsoleVersion.Model;
+using GalaSoft.MvvmLight.Messaging;
 using GraphLib.Base;
 using GraphLib.Extensions;
 using GraphLib.Interfaces;
@@ -17,6 +21,7 @@ using Interruptable.EventArguments;
 using Interruptable.EventHandlers;
 using Interruptable.Interface;
 using Logging.Interface;
+using NullObject.Extensions;
 using System;
 using System.Linq;
 using static ConsoleVersion.Constants;
@@ -29,6 +34,7 @@ namespace ConsoleVersion.ViewModel
         IModel, IInterruptable, IRequireInt32Input, IRequireAnswerInput
     {
         public event ProcessEventHandler Interrupted;
+
         public bool IsAlgorithmFindingPath { get; set; }
 
         public string AlgorithmKeyInputMessage { private get; set; }
@@ -61,7 +67,6 @@ namespace ConsoleVersion.ViewModel
                     {
                         HookAlgorithmInterruptionKeystrokes();
                     }
-                    mainModel.PathFindingStatistics = string.Empty;
                     Console.CursorVisible = true;
                 }
                 catch (Exception ex)
@@ -77,15 +82,16 @@ namespace ConsoleVersion.ViewModel
 
         protected override void Summarize()
         {
-            mainModel.PathFindingStatistics = path.PathLength > 0 ? GetStatistics() : CouldntFindPathMsg;
+            string statistics = !path.IsNull() ? GetStatistics() : CouldntFindPathMsg;
+            Messenger.Default.Send(new UpdateStatisticsMessage(statistics), Constants.MessageToken);
             visitedVerticesCount = 0;
         }
 
         protected override void OnVertexVisited(object sender, AlgorithmEventArgs e)
         {
             timer.Wait(DelayTime);
+            Messenger.Default.Send(new UpdateStatisticsMessage(GetStatistics()), Constants.MessageToken);
             base.OnVertexVisited(sender, e);
-            mainModel.PathFindingStatistics = GetStatistics();
         }
 
         protected override void OnAlgorithmInterrupted(object sender, ProcessEventArgs e)

@@ -4,9 +4,11 @@ using ConsoleVersion.EventArguments;
 using ConsoleVersion.EventHandlers;
 using ConsoleVersion.Extensions;
 using ConsoleVersion.Interface;
+using ConsoleVersion.Messages;
 using ConsoleVersion.Model;
 using ConsoleVersion.View;
 using ConsoleVersion.View.Abstraction;
+using GalaSoft.MvvmLight.Messaging;
 using GraphLib.Base;
 using GraphLib.Extensions;
 using GraphLib.Interfaces;
@@ -36,14 +38,6 @@ namespace ConsoleVersion.ViewModel
         public event CostRangeChangedEventHandler CostRangeChanged;
         public event NewGraphCreatedEventHandler NewGraphCreated;
         public event ProcessEventHandler Interrupted;
-        public event StatisticsUpdatedEventHandler StatisticsUpdated;
-
-        private string statistics;
-        public string PathFindingStatistics
-        {
-            get => statistics;
-            set { statistics = value; StatisticsUpdated?.Invoke(this, new StatisticsUpdatedEventArgs(value)); }
-        }
 
         public override IGraph Graph
         {
@@ -151,13 +145,13 @@ namespace ConsoleVersion.ViewModel
         public override void ClearGraph()
         {
             base.ClearGraph();
-            PathFindingStatistics = string.Empty;
+            Messenger.Default.Send(new UpdateStatisticsMessage(string.Empty));
         }
 
         public override void ConnectNewGraph(IGraph graph)
         {
             base.ConnectNewGraph(graph);
-            PathFindingStatistics = string.Empty;
+            Messenger.Default.Send(new UpdateStatisticsMessage(string.Empty));
         }
 
         public void DisplayGraph()
@@ -186,7 +180,6 @@ namespace ConsoleVersion.ViewModel
             Console.ForegroundColor = Color.White;
             Console.WriteLine(GraphParametres);
             (GraphField as IDisplayable)?.Display();
-            Console.WriteLine(PathFindingStatistics);
         }
 
         private void PrepareViewAndModel<TModel>(View<TModel> view, TModel model)

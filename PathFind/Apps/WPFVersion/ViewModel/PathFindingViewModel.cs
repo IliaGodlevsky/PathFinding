@@ -7,6 +7,7 @@ using GraphViewModel;
 using GraphViewModel.Interfaces;
 using Interruptable.EventArguments;
 using Logging.Interface;
+using NullObject.Extensions;
 using System;
 using System.Linq;
 using System.Threading.Tasks;
@@ -29,7 +30,7 @@ namespace WPFVersion.ViewModel
         {
             ConfirmPathFindAlgorithmChoice = new RelayCommand(ExecuteConfirmPathFindAlgorithmChoice,
                 CanExecuteConfirmPathFindAlgorithmChoice);
-            CancelPathFindAlgorithmChoice = new RelayCommand(ExecuteCloseWindowCommand);           
+            CancelPathFindAlgorithmChoice = new RelayCommand(ExecuteCloseWindowCommand);
             Messenger.Default.Register<AlgorithmStatisticsIndexMessage>(this, Constants.MessageToken, SetAlgorithmIndex);
         }
 
@@ -49,7 +50,7 @@ namespace WPFVersion.ViewModel
 
         protected override void Summarize()
         {
-            var status = path.PathLength > 0 ? AlgorithmStatus.Finished : AlgorithmStatus.PathNotFound;
+            var status = !path.IsNull() ? AlgorithmStatus.Finished : AlgorithmStatus.Failed;
             string time = timer.Elapsed.ToString(@"mm\:ss\.ff");
             var message = new UpdateAlgorithmStatisticsMessage(AlgorithmStatisticsIndex,
                 time, visitedVerticesCount, status, path.PathLength, path.PathCost);
@@ -75,11 +76,6 @@ namespace WPFVersion.ViewModel
             base.OnAlgorithmFinished(sender, e);
             Messenger.Default.Send(new AlgorithmFinishedMessage(AlgorithmStatisticsIndex), Constants.MessageToken);
             Messenger.Default.Unregister<AlgorithmStatisticsIndexMessage>(this, Constants.MessageToken, SetAlgorithmIndex);
-        }
-
-        protected override string GetStatistics()
-        {
-            return base.GetStatistics();
         }
 
         private void ExecuteCloseWindowCommand(object param)

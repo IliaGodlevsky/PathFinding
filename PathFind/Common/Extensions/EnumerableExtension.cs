@@ -44,7 +44,7 @@ namespace Common.Extensions
             bool isRemoved = false;
             if (queue.Contains(item))
             {
-                var items = new List<T>(queue);
+                var items = new LinkedList<T>(queue);
                 queue.Clear();
                 isRemoved = items.Remove(item);
                 items.ForEach(queue.Enqueue);

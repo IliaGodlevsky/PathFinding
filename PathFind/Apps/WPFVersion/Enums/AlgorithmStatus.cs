@@ -1,16 +1,10 @@
-﻿using System.ComponentModel;
-
-namespace WPFVersion.Enums
+﻿namespace WPFVersion.Enums
 {
     internal enum AlgorithmStatus
     {
         Started = 0,
-
         Interrupted = 1,
-
         Finished = 2,
-
-        [Description("Couldn't find path")]
-        PathNotFound = 3
+        Failed = 3
     }
 }
