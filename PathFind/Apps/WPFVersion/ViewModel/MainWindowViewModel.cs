@@ -47,7 +47,7 @@ namespace WPFVersion.ViewModel
             set { graphField = value; OnPropertyChanged(); WindowService.Adjust(Graph); }
         }
 
-        private AlgorithmStatus[] Statuses { get; set; } = new AlgorithmStatus[] { };
+        private bool IsAllAlgorithmFinished { get; set; } = true;
 
         public ICommand StartPathFindCommand { get; }
         public ICommand CreateNewGraphCommand { get; }
@@ -70,7 +70,7 @@ namespace WPFVersion.ViewModel
             LoadGraphCommand = new RelayCommand(ExecuteLoadGraphCommand, CanExecuteOperation);
             ShowVertexCost = new RelayCommand(ExecuteShowVertexCostCommand, CanExecuteOperation);
             InterruptAlgorithmCommand = new RelayCommand(ExecuteInterruptAlgorithmCommand, CanExecuteInterruptAlgorithmCommand);
-            Messenger.Default.Register<AlgorithmStatusesMessage>(this, Constants.MessageToken, OnStatusesRecieved);
+            Messenger.Default.Register<AlgorithmsFinishedStatusMessage>(this, Constants.MessageToken, OnStatusesRecieved);
         }
 
         public void ExecuteShowVertexCostCommand(object parametre)
@@ -124,9 +124,9 @@ namespace WPFVersion.ViewModel
             window.Show();
         }
 
-        private void OnStatusesRecieved(AlgorithmStatusesMessage message)
+        private void OnStatusesRecieved(AlgorithmsFinishedStatusMessage message)
         {
-            Statuses = message.Statuses;
+            IsAllAlgorithmFinished = message.IsAllAlgorithmsFinished;
         }
 
         private void ExecuteInterruptAlgorithmCommand(object param)
@@ -159,12 +159,12 @@ namespace WPFVersion.ViewModel
 
         private bool CanExecuteOperation(object param)
         {
-            return Statuses.All(stat => stat != AlgorithmStatus.Started);
+            return IsAllAlgorithmFinished;
         }
 
         private bool CanExecuteInterruptAlgorithmCommand(object param)
         {
-            return Statuses.Any(stat => stat == AlgorithmStatus.Started);
+            return !IsAllAlgorithmFinished;
         }
 
         private bool CanExecuteClearGraphOperation(object param)

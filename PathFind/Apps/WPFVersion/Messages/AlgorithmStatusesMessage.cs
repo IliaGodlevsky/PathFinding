@@ -2,13 +2,13 @@
 
 namespace WPFVersion.Messages
 {
-    internal sealed class AlgorithmStatusesMessage
+    internal sealed class AlgorithmsFinishedStatusMessage
     {
-        public AlgorithmStatus[] Statuses { get; }
+        public bool IsAllAlgorithmsFinished  { get; }
 
-        public AlgorithmStatusesMessage(AlgorithmStatus[] statuses)
+        public AlgorithmsFinishedStatusMessage(bool isAllFinished)
         {
-            Statuses = statuses;
+            IsAllAlgorithmsFinished = isAllFinished;
         }
     }
 }

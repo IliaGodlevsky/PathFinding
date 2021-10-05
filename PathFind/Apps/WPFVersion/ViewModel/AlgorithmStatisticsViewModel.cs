@@ -57,7 +57,6 @@ namespace WPFVersion.ViewModel
         private void UpdateAlgorithmStatistics(UpdateAlgorithmStatisticsMessage message)
         {
             Statistics[message.Index].RecieveMessage(message);
-            SendStatusesMessage();
         }
 
         private void OnAlgorithmFinished(AlgorithmFinishedMessage message)
@@ -102,8 +101,8 @@ namespace WPFVersion.ViewModel
 
         private void SendStatusesMessage()
         {
-            var statuses = Statistics.Select(stat => stat.Status).ToArray();
-            var message = new AlgorithmStatusesMessage(statuses);
+            var isAllFinished = Statistics.All(stat => !stat.IsStarted());
+            var message = new AlgorithmsFinishedStatusMessage(isAllFinished);
             Messenger.Default.Send(message, Constants.MessageToken);
         }
     }
