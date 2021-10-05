@@ -79,7 +79,7 @@
     <Compile Include="Messages\AlgorithmStartedMessage.cs" />
     <Compile Include="Messages\AlgorithmStatisticsIndexMessage.cs" />
     <Compile Include="Messages\ClearStatisticsMessage.cs" />
-    <Compile Include="Messages\InterruptAllAlgorithmMessage.cs" />
+    <Compile Include="Messages\InterruptAllAlgorithmsMessage.cs" />
     <Compile Include="Messages\AlgorithmStatusesMessage.cs" />
     <Compile Include="Messages\UpdateAlgorithmStatisticsMessage.cs" />
     <Compile Include="Model\EndPoints.cs" />

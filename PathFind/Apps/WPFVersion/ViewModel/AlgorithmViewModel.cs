@@ -56,6 +56,7 @@ namespace WPFVersion.ViewModel
         {
             this.algorithm = algorithm;
             AlgorithmName = algorithmName;
+            Status = AlgorithmStatus.Started;
         }
 
         public void Interrupt()

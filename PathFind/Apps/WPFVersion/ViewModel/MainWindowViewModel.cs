@@ -70,7 +70,7 @@ namespace WPFVersion.ViewModel
             LoadGraphCommand = new RelayCommand(ExecuteLoadGraphCommand, CanExecuteOperation);
             ShowVertexCost = new RelayCommand(ExecuteShowVertexCostCommand, CanExecuteOperation);
             InterruptAlgorithmCommand = new RelayCommand(ExecuteInterruptAlgorithmCommand, CanExecuteInterruptAlgorithmCommand);
-            Messenger.Default.Register<AlgorithmsFinishedStatusMessage>(this, Constants.MessageToken, OnStatusesRecieved);
+            Messenger.Default.Register<AlgorithmsFinishedStatusMessage>(this, Constants.MessageToken, OnIsAllAlgorithmsFinished);
         }
 
         public void ExecuteShowVertexCostCommand(object parametre)
@@ -124,14 +124,14 @@ namespace WPFVersion.ViewModel
             window.Show();
         }
 
-        private void OnStatusesRecieved(AlgorithmsFinishedStatusMessage message)
+        private void OnIsAllAlgorithmsFinished(AlgorithmsFinishedStatusMessage message)
         {
             IsAllAlgorithmFinished = message.IsAllAlgorithmsFinished;
         }
 
         private void ExecuteInterruptAlgorithmCommand(object param)
         {
-            Messenger.Default.Send(new InterruptAllAlgorithmMessage(), Constants.MessageToken);
+            Messenger.Default.Send(new InterruptAllAlgorithmsMessage(), Constants.MessageToken);
         }
 
         private void ExecuteClearVerticesColors(object param)

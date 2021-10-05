@@ -9,10 +9,8 @@ namespace WPFVersion.Messages
         {
             Algorithm = algorithm;
             AlgorithmName = algorithmName;
-            Status = AlgorithmStatus.Started;
         }
 
-        public AlgorithmStatus Status { get; }
         public string AlgorithmName { get; }
         public IAlgorithm Algorithm { get; }
     }
