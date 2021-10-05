@@ -7,7 +7,7 @@
         xmlns:converters="clr-namespace:WPFVersion.Converters"
         xmlns:range="clr-namespace:WPFVersion" 
         xmlns:rules="clr-namespace:WPFVersion.ValidationRules" 
-        xmlns:viewmodel="clr-namespace:WPFVersion.ViewModel" 
+        xmlns:viewmodel="clr-namespace:WPFVersion.ViewModel" xmlns:windows="clr-namespace:WPFVersion.View.Windows"
         d:DataContext="{d:DesignInstance Type=viewmodel:MainWindowViewModel}"
         mc:Ignorable="d"
         Background="White"
@@ -140,54 +140,7 @@
         </StackPanel>
 
         <Expander Background="White" Grid.Row="5">
-            <ListView HorizontalAlignment="Left" 
-                      BorderBrush="White" 
-                      BorderThickness="0.1" 
-                      SelectedItem="{Binding SelectedAlgorithm}" 
-                      ItemsSource="{Binding Statistics}">
-                <ListView.View>
-                    <GridView>
-                        <GridView.Columns>
-                            <GridViewColumn DisplayMemberBinding="{Binding AlgorithmName}">
-                                <GridViewColumn.Header>
-                                    <TextBlock Text="Name"/>
-                                </GridViewColumn.Header>
-                            </GridViewColumn>
-                            <GridViewColumn DisplayMemberBinding="{Binding Time}">
-                                <GridViewColumn.Header>
-                                    <TextBlock Text="Time"/>
-                                </GridViewColumn.Header>
-                            </GridViewColumn>
-                            <GridViewColumn DisplayMemberBinding="{Binding PathLength}">
-                                <GridViewColumn.Header>
-                                    <TextBlock Text="Path length"/>
-                                </GridViewColumn.Header>
-                            </GridViewColumn>
-                            <GridViewColumn DisplayMemberBinding="{Binding PathCost}">
-                                <GridViewColumn.Header>
-                                    <TextBlock Text="Path cost"/>
-                                </GridViewColumn.Header>
-                            </GridViewColumn>
-                            <GridViewColumn DisplayMemberBinding="{Binding VisitedVerticesCount}">
-                                <GridViewColumn.Header>
-                                    <TextBlock Text="Vertices visited"/>
-                                </GridViewColumn.Header>
-                            </GridViewColumn>
-                            <GridViewColumn DisplayMemberBinding="{Binding Status, Converter={StaticResource StatusToStringConverter}}">
-                                <GridViewColumn.Header>
-                                    <TextBlock Text="Status"/>
-                                </GridViewColumn.Header>
-                            </GridViewColumn>
-                        </GridView.Columns>
-                    </GridView>
-                </ListView.View>
-                <ListView.ContextMenu>
-                    <ContextMenu>
-                        <MenuItem Command="{Binding InterruptSelelctedAlgorithmCommand}" Header="Interrupt"/>
-                        <MenuItem Command="{Binding RemoveFromStatisticsCommand}" Header="Remove"/>
-                    </ContextMenu>
-                </ListView.ContextMenu>
-            </ListView>
+            <windows:AlgorithmStatisticsUserControl/>
         </Expander>
     </Grid>
 </Window>

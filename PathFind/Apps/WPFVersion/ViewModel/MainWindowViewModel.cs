@@ -1,5 +1,4 @@
-﻿using Common.Extensions;
-using Common.Interface;
+﻿using Common.Interface;
 using GalaSoft.MvvmLight.Messaging;
 using GraphLib.Base;
 using GraphLib.Extensions;
@@ -11,14 +10,12 @@ using Logging.Interface;
 using NullObject.Extensions;
 using System;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Windows;
 using System.Windows.Input;
 using WPFVersion.Enums;
-using WPFVersion.Extensions;
 using WPFVersion.Infrastructure;
 using WPFVersion.Messages;
 using WPFVersion.Model;
@@ -43,15 +40,6 @@ namespace WPFVersion.ViewModel
             set { graphParametres = value; OnPropertyChanged(); }
         }
 
-        public AlgorithmViewModel SelectedAlgorithm { get; set; }
-
-        private ObservableCollection<AlgorithmViewModel> statistics;
-        public ObservableCollection<AlgorithmViewModel> Statistics
-        {
-            get => statistics ?? (statistics = new ObservableCollection<AlgorithmViewModel>());
-            set { statistics = value; OnPropertyChanged(); }
-        }
-
         private IGraphField graphField;
         public override IGraphField GraphField
         {
@@ -59,9 +47,8 @@ namespace WPFVersion.ViewModel
             set { graphField = value; OnPropertyChanged(); WindowService.Adjust(Graph); }
         }
 
-        private int StartedAlgorithmsCount { get; set; }
+        private AlgorithmStatus[] Statuses { get; set; } = new AlgorithmStatus[] { };
 
-        public ICommand InterruptSelelctedAlgorithmCommand { get; }
         public ICommand StartPathFindCommand { get; }
         public ICommand CreateNewGraphCommand { get; }
         public ICommand ClearGraphCommand { get; }
@@ -70,13 +57,11 @@ namespace WPFVersion.ViewModel
         public ICommand ShowVertexCost { get; }
         public ICommand InterruptAlgorithmCommand { get; }
         public ICommand ClearVerticesColorCommand { get; }
-        public ICommand RemoveFromStatisticsCommand { get; }
 
         public MainWindowViewModel(IGraphFieldFactory fieldFactory, IVertexEventHolder eventHolder,
             ISaveLoadGraph saveLoad, IEnumerable<IGraphAssemble> graphAssembles, BaseEndPoints endPoints, ILog log)
             : base(fieldFactory, eventHolder, saveLoad, graphAssembles, endPoints, log)
         {
-            RemoveFromStatisticsCommand = new RelayCommand(ExecuteRemoveFromStatisticsCommand, CanExecuteRemoveFromStatisticsCommand);
             ClearVerticesColorCommand = new RelayCommand(ExecuteClearVerticesColors, CanExecuteClearGraphOperation);
             StartPathFindCommand = new RelayCommand(ExecuteStartPathFindCommand, CanExecuteStartFindPathCommand);
             CreateNewGraphCommand = new RelayCommand(ExecuteCreateNewGraphCommand, CanExecuteOperation);
@@ -85,10 +70,7 @@ namespace WPFVersion.ViewModel
             LoadGraphCommand = new RelayCommand(ExecuteLoadGraphCommand, CanExecuteOperation);
             ShowVertexCost = new RelayCommand(ExecuteShowVertexCostCommand, CanExecuteOperation);
             InterruptAlgorithmCommand = new RelayCommand(ExecuteInterruptAlgorithmCommand, CanExecuteInterruptAlgorithmCommand);
-            InterruptSelelctedAlgorithmCommand = new RelayCommand(ExecuteInterruptCurrentAlgorithmCommand, CanExecuteInterruptCurrentAlgorithmCommand);
-            Messenger.Default.Register<UpdateAlgorithmStatisticsMessage>(this, Constants.MessageToken, UpdateAlgorithmStatistics);
-            Messenger.Default.Register<AlgorithmStartedMessage>(this, Constants.MessageToken, OnAlgorithmStarted);
-            Messenger.Default.Register<AlgorithmFinishedMessage>(this, Constants.MessageToken, OnAlgorithmFinished);
+            Messenger.Default.Register<AlgorithmStatusesMessage>(this, Constants.MessageToken, OnStatusesRecieved);
         }
 
         public void ExecuteShowVertexCostCommand(object parametre)
@@ -131,8 +113,7 @@ namespace WPFVersion.ViewModel
         public override void ConnectNewGraph(IGraph graph)
         {
             base.ConnectNewGraph(graph);
-            Statistics.Clear();
-            StartedAlgorithmsCount = 0;
+            Messenger.Default.Send(new ClearStatisticsMessage(), Constants.MessageToken);
         }
 
         private void PrepareWindow(IViewModel model, Window window)
@@ -143,39 +124,19 @@ namespace WPFVersion.ViewModel
             window.Show();
         }
 
+        private void OnStatusesRecieved(AlgorithmStatusesMessage message)
+        {
+            Statuses = message.Statuses;
+        }
+
         private void ExecuteInterruptAlgorithmCommand(object param)
         {
-            Statistics.ForEach(stat => stat.TryInterrupt());
+            Messenger.Default.Send(new InterruptAllAlgorithmMessage(), Constants.MessageToken);
         }
 
         private void ExecuteClearVerticesColors(object param)
         {
             ClearColors();
-        }
-
-        private void ExecuteInterruptCurrentAlgorithmCommand(object param)
-        {
-            SelectedAlgorithm?.TryInterrupt();
-        }
-
-        private void ExecuteRemoveFromStatisticsCommand(object param)
-        {
-            Statistics.Remove(SelectedAlgorithm);
-        }
-
-        private bool CanExecuteRemoveFromStatisticsCommand(object param)
-        {
-            return SelectedAlgorithm?.IsStarted() == false;
-        }
-
-        private bool CanExecuteInterruptCurrentAlgorithmCommand(object param)
-        {
-            return SelectedAlgorithm?.IsStarted() == true;
-        }
-
-        private bool CanExecuteInterruptAlgorithmCommand(object sender)
-        {
-            return Statistics.Any(stat => stat.IsStarted());
         }
 
         private void ExecuteSaveGraphCommand(object param) => base.SaveGraph();
@@ -187,28 +148,7 @@ namespace WPFVersion.ViewModel
         private void ExecuteClearGraphCommand(object param)
         {
             base.ClearGraph();
-            Statistics.Clear();
-            StartedAlgorithmsCount = 0;
-        }
-
-        private void OnAlgorithmFinished(AlgorithmFinishedMessage message)
-        {
-            Statistics[message.Index].Status = AlgorithmStatus.Finished;
-        }
-
-        private void OnAlgorithmStarted(AlgorithmStartedMessage message)
-        {
-            Application.Current.Dispatcher.Invoke(() =>
-            {
-                Statistics.Add(new AlgorithmViewModel(message.Algorithm, message.AlgorithmName));
-                var msg = new AlgorithmStatisticsIndexMessage(StartedAlgorithmsCount++);
-                Messenger.Default.Send(msg, Constants.MessageToken);
-            });
-        }
-
-        private void UpdateAlgorithmStatistics(UpdateAlgorithmStatisticsMessage message)
-        {
-            Application.Current.Dispatcher.Invoke(() => Statistics[message.Index].RecieveMessage(message));
+            Messenger.Default.Send(new ClearStatisticsMessage(), Constants.MessageToken);
         }
 
         private void ExecuteStartPathFindCommand(object param) => FindPath();
@@ -219,7 +159,12 @@ namespace WPFVersion.ViewModel
 
         private bool CanExecuteOperation(object param)
         {
-            return Statistics.All(stat => !stat.IsStarted());
+            return Statuses.All(stat => stat != AlgorithmStatus.Started);
+        }
+
+        private bool CanExecuteInterruptAlgorithmCommand(object param)
+        {
+            return Statuses.Any(stat => stat == AlgorithmStatus.Started);
         }
 
         private bool CanExecuteClearGraphOperation(object param)
