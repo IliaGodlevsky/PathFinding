@@ -1,5 +1,4 @@
-﻿using Common.Extensions;
-using Common.Interface;
+﻿using Common.Interface;
 using EnumerationValues.Realizations;
 using GalaSoft.MvvmLight.Messaging;
 using GraphLib.Base;
@@ -12,9 +11,7 @@ using Logging.Interface;
 using NullObject.Extensions;
 using System;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using System.ComponentModel;
-using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Windows;
 using System.Windows.Input;
@@ -46,15 +43,6 @@ namespace WPFVersion3D.ViewModel
             set { graphParametres = value; OnPropertyChanged(); }
         }
 
-        public AlgorithmViewModel SelectedAlgorithm { get; set; }
-
-        private ObservableCollection<AlgorithmViewModel> statistics;
-        public ObservableCollection<AlgorithmViewModel> Statistics
-        {
-            get => statistics ?? (statistics = new ObservableCollection<AlgorithmViewModel>());
-            set { statistics = value; OnPropertyChanged(); }
-        }
-
         private IGraphField graphField;
         public override IGraphField GraphField
         {
@@ -62,9 +50,10 @@ namespace WPFVersion3D.ViewModel
             set { graphField = value; OnPropertyChanged(); }
         }
 
+        private bool IsAllAlgorithmsFinished { get; set; } = true;
+
         public Tuple<string, BaseAnimationSpeed>[] AnimationSpeeds => animationSpeeds.Value;
 
-        public ICommand InterruptSelelctedAlgorithmCommand { get; }
         public ICommand StartPathFindCommand { get; }
         public ICommand CreateNewGraphCommand { get; }
         public ICommand ClearGraphCommand { get; }
@@ -74,13 +63,11 @@ namespace WPFVersion3D.ViewModel
         public ICommand AnimatedAxisRotateCommand { get; }
         public ICommand InterruptAlgorithmCommand { get; }
         public ICommand ClearVerticesColorCommand { get; }
-        public ICommand RemoveFromStatisticsCommand { get; }
 
         public MainWindowViewModel(IGraphFieldFactory fieldFactory, IVertexEventHolder eventHolder,
             ISaveLoadGraph saveLoad, IEnumerable<IGraphAssemble> graphAssembles, BaseEndPoints endPoints, ILog log)
             : base(fieldFactory, eventHolder, saveLoad, graphAssembles, endPoints, log)
         {
-            RemoveFromStatisticsCommand = new RelayCommand(ExecuteRemoveFromStatisticsCommand, CanExecuteRemoveFromStatisticsCommand);
             ClearVerticesColorCommand = new RelayCommand(ExecuteClearVerticesColors, CanExecuteClearGraphOperation);
             StartPathFindCommand = new RelayCommand(ExecuteStartPathFindCommand, CanExecuteStartFindPathCommand);
             CreateNewGraphCommand = new RelayCommand(ExecuteCreateNewGraphCommand, CanExecuteOperation);
@@ -90,11 +77,8 @@ namespace WPFVersion3D.ViewModel
             ChangeOpacityCommand = new RelayCommand(ExecuteChangeOpacity, CanExecuteGraphOperation);
             AnimatedAxisRotateCommand = new RelayCommand(ExecuteAnimatedAxisRotateCommand);
             InterruptAlgorithmCommand = new RelayCommand(ExecuteInterruptAlgorithmCommand, CanExecuteInterruptAlgorithmCommand);
-            InterruptSelelctedAlgorithmCommand = new RelayCommand(ExecuteInterruptCurrentAlgorithmCommand, CanExecuteInterruptCurrentAlgorithmCommand);
             animationSpeeds = new Lazy<Tuple<string, BaseAnimationSpeed>[]>(new EnumValues<AnimationSpeeds>().ToAnimationSpeedTuples);
-            Messenger.Default.Register<UpdateAlgorithmStatisticsMessage>(this, Constants.MessageToken, UpdateAlgorithmStatistics);
-            Messenger.Default.Register<AlgorithmStartedMessage>(this, Constants.MessageToken, OnAlgorithmStarted);
-            Messenger.Default.Register<AlgorithmFinishedMessage>(this, Constants.MessageToken, OnAlgorithmFinished);
+            Messenger.Default.Register<AlgorithmsFinishedStatusMessage>(this, MessageTokens.MainModel, OnIsAllAlgorithmsFinished);
         }
 
         public override void FindPath()
@@ -132,7 +116,7 @@ namespace WPFVersion3D.ViewModel
         public override void ConnectNewGraph(IGraph graph)
         {
             base.ConnectNewGraph(graph);
-            Statistics.Clear();
+            Messenger.Default.Send(new ClearStatisticsMessage(), MessageTokens.AlgorithmStatisticsModel);
             (graphField as GraphField3D)?.CenterGraph();
         }
 
@@ -152,28 +136,14 @@ namespace WPFVersion3D.ViewModel
             PrepareWindow(model, window);
         }
 
-        private void OnAlgorithmStarted(AlgorithmStartedMessage message)
-        {
-            Application.Current.Dispatcher.Invoke(() =>
-            {
-                Statistics.Add(new AlgorithmViewModel(message.Algorithm, message.AlgorithmName));
-                Messenger.Default.Send(new AlgorithmStatisticsIndexMessage(Statistics.Count - 1), Constants.MessageToken);
-            });
-        }
-
-        private void OnAlgorithmFinished(AlgorithmFinishedMessage message)
-        {
-            Statistics[message.Index].Status = AlgorithmStatuses.Finished;
-        }
-
-        private void UpdateAlgorithmStatistics(UpdateAlgorithmStatisticsMessage message)
-        {
-            Application.Current.Dispatcher.Invoke(() => statistics[message.Index].RecieveMessage(message));
-        }
-
         private void ExecuteClearVerticesColors(object param)
         {
             ClearColors();
+        }
+
+        private void OnIsAllAlgorithmsFinished(AlgorithmsFinishedStatusMessage message)
+        {
+            IsAllAlgorithmsFinished = message.IsAllAlgorithmsFinished;
         }
 
         private void ExecuteSaveGraphCommand(object param) => base.SaveGraph();
@@ -187,7 +157,7 @@ namespace WPFVersion3D.ViewModel
         private void ExecuteClearGraphCommand(object param)
         {
             base.ClearGraph();
-            Statistics.Clear();
+            Messenger.Default.Send(new ClearStatisticsMessage(), MessageTokens.AlgorithmStatisticsModel);
         }
 
         private void ExecuteStartPathFindCommand(object param) => FindPath();
@@ -196,32 +166,12 @@ namespace WPFVersion3D.ViewModel
 
         private void ExecuteInterruptAlgorithmCommand(object param)
         {
-            Statistics.ForEach(stat => stat.TryInterrupt());
-        }
-
-        private void ExecuteInterruptCurrentAlgorithmCommand(object param)
-        {
-            SelectedAlgorithm.TryInterrupt();
-        }
-
-        private void ExecuteRemoveFromStatisticsCommand(object param)
-        {
-            Statistics.Remove(SelectedAlgorithm);
-        }
-
-        private bool CanExecuteRemoveFromStatisticsCommand(object param)
-        {
-            return SelectedAlgorithm?.IsStarted() == false;
-        }
-
-        private bool CanExecuteInterruptCurrentAlgorithmCommand(object param)
-        {
-            return SelectedAlgorithm?.IsStarted() == true;
+            Messenger.Default.Send(new InterruptAllAlgorithmsMessage(), MessageTokens.AlgorithmStatisticsModel);
         }
 
         private bool CanExecuteInterruptAlgorithmCommand(object sender)
         {
-            return Statistics.Any(stat => stat.IsStarted());
+            return !IsAllAlgorithmsFinished;
         }
 
         private void ExecuteAnimatedAxisRotateCommand(object param)
@@ -249,7 +199,7 @@ namespace WPFVersion3D.ViewModel
 
         private bool CanExecuteOperation(object param)
         {
-            return Statistics.All(stat => !stat.IsStarted());
+            return IsAllAlgorithmsFinished;
         }
 
         private readonly Lazy<Tuple<string, BaseAnimationSpeed>[]> animationSpeeds;

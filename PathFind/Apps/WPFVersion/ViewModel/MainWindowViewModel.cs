@@ -11,11 +11,9 @@ using NullObject.Extensions;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Windows;
 using System.Windows.Input;
-using WPFVersion.Enums;
 using WPFVersion.Infrastructure;
 using WPFVersion.Messages;
 using WPFVersion.Model;
@@ -47,7 +45,7 @@ namespace WPFVersion.ViewModel
             set { graphField = value; OnPropertyChanged(); WindowService.Adjust(Graph); }
         }
 
-        private bool IsAllAlgorithmFinished { get; set; } = true;
+        private bool IsAllAlgorithmsFinished { get; set; } = true;
 
         public ICommand StartPathFindCommand { get; }
         public ICommand CreateNewGraphCommand { get; }
@@ -70,7 +68,7 @@ namespace WPFVersion.ViewModel
             LoadGraphCommand = new RelayCommand(ExecuteLoadGraphCommand, CanExecuteOperation);
             ShowVertexCost = new RelayCommand(ExecuteShowVertexCostCommand, CanExecuteOperation);
             InterruptAlgorithmCommand = new RelayCommand(ExecuteInterruptAlgorithmCommand, CanExecuteInterruptAlgorithmCommand);
-            Messenger.Default.Register<AlgorithmsFinishedStatusMessage>(this, Constants.MessageToken, OnIsAllAlgorithmsFinished);
+            Messenger.Default.Register<AlgorithmsFinishedStatusMessage>(this, MessageTokens.MainModel, OnIsAllAlgorithmsFinished);
         }
 
         public void ExecuteShowVertexCostCommand(object parametre)
@@ -113,7 +111,7 @@ namespace WPFVersion.ViewModel
         public override void ConnectNewGraph(IGraph graph)
         {
             base.ConnectNewGraph(graph);
-            Messenger.Default.Send(new ClearStatisticsMessage(), Constants.MessageToken);
+            Messenger.Default.Send(new ClearStatisticsMessage(), MessageTokens.AlgorithmStatisticsModel);
         }
 
         private void PrepareWindow(IViewModel model, Window window)
@@ -126,12 +124,12 @@ namespace WPFVersion.ViewModel
 
         private void OnIsAllAlgorithmsFinished(AlgorithmsFinishedStatusMessage message)
         {
-            IsAllAlgorithmFinished = message.IsAllAlgorithmsFinished;
+            IsAllAlgorithmsFinished = message.IsAllAlgorithmsFinished;
         }
 
         private void ExecuteInterruptAlgorithmCommand(object param)
         {
-            Messenger.Default.Send(new InterruptAllAlgorithmsMessage(), Constants.MessageToken);
+            Messenger.Default.Send(new InterruptAllAlgorithmsMessage(), MessageTokens.AlgorithmStatisticsModel);
         }
 
         private void ExecuteClearVerticesColors(object param)
@@ -148,7 +146,7 @@ namespace WPFVersion.ViewModel
         private void ExecuteClearGraphCommand(object param)
         {
             base.ClearGraph();
-            Messenger.Default.Send(new ClearStatisticsMessage(), Constants.MessageToken);
+            Messenger.Default.Send(new ClearStatisticsMessage(), MessageTokens.AlgorithmStatisticsModel);
         }
 
         private void ExecuteStartPathFindCommand(object param) => FindPath();
@@ -159,12 +157,12 @@ namespace WPFVersion.ViewModel
 
         private bool CanExecuteOperation(object param)
         {
-            return IsAllAlgorithmFinished;
+            return IsAllAlgorithmsFinished;
         }
 
         private bool CanExecuteInterruptAlgorithmCommand(object param)
         {
-            return !IsAllAlgorithmFinished;
+            return !IsAllAlgorithmsFinished;
         }
 
         private bool CanExecuteClearGraphOperation(object param)

@@ -1,11 +1,9 @@
 ﻿using Common.ValueRanges;
-using System;
 
 namespace WPFVersion3D
 {
     internal static class Constants
     {
-        public static Guid MessageToken { get; }
         public static InclusiveValueRange<double> DistanceBetweenVerticesValueRange { get; }
         public static InclusiveValueRange<double> OpacityValueRange { get; }
         public static InclusiveValueRange<double> AngleValueRange { get; }
@@ -30,7 +28,6 @@ namespace WPFVersion3D
 
         static Constants()
         {
-            MessageToken = Guid.NewGuid();
             DistanceBetweenVerticesValueRange = new InclusiveValueRange<double>(DistanceBase * InitialVertexSize, 0);
             ZoomValueRange = new InclusiveValueRange<double>(ZoomBase * InitialVertexSize, 0);
             OpacityValueRange = new InclusiveValueRange<double>(1, 0);

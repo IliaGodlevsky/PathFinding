@@ -1,6 +1,6 @@
 ﻿using System.Windows.Controls;
 
-namespace WPFVersion.View.Windows
+namespace WPFVersion3D.View
 {
     /// <summary>
     /// Interaction logic for AlgorithmStatisticsUserControl.xaml

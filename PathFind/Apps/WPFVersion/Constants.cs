@@ -1,11 +1,9 @@
 ﻿using Common.ValueRanges;
-using System;
 
 namespace WPFVersion
 {
     internal static class Constants
     {
-        public static Guid MessageToken { get; }
         public static InclusiveValueRange<double> GraphFieldScaleValueRange { get; }
         public static InclusiveValueRange<int> GraphWidthValueRange { get; }
         public static InclusiveValueRange<int> GraphLengthValueRange { get; }
@@ -21,7 +19,6 @@ namespace WPFVersion
 
         static Constants()
         {
-            MessageToken = Guid.NewGuid();
             GraphFieldScaleValueRange = new InclusiveValueRange<double>(2.5, 0.1);
             GraphWidthValueRange = new InclusiveValueRange<int>(Leverage * WidthBase, 1);
             GraphLengthValueRange = new InclusiveValueRange<int>(Leverage * LengthBase, 1);

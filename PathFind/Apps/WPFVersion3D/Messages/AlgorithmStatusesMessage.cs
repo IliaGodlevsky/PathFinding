@@ -1,4 +1,4 @@
-﻿namespace WPFVersion.Messages
+﻿namespace WPFVersion3D.Messages
 {
     internal sealed class AlgorithmsFinishedStatusMessage
     {

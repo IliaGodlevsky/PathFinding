@@ -7,12 +7,12 @@ using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Windows;
 using System.Windows.Input;
-using WPFVersion.Enums;
-using WPFVersion.Extensions;
-using WPFVersion.Infrastructure;
-using WPFVersion.Messages;
+using WPFVersion3D.Enums;
+using WPFVersion3D.Extensions;
+using WPFVersion3D.Infrastructure;
+using WPFVersion3D.Messages;
 
-namespace WPFVersion.ViewModel
+namespace WPFVersion3D.ViewModel
 {
     internal class AlgorithmStatisticsViewModel : INotifyPropertyChanged, IModel
     {
@@ -62,7 +62,7 @@ namespace WPFVersion.ViewModel
 
         private void OnAlgorithmFinished(AlgorithmFinishedMessage message)
         {
-            Statistics[message.Index].Status = AlgorithmStatus.Finished;
+            Statistics[message.Index].Status = AlgorithmStatuses.Finished;
             SendIsAllFinishedMessage();
         }
 

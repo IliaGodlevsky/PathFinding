@@ -74,6 +74,7 @@
     <Compile Include="Converters\IntToStringConverter.cs" />
     <Compile Include="Enums\AlgorithmStatus.cs" />
     <Compile Include="Extensions\AlgorithmViewModelExtensions.cs" />
+    <Compile Include="Extensions\IMessengerExtensions.cs" />
     <Compile Include="Infrastructure\RelayCommand.cs" />
     <Compile Include="Messages\AlgorithmFinishedMessage.cs" />
     <Compile Include="Messages\AlgorithmStartedMessage.cs" />
@@ -82,6 +83,7 @@
     <Compile Include="Messages\InterruptAllAlgorithmsMessage.cs" />
     <Compile Include="Messages\AlgorithmStatusesMessage.cs" />
     <Compile Include="Messages\UpdateAlgorithmStatisticsMessage.cs" />
+    <Compile Include="MessageTokens.cs" />
     <Compile Include="Model\EndPoints.cs" />
     <Compile Include="Model\PathInput.cs" />
     <Compile Include="Model\RangedSlider.cs" />

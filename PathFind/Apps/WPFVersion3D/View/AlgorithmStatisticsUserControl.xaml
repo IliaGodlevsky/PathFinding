@@ -1,0 +1,66 @@
+﻿<UserControl x:Class="WPFVersion3D.View.AlgorithmStatisticsUserControl"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:converters="clr-namespace:WPFVersion3D.Converters" 
+             xmlns:viewmodel="clr-namespace:WPFVersion3D.ViewModel" 
+             d:DataContext="{d:DesignInstance Type=viewmodel:AlgorithmStatisticsViewModel}"
+             mc:Ignorable="d">
+    <UserControl.DataContext>
+        <viewmodel:AlgorithmStatisticsViewModel/>
+    </UserControl.DataContext>
+    <UserControl.Resources>
+        <converters:AlgorithmStatusToStringConverter x:Key="StatusToStringConverter"/>
+    </UserControl.Resources>
+    <Grid>
+        <ListView HorizontalAlignment="Left" 
+                      BorderBrush="White" 
+                      BorderThickness="0.1" 
+                      SelectedItem="{Binding SelectedAlgorithm}" 
+                      ItemsSource="{Binding Statistics}">
+            <ListView.View>
+                <GridView>
+                    <GridView.Columns>
+                        <GridViewColumn DisplayMemberBinding="{Binding AlgorithmName}">
+                            <GridViewColumn.Header>
+                                <TextBlock Text="Name"/>
+                            </GridViewColumn.Header>
+                        </GridViewColumn>
+                        <GridViewColumn DisplayMemberBinding="{Binding Time}">
+                            <GridViewColumn.Header>
+                                <TextBlock Text="Time"/>
+                            </GridViewColumn.Header>
+                        </GridViewColumn>
+                        <GridViewColumn DisplayMemberBinding="{Binding PathLength}">
+                            <GridViewColumn.Header>
+                                <TextBlock Text="Path length"/>
+                            </GridViewColumn.Header>
+                        </GridViewColumn>
+                        <GridViewColumn DisplayMemberBinding="{Binding PathCost}">
+                            <GridViewColumn.Header>
+                                <TextBlock Text="Path cost"/>
+                            </GridViewColumn.Header>
+                        </GridViewColumn>
+                        <GridViewColumn DisplayMemberBinding="{Binding VisitedVerticesCount}">
+                            <GridViewColumn.Header>
+                                <TextBlock Text="Vertices visited"/>
+                            </GridViewColumn.Header>
+                        </GridViewColumn>
+                        <GridViewColumn DisplayMemberBinding="{Binding Status, Converter={StaticResource StatusToStringConverter}}">
+                            <GridViewColumn.Header>
+                                <TextBlock Text="Status"/>
+                            </GridViewColumn.Header>
+                        </GridViewColumn>
+                    </GridView.Columns>
+                </GridView>
+            </ListView.View>
+            <ListView.ContextMenu>
+                <ContextMenu>
+                    <MenuItem Command="{Binding InterruptSelelctedAlgorithmCommand}" Header="Interrupt"/>
+                    <MenuItem Command="{Binding RemoveSelelctedAlgorithmCommand}" Header="Remove"/>
+                </ContextMenu>
+            </ListView.ContextMenu>
+        </ListView>
+    </Grid>
+</UserControl>

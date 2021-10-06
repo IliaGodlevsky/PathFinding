@@ -1,5 +1,4 @@
 ﻿using Algorithm.Interfaces;
-using WPFVersion.Enums;
 
 namespace WPFVersion.Messages
 {

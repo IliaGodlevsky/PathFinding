@@ -3,8 +3,6 @@ using Common.Extensions;
 using Common.ValueRanges;
 using ConsoleVersion.Attributes;
 using ConsoleVersion.Enums;
-using ConsoleVersion.EventArguments;
-using ConsoleVersion.EventHandlers;
 using ConsoleVersion.Extensions;
 using ConsoleVersion.Interface;
 using ConsoleVersion.Messages;
