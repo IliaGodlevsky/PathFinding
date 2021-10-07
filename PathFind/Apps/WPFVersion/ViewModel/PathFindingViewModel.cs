@@ -71,11 +71,8 @@ namespace WPFVersion.ViewModel
             timer.Wait(DelayTime);
             string time = timer.Elapsed.ToString(@"mm\:ss\.ff");
             var message = new UpdateAlgorithmStatisticsMessage(AlgorithmStatisticsIndex, time, visitedVerticesCount);
-            await Task.Run(() =>
-            {
-                Messenger.Default.Send(message, MessageTokens.AlgorithmStatisticsModel);
-                base.OnVertexVisited(sender, e);
-            });
+            Messenger.Default.Send(message, MessageTokens.AlgorithmStatisticsModel);
+            await Task.Run(() => base.OnVertexVisited(sender, e));
         }
 
         protected override async void OnVertexEnqueued(object sender, AlgorithmEventArgs e)

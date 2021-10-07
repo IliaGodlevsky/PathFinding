@@ -86,13 +86,11 @@ namespace GraphViewModel
 
         protected virtual void OnAlgorithmInterrupted(object sender, ProcessEventArgs e)
         {
-            UnsubscribeFromAlgorithmEvents();
             timer.Stop();
         }
 
         protected virtual void OnAlgorithmFinished(object sender, ProcessEventArgs e)
         {
-            UnsubscribeFromAlgorithmEvents();
             timer.Stop();
         }
 
@@ -127,22 +125,6 @@ namespace GraphViewModel
             algorithm.Finished += OnAlgorithmFinished;
             algorithm.Started += OnAlgorithmStarted;
             algorithm.Interrupted += OnAlgorithmInterrupted;
-        }
-
-        private void UnsubscribeFromAlgorithmEvents()
-        {
-            if (IsVisualizationRequired)
-            {
-                algorithm.VertexEnqueued -= OnVertexEnqueued;
-                algorithm.VertexVisited -= OnVertexVisited;
-            }
-            else
-            {
-                algorithm.VertexVisited -= OnVertexVisitedNoVisualization;
-            }
-            algorithm.Finished -= OnAlgorithmFinished;
-            algorithm.Started -= OnAlgorithmStarted;
-            algorithm.Interrupted -= OnAlgorithmInterrupted;
         }
 
         private bool CanBeVisualized(IVertex vertex)
