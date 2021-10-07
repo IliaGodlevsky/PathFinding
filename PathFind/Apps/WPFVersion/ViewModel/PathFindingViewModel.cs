@@ -32,6 +32,7 @@ namespace WPFVersion.ViewModel
                 CanExecuteConfirmPathFindAlgorithmChoice);
             CancelPathFindAlgorithmChoice = new RelayCommand(ExecuteCloseWindowCommand);
             Messenger.Default.Register<AlgorithmStatisticsIndexMessage>(this, MessageTokens.PathfindingModel, SetAlgorithmIndex);
+            Messenger.Default.Register<DelayTimeChangedMessage>(this, MessageTokens.PathfindingModel, SetAlgorithmDelayTime);
         }
 
         private void SetAlgorithmIndex(AlgorithmStatisticsIndexMessage message)
@@ -40,11 +41,19 @@ namespace WPFVersion.ViewModel
             AlgorithmStatisticsIndex = message.Index;
         }
 
+        private void SetAlgorithmDelayTime(DelayTimeChangedMessage message)
+        {
+            if (AlgorithmStatisticsIndex == message.Index)
+            {
+                DelayTime = message.DelayTime;
+            }
+        }
+
         protected override void OnAlgorithmStarted(object sender, ProcessEventArgs e)
         {
             base.OnAlgorithmStarted(sender, e);
             string algorithmName = Algorithm.GetDescriptionAttributeValueOrTypeName();
-            var message = new AlgorithmStartedMessage(algorithm, algorithmName);
+            var message = new AlgorithmStartedMessage(algorithm, algorithmName, DelayTime);
             Messenger.Default.Send(message, MessageTokens.AlgorithmStatisticsModel);
         }
 
@@ -62,13 +71,23 @@ namespace WPFVersion.ViewModel
             timer.Wait(DelayTime);
             string time = timer.Elapsed.ToString(@"mm\:ss\.ff");
             var message = new UpdateAlgorithmStatisticsMessage(AlgorithmStatisticsIndex, time, visitedVerticesCount);
-            Messenger.Default.Send(message, MessageTokens.AlgorithmStatisticsModel);
-            await Task.Run(() => base.OnVertexVisited(sender, e));
+            await Task.Run(() =>
+            {
+                Messenger.Default.Send(message, MessageTokens.AlgorithmStatisticsModel);
+                base.OnVertexVisited(sender, e);
+            });
         }
 
         protected override async void OnVertexEnqueued(object sender, AlgorithmEventArgs e)
         {
             await Task.Run(() => base.OnVertexEnqueued(sender, e));
+        }
+
+        protected override void OnAlgorithmInterrupted(object sender, ProcessEventArgs e)
+        {
+            base.OnAlgorithmInterrupted(sender, e);
+            Messenger.Default.Unregister<AlgorithmStatisticsIndexMessage>(this, MessageTokens.PathfindingModel, SetAlgorithmIndex);
+            Messenger.Default.Unregister<DelayTimeChangedMessage>(this, MessageTokens.PathfindingModel, SetAlgorithmDelayTime);
         }
 
         protected override void OnAlgorithmFinished(object sender, ProcessEventArgs e)
@@ -77,6 +96,7 @@ namespace WPFVersion.ViewModel
             var message = new AlgorithmFinishedMessage(AlgorithmStatisticsIndex);
             Messenger.Default.Send(message, MessageTokens.AlgorithmStatisticsModel);
             Messenger.Default.Unregister<AlgorithmStatisticsIndexMessage>(this, MessageTokens.PathfindingModel, SetAlgorithmIndex);
+            Messenger.Default.Unregister<DelayTimeChangedMessage>(this, MessageTokens.PathfindingModel, SetAlgorithmDelayTime);
         }
 
         private void ExecuteCloseWindowCommand(object param)

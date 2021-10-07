@@ -9,5 +9,7 @@ namespace Algorithm.Сompanions.Interface
         double GetAccumulatedCost(IVertex vertex);
 
         int Compare(IVertex vertex, double accumulatedCost);
+
+        void Clear();
     }
 }

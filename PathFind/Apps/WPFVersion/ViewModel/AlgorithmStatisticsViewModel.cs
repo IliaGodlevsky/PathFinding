@@ -48,9 +48,10 @@ namespace WPFVersion.ViewModel
 
         private void OnAlgorithmStarted(AlgorithmStartedMessage message)
         {
-            var viewModel = new AlgorithmViewModel(message.Algorithm, message.AlgorithmName);
+            int index = Statistics.Count;
+            var viewModel = new AlgorithmViewModel(message, index);
             Application.Current.Dispatcher.Invoke(() => Statistics.Add(viewModel));
-            var msg = new AlgorithmStatisticsIndexMessage(Statistics.Count - 1);
+            var msg = new AlgorithmStatisticsIndexMessage(index);
             Messenger.Default.Send(msg, MessageTokens.PathfindingModel);
             SendIsAllFinishedMessage();
         }
@@ -86,7 +87,7 @@ namespace WPFVersion.ViewModel
 
         private bool CanExecuteRemoveFromStatisticsCommand(object param)
         {
-            return SelectedAlgorithm?.IsStarted() == false;
+            return SelectedAlgorithm?.IsStarted() == false && Statistics.All(stat => !stat.IsStarted());
         }
 
         private void ExecuteInterruptSelectedAlgorithmCommand(object param)

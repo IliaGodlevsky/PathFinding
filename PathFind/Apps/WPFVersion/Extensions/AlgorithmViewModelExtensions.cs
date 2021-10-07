@@ -11,7 +11,6 @@ namespace WPFVersion.Extensions
             if (model.IsStarted())
             {
                 model.Interrupt();
-                model.Status = AlgorithmStatus.Interrupted;
                 return true;
             }
 
@@ -21,7 +20,10 @@ namespace WPFVersion.Extensions
         public static void RecieveMessage(this AlgorithmViewModel model, UpdateAlgorithmStatisticsMessage message)
         {
             model.Time = message.Time;
-            model.Status = message.Status;
+            if (model.Status != AlgorithmStatus.Interrupted)
+            {
+                model.Status = message.Status;
+            }
             model.PathCost = message.PathCost;
             model.PathLength = message.PathLength;
             model.VisitedVerticesCount = message.VisitedVertices;

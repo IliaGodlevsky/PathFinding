@@ -51,6 +51,7 @@ namespace Algorithm.Base
         {
             base.Reset();
             verticesQueue.Clear();
+            accumulatedCosts.Clear();
         }
 
         protected virtual void PrepareForLocalPathfinding()

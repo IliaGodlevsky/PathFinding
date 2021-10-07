@@ -14,9 +14,9 @@ namespace WPFVersion3D.Messages
         public UpdateAlgorithmStatisticsMessage(int index,
             string time,
             int visitedVertices,
-            AlgorithmStatuses status = AlgorithmStatuses.Started,
-            int pathLength = 0,
-            double pathCost = 0)
+            AlgorithmStatuses status = default,
+            int pathLength = default,
+            double pathCost = default)
         {
             Index = index;
             Time = time;

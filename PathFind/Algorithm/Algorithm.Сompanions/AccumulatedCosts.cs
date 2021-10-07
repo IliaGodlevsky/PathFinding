@@ -39,6 +39,11 @@ namespace Algorithm.Сompanions
             return vertexAccumulatedCost.CompareTo(accumulatedCost);
         }
 
+        public void Clear()
+        {
+            accumulatedCosts.Clear();
+        }
+
         private void SetAccumulatedCostToStartCost(IVertex vertex)
         {
             if (!vertex.IsNull())

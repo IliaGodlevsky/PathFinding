@@ -22,7 +22,7 @@ namespace GraphViewModel
     {
         public bool IsVisualizationRequired { get; set; } = true;
 
-        public int DelayTime { get; set; } = 4;
+        public int DelayTime { get; set; } = 5;
 
         public Algorithms Algorithm { get; set; }
 
@@ -86,17 +86,18 @@ namespace GraphViewModel
 
         protected virtual void OnAlgorithmInterrupted(object sender, ProcessEventArgs e)
         {
-            log.Warn(AlgorithmInterruptedMsg);
+            UnsubscribeFromAlgorithmEvents();
             timer.Stop();
         }
 
         protected virtual void OnAlgorithmFinished(object sender, ProcessEventArgs e)
         {
+            UnsubscribeFromAlgorithmEvents();
             timer.Stop();
         }
 
         protected abstract void Summarize();
-
+        
         protected virtual void OnAlgorithmStarted(object sender, ProcessEventArgs e)
         {
             timer.Restart();
@@ -126,6 +127,22 @@ namespace GraphViewModel
             algorithm.Finished += OnAlgorithmFinished;
             algorithm.Started += OnAlgorithmStarted;
             algorithm.Interrupted += OnAlgorithmInterrupted;
+        }
+
+        private void UnsubscribeFromAlgorithmEvents()
+        {
+            if (IsVisualizationRequired)
+            {
+                algorithm.VertexEnqueued -= OnVertexEnqueued;
+                algorithm.VertexVisited -= OnVertexVisited;
+            }
+            else
+            {
+                algorithm.VertexVisited -= OnVertexVisitedNoVisualization;
+            }
+            algorithm.Finished -= OnAlgorithmFinished;
+            algorithm.Started -= OnAlgorithmStarted;
+            algorithm.Interrupted -= OnAlgorithmInterrupted;
         }
 
         private bool CanBeVisualized(IVertex vertex)

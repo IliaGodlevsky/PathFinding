@@ -4,7 +4,7 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:converters="clr-namespace:WPFVersion.Converters" 
-             xmlns:viewmodel="clr-namespace:WPFVersion.ViewModel" 
+             xmlns:viewmodel="clr-namespace:WPFVersion.ViewModel" xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
              d:DataContext="{d:DesignInstance Type=viewmodel:AlgorithmStatisticsViewModel}"
              mc:Ignorable="d">
     <UserControl.DataContext>
@@ -51,6 +51,16 @@
                             <GridViewColumn.Header>
                                 <TextBlock Text="Status"/>
                             </GridViewColumn.Header>
+                        </GridViewColumn>
+                        <GridViewColumn>
+                            <GridViewColumn.Header>
+                                <TextBlock Text="Delay time"></TextBlock>
+                            </GridViewColumn.Header>
+                            <GridViewColumn.CellTemplate>
+                                <DataTemplate>
+                                    <xctk:IntegerUpDown Value="{Binding DelayTime}"/>
+                                </DataTemplate>
+                            </GridViewColumn.CellTemplate>
                         </GridViewColumn>
                     </GridView.Columns>
                 </GridView>

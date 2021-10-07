@@ -1,8 +1,10 @@
 ﻿using Algorithm.Interfaces;
+using GalaSoft.MvvmLight.Messaging;
 using GraphViewModel.Interfaces;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using WPFVersion.Enums;
+using WPFVersion.Messages;
 
 namespace WPFVersion.ViewModel
 {
@@ -15,6 +17,7 @@ namespace WPFVersion.ViewModel
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
 
+        public int Index { get; }
         public string AlgorithmName { get; }
 
         private string time;
@@ -22,6 +25,19 @@ namespace WPFVersion.ViewModel
         {
             get => time;
             set { time = value; OnPropertyChanged(); }
+        }
+
+        private int delayTime;
+        public int DelayTime
+        {
+            get => delayTime;
+            set
+            {
+                delayTime = (int)Constants.AlgorithmDelayTimeValueRange.ReturnInRange(value);
+                OnPropertyChanged();
+                var message = new DelayTimeChangedMessage(delayTime, Index);
+                Messenger.Default.Send(message, MessageTokens.PathfindingModel);
+            }
         }
 
         private int pathLength;
@@ -52,11 +68,19 @@ namespace WPFVersion.ViewModel
             set { status = value; OnPropertyChanged(); }
         }
 
-        public AlgorithmViewModel(IAlgorithm algorithm, string algorithmName)
+        public AlgorithmViewModel(IAlgorithm algorithm, string algorithmName, int delayTime, int index)
         {
             this.algorithm = algorithm;
             AlgorithmName = algorithmName;
             Status = AlgorithmStatus.Started;
+            DelayTime = delayTime;
+            Index = index;
+        }
+
+        public AlgorithmViewModel(AlgorithmStartedMessage message, int index)
+            : this(message.Algorithm, message.AlgorithmName, message.DelayTime, index)
+        {
+
         }
 
         public void Interrupt()
