@@ -30,7 +30,6 @@ namespace ConsoleVersion
         public const string InputObstaclePercent = "Input obstacle percent";
         public const string InputGraphParametres = "Input graph parametres";
 
-        public static Guid MessageToken { get; }
         public static InclusiveValueRange<Answer> AnswerValueRange { get; }
         public static InclusiveValueRange<int> GraphWidthValueRange { get; }
         public static InclusiveValueRange<int> GraphLengthValueRange { get; }
@@ -40,7 +39,6 @@ namespace ConsoleVersion
 
         static Constants()
         {
-            MessageToken = Guid.NewGuid();
             AnswerValueRange = new EnumValues<Answer>().ToValueRange();
             VerticesCostRange = new InclusiveValueRange<int>(99, 1);
             GraphWidthValueRange = new InclusiveValueRange<int>(80, 1);

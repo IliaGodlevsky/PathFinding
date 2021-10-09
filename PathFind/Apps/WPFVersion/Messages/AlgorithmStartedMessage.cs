@@ -4,7 +4,8 @@ namespace WPFVersion.Messages
 {
     internal sealed class AlgorithmStartedMessage
     {
-        public AlgorithmStartedMessage(IAlgorithm algorithm, string algorithmName, int delayTime)
+        public AlgorithmStartedMessage(IAlgorithm algorithm,
+            string algorithmName, int delayTime)
         {
             Algorithm = algorithm;
             AlgorithmName = algorithmName;

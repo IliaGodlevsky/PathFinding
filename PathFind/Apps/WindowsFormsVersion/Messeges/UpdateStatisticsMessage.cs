@@ -1,4 +1,4 @@
-﻿namespace ConsoleVersion.Messages
+﻿namespace WindowsFormsVersion.Messeges
 {
     internal sealed class UpdateStatisticsMessage
     {

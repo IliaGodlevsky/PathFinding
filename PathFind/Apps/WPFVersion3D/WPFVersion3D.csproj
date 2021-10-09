@@ -78,11 +78,12 @@
     <Compile Include="Enums\AnimationSpeeds.cs" />
     <Compile Include="Extensions\AlgorithmViewModelExtensions.cs" />
     <Compile Include="Extensions\EnumValuesExtensions.cs" />
-    <Compile Include="Messages\AlgorithmFinishedMessage.cs" />
     <Compile Include="Messages\AlgorithmStartedMessage.cs" />
     <Compile Include="Messages\AlgorithmStatisticsIndexMessage.cs" />
     <Compile Include="Messages\AlgorithmsFinishedStatusMessage.cs" />
+    <Compile Include="Messages\AlgorithmStatusMessage.cs" />
     <Compile Include="Messages\ClearStatisticsMessage.cs" />
+    <Compile Include="Messages\GraphCreatedMessage.cs" />
     <Compile Include="Messages\InterruptAllAlgorithmsMessage.cs" />
     <Compile Include="Messages\UpdateAlgorithmStatisticsMessage.cs" />
     <Compile Include="MessageTokens.cs" />

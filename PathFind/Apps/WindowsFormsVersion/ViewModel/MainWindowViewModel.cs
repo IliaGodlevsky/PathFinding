@@ -1,4 +1,5 @@
 ﻿using Common.Interface;
+using GalaSoft.MvvmLight.Messaging;
 using GraphLib.Base;
 using GraphLib.Extensions;
 using GraphLib.Interfaces;
@@ -18,6 +19,7 @@ using WindowsFormsVersion.EventArguments;
 using WindowsFormsVersion.EventHandlers;
 using WindowsFormsVersion.Extensions;
 using WindowsFormsVersion.Forms;
+using WindowsFormsVersion.Messeges;
 using WindowsFormsVersion.View;
 
 namespace WindowsFormsVersion.ViewModel
@@ -76,7 +78,19 @@ namespace WindowsFormsVersion.ViewModel
             ISaveLoadGraph saveLoad, IEnumerable<IGraphAssemble> graphFactories, BaseEndPoints endPoints, ILog log)
             : base(fieldFactory, eventHolder, saveLoad, graphFactories, endPoints, log)
         {
+            Messenger.Default.Register<AlgorithmStatusMessage>(this, MessageTokens.MainModel, SetAlgorithmStatus);
+            Messenger.Default.Register<UpdateStatisticsMessage>(this, MessageTokens.MainModel, SetStatisticsMessage);
+            Messenger.Default.Register<GraphCreatedMessage>(this, MessageTokens.MainModel, SetGraph);
+        }
 
+        private void SetAlgorithmStatus(AlgorithmStatusMessage message)
+        {
+            IsPathfindingStarted = message.IsAlgorithmStarted;
+        }
+
+        private void SetStatisticsMessage(UpdateStatisticsMessage message)
+        {
+            PathFindingStatistics = message.Statistics;
         }
 
         public override void FindPath()
@@ -85,7 +99,7 @@ namespace WindowsFormsVersion.ViewModel
             {
                 try
                 {
-                    var model = new PathFindingViewModel(log, this, endPoints);
+                    var model = new PathFindingViewModel(log, Graph, endPoints);
                     var form = new PathFindingWindow(model);
                     PrepareWindow(model, form);
                 }
@@ -102,7 +116,7 @@ namespace WindowsFormsVersion.ViewModel
             {
                 try
                 {
-                    var model = new GraphCreatingViewModel(log, this, graphAssembles);
+                    var model = new GraphCreatingViewModel(log, graphAssembles);
                     var form = new GraphCreatingWindow(model);
                     PrepareWindow(model, form);
                 }
@@ -175,6 +189,11 @@ namespace WindowsFormsVersion.ViewModel
             model.WindowClosed += (sender, args) => window.Close();
             window.StartPosition = FormStartPosition.CenterScreen;
             window.Show();
+        }
+
+        private void SetGraph(GraphCreatedMessage message)
+        {
+            ConnectNewGraph(message.Graph);
         }
 
         private bool CanStartPathFinding()

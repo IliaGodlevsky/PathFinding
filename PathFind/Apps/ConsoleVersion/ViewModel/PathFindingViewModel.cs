@@ -1,4 +1,5 @@
 ﻿using Algorithm.Infrastructure.EventArguments;
+using Algorithm.Interfaces;
 using Common.Extensions;
 using Common.ValueRanges;
 using ConsoleVersion.Attributes;
@@ -10,9 +11,6 @@ using ConsoleVersion.Model;
 using GalaSoft.MvvmLight.Messaging;
 using GraphLib.Base;
 using GraphLib.Extensions;
-using GraphLib.Interfaces;
-using GraphLib.NullRealizations.NullObjects;
-using GraphLib.Realizations.Graphs;
 using GraphViewModel;
 using GraphViewModel.Interfaces;
 using Interruptable.EventArguments;
@@ -21,6 +19,7 @@ using Interruptable.Interface;
 using Logging.Interface;
 using NullObject.Extensions;
 using System;
+using System.Diagnostics;
 using System.Linq;
 using static ConsoleVersion.Constants;
 
@@ -33,8 +32,6 @@ namespace ConsoleVersion.ViewModel
     {
         public event ProcessEventHandler Interrupted;
 
-        public bool IsAlgorithmFindingPath { get; set; }
-
         public string AlgorithmKeyInputMessage { private get; set; }
 
         public string TargetVertexInputMessage { private get; set; }
@@ -44,11 +41,12 @@ namespace ConsoleVersion.ViewModel
 
         public string SourceVertexInputMessage { private get; set; }
 
-        public PathFindingViewModel(ILog log, IMainModel model, BaseEndPoints endPoints)
-            : base(log, model, endPoints)
+        public PathFindingViewModel(ILog log, MainViewModel model, BaseEndPoints endPoints)
+            : base(log, model.Graph, endPoints)
         {
             algorithmKeysValueRange = new InclusiveValueRange<int>(Algorithms.Length, 1);
-            mainModel = model as MainViewModel ?? throw new ArgumentException();
+            //keyStrokesHook = new ConsoleKeystrokesHook(ConsoleKey.Escape, ConsoleKey.End);            
+            this.mainModel = model;
         }
 
         [MenuItem(Constants.FindPath, MenuItemPriority.Highest)]
@@ -59,13 +57,11 @@ namespace ConsoleVersion.ViewModel
                 try
                 {
                     Console.CursorVisible = false;
-                    IsAlgorithmFindingPath = true;
                     base.FindPath();
-                    while (IsAlgorithmFindingPath)
-                    {
-                        HookAlgorithmInterruptionKeystrokes();
-                    }
+                    //keyStrokesHook.KeystrokeHooked += algorithm.Interrupt;
+                    //keyStrokesHook.StartHookingConsoleKeystrokes();
                     Console.CursorVisible = true;
+                    //keyStrokesHook.KeystrokeHooked -= algorithm.Interrupt;
                 }
                 catch (Exception ex)
                 {
@@ -80,28 +76,16 @@ namespace ConsoleVersion.ViewModel
 
         protected override void Summarize()
         {
-            string statistics = !path.IsNull() ? GetStatistics() : CouldntFindPathMsg;
-            Messenger.Default.Send(new UpdateStatisticsMessage(statistics), Constants.MessageToken);
+            string statistics = !path.IsNull() ? Statistics : CouldntFindPath;
+            mainModel.Statistics = Statistics;
             visitedVerticesCount = 0;
         }
 
         protected override void OnVertexVisited(object sender, AlgorithmEventArgs e)
         {
-            timer.Wait(DelayTime);
-            Messenger.Default.Send(new UpdateStatisticsMessage(GetStatistics()), Constants.MessageToken);
+            Stopwatch.StartNew().Pause(DelayTime).Cancel();
             base.OnVertexVisited(sender, e);
-        }
-
-        protected override void OnAlgorithmInterrupted(object sender, ProcessEventArgs e)
-        {
-            base.OnAlgorithmInterrupted(sender, e);
-            IsAlgorithmFindingPath = false;
-        }
-
-        protected override void OnAlgorithmFinished(object sender, ProcessEventArgs e)
-        {
-            base.OnAlgorithmFinished(sender, e);
-            IsAlgorithmFindingPath = false;
+            mainModel.Statistics = Statistics;
         }
 
         [MenuItem(Constants.ChooseAlgorithm, MenuItemPriority.High)]
@@ -109,7 +93,7 @@ namespace ConsoleVersion.ViewModel
         {
             int algorithmKeyIndex = Int32Input.InputValue(AlgorithmKeyInputMessage,
                 algorithmKeysValueRange) - 1;
-            Algorithm = Algorithms.ElementAt(algorithmKeyIndex).Item2;
+            Algorithm = Algorithms[algorithmKeyIndex].Item2;
         }
 
         [MenuItem(Constants.InputDelayTime)]
@@ -134,22 +118,13 @@ namespace ConsoleVersion.ViewModel
         {
             if (HasAnyVerticesToChooseAsEndPoints)
             {
-                string inputMessage = "Input number of intermediate vertices: ";
-                string intermediateInputMessage = "Choose intermediate vertex";
-                int cursorLeft = Console.CursorLeft;
-                int cursorRight = Console.CursorTop;
-                int numberOfIntermediates = Int32Input.InputValue(inputMessage, NumberOfAvailableIntermediate);
-                var messages = Enumerable.Repeat(intermediateInputMessage, numberOfIntermediates);
-                endPoints.Reset();
-                var chooseMessages = new[] { SourceVertexInputMessage, TargetVertexInputMessage }.Concat(messages);
-                foreach (var message in chooseMessages)
+                var selection = new EndPointsSelection(endPoints, graph, NumberOfAvailableIntermediate)
                 {
-                    Console.SetCursorPosition(cursorLeft, cursorRight);
-                    var vertex = ChooseVertex(message);
-                    cursorLeft = Console.CursorLeft;
-                    cursorRight = Console.CursorTop;
-                    (vertex as Vertex)?.SetAsExtremeVertex();
-                }
+                    SourceVertexInputMsg = SourceVertexInputMessage,
+                    TargetVertexInputMsg = TargetVertexInputMessage,
+                    Int32Input = Int32Input
+                };
+                selection.ChooseEndPoints();
             }
             else
             {
@@ -160,13 +135,13 @@ namespace ConsoleVersion.ViewModel
         [MenuItem(Constants.ClearGraph, MenuItemPriority.Low)]
         public void ClearGraph()
         {
-            mainViewModel.ClearGraph();
+            mainModel.ClearGraph();
         }
 
         [MenuItem(Constants.ClearColors, MenuItemPriority.Low)]
         public void ClearColors()
         {
-            mainViewModel.ClearColors();
+            mainModel.ClearColors();
         }
 
         [MenuItem(Constants.ApplyVisualization, MenuItemPriority.Low)]
@@ -176,39 +151,33 @@ namespace ConsoleVersion.ViewModel
             IsVisualizationRequired = answer == Answer.Yes;
         }
 
-        private IVertex ChooseVertex(string message)
+        protected override void SubscribeOnAlgorithmEvents(IAlgorithm algorithm)
         {
-            if (mainViewModel.Graph is Graph2D graph2D)
-            {
-                Console.WriteLine(message);
-                IVertex vertex;
-                do
-                {
-                    vertex = Int32Input.InputVertex(graph2D);
-                } while (!endPoints.CanBeEndPoint(vertex));
-
-                return vertex;
-            }
-            return new NullVertex();
+            base.SubscribeOnAlgorithmEvents(algorithm);
+            //algorithm.Finished += keyStrokesHook.CancelKeyStrokeHooking;
         }
 
-        private void HookAlgorithmInterruptionKeystrokes()
+        private string Statistics
         {
-            var key = Console.ReadKey(true).Key;
-            switch (key)
+            get
             {
-                case ConsoleKey.Escape:
-                case ConsoleKey.End:
-                    algorithm.Interrupt();
-                    break;
+                string timerInfo = timer.ToFormattedString();
+                string description = Algorithms.FirstOrDefault(item => item.Item2 == Algorithm).Item1;
+                string pathfindingInfo = string.Format(Format, PathfindingInfo);
+                return string.Join("\t", description, timerInfo, pathfindingInfo);
             }
         }
 
-        private int NumberOfAvailableIntermediate
-            => mainModel.Graph.Size - mainModel.Graph.Vertices.Count(v => v.IsIsolated()) - 2;
+        private object[] PathfindingInfo => new object[] { path.PathLength, path.PathCost, visitedVerticesCount };
+
+        private readonly string Format = "Steps: {0}  Path cost: {1}  Visited: {2}";
+        private readonly string CouldntFindPath = "Could't fing path";
+
+        private int NumberOfAvailableIntermediate => graph.Size - graph.Vertices.Count(v => v.IsIsolated()) - 2;
         private bool HasAnyVerticesToChooseAsEndPoints => NumberOfAvailableIntermediate >= 0;
 
         private readonly InclusiveValueRange<int> algorithmKeysValueRange;
+        //private readonly ConsoleKeystrokesHook keyStrokesHook;
         private readonly MainViewModel mainModel;
     }
 }

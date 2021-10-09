@@ -35,16 +35,15 @@ namespace ConsoleVersion.ViewModel
     internal sealed class MainViewModel : MainModel,
         IMainModel, IModel, IInterruptable, IRequireAnswerInput, IRequireInt32Input
     {
-        public event CostRangeChangedEventHandler CostRangeChanged;
-        public event NewGraphCreatedEventHandler NewGraphCreated;
         public event ProcessEventHandler Interrupted;
+        public event StatisticsUpdatedEventHandler StatisticsUpdated;
 
-        public override IGraph Graph
+        private string statistics;
+        public string Statistics
         {
-            get => base.Graph;
-            protected set { base.Graph = value; NewGraphCreated?.Invoke(this, new NewGraphCreatedEventArgs(value)); }
+            get => statistics;
+            set { statistics = value; StatisticsUpdated?.Invoke(this, new StatisticsUpdatedEventArgs(value)); }
         }
-
         public IValueInput<int> Int32Input { get; set; }
         public IValueInput<Answer> AnswerInput { get; set; }
 
@@ -52,7 +51,7 @@ namespace ConsoleVersion.ViewModel
             ISaveLoadGraph saveLoad, IEnumerable<IGraphAssemble> graphAssembles, BaseEndPoints endPoints, ILog log)
             : base(fieldFactory, eventHolder, saveLoad, graphAssembles, endPoints, log)
         {
-
+            Messenger.Default.Register<GraphCreatedMessage>(this, MessageTokens.MainModel, SetGraph);
         }
 
         [MenuItem(Constants.MakeUnwieghted)]
@@ -66,7 +65,7 @@ namespace ConsoleVersion.ViewModel
         {
             try
             {
-                var model = new GraphCreatingViewModel(log, this, graphAssembles);
+                var model = new GraphCreatingViewModel(log, graphAssembles);
                 var view = new GraphCreateView(model);
                 PrepareViewAndModel(view, model);
                 view.Start();
@@ -103,8 +102,8 @@ namespace ConsoleVersion.ViewModel
         public void ChangeVertexCostValueRange()
         {
             CostRange = Int32Input.InputRange(Constants.VerticesCostRange);
-            var args = new CostRangeChangedEventArgs(CostRange);
-            CostRangeChanged?.Invoke(this, args);
+            var message = new CostRangeChangedMessage(CostRange);
+            Messenger.Default.Send(message, MessageTokens.MainView);
         }
 
         [MenuItem(Constants.ChangeVertexCost, MenuItemPriority.Low)]
@@ -120,7 +119,8 @@ namespace ConsoleVersion.ViewModel
             {
                 var graph = saveLoad.LoadGraphAsync().Result;
                 ConnectNewGraph(graph);
-                CostRangeChanged?.Invoke(this, new CostRangeChangedEventArgs(CostRange));
+                var message = new CostRangeChangedMessage(CostRange);
+                Messenger.Default.Send(message, MessageTokens.MainView);
             }
             catch (CantSerializeGraphException ex)
             {
@@ -145,13 +145,7 @@ namespace ConsoleVersion.ViewModel
         public override void ClearGraph()
         {
             base.ClearGraph();
-            Messenger.Default.Send(new UpdateStatisticsMessage(string.Empty));
-        }
-
-        public override void ConnectNewGraph(IGraph graph)
-        {
-            base.ConnectNewGraph(graph);
-            Messenger.Default.Send(new UpdateStatisticsMessage(string.Empty));
+            Statistics = string.Empty;
         }
 
         public void DisplayGraph()
@@ -180,6 +174,11 @@ namespace ConsoleVersion.ViewModel
             Console.ForegroundColor = Color.White;
             Console.WriteLine(GraphParametres);
             (GraphField as IDisplayable)?.Display();
+        }
+
+        private void SetGraph(GraphCreatedMessage message)
+        {
+            ConnectNewGraph(message.Graph);
         }
 
         private void PrepareViewAndModel<TModel>(View<TModel> view, TModel model)

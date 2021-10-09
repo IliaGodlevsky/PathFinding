@@ -1,14 +1,15 @@
 ﻿using Common.Interface;
+using GalaSoft.MvvmLight.Messaging;
+using GraphLib.Extensions;
 using GraphLib.Interfaces.Factories;
 using GraphLib.ViewModel;
-using GraphViewModel.Interfaces;
 using Logging.Interface;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Windows.Input;
 using WPFVersion3D.Infrastructure;
-using WPFVersion3D.Model;
+using WPFVersion3D.Messages;
 
 namespace WPFVersion3D.ViewModel
 {
@@ -21,9 +22,8 @@ namespace WPFVersion3D.ViewModel
         public ICommand ConfirmCreateGraphCommand { get; }
         public ICommand CancelCreateGraphCommand { get; }
 
-        public GraphCreatingViewModel(ILog log, IMainModel model,
-            IEnumerable<IGraphAssemble> graphAssembles)
-            : base(log, model, graphAssembles)
+        public GraphCreatingViewModel(ILog log, IEnumerable<IGraphAssemble> graphAssembles)
+            : base(log, graphAssembles)
         {
             SelectedGraphAssemble = graphAssembles.FirstOrDefault();
             ConfirmCreateGraphCommand = new RelayCommand(ExecuteConfirmCreateGraphCommand,
@@ -33,14 +33,23 @@ namespace WPFVersion3D.ViewModel
 
         protected override int[] GraphParametres => new[] { Width, Length, Height };
 
+        public override async void CreateGraph()
+        {
+            try
+            {
+                var graph = await SelectedGraphAssemble.AssembleGraphAsync(ObstaclePercent, GraphParametres);
+                var message = new GraphCreatedMessage(graph);
+                Messenger.Default.Send(message, MessageTokens.MainModel);
+            }
+            catch (Exception ex)
+            {
+                log.Error(ex);
+            }
+        }
+
         private void ExecuteConfirmCreateGraphCommand(object param)
         {
             CreateGraph();
-
-            var field = model.GraphField as GraphField3D;
-
-            field?.CenterGraph();
-
             CloseWindow();
         }
 

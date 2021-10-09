@@ -1,6 +1,4 @@
-﻿using WPFVersion3D.Enums;
-
-namespace WPFVersion3D.Messages
+﻿namespace WPFVersion3D.Messages
 {
     internal sealed class UpdateAlgorithmStatisticsMessage
     {
@@ -9,12 +7,10 @@ namespace WPFVersion3D.Messages
         public int VisitedVertices { get; }
         public double PathCost { get; }
         public int PathLength { get; }
-        public AlgorithmStatuses Status { get; }
 
         public UpdateAlgorithmStatisticsMessage(int index,
             string time,
             int visitedVertices,
-            AlgorithmStatuses status = default,
             int pathLength = default,
             double pathCost = default)
         {
@@ -23,7 +19,6 @@ namespace WPFVersion3D.Messages
             VisitedVertices = visitedVertices;
             PathCost = pathCost;
             PathLength = pathLength;
-            Status = status;
         }
     }
 }

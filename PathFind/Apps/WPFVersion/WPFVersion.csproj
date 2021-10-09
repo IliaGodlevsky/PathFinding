@@ -74,13 +74,13 @@
     <Compile Include="Converters\IntToStringConverter.cs" />
     <Compile Include="Enums\AlgorithmStatus.cs" />
     <Compile Include="Extensions\AlgorithmViewModelExtensions.cs" />
-    <Compile Include="Extensions\IMessengerExtensions.cs" />
     <Compile Include="Infrastructure\RelayCommand.cs" />
-    <Compile Include="Messages\AlgorithmFinishedMessage.cs" />
     <Compile Include="Messages\AlgorithmStartedMessage.cs" />
     <Compile Include="Messages\AlgorithmStatisticsIndexMessage.cs" />
+    <Compile Include="Messages\AlgorithmStatusMessage.cs" />
     <Compile Include="Messages\ClearStatisticsMessage.cs" />
     <Compile Include="Messages\DelayTimeChangedMessage.cs" />
+    <Compile Include="Messages\GraphCreatedMessage.cs" />
     <Compile Include="Messages\InterruptAllAlgorithmsMessage.cs" />
     <Compile Include="Messages\AlgorithmsFinishedStatusMessage.cs" />
     <Compile Include="Messages\UpdateAlgorithmStatisticsMessage.cs" />

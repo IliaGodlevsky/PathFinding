@@ -42,7 +42,7 @@ namespace WPFVersion.ViewModel
         public override IGraphField GraphField
         {
             get => graphField;
-            set { graphField = value; OnPropertyChanged(); WindowService.Adjust(Graph); }
+            set { graphField = value; OnPropertyChanged(); }
         }
 
         private bool IsAllAlgorithmsFinished { get; set; } = true;
@@ -69,6 +69,7 @@ namespace WPFVersion.ViewModel
             ShowVertexCost = new RelayCommand(ExecuteShowVertexCostCommand, CanExecuteOperation);
             InterruptAlgorithmCommand = new RelayCommand(ExecuteInterruptAlgorithmCommand, CanExecuteInterruptAlgorithmCommand);
             Messenger.Default.Register<AlgorithmsFinishedStatusMessage>(this, MessageTokens.MainModel, OnIsAllAlgorithmsFinished);
+            Messenger.Default.Register<GraphCreatedMessage>(this, MessageTokens.MainModel, SetGraph);
         }
 
         public void ExecuteShowVertexCostCommand(object parametre)
@@ -80,7 +81,7 @@ namespace WPFVersion.ViewModel
         {
             try
             {
-                var viewModel = new PathFindingViewModel(log, this, endPoints);
+                var viewModel = new PathFindingViewModel(log, Graph, endPoints);
                 var window = new PathFindWindow();
                 PrepareWindow(viewModel, window);
             }
@@ -98,7 +99,7 @@ namespace WPFVersion.ViewModel
         {
             try
             {
-                var model = new GraphCreatingViewModel(log, this, graphAssembles);
+                var model = new GraphCreatingViewModel(log, graphAssembles);
                 var window = new GraphCreatesWindow();
                 PrepareWindow(model, window);
             }
@@ -111,6 +112,7 @@ namespace WPFVersion.ViewModel
         public override void ConnectNewGraph(IGraph graph)
         {
             base.ConnectNewGraph(graph);
+            WindowService.Adjust(graph);
             Messenger.Default.Send(new ClearStatisticsMessage(), MessageTokens.AlgorithmStatisticsModel);
         }
 
@@ -168,6 +170,11 @@ namespace WPFVersion.ViewModel
         private bool CanExecuteClearGraphOperation(object param)
         {
             return CanExecuteOperation(param) && CanExecuteGraphOperation(param);
+        }
+
+        private void SetGraph(GraphCreatedMessage message)
+        {
+            ConnectNewGraph(message.Graph);
         }
     }
 }

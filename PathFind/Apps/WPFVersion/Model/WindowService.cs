@@ -1,7 +1,6 @@
 ﻿using GraphLib.Interfaces;
 using GraphLib.Realizations.Graphs;
 using System.Windows;
-
 using static WPFVersion.Constants;
 
 namespace WPFVersion.Model

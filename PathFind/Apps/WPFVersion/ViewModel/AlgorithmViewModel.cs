@@ -73,8 +73,8 @@ namespace WPFVersion.ViewModel
             this.algorithm = algorithm;
             AlgorithmName = algorithmName;
             Status = AlgorithmStatus.Started;
-            DelayTime = delayTime;
             Index = index;
+            this.delayTime = delayTime;
         }
 
         public AlgorithmViewModel(AlgorithmStartedMessage message, int index)
@@ -86,7 +86,6 @@ namespace WPFVersion.ViewModel
         public void Interrupt()
         {
             algorithm.Interrupt();
-            Status = AlgorithmStatus.Interrupted;
         }
 
         private readonly IAlgorithm algorithm;

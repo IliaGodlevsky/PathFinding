@@ -1,10 +1,13 @@
 ﻿using Common.Interface;
+using GalaSoft.MvvmLight.Messaging;
+using GraphLib.Extensions;
 using GraphLib.Interfaces.Factories;
 using GraphLib.ViewModel;
 using GraphViewModel.Interfaces;
 using Logging.Interface;
 using System;
 using System.Collections.Generic;
+using WindowsFormsVersion.Messeges;
 
 namespace WindowsFormsVersion.ViewModel
 {
@@ -12,11 +15,24 @@ namespace WindowsFormsVersion.ViewModel
     {
         public event EventHandler WindowClosed;
 
-        public GraphCreatingViewModel(ILog log, IMainModel model,
-            IEnumerable<IGraphAssemble> graphAssembles)
-            : base(log, model, graphAssembles)
+        public GraphCreatingViewModel(ILog log, IEnumerable<IGraphAssemble> graphAssembles)
+            : base(log, graphAssembles)
         {
 
+        }
+
+        public override async void CreateGraph()
+        {
+            try
+            {
+                var graph = await SelectedGraphAssemble.AssembleGraphAsync(ObstaclePercent, GraphParametres);
+                var message = new GraphCreatedMessage(graph);
+                Messenger.Default.Send(message, MessageTokens.MainModel);
+            }
+            catch (Exception ex)
+            {
+                log.Error(ex);
+            }
         }
 
         public void CreateGraph(object sender, EventArgs e)

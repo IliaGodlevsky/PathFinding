@@ -1,4 +1,5 @@
 ﻿using ConsoleVersion.EventArguments;
+using ConsoleVersion.EventHandlers;
 using ConsoleVersion.Interface;
 using ConsoleVersion.Messages;
 using ConsoleVersion.View.Abstraction;
@@ -29,10 +30,10 @@ namespace ConsoleVersion.View
             return costWidth >= width ? costWidth + 2 : width + width - costWidth;
         }
 
-        private static void OnNewGraphCreated(object sender, NewGraphCreatedEventArgs e)
+        private void OnNewGraphCreated(GraphCreatedMessage message)
         {
             PreviousMaxValueOfRange = CurrentMaxValueOfRange;
-            if (e.NewGraph is Graph2D graph2D)
+            if (message.Graph is Graph2D graph2D)
             {
                 int pathFindingStatisticsOffset = graph2D.Length
                     + HeightOfAbscissaView * 2 + HeightOfGraphParametresView;
@@ -40,16 +41,16 @@ namespace ConsoleVersion.View
             }
         }
 
-        private static void OnCostRangeChanged(object sender, CostRangeChangedEventArgs e)
+        private void OnCostRangeChanged(CostRangeChangedMessage message)
         {
-            int upperValueRange = e.NewValueRange.UpperValueOfRange;
-            int lowerValueRange = e.NewValueRange.LowerValueOfRange;
+            int upperValueRange = message.CostRange.UpperValueOfRange;
+            int lowerValueRange = message.CostRange.LowerValueOfRange;
             int max = Math.Max(upperValueRange, Math.Abs(lowerValueRange));
             PreviousMaxValueOfRange = Math.Max(CurrentMaxValueOfRange, PreviousMaxValueOfRange);
             CurrentMaxValueOfRange = max;
         }
 
-        private static void OnStatisticsUpdated(UpdateStatisticsMessage message)
+        private void OnStatisticsUpdated(object sender, StatisticsUpdatedEventArgs e)
         {
             var coordinate = MainView.PathfindingStatisticsPosition;
             if (coordinate != null)
@@ -57,7 +58,7 @@ namespace ConsoleVersion.View
                 Console.SetCursorPosition(coordinate.X, coordinate.Y);
                 Console.Write(new string(' ', Console.BufferWidth));
                 Console.SetCursorPosition(coordinate.X, coordinate.Y);
-                Console.Write(message.Statistics);
+                Console.Write(e.Statistics);
             }
         }
 
@@ -74,13 +75,13 @@ namespace ConsoleVersion.View
 
         public MainView(MainViewModel model) : base(model)
         {
-            Messenger.Default.Register<UpdateStatisticsMessage>(this, Constants.MessageToken, OnStatisticsUpdated);
-            Model.CostRangeChanged += OnCostRangeChanged;
-            Model.NewGraphCreated += OnNewGraphCreated;
+            Messenger.Default.Register<GraphCreatedMessage>(this, MessageTokens.MainView, OnNewGraphCreated);
+            Messenger.Default.Register<CostRangeChangedMessage>(this, MessageTokens.MainView, OnCostRangeChanged);
+            Model.StatisticsUpdated += OnStatisticsUpdated;
             Model.Interrupted += OnInterrupted;
             NewMenuIteration += Model.DisplayGraph;
-            var args = new CostRangeChangedEventArgs(BaseVertexCost.CostRange);
-            OnCostRangeChanged(this, args);
+            var message = new CostRangeChangedMessage(BaseVertexCost.CostRange);
+            OnCostRangeChanged(message);
         }
 
         private static int PreviousMaxValueOfRange;

@@ -1,6 +1,4 @@
-﻿using WPFVersion.Enums;
-
-namespace WPFVersion.Messages
+﻿namespace WPFVersion.Messages
 {
     internal sealed class UpdateAlgorithmStatisticsMessage
     {
@@ -9,12 +7,10 @@ namespace WPFVersion.Messages
         public int VisitedVertices { get; }
         public double PathCost { get; }
         public int PathLength { get; }
-        public AlgorithmStatus Status { get; }
 
         public UpdateAlgorithmStatisticsMessage(int index,
             string time,
             int visitedVertices,
-            AlgorithmStatus status = AlgorithmStatus.Started,
             int pathLength = 0,
             double pathCost = 0)
         {
@@ -23,7 +19,6 @@ namespace WPFVersion.Messages
             VisitedVertices = visitedVertices;
             PathCost = pathCost;
             PathLength = pathLength;
-            Status = status;
         }
     }
 }

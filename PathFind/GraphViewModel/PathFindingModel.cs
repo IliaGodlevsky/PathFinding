@@ -13,8 +13,6 @@ using Interruptable.EventArguments;
 using Logging.Interface;
 using System;
 using System.Diagnostics;
-using System.Linq;
-using static GraphViewModel.Resources.ViewModelResources;
 
 namespace GraphViewModel
 {
@@ -28,15 +26,14 @@ namespace GraphViewModel
 
         public Tuple<string, Algorithms>[] Algorithms => algorithms.Value;
 
-        protected PathFindingModel(ILog log, IMainModel mainViewModel,
+        protected PathFindingModel(ILog log, IGraph graph,
             BaseEndPoints endPoints)
         {
-            this.mainViewModel = mainViewModel;
             this.endPoints = endPoints;
             this.log = log;
+            this.graph = graph;
             var enumValues = new EnumValuesWithoutIgnored<Algorithms>(new EnumValues<Algorithms>());
-            algorithms = new Lazy<Tuple<string, Algorithms>[]>(enumValues.ToAdjustedAndOrderedByDescriptionTuples);
-            graph = mainViewModel.Graph;
+            algorithms = new Lazy<Tuple<string, Algorithms>[]>(enumValues.ToAdjustedAndOrderedByDescriptionTuples);           
             timer = new Stopwatch();
             path = new NullGraphPath();
             algorithm = new NullAlgorithm();
@@ -47,7 +44,7 @@ namespace GraphViewModel
             try
             {
                 algorithm = Algorithm.ToAlgorithm(graph, endPoints);
-                SubscribeOnAlgorithmEvents();
+                SubscribeOnAlgorithmEvents(algorithm);
                 path = await algorithm.FindPathAsync();
                 await path.HighlightAsync(endPoints);
                 Summarize();
@@ -95,23 +92,13 @@ namespace GraphViewModel
         }
 
         protected abstract void Summarize();
-        
+
         protected virtual void OnAlgorithmStarted(object sender, ProcessEventArgs e)
         {
             timer.Restart();
         }
 
-        protected virtual string GetStatistics()
-        {
-            string timerInfo = timer.Elapsed.ToString(@"mm\:ss\.ff");
-            string description = Algorithms.FirstOrDefault(item => item.Item2 == Algorithm).Item1;
-            string pathfindingInfo = string.Format(StatisticsFormat, PathfindingInfo);
-            return string.Join("\t", description, timerInfo, pathfindingInfo);
-        }
-
-        protected string CouldntFindPathMsg => PathWasNotFoundMsg;
-
-        private void SubscribeOnAlgorithmEvents()
+        protected virtual void SubscribeOnAlgorithmEvents(IAlgorithm algorithm)
         {
             if (IsVisualizationRequired)
             {
@@ -133,15 +120,11 @@ namespace GraphViewModel
                 && vertex is IVisualizable;
         }
 
-        private object[] PathfindingInfo
-            => new object[] { path.PathLength, path.PathCost, visitedVerticesCount };
-
         protected readonly BaseEndPoints endPoints;
-        protected readonly IMainModel mainViewModel;
         protected readonly ILog log;
-        protected IAlgorithm algorithm;
         protected IGraphPath path;
-        private readonly IGraph graph;
+        protected IAlgorithm algorithm;
+        protected readonly IGraph graph;
         private readonly Lazy<Tuple<string, Algorithms>[]> algorithms;
         protected readonly Stopwatch timer;
         protected int visitedVerticesCount;

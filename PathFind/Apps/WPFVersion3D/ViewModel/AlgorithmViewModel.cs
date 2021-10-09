@@ -61,7 +61,6 @@ namespace WPFVersion3D.ViewModel
         public void Interrupt()
         {
             algorithm.Interrupt();
-            Status = AlgorithmStatuses.Interrupted;
         }
 
         private readonly IAlgorithm algorithm;

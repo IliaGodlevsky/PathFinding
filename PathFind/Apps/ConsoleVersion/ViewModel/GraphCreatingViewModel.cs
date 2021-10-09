@@ -3,6 +3,8 @@ using ConsoleVersion.Attributes;
 using ConsoleVersion.Enums;
 using ConsoleVersion.Extensions;
 using ConsoleVersion.Interface;
+using ConsoleVersion.Messages;
+using GalaSoft.MvvmLight.Messaging;
 using GraphLib.Interfaces.Factories;
 using GraphLib.ViewModel;
 using GraphViewModel.Interfaces;
@@ -13,6 +15,7 @@ using Logging.Interface;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using static ConsoleVersion.Constants;
 
 namespace ConsoleVersion.ViewModel
@@ -31,8 +34,8 @@ namespace ConsoleVersion.ViewModel
 
         public IValueInput<int> Int32Input { get; set; }
 
-        public GraphCreatingViewModel(ILog log, IMainModel model, IEnumerable<IGraphAssemble> graphAssembles)
-            : base(log, model, graphAssembles)
+        public GraphCreatingViewModel(ILog log, IEnumerable<IGraphAssemble> graphAssembles)
+            : base(log, graphAssembles)
         {
             graphAssembleKeyRange = new InclusiveValueRange<int>(graphAssembles.Count(), 1);
         }
@@ -45,7 +48,8 @@ namespace ConsoleVersion.ViewModel
                 try
                 {
                     var graph = SelectedGraphAssemble.AssembleGraph(ObstaclePercent, GraphParametres);
-                    model.ConnectNewGraph(graph);
+                    var message = new GraphCreatedMessage(graph);
+                    Messenger.Default.SendMany(message, MessageTokens.MainView, MessageTokens.MainModel);
                 }
                 catch (Exception ex)
                 {

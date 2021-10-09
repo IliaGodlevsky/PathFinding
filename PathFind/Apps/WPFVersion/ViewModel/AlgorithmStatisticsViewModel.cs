@@ -41,9 +41,18 @@ namespace WPFVersion.ViewModel
             RemoveSelelctedAlgorithmCommand = new RelayCommand(ExecuteRemoveFromStatisticsCommand, CanExecuteRemoveFromStatisticsCommand);
             Messenger.Default.Register<AlgorithmStartedMessage>(this, MessageTokens.AlgorithmStatisticsModel, OnAlgorithmStarted);
             Messenger.Default.Register<UpdateAlgorithmStatisticsMessage>(this, MessageTokens.AlgorithmStatisticsModel, UpdateAlgorithmStatistics);
-            Messenger.Default.Register<AlgorithmFinishedMessage>(this, MessageTokens.AlgorithmStatisticsModel, OnAlgorithmFinished);
             Messenger.Default.Register<InterruptAllAlgorithmsMessage>(this, MessageTokens.AlgorithmStatisticsModel, OnAllAlgorithmInterrupted);
             Messenger.Default.Register<ClearStatisticsMessage>(this, MessageTokens.AlgorithmStatisticsModel, OnClearStatistics);
+            Messenger.Default.Register<AlgorithmStatusMessage>(this, MessageTokens.AlgorithmStatisticsModel, SetAlgorithmStatistics);
+        }
+
+        private void SetAlgorithmStatistics(AlgorithmStatusMessage message)
+        {
+            if (Statistics[message.Index].Status != AlgorithmStatus.Interrupted)
+            {
+                Statistics[message.Index].Status = message.Status;
+                SendIsAllFinishedMessage();
+            }
         }
 
         private void OnAlgorithmStarted(AlgorithmStartedMessage message)
@@ -52,7 +61,7 @@ namespace WPFVersion.ViewModel
             var msg = new AlgorithmStatisticsIndexMessage(index);
             Messenger.Default.Send(msg, MessageTokens.PathfindingModel);
             var viewModel = new AlgorithmViewModel(message, index);
-            Application.Current.Dispatcher.Invoke(() => Statistics.Add(viewModel));           
+            Application.Current.Dispatcher.Invoke(() => Statistics.Add(viewModel));
             SendIsAllFinishedMessage();
         }
 
@@ -61,16 +70,9 @@ namespace WPFVersion.ViewModel
             Application.Current.Dispatcher.Invoke(() => Statistics[message.Index].RecieveMessage(message));
         }
 
-        private void OnAlgorithmFinished(AlgorithmFinishedMessage message)
-        {
-            Statistics[message.Index].Status = AlgorithmStatus.Finished;
-            SendIsAllFinishedMessage();
-        }
-
         private void OnAllAlgorithmInterrupted(InterruptAllAlgorithmsMessage message)
         {
             Statistics.ForEach(stat => stat.TryInterrupt());
-            SendIsAllFinishedMessage();
         }
 
         private void OnClearStatistics(ClearStatisticsMessage message)
@@ -87,14 +89,13 @@ namespace WPFVersion.ViewModel
 
         private bool CanExecuteRemoveFromStatisticsCommand(object param)
         {
-            return SelectedAlgorithm?.IsStarted() == false 
+            return SelectedAlgorithm?.IsStarted() == false
                 && Statistics.All(stat => !stat.IsStarted());
         }
 
         private void ExecuteInterruptSelectedAlgorithmCommand(object param)
         {
             SelectedAlgorithm?.TryInterrupt();
-            SendIsAllFinishedMessage();
         }
 
         private bool CanExecuteInterruptSelectedAlgorithmCommand(object param)

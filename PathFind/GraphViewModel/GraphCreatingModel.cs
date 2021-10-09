@@ -1,10 +1,12 @@
 ﻿using Common.Extensions;
 using GraphLib.Extensions;
+using GraphLib.Interfaces;
 using GraphLib.Interfaces.Factories;
 using GraphViewModel.Interfaces;
 using Logging.Interface;
 using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace GraphLib.ViewModel
 {
@@ -20,32 +22,19 @@ namespace GraphLib.ViewModel
 
         public virtual IGraphAssemble SelectedGraphAssemble { get; set; }
 
-        protected GraphCreatingModel(ILog log, IMainModel model,
+        protected GraphCreatingModel(ILog log,
             IEnumerable<IGraphAssemble> graphAssembles)
         {
             GraphAssembles = graphAssembles.ToNameInstanceDictionary();
-            this.model = model;
             this.graphAssembles = graphAssembles;
             this.log = log;
         }
 
-        public virtual async void CreateGraph()
-        {
-            try
-            {
-                var graph = await SelectedGraphAssemble
-                    .AssembleGraphAsync(ObstaclePercent, GraphParametres);
-                model.ConnectNewGraph(graph);
-            }
-            catch (Exception ex)
-            {
-                log.Error(ex);
-            }
-        }
+        public abstract void CreateGraph();
 
         protected virtual int[] GraphParametres => new[] { Width, Length };
 
-        protected readonly IMainModel model;
+        protected IGraph graph;
         protected readonly IEnumerable<IGraphAssemble> graphAssembles;
         protected readonly ILog log;
     }

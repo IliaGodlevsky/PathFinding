@@ -1,13 +1,17 @@
 ﻿using Algorithm.Infrastructure.EventArguments;
 using Common.Extensions;
 using Common.Interface;
+using GalaSoft.MvvmLight.Messaging;
 using GraphLib.Base;
+using GraphLib.Interfaces;
 using GraphViewModel;
 using GraphViewModel.Interfaces;
 using Interruptable.EventArguments;
 using Logging.Interface;
 using System;
+using System.Diagnostics;
 using System.Linq;
+using WindowsFormsVersion.Messeges;
 
 namespace WindowsFormsVersion.ViewModel
 {
@@ -15,8 +19,8 @@ namespace WindowsFormsVersion.ViewModel
     {
         public event EventHandler WindowClosed;
 
-        public PathFindingViewModel(ILog log, IMainModel model, BaseEndPoints endPoints)
-            : base(log, model, endPoints)
+        public PathFindingViewModel(ILog log, IGraph graph, BaseEndPoints endPoints)
+            : base(log, graph, endPoints)
         {
 
         }
@@ -24,47 +28,33 @@ namespace WindowsFormsVersion.ViewModel
         protected override void OnAlgorithmFinished(object sender, ProcessEventArgs e)
         {
             base.OnAlgorithmFinished(sender, e);
-            if (mainViewModel is MainWindowViewModel mainModel)
-            {
-                mainModel.IsPathfindingStarted = false;
-            }
+            Messenger.Default.Send(new AlgorithmStatusMessage(false), MessageTokens.MainModel);
         }
 
         protected override void OnAlgorithmStarted(object sender, ProcessEventArgs e)
         {
             base.OnAlgorithmStarted(sender, e);
-            if (mainViewModel is MainWindowViewModel mainModel)
-            {
-                mainModel.IsPathfindingStarted = true;
-            }
+            Messenger.Default.Send(new AlgorithmStatusMessage(true), MessageTokens.MainModel);
         }
 
         protected override void Summarize()
         {
-            if (mainViewModel is MainWindowViewModel mainModel)
-            {
-                mainModel.PathFindingStatistics
-                    = path.PathLength > 0 ? GetStatistics() : CouldntFindPathMsg;
-            }
+            string statistics = path.PathLength > 0 ? Statistics : CouldntFindPath;
+            var message = new UpdateStatisticsMessage(statistics);
+            Messenger.Default.Send(message, MessageTokens.MainModel);
         }
 
         protected override void OnVertexVisited(object sender, AlgorithmEventArgs e)
         {
             base.OnVertexVisited(sender, e);
-            if (mainViewModel is MainWindowViewModel mainModel)
-            {
-                mainModel.PathFindingStatistics = GetStatistics();
-            }
-            timer.Wait(DelayTime);
+            Messenger.Default.Send(new UpdateStatisticsMessage(Statistics), MessageTokens.MainModel);
+            Stopwatch.StartNew().Pause(DelayTime).Cancel();
         }
 
         protected override void OnAlgorithmInterrupted(object sender, ProcessEventArgs e)
         {
             base.OnAlgorithmInterrupted(sender, e);
-            if (mainViewModel is MainWindowViewModel mainModel)
-            {
-                mainModel.IsPathfindingStarted = false;
-            }
+            Messenger.Default.Send(new AlgorithmStatusMessage(false), MessageTokens.MainModel);
         }
 
         public void StartPathfinding(object sender, EventArgs e)
@@ -77,6 +67,8 @@ namespace WindowsFormsVersion.ViewModel
             }
         }
 
+
+
         public void CancelPathFinding(object sender, EventArgs e)
         {
             WindowClosed?.Invoke(this, EventArgs.Empty);
@@ -87,5 +79,21 @@ namespace WindowsFormsVersion.ViewModel
         {
             return Algorithms.Any(item => item.Item2 == Algorithm);
         }
+
+        private string Statistics
+        {
+            get
+            {
+                string timerInfo = timer.ToFormattedString();
+                string description = Algorithms.FirstOrDefault(item => item.Item2 == Algorithm).Item1;
+                string pathfindingInfo = string.Format(Format, PathfindingInfo);
+                return string.Join("\t", description, timerInfo, pathfindingInfo);
+            }
+        }
+
+        private object[] PathfindingInfo => new object[] { path.PathLength, path.PathCost, visitedVerticesCount };
+
+        private readonly string Format = "Steps: {0}  Path cost: {1}  Visited: {2}";
+        private readonly string CouldntFindPath = "Could't fing path";
     }
 }

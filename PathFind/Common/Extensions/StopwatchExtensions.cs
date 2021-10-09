@@ -24,5 +24,28 @@ namespace Common.Extensions
                 }
             }
         }
+
+        public static Stopwatch Run(this Stopwatch self)
+        {
+            self.Start();
+            return self;
+        }
+
+        public static Stopwatch Cancel(this Stopwatch self)
+        {
+            self.Stop();
+            return self;
+        }
+
+        public static Stopwatch Pause(this Stopwatch self, int milliseconds)
+        {
+            self.Wait(milliseconds);
+            return self;
+        }
+
+        public static string ToFormattedString(this Stopwatch self)
+        {
+            return self.Elapsed.ToString(@"mm\:ss\.ff");
+        }
     }
 }

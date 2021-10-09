@@ -79,13 +79,14 @@ namespace WPFVersion3D.ViewModel
             InterruptAlgorithmCommand = new RelayCommand(ExecuteInterruptAlgorithmCommand, CanExecuteInterruptAlgorithmCommand);
             animationSpeeds = new Lazy<Tuple<string, BaseAnimationSpeed>[]>(new EnumValues<AnimationSpeeds>().ToAnimationSpeedTuples);
             Messenger.Default.Register<AlgorithmsFinishedStatusMessage>(this, MessageTokens.MainModel, OnIsAllAlgorithmsFinished);
+            Messenger.Default.Register<GraphCreatedMessage>(this, MessageTokens.MainModel, SetGraph);
         }
 
         public override void FindPath()
         {
             try
             {
-                var viewModel = new PathFindingViewModel(log, this, endPoints);
+                var viewModel = new PathFindingViewModel(log, Graph, endPoints);
                 var window = new PathFindWindow();
                 PrepareWindow(viewModel, window);
             }
@@ -103,7 +104,7 @@ namespace WPFVersion3D.ViewModel
         {
             try
             {
-                var model = new GraphCreatingViewModel(log, this, graphAssembles);
+                var model = new GraphCreatingViewModel(log, graphAssembles);
                 var window = new GraphCreateWindow();
                 PrepareWindow(model, window);
             }
@@ -200,6 +201,11 @@ namespace WPFVersion3D.ViewModel
         private bool CanExecuteOperation(object param)
         {
             return IsAllAlgorithmsFinished;
+        }
+
+        private void SetGraph(GraphCreatedMessage message)
+        {
+            ConnectNewGraph(message.Graph);
         }
 
         private readonly Lazy<Tuple<string, BaseAnimationSpeed>[]> animationSpeeds;
