@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using System.Reflection;
 
 namespace Common.Extensions
@@ -41,6 +42,16 @@ namespace Common.Extensions
                 action = null;
                 return false;
             }
+        }
+
+        public static TValue[] GetValuesOfStaticClassProperties<TValue>(this Type classType, params string[] exceptNamesOfProperties)
+        {
+            return classType
+                .GetProperties()
+                .Where(property => !exceptNamesOfProperties.Contains(property.Name))
+                .Select(property => property.GetValue(null))
+                .OfType<TValue>()
+                .ToArray();
         }
     }
 }

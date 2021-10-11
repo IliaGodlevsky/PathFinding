@@ -51,18 +51,18 @@ namespace WPFVersion.ViewModel
             if (Statistics[message.Index].Status != AlgorithmStatus.Interrupted)
             {
                 Statistics[message.Index].Status = message.Status;
-                SendIsAllFinishedMessage();
+                SendIsAllAlgorithmsFinishedMessage();
             }
         }
 
         private void OnAlgorithmStarted(AlgorithmStartedMessage message)
         {
             int index = Statistics.Count;
-            var msg = new AlgorithmStatisticsIndexMessage(index);
+            var msg = new AlgorithmIndexMessage(index);
             Messenger.Default.Send(msg, MessageTokens.PathfindingModel);
             var viewModel = new AlgorithmViewModel(message, index);
             Application.Current.Dispatcher.Invoke(() => Statistics.Add(viewModel));
-            SendIsAllFinishedMessage();
+            SendIsAllAlgorithmsFinishedMessage();
         }
 
         private void UpdateAlgorithmStatistics(UpdateAlgorithmStatisticsMessage message)
@@ -78,13 +78,13 @@ namespace WPFVersion.ViewModel
         private void OnClearStatistics(ClearStatisticsMessage message)
         {
             Statistics.Clear();
-            SendIsAllFinishedMessage();
+            SendIsAllAlgorithmsFinishedMessage();
         }
 
         private void ExecuteRemoveFromStatisticsCommand(object param)
         {
             Statistics.Remove(SelectedAlgorithm);
-            SendIsAllFinishedMessage();
+            SendIsAllAlgorithmsFinishedMessage();
         }
 
         private bool CanExecuteRemoveFromStatisticsCommand(object param)
@@ -103,10 +103,10 @@ namespace WPFVersion.ViewModel
             return SelectedAlgorithm?.IsStarted() == true;
         }
 
-        private void SendIsAllFinishedMessage()
+        private void SendIsAllAlgorithmsFinishedMessage()
         {
             var isAllFinished = Statistics.All(stat => !stat.IsStarted());
-            var message = new AlgorithmsFinishedStatusMessage(isAllFinished);
+            var message = new IsAllAlgorithmsFinishedMessage(isAllFinished);
             Messenger.Default.Send(message, MessageTokens.MainModel);
         }
     }

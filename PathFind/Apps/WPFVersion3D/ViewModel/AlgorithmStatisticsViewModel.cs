@@ -60,7 +60,7 @@ namespace WPFVersion3D.ViewModel
             int index = Statistics.Count;
             var viewModel = new AlgorithmViewModel(message.Algorithm, message.AlgorithmName);
             Application.Current.Dispatcher.Invoke(() => Statistics.Add(viewModel));
-            var msg = new AlgorithmStatisticsIndexMessage(index);
+            var msg = new AlgorithmIndexMessage(index);
             Messenger.Default.Send(msg, MessageTokens.PathfindingModel);
             SendIsAllFinishedMessage();
         }
@@ -105,7 +105,7 @@ namespace WPFVersion3D.ViewModel
         private void SendIsAllFinishedMessage()
         {
             var isAllFinished = Statistics.All(stat => !stat.IsStarted());
-            var message = new AlgorithmsFinishedStatusMessage(isAllFinished);
+            var message = new IsAllAlgorithmsFinishedMessage(isAllFinished);
             Messenger.Default.Send(message, MessageTokens.MainModel);
         }
     }

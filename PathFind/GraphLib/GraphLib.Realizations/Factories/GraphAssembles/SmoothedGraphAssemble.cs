@@ -38,9 +38,8 @@ namespace GraphLib.Realizations.Factories.GraphAssembles
                 visited.Add(vertex);
                 if (visited.HasUnvisitedNeighbours(vertex))
                 {
-                    double avgCost = visited
-                        .GetUnvisitedNeighbours(vertex)
-                        .Average(neighbour => averageCost.Calculate(neighbour, vertex));
+                    int Calculate(IVertex neighbour) => averageCost.Calculate(neighbour, vertex);
+                    double avgCost = visited.GetUnvisitedNeighbours(vertex).Average(Calculate);
                     int cost = Convert.ToInt32(Math.Round(avgCost, 0));
                     vertex.Cost = costFactory.CreateCost(cost);
                 }

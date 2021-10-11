@@ -19,6 +19,10 @@ namespace ConsoleVersion.View
         public static int WidthOfOrdinateView
             => Constants.GraphLengthValueRange.UpperValueOfRange.ToString().Length + 1;
 
+        public static Coordinate2D GraphFieldPosition { get; }
+
+        public static Coordinate2D PathfindingStatisticsPosition { get; private set; }
+
         public static int GetLateralDistanceBetweenVertices()
         {
             int currentCostWidth = CurrentMaxValueOfRange.ToString().Length;
@@ -28,13 +32,30 @@ namespace ConsoleVersion.View
             return costWidth >= width ? costWidth + 2 : width + width - costWidth;
         }
 
+        static MainView()
+        {
+            int x = WidthOfOrdinateView;
+            int y = HeightOfAbscissaView + HeightOfGraphParametresView;
+            GraphFieldPosition = new Coordinate2D(x, y);
+        }
+
+        public MainView(MainViewModel model) : base(model)
+        {
+            Messenger.Default.Register<GraphCreatedMessage>(this, MessageTokens.MainView, OnNewGraphCreated);
+            Messenger.Default.Register<CostRangeChangedMessage>(this, MessageTokens.MainView, OnCostRangeChanged);
+            Messenger.Default.Register<UpdateStatisticsMessage>(this, MessageTokens.MainView, OnStatisticsUpdated);
+            Model.Interrupted += OnInterrupted;
+            NewMenuIteration += Model.DisplayGraph;
+            var message = new CostRangeChangedMessage(BaseVertexCost.CostRange);
+            OnCostRangeChanged(message);
+        }
+
         private void OnNewGraphCreated(GraphCreatedMessage message)
         {
             PreviousMaxValueOfRange = CurrentMaxValueOfRange;
             if (message.Graph is Graph2D graph2D)
             {
-                int pathFindingStatisticsOffset = graph2D.Length
-                    + HeightOfAbscissaView * 2 + HeightOfGraphParametresView;
+                int pathFindingStatisticsOffset = graph2D.Length + HeightOfAbscissaView * 2 + HeightOfGraphParametresView;
                 PathfindingStatisticsPosition = new Coordinate2D(0, pathFindingStatisticsOffset);
             }
         }
@@ -58,28 +79,6 @@ namespace ConsoleVersion.View
                 Console.SetCursorPosition(coordinate.X, coordinate.Y);
                 Console.Write(message.Statistics);
             }
-        }
-
-        public static Coordinate2D GraphFieldPosition { get; set; }
-
-        public static Coordinate2D PathfindingStatisticsPosition { get; set; }
-
-        static MainView()
-        {
-            int x = WidthOfOrdinateView;
-            int y = HeightOfAbscissaView + HeightOfGraphParametresView;
-            GraphFieldPosition = new Coordinate2D(x, y);
-        }
-
-        public MainView(MainViewModel model) : base(model)
-        {
-            Messenger.Default.Register<GraphCreatedMessage>(this, MessageTokens.MainView, OnNewGraphCreated);
-            Messenger.Default.Register<CostRangeChangedMessage>(this, MessageTokens.MainView, OnCostRangeChanged);
-            Messenger.Default.Register<UpdateStatisticsMessage>(this, MessageTokens.MainView, OnStatisticsUpdated);
-            Model.Interrupted += OnInterrupted;
-            NewMenuIteration += Model.DisplayGraph;
-            var message = new CostRangeChangedMessage(BaseVertexCost.CostRange);
-            OnCostRangeChanged(message);
         }
 
         private static int PreviousMaxValueOfRange;

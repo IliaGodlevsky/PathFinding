@@ -18,7 +18,7 @@ namespace GraphLib.Realizations.NeighboursCoordinates
         public CardinalNeighboursCoordinates(ICoordinate coordinate)
         {
             coordinates = new Lazy<ICoordinate[]>(DetectNeighboursCoordinates);
-            coordinatesValues = coordinate.CoordinatesValues.ToCoordinate();
+            coordinatesValues = coordinate;
             neighboursCoordinates = new AroundNeighboursCoordinates(coordinatesValues);
         }
 

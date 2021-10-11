@@ -10,10 +10,12 @@ namespace EnumerationValues.Realizations
     {
         public TEnum[] Values => valuesWithoutIgnored.Value;
 
-        public EnumValuesWithoutIgnored(IEnumValues<TEnum> enumValues)
+        public EnumValuesWithoutIgnored()
         {
-            valuesWithoutIgnored = new Lazy<TEnum[]>(enumValues.Values
-                .Where(value => !value.IsIgnored()).ToArray);
+            valuesWithoutIgnored = new Lazy<TEnum[]>(new EnumValues<TEnum>()
+                .Values
+                .Where(value => !value.IsIgnored())
+                .ToArray);
         }
 
         private readonly Lazy<TEnum[]> valuesWithoutIgnored;

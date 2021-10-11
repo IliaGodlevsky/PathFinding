@@ -54,8 +54,7 @@ namespace WPFVersion3D.Model3DFactories
                     var p1 = points[latitude + 1, meridian];
                     var p2 = points[latitude + 1, meridian + 1];
                     var p3 = points[latitude, meridian + 1];
-                    yield return reactangleFactory
-                        .CreateRectangleModel(p0, p1, p2, p3, material);
+                    yield return reactangleFactory.CreateRectangleModel(p0, p1, p2, p3, material);
                 }
             }
         }

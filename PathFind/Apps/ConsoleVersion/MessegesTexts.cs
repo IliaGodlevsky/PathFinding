@@ -8,6 +8,7 @@
         public const string IntermediateVertexChoiceMsg = "Choose intermediate vertex: ";
         public const string AlgorithmChoiceMsg = "Choose algorithm: ";
         public const string GraphAssembleChoiceMsg = "Choose graph assemble: ";
+        public const string ApplyVisualizationMsg = "Apply visualization <yes/no>?: ";
         public const string ExitAppMsg = "Do you want to exit <yes/no>?: ";
         public const string DelayTimeInputMsg = "Input delay time: ";
         public const string GraphHeightInputMsg = "Input height of graph: ";
@@ -18,7 +19,6 @@
         public const string NoVerticesAsEndPointsMsg = "No vertices to choose as end points";
         public const string ObstaclePercentInputMsg = "Input percent of obstacles: ";
         public const string MenuOptionChoiceMsg = "Choose menu option: ";
-        public const string ApplyVisualizationMsg = "Apply visualization <yes/no>?: ";
         public const string XCoordinateInputMsg = "Input X coordinate of vertex: ";
         public const string YCoordinateInputMsg = "Input Y coordinate of vertex: ";
         public const string EndPointsFirstlyMsg = "Firstly choose endpoints";

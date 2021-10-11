@@ -40,12 +40,12 @@ namespace WPFVersion3D.ViewModel
                 ExecuteConfirmPathFindAlgorithmChoice,
                 CanExecuteConfirmPathFindAlgorithmChoice);
             CancelPathFindAlgorithmChoice = new RelayCommand(ExecuteCloseWindowCommand);
-            Messenger.Default.Register<AlgorithmStatisticsIndexMessage>(this, MessageTokens.PathfindingModel, SetAlgorithmIndex);
+            Messenger.Default.Register<AlgorithmIndexMessage>(this, MessageTokens.PathfindingModel, SetAlgorithmIndex);
         }
 
-        private void SetAlgorithmIndex(AlgorithmStatisticsIndexMessage message)
+        private void SetAlgorithmIndex(AlgorithmIndexMessage message)
         {
-            Messenger.Default.Unregister<AlgorithmStatisticsIndexMessage>(this, MessageTokens.PathfindingModel, SetAlgorithmIndex);
+            Messenger.Default.Unregister<AlgorithmIndexMessage>(this, MessageTokens.PathfindingModel, SetAlgorithmIndex);
             Index = message.Index;
         }
 

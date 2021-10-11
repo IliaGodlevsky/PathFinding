@@ -1,10 +1,10 @@
 ﻿namespace WPFVersion.Messages
 {
-    internal sealed class AlgorithmStatisticsIndexMessage
+    internal sealed class AlgorithmIndexMessage
     {
         public int Index { get; }
 
-        public AlgorithmStatisticsIndexMessage(int index)
+        public AlgorithmIndexMessage(int index)
         {
             Index = index;
         }

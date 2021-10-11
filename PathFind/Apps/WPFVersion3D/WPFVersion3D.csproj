@@ -79,8 +79,8 @@
     <Compile Include="Extensions\AlgorithmViewModelExtensions.cs" />
     <Compile Include="Extensions\EnumValuesExtensions.cs" />
     <Compile Include="Messages\AlgorithmStartedMessage.cs" />
-    <Compile Include="Messages\AlgorithmStatisticsIndexMessage.cs" />
-    <Compile Include="Messages\AlgorithmsFinishedStatusMessage.cs" />
+    <Compile Include="Messages\AlgorithmIndexMessage.cs" />
+    <Compile Include="Messages\IsAllAlgorithmsFinishedMessage.cs" />
     <Compile Include="Messages\AlgorithmStatusMessage.cs" />
     <Compile Include="Messages\ClearStatisticsMessage.cs" />
     <Compile Include="Messages\GraphCreatedMessage.cs" />

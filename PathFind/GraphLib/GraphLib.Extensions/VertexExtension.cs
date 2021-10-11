@@ -164,7 +164,7 @@ namespace GraphLib.Extensions
                 .Where(coordinate => coordinate.IsWithinGraph(graph))
                 .Select(coordinate => graph[coordinate])
                 .Where(vertex => self.CanBeNeighbour(vertex))
-                .ToList();
+                .ToArray();
         }
     }
 }

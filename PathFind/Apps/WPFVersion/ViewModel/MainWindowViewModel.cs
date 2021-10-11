@@ -68,7 +68,7 @@ namespace WPFVersion.ViewModel
             LoadGraphCommand = new RelayCommand(ExecuteLoadGraphCommand, CanExecuteOperation);
             ShowVertexCost = new RelayCommand(ExecuteShowVertexCostCommand, CanExecuteOperation);
             InterruptAlgorithmCommand = new RelayCommand(ExecuteInterruptAlgorithmCommand, CanExecuteInterruptAlgorithmCommand);
-            Messenger.Default.Register<AlgorithmsFinishedStatusMessage>(this, MessageTokens.MainModel, OnIsAllAlgorithmsFinished);
+            Messenger.Default.Register<IsAllAlgorithmsFinishedMessage>(this, MessageTokens.MainModel, OnIsAllAlgorithmsFinished);
             Messenger.Default.Register<GraphCreatedMessage>(this, MessageTokens.MainModel, SetGraph);
         }
 
@@ -124,7 +124,7 @@ namespace WPFVersion.ViewModel
             window.Show();
         }
 
-        private void OnIsAllAlgorithmsFinished(AlgorithmsFinishedStatusMessage message)
+        private void OnIsAllAlgorithmsFinished(IsAllAlgorithmsFinishedMessage message)
         {
             IsAllAlgorithmsFinished = message.IsAllAlgorithmsFinished;
         }

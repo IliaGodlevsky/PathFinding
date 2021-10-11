@@ -39,7 +39,7 @@ namespace ConsoleVersion.ViewModel
             : base(log, graph, endPoints)
         {
             algorithmKeysValueRange = new InclusiveValueRange<int>(Algorithms.Length, 1);
-            keyStrokesHook = new ConsoleKeystrokesHook(ConsoleKey.Escape, ConsoleKey.End);
+            keystrokesHook = new ConsoleKeystrokesHook(ConsoleKey.Escape, ConsoleKey.End);
         }
 
         [MenuItem(MenuItemsNames.FindPath, MenuItemPriority.Highest)]
@@ -51,8 +51,8 @@ namespace ConsoleVersion.ViewModel
                 {
                     Console.CursorVisible = false;
                     base.FindPath();
-                    keyStrokesHook.StartHookingConsoleKeystrokes();
-                    keyStrokesHook.KeystrokeHooked -= algorithm.Interrupt;
+                    keystrokesHook.StartHookingConsoleKeystrokes();
+                    keystrokesHook.KeystrokeHooked -= algorithm.Interrupt;
                     Console.CursorVisible = true;
                 }
                 catch (Exception ex)
@@ -66,21 +66,7 @@ namespace ConsoleVersion.ViewModel
             }
         }
 
-        protected override void Summarize()
-        {
-            string statistics = !path.IsNull() ? Statistics : MessagesTexts.CouldntFindPathMsg;
-            var message = new UpdateStatisticsMessage(statistics);
-            Messenger.Default.Send(message, MessageTokens.MainView);
-            visitedVerticesCount = 0;
-        }
 
-        protected override void OnVertexVisited(object sender, AlgorithmEventArgs e)
-        {
-            Stopwatch.StartNew().Pause(DelayTime).Cancel();
-            var message = new UpdateStatisticsMessage(Statistics);
-            Messenger.Default.Send(message, MessageTokens.MainView);
-            base.OnVertexVisited(sender, e);
-        }
 
         [MenuItem(MenuItemsNames.ChooseAlgorithm, MenuItemPriority.High)]
         public void ChooseAlgorithm()
@@ -139,30 +125,42 @@ namespace ConsoleVersion.ViewModel
             IsVisualizationRequired = answer == Answer.Yes;
         }
 
+        protected override void Summarize()
+        {
+            string statistics = !path.IsNull() ? GetStatistics() : MessagesTexts.CouldntFindPathMsg;
+            var message = new UpdateStatisticsMessage(statistics);
+            Messenger.Default.Send(message, MessageTokens.MainView);
+            visitedVerticesCount = 0;
+        }
+
+        protected override void OnVertexVisited(object sender, AlgorithmEventArgs e)
+        {
+            Stopwatch.StartNew().Pause(DelayTime).Cancel();
+            var message = new UpdateStatisticsMessage(GetStatistics());
+            Messenger.Default.Send(message, MessageTokens.MainView);
+            base.OnVertexVisited(sender, e);
+        }
+
         protected override void SubscribeOnAlgorithmEvents(IAlgorithm algorithm)
         {
             base.SubscribeOnAlgorithmEvents(algorithm);
-            algorithm.Finished += keyStrokesHook.CancelHookingConsoleKeystrokes;
-            keyStrokesHook.KeystrokeHooked += algorithm.Interrupt; 
+            algorithm.Finished += keystrokesHook.CancelHookingConsoleKeystrokes;
+            keystrokesHook.KeystrokeHooked += algorithm.Interrupt; 
         }
 
-        private string Statistics
+        private string GetStatistics()
         {
-            get
-            {
-                string timerInfo = timer.ToFormattedString();
-                string description = Algorithms.FirstOrDefault(item => item.Item2 == Algorithm).Item1;
-                string pathfindingInfo = string.Format(MessagesTexts.PathfindingStatisticsFormat, PathfindingInfo);
-                return string.Join("\t", description, timerInfo, pathfindingInfo);
-            }
+            string timerInfo = timer.ToFormattedString();
+            string description = Algorithms.FirstOrDefault(item => item.Item2 == Algorithm).Item1;
+            var pathfindingInfos = new object[] { path.PathLength, path.PathCost, visitedVerticesCount };
+            string pathfindingInfo = string.Format(MessagesTexts.PathfindingStatisticsFormat, pathfindingInfos);
+            return string.Join("\t", description, timerInfo, pathfindingInfo);
         }
-
-        private object[] PathfindingInfo => new object[] { path.PathLength, path.PathCost, visitedVerticesCount };
 
         private int NumberOfAvailableIntermediate => graph.Size - graph.Vertices.Count(v => v.IsIsolated()) - 2;
         private bool HasAnyVerticesToChooseAsEndPoints => NumberOfAvailableIntermediate >= 0;
 
         private readonly InclusiveValueRange<int> algorithmKeysValueRange;
-        private readonly ConsoleKeystrokesHook keyStrokesHook;
+        private readonly ConsoleKeystrokesHook keystrokesHook;
     }
 }

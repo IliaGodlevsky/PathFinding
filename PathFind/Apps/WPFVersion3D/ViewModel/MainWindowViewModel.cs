@@ -37,18 +37,10 @@ namespace WPFVersion3D.ViewModel
         }
 
         private string graphParametres;
-        public override string GraphParametres
-        {
-            get => graphParametres;
-            set { graphParametres = value; OnPropertyChanged(); }
-        }
+        public override string GraphParametres { get => graphParametres; set { graphParametres = value; OnPropertyChanged(); } }
 
         private IGraphField graphField;
-        public override IGraphField GraphField
-        {
-            get => graphField;
-            set { graphField = value; OnPropertyChanged(); }
-        }
+        public override IGraphField GraphField { get => graphField; set { graphField = value; OnPropertyChanged(); } }
 
         private bool IsAllAlgorithmsFinished { get; set; } = true;
 
@@ -77,8 +69,8 @@ namespace WPFVersion3D.ViewModel
             ChangeOpacityCommand = new RelayCommand(ExecuteChangeOpacity, CanExecuteGraphOperation);
             AnimatedAxisRotateCommand = new RelayCommand(ExecuteAnimatedAxisRotateCommand);
             InterruptAlgorithmCommand = new RelayCommand(ExecuteInterruptAlgorithmCommand, CanExecuteInterruptAlgorithmCommand);
-            animationSpeeds = new Lazy<Tuple<string, BaseAnimationSpeed>[]>(new EnumValues<AnimationSpeeds>().ToAnimationSpeedTuples);
-            Messenger.Default.Register<AlgorithmsFinishedStatusMessage>(this, MessageTokens.MainModel, OnIsAllAlgorithmsFinished);
+            animationSpeeds = new Lazy<Tuple<string, BaseAnimationSpeed>[]>(new EnumValuesWithoutIgnored<AnimationSpeeds>().ToAnimationSpeedTuples);
+            Messenger.Default.Register<IsAllAlgorithmsFinishedMessage>(this, MessageTokens.MainModel, OnIsAllAlgorithmsFinished);
             Messenger.Default.Register<GraphCreatedMessage>(this, MessageTokens.MainModel, SetGraph);
         }
 
@@ -142,7 +134,7 @@ namespace WPFVersion3D.ViewModel
             ClearColors();
         }
 
-        private void OnIsAllAlgorithmsFinished(AlgorithmsFinishedStatusMessage message)
+        private void OnIsAllAlgorithmsFinished(IsAllAlgorithmsFinishedMessage message)
         {
             IsAllAlgorithmsFinished = message.IsAllAlgorithmsFinished;
         }

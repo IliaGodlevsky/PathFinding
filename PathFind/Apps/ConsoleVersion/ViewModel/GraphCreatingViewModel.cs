@@ -71,7 +71,7 @@ namespace ConsoleVersion.ViewModel
             Length = Int32Input.InputValue(MessagesTexts.GraphHeightInputMsg, GraphLengthValueRange);
         }
 
-        [MenuItem(MenuItemsNames.InputObstaclePercent, MenuItemPriority.Low)]
+        [MenuItem(MenuItemsNames.InputObstaclePercent, MenuItemPriority.Normal)]
         public void InputObstaclePercent()
         {
             ObstaclePercent = Int32Input.InputValue(MessagesTexts.ObstaclePercentInputMsg, ObstaclesPercentValueRange);

@@ -28,7 +28,8 @@
             <RowDefinition Height="Auto"></RowDefinition>
             <RowDefinition Height="Auto"></RowDefinition>
         </Grid.RowDefinitions>
-        
+
+        <ListBox Grid.Row="5"></ListBox>
         <TextBlock Margin="5" 
                    Text="Obstacle percent" 
                    Grid.Row="0" 

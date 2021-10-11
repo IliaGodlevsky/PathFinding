@@ -1,5 +1,5 @@
-﻿using System;
-using System.Linq;
+﻿using Common.Extensions;
+using System;
 
 namespace ConsoleVersion
 {
@@ -13,16 +13,12 @@ namespace ConsoleVersion
         {
             MainModel = Guid.NewGuid();
             MainView = Guid.NewGuid();
-            everyone = new Lazy<Guid[]>(GetAllModelTokens, isThreadSafe: true);
+            everyone = new Lazy<Guid[]>(GetEveryoneTokens, isThreadSafe: true);
         }
 
-        private static Guid[] GetAllModelTokens()
+        private static Guid[] GetEveryoneTokens()
         {
-            return typeof(MessageTokens)
-                .GetProperties()
-                .Where(property => !property.Name.Equals(nameof(Everyone)))
-                .Select(property => (Guid)property.GetValue(null))
-                .ToArray();
+            return typeof(MessageTokens).GetValuesOfStaticClassProperties<Guid>(nameof(Everyone));
         }
 
         private static readonly Lazy<Guid[]> everyone;
