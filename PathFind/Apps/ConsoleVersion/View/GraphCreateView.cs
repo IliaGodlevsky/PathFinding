@@ -1,7 +1,6 @@
 ﻿using ConsoleVersion.Interface;
 using ConsoleVersion.View.Abstraction;
 using ConsoleVersion.ViewModel;
-using static ConsoleVersion.Resource.Resources;
 
 namespace ConsoleVersion.View
 {
@@ -11,10 +10,7 @@ namespace ConsoleVersion.View
         {
             var keys = model.GraphAssembles.Keys;
             string graphAssembleMenu = new MenuList(keys, 1).ToString();
-            Model.GraphAssembleInpuMessage = graphAssembleMenu + ChooseGraphAssemble;
-            Model.ObstaclePercentInputMessage = ObstaclePercentInputMsg;
-            Model.WidthInputMessage = WidthInputMsg;
-            Model.HeightInputMessage = HeightInputMsg;
+            Model.GraphAssembleInpuMessage = graphAssembleMenu + MessagesTexts.GraphAssembleChoiceMsg;
         }
     }
 }

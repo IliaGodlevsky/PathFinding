@@ -10,7 +10,6 @@ using System.Collections.Generic;
 using System.Windows.Input;
 using WPFVersion.Infrastructure;
 using WPFVersion.Messages;
-using WPFVersion.Model;
 
 namespace WPFVersion.ViewModel
 {
@@ -37,7 +36,7 @@ namespace WPFVersion.ViewModel
                 var message = new GraphCreatedMessage(graph);
                 Messenger.Default.Send(message, MessageTokens.MainModel);
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 log.Error(ex);
             }
@@ -45,7 +44,7 @@ namespace WPFVersion.ViewModel
 
         private void ExecuteConfirmCreateGraphCommand(object param)
         {
-            CreateGraph();           
+            CreateGraph();
             ExecuteCloseWindowCommand(null);
         }
 

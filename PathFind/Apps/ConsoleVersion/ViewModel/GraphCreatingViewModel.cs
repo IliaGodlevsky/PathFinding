@@ -15,7 +15,6 @@ using Logging.Interface;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 using static ConsoleVersion.Constants;
 
 namespace ConsoleVersion.ViewModel
@@ -26,12 +25,6 @@ namespace ConsoleVersion.ViewModel
 
         public string GraphAssembleInpuMessage { private get; set; }
 
-        public string ObstaclePercentInputMessage { private get; set; }
-
-        public string WidthInputMessage { private get; set; }
-
-        public string HeightInputMessage { private get; set; }
-
         public IValueInput<int> Int32Input { get; set; }
 
         public GraphCreatingViewModel(ILog log, IEnumerable<IGraphAssemble> graphAssembles)
@@ -40,7 +33,7 @@ namespace ConsoleVersion.ViewModel
             graphAssembleKeyRange = new InclusiveValueRange<int>(graphAssembles.Count(), 1);
         }
 
-        [MenuItem(CreateNewGraph, MenuItemPriority.Highest)]
+        [MenuItem(MenuItemsNames.CreateNewGraph, MenuItemPriority.Highest)]
         public override void CreateGraph()
         {
             if (CanCreateGraph())
@@ -49,7 +42,7 @@ namespace ConsoleVersion.ViewModel
                 {
                     var graph = SelectedGraphAssemble.AssembleGraph(ObstaclePercent, GraphParametres);
                     var message = new GraphCreatedMessage(graph);
-                    Messenger.Default.SendMany(message, MessageTokens.MainView, MessageTokens.MainModel);
+                    Messenger.Default.SendMany(message, MessageTokens.Everyone);
                 }
                 catch (Exception ex)
                 {
@@ -58,11 +51,11 @@ namespace ConsoleVersion.ViewModel
             }
             else
             {
-                log.Warn("Not enough parametres to create graph");
+                log.Warn(MessagesTexts.NotEnoughParamtres);
             }
         }
 
-        [MenuItem(Constants.ChooseGraphAssemble, MenuItemPriority.High)]
+        [MenuItem(MenuItemsNames.ChooseGraphAssemble, MenuItemPriority.High)]
         public void ChooseGraphAssemble()
         {
             int graphAssembleIndex = Int32Input.InputValue(GraphAssembleInpuMessage, graphAssembleKeyRange) - 1;
@@ -71,20 +64,20 @@ namespace ConsoleVersion.ViewModel
             SelectedGraphAssemble = GraphAssembles[selectedGraphAssembleKey];
         }
 
-        [MenuItem(Constants.InputGraphParametres, MenuItemPriority.High)]
+        [MenuItem(MenuItemsNames.InputGraphParametres, MenuItemPriority.High)]
         public void InputGraphParametres()
         {
-            Width = Int32Input.InputValue(WidthInputMessage, GraphWidthValueRange);
-            Length = Int32Input.InputValue(HeightInputMessage, GraphLengthValueRange);
+            Width = Int32Input.InputValue(MessagesTexts.GraphWidthInputMsg, GraphWidthValueRange);
+            Length = Int32Input.InputValue(MessagesTexts.GraphHeightInputMsg, GraphLengthValueRange);
         }
 
-        [MenuItem(Constants.InputObstaclePercent, MenuItemPriority.Low)]
+        [MenuItem(MenuItemsNames.InputObstaclePercent, MenuItemPriority.Low)]
         public void InputObstaclePercent()
         {
-            ObstaclePercent = Int32Input.InputValue(ObstaclePercentInputMessage, ObstaclesPercentValueRange);
+            ObstaclePercent = Int32Input.InputValue(MessagesTexts.ObstaclePercentInputMsg, ObstaclesPercentValueRange);
         }
 
-        [MenuItem(Exit, MenuItemPriority.Lowest)]
+        [MenuItem(MenuItemsNames.Exit, MenuItemPriority.Lowest)]
         public void Interrupt()
         {
             Interrupted?.Invoke(this, new ProcessEventArgs());

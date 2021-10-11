@@ -1,6 +1,4 @@
-﻿using ConsoleVersion.EventArguments;
-using ConsoleVersion.EventHandlers;
-using ConsoleVersion.Interface;
+﻿using ConsoleVersion.Interface;
 using ConsoleVersion.Messages;
 using ConsoleVersion.View.Abstraction;
 using ConsoleVersion.ViewModel;
@@ -50,7 +48,7 @@ namespace ConsoleVersion.View
             CurrentMaxValueOfRange = max;
         }
 
-        private void OnStatisticsUpdated(object sender, StatisticsUpdatedEventArgs e)
+        private void OnStatisticsUpdated(UpdateStatisticsMessage message)
         {
             var coordinate = MainView.PathfindingStatisticsPosition;
             if (coordinate != null)
@@ -58,7 +56,7 @@ namespace ConsoleVersion.View
                 Console.SetCursorPosition(coordinate.X, coordinate.Y);
                 Console.Write(new string(' ', Console.BufferWidth));
                 Console.SetCursorPosition(coordinate.X, coordinate.Y);
-                Console.Write(e.Statistics);
+                Console.Write(message.Statistics);
             }
         }
 
@@ -77,7 +75,7 @@ namespace ConsoleVersion.View
         {
             Messenger.Default.Register<GraphCreatedMessage>(this, MessageTokens.MainView, OnNewGraphCreated);
             Messenger.Default.Register<CostRangeChangedMessage>(this, MessageTokens.MainView, OnCostRangeChanged);
-            Model.StatisticsUpdated += OnStatisticsUpdated;
+            Messenger.Default.Register<UpdateStatisticsMessage>(this, MessageTokens.MainView, OnStatisticsUpdated);
             Model.Interrupted += OnInterrupted;
             NewMenuIteration += Model.DisplayGraph;
             var message = new CostRangeChangedMessage(BaseVertexCost.CostRange);

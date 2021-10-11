@@ -34,17 +34,17 @@
                         </GridViewColumn>
                         <GridViewColumn DisplayMemberBinding="{Binding PathLength}">
                             <GridViewColumn.Header>
-                                <TextBlock Text="Path length"/>
+                                <TextBlock Text="Length"/>
                             </GridViewColumn.Header>
                         </GridViewColumn>
                         <GridViewColumn DisplayMemberBinding="{Binding PathCost}">
                             <GridViewColumn.Header>
-                                <TextBlock Text="Path cost"/>
+                                <TextBlock Text="Cost"/>
                             </GridViewColumn.Header>
                         </GridViewColumn>
                         <GridViewColumn DisplayMemberBinding="{Binding VisitedVerticesCount}">
                             <GridViewColumn.Header>
-                                <TextBlock Text="Vertices visited"/>
+                                <TextBlock Text="Visited"/>
                             </GridViewColumn.Header>
                         </GridViewColumn>
                         <GridViewColumn DisplayMemberBinding="{Binding Status, Converter={StaticResource StatusToStringConverter}}">

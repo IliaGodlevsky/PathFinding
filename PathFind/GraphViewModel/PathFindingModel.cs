@@ -33,7 +33,7 @@ namespace GraphViewModel
             this.log = log;
             this.graph = graph;
             var enumValues = new EnumValuesWithoutIgnored<Algorithms>(new EnumValues<Algorithms>());
-            algorithms = new Lazy<Tuple<string, Algorithms>[]>(enumValues.ToAdjustedAndOrderedByDescriptionTuples);           
+            algorithms = new Lazy<Tuple<string, Algorithms>[]>(enumValues.ToAdjustedAndOrderedByDescriptionTuples);
             timer = new Stopwatch();
             path = new NullGraphPath();
             algorithm = new NullAlgorithm();
@@ -121,12 +121,14 @@ namespace GraphViewModel
         }
 
         protected readonly BaseEndPoints endPoints;
+        protected readonly IGraph graph;
         protected readonly ILog log;
+        protected readonly Stopwatch timer;
+
         protected IGraphPath path;
         protected IAlgorithm algorithm;
-        protected readonly IGraph graph;
-        private readonly Lazy<Tuple<string, Algorithms>[]> algorithms;
-        protected readonly Stopwatch timer;
         protected int visitedVerticesCount;
+
+        private readonly Lazy<Tuple<string, Algorithms>[]> algorithms;
     }
 }

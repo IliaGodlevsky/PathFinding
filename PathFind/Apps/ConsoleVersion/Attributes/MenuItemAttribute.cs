@@ -19,8 +19,7 @@ namespace ConsoleVersion.Attributes
         /// </summary>
         public string Header { get; }
 
-        public MenuItemAttribute(string header,
-            MenuItemPriority priority = MenuItemPriority.Normal)
+        public MenuItemAttribute(string header, MenuItemPriority priority)
         {
             Header = header;
             Priority = priority;

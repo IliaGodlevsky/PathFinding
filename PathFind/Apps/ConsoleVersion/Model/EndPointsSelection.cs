@@ -6,20 +6,16 @@ using GraphLib.Extensions;
 using GraphLib.Interfaces;
 using GraphLib.NullRealizations.NullObjects;
 using GraphLib.Realizations.Graphs;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace ConsoleVersion.Model
 {
     internal sealed class EndPointsSelection : IRequireInt32Input
     {
-        public string SourceVertexInputMsg { private get; set; }
-        public string TargetVertexInputMsg { private get; set; }
-
-        private readonly string IntermediateInputMessage = "Choose intermediate vertex: ";
-
         public IValueInput<int> Int32Input { get; set; }
 
-        public EndPointsSelection(BaseEndPoints endPoints, IGraph graph, 
+        public EndPointsSelection(BaseEndPoints endPoints, IGraph graph,
             int numberOfAvailiableVertices)
         {
             this.graph = graph;
@@ -29,13 +25,18 @@ namespace ConsoleVersion.Model
 
         public void ChooseEndPoints()
         {
-            string inputMessage = "Input number of intermediate vertices: ";
             int cursorLeft = Console.CursorLeft;
             int cursorRight = Console.CursorTop;
-            int numberOfIntermediates = Int32Input.InputValue(inputMessage, numberOfAvailiableVertices);
-            var messages = Enumerable.Repeat(IntermediateInputMessage, numberOfIntermediates);
+            int numberOfIntermediates = Int32Input.InputValue(
+                MessagesTexts.NumberOfIntermediateVerticesInputMsg, 
+                numberOfAvailiableVertices);
+            var messages = Enumerable.Repeat(MessagesTexts.IntermediateVertexChoiceMsg, numberOfIntermediates);           
+            var chooseMessages = new[]
+            {
+                "\n" + MessagesTexts.SourceVertexChoiceMsg,
+                MessagesTexts.TargetVertexChoiceMsg
+            }.Concat(messages);
             endPoints.Reset();
-            var chooseMessages = new[] { SourceVertexInputMsg, TargetVertexInputMsg }.Concat(messages);
             foreach (var message in chooseMessages)
             {
                 Console.SetCursorPosition(cursorLeft, cursorRight);
@@ -64,6 +65,6 @@ namespace ConsoleVersion.Model
 
         private readonly IGraph graph;
         private readonly BaseEndPoints endPoints;
-        private readonly int numberOfAvailiableVertices;        
+        private readonly int numberOfAvailiableVertices;
     }
 }

@@ -5,8 +5,6 @@ using GraphViewModel.Interfaces;
 using Interruptable.EventArguments;
 using System;
 
-using static ConsoleVersion.Resource.Resources;
-
 namespace ConsoleVersion.View.Abstraction
 {
     internal abstract class View<TModel> : IView, IRequireInt32Input
@@ -39,7 +37,7 @@ namespace ConsoleVersion.View.Abstraction
             {
                 NewMenuIteration?.Invoke();
                 menuList.Display();
-                int menuItemIndex = Int32Input.InputValue(OptionInputMsg, menuValueRange) - 1;
+                int menuItemIndex = Int32Input.InputValue(MessagesTexts.MenuOptionChoiceMsg, menuValueRange) - 1;
                 string menuItem = menu.MenuActionsNames[menuItemIndex];
                 menu.MenuActions[menuItem].Invoke();
             }

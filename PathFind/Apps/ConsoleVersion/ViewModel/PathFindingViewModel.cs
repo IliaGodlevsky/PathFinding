@@ -11,6 +11,7 @@ using ConsoleVersion.Model;
 using GalaSoft.MvvmLight.Messaging;
 using GraphLib.Base;
 using GraphLib.Extensions;
+using GraphLib.Interfaces;
 using GraphViewModel;
 using GraphViewModel.Interfaces;
 using Interruptable.EventArguments;
@@ -21,9 +22,6 @@ using NullObject.Extensions;
 using System;
 using System.Diagnostics;
 using System.Linq;
-using static ConsoleVersion.Constants;
-
-using static ConsoleVersion.Resource.Resources;
 
 namespace ConsoleVersion.ViewModel
 {
@@ -34,22 +32,17 @@ namespace ConsoleVersion.ViewModel
 
         public string AlgorithmKeyInputMessage { private get; set; }
 
-        public string TargetVertexInputMessage { private get; set; }
-
         public IValueInput<int> Int32Input { get; set; }
         public IValueInput<Answer> AnswerInput { get; set; }
 
-        public string SourceVertexInputMessage { private get; set; }
-
-        public PathFindingViewModel(ILog log, MainViewModel model, BaseEndPoints endPoints)
-            : base(log, model.Graph, endPoints)
+        public PathFindingViewModel(ILog log, IGraph graph, BaseEndPoints endPoints)
+            : base(log, graph, endPoints)
         {
             algorithmKeysValueRange = new InclusiveValueRange<int>(Algorithms.Length, 1);
-            //keyStrokesHook = new ConsoleKeystrokesHook(ConsoleKey.Escape, ConsoleKey.End);            
-            this.mainModel = model;
+            keyStrokesHook = new ConsoleKeystrokesHook(ConsoleKey.Escape, ConsoleKey.End);
         }
 
-        [MenuItem(Constants.FindPath, MenuItemPriority.Highest)]
+        [MenuItem(MenuItemsNames.FindPath, MenuItemPriority.Highest)]
         public override void FindPath()
         {
             if (!endPoints.HasIsolators())
@@ -58,10 +51,9 @@ namespace ConsoleVersion.ViewModel
                 {
                     Console.CursorVisible = false;
                     base.FindPath();
-                    //keyStrokesHook.KeystrokeHooked += algorithm.Interrupt;
-                    //keyStrokesHook.StartHookingConsoleKeystrokes();
+                    keyStrokesHook.StartHookingConsoleKeystrokes();
+                    keyStrokesHook.KeystrokeHooked -= algorithm.Interrupt;
                     Console.CursorVisible = true;
-                    //keyStrokesHook.KeystrokeHooked -= algorithm.Interrupt;
                 }
                 catch (Exception ex)
                 {
@@ -70,42 +62,43 @@ namespace ConsoleVersion.ViewModel
             }
             else
             {
-                log.Warn("Firstly choose endpoints");
+                log.Warn(MessagesTexts.EndPointsFirstlyMsg);
             }
         }
 
         protected override void Summarize()
         {
-            string statistics = !path.IsNull() ? Statistics : CouldntFindPath;
-            mainModel.Statistics = Statistics;
+            string statistics = !path.IsNull() ? Statistics : MessagesTexts.CouldntFindPathMsg;
+            var message = new UpdateStatisticsMessage(statistics);
+            Messenger.Default.Send(message, MessageTokens.MainView);
             visitedVerticesCount = 0;
         }
 
         protected override void OnVertexVisited(object sender, AlgorithmEventArgs e)
         {
             Stopwatch.StartNew().Pause(DelayTime).Cancel();
+            var message = new UpdateStatisticsMessage(Statistics);
+            Messenger.Default.Send(message, MessageTokens.MainView);
             base.OnVertexVisited(sender, e);
-            mainModel.Statistics = Statistics;
         }
 
-        [MenuItem(Constants.ChooseAlgorithm, MenuItemPriority.High)]
+        [MenuItem(MenuItemsNames.ChooseAlgorithm, MenuItemPriority.High)]
         public void ChooseAlgorithm()
         {
-            int algorithmKeyIndex = Int32Input.InputValue(AlgorithmKeyInputMessage,
-                algorithmKeysValueRange) - 1;
+            int algorithmKeyIndex = Int32Input.InputValue(AlgorithmKeyInputMessage, algorithmKeysValueRange) - 1;
             Algorithm = Algorithms[algorithmKeyIndex].Item2;
         }
 
-        [MenuItem(Constants.InputDelayTime)]
+        [MenuItem(MenuItemsNames.InputDelayTime, MenuItemPriority.Normal)]
         public void InputDelayTime()
         {
             if (IsVisualizationRequired)
             {
-                DelayTime = Int32Input.InputValue(DelayTimeInputMsg, AlgorithmDelayTimeValueRange);
+                DelayTime = Int32Input.InputValue(MessagesTexts.DelayTimeInputMsg, Constants.AlgorithmDelayTimeValueRange);
             }
         }
 
-        [MenuItem(Constants.Exit, MenuItemPriority.Lowest)]
+        [MenuItem(MenuItemsNames.Exit, MenuItemPriority.Lowest)]
         public void Interrupt()
         {
             ClearGraph();
@@ -113,48 +106,44 @@ namespace ConsoleVersion.ViewModel
             Interrupted = null;
         }
 
-        [MenuItem(Constants.ChooseEndPoints, MenuItemPriority.High)]
+        [MenuItem(MenuItemsNames.ChooseEndPoints, MenuItemPriority.High)]
         public void ChooseExtremeVertex()
         {
             if (HasAnyVerticesToChooseAsEndPoints)
             {
-                var selection = new EndPointsSelection(endPoints, graph, NumberOfAvailableIntermediate)
-                {
-                    SourceVertexInputMsg = SourceVertexInputMessage,
-                    TargetVertexInputMsg = TargetVertexInputMessage,
-                    Int32Input = Int32Input
-                };
+                var selection = new EndPointsSelection(endPoints, graph, NumberOfAvailableIntermediate) { Int32Input = Int32Input };
                 selection.ChooseEndPoints();
             }
             else
             {
-                log.Warn("No vertices to choose as end points");
+                log.Warn(MessagesTexts.NoVerticesAsEndPointsMsg);
             }
         }
 
-        [MenuItem(Constants.ClearGraph, MenuItemPriority.Low)]
+        [MenuItem(MenuItemsNames.ClearGraph, MenuItemPriority.Low)]
         public void ClearGraph()
         {
-            mainModel.ClearGraph();
+            Messenger.Default.Send(new ClearGraphMessage(), MessageTokens.MainModel);
         }
 
-        [MenuItem(Constants.ClearColors, MenuItemPriority.Low)]
+        [MenuItem(MenuItemsNames.ClearColors, MenuItemPriority.Low)]
         public void ClearColors()
         {
-            mainModel.ClearColors();
+            Messenger.Default.Send(new ClearColorsMessage(), MessageTokens.MainModel);
         }
 
-        [MenuItem(Constants.ApplyVisualization, MenuItemPriority.Low)]
+        [MenuItem(MenuItemsNames.ApplyVisualization, MenuItemPriority.Low)]
         public void ApplyVisualization()
         {
-            var answer = AnswerInput.InputValue(VisualizationMsg, Constants.AnswerValueRange);
+            var answer = AnswerInput.InputValue(MessagesTexts.ApplyVisualizationMsg, Constants.AnswerValueRange);
             IsVisualizationRequired = answer == Answer.Yes;
         }
 
         protected override void SubscribeOnAlgorithmEvents(IAlgorithm algorithm)
         {
             base.SubscribeOnAlgorithmEvents(algorithm);
-            //algorithm.Finished += keyStrokesHook.CancelKeyStrokeHooking;
+            algorithm.Finished += keyStrokesHook.CancelHookingConsoleKeystrokes;
+            keyStrokesHook.KeystrokeHooked += algorithm.Interrupt; 
         }
 
         private string Statistics
@@ -163,21 +152,17 @@ namespace ConsoleVersion.ViewModel
             {
                 string timerInfo = timer.ToFormattedString();
                 string description = Algorithms.FirstOrDefault(item => item.Item2 == Algorithm).Item1;
-                string pathfindingInfo = string.Format(Format, PathfindingInfo);
+                string pathfindingInfo = string.Format(MessagesTexts.PathfindingStatisticsFormat, PathfindingInfo);
                 return string.Join("\t", description, timerInfo, pathfindingInfo);
             }
         }
 
         private object[] PathfindingInfo => new object[] { path.PathLength, path.PathCost, visitedVerticesCount };
 
-        private readonly string Format = "Steps: {0}  Path cost: {1}  Visited: {2}";
-        private readonly string CouldntFindPath = "Could't fing path";
-
         private int NumberOfAvailableIntermediate => graph.Size - graph.Vertices.Count(v => v.IsIsolated()) - 2;
         private bool HasAnyVerticesToChooseAsEndPoints => NumberOfAvailableIntermediate >= 0;
 
         private readonly InclusiveValueRange<int> algorithmKeysValueRange;
-        //private readonly ConsoleKeystrokesHook keyStrokesHook;
-        private readonly MainViewModel mainModel;
+        private readonly ConsoleKeystrokesHook keyStrokesHook;
     }
 }

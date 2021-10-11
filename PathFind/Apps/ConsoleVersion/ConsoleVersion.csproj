@@ -65,13 +65,16 @@
     <Compile Include="Constants.cs" />
     <Compile Include="Enums\Answer.cs" />
     <Compile Include="Enums\MenuItemPriority.cs" />
-    <Compile Include="EventArguments\StatisticsUpdatedEventArgs.cs" />
-    <Compile Include="EventHandlers\StatisticsUpdateEventHandler.cs" />
     <Compile Include="Extensions\IMessengerExtensions.cs" />
     <Compile Include="Extensions\ValueInputExtensions.cs" />
+    <Compile Include="MenuItemsNames.cs" />
+    <Compile Include="Messages\ClearColorMessage.cs" />
+    <Compile Include="Messages\ClearGraphMessage.cs" />
     <Compile Include="Messages\CostRangeChangedMessage.cs" />
     <Compile Include="Messages\GraphCreatedMessage.cs" />
+    <Compile Include="Messages\UpdateStatisticsMessage.cs" />
     <Compile Include="MessageTokens.cs" />
+    <Compile Include="MessegesTexts.cs" />
     <Compile Include="Model\ConsoleKeystrokesHook.cs" />
     <Compile Include="Model\EndPointsSelection.cs" />
     <Compile Include="ValueInput\ConsoleValueInput.cs" />
@@ -103,23 +106,12 @@
     <Compile Include="View\GraphCreateView.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Resource\Resources.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Resources.resx</DependentUpon>
-    </Compile>
     <Compile Include="Model\VertexEventHolder.cs" />
     <Compile Include="Model\Vertex.cs" />
     <Compile Include="Interface\IView.cs" />
     <Compile Include="View\MainView.cs" />
     <Compile Include="View\MenuList.cs" />
     <Compile Include="View\PathFindView.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Resource\Resources.resx">
-      <Generator>ResXFileCodeGenerator</Generator>
-      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
-    </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\Algorithm\Algorithm.Algos\Algorithm.Algos.csproj">

@@ -6,7 +6,6 @@ using GraphLib.NullRealizations.NullObjects;
 using GraphLib.Realizations.Coordinates;
 using GraphLib.Realizations.Graphs;
 using System;
-using static ConsoleVersion.Resource.Resources;
 
 namespace ConsoleVersion.Extensions
 {
@@ -43,8 +42,8 @@ namespace ConsoleVersion.Extensions
         public static Coordinate2D InputPoint(this IValueInput<int> self,
             int upperPossibleXValue, int upperPossibleYValue)
         {
-            int xCoordinate = self.InputValue(XCoordinateInputMsg, upperPossibleXValue);
-            int yCoordinate = self.InputValue(YCoordinateInputMsg, upperPossibleYValue);
+            int xCoordinate = self.InputValue(MessagesTexts.XCoordinateInputMsg, upperPossibleXValue);
+            int yCoordinate = self.InputValue(MessagesTexts.YCoordinateInputMsg, upperPossibleYValue);
 
             return new Coordinate2D(xCoordinate, yCoordinate);
         }
@@ -62,8 +61,8 @@ namespace ConsoleVersion.Extensions
             InclusiveValueRange<TValue> rangeOfValiInput)
             where TValue : struct, IComparable
         {
-            TValue upperValueOfRange = self.InputValue(UpperValueOfRangeMsg, rangeOfValiInput);
-            TValue lowerValueOfRange = self.InputValue(LowerValueOfRangeMsg, rangeOfValiInput);
+            var upperValueOfRange = self.InputValue(MessagesTexts.CostRangeUpperValueInputMsg, rangeOfValiInput);
+            var lowerValueOfRange = self.InputValue(MessagesTexts.CostRangeLowerValueInputMsg, rangeOfValiInput);
 
             return new InclusiveValueRange<TValue>(upperValueOfRange, lowerValueOfRange);
         }

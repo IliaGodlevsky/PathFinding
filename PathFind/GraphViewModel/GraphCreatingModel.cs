@@ -1,12 +1,9 @@
 ﻿using Common.Extensions;
-using GraphLib.Extensions;
 using GraphLib.Interfaces;
 using GraphLib.Interfaces.Factories;
 using GraphViewModel.Interfaces;
 using Logging.Interface;
-using System;
 using System.Collections.Generic;
-using System.Threading.Tasks;
 
 namespace GraphLib.ViewModel
 {

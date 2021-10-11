@@ -1,7 +1,5 @@
 ﻿using ConsoleVersion.Attributes;
 using ConsoleVersion.Enums;
-using ConsoleVersion.EventArguments;
-using ConsoleVersion.EventHandlers;
 using ConsoleVersion.Extensions;
 using ConsoleVersion.Interface;
 using ConsoleVersion.Messages;
@@ -26,7 +24,6 @@ using System;
 using System.Collections.Generic;
 using System.Drawing;
 
-using static ConsoleVersion.Resource.Resources;
 using static GraphLib.Base.BaseVertexCost;
 using Console = Colorful.Console;
 
@@ -36,14 +33,7 @@ namespace ConsoleVersion.ViewModel
         IMainModel, IModel, IInterruptable, IRequireAnswerInput, IRequireInt32Input
     {
         public event ProcessEventHandler Interrupted;
-        public event StatisticsUpdatedEventHandler StatisticsUpdated;
 
-        private string statistics;
-        public string Statistics
-        {
-            get => statistics;
-            set { statistics = value; StatisticsUpdated?.Invoke(this, new StatisticsUpdatedEventArgs(value)); }
-        }
         public IValueInput<int> Int32Input { get; set; }
         public IValueInput<Answer> AnswerInput { get; set; }
 
@@ -51,16 +41,18 @@ namespace ConsoleVersion.ViewModel
             ISaveLoadGraph saveLoad, IEnumerable<IGraphAssemble> graphAssembles, BaseEndPoints endPoints, ILog log)
             : base(fieldFactory, eventHolder, saveLoad, graphAssembles, endPoints, log)
         {
-            Messenger.Default.Register<GraphCreatedMessage>(this, MessageTokens.MainModel, SetGraph);
+            Messenger.Default.Register<GraphCreatedMessage>(this, MessageTokens.MainModel, message => ConnectNewGraph(message.Graph));
+            Messenger.Default.Register<ClearGraphMessage>(this, MessageTokens.MainModel, message => ClearGraph());
+            Messenger.Default.Register<ClearColorsMessage>(this, MessageTokens.MainModel, message => ClearColors());
         }
 
-        [MenuItem(Constants.MakeUnwieghted)]
+        [MenuItem(MenuItemsNames.MakeUnwieghted, MenuItemPriority.Normal)]
         public void MakeGraphUnweighted() => Graph.ToUnweighted();
 
-        [MenuItem(Constants.MakeWeighted)]
+        [MenuItem(MenuItemsNames.MakeWeighted, MenuItemPriority.Normal)]
         public void MakeGraphWeighted() => Graph.ToWeighted();
 
-        [MenuItem(Constants.CreateNewGraph, MenuItemPriority.Highest)]
+        [MenuItem(MenuItemsNames.CreateNewGraph, MenuItemPriority.Highest)]
         public override void CreateNewGraph()
         {
             try
@@ -77,12 +69,12 @@ namespace ConsoleVersion.ViewModel
             }
         }
 
-        [MenuItem(Constants.FindPath, MenuItemPriority.High)]
+        [MenuItem(MenuItemsNames.FindPath, MenuItemPriority.High)]
         public override void FindPath()
         {
             try
             {
-                var model = new PathFindingViewModel(log, this, endPoints);
+                var model = new PathFindingViewModel(log, Graph, endPoints);
                 var view = new PathFindView(model);
                 PrepareViewAndModel(view, model);
                 model.AnswerInput = AnswerInput;
@@ -95,10 +87,10 @@ namespace ConsoleVersion.ViewModel
             }
         }
 
-        [MenuItem(Constants.ReverseVertex)]
+        [MenuItem(MenuItemsNames.ReverseVertex, MenuItemPriority.Normal)]
         public void ReverseVertex() => PerformActionOnVertex(vertex => vertex?.Reverse());
 
-        [MenuItem(Constants.ChangeCostRange, MenuItemPriority.Low)]
+        [MenuItem(MenuItemsNames.ChangeCostRange, MenuItemPriority.Low)]
         public void ChangeVertexCostValueRange()
         {
             CostRange = Int32Input.InputRange(Constants.VerticesCostRange);
@@ -106,21 +98,23 @@ namespace ConsoleVersion.ViewModel
             Messenger.Default.Send(message, MessageTokens.MainView);
         }
 
-        [MenuItem(Constants.ChangeVertexCost, MenuItemPriority.Low)]
+        [MenuItem(MenuItemsNames.ChangeVertexCost, MenuItemPriority.Low)]
         public void ChangeVertexCost() => PerformActionOnVertex(vertex => vertex?.ChangeCost());
 
-        [MenuItem(Constants.SaveGraph)]
+        [MenuItem(MenuItemsNames.SaveGraph, MenuItemPriority.Normal)]
         public override void SaveGraph() => base.SaveGraph();
 
-        [MenuItem(Constants.LoadGraph)]
+        [MenuItem(MenuItemsNames.LoadGraph, MenuItemPriority.Normal)]
         public override void LoadGraph()
         {
             try
             {
                 var graph = saveLoad.LoadGraphAsync().Result;
                 ConnectNewGraph(graph);
-                var message = new CostRangeChangedMessage(CostRange);
-                Messenger.Default.Send(message, MessageTokens.MainView);
+                var costRangeMessage = new CostRangeChangedMessage(CostRange);
+                Messenger.Default.Send(costRangeMessage, MessageTokens.MainView);
+                var graphMessage = new GraphCreatedMessage(graph);
+                Messenger.Default.Send(graphMessage, MessageTokens.MainView);
             }
             catch (CantSerializeGraphException ex)
             {
@@ -132,10 +126,10 @@ namespace ConsoleVersion.ViewModel
             }
         }
 
-        [MenuItem(Constants.Exit, MenuItemPriority.Lowest)]
+        [MenuItem(MenuItemsNames.Exit, MenuItemPriority.Lowest)]
         public void Interrupt()
         {
-            var answer = AnswerInput.InputValue(ExitAppMsg, Constants.AnswerValueRange);
+            var answer = AnswerInput.InputValue(MessagesTexts.ExitAppMsg, Constants.AnswerValueRange);
             if (answer == Answer.Yes)
             {
                 Interrupted?.Invoke(this, new ProcessEventArgs());
@@ -145,7 +139,8 @@ namespace ConsoleVersion.ViewModel
         public override void ClearGraph()
         {
             base.ClearGraph();
-            Statistics = string.Empty;
+            var message = new UpdateStatisticsMessage(string.Empty);
+            Messenger.Default.Send(message, MessageTokens.MainView);
         }
 
         public void DisplayGraph()
@@ -174,11 +169,7 @@ namespace ConsoleVersion.ViewModel
             Console.ForegroundColor = Color.White;
             Console.WriteLine(GraphParametres);
             (GraphField as IDisplayable)?.Display();
-        }
-
-        private void SetGraph(GraphCreatedMessage message)
-        {
-            ConnectNewGraph(message.Graph);
+            Console.WriteLine();
         }
 
         private void PrepareViewAndModel<TModel>(View<TModel> view, TModel model)

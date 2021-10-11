@@ -7,14 +7,14 @@ namespace ConsoleVersion.Model
     {
         public event Action KeystrokeHooked;
 
-        private bool IsHookingRequired { get; set; } = false;
+        private bool IsHookingRequired { get; set; }
 
-        public ConsoleKeystrokesHook(params ConsoleKey[] consoleKeys)
+        public ConsoleKeystrokesHook(ConsoleKey key, params ConsoleKey[] consoleKeys)
         {
-            this.consoleKeys = consoleKeys; 
+            this.consoleKeys = consoleKeys.Append(key).ToArray();
         }
 
-        public void CancelKeyStrokeHooking(object sender, EventArgs e)
+        public void CancelHookingConsoleKeystrokes(object sender, EventArgs e)
         {
             IsHookingRequired = false;
         }
@@ -22,7 +22,7 @@ namespace ConsoleVersion.Model
         public void StartHookingConsoleKeystrokes()
         {
             IsHookingRequired = true;
-            while (!IsHookingRequired)
+            while (IsHookingRequired)
             {
                 var key = Console.ReadKey(true).Key;
                 if (consoleKeys.Contains(key))

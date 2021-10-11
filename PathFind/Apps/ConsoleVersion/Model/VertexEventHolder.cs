@@ -5,7 +5,6 @@ using GraphLib.Interfaces;
 using GraphLib.Interfaces.Factories;
 using System;
 
-using static ConsoleVersion.Resource.Resources;
 using static GraphLib.Base.BaseVertexCost;
 
 namespace ConsoleVersion.Model
@@ -24,7 +23,7 @@ namespace ConsoleVersion.Model
         {
             if (sender is Vertex vertex && !vertex.IsObstacle)
             {
-                var cost = Int32Input.InputValue(VertexCostInputMsg, CostRange);
+                var cost = Int32Input.InputValue(MessagesTexts.VertexCostInputMsg, CostRange);
                 vertex.Cost = costFactory.CreateCost(cost);
             }
         }

@@ -25,12 +25,6 @@ namespace Common.Extensions
             }
         }
 
-        public static Stopwatch Run(this Stopwatch self)
-        {
-            self.Start();
-            return self;
-        }
-
         public static Stopwatch Cancel(this Stopwatch self)
         {
             self.Stop();

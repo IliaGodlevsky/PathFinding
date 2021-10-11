@@ -26,11 +26,12 @@
         <converters:AlgorithmStatusToStringConverter x:Key="StatusToStringConverter"/>
 
         <Style TargetType="TextBox" x:Key="TextBoxStyle">
-            <Setter Property="MinWidth" Value="40"></Setter>
+            <Setter Property="MaxWidth" Value="40"></Setter>
+            <Setter Property="Width" Value="40"></Setter>
             <Setter Property="Margin" Value="5"></Setter>
         </Style>
         <Style TargetType="Slider" x:Key="SliderStyle">
-            <Setter Property="MinWidth" Value="100"></Setter>
+            <Setter Property="MinWidth" Value="150"></Setter>
             <Setter Property="Margin" Value="5"></Setter>
         </Style>
     </Window.Resources>
@@ -45,7 +46,7 @@
             <ColumnDefinition Width="*"/>
             <ColumnDefinition Width="auto"/>
         </Grid.ColumnDefinitions>
-        <Expander Grid.Column="1" Grid.RowSpan="4">
+        <Expander Width="auto" Grid.Column="1" Grid.RowSpan="4">
             <Grid>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition></ColumnDefinition>
@@ -64,8 +65,10 @@
                     <RowDefinition Height="auto"></RowDefinition>
                     <RowDefinition Height="auto"></RowDefinition>
                     <RowDefinition Height="auto"></RowDefinition>
+                    <RowDefinition Height="auto"></RowDefinition>
                 </Grid.RowDefinitions>
 
+                <windows:AlgorithmStatisticsUserControl Grid.Row="9" Grid.ColumnSpan="4"/>
                 <TextBlock Margin="5" 
                            Grid.Row ="1" 
                            Text="Rotation speed: "/>
@@ -353,9 +356,6 @@
                 </model:GraphField3DContainer>
             </Viewport3D.Children>
         </Viewport3D>
-        <Expander Background="White" Grid.Row="3">
-            <windows:AlgorithmStatisticsUserControl/>
-        </Expander>
         <StatusBar Grid.Row="1">
             <TextBlock Text="{Binding GraphParametres}"/>
         </StatusBar>

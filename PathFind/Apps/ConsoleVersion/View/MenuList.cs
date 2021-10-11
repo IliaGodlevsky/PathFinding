@@ -22,7 +22,7 @@ namespace ConsoleVersion.View
 
         public void Display()
         {
-            Console.WriteLine(menuList.Value);
+            Console.WriteLine(ToString());
         }
 
         public override string ToString()

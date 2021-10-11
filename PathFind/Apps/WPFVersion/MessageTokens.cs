@@ -5,7 +5,7 @@ namespace WPFVersion
 {
     internal static class MessageTokens
     {
-        public static Guid[] AllModels => allModels.Value;
+        public static Guid[] Everyone => everyone.Value;
         public static Guid MainModel { get; }
         public static Guid AlgorithmStatisticsModel { get; }
         public static Guid PathfindingModel { get; }
@@ -15,18 +15,18 @@ namespace WPFVersion
             MainModel = Guid.NewGuid();
             AlgorithmStatisticsModel = Guid.NewGuid();
             PathfindingModel = Guid.NewGuid();
-            allModels = new Lazy<Guid[]>(GetAllModelTokens, isThreadSafe: true);
+            everyone = new Lazy<Guid[]>(GetAllModelTokens, isThreadSafe: true);
         }
 
         private static Guid[] GetAllModelTokens()
         {
             return typeof(MessageTokens)
                 .GetProperties()
-                .Where(property => !property.Name.Equals(nameof(AllModels)))
+                .Where(property => !property.Name.Equals(nameof(Everyone)))
                 .Select(property => (Guid)property.GetValue(null))
                 .ToArray();
         }
 
-        private static readonly Lazy<Guid[]> allModels;
+        private static readonly Lazy<Guid[]> everyone;
     }
 }

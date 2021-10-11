@@ -5,7 +5,6 @@ using GalaSoft.MvvmLight.Messaging;
 using GraphLib.Base;
 using GraphLib.Interfaces;
 using GraphViewModel;
-using GraphViewModel.Interfaces;
 using Interruptable.EventArguments;
 using Logging.Interface;
 using System;
