@@ -52,7 +52,6 @@
     <Compile Include="Benchmarks\BestFirstLeeAlgorithm.cs" />
     <Compile Include="Benchmarks\DijkstraAlgorithmBenchmarks.cs" />
     <Compile Include="Benchmarks\LeeAlgorithmBenchmarks.cs" />
-    <Compile Include="ParamsSource.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
