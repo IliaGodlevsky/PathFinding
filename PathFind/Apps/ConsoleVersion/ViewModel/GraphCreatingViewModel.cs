@@ -15,7 +15,6 @@ using Logging.Interface;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using static ConsoleVersion.Constants;
 
 namespace ConsoleVersion.ViewModel
 {
@@ -59,22 +58,21 @@ namespace ConsoleVersion.ViewModel
         public void ChooseGraphAssemble()
         {
             int graphAssembleIndex = Int32Input.InputValue(GraphAssembleInpuMessage, graphAssembleKeyRange) - 1;
-            var graphAssembleKeys = GraphAssembles.Keys.ToArray();
-            string selectedGraphAssembleKey = graphAssembleKeys[graphAssembleIndex];
+            string selectedGraphAssembleKey = GraphAssembles.Keys.ElementAt(graphAssembleIndex);
             SelectedGraphAssemble = GraphAssembles[selectedGraphAssembleKey];
         }
 
         [MenuItem(MenuItemsNames.InputGraphParametres, MenuItemPriority.High)]
         public void InputGraphParametres()
         {
-            Width = Int32Input.InputValue(MessagesTexts.GraphWidthInputMsg, GraphWidthValueRange);
-            Length = Int32Input.InputValue(MessagesTexts.GraphHeightInputMsg, GraphLengthValueRange);
+            Width = Int32Input.InputValue(MessagesTexts.GraphWidthInputMsg, Constants.GraphWidthValueRange);
+            Length = Int32Input.InputValue(MessagesTexts.GraphHeightInputMsg, Constants.GraphLengthValueRange);
         }
 
         [MenuItem(MenuItemsNames.InputObstaclePercent, MenuItemPriority.Normal)]
         public void InputObstaclePercent()
         {
-            ObstaclePercent = Int32Input.InputValue(MessagesTexts.ObstaclePercentInputMsg, ObstaclesPercentValueRange);
+            ObstaclePercent = Int32Input.InputValue(MessagesTexts.ObstaclePercentInputMsg, Constants.ObstaclesPercentValueRange);
         }
 
         [MenuItem(MenuItemsNames.Exit, MenuItemPriority.Lowest)]
@@ -87,8 +85,8 @@ namespace ConsoleVersion.ViewModel
         private bool CanCreateGraph()
         {
             return SelectedGraphAssemble != null
-                && GraphWidthValueRange.Contains(Width)
-                && GraphLengthValueRange.Contains(Length);
+                && Constants.GraphWidthValueRange.Contains(Width)
+                && Constants.GraphLengthValueRange.Contains(Length);
         }
 
         private readonly InclusiveValueRange<int> graphAssembleKeyRange;

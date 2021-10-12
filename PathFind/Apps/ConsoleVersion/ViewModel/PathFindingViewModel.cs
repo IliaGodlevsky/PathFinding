@@ -136,9 +136,9 @@ namespace ConsoleVersion.ViewModel
         protected override void OnVertexVisited(object sender, AlgorithmEventArgs e)
         {
             Stopwatch.StartNew().Pause(DelayTime).Cancel();
-            var message = new UpdateStatisticsMessage(GetStatistics());
-            Messenger.Default.Send(message, MessageTokens.MainView);
             base.OnVertexVisited(sender, e);
+            var message = new UpdateStatisticsMessage(GetStatistics());
+            Messenger.Default.Send(message, MessageTokens.MainView);           
         }
 
         protected override void SubscribeOnAlgorithmEvents(IAlgorithm algorithm)

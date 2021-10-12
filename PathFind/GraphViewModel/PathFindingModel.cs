@@ -56,6 +56,7 @@ namespace GraphViewModel
             finally
             {
                 algorithm.Dispose();
+                path = new NullGraphPath();
             }
         }
 

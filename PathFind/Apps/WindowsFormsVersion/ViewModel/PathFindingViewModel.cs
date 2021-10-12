@@ -46,9 +46,9 @@ namespace WindowsFormsVersion.ViewModel
 
         protected override void OnVertexVisited(object sender, AlgorithmEventArgs e)
         {
+            Stopwatch.StartNew().Pause(DelayTime).Cancel();
             base.OnVertexVisited(sender, e);
             Messenger.Default.Send(new UpdateStatisticsMessage(Statistics), MessageTokens.MainModel);
-            Stopwatch.StartNew().Pause(DelayTime).Cancel();
         }
 
         protected override void OnAlgorithmInterrupted(object sender, ProcessEventArgs e)
