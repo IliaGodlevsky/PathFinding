@@ -63,7 +63,7 @@ namespace WPFVersion.ViewModel
         {
             var status = !path.IsNull() ? AlgorithmStatus.Finished : AlgorithmStatus.Failed;
             string time = timer.ToFormattedString();
-            var message = new UpdateAlgorithmStatisticsMessage(Index,
+            var message = new UpdateStatisticsMessage(Index,
                 time, visitedVerticesCount, path.PathLength, path.PathCost);
             Messenger.Default.Send(message, MessageTokens.AlgorithmStatisticsModel);
             var statusMessage = new AlgorithmStatusMessage(status, Index);
@@ -74,7 +74,7 @@ namespace WPFVersion.ViewModel
         {
             Stopwatch.StartNew().Pause(DelayTime).Cancel();
             string time = timer.ToFormattedString();
-            var message = new UpdateAlgorithmStatisticsMessage(Index, time, visitedVerticesCount);
+            var message = new UpdateStatisticsMessage(Index, time, visitedVerticesCount);
             Messenger.Default.Send(message, MessageTokens.AlgorithmStatisticsModel);
             await Task.Run(() => base.OnVertexVisited(sender, e));
         }

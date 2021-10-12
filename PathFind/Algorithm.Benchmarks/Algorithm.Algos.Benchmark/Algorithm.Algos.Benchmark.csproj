@@ -1,0 +1,102 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{D294DACD-668E-4397-B8E8-F1717D5653B5}</ProjectGuid>
+    <OutputType>Exe</OutputType>
+    <RootNamespace>Algorithm.Algos.Benchmark</RootNamespace>
+    <AssemblyName>Algorithm.Algos.Benchmark</AssemblyName>
+    <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
+    <Deterministic>true</Deterministic>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Benchmarks\CostGreedyAlgorithmBenchmark.cs" />
+    <Compile Include="Benchmarks\DepthFirstAlgorithmBenchmark.cs" />
+    <Compile Include="Benchmarks\DistanceFirstAlgorithmBenchmarks.cs" />
+    <Compile Include="Benchmarks\AlgorithmBenchmarks.cs" />
+    <Compile Include="Benchmarks\AStarAlgorithmBenchmarks.cs" />
+    <Compile Include="Benchmarks\AStarModifiedBenchmarks.cs" />
+    <Compile Include="Benchmarks\BestFirstLeeAlgorithm.cs" />
+    <Compile Include="Benchmarks\DijkstraAlgorithmBenchmarks.cs" />
+    <Compile Include="Benchmarks\LeeAlgorithmBenchmarks.cs" />
+    <Compile Include="ParamsSource.cs" />
+    <Compile Include="Program.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="BenchmarkDotNet">
+      <Version>0.13.1</Version>
+    </PackageReference>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\Algorithm\Algorithm.Algos\Algorithm.Algos.csproj">
+      <Project>{4DE08169-8512-4E1C-91ED-FD42FFC0AF71}</Project>
+      <Name>Algorithm.Algos</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Algorithm\Algorithm.Base\Algorithm.Base.csproj">
+      <Project>{04393071-3BA6-42C5-89D8-A89E3AC34511}</Project>
+      <Name>Algorithm.Base</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Algorithm\Algorithm.Interfaces\Algorithm.Interfaces.csproj">
+      <Project>{FC4F499E-9AB1-4623-9AD8-CFDE0A07B7D0}</Project>
+      <Name>Algorithm.Interfaces</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Common\Common.csproj">
+      <Project>{A5A743F5-D346-4B2B-B6AC-07152F64E4D9}</Project>
+      <Name>Common</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\GraphLib\GraphLib.Interfaces\GraphLib.Interfaces.csproj">
+      <Project>{D3C5CCFE-698B-41C7-9A72-5FD0262765E1}</Project>
+      <Name>GraphLib.Interfaces</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\GraphLib\GraphLib.Realizations\GraphLib.Realizations.csproj">
+      <Project>{B80C5250-3D81-4742-B8A5-84AE39122BA9}</Project>
+      <Name>GraphLib.Realizations</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\GraphLib\GraphLib.TestRealizations\GraphLib.TestRealizations.csproj">
+      <Project>{8DF766E8-189D-4845-917D-DD60EABF556A}</Project>
+      <Name>GraphLib.TestRealizations</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Interruptable\Interruptable.csproj">
+      <Project>{97260353-B5E4-414B-A789-C4B5568089DC}</Project>
+      <Name>Interruptable</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+</Project>

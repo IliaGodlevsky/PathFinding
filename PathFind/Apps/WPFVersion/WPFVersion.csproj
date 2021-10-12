@@ -83,7 +83,7 @@
     <Compile Include="Messages\GraphCreatedMessage.cs" />
     <Compile Include="Messages\InterruptAllAlgorithmsMessage.cs" />
     <Compile Include="Messages\IsAllAlgorithmsFinishedMessage.cs" />
-    <Compile Include="Messages\UpdateAlgorithmStatisticsMessage.cs" />
+    <Compile Include="Messages\UpdateStatisticsMessage.cs" />
     <Compile Include="MessageTokens.cs" />
     <Compile Include="Model\EndPoints.cs" />
     <Compile Include="Model\PathInput.cs" />

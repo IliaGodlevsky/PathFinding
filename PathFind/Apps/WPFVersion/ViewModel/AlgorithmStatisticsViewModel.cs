@@ -40,7 +40,7 @@ namespace WPFVersion.ViewModel
             InterruptSelelctedAlgorithmCommand = new RelayCommand(ExecuteInterruptSelectedAlgorithmCommand, CanExecuteInterruptSelectedAlgorithmCommand);
             RemoveSelelctedAlgorithmCommand = new RelayCommand(ExecuteRemoveFromStatisticsCommand, CanExecuteRemoveFromStatisticsCommand);
             Messenger.Default.Register<AlgorithmStartedMessage>(this, MessageTokens.AlgorithmStatisticsModel, OnAlgorithmStarted);
-            Messenger.Default.Register<UpdateAlgorithmStatisticsMessage>(this, MessageTokens.AlgorithmStatisticsModel, UpdateAlgorithmStatistics);
+            Messenger.Default.Register<UpdateStatisticsMessage>(this, MessageTokens.AlgorithmStatisticsModel, UpdateAlgorithmStatistics);
             Messenger.Default.Register<InterruptAllAlgorithmsMessage>(this, MessageTokens.AlgorithmStatisticsModel, OnAllAlgorithmInterrupted);
             Messenger.Default.Register<ClearStatisticsMessage>(this, MessageTokens.AlgorithmStatisticsModel, OnClearStatistics);
             Messenger.Default.Register<AlgorithmStatusMessage>(this, MessageTokens.AlgorithmStatisticsModel, SetAlgorithmStatistics);
@@ -65,7 +65,7 @@ namespace WPFVersion.ViewModel
             SendIsAllAlgorithmsFinishedMessage();
         }
 
-        private void UpdateAlgorithmStatistics(UpdateAlgorithmStatisticsMessage message)
+        private void UpdateAlgorithmStatistics(UpdateStatisticsMessage message)
         {
             Application.Current.Dispatcher.Invoke(() => Statistics[message.Index].RecieveMessage(message));
         }

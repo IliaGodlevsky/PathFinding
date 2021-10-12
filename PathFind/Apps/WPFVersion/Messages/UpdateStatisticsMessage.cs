@@ -1,6 +1,6 @@
 ﻿namespace WPFVersion.Messages
 {
-    internal sealed class UpdateAlgorithmStatisticsMessage
+    internal sealed class UpdateStatisticsMessage
     {
         public int Index { get; }
         public string Time { get; }
@@ -8,7 +8,7 @@
         public double PathCost { get; }
         public int PathLength { get; }
 
-        public UpdateAlgorithmStatisticsMessage(int index,
+        public UpdateStatisticsMessage(int index,
             string time,
             int visitedVertices,
             int pathLength = 0,

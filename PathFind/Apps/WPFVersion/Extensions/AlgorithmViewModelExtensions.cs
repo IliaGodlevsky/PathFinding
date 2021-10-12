@@ -17,7 +17,7 @@ namespace WPFVersion.Extensions
             return false;
         }
 
-        public static void RecieveMessage(this AlgorithmViewModel model, UpdateAlgorithmStatisticsMessage message)
+        public static void RecieveMessage(this AlgorithmViewModel model, UpdateStatisticsMessage message)
         {
             model.Time = message.Time;
             model.PathCost = message.PathCost;

@@ -36,7 +36,7 @@ namespace ConsoleVersion.View
             if (methodInfo.TryCreateDelegate(target, out TAction action))
             {
                 var attribute = methodInfo.GetAttributeOrNull<MenuItemAttribute>();
-                var header = attribute?.Header ?? methodInfo.Name;
+                string header = attribute?.Header ?? methodInfo.Name;
                 yield return new KeyValuePair<string, TAction>(header, action);
             }
         }

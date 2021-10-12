@@ -24,16 +24,15 @@ namespace GraphViewModel
 
         public Algorithms Algorithm { get; set; }
 
-        public Tuple<string, Algorithms>[] Algorithms => algorithms.Value;
+        public Tuple<string, Algorithms>[] Algorithms { get; }
 
-        protected PathFindingModel(ILog log, IGraph graph,
-            BaseEndPoints endPoints)
+        protected PathFindingModel(ILog log, IGraph graph, BaseEndPoints endPoints)
         {
             this.endPoints = endPoints;
             this.log = log;
             this.graph = graph;
             var enumValues = new EnumValuesWithoutIgnored<Algorithms>();
-            algorithms = new Lazy<Tuple<string, Algorithms>[]>(enumValues.ToAdjustedAndOrderedByDescriptionTuples);
+            Algorithms = enumValues.ToAdjustedAndOrderedByDescriptionTuples();
             timer = new Stopwatch();
             path = new NullGraphPath();
             algorithm = new NullAlgorithm();
@@ -62,7 +61,7 @@ namespace GraphViewModel
 
         protected virtual void OnVertexVisited(object sender, AlgorithmEventArgs e)
         {
-            if (CanBeVisualized(e.Current))
+            if (!endPoints.IsEndPoint(e.Current))
             {
                 (e.Current as IVisualizable)?.VisualizeAsVisited();
             }
@@ -76,7 +75,7 @@ namespace GraphViewModel
 
         protected virtual void OnVertexEnqueued(object sender, AlgorithmEventArgs e)
         {
-            if (CanBeVisualized(e.Current))
+            if (!endPoints.IsEndPoint(e.Current))
             {
                 (e.Current as IVisualizable)?.VisualizeAsEnqueued();
             }
@@ -96,6 +95,7 @@ namespace GraphViewModel
 
         protected virtual void OnAlgorithmStarted(object sender, ProcessEventArgs e)
         {
+            visitedVerticesCount = 0;
             timer.Restart();
         }
 
@@ -115,12 +115,6 @@ namespace GraphViewModel
             algorithm.Interrupted += OnAlgorithmInterrupted;
         }
 
-        private bool CanBeVisualized(IVertex vertex)
-        {
-            return !endPoints.IsEndPoint(vertex)
-                && vertex is IVisualizable;
-        }
-
         protected readonly BaseEndPoints endPoints;
         protected readonly IGraph graph;
         protected readonly ILog log;
@@ -129,7 +123,5 @@ namespace GraphViewModel
         protected IGraphPath path;
         protected IAlgorithm algorithm;
         protected int visitedVerticesCount;
-
-        private readonly Lazy<Tuple<string, Algorithms>[]> algorithms;
     }
 }

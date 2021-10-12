@@ -57,8 +57,7 @@ namespace Algorithm.Algos.Algos
                     .ToQueue();
 
                 var verticesToDelete = verticesQueue
-                    .Take(VerticesCountToDelete)
-                    .ToArray();
+                    .Take(VerticesCountToDelete);
 
                 deletedVertices.EnqueueRange(verticesToDelete);
                 verticesQueue = verticesQueue.Except(verticesToDelete);
@@ -92,8 +91,8 @@ namespace Algorithm.Algos.Algos
             int graphSize = graph.Size + 1;
             // this formula was found empirically (it means: in what power you need 
             // to raise the base of the logarithm to get the size of the graph)
-            var percentOfVerticesToDelete = Math.Floor(Math.Log(graphSize, LogarithmBase));
-            var partOfVerticesToDelete = Convert.ToInt32(percentOfVerticesToDelete);
+            double percentOfVerticesToDelete = Math.Floor(Math.Log(graphSize, LogarithmBase));
+            int partOfVerticesToDelete = Convert.ToInt32(percentOfVerticesToDelete);
             return percentValueRange.ReturnInRange(partOfVerticesToDelete);
         }
 
