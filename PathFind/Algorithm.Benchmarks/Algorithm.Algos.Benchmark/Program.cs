@@ -1,6 +1,5 @@
 ﻿using Algorithm.Algos.Benchmark.Benchmarks;
 using BenchmarkDotNet.Running;
-using System;
 
 namespace Algorithm.Algos.Benchmark
 {
@@ -16,7 +15,6 @@ namespace Algorithm.Algos.Benchmark
             BenchmarkRunner.Run<CostGreedyAlgorithmBenchmark>();
             BenchmarkRunner.Run<DepthFirstAlgorithmBenchmark>();
             BenchmarkRunner.Run<DistanceFirstAlgorithmBenchmarks>();
-            Console.ReadLine();
         }
     }
 }

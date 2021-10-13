@@ -15,8 +15,7 @@ namespace GraphLib.Base
 
         protected BaseVertexCost(int cost)
         {
-            cost = CostRange.ReturnInRange(cost);
-            CurrentCost = cost;
+            CurrentCost = CostRange.ReturnInRange(cost);
         }
 
         protected BaseVertexCost()
