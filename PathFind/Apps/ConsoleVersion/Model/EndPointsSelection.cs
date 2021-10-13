@@ -6,7 +6,6 @@ using GraphLib.Extensions;
 using GraphLib.Interfaces;
 using GraphLib.NullRealizations.NullObjects;
 using GraphLib.Realizations.Graphs;
-using System.Collections.Generic;
 using System.Linq;
 
 namespace ConsoleVersion.Model
@@ -28,9 +27,9 @@ namespace ConsoleVersion.Model
             int cursorLeft = Console.CursorLeft;
             int cursorRight = Console.CursorTop;
             int numberOfIntermediates = Int32Input.InputValue(
-                MessagesTexts.NumberOfIntermediateVerticesInputMsg, 
+                MessagesTexts.NumberOfIntermediateVerticesInputMsg,
                 numberOfAvailiableVertices);
-            var messages = Enumerable.Repeat(MessagesTexts.IntermediateVertexChoiceMsg, numberOfIntermediates);           
+            var messages = Enumerable.Repeat(MessagesTexts.IntermediateVertexChoiceMsg, numberOfIntermediates);
             var chooseMessages = new[]
             {
                 "\n" + MessagesTexts.SourceVertexChoiceMsg,

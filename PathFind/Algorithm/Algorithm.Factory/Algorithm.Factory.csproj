@@ -4,11 +4,11 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{4DE08169-8512-4E1C-91ED-FD42FFC0AF71}</ProjectGuid>
+    <ProjectGuid>{8270F3AF-2B53-45E4-9795-89091CEE60D4}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Algorithm.Algos</RootNamespace>
-    <AssemblyName>Algorithm.Algos</AssemblyName>
+    <RootNamespace>Algorithm.Factory</RootNamespace>
+    <AssemblyName>Algorithm.Factory</AssemblyName>
     <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <Deterministic>true</Deterministic>
@@ -32,7 +32,6 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
-    <Reference Include="System.ComponentModel.Composition" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
@@ -42,29 +41,18 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Algos\AStarAlgorithm.cs" />
-    <Compile Include="Algos\AStarModified.cs" />
-    <Compile Include="Algos\BestFirstLeeAlgorithm.cs" />
-    <Compile Include="Algos\CostGreedyAlgorithm.cs" />
-    <Compile Include="Algos\DepthFirstAlgorithm.cs" />
-    <Compile Include="Algos\DijkstraAlgorithm.cs" />
-    <Compile Include="Algos\DistanceFirstAlgorithm.cs" />
-    <Compile Include="Algos\LeeAlgorithm.cs" />
+    <Compile Include="AStarAlgorithmFactory.cs" />
+    <Compile Include="AStarModifiedFactory.cs" />
+    <Compile Include="BestFirstLeeAlgorithmFactory.cs" />
+    <Compile Include="CostGreedyAlgorithmFactory.cs" />
+    <Compile Include="DepthFirstAlgorithmFactory.cs" />
+    <Compile Include="DijkstraAlgorithmFactory.cs" />
+    <Compile Include="DistanceFirstAlgorithmFactory.cs" />
+    <Compile Include="IAlgorithmFactory.cs" />
+    <Compile Include="LeeAlgorithmFactory.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\Common\Common.csproj">
-      <Project>{a5a743f5-d346-4b2b-b6ac-07152f64e4d9}</Project>
-      <Name>Common</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\EnumerationValues\EnumerationValues.csproj">
-      <Project>{2D990CD3-70C4-4DD2-AD23-9F613446D0D6}</Project>
-      <Name>EnumerationValues</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\GraphLib\GraphLib.Extensions\GraphLib.Extensions.csproj">
-      <Project>{93f88f47-1871-44cd-9622-eb8d406c969c}</Project>
-      <Name>GraphLib.Extensions</Name>
-    </ProjectReference>
     <ProjectReference Include="..\..\GraphLib\GraphLib.Interfaces\GraphLib.Interfaces.csproj">
       <Project>{D3C5CCFE-698B-41C7-9A72-5FD0262765E1}</Project>
       <Name>GraphLib.Interfaces</Name>
@@ -73,21 +61,13 @@
       <Project>{97260353-B5E4-414B-A789-C4B5568089DC}</Project>
       <Name>Interruptable</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\NullObject\NullObject.csproj">
-      <Project>{51D677FD-7A82-4282-8A2E-51DEBE39E695}</Project>
-      <Name>NullObject</Name>
+    <ProjectReference Include="..\Algorithm.Algos\Algorithm.Algos.csproj">
+      <Project>{4DE08169-8512-4E1C-91ED-FD42FFC0AF71}</Project>
+      <Name>Algorithm.Algos</Name>
     </ProjectReference>
     <ProjectReference Include="..\Algorithm.Base\Algorithm.Base.csproj">
       <Project>{04393071-3BA6-42C5-89D8-A89E3AC34511}</Project>
       <Name>Algorithm.Base</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Algorithm.Extensions\Algorithm.Extensions.csproj">
-      <Project>{11c8b301-fe40-44a1-a5a2-bc684b6a56a0}</Project>
-      <Name>Algorithm.Extensions</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Algorithm.Infrastructure\Algorithm.Infrastructure.csproj">
-      <Project>{DA2A9A8C-0EF3-4EDB-B026-3FF86DEF9464}</Project>
-      <Name>Algorithm.Infrastructure</Name>
     </ProjectReference>
     <ProjectReference Include="..\Algorithm.Interfaces\Algorithm.Interfaces.csproj">
       <Project>{FC4F499E-9AB1-4623-9AD8-CFDE0A07B7D0}</Project>
@@ -96,14 +76,6 @@
     <ProjectReference Include="..\Algorithm.Realizations\Algorithm.Realizations.csproj">
       <Project>{600D74AF-A0AE-46AA-BCF5-695650BBE66F}</Project>
       <Name>Algorithm.Realizations</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Algorithm.Сompanions\Algorithm.Сompanions.csproj">
-      <Project>{8A717526-D82A-4409-B3B4-5979820253AF}</Project>
-      <Name>Algorithm.Сompanions</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Algorithms.NullRealizations\Algorithm.NullRealizations.csproj">
-      <Project>{FE692FCB-46C0-47A1-80ED-EFDCC811CF69}</Project>
-      <Name>Algorithm.NullRealizations</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

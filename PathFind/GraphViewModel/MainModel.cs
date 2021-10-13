@@ -1,4 +1,5 @@
-﻿using Common.Extensions;
+﻿using Algorithm.Factory;
+using Common.Extensions;
 using GraphLib.Base;
 using GraphLib.Extensions;
 using GraphLib.Interfaces;
@@ -25,6 +26,7 @@ namespace GraphViewModel
             ISaveLoadGraph saveLoad,
             IEnumerable<IGraphAssemble> graphAssembles,
             BaseEndPoints endPoints,
+            IEnumerable<IAlgorithmFactory> algorithmFactories,
             ILog log)
         {
             this.eventHolder = eventHolder;
@@ -33,6 +35,7 @@ namespace GraphViewModel
             this.graphAssembles = graphAssembles;
             this.endPoints = endPoints;
             this.log = log;
+            this.algorithmFactories = algorithmFactories;
             Graph = new NullGraph();
         }
 
@@ -98,6 +101,7 @@ namespace GraphViewModel
         protected readonly ILog log;
         protected readonly BaseEndPoints endPoints;
         protected readonly ISaveLoadGraph saveLoad;
+        protected readonly IEnumerable<IAlgorithmFactory> algorithmFactories;
 
         private readonly IVertexEventHolder eventHolder;
     }

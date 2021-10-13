@@ -1,4 +1,5 @@
-﻿using Autofac;
+﻿using Algorithm.Factory;
+using Autofac;
 using GraphLib.Base;
 using GraphLib.Interfaces;
 using GraphLib.Interfaces.Factories;
@@ -62,6 +63,15 @@ namespace WindowsFormsVersion.Configure
             builder.RegisterDecorator<CryptoGraphSerializer, IGraphSerializer>();
             builder.RegisterType<BinaryFormatter>().As<IFormatter>().SingleInstance();
             builder.RegisterType<VertexFromInfoFactory>().As<IVertexFromInfoFactory>().SingleInstance();
+
+            builder.RegisterType<DijkstraAlgorithmFactory>().As<IAlgorithmFactory>().SingleInstance();
+            builder.RegisterType<AStarAlgorithmFactory>().As<IAlgorithmFactory>().SingleInstance();
+            builder.RegisterType<AStarModifiedFactory>().As<IAlgorithmFactory>().SingleInstance();
+            builder.RegisterType<LeeAlgorithmFactory>().As<IAlgorithmFactory>().SingleInstance();
+            builder.RegisterType<BestFirstLeeAlgorithmFactory>().As<IAlgorithmFactory>().SingleInstance();
+            builder.RegisterType<DepthFirstAlgorithmFactory>().As<IAlgorithmFactory>().SingleInstance();
+            builder.RegisterType<CostGreedyAlgorithmFactory>().As<IAlgorithmFactory>().SingleInstance();
+            builder.RegisterType<DistanceFirstAlgorithmFactory>().As<IAlgorithmFactory>().SingleInstance();
 
             return builder.Build();
         }

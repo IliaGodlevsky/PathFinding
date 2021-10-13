@@ -1,4 +1,5 @@
-﻿using Algorithm.Infrastructure.EventArguments;
+﻿using Algorithm.Factory;
+using Algorithm.Infrastructure.EventArguments;
 using Common.Extensions;
 using Common.Interface;
 using GalaSoft.MvvmLight.Messaging;
@@ -9,6 +10,7 @@ using GraphViewModel.Interfaces;
 using Interruptable.EventArguments;
 using Logging.Interface;
 using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using WindowsFormsVersion.Messeges;
@@ -19,8 +21,9 @@ namespace WindowsFormsVersion.ViewModel
     {
         public event EventHandler WindowClosed;
 
-        public PathFindingViewModel(ILog log, IGraph graph, BaseEndPoints endPoints)
-            : base(log, graph, endPoints)
+        public PathFindingViewModel(ILog log, IGraph graph,
+            BaseEndPoints endPoints, IEnumerable<IAlgorithmFactory> algorithmFactories)
+            : base(log, graph, endPoints, algorithmFactories)
         {
 
         }

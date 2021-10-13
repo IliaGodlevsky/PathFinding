@@ -1,4 +1,5 @@
-﻿using Algorithm.Infrastructure.EventArguments;
+﻿using Algorithm.Factory;
+using Algorithm.Infrastructure.EventArguments;
 using Algorithm.Interfaces;
 using Common.Extensions;
 using Common.ValueRanges;
@@ -20,6 +21,7 @@ using Interruptable.Interface;
 using Logging.Interface;
 using NullObject.Extensions;
 using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 
@@ -35,8 +37,9 @@ namespace ConsoleVersion.ViewModel
         public IValueInput<int> Int32Input { get; set; }
         public IValueInput<Answer> AnswerInput { get; set; }
 
-        public PathFindingViewModel(ILog log, IGraph graph, BaseEndPoints endPoints)
-            : base(log, graph, endPoints)
+        public PathFindingViewModel(ILog log, IGraph graph,
+            BaseEndPoints endPoints, IEnumerable<IAlgorithmFactory> algorithmFactories)
+            : base(log, graph, endPoints, algorithmFactories)
         {
             algorithmKeysValueRange = new InclusiveValueRange<int>(Algorithms.Length, 1);
             keystrokesHook = new ConsoleKeystrokesHook(ConsoleKey.Escape, ConsoleKey.End);
@@ -138,14 +141,14 @@ namespace ConsoleVersion.ViewModel
             Stopwatch.StartNew().Pause(DelayTime).Cancel();
             base.OnVertexVisited(sender, e);
             var message = new UpdateStatisticsMessage(GetStatistics());
-            Messenger.Default.Send(message, MessageTokens.MainView);           
+            Messenger.Default.Send(message, MessageTokens.MainView);
         }
 
         protected override void SubscribeOnAlgorithmEvents(IAlgorithm algorithm)
         {
             base.SubscribeOnAlgorithmEvents(algorithm);
             algorithm.Finished += keystrokesHook.CancelHookingConsoleKeystrokes;
-            keystrokesHook.KeystrokeHooked += algorithm.Interrupt; 
+            keystrokesHook.KeystrokeHooked += algorithm.Interrupt;
         }
 
         private string GetStatistics()

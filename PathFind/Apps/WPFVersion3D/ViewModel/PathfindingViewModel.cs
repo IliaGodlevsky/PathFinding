@@ -1,4 +1,5 @@
-﻿using Algorithm.Infrastructure.EventArguments;
+﻿using Algorithm.Factory;
+using Algorithm.Infrastructure.EventArguments;
 using Common.Extensions;
 using Common.Interface;
 using GalaSoft.MvvmLight.Messaging;
@@ -8,6 +9,7 @@ using GraphViewModel;
 using Interruptable.EventArguments;
 using Logging.Interface;
 using System;
+using System.Collections.Generic;
 using System.ComponentModel;
 using System.Diagnostics;
 using System.Linq;
@@ -33,8 +35,9 @@ namespace WPFVersion3D.ViewModel
         public ICommand ConfirmPathFindAlgorithmChoice { get; }
         public ICommand CancelPathFindAlgorithmChoice { get; }
 
-        public PathFindingViewModel(ILog log, IGraph graph, BaseEndPoints endPoints)
-            : base(log, graph, endPoints)
+        public PathFindingViewModel(ILog log, IGraph graph,
+            BaseEndPoints endPoints, IEnumerable<IAlgorithmFactory> algorithmFactories)
+            : base(log, graph, endPoints, algorithmFactories)
         {
             ConfirmPathFindAlgorithmChoice = new RelayCommand(
                 ExecuteConfirmPathFindAlgorithmChoice,

@@ -1,4 +1,5 @@
-﻿using Common.Interface;
+﻿using Algorithm.Factory;
+using Common.Interface;
 using GalaSoft.MvvmLight.Messaging;
 using GraphLib.Base;
 using GraphLib.Extensions;
@@ -74,9 +75,9 @@ namespace WindowsFormsVersion.ViewModel
 
         public MainWindow MainWindow { get; set; }
 
-        public MainWindowViewModel(IGraphFieldFactory fieldFactory, IVertexEventHolder eventHolder,
-            ISaveLoadGraph saveLoad, IEnumerable<IGraphAssemble> graphFactories, BaseEndPoints endPoints, ILog log)
-            : base(fieldFactory, eventHolder, saveLoad, graphFactories, endPoints, log)
+        public MainWindowViewModel(IGraphFieldFactory fieldFactory, IVertexEventHolder eventHolder, ISaveLoadGraph saveLoad,
+            IEnumerable<IGraphAssemble> graphAssembles, BaseEndPoints endPoints, IEnumerable<IAlgorithmFactory> algorithmFactories, ILog log)
+            : base(fieldFactory, eventHolder, saveLoad, graphAssembles, endPoints, algorithmFactories, log)
         {
             Messenger.Default.Register<AlgorithmStatusMessage>(this, MessageTokens.MainModel, SetAlgorithmStatus);
             Messenger.Default.Register<UpdateStatisticsMessage>(this, MessageTokens.MainModel, SetStatisticsMessage);
@@ -99,7 +100,7 @@ namespace WindowsFormsVersion.ViewModel
             {
                 try
                 {
-                    var model = new PathFindingViewModel(log, Graph, endPoints);
+                    var model = new PathFindingViewModel(log, Graph, endPoints, algorithmFactories);
                     var form = new PathFindingWindow(model);
                     PrepareWindow(model, form);
                 }

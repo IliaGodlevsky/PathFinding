@@ -1,4 +1,5 @@
-﻿using Common.Interface;
+﻿using Algorithm.Factory;
+using Common.Interface;
 using EnumerationValues.Realizations;
 using GalaSoft.MvvmLight.Messaging;
 using GraphLib.Base;
@@ -56,9 +57,9 @@ namespace WPFVersion3D.ViewModel
         public ICommand InterruptAlgorithmCommand { get; }
         public ICommand ClearVerticesColorCommand { get; }
 
-        public MainWindowViewModel(IGraphFieldFactory fieldFactory, IVertexEventHolder eventHolder,
-            ISaveLoadGraph saveLoad, IEnumerable<IGraphAssemble> graphAssembles, BaseEndPoints endPoints, ILog log)
-            : base(fieldFactory, eventHolder, saveLoad, graphAssembles, endPoints, log)
+        public MainWindowViewModel(IGraphFieldFactory fieldFactory, IVertexEventHolder eventHolder, ISaveLoadGraph saveLoad,
+            IEnumerable<IGraphAssemble> graphAssembles, BaseEndPoints endPoints, IEnumerable<IAlgorithmFactory> algorithmFactories, ILog log)
+            : base(fieldFactory, eventHolder, saveLoad, graphAssembles, endPoints, algorithmFactories, log)
         {
             ClearVerticesColorCommand = new RelayCommand(ExecuteClearVerticesColors, CanExecuteClearGraphOperation);
             StartPathFindCommand = new RelayCommand(ExecuteStartPathFindCommand, CanExecuteStartFindPathCommand);
@@ -78,7 +79,7 @@ namespace WPFVersion3D.ViewModel
         {
             try
             {
-                var viewModel = new PathFindingViewModel(log, Graph, endPoints);
+                var viewModel = new PathFindingViewModel(log, Graph, endPoints, algorithmFactories);
                 var window = new PathFindWindow();
                 PrepareWindow(viewModel, window);
             }

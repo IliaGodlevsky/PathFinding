@@ -4,11 +4,11 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("Algorithm.Algos.Benchmark")]
+[assembly: AssemblyTitle("Algorithm.Factory")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
-[assembly: AssemblyProduct("Algorithm.Algos.Benchmark")]
+[assembly: AssemblyProduct("Algorithm.Factory")]
 [assembly: AssemblyCopyright("Copyright ©  2021")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
@@ -19,7 +19,7 @@ using System.Runtime.InteropServices;
 [assembly: ComVisible(false)]
 
 // The following GUID is for the ID of the typelib if this project is exposed to COM
-[assembly: Guid("d294dacd-668e-4397-b8e8-f1717d5653b5")]
+[assembly: Guid("8270f3af-2b53-45e4-9795-89091cee60d4")]
 
 // Version information for an assembly consists of the following four values:
 //

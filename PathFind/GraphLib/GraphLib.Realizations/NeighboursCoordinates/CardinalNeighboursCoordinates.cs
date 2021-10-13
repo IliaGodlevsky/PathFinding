@@ -2,7 +2,6 @@
 using GraphLib.Extensions;
 using GraphLib.Interfaces;
 using GraphLib.Realizations.Coordinates;
-using GraphLib.Realizations.Extensions;
 using System;
 using System.Linq;
 using System.Runtime.Serialization;

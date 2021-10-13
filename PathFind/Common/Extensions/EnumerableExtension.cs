@@ -188,5 +188,10 @@ namespace Common.Extensions
         {
             return collection.ToDictionary(item => item.GetDescriptionAttributeValueOrTypeName());
         }
+
+        public static Tuple<string, T>[] ToNameInstanceTuples<T>(this IEnumerable<T> collection)
+        {
+            return collection.Select(item => new Tuple<string, T>(item.GetDescriptionAttributeValueOrTypeName(), item)).ToArray();
+        }
     }
 }

@@ -9,7 +9,7 @@ namespace WindowsFormsVersion
         static MessageTokens()
         {
             MainModel = Guid.NewGuid();
-           
+
         }
     }
 }

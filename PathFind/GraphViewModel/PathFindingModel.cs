@@ -1,18 +1,18 @@
-﻿using Algorithm.Algos.Enums;
-using Algorithm.Algos.Extensions;
-using Algorithm.Extensions;
+﻿using Algorithm.Extensions;
+using Algorithm.Factory;
 using Algorithm.Infrastructure.EventArguments;
 using Algorithm.Interfaces;
 using Algorithm.NullRealizations;
-using EnumerationValues.Extensions;
-using EnumerationValues.Realizations;
+using Common.Extensions;
 using GraphLib.Base;
 using GraphLib.Interfaces;
 using GraphViewModel.Interfaces;
 using Interruptable.EventArguments;
 using Logging.Interface;
 using System;
+using System.Collections.Generic;
 using System.Diagnostics;
+using System.Linq;
 
 namespace GraphViewModel
 {
@@ -22,17 +22,21 @@ namespace GraphViewModel
 
         public int DelayTime { get; set; } = 5;
 
-        public Algorithms Algorithm { get; set; }
+        public IAlgorithmFactory Algorithm { get; set; }
 
-        public Tuple<string, Algorithms>[] Algorithms { get; }
+        public Tuple<string, IAlgorithmFactory>[] Algorithms { get; }
 
-        protected PathFindingModel(ILog log, IGraph graph, BaseEndPoints endPoints)
+        protected PathFindingModel(ILog log, IGraph graph,
+            BaseEndPoints endPoints, IEnumerable<IAlgorithmFactory> algorithmFactories)
         {
             this.endPoints = endPoints;
+            factories = algorithmFactories;
             this.log = log;
             this.graph = graph;
-            var enumValues = new EnumValuesWithoutIgnored<Algorithms>();
-            Algorithms = enumValues.ToAdjustedAndOrderedByDescriptionTuples();
+            Algorithms = factories
+                .ToNameInstanceTuples()
+                .OrderBy(item => item.Item1)
+                .ToArray();
             timer = new Stopwatch();
             path = new NullGraphPath();
             algorithm = new NullAlgorithm();
@@ -42,7 +46,7 @@ namespace GraphViewModel
         {
             try
             {
-                algorithm = Algorithm.ToAlgorithm(graph, endPoints);
+                algorithm = Algorithm.CreateAlgorithm(graph, endPoints);
                 SubscribeOnAlgorithmEvents(algorithm);
                 path = await algorithm.FindPathAsync();
                 await path.HighlightAsync(endPoints);
@@ -119,6 +123,7 @@ namespace GraphViewModel
         protected readonly IGraph graph;
         protected readonly ILog log;
         protected readonly Stopwatch timer;
+        protected readonly IEnumerable<IAlgorithmFactory> factories;
 
         protected IGraphPath path;
         protected IAlgorithm algorithm;

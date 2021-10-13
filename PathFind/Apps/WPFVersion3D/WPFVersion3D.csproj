@@ -212,6 +212,10 @@
       <Project>{4DE08169-8512-4E1C-91ED-FD42FFC0AF71}</Project>
       <Name>Algorithm.Algos</Name>
     </ProjectReference>
+    <ProjectReference Include="..\..\Algorithm\Algorithm.Factory\Algorithm.Factory.csproj">
+      <Project>{8270F3AF-2B53-45E4-9795-89091CEE60D4}</Project>
+      <Name>Algorithm.Factory</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\Algorithm\Algorithm.Infrastructure\Algorithm.Infrastructure.csproj">
       <Project>{DA2A9A8C-0EF3-4EDB-B026-3FF86DEF9464}</Project>
       <Name>Algorithm.Infrastructure</Name>

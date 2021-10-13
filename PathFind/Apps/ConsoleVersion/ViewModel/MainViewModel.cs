@@ -1,4 +1,5 @@
-﻿using ConsoleVersion.Attributes;
+﻿using Algorithm.Factory;
+using ConsoleVersion.Attributes;
 using ConsoleVersion.Enums;
 using ConsoleVersion.Extensions;
 using ConsoleVersion.Interface;
@@ -37,9 +38,9 @@ namespace ConsoleVersion.ViewModel
         public IValueInput<int> Int32Input { get; set; }
         public IValueInput<Answer> AnswerInput { get; set; }
 
-        public MainViewModel(IGraphFieldFactory fieldFactory, IVertexEventHolder eventHolder,
-            ISaveLoadGraph saveLoad, IEnumerable<IGraphAssemble> graphAssembles, BaseEndPoints endPoints, ILog log)
-            : base(fieldFactory, eventHolder, saveLoad, graphAssembles, endPoints, log)
+        public MainViewModel(IGraphFieldFactory fieldFactory, IVertexEventHolder eventHolder, ISaveLoadGraph saveLoad,
+            IEnumerable<IGraphAssemble> graphAssembles, BaseEndPoints endPoints, IEnumerable<IAlgorithmFactory> algorithmFactories, ILog log)
+            : base(fieldFactory, eventHolder, saveLoad, graphAssembles, endPoints, algorithmFactories, log)
         {
             Messenger.Default.Register<GraphCreatedMessage>(this, MessageTokens.MainModel, message => ConnectNewGraph(message.Graph));
             Messenger.Default.Register<ClearGraphMessage>(this, MessageTokens.MainModel, message => ClearGraph());
@@ -73,7 +74,7 @@ namespace ConsoleVersion.ViewModel
         {
             try
             {
-                var model = new PathFindingViewModel(log, Graph, endPoints);
+                var model = new PathFindingViewModel(log, Graph, endPoints, algorithmFactories);
                 var view = new PathFindView(model);
                 PrepareViewAndModel(view, model);
                 model.AnswerInput = AnswerInput;

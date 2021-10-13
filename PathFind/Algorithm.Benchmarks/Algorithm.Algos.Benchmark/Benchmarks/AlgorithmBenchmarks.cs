@@ -36,19 +36,24 @@ namespace Algorithm.Algos.Benchmark.Benchmarks
             endPoints50x50 = CreateEndPoints(graph50x50);
         }
 
-        [IterationCleanup][Benchmark]
+        [IterationCleanup]
+        [Benchmark]
         public void Graph10x10PathfindingTesting() => CreateAlgorithm(graph10x10, endPoints10x10).FindPath();
 
-        [IterationCleanup][Benchmark]
+        [IterationCleanup]
+        [Benchmark]
         public void Graph20x20PathfindingTesting() => CreateAlgorithm(graph20x20, endPoints20x20).FindPath();
 
-        [IterationCleanup][Benchmark]
+        [IterationCleanup]
+        [Benchmark]
         public void Graph30x30PathfindingTesting() => CreateAlgorithm(graph30x30, endPoints30x30).FindPath();
 
-        [IterationCleanup][Benchmark]
+        [IterationCleanup]
+        [Benchmark]
         public void Graph40x40PathfindingTesting() => CreateAlgorithm(graph40x40, endPoints40x40).FindPath();
 
-        [IterationCleanup][Benchmark]
+        [IterationCleanup]
+        [Benchmark]
         public void Graph50x50PathfindingTesting() => CreateAlgorithm(graph50x50, endPoints50x50).FindPath();
 
         private IIntermediateEndPoints CreateEndPoints(IGraph graph) => new TestEndPoints(graph.Vertices.First(), graph.Vertices.Last());
