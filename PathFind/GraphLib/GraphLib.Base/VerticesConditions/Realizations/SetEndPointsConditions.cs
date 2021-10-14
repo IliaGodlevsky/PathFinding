@@ -37,7 +37,8 @@ namespace GraphLib.Base.EndPointsConditions.Realizations
         {
             unsetSourceVertexCondition.Execute(endPoints.Source);
             unsetTargetVertexCondition.Execute(endPoints.Target);
-            endPoints.IntermediateVertices.ForEach(unsetIntermediateVertexCondition.Execute);
+            var intermediateVertices = endPoints.IntermediateVertices.ToArray();
+            intermediateVertices.ForEach(unsetIntermediateVertexCondition.Execute);
         }
 
         public void ExecuteTheFirstTrue(IVertex vertex)

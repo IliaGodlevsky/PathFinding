@@ -70,7 +70,8 @@ namespace Algorithm.Base
         {
             if (!graph.Contains(endPoints))
             {
-                throw new ArgumentException($"{nameof(endPoints)} don't belong to {nameof(graph)}");
+                string msg = $"{nameof(endPoints)} don't belong to {nameof(graph)}";
+                throw new ArgumentException(msg);
             }
             Started?.Invoke(this, new ProcessEventArgs());
         }

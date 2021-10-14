@@ -1,17 +1,18 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace ConsoleVersion.Model
 {
-    internal sealed class ConsoleKeystrokesHook : IDisposable
+    internal sealed class ConsoleKeystrokesHook
     {
-        public event Action KeystrokeHooked;
+        public static ConsoleKeystrokesHook Instance => instance.Value;
 
         private bool IsHookingRequired { get; set; }
 
-        public ConsoleKeystrokesHook(ConsoleKey key, params ConsoleKey[] consoleKeys)
+        private ConsoleKeystrokesHook()
         {
-            this.consoleKeys = consoleKeys.Append(key).ToArray();
+            actionsPerKeystrokes = new List<Tuple<Action, ConsoleKey[]>>();
         }
 
         public void CancelHookingConsoleKeystrokes(object sender, EventArgs e)
@@ -25,19 +26,32 @@ namespace ConsoleVersion.Model
             while (IsHookingRequired)
             {
                 var key = Console.ReadKey(true).Key;
-                if (consoleKeys.Contains(key))
+                var action = actionsPerKeystrokes.Find(item => item.Item2.Contains(key));
+                if (action != null)
                 {
-                    KeystrokeHooked?.Invoke();
-                    IsHookingRequired = false;
+                    action.Item1.Invoke();
                 }
             }
         }
 
-        public void Dispose()
+        public void Register(Action action, ConsoleKey key, params ConsoleKey[] keys)
         {
-            KeystrokeHooked = null;
+            var keystrokes = keys.Append(key).ToArray();
+            var actionPerKeystrokes = new Tuple<Action, ConsoleKey[]>(action, keystrokes);
+            actionsPerKeystrokes.Add(actionPerKeystrokes);
         }
 
-        private readonly ConsoleKey[] consoleKeys;
+        public void Unregister(Action action)
+        {
+            var actionPerKeystrokes = actionsPerKeystrokes.Find(item => item.Item1.Equals(action));
+            if (actionsPerKeystrokes != null)
+            {
+                actionsPerKeystrokes.Remove(actionPerKeystrokes);
+            }
+        }
+
+        private readonly List<Tuple<Action, ConsoleKey[]>> actionsPerKeystrokes;
+        private static readonly Lazy<ConsoleKeystrokesHook> instance 
+            = new Lazy<ConsoleKeystrokesHook>(() => new ConsoleKeystrokesHook());
     }
 }

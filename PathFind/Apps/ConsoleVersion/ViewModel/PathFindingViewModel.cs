@@ -24,6 +24,7 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace ConsoleVersion.ViewModel
 {
@@ -42,7 +43,9 @@ namespace ConsoleVersion.ViewModel
             : base(log, graph, endPoints, algorithmFactories)
         {
             algorithmKeysValueRange = new InclusiveValueRange<int>(Algorithms.Length, 1);
-            keystrokesHook = new ConsoleKeystrokesHook(ConsoleKey.Escape, ConsoleKey.End);
+            keystrokesHook = ConsoleKeystrokesHook.Instance;
+            keystrokesHook.Register(SlowDownAlgorithm, ConsoleKey.DownArrow);
+            keystrokesHook.Register(SpeedUpAlgorithm, ConsoleKey.UpArrow);
         }
 
         [MenuItem(MenuItemsNames.FindPath, MenuItemPriority.Highest)]
@@ -55,7 +58,7 @@ namespace ConsoleVersion.ViewModel
                     Console.CursorVisible = false;
                     base.FindPath();
                     keystrokesHook.StartHookingConsoleKeystrokes();
-                    keystrokesHook.KeystrokeHooked -= algorithm.Interrupt;
+                    keystrokesHook.Unregister(algorithm.Interrupt);
                     Console.CursorVisible = true;
                 }
                 catch (Exception ex)
@@ -90,6 +93,8 @@ namespace ConsoleVersion.ViewModel
         [MenuItem(MenuItemsNames.Exit, MenuItemPriority.Lowest)]
         public void Interrupt()
         {
+            keystrokesHook.Unregister(SlowDownAlgorithm);
+            keystrokesHook.Unregister(SpeedUpAlgorithm);
             ClearGraph();
             Interrupted?.Invoke(this, new ProcessEventArgs());
             Interrupted = null;
@@ -148,7 +153,7 @@ namespace ConsoleVersion.ViewModel
         {
             base.SubscribeOnAlgorithmEvents(algorithm);
             algorithm.Finished += keystrokesHook.CancelHookingConsoleKeystrokes;
-            keystrokesHook.KeystrokeHooked += algorithm.Interrupt;
+            keystrokesHook.Register(algorithm.Interrupt, ConsoleKey.Escape);
         }
 
         private string GetStatistics()
@@ -158,6 +163,16 @@ namespace ConsoleVersion.ViewModel
             var pathfindingInfos = new object[] { path.PathLength, path.PathCost, visitedVerticesCount };
             string pathfindingInfo = string.Format(MessagesTexts.PathfindingStatisticsFormat, pathfindingInfos);
             return string.Join("\t", description, timerInfo, pathfindingInfo);
+        }
+
+        private void SpeedUpAlgorithm()
+        {
+            DelayTime = Constants.AlgorithmDelayTimeValueRange.ReturnInRange(DelayTime - 1);
+        }
+
+        private void SlowDownAlgorithm()
+        {
+            DelayTime = Constants.AlgorithmDelayTimeValueRange.ReturnInRange(DelayTime + 1);
         }
 
         private int NumberOfAvailableIntermediate => graph.Size - graph.Vertices.Count(v => v.IsIsolated()) - 2;
