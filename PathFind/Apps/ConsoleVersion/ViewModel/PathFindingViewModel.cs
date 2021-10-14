@@ -128,7 +128,7 @@ namespace ConsoleVersion.ViewModel
             IsVisualizationRequired = answer == Answer.Yes;
         }
 
-        protected override void Summarize()
+        protected override void SummarizePathfindingResults()
         {
             string statistics = !path.IsNull() ? GetStatistics() : MessagesTexts.CouldntFindPathMsg;
             var message = new UpdateStatisticsMessage(statistics);

@@ -40,7 +40,7 @@ namespace WindowsFormsVersion.ViewModel
             Messenger.Default.Send(new AlgorithmStatusMessage(true), MessageTokens.MainModel);
         }
 
-        protected override void Summarize()
+        protected override void SummarizePathfindingResults()
         {
             string statistics = path.PathLength > 0 ? Statistics : CouldntFindPath;
             var message = new UpdateStatisticsMessage(statistics);
@@ -69,8 +69,6 @@ namespace WindowsFormsVersion.ViewModel
                 FindPath();
             }
         }
-
-
 
         public void CancelPathFinding(object sender, EventArgs e)
         {

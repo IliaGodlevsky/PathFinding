@@ -1,6 +1,5 @@
 ﻿using Algorithm.Interfaces;
 using Common.Extensions;
-using GraphLib.Interfaces;
 using System;
 using System.Collections.Generic;
 
@@ -13,11 +12,6 @@ namespace Algorithm.Realizations.Heuristic
     /// <remarks><see cref="https://en.wikipedia.org/wiki/Chebyshev_distance"/></remarks>
     public sealed class ChebyshevDistance : Distance, IHeuristic
     {
-        public double Calculate(IVertex first, IVertex second)
-        {
-            return CalculateDistance(first, second);
-        }
-
         protected override double Aggregate(IEnumerable<double> collection)
         {
             return collection.MaxOrDefault();

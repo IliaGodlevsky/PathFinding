@@ -119,7 +119,7 @@ namespace Common.Extensions
         /// to which <paramref name="action"/> was applied</returns>
         public static IEnumerable<T> ForEach<T>(this IEnumerable<T> collection, Action<T> action)
         {
-            foreach (var item in collection.ToArray())
+            foreach (var item in collection)
             {
                 action(item);
             }
@@ -140,6 +140,11 @@ namespace Common.Extensions
         public static double MaxOrDefault(this IEnumerable<double> collection)
         {
             return collection.Any() ? collection.Max() : default;
+        }
+
+        public static double MinOrDefault<T>(this IEnumerable<T> collection, Func<T, double> selector)
+        {
+            return collection.Any() ? collection.Min(selector) : default;
         }
 
         /// <summary>
@@ -189,9 +194,12 @@ namespace Common.Extensions
             return collection.ToDictionary(item => item.GetDescriptionAttributeValueOrTypeName());
         }
 
-        public static Tuple<string, T>[] ToNameInstanceTuples<T>(this IEnumerable<T> collection)
+        public static Tuple<string, T>[] ToOrderedNameInstanceTuples<T, U>(this IEnumerable<T> collection, Func<Tuple<string, T>, U> orderSelector)
         {
-            return collection.Select(item => new Tuple<string, T>(item.GetDescriptionAttributeValueOrTypeName(), item)).ToArray();
+            return collection
+                .Select(item => new Tuple<string, T>(item.GetDescriptionAttributeValueOrTypeName(), item))
+                .OrderBy(orderSelector)
+                .ToArray();
         }
     }
 }

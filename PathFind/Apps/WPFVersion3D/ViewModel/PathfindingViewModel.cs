@@ -60,7 +60,7 @@ namespace WPFVersion3D.ViewModel
             Messenger.Default.Send(message, MessageTokens.AlgorithmStatisticsModel);
         }
 
-        protected override void Summarize()
+        protected override void SummarizePathfindingResults()
         {
             var status = path.PathLength > 0 ? AlgorithmStatuses.Finished : AlgorithmStatuses.Failed;
             string time = timer.ToFormattedString();

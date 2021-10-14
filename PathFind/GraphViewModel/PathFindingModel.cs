@@ -12,7 +12,6 @@ using Logging.Interface;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
-using System.Linq;
 
 namespace GraphViewModel
 {
@@ -26,17 +25,13 @@ namespace GraphViewModel
 
         public Tuple<string, IAlgorithmFactory>[] Algorithms { get; }
 
-        protected PathFindingModel(ILog log, IGraph graph,
-            BaseEndPoints endPoints, IEnumerable<IAlgorithmFactory> algorithmFactories)
+        protected PathFindingModel(ILog log, IGraph graph, BaseEndPoints endPoints, 
+            IEnumerable<IAlgorithmFactory> factories)
         {
             this.endPoints = endPoints;
-            factories = algorithmFactories;
             this.log = log;
             this.graph = graph;
-            Algorithms = factories
-                .ToNameInstanceTuples()
-                .OrderBy(item => item.Item1)
-                .ToArray();
+            Algorithms = factories.ToOrderedNameInstanceTuples(item => item.Item1);
             timer = new Stopwatch();
             path = new NullGraphPath();
             algorithm = new NullAlgorithm();
@@ -50,7 +45,7 @@ namespace GraphViewModel
                 SubscribeOnAlgorithmEvents(algorithm);
                 path = await algorithm.FindPathAsync();
                 await path.HighlightAsync(endPoints);
-                Summarize();
+                SummarizePathfindingResults();
             }
             catch (Exception ex)
             {
@@ -95,7 +90,7 @@ namespace GraphViewModel
             timer.Stop();
         }
 
-        protected abstract void Summarize();
+        protected abstract void SummarizePathfindingResults();
 
         protected virtual void OnAlgorithmStarted(object sender, ProcessEventArgs e)
         {
@@ -123,7 +118,6 @@ namespace GraphViewModel
         protected readonly IGraph graph;
         protected readonly ILog log;
         protected readonly Stopwatch timer;
-        protected readonly IEnumerable<IAlgorithmFactory> factories;
 
         protected IGraphPath path;
         protected IAlgorithm algorithm;

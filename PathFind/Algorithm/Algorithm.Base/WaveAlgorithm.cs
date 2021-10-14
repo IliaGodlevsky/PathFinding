@@ -92,8 +92,7 @@ namespace Algorithm.Base
         {
             return visitedVertices
                 .GetUnvisitedNeighbours(vertex)
-                .FilterObstacles()
-                .ToArray();
+                .FilterObstacles();
         }
     }
 }

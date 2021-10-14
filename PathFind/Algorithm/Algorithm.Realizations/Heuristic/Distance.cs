@@ -14,7 +14,7 @@ namespace Algorithm.Realizations.Heuristic
     /// </summary>
     public abstract class Distance
     {
-        public double CalculateDistance(IVertex first, IVertex second)
+        public double Calculate(IVertex first, IVertex second)
         {
             if (first == null || second == null)
             {

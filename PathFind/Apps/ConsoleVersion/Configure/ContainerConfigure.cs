@@ -1,4 +1,6 @@
 ﻿using Algorithm.Factory;
+using Algorithm.Interfaces;
+using Algorithm.Realizations.StepRules;
 using Autofac;
 using ConsoleVersion.Enums;
 using ConsoleVersion.Interface;
@@ -78,6 +80,9 @@ namespace ConsoleVersion.Configure
             builder.RegisterType<DepthFirstAlgorithmFactory>().As<IAlgorithmFactory>().SingleInstance();
             builder.RegisterType<CostGreedyAlgorithmFactory>().As<IAlgorithmFactory>().SingleInstance();
             builder.RegisterType<DistanceFirstAlgorithmFactory>().As<IAlgorithmFactory>().SingleInstance();
+
+            builder.RegisterType<LandscapeStepRule>().As<IStepRule>().SingleInstance();
+            builder.RegisterDecorator<WalkStepRule, IStepRule>();
 
             return builder.Build();
         }

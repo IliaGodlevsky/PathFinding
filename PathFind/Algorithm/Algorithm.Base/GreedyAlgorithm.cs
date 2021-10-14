@@ -1,6 +1,7 @@
 ﻿using Algorithm.Extensions;
 using Algorithm.Infrastructure.EventArguments;
 using Algorithm.Interfaces;
+using Algorithm.NullRealizations;
 using Algorithm.Realizations.GraphPaths;
 using Common.Extensions;
 using GraphLib.Extensions;
@@ -42,7 +43,9 @@ namespace Algorithm.Base
 
         protected virtual IGraphPath CreateGraphPath()
         {
-            return new GraphPath(parentVertices, endPoints);
+            return CurrentVertex.IsNull()
+                ? (IGraphPath)new NullGraphPath() 
+                : new GraphPath(parentVertices, endPoints);
         }
 
         /// <summary>
@@ -75,19 +78,10 @@ namespace Algorithm.Base
         {
             get
             {
-                var neighbours = visitedVertices
-                    .GetUnvisitedNeighbours(CurrentVertex)
-                    .FilterObstacles();
-
-                bool IsLeastCostVertex(IVertex vertex)
-                {
-                    return GreedyHeuristic(vertex) == neighbours.Min(GreedyHeuristic);
-                }
-
-                return neighbours
-                    .ForEach(Enqueue)
-                    .ToList()
-                    .FindOrNullVertex(IsLeastCostVertex);
+                var neighbours = visitedVertices.GetUnvisitedNeighbours(CurrentVertex).FilterObstacles();
+                double leastVertexCost = neighbours.MinOrDefault(GreedyHeuristic);
+                bool IsLeastCostVertex(IVertex vertex) => GreedyHeuristic(vertex) == leastVertexCost;
+                return neighbours.ForEach(Enqueue).FirstOrNullVertex(IsLeastCostVertex);
             }
         }
 
