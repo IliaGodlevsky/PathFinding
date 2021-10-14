@@ -73,8 +73,6 @@ namespace WPFVersion.Configure
             builder.RegisterType<CostGreedyAlgorithmFactory>().As<IAlgorithmFactory>().SingleInstance();
             builder.RegisterType<DistanceFirstAlgorithmFactory>().As<IAlgorithmFactory>().SingleInstance();
 
-            builder.RegisterType<LandscapeStepRule>().As<IStepRule>().SingleInstance();
-
             return builder.Build();
         }
     }

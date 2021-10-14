@@ -8,20 +8,6 @@ namespace EnumerationValues.Extensions
 {
     public static class EnumValuesExtensions
     {
-        public static Tuple<string, TEnum>[] ToAdjustedAndOrderedByDescriptionTuples<TEnum>(
-            this IEnumValues<TEnum> self)
-            where TEnum : Enum
-        {
-            var tuples = self.GetDescriptionAndValueTuples();
-            var longestDescriptionLength = tuples.Max(tuple => tuple.Item1.Length);
-
-            return tuples
-                .Select(tuple => tuple.Item1.PadRight(longestDescriptionLength))
-                .Zip(self.Values, (item1, item2) => new Tuple<string, TEnum>(item1, item2))
-                .OrderBy(item => item.Item1)
-                .ToArray();
-        }
-
         public static Tuple<string, TEnum>[] GetDescriptionAndValueTuples<TEnum>(this IEnumValues<TEnum> self)
             where TEnum : Enum
         {
