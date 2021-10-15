@@ -5,6 +5,7 @@ using Common.Extensions;
 using Common.ValueRanges;
 using ConsoleVersion.Attributes;
 using ConsoleVersion.Enums;
+using ConsoleVersion.EventArguments;
 using ConsoleVersion.Extensions;
 using ConsoleVersion.Interface;
 using ConsoleVersion.Messages;
@@ -24,7 +25,6 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
-using System.Threading.Tasks;
 
 namespace ConsoleVersion.ViewModel
 {
@@ -43,9 +43,7 @@ namespace ConsoleVersion.ViewModel
             : base(log, graph, endPoints, algorithmFactories)
         {
             algorithmKeysValueRange = new InclusiveValueRange<int>(Algorithms.Length, 1);
-            keystrokesHook = ConsoleKeystrokesHook.Instance;
-            keystrokesHook.Register(SlowDownAlgorithm, ConsoleKey.DownArrow);
-            keystrokesHook.Register(SpeedUpAlgorithm, ConsoleKey.UpArrow);
+            ConsoleKeystrokesHook.Instance.KeyPressed += OnConsoleKeyPressed;
         }
 
         [MenuItem(MenuItemsNames.FindPath, MenuItemPriority.Highest)]
@@ -57,8 +55,7 @@ namespace ConsoleVersion.ViewModel
                 {
                     Console.CursorVisible = false;
                     base.FindPath();
-                    keystrokesHook.StartHookingConsoleKeystrokes();
-                    keystrokesHook.Unregister(algorithm.Interrupt);
+                    ConsoleKeystrokesHook.Instance.StartHookingConsoleKeystrokes();
                     Console.CursorVisible = true;
                 }
                 catch (Exception ex)
@@ -93,11 +90,10 @@ namespace ConsoleVersion.ViewModel
         [MenuItem(MenuItemsNames.Exit, MenuItemPriority.Lowest)]
         public void Interrupt()
         {
-            keystrokesHook.Unregister(SlowDownAlgorithm);
-            keystrokesHook.Unregister(SpeedUpAlgorithm);
             ClearGraph();
             Interrupted?.Invoke(this, new ProcessEventArgs());
             Interrupted = null;
+            ConsoleKeystrokesHook.Instance.KeyPressed -= OnConsoleKeyPressed;
         }
 
         [MenuItem(MenuItemsNames.ChooseEndPoints, MenuItemPriority.High)]
@@ -152,8 +148,7 @@ namespace ConsoleVersion.ViewModel
         protected override void SubscribeOnAlgorithmEvents(IAlgorithm algorithm)
         {
             base.SubscribeOnAlgorithmEvents(algorithm);
-            algorithm.Finished += keystrokesHook.CancelHookingConsoleKeystrokes;
-            keystrokesHook.Register(algorithm.Interrupt, ConsoleKey.Escape);
+            algorithm.Finished += ConsoleKeystrokesHook.Instance.CancelHookingConsoleKeystrokes;
         }
 
         private string GetStatistics()
@@ -165,20 +160,25 @@ namespace ConsoleVersion.ViewModel
             return string.Join("\t", description, timerInfo, pathfindingInfo);
         }
 
-        private void SpeedUpAlgorithm()
+        private void OnConsoleKeyPressed(object sender, ConsoleKeyPressedEventArgs e)
         {
-            DelayTime = Constants.AlgorithmDelayTimeValueRange.ReturnInRange(DelayTime - 1);
-        }
-
-        private void SlowDownAlgorithm()
-        {
-            DelayTime = Constants.AlgorithmDelayTimeValueRange.ReturnInRange(DelayTime + 1);
+            switch (e.PressedKey)
+            {
+                case ConsoleKey.Escape:
+                    algorithm.Interrupt();
+                    break;
+                case ConsoleKey.UpArrow:
+                    DelayTime = Constants.AlgorithmDelayTimeValueRange.ReturnInRange(DelayTime - 1);
+                    break;
+                case ConsoleKey.DownArrow:
+                    DelayTime = Constants.AlgorithmDelayTimeValueRange.ReturnInRange(DelayTime + 1);
+                    break;
+            }
         }
 
         private int NumberOfAvailableIntermediate => graph.Size - graph.Vertices.Count(v => v.IsIsolated()) - 2;
         private bool HasAnyVerticesToChooseAsEndPoints => NumberOfAvailableIntermediate >= 0;
 
         private readonly InclusiveValueRange<int> algorithmKeysValueRange;
-        private readonly ConsoleKeystrokesHook keystrokesHook;
     }
 }

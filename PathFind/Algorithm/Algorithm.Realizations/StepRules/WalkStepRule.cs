@@ -5,7 +5,7 @@ namespace Algorithm.Realizations.StepRules
 {
     /// <summary>
     /// A step rule, that immitates a process
-    /// of moving during the pathfinding process.
+    /// of wasting energy during the pathfinding process.
     /// This class can't be inherited
     /// </summary>
     public sealed class WalkStepRule : IStepRule
