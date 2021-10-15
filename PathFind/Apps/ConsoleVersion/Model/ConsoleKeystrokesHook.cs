@@ -10,8 +10,6 @@ namespace ConsoleVersion.Model
 
         public static ConsoleKeystrokesHook Instance => instance.Value;
 
-        private bool IsHookingRequired { get; set; }
-
         public void CancelHookingConsoleKeystrokes()
         {
             IsHookingRequired = false;
@@ -26,6 +24,13 @@ namespace ConsoleVersion.Model
                 var args = new ConsoleKeyPressedEventArgs(key);
                 KeyPressed?.Invoke(this, args);
             }
+        }
+
+        private bool IsHookingRequired { get; set; }
+
+        private ConsoleKeystrokesHook()
+        {
+
         }
 
         private static readonly Lazy<ConsoleKeystrokesHook> instance 

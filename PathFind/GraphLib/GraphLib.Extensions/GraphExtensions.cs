@@ -1,6 +1,8 @@
 ﻿using Common.Extensions;
 using Common.ValueRanges;
 using GraphLib.Interfaces;
+using GraphLib.NullRealizations.NullObjects;
+using NullObject.Extensions;
 using System;
 using System.Linq;
 
@@ -45,13 +47,15 @@ namespace GraphLib.Extensions
 
         public static int GetObstaclesCount(this IGraph self)
         {
-            return self.Vertices.Count(vertex => vertex.IsObstacle);
+            return self.Vertices.Where(vertex => vertex.IsObstacle).Count();
         }
 
-        public static TGraph CloneVertices<TGraph>(this TGraph self, TGraph graphToClone)
+        public static TGraph CopyVerticesDeeply<TGraph>(this TGraph self, TGraph graphToCopy)
             where TGraph : IGraph
         {
-            foreach (var vertex in graphToClone.Vertices)
+            int limit = Math.Min(self.Size, graphToCopy.Size);
+            var vertices = graphToCopy.Vertices.Take(limit);
+            foreach (var vertex in vertices)
             {
                 var clone = vertex.Clone();
                 self[clone.Position] = clone;
@@ -91,6 +95,11 @@ namespace GraphLib.Extensions
         public static bool Contains(this IGraph self, IIntermediateEndPoints endPoints)
         {
             return self.Contains((IEndPoints)endPoints) && self.Contains(endPoints.IntermediateVertices.ToArray());
+        }
+
+        public static int GetIsolatedCount(this IGraph self)
+        {
+            return self.Vertices.Where(vertex => vertex.IsIsolated()).Count();
         }
 
         public static IVertex[] GetNotObstacles(this IGraph self)

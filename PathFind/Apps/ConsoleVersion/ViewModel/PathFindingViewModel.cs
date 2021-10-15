@@ -69,8 +69,6 @@ namespace ConsoleVersion.ViewModel
             }
         }
 
-
-
         [MenuItem(MenuItemsNames.ChooseAlgorithm, MenuItemPriority.High)]
         public void ChooseAlgorithm()
         {
@@ -176,7 +174,7 @@ namespace ConsoleVersion.ViewModel
             }
         }
 
-        private int NumberOfAvailableIntermediate => graph.Size - graph.Vertices.Count(v => v.IsIsolated()) - 2;
+        private int NumberOfAvailableIntermediate => graph.Size - graph.GetIsolatedCount() - 2;
         private bool HasAnyVerticesToChooseAsEndPoints => NumberOfAvailableIntermediate >= 0;
 
         private readonly InclusiveValueRange<int> algorithmKeysValueRange;

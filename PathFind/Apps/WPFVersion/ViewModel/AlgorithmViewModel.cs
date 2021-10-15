@@ -51,10 +51,10 @@ namespace WPFVersion.ViewModel
         public AlgorithmViewModel(IAlgorithm algorithm, string algorithmName, int delayTime, int index)
         {
             this.algorithm = algorithm;
+            this.delayTime = delayTime;
             AlgorithmName = algorithmName;
             Status = AlgorithmStatus.Started;
             Index = index;
-            this.delayTime = delayTime;
         }
 
         public AlgorithmViewModel(AlgorithmStartedMessage message, int index)

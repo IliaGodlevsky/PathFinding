@@ -1,5 +1,6 @@
 ﻿using Common.Extensions;
 using GraphLib.Interfaces;
+using GraphLib.TestRealizations.TestFactories;
 using Moq;
 using NUnit.Framework;
 using System;
@@ -42,6 +43,18 @@ namespace GraphLib.Extensions.Tests
             var coordinates = graph.ToCoordinates(index);
 
             Assert.IsTrue(coordinates.SequenceEqual(expectedCoordinates));
+        }
+
+        [TestCase(new[] { 96, 40 })]
+        public void CloneTest_ReturnsEqualGraph(int[] dimensionSizes)
+        {
+            var assemble = new TestGraphAssemble();
+            var graph = assemble.AssembleGraph(25, dimensionSizes);
+
+            var clone = graph.Clone();
+
+            Assert.IsTrue(graph.IsEqual(clone));
+            Assert.AreNotSame(graph, clone);
         }
     }
 }

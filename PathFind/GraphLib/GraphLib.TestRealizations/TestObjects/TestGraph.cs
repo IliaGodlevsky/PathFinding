@@ -16,7 +16,7 @@ namespace GraphLib.TestRealizations
         public override IGraph Clone()
         {
             var graph = new TestGraph(DimensionsSizes);
-            return graph.CloneVertices(this);
+            return graph.CopyVerticesDeeply(this);
         }
     }
 }

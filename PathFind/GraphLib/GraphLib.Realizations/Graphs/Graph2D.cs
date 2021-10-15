@@ -22,7 +22,7 @@ namespace GraphLib.Realizations.Graphs
         public override IGraph Clone()
         {
             var graph = new Graph2D(DimensionsSizes);
-            return graph.CloneVertices(this);
+            return graph.CopyVerticesDeeply(this);
         }
     }
 }
