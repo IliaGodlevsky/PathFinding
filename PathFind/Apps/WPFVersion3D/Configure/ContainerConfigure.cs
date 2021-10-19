@@ -1,5 +1,6 @@
 ﻿using Algorithm.Factory;
 using Autofac;
+using Common.Extensions;
 using GraphLib.Base;
 using GraphLib.Interfaces;
 using GraphLib.Interfaces.Factories;
@@ -13,6 +14,7 @@ using GraphViewModel;
 using GraphViewModel.Interfaces;
 using Logging.Interface;
 using Logging.Loggers;
+using System;
 using System.Runtime.Serialization;
 using System.Web.UI;
 using WPFVersion3D.Interface;
@@ -55,14 +57,8 @@ namespace WPFVersion3D.Configure
             builder.RegisterType<ObjectStateFormatter>().As<IFormatter>().SingleInstance();
             builder.RegisterType<Vertex3DFromInfoFactory>().As<IVertexFromInfoFactory>().SingleInstance();
 
-            builder.RegisterType<DijkstraAlgorithmFactory>().As<IAlgorithmFactory>().SingleInstance();
-            builder.RegisterType<AStarAlgorithmFactory>().As<IAlgorithmFactory>().SingleInstance();
-            builder.RegisterType<AStarModifiedFactory>().As<IAlgorithmFactory>().SingleInstance();
-            builder.RegisterType<LeeAlgorithmFactory>().As<IAlgorithmFactory>().SingleInstance();
-            builder.RegisterType<BestFirstLeeAlgorithmFactory>().As<IAlgorithmFactory>().SingleInstance();
-            builder.RegisterType<DepthFirstAlgorithmFactory>().As<IAlgorithmFactory>().SingleInstance();
-            builder.RegisterType<CostGreedyAlgorithmFactory>().As<IAlgorithmFactory>().SingleInstance();
-            builder.RegisterType<DistanceFirstAlgorithmFactory>().As<IAlgorithmFactory>().SingleInstance();
+            builder.RegisterAssemblyTypes(AppDomain.CurrentDomain.GetAssemblies())
+                .Where(type => type.Implements<IAlgorithmFactory>()).As<IAlgorithmFactory>().SingleInstance();
 
             return builder.Build();
         }

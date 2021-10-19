@@ -9,25 +9,25 @@ using System.ComponentModel;
 namespace Algorithm.Factory
 {
     [Description("A* modified algorithm")]
-    public sealed class AStarModifiedFactory : IAlgorithmFactory
+    public sealed class AStarModifiedAlgorithmFactory : IAlgorithmFactory
     {
-        public AStarModifiedFactory(IStepRule stepRule, IHeuristic heuristic)
+        public AStarModifiedAlgorithmFactory(IStepRule stepRule, IHeuristic heuristic)
         {
             this.heuristic = heuristic;
             this.stepRule = stepRule;
         }
 
-        public AStarModifiedFactory(IStepRule stepRule) : this(stepRule, new ChebyshevDistance())
+        public AStarModifiedAlgorithmFactory(IStepRule stepRule) : this(stepRule, new ChebyshevDistance())
         {
 
         }
 
-        public AStarModifiedFactory(IHeuristic heuristic) : this(new DefaultStepRule(), heuristic)
+        public AStarModifiedAlgorithmFactory(IHeuristic heuristic) : this(new DefaultStepRule(), heuristic)
         {
 
         }
 
-        public AStarModifiedFactory() : this(new DefaultStepRule(), new ChebyshevDistance())
+        public AStarModifiedAlgorithmFactory() : this(new DefaultStepRule(), new ChebyshevDistance())
         {
 
         }

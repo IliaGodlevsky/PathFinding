@@ -64,7 +64,7 @@ namespace WPFVersion3D.ViewModel
         protected override void SummarizePathfindingResults()
         {
             var status = path.PathLength > 0 ? AlgorithmStatuses.Finished : AlgorithmStatuses.Failed;
-            string time = timer.ToString();
+            string time = timer.ToFormattedString();
             var message = new UpdateAlgorithmStatisticsMessage(Index, time,
                 visitedVerticesCount, path.PathLength, path.PathCost);
             Messenger.Default.Send(message, MessageTokens.AlgorithmStatisticsModel);
@@ -73,7 +73,7 @@ namespace WPFVersion3D.ViewModel
         protected override async void OnVertexVisited(object sender, AlgorithmEventArgs e)
         {
             Stopwatch.StartNew().Pause(DelayTime).Cancel();
-            string time = timer.ToString();
+            string time = timer.ToFormattedString();
             var message = new UpdateAlgorithmStatisticsMessage(Index, time, visitedVerticesCount);
             Messenger.Default.Send(message, MessageTokens.AlgorithmStatisticsModel);
             await Task.Run(() => base.OnVertexVisited(sender, e));

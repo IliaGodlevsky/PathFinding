@@ -52,7 +52,7 @@ namespace Algorithm.Algos.Algos
         protected override void PrepareForLocalPathfinding()
         {
             base.PrepareForLocalPathfinding();
-            var vertices = graph.GetNotObstacles().Except(CurrentEndPoints.Source);
+            var vertices = graph.GetNotObstacles().Without(CurrentEndPoints.Source);
             accumulatedCosts = new AccumulatedCosts(vertices, double.PositiveInfinity);
             accumulatedCosts.Reevaluate(CurrentEndPoints.Source, default);
         }

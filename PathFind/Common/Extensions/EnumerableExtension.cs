@@ -103,9 +103,14 @@ namespace Common.Extensions
             return items.All(IsInCollection);
         }
 
-        public static IEnumerable<T> Except<T>(this IEnumerable<T> self, params T[] items)
+        public static IEnumerable<T> Without<T>(this IEnumerable<T> self, params T[] items)
         {
-            return self.Except(items.AsEnumerable());
+            return self.Where(item => !items.Contains(item));
+        }
+
+        public static IEnumerable<T> Without<T>(this IEnumerable<T> self, IEnumerable<T> items)
+        {
+            return self.Where(item => !items.Contains(item));
         }
 
         /// <summary>

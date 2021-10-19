@@ -1,3 +1,4 @@
+using Algorithm.Infrastructure;
 using Algorithm.Interfaces;
 using GraphLib.Interfaces;
 using GraphLib.NullRealizations.NullObjects;
@@ -37,14 +38,14 @@ namespace Algorithm.Algos.Tests
         }
 
         [Test]
-        public virtual void FindPath_EndPointsDoesntBelongToGraph_TrowsArgumentException()
+        public virtual void FindPath_EndPointsDoesntBelongToGraph_TrowsEndPointsNotFromCurrentGraphException()
         {
             var graph = testgraph2DAssemble.AssembleGraph();
             var endPoints = new TestEndPoints(new NullVertex(), new NullVertex());
 
             var algorithm = CreateAlgorithm(graph, endPoints);
 
-            Assert.Throws<ArgumentException>(() => algorithm.FindPath());
+            Assert.Throws<EndPointsNotFromCurrentGraphException>(() => algorithm.FindPath());
         }
 
         [Test]

@@ -6,6 +6,7 @@ using GraphLib.Serialization;
 using GraphLib.Serialization.Extensions;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Windows;
 using System.Windows.Media;
 using System.Windows.Media.Media3D;
@@ -15,6 +16,7 @@ using static WPFVersion3D.Constants;
 
 namespace WPFVersion3D.Model
 {
+    [DebuggerDisplay("{Position.ToString()})")]
     internal class Vertex3D : UIElement3D, IVertex, IVisualizable, IEquatable<IVertex>, ICloneable<IVertex>
     {
         public Vertex3D(INeighboursCoordinates radar, ICoordinate coordinate, IModel3DFactory modelFactory)

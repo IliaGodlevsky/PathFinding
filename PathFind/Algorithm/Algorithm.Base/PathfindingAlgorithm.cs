@@ -59,10 +59,9 @@ namespace Algorithm.Base
         /// <summary>
         /// Interruptes the algorithm
         /// </summary>
-        /// <remarks>This method doesn't stops an algorithm
+        /// <remarks>This method doesn't stops the algorithm
         /// immidietly. The algorithm will complete the iteration
-        /// and then will stop. Also if the algorithm is being paused
-        /// it will be resumed and interrupted as well</remarks>
+        /// and then will stop.</remarks>
         public void Interrupt()
         {
             IsInterruptRequested = true;

@@ -75,7 +75,7 @@ namespace GraphLib.Realizations.NeighboursCoordinates
         private ICoordinate[] GetNeighboursCoordinates()
         {
             return DetectNeighboursCoordinates()
-                .Except(selfCoordinatesValues.ToCoordinate())
+                .Without(selfCoordinatesValues.ToCoordinate())
                 .ToArray();
         }
 

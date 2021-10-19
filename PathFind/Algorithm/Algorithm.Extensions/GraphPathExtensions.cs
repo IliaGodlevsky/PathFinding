@@ -9,17 +9,12 @@ namespace Algorithm.Extensions
 {
     public static class GraphPathExtensions
     {
-        public static IGraphPath Highlight(this IGraphPath self, IIntermediateEndPoints endpoints)
+        public static IGraphPath Highlight(this IGraphPath self, IIntermediateEndPoints endPoints)
         {
             self.Path
-                .Except(endpoints.Source, endpoints.Target)
-                .Except(endpoints.IntermediateVertices)
+                .Without(endPoints.GetVertices())
+                .OfType<IVisualizable>()
                 .Reverse()
-                .OfType<IVisualizable>()
-                .ForEach(vertex => vertex.VisualizeAsPath())
-                .OfType<IVertex>()
-                .Where(v => !self.Path.IsSingle(i => i.Equals(v)))
-                .OfType<IVisualizable>()
                 .ForEach(vertex => vertex.VisualizeAsPath());
             return self;
         }

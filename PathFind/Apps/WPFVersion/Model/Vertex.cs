@@ -6,12 +6,14 @@ using GraphLib.Serialization;
 using GraphLib.Serialization.Extensions;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Windows.Controls;
 using System.Windows.Media;
 using static WPFVersion.Constants;
 
 namespace WPFVersion.Model
 {
+    [DebuggerDisplay("{Position.ToString()})")]
     internal class Vertex : Label, IVertex, IVisualizable, IWeightable, IEquatable<IVertex>, ICloneable<IVertex>
     {
         public static SolidColorBrush VisitedVertexColor { get; set; } = new SolidColorBrush(Colors.CadetBlue);

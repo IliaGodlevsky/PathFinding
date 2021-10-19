@@ -13,7 +13,9 @@ namespace GraphLib.Base.VertexCondition.Realizations.VertexRevertCondition
 
         public bool IsTrue(IVertex vertex)
         {
-            return !vertex.IsObstacle && vertex is IVisualizable;
+            return !vertex.IsObstacle 
+                && vertex is IVisualizable visualizable
+                && !visualizable.IsVisualizedAsEndPoint;
         }
     }
 }

@@ -55,6 +55,7 @@ namespace ConsoleVersion.ViewModel
                 try
                 {
                     Console.CursorVisible = false;
+                    CurrentAlgorithmName = Algorithm.GetDescriptionAttributeValueOrTypeName();
                     base.FindPath();
                     ConsoleKeystrokesHook.Instance.StartHookingConsoleKeystrokes();
                     Console.CursorVisible = true;
@@ -152,11 +153,10 @@ namespace ConsoleVersion.ViewModel
 
         private string GetStatistics()
         {
-            string timerInfo = timer.ToString();
-            string description = Algorithms.FirstOrDefault(item => item.Item2 == Algorithm).Item1;
+            string timerInfo = timer.ToFormattedString();
             var pathfindingInfos = new object[] { path.PathLength, path.PathCost, visitedVerticesCount };
             string pathfindingInfo = string.Format(MessagesTexts.PathfindingStatisticsFormat, pathfindingInfos);
-            return string.Join("\t", description, timerInfo, pathfindingInfo);
+            return string.Join("\t", CurrentAlgorithmName, timerInfo, pathfindingInfo);
         }
 
         private void OnConsoleKeyPressed(object sender, ConsoleKeyPressedEventArgs e)
@@ -175,6 +175,7 @@ namespace ConsoleVersion.ViewModel
             }
         }
 
+        private string CurrentAlgorithmName { get; set; }
         private int NumberOfAvailableIntermediate => graph.Size - graph.GetIsolatedCount() - 2;
         private bool HasAnyVerticesToChooseAsEndPoints => NumberOfAvailableIntermediate >= 0;
 

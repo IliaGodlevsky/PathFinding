@@ -42,7 +42,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AStarAlgorithmFactory.cs" />
-    <Compile Include="AStarModifiedFactory.cs" />
+    <Compile Include="AStarModifiedAlgorithmFactory.cs" />
     <Compile Include="BestFirstLeeAlgorithmFactory.cs" />
     <Compile Include="CostGreedyAlgorithmFactory.cs" />
     <Compile Include="DepthFirstAlgorithmFactory.cs" />

@@ -7,12 +7,14 @@ using GraphLib.Serialization;
 using GraphLib.Serialization.Extensions;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Drawing;
 using System.Windows.Forms;
 using static WindowsFormsVersion.Constants;
 
 namespace WindowsFormsVersion.Model
 {
+    [DebuggerDisplay("{Position.ToString()})")]
     internal class Vertex : Label, IVertex, IVisualizable, IWeightable, IEquatable<IVertex>, ICloneable<IVertex>
     {
         private static Color RegularVertexColor = Color.FromKnownColor(KnownColor.WhiteSmoke);

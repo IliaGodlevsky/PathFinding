@@ -10,6 +10,7 @@ using GraphLib.Serialization;
 using GraphLib.Serialization.Extensions;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Drawing;
 using System.Linq;
 
@@ -17,6 +18,7 @@ using Console = Colorful.Console;
 
 namespace ConsoleVersion.Model
 {
+    [DebuggerDisplay("{Position.ToString()})")]
     internal class Vertex : IVertex, IVisualizable, IWeightable, IDisplayable, IEquatable<IVertex>, ICloneable<IVertex>
     {
         public event EventHandler OnVertexCostChanged;
