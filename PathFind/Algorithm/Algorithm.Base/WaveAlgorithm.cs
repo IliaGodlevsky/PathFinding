@@ -9,11 +9,14 @@ using GraphLib.Interfaces;
 using Interruptable.Interface;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 
 namespace Algorithm.Base
 {
-    public abstract class WaveAlgorithm : Algorithm,
+    /// <summary>
+    /// A base class for all wave algorithms, such as Dijkstra's algorithm,
+    /// A* algorithm or Lee algorithm. This class is abstract
+    /// </summary>
+    public abstract class WaveAlgorithm : PathfindingAlgorithm,
         IAlgorithm, IInterruptableProcess, IInterruptable, IDisposable
     {
         protected WaveAlgorithm(IGraph graph, IIntermediateEndPoints endPoints)
@@ -22,6 +25,12 @@ namespace Algorithm.Base
             verticesQueue = new Queue<IVertex>();
         }
 
+        /// <summary>
+        /// Finds the cheapest path in the graph. 
+        /// This method can't be overriden
+        /// </summary>
+        /// <returns>A cheapest path in the graph 
+        /// between speciаied end points</returns>
         public override sealed IGraphPath FindPath()
         {
             IGraphPath path = new NullGraphPath();
@@ -47,11 +56,11 @@ namespace Algorithm.Base
             return !IsAbleToContinue ? new NullGraphPath() : path;
         }
 
-        protected override void Reset()
+        protected override sealed void Reset()
         {
             base.Reset();
             verticesQueue.Clear();
-            accumulatedCosts.Clear();
+            accumulatedCosts?.Clear();
         }
 
         protected virtual void PrepareForLocalPathfinding()

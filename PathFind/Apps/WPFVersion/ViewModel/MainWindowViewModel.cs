@@ -82,7 +82,7 @@ namespace WPFVersion.ViewModel
         {
             try
             {
-                var viewModel = new PathFindingViewModel(log, Graph, 
+                var viewModel = new PathFindingViewModel(log, Graph,
                     endPoints, algorithmFactories);
                 var window = new PathFindWindow();
                 PrepareWindow(viewModel, window);

@@ -1,4 +1,4 @@
-﻿using Algorithm.Interfaces;
+﻿using Algorithm.Base;
 using GraphViewModel.Interfaces;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
@@ -52,7 +52,7 @@ namespace WPFVersion3D.ViewModel
             set { status = value; OnPropertyChanged(); }
         }
 
-        public AlgorithmViewModel(IAlgorithm algorithm, string algorithmName)
+        public AlgorithmViewModel(PathfindingAlgorithm algorithm, string algorithmName)
         {
             this.algorithm = algorithm;
             AlgorithmName = algorithmName;
@@ -63,6 +63,6 @@ namespace WPFVersion3D.ViewModel
             algorithm.Interrupt();
         }
 
-        private readonly IAlgorithm algorithm;
+        private readonly PathfindingAlgorithm algorithm;
     }
 }

@@ -4,6 +4,9 @@ using WPFVersion3D.Attributes;
 
 namespace WPFVersion3D.Enums
 {
+    /// <summary>
+    /// Represents the speed of an animation
+    /// </summary>
     internal enum AnimationSpeeds
     {
         [EnumValuesIgnore]

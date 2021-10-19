@@ -1,4 +1,5 @@
-﻿using Algorithm.Infrastructure.EventArguments;
+﻿using Algorithm.Infrastructure;
+using Algorithm.Infrastructure.EventArguments;
 using Algorithm.Infrastructure.Handlers;
 using Algorithm.Interfaces;
 using Algorithm.Сompanions;
@@ -15,23 +16,60 @@ using System.Linq;
 
 namespace Algorithm.Base
 {
-    public abstract class Algorithm : IAlgorithm, IInterruptableProcess, IInterruptable, IDisposable
+    /// <summary>
+    /// A base algorithm for all pathfinding algorithms.
+    /// This class is abstract
+    /// </summary>
+    /// <remarks>Try to wait the algorithm finishes pathfinding and only then
+    /// call <see cref="FindPath"/> method one more time</remarks>
+    public abstract class PathfindingAlgorithm
+        : IAlgorithm, IInterruptableProcess, IInterruptable, IDisposable
     {
+        /// <summary>
+        /// Occurres, when the algorithm visites a vertex
+        /// </summary>
         public event AlgorithmEventHandler VertexVisited;
+        /// <summary>
+        /// Occurres, when the algorithm enqueues a vertex
+        /// for the future processing
+        /// </summary>
         public event AlgorithmEventHandler VertexEnqueued;
+        /// <summary>
+        /// Occures, when the algorithm starts the pathfinding
+        /// </summary>
         public event ProcessEventHandler Started;
+        /// <summary>
+        /// Occurres, when the algorithm finishes the pathfinding
+        /// </summary>
         public event ProcessEventHandler Finished;
+        /// <summary>
+        /// Occurres, when the algorithm is required to interrupt
+        /// </summary>
         public event ProcessEventHandler Interrupted;
 
+        /// <summary>
+        /// When overriden in derived class, 
+        /// finds the cheapest path in the graph
+        /// </summary>
+        /// <returns></returns>
+        /// <exception cref="EndPointsNotFromCurrentGraphException>">when graph
+        /// doesn't contains end points</exception>
         public abstract IGraphPath FindPath();
 
-        public virtual void Interrupt()
+        /// <summary>
+        /// Interruptes the algorithm
+        /// </summary>
+        /// <remarks>This method doesn't stops an algorithm
+        /// immidietly. The algorithm will complete the iteration
+        /// and then will stop. Also if the algorithm is being paused
+        /// it will be resumed and interrupted as well</remarks>
+        public void Interrupt()
         {
-            isInterruptRequested = true;
+            IsInterruptRequested = true;
             Interrupted?.Invoke(this, new ProcessEventArgs());
         }
 
-        protected Algorithm(IGraph graph, IIntermediateEndPoints endPoints)
+        protected PathfindingAlgorithm(IGraph graph, IIntermediateEndPoints endPoints)
         {
             visitedVertices = new VisitedVertices();
             parentVertices = new ParentVertices();
@@ -43,13 +81,13 @@ namespace Algorithm.Base
         {
             visitedVertices.Clear();
             parentVertices.Clear();
-            isInterruptRequested = false;
+            IsInterruptRequested = false;
         }
 
         protected IVertex CurrentVertex { get; set; }
         protected abstract IVertex NextVertex { get; }
 
-        protected bool IsAbleToContinue => !CurrentVertex.IsNull() && !isInterruptRequested;
+        protected bool IsAbleToContinue => !CurrentVertex.IsNull() && !IsInterruptRequested;
 
         protected virtual bool IsDestination(IEndPoints endPoints)
         {
@@ -70,9 +108,9 @@ namespace Algorithm.Base
         {
             if (!graph.Contains(endPoints))
             {
-                string msg = $"{nameof(endPoints)} don't belong to {nameof(graph)}";
-                throw new ArgumentException(msg);
+                throw new EndPointsNotFromCurrentGraphException(graph, endPoints);
             }
+            Reset();
             Started?.Invoke(this, new ProcessEventArgs());
         }
 
@@ -91,7 +129,8 @@ namespace Algorithm.Base
             Reset();
         }
 
-        private bool isInterruptRequested;
+        private bool IsInterruptRequested { get; set; }
+
         protected IAccumulatedCosts accumulatedCosts;
         protected readonly IVisitedVertices visitedVertices;
         protected readonly IParentVertices parentVertices;

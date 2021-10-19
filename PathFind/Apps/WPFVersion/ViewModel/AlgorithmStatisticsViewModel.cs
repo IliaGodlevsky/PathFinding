@@ -89,8 +89,7 @@ namespace WPFVersion.ViewModel
 
         private bool CanExecuteRemoveFromStatisticsCommand(object param)
         {
-            return SelectedAlgorithm?.IsStarted() == false
-                && Statistics.All(stat => !stat.IsStarted());
+            return Statistics.All(stat => !stat.IsStarted());
         }
 
         private void ExecuteInterruptSelectedAlgorithmCommand(object param)

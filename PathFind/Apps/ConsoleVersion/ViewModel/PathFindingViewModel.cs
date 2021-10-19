@@ -1,6 +1,6 @@
-﻿using Algorithm.Factory;
+﻿using Algorithm.Base;
+using Algorithm.Factory;
 using Algorithm.Infrastructure.EventArguments;
-using Algorithm.Interfaces;
 using Common.Extensions;
 using Common.ValueRanges;
 using ConsoleVersion.Attributes;
@@ -44,12 +44,13 @@ namespace ConsoleVersion.ViewModel
         {
             algorithmKeysValueRange = new InclusiveValueRange<int>(Algorithms.Length, 1);
             ConsoleKeystrokesHook.Instance.KeyPressed += OnConsoleKeyPressed;
+            DelayTime = Constants.AlgorithmDelayTimeValueRange.LowerValueOfRange;
         }
 
         [MenuItem(MenuItemsNames.FindPath, MenuItemPriority.Highest)]
         public override void FindPath()
         {
-            if (!endPoints.HasIsolators())
+            if (!endPoints.HasIsolators() && !Algorithm.IsNull())
             {
                 try
                 {
@@ -143,7 +144,7 @@ namespace ConsoleVersion.ViewModel
             Messenger.Default.Send(message, MessageTokens.MainView);
         }
 
-        protected override void SubscribeOnAlgorithmEvents(IAlgorithm algorithm)
+        protected override void SubscribeOnAlgorithmEvents(PathfindingAlgorithm algorithm)
         {
             base.SubscribeOnAlgorithmEvents(algorithm);
             algorithm.Finished += ConsoleKeystrokesHook.Instance.CancelHookingConsoleKeystrokes;
@@ -151,7 +152,7 @@ namespace ConsoleVersion.ViewModel
 
         private string GetStatistics()
         {
-            string timerInfo = timer.ToFormattedString();
+            string timerInfo = timer.ToString();
             string description = Algorithms.FirstOrDefault(item => item.Item2 == Algorithm).Item1;
             var pathfindingInfos = new object[] { path.PathLength, path.PathCost, visitedVerticesCount };
             string pathfindingInfo = string.Format(MessagesTexts.PathfindingStatisticsFormat, pathfindingInfos);

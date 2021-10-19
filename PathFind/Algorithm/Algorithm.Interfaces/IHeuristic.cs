@@ -8,6 +8,13 @@ namespace Algorithm.Interfaces
     /// </summary>
     public interface IHeuristic
     {
+        /// <summary>
+        /// Calculates the value of a heuristic 
+        /// function for two given vertices
+        /// </summary>
+        /// <param name="first"></param>
+        /// <param name="second"></param>
+        /// <returns></returns>
         double Calculate(IVertex first, IVertex second);
     }
 }

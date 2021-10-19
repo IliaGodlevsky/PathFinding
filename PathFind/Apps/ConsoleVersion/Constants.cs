@@ -18,8 +18,8 @@ namespace ConsoleVersion
         {
             AnswerValueRange = new EnumValues<Answer>().ToValueRange();
             VerticesCostRange = new InclusiveValueRange<int>(99, 1);
-            GraphWidthValueRange = new InclusiveValueRange<int>(80, 1);
-            GraphLengthValueRange = new InclusiveValueRange<int>(50, 1);
+            GraphWidthValueRange = new InclusiveValueRange<int>(75, 1);
+            GraphLengthValueRange = new InclusiveValueRange<int>(40, 1);
             ObstaclesPercentValueRange = new InclusiveValueRange<int>(99);
             AlgorithmDelayTimeValueRange = new InclusiveValueRange<int>(35);
         }

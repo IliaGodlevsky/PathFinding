@@ -1,10 +1,10 @@
-﻿using Algorithm.Interfaces;
+﻿using Algorithm.Base;
 
 namespace WPFVersion.Messages
 {
     internal sealed class AlgorithmStartedMessage
     {
-        public AlgorithmStartedMessage(IAlgorithm algorithm,
+        public AlgorithmStartedMessage(PathfindingAlgorithm algorithm,
             string algorithmName, int delayTime)
         {
             Algorithm = algorithm;
@@ -14,6 +14,6 @@ namespace WPFVersion.Messages
 
         public int DelayTime { get; }
         public string AlgorithmName { get; }
-        public IAlgorithm Algorithm { get; }
+        public PathfindingAlgorithm Algorithm { get; }
     }
 }

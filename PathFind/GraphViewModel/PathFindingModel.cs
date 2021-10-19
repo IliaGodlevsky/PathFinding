@@ -1,4 +1,5 @@
-﻿using Algorithm.Extensions;
+﻿using Algorithm.Base;
+using Algorithm.Extensions;
 using Algorithm.Factory;
 using Algorithm.Infrastructure.EventArguments;
 using Algorithm.Interfaces;
@@ -19,13 +20,13 @@ namespace GraphViewModel
     {
         public bool IsVisualizationRequired { get; set; } = true;
 
-        public int DelayTime { get; set; } = 5;
+        public int DelayTime { get; set; }
 
         public IAlgorithmFactory Algorithm { get; set; }
 
         public Tuple<string, IAlgorithmFactory>[] Algorithms { get; }
 
-        protected PathFindingModel(ILog log, IGraph graph, BaseEndPoints endPoints, 
+        protected PathFindingModel(ILog log, IGraph graph, BaseEndPoints endPoints,
             IEnumerable<IAlgorithmFactory> factories)
         {
             this.endPoints = endPoints;
@@ -34,7 +35,6 @@ namespace GraphViewModel
             Algorithms = factories.ToOrderedNameInstanceTuples(item => item.Item1);
             timer = new Stopwatch();
             path = new NullGraphPath();
-            algorithm = new NullAlgorithm();
         }
 
         public virtual async void FindPath()
@@ -98,7 +98,7 @@ namespace GraphViewModel
             timer.Restart();
         }
 
-        protected virtual void SubscribeOnAlgorithmEvents(IAlgorithm algorithm)
+        protected virtual void SubscribeOnAlgorithmEvents(PathfindingAlgorithm algorithm)
         {
             if (IsVisualizationRequired)
             {
@@ -120,7 +120,7 @@ namespace GraphViewModel
         protected readonly Stopwatch timer;
 
         protected IGraphPath path;
-        protected IAlgorithm algorithm;
+        protected PathfindingAlgorithm algorithm;
         protected int visitedVerticesCount;
     }
 }

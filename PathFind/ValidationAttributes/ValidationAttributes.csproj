@@ -4,11 +4,11 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{DA2A9A8C-0EF3-4EDB-B026-3FF86DEF9464}</ProjectGuid>
+    <ProjectGuid>{D14E38F2-E770-41E9-BA57-8C33C65D785A}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Algorithm.Infrastructure</RootNamespace>
-    <AssemblyName>Algorithm.Infrastructure</AssemblyName>
+    <RootNamespace>ValidationAttributes</RootNamespace>
+    <AssemblyName>ValidationAttributes</AssemblyName>
     <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <Deterministic>true</Deterministic>
@@ -41,28 +41,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="EndPointsNotFromCurrentGraphException.cs" />
-    <Compile Include="EventArguments\AlgorithmEventArgs.cs" />
-    <Compile Include="Handlers\AlgorithmEventHandler.cs" />
+    <Compile Include="Class1.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\..\Common\Common.csproj">
-      <Project>{a5a743f5-d346-4b2b-b6ac-07152f64e4d9}</Project>
-      <Name>Common</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\GraphLib\GraphLib.Interfaces\GraphLib.Interfaces.csproj">
-      <Project>{d3c5ccfe-698b-41c7-9a72-5fd0262765e1}</Project>
-      <Name>GraphLib.Interfaces</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\GraphLib\GraphLib.NullRealizations\GraphLib.NullRealizations.csproj">
-      <Project>{FA595CBF-C9AA-4D4F-AFF7-19E571C91D00}</Project>
-      <Name>GraphLib.NullRealizations</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Algorithm.Сompanions\Algorithm.Сompanions.csproj">
-      <Project>{8A717526-D82A-4409-B3B4-5979820253AF}</Project>
-      <Name>Algorithm.Сompanions</Name>
-    </ProjectReference>
+    <Compile Include="ValidationAttributes\ValidationAttribute.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

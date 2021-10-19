@@ -25,7 +25,7 @@ namespace WindowsFormsVersion.ViewModel
             BaseEndPoints endPoints, IEnumerable<IAlgorithmFactory> algorithmFactories)
             : base(log, graph, endPoints, algorithmFactories)
         {
-
+            DelayTime = Constants.AlgorithmDelayTimeValueRange.LowerValueOfRange;
         }
 
         protected override void OnAlgorithmFinished(object sender, ProcessEventArgs e)
@@ -85,7 +85,7 @@ namespace WindowsFormsVersion.ViewModel
         {
             get
             {
-                string timerInfo = timer.ToFormattedString();
+                string timerInfo = timer.ToString();
                 string description = Algorithms.FirstOrDefault(item => item.Item2 == Algorithm).Item1;
                 string pathfindingInfo = string.Format(Format, PathfindingInfo);
                 return string.Join("\t", description, timerInfo, pathfindingInfo);

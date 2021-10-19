@@ -33,7 +33,7 @@ namespace ConsoleVersion.Model
 
         }
 
-        private static readonly Lazy<ConsoleKeystrokesHook> instance 
+        private static readonly Lazy<ConsoleKeystrokesHook> instance
             = new Lazy<ConsoleKeystrokesHook>(() => new ConsoleKeystrokesHook());
     }
 }

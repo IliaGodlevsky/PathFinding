@@ -1,4 +1,4 @@
-﻿using Algorithm.Interfaces;
+﻿using Algorithm.Base;
 using GalaSoft.MvvmLight.Messaging;
 using GraphViewModel.Interfaces;
 using System.ComponentModel;
@@ -48,7 +48,7 @@ namespace WPFVersion.ViewModel
             }
         }
 
-        public AlgorithmViewModel(IAlgorithm algorithm, string algorithmName, int delayTime, int index)
+        public AlgorithmViewModel(PathfindingAlgorithm algorithm, string algorithmName, int delayTime, int index)
         {
             this.algorithm = algorithm;
             this.delayTime = delayTime;
@@ -68,6 +68,6 @@ namespace WPFVersion.ViewModel
             algorithm.Interrupt();
         }
 
-        private readonly IAlgorithm algorithm;
+        private readonly PathfindingAlgorithm algorithm;
     }
 }

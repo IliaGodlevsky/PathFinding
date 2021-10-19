@@ -69,6 +69,10 @@
       <Project>{D3C5CCFE-698B-41C7-9A72-5FD0262765E1}</Project>
       <Name>GraphLib.Interfaces</Name>
     </ProjectReference>
+    <ProjectReference Include="..\..\GraphLib\GraphLib.NullRealizations\GraphLib.NullRealizations.csproj">
+      <Project>{FA595CBF-C9AA-4D4F-AFF7-19E571C91D00}</Project>
+      <Name>GraphLib.NullRealizations</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\Interruptable\Interruptable.csproj">
       <Project>{97260353-B5E4-414B-A789-C4B5568089DC}</Project>
       <Name>Interruptable</Name>

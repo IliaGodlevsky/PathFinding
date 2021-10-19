@@ -1,10 +1,10 @@
-﻿using Algorithm.Interfaces;
+﻿using Algorithm.Base;
 using GraphLib.Interfaces;
 
 namespace Algorithm.Factory
 {
     public interface IAlgorithmFactory
     {
-        IAlgorithm CreateAlgorithm(IGraph graph, IIntermediateEndPoints endPoints);
+        PathfindingAlgorithm CreateAlgorithm(IGraph graph, IIntermediateEndPoints endPoints);
     }
 }

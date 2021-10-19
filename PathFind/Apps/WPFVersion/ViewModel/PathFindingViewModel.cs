@@ -38,6 +38,7 @@ namespace WPFVersion.ViewModel
             CancelPathFindAlgorithmChoice = new RelayCommand(ExecuteCloseWindowCommand);
             Messenger.Default.Register<AlgorithmIndexMessage>(this, MessageTokens.PathfindingModel, SetAlgorithmIndex);
             Messenger.Default.Register<DelayTimeChangedMessage>(this, MessageTokens.PathfindingModel, SetAlgorithmDelayTime);
+            DelayTime = Convert.ToInt32(Constants.AlgorithmDelayTimeValueRange.LowerValueOfRange);
         }
 
         private void SetAlgorithmIndex(AlgorithmIndexMessage message)
@@ -65,7 +66,7 @@ namespace WPFVersion.ViewModel
         protected override void SummarizePathfindingResults()
         {
             var status = !path.IsNull() ? AlgorithmStatus.Finished : AlgorithmStatus.Failed;
-            string time = timer.ToFormattedString();
+            string time = timer.ToString();
             var message = new UpdateStatisticsMessage(Index,
                 time, visitedVerticesCount, path.PathLength, path.PathCost);
             Messenger.Default.Send(message, MessageTokens.AlgorithmStatisticsModel);
@@ -76,7 +77,7 @@ namespace WPFVersion.ViewModel
         protected override async void OnVertexVisited(object sender, AlgorithmEventArgs e)
         {
             Stopwatch.StartNew().Pause(DelayTime).Cancel();
-            string time = timer.ToFormattedString();
+            string time = timer.ToString();
             var message = new UpdateStatisticsMessage(Index, time, visitedVerticesCount);
             Messenger.Default.Send(message, MessageTokens.AlgorithmStatisticsModel);
             await Task.Run(() => base.OnVertexVisited(sender, e));

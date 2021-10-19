@@ -1,18 +1,15 @@
-﻿using Algorithm.Infrastructure.Handlers;
-using Interruptable.Interface;
-using System;
-
-namespace Algorithm.Interfaces
+﻿namespace Algorithm.Interfaces
 {
     /// <summary>
-    /// Provides events and methods for 
-    /// pathfinding algorithm
+    /// An interface for all pathfinding algorithms
     /// </summary>
-    public interface IAlgorithm : IInterruptableProcess, IInterruptable, IDisposable
+    public interface IAlgorithm
     {
-        event AlgorithmEventHandler VertexVisited;
-        event AlgorithmEventHandler VertexEnqueued;
-
+        /// <summary>
+        /// Finds path in the graph 
+        /// or in the other data structure
+        /// </summary>
+        /// <returns></returns>
         IGraphPath FindPath();
     }
 }

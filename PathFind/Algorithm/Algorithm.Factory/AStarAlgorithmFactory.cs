@@ -1,4 +1,5 @@
 ﻿using Algorithm.Algos.Algos;
+using Algorithm.Base;
 using Algorithm.Interfaces;
 using Algorithm.Realizations.Heuristic;
 using Algorithm.Realizations.StepRules;
@@ -31,7 +32,7 @@ namespace Algorithm.Factory
 
         }
 
-        public IAlgorithm CreateAlgorithm(IGraph graph, IIntermediateEndPoints endPoints)
+        public PathfindingAlgorithm CreateAlgorithm(IGraph graph, IIntermediateEndPoints endPoints)
         {
             return new AStarAlgorithm(graph, endPoints, stepRule, heuristic);
         }

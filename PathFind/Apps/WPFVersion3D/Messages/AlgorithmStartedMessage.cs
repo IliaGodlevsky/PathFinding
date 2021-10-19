@@ -1,16 +1,16 @@
-﻿using Algorithm.Interfaces;
+﻿using Algorithm.Base;
 
 namespace WPFVersion3D.Messages
 {
     internal sealed class AlgorithmStartedMessage
     {
-        public AlgorithmStartedMessage(IAlgorithm algorithm, string algorithmName)
+        public AlgorithmStartedMessage(PathfindingAlgorithm algorithm, string algorithmName)
         {
             Algorithm = algorithm;
             AlgorithmName = algorithmName;
         }
 
         public string AlgorithmName { get; }
-        public IAlgorithm Algorithm { get; }
+        public PathfindingAlgorithm Algorithm { get; }
     }
 }
