@@ -48,32 +48,33 @@ namespace GraphLib.Extensions.Tests
         {
             var graph = new NullGraph();
             var otherGraph = new NullGraph();
-            var vertex = graph.Vertices.Any() ? graph.Vertices.First() : new NullVertex();
+            var vertex = graph.FirstOrNullVertex();
 
             Assert.Throws<ArgumentException>(() => vertex.SetNeighbours(otherGraph));
         }
 
         [Test]
-        public void SetNeighbours_NullVertex_ReturnsRightNumberOfNeighbours()
+        public void SetNeighbours_NullVertex_GraphIsNotNull_NeighboursArrayAreEmpty()
         {
-            const int expectedNumberOfNeighbours = 0;
             var graph = graphAssembler.AssembleGraph();
             graph[new TestCoordinate(0, 0)] = new NullVertex();
 
-            NullVertex vertex = (NullVertex)graph.Vertices.First();
+            var vertex = graph.FirstOrNullVertex();
 
             vertex.SetNeighbours(graph);
 
-            Assert.AreEqual(expectedNumberOfNeighbours, vertex.Neighbours.Count);
+            Assert.IsFalse(vertex.Neighbours.Any());
         }
 
         [Test]
-        public void SetNeighbours_NullVertex_NullGraph_ThrowsArgumentException()
+        public void SetNeighbours_NullVertex_NullGraph_NeighboursArrayAreEmpty()
         {
             var graph = new NullGraph();
-            var vertex = graph.Vertices.Any() ? graph.Vertices.First() : new NullVertex();
+            var vertex = graph.FirstOrNullVertex();
 
-            Assert.Throws<ArgumentException>(() => vertex.SetNeighbours(graph));
+            vertex.SetNeighbours(graph);
+
+            Assert.IsFalse(vertex.Neighbours.Any());           
         }
     }
 }

@@ -69,7 +69,7 @@ namespace GraphLib.Extensions
                 throw new ArgumentNullException(nameof(graph));
             }
 
-            return self.CoordinatesValues.Match(graph.DimensionsSizes, predicate);
+            return self.CoordinatesValues.Juxtapose(graph.DimensionsSizes, predicate);
         }
     }
 }

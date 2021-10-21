@@ -9,7 +9,7 @@ namespace GraphLib.Extensions
     {
         public static bool IsCardinal(this int[] coordinates, int[] neighbourCoordinates)
         {
-            if (!coordinates.HaveEqualLength(neighbourCoordinates)
+            if (coordinates.Length != neighbourCoordinates.Length
                 || coordinates.Length == 0 || neighbourCoordinates.Length == 0)
             {
                 return false;

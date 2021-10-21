@@ -34,7 +34,7 @@ namespace GraphLib.Common.Tests
         }
 
         [Test]
-        public void IsEqual_NUllVertex_ReturnTrue()
+        public void IsEqual_NullVertex_ReturnTrue()
         {
             var vertex = new NullVertex();
             var secondVertex = new NullVertex();
@@ -43,12 +43,12 @@ namespace GraphLib.Common.Tests
         }
 
         [Test]
-        public void SetNeighbours_Throws()
+        public void SetNeighbours_DoesnotThrows()
         {
             var graph = new NullGraph();
-            var vertex = graph.Vertices.FirstOrDefault() ?? new NullVertex();
+            var vertex = graph.FirstOrNullVertex();
 
-            Assert.Throws<ArgumentException>(() => vertex.SetNeighbours(graph));
+            Assert.DoesNotThrow(() => vertex.SetNeighbours(graph));
         }
 
         [Test]
@@ -57,7 +57,7 @@ namespace GraphLib.Common.Tests
             NullGraph graph = new NullGraph();
 
             var candidate = new NullVertex();
-            var vertex = graph.Vertices.FirstOrDefault() ?? new NullVertex();
+            var vertex = graph.FirstOrNullVertex();
 
             Assert.DoesNotThrow(() => vertex.IsNeighbour(candidate));
         }

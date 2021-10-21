@@ -4,6 +4,26 @@ using System.Linq;
 
 namespace Common.Extensions
 {
+    class MatchComparer<T> : IEqualityComparer<T>
+    {
+        public MatchComparer(Func<T, T, bool> predicate)
+        {
+            this.predicate = predicate;
+        }
+
+        public bool Equals(T x, T y)
+        {
+            return predicate(x, y);
+        }
+
+        public int GetHashCode(T obj)
+        {
+            return obj.GetHashCode();
+        }
+
+        private readonly Func<T, T, bool> predicate;
+    }
+
     public static class EnumerableExtension
     {
         /// <summary>
@@ -140,26 +160,9 @@ namespace Common.Extensions
         /// <param name="predicate"></param>
         /// <returns>true if <paramref name="predicate"/> is true 
         /// for each corresponding elements in two sequencies and false if not</returns>
-        public static bool Match<T>(this IEnumerable<T> self,
-            IEnumerable<T> second, Func<T, T, bool> predicate)
+        public static bool Juxtapose<T>(this IEnumerable<T> self, IEnumerable<T> second, Func<T, T, bool> predicate)
         {
-            const int ZeroLength = default;
-            var firstArray = self.ToArray();
-            var secondArray = second.ToArray();
-            #region InvariantsObservance
-            if (firstArray.Length != secondArray.Length
-                || ZeroLength.IsOneOf(firstArray.Length, secondArray.Length))
-            {
-                return false;
-            }
-            #endregion
-            bool Matches(int i) => predicate(firstArray[i], secondArray[i]);
-            return Enumerable.Range(0, secondArray.Length).All(Matches);
-        }
-
-        public static bool HaveEqualLength<T>(this IEnumerable<T> self, IEnumerable<T> collection)
-        {
-            return self.Count() == collection.Count();
+            return self.SequenceEqual(second, new MatchComparer<T>(predicate));
         }
 
         public static IDictionary<TKey, TValue> ToDictionary<TKey, TValue>

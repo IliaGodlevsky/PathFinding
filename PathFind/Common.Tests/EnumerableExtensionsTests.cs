@@ -7,41 +7,41 @@ namespace Common.Tests
     public class EnumerableExtensionsTests
     {
         [TestCase(new int[] { 1, 2, 7, 100, 15, 33, -1 }, new int[] { 1, 2, 7, 100, 15, 33, -1 })]
-        public void Match_ArraysAreEqual_ComparesForEquality_ReturnsTrue(int[] firstArray, int[] secondArray)
+        public void Juxtapose_ArraysAreEqual_ComparesForEquality_ReturnsTrue(int[] firstArray, int[] secondArray)
         {
-            bool matches = firstArray.Match(secondArray, (a, b) => a == b);
+            bool matches = firstArray.Juxtapose(secondArray, (a, b) => a == b);
 
             Assert.IsTrue(matches);
         }
 
         [TestCase(new int[] { 1, 2, 7, 100, 15, 11, -1 }, new int[] { 1, 3, 7, 100, 15, 33, -1 })]
-        public void Match_ArraysAreNotEqual_CpmparesForEquality_ReturnsFalse(int[] firstArray, int[] secondArray)
+        public void Juxtapose_ArraysAreNotEqual_CpmparesForEquality_ReturnsFalse(int[] firstArray, int[] secondArray)
         {
-            bool matches = firstArray.Match(secondArray, (a, b) => a == b);
+            bool matches = firstArray.Juxtapose(secondArray, (a, b) => a == b);
 
             Assert.IsFalse(matches);
         }
 
         [TestCase(new int[] { 1, 2, 3, 4, 5, 6, 7 }, new int[] { 2, 3, 4, 5, 6, 7, 8 })]
-        public void Match_EachValueInFirstArrayIsLessThanInSecond_ComparesForLess_ReturnsTrue(
+        public void Juxtapose_EachValueInFirstArrayIsLessThanInSecond_ComparesForLess_ReturnsTrue(
             int[] firstArray, int[] secondArray)
         {
-            bool matches = firstArray.Match(secondArray, (a, b) => a < b);
+            bool matches = firstArray.Juxtapose(secondArray, (a, b) => a < b);
 
             Assert.IsTrue(matches);
         }
 
         [TestCase(new int[] { }, new int[] { })]
-        public void Match_EmptyCollections_ReturnsFalse(
+        public void Juxtapose_EmptyCollections_ReturnsTrue(
             int[] firstArray, int[] secondArray)
         {
-            bool matches = firstArray.Match(secondArray, (a, b) => a == b);
+            bool matches = firstArray.Juxtapose(secondArray, (a, b) => a == b);
 
-            Assert.IsFalse(matches);
+            Assert.IsTrue(matches);
         }
 
         [Test]
-        public void ContainsAll_ArrayContainsElements_ReturnsTrue()
+        public void ContainsReferences_ArrayContainsElements_ReturnsTrue()
         {
             var object1 = new object();
             var object2 = new object();
@@ -57,7 +57,7 @@ namespace Common.Tests
         }
 
         [Test]
-        public void ContainsAll_ArrayDoesntContainsElements_ReturnsFalse()
+        public void ContainsReferences_ArrayDoesntContainsElements_ReturnsFalse()
         {
             string str1 = "Day";
             string str2 = "Night";

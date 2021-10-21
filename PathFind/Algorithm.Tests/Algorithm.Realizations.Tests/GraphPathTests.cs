@@ -55,7 +55,7 @@ namespace Algorithm.Realizations.Tests
 
             Assert.AreEqual(expectedPathLength, pathLength);
             Assert.AreEqual(expectedPathCost, pathCost);
-            Assert.IsTrue(pathCoordinates.Match(expectedPraphPathCoordinates, AreEqual));
+            Assert.IsTrue(pathCoordinates.Juxtapose(expectedPraphPathCoordinates, AreEqual));
         }
 
         private void FormParentVertices(ParentVertices parentVertices)

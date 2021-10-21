@@ -1,6 +1,8 @@
 ﻿using GraphLib.Interfaces;
 using NullObject.Attributes;
+using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace GraphLib.NullRealizations.NullObjects
 {
@@ -9,13 +11,13 @@ namespace GraphLib.NullRealizations.NullObjects
     {
         public NullGraph()
         {
-            Vertices = new NullVertex[] { };
-            DimensionsSizes = new int[] { };
+            Vertices = new NullVertex[] { new NullVertex() };
+            DimensionsSizes = Array.Empty<int>();
         }
 
         public IVertex this[ICoordinate position]
         {
-            get => new NullVertex();
+            get => Vertices.First();
             set => _ = value;
         }
 

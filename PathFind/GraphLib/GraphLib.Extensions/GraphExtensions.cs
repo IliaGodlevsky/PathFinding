@@ -1,6 +1,7 @@
 ﻿using Common.Extensions;
 using Common.ValueRanges;
 using GraphLib.Interfaces;
+using GraphLib.NullRealizations.NullObjects;
 using System;
 using System.Linq;
 
@@ -71,8 +72,18 @@ namespace GraphLib.Extensions
         {
             bool hasEqualDimensionSizes = self.DimensionsSizes.SequenceEqual(graph.DimensionsSizes);
             bool hasEqualNumberOfObstacles = graph.GetObstaclesCount() == self.GetObstaclesCount();
-            bool hasEqualVertices = self.Vertices.Match(graph.Vertices, (a, b) => a.Equals(b));
+            bool hasEqualVertices = self.Vertices.Juxtapose(graph.Vertices, (a, b) => a.Equals(b));
             return hasEqualNumberOfObstacles && hasEqualVertices && hasEqualDimensionSizes;
+        }
+
+        public static IVertex FirstOrNullVertex(this IGraph graph)
+        {
+            return graph.Vertices.FirstOrDefault() ?? new NullVertex();
+        }
+
+        public static IVertex LastOrNullVertex(this IGraph graph)
+        {
+            return graph.Vertices.LastOrDefault() ?? new NullVertex();
         }
 
         public static IGraph ConnectVertices(this IGraph self)

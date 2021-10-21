@@ -47,7 +47,7 @@ namespace GraphLib.Base
             get => vertices.TryGetValue(coordinate, out var vertex) ? vertex : new NullVertex();
             set
             {
-                if (coordinate.CoordinatesValues.HaveEqualLength(DimensionsSizes))
+                if (coordinate.CoordinatesValues.Length == DimensionsSizes.Length)
                 {
                     vertices[coordinate] = value;
                 }

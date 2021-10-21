@@ -40,12 +40,12 @@ namespace ConsoleVersion.View
             }
         }
 
-        private bool IsMenuAction(MethodInfo method)
+        private static bool IsMenuAction(MethodInfo method)
         {
             return Attribute.IsDefined(method, typeof(MenuItemAttribute));
         }
 
-        private MenuItemPriority GetMenuActionPriority(MethodInfo method)
+        private static MenuItemPriority GetMenuActionPriority(MethodInfo method)
         {
             return method.GetAttributeOrNull<MenuItemAttribute>().Priority;
         }

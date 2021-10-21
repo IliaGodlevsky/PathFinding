@@ -1,10 +1,12 @@
 using Algorithm.Extensions;
 using Algorithm.Infrastructure;
 using Algorithm.Interfaces;
+using GraphLib.Extensions;
 using GraphLib.Interfaces;
 using GraphLib.NullRealizations.NullObjects;
 using GraphLib.TestRealizations.TestFactories;
 using GraphLib.TestRealizations.TestObjects;
+using NullObject.Extensions;
 using NUnit.Framework;
 using System.Linq;
 
@@ -49,16 +51,17 @@ namespace Algorithm.Algos.Tests
         }
 
         [Test]
-        public virtual void FindPath_NullGraph_ThrowsEndPointsNotFromCurrentGraphException()
+        public virtual void FindPath_NullGraph_ReturnsNullGraph()
         {
             var graph = new NullGraph();
-            var source = graph.Vertices.FirstOrNullVertex();
-            var target = graph.Vertices.LastOrNullVertex();
+            var source = graph.FirstOrNullVertex();
+            var target = graph.LastOrNullVertex();
             var endPoints = new TestEndPoints(source, target);
 
             var algorithm = CreateAlgorithm(graph, endPoints);
+            var path = algorithm.FindPath();
 
-            Assert.Throws<EndPointsNotFromCurrentGraphException>(() => algorithm.FindPath());
+            Assert.IsTrue(path.IsNull());
         }
 
         [TestCase(new int[] { 500 })]
@@ -69,13 +72,14 @@ namespace Algorithm.Algos.Tests
         public void FindPath_GraphsWithoutObstacles_ReturnsNotEmptyPath(int[] dimensionSizes)
         {
             var graph = testGraphAssemble.AssembleGraph(0, dimensionSizes);
-            var endPoints = new TestEndPoints(graph.Vertices.First(), graph.Vertices.Last());
+            var source = graph.FirstOrNullVertex();
+            var target = graph.LastOrNullVertex();
+            var endPoints = new TestEndPoints(source, target);
             var algorithm = CreateAlgorithm(graph, endPoints);
 
             var graphPath = algorithm.FindPath();
 
-            Assert.IsTrue(graphPath.PathLength > 0);
-            Assert.IsTrue(graphPath.PathCost > 0);
+            Assert.IsFalse(graph.IsNull());
         }
 
         protected abstract IAlgorithm CreateAlgorithm(IGraph graph, IIntermediateEndPoints endPoints);
