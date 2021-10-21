@@ -26,15 +26,9 @@ namespace ConsoleVersion.Model
         {
             int cursorLeft = Console.CursorLeft;
             int cursorRight = Console.CursorTop;
-            int numberOfIntermediates = Int32Input.InputValue(
-                MessagesTexts.NumberOfIntermediateVerticesInputMsg,
-                numberOfAvailiableVertices);
+            int numberOfIntermediates = Int32Input.InputValue(MessagesTexts.NumberOfIntermediateVerticesInputMsg, numberOfAvailiableVertices);
             var messages = Enumerable.Repeat(MessagesTexts.IntermediateVertexChoiceMsg, numberOfIntermediates);
-            var chooseMessages = new[]
-            {
-                "\n" + MessagesTexts.SourceVertexChoiceMsg,
-                MessagesTexts.TargetVertexChoiceMsg
-            }.Concat(messages);
+            var chooseMessages = new[] { "\n" + MessagesTexts.SourceVertexChoiceMsg, MessagesTexts.TargetVertexChoiceMsg }.Concat(messages);
             endPoints.Reset();
             foreach (var message in chooseMessages)
             {

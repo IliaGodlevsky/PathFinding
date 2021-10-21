@@ -32,9 +32,7 @@ namespace EnumerationValues.Extensions
             Func<TEnum, T2> item2Selector)
             where TEnum : Enum
         {
-            return self.Values
-                .Select(value => new Tuple<T1, T2>(item1Selector(value), item2Selector(value)))
-                .ToArray();
+            return self.Values.Select(value => new Tuple<T1, T2>(item1Selector(value), item2Selector(value))).ToArray();
         }
     }
 }

@@ -24,7 +24,6 @@ using NullObject.Extensions;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
-using System.Linq;
 
 namespace ConsoleVersion.ViewModel
 {
@@ -91,9 +90,9 @@ namespace ConsoleVersion.ViewModel
         public void Interrupt()
         {
             ClearGraph();
+            ConsoleKeystrokesHook.Instance.KeyPressed -= OnConsoleKeyPressed;
             Interrupted?.Invoke(this, new ProcessEventArgs());
             Interrupted = null;
-            ConsoleKeystrokesHook.Instance.KeyPressed -= OnConsoleKeyPressed;
         }
 
         [MenuItem(MenuItemsNames.ChooseEndPoints, MenuItemPriority.High)]

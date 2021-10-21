@@ -12,7 +12,6 @@ using Interruptable.EventHandlers;
 using Interruptable.Interface;
 using NullObject.Extensions;
 using System;
-using System.Linq;
 
 namespace Algorithm.Base
 {
@@ -105,7 +104,7 @@ namespace Algorithm.Base
 
         protected virtual void PrepareForPathfinding()
         {
-            if (!graph.Contains(endPoints))
+            if (!graph.ContainsReferences(endPoints))
             {
                 throw new EndPointsNotFromCurrentGraphException(graph, endPoints);
             }

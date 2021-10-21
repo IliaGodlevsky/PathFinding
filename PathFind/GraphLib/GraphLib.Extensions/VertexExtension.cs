@@ -49,12 +49,7 @@ namespace GraphLib.Extensions
         /// otherwise - <see cref="false"/></returns>
         public static bool IsNeighbour(this IVertex self, IVertex candidate)
         {
-            bool IsAtSamePosition(IVertex vertex)
-            {
-                return vertex.Position.IsEqual(candidate.Position)
-                    && ReferenceEquals(vertex, candidate);
-            }
-            return self.Neighbours.Any(IsAtSamePosition);
+            return self.Neighbours.Any(vertex => ReferenceEquals(vertex, candidate));
         }
 
 
@@ -153,7 +148,7 @@ namespace GraphLib.Extensions
         /// doesn't contain <paramref name="self"/></exception>
         public static void SetNeighbours(this IVertex self, IGraph graph)
         {
-            if (!graph.Contains(self))
+            if (!graph.ContainsReferences(self))
             {
                 throw new ArgumentException("Vertex doesn't belong to graph\n", nameof(self));
             }
@@ -163,7 +158,6 @@ namespace GraphLib.Extensions
                 .Coordinates
                 .Where(coordinate => coordinate.IsWithinGraph(graph))
                 .Select(coordinate => graph[coordinate])
-                .Where(vertex => self.CanBeNeighbour(vertex))
                 .ToArray();
         }
     }

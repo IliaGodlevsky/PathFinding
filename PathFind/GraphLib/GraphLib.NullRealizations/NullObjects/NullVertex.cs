@@ -1,15 +1,17 @@
-﻿using GraphLib.Interfaces;
+﻿using Common.Interface;
+using GraphLib.Interfaces;
 using NullObject.Attributes;
+using System;
 using System.Collections.Generic;
 
 namespace GraphLib.NullRealizations.NullObjects
 {
     [Null]
-    public sealed class NullVertex : IVertex
+    public sealed class NullVertex : IVertex, IEquatable<IVertex>, ICloneable<IVertex>
     {
         public NullVertex()
         {
-            neighbours = new List<IVertex> { this };
+            neighbours = new NullVertex[] { };
         }
 
         public bool IsObstacle { get => true; set { } }
@@ -29,6 +31,6 @@ namespace GraphLib.NullRealizations.NullObjects
 
         public INeighboursCoordinates NeighboursCoordinates => new NullNeighboursCoordinates();
 
-        private readonly List<IVertex> neighbours;
+        private readonly IVertex[] neighbours;
     }
 }

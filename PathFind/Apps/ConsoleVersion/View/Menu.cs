@@ -36,8 +36,7 @@ namespace ConsoleVersion.View
             if (methodInfo.TryCreateDelegate(target, out TAction action))
             {
                 var attribute = methodInfo.GetAttributeOrNull<MenuItemAttribute>();
-                string header = attribute?.Header ?? methodInfo.Name;
-                yield return new KeyValuePair<string, TAction>(header, action);
+                yield return new KeyValuePair<string, TAction>(attribute.Header, action);
             }
         }
 
@@ -48,8 +47,7 @@ namespace ConsoleVersion.View
 
         private MenuItemPriority GetMenuActionPriority(MethodInfo method)
         {
-            var attribute = method.GetAttributeOrNull<MenuItemAttribute>();
-            return attribute?.Priority ?? default;
+            return method.GetAttributeOrNull<MenuItemAttribute>().Priority;
         }
 
         private readonly object target;

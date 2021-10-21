@@ -1,14 +1,12 @@
 ﻿using Common.ValueRanges;
 using ConsoleVersion.Extensions;
 using ConsoleVersion.Interface;
-using GraphViewModel.Interfaces;
 using Interruptable.EventArguments;
 using System;
 
 namespace ConsoleVersion.View.Abstraction
 {
     internal abstract class View<TModel> : IView, IRequireInt32Input
-        where TModel : IModel
     {
         public event Action NewMenuIteration;
 

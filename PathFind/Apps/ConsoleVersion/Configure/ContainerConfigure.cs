@@ -75,10 +75,12 @@ namespace ConsoleVersion.Configure
             builder.RegisterType<VertexFromInfoFactory>().As<IVertexFromInfoFactory>().SingleInstance();
 
             builder.RegisterAssemblyTypes(AppDomain.CurrentDomain.GetAssemblies())
-                .Where(type => type.Implements<IAlgorithmFactory>()).As<IAlgorithmFactory>().SingleInstance();
+                .Where(type => type.ImplementsAll(typeof(IAlgorithmFactory)))
+                .As<IAlgorithmFactory>().SingleInstance();
 
             builder.RegisterType<LandscapeStepRule>().As<IStepRule>().SingleInstance();
             builder.RegisterDecorator<WalkStepRule, IStepRule>();
+            builder.RegisterDecorator<RatedStepRule, IStepRule>();
 
             return builder.Build();
         }

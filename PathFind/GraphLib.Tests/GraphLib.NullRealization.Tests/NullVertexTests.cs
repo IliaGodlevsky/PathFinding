@@ -1,6 +1,7 @@
 ﻿using GraphLib.Extensions;
 using GraphLib.NullRealizations.NullObjects;
 using NUnit.Framework;
+using System;
 using System.Linq;
 
 namespace GraphLib.Common.Tests
@@ -42,12 +43,12 @@ namespace GraphLib.Common.Tests
         }
 
         [Test]
-        public void SetNeighbours_DoesntThrow()
+        public void SetNeighbours_Throws()
         {
             var graph = new NullGraph();
-            var vertex = (NullVertex)graph.Vertices.First();
+            var vertex = graph.Vertices.FirstOrDefault() ?? new NullVertex();
 
-            Assert.DoesNotThrow(() => vertex.SetNeighbours(graph));
+            Assert.Throws<ArgumentException>(() => vertex.SetNeighbours(graph));
         }
 
         [Test]
@@ -55,32 +56,10 @@ namespace GraphLib.Common.Tests
         {
             NullGraph graph = new NullGraph();
 
-            NullVertex candidate = new NullVertex();
-            NullVertex vertex = (NullVertex)graph.Vertices.First();
+            var candidate = new NullVertex();
+            var vertex = graph.Vertices.FirstOrDefault() ?? new NullVertex();
 
             Assert.DoesNotThrow(() => vertex.IsNeighbour(candidate));
-        }
-
-        [Test]
-        public void IsNeighbour_VerticesDoesntBelongToGraph_ReturnFalse()
-        {
-            var graph = new NullGraph();
-
-            NullVertex candidate = new NullVertex();
-            NullVertex vertex = (NullVertex)graph.Vertices.First();
-
-            Assert.IsFalse(vertex.IsNeighbour(candidate));
-        }
-
-        [Test]
-        public void CanBeNeighbour_VerticesBelongToGraph_ReturnsFalse()
-        {
-            var graph = new NullGraph();
-
-            NullVertex candidate = (NullVertex)graph.Vertices.Last();
-            NullVertex vertex = (NullVertex)graph.Vertices.First();
-
-            Assert.IsFalse(vertex.CanBeNeighbour(candidate));
         }
     }
 }

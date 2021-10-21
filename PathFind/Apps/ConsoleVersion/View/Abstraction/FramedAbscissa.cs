@@ -25,7 +25,8 @@ namespace ConsoleVersion.View.Abstraction
             var stringBuilder = new StringBuilder(largeSpace);
             for (int index = 0; index < graphWidth; index++)
             {
-                stringBuilder.Append(GetAbscissaFragment(index));
+                string fragment = GetAbscissaFragment(index);
+                stringBuilder.Append(fragment);
             }
             return stringBuilder.Append(largeSpace).ToString();
         }

@@ -17,7 +17,7 @@ namespace Algorithm.Realizations.Heuristic
 
         protected override double Aggregate(IEnumerable<double> collection)
         {
-            var aggregation = Math.Sqrt(collection.SumOrDefault());
+            double aggregation = Math.Sqrt(collection.SumOrDefault());
             return Math.Round(aggregation, Precision);
         }
 

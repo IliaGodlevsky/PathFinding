@@ -17,7 +17,7 @@ namespace ConsoleVersion.View
         public static int YCoordinatePadding => WidthOfOrdinateView - 1;
 
         public static int WidthOfOrdinateView
-            => Constants.GraphLengthValueRange.UpperValueOfRange.ToString().Length + 1;
+            => (Constants.GraphLengthValueRange.UpperValueOfRange - 1).ToString().Length + 1;
 
         public static Coordinate2D GraphFieldPosition { get; }
 
@@ -28,7 +28,7 @@ namespace ConsoleVersion.View
             int currentCostWidth = CurrentMaxValueOfRange.ToString().Length;
             int previousCostWidth = PreviousMaxValueOfRange.ToString().Length;
             int costWidth = Math.Max(currentCostWidth, previousCostWidth);
-            int width = Constants.GraphWidthValueRange.UpperValueOfRange.ToString().Length;
+            int width = (Constants.GraphWidthValueRange.UpperValueOfRange - 1).ToString().Length;
             return costWidth >= width ? costWidth + 2 : width + width - costWidth;
         }
 

@@ -12,7 +12,7 @@ namespace Algorithm.Extensions
         public static IGraphPath Highlight(this IGraphPath self, IIntermediateEndPoints endPoints)
         {
             self.Path
-                .Without(endPoints.GetVertices())
+                .Without(endPoints)
                 .OfType<IVisualizable>()
                 .Reverse()
                 .ForEach(vertex => vertex.VisualizeAsPath());

@@ -8,6 +8,7 @@ using GraphLib.Interfaces;
 using GraphViewModel;
 using Interruptable.EventArguments;
 using Logging.Interface;
+using NullObject.Extensions;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -63,7 +64,7 @@ namespace WPFVersion3D.ViewModel
 
         protected override void SummarizePathfindingResults()
         {
-            var status = path.PathLength > 0 ? AlgorithmStatuses.Finished : AlgorithmStatuses.Failed;
+            var status = !path.IsNull() ? AlgorithmStatuses.Finished : AlgorithmStatuses.Failed;
             string time = timer.ToFormattedString();
             var message = new UpdateAlgorithmStatisticsMessage(Index, time,
                 visitedVerticesCount, path.PathLength, path.PathCost);

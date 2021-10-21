@@ -32,5 +32,15 @@ namespace Algorithm.Extensions
         {
             return collection.FirstOrDefault(predicate) ?? new NullVertex();
         }
+
+        public static IVertex FirstOrNullVertex(this IEnumerable<IVertex> collection)
+        {
+            return collection.FirstOrDefault() ?? new NullVertex();
+        }
+
+        public static IVertex LastOrNullVertex(this IEnumerable<IVertex> collection)
+        {
+            return collection.LastOrDefault() ?? new NullVertex();
+        }
     }
 }

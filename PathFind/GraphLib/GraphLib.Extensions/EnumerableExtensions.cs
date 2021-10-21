@@ -25,6 +25,11 @@ namespace GraphLib.Extensions
             return collection.Where(vertex => !vertex.IsObstacle).ToArray();
         }
 
+        public static IEnumerable<IVertex> Without(this IEnumerable<IVertex> self, IIntermediateEndPoints endPoints)
+        {
+            return self.Without(endPoints.GetVertices());
+        }
+
         public static int ToHashCode(this IEnumerable<int> array)
         {
             return array.AggregateOrDefault(IntExtensions.Xor);

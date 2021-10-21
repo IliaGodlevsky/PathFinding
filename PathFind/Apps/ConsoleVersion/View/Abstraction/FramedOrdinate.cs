@@ -23,7 +23,8 @@ namespace ConsoleVersion.View.Abstraction
             var stringBuilder = new StringBuilder();
             for (int i = 0; i < graphLength; i++)
             {
-                stringBuilder.AppendLine(GetStringToAppend(i));
+                string toAppend = GetStringToAppend(i);
+                stringBuilder.AppendLine(toAppend);
             }
             return stringBuilder.ToString();
         }

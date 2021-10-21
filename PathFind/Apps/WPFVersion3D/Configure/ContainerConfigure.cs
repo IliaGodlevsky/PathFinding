@@ -58,7 +58,8 @@ namespace WPFVersion3D.Configure
             builder.RegisterType<Vertex3DFromInfoFactory>().As<IVertexFromInfoFactory>().SingleInstance();
 
             builder.RegisterAssemblyTypes(AppDomain.CurrentDomain.GetAssemblies())
-                .Where(type => type.Implements<IAlgorithmFactory>()).As<IAlgorithmFactory>().SingleInstance();
+                .Where(type => type.ImplementsAll(typeof(IAlgorithmFactory)))
+                .As<IAlgorithmFactory>().SingleInstance();
 
             return builder.Build();
         }

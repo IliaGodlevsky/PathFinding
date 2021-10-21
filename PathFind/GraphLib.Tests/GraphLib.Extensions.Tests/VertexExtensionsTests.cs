@@ -48,7 +48,7 @@ namespace GraphLib.Extensions.Tests
         {
             var graph = new NullGraph();
             var otherGraph = new NullGraph();
-            var vertex = graph.Vertices.First();
+            var vertex = graph.Vertices.Any() ? graph.Vertices.First() : new NullVertex();
 
             Assert.Throws<ArgumentException>(() => vertex.SetNeighbours(otherGraph));
         }
@@ -56,7 +56,7 @@ namespace GraphLib.Extensions.Tests
         [Test]
         public void SetNeighbours_NullVertex_ReturnsRightNumberOfNeighbours()
         {
-            const int expectedNumberOfNeighbours = 1;
+            const int expectedNumberOfNeighbours = 0;
             var graph = graphAssembler.AssembleGraph();
             graph[new TestCoordinate(0, 0)] = new NullVertex();
 
@@ -68,15 +68,12 @@ namespace GraphLib.Extensions.Tests
         }
 
         [Test]
-        public void SetNeighbours_NullVertex_NullGraph_ReturnsRightNumberOfNeighbours()
+        public void SetNeighbours_NullVertex_NullGraph_ThrowsArgumentException()
         {
-            const int expectedNumberOfNeighbours = 1;
             var graph = new NullGraph();
-            NullVertex vertex = (NullVertex)graph.Vertices.First();
+            var vertex = graph.Vertices.Any() ? graph.Vertices.First() : new NullVertex();
 
-            vertex.SetNeighbours(graph);
-
-            Assert.AreEqual(expectedNumberOfNeighbours, vertex.Neighbours.Count);
+            Assert.Throws<ArgumentException>(() => vertex.SetNeighbours(graph));
         }
     }
 }

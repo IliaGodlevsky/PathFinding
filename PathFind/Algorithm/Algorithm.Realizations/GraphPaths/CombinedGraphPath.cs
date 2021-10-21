@@ -5,6 +5,10 @@ using System.Linq;
 
 namespace Algorithm.Realizations.GraphPaths
 {
+    /// <summary>
+    /// A class, that merges two or more graph 
+    /// pathes into one
+    /// </summary>
     public sealed class CombinedGraphPath : IGraphPath
     {
         public CombinedGraphPath(IGraphPath first,

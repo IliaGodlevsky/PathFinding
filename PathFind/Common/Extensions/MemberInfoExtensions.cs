@@ -44,9 +44,9 @@ namespace Common.Extensions
             }
         }
 
-        public static bool Implements<TInterface>(this Type type) where TInterface : class
+        public static bool ImplementsAll(this Type type, params Type[] interfaces)
         {
-            return type.GetInterface(typeof(TInterface).Name) != null;
+            return interfaces.All(@interface => type.GetInterface(@interface.Name) != null);
         }
 
         public static TValue[] GetValuesOfStaticClassProperties<TValue>(this Type classType, params string[] exceptNamesOfProperties)

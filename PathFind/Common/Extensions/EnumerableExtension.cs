@@ -6,13 +6,6 @@ namespace Common.Extensions
 {
     public static class EnumerableExtension
     {
-        private static readonly Random Random;
-
-        static EnumerableExtension()
-        {
-            Random = new Random();
-        }
-
         /// <summary>
         /// Distincts <paramref name="collection"/> by <paramref name="selector"/>
         /// </summary>
@@ -67,24 +60,6 @@ namespace Common.Extensions
             return items.Any() ? items.Aggregate(func) : default;
         }
 
-        public static double AverageOrDefault<TSource>(this IEnumerable<TSource> source, Func<TSource, int> selector)
-        {
-            return source.Any() ? source.Average(selector) : default;
-        }
-
-        /// <summary>
-        /// Returns random element of <paramref name="self"/>
-        /// </summary>
-        /// <typeparam name="TSource"></typeparam>
-        /// <param name="self"></param>
-        /// <returns>Random element of <paramref name="self"/></returns>
-        public static TSource RandomElementOrDefault<TSource>(this IEnumerable<TSource> self)
-        {
-            var collection = self.ToArray();
-            var index = Random.Next(collection.Length);
-            return collection.ElementAtOrDefault(index);
-        }
-
         /// <summary>
         /// Determins, whether the sequence 
         /// contains all of the <paramref name="items"/>
@@ -93,7 +68,9 @@ namespace Common.Extensions
         /// <param name="self"></param>
         /// <param name="items"></param>
         /// <returns></returns>
-        public static bool ContainsAll<T>(this IEnumerable<T> self, params T[] items)
+        /// <remarks>This method compares elements by references</remarks>
+        public static bool ContainsReferences<T>(this IEnumerable<T> self, params T[] items)
+            where T : class
         {
             bool IsInCollection(T item)
             {
@@ -166,15 +143,12 @@ namespace Common.Extensions
         public static bool Match<T>(this IEnumerable<T> self,
             IEnumerable<T> second, Func<T, T, bool> predicate)
         {
+            const int ZeroLength = default;
             var firstArray = self.ToArray();
             var secondArray = second.ToArray();
             #region InvariantsObservance
-            if (!self.HaveEqualLength(second))
-            {
-                return false;
-            }
-
-            if (!firstArray.Any() || !secondArray.Any())
+            if (firstArray.Length != secondArray.Length
+                || ZeroLength.IsOneOf(firstArray.Length, secondArray.Length))
             {
                 return false;
             }

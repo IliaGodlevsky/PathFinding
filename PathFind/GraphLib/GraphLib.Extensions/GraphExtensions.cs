@@ -80,19 +80,19 @@ namespace GraphLib.Extensions
             return self.ForEach(vertex => vertex.SetNeighbours(self));
         }
 
-        public static bool Contains(this IGraph self, params IVertex[] vertices)
+        public static bool ContainsReferences(this IGraph self, params IVertex[] vertices)
         {
-            return self.Vertices.ContainsAll(vertices);
+            return self.Vertices.ContainsReferences(vertices);
         }
 
-        public static bool Contains(this IGraph self, IEndPoints endPoints)
+        public static bool ContainsReferences(this IGraph self, IEndPoints endPoints)
         {
-            return self.Contains(endPoints.Source, endPoints.Target);
+            return self.ContainsReferences(endPoints.Source, endPoints.Target);
         }
 
-        public static bool Contains(this IGraph self, IIntermediateEndPoints endPoints)
+        public static bool ContainsReferences(this IGraph self, IIntermediateEndPoints endPoints)
         {
-            return self.Contains((IEndPoints)endPoints) && self.Contains(endPoints.IntermediateVertices.ToArray());
+            return self.ContainsReferences((IEndPoints)endPoints) && self.ContainsReferences(endPoints.IntermediateVertices.ToArray());
         }
 
         public static int GetIsolatedCount(this IGraph self)

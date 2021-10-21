@@ -1,3 +1,4 @@
+using Algorithm.Extensions;
 using Algorithm.Infrastructure;
 using Algorithm.Interfaces;
 using GraphLib.Interfaces;
@@ -5,7 +6,6 @@ using GraphLib.NullRealizations.NullObjects;
 using GraphLib.TestRealizations.TestFactories;
 using GraphLib.TestRealizations.TestObjects;
 using NUnit.Framework;
-using System;
 using System.Linq;
 
 namespace Algorithm.Algos.Tests
@@ -49,16 +49,16 @@ namespace Algorithm.Algos.Tests
         }
 
         [Test]
-        public virtual void FindPath_NullGraph_ReturnsEmptyPath()
+        public virtual void FindPath_NullGraph_ThrowsEndPointsNotFromCurrentGraphException()
         {
             var graph = new NullGraph();
-            var endPoints = new TestEndPoints(graph.Vertices.First(), graph.Vertices.Last());
+            var source = graph.Vertices.FirstOrNullVertex();
+            var target = graph.Vertices.LastOrNullVertex();
+            var endPoints = new TestEndPoints(source, target);
+
             var algorithm = CreateAlgorithm(graph, endPoints);
 
-            var graphPath = algorithm.FindPath();
-
-            Assert.AreEqual(default(int), graphPath.PathLength);
-            Assert.AreEqual(default(double), graphPath.PathCost);
+            Assert.Throws<EndPointsNotFromCurrentGraphException>(() => algorithm.FindPath());
         }
 
         [TestCase(new int[] { 500 })]

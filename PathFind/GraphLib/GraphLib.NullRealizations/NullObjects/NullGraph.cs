@@ -1,7 +1,6 @@
 ﻿using GraphLib.Interfaces;
 using NullObject.Attributes;
 using System.Collections.Generic;
-using System.Linq;
 
 namespace GraphLib.NullRealizations.NullObjects
 {
@@ -10,20 +9,21 @@ namespace GraphLib.NullRealizations.NullObjects
     {
         public NullGraph()
         {
-            vertices = new NullVertex[] { new NullVertex() };
+            Vertices = new NullVertex[] { };
+            DimensionsSizes = new int[] { };
         }
 
         public IVertex this[ICoordinate position]
         {
-            get => vertices.First();
+            get => new NullVertex();
             set => _ = value;
         }
 
-        public int[] DimensionsSizes => new int[] { };
+        public int[] DimensionsSizes { get; }
 
-        public IEnumerable<IVertex> Vertices => vertices;
+        public IEnumerable<IVertex> Vertices { get; }
 
-        public int Size => vertices.Length;
+        public int Size => 0;
 
         public override bool Equals(object obj)
         {
@@ -44,7 +44,5 @@ namespace GraphLib.NullRealizations.NullObjects
         {
             return new NullGraph();
         }
-
-        private readonly NullVertex[] vertices;
     }
 }
