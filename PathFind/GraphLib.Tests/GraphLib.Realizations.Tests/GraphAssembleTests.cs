@@ -73,7 +73,6 @@ namespace GraphLib.Realizations.Tests
             IGraph graph = null;
 
             Assert.DoesNotThrow(() => graph = assemble.AssembleGraph(0));
-            Assert.IsTrue(graph.Vertices.All(IsNullVertex));
         }
 
         private bool CoordinatesAreUnique(IGraph graph)
@@ -87,12 +86,7 @@ namespace GraphLib.Realizations.Tests
 
         private bool IsTestVertexType(IVertex vertex)
         {
-            return vertex.GetType() == typeof(TestVertex);
-        }
-
-        private bool IsNullVertex(IVertex vertex)
-        {
-            return vertex.GetType() == typeof(NullVertex);
+            return vertex is TestVertex;
         }
     }
 }

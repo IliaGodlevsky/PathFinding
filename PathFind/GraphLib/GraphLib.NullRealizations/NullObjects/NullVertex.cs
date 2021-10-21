@@ -11,14 +11,14 @@ namespace GraphLib.NullRealizations.NullObjects
     {
         public NullVertex()
         {
-            neighbours = new NullVertex[] { };
+
         }
 
         public bool IsObstacle { get => true; set { } }
 
         public IVertexCost Cost { get => new NullCost(); set { } }
 
-        public IReadOnlyCollection<IVertex> Neighbours { get => neighbours; set { } }
+        public IReadOnlyCollection<IVertex> Neighbours { get => new NullVertex[] { }; set { } }
 
         public ICoordinate Position { get => new NullCoordinate(); set { } }
 
@@ -30,7 +30,5 @@ namespace GraphLib.NullRealizations.NullObjects
         }
 
         public INeighboursCoordinates NeighboursCoordinates => new NullNeighboursCoordinates();
-
-        private readonly IVertex[] neighbours;
     }
 }

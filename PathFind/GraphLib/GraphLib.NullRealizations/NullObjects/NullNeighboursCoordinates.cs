@@ -8,12 +8,7 @@ namespace GraphLib.NullRealizations.NullObjects
     [Serializable]
     public sealed class NullNeighboursCoordinates : INeighboursCoordinates
     {
-        public NullNeighboursCoordinates()
-        {
-            Coordinates = new NullCoordinate[] { new NullCoordinate() };
-        }
-
-        public ICoordinate[] Coordinates { get; }
+        public ICoordinate[] Coordinates => new NullCoordinate[] { };
 
         public INeighboursCoordinates Clone()
         {
