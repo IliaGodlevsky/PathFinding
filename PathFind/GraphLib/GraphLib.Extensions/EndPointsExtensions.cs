@@ -12,11 +12,20 @@ namespace GraphLib.Extensions
         /// </summary>
         /// <param name="self"></param>
         /// <returns></returns>
-        public static IEndPoints[] ToEndPoints(this IIntermediateEndPoints self)
+        public static IEnumerable<IEndPoints> ToEndPoints(this IIntermediateEndPoints self)
         {
-            var vertices = self.GetVertices().ToArray();
-            IEndPoints EndPoint(int i) => new EndPoints(vertices[i], vertices[i + 1]);
-            return Enumerable.Range(0, vertices.Length - 1).Select(EndPoint).ToArray();
+            var vertices = self.GetVertices();
+            using (var iterator = vertices.GetEnumerator())
+            {
+                iterator.MoveNext();
+                var previous = iterator.Current;
+                while (iterator.MoveNext())
+                {
+                    var current = iterator.Current;
+                    yield return new EndPoints(previous, current);
+                    previous = iterator.Current;
+                }
+            }
         }
 
         public static bool CanBeEndPoint(this IEndPoints self, IVertex vertex)
