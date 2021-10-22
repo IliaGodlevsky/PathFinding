@@ -1,8 +1,6 @@
 ﻿using GraphLib.Extensions;
 using GraphLib.NullRealizations.NullObjects;
 using NUnit.Framework;
-using System;
-using System.Linq;
 
 namespace GraphLib.Common.Tests
 {

@@ -3,6 +3,7 @@ using Common.ValueRanges;
 using GraphLib.Interfaces;
 using GraphLib.NullRealizations.NullObjects;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace GraphLib.Extensions
@@ -111,7 +112,7 @@ namespace GraphLib.Extensions
             return self.Vertices.Where(vertex => vertex.IsIsolated()).Count();
         }
 
-        public static IVertex[] GetNotObstacles(this IGraph self)
+        public static IEnumerable<IVertex> GetNotObstacles(this IGraph self)
         {
             return self.Vertices.FilterObstacles();
         }

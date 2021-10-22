@@ -1,9 +1,8 @@
 ﻿using Common.Extensions;
 using GraphLib.Base.EndPointsInspection.Abstractions;
-using GraphLib.Base.VertexCondition.Interface;
 using GraphLib.Interfaces;
 
-namespace GraphLib.Base.VertexCondition.Realizations.ReplaceIntermediatesConditions
+namespace GraphLib.Base.VertexCondition.ReplaceIntermediatesConditions
 {
     internal sealed class CancelMarkToReplaceEndPointsConditions
         : BaseIntermediateEndPointsInspection, IVertexCondition

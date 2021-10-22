@@ -1,10 +1,9 @@
 ﻿using GraphLib.Base.EndPointsInspection.Abstractions;
-using GraphLib.Base.VertexCondition.Interface;
 using GraphLib.Extensions;
 using GraphLib.Interfaces;
 using NullObject.Extensions;
 
-namespace GraphLib.Base.VertexCondition.Realizations.EndPointsConditions
+namespace GraphLib.Base.VertexCondition.EndPointsConditions
 {
     internal sealed class SetSourceVertexCondition
         : BaseEndPointsInspection, IVertexCondition

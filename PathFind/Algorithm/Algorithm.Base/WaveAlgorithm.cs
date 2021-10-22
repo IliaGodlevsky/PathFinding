@@ -9,6 +9,7 @@ using GraphLib.Interfaces;
 using Interruptable.Interface;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Algorithm.Base
 {
@@ -101,7 +102,8 @@ namespace Algorithm.Base
         {
             return visitedVertices
                 .GetUnvisitedNeighbours(vertex)
-                .FilterObstacles();
+                .FilterObstacles()
+                .ToArray();
         }
     }
 }

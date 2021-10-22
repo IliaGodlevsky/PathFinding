@@ -20,9 +20,9 @@ namespace GraphLib.Extensions
             return Enumerable.Range(0, coordinates.Length).IsSingle(IsNotEqual);
         }
 
-        public static IVertex[] FilterObstacles(this IEnumerable<IVertex> collection)
+        public static IEnumerable<IVertex> FilterObstacles(this IEnumerable<IVertex> collection)
         {
-            return collection.Where(vertex => !vertex.IsObstacle).ToArray();
+            return collection.Where(vertex => !vertex.IsObstacle);
         }
 
         public static IEnumerable<IVertex> Without(this IEnumerable<IVertex> self, IIntermediateEndPoints endPoints)

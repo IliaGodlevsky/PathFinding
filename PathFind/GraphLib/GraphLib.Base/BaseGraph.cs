@@ -44,12 +44,18 @@ namespace GraphLib.Base
 
         public virtual IVertex this[ICoordinate coordinate]
         {
-            get => vertices.TryGetValue(coordinate, out var vertex) ? vertex : new NullVertex();
+            get => vertices.TryGetValue(coordinate, out var vertex) 
+                ? vertex 
+                : new NullVertex();
             set
             {
-                if (coordinate.CoordinatesValues.Length == DimensionsSizes.Length)
+                if (vertices.TryGetValue(coordinate, out _))
                 {
                     vertices[coordinate] = value;
+                }
+                else if (vertices.Count < Size && coordinate.IsWithinGraph(this))
+                {
+                    vertices.Add(coordinate, value);
                 }
             }
         }
@@ -74,21 +80,22 @@ namespace GraphLib.Base
 
         public override string ToString()
         {
-            string format = "Obstacle percent: {0} ({1}/{2})";
-            string largeSpace = "   ";
             int obstacles = this.GetObstaclesCount();
             int obstaclesPercent = this.GetObstaclePercent();
             string Zip(string name, int size) => $"{name}: {size}";
             var zipped = DimensionNames.Zip(DimensionsSizes, Zip);
-            string joined = string.Join(largeSpace, zipped);
-            string graphParams = string.Format(format,
+            string joined = string.Join(LargeSpace, zipped);
+            string graphParams = string.Format(ParamsFormat,
                 obstaclesPercent, obstacles, Size);
-            return string.Join(largeSpace, joined, graphParams);
+            return string.Join(LargeSpace, joined, graphParams);
         }
 
         public abstract IGraph Clone();
 
         protected static string[] DimensionNames { get; }
         private readonly IDictionary<ICoordinate, IVertex> vertices;
+
+        private static readonly string ParamsFormat = "Obstacle percent: {0} ({1}/{2})";
+        private static readonly string LargeSpace = "   ";
     }
 }

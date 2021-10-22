@@ -1,7 +1,6 @@
-﻿using GraphLib.Base.VertexCondition.Interface;
-using GraphLib.Interfaces;
+﻿using GraphLib.Interfaces;
 
-namespace GraphLib.Base.VertexCondition.Realizations.VertexRevertCondition
+namespace GraphLib.Base.VertexCondition.VertexRevertCondition
 {
     internal sealed class SetVertexAsRegularCondition : IVertexCondition
     {

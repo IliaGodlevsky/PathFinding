@@ -77,7 +77,8 @@ namespace WPFVersion3D.Model3DFactories
                 for (int meridian = 0; meridian < Meridians; meridian++)
                 {
                     double phi = meridian * PI2 / (Meridians - 1);
-                    points[latitude, meridian] = GetPosition(radius, theta, phi);
+                    var position = GetPosition(radius, theta, phi);
+                    points[latitude, meridian] = position;
                 }
             }
 

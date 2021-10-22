@@ -10,6 +10,7 @@ using Interruptable.Interface;
 using NullObject.Extensions;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Algorithm.Base
 {
@@ -77,10 +78,16 @@ namespace Algorithm.Base
         {
             get
             {
-                var neighbours = visitedVertices.GetUnvisitedNeighbours(CurrentVertex).FilterObstacles();
+                var neighbours = visitedVertices
+                    .GetUnvisitedNeighbours(CurrentVertex)
+                    .FilterObstacles()
+                    .ToArray();
                 double leastVertexCost = neighbours.MinOrDefault(GreedyHeuristic);
-                bool IsLeastCostVertex(IVertex vertex) => GreedyHeuristic(vertex) == leastVertexCost;
-                return neighbours.ForEach(Enqueue).FirstOrNullVertex(IsLeastCostVertex);
+                bool IsLeastCostVertex(IVertex vertex)
+                    => GreedyHeuristic(vertex) == leastVertexCost;
+                return neighbours
+                    .ForEach(Enqueue)
+                    .FirstOrNullVertex(IsLeastCostVertex);
             }
         }
 

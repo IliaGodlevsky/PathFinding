@@ -74,7 +74,7 @@ namespace GraphLib.Extensions.Tests
 
             vertex.SetNeighbours(graph);
 
-            Assert.IsFalse(vertex.Neighbours.Any());           
+            Assert.IsFalse(vertex.Neighbours.Any());
         }
     }
 }

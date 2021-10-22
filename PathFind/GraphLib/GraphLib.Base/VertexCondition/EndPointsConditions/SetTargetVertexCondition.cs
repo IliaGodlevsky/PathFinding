@@ -1,28 +1,29 @@
 ﻿using GraphLib.Base.EndPointsInspection.Abstractions;
-using GraphLib.Base.VertexCondition.Interface;
 using GraphLib.Extensions;
 using GraphLib.Interfaces;
+using NullObject.Extensions;
 
-namespace GraphLib.Base.VertexCondition.Realizations.EndPointsConditions
+namespace GraphLib.Base.VertexCondition.EndPointsConditions
 {
-    internal sealed class ReplaceIsolatedTargetVertexCondition
+    internal sealed class SetTargetVertexCondition
         : BaseEndPointsInspection, IVertexCondition
     {
-        public ReplaceIsolatedTargetVertexCondition(BaseEndPoints endPoints)
+        public SetTargetVertexCondition(BaseEndPoints endPoints)
             : base(endPoints)
         {
         }
 
         public void Execute(IVertex vertex)
         {
-            (endPoints.Target as IVisualizable)?.VisualizeAsRegular();
             endPoints.Target = vertex;
             (vertex as IVisualizable)?.VisualizeAsTarget();
         }
 
         public bool IsTrue(IVertex vertex)
         {
-            return endPoints.Target.IsIsolated();
+            return !endPoints.Source.IsNull()
+                && endPoints.Target.IsNull()
+                && endPoints.CanBeEndPoint(vertex);
         }
     }
 }

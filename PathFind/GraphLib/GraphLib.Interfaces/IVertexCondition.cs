@@ -1,6 +1,4 @@
-﻿using GraphLib.Interfaces;
-
-namespace GraphLib.Base.VertexCondition.Interface
+﻿namespace GraphLib.Interfaces
 {
     /// <summary>
     /// Represents a condition construction

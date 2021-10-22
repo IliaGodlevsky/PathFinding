@@ -1,6 +1,4 @@
-﻿using GraphLib.Interfaces;
-
-namespace GraphLib.Base.EndPointsConditions.Interfaces
+﻿namespace GraphLib.Interfaces
 {
     public interface IVerticesConditions
     {

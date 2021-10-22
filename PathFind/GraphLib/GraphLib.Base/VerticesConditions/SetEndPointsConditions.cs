@@ -1,14 +1,12 @@
 ﻿using Common.Extensions;
-using GraphLib.Base.EndPointsConditions.Interfaces;
-using GraphLib.Base.VertexCondition.Interface;
-using GraphLib.Base.VertexCondition.Realizations.EndPointsConditions;
+using GraphLib.Base.VertexCondition.EndPointsConditions;
 using GraphLib.Extensions;
 using GraphLib.Interfaces;
 using NullObject.Extensions;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace GraphLib.Base.EndPointsConditions.Realizations
+namespace GraphLib.Base.VerticesConditions
 {
     internal sealed class SetEndPointsConditions : IVerticesConditions
     {
@@ -53,6 +51,6 @@ namespace GraphLib.Base.EndPointsConditions.Realizations
         private readonly IVertexCondition unsetTargetVertexCondition;
         private readonly IVertexCondition unsetIntermediateVertexCondition;
         private readonly BaseEndPoints endPoints;
-        private readonly IEnumerable<IVertexCondition> conditions;
+        private readonly IVertexCondition[] conditions;
     }
 }

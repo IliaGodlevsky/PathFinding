@@ -1,11 +1,9 @@
-﻿using GraphLib.Base.EndPointsConditions.Interfaces;
-using GraphLib.Base.VertexCondition.Interface;
-using GraphLib.Base.VertexCondition.Realizations.VertexRevertCondition;
+﻿using GraphLib.Base.VertexCondition.VertexRevertCondition;
 using GraphLib.Interfaces;
 using NullObject.Extensions;
 using System.Linq;
 
-namespace GraphLib.Base.VerticesConditions.Realizations
+namespace GraphLib.Base.VerticesConditions
 {
     internal sealed class ReverseVertexConditions : IVerticesConditions
     {

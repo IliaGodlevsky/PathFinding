@@ -1,11 +1,10 @@
 ﻿using GraphLib.Base.EndPointsInspection.Abstractions;
-using GraphLib.Base.VertexCondition.Interface;
 using GraphLib.Extensions;
 using GraphLib.Interfaces;
 using NullObject.Extensions;
 using System.Linq;
 
-namespace GraphLib.Base.VertexCondition.Realizations.EndPointsConditions
+namespace GraphLib.Base.VertexCondition.EndPointsConditions
 {
     internal sealed class ReplaceIntermediateIsolatedVertexCondition
         : BaseIntermediateEndPointsInspection, IVertexCondition

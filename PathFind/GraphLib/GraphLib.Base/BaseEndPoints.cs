@@ -1,5 +1,4 @@
-﻿using GraphLib.Base.EndPointsConditions.Interfaces;
-using GraphLib.Base.EndPointsConditions.Realizations;
+﻿using GraphLib.Base.VerticesConditions;
 using GraphLib.Extensions;
 using GraphLib.Interfaces;
 using System;
