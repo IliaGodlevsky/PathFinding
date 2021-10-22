@@ -1,4 +1,5 @@
-﻿using Common.Interface;
+﻿using Common.Extensions;
+using Common.Interface;
 using GraphLib.Exceptions;
 using GraphLib.Extensions;
 using GraphLib.Interfaces;
@@ -25,21 +26,41 @@ namespace GraphLib.Base
                 message += $"Required value is {numberOfDimensions}";
                 throw new WrongNumberOfDimensionsException(argumentName, actualLength, message);
             }
-            toString = $"({string.Join(",", CoordinatesValues)})";
-            hashCode = CoordinatesValues.ToHashCode();
         }
 
         public int[] CoordinatesValues { get; }
 
-        public override bool Equals(object pos) => (pos as ICoordinate)?.IsEqual(this) == true;
-        public override int GetHashCode() => hashCode;
-        public override string ToString() => toString;
+        public override bool Equals(object pos)
+        {
+            if (pos is ICoordinate coordinate)
+            {
+                return coordinate.IsEqual(this);
+            }
+
+            return false;
+        }
+
+        public override int GetHashCode()
+        {
+            if (!hashCode.HasValue)
+            {
+                hashCode = CoordinatesValues.ToHashCode();
+            }
+            return hashCode.Value;
+        }
+
+        public override string ToString()
+        {
+            return toString = string.IsNullOrEmpty(toString)
+                ? $"({string.Join(",", CoordinatesValues)})"
+                : toString;
+        }
 
         public abstract ICoordinate Clone();
 
         [NonSerialized]
-        private readonly string toString;
+        private string toString;
         [NonSerialized]
-        private readonly int hashCode;
+        private int? hashCode;
     }
 }
