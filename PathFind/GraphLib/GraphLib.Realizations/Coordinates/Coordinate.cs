@@ -14,7 +14,7 @@ namespace GraphLib.Realizations.Coordinates
         public Coordinate(int[] coordinates)
         {
             CoordinatesValues = coordinates.ToArray();
-            hashCode = new Lazy<int>(() => CoordinatesValues.ToHashCode());
+            hashCode = CoordinatesValues.ToHashCode();
         }
 
         public Coordinate(ICoordinate coordinate)
@@ -30,7 +30,7 @@ namespace GraphLib.Realizations.Coordinates
 
         public override int GetHashCode()
         {
-            return hashCode.Value;
+            return hashCode;
         }
 
         public ICoordinate Clone()
@@ -38,7 +38,6 @@ namespace GraphLib.Realizations.Coordinates
             return new Coordinate(this);
         }
 
-        [NonSerialized]
-        private readonly Lazy<int> hashCode;
+        private readonly int hashCode;
     }
 }

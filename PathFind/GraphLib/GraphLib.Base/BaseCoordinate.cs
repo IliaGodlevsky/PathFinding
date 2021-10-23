@@ -26,6 +26,8 @@ namespace GraphLib.Base
                 message += $"Required value is {numberOfDimensions}";
                 throw new WrongNumberOfDimensionsException(argumentName, actualLength, message);
             }
+            toString = $"({string.Join(",", CoordinatesValues)})";
+            hashCode = CoordinatesValues.ToHashCode();
         }
 
         public int[] CoordinatesValues { get; }
@@ -42,25 +44,17 @@ namespace GraphLib.Base
 
         public override int GetHashCode()
         {
-            if (!hashCode.HasValue)
-            {
-                hashCode = CoordinatesValues.ToHashCode();
-            }
-            return hashCode.Value;
+            return hashCode;
         }
 
         public override string ToString()
         {
-            return toString = string.IsNullOrEmpty(toString)
-                ? $"({string.Join(",", CoordinatesValues)})"
-                : toString;
+            return toString;
         }
 
         public abstract ICoordinate Clone();
 
-        [NonSerialized]
-        private string toString;
-        [NonSerialized]
-        private int? hashCode;
+        private readonly string toString;
+        private readonly int hashCode;
     }
 }
