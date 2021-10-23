@@ -12,7 +12,7 @@ namespace Algorithm.Сompanions
     {
         public AccumulatedCosts(IEnumerable<IVertex> graph, double startCost)
         {
-            accumulatedCosts = new ConcurrentDictionary<ICoordinate, double>();
+            accumulatedCosts = new Dictionary<ICoordinate, double>();
             this.startCost = startCost;
             graph.ForEach(SetAccumulatedCostToStartCost);
         }

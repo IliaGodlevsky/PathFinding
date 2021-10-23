@@ -1,6 +1,7 @@
 ﻿using Common.Extensions;
 using Common.Interface;
 using GraphLib.Interfaces;
+using GraphLib.Realizations.Coordinates;
 using GraphLib.Realizations.Extensions;
 using System;
 using System.Collections.Generic;
@@ -31,7 +32,7 @@ namespace GraphLib.Realizations.NeighboursCoordinates
 
         public void GetObjectData(SerializationInfo info, StreamingContext context)
         {
-            info.AddValue(nameof(selfCoordinatesValues), selfCoordinatesValues, typeof(int[]));
+            info.AddValue(nameof(selfCoordinate), selfCoordinate, typeof(ICoordinate));
         }
 
         /// <summary>
@@ -41,7 +42,7 @@ namespace GraphLib.Realizations.NeighboursCoordinates
         public ICoordinate[] Coordinates => neighboursCoordinates.Value;
 
         private AroundNeighboursCoordinates(SerializationInfo info, StreamingContext context)
-            : this(((int[])info.GetValue(nameof(selfCoordinatesValues), typeof(int[]))).ToCoordinate())
+            : this((ICoordinate)info.GetValue(nameof(selfCoordinate), typeof(ICoordinate)))
         {
 
         }

@@ -23,11 +23,11 @@ namespace GraphLib.Realizations.NeighboursCoordinates
 
         public void GetObjectData(SerializationInfo info, StreamingContext context)
         {
-            info.AddValue(nameof(coordinatesValues), coordinatesValues, typeof(Coordinate));
+            info.AddValue(nameof(coordinatesValues), coordinatesValues, typeof(ICoordinate));
         }
 
         private CardinalNeighboursCoordinates(SerializationInfo info, StreamingContext context)
-            : this((Coordinate)info.GetValue(nameof(coordinatesValues), typeof(Coordinate)))
+            : this((ICoordinate)info.GetValue(nameof(coordinatesValues), typeof(ICoordinate)))
         {
 
         }

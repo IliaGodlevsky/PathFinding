@@ -9,6 +9,8 @@ using GraphLib.Realizations.Factories.CoordinateFactories;
 using GraphLib.Realizations.Factories.GraphAssembles;
 using GraphLib.Realizations.Factories.GraphFactories;
 using GraphLib.Realizations.Factories.NeighboursCoordinatesFactories;
+using GraphLib.Realizations.MeanCosts;
+using GraphLib.Realizations.SmoothLevel;
 using GraphLib.Serialization.Interfaces;
 using GraphLib.Serialization.Serializers;
 using GraphViewModel;
@@ -31,7 +33,9 @@ namespace WPFVersion.Configure
         {
             var randomGraphAssemble = context.ResolveNamed<IGraphAssemble>(GraphAssembleName);
             var costFactory = context.Resolve<IVertexCostFactory>();
-            return new SmoothedGraphAssemble(randomGraphAssemble, costFactory);
+            var meanCost = context.Resolve<IMeanCost>();
+            var smoothLevel = context.Resolve<ISmoothLevel>();
+            return new SmoothedGraphAssemble(randomGraphAssemble, costFactory, meanCost, smoothLevel);
         }
 
         public static IContainer Configure()
@@ -56,6 +60,8 @@ namespace WPFVersion.Configure
             builder.RegisterType<Coordinate2DFactory>().As<ICoordinateFactory>().SingleInstance();
             builder.RegisterType<Graph2DFactory>().As<IGraphFactory>().SingleInstance();
             builder.RegisterType<AroundNeighboursCoordinatesFactory>().As<INeighboursCoordinatesFactory>().SingleInstance();
+            builder.RegisterType<GeometricMeanCost>().As<IMeanCost>().SingleInstance();
+            builder.RegisterType<MediumSmoothLevel>().As<ISmoothLevel>().SingleInstance();
 
             builder.RegisterType<SaveLoadGraph>().As<ISaveLoadGraph>().SingleInstance();
             builder.RegisterType<PathInput>().As<IPathInput>().SingleInstance();

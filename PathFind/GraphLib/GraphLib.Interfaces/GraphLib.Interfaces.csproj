@@ -54,6 +54,7 @@
     <Compile Include="Factories\IGraphAssemble.cs" />
     <Compile Include="Factories\IGraphFactory.cs" />
     <Compile Include="IGraphField.cs" />
+    <Compile Include="ISmoothLevel.cs" />
     <Compile Include="IVertexCondition.cs" />
     <Compile Include="IVerticesConditions.cs" />
     <Compile Include="IVisualizable.cs" />

@@ -51,7 +51,7 @@ namespace Common.Extensions
             {
                 type = e.GetType().GetField(e.ToString());
             }
-            return type.GetAttributeOrNull<DescriptionAttribute>()
+            return type?.GetAttributeOrNull<DescriptionAttribute>()
                 ?.Description ?? type.Name;
         }
 

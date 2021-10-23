@@ -41,7 +41,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Enums\SmoothLevels.cs" />
     <Compile Include="Extensions\EnumerableExtensions.cs" />
+    <Compile Include="Extensions\GraphExtensions.cs" />
     <Compile Include="Extensions\InclusiveValueRangeExtensions.cs" />
     <Compile Include="NeighboursCoordinates\CardinalNeighboursCoordinates.cs" />
     <Compile Include="NeighboursCoordinates\AroundNeighboursCoordinates.cs" />
@@ -64,6 +66,10 @@
     <Compile Include="Graphs\Graph3D.cs" />
     <Compile Include="Interfaces\ICostState.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="SmoothLevel\HighSmoothLevel.cs" />
+    <Compile Include="SmoothLevel\LowSmoothLevel.cs" />
+    <Compile Include="SmoothLevel\MediumSmoothLevel.cs" />
+    <Compile Include="SmoothLevel\SmoothLevelAttribute.cs" />
     <Compile Include="VertexCost\WeightableVertexCost.cs" />
     <Compile Include="VertexCost\CostStates\UnweightedState.cs" />
     <Compile Include="VertexCost\CostStates\WeightedState.cs" />
@@ -77,6 +83,10 @@
     <ProjectReference Include="..\..\Common\Common.csproj">
       <Project>{a5a743f5-d346-4b2b-b6ac-07152f64e4d9}</Project>
       <Name>Common</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\EnumerationValues\EnumerationValues.csproj">
+      <Project>{2D990CD3-70C4-4DD2-AD23-9F613446D0D6}</Project>
+      <Name>EnumerationValues</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\NullObject\NullObject.csproj">
       <Project>{51D677FD-7A82-4282-8A2E-51DEBE39E695}</Project>

@@ -17,6 +17,7 @@ using GraphLib.Realizations.Factories.CoordinateFactories;
 using GraphLib.Realizations.Factories.GraphAssembles;
 using GraphLib.Realizations.Factories.GraphFactories;
 using GraphLib.Realizations.Factories.NeighboursCoordinatesFactories;
+using GraphLib.Realizations.MeanCosts;
 using GraphLib.Serialization.Interfaces;
 using GraphLib.Serialization.Serializers;
 using GraphViewModel;
@@ -37,7 +38,8 @@ namespace ConsoleVersion.Configure
         {
             var randomGraphAssemble = context.ResolveNamed<IGraphAssemble>(GraphAssemble);
             var costFactory = context.Resolve<IVertexCostFactory>();
-            return new SmoothedGraphAssemble(randomGraphAssemble, costFactory);
+            var meanCost = context.Resolve<IMeanCost>();
+            return new SmoothedGraphAssemble(randomGraphAssemble, costFactory, meanCost);
         }
 
         public static IContainer Configure()
@@ -66,6 +68,7 @@ namespace ConsoleVersion.Configure
             builder.RegisterType<Coordinate2DFactory>().As<ICoordinateFactory>().SingleInstance();
             builder.RegisterType<Graph2DFactory>().As<IGraphFactory>().SingleInstance();
             builder.RegisterType<AroundNeighboursCoordinatesFactory>().As<INeighboursCoordinatesFactory>().SingleInstance();
+            builder.RegisterType<RootMeanSquareCost>().As<IMeanCost>().SingleInstance();
 
             builder.RegisterType<SaveLoadGraph>().As<ISaveLoadGraph>().SingleInstance();
             builder.RegisterType<PathInput>().As<IPathInput>().SingleInstance();

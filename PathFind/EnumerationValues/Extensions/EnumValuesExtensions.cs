@@ -8,12 +8,6 @@ namespace EnumerationValues.Extensions
 {
     public static class EnumValuesExtensions
     {
-        public static Tuple<string, TEnum>[] GetDescriptionAndValueTuples<TEnum>(this IEnumValues<TEnum> self)
-            where TEnum : Enum
-        {
-            return self.ToTupleCollection(value => value.GetDescriptionAttributeValueOrTypeName());
-        }
-
         public static Tuple<T1, TEnum>[] ToTupleCollection<T1, TEnum>(this IEnumValues<TEnum> self, Func<TEnum, T1> item1Selector)
             where TEnum : Enum
         {
