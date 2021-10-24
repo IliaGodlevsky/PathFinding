@@ -29,9 +29,7 @@ namespace GraphLib.Extensions
 
         public static bool IsCardinal(this ICoordinate coordinate, ICoordinate neighbour)
         {
-            var vertexCoordinates = coordinate.CoordinatesValues.ToArray();
-            var neighbourCoordinates = neighbour.CoordinatesValues.ToArray();
-            return vertexCoordinates.IsCardinal(neighbourCoordinates);
+            return coordinate.CoordinatesValues.IsCardinal(neighbour.CoordinatesValues);
         }
 
         /// <summary>

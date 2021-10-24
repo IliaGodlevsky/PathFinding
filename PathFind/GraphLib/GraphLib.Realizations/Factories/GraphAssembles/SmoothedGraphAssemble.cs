@@ -55,7 +55,7 @@ namespace GraphLib.Realizations.Factories.GraphAssembles
         {
             return graphAssemble
                 .AssembleGraph(obstaclePercent, graphDimensionSizes)
-                .Smooth(costFactory, averageCost, smoothLevel);
+                .Smooth(costFactory, averageCost, smoothLevel.Level);
         }
 
         private readonly IGraphAssemble graphAssemble;

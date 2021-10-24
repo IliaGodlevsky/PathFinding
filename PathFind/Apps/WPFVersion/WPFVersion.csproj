@@ -86,6 +86,7 @@
     <Compile Include="Messages\UpdateStatisticsMessage.cs" />
     <Compile Include="MessageTokens.cs" />
     <Compile Include="Model\EndPoints.cs" />
+    <Compile Include="Model\HeightColor.cs" />
     <Compile Include="Model\PathInput.cs" />
     <Compile Include="Model\RangedSlider.cs" />
     <Compile Include="Model\VertexEventHolder.cs" />

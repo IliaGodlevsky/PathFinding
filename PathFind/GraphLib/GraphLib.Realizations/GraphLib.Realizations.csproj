@@ -43,6 +43,7 @@
   <ItemGroup>
     <Compile Include="Enums\SmoothLevels.cs" />
     <Compile Include="Extensions\EnumerableExtensions.cs" />
+    <Compile Include="Extensions\EnumValuesExtensions.cs" />
     <Compile Include="Extensions\GraphExtensions.cs" />
     <Compile Include="Extensions\InclusiveValueRangeExtensions.cs" />
     <Compile Include="NeighboursCoordinates\CardinalNeighboursCoordinates.cs" />

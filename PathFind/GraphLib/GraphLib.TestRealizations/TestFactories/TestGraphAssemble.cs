@@ -10,7 +10,7 @@ namespace GraphLib.TestRealizations.TestFactories
                   new TestCoordinateFactory(),
                   new TestGraphFactory(),
                   new TestCostFactory(),
-                  new AroundNeighboursCoordinatesFactory())
+                  new CardinalNeighboursCoordinatesFactory())
         {
 
         }

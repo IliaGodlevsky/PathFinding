@@ -45,9 +45,7 @@ namespace GraphLib.Realizations.Tests
         {
             using (var mock = AutoMock.GetLoose())
             {
-                mock.Mock<ICoordinate>()
-                    .Setup(c => c.CoordinatesValues)
-                    .Returns(coordinateValues);
+                mock.Mock<ICoordinate>().Setup(c => c.CoordinatesValues).Returns(coordinateValues);
                 var neighboursCoordinate = mock.Create<CardinalNeighboursCoordinates>();
 
                 var environment = neighboursCoordinate.Coordinates;

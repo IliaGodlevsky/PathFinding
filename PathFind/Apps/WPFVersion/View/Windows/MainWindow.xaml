@@ -7,7 +7,7 @@
         xmlns:converters="clr-namespace:WPFVersion.Converters"
         xmlns:range="clr-namespace:WPFVersion" 
         xmlns:rules="clr-namespace:WPFVersion.ValidationRules" 
-        xmlns:viewmodel="clr-namespace:WPFVersion.ViewModel" xmlns:windows="clr-namespace:WPFVersion.View.Windows"
+        xmlns:viewmodel="clr-namespace:WPFVersion.ViewModel" xmlns:windows="clr-namespace:WPFVersion.View.Windows" xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
         d:DataContext="{d:DesignInstance Type=viewmodel:MainWindowViewModel}"
         mc:Ignorable="d"
         Background="White"
@@ -72,6 +72,29 @@
                         </Style>
                     </ToggleButton.Style>
                 </ToggleButton>
+                <Button MaxWidth="25" MaxHeight="25" Margin="3">
+                    <Button.Style>
+                        <Style TargetType="{x:Type Button}">
+                            <Setter Property="Content" Value="{StaticResource UncolorizeVertices}"/>
+                            <Style.Triggers>
+                                <Trigger Property="IsMouseOver" Value="True">
+                                    <Setter Property="Content" Value="{StaticResource ColorizeVertices}" />
+                                </Trigger>
+                                <Trigger Property="IsMouseOver" Value="False">
+                                    <Setter Property="Content" Value="{StaticResource UncolorizeVertices}" />
+                                </Trigger>
+                            </Style.Triggers>
+                        </Style>
+                    </Button.Style>
+                    <i:Interaction.Triggers>
+                        <i:EventTrigger EventName="MouseEnter">
+                            <i:InvokeCommandAction Command="{Binding ColorizeAccordingToCostCommand}"></i:InvokeCommandAction>
+                        </i:EventTrigger>
+                        <i:EventTrigger EventName="MouseLeave">
+                            <i:InvokeCommandAction Command="{Binding ResetColorizingCommand}"></i:InvokeCommandAction>
+                        </i:EventTrigger>
+                    </i:Interaction.Triggers>
+                </Button>
             </ToolBar>
             <StatusBar Background="White" Grid.Row="2">
                 <TextBlock Text="{Binding GraphParametres}"></TextBlock>

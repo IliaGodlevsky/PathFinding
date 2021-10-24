@@ -9,9 +9,9 @@ namespace GraphLib.Serialization
         public VertexSerializationInfo(IVertex vertex)
         {
             Cost = vertex.Cost.Clone();
-            Position = vertex.Position;
+            Position = vertex.Position.Clone();
             IsObstacle = vertex.IsObstacle;
-            NeighboursCoordinates = vertex.NeighboursCoordinates;
+            NeighboursCoordinates = vertex.NeighboursCoordinates.Clone();
         }
 
         public bool IsObstacle { get; }

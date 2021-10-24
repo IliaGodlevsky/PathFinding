@@ -9,9 +9,9 @@ namespace GraphLib.Realizations.Extensions
     public static class GraphExtensions
     {
         public static IGraph Smooth(this IGraph self, IVertexCostFactory costFactory,
-            IMeanCost meanCost, ISmoothLevel smoothLevel)
+            IMeanCost meanCost, int smoothLevel)
         {
-            for (int i = 0; i < smoothLevel.Level; i++)
+            while (smoothLevel --> 0)
             {
                 var visited = new VisitedVertices();
                 foreach (var vertex in self.Vertices)

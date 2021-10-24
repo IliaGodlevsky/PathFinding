@@ -56,11 +56,15 @@ namespace WPFVersion.ViewModel
         public ICommand ShowVertexCost { get; }
         public ICommand InterruptAlgorithmCommand { get; }
         public ICommand ClearVerticesColorCommand { get; }
+        public ICommand ColorizeAccordingToCostCommand { get; }
+        public ICommand ResetColorizingCommand { get; }
 
         public MainWindowViewModel(IGraphFieldFactory fieldFactory, IVertexEventHolder eventHolder, ISaveLoadGraph saveLoad,
             IEnumerable<IGraphAssemble> graphAssembles, BaseEndPoints endPoints, IEnumerable<IAlgorithmFactory> algorithmFactories, ILog log)
             : base(fieldFactory, eventHolder, saveLoad, graphAssembles, endPoints, algorithmFactories, log)
         {
+            ResetColorizingCommand = new RelayCommand(ExecuteResetColorizing, CanExecuteColorizingGraphOperation);
+            ColorizeAccordingToCostCommand = new RelayCommand(ExecuteColorizeAccordingToCost, CanExecuteColorizingGraphOperation);
             ClearVerticesColorCommand = new RelayCommand(ExecuteClearVerticesColors, CanExecuteClearGraphOperation);
             StartPathFindCommand = new RelayCommand(ExecuteStartPathFindCommand, CanExecuteStartFindPathCommand);
             CreateNewGraphCommand = new RelayCommand(ExecuteCreateNewGraphCommand, CanExecuteOperation);
@@ -73,7 +77,17 @@ namespace WPFVersion.ViewModel
             Messenger.Default.Register<GraphCreatedMessage>(this, MessageTokens.MainModel, SetGraph);
         }
 
-        public void ExecuteShowVertexCostCommand(object parametre)
+        private void ExecuteColorizeAccordingToCost(object param)
+        {
+            heightColor.ColorizeAccordingToCost();
+        }
+
+        private void ExecuteResetColorizing(object param)
+        {
+            heightColor.Reset();
+        }
+
+        private void ExecuteShowVertexCostCommand(object parametre)
         {
             (parametre as IVerticesCostsMode)?.Apply(Graph);
         }
@@ -113,6 +127,8 @@ namespace WPFVersion.ViewModel
 
         public override void ConnectNewGraph(IGraph graph)
         {
+             
+            heightColor = new HeightColor(graph);
             base.ConnectNewGraph(graph);
             WindowService.Adjust(graph);
             Messenger.Default.Send(new ClearStatisticsMessage(), MessageTokens.AlgorithmStatisticsModel);
@@ -174,9 +190,16 @@ namespace WPFVersion.ViewModel
             return CanExecuteOperation(param) && CanExecuteGraphOperation(param);
         }
 
+        private bool CanExecuteColorizingGraphOperation(object param)
+        {
+            return CanExecuteGraphOperation(param) && IsAllAlgorithmsFinished;
+        }
+
         private void SetGraph(GraphCreatedMessage message)
         {
             ConnectNewGraph(message.Graph);
         }
+
+        private HeightColor heightColor;
     }
 }

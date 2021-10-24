@@ -41,4 +41,10 @@
               14.9L9 16.3C8.4 16.9 7.5 16.9 6.9 16.3L6.2 17H2L4.8 14.2C4.2 13.6 4.2 12.7 4.8 12.1L9.5 7.4L11.1 9C10.4 
               10 10 11.2 10 12.5C10 13.3 10.2 14.1 10.5 14.9Z" />
     </Viewbox>
+    <Viewbox x:Key="ColorizeVertices">
+        <Path Stroke="Black" Data="M12,16L19.36,10.27L21,9L12,2L3,9L4.63,10.27M12,18.54L4.62,12.81L3,14.07L12,21.07L21,14.07L19.37,12.8L12,18.54Z"/>
+    </Viewbox>
+    <Viewbox x:Key="UncolorizeVertices">
+        <Path Stroke="Black" Data="M12,18.54L19.37,12.8L21,14.07L12,21.07L3,14.07L4.62,12.81L12,18.54M12,16L3,9L12,2L21,9L12,16M12,4.53L6.26,9L12,13.47L17.74,9L12,4.53Z"/>
+    </Viewbox>
 </ResourceDictionary>

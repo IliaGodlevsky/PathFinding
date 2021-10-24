@@ -1,5 +1,7 @@
 ﻿using Common.ValueRanges;
 using System;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace Common.Extensions
 {
@@ -15,6 +17,12 @@ namespace Common.Extensions
         public static int GetRandomValue(this InclusiveValueRange<int> valueRange)
         {
             return Random.Next(valueRange.LowerValueOfRange, valueRange.UpperValueOfRange + 1);
+        }
+
+        public static int[] GetAllValues(this InclusiveValueRange<int> valueRange)
+        {
+            var length = valueRange.Amplitude() + 1;
+            return Enumerable.Range(valueRange.LowerValueOfRange, length).ToArray();
         }
 
         public static int Amplitude(this InclusiveValueRange<int> valueRange)

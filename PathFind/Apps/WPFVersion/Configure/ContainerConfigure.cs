@@ -1,4 +1,6 @@
 ﻿using Algorithm.Factory;
+using Algorithm.Interfaces;
+using Algorithm.Realizations.StepRules;
 using Autofac;
 using Common.Extensions;
 using GraphLib.Base;
@@ -61,7 +63,7 @@ namespace WPFVersion.Configure
             builder.RegisterType<Graph2DFactory>().As<IGraphFactory>().SingleInstance();
             builder.RegisterType<AroundNeighboursCoordinatesFactory>().As<INeighboursCoordinatesFactory>().SingleInstance();
             builder.RegisterType<GeometricMeanCost>().As<IMeanCost>().SingleInstance();
-            builder.RegisterType<MediumSmoothLevel>().As<ISmoothLevel>().SingleInstance();
+            builder.RegisterType<HighSmoothLevel>().As<ISmoothLevel>().SingleInstance();
 
             builder.RegisterType<SaveLoadGraph>().As<ISaveLoadGraph>().SingleInstance();
             builder.RegisterType<PathInput>().As<IPathInput>().SingleInstance();
@@ -73,6 +75,9 @@ namespace WPFVersion.Configure
             builder.RegisterAssemblyTypes(AppDomain.CurrentDomain.GetAssemblies())
                 .Where(type => type.ImplementsAll(typeof(IAlgorithmFactory)))
                 .As<IAlgorithmFactory>().SingleInstance();
+
+            builder.RegisterType<LandscapeStepRule>().As<IStepRule>().SingleInstance();
+            builder.RegisterDecorator<WalkStepRule, IStepRule>();
 
             return builder.Build();
         }
