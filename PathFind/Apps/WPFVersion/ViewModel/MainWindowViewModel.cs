@@ -33,18 +33,10 @@ namespace WPFVersion.ViewModel
         }
 
         private string graphParametres;
-        public override string GraphParametres
-        {
-            get => graphParametres;
-            set { graphParametres = value; OnPropertyChanged(); }
-        }
+        public override string GraphParametres { get => graphParametres; set { graphParametres = value; OnPropertyChanged(); } }
 
         private IGraphField graphField;
-        public override IGraphField GraphField
-        {
-            get => graphField;
-            set { graphField = value; OnPropertyChanged(); }
-        }
+        public override IGraphField GraphField { get => graphField; set { graphField = value; OnPropertyChanged(); } }
 
         private bool IsAllAlgorithmsFinished { get; set; } = true;
 
@@ -75,21 +67,6 @@ namespace WPFVersion.ViewModel
             InterruptAlgorithmCommand = new RelayCommand(ExecuteInterruptAlgorithmCommand, CanExecuteInterruptAlgorithmCommand);
             Messenger.Default.Register<IsAllAlgorithmsFinishedMessage>(this, MessageTokens.MainModel, OnIsAllAlgorithmsFinished);
             Messenger.Default.Register<GraphCreatedMessage>(this, MessageTokens.MainModel, SetGraph);
-        }
-
-        private void ExecuteColorizeAccordingToCost(object param)
-        {
-            heightColor.ColorizeAccordingToCost();
-        }
-
-        private void ExecuteResetColorizing(object param)
-        {
-            heightColor.Reset();
-        }
-
-        private void ExecuteShowVertexCostCommand(object parametre)
-        {
-            (parametre as IVerticesCostsMode)?.Apply(Graph);
         }
 
         public override void FindPath()
@@ -126,9 +103,8 @@ namespace WPFVersion.ViewModel
         }
 
         public override void ConnectNewGraph(IGraph graph)
-        {
-             
-            heightColor = new HeightColor(graph);
+        {             
+            costColors = new CostColors(graph);
             base.ConnectNewGraph(graph);
             WindowService.Adjust(graph);
             Messenger.Default.Send(new ClearStatisticsMessage(), MessageTokens.AlgorithmStatisticsModel);
@@ -142,64 +118,33 @@ namespace WPFVersion.ViewModel
             window.Show();
         }
 
-        private void OnIsAllAlgorithmsFinished(IsAllAlgorithmsFinishedMessage message)
-        {
-            IsAllAlgorithmsFinished = message.IsAllAlgorithmsFinished;
-        }
-
-        private void ExecuteInterruptAlgorithmCommand(object param)
-        {
-            Messenger.Default.Send(new InterruptAllAlgorithmsMessage(), MessageTokens.AlgorithmStatisticsModel);
-        }
-
-        private void ExecuteClearVerticesColors(object param)
-        {
-            ClearColors();
-        }
-
+        private void ExecuteColorizeAccordingToCost(object param) => costColors.ColorizeAccordingToCost();
+        private void ExecuteResetColorizing(object param) => costColors.ReturnPreviousColors();
+        private void ExecuteShowVertexCostCommand(object parametre) => (parametre as IVerticesCostsMode)?.Apply(Graph);
+        private void ExecuteClearVerticesColors(object param) => ClearColors();
         private void ExecuteSaveGraphCommand(object param) => base.SaveGraph();
-
         private bool CanExecuteStartFindPathCommand(object param) => !endPoints.HasIsolators();
-
         private void ExecuteLoadGraphCommand(object param) => base.LoadGraph();
-
+        private void ExecuteStartPathFindCommand(object param) => FindPath();
+        private void ExecuteCreateNewGraphCommand(object param) => CreateNewGraph();
+        private void ExecuteInterruptAlgorithmCommand(object param) 
+            => Messenger.Default.Send(new InterruptAllAlgorithmsMessage(), MessageTokens.AlgorithmStatisticsModel);
         private void ExecuteClearGraphCommand(object param)
         {
             base.ClearGraph();
             Messenger.Default.Send(new ClearStatisticsMessage(), MessageTokens.AlgorithmStatisticsModel);
         }
 
-        private void ExecuteStartPathFindCommand(object param) => FindPath();
-
-        private void ExecuteCreateNewGraphCommand(object param) => CreateNewGraph();
-
         private bool CanExecuteGraphOperation(object param) => !Graph.IsNull();
+        private bool CanExecuteOperation(object param) => IsAllAlgorithmsFinished;
+        private bool CanExecuteInterruptAlgorithmCommand(object param) => !IsAllAlgorithmsFinished;
+        private bool CanExecuteClearGraphOperation(object param) => CanExecuteOperation(param) && CanExecuteGraphOperation(param);
+        private bool CanExecuteColorizingGraphOperation(object param) => CanExecuteGraphOperation(param) && IsAllAlgorithmsFinished;
 
-        private bool CanExecuteOperation(object param)
-        {
-            return IsAllAlgorithmsFinished;
-        }
+        private void SetGraph(GraphCreatedMessage message) => ConnectNewGraph(message.Graph);
+        private void OnIsAllAlgorithmsFinished(IsAllAlgorithmsFinishedMessage message)
+            => IsAllAlgorithmsFinished = message.IsAllAlgorithmsFinished;
 
-        private bool CanExecuteInterruptAlgorithmCommand(object param)
-        {
-            return !IsAllAlgorithmsFinished;
-        }
-
-        private bool CanExecuteClearGraphOperation(object param)
-        {
-            return CanExecuteOperation(param) && CanExecuteGraphOperation(param);
-        }
-
-        private bool CanExecuteColorizingGraphOperation(object param)
-        {
-            return CanExecuteGraphOperation(param) && IsAllAlgorithmsFinished;
-        }
-
-        private void SetGraph(GraphCreatedMessage message)
-        {
-            ConnectNewGraph(message.Graph);
-        }
-
-        private HeightColor heightColor;
+        private CostColors costColors;
     }
 }

@@ -1,5 +1,4 @@
-﻿using Common.Extensions;
-using Common.Interface;
+﻿using Common.Interface;
 using GraphLib.Extensions;
 using GraphLib.Interfaces;
 using GraphLib.Serialization;
@@ -8,25 +7,13 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Windows.Controls;
-using System.Windows.Media;
 using static WPFVersion.Constants;
 
 namespace WPFVersion.Model
 {
     [DebuggerDisplay("{Position.ToString()})")]
-    internal class Vertex : Label, IVertex, IVisualizable, IWeightable, IEquatable<IVertex>, ICloneable<IVertex>
+    internal class Vertex : ContentControl, IVertex, IVisualizable, IWeightable, IEquatable<IVertex>, ICloneable<IVertex>
     {
-        public static SolidColorBrush VisitedVertexColor { get; set; } = new SolidColorBrush(Colors.CadetBlue);
-        public static SolidColorBrush PathVertexColor { get; set; } = new SolidColorBrush(Colors.Yellow);
-        public static SolidColorBrush StartVertexColor { get; set; } = new SolidColorBrush(Colors.Green);
-        public static SolidColorBrush EndVertexColor { get; set; } = new SolidColorBrush(Colors.Red);
-        public static SolidColorBrush EnqueuedVertexColor { get; set; } = new SolidColorBrush(Colors.Magenta);
-        public static SolidColorBrush ObstacleVertexColor { get; set; } = new SolidColorBrush(Colors.Black);
-        public static SolidColorBrush RegularVertexColor { get; set; } = new SolidColorBrush(Colors.White);
-        public static SolidColorBrush AlreadyPathVertexColor { get; set; } = new SolidColorBrush(Colors.Gold);
-        public static SolidColorBrush IntermediateVertexColor { get; set; } = new SolidColorBrush(Colors.DarkOrange);
-        public static SolidColorBrush ToReplaceMarkColor { get; set; } = new SolidColorBrush(new Color { A = 185, B = 0, R = 255, G = 140 });
-
         public Vertex(INeighboursCoordinates radar, ICoordinate coordinate) : base()
         {
             Width = Height = VertexSize;
@@ -56,6 +43,8 @@ namespace WPFVersion.Model
             }
         }
 
+        public IGraph Graph { get; }
+
         public virtual INeighboursCoordinates NeighboursCoordinates { get; }
 
         private IVertexCost cost;
@@ -82,74 +71,18 @@ namespace WPFVersion.Model
             }
         }
 
-        public bool IsVisualizedAsPath
-            => Background.IsOneOf(AlreadyPathVertexColor, PathVertexColor, IntermediateVertexColor, ToReplaceMarkColor);
-
-        public bool IsVisualizedAsEndPoint
-            => Background.IsOneOf(StartVertexColor, EndVertexColor, IntermediateVertexColor, ToReplaceMarkColor);
-
-        public void VisualizeAsTarget()
-        {
-            Dispatcher.Invoke(() => Background = EndVertexColor);
-        }
-
-        public void VisualizeAsObstacle()
-        {
-            Dispatcher.Invoke(() => Background = ObstacleVertexColor);
-        }
-
-        public void VisualizeAsPath()
-        {
-            Dispatcher.Invoke(() =>
-            {
-                if (IsVisualizedAsPath)
-                {
-                    Background = AlreadyPathVertexColor;
-                }
-                else
-                {
-                    Background = PathVertexColor;
-                }
-            });
-        }
-
-        public void VisualizeAsSource()
-        {
-            Dispatcher.Invoke(() => Background = StartVertexColor);
-        }
-
-        public void VisualizeAsRegular()
-        {
-            Dispatcher.Invoke(() =>
-            {
-                if (!IsObstacle)
-                {
-                    Background = RegularVertexColor;
-                }
-            });
-        }
-
-        public void VisualizeAsVisited()
-        {
-            Dispatcher.Invoke(() =>
-            {
-                if (!IsVisualizedAsPath)
-                {
-                    Background = VisitedVertexColor;
-                }
-            });
-        }
-
-        public void VisualizeAsEnqueued()
-        {
-            Dispatcher.Invoke(() =>
-            {
-                if (!IsVisualizedAsPath)
-                {
-                    Background = EnqueuedVertexColor;
-                }
-            });
-        }
+        public bool Equals(IVertex other) => other.IsEqual(this);
+        public bool IsVisualizedAsPath => ColorsHub.IsVisualizedAsPath(this);
+        public bool IsVisualizedAsEndPoint => ColorsHub.IsVisualizedAsEndPoints(this);
+        public void VisualizeAsTarget() => ColorsHub.VisualizeAsTarget(this);
+        public void VisualizeAsObstacle() => ColorsHub.VisualizeAsObstacle(this);
+        public void VisualizeAsPath() => ColorsHub.VisualizeAsPath(this);
+        public void VisualizeAsSource() => ColorsHub.VisualizeAsSource(this);
+        public void VisualizeAsRegular() => ColorsHub.VisualizeAsRegular(this);
+        public void VisualizeAsVisited() => ColorsHub.VisualizeAsVisited(this);
+        public void VisualizeAsEnqueued() => ColorsHub.VisualizeAsEnqueued(this);
+        public void VisualizeAsIntermediate() => ColorsHub.VisualizeAsIntermediate(this);
+        public void VisualizeAsMarkedToReplaceIntermediate() => ColorsHub.VisualizeAsMarkedToReplaceIntermediate(this);
 
         public void MakeUnweighted()
         {
@@ -163,24 +96,6 @@ namespace WPFVersion.Model
             Dispatcher.Invoke(() => Content = cost.ToString());
         }
 
-        public bool Equals(IVertex other)
-        {
-            return other.IsEqual(this);
-        }
-
-        public void VisualizeAsIntermediate()
-        {
-            Dispatcher.Invoke(() => Background = IntermediateVertexColor);
-        }
-
-        public void VisualizeAsMarkedToReplaceIntermediate()
-        {
-            if (Background == IntermediateVertexColor)
-            {
-                Dispatcher.Invoke(() => Background = ToReplaceMarkColor);
-            }
-        }
-
         public IVertex Clone()
         {
             var neighbourCoordinates = NeighboursCoordinates.Clone();
@@ -188,5 +103,7 @@ namespace WPFVersion.Model
             var vertex = new Vertex(neighbourCoordinates, coordinates);
             return vertex.CloneProperties(this);
         }
+
+        private static readonly VerticesColorsHub ColorsHub = new VerticesColorsHub();
     }
 }

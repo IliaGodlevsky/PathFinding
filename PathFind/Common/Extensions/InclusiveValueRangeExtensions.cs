@@ -19,7 +19,7 @@ namespace Common.Extensions
             return Random.Next(valueRange.LowerValueOfRange, valueRange.UpperValueOfRange + 1);
         }
 
-        public static int[] GetAllValues(this InclusiveValueRange<int> valueRange)
+        public static int[] GetAllValuesInRange(this InclusiveValueRange<int> valueRange)
         {
             var length = valueRange.Amplitude() + 1;
             return Enumerable.Range(valueRange.LowerValueOfRange, length).ToArray();

@@ -74,6 +74,7 @@
     <Compile Include="Converters\IntToStringConverter.cs" />
     <Compile Include="Enums\AlgorithmStatus.cs" />
     <Compile Include="Extensions\AlgorithmViewModelExtensions.cs" />
+    <Compile Include="Extensions\ColorExtensions.cs" />
     <Compile Include="Infrastructure\RelayCommand.cs" />
     <Compile Include="Messages\AlgorithmStartedMessage.cs" />
     <Compile Include="Messages\AlgorithmIndexMessage.cs" />
@@ -86,13 +87,14 @@
     <Compile Include="Messages\UpdateStatisticsMessage.cs" />
     <Compile Include="MessageTokens.cs" />
     <Compile Include="Model\EndPoints.cs" />
-    <Compile Include="Model\HeightColor.cs" />
+    <Compile Include="Model\CostColors.cs" />
     <Compile Include="Model\PathInput.cs" />
     <Compile Include="Model\RangedSlider.cs" />
     <Compile Include="Model\VertexEventHolder.cs" />
     <Compile Include="Model\Vertex.cs" />
     <Compile Include="Model\VertexFactory.cs" />
     <Compile Include="Model\VertexFromInfoFactory.cs" />
+    <Compile Include="Model\VerticesColorsHub.cs" />
     <Compile Include="Model\VerticesCostMode\IVerticesCostsMode.cs" />
     <Compile Include="Model\VerticesCostMode\UnweightedVerticesCostsMode.cs" />
     <Compile Include="Model\VerticesCostMode\WeightedVerticesCostsMode.cs" />
