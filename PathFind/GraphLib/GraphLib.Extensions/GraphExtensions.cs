@@ -1,7 +1,6 @@
 ﻿using Common.Extensions;
 using Common.ValueRanges;
 using GraphLib.Interfaces;
-using GraphLib.Interfaces.Factories;
 using GraphLib.NullRealizations.NullObjects;
 using System;
 using System.Collections.Generic;
@@ -49,19 +48,6 @@ namespace GraphLib.Extensions
         public static int GetObstaclesCount(this IGraph self)
         {
             return self.Vertices.Where(vertex => vertex.IsObstacle).Count();
-        }
-
-        public static TGraph CopyVerticesDeeply<TGraph>(this TGraph self, TGraph graphToCopy)
-            where TGraph : IGraph
-        {
-            int limit = Math.Min(self.Size, graphToCopy.Size);
-            var vertices = graphToCopy.Vertices.Take(limit);
-            foreach (var vertex in vertices)
-            {
-                var clone = vertex.Clone();
-                self[clone.Position] = clone;
-            }
-            return (TGraph)self.ConnectVertices();
         }
 
         public static IGraph ForEach(this IGraph self, Action<IVertex> action)
@@ -125,21 +111,21 @@ namespace GraphLib.Extensions
         /// <param name="self"></param>
         /// <param name="index"></param>
         /// <returns>An array of cartesian coordinates</returns>
-        public static int[] ToCoordinates(this IGraph self, int index)
+        public static int[] ToCoordinates(this int[] dimensionSizes, int index)
         {
-            var rangeOfIndices = new InclusiveValueRange<int>(self.Size - 1, 0);
+            int size = dimensionSizes.AggregateOrDefault(IntExtensions.Multiply);
+            var rangeOfIndices = new InclusiveValueRange<int>(size - 1, 0);
             if (!rangeOfIndices.Contains(index))
             {
                 throw new ArgumentOutOfRangeException(nameof(index));
             }
 
-            var dimensions = self.DimensionsSizes;
-            var coordinates = new int[dimensions.Length];
+            var coordinates = new int[dimensionSizes.Length];
 
             for (int i = 0; i < coordinates.Length; i++)
             {
-                coordinates[i] = index % dimensions[i];
-                index /= dimensions[i];
+                coordinates[i] = index % dimensionSizes[i];
+                index /= dimensionSizes[i];
             }
 
             return coordinates;

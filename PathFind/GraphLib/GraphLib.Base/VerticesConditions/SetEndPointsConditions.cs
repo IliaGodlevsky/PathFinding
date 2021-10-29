@@ -3,7 +3,6 @@ using GraphLib.Base.VertexCondition.EndPointsConditions;
 using GraphLib.Extensions;
 using GraphLib.Interfaces;
 using NullObject.Extensions;
-using System.Collections.Generic;
 using System.Linq;
 
 namespace GraphLib.Base.VerticesConditions

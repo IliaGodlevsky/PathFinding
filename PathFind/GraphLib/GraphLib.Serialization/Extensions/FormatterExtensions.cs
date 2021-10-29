@@ -13,7 +13,7 @@ namespace GraphLib.Serialization.Extensions
 
         internal static void SerializeGraph(this IFormatter self, IGraph graph, Stream stream)
         {
-            self.Serialize(stream, graph.GetGraphSerializationInfo());
+            self.Serialize(stream, graph.ToGraphSerializationInfo());
         }
     }
 }

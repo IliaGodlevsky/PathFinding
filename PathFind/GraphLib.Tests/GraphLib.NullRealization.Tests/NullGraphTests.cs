@@ -12,10 +12,10 @@ namespace GraphLib.Common.Tests
         public void ToCoordinates_NullGraph_IndexIsInRange_ReturnEmptyCoordinates()
         {
             var expectedCoordinates = new int[] { };
-            NullGraph graph = new NullGraph();
+            var dimensionSizes = new int[] { };
             int index = 0;
 
-            var coordinates = graph.ToCoordinates(index);
+            var coordinates = dimensionSizes.ToCoordinates(index);
 
             Assert.IsTrue(coordinates.SequenceEqual(expectedCoordinates));
         }

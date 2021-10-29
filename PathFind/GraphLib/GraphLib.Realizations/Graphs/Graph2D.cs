@@ -1,28 +1,21 @@
-﻿using Common.Interface;
-using GraphLib.Base;
-using GraphLib.Extensions;
+﻿using GraphLib.Base;
 using GraphLib.Interfaces;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace GraphLib.Realizations.Graphs
 {
-    public sealed class Graph2D : BaseGraph, IGraph, ICloneable<IGraph>
+    public sealed class Graph2D : BaseGraph, IGraph
     {
         public int Width { get; }
 
         public int Length { get; }
 
-        public Graph2D(params int[] dimensions)
-            : base(numberOfDimensions: 2, dimensions)
+        public Graph2D(IEnumerable<IVertex> vertices, params int[] dimensions)
+            : base(numberOfDimensions: 2, vertices, dimensions)
         {
             Width = DimensionsSizes.First();
             Length = DimensionsSizes.Last();
-        }
-
-        public override IGraph Clone()
-        {
-            var graph = new Graph2D(DimensionsSizes);
-            return graph.CopyVerticesDeeply(this);
         }
     }
 }

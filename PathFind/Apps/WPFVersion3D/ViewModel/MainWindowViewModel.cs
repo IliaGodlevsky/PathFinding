@@ -16,7 +16,6 @@ using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using System.Windows;
 using System.Windows.Input;
-using WPFVersion3D.Attributes;
 using WPFVersion3D.Axes;
 using WPFVersion3D.Enums;
 using WPFVersion3D.Extensions;

@@ -1,6 +1,5 @@
 ﻿using Common.Extensions;
 using GraphLib.Interfaces;
-using GraphLib.TestRealizations.TestFactories;
 using Moq;
 using NUnit.Framework;
 using System;
@@ -23,38 +22,18 @@ namespace GraphLib.Extensions.Tests
         [TestCase(new[] { 11, 12, 13 })]
         public void ToCoordinates_IndexIsOutOfRange_ThrowsArgumentOurOfRangeException(int[] dimensionSizes)
         {
-            graphMock.Setup(g => g.DimensionsSizes).Returns(dimensionSizes);
-            graphMock.Setup(g => g.Size).Returns(dimensionSizes.AggregateOrDefault(IntExtensions.Multiply));
-            var graph = graphMock.Object;
-            int index = -1;
-
-            Assert.Throws<ArgumentOutOfRangeException>(() => graph.ToCoordinates(index));
+            Assert.Throws<ArgumentOutOfRangeException>(() => dimensionSizes.ToCoordinates(-1));
         }
 
         [TestCase(new[] { 11, 12 })]
         public void ToCoordinates_IndexIsInRange_ReturnCoordinates(int[] dimensionSizes)
         {
             var expectedCoordinates = new[] { 7, 3 };
-            graphMock.Setup(g => g.DimensionsSizes).Returns(dimensionSizes);
-            graphMock.Setup(g => g.Size).Returns(dimensionSizes.AggregateOrDefault(IntExtensions.Multiply));
-            var graph = graphMock.Object;
             int index = 40;
 
-            var coordinates = graph.ToCoordinates(index);
+            var coordinates = dimensionSizes.ToCoordinates(index);
 
             Assert.IsTrue(coordinates.SequenceEqual(expectedCoordinates));
-        }
-
-        [TestCase(new[] { 96, 40 })]
-        public void CloneTest_ReturnsEqualGraph(int[] dimensionSizes)
-        {
-            var assemble = new TestGraphAssemble();
-            var graph = assemble.AssembleGraph(25, dimensionSizes);
-
-            var clone = graph.Clone();
-
-            Assert.IsTrue(graph.IsEqual(clone));
-            Assert.AreNotSame(graph, clone);
         }
     }
 }

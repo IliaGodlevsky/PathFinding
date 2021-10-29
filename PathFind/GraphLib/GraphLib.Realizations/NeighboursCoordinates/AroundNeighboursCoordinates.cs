@@ -13,11 +13,13 @@ namespace GraphLib.Realizations.NeighboursCoordinates
     /// A class that finds the neighbors of the specified coordinate
     /// </summary>
     [Serializable]
-    public sealed class AroundNeighboursCoordinates
-        : INeighboursCoordinates, ISerializable, ICloneable<INeighboursCoordinates>
+    public sealed class AroundNeighboursCoordinates : INeighboursCoordinates, ISerializable, ICloneable<INeighboursCoordinates>
     {
-        private static readonly int[] EmptyOffsetMatrix = Array.Empty<int>();
-        private static readonly int[] OffsetMatrix = new int[] { -1, 0, 1 };
+        /// <summary>
+        /// Returns an array of the coordinate neighbours
+        /// </summary>
+        /// <returns>An array of the coordinate neighbours</returns>
+        public IReadOnlyCollection<ICoordinate> Coordinates => neighboursCoordinates.Value;
 
         public AroundNeighboursCoordinates(ICoordinate coordinate)
         {
@@ -26,19 +28,13 @@ namespace GraphLib.Realizations.NeighboursCoordinates
             limitDepth = selfCoordinatesValues.Length;
             resultCoordinatesValues = new int[limitDepth];
             lateralOffsetMatrix = limitDepth == 0 ? EmptyOffsetMatrix : OffsetMatrix;
-            neighboursCoordinates = new Lazy<ICoordinate[]>(GetNeighboursCoordinates);
+            neighboursCoordinates = new Lazy<IReadOnlyCollection<ICoordinate>>(GetNeighboursCoordinates);
         }
 
         public void GetObjectData(SerializationInfo info, StreamingContext context)
         {
             info.AddValue(nameof(selfCoordinate), selfCoordinate, typeof(ICoordinate));
         }
-
-        /// <summary>
-        /// Returns an array of the coordinate neighbours
-        /// </summary>
-        /// <returns>An array of the coordinate neighbours</returns>
-        public ICoordinate[] Coordinates => neighboursCoordinates.Value;
 
         private AroundNeighboursCoordinates(SerializationInfo info, StreamingContext context)
             : this((ICoordinate)info.GetValue(nameof(selfCoordinate), typeof(ICoordinate)))
@@ -54,29 +50,27 @@ namespace GraphLib.Realizations.NeighboursCoordinates
         /// <returns>An array of neighbours coordinates around the central one</returns>
         private List<ICoordinate> DetectNeighboursCoordinates(int depth = 0)
         {
-            var neighbourCoordinates = new List<ICoordinate>();
+            var neighboursCoordinates = new List<ICoordinate>();
             foreach (int offset in lateralOffsetMatrix)
             {
                 resultCoordinatesValues[depth] = selfCoordinatesValues[depth] + offset;
                 if (depth < limitDepth - 1)
                 {
-                    var coordinates = DetectNeighboursCoordinates(depth + 1);
-                    neighbourCoordinates.AddRange(coordinates);
+                    neighboursCoordinates.AddRange(DetectNeighboursCoordinates(depth + 1));
                 }
                 else
                 {
-                    var coordinate = resultCoordinatesValues.ToCoordinate();
-                    neighbourCoordinates.Add(coordinate);
+                    neighboursCoordinates.Add(resultCoordinatesValues.ToCoordinate());
                 }
             }
-            return neighbourCoordinates;
+            return neighboursCoordinates;
         }
 
-        private ICoordinate[] GetNeighboursCoordinates()
+        private List<ICoordinate> GetNeighboursCoordinates()
         {
-            return DetectNeighboursCoordinates()
-                .Without(selfCoordinatesValues.ToCoordinate())
-                .ToArray();
+            var coordinates = DetectNeighboursCoordinates();
+            coordinates.Remove(selfCoordinate);
+            return coordinates;
         }
 
         public INeighboursCoordinates Clone()
@@ -89,6 +83,9 @@ namespace GraphLib.Realizations.NeighboursCoordinates
         private readonly int[] selfCoordinatesValues;
         private readonly int[] resultCoordinatesValues;
         private readonly int[] lateralOffsetMatrix;
-        private readonly Lazy<ICoordinate[]> neighboursCoordinates;
+        private readonly Lazy<IReadOnlyCollection<ICoordinate>> neighboursCoordinates;
+
+        private static readonly int[] EmptyOffsetMatrix = Array.Empty<int>();
+        private static readonly int[] OffsetMatrix = new int[] { -1, 0, 1 };
     }
 }

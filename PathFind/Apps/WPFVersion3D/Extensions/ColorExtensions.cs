@@ -2,7 +2,7 @@
 using System;
 using System.Windows.Media;
 
-namespace WPFVersion.Extensions
+namespace WPFVersion3D.Extensions
 {
     internal static class ColorExtensions
     {

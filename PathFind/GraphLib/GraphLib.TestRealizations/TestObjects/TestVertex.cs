@@ -1,5 +1,4 @@
-﻿using Common.Interface;
-using GraphLib.Extensions;
+﻿using GraphLib.Extensions;
 using GraphLib.Interfaces;
 using GraphLib.Serialization;
 using GraphLib.Serialization.Extensions;
@@ -8,7 +7,7 @@ using System.Collections.Generic;
 
 namespace GraphLib.TestRealizations.TestObjects
 {
-    public sealed class TestVertex : IVertex, IEquatable<IVertex>, ICloneable<IVertex>
+    public sealed class TestVertex : IVertex, IEquatable<IVertex>
     {
         public TestVertex(INeighboursCoordinates radar, ICoordinate coordinate)
         {
@@ -36,14 +35,6 @@ namespace GraphLib.TestRealizations.TestObjects
         public bool Equals(IVertex other)
         {
             return other.IsEqual(this);
-        }
-
-        public IVertex Clone()
-        {
-            var neighbourCoordinates = NeighboursCoordinates.Clone();
-            var coordinates = Position.Clone();
-            var vertex = new TestVertex(neighbourCoordinates, coordinates);
-            return vertex.CloneProperties(this);
         }
     }
 }

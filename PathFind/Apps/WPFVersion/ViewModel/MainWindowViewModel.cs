@@ -103,7 +103,7 @@ namespace WPFVersion.ViewModel
         }
 
         public override void ConnectNewGraph(IGraph graph)
-        {             
+        {
             costColors = new CostColors(graph);
             base.ConnectNewGraph(graph);
             WindowService.Adjust(graph);
@@ -127,7 +127,7 @@ namespace WPFVersion.ViewModel
         private void ExecuteLoadGraphCommand(object param) => base.LoadGraph();
         private void ExecuteStartPathFindCommand(object param) => FindPath();
         private void ExecuteCreateNewGraphCommand(object param) => CreateNewGraph();
-        private void ExecuteInterruptAlgorithmCommand(object param) 
+        private void ExecuteInterruptAlgorithmCommand(object param)
             => Messenger.Default.Send(new InterruptAllAlgorithmsMessage(), MessageTokens.AlgorithmStatisticsModel);
         private void ExecuteClearGraphCommand(object param)
         {

@@ -21,8 +21,8 @@ namespace WPFVersion3D
         public const double InitialVisitedVertexOpacity = 0.15;
         public const double InitialEnqueuedVertexOpacity = 0.15;
         public const double InitialPathVertexOpacity = 0.9;
-        public const double InitialStartVertexOpacity = 1.0;
-        public const double InitialEndVertexOpacity = 1.0;
+        public const double InitialSourceVertexOpacity = 1.0;
+        public const double InitialTargetVertexOpacity = 1.0;
         public const double InitialRegularVertexOpacity = 0.25;
         public const double InitialObstacleVertexOpacity = 0.2;
 

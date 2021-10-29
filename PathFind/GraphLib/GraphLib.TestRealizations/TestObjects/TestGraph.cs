@@ -1,22 +1,15 @@
-﻿using Common.Interface;
-using GraphLib.Base;
-using GraphLib.Extensions;
+﻿using GraphLib.Base;
 using GraphLib.Interfaces;
+using System.Collections.Generic;
 
 namespace GraphLib.TestRealizations
 {
-    public sealed class TestGraph : BaseGraph, IGraph, ICloneable<IGraph>
+    public sealed class TestGraph : BaseGraph, IGraph
     {
-        public TestGraph(params int[] dimensionSizes)
-            : base(dimensionSizes.Length, dimensionSizes)
+        public TestGraph(IEnumerable<IVertex> vertices, params int[] dimensionSizes)
+            : base(dimensionSizes.Length, vertices, dimensionSizes)
         {
 
-        }
-
-        public override IGraph Clone()
-        {
-            var graph = new TestGraph(DimensionsSizes);
-            return graph.CopyVerticesDeeply(this);
         }
     }
 }

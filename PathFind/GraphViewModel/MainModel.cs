@@ -5,7 +5,6 @@ using GraphLib.Extensions;
 using GraphLib.Interfaces;
 using GraphLib.Interfaces.Factories;
 using GraphLib.NullRealizations.NullObjects;
-using GraphLib.Realizations;
 using GraphViewModel.Interfaces;
 using Logging.Interface;
 using System;

@@ -3,7 +3,6 @@ using Common.Extensions;
 using GraphLib.Extensions;
 using GraphLib.Interfaces;
 using NullObject.Extensions;
-using System.Collections.Concurrent;
 using System.Collections.Generic;
 
 namespace Algorithm.Сompanions

@@ -1,5 +1,4 @@
 ﻿using Common.Extensions;
-using Common.Interface;
 using ConsoleVersion.Interface;
 using ConsoleVersion.View;
 using GraphLib.Extensions;
@@ -18,8 +17,8 @@ using Console = Colorful.Console;
 
 namespace ConsoleVersion.Model
 {
-    [DebuggerDisplay("{Position.ToString()})")]
-    internal class Vertex : IVertex, IVisualizable, IWeightable, IDisplayable, IEquatable<IVertex>, ICloneable<IVertex>
+    [DebuggerDisplay("{Position.ToString()}")]
+    internal class Vertex : IVertex, IVisualizable, IWeightable, IDisplayable, IEquatable<IVertex>
     {
         public event EventHandler OnVertexCostChanged;
         public event EventHandler OnEndPointChosen;
@@ -192,14 +191,6 @@ namespace ConsoleVersion.Model
         public void VisualizeAsMarkedToReplaceIntermediate()
         {
 
-        }
-
-        public IVertex Clone()
-        {
-            var neighbourCoordinates = NeighboursCoordinates.Clone();
-            var coordinates = Position.Clone();
-            var vertex = new Vertex(neighbourCoordinates, coordinates);
-            return vertex.CloneProperties(this);
         }
 
         private static readonly Color RegularVertexColor = Color.FromKnownColor(KnownColor.WhiteSmoke);

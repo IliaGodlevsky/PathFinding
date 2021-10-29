@@ -1,6 +1,4 @@
-﻿using Common.Extensions;
-using Common.Interface;
-using GraphLib.Extensions;
+﻿using GraphLib.Extensions;
 using GraphLib.Interfaces;
 using GraphLib.Serialization;
 using GraphLib.Serialization.Extensions;
@@ -12,13 +10,40 @@ using System.Windows.Media;
 using System.Windows.Media.Media3D;
 using WPFVersion3D.Interface;
 
-using static WPFVersion3D.Constants;
-
 namespace WPFVersion3D.Model
 {
-    [DebuggerDisplay("{Position.ToString()})")]
-    internal class Vertex3D : UIElement3D, IVertex, IVisualizable, IEquatable<IVertex>, ICloneable<IVertex>
+    [DebuggerDisplay("{Position.ToString()}")]
+    internal class Vertex3D : UIElement3D, IVertex, IVisualizable, IEquatable<IVertex>
     {
+        public static readonly DependencyProperty ModelProperty;
+        public static readonly DependencyProperty MaterialProperty;
+        public static readonly DependencyProperty SizeProperty;
+        public static readonly DependencyProperty BrushProperty;
+
+        public double Size 
+        { 
+            get => (double)GetValue(SizeProperty); 
+            set => SetValue(SizeProperty, value); 
+        }
+
+        public Model3D Model 
+        { 
+            get => (Model3D)GetValue(ModelProperty); 
+            set => SetValue(ModelProperty, value); 
+        }
+
+        public DiffuseMaterial Material 
+        { 
+            get => (DiffuseMaterial)GetValue(MaterialProperty); 
+            set => SetValue(MaterialProperty, value); 
+        }
+
+        public Brush Brush 
+        { 
+            get => (Brush)GetValue(BrushProperty); 
+            set => SetValue(BrushProperty, value); 
+        }
+
         public Vertex3D(INeighboursCoordinates radar, ICoordinate coordinate, IModel3DFactory modelFactory)
         {
             this.modelFactory = modelFactory;
@@ -26,7 +51,7 @@ namespace WPFVersion3D.Model
             NeighboursCoordinates = radar;
             Material = new DiffuseMaterial();
             Transform = new TranslateTransform3D();
-            Size = InitialVertexSize;
+            Size = Constants.InitialVertexSize;
             this.Initialize();
         }
 
@@ -35,17 +60,6 @@ namespace WPFVersion3D.Model
         {
             this.Initialize(info);
         }
-
-        public static SolidColorBrush VisitedVertexBrush { get; set; } = new SolidColorBrush(Colors.CadetBlue) { Opacity = InitialVisitedVertexOpacity };
-        public static SolidColorBrush ObstacleVertexBrush { get; set; } = new SolidColorBrush(Colors.Black) { Opacity = InitialObstacleVertexOpacity };
-        public static SolidColorBrush SimpleVertexBrush { get; set; } = new SolidColorBrush(Colors.White) { Opacity = InitialRegularVertexOpacity };
-        public static SolidColorBrush PathVertexBrush { get; set; } = new SolidColorBrush(Colors.Yellow) { Opacity = InitialPathVertexOpacity };
-        public static SolidColorBrush StartVertexBrush { get; set; } = new SolidColorBrush(Colors.Green) { Opacity = InitialStartVertexOpacity };
-        public static SolidColorBrush EndVertexBrush { get; set; } = new SolidColorBrush(Colors.Red) { Opacity = InitialEndVertexOpacity };
-        public static SolidColorBrush EnqueuedVertexBrush { get; set; } = new SolidColorBrush(Colors.Magenta) { Opacity = InitialEnqueuedVertexOpacity };
-        public static SolidColorBrush IntermediateVertexColor { get; set; } = new SolidColorBrush(Colors.DarkOrange) { Opacity = InitialStartVertexOpacity };
-        public static SolidColorBrush AlreadyPathVertexBrush { get; set; } = new SolidColorBrush(Colors.Gold) { Opacity = InitialStartVertexOpacity };
-        public static SolidColorBrush ToReplaceMarkColor { get; set; } = new SolidColorBrush(Color.FromArgb(a: 185, b: 0, r: 255, g: 140)) { Opacity = InitialStartVertexOpacity };
 
         static Vertex3D()
         {
@@ -74,35 +88,6 @@ namespace WPFVersion3D.Model
                 new PropertyMetadata(BrushPropertyChanged));
         }
 
-        public static readonly DependencyProperty ModelProperty;
-        public static readonly DependencyProperty MaterialProperty;
-        public static readonly DependencyProperty SizeProperty;
-        public static readonly DependencyProperty BrushProperty;
-
-        public double Size
-        {
-            get => (double)GetValue(SizeProperty);
-            set => SetValue(SizeProperty, value);
-        }
-
-        public Model3D Model
-        {
-            get => (Model3D)GetValue(ModelProperty);
-            set => SetValue(ModelProperty, value);
-        }
-
-        public DiffuseMaterial Material
-        {
-            get => (DiffuseMaterial)GetValue(MaterialProperty);
-            set => SetValue(MaterialProperty, value);
-        }
-
-        public SolidColorBrush Brush
-        {
-            get => (SolidColorBrush)GetValue(BrushProperty);
-            set => SetValue(BrushProperty, value);
-        }
-
         private bool isObstacle;
         public bool IsObstacle
         {
@@ -117,78 +102,23 @@ namespace WPFVersion3D.Model
             }
         }
 
-        public virtual INeighboursCoordinates NeighboursCoordinates { get; }
-
+        public INeighboursCoordinates NeighboursCoordinates { get; }
         public IVertexCost Cost { get; set; }
-
         public IReadOnlyCollection<IVertex> Neighbours { get; set; }
-
         public ICoordinate Position { get; }
 
-        public bool Equals(IVertex other)
-        {
-            return other.IsEqual(this);
-        }
-
-        public bool IsVisualizedAsPath
-            => Dispatcher.Invoke(() => Brush.IsOneOf(PathVertexBrush, PathVertexBrush, IntermediateVertexColor, ToReplaceMarkColor));
-
-        public bool IsVisualizedAsEndPoint
-            => Dispatcher.Invoke(() => Brush.IsOneOf(StartVertexBrush, EndVertexBrush, IntermediateVertexColor, ToReplaceMarkColor));
-
-        public void VisualizeAsTarget()
-        {
-            Dispatcher.Invoke(() => Brush = EndVertexBrush);
-        }
-
-        public void VisualizeAsObstacle()
-        {
-            Dispatcher.Invoke(() => Brush = ObstacleVertexBrush);
-        }
-
-        public void VisualizeAsPath()
-        {
-            if (IsVisualizedAsPath)
-            {
-                Dispatcher.Invoke(() => Brush = AlreadyPathVertexBrush);
-            }
-            else
-            {
-                Dispatcher.Invoke(() => Brush = PathVertexBrush);
-            }
-        }
-
-        public void VisualizeAsRegular()
-        {
-            Dispatcher.Invoke(() =>
-            {
-                if (!IsObstacle)
-                {
-                    Brush = SimpleVertexBrush;
-                }
-            });
-        }
-
-        public void VisualizeAsVisited()
-        {
-            if (!IsVisualizedAsPath)
-            {
-                Dispatcher.Invoke(() => Brush = VisitedVertexBrush);
-            }
-        }
-
-        public void VisualizeAsEnqueued()
-        {
-            if (!IsVisualizedAsPath)
-            {
-                Dispatcher.Invoke(() => Brush = EnqueuedVertexBrush);
-            }
-        }
-
-        public void VisualizeAsSource()
-        {
-            Dispatcher.Invoke(() => Brush = StartVertexBrush);
-        }
+        public bool Equals(IVertex other) => other.IsEqual(this);
+        public bool IsVisualizedAsPath => ColorsHub.IsVisualizedAsPath(this);
+        public bool IsVisualizedAsEndPoint => ColorsHub.IsVisualizedAsEndPoints(this);
+        public void VisualizeAsTarget() => ColorsHub.VisualizeAsTarget(this);
+        public void VisualizeAsObstacle() => ColorsHub.VisualizeAsObstacle(this);
+        public void VisualizeAsPath() => ColorsHub.VisualizeAsPath(this);
+        public void VisualizeAsRegular() => ColorsHub.VisualizeAsRegular(this);
+        public void VisualizeAsVisited() => ColorsHub.VisualizeAsVisited(this);
+        public void VisualizeAsEnqueued() => ColorsHub.VisualizeAsEnqueued(this);
+        public void VisualizeAsSource() => ColorsHub.VisualizeAsSource(this);
+        public void VisualizeAsIntermediate() => ColorsHub.VisualizeAsIntermediate(this);
+        public void VisualizeAsMarkedToReplaceIntermediate() => ColorsHub.VisualizeAsMarkedToReplaceIntermediate(this);
 
         protected static void MaterialPropertyChanged(DependencyObject depObj,
             DependencyPropertyChangedEventArgs prop)
@@ -222,28 +152,7 @@ namespace WPFVersion3D.Model
             vert.Material.Brush = vert.Brush;
         }
 
-        public void VisualizeAsIntermediate()
-        {
-            Dispatcher.Invoke(() => Brush = IntermediateVertexColor);
-        }
-
-        public void VisualizeAsMarkedToReplaceIntermediate()
-        {
-            if (Brush == IntermediateVertexColor)
-            {
-                Dispatcher.Invoke(() => Brush = ToReplaceMarkColor);
-            }
-        }
-
-        public IVertex Clone()
-        {
-            var neighbourCoordinates = NeighboursCoordinates.Clone();
-            var coordinates = Position.Clone();
-            var model3DFactory = modelFactory.Clone();
-            var vertex = new Vertex3D(neighbourCoordinates, coordinates, model3DFactory);
-            return vertex.CloneProperties(this);
-        }
-
         private readonly IModel3DFactory modelFactory;
+        private static readonly VerticesColorsHub ColorsHub = new VerticesColorsHub();
     }
 }

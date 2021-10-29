@@ -2,20 +2,20 @@
 using GraphLib.Extensions;
 using GraphLib.Interfaces;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.Serialization;
 
 namespace GraphLib.Realizations.NeighboursCoordinates
 {
     [Serializable]
-    public sealed class CardinalNeighboursCoordinates
-        : INeighboursCoordinates, ISerializable, ICloneable<INeighboursCoordinates>
+    public sealed class CardinalNeighboursCoordinates : INeighboursCoordinates, ISerializable, ICloneable<INeighboursCoordinates>
     {
-        public ICoordinate[] Coordinates => coordinates.Value;
+        public IReadOnlyCollection<ICoordinate> Coordinates => coordinates.Value;
 
         public CardinalNeighboursCoordinates(ICoordinate coordinate)
         {
-            coordinates = new Lazy<ICoordinate[]>(DetectNeighboursCoordinates);
+            coordinates = new Lazy<IReadOnlyCollection<ICoordinate>>(DetectNeighboursCoordinates);
             selfCoordinate = coordinate;
             neighboursCoordinates = new AroundNeighboursCoordinates(coordinate);
         }
@@ -36,7 +36,7 @@ namespace GraphLib.Realizations.NeighboursCoordinates
             return coordinate.IsCardinal(selfCoordinate);
         }
 
-        private ICoordinate[] DetectNeighboursCoordinates()
+        private IReadOnlyCollection<ICoordinate> DetectNeighboursCoordinates()
         {
             return neighboursCoordinates.Coordinates.Where(IsCardinal).ToArray();
         }
@@ -48,6 +48,6 @@ namespace GraphLib.Realizations.NeighboursCoordinates
 
         private readonly ICoordinate selfCoordinate;
         private readonly INeighboursCoordinates neighboursCoordinates;
-        private readonly Lazy<ICoordinate[]> coordinates;
+        private readonly Lazy<IReadOnlyCollection<ICoordinate>> coordinates;
     }
 }

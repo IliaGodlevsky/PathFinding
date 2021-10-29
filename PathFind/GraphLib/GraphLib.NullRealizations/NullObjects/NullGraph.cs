@@ -23,7 +23,7 @@ namespace GraphLib.NullRealizations.NullObjects
 
         public int[] DimensionsSizes { get; }
 
-        public IEnumerable<IVertex> Vertices { get; }
+        public ICollection<IVertex> Vertices { get; }
 
         public int Size => 0;
 

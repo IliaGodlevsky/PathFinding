@@ -52,16 +52,6 @@ namespace GraphLib.Extensions
             return self.Neighbours.Any(vertex => ReferenceEquals(vertex, candidate));
         }
 
-
-        public static TVertex CloneProperties<TVertex>(this TVertex self, TVertex vertexToClone)
-            where TVertex : IVertex
-        {
-            self.IsObstacle = vertexToClone.IsObstacle;
-            self.Cost = vertexToClone.Cost.Clone();
-            self.Neighbours = new IVertex[] { };
-            return self;
-        }
-
         /// <summary>
         /// Returns <paramref name="self"/> as 
         /// an array of <see cref="Int32"/>

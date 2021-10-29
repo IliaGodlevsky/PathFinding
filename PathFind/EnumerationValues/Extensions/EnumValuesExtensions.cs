@@ -1,5 +1,4 @@
-﻿using Common.Extensions;
-using Common.ValueRanges;
+﻿using Common.ValueRanges;
 using EnumerationValues.Interface;
 using System;
 using System.Linq;

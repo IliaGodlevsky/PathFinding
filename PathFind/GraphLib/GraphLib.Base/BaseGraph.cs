@@ -1,5 +1,4 @@
 ﻿using Common.Extensions;
-using Common.Interface;
 using GraphLib.Exceptions;
 using GraphLib.Extensions;
 using GraphLib.Interfaces;
@@ -16,25 +15,23 @@ namespace GraphLib.Base
     /// A base graph for all graph classes.
     /// This is an abstract class
     /// </summary>
-    public abstract class BaseGraph : IGraph, ICloneable<IGraph>
+    public abstract class BaseGraph : IGraph
     {
-        public int Size { get; }
+        public int Size => vertices.Count;
 
-        public IEnumerable<IVertex> Vertices => vertices.Values;
+        public ICollection<IVertex> Vertices => vertices.Values;
 
         public int[] DimensionsSizes { get; }
 
-        protected BaseGraph(int numberOfDimensions, params int[] dimensionSizes)
+        protected BaseGraph(int numberOfDimensions, IEnumerable<IVertex> vertices, params int[] dimensionSizes)
         {
             DimensionsSizes = dimensionSizes.ToArray();
-
-            if (dimensionSizes.Length != numberOfDimensions)
+            int size = DimensionsSizes.AggregateOrDefault(IntExtensions.Multiply);
+            this.vertices = vertices.ToDictionary(vertex => vertex.Position, vertex => vertex);
+            if (dimensionSizes.Length != numberOfDimensions || size != Size)
             {
                 throw new WrongNumberOfDimensionsException(nameof(dimensionSizes));
             }
-
-            Size = DimensionsSizes.AggregateOrDefault(IntExtensions.Multiply);
-            vertices = new Dictionary<ICoordinate, IVertex>(Size);
         }
 
         static BaseGraph()
@@ -42,22 +39,9 @@ namespace GraphLib.Base
             DimensionNames = new[] { "Width", "Length", "Height" };
         }
 
-        public virtual IVertex this[ICoordinate coordinate]
+        public IVertex this[ICoordinate coordinate]
         {
-            get => vertices.TryGetValue(coordinate, out var vertex) 
-                ? vertex 
-                : new NullVertex();
-            set
-            {
-                if (vertices.TryGetValue(coordinate, out _))
-                {
-                    vertices[coordinate] = value;
-                }
-                else if (vertices.Count < Size && coordinate.IsWithinGraph(this))
-                {
-                    vertices.Add(coordinate, value);
-                }
-            }
+            get => vertices.TryGetValue(coordinate, out var vertex) ? vertex : new NullVertex();
         }
 
         public override bool Equals(object obj)
@@ -90,10 +74,8 @@ namespace GraphLib.Base
             return string.Join(LargeSpace, joined, graphParams);
         }
 
-        public abstract IGraph Clone();
-
         protected static string[] DimensionNames { get; }
-        private readonly IDictionary<ICoordinate, IVertex> vertices;
+        private readonly Dictionary<ICoordinate, IVertex> vertices;
 
         private static readonly string ParamsFormat = "Obstacle percent: {0} ({1}/{2})";
         private static readonly string LargeSpace = "   ";

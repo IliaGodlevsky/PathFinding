@@ -1,24 +1,33 @@
-﻿using GraphLib.Extensions;
-using GraphLib.Interfaces;
-using GraphLib.Interfaces.Factories;
+﻿using GraphLib.Interfaces;
+using GraphLib.Realizations.Factories.CoordinateFactories;
+using GraphLib.Realizations.Factories.GraphAssembles;
+using GraphLib.Realizations.Factories.GraphFactories;
+using GraphLib.Realizations.Factories.NeighboursCoordinatesFactories;
 using GraphLib.Realizations.Graphs;
 using GraphLib.TestRealizations.TestFactories.Matrix;
 
-using static GraphLib.TestRealizations.Constants;
-
 namespace GraphLib.TestRealizations.TestFactories
 {
-    public sealed class TestGraph2DAssemble : IGraphAssemble
+    public sealed class TestGraph2DAssemble : GraphAssemble
     {
-        public IGraph AssembleGraph(int obstaclePercent = 0, params int[] sizes)
+        public TestGraph2DAssemble()
+            : base(new TestVertexFactory(),
+                  new Coordinate2DFactory(),
+                  new Graph2DFactory(),
+                  new TestCostFactory(),
+                  new AroundNeighboursCoordinatesFactory())
         {
-            var graph = new Graph2D(DimensionSizes2D);
+
+        }
+
+        public override IGraph AssembleGraph(int obstaclePercent = 0, params int[] sizes)
+        {
+            var graph = (Graph2D)base.AssembleGraph(0, Constants.DimensionSizes2D);
             var matrices = new Matrices(
-                new VertexMatrix(graph),
                 new CostMatrix(graph),
                 new ObstacleMatrix(graph));
             matrices.Overlay();
-            return graph.ConnectVertices();
+            return graph;
         }
     }
 }

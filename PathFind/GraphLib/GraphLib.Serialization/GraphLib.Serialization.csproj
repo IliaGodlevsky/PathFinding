@@ -44,6 +44,7 @@
     <Compile Include="AesCrypto.cs" />
     <Compile Include="Extensions\EnumerableExtensions.cs" />
     <Compile Include="Extensions\FormatterExtensions.cs" />
+    <Compile Include="Extensions\GraphSerializationInfoExtensions.cs" />
     <Compile Include="Extensions\GraphSerializerExtensions.cs" />
     <Compile Include="Interfaces\ICrypto.cs" />
     <Compile Include="Serializers\CompressGraphSerializer.cs" />

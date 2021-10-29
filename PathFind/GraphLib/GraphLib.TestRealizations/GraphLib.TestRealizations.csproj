@@ -48,7 +48,6 @@
     <Compile Include="TestFactories\Matrix\IMatrix.cs" />
     <Compile Include="TestFactories\Matrix\Matrices.cs" />
     <Compile Include="TestFactories\Matrix\ObstacleMatrix.cs" />
-    <Compile Include="TestFactories\Matrix\VertexMatrix.cs" />
     <Compile Include="TestFactories\TestCoordinateFactory.cs" />
     <Compile Include="TestFactories\TestCostFactory.cs" />
     <Compile Include="TestFactories\TestGraphAssemble.cs" />

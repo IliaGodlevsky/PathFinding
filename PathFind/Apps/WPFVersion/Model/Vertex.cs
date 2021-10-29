@@ -1,5 +1,4 @@
-﻿using Common.Interface;
-using GraphLib.Extensions;
+﻿using GraphLib.Extensions;
 using GraphLib.Interfaces;
 using GraphLib.Serialization;
 using GraphLib.Serialization.Extensions;
@@ -11,8 +10,8 @@ using static WPFVersion.Constants;
 
 namespace WPFVersion.Model
 {
-    [DebuggerDisplay("{Position.ToString()})")]
-    internal class Vertex : ContentControl, IVertex, IVisualizable, IWeightable, IEquatable<IVertex>, ICloneable<IVertex>
+    [DebuggerDisplay("{Position.ToString()}")]
+    internal class Vertex : ContentControl, IVertex, IVisualizable, IWeightable, IEquatable<IVertex>
     {
         public Vertex(INeighboursCoordinates radar, ICoordinate coordinate) : base()
         {
@@ -42,8 +41,6 @@ namespace WPFVersion.Model
                 }
             }
         }
-
-        public IGraph Graph { get; }
 
         public virtual INeighboursCoordinates NeighboursCoordinates { get; }
 
@@ -94,14 +91,6 @@ namespace WPFVersion.Model
         {
             (cost as IWeightable)?.MakeWeighted();
             Dispatcher.Invoke(() => Content = cost.ToString());
-        }
-
-        public IVertex Clone()
-        {
-            var neighbourCoordinates = NeighboursCoordinates.Clone();
-            var coordinates = Position.Clone();
-            var vertex = new Vertex(neighbourCoordinates, coordinates);
-            return vertex.CloneProperties(this);
         }
 
         private static readonly VerticesColorsHub ColorsHub = new VerticesColorsHub();

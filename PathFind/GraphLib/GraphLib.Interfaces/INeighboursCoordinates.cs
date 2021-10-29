@@ -1,4 +1,5 @@
 ﻿using Common.Interface;
+using System.Collections.Generic;
 
 namespace GraphLib.Interfaces
 {
@@ -12,6 +13,6 @@ namespace GraphLib.Interfaces
         /// <see cref="ICoordinate"/>
         /// around some coordinate
         /// </summary>
-        ICoordinate[] Coordinates { get; }
+        IReadOnlyCollection<ICoordinate> Coordinates { get; }
     }
 }

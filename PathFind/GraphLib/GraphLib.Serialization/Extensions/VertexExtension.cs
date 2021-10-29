@@ -4,7 +4,7 @@ namespace GraphLib.Serialization.Extensions
 {
     public static class VertexExtension
     {
-        internal static VertexSerializationInfo GetSerializationInfo(this IVertex self)
+        internal static VertexSerializationInfo ToSerializationInfo(this IVertex self)
         {
             return new VertexSerializationInfo(self);
         }

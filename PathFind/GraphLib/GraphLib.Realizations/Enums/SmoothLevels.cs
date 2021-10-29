@@ -10,7 +10,7 @@ namespace GraphLib.Realizations.Enums
         None = 0,
 
         [SmoothLevel(1)]
-        [Description("Low")]        
+        [Description("Low")]
         Low,
 
         [SmoothLevel(2)]

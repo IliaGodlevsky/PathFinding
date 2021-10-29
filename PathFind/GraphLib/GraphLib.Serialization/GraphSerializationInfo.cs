@@ -17,7 +17,7 @@ namespace GraphLib.Serialization
                 .ToArray();
 
             VerticesInfo = graph.Vertices
-                .Select(v => v.GetSerializationInfo())
+                .Select(VertexExtension.ToSerializationInfo)
                 .ToArray();
 
             CostRange = BaseVertexCost.CostRange;

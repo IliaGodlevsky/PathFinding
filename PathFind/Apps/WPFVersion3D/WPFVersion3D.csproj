@@ -77,6 +77,7 @@
     <Compile Include="Enums\AlgorithmStatuses.cs" />
     <Compile Include="Enums\AnimationSpeeds.cs" />
     <Compile Include="Extensions\AlgorithmViewModelExtensions.cs" />
+    <Compile Include="Extensions\ColorExtensions.cs" />
     <Compile Include="Extensions\EnumValuesExtensions.cs" />
     <Compile Include="Messages\AlgorithmStartedMessage.cs" />
     <Compile Include="Messages\AlgorithmIndexMessage.cs" />
@@ -113,6 +114,7 @@
     <Compile Include="Model\Vertex3DCostFactory.cs" />
     <Compile Include="Model\Vertex3DFactory.cs" />
     <Compile Include="Model\Vertex3DFromInfoFactory.cs" />
+    <Compile Include="Model\VerticesColorsHub.cs" />
     <Compile Include="ValidationRules\NonDoubleInputValidationRule.cs" />
     <Compile Include="ValidationRules\NonInt32InputValidationRule.cs" />
     <Compile Include="ValidationRules\RangedDoubleValidationRule.cs" />

@@ -1,6 +1,7 @@
 ﻿using GraphLib.Interfaces;
 using NullObject.Attributes;
 using System;
+using System.Collections.Generic;
 
 namespace GraphLib.NullRealizations.NullObjects
 {
@@ -8,7 +9,7 @@ namespace GraphLib.NullRealizations.NullObjects
     [Serializable]
     public sealed class NullNeighboursCoordinates : INeighboursCoordinates
     {
-        public ICoordinate[] Coordinates => new NullCoordinate[] { };
+        public IReadOnlyCollection<ICoordinate> Coordinates => new NullCoordinate[] { };
 
         public INeighboursCoordinates Clone()
         {

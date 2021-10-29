@@ -1,5 +1,4 @@
-﻿using Common.Interface;
-using System;
+﻿using System;
 using System.Collections.Generic;
 
 namespace GraphLib.Interfaces
@@ -8,7 +7,7 @@ namespace GraphLib.Interfaces
     /// An interface, that represents 
     /// a vertex of <see cref="IGraph"/>
     /// </summary>
-    public interface IVertex : IEquatable<IVertex>, ICloneable<IVertex>
+    public interface IVertex : IEquatable<IVertex>
     {
         /// <summary>
         /// Indicates whether the vertex is an obstacle or not

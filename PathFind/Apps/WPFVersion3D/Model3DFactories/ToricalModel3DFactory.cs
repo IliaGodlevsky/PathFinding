@@ -1,5 +1,4 @@
 ﻿using Common.Extensions;
-using Common.Interface;
 using System;
 using System.Collections.Generic;
 using System.Windows.Media.Media3D;
@@ -8,7 +7,7 @@ using WPFVersion3D.Model;
 
 namespace WPFVersion3D.Model3DFactories
 {
-    internal sealed class ToricalModel3DFactory : IModel3DFactory, ICloneable<IModel3DFactory>
+    internal sealed class ToricalModel3DFactory : IModel3DFactory
     {
         private const int Latitudes = 20;
         private const int Meridians = 15;
@@ -72,11 +71,6 @@ namespace WPFVersion3D.Model3DFactories
                     yield return rectangleFactory.CreateRectangleModel(p0, p1, p2, p3, material);
                 }
             }
-        }
-
-        public IModel3DFactory Clone()
-        {
-            return new ToricalModel3DFactory();
         }
     }
 }

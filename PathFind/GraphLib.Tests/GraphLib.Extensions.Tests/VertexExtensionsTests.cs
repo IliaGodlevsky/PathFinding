@@ -2,7 +2,6 @@
 using GraphLib.NullRealizations.NullObjects;
 using GraphLib.Realizations.Coordinates;
 using GraphLib.TestRealizations.TestFactories;
-using GraphLib.TestRealizations.TestObjects;
 using NUnit.Framework;
 using System;
 using System.Collections.Generic;
@@ -51,19 +50,6 @@ namespace GraphLib.Extensions.Tests
             var vertex = graph.FirstOrNullVertex();
 
             Assert.Throws<ArgumentException>(() => vertex.SetNeighbours(otherGraph));
-        }
-
-        [Test]
-        public void SetNeighbours_NullVertex_GraphIsNotNull_NeighboursArrayAreEmpty()
-        {
-            var graph = graphAssembler.AssembleGraph();
-            graph[new TestCoordinate(0, 0)] = new NullVertex();
-
-            var vertex = graph.FirstOrNullVertex();
-
-            vertex.SetNeighbours(graph);
-
-            Assert.IsFalse(vertex.Neighbours.Any());
         }
 
         [Test]

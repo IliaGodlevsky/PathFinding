@@ -1,5 +1,4 @@
 ﻿using Common.Extensions;
-using Common.Interface;
 using GraphLib.Extensions;
 using GraphLib.Interfaces;
 using GraphLib.Realizations.VertexCost;
@@ -14,8 +13,8 @@ using static WindowsFormsVersion.Constants;
 
 namespace WindowsFormsVersion.Model
 {
-    [DebuggerDisplay("{Position.ToString()})")]
-    internal class Vertex : Label, IVertex, IVisualizable, IWeightable, IEquatable<IVertex>, ICloneable<IVertex>
+    [DebuggerDisplay("{Position.ToString()}")]
+    internal class Vertex : Label, IVertex, IVisualizable, IWeightable, IEquatable<IVertex>
     {
         private static Color RegularVertexColor = Color.FromKnownColor(KnownColor.WhiteSmoke);
         private static Color ObstacleVertexColor = Color.FromKnownColor(KnownColor.Black);
@@ -161,14 +160,6 @@ namespace WindowsFormsVersion.Model
             {
                 BackColor = ToReplaceMarkColor;
             }
-        }
-
-        public IVertex Clone()
-        {
-            var neighbourCoordinates = NeighboursCoordinates.Clone();
-            var coordinates = Position.Clone();
-            var vertex = new Vertex(neighbourCoordinates, coordinates);
-            return vertex.CloneProperties(this);
         }
     }
 }

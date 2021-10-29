@@ -11,7 +11,7 @@ namespace GraphLib.Realizations.Extensions
         public static IGraph Smooth(this IGraph self, IVertexCostFactory costFactory,
             IMeanCost meanCost, int smoothLevel)
         {
-            while (smoothLevel --> 0)
+            while (smoothLevel-- > 0)
             {
                 var visited = new VisitedVertices();
                 foreach (var vertex in self.Vertices)

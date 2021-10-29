@@ -22,11 +22,11 @@ namespace WPFVersion3D.ViewModel
 
         public OpacityChangeViewModel()
         {
-            ObstacleColorOpacity = Vertex3D.ObstacleVertexBrush.Opacity;
-            VisitedVertexColorOpacity = Vertex3D.VisitedVertexBrush.Opacity;
-            EnqueuedVertexColorOpacity = Vertex3D.EnqueuedVertexBrush.Opacity;
-            PathVertexColorOpacity = Vertex3D.PathVertexBrush.Opacity;
-            SimpleVertexColorOpacity = Vertex3D.SimpleVertexBrush.Opacity;
+            ObstacleColorOpacity = VerticesColorsHub.ObstacleVertexBrush.Opacity;
+            VisitedVertexColorOpacity = VerticesColorsHub.VisitedVertexBrush.Opacity;
+            EnqueuedVertexColorOpacity = VerticesColorsHub.EnqueuedVertexBrush.Opacity;
+            PathVertexColorOpacity = VerticesColorsHub.PathVertexBrush.Opacity;
+            SimpleVertexColorOpacity = VerticesColorsHub.RegularVertexBrush.Opacity;
 
             ConfirmOpacityChange = new RelayCommand(ExecuteChangeVertexOpacity);
             CancelOpacityChange = new RelayCommand(ExecuteCloseChangeVertexOpacity);
@@ -34,12 +34,12 @@ namespace WPFVersion3D.ViewModel
 
         private void ExecuteChangeVertexOpacity(object param)
         {
-            Vertex3D.EnqueuedVertexBrush.Opacity = EnqueuedVertexColorOpacity;
-            Vertex3D.ObstacleVertexBrush.Opacity = ObstacleColorOpacity;
-            Vertex3D.SimpleVertexBrush.Opacity = SimpleVertexColorOpacity;
-            Vertex3D.PathVertexBrush.Opacity = PathVertexColorOpacity;
-            Vertex3D.VisitedVertexBrush.Opacity = VisitedVertexColorOpacity;
-            Vertex3D.AlreadyPathVertexBrush.Opacity = PathVertexColorOpacity;
+            VerticesColorsHub.EnqueuedVertexBrush.Opacity = EnqueuedVertexColorOpacity;
+            VerticesColorsHub.ObstacleVertexBrush.Opacity = ObstacleColorOpacity;
+            VerticesColorsHub.RegularVertexBrush.Opacity = SimpleVertexColorOpacity;
+            VerticesColorsHub.PathVertexBrush.Opacity = PathVertexColorOpacity;
+            VerticesColorsHub.VisitedVertexBrush.Opacity = VisitedVertexColorOpacity;
+            VerticesColorsHub.AlreadyPathVertexBrush.Opacity = PathVertexColorOpacity;
 
             ExecuteCloseChangeVertexOpacity(param);
         }
