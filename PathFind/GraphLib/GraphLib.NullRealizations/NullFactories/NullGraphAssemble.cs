@@ -10,7 +10,7 @@ namespace GraphLib.NullRealizations.NullFactories
     {
         public IGraph AssembleGraph(int obstaclePercent, params int[] graphDimensionSizes)
         {
-            return new NullGraph();
+            return NullGraph.Instance;
         }
     }
 }

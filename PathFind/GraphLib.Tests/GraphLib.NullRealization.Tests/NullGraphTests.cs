@@ -23,7 +23,7 @@ namespace GraphLib.Common.Tests
         [Test]
         public void Refresh_DoesnotThrows()
         {
-            var graph = new NullGraph();
+            var graph = NullGraph.Instance;
 
             Assert.DoesNotThrow(() => graph.Refresh());
         }
@@ -31,7 +31,7 @@ namespace GraphLib.Common.Tests
         [Test]
         public void ToWeighted_DoesntThrow()
         {
-            var graph = new NullGraph();
+            var graph = NullGraph.Instance;
 
             Assert.DoesNotThrow(() => graph.ToWeighted());
         }
@@ -39,7 +39,7 @@ namespace GraphLib.Common.Tests
         [Test]
         public void ToUnweighted_DoesntThrow()
         {
-            var graph = new NullGraph();
+            var graph = NullGraph.Instance;
 
             Assert.DoesNotThrow(() => graph.ToUnweighted());
         }
@@ -47,17 +47,9 @@ namespace GraphLib.Common.Tests
         [Test]
         public void ForEach_DoesntThrow()
         {
-            var graph = new NullGraph();
+            var graph = NullGraph.Instance;
 
             Assert.DoesNotThrow(() => graph.ForEach(vertex => vertex.GetHashCode()));
-        }
-
-        [Test]
-        public void ConnectVertices_DoesntThrow()
-        {
-            var graph = new NullGraph();
-
-            Assert.DoesNotThrow(() => graph.ConnectVertices());
         }
     }
 }

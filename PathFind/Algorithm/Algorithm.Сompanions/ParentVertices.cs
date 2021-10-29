@@ -26,7 +26,7 @@ namespace Algorithm.Сompanions
         {
             return HasParent(child)
                 ? parentVertices[child.Position]
-                : new NullVertex();
+                : NullVertex.Instance;
         }
 
         public bool HasParent(IVertex child)

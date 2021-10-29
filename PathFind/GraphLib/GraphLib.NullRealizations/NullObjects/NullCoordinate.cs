@@ -11,6 +11,8 @@ namespace GraphLib.NullRealizations.NullObjects
     [Serializable]
     public sealed class NullCoordinate : ICoordinate
     {
+        public static ICoordinate Instance => instance.Value;
+
         public int[] CoordinatesValues => new int[] { };
 
         public ICoordinate Clone()
@@ -27,5 +29,12 @@ namespace GraphLib.NullRealizations.NullObjects
         {
             return base.GetHashCode();
         }
+
+        private NullCoordinate()
+        {
+
+        }
+
+        private static readonly Lazy<ICoordinate> instance = new Lazy<ICoordinate>(() => new NullCoordinate());
     }
 }

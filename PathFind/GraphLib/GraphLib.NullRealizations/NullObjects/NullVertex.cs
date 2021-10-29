@@ -9,26 +9,23 @@ namespace GraphLib.NullRealizations.NullObjects
     [Null]
     public sealed class NullVertex : IVertex, IEquatable<IVertex>, ICloneable<IVertex>
     {
-        public NullVertex()
-        {
-
-        }
+        public static IVertex Instance => instance.Value;
 
         public bool IsObstacle { get => true; set { } }
-
-        public IVertexCost Cost { get => new NullCost(); set { } }
-
-        public IReadOnlyCollection<IVertex> Neighbours { get => new NullVertex[] { }; set { } }
-
-        public ICoordinate Position { get => new NullCoordinate(); set { } }
-
+        public IVertexCost Cost { get => NullCost.Instance; set { } }
+        public IReadOnlyCollection<IVertex> Neighbours { get; }
+        public IGraph Graph { get; }
+        public ICoordinate Position { get => NullCoordinate.Instance; set { } }
         public bool Equals(IVertex other) => other is NullVertex;
+        public IVertex Clone() => Instance;
+        public INeighboursCoordinates NeighboursCoordinates =>  NullNeighboursCoordinates.Instance;
 
-        public IVertex Clone()
+        private NullVertex()
         {
-            return new NullVertex();
+            Neighbours = new NullVertex[] { };
+            Graph = NullGraph.Instance;
         }
 
-        public INeighboursCoordinates NeighboursCoordinates => new NullNeighboursCoordinates();
+        private static readonly Lazy<IVertex> instance = new Lazy<IVertex>(() => new NullVertex());
     }
 }

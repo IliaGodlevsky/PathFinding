@@ -29,7 +29,7 @@ namespace GraphLib.Serialization.Serializers
                 var graphInfo = formatter.DeserializeGraph(stream);
                 var vertices = graphInfo.CreateVertices(vertexFactory);
                 BaseVertexCost.CostRange = graphInfo.CostRange;
-                return graphFactory.CreateGraph(vertices, graphInfo.DimensionsSizes).ConnectVertices();
+                return graphFactory.CreateGraph(vertices, graphInfo.DimensionsSizes);
             }
             catch (Exception ex)
             {

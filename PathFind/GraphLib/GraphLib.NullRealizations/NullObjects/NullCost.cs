@@ -8,6 +8,8 @@ namespace GraphLib.NullRealizations.NullObjects
     [Serializable]
     public sealed class NullCost : IVertexCost
     {
+        public static IVertexCost Instance => instance.Value;
+
         public int CurrentCost => default;
 
         public override bool Equals(object obj)
@@ -22,7 +24,14 @@ namespace GraphLib.NullRealizations.NullObjects
 
         public IVertexCost Clone()
         {
-            return new NullCost();
+            return Instance;
         }
+
+        private NullCost()
+        {
+
+        }
+
+        private static readonly Lazy<IVertexCost> instance = new Lazy<IVertexCost>(() => new NullCost());
     }
 }

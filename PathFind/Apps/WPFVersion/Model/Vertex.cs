@@ -20,6 +20,7 @@ namespace WPFVersion.Model
             Position = coordinate;
             NeighboursCoordinates = radar;
             this.Initialize();
+            neighbours = new Lazy<IReadOnlyCollection<IVertex>>(this.SetNeighbours);
         }
 
         public Vertex(VertexSerializationInfo info)
@@ -55,7 +56,9 @@ namespace WPFVersion.Model
             }
         }
 
-        public IReadOnlyCollection<IVertex> Neighbours { get; set; }
+        public IReadOnlyCollection<IVertex> Neighbours => neighbours.Value;
+
+        public IGraph Graph { get; }
 
         private ICoordinate position;
         public ICoordinate Position
@@ -94,5 +97,6 @@ namespace WPFVersion.Model
         }
 
         private static readonly VerticesColorsHub ColorsHub = new VerticesColorsHub();
+        private readonly Lazy<IReadOnlyCollection<IVertex>> neighbours;
     }
 }

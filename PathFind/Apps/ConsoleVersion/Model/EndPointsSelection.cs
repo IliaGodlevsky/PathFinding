@@ -53,7 +53,7 @@ namespace ConsoleVersion.Model
 
                 return vertex;
             }
-            return new NullVertex();
+            return NullVertex.Instance;
         }
 
         private readonly IGraph graph;

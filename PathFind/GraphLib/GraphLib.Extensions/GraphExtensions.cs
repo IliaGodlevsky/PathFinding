@@ -66,17 +66,12 @@ namespace GraphLib.Extensions
 
         public static IVertex FirstOrNullVertex(this IGraph graph)
         {
-            return graph.Vertices.FirstOrDefault() ?? new NullVertex();
+            return graph.Vertices.FirstOrDefault() ?? NullVertex.Instance;
         }
 
         public static IVertex LastOrNullVertex(this IGraph graph)
         {
-            return graph.Vertices.LastOrDefault() ?? new NullVertex();
-        }
-
-        public static IGraph ConnectVertices(this IGraph self)
-        {
-            return self.ForEach(vertex => vertex.SetNeighbours(self));
+            return graph.Vertices.LastOrDefault() ?? NullVertex.Instance;
         }
 
         public static bool ContainsReferences(this IGraph self, params IVertex[] vertices)

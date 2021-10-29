@@ -16,7 +16,7 @@ namespace Algorithm.Extensions
         /// <exception cref="System.ArgumentNullException"></exception>
         public static IVertex DequeueOrNullVertex(this Queue<IVertex> queue)
         {
-            return queue.Count == 0 ? new NullVertex() : queue.Dequeue();
+            return queue.Count == 0 ? NullVertex.Instance : queue.Dequeue();
         }
 
         public static Queue<T> EnqueueRange<T>(this Queue<T> queue, IEnumerable<T> range)

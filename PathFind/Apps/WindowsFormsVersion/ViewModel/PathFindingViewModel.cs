@@ -78,7 +78,7 @@ namespace WindowsFormsVersion.ViewModel
 
         private bool CanExecuteConfirmPathFindAlgorithmChoice()
         {
-            return Algorithms.Any(item => item.Item2 == Algorithm);
+            return Algorithm != null;
         }
 
         private string Statistics

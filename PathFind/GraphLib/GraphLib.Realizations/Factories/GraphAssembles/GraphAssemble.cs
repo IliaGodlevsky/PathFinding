@@ -57,7 +57,7 @@ namespace GraphLib.Realizations.Factories.GraphAssembles
                 vertex.IsObstacle = percentRange.IsObstacleChance(percentOfObstacles);
                 vertices.Add(vertex);
             }
-            return graphFactory.CreateGraph(vertices, graphDimensionsSizes).ConnectVertices();
+            return graphFactory.CreateGraph(vertices, graphDimensionsSizes);
         }
 
         protected readonly IVertexCostFactory costFactory;

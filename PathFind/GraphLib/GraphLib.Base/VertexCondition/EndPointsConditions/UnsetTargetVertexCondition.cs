@@ -21,7 +21,7 @@ namespace GraphLib.Base.VertexCondition.EndPointsConditions
         public void Execute(IVertex vertex)
         {
             (vertex as IVisualizable)?.VisualizeAsRegular();
-            endPoints.Target = new NullVertex();
+            endPoints.Target = NullVertex.Instance;
         }
     }
 }

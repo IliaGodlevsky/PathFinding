@@ -2,28 +2,22 @@
 using NullObject.Attributes;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 
 namespace GraphLib.NullRealizations.NullObjects
 {
     [Null]
     public sealed class NullGraph : IGraph
     {
-        public NullGraph()
-        {
-            Vertices = new NullVertex[] { new NullVertex() };
-            DimensionsSizes = Array.Empty<int>();
-        }
+        public static IGraph Instance => instance.Value;
 
         public IVertex this[ICoordinate position]
         {
-            get => Vertices.First();
-            set => _ = value;
+            get => NullVertex.Instance;
         }
 
         public int[] DimensionsSizes { get; }
 
-        public ICollection<IVertex> Vertices { get; }
+        public ICollection<IVertex> Vertices => new IVertex[] { NullVertex.Instance };
 
         public int Size => 0;
 
@@ -44,7 +38,14 @@ namespace GraphLib.NullRealizations.NullObjects
 
         public IGraph Clone()
         {
-            return new NullGraph();
+            return NullGraph.Instance;
         }
+
+        private NullGraph()
+        {
+            DimensionsSizes = Array.Empty<int>();
+        }
+
+        private static readonly Lazy<IGraph> instance = new Lazy<IGraph>(() => new NullGraph());
     }
 }

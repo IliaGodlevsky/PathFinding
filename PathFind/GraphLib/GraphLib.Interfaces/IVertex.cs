@@ -9,6 +9,7 @@ namespace GraphLib.Interfaces
     /// </summary>
     public interface IVertex : IEquatable<IVertex>
     {
+        IGraph Graph { get; }
         /// <summary>
         /// Indicates whether the vertex is an obstacle or not
         /// </summary>
@@ -24,7 +25,7 @@ namespace GraphLib.Interfaces
         /// <summary>
         /// Neighbours around the vertex
         /// </summary>
-        IReadOnlyCollection<IVertex> Neighbours { get; set; }
+        IReadOnlyCollection<IVertex> Neighbours { get; }
 
         INeighboursCoordinates NeighboursCoordinates { get; }
     }

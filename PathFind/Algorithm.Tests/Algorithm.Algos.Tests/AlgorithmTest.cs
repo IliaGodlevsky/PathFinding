@@ -43,7 +43,7 @@ namespace Algorithm.Algos.Tests
         public virtual void FindPath_EndPointsDoesntBelongToGraph_TrowsEndPointsNotFromCurrentGraphException()
         {
             var graph = testgraph2DAssemble.AssembleGraph();
-            var endPoints = new TestEndPoints(new NullVertex(), new NullVertex());
+            var endPoints = new TestEndPoints(NullVertex.Instance, NullVertex.Instance);
 
             var algorithm = CreateAlgorithm(graph, endPoints);
 
@@ -53,7 +53,7 @@ namespace Algorithm.Algos.Tests
         [Test]
         public virtual void FindPath_NullGraph_ReturnsNullGraph()
         {
-            var graph = new NullGraph();
+            var graph = NullGraph.Instance;
             var source = graph.FirstOrNullVertex();
             var target = graph.LastOrNullVertex();
             var endPoints = new TestEndPoints(source, target);

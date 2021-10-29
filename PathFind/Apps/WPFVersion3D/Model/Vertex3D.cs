@@ -53,6 +53,7 @@ namespace WPFVersion3D.Model
             Transform = new TranslateTransform3D();
             Size = Constants.InitialVertexSize;
             this.Initialize();
+            neighbours = new Lazy<IReadOnlyCollection<IVertex>>(this.SetNeighbours);
         }
 
         public Vertex3D(VertexSerializationInfo info, IModel3DFactory modelFactory) :
@@ -102,9 +103,10 @@ namespace WPFVersion3D.Model
             }
         }
 
+        public IGraph Graph { get; }
         public INeighboursCoordinates NeighboursCoordinates { get; }
         public IVertexCost Cost { get; set; }
-        public IReadOnlyCollection<IVertex> Neighbours { get; set; }
+        public IReadOnlyCollection<IVertex> Neighbours => neighbours.Value;
         public ICoordinate Position { get; }
 
         public bool Equals(IVertex other) => other.IsEqual(this);
@@ -154,5 +156,6 @@ namespace WPFVersion3D.Model
 
         private readonly IModel3DFactory modelFactory;
         private static readonly VerticesColorsHub ColorsHub = new VerticesColorsHub();
+        private readonly Lazy<IReadOnlyCollection<IVertex>> neighbours;
     }
 }

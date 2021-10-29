@@ -6,7 +6,7 @@ using GraphLib.NullRealizations.NullObjects;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-
+using System.Reflection;
 using static Common.Extensions.IntExtensions;
 
 namespace GraphLib.Base
@@ -32,6 +32,7 @@ namespace GraphLib.Base
             {
                 throw new WrongNumberOfDimensionsException(nameof(dimensionSizes));
             }
+            Vertices.ForEach(SetGraphForVertex);
         }
 
         static BaseGraph()
@@ -41,7 +42,7 @@ namespace GraphLib.Base
 
         public IVertex this[ICoordinate coordinate]
         {
-            get => vertices.TryGetValue(coordinate, out var vertex) ? vertex : new NullVertex();
+            get => vertices.TryGetValue(coordinate, out var vertex) ? vertex : NullVertex.Instance;
         }
 
         public override bool Equals(object obj)
@@ -72,6 +73,16 @@ namespace GraphLib.Base
             string graphParams = string.Format(ParamsFormat,
                 obstaclesPercent, obstacles, Size);
             return string.Join(LargeSpace, joined, graphParams);
+        }
+
+        private void SetGraphForVertex(IVertex vertex)
+        {
+            vertex
+                .GetType()
+                .GetFields(BindingFlags.NonPublic | BindingFlags.Instance)
+                .Where(field => field.Name.Contains(nameof(vertex.Graph)))
+                .FirstOrDefault()
+                ?.SetValue(vertex, this);
         }
 
         protected static string[] DimensionNames { get; }

@@ -59,23 +59,23 @@ namespace GraphLib.Realizations.Tests
             using var mock = AutoMock.GetLoose();
             mock.Mock<ICoordinateFactory>()
                 .Setup(x => x.CreateCoordinate(It.IsAny<int[]>()))
-                .Returns<int[]>(x => new NullCoordinate());
+                .Returns<int[]>(x => NullCoordinate.Instance);
 
             mock.Mock<INeighboursCoordinatesFactory>()
                 .Setup(x => x.CreateNeighboursCoordinates(It.IsAny<ICoordinate>()))
-                .Returns<ICoordinate>(x => new NullNeighboursCoordinates());
+                .Returns<ICoordinate>(x => NullNeighboursCoordinates.Instance);
 
             mock.Mock<IVertexFactory>()
                 .Setup(x => x.CreateVertex(It.IsAny<INeighboursCoordinates>(), It.IsAny<ICoordinate>()))
-                .Returns<INeighboursCoordinates, ICoordinate>((nc, c) => new NullVertex());
+                .Returns<INeighboursCoordinates, ICoordinate>((nc, c) => NullVertex.Instance);
 
             mock.Mock<IGraphFactory>()
                 .Setup(x => x.CreateGraph(It.IsAny<IEnumerable<IVertex>>(), It.IsAny<int[]>()))
-                .Returns<IEnumerable<IVertex>, int[]>((vertices, dimensions) => new NullGraph());
+                .Returns<IEnumerable<IVertex>, int[]>((vertices, dimensions) => NullGraph.Instance);
 
             mock.Mock<IVertexCostFactory>()
                 .Setup(x => x.CreateCost())
-                .Returns(() => new NullCost());
+                .Returns(() => NullCost.Instance);
 
             var assemble = mock.Create<GraphAssemble>();
 

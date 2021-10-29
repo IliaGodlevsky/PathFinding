@@ -53,7 +53,7 @@ namespace GraphLib.Serialization.Serializers
         /// <returns></returns>
         public IGraph LoadGraph(Stream stream)
         {
-            IGraph graph = new NullGraph();
+            IGraph graph = NullGraph.Instance;
             try
             {
                 algorithm.Padding = PaddingMode.None;

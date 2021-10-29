@@ -2,6 +2,7 @@
 using GraphLib.NullRealizations.NullObjects;
 using NullObject.Extensions;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace GraphLib.Extensions
@@ -83,9 +84,8 @@ namespace GraphLib.Extensions
 
         public static void Initialize(this IVertex self)
         {
-            self.Neighbours = new IVertex[] { };
             self.IsObstacle = false;
-            self.Cost = new NullCost();
+            self.Cost = NullCost.Instance;
             self.SetToDefault();
         }
 
@@ -136,18 +136,13 @@ namespace GraphLib.Extensions
         /// <param name="graph">A graph, where vertex is situated</param>
         /// <exception cref="ArgumentException">Thrown when <paramref name="graph"/> 
         /// doesn't contain <paramref name="self"/></exception>
-        public static void SetNeighbours(this IVertex self, IGraph graph)
+        public static IReadOnlyCollection<IVertex> SetNeighbours(this IVertex self)
         {
-            if (!graph.ContainsReferences(self))
-            {
-                throw new ArgumentException("Vertex doesn't belong to graph\n", nameof(self));
-            }
-
-            self.Neighbours = self
+            return self
                 .NeighboursCoordinates
                 .Coordinates
-                .Where(coordinate => coordinate.IsWithinGraph(graph))
-                .Select(coordinate => graph[coordinate])
+                .Where(coordinate => coordinate.IsWithinGraph(self.Graph))
+                .Select(coordinate => self.Graph[coordinate])
                 .ToArray();
         }
     }

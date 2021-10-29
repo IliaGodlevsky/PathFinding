@@ -9,11 +9,20 @@ namespace GraphLib.NullRealizations.NullObjects
     [Serializable]
     public sealed class NullNeighboursCoordinates : INeighboursCoordinates
     {
+        public static INeighboursCoordinates Instance => instance.Value;
+
         public IReadOnlyCollection<ICoordinate> Coordinates => new NullCoordinate[] { };
 
         public INeighboursCoordinates Clone()
         {
-            return new NullNeighboursCoordinates();
+            return Instance;
         }
+
+        private NullNeighboursCoordinates()
+        {
+
+        }
+
+        private static readonly Lazy<INeighboursCoordinates> instance = new Lazy<INeighboursCoordinates>(() => new NullNeighboursCoordinates());
     }
 }

@@ -36,6 +36,7 @@ namespace WindowsFormsVersion.Model
             this.Initialize();
             Position = coordinate;
             NeighboursCoordinates = coordinateRadar;
+            neighbours = new Lazy<IReadOnlyCollection<IVertex>>(this.SetNeighbours);
         }
 
         public Vertex(VertexSerializationInfo info)
@@ -43,6 +44,8 @@ namespace WindowsFormsVersion.Model
         {
             this.Initialize(info);
         }
+
+        public IGraph Graph { get; }
 
         private IVertexCost cost;
         public IVertexCost Cost
@@ -59,7 +62,7 @@ namespace WindowsFormsVersion.Model
 
         public ICoordinate Position { get; }
 
-        public IReadOnlyCollection<IVertex> Neighbours { get; set; }
+        public IReadOnlyCollection<IVertex> Neighbours => neighbours.Value;
 
         private bool isObstacle;
         public bool IsObstacle
@@ -161,5 +164,7 @@ namespace WindowsFormsVersion.Model
                 BackColor = ToReplaceMarkColor;
             }
         }
+
+        private readonly Lazy<IReadOnlyCollection<IVertex>> neighbours;
     }
 }

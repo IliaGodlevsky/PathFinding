@@ -74,7 +74,7 @@ namespace GraphLib.Realizations.Tests
         [Test]
         public void Coordinates_NullCoordinate_ReturnEmptyEnvironment()
         {
-            var coordinateEnvironment = new AroundNeighboursCoordinates(new NullCoordinate());
+            var coordinateEnvironment = new AroundNeighboursCoordinates(NullCoordinate.Instance);
 
             var environment = coordinateEnvironment.Coordinates.ToArray();
 

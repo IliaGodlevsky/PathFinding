@@ -29,12 +29,14 @@ namespace ConsoleVersion.Model
             NeighboursCoordinates = coordinateRadar;
             Position = coordinate;
             this.Initialize();
+            neighbours = new Lazy<IReadOnlyCollection<IVertex>>(this.SetNeighbours);
         }
 
         public Vertex(VertexSerializationInfo info)
             : this(info.NeighboursCoordinates, info.Position)
         {
             this.Initialize(info);
+            
         }
 
         private bool isObstacle;
@@ -50,6 +52,8 @@ namespace ConsoleVersion.Model
                 }
             }
         }
+
+        public IGraph Graph { get; }
 
         public INeighboursCoordinates NeighboursCoordinates { get; }
 
@@ -68,7 +72,7 @@ namespace ConsoleVersion.Model
             }
         }
 
-        public IReadOnlyCollection<IVertex> Neighbours { get; set; }
+        public IReadOnlyCollection<IVertex> Neighbours => neighbours.Value;
 
         public ICoordinate Position { get; }
 
@@ -205,5 +209,6 @@ namespace ConsoleVersion.Model
 
         private string text;
         private Color colour;
+        private readonly Lazy<IReadOnlyCollection<IVertex>> neighbours;
     }
 }

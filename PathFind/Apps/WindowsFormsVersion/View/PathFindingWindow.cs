@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using Algorithm.Factory;
+using System.Linq;
 using System.Windows.Forms;
 using WindowsFormsVersion.ViewModel;
 
@@ -13,7 +14,7 @@ namespace WindowsFormsVersion.View
             okButton.Click += model.StartPathfinding;
             cancelButton.Click += model.CancelPathFinding;
 
-            var dataSource = model.Algorithms.ToArray();
+            var dataSource = model.Algorithms;
             algorithmListBox.DataSource = dataSource;
 
             algorithmListBox.ValueMember = "Item2";

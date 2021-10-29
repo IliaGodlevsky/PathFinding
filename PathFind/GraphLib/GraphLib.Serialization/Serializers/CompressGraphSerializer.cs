@@ -17,7 +17,7 @@ namespace GraphLib.Serialization.Serializers
 
         public IGraph LoadGraph(Stream stream)
         {
-            IGraph graph = new NullGraph();
+            IGraph graph = NullGraph.Instance;
             try
             {
                 using (var compressionStream = new GZipStream(stream, CompressionMode.Decompress, leaveOpen: true))

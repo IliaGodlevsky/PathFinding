@@ -30,17 +30,17 @@ namespace Algorithm.Extensions
         /// <returns></returns>
         public static IVertex FirstOrNullVertex(this IEnumerable<IVertex> collection, Func<IVertex, bool> predicate)
         {
-            return collection.FirstOrDefault(predicate) ?? new NullVertex();
+            return collection.FirstOrDefault(predicate) ?? NullVertex.Instance;
         }
 
         public static IVertex FirstOrNullVertex(this IEnumerable<IVertex> collection)
         {
-            return collection.FirstOrDefault() ?? new NullVertex();
+            return collection.FirstOrDefault() ?? NullVertex.Instance;
         }
 
         public static IVertex LastOrNullVertex(this IEnumerable<IVertex> collection)
         {
-            return collection.LastOrDefault() ?? new NullVertex();
+            return collection.LastOrDefault() ?? NullVertex.Instance;
         }
     }
 }

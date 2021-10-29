@@ -80,7 +80,7 @@ namespace ConsoleVersion.Extensions
 
             var point = self.InputPoint(upperPossibleXValue, upperPossibleYValue);
 
-            return (graph2D[point] as Vertex) ?? (IVertex)new NullVertex();
+            return (graph2D[point] as Vertex) ?? NullVertex.Instance;
         }
     }
 }

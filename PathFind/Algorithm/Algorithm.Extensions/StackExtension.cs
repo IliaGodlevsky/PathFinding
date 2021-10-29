@@ -8,7 +8,7 @@ namespace Algorithm.Extensions
     {
         public static IVertex PopOrNullVertex(this Stack<IVertex> stack)
         {
-            return stack.Count == 0 ? new NullVertex() : stack.Pop();
+            return stack.Count == 0 ? NullVertex.Instance : stack.Pop();
         }
     }
 }
