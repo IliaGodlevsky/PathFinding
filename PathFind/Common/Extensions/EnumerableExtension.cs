@@ -146,6 +146,11 @@ namespace Common.Extensions
             return self.SequenceEqual(second, new MatchComparer<T>(predicate));
         }
 
+        public static bool Juxtapose<T>(this IEnumerable<T> self, IEnumerable<T> second)
+        {
+            return self.Juxtapose(second, (a, b) => a.Equals(b));
+        }
+
         public static IDictionary<TKey, TValue> ToDictionary<TKey, TValue>
             (this IEnumerable<KeyValuePair<TKey, TValue>> collection)
         {

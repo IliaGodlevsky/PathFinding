@@ -10,6 +10,7 @@ namespace GraphLib.Interfaces
     public interface IVertex : IEquatable<IVertex>
     {
         IGraph Graph { get; }
+
         /// <summary>
         /// Indicates whether the vertex is an obstacle or not
         /// </summary>

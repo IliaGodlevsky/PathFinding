@@ -23,11 +23,9 @@ namespace GraphLib.TestRealizations.TestFactories
         public override IGraph AssembleGraph(int obstaclePercent = 0, params int[] sizes)
         {
             var graph = (Graph2D)base.AssembleGraph(0, Constants.DimensionSizes2D);
-            var matrices = new Matrices(
-                new CostMatrix(graph),
-                new ObstacleMatrix(graph));
+            var matrices = new Matrices(new CostMatrix(graph), new ObstacleMatrix(graph));
             matrices.Overlay();
-            return graph;
+            return graph; 
         }
     }
 }
