@@ -20,28 +20,28 @@ namespace WPFVersion3D.Model
         public static readonly DependencyProperty SizeProperty;
         public static readonly DependencyProperty BrushProperty;
 
-        public double Size 
-        { 
-            get => (double)GetValue(SizeProperty); 
-            set => SetValue(SizeProperty, value); 
+        public double Size
+        {
+            get => (double)GetValue(SizeProperty);
+            set => SetValue(SizeProperty, value);
         }
 
-        public Model3D Model 
-        { 
-            get => (Model3D)GetValue(ModelProperty); 
-            set => SetValue(ModelProperty, value); 
+        public Model3D Model
+        {
+            get => (Model3D)GetValue(ModelProperty);
+            set => SetValue(ModelProperty, value);
         }
 
-        public DiffuseMaterial Material 
-        { 
-            get => (DiffuseMaterial)GetValue(MaterialProperty); 
-            set => SetValue(MaterialProperty, value); 
+        public DiffuseMaterial Material
+        {
+            get => (DiffuseMaterial)GetValue(MaterialProperty);
+            set => SetValue(MaterialProperty, value);
         }
 
-        public Brush Brush 
-        { 
-            get => (Brush)GetValue(BrushProperty); 
-            set => SetValue(BrushProperty, value); 
+        public Brush Brush
+        {
+            get => (Brush)GetValue(BrushProperty);
+            set => SetValue(BrushProperty, value);
         }
 
         public Vertex3D(INeighboursCoordinates radar, ICoordinate coordinate, IModel3DFactory modelFactory)
@@ -53,7 +53,7 @@ namespace WPFVersion3D.Model
             Transform = new TranslateTransform3D();
             Size = Constants.InitialVertexSize;
             this.Initialize();
-            neighbours = new Lazy<IReadOnlyCollection<IVertex>>(this.SetNeighbours);
+            neighbours = new Lazy<IReadOnlyCollection<IVertex>>(this.GetNeighbours);
         }
 
         public Vertex3D(VertexSerializationInfo info, IModel3DFactory modelFactory) :

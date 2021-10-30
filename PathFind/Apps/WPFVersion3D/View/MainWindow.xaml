@@ -85,7 +85,7 @@
                           SelectedValuePath="Item2"
                           SelectedIndex="0"/>
 
-                <ToggleButton Command="{Binding AnimatedAxisRotateCommand}"                                                           
+                <ToggleButton Command="{Binding AnimatedAxisRotateCommand}"
                               Margin="5" 
                               Grid.Column="3" 
                               Grid.Row="2"

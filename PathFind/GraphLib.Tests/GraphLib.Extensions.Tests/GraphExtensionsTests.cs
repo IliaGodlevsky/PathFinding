@@ -1,5 +1,4 @@
-﻿using Common.Extensions;
-using GraphLib.Interfaces;
+﻿using GraphLib.Interfaces;
 using Moq;
 using NUnit.Framework;
 using System;

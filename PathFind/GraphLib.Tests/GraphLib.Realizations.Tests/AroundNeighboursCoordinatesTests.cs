@@ -1,7 +1,4 @@
-﻿using Autofac;
-using Autofac.Extras.Moq;
-using Common.Extensions;
-using GraphLib.Interfaces;
+﻿using Common.Extensions;
 using GraphLib.NullRealizations.NullObjects;
 using GraphLib.Realizations.NeighboursCoordinates;
 using GraphLib.TestRealizations.TestObjects;

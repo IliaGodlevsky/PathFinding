@@ -1,5 +1,4 @@
-﻿using Common.Extensions;
-using ConsoleVersion.Interface;
+﻿using ConsoleVersion.Interface;
 using ConsoleVersion.View;
 using GraphLib.Extensions;
 using GraphLib.Interfaces;
@@ -29,14 +28,14 @@ namespace ConsoleVersion.Model
             NeighboursCoordinates = coordinateRadar;
             Position = coordinate;
             this.Initialize();
-            neighbours = new Lazy<IReadOnlyCollection<IVertex>>(this.SetNeighbours);
+            neighbours = new Lazy<IReadOnlyCollection<IVertex>>(this.GetNeighbours);
         }
 
         public Vertex(VertexSerializationInfo info)
             : this(info.NeighboursCoordinates, info.Position)
         {
             this.Initialize(info);
-            
+
         }
 
         private bool isObstacle;
@@ -53,10 +52,6 @@ namespace ConsoleVersion.Model
             }
         }
 
-        public IGraph Graph { get; }
-
-        public INeighboursCoordinates NeighboursCoordinates { get; }
-
         private IVertexCost cost;
         public IVertexCost Cost
         {
@@ -72,24 +67,15 @@ namespace ConsoleVersion.Model
             }
         }
 
+        public IGraph Graph { get; }
+        public Color Color { get; set; }
+        public INeighboursCoordinates NeighboursCoordinates { get; }
         public IReadOnlyCollection<IVertex> Neighbours => neighbours.Value;
-
         public ICoordinate Position { get; }
 
-        public void ChangeCost()
-        {
-            OnVertexCostChanged?.Invoke(this, EventArgs.Empty);
-        }
-
-        public void Reverse()
-        {
-            OnVertexReversed?.Invoke(this, EventArgs.Empty);
-        }
-
-        public void SetAsExtremeVertex()
-        {
-            OnEndPointChosen?.Invoke(this, EventArgs.Empty);
-        }
+        public void ChangeCost() => OnVertexCostChanged?.Invoke(this, EventArgs.Empty);
+        public void Reverse() => OnVertexReversed?.Invoke(this, EventArgs.Empty);
+        public void SetAsExtremeVertex() => OnEndPointChosen?.Invoke(this, EventArgs.Empty);
 
         public void MakeUnweighted()
         {
@@ -107,8 +93,21 @@ namespace ConsoleVersion.Model
         {
             var consoleCoordinate = GetConsoleCoordinates();
             Console.SetCursorPosition(consoleCoordinate.X, consoleCoordinate.Y);
-            Console.Write(text, colour);
+            Console.Write(text, Color);
         }
+
+        public bool Equals(IVertex other) => other.IsEqual(this);
+        public bool IsVisualizedAsPath => ColorsHub.IsVisualizedAsPath(this);
+        public bool IsVisualizedAsEndPoint => ColorsHub.IsVisualizedAsEndPoint(this);
+        public void VisualizeAsTarget() => ColorsHub.VisualizeAsTarget(this);
+        public void VisualizeAsRegular() => ColorsHub.VisualizeAsRegular(this);
+        public void VisualizeAsObstacle() => ColorsHub.VisualizeAsObstacle(this);
+        public void VisualizeAsPath() => ColorsHub.VisualizeAsPath(this);
+        public void VisualizeAsSource() => ColorsHub.VisualizeAsSource(this);
+        public void VisualizeAsVisited() => ColorsHub.VisualizeAsVisited(this);
+        public void VisualizeAsEnqueued() => ColorsHub.VisualizeAsEnqueued(this);
+        public void VisualizeAsIntermediate() => ColorsHub.VisualizeAsIntermediate(this);
+        public void VisualizeAsMarkedToReplaceIntermediate() => ColorsHub.VisualizeAsMarkedToReplaceIntermediate(this);
 
         private Coordinate2D GetConsoleCoordinates()
         {
@@ -121,94 +120,9 @@ namespace ConsoleVersion.Model
             return new Coordinate2D(left, top);
         }
 
-        public bool Equals(IVertex other)
-        {
-            return other.IsEqual(this);
-        }
-
-        private void Mark(Color color)
-        {
-            this.colour = color;
-            Display();
-        }
-
-        public bool IsVisualizedAsPath => colour.IsOneOf(PathVertexColor, AlreadyPathVertexColor, IntermediateVertexColor);
-
-        public bool IsVisualizedAsEndPoint => colour.IsOneOf(SourceVertexColor, TargetVertexColor, IntermediateVertexColor);
-
-        public void VisualizeAsTarget()
-        {
-            Mark(TargetVertexColor);
-        }
-
-        public void VisualizeAsRegular()
-        {
-            if (!IsObstacle)
-            {
-                Mark(RegularVertexColor);
-            }
-        }
-
-        public void VisualizeAsObstacle()
-        {
-            Mark(ObstacleVertexColor);
-        }
-
-        public void VisualizeAsPath()
-        {
-            if (IsVisualizedAsPath)
-            {
-                Mark(AlreadyPathVertexColor);
-            }
-            else
-            {
-                Mark(PathVertexColor);
-            }
-        }
-
-        public void VisualizeAsSource()
-        {
-            Mark(SourceVertexColor);
-        }
-
-        public void VisualizeAsVisited()
-        {
-            if (!IsVisualizedAsPath)
-            {
-                Mark(VisitedVertexColor);
-            }
-        }
-
-        public void VisualizeAsEnqueued()
-        {
-            if (!IsVisualizedAsPath)
-            {
-                Mark(EnqueuedVertexColor);
-            }
-        }
-
-        public void VisualizeAsIntermediate()
-        {
-            Mark(IntermediateVertexColor);
-        }
-
-        public void VisualizeAsMarkedToReplaceIntermediate()
-        {
-
-        }
-
-        private static readonly Color RegularVertexColor = Color.FromKnownColor(KnownColor.WhiteSmoke);
-        private static readonly Color ObstacleVertexColor = Color.FromKnownColor(KnownColor.Black);
-        private static readonly Color PathVertexColor = Color.FromKnownColor(KnownColor.Yellow);
-        private static readonly Color EnqueuedVertexColor = Color.FromKnownColor(KnownColor.Magenta);
-        private static readonly Color SourceVertexColor = Color.FromKnownColor(KnownColor.Green);
-        private static readonly Color TargetVertexColor = Color.FromKnownColor(KnownColor.Red);
-        private static readonly Color AlreadyPathVertexColor = Color.FromKnownColor(KnownColor.Orange);
-        private static readonly Color VisitedVertexColor = Color.FromKnownColor(KnownColor.Blue);
-        private static readonly Color IntermediateVertexColor = Color.FromKnownColor(KnownColor.DarkOrange);
-
         private string text;
-        private Color colour;
+
         private readonly Lazy<IReadOnlyCollection<IVertex>> neighbours;
+        private static readonly VerticesColorHub ColorsHub = new VerticesColorHub();
     }
 }

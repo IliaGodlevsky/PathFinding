@@ -4,9 +4,11 @@ using GraphLib.Serialization;
 using GraphLib.Serialization.Extensions;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 
 namespace GraphLib.TestRealizations.TestObjects
 {
+    [DebuggerDisplay("{Position.ToString()}")]
     public sealed class TestVertex : IVertex, IEquatable<IVertex>
     {
         public TestVertex(INeighboursCoordinates radar, ICoordinate coordinate)
@@ -14,7 +16,7 @@ namespace GraphLib.TestRealizations.TestObjects
             this.Initialize();
             NeighboursCoordinates = radar;
             Position = coordinate;
-            neighbours = new Lazy<IReadOnlyCollection<IVertex>>(this.SetNeighbours);
+            neighbours = new Lazy<IReadOnlyCollection<IVertex>>(this.GetNeighbours);
         }
 
         public TestVertex(VertexSerializationInfo info)
@@ -24,15 +26,10 @@ namespace GraphLib.TestRealizations.TestObjects
         }
 
         public bool IsObstacle { get; set; }
-
         public IVertexCost Cost { get; set; }
-
         public IReadOnlyCollection<IVertex> Neighbours => neighbours.Value;
-
         public ICoordinate Position { get; }
-
         public INeighboursCoordinates NeighboursCoordinates { get; }
-
         public IGraph Graph { get; }
 
         public bool Equals(IVertex other)

@@ -1,5 +1,6 @@
 ﻿using Algorithm.Algos.Algos;
 using Algorithm.Base;
+using Algorithm.Factory.Attrbiutes;
 using Algorithm.Interfaces;
 using Algorithm.Realizations.Heuristic;
 using GraphLib.Interfaces;
@@ -7,6 +8,7 @@ using System.ComponentModel;
 
 namespace Algorithm.Factory
 {
+    [GreedyGroup]
     [Description("Distance first algorithm")]
     public sealed class DistanceFirstAlgorithmFactory : IAlgorithmFactory
     {

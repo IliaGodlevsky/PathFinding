@@ -1,5 +1,6 @@
 ﻿using Algorithm.Algos.Algos;
 using Algorithm.Base;
+using Algorithm.Factory.Attrbiutes;
 using Algorithm.Interfaces;
 using Algorithm.Realizations.Heuristic;
 using Algorithm.Realizations.StepRules;
@@ -8,6 +9,7 @@ using System.ComponentModel;
 
 namespace Algorithm.Factory
 {
+    [WaveGroup(3)]
     [Description("A* modified algorithm")]
     public sealed class AStarModifiedAlgorithmFactory : IAlgorithmFactory
     {

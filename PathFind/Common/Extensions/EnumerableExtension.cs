@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Common.Attrbiutes;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -80,26 +81,6 @@ namespace Common.Extensions
             return items.Any() ? items.Aggregate(func) : default;
         }
 
-        /// <summary>
-        /// Determins, whether the sequence 
-        /// contains all of the <paramref name="items"/>
-        /// </summary>
-        /// <typeparam name="T"></typeparam>
-        /// <param name="self"></param>
-        /// <param name="items"></param>
-        /// <returns></returns>
-        /// <remarks>This method compares elements by references</remarks>
-        public static bool ContainsReferences<T>(this IEnumerable<T> self, params T[] items)
-            where T : class
-        {
-            bool IsInCollection(T item)
-            {
-                return self.Any(selfItems => ReferenceEquals(selfItems, item));
-            }
-
-            return items.All(IsInCollection);
-        }
-
         public static IEnumerable<T> Without<T>(this IEnumerable<T> self, params T[] items)
         {
             return self.Where(item => !items.Contains(item));
@@ -176,12 +157,19 @@ namespace Common.Extensions
             return collection.ToDictionary(item => item.GetDescriptionAttributeValueOrTypeName());
         }
 
-        public static Tuple<string, T>[] ToOrderedNameInstanceTuples<T, U>(this IEnumerable<T> collection, Func<Tuple<string, T>, U> orderSelector)
+        public static Tuple<string, T>[] ToNameInstanceTuples<T>(this IEnumerable<T> collection)
         {
             return collection
                 .Select(item => new Tuple<string, T>(item.GetDescriptionAttributeValueOrTypeName(), item))
-                .OrderBy(orderSelector)
                 .ToArray();
+        }
+
+        public static IEnumerable<T> GroupByGroupAttribute<T>(this IEnumerable<T> collection)
+        {
+            return collection
+                .GroupBy(item => item.GetAttributeOrNull<T, GroupAttribute>())
+                .Select(item => item.OrderBy(x => x.GetGroupAttributeValueOrMaxValue()))
+                .SelectMany(item => item);
         }
     }
 }

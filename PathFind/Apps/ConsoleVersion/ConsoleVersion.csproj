@@ -80,6 +80,7 @@
     <Compile Include="MessegesTexts.cs" />
     <Compile Include="Model\ConsoleKeystrokesHook.cs" />
     <Compile Include="Model\EndPointsSelection.cs" />
+    <Compile Include="Model\VerticesColorHub.cs" />
     <Compile Include="ValueInput\ConsoleValueInput.cs" />
     <Compile Include="ValueInput\EnumConsoleValueInput.cs" />
     <Compile Include="ValueInput\Int32ConsoleValueInput.cs" />

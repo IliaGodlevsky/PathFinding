@@ -43,6 +43,8 @@
   <ItemGroup>
     <Compile Include="AStarAlgorithmFactory.cs" />
     <Compile Include="AStarModifiedAlgorithmFactory.cs" />
+    <Compile Include="Attrbiutes\GreedyGroupAttribute.cs" />
+    <Compile Include="Attrbiutes\WaveGroupAttribute.cs" />
     <Compile Include="BestFirstLeeAlgorithmFactory.cs" />
     <Compile Include="CostGreedyAlgorithmFactory.cs" />
     <Compile Include="DepthFirstAlgorithmFactory.cs" />
@@ -53,6 +55,10 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\Common\Common.csproj">
+      <Project>{A5A743F5-D346-4B2B-B6AC-07152F64E4D9}</Project>
+      <Name>Common</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\GraphLib\GraphLib.Interfaces\GraphLib.Interfaces.csproj">
       <Project>{D3C5CCFE-698B-41C7-9A72-5FD0262765E1}</Project>
       <Name>GraphLib.Interfaces</Name>
@@ -78,5 +84,6 @@
       <Name>Algorithm.Realizations</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

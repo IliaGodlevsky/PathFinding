@@ -1,6 +1,4 @@
-﻿using Algorithm.Factory;
-using System.Linq;
-using System.Windows.Forms;
+﻿using System.Windows.Forms;
 using WindowsFormsVersion.ViewModel;
 
 namespace WindowsFormsVersion.View
@@ -23,7 +21,9 @@ namespace WindowsFormsVersion.View
             var algorithmBinding = new Binding(
                 nameof(algorithmListBox.SelectedValue),
                 model,
-                nameof(model.Algorithm));
+                nameof(model.Algorithm),
+                true,
+                DataSourceUpdateMode.OnPropertyChanged);
             algorithmListBox.DataBindings.Add(algorithmBinding);
 
             var bindingVisualize = new Binding(

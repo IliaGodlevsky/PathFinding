@@ -36,7 +36,7 @@ namespace WindowsFormsVersion.Model
             this.Initialize();
             Position = coordinate;
             NeighboursCoordinates = coordinateRadar;
-            neighbours = new Lazy<IReadOnlyCollection<IVertex>>(this.SetNeighbours);
+            neighbours = new Lazy<IReadOnlyCollection<IVertex>>(this.GetNeighbours);
         }
 
         public Vertex(VertexSerializationInfo info)

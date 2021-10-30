@@ -1,5 +1,4 @@
-﻿using Common.Interface;
-using GraphLib.Interfaces;
+﻿using GraphLib.Interfaces;
 using NullObject.Attributes;
 using System;
 using System.Collections.Generic;
@@ -7,7 +6,7 @@ using System.Collections.Generic;
 namespace GraphLib.NullRealizations.NullObjects
 {
     [Null]
-    public sealed class NullVertex : IVertex, IEquatable<IVertex>, ICloneable<IVertex>
+    public sealed class NullVertex : IVertex, IEquatable<IVertex>
     {
         public static IVertex Instance => instance.Value;
 
@@ -17,8 +16,7 @@ namespace GraphLib.NullRealizations.NullObjects
         public IGraph Graph { get; }
         public ICoordinate Position { get => NullCoordinate.Instance; set { } }
         public bool Equals(IVertex other) => other is NullVertex;
-        public IVertex Clone() => Instance;
-        public INeighboursCoordinates NeighboursCoordinates =>  NullNeighboursCoordinates.Instance;
+        public INeighboursCoordinates NeighboursCoordinates => NullNeighboursCoordinates.Instance;
 
         private NullVertex()
         {

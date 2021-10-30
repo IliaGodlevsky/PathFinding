@@ -58,5 +58,24 @@ namespace Common.Extensions
                 .OfType<TValue>()
                 .ToArray();
         }
+
+        public static bool TrySetValue(this FieldInfo fieldInfo, object obj, object value)
+        {
+            if (fieldInfo == null)
+            {
+                return false;
+            }
+            try
+            {
+                fieldInfo.SetValue(obj, value);
+                return true;
+            }
+            catch
+            {
+                return false;
+            }
+        }
+
+
     }
 }

@@ -32,7 +32,7 @@ namespace GraphViewModel
             this.endPoints = endPoints;
             this.log = log;
             this.graph = graph;
-            Algorithms = factories.ToOrderedNameInstanceTuples(item => item.Item1);
+            Algorithms = factories.GroupByGroupAttribute().ToNameInstanceTuples();
             timer = new Stopwatch();
             path = new NullGraphPath();
         }

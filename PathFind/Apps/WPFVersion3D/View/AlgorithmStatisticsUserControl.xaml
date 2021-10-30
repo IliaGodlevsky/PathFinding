@@ -24,32 +24,32 @@
                     <GridView.Columns>
                         <GridViewColumn DisplayMemberBinding="{Binding AlgorithmName}">
                             <GridViewColumn.Header>
-                                <TextBlock Text="Name"/>
+                                <TextBlock TextAlignment="Justify" Text="Name"/>
                             </GridViewColumn.Header>
                         </GridViewColumn>
                         <GridViewColumn DisplayMemberBinding="{Binding Time}">
                             <GridViewColumn.Header>
-                                <TextBlock Text="Time"/>
+                                <TextBlock TextAlignment="Justify" Text="Time"/>
                             </GridViewColumn.Header>
                         </GridViewColumn>
                         <GridViewColumn DisplayMemberBinding="{Binding PathLength}">
                             <GridViewColumn.Header>
-                                <TextBlock Text="Length"/>
+                                <TextBlock TextAlignment="Justify" Text="Length"/>
                             </GridViewColumn.Header>
                         </GridViewColumn>
                         <GridViewColumn DisplayMemberBinding="{Binding PathCost}">
                             <GridViewColumn.Header>
-                                <TextBlock Text="Cost"/>
+                                <TextBlock TextAlignment="Justify" Text="Cost"/>
                             </GridViewColumn.Header>
                         </GridViewColumn>
                         <GridViewColumn DisplayMemberBinding="{Binding VisitedVerticesCount}">
                             <GridViewColumn.Header>
-                                <TextBlock Text="Visited"/>
+                                <TextBlock TextAlignment="Justify" Text="Visited"/>
                             </GridViewColumn.Header>
                         </GridViewColumn>
                         <GridViewColumn DisplayMemberBinding="{Binding Status, Converter={StaticResource StatusToStringConverter}}">
                             <GridViewColumn.Header>
-                                <TextBlock Text="Status"/>
+                                <TextBlock TextAlignment="Justify" Text="Status"/>
                             </GridViewColumn.Header>
                         </GridViewColumn>
                     </GridView.Columns>

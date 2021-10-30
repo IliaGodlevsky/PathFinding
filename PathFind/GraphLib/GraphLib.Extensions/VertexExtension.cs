@@ -50,7 +50,9 @@ namespace GraphLib.Extensions
         /// otherwise - <see cref="false"/></returns>
         public static bool IsNeighbour(this IVertex self, IVertex candidate)
         {
-            return self.Neighbours.Any(vertex => ReferenceEquals(vertex, candidate));
+            return self.Neighbours.Any(vertex =>
+                ReferenceEquals(vertex, candidate)
+                && ReferenceEquals(vertex.Graph, candidate.Graph));
         }
 
         /// <summary>
@@ -136,7 +138,7 @@ namespace GraphLib.Extensions
         /// <param name="graph">A graph, where vertex is situated</param>
         /// <exception cref="ArgumentException">Thrown when <paramref name="graph"/> 
         /// doesn't contain <paramref name="self"/></exception>
-        public static IReadOnlyCollection<IVertex> SetNeighbours(this IVertex self)
+        public static IReadOnlyCollection<IVertex> GetNeighbours(this IVertex self)
         {
             return self
                 .NeighboursCoordinates

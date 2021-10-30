@@ -1,5 +1,4 @@
 ﻿using GraphLib.Base;
-using GraphLib.Extensions;
 using GraphLib.Interfaces;
 using GraphLib.Interfaces.Factories;
 using GraphLib.Serialization.Exceptions;

@@ -7,7 +7,6 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
-using static Common.Extensions.IntExtensions;
 
 namespace GraphLib.Base
 {
@@ -23,26 +22,21 @@ namespace GraphLib.Base
 
         public int[] DimensionsSizes { get; }
 
+        public IVertex this[ICoordinate coordinate]
+        {
+            get => vertices.TryGetValue(coordinate, out var vertex) ? vertex : NullVertex.Instance;
+        }
+
         protected BaseGraph(int numberOfDimensions, IEnumerable<IVertex> vertices, params int[] dimensionSizes)
         {
             DimensionsSizes = dimensionSizes.ToArray();
             int size = DimensionsSizes.AggregateOrDefault(IntExtensions.Multiply);
-            this.vertices = vertices.ToDictionary(vertex => vertex.Position, vertex => vertex);
+            this.vertices = vertices.ToDictionary(vertex => vertex.Position);
             if (dimensionSizes.Length != numberOfDimensions || size != Size)
             {
                 throw new WrongNumberOfDimensionsException(nameof(dimensionSizes));
             }
             Vertices.ForEach(SetGraphForVertex);
-        }
-
-        static BaseGraph()
-        {
-            DimensionNames = new[] { "Width", "Length", "Height" };
-        }
-
-        public IVertex this[ICoordinate coordinate]
-        {
-            get => vertices.TryGetValue(coordinate, out var vertex) ? vertex : NullVertex.Instance;
         }
 
         public override bool Equals(object obj)
@@ -82,13 +76,13 @@ namespace GraphLib.Base
                 .GetFields(BindingFlags.NonPublic | BindingFlags.Instance)
                 .Where(field => field.Name.Contains(nameof(vertex.Graph)))
                 .FirstOrDefault()
-                ?.SetValue(vertex, this);
+                .TrySetValue(vertex, this);
         }
 
-        protected static string[] DimensionNames { get; }
-        private readonly Dictionary<ICoordinate, IVertex> vertices;
-
+        protected static string[] DimensionNames = new[] { "Width", "Length", "Height" };
         private static readonly string ParamsFormat = "Obstacle percent: {0} ({1}/{2})";
         private static readonly string LargeSpace = "   ";
+
+        private readonly Dictionary<ICoordinate, IVertex> vertices;
     }
 }

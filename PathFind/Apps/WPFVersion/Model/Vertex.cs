@@ -20,7 +20,7 @@ namespace WPFVersion.Model
             Position = coordinate;
             NeighboursCoordinates = radar;
             this.Initialize();
-            neighbours = new Lazy<IReadOnlyCollection<IVertex>>(this.SetNeighbours);
+            neighbours = new Lazy<IReadOnlyCollection<IVertex>>(this.GetNeighbours);
         }
 
         public Vertex(VertexSerializationInfo info)

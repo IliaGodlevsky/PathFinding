@@ -1,5 +1,6 @@
 ﻿using Algorithm.Algos.Algos;
 using Algorithm.Base;
+using Algorithm.Factory.Attrbiutes;
 using Algorithm.Interfaces;
 using Algorithm.Realizations.Heuristic;
 using GraphLib.Interfaces;
@@ -7,6 +8,7 @@ using System.ComponentModel;
 
 namespace Algorithm.Factory
 {
+    [WaveGroup(5)]
     [Description("Lee algorithm (heuristic)")]
     public sealed class BestFirstLeeAlgorithmFactory : IAlgorithmFactory
     {

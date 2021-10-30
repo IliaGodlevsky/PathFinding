@@ -39,37 +39,5 @@ namespace Common.Tests
 
             Assert.IsTrue(matches);
         }
-
-        [Test]
-        public void ContainsReferences_ArrayContainsElements_ReturnsTrue()
-        {
-            var object1 = new object();
-            var object2 = new object();
-            var object3 = new object();
-            var object4 = new object();
-            var refToObject1 = object1;
-            var refToObject2 = object2;
-            var objects = new[] { object1, object2, object3, object4 };
-
-            bool containsAll = objects.ContainsReferences(refToObject1, refToObject2);
-
-            Assert.IsTrue(containsAll);
-        }
-
-        [Test]
-        public void ContainsReferences_ArrayDoesntContainsElements_ReturnsFalse()
-        {
-            string str1 = "Day";
-            string str2 = "Night";
-            string str3 = "Sun";
-            string str4 = "Moon";
-            string str5 = new string("Day".ToCharArray());
-            string str6 = new string("Night".ToCharArray());
-            var strings = new[] { str1, str2, str3, str4 };
-
-            bool containsAll = strings.ContainsReferences(str5, str6);
-
-            Assert.IsFalse(containsAll);
-        }
     }
 }

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Common.Attrbiutes;
+using System;
 using System.ComponentModel;
 using System.Linq;
 using System.Reflection;
@@ -53,6 +54,22 @@ namespace Common.Extensions
             }
             return type?.GetAttributeOrNull<DescriptionAttribute>()
                 ?.Description ?? type.Name;
+        }
+
+        public static int GetGroupAttributeValueOrMaxValue<T>(this T self)
+        {
+            return self.GetAttributeOrNull<T, GroupAttribute>()?.OrderInGroup ?? int.MaxValue;
+        }
+
+        public static TAttribute GetAttributeOrNull<T, TAttribute>(this T self)
+            where TAttribute : Attribute
+        {
+            MemberInfo type = self.GetType();
+            if (self is Enum e)
+            {
+                type = e.GetType().GetField(e.ToString());
+            }
+            return type?.GetAttributeOrNull<TAttribute>();
         }
 
         public static bool IsOneOf<T>(this T self, params T[] objects)

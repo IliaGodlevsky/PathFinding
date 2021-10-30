@@ -104,7 +104,7 @@ namespace Algorithm.Base
 
         protected virtual void PrepareForPathfinding()
         {
-            if (!graph.ContainsReferences(endPoints))
+            if (!graph.Contains(endPoints))
             {
                 throw new EndPointsNotFromCurrentGraphException(graph, endPoints);
             }

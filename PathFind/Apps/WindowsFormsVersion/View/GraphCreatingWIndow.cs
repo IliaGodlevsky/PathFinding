@@ -1,5 +1,4 @@
-﻿using GraphLib.Interfaces.Factories;
-using System.Linq;
+﻿using System.Linq;
 using System.Windows.Forms;
 using WindowsFormsVersion.ViewModel;
 
@@ -18,7 +17,6 @@ namespace WindowsFormsVersion.View
             okButton.Click += Model.CreateGraph;
             cancelButton.Click += Model.CancelCreateGraph;
 
-
             var source = model.GraphAssembles.ToArray();
             graphAssemblesListBox.DataSource = source;
 
@@ -29,49 +27,9 @@ namespace WindowsFormsVersion.View
                 nameof(graphAssemblesListBox.SelectedValue),
                 model,
                 nameof(model.SelectedGraphAssemble),
-                true);
-            graphAssembleBinding.Parse += GraphAssembleToInterface;
+                true,
+                DataSourceUpdateMode.OnPropertyChanged);
             graphAssemblesListBox.DataBindings.Add(graphAssembleBinding);
-
-            int ConvertFromString(string str, int alternativeResult)
-            {
-                return int.TryParse(str, out int number)
-                    ? number
-                    : alternativeResult;
-            }
-
-            void StringToWidth(object sender, ConvertEventArgs e)
-            {
-                var value = ConvertFromString(
-                    e.Value.ToString(),
-                    Constants.GraphWidthValueRange.LowerValueOfRange);
-
-                value = Constants.GraphWidthValueRange.ReturnInRange(value);
-
-                e.Value = value;
-            }
-
-            void GraphAssembleToInterface(object sender, ConvertEventArgs e)
-            {
-                var value = (IGraphAssemble)e.Value;
-                e.Value = value;
-            }
-
-            void StringToHeight(object sender, ConvertEventArgs e)
-            {
-                var value = ConvertFromString(
-                    e.Value.ToString(),
-                    Constants.GraphLengthValueRange.LowerValueOfRange);
-
-                value = Constants.GraphLengthValueRange.ReturnInRange(value);
-
-                e.Value = value;
-            }
-
-            void IntToString(object sender, ConvertEventArgs e)
-            {
-                e.Value = e.Value.ToString();
-            }
 
             var bindWidth = new Binding(
                 nameof(widthTextBox.Text),
@@ -109,6 +67,40 @@ namespace WindowsFormsVersion.View
                 true,
                 DataSourceUpdateMode.OnPropertyChanged);
             obstacleTextBox.DataBindings.Add(bindObstaclePercent);
+        }
+
+        private int ConvertFromString(string str, int alternativeResult)
+        {
+            return int.TryParse(str, out int number)
+                ? number
+                : alternativeResult;
+        }
+
+        private void StringToWidth(object sender, ConvertEventArgs e)
+        {
+            var value = ConvertFromString(
+                e.Value.ToString(),
+                Constants.GraphWidthValueRange.LowerValueOfRange);
+
+            value = Constants.GraphWidthValueRange.ReturnInRange(value);
+
+            e.Value = value;
+        }
+
+        private void StringToHeight(object sender, ConvertEventArgs e)
+        {
+            var value = ConvertFromString(
+                e.Value.ToString(),
+                Constants.GraphLengthValueRange.LowerValueOfRange);
+
+            value = Constants.GraphLengthValueRange.ReturnInRange(value);
+
+            e.Value = value;
+        }
+
+        private void IntToString(object sender, ConvertEventArgs e)
+        {
+            e.Value = e.Value.ToString();
         }
     }
 }
