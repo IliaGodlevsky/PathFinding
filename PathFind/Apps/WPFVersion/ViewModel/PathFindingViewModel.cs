@@ -17,6 +17,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using WPFVersion.Enums;
+using WPFVersion.Extensions;
 using WPFVersion.Infrastructure;
 using WPFVersion.Messages;
 
@@ -79,7 +80,7 @@ namespace WPFVersion.ViewModel
             Stopwatch.StartNew().Pause(DelayTime).Cancel();
             string time = timer.ToFormattedString();
             var message = new UpdateStatisticsMessage(Index, time, visitedVerticesCount);
-            Messenger.Default.Send(message, MessageTokens.AlgorithmStatisticsModel);
+            await Messenger.Default.SendAsync(message, MessageTokens.AlgorithmStatisticsModel);
             await Task.Run(() => base.OnVertexVisited(sender, e));
         }
 
