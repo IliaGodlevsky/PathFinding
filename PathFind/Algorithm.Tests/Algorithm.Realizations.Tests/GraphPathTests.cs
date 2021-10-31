@@ -1,7 +1,6 @@
 ﻿using Algorithm.Realizations.GraphPaths;
 using Algorithm.Сompanions;
 using Common.Extensions;
-using GraphLib.Extensions;
 using GraphLib.Interfaces;
 using GraphLib.Interfaces.Factories;
 using GraphLib.TestRealizations.TestFactories;

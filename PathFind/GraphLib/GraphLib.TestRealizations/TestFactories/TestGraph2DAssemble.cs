@@ -25,7 +25,7 @@ namespace GraphLib.TestRealizations.TestFactories
             var graph = (Graph2D)base.AssembleGraph(0, Constants.DimensionSizes2D);
             var matrices = new Matrices(new CostMatrix(graph), new ObstacleMatrix(graph));
             matrices.Overlay();
-            return graph; 
+            return graph;
         }
     }
 }

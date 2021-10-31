@@ -1,4 +1,5 @@
 ﻿using Algorithm.Base;
+using Algorithm.Interfaces;
 using GalaSoft.MvvmLight.Messaging;
 using GraphViewModel.Interfaces;
 using System.ComponentModel;
@@ -16,6 +17,8 @@ namespace WPFVersion.ViewModel
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
+
+        public IAlgorithm Algorithm => algorithm;
 
         public int Index { get; }
         public string AlgorithmName { get; }

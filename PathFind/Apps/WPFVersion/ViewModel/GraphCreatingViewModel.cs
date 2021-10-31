@@ -8,6 +8,7 @@ using Logging.Interface;
 using System;
 using System.Collections.Generic;
 using System.Windows.Input;
+using WPFVersion.Extensions;
 using WPFVersion.Infrastructure;
 using WPFVersion.Messages;
 
@@ -34,7 +35,7 @@ namespace WPFVersion.ViewModel
             {
                 var graph = await SelectedGraphAssemble.AssembleGraphAsync(ObstaclePercent, GraphParametres);
                 var message = new GraphCreatedMessage(graph);
-                Messenger.Default.Send(message, MessageTokens.MainModel);
+                Messenger.Default.SendMany(message, MessageTokens.MainModel, MessageTokens.AlgorithmStatisticsModel);
             }
             catch (Exception ex)
             {

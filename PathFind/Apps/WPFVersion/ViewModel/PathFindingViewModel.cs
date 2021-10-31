@@ -1,4 +1,5 @@
-﻿using Algorithm.Factory;
+﻿using Algorithm.Base;
+using Algorithm.Factory;
 using Algorithm.Infrastructure.EventArguments;
 using Common.Extensions;
 using Common.Interface;
@@ -72,20 +73,17 @@ namespace WPFVersion.ViewModel
             Messenger.Default.Send(message, MessageTokens.AlgorithmStatisticsModel);
             var statusMessage = new AlgorithmStatusMessage(status, Index);
             Messenger.Default.Send(statusMessage, MessageTokens.AlgorithmStatisticsModel);
+            var pathFoundMessage = new PathFoundMessage(algorithm, path);
+            Messenger.Default.Send(pathFoundMessage, MessageTokens.VisualizationModel);
         }
 
-        protected override async void OnVertexVisited(object sender, AlgorithmEventArgs e)
+        protected override void OnVertexVisited(object sender, AlgorithmEventArgs e)
         {
             Stopwatch.StartNew().Pause(DelayTime).Cancel();
             string time = timer.ToFormattedString();
             var message = new UpdateStatisticsMessage(Index, time, visitedVerticesCount);
             Messenger.Default.Send(message, MessageTokens.AlgorithmStatisticsModel);
-            await Task.Run(() => base.OnVertexVisited(sender, e));
-        }
-
-        protected override async void OnVertexEnqueued(object sender, AlgorithmEventArgs e)
-        {
-            await Task.Run(() => base.OnVertexEnqueued(sender, e));
+            base.OnVertexVisited(sender, e);
         }
 
         protected override void OnAlgorithmInterrupted(object sender, ProcessEventArgs e)
@@ -113,6 +111,13 @@ namespace WPFVersion.ViewModel
         {
             ExecuteCloseWindowCommand(null);
             base.FindPath();
+        }
+
+        protected override void SubscribeOnAlgorithmEvents(PathfindingAlgorithm algorithm)
+        {
+            var message = new AlgorithmChosenMessage(algorithm, endPoints);
+            Messenger.Default.Send(message, MessageTokens.VisualizationModel);
+            base.SubscribeOnAlgorithmEvents(algorithm);
         }
 
         private bool CanExecuteConfirmPathFindAlgorithmChoice(object param)

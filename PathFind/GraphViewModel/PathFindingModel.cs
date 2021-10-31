@@ -60,10 +60,10 @@ namespace GraphViewModel
 
         protected virtual void OnVertexVisited(object sender, AlgorithmEventArgs e)
         {
-            if (!endPoints.IsEndPoint(e.Current))
-            {
-                (e.Current as IVisualizable)?.VisualizeAsVisited();
-            }
+            //if (!endPoints.IsEndPoint(e.Current))
+            //{
+            //    (e.Current as IVisualizable)?.VisualizeAsVisited();
+            //}
             visitedVerticesCount++;
         }
 
@@ -74,10 +74,10 @@ namespace GraphViewModel
 
         protected virtual void OnVertexEnqueued(object sender, AlgorithmEventArgs e)
         {
-            if (!endPoints.IsEndPoint(e.Current))
-            {
-                (e.Current as IVisualizable)?.VisualizeAsEnqueued();
-            }
+            //if (!endPoints.IsEndPoint(e.Current))
+            //{
+            //    (e.Current as IVisualizable)?.VisualizeAsEnqueued();
+            //}
         }
 
         protected virtual void OnAlgorithmInterrupted(object sender, ProcessEventArgs e)

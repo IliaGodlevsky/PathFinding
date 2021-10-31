@@ -11,6 +11,7 @@ using WPFVersion.Enums;
 using WPFVersion.Extensions;
 using WPFVersion.Infrastructure;
 using WPFVersion.Messages;
+using WPFVersion.Model;
 
 namespace WPFVersion.ViewModel
 {
@@ -26,7 +27,20 @@ namespace WPFVersion.ViewModel
         public ICommand InterruptSelelctedAlgorithmCommand { get; }
         public ICommand RemoveSelelctedAlgorithmCommand { get; }
 
-        public AlgorithmViewModel SelectedAlgorithm { get; set; }
+        private AlgorithmViewModel selected;
+        public AlgorithmViewModel SelectedAlgorithm 
+        {
+            get => selected;
+            set
+            {
+                selected = value;
+                if (selected?.Algorithm != null && IsAllFinished)
+                {
+                    var message = new ShowAlgorithmVisualization(selected.Algorithm);
+                    Messenger.Default.Send(message, MessageTokens.VisualizationModel);
+                }
+            }
+        }
 
         private ObservableCollection<AlgorithmViewModel> statistics;
         public ObservableCollection<AlgorithmViewModel> Statistics
@@ -44,6 +58,7 @@ namespace WPFVersion.ViewModel
             Messenger.Default.Register<InterruptAllAlgorithmsMessage>(this, MessageTokens.AlgorithmStatisticsModel, OnAllAlgorithmInterrupted);
             Messenger.Default.Register<ClearStatisticsMessage>(this, MessageTokens.AlgorithmStatisticsModel, OnClearStatistics);
             Messenger.Default.Register<AlgorithmStatusMessage>(this, MessageTokens.AlgorithmStatisticsModel, SetAlgorithmStatistics);
+            Messenger.Default.Register<GraphCreatedMessage>(this, MessageTokens.AlgorithmStatisticsModel, NewGraphCreated);
         }
 
         private void SetAlgorithmStatistics(AlgorithmStatusMessage message)
@@ -68,6 +83,7 @@ namespace WPFVersion.ViewModel
         private void UpdateAlgorithmStatistics(UpdateStatisticsMessage message)
         {
             Application.Current.Dispatcher.Invoke(() => Statistics[message.Index].RecieveMessage(message));
+
         }
 
         private void OnAllAlgorithmInterrupted(InterruptAllAlgorithmsMessage message)
@@ -75,9 +91,16 @@ namespace WPFVersion.ViewModel
             Statistics.ForEach(stat => stat.TryInterrupt());
         }
 
+        private void NewGraphCreated(GraphCreatedMessage message)
+        {
+            visualizationModel?.Clear();
+            visualizationModel = new VertexVisualizationModel(message.Graph);
+        }
+
         private void OnClearStatistics(ClearStatisticsMessage message)
         {
             Statistics.Clear();
+            visualizationModel?.Clear();
             SendIsAllAlgorithmsFinishedMessage();
         }
 
@@ -103,10 +126,13 @@ namespace WPFVersion.ViewModel
         }
 
         private void SendIsAllAlgorithmsFinishedMessage()
-        {
-            var isAllFinished = Statistics.All(stat => !stat.IsStarted());
-            var message = new IsAllAlgorithmsFinishedMessage(isAllFinished);
+        {           
+            var message = new IsAllAlgorithmsFinishedMessage(IsAllFinished);
             Messenger.Default.Send(message, MessageTokens.MainModel);
         }
+
+        private bool IsAllFinished => Statistics.All(stat => !stat.IsStarted());
+
+        private VertexVisualizationModel visualizationModel;
     }
 }

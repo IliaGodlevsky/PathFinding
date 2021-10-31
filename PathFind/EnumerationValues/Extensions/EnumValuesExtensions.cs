@@ -7,12 +7,6 @@ namespace EnumerationValues.Extensions
 {
     public static class EnumValuesExtensions
     {
-        public static Tuple<T1, TEnum>[] ToTupleCollection<T1, TEnum>(this IEnumValues<TEnum> self, Func<TEnum, T1> item1Selector)
-            where TEnum : Enum
-        {
-            return self.ToTupleCollection(item1Selector, value => value);
-        }
-
         public static InclusiveValueRange<TEnum> ToValueRange<TEnum>(this IEnumValues<TEnum> self)
             where TEnum : struct, Enum
         {

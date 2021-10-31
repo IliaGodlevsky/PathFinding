@@ -75,7 +75,9 @@
     <Compile Include="Enums\AlgorithmStatus.cs" />
     <Compile Include="Extensions\AlgorithmViewModelExtensions.cs" />
     <Compile Include="Extensions\ColorExtensions.cs" />
+    <Compile Include="Extensions\IMessengerExtensions.cs" />
     <Compile Include="Infrastructure\RelayCommand.cs" />
+    <Compile Include="Messages\AlgorithmChosenMessage.cs" />
     <Compile Include="Messages\AlgorithmStartedMessage.cs" />
     <Compile Include="Messages\AlgorithmIndexMessage.cs" />
     <Compile Include="Messages\AlgorithmStatusMessage.cs" />
@@ -84,6 +86,8 @@
     <Compile Include="Messages\GraphCreatedMessage.cs" />
     <Compile Include="Messages\InterruptAllAlgorithmsMessage.cs" />
     <Compile Include="Messages\IsAllAlgorithmsFinishedMessage.cs" />
+    <Compile Include="Messages\PathFoundMessage.cs" />
+    <Compile Include="Messages\ShowAlgorithmVisualization.cs" />
     <Compile Include="Messages\UpdateStatisticsMessage.cs" />
     <Compile Include="MessageTokens.cs" />
     <Compile Include="Model\EndPoints.cs" />
@@ -98,6 +102,7 @@
     <Compile Include="Model\VerticesCostMode\IVerticesCostsMode.cs" />
     <Compile Include="Model\VerticesCostMode\UnweightedVerticesCostsMode.cs" />
     <Compile Include="Model\VerticesCostMode\WeightedVerticesCostsMode.cs" />
+    <Compile Include="Model\VertexVisualizationModel.cs" />
     <Compile Include="Model\WindowService.cs" />
     <Compile Include="Model\GraphField.cs" />
     <Compile Include="Model\GraphFieldFactory.cs" />
