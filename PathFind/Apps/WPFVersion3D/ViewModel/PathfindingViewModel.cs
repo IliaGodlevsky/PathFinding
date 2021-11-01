@@ -18,6 +18,7 @@ using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using WPFVersion3D.Enums;
+using WPFVersion3D.Extensions;
 using WPFVersion3D.Infrastructure;
 using WPFVersion3D.Messages;
 
@@ -76,7 +77,7 @@ namespace WPFVersion3D.ViewModel
             Stopwatch.StartNew().Pause(DelayTime).Cancel();
             string time = timer.ToFormattedString();
             var message = new UpdateAlgorithmStatisticsMessage(Index, time, visitedVerticesCount);
-            Messenger.Default.Send(message, MessageTokens.AlgorithmStatisticsModel);
+            await Messenger.Default.SendAsync(message, MessageTokens.AlgorithmStatisticsModel);
             await Task.Run(() => base.OnVertexVisited(sender, e));
         }
 

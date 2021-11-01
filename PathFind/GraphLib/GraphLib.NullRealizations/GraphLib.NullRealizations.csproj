@@ -47,6 +47,7 @@
     <Compile Include="NullObjects\NullCost.cs" />
     <Compile Include="NullObjects\NullGraph.cs" />
     <Compile Include="NullObjects\NullVertex.cs" />
+    <Compile Include="NullObjects\NullVisualizable.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

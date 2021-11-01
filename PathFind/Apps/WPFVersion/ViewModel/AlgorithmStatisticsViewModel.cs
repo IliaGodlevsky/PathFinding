@@ -83,7 +83,6 @@ namespace WPFVersion.ViewModel
         private void UpdateAlgorithmStatistics(UpdateStatisticsMessage message)
         {
             Application.Current.Dispatcher.Invoke(() => Statistics[message.Index].RecieveMessage(message));
-
         }
 
         private void OnAllAlgorithmInterrupted(InterruptAllAlgorithmsMessage message)
@@ -93,7 +92,11 @@ namespace WPFVersion.ViewModel
 
         private void NewGraphCreated(GraphCreatedMessage message)
         {
-            visualizationModel?.Clear();
+            if (visualizationModel != null)
+            {
+                visualizationModel.Clear();
+                visualizationModel.Dispose();
+            }
             visualizationModel = new VertexVisualizationModel(message.Graph);
         }
 
@@ -106,18 +109,20 @@ namespace WPFVersion.ViewModel
 
         private void ExecuteRemoveFromStatisticsCommand(object param)
         {
-            Statistics.Remove(SelectedAlgorithm);
+            var message = new RemoveVisualizationMessage(SelectedAlgorithm.Algorithm);
+            Messenger.Default.Send(message, MessageTokens.VisualizationModel);
+            Statistics.Remove(SelectedAlgorithm);           
             SendIsAllAlgorithmsFinishedMessage();
-        }
-
-        private bool CanExecuteRemoveFromStatisticsCommand(object param)
-        {
-            return Statistics.All(stat => !stat.IsStarted());
         }
 
         private void ExecuteInterruptSelectedAlgorithmCommand(object param)
         {
             SelectedAlgorithm?.TryInterrupt();
+        }
+
+        private bool CanExecuteRemoveFromStatisticsCommand(object param)
+        {
+            return Statistics.All(stat => !stat.IsStarted());
         }
 
         private bool CanExecuteInterruptSelectedAlgorithmCommand(object param)

@@ -108,6 +108,7 @@ namespace WPFVersion.ViewModel
             base.ConnectNewGraph(graph);
             WindowService.Adjust(graph);
             Messenger.Default.Send(new ClearStatisticsMessage(), MessageTokens.AlgorithmStatisticsModel);
+            Messenger.Default.Send(new GraphCreatedMessage(Graph), MessageTokens.AlgorithmStatisticsModel);
         }
 
         private void PrepareWindow(IViewModel model, Window window)

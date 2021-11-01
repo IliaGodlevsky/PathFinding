@@ -75,7 +75,6 @@
     <Compile Include="Enums\AlgorithmStatus.cs" />
     <Compile Include="Extensions\AlgorithmViewModelExtensions.cs" />
     <Compile Include="Extensions\ColorExtensions.cs" />
-    <Compile Include="Extensions\MessageExtensions.cs" />
     <Compile Include="Extensions\IMessengerExtensions.cs" />
     <Compile Include="Infrastructure\RelayCommand.cs" />
     <Compile Include="Messages\AlgorithmChosenMessage.cs" />
@@ -88,6 +87,7 @@
     <Compile Include="Messages\InterruptAllAlgorithmsMessage.cs" />
     <Compile Include="Messages\IsAllAlgorithmsFinishedMessage.cs" />
     <Compile Include="Messages\PathFoundMessage.cs" />
+    <Compile Include="Messages\RemoveVisualizationMessage.cs" />
     <Compile Include="Messages\ShowAlgorithmVisualization.cs" />
     <Compile Include="Messages\UpdateStatisticsMessage.cs" />
     <Compile Include="MessageTokens.cs" />

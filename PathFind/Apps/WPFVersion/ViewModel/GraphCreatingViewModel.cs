@@ -35,7 +35,7 @@ namespace WPFVersion.ViewModel
             {
                 var graph = await SelectedGraphAssemble.AssembleGraphAsync(ObstaclePercent, GraphParametres);
                 var message = new GraphCreatedMessage(graph);
-                Messenger.Default.SendMany(message, MessageTokens.MainModel, MessageTokens.AlgorithmStatisticsModel);
+                Messenger.Default.Send(message, MessageTokens.MainModel);
             }
             catch (Exception ex)
             {

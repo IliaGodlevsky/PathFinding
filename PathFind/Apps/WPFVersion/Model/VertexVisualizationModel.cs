@@ -1,31 +1,21 @@
 ﻿using Algorithm.Infrastructure.EventArguments;
-using Algorithm.Interfaces;
 using GalaSoft.MvvmLight.Messaging;
-using GraphLib.Extensions;
 using GraphLib.Interfaces;
 using GraphViewModel;
+using System;
 using System.Threading.Tasks;
-using System.Windows.Media;
 using WPFVersion.Messages;
 
 namespace WPFVersion.Model
 {
-    internal sealed class VertexVisualizationModel : VisualizationModel<Brush>
+    internal sealed class VertexVisualizationModel : VisualizationModel, IDisposable
     {
         public VertexVisualizationModel(IGraph graph) : base(graph)
         {
             Messenger.Default.Register<PathFoundMessage>(this, MessageTokens.VisualizationModel, PathFound);
             Messenger.Default.Register<AlgorithmChosenMessage>(this, MessageTokens.VisualizationModel, AlgorithmChosen);
             Messenger.Default.Register<ShowAlgorithmVisualization>(this, MessageTokens.VisualizationModel, ShowVisualization);
-        }
-
-        public override void ShowAlgorithmVisualization(IAlgorithm algorithm)
-        {
-            Task.Run(() =>
-            {
-                HideVisualiztion();
-                base.ShowAlgorithmVisualization(algorithm);
-            });
+            Messenger.Default.Register<RemoveVisualizationMessage>(this, MessageTokens.VisualizationModel, RemoveVisualization);
         }
 
         public override async void OnVertexEnqueued(object sender, AlgorithmEventArgs e)
@@ -54,9 +44,14 @@ namespace WPFVersion.Model
             AddPathVertices(message.Algorithm, message.Path);
         }
 
-        public override void HideVisualiztion()
+        private void RemoveVisualization(RemoveVisualizationMessage message)
         {
-            graph.Refresh();
+            Remove(message.Algorithm);
+        }
+
+        public void Dispose()
+        {
+            Messenger.Default.Unregister(this);
         }
     }
 }

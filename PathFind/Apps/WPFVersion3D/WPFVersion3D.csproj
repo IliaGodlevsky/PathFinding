@@ -79,6 +79,7 @@
     <Compile Include="Extensions\AlgorithmViewModelExtensions.cs" />
     <Compile Include="Extensions\ColorExtensions.cs" />
     <Compile Include="Extensions\EnumValuesExtensions.cs" />
+    <Compile Include="Extensions\MessengerExtensions.cs" />
     <Compile Include="Messages\AlgorithmStartedMessage.cs" />
     <Compile Include="Messages\AlgorithmIndexMessage.cs" />
     <Compile Include="Messages\IsAllAlgorithmsFinishedMessage.cs" />

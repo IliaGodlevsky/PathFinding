@@ -2,7 +2,7 @@
 using System;
 using System.Threading.Tasks;
 
-namespace WPFVersion.Extensions
+namespace WPFVersion3D.Extensions
 {
     internal static class MessengerExtensions
     {

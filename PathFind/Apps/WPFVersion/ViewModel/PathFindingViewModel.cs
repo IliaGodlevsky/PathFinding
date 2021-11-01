@@ -15,7 +15,6 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
-using System.Threading.Tasks;
 using System.Windows.Input;
 using WPFVersion.Enums;
 using WPFVersion.Extensions;
@@ -78,13 +77,18 @@ namespace WPFVersion.ViewModel
             Messenger.Default.Send(pathFoundMessage, MessageTokens.VisualizationModel);
         }
 
-        protected override void OnVertexVisited(object sender, AlgorithmEventArgs e)
+        protected override async void OnVertexVisited(object sender, AlgorithmEventArgs e)
         {
             Stopwatch.StartNew().Pause(DelayTime).Cancel();
             string time = timer.ToFormattedString();
             var message = new UpdateStatisticsMessage(Index, time, visitedVerticesCount);
             await Messenger.Default.SendAsync(message, MessageTokens.AlgorithmStatisticsModel);
-            base.OnVertexVisited(sender, e);
+            visitedVerticesCount++;
+        }
+
+        protected override void OnVertexEnqueued(object sender, AlgorithmEventArgs e)
+        {
+            
         }
 
         protected override void OnAlgorithmInterrupted(object sender, ProcessEventArgs e)
@@ -116,9 +120,13 @@ namespace WPFVersion.ViewModel
 
         protected override void SubscribeOnAlgorithmEvents(PathfindingAlgorithm algorithm)
         {
-            var message = new AlgorithmChosenMessage(algorithm, endPoints);
-            Messenger.Default.Send(message, MessageTokens.VisualizationModel);
+            if (IsVisualizationRequired)
+            {
+                var message = new AlgorithmChosenMessage(algorithm, endPoints);
+                Messenger.Default.Send(message, MessageTokens.VisualizationModel);
+            }
             base.SubscribeOnAlgorithmEvents(algorithm);
+
         }
 
         private bool CanExecuteConfirmPathFindAlgorithmChoice(object param)

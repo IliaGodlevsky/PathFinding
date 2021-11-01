@@ -1,5 +1,7 @@
 ﻿using Common.Attrbiutes;
 using System;
+using System.Collections;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -175,6 +177,47 @@ namespace Common.Extensions
                 .GroupBy(item => item.GetAttributeOrNull<T, GroupAttribute>())
                 .Select(item => item.OrderBy(x => x.GetGroupAttributeValueOrMaxValue()))
                 .SelectMany(item => item);
+        }
+
+        public static TValue TryGetOrAdd<TKey, TValue>(this ConcurrentDictionary<TKey, TValue> self, TKey key)
+            where TValue : new()
+        {
+            if (self.TryGetValue(key, out var value))
+            {
+                return value;
+            }
+
+            value = new TValue();
+            self.TryAdd(key, value);
+            return value;
+        }
+
+        public static TValue TryGetOrAdd<TKey, TValue>(this IDictionary<TKey, TValue> self, TKey key)
+                where TValue : new()
+        {
+            if (self.TryGetValue(key, out var value))
+            {
+                return value;
+            }
+
+            value = new TValue();
+            self.Add(key, value);
+            return value;
+        }
+
+        public static TValue GetOrDefault<TKey, TValue>(this IDictionary<TKey, TValue> self, TKey key, Func<TValue> defaultValue)
+        {
+            if (self.TryGetValue(key, out var value))
+            {
+                return value;
+            }
+
+            return defaultValue();
+        }
+
+        public static List<T> GetOrEmpty<TKey, T>(this IDictionary<TKey, List<T>> self, TKey key)
+        {
+            return self.GetOrDefault(key, () => Enumerable.Empty<T>().ToList());
         }
     }
 }
