@@ -8,7 +8,6 @@ using Logging.Interface;
 using System;
 using System.Collections.Generic;
 using System.Windows.Input;
-using WPFVersion.Extensions;
 using WPFVersion.Infrastructure;
 using WPFVersion.Messages;
 

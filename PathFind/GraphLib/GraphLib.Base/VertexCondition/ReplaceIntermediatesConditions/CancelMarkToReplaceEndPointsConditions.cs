@@ -1,4 +1,4 @@
-﻿using Common.Extensions;
+﻿using Common.Extensions.EnumerableExtensions;
 using GraphLib.Base.EndPointsInspection.Abstractions;
 using GraphLib.Interfaces;
 

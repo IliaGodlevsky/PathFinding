@@ -43,6 +43,10 @@
   <ItemGroup>
     <Compile Include="BaseCoordinate.cs" />
     <Compile Include="BaseEndPoints.cs" />
+    <Compile Include="VertexCondition\EndPointsConditions\ReturnIntermediateColorCondition.cs" />
+    <Compile Include="VertexCondition\EndPointsConditions\ReturnMarkedToReplaceColorCondition.cs" />
+    <Compile Include="VertexCondition\EndPointsConditions\ReturnSourceColorCondition.cs" />
+    <Compile Include="VertexCondition\EndPointsConditions\ReturnTargetColorCondition.cs" />
     <Compile Include="VerticesConditions\MarkIntermediateToReplaceEndPointsConditions.cs" />
     <Compile Include="VertexCondition\VertexRevertCondition\SetVertexAsObstacleCondition.cs" />
     <Compile Include="VertexCondition\EndPointsConditions\ReplaceIntermediateVertexCondition.cs" />
@@ -63,6 +67,7 @@
     <Compile Include="BaseGraphFieldFactory.cs" />
     <Compile Include="BaseVertexCost.cs" />
     <Compile Include="BaseVertexEventHolder.cs" />
+    <Compile Include="VerticesConditions\ReturnColorsConditions.cs" />
     <Compile Include="VerticesConditions\ReverseVertexConditions.cs" />
     <Compile Include="VerticesConditions\SetEndPointsConditions.cs" />
     <Compile Include="VertexCondition\VertexRevertCondition\SetVertexAsRegularCondition.cs" />

@@ -6,13 +6,11 @@ namespace WPFVersion.Extensions
 {
     internal static class IMessengerExtensions
     {
-        public static void SendMany<TMessage>(this IMessenger messenger,
-            TMessage message, params Guid[] tokens)
+        public static void SendMany<TMessage1, TMessage2>(this IMessenger messenger,
+            Guid token, TMessage1 message1, TMessage2 message2)
         {
-            for (int i = 0; i < tokens.Length; i++)
-            {
-                messenger.Send(message, tokens[i]);
-            }
+            messenger.Send(message1, token);
+            messenger.Send(message2, token);
         }
 
         public static async Task SendAsync<TMessage>(this IMessenger self, TMessage message, Guid messageToken)

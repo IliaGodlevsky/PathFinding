@@ -1,6 +1,6 @@
-﻿using Algorithm.Extensions;
-using Algorithm.Interfaces;
+﻿using Algorithm.Interfaces;
 using Algorithm.Realizations.Heuristic;
+using Common.Extensions.EnumerableExtensions;
 using GraphLib.Interfaces;
 using Interruptable.Interface;
 using System;

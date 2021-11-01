@@ -1,5 +1,4 @@
-﻿using Common.Extensions;
-using GraphLib.Extensions;
+﻿using GraphLib.Extensions;
 using GraphLib.Interfaces;
 
 namespace GraphLib.Base

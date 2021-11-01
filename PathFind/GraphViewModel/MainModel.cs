@@ -1,5 +1,4 @@
 ﻿using Algorithm.Factory;
-using Common.Extensions;
 using GraphLib.Base;
 using GraphLib.Extensions;
 using GraphLib.Interfaces;
@@ -71,7 +70,7 @@ namespace GraphViewModel
 
         public virtual void ClearGraph()
         {
-            ClearColors();
+            Graph.Refresh();
             GraphParametres = Graph.ToString();
             endPoints.Reset();
         }
@@ -90,10 +89,8 @@ namespace GraphViewModel
 
         public void ClearColors()
         {
-            Graph.Vertices
-                .OfType<IVisualizable>()
-                .Where(vertex => !vertex.IsVisualizedAsEndPoint)
-                .ForEach(vertex => vertex.VisualizeAsRegular());
+            Graph.Refresh();
+            endPoints.ReturnColors(Graph.Vertices.Where(endPoints.IsEndPoint));
         }
 
         protected readonly IEnumerable<IGraphAssemble> graphAssembles;

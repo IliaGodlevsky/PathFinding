@@ -1,5 +1,5 @@
 ﻿using Algorithm.Interfaces;
-using Common.Extensions;
+using Common.Extensions.EnumerableExtensions;
 using System;
 using System.Collections.Generic;
 

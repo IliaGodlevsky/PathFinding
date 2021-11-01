@@ -1,8 +1,7 @@
 ﻿using Algorithm.Base;
-using Algorithm.Extensions;
 using Algorithm.Interfaces;
 using Algorithm.Сompanions;
-using Common.Extensions;
+using Common.Extensions.EnumerableExtensions;
 using GraphLib.Extensions;
 using GraphLib.Interfaces;
 using Interruptable.Interface;

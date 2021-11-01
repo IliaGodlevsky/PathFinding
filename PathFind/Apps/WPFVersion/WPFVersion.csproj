@@ -87,8 +87,6 @@
     <Compile Include="Messages\InterruptAllAlgorithmsMessage.cs" />
     <Compile Include="Messages\IsAllAlgorithmsFinishedMessage.cs" />
     <Compile Include="Messages\PathFoundMessage.cs" />
-    <Compile Include="Messages\RemoveVisualizationMessage.cs" />
-    <Compile Include="Messages\ShowAlgorithmVisualization.cs" />
     <Compile Include="Messages\UpdateStatisticsMessage.cs" />
     <Compile Include="MessageTokens.cs" />
     <Compile Include="Model\EndPoints.cs" />

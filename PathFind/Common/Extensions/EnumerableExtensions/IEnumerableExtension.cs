@@ -1,11 +1,10 @@
 ﻿using Common.Attrbiutes;
+using Common.Extensions.EnumerableExtensions;
 using System;
-using System.Collections;
-using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace Common.Extensions
+namespace Common.Extensions.EnumerableExtensions
 {
     class MatchComparer<T> : IEqualityComparer<T>
     {
@@ -27,7 +26,7 @@ namespace Common.Extensions
         private readonly Func<T, T, bool> predicate;
     }
 
-    public static class EnumerableExtension
+    public static class IEnumerableExtension
     {
         /// <summary>
         /// Distincts <paramref name="collection"/> by <paramref name="selector"/>
@@ -53,19 +52,6 @@ namespace Common.Extensions
             return collection
                 .GroupBy(selector)
                 .Select(FirstOfTheGroup);
-        }
-
-        public static bool Remove<T>(this Queue<T> queue, T item)
-        {
-            bool isRemoved = false;
-            if (queue.Contains(item))
-            {
-                var items = new LinkedList<T>(queue);
-                queue.Clear();
-                isRemoved = items.Remove(item);
-                items.ForEach(queue.Enqueue);
-            }
-            return isRemoved;
         }
 
         /// <summary>
@@ -179,45 +165,21 @@ namespace Common.Extensions
                 .SelectMany(item => item);
         }
 
-        public static TValue TryGetOrAdd<TKey, TValue>(this ConcurrentDictionary<TKey, TValue> self, TKey key)
-            where TValue : new()
+        /// <summary>
+        /// Creates a new queue from specified collection
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="collection"></param>
+        /// <returns>An instance of queue, that contains 
+        /// elements from the specified collection</returns>
+        public static Queue<T> ToQueue<T>(this IEnumerable<T> collection)
         {
-            if (self.TryGetValue(key, out var value))
-            {
-                return value;
-            }
-
-            value = new TValue();
-            self.TryAdd(key, value);
-            return value;
+            return new Queue<T>(collection);
         }
 
-        public static TValue TryGetOrAdd<TKey, TValue>(this IDictionary<TKey, TValue> self, TKey key)
-                where TValue : new()
+        public static int ToHashCode(this IEnumerable<int> array)
         {
-            if (self.TryGetValue(key, out var value))
-            {
-                return value;
-            }
-
-            value = new TValue();
-            self.Add(key, value);
-            return value;
-        }
-
-        public static TValue GetOrDefault<TKey, TValue>(this IDictionary<TKey, TValue> self, TKey key, Func<TValue> defaultValue)
-        {
-            if (self.TryGetValue(key, out var value))
-            {
-                return value;
-            }
-
-            return defaultValue();
-        }
-
-        public static List<T> GetOrEmpty<TKey, T>(this IDictionary<TKey, List<T>> self, TKey key)
-        {
-            return self.GetOrDefault(key, () => Enumerable.Empty<T>().ToList());
+            return array.AggregateOrDefault(IntExtensions.Xor);
         }
     }
 }

@@ -14,8 +14,6 @@ namespace WPFVersion.Model
         {
             Messenger.Default.Register<PathFoundMessage>(this, MessageTokens.VisualizationModel, PathFound);
             Messenger.Default.Register<AlgorithmChosenMessage>(this, MessageTokens.VisualizationModel, AlgorithmChosen);
-            Messenger.Default.Register<ShowAlgorithmVisualization>(this, MessageTokens.VisualizationModel, ShowVisualization);
-            Messenger.Default.Register<RemoveVisualizationMessage>(this, MessageTokens.VisualizationModel, RemoveVisualization);
         }
 
         public override async void OnVertexEnqueued(object sender, AlgorithmEventArgs e)
@@ -34,19 +32,9 @@ namespace WPFVersion.Model
             AddEndPoints(message.Algorithm, message.EndPoints);
         }
 
-        private void ShowVisualization(ShowAlgorithmVisualization message)
-        {
-            ShowAlgorithmVisualization(message.Algorithm);
-        }
-
         private void PathFound(PathFoundMessage message)
         {
             AddPathVertices(message.Algorithm, message.Path);
-        }
-
-        private void RemoveVisualization(RemoveVisualizationMessage message)
-        {
-            Remove(message.Algorithm);
         }
 
         public void Dispose()

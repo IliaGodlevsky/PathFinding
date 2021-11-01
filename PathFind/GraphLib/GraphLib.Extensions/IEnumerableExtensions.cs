@@ -1,11 +1,13 @@
-﻿using Common.Extensions;
+﻿using Common.Extensions.EnumerableExtensions;
 using GraphLib.Interfaces;
+using GraphLib.NullRealizations.NullObjects;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
 namespace GraphLib.Extensions
 {
-    public static class EnumerableExtensions
+    public static class IEnumerableExtensions
     {
         public static bool IsCardinal(this int[] coordinates, int[] neighbourCoordinates)
         {
@@ -30,9 +32,22 @@ namespace GraphLib.Extensions
             return self.Without(endPoints.GetVertices());
         }
 
-        public static int ToHashCode(this IEnumerable<int> array)
+        public static IVertex DequeueOrNullVertex(this Queue<IVertex> queue)
         {
-            return array.AggregateOrDefault(IntExtensions.Xor);
+            return queue.Count == 0 ? NullVertex.Instance : queue.Dequeue();
+        }
+
+        /// <summary>
+        /// Returns the first vertex of the sequence using <paramref name="predicate"/> 
+        /// of returns <see cref="NullVertex"/> if the sequence is empty or 
+        /// no element passes the <paramref name="predicate"/>
+        /// </summary>
+        /// <param name="collection"></param>
+        /// <param name="predicate"></param>
+        /// <returns></returns>
+        public static IVertex FirstOrNullVertex(this IEnumerable<IVertex> collection, Func<IVertex, bool> predicate)
+        {
+            return collection.FirstOrDefault(predicate) ?? NullVertex.Instance;
         }
     }
 }

@@ -1,4 +1,4 @@
-﻿using Common.Extensions;
+﻿using Common.Extensions.EnumerableExtensions;
 using GalaSoft.MvvmLight.Messaging;
 using GraphViewModel.Interfaces;
 using System.Collections.ObjectModel;
@@ -28,7 +28,7 @@ namespace WPFVersion.ViewModel
         public ICommand RemoveSelelctedAlgorithmCommand { get; }
 
         private AlgorithmViewModel selected;
-        public AlgorithmViewModel SelectedAlgorithm 
+        public AlgorithmViewModel SelectedAlgorithm
         {
             get => selected;
             set
@@ -36,8 +36,7 @@ namespace WPFVersion.ViewModel
                 selected = value;
                 if (selected?.Algorithm != null && IsAllFinished)
                 {
-                    var message = new ShowAlgorithmVisualization(selected.Algorithm);
-                    Messenger.Default.Send(message, MessageTokens.VisualizationModel);
+                    visualizationModel?.ShowAlgorithmVisualization(selected.Algorithm);
                 }
             }
         }
@@ -109,9 +108,8 @@ namespace WPFVersion.ViewModel
 
         private void ExecuteRemoveFromStatisticsCommand(object param)
         {
-            var message = new RemoveVisualizationMessage(SelectedAlgorithm.Algorithm);
-            Messenger.Default.Send(message, MessageTokens.VisualizationModel);
-            Statistics.Remove(SelectedAlgorithm);           
+            visualizationModel?.Remove(SelectedAlgorithm.Algorithm);
+            Statistics.Remove(SelectedAlgorithm);
             SendIsAllAlgorithmsFinishedMessage();
         }
 
@@ -131,7 +129,7 @@ namespace WPFVersion.ViewModel
         }
 
         private void SendIsAllAlgorithmsFinishedMessage()
-        {           
+        {
             var message = new IsAllAlgorithmsFinishedMessage(IsAllFinished);
             Messenger.Default.Send(message, MessageTokens.MainModel);
         }

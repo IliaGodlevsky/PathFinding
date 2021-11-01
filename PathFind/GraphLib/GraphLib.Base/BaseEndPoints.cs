@@ -1,4 +1,5 @@
-﻿using GraphLib.Base.VerticesConditions;
+﻿using Common.Extensions.EnumerableExtensions;
+using GraphLib.Base.VerticesConditions;
 using GraphLib.Extensions;
 using GraphLib.Interfaces;
 using System;
@@ -23,6 +24,11 @@ namespace GraphLib.Base
         }
         public bool IsEndPoint(IVertex vertex) => this.GetVertices().Contains(vertex);
 
+        public void ReturnColors(IEnumerable<IVertex> vertices)
+        {
+            vertices.ForEach(returnColorsConditions.ExecuteTheFirstTrue);
+        }
+
         internal protected readonly Collection<IVertex> intermediates;
         internal protected readonly Queue<IVertex> markedToReplaceIntermediates;
 
@@ -32,6 +38,7 @@ namespace GraphLib.Base
             markedToReplaceIntermediates = new Queue<IVertex>();
             leftButtonConditions = new SetEndPointsConditions(this);
             middleButtonConditions = new MarkIntermediateToReplaceEndPointsConditions(this);
+            returnColorsConditions = new ReturnColorsConditions(this);
             Reset();
         }
 
@@ -50,5 +57,6 @@ namespace GraphLib.Base
 
         private readonly IVerticesConditions middleButtonConditions;
         private readonly IVerticesConditions leftButtonConditions;
+        private readonly IVerticesConditions returnColorsConditions;
     }
 }

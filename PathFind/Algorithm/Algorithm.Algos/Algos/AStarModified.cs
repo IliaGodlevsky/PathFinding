@@ -1,7 +1,7 @@
-﻿using Algorithm.Extensions;
-using Algorithm.Interfaces;
+﻿using Algorithm.Interfaces;
 using Algorithm.Realizations.Heuristic;
 using Algorithm.Realizations.StepRules;
+using Common.Extensions.EnumerableExtensions;
 using Common.ValueRanges;
 using GraphLib.Interfaces;
 using Interruptable.Interface;

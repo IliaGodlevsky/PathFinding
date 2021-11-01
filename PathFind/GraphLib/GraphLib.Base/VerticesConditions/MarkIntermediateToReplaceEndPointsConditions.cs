@@ -1,4 +1,4 @@
-﻿using Common.Extensions;
+﻿using Common.Extensions.EnumerableExtensions;
 using GraphLib.Base.VertexCondition.ReplaceIntermediatesConditions;
 using GraphLib.Extensions;
 using GraphLib.Interfaces;
@@ -30,7 +30,8 @@ namespace GraphLib.Base.VerticesConditions
 
         public void ResetAllExecutings()
         {
-            endPoints.markedToReplaceIntermediates.ForEach(cancelMarkToReplace.Execute);
+            var marked = endPoints.markedToReplaceIntermediates.ToArray();
+            marked.ForEach(cancelMarkToReplace.Execute);
         }
 
         private readonly IVertexCondition cancelMarkToReplace;

@@ -1,9 +1,8 @@
-﻿using Algorithm.Extensions;
-using Algorithm.Infrastructure.EventArguments;
+﻿using Algorithm.Infrastructure.EventArguments;
 using Algorithm.Interfaces;
 using Algorithm.NullRealizations;
 using Algorithm.Realizations.GraphPaths;
-using Common.Extensions;
+using Common.Extensions.EnumerableExtensions;
 using GraphLib.Extensions;
 using GraphLib.Interfaces;
 using Interruptable.Interface;

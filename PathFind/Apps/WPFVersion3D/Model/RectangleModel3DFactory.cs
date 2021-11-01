@@ -1,4 +1,4 @@
-﻿using Common.Extensions;
+﻿using Common.Extensions.EnumerableExtensions;
 using System.Windows.Media.Media3D;
 
 namespace WPFVersion3D.Model

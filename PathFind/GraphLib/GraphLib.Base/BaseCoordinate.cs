@@ -1,4 +1,5 @@
-﻿using Common.Interface;
+﻿using Common.Extensions.EnumerableExtensions;
+using Common.Interface;
 using GraphLib.Exceptions;
 using GraphLib.Extensions;
 using GraphLib.Interfaces;

@@ -2,7 +2,7 @@
 using GraphLib.NullRealizations.NullObjects;
 using System.Collections.Generic;
 
-namespace Algorithm.Extensions
+namespace GraphLib.Extensions
 {
     public static class StackExtension
     {

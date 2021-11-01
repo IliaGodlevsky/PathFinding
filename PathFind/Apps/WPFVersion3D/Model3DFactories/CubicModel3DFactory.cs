@@ -1,4 +1,4 @@
-﻿using Common.Extensions;
+﻿using Common.Extensions.EnumerableExtensions;
 using System.Collections.Generic;
 using System.Linq;
 using System.Windows.Media.Media3D;

@@ -1,4 +1,4 @@
-﻿using Common.Extensions;
+﻿using Common.Extensions.EnumerableExtensions;
 using GraphLib.Base.VertexCondition.EndPointsConditions;
 using GraphLib.Extensions;
 using GraphLib.Interfaces;

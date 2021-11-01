@@ -2,7 +2,7 @@
 using Algorithm.Infrastructure.EventArguments;
 using Algorithm.Interfaces;
 using Algorithm.NullRealizations;
-using Common.Extensions;
+using Common.Extensions.EnumerableExtensions;
 using GraphLib.Extensions;
 using GraphLib.Interfaces;
 using GraphLib.NullRealizations.NullObjects;
@@ -16,8 +16,8 @@ namespace GraphViewModel
     {
         protected VisualizationModel(IGraph graph)
         {
-            visitedVertices = new ConcurrentDictionary<IAlgorithm, List<IVertex>>();
-            enqueuedVertices = new ConcurrentDictionary<IAlgorithm, List<IVertex>>();
+            visitedVertices = new ConcurrentDictionary<IAlgorithm, HashSet<IVertex>>();
+            enqueuedVertices = new ConcurrentDictionary<IAlgorithm, HashSet<IVertex>>();
             pathVertices = new Dictionary<IAlgorithm, List<IVertex>>();
             intermediate = new Dictionary<IAlgorithm, List<IVertex>>();
             source = new Dictionary<IAlgorithm, IVertex>();
@@ -41,8 +41,7 @@ namespace GraphViewModel
             {
                 vertex.VisualizeAsVisited();
                 visitedVertices.TryGetOrAdd(algorithm).Add(e.Current);
-                enqueuedVertices.TryGetOrAdd(algorithm).Remove(e.Current);
-            }           
+            }
         }
 
         public virtual void OnVertexEnqueued(object sender, AlgorithmEventArgs e)
@@ -75,12 +74,12 @@ namespace GraphViewModel
         public virtual void ShowAlgorithmVisualization(IAlgorithm algorithm)
         {
             graph.Refresh();
-            foreach (IVisualizable vertex in enqueuedVertices.GetOrEmpty(algorithm)) vertex.VisualizeAsEnqueued();
-            foreach (IVisualizable vertex in visitedVertices.GetOrEmpty(algorithm)) vertex.VisualizeAsVisited();
-            foreach (IVisualizable vertex in pathVertices.GetOrEmpty(algorithm)) vertex.VisualizeAsPath();
-            foreach (IVisualizable vertex in intermediate.GetOrEmpty(algorithm)) vertex.VisualizeAsIntermediate();
-            (source.GetOrDefault(algorithm, () => NullVertex.Instance) as IVisualizable)?.VisualizeAsSource();
-            (target.GetOrDefault(algorithm, () => NullVertex.Instance) as IVisualizable)?.VisualizeAsTarget();
+            foreach (IVisualizable vertex in enqueuedVertices.GetOrEmpty(algorithm)) vertex?.VisualizeAsEnqueued();
+            foreach (IVisualizable vertex in visitedVertices.GetOrEmpty(algorithm)) vertex?.VisualizeAsVisited();
+            foreach (IVisualizable vertex in pathVertices.GetOrEmpty(algorithm)) vertex?.VisualizeAsPath();
+            foreach (IVisualizable vertex in intermediate.GetOrEmpty(algorithm)) vertex?.VisualizeAsIntermediate();
+            (source.GetOrNullVertex(algorithm) as IVisualizable)?.VisualizeAsSource();
+            (target.GetOrNullVertex(algorithm) as IVisualizable)?.VisualizeAsTarget();
         }
 
         public void Remove(IAlgorithm algorithm)
@@ -95,8 +94,8 @@ namespace GraphViewModel
 
         private bool IsEndPoints(IAlgorithm algorithm, IVertex vertex)
         {
-            return source.GetOrDefault(algorithm, () => NullVertex.Instance).Equals(vertex)
-                || target.GetOrDefault(algorithm, () => NullVertex.Instance).Equals(vertex)
+            return source.GetOrNullVertex(algorithm).Equals(vertex)
+                || target.GetOrNullVertex(algorithm).Equals(vertex)
                 || intermediate.GetOrEmpty(algorithm).Contains(vertex);
         }
 
@@ -104,20 +103,20 @@ namespace GraphViewModel
         {
             algorithm = NullAlgorithm.Instance;
             vertex = NullVisualizable.Instance;
-            if (e.Current is IVisualizable vert && sender is IAlgorithm algo 
+            if (e.Current is IVisualizable vert && sender is IAlgorithm algo
                 && !IsEndPoints(algo, e.Current))
             {
                 algorithm = algo;
                 vertex = vert;
-                return true;               
+                return true;
             }
 
             return false;
         }
 
-        protected readonly ConcurrentDictionary<IAlgorithm, List<IVertex>> visitedVertices;
-        protected readonly ConcurrentDictionary<IAlgorithm, List<IVertex>> enqueuedVertices;
-        protected readonly Dictionary<IAlgorithm, List<IVertex>> pathVertices;       
+        protected readonly ConcurrentDictionary<IAlgorithm, HashSet<IVertex>> visitedVertices;
+        protected readonly ConcurrentDictionary<IAlgorithm, HashSet<IVertex>> enqueuedVertices;
+        protected readonly Dictionary<IAlgorithm, List<IVertex>> pathVertices;
         protected readonly Dictionary<IAlgorithm, List<IVertex>> intermediate;
         protected readonly Dictionary<IAlgorithm, IVertex> source;
         protected readonly Dictionary<IAlgorithm, IVertex> target;

@@ -1,4 +1,4 @@
-﻿using Common.Extensions;
+﻿using Common.Extensions.EnumerableExtensions;
 using GalaSoft.MvvmLight.Messaging;
 using GraphViewModel.Interfaces;
 using System.Collections.ObjectModel;

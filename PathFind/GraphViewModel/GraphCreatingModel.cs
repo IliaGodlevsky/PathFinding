@@ -1,4 +1,4 @@
-﻿using Common.Extensions;
+﻿using Common.Extensions.EnumerableExtensions;
 using GraphLib.Interfaces;
 using GraphLib.Interfaces.Factories;
 using GraphViewModel.Interfaces;

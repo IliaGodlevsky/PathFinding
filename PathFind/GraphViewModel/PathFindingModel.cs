@@ -4,7 +4,7 @@ using Algorithm.Factory;
 using Algorithm.Infrastructure.EventArguments;
 using Algorithm.Interfaces;
 using Algorithm.NullRealizations;
-using Common.Extensions;
+using Common.Extensions.EnumerableExtensions;
 using GraphLib.Base;
 using GraphLib.Interfaces;
 using GraphViewModel.Interfaces;

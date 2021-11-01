@@ -70,9 +70,8 @@ namespace WPFVersion.ViewModel
             string time = timer.ToFormattedString();
             var message = new UpdateStatisticsMessage(Index,
                 time, visitedVerticesCount, path.PathLength, path.PathCost);
-            Messenger.Default.Send(message, MessageTokens.AlgorithmStatisticsModel);
             var statusMessage = new AlgorithmStatusMessage(status, Index);
-            Messenger.Default.Send(statusMessage, MessageTokens.AlgorithmStatisticsModel);
+            Messenger.Default.SendMany(MessageTokens.AlgorithmStatisticsModel, message, statusMessage);
             var pathFoundMessage = new PathFoundMessage(algorithm, path);
             Messenger.Default.Send(pathFoundMessage, MessageTokens.VisualizationModel);
         }
@@ -88,7 +87,7 @@ namespace WPFVersion.ViewModel
 
         protected override void OnVertexEnqueued(object sender, AlgorithmEventArgs e)
         {
-            
+
         }
 
         protected override void OnAlgorithmInterrupted(object sender, ProcessEventArgs e)

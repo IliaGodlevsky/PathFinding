@@ -1,8 +1,10 @@
 ﻿using GraphLib.Interfaces;
+using NullObject.Attributes;
 using System;
 
 namespace GraphLib.NullRealizations.NullObjects
 {
+    [Null]
     public sealed class NullVisualizable : IVisualizable
     {
         public static IVisualizable Instance => instance.Value;
@@ -13,47 +15,47 @@ namespace GraphLib.NullRealizations.NullObjects
 
         public void VisualizeAsEnqueued()
         {
-            
+
         }
 
         public void VisualizeAsIntermediate()
         {
-            
+
         }
 
         public void VisualizeAsMarkedToReplaceIntermediate()
         {
-            
+
         }
 
         public void VisualizeAsObstacle()
         {
-           
+
         }
 
         public void VisualizeAsPath()
         {
-            
+
         }
 
         public void VisualizeAsRegular()
         {
-            
+
         }
 
         public void VisualizeAsSource()
         {
-            
+
         }
 
         public void VisualizeAsTarget()
         {
-            
+
         }
 
         public void VisualizeAsVisited()
         {
-            
+
         }
 
         private NullVisualizable()
