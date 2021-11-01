@@ -75,6 +75,7 @@
     <Compile Include="Enums\AlgorithmStatus.cs" />
     <Compile Include="Extensions\AlgorithmViewModelExtensions.cs" />
     <Compile Include="Extensions\ColorExtensions.cs" />
+    <Compile Include="Extensions\MessageExtensions.cs" />
     <Compile Include="Extensions\IMessengerExtensions.cs" />
     <Compile Include="Infrastructure\RelayCommand.cs" />
     <Compile Include="Messages\AlgorithmChosenMessage.cs" />
