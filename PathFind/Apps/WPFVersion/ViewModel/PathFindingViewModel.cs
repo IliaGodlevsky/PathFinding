@@ -14,7 +14,6 @@ using NullObject.Extensions;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
-using System.Linq;
 using System.Windows.Input;
 using WPFVersion.Enums;
 using WPFVersion.Extensions;
@@ -62,6 +61,8 @@ namespace WPFVersion.ViewModel
             string algorithmName = Algorithm.GetDescriptionAttributeValueOrTypeName();
             var message = new AlgorithmStartedMessage(algorithm, algorithmName, DelayTime);
             Messenger.Default.Send(message, MessageTokens.AlgorithmStatisticsModel);
+            var endPointsMessage = new EndPointsChosenMessage(algorithm, endPoints);
+            Messenger.Default.Send(endPointsMessage, MessageTokens.VisualizationModel);
         }
 
         protected override void SummarizePathfindingResults()
@@ -71,7 +72,7 @@ namespace WPFVersion.ViewModel
             var message = new UpdateStatisticsMessage(Index,
                 time, visitedVerticesCount, path.PathLength, path.PathCost);
             var statusMessage = new AlgorithmStatusMessage(status, Index);
-            Messenger.Default.SendMany(MessageTokens.AlgorithmStatisticsModel, message, statusMessage);
+            Messenger.Default.SendMany(message, statusMessage, MessageTokens.AlgorithmStatisticsModel);
             var pathFoundMessage = new PathFoundMessage(algorithm, path);
             Messenger.Default.Send(pathFoundMessage, MessageTokens.VisualizationModel);
         }
@@ -85,10 +86,7 @@ namespace WPFVersion.ViewModel
             visitedVerticesCount++;
         }
 
-        protected override void OnVertexEnqueued(object sender, AlgorithmEventArgs e)
-        {
-
-        }
+        protected override void OnVertexEnqueued(object sender, AlgorithmEventArgs e) { }
 
         protected override void OnAlgorithmInterrupted(object sender, ProcessEventArgs e)
         {
@@ -121,16 +119,15 @@ namespace WPFVersion.ViewModel
         {
             if (IsVisualizationRequired)
             {
-                var message = new AlgorithmChosenMessage(algorithm, endPoints);
+                var message = new SubscribeOnAlgorithmEventsMessage(algorithm);
                 Messenger.Default.Send(message, MessageTokens.VisualizationModel);
             }
             base.SubscribeOnAlgorithmEvents(algorithm);
-
         }
 
         private bool CanExecuteConfirmPathFindAlgorithmChoice(object param)
         {
-            return Algorithms.Any(item => item.Item2 == Algorithm);
+            return Algorithm != null;
         }
 
         private int Index { get; set; }

@@ -15,6 +15,7 @@ using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using System.Windows;
 using System.Windows.Input;
+using WPFVersion.Extensions;
 using WPFVersion.Infrastructure;
 using WPFVersion.Messages;
 using WPFVersion.Model;
@@ -107,8 +108,9 @@ namespace WPFVersion.ViewModel
             costColors = new CostColors(graph);
             base.ConnectNewGraph(graph);
             WindowService.Adjust(graph);
-            Messenger.Default.Send(new ClearStatisticsMessage(), MessageTokens.AlgorithmStatisticsModel);
-            Messenger.Default.Send(new GraphCreatedMessage(Graph), MessageTokens.AlgorithmStatisticsModel);
+            var graphMessage = new GraphCreatedMessage(Graph);
+            var clearMessage = new ClearStatisticsMessage();
+            Messenger.Default.SendMany(graphMessage, clearMessage, MessageTokens.AlgorithmStatisticsModel);
         }
 
         private void PrepareWindow(IViewModel model, Window window)
@@ -129,11 +131,15 @@ namespace WPFVersion.ViewModel
         private void ExecuteStartPathFindCommand(object param) => FindPath();
         private void ExecuteCreateNewGraphCommand(object param) => CreateNewGraph();
         private void ExecuteInterruptAlgorithmCommand(object param)
-            => Messenger.Default.Send(new InterruptAllAlgorithmsMessage(), MessageTokens.AlgorithmStatisticsModel);
+        {
+            var message = new InterruptAllAlgorithmsMessage();
+            Messenger.Default.Send(message, MessageTokens.AlgorithmStatisticsModel);
+        }
         private void ExecuteClearGraphCommand(object param)
         {
             base.ClearGraph();
-            Messenger.Default.Send(new ClearStatisticsMessage(), MessageTokens.AlgorithmStatisticsModel);
+            var message = new ClearStatisticsMessage();
+            Messenger.Default.Send(message, MessageTokens.AlgorithmStatisticsModel);
         }
 
         private bool CanExecuteGraphOperation(object param) => !Graph.IsNull();
@@ -144,7 +150,9 @@ namespace WPFVersion.ViewModel
 
         private void SetGraph(GraphCreatedMessage message) => ConnectNewGraph(message.Graph);
         private void OnIsAllAlgorithmsFinished(IsAllAlgorithmsFinishedMessage message)
-            => IsAllAlgorithmsFinished = message.IsAllAlgorithmsFinished;
+        {
+            IsAllAlgorithmsFinished = message.IsAllAlgorithmsFinished;
+        }
 
         private CostColors costColors;
     }

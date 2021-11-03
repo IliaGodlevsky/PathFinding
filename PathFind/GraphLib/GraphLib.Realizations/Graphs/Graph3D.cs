@@ -14,7 +14,7 @@ namespace GraphLib.Realizations.Graphs
         public int Height { get; }
 
         public Graph3D(IEnumerable<IVertex> vertices, params int[] dimensions)
-            : base(numberOfDimensions: 3, vertices, dimensions)
+            : base(requiredNumberOfDimensions: 3, vertices, dimensions)
         {
             Width = DimensionsSizes.First();
             Length = DimensionsSizes.ElementAt(1);

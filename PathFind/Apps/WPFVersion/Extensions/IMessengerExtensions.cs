@@ -7,7 +7,7 @@ namespace WPFVersion.Extensions
     internal static class IMessengerExtensions
     {
         public static void SendMany<TMessage1, TMessage2>(this IMessenger messenger,
-            Guid token, TMessage1 message1, TMessage2 message2)
+            TMessage1 message1, TMessage2 message2, Guid token)
         {
             messenger.Send(message1, token);
             messenger.Send(message2, token);

@@ -1,18 +1,14 @@
 ﻿using Algorithm.Base;
-using GraphLib.Interfaces;
 
 namespace WPFVersion.Messages
 {
-    internal sealed class AlgorithmChosenMessage
+    internal sealed class SubscribeOnAlgorithmEventsMessage
     {
         public PathfindingAlgorithm Algorithm { get; }
 
-        public AlgorithmChosenMessage(PathfindingAlgorithm algorithm, IIntermediateEndPoints endPoints)
+        public SubscribeOnAlgorithmEventsMessage(PathfindingAlgorithm algorithm)
         {
             Algorithm = algorithm;
-            EndPoints = endPoints;
         }
-
-        public IIntermediateEndPoints EndPoints { get; }
     }
 }

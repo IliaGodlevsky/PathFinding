@@ -24,9 +24,9 @@ namespace GraphLib.Base
         }
         public bool IsEndPoint(IVertex vertex) => this.GetVertices().Contains(vertex);
 
-        public void ReturnColors(IEnumerable<IVertex> vertices)
+        public void ReturnColors()
         {
-            vertices.ForEach(returnColorsConditions.ExecuteTheFirstTrue);
+            this.GetVertices().ForEach(returnColorsConditions.ExecuteTheFirstTrue);
         }
 
         internal protected readonly Collection<IVertex> intermediates;

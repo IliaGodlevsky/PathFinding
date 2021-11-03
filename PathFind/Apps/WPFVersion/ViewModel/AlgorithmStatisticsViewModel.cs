@@ -120,7 +120,7 @@ namespace WPFVersion.ViewModel
 
         private bool CanExecuteRemoveFromStatisticsCommand(object param)
         {
-            return Statistics.All(stat => !stat.IsStarted());
+            return IsAllFinished;
         }
 
         private bool CanExecuteInterruptSelectedAlgorithmCommand(object param)

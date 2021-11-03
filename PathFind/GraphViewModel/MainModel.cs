@@ -8,7 +8,6 @@ using GraphViewModel.Interfaces;
 using Logging.Interface;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 
 namespace GraphViewModel
 {
@@ -90,7 +89,7 @@ namespace GraphViewModel
         public void ClearColors()
         {
             Graph.Refresh();
-            endPoints.ReturnColors(Graph.Vertices.Where(endPoints.IsEndPoint));
+            endPoints.ReturnColors();
         }
 
         protected readonly IEnumerable<IGraphAssemble> graphAssembles;

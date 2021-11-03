@@ -136,10 +136,15 @@ namespace GraphLib.Extensions
         /// </summary>
         /// <param name="self"></param>
         /// <param name="graph">A graph, where vertex is situated</param>
-        /// <exception cref="ArgumentException">Thrown when <paramref name="graph"/> 
-        /// doesn't contain <paramref name="self"/></exception>
+        /// <exception cref="ArgumentException"></exception>
         public static IReadOnlyCollection<IVertex> GetNeighbours(this IVertex self)
         {
+            if (self.Graph.IsNull())
+            {
+                string message = $"Vertex doesn't belong to any graph. Vertex: {self.GetInforamtion()}";
+                throw new ArgumentNullException(message);
+            }
+
             return self
                 .NeighboursCoordinates
                 .Coordinates

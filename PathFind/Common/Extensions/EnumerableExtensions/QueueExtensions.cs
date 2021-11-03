@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 
 namespace Common.Extensions.EnumerableExtensions
 {
@@ -12,7 +13,7 @@ namespace Common.Extensions.EnumerableExtensions
 
         public static Queue<T> Except<T>(this Queue<T> queue, IEnumerable<T> range)
         {
-            return queue.Except(range).ToQueue();
+            return queue.AsEnumerable().Except(range).ToQueue();
         }
 
         public static bool Remove<T>(this Queue<T> queue, T item)

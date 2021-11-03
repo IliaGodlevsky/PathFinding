@@ -49,5 +49,10 @@ namespace GraphLib.Extensions
         {
             return collection.FirstOrDefault(predicate) ?? NullVertex.Instance;
         }
+
+        public static Dictionary<ICoordinate, IVertex> ToDictionary(this IEnumerable<IVertex> vertices)
+        {
+            return vertices.ToDictionary(vertex => vertex.Position);
+        }
     }
 }

@@ -72,6 +72,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Attrbiutes\GroupAttribute.cs" />
+    <Compile Include="Extensions\EnumerableExtensions\ConcurrentBagExtensions.cs" />
     <Compile Include="Extensions\EnumerableExtensions\ICollectionExtensions.cs" />
     <Compile Include="Extensions\EnumerableExtensions\ConcurrentDictionaryExtensions.cs" />
     <Compile Include="Extensions\EnumExtensions.cs" />

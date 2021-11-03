@@ -1,14 +1,14 @@
 ﻿using Algorithm.Base;
 using Algorithm.Infrastructure.EventArguments;
 using Algorithm.Interfaces;
-using Algorithm.NullRealizations;
 using Common.Extensions.EnumerableExtensions;
 using GraphLib.Extensions;
 using GraphLib.Interfaces;
-using GraphLib.NullRealizations.NullObjects;
+using GraphViewModel.Extensions;
 using GraphViewModel.Interfaces;
+using System.Collections;
 using System.Collections.Concurrent;
-using System.Collections.Generic;
+using System.Linq;
 
 namespace GraphViewModel
 {
@@ -16,44 +16,49 @@ namespace GraphViewModel
     {
         protected VisualizationModel(IGraph graph)
         {
-            visitedVertices = new ConcurrentDictionary<IAlgorithm, HashSet<IVertex>>();
-            enqueuedVertices = new ConcurrentDictionary<IAlgorithm, HashSet<IVertex>>();
-            pathVertices = new Dictionary<IAlgorithm, List<IVertex>>();
-            intermediate = new Dictionary<IAlgorithm, List<IVertex>>();
-            source = new Dictionary<IAlgorithm, IVertex>();
-            target = new Dictionary<IAlgorithm, IVertex>();
+            visitedVertices = new ConcurrentDictionary<IAlgorithm, ConcurrentDictionary<ICoordinate, IVertex>>();
+            enqueuedVertices = new ConcurrentDictionary<IAlgorithm, ConcurrentDictionary<ICoordinate, IVertex>>();
+            pathVertices = new ConcurrentDictionary<IAlgorithm, ConcurrentBag<IVertex>>();
+            intermediate = new ConcurrentDictionary<IAlgorithm, ConcurrentBag<IVertex>>();
+            source = new ConcurrentDictionary<IAlgorithm, IVertex>();
+            target = new ConcurrentDictionary<IAlgorithm, IVertex>();
+            dictionaries = new IDictionary[] { visitedVertices, enqueuedVertices, pathVertices, intermediate, source, target };
             this.graph = graph;
         }
 
         public void Clear()
         {
-            pathVertices.Clear();
-            visitedVertices.Clear();
-            enqueuedVertices.Clear();
-            source.Clear();
-            target.Clear();
-            intermediate.Clear();
+            dictionaries.ForEach(dict => dict.Clear());
+        }
+
+        public void Remove(IAlgorithm algorithm)
+        {
+            dictionaries.ForEach(dict => dict.Remove(algorithm));
         }
 
         public virtual void OnVertexVisited(object sender, AlgorithmEventArgs e)
         {
-            if (CanVisualize(sender, e, out var algorithm, out var vertex))
+            if (this.CanVisualize(sender, e, out var algorithm, out var vertex))
             {
                 vertex.VisualizeAsVisited();
-                visitedVertices.TryGetOrAdd(algorithm).Add(e.Current);
+                visitedVertices
+                    .TryGetOrAddNew(algorithm)
+                    .TryAddOrUpdate(e.Current.Position, e.Current);
             }
         }
 
         public virtual void OnVertexEnqueued(object sender, AlgorithmEventArgs e)
         {
-            if (CanVisualize(sender, e, out var algorithm, out var vertex))
+            if (this.CanVisualize(sender, e, out var algorithm, out var vertex))
             {
                 vertex.VisualizeAsEnqueued();
-                enqueuedVertices.TryGetOrAdd(algorithm).Add(e.Current);
+                enqueuedVertices
+                    .TryGetOrAddNew(algorithm)
+                    .TryAddOrUpdate(e.Current.Position, e.Current);
             }
         }
 
-        public void SubscribeOnAlgorithmEvents(PathfindingAlgorithm algorithm)
+        public virtual void SubscribeOnAlgorithmEvents(PathfindingAlgorithm algorithm)
         {
             algorithm.VertexVisited += OnVertexVisited;
             algorithm.VertexEnqueued += OnVertexEnqueued;
@@ -63,63 +68,39 @@ namespace GraphViewModel
         {
             source[algorithm] = endPoints.Source;
             target[algorithm] = endPoints.Target;
-            intermediate.TryGetOrAdd(algorithm).AddRange(endPoints.IntermediateVertices);
+            intermediate.TryGetOrAddNew(algorithm).AddRange(endPoints.IntermediateVertices);
         }
 
         public void AddPathVertices(IAlgorithm algorithm, IGraphPath path)
         {
-            pathVertices.TryGetOrAdd(algorithm).AddRange(path.Path);
+            pathVertices.TryGetOrAddNew(algorithm).AddRange(path.Path);
         }
 
         public virtual void ShowAlgorithmVisualization(IAlgorithm algorithm)
         {
             graph.Refresh();
-            foreach (IVisualizable vertex in enqueuedVertices.GetOrEmpty(algorithm)) vertex?.VisualizeAsEnqueued();
-            foreach (IVisualizable vertex in visitedVertices.GetOrEmpty(algorithm)) vertex?.VisualizeAsVisited();
+            foreach (IVisualizable vertex in enqueuedVertices.GetOrEmpty(algorithm).Values) vertex?.VisualizeAsEnqueued();
+            foreach (IVisualizable vertex in visitedVertices.GetOrEmpty(algorithm).Values) vertex?.VisualizeAsVisited();
             foreach (IVisualizable vertex in pathVertices.GetOrEmpty(algorithm)) vertex?.VisualizeAsPath();
             foreach (IVisualizable vertex in intermediate.GetOrEmpty(algorithm)) vertex?.VisualizeAsIntermediate();
             (source.GetOrNullVertex(algorithm) as IVisualizable)?.VisualizeAsSource();
             (target.GetOrNullVertex(algorithm) as IVisualizable)?.VisualizeAsTarget();
         }
 
-        public void Remove(IAlgorithm algorithm)
-        {
-            pathVertices.Remove(algorithm);
-            visitedVertices.TryRemove(algorithm, out _);
-            enqueuedVertices.TryRemove(algorithm, out _);
-            source.Remove(algorithm);
-            target.Remove(algorithm);
-            intermediate.Remove(algorithm);
-        }
-
-        private bool IsEndPoints(IAlgorithm algorithm, IVertex vertex)
+        internal protected bool IsEndPoints(IAlgorithm algorithm, IVertex vertex)
         {
             return source.GetOrNullVertex(algorithm).Equals(vertex)
                 || target.GetOrNullVertex(algorithm).Equals(vertex)
                 || intermediate.GetOrEmpty(algorithm).Contains(vertex);
         }
 
-        private bool CanVisualize(object sender, AlgorithmEventArgs e, out IAlgorithm algorithm, out IVisualizable vertex)
-        {
-            algorithm = NullAlgorithm.Instance;
-            vertex = NullVisualizable.Instance;
-            if (e.Current is IVisualizable vert && sender is IAlgorithm algo
-                && !IsEndPoints(algo, e.Current))
-            {
-                algorithm = algo;
-                vertex = vert;
-                return true;
-            }
-
-            return false;
-        }
-
-        protected readonly ConcurrentDictionary<IAlgorithm, HashSet<IVertex>> visitedVertices;
-        protected readonly ConcurrentDictionary<IAlgorithm, HashSet<IVertex>> enqueuedVertices;
-        protected readonly Dictionary<IAlgorithm, List<IVertex>> pathVertices;
-        protected readonly Dictionary<IAlgorithm, List<IVertex>> intermediate;
-        protected readonly Dictionary<IAlgorithm, IVertex> source;
-        protected readonly Dictionary<IAlgorithm, IVertex> target;
+        protected readonly ConcurrentDictionary<IAlgorithm, ConcurrentDictionary<ICoordinate, IVertex>> visitedVertices;
+        protected readonly ConcurrentDictionary<IAlgorithm, ConcurrentDictionary<ICoordinate, IVertex>> enqueuedVertices;
+        protected readonly ConcurrentDictionary<IAlgorithm, ConcurrentBag<IVertex>> pathVertices;
+        protected readonly ConcurrentDictionary<IAlgorithm, ConcurrentBag<IVertex>> intermediate;
+        protected readonly ConcurrentDictionary<IAlgorithm, IVertex> source;
+        protected readonly ConcurrentDictionary<IAlgorithm, IVertex> target;
+        protected readonly IDictionary[] dictionaries;
         protected readonly IGraph graph;
     }
 }

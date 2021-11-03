@@ -12,7 +12,6 @@ using Logging.Interface;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
-using System.Linq;
 using WindowsFormsVersion.Messeges;
 
 namespace WindowsFormsVersion.ViewModel
@@ -31,13 +30,13 @@ namespace WindowsFormsVersion.ViewModel
         protected override void OnAlgorithmFinished(object sender, ProcessEventArgs e)
         {
             base.OnAlgorithmFinished(sender, e);
-            Messenger.Default.Send(new AlgorithmStatusMessage(false), MessageTokens.MainModel);
+            Messenger.Default.Send(AlgorithmStatusMessage.Finished, MessageTokens.MainModel);
         }
 
         protected override void OnAlgorithmStarted(object sender, ProcessEventArgs e)
         {
             base.OnAlgorithmStarted(sender, e);
-            Messenger.Default.Send(new AlgorithmStatusMessage(true), MessageTokens.MainModel);
+            Messenger.Default.Send(AlgorithmStatusMessage.Started, MessageTokens.MainModel);
         }
 
         protected override void SummarizePathfindingResults()
@@ -51,13 +50,14 @@ namespace WindowsFormsVersion.ViewModel
         {
             Stopwatch.StartNew().Pause(DelayTime).Cancel();
             base.OnVertexVisited(sender, e);
-            Messenger.Default.Send(new UpdateStatisticsMessage(Statistics), MessageTokens.MainModel);
+            var message = new UpdateStatisticsMessage(Statistics);
+            Messenger.Default.Send(message, MessageTokens.MainModel);
         }
 
         protected override void OnAlgorithmInterrupted(object sender, ProcessEventArgs e)
         {
             base.OnAlgorithmInterrupted(sender, e);
-            Messenger.Default.Send(new AlgorithmStatusMessage(false), MessageTokens.MainModel);
+            Messenger.Default.Send(AlgorithmStatusMessage.Finished, MessageTokens.MainModel);
         }
 
         public void StartPathfinding(object sender, EventArgs e)
@@ -86,7 +86,7 @@ namespace WindowsFormsVersion.ViewModel
             get
             {
                 string timerInfo = timer.ToFormattedString();
-                string description = Algorithms.FirstOrDefault(item => item.Item2 == Algorithm).Item1;
+                string description = Algorithms.GetDescriptionAttributeValueOrTypeName();
                 string pathfindingInfo = string.Format(Format, PathfindingInfo);
                 return string.Join("\t", description, timerInfo, pathfindingInfo);
             }

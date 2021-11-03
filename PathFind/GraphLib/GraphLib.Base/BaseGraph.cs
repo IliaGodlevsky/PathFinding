@@ -3,7 +3,6 @@ using Common.Extensions.EnumerableExtensions;
 using GraphLib.Exceptions;
 using GraphLib.Extensions;
 using GraphLib.Interfaces;
-using GraphLib.NullRealizations.NullObjects;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -25,15 +24,15 @@ namespace GraphLib.Base
 
         public IVertex this[ICoordinate coordinate]
         {
-            get => vertices.TryGetValue(coordinate, out var vertex) ? vertex : NullVertex.Instance;
+            get => vertices.GetOrNullVertex(coordinate);
         }
 
-        protected BaseGraph(int numberOfDimensions, IEnumerable<IVertex> vertices, params int[] dimensionSizes)
+        protected BaseGraph(int requiredNumberOfDimensions, IEnumerable<IVertex> vertices, params int[] dimensionSizes)
         {
             DimensionsSizes = dimensionSizes.ToArray();
             int size = DimensionsSizes.AggregateOrDefault(IntExtensions.Multiply);
-            this.vertices = vertices.ToDictionary(vertex => vertex.Position);
-            if (dimensionSizes.Length != numberOfDimensions || size != Size)
+            this.vertices = vertices.ToDictionary();
+            if (dimensionSizes.Length != requiredNumberOfDimensions || size != Size)
             {
                 throw new WrongNumberOfDimensionsException(nameof(dimensionSizes));
             }

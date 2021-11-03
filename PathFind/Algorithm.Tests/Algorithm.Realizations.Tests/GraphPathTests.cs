@@ -24,7 +24,7 @@ namespace Algorithm.Realizations.Tests
             graphAssemble = new TestGraph2DAssemble();
             expectedPraphPathCoordinates = new ICoordinate[]
             {
-                new TestCoordinate(0,0), //1
+                new TestCoordinate(0,0), // cost: 1
                 new TestCoordinate(0,1), //5
                 new TestCoordinate(1,2), //8
                 new TestCoordinate(1,3), //1

@@ -83,6 +83,7 @@
     <Compile Include="Messages\AlgorithmStatusMessage.cs" />
     <Compile Include="Messages\ClearStatisticsMessage.cs" />
     <Compile Include="Messages\DelayTimeChangedMessage.cs" />
+    <Compile Include="Messages\EndPointsChosenMessage.cs" />
     <Compile Include="Messages\GraphCreatedMessage.cs" />
     <Compile Include="Messages\InterruptAllAlgorithmsMessage.cs" />
     <Compile Include="Messages\IsAllAlgorithmsFinishedMessage.cs" />
