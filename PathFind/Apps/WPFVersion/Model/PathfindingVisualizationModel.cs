@@ -1,16 +1,16 @@
 ﻿using Algorithm.Infrastructure.EventArguments;
 using GalaSoft.MvvmLight.Messaging;
 using GraphLib.Interfaces;
-using GraphViewModel;
 using System;
 using System.Threading.Tasks;
+using Visualization;
 using WPFVersion.Messages;
 
 namespace WPFVersion.Model
 {
-    internal sealed class VertexVisualizationModel : VisualizationModel, IDisposable
+    internal sealed class PathfindingVisualizationModel : PathfindingVisualization, IDisposable
     {
-        public VertexVisualizationModel(IGraph graph) : base(graph)
+        public PathfindingVisualizationModel(IGraph graph) : base(graph)
         {
             Messenger.Default.Register<PathFoundMessage>(this, MessageTokens.VisualizationModel, PathFound);
             Messenger.Default.Register<SubscribeOnAlgorithmEventsMessage>(this, MessageTokens.VisualizationModel, AlgorithmChosen);
@@ -44,6 +44,7 @@ namespace WPFVersion.Model
 
         public void Dispose()
         {
+            Clear();
             Messenger.Default.Unregister(this);
         }
     }

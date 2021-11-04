@@ -4,12 +4,11 @@ using Algorithm.NullRealizations;
 using GraphLib.Interfaces;
 using GraphLib.NullRealizations.NullObjects;
 
-namespace GraphViewModel.Extensions
+namespace Visualization.Extensions
 {
-    public static class VisualizationModelExtensions
+    internal static class ObjectExtensions
     {
-        public static bool CanVisualize(this VisualizationModel self, object sender,
-            AlgorithmEventArgs e, out IAlgorithm algorithm, out IVisualizable vertex)
+        public static bool CanBeVisualized(this object sender, AlgorithmEventArgs e, out IAlgorithm algorithm, out IVisualizable vertex)
         {
             algorithm = NullAlgorithm.Instance;
             vertex = NullVisualizable.Instance;

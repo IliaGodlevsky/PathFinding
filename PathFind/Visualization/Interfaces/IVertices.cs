@@ -2,13 +2,13 @@
 using GraphLib.Interfaces;
 using System.Collections.Generic;
 
-namespace GraphViewModel.Interfaces
+namespace Visualization.Interfaces
 {
-    internal interface IProcessedVertices
+    internal interface IVertices
     {
         IEnumerable<IVertex> GetVertices(IAlgorithm algorithm);
         void Add(IAlgorithm algorithm, IVertex vertex);
-        void Remove(IAlgorithm algorithm);
         void Clear();
+        void Remove(IAlgorithm algorithm);
     }
 }

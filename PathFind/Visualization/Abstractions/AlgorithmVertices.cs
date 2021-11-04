@@ -1,14 +1,14 @@
 ﻿using Algorithm.Interfaces;
 using Common.Extensions.EnumerableExtensions;
 using GraphLib.Interfaces;
-using GraphViewModel.Interfaces;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
+using Visualization.Interfaces;
 
-namespace GraphViewModel.Visualizations
+namespace Visualization.Abstractions
 {
-    internal abstract class AlgorithmVertices : IProcessedVertices, IVisualization
+    internal abstract class AlgorithmVertices : IVertices, IVisualization
     {
         public AlgorithmVertices()
         {

@@ -2,10 +2,10 @@
 using Common.Extensions.EnumerableExtensions;
 using GraphLib.Extensions;
 using GraphLib.Interfaces;
-using GraphViewModel.Interfaces;
 using System.Linq;
+using Visualization.Interfaces;
 
-namespace GraphViewModel.Visualizations
+namespace Visualization.Realizations
 {
     internal sealed class CompositeVisualization : IVisualization
     {

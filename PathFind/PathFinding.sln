@@ -87,6 +87,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Algorithm.Algos.Benchmark",
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Algorithm.Factory", "Algorithm\Algorithm.Factory\Algorithm.Factory.csproj", "{8270F3AF-2B53-45E4-9795-89091CEE60D4}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Visualization", "Visualization\Visualization.csproj", "{ABB541F1-72EC-4607-8515-7A43BCD67B13}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -237,6 +239,10 @@ Global
 		{8270F3AF-2B53-45E4-9795-89091CEE60D4}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{8270F3AF-2B53-45E4-9795-89091CEE60D4}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{8270F3AF-2B53-45E4-9795-89091CEE60D4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{ABB541F1-72EC-4607-8515-7A43BCD67B13}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{ABB541F1-72EC-4607-8515-7A43BCD67B13}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{ABB541F1-72EC-4607-8515-7A43BCD67B13}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{ABB541F1-72EC-4607-8515-7A43BCD67B13}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

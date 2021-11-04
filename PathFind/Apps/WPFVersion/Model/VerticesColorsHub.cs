@@ -24,7 +24,7 @@ namespace WPFVersion.Model
         {
             return Dispatcher.Invoke(() =>
             {
-                return vertex.Background.IsOneOf(AlreadyPathVertexColor, 
+                return vertex.Background.IsOneOf(AlreadyPathVertexColor,
                     PathVertexColor, IntermediateVertexColor, ToReplaceMarkColor);
             });
         }
@@ -33,9 +33,9 @@ namespace WPFVersion.Model
         {
             return Dispatcher.Invoke(() =>
             {
-                return vertex.Background.IsOneOf(SourceVertexColor, 
+                return vertex.Background.IsOneOf(SourceVertexColor,
                     TargetVertexColor, IntermediateVertexColor, ToReplaceMarkColor);
-            });           
+            });
         }
 
         public void VisualizeAsTarget(Vertex vertex) => Dispatcher.Invoke(() => vertex.Background = TargetVertexColor);

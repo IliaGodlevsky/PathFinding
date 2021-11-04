@@ -1,14 +1,14 @@
 ﻿using Algorithm.Interfaces;
 using GraphLib.Interfaces;
-using GraphViewModel.Interfaces;
-using GraphViewModel.Visualizations;
 using System.Collections.Generic;
+using Visualization.Abstractions;
+using Visualization.Interfaces;
 
-namespace GraphViewModel.Extensions
+namespace Visualization.Extensions
 {
-    internal static class IProcessedVerticesExtensions
+    internal static class IVerticesExtensions
     {
-        public static void AddRange(this IProcessedVertices self, IAlgorithm algorithm, IEnumerable<IVertex> range)
+        public static void AddRange(this IVertices self, IAlgorithm algorithm, IEnumerable<IVertex> range)
         {
             foreach (var item in range)
             {

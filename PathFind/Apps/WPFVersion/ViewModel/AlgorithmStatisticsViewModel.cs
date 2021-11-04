@@ -36,7 +36,7 @@ namespace WPFVersion.ViewModel
                 selected = value;
                 if (selected?.Algorithm != null && IsAllFinished)
                 {
-                    visualizationModel?.ShowAlgorithmVisualization(selected.Algorithm);
+                    visualizationModel?.Visualize(selected.Algorithm);
                 }
             }
         }
@@ -93,10 +93,9 @@ namespace WPFVersion.ViewModel
         {
             if (visualizationModel != null)
             {
-                visualizationModel.Clear();
                 visualizationModel.Dispose();
             }
-            visualizationModel = new VertexVisualizationModel(message.Graph);
+            visualizationModel = new PathfindingVisualizationModel(message.Graph);
         }
 
         private void OnClearStatistics(ClearStatisticsMessage message)
@@ -136,6 +135,6 @@ namespace WPFVersion.ViewModel
 
         private bool IsAllFinished => Statistics.All(stat => !stat.IsStarted());
 
-        private VertexVisualizationModel visualizationModel;
+        private PathfindingVisualizationModel visualizationModel;
     }
 }

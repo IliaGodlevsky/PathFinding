@@ -1,9 +1,10 @@
 ﻿using GraphLib.Interfaces;
-using GraphViewModel.Interfaces;
+using Visualization.Abstractions;
+using Visualization.Interfaces;
 
-namespace GraphViewModel.Visualizations
+namespace Visualization.Realizations
 {
-    internal sealed class TargetVertices : EndPointsVertices, IProcessedVertices, IVisualization
+    internal sealed class TargetVertices : EndPointsVertices, IVisualization
     {
         protected override void Visualize(IVisualizable visualizable)
         {

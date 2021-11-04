@@ -1,6 +1,6 @@
 ﻿using Algorithm.Interfaces;
 
-namespace GraphViewModel.Interfaces
+namespace Visualization.Interfaces
 {
     internal interface IVisualization
     {
