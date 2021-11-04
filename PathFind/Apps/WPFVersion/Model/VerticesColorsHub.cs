@@ -22,12 +22,20 @@ namespace WPFVersion.Model
 
         public bool IsVisualizedAsPath(Vertex vertex)
         {
-            return vertex.Background.IsOneOf(AlreadyPathVertexColor, PathVertexColor, IntermediateVertexColor, ToReplaceMarkColor);
+            return Dispatcher.Invoke(() =>
+            {
+                return vertex.Background.IsOneOf(AlreadyPathVertexColor, 
+                    PathVertexColor, IntermediateVertexColor, ToReplaceMarkColor);
+            });
         }
 
         public bool IsVisualizedAsEndPoints(Vertex vertex)
         {
-            return vertex.Background.IsOneOf(SourceVertexColor, TargetVertexColor, IntermediateVertexColor, ToReplaceMarkColor);
+            return Dispatcher.Invoke(() =>
+            {
+                return vertex.Background.IsOneOf(SourceVertexColor, 
+                    TargetVertexColor, IntermediateVertexColor, ToReplaceMarkColor);
+            });           
         }
 
         public void VisualizeAsTarget(Vertex vertex) => Dispatcher.Invoke(() => vertex.Background = TargetVertexColor);

@@ -15,7 +15,7 @@ namespace GraphViewModel.Extensions
             vertex = NullVisualizable.Instance;
             if (e.Current is IVisualizable vert
                 && sender is IAlgorithm algo
-                && !self.IsEndPoints(algo, e.Current))
+                && !vert.IsVisualizedAsEndPoint)
             {
                 algorithm = algo;
                 vertex = vert;

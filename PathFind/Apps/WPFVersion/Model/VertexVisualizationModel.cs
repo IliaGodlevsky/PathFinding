@@ -1,14 +1,8 @@
-﻿using Algorithm.Base;
-using Algorithm.Infrastructure.EventArguments;
-using Algorithm.Interfaces;
-using Common.Extensions.EnumerableExtensions;
+﻿using Algorithm.Infrastructure.EventArguments;
 using GalaSoft.MvvmLight.Messaging;
-using GraphLib.Extensions;
 using GraphLib.Interfaces;
 using GraphViewModel;
 using System;
-using System.Collections.Concurrent;
-using System.Linq;
 using System.Threading.Tasks;
 using WPFVersion.Messages;
 
@@ -31,24 +25,6 @@ namespace WPFVersion.Model
         public override async void OnVertexVisited(object sender, AlgorithmEventArgs e)
         {
             await Task.Run(() => base.OnVertexVisited(sender, e));
-        }
-
-        public void OnAlgorithmFinished(object sender, EventArgs e)
-        {
-            if (sender is IAlgorithm algorithm)
-            {
-                var visited = visitedVertices.GetOrEmpty(algorithm);
-                var enqueued = enqueuedVertices.GetOrEmpty(algorithm);
-                var except = enqueued.Values.Except(visited.Values).ToDictionary();
-                var dictionary = new ConcurrentDictionary<ICoordinate, IVertex>(except);
-                enqueuedVertices.TryAddOrUpdate(algorithm, dictionary);
-            }
-        }
-
-        public override void SubscribeOnAlgorithmEvents(PathfindingAlgorithm algorithm)
-        {
-            base.SubscribeOnAlgorithmEvents(algorithm);
-            algorithm.Finished += OnAlgorithmFinished;
         }
 
         private void AlgorithmChosen(SubscribeOnAlgorithmEventsMessage message)

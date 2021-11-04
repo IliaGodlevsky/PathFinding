@@ -30,6 +30,11 @@ namespace GraphViewModel.Visualizations
             vertices.TryRemove(algorithm, out _);
         }
 
+        public void Remove(IAlgorithm algorithm, IVertex vertex)
+        {
+            vertices.GetOrEmpty(algorithm).TryRemove(vertex.Position, out _);
+        }
+
         public void Visualize(IAlgorithm algorithm)
         {
             GetVertices(algorithm)
