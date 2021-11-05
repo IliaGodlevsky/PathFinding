@@ -98,6 +98,7 @@ namespace WPFVersion3D.ViewModel
             base.OnAlgorithmFinished(sender, e);
             var message = new AlgorithmStatusMessage(AlgorithmStatuses.Finished, Index);
             Messenger.Default.Send(message, MessageTokens.AlgorithmStatisticsModel);
+            Messenger.Default.Unregister(this);
         }
 
         private void ExecuteCloseWindowCommand(object param)
@@ -114,7 +115,7 @@ namespace WPFVersion3D.ViewModel
 
         private bool CanExecuteConfirmPathFindAlgorithmChoice(object param)
         {
-            return Algorithms.Any(item => item.Item2 == Algorithm);
+            return Algorithm != null;
         }
 
         private int Index { get; set; }

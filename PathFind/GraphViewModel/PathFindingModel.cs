@@ -43,6 +43,7 @@ namespace GraphViewModel
             {
                 algorithm = Algorithm.CreateAlgorithm(graph, endPoints);
                 SubscribeOnAlgorithmEvents(algorithm);
+                endPoints.ReturnColors();
                 path = await algorithm.FindPathAsync();
                 await path.HighlightAsync(endPoints);
                 SummarizePathfindingResults();
@@ -53,6 +54,7 @@ namespace GraphViewModel
             }
             finally
             {
+                UnsubscribeOnAlgorithmEvents(algorithm);
                 algorithm.Dispose();
                 path = new NullGraphPath();
             }
@@ -112,6 +114,22 @@ namespace GraphViewModel
             algorithm.Finished += OnAlgorithmFinished;
             algorithm.Started += OnAlgorithmStarted;
             algorithm.Interrupted += OnAlgorithmInterrupted;
+        }
+
+        protected virtual void UnsubscribeOnAlgorithmEvents(PathfindingAlgorithm algorithm)
+        {
+            if (IsVisualizationRequired)
+            {
+                algorithm.VertexEnqueued -= OnVertexEnqueued;
+                algorithm.VertexVisited -= OnVertexVisited;
+            }
+            else
+            {
+                algorithm.VertexVisited -= OnVertexVisitedNoVisualization;
+            }
+            algorithm.Finished -= OnAlgorithmFinished;
+            algorithm.Started -= OnAlgorithmStarted;
+            algorithm.Interrupted -= OnAlgorithmInterrupted;
         }
 
         protected readonly BaseEndPoints endPoints;

@@ -16,7 +16,7 @@ namespace WPFVersion.Model
             this.graph = graph;
             previousColors = new List<Brush>();
             costColors = new Lazy<Dictionary<int, Brush>>(FormCostColors);
-            CostColor = Colors.DarkOrchid;
+            CostColor = Colors.DodgerBlue;
         }
 
         public void ColorizeAccordingToCost()

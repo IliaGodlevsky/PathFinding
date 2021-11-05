@@ -1,4 +1,5 @@
 ﻿using Colorful;
+using Common.Extensions;
 using ConsoleVersion.Interface;
 using System.Text;
 
@@ -21,12 +22,7 @@ namespace ConsoleVersion.View.Abstraction
         public override string GetFramedAxis()
         {
             var stringBuilder = new StringBuilder();
-            for (int i = 0; i < graphLength; i++)
-            {
-                string toAppend = GetStringToAppend(i);
-                stringBuilder.AppendLine(toAppend);
-            }
-            return stringBuilder.ToString();
+            return stringBuilder.AppendLineMany(GetStringToAppend, graphLength).ToString();
         }
 
         protected abstract string GetStringToAppend(int yCoordinate);

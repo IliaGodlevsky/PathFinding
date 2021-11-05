@@ -3,7 +3,7 @@ using GalaSoft.MvvmLight.Messaging;
 using GraphLib.Interfaces;
 using System;
 using System.Threading.Tasks;
-using Visualization;
+using Visualization.Realizations;
 using WPFVersion.Messages;
 
 namespace WPFVersion.Model
@@ -17,12 +17,18 @@ namespace WPFVersion.Model
             Messenger.Default.Register<EndPointsChosenMessage>(this, MessageTokens.VisualizationModel, RegisterEndPointsForAlgorithm);
         }
 
-        public override async void OnVertexEnqueued(object sender, AlgorithmEventArgs e)
+        public void Dispose()
+        {
+            Clear();
+            Messenger.Default.Unregister(this);
+        }
+
+        protected override async void OnVertexEnqueued(object sender, AlgorithmEventArgs e)
         {
             await Task.Run(() => base.OnVertexEnqueued(sender, e));
         }
 
-        public override async void OnVertexVisited(object sender, AlgorithmEventArgs e)
+        protected override async void OnVertexVisited(object sender, AlgorithmEventArgs e)
         {
             await Task.Run(() => base.OnVertexVisited(sender, e));
         }
@@ -40,12 +46,6 @@ namespace WPFVersion.Model
         private void PathFound(PathFoundMessage message)
         {
             AddPathVertices(message.Algorithm, message.Path);
-        }
-
-        public void Dispose()
-        {
-            Clear();
-            Messenger.Default.Unregister(this);
         }
     }
 }

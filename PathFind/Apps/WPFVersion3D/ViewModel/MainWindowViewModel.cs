@@ -44,7 +44,7 @@ namespace WPFVersion3D.ViewModel
 
         private bool IsAllAlgorithmsFinished { get; set; } = true;
 
-        public Tuple<string, IAnimationSpeed>[] AnimationSpeeds => animationSpeeds.Value;
+        public Tuple<string, IAnimationSpeed>[] AnimationSpeeds { get; }
 
         public ICommand StartPathFindCommand { get; }
         public ICommand CreateNewGraphCommand { get; }
@@ -69,7 +69,7 @@ namespace WPFVersion3D.ViewModel
             ChangeOpacityCommand = new RelayCommand(ExecuteChangeOpacity, CanExecuteGraphOperation);
             AnimatedAxisRotateCommand = new RelayCommand(ExecuteAnimatedAxisRotateCommand);
             InterruptAlgorithmCommand = new RelayCommand(ExecuteInterruptAlgorithmCommand, CanExecuteInterruptAlgorithmCommand);
-            animationSpeeds = new Lazy<Tuple<string, IAnimationSpeed>[]>(new EnumValuesWithoutIgnored<AnimationSpeeds>().ToAnimationSpeedTuples);
+            AnimationSpeeds = new EnumValuesWithoutIgnored<AnimationSpeeds>().ToAnimationSpeedTuples();
             Messenger.Default.Register<IsAllAlgorithmsFinishedMessage>(this, MessageTokens.MainModel, OnIsAllAlgorithmsFinished);
             Messenger.Default.Register<GraphCreatedMessage>(this, MessageTokens.MainModel, SetGraph);
         }
@@ -199,7 +199,5 @@ namespace WPFVersion3D.ViewModel
         {
             ConnectNewGraph(message.Graph);
         }
-
-        private readonly Lazy<Tuple<string, IAnimationSpeed>[]> animationSpeeds;
     }
 }

@@ -41,15 +41,11 @@ namespace WPFVersion.ViewModel
             }
         }
 
-        private ObservableCollection<AlgorithmViewModel> statistics;
-        public ObservableCollection<AlgorithmViewModel> Statistics
-        {
-            get => statistics ?? (statistics = new ObservableCollection<AlgorithmViewModel>());
-            set { statistics = value; OnPropertyChanged(); }
-        }
+        public ObservableCollection<AlgorithmViewModel> Statistics { get; set; }
 
         public AlgorithmStatisticsViewModel()
         {
+            Statistics = new ObservableCollection<AlgorithmViewModel>();
             InterruptSelelctedAlgorithmCommand = new RelayCommand(ExecuteInterruptSelectedAlgorithmCommand, CanExecuteInterruptSelectedAlgorithmCommand);
             RemoveSelelctedAlgorithmCommand = new RelayCommand(ExecuteRemoveFromStatisticsCommand, CanExecuteRemoveFromStatisticsCommand);
             Messenger.Default.Register<AlgorithmStartedMessage>(this, MessageTokens.AlgorithmStatisticsModel, OnAlgorithmStarted);

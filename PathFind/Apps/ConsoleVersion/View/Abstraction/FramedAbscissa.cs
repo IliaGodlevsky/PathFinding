@@ -1,4 +1,5 @@
-﻿using ConsoleVersion.Interface;
+﻿using Common.Extensions;
+using ConsoleVersion.Interface;
 using System;
 using System.Text;
 
@@ -23,22 +24,15 @@ namespace ConsoleVersion.View.Abstraction
         {
             string largeSpace = LargeSpace;
             var stringBuilder = new StringBuilder(largeSpace);
-            for (int index = 0; index < graphWidth; index++)
-            {
-                string fragment = GetAbscissaFragment(index);
-                stringBuilder.Append(fragment);
-            }
-            return stringBuilder.Append(largeSpace).ToString();
+            return stringBuilder.AppendMany(GetAbscissaFragment, graphWidth)
+                .Append(largeSpace).ToString();
         }
 
         protected string GetHorizontalFrame()
         {
             var stringBuilder = new StringBuilder(LargeSpace);
-            for (int index = 0; index < graphWidth; index++)
-            {
-                stringBuilder.Append(HorizontalFrameFragment);
-            }
-            return stringBuilder.Append(CoordinateDelimiter).ToString();
+            return stringBuilder.AppendMany(HorizontalFrameFragment, graphWidth)
+                .Append(CoordinateDelimiter).ToString();
         }
 
         private string GetAbscissaFragment(int index)

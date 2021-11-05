@@ -100,7 +100,7 @@ namespace WPFVersion.ViewModel
             base.OnAlgorithmFinished(sender, e);
             var message = new AlgorithmStatusMessage(AlgorithmStatus.Finished, Index);
             Messenger.Default.Send(message, MessageTokens.AlgorithmStatisticsModel);
-            Messenger.Default.Unregister<DelayTimeChangedMessage>(this, MessageTokens.PathfindingModel, SetAlgorithmDelayTime);
+            Messenger.Default.Unregister(this);
         }
 
         private void ExecuteCloseWindowCommand(object param)

@@ -62,6 +62,7 @@ namespace ConsoleVersion.ViewModel
                 var view = new GraphCreateView(model);
                 PrepareViewAndModel(view, model);
                 view.Start();
+                view.NewMenuIteration -= DisplayGraph;
             }
             catch (Exception ex)
             {
@@ -79,6 +80,7 @@ namespace ConsoleVersion.ViewModel
                 PrepareViewAndModel(view, model);
                 model.AnswerInput = AnswerInput;
                 view.Start();
+                view.NewMenuIteration -= DisplayGraph;
             }
             catch (Exception ex)
             {

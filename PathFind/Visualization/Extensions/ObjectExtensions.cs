@@ -8,7 +8,8 @@ namespace Visualization.Extensions
 {
     internal static class ObjectExtensions
     {
-        public static bool CanBeVisualized(this object sender, AlgorithmEventArgs e, out IAlgorithm algorithm, out IVisualizable vertex)
+        public static bool CanBeVisualized(this object sender, AlgorithmEventArgs e, 
+            out IAlgorithm algorithm, out IVisualizable vertex)
         {
             algorithm = NullAlgorithm.Instance;
             vertex = NullVisualizable.Instance;
