@@ -70,7 +70,7 @@ namespace WPFVersion.ViewModel
             var status = !path.IsNull() ? AlgorithmStatus.Finished : AlgorithmStatus.Failed;
             string time = timer.ToFormattedString();
             var message = new UpdateStatisticsMessage(Index,
-                time, visitedVerticesCount, path.PathLength, path.PathCost);
+                time, visitedVerticesCount, path.Length, path.Cost);
             var statusMessage = new AlgorithmStatusMessage(status, Index);
             Messenger.Default.SendMany(message, statusMessage, MessageTokens.AlgorithmStatisticsModel);
             var pathFoundMessage = new PathFoundMessage(algorithm, path);

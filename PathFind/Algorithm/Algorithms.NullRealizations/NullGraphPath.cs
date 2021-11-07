@@ -15,8 +15,8 @@ namespace Algorithm.NullRealizations
 
         public IVertex[] Path { get; }
 
-        public double PathCost => default;
+        public double Cost => default;
 
-        public int PathLength => default;
+        public int Length => default;
     }
 }

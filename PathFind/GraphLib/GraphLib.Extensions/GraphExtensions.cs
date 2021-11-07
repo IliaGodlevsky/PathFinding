@@ -80,6 +80,11 @@ namespace GraphLib.Extensions
             return vertices.All(vertex => ReferenceEquals(self, vertex.Graph));
         }
 
+        public static bool Contains(this IGraph self, IEnumerable<IVertex> vertices)
+        {
+            return vertices.All(vertex => ReferenceEquals(self, vertex.Graph));
+        }
+
         public static bool Contains(this IGraph self, IEndPoints endPoints)
         {
             return self.Contains(endPoints.Source, endPoints.Target);
@@ -87,7 +92,7 @@ namespace GraphLib.Extensions
 
         public static bool Contains(this IGraph self, IIntermediateEndPoints endPoints)
         {
-            return self.Contains((IEndPoints)endPoints) && self.Contains(endPoints.IntermediateVertices.ToArray());
+            return self.Contains((IEndPoints)endPoints) && self.Contains(endPoints.IntermediateVertices);
         }
 
         public static int GetIsolatedCount(this IGraph self)

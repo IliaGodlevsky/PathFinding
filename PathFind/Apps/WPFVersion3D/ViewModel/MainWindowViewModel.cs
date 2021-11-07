@@ -56,8 +56,13 @@ namespace WPFVersion3D.ViewModel
         public ICommand InterruptAlgorithmCommand { get; }
         public ICommand ClearVerticesColorCommand { get; }
 
-        public MainWindowViewModel(IGraphFieldFactory fieldFactory, IVertexEventHolder eventHolder, ISaveLoadGraph saveLoad,
-            IEnumerable<IGraphAssemble> graphAssembles, BaseEndPoints endPoints, IEnumerable<IAlgorithmFactory> algorithmFactories, ILog log)
+        public MainWindowViewModel(IGraphFieldFactory fieldFactory, 
+            IVertexEventHolder eventHolder, 
+            ISaveLoadGraph saveLoad,
+            IEnumerable<IGraphAssemble> graphAssembles, 
+            BaseEndPoints endPoints, 
+            IEnumerable<IAlgorithmFactory> algorithmFactories, 
+            ILog log)
             : base(fieldFactory, eventHolder, saveLoad, graphAssembles, endPoints, algorithmFactories, log)
         {
             ClearVerticesColorCommand = new RelayCommand(ExecuteClearVerticesColors, CanExecuteClearGraphOperation);
@@ -129,48 +134,32 @@ namespace WPFVersion3D.ViewModel
             PrepareWindow(model, window);
         }
 
-        private void ExecuteClearVerticesColors(object param)
-        {
-            ClearColors();
-        }
-
-        private void OnIsAllAlgorithmsFinished(IsAllAlgorithmsFinishedMessage message)
-        {
-            IsAllAlgorithmsFinished = message.IsAllAlgorithmsFinished;
-        }
-
+        private void ExecuteClearVerticesColors(object param) => ClearColors();
         private void ExecuteSaveGraphCommand(object param) => base.SaveGraph();
-
         private void ExecuteChangeOpacity(object param) => ChangeVerticesOpacity();
-
-        private bool CanExecuteStartFindPathCommand(object param) => !endPoints.HasIsolators();
-
         private void ExecuteLoadGraphCommand(object param) => base.LoadGraph();
+        private void ExecuteStartPathFindCommand(object param) => FindPath();
+        private void ExecuteCreateNewGraphCommand(object param) => CreateNewGraph();
+        private void ExecuteAnimatedAxisRotateCommand(object param) => (param as IAnimatedAxisRotator)?.RotateAxis();
 
         private void ExecuteClearGraphCommand(object param)
         {
             base.ClearGraph();
-            Messenger.Default.Send(new ClearStatisticsMessage(), MessageTokens.AlgorithmStatisticsModel);
+            var message = new ClearStatisticsMessage();
+            Messenger.Default.Send(message, MessageTokens.AlgorithmStatisticsModel);
         }
-
-        private void ExecuteStartPathFindCommand(object param) => FindPath();
-
-        private void ExecuteCreateNewGraphCommand(object param) => CreateNewGraph();
 
         private void ExecuteInterruptAlgorithmCommand(object param)
         {
-            Messenger.Default.Send(new InterruptAllAlgorithmsMessage(), MessageTokens.AlgorithmStatisticsModel);
+            var message = new InterruptAllAlgorithmsMessage();
+            Messenger.Default.Send(message, MessageTokens.AlgorithmStatisticsModel);
         }
 
-        private bool CanExecuteInterruptAlgorithmCommand(object sender)
-        {
-            return !IsAllAlgorithmsFinished;
-        }
-
-        private void ExecuteAnimatedAxisRotateCommand(object param)
-        {
-            (param as IAnimatedAxisRotator)?.RotateAxis();
-        }
+        private bool CanExecuteStartFindPathCommand(object param) => !endPoints.HasIsolators();
+        private bool CanExecuteClearGraphOperation(object param) => CanExecuteGraphOperation(param) && CanExecuteOperation(param);
+        private bool CanExecuteGraphOperation(object param) => !Graph.IsNull();
+        private bool CanExecuteOperation(object param) => IsAllAlgorithmsFinished;
+        private bool CanExecuteInterruptAlgorithmCommand(object sender) => !IsAllAlgorithmsFinished;
 
         private void PrepareWindow(IViewModel model, Window window)
         {
@@ -180,24 +169,8 @@ namespace WPFVersion3D.ViewModel
             window.Show();
         }
 
-        private bool CanExecuteClearGraphOperation(object param)
-        {
-            return CanExecuteGraphOperation(param) && CanExecuteOperation(param);
-        }
-
-        private bool CanExecuteGraphOperation(object param)
-        {
-            return !Graph.IsNull();
-        }
-
-        private bool CanExecuteOperation(object param)
-        {
-            return IsAllAlgorithmsFinished;
-        }
-
-        private void SetGraph(GraphCreatedMessage message)
-        {
-            ConnectNewGraph(message.Graph);
-        }
+        private void OnIsAllAlgorithmsFinished(IsAllAlgorithmsFinishedMessage message) 
+            => IsAllAlgorithmsFinished = message.IsAllAlgorithmsFinished;
+        private void SetGraph(GraphCreatedMessage message) => ConnectNewGraph(message.Graph);
     }
 }

@@ -20,11 +20,11 @@ namespace Algorithm.Interfaces
         /// should be done to come from the source vertex to 
         /// the target one
         /// </summary>
-        int PathLength { get; }
+        int Length { get; }
 
         /// <summary>
         /// A sum of step costs of vertices in the founded path
         /// </summary>
-        double PathCost { get; }
+        double Cost { get; }
     }
 }

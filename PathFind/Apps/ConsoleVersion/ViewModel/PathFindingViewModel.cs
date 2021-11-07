@@ -153,7 +153,7 @@ namespace ConsoleVersion.ViewModel
         private string GetStatistics()
         {
             string timerInfo = timer.ToFormattedString();
-            var pathfindingInfos = new object[] { path.PathLength, path.PathCost, visitedVerticesCount };
+            var pathfindingInfos = new object[] { path.Length, path.Cost, visitedVerticesCount };
             string pathfindingInfo = string.Format(MessagesTexts.PathfindingStatisticsFormat, pathfindingInfos);
             return string.Join("\t", CurrentAlgorithmName, timerInfo, pathfindingInfo);
         }

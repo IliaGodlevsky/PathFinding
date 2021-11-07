@@ -48,8 +48,8 @@ namespace Algorithm.Realizations.Tests
             const int expectedPathCost = 25;
             var graphPath = new GraphPath(parentVertices, endPoints);
 
-            double pathCost = graphPath.PathCost;
-            int pathLength = graphPath.PathLength;
+            double pathCost = graphPath.Cost;
+            int pathLength = graphPath.Length;
             var pathCoordinates = graphPath.Path.Select(Coordinate).Reverse();
 
             Assert.AreEqual(expectedPathLength, pathLength);

@@ -90,8 +90,6 @@
     <Compile Include="Messages\UpdateAlgorithmStatisticsMessage.cs" />
     <Compile Include="MessageTokens.cs" />
     <Compile Include="Model3DFactories\ToricalModel3DFactory.cs" />
-    <Compile Include="Model\GraphAxisCenteringOffset.cs" />
-    <Compile Include="Model\VertexAxisOffset.cs" />
     <Compile Include="Model\RectangleModel3DFactory.cs" />
     <Compile Include="Infrastructure\Animators\BackwardAnimatedAxisRotator.cs" />
     <Compile Include="Infrastructure\Animators\AnimatedAxisRotator.cs" />

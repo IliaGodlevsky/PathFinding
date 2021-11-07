@@ -34,8 +34,8 @@ namespace Algorithm.Algos.Tests
 
             var graphPath = algorithm.FindPath();
 
-            Assert.AreEqual(GetExpectedLength(), graphPath.PathLength);
-            Assert.AreEqual(GetExpectedCost(), graphPath.PathCost);
+            Assert.AreEqual(GetExpectedLength(), graphPath.Length);
+            Assert.AreEqual(GetExpectedCost(), graphPath.Cost);
         }
 
         [Test]

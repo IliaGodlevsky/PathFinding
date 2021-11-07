@@ -3,7 +3,7 @@ using System;
 
 namespace GraphLib.Realizations.SmoothLevel
 {
-    [AttributeUsage(AttributeTargets.Field, Inherited = true)]
+    [AttributeUsage(AttributeTargets.Field)]
     public sealed class SmoothLevelAttribute : Attribute, ISmoothLevel
     {
         public SmoothLevelAttribute(int level)

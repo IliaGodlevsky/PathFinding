@@ -18,9 +18,9 @@ namespace Algorithm.Realizations.GraphPaths
     {
         public IVertex[] Path => path.Value;
 
-        public double PathCost => pathCost.Value;
+        public double Cost => pathCost.Value;
 
-        public int PathLength => pathLength.Value;
+        public int Length => pathLength.Value;
 
         public GraphPath(IParentVertices parentVertices, IEndPoints endPoints)
             : this(parentVertices, endPoints, new DefaultStepRule())

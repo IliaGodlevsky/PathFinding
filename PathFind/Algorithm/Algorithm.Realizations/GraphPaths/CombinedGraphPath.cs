@@ -12,17 +12,17 @@ namespace Algorithm.Realizations.GraphPaths
     {
         public IVertex[] Path { get; }
 
-        public int PathLength { get; }
+        public int Length { get; }
 
-        public double PathCost { get; }
+        public double Cost { get; }
 
         public CombinedGraphPath(IGraphPath first,
             IGraphPath second, params IGraphPath[] other)
         {
             var paths = other.Prepend(second).Prepend(first);
             Path = paths.SelectMany(x => x.Path.Reverse()).Reverse().ToArray();
-            PathLength = paths.Select(x => x.PathLength).Sum();
-            PathCost = paths.Select(x => x.PathCost).Sum();
+            Length = paths.Select(x => x.Length).Sum();
+            Cost = paths.Select(x => x.Cost).Sum();
         }
     }
 }

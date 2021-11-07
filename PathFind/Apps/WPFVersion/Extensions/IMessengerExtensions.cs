@@ -13,7 +13,7 @@ namespace WPFVersion.Extensions
             messenger.Send(message2, token);
         }
 
-        public static async Task SendAsync<TMessage>(this IMessenger self, TMessage message, Guid messageToken)
+        public static async Task SendAsync<TMessage>(this IMessenger self, TMessage message, object messageToken)
         {
             await Task.Run(() => self.Send(message, messageToken));
         }

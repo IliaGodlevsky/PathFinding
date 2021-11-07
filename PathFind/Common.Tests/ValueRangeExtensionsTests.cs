@@ -32,7 +32,7 @@ namespace Common.Tests
         {
             var valueRange = new InclusiveValueRange<double>(upperValue, lowerValue);
 
-            var randomValues = RandomValues(valueRange);
+            var randomValues = RandomValues(valueRange).ToList();
 
             Assert.IsTrue(randomValues.All(valueRange.Contains));
         }
