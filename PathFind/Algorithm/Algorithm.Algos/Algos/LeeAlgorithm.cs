@@ -51,8 +51,13 @@ namespace Algorithm.Algos.Algos
 
         protected virtual void RelaxNeighbour(IVertex vertex)
         {
-            accumulatedCosts.Reevaluate(vertex, CreateWave());
+            Reevaluate(vertex, CreateWave());
             parentVertices.Add(vertex, CurrentVertex);
+        }
+
+        protected virtual void Reevaluate(IVertex vertex, double value)
+        {
+            accumulatedCosts.Reevaluate(vertex, value);
         }
 
         protected bool VertexIsUnwaved(IVertex vertex)

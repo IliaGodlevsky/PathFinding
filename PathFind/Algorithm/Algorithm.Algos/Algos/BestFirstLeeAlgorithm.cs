@@ -1,6 +1,9 @@
 ﻿using Algorithm.Interfaces;
 using Algorithm.Realizations.Heuristic;
+using Algorithm.Сompanions;
+using Algorithm.Сompanions.Interface;
 using Common.Extensions.EnumerableExtensions;
+using GraphLib.Extensions;
 using GraphLib.Interfaces;
 using Interruptable.Interface;
 using System;
@@ -38,18 +41,30 @@ namespace Algorithm.Algos.Algos
             get
             {
                 verticesQueue = verticesQueue
-                    .OrderBy(accumulatedCosts.GetAccumulatedCost)
+                    .OrderBy(accumulatedCostWithHeuristic.GetAccumulatedCost)
                     .ToQueue();
 
                 return base.NextVertex;
             }
         }
 
-        protected override double CreateWave()
+        protected override void Reevaluate(IVertex vertex, double value)
         {
-            return base.CreateWave() + heuristic.Calculate(CurrentVertex, CurrentEndPoints.Target);
+            base.Reevaluate(vertex, value);
+            value += heuristic.Calculate(CurrentVertex, CurrentEndPoints.Target);
+            accumulatedCostWithHeuristic.Reevaluate(vertex, value);
         }
 
+        protected override void PrepareForLocalPathfinding()
+        {
+            base.PrepareForLocalPathfinding();
+            var vertices = graph.GetNotObstacles().Without(CurrentEndPoints.Source);
+            accumulatedCostWithHeuristic = new AccumulatedCosts(vertices, double.PositiveInfinity);
+            double value = heuristic.Calculate(CurrentEndPoints.Source, CurrentEndPoints.Target);
+            accumulatedCostWithHeuristic.Reevaluate(CurrentEndPoints.Source, value);
+        }
+
+        protected IAccumulatedCosts accumulatedCostWithHeuristic;
         private readonly IHeuristic heuristic;
     }
 }

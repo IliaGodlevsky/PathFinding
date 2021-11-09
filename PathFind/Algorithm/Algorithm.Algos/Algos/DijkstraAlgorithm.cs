@@ -40,7 +40,7 @@ namespace Algorithm.Algos.Algos
             get
             {
                 verticesQueue = verticesQueue
-                    .OrderBy(accumulatedCosts.GetAccumulatedCost)
+                    .OrderBy(OrderFunction)
                     .Where(visitedVertices.IsNotVisited)
                     .ToQueue();
 
@@ -61,9 +61,19 @@ namespace Algorithm.Algos.Algos
             double relaxedCost = GetVertexRelaxedCost(vertex);
             if (accumulatedCosts.Compare(vertex, relaxedCost) > 0)
             {
-                accumulatedCosts.Reevaluate(vertex, relaxedCost);
+                Reevaluate(vertex, relaxedCost);
                 parentVertices.Add(vertex, CurrentVertex);
             }
+        }
+
+        protected virtual void Reevaluate(IVertex vertex, double value)
+        {
+            accumulatedCosts.Reevaluate(vertex, value);
+        }
+
+        protected virtual double OrderFunction(IVertex vertex)
+        {
+            return accumulatedCosts.GetAccumulatedCost(vertex);
         }
 
         protected virtual double GetVertexRelaxedCost(IVertex neighbour)

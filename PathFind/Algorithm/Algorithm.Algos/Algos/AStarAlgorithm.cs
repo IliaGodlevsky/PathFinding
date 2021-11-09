@@ -1,9 +1,14 @@
 ﻿using Algorithm.Interfaces;
 using Algorithm.Realizations.Heuristic;
 using Algorithm.Realizations.StepRules;
+using Algorithm.Сompanions;
+using Algorithm.Сompanions.Interface;
+using Common.Extensions.EnumerableExtensions;
+using GraphLib.Extensions;
 using GraphLib.Interfaces;
 using Interruptable.Interface;
 using System;
+using System.Linq;
 
 namespace Algorithm.Algos.Algos
 {
@@ -39,12 +44,28 @@ namespace Algorithm.Algos.Algos
 
         }
 
-        protected override double GetVertexRelaxedCost(IVertex neighbour)
+        protected override void PrepareForLocalPathfinding()
         {
-            return base.GetVertexRelaxedCost(neighbour)
-                   + heuristic.Calculate(CurrentVertex, CurrentEndPoints.Target);
+            base.PrepareForLocalPathfinding();
+            var vertices = graph.GetNotObstacles().Without(CurrentEndPoints.Source);
+            heuristicAccumulatedCosts = new AccumulatedCosts(vertices, double.PositiveInfinity);
+            double value = heuristic.Calculate(CurrentEndPoints.Source, CurrentEndPoints.Target);
+            heuristicAccumulatedCosts.Reevaluate(CurrentEndPoints.Source, value);
         }
 
+        protected override double OrderFunction(IVertex vertex)
+        {
+            return heuristicAccumulatedCosts.GetAccumulatedCost(vertex);
+        }
+
+        protected override void Reevaluate(IVertex vertex, double value)
+        {
+            base.Reevaluate(vertex, value);
+            value += heuristic.Calculate(vertex, CurrentEndPoints.Target);
+            heuristicAccumulatedCosts.Reevaluate(vertex, value);
+        }
+
+        protected IAccumulatedCosts heuristicAccumulatedCosts;
         protected readonly IHeuristic heuristic;
     }
 }

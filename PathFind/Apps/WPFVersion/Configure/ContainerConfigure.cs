@@ -78,7 +78,6 @@ namespace WPFVersion.Configure
 
             builder.RegisterType<LandscapeStepRule>().As<IStepRule>().SingleInstance();
             builder.RegisterDecorator<WalkStepRule, IStepRule>();
-            builder.RegisterDecorator<RatedStepRule, IStepRule>();
 
             return builder.Build();
         }

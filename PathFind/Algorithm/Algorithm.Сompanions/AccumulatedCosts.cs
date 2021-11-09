@@ -3,6 +3,7 @@ using Common.Extensions.EnumerableExtensions;
 using GraphLib.Extensions;
 using GraphLib.Interfaces;
 using NullObject.Extensions;
+using System;
 using System.Collections.Generic;
 
 namespace Algorithm.Сompanions
@@ -12,8 +13,13 @@ namespace Algorithm.Сompanions
         public AccumulatedCosts(IEnumerable<IVertex> graph, double startCost)
         {
             accumulatedCosts = new Dictionary<ICoordinate, double>();
-            this.startCost = startCost;
-            graph.ForEach(SetAccumulatedCostToStartCost);
+            graph.ForEach(vertex => Reevaluate(vertex, startCost));
+        }
+
+        public AccumulatedCosts(IEnumerable<IVertex> graph, Func<IVertex, double> function)
+        {
+            accumulatedCosts = new Dictionary<ICoordinate, double>();
+            graph.ForEach(vertex => Reevaluate(vertex, function(vertex)));
         }
 
         public void Reevaluate(IVertex vertex, double accumulatedCost)
@@ -43,15 +49,6 @@ namespace Algorithm.Сompanions
             accumulatedCosts.Clear();
         }
 
-        private void SetAccumulatedCostToStartCost(IVertex vertex)
-        {
-            if (!vertex.IsNull())
-            {
-                accumulatedCosts[vertex.Position] = startCost;
-            }
-        }
-
         private readonly IDictionary<ICoordinate, double> accumulatedCosts;
-        private readonly double startCost;
     }
 }
