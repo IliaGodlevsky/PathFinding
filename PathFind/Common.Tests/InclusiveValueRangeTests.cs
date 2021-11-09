@@ -1,5 +1,7 @@
+using Common.Extensions;
 using Common.ValueRanges;
 using NUnit.Framework;
+using System.Linq;
 
 namespace Common.Tests
 {
@@ -82,6 +84,27 @@ namespace Common.Tests
             var valueInRange = range.ReturnInRange(withinRangeValue);
 
             Assert.AreEqual(valueInRange, withinRangeValue);
+        }
+
+        [Test]
+        public void Amplitude_ExtremeValuesOfInt_ReturnsUintMaxValue()
+        {
+            var range = new InclusiveValueRange<int>(int.MaxValue, int.MinValue);
+
+            uint amplitude = range.Amplitude();
+
+            Assert.AreEqual(amplitude, uint.MaxValue);
+        }
+
+        [TestCase((int)short.MaxValue, (int)short.MinValue)]
+        public void GetAllValuesInRange(int maxValue, int minValue)
+        {
+            var range = new InclusiveValueRange<int>(maxValue, minValue);
+
+            var values = range.GetAllValuesInRange().ToArray();
+
+            Assert.AreEqual(minValue, values.First());
+            Assert.AreEqual(maxValue, values.Last());
         }
     }
 }

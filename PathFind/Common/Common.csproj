@@ -63,7 +63,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Attrbiutes\GroupAttribute.cs" />
-    <Compile Include="CryptoRandom.cs" />
+    <Compile Include="Extensions\IRandomExtensions.cs" />
+    <Compile Include="InclusiveRangeRandom.cs" />
     <Compile Include="Extensions\EnumerableExtensions\ICollectionExtensions.cs" />
     <Compile Include="Extensions\EnumerableExtensions\ConcurrentDictionaryExtensions.cs" />
     <Compile Include="Extensions\EnumExtensions.cs" />
@@ -75,6 +76,7 @@
     <Compile Include="Extensions\InclusiveValueRangeExtensions.cs" />
     <Compile Include="Extensions\StringBuilderExtensions.cs" />
     <Compile Include="Interface\ICloneable.cs" />
+    <Compile Include="Interface\IRandom.cs" />
     <Compile Include="Interface\IViewModel.cs" />
     <Compile Include="Extensions\EnumerableExtensions\IEnumerableExtension.cs" />
     <Compile Include="Extensions\MemberInfoExtensions.cs" />

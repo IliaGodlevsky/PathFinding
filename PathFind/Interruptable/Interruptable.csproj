@@ -45,7 +45,6 @@
     <Compile Include="EventHandlers\ProcessEventHandler.cs" />
     <Compile Include="Interface\IInterruptable.cs" />
     <Compile Include="Interface\IInterruptableProcess.cs" />
-    <Compile Include="Interface\IPausableProcess.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

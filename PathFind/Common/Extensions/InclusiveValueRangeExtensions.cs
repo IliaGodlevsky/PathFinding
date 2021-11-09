@@ -1,43 +1,40 @@
-﻿using Common.ValueRanges;
+﻿using Common.Interface;
+using Common.ValueRanges;
 using System;
+using System.Collections.Generic;
 
 namespace Common.Extensions
 {
     public static class InclusiveValueRangeExtensions
     {
-        private static readonly Random Random;
+        private static readonly InclusiveRangeRandom Random;
 
         static InclusiveValueRangeExtensions()
         {
-            Random = new CryptoRandom();
+            Random = new InclusiveRangeRandom();
         }
 
+        /// <summary>
+        /// Return random number within the range
+        /// </summary>
+        /// <param name="valueRange"></param>
+        /// <returns>A random number within the range</returns>
         public static int GetRandomValue(this InclusiveValueRange<int> valueRange)
         {
-            if (valueRange.UpperValueOfRange == int.MaxValue)
-            {
-                return Random.Next(valueRange.LowerValueOfRange, valueRange.UpperValueOfRange);
-            }
-            else
-            {
-                return Random.Next(valueRange.LowerValueOfRange, valueRange.UpperValueOfRange + 1);
-            }
+            return Random.Next(valueRange);
         }
 
-        public static int[] GetAllValuesInRange(this InclusiveValueRange<int> valueRange)
+        public static IEnumerable<int> GetAllValuesInRange(this InclusiveValueRange<int> valueRange)
         {
-            uint length = valueRange.Amplitude() + 1;
-            var values = new int[length];
-            for (int i = 0; i < length; i++)
+            for (int i = valueRange.LowerValueOfRange; i <= valueRange.UpperValueOfRange; i++)
             {
-                values[i] = valueRange.LowerValueOfRange + i;
+                yield return i;
             }
-            return values;
         }
 
         public static uint Amplitude(this InclusiveValueRange<int> valueRange)
         {
-            return (uint)(valueRange.UpperValueOfRange - valueRange.LowerValueOfRange);
+            return (uint)((long)valueRange.UpperValueOfRange - valueRange.LowerValueOfRange);
         }
 
         public static double Amplitude(this InclusiveValueRange<double> valueRange)

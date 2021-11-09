@@ -3,7 +3,10 @@ using GraphLib.Base;
 using GraphLib.Interfaces;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Windows.Media;
+
+using static GraphLib.Base.BaseVertexCost;
 
 namespace WPFVersion.Model
 {
@@ -24,7 +27,7 @@ namespace WPFVersion.Model
             foreach (Vertex vertex in graph.Vertices)
             {
                 previousColors.Add(vertex.Background);
-                if (!vertex.IsObstacle && !vertex.IsVisualizedAsEndPoint && !vertex.IsVisualizedAsPath)
+                if (CanBeColored(vertex))
                 {
                     vertex.Background = costColors.Value[vertex.Cost.CurrentCost];
                 }
@@ -47,7 +50,7 @@ namespace WPFVersion.Model
 
         private Dictionary<int, Brush> FormCostColors()
         {
-            var availableCostValues = BaseVertexCost.CostRange.GetAllValuesInRange();
+            var availableCostValues = CostRange.GetAllValuesInRange().ToArray();
             var colors = new Dictionary<int, Brush>();
             double step = byte.MaxValue / availableCostValues.Length;
             for (int i = 0; i < availableCostValues.Length; i++)
@@ -58,6 +61,13 @@ namespace WPFVersion.Model
                 colors.Add(availableCostValues[i], brush);
             }
             return colors;
+        }
+
+        private bool CanBeColored(Vertex vertex)
+        {
+            return !vertex.IsObstacle
+                && !vertex.IsVisualizedAsEndPoint
+                && !vertex.IsVisualizedAsPath;
         }
 
         private readonly Lazy<Dictionary<int, Brush>> costColors;
