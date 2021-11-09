@@ -36,18 +36,6 @@ namespace Algorithm.Algos.Algos
             deletedVertices = new Queue<IVertex>();
         }
 
-        public AStarModified(IGraph graph, IIntermediateEndPoints endPoints, IHeuristic function)
-            : this(graph, endPoints, new DefaultStepRule(), function)
-        {
-
-        }
-
-        public AStarModified(IGraph graph, IIntermediateEndPoints endPoints, IStepRule stepRule)
-            : this(graph, endPoints, stepRule, new ChebyshevDistance())
-        {
-
-        }
-
         protected override IVertex NextVertex
         {
             get

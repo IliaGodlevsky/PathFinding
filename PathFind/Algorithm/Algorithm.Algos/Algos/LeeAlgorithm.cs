@@ -6,6 +6,7 @@ using GraphLib.Extensions;
 using GraphLib.Interfaces;
 using Interruptable.Interface;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace Algorithm.Algos.Algos
@@ -19,10 +20,9 @@ namespace Algorithm.Algos.Algos
 
         }
 
-        protected override void PrepareForLocalPathfinding()
+        protected override void PrepareForLocalPathfinding(IEnumerable<IVertex> vertices)
         {
-            base.PrepareForLocalPathfinding();
-            var vertices = graph.GetNotObstacles();
+            base.PrepareForLocalPathfinding(vertices);
             accumulatedCosts = new AccumulatedCosts(vertices, 0);
         }
 

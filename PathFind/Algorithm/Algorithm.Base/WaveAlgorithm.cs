@@ -38,7 +38,8 @@ namespace Algorithm.Base
             foreach (var endPoint in endPoints.ToEndPoints())
             {
                 CurrentEndPoints = endPoint;
-                PrepareForLocalPathfinding();
+                var nonObstacles = graph.GetNotObstacles().ToArray();
+                PrepareForLocalPathfinding(nonObstacles);
                 do
                 {
                     VisitVertex(CurrentVertex);
@@ -63,7 +64,7 @@ namespace Algorithm.Base
             accumulatedCosts?.Clear();
         }
 
-        protected virtual void PrepareForLocalPathfinding()
+        protected virtual void PrepareForLocalPathfinding(IEnumerable<IVertex> vertices)
         {
             CurrentVertex = CurrentEndPoints.Source;
         }

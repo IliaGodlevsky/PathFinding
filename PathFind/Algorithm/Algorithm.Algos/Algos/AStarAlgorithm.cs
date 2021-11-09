@@ -7,6 +7,7 @@ using GraphLib.Extensions;
 using GraphLib.Interfaces;
 using Interruptable.Interface;
 using System;
+using System.Collections.Generic;
 
 namespace Algorithm.Algos.Algos
 {
@@ -30,28 +31,15 @@ namespace Algorithm.Algos.Algos
             heuristic = function;
         }
 
-        public AStarAlgorithm(IGraph graph, IIntermediateEndPoints endPoints, IHeuristic function)
-            : this(graph, endPoints, new DefaultStepRule(), function)
-        {
-
-        }
-
-        public AStarAlgorithm(IGraph graph, IIntermediateEndPoints endPoints, IStepRule stepRule)
-            : this(graph, endPoints, stepRule, new ChebyshevDistance())
-        {
-
-        }
-
         protected override void Reset()
         {
             base.Reset();
             heuristicAccumulatedCosts?.Clear();
         }
 
-        protected override void PrepareForLocalPathfinding()
+        protected override void PrepareForLocalPathfinding(IEnumerable<IVertex> vertices)
         {
-            base.PrepareForLocalPathfinding();
-            var vertices = graph.GetNotObstacles();
+            base.PrepareForLocalPathfinding(vertices);
             heuristicAccumulatedCosts = new AccumulatedCosts(vertices, double.PositiveInfinity);
             double value = heuristic.Calculate(CurrentEndPoints.Source, CurrentEndPoints.Target);
             heuristicAccumulatedCosts.Reevaluate(CurrentEndPoints.Source, value);
