@@ -25,7 +25,7 @@ namespace GraphLib.Realizations.Tests
             using (var mock = AutoMock.GetLoose())
             {
                 mock.Mock<ICoordinate>().Setup(c => c.CoordinatesValues).Returns(coordinateValues);
-                var neighboursCoordinate = mock.Create<CardinalNeighboursCoordinates>();
+                var neighboursCoordinate = mock.Create<VonNeumannNeighborhood>();
 
                 var environment = neighboursCoordinate.Coordinates;
 
@@ -46,7 +46,7 @@ namespace GraphLib.Realizations.Tests
             using (var mock = AutoMock.GetLoose())
             {
                 mock.Mock<ICoordinate>().Setup(c => c.CoordinatesValues).Returns(coordinateValues);
-                var neighboursCoordinate = mock.Create<CardinalNeighboursCoordinates>();
+                var neighboursCoordinate = mock.Create<VonNeumannNeighborhood>();
 
                 var environment = neighboursCoordinate.Coordinates;
                 var coordinate = mock.Container.Resolve<ICoordinate>();
@@ -72,7 +72,7 @@ namespace GraphLib.Realizations.Tests
                 mock.Mock<ICoordinate>()
                     .Setup(c => c.CoordinatesValues)
                     .Returns(coordinateValues);
-                var neighboursCoordinate = mock.Create<CardinalNeighboursCoordinates>();
+                var neighboursCoordinate = mock.Create<VonNeumannNeighborhood>();
 
                 var environment = neighboursCoordinate.Coordinates.ToArray();
 

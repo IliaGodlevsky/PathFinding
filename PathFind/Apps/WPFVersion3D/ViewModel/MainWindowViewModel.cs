@@ -56,12 +56,12 @@ namespace WPFVersion3D.ViewModel
         public ICommand InterruptAlgorithmCommand { get; }
         public ICommand ClearVerticesColorCommand { get; }
 
-        public MainWindowViewModel(IGraphFieldFactory fieldFactory, 
-            IVertexEventHolder eventHolder, 
+        public MainWindowViewModel(IGraphFieldFactory fieldFactory,
+            IVertexEventHolder eventHolder,
             ISaveLoadGraph saveLoad,
-            IEnumerable<IGraphAssemble> graphAssembles, 
-            BaseEndPoints endPoints, 
-            IEnumerable<IAlgorithmFactory> algorithmFactories, 
+            IEnumerable<IGraphAssemble> graphAssembles,
+            BaseEndPoints endPoints,
+            IEnumerable<IAlgorithmFactory> algorithmFactories,
             ILog log)
             : base(fieldFactory, eventHolder, saveLoad, graphAssembles, endPoints, algorithmFactories, log)
         {
@@ -169,7 +169,7 @@ namespace WPFVersion3D.ViewModel
             window.Show();
         }
 
-        private void OnIsAllAlgorithmsFinished(IsAllAlgorithmsFinishedMessage message) 
+        private void OnIsAllAlgorithmsFinished(IsAllAlgorithmsFinishedMessage message)
             => IsAllAlgorithmsFinished = message.IsAllAlgorithmsFinished;
         private void SetGraph(GraphCreatedMessage message) => ConnectNewGraph(message.Graph);
     }

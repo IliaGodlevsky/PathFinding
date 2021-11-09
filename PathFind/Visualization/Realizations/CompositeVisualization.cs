@@ -9,7 +9,7 @@ namespace Visualization.Realizations
 {
     internal sealed class CompositeVisualization : IVisualization
     {
-        public CompositeVisualization(IGraph graph, IVisualization visualization, 
+        public CompositeVisualization(IGraph graph, IVisualization visualization,
             params IVisualization[] visualizations)
         {
             this.graph = graph;

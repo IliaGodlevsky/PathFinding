@@ -23,7 +23,7 @@ namespace GraphLib.Realizations.Factories.GraphAssembles
             ICoordinateFactory coordinateFactory,
             IGraphFactory graphFactory,
             IVertexCostFactory costFactory,
-            INeighboursCoordinatesFactory neighboursCoordinates)
+            INeighborhoodFactory neighboursCoordinates)
         {
             this.vertexFactory = vertexFactory;
             this.coordinateFactory = coordinateFactory;
@@ -52,7 +52,7 @@ namespace GraphLib.Realizations.Factories.GraphAssembles
             {
                 var coordinateValues = graphDimensionsSizes.ToCoordinates(vertexIndex);
                 var coordinate = coordinateFactory.CreateCoordinate(coordinateValues);
-                var coordinates = neighboursCoordinates.CreateNeighboursCoordinates(coordinate);
+                var coordinates = neighboursCoordinates.CreateNeighborhood(coordinate);
                 var vertex = vertexFactory.CreateVertex(coordinates, coordinate);
                 vertex.Cost = costFactory.CreateCost();
                 vertex.IsObstacle = percentRange.IsObstacleChance(percentOfObstacles);
@@ -65,7 +65,7 @@ namespace GraphLib.Realizations.Factories.GraphAssembles
         protected readonly ICoordinateFactory coordinateFactory;
         protected readonly IVertexFactory vertexFactory;
         protected readonly IGraphFactory graphFactory;
-        protected readonly INeighboursCoordinatesFactory neighboursCoordinates;
+        protected readonly INeighborhoodFactory neighboursCoordinates;
         protected readonly InclusiveValueRange<int> percentRange;
     }
 }

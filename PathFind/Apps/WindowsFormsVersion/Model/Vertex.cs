@@ -27,7 +27,7 @@ namespace WindowsFormsVersion.Model
         private static Color IntermediateVertexColor = Color.FromKnownColor(KnownColor.DarkOrange);
         private static Color ToReplaceMarkColor = Color.FromArgb(alpha: 185, red: 255, green: 140, blue: 0);
 
-        public Vertex(INeighboursCoordinates coordinateRadar, ICoordinate coordinate) : base()
+        public Vertex(INeighborhood coordinateRadar, ICoordinate coordinate) : base()
         {
             float fontSize = VertexSize * TextToSizeRatio;
             Font = new Font("Times New Roman", fontSize);
@@ -58,7 +58,7 @@ namespace WindowsFormsVersion.Model
             }
         }
 
-        public virtual INeighboursCoordinates NeighboursCoordinates { get; }
+        public virtual INeighborhood NeighboursCoordinates { get; }
 
         public ICoordinate Position { get; }
 

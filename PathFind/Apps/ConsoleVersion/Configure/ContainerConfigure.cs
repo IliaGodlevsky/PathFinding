@@ -67,7 +67,7 @@ namespace ConsoleVersion.Configure
             builder.RegisterType<VertexFactory>().As<IVertexFactory>().SingleInstance();
             builder.RegisterType<Coordinate2DFactory>().As<ICoordinateFactory>().SingleInstance();
             builder.RegisterType<Graph2DFactory>().As<IGraphFactory>().SingleInstance();
-            builder.RegisterType<AroundNeighboursCoordinatesFactory>().As<INeighboursCoordinatesFactory>().SingleInstance();
+            builder.RegisterType<MooreNeighborhoodFactory>().As<INeighborhoodFactory>().SingleInstance();
             builder.RegisterType<RootMeanSquareCost>().As<IMeanCost>().SingleInstance();
 
             builder.RegisterType<SaveLoadGraph>().As<ISaveLoadGraph>().SingleInstance();

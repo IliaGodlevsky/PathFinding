@@ -7,13 +7,13 @@ namespace GraphLib.NullRealizations.NullObjects
 {
     [Null]
     [Serializable]
-    public sealed class NullNeighboursCoordinates : INeighboursCoordinates
+    public sealed class NullNeighboursCoordinates : INeighborhood
     {
-        public static INeighboursCoordinates Instance => instance.Value;
+        public static INeighborhood Instance => instance.Value;
 
         public IReadOnlyCollection<ICoordinate> Coordinates => new NullCoordinate[] { };
 
-        public INeighboursCoordinates Clone()
+        public INeighborhood Clone()
         {
             return Instance;
         }
@@ -23,6 +23,6 @@ namespace GraphLib.NullRealizations.NullObjects
 
         }
 
-        private static readonly Lazy<INeighboursCoordinates> instance = new Lazy<INeighboursCoordinates>(() => new NullNeighboursCoordinates());
+        private static readonly Lazy<INeighborhood> instance = new Lazy<INeighborhood>(() => new NullNeighboursCoordinates());
     }
 }

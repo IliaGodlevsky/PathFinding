@@ -46,7 +46,7 @@ namespace WPFVersion3D.Configure
             builder.RegisterType<Vertex3DCostFactory>().As<IVertexCostFactory>().SingleInstance();
             builder.RegisterType<Coordinate3DFactory>().As<ICoordinateFactory>().SingleInstance();
             builder.RegisterType<Graph3DFactory>().As<IGraphFactory>().SingleInstance();
-            builder.RegisterType<CardinalNeighboursCoordinatesFactory>().As<INeighboursCoordinatesFactory>().SingleInstance();
+            builder.RegisterType<VonNeumannNeighborhoodFactory>().As<INeighborhoodFactory>().SingleInstance();
             builder.RegisterType<CubicModel3DFactory>().As<IModel3DFactory>().SingleInstance();
 
             builder.RegisterType<SaveLoadGraph>().As<ISaveLoadGraph>().SingleInstance();

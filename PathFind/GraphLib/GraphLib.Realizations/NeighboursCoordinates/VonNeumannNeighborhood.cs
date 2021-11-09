@@ -9,15 +9,15 @@ using System.Runtime.Serialization;
 namespace GraphLib.Realizations.NeighboursCoordinates
 {
     [Serializable]
-    public sealed class CardinalNeighboursCoordinates : INeighboursCoordinates, ISerializable, ICloneable<INeighboursCoordinates>
+    public sealed class VonNeumannNeighborhood : INeighborhood, ISerializable, ICloneable<INeighborhood>
     {
         public IReadOnlyCollection<ICoordinate> Coordinates => coordinates.Value;
 
-        public CardinalNeighboursCoordinates(ICoordinate coordinate)
+        public VonNeumannNeighborhood(ICoordinate coordinate)
         {
-            coordinates = new Lazy<IReadOnlyCollection<ICoordinate>>(DetectNeighboursCoordinates);
+            coordinates = new Lazy<IReadOnlyCollection<ICoordinate>>(DetectNeighborhood);
             selfCoordinate = coordinate;
-            neighboursCoordinates = new AroundNeighboursCoordinates(coordinate);
+            neighboursCoordinates = new MooreNeighborhood(coordinate);
         }
 
         public void GetObjectData(SerializationInfo info, StreamingContext context)
@@ -25,7 +25,7 @@ namespace GraphLib.Realizations.NeighboursCoordinates
             info.AddValue(nameof(selfCoordinate), selfCoordinate, typeof(ICoordinate));
         }
 
-        private CardinalNeighboursCoordinates(SerializationInfo info, StreamingContext context)
+        private VonNeumannNeighborhood(SerializationInfo info, StreamingContext context)
             : this((ICoordinate)info.GetValue(nameof(selfCoordinate), typeof(ICoordinate)))
         {
 
@@ -36,18 +36,18 @@ namespace GraphLib.Realizations.NeighboursCoordinates
             return coordinate.IsCardinal(selfCoordinate);
         }
 
-        private IReadOnlyCollection<ICoordinate> DetectNeighboursCoordinates()
+        private IReadOnlyCollection<ICoordinate> DetectNeighborhood()
         {
             return neighboursCoordinates.Coordinates.Where(IsCardinal).ToArray();
         }
 
-        public INeighboursCoordinates Clone()
+        public INeighborhood Clone()
         {
-            return new CardinalNeighboursCoordinates(selfCoordinate.Clone());
+            return new VonNeumannNeighborhood(selfCoordinate.Clone());
         }
 
         private readonly ICoordinate selfCoordinate;
-        private readonly INeighboursCoordinates neighboursCoordinates;
+        private readonly INeighborhood neighboursCoordinates;
         private readonly Lazy<IReadOnlyCollection<ICoordinate>> coordinates;
     }
 }

@@ -11,7 +11,7 @@ namespace GraphLib.TestRealizations.TestObjects
     [DebuggerDisplay("{Position.ToString()}")]
     public sealed class TestVertex : IVertex, IEquatable<IVertex>
     {
-        public TestVertex(INeighboursCoordinates radar, ICoordinate coordinate)
+        public TestVertex(INeighborhood radar, ICoordinate coordinate)
         {
             this.Initialize();
             NeighboursCoordinates = radar;
@@ -29,7 +29,7 @@ namespace GraphLib.TestRealizations.TestObjects
         public IVertexCost Cost { get; set; }
         public IReadOnlyCollection<IVertex> Neighbours => neighbours.Value;
         public ICoordinate Position { get; }
-        public INeighboursCoordinates NeighboursCoordinates { get; }
+        public INeighborhood NeighboursCoordinates { get; }
         public IGraph Graph { get; }
 
         public bool Equals(IVertex other)

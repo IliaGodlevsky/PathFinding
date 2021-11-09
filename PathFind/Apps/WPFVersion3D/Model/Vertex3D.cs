@@ -44,7 +44,7 @@ namespace WPFVersion3D.Model
             set => SetValue(BrushProperty, value);
         }
 
-        public Vertex3D(INeighboursCoordinates radar, ICoordinate coordinate, IModel3DFactory modelFactory)
+        public Vertex3D(INeighborhood radar, ICoordinate coordinate, IModel3DFactory modelFactory)
         {
             this.modelFactory = modelFactory;
             Position = coordinate;
@@ -104,7 +104,7 @@ namespace WPFVersion3D.Model
         }
 
         public IGraph Graph { get; }
-        public INeighboursCoordinates NeighboursCoordinates { get; }
+        public INeighborhood NeighboursCoordinates { get; }
         public IVertexCost Cost { get; set; }
         public IReadOnlyCollection<IVertex> Neighbours => neighbours.Value;
         public ICoordinate Position { get; }

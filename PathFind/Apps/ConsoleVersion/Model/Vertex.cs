@@ -23,7 +23,7 @@ namespace ConsoleVersion.Model
         public event EventHandler OnEndPointChosen;
         public event EventHandler OnVertexReversed;
 
-        public Vertex(INeighboursCoordinates coordinateRadar, ICoordinate coordinate)
+        public Vertex(INeighborhood coordinateRadar, ICoordinate coordinate)
         {
             NeighboursCoordinates = coordinateRadar;
             Position = coordinate;
@@ -69,7 +69,7 @@ namespace ConsoleVersion.Model
 
         public IGraph Graph { get; }
         public Color Color { get; set; }
-        public INeighboursCoordinates NeighboursCoordinates { get; }
+        public INeighborhood NeighboursCoordinates { get; }
         public IReadOnlyCollection<IVertex> Neighbours => neighbours.Value;
         public ICoordinate Position { get; }
 

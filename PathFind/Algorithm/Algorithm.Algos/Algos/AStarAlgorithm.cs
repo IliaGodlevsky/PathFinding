@@ -3,12 +3,10 @@ using Algorithm.Realizations.Heuristic;
 using Algorithm.Realizations.StepRules;
 using Algorithm.Сompanions;
 using Algorithm.Сompanions.Interface;
-using Common.Extensions.EnumerableExtensions;
 using GraphLib.Extensions;
 using GraphLib.Interfaces;
 using Interruptable.Interface;
 using System;
-using System.Linq;
 
 namespace Algorithm.Algos.Algos
 {
@@ -44,10 +42,16 @@ namespace Algorithm.Algos.Algos
 
         }
 
+        protected override void Reset()
+        {
+            base.Reset();
+            heuristicAccumulatedCosts?.Clear();
+        }
+
         protected override void PrepareForLocalPathfinding()
         {
             base.PrepareForLocalPathfinding();
-            var vertices = graph.GetNotObstacles().Without(CurrentEndPoints.Source);
+            var vertices = graph.GetNotObstacles();
             heuristicAccumulatedCosts = new AccumulatedCosts(vertices, double.PositiveInfinity);
             double value = heuristic.Calculate(CurrentEndPoints.Source, CurrentEndPoints.Target);
             heuristicAccumulatedCosts.Reevaluate(CurrentEndPoints.Source, value);
@@ -65,7 +69,7 @@ namespace Algorithm.Algos.Algos
             heuristicAccumulatedCosts.Reevaluate(vertex, value);
         }
 
-        protected IAccumulatedCosts heuristicAccumulatedCosts;
+        private IAccumulatedCosts heuristicAccumulatedCosts;
         protected readonly IHeuristic heuristic;
     }
 }

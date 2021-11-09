@@ -13,7 +13,7 @@ namespace WPFVersion.Model
     [DebuggerDisplay("{Position.ToString()}")]
     internal class Vertex : ContentControl, IVertex, IVisualizable, IWeightable, IEquatable<IVertex>
     {
-        public Vertex(INeighboursCoordinates radar, ICoordinate coordinate) : base()
+        public Vertex(INeighborhood radar, ICoordinate coordinate) : base()
         {
             Width = Height = VertexSize;
             Template = (ControlTemplate)TryFindResource("vertexTemplate");
@@ -43,7 +43,7 @@ namespace WPFVersion.Model
             }
         }
 
-        public virtual INeighboursCoordinates NeighboursCoordinates { get; }
+        public virtual INeighborhood NeighboursCoordinates { get; }
 
         private IVertexCost cost;
         public IVertexCost Cost

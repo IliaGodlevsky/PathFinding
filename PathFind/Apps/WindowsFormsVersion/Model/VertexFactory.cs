@@ -5,7 +5,7 @@ namespace WindowsFormsVersion.Model
 {
     internal sealed class VertexFactory : IVertexFactory
     {
-        public IVertex CreateVertex(INeighboursCoordinates coordinateRadar, ICoordinate coordinate)
+        public IVertex CreateVertex(INeighborhood coordinateRadar, ICoordinate coordinate)
         {
             return new Vertex(coordinateRadar, coordinate);
         }

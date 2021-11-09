@@ -15,7 +15,7 @@ namespace GraphLib.TestRealizations.TestFactories
                   new Coordinate2DFactory(),
                   new Graph2DFactory(),
                   new TestCostFactory(),
-                  new AroundNeighboursCoordinatesFactory())
+                  new MooreNeighborhoodFactory())
         {
 
         }

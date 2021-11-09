@@ -24,7 +24,7 @@ namespace GraphLib.Realizations.Tests
             int dimensions = coordinateValues.Length;
             ulong expectedResult = 3.Pow(dimensions) - Self;
             var coordinate = new TestCoordinate(coordinateValues);
-            var neighboursCoordinates = new AroundNeighboursCoordinates(coordinate);
+            var neighboursCoordinates = new MooreNeighborhood(coordinate);
 
             var coordinates = neighboursCoordinates.Coordinates;
 
@@ -42,7 +42,7 @@ namespace GraphLib.Realizations.Tests
         public void Coordinates_CoordinatesWithVariousDimensionsNumber_ReturnNeighboursWithoutSelf(int[] coordinateValues)
         {
             var coordinate = new TestCoordinate(coordinateValues);
-            var neighboursCoordinates = new AroundNeighboursCoordinates(coordinate);
+            var neighboursCoordinates = new MooreNeighborhood(coordinate);
 
             bool hasSelf = neighboursCoordinates.Coordinates.Any(values => values.Equals(coordinate));
 
@@ -61,7 +61,7 @@ namespace GraphLib.Realizations.Tests
         public void Coordinates_CoordinatesWithVariousDimensionsCount_ReturnUniqueCoordinates(int[] coordinateValues)
         {
             var coordinate = new TestCoordinate(coordinateValues);
-            var neighboursCoordinates = new AroundNeighboursCoordinates(coordinate);
+            var neighboursCoordinates = new MooreNeighborhood(coordinate);
 
             var coordinates = neighboursCoordinates.Coordinates;
 
@@ -71,7 +71,7 @@ namespace GraphLib.Realizations.Tests
         [Test]
         public void Coordinates_NullCoordinate_ReturnEmptyEnvironment()
         {
-            var coordinateEnvironment = new AroundNeighboursCoordinates(NullCoordinate.Instance);
+            var coordinateEnvironment = new MooreNeighborhood(NullCoordinate.Instance);
 
             var environment = coordinateEnvironment.Coordinates.ToArray();
 

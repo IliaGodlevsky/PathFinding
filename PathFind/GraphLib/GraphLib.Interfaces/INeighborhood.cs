@@ -7,7 +7,7 @@ namespace GraphLib.Interfaces
     /// An interface, that provides a property for 
     /// all neighbours around some coordinate
     /// </summary>
-    public interface INeighboursCoordinates : ICloneable<INeighboursCoordinates>
+    public interface INeighborhood : ICloneable<INeighborhood>
     {
         /// <summary>
         /// <see cref="ICoordinate"/>

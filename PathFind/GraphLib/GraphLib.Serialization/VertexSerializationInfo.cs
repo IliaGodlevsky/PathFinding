@@ -20,6 +20,6 @@ namespace GraphLib.Serialization
 
         public ICoordinate Position { get; }
 
-        public INeighboursCoordinates NeighboursCoordinates { get; }
+        public INeighborhood NeighboursCoordinates { get; }
     }
 }

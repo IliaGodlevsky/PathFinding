@@ -7,7 +7,7 @@ namespace Common.Extensions
     {
         public static StringBuilder AppendMany(this StringBuilder self, string line, int times)
         {
-            while (times-->0)
+            while (times-- > 0)
             {
                 self.Append(line);
             }

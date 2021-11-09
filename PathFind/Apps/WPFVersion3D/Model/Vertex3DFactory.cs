@@ -12,7 +12,7 @@ namespace WPFVersion3D.Model
             model3Dfactory = modelFactory;
         }
 
-        public IVertex CreateVertex(INeighboursCoordinates coordinateRadar, ICoordinate coordinate)
+        public IVertex CreateVertex(INeighborhood coordinateRadar, ICoordinate coordinate)
         {
             return Application.Current.Dispatcher.Invoke(() => new Vertex3D(coordinateRadar, coordinate, model3Dfactory));
         }

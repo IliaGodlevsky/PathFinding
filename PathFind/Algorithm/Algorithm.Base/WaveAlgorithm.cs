@@ -56,7 +56,7 @@ namespace Algorithm.Base
             return !IsAbleToContinue ? new NullGraphPath() : path;
         }
 
-        protected override sealed void Reset()
+        protected override void Reset()
         {
             base.Reset();
             verticesQueue.Clear();

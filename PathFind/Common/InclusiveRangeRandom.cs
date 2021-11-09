@@ -11,7 +11,7 @@ namespace Common
     /// base on <see cref="RNGCryptoServiceProvider"/>
     /// </summary>
     public sealed class InclusiveRangeRandom : IRandom, IDisposable
-    {       
+    {
         private const int IntSize = sizeof(int);
         private const int MaxBufferSize = IntSize << 4;
 

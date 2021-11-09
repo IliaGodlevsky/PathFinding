@@ -28,13 +28,13 @@ namespace GraphLib.Realizations.Tests
                 .Setup(x => x.CreateCoordinate(It.IsAny<int[]>()))
                 .Returns<int[]>(x => new TestCoordinate(x));
 
-            mock.Mock<INeighboursCoordinatesFactory>()
-                .Setup(x => x.CreateNeighboursCoordinates(It.IsAny<ICoordinate>()))
-                .Returns<ICoordinate>(x => new AroundNeighboursCoordinates(x));
+            mock.Mock<INeighborhoodFactory>()
+                .Setup(x => x.CreateNeighborhood(It.IsAny<ICoordinate>()))
+                .Returns<ICoordinate>(x => new MooreNeighborhood(x));
 
             mock.Mock<IVertexFactory>()
-                .Setup(x => x.CreateVertex(It.IsAny<INeighboursCoordinates>(), It.IsAny<ICoordinate>()))
-                .Returns<INeighboursCoordinates, ICoordinate>((nc, c) => new TestVertex(nc, c));
+                .Setup(x => x.CreateVertex(It.IsAny<INeighborhood>(), It.IsAny<ICoordinate>()))
+                .Returns<INeighborhood, ICoordinate>((nc, c) => new TestVertex(nc, c));
 
             mock.Mock<IGraphFactory>()
                 .Setup(x => x.CreateGraph(It.IsAny<IEnumerable<IVertex>>(), It.IsAny<int[]>()))
@@ -61,13 +61,13 @@ namespace GraphLib.Realizations.Tests
                 .Setup(x => x.CreateCoordinate(It.IsAny<int[]>()))
                 .Returns<int[]>(x => NullCoordinate.Instance);
 
-            mock.Mock<INeighboursCoordinatesFactory>()
-                .Setup(x => x.CreateNeighboursCoordinates(It.IsAny<ICoordinate>()))
+            mock.Mock<INeighborhoodFactory>()
+                .Setup(x => x.CreateNeighborhood(It.IsAny<ICoordinate>()))
                 .Returns<ICoordinate>(x => NullNeighboursCoordinates.Instance);
 
             mock.Mock<IVertexFactory>()
-                .Setup(x => x.CreateVertex(It.IsAny<INeighboursCoordinates>(), It.IsAny<ICoordinate>()))
-                .Returns<INeighboursCoordinates, ICoordinate>((nc, c) => NullVertex.Instance);
+                .Setup(x => x.CreateVertex(It.IsAny<INeighborhood>(), It.IsAny<ICoordinate>()))
+                .Returns<INeighborhood, ICoordinate>((nc, c) => NullVertex.Instance);
 
             mock.Mock<IGraphFactory>()
                 .Setup(x => x.CreateGraph(It.IsAny<IEnumerable<IVertex>>(), It.IsAny<int[]>()))
