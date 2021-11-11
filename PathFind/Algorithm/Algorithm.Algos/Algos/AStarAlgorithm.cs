@@ -37,13 +37,6 @@ namespace Algorithm.Algos.Algos
             heuristics.Clear();
         }
 
-        protected override void PrepareForLocalPathfinding()
-        {
-            base.PrepareForLocalPathfinding();
-            double value = CalculateHeuristic(CurrentEndPoints.Source);
-            heuristics.Reevaluate(CurrentEndPoints.Source, value);
-        }
-
         protected override void Enqueue(IVertex vertex, double value)
         {
             heuristics.ReevaluateIfNotExists(vertex, CalculateHeuristic);

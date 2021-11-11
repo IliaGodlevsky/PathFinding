@@ -54,9 +54,9 @@ namespace Algorithm.Base
         /// <returns></returns>
         protected abstract double GreedyHeuristic(IVertex vertex);
 
-        protected override void CompletePathfinding()
+        protected override void Reset()
         {
-            base.CompletePathfinding();
+            base.Reset();
             visitedVerticesStack.Clear();
         }
 
