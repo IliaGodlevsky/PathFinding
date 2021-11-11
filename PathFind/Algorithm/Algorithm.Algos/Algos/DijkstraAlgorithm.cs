@@ -82,7 +82,7 @@ namespace Algorithm.Algos.Algos
             neighbours.ForEach(RelaxVertex);
         }
 
-        protected SimplePriorityQueue<IVertex, double> queue;
+        protected IPriorityQueue<IVertex, double> queue;
         protected ICosts accumulatedCosts;
 
         protected readonly IStepRule stepRule;

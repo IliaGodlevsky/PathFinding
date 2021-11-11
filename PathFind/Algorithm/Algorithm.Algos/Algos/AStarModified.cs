@@ -65,12 +65,6 @@ namespace Algorithm.Algos.Algos
             deletedVertices.Clear();
         }
 
-        protected override void CompletePathfinding()
-        {
-            base.CompletePathfinding();
-            deletedVertices.Clear();
-        }
-
         private int VerticesCountToDelete => queue.Count * percentOfFarthestVerticesToDelete.Value / 100;
 
         private int CalculatePercentOfFarthestVerticesToDelete()

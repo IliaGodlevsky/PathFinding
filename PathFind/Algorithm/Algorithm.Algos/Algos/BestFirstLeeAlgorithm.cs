@@ -48,6 +48,12 @@ namespace Algorithm.Algos.Algos
             }
         }
 
+        protected override void Reset()
+        {
+            base.Reset();
+            heuristics?.Clear();
+        }
+
         protected override void Reevaluate(IVertex vertex, double value)
         {
             base.Reevaluate(vertex, value);
