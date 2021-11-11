@@ -28,18 +28,20 @@ namespace Algorithm.Algos.Algos
             : base(graph, endPoints, stepRule)
         {
             heuristic = function;
+            heuristics = new Costs();
         }
 
         protected override void Reset()
         {
             base.Reset();
-            heuristics?.Clear();
+            heuristics.Clear();
         }
 
         protected override void PrepareForLocalPathfinding()
         {
             base.PrepareForLocalPathfinding();
-            heuristics = new Costs();
+            double value = CalculateHeuristic(CurrentEndPoints.Source);
+            heuristics.Reevaluate(CurrentEndPoints.Source, value);
         }
 
         protected override void Enqueue(IVertex vertex, double value)
@@ -53,7 +55,7 @@ namespace Algorithm.Algos.Algos
             return heuristic.Calculate(vertex, CurrentEndPoints.Target);
         }
 
-        protected ICosts heuristics;
+        protected readonly ICosts heuristics;
         protected readonly IHeuristic heuristic;
     }
 }

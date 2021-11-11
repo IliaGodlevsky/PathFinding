@@ -1,27 +1,36 @@
-﻿using Common.Interface;
+﻿using Common.Extensions;
+using Common.Interface;
+using Common.ValueRanges;
+using GraphLib.Base;
 using GraphLib.Interfaces;
 using System;
 
 namespace WPFVersion3D.Model
 {
     [Serializable]
-    internal sealed class Vertex3DCost : IVertexCost, ICloneable<IVertexCost>
+    internal sealed class Vertex3DCost : BaseVertexCost, IVertexCost, ICloneable<IVertexCost>
     {
-        public int CurrentCost { get; } = 1;
-
-        public override bool Equals(object obj)
+        public Vertex3DCost() : base()
         {
-            return obj is IVertexCost cost && cost.CurrentCost == CurrentCost;
+
         }
 
-        public override int GetHashCode()
+        public Vertex3DCost(int cost) : base(cost)
         {
-            return CurrentCost.GetHashCode();
+
         }
 
-        public IVertexCost Clone()
+        static Vertex3DCost()
         {
-            return new Vertex3DCost();
+            CostRange = new InclusiveValueRange<int>(4, 1);
+        }
+
+        public override IVertexCost Clone()
+        {
+            return new Vertex3DCost
+            {
+                CurrentCost = CurrentCost
+            };
         }
     }
 }

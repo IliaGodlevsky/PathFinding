@@ -48,8 +48,7 @@ namespace Algorithm.Base
                     VisitVertex(CurrentVertex);
                 } while (!IsDestination(CurrentEndPoints));
                 if (!IsAbleToContinue) break;
-                var foundPath = CreateGraphPath();
-                path = new CombinedGraphPath(path, foundPath);
+                path = new CombinedGraphPath(path, CreateGraphPath());
                 Reset();
             }
             CompletePathfinding();

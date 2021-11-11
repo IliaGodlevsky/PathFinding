@@ -30,6 +30,8 @@ namespace Algorithm.Algos.Algos
             : base(graph, endPoints)
         {
             this.stepRule = stepRule;
+            queue = new SimplePriorityQueue<IVertex, double>();
+            accumulatedCosts = new Costs();
         }
 
         protected override IGraphPath CreateGraphPath()
@@ -40,8 +42,8 @@ namespace Algorithm.Algos.Algos
         protected override void Reset()
         {
             base.Reset();
-            queue?.Clear();
-            accumulatedCosts?.Clear();
+            queue.Clear();
+            accumulatedCosts.Clear();
         }
 
         protected override IVertex NextVertex => queue.DequeueOrNullVertex();
@@ -49,8 +51,6 @@ namespace Algorithm.Algos.Algos
         protected override void PrepareForLocalPathfinding()
         {
             base.PrepareForLocalPathfinding();
-            queue = new SimplePriorityQueue<IVertex, double>();
-            accumulatedCosts = new Costs();
             accumulatedCosts.Reevaluate(CurrentEndPoints.Source, default);
         }
 
@@ -82,8 +82,8 @@ namespace Algorithm.Algos.Algos
             neighbours.ForEach(RelaxVertex);
         }
 
-        protected IPriorityQueue<IVertex, double> queue;
-        protected ICosts accumulatedCosts;
+        protected readonly SimplePriorityQueue<IVertex, double> queue;
+        protected readonly ICosts accumulatedCosts;
 
         protected readonly IStepRule stepRule;
     }

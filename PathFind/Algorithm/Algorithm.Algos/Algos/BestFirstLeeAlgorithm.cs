@@ -28,12 +28,13 @@ namespace Algorithm.Algos.Algos
             : base(graph, endPoints)
         {
             heuristic = function;
+            heuristics = new Costs();
         }
 
         public BestFirstLeeAlgorithm(IGraph graph, IIntermediateEndPoints endPoints)
             : this(graph, endPoints, new ManhattanDistance())
         {
-
+            
         }
 
         protected override IVertex NextVertex
@@ -51,19 +52,19 @@ namespace Algorithm.Algos.Algos
         protected override void Reset()
         {
             base.Reset();
-            heuristics?.Clear();
+            heuristics.Clear();
         }
 
         protected override void Reevaluate(IVertex vertex, double value)
         {
             base.Reevaluate(vertex, value);
-            heuristics.Reevaluate(vertex, value + CalculateHeuristic(CurrentVertex));
+            double result = CalculateHeuristic(CurrentVertex);
+            heuristics.Reevaluate(vertex, value + result);
         }
 
         protected override void PrepareForLocalPathfinding()
         {
-            base.PrepareForLocalPathfinding();
-            heuristics = new Costs();
+            base.PrepareForLocalPathfinding();           
             double value = CalculateHeuristic(CurrentEndPoints.Source);
             heuristics.Reevaluate(CurrentEndPoints.Source, value);
         }
@@ -73,7 +74,7 @@ namespace Algorithm.Algos.Algos
             return heuristic.Calculate(vertex, CurrentEndPoints.Target);
         }
 
-        protected ICosts heuristics;
+        private readonly ICosts heuristics;
         private readonly IHeuristic heuristic;
     }
 }
