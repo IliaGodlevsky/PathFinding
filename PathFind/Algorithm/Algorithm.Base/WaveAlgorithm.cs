@@ -6,6 +6,7 @@ using Common.Extensions.EnumerableExtensions;
 using GraphLib.Extensions;
 using GraphLib.Interfaces;
 using Interruptable.Interface;
+using NullObject.Extensions;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -22,7 +23,7 @@ namespace Algorithm.Base
         protected WaveAlgorithm(IGraph graph, IIntermediateEndPoints endPoints)
             : base(graph, endPoints)
         {
-            verticesQueue = new Queue<IVertex>();
+
         }
 
         /// <summary>
@@ -38,15 +39,15 @@ namespace Algorithm.Base
             foreach (var endPoint in endPoints.ToEndPoints())
             {
                 CurrentEndPoints = endPoint;
-                var nonObstacles = graph.GetNotObstacles().ToArray();
-                PrepareForLocalPathfinding(nonObstacles);
+                PrepareForLocalPathfinding();
+                VisitVertex(CurrentVertex);
                 do
-                {
-                    VisitVertex(CurrentVertex);
+                {                   
                     var neighbours = GetUnvisitedNeighbours(CurrentVertex);
                     ExtractNeighbours(neighbours);
                     RelaxNeighbours(neighbours);
                     CurrentVertex = NextVertex;
+                    VisitVertex(CurrentVertex);
                 } while (!IsDestination(CurrentEndPoints));
                 if (!IsAbleToContinue) break;
                 var foundPath = CreateGraphPath();
@@ -57,14 +58,7 @@ namespace Algorithm.Base
             return !IsAbleToContinue ? new NullGraphPath() : path;
         }
 
-        protected override void Reset()
-        {
-            base.Reset();
-            verticesQueue.Clear();
-            accumulatedCosts?.Clear();
-        }
-
-        protected virtual void PrepareForLocalPathfinding(IEnumerable<IVertex> vertices)
+        protected virtual void PrepareForLocalPathfinding()
         {
             CurrentVertex = CurrentEndPoints.Source;
         }
@@ -85,18 +79,8 @@ namespace Algorithm.Base
 
         protected virtual void ExtractNeighbours(IVertex[] neighbours)
         {
-            foreach (var neighbour in neighbours)
-            {
-                RaiseVertexEnqueued(new AlgorithmEventArgs(neighbour));
-                verticesQueue.Enqueue(neighbour);
-            }
-
-            verticesQueue = verticesQueue
-                .DistinctBy(vertex => vertex.Position)
-                .ToQueue();
+            neighbours.ForEach(vertex => RaiseVertexEnqueued(new AlgorithmEventArgs(vertex)));
         }
-
-        protected Queue<IVertex> verticesQueue;
 
         private IVertex[] GetUnvisitedNeighbours(IVertex vertex)
         {

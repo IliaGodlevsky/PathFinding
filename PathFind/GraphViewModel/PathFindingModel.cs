@@ -6,10 +6,12 @@ using Algorithm.Interfaces;
 using Algorithm.NullRealizations;
 using Common.Extensions.EnumerableExtensions;
 using GraphLib.Base;
+using GraphLib.Extensions;
 using GraphLib.Interfaces;
 using GraphViewModel.Interfaces;
 using Interruptable.EventArguments;
 using Logging.Interface;
+using NullObject.Extensions;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -66,7 +68,10 @@ namespace GraphViewModel
             {
                 (e.Current as IVisualizable)?.VisualizeAsVisited();
             }
-            visitedVerticesCount++;
+            if (!e.Current.IsNull())
+            {                
+                visitedVerticesCount++;
+            }
         }
 
         protected virtual void OnVertexVisitedNoVisualization(object sender, EventArgs e)

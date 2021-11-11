@@ -129,7 +129,6 @@ namespace Algorithm.Base
 
         private bool IsInterruptRequested { get; set; }
 
-        protected IAccumulatedCosts accumulatedCosts;
         protected readonly IVisitedVertices visitedVertices;
         protected readonly IParentVertices parentVertices;
         protected readonly IGraph graph;

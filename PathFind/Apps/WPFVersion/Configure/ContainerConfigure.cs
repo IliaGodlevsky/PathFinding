@@ -76,8 +76,8 @@ namespace WPFVersion.Configure
                 .Where(type => type.ImplementsAll(typeof(IAlgorithmFactory)))
                 .As<IAlgorithmFactory>().SingleInstance();
 
-            builder.RegisterType<LandscapeStepRule>().As<IStepRule>().SingleInstance();
-            builder.RegisterDecorator<WalkStepRule, IStepRule>();
+            //builder.RegisterType<LandscapeStepRule>().As<IStepRule>().SingleInstance();
+            //builder.RegisterDecorator<WalkStepRule, IStepRule>();
 
             return builder.Build();
         }

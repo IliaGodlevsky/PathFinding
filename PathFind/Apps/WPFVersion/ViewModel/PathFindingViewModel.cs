@@ -83,7 +83,10 @@ namespace WPFVersion.ViewModel
             string time = timer.ToFormattedString();
             var message = new UpdateStatisticsMessage(Index, time, visitedVerticesCount);
             await Messenger.Default.SendAsync(message, MessageTokens.AlgorithmStatisticsModel);
-            visitedVerticesCount++;
+            if (!e.Current.IsNull())
+            {
+                visitedVerticesCount++;
+            }
         }
 
         protected override void OnVertexEnqueued(object sender, AlgorithmEventArgs e) { }

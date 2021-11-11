@@ -39,7 +39,7 @@ namespace Common.Extensions
 
         public static string ToFormattedString(this Stopwatch self)
         {
-            return self.Elapsed.ToString(@"mm\:ss\.ff");
+            return self.Elapsed.ToString(@"mm\:ss\.fff");
         }
     }
 }

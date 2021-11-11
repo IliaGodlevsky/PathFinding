@@ -3,11 +3,9 @@ using Algorithm.Realizations.Heuristic;
 using Algorithm.Сompanions;
 using Algorithm.Сompanions.Interface;
 using Common.Extensions.EnumerableExtensions;
-using GraphLib.Extensions;
 using GraphLib.Interfaces;
 using Interruptable.Interface;
 using System;
-using System.Collections.Generic;
 using System.Linq;
 
 namespace Algorithm.Algos.Algos
@@ -56,10 +54,10 @@ namespace Algorithm.Algos.Algos
             accumulatedCostWithHeuristic.Reevaluate(vertex, value);
         }
 
-        protected override void PrepareForLocalPathfinding(IEnumerable<IVertex> vertices)
+        protected override void PrepareForLocalPathfinding()
         {
-            base.PrepareForLocalPathfinding(vertices);
-            accumulatedCostWithHeuristic = new AccumulatedCosts(vertices, double.PositiveInfinity);
+            base.PrepareForLocalPathfinding();
+            accumulatedCostWithHeuristic = new AccumulatedCosts(0);
             double value = heuristic.Calculate(CurrentEndPoints.Source, CurrentEndPoints.Target);
             accumulatedCostWithHeuristic.Reevaluate(CurrentEndPoints.Source, value);
         }

@@ -1,13 +1,12 @@
-﻿using Algorithm.Interfaces;
+﻿using Algorithm.Extensions;
+using Algorithm.Interfaces;
 using Algorithm.Realizations.Heuristic;
 using Algorithm.Realizations.StepRules;
 using Algorithm.Сompanions;
 using Algorithm.Сompanions.Interface;
-using GraphLib.Extensions;
 using GraphLib.Interfaces;
 using Interruptable.Interface;
 using System;
-using System.Collections.Generic;
 
 namespace Algorithm.Algos.Algos
 {
@@ -34,30 +33,27 @@ namespace Algorithm.Algos.Algos
         protected override void Reset()
         {
             base.Reset();
-            heuristicAccumulatedCosts?.Clear();
+            heuristics?.Clear();
         }
 
-        protected override void PrepareForLocalPathfinding(IEnumerable<IVertex> vertices)
+        protected override void PrepareForLocalPathfinding()
         {
-            base.PrepareForLocalPathfinding(vertices);
-            heuristicAccumulatedCosts = new AccumulatedCosts(vertices, double.PositiveInfinity);
-            double value = heuristic.Calculate(CurrentEndPoints.Source, CurrentEndPoints.Target);
-            heuristicAccumulatedCosts.Reevaluate(CurrentEndPoints.Source, value);
+            base.PrepareForLocalPathfinding();
+            heuristics = new AccumulatedCosts();
         }
 
-        protected override double OrderFunction(IVertex vertex)
+        protected override void Enqueue(IVertex vertex, double value)
         {
-            return heuristicAccumulatedCosts.GetAccumulatedCost(vertex);
+            heuristics.ReevaluateIfNotExists(vertex, CalculateHeuristic);
+            base.Enqueue(vertex, value + heuristics.GetAccumulatedCost(vertex));
         }
 
-        protected override void Reevaluate(IVertex vertex, double value)
+        protected virtual double CalculateHeuristic(IVertex vertex)
         {
-            base.Reevaluate(vertex, value);
-            value += heuristic.Calculate(vertex, CurrentEndPoints.Target);
-            heuristicAccumulatedCosts.Reevaluate(vertex, value);
+            return heuristic.Calculate(vertex, CurrentEndPoints.Target);
         }
 
-        private IAccumulatedCosts heuristicAccumulatedCosts;
+        protected IAccumulatedCosts heuristics;
         protected readonly IHeuristic heuristic;
     }
 }

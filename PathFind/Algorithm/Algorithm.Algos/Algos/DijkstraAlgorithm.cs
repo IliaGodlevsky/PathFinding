@@ -1,12 +1,15 @@
 ﻿using Algorithm.Base;
+using Algorithm.Extensions;
 using Algorithm.Interfaces;
 using Algorithm.Realizations.GraphPaths;
 using Algorithm.Realizations.StepRules;
 using Algorithm.Сompanions;
+using Algorithm.Сompanions.Interface;
 using Common.Extensions.EnumerableExtensions;
 using GraphLib.Extensions;
 using GraphLib.Interfaces;
 using Interruptable.Interface;
+using Priority_Queue;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -36,23 +39,20 @@ namespace Algorithm.Algos.Algos
             return new GraphPath(parentVertices, CurrentEndPoints, stepRule);
         }
 
-        protected override IVertex NextVertex
+        protected override void Reset()
         {
-            get
-            {
-                verticesQueue = verticesQueue
-                    .OrderBy(OrderFunction)
-                    .Where(visitedVertices.IsNotVisited)
-                    .ToQueue();
-
-                return verticesQueue.DequeueOrNullVertex();
-            }
+            base.Reset();
+            queue?.Clear();
+            accumulatedCosts?.Clear();
         }
 
-        protected override void PrepareForLocalPathfinding(IEnumerable<IVertex> vertices)
+        protected override IVertex NextVertex => queue.DequeueOrNullVertex();
+
+        protected override void PrepareForLocalPathfinding()
         {
-            base.PrepareForLocalPathfinding(vertices);
-            accumulatedCosts = new AccumulatedCosts(vertices, double.PositiveInfinity);
+            base.PrepareForLocalPathfinding();
+            queue = new SimplePriorityQueue<IVertex, double>();
+            accumulatedCosts = new AccumulatedCosts();
             accumulatedCosts.Reevaluate(CurrentEndPoints.Source, default);
         }
 
@@ -61,19 +61,15 @@ namespace Algorithm.Algos.Algos
             double relaxedCost = GetVertexRelaxedCost(vertex);
             if (accumulatedCosts.Compare(vertex, relaxedCost) > 0)
             {
-                Reevaluate(vertex, relaxedCost);
+                accumulatedCosts.Reevaluate(vertex, relaxedCost);
+                Enqueue(vertex, relaxedCost);
                 parentVertices.Add(vertex, CurrentVertex);
             }
         }
 
-        protected virtual void Reevaluate(IVertex vertex, double value)
-        {
-            accumulatedCosts.Reevaluate(vertex, value);
-        }
-
-        protected virtual double OrderFunction(IVertex vertex)
-        {
-            return accumulatedCosts.GetAccumulatedCost(vertex);
+        protected virtual void Enqueue(IVertex vertex, double value)
+        {           
+            queue.EnqueueOrUpdatePriority(vertex, value);
         }
 
         protected virtual double GetVertexRelaxedCost(IVertex neighbour)
@@ -86,6 +82,9 @@ namespace Algorithm.Algos.Algos
         {
             neighbours.ForEach(RelaxVertex);
         }
+
+        protected SimplePriorityQueue<IVertex, double> queue;
+        protected IAccumulatedCosts accumulatedCosts;
 
         protected readonly IStepRule stepRule;
     }

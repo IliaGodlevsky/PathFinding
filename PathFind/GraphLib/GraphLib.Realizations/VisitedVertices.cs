@@ -25,11 +25,6 @@ namespace GraphLib.Realizations
             return !visitedVertices.TryGetValue(vertex.Position, out _);
         }
 
-        public IEnumerable<IVertex> GetUnvisitedNeighbours(IVertex vertex)
-        {
-            return vertex.Neighbours.Where(IsNotVisited);
-        }
-
         public void Clear()
         {
             visitedVertices.Clear();

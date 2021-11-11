@@ -1,6 +1,7 @@
 ﻿using Algorithm.Base;
 using Algorithm.Interfaces;
 using Algorithm.Сompanions;
+using Algorithm.Сompanions.Interface;
 using Common.Extensions.EnumerableExtensions;
 using GraphLib.Extensions;
 using GraphLib.Interfaces;
@@ -17,13 +18,13 @@ namespace Algorithm.Algos.Algos
         public LeeAlgorithm(IGraph graph, IIntermediateEndPoints endPoints)
             : base(graph, endPoints)
         {
-
+            verticesQueue = new Queue<IVertex>();
         }
 
-        protected override void PrepareForLocalPathfinding(IEnumerable<IVertex> vertices)
+        protected override void PrepareForLocalPathfinding()
         {
-            base.PrepareForLocalPathfinding(vertices);
-            accumulatedCosts = new AccumulatedCosts(vertices, 0);
+            base.PrepareForLocalPathfinding();
+            accumulatedCosts = new AccumulatedCosts(0);
         }
 
         protected override void CompletePathfinding()
@@ -32,17 +33,7 @@ namespace Algorithm.Algos.Algos
             verticesQueue.Clear();
         }
 
-        protected override IVertex NextVertex
-        {
-            get
-            {
-                verticesQueue = verticesQueue
-                    .Where(visitedVertices.IsNotVisited)
-                    .ToQueue();
-
-                return verticesQueue.DequeueOrNullVertex();
-            }
-        }
+        protected override IVertex NextVertex => verticesQueue.DequeueOrNullVertex();
 
         protected virtual double CreateWave()
         {
@@ -52,6 +43,7 @@ namespace Algorithm.Algos.Algos
         protected virtual void RelaxNeighbour(IVertex vertex)
         {
             Reevaluate(vertex, CreateWave());
+            verticesQueue.Enqueue(vertex);
             parentVertices.Add(vertex, CurrentVertex);
         }
 
@@ -64,6 +56,9 @@ namespace Algorithm.Algos.Algos
         {
             return accumulatedCosts.GetAccumulatedCost(vertex) == 0;
         }
+
+        protected Queue<IVertex> verticesQueue;
+        protected IAccumulatedCosts accumulatedCosts;
 
         protected override void RelaxNeighbours(IVertex[] neighbours)
         {

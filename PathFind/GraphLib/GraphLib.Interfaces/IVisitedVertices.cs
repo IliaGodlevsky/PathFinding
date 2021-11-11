@@ -23,13 +23,6 @@ namespace GraphLib.Interfaces
         /// <returns></returns>
         bool IsNotVisited(IVertex vertex);
 
-        /// <summary>
-        /// Gets vertex's unvisited neighbours
-        /// </summary>
-        /// <param name="vertex"></param>
-        /// <returns></returns>
-        IEnumerable<IVertex> GetUnvisitedNeighbours(IVertex vertex);
-
         void Clear();
     }
 }

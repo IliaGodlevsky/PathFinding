@@ -1,8 +1,11 @@
-﻿using Algorithm.Interfaces;
+﻿using Algorithm.Extensions;
+using Algorithm.Interfaces;
 using Algorithm.Realizations.Heuristic;
 using Algorithm.Realizations.StepRules;
+using Algorithm.Сompanions;
 using Common.Extensions.EnumerableExtensions;
 using Common.ValueRanges;
+using GraphLib.Extensions;
 using GraphLib.Interfaces;
 using Interruptable.Interface;
 using NullObject.Extensions;
@@ -33,31 +36,35 @@ namespace Algorithm.Algos.Algos
         {
             percentValueRange = new InclusiveValueRange<int>(99);
             percentOfFarthestVerticesToDelete = new Lazy<int>(CalculatePercentOfFarthestVerticesToDelete);
-            deletedVertices = new Queue<IVertex>();
+            deletedVertices = new HashSet<ValueTuple<IVertex, double>>();
         }
 
         protected override IVertex NextVertex
         {
             get
             {
-                verticesQueue = verticesQueue
-                    .OrderByDescending(CalculateHeuristic)
-                    .ToQueue();
-
-                var verticesToDelete = verticesQueue
-                    .Take(VerticesCountToDelete);
-
-                deletedVertices.EnqueueRange(verticesToDelete);
-                verticesQueue = verticesQueue.Except(verticesToDelete);
-
+                var verticesToDelete = queue
+                    .OrderByDescending(heuristics.GetAccumulatedCost)
+                    .Take(VerticesCountToDelete)
+                    .ToList();
+                var tuples = queue.ToValueTuples(verticesToDelete);
+                queue.RemoveRange(verticesToDelete);
+                deletedVertices.AddRange(tuples);
                 var next = base.NextVertex;
                 if (next.IsNull())
                 {
-                    verticesQueue = deletedVertices;
+                    queue.EnqueueOrUpdateRange(deletedVertices);
+                    deletedVertices.Clear();
                     next = base.NextVertex;
                 }
                 return next;
             }
+        }
+
+        protected override void Reset()
+        {
+            base.Reset();
+            deletedVertices.Clear();
         }
 
         protected override void CompletePathfinding()
@@ -66,16 +73,11 @@ namespace Algorithm.Algos.Algos
             deletedVertices.Clear();
         }
 
-        protected virtual double CalculateHeuristic(IVertex vertex)
-        {
-            return heuristic.Calculate(vertex, CurrentEndPoints.Target);
-        }
-
-        private int VerticesCountToDelete => verticesQueue.Count * percentOfFarthestVerticesToDelete.Value / 100;
+        private int VerticesCountToDelete => queue.Count * percentOfFarthestVerticesToDelete.Value / 100;
 
         private int CalculatePercentOfFarthestVerticesToDelete()
         {
-            const int LogarithmBase = 4;
+            const int LogarithmBase = 6;
             int graphSize = graph.Size + 1;
             // this formula was found empirically (it means: in what power you need 
             // to raise the base of the logarithm to get the size of the graph)
@@ -86,6 +88,6 @@ namespace Algorithm.Algos.Algos
 
         private readonly InclusiveValueRange<int> percentValueRange;
         private readonly Lazy<int> percentOfFarthestVerticesToDelete;
-        private readonly Queue<IVertex> deletedVertices;
+        private readonly HashSet<ValueTuple<IVertex, double>> deletedVertices;
     }
 }

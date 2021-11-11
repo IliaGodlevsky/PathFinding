@@ -9,16 +9,10 @@ namespace Algorithm.Сompanions
 {
     public sealed class AccumulatedCosts : IAccumulatedCosts
     {
-        public AccumulatedCosts(IEnumerable<IVertex> graph, double startCost)
+        public AccumulatedCosts(double returnIfNotExists = double.PositiveInfinity)
         {
+            this.returnIfNotExists = returnIfNotExists;
             accumulatedCosts = new Dictionary<ICoordinate, double>();
-            graph.ForEach(vertex => Reevaluate(vertex, startCost));
-        }
-
-        public AccumulatedCosts(IEnumerable<IVertex> graph, Func<IVertex, double> function)
-        {
-            accumulatedCosts = new Dictionary<ICoordinate, double>();
-            graph.ForEach(vertex => Reevaluate(vertex, function(vertex)));
         }
 
         public void Reevaluate(IVertex vertex, double accumulatedCost)
@@ -33,8 +27,7 @@ namespace Algorithm.Сompanions
                 return cost;
             }
 
-            string message = $"Could not find cost of {vertex.GetInforamtion()}";
-            throw new KeyNotFoundException(message);
+            return returnIfNotExists;
         }
 
         public int Compare(IVertex vertex, double accumulatedCost)
@@ -49,5 +42,6 @@ namespace Algorithm.Сompanions
         }
 
         private readonly IDictionary<ICoordinate, double> accumulatedCosts;
+        private readonly double returnIfNotExists;
     }
 }
