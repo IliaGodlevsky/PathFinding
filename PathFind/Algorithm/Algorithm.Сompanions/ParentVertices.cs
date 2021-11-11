@@ -15,11 +15,10 @@ namespace Algorithm.Сompanions
 
         public void Add(IVertex child, IVertex parent)
         {
-            if (parent.IsNull() || child.IsNull())
+            if (!parent.IsNull() && !child.IsNull())
             {
-                return;
+                parentVertices[child.Position] = parent;
             }
-            parentVertices[child.Position] = parent;
         }
 
         public IVertex GetParent(IVertex child)
@@ -39,6 +38,6 @@ namespace Algorithm.Сompanions
             parentVertices.Clear();
         }
 
-        private readonly IDictionary<ICoordinate, IVertex> parentVertices;
+        private readonly Dictionary<ICoordinate, IVertex> parentVertices;
     }
 }

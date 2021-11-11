@@ -43,9 +43,8 @@
   <ItemGroup>
     <Compile Include="AlgorithmExtensions.cs" />
     <Compile Include="GraphPathExtensions.cs" />
-    <Compile Include="IAccumulatedCostsExtensions.cs" />
+    <Compile Include="ICostsExtensions.cs" />
     <Compile Include="IPriorityQueueExtensions.cs" />
-    <Compile Include="IEnumerableExtensions.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

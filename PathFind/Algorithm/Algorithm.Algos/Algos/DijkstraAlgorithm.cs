@@ -11,8 +11,6 @@ using GraphLib.Interfaces;
 using Interruptable.Interface;
 using Priority_Queue;
 using System;
-using System.Collections.Generic;
-using System.Linq;
 
 namespace Algorithm.Algos.Algos
 {
@@ -52,14 +50,15 @@ namespace Algorithm.Algos.Algos
         {
             base.PrepareForLocalPathfinding();
             queue = new SimplePriorityQueue<IVertex, double>();
-            accumulatedCosts = new AccumulatedCosts();
+            accumulatedCosts = new Costs();
             accumulatedCosts.Reevaluate(CurrentEndPoints.Source, default);
         }
 
         protected virtual void RelaxVertex(IVertex vertex)
         {
             double relaxedCost = GetVertexRelaxedCost(vertex);
-            if (accumulatedCosts.Compare(vertex, relaxedCost) > 0)
+            double vertexCost = accumulatedCosts.GetCostOrDefault(vertex);
+            if (vertexCost > relaxedCost)
             {
                 accumulatedCosts.Reevaluate(vertex, relaxedCost);
                 Enqueue(vertex, relaxedCost);
@@ -68,14 +67,14 @@ namespace Algorithm.Algos.Algos
         }
 
         protected virtual void Enqueue(IVertex vertex, double value)
-        {           
+        {
             queue.EnqueueOrUpdatePriority(vertex, value);
         }
 
         protected virtual double GetVertexRelaxedCost(IVertex neighbour)
         {
             return stepRule.CalculateStepCost(neighbour, CurrentVertex)
-                   + accumulatedCosts.GetAccumulatedCost(CurrentVertex);
+                   + accumulatedCosts.GetCost(CurrentVertex);
         }
 
         protected override void RelaxNeighbours(IVertex[] neighbours)
@@ -84,7 +83,7 @@ namespace Algorithm.Algos.Algos
         }
 
         protected SimplePriorityQueue<IVertex, double> queue;
-        protected IAccumulatedCosts accumulatedCosts;
+        protected ICosts accumulatedCosts;
 
         protected readonly IStepRule stepRule;
     }

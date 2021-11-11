@@ -1,7 +1,6 @@
 ﻿using GraphLib.Interfaces;
 using NullObject.Extensions;
 using System.Collections.Generic;
-using System.Linq;
 
 namespace GraphLib.Realizations
 {
@@ -9,20 +8,20 @@ namespace GraphLib.Realizations
     {
         public VisitedVertices()
         {
-            visitedVertices = new Dictionary<ICoordinate, IVertex>();
+            visitedVertices = new HashSet<IVertex>();
         }
 
         public void Add(IVertex vertex)
         {
             if (!vertex.IsNull())
             {
-                visitedVertices[vertex.Position] = vertex;
+                visitedVertices.Add(vertex);
             }
         }
 
         public bool IsNotVisited(IVertex vertex)
         {
-            return !visitedVertices.TryGetValue(vertex.Position, out _);
+            return !visitedVertices.Contains(vertex);
         }
 
         public void Clear()
@@ -30,6 +29,6 @@ namespace GraphLib.Realizations
             visitedVertices.Clear();
         }
 
-        private readonly IDictionary<ICoordinate, IVertex> visitedVertices;
+        private readonly HashSet<IVertex> visitedVertices;
     }
 }

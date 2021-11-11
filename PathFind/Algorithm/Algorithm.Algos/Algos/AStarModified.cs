@@ -2,10 +2,8 @@
 using Algorithm.Interfaces;
 using Algorithm.Realizations.Heuristic;
 using Algorithm.Realizations.StepRules;
-using Algorithm.Сompanions;
 using Common.Extensions.EnumerableExtensions;
 using Common.ValueRanges;
-using GraphLib.Extensions;
 using GraphLib.Interfaces;
 using Interruptable.Interface;
 using NullObject.Extensions;
@@ -44,7 +42,7 @@ namespace Algorithm.Algos.Algos
             get
             {
                 var verticesToDelete = queue
-                    .OrderByDescending(heuristics.GetAccumulatedCost)
+                    .OrderByDescending(heuristics.GetCost)
                     .Take(VerticesCountToDelete)
                     .ToList();
                 var tuples = queue.ToValueTuples(verticesToDelete);

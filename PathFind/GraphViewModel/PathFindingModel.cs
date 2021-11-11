@@ -6,7 +6,6 @@ using Algorithm.Interfaces;
 using Algorithm.NullRealizations;
 using Common.Extensions.EnumerableExtensions;
 using GraphLib.Base;
-using GraphLib.Extensions;
 using GraphLib.Interfaces;
 using GraphViewModel.Interfaces;
 using Interruptable.EventArguments;
@@ -69,7 +68,7 @@ namespace GraphViewModel
                 (e.Current as IVisualizable)?.VisualizeAsVisited();
             }
             if (!e.Current.IsNull())
-            {                
+            {
                 visitedVerticesCount++;
             }
         }

@@ -1,6 +1,4 @@
-﻿using System.Collections.Generic;
-
-namespace GraphLib.Interfaces
+﻿namespace GraphLib.Interfaces
 {
     /// <summary>
     /// An interface, that provides methods 

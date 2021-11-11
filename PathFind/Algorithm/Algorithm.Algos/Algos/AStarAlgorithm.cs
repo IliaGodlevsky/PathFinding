@@ -39,13 +39,13 @@ namespace Algorithm.Algos.Algos
         protected override void PrepareForLocalPathfinding()
         {
             base.PrepareForLocalPathfinding();
-            heuristics = new AccumulatedCosts();
+            heuristics = new Costs();
         }
 
         protected override void Enqueue(IVertex vertex, double value)
         {
             heuristics.ReevaluateIfNotExists(vertex, CalculateHeuristic);
-            base.Enqueue(vertex, value + heuristics.GetAccumulatedCost(vertex));
+            base.Enqueue(vertex, value + heuristics.GetCost(vertex));
         }
 
         protected virtual double CalculateHeuristic(IVertex vertex)
@@ -53,7 +53,7 @@ namespace Algorithm.Algos.Algos
             return heuristic.Calculate(vertex, CurrentEndPoints.Target);
         }
 
-        protected IAccumulatedCosts heuristics;
+        protected ICosts heuristics;
         protected readonly IHeuristic heuristic;
     }
 }

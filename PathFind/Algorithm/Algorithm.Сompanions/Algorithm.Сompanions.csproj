@@ -41,10 +41,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AccumulatedCosts.cs" />
-    <Compile Include="Interface\IAccumulatedCosts.cs" />
+    <Compile Include="Costs.cs" />
+    <Compile Include="Interface\ICosts.cs" />
     <Compile Include="Interface\IParentVertices.cs" />
-    <Compile Include="Node.cs" />
     <Compile Include="ParentVertices.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

@@ -1,4 +1,5 @@
 ﻿using Algorithm.Base;
+using Algorithm.Extensions;
 using Algorithm.Interfaces;
 using Algorithm.Сompanions;
 using Algorithm.Сompanions.Interface;
@@ -24,7 +25,7 @@ namespace Algorithm.Algos.Algos
         protected override void PrepareForLocalPathfinding()
         {
             base.PrepareForLocalPathfinding();
-            accumulatedCosts = new AccumulatedCosts(0);
+            accumulatedCosts = new Costs();
         }
 
         protected override void CompletePathfinding()
@@ -37,7 +38,7 @@ namespace Algorithm.Algos.Algos
 
         protected virtual double CreateWave()
         {
-            return accumulatedCosts.GetAccumulatedCost(CurrentVertex) + 1;
+            return accumulatedCosts.GetCostOrDefault(CurrentVertex, default) + 1;
         }
 
         protected virtual void RelaxNeighbour(IVertex vertex)
@@ -54,11 +55,8 @@ namespace Algorithm.Algos.Algos
 
         protected bool VertexIsUnwaved(IVertex vertex)
         {
-            return accumulatedCosts.GetAccumulatedCost(vertex) == 0;
+            return accumulatedCosts.GetCostOrDefault(vertex, default) == 0;
         }
-
-        protected Queue<IVertex> verticesQueue;
-        protected IAccumulatedCosts accumulatedCosts;
 
         protected override void RelaxNeighbours(IVertex[] neighbours)
         {
@@ -66,5 +64,8 @@ namespace Algorithm.Algos.Algos
                 .Where(VertexIsUnwaved)
                 .ForEach(RelaxNeighbour);
         }
+
+        protected Queue<IVertex> verticesQueue;
+        protected ICosts accumulatedCosts;
     }
 }

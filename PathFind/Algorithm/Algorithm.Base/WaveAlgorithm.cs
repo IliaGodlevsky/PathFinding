@@ -6,9 +6,7 @@ using Common.Extensions.EnumerableExtensions;
 using GraphLib.Extensions;
 using GraphLib.Interfaces;
 using Interruptable.Interface;
-using NullObject.Extensions;
 using System;
-using System.Collections.Generic;
 using System.Linq;
 
 namespace Algorithm.Base
@@ -42,7 +40,7 @@ namespace Algorithm.Base
                 PrepareForLocalPathfinding();
                 VisitVertex(CurrentVertex);
                 do
-                {                   
+                {
                     var neighbours = GetUnvisitedNeighbours(CurrentVertex);
                     ExtractNeighbours(neighbours);
                     RelaxNeighbours(neighbours);

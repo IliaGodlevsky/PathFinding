@@ -39,7 +39,7 @@ namespace Algorithm.Extensions
             }
         }
 
-        public static void EnqueueOrUpdateRange<TItem, TPriority>(this IPriorityQueue<TItem, TPriority> self, 
+        public static void EnqueueOrUpdateRange<TItem, TPriority>(this IPriorityQueue<TItem, TPriority> self,
             IEnumerable<ValueTuple<TItem, TPriority>> nodes)
         {
             foreach (var node in nodes)
@@ -58,10 +58,10 @@ namespace Algorithm.Extensions
             return self.TryGetPriority(vertex, out double value) ? value : double.PositiveInfinity;
         }
 
-        public static IEnumerable<ValueTuple<IVertex, double>> ToValueTuples(this SimplePriorityQueue<IVertex, double> self, 
+        public static IEnumerable<ValueTuple<IVertex, double>> ToValueTuples(this SimplePriorityQueue<IVertex, double> self,
             IEnumerable<IVertex> vertices)
         {
-            foreach(var vertex in vertices)
+            foreach (var vertex in vertices)
             {
                 yield return self.ToValueTuple(vertex);
             }
