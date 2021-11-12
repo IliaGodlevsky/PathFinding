@@ -4,6 +4,7 @@ using GraphLib.NullRealizations.NullObjects;
 using Priority_Queue;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Algorithm.Extensions
 {
@@ -65,6 +66,11 @@ namespace Algorithm.Extensions
             {
                 yield return self.ToValueTuple(vertex);
             }
+        }
+
+        public static IList<TItem> TakeOrderedBy<TItem, TPriority>(this IPriorityQueue<TItem, TPriority> self, int take, Func<TItem, TPriority> selector)
+        {
+            return self.OrderByDescending(selector).Take(take).ToList();
         }
     }
 }

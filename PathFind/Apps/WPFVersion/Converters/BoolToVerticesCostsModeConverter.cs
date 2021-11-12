@@ -9,15 +9,12 @@ namespace WPFVersion.Converters
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            if (value is true)
+            switch (value)
             {
-                return new WeightedVerticesCostsMode();
+                case true:  return new WeightedVerticesCostsMode();
+                case false: return new UnweightedVerticesCostsMode();
+                default:    return Binding.DoNothing;
             }
-            else if (value is false)
-            {
-                return new UnweightedVerticesCostsMode();
-            }
-            return Binding.DoNothing;
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
