@@ -60,8 +60,9 @@ namespace ConsoleVersion.Model
                 if (value is WeightableVertexCost vertexCost)
                 {
                     vertexCost.UnweightedCostView = "#";
+                    text = value.ToString();
                 }
-                text = value.ToString();
+
                 cost = value;
             }
         }

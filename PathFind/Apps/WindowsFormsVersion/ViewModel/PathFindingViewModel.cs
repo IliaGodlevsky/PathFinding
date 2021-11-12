@@ -86,15 +86,15 @@ namespace WindowsFormsVersion.ViewModel
             get
             {
                 string timerInfo = timer.ToFormattedString();
-                string description = Algorithms.GetDescriptionAttributeValueOrTypeName();
+                string description = Algorithm.GetDescriptionAttributeValueOrTypeName();
                 string pathfindingInfo = string.Format(Format, PathfindingInfo);
-                return string.Join("\t", description, timerInfo, pathfindingInfo);
+                return string.Join("    ", description, timerInfo, pathfindingInfo);
             }
         }
 
         private object[] PathfindingInfo => new object[] { path.Length, path.Cost, visitedVerticesCount };
 
-        private readonly string Format = "Steps: {0}  Path cost: {1}  Visited: {2}";
+        private readonly string Format = "Steps: {0}   Path cost: {1}   Visited: {2}";
         private readonly string CouldntFindPath = "Could't fing path";
     }
 }
