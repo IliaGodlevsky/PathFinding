@@ -101,8 +101,6 @@ namespace WPFVersion.ViewModel
         protected override void OnAlgorithmFinished(object sender, ProcessEventArgs e)
         {
             base.OnAlgorithmFinished(sender, e);
-            var message = new AlgorithmStatusMessage(AlgorithmStatus.Finished, Index);
-            Messenger.Default.Send(message, MessageTokens.AlgorithmStatisticsModel);
             Messenger.Default.Unregister(this);
         }
 

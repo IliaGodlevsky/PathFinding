@@ -69,6 +69,8 @@ namespace WPFVersion3D.ViewModel
             var message = new UpdateAlgorithmStatisticsMessage(Index, time,
                 visitedVerticesCount, path.Length, path.Cost);
             Messenger.Default.Send(message, MessageTokens.AlgorithmStatisticsModel);
+            var statusMessage = new AlgorithmStatusMessage(status, Index);
+            Messenger.Default.Send(statusMessage, MessageTokens.AlgorithmStatisticsModel);
         }
 
         protected override async void OnVertexVisited(object sender, AlgorithmEventArgs e)
@@ -94,9 +96,7 @@ namespace WPFVersion3D.ViewModel
 
         protected override void OnAlgorithmFinished(object sender, ProcessEventArgs e)
         {
-            base.OnAlgorithmFinished(sender, e);
-            var message = new AlgorithmStatusMessage(AlgorithmStatuses.Finished, Index);
-            Messenger.Default.Send(message, MessageTokens.AlgorithmStatisticsModel);
+            base.OnAlgorithmFinished(sender, e);            
             Messenger.Default.Unregister(this);
         }
 
