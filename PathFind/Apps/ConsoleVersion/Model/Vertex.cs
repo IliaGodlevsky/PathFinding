@@ -35,7 +35,6 @@ namespace ConsoleVersion.Model
             : this(info.NeighboursCoordinates, info.Position)
         {
             this.Initialize(info);
-
         }
 
         private bool isObstacle;

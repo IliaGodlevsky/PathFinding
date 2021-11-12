@@ -24,12 +24,6 @@ namespace Algorithm.Base
 
         }
 
-        /// <summary>
-        /// Finds the cheapest path in the graph. 
-        /// This method can't be overriden
-        /// </summary>
-        /// <returns>A cheapest path in the graph 
-        /// between speciаied end points</returns>
         public override sealed IGraphPath FindPath()
         {
             IGraphPath path = new NullGraphPath();
@@ -39,16 +33,15 @@ namespace Algorithm.Base
                 CurrentEndPoints = endPoint;
                 PrepareForLocalPathfinding();
                 VisitVertex(CurrentVertex);
-                do
+                while(!IsDestination(CurrentEndPoints))
                 {
-                    var neighbours = GetUnvisitedNeighbours(CurrentVertex);
-                    ExtractNeighbours(neighbours);
-                    RelaxNeighbours(neighbours);
+                    InspectCurrentVertex();
                     CurrentVertex = NextVertex;
                     VisitVertex(CurrentVertex);
-                } while (!IsDestination(CurrentEndPoints));
+                }
                 if (!IsAbleToContinue) break;
-                path = new CombinedGraphPath(path, CreateGraphPath());
+                var found = CreateGraphPath();
+                path = new CombinedGraphPath(path, found);
                 Reset();
             }
             CompletePathfinding();
@@ -79,12 +72,14 @@ namespace Algorithm.Base
             neighbours.ForEach(vertex => RaiseVertexEnqueued(new AlgorithmEventArgs(vertex)));
         }
 
-        private IVertex[] GetUnvisitedNeighbours(IVertex vertex)
+        private void InspectCurrentVertex()
         {
-            return visitedVertices
-                .GetUnvisitedNeighbours(vertex)
+            var neighbours = visitedVertices
+                .GetUnvisitedNeighbours(CurrentVertex)
                 .FilterObstacles()
                 .ToArray();
+            ExtractNeighbours(neighbours);
+            RelaxNeighbours(neighbours);
         }
     }
 }

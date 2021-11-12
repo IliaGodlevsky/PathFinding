@@ -12,7 +12,7 @@ namespace Common.Extensions
         /// <remarks>WARNING: This method doesn't start 
         /// stopwatch, stop or reset it. You should use 
         /// this method on a started stopwatch instance</remarks>
-        public static void Wait(this Stopwatch watch, int milliseconds)
+        public static Stopwatch Wait(this Stopwatch watch, int milliseconds)
         {
             if (watch.IsRunning)
             {
@@ -23,17 +23,12 @@ namespace Common.Extensions
                     millisecondsPassed = watch.ElapsedMilliseconds - currentMilliseconds;
                 }
             }
+            return watch;
         }
 
         public static Stopwatch Cancel(this Stopwatch self)
         {
             self.Stop();
-            return self;
-        }
-
-        public static Stopwatch Pause(this Stopwatch self, int milliseconds)
-        {
-            self.Wait(milliseconds);
             return self;
         }
 

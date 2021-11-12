@@ -20,11 +20,6 @@ namespace Algorithm.Algos.Algos
             : base(graph, endPoints)
         {
             verticesQueue = new Queue<IVertex>();
-        }
-
-        protected override void PrepareForLocalPathfinding()
-        {
-            base.PrepareForLocalPathfinding();
             accumulatedCosts = new Costs();
         }
 
@@ -32,6 +27,7 @@ namespace Algorithm.Algos.Algos
         {
             base.CompletePathfinding();
             verticesQueue.Clear();
+            accumulatedCosts.Clear();
         }
 
         protected override IVertex NextVertex => verticesQueue.DequeueOrNullVertex();
@@ -66,6 +62,6 @@ namespace Algorithm.Algos.Algos
         }
 
         protected Queue<IVertex> verticesQueue;
-        protected ICosts accumulatedCosts;
+        protected readonly ICosts accumulatedCosts;
     }
 }
