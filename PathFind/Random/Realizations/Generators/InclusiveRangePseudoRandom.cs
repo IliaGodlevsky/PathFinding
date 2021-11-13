@@ -21,8 +21,9 @@ namespace Random.Realizations
         }
 
         public InclusiveRangePseudoRandom()
+            : this(DateTime.UtcNow.Ticks)
         {
-            seed = DateTime.UtcNow.Ticks;
+
         }
 
         public int Next(int minValue, int maxValue)
