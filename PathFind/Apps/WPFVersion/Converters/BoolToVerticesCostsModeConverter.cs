@@ -11,9 +11,9 @@ namespace WPFVersion.Converters
         {
             switch (value)
             {
-                case true:  return new WeightedVerticesCostsMode();
+                case true: return new WeightedVerticesCostsMode();
                 case false: return new UnweightedVerticesCostsMode();
-                default:    return Binding.DoNothing;
+                default: return Binding.DoNothing;
             }
         }
 

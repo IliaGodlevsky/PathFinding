@@ -1,8 +1,8 @@
 ﻿using Common.Extensions.EnumerableExtensions;
-using Common.ValueRanges;
 using GraphLib.Interfaces;
 using System;
 using System.Linq;
+using ValueRange;
 
 namespace GraphLib.Extensions
 {

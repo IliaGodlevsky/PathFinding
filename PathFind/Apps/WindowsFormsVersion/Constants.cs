@@ -1,4 +1,4 @@
-﻿using Common.ValueRanges;
+﻿using ValueRange;
 
 namespace WindowsFormsVersion
 {

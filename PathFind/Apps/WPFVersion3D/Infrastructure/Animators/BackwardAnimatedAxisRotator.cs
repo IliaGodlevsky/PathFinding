@@ -1,8 +1,8 @@
-﻿using Common.Extensions;
-using System;
+﻿using System;
 using System.Windows;
 using System.Windows.Media.Animation;
 using System.Windows.Media.Media3D;
+using ValueRange.Extensions;
 using WPFVersion3D.Interface;
 
 using static WPFVersion3D.Constants;

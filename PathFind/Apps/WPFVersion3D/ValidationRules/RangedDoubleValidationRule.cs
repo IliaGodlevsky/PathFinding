@@ -1,6 +1,6 @@
-﻿using Common.ValueRanges;
-using System.Globalization;
+﻿using System.Globalization;
 using System.Windows.Controls;
+using ValueRange;
 
 namespace WPFVersion3D.ValidationRules
 {

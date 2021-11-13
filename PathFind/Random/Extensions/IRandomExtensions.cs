@@ -1,7 +1,7 @@
-﻿using Common.Interface;
-using Common.ValueRanges;
+﻿using Random.Interface;
+using ValueRange;
 
-namespace Common.Extensions
+namespace Random.Extensions
 {
     public static class IRandomExtensions
     {
@@ -24,7 +24,7 @@ namespace Common.Extensions
         /// <returns>A value within the range if 0 to 1 inclusivly </returns>
         public static double NextDouble(this IRandom self)
         {
-            return (double)self.Next() / (double)int.MaxValue;
+            return self.Next() / (double)int.MaxValue;
         }
 
         /// <summary>
@@ -37,5 +37,7 @@ namespace Common.Extensions
         {
             return self.Next(0, int.MaxValue);
         }
+
+
     }
 }

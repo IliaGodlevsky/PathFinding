@@ -1,11 +1,11 @@
 ﻿using Common.Extensions.EnumerableExtensions;
-using Common.ValueRanges;
 using ConsoleVersion.Interface;
 using ConsoleVersion.Model;
 using ConsoleVersion.View.FramedAxes;
 using GraphLib.Interfaces;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using ValueRange;
 
 namespace ConsoleVersion.View
 {

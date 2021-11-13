@@ -1,7 +1,7 @@
-﻿using Common.ValueRanges;
-using EnumerationValues.Interface;
+﻿using EnumerationValues.Interface;
 using System;
 using System.Linq;
+using ValueRange;
 
 namespace EnumerationValues.Extensions
 {

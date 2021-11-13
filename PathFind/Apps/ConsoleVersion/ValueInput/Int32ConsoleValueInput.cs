@@ -1,5 +1,5 @@
-﻿using Common.ValueRanges;
-using ConsoleVersion.Interface;
+﻿using ConsoleVersion.Interface;
+using ValueRange;
 
 namespace ConsoleVersion.ValueInput
 {

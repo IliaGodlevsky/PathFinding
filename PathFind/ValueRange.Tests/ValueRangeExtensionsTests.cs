@@ -1,8 +1,9 @@
-﻿using Common.Extensions;
-using Common.ValueRanges;
-using NUnit.Framework;
+﻿using NUnit.Framework;
+using Random.Extensions;
 using System.Collections.Generic;
 using System.Linq;
+using ValueRange;
+using ValueRange.Extensions;
 
 namespace Common.Tests
 {

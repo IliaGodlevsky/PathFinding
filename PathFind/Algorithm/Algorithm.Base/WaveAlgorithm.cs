@@ -33,7 +33,7 @@ namespace Algorithm.Base
                 CurrentEndPoints = endPoint;
                 PrepareForLocalPathfinding();
                 VisitVertex(CurrentVertex);
-                while(!IsDestination(CurrentEndPoints))
+                while (!IsDestination(CurrentEndPoints))
                 {
                     InspectCurrentVertex();
                     CurrentVertex = NextVertex;

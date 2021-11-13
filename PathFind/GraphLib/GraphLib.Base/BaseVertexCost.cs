@@ -1,8 +1,8 @@
-﻿using Common.Extensions;
-using Common.Interface;
-using Common.ValueRanges;
+﻿using Common.Interface;
 using GraphLib.Interfaces;
+using Random.Extensions;
 using System;
+using ValueRange;
 
 namespace GraphLib.Base
 {

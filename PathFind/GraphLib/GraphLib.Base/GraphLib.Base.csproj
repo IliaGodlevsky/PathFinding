@@ -86,6 +86,14 @@
       <Project>{51D677FD-7A82-4282-8A2E-51DEBE39E695}</Project>
       <Name>NullObject</Name>
     </ProjectReference>
+    <ProjectReference Include="..\..\Random\Random.csproj">
+      <Project>{03eb6575-5b74-418f-9231-1b67598c68e8}</Project>
+      <Name>Random</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\ValueRange\ValueRange.csproj">
+      <Project>{EB70607D-CDF4-4D91-BBFE-55F85ACC0A1B}</Project>
+      <Name>ValueRange</Name>
+    </ProjectReference>
     <ProjectReference Include="..\GraphLib.Exceptions\GraphLib.Exceptions.csproj">
       <Project>{B6DA5928-65EC-42C0-B012-F25F8F023271}</Project>
       <Name>GraphLib.Exceptions</Name>

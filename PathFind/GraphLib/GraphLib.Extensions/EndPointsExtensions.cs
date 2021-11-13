@@ -1,5 +1,6 @@
 ﻿using GraphLib.Extensions.Objects;
 using GraphLib.Interfaces;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -56,6 +57,23 @@ namespace GraphLib.Extensions
         public static bool HasIsolators(this IIntermediateEndPoints self)
         {
             return self.GetVertices().Any(vertex => vertex.IsIsolated());
+        }
+
+        public static bool HasDuplicates(this IIntermediateEndPoints endPoints)
+        {
+            try
+            {
+                endPoints.GetVertices().ToDictionary();
+                return false;
+            }
+            catch (ArgumentException)
+            {
+                return true;
+            }
+            catch (Exception)
+            {
+                throw;
+            }
         }
     }
 }

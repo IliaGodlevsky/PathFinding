@@ -1,10 +1,10 @@
-﻿using Common.Extensions;
-using Common.Interface;
-using Common.ValueRanges;
+﻿using Random.Interface;
 using System;
 using System.Security.Cryptography;
+using ValueRange;
+using ValueRange.Extensions;
 
-namespace Common
+namespace Random.Realizations
 {
     /// <summary>
     /// A random number generator 

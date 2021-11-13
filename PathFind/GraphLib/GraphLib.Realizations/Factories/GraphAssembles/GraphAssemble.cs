@@ -1,6 +1,5 @@
 ﻿using Common.Extensions;
 using Common.Extensions.EnumerableExtensions;
-using Common.ValueRanges;
 using GraphLib.Exceptions;
 using GraphLib.Extensions;
 using GraphLib.Interfaces;
@@ -9,6 +8,7 @@ using GraphLib.Realizations.Extensions;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using ValueRange;
 
 namespace GraphLib.Realizations.Factories.GraphAssembles
 {

@@ -1,4 +1,4 @@
-﻿namespace Common.Interface
+﻿namespace Random.Interface
 {
     /// <summary>
     /// An interface of random number generator

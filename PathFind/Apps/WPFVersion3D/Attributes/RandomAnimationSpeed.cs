@@ -1,5 +1,5 @@
-﻿using Common.Extensions;
-using Common.ValueRanges;
+﻿using Random.Extensions;
+using ValueRange;
 using WPFVersion3D.Interface;
 
 namespace WPFVersion3D.Attributes

@@ -1,8 +1,8 @@
-﻿using Common.ValueRanges;
-using ConsoleVersion.Interface;
+﻿using ConsoleVersion.Interface;
 using EnumerationValues.Realizations;
 using System;
 using System.Linq;
+using ValueRange;
 
 namespace ConsoleVersion.ValueInput
 {

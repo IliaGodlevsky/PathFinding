@@ -5,7 +5,6 @@ using Algorithm.Сompanions.Interface;
 using Common.Extensions.EnumerableExtensions;
 using GraphLib.Interfaces;
 using Interruptable.Interface;
-using Priority_Queue;
 using System;
 using System.Linq;
 
@@ -34,7 +33,7 @@ namespace Algorithm.Algos.Algos
         public BestFirstLeeAlgorithm(IGraph graph, IIntermediateEndPoints endPoints)
             : this(graph, endPoints, new ManhattanDistance())
         {
-            
+
         }
 
         protected override IVertex NextVertex
@@ -64,7 +63,7 @@ namespace Algorithm.Algos.Algos
 
         protected override void PrepareForLocalPathfinding()
         {
-            base.PrepareForLocalPathfinding();           
+            base.PrepareForLocalPathfinding();
             double value = CalculateHeuristic(CurrentEndPoints.Source);
             heuristics.Reevaluate(CurrentEndPoints.Source, value);
         }

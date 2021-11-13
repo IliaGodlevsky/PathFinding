@@ -96,7 +96,7 @@ namespace WPFVersion3D.ViewModel
 
         protected override void OnAlgorithmFinished(object sender, ProcessEventArgs e)
         {
-            base.OnAlgorithmFinished(sender, e);            
+            base.OnAlgorithmFinished(sender, e);
             Messenger.Default.Unregister(this);
         }
 

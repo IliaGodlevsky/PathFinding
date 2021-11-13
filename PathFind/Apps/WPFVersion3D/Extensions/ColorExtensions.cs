@@ -1,6 +1,6 @@
-﻿using Common.ValueRanges;
-using System;
+﻿using System;
 using System.Windows.Media;
+using ValueRange;
 
 namespace WPFVersion3D.Extensions
 {

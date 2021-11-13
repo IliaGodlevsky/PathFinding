@@ -65,6 +65,10 @@
       <Project>{a5a743f5-d346-4b2b-b6ac-07152f64e4d9}</Project>
       <Name>Common</Name>
     </ProjectReference>
+    <ProjectReference Include="..\..\ValueRange\ValueRange.csproj">
+      <Project>{EB70607D-CDF4-4D91-BBFE-55F85ACC0A1B}</Project>
+      <Name>ValueRange</Name>
+    </ProjectReference>
     <ProjectReference Include="..\GraphLib.Base\GraphLib.Base.csproj">
       <Project>{6AA3B516-ABFE-4EDA-98DD-1CE799DA747F}</Project>
       <Name>GraphLib.Base</Name>

@@ -81,6 +81,10 @@
       <Project>{51D677FD-7A82-4282-8A2E-51DEBE39E695}</Project>
       <Name>NullObject</Name>
     </ProjectReference>
+    <ProjectReference Include="..\..\ValueRange\ValueRange.csproj">
+      <Project>{EB70607D-CDF4-4D91-BBFE-55F85ACC0A1B}</Project>
+      <Name>ValueRange</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Algorithm.Base\Algorithm.Base.csproj">
       <Project>{04393071-3BA6-42C5-89D8-A89E3AC34511}</Project>
       <Name>Algorithm.Base</Name>

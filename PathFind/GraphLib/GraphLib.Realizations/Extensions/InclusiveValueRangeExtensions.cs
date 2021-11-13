@@ -1,5 +1,6 @@
 ﻿using Common.Extensions;
-using Common.ValueRanges;
+using Random.Extensions;
+using ValueRange;
 
 namespace GraphLib.Realizations.Extensions
 {

@@ -1,9 +1,8 @@
-﻿using Common.Extensions;
-using Common.Interface;
-using Common.ValueRanges;
+﻿using Common.Interface;
 using GraphLib.Base;
 using GraphLib.Interfaces;
 using System;
+using ValueRange;
 
 namespace WPFVersion3D.Model
 {

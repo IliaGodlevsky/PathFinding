@@ -1,9 +1,9 @@
-﻿using Common.ValueRanges;
-using GraphLib.Base;
+﻿using GraphLib.Base;
 using GraphLib.Interfaces;
 using GraphLib.Serialization.Extensions;
 using System;
 using System.Linq;
+using ValueRange;
 
 namespace GraphLib.Serialization
 {

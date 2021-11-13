@@ -1,11 +1,11 @@
-﻿using Common.ValueRanges;
-using ConsoleVersion.Interface;
+﻿using ConsoleVersion.Interface;
 using ConsoleVersion.Model;
 using GraphLib.Interfaces;
 using GraphLib.NullRealizations.NullObjects;
 using GraphLib.Realizations.Coordinates;
 using GraphLib.Realizations.Graphs;
 using System;
+using ValueRange;
 
 namespace ConsoleVersion.Extensions
 {

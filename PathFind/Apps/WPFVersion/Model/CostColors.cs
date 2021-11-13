@@ -1,10 +1,9 @@
-﻿using Common.Extensions;
-using GraphLib.Interfaces;
+﻿using GraphLib.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Windows.Media;
-
+using ValueRange.Extensions;
 using static GraphLib.Base.BaseVertexCost;
 
 namespace WPFVersion.Model

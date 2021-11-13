@@ -1,8 +1,8 @@
-﻿using Common.ValueRanges;
-using ConsoleVersion.Extensions;
+﻿using ConsoleVersion.Extensions;
 using ConsoleVersion.Interface;
 using Interruptable.EventArguments;
 using System;
+using ValueRange;
 
 namespace ConsoleVersion.View.Abstraction
 {

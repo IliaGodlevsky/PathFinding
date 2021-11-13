@@ -2,7 +2,6 @@
 using Algorithm.Factory;
 using Algorithm.Infrastructure.EventArguments;
 using Common.Extensions;
-using Common.ValueRanges;
 using ConsoleVersion.Attributes;
 using ConsoleVersion.Enums;
 using ConsoleVersion.EventArguments;
@@ -24,6 +23,7 @@ using NullObject.Extensions;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using ValueRange;
 
 namespace ConsoleVersion.ViewModel
 {

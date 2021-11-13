@@ -1,7 +1,7 @@
-using Common.Extensions;
-using Common.ValueRanges;
 using NUnit.Framework;
 using System.Linq;
+using ValueRange;
+using ValueRange.Extensions;
 
 namespace Common.Tests
 {

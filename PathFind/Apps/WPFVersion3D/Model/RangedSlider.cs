@@ -1,5 +1,5 @@
-﻿using Common.ValueRanges;
-using System.Windows.Controls;
+﻿using System.Windows.Controls;
+using ValueRange;
 
 namespace WPFVersion3D.Model
 {

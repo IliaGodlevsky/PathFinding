@@ -1,9 +1,9 @@
-﻿using Common.ValueRanges;
-using ConsoleVersion.Interface;
+﻿using ConsoleVersion.Interface;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using ValueRange;
 
 namespace ConsoleVersion.View
 {

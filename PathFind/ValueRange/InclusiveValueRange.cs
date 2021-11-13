@@ -1,7 +1,7 @@
 ﻿using Common.Extensions;
 using System;
 
-namespace Common.ValueRanges
+namespace ValueRange
 {
     /// <summary>
     /// Represents inclusive range of values

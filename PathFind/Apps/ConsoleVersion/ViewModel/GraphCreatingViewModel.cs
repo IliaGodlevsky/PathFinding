@@ -1,5 +1,4 @@
-﻿using Common.ValueRanges;
-using ConsoleVersion.Attributes;
+﻿using ConsoleVersion.Attributes;
 using ConsoleVersion.Enums;
 using ConsoleVersion.Extensions;
 using ConsoleVersion.Interface;
@@ -15,6 +14,7 @@ using Logging.Interface;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using ValueRange;
 
 namespace ConsoleVersion.ViewModel
 {

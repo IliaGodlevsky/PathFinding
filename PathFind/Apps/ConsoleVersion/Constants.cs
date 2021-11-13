@@ -1,7 +1,7 @@
-﻿using Common.ValueRanges;
-using ConsoleVersion.Enums;
+﻿using ConsoleVersion.Enums;
 using EnumerationValues.Extensions;
 using EnumerationValues.Realizations;
+using ValueRange;
 
 namespace ConsoleVersion
 {
