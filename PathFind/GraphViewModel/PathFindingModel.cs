@@ -35,7 +35,7 @@ namespace GraphViewModel
             this.graph = graph;
             Algorithms = factories.GroupByGroupAttribute().ToNameInstanceTuples();
             timer = new Stopwatch();
-            path = new NullGraphPath();
+            path = NullGraphPath.Instance;
         }
 
         public virtual async void FindPath()
@@ -57,7 +57,7 @@ namespace GraphViewModel
             {
                 UnsubscribeOnAlgorithmEvents(algorithm);
                 algorithm.Dispose();
-                path = new NullGraphPath();
+                path = NullGraphPath.Instance;
             }
         }
 

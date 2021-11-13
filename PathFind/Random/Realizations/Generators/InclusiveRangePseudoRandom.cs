@@ -10,8 +10,10 @@ namespace Random.Realizations
     /// </summary>
     public sealed class InclusiveRangePseudoRandom : IRandom
     {
-        private const long C = 12345;
-        private const long A = 1_103_515_245;
+        private const long Term = 12345;
+        private const long Factor = 1_103_515_245;
+
+        private long Seed => seed = Math.Abs(seed * Factor + Term);
 
         public InclusiveRangePseudoRandom(long seed)
         {
@@ -20,19 +22,15 @@ namespace Random.Realizations
 
         public InclusiveRangePseudoRandom()
         {
-            seed = DateTime.Now.Ticks;
+            seed = DateTime.UtcNow.Ticks;
         }
 
         public int Next(int minValue, int maxValue)
         {
             var range = new InclusiveValueRange<int>(maxValue, minValue);
-            long amplitude = (long)range.Amplitude() + 1;
-            return amplitude == 0 ? range.LowerValueOfRange
-                : (int)(Seed % amplitude)
-                + range.LowerValueOfRange;
+            long module = (long)range.Amplitude() + 1;
+            return (int)(Seed % module) + range.LowerValueOfRange;
         }
-
-        private long Seed => seed = Math.Abs(seed * A + C);
 
         private long seed;
     }

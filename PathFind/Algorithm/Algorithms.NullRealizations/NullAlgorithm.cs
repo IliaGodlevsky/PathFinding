@@ -9,7 +9,7 @@ namespace Algorithm.NullRealizations
 
         public IGraphPath FindPath()
         {
-            return new NullGraphPath();
+            return NullGraphPath.Instance;
         }
 
         private NullAlgorithm()

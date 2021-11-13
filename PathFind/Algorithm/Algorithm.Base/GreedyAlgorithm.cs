@@ -43,7 +43,7 @@ namespace Algorithm.Base
         protected virtual IGraphPath CreateGraphPath()
         {
             return CurrentVertex.IsNull()
-                ? (IGraphPath)new NullGraphPath()
+                ? NullGraphPath.Instance
                 : new GraphPath(parentVertices, endPoints);
         }
 

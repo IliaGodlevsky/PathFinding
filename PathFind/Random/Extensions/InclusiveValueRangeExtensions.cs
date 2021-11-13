@@ -11,7 +11,7 @@ namespace Random.Extensions
 
         static InclusiveValueRangeExtensions()
         {
-            Random = new InclusiveRangeMinimalRandom();
+            Random = new InclusiveRangeCryptoRandom();
         }
 
         /// <summary>

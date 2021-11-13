@@ -5,8 +5,10 @@ using ValueRange;
 
 namespace Common.Tests
 {
-    public class InclusiveRangeRandomTests
+    [TestFixture]
+    public class InclusiveRangeCryptoRandomTests
     {
+        [TestCase(int.MaxValue, int.MinValue)]
         [TestCase(-5, -10)]
         [TestCase(14, 0)]
         [TestCase(144, 12)]
@@ -16,7 +18,7 @@ namespace Common.Tests
         {
             var range = new InclusiveValueRange<int>(maxValue, minValue);
             int limit = 200;
-            using (var random = new InclusiveRangeRandom())
+            using (var random = new InclusiveRangeCryptoRandom())
             {
                 while (limit-- > 0)
                 {
@@ -31,7 +33,7 @@ namespace Common.Tests
         {
             var range = new InclusiveValueRange<double>(1, 0);
             int limit = 200;
-            using (var random = new InclusiveRangeRandom())
+            using (var random = new InclusiveRangeCryptoRandom())
             {
                 while (limit-- > 0)
                 {

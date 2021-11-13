@@ -8,14 +8,26 @@ namespace Random.Realizations
 {
     /// <summary>
     /// A random number generator 
-    /// base on <see cref="RNGCryptoServiceProvider"/>
+    /// based on <see cref="RNGCryptoServiceProvider"/>
     /// </summary>
-    public sealed class InclusiveRangeRandom : IRandom, IDisposable
+    public sealed class InclusiveRangeCryptoRandom : IRandom, IDisposable
     {
         private const int IntSize = sizeof(int);
         private const int MaxBufferSize = IntSize << 4;
 
-        public InclusiveRangeRandom()
+        private uint Seed
+        {
+            get
+            {
+                uint number = BitConverter.ToUInt32(buffer, currentBufferPosition);
+                currentBufferPosition += IntSize;
+                VerifyBuffer();
+                return number;
+            }
+        }
+        
+
+        public InclusiveRangeCryptoRandom()
         {
             provider = new RNGCryptoServiceProvider();
             buffer = new byte[MaxBufferSize];
@@ -29,13 +41,15 @@ namespace Random.Realizations
             lock (lockObject)
             {
                 var range = new InclusiveValueRange<int>(maxValue, minValue);
-                uint number = GetUInt32();
-                currentBufferPosition += IntSize;
-                VerifyBuffer();
-                long amplitude = (long)range.Amplitude() + 1;
-                return amplitude == 0 ? range.LowerValueOfRange
-                    : (int)(number % amplitude)
-                    + range.LowerValueOfRange;
+                long module = (long)range.Amplitude() + 1;
+                long max = 1 + (long)uint.MaxValue;
+                long remainder = max % module;
+                uint seed = Seed;
+                while (seed >= max - remainder)
+                {
+                    seed = Seed;
+                }
+                return (int)(seed % module) + range.LowerValueOfRange;
             }
         }
 
@@ -43,16 +57,6 @@ namespace Random.Realizations
         {
             Dispose(true);
             GC.SuppressFinalize(this);
-        }
-
-        ~InclusiveRangeRandom()
-        {
-            Dispose(false);
-        }
-
-        private uint GetUInt32()
-        {
-            return (uint)Math.Abs(BitConverter.ToInt32(buffer, currentBufferPosition));
         }
 
         private void Dispose(bool disposing)
@@ -75,11 +79,16 @@ namespace Random.Realizations
             }
         }
 
+        ~InclusiveRangeCryptoRandom()
+        {
+            Dispose(false);
+        }
+
         private readonly object lockObject;
-        private bool isDisposing;
         private readonly byte[] buffer;
         private readonly RNGCryptoServiceProvider provider;
 
+        private bool isDisposing;
         private int currentBufferPosition;
     }
 }

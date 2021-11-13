@@ -26,7 +26,7 @@ namespace Algorithm.Base
 
         public override sealed IGraphPath FindPath()
         {
-            IGraphPath path = new NullGraphPath();
+            IGraphPath path = NullGraphPath.Instance;
             PrepareForPathfinding();
             foreach (var endPoint in endPoints.ToEndPoints())
             {
@@ -45,7 +45,7 @@ namespace Algorithm.Base
                 Reset();
             }
             CompletePathfinding();
-            return !IsAbleToContinue ? new NullGraphPath() : path;
+            return !IsAbleToContinue ? NullGraphPath.Instance : path;
         }
 
         protected virtual void PrepareForLocalPathfinding()

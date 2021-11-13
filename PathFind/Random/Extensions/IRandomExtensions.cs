@@ -37,7 +37,5 @@ namespace Random.Extensions
         {
             return self.Next(0, int.MaxValue);
         }
-
-
     }
 }
