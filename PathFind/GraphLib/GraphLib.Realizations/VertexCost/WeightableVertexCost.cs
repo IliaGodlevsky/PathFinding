@@ -3,7 +3,6 @@ using GraphLib.Base;
 using GraphLib.Interfaces;
 using GraphLib.Realizations.Interfaces;
 using GraphLib.Realizations.VertexCost.CostStates;
-using Random.Extensions;
 using System;
 
 namespace GraphLib.Realizations.VertexCost

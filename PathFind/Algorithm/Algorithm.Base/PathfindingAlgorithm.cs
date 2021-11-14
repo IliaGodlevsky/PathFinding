@@ -24,26 +24,10 @@ namespace Algorithm.Base
     public abstract class PathfindingAlgorithm
         : IAlgorithm, IInterruptableProcess, IInterruptable, IDisposable
     {
-        /// <summary>
-        /// Occurres, when the algorithm visites a vertex
-        /// </summary>
         public event AlgorithmEventHandler VertexVisited;
-        /// <summary>
-        /// Occurres, when the algorithm enqueues a vertex
-        /// for the future processing
-        /// </summary>
         public event AlgorithmEventHandler VertexEnqueued;
-        /// <summary>
-        /// Occures, when the algorithm starts the pathfinding
-        /// </summary>
         public event ProcessEventHandler Started;
-        /// <summary>
-        /// Occurres, when the algorithm finishes the pathfinding
-        /// </summary>
         public event ProcessEventHandler Finished;
-        /// <summary>
-        /// Occurres, when the algorithm is required to interrupt
-        /// </summary>
         public event ProcessEventHandler Interrupted;
 
         /// <summary>
@@ -55,12 +39,6 @@ namespace Algorithm.Base
         /// doesn't contains end points</exception>
         public abstract IGraphPath FindPath();
 
-        /// <summary>
-        /// Interruptes the algorithm
-        /// </summary>
-        /// <remarks>This method doesn't stops the algorithm
-        /// immidietly. The algorithm will complete the iteration
-        /// and then will stop.</remarks>
         public void Interrupt()
         {
             IsInterruptRequested = true;

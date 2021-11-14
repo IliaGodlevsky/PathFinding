@@ -21,7 +21,7 @@ namespace Algorithm.NullRealizations
 
         public int Length => default;
 
-        private static Lazy<IGraphPath> instance 
+        private static Lazy<IGraphPath> instance
             = new Lazy<IGraphPath>(() => new NullGraphPath());
     }
 }

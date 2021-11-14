@@ -44,9 +44,9 @@
     <Compile Include="Extensions\IRandomExtensions.cs" />
     <Compile Include="Interface\IRandom.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Realizations\Generators\InclusiveRangeCryptoRandom.cs" />
-    <Compile Include="Realizations\Generators\InclusiveRangePseudoRandom.cs" />
-    <Compile Include="Realizations\Generators\InclusiveRangeKnuthRandom.cs" />
+    <Compile Include="Realizations\Generators\CryptoRandom.cs" />
+    <Compile Include="Realizations\Generators\PseudoRandom.cs" />
+    <Compile Include="Realizations\Generators\KnuthRandom.cs" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>

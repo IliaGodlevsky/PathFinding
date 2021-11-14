@@ -7,7 +7,8 @@ namespace System
     /// <summary>
     /// Knuth substractive generator
     /// </summary>
-    public sealed class InclusiveRangeKnuthRandom : IRandom
+    /// <remarks>See Numeric resipes in C, second edition</remarks>
+    public sealed class KnuthRandom : IRandom
     {
         private const int MBig = int.MaxValue;
         private const int MSeed = 161803398;
@@ -16,19 +17,18 @@ namespace System
         private const int InitializationConst = 21;
         private const int CalculationConst = 30;
 
-        public InclusiveRangeKnuthRandom()
+        private int[] Seeds => seeds.Value;
+
+        public KnuthRandom()
           : this(Environment.TickCount)
         {
 
         }
 
-        public InclusiveRangeKnuthRandom(int seed)
+        public KnuthRandom(int seed)
         {
-            seeds = new int[ArrayLength];
-            this.seed = seed;
+            seeds = new Lazy<int[]>(() => Initialize(seed));
             lockObject = new object();
-            Initialize();
-            CalculateNumbers();
         }
 
         public int Next(int minValue, int maxValue)
@@ -54,39 +54,35 @@ namespace System
                 {
                     inextp = 1;
                 }
-                result = seeds[inext] - seeds[inextp];
+                result = Seeds[inext] - Seeds[inextp];
                 if (result < MZero)
                 {
                     result += MBig;
                 }
-                seeds[inext] = result;
+                Seeds[inext] = result;
                 return result;
-            }            
+            }
         }
 
-        private void Initialize()
+        private int[] Initialize(int seed)
         {
-            int ii, mj, mk;
-            int subtraction = (seed == int.MinValue) ? int.MaxValue : Math.Abs(seed);
-            mj = MSeed - subtraction;
+            var seeds = new int[ArrayLength];
+            int seedIndex, mj, mk;
+            mj = MSeed - ((seed == int.MinValue) ? int.MaxValue : Math.Abs(seed));
             mj %= MBig;
             seeds[ArrayLength - 1] = mj;
             mk = 1;
             for (int i = 1; i < ArrayLength - 1; i++)
             {
-                ii = (InitializationConst * i) % (ArrayLength - 1);
-                seeds[ii] = mk;
+                seedIndex = (InitializationConst * i) % (ArrayLength - 1);
+                seeds[seedIndex] = mk;
                 mk = mj - mk;
                 if (mk < MZero)
                 {
                     mk += MBig;
                 }
-                mj = seeds[ii];
+                mj = seeds[seedIndex];
             }
-        }
-
-        private void CalculateNumbers()
-        {
             int limit = 5;
             while (limit-- > 1)
             {
@@ -101,14 +97,13 @@ namespace System
             }
             inext = 0;
             inextp = CalculationConst + 1;
-            seed = 1;
+            return seeds;
         }
 
         private int inext;
         private int inextp;
 
-        private int seed;
-        private readonly int[] seeds;
+        private readonly Lazy<int[]> seeds;
         private readonly object lockObject;
     }
 }

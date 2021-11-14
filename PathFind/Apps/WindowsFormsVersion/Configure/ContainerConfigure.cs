@@ -53,7 +53,7 @@ namespace WindowsFormsVersion.Configure
             builder.RegisterType<MailLog>().As<ILog>().SingleInstance();
             builder.RegisterComposite<Logs, ILog>().SingleInstance();
 
-            builder.RegisterType<InclusiveRangePseudoRandom>().As<IRandom>().SingleInstance();
+            builder.RegisterType<PseudoRandom>().As<IRandom>().SingleInstance();
             builder.RegisterType<GraphAssemble>().Named<IGraphAssemble>(GraphAssembleName).As<IGraphAssemble>().SingleInstance();
             builder.Register(RegisterSmoothedGraphAssemble).As<IGraphAssemble>().SingleInstance();
             builder.RegisterType<CostFactory>().As<IVertexCostFactory>().SingleInstance();

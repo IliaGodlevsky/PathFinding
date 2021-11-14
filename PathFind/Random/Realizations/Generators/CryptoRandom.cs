@@ -8,9 +8,10 @@ namespace Random.Realizations
 {
     /// <summary>
     /// A random number generator 
-    /// based on <see cref="RNGCryptoServiceProvider"/>
+    /// based on <see cref="RandomNumberGenerator"/>
     /// </summary>
-    public sealed class InclusiveRangeCryptoRandom : IRandom, IDisposable
+    /// <remarks>See <see cref="https://docs.microsoft.com/en-us/archive/msdn-magazine/2007/september/net-matters-tales-from-the-cryptorandom"/></remarks>
+    public sealed class CryptoRandom : IRandom, IDisposable
     {
         private const int IntSize = sizeof(int);
         private const int MaxBufferSize = IntSize << 4;
@@ -25,14 +26,13 @@ namespace Random.Realizations
                 return number;
             }
         }
-        
 
-        public InclusiveRangeCryptoRandom()
+        public CryptoRandom()
         {
-            provider = new RNGCryptoServiceProvider();
+            generator = RandomNumberGenerator.Create();
             buffer = new byte[MaxBufferSize];
             currentBufferPosition = 0;
-            provider.GetBytes(buffer);
+            generator.GetBytes(buffer);
             lockObject = new object();
         }
 
@@ -67,7 +67,7 @@ namespace Random.Realizations
             }
 
             isDisposing = true;
-            provider.Dispose();
+            generator.Dispose();
         }
 
         private void VerifyBuffer()
@@ -75,18 +75,18 @@ namespace Random.Realizations
             if (currentBufferPosition >= MaxBufferSize)
             {
                 currentBufferPosition = 0;
-                provider.GetBytes(buffer);
+                generator.GetBytes(buffer);
             }
         }
 
-        ~InclusiveRangeCryptoRandom()
+        ~CryptoRandom()
         {
             Dispose(false);
         }
 
         private readonly object lockObject;
         private readonly byte[] buffer;
-        private readonly RNGCryptoServiceProvider provider;
+        private readonly RandomNumberGenerator generator;
 
         private bool isDisposing;
         private int currentBufferPosition;

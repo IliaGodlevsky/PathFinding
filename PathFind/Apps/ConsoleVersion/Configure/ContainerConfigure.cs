@@ -63,7 +63,7 @@ namespace ConsoleVersion.Configure
             builder.RegisterType<MailLog>().As<ILog>().SingleInstance();
             builder.RegisterComposite<Logs, ILog>().SingleInstance();
 
-            builder.RegisterType<InclusiveRangePseudoRandom>().As<IRandom>().SingleInstance();
+            builder.RegisterType<PseudoRandom>().As<IRandom>().SingleInstance();
             builder.RegisterType<GraphAssemble>().As<IGraphAssemble>().SingleInstance().Named<IGraphAssemble>(GraphAssemble);
             builder.Register(RegisterSmoothedGraphAssemble).As<IGraphAssemble>().SingleInstance();
             builder.RegisterType<CostFactory>().As<IVertexCostFactory>().SingleInstance();

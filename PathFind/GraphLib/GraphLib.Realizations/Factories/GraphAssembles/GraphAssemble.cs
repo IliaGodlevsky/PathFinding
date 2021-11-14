@@ -44,8 +44,8 @@ namespace GraphLib.Realizations.Factories.GraphAssembles
             IGraphFactory graphFactory,
             IVertexCostFactory costFactory,
             INeighborhoodFactory neighbourhoodFactory)
-            : this(vertexFactory, coordinateFactory, graphFactory, costFactory, 
-                  neighbourhoodFactory, new InclusiveRangePseudoRandom())
+            : this(vertexFactory, coordinateFactory, graphFactory, costFactory,
+                  neighbourhoodFactory, new PseudoRandom())
         {
 
         }
