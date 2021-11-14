@@ -43,7 +43,7 @@ namespace WPFVersion3D.Configure
             builder.RegisterType<MailLog>().As<ILog>().SingleInstance();
             builder.RegisterComposite<Logs, ILog>().SingleInstance();
 
-            builder.RegisterType<InclusiveRangeCryptoRandom>().As<IRandom>().SingleInstance();
+            builder.RegisterType<InclusiveRangeKnuthRandom>().As<IRandom>().SingleInstance();
             builder.RegisterType<GraphAssemble>().As<IGraphAssemble>().SingleInstance();
             builder.RegisterType<Vertex3DFactory>().As<IVertexFactory>().SingleInstance();
             builder.RegisterType<Vertex3DCostFactory>().As<IVertexCostFactory>().SingleInstance();

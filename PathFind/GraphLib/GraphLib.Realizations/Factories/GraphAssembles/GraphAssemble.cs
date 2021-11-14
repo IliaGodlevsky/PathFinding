@@ -5,7 +5,6 @@ using GraphLib.Exceptions;
 using GraphLib.Extensions;
 using GraphLib.Interfaces;
 using GraphLib.Interfaces.Factories;
-using GraphLib.Realizations.Extensions;
 using Random.Extensions;
 using Random.Interface;
 using Random.Realizations;

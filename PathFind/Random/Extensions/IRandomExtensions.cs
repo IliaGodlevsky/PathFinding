@@ -14,7 +14,7 @@ namespace Random.Extensions
         /// <returns>A random number within <paramref name="range"/></returns>
         public static int Next(this IRandom self, InclusiveValueRange<int> range)
         {
-            return self.Next(range.UpperValueOfRange, range.LowerValueOfRange);
+            return self.Next(range.LowerValueOfRange, range.UpperValueOfRange);
         }
     }
 }
