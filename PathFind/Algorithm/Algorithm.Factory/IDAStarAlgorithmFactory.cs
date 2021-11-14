@@ -10,33 +10,33 @@ using System.ComponentModel;
 namespace Algorithm.Factory
 {
     [WaveGroup(3)]
-    [Description("A* modified algorithm")]
-    public sealed class AStarModifiedAlgorithmFactory : IAlgorithmFactory
+    [Description("IDA* algorithm")]
+    public sealed class IDAStarAlgorithmFactory : IAlgorithmFactory
     {
-        public AStarModifiedAlgorithmFactory(IStepRule stepRule, IHeuristic heuristic)
+        public IDAStarAlgorithmFactory(IStepRule stepRule, IHeuristic heuristic)
         {
             this.heuristic = heuristic;
             this.stepRule = stepRule;
         }
 
-        public AStarModifiedAlgorithmFactory(IStepRule stepRule) : this(stepRule, new ChebyshevDistance())
+        public IDAStarAlgorithmFactory(IStepRule stepRule) : this(stepRule, new ChebyshevDistance())
         {
 
         }
 
-        public AStarModifiedAlgorithmFactory(IHeuristic heuristic) : this(new DefaultStepRule(), heuristic)
+        public IDAStarAlgorithmFactory(IHeuristic heuristic) : this(new DefaultStepRule(), heuristic)
         {
 
         }
 
-        public AStarModifiedAlgorithmFactory() : this(new DefaultStepRule(), new ChebyshevDistance())
+        public IDAStarAlgorithmFactory() : this(new DefaultStepRule(), new ChebyshevDistance())
         {
 
         }
 
         public PathfindingAlgorithm CreateAlgorithm(IGraph graph, IIntermediateEndPoints endPoints)
         {
-            return new AStarModified(graph, endPoints, stepRule, heuristic);
+            return new IDAStarAlgorithm(graph, endPoints, stepRule, heuristic);
         }
 
         private readonly IStepRule stepRule;

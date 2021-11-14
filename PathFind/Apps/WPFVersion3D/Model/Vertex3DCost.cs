@@ -9,11 +9,6 @@ namespace WPFVersion3D.Model
     [Serializable]
     internal sealed class Vertex3DCost : BaseVertexCost, IVertexCost, ICloneable<IVertexCost>
     {
-        public Vertex3DCost() : base()
-        {
-
-        }
-
         public Vertex3DCost(int cost) : base(cost)
         {
 
@@ -26,10 +21,7 @@ namespace WPFVersion3D.Model
 
         public override IVertexCost Clone()
         {
-            return new Vertex3DCost
-            {
-                CurrentCost = CurrentCost
-            };
+            return new Vertex3DCost(CurrentCost);
         }
     }
 }

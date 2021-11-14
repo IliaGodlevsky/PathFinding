@@ -41,7 +41,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Extensions\InclusiveValueRangeExtensions.cs" />
     <Compile Include="Extensions\IRandomExtensions.cs" />
     <Compile Include="Interface\IRandom.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

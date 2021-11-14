@@ -15,6 +15,8 @@ using GraphViewModel;
 using GraphViewModel.Interfaces;
 using Logging.Interface;
 using Logging.Loggers;
+using Random.Interface;
+using Random.Realizations;
 using System;
 using System.Runtime.Serialization;
 using System.Runtime.Serialization.Formatters.Binary;
@@ -51,6 +53,7 @@ namespace WindowsFormsVersion.Configure
             builder.RegisterType<MailLog>().As<ILog>().SingleInstance();
             builder.RegisterComposite<Logs, ILog>().SingleInstance();
 
+            builder.RegisterType<InclusiveRangePseudoRandom>().As<IRandom>().SingleInstance();
             builder.RegisterType<GraphAssemble>().Named<IGraphAssemble>(GraphAssembleName).As<IGraphAssemble>().SingleInstance();
             builder.Register(RegisterSmoothedGraphAssemble).As<IGraphAssemble>().SingleInstance();
             builder.RegisterType<CostFactory>().As<IVertexCostFactory>().SingleInstance();

@@ -14,6 +14,8 @@ using GraphViewModel;
 using GraphViewModel.Interfaces;
 using Logging.Interface;
 using Logging.Loggers;
+using Random.Interface;
+using Random.Realizations;
 using System;
 using System.Runtime.Serialization;
 using System.Web.UI;
@@ -41,6 +43,7 @@ namespace WPFVersion3D.Configure
             builder.RegisterType<MailLog>().As<ILog>().SingleInstance();
             builder.RegisterComposite<Logs, ILog>().SingleInstance();
 
+            builder.RegisterType<InclusiveRangeCryptoRandom>().As<IRandom>().SingleInstance();
             builder.RegisterType<GraphAssemble>().As<IGraphAssemble>().SingleInstance();
             builder.RegisterType<Vertex3DFactory>().As<IVertexFactory>().SingleInstance();
             builder.RegisterType<Vertex3DCostFactory>().As<IVertexCostFactory>().SingleInstance();

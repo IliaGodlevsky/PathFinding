@@ -1,10 +1,14 @@
 ﻿using Common.Extensions;
 using Common.Extensions.EnumerableExtensions;
+using GraphLib.Base;
 using GraphLib.Exceptions;
 using GraphLib.Extensions;
 using GraphLib.Interfaces;
 using GraphLib.Interfaces.Factories;
 using GraphLib.Realizations.Extensions;
+using Random.Extensions;
+using Random.Interface;
+using Random.Realizations;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -23,14 +27,28 @@ namespace GraphLib.Realizations.Factories.GraphAssembles
             ICoordinateFactory coordinateFactory,
             IGraphFactory graphFactory,
             IVertexCostFactory costFactory,
-            INeighborhoodFactory neighboursCoordinates)
+            INeighborhoodFactory neighbourhoodFactory,
+            IRandom random)
         {
             this.vertexFactory = vertexFactory;
             this.coordinateFactory = coordinateFactory;
             this.graphFactory = graphFactory;
             this.costFactory = costFactory;
-            this.neighboursCoordinates = neighboursCoordinates;
+            this.neighboursCoordinates = neighbourhoodFactory;
+            this.random = random;
             percentRange = new InclusiveValueRange<int>(99, 0);
+        }
+
+        public GraphAssemble(
+            IVertexFactory vertexFactory,
+            ICoordinateFactory coordinateFactory,
+            IGraphFactory graphFactory,
+            IVertexCostFactory costFactory,
+            INeighborhoodFactory neighbourhoodFactory)
+            : this(vertexFactory, coordinateFactory, graphFactory, costFactory, 
+                  neighbourhoodFactory, new InclusiveRangePseudoRandom())
+        {
+
         }
 
         /// <summary>
@@ -43,7 +61,7 @@ namespace GraphLib.Realizations.Factories.GraphAssembles
         /// pathfinding algorithms</returns>
         /// <exception cref="ArgumentException"></exception>
         /// <exception cref="WrongNumberOfDimensionsException"></exception>
-        public virtual IGraph AssembleGraph(int obstaclePercent = 0, params int[] graphDimensionsSizes)
+        public virtual IGraph AssembleGraph(int obstaclePercent, params int[] graphDimensionsSizes)
         {
             var vertices = new List<IVertex>();
             int graphSize = graphDimensionsSizes.AggregateOrDefault(IntExtensions.Multiply);
@@ -54,8 +72,9 @@ namespace GraphLib.Realizations.Factories.GraphAssembles
                 var coordinate = coordinateFactory.CreateCoordinate(coordinateValues);
                 var coordinates = neighboursCoordinates.CreateNeighborhood(coordinate);
                 var vertex = vertexFactory.CreateVertex(coordinates, coordinate);
-                vertex.Cost = costFactory.CreateCost();
-                vertex.IsObstacle = percentRange.IsObstacleChance(percentOfObstacles);
+                int randomCost = random.Next(BaseVertexCost.CostRange);
+                vertex.Cost = costFactory.CreateCost(randomCost);
+                vertex.IsObstacle = random.Next(percentRange).IsLess(percentOfObstacles);
                 vertices.Add(vertex);
             }
             return graphFactory.CreateGraph(vertices, graphDimensionsSizes);
@@ -66,6 +85,7 @@ namespace GraphLib.Realizations.Factories.GraphAssembles
         protected readonly IVertexFactory vertexFactory;
         protected readonly IGraphFactory graphFactory;
         protected readonly INeighborhoodFactory neighboursCoordinates;
+        protected readonly IRandom random;
         protected readonly InclusiveValueRange<int> percentRange;
     }
 }

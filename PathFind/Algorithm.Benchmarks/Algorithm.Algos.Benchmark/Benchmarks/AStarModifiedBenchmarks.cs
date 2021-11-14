@@ -10,7 +10,7 @@ namespace Algorithm.Algos.Benchmark.Benchmarks
     {
         protected override IAlgorithm CreateAlgorithm(IGraph graph, IIntermediateEndPoints endPoints)
         {
-            return new AStarModified(graph, endPoints);
+            return new IDAStarAlgorithm(graph, endPoints);
         }
     }
 }

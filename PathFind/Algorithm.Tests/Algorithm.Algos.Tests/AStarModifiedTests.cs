@@ -19,7 +19,7 @@ namespace Algorithm.Algos.Tests
 
         protected override IAlgorithm CreateAlgorithm(IGraph graph, IIntermediateEndPoints endPoints)
         {
-            return new AStarModified(graph, endPoints);
+            return new IDAStarAlgorithm(graph, endPoints);
         }
 
         protected override int GetExpectedCost()

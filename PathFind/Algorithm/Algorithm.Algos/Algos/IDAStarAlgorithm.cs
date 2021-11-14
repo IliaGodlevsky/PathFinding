@@ -19,16 +19,16 @@ namespace Algorithm.Algos.Algos
     /// removes the most distant vertices from its horisont 
     /// of search and searches only among vertices, that are 
     /// the closest to the target vertex</remarks>
-    public class AStarModified : AStarAlgorithm,
+    public class IDAStarAlgorithm : AStarAlgorithm,
         IAlgorithm, IInterruptableProcess, IInterruptable, IDisposable
     {
-        public AStarModified(IGraph graph, IIntermediateEndPoints endPoints)
+        public IDAStarAlgorithm(IGraph graph, IIntermediateEndPoints endPoints)
             : this(graph, endPoints, new DefaultStepRule(), new ChebyshevDistance())
         {
 
         }
 
-        public AStarModified(IGraph graph, IIntermediateEndPoints endPoints, IStepRule stepRule, IHeuristic function)
+        public IDAStarAlgorithm(IGraph graph, IIntermediateEndPoints endPoints, IStepRule stepRule, IHeuristic function)
             : base(graph, endPoints, stepRule, function)
         {
             percentValueRange = new InclusiveValueRange<int>(99);

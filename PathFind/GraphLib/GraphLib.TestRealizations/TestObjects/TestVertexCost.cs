@@ -14,11 +14,6 @@ namespace GraphLib.TestRealizations.TestObjects
 
         }
 
-        public TestVertexCost() : base()
-        {
-
-        }
-
         public override string ToString()
         {
             return CurrentCost.ToString();

@@ -30,18 +30,6 @@ namespace GraphLib.Realizations.VertexCost
         }
 
         /// <summary>
-        /// Creates a new instance of 
-        /// <see cref="WeightableVertexCost"/>
-        /// with random cost.
-        /// Weighted cost is set to the same value
-        /// </summary>
-        public WeightableVertexCost()
-            : this(CostRange.GetRandomValue())
-        {
-
-        }
-
-        /// <summary>
         /// A string representing unweighted 
         /// state view of vertex cost
         /// </summary>

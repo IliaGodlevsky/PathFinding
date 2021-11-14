@@ -18,12 +18,6 @@ namespace GraphLib.Base
             CurrentCost = CostRange.ReturnInRange(cost);
         }
 
-        protected BaseVertexCost()
-            : this(CostRange.GetRandomValue())
-        {
-
-        }
-
         static BaseVertexCost()
         {
             CostRange = new InclusiveValueRange<int>(9, 1);

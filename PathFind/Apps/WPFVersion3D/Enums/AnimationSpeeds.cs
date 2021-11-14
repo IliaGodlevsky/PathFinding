@@ -12,10 +12,6 @@ namespace WPFVersion3D.Enums
         [EnumValuesIgnore]
         None = 0,
 
-        [Description("Extremely slow")]
-        [AnimationSpeed(milliseconds: 9600)]
-        ExtremelySlow,
-
         [Description("Slowest")]
         [AnimationSpeed(milliseconds: 4800)]
         Slowest,
@@ -34,10 +30,6 @@ namespace WPFVersion3D.Enums
 
         [Description("Highest")]
         [AnimationSpeed(milliseconds: 300)]
-        Highest,
-
-        [Description("Random")]
-        [RandomAnimationSpeed(300, 9600)]
-        Random
+        Highest
     }
 }

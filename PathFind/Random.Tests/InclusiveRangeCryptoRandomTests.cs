@@ -27,20 +27,5 @@ namespace Common.Tests
                 }
             }
         }
-
-        [Test]
-        public void NextDouble()
-        {
-            var range = new InclusiveValueRange<double>(1, 0);
-            int limit = 200;
-            using (var random = new InclusiveRangeCryptoRandom())
-            {
-                while (limit-- > 0)
-                {
-                    double number = random.NextDouble();
-                    Assert.IsTrue(range.Contains(number));
-                }
-            }
-        }
     }
 }

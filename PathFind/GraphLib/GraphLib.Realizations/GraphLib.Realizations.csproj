@@ -45,7 +45,6 @@
     <Compile Include="Extensions\EnumerableExtensions.cs" />
     <Compile Include="Extensions\EnumValuesExtensions.cs" />
     <Compile Include="Extensions\GraphExtensions.cs" />
-    <Compile Include="Extensions\InclusiveValueRangeExtensions.cs" />
     <Compile Include="NeighboursCoordinates\VonNeumannNeighborhood.cs" />
     <Compile Include="NeighboursCoordinates\MooreNeighborhood.cs" />
     <Compile Include="Coordinates\Coordinate.cs" />

@@ -9,6 +9,8 @@ using GraphLib.TestRealizations;
 using GraphLib.TestRealizations.TestObjects;
 using Moq;
 using NUnit.Framework;
+using Random.Interface;
+using Random.Realizations;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -41,8 +43,8 @@ namespace GraphLib.Realizations.Tests
                 .Returns<IEnumerable<IVertex>, int[]>((vertices, dimensions) => new TestGraph(vertices, dimensions));
 
             mock.Mock<IVertexCostFactory>()
-                .Setup(x => x.CreateCost())
-                .Returns(() => new TestVertexCost());
+                .Setup(x => x.CreateCost(It.IsAny<int>()))
+                .Returns<int>(cost => new TestVertexCost(cost));
 
             var assemble = mock.Create<GraphAssemble>();
 
@@ -74,7 +76,7 @@ namespace GraphLib.Realizations.Tests
                 .Returns<IEnumerable<IVertex>, int[]>((vertices, dimensions) => NullGraph.Instance);
 
             mock.Mock<IVertexCostFactory>()
-                .Setup(x => x.CreateCost())
+                .Setup(x => x.CreateCost(default))
                 .Returns(() => NullCost.Instance);
 
             var assemble = mock.Create<GraphAssemble>();
