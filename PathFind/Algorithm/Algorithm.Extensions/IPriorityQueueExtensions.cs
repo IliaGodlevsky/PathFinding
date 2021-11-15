@@ -10,7 +10,8 @@ namespace Algorithm.Extensions
 {
     public static class IPriorityQueueExtensions
     {
-        public static void EnqueueOrUpdatePriority<TItem, TPriority>(this IPriorityQueue<TItem, TPriority> self, TItem node, TPriority priority)
+        public static void EnqueueOrUpdatePriority<TItem, TPriority>(this IPriorityQueue<TItem, TPriority> self, 
+            TItem node, TPriority priority)
         {
             if (self.Contains(node))
             {
@@ -22,12 +23,13 @@ namespace Algorithm.Extensions
             }
         }
 
-        public static IVertex DequeueOrNullVertex(this IPriorityQueue<IVertex, double> self)
+        public static IVertex FirstOrNullVertex(this IPriorityQueue<IVertex, double> self)
         {
-            return self.Count == 0 ? NullVertex.Instance : self.Dequeue();
+            return self.Count == 0 ? NullVertex.Instance : self.First;
         }
 
-        public static void RemoveRange<TItem, TPriority>(this IPriorityQueue<TItem, TPriority> self, IEnumerable<TItem> nodes)
+        public static void RemoveRange<TItem, TPriority>(this IPriorityQueue<TItem, TPriority> self, 
+            IEnumerable<TItem> nodes)
         {
             nodes.ForEach(self.RemoveIfContains);
         }
@@ -47,28 +49,10 @@ namespace Algorithm.Extensions
             {
                 self.EnqueueOrUpdatePriority(node.Item1, node.Item2);
             }
-        }
+        }        
 
-        public static ValueTuple<IVertex, double> ToValueTuple(this SimplePriorityQueue<IVertex, double> self, IVertex item)
-        {
-            return new ValueTuple<IVertex, double>(item, self.GetPriorityOrInfinity(item));
-        }
-
-        public static double GetPriorityOrInfinity(this SimplePriorityQueue<IVertex, double> self, IVertex vertex)
-        {
-            return self.TryGetPriority(vertex, out double value) ? value : double.PositiveInfinity;
-        }
-
-        public static IEnumerable<ValueTuple<IVertex, double>> ToValueTuples(this SimplePriorityQueue<IVertex, double> self,
-            IEnumerable<IVertex> vertices)
-        {
-            foreach (var vertex in vertices)
-            {
-                yield return self.ToValueTuple(vertex);
-            }
-        }
-
-        public static IList<TItem> TakeOrderedBy<TItem, TPriority>(this IPriorityQueue<TItem, TPriority> self, int take, Func<TItem, TPriority> selector)
+        public static IList<TItem> TakeOrderedBy<TItem, TPriority>(this IEnumerable<TItem> self, int take, 
+            Func<TItem, TPriority> selector)
         {
             return self.OrderByDescending(selector).Take(take).ToList();
         }

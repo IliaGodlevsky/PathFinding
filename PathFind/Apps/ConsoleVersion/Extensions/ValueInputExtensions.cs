@@ -61,8 +61,8 @@ namespace ConsoleVersion.Extensions
             InclusiveValueRange<TValue> rangeOfValiInput)
             where TValue : struct, IComparable
         {
-            var upperValueOfRange = self.InputValue(MessagesTexts.CostRangeUpperValueInputMsg, rangeOfValiInput);
-            var lowerValueOfRange = self.InputValue(MessagesTexts.CostRangeLowerValueInputMsg, rangeOfValiInput);
+            TValue upperValueOfRange = self.InputValue(MessagesTexts.RangeUpperValueInputMsg, rangeOfValiInput);
+            TValue lowerValueOfRange = self.InputValue(MessagesTexts.RangeLowerValueInputMsg, rangeOfValiInput);
 
             return new InclusiveValueRange<TValue>(upperValueOfRange, lowerValueOfRange);
         }

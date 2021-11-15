@@ -31,7 +31,6 @@ namespace Algorithm.Algos.Algos
         {
             this.stepRule = stepRule;
             queue = new SimplePriorityQueue<IVertex, double>();
-            accumulatedCosts = new Costs();
         }
 
         protected override IGraphPath CreateGraphPath()
@@ -43,24 +42,22 @@ namespace Algorithm.Algos.Algos
         {
             base.Reset();
             queue.Clear();
-            accumulatedCosts.Clear();
         }
 
-        protected override IVertex NextVertex => queue.DequeueOrNullVertex();
+        protected override IVertex NextVertex => queue.FirstOrNullVertex();
 
         protected override void PrepareForLocalPathfinding()
         {
             base.PrepareForLocalPathfinding();
-            accumulatedCosts.Reevaluate(CurrentEndPoints.Source, default);
+            queue.EnqueueOrUpdatePriority(CurrentEndPoints.Source, default);
         }
 
         protected virtual void RelaxVertex(IVertex vertex)
         {
             double relaxedCost = GetVertexRelaxedCost(vertex);
-            double vertexCost = accumulatedCosts.GetCostOrDefault(vertex);
+            double vertexCost = GetVertexCurrentCost(vertex);
             if (vertexCost > relaxedCost)
             {
-                accumulatedCosts.Reevaluate(vertex, relaxedCost);
                 Enqueue(vertex, relaxedCost);
                 parentVertices.Add(vertex, CurrentVertex);
             }
@@ -71,20 +68,24 @@ namespace Algorithm.Algos.Algos
             queue.EnqueueOrUpdatePriority(vertex, value);
         }
 
+        protected virtual double GetVertexCurrentCost(IVertex vertex)
+        {
+            return queue.GetPriorityOrInfinity(vertex);
+        }
+
         protected virtual double GetVertexRelaxedCost(IVertex neighbour)
         {
             return stepRule.CalculateStepCost(neighbour, CurrentVertex)
-                   + accumulatedCosts.GetCost(CurrentVertex);
+                   + queue.GetPriorityOrInfinity(CurrentVertex);
         }
 
         protected override void RelaxNeighbours(IVertex[] neighbours)
         {
             neighbours.ForEach(RelaxVertex);
+            queue.RemoveIfContains(CurrentVertex);
         }
 
         protected readonly SimplePriorityQueue<IVertex, double> queue;
-        protected readonly ICosts accumulatedCosts;
-
         protected readonly IStepRule stepRule;
     }
 }

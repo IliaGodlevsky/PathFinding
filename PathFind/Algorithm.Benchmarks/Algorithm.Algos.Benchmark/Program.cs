@@ -10,11 +10,11 @@ namespace Algorithm.Algos.Benchmark
             BenchmarkRunner.Run<DijkstraAlgorithmBenchmarks>();
             BenchmarkRunner.Run<AStarAlgorithmBenchmarks>();
             BenchmarkRunner.Run<AStarModifiedBenchmarks>();
-            BenchmarkRunner.Run<LeeAlgorithmBenchmarks>();
-            BenchmarkRunner.Run<BestFirstLeeAlgorithmBenchmarks>();
-            BenchmarkRunner.Run<CostGreedyAlgorithmBenchmark>();
-            BenchmarkRunner.Run<DepthFirstAlgorithmBenchmark>();
-            BenchmarkRunner.Run<DistanceFirstAlgorithmBenchmarks>();
+            //BenchmarkRunner.Run<LeeAlgorithmBenchmarks>();
+            //BenchmarkRunner.Run<BestFirstLeeAlgorithmBenchmarks>();
+            //BenchmarkRunner.Run<CostGreedyAlgorithmBenchmark>();
+            //BenchmarkRunner.Run<DepthFirstAlgorithmBenchmark>();
+            //BenchmarkRunner.Run<DistanceFirstAlgorithmBenchmarks>();
         }
     }
 }

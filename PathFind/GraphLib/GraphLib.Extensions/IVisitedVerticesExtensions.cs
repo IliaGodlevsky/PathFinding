@@ -10,5 +10,10 @@ namespace GraphLib.Extensions
         {
             return vertex.Neighbours.Where(self.IsNotVisited);
         }
+
+        public static bool HasUnvisitedNeighbours(this IVisitedVertices self, IVertex vertex)
+        {
+            return vertex.Neighbours.Any(self.IsNotVisited);
+        }
     }
 }

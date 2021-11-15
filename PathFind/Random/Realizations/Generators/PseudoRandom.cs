@@ -17,13 +17,13 @@ namespace Random.Realizations
         private ulong seed;
         private ulong Seed => seed = seed * Factor + Term;
 
-        public PseudoRandom(ulong seed)
+        public PseudoRandom(int seed)
         {
-            this.seed = seed;
+            this.seed = (ulong)seed;
         }
 
         public PseudoRandom()
-            : this(((ulong)DateTime.UtcNow.Ticks))
+            : this(Environment.TickCount)
         {
 
         }

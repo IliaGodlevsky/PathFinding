@@ -52,7 +52,6 @@
     <Compile Include="StackExtension.cs" />
     <Compile Include="VertexExtension.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="VisitedVerticesExtensions.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\Common\Common.csproj">

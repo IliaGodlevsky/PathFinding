@@ -13,8 +13,8 @@
         public const string DelayTimeInputMsg = "Input delay time: ";
         public const string GraphHeightInputMsg = "Input height of graph: ";
         public const string GraphWidthInputMsg = "Input width of graph: ";
-        public const string CostRangeLowerValueInputMsg = "Input lower vertices cost range value: ";
-        public const string CostRangeUpperValueInputMsg = "Input upper vertices cost range value: ";
+        public const string RangeLowerValueInputMsg = "Input lower value of range: ";
+        public const string RangeUpperValueInputMsg = "Input upper value of range: ";
         public const string CouldntFindPathMsg = "Couldn't find path";
         public const string NoVerticesAsEndPointsMsg = "No vertices to choose as end points";
         public const string ObstaclePercentInputMsg = "Input percent of obstacles: ";

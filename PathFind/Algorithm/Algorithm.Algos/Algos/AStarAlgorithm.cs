@@ -43,6 +43,18 @@ namespace Algorithm.Algos.Algos
             base.Enqueue(vertex, value + heuristics.GetCost(vertex));
         }
 
+        protected override double GetVertexRelaxedCost(IVertex neighbour)
+        {
+            return base.GetVertexRelaxedCost(neighbour) 
+                - heuristics.GetCostOrDefault(CurrentVertex, default);
+        }
+
+        protected override double GetVertexCurrentCost(IVertex vertex)
+        {
+            return base.GetVertexCurrentCost(vertex) 
+                - heuristics.GetCostOrDefault(vertex, default);
+        }
+
         protected virtual double CalculateHeuristic(IVertex vertex)
         {
             return heuristic.Calculate(vertex, CurrentEndPoints.Target);
