@@ -16,7 +16,7 @@ namespace GraphLib.NullRealizations.NullObjects
         public IGraph Graph { get; }
         public ICoordinate Position { get => NullCoordinate.Instance; set { } }
         public bool Equals(IVertex other) => other is NullVertex;
-        public INeighborhood NeighboursCoordinates => NullNeighboursCoordinates.Instance;
+        public INeighborhood Neighborhood => NullNeighboursCoordinates.Instance;
 
         private NullVertex()
         {

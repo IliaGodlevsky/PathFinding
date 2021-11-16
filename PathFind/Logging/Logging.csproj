@@ -47,7 +47,6 @@
     <Compile Include="Loggers\Logs.cs" />
     <Compile Include="Loggers\MailLog.cs" />
     <Compile Include="Loggers\MessageBoxLog.cs" />
-    <Compile Include="Loggers\NullLog.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

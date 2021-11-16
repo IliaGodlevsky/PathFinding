@@ -146,8 +146,8 @@ namespace GraphLib.Extensions
             }
 
             return self
-                .NeighboursCoordinates
-                .Coordinates
+                .Neighborhood
+                .Neighbours
                 .Where(coordinate => coordinate.IsWithinGraph(self.Graph))
                 .Select(coordinate => self.Graph[coordinate])
                 .ToArray();

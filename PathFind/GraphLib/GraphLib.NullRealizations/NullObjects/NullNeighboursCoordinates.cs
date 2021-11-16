@@ -11,7 +11,7 @@ namespace GraphLib.NullRealizations.NullObjects
     {
         public static INeighborhood Instance => instance.Value;
 
-        public IReadOnlyCollection<ICoordinate> Coordinates => new NullCoordinate[] { };
+        public IReadOnlyCollection<ICoordinate> Neighbours => new NullCoordinate[] { };
 
         public INeighborhood Clone()
         {

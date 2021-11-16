@@ -26,7 +26,7 @@ namespace GraphLib.Realizations.Tests
             var coordinate = new TestCoordinate(coordinateValues);
             var neighboursCoordinates = new MooreNeighborhood(coordinate);
 
-            var coordinates = neighboursCoordinates.Coordinates;
+            var coordinates = neighboursCoordinates.Neighbours;
 
             Assert.AreEqual(expectedResult, coordinates.LongCount());
         }
@@ -44,7 +44,7 @@ namespace GraphLib.Realizations.Tests
             var coordinate = new TestCoordinate(coordinateValues);
             var neighboursCoordinates = new MooreNeighborhood(coordinate);
 
-            bool hasSelf = neighboursCoordinates.Coordinates.Any(values => values.Equals(coordinate));
+            bool hasSelf = neighboursCoordinates.Neighbours.Any(values => values.Equals(coordinate));
 
             Assert.IsFalse(hasSelf);
         }
@@ -63,7 +63,7 @@ namespace GraphLib.Realizations.Tests
             var coordinate = new TestCoordinate(coordinateValues);
             var neighboursCoordinates = new MooreNeighborhood(coordinate);
 
-            var coordinates = neighboursCoordinates.Coordinates;
+            var coordinates = neighboursCoordinates.Neighbours;
 
             Assert.IsTrue(coordinates.Distinct().Count() == coordinates.Count);
         }
@@ -73,7 +73,7 @@ namespace GraphLib.Realizations.Tests
         {
             var coordinateEnvironment = new MooreNeighborhood(NullCoordinate.Instance);
 
-            var environment = coordinateEnvironment.Coordinates.ToArray();
+            var environment = coordinateEnvironment.Neighbours.ToArray();
 
             Assert.IsFalse(environment.Any());
         }

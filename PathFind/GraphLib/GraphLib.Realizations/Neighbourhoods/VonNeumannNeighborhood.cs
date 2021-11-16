@@ -11,11 +11,11 @@ namespace GraphLib.Realizations.Neighbourhoods
     [Serializable]
     public sealed class VonNeumannNeighborhood : INeighborhood, ISerializable, ICloneable<INeighborhood>
     {
-        public IReadOnlyCollection<ICoordinate> Coordinates => coordinates.Value;
+        public IReadOnlyCollection<ICoordinate> Neighbours => neighbourhood.Value;
 
         public VonNeumannNeighborhood(ICoordinate coordinate)
         {
-            coordinates = new Lazy<IReadOnlyCollection<ICoordinate>>(DetectNeighborhood);
+            neighbourhood = new Lazy<IReadOnlyCollection<ICoordinate>>(DetectNeighborhood);
             selfCoordinate = coordinate;
             neighboursCoordinates = new MooreNeighborhood(coordinate);
         }
@@ -38,7 +38,7 @@ namespace GraphLib.Realizations.Neighbourhoods
 
         private IReadOnlyCollection<ICoordinate> DetectNeighborhood()
         {
-            return neighboursCoordinates.Coordinates.Where(IsCardinal).ToArray();
+            return neighboursCoordinates.Neighbours.Where(IsCardinal).ToArray();
         }
 
         public INeighborhood Clone()
@@ -48,6 +48,6 @@ namespace GraphLib.Realizations.Neighbourhoods
 
         private readonly ICoordinate selfCoordinate;
         private readonly INeighborhood neighboursCoordinates;
-        private readonly Lazy<IReadOnlyCollection<ICoordinate>> coordinates;
+        private readonly Lazy<IReadOnlyCollection<ICoordinate>> neighbourhood;
     }
 }

@@ -48,7 +48,7 @@ namespace WPFVersion3D.Model
         {
             this.modelFactory = modelFactory;
             Position = coordinate;
-            NeighboursCoordinates = radar;
+            Neighborhood = radar;
             Material = new DiffuseMaterial();
             Transform = new TranslateTransform3D();
             Size = Constants.InitialVertexSize;
@@ -104,7 +104,7 @@ namespace WPFVersion3D.Model
         }
 
         public IGraph Graph { get; }
-        public INeighborhood NeighboursCoordinates { get; }
+        public INeighborhood Neighborhood { get; }
         public IVertexCost Cost { get; set; }
         public IReadOnlyCollection<IVertex> Neighbours => neighbours.Value;
         public ICoordinate Position { get; }

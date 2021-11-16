@@ -18,7 +18,7 @@ namespace WPFVersion.Model
             Width = Height = VertexSize;
             Template = (ControlTemplate)TryFindResource("vertexTemplate");
             Position = coordinate;
-            NeighboursCoordinates = radar;
+            Neighborhood = radar;
             this.Initialize();
             neighbours = new Lazy<IReadOnlyCollection<IVertex>>(this.GetNeighbours);
         }
@@ -43,7 +43,7 @@ namespace WPFVersion.Model
             }
         }
 
-        public virtual INeighborhood NeighboursCoordinates { get; }
+        public virtual INeighborhood Neighborhood { get; }
 
         private IVertexCost cost;
         public IVertexCost Cost

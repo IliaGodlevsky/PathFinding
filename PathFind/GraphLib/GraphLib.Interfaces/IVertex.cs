@@ -28,6 +28,6 @@ namespace GraphLib.Interfaces
         /// </summary>
         IReadOnlyCollection<IVertex> Neighbours { get; }
 
-        INeighborhood NeighboursCoordinates { get; }
+        INeighborhood Neighborhood { get; }
     }
 }

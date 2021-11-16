@@ -27,7 +27,7 @@ namespace GraphLib.Realizations.Tests
                 mock.Mock<ICoordinate>().Setup(c => c.CoordinatesValues).Returns(coordinateValues);
                 var neighboursCoordinate = mock.Create<VonNeumannNeighborhood>();
 
-                var environment = neighboursCoordinate.Coordinates;
+                var environment = neighboursCoordinate.Neighbours;
 
                 Assert.AreEqual(expectedResult, environment.LongCount());
             }
@@ -48,7 +48,7 @@ namespace GraphLib.Realizations.Tests
                 mock.Mock<ICoordinate>().Setup(c => c.CoordinatesValues).Returns(coordinateValues);
                 var neighboursCoordinate = mock.Create<VonNeumannNeighborhood>();
 
-                var environment = neighboursCoordinate.Coordinates;
+                var environment = neighboursCoordinate.Neighbours;
                 var coordinate = mock.Container.Resolve<ICoordinate>();
                 bool hasSelf = environment.Any(values => values.Equals(coordinate));
 
@@ -74,7 +74,7 @@ namespace GraphLib.Realizations.Tests
                     .Returns(coordinateValues);
                 var neighboursCoordinate = mock.Create<VonNeumannNeighborhood>();
 
-                var environment = neighboursCoordinate.Coordinates.ToArray();
+                var environment = neighboursCoordinate.Neighbours.ToArray();
 
                 Assert.IsTrue(environment.Distinct().Count() == environment.Length);
             }

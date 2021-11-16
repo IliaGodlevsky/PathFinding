@@ -25,7 +25,7 @@ namespace ConsoleVersion.Model
 
         public Vertex(INeighborhood coordinateRadar, ICoordinate coordinate)
         {
-            NeighboursCoordinates = coordinateRadar;
+            Neighborhood = coordinateRadar;
             Position = coordinate;
             this.Initialize();
             neighbours = new Lazy<IReadOnlyCollection<IVertex>>(this.GetNeighbours);
@@ -69,7 +69,7 @@ namespace ConsoleVersion.Model
 
         public IGraph Graph { get; }
         public Color Color { get; set; }
-        public INeighborhood NeighboursCoordinates { get; }
+        public INeighborhood Neighborhood { get; }
         public IReadOnlyCollection<IVertex> Neighbours => neighbours.Value;
         public ICoordinate Position { get; }
 

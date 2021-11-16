@@ -14,7 +14,7 @@ namespace GraphLib.TestRealizations.TestObjects
         public TestVertex(INeighborhood radar, ICoordinate coordinate)
         {
             this.Initialize();
-            NeighboursCoordinates = radar;
+            Neighborhood = radar;
             Position = coordinate;
             neighbours = new Lazy<IReadOnlyCollection<IVertex>>(this.GetNeighbours);
         }
@@ -29,7 +29,7 @@ namespace GraphLib.TestRealizations.TestObjects
         public IVertexCost Cost { get; set; }
         public IReadOnlyCollection<IVertex> Neighbours => neighbours.Value;
         public ICoordinate Position { get; }
-        public INeighborhood NeighboursCoordinates { get; }
+        public INeighborhood Neighborhood { get; }
         public IGraph Graph { get; }
 
         public bool Equals(IVertex other)

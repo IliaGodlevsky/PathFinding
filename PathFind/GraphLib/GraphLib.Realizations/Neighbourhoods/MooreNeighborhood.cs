@@ -18,7 +18,7 @@ namespace GraphLib.Realizations.Neighbourhoods
         /// Returns an array of the coordinate neighbours
         /// </summary>
         /// <returns>An array of the coordinate neighbours</returns>
-        public IReadOnlyCollection<ICoordinate> Coordinates => neighboursCoordinates.Value;
+        public IReadOnlyCollection<ICoordinate> Neighbours => neighbourhood.Value;
 
         public MooreNeighborhood(ICoordinate coordinate)
         {
@@ -27,7 +27,7 @@ namespace GraphLib.Realizations.Neighbourhoods
             limitDepth = selfCoordinatesValues.Length;
             resultCoordinatesValues = new int[limitDepth];
             lateralOffsetMatrix = limitDepth == 0 ? EmptyOffsetMatrix : OffsetMatrix;
-            neighboursCoordinates = new Lazy<IReadOnlyCollection<ICoordinate>>(GetNeighborhood);
+            neighbourhood = new Lazy<IReadOnlyCollection<ICoordinate>>(GetNeighborhood);
         }
 
         public void GetObjectData(SerializationInfo info, StreamingContext context)
@@ -82,7 +82,7 @@ namespace GraphLib.Realizations.Neighbourhoods
         private readonly int[] selfCoordinatesValues;
         private readonly int[] resultCoordinatesValues;
         private readonly int[] lateralOffsetMatrix;
-        private readonly Lazy<IReadOnlyCollection<ICoordinate>> neighboursCoordinates;
+        private readonly Lazy<IReadOnlyCollection<ICoordinate>> neighbourhood;
 
         private static readonly int[] EmptyOffsetMatrix = Array.Empty<int>();
         private static readonly int[] OffsetMatrix = new int[] { -1, 0, 1 };

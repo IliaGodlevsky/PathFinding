@@ -13,6 +13,6 @@ namespace GraphLib.Interfaces
         /// <see cref="ICoordinate"/>
         /// around some coordinate
         /// </summary>
-        IReadOnlyCollection<ICoordinate> Coordinates { get; }
+        IReadOnlyCollection<ICoordinate> Neighbours { get; }
     }
 }

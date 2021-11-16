@@ -35,7 +35,7 @@ namespace WindowsFormsVersion.Model
             TextAlign = ContentAlignment.MiddleCenter;
             this.Initialize();
             Position = coordinate;
-            NeighboursCoordinates = coordinateRadar;
+            Neighborhood = coordinateRadar;
             neighbours = new Lazy<IReadOnlyCollection<IVertex>>(this.GetNeighbours);
         }
 
@@ -58,7 +58,7 @@ namespace WindowsFormsVersion.Model
             }
         }
 
-        public virtual INeighborhood NeighboursCoordinates { get; }
+        public virtual INeighborhood Neighborhood { get; }
 
         public ICoordinate Position { get; }
 
