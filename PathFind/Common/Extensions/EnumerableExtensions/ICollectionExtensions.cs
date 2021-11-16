@@ -7,10 +7,7 @@ namespace Common.Extensions.EnumerableExtensions
     {
         public static void AddRange<T>(this ICollection<T> collection, IEnumerable<T> range)
         {
-            foreach (var item in range)
-            {
-                collection.Add(item);
-            }
+            range.ForEach(collection.Add);
         }
 
         public static void AddRange<T>(this ICollection<T> collection, params T[] items)
