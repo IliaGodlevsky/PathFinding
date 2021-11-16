@@ -1,6 +1,6 @@
 ﻿using GraphLib.Interfaces;
 using GraphLib.Interfaces.Factories;
-using GraphLib.Realizations.NeighboursCoordinates;
+using GraphLib.Realizations.Neighbourhoods;
 
 namespace GraphLib.Realizations.Factories.NeighboursCoordinatesFactories
 {

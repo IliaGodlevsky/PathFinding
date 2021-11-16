@@ -4,7 +4,7 @@ using GraphLib.Interfaces;
 using GraphLib.Interfaces.Factories;
 using GraphLib.NullRealizations.NullObjects;
 using GraphLib.Realizations.Factories.GraphAssembles;
-using GraphLib.Realizations.NeighboursCoordinates;
+using GraphLib.Realizations.Neighbourhoods;
 using GraphLib.TestRealizations;
 using GraphLib.TestRealizations.TestObjects;
 using Moq;

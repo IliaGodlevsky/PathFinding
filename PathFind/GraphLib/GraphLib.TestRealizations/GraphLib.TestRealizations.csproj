@@ -70,6 +70,14 @@
       <Project>{51D677FD-7A82-4282-8A2E-51DEBE39E695}</Project>
       <Name>NullObject</Name>
     </ProjectReference>
+    <ProjectReference Include="..\..\Random\Random.csproj">
+      <Project>{03EB6575-5B74-418F-9231-1B67598C68E8}</Project>
+      <Name>Random</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\ValueRange\ValueRange.csproj">
+      <Project>{EB70607D-CDF4-4D91-BBFE-55F85ACC0A1B}</Project>
+      <Name>ValueRange</Name>
+    </ProjectReference>
     <ProjectReference Include="..\GraphLib.Base\GraphLib.Base.csproj">
       <Project>{6AA3B516-ABFE-4EDA-98DD-1CE799DA747F}</Project>
       <Name>GraphLib.Base</Name>

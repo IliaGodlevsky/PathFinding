@@ -1,7 +1,7 @@
 ﻿using Autofac;
 using Autofac.Extras.Moq;
 using GraphLib.Interfaces;
-using GraphLib.Realizations.NeighboursCoordinates;
+using GraphLib.Realizations.Neighbourhoods;
 using NUnit.Framework;
 using System.Linq;
 
