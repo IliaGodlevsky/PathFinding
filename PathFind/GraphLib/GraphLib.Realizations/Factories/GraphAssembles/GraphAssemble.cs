@@ -71,8 +71,7 @@ namespace GraphLib.Realizations.Factories.GraphAssembles
                 var coordinate = coordinateFactory.CreateCoordinate(coordinateValues);
                 var coordinates = neighboursCoordinates.CreateNeighborhood(coordinate);
                 var vertex = vertexFactory.CreateVertex(coordinates, coordinate);
-                int randomCost = random.Next(BaseVertexCost.CostRange);
-                vertex.Cost = costFactory.CreateCost(randomCost);
+                vertex.Cost = costFactory.CreateCost();
                 vertex.IsObstacle = random.Next(percentRange).IsLess(percentOfObstacles);
                 vertices.Add(vertex);
             }

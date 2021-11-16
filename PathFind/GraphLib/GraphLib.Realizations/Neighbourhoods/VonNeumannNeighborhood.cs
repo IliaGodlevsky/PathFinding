@@ -6,7 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.Serialization;
 
-namespace GraphLib.Realizations.NeighboursCoordinates
+namespace GraphLib.Realizations.Neighbourhoods
 {
     [Serializable]
     public sealed class VonNeumannNeighborhood : INeighborhood, ISerializable, ICloneable<INeighborhood>

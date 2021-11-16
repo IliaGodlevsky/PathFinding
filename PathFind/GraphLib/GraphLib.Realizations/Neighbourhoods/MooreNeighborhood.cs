@@ -6,7 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.Serialization;
 
-namespace GraphLib.Realizations.NeighboursCoordinates
+namespace GraphLib.Realizations.Neighbourhoods  
 {
     /// <summary>
     /// A class that finds the neighbors of the specified coordinate

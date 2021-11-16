@@ -1,6 +1,6 @@
 ﻿using Common.Extensions;
 using GraphLib.NullRealizations.NullObjects;
-using GraphLib.Realizations.NeighboursCoordinates;
+using GraphLib.Realizations.Neighbourhoods;
 using GraphLib.TestRealizations.TestObjects;
 using NUnit.Framework;
 using System.Linq;
