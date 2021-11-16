@@ -74,6 +74,11 @@ namespace Common.Extensions.EnumerableExtensions
             return self.Where(item => !items.Contains(item));
         }
 
+        public static IEnumerable<T> Without<T>(this IEnumerable<T> self, params T[] items)
+        {
+            return self.Without(items.AsEnumerable());
+        }
+
         /// <summary>
         /// Applies delegate <paramref name="action"/> 
         /// to each element of <paramref name="collection"/>

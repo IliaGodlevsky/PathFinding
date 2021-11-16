@@ -1,4 +1,6 @@
-﻿namespace GraphLib.Interfaces
+﻿using System.Collections.Generic;
+
+namespace GraphLib.Interfaces
 {
     /// <summary>
     /// An interface, that provides 
@@ -11,6 +13,8 @@
         IVertex Target { get; }
 
         IVertex Source { get; }
+
+        IEnumerable<IVertex> EndPoints { get; }
 
         bool IsEndPoint(IVertex vertex);
     }

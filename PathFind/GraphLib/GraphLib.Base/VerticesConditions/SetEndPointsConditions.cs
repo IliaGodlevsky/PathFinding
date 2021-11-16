@@ -34,7 +34,7 @@ namespace GraphLib.Base.VerticesConditions
         {
             unsetSourceVertexCondition.Execute(endPoints.Source);
             unsetTargetVertexCondition.Execute(endPoints.Target);
-            var intermediateVertices = endPoints.IntermediateVertices.ToArray();
+            var intermediateVertices = endPoints.intermediates.ToArray();
             intermediateVertices.ForEach(unsetIntermediateVertexCondition.Execute);
         }
 

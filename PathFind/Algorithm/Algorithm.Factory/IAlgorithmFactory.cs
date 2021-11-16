@@ -5,6 +5,6 @@ namespace Algorithm.Factory
 {
     public interface IAlgorithmFactory
     {
-        PathfindingAlgorithm CreateAlgorithm(IGraph graph, IIntermediateEndPoints endPoints);
+        PathfindingAlgorithm CreateAlgorithm(IGraph graph, IEndPoints endPoints);
     }
 }

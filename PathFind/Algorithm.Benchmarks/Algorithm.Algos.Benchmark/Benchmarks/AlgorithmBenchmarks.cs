@@ -15,11 +15,11 @@ namespace Algorithm.Algos.Benchmark.Benchmarks
         private readonly IGraph graph40x40;
         private readonly IGraph graph50x50;
 
-        private readonly IIntermediateEndPoints endPoints10x10;
-        private readonly IIntermediateEndPoints endPoints20x20;
-        private readonly IIntermediateEndPoints endPoints30x30;
-        private readonly IIntermediateEndPoints endPoints40x40;
-        private readonly IIntermediateEndPoints endPoints50x50;
+        private readonly IEndPoints endPoints10x10;
+        private readonly IEndPoints endPoints20x20;
+        private readonly IEndPoints endPoints30x30;
+        private readonly IEndPoints endPoints40x40;
+        private readonly IEndPoints endPoints50x50;
 
         protected AlgorithmBenchmarks()
         {
@@ -56,8 +56,8 @@ namespace Algorithm.Algos.Benchmark.Benchmarks
         [Benchmark]
         public void Graph50x50PathfindingTesting() => CreateAlgorithm(graph50x50, endPoints50x50).FindPath();
 
-        private IIntermediateEndPoints CreateEndPoints(IGraph graph) => new TestEndPoints(graph.Vertices.First(), graph.Vertices.Last());
+        private IEndPoints CreateEndPoints(IGraph graph) => new TestEndPoints(graph.Vertices.First(), graph.Vertices.Last());
 
-        protected abstract IAlgorithm CreateAlgorithm(IGraph graph, IIntermediateEndPoints endPoints);
+        protected abstract IAlgorithm CreateAlgorithm(IGraph graph, IEndPoints endPoints);
     }
 }

@@ -1,6 +1,6 @@
-﻿using GraphLib.Extensions.Objects;
+﻿using Common.Extensions.EnumerableExtensions;
+using GraphLib.Extensions.Objects;
 using GraphLib.Interfaces;
-using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -13,17 +13,16 @@ namespace GraphLib.Extensions
         /// </summary>
         /// <param name="self"></param>
         /// <returns></returns>
-        public static IEnumerable<IEndPoints> ToEndPoints(this IIntermediateEndPoints self)
+        public static IEnumerable<IEndPoints> ToLocalEndPoints(this IEndPoints self)
         {
-            var vertices = self.GetVertices();
-            using (var iterator = vertices.GetEnumerator())
+            using (var iterator = self.EndPoints.GetEnumerator())
             {
                 iterator.MoveNext();
                 var previous = iterator.Current;
                 while (iterator.MoveNext())
                 {
                     var current = iterator.Current;
-                    yield return new EndPoints(previous, current);
+                    yield return new LocalEndPoints(previous, current);
                     previous = iterator.Current;
                 }
             }
@@ -40,40 +39,18 @@ namespace GraphLib.Extensions
         }
 
         /// <summary>
-        /// Returns all vertices that are chosen as end points in an array
-        /// </summary>
-        /// <param name="self"></param>
-        /// <returns></returns>
-        public static IEnumerable<IVertex> GetVertices(this IIntermediateEndPoints self)
-        {
-            return self.IntermediateVertices.Prepend(self.Source).Append(self.Target);
-        }
-
-        /// <summary>
         /// Determins, whether any vertex that is chosen as end point is isolated
         /// </summary>
         /// <param name="self"></param>
         /// <returns></returns>
-        public static bool HasIsolators(this IIntermediateEndPoints self)
+        public static bool HasIsolators(this IEndPoints self)
         {
-            return self.GetVertices().Any(vertex => vertex.IsIsolated());
+            return self.EndPoints.Any(vertex => vertex.IsIsolated());
         }
 
-        public static bool HasDuplicates(this IIntermediateEndPoints endPoints)
+        public static IEnumerable<IVertex> GetIntermediates(this IEndPoints self)
         {
-            try
-            {
-                endPoints.GetVertices().ToDictionary();
-                return false;
-            }
-            catch (ArgumentException)
-            {
-                return true;
-            }
-            catch (Exception)
-            {
-                throw;
-            }
+            return self.EndPoints.Without(self.Source, self.Target);
         }
     }
 }

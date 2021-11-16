@@ -17,13 +17,13 @@ namespace Algorithm.Algos.Algos
     public class AStarAlgorithm : DijkstraAlgorithm,
         IAlgorithm, IInterruptableProcess, IInterruptable, IDisposable
     {
-        public AStarAlgorithm(IGraph graph, IIntermediateEndPoints endPoints)
+        public AStarAlgorithm(IGraph graph, IEndPoints endPoints)
             : this(graph, endPoints, new DefaultStepRule(), new ChebyshevDistance())
         {
 
         }
 
-        public AStarAlgorithm(IGraph graph, IIntermediateEndPoints endPoints,
+        public AStarAlgorithm(IGraph graph, IEndPoints endPoints,
             IStepRule stepRule, IHeuristic function)
             : base(graph, endPoints, stepRule)
         {
@@ -45,13 +45,13 @@ namespace Algorithm.Algos.Algos
 
         protected override double GetVertexRelaxedCost(IVertex neighbour)
         {
-            return base.GetVertexRelaxedCost(neighbour) 
+            return base.GetVertexRelaxedCost(neighbour)
                 - heuristics.GetCostOrDefault(CurrentVertex, default);
         }
 
         protected override double GetVertexCurrentCost(IVertex vertex)
         {
-            return base.GetVertexCurrentCost(vertex) 
+            return base.GetVertexCurrentCost(vertex)
                 - heuristics.GetCostOrDefault(vertex, default);
         }
 

@@ -22,13 +22,13 @@ namespace Algorithm.Algos.Algos
     public class IDAStarAlgorithm : AStarAlgorithm,
         IAlgorithm, IInterruptableProcess, IInterruptable, IDisposable
     {
-        public IDAStarAlgorithm(IGraph graph, IIntermediateEndPoints endPoints)
+        public IDAStarAlgorithm(IGraph graph, IEndPoints endPoints)
             : this(graph, endPoints, new DefaultStepRule(), new ChebyshevDistance())
         {
 
         }
 
-        public IDAStarAlgorithm(IGraph graph, IIntermediateEndPoints endPoints, IStepRule stepRule, IHeuristic function)
+        public IDAStarAlgorithm(IGraph graph, IEndPoints endPoints, IStepRule stepRule, IHeuristic function)
             : base(graph, endPoints, stepRule, function)
         {
             percentValueRange = new InclusiveValueRange<int>(99);

@@ -45,7 +45,7 @@ namespace Algorithm.Base
             Interrupted?.Invoke(this, new ProcessEventArgs());
         }
 
-        protected PathfindingAlgorithm(IGraph graph, IIntermediateEndPoints endPoints)
+        protected PathfindingAlgorithm(IGraph graph, IEndPoints endPoints)
         {
             visitedVertices = new VisitedVertices();
             parentVertices = new ParentVertices();
@@ -110,6 +110,6 @@ namespace Algorithm.Base
         protected readonly IVisitedVertices visitedVertices;
         protected readonly IParentVertices parentVertices;
         protected readonly IGraph graph;
-        protected readonly IIntermediateEndPoints endPoints;
+        protected readonly IEndPoints endPoints;
     }
 }

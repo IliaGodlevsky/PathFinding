@@ -87,12 +87,7 @@ namespace GraphLib.Extensions
 
         public static bool Contains(this IGraph self, IEndPoints endPoints)
         {
-            return self.Contains(endPoints.Source, endPoints.Target);
-        }
-
-        public static bool Contains(this IGraph self, IIntermediateEndPoints endPoints)
-        {
-            return self.Contains((IEndPoints)endPoints) && self.Contains(endPoints.IntermediateVertices);
+            return self.Contains(endPoints.EndPoints);
         }
 
         public static int GetIsolatedCount(this IGraph self)
