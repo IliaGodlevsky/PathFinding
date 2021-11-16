@@ -1,21 +1,9 @@
 ﻿using System.Collections.Generic;
-using System.Linq;
 
 namespace Common.Extensions.EnumerableExtensions
 {
     public static class QueueExtensions
     {
-        public static Queue<T> EnqueueRange<T>(this Queue<T> queue, IEnumerable<T> range)
-        {
-            range.ForEach(queue.Enqueue);
-            return queue;
-        }
-
-        public static Queue<T> Except<T>(this Queue<T> queue, IEnumerable<T> range)
-        {
-            return queue.AsEnumerable().Except(range).ToQueue();
-        }
-
         public static bool Remove<T>(this Queue<T> queue, T item)
         {
             bool isRemoved = false;

@@ -69,11 +69,6 @@ namespace Common.Extensions.EnumerableExtensions
             return items.Any() ? items.Aggregate(func) : default;
         }
 
-        public static IEnumerable<T> Without<T>(this IEnumerable<T> self, params T[] items)
-        {
-            return self.Where(item => !items.Contains(item));
-        }
-
         public static IEnumerable<T> Without<T>(this IEnumerable<T> self, IEnumerable<T> items)
         {
             return self.Where(item => !items.Contains(item));
