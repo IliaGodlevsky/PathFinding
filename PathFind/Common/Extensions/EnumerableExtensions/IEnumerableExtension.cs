@@ -88,14 +88,19 @@ namespace Common.Extensions.EnumerableExtensions
         /// <param name="action"></param>
         /// <returns>The same <paramref name="collection"/> with elements 
         /// to which <paramref name="action"/> was applied</returns>
-        public static IEnumerable<T> ForEach<T>(this IEnumerable<T> collection, Action<T> action)
+        public static TCollection ForEach<TCollection, T>(this TCollection collection, Action<T> action)
+            where TCollection : IEnumerable<T>
+        {
+            collection.AsEnumerable().ForEach(action);
+            return collection;
+        }
+
+        public static void ForEach<T>(this IEnumerable<T> collection, Action<T> action)
         {
             foreach (var item in collection)
             {
                 action(item);
             }
-
-            return collection;
         }
 
         public static bool IsSingle<T>(this IEnumerable<T> collection, Func<T, bool> predicate)

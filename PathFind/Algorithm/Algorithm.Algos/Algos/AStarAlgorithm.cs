@@ -14,8 +14,7 @@ namespace Algorithm.Algos.Algos
     /// A realization of the A* algorithm
     /// </summary>
     /// <remarks><see cref="https://en.wikipedia.org/wiki/A*_search_algorithm"/></remarks>
-    public class AStarAlgorithm : DijkstraAlgorithm,
-        IAlgorithm, IInterruptableProcess, IInterruptable, IDisposable
+    public class AStarAlgorithm : DijkstraAlgorithm, IAlgorithm, IInterruptableProcess, IInterruptable, IDisposable
     {
         public AStarAlgorithm(IGraph graph, IEndPoints endPoints)
             : this(graph, endPoints, new DefaultStepRule(), new ChebyshevDistance())

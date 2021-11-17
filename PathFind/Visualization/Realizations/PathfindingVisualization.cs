@@ -52,7 +52,8 @@ namespace Visualization.Realizations
         {
             source.Add(algorithm, endPoints.Source);
             target.Add(algorithm, endPoints.Target);
-            intermediate.AddRange(algorithm, endPoints.GetIntermediates());
+            var intermediates = endPoints.GetIntermediates().ToArray();
+            intermediate.AddRange(algorithm, intermediates);
         }
 
         public void AddPathVertices(IAlgorithm algorithm, IGraphPath grapPath)

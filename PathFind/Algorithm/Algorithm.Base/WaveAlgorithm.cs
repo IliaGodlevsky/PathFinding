@@ -15,8 +15,7 @@ namespace Algorithm.Base
     /// A base class for all wave algorithms, such as Dijkstra's algorithm,
     /// A* algorithm or Lee algorithm. This class is abstract
     /// </summary>
-    public abstract class WaveAlgorithm : PathfindingAlgorithm,
-        IAlgorithm, IInterruptableProcess, IInterruptable, IDisposable
+    public abstract class WaveAlgorithm : PathfindingAlgorithm, IAlgorithm, IInterruptableProcess, IInterruptable, IDisposable
     {
         protected WaveAlgorithm(IGraph graph, IEndPoints endPoints)
             : base(graph, endPoints)
@@ -67,9 +66,9 @@ namespace Algorithm.Base
         protected abstract void RelaxNeighbours(IVertex[] vertex);
         protected virtual IEndPoints CurrentEndPoints { get; set; }
 
-        protected virtual void ExtractNeighbours(IVertex[] neighbours)
+        protected virtual void RaiseVertexEnqueued(IVertex vertex)
         {
-            neighbours.ForEach(vertex => RaiseVertexEnqueued(new AlgorithmEventArgs(vertex)));
+            RaiseVertexEnqueued(new AlgorithmEventArgs(vertex));
         }
 
         private void InspectCurrentVertex()
@@ -78,7 +77,7 @@ namespace Algorithm.Base
                 .GetUnvisitedNeighbours(CurrentVertex)
                 .FilterObstacles()
                 .ToArray();
-            ExtractNeighbours(neighbours);
+            neighbours.ForEach(RaiseVertexEnqueued);
             RelaxNeighbours(neighbours);
         }
     }
