@@ -3,8 +3,6 @@ using Algorithm.Extensions;
 using Algorithm.Interfaces;
 using Algorithm.Realizations.GraphPaths;
 using Algorithm.Realizations.StepRules;
-using Algorithm.Сompanions;
-using Algorithm.Сompanions.Interface;
 using Common.Extensions.EnumerableExtensions;
 using GraphLib.Extensions;
 using GraphLib.Interfaces;
@@ -20,13 +18,13 @@ namespace Algorithm.Algos.Algos
     public class DijkstraAlgorithm : WaveAlgorithm,
         IAlgorithm, IInterruptableProcess, IInterruptable, IDisposable
     {
-        public DijkstraAlgorithm(IGraph graph, IIntermediateEndPoints endPoints)
+        public DijkstraAlgorithm(IGraph graph, IEndPoints endPoints)
             : this(graph, endPoints, new DefaultStepRule())
         {
 
         }
 
-        public DijkstraAlgorithm(IGraph graph, IIntermediateEndPoints endPoints, IStepRule stepRule)
+        public DijkstraAlgorithm(IGraph graph, IEndPoints endPoints, IStepRule stepRule)
             : base(graph, endPoints)
         {
             this.stepRule = stepRule;

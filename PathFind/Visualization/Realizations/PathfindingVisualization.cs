@@ -2,6 +2,7 @@
 using Algorithm.Infrastructure.EventArguments;
 using Algorithm.Interfaces;
 using Common.Extensions.EnumerableExtensions;
+using GraphLib.Extensions;
 using GraphLib.Interfaces;
 using System;
 using System.Collections.Generic;
@@ -47,11 +48,11 @@ namespace Visualization.Realizations
             algorithm.Finished += OnAlgorithmFinished;
         }
 
-        public void AddEndPoints(IAlgorithm algorithm, IIntermediateEndPoints endPoints)
+        public void AddEndPoints(IAlgorithm algorithm, IEndPoints endPoints)
         {
             source.Add(algorithm, endPoints.Source);
             target.Add(algorithm, endPoints.Target);
-            intermediate.AddRange(algorithm, endPoints.IntermediateVertices);
+            intermediate.AddRange(algorithm, endPoints.GetIntermediates());
         }
 
         public void AddPathVertices(IAlgorithm algorithm, IGraphPath grapPath)

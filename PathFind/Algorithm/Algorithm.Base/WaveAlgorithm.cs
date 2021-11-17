@@ -18,7 +18,7 @@ namespace Algorithm.Base
     public abstract class WaveAlgorithm : PathfindingAlgorithm,
         IAlgorithm, IInterruptableProcess, IInterruptable, IDisposable
     {
-        protected WaveAlgorithm(IGraph graph, IIntermediateEndPoints endPoints)
+        protected WaveAlgorithm(IGraph graph, IEndPoints endPoints)
             : base(graph, endPoints)
         {
 
@@ -28,7 +28,7 @@ namespace Algorithm.Base
         {
             IGraphPath path = NullGraphPath.Instance;
             PrepareForPathfinding();
-            foreach (var endPoint in endPoints.ToEndPoints())
+            foreach (var endPoint in endPoints.ToLocalEndPoints())
             {
                 CurrentEndPoints = endPoint;
                 PrepareForLocalPathfinding();

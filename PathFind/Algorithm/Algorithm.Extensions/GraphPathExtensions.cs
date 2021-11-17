@@ -9,7 +9,7 @@ namespace Algorithm.Extensions
 {
     public static class GraphPathExtensions
     {
-        public static IGraphPath Highlight(this IGraphPath self, IIntermediateEndPoints endPoints)
+        public static IGraphPath Highlight(this IGraphPath self, IEndPoints endPoints)
         {
             self.Path
                 .Without(endPoints)
@@ -19,7 +19,7 @@ namespace Algorithm.Extensions
             return self;
         }
 
-        public static async Task<IGraphPath> HighlightAsync(this IGraphPath self, IIntermediateEndPoints endPoints)
+        public static async Task<IGraphPath> HighlightAsync(this IGraphPath self, IEndPoints endPoints)
         {
             return await Task.Run(() => self.Highlight(endPoints)).ConfigureAwait(false);
         }

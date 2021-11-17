@@ -8,7 +8,7 @@ namespace Algorithm.Algos.Benchmark.Benchmarks
     [MemoryDiagnoser]
     public class DijkstraAlgorithmBenchmarks : AlgorithmBenchmarks
     {
-        protected override IAlgorithm CreateAlgorithm(IGraph graph, IIntermediateEndPoints endPoints)
+        protected override IAlgorithm CreateAlgorithm(IGraph graph, IEndPoints endPoints)
         {
             return new DijkstraAlgorithm(graph, endPoints);
         }

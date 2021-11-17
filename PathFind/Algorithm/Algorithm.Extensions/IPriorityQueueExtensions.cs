@@ -10,7 +10,7 @@ namespace Algorithm.Extensions
 {
     public static class IPriorityQueueExtensions
     {
-        public static void EnqueueOrUpdatePriority<TItem, TPriority>(this IPriorityQueue<TItem, TPriority> self, 
+        public static void EnqueueOrUpdatePriority<TItem, TPriority>(this IPriorityQueue<TItem, TPriority> self,
             TItem node, TPriority priority)
         {
             if (self.Contains(node))
@@ -28,7 +28,7 @@ namespace Algorithm.Extensions
             return self.Count == 0 ? NullVertex.Instance : self.First;
         }
 
-        public static void RemoveRange<TItem, TPriority>(this IPriorityQueue<TItem, TPriority> self, 
+        public static void RemoveRange<TItem, TPriority>(this IPriorityQueue<TItem, TPriority> self,
             IEnumerable<TItem> nodes)
         {
             nodes.ForEach(self.RemoveIfContains);
@@ -49,9 +49,9 @@ namespace Algorithm.Extensions
             {
                 self.EnqueueOrUpdatePriority(node.Item1, node.Item2);
             }
-        }        
+        }
 
-        public static IList<TItem> TakeOrderedBy<TItem, TPriority>(this IEnumerable<TItem> self, int take, 
+        public static IList<TItem> TakeOrderedBy<TItem, TPriority>(this IEnumerable<TItem> self, int take,
             Func<TItem, TPriority> selector)
         {
             return self.OrderByDescending(selector).Take(take).ToList();

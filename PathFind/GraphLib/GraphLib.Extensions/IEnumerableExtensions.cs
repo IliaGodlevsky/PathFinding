@@ -27,9 +27,9 @@ namespace GraphLib.Extensions
             return collection.Where(vertex => !vertex.IsObstacle);
         }
 
-        public static IEnumerable<IVertex> Without(this IEnumerable<IVertex> self, IIntermediateEndPoints endPoints)
+        public static IEnumerable<IVertex> Without(this IEnumerable<IVertex> self, IEndPoints endPoints)
         {
-            return self.Without(endPoints.GetVertices());
+            return self.Without(endPoints.EndPoints);
         }
 
         public static IVertex DequeueOrNullVertex(this Queue<IVertex> queue)

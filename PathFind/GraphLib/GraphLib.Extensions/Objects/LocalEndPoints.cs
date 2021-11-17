@@ -1,15 +1,15 @@
 ﻿using GraphLib.Interfaces;
 using System.Collections.Generic;
 
-namespace GraphLib.TestRealizations.TestObjects
+namespace GraphLib.Extensions.Objects
 {
-    public sealed class TestEndPoints : IEndPoints
+    internal sealed class LocalEndPoints : IEndPoints
     {
         public IVertex Target { get; }
         public IVertex Source { get; }
         public IEnumerable<IVertex> EndPoints { get; }
 
-        public TestEndPoints(IVertex source, IVertex target)
+        public LocalEndPoints(IVertex source, IVertex target)
         {
             Source = source;
             Target = target;

@@ -42,7 +42,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="IGraphFieldFactory.cs" />
-    <Compile Include="IIntermediateEndPoints.cs" />
     <Compile Include="IMeanCost.cs" />
     <Compile Include="ICoordinate.cs" />
     <Compile Include="Factories\ICoordinateFactory.cs" />

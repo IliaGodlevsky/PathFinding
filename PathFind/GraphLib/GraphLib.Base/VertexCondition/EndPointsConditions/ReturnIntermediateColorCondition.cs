@@ -1,6 +1,5 @@
 ﻿using GraphLib.Base.EndPointsInspection.Abstractions;
 using GraphLib.Interfaces;
-using System.Linq;
 
 namespace GraphLib.Base.VertexCondition.EndPointsConditions
 {
@@ -17,7 +16,7 @@ namespace GraphLib.Base.VertexCondition.EndPointsConditions
 
         public bool IsTrue(IVertex vertex)
         {
-            return endPoints.IntermediateVertices.Contains(vertex);
+            return endPoints.intermediates.Contains(vertex);
         }
     }
 }

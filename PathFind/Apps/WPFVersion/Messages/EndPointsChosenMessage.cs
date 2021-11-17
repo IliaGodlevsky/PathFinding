@@ -6,9 +6,9 @@ namespace WPFVersion.Messages
     internal sealed class EndPointsChosenMessage
     {
         public IAlgorithm Algorithm { get; }
-        public IIntermediateEndPoints EndPoints { get; }
+        public IEndPoints EndPoints { get; }
 
-        public EndPointsChosenMessage(IAlgorithm algorithm, IIntermediateEndPoints endPoints)
+        public EndPointsChosenMessage(IAlgorithm algorithm, IEndPoints endPoints)
         {
             Algorithm = algorithm;
             EndPoints = endPoints;

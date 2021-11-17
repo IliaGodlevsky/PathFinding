@@ -9,11 +9,17 @@ using System.Linq;
 
 namespace GraphLib.Base
 {
-    public abstract class BaseEndPoints : IIntermediateEndPoints, IEndPoints
+    public abstract class BaseEndPoints : IEndPoints
     {
         public IVertex Source { get; internal set; }
         public IVertex Target { get; internal set; }
-        public IReadOnlyCollection<IVertex> IntermediateVertices => intermediates;
+        public IEnumerable<IVertex> EndPoints => intermediates.Prepend(Source).Append(Target);
+        public bool IsEndPoint(IVertex vertex)
+        {
+            return Source.Equals(vertex)
+                || Target.Equals(vertex)
+                || intermediates.Contains(vertex);
+        }
 
         public void SubscribeToEvents(IGraph graph) => graph.ForEach(SubscribeVertex);
         public void UnsubscribeFromEvents(IGraph graph) => graph.ForEach(UnsubscribeVertex);
@@ -22,11 +28,10 @@ namespace GraphLib.Base
             middleButtonConditions.ResetAllExecutings();
             leftButtonConditions.ResetAllExecutings();
         }
-        public bool IsEndPoint(IVertex vertex) => this.GetVertices().Contains(vertex);
 
         public void ReturnColors()
         {
-            this.GetVertices().ForEach(returnColorsConditions.ExecuteTheFirstTrue);
+            EndPoints.ForEach(returnColorsConditions.ExecuteTheFirstTrue);
         }
 
         internal protected readonly Collection<IVertex> intermediates;

@@ -21,7 +21,7 @@ namespace Algorithm.Algos.Algos
         /// <param name="graph">A graph, where the cheapest path must be found</param>
         /// <param name="endPoints">Vertices, between which the cheapest path
         /// must be found</param>
-        public CostGreedyAlgorithm(IGraph graph, IIntermediateEndPoints endPoints)
+        public CostGreedyAlgorithm(IGraph graph, IEndPoints endPoints)
             : this(graph, endPoints, new DefaultStepRule())
         {
 
@@ -34,7 +34,7 @@ namespace Algorithm.Algos.Algos
         /// <param name="endPoints">Vertices, between which the cheapest path
         /// must be found</param>
         /// <param name="stepRule">A way of calculating a step cost between vertices</param>
-        public CostGreedyAlgorithm(IGraph graph, IIntermediateEndPoints endPoints, IStepRule stepRule)
+        public CostGreedyAlgorithm(IGraph graph, IEndPoints endPoints, IStepRule stepRule)
             : base(graph, endPoints)
         {
             this.stepRule = stepRule;
