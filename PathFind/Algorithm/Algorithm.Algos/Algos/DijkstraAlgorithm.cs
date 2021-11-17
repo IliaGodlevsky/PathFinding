@@ -76,7 +76,7 @@ namespace Algorithm.Algos.Algos
         protected virtual double GetVertexRelaxedCost(IVertex neighbour)
         {
             return stepRule.CalculateStepCost(neighbour, CurrentVertex)
-                   + queue.GetPriorityOrInfinity(CurrentVertex);
+                   + GetVertexCurrentCost(CurrentVertex);
         }
 
         protected override void RelaxNeighbours(IVertex[] neighbours)
