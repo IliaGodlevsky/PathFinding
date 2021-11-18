@@ -8,6 +8,7 @@ using Interruptable.Interface;
 using NullObject.Extensions;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using ValueRange;
 
 namespace Algorithm.Algos.Algos
@@ -33,7 +34,7 @@ namespace Algorithm.Algos.Algos
         {
             percentValueRange = new InclusiveValueRange<int>(99);
             percentOfFarthestVerticesToDelete = new Lazy<int>(CalculatePercentOfFarthestVerticesToDelete);
-            deletedVertices = new HashSet<ValueTuple<IVertex, double>>();
+            deletedVertices = new HashSet<Tuple<IVertex, double>>();
         }
 
         protected override IVertex NextVertex
@@ -41,14 +42,14 @@ namespace Algorithm.Algos.Algos
             get
             {
                 var verticesToDelete = queue
-                    .TakeOrderedBy(VerticesCountToDelete, heuristics.GetCost);
+                    .TakeOrderedBy(VerticesCountToDelete, CalculateHeuristic);
                 queue.RemoveRange(verticesToDelete);
-                var tuples = queue.ToValueTuples(verticesToDelete);
+                var tuples = queue.ToTuples(verticesToDelete).ToList();
                 deletedVertices.AddRange(tuples);
                 var next = base.NextVertex;
                 if (next.IsNull())
                 {
-                    queue.EnqueueOrUpdateRange(deletedVertices);
+                    queue.EnqueueRange(deletedVertices);
                     deletedVertices.Clear();
                     next = base.NextVertex;
                 }
@@ -77,6 +78,6 @@ namespace Algorithm.Algos.Algos
 
         private readonly InclusiveValueRange<int> percentValueRange;
         private readonly Lazy<int> percentOfFarthestVerticesToDelete;
-        private readonly HashSet<ValueTuple<IVertex, double>> deletedVertices;
+        private readonly ICollection<Tuple<IVertex, double>> deletedVertices;
     }
 }

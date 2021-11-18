@@ -42,8 +42,17 @@ namespace Algorithm.Extensions
             }
         }
 
+        public static void EnqueueRange<TItem, TPriority>(this IPriorityQueue<TItem, TPriority> self,
+            IEnumerable<Tuple<TItem, TPriority>> nodes)
+        {
+            foreach (var node in nodes)
+            {
+                self.EnqueueOrUpdatePriority(node.Item1, node.Item2);
+            }
+        }
+
         public static void EnqueueOrUpdateRange<TItem, TPriority>(this IPriorityQueue<TItem, TPriority> self,
-            IEnumerable<ValueTuple<TItem, TPriority>> nodes)
+            IEnumerable<Tuple<TItem, TPriority>> nodes)
         {
             foreach (var node in nodes)
             {
