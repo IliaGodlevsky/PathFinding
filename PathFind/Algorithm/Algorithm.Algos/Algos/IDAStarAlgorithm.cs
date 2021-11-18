@@ -42,9 +42,9 @@ namespace Algorithm.Algos.Algos
             get
             {
                 var verticesToDelete = queue
-                    .TakeOrderedBy(VerticesCountToDelete, CalculateHeuristic);
-                queue.RemoveRange(verticesToDelete);
-                var tuples = queue.ToTuples(verticesToDelete).ToList();
+                    .TakeOrderedBy(VerticesCountToDelete, heuristics.GetCost);
+                var tuples = queue.ToTuples(verticesToDelete, heuristics.GetCost).ToList();
+                queue.RemoveRange(verticesToDelete);                
                 deletedVertices.AddRange(tuples);
                 var next = base.NextVertex;
                 if (next.IsNull())
