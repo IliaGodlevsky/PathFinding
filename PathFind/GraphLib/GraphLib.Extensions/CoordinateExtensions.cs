@@ -24,9 +24,16 @@ namespace GraphLib.Extensions
                 return false;
             }
 
-            return self.CoordinatesValues.SequenceEqual(coordinate.CoordinatesValues);
+            return self.CoordinatesValues.Juxtapose(coordinate.CoordinatesValues);
         }
 
+        /// <summary>
+        /// Checks, whether <paramref name="neighbour"/> 
+        /// is cardinal to <paramref name="coordinate"/>
+        /// </summary>
+        /// <param name="coordinate"></param>
+        /// <param name="neighbour"></param>
+        /// <returns>True if <paramref name="neighbour"/> is cardinal to <paramref name="coordinate"/></returns>
         public static bool IsCardinal(this ICoordinate coordinate, ICoordinate neighbour)
         {
             return coordinate.CoordinatesValues.IsCardinal(neighbour.CoordinatesValues);

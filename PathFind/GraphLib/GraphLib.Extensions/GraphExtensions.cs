@@ -11,6 +11,10 @@ namespace GraphLib.Extensions
 {
     public static class GraphExtensions
     {
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="graph"></param>
         public static void Refresh(this IGraph graph)
         {
             graph.ForEach(vertex => vertex.Refresh());
@@ -101,12 +105,17 @@ namespace GraphLib.Extensions
         }
 
         /// <summary>
-        /// Converts <paramref name="index"/> into an array of 
-        /// cartesian coordinates according to graph dimension sizes
+        /// Converts <paramref name="index"/> 
+        /// into an array of cartesian coordinates 
+        /// according to graph dimension sizes
         /// </summary>
         /// <param name="self"></param>
         /// <param name="index"></param>
         /// <returns>An array of cartesian coordinates</returns>
+        /// <exception cref="ArgumentOutOfRangeException">Thrown when 
+        /// index is greater of equals
+        /// <paramref name="dimensionSizes"/> 
+        /// elements multiplication </exception>
         public static int[] ToCoordinates(this int[] dimensionSizes, int index)
         {
             int size = dimensionSizes.AggregateOrDefault(IntExtensions.Multiply);

@@ -30,10 +30,7 @@ namespace ConsoleVersion.Model
 
         public void VisualizeAsRegular(Vertex vertex)
         {
-            if (!vertex.IsObstacle)
-            {
-                Mark(vertex, RegularVertexColor);
-            }
+            Mark(vertex, RegularVertexColor);
         }
 
         public void VisualizeAsPath(Vertex vertex)

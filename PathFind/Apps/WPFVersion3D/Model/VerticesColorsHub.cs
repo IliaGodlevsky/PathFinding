@@ -39,10 +39,7 @@ namespace WPFVersion3D.Model
         {
             Dispatcher.Invoke(() =>
             {
-                if (!vertex.IsObstacle)
-                {
-                    vertex.Brush = RegularVertexBrush;
-                }
+                vertex.Brush = RegularVertexBrush;
             });
         }
 

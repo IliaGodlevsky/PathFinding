@@ -9,6 +9,15 @@ namespace Algorithm.Extensions
 {
     public static class GraphPathExtensions
     {
+        /// <summary>
+        /// Highlights all vertices that implement an <see cref="IVisualizable"/> interface 
+        /// in <paramref name="self"/>, except <paramref name="endPoints"/>, as path
+        /// </summary>
+        /// <param name="self"></param>
+        /// <param name="endPoints"></param>
+        /// <returns>The same instance of <see cref="IGraphPath"/></returns>
+        /// <remarks>Vertex should implement an <see cref="IVisualizable"/> interface
+        /// to be highlighted as path</remarks>
         public static IGraphPath Highlight(this IGraphPath self, IEndPoints endPoints)
         {
             self.Path

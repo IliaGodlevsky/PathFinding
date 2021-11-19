@@ -44,6 +44,7 @@
     <Compile Include="Abstractions\AlgorithmVertices.cs" />
     <Compile Include="Abstractions\EndPointsVertices.cs" />
     <Compile Include="Abstractions\ResultVertices.cs" />
+    <Compile Include="Extensions\GraphExtensions.cs" />
     <Compile Include="Extensions\IVerticesExtensions.cs" />
     <Compile Include="Extensions\ObjectExtensions.cs" />
     <Compile Include="Interfaces\IVertices.cs" />
@@ -52,6 +53,7 @@
     <Compile Include="Realizations\CompositeVisualization.cs" />
     <Compile Include="Realizations\EnqueuedVertices.cs" />
     <Compile Include="Realizations\IntermediateVertices.cs" />
+    <Compile Include="Realizations\ObstacleVertices.cs" />
     <Compile Include="Realizations\PathVertices.cs" />
     <Compile Include="Realizations\SourceVertices.cs" />
     <Compile Include="Realizations\TargetVertices.cs" />

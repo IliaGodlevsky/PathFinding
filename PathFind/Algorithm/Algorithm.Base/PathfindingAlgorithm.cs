@@ -19,8 +19,9 @@ namespace Algorithm.Base
     /// A base algorithm for all pathfinding algorithms.
     /// This class is abstract
     /// </summary>
-    /// <remarks>Try to wait the algorithm finishes pathfinding and only then
-    /// call <see cref="FindPath"/> method one more time</remarks>
+    /// <remarks>Do not use the same instance of algorithm untill it stops to 
+    /// find the path. And only then use it again. But it is better not to use
+    /// the same instance twice. Create a new one instead.</remarks>
     public abstract class PathfindingAlgorithm
         : IAlgorithm, IInterruptableProcess, IInterruptable, IDisposable
     {
@@ -29,6 +30,8 @@ namespace Algorithm.Base
         public event ProcessEventHandler Started;
         public event ProcessEventHandler Finished;
         public event ProcessEventHandler Interrupted;
+
+        public bool IsInProcess { get; private set; }
 
         /// <summary>
         /// When overriden in derived class, 
@@ -39,12 +42,27 @@ namespace Algorithm.Base
         /// doesn't contains end points</exception>
         public abstract IGraphPath FindPath();
 
+        /// <summary>
+        /// Iterrupts the algorithm and stops its activity
+        /// The algorithm does not stop immidietly, 
+        /// but it performs the current iteration
+        /// and only then it will be stopped
+        /// </summary>
+        /// <remarks>The algorithm does not stop immidietly, 
+        /// but it performs the current iteration
+        /// and only then it will be stopped</remarks>
         public void Interrupt()
         {
             IsInterruptRequested = true;
+            IsInProcess = false;
             Interrupted?.Invoke(this, new ProcessEventArgs());
         }
 
+        /// <summary>
+        /// Initialization a new instance of <see cref="PathfindingAlgorithm"/>
+        /// </summary>
+        /// <param name="graph"></param>
+        /// <param name="endPoints"></param>
         protected PathfindingAlgorithm(IGraph graph, IEndPoints endPoints)
         {
             visitedVertices = new VisitedVertices();
@@ -53,6 +71,10 @@ namespace Algorithm.Base
             this.endPoints = endPoints;
         }
 
+        /// <summary>
+        /// Removes all activity of the
+        /// algorithm so that you can use it again
+        /// </summary>
         protected virtual void Reset()
         {
             visitedVertices.Clear();
@@ -60,11 +82,28 @@ namespace Algorithm.Base
             IsInterruptRequested = false;
         }
 
+        /// <summary>
+        /// The vertex that is currently being processed by th
+        /// </summary>
         protected IVertex CurrentVertex { get; set; }
+
+        /// <summary>
+        /// The vertex that is next to be processed
+        /// </summary>
         protected abstract IVertex NextVertex { get; }
 
+        /// <summary>
+        /// Determins whether the algorithm is able to continue 
+        /// the pathfinding process
+        /// </summary>
         protected bool IsAbleToContinue => !CurrentVertex.IsNull() && !IsInterruptRequested;
 
+        /// <summary>
+        /// Determins, whether the algorithm has reached the target vertex
+        /// or whether it is able to continue pathfinding
+        /// </summary>
+        /// <param name="endPoints"></param>
+        /// <returns></returns>
         protected virtual bool IsDestination(IEndPoints endPoints)
         {
             return endPoints.Target.IsEqual(CurrentVertex) || !IsAbleToContinue;
@@ -87,14 +126,20 @@ namespace Algorithm.Base
                 throw new EndPointsNotFromCurrentGraphException(graph, endPoints);
             }
             Reset();
-            Started?.Invoke(this, new ProcessEventArgs());
+            IsInProcess = true;
+            Started?.Invoke(this, new ProcessEventArgs());            
         }
 
         protected virtual void CompletePathfinding()
         {
+            IsInProcess = true;
             Finished?.Invoke(this, new ProcessEventArgs());
         }
 
+        /// <summary>
+        /// Resets the algorithms and removes all 
+        /// subscribers from the its events
+        /// </summary>
         public void Dispose()
         {
             Started = null;
