@@ -3,6 +3,7 @@ using EnumerationValues.Realizations;
 using System;
 using System.Linq;
 using ValueRange;
+using ValueRange.Extensions;
 
 namespace ConsoleVersion.ValueInput
 {

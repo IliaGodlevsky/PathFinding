@@ -2,6 +2,7 @@
 using Random.Extensions;
 using Random.Realizations;
 using ValueRange;
+using ValueRange.Extensions;
 
 namespace Common.Tests
 {

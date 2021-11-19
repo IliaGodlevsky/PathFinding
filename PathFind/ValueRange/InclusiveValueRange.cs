@@ -35,23 +35,5 @@ namespace ValueRange
                 LowerValueOfRange = lowerValueOfRange;
             }
         }
-
-        public T ReturnInRange(T value)
-        {
-            if (value.IsGreater(UpperValueOfRange))
-            {
-                value = UpperValueOfRange;
-            }
-            if (value.IsLess(LowerValueOfRange))
-            {
-                value = LowerValueOfRange;
-            }
-            return value;
-        }
-
-        public bool Contains(T value)
-        {
-            return value.IsBetween(UpperValueOfRange, LowerValueOfRange);
-        }
     }
 }

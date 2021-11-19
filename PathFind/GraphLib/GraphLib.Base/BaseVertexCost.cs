@@ -2,6 +2,7 @@
 using GraphLib.Interfaces;
 using System;
 using ValueRange;
+using ValueRange.Extensions;
 
 namespace GraphLib.Base
 {

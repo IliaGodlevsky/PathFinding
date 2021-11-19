@@ -4,6 +4,7 @@ using GalaSoft.MvvmLight.Messaging;
 using GraphViewModel.Interfaces;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
+using ValueRange.Extensions;
 using WPFVersion.Enums;
 using WPFVersion.Messages;
 

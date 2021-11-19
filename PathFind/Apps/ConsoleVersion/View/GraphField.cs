@@ -6,6 +6,7 @@ using GraphLib.Interfaces;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using ValueRange;
+using ValueRange.Extensions;
 
 namespace ConsoleVersion.View
 {

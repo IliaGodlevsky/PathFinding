@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Windows.Media;
 using ValueRange;
+using ValueRange.Extensions;
 
 namespace WPFVersion3D.Extensions
 {

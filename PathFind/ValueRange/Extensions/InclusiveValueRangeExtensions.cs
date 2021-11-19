@@ -1,4 +1,7 @@
-﻿using System.Collections.Generic;
+﻿using Common.Extensions;
+using System;
+using System.Collections.Generic;
+using ValueRange.Enums;
 
 namespace ValueRange.Extensions
 {
@@ -20,6 +23,35 @@ namespace ValueRange.Extensions
         public static double Amplitude(this InclusiveValueRange<double> valueRange)
         {
             return valueRange.UpperValueOfRange - valueRange.LowerValueOfRange;
+        }
+
+        public static bool Contains<T>(this InclusiveValueRange<T> self, T value)
+            where T : struct, IComparable
+        {
+            return value.IsBetween(self.UpperValueOfRange, self.LowerValueOfRange);
+        }
+
+        public static T ReturnInRange<T>(this InclusiveValueRange<T> self, T value,
+            ReturnOptions returnOptions = ReturnOptions.Limit)
+            where T : struct, IComparable
+        {
+            if (value.IsGreater(self.UpperValueOfRange))
+            {
+                switch (returnOptions)
+                {
+                    case ReturnOptions.Cycle: value = self.LowerValueOfRange; break;
+                    case ReturnOptions.Limit: value = self.UpperValueOfRange; break;
+                }
+            }
+            if (value.IsLess(self.LowerValueOfRange))
+            {
+                switch (returnOptions)
+                {
+                    case ReturnOptions.Cycle: value = self.UpperValueOfRange; break;
+                    case ReturnOptions.Limit: value = self.LowerValueOfRange; break;
+                }
+            }
+            return value;
         }
     }
 }

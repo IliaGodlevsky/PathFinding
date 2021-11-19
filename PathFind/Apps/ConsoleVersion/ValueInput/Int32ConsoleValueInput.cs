@@ -1,5 +1,6 @@
 ﻿using ConsoleVersion.Interface;
 using ValueRange;
+using ValueRange.Extensions;
 
 namespace ConsoleVersion.ValueInput
 {

@@ -1,6 +1,7 @@
 ﻿using System.Globalization;
 using System.Windows.Controls;
 using ValueRange;
+using ValueRange.Extensions;
 
 namespace WPFVersion.ValidationRules
 {

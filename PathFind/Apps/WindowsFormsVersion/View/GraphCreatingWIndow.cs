@@ -1,5 +1,6 @@
 ﻿using System.Linq;
 using System.Windows.Forms;
+using ValueRange.Extensions;
 using WindowsFormsVersion.ViewModel;
 
 namespace WindowsFormsVersion.View

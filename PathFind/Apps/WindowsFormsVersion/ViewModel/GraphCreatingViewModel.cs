@@ -7,6 +7,7 @@ using GraphViewModel.Interfaces;
 using Logging.Interface;
 using System;
 using System.Collections.Generic;
+using ValueRange.Extensions;
 using WindowsFormsVersion.Messeges;
 
 namespace WindowsFormsVersion.ViewModel

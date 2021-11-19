@@ -15,6 +15,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using ValueRange;
+using ValueRange.Extensions;
 
 namespace ConsoleVersion.ViewModel
 {

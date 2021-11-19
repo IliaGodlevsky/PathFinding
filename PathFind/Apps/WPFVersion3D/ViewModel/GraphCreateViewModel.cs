@@ -8,6 +8,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Windows.Input;
+using ValueRange.Extensions;
 using WPFVersion3D.Infrastructure;
 using WPFVersion3D.Messages;
 

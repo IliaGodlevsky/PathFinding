@@ -9,6 +9,13 @@ namespace Visualization.Extensions
 {
     internal static class IVerticesExtensions
     {
+        /// <summary>
+        /// Adds a  <<paramref name="range"/> of vertices to be stored
+        /// by a particular <paramref name="algorithm"/>
+        /// </summary>
+        /// <param name="self"></param>
+        /// <param name="algorithm"></param>
+        /// <param name="range"></param>
         public static void AddRange(this IVertices self, IAlgorithm algorithm, IEnumerable<IVertex> range)
         {
             range.ForEach(item => self.Add(algorithm, item));

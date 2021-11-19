@@ -11,6 +11,7 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using ValueRange;
+using ValueRange.Extensions;
 
 namespace GraphLib.Realizations.Factories.GraphAssembles
 {

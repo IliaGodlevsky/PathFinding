@@ -24,6 +24,7 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using ValueRange;
+using ValueRange.Extensions;
 
 namespace ConsoleVersion.ViewModel
 {
