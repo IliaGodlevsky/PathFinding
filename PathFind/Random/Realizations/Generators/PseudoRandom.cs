@@ -22,6 +22,10 @@ namespace Random.Realizations
             this.seed = (ulong)seed;
         }
 
+        /// <summary>
+        /// Initializes new instance of <see cref="PseudoRandom"/>
+        /// using <see cref="Environment.TickCount"/> as seed
+        /// </summary>
         public PseudoRandom()
             : this(Environment.TickCount)
         {

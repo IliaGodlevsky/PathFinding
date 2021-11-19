@@ -30,6 +30,12 @@ namespace Algorithm.Algos.Algos
             heuristics = new Costs();
         }
 
+        /// <summary>
+        /// Initializes a new instance of <see cref="BestFirstLeeAlgorithm"/>
+        /// using <see cref="ManhattanDistance"/> as a heuristic function
+        /// </summary>
+        /// <param name="graph">A graph, where the cheapest path must be founded</param>
+        /// <param name="endPoints">Vertices, between which the cheapest path must be founded</param>
         public BestFirstLeeAlgorithm(IGraph graph, IEndPoints endPoints)
             : this(graph, endPoints, new ManhattanDistance())
         {

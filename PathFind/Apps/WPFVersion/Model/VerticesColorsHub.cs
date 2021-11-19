@@ -47,10 +47,7 @@ namespace WPFVersion.Model
         {
             Dispatcher.Invoke(() =>
             {
-                if (!vertex.IsObstacle)
-                {
-                    vertex.Background = RegularVertexColor;
-                }
+                vertex.Background = RegularVertexColor;
             });
         }
 

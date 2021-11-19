@@ -6,7 +6,7 @@ namespace Algorithm.Realizations.StepRules
     /// <summary>
     /// A step rule, that says, that 
     /// next step is equal to
-    /// neibour vertex cost.
+    /// neighbour vertex cost.
     /// This class can't inherited
     /// </summary>
     public sealed class DefaultStepRule : IStepRule

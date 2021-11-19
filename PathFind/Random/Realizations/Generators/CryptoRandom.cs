@@ -36,6 +36,13 @@ namespace Random.Realizations
             lockObject = new object();
         }
 
+        /// <summary>
+        /// Creates new random <see cref="Int32"/> value
+        /// </summary>
+        /// <param name="minValue"></param>
+        /// <param name="maxValue"></param>
+        /// <returns>Cryptographically strong 
+        /// random <see cref="Int32"/></returns>
         public int Next(int minValue, int maxValue)
         {
             lock (lockObject)

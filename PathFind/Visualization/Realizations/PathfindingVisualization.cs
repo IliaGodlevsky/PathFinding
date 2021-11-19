@@ -22,8 +22,10 @@ namespace Visualization.Realizations
             intermediate = new IntermediateVertices();
             source = new SourceVertices();
             target = new TargetVertices();
-            visualizations = new CompositeVisualization(graph, enqueued, visited, path, intermediate, source, target);
-            vertices = new IVertices[] { visited, enqueued, path, intermediate, source, target };
+            obstacles = new ObstacleVertices();
+            visualizations = new CompositeVisualization(graph, obstacles, enqueued, visited, path, intermediate, source, target);
+            vertices = new IVertices[] { obstacles, visited, enqueued, path, intermediate, source, target };
+            this.graph = graph;
         }
 
         public void Clear()
@@ -46,6 +48,7 @@ namespace Visualization.Realizations
             algorithm.VertexVisited += OnVertexVisited;
             algorithm.VertexEnqueued += OnVertexEnqueued;
             algorithm.Finished += OnAlgorithmFinished;
+            algorithm.Started += OnAlgorithmStarted;
         }
 
         public void AddEndPoints(IAlgorithm algorithm, IEndPoints endPoints)
@@ -67,6 +70,14 @@ namespace Visualization.Realizations
         }
 
         public void Add(IAlgorithm algorithm, IVertex vertex) { }
+
+        protected virtual void OnAlgorithmStarted(object sender, EventArgs e)
+        {
+            if (sender is IAlgorithm algorithm)
+            {
+                obstacles.AddRange(algorithm, graph.GetObstacles());
+            }
+        }
 
         protected virtual void OnVertexVisited(object sender, AlgorithmEventArgs e)
         {
@@ -94,6 +105,7 @@ namespace Visualization.Realizations
                 algorithm.VertexVisited -= OnVertexVisited;
                 algorithm.VertexEnqueued -= OnVertexEnqueued;
                 algorithm.Finished -= OnAlgorithmFinished;
+                algorithm.Started -= OnAlgorithmStarted;
             }
         }
 
@@ -103,7 +115,9 @@ namespace Visualization.Realizations
         private readonly IntermediateVertices intermediate;
         private readonly SourceVertices source;
         private readonly TargetVertices target;
+        private readonly ObstacleVertices obstacles;
         private readonly IVisualization visualizations;
         private readonly IVertices[] vertices;
+        private readonly IGraph graph;
     }
 }

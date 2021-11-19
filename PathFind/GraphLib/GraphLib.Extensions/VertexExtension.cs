@@ -80,7 +80,14 @@ namespace GraphLib.Extensions
         {
             if (self is IVisualizable vertex)
             {
-                vertex.VisualizeAsRegular();
+                if (self.IsObstacle)
+                {
+                    vertex.VisualizeAsObstacle();
+                }
+                else
+                {
+                    vertex.VisualizeAsRegular();
+                }
             }
         }
 
@@ -93,10 +100,7 @@ namespace GraphLib.Extensions
 
         internal static void Refresh(this IVertex self)
         {
-            if (!self.IsObstacle)
-            {
-                self.SetToDefault();
-            }
+            self.SetToDefault();
         }
 
         /// <summary>

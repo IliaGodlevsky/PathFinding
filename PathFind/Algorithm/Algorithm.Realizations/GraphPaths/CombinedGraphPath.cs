@@ -10,6 +10,9 @@ namespace Algorithm.Realizations.GraphPaths
     /// </summary>
     public sealed class CombinedGraphPath : IGraphPath
     {
+        /// <summary>
+        /// A path that includes all combined paths
+        /// </summary>
         public IVertex[] Path { get; }
 
         public int Length { get; }

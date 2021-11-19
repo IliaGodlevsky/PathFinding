@@ -19,6 +19,10 @@ namespace System
 
         private int[] Seeds => seeds.Value;
 
+        /// <summary>
+        /// Initializes new instance of <see cref="KnuthRandom"/>
+        /// using <see cref="Environment.TickCount"/> as seed
+        /// </summary>
         public KnuthRandom()
           : this(Environment.TickCount)
         {
@@ -31,6 +35,13 @@ namespace System
             lockObject = new object();
         }
 
+        /// <summary>
+        /// Returns a pseudo random number 
+        /// based on Knuth algorithm
+        /// </summary>
+        /// <param name="minValue"></param>
+        /// <param name="maxValue"></param>
+        /// <returns></returns>
         public int Next(int minValue, int maxValue)
         {
             lock (lockObject)

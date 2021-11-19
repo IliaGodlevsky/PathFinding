@@ -3,6 +3,7 @@ using Common.Extensions.EnumerableExtensions;
 using GraphLib.Extensions;
 using GraphLib.Interfaces;
 using System.Linq;
+using Visualization.Extensions;
 using Visualization.Interfaces;
 
 namespace Visualization.Realizations
@@ -18,7 +19,7 @@ namespace Visualization.Realizations
 
         public void Visualize(IAlgorithm algorithm)
         {
-            graph.Refresh();
+            graph.RemoveAllColors();
             visualizations.ForEach(visualization => visualization.Visualize(algorithm));
         }
 

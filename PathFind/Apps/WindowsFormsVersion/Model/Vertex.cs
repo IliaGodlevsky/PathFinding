@@ -85,10 +85,7 @@ namespace WindowsFormsVersion.Model
 
         public void VisualizeAsRegular()
         {
-            if (!IsObstacle)
-            {
-                BackColor = RegularVertexColor;
-            }
+            BackColor = RegularVertexColor;
         }
 
         public void VisualizeAsSource()
