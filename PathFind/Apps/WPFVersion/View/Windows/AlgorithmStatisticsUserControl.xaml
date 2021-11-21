@@ -4,7 +4,9 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:converters="clr-namespace:WPFVersion.Converters" 
-             xmlns:viewmodel="clr-namespace:WPFVersion.ViewModel" xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
+             xmlns:viewmodel="clr-namespace:WPFVersion.ViewModel" 
+             xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit" 
+             xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
              d:DataContext="{d:DesignInstance Type=viewmodel:AlgorithmStatisticsViewModel}"
              mc:Ignorable="d">
     <UserControl.DataContext>
@@ -18,7 +20,12 @@
                       BorderBrush="White" 
                       BorderThickness="0.1" 
                       SelectedItem="{Binding SelectedAlgorithm}" 
-                      ItemsSource="{Binding Statistics}">
+                      ItemsSource="{Binding Algorithms}">
+            <i:Interaction.Triggers>
+                <i:EventTrigger EventName="SelectionChanged">
+                    <i:InvokeCommandAction Command="{Binding VisualizeCommand}"></i:InvokeCommandAction>
+                </i:EventTrigger>
+            </i:Interaction.Triggers>
             <ListView.View>
                 <GridView>
                     <GridView.Columns>

@@ -18,10 +18,9 @@ using GraphLib.Realizations.Factories.GraphAssembles;
 using GraphLib.Realizations.Factories.GraphFactories;
 using GraphLib.Realizations.Factories.NeighboursCoordinatesFactories;
 using GraphLib.Realizations.MeanCosts;
+using GraphLib.Serialization;
 using GraphLib.Serialization.Interfaces;
 using GraphLib.Serialization.Serializers;
-using GraphViewModel;
-using GraphViewModel.Interfaces;
 using Logging.Interface;
 using Logging.Loggers;
 using Random.Interface;
@@ -62,7 +61,7 @@ namespace ConsoleVersion.Configure
             builder.RegisterType<ConsoleLog>().As<ILog>().SingleInstance();
             builder.RegisterType<MailLog>().As<ILog>().SingleInstance();
             builder.RegisterComposite<Logs, ILog>().SingleInstance();
-
+            // Graph creating block
             builder.RegisterType<PseudoRandom>().As<IRandom>().SingleInstance();
             builder.RegisterType<GraphAssemble>().As<IGraphAssemble>().SingleInstance().Named<IGraphAssemble>(GraphAssemble);
             builder.Register(RegisterSmoothedGraphAssemble).As<IGraphAssemble>().SingleInstance();
@@ -72,8 +71,8 @@ namespace ConsoleVersion.Configure
             builder.RegisterType<Graph2DFactory>().As<IGraphFactory>().SingleInstance();
             builder.RegisterType<MooreNeighborhoodFactory>().As<INeighborhoodFactory>().SingleInstance();
             builder.RegisterType<RootMeanSquareCost>().As<IMeanCost>().SingleInstance();
-
-            builder.RegisterType<SaveLoadGraph>().As<ISaveLoadGraph>().SingleInstance();
+            // Graph serailizing block
+            builder.RegisterType<GraphSerializationModule>().AsSelf().SingleInstance();
             builder.RegisterType<PathInput>().As<IPathInput>().SingleInstance();
             builder.RegisterType<GraphSerializer>().As<IGraphSerializer>().SingleInstance();
             builder.RegisterDecorator<CryptoGraphSerializer, IGraphSerializer>();

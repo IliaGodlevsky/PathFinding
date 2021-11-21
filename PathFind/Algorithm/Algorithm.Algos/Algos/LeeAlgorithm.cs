@@ -23,11 +23,11 @@ namespace Algorithm.Algos.Algos
             accumulatedCosts = new Costs();
         }
 
-        protected override void CompletePathfinding()
+        protected override void Reset()
         {
-            base.CompletePathfinding();
-            verticesQueue.Clear();
+            base.Reset();
             accumulatedCosts.Clear();
+            verticesQueue.Clear();
         }
 
         protected override IVertex NextVertex => verticesQueue.DequeueOrNullVertex();

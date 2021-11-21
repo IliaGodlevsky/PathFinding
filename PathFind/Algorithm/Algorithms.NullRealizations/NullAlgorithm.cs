@@ -17,7 +17,7 @@ namespace Algorithm.NullRealizations
 
         }
 
-        private static readonly Lazy<IAlgorithm> instance 
+        private static readonly Lazy<IAlgorithm> instance
             = new Lazy<IAlgorithm>(() => new NullAlgorithm());
     }
 }

@@ -27,7 +27,7 @@ namespace WindowsFormsVersion.Model
         private static Color IntermediateVertexColor = Color.FromKnownColor(KnownColor.DarkOrange);
         private static Color ToReplaceMarkColor = Color.FromArgb(alpha: 185, red: 255, green: 140, blue: 0);
 
-        public Vertex(INeighborhood coordinateRadar, ICoordinate coordinate) : base()
+        public Vertex(INeighborhood neighborhood, ICoordinate coordinate) : base()
         {
             float fontSize = VertexSize * TextToSizeRatio;
             Font = new Font("Times New Roman", fontSize);
@@ -35,12 +35,11 @@ namespace WindowsFormsVersion.Model
             TextAlign = ContentAlignment.MiddleCenter;
             this.Initialize();
             Position = coordinate;
-            Neighborhood = coordinateRadar;
-            neighbours = new Lazy<IReadOnlyCollection<IVertex>>(this.GetNeighbours);
+            neighbours = new Lazy<IReadOnlyCollection<IVertex>>(() => neighborhood.GetNeighbours(this));
         }
 
         public Vertex(VertexSerializationInfo info)
-            : this(info.NeighboursCoordinates, info.Position)
+            : this(info.Neighbourhood, info.Position)
         {
             this.Initialize(info);
         }
@@ -57,8 +56,6 @@ namespace WindowsFormsVersion.Model
                 Text = cost.ToString();
             }
         }
-
-        public virtual INeighborhood Neighborhood { get; }
 
         public ICoordinate Position { get; }
 

@@ -5,6 +5,7 @@ using GraphLib.Base;
 using GraphLib.Extensions;
 using GraphLib.Interfaces;
 using GraphLib.Interfaces.Factories;
+using GraphLib.Serialization;
 using GraphViewModel;
 using GraphViewModel.Interfaces;
 using Logging.Interface;
@@ -52,9 +53,10 @@ namespace WPFVersion.ViewModel
         public ICommand ColorizeAccordingToCostCommand { get; }
         public ICommand ResetColorizingCommand { get; }
 
-        public MainWindowViewModel(IGraphFieldFactory fieldFactory, IVertexEventHolder eventHolder, ISaveLoadGraph saveLoad,
+        public MainWindowViewModel(IGraphFieldFactory fieldFactory, IVertexEventHolder eventHolder,
+            GraphSerializationModule SerializationModule,
             IEnumerable<IGraphAssemble> graphAssembles, BaseEndPoints endPoints, IEnumerable<IAlgorithmFactory> algorithmFactories, ILog log)
-            : base(fieldFactory, eventHolder, saveLoad, graphAssembles, endPoints, algorithmFactories, log)
+            : base(fieldFactory, eventHolder, SerializationModule, graphAssembles, endPoints, algorithmFactories, log)
         {
             ResetColorizingCommand = new RelayCommand(ExecuteResetColorizing, CanExecuteColorizingGraphOperation);
             ColorizeAccordingToCostCommand = new RelayCommand(ExecuteColorizeAccordingToCost, CanExecuteColorizingGraphOperation);

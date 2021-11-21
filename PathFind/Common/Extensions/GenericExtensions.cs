@@ -39,11 +39,13 @@ namespace Common.Extensions
         }
 
         /// <summary>
-        /// 
+        /// Returns <see cref="DescriptionAttribute"/>'s value of type name
+        /// if <paramref name="self"/> is marked with this attribute
         /// </summary>
         /// <typeparam name="T"></typeparam>
         /// <param name="self"></param>
-        /// <returns></returns>
+        /// <returns>A <see cref="DescriptionAttribute"'s value or type name 
+        /// if <paramref name="self"/> is not marked with this attribute</returns>
         /// <remarks>Type name for <see cref="Enum"/> is a field name</remarks>
         public static string GetDescriptionAttributeValueOrTypeName<T>(this T self)
         {

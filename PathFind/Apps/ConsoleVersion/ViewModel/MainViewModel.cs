@@ -14,6 +14,7 @@ using GraphLib.Interfaces;
 using GraphLib.Interfaces.Factories;
 using GraphLib.Realizations.Coordinates;
 using GraphLib.Realizations.Graphs;
+using GraphLib.Serialization;
 using GraphLib.Serialization.Exceptions;
 using GraphViewModel;
 using GraphViewModel.Interfaces;
@@ -38,9 +39,9 @@ namespace ConsoleVersion.ViewModel
         public IValueInput<int> Int32Input { get; set; }
         public IValueInput<Answer> AnswerInput { get; set; }
 
-        public MainViewModel(IGraphFieldFactory fieldFactory, IVertexEventHolder eventHolder, ISaveLoadGraph saveLoad,
+        public MainViewModel(IGraphFieldFactory fieldFactory, IVertexEventHolder eventHolder, GraphSerializationModule serializationModule,
             IEnumerable<IGraphAssemble> graphAssembles, BaseEndPoints endPoints, IEnumerable<IAlgorithmFactory> algorithmFactories, ILog log)
-            : base(fieldFactory, eventHolder, saveLoad, graphAssembles, endPoints, algorithmFactories, log)
+            : base(fieldFactory, eventHolder, serializationModule, graphAssembles, endPoints, algorithmFactories, log)
         {
             Messenger.Default.Register<GraphCreatedMessage>(this, MessageTokens.MainModel, message => ConnectNewGraph(message.Graph));
             Messenger.Default.Register<ClearGraphMessage>(this, MessageTokens.MainModel, message => ClearGraph());
@@ -110,7 +111,7 @@ namespace ConsoleVersion.ViewModel
         {
             try
             {
-                var graph = saveLoad.LoadGraphAsync().Result;
+                var graph = serializationModule.LoadGraph();
                 ConnectNewGraph(graph);
                 var costRangeMessage = new CostRangeChangedMessage(CostRange);
                 Messenger.Default.Send(costRangeMessage, MessageTokens.MainView);

@@ -44,6 +44,13 @@ namespace Common.Extensions
             }
         }
 
+        /// <summary>
+        /// Determines, where <paramref name="type"/> implements all
+        /// of provided <paramref name="interfaces"/>
+        /// </summary>
+        /// <param name="type"></param>
+        /// <param name="interfaces"></param>
+        /// <returns>true if type implements all the interfaces and false if is not</returns>
         public static bool ImplementsAll(this Type type, params Type[] interfaces)
         {
             return interfaces.All(@interface => type.GetInterface(@interface.Name) != null);

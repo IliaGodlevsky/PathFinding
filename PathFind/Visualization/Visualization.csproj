@@ -45,9 +45,9 @@
     <Compile Include="Abstractions\EndPointsVertices.cs" />
     <Compile Include="Abstractions\ResultVertices.cs" />
     <Compile Include="Extensions\GraphExtensions.cs" />
-    <Compile Include="Extensions\IVerticesExtensions.cs" />
+    <Compile Include="Extensions\IVisualizationSlidesExtensions.cs" />
     <Compile Include="Extensions\ObjectExtensions.cs" />
-    <Compile Include="Interfaces\IVertices.cs" />
+    <Compile Include="Interfaces\IVisualizationSlides.cs" />
     <Compile Include="Interfaces\IVisualization.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Realizations\CompositeVisualization.cs" />
@@ -58,7 +58,7 @@
     <Compile Include="Realizations\SourceVertices.cs" />
     <Compile Include="Realizations\TargetVertices.cs" />
     <Compile Include="Realizations\VisitedVertices.cs" />
-    <Compile Include="Realizations\PathfindingVisualization.cs" />
+    <Compile Include="PathfindingVisualization.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Algorithm\Algorithm.Base\Algorithm.Base.csproj">

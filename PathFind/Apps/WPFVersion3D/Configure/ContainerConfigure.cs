@@ -8,10 +8,9 @@ using GraphLib.Realizations.Factories.CoordinateFactories;
 using GraphLib.Realizations.Factories.GraphAssembles;
 using GraphLib.Realizations.Factories.GraphFactories;
 using GraphLib.Realizations.Factories.NeighboursCoordinatesFactories;
+using GraphLib.Serialization;
 using GraphLib.Serialization.Interfaces;
 using GraphLib.Serialization.Serializers;
-using GraphViewModel;
-using GraphViewModel.Interfaces;
 using Logging.Interface;
 using Logging.Loggers;
 using Random.Interface;
@@ -51,7 +50,7 @@ namespace WPFVersion3D.Configure
             builder.RegisterType<VonNeumannNeighborhoodFactory>().As<INeighborhoodFactory>().SingleInstance();
             builder.RegisterType<CubicModel3DFactory>().As<IModel3DFactory>().SingleInstance();
 
-            builder.RegisterType<SaveLoadGraph>().As<ISaveLoadGraph>().SingleInstance();
+            builder.RegisterType<GraphSerializationModule>().AsSelf().SingleInstance();
             builder.RegisterType<PathInput>().As<IPathInput>().SingleInstance();
             builder.RegisterType<GraphSerializer>().As<IGraphSerializer>().SingleInstance();
             builder.RegisterDecorator<CompressGraphSerializer, IGraphSerializer>();

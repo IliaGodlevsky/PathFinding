@@ -1,6 +1,7 @@
 ﻿using GraphLib.Base.EndPointsInspection.Abstractions;
 using GraphLib.Extensions;
 using GraphLib.Interfaces;
+using NullObject.Extensions;
 
 namespace GraphLib.Base.VertexCondition.EndPointsConditions
 {
@@ -21,7 +22,9 @@ namespace GraphLib.Base.VertexCondition.EndPointsConditions
 
         public bool IsTrue(IVertex vertex)
         {
-            return endPoints.Source.IsIsolated();
+            return endPoints.Source.IsIsolated()
+                && !endPoints.Source.IsNull()
+                && !endPoints.IsEndPoint(vertex);
         }
     }
 }

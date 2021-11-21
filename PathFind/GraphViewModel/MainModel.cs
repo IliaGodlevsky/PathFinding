@@ -4,6 +4,8 @@ using GraphLib.Extensions;
 using GraphLib.Interfaces;
 using GraphLib.Interfaces.Factories;
 using GraphLib.NullRealizations.NullObjects;
+using GraphLib.Serialization;
+using GraphLib.Serialization.Extensions;
 using GraphViewModel.Interfaces;
 using Logging.Interface;
 using System;
@@ -21,14 +23,14 @@ namespace GraphViewModel
 
         protected MainModel(IGraphFieldFactory fieldFactory,
             IVertexEventHolder eventHolder,
-            ISaveLoadGraph saveLoad,
+            GraphSerializationModule serializationModule,
             IEnumerable<IGraphAssemble> graphAssembles,
             BaseEndPoints endPoints,
             IEnumerable<IAlgorithmFactory> algorithmFactories,
             ILog log)
         {
             this.eventHolder = eventHolder;
-            this.saveLoad = saveLoad;
+            this.serializationModule = serializationModule;
             this.fieldFactory = fieldFactory;
             this.graphAssembles = graphAssembles;
             this.endPoints = endPoints;
@@ -39,7 +41,7 @@ namespace GraphViewModel
 
         public virtual async void SaveGraph()
         {
-            var task = saveLoad.SaveGraphAsync(Graph);
+            var task = serializationModule.SaveGraphAsync(Graph);
             try
             {
                 await task;
@@ -54,7 +56,7 @@ namespace GraphViewModel
         {
             try
             {
-                var newGraph = await saveLoad.LoadGraphAsync();
+                var newGraph = await serializationModule.LoadGraphAsync();
                 ConnectNewGraph(newGraph);
             }
             catch (Exception ex)
@@ -96,7 +98,7 @@ namespace GraphViewModel
         protected readonly IGraphFieldFactory fieldFactory;
         protected readonly ILog log;
         protected readonly BaseEndPoints endPoints;
-        protected readonly ISaveLoadGraph saveLoad;
+        protected readonly GraphSerializationModule serializationModule;
         protected readonly IEnumerable<IAlgorithmFactory> algorithmFactories;
 
         private readonly IVertexEventHolder eventHolder;

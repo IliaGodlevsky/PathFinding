@@ -1,7 +1,5 @@
 ﻿using ConsoleVersion.Interface;
-using ConsoleVersion.Model;
 using GraphLib.Interfaces;
-using GraphLib.NullRealizations.NullObjects;
 using GraphLib.Realizations.Coordinates;
 using GraphLib.Realizations.Graphs;
 using System;
@@ -80,7 +78,7 @@ namespace ConsoleVersion.Extensions
 
             var point = self.InputPoint(upperPossibleXValue, upperPossibleYValue);
 
-            return (graph2D[point] as Vertex) ?? NullVertex.Instance;
+            return graph2D[point];
         }
     }
 }

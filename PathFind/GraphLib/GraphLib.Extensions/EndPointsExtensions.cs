@@ -12,7 +12,7 @@ namespace GraphLib.Extensions
         /// Forms end points from source, target and intermediate vertices
         /// </summary>
         /// <param name="self"></param>
-        /// <returns></returns>
+        /// <returns>An array of end points</returns>
         public static IEnumerable<IEndPoints> ToLocalEndPoints(this IEndPoints self)
         {
             using (var iterator = self.EndPoints.GetEnumerator())
@@ -28,6 +28,14 @@ namespace GraphLib.Extensions
             }
         }
 
+        /// <summary>
+        /// Determines, whether the <paramref name="vertex"/>
+        /// can be an end point
+        /// </summary>
+        /// <param name="self"></param>
+        /// <param name="vertex"></param>
+        /// <returns>true, is vertex is not 
+        /// isolated and is not end points, false it is</returns>
         public static bool CanBeEndPoint(this IEndPoints self, IVertex vertex)
         {
             return !self.IsEndPoint(vertex) && !vertex.IsIsolated();
@@ -48,6 +56,12 @@ namespace GraphLib.Extensions
             return self.EndPoints.Any(vertex => vertex.IsIsolated());
         }
 
+        /// <summary>
+        /// Retunrs vertices that are end 
+        /// points without source and target vertices
+        /// </summary>
+        /// <param name="self"></param>
+        /// <returns></returns>
         public static IEnumerable<IVertex> GetIntermediates(this IEndPoints self)
         {
             return self.EndPoints.Without(self.Source, self.Target);

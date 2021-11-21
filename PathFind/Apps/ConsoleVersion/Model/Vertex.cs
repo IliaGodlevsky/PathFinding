@@ -23,16 +23,15 @@ namespace ConsoleVersion.Model
         public event EventHandler OnEndPointChosen;
         public event EventHandler OnVertexReversed;
 
-        public Vertex(INeighborhood coordinateRadar, ICoordinate coordinate)
+        public Vertex(INeighborhood neighbourhood, ICoordinate coordinate)
         {
-            Neighborhood = coordinateRadar;
             Position = coordinate;
             this.Initialize();
-            neighbours = new Lazy<IReadOnlyCollection<IVertex>>(this.GetNeighbours);
+            neighbours = new Lazy<IReadOnlyCollection<IVertex>>(() => neighbourhood.GetNeighbours(this));
         }
 
         public Vertex(VertexSerializationInfo info)
-            : this(info.NeighboursCoordinates, info.Position)
+            : this(info.Neighbourhood, info.Position)
         {
             this.Initialize(info);
         }
@@ -69,7 +68,6 @@ namespace ConsoleVersion.Model
 
         public IGraph Graph { get; }
         public Color Color { get; set; }
-        public INeighborhood Neighborhood { get; }
         public IReadOnlyCollection<IVertex> Neighbours => neighbours.Value;
         public ICoordinate Position { get; }
 

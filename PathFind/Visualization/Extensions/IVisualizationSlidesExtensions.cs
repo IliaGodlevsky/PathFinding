@@ -7,7 +7,7 @@ using Visualization.Interfaces;
 
 namespace Visualization.Extensions
 {
-    internal static class IVerticesExtensions
+    internal static class IVisualizationSlidesExtensions
     {
         /// <summary>
         /// Adds a  <<paramref name="range"/> of vertices to be stored
@@ -16,7 +16,7 @@ namespace Visualization.Extensions
         /// <param name="self"></param>
         /// <param name="algorithm"></param>
         /// <param name="range"></param>
-        public static void AddRange(this IVertices self, IAlgorithm algorithm, IEnumerable<IVertex> range)
+        public static void AddRange(this IVisualizationSlides self, IAlgorithm algorithm, IEnumerable<IVertex> range)
         {
             range.ForEach(item => self.Add(algorithm, item));
         }

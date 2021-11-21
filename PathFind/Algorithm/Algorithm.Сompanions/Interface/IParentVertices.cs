@@ -8,6 +8,8 @@ namespace Algorithm.Сompanions.Interface
 
         IVertex GetParent(IVertex child);
 
+        bool HasParent(IVertex vertex);
+
         void Clear();
     }
 }

@@ -1,6 +1,5 @@
 ﻿using Algorithm.Сompanions.Interface;
 using GraphLib.Interfaces;
-using GraphLib.NullRealizations.NullObjects;
 using NullObject.Extensions;
 using System.Collections.Generic;
 
@@ -25,7 +24,7 @@ namespace Algorithm.Сompanions
         {
             return HasParent(child)
                 ? parentVertices[child.Position]
-                : NullVertex.Instance;
+                : throw new KeyNotFoundException();
         }
 
         public bool HasParent(IVertex child)

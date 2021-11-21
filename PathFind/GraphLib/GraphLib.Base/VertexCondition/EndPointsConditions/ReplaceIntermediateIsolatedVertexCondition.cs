@@ -18,7 +18,8 @@ namespace GraphLib.Base.VertexCondition.EndPointsConditions
         {
             return endPoints.HasSourceAndTargetSet()
                 && !IsIntermediate(vertex)
-                && HasIsolatedIntermediates;
+                && HasIsolatedIntermediates
+                && !endPoints.IsEndPoint(vertex);
         }
 
         public void Execute(IVertex vertex)

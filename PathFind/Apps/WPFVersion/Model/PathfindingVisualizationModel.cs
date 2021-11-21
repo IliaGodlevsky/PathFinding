@@ -3,7 +3,7 @@ using GalaSoft.MvvmLight.Messaging;
 using GraphLib.Interfaces;
 using System;
 using System.Threading.Tasks;
-using Visualization.Realizations;
+using Visualization;
 using WPFVersion.Messages;
 
 namespace WPFVersion.Model

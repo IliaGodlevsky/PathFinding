@@ -8,8 +8,9 @@ namespace Visualization.Interfaces
     /// An interface for class, that contains vertices
     /// processed by algorithms
     /// </summary>
-    internal interface IVertices
+    internal interface IVisualizationSlides
     {
+        ICollection<IAlgorithm> Algorithms { get; }
         /// <summary>
         /// Returns all vertices, that stored 
         /// by a particular <paramref name="algorithm"/>

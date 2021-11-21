@@ -11,7 +11,7 @@ namespace GraphLib.Serialization
             Cost = vertex.Cost.Clone();
             Position = vertex.Position.Clone();
             IsObstacle = vertex.IsObstacle;
-            NeighboursCoordinates = vertex.Neighborhood.Clone();
+            Neighbourhood = new NeighbourhoodProxy(vertex);
         }
 
         public bool IsObstacle { get; }
@@ -20,6 +20,6 @@ namespace GraphLib.Serialization
 
         public ICoordinate Position { get; }
 
-        public INeighborhood NeighboursCoordinates { get; }
+        public INeighborhood Neighbourhood { get; }
     }
 }

@@ -1,4 +1,5 @@
-﻿using Algorithm.Interfaces;
+﻿using Algorithm.Extensions;
+using Algorithm.Interfaces;
 using Algorithm.Realizations.StepRules;
 using Algorithm.Сompanions.Interface;
 using GraphLib.Extensions;
@@ -77,12 +78,12 @@ namespace Algorithm.Realizations.GraphPaths
         {
             var vertex = endPoints.Target;
             yield return vertex;
-            var parent = parentVertices.GetParent(vertex);
+            var parent = parentVertices.GetParentOrNullVertex(vertex);
             while (parent.IsNeighbour(vertex))
             {
                 yield return parent;
                 vertex = parent;
-                parent = parentVertices.GetParent(vertex);
+                parent = parentVertices.GetParentOrNullVertex(vertex);
             }
         }
 

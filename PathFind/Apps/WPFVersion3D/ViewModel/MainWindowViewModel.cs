@@ -6,8 +6,8 @@ using GraphLib.Base;
 using GraphLib.Extensions;
 using GraphLib.Interfaces;
 using GraphLib.Interfaces.Factories;
+using GraphLib.Serialization;
 using GraphViewModel;
-using GraphViewModel.Interfaces;
 using Logging.Interface;
 using NullObject.Extensions;
 using System;
@@ -58,12 +58,12 @@ namespace WPFVersion3D.ViewModel
 
         public MainWindowViewModel(IGraphFieldFactory fieldFactory,
             IVertexEventHolder eventHolder,
-            ISaveLoadGraph saveLoad,
+            GraphSerializationModule serializationModule,
             IEnumerable<IGraphAssemble> graphAssembles,
             BaseEndPoints endPoints,
             IEnumerable<IAlgorithmFactory> algorithmFactories,
             ILog log)
-            : base(fieldFactory, eventHolder, saveLoad, graphAssembles, endPoints, algorithmFactories, log)
+            : base(fieldFactory, eventHolder, serializationModule, graphAssembles, endPoints, algorithmFactories, log)
         {
             ClearVerticesColorCommand = new RelayCommand(ExecuteClearVerticesColors, CanExecuteClearGraphOperation);
             StartPathFindCommand = new RelayCommand(ExecuteStartPathFindCommand, CanExecuteStartFindPathCommand);

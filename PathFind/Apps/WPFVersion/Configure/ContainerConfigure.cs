@@ -13,10 +13,9 @@ using GraphLib.Realizations.Factories.GraphFactories;
 using GraphLib.Realizations.Factories.NeighboursCoordinatesFactories;
 using GraphLib.Realizations.MeanCosts;
 using GraphLib.Realizations.SmoothLevel;
+using GraphLib.Serialization;
 using GraphLib.Serialization.Interfaces;
 using GraphLib.Serialization.Serializers;
-using GraphViewModel;
-using GraphViewModel.Interfaces;
 using Logging.Interface;
 using Logging.Loggers;
 using Random.Interface;
@@ -68,7 +67,7 @@ namespace WPFVersion.Configure
             builder.RegisterType<GeometricMeanCost>().As<IMeanCost>().SingleInstance();
             builder.RegisterType<HighSmoothLevel>().As<ISmoothLevel>().SingleInstance();
 
-            builder.RegisterType<SaveLoadGraph>().As<ISaveLoadGraph>().SingleInstance();
+            builder.RegisterType<GraphSerializationModule>().AsSelf().SingleInstance();
             builder.RegisterType<PathInput>().As<IPathInput>().SingleInstance();
             builder.RegisterType<GraphSerializer>().As<IGraphSerializer>().SingleInstance();
             builder.RegisterDecorator<CryptoGraphSerializer, IGraphSerializer>();

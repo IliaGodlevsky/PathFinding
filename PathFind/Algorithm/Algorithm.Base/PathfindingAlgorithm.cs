@@ -83,7 +83,7 @@ namespace Algorithm.Base
         }
 
         /// <summary>
-        /// The vertex that is currently being processed by th
+        /// The vertex that is currently being processed by the algorithm
         /// </summary>
         protected IVertex CurrentVertex { get; set; }
 
@@ -93,13 +93,13 @@ namespace Algorithm.Base
         protected abstract IVertex NextVertex { get; }
 
         /// <summary>
-        /// Determins whether the algorithm is able to continue 
+        /// Determines whether the algorithm is able to continue 
         /// the pathfinding process
         /// </summary>
         protected bool IsAbleToContinue => !CurrentVertex.IsNull() && !IsInterruptRequested;
 
         /// <summary>
-        /// Determins, whether the algorithm has reached the target vertex
+        /// Determines, whether the algorithm has reached the target vertex
         /// or whether it is able to continue pathfinding
         /// </summary>
         /// <param name="endPoints"></param>
@@ -127,7 +127,7 @@ namespace Algorithm.Base
             }
             Reset();
             IsInProcess = true;
-            Started?.Invoke(this, new ProcessEventArgs());            
+            Started?.Invoke(this, new ProcessEventArgs());
         }
 
         protected virtual void CompletePathfinding()
@@ -137,8 +137,8 @@ namespace Algorithm.Base
         }
 
         /// <summary>
-        /// Resets the algorithms and removes all 
-        /// subscribers from the its events
+        /// Resets the algorithm and removes all 
+        /// subscribers from its events
         /// </summary>
         public void Dispose()
         {

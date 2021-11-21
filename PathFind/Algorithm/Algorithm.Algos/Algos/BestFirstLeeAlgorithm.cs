@@ -62,9 +62,9 @@ namespace Algorithm.Algos.Algos
 
         protected override void Reevaluate(IVertex vertex, double value)
         {
-            base.Reevaluate(vertex, value);
-            double result = CalculateHeuristic(CurrentVertex);
+            double result = CalculateHeuristic(vertex);
             heuristics.Reevaluate(vertex, value + result);
+            base.Reevaluate(vertex, value);
         }
 
         protected override void PrepareForLocalPathfinding()

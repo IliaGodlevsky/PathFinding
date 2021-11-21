@@ -56,7 +56,7 @@
     <Compile Include="EndPointsInspection\BaseIntermediateEndPointsInspection.cs" />
     <Compile Include="VertexCondition\EndPointsConditions\ReplaceIntermediateIsolatedVertexCondition.cs" />
     <Compile Include="VertexCondition\EndPointsConditions\ReplaceIsolatedSourceVertexCondition.cs" />
-    <Compile Include="VertexCondition\EndPointsConditions\ReplaceTargetVertexCondition.cs" />
+    <Compile Include="VertexCondition\EndPointsConditions\ReplaceIsolatedTargetVertexCondition.cs" />
     <Compile Include="VertexCondition\EndPointsConditions\SetIntermediateVertexCondition.cs" />
     <Compile Include="VertexCondition\EndPointsConditions\SetSourceVertexCondition.cs" />
     <Compile Include="VertexCondition\EndPointsConditions\SetTargetVertexCondition.cs" />

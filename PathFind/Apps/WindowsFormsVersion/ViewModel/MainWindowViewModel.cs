@@ -6,6 +6,7 @@ using GraphLib.Extensions;
 using GraphLib.Interfaces;
 using GraphLib.Interfaces.Factories;
 using GraphLib.Realizations.Graphs;
+using GraphLib.Serialization;
 using GraphViewModel;
 using GraphViewModel.Interfaces;
 using Logging.Interface;
@@ -75,9 +76,9 @@ namespace WindowsFormsVersion.ViewModel
 
         public MainWindow MainWindow { get; set; }
 
-        public MainWindowViewModel(IGraphFieldFactory fieldFactory, IVertexEventHolder eventHolder, ISaveLoadGraph saveLoad,
+        public MainWindowViewModel(IGraphFieldFactory fieldFactory, IVertexEventHolder eventHolder, GraphSerializationModule serializationModule,
             IEnumerable<IGraphAssemble> graphAssembles, BaseEndPoints endPoints, IEnumerable<IAlgorithmFactory> algorithmFactories, ILog log)
-            : base(fieldFactory, eventHolder, saveLoad, graphAssembles, endPoints, algorithmFactories, log)
+            : base(fieldFactory, eventHolder, serializationModule, graphAssembles, endPoints, algorithmFactories, log)
         {
             Messenger.Default.Register<AlgorithmStatusMessage>(this, MessageTokens.MainModel, SetAlgorithmStatus);
             Messenger.Default.Register<UpdateStatisticsMessage>(this, MessageTokens.MainModel, SetStatisticsMessage);

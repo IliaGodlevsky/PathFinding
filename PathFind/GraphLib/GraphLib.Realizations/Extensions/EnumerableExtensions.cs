@@ -9,7 +9,7 @@ namespace GraphLib.Realizations.Extensions
     {
         internal static ICoordinate ToCoordinate(this IEnumerable<int> array)
         {
-            return new Coordinate(array.ToArray());
+            return new CoordinateProxy(array.ToArray());
         }
     }
 }

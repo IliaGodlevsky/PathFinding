@@ -48,7 +48,6 @@
     <Compile Include="GraphCreatingModel.cs" />
     <Compile Include="Interfaces\IMainModel.cs" />
     <Compile Include="Interfaces\IModel.cs" />
-    <Compile Include="Interfaces\ISaveLoadGraph.cs" />
     <Compile Include="MainModel.cs" />
     <Compile Include="PathFindingModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -57,7 +56,6 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>ViewModelResources.resx</DependentUpon>
     </Compile>
-    <Compile Include="SaveLoadGraph.cs" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Resources\ViewModelResources.resx">

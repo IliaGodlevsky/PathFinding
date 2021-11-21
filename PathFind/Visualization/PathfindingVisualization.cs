@@ -5,14 +5,14 @@ using Common.Extensions.EnumerableExtensions;
 using GraphLib.Extensions;
 using GraphLib.Interfaces;
 using System;
-using System.Collections.Generic;
 using System.Linq;
 using Visualization.Extensions;
 using Visualization.Interfaces;
+using Visualization.Realizations;
 
-namespace Visualization.Realizations
+namespace Visualization
 {
-    public abstract class PathfindingVisualization : IVertices, IVisualization
+    public abstract class PathfindingVisualization : IVisualization
     {
         protected PathfindingVisualization(IGraph graph)
         {
@@ -24,18 +24,18 @@ namespace Visualization.Realizations
             target = new TargetVertices();
             obstacles = new ObstacleVertices();
             visualizations = new CompositeVisualization(graph, obstacles, enqueued, visited, path, intermediate, source, target);
-            vertices = new IVertices[] { obstacles, visited, enqueued, path, intermediate, source, target };
+            visualizationSlides = new IVisualizationSlides[] { obstacles, visited, enqueued, path, intermediate, source, target };
             this.graph = graph;
         }
 
         public void Clear()
         {
-            vertices.ForEach(processed => processed.Clear());
+            visualizationSlides.ForEach(processed => processed.Clear());
         }
 
         public void Remove(IAlgorithm algorithm)
         {
-            vertices.ForEach(processed => processed.Remove(algorithm));
+            visualizationSlides.ForEach(processed => processed.Remove(algorithm));
         }
 
         public void Visualize(IAlgorithm algorithm)
@@ -63,13 +63,6 @@ namespace Visualization.Realizations
         {
             path.AddRange(algorithm, grapPath.Path);
         }
-
-        public IEnumerable<IVertex> GetVertices(IAlgorithm algorithm)
-        {
-            return vertices.SelectMany(processed => processed.GetVertices(algorithm));
-        }
-
-        public void Add(IAlgorithm algorithm, IVertex vertex) { }
 
         protected virtual void OnAlgorithmStarted(object sender, EventArgs e)
         {
@@ -117,7 +110,7 @@ namespace Visualization.Realizations
         private readonly TargetVertices target;
         private readonly ObstacleVertices obstacles;
         private readonly IVisualization visualizations;
-        private readonly IVertices[] vertices;
+        private readonly IVisualizationSlides[] visualizationSlides;
         private readonly IGraph graph;
     }
 }

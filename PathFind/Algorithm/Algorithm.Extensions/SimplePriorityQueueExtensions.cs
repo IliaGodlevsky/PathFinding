@@ -8,7 +8,7 @@ namespace Algorithm.Extensions
 {
     public static class SimplePriorityQueueExtensions
     {
-        public static Tuple<IVertex, double> ToTuple(this SimplePriorityQueue<IVertex, double> self, IVertex item, 
+        public static Tuple<IVertex, double> ToTuple(this SimplePriorityQueue<IVertex, double> self, IVertex item,
             Func<IVertex, double> heuristic)
         {
             return new Tuple<IVertex, double>(item, self.GetPriorityOrInfinity(item));

@@ -13,18 +13,17 @@ namespace WPFVersion.Model
     [DebuggerDisplay("{Position.ToString()}")]
     internal class Vertex : ContentControl, IVertex, IVisualizable, IWeightable, IEquatable<IVertex>
     {
-        public Vertex(INeighborhood radar, ICoordinate coordinate) : base()
+        public Vertex(INeighborhood neighborhood, ICoordinate coordinate) : base()
         {
             Width = Height = VertexSize;
             Template = (ControlTemplate)TryFindResource("vertexTemplate");
             Position = coordinate;
-            Neighborhood = radar;
             this.Initialize();
-            neighbours = new Lazy<IReadOnlyCollection<IVertex>>(this.GetNeighbours);
+            neighbours = new Lazy<IReadOnlyCollection<IVertex>>(() => neighborhood.GetNeighbours(this));
         }
 
         public Vertex(VertexSerializationInfo info)
-            : this(info.NeighboursCoordinates, info.Position)
+            : this(info.Neighbourhood, info.Position)
         {
             this.Initialize(info);
         }

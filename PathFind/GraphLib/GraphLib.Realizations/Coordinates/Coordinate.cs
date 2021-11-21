@@ -8,17 +8,17 @@ using System.Linq;
 namespace GraphLib.Realizations.Coordinates
 {
     [Serializable]
-    internal sealed class Coordinate : ICoordinate, ICloneable<ICoordinate>
+    internal sealed class CoordinateProxy : ICoordinate, ICloneable<ICoordinate>
     {
         public int[] CoordinatesValues { get; }
 
-        public Coordinate(int[] coordinates)
+        public CoordinateProxy(int[] coordinates)
         {
             CoordinatesValues = coordinates.ToArray();
             hashCode = CoordinatesValues.ToHashCode();
         }
 
-        public Coordinate(ICoordinate coordinate)
+        public CoordinateProxy(ICoordinate coordinate)
             : this(coordinate.CoordinatesValues)
         {
 
@@ -36,7 +36,7 @@ namespace GraphLib.Realizations.Coordinates
 
         public ICoordinate Clone()
         {
-            return new Coordinate(this);
+            return new CoordinateProxy(this);
         }
 
         private readonly int hashCode;

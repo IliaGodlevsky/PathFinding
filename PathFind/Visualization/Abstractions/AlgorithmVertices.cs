@@ -8,7 +8,7 @@ using Visualization.Interfaces;
 
 namespace Visualization.Abstractions
 {
-    internal abstract class AlgorithmVertices : IVertices, IVisualization
+    internal abstract class AlgorithmVertices : IVisualizationSlides, IVisualization
     {
         public AlgorithmVertices()
         {
@@ -50,5 +50,7 @@ namespace Visualization.Abstractions
         protected abstract void Visualize(IVisualizable visualizable);
 
         private readonly ConcurrentDictionary<IAlgorithm, ConcurrentDictionary<ICoordinate, IVertex>> vertices;
+
+        public ICollection<IAlgorithm> Algorithms => vertices.Keys;
     }
 }

@@ -2,7 +2,6 @@
 using GraphLib.NullRealizations.NullObjects;
 using NullObject.Extensions;
 using System;
-using System.Collections.Generic;
 using System.Linq;
 
 namespace GraphLib.Extensions
@@ -23,7 +22,7 @@ namespace GraphLib.Extensions
         }
 
         /// <summary>
-        /// Determins, whether <paramref name="self"/> is isolated, 
+        /// Determines, whether <paramref name="self"/> is isolated, 
         /// e.a. all of its neighbours are obstacles or <see cref="NullVertex"/>
         /// or <paramref name="self"/> is obstacle or <see cref="NullVertex"/>
         /// </summary>
@@ -40,7 +39,7 @@ namespace GraphLib.Extensions
         }
 
         /// <summary>
-        /// Determins, whether <paramref name="candidate"/> 
+        /// Determines, whether <paramref name="candidate"/> 
         /// is a neighbour of <paramref name="self"/>
         /// </summary>
         /// <param name="self"></param>
@@ -132,29 +131,6 @@ namespace GraphLib.Extensions
         public static bool IsOneOf(this IVertex self, params IVertex[] vertices)
         {
             return vertices.Any(vertex => vertex.Equals(self));
-        }
-
-        /// <summary>
-        /// Sets certain vertices of <paramref name="self"/>'s 
-        /// environment as its neighbors
-        /// </summary>
-        /// <param name="self"></param>
-        /// <param name="graph">A graph, where vertex is situated</param>
-        /// <exception cref="ArgumentException"></exception>
-        public static IReadOnlyCollection<IVertex> GetNeighbours(this IVertex self)
-        {
-            if (self.Graph.IsNull())
-            {
-                string message = $"Vertex doesn't belong to any graph. Vertex: {self.GetInforamtion()}";
-                throw new ArgumentNullException(message);
-            }
-
-            return self
-                .Neighborhood
-                .Neighbours
-                .Where(coordinate => coordinate.IsWithinGraph(self.Graph))
-                .Select(coordinate => self.Graph[coordinate])
-                .ToArray();
         }
     }
 }

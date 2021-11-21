@@ -44,20 +44,19 @@ namespace WPFVersion3D.Model
             set => SetValue(BrushProperty, value);
         }
 
-        public Vertex3D(INeighborhood radar, ICoordinate coordinate, IModel3DFactory modelFactory)
+        public Vertex3D(INeighborhood neighborhood, ICoordinate coordinate, IModel3DFactory modelFactory)
         {
             this.modelFactory = modelFactory;
             Position = coordinate;
-            Neighborhood = radar;
             Material = new DiffuseMaterial();
             Transform = new TranslateTransform3D();
             Size = Constants.InitialVertexSize;
             this.Initialize();
-            neighbours = new Lazy<IReadOnlyCollection<IVertex>>(this.GetNeighbours);
+            neighbours = new Lazy<IReadOnlyCollection<IVertex>>(() => neighborhood.GetNeighbours(this));
         }
 
         public Vertex3D(VertexSerializationInfo info, IModel3DFactory modelFactory) :
-            this(info.NeighboursCoordinates, info.Position, modelFactory)
+            this(info.Neighbourhood, info.Position, modelFactory)
         {
             this.Initialize(info);
         }
@@ -104,7 +103,6 @@ namespace WPFVersion3D.Model
         }
 
         public IGraph Graph { get; }
-        public INeighborhood Neighborhood { get; }
         public IVertexCost Cost { get; set; }
         public IReadOnlyCollection<IVertex> Neighbours => neighbours.Value;
         public ICoordinate Position { get; }
