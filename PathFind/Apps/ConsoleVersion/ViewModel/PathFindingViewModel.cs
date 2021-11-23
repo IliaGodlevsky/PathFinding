@@ -1,10 +1,8 @@
 ﻿using Algorithm.Base;
 using Algorithm.Factory;
 using Algorithm.Infrastructure.EventArguments;
-using Autofac;
 using Common.Extensions;
 using ConsoleVersion.Attributes;
-using ConsoleVersion.Configure;
 using ConsoleVersion.Enums;
 using ConsoleVersion.EventArguments;
 using ConsoleVersion.Extensions;
@@ -40,10 +38,9 @@ namespace ConsoleVersion.ViewModel
         public IValueInput<int> Int32Input { get; set; }
         public IValueInput<Answer> AnswerInput { get; set; }
 
-        public PathFindingViewModel(BaseEndPoints endPoints, IEnumerable<IAlgorithmFactory> algorithmFactories)
-            : base(endPoints, algorithmFactories)
+        public PathFindingViewModel(BaseEndPoints endPoints, IEnumerable<IAlgorithmFactory> algorithmFactories, ILog log)
+            : base(endPoints, algorithmFactories, log)
         {
-            log = ContainerConfigure.Container.Resolve<ILog>();
             algorithmKeysValueRange = new InclusiveValueRange<int>(Algorithms.Length, 1);
             ConsoleKeystrokesHook.Instance.KeyPressed += OnConsoleKeyPressed;
             DelayTime = Constants.AlgorithmDelayTimeValueRange.LowerValueOfRange;

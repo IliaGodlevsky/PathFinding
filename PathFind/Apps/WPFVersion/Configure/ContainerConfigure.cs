@@ -37,15 +37,6 @@ namespace WPFVersion.Configure
     {
         private const string GraphAssembleName = nameof(GraphAssembleName);
 
-        private static SmoothedGraphAssemble RegisterSmoothedGraphAssemble(IComponentContext context)
-        {
-            var randomGraphAssemble = context.ResolveNamed<IGraphAssemble>(GraphAssembleName);
-            var costFactory = context.Resolve<IVertexCostFactory>();
-            var meanCost = context.Resolve<IMeanCost>();
-            var smoothLevel = context.Resolve<ISmoothLevel>();
-            return new SmoothedGraphAssemble(randomGraphAssemble, costFactory, meanCost, smoothLevel);
-        }
-
         private static Assembly[] Assemblies => AppDomain.CurrentDomain.GetAssemblies();
 
         public static IContainer Container { get; private set; }
@@ -55,15 +46,8 @@ namespace WPFVersion.Configure
             var builder = new ContainerBuilder();
 
             builder.RegisterType<MainWindowViewModel>().As<IMainModel>().InstancePerDependency();
-
-            builder.RegisterAssemblyTypes(Assemblies)
-                .Where(type => type.ImplementsAll(typeof(IViewModel)))
-                .AsSelf()
-                .InstancePerDependency();
-            builder.RegisterAssemblyTypes(Assemblies)
-                .Where(type => type.IsAppWindow())
-                .AsSelf()
-                .InstancePerDependency()
+            builder.RegisterAssemblyTypes(Assemblies).Where(Implements<IViewModel>).AsSelf().InstancePerDependency();
+            builder.RegisterAssemblyTypes(Assemblies).Where(type => type.IsAppWindow()).AsSelf().InstancePerDependency()
                 .OnActivated((args => ((Window)args.Instance).Show()));
 
             builder.RegisterType<EndPoints>().As<BaseEndPoints>().SingleInstance();
@@ -94,14 +78,25 @@ namespace WPFVersion.Configure
             builder.RegisterType<BinaryFormatter>().As<IFormatter>().SingleInstance();
             builder.RegisterType<VertexFromInfoFactory>().As<IVertexFromInfoFactory>().SingleInstance();
 
-            builder.RegisterAssemblyTypes(Assemblies)
-                .Where(type => type.ImplementsAll(typeof(IAlgorithmFactory)))
-                .As<IAlgorithmFactory>().SingleInstance();
-
+            builder.RegisterAssemblyTypes(Assemblies).Where(Implements<IAlgorithmFactory>).As<IAlgorithmFactory>().SingleInstance();
             builder.RegisterType<LandscapeStepRule>().As<IStepRule>().SingleInstance();
             builder.RegisterDecorator<WalkStepRule, IStepRule>();
 
             return Container = builder.Build();
+        }
+
+        private static bool Implements<TInterface>(Type type)
+        {
+            return type.ImplementsAll(typeof(TInterface));
+        }
+
+        private static SmoothedGraphAssemble RegisterSmoothedGraphAssemble(IComponentContext context)
+        {
+            var randomGraphAssemble = context.ResolveNamed<IGraphAssemble>(GraphAssembleName);
+            var costFactory = context.Resolve<IVertexCostFactory>();
+            var meanCost = context.Resolve<IMeanCost>();
+            var smoothLevel = context.Resolve<ISmoothLevel>();
+            return new SmoothedGraphAssemble(randomGraphAssemble, costFactory, meanCost, smoothLevel);
         }
     }
 }

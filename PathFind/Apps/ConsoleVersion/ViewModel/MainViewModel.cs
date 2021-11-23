@@ -38,10 +38,9 @@ namespace ConsoleVersion.ViewModel
         public IValueInput<Answer> AnswerInput { get; set; }
 
         public MainViewModel(IGraphFieldFactory fieldFactory,
-            IVertexEventHolder eventHolder, GraphSerializationModule serializationModule, BaseEndPoints endPoints)
-            : base(fieldFactory, eventHolder, serializationModule, endPoints)
+            IVertexEventHolder eventHolder, GraphSerializationModule serializationModule, BaseEndPoints endPoints, ILog log)
+            : base(fieldFactory, eventHolder, serializationModule, endPoints, log)
         {
-            log = ContainerConfigure.Container.Resolve<ILog>();
             Messenger.Default.Register<GraphCreatedMessage>(this, MessageTokens.MainModel, message => ConnectNewGraph(message.Graph));
             Messenger.Default.Register<ClearGraphMessage>(this, MessageTokens.MainModel, message => ClearGraph());
             Messenger.Default.Register<ClearColorsMessage>(this, MessageTokens.MainModel, message => ClearColors());

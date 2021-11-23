@@ -1,6 +1,4 @@
-﻿using Autofac;
-using ConsoleVersion.Attributes;
-using ConsoleVersion.Configure;
+﻿using ConsoleVersion.Attributes;
 using ConsoleVersion.Enums;
 using ConsoleVersion.Extensions;
 using ConsoleVersion.Interface;
@@ -29,11 +27,10 @@ namespace ConsoleVersion.ViewModel
 
         public IValueInput<int> Int32Input { get; set; }
 
-        public GraphCreatingViewModel(IEnumerable<IGraphAssemble> graphAssembles)
-            : base(graphAssembles)
+        public GraphCreatingViewModel(IEnumerable<IGraphAssemble> graphAssembles, ILog log)
+            : base(log, graphAssembles)
         {
             graphAssembleKeyRange = new InclusiveValueRange<int>(graphAssembles.Count(), 1);
-            log = ContainerConfigure.Container.Resolve<ILog>();
         }
 
         [MenuItem(MenuItemsNames.CreateNewGraph, MenuItemPriority.Highest)]

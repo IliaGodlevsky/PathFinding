@@ -21,12 +21,14 @@ namespace GraphViewModel
         protected MainModel(IGraphFieldFactory fieldFactory,
             IVertexEventHolder eventHolder,
             GraphSerializationModule serializationModule,
-            BaseEndPoints endPoints)
+            BaseEndPoints endPoints,
+            ILog log)
         {
             this.eventHolder = eventHolder;
             this.serializationModule = serializationModule;
             this.fieldFactory = fieldFactory;
             this.endPoints = endPoints;
+            this.log = log;
             Graph = NullGraph.Instance;
         }
 
@@ -85,7 +87,7 @@ namespace GraphViewModel
             endPoints.ReturnColors();
         }
 
-        protected ILog log;
+        protected readonly ILog log;
         protected readonly IGraphFieldFactory fieldFactory;
         protected readonly BaseEndPoints endPoints;
         protected readonly GraphSerializationModule serializationModule;

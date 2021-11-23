@@ -22,7 +22,7 @@ namespace Algorithm.Algos.Algos
     public class IDAStarAlgorithm : AStarAlgorithm,
         IAlgorithm, IInterruptableProcess, IInterruptable, IDisposable
     {
-        private double MaximumAllowedDistance { get; set; }
+        private const int PercentToDelete = 4;
 
         public IDAStarAlgorithm(IEndPoints endPoints)
             : this(endPoints, new DefaultStepRule(), new ChebyshevDistance())
@@ -41,7 +41,8 @@ namespace Algorithm.Algos.Algos
             get
             {
                 var verticesToDelete = queue
-                    .Where(vertex => heuristics.GetCost(vertex) > MaximumAllowedDistance);
+                    .TakeOrderedBy(VerticesToDeleteCount, heuristics.GetCost)                   
+                    .ToArray();
                 var tuples = queue.ToTuples(verticesToDelete, heuristics.GetCost).ToList();
                 queue.RemoveRange(verticesToDelete);
                 deletedVertices.AddRange(tuples);
@@ -56,11 +57,7 @@ namespace Algorithm.Algos.Algos
             }
         }
 
-        protected override void PrepareForLocalPathfinding()
-        {
-            base.PrepareForLocalPathfinding();
-            MaximumAllowedDistance = CalculateHeuristic(CurrentEndPoints.Source) * .75;
-        }
+        private int VerticesToDeleteCount => queue.Count * PercentToDelete / 100;
 
         protected override void Reset()
         {

@@ -1,6 +1,5 @@
 ﻿using Algorithm.Factory;
 using Algorithm.Infrastructure.EventArguments;
-using Autofac;
 using Common.Extensions;
 using Common.Interface;
 using GalaSoft.MvvmLight.Messaging;
@@ -16,7 +15,6 @@ using System.Diagnostics;
 using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
 using System.Windows.Input;
-using WPFVersion3D.Configure;
 using WPFVersion3D.Enums;
 using WPFVersion3D.Extensions;
 using WPFVersion3D.Infrastructure;
@@ -37,10 +35,9 @@ namespace WPFVersion3D.ViewModel
         public ICommand ConfirmPathFindAlgorithmChoice { get; }
         public ICommand CancelPathFindAlgorithmChoice { get; }
 
-        public PathFindingViewModel(BaseEndPoints endPoints, IEnumerable<IAlgorithmFactory> algorithmFactories)
-            : base(endPoints, algorithmFactories)
+        public PathFindingViewModel(BaseEndPoints endPoints, IEnumerable<IAlgorithmFactory> algorithmFactories, ILog log)
+            : base(endPoints, algorithmFactories, log)
         {
-            log = ContainerConfigure.Container.Resolve<ILog>();
             ConfirmPathFindAlgorithmChoice = new RelayCommand(
                 ExecuteConfirmPathFindAlgorithmChoice,
                 CanExecuteConfirmPathFindAlgorithmChoice);

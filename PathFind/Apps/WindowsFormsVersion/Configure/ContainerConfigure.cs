@@ -18,6 +18,7 @@ using Logging.Loggers;
 using Random.Interface;
 using Random.Realizations;
 using System;
+using System.Reflection;
 using System.Runtime.Serialization;
 using System.Runtime.Serialization.Formatters.Binary;
 using WindowsFormsVersion.Extensions;
@@ -36,6 +37,8 @@ namespace WindowsFormsVersion.Configure
             return new SmoothedGraphAssemble(randomGraphAssemble, costFactory);
         }
 
+        private static Assembly[] Assemblies => AppDomain.CurrentDomain.GetAssemblies();
+
         public static IContainer Container { get; private set; }
 
         public static IContainer Configure()
@@ -44,12 +47,8 @@ namespace WindowsFormsVersion.Configure
 
             builder.RegisterType<MainWindowViewModel>().AsSelf().InstancePerDependency();
 
-            builder.RegisterAssemblyTypes(AppDomain.CurrentDomain.GetAssemblies())
-                .Where(type => type.ImplementsAll(typeof(IViewModel))).AsSelf()
-                .InstancePerDependency();
-            builder.RegisterAssemblyTypes(AppDomain.CurrentDomain.GetAssemblies())
-                .Where(type => type.IsAppWindow()).AsSelf()
-                .InstancePerDependency();
+            builder.RegisterAssemblyTypes(Assemblies).Where(Implements<IViewModel>).AsSelf().InstancePerDependency();
+            builder.RegisterAssemblyTypes(Assemblies).Where(type => type.IsAppWindow()).AsSelf().InstancePerDependency();
 
             builder.RegisterType<EndPoints>().As<BaseEndPoints>().SingleInstance();
             builder.RegisterType<GraphFieldFactory>().As<IGraphFieldFactory>().SingleInstance();
@@ -77,11 +76,14 @@ namespace WindowsFormsVersion.Configure
             builder.RegisterType<BinaryFormatter>().As<IFormatter>().SingleInstance();
             builder.RegisterType<VertexFromInfoFactory>().As<IVertexFromInfoFactory>().SingleInstance();
 
-            builder.RegisterAssemblyTypes(AppDomain.CurrentDomain.GetAssemblies())
-                .Where(type => type.ImplementsAll(typeof(IAlgorithmFactory)))
-                .As<IAlgorithmFactory>().SingleInstance();
+            builder.RegisterAssemblyTypes(Assemblies).Where(Implements<IAlgorithmFactory>).As<IAlgorithmFactory>().SingleInstance();
 
             return Container = builder.Build();
+        }
+
+        private static bool Implements<TInterface>(Type type)
+        {
+            return type.ImplementsAll(typeof(TInterface));
         }
     }
 }

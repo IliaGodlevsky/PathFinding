@@ -1,5 +1,4 @@
-﻿using Autofac;
-using Common.Interface;
+﻿using Common.Interface;
 using GalaSoft.MvvmLight.Messaging;
 using GraphLib.Extensions;
 using GraphLib.Interfaces.Factories;
@@ -9,7 +8,6 @@ using Logging.Interface;
 using System;
 using System.Collections.Generic;
 using ValueRange.Extensions;
-using WindowsFormsVersion.Configure;
 using WindowsFormsVersion.Messeges;
 
 namespace WindowsFormsVersion.ViewModel
@@ -18,10 +16,10 @@ namespace WindowsFormsVersion.ViewModel
     {
         public event EventHandler WindowClosed;
 
-        public GraphCreatingViewModel(IEnumerable<IGraphAssemble> graphAssembles)
-            : base(graphAssembles)
+        public GraphCreatingViewModel(IEnumerable<IGraphAssemble> graphAssembles, ILog log)
+            : base(log, graphAssembles)
         {
-            log = ContainerConfigure.Container.Resolve<ILog>();
+
         }
 
         public override async void CreateGraph()

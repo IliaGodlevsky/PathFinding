@@ -1,5 +1,4 @@
-﻿using Autofac;
-using Common.Interface;
+﻿using Common.Interface;
 using GalaSoft.MvvmLight.Messaging;
 using GraphLib.Extensions;
 using GraphLib.Interfaces.Factories;
@@ -10,7 +9,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Windows.Input;
 using ValueRange.Extensions;
-using WPFVersion3D.Configure;
 using WPFVersion3D.Infrastructure;
 using WPFVersion3D.Messages;
 
@@ -25,10 +23,9 @@ namespace WPFVersion3D.ViewModel
         public ICommand ConfirmCreateGraphCommand { get; }
         public ICommand CancelCreateGraphCommand { get; }
 
-        public GraphCreatingViewModel(IEnumerable<IGraphAssemble> graphAssembles)
-            : base(graphAssembles)
+        public GraphCreatingViewModel(IEnumerable<IGraphAssemble> graphAssembles, ILog log)
+            : base(log, graphAssembles)
         {
-            log = ContainerConfigure.Container.Resolve<ILog>();
             SelectedGraphAssemble = graphAssembles.FirstOrDefault();
             ConfirmCreateGraphCommand = new RelayCommand(ExecuteConfirmCreateGraphCommand,
                 CanExecuteConfirmCreateGraphCommand);

@@ -27,9 +27,11 @@ namespace GraphViewModel
 
         public Tuple<string, IAlgorithmFactory>[] Algorithms { get; }
 
-        protected PathFindingModel(BaseEndPoints endPoints, IEnumerable<IAlgorithmFactory> factories)
+        protected PathFindingModel(BaseEndPoints endPoints,
+            IEnumerable<IAlgorithmFactory> factories, ILog log)
         {
             this.endPoints = endPoints;
+            this.log = log;
             Algorithms = factories.GroupByGroupAttribute().ToNameInstanceTuples();
             timer = new Stopwatch();
             path = NullGraphPath.Instance;
@@ -135,8 +137,8 @@ namespace GraphViewModel
 
         protected readonly BaseEndPoints endPoints;
         protected readonly Stopwatch timer;
+        protected readonly ILog log;
 
-        protected ILog log;
         protected IGraphPath path;
         protected PathfindingAlgorithm algorithm;
         protected int visitedVerticesCount;

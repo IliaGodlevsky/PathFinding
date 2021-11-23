@@ -17,6 +17,7 @@ using Logging.Interface;
 using Logging.Loggers;
 using Random.Interface;
 using System;
+using System.Reflection;
 using System.Runtime.Serialization;
 using System.Web.UI;
 using WPFVersion3D.Extensions;
@@ -31,18 +32,15 @@ namespace WPFVersion3D.Configure
     {
         public static IContainer Container { get; private set; }
 
+        private static Assembly[] Assemblies => AppDomain.CurrentDomain.GetAssemblies();
+
         public static IContainer Configure()
         {
             var builder = new ContainerBuilder();
 
             builder.RegisterType<MainWindowViewModel>().As<IMainModel>().InstancePerDependency();
-
-            builder.RegisterAssemblyTypes(AppDomain.CurrentDomain.GetAssemblies())
-                .Where(type => type.ImplementsAll(typeof(IViewModel))).AsSelf()
-                .InstancePerDependency();
-            builder.RegisterAssemblyTypes(AppDomain.CurrentDomain.GetAssemblies())
-                .Where(type => type.IsAppWindow()).AsSelf()
-                .InstancePerDependency();
+            builder.RegisterAssemblyTypes(Assemblies).Where(Implements<IViewModel>).AsSelf().InstancePerDependency();
+            builder.RegisterAssemblyTypes(Assemblies).Where(type => type.IsAppWindow()).AsSelf().InstancePerDependency();
 
             builder.RegisterType<EndPoints>().As<BaseEndPoints>().SingleInstance();
             builder.RegisterType<Vertex3DEventHolder>().As<IVertexEventHolder>().SingleInstance();
@@ -70,11 +68,14 @@ namespace WPFVersion3D.Configure
             builder.RegisterType<ObjectStateFormatter>().As<IFormatter>().SingleInstance();
             builder.RegisterType<Vertex3DFromInfoFactory>().As<IVertexFromInfoFactory>().SingleInstance();
 
-            builder.RegisterAssemblyTypes(AppDomain.CurrentDomain.GetAssemblies())
-                .Where(type => type.ImplementsAll(typeof(IAlgorithmFactory)))
-                .As<IAlgorithmFactory>().SingleInstance();
+            builder.RegisterAssemblyTypes(Assemblies).Where(Implements<IAlgorithmFactory>).As<IAlgorithmFactory>().SingleInstance();
 
             return Container = builder.Build();
+        }
+
+        private static bool Implements<TInterface>(Type type)
+        {
+            return type.ImplementsAll(typeof(TInterface));
         }
     }
 }

@@ -18,13 +18,14 @@ namespace GraphLib.ViewModel
 
         public virtual IGraphAssemble SelectedGraphAssemble { get; set; }
 
-        protected GraphCreatingModel(IEnumerable<IGraphAssemble> graphAssembles)
+        protected GraphCreatingModel(ILog log, IEnumerable<IGraphAssemble> graphAssembles)
         {
+            this.log = log;
             GraphAssembles = graphAssembles.ToNameInstanceDictionary();
         }
 
         public abstract void CreateGraph();
 
-        protected ILog log;
+        protected readonly ILog log;
     }
 }

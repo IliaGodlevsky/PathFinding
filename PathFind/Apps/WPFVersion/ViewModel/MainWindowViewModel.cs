@@ -51,10 +51,9 @@ namespace WPFVersion.ViewModel
         public ICommand ResetColorizingCommand { get; }
 
         public MainWindowViewModel(IGraphFieldFactory fieldFactory, IVertexEventHolder eventHolder,
-            GraphSerializationModule SerializationModule, BaseEndPoints endPoints)
-            : base(fieldFactory, eventHolder, SerializationModule, endPoints)
+            GraphSerializationModule SerializationModule, BaseEndPoints endPoints, ILog log)
+            : base(fieldFactory, eventHolder, SerializationModule, endPoints, log)
         {
-            log = ContainerConfigure.Container.Resolve<ILog>();
             ResetColorizingCommand = new RelayCommand(ExecuteResetColorizing, CanExecuteColorizingGraphOperation);
             ColorizeAccordingToCostCommand = new RelayCommand(ExecuteColorizeAccordingToCost, CanExecuteColorizingGraphOperation);
             ClearVerticesColorCommand = new RelayCommand(ExecuteClearVerticesColors, CanExecuteClearGraphOperation);

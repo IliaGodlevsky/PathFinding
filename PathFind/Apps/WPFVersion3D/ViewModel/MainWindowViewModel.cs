@@ -7,6 +7,7 @@ using GraphLib.Interfaces;
 using GraphLib.Serialization;
 using GraphViewModel;
 using GraphViewModel.Interfaces;
+using Logging.Interface;
 using NullObject.Extensions;
 using System;
 using System.ComponentModel;
@@ -25,7 +26,7 @@ using WPFVersion3D.View;
 
 namespace WPFVersion3D.ViewModel
 {
-    public class MainWindowViewModel : MainModel, IMainModel, INotifyPropertyChanged
+    internal class MainWindowViewModel : MainModel, IMainModel, INotifyPropertyChanged
     {
         public event PropertyChangedEventHandler PropertyChanged;
 
@@ -42,7 +43,7 @@ namespace WPFVersion3D.ViewModel
 
         private bool IsAllAlgorithmsFinished { get; set; } = true;
 
-        internal Tuple<string, IAnimationSpeed>[] AnimationSpeeds { get; }
+        public Tuple<string, IAnimationSpeed>[] AnimationSpeeds { get; }
 
         public ICommand StartPathFindCommand { get; }
         public ICommand CreateNewGraphCommand { get; }
@@ -55,8 +56,8 @@ namespace WPFVersion3D.ViewModel
         public ICommand ClearVerticesColorCommand { get; }
 
         public MainWindowViewModel(IGraphFieldFactory fieldFactory,
-            IVertexEventHolder eventHolder, GraphSerializationModule serializationModule, BaseEndPoints endPoints)
-            : base(fieldFactory, eventHolder, serializationModule, endPoints)
+            IVertexEventHolder eventHolder, GraphSerializationModule serializationModule, BaseEndPoints endPoints, ILog log)
+            : base(fieldFactory, eventHolder, serializationModule, endPoints, log)
         {
             ClearVerticesColorCommand = new RelayCommand(ExecuteClearVerticesColors, CanExecuteClearGraphOperation);
             StartPathFindCommand = new RelayCommand(ExecuteStartPathFindCommand, CanExecuteStartFindPathCommand);
