@@ -6,9 +6,9 @@ namespace Algorithm.Algos.Benchmark.Benchmarks
 {
     public class CostGreedyAlgorithmBenchmark : AlgorithmBenchmarks
     {
-        protected override IAlgorithm CreateAlgorithm(IGraph graph, IEndPoints endPoints)
+        protected override IAlgorithm CreateAlgorithm(IEndPoints endPoints)
         {
-            return new CostGreedyAlgorithm(graph, endPoints);
+            return new CostGreedyAlgorithm(endPoints);
         }
     }
 }

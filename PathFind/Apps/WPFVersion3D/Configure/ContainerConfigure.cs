@@ -1,6 +1,7 @@
 ﻿using Algorithm.Factory;
 using Autofac;
 using Common.Extensions;
+using Common.Interface;
 using GraphLib.Base;
 using GraphLib.Interfaces;
 using GraphLib.Interfaces.Factories;
@@ -11,12 +12,14 @@ using GraphLib.Realizations.Factories.NeighboursCoordinatesFactories;
 using GraphLib.Serialization;
 using GraphLib.Serialization.Interfaces;
 using GraphLib.Serialization.Serializers;
+using GraphViewModel.Interfaces;
 using Logging.Interface;
 using Logging.Loggers;
 using Random.Interface;
 using System;
 using System.Runtime.Serialization;
 using System.Web.UI;
+using WPFVersion3D.Extensions;
 using WPFVersion3D.Interface;
 using WPFVersion3D.Model;
 using WPFVersion3D.Model3DFactories;
@@ -32,9 +35,14 @@ namespace WPFVersion3D.Configure
         {
             var builder = new ContainerBuilder();
 
-            builder.RegisterType<MainWindowViewModel>().AsSelf().PropertiesAutowired().SingleInstance();
-            builder.RegisterType<PathFindingViewModel>().AsSelf().InstancePerDependency();
-            builder.RegisterType<GraphCreatingViewModel>().AsSelf().InstancePerDependency();
+            builder.RegisterType<MainWindowViewModel>().As<IMainModel>().InstancePerDependency();
+
+            builder.RegisterAssemblyTypes(AppDomain.CurrentDomain.GetAssemblies())
+                .Where(type => type.ImplementsAll(typeof(IViewModel))).AsSelf()
+                .InstancePerDependency();
+            builder.RegisterAssemblyTypes(AppDomain.CurrentDomain.GetAssemblies())
+                .Where(type => type.IsAppWindow()).AsSelf()
+                .InstancePerDependency();
 
             builder.RegisterType<EndPoints>().As<BaseEndPoints>().SingleInstance();
             builder.RegisterType<Vertex3DEventHolder>().As<IVertexEventHolder>().SingleInstance();

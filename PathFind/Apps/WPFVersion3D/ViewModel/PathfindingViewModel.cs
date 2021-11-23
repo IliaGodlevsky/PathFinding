@@ -5,7 +5,6 @@ using Common.Extensions;
 using Common.Interface;
 using GalaSoft.MvvmLight.Messaging;
 using GraphLib.Base;
-using GraphLib.Interfaces;
 using GraphViewModel;
 using Interruptable.EventArguments;
 using Logging.Interface;
@@ -25,7 +24,7 @@ using WPFVersion3D.Messages;
 
 namespace WPFVersion3D.ViewModel
 {
-    internal class PathFindingViewModel : PathFindingModel, IViewModel, INotifyPropertyChanged
+    public class PathFindingViewModel : PathFindingModel, IViewModel, INotifyPropertyChanged
     {
         public event EventHandler WindowClosed;
         public event PropertyChangedEventHandler PropertyChanged;

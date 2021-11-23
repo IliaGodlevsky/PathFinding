@@ -1,5 +1,4 @@
-﻿using Algorithm.Factory;
-using Autofac;
+﻿using Autofac;
 using ConsoleVersion.Attributes;
 using ConsoleVersion.Configure;
 using ConsoleVersion.Enums;
@@ -8,12 +7,10 @@ using ConsoleVersion.Interface;
 using ConsoleVersion.Messages;
 using ConsoleVersion.Model;
 using ConsoleVersion.View;
-using ConsoleVersion.View.Abstraction;
 using GalaSoft.MvvmLight.Messaging;
 using GraphLib.Base;
 using GraphLib.Extensions;
 using GraphLib.Interfaces;
-using GraphLib.Interfaces.Factories;
 using GraphLib.Realizations.Coordinates;
 using GraphLib.Realizations.Graphs;
 using GraphLib.Serialization;
@@ -25,7 +22,6 @@ using Interruptable.EventHandlers;
 using Interruptable.Interface;
 using Logging.Interface;
 using System;
-using System.Collections.Generic;
 using System.Drawing;
 
 using static GraphLib.Base.BaseVertexCost;
@@ -62,10 +58,8 @@ namespace ConsoleVersion.ViewModel
         {
             try
             {
-                var assembles = ContainerConfigure.Container.Resolve<IEnumerable<IGraphAssemble>>();
-                var model = new GraphCreatingViewModel(assembles);
-                var view = new GraphCreateView(model);
-                PrepareViewAndModel(view, model);
+                var view = ContainerConfigure.Container.Resolve<GraphCreateView>();
+                view.NewMenuIteration += DisplayGraph;
                 view.Start();
                 view.NewMenuIteration -= DisplayGraph;
             }
@@ -80,11 +74,9 @@ namespace ConsoleVersion.ViewModel
         {
             try
             {
-                var factories = ContainerConfigure.Container.Resolve<IEnumerable<IAlgorithmFactory>>();
-                var model = new PathFindingViewModel(endPoints, factories);
-                var view = new PathFindView(model);
-                PrepareViewAndModel(view, model);
-                model.AnswerInput = AnswerInput;
+                var view = ContainerConfigure.Container.Resolve<PathFindView>();
+                Messenger.Default.Send(new GraphCreatedMessage(Graph), MessageTokens.PathFindingModel);
+                view.NewMenuIteration += DisplayGraph;
                 view.Start();
                 view.NewMenuIteration -= DisplayGraph;
             }
@@ -177,15 +169,6 @@ namespace ConsoleVersion.ViewModel
             Console.WriteLine(GraphParametres);
             (GraphField as IDisplayable)?.Display();
             Console.WriteLine();
-        }
-
-        private void PrepareViewAndModel<TModel>(View<TModel> view, TModel model)
-            where TModel : IModel, IRequireInt32Input, IInterruptable
-        {
-            model.Interrupted += view.OnInterrupted;
-            view.NewMenuIteration += DisplayGraph;
-            model.Int32Input = Int32Input;
-            view.Int32Input = Int32Input;
         }
 
         private void PerformActionOnVertex(Action<Vertex> function)

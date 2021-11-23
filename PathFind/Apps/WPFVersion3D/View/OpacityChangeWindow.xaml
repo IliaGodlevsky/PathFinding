@@ -1,10 +1,12 @@
-﻿<Window x:Class="WPFVersion3D.View.OpacityChangeWindow"
+﻿<Window
+        x:Class="WPFVersion3D.View.OpacityChangeWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:converter="clr-namespace:WPFVersion3D.Converters" 
         xmlns:model="clr-namespace:WPFVersion3D.Model"
+        xmlns:window="clr-namespace:WPFVersion3D.View"
         xmlns:range="clr-namespace:WPFVersion3D" 
         xmlns:validationrules="clr-namespace:WPFVersion3D.ValidationRules"
         mc:Ignorable="d"

@@ -65,6 +65,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Attributes\AppWindowAttribute.cs" />
     <Compile Include="Configure\ContainerConfigure.cs" />
     <Compile Include="Constants.cs" />
     <Compile Include="Converters\AlgorithmStatusToStringConverter.cs" />
@@ -76,6 +77,7 @@
     <Compile Include="Extensions\AlgorithmViewModelExtensions.cs" />
     <Compile Include="Extensions\ColorExtensions.cs" />
     <Compile Include="Extensions\IMessengerExtensions.cs" />
+    <Compile Include="Extensions\TypeExtensions.cs" />
     <Compile Include="Infrastructure\RelayCommand.cs" />
     <Compile Include="Messages\SubscribeOnAlgorithmEventsMessage.cs" />
     <Compile Include="Messages\AlgorithmStartedMessage.cs" />

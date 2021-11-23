@@ -1,11 +1,8 @@
-﻿using Algorithm.Factory;
-using Autofac;
-using Common.Interface;
+﻿using Autofac;
 using GalaSoft.MvvmLight.Messaging;
 using GraphLib.Base;
 using GraphLib.Extensions;
 using GraphLib.Interfaces;
-using GraphLib.Interfaces.Factories;
 using GraphLib.Realizations.Graphs;
 using GraphLib.Serialization;
 using GraphViewModel;
@@ -13,11 +10,9 @@ using GraphViewModel.Interfaces;
 using Logging.Interface;
 using NullObject.Extensions;
 using System;
-using System.Collections.Generic;
 using System.ComponentModel;
 using System.Drawing;
 using System.Runtime.CompilerServices;
-using System.Windows.Forms;
 using WindowsFormsVersion.Configure;
 using WindowsFormsVersion.EventArguments;
 using WindowsFormsVersion.EventHandlers;
@@ -104,10 +99,8 @@ namespace WindowsFormsVersion.ViewModel
             {
                 try
                 {
-                    var factories = ContainerConfigure.Container.Resolve<IEnumerable<IAlgorithmFactory>>();
-                    var model = new PathFindingViewModel(endPoints, factories);
-                    var form = new PathFindingWindow(model);
-                    PrepareWindow(model, form);
+                    var form = ContainerConfigure.Container.Resolve<PathFindingWindow>();
+                    form.Show();
                 }
                 catch (Exception ex)
                 {
@@ -122,10 +115,8 @@ namespace WindowsFormsVersion.ViewModel
             {
                 try
                 {
-                    var assembles = ContainerConfigure.Container.Resolve<IEnumerable<IGraphAssemble>>();
-                    var model = new GraphCreatingViewModel(assembles);
-                    var form = new GraphCreatingWindow(model);
-                    PrepareWindow(model, form);
+                    var form = ContainerConfigure.Container.Resolve<GraphCreatingWindow>();
+                    form.Show();
                 }
                 catch (Exception ex)
                 {
@@ -189,13 +180,6 @@ namespace WindowsFormsVersion.ViewModel
         public void CreateNewGraph(object sender, EventArgs e)
         {
             CreateNewGraph();
-        }
-
-        private void PrepareWindow(IViewModel model, Form window)
-        {
-            model.WindowClosed += (sender, args) => window.Close();
-            window.StartPosition = FormStartPosition.CenterScreen;
-            window.Show();
         }
 
         private void SetGraph(GraphCreatedMessage message)

@@ -6,9 +6,9 @@ namespace Algorithm.Algos.Benchmark.Benchmarks
 {
     public class DistanceFirstAlgorithmBenchmarks : AlgorithmBenchmarks
     {
-        protected override IAlgorithm CreateAlgorithm(IGraph graph, IEndPoints endPoints)
+        protected override IAlgorithm CreateAlgorithm(IEndPoints endPoints)
         {
-            return new DistanceFirstAlgorithm(graph, endPoints);
+            return new DistanceFirstAlgorithm(endPoints);
         }
     }
 }

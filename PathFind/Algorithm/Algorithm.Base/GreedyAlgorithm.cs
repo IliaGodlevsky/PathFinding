@@ -20,7 +20,7 @@ namespace Algorithm.Base
     public abstract class GreedyAlgorithm : PathfindingAlgorithm,
         IAlgorithm, IInterruptableProcess, IInterruptable, IDisposable
     {
-        protected GreedyAlgorithm( IEndPoints endPoints)
+        protected GreedyAlgorithm(IEndPoints endPoints)
            : base(endPoints)
         {
             visitedVerticesStack = new Stack<IVertex>();

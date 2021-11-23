@@ -1,6 +1,7 @@
 ﻿using Algorithm.Factory;
 using Autofac;
 using Common.Extensions;
+using Common.Interface;
 using GraphLib.Base;
 using GraphLib.Interfaces;
 using GraphLib.Interfaces.Factories;
@@ -19,8 +20,7 @@ using Random.Realizations;
 using System;
 using System.Runtime.Serialization;
 using System.Runtime.Serialization.Formatters.Binary;
-using System.Windows.Forms;
-using WindowsFormsVersion.Forms;
+using WindowsFormsVersion.Extensions;
 using WindowsFormsVersion.Model;
 using WindowsFormsVersion.ViewModel;
 
@@ -42,8 +42,14 @@ namespace WindowsFormsVersion.Configure
         {
             var builder = new ContainerBuilder();
 
-            builder.RegisterType<MainWindow>().As<Form>().InstancePerLifetimeScope();
-            builder.RegisterType<MainWindowViewModel>().AsSelf().InstancePerLifetimeScope();
+            builder.RegisterType<MainWindowViewModel>().AsSelf().InstancePerDependency();
+
+            builder.RegisterAssemblyTypes(AppDomain.CurrentDomain.GetAssemblies())
+                .Where(type => type.ImplementsAll(typeof(IViewModel))).AsSelf()
+                .InstancePerDependency();
+            builder.RegisterAssemblyTypes(AppDomain.CurrentDomain.GetAssemblies())
+                .Where(type => type.IsAppWindow()).AsSelf()
+                .InstancePerDependency();
 
             builder.RegisterType<EndPoints>().As<BaseEndPoints>().SingleInstance();
             builder.RegisterType<GraphFieldFactory>().As<IGraphFieldFactory>().SingleInstance();

@@ -7,7 +7,7 @@ using WPFVersion3D.Model;
 
 namespace WPFVersion3D.ViewModel
 {
-    internal class OpacityChangeViewModel : IModel, IViewModel
+    public class OpacityChangeViewModel : IModel, IViewModel
     {
         public event EventHandler WindowClosed;
 

@@ -1,17 +1,14 @@
-﻿using Algorithm.Factory;
-using Autofac;
-using Common.Interface;
+﻿using Autofac;
 using EnumerationValues.Realizations;
 using GalaSoft.MvvmLight.Messaging;
 using GraphLib.Base;
 using GraphLib.Extensions;
 using GraphLib.Interfaces;
-using GraphLib.Interfaces.Factories;
 using GraphLib.Serialization;
 using GraphViewModel;
+using GraphViewModel.Interfaces;
 using NullObject.Extensions;
 using System;
-using System.Collections.Generic;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using System.Windows;
@@ -28,7 +25,7 @@ using WPFVersion3D.View;
 
 namespace WPFVersion3D.ViewModel
 {
-    internal class MainWindowViewModel : MainModel, INotifyPropertyChanged
+    public class MainWindowViewModel : MainModel, IMainModel, INotifyPropertyChanged
     {
         public event PropertyChangedEventHandler PropertyChanged;
 
@@ -45,7 +42,7 @@ namespace WPFVersion3D.ViewModel
 
         private bool IsAllAlgorithmsFinished { get; set; } = true;
 
-        public Tuple<string, IAnimationSpeed>[] AnimationSpeeds { get; }
+        internal Tuple<string, IAnimationSpeed>[] AnimationSpeeds { get; }
 
         public ICommand StartPathFindCommand { get; }
         public ICommand CreateNewGraphCommand { get; }
@@ -79,9 +76,8 @@ namespace WPFVersion3D.ViewModel
         {
             try
             {
-                var model = ContainerConfigure.Container.Resolve<PathFindingViewModel>();
-                var window = new PathFindWindow();
-                PrepareWindow(model, window);
+                var window = ContainerConfigure.Container.Resolve<PathFindWindow>();
+                window.Show();
             }
             catch (SystemException ex)
             {
@@ -97,9 +93,8 @@ namespace WPFVersion3D.ViewModel
         {
             try
             {
-                var model = ContainerConfigure.Container.Resolve<GraphCreatingViewModel>();
-                var window = new GraphCreateWindow();
-                PrepareWindow(model, window);
+                var window = ContainerConfigure.Container.Resolve<GraphCreateWindow>();
+                window.Show();
             }
             catch (Exception ex)
             {
@@ -125,9 +120,8 @@ namespace WPFVersion3D.ViewModel
 
         private void ChangeVerticesOpacity()
         {
-            var model = new OpacityChangeViewModel();
-            var window = new OpacityChangeWindow();
-            PrepareWindow(model, window);
+            var window = ContainerConfigure.Container.Resolve<OpacityChangeWindow>();
+            window.Show();
         }
 
         private void ExecuteClearVerticesColors(object param) => ClearColors();
@@ -156,14 +150,6 @@ namespace WPFVersion3D.ViewModel
         private bool CanExecuteGraphOperation(object param) => !Graph.IsNull();
         private bool CanExecuteOperation(object param) => IsAllAlgorithmsFinished;
         private bool CanExecuteInterruptAlgorithmCommand(object sender) => !IsAllAlgorithmsFinished;
-
-        private void PrepareWindow(IViewModel model, Window window)
-        {
-            model.WindowClosed += (sender, args) => window.Close();
-            window.DataContext = model;
-            window.WindowStartupLocation = WindowStartupLocation.CenterScreen;
-            window.Show();
-        }
 
         private void OnIsAllAlgorithmsFinished(IsAllAlgorithmsFinishedMessage message)
             => IsAllAlgorithmsFinished = message.IsAllAlgorithmsFinished;

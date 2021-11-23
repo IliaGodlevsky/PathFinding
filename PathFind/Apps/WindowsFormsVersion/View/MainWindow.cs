@@ -1,11 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Windows.Forms;
+using WindowsFormsVersion.Attributes;
 using WindowsFormsVersion.EventArguments;
 using WindowsFormsVersion.ViewModel;
 
 namespace WindowsFormsVersion.Forms
 {
+    [AppWindow]
     internal partial class MainWindow : Form
     {
         private readonly MainWindowViewModel mainModel;

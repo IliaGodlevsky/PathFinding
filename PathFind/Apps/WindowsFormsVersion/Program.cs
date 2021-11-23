@@ -2,6 +2,7 @@
 using System;
 using System.Windows.Forms;
 using WindowsFormsVersion.Configure;
+using WindowsFormsVersion.Forms;
 
 namespace WindowsFormsVersion
 {
@@ -11,13 +12,9 @@ namespace WindowsFormsVersion
         private static void Main()
         {
             var container = ContainerConfigure.Configure();
-
-            using (var scope = container.BeginLifetimeScope())
-            {
-                Application.EnableVisualStyles();
-                Application.SetCompatibleTextRenderingDefault(false);
-                Application.Run(scope.Resolve<Form>());
-            }
+            Application.EnableVisualStyles();
+            Application.SetCompatibleTextRenderingDefault(false);
+            Application.Run(container.Resolve<MainWindow>());
         }
     }
 }

@@ -56,10 +56,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Attributes\AppWindowAttribute.cs" />
     <Compile Include="Configure\ContainerConfigure.cs" />
     <Compile Include="Constants.cs" />
     <Compile Include="EventArguments\StatisticsChangedEventArgs.cs" />
     <Compile Include="EventHandlers\StatisticsChangedEventHandler.cs" />
+    <Compile Include="Extensions\TypeExtensions.cs" />
     <Compile Include="Extensions\ConstrolCollectionExtension.cs" />
     <Compile Include="Extensions\ControlExtension.cs" />
     <Compile Include="MessageTokens.cs" />

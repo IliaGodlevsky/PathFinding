@@ -30,7 +30,7 @@ namespace Algorithm.Algos.Tests
         {
             var graph = testgraph2DAssemble.AssembleGraph();
             var endPoints = new TestEndPoints(graph.Vertices.First(), graph.Vertices.Last());
-            var algorithm = CreateAlgorithm(graph, endPoints);
+            var algorithm = CreateAlgorithm(endPoints);
 
             var graphPath = algorithm.FindPath();
 
@@ -44,7 +44,7 @@ namespace Algorithm.Algos.Tests
             var graph = testgraph2DAssemble.AssembleGraph();
             var endPoints = new TestEndPoints(NullVertex.Instance, NullVertex.Instance);
 
-            var algorithm = CreateAlgorithm(graph, endPoints);
+            var algorithm = CreateAlgorithm(endPoints);
 
             Assert.Throws<EndPointsNotFromCurrentGraphException>(() => algorithm.FindPath());
         }
@@ -57,7 +57,7 @@ namespace Algorithm.Algos.Tests
             var target = graph.LastOrNullVertex();
             var endPoints = new TestEndPoints(source, target);
 
-            var algorithm = CreateAlgorithm(graph, endPoints);
+            var algorithm = CreateAlgorithm(endPoints);
             var path = algorithm.FindPath();
 
             Assert.IsTrue(path.IsNull());
@@ -74,14 +74,14 @@ namespace Algorithm.Algos.Tests
             var source = graph.FirstOrNullVertex();
             var target = graph.LastOrNullVertex();
             var endPoints = new TestEndPoints(source, target);
-            var algorithm = CreateAlgorithm(graph, endPoints);
+            var algorithm = CreateAlgorithm(endPoints);
 
             var graphPath = algorithm.FindPath();
 
             Assert.IsFalse(graph.IsNull());
         }
 
-        protected abstract IAlgorithm CreateAlgorithm(IGraph graph, IEndPoints endPoints);
+        protected abstract IAlgorithm CreateAlgorithm(IEndPoints endPoints);
 
         protected abstract int GetExpectedCost();
         protected abstract int GetExpectedLength();

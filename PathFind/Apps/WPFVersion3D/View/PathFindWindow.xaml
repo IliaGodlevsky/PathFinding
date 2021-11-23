@@ -1,4 +1,5 @@
-﻿<Window x:Class="WPFVersion3D.View.PathFindWindow"
+﻿<Window
+        x:Class="WPFVersion3D.View.PathFindWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"

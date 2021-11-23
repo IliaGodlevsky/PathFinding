@@ -17,7 +17,7 @@ namespace Algorithm.Algos.Algos
     /// </summary>
     public class DijkstraAlgorithm : WaveAlgorithm, IAlgorithm, IInterruptableProcess, IInterruptable, IDisposable
     {
-        public DijkstraAlgorithm( IEndPoints endPoints)
+        public DijkstraAlgorithm(IEndPoints endPoints)
             : this(endPoints, new DefaultStepRule())
         {
 

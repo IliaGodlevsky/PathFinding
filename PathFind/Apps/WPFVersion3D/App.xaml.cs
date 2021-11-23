@@ -1,7 +1,6 @@
 ﻿using Autofac;
 using System.Windows;
 using WPFVersion3D.Configure;
-using WPFVersion3D.ViewModel;
 
 namespace WPFVersion3D
 {
@@ -12,8 +11,7 @@ namespace WPFVersion3D
             base.OnStartup(e);
 
             var container = ContainerConfigure.Configure();
-            var viewModel = container.Resolve<MainWindowViewModel>();
-            var mainWindow = new MainWindow { DataContext = viewModel };
+            var mainWindow = container.Resolve<MainWindow>();
             mainWindow.Show();
         }
     }

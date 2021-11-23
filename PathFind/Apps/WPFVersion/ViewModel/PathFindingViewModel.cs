@@ -6,7 +6,6 @@ using Common.Extensions;
 using Common.Interface;
 using GalaSoft.MvvmLight.Messaging;
 using GraphLib.Base;
-using GraphLib.Interfaces;
 using GraphViewModel;
 using GraphViewModel.Interfaces;
 using Interruptable.EventArguments;
@@ -24,7 +23,7 @@ using WPFVersion.Messages;
 
 namespace WPFVersion.ViewModel
 {
-    internal class PathFindingViewModel : PathFindingModel, IModel, IViewModel
+    public class PathFindingViewModel : PathFindingModel, IModel, IViewModel
     {
         public event EventHandler WindowClosed;
 

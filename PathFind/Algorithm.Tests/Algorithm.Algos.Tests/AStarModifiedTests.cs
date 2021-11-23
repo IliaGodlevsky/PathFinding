@@ -17,9 +17,9 @@ namespace Algorithm.Algos.Tests
             base.FindPath_EndpointsBelongToGraph_ReturnsShortestPath();
         }
 
-        protected override IAlgorithm CreateAlgorithm(IGraph graph, IEndPoints endPoints)
+        protected override IAlgorithm CreateAlgorithm(IEndPoints endPoints)
         {
-            return new IDAStarAlgorithm(graph, endPoints);
+            return new IDAStarAlgorithm(endPoints);
         }
 
         protected override int GetExpectedCost()

@@ -8,9 +8,9 @@ namespace Algorithm.Algos.Benchmark.Benchmarks
     [MemoryDiagnoser]
     public class AStarAlgorithmBenchmarks : AlgorithmBenchmarks
     {
-        protected override IAlgorithm CreateAlgorithm(IGraph graph, IEndPoints endPoints)
+        protected override IAlgorithm CreateAlgorithm(IEndPoints endPoints)
         {
-            return new AStarAlgorithm(graph, endPoints);
+            return new AStarAlgorithm(endPoints);
         }
     }
 }

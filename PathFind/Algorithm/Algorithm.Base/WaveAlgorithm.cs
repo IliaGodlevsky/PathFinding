@@ -44,8 +44,7 @@ namespace Algorithm.Base
                 Reset();
             }
             CompletePathfinding();
-            return !IsTerminatedPrematurely 
-? NullGraphPath.Instance : path;
+            return !IsTerminatedPrematurely ? NullGraphPath.Instance : path;
         }
 
         protected virtual void PrepareForLocalPathfinding()

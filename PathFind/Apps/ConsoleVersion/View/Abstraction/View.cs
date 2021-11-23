@@ -1,12 +1,15 @@
 ﻿using ConsoleVersion.Extensions;
 using ConsoleVersion.Interface;
+using GraphViewModel.Interfaces;
 using Interruptable.EventArguments;
+using Interruptable.Interface;
 using System;
 using ValueRange;
 
 namespace ConsoleVersion.View.Abstraction
 {
     internal abstract class View<TModel> : IView, IRequireInt32Input
+        where TModel : IModel, IInterruptable
     {
         public event Action NewMenuIteration;
 
@@ -27,6 +30,7 @@ namespace ConsoleVersion.View.Abstraction
             menu = new Menu<Action>(Model);
             menuList = new MenuList(menu.MenuActionsNames);
             menuValueRange = new InclusiveValueRange<int>(menu.MenuActionsNames.Length, 1);
+            model.Interrupted += OnInterrupted;
         }
 
         public virtual void Start()

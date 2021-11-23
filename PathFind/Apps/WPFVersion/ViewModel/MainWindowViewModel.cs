@@ -1,21 +1,16 @@
-﻿using Algorithm.Factory;
-using Autofac;
-using Common.Interface;
+﻿using Autofac;
 using GalaSoft.MvvmLight.Messaging;
 using GraphLib.Base;
 using GraphLib.Extensions;
 using GraphLib.Interfaces;
-using GraphLib.Interfaces.Factories;
 using GraphLib.Serialization;
 using GraphViewModel;
 using GraphViewModel.Interfaces;
 using Logging.Interface;
 using NullObject.Extensions;
 using System;
-using System.Collections.Generic;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
-using System.Windows;
 using System.Windows.Input;
 using WPFVersion.Configure;
 using WPFVersion.Extensions;
@@ -27,7 +22,7 @@ using WPFVersion.View.Windows;
 
 namespace WPFVersion.ViewModel
 {
-    internal class MainWindowViewModel : MainModel, IMainModel, IModel, INotifyPropertyChanged
+    public class MainWindowViewModel : MainModel, IMainModel, IModel, INotifyPropertyChanged
     {
         public event PropertyChangedEventHandler PropertyChanged;
 
@@ -78,10 +73,7 @@ namespace WPFVersion.ViewModel
         {
             try
             {
-
-                var viewModel = ContainerConfigure.Container.Resolve<PathFindingViewModel>();
-                var window = new PathFindWindow();
-                PrepareWindow(viewModel, window);
+                ContainerConfigure.Container.Resolve<PathFindWindow>();
             }
             catch (SystemException ex)
             {
@@ -97,9 +89,7 @@ namespace WPFVersion.ViewModel
         {
             try
             {
-                var model = ContainerConfigure.Container.Resolve<GraphCreatingViewModel>();
-                var window = new GraphCreatesWindow();
-                PrepareWindow(model, window);
+                ContainerConfigure.Container.Resolve<GraphCreatesWindow>();
             }
             catch (Exception ex)
             {
@@ -115,14 +105,6 @@ namespace WPFVersion.ViewModel
             var graphMessage = new GraphCreatedMessage(Graph);
             var clearMessage = new ClearStatisticsMessage();
             Messenger.Default.SendMany(graphMessage, clearMessage, MessageTokens.AlgorithmStatisticsModel);
-        }
-
-        private void PrepareWindow(IViewModel model, Window window)
-        {
-            window.DataContext = model;
-            model.WindowClosed += (sender, args) => window.Close();
-            window.WindowStartupLocation = WindowStartupLocation.CenterScreen;
-            window.Show();
         }
 
         private void ExecuteColorizeAccordingToCost(object param) => costColors.ColorizeAccordingToCost();

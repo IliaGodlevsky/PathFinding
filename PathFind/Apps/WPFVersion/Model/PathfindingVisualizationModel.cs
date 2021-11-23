@@ -40,7 +40,7 @@ namespace WPFVersion.Model
                 SubscribeOnAlgorithmEvents(message.Algorithm);
             }
             else
-            {                
+            {
                 message.Algorithm.Started += OnAlgorithmStarted;
             }
         }

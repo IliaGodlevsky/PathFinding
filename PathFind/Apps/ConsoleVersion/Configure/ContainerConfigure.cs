@@ -7,8 +7,6 @@ using ConsoleVersion.Enums;
 using ConsoleVersion.Interface;
 using ConsoleVersion.Model;
 using ConsoleVersion.ValueInput;
-using ConsoleVersion.View;
-using ConsoleVersion.ViewModel;
 using GraphLib.Base;
 using GraphLib.Interfaces;
 using GraphLib.Interfaces.Factories;
@@ -21,11 +19,14 @@ using GraphLib.Realizations.MeanCosts;
 using GraphLib.Serialization;
 using GraphLib.Serialization.Interfaces;
 using GraphLib.Serialization.Serializers;
+using GraphViewModel.Interfaces;
+using Interruptable.Interface;
 using Logging.Interface;
 using Logging.Loggers;
 using Random.Interface;
 using Random.Realizations;
 using System;
+using System.Reflection;
 using System.Runtime.Serialization;
 using System.Runtime.Serialization.Formatters.Binary;
 
@@ -43,6 +44,8 @@ namespace ConsoleVersion.Configure
             return new SmoothedGraphAssemble(randomGraphAssemble, costFactory, meanCost);
         }
 
+        private static Assembly[] Assemblies => AppDomain.CurrentDomain.GetAssemblies();
+
         public static IContainer Container { get; private set; }
 
         public static IContainer Configure()
@@ -51,10 +54,16 @@ namespace ConsoleVersion.Configure
             // Input block
             builder.RegisterType<EnumConsoleValueInput<Answer>>().As<IValueInput<Answer>>().SingleInstance();
             builder.RegisterType<Int32ConsoleValueInput>().As<IValueInput<int>>().SingleInstance();
-
-            builder.RegisterType<MainView>().As<IView>().SingleInstance().PropertiesAutowired();
-            builder.RegisterType<MainViewModel>().AsSelf().SingleInstance().PropertiesAutowired();
-
+            // View and view model block
+            builder.RegisterAssemblyTypes(Assemblies)
+                .Where(type => type.ImplementsAll(typeof(IModel))).AsSelf()
+                .PropertiesAutowired()
+                .InstancePerDependency();
+            builder.RegisterAssemblyTypes(Assemblies)
+                .Where(type => type.ImplementsAll(typeof(IView))).AsSelf()
+                .PropertiesAutowired()
+                .InstancePerDependency();
+            //
             builder.RegisterType<EndPoints>().As<BaseEndPoints>().SingleInstance();
             builder.RegisterType<VertexEventHolder>().As<IVertexEventHolder>().SingleInstance().PropertiesAutowired();
             builder.RegisterType<GraphFieldFactory>().As<IGraphFieldFactory>().SingleInstance();
@@ -82,7 +91,7 @@ namespace ConsoleVersion.Configure
             builder.RegisterType<BinaryFormatter>().As<IFormatter>().SingleInstance();
             builder.RegisterType<VertexFromInfoFactory>().As<IVertexFromInfoFactory>().SingleInstance();
             // Algorithms block
-            builder.RegisterAssemblyTypes(AppDomain.CurrentDomain.GetAssemblies())
+            builder.RegisterAssemblyTypes(Assemblies)
                 .Where(type => type.ImplementsAll(typeof(IAlgorithmFactory)))
                 .As<IAlgorithmFactory>().SingleInstance();
             builder.RegisterType<LandscapeStepRule>().As<IStepRule>().SingleInstance();

@@ -6,9 +6,9 @@ namespace Algorithm.Algos.Benchmark.Benchmarks
 {
     public class DepthFirstAlgorithmBenchmark : AlgorithmBenchmarks
     {
-        protected override IAlgorithm CreateAlgorithm(IGraph graph, IEndPoints endPoints)
+        protected override IAlgorithm CreateAlgorithm(IEndPoints endPoints)
         {
-            return new DepthFirstAlgorithm(graph, endPoints);
+            return new DepthFirstAlgorithm(endPoints);
         }
     }
 }

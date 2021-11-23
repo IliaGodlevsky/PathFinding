@@ -1,9 +1,9 @@
 ﻿using Algorithm.Factory;
 using Algorithm.Interfaces;
-using Algorithm.Realizations.Heuristic;
 using Algorithm.Realizations.StepRules;
 using Autofac;
 using Common.Extensions;
+using Common.Interface;
 using GraphLib.Base;
 using GraphLib.Interfaces;
 using GraphLib.Interfaces.Factories;
@@ -17,13 +17,17 @@ using GraphLib.Realizations.SmoothLevel;
 using GraphLib.Serialization;
 using GraphLib.Serialization.Interfaces;
 using GraphLib.Serialization.Serializers;
+using GraphViewModel.Interfaces;
 using Logging.Interface;
 using Logging.Loggers;
 using Random.Interface;
 using Random.Realizations;
 using System;
+using System.Reflection;
 using System.Runtime.Serialization;
 using System.Runtime.Serialization.Formatters.Binary;
+using System.Windows;
+using WPFVersion.Extensions;
 using WPFVersion.Model;
 using WPFVersion.ViewModel;
 
@@ -42,15 +46,25 @@ namespace WPFVersion.Configure
             return new SmoothedGraphAssemble(randomGraphAssemble, costFactory, meanCost, smoothLevel);
         }
 
+        private static Assembly[] Assemblies => AppDomain.CurrentDomain.GetAssemblies();
+
         public static IContainer Container { get; private set; }
 
         public static IContainer Configure()
         {
             var builder = new ContainerBuilder();
 
-            builder.RegisterType<MainWindowViewModel>().AsSelf().InstancePerLifetimeScope();
-            builder.RegisterType<GraphCreatingViewModel>().AsSelf().InstancePerLifetimeScope();
-            builder.RegisterType<PathFindingViewModel>().AsSelf().InstancePerLifetimeScope();
+            builder.RegisterType<MainWindowViewModel>().As<IMainModel>().InstancePerDependency();
+
+            builder.RegisterAssemblyTypes(Assemblies)
+                .Where(type => type.ImplementsAll(typeof(IViewModel)))
+                .AsSelf()
+                .InstancePerDependency();
+            builder.RegisterAssemblyTypes(Assemblies)
+                .Where(type => type.IsAppWindow())
+                .AsSelf()
+                .InstancePerDependency()
+                .OnActivated((args => ((Window)args.Instance).Show()));
 
             builder.RegisterType<EndPoints>().As<BaseEndPoints>().SingleInstance();
             builder.RegisterType<VertexEventHolder>().As<IVertexEventHolder>().SingleInstance();
@@ -80,7 +94,7 @@ namespace WPFVersion.Configure
             builder.RegisterType<BinaryFormatter>().As<IFormatter>().SingleInstance();
             builder.RegisterType<VertexFromInfoFactory>().As<IVertexFromInfoFactory>().SingleInstance();
 
-            builder.RegisterAssemblyTypes(AppDomain.CurrentDomain.GetAssemblies())
+            builder.RegisterAssemblyTypes(Assemblies)
                 .Where(type => type.ImplementsAll(typeof(IAlgorithmFactory)))
                 .As<IAlgorithmFactory>().SingleInstance();
 

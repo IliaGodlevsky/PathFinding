@@ -16,7 +16,7 @@ using WPFVersion.Messages;
 
 namespace WPFVersion.ViewModel
 {
-    internal class GraphCreatingViewModel : GraphCreatingModel, IModel, IViewModel
+    public class GraphCreatingViewModel : GraphCreatingModel, IModel, IViewModel
     {
         public event EventHandler WindowClosed;
 

@@ -1,4 +1,4 @@
-﻿<Window x:Name="Window" 
+﻿<Window x:Name="Window"
         x:Class="WPFVersion3D.MainWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
@@ -7,6 +7,7 @@
         xmlns:converters="clr-namespace:WPFVersion3D.Converters" 
         xmlns:model="clr-namespace:WPFVersion3D.Model"
         xmlns:range="clr-namespace:WPFVersion3D"
+        xmlns:window="clr-namespace:WPFVersion3D.View"
         xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
         xmlns:ei="http://schemas.microsoft.com/expression/2010/interactions" 
         xmlns:validationrules="clr-namespace:WPFVersion3D.ValidationRules" 

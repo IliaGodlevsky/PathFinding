@@ -8,9 +8,9 @@ namespace Algorithm.Algos.Tests
     [TestFixture]
     public class DistanceFirstALgorithmTests : AlgorithmTest
     {
-        protected override IAlgorithm CreateAlgorithm(IGraph graph, IEndPoints endPoints)
+        protected override IAlgorithm CreateAlgorithm(IEndPoints endPoints)
         {
-            return new DistanceFirstAlgorithm(graph, endPoints);
+            return new DistanceFirstAlgorithm(endPoints);
         }
 
         protected override int GetExpectedCost()
