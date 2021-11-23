@@ -23,8 +23,8 @@ namespace Algorithm.Algos.Algos
         /// <param name="graph">A graph, where the cheapest path must be founded</param>
         /// <param name="endPoints">Vertices, between which the cheapest path must be founded</param>
         /// <param name="function">A function, that influences on the choosing the next vertex to move</param>
-        public BestFirstLeeAlgorithm(IGraph graph, IEndPoints endPoints, IHeuristic function)
-            : base(graph, endPoints)
+        public BestFirstLeeAlgorithm(IEndPoints endPoints, IHeuristic function)
+            : base(endPoints)
         {
             heuristic = function;
             heuristics = new Costs();
@@ -36,8 +36,8 @@ namespace Algorithm.Algos.Algos
         /// </summary>
         /// <param name="graph">A graph, where the cheapest path must be founded</param>
         /// <param name="endPoints">Vertices, between which the cheapest path must be founded</param>
-        public BestFirstLeeAlgorithm(IGraph graph, IEndPoints endPoints)
-            : this(graph, endPoints, new ManhattanDistance())
+        public BestFirstLeeAlgorithm(IEndPoints endPoints)
+            : this(endPoints, new ManhattanDistance())
         {
 
         }

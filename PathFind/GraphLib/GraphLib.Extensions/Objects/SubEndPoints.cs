@@ -3,13 +3,13 @@ using System.Collections.Generic;
 
 namespace GraphLib.Extensions.Objects
 {
-    internal sealed class LocalEndPoints : IEndPoints
+    internal sealed class SubEndPoints : IEndPoints
     {
         public IVertex Target { get; }
         public IVertex Source { get; }
         public IEnumerable<IVertex> EndPoints { get; }
 
-        public LocalEndPoints(IVertex source, IVertex target)
+        public SubEndPoints(IVertex source, IVertex target)
         {
             Source = source;
             Target = target;

@@ -17,14 +17,14 @@ namespace Algorithm.Algos.Algos
     /// </summary>
     public class DijkstraAlgorithm : WaveAlgorithm, IAlgorithm, IInterruptableProcess, IInterruptable, IDisposable
     {
-        public DijkstraAlgorithm(IGraph graph, IEndPoints endPoints)
-            : this(graph, endPoints, new DefaultStepRule())
+        public DijkstraAlgorithm( IEndPoints endPoints)
+            : this(endPoints, new DefaultStepRule())
         {
 
         }
 
-        public DijkstraAlgorithm(IGraph graph, IEndPoints endPoints, IStepRule stepRule)
-            : base(graph, endPoints)
+        public DijkstraAlgorithm(IEndPoints endPoints, IStepRule stepRule)
+            : base(endPoints)
         {
             this.stepRule = stepRule;
             queue = new SimplePriorityQueue<IVertex, double>();

@@ -20,8 +20,8 @@ namespace Algorithm.Base
     public abstract class GreedyAlgorithm : PathfindingAlgorithm,
         IAlgorithm, IInterruptableProcess, IInterruptable, IDisposable
     {
-        protected GreedyAlgorithm(IGraph graph, IEndPoints endPoints)
-           : base(graph, endPoints)
+        protected GreedyAlgorithm( IEndPoints endPoints)
+           : base(endPoints)
         {
             visitedVerticesStack = new Stack<IVertex>();
         }
@@ -42,9 +42,9 @@ namespace Algorithm.Base
 
         protected virtual IGraphPath CreateGraphPath()
         {
-            return CurrentVertex.IsNull()
-                ? NullGraphPath.Instance
-                : new GraphPath(parentVertices, endPoints);
+            return IsTerminatedPrematurely
+                ? new GraphPath(parentVertices, endPoints)
+                : NullGraphPath.Instance;
         }
 
         /// <summary>

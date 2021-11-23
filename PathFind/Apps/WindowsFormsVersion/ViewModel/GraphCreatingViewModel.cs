@@ -1,4 +1,5 @@
-﻿using Common.Interface;
+﻿using Autofac;
+using Common.Interface;
 using GalaSoft.MvvmLight.Messaging;
 using GraphLib.Extensions;
 using GraphLib.Interfaces.Factories;
@@ -8,6 +9,7 @@ using Logging.Interface;
 using System;
 using System.Collections.Generic;
 using ValueRange.Extensions;
+using WindowsFormsVersion.Configure;
 using WindowsFormsVersion.Messeges;
 
 namespace WindowsFormsVersion.ViewModel
@@ -16,17 +18,17 @@ namespace WindowsFormsVersion.ViewModel
     {
         public event EventHandler WindowClosed;
 
-        public GraphCreatingViewModel(ILog log, IEnumerable<IGraphAssemble> graphAssembles)
-            : base(log, graphAssembles)
+        public GraphCreatingViewModel(IEnumerable<IGraphAssemble> graphAssembles)
+            : base(graphAssembles)
         {
-
+            log = ContainerConfigure.Container.Resolve<ILog>();
         }
 
         public override async void CreateGraph()
         {
             try
             {
-                var graph = await SelectedGraphAssemble.AssembleGraphAsync(ObstaclePercent, GraphParametres);
+                var graph = await SelectedGraphAssemble.AssembleGraphAsync(ObstaclePercent, Width, Length);
                 var message = new GraphCreatedMessage(graph);
                 Messenger.Default.Send(message, MessageTokens.MainModel);
             }

@@ -22,9 +22,9 @@ namespace Algorithm.Factory
 
         }
 
-        public PathfindingAlgorithm CreateAlgorithm(IGraph graph, IEndPoints endPoints)
+        public PathfindingAlgorithm CreateAlgorithm(IEndPoints endPoints)
         {
-            return new CostGreedyAlgorithm(graph, endPoints, stepRule);
+            return new CostGreedyAlgorithm(endPoints, stepRule);
         }
 
         private readonly IStepRule stepRule;

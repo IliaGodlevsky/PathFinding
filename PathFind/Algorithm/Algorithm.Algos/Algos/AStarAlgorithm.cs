@@ -16,15 +16,14 @@ namespace Algorithm.Algos.Algos
     /// <remarks><see cref="https://en.wikipedia.org/wiki/A*_search_algorithm"/></remarks>
     public class AStarAlgorithm : DijkstraAlgorithm, IAlgorithm, IInterruptableProcess, IInterruptable, IDisposable
     {
-        public AStarAlgorithm(IGraph graph, IEndPoints endPoints)
-            : this(graph, endPoints, new DefaultStepRule(), new ChebyshevDistance())
+        public AStarAlgorithm(IEndPoints endPoints)
+            : this(endPoints, new DefaultStepRule(), new ChebyshevDistance())
         {
 
         }
 
-        public AStarAlgorithm(IGraph graph, IEndPoints endPoints,
-            IStepRule stepRule, IHeuristic function)
-            : base(graph, endPoints, stepRule)
+        public AStarAlgorithm(IEndPoints endPoints, IStepRule stepRule, IHeuristic function)
+            : base(endPoints, stepRule)
         {
             heuristic = function;
             heuristics = new Costs();

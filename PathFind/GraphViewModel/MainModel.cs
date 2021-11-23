@@ -1,15 +1,12 @@
-﻿using Algorithm.Factory;
-using GraphLib.Base;
+﻿using GraphLib.Base;
 using GraphLib.Extensions;
 using GraphLib.Interfaces;
-using GraphLib.Interfaces.Factories;
 using GraphLib.NullRealizations.NullObjects;
 using GraphLib.Serialization;
 using GraphLib.Serialization.Extensions;
 using GraphViewModel.Interfaces;
 using Logging.Interface;
 using System;
-using System.Collections.Generic;
 
 namespace GraphViewModel
 {
@@ -24,18 +21,12 @@ namespace GraphViewModel
         protected MainModel(IGraphFieldFactory fieldFactory,
             IVertexEventHolder eventHolder,
             GraphSerializationModule serializationModule,
-            IEnumerable<IGraphAssemble> graphAssembles,
-            BaseEndPoints endPoints,
-            IEnumerable<IAlgorithmFactory> algorithmFactories,
-            ILog log)
+            BaseEndPoints endPoints)
         {
             this.eventHolder = eventHolder;
             this.serializationModule = serializationModule;
             this.fieldFactory = fieldFactory;
-            this.graphAssembles = graphAssembles;
             this.endPoints = endPoints;
-            this.log = log;
-            this.algorithmFactories = algorithmFactories;
             Graph = NullGraph.Instance;
         }
 
@@ -94,12 +85,10 @@ namespace GraphViewModel
             endPoints.ReturnColors();
         }
 
-        protected readonly IEnumerable<IGraphAssemble> graphAssembles;
+        protected ILog log;
         protected readonly IGraphFieldFactory fieldFactory;
-        protected readonly ILog log;
         protected readonly BaseEndPoints endPoints;
         protected readonly GraphSerializationModule serializationModule;
-        protected readonly IEnumerable<IAlgorithmFactory> algorithmFactories;
 
         private readonly IVertexEventHolder eventHolder;
     }

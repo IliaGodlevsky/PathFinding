@@ -8,9 +8,11 @@ namespace ConsoleVersion
         public static Guid[] Everyone => everyone.Value;
         public static Guid MainModel { get; }
         public static Guid MainView { get; }
+        public static Guid PathFindingModel { get; }
 
         static MessageTokens()
         {
+            PathFindingModel = Guid.NewGuid();
             MainModel = Guid.NewGuid();
             MainView = Guid.NewGuid();
             everyone = new Lazy<Guid[]>(GetEveryoneTokens, isThreadSafe: true);

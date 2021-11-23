@@ -1,4 +1,5 @@
 ﻿using Algorithm.Factory;
+using Autofac;
 using Common.Interface;
 using GalaSoft.MvvmLight.Messaging;
 using GraphLib.Base;
@@ -17,6 +18,7 @@ using System.ComponentModel;
 using System.Drawing;
 using System.Runtime.CompilerServices;
 using System.Windows.Forms;
+using WindowsFormsVersion.Configure;
 using WindowsFormsVersion.EventArguments;
 using WindowsFormsVersion.EventHandlers;
 using WindowsFormsVersion.Extensions;
@@ -76,10 +78,11 @@ namespace WindowsFormsVersion.ViewModel
 
         public MainWindow MainWindow { get; set; }
 
-        public MainWindowViewModel(IGraphFieldFactory fieldFactory, IVertexEventHolder eventHolder, GraphSerializationModule serializationModule,
-            IEnumerable<IGraphAssemble> graphAssembles, BaseEndPoints endPoints, IEnumerable<IAlgorithmFactory> algorithmFactories, ILog log)
-            : base(fieldFactory, eventHolder, serializationModule, graphAssembles, endPoints, algorithmFactories, log)
+        public MainWindowViewModel(IGraphFieldFactory fieldFactory,
+            IVertexEventHolder eventHolder, GraphSerializationModule serializationModule, BaseEndPoints endPoints)
+            : base(fieldFactory, eventHolder, serializationModule, endPoints)
         {
+            log = ContainerConfigure.Container.Resolve<ILog>();
             Messenger.Default.Register<AlgorithmStatusMessage>(this, MessageTokens.MainModel, SetAlgorithmStatus);
             Messenger.Default.Register<UpdateStatisticsMessage>(this, MessageTokens.MainModel, SetStatisticsMessage);
             Messenger.Default.Register<GraphCreatedMessage>(this, MessageTokens.MainModel, SetGraph);
@@ -101,7 +104,8 @@ namespace WindowsFormsVersion.ViewModel
             {
                 try
                 {
-                    var model = new PathFindingViewModel(log, Graph, endPoints, algorithmFactories);
+                    var factories = ContainerConfigure.Container.Resolve<IEnumerable<IAlgorithmFactory>>();
+                    var model = new PathFindingViewModel(endPoints, factories);
                     var form = new PathFindingWindow(model);
                     PrepareWindow(model, form);
                 }
@@ -118,7 +122,8 @@ namespace WindowsFormsVersion.ViewModel
             {
                 try
                 {
-                    var model = new GraphCreatingViewModel(log, graphAssembles);
+                    var assembles = ContainerConfigure.Container.Resolve<IEnumerable<IGraphAssemble>>();
+                    var model = new GraphCreatingViewModel(assembles);
                     var form = new GraphCreatingWindow(model);
                     PrepareWindow(model, form);
                 }

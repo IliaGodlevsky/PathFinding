@@ -34,9 +34,9 @@ namespace Algorithm.Factory
 
         }
 
-        public PathfindingAlgorithm CreateAlgorithm(IGraph graph, IEndPoints endPoints)
+        public PathfindingAlgorithm CreateAlgorithm(IEndPoints endPoints)
         {
-            return new AStarAlgorithm(graph, endPoints, stepRule, heuristic);
+            return new AStarAlgorithm(endPoints, stepRule, heuristic);
         }
 
         private readonly IStepRule stepRule;

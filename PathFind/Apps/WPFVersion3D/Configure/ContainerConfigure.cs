@@ -26,11 +26,15 @@ namespace WPFVersion3D.Configure
 {
     internal static class ContainerConfigure
     {
+        public static IContainer Container { get; private set; }
+
         public static IContainer Configure()
         {
             var builder = new ContainerBuilder();
 
-            builder.RegisterType<MainWindowViewModel>().AsSelf().InstancePerLifetimeScope().PropertiesAutowired();
+            builder.RegisterType<MainWindowViewModel>().AsSelf().PropertiesAutowired().SingleInstance();
+            builder.RegisterType<PathFindingViewModel>().AsSelf().InstancePerDependency();
+            builder.RegisterType<GraphCreatingViewModel>().AsSelf().InstancePerDependency();
 
             builder.RegisterType<EndPoints>().As<BaseEndPoints>().SingleInstance();
             builder.RegisterType<Vertex3DEventHolder>().As<IVertexEventHolder>().SingleInstance();
@@ -42,13 +46,13 @@ namespace WPFVersion3D.Configure
             builder.RegisterComposite<Logs, ILog>().SingleInstance();
 
             builder.RegisterType<KnuthRandom>().As<IRandom>().SingleInstance();
-            builder.RegisterType<GraphAssemble>().As<IGraphAssemble>().SingleInstance();
             builder.RegisterType<Vertex3DFactory>().As<IVertexFactory>().SingleInstance();
             builder.RegisterType<Vertex3DCostFactory>().As<IVertexCostFactory>().SingleInstance();
             builder.RegisterType<Coordinate3DFactory>().As<ICoordinateFactory>().SingleInstance();
             builder.RegisterType<Graph3DFactory>().As<IGraphFactory>().SingleInstance();
             builder.RegisterType<VonNeumannNeighborhoodFactory>().As<INeighborhoodFactory>().SingleInstance();
             builder.RegisterType<CubicModel3DFactory>().As<IModel3DFactory>().SingleInstance();
+            builder.RegisterType<GraphAssemble>().As<IGraphAssemble>().SingleInstance();
 
             builder.RegisterType<GraphSerializationModule>().AsSelf().SingleInstance();
             builder.RegisterType<PathInput>().As<IPathInput>().SingleInstance();
@@ -62,7 +66,7 @@ namespace WPFVersion3D.Configure
                 .Where(type => type.ImplementsAll(typeof(IAlgorithmFactory)))
                 .As<IAlgorithmFactory>().SingleInstance();
 
-            return builder.Build();
+            return Container = builder.Build();
         }
     }
 }

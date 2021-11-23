@@ -41,11 +41,15 @@ namespace WPFVersion.Configure
             return new SmoothedGraphAssemble(randomGraphAssemble, costFactory, meanCost, smoothLevel);
         }
 
+        public static IContainer Container { get; private set; }
+
         public static IContainer Configure()
         {
             var builder = new ContainerBuilder();
 
             builder.RegisterType<MainWindowViewModel>().AsSelf().InstancePerLifetimeScope();
+            builder.RegisterType<GraphCreatingViewModel>().AsSelf().InstancePerLifetimeScope();
+            builder.RegisterType<PathFindingViewModel>().AsSelf().InstancePerLifetimeScope();
 
             builder.RegisterType<EndPoints>().As<BaseEndPoints>().SingleInstance();
             builder.RegisterType<VertexEventHolder>().As<IVertexEventHolder>().SingleInstance();
@@ -81,7 +85,7 @@ namespace WPFVersion.Configure
             builder.RegisterType<LandscapeStepRule>().As<IStepRule>().SingleInstance();
             builder.RegisterDecorator<WalkStepRule, IStepRule>();
 
-            return builder.Build();
+            return Container = builder.Build();
         }
     }
 }

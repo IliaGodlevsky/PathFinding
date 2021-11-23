@@ -1,5 +1,4 @@
 ﻿using Common.Extensions.EnumerableExtensions;
-using GraphLib.Interfaces;
 using GraphLib.Interfaces.Factories;
 using GraphViewModel.Interfaces;
 using Logging.Interface;
@@ -19,20 +18,13 @@ namespace GraphLib.ViewModel
 
         public virtual IGraphAssemble SelectedGraphAssemble { get; set; }
 
-        protected GraphCreatingModel(ILog log,
-            IEnumerable<IGraphAssemble> graphAssembles)
+        protected GraphCreatingModel(IEnumerable<IGraphAssemble> graphAssembles)
         {
             GraphAssembles = graphAssembles.ToNameInstanceDictionary();
-            this.graphAssembles = graphAssembles;
-            this.log = log;
         }
 
         public abstract void CreateGraph();
 
-        protected virtual int[] GraphParametres => new[] { Width, Length };
-
-        protected IGraph graph;
-        protected readonly IEnumerable<IGraphAssemble> graphAssembles;
-        protected readonly ILog log;
+        protected ILog log;
     }
 }

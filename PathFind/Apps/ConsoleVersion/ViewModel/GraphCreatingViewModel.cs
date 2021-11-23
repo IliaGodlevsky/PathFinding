@@ -1,4 +1,6 @@
-﻿using ConsoleVersion.Attributes;
+﻿using Autofac;
+using ConsoleVersion.Attributes;
+using ConsoleVersion.Configure;
 using ConsoleVersion.Enums;
 using ConsoleVersion.Extensions;
 using ConsoleVersion.Interface;
@@ -27,10 +29,11 @@ namespace ConsoleVersion.ViewModel
 
         public IValueInput<int> Int32Input { get; set; }
 
-        public GraphCreatingViewModel(ILog log, IEnumerable<IGraphAssemble> graphAssembles)
-            : base(log, graphAssembles)
+        public GraphCreatingViewModel(IEnumerable<IGraphAssemble> graphAssembles)
+            : base(graphAssembles)
         {
             graphAssembleKeyRange = new InclusiveValueRange<int>(graphAssembles.Count(), 1);
+            log = ContainerConfigure.Container.Resolve<ILog>();
         }
 
         [MenuItem(MenuItemsNames.CreateNewGraph, MenuItemPriority.Highest)]
@@ -40,9 +43,9 @@ namespace ConsoleVersion.ViewModel
             {
                 try
                 {
-                    var graph = SelectedGraphAssemble.AssembleGraph(ObstaclePercent, GraphParametres);
+                    var graph = SelectedGraphAssemble.AssembleGraph(ObstaclePercent, Width, Length);
                     var message = new GraphCreatedMessage(graph);
-                    Messenger.Default.SendMany(message, MessageTokens.Everyone);
+                    Messenger.Default.SendMany(message, MessageTokens.MainModel, MessageTokens.MainView);
                 }
                 catch (Exception ex)
                 {

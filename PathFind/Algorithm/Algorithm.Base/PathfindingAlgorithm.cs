@@ -63,11 +63,10 @@ namespace Algorithm.Base
         /// </summary>
         /// <param name="graph"></param>
         /// <param name="endPoints"></param>
-        protected PathfindingAlgorithm(IGraph graph, IEndPoints endPoints)
+        protected PathfindingAlgorithm(IEndPoints endPoints)
         {
             visitedVertices = new VisitedVertices();
             parentVertices = new ParentVertices();
-            this.graph = graph;
             this.endPoints = endPoints;
         }
 
@@ -95,8 +94,9 @@ namespace Algorithm.Base
         /// <summary>
         /// Determines whether the algorithm is able to continue 
         /// the pathfinding process
+        /// algorithm terminated prematurely
         /// </summary>
-        protected bool IsAbleToContinue => !CurrentVertex.IsNull() && !IsInterruptRequested;
+        protected bool IsTerminatedPrematurely => !CurrentVertex.IsNull() && !IsInterruptRequested;
 
         /// <summary>
         /// Determines, whether the algorithm has reached the target vertex
@@ -106,7 +106,7 @@ namespace Algorithm.Base
         /// <returns></returns>
         protected virtual bool IsDestination(IEndPoints endPoints)
         {
-            return endPoints.Target.IsEqual(CurrentVertex) || !IsAbleToContinue;
+            return endPoints.Target.IsEqual(CurrentVertex) || !IsTerminatedPrematurely;
         }
 
         protected void RaiseVertexVisited(AlgorithmEventArgs e)
@@ -121,10 +121,6 @@ namespace Algorithm.Base
 
         protected virtual void PrepareForPathfinding()
         {
-            if (!graph.Contains(endPoints))
-            {
-                throw new EndPointsNotFromCurrentGraphException(graph, endPoints);
-            }
             Reset();
             IsInProcess = true;
             Started?.Invoke(this, new ProcessEventArgs());
@@ -154,7 +150,6 @@ namespace Algorithm.Base
 
         protected readonly IVisitedVertices visitedVertices;
         protected readonly IParentVertices parentVertices;
-        protected readonly IGraph graph;
         protected readonly IEndPoints endPoints;
     }
 }

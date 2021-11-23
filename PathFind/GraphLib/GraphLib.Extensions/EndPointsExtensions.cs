@@ -13,7 +13,7 @@ namespace GraphLib.Extensions
         /// </summary>
         /// <param name="self"></param>
         /// <returns>An array of end points</returns>
-        public static IEnumerable<IEndPoints> ToLocalEndPoints(this IEndPoints self)
+        public static IEnumerable<IEndPoints> ToSubEndPoints(this IEndPoints self)
         {
             using (var iterator = self.EndPoints.GetEnumerator())
             {
@@ -22,7 +22,7 @@ namespace GraphLib.Extensions
                 while (iterator.MoveNext())
                 {
                     var current = iterator.Current;
-                    yield return new LocalEndPoints(previous, current);
+                    yield return new SubEndPoints(previous, current);
                     previous = iterator.Current;
                 }
             }
