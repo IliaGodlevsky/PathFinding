@@ -77,7 +77,7 @@
     <Compile Include="Extensions\ColorExtensions.cs" />
     <Compile Include="Extensions\IMessengerExtensions.cs" />
     <Compile Include="Infrastructure\RelayCommand.cs" />
-    <Compile Include="Messages\AlgorithmChosenMessage.cs" />
+    <Compile Include="Messages\SubscribeOnAlgorithmEventsMessage.cs" />
     <Compile Include="Messages\AlgorithmStartedMessage.cs" />
     <Compile Include="Messages\AlgorithmIndexMessage.cs" />
     <Compile Include="Messages\AlgorithmStatusMessage.cs" />

@@ -43,7 +43,7 @@ namespace Visualization
             visualizations.Visualize(algorithm);
         }
 
-        public virtual void SubscribeOnAlgorithmEvents(PathfindingAlgorithm algorithm)
+        protected virtual void SubscribeOnAlgorithmEvents(PathfindingAlgorithm algorithm)
         {
             algorithm.VertexVisited += OnVertexVisited;
             algorithm.VertexEnqueued += OnVertexEnqueued;
@@ -51,7 +51,7 @@ namespace Visualization
             algorithm.Started += OnAlgorithmStarted;
         }
 
-        public void AddEndPoints(IAlgorithm algorithm, IEndPoints endPoints)
+        protected void AddEndPoints(IAlgorithm algorithm, IEndPoints endPoints)
         {
             source.Add(algorithm, endPoints.Source);
             target.Add(algorithm, endPoints.Target);
@@ -59,7 +59,7 @@ namespace Visualization
             intermediate.AddRange(algorithm, intermediates);
         }
 
-        public void AddPathVertices(IAlgorithm algorithm, IGraphPath grapPath)
+        protected void AddPathVertices(IAlgorithm algorithm, IGraphPath grapPath)
         {
             path.AddRange(algorithm, grapPath.Path);
         }

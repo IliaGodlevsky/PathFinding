@@ -35,7 +35,14 @@ namespace WPFVersion.Model
 
         private void AlgorithmChosen(SubscribeOnAlgorithmEventsMessage message)
         {
-            SubscribeOnAlgorithmEvents(message.Algorithm);
+            if (message.IsVisualizationRequired)
+            {
+                SubscribeOnAlgorithmEvents(message.Algorithm);
+            }
+            else
+            {                
+                message.Algorithm.Started += OnAlgorithmStarted;
+            }
         }
 
         private void RegisterEndPointsForAlgorithm(EndPointsChosenMessage message)

@@ -1,5 +1,6 @@
 ﻿using Algorithm.Factory;
 using Algorithm.Interfaces;
+using Algorithm.Realizations.Heuristic;
 using Algorithm.Realizations.StepRules;
 using Autofac;
 using Common.Extensions;
@@ -70,6 +71,7 @@ namespace WPFVersion.Configure
             builder.RegisterType<GraphSerializationModule>().AsSelf().SingleInstance();
             builder.RegisterType<PathInput>().As<IPathInput>().SingleInstance();
             builder.RegisterType<GraphSerializer>().As<IGraphSerializer>().SingleInstance();
+            builder.RegisterDecorator<CompressGraphSerializer, IGraphSerializer>();
             builder.RegisterDecorator<CryptoGraphSerializer, IGraphSerializer>();
             builder.RegisterType<BinaryFormatter>().As<IFormatter>().SingleInstance();
             builder.RegisterType<VertexFromInfoFactory>().As<IVertexFromInfoFactory>().SingleInstance();

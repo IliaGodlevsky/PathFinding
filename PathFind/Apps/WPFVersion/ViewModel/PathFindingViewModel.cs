@@ -118,11 +118,8 @@ namespace WPFVersion.ViewModel
 
         protected override void SubscribeOnAlgorithmEvents(PathfindingAlgorithm algorithm)
         {
-            if (IsVisualizationRequired)
-            {
-                var message = new SubscribeOnAlgorithmEventsMessage(algorithm);
-                Messenger.Default.Send(message, MessageTokens.VisualizationModel);
-            }
+            var message = new SubscribeOnAlgorithmEventsMessage(algorithm, IsVisualizationRequired);
+            Messenger.Default.Send(message, MessageTokens.VisualizationModel);
             base.SubscribeOnAlgorithmEvents(algorithm);
         }
 

@@ -46,7 +46,7 @@ namespace ConsoleVersion.Configure
         public static IContainer Configure()
         {
             var builder = new ContainerBuilder();
-
+            // Input block
             builder.RegisterType<EnumConsoleValueInput<Answer>>().As<IValueInput<Answer>>().SingleInstance();
             builder.RegisterType<Int32ConsoleValueInput>().As<IValueInput<int>>().SingleInstance();
 
@@ -56,7 +56,7 @@ namespace ConsoleVersion.Configure
             builder.RegisterType<EndPoints>().As<BaseEndPoints>().SingleInstance();
             builder.RegisterType<VertexEventHolder>().As<IVertexEventHolder>().SingleInstance().PropertiesAutowired();
             builder.RegisterType<GraphFieldFactory>().As<IGraphFieldFactory>().SingleInstance();
-
+            // Logging block
             builder.RegisterType<FileLog>().As<ILog>().SingleInstance();
             builder.RegisterType<ConsoleLog>().As<ILog>().SingleInstance();
             builder.RegisterType<MailLog>().As<ILog>().SingleInstance();
@@ -75,14 +75,14 @@ namespace ConsoleVersion.Configure
             builder.RegisterType<GraphSerializationModule>().AsSelf().SingleInstance();
             builder.RegisterType<PathInput>().As<IPathInput>().SingleInstance();
             builder.RegisterType<GraphSerializer>().As<IGraphSerializer>().SingleInstance();
+            builder.RegisterDecorator<CompressGraphSerializer, IGraphSerializer>();
             builder.RegisterDecorator<CryptoGraphSerializer, IGraphSerializer>();
             builder.RegisterType<BinaryFormatter>().As<IFormatter>().SingleInstance();
             builder.RegisterType<VertexFromInfoFactory>().As<IVertexFromInfoFactory>().SingleInstance();
-
+            // Algorithms block
             builder.RegisterAssemblyTypes(AppDomain.CurrentDomain.GetAssemblies())
                 .Where(type => type.ImplementsAll(typeof(IAlgorithmFactory)))
                 .As<IAlgorithmFactory>().SingleInstance();
-
             builder.RegisterType<LandscapeStepRule>().As<IStepRule>().SingleInstance();
             builder.RegisterDecorator<WalkStepRule, IStepRule>();
             builder.RegisterDecorator<RatedStepRule, IStepRule>();
