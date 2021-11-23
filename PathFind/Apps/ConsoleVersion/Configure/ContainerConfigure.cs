@@ -43,6 +43,8 @@ namespace ConsoleVersion.Configure
             return new SmoothedGraphAssemble(randomGraphAssemble, costFactory, meanCost);
         }
 
+        public static IContainer Container { get; private set; }
+
         public static IContainer Configure()
         {
             var builder = new ContainerBuilder();
@@ -87,7 +89,7 @@ namespace ConsoleVersion.Configure
             builder.RegisterDecorator<WalkStepRule, IStepRule>();
             builder.RegisterDecorator<RatedStepRule, IStepRule>();
 
-            return builder.Build();
+            return Container = builder.Build();
         }
     }
 }

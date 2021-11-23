@@ -1,4 +1,5 @@
 ﻿using Algorithm.Factory;
+using Autofac;
 using Common.Interface;
 using EnumerationValues.Realizations;
 using GalaSoft.MvvmLight.Messaging;
@@ -8,7 +9,6 @@ using GraphLib.Interfaces;
 using GraphLib.Interfaces.Factories;
 using GraphLib.Serialization;
 using GraphViewModel;
-using Logging.Interface;
 using NullObject.Extensions;
 using System;
 using System.Collections.Generic;
@@ -17,6 +17,7 @@ using System.Runtime.CompilerServices;
 using System.Windows;
 using System.Windows.Input;
 using WPFVersion3D.Axes;
+using WPFVersion3D.Configure;
 using WPFVersion3D.Enums;
 using WPFVersion3D.Extensions;
 using WPFVersion3D.Infrastructure;
@@ -57,13 +58,8 @@ namespace WPFVersion3D.ViewModel
         public ICommand ClearVerticesColorCommand { get; }
 
         public MainWindowViewModel(IGraphFieldFactory fieldFactory,
-            IVertexEventHolder eventHolder,
-            GraphSerializationModule serializationModule,
-            IEnumerable<IGraphAssemble> graphAssembles,
-            BaseEndPoints endPoints,
-            IEnumerable<IAlgorithmFactory> algorithmFactories,
-            ILog log)
-            : base(fieldFactory, eventHolder, serializationModule, graphAssembles, endPoints, algorithmFactories, log)
+            IVertexEventHolder eventHolder, GraphSerializationModule serializationModule, BaseEndPoints endPoints)
+            : base(fieldFactory, eventHolder, serializationModule, endPoints)
         {
             ClearVerticesColorCommand = new RelayCommand(ExecuteClearVerticesColors, CanExecuteClearGraphOperation);
             StartPathFindCommand = new RelayCommand(ExecuteStartPathFindCommand, CanExecuteStartFindPathCommand);
@@ -83,9 +79,9 @@ namespace WPFVersion3D.ViewModel
         {
             try
             {
-                var viewModel = new PathFindingViewModel(log, Graph, endPoints, algorithmFactories);
+                var model = ContainerConfigure.Container.Resolve<PathFindingViewModel>();
                 var window = new PathFindWindow();
-                PrepareWindow(viewModel, window);
+                PrepareWindow(model, window);
             }
             catch (SystemException ex)
             {
@@ -101,7 +97,7 @@ namespace WPFVersion3D.ViewModel
         {
             try
             {
-                var model = new GraphCreatingViewModel(log, graphAssembles);
+                var model = ContainerConfigure.Container.Resolve<GraphCreatingViewModel>();
                 var window = new GraphCreateWindow();
                 PrepareWindow(model, window);
             }

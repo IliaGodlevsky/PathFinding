@@ -16,8 +16,8 @@ namespace Algorithm.Algos.Algos
     public class LeeAlgorithm : WaveAlgorithm,
         IAlgorithm, IInterruptableProcess, IInterruptable, IDisposable
     {
-        public LeeAlgorithm(IGraph graph, IEndPoints endPoints)
-            : base(graph, endPoints)
+        public LeeAlgorithm(IEndPoints endPoints)
+            : base(endPoints)
         {
             verticesQueue = new Queue<IVertex>();
             accumulatedCosts = new Costs();

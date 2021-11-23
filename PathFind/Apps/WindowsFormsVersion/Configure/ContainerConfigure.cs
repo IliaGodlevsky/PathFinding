@@ -36,6 +36,8 @@ namespace WindowsFormsVersion.Configure
             return new SmoothedGraphAssemble(randomGraphAssemble, costFactory);
         }
 
+        public static IContainer Container { get; private set; }
+
         public static IContainer Configure()
         {
             var builder = new ContainerBuilder();
@@ -73,7 +75,7 @@ namespace WindowsFormsVersion.Configure
                 .Where(type => type.ImplementsAll(typeof(IAlgorithmFactory)))
                 .As<IAlgorithmFactory>().SingleInstance();
 
-            return builder.Build();
+            return Container = builder.Build();
         }
     }
 }

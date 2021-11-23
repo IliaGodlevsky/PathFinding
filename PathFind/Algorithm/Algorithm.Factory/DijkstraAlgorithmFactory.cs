@@ -22,9 +22,9 @@ namespace Algorithm.Factory
 
         }
 
-        public PathfindingAlgorithm CreateAlgorithm(IGraph graph, IEndPoints endPoints)
+        public PathfindingAlgorithm CreateAlgorithm(IEndPoints endPoints)
         {
-            return new DijkstraAlgorithm(graph, endPoints, stepRule);
+            return new DijkstraAlgorithm(endPoints, stepRule);
         }
 
         private readonly IStepRule stepRule;

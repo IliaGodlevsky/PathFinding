@@ -1,8 +1,10 @@
 ﻿using Algorithm.Base;
 using Algorithm.Factory;
 using Algorithm.Infrastructure.EventArguments;
+using Autofac;
 using Common.Extensions;
 using ConsoleVersion.Attributes;
+using ConsoleVersion.Configure;
 using ConsoleVersion.Enums;
 using ConsoleVersion.EventArguments;
 using ConsoleVersion.Extensions;
@@ -38,13 +40,14 @@ namespace ConsoleVersion.ViewModel
         public IValueInput<int> Int32Input { get; set; }
         public IValueInput<Answer> AnswerInput { get; set; }
 
-        public PathFindingViewModel(ILog log, IGraph graph,
-            BaseEndPoints endPoints, IEnumerable<IAlgorithmFactory> algorithmFactories)
-            : base(log, graph, endPoints, algorithmFactories)
+        public PathFindingViewModel(BaseEndPoints endPoints, IEnumerable<IAlgorithmFactory> algorithmFactories)
+            : base(endPoints, algorithmFactories)
         {
+            log = ContainerConfigure.Container.Resolve<ILog>();
             algorithmKeysValueRange = new InclusiveValueRange<int>(Algorithms.Length, 1);
             ConsoleKeystrokesHook.Instance.KeyPressed += OnConsoleKeyPressed;
             DelayTime = Constants.AlgorithmDelayTimeValueRange.LowerValueOfRange;
+            Messenger.Default.Register<GraphCreatedMessage>(this, MessageTokens.PathFindingModel, SetGraph);
         }
 
         [MenuItem(MenuItemsNames.FindPath, MenuItemPriority.Highest)]
@@ -175,10 +178,16 @@ namespace ConsoleVersion.ViewModel
             }
         }
 
+        private void SetGraph(GraphCreatedMessage message)
+        {
+            graph = message.Graph;
+        }
+
         private string CurrentAlgorithmName { get; set; }
         private int NumberOfAvailableIntermediate => graph.Size - graph.GetIsolatedCount() - 2;
         private bool HasAnyVerticesToChooseAsEndPoints => NumberOfAvailableIntermediate >= 0;
 
         private readonly InclusiveValueRange<int> algorithmKeysValueRange;
+        private IGraph graph;
     }
 }

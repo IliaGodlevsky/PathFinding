@@ -10,14 +10,14 @@ namespace Algorithm.Algos.Algos
     public sealed class DepthFirstAlgorithm : GreedyAlgorithm,
         IAlgorithm, IInterruptableProcess, IInterruptable, IDisposable
     {
-        public DepthFirstAlgorithm(IGraph graph, IEndPoints endPoints, IHeuristic heuristic)
-            : base(graph, endPoints)
+        public DepthFirstAlgorithm(IEndPoints endPoints, IHeuristic heuristic)
+            : base(endPoints)
         {
             this.heuristic = heuristic;
         }
 
-        public DepthFirstAlgorithm(IGraph graph, IEndPoints endPoints)
-            : this(graph, endPoints, new ManhattanDistance())
+        public DepthFirstAlgorithm(IEndPoints endPoints)
+            : this(endPoints, new ManhattanDistance())
         {
 
         }

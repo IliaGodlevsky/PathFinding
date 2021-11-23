@@ -17,8 +17,8 @@ namespace Algorithm.Base
     /// </summary>
     public abstract class WaveAlgorithm : PathfindingAlgorithm, IAlgorithm, IInterruptableProcess, IInterruptable, IDisposable
     {
-        protected WaveAlgorithm(IGraph graph, IEndPoints endPoints)
-            : base(graph, endPoints)
+        protected WaveAlgorithm(IEndPoints endPoints)
+            : base(endPoints)
         {
 
         }
@@ -27,7 +27,7 @@ namespace Algorithm.Base
         {
             IGraphPath path = NullGraphPath.Instance;
             PrepareForPathfinding();
-            foreach (var endPoint in endPoints.ToLocalEndPoints())
+            foreach (var endPoint in endPoints.ToSubEndPoints())
             {
                 CurrentEndPoints = endPoint;
                 PrepareForLocalPathfinding();
@@ -38,13 +38,14 @@ namespace Algorithm.Base
                     CurrentVertex = NextVertex;
                     VisitVertex(CurrentVertex);
                 }
-                if (!IsAbleToContinue) break;
+                if (!IsTerminatedPrematurely) break;
                 var found = CreateGraphPath();
                 path = new CombinedGraphPath(path, found);
                 Reset();
             }
             CompletePathfinding();
-            return !IsAbleToContinue ? NullGraphPath.Instance : path;
+            return !IsTerminatedPrematurely 
+? NullGraphPath.Instance : path;
         }
 
         protected virtual void PrepareForLocalPathfinding()

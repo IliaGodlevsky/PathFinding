@@ -22,9 +22,9 @@ namespace Algorithm.Factory
 
         }
 
-        public PathfindingAlgorithm CreateAlgorithm(IGraph graph, IEndPoints endPoints)
+        public PathfindingAlgorithm CreateAlgorithm(IEndPoints endPoints)
         {
-            return new BestFirstLeeAlgorithm(graph, endPoints, heuristic);
+            return new BestFirstLeeAlgorithm(endPoints, heuristic);
         }
 
         private readonly IHeuristic heuristic;

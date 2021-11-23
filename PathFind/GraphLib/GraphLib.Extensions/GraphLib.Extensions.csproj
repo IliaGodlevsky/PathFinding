@@ -49,7 +49,7 @@
     <Compile Include="IDictionaryExtensions.cs" />
     <Compile Include="INeighbourhoodExtensions.cs" />
     <Compile Include="IVisitedVerticesExtensions.cs" />
-    <Compile Include="Objects\LocalEndPoints.cs" />
+    <Compile Include="Objects\SubEndPoints.cs" />
     <Compile Include="StackExtension.cs" />
     <Compile Include="VertexExtension.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

@@ -1,5 +1,6 @@
 ﻿using Algorithm.Factory;
 using Algorithm.Infrastructure.EventArguments;
+using Autofac;
 using Common.Extensions;
 using Common.Interface;
 using GalaSoft.MvvmLight.Messaging;
@@ -12,6 +13,7 @@ using Logging.Interface;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using WindowsFormsVersion.Configure;
 using WindowsFormsVersion.Messeges;
 
 namespace WindowsFormsVersion.ViewModel
@@ -20,10 +22,10 @@ namespace WindowsFormsVersion.ViewModel
     {
         public event EventHandler WindowClosed;
 
-        public PathFindingViewModel(ILog log, IGraph graph,
-            BaseEndPoints endPoints, IEnumerable<IAlgorithmFactory> algorithmFactories)
-            : base(log, graph, endPoints, algorithmFactories)
+        public PathFindingViewModel(BaseEndPoints endPoints, IEnumerable<IAlgorithmFactory> algorithmFactories)
+            : base(endPoints, algorithmFactories)
         {
+            log = ContainerConfigure.Container.Resolve<ILog>();
             DelayTime = Constants.AlgorithmDelayTimeValueRange.LowerValueOfRange;
         }
 

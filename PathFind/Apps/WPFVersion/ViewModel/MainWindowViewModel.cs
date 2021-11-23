@@ -1,4 +1,5 @@
 ﻿using Algorithm.Factory;
+using Autofac;
 using Common.Interface;
 using GalaSoft.MvvmLight.Messaging;
 using GraphLib.Base;
@@ -16,6 +17,7 @@ using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using System.Windows;
 using System.Windows.Input;
+using WPFVersion.Configure;
 using WPFVersion.Extensions;
 using WPFVersion.Infrastructure;
 using WPFVersion.Messages;
@@ -54,10 +56,10 @@ namespace WPFVersion.ViewModel
         public ICommand ResetColorizingCommand { get; }
 
         public MainWindowViewModel(IGraphFieldFactory fieldFactory, IVertexEventHolder eventHolder,
-            GraphSerializationModule SerializationModule,
-            IEnumerable<IGraphAssemble> graphAssembles, BaseEndPoints endPoints, IEnumerable<IAlgorithmFactory> algorithmFactories, ILog log)
-            : base(fieldFactory, eventHolder, SerializationModule, graphAssembles, endPoints, algorithmFactories, log)
+            GraphSerializationModule SerializationModule, BaseEndPoints endPoints)
+            : base(fieldFactory, eventHolder, SerializationModule, endPoints)
         {
+            log = ContainerConfigure.Container.Resolve<ILog>();
             ResetColorizingCommand = new RelayCommand(ExecuteResetColorizing, CanExecuteColorizingGraphOperation);
             ColorizeAccordingToCostCommand = new RelayCommand(ExecuteColorizeAccordingToCost, CanExecuteColorizingGraphOperation);
             ClearVerticesColorCommand = new RelayCommand(ExecuteClearVerticesColors, CanExecuteClearGraphOperation);
@@ -76,8 +78,8 @@ namespace WPFVersion.ViewModel
         {
             try
             {
-                var viewModel = new PathFindingViewModel(log, Graph,
-                    endPoints, algorithmFactories);
+
+                var viewModel = ContainerConfigure.Container.Resolve<PathFindingViewModel>();
                 var window = new PathFindWindow();
                 PrepareWindow(viewModel, window);
             }
@@ -95,7 +97,7 @@ namespace WPFVersion.ViewModel
         {
             try
             {
-                var model = new GraphCreatingViewModel(log, graphAssembles);
+                var model = ContainerConfigure.Container.Resolve<GraphCreatingViewModel>();
                 var window = new GraphCreatesWindow();
                 PrepareWindow(model, window);
             }

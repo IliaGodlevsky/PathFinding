@@ -1,5 +1,7 @@
 ﻿using Algorithm.Factory;
+using Autofac;
 using ConsoleVersion.Attributes;
+using ConsoleVersion.Configure;
 using ConsoleVersion.Enums;
 using ConsoleVersion.Extensions;
 using ConsoleVersion.Interface;
@@ -39,10 +41,11 @@ namespace ConsoleVersion.ViewModel
         public IValueInput<int> Int32Input { get; set; }
         public IValueInput<Answer> AnswerInput { get; set; }
 
-        public MainViewModel(IGraphFieldFactory fieldFactory, IVertexEventHolder eventHolder, GraphSerializationModule serializationModule,
-            IEnumerable<IGraphAssemble> graphAssembles, BaseEndPoints endPoints, IEnumerable<IAlgorithmFactory> algorithmFactories, ILog log)
-            : base(fieldFactory, eventHolder, serializationModule, graphAssembles, endPoints, algorithmFactories, log)
+        public MainViewModel(IGraphFieldFactory fieldFactory,
+            IVertexEventHolder eventHolder, GraphSerializationModule serializationModule, BaseEndPoints endPoints)
+            : base(fieldFactory, eventHolder, serializationModule, endPoints)
         {
+            log = ContainerConfigure.Container.Resolve<ILog>();
             Messenger.Default.Register<GraphCreatedMessage>(this, MessageTokens.MainModel, message => ConnectNewGraph(message.Graph));
             Messenger.Default.Register<ClearGraphMessage>(this, MessageTokens.MainModel, message => ClearGraph());
             Messenger.Default.Register<ClearColorsMessage>(this, MessageTokens.MainModel, message => ClearColors());
@@ -59,7 +62,8 @@ namespace ConsoleVersion.ViewModel
         {
             try
             {
-                var model = new GraphCreatingViewModel(log, graphAssembles);
+                var assembles = ContainerConfigure.Container.Resolve<IEnumerable<IGraphAssemble>>();
+                var model = new GraphCreatingViewModel(assembles);
                 var view = new GraphCreateView(model);
                 PrepareViewAndModel(view, model);
                 view.Start();
@@ -76,7 +80,8 @@ namespace ConsoleVersion.ViewModel
         {
             try
             {
-                var model = new PathFindingViewModel(log, Graph, endPoints, algorithmFactories);
+                var factories = ContainerConfigure.Container.Resolve<IEnumerable<IAlgorithmFactory>>();
+                var model = new PathFindingViewModel(endPoints, factories);
                 var view = new PathFindView(model);
                 PrepareViewAndModel(view, model);
                 model.AnswerInput = AnswerInput;

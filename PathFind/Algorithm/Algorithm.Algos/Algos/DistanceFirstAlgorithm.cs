@@ -10,14 +10,14 @@ namespace Algorithm.Algos.Algos
     public class DistanceFirstAlgorithm : GreedyAlgorithm,
         IAlgorithm, IInterruptableProcess, IInterruptable, IDisposable
     {
-        public DistanceFirstAlgorithm(IGraph graph, IEndPoints endPoints, IHeuristic heuristic)
-            : base(graph, endPoints)
+        public DistanceFirstAlgorithm(IEndPoints endPoints, IHeuristic heuristic)
+            : base(endPoints)
         {
             this.heuristic = heuristic;
         }
 
-        public DistanceFirstAlgorithm(IGraph graph, IEndPoints endPoints)
-            : this(graph, endPoints, new EuclidianDistance())
+        public DistanceFirstAlgorithm(IEndPoints endPoints)
+            : this(endPoints, new EuclidianDistance())
         {
 
         }
