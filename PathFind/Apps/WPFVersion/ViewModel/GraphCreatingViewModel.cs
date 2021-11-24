@@ -14,9 +14,9 @@ using WPFVersion.Messages;
 
 namespace WPFVersion.ViewModel
 {
-    public class GraphCreatingViewModel : GraphCreatingModel, IModel, IViewModel
+    public class GraphCreatingViewModel : GraphCreatingModel, IModel, IViewModel, IDisposable
     {
-        public event EventHandler WindowClosed;
+        public event Action WindowClosed;
 
         public ICommand ConfirmCreateGraphCommand { get; }
         public ICommand CancelCreateGraphCommand { get; }
@@ -51,8 +51,7 @@ namespace WPFVersion.ViewModel
 
         private void ExecuteCloseWindowCommand(object param)
         {
-            WindowClosed?.Invoke(this, EventArgs.Empty);
-            WindowClosed = null;
+            WindowClosed?.Invoke();
         }
 
         private bool CanExecuteConfirmCreateGraphCommand(object sender)
@@ -60,6 +59,11 @@ namespace WPFVersion.ViewModel
             return SelectedGraphAssemble != null
                 && Constants.GraphWidthValueRange.Contains(Width)
                 && Constants.GraphLengthValueRange.Contains(Length);
+        }
+
+        public void Dispose()
+        {
+            WindowClosed = null;
         }
     }
 }

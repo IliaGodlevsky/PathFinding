@@ -22,7 +22,7 @@ using WPFVersion.View.Windows;
 
 namespace WPFVersion.ViewModel
 {
-    public class MainWindowViewModel : MainModel, IMainModel, IModel, INotifyPropertyChanged
+    public class MainWindowViewModel : MainModel, IMainModel, IModel, INotifyPropertyChanged, IDisposable
     {
         public event PropertyChangedEventHandler PropertyChanged;
 
@@ -72,7 +72,8 @@ namespace WPFVersion.ViewModel
         {
             try
             {
-                ContainerConfigure.Container.Resolve<PathFindWindow>();
+                var window = ContainerConfigure.Container.Resolve<PathFindWindow>();
+                window.Show();
             }
             catch (SystemException ex)
             {
@@ -88,7 +89,8 @@ namespace WPFVersion.ViewModel
         {
             try
             {
-                ContainerConfigure.Container.Resolve<GraphCreatesWindow>();
+                var window = ContainerConfigure.Container.Resolve<GraphCreatesWindow>();
+                window.Show();
             }
             catch (Exception ex)
             {
@@ -137,6 +139,11 @@ namespace WPFVersion.ViewModel
         private void OnIsAllAlgorithmsFinished(IsAllAlgorithmsFinishedMessage message)
         {
             IsAllAlgorithmsFinished = message.IsAllAlgorithmsFinished;
+        }
+
+        public void Dispose()
+        {
+            Messenger.Default.Unregister(this);
         }
 
         private CostColors costColors;

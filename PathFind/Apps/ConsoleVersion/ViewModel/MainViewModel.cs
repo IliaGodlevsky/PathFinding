@@ -30,7 +30,7 @@ using Console = Colorful.Console;
 namespace ConsoleVersion.ViewModel
 {
     internal sealed class MainViewModel : MainModel,
-        IMainModel, IModel, IInterruptable, IRequireAnswerInput, IRequireInt32Input
+        IMainModel, IModel, IInterruptable, IRequireAnswerInput, IRequireInt32Input, IDisposable
     {
         public event ProcessEventHandler Interrupted;
 
@@ -44,6 +44,7 @@ namespace ConsoleVersion.ViewModel
             Messenger.Default.Register<GraphCreatedMessage>(this, MessageTokens.MainModel, message => ConnectNewGraph(message.Graph));
             Messenger.Default.Register<ClearGraphMessage>(this, MessageTokens.MainModel, message => ClearGraph());
             Messenger.Default.Register<ClearColorsMessage>(this, MessageTokens.MainModel, message => ClearColors());
+            Messenger.Default.Register<ClaimGraphMessage>(this, MessageTokens.MainModel, RecieveClaimGraphMessage);
         }
 
         [MenuItem(MenuItemsNames.MakeUnwieghted, MenuItemPriority.Normal)]
@@ -57,10 +58,11 @@ namespace ConsoleVersion.ViewModel
         {
             try
             {
-                var view = ContainerConfigure.Container.Resolve<GraphCreateView>();
-                view.NewMenuIteration += DisplayGraph;
-                view.Start();
-                view.NewMenuIteration -= DisplayGraph;
+                using (var scope = ContainerConfigure.Container.BeginLifetimeScope())
+                {
+                    var view = scope.Resolve<GraphCreateView>();
+                    view.Start();
+                }
             }
             catch (Exception ex)
             {
@@ -73,11 +75,11 @@ namespace ConsoleVersion.ViewModel
         {
             try
             {
-                var view = ContainerConfigure.Container.Resolve<PathFindView>();
-                Messenger.Default.Send(new GraphCreatedMessage(Graph), MessageTokens.PathFindingModel);
-                view.NewMenuIteration += DisplayGraph;
-                view.Start();
-                view.NewMenuIteration -= DisplayGraph;
+                using (var scope = ContainerConfigure.Container.BeginLifetimeScope())
+                {
+                    var view = scope.Resolve<PathFindView>();
+                    view.Start();
+                }
             }
             catch (Exception ex)
             {
@@ -122,6 +124,11 @@ namespace ConsoleVersion.ViewModel
             {
                 log.Error(ex);
             }
+        }
+
+        private void RecieveClaimGraphMessage(ClaimGraphMessage message)
+        {
+            Messenger.Default.Send(new GraphCreatedMessage(Graph), message.ClaimerMessageToken);
         }
 
         [MenuItem(MenuItemsNames.Exit, MenuItemPriority.Lowest)]
@@ -177,6 +184,11 @@ namespace ConsoleVersion.ViewModel
                 var vertex = Int32Input.InputVertex(graph2D);
                 function(vertex as Vertex);
             }
+        }
+
+        public void Dispose()
+        {
+            Interrupted = null;
         }
     }
 }

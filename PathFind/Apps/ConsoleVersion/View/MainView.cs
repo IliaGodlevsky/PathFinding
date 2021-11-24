@@ -44,8 +44,6 @@ namespace ConsoleVersion.View
             Messenger.Default.Register<GraphCreatedMessage>(this, MessageTokens.MainView, OnNewGraphCreated);
             Messenger.Default.Register<CostRangeChangedMessage>(this, MessageTokens.MainView, OnCostRangeChanged);
             Messenger.Default.Register<UpdateStatisticsMessage>(this, MessageTokens.MainView, OnStatisticsUpdated);
-            Model.Interrupted += OnInterrupted;
-            NewMenuIteration += Model.DisplayGraph;
             var message = new CostRangeChangedMessage(BaseVertexCost.CostRange);
             OnCostRangeChanged(message);
         }

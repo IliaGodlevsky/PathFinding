@@ -7,21 +7,14 @@ using WindowsFormsVersion.ViewModel;
 namespace WindowsFormsVersion.View
 {
     [AppWindow]
-    internal partial class GraphCreatingWindow : Form
+    internal partial class GraphCreatingWindow : ViewModelWindow
     {
-        public GraphCreatingViewModel Model { get; set; }
-
-        public GraphCreatingWindow(GraphCreatingViewModel model)
+        public GraphCreatingWindow(GraphCreatingViewModel model) : base(model)
         {
             InitializeComponent();
 
-            model.WindowClosed += (sender, args) => Close();
-            StartPosition = FormStartPosition.CenterScreen;
-
-            Model = model;
-
-            okButton.Click += Model.CreateGraph;
-            cancelButton.Click += Model.CancelCreateGraph;
+            okButton.Click += model.CreateGraph;
+            cancelButton.Click += model.CancelCreateGraph;
 
             var source = model.GraphAssembles.ToArray();
             graphAssemblesListBox.DataSource = source;
@@ -39,8 +32,8 @@ namespace WindowsFormsVersion.View
 
             var bindWidth = new Binding(
                 nameof(widthTextBox.Text),
-                Model,
-                nameof(Model.Width));
+                model,
+                nameof(model.Width));
             widthTextBox.DataBindings.Add(bindWidth);
 
             bindWidth.Format += IntToString;
@@ -48,8 +41,8 @@ namespace WindowsFormsVersion.View
 
             var bindHeight = new Binding(
                 nameof(heightTextBox.Text),
-                Model,
-                nameof(Model.Length));
+                model,
+                nameof(model.Length));
             heightTextBox.DataBindings.Add(bindHeight);
 
             bindHeight.Format += IntToString;
@@ -68,8 +61,8 @@ namespace WindowsFormsVersion.View
 
             var bindObstaclePercent = new Binding(
                 nameof(obstacleTextBox.Text),
-                Model,
-                nameof(Model.ObstaclePercent),
+                model,
+                nameof(model.ObstaclePercent),
                 true,
                 DataSourceUpdateMode.OnPropertyChanged);
             obstacleTextBox.DataBindings.Add(bindObstaclePercent);

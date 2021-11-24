@@ -29,7 +29,7 @@ using ValueRange.Extensions;
 namespace ConsoleVersion.ViewModel
 {
     internal sealed class PathFindingViewModel : PathFindingModel,
-        IModel, IInterruptable, IRequireInt32Input, IRequireAnswerInput
+        IModel, IInterruptable, IRequireInt32Input, IRequireAnswerInput, IDisposable
     {
         public event ProcessEventHandler Interrupted;
 
@@ -45,6 +45,8 @@ namespace ConsoleVersion.ViewModel
             ConsoleKeystrokesHook.Instance.KeyPressed += OnConsoleKeyPressed;
             DelayTime = Constants.AlgorithmDelayTimeValueRange.LowerValueOfRange;
             Messenger.Default.Register<GraphCreatedMessage>(this, MessageTokens.PathFindingModel, SetGraph);
+            var claimMessage = new ClaimGraphMessage(MessageTokens.PathFindingModel);
+            Messenger.Default.SendMany(claimMessage, MessageTokens.Everyone);
         }
 
         [MenuItem(MenuItemsNames.FindPath, MenuItemPriority.Highest)]
@@ -89,11 +91,8 @@ namespace ConsoleVersion.ViewModel
 
         [MenuItem(MenuItemsNames.Exit, MenuItemPriority.Lowest)]
         public void Interrupt()
-        {
-            ClearGraph();
-            ConsoleKeystrokesHook.Instance.KeyPressed -= OnConsoleKeyPressed;
+        {            
             Interrupted?.Invoke(this, new ProcessEventArgs());
-            Interrupted = null;
         }
 
         [MenuItem(MenuItemsNames.ChooseEndPoints, MenuItemPriority.High)]
@@ -178,6 +177,14 @@ namespace ConsoleVersion.ViewModel
         private void SetGraph(GraphCreatedMessage message)
         {
             graph = message.Graph;
+        }
+
+        public void Dispose()
+        {
+            ClearGraph();
+            ConsoleKeystrokesHook.Instance.KeyPressed -= OnConsoleKeyPressed;
+            Interrupted = null;
+            Messenger.Default.Unregister(this);
         }
 
         private string CurrentAlgorithmName { get; set; }

@@ -1,21 +1,12 @@
-﻿using System.Windows;
-using WPFVersion.Attributes;
-using WPFVersion.ViewModel;
+﻿using WPFVersion.ViewModel;
 
 namespace WPFVersion.View.Windows
 {
-    /// <summary>
-    /// Логика взаимодействия для GraphParametresWindow.xaml
-    /// </summary>
-    [AppWindow]
-    public partial class GraphCreatesWindow : Window
+    public partial class GraphCreatesWindow : ViewModelWindow
     {
-        public GraphCreatesWindow(GraphCreatingViewModel viewModel)
+        public GraphCreatesWindow(GraphCreatingViewModel viewModel) : base(viewModel)
         {
             InitializeComponent();
-            DataContext = viewModel;
-            viewModel.WindowClosed += (sender, args) => Close();
-            WindowStartupLocation = WindowStartupLocation.CenterScreen;
         }
     }
 }

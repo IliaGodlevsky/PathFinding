@@ -52,6 +52,12 @@ namespace WindowsFormsVersion.Forms
             }
         }
 
+        protected override void OnClosed(EventArgs e)
+        {
+            mainModel.Dispose();
+            base.OnClosed(e);
+        }
+
         private void OnStatisticsChanged(object sender, StatisticsChangedEventArgs e)
         {
             statistics.Invoke(new Action(() => { statistics.Text = e.Statistics; }));

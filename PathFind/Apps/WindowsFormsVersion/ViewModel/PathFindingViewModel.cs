@@ -15,9 +15,9 @@ using WindowsFormsVersion.Messeges;
 
 namespace WindowsFormsVersion.ViewModel
 {
-    internal class PathFindingViewModel : PathFindingModel, IModel, IViewModel
+    internal class PathFindingViewModel : PathFindingModel, IModel, IViewModel, IDisposable
     {
-        public event EventHandler WindowClosed;
+        public event Action WindowClosed;
 
         public PathFindingViewModel(BaseEndPoints endPoints, IEnumerable<IAlgorithmFactory> algorithmFactories, ILog log)
             : base(endPoints, algorithmFactories, log)
@@ -62,21 +62,24 @@ namespace WindowsFormsVersion.ViewModel
         {
             if (CanExecuteConfirmPathFindAlgorithmChoice())
             {
-                WindowClosed?.Invoke(this, EventArgs.Empty);
-                WindowClosed = null;
+                WindowClosed?.Invoke();
                 FindPath();
             }
         }
 
         public void CancelPathFinding(object sender, EventArgs e)
         {
-            WindowClosed?.Invoke(this, EventArgs.Empty);
-            WindowClosed = null;
+            WindowClosed?.Invoke();
         }
 
         private bool CanExecuteConfirmPathFindAlgorithmChoice()
         {
             return Algorithm != null;
+        }
+
+        public void Dispose()
+        {
+            WindowClosed = null;
         }
 
         private string Statistics

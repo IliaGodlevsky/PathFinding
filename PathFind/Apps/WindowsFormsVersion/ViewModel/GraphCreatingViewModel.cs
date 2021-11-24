@@ -12,9 +12,9 @@ using WindowsFormsVersion.Messeges;
 
 namespace WindowsFormsVersion.ViewModel
 {
-    internal class GraphCreatingViewModel : GraphCreatingModel, IModel, IViewModel
+    internal class GraphCreatingViewModel : GraphCreatingModel, IModel, IViewModel, IDisposable
     {
-        public event EventHandler WindowClosed;
+        public event Action WindowClosed;
 
         public GraphCreatingViewModel(IEnumerable<IGraphAssemble> graphAssembles, ILog log)
             : base(log, graphAssembles)
@@ -41,15 +41,13 @@ namespace WindowsFormsVersion.ViewModel
             if (CanExecuteConfirmGraphAssembleChoice())
             {
                 CreateGraph();
-                WindowClosed?.Invoke(this, EventArgs.Empty);
-                WindowClosed = null;
+                WindowClosed?.Invoke();
             }
         }
 
         public void CancelCreateGraph(object sender, EventArgs e)
         {
-            WindowClosed?.Invoke(this, EventArgs.Empty);
-            WindowClosed = null;
+            WindowClosed?.Invoke();
         }
 
         private bool CanExecuteConfirmGraphAssembleChoice()
@@ -57,6 +55,11 @@ namespace WindowsFormsVersion.ViewModel
             return SelectedGraphAssemble != null
                 && Constants.GraphWidthValueRange.Contains(Width)
                 && Constants.GraphLengthValueRange.Contains(Length);
+        }
+
+        public void Dispose()
+        {
+            WindowClosed = null;
         }
     }
 }

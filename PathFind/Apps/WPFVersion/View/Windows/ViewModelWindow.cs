@@ -1,20 +1,18 @@
-﻿using GraphViewModel.Interfaces;
+﻿using Common.Interface;
 using System;
 using System.Windows;
 using WPFVersion.Attributes;
 
-namespace WPFVersion
+namespace WPFVersion.View.Windows
 {
-    /// <summary>
-    /// Логика взаимодействия для MainWindow.xaml
-    /// </summary>
     [AppWindow]
-    public partial class MainWindow : Window
+    public abstract class ViewModelWindow : Window
     {
-        public MainWindow(IMainModel viewModel)
+        protected ViewModelWindow(IViewModel viewModel)
         {
-            InitializeComponent();
             DataContext = viewModel;
+            viewModel.WindowClosed += Close;
+            WindowStartupLocation = WindowStartupLocation.CenterScreen;
         }
 
         protected override void OnClosed(EventArgs e)

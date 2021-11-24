@@ -1,22 +1,15 @@
-﻿using System.Windows;
+﻿using System;
+using System.Windows;
 using WPFVersion.Attributes;
 using WPFVersion.ViewModel;
 
 namespace WPFVersion.View.Windows
 {
-    /// <summary>
-    /// Логика взаимодействия для PathFindParametresWindow.xaml
-    /// </summary>
-    [AppWindow]
-    public partial class PathFindWindow : Window
+    public partial class PathFindWindow : ViewModelWindow
     {
-
-        public PathFindWindow(PathFindingViewModel viewModel)
+        public PathFindWindow(PathFindingViewModel viewModel) : base(viewModel)
         {
-            InitializeComponent();
-            DataContext = viewModel;
-            viewModel.WindowClosed += (sender, args) => Close();
-            WindowStartupLocation = WindowStartupLocation.CenterScreen;
+            InitializeComponent();          
             delayTimeSlider.Minimum = Constants.AlgorithmDelayTimeValueRange.LowerValueOfRange;
             delayTimeSlider.Maximum = Constants.AlgorithmDelayTimeValueRange.UpperValueOfRange;
         }

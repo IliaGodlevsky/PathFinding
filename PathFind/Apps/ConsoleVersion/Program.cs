@@ -9,8 +9,11 @@ namespace ConsoleVersion
         private static void Main(string[] args)
         {
             var container = ContainerConfigure.Configure();
-            var mainView = container.Resolve<MainView>();
-            mainView.Start();
+            using (var scope = container.BeginLifetimeScope())
+            {
+                var view = scope.Resolve<MainView>();
+                view.Start();
+            }
         }
     }
 }

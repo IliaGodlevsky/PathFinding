@@ -8,7 +8,7 @@ using ValueRange;
 
 namespace ConsoleVersion.View.Abstraction
 {
-    internal abstract class View<TModel> : IView, IRequireInt32Input
+    internal abstract class View<TModel> : IView, IRequireInt32Input, IDisposable
         where TModel : IModel, IInterruptable
     {
         public event Action NewMenuIteration;
@@ -43,6 +43,11 @@ namespace ConsoleVersion.View.Abstraction
                 string menuItem = menu.MenuActionsNames[menuItemIndex];
                 menu.MenuActions[menuItem].Invoke();
             }
+        }
+
+        public void Dispose()
+        {
+            NewMenuIteration = null;
         }
 
         private readonly Menu<Action> menu;

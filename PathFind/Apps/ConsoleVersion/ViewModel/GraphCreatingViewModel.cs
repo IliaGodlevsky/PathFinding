@@ -19,7 +19,7 @@ using ValueRange.Extensions;
 
 namespace ConsoleVersion.ViewModel
 {
-    internal sealed class GraphCreatingViewModel : GraphCreatingModel, IModel, IInterruptable, IRequireInt32Input
+    internal sealed class GraphCreatingViewModel : GraphCreatingModel, IModel, IInterruptable, IRequireInt32Input, IDisposable
     {
         public event ProcessEventHandler Interrupted;
 
@@ -80,7 +80,6 @@ namespace ConsoleVersion.ViewModel
         public void Interrupt()
         {
             Interrupted?.Invoke(this, new ProcessEventArgs());
-            Interrupted = null;
         }
 
         private bool CanCreateGraph()
@@ -88,6 +87,11 @@ namespace ConsoleVersion.ViewModel
             return SelectedGraphAssemble != null
                 && Constants.GraphWidthValueRange.Contains(Width)
                 && Constants.GraphLengthValueRange.Contains(Length);
+        }
+
+        public void Dispose()
+        {
+            Interrupted = null;
         }
 
         private readonly InclusiveValueRange<int> graphAssembleKeyRange;

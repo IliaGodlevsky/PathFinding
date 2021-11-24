@@ -71,6 +71,7 @@
     <Compile Include="Extensions\IMessengerExtensions.cs" />
     <Compile Include="Extensions\ValueInputExtensions.cs" />
     <Compile Include="MenuItemsNames.cs" />
+    <Compile Include="Messages\ClaimGraphMessage.cs" />
     <Compile Include="Messages\ClearColorMessage.cs" />
     <Compile Include="Messages\ClearGraphMessage.cs" />
     <Compile Include="Messages\CostRangeChangedMessage.cs" />

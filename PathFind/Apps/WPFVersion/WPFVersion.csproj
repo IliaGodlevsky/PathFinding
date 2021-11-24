@@ -129,6 +129,7 @@
     <Compile Include="View\Windows\PathFindWindow.xaml.cs">
       <DependentUpon>PathFindWindow.xaml</DependentUpon>
     </Compile>
+    <Compile Include="View\Windows\ViewModelWindow.cs" />
     <Page Include="Resources\Images\SvgImages.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>

@@ -26,7 +26,7 @@ using WPFVersion3D.View;
 
 namespace WPFVersion3D.ViewModel
 {
-    internal class MainWindowViewModel : MainModel, IMainModel, INotifyPropertyChanged
+    internal class MainWindowViewModel : MainModel, IMainModel, INotifyPropertyChanged, IDisposable
     {
         public event PropertyChangedEventHandler PropertyChanged;
 
@@ -73,35 +73,9 @@ namespace WPFVersion3D.ViewModel
             Messenger.Default.Register<GraphCreatedMessage>(this, MessageTokens.MainModel, SetGraph);
         }
 
-        public override void FindPath()
-        {
-            try
-            {
-                var window = ContainerConfigure.Container.Resolve<PathFindWindow>();
-                window.Show();
-            }
-            catch (SystemException ex)
-            {
-                log.Warn(ex);
-            }
-            catch (Exception ex)
-            {
-                log.Error(ex);
-            }
-        }
-
-        public override void CreateNewGraph()
-        {
-            try
-            {
-                var window = ContainerConfigure.Container.Resolve<GraphCreateWindow>();
-                window.Show();
-            }
-            catch (Exception ex)
-            {
-                log.Error(ex);
-            }
-        }
+        public override void FindPath() => ContainerConfigure.Container.Resolve<PathFindWindow>().Show();
+        public override void CreateNewGraph() => ContainerConfigure.Container.Resolve<GraphCreateWindow>().Show();
+        private void ChangeVerticesOpacity() => ContainerConfigure.Container.Resolve<OpacityChangeWindow>().Show();
 
         public override void ConnectNewGraph(IGraph graph)
         {
@@ -118,12 +92,6 @@ namespace WPFVersion3D.ViewModel
 
         public void StretchAlongZAxis(object sender, RoutedPropertyChangedEventArgs<double> e)
             => (GraphField as GraphField3D)?.StretchAlongAxis(new Applicate(), e.NewValue, 0, 0, 1);
-
-        private void ChangeVerticesOpacity()
-        {
-            var window = ContainerConfigure.Container.Resolve<OpacityChangeWindow>();
-            window.Show();
-        }
 
         private void ExecuteClearVerticesColors(object param) => ClearColors();
         private void ExecuteSaveGraphCommand(object param) => base.SaveGraph();
@@ -155,5 +123,10 @@ namespace WPFVersion3D.ViewModel
         private void OnIsAllAlgorithmsFinished(IsAllAlgorithmsFinishedMessage message)
             => IsAllAlgorithmsFinished = message.IsAllAlgorithmsFinished;
         private void SetGraph(GraphCreatedMessage message) => ConnectNewGraph(message.Graph);
+
+        public void Dispose()
+        {
+            Messenger.Default.Unregister(this);
+        }
     }
 }

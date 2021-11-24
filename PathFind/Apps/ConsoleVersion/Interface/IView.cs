@@ -1,7 +1,11 @@
-﻿namespace ConsoleVersion.Interface
+﻿using System;
+
+namespace ConsoleVersion.Interface
 {
     internal interface IView
     {
+        event Action NewMenuIteration;
+
         void Start();
     }
 }

@@ -21,9 +21,9 @@ using WPFVersion.Messages;
 
 namespace WPFVersion.ViewModel
 {
-    public class PathFindingViewModel : PathFindingModel, IModel, IViewModel
+    public class PathFindingViewModel : PathFindingModel, IViewModel, IModel, IDisposable
     {
-        public event EventHandler WindowClosed;
+        public event Action WindowClosed;
 
         public ICommand ConfirmPathFindAlgorithmChoice { get; }
         public ICommand CancelPathFindAlgorithmChoice { get; }
@@ -104,8 +104,7 @@ namespace WPFVersion.ViewModel
 
         private void ExecuteCloseWindowCommand(object param)
         {
-            WindowClosed?.Invoke(this, EventArgs.Empty);
-            WindowClosed = null;
+            WindowClosed?.Invoke();
         }
 
         private void ExecuteConfirmPathFindAlgorithmChoice(object param)
@@ -124,6 +123,11 @@ namespace WPFVersion.ViewModel
         private bool CanExecuteConfirmPathFindAlgorithmChoice(object param)
         {
             return Algorithm != null;
+        }
+
+        public void Dispose()
+        {
+            WindowClosed = null;
         }
 
         private int Index { get; set; }

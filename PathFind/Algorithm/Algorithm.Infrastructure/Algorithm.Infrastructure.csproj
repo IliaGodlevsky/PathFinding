@@ -41,7 +41,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="EndPointsNotFromCurrentGraphException.cs" />
     <Compile Include="EventArguments\AlgorithmEventArgs.cs" />
     <Compile Include="Handlers\AlgorithmEventHandler.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

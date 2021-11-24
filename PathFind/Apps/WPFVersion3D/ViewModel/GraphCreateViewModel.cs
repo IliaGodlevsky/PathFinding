@@ -14,9 +14,9 @@ using WPFVersion3D.Messages;
 
 namespace WPFVersion3D.ViewModel
 {
-    public class GraphCreatingViewModel : GraphCreatingModel, IViewModel
+    public class GraphCreatingViewModel : GraphCreatingModel, IViewModel, IDisposable
     {
-        public event EventHandler WindowClosed;
+        public event Action WindowClosed;
 
         public int Height { get; set; }
 
@@ -54,8 +54,7 @@ namespace WPFVersion3D.ViewModel
 
         private void CloseWindow()
         {
-            WindowClosed?.Invoke(this, EventArgs.Empty);
-            WindowClosed = null;
+            WindowClosed?.Invoke();
         }
 
         private bool CanExecuteConfirmCreateGraphCommand(object sender)
@@ -64,6 +63,11 @@ namespace WPFVersion3D.ViewModel
                 && Constants.GraphWidthValueRange.Contains(Width)
                 && Constants.GraphLengthValueRange.Contains(Length)
                 && Constants.GraphHeightValueRange.Contains(Height);
+        }
+
+        public void Dispose()
+        {
+            WindowClosed = null;
         }
     }
 }

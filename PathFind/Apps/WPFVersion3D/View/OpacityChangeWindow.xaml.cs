@@ -1,21 +1,12 @@
-﻿using System.Windows;
-using WPFVersion3D.Attributes;
-using WPFVersion3D.ViewModel;
+﻿using WPFVersion3D.ViewModel;
 
 namespace WPFVersion3D.View
 {
-    /// <summary>
-    /// Логика взаимодействия для OpacityChangeWindow.xaml
-    /// </summary>
-    [AppWindow]
-    public partial class OpacityChangeWindow : Window
+    public partial class OpacityChangeWindow : ViewModelWindow
     {
-        public OpacityChangeWindow(OpacityChangeViewModel viewModel)
+        public OpacityChangeWindow(OpacityChangeViewModel viewModel) : base(viewModel)
         {
-            InitializeComponent();
-            DataContext = viewModel;
-            viewModel.WindowClosed += (sender, e) => Close();
-            WindowStartupLocation = WindowStartupLocation.CenterScreen;
+            InitializeComponent();           
         }
     }
 }

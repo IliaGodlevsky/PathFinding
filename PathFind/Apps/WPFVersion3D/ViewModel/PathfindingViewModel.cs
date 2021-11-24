@@ -22,9 +22,9 @@ using WPFVersion3D.Messages;
 
 namespace WPFVersion3D.ViewModel
 {
-    public class PathFindingViewModel : PathFindingModel, IViewModel, INotifyPropertyChanged
+    public class PathFindingViewModel : PathFindingModel, IViewModel, INotifyPropertyChanged, IDisposable
     {
-        public event EventHandler WindowClosed;
+        public event Action WindowClosed;
         public event PropertyChangedEventHandler PropertyChanged;
 
         protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = "")
@@ -100,8 +100,7 @@ namespace WPFVersion3D.ViewModel
 
         private void ExecuteCloseWindowCommand(object param)
         {
-            WindowClosed?.Invoke(this, EventArgs.Empty);
-            WindowClosed = null;
+            WindowClosed?.Invoke();
         }
 
         private void ExecuteConfirmPathFindAlgorithmChoice(object param)
@@ -113,6 +112,11 @@ namespace WPFVersion3D.ViewModel
         private bool CanExecuteConfirmPathFindAlgorithmChoice(object param)
         {
             return Algorithm != null;
+        }
+
+        public void Dispose()
+        {
+            WindowClosed = null;
         }
 
         private int Index { get; set; }

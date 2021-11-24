@@ -11,7 +11,8 @@ namespace WPFVersion
             base.OnStartup(e);
 
             var container = ContainerConfigure.Configure();
-            container.Resolve<MainWindow>();
+            var window = container.Resolve<MainWindow>();
+            window.Show();
         }
     }
 }

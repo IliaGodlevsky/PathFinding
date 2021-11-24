@@ -1,6 +1,7 @@
 ﻿using Common.Extensions.EnumerableExtensions;
 using GalaSoft.MvvmLight.Messaging;
 using GraphViewModel.Interfaces;
+using System;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
@@ -16,7 +17,7 @@ using WPFVersion.Model;
 
 namespace WPFVersion.ViewModel
 {
-    internal class AlgorithmStatisticsViewModel : INotifyPropertyChanged, IModel
+    internal class AlgorithmStatisticsViewModel : INotifyPropertyChanged, IModel, IDisposable
     {
         private Dispatcher Dispatcher => Application.Current.Dispatcher;
 
@@ -131,6 +132,18 @@ namespace WPFVersion.ViewModel
         {
             var message = new IsAllAlgorithmsFinishedMessage(IsAllFinished);
             Messenger.Default.Send(message, MessageTokens.MainModel);
+        }
+
+        public void Dispose()
+        {
+            Messenger.Default.Unregister(this);
+            Algorithms.Clear();
+            SelectedAlgorithm = null;
+            if (visualizationModel != null)
+            {
+                visualizationModel.Dispose();
+                visualizationModel = null;
+            }
         }
 
         private bool IsAllFinished => Algorithms.All(stat => !stat.IsStarted());

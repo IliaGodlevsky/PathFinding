@@ -2,11 +2,13 @@
 using Algorithm.Interfaces;
 using Algorithm.Realizations.StepRules;
 using Autofac;
+using Autofac.Core;
 using Common.Extensions;
 using ConsoleVersion.Enums;
 using ConsoleVersion.Interface;
 using ConsoleVersion.Model;
 using ConsoleVersion.ValueInput;
+using ConsoleVersion.ViewModel;
 using GraphLib.Base;
 using GraphLib.Interfaces;
 using GraphLib.Interfaces.Factories;
@@ -35,14 +37,6 @@ namespace ConsoleVersion.Configure
     {
         private const string GraphAssemble = nameof(GraphAssemble);
 
-        private static SmoothedGraphAssemble RegisterSmoothedGraphAssemble(IComponentContext context)
-        {
-            var randomGraphAssemble = context.ResolveNamed<IGraphAssemble>(GraphAssemble);
-            var costFactory = context.Resolve<IVertexCostFactory>();
-            var meanCost = context.Resolve<IMeanCost>();
-            return new SmoothedGraphAssemble(randomGraphAssemble, costFactory, meanCost);
-        }
-
         private static Assembly[] Assemblies => AppDomain.CurrentDomain.GetAssemblies();
 
         public static IContainer Container { get; private set; }
@@ -54,8 +48,11 @@ namespace ConsoleVersion.Configure
             builder.RegisterType<EnumConsoleValueInput<Answer>>().As<IValueInput<Answer>>().SingleInstance();
             builder.RegisterType<Int32ConsoleValueInput>().As<IValueInput<int>>().SingleInstance();
 
-            builder.RegisterAssemblyTypes(Assemblies).Where(Implements<IModel>).AsSelf().PropertiesAutowired().InstancePerDependency();
-            builder.RegisterAssemblyTypes(Assemblies).Where(Implements<IView>).AsSelf().PropertiesAutowired().InstancePerDependency();
+            builder.RegisterType<MainViewModel>().AsSelf().SingleInstance().PropertiesAutowired();
+            builder.RegisterAssemblyTypes(Assemblies).Where(Implements<IModel>).Except<MainViewModel>().AsSelf()
+                .PropertiesAutowired().InstancePerLifetimeScope();
+            builder.RegisterAssemblyTypes(Assemblies).Where(Implements<IView>).AsSelf().PropertiesAutowired()
+                .InstancePerLifetimeScope().OnActivated(OnActivated);
 
             builder.RegisterType<EndPoints>().As<BaseEndPoints>().SingleInstance();
             builder.RegisterType<VertexEventHolder>().As<IVertexEventHolder>().SingleInstance().PropertiesAutowired();
@@ -90,6 +87,21 @@ namespace ConsoleVersion.Configure
             builder.RegisterDecorator<RatedStepRule, IStepRule>();
 
             return Container = builder.Build();
+        }
+
+        private static void OnActivated(IActivatedEventArgs<object> e)
+        {
+            var view = (IView)e.Instance;
+            var mainModel = e.Context.Resolve<MainViewModel>();
+            view.NewMenuIteration += mainModel.DisplayGraph;
+        }
+
+        private static SmoothedGraphAssemble RegisterSmoothedGraphAssemble(IComponentContext context)
+        {
+            var randomGraphAssemble = context.ResolveNamed<IGraphAssemble>(GraphAssemble);
+            var costFactory = context.Resolve<IVertexCostFactory>();
+            var meanCost = context.Resolve<IMeanCost>();
+            return new SmoothedGraphAssemble(randomGraphAssemble, costFactory, meanCost);
         }
 
         private static bool Implements<TInterface>(Type type)

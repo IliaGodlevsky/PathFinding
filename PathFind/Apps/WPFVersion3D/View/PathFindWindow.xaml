@@ -1,4 +1,5 @@
-﻿<Window
+﻿<view:ViewModelWindow
+    xmlns:view="clr-namespace:WPFVersion3D.View"
         x:Class="WPFVersion3D.View.PathFindWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
@@ -85,4 +86,4 @@
             </TextBox>
         </Grid>
     </Grid>
-</Window>
+</view:ViewModelWindow>

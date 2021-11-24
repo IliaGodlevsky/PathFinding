@@ -7,9 +7,9 @@ using WPFVersion3D.Model;
 
 namespace WPFVersion3D.ViewModel
 {
-    public class OpacityChangeViewModel : IModel, IViewModel
+    public class OpacityChangeViewModel : IModel, IViewModel, IDisposable
     {
-        public event EventHandler WindowClosed;
+        public event Action WindowClosed;
 
         public double ObstacleColorOpacity { get; set; }
         public double VisitedVertexColorOpacity { get; set; }
@@ -46,7 +46,11 @@ namespace WPFVersion3D.ViewModel
 
         private void ExecuteCloseChangeVertexOpacity(object param)
         {
-            WindowClosed?.Invoke(this, EventArgs.Empty);
+            WindowClosed?.Invoke();
+        }
+
+        public void Dispose()
+        {
             WindowClosed = null;
         }
     }

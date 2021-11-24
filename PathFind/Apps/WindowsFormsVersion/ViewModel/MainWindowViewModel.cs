@@ -23,7 +23,7 @@ using WindowsFormsVersion.View;
 
 namespace WindowsFormsVersion.ViewModel
 {
-    internal class MainWindowViewModel : MainModel, IMainModel, IModel, INotifyPropertyChanged
+    internal class MainWindowViewModel : MainModel, IMainModel, IModel, INotifyPropertyChanged, IDisposable
     {
         public event PropertyChangedEventHandler PropertyChanged;
         public event StatisticsChangedEventHandler StatisticsChanged;
@@ -189,6 +189,11 @@ namespace WindowsFormsVersion.ViewModel
         private bool CanStartPathFinding()
         {
             return !endPoints.HasIsolators() && !IsPathfindingStarted;
+        }
+
+        public void Dispose()
+        {
+            Messenger.Default.Unregister(this);
         }
     }
 }

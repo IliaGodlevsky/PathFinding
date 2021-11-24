@@ -1,18 +1,16 @@
-﻿using System.Windows.Forms;
+﻿using System;
+using System.Windows.Forms;
 using WindowsFormsVersion.Attributes;
 using WindowsFormsVersion.ViewModel;
 
 namespace WindowsFormsVersion.View
 {
     [AppWindow]
-    internal partial class PathFindingWindow : Form
+    internal partial class PathFindingWindow : ViewModelWindow
     {
-        public PathFindingWindow(PathFindingViewModel model)
+        public PathFindingWindow(PathFindingViewModel model) : base(model)
         {
             InitializeComponent();
-
-            model.WindowClosed += (sender, args) => Close();
-            StartPosition = FormStartPosition.CenterScreen;
 
             okButton.Click += model.StartPathfinding;
             cancelButton.Click += model.CancelPathFinding;

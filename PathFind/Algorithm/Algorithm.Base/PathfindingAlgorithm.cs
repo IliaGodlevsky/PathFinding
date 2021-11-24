@@ -38,8 +38,6 @@ namespace Algorithm.Base
         /// finds the cheapest path in the graph
         /// </summary>
         /// <returns></returns>
-        /// <exception cref="EndPointsNotFromCurrentGraphException>">when graph
-        /// doesn't contains end points</exception>
         public abstract IGraphPath FindPath();
 
         /// <summary>

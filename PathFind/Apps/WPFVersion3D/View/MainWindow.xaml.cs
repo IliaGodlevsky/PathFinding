@@ -1,4 +1,5 @@
 ﻿using GraphViewModel.Interfaces;
+using System;
 using System.Windows;
 using WPFVersion3D.Attributes;
 
@@ -14,6 +15,12 @@ namespace WPFVersion3D
         {
             InitializeComponent();
             DataContext = viewModel;
+        }
+
+        protected override void OnClosed(EventArgs e)
+        {            
+            (DataContext as IDisposable)?.Dispose();
+            base.OnClosed(e);
         }
     }
 }
