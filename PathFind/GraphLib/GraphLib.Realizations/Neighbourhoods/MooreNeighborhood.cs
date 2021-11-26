@@ -3,6 +3,7 @@ using GraphLib.Interfaces;
 using GraphLib.Realizations.Extensions;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Runtime.Serialization;
 
@@ -12,6 +13,7 @@ namespace GraphLib.Realizations.Neighbourhoods
     /// A class that finds the neighbors of the specified coordinate
     /// </summary>
     [Serializable]
+    [DebuggerDisplay("Count = {Neighbours.Length}")]
     public sealed class MooreNeighborhood : INeighborhood, ISerializable, ICloneable<INeighborhood>
     {
         /// <summary>

@@ -14,7 +14,7 @@ namespace WPFVersion3D.View
         }
 
         private void OnLoaded(object sender, EventArgs e)
-        {            
+        {
             Loaded -= OnLoaded;
             var window = Window.GetWindow(this);
             void OnWindowClosing(object s, CancelEventArgs args)

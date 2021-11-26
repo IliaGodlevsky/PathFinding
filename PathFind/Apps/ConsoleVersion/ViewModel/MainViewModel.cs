@@ -1,6 +1,6 @@
 ﻿using Autofac;
 using ConsoleVersion.Attributes;
-using ConsoleVersion.Configure;
+using ConsoleVersion.DependencyInjection;
 using ConsoleVersion.Enums;
 using ConsoleVersion.Extensions;
 using ConsoleVersion.Interface;
@@ -58,7 +58,7 @@ namespace ConsoleVersion.ViewModel
         {
             try
             {
-                using (var scope = ContainerConfigure.Container.BeginLifetimeScope())
+                using (var scope = DI.Container.BeginLifetimeScope())
                 {
                     var view = scope.Resolve<GraphCreateView>();
                     view.Start();
@@ -75,7 +75,7 @@ namespace ConsoleVersion.ViewModel
         {
             try
             {
-                using (var scope = ContainerConfigure.Container.BeginLifetimeScope())
+                using (var scope = DI.Container.BeginLifetimeScope())
                 {
                     var view = scope.Resolve<PathFindView>();
                     view.Start();
@@ -95,7 +95,7 @@ namespace ConsoleVersion.ViewModel
         {
             CostRange = Int32Input.InputRange(Constants.VerticesCostRange);
             var message = new CostRangeChangedMessage(CostRange);
-            Messenger.Default.Send(message, MessageTokens.MainView);
+            Messenger.Default.Forward(message, MessageTokens.MainView);
         }
 
         [MenuItem(MenuItemsNames.ChangeVertexCost, MenuItemPriority.Low)]
@@ -112,9 +112,9 @@ namespace ConsoleVersion.ViewModel
                 var graph = serializationModule.LoadGraph();
                 ConnectNewGraph(graph);
                 var costRangeMessage = new CostRangeChangedMessage(CostRange);
-                Messenger.Default.Send(costRangeMessage, MessageTokens.MainView);
+                Messenger.Default.Forward(costRangeMessage, MessageTokens.MainView);
                 var graphMessage = new GraphCreatedMessage(graph);
-                Messenger.Default.Send(graphMessage, MessageTokens.MainView);
+                Messenger.Default.Forward(graphMessage, MessageTokens.MainView);
             }
             catch (CantSerializeGraphException ex)
             {
@@ -124,11 +124,6 @@ namespace ConsoleVersion.ViewModel
             {
                 log.Error(ex);
             }
-        }
-
-        private void RecieveClaimGraphMessage(ClaimGraphMessage message)
-        {
-            Messenger.Default.Send(new GraphCreatedMessage(Graph), message.ClaimerMessageToken);
         }
 
         [MenuItem(MenuItemsNames.Exit, MenuItemPriority.Lowest)]
@@ -145,7 +140,7 @@ namespace ConsoleVersion.ViewModel
         {
             base.ClearGraph();
             var message = new UpdateStatisticsMessage(string.Empty);
-            Messenger.Default.Send(message, MessageTokens.MainView);
+            Messenger.Default.Forward(message, MessageTokens.MainView);
         }
 
         public void DisplayGraph()
@@ -177,6 +172,12 @@ namespace ConsoleVersion.ViewModel
             Console.WriteLine();
         }
 
+        private void RecieveClaimGraphMessage(ClaimGraphMessage message)
+        {
+            var graphMessage = new GraphCreatedMessage(Graph);
+            Messenger.Default.Forward(graphMessage, message.ClaimerMessageToken);
+        }
+
         private void PerformActionOnVertex(Action<Vertex> function)
         {
             if (Graph.HasVertices() && Graph is Graph2D graph2D)
@@ -188,6 +189,7 @@ namespace ConsoleVersion.ViewModel
 
         public void Dispose()
         {
+            Messenger.Default.Unregister(this);
             Interrupted = null;
         }
     }

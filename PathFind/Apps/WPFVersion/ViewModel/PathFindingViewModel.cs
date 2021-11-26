@@ -70,9 +70,9 @@ namespace WPFVersion.ViewModel
             var message = new UpdateStatisticsMessage(Index,
                 time, visitedVerticesCount, path.Length, path.Cost);
             var statusMessage = new AlgorithmStatusMessage(status, Index);
-            Messenger.Default.SendMany(message, statusMessage, MessageTokens.AlgorithmStatisticsModel);
+            Messenger.Default.ForwardMany(message, statusMessage, MessageTokens.AlgorithmStatisticsModel);
             var pathFoundMessage = new PathFoundMessage(algorithm, path);
-            Messenger.Default.Send(pathFoundMessage, MessageTokens.VisualizationModel);
+            Messenger.Default.Forward(pathFoundMessage, MessageTokens.VisualizationModel);
         }
 
         protected override async void OnVertexVisited(object sender, AlgorithmEventArgs e)
@@ -80,7 +80,7 @@ namespace WPFVersion.ViewModel
             Stopwatch.StartNew().Wait(DelayTime).Cancel();
             string time = timer.ToFormattedString();
             var message = new UpdateStatisticsMessage(Index, time, visitedVerticesCount);
-            await Messenger.Default.SendAsync(message, MessageTokens.AlgorithmStatisticsModel);
+            await Messenger.Default.ForwardAsync(message, MessageTokens.AlgorithmStatisticsModel);
             if (!e.Current.IsNull())
             {
                 visitedVerticesCount++;
@@ -93,7 +93,7 @@ namespace WPFVersion.ViewModel
         {
             base.OnAlgorithmInterrupted(sender, e);
             var message = new AlgorithmStatusMessage(AlgorithmStatus.Interrupted, Index);
-            Messenger.Default.Send(message, MessageTokens.AlgorithmStatisticsModel);
+            Messenger.Default.Forward(message, MessageTokens.AlgorithmStatisticsModel);
         }
 
         protected override void OnAlgorithmFinished(object sender, ProcessEventArgs e)
@@ -116,7 +116,7 @@ namespace WPFVersion.ViewModel
         protected override void SubscribeOnAlgorithmEvents(PathfindingAlgorithm algorithm)
         {
             var message = new SubscribeOnAlgorithmEventsMessage(algorithm, IsVisualizationRequired);
-            Messenger.Default.Send(message, MessageTokens.VisualizationModel);
+            Messenger.Default.Forward(message, MessageTokens.VisualizationModel);
             base.SubscribeOnAlgorithmEvents(algorithm);
         }
 

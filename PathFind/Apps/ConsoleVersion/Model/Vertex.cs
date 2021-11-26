@@ -61,12 +61,12 @@ namespace ConsoleVersion.Model
                     vertexCost.UnweightedCostView = "#";
                     text = value.ToString();
                 }
-
                 cost = value;
             }
         }
 
         public IGraph Graph { get; }
+
         public Color Color { get; set; }
         public IReadOnlyCollection<IVertex> Neighbours => neighbours.Value;
         public ICoordinate Position { get; }

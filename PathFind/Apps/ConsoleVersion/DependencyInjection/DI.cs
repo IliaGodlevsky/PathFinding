@@ -31,17 +31,16 @@ using System.Reflection;
 using System.Runtime.Serialization;
 using System.Runtime.Serialization.Formatters.Binary;
 
-namespace ConsoleVersion.Configure
+namespace ConsoleVersion.DependencyInjection
 {
-    internal static class ContainerConfigure
+    internal static class DI
     {
-        private const string GraphAssemble = nameof(GraphAssemble);
+        public static IContainer Container => container.Value;
 
+        private const string GraphAssemble = nameof(GraphAssemble);
         private static Assembly[] Assemblies => AppDomain.CurrentDomain.GetAssemblies();
 
-        public static IContainer Container { get; private set; }
-
-        public static IContainer Configure()
+        private static IContainer Configure()
         {
             var builder = new ContainerBuilder();
 
@@ -52,7 +51,8 @@ namespace ConsoleVersion.Configure
             builder.RegisterAssemblyTypes(Assemblies).Where(Implements<IModel>).Except<MainViewModel>().AsSelf()
                 .PropertiesAutowired().InstancePerLifetimeScope();
             builder.RegisterAssemblyTypes(Assemblies).Where(Implements<IView>).AsSelf().PropertiesAutowired()
-                .InstancePerLifetimeScope().OnActivated(OnActivated);
+                .OnActivated(OnActivated).InstancePerLifetimeScope();
+            builder.RegisterType<EndPointsSelection>().AsSelf().PropertiesAutowired().InstancePerLifetimeScope();
 
             builder.RegisterType<EndPoints>().As<BaseEndPoints>().SingleInstance();
             builder.RegisterType<VertexEventHolder>().As<IVertexEventHolder>().SingleInstance().PropertiesAutowired();
@@ -86,7 +86,7 @@ namespace ConsoleVersion.Configure
             builder.RegisterDecorator<WalkStepRule, IStepRule>();
             builder.RegisterDecorator<RatedStepRule, IStepRule>();
 
-            return Container = builder.Build();
+            return builder.Build();
         }
 
         private static void OnActivated(IActivatedEventArgs<object> e)
@@ -108,5 +108,7 @@ namespace ConsoleVersion.Configure
         {
             return type.ImplementsAll(typeof(TInterface));
         }
+
+        private static readonly Lazy<IContainer> container = new Lazy<IContainer>(Configure);
     }
 }

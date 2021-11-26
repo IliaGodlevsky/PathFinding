@@ -1,5 +1,5 @@
 ﻿using Autofac;
-using ConsoleVersion.Configure;
+using ConsoleVersion.DependencyInjection;
 using ConsoleVersion.View;
 
 namespace ConsoleVersion
@@ -8,8 +8,7 @@ namespace ConsoleVersion
     {
         private static void Main(string[] args)
         {
-            var container = ContainerConfigure.Configure();
-            using (var scope = container.BeginLifetimeScope())
+            using (var scope = DI.Container.BeginLifetimeScope())
             {
                 var view = scope.Resolve<MainView>();
                 view.Start();

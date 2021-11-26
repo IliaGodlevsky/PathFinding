@@ -61,7 +61,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Attributes\MenuItemAttribute.cs" />
-    <Compile Include="Configure\ContainerConfigure.cs" />
+    <Compile Include="DependencyInjection\DI.cs" />
     <Compile Include="Constants.cs" />
     <Compile Include="Enums\Answer.cs" />
     <Compile Include="Enums\MenuItemPriority.cs" />
@@ -77,7 +77,7 @@
     <Compile Include="Messages\CostRangeChangedMessage.cs" />
     <Compile Include="Messages\GraphCreatedMessage.cs" />
     <Compile Include="Messages\UpdateStatisticsMessage.cs" />
-    <Compile Include="MessageTokens.cs" />
+    <Compile Include="Enums\MessageTokens.cs" />
     <Compile Include="MessegesTexts.cs" />
     <Compile Include="Model\ConsoleKeystrokesHook.cs" />
     <Compile Include="Model\EndPointsSelection.cs" />

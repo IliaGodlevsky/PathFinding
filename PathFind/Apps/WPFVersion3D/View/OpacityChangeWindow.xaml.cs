@@ -6,7 +6,7 @@ namespace WPFVersion3D.View
     {
         public OpacityChangeWindow(OpacityChangeViewModel viewModel) : base(viewModel)
         {
-            InitializeComponent();           
+            InitializeComponent();
         }
     }
 }

@@ -1,5 +1,4 @@
-﻿using WPFVersion3D.Attributes;
-using WPFVersion3D.ViewModel;
+﻿using WPFVersion3D.ViewModel;
 
 namespace WPFVersion3D.View
 {
@@ -9,7 +8,7 @@ namespace WPFVersion3D.View
         {
             InitializeComponent();
             obstacleSlider.Minimum = Constants.ObstaclePercentValueRange.LowerValueOfRange;
-            obstacleSlider.Maximum = Constants.ObstaclePercentValueRange.UpperValueOfRange;            
+            obstacleSlider.Maximum = Constants.ObstaclePercentValueRange.UpperValueOfRange;
         }
     }
 }

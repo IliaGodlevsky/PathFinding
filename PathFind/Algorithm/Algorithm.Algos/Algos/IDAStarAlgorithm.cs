@@ -40,9 +40,7 @@ namespace Algorithm.Algos.Algos
         {
             get
             {
-                var verticesToDelete = queue
-                    .TakeOrderedBy(VerticesToDeleteCount, heuristics.GetCost)                   
-                    .ToArray();
+                var verticesToDelete = queue.TakeOrderedBy(ToDeleteCount, heuristics.GetCost).ToArray();
                 var tuples = queue.ToTuples(verticesToDelete, heuristics.GetCost).ToList();
                 queue.RemoveRange(verticesToDelete);
                 deletedVertices.AddRange(tuples);
@@ -57,7 +55,7 @@ namespace Algorithm.Algos.Algos
             }
         }
 
-        private int VerticesToDeleteCount => queue.Count * PercentToDelete / 100;
+        private int ToDeleteCount => queue.Count * PercentToDelete / 100;
 
         protected override void Reset()
         {

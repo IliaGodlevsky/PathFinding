@@ -9,6 +9,9 @@ namespace GraphLib.Interfaces
     /// </summary>
     public interface IVertex : IEquatable<IVertex>
     {
+        /// <summary>
+        /// A graph to which vertex belongs
+        /// </summary>
         IGraph Graph { get; }
 
         /// <summary>

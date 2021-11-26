@@ -3,12 +3,14 @@ using GraphLib.Extensions;
 using GraphLib.Interfaces;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Runtime.Serialization;
 
 namespace GraphLib.Realizations.Neighbourhoods
 {
     [Serializable]
+    [DebuggerDisplay("Count = {Neighbours.Length}")]
     public sealed class VonNeumannNeighborhood : INeighborhood, ISerializable, ICloneable<INeighborhood>
     {
         public IReadOnlyCollection<ICoordinate> Neighbours => neighbourhood.Value;

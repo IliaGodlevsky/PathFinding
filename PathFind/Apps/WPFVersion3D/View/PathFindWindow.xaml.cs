@@ -8,7 +8,7 @@ namespace WPFVersion3D.View
         {
             InitializeComponent();
             delayTimeSlider.Minimum = Constants.AlgorithmDelayValueRange.LowerValueOfRange;
-            delayTimeSlider.Maximum = Constants.AlgorithmDelayValueRange.UpperValueOfRange;           
+            delayTimeSlider.Maximum = Constants.AlgorithmDelayValueRange.UpperValueOfRange;
         }
     }
 }

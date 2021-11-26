@@ -1,4 +1,5 @@
-﻿using ConsoleVersion.Interface;
+﻿using ConsoleVersion.Enums;
+using ConsoleVersion.Interface;
 using ConsoleVersion.Messages;
 using ConsoleVersion.View.Abstraction;
 using ConsoleVersion.ViewModel;

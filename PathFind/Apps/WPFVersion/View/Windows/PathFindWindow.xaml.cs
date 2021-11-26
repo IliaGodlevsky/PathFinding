@@ -1,7 +1,4 @@
-﻿using System;
-using System.Windows;
-using WPFVersion.Attributes;
-using WPFVersion.ViewModel;
+﻿using WPFVersion.ViewModel;
 
 namespace WPFVersion.View.Windows
 {
@@ -9,7 +6,7 @@ namespace WPFVersion.View.Windows
     {
         public PathFindWindow(PathFindingViewModel viewModel) : base(viewModel)
         {
-            InitializeComponent();          
+            InitializeComponent();
             delayTimeSlider.Minimum = Constants.AlgorithmDelayTimeValueRange.LowerValueOfRange;
             delayTimeSlider.Maximum = Constants.AlgorithmDelayTimeValueRange.UpperValueOfRange;
         }

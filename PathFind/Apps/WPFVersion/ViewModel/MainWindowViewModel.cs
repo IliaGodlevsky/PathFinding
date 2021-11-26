@@ -13,6 +13,7 @@ using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using System.Windows.Input;
 using WPFVersion.Configure;
+using WPFVersion.Enums;
 using WPFVersion.Extensions;
 using WPFVersion.Infrastructure;
 using WPFVersion.Messages;
@@ -105,7 +106,7 @@ namespace WPFVersion.ViewModel
             WindowService.Adjust(graph);
             var graphMessage = new GraphCreatedMessage(Graph);
             var clearMessage = new ClearStatisticsMessage();
-            Messenger.Default.SendMany(graphMessage, clearMessage, MessageTokens.AlgorithmStatisticsModel);
+            Messenger.Default.ForwardMany(graphMessage, clearMessage, MessageTokens.AlgorithmStatisticsModel);
         }
 
         private void ExecuteColorizeAccordingToCost(object param) => costColors.ColorizeAccordingToCost();
@@ -120,13 +121,13 @@ namespace WPFVersion.ViewModel
         private void ExecuteInterruptAlgorithmCommand(object param)
         {
             var message = new InterruptAllAlgorithmsMessage();
-            Messenger.Default.Send(message, MessageTokens.AlgorithmStatisticsModel);
+            Messenger.Default.Forward(message, MessageTokens.AlgorithmStatisticsModel);
         }
         private void ExecuteClearGraphCommand(object param)
         {
             base.ClearGraph();
             var message = new ClearStatisticsMessage();
-            Messenger.Default.Send(message, MessageTokens.AlgorithmStatisticsModel);
+            Messenger.Default.Forward(message, MessageTokens.AlgorithmStatisticsModel);
         }
 
         private bool CanExecuteGraphOperation(object param) => !Graph.IsNull();

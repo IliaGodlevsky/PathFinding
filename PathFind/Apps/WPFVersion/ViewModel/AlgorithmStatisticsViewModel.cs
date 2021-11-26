@@ -62,7 +62,7 @@ namespace WPFVersion.ViewModel
         {
             int index = Algorithms.Count;
             var msg = new AlgorithmIndexMessage(index);
-            Messenger.Default.Send(msg, MessageTokens.PathfindingModel);
+            Messenger.Default.Forward(msg, MessageTokens.PathfindingModel);
             var viewModel = new AlgorithmViewModel(message, index);
             Dispatcher.Invoke(() => Algorithms.Add(viewModel));
             SendIsAllAlgorithmsFinishedMessage();
@@ -131,7 +131,7 @@ namespace WPFVersion.ViewModel
         private void SendIsAllAlgorithmsFinishedMessage()
         {
             var message = new IsAllAlgorithmsFinishedMessage(IsAllFinished);
-            Messenger.Default.Send(message, MessageTokens.MainModel);
+            Messenger.Default.Forward(message, MessageTokens.MainModel);
         }
 
         public void Dispose()

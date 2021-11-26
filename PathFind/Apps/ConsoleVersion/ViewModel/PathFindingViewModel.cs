@@ -1,8 +1,11 @@
 ﻿using Algorithm.Base;
 using Algorithm.Factory;
 using Algorithm.Infrastructure.EventArguments;
+using Autofac;
 using Common.Extensions;
+using Common.Extensions.EnumerableExtensions;
 using ConsoleVersion.Attributes;
+using ConsoleVersion.DependencyInjection;
 using ConsoleVersion.Enums;
 using ConsoleVersion.EventArguments;
 using ConsoleVersion.Extensions;
@@ -43,10 +46,7 @@ namespace ConsoleVersion.ViewModel
         {
             algorithmKeysValueRange = new InclusiveValueRange<int>(Algorithms.Length, 1);
             ConsoleKeystrokesHook.Instance.KeyPressed += OnConsoleKeyPressed;
-            DelayTime = Constants.AlgorithmDelayTimeValueRange.LowerValueOfRange;
-            Messenger.Default.Register<GraphCreatedMessage>(this, MessageTokens.PathFindingModel, SetGraph);
-            var claimMessage = new ClaimGraphMessage(MessageTokens.PathFindingModel);
-            Messenger.Default.SendMany(claimMessage, MessageTokens.Everyone);
+            DelayTime = Constants.AlgorithmDelayTimeValueRange.LowerValueOfRange;                       
         }
 
         [MenuItem(MenuItemsNames.FindPath, MenuItemPriority.Highest)]
@@ -91,34 +91,30 @@ namespace ConsoleVersion.ViewModel
 
         [MenuItem(MenuItemsNames.Exit, MenuItemPriority.Lowest)]
         public void Interrupt()
-        {            
+        {
             Interrupted?.Invoke(this, new ProcessEventArgs());
         }
 
         [MenuItem(MenuItemsNames.ChooseEndPoints, MenuItemPriority.High)]
         public void ChooseExtremeVertex()
         {
-            if (HasAnyVerticesToChooseAsEndPoints)
+            using (var scope = DI.Container.BeginLifetimeScope())
             {
-                var selection = new EndPointsSelection(endPoints, graph, NumberOfAvailableIntermediate) { Int32Input = Int32Input };
+                var selection = scope.Resolve<EndPointsSelection>();
                 selection.ChooseEndPoints();
-            }
-            else
-            {
-                log.Warn(MessagesTexts.NoVerticesAsEndPointsMsg);
             }
         }
 
         [MenuItem(MenuItemsNames.ClearGraph, MenuItemPriority.Low)]
         public void ClearGraph()
         {
-            Messenger.Default.Send(new ClearGraphMessage(), MessageTokens.MainModel);
+            Messenger.Default.Forward(new ClearGraphMessage(), MessageTokens.MainModel);
         }
 
         [MenuItem(MenuItemsNames.ClearColors, MenuItemPriority.Low)]
         public void ClearColors()
         {
-            Messenger.Default.Send(new ClearColorsMessage(), MessageTokens.MainModel);
+            Messenger.Default.Forward(new ClearColorsMessage(), MessageTokens.MainModel);
         }
 
         [MenuItem(MenuItemsNames.ApplyVisualization, MenuItemPriority.Low)]
@@ -132,7 +128,7 @@ namespace ConsoleVersion.ViewModel
         {
             string statistics = !path.IsNull() ? GetStatistics() : MessagesTexts.CouldntFindPathMsg;
             var message = new UpdateStatisticsMessage(statistics);
-            Messenger.Default.Send(message, MessageTokens.MainView);
+            Messenger.Default.Forward(message, MessageTokens.MainView);
             visitedVerticesCount = 0;
         }
 
@@ -141,7 +137,7 @@ namespace ConsoleVersion.ViewModel
             Stopwatch.StartNew().Wait(DelayTime).Cancel();
             base.OnVertexVisited(sender, e);
             var message = new UpdateStatisticsMessage(GetStatistics());
-            Messenger.Default.Send(message, MessageTokens.MainView);
+            Messenger.Default.Forward(message, MessageTokens.MainView);
         }
 
         protected override void SubscribeOnAlgorithmEvents(PathfindingAlgorithm algorithm)
@@ -184,12 +180,10 @@ namespace ConsoleVersion.ViewModel
             ClearGraph();
             ConsoleKeystrokesHook.Instance.KeyPressed -= OnConsoleKeyPressed;
             Interrupted = null;
-            Messenger.Default.Unregister(this);
         }
 
         private string CurrentAlgorithmName { get; set; }
-        private int NumberOfAvailableIntermediate => graph.Size - graph.GetIsolatedCount() - 2;
-        private bool HasAnyVerticesToChooseAsEndPoints => NumberOfAvailableIntermediate >= 0;
+
 
         private readonly InclusiveValueRange<int> algorithmKeysValueRange;
         private IGraph graph;

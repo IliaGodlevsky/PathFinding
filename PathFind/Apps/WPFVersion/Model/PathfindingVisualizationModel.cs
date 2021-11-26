@@ -4,6 +4,7 @@ using GraphLib.Interfaces;
 using System;
 using System.Threading.Tasks;
 using Visualization;
+using WPFVersion.Enums;
 using WPFVersion.Messages;
 
 namespace WPFVersion.Model

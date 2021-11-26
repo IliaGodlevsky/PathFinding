@@ -1,5 +1,4 @@
-﻿using Algorithm.Infrastructure;
-using Algorithm.Infrastructure.EventArguments;
+﻿using Algorithm.Infrastructure.EventArguments;
 using Algorithm.Infrastructure.Handlers;
 using Algorithm.Interfaces;
 using Algorithm.Сompanions;
@@ -90,9 +89,7 @@ namespace Algorithm.Base
         protected abstract IVertex NextVertex { get; }
 
         /// <summary>
-        /// Determines whether the algorithm is able to continue 
-        /// the pathfinding process
-        /// algorithm terminated prematurely
+        /// Determines whether the algorithm is terminated prematurely
         /// </summary>
         protected bool IsTerminatedPrematurely => !CurrentVertex.IsNull() && !IsInterruptRequested;
 
