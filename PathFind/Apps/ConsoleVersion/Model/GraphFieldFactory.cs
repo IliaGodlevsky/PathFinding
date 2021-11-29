@@ -1,5 +1,4 @@
-﻿using ConsoleVersion.View;
-using GraphLib.Extensions;
+﻿using GraphLib.Extensions;
 using GraphLib.Interfaces;
 using GraphLib.Realizations.Graphs;
 using System;

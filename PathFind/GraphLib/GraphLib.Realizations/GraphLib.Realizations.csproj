@@ -47,7 +47,7 @@
     <Compile Include="Extensions\GraphExtensions.cs" />
     <Compile Include="Neighbourhoods\VonNeumannNeighborhood.cs" />
     <Compile Include="Neighbourhoods\MooreNeighborhood.cs" />
-    <Compile Include="Coordinates\Coordinate.cs" />
+    <Compile Include="Coordinates\CoordinateProxy.cs" />
     <Compile Include="MeanCosts\GeometricMeanCost.cs" />
     <Compile Include="MeanCosts\MeanCost.cs" />
     <Compile Include="MeanCosts\RootMeanSquareCost.cs" />

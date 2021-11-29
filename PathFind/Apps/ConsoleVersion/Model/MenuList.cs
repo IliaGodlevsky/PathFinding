@@ -6,7 +6,7 @@ using System.Text;
 using ValueRange;
 using ValueRange.Extensions;
 
-namespace ConsoleVersion.View
+namespace ConsoleVersion.Model
 {
     internal sealed class MenuList : IDisplayable
     {

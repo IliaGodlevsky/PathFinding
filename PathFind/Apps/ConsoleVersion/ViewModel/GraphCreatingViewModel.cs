@@ -1,15 +1,13 @@
-﻿using ConsoleVersion.Attributes;
+﻿using Common.Interface;
+using ConsoleVersion.Attributes;
 using ConsoleVersion.Enums;
 using ConsoleVersion.Extensions;
 using ConsoleVersion.Interface;
 using ConsoleVersion.Messages;
+using ConsoleVersion.ValueInput;
 using GalaSoft.MvvmLight.Messaging;
 using GraphLib.Interfaces.Factories;
 using GraphLib.ViewModel;
-using GraphViewModel.Interfaces;
-using Interruptable.EventArguments;
-using Interruptable.EventHandlers;
-using Interruptable.Interface;
 using Logging.Interface;
 using System;
 using System.Collections.Generic;
@@ -19,13 +17,13 @@ using ValueRange.Extensions;
 
 namespace ConsoleVersion.ViewModel
 {
-    internal sealed class GraphCreatingViewModel : GraphCreatingModel, IModel, IInterruptable, IRequireInt32Input, IDisposable
+    internal sealed class GraphCreatingViewModel : GraphCreatingModel, IViewModel, IRequireInt32Input, IDisposable
     {
-        public event ProcessEventHandler Interrupted;
+        public event Action WindowClosed;
 
         public string GraphAssembleInpuMessage { private get; set; }
 
-        public IValueInput<int> Int32Input { get; set; }
+        public ConsoleValueInput<int> Int32Input { get; set; }
 
         public GraphCreatingViewModel(IEnumerable<IGraphAssemble> graphAssembles, ILog log)
             : base(log, graphAssembles)
@@ -79,7 +77,7 @@ namespace ConsoleVersion.ViewModel
         [MenuItem(MenuItemsNames.Exit, MenuItemPriority.Lowest)]
         public void Interrupt()
         {
-            Interrupted?.Invoke(this, new ProcessEventArgs());
+            WindowClosed?.Invoke();
         }
 
         private bool CanCreateGraph()
@@ -91,7 +89,7 @@ namespace ConsoleVersion.ViewModel
 
         public void Dispose()
         {
-            Interrupted = null;
+            WindowClosed = null;
         }
 
         private readonly InclusiveValueRange<int> graphAssembleKeyRange;

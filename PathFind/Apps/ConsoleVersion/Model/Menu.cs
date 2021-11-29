@@ -7,7 +7,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 
-namespace ConsoleVersion.View
+namespace ConsoleVersion.Model
 {
     internal sealed class Menu<TAction> where TAction : Delegate
     {

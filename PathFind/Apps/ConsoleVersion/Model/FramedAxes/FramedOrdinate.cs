@@ -1,9 +1,10 @@
 ﻿using Colorful;
 using Common.Extensions;
 using ConsoleVersion.Interface;
+using ConsoleVersion.Views;
 using System.Text;
 
-namespace ConsoleVersion.View.Abstraction
+namespace ConsoleVersion.Model.FramedAxes
 {
     internal abstract class FramedOrdinate : FramedAxis, IFramedAxis, IDisplayable
     {

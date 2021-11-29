@@ -2,7 +2,7 @@
 
 namespace GraphViewModel.Interfaces
 {
-    public interface IMainModel : IModel
+    public interface IMainModel
     {
         string GraphParametres { get; set; }
 

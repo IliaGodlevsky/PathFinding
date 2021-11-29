@@ -25,9 +25,9 @@ using WindowsFormsVersion.Extensions;
 using WindowsFormsVersion.Model;
 using WindowsFormsVersion.ViewModel;
 
-namespace WindowsFormsVersion.Configure
+namespace WindowsFormsVersion.DependencyInjection
 {
-    internal static class ContainerConfigure
+    internal static class DI
     {
         private const string GraphAssembleName = nameof(GraphAssembleName);
         private static SmoothedGraphAssemble RegisterSmoothedGraphAssemble(IComponentContext context)
@@ -39,9 +39,9 @@ namespace WindowsFormsVersion.Configure
 
         private static Assembly[] Assemblies => AppDomain.CurrentDomain.GetAssemblies();
 
-        public static IContainer Container { get; private set; }
+        public static IContainer Container => container.Value;
 
-        public static IContainer Configure()
+        private static IContainer Configure()
         {
             var builder = new ContainerBuilder();
 
@@ -78,12 +78,14 @@ namespace WindowsFormsVersion.Configure
 
             builder.RegisterAssemblyTypes(Assemblies).Where(Implements<IAlgorithmFactory>).As<IAlgorithmFactory>().SingleInstance();
 
-            return Container = builder.Build();
+            return builder.Build();
         }
 
         private static bool Implements<TInterface>(Type type)
         {
             return type.ImplementsAll(typeof(TInterface));
         }
+
+        private static readonly Lazy<IContainer> container = new Lazy<IContainer>(Configure);
     }
 }

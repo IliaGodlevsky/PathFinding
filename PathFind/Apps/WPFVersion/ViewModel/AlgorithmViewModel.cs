@@ -1,7 +1,6 @@
 ﻿using Algorithm.Base;
 using Algorithm.Interfaces;
 using GalaSoft.MvvmLight.Messaging;
-using GraphViewModel.Interfaces;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using ValueRange.Extensions;
@@ -10,7 +9,7 @@ using WPFVersion.Messages;
 
 namespace WPFVersion.ViewModel
 {
-    internal class AlgorithmViewModel : INotifyPropertyChanged, IModel
+    internal class AlgorithmViewModel : INotifyPropertyChanged
     {
         public event PropertyChangedEventHandler PropertyChanged;
 

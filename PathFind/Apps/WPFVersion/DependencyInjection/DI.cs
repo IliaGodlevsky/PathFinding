@@ -30,17 +30,17 @@ using WPFVersion.Extensions;
 using WPFVersion.Model;
 using WPFVersion.ViewModel;
 
-namespace WPFVersion.Configure
+namespace WPFVersion.DependencyInjection
 {
-    internal static class ContainerConfigure
+    internal static class DI
     {
         private const string GraphAssembleName = nameof(GraphAssembleName);
 
         private static Assembly[] Assemblies => AppDomain.CurrentDomain.GetAssemblies();
 
-        public static IContainer Container { get; private set; }
+        public static IContainer Container => container.Value;
 
-        public static IContainer Configure()
+        private static IContainer Configure()
         {
             var builder = new ContainerBuilder();
 
@@ -80,7 +80,7 @@ namespace WPFVersion.Configure
             builder.RegisterType<LandscapeStepRule>().As<IStepRule>().SingleInstance();
             builder.RegisterDecorator<WalkStepRule, IStepRule>();
 
-            return Container = builder.Build();
+            return builder.Build();
         }
 
         private static bool Implements<TInterface>(Type type)
@@ -96,5 +96,7 @@ namespace WPFVersion.Configure
             var smoothLevel = context.Resolve<ISmoothLevel>();
             return new SmoothedGraphAssemble(randomGraphAssemble, costFactory, meanCost, smoothLevel);
         }
+
+        private static readonly Lazy<IContainer> container = new Lazy<IContainer>(Configure);
     }
 }

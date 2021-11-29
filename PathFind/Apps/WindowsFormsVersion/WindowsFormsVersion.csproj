@@ -57,14 +57,14 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Attributes\AppWindowAttribute.cs" />
-    <Compile Include="Configure\ContainerConfigure.cs" />
+    <Compile Include="DependencyInjection\DI.cs" />
     <Compile Include="Constants.cs" />
+    <Compile Include="Enums\MessageTokens.cs" />
     <Compile Include="EventArguments\StatisticsChangedEventArgs.cs" />
     <Compile Include="EventHandlers\StatisticsChangedEventHandler.cs" />
     <Compile Include="Extensions\TypeExtensions.cs" />
     <Compile Include="Extensions\ConstrolCollectionExtension.cs" />
     <Compile Include="Extensions\ControlExtension.cs" />
-    <Compile Include="MessageTokens.cs" />
     <Compile Include="Messeges\AlgorithmStatusMessage.cs" />
     <Compile Include="Messeges\GraphCreatedMessage.cs" />
     <Compile Include="Messeges\UpdateStatisticsMessage.cs" />

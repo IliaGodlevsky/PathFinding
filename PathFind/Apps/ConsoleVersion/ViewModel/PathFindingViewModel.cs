@@ -3,7 +3,7 @@ using Algorithm.Factory;
 using Algorithm.Infrastructure.EventArguments;
 using Autofac;
 using Common.Extensions;
-using Common.Extensions.EnumerableExtensions;
+using Common.Interface;
 using ConsoleVersion.Attributes;
 using ConsoleVersion.DependencyInjection;
 using ConsoleVersion.Enums;
@@ -12,15 +12,12 @@ using ConsoleVersion.Extensions;
 using ConsoleVersion.Interface;
 using ConsoleVersion.Messages;
 using ConsoleVersion.Model;
+using ConsoleVersion.ValueInput;
+using ConsoleVersion.Views;
 using GalaSoft.MvvmLight.Messaging;
 using GraphLib.Base;
 using GraphLib.Extensions;
-using GraphLib.Interfaces;
 using GraphViewModel;
-using GraphViewModel.Interfaces;
-using Interruptable.EventArguments;
-using Interruptable.EventHandlers;
-using Interruptable.Interface;
 using Logging.Interface;
 using NullObject.Extensions;
 using System;
@@ -32,21 +29,21 @@ using ValueRange.Extensions;
 namespace ConsoleVersion.ViewModel
 {
     internal sealed class PathFindingViewModel : PathFindingModel,
-        IModel, IInterruptable, IRequireInt32Input, IRequireAnswerInput, IDisposable
+        IViewModel, IRequireInt32Input, IRequireAnswerInput, IDisposable
     {
-        public event ProcessEventHandler Interrupted;
+        public event Action WindowClosed;
 
         public string AlgorithmKeyInputMessage { private get; set; }
 
-        public IValueInput<int> Int32Input { get; set; }
-        public IValueInput<Answer> AnswerInput { get; set; }
+        public ConsoleValueInput<int> Int32Input { get; set; }
+        public ConsoleValueInput<Answer> AnswerInput { get; set; }
 
         public PathFindingViewModel(BaseEndPoints endPoints, IEnumerable<IAlgorithmFactory> algorithmFactories, ILog log)
             : base(endPoints, algorithmFactories, log)
         {
             algorithmKeysValueRange = new InclusiveValueRange<int>(Algorithms.Length, 1);
             ConsoleKeystrokesHook.Instance.KeyPressed += OnConsoleKeyPressed;
-            DelayTime = Constants.AlgorithmDelayTimeValueRange.LowerValueOfRange;                       
+            DelayTime = Constants.AlgorithmDelayTimeValueRange.LowerValueOfRange;
         }
 
         [MenuItem(MenuItemsNames.FindPath, MenuItemPriority.Highest)]
@@ -92,7 +89,7 @@ namespace ConsoleVersion.ViewModel
         [MenuItem(MenuItemsNames.Exit, MenuItemPriority.Lowest)]
         public void Interrupt()
         {
-            Interrupted?.Invoke(this, new ProcessEventArgs());
+            WindowClosed?.Invoke();
         }
 
         [MenuItem(MenuItemsNames.ChooseEndPoints, MenuItemPriority.High)]
@@ -100,8 +97,8 @@ namespace ConsoleVersion.ViewModel
         {
             using (var scope = DI.Container.BeginLifetimeScope())
             {
-                var selection = scope.Resolve<EndPointsSelection>();
-                selection.ChooseEndPoints();
+                var view = scope.Resolve<EndPointsView>();
+                view.Start();
             }
         }
 
@@ -170,22 +167,15 @@ namespace ConsoleVersion.ViewModel
             }
         }
 
-        private void SetGraph(GraphCreatedMessage message)
-        {
-            graph = message.Graph;
-        }
-
         public void Dispose()
         {
+            WindowClosed = null;
             ClearGraph();
             ConsoleKeystrokesHook.Instance.KeyPressed -= OnConsoleKeyPressed;
-            Interrupted = null;
         }
 
         private string CurrentAlgorithmName { get; set; }
 
-
         private readonly InclusiveValueRange<int> algorithmKeysValueRange;
-        private IGraph graph;
     }
 }

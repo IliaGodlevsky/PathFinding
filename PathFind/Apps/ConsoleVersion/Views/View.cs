@@ -1,36 +1,32 @@
-﻿using ConsoleVersion.Extensions;
+﻿using Common.Interface;
+using ConsoleVersion.Extensions;
 using ConsoleVersion.Interface;
-using GraphViewModel.Interfaces;
-using Interruptable.EventArguments;
-using Interruptable.Interface;
+using ConsoleVersion.Model;
+using ConsoleVersion.ValueInput;
 using System;
 using ValueRange;
 
-namespace ConsoleVersion.View.Abstraction
+namespace ConsoleVersion.Views
 {
-    internal abstract class View<TModel> : IView, IRequireInt32Input, IDisposable
-        where TModel : IModel, IInterruptable
+    internal abstract class View : IView, IRequireInt32Input, IDisposable
     {
         public event Action NewMenuIteration;
 
-        public void OnInterrupted(object sender, ProcessEventArgs e)
+        public void OnClosed()
         {
             IsInterruptRequested = true;
         }
 
         private bool IsInterruptRequested { get; set; }
 
-        protected TModel Model { get; }
+        public ConsoleValueInput<int> Int32Input { get; set; }
 
-        public IValueInput<int> Int32Input { get; set; }
-
-        protected View(TModel model)
+        protected View(IViewModel model)
         {
-            Model = model;
-            menu = new Menu<Action>(Model);
+            menu = new Menu<Action>(model);
             menuList = new MenuList(menu.MenuActionsNames);
             menuValueRange = new InclusiveValueRange<int>(menu.MenuActionsNames.Length, 1);
-            model.Interrupted += OnInterrupted;
+            model.WindowClosed += OnClosed;
         }
 
         public virtual void Start()

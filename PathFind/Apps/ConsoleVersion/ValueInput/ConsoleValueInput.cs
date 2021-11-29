@@ -1,13 +1,14 @@
-﻿using System;
+﻿using ConsoleVersion.Interface;
+using System;
 using ValueRange;
 
 namespace ConsoleVersion.ValueInput
 {
-    internal abstract class ConsoleValueInput<TValue>
+    internal abstract class ConsoleValueInput<TValue> : IValueInput<TValue>
         where TValue : struct, IComparable
     {
         public virtual TValue InputValue(string accompanyingMessage,
-            TValue upperRangeValue, TValue lowerRangeValue)
+            TValue upperRangeValue, TValue lowerRangeValue = default)
         {
             var rangeOfValidInput = new InclusiveValueRange<TValue>(upperRangeValue, lowerRangeValue);
             string userInput;

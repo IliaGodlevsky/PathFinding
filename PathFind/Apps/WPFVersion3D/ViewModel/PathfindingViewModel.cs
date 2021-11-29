@@ -57,7 +57,7 @@ namespace WPFVersion3D.ViewModel
             base.OnAlgorithmStarted(sender, e);
             string algorithmName = Algorithm.GetDescriptionAttributeValueOrTypeName();
             var message = new AlgorithmStartedMessage(algorithm, algorithmName);
-            Messenger.Default.Send(message, MessageTokens.AlgorithmStatisticsModel);
+            Messenger.Default.Forward(message, MessageTokens.AlgorithmStatisticsModel);
         }
 
         protected override void SummarizePathfindingResults()
@@ -66,9 +66,9 @@ namespace WPFVersion3D.ViewModel
             string time = timer.ToFormattedString();
             var message = new UpdateAlgorithmStatisticsMessage(Index, time,
                 visitedVerticesCount, path.Length, path.Cost);
-            Messenger.Default.Send(message, MessageTokens.AlgorithmStatisticsModel);
+            Messenger.Default.Forward(message, MessageTokens.AlgorithmStatisticsModel);
             var statusMessage = new AlgorithmStatusMessage(status, Index);
-            Messenger.Default.Send(statusMessage, MessageTokens.AlgorithmStatisticsModel);
+            Messenger.Default.Forward(statusMessage, MessageTokens.AlgorithmStatisticsModel);
         }
 
         protected override async void OnVertexVisited(object sender, AlgorithmEventArgs e)
@@ -76,7 +76,7 @@ namespace WPFVersion3D.ViewModel
             Stopwatch.StartNew().Wait(DelayTime).Cancel();
             string time = timer.ToFormattedString();
             var message = new UpdateAlgorithmStatisticsMessage(Index, time, visitedVerticesCount);
-            await Messenger.Default.SendAsync(message, MessageTokens.AlgorithmStatisticsModel);
+            await Messenger.Default.ForwardAsync(message, MessageTokens.AlgorithmStatisticsModel);
             await Task.Run(() => base.OnVertexVisited(sender, e));
         }
 
@@ -89,7 +89,7 @@ namespace WPFVersion3D.ViewModel
         {
             base.OnAlgorithmInterrupted(sender, e);
             var message = new AlgorithmStatusMessage(AlgorithmStatuses.Interrupted, Index);
-            Messenger.Default.Send(message, MessageTokens.AlgorithmStatisticsModel);
+            Messenger.Default.Forward(message, MessageTokens.AlgorithmStatisticsModel);
         }
 
         protected override void OnAlgorithmFinished(object sender, ProcessEventArgs e)

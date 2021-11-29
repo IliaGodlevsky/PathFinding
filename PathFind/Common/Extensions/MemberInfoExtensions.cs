@@ -56,6 +56,11 @@ namespace Common.Extensions
             return interfaces.All(@interface => type.GetInterface(@interface.Name) != null);
         }
 
+        public static bool IsSubClass(this Type type, params Type[] classes)
+        {
+            return classes.All(_type => type.IsSubclassOf(_type));
+        }
+
         public static TValue[] GetValuesOfStaticClassProperties<TValue>(this Type classType, params string[] exceptNamesOfProperties)
         {
             return classType

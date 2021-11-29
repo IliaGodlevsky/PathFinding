@@ -1,4 +1,5 @@
 ﻿using Autofac;
+using Common.Interface;
 using ConsoleVersion.Attributes;
 using ConsoleVersion.DependencyInjection;
 using ConsoleVersion.Enums;
@@ -6,7 +7,8 @@ using ConsoleVersion.Extensions;
 using ConsoleVersion.Interface;
 using ConsoleVersion.Messages;
 using ConsoleVersion.Model;
-using ConsoleVersion.View;
+using ConsoleVersion.ValueInput;
+using ConsoleVersion.Views;
 using GalaSoft.MvvmLight.Messaging;
 using GraphLib.Base;
 using GraphLib.Extensions;
@@ -17,9 +19,6 @@ using GraphLib.Serialization;
 using GraphLib.Serialization.Exceptions;
 using GraphViewModel;
 using GraphViewModel.Interfaces;
-using Interruptable.EventArguments;
-using Interruptable.EventHandlers;
-using Interruptable.Interface;
 using Logging.Interface;
 using System;
 using System.Drawing;
@@ -30,12 +29,12 @@ using Console = Colorful.Console;
 namespace ConsoleVersion.ViewModel
 {
     internal sealed class MainViewModel : MainModel,
-        IMainModel, IModel, IInterruptable, IRequireAnswerInput, IRequireInt32Input, IDisposable
+        IMainModel, IViewModel, IRequireAnswerInput, IRequireInt32Input, IDisposable
     {
-        public event ProcessEventHandler Interrupted;
+        public event Action WindowClosed;
 
-        public IValueInput<int> Int32Input { get; set; }
-        public IValueInput<Answer> AnswerInput { get; set; }
+        public ConsoleValueInput<int> Int32Input { get; set; }
+        public ConsoleValueInput<Answer> AnswerInput { get; set; }
 
         public MainViewModel(IGraphFieldFactory fieldFactory,
             IVertexEventHolder eventHolder, GraphSerializationModule serializationModule, BaseEndPoints endPoints, ILog log)
@@ -88,7 +87,7 @@ namespace ConsoleVersion.ViewModel
         }
 
         [MenuItem(MenuItemsNames.ReverseVertex, MenuItemPriority.Normal)]
-        public void ReverseVertex() => PerformActionOnVertex(vertex => vertex?.Reverse());
+        public void ReverseVertex() => PerformActionOnVertex(vertex => vertex?.OnVertexReversed());
 
         [MenuItem(MenuItemsNames.ChangeCostRange, MenuItemPriority.Low)]
         public void ChangeVertexCostValueRange()
@@ -99,7 +98,7 @@ namespace ConsoleVersion.ViewModel
         }
 
         [MenuItem(MenuItemsNames.ChangeVertexCost, MenuItemPriority.Low)]
-        public void ChangeVertexCost() => PerformActionOnVertex(vertex => vertex?.ChangeCost());
+        public void ChangeVertexCost() => PerformActionOnVertex(vertex => vertex?.OnVertexCostChanged());
 
         [MenuItem(MenuItemsNames.SaveGraph, MenuItemPriority.Normal)]
         public override void SaveGraph() => base.SaveGraph();
@@ -132,7 +131,7 @@ namespace ConsoleVersion.ViewModel
             var answer = AnswerInput.InputValue(MessagesTexts.ExitAppMsg, Constants.AnswerValueRange);
             if (answer == Answer.Yes)
             {
-                Interrupted?.Invoke(this, new ProcessEventArgs());
+                WindowClosed?.Invoke();
             }
         }
 
@@ -190,7 +189,7 @@ namespace ConsoleVersion.ViewModel
         public void Dispose()
         {
             Messenger.Default.Unregister(this);
-            Interrupted = null;
+            WindowClosed = null;
         }
     }
 }

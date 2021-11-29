@@ -1,5 +1,4 @@
 ﻿using ConsoleVersion.Enums;
-using System;
 
 namespace ConsoleVersion.Messages
 {

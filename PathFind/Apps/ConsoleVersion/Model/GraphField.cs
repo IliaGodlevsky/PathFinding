@@ -1,14 +1,13 @@
 ﻿using Common.Extensions.EnumerableExtensions;
 using ConsoleVersion.Interface;
-using ConsoleVersion.Model;
-using ConsoleVersion.View.FramedAxes;
+using ConsoleVersion.Model.FramedAxes;
 using GraphLib.Interfaces;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using ValueRange;
 using ValueRange.Extensions;
 
-namespace ConsoleVersion.View
+namespace ConsoleVersion.Model
 {
     internal sealed class GraphField : IGraphField, IDisplayable
     {

@@ -15,7 +15,7 @@ using System.Runtime.CompilerServices;
 using System.Windows;
 using System.Windows.Input;
 using WPFVersion3D.Axes;
-using WPFVersion3D.Configure;
+using WPFVersion3D.DependencyInjection;
 using WPFVersion3D.Enums;
 using WPFVersion3D.Extensions;
 using WPFVersion3D.Infrastructure;
@@ -73,14 +73,14 @@ namespace WPFVersion3D.ViewModel
             Messenger.Default.Register<GraphCreatedMessage>(this, MessageTokens.MainModel, SetGraph);
         }
 
-        public override void FindPath() => ContainerConfigure.Container.Resolve<PathFindWindow>().Show();
-        public override void CreateNewGraph() => ContainerConfigure.Container.Resolve<GraphCreateWindow>().Show();
-        private void ChangeVerticesOpacity() => ContainerConfigure.Container.Resolve<OpacityChangeWindow>().Show();
+        public override void FindPath() => DI.Container.Resolve<PathFindWindow>().Show();
+        public override void CreateNewGraph() => DI.Container.Resolve<GraphCreateWindow>().Show();
+        private void ChangeVerticesOpacity() => DI.Container.Resolve<OpacityChangeWindow>().Show();
 
         public override void ConnectNewGraph(IGraph graph)
         {
             base.ConnectNewGraph(graph);
-            Messenger.Default.Send(new ClearStatisticsMessage(), MessageTokens.AlgorithmStatisticsModel);
+            Messenger.Default.Forward(new ClearStatisticsMessage(), MessageTokens.AlgorithmStatisticsModel);
             (graphField as GraphField3D)?.CenterGraph();
         }
 
@@ -105,13 +105,13 @@ namespace WPFVersion3D.ViewModel
         {
             base.ClearGraph();
             var message = new ClearStatisticsMessage();
-            Messenger.Default.Send(message, MessageTokens.AlgorithmStatisticsModel);
+            Messenger.Default.Forward(message, MessageTokens.AlgorithmStatisticsModel);
         }
 
         private void ExecuteInterruptAlgorithmCommand(object param)
         {
             var message = new InterruptAllAlgorithmsMessage();
-            Messenger.Default.Send(message, MessageTokens.AlgorithmStatisticsModel);
+            Messenger.Default.Forward(message, MessageTokens.AlgorithmStatisticsModel);
         }
 
         private bool CanExecuteStartFindPathCommand(object param) => !endPoints.HasIsolators();

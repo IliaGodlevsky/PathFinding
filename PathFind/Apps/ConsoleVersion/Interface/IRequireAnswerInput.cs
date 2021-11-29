@@ -1,9 +1,10 @@
 ﻿using ConsoleVersion.Enums;
+using ConsoleVersion.ValueInput;
 
 namespace ConsoleVersion.Interface
 {
     internal interface IRequireAnswerInput
     {
-        IValueInput<Answer> AnswerInput { get; set; }
+        ConsoleValueInput<Answer> AnswerInput { get; set; }
     }
 }

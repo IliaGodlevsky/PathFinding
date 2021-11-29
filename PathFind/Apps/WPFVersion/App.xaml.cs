@@ -1,6 +1,6 @@
 ﻿using Autofac;
 using System.Windows;
-using WPFVersion.Configure;
+using WPFVersion.DependencyInjection;
 
 namespace WPFVersion
 {
@@ -10,8 +10,7 @@ namespace WPFVersion
         {
             base.OnStartup(e);
 
-            var container = ContainerConfigure.Configure();
-            var window = container.Resolve<MainWindow>();
+            var window = DI.Container.Resolve<MainWindow>();
             window.Show();
         }
     }

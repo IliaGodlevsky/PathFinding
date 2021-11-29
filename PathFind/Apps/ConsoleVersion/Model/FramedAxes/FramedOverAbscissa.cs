@@ -1,7 +1,6 @@
 ﻿using ConsoleVersion.Interface;
-using ConsoleVersion.View.Abstraction;
 
-namespace ConsoleVersion.View.FramedAxes
+namespace ConsoleVersion.Model.FramedAxes
 {
     internal sealed class FramedOverAbscissa : FramedAbscissa, IFramedAxis, IDisplayable
     {

@@ -3,7 +3,6 @@ using GalaSoft.MvvmLight.Messaging;
 using GraphLib.Extensions;
 using GraphLib.Interfaces.Factories;
 using GraphLib.ViewModel;
-using GraphViewModel.Interfaces;
 using Logging.Interface;
 using System;
 using System.Collections.Generic;
@@ -16,7 +15,7 @@ using WPFVersion.Messages;
 
 namespace WPFVersion.ViewModel
 {
-    public class GraphCreatingViewModel : GraphCreatingModel, IModel, IViewModel, IDisposable
+    public class GraphCreatingViewModel : GraphCreatingModel, IViewModel, IDisposable
     {
         public event Action WindowClosed;
 

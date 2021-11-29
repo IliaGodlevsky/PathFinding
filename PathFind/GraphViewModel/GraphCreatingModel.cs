@@ -1,12 +1,11 @@
 ﻿using Common.Extensions.EnumerableExtensions;
 using GraphLib.Interfaces.Factories;
-using GraphViewModel.Interfaces;
 using Logging.Interface;
 using System.Collections.Generic;
 
 namespace GraphLib.ViewModel
 {
-    public abstract class GraphCreatingModel : IModel
+    public abstract class GraphCreatingModel
     {
         public int Width { get; set; }
 

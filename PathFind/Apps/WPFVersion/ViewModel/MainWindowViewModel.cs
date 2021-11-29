@@ -12,7 +12,7 @@ using System;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using System.Windows.Input;
-using WPFVersion.Configure;
+using WPFVersion.DependencyInjection;
 using WPFVersion.Enums;
 using WPFVersion.Extensions;
 using WPFVersion.Infrastructure;
@@ -23,7 +23,7 @@ using WPFVersion.View.Windows;
 
 namespace WPFVersion.ViewModel
 {
-    public class MainWindowViewModel : MainModel, IMainModel, IModel, INotifyPropertyChanged, IDisposable
+    public class MainWindowViewModel : MainModel, IMainModel, INotifyPropertyChanged, IDisposable
     {
         public event PropertyChangedEventHandler PropertyChanged;
 
@@ -71,32 +71,14 @@ namespace WPFVersion.ViewModel
 
         public override void FindPath()
         {
-            try
-            {
-                var window = ContainerConfigure.Container.Resolve<PathFindWindow>();
-                window.Show();
-            }
-            catch (SystemException ex)
-            {
-                log.Warn(ex);
-            }
-            catch (Exception ex)
-            {
-                log.Error(ex);
-            }
+            var window = DI.Container.Resolve<PathFindWindow>();
+            window.Show();
         }
 
         public override void CreateNewGraph()
         {
-            try
-            {
-                var window = ContainerConfigure.Container.Resolve<GraphCreatesWindow>();
-                window.Show();
-            }
-            catch (Exception ex)
-            {
-                log.Error(ex);
-            }
+            var window = DI.Container.Resolve<GraphCreatesWindow>();
+            window.Show();
         }
 
         public override void ConnectNewGraph(IGraph graph)

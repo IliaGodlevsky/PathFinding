@@ -1,5 +1,6 @@
 ﻿using ConsoleVersion.Extensions;
 using ConsoleVersion.Interface;
+using ConsoleVersion.ValueInput;
 using GraphLib.Base;
 using GraphLib.Interfaces;
 using GraphLib.Interfaces.Factories;
@@ -17,7 +18,7 @@ namespace ConsoleVersion.Model
 
         }
 
-        public IValueInput<int> Int32Input { get; set; }
+        public ConsoleValueInput<int> Int32Input { get; set; }
 
         public override void ChangeVertexCost(object sender, EventArgs e)
         {
@@ -37,8 +38,8 @@ namespace ConsoleVersion.Model
         {
             if (vertex is Vertex vert)
             {
-                vert.OnVertexCostChanged += ChangeVertexCost;
-                vert.OnVertexReversed += Reverse;
+                vert.VertexCostChanged += ChangeVertexCost;
+                vert.VertexReversed += Reverse;
             }
         }
 
@@ -46,8 +47,8 @@ namespace ConsoleVersion.Model
         {
             if (vertex is Vertex vert)
             {
-                vert.OnVertexCostChanged -= ChangeVertexCost;
-                vert.OnVertexReversed -= Reverse;
+                vert.VertexCostChanged -= ChangeVertexCost;
+                vert.VertexReversed -= Reverse;
             }
         }
     }

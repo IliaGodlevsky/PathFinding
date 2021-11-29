@@ -66,7 +66,7 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Attributes\AppWindowAttribute.cs" />
-    <Compile Include="Configure\ContainerConfigure.cs" />
+    <Compile Include="DependencyInjection\DI.cs" />
     <Compile Include="Constants.cs" />
     <Compile Include="Converters\AlgorithmStatusToStringConverter.cs" />
     <Compile Include="Converters\BoolToVerticesCostsModeConverter.cs" />

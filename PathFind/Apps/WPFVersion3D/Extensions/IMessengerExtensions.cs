@@ -1,11 +1,12 @@
 ﻿using Common.Extensions.EnumerableExtensions;
-using ConsoleVersion.Enums;
 using EnumerationValues.Interface;
 using EnumerationValues.Realizations;
 using GalaSoft.MvvmLight.Messaging;
 using System.Linq;
+using System.Threading.Tasks;
+using WPFVersion3D.Enums;
 
-namespace ConsoleVersion.Extensions
+namespace WPFVersion3D.Extensions
 {
     internal static class IMessengerExtensions
     {
@@ -14,6 +15,12 @@ namespace ConsoleVersion.Extensions
         static IMessengerExtensions()
         {
             Tokens = new EnumValuesWithoutIgnored<MessageTokens>();
+        }
+
+        public static async Task ForwardAsync<TMessage>(this IMessenger self,
+            TMessage message, MessageTokens messageToken)
+        {
+            await Task.Run(() => self.Forward(message, messageToken));
         }
 
         /// <summary>

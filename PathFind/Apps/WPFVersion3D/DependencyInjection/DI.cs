@@ -26,15 +26,15 @@ using WPFVersion3D.Model;
 using WPFVersion3D.Model3DFactories;
 using WPFVersion3D.ViewModel;
 
-namespace WPFVersion3D.Configure
+namespace WPFVersion3D.DependencyInjection
 {
-    internal static class ContainerConfigure
+    internal static class DI
     {
-        public static IContainer Container { get; private set; }
+        public static IContainer Container => container.Value;
 
         private static Assembly[] Assemblies => AppDomain.CurrentDomain.GetAssemblies();
 
-        public static IContainer Configure()
+        private static IContainer Configure()
         {
             var builder = new ContainerBuilder();
 
@@ -70,12 +70,14 @@ namespace WPFVersion3D.Configure
 
             builder.RegisterAssemblyTypes(Assemblies).Where(Implements<IAlgorithmFactory>).As<IAlgorithmFactory>().SingleInstance();
 
-            return Container = builder.Build();
+            return builder.Build();
         }
 
         private static bool Implements<TInterface>(Type type)
         {
             return type.ImplementsAll(typeof(TInterface));
         }
+
+        private static readonly Lazy<IContainer> container = new Lazy<IContainer>(Configure);
     }
 }

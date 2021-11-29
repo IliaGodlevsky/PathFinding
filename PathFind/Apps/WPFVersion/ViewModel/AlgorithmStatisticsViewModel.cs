@@ -1,6 +1,5 @@
 ﻿using Common.Extensions.EnumerableExtensions;
 using GalaSoft.MvvmLight.Messaging;
-using GraphViewModel.Interfaces;
 using System;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
@@ -17,7 +16,7 @@ using WPFVersion.Model;
 
 namespace WPFVersion.ViewModel
 {
-    internal class AlgorithmStatisticsViewModel : INotifyPropertyChanged, IModel, IDisposable
+    internal class AlgorithmStatisticsViewModel : INotifyPropertyChanged, IDisposable
     {
         private Dispatcher Dispatcher => Application.Current.Dispatcher;
 

@@ -1,11 +1,12 @@
 ﻿using Common.Extensions;
 using ConsoleVersion.Interface;
+using ConsoleVersion.Views;
 using System;
 using System.Text;
 
 using Console = Colorful.Console;
 
-namespace ConsoleVersion.View.Abstraction
+namespace ConsoleVersion.Model.FramedAxes
 {
     internal abstract class FramedAbscissa : FramedAxis, IFramedAxis, IDisplayable
     {

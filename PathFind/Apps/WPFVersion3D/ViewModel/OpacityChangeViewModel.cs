@@ -1,5 +1,4 @@
 ﻿using Common.Interface;
-using GraphViewModel.Interfaces;
 using System;
 using System.Windows.Input;
 using WPFVersion3D.Infrastructure;
@@ -7,7 +6,7 @@ using WPFVersion3D.Model;
 
 namespace WPFVersion3D.ViewModel
 {
-    public class OpacityChangeViewModel : IModel, IViewModel, IDisposable
+    public class OpacityChangeViewModel : IViewModel, IDisposable
     {
         public event Action WindowClosed;
 

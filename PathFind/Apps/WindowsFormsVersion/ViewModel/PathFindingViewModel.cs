@@ -5,17 +5,17 @@ using Common.Interface;
 using GalaSoft.MvvmLight.Messaging;
 using GraphLib.Base;
 using GraphViewModel;
-using GraphViewModel.Interfaces;
 using Interruptable.EventArguments;
 using Logging.Interface;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using WindowsFormsVersion.Enums;
 using WindowsFormsVersion.Messeges;
 
 namespace WindowsFormsVersion.ViewModel
 {
-    internal class PathFindingViewModel : PathFindingModel, IModel, IViewModel, IDisposable
+    internal class PathFindingViewModel : PathFindingModel, IViewModel, IDisposable
     {
         public event Action WindowClosed;
 

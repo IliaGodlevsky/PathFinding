@@ -1,6 +1,5 @@
 ﻿using ConsoleVersion.Enums;
 using System;
-using System.Diagnostics;
 
 namespace ConsoleVersion.Attributes
 {
@@ -8,7 +7,6 @@ namespace ConsoleVersion.Attributes
     /// Indicates that a method can be used to create a menu item
     /// </summary>
     [AttributeUsage(AttributeTargets.Method)]
-    [DebuggerDisplay("Header - {Header}; Priority - {Priority}")]
     internal sealed class MenuItemAttribute : Attribute
     {
         /// <summary>

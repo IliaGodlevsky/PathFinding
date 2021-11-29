@@ -1,5 +1,5 @@
 ﻿using ConsoleVersion.Interface;
-using ConsoleVersion.View;
+using ConsoleVersion.Views;
 using GraphLib.Extensions;
 using GraphLib.Interfaces;
 using GraphLib.Realizations.Coordinates;
@@ -19,9 +19,10 @@ namespace ConsoleVersion.Model
     [DebuggerDisplay("{Position.ToString()}")]
     internal class Vertex : IVertex, IVisualizable, IWeightable, IDisplayable, IEquatable<IVertex>
     {
-        public event EventHandler OnVertexCostChanged;
-        public event EventHandler OnEndPointChosen;
-        public event EventHandler OnVertexReversed;
+        public event EventHandler VertexCostChanged;
+        public event EventHandler EndPointChosen;
+        public event EventHandler VertexReversed;
+        public event EventHandler MarkedToReplaceIntermediate;
 
         public Vertex(INeighborhood neighbourhood, ICoordinate coordinate)
         {
@@ -71,9 +72,10 @@ namespace ConsoleVersion.Model
         public IReadOnlyCollection<IVertex> Neighbours => neighbours.Value;
         public ICoordinate Position { get; }
 
-        public void ChangeCost() => OnVertexCostChanged?.Invoke(this, EventArgs.Empty);
-        public void Reverse() => OnVertexReversed?.Invoke(this, EventArgs.Empty);
-        public void SetAsExtremeVertex() => OnEndPointChosen?.Invoke(this, EventArgs.Empty);
+        public void OnVertexCostChanged() => VertexCostChanged?.Invoke(this, EventArgs.Empty);
+        public void OnVertexReversed() => VertexReversed?.Invoke(this, EventArgs.Empty);
+        public void OnEndPointChosen() => EndPointChosen?.Invoke(this, EventArgs.Empty);
+        public void OnMarkedToReplaceIntermediate() => MarkedToReplaceIntermediate?.Invoke(this, EventArgs.Empty);
 
         public void MakeUnweighted()
         {

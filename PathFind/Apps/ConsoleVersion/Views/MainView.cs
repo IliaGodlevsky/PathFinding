@@ -1,7 +1,6 @@
 ﻿using ConsoleVersion.Enums;
 using ConsoleVersion.Interface;
 using ConsoleVersion.Messages;
-using ConsoleVersion.View.Abstraction;
 using ConsoleVersion.ViewModel;
 using GalaSoft.MvvmLight.Messaging;
 using GraphLib.Base;
@@ -9,9 +8,9 @@ using GraphLib.Realizations.Coordinates;
 using GraphLib.Realizations.Graphs;
 using System;
 
-namespace ConsoleVersion.View
+namespace ConsoleVersion.Views
 {
-    internal sealed class MainView : View<MainViewModel>, IView
+    internal sealed class MainView : View, IView
     {
         public static int HeightOfAbscissaView => 2;
         public static int HeightOfGraphParametresView => 1;

@@ -1,5 +1,5 @@
-﻿using EnumerationValues.Attributes;
-using ConsoleVersion.ViewModel;
+﻿using ConsoleVersion.ViewModel;
+using EnumerationValues.Attributes;
 using System;
 
 namespace ConsoleVersion.Enums
@@ -15,13 +15,13 @@ namespace ConsoleVersion.Enums
         /// </summary>
         MainModel = 2 << 0,
         /// <summary>
-        /// Use this token to send message to <see cref="ConsoleVersion.View.MainView"/>
+        /// Use this token to send message to <see cref="ConsoleVersion.Views.MainView"/>
         /// </summary>
         MainView = 2 << 1,
         /// <summary>
-        /// Use this token to send message to <see cref="ConsoleVersion.Model.EndPointsSelection"/>
+        /// Use this token to send message to <see cref="ConsoleVersion.ViewModel.EndPointsViewModel"/>
         /// </summary>
-        EndPointsSelection = 2 << 2,
+        EndPointsViewModel = 2 << 2,
         /// <summary>
         /// Use this token to send message to everybody
         /// </summary>

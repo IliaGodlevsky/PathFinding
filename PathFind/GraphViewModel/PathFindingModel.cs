@@ -7,7 +7,6 @@ using Algorithm.NullRealizations;
 using Common.Extensions.EnumerableExtensions;
 using GraphLib.Base;
 using GraphLib.Interfaces;
-using GraphViewModel.Interfaces;
 using Interruptable.EventArguments;
 using Logging.Interface;
 using NullObject.Extensions;
@@ -17,7 +16,7 @@ using System.Diagnostics;
 
 namespace GraphViewModel
 {
-    public abstract class PathFindingModel : IModel
+    public abstract class PathFindingModel
     {
         public bool IsVisualizationRequired { get; set; } = true;
 
@@ -54,7 +53,6 @@ namespace GraphViewModel
             }
             finally
             {
-                UnsubscribeOnAlgorithmEvents(algorithm);
                 algorithm.Dispose();
                 path = NullGraphPath.Instance;
             }
@@ -117,22 +115,6 @@ namespace GraphViewModel
             algorithm.Finished += OnAlgorithmFinished;
             algorithm.Started += OnAlgorithmStarted;
             algorithm.Interrupted += OnAlgorithmInterrupted;
-        }
-
-        protected virtual void UnsubscribeOnAlgorithmEvents(PathfindingAlgorithm algorithm)
-        {
-            if (IsVisualizationRequired)
-            {
-                algorithm.VertexEnqueued -= OnVertexEnqueued;
-                algorithm.VertexVisited -= OnVertexVisited;
-            }
-            else
-            {
-                algorithm.VertexVisited -= OnVertexVisitedNoVisualization;
-            }
-            algorithm.Finished -= OnAlgorithmFinished;
-            algorithm.Started -= OnAlgorithmStarted;
-            algorithm.Interrupted -= OnAlgorithmInterrupted;
         }
 
         protected readonly BaseEndPoints endPoints;

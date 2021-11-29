@@ -11,7 +11,8 @@ namespace ConsoleVersion.Model
         {
             if (vertex is Vertex vert)
             {
-                vert.OnEndPointChosen += SetEndPoints;
+                vert.EndPointChosen += SetEndPoints;
+                vert.MarkedToReplaceIntermediate += MarkIntermediateToReplace;
             }
         }
 
@@ -19,7 +20,8 @@ namespace ConsoleVersion.Model
         {
             if (vertex is Vertex vert)
             {
-                vert.OnEndPointChosen -= SetEndPoints;
+                vert.EndPointChosen -= SetEndPoints;
+                vert.MarkedToReplaceIntermediate -= MarkIntermediateToReplace;
             }
         }
     }

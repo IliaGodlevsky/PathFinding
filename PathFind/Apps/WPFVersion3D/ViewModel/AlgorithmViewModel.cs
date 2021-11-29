@@ -1,12 +1,11 @@
 ﻿using Algorithm.Base;
-using GraphViewModel.Interfaces;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using WPFVersion3D.Enums;
 
 namespace WPFVersion3D.ViewModel
 {
-    internal class AlgorithmViewModel : INotifyPropertyChanged, IModel
+    internal class AlgorithmViewModel : INotifyPropertyChanged
     {
         public event PropertyChangedEventHandler PropertyChanged;
 

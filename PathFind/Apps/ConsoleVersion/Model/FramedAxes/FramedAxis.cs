@@ -1,6 +1,7 @@
 ﻿using ConsoleVersion.Interface;
+using ConsoleVersion.Views;
 
-namespace ConsoleVersion.View.Abstraction
+namespace ConsoleVersion.Model.FramedAxes
 {
     /// <summary>
     /// An abstract class, that provides methods for

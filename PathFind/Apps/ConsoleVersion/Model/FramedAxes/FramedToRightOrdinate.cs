@@ -1,7 +1,7 @@
 ﻿using ConsoleVersion.Interface;
-using ConsoleVersion.View.Abstraction;
+using ConsoleVersion.Views;
 
-namespace ConsoleVersion.View.FramedAxes
+namespace ConsoleVersion.Model.FramedAxes
 {
     internal sealed class FramedToRightOrdinate : FramedOrdinate, IFramedAxis, IDisplayable
     {

@@ -1,6 +1,6 @@
 ﻿using Autofac;
 using System.Windows;
-using WPFVersion3D.Configure;
+using WPFVersion3D.DependencyInjection;
 
 namespace WPFVersion3D
 {
@@ -10,8 +10,7 @@ namespace WPFVersion3D
         {
             base.OnStartup(e);
 
-            var container = ContainerConfigure.Configure();
-            var mainWindow = container.Resolve<MainWindow>();
+            var mainWindow = DI.Container.Resolve<MainWindow>();
             mainWindow.Show();
         }
     }

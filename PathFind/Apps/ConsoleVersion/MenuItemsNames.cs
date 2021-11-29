@@ -21,5 +21,9 @@
         public const string ChooseGraphAssemble = "Choose graph assemble";
         public const string InputObstaclePercent = "Input obstacle percent";
         public const string InputGraphParametres = "Input graph parametres";
+        public const string ChooseIntermediates = "Choose intermediates";
+        public const string ReplaceSourceVertex = "Replace source vertex";
+        public const string ReplaceTargetVertex = "Replace target vertex";
+        public const string ReplaceIntermediates = "Replace intermediates";
     }
 }

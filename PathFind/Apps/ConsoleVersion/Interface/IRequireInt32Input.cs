@@ -1,7 +1,9 @@
-﻿namespace ConsoleVersion.Interface
+﻿using ConsoleVersion.ValueInput;
+
+namespace ConsoleVersion.Interface
 {
     internal interface IRequireInt32Input
     {
-        IValueInput<int> Int32Input { get; set; }
+        ConsoleValueInput<int> Int32Input { get; set; }
     }
 }

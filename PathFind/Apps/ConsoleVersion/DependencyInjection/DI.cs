@@ -4,6 +4,7 @@ using Algorithm.Realizations.StepRules;
 using Autofac;
 using Autofac.Core;
 using Common.Extensions;
+using Common.Interface;
 using ConsoleVersion.Enums;
 using ConsoleVersion.Interface;
 using ConsoleVersion.Model;
@@ -21,7 +22,6 @@ using GraphLib.Realizations.MeanCosts;
 using GraphLib.Serialization;
 using GraphLib.Serialization.Interfaces;
 using GraphLib.Serialization.Serializers;
-using GraphViewModel.Interfaces;
 using Logging.Interface;
 using Logging.Loggers;
 using Random.Interface;
@@ -44,15 +44,14 @@ namespace ConsoleVersion.DependencyInjection
         {
             var builder = new ContainerBuilder();
 
-            builder.RegisterType<EnumConsoleValueInput<Answer>>().As<IValueInput<Answer>>().SingleInstance();
-            builder.RegisterType<Int32ConsoleValueInput>().As<IValueInput<int>>().SingleInstance();
+            builder.RegisterType<EnumConsoleValueInput<Answer>>().As<ConsoleValueInput<Answer>>().SingleInstance();
+            builder.RegisterType<Int32ConsoleValueInput>().As<ConsoleValueInput<int>>().SingleInstance();
 
             builder.RegisterType<MainViewModel>().AsSelf().SingleInstance().PropertiesAutowired();
-            builder.RegisterAssemblyTypes(Assemblies).Where(Implements<IModel>).Except<MainViewModel>().AsSelf()
+            builder.RegisterAssemblyTypes(Assemblies).Where(Implements<IViewModel>).Except<MainViewModel>().AsSelf()
                 .PropertiesAutowired().InstancePerLifetimeScope();
             builder.RegisterAssemblyTypes(Assemblies).Where(Implements<IView>).AsSelf().PropertiesAutowired()
                 .OnActivated(OnActivated).InstancePerLifetimeScope();
-            builder.RegisterType<EndPointsSelection>().AsSelf().PropertiesAutowired().InstancePerLifetimeScope();
 
             builder.RegisterType<EndPoints>().As<BaseEndPoints>().SingleInstance();
             builder.RegisterType<VertexEventHolder>().As<IVertexEventHolder>().SingleInstance().PropertiesAutowired();

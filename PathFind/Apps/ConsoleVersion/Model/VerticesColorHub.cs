@@ -14,6 +14,7 @@ namespace ConsoleVersion.Model
         private static readonly Color AlreadyPathVertexColor = Color.FromKnownColor(KnownColor.Orange);
         private static readonly Color VisitedVertexColor = Color.FromKnownColor(KnownColor.Blue);
         private static readonly Color IntermediateVertexColor = Color.FromKnownColor(KnownColor.DarkOrange);
+        private static readonly Color ToReplaceMarkColor = Color.FromKnownColor(KnownColor.DarkRed);
 
         private void Mark(Vertex vertex, Color color)
         {
@@ -22,7 +23,7 @@ namespace ConsoleVersion.Model
         }
 
         public bool IsVisualizedAsPath(Vertex vertex) => vertex.Color.IsOneOf(PathVertexColor, AlreadyPathVertexColor, IntermediateVertexColor);
-        public bool IsVisualizedAsEndPoint(Vertex vertex) => vertex.Color.IsOneOf(SourceVertexColor, TargetVertexColor, IntermediateVertexColor);
+        public bool IsVisualizedAsEndPoint(Vertex vertex) => vertex.Color.IsOneOf(SourceVertexColor, TargetVertexColor, IntermediateVertexColor, ToReplaceMarkColor);
         public void VisualizeAsTarget(Vertex vertex) => Mark(vertex, TargetVertexColor);
         public void VisualizeAsObstacle(Vertex vertex) => Mark(vertex, ObstacleVertexColor);
         public void VisualizeAsSource(Vertex vertex) => Mark(vertex, SourceVertexColor);
@@ -65,7 +66,10 @@ namespace ConsoleVersion.Model
 
         public void VisualizeAsMarkedToReplaceIntermediate(Vertex vertex)
         {
-
+            if (vertex.Color == IntermediateVertexColor)
+            {
+                Mark(vertex, ToReplaceMarkColor);
+            }
         }
     }
 }

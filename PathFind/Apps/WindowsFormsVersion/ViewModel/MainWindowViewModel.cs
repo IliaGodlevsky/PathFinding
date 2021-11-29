@@ -13,7 +13,8 @@ using System;
 using System.ComponentModel;
 using System.Drawing;
 using System.Runtime.CompilerServices;
-using WindowsFormsVersion.Configure;
+using WindowsFormsVersion.DependencyInjection;
+using WindowsFormsVersion.Enums;
 using WindowsFormsVersion.EventArguments;
 using WindowsFormsVersion.EventHandlers;
 using WindowsFormsVersion.Extensions;
@@ -23,7 +24,7 @@ using WindowsFormsVersion.View;
 
 namespace WindowsFormsVersion.ViewModel
 {
-    internal class MainWindowViewModel : MainModel, IMainModel, IModel, INotifyPropertyChanged, IDisposable
+    internal class MainWindowViewModel : MainModel, IMainModel, INotifyPropertyChanged, IDisposable
     {
         public event PropertyChangedEventHandler PropertyChanged;
         public event StatisticsChangedEventHandler StatisticsChanged;
@@ -96,15 +97,8 @@ namespace WindowsFormsVersion.ViewModel
         {
             if (CanStartPathFinding())
             {
-                try
-                {
-                    var form = ContainerConfigure.Container.Resolve<PathFindingWindow>();
-                    form.Show();
-                }
-                catch (Exception ex)
-                {
-                    log.Error(ex);
-                }
+                var form = DI.Container.Resolve<PathFindingWindow>();
+                form.Show();
             }
         }
 
@@ -112,15 +106,8 @@ namespace WindowsFormsVersion.ViewModel
         {
             if (!IsPathfindingStarted)
             {
-                try
-                {
-                    var form = ContainerConfigure.Container.Resolve<GraphCreatingWindow>();
-                    form.Show();
-                }
-                catch (Exception ex)
-                {
-                    log.Error(ex);
-                }
+                var form = DI.Container.Resolve<GraphCreatingWindow>();
+                form.Show();
             }
         }
 

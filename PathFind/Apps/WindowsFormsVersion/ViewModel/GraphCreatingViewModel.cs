@@ -3,16 +3,16 @@ using GalaSoft.MvvmLight.Messaging;
 using GraphLib.Extensions;
 using GraphLib.Interfaces.Factories;
 using GraphLib.ViewModel;
-using GraphViewModel.Interfaces;
 using Logging.Interface;
 using System;
 using System.Collections.Generic;
 using ValueRange.Extensions;
+using WindowsFormsVersion.Enums;
 using WindowsFormsVersion.Messeges;
 
 namespace WindowsFormsVersion.ViewModel
 {
-    internal class GraphCreatingViewModel : GraphCreatingModel, IModel, IViewModel, IDisposable
+    internal class GraphCreatingViewModel : GraphCreatingModel, IViewModel, IDisposable
     {
         public event Action WindowClosed;
 

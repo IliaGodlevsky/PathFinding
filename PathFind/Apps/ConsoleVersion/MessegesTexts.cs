@@ -6,6 +6,8 @@
         public const string SourceVertexChoiceMsg = "Choose source vertex: ";
         public const string TargetVertexChoiceMsg = "Choose target vertex: ";
         public const string IntermediateVertexChoiceMsg = "Choose intermediate vertex: ";
+        public const string IntermediateToReplaceMsg = "Choose intermedinates to replace: ";
+        public const string PlaceToPutIntermediateMsg = "Choose place where to put intermediate: ";
         public const string AlgorithmChoiceMsg = "Choose algorithm: ";
         public const string GraphAssembleChoiceMsg = "Choose graph assemble: ";
         public const string ApplyVisualizationMsg = "Apply visualization <yes/no>?: ";
@@ -24,6 +26,8 @@
         public const string EndPointsFirstlyMsg = "Firstly choose endpoints";
         public const string VertexCostInputMsg = "Input vertex cost: ";
         public const string NotEnoughParamtres = "Not enough parametres to create graph";
-        public const string NumberOfIntermediateVerticesInputMsg = "Input number of intermediate vertices: ";
+        public const string NumberOfIntermediateVerticesInputMsg = "Input number of intermediates vertices: ";
+        public const string NumberOfIntermediatesVerticesToReplaceMsg = "Input number of intermediates to replace: ";
+
     }
 }
