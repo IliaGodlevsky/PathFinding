@@ -2,6 +2,7 @@
 using GraphLib.Base;
 using GraphLib.Interfaces;
 using System;
+using System.Diagnostics;
 using System.Linq;
 
 namespace GraphLib.Realizations.Coordinates
@@ -10,6 +11,7 @@ namespace GraphLib.Realizations.Coordinates
     ///  A class representing cartesian three-dimensional coordinates
     /// </summary>
     [Serializable]
+    [DebuggerDisplay("{ToString()}")]
     public sealed class Coordinate3D : BaseCoordinate, ICoordinate, ICloneable<ICoordinate>
     {
         public int X { get; }

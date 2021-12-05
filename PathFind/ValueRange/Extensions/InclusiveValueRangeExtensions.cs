@@ -43,7 +43,7 @@ namespace ValueRange.Extensions
                     case ReturnOptions.Limit: value = self.UpperValueOfRange; break;
                 }
             }
-            if (value.IsLess(self.LowerValueOfRange))
+            else if (value.IsLess(self.LowerValueOfRange))
             {
                 switch (returnOptions)
                 {

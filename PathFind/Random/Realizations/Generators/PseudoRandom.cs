@@ -3,7 +3,7 @@ using System;
 using ValueRange;
 using ValueRange.Extensions;
 
-namespace Random.Realizations
+namespace Random.Realizations.Generators
 {
     /// <summary>
     /// Linear congruential generator
@@ -26,8 +26,7 @@ namespace Random.Realizations
         /// Initializes new instance of <see cref="PseudoRandom"/>
         /// using <see cref="Environment.TickCount"/> as seed
         /// </summary>
-        public PseudoRandom()
-            : this(Environment.TickCount)
+        public PseudoRandom() : this(Environment.TickCount)
         {
 
         }

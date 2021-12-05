@@ -2,6 +2,7 @@
 using Common.Extensions.EnumerableExtensions;
 using GraphLib.Interfaces;
 using GraphLib.NullRealizations.NullObjects;
+using Random.Interface;
 using System;
 using System.Collections.Generic;
 using System.Linq;

@@ -6,11 +6,11 @@ using Random.Realizations.Generators;
 namespace Random.Tests
 {
     [TestFixture]
-    public class CryptoRandomTests : RandomTests
+    public class KnuthRandomTests : RandomTests
     {
         protected override IRandom GetRandom()
         {
-            return new CryptoRandom();
+            return new KnuthRandom();
         }
     }
 }

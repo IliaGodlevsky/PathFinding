@@ -170,6 +170,11 @@ namespace Common.Extensions.EnumerableExtensions
                 .SelectMany(item => item);
         }
 
+        public static IEnumerable<T> Shuffle<T,U>(this IEnumerable<T> self, Func<U> randomFunction)
+        {
+            return self.OrderBy(_ => randomFunction());
+        }
+
         /// <summary>
         /// Creates a new queue from specified collection
         /// </summary>

@@ -16,6 +16,7 @@ using GraphViewModel.Interfaces;
 using Logging.Interface;
 using Logging.Loggers;
 using Random.Interface;
+using Random.Realizations.Generators;
 using System;
 using System.Reflection;
 using System.Runtime.Serialization;

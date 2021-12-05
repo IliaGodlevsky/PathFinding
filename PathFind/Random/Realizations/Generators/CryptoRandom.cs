@@ -4,7 +4,7 @@ using System.Security.Cryptography;
 using ValueRange;
 using ValueRange.Extensions;
 
-namespace Random.Realizations
+namespace Random.Realizations.Generators
 {
     /// <summary>
     /// A random number generator 
@@ -37,12 +37,12 @@ namespace Random.Realizations
         }
 
         /// <summary>
-        /// Creates new random <see cref="Int32"/> value
+        /// Creates new random <see cref="int"/> value
         /// </summary>
         /// <param name="minValue"></param>
         /// <param name="maxValue"></param>
         /// <returns>Cryptographically strong 
-        /// random <see cref="Int32"/></returns>
+        /// random <see cref="int"/></returns>
         public int Next(int minValue, int maxValue)
         {
             lock (lockObject)

@@ -7,9 +7,11 @@ using GraphLib.Interfaces.Factories;
 using Random.Extensions;
 using Random.Interface;
 using Random.Realizations;
+using Random.Realizations.Generators;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Linq;
 using ValueRange;
 using ValueRange.Extensions;
 
@@ -33,7 +35,7 @@ namespace GraphLib.Realizations.Factories.GraphAssembles
             this.coordinateFactory = coordinateFactory;
             this.graphFactory = graphFactory;
             this.costFactory = costFactory;
-            this.neighboursCoordinates = neighbourhoodFactory;
+            this.neighbourhoodFactory = neighbourhoodFactory;
             this.random = random;
             percentRange = new InclusiveValueRange<int>(99, 0);
         }
@@ -54,7 +56,10 @@ namespace GraphLib.Realizations.Factories.GraphAssembles
         /// Creates graph with the specification 
         /// indicated int method params
         /// </summary>
-        /// <param name="obstaclePercent"></param>
+        /// <param name="obstaclePercent">A percent of obstacles, 
+        /// f.e. 5, 10, 25. Max - 99. If percent is less than 0
+        /// it will be set to 0, if greater than 99, will be set
+        /// to 99</param>
         /// <param name="graphDimensionsSizes"></param>
         /// <returns>Assembled graph suitable for use with 
         /// pathfinding algorithms</returns>
@@ -65,14 +70,18 @@ namespace GraphLib.Realizations.Factories.GraphAssembles
             var vertices = new List<IVertex>();
             int graphSize = graphDimensionsSizes.AggregateOrDefault(IntExtensions.Multiply);
             int percentOfObstacles = percentRange.ReturnInRange(obstaclePercent);
+            int numberOfObstacles = (int)Math.Round(graphSize * obstaclePercent / 100.0, 0);
+            var obstacles = Enumerable.Repeat(Obstacle, numberOfObstacles);
+            var regulars = Enumerable.Repeat(Regular, graphSize - numberOfObstacles);
+            var obstaclesMatrix = obstacles.Concat(regulars).Shuffle(random.Next).ToArray();
             for (int vertexIndex = 0; vertexIndex < graphSize; vertexIndex++)
             {
                 var coordinateValues = graphDimensionsSizes.ToCoordinates(vertexIndex);
                 var coordinate = coordinateFactory.CreateCoordinate(coordinateValues);
-                var coordinates = neighboursCoordinates.CreateNeighborhood(coordinate);
-                var vertex = vertexFactory.CreateVertex(coordinates, coordinate);
+                var neighbourhood = neighbourhoodFactory.CreateNeighborhood(coordinate);
+                var vertex = vertexFactory.CreateVertex(neighbourhood, coordinate);
                 vertex.Cost = costFactory.CreateCost();
-                vertex.IsObstacle = random.Next(percentRange).IsLess(percentOfObstacles);
+                vertex.IsObstacle = obstaclesMatrix[vertexIndex];
                 vertices.Add(vertex);
             }
             return graphFactory.CreateGraph(vertices, graphDimensionsSizes);
@@ -82,8 +91,11 @@ namespace GraphLib.Realizations.Factories.GraphAssembles
         protected readonly ICoordinateFactory coordinateFactory;
         protected readonly IVertexFactory vertexFactory;
         protected readonly IGraphFactory graphFactory;
-        protected readonly INeighborhoodFactory neighboursCoordinates;
+        protected readonly INeighborhoodFactory neighbourhoodFactory;
         protected readonly IRandom random;
         protected readonly InclusiveValueRange<int> percentRange;
+
+        private const bool Obstacle = true;
+        private const bool Regular = false;
     }
 }

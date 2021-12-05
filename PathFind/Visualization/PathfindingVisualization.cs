@@ -30,12 +30,12 @@ namespace Visualization
 
         public void Clear()
         {
-            visualizationSlides.ForEach(processed => processed.Clear());
+            visualizationSlides.ForEach(slides => slides.Clear());
         }
 
         public void Remove(IAlgorithm algorithm)
         {
-            visualizationSlides.ForEach(processed => processed.Remove(algorithm));
+            visualizationSlides.ForEach(slides => slides.Remove(algorithm));
         }
 
         public void Visualize(IAlgorithm algorithm)
@@ -95,10 +95,6 @@ namespace Visualization
             if (sender is PathfindingAlgorithm algorithm)
             {
                 enqueued.RemoveRange(algorithm, visited.GetVertices(algorithm));
-                algorithm.VertexVisited -= OnVertexVisited;
-                algorithm.VertexEnqueued -= OnVertexEnqueued;
-                algorithm.Finished -= OnAlgorithmFinished;
-                algorithm.Started -= OnAlgorithmStarted;
             }
         }
 

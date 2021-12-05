@@ -1,5 +1,6 @@
 ﻿using Common.Extensions;
 using System;
+using System.Diagnostics;
 
 namespace ValueRange
 {
@@ -7,6 +8,7 @@ namespace ValueRange
     /// Represents inclusive range of values
     /// </summary>
     [Serializable]
+    [DebuggerDisplay("[{LowerValueOfRange} - {UpperValueOfRange}]")]
     public readonly struct InclusiveValueRange<T> where T : struct, IComparable
     {
         public T UpperValueOfRange { get; }

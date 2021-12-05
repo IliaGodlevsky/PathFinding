@@ -50,10 +50,11 @@ namespace ConsoleVersion.ViewModel
         {
             if (HasAnyVerticesToChooseAsEndPoints)
             {
-                endPoints.Reset();
-                SetCursorPositionUnderMenu();
-                ChooseEndPointVertices(EndPointsMessages);
-                isEndPointsChosen = true;
+                if (!endPoints.HasSourceAndTargetSet())
+                {
+                    SetCursorPositionUnderMenu();
+                    ChooseEndPointVertices(EndPointsMessages);
+                }
             }
             else
             {
@@ -64,7 +65,7 @@ namespace ConsoleVersion.ViewModel
         [MenuItem(MenuItemsNames.ChooseIntermediates, MenuItemPriority.Normal)]
         public void ChooseIntermediates()
         {
-            if (isEndPointsChosen)
+            if (endPoints.HasSourceAndTargetSet())
             {
                 string message = MessagesTexts.NumberOfIntermediateVerticesInputMsg;
                 SetCursorPositionUnderMenu();
@@ -74,36 +75,10 @@ namespace ConsoleVersion.ViewModel
             }
         }
 
-        [MenuItem(MenuItemsNames.ReplaceSourceVertex, MenuItemPriority.Low)]
-        public void ReplaceSourceVertex()
+        [MenuItem(MenuItemsNames.ClearEndPoints, MenuItemPriority.Low)]
+        public void ClearEndPoints()
         {
-            ReplaceEndPoint(endPoints.Source, MessagesTexts.SourceVertexChoiceMsg);
-        }
-
-        [MenuItem(MenuItemsNames.ReplaceTargetVertex, MenuItemPriority.Low)]
-        public void ReplaceTargetVertex() 
-        { 
-            ReplaceEndPoint(endPoints.Target, MessagesTexts.TargetVertexChoiceMsg); 
-        }
-
-        [MenuItem(MenuItemsNames.ReplaceIntermediates, MenuItemPriority.Low)]
-        public void ReplaceIntermediates()
-        {
-            var intermdiates = endPoints.GetIntermediates().ToArray();
-            if (isEndPointsChosen && intermdiates.Length > 0)
-            {               
-                string message = MessagesTexts.NumberOfIntermediatesVerticesToReplaceMsg;
-                SetCursorPositionUnderMenu();
-                int numberOfIntermediates = Int32Input.InputValue(message, intermdiates.Length);
-                var messages = Enumerable.Repeat(ReplaceIntermediatesMessages, numberOfIntermediates);
-                cursorLeft = Console.CursorLeft;
-                cursorRight = Console.CursorTop;
-                foreach (var msg in messages)
-                {
-                    InputVertexAndPerformAction(msg[0], intermdiates.Contains, MarkToReplace);
-                    InputVertexAndPerformAction(msg[1], endPoints.CanBeEndPoint, MarkAsEndPoint);
-                }
-            }
+            endPoints.Reset();
         }
 
         [MenuItem(MenuItemsNames.Exit, MenuItemPriority.Lowest)]
@@ -129,39 +104,19 @@ namespace ConsoleVersion.ViewModel
             Console.SetCursorPosition(fieldPosition.X, fieldPosition.Y + Offset);
         }
 
-        private void ReplaceEndPoint(IVertex vertex, string message)
-        {
-            if (isEndPointsChosen)
-            {
-                var toReplace = vertex as Vertex;
-                toReplace?.OnEndPointChosen();
-                SetCursorPositionUnderMenu();
-                var messages = new[] { message };
-                ChooseEndPointVertices(messages);
-            }
-        }
-
-        private void InputVertexAndPerformAction(string message,
-            Predicate<IVertex> inputPredicate, Action<Vertex> markAction)
-        {
-            Console.SetCursorPosition(cursorLeft, cursorRight);
-            var vertex = (Vertex)InputVertex(message, inputPredicate);
-            cursorLeft = Console.CursorLeft;
-            cursorRight = Console.CursorTop;
-            markAction(vertex);
-        }
-
         private void ChooseEndPointVertices(IEnumerable<string> messages)
         {
-            cursorLeft = Console.CursorLeft;
-            cursorRight = Console.CursorTop;
+            ConsoleCursor.SaveCursorPosition();
             foreach (var message in messages)
             {
-                InputVertexAndPerformAction(message, endPoints.CanBeEndPoint, MarkAsEndPoint);
+                ConsoleCursor.RestoreCursorPosition();
+                var vertex = (Vertex)InputVertex(message);
+                ConsoleCursor.SaveCursorPosition();
+                vertex?.OnEndPointChosen();
             }
         }
 
-        private IVertex InputVertex(string message, Predicate<IVertex> inputPredicate)
+        private IVertex InputVertex(string message)
         {
             if (graph is Graph2D graph2D)
             {
@@ -170,22 +125,16 @@ namespace ConsoleVersion.ViewModel
                 do
                 {
                     vertex = Int32Input.InputVertex(graph2D);
-                } while (!inputPredicate(vertex));
+                } while (!endPoints.CanBeEndPoint(vertex));
 
                 return vertex;
             }
 
             return NullVertex.Instance;
         }
-
-        private static void MarkToReplace(Vertex vertex) => vertex.OnMarkedToReplaceIntermediate();
-        private static void MarkAsEndPoint(Vertex vertex) => vertex.OnEndPointChosen();
         
         private readonly BaseEndPoints endPoints;
         private readonly ILog log;
-        private bool isEndPointsChosen;
         private IGraph graph;
-        private int cursorLeft;
-        private int cursorRight;
     }
 }

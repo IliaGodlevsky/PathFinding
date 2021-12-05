@@ -17,6 +17,7 @@ using Logging.Interface;
 using Logging.Loggers;
 using Random.Interface;
 using Random.Realizations;
+using Random.Realizations.Generators;
 using System;
 using System.Reflection;
 using System.Runtime.Serialization;
@@ -59,7 +60,7 @@ namespace WindowsFormsVersion.DependencyInjection
             builder.RegisterType<MailLog>().As<ILog>().SingleInstance();
             builder.RegisterComposite<Logs, ILog>().SingleInstance();
 
-            builder.RegisterType<PseudoRandom>().As<IRandom>().SingleInstance();
+            builder.RegisterType<KnuthRandom>().As<IRandom>().SingleInstance();
             builder.RegisterType<GraphAssemble>().Named<IGraphAssemble>(GraphAssembleName).As<IGraphAssemble>().SingleInstance();
             builder.Register(RegisterSmoothedGraphAssemble).As<IGraphAssemble>().SingleInstance();
             builder.RegisterType<CostFactory>().As<IVertexCostFactory>().SingleInstance();

@@ -4,6 +4,7 @@ using GraphLib.TestRealizations.TestObjects;
 using Random.Extensions;
 using Random.Interface;
 using Random.Realizations;
+using Random.Realizations.Generators;
 
 namespace GraphLib.TestRealizations.TestFactories
 {

@@ -61,6 +61,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Attributes\MenuItemAttribute.cs" />
+    <Compile Include="ConsoleCursor.cs" />
     <Compile Include="DependencyInjection\DI.cs" />
     <Compile Include="Constants.cs" />
     <Compile Include="Enums\Answer.cs" />

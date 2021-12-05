@@ -12,9 +12,10 @@ namespace GraphLib.Serialization
         public IReadOnlyCollection<ICoordinate> Neighbours { get; }
 
         public NeighbourhoodProxy(IVertex vertex)
-            : this(vertex.Neighbours.Select(neighbour => neighbour.Position))
         {
-
+            Neighbours = vertex.Neighbours
+                .Select(neighbour => neighbour.Position)
+                .ToArray();
         }
 
         private NeighbourhoodProxy(IEnumerable<ICoordinate> coordinates)

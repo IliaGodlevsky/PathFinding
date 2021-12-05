@@ -1,8 +1,10 @@
 ﻿using Random.Interface;
+using System;
 using ValueRange;
+using ValueRange.Enums;
 using ValueRange.Extensions;
 
-namespace System
+namespace Random.Realizations.Generators
 {
     /// <summary>
     /// Knuth substractive generator
@@ -31,8 +33,9 @@ namespace System
 
         public KnuthRandom(int seed)
         {
-            seeds = new Lazy<int[]>(() => Initialize(seed));
+            seeds = new Lazy<int[]>(() => Initialize(seed), true);
             lockObject = new object();
+            indexRange = new InclusiveValueRange<int>(ArrayLength - 1, 1);
         }
 
         /// <summary>
@@ -56,16 +59,9 @@ namespace System
         {
             get
             {
-                int result;
-                if (++inext == ArrayLength)
-                {
-                    inext = 1;
-                }
-                if (++inextp == ArrayLength)
-                {
-                    inextp = 1;
-                }
-                result = Seeds[inext] - Seeds[inextp];
+                inext = indexRange.ReturnInRange(++inext, ReturnOptions.Cycle);
+                inextp = indexRange.ReturnInRange(++inextp, ReturnOptions.Cycle);
+                int result = Seeds[inext] - Seeds[inextp];
                 if (result < MZero)
                 {
                     result += MBig;
@@ -79,13 +75,12 @@ namespace System
         {
             var seeds = new int[ArrayLength];
             int seedIndex, mj, mk;
-            mj = MSeed - ((seed == int.MinValue) ? int.MaxValue : Math.Abs(seed));
-            mj %= MBig;
+            mj = Math.Abs(MSeed - (seed == int.MinValue ? int.MaxValue : Math.Abs(seed)));
             seeds[ArrayLength - 1] = mj;
             mk = 1;
             for (int i = 1; i < ArrayLength - 1; i++)
             {
-                seedIndex = (InitializationConst * i) % (ArrayLength - 1);
+                seedIndex = InitializationConst * i % (ArrayLength - 1);
                 seeds[seedIndex] = mk;
                 mk = mj - mk;
                 if (mk < MZero)
@@ -114,6 +109,7 @@ namespace System
         private int inext;
         private int inextp;
 
+        private readonly InclusiveValueRange<int> indexRange;
         private readonly Lazy<int[]> seeds;
         private readonly object lockObject;
     }

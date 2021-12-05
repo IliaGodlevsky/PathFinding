@@ -1,21 +1,20 @@
-﻿using Common.Extensions.EnumerableExtensions;
-using Common.Interface;
-using GraphLib.Extensions;
+﻿using Common.Interface;
+using GraphLib.Base;
 using GraphLib.Interfaces;
 using System;
-using System.Linq;
+using System.Diagnostics;
 
 namespace GraphLib.Realizations.Coordinates
 {
     [Serializable]
-    internal sealed class CoordinateProxy : ICoordinate, ICloneable<ICoordinate>
+    [DebuggerDisplay("{ToString()}")]
+    internal sealed class CoordinateProxy : BaseCoordinate, ICoordinate, ICloneable<ICoordinate>
     {
-        public int[] CoordinatesValues { get; }
 
-        public CoordinateProxy(int[] coordinates)
+        public CoordinateProxy(int[] coordinates) 
+            : base(coordinates.Length, coordinates)
         {
-            CoordinatesValues = coordinates.ToArray();
-            hashCode = CoordinatesValues.ToHashCode();
+
         }
 
         public CoordinateProxy(ICoordinate coordinate)
@@ -24,21 +23,9 @@ namespace GraphLib.Realizations.Coordinates
 
         }
 
-        public override bool Equals(object pos)
-        {
-            return (pos as ICoordinate)?.IsEqual(this) == true;
-        }
-
-        public override int GetHashCode()
-        {
-            return hashCode;
-        }
-
-        public ICoordinate Clone()
+        public override ICoordinate Clone()
         {
             return new CoordinateProxy(this);
         }
-
-        private readonly int hashCode;
     }
 }

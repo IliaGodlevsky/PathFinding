@@ -14,12 +14,8 @@ namespace GraphLib.Base
         public IVertex Source { get; internal set; }
         public IVertex Target { get; internal set; }
         public IEnumerable<IVertex> EndPoints => intermediates.Prepend(Source).Append(Target);
-        public bool IsEndPoint(IVertex vertex)
-        {
-            return Source.Equals(vertex)
-                || Target.Equals(vertex)
-                || intermediates.Contains(vertex);
-        }
+        public bool IsEndPoint(IVertex vertex) 
+            => Source.Equals(vertex) || Target.Equals(vertex) || intermediates.Contains(vertex);
 
         public void SubscribeToEvents(IGraph graph) => graph.ForEach(SubscribeVertex);
         public void UnsubscribeFromEvents(IGraph graph) => graph.ForEach(UnsubscribeVertex);
