@@ -112,7 +112,7 @@ namespace ConsoleVersion.ViewModel
                 ConsoleCursor.RestoreCursorPosition();
                 var vertex = (Vertex)InputVertex(message);
                 ConsoleCursor.SaveCursorPosition();
-                vertex?.OnEndPointChosen();
+                vertex.OnEndPointChosen();
             }
         }
 
