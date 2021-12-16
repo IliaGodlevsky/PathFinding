@@ -6,10 +6,8 @@ using GraphLib.Interfaces;
 using GraphLib.Interfaces.Factories;
 using Random.Extensions;
 using Random.Interface;
-using Random.Realizations;
 using Random.Realizations.Generators;
 using System;
-using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
 using ValueRange;
@@ -66,9 +64,9 @@ namespace GraphLib.Realizations.Factories.GraphAssembles
         /// <exception cref="ArgumentException"></exception>
         /// <exception cref="WrongNumberOfDimensionsException"></exception>
         public virtual IGraph AssembleGraph(int obstaclePercent, params int[] graphDimensionsSizes)
-        {
-            var vertices = new List<IVertex>();
+        {            
             int graphSize = graphDimensionsSizes.AggregateOrDefault(IntExtensions.Multiply);
+            var vertices = new IVertex[graphSize];
             int percentOfObstacles = percentRange.ReturnInRange(obstaclePercent);
             int numberOfObstacles = (int)Math.Round(graphSize * obstaclePercent / 100.0, 0);
             var obstacles = Enumerable.Repeat(Obstacle, numberOfObstacles);
@@ -82,7 +80,7 @@ namespace GraphLib.Realizations.Factories.GraphAssembles
                 var vertex = vertexFactory.CreateVertex(neighbourhood, coordinate);
                 vertex.Cost = costFactory.CreateCost();
                 vertex.IsObstacle = obstaclesMatrix[vertexIndex];
-                vertices.Add(vertex);
+                vertices[vertexIndex] = vertex;
             }
             return graphFactory.CreateGraph(vertices, graphDimensionsSizes);
         }

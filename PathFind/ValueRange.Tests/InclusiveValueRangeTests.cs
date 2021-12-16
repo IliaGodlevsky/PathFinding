@@ -1,4 +1,5 @@
 using NUnit.Framework;
+using System;
 using System.Linq;
 using ValueRange;
 using ValueRange.Extensions;
@@ -105,6 +106,13 @@ namespace Common.Tests
 
             Assert.AreEqual(minValue, values.First());
             Assert.AreEqual(maxValue, values.Last());
+        }
+
+        [Test]
+        public void GetAllValuesInRange_IntValueRange_DoesntThrow()
+        {
+            var range = new InclusiveValueRange<int>(int.MaxValue, int.MinValue);
+            Assert.DoesNotThrow(() => range.GetAllValuesInRange());
         }
     }
 }

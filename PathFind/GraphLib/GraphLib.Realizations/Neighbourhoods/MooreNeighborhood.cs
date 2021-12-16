@@ -1,4 +1,5 @@
-﻿using Common.Interface;
+﻿using Common.Extensions;
+using Common.Interface;
 using GraphLib.Interfaces;
 using GraphLib.Realizations.Extensions;
 using System;
@@ -34,11 +35,11 @@ namespace GraphLib.Realizations.Neighbourhoods
 
         public void GetObjectData(SerializationInfo info, StreamingContext context)
         {
-            info.AddValue(nameof(selfCoordinate), selfCoordinate, typeof(ICoordinate));
+            info.Add(nameof(selfCoordinate), selfCoordinate);
         }
 
         private MooreNeighborhood(SerializationInfo info, StreamingContext context)
-            : this((ICoordinate)info.GetValue(nameof(selfCoordinate), typeof(ICoordinate)))
+            : this(info.Get<ICoordinate>(nameof(selfCoordinate)))
         {
 
         }

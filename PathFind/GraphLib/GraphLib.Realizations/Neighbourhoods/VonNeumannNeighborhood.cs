@@ -1,4 +1,5 @@
-﻿using Common.Interface;
+﻿using Common.Extensions;
+using Common.Interface;
 using GraphLib.Extensions;
 using GraphLib.Interfaces;
 using System;
@@ -24,23 +25,20 @@ namespace GraphLib.Realizations.Neighbourhoods
 
         public void GetObjectData(SerializationInfo info, StreamingContext context)
         {
-            info.AddValue(nameof(selfCoordinate), selfCoordinate, typeof(ICoordinate));
+            info.Add(nameof(selfCoordinate), selfCoordinate);
         }
 
         private VonNeumannNeighborhood(SerializationInfo info, StreamingContext context)
-            : this((ICoordinate)info.GetValue(nameof(selfCoordinate), typeof(ICoordinate)))
+            : this(info.Get<ICoordinate>(nameof(selfCoordinate)))
         {
 
-        }
-
-        private bool IsCardinal(ICoordinate coordinate)
-        {
-            return coordinate.IsCardinal(selfCoordinate);
         }
 
         private IReadOnlyCollection<ICoordinate> DetectNeighborhood()
         {
-            return neighboursCoordinates.Neighbours.Where(IsCardinal).ToArray();
+            return neighboursCoordinates.Neighbours
+                .Where(neighbour => neighbour.IsCardinal(selfCoordinate))
+                .ToArray();
         }
 
         public INeighborhood Clone()

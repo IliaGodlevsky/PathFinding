@@ -23,10 +23,5 @@ namespace Random.Extensions
         {
             return random.Next(0, int.MaxValue);
         }
-
-        public static IEnumerable<T> Shuffle<T>(this IRandom self, IEnumerable<T> collection)
-        {
-            return collection.OrderBy(_ => self.Next());
-        }
     }
 }

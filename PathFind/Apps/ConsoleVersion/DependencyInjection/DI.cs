@@ -63,7 +63,8 @@ namespace ConsoleVersion.DependencyInjection
             builder.RegisterComposite<Logs, ILog>().SingleInstance();
 
             builder.RegisterType<PseudoRandom>().As<IRandom>().SingleInstance();
-            builder.RegisterType<GraphAssemble>().As<IGraphAssemble>().SingleInstance().Named<IGraphAssemble>(GraphAssemble);
+            builder.RegisterType<GraphAssemble>().As<IGraphAssemble>()
+                .SingleInstance().Named<IGraphAssemble>(GraphAssemble);
             builder.Register(RegisterSmoothedGraphAssemble).As<IGraphAssemble>().SingleInstance();
             builder.RegisterType<CostFactory>().As<IVertexCostFactory>().SingleInstance();
             builder.RegisterType<VertexFactory>().As<IVertexFactory>().SingleInstance();
@@ -80,7 +81,8 @@ namespace ConsoleVersion.DependencyInjection
             builder.RegisterType<BinaryFormatter>().As<IFormatter>().SingleInstance();
             builder.RegisterType<VertexFromInfoFactory>().As<IVertexFromInfoFactory>().SingleInstance();
 
-            builder.RegisterAssemblyTypes(Assemblies).Where(Implements<IAlgorithmFactory>).As<IAlgorithmFactory>().SingleInstance();
+            builder.RegisterAssemblyTypes(Assemblies).Where(Implements<IAlgorithmFactory>)
+                .As<IAlgorithmFactory>().SingleInstance();
             builder.RegisterType<LandscapeStepRule>().As<IStepRule>().SingleInstance();
             builder.RegisterDecorator<WalkStepRule, IStepRule>();
             builder.RegisterDecorator<RatedStepRule, IStepRule>();

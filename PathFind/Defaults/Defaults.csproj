@@ -4,11 +4,11 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{FA595CBF-C9AA-4D4F-AFF7-19E571C91D00}</ProjectGuid>
+    <ProjectGuid>{4A4536A9-8324-4861-BD5C-F29C772188DD}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>GraphLib.NullRealizations</RootNamespace>
-    <AssemblyName>GraphLib.NullRealizations</AssemblyName>
+    <RootNamespace>Defaults</RootNamespace>
+    <AssemblyName>Defaults</AssemblyName>
     <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <Deterministic>true</Deterministic>
@@ -41,27 +41,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="NullObjects\NullCoordinate.cs" />
-    <Compile Include="NullObjects\NullNeighboursCoordinates.cs" />
-    <Compile Include="NullObjects\NullCost.cs" />
-    <Compile Include="NullObjects\NullGraph.cs" />
-    <Compile Include="NullObjects\NullVertex.cs" />
-    <Compile Include="NullObjects\NullVisualizable.cs" />
+    <Compile Include="Default.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\..\Common\Common.csproj">
-      <Project>{A5A743F5-D346-4B2B-B6AC-07152F64E4D9}</Project>
-      <Name>Common</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\NullObject\NullObject.csproj">
-      <Project>{51D677FD-7A82-4282-8A2E-51DEBE39E695}</Project>
-      <Name>NullObject</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\GraphLib.Interfaces\GraphLib.Interfaces.csproj">
-      <Project>{D3C5CCFE-698B-41C7-9A72-5FD0262765E1}</Project>
-      <Name>GraphLib.Interfaces</Name>
-    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
