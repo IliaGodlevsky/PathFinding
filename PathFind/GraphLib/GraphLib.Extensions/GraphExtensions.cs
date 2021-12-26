@@ -120,7 +120,7 @@ namespace GraphLib.Extensions
         /// elements multiplication </exception>
         public static int[] ToCoordinates(this int[] dimensionSizes, int index)
         {
-            int size = dimensionSizes.AggregateOrDefault(IntExtensions.Multiply);
+            int size = dimensionSizes.GetMultiplication();
             var rangeOfIndices = new InclusiveValueRange<int>(size - 1, 0);
             if (!rangeOfIndices.Contains(index))
             {

@@ -30,7 +30,7 @@ namespace GraphLib.Base
         protected BaseGraph(int requiredNumberOfDimensions, IEnumerable<IVertex> vertices, params int[] dimensionSizes)
         {
             DimensionsSizes = dimensionSizes.ToArray();
-            int size = DimensionsSizes.AggregateOrDefault(IntExtensions.Multiply);
+            int size = DimensionsSizes.GetMultiplication();
             this.vertices = vertices.ToDictionary();
             if (dimensionSizes.Length != requiredNumberOfDimensions || size != Size)
             {

@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 
 namespace Common.Extensions
 {
@@ -17,6 +18,11 @@ namespace Common.Extensions
         public static int Multiply(this int value, int value2)
         {
             return value * value2;
+        }
+
+        public static int GetPercentage(this int value, double percent)
+        {
+            return (int)Math.Round(value * percent / 100.0, 0);
         }
     }
 }

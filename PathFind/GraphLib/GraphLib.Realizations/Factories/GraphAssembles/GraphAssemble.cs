@@ -65,13 +65,10 @@ namespace GraphLib.Realizations.Factories.GraphAssembles
         /// <exception cref="WrongNumberOfDimensionsException"></exception>
         public virtual IGraph AssembleGraph(int obstaclePercent, params int[] graphDimensionsSizes)
         {            
-            int graphSize = graphDimensionsSizes.AggregateOrDefault(IntExtensions.Multiply);
+            int graphSize = graphDimensionsSizes.GetMultiplication();
             var vertices = new IVertex[graphSize];
             int percentOfObstacles = percentRange.ReturnInRange(obstaclePercent);
-            int numberOfObstacles = (int)Math.Round(graphSize * obstaclePercent / 100.0, 0);
-            var obstacles = Enumerable.Repeat(Obstacle, numberOfObstacles);
-            var regulars = Enumerable.Repeat(Regular, graphSize - numberOfObstacles);
-            var obstaclesMatrix = obstacles.Concat(regulars).Shuffle(random.Next).ToArray();
+            var obstaclesMatrix = random.GetObstacleMatrix(graphSize, obstaclePercent);
             for (int vertexIndex = 0; vertexIndex < graphSize; vertexIndex++)
             {
                 var coordinateValues = graphDimensionsSizes.ToCoordinates(vertexIndex);
@@ -92,8 +89,5 @@ namespace GraphLib.Realizations.Factories.GraphAssembles
         protected readonly INeighborhoodFactory neighbourhoodFactory;
         protected readonly IRandom random;
         protected readonly InclusiveValueRange<int> percentRange;
-
-        private const bool Obstacle = true;
-        private const bool Regular = false;
     }
 }

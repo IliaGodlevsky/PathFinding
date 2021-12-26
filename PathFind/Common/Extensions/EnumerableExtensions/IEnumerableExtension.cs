@@ -79,6 +79,11 @@ namespace Common.Extensions.EnumerableExtensions
             return self.Without(items.AsEnumerable());
         }
 
+        public static int GetMultiplication(this IEnumerable<int> array)
+        {
+            return array.AggregateOrDefault(IntExtensions.Multiply);
+        }
+
         /// <summary>
         /// Applies delegate <paramref name="action"/> 
         /// to each element of <paramref name="collection"/>
