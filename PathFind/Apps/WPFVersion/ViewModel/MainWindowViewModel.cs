@@ -12,6 +12,7 @@ using System;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using System.Windows.Input;
+using WPFVersion.Attributes;
 using WPFVersion.DependencyInjection;
 using WPFVersion.Enums;
 using WPFVersion.Extensions;
@@ -55,6 +56,7 @@ namespace WPFVersion.ViewModel
             GraphSerializationModule SerializationModule, BaseEndPoints endPoints, ILog log)
             : base(fieldFactory, eventHolder, SerializationModule, endPoints, log)
         {
+            messenger = DI.Container.Resolve<IMessenger>();
             ResetColorizingCommand = new RelayCommand(ExecuteResetColorizing, CanExecuteColorizingGraphOperation);
             ColorizeAccordingToCostCommand = new RelayCommand(ExecuteColorizeAccordingToCost, CanExecuteColorizingGraphOperation);
             ClearVerticesColorCommand = new RelayCommand(ExecuteClearVerticesColors, CanExecuteClearGraphOperation);
@@ -65,30 +67,21 @@ namespace WPFVersion.ViewModel
             LoadGraphCommand = new RelayCommand(ExecuteLoadGraphCommand, CanExecuteOperation);
             ShowVertexCost = new RelayCommand(ExecuteShowVertexCostCommand, CanExecuteOperation);
             InterruptAlgorithmCommand = new RelayCommand(ExecuteInterruptAlgorithmCommand, CanExecuteInterruptAlgorithmCommand);
-            Messenger.Default.Register<IsAllAlgorithmsFinishedMessage>(this, MessageTokens.MainModel, OnIsAllAlgorithmsFinished);
-            Messenger.Default.Register<GraphCreatedMessage>(this, MessageTokens.MainModel, SetGraph);
+            messenger.Register<IsAllAlgorithmsFinishedMessage>(this, MessageTokens.MainModel, OnIsAllAlgorithmsFinished);
+            messenger.Register<GraphCreatedMessage>(this, MessageTokens.MainModel, SetGraph);
         }
 
-        public override void FindPath()
-        {
-            var window = DI.Container.Resolve<PathFindWindow>();
-            window.Show();
-        }
+        public override void FindPath() => DI.Container.Resolve<PathFindWindow>().Show();
 
-        public override void CreateNewGraph()
-        {
-            var window = DI.Container.Resolve<GraphCreatesWindow>();
-            window.Show();
-        }
+        public override void CreateNewGraph() => DI.Container.Resolve<GraphCreatesWindow>().Show();
 
         public override void ConnectNewGraph(IGraph graph)
         {
             costColors = new CostColors(graph);
             base.ConnectNewGraph(graph);
             WindowService.Adjust(graph);
-            var graphMessage = new GraphCreatedMessage(Graph);
-            var clearMessage = new ClearStatisticsMessage();
-            Messenger.Default.ForwardMany(graphMessage, clearMessage, MessageTokens.AlgorithmStatisticsModel);
+            messenger.Forward(new ClearStatisticsMessage(), MessageTokens.AlgorithmStatisticsModel)
+                .Forward(new GraphCreatedMessage(graph), MessageTokens.AlgorithmStatisticsModel);
         }
 
         private void ExecuteColorizeAccordingToCost(object param) => costColors.ColorizeAccordingToCost();
@@ -102,14 +95,12 @@ namespace WPFVersion.ViewModel
         private void ExecuteCreateNewGraphCommand(object param) => CreateNewGraph();
         private void ExecuteInterruptAlgorithmCommand(object param)
         {
-            var message = new InterruptAllAlgorithmsMessage();
-            Messenger.Default.Forward(message, MessageTokens.AlgorithmStatisticsModel);
+            messenger.Forward(new InterruptAllAlgorithmsMessage(), MessageTokens.AlgorithmStatisticsModel);
         }
         private void ExecuteClearGraphCommand(object param)
         {
             base.ClearGraph();
-            var message = new ClearStatisticsMessage();
-            Messenger.Default.Forward(message, MessageTokens.AlgorithmStatisticsModel);
+            messenger.Forward(new ClearStatisticsMessage(), MessageTokens.AlgorithmStatisticsModel);
         }
 
         private bool CanExecuteGraphOperation(object param) => !Graph.IsNull();
@@ -126,9 +117,11 @@ namespace WPFVersion.ViewModel
 
         public void Dispose()
         {
-            Messenger.Default.Unregister(this);
+            messenger.Unregister(this);
         }
 
         private CostColors costColors;
+
+        private readonly IMessenger messenger;
     }
 }

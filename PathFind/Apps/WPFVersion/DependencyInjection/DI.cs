@@ -4,6 +4,7 @@ using Algorithm.Realizations.StepRules;
 using Autofac;
 using Common.Extensions;
 using Common.Interface;
+using GalaSoft.MvvmLight.Messaging;
 using GraphLib.Base;
 using GraphLib.Interfaces;
 using GraphLib.Interfaces.Factories;
@@ -48,6 +49,7 @@ namespace WPFVersion.DependencyInjection
             builder.RegisterAssemblyTypes(Assemblies).Where(Implements<IViewModel>).AsSelf().InstancePerDependency();
             builder.RegisterAssemblyTypes(Assemblies).Where(type => type.IsAppWindow()).AsSelf().InstancePerDependency();
 
+            builder.RegisterType<Messenger>().As<IMessenger>().SingleInstance();
             builder.RegisterType<EndPoints>().As<BaseEndPoints>().SingleInstance();
             builder.RegisterType<VertexEventHolder>().As<IVertexEventHolder>().SingleInstance();
             builder.RegisterType<GraphFieldFactory>().As<IGraphFieldFactory>().SingleInstance();

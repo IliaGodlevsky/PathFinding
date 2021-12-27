@@ -1,9 +1,11 @@
 ﻿using Algorithm.Infrastructure.EventArguments;
+using Autofac;
 using GalaSoft.MvvmLight.Messaging;
 using GraphLib.Interfaces;
 using System;
 using System.Threading.Tasks;
 using Visualization;
+using WPFVersion.DependencyInjection;
 using WPFVersion.Enums;
 using WPFVersion.Messages;
 
@@ -13,15 +15,16 @@ namespace WPFVersion.Model
     {
         public PathfindingVisualizationModel(IGraph graph) : base(graph)
         {
-            Messenger.Default.Register<PathFoundMessage>(this, MessageTokens.VisualizationModel, PathFound);
-            Messenger.Default.Register<SubscribeOnAlgorithmEventsMessage>(this, MessageTokens.VisualizationModel, AlgorithmChosen);
-            Messenger.Default.Register<EndPointsChosenMessage>(this, MessageTokens.VisualizationModel, RegisterEndPointsForAlgorithm);
+            messenger = DI.Container.Resolve<IMessenger>();
+            messenger.Register<PathFoundMessage>(this, MessageTokens.VisualizationModel, PathFound);
+            messenger.Register<SubscribeOnAlgorithmEventsMessage>(this, MessageTokens.VisualizationModel, AlgorithmChosen);
+            messenger.Register<EndPointsChosenMessage>(this, MessageTokens.VisualizationModel, RegisterEndPointsForAlgorithm);
         }
 
         public void Dispose()
         {
             Clear();
-            Messenger.Default.Unregister(this);
+            messenger.Unregister(this);
         }
 
         protected override async void OnVertexEnqueued(object sender, AlgorithmEventArgs e)
@@ -55,5 +58,7 @@ namespace WPFVersion.Model
         {
             AddPathVertices(message.Algorithm, message.Path);
         }
+
+        private readonly IMessenger messenger;
     }
 }

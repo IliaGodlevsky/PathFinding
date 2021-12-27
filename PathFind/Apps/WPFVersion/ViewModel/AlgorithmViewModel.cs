@@ -1,10 +1,13 @@
 ﻿using Algorithm.Base;
 using Algorithm.Interfaces;
+using Autofac;
 using GalaSoft.MvvmLight.Messaging;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using ValueRange.Extensions;
+using WPFVersion.DependencyInjection;
 using WPFVersion.Enums;
+using WPFVersion.Extensions;
 using WPFVersion.Messages;
 
 namespace WPFVersion.ViewModel
@@ -47,7 +50,7 @@ namespace WPFVersion.ViewModel
                 delayTime = (int)Constants.AlgorithmDelayTimeValueRange.ReturnInRange(value);
                 OnPropertyChanged();
                 var message = new DelayTimeChangedMessage(delayTime, Index);
-                Messenger.Default.Send(message, MessageTokens.PathfindingModel);
+                messenger.Forward(message, MessageTokens.PathfindingModel);
             }
         }
 
@@ -58,6 +61,7 @@ namespace WPFVersion.ViewModel
             AlgorithmName = algorithmName;
             Status = AlgorithmStatus.Started;
             Index = index;
+            messenger = DI.Container.Resolve<IMessenger>();
         }
 
         public AlgorithmViewModel(AlgorithmStartedMessage message, int index)
@@ -72,5 +76,6 @@ namespace WPFVersion.ViewModel
         }
 
         private readonly PathfindingAlgorithm algorithm;
+        private readonly IMessenger messenger;
     }
 }

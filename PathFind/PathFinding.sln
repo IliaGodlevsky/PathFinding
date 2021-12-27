@@ -93,9 +93,9 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ValueRange", "ValueRange\Va
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Random", "Random\Random.csproj", "{03EB6575-5B74-418F-9231-1B67598C68E8}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Random.Tests", "Random.Tests\Random.Tests.csproj", "{0B4A7688-8AB6-4CF5-BBFF-5599E076E2C9}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Random.Tests", "Random.Tests\Random.Tests.csproj", "{0B4A7688-8AB6-4CF5-BBFF-5599E076E2C9}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ValueRange.Tests", "ValueRange.Tests\ValueRange.Tests.csproj", "{2EC389E2-362C-4522-8481-7B40E07DFC3E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ValueRange.Tests", "ValueRange.Tests\ValueRange.Tests.csproj", "{2EC389E2-362C-4522-8481-7B40E07DFC3E}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

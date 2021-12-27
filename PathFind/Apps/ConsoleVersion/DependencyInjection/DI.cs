@@ -51,7 +51,7 @@ namespace ConsoleVersion.DependencyInjection
             builder.RegisterAssemblyTypes(Assemblies).Where(Implements<IViewModel>).Except<MainViewModel>().AsSelf()
                 .PropertiesAutowired().InstancePerLifetimeScope();
             builder.RegisterAssemblyTypes(Assemblies).Where(Implements<IView>).AsSelf().PropertiesAutowired()
-                .OnActivated(OnActivated).InstancePerLifetimeScope();
+                .OnActivated(OnViewActivated).InstancePerLifetimeScope();
 
             builder.RegisterType<EndPoints>().As<BaseEndPoints>().SingleInstance();
             builder.RegisterType<VertexEventHolder>().As<IVertexEventHolder>().SingleInstance().PropertiesAutowired();
@@ -90,7 +90,7 @@ namespace ConsoleVersion.DependencyInjection
             return builder.Build();
         }
 
-        private static void OnActivated(IActivatedEventArgs<object> e)
+        private static void OnViewActivated(IActivatedEventArgs<object> e)
         {
             var view = (IView)e.Instance;
             var mainModel = e.Context.Resolve<MainViewModel>();

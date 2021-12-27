@@ -1,5 +1,6 @@
 ﻿using EnumerationValues.Interface;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using ValueRange;
 
@@ -20,6 +21,12 @@ namespace EnumerationValues.Extensions
             where TEnum : Enum
         {
             return self.Values.Select(value => new Tuple<T1, T2>(item1Selector(value), item2Selector(value))).ToArray();
+        }
+
+        public static IEnumerable<TEnum> BreakIntoFlags<TEnum>(this IEnumValues<TEnum> values, TEnum value)
+            where TEnum : Enum
+        {
+            return values.Values.Where(val => value.HasFlag(val));
         }
     }
 }

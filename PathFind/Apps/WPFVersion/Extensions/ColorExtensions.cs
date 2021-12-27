@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Common.Extensions;
+using System;
 using System.Windows.Media;
 using ValueRange;
 using ValueRange.Extensions;
@@ -15,9 +16,9 @@ namespace WPFVersion.Extensions
         /// <returns></returns>
         public static Color SetBrightness(this Color color, double percentFromMax)
         {
-            var percentValueRange = new InclusiveValueRange<double>(0, 1);
-            percentFromMax = percentValueRange.ReturnInRange(percentFromMax / 100);
-            var newBrightness = Math.Round(byte.MaxValue * percentFromMax, 0);
+            var percentValueRange = new InclusiveValueRange<double>(0, 100);
+            percentFromMax = percentValueRange.ReturnInRange(percentFromMax);
+            int newBrightness = ((int)byte.MaxValue).GetPercentage(percentFromMax);
             color.A = Convert.ToByte(newBrightness);
             return color;
         }

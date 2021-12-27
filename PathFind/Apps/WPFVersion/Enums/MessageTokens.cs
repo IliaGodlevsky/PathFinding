@@ -6,6 +6,8 @@ namespace WPFVersion.Enums
     [Flags]
     internal enum MessageTokens
     {
+        [EnumValuesIgnore]
+        None = 0,
         MainModel = 2 << 0,
         AlgorithmStatisticsModel = 2 << 1,
         PathfindingModel = 2 << 2,

@@ -1,7 +1,9 @@
 ﻿using Common.Extensions.EnumerableExtensions;
+using EnumerationValues.Extensions;
 using EnumerationValues.Interface;
 using EnumerationValues.Realizations;
 using GalaSoft.MvvmLight.Messaging;
+using System;
 using System.Linq;
 using System.Threading.Tasks;
 using WPFVersion.Enums;
@@ -15,13 +17,6 @@ namespace WPFVersion.Extensions
         static IMessengerExtensions()
         {
             Tokens = new EnumValuesWithoutIgnored<MessageTokens>();
-        }
-
-        public static void ForwardMany<TMessage1, TMessage2>(this IMessenger messenger,
-            TMessage1 message1, TMessage2 message2, MessageTokens token)
-        {
-            messenger.Forward(message1, token);
-            messenger.Forward(message2, token);
         }
 
         public static async Task ForwardAsync<TMessage>(this IMessenger self, TMessage message, MessageTokens messageToken)
@@ -38,11 +33,10 @@ namespace WPFVersion.Extensions
         /// <param name="token">A message token, that channels <paramref name="message"/> delivering</param>
         /// <remarks>You can use '|' to combine message tokens and send <paramref name="message"/> 
         /// to several recipients</remarks>
-        public static void Forward<TMessage>(this IMessenger messenger, TMessage message, MessageTokens token)
+        public static IMessenger Forward<TMessage>(this IMessenger messenger, TMessage message, MessageTokens token)
         {
-            bool IsPartOfToken(MessageTokens value) => token.HasFlag(value);
-            void SendMessageByTokenPart(MessageTokens value) => messenger.Send(message, value);
-            Tokens.Values.Where(IsPartOfToken).ForEach(SendMessageByTokenPart);
+            Tokens.BreakIntoFlags(token).ForEach(value => messenger.Send(message, value));
+            return messenger;
         }
     }
 }

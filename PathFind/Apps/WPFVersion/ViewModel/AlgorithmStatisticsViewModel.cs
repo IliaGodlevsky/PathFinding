@@ -1,4 +1,5 @@
-﻿using Common.Extensions.EnumerableExtensions;
+﻿using Autofac;
+using Common.Extensions.EnumerableExtensions;
 using GalaSoft.MvvmLight.Messaging;
 using System;
 using System.Collections.ObjectModel;
@@ -8,6 +9,7 @@ using System.Runtime.CompilerServices;
 using System.Windows;
 using System.Windows.Input;
 using System.Windows.Threading;
+using WPFVersion.DependencyInjection;
 using WPFVersion.Enums;
 using WPFVersion.Extensions;
 using WPFVersion.Infrastructure;
@@ -36,16 +38,17 @@ namespace WPFVersion.ViewModel
 
         public AlgorithmStatisticsViewModel()
         {
+            messenger = DI.Container.Resolve<IMessenger>();
             Algorithms = new ObservableCollection<AlgorithmViewModel>();
             VisualizeCommand = new RelayCommand(ExecuteVisualizeCommand, CanExecuteVisualizeCommand);
             InterruptSelelctedAlgorithmCommand = new RelayCommand(ExecuteInterruptSelectedAlgorithmCommand, CanExecuteInterruptSelectedAlgorithmCommand);
             RemoveSelelctedAlgorithmCommand = new RelayCommand(ExecuteRemoveFromStatisticsCommand, CanExecuteRemoveFromStatisticsCommand);
-            Messenger.Default.Register<AlgorithmStartedMessage>(this, MessageTokens.AlgorithmStatisticsModel, OnAlgorithmStarted);
-            Messenger.Default.Register<UpdateStatisticsMessage>(this, MessageTokens.AlgorithmStatisticsModel, UpdateAlgorithmStatistics);
-            Messenger.Default.Register<InterruptAllAlgorithmsMessage>(this, MessageTokens.AlgorithmStatisticsModel, OnAllAlgorithmInterrupted);
-            Messenger.Default.Register<ClearStatisticsMessage>(this, MessageTokens.AlgorithmStatisticsModel, OnClearStatistics);
-            Messenger.Default.Register<AlgorithmStatusMessage>(this, MessageTokens.AlgorithmStatisticsModel, SetAlgorithmStatistics);
-            Messenger.Default.Register<GraphCreatedMessage>(this, MessageTokens.AlgorithmStatisticsModel, NewGraphCreated);
+            messenger.Register<AlgorithmStartedMessage>(this, MessageTokens.AlgorithmStatisticsModel, OnAlgorithmStarted);
+            messenger.Register<UpdateStatisticsMessage>(this, MessageTokens.AlgorithmStatisticsModel, UpdateAlgorithmStatistics);
+            messenger.Register<InterruptAllAlgorithmsMessage>(this, MessageTokens.AlgorithmStatisticsModel, OnAllAlgorithmInterrupted);
+            messenger.Register<ClearStatisticsMessage>(this, MessageTokens.AlgorithmStatisticsModel, OnClearStatistics);
+            messenger.Register<AlgorithmStatusMessage>(this, MessageTokens.AlgorithmStatisticsModel, SetAlgorithmStatistics);
+            messenger.Register<GraphCreatedMessage>(this, MessageTokens.AlgorithmStatisticsModel, NewGraphCreated);
         }
 
         private void SetAlgorithmStatistics(AlgorithmStatusMessage message)
@@ -61,7 +64,7 @@ namespace WPFVersion.ViewModel
         {
             int index = Algorithms.Count;
             var msg = new AlgorithmIndexMessage(index);
-            Messenger.Default.Forward(msg, MessageTokens.PathfindingModel);
+            messenger.Forward(msg, MessageTokens.PathfindingModel);
             var viewModel = new AlgorithmViewModel(message, index);
             Dispatcher.Invoke(() => Algorithms.Add(viewModel));
             SendIsAllAlgorithmsFinishedMessage();
@@ -130,12 +133,12 @@ namespace WPFVersion.ViewModel
         private void SendIsAllAlgorithmsFinishedMessage()
         {
             var message = new IsAllAlgorithmsFinishedMessage(IsAllFinished);
-            Messenger.Default.Forward(message, MessageTokens.MainModel);
+            messenger.Forward(message, MessageTokens.MainModel);
         }
 
         public void Dispose()
         {
-            Messenger.Default.Unregister(this);
+            messenger.Unregister(this);
             Algorithms.Clear();
             SelectedAlgorithm = null;
             if (visualizationModel != null)
@@ -148,5 +151,6 @@ namespace WPFVersion.ViewModel
         private bool IsAllFinished => Algorithms.All(stat => !stat.IsStarted());
 
         private PathfindingVisualizationModel visualizationModel;
+        private readonly IMessenger messenger;
     }
 }
