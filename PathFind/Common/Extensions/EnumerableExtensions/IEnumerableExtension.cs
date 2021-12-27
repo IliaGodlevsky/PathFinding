@@ -196,5 +196,11 @@ namespace Common.Extensions.EnumerableExtensions
         {
             return array.AggregateOrDefault(IntExtensions.Xor);
         }
+
+        public static bool AreAllEqual<T>(this IEnumerable<T> values)
+        {
+            var value = values.FirstOrDefault();
+            return values.All(v => value?.Equals(v) == true);
+        }
     }
 }

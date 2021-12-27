@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Common.Extensions.EnumerableExtensions;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -20,12 +21,19 @@ namespace EnumerationValues.Attributes
 
         private IReadOnlyCollection<Enum> GetEnums(IEnumerable<object> enums)
         {
-            return enums.All(IsEnum) ? new HashSet<Enum>(enums.Cast<Enum>()) : new HashSet<Enum>();
+            return enums.All(IsEnum) && AreAllOfSameType(enums)
+                ? new HashSet<Enum>(enums.Cast<Enum>())
+                : throw new ArgumentException();
         }
 
         private static bool IsEnum(object value)
         {
             return value.GetType().IsEnum;
+        }
+
+        private static bool AreAllOfSameType(IEnumerable<object> enums)
+        {
+            return enums.Select(@enum => @enum.GetType()).AreAllEqual();
         }
 
         private readonly Lazy<IReadOnlyCollection<Enum>> ignored;
