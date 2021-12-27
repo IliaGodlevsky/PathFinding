@@ -1,5 +1,7 @@
-﻿using Common.Interface;
+﻿using Autofac;
+using Common.Interface;
 using ConsoleVersion.Attributes;
+using ConsoleVersion.DependencyInjection;
 using ConsoleVersion.Enums;
 using ConsoleVersion.Extensions;
 using ConsoleVersion.Interface;
@@ -29,6 +31,7 @@ namespace ConsoleVersion.ViewModel
             : base(log, graphAssembles)
         {
             graphAssembleKeyRange = new InclusiveValueRange<int>(graphAssembles.Count(), 1);
+            messenger = DI.Container.Resolve<IMessenger>();
         }
 
         [MenuItem(MenuItemsNames.CreateNewGraph, MenuItemPriority.Highest)]
@@ -39,8 +42,7 @@ namespace ConsoleVersion.ViewModel
                 try
                 {
                     var graph = SelectedGraphAssemble.AssembleGraph(ObstaclePercent, Width, Length);
-                    var message = new GraphCreatedMessage(graph);
-                    Messenger.Default.Forward(message, MessageTokens.MainModel | MessageTokens.MainView);
+                    messenger.Forward(new GraphCreatedMessage(graph), MessageTokens.MainModel | MessageTokens.MainView);
                 }
                 catch (Exception ex)
                 {
@@ -92,6 +94,7 @@ namespace ConsoleVersion.ViewModel
             WindowClosed = null;
         }
 
+        private readonly IMessenger messenger;
         private readonly InclusiveValueRange<int> graphAssembleKeyRange;
     }
 }

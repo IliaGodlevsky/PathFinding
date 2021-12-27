@@ -1,6 +1,9 @@
-﻿using EnumerationValues.Extensions;
+﻿using Common.Extensions;
+using EnumerationValues.Attributes;
+using EnumerationValues.Extensions;
 using EnumerationValues.Interface;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace EnumerationValues.Realizations
@@ -12,10 +15,28 @@ namespace EnumerationValues.Realizations
 
         public EnumValuesWithoutIgnored()
         {
-            valuesWithoutIgnored = new Lazy<TEnum[]>(new EnumValues<TEnum>()
-                .Values
-                .Where(value => !value.IsIgnored())
-                .ToArray);
+            valuesWithoutIgnored = new Lazy<TEnum[]>(GetNotIgnoredValues);
+        }
+
+        private IReadOnlyCollection<TEnum> GetIgnored()
+        {
+            return typeof(TEnum)
+                .GetCustomAttributes(false)
+                .OfType<EnumValuesIgnoreAttribute>()
+                .SelectMany(attribute => attribute.Ignored)
+                .Distinct()
+                .Cast<TEnum>()
+                .ToArray();
+        }
+
+        private IReadOnlyCollection<TEnum> GetAllValues()
+        {
+            return Enum.GetValues(typeof(TEnum)).Cast<TEnum>().ToArray();
+        }
+
+        private TEnum[] GetNotIgnoredValues()
+        {
+            return GetAllValues().Except(GetIgnored()).ToArray();
         }
 
         private readonly Lazy<TEnum[]> valuesWithoutIgnored;

@@ -1,5 +1,7 @@
-﻿using Common.Interface;
+﻿using Autofac;
+using Common.Interface;
 using ConsoleVersion.Attributes;
+using ConsoleVersion.DependencyInjection;
 using ConsoleVersion.Enums;
 using ConsoleVersion.Extensions;
 using ConsoleVersion.Interface;
@@ -40,9 +42,10 @@ namespace ConsoleVersion.ViewModel
             graph = NullGraph.Instance;
             this.endPoints = endPoints;
             this.log = log;
-            Messenger.Default.Register<GraphCreatedMessage>(this, MessageTokens.EndPointsViewModel, SetGraph);
+            messenger = DI.Container.Resolve<IMessenger>();
+            messenger.Register<GraphCreatedMessage>(this, MessageTokens.EndPointsViewModel, SetGraph);
             var claimMessage = new ClaimGraphMessage(MessageTokens.EndPointsViewModel);
-            Messenger.Default.Forward(claimMessage, MessageTokens.Everyone);
+            messenger.Forward(claimMessage, MessageTokens.Everyone);
         }
 
         [MenuItem(MenuItemsNames.ChooseEndPoints, MenuItemPriority.Highest)]
@@ -90,7 +93,7 @@ namespace ConsoleVersion.ViewModel
         public void Dispose()
         {
             WindowClosed = null;
-            Messenger.Default.Unregister(this);
+            messenger.Unregister(this);
         }
 
         private void SetGraph(GraphCreatedMessage message)
@@ -136,5 +139,6 @@ namespace ConsoleVersion.ViewModel
         private readonly BaseEndPoints endPoints;
         private readonly ILog log;
         private IGraph graph;
+        private readonly IMessenger messenger;
     }
 }

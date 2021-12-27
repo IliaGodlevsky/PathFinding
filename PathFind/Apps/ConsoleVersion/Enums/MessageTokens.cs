@@ -8,8 +8,10 @@ namespace ConsoleVersion.Enums
     /// Tokens to channel messages
     /// </summary>
     [Flags]
+    [EnumValuesIgnore(MessageTokens.None, MessageTokens.Everyone)]
     internal enum MessageTokens
     {
+        None = 0,
         /// <summary>
         /// Use this token to send message to <see cref="MainViewModel"/>
         /// </summary>
@@ -25,7 +27,6 @@ namespace ConsoleVersion.Enums
         /// <summary>
         /// Use this token to send message to everybody
         /// </summary>
-        [EnumValuesIgnore]
         Everyone = (2 << 3) - 1
     }
 }

@@ -44,6 +44,7 @@ namespace ConsoleVersion.ViewModel
             algorithmKeysValueRange = new InclusiveValueRange<int>(Algorithms.Length, 1);
             ConsoleKeystrokesHook.Instance.KeyPressed += OnConsoleKeyPressed;
             DelayTime = Constants.AlgorithmDelayTimeValueRange.LowerValueOfRange;
+            messenger = DI.Container.Resolve<IMessenger>();
         }
 
         [MenuItem(MenuItemsNames.FindPath, MenuItemPriority.Highest)]
@@ -105,13 +106,13 @@ namespace ConsoleVersion.ViewModel
         [MenuItem(MenuItemsNames.ClearGraph, MenuItemPriority.Low)]
         public void ClearGraph()
         {
-            Messenger.Default.Forward(new ClearGraphMessage(), MessageTokens.MainModel);
+            messenger.Forward(new ClearGraphMessage(), MessageTokens.MainModel);
         }
 
         [MenuItem(MenuItemsNames.ClearColors, MenuItemPriority.Low)]
         public void ClearColors()
         {
-            Messenger.Default.Forward(new ClearColorsMessage(), MessageTokens.MainModel);
+            messenger.Forward(new ClearColorsMessage(), MessageTokens.MainModel);
         }
 
         [MenuItem(MenuItemsNames.ApplyVisualization, MenuItemPriority.Low)]
@@ -124,8 +125,7 @@ namespace ConsoleVersion.ViewModel
         protected override void SummarizePathfindingResults()
         {
             string statistics = !path.IsNull() ? GetStatistics() : MessagesTexts.CouldntFindPathMsg;
-            var message = new UpdateStatisticsMessage(statistics);
-            Messenger.Default.Forward(message, MessageTokens.MainView);
+            messenger.Forward(new UpdateStatisticsMessage(statistics), MessageTokens.MainView);
             visitedVerticesCount = 0;
         }
 
@@ -133,8 +133,7 @@ namespace ConsoleVersion.ViewModel
         {
             Stopwatch.StartNew().Wait(DelayTime).Cancel();
             base.OnVertexVisited(sender, e);
-            var message = new UpdateStatisticsMessage(GetStatistics());
-            Messenger.Default.Forward(message, MessageTokens.MainView);
+            messenger.Forward(new UpdateStatisticsMessage(GetStatistics()), MessageTokens.MainView);
         }
 
         protected override void SubscribeOnAlgorithmEvents(PathfindingAlgorithm algorithm)
@@ -177,5 +176,6 @@ namespace ConsoleVersion.ViewModel
         private string CurrentAlgorithmName { get; set; }
 
         private readonly InclusiveValueRange<int> algorithmKeysValueRange;
+        private readonly IMessenger messenger;
     }
 }

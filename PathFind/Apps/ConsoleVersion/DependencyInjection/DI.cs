@@ -10,6 +10,7 @@ using ConsoleVersion.Interface;
 using ConsoleVersion.Model;
 using ConsoleVersion.ValueInput;
 using ConsoleVersion.ViewModel;
+using GalaSoft.MvvmLight.Messaging;
 using GraphLib.Base;
 using GraphLib.Interfaces;
 using GraphLib.Interfaces.Factories;
@@ -53,6 +54,7 @@ namespace ConsoleVersion.DependencyInjection
             builder.RegisterAssemblyTypes(Assemblies).Where(Implements<IView>).AsSelf().PropertiesAutowired()
                 .OnActivated(OnViewActivated).InstancePerLifetimeScope();
 
+            builder.RegisterType<Messenger>().As<IMessenger>().SingleInstance();
             builder.RegisterType<EndPoints>().As<BaseEndPoints>().SingleInstance();
             builder.RegisterType<VertexEventHolder>().As<IVertexEventHolder>().SingleInstance().PropertiesAutowired();
             builder.RegisterType<GraphFieldFactory>().As<IGraphFieldFactory>().SingleInstance();

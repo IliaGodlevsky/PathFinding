@@ -1,8 +1,10 @@
 ﻿using Common.Extensions.EnumerableExtensions;
 using ConsoleVersion.Enums;
+using EnumerationValues.Extensions;
 using EnumerationValues.Interface;
 using EnumerationValues.Realizations;
 using GalaSoft.MvvmLight.Messaging;
+using System;
 using System.Linq;
 
 namespace ConsoleVersion.Extensions
@@ -25,11 +27,10 @@ namespace ConsoleVersion.Extensions
         /// <param name="token">A message token, that channels <paramref name="message"/> delivering</param>
         /// <remarks>You can use '|' to combine message tokens and send <paramref name="message"/> 
         /// to several recipients</remarks>
-        public static void Forward<TMessage>(this IMessenger messenger, TMessage message, MessageTokens token)
+        public static IMessenger Forward<TMessage>(this IMessenger messenger, TMessage message, MessageTokens token)
         {
-            bool IsPartOfToken(MessageTokens value) => token.HasFlag(value);
-            void SendMessageByTokenPart(MessageTokens value) => messenger.Send(message, value);
-            Tokens.Values.Where(IsPartOfToken).ForEach(SendMessageByTokenPart);
+            Tokens.BreakIntoFlags(token).ForEach(value => messenger.Send(message, value));
+            return messenger;
         }
     }
 }

@@ -40,10 +40,11 @@ namespace ConsoleVersion.ViewModel
             IVertexEventHolder eventHolder, GraphSerializationModule serializationModule, BaseEndPoints endPoints, ILog log)
             : base(fieldFactory, eventHolder, serializationModule, endPoints, log)
         {
-            Messenger.Default.Register<GraphCreatedMessage>(this, MessageTokens.MainModel, message => ConnectNewGraph(message.Graph));
-            Messenger.Default.Register<ClearGraphMessage>(this, MessageTokens.MainModel, message => ClearGraph());
-            Messenger.Default.Register<ClearColorsMessage>(this, MessageTokens.MainModel, message => ClearColors());
-            Messenger.Default.Register<ClaimGraphMessage>(this, MessageTokens.MainModel, RecieveClaimGraphMessage);
+            messenger = DI.Container.Resolve<IMessenger>();
+            messenger.Register<GraphCreatedMessage>(this, MessageTokens.MainModel, message => ConnectNewGraph(message.Graph));
+            messenger.Register<ClearGraphMessage>(this, MessageTokens.MainModel, message => ClearGraph());
+            messenger.Register<ClearColorsMessage>(this, MessageTokens.MainModel, message => ClearColors());
+            messenger.Register<ClaimGraphMessage>(this, MessageTokens.MainModel, RecieveClaimGraphMessage);
         }
 
         [MenuItem(MenuItemsNames.MakeUnwieghted, MenuItemPriority.Normal)]
@@ -94,7 +95,7 @@ namespace ConsoleVersion.ViewModel
         {
             CostRange = Int32Input.InputRange(Constants.VerticesCostRange);
             var message = new CostRangeChangedMessage(CostRange);
-            Messenger.Default.Forward(message, MessageTokens.MainView);
+            messenger.Forward(message, MessageTokens.MainView);
         }
 
         [MenuItem(MenuItemsNames.ChangeVertexCost, MenuItemPriority.Low)]
@@ -110,10 +111,9 @@ namespace ConsoleVersion.ViewModel
             {
                 var graph = serializationModule.LoadGraph();
                 ConnectNewGraph(graph);
-                var costRangeMessage = new CostRangeChangedMessage(CostRange);
-                Messenger.Default.Forward(costRangeMessage, MessageTokens.MainView);
-                var graphMessage = new GraphCreatedMessage(graph);
-                Messenger.Default.Forward(graphMessage, MessageTokens.MainView);
+                messenger
+                    .Forward(new CostRangeChangedMessage(CostRange), MessageTokens.MainView)
+                    .Forward(new GraphCreatedMessage(graph), MessageTokens.MainView);
             }
             catch (CantSerializeGraphException ex)
             {
@@ -138,8 +138,7 @@ namespace ConsoleVersion.ViewModel
         public override void ClearGraph()
         {
             base.ClearGraph();
-            var message = new UpdateStatisticsMessage(string.Empty);
-            Messenger.Default.Forward(message, MessageTokens.MainView);
+            messenger.Forward(new UpdateStatisticsMessage(string.Empty), MessageTokens.MainView);
         }
 
         public void DisplayGraph()
@@ -173,8 +172,7 @@ namespace ConsoleVersion.ViewModel
 
         private void RecieveClaimGraphMessage(ClaimGraphMessage message)
         {
-            var graphMessage = new GraphCreatedMessage(Graph);
-            Messenger.Default.Forward(graphMessage, message.ClaimerMessageToken);
+            messenger.Forward(new GraphCreatedMessage(Graph), message.ClaimerMessageToken);
         }
 
         private void PerformActionOnVertex(Action<Vertex> function)
@@ -188,8 +186,10 @@ namespace ConsoleVersion.ViewModel
 
         public void Dispose()
         {
-            Messenger.Default.Unregister(this);
+            messenger.Unregister(this);
             WindowClosed = null;
         }
+
+        private readonly IMessenger messenger;
     }
 }
