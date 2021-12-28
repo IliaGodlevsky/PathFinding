@@ -19,14 +19,9 @@ namespace EnumerationValues.Attributes
 
         private IReadOnlyCollection<Enum> GetEnums(IEnumerable<object> enums)
         {
-            return enums.All(IsEnum)
+            return enums.All(value => value.GetType().IsEnum)
                 ? new HashSet<Enum>(enums.Cast<Enum>())
                 : throw new ArgumentException();
-        }
-
-        private static bool IsEnum(object value)
-        {
-            return value.GetType().IsEnum;
         }
 
         private readonly Lazy<IReadOnlyCollection<Enum>> ignored;
