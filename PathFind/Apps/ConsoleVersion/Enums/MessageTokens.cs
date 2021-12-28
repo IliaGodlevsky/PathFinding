@@ -8,7 +8,7 @@ namespace ConsoleVersion.Enums
     /// Tokens to channel messages
     /// </summary>
     [Flags]
-    [EnumValuesIgnore(MessageTokens.None, MessageTokens.Everyone)]
+    [EnumValuesIgnore(None, Everyone)]
     internal enum MessageTokens
     {
         None = 0,
@@ -17,11 +17,11 @@ namespace ConsoleVersion.Enums
         /// </summary>
         MainModel = 2 << 0,
         /// <summary>
-        /// Use this token to send message to <see cref="ConsoleVersion.Views.MainView"/>
+        /// Use this token to send message to <see cref="Views.MainView"/>
         /// </summary>
         MainView = 2 << 1,
         /// <summary>
-        /// Use this token to send message to <see cref="ConsoleVersion.ViewModel.EndPointsViewModel"/>
+        /// Use this token to send message to <see cref="ViewModel.EndPointsViewModel"/>
         /// </summary>
         EndPointsViewModel = 2 << 2,
         /// <summary>

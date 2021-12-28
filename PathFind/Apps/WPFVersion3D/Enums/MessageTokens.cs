@@ -4,7 +4,7 @@ using System;
 namespace WPFVersion3D.Enums
 {
     [Flags]
-    [EnumValuesIgnore(MessageTokens.None, MessageTokens.Everyone)]
+    [EnumValuesIgnore(None, Everyone)]
     internal enum MessageTokens
     {
         None = 0,

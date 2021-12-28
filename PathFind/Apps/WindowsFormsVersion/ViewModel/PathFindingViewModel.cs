@@ -46,7 +46,7 @@ namespace WindowsFormsVersion.ViewModel
 
         protected override void OnVertexVisited(object sender, AlgorithmEventArgs e)
         {
-            Stopwatch.StartNew().Wait(DelayTime).Cancel();
+            Stopwatch.StartNew().Wait(DelayTime).Stop();
             base.OnVertexVisited(sender, e);
             var message = new UpdateStatisticsMessage(Statistics);
             Messenger.Default.Send(message, MessageTokens.MainModel);

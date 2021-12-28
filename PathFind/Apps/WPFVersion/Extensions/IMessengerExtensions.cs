@@ -3,8 +3,6 @@ using EnumerationValues.Extensions;
 using EnumerationValues.Interface;
 using EnumerationValues.Realizations;
 using GalaSoft.MvvmLight.Messaging;
-using System;
-using System.Linq;
 using System.Threading.Tasks;
 using WPFVersion.Enums;
 

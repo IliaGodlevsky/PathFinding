@@ -7,7 +7,7 @@ namespace WPFVersion3D.Enums
     /// <summary>
     /// Represents the speed of an animation
     /// </summary>
-    [EnumValuesIgnore(AnimationSpeeds.None)]
+    [EnumValuesIgnore(None)]
     internal enum AnimationSpeeds
     {
         None = 0,

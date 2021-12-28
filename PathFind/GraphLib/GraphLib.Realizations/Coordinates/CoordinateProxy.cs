@@ -11,7 +11,7 @@ namespace GraphLib.Realizations.Coordinates
     internal sealed class CoordinateProxy : BaseCoordinate, ICoordinate, ICloneable<ICoordinate>
     {
 
-        public CoordinateProxy(int[] coordinates) 
+        public CoordinateProxy(int[] coordinates)
             : base(coordinates.Length, coordinates)
         {
 

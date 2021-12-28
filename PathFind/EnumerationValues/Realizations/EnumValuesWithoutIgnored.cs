@@ -1,6 +1,4 @@
-﻿using Common.Extensions;
-using EnumerationValues.Attributes;
-using EnumerationValues.Extensions;
+﻿using EnumerationValues.Attributes;
 using EnumerationValues.Interface;
 using System;
 using System.Collections.Generic;

@@ -73,7 +73,7 @@ namespace WPFVersion3D.ViewModel
 
         protected override async void OnVertexVisited(object sender, AlgorithmEventArgs e)
         {
-            Stopwatch.StartNew().Wait(DelayTime).Cancel();
+            Stopwatch.StartNew().Wait(DelayTime).Stop();
             string time = timer.ToFormattedString();
             var message = new UpdateAlgorithmStatisticsMessage(Index, time, visitedVerticesCount);
             await Messenger.Default.ForwardAsync(message, MessageTokens.AlgorithmStatisticsModel);

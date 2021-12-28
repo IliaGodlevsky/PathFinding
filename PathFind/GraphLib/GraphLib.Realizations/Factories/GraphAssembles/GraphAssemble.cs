@@ -1,5 +1,4 @@
-﻿using Common.Extensions;
-using Common.Extensions.EnumerableExtensions;
+﻿using Common.Extensions.EnumerableExtensions;
 using GraphLib.Exceptions;
 using GraphLib.Extensions;
 using GraphLib.Interfaces;
@@ -9,7 +8,6 @@ using Random.Interface;
 using Random.Realizations.Generators;
 using System;
 using System.ComponentModel;
-using System.Linq;
 using ValueRange;
 using ValueRange.Extensions;
 
@@ -64,7 +62,7 @@ namespace GraphLib.Realizations.Factories.GraphAssembles
         /// <exception cref="ArgumentException"></exception>
         /// <exception cref="WrongNumberOfDimensionsException"></exception>
         public virtual IGraph AssembleGraph(int obstaclePercent, params int[] graphDimensionsSizes)
-        {            
+        {
             int graphSize = graphDimensionsSizes.GetMultiplication();
             var vertices = new IVertex[graphSize];
             int percentOfObstacles = percentRange.ReturnInRange(obstaclePercent);

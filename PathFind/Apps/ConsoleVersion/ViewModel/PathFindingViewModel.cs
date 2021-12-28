@@ -131,7 +131,7 @@ namespace ConsoleVersion.ViewModel
 
         protected override void OnVertexVisited(object sender, AlgorithmEventArgs e)
         {
-            Stopwatch.StartNew().Wait(DelayTime).Cancel();
+            Stopwatch.StartNew().Wait(DelayTime).Stop();
             base.OnVertexVisited(sender, e);
             messenger.Forward(new UpdateStatisticsMessage(GetStatistics()), MessageTokens.MainView);
         }

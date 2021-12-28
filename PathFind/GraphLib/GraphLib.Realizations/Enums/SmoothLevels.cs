@@ -4,7 +4,7 @@ using System.ComponentModel;
 
 namespace GraphLib.Realizations.Enums
 {
-    [EnumValuesIgnore(SmoothLevels.None)]
+    [EnumValuesIgnore(None)]
     public enum SmoothLevels
     {
         None = 0,

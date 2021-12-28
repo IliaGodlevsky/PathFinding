@@ -1,7 +1,6 @@
 ﻿using NUnit.Framework;
 using Random.Extensions;
 using Random.Interface;
-using Random.Realizations;
 using System.Linq;
 using ValueRange;
 using ValueRange.Extensions;
@@ -44,7 +43,7 @@ namespace Common.Tests
         private int[] GetNumbers(IRandom random, int count, InclusiveValueRange<int> range)
         {
             var numbers = new int[count];
-            while(count-->0)
+            while (count-- > 0)
             {
                 numbers[count] = random.Next(range);
             }

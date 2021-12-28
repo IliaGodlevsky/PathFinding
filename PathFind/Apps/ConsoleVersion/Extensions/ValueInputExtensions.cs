@@ -1,6 +1,5 @@
 ﻿using ConsoleVersion.Interface;
 using GraphLib.Interfaces;
-using GraphLib.NullRealizations.NullObjects;
 using GraphLib.Realizations.Coordinates;
 using GraphLib.Realizations.Graphs;
 using System;

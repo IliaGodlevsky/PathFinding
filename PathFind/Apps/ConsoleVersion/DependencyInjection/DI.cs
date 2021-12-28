@@ -6,7 +6,9 @@ using Autofac.Core;
 using Common.Extensions;
 using Common.Interface;
 using ConsoleVersion.Enums;
+using ConsoleVersion.Extensions;
 using ConsoleVersion.Interface;
+using ConsoleVersion.Messages;
 using ConsoleVersion.Model;
 using ConsoleVersion.ValueInput;
 using ConsoleVersion.ViewModel;
@@ -49,8 +51,10 @@ namespace ConsoleVersion.DependencyInjection
             builder.RegisterType<Int32ConsoleValueInput>().As<ConsoleValueInput<int>>().SingleInstance();
 
             builder.RegisterType<MainViewModel>().AsSelf().SingleInstance().PropertiesAutowired();
-            builder.RegisterAssemblyTypes(Assemblies).Where(Implements<IViewModel>).Except<MainViewModel>().AsSelf()
-                .PropertiesAutowired().InstancePerLifetimeScope();
+            builder.RegisterType<EndPointsViewModel>().AsSelf().PropertiesAutowired()
+                .InstancePerLifetimeScope().OnActivated(OnEndPointsViewModelActivated);
+            builder.RegisterAssemblyTypes(Assemblies).Where(Implements<IViewModel>).Except<MainViewModel>()
+                .Except<EndPointsViewModel>().AsSelf().PropertiesAutowired().InstancePerLifetimeScope();
             builder.RegisterAssemblyTypes(Assemblies).Where(Implements<IView>).AsSelf().PropertiesAutowired()
                 .OnActivated(OnViewActivated).InstancePerLifetimeScope();
 
@@ -97,6 +101,13 @@ namespace ConsoleVersion.DependencyInjection
             var view = (IView)e.Instance;
             var mainModel = e.Context.Resolve<MainViewModel>();
             view.NewMenuIteration += mainModel.DisplayGraph;
+        }
+
+        private static void OnEndPointsViewModelActivated(IActivatedEventArgs<object> e)
+        {
+            var messenger = e.Context.Resolve<IMessenger>();
+            var message = new ClaimGraphMessage(MessageTokens.EndPointsViewModel);
+            messenger.Forward(message, MessageTokens.Everyone);
         }
 
         private static SmoothedGraphAssemble RegisterSmoothedGraphAssemble(IComponentContext context)

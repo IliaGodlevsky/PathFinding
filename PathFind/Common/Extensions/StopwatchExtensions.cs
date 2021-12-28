@@ -26,12 +26,6 @@ namespace Common.Extensions
             return watch;
         }
 
-        public static Stopwatch Cancel(this Stopwatch self)
-        {
-            self.Stop();
-            return self;
-        }
-
         public static string ToFormattedString(this Stopwatch self)
         {
             return self.Elapsed.ToString(@"mm\:ss\.fff");

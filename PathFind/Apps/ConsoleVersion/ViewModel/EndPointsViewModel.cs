@@ -44,8 +44,6 @@ namespace ConsoleVersion.ViewModel
             this.log = log;
             messenger = DI.Container.Resolve<IMessenger>();
             messenger.Register<GraphCreatedMessage>(this, MessageTokens.EndPointsViewModel, SetGraph);
-            var claimMessage = new ClaimGraphMessage(MessageTokens.EndPointsViewModel);
-            messenger.Forward(claimMessage, MessageTokens.Everyone);
         }
 
         [MenuItem(MenuItemsNames.ChooseEndPoints, MenuItemPriority.Highest)]
@@ -135,7 +133,7 @@ namespace ConsoleVersion.ViewModel
 
             return NullVertex.Instance;
         }
-        
+
         private readonly BaseEndPoints endPoints;
         private readonly ILog log;
         private IGraph graph;
