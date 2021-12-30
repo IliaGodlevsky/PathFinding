@@ -15,7 +15,7 @@ namespace GraphLib.Extensions
         /// <param name="dimensionSizes"></param>
         /// <returns>A task, that return an assembled graph</returns>
         public static async Task<IGraph> AssembleGraphAsync(this IGraphAssemble self,
-            int percentOfObstacles = 0, params int[] dimensionSizes)
+            int percentOfObstacles, params int[] dimensionSizes)
         {
             var task = Task.Run(() => self.AssembleGraph(percentOfObstacles, dimensionSizes));
             try

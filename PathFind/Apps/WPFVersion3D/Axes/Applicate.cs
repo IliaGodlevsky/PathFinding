@@ -1,12 +1,12 @@
-﻿using System.Windows.Media.Media3D;
+﻿using Common.Attrbiutes;
+using System.Windows.Media.Media3D;
 using WPFVersion3D.Model;
 
 namespace WPFVersion3D.Axes
 {
+    [Order(0)]
     internal sealed class Applicate : IAxis
     {
-        public int Index => 0;
-
         public void Offset(TranslateTransform3D transfrom, double offset)
         {
             transfrom.OffsetZ = offset;

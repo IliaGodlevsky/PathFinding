@@ -2,14 +2,12 @@
 
 namespace Common.Attrbiutes
 {
-    [AttributeUsage(AttributeTargets.All, AllowMultiple = false, Inherited = true)]
-    public abstract class GroupAttribute : Attribute
+    [AttributeUsage(AttributeTargets.All, Inherited = true)]
+    public abstract class GroupAttribute : OrderAttribute
     {
-        public int OrderInGroup { get; }
-
-        public GroupAttribute(int order)
+        public GroupAttribute(int order) : base(order)
         {
-            OrderInGroup = order;
+
         }
     }
 }

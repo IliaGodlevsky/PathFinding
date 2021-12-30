@@ -123,7 +123,7 @@ namespace Algorithm.Base
 
         protected virtual void CompletePathfinding()
         {
-            IsInProcess = true;
+            IsInProcess = false;
             Finished?.Invoke(this, new ProcessEventArgs());
         }
 

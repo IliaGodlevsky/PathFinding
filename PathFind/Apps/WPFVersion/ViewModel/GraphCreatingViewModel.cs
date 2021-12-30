@@ -25,7 +25,7 @@ namespace WPFVersion.ViewModel
         public ICommand CancelCreateGraphCommand { get; }
 
         public GraphCreatingViewModel(IEnumerable<IGraphAssemble> graphAssembles, ILog log)
-            : base(log, graphAssembles)
+            : base(log, graphAssembles) 
         {
             messenger = DI.Container.Resolve<IMessenger>();
             ConfirmCreateGraphCommand = new RelayCommand(ExecuteConfirmCreateGraphCommand,
@@ -39,7 +39,7 @@ namespace WPFVersion.ViewModel
             {
                 var graph = await SelectedGraphAssemble.AssembleGraphAsync(ObstaclePercent, Width, Length);
                 var message = new GraphCreatedMessage(graph);
-                messenger.Forward(message, MessageTokens.MainModel);
+                messenger.Forward(message, MessageTokens.MainModel); 
             }
             catch (Exception ex)
             {

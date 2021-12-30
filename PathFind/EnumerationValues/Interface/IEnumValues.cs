@@ -1,10 +1,11 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace EnumerationValues.Interface
 {
     public interface IEnumValues<TEnum>
         where TEnum : Enum
     {
-        TEnum[] Values { get; }
+        IReadOnlyCollection<TEnum> Values { get; }
     }
 }

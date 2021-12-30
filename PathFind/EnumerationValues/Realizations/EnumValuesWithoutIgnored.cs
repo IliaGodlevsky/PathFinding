@@ -9,34 +9,27 @@ namespace EnumerationValues.Realizations
     public sealed class EnumValuesWithoutIgnored<TEnum> : IEnumValues<TEnum>
         where TEnum : Enum
     {
-        public TEnum[] Values => valuesWithoutIgnored.Value;
+        public IReadOnlyCollection<TEnum> Values => values.Value;
 
         public EnumValuesWithoutIgnored()
         {
-            valuesWithoutIgnored = new Lazy<TEnum[]>(GetNotIgnoredValues);
+            values = new Lazy<TEnum[]>(GetValues);
         }
 
-        private IReadOnlyCollection<TEnum> GetIgnored()
+        private TEnum[] GetValues()
         {
-            return typeof(TEnum)
+            return Enum
+                .GetValues(typeof(TEnum))
+                .Cast<TEnum>()
+                .Except(typeof(TEnum)
                 .GetCustomAttributes(false)
                 .OfType<EnumValuesIgnoreAttribute>()
                 .SelectMany(attribute => attribute.Ignored)
                 .Distinct()
-                .Cast<TEnum>()
+                .Cast<TEnum>())
                 .ToArray();
         }
 
-        private IReadOnlyCollection<TEnum> GetAllValues()
-        {
-            return Enum.GetValues(typeof(TEnum)).Cast<TEnum>().ToArray();
-        }
-
-        private TEnum[] GetNotIgnoredValues()
-        {
-            return GetAllValues().Except(GetIgnored()).ToArray();
-        }
-
-        private readonly Lazy<TEnum[]> valuesWithoutIgnored;
+        private readonly Lazy<TEnum[]> values;
     }
 }

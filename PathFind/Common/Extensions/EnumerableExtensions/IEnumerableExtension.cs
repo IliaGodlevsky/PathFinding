@@ -171,7 +171,7 @@ namespace Common.Extensions.EnumerableExtensions
         {
             return collection
                 .GroupBy(item => item.GetAttributeOrNull<T, GroupAttribute>())
-                .Select(item => item.OrderBy(x => x.GetGroupAttributeValueOrMaxValue()))
+                .Select(item => item.OrderBy(x => x.GetOrderAttributeValueOrMaxValue()))
                 .SelectMany(item => item);
         }
 

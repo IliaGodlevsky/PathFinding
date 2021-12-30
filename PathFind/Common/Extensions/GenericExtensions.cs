@@ -58,9 +58,9 @@ namespace Common.Extensions
                 ?.Description ?? type.Name;
         }
 
-        public static int GetGroupAttributeValueOrMaxValue<T>(this T self)
+        public static int GetOrderAttributeValueOrMaxValue<T>(this T self)
         {
-            return self.GetAttributeOrNull<T, GroupAttribute>()?.OrderInGroup ?? int.MaxValue;
+            return self.GetAttributeOrNull<T, OrderAttribute>()?.Order ?? int.MaxValue;
         }
 
         public static TAttribute GetAttributeOrNull<T, TAttribute>(this T self)
