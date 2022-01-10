@@ -9,7 +9,7 @@ namespace GraphLib.Interfaces
         /// </summary>
         int Size { get; }
 
-        ICollection<IVertex> Vertices { get; }
+        IReadOnlyCollection<IVertex> Vertices { get; }
 
         /// <summary>
         /// Dimension sizes of graph, f.e width, length, height

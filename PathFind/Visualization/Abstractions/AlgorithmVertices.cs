@@ -37,20 +37,16 @@ namespace Visualization.Abstractions
 
         public void Visualize(IAlgorithm algorithm)
         {
-            GetVertices(algorithm)
-                .OfType<IVisualizable>()
-                .ForEach(Visualize);
+            GetVertices(algorithm).OfType<IVisualizable>().ForEach(Visualize);
         }
 
-        public IEnumerable<IVertex> GetVertices(IAlgorithm algorithm)
+        public IReadOnlyCollection<IVertex> GetVertices(IAlgorithm algorithm)
         {
-            return vertices.GetOrEmpty(algorithm).Values;
+            return (IReadOnlyCollection<IVertex>)vertices.GetOrEmpty(algorithm).Values;
         }
 
         protected abstract void Visualize(IVisualizable visualizable);
 
         private readonly ConcurrentDictionary<IAlgorithm, ConcurrentDictionary<ICoordinate, IVertex>> vertices;
-
-        public ICollection<IAlgorithm> Algorithms => vertices.Keys;
     }
 }

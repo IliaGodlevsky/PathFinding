@@ -22,7 +22,7 @@ using GraphViewModel.Interfaces;
 using Logging.Interface;
 using System;
 using System.Drawing;
-
+using System.Runtime.CompilerServices;
 using static GraphLib.Base.BaseVertexCost;
 using Console = Colorful.Console;
 
@@ -47,9 +47,11 @@ namespace ConsoleVersion.ViewModel
             messenger.Register<ClaimGraphMessage>(this, MessageTokens.MainModel, RecieveClaimGraphMessage);
         }
 
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         [MenuItem(MenuItemsNames.MakeUnwieghted, MenuItemPriority.Normal)]
         public void MakeGraphUnweighted() => Graph.ToUnweighted();
 
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         [MenuItem(MenuItemsNames.MakeWeighted, MenuItemPriority.Normal)]
         public void MakeGraphWeighted() => Graph.ToWeighted();
 
@@ -87,6 +89,7 @@ namespace ConsoleVersion.ViewModel
             }
         }
 
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         [MenuItem(MenuItemsNames.ReverseVertex, MenuItemPriority.Normal)]
         public void ReverseVertex() => PerformActionOnVertex(vertex => vertex?.OnVertexReversed());
 
@@ -98,6 +101,7 @@ namespace ConsoleVersion.ViewModel
             messenger.Forward(message, MessageTokens.MainView);
         }
 
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         [MenuItem(MenuItemsNames.ChangeVertexCost, MenuItemPriority.Low)]
         public void ChangeVertexCost() => PerformActionOnVertex(vertex => vertex?.OnVertexCostChanged());
 
@@ -170,6 +174,7 @@ namespace ConsoleVersion.ViewModel
             Console.WriteLine();
         }
 
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         private void RecieveClaimGraphMessage(ClaimGraphMessage message)
         {
             messenger.Forward(new GraphCreatedMessage(Graph), message.ClaimerMessageToken);

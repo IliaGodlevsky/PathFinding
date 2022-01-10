@@ -18,7 +18,7 @@ namespace GraphLib.Base
     {
         public int Size => vertices.Count;
 
-        public ICollection<IVertex> Vertices => vertices.Values;
+        public IReadOnlyCollection<IVertex> Vertices => vertices.Values;
 
         public int[] DimensionsSizes { get; }
 

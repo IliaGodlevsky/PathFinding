@@ -3,12 +3,14 @@ using Algorithm.Base;
 using Algorithm.Factory.Attrbiutes;
 using Algorithm.Interfaces;
 using Algorithm.Realizations.Heuristic;
+using Common.Attrbiutes;
 using GraphLib.Interfaces;
 using System.ComponentModel;
 
 namespace Algorithm.Factory
 {
-    [WaveGroup(5)]
+    [Order(5)]
+    [WaveGroup]
     [Description("Lee algorithm (heuristic)")]
     public sealed class BestFirstLeeAlgorithmFactory : IAlgorithmFactory
     {

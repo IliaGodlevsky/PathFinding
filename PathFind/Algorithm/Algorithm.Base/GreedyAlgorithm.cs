@@ -85,7 +85,7 @@ namespace Algorithm.Base
                 bool IsLeastCostVertex(IVertex vertex)
                     => GreedyHeuristic(vertex) == leastVertexCost;
                 return neighbours
-                    .ForEach(new Action<IVertex>(Enqueue))
+                    .ForAll(Enqueue)
                     .FirstOrNullVertex(IsLeastCostVertex);
             }
         }

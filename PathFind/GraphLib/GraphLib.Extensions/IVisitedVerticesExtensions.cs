@@ -1,6 +1,7 @@
 ﻿using GraphLib.Interfaces;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.CompilerServices;
 
 namespace GraphLib.Extensions
 {
@@ -12,6 +13,7 @@ namespace GraphLib.Extensions
         /// <param name="self"></param>
         /// <param name="vertex"></param>
         /// <returns></returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static IEnumerable<IVertex> GetUnvisitedNeighbours(this IVisitedVertices self, IVertex vertex)
         {
             return vertex.Neighbours.Where(self.IsNotVisited);

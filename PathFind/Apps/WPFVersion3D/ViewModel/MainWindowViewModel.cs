@@ -85,13 +85,13 @@ namespace WPFVersion3D.ViewModel
         }
 
         public void StretchAlongXAxis(object sender, RoutedPropertyChangedEventArgs<double> e)
-            => (GraphField as GraphField3D)?.StretchAlongAxis(new Abscissa(), e.NewValue, 1, 0, 0);
+            => (GraphField as GraphField3D)?.StretchAlongAxis(DI.Container.Resolve<Abscissa>(), e.NewValue, 0, 0, 1);
 
         public void StretchAlongYAxis(object sender, RoutedPropertyChangedEventArgs<double> e)
-            => (GraphField as GraphField3D)?.StretchAlongAxis(new Ordinate(), e.NewValue, 0, 1, 0);
+            => (GraphField as GraphField3D)?.StretchAlongAxis(DI.Container.Resolve<Ordinate>(), e.NewValue, 0, 1, 0);
 
         public void StretchAlongZAxis(object sender, RoutedPropertyChangedEventArgs<double> e)
-            => (GraphField as GraphField3D)?.StretchAlongAxis(new Applicate(), e.NewValue, 0, 0, 1);
+            => (GraphField as GraphField3D)?.StretchAlongAxis(DI.Container.Resolve<Applicate>(), e.NewValue, 1, 0, 0);
 
         private void ExecuteClearVerticesColors(object param) => ClearColors();
         private void ExecuteSaveGraphCommand(object param) => base.SaveGraph();

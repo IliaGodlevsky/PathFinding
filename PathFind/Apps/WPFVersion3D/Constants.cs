@@ -18,6 +18,10 @@ namespace WPFVersion3D
         public const double DistanceBase = 14;
         public const double ZoomBase = 200;
 
+        public const int Abscissa = 2;
+        public const int Ordinate = 1;
+        public const int Applicate = 0;
+
         public const double InitialVisitedVertexOpacity = 0.15;
         public const double InitialEnqueuedVertexOpacity = 0.15;
         public const double InitialPathVertexOpacity = 0.9;

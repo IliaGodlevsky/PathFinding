@@ -17,7 +17,7 @@ namespace WPFVersion.Model
         {
             messenger = DI.Container.Resolve<IMessenger>();
             messenger.Register<PathFoundMessage>(this, MessageTokens.VisualizationModel, PathFound);
-            messenger.Register<SubscribeOnAlgorithmEventsMessage>(this, MessageTokens.VisualizationModel, AlgorithmChosen);
+            messenger.Register<SubscribeOnAlgorithmEventsMessage>(this, MessageTokens.VisualizationModel, Subscribe);
             messenger.Register<EndPointsChosenMessage>(this, MessageTokens.VisualizationModel, RegisterEndPointsForAlgorithm);
         }
 
@@ -37,7 +37,7 @@ namespace WPFVersion.Model
             await Task.Run(() => base.OnVertexVisited(sender, e));
         }
 
-        private void AlgorithmChosen(SubscribeOnAlgorithmEventsMessage message)
+        private void Subscribe(SubscribeOnAlgorithmEventsMessage message)
         {
             if (message.IsVisualizationRequired)
             {

@@ -3,6 +3,7 @@ using GraphLib.Interfaces;
 using GraphLib.Realizations.Coordinates;
 using GraphLib.Realizations.Graphs;
 using System;
+using System.Runtime.CompilerServices;
 using ValueRange;
 
 namespace ConsoleVersion.Extensions
@@ -16,7 +17,8 @@ namespace ConsoleVersion.Extensions
         /// <param name="rangeOfValidInput"></param>
         /// <returns>A number in the range
         /// <paramref name="rangeOfValidInput"/></returns>
-        /// <exception cref="System.IO.IOException"></exception>        
+        /// <exception cref="System.IO.IOException"></exception> 
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static TValue InputValue<TValue>(this IValueInput<TValue> self,
             string accompanyingMessage,
             InclusiveValueRange<TValue> rangeOfValidInput)

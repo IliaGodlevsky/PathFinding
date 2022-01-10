@@ -13,13 +13,12 @@ namespace EnumerationValues.Realizations
 
         public EnumValuesWithoutIgnored()
         {
-            values = new Lazy<TEnum[]>(GetValues);
+            values = new Lazy<TEnum[]>(GetValues, isThreadSafe: true);
         }
 
         private TEnum[] GetValues()
         {
-            return Enum
-                .GetValues(typeof(TEnum))
+            return Enum.GetValues(typeof(TEnum))
                 .Cast<TEnum>()
                 .Except(typeof(TEnum)
                 .GetCustomAttributes(false)

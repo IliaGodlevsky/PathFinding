@@ -54,7 +54,7 @@ namespace Algorithm.Algos.Algos
             return accumulatedCosts.GetCostOrDefault(vertex, default) == 0;
         }
 
-        protected override void RelaxNeighbours(IVertex[] neighbours)
+        protected override void RelaxNeighbours(IReadOnlyCollection<IVertex> neighbours)
         {
             neighbours
                 .Where(VertexIsUnwaved)

@@ -12,7 +12,7 @@ namespace WPFVersion3D.Converters
         {
             if (value is AlgorithmStatuses status)
             {
-                return status.GetDescriptionAttributeValueOrTypeName();
+                return status.GetDescriptionAttributeValueOrEmpty();
             }
 
             return Binding.DoNothing;

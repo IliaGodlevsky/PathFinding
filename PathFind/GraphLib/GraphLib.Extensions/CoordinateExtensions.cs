@@ -2,6 +2,7 @@
 using GraphLib.Interfaces;
 using System;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using ValueRange;
 using ValueRange.Extensions;
 
@@ -18,6 +19,7 @@ namespace GraphLib.Extensions
         /// equals to the corresponding coordinates of <paramref name="coordinate"/>;
         /// false if not, or if they have not equal number of coordinates values
         /// or any of parametres is null</returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static bool IsEqual(this ICoordinate self, ICoordinate coordinate)
         {
             if (self == null || coordinate == null)

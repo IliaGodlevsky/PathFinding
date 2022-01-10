@@ -3,6 +3,7 @@ using Common.Extensions.EnumerableExtensions;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.CompilerServices;
 
 namespace Common.Extensions.EnumerableExtensions
 {
@@ -63,22 +64,25 @@ namespace Common.Extensions.EnumerableExtensions
         /// <param name="func"></param>
         /// <returns>A result of aggregation of the collection</returns>
         /// <exception cref="ArgumentNullException"></exception>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static T AggregateOrDefault<T>(this IEnumerable<T> collection, Func<T, T, T> func)
         {
-            var items = collection.ToArray();
-            return items.Any() ? items.Aggregate(func) : default;
+            return collection.Any() ? collection.Aggregate(func) : default;
         }
 
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static IEnumerable<T> Without<T>(this IEnumerable<T> self, IEnumerable<T> items)
         {
             return self.Where(item => !items.Contains(item));
         }
 
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static IEnumerable<T> Without<T>(this IEnumerable<T> self, params T[] items)
         {
             return self.Without(items.AsEnumerable());
         }
 
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static int GetMultiplication(this IEnumerable<int> array)
         {
             return array.AggregateOrDefault(IntExtensions.Multiply);
@@ -93,13 +97,13 @@ namespace Common.Extensions.EnumerableExtensions
         /// <param name="action"></param>
         /// <returns>The same <paramref name="collection"/> with elements 
         /// to which <paramref name="action"/> was applied</returns>
-        public static TCollection ForEach<TCollection, T>(this TCollection collection, Action<T> action)
-            where TCollection : IEnumerable<T>
+        public static IEnumerable<T> ForAll<T>(this IEnumerable<T> collection, Action<T> action)
         {
-            collection.AsEnumerable().ForEach(action);
+            collection.ForEach(action);
             return collection;
         }
 
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static void ForEach<T>(this IEnumerable<T> collection, Action<T> action)
         {
             foreach (var item in collection)
@@ -108,21 +112,25 @@ namespace Common.Extensions.EnumerableExtensions
             }
         }
 
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static bool IsSingle<T>(this IEnumerable<T> collection, Func<T, bool> predicate)
         {
             return collection.Count(predicate) == 1;
         }
 
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static double SumOrDefault(this IEnumerable<double> collection)
         {
             return collection.Any() ? collection.Sum() : default;
         }
 
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static double MaxOrDefault(this IEnumerable<double> collection)
         {
             return collection.Any() ? collection.Max() : default;
         }
 
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static double MinOrDefault<T>(this IEnumerable<T> collection, Func<T, double> selector)
         {
             return collection.Any() ? collection.Min(selector) : default;
@@ -139,38 +147,42 @@ namespace Common.Extensions.EnumerableExtensions
         /// <param name="predicate"></param>
         /// <returns>true if <paramref name="predicate"/> is true 
         /// for each corresponding elements in two sequencies and false if not</returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static bool Juxtapose<T>(this IEnumerable<T> self, IEnumerable<T> second, Func<T, T, bool> predicate)
         {
             return self.SequenceEqual(second, new MatchComparer<T>(predicate));
         }
 
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static bool Juxtapose<T>(this IEnumerable<T> self, IEnumerable<T> second)
         {
             return self.Juxtapose(second, (a, b) => a.Equals(b));
         }
 
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static IDictionary<TKey, TValue> ToDictionary<TKey, TValue>
             (this IEnumerable<KeyValuePair<TKey, TValue>> collection)
         {
             return collection.ToDictionary(item => item.Key, item => item.Value);
         }
 
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static IDictionary<string, T> ToNameInstanceDictionary<T>(this IEnumerable<T> collection)
         {
-            return collection.ToDictionary(item => item.GetDescriptionAttributeValueOrTypeName());
+            return collection.ToDictionary(item => item.GetDescriptionAttributeValueOrEmpty());
         }
 
         public static Tuple<string, T>[] ToNameInstanceTuples<T>(this IEnumerable<T> collection)
         {
             return collection
-                .Select(item => new Tuple<string, T>(item.GetDescriptionAttributeValueOrTypeName(), item))
+                .Select(item => new Tuple<string, T>(item.GetDescriptionAttributeValueOrEmpty(), item))
                 .ToArray();
         }
 
         public static IEnumerable<T> GroupByGroupAttribute<T>(this IEnumerable<T> collection)
         {
             return collection
-                .GroupBy(item => item.GetAttributeOrNull<T, GroupAttribute>())
+                .GroupBy(item => item.GetAttributeOrNull<GroupAttribute>())
                 .Select(item => item.OrderBy(x => x.GetOrderAttributeValueOrMaxValue()))
                 .SelectMany(item => item);
         }
@@ -195,12 +207,6 @@ namespace Common.Extensions.EnumerableExtensions
         public static int ToHashCode(this IEnumerable<int> array)
         {
             return array.AggregateOrDefault(IntExtensions.Xor);
-        }
-
-        public static bool AreAllEqual<T>(this IEnumerable<T> values)
-        {
-            var value = values.FirstOrDefault();
-            return values.All(v => value?.Equals(v) == true);
         }
     }
 }

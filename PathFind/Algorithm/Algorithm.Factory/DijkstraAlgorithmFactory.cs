@@ -3,12 +3,14 @@ using Algorithm.Base;
 using Algorithm.Factory.Attrbiutes;
 using Algorithm.Interfaces;
 using Algorithm.Realizations.StepRules;
+using Common.Attrbiutes;
 using GraphLib.Interfaces;
 using System.ComponentModel;
 
 namespace Algorithm.Factory
 {
-    [WaveGroup(1)]
+    [Order(1)]
+    [WaveGroup]
     [Description("Dijkstra's algorithm")]
     public sealed class DijkstraAlgorithmFactory : IAlgorithmFactory
     {

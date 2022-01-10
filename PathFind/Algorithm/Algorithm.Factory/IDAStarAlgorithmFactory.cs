@@ -4,12 +4,14 @@ using Algorithm.Factory.Attrbiutes;
 using Algorithm.Interfaces;
 using Algorithm.Realizations.Heuristic;
 using Algorithm.Realizations.StepRules;
+using Common.Attrbiutes;
 using GraphLib.Interfaces;
 using System.ComponentModel;
 
 namespace Algorithm.Factory
 {
-    [WaveGroup(3)]
+    [Order(3)]
+    [WaveGroup]
     [Description("IDA* algorithm")]
     public sealed class IDAStarAlgorithmFactory : IAlgorithmFactory
     {

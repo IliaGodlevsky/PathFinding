@@ -25,7 +25,7 @@ namespace Visualization.Abstractions
             vertices.Clear();
         }
 
-        public IEnumerable<IVertex> GetVertices(IAlgorithm algorithm)
+        public IReadOnlyCollection<IVertex> GetVertices(IAlgorithm algorithm)
         {
             return new IVertex[] { vertices.GetOrNullVertex(algorithm) };
         }
@@ -47,7 +47,5 @@ namespace Visualization.Abstractions
         protected abstract void Visualize(IVisualizable visualizable);
 
         private readonly ConcurrentDictionary<IAlgorithm, IVertex> vertices;
-
-        public ICollection<IAlgorithm> Algorithms => vertices.Keys;
     }
 }

@@ -26,7 +26,7 @@ namespace GraphLib.Realizations.Neighbourhoods
         public MooreNeighborhood(ICoordinate coordinate)
         {
             selfCoordinate = coordinate;
-            selfCoordinatesValues = coordinate.CoordinatesValues.ToArray();
+            selfCoordinatesValues = selfCoordinate.CoordinatesValues.ToArray();
             limitDepth = selfCoordinatesValues.Length;
             resultCoordinatesValues = new int[limitDepth];
             lateralOffsetMatrix = limitDepth == 0 ? EmptyOffsetMatrix : OffsetMatrix;

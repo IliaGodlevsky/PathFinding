@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Linq;
 using System.Reflection;
+using System.Runtime.CompilerServices;
 
 namespace Common.Extensions
 {
@@ -14,10 +15,11 @@ namespace Common.Extensions
         /// <param name="inherit"></param>
         /// <returns>Attribute of type <typeparamref name="TAttribute"/> 
         /// if it exists and <see cref="null"/> if it doesn't</returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static TAttribute GetAttributeOrNull<TAttribute>(this MemberInfo self, bool inherit = false)
             where TAttribute : Attribute
         {
-            return (TAttribute)Attribute.GetCustomAttribute(self, typeof(TAttribute), inherit);
+            return Attribute.GetCustomAttribute(self, typeof(TAttribute), inherit) as TAttribute;
         }
 
         /// <summary>
@@ -56,21 +58,7 @@ namespace Common.Extensions
             return interfaces.All(@interface => type.GetInterface(@interface.Name) != null);
         }
 
-        public static bool IsSubClass(this Type type, params Type[] classes)
-        {
-            return classes.All(_type => type.IsSubclassOf(_type));
-        }
-
-        public static TValue[] GetValuesOfStaticClassProperties<TValue>(this Type classType, params string[] exceptNamesOfProperties)
-        {
-            return classType
-                .GetProperties()
-                .Where(property => !exceptNamesOfProperties.Contains(property.Name))
-                .Select(property => property.GetValue(null))
-                .OfType<TValue>()
-                .ToArray();
-        }
-
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public static bool TrySetValue(this FieldInfo fieldInfo, object obj, object value)
         {
             if (fieldInfo == null)
@@ -87,7 +75,5 @@ namespace Common.Extensions
                 return false;
             }
         }
-
-
     }
 }

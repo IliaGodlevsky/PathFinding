@@ -1,5 +1,6 @@
 ﻿using Random.Interface;
 using System;
+using System.Runtime.CompilerServices;
 using System.Security.Cryptography;
 using ValueRange;
 using ValueRange.Extensions;
@@ -33,7 +34,6 @@ namespace Random.Realizations.Generators
             buffer = new byte[MaxBufferSize];
             currentBufferPosition = 0;
             generator.GetBytes(buffer);
-            lockObject = new object();
         }
 
         /// <summary>
@@ -43,21 +43,19 @@ namespace Random.Realizations.Generators
         /// <param name="maxValue"></param>
         /// <returns>Cryptographically strong 
         /// random <see cref="int"/></returns>
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public int Next(int minValue, int maxValue)
         {
-            lock (lockObject)
+            var range = new InclusiveValueRange<int>(maxValue, minValue);
+            long module = (long)range.Amplitude() + 1;
+            long max = 1 + (long)uint.MaxValue;
+            long remainder = max % module;
+            uint seed = Seed;
+            while (seed >= max - remainder)
             {
-                var range = new InclusiveValueRange<int>(maxValue, minValue);
-                long module = (long)range.Amplitude() + 1;
-                long max = 1 + (long)uint.MaxValue;
-                long remainder = max % module;
-                uint seed = Seed;
-                while (seed >= max - remainder)
-                {
-                    seed = Seed;
-                }
-                return (int)(seed % module) + range.LowerValueOfRange;
+                seed = Seed;
             }
+            return (int)(seed % module) + range.LowerValueOfRange;
         }
 
         public void Dispose()
@@ -91,7 +89,6 @@ namespace Random.Realizations.Generators
             Dispose(false);
         }
 
-        private readonly object lockObject;
         private readonly byte[] buffer;
         private readonly RandomNumberGenerator generator;
 

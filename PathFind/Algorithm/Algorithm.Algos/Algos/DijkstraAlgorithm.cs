@@ -9,6 +9,7 @@ using GraphLib.Interfaces;
 using Interruptable.Interface;
 using Priority_Queue;
 using System;
+using System.Collections.Generic;
 
 namespace Algorithm.Algos.Algos
 {
@@ -76,7 +77,7 @@ namespace Algorithm.Algos.Algos
                    + GetVertexCurrentCost(CurrentVertex);
         }
 
-        protected override void RelaxNeighbours(IVertex[] neighbours)
+        protected override void RelaxNeighbours(IReadOnlyCollection<IVertex> neighbours)
         {
             neighbours.ForEach(RelaxVertex);
             queue.RemoveIfContains(CurrentVertex);

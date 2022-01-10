@@ -8,6 +8,8 @@ namespace WPFVersion3D.Axes
     /// </summary>
     internal interface IAxis
     {
+        int Order { get; }
+
         void SetDistanceBeetween(double distance, GraphField3D field);
 
         void Offset(TranslateTransform3D transfrom, double offset);

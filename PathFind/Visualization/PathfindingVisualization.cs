@@ -5,7 +5,7 @@ using Common.Extensions.EnumerableExtensions;
 using GraphLib.Extensions;
 using GraphLib.Interfaces;
 using System;
-using System.Linq;
+using System.Runtime.CompilerServices;
 using Visualization.Extensions;
 using Visualization.Interfaces;
 using Visualization.Realizations;
@@ -28,16 +28,19 @@ namespace Visualization
             this.graph = graph;
         }
 
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public void Clear()
         {
             visualizationSlides.ForEach(slides => slides.Clear());
         }
 
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public void Remove(IAlgorithm algorithm)
         {
             visualizationSlides.ForEach(slides => slides.Remove(algorithm));
         }
 
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public void Visualize(IAlgorithm algorithm)
         {
             visualizations.Visualize(algorithm);
@@ -55,10 +58,11 @@ namespace Visualization
         {
             source.Add(algorithm, endPoints.Source);
             target.Add(algorithm, endPoints.Target);
-            var intermediates = endPoints.GetIntermediates().ToArray();
+            var intermediates = endPoints.GetIntermediates();
             intermediate.AddRange(algorithm, intermediates);
         }
 
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         protected void AddPathVertices(IAlgorithm algorithm, IGraphPath grapPath)
         {
             path.AddRange(algorithm, grapPath.Path);
@@ -74,25 +78,23 @@ namespace Visualization
 
         protected virtual void OnVertexVisited(object sender, AlgorithmEventArgs e)
         {
-            if (sender.CanBeVisualized(e, out var algorithm, out var vertex))
+            if (sender is IAlgorithm algo && e.Current.TryVisualizeAsVisited())
             {
-                vertex.VisualizeAsVisited();
-                visited.Add(algorithm, e.Current);
+                visited.Add(algo, e.Current);
             }
         }
 
         protected virtual void OnVertexEnqueued(object sender, AlgorithmEventArgs e)
         {
-            if (sender.CanBeVisualized(e, out var algorithm, out var vertex))
+            if (sender is IAlgorithm algo && e.Current.TryVisualizeAsEnqueued())
             {
-                vertex.VisualizeAsEnqueued();
-                enqueued.Add(algorithm, e.Current);
+                enqueued.Add(algo, e.Current);
             }
         }
 
         protected virtual void OnAlgorithmFinished(object sender, EventArgs e)
         {
-            if (sender is PathfindingAlgorithm algorithm)
+            if (sender is IAlgorithm algorithm)
             {
                 enqueued.RemoveRange(algorithm, visited.GetVertices(algorithm));
             }

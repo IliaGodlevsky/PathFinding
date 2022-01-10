@@ -2,6 +2,7 @@
 using Common.Extensions.EnumerableExtensions;
 using Random.Interface;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using ValueRange;
 
 namespace Random.Extensions
@@ -15,22 +16,24 @@ namespace Random.Extensions
         /// <param name="range">A range, that sets the boundaries 
         /// of the range of random values</param>
         /// <returns>A random number within <paramref name="range"/></returns>
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public static int Next(this IRandom self, InclusiveValueRange<int> range)
         {
             return self.Next(range.LowerValueOfRange, range.UpperValueOfRange);
         }
 
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public static int Next(this IRandom random)
         {
-            return random.Next(0, int.MaxValue);
+            return random.Next(default, int.MaxValue);
         }
 
         public static bool[] GetObstacleMatrix(this IRandom random, int totalSize, double percentOfObstacles)
         {
             int numberOfObstacles = totalSize.GetPercentage(percentOfObstacles);
-            var regular = Enumerable.Repeat(false, totalSize - numberOfObstacles);
+            var regulars = Enumerable.Repeat(false, totalSize - numberOfObstacles);
             var obstacles = Enumerable.Repeat(true, numberOfObstacles);
-            return regular.Concat(obstacles).Shuffle(random.Next).ToArray();
+            return regulars.Concat(obstacles).Shuffle(random.Next).ToArray();
         }
     }
 }

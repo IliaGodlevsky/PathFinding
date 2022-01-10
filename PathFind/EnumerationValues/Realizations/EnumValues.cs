@@ -12,7 +12,7 @@ namespace EnumerationValues.Realizations
 
         public EnumValues()
         {
-            values = new Lazy<TEnum[]>(GetValues);
+            values = new Lazy<TEnum[]>(GetValues, isThreadSafe: true);
         }
 
         private TEnum[] GetValues()

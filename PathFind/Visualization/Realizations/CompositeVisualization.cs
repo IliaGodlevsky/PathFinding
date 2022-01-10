@@ -2,7 +2,6 @@
 using Common.Extensions.EnumerableExtensions;
 using GraphLib.Extensions;
 using GraphLib.Interfaces;
-using System.Linq;
 using Visualization.Extensions;
 using Visualization.Interfaces;
 
@@ -10,11 +9,10 @@ namespace Visualization.Realizations
 {
     internal sealed class CompositeVisualization : IVisualization
     {
-        public CompositeVisualization(IGraph graph, IVisualization visualization,
-            params IVisualization[] visualizations)
+        public CompositeVisualization(IGraph graph, params IVisualization[] visualizations)
         {
             this.graph = graph;
-            this.visualizations = visualizations.Prepend(visualization).ToArray();
+            this.visualizations = visualizations;
         }
 
         public void Visualize(IAlgorithm algorithm)

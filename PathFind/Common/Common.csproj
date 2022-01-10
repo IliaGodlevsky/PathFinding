@@ -66,7 +66,6 @@
     <Compile Include="Attrbiutes\OrderAttribute.cs" />
     <Compile Include="Extensions\EnumerableExtensions\ICollectionExtensions.cs" />
     <Compile Include="Extensions\EnumerableExtensions\ConcurrentDictionaryExtensions.cs" />
-    <Compile Include="Extensions\EnumExtensions.cs" />
     <Compile Include="Extensions\GenericExtensions.cs" />
     <Compile Include="Extensions\EnumerableExtensions\IDictionaryExtensions.cs" />
     <Compile Include="Extensions\IntExtensions.cs" />

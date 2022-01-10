@@ -10,7 +10,6 @@ namespace Visualization.Interfaces
     /// </summary>
     internal interface IVisualizationSlides
     {
-        ICollection<IAlgorithm> Algorithms { get; }
         /// <summary>
         /// Returns all vertices, that stored 
         /// by a particular <paramref name="algorithm"/>
@@ -18,7 +17,7 @@ namespace Visualization.Interfaces
         /// <param name="algorithm">An algorithm, that stores
         /// processed vertices</param>
         /// <returns></returns>
-        IEnumerable<IVertex> GetVertices(IAlgorithm algorithm);
+        IReadOnlyCollection<IVertex> GetVertices(IAlgorithm algorithm);
         /// <summary>
         /// Adds processed by <paramref name="algorithm"/> vertex
         /// to already processed by the algorithm vertices

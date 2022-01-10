@@ -1,6 +1,7 @@
 ﻿using Common.Extensions;
 using System;
 using System.Collections.Generic;
+using System.Runtime.CompilerServices;
 using ValueRange.Enums;
 
 namespace ValueRange.Extensions
@@ -15,16 +16,19 @@ namespace ValueRange.Extensions
             }
         }
 
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static uint Amplitude(this InclusiveValueRange<int> valueRange)
         {
             return (uint)((long)valueRange.UpperValueOfRange - valueRange.LowerValueOfRange);
         }
 
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static double Amplitude(this InclusiveValueRange<double> valueRange)
         {
             return valueRange.UpperValueOfRange - valueRange.LowerValueOfRange;
         }
 
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static bool Contains<T>(this InclusiveValueRange<T> self, T value)
             where T : struct, IComparable
         {

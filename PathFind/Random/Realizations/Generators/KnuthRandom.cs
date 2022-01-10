@@ -1,5 +1,6 @@
 ﻿using Random.Interface;
 using System;
+using System.Runtime.CompilerServices;
 using ValueRange;
 using ValueRange.Enums;
 using ValueRange.Extensions;
@@ -34,7 +35,6 @@ namespace Random.Realizations.Generators
         public KnuthRandom(int seed)
         {
             seeds = new Lazy<int[]>(() => Initialize(seed), true);
-            lockObject = new object();
             indexRange = new InclusiveValueRange<int>(ArrayLength - 1, 1);
         }
 
@@ -45,14 +45,12 @@ namespace Random.Realizations.Generators
         /// <param name="minValue"></param>
         /// <param name="maxValue"></param>
         /// <returns></returns>
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public int Next(int minValue, int maxValue)
         {
-            lock (lockObject)
-            {
-                var range = new InclusiveValueRange<int>(maxValue, minValue);
-                long module = (long)range.Amplitude() + 1;
-                return (int)(Seed % module) + range.LowerValueOfRange;
-            }
+            var range = new InclusiveValueRange<int>(maxValue, minValue);
+            long module = (long)range.Amplitude() + 1;
+            return (int)(Seed % module) + range.LowerValueOfRange;
         }
 
         private int Seed
@@ -111,6 +109,5 @@ namespace Random.Realizations.Generators
 
         private readonly InclusiveValueRange<int> indexRange;
         private readonly Lazy<int[]> seeds;
-        private readonly object lockObject;
     }
 }

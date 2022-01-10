@@ -17,7 +17,7 @@ namespace GraphLib.NullRealizations.NullObjects
 
         public int[] DimensionsSizes { get; }
 
-        public ICollection<IVertex> Vertices => new IVertex[] { NullVertex.Instance };
+        public IReadOnlyCollection<IVertex> Vertices => new IVertex[] { NullVertex.Instance };
 
         public int Size => 0;
 

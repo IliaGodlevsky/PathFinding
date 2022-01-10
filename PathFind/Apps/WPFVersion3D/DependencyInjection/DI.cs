@@ -20,7 +20,8 @@ using Random.Realizations.Generators;
 using System;
 using System.Reflection;
 using System.Runtime.Serialization;
-using System.Web.UI;
+using System.Runtime.Serialization.Formatters.Soap;
+using WPFVersion3D.Axes;
 using WPFVersion3D.Extensions;
 using WPFVersion3D.Interface;
 using WPFVersion3D.Model;
@@ -66,10 +67,11 @@ namespace WPFVersion3D.DependencyInjection
             builder.RegisterType<GraphSerializer>().As<IGraphSerializer>().SingleInstance();
             builder.RegisterDecorator<CompressGraphSerializer, IGraphSerializer>();
             builder.RegisterDecorator<CryptoGraphSerializer, IGraphSerializer>();
-            builder.RegisterType<ObjectStateFormatter>().As<IFormatter>().SingleInstance();
+            builder.RegisterType<SoapFormatter>().As<IFormatter>().SingleInstance();
             builder.RegisterType<Vertex3DFromInfoFactory>().As<IVertexFromInfoFactory>().SingleInstance();
 
             builder.RegisterAssemblyTypes(Assemblies).Where(Implements<IAlgorithmFactory>).As<IAlgorithmFactory>().SingleInstance();
+            builder.RegisterAssemblyTypes(Assemblies).Where(Implements<IAxis>).As<IAxis>().AsSelf().SingleInstance();
 
             return builder.Build();
         }

@@ -46,7 +46,7 @@
     <Compile Include="Abstractions\ResultVertices.cs" />
     <Compile Include="Extensions\GraphExtensions.cs" />
     <Compile Include="Extensions\IVisualizationSlidesExtensions.cs" />
-    <Compile Include="Extensions\ObjectExtensions.cs" />
+    <Compile Include="Extensions\IVertexExtensions.cs" />
     <Compile Include="Interfaces\IVisualizationSlides.cs" />
     <Compile Include="Interfaces\IVisualization.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

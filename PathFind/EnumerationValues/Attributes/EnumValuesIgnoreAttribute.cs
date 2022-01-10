@@ -5,7 +5,7 @@ using System.Linq;
 namespace EnumerationValues.Attributes
 {
     /// <summary>
-    /// Marks enums to ignore by specified classes
+    /// Marks enum values to ignore
     /// </summary>
     [AttributeUsage(AttributeTargets.Enum, AllowMultiple = true)]
     public sealed class EnumValuesIgnoreAttribute : Attribute
