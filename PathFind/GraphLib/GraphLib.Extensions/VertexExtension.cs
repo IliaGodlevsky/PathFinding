@@ -29,7 +29,6 @@ namespace GraphLib.Extensions
         /// </summary>
         /// <param name="self"></param>
         /// <returns>true if obstacle is isolated</returns>
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static bool IsIsolated(this IVertex self)
         {
             bool IsObstacleOrNull(IVertex vertex)
@@ -64,14 +63,10 @@ namespace GraphLib.Extensions
         /// <param name="self"></param>
         /// <returns>Coordinates of <paramref name="self"/> as 
         /// an array of <see cref="Int32"/></returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static int[] GetCoordinates(this IVertex self)
         {
             return self.Position.CoordinatesValues;
-        }
-
-        public static bool CanBeNeighbour(this IVertex self, IVertex candidate)
-        {
-            return !ReferenceEquals(candidate, self) && !self.IsNeighbour(candidate);
         }
 
         /// <summary>
@@ -116,7 +111,6 @@ namespace GraphLib.Extensions
         /// <returns><see cref="true"/> if <paramref name="self"/> is 
         /// equal to <paramref name="vertex"/>, 
         ///  otherwise - <see cref="false"/></returns>
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static bool IsEqual(this IVertex self, IVertex vertex)
         {
             bool hasEqualCost = self.Cost.Equals(vertex.Cost);

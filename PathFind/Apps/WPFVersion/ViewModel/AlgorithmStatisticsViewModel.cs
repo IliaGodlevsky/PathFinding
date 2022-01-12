@@ -43,12 +43,12 @@ namespace WPFVersion.ViewModel
             VisualizeCommand = new RelayCommand(ExecuteVisualizeCommand, CanExecuteVisualizeCommand);
             InterruptSelelctedAlgorithmCommand = new RelayCommand(ExecuteInterruptSelectedAlgorithmCommand, CanExecuteInterruptSelectedAlgorithmCommand);
             RemoveSelelctedAlgorithmCommand = new RelayCommand(ExecuteRemoveFromStatisticsCommand, CanExecuteRemoveFromStatisticsCommand);
-            messenger.Register<AlgorithmStartedMessage>(this, MessageTokens.AlgorithmStatisticsModel, OnAlgorithmStarted);
-            messenger.Register<UpdateStatisticsMessage>(this, MessageTokens.AlgorithmStatisticsModel, UpdateAlgorithmStatistics);
-            messenger.Register<InterruptAllAlgorithmsMessage>(this, MessageTokens.AlgorithmStatisticsModel, OnAllAlgorithmInterrupted);
-            messenger.Register<ClearStatisticsMessage>(this, MessageTokens.AlgorithmStatisticsModel, OnClearStatistics);
-            messenger.Register<AlgorithmStatusMessage>(this, MessageTokens.AlgorithmStatisticsModel, SetAlgorithmStatistics);
-            messenger.Register<GraphCreatedMessage>(this, MessageTokens.AlgorithmStatisticsModel, NewGraphCreated);
+            messenger.Register<AlgorithmStartedMessage>(this, MessageTokens.AlgorithmStatisticsModel, true, OnAlgorithmStarted);
+            messenger.Register<UpdateStatisticsMessage>(this, MessageTokens.AlgorithmStatisticsModel, true, UpdateAlgorithmStatistics);
+            messenger.Register<InterruptAllAlgorithmsMessage>(this, MessageTokens.AlgorithmStatisticsModel, true, OnAllAlgorithmInterrupted);
+            messenger.Register<ClearStatisticsMessage>(this, MessageTokens.AlgorithmStatisticsModel, true, OnClearStatistics);
+            messenger.Register<AlgorithmStatusMessage>(this, MessageTokens.AlgorithmStatisticsModel, true, SetAlgorithmStatistics);
+            messenger.Register<GraphCreatedMessage>(this, MessageTokens.AlgorithmStatisticsModel, true, NewGraphCreated);
         }
 
         private void SetAlgorithmStatistics(AlgorithmStatusMessage message)

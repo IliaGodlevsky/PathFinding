@@ -2,11 +2,13 @@
 using GraphLib.Base;
 using GraphLib.Interfaces;
 using System;
+using System.Diagnostics;
 using ValueRange;
 
 namespace WPFVersion3D.Model
 {
     [Serializable]
+    [DebuggerDisplay("Cost = {CurrentCost}")]
     internal sealed class Vertex3DCost : BaseVertexCost, IVertexCost, ICloneable<IVertexCost>
     {
         public Vertex3DCost(int cost) : base(cost)

@@ -39,7 +39,7 @@ namespace ConsoleVersion.Extensions
         /// <param name="upperPossibleYValue">An upper value of Y 
         /// coordinate in range where a lower value is 0</param>
         /// <returns>An instance of <see cref="Coordinate2D"/></returns>
-        public static Coordinate2D InputPoint(this IValueInput<int> self,
+        public static ICoordinate InputPoint(this IValueInput<int> self,
             int upperPossibleXValue, int upperPossibleYValue)
         {
             int xCoordinate = self.InputValue(MessagesTexts.XCoordinateInputMsg, upperPossibleXValue);

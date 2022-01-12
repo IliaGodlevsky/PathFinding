@@ -105,6 +105,7 @@ namespace ConsoleVersion.ViewModel
         [MenuItem(MenuItemsNames.ChangeVertexCost, MenuItemPriority.Low)]
         public void ChangeVertexCost() => PerformActionOnVertex(vertex => vertex?.OnVertexCostChanged());
 
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         [MenuItem(MenuItemsNames.SaveGraph, MenuItemPriority.Normal)]
         public override void SaveGraph() => base.SaveGraph();
 

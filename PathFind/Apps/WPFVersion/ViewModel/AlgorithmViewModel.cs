@@ -4,6 +4,7 @@ using Autofac;
 using GalaSoft.MvvmLight.Messaging;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
+using ValueRange.Enums;
 using ValueRange.Extensions;
 using WPFVersion.DependencyInjection;
 using WPFVersion.Enums;
@@ -47,10 +48,10 @@ namespace WPFVersion.ViewModel
             get => delayTime;
             set
             {
-                delayTime = (int)Constants.AlgorithmDelayTimeValueRange.ReturnInRange(value);
+                delayTime = (int)Constants.AlgorithmDelayTimeValueRange.ReturnInRange(value, ReturnOptions.Cycle);
                 OnPropertyChanged();
                 var message = new DelayTimeChangedMessage(delayTime, Index);
-                messenger.Forward(message, MessageTokens.PathfindingModel);
+                messenger.ForwardParallel(message, MessageTokens.PathfindingModel);
             }
         }
 

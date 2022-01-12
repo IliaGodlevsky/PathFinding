@@ -19,10 +19,8 @@ namespace Algorithm.Realizations.GraphPaths
 
         public double Cost { get; }
 
-        public CombinedGraphPath(IGraphPath first,
-            IGraphPath second, params IGraphPath[] other)
+        public CombinedGraphPath(params IGraphPath[] paths)
         {
-            var paths = other.Prepend(second).Prepend(first);
             Path = paths.SelectMany(x => x.Path.Reverse()).Reverse().ToArray();
             Length = paths.Select(x => x.Length).Sum();
             Cost = paths.Select(x => x.Cost).Sum();

@@ -28,6 +28,5 @@
         public const string NotEnoughParamtres = "Not enough parametres to create graph";
         public const string NumberOfIntermediateVerticesInputMsg = "Input number of intermediates vertices: ";
         public const string NumberOfIntermediatesVerticesToReplaceMsg = "Input number of intermediates to replace: ";
-
     }
 }

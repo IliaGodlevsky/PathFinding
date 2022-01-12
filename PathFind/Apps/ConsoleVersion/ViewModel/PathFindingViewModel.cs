@@ -24,6 +24,7 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using ValueRange;
+using ValueRange.Enums;
 using ValueRange.Extensions;
 
 namespace ConsoleVersion.ViewModel
@@ -158,10 +159,10 @@ namespace ConsoleVersion.ViewModel
                     algorithm.Interrupt();
                     break;
                 case ConsoleKey.UpArrow:
-                    DelayTime = Constants.AlgorithmDelayTimeValueRange.ReturnInRange(DelayTime - 1);
+                    DelayTime = Constants.AlgorithmDelayTimeValueRange.ReturnInRange(DelayTime - 1, ReturnOptions.Cycle);
                     break;
                 case ConsoleKey.DownArrow:
-                    DelayTime = Constants.AlgorithmDelayTimeValueRange.ReturnInRange(DelayTime + 1);
+                    DelayTime = Constants.AlgorithmDelayTimeValueRange.ReturnInRange(DelayTime + 1, ReturnOptions.Cycle);
                     break;
             }
         }

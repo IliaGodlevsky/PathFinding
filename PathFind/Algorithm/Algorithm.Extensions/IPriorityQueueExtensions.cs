@@ -11,7 +11,6 @@ namespace Algorithm.Extensions
 {
     public static class IPriorityQueueExtensions
     {
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static void EnqueueOrUpdatePriority<TItem, TPriority>(this IPriorityQueue<TItem, TPriority> self,
             TItem node, TPriority priority)
         {
@@ -38,7 +37,6 @@ namespace Algorithm.Extensions
             nodes.ForEach(self.RemoveIfContains);
         }
 
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static void RemoveIfContains<TItem, TPriority>(this IPriorityQueue<TItem, TPriority> self, TItem node)
         {
             if (self.Contains(node))
@@ -51,10 +49,7 @@ namespace Algorithm.Extensions
         public static void EnqueueRange<TItem, TPriority>(this IPriorityQueue<TItem, TPriority> self,
             IEnumerable<Tuple<TItem, TPriority>> nodes)
         {
-            foreach (var node in nodes)
-            {
-                self.EnqueueOrUpdatePriority(node.Item1, node.Item2);
-            }
+            nodes.ForEach(node => self.EnqueueOrUpdatePriority(node.Item1, node.Item2));
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]

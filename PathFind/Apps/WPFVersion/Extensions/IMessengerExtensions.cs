@@ -22,6 +22,11 @@ namespace WPFVersion.Extensions
             await Task.Run(() => self.Forward(message, messageToken));
         }
 
+        public static void ForwardParallel<TMessage>(this IMessenger self, TMessage message, MessageTokens messageToken)
+        {
+            Task.Run(() => self.Forward(message, messageToken));
+        }
+
         /// <summary>
         /// Sends a message to recipient(s), registered under the <paramref name="token"/>(s)
         /// </summary>

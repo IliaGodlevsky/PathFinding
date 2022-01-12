@@ -79,7 +79,8 @@ namespace WPFVersion.ViewModel
             costColors = new CostColors(graph);
             base.ConnectNewGraph(graph);
             WindowService.Adjust(graph);
-            messenger.Forward(new ClearStatisticsMessage(), MessageTokens.AlgorithmStatisticsModel)
+            messenger
+                .Forward(new ClearStatisticsMessage(), MessageTokens.AlgorithmStatisticsModel)
                 .Forward(new GraphCreatedMessage(graph), MessageTokens.AlgorithmStatisticsModel);
         }
 

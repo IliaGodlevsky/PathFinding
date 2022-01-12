@@ -103,7 +103,6 @@ namespace Common.Extensions.EnumerableExtensions
             return collection;
         }
 
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static void ForEach<T>(this IEnumerable<T> collection, Action<T> action)
         {
             foreach (var item in collection)
@@ -179,6 +178,12 @@ namespace Common.Extensions.EnumerableExtensions
                 .ToArray();
         }
 
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static IEnumerable<T1> GetItems1<T1,T2>(this IEnumerable<Tuple<T1,T2>> tuples)
+        {
+            return tuples.Select(item => item.Item1);
+        }
+
         public static IEnumerable<T> GroupByGroupAttribute<T>(this IEnumerable<T> collection)
         {
             return collection
@@ -187,6 +192,7 @@ namespace Common.Extensions.EnumerableExtensions
                 .SelectMany(item => item);
         }
 
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static IEnumerable<T> Shuffle<T, U>(this IEnumerable<T> self, Func<U> randomFunction)
         {
             return self.OrderBy(_ => randomFunction());
@@ -199,11 +205,13 @@ namespace Common.Extensions.EnumerableExtensions
         /// <param name="collection"></param>
         /// <returns>An instance of queue, that contains 
         /// elements from the specified collection</returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Queue<T> ToQueue<T>(this IEnumerable<T> collection)
         {
             return new Queue<T>(collection);
         }
 
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static int ToHashCode(this IEnumerable<int> array)
         {
             return array.AggregateOrDefault(IntExtensions.Xor);

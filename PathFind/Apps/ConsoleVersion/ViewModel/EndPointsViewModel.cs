@@ -31,7 +31,7 @@ namespace ConsoleVersion.ViewModel
         private bool HasAnyVerticesToChooseAsEndPoints => NumberOfAvailableIntermediate >= 0;
 
         private const int MethodsCount = 6;
-        private const int Offset = MethodsCount + 1;
+        private const int Offset = MethodsCount;
 
         public event Action WindowClosed;
 

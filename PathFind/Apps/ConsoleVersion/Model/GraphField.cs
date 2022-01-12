@@ -40,6 +40,6 @@ namespace ConsoleVersion.Model
         }
 
         private readonly InclusiveValueRange<int> countRange;
-        private readonly ICollection<IDisplayable> uiElements;
+        private readonly Collection<IDisplayable> uiElements;
     }
 }
