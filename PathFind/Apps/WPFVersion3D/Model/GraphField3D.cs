@@ -1,10 +1,11 @@
 ﻿using Autofac;
-using Common.Extensions;
 using Common.Extensions.EnumerableExtensions;
 using GraphLib.Extensions;
 using GraphLib.Interfaces;
 using GraphLib.Realizations.Coordinates;
+using GraphLib.Realizations.Graphs;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Windows.Media.Media3D;
 using WPFVersion3D.Axes;
@@ -14,18 +15,26 @@ namespace WPFVersion3D.Model
 {
     internal sealed class GraphField3D : ModelVisual3D, IGraphField
     {
+        public IReadOnlyCollection<IVertex> Vertices { get; }
         public double DistanceBetweenVerticesAtXAxis { get; set; } = default;
         public double DistanceBetweenVerticesAtYAxis { get; set; } = default;
         public double DistanceBetweenVerticesAtZAxis { get; set; } = default;
 
-        public GraphField3D(int width, int length, int height)
+        public GraphField3D(Graph3D graph)
         {
             CoordinateSystem = DI.Container.Resolve<IAxis[]>();
-            DimensionSizes = new[] { width, length, height };
+            DimensionSizes = graph.DimensionsSizes;
             AxisIndices = Enumerable.Range(0, CoordinateSystem.Length).ToArray();
+            Vertices = graph.Vertices;
+            Vertices.ForEach(Add);
         }
 
-        public void Add(IVertex vertex)
+        public GraphField3D()
+        {
+
+        }
+
+        private void Add(IVertex vertex)
         {
             if (vertex is Vertex3D vertex3D && vertex.Position is Coordinate3D)
             {
@@ -37,7 +46,7 @@ namespace WPFVersion3D.Model
         public void CenterGraph(params double[] offsets)
         {
             var centerOffsets = AxisIndices.Select(i => CalculateAxisOffset(offsets, i)).ToArray();
-            Children.ForEach(vertex => LocateVertex(CoordinateSystem, (Vertex3D)vertex, centerOffsets));
+            Vertices.ForEach(vertex => LocateVertex(CoordinateSystem, (Vertex3D)vertex, centerOffsets));
         }
 
         public void StretchAlongAxis(IAxis axis, double distanceBetween, params double[] additionalOffset)
@@ -54,7 +63,7 @@ namespace WPFVersion3D.Model
 
         private void StretchAlongAxis(IAxis axis)
         {
-            Children.ForEach(vertex => LocateVertex(axis, (Vertex3D)vertex));
+            Vertices.ForEach(vertex => LocateVertex(axis, (Vertex3D)vertex));
         }
 
         private void LocateVertex(IAxis[] axes, Vertex3D vertex, params double[] additionalOffset)

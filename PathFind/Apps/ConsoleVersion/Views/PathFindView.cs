@@ -2,7 +2,6 @@
 using ConsoleVersion.Interface;
 using ConsoleVersion.Model;
 using ConsoleVersion.ViewModel;
-using System.Linq;
 
 namespace ConsoleVersion.Views
 {

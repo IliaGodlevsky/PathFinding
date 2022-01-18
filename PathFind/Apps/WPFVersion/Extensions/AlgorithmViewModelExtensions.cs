@@ -22,7 +22,7 @@ namespace WPFVersion.Extensions
             model.Time = message.Time;
             model.PathCost = message.PathCost;
             model.PathLength = message.PathLength;
-            model.VisitedVerticesCount = message.VisitedVertices; 
+            model.VisitedVerticesCount = message.VisitedVertices;
         }
 
         public static bool IsStarted(this AlgorithmViewModel model)

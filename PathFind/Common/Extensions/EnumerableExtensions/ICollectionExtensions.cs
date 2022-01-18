@@ -5,14 +5,21 @@ namespace Common.Extensions.EnumerableExtensions
 {
     public static class ICollectionExtensions
     {
-        public static void AddRange<T>(this ICollection<T> collection, IEnumerable<T> range)
+        public static ICollection<T> AddRange<T>(this ICollection<T> collection, IEnumerable<T> range)
         {
             range.ForEach(collection.Add);
+            return collection;
         }
 
-        public static void AddRange<T>(this ICollection<T> collection, params T[] items)
+        public static ICollection<TCast> AddCastedRange<TCast, TAdd>(this ICollection<TCast> collection, IEnumerable<TAdd> range)
         {
-            collection.AddRange(items.AsEnumerable());
+            range.Cast<TCast>().ForEach(collection.Add);
+            return collection;
+        }
+
+        public static ICollection<T> AddRange<T>(this ICollection<T> collection, params T[] items)
+        {
+            return collection.AddRange(items.AsEnumerable());
         }
     }
 }

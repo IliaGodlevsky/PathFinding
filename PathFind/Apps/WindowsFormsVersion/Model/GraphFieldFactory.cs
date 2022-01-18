@@ -1,15 +1,15 @@
-﻿using GraphLib.Base;
-using GraphLib.Interfaces;
+﻿using GraphLib.Interfaces;
+using GraphLib.Realizations.Graphs;
 using System.Drawing;
 using WindowsFormsVersion.View;
 
 namespace WindowsFormsVersion.Model
 {
-    internal sealed class GraphFieldFactory : BaseGraphFieldFactory, IGraphFieldFactory
+    internal sealed class GraphFieldFactory : IGraphFieldFactory
     {
-        protected override IGraphField GetField()
+        public IGraphField CreateGraphField(IGraph graph)
         {
-            return new WinFormsGraphField { Location = new Point(4, 90) };
+            return new WinFormsGraphField((Graph2D)graph) { Location = new Point(4, 90) };
         }
     }
 }

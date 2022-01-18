@@ -51,8 +51,7 @@ namespace WPFVersion.DependencyInjection
 
             builder.RegisterType<Messenger>().As<IMessenger>().SingleInstance();
             builder.RegisterType<EndPoints>().As<BaseEndPoints>().SingleInstance();
-            builder.RegisterType<VertexEventHolder>().As<IVertexEventHolder>().SingleInstance();
-            builder.RegisterType<GraphFieldFactory>().As<IGraphFieldFactory>().SingleInstance();
+            builder.RegisterType<VertexEventHolder>().As<IVertexEventHolder>().SingleInstance();            
 
             builder.RegisterType<FileLog>().As<ILog>().SingleInstance();
             builder.RegisterType<MessageBoxLog>().As<ILog>().SingleInstance();
@@ -66,6 +65,7 @@ namespace WPFVersion.DependencyInjection
             builder.RegisterType<CostFactory>().As<IVertexCostFactory>().SingleInstance();
             builder.RegisterType<Coordinate2DFactory>().As<ICoordinateFactory>().SingleInstance();
             builder.RegisterType<Graph2DFactory>().As<IGraphFactory>().SingleInstance();
+            builder.RegisterType<GraphFieldFactory>().As<IGraphFieldFactory>().SingleInstance();
             builder.RegisterType<MooreNeighborhoodFactory>().As<INeighborhoodFactory>().SingleInstance();
             builder.RegisterType<GeometricMeanCost>().As<IMeanCost>().SingleInstance();
             builder.RegisterType<HighSmoothLevel>().As<ISmoothLevel>().SingleInstance();

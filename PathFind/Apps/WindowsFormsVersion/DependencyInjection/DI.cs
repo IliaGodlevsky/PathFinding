@@ -50,8 +50,7 @@ namespace WindowsFormsVersion.DependencyInjection
             builder.RegisterAssemblyTypes(Assemblies).Where(Implements<IViewModel>).AsSelf().InstancePerDependency();
             builder.RegisterAssemblyTypes(Assemblies).Where(type => type.IsAppWindow()).AsSelf().InstancePerDependency();
 
-            builder.RegisterType<EndPoints>().As<BaseEndPoints>().SingleInstance();
-            builder.RegisterType<GraphFieldFactory>().As<IGraphFieldFactory>().SingleInstance();
+            builder.RegisterType<EndPoints>().As<BaseEndPoints>().SingleInstance();            
             builder.RegisterType<VertexEventHolder>().As<IVertexEventHolder>().SingleInstance();
 
             builder.RegisterType<FileLog>().As<ILog>().SingleInstance();
@@ -66,6 +65,7 @@ namespace WindowsFormsVersion.DependencyInjection
             builder.RegisterType<VertexFactory>().As<IVertexFactory>().SingleInstance();
             builder.RegisterType<Coordinate2DFactory>().As<ICoordinateFactory>().SingleInstance();
             builder.RegisterType<Graph2DFactory>().As<IGraphFactory>().SingleInstance();
+            builder.RegisterType<GraphFieldFactory>().As<IGraphFieldFactory>().SingleInstance();
             builder.RegisterType<MooreNeighborhoodFactory>().As<INeighborhoodFactory>().SingleInstance();
 
             builder.RegisterType<GraphSerializationModule>().AsSelf().SingleInstance();

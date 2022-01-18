@@ -2,44 +2,42 @@
 using ConsoleVersion.Interface;
 using ConsoleVersion.Model.FramedAxes;
 using GraphLib.Interfaces;
+using GraphLib.Realizations.Graphs;
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using ValueRange;
-using ValueRange.Extensions;
 
 namespace ConsoleVersion.Model
 {
     internal sealed class GraphField : IGraphField, IDisplayable
     {
-        public GraphField(int width, int length)
+        private IReadOnlyCollection<IDisplayable> UiElements => uiElements.Value;
+
+        public IReadOnlyCollection<IVertex> Vertices { get; }
+
+        public GraphField(Graph2D graph)
         {
-            uiElements = new Collection<IDisplayable>
-            {
-                new FramedOverAbscissa(width, length),
-                new FramedUnderAbscissa(width),
-                new FramedToRightOrdinate(width, length),
-                new FramedToLeftOrdinate(length)
-            };
-            countRange = new InclusiveValueRange<int>(width * length + 3);
+            Vertices = graph.Vertices;
+            uiElements = new Lazy<IReadOnlyCollection<IDisplayable>>(() => CreateCollection(graph));
         }
 
-        public void Add(IVertex vertex)
+        private IReadOnlyCollection<IDisplayable> CreateCollection(Graph2D graph)
         {
-            if (countRange.Contains(uiElements.Count))
+            var elements = new Collection<IDisplayable>
             {
-                if (vertex is Vertex vertex2D)
-                {
-                    uiElements.Add(vertex2D);
-                }
-            }
+                new FramedOverAbscissa(graph.Width, graph.Length),
+                new FramedUnderAbscissa(graph.Width),
+                new FramedToRightOrdinate(graph.Width, graph.Length),
+                new FramedToLeftOrdinate(graph.Length)
+            };
+            return (IReadOnlyCollection<IDisplayable>)elements.AddCastedRange(Vertices);
         }
 
         public void Display()
         {
-            uiElements.ForEach(element => element.Display());
+            UiElements.ForEach(element => element.Display());
         }
 
-        private readonly InclusiveValueRange<int> countRange;
-        private readonly Collection<IDisplayable> uiElements;
+        private readonly Lazy<IReadOnlyCollection<IDisplayable>> uiElements;
     }
 }

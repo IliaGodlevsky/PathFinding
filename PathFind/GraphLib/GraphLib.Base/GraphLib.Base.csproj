@@ -64,7 +64,6 @@
     <Compile Include="VertexCondition\EndPointsConditions\UnsetIntermediateVertexCondition.cs" />
     <Compile Include="VertexCondition\EndPointsConditions\UnsetTargetVertexCondition.cs" />
     <Compile Include="BaseGraph.cs" />
-    <Compile Include="BaseGraphFieldFactory.cs" />
     <Compile Include="BaseVertexCost.cs" />
     <Compile Include="BaseVertexEventHolder.cs" />
     <Compile Include="VerticesConditions\ReturnColorsConditions.cs" />

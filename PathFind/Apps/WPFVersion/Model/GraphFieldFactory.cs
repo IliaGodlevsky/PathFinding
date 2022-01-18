@@ -1,13 +1,13 @@
-﻿using GraphLib.Base;
-using GraphLib.Interfaces;
+﻿using GraphLib.Interfaces;
+using GraphLib.Realizations.Graphs;
 
 namespace WPFVersion.Model
 {
-    internal sealed class GraphFieldFactory : BaseGraphFieldFactory, IGraphFieldFactory
+    internal sealed class GraphFieldFactory : IGraphFieldFactory
     {
-        protected override IGraphField GetField()
+        public IGraphField CreateGraphField(IGraph graph)
         {
-            return new GraphField();
+            return new GraphField((Graph2D)graph);
         }
     }
 }

@@ -179,7 +179,7 @@ namespace Common.Extensions.EnumerableExtensions
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static IEnumerable<T1> GetItems1<T1,T2>(this IEnumerable<Tuple<T1,T2>> tuples)
+        public static IEnumerable<T1> GetItems1<T1, T2>(this IEnumerable<Tuple<T1, T2>> tuples)
         {
             return tuples.Select(item => item.Item1);
         }
@@ -196,6 +196,27 @@ namespace Common.Extensions.EnumerableExtensions
         public static IEnumerable<T> Shuffle<T, U>(this IEnumerable<T> self, Func<U> randomFunction)
         {
             return self.OrderBy(_ => randomFunction());
+        }
+
+        public static IEnumerable<T> TakeOrDefault<T>(this IEnumerable<T> collection, int number)
+        {
+            int count = 0;
+            using (var iterator = collection.GetEnumerator())
+            {
+                while (iterator.MoveNext())
+                {
+                    count++;
+                    yield return iterator.Current;
+                }
+            }
+            if (count != number)
+            {
+                int remained = number - count;
+                while (remained-- > 0)
+                {
+                    yield return default;
+                }
+            }
         }
 
         /// <summary>

@@ -16,7 +16,7 @@ namespace GraphLib.Base
     /// </summary>
     public abstract class BaseGraph : IGraph
     {
-        public int Size => vertices.Count;
+        public int Size { get; }
 
         public IReadOnlyCollection<IVertex> Vertices => vertices.Values;
 
@@ -29,24 +29,15 @@ namespace GraphLib.Base
 
         protected BaseGraph(int requiredNumberOfDimensions, IEnumerable<IVertex> vertices, params int[] dimensionSizes)
         {
-            DimensionsSizes = dimensionSizes.ToArray();
-            int size = DimensionsSizes.GetMultiplication();
+            DimensionsSizes = dimensionSizes.TakeOrDefault(requiredNumberOfDimensions).ToArray();
+            Size = DimensionsSizes.GetMultiplication();
             this.vertices = vertices.ToDictionary();
-            if (dimensionSizes.Length != requiredNumberOfDimensions || size != Size)
-            {
-                throw new WrongNumberOfDimensionsException(nameof(dimensionSizes));
-            }
             Vertices.ForEach(SetGraphForVertex);
         }
 
         public override bool Equals(object obj)
         {
-            if (obj is IGraph graph)
-            {
-                return graph.IsEqual(this);
-            }
-
-            throw new ArgumentException();
+            return obj is IGraph graph ? graph.IsEqual(this) : false;
         }
 
         public override int GetHashCode()

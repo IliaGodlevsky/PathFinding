@@ -1,7 +1,5 @@
-﻿using GraphLib.Extensions;
-using GraphLib.Interfaces;
+﻿using GraphLib.Interfaces;
 using GraphLib.Realizations.Graphs;
-using System;
 
 namespace ConsoleVersion.Model
 {
@@ -14,15 +12,7 @@ namespace ConsoleVersion.Model
         /// <returns>Graph field</returns>
         public IGraphField CreateGraphField(IGraph graph)
         {
-            if (graph is Graph2D graph2D)
-            {
-                var graphField = new GraphField(graph2D.Width, graph2D.Length);
-                graph.ForEach(graphField.Add);
-
-                return graphField;
-            }
-
-            throw new ArgumentException(nameof(graph));
+            return new GraphField((Graph2D)graph);
         }
     }
 }
