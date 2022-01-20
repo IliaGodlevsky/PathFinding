@@ -27,5 +27,10 @@ namespace GraphLib.Serialization
         {
             return new NeighbourhoodProxy(Neighbours);
         }
+
+        object ICloneable.Clone()
+        {
+            return Clone();
+        }
     }
 }

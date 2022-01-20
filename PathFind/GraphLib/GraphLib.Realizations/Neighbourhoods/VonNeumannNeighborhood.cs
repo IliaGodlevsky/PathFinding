@@ -46,6 +46,11 @@ namespace GraphLib.Realizations.Neighbourhoods
             return new VonNeumannNeighborhood(selfCoordinate.Clone());
         }
 
+        object ICloneable.Clone()
+        {
+            return Clone();
+        }
+
         private readonly ICoordinate selfCoordinate;
         private readonly INeighborhood neighboursCoordinates;
         private readonly Lazy<IReadOnlyCollection<ICoordinate>> neighbourhood;

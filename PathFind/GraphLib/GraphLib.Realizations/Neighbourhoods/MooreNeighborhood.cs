@@ -80,6 +80,11 @@ namespace GraphLib.Realizations.Neighbourhoods
             return new MooreNeighborhood(selfCoordinate.Clone());
         }
 
+        object ICloneable.Clone()
+        {
+            return Clone();
+        }
+
         private readonly ICoordinate selfCoordinate;
         private readonly int limitDepth;
         private readonly int[] selfCoordinatesValues;

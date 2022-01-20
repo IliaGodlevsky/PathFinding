@@ -16,5 +16,10 @@ namespace GraphLib.Realizations.VertexCost.CostStates
         {
             return new WeightedState();
         }
+
+        object ICloneable.Clone()
+        {
+            return Clone();
+        }
     }
 }

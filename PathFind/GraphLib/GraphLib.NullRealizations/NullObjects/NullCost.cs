@@ -27,6 +27,11 @@ namespace GraphLib.NullRealizations.NullObjects
             return Instance;
         }
 
+        object ICloneable.Clone()
+        {
+            return Clone();
+        }
+
         private NullCost()
         {
 

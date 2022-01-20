@@ -34,5 +34,10 @@ namespace GraphLib.Base
         }
 
         public abstract IVertexCost Clone();
+
+        object ICloneable.Clone()
+        {
+            return Clone();
+        }
     }
 }

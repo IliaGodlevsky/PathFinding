@@ -30,6 +30,11 @@ namespace GraphLib.NullRealizations.NullObjects
             return base.GetHashCode();
         }
 
+        object ICloneable.Clone()
+        {
+            return Clone();
+        }
+
         private NullCoordinate()
         {
 

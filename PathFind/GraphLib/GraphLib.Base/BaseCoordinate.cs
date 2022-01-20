@@ -54,6 +54,11 @@ namespace GraphLib.Base
 
         public abstract ICoordinate Clone();
 
+        object ICloneable.Clone()
+        {
+            return Clone();
+        }
+
         private readonly string toString;
         private readonly int hashCode;
     }
