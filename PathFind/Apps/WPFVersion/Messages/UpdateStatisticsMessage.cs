@@ -8,11 +8,8 @@
         public double PathCost { get; }
         public int PathLength { get; }
 
-        public UpdateStatisticsMessage(int index,
-            string time,
-            int visitedVertices,
-            int pathLength = 0,
-            double pathCost = 0)
+        public UpdateStatisticsMessage(int index, string time, int visitedVertices,
+            int pathLength = 0, double pathCost = 0)
         {
             Index = index;
             Time = time;

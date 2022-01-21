@@ -69,6 +69,7 @@
     <Compile Include="Attributes\AppWindowAttribute.cs" />
     <Compile Include="Attributes\BaseAnimationSpeed.cs" />
     <Compile Include="Attributes\AnimationSpeed.cs" />
+    <Compile Include="Attributes\RandomAnimationSpeed.cs" />
     <Compile Include="Axes\Abscissa.cs" />
     <Compile Include="Axes\Applicate.cs" />
     <Compile Include="Axes\Ordinate.cs" />

@@ -4,6 +4,7 @@ using Random.Interface;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using ValueRange;
+using ValueRange.Extensions;
 
 namespace Random.Extensions
 {
@@ -26,6 +27,12 @@ namespace Random.Extensions
         public static int Next(this IRandom random)
         {
             return random.Next(default, int.MaxValue);
+        }
+
+        [MethodImpl(MethodImplOptions.Synchronized)]
+        public static double NextDouble(this IRandom random, InclusiveValueRange<double> range)
+        {
+            return range.Amplitude() * random.Next() / int.MaxValue + range.LowerValueOfRange;
         }
 
         public static bool[] GetObstacleMatrix(this IRandom random, int totalSize, double percentOfObstacles)

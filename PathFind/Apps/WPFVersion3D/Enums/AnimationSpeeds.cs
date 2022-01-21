@@ -30,6 +30,10 @@ namespace WPFVersion3D.Enums
 
         [Description("Highest")]
         [AnimationSpeed(milliseconds: 300)]
-        Highest
+        Highest,
+
+        [Description("Random")]
+        [RandomAnimationSpeed(300, 4800)]
+        Random
     }
 }
