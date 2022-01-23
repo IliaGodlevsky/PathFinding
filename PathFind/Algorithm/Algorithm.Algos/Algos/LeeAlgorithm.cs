@@ -9,10 +9,12 @@ using GraphLib.Interfaces;
 using Interruptable.Interface;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 
 namespace Algorithm.Algos.Algos
 {
+    [DebuggerDisplay("Lee algorithm")]
     public class LeeAlgorithm : WaveAlgorithm,
         IAlgorithm, IInterruptableProcess, IInterruptable, IDisposable
     {

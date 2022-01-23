@@ -42,7 +42,8 @@ namespace ConsoleVersion.ViewModel
                 try
                 {
                     var graph = SelectedGraphAssemble.AssembleGraph(ObstaclePercent, Width, Length);
-                    messenger.Forward(new GraphCreatedMessage(graph), MessageTokens.MainModel | MessageTokens.MainView);
+                    var token = MessageTokens.MainModel | MessageTokens.MainView;
+                    messenger.Forward(new GraphCreatedMessage(graph), token);
                 }
                 catch (Exception ex)
                 {

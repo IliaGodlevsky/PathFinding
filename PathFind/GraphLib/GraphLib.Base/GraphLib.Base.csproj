@@ -89,6 +89,10 @@
       <Project>{03eb6575-5b74-418f-9231-1b67598c68e8}</Project>
       <Name>Random</Name>
     </ProjectReference>
+    <ProjectReference Include="..\..\SingletonLib\SingletonLib.csproj">
+      <Project>{1F8DE924-837C-4CD6-B902-110E1C565F89}</Project>
+      <Name>SingletonLib</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\ValueRange\ValueRange.csproj">
       <Project>{EB70607D-CDF4-4D91-BBFE-55F85ACC0A1B}</Project>
       <Name>ValueRange</Name>

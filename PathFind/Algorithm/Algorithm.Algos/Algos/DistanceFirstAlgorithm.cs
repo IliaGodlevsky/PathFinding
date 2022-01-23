@@ -4,9 +4,11 @@ using Algorithm.Realizations.Heuristic;
 using GraphLib.Interfaces;
 using Interruptable.Interface;
 using System;
+using System.Diagnostics;
 
 namespace Algorithm.Algos.Algos
 {
+    [DebuggerDisplay("Distance first algorithm")]
     public class DistanceFirstAlgorithm : GreedyAlgorithm,
         IAlgorithm, IInterruptableProcess, IInterruptable, IDisposable
     {

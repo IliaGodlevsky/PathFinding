@@ -1,5 +1,6 @@
 ﻿using GraphLib.Interfaces;
 using NullObject.Attributes;
+using SingletonLib;
 using System;
 using System.Collections.Generic;
 
@@ -7,11 +8,10 @@ namespace GraphLib.NullRealizations.NullObjects
 {
     [Null]
     [Serializable]
-    public sealed class NullNeighboursCoordinates : INeighborhood
+    public sealed class NullNeighboursCoordinates
+        : Singleton<NullNeighboursCoordinates>, INeighborhood
     {
-        public static INeighborhood Instance => instance.Value;
-
-        public IReadOnlyCollection<ICoordinate> Neighbours => Array.Empty<NullCoordinate>();
+        public IReadOnlyCollection<ICoordinate> Neighbours => Array.Empty<ICoordinate>();
 
         public INeighborhood Clone()
         {
@@ -27,7 +27,5 @@ namespace GraphLib.NullRealizations.NullObjects
         {
 
         }
-
-        private static readonly Lazy<INeighborhood> instance = new Lazy<INeighborhood>(() => new NullNeighboursCoordinates());
     }
 }

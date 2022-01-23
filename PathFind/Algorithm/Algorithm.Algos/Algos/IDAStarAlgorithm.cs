@@ -8,6 +8,7 @@ using Interruptable.Interface;
 using NullObject.Extensions;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 
 namespace Algorithm.Algos.Algos
@@ -19,6 +20,7 @@ namespace Algorithm.Algos.Algos
     /// removes the most distant vertices from its horisont 
     /// of search and searches only among vertices, that are 
     /// the closest to the target vertex</remarks>
+    [DebuggerDisplay("IDA* algorithm")]
     public class IDAStarAlgorithm : AStarAlgorithm,
         IAlgorithm, IInterruptableProcess, IInterruptable, IDisposable
     {

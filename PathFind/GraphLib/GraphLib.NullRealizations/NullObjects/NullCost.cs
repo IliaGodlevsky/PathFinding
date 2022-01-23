@@ -1,15 +1,14 @@
 ﻿using GraphLib.Interfaces;
 using NullObject.Attributes;
+using SingletonLib;
 using System;
 
 namespace GraphLib.NullRealizations.NullObjects
 {
     [Null]
     [Serializable]
-    public sealed class NullCost : IVertexCost
+    public sealed class NullCost : Singleton<NullCost>, IVertexCost
     {
-        public static IVertexCost Instance => instance.Value;
-
         public int CurrentCost => default;
 
         public override bool Equals(object obj)
@@ -36,7 +35,5 @@ namespace GraphLib.NullRealizations.NullObjects
         {
 
         }
-
-        private static readonly Lazy<IVertexCost> instance = new Lazy<IVertexCost>(() => new NullCost());
     }
 }

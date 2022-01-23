@@ -7,6 +7,7 @@ using Algorithm.Сompanions.Interface;
 using GraphLib.Interfaces;
 using Interruptable.Interface;
 using System;
+using System.Diagnostics;
 
 namespace Algorithm.Algos.Algos
 {
@@ -14,6 +15,7 @@ namespace Algorithm.Algos.Algos
     /// A realization of the A* algorithm
     /// </summary>
     /// <remarks><see cref="https://en.wikipedia.org/wiki/A*_search_algorithm"/></remarks>
+    [DebuggerDisplay("A* algorithm")]
     public class AStarAlgorithm : DijkstraAlgorithm, IAlgorithm, IInterruptableProcess, IInterruptable, IDisposable
     {
         public AStarAlgorithm(IEndPoints endPoints)

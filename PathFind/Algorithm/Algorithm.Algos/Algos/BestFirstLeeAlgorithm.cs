@@ -6,6 +6,7 @@ using Common.Extensions.EnumerableExtensions;
 using GraphLib.Interfaces;
 using Interruptable.Interface;
 using System;
+using System.Diagnostics;
 using System.Linq;
 
 namespace Algorithm.Algos.Algos
@@ -14,6 +15,7 @@ namespace Algorithm.Algos.Algos
     /// A version of <see cref="LeeAlgorithm"/> that seaches path
     /// with a heuristic function
     /// </summary>
+    [DebuggerDisplay("Lee algorithm (heusritic)")]
     public class BestFirstLeeAlgorithm : LeeAlgorithm,
         IAlgorithm, IInterruptableProcess, IInterruptable, IDisposable
     {

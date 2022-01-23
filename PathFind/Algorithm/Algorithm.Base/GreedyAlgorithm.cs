@@ -44,7 +44,7 @@ namespace Algorithm.Base
         {
             return IsTerminatedPrematurely
                 ? new GraphPath(parentVertices, endPoints)
-                : NullGraphPath.Instance;
+                : (IGraphPath)NullGraphPath.Instance;
         }
 
         /// <summary>

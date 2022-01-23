@@ -46,7 +46,7 @@ namespace WPFVersion3D.DependencyInjection
 
             builder.RegisterType<EndPoints>().As<BaseEndPoints>().SingleInstance();
             builder.RegisterType<Vertex3DEventHolder>().As<IVertexEventHolder>().SingleInstance();
-            
+
             builder.RegisterType<FileLog>().As<ILog>().SingleInstance();
             builder.RegisterType<MessageBoxLog>().As<ILog>().SingleInstance();
             builder.RegisterType<MailLog>().As<ILog>().SingleInstance();

@@ -1,5 +1,6 @@
 ﻿using GraphLib.Interfaces;
 using NullObject.Attributes;
+using SingletonLib;
 using System;
 
 namespace GraphLib.NullRealizations.NullObjects
@@ -9,15 +10,13 @@ namespace GraphLib.NullRealizations.NullObjects
     /// </summary>
     [Null]
     [Serializable]
-    public sealed class NullCoordinate : ICoordinate
+    public sealed class NullCoordinate : Singleton<NullCoordinate>, ICoordinate
     {
-        public static ICoordinate Instance => instance.Value;
-
-        public int[] CoordinatesValues => new int[] { };
+        public int[] CoordinatesValues => Array.Empty<int>();
 
         public ICoordinate Clone()
         {
-            return new NullCoordinate();
+            return Instance;
         }
 
         public override bool Equals(object pos)
@@ -39,7 +38,5 @@ namespace GraphLib.NullRealizations.NullObjects
         {
 
         }
-
-        private static readonly Lazy<ICoordinate> instance = new Lazy<ICoordinate>(() => new NullCoordinate());
     }
 }

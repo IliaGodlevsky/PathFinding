@@ -41,7 +41,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="NullAlgorithm.cs" />
     <Compile Include="NullGraphPath.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -65,6 +64,10 @@
     <ProjectReference Include="..\..\NullObject\NullObject.csproj">
       <Project>{51D677FD-7A82-4282-8A2E-51DEBE39E695}</Project>
       <Name>NullObject</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\SingletonLib\SingletonLib.csproj">
+      <Project>{1F8DE924-837C-4CD6-B902-110E1C565F89}</Project>
+      <Name>SingletonLib</Name>
     </ProjectReference>
     <ProjectReference Include="..\Algorithm.Infrastructure\Algorithm.Infrastructure.csproj">
       <Project>{DA2A9A8C-0EF3-4EDB-B026-3FF86DEF9464}</Project>

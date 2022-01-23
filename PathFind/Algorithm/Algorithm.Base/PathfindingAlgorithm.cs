@@ -18,8 +18,8 @@ namespace Algorithm.Base
     /// A base algorithm for all pathfinding algorithms.
     /// This class is abstract
     /// </summary>
-    /// <remarks>Do not use the same instance of algorithm untill it stops to 
-    /// find the path. And only then use it again. But it is better not to use
+    /// <remarks>Do not use the same instance of algorithm untill it stops 
+    /// finding a path. And only then use it again. But it is better not to use
     /// the same instance twice. Create a new one instead.</remarks>
     public abstract class PathfindingAlgorithm
         : IAlgorithm, IInterruptableProcess, IInterruptable, IDisposable

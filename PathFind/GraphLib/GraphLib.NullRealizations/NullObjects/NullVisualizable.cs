@@ -1,14 +1,12 @@
 ﻿using GraphLib.Interfaces;
 using NullObject.Attributes;
-using System;
+using SingletonLib;
 
 namespace GraphLib.NullRealizations.NullObjects
 {
     [Null]
-    public sealed class NullVisualizable : IVisualizable
+    public sealed class NullVisualizable : Singleton<NullVisualizable>, IVisualizable
     {
-        public static IVisualizable Instance => instance.Value;
-
         public bool IsVisualizedAsPath => false;
 
         public bool IsVisualizedAsEndPoint => false;
@@ -62,7 +60,5 @@ namespace GraphLib.NullRealizations.NullObjects
         {
 
         }
-
-        private static readonly Lazy<IVisualizable> instance = new Lazy<IVisualizable>(() => new NullVisualizable());
     }
 }

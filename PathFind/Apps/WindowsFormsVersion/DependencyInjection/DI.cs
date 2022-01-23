@@ -50,7 +50,7 @@ namespace WindowsFormsVersion.DependencyInjection
             builder.RegisterAssemblyTypes(Assemblies).Where(Implements<IViewModel>).AsSelf().InstancePerDependency();
             builder.RegisterAssemblyTypes(Assemblies).Where(type => type.IsAppWindow()).AsSelf().InstancePerDependency();
 
-            builder.RegisterType<EndPoints>().As<BaseEndPoints>().SingleInstance();            
+            builder.RegisterType<EndPoints>().As<BaseEndPoints>().SingleInstance();
             builder.RegisterType<VertexEventHolder>().As<IVertexEventHolder>().SingleInstance();
 
             builder.RegisterType<FileLog>().As<ILog>().SingleInstance();

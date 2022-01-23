@@ -5,6 +5,7 @@ using Algorithm.Realizations.StepRules;
 using GraphLib.Interfaces;
 using Interruptable.Interface;
 using System;
+using System.Diagnostics;
 
 namespace Algorithm.Algos.Algos
 {
@@ -12,6 +13,7 @@ namespace Algorithm.Algos.Algos
     /// An algorithm, that choses the cheapest neighbour around 
     /// a vertex and goes to it
     /// </summary>
+    [DebuggerDisplay("Cost greedy algorithm")]
     public sealed class CostGreedyAlgorithm : GreedyAlgorithm,
         IAlgorithm, IInterruptableProcess, IInterruptable, IDisposable
     {

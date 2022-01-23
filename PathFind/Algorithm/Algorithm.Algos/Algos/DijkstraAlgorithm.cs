@@ -10,12 +10,14 @@ using Interruptable.Interface;
 using Priority_Queue;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 
 namespace Algorithm.Algos.Algos
 {
     /// <summary>
     /// Realization of Dijkstra's algorithm
     /// </summary>
+    [DebuggerDisplay("Dijkstra's algorithm")]
     public class DijkstraAlgorithm : WaveAlgorithm, IAlgorithm, IInterruptableProcess, IInterruptable, IDisposable
     {
         public DijkstraAlgorithm(IEndPoints endPoints)

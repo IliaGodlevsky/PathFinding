@@ -46,6 +46,13 @@ namespace Common.Extensions
             }
         }
 
+        public static bool TryGetNonPublicParametrelessCtor(this Type type, out ConstructorInfo ctor)
+        {
+            var flags = BindingFlags.NonPublic | BindingFlags.Instance;
+            ctor = type.GetConstructors(flags).FirstOrDefault(c => c.GetParameters().Length == 0);
+            return ctor != null;
+        }
+
         /// <summary>
         /// Determines, where <paramref name="type"/> implements all
         /// of provided <paramref name="interfaces"/>
