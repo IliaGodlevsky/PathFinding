@@ -1,4 +1,5 @@
-﻿using GraphLib.Interfaces;
+﻿using Common.Extensions.EnumerableExtensions;
+using GraphLib.Interfaces;
 using NullObject.Attributes;
 using SingletonLib;
 using System;
@@ -26,7 +27,7 @@ namespace GraphLib.NullRealizations.NullObjects
 
         public override int GetHashCode()
         {
-            return base.GetHashCode();
+            return default;
         }
 
         object ICloneable.Clone()

@@ -32,7 +32,7 @@ namespace GraphLib.NullRealizations.NullObjects
 
         public override int GetHashCode()
         {
-            return base.GetHashCode();
+            return default;
         }
 
         public IGraph Clone()

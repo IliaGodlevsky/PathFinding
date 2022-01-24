@@ -13,7 +13,7 @@ namespace SingletonLib
     [Serializable]
     public abstract class Singleton<T> where T : class
     {
-        private static readonly string Message = $"{typeof(T).Name} has neither private nor protected parametreless contructor";
+        private static readonly string Message = $"{typeof(T).Name} has neither private nor protected parametreless constructor";
 
         [NonSerialized]
         private static readonly Lazy<T> instance;
