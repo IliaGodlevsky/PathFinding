@@ -16,7 +16,7 @@ namespace GraphLib.NullRealizations.NullObjects
 
         public int[] DimensionsSizes => Array.Empty<int>();
 
-        public IReadOnlyCollection<IVertex> Vertices => Array.Empty<NullVertex>();
+        public IReadOnlyCollection<IVertex> Vertices => Array.Empty<IVertex>();
 
         public int Size => 0;
 
@@ -32,12 +32,12 @@ namespace GraphLib.NullRealizations.NullObjects
 
         public override int GetHashCode()
         {
-            return default;
+            return base.GetHashCode();
         }
 
         public IGraph Clone()
         {
-            return NullGraph.Instance;
+            return Instance;
         }
 
         private NullGraph()

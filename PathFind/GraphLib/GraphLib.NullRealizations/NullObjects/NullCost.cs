@@ -18,7 +18,7 @@ namespace GraphLib.NullRealizations.NullObjects
 
         public override int GetHashCode()
         {
-            return default;
+            return base.GetHashCode();
         }
 
         public IVertexCost Clone()

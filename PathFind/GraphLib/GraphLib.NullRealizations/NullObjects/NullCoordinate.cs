@@ -27,7 +27,7 @@ namespace GraphLib.NullRealizations.NullObjects
 
         public override int GetHashCode()
         {
-            return default;
+            return base.GetHashCode();
         }
 
         object ICloneable.Clone()
