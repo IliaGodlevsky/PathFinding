@@ -1,4 +1,5 @@
-﻿using GraphLib.Interfaces;
+﻿using Common.Interface;
+using GraphLib.Interfaces;
 using NullObject.Attributes;
 using SingletonLib;
 using System;
@@ -7,7 +8,7 @@ using System.Collections.Generic;
 namespace GraphLib.NullRealizations.NullObjects
 {
     [Null]
-    public sealed class NullGraph : Singleton<NullGraph>, IGraph
+    public sealed class NullGraph : Singleton<NullGraph>, IGraph, ICloneable<IGraph>
     {
         public IVertex this[ICoordinate position]
         {
@@ -16,7 +17,7 @@ namespace GraphLib.NullRealizations.NullObjects
 
         public int[] DimensionsSizes => Array.Empty<int>();
 
-        public IReadOnlyCollection<IVertex> Vertices => Array.Empty<IVertex>();
+        public IReadOnlyCollection<IVertex> Vertices => NullVertex.GetMany(0);
 
         public int Size => 0;
 
@@ -38,6 +39,11 @@ namespace GraphLib.NullRealizations.NullObjects
         public IGraph Clone()
         {
             return Instance;
+        }
+
+        object ICloneable.Clone()
+        {
+            return Clone();
         }
 
         private NullGraph()

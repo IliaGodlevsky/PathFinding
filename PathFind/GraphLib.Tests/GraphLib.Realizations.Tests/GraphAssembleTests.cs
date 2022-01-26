@@ -63,7 +63,7 @@ namespace GraphLib.Realizations.Tests
 
             mock.Mock<INeighborhoodFactory>()
                 .Setup(x => x.CreateNeighborhood(It.IsAny<ICoordinate>()))
-                .Returns<ICoordinate>(x => NullNeighboursCoordinates.Instance);
+                .Returns<ICoordinate>(x => NullNeighborhood.Instance);
 
             mock.Mock<IVertexFactory>()
                 .Setup(x => x.CreateVertex(It.IsAny<INeighborhood>(), It.IsAny<ICoordinate>()))

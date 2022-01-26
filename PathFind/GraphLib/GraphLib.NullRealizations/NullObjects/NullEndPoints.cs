@@ -15,14 +15,8 @@ namespace GraphLib.NullRealizations.NullObjects
 
         public IEnumerable<IVertex> EndPoints { get; }
 
-        public bool IsEndPoint(IVertex vertex)
-        {
-            return false;
-        }
+        public bool IsEndPoint(IVertex vertex) => false;
 
-        private NullEndPoints()
-        {
-            EndPoints = new IVertex[] { Source, Target };
-        }
+        private NullEndPoints() => EndPoints = NullVertex.GetMany(2);
     }
 }

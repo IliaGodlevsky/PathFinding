@@ -8,9 +8,6 @@ namespace Random.Tests
     [TestFixture]
     public class KnuthRandomTests : RandomTests
     {
-        protected override IRandom GetRandom()
-        {
-            return new KnuthRandom();
-        }
+        protected override IRandom Random => new KnuthRandom();
     }
 }

@@ -10,6 +10,8 @@ namespace Common.Tests
     [TestFixture]
     public abstract class RandomTests
     {
+        protected abstract IRandom Random { get; }
+
         [TestCase(int.MaxValue, int.MinValue)]
         [TestCase(-5, -10)]
         [TestCase(14, 0)]
@@ -20,21 +22,19 @@ namespace Common.Tests
         {
             var range = new InclusiveValueRange<int>(maxValue, minValue);
             int limit = 200;
-            var random = GetRandom();
 
-            var numbers = GetNumbers(random, limit, range);
+            var numbers = GetNumbers(Random, limit, range);
 
             Assert.IsTrue(numbers.All(value => range.Contains(value)));
         }
 
-        [Test]
+        [TestCase]
         public void Next_MaxRange_ReturnsVariousNumbers()
         {
             var range = new InclusiveValueRange<int>(int.MaxValue, int.MinValue);
             int limit = 5000;
-            var random = GetRandom();
 
-            var numbers = GetNumbers(random, limit, range);
+            var numbers = GetNumbers(Random, limit, range);
             var unique = numbers.Distinct().ToArray();
 
             Assert.IsTrue(numbers.Length == unique.Length);
@@ -49,7 +49,5 @@ namespace Common.Tests
             }
             return numbers;
         }
-
-        protected abstract IRandom GetRandom();
     }
 }

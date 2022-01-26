@@ -5,7 +5,7 @@ using NUnit.Framework;
 
 namespace Algorithm.Algos.Tests
 {
-    [TestFixture(TestName = "A* algorithm test")]
+    [TestFixture]
     public class AStarAlgorithmTests : AlgorithmTest
     {
         private const int AStarAlgorithmTimeoutToFinishPathfinding = 1900;

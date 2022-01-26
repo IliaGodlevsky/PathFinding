@@ -5,7 +5,7 @@ using NUnit.Framework;
 
 namespace Algorithm.Algos.Tests
 {
-    [TestFixture(TestName = "IDA* algorithm test")]
+    [TestFixture]
     public class IDAStarAlgorithmTests : AlgorithmTest
     {
         private const int AStarModifiedAlgorithmTimeoutToFinishPathfinding = 1000;

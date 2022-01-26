@@ -5,7 +5,7 @@ using NUnit.Framework;
 
 namespace Algorithm.Algos.Tests
 {
-    [TestFixture(TestName = "Dijkstra's algorithm test")]
+    [TestFixture]
     public class DijkstraAlgorithmTest : AlgorithmTest
     {
         private const int DijkstraAlgorithmTimeoutToFinishPathfinding = 2100;

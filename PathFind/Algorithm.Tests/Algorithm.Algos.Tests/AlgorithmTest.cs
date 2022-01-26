@@ -24,6 +24,7 @@ namespace Algorithm.Algos.Tests
 
         #region Test Methods
 
+        [Test]
         public virtual void FindPath_EndpointsBelongToGraph_ReturnsShortestPath()
         {
             var graph = testgraph2DAssemble.AssembleGraph();

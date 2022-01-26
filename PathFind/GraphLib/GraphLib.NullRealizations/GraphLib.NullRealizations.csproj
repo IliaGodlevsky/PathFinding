@@ -43,7 +43,7 @@
   <ItemGroup>
     <Compile Include="NullObjects\NullCoordinate.cs" />
     <Compile Include="NullObjects\NullEndPoints.cs" />
-    <Compile Include="NullObjects\NullNeighboursCoordinates.cs" />
+    <Compile Include="NullObjects\NullNeighborhood.cs" />
     <Compile Include="NullObjects\NullCost.cs" />
     <Compile Include="NullObjects\NullGraph.cs" />
     <Compile Include="NullObjects\NullVertex.cs" />

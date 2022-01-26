@@ -8,10 +8,9 @@ namespace GraphLib.NullRealizations.NullObjects
 {
     [Null]
     [Serializable]
-    public sealed class NullNeighboursCoordinates
-        : Singleton<NullNeighboursCoordinates>, INeighborhood
+    public sealed class NullNeighborhood : Singleton<NullNeighborhood>, INeighborhood
     {
-        public IReadOnlyCollection<ICoordinate> Neighbours => Array.Empty<ICoordinate>();
+        public IReadOnlyCollection<ICoordinate> Neighbours => NullCoordinate.GetMany(0);
 
         public INeighborhood Clone()
         {
@@ -23,7 +22,7 @@ namespace GraphLib.NullRealizations.NullObjects
             return Clone();
         }
 
-        private NullNeighboursCoordinates()
+        private NullNeighborhood()
         {
 
         }

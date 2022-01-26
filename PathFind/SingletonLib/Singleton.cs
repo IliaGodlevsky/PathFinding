@@ -1,6 +1,8 @@
 ﻿using Common.Extensions;
 using SingletonLib.Exceptions;
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Runtime.CompilerServices;
 
 namespace SingletonLib
@@ -26,6 +28,13 @@ namespace SingletonLib
         /// doesn't have a private or protected 
         /// paramtreless constructor</exception>
         public static T Instance => instance.Value;
+
+        public static IReadOnlyCollection<T> GetMany(int count)
+        {
+            return count > 0 
+                ? Enumerable.Repeat(Instance, count).ToArray() 
+                : Array.Empty<T>();
+        }
 
         static Singleton() => instance = new Lazy<T>(CreateInstance, true);
 
