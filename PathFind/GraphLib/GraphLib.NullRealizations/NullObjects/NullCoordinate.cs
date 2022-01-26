@@ -1,5 +1,4 @@
-﻿using Common.Extensions.EnumerableExtensions;
-using GraphLib.Interfaces;
+﻿using GraphLib.Interfaces;
 using NullObject.Attributes;
 using SingletonLib;
 using System;

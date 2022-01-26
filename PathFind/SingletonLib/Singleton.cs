@@ -29,10 +29,10 @@ namespace SingletonLib
         /// paramtreless constructor</exception>
         public static T Instance => instance.Value;
 
-        public static IReadOnlyCollection<T> GetMany(int count)
+        public static IReadOnlyList<T> GetMany(int count)
         {
-            return count > 0 
-                ? Enumerable.Repeat(Instance, count).ToArray() 
+            return count > 0
+                ? Enumerable.Repeat(Instance, count).ToArray()
                 : Array.Empty<T>();
         }
 

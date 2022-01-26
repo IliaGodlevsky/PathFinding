@@ -21,7 +21,7 @@ namespace Algorithm.Realizations.GraphPaths
         /// Vertices, that represent path. The vertices are ordered
         /// in the same way they were visited by an algorithm
         /// </summary>
-        public IVertex[] Path => path.Value;
+        public IReadOnlyList<IVertex> Path => path.Value;
 
         /// <summary>
         /// Cost of the past that is calculated according to a step rule
@@ -89,7 +89,7 @@ namespace Algorithm.Realizations.GraphPaths
 
         private double ExtractPathCost()
         {
-            if (Path.Length == 0)
+            if (Path.Count == 0)
             {
                 return default;
             }
@@ -99,16 +99,16 @@ namespace Algorithm.Realizations.GraphPaths
                 return stepRule.CalculateStepCost(Path[i], Path[i + 1]);
             }
 
-            return Enumerable.Range(0, Path.Length - 1).Sum(GetCost);
+            return Enumerable.Range(0, Path.Count - 1).Sum(GetCost);
         }
 
         private int GetPathLength()
         {
-            if (Path.Length == 0)
+            if (Path.Count == 0)
             {
                 return default;
             }
-            return Path.Length - 1;
+            return Path.Count - 1;
         }
 
         private readonly IParentVertices parentVertices;

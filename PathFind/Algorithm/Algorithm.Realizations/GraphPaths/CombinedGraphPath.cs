@@ -1,5 +1,6 @@
 ﻿using Algorithm.Interfaces;
 using GraphLib.Interfaces;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace Algorithm.Realizations.GraphPaths
@@ -13,7 +14,7 @@ namespace Algorithm.Realizations.GraphPaths
         /// <summary>
         /// A path that includes all combined paths
         /// </summary>
-        public IVertex[] Path { get; }
+        public IReadOnlyList<IVertex> Path { get; }
 
         public int Length { get; }
 

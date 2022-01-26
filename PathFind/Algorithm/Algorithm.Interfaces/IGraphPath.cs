@@ -1,4 +1,5 @@
 ﻿using GraphLib.Interfaces;
+using System.Collections.Generic;
 
 namespace Algorithm.Interfaces
 {
@@ -13,7 +14,7 @@ namespace Algorithm.Interfaces
         /// Vertices are arranged in order they were visited
         /// by a pathfinding algorithm
         /// </summary>
-        IVertex[] Path { get; }
+        IReadOnlyList<IVertex> Path { get; }
 
         /// <summary>
         /// A length of algorithms, or a number of steps that
