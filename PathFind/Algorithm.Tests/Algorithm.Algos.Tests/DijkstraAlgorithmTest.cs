@@ -5,13 +5,13 @@ using NUnit.Framework;
 
 namespace Algorithm.Algos.Tests
 {
-    [TestFixture]
+    [TestFixture(TestName = "Dijkstra's algorithm test")]
     public class DijkstraAlgorithmTest : AlgorithmTest
     {
         private const int DijkstraAlgorithmTimeoutToFinishPathfinding = 2100;
 
         #region Test Methods
-        [Test]
+        [TestCase(TestName = "Finding path with valid endpoints within 2100 milliseconds")]
         [Timeout(DijkstraAlgorithmTimeoutToFinishPathfinding)]
         public override void FindPath_EndpointsBelongToGraph_ReturnsShortestPath()
         {

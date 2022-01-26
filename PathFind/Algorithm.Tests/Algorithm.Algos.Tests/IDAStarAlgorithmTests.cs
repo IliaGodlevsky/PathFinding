@@ -5,12 +5,12 @@ using NUnit.Framework;
 
 namespace Algorithm.Algos.Tests
 {
-    [TestFixture]
-    public class AStarModifiedTests : AlgorithmTest
+    [TestFixture(TestName = "IDA* algorithm test")]
+    public class IDAStarAlgorithmTests : AlgorithmTest
     {
         private const int AStarModifiedAlgorithmTimeoutToFinishPathfinding = 1000;
 
-        [Test]
+        [TestCase(TestName = "Finding path with valid endpoints within 1000 milliseconds")]
         [Timeout(AStarModifiedAlgorithmTimeoutToFinishPathfinding)]
         public override void FindPath_EndpointsBelongToGraph_ReturnsShortestPath()
         {

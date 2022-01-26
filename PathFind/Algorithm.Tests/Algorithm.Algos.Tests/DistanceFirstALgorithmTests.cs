@@ -5,7 +5,7 @@ using NUnit.Framework;
 
 namespace Algorithm.Algos.Tests
 {
-    [TestFixture]
+    [TestFixture(TestName = "Distance first algorithm test")]
     public class DistanceFirstALgorithmTests : AlgorithmTest
     {
         protected override IAlgorithm CreateAlgorithm(IEndPoints endPoints)

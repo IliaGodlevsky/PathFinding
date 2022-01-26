@@ -22,9 +22,11 @@ namespace WPFVersion3D.Model
 
         public GraphField3D(Graph3D graph)
         {
-            CoordinateSystem = DI.Container.Resolve<IAxis[]>();
+            CoordinateSystem = DI.Container
+                .Resolve<IEnumerable<IAxis>>()
+                .OrderBy(axis => axis.Order)
+                .ToArray();
             DimensionSizes = graph.DimensionsSizes;
-            AxisIndices = Enumerable.Range(0, CoordinateSystem.Length).ToArray();
             Vertices = graph.Vertices;
             Vertices.ForEach(Add);
         }
@@ -45,7 +47,7 @@ namespace WPFVersion3D.Model
 
         public void CenterGraph(params double[] offsets)
         {
-            var centerOffsets = AxisIndices.Select(i => CalculateAxisOffset(offsets, i)).ToArray();
+            var centerOffsets = CoordinateSystem.Select(axis => CalculateAxisOffset(offsets, axis)).ToArray();
             Vertices.ForEach(vertex => LocateVertex(CoordinateSystem, (Vertex3D)vertex, centerOffsets));
         }
 
@@ -56,9 +58,9 @@ namespace WPFVersion3D.Model
             CenterGraph(distanceBetween == 0 ? Array.Empty<double>() : additionalOffset);
         }
 
-        private double CalculateAxisOffset(double[] additionalOffset, int index)
+        private double CalculateAxisOffset(double[] additionalOffset, IAxis axis)
         {
-            return (additionalOffset.ElementAtOrDefault(index) - DimensionSizes[index]) * GetAdjustedVertexSize(index) / 2;
+            return (additionalOffset.ElementAtOrDefault(axis.Order) - DimensionSizes[axis.Order]) * GetAdjustedVertexSize(axis) / 2;
         }
 
         private void StretchAlongAxis(IAxis axis)
@@ -74,14 +76,13 @@ namespace WPFVersion3D.Model
         private void LocateVertex(IAxis axis, Vertex3D vertex, params double[] additionalOffset)
         {
             var coordinates = vertex.GetCoordinates();
-            double offset = GetAdjustedVertexSize(axis.Order) * coordinates[axis.Order]
+            double offset = GetAdjustedVertexSize(axis) * coordinates[axis.Order]
                 + additionalOffset.ElementAtOrDefault(axis.Order);
             axis.Offset(vertex.Transform as TranslateTransform3D, offset);
         }
 
-        private double GetAdjustedVertexSize(int index) => Constants.InitialVertexSize + DistancesBetween[index];
+        private double GetAdjustedVertexSize(IAxis axis) => Constants.InitialVertexSize + DistancesBetween[axis.Order];
 
-        private int[] AxisIndices { get; }
         private int[] DimensionSizes { get; }
         private IAxis[] CoordinateSystem { get; }
 
