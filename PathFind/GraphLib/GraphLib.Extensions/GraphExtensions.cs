@@ -79,29 +79,9 @@ namespace GraphLib.Extensions
             return graph.Vertices.LastOrDefault() ?? NullVertex.Instance;
         }
 
-        public static bool Contains(this IGraph self, params IVertex[] vertices)
-        {
-            return vertices.All(vertex => ReferenceEquals(self, vertex.Graph));
-        }
-
-        public static bool Contains(this IGraph self, IEnumerable<IVertex> vertices)
-        {
-            return vertices.All(vertex => ReferenceEquals(self, vertex.Graph));
-        }
-
-        public static bool Contains(this IGraph self, IEndPoints endPoints)
-        {
-            return self.Contains(endPoints.EndPoints);
-        }
-
         public static int GetIsolatedCount(this IGraph self)
         {
             return self.Vertices.Where(vertex => vertex.IsIsolated()).Count();
-        }
-
-        public static IEnumerable<IVertex> GetNotObstacles(this IGraph self)
-        {
-            return self.Vertices.FilterObstacles();
         }
 
         /// <summary>
