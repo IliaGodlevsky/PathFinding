@@ -1,4 +1,5 @@
 ﻿using Common.Attrbiutes;
+using Common.Extensions.EnumerableExtensions;
 using System;
 using System.ComponentModel;
 using System.Linq;
@@ -72,6 +73,29 @@ namespace Common.Extensions
                 ? (MemberInfo)e.GetType().GetField(e.ToString())
                 : (MemberInfo)self.GetType();
             return memberInfo.GetAttributeOrNull<TAttribute>();
+        }
+
+        /// <summary>
+        /// Initializes all fields, that marked 
+        /// with <see cref="InitializationRequiredAttribute"/>
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="self"></param>
+        /// <returns>An array instances, ordered by initailization 
+        /// order, with which fields were initialized</returns>
+        /// <remarks>Initializes only fields with types 
+        /// that have default constructor</remarks>
+        public static object[] InitializeRequiredFields<T>(this T self)
+        {
+            return self
+                .GetType()
+                .GetHierarhyTree()
+                .SelectMany(type => type.GetAllNonStaticFields())
+                .Where(field => field.IsInitializationRequired())
+                .OrderBy(field => field.GetInitializationOrderOrMaxValue())
+                .ForAll(field => field.InitializeItself(self))
+                .Select(field => field.GetValue(self))
+                .ToArray();
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]

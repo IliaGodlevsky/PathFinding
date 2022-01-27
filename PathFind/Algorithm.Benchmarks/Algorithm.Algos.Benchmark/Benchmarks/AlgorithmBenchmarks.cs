@@ -37,7 +37,7 @@ namespace Algorithm.Algos.Benchmark.Benchmarks
         }
 
         [IterationCleanup]
-        [Benchmark(Description ="Graph 10x10")]
+        [Benchmark(Description = "Graph 10x10")]
         public void Graph10x10PathfindingTesting() => CreateAlgorithm(endPoints10x10).FindPath();
 
         [IterationCleanup]

@@ -1,4 +1,6 @@
-﻿using System;
+﻿using Common.Attrbiutes;
+using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using System.Runtime.CompilerServices;
@@ -81,6 +83,36 @@ namespace Common.Extensions
             catch
             {
                 return false;
+            }
+        }
+
+        public static FieldInfo[] GetAllNonStaticFields(this Type type)
+        {
+            return type.GetFields(BindingFlags.NonPublic | BindingFlags.Public | BindingFlags.Instance);
+        }
+
+        public static bool IsInitializationRequired(this FieldInfo field)
+        {
+            return Attribute.IsDefined(field, typeof(InitializationRequiredAttribute));
+        }
+
+        public static int GetInitializationOrderOrMaxValue(this FieldInfo field)
+        {
+            return field.GetAttributeOrNull<InitializationRequiredAttribute>()?.Order ?? int.MaxValue;
+        }
+
+        public static void InitializeItself(this FieldInfo field, object owner, params object[] ctorParams)
+        {
+            field.SetValue(owner, Activator.CreateInstance(field.FieldType, ctorParams));
+        }
+
+        public static IEnumerable<Type> GetHierarhyTree(this Type type)
+        {
+            var current = type;
+            while (current != null)
+            {
+                yield return current;
+                current = current.BaseType;
             }
         }
     }
