@@ -6,7 +6,7 @@ using GraphLib.Interfaces;
 namespace Algorithm.Algos.Benchmark.Benchmarks
 {
     [MemoryDiagnoser]
-    public class AStarModifiedBenchmarks : AlgorithmBenchmarks
+    public class IDAStarALgorithmBenchmarks : AlgorithmBenchmarks
     {
         protected override IAlgorithm CreateAlgorithm(IEndPoints endPoints)
         {

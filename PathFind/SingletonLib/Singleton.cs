@@ -15,8 +15,6 @@ namespace SingletonLib
     [Serializable]
     public abstract class Singleton<T> where T : class
     {
-        private static readonly string Message = $"{typeof(T).Name} has neither private nor protected parametreless constructor";
-
         [NonSerialized]
         private static readonly Lazy<T> instance;
         /// <summary>
@@ -29,6 +27,7 @@ namespace SingletonLib
         /// paramtreless constructor</exception>
         public static T Instance => instance.Value;
 
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static IReadOnlyList<T> GetMany(int count)
         {
             return count > 0
@@ -36,14 +35,17 @@ namespace SingletonLib
                 : Array.Empty<T>();
         }
 
-        static Singleton() => instance = new Lazy<T>(CreateInstance, true);
+        static Singleton()
+        {
+            instance = new Lazy<T>(() => CreateInstance(typeof(T)), true);
+        }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        private static T CreateInstance()
+        private static T CreateInstance(Type ofType)
         {
-            return typeof(T).TryGetNonPublicParametrelessCtor(out var ctor)
+            return ofType.TryGetNonPublicParametrelessCtor(out var ctor)
                 ? (T)ctor.Invoke(Array.Empty<object>())
-                : throw new SingletonException(Message);
+                : throw new SingletonException(Constants.GetMessage(ofType));
         }
     }
 }

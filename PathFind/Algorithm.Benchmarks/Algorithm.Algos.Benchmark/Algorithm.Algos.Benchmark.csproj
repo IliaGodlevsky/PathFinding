@@ -48,7 +48,7 @@
     <Compile Include="Benchmarks\DistanceFirstAlgorithmBenchmarks.cs" />
     <Compile Include="Benchmarks\AlgorithmBenchmarks.cs" />
     <Compile Include="Benchmarks\AStarAlgorithmBenchmarks.cs" />
-    <Compile Include="Benchmarks\AStarModifiedBenchmarks.cs" />
+    <Compile Include="Benchmarks\IDAStarALgorithmBenchmarks.cs" />
     <Compile Include="Benchmarks\BestFirstLeeAlgorithm.cs" />
     <Compile Include="Benchmarks\DijkstraAlgorithmBenchmarks.cs" />
     <Compile Include="Benchmarks\LeeAlgorithmBenchmarks.cs" />
