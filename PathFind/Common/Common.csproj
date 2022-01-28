@@ -63,7 +63,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Attrbiutes\GroupAttribute.cs" />
-    <Compile Include="Attrbiutes\InitializationRequiredAttribute.cs" />
     <Compile Include="Attrbiutes\OrderAttribute.cs" />
     <Compile Include="Extensions\EnumerableExtensions\ICollectionExtensions.cs" />
     <Compile Include="Extensions\EnumerableExtensions\ConcurrentDictionaryExtensions.cs" />

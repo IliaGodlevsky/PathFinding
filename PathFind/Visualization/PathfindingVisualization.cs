@@ -1,13 +1,10 @@
 ﻿using Algorithm.Base;
 using Algorithm.Infrastructure.EventArguments;
 using Algorithm.Interfaces;
-using Common.Attrbiutes;
-using Common.Extensions;
 using Common.Extensions.EnumerableExtensions;
 using GraphLib.Extensions;
 using GraphLib.Interfaces;
 using System;
-using System.Linq;
 using System.Runtime.CompilerServices;
 using Visualization.Extensions;
 using Visualization.Interfaces;
@@ -19,29 +16,19 @@ namespace Visualization
     {
         protected PathfindingVisualization(IGraph graph)
         {
-            var instances = this.InitializeRequiredFields();
-            visualizations = new CompositeVisualization(graph, instances.OfType<IVisualization>().ToArray());
-            visualizationSlides = instances.OfType<IVisualizationSlides>().ToArray();
+            visualizations = new CompositeVisualization(graph, obstacles, enqueued, visited, path, intermediate, source, target);
+            visualizationSlides = new CompositeVisualizationSlides(obstacles, enqueued, visited, path, intermediate, source, target);
             this.graph = graph;
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public void Clear()
-        {
-            visualizationSlides.ForEach(slides => slides.Clear());
-        }
+        public void Clear() => visualizationSlides.Clear();
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public void Remove(IAlgorithm algorithm)
-        {
-            visualizationSlides.ForEach(slides => slides.Remove(algorithm));
-        }
+        public void Remove(IAlgorithm algorithm) => visualizationSlides.Remove(algorithm);
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public void Visualize(IAlgorithm algorithm)
-        {
-            visualizations.Visualize(algorithm);
-        }
+        public void Visualize(IAlgorithm algorithm) => visualizations.Visualize(algorithm);
 
         protected virtual void SubscribeOnAlgorithmEvents(PathfindingAlgorithm algorithm)
         {
@@ -96,17 +83,16 @@ namespace Visualization
                 enqueued.RemoveRange(algorithm, visited.GetVertices(algorithm));
             }
         }
-#pragma warning disable 0649
-        [InitializationRequired(2)] private readonly VisitedVertices visited;
-        [InitializationRequired(1)] private readonly EnqueuedVertices enqueued;
-        [InitializationRequired(3)] private readonly PathVertices path;
-        [InitializationRequired(4)] private readonly IntermediateVertices intermediate;
-        [InitializationRequired(5)] private readonly SourceVertices source;
-        [InitializationRequired(6)] private readonly TargetVertices target;
-        [InitializationRequired(0)] private readonly ObstacleVertices obstacles;
-#pragma warning restore 0649
+
+        private readonly VisitedVertices visited = new VisitedVertices();
+        private readonly EnqueuedVertices enqueued = new EnqueuedVertices();
+        private readonly PathVertices path = new PathVertices();
+        private readonly IntermediateVertices intermediate = new IntermediateVertices();
+        private readonly SourceVertices source = new SourceVertices();
+        private readonly TargetVertices target = new TargetVertices();
+        private readonly ObstacleVertices obstacles = new ObstacleVertices();
         private readonly IVisualization visualizations;
-        private readonly IVisualizationSlides[] visualizationSlides;
+        private readonly IVisualizationSlides visualizationSlides;
         private readonly IGraph graph;
     }
 }

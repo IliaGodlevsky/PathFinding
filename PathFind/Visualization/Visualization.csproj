@@ -59,6 +59,7 @@
     <Compile Include="Realizations\TargetVertices.cs" />
     <Compile Include="Realizations\VisitedVertices.cs" />
     <Compile Include="PathfindingVisualization.cs" />
+    <Compile Include="Realizations\VisualizationSlides.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Algorithm\Algorithm.Base\Algorithm.Base.csproj">
