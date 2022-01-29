@@ -4,6 +4,7 @@ using GraphLib.NullRealizations.NullObjects;
 using NullObject.Attributes;
 using SingletonLib;
 using System.Collections.Generic;
+using System.Diagnostics;
 
 namespace Algorithm.NullRealizations
 {
@@ -12,6 +13,7 @@ namespace Algorithm.NullRealizations
     /// <see cref="IGraphPath"/>. This class is a singleton
     /// </summary>
     [Null]
+    [DebuggerDisplay("Null")]
     public sealed class NullGraphPath : Singleton<NullGraphPath>, IGraphPath
     {
         public IReadOnlyList<IVertex> Path => NullVertex.GetMany(0);

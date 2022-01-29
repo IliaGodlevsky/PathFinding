@@ -4,6 +4,8 @@ using GraphLib.NullRealizations.NullObjects;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using ValueRange;
+using ValueRange.Extensions;
 
 namespace GraphLib.Extensions
 {
@@ -53,6 +55,38 @@ namespace GraphLib.Extensions
         public static Dictionary<ICoordinate, IVertex> ToDictionary(this IEnumerable<IVertex> vertices)
         {
             return vertices.ToDictionary(vertex => vertex.Position);
+        }
+
+        /// <summary>
+        /// Converts <paramref name="index"/> 
+        /// into an array of cartesian coordinates 
+        /// according to graph dimension sizes
+        /// </summary>
+        /// <param name="self"></param>
+        /// <param name="index"></param>
+        /// <returns>An array of cartesian coordinates</returns>
+        /// <exception cref="ArgumentOutOfRangeException">Thrown when 
+        /// index is greater of equals
+        /// <paramref name="dimensionSizes"/> 
+        /// elements multiplication </exception>
+        public static int[] ToCoordinates(this int[] dimensionSizes, int index)
+        {
+            int size = dimensionSizes.GetMultiplication();
+            var rangeOfIndices = new InclusiveValueRange<int>(size - 1, 0);
+            if (!rangeOfIndices.Contains(index))
+            {
+                throw new ArgumentOutOfRangeException(nameof(index));
+            }
+
+            var coordinates = new int[dimensionSizes.Length];
+
+            for (int i = 0; i < coordinates.Length; i++)
+            {
+                coordinates[i] = index % dimensionSizes[i];
+                index /= dimensionSizes[i];
+            }
+
+            return coordinates;
         }
     }
 }

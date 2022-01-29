@@ -2,23 +2,23 @@
 using GraphLib.Interfaces;
 using GraphLib.Interfaces.Factories;
 using GraphLib.Serialization.Interfaces;
-using GraphLib.Serialization.Tests.Configure;
 using NUnit.Framework;
 using System.IO;
 
-namespace GraphLib.Serialization.Tests
+namespace GraphLib.Serialization.Tests.SerializersTests
 {
     [TestFixture]
-    internal class GraphSerializerTests
+    public abstract class BaseGraphSerializerTests
     {
+        protected abstract IContainer Container { get; }
+
         [TestCase(11, new[] { 8, 9, 7 })]
         [TestCase(22, new[] { 15, 15 })]
         [TestCase(66, new[] { 4, 3, 4, 2 })]
         [TestCase(44, new[] { 4, 3, 4, 2, 2 })]
         public void SaveGraph_LoadGraph_ReturnsEqualGraph(int obstaclePercent, int[] graphParams)
         {
-            var container = ContainerConfigure.GraphSerializerConfigure();
-            using (var scope = container.BeginLifetimeScope())
+            using (var scope = Container.BeginLifetimeScope())
             {
                 var assembler = scope.Resolve<IGraphAssemble>();
                 var serializer = scope.Resolve<IGraphSerializer>();

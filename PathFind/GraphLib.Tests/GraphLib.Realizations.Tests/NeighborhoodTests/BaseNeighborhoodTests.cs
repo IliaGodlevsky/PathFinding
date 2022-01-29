@@ -1,15 +1,15 @@
 ﻿using Autofac;
 using Autofac.Extras.Moq;
 using GraphLib.Interfaces;
-using GraphLib.Realizations.Neighbourhoods;
 using NUnit.Framework;
 using System.Linq;
 
-namespace GraphLib.Realizations.Tests
+namespace GraphLib.Realizations.Tests.NeighborhoodTests
 {
-    [TestFixture]
-    public class CardinalNeighboursCoordinatesTest
+    public abstract class BaseNeighborhoodTests<TNeighborhood> where TNeighborhood : INeighborhood
     {
+        protected abstract ulong GetExpectedNeighborhoodCount(int dimensionsCount);
+
         [TestCase(new int[] { })]
         [TestCase(new[] { 2 })]
         [TestCase(new[] { 2, 3 })]
@@ -20,12 +20,11 @@ namespace GraphLib.Realizations.Tests
         [TestCase(new[] { 2, 3, 4, 5, 6, 7, 8 })]
         public void Coordinates_CoordinatesWithVariousDimensionsNumber_ReturnValidNumberOfNeighbours(int[] coordinateValues)
         {
-            int dimensions = coordinateValues.Length;
-            int expectedResult = 2 * dimensions;
+            ulong expectedResult = GetExpectedNeighborhoodCount(coordinateValues.Length);
             using (var mock = AutoMock.GetLoose())
             {
                 mock.Mock<ICoordinate>().Setup(c => c.CoordinatesValues).Returns(coordinateValues);
-                var neighboursCoordinate = mock.Create<VonNeumannNeighborhood>();
+                var neighboursCoordinate = mock.Create<TNeighborhood>();
 
                 var environment = neighboursCoordinate.Neighbours;
 
@@ -46,7 +45,7 @@ namespace GraphLib.Realizations.Tests
             using (var mock = AutoMock.GetLoose())
             {
                 mock.Mock<ICoordinate>().Setup(c => c.CoordinatesValues).Returns(coordinateValues);
-                var neighboursCoordinate = mock.Create<VonNeumannNeighborhood>();
+                var neighboursCoordinate = mock.Create<TNeighborhood>();
 
                 var environment = neighboursCoordinate.Neighbours;
                 var coordinate = mock.Container.Resolve<ICoordinate>();
@@ -69,14 +68,12 @@ namespace GraphLib.Realizations.Tests
         {
             using (var mock = AutoMock.GetLoose())
             {
-                mock.Mock<ICoordinate>()
-                    .Setup(c => c.CoordinatesValues)
-                    .Returns(coordinateValues);
-                var neighboursCoordinate = mock.Create<VonNeumannNeighborhood>();
+                mock.Mock<ICoordinate>().Setup(c => c.CoordinatesValues).Returns(coordinateValues);
+                var neighboursCoordinate = mock.Create<TNeighborhood>();
 
-                var environment = neighboursCoordinate.Neighbours.ToArray();
+                var environment = neighboursCoordinate.Neighbours;
 
-                Assert.IsTrue(environment.Distinct().Count() == environment.Length);
+                Assert.IsTrue(environment.Distinct().Count() == environment.Count);
             }
         }
     }

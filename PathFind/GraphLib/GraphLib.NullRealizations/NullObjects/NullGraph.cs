@@ -4,10 +4,12 @@ using NullObject.Attributes;
 using SingletonLib;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 
 namespace GraphLib.NullRealizations.NullObjects
 {
     [Null]
+    [DebuggerDisplay("Null")]
     public sealed class NullGraph : Singleton<NullGraph>, IGraph, ICloneable<IGraph>
     {
         public IVertex this[ICoordinate position]

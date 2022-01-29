@@ -2,6 +2,7 @@
 using NullObject.Attributes;
 using SingletonLib;
 using System;
+using System.Diagnostics;
 
 namespace GraphLib.NullRealizations.NullObjects
 {
@@ -10,6 +11,7 @@ namespace GraphLib.NullRealizations.NullObjects
     /// </summary>
     [Null]
     [Serializable]
+    [DebuggerDisplay("Null")]
     public sealed class NullCoordinate : Singleton<NullCoordinate>, ICoordinate
     {
         public int[] CoordinatesValues => Array.Empty<int>();

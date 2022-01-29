@@ -3,10 +3,12 @@ using NullObject.Attributes;
 using SingletonLib;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 
 namespace GraphLib.NullRealizations.NullObjects
 {
     [Null]
+    [DebuggerDisplay("Null")]
     public sealed class NullVertex : Singleton<NullVertex>, IVertex, IEquatable<IVertex>
     {
         public bool IsObstacle { get => true; set { } }

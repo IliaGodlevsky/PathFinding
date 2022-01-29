@@ -85,7 +85,7 @@ namespace Common.Extensions.EnumerableExtensions
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static int GetMultiplication(this IEnumerable<int> array)
         {
-            return array.AggregateOrDefault(IntExtensions.Multiply);
+            return array.AggregateOrDefault((x, y) => x * y);
         }
 
         /// <summary>

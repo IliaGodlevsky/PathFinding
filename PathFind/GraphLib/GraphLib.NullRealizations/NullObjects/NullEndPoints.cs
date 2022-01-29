@@ -2,10 +2,12 @@
 using NullObject.Attributes;
 using SingletonLib;
 using System.Collections.Generic;
+using System.Diagnostics;
 
 namespace GraphLib.NullRealizations.NullObjects
 {
     [Null]
+    [DebuggerDisplay("Null")]
     public sealed class NullEndPoints : Singleton<NullEndPoints>, IEndPoints
     {
         public IVertex Target => NullVertex.Instance;

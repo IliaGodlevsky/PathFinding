@@ -1,10 +1,12 @@
 ﻿using GraphLib.Interfaces;
 using NullObject.Attributes;
 using SingletonLib;
+using System.Diagnostics;
 
 namespace GraphLib.NullRealizations.NullObjects
 {
     [Null]
+    [DebuggerDisplay("Null")]
     public sealed class NullVisualizable : Singleton<NullVisualizable>, IVisualizable
     {
         public bool IsVisualizedAsPath => false;
