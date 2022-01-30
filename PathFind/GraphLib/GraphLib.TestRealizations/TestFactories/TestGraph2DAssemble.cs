@@ -1,29 +1,31 @@
-﻿using GraphLib.Interfaces;
-using GraphLib.Realizations.Factories.CoordinateFactories;
-using GraphLib.Realizations.Factories.GraphAssembles;
-using GraphLib.Realizations.Factories.GraphFactories;
-using GraphLib.Realizations.Factories.NeighboursCoordinatesFactories;
+﻿using Common.Extensions.EnumerableExtensions;
+using GraphLib.Extensions;
+using GraphLib.Interfaces;
+using GraphLib.Interfaces.Factories;
 using GraphLib.Realizations.Graphs;
+using GraphLib.Realizations.Neighbourhoods;
 using GraphLib.TestRealizations.TestFactories.Matrix;
+using GraphLib.TestRealizations.TestObjects;
 
 namespace GraphLib.TestRealizations.TestFactories
 {
-    public sealed class TestGraph2DAssemble : GraphAssemble
+    public sealed class TestGraph2DAssemble : IGraphAssemble
     {
-        public TestGraph2DAssemble()
-            : base(new TestVertexFactory(),
-                  new Coordinate2DFactory(),
-                  new Graph2DFactory(),
-                  new TestCostFactory(),
-                  new MooreNeighborhoodFactory())
+        public IGraph AssembleGraph(int obstaclePercent = 0, params int[] sizes)
         {
-
-        }
-
-        public override IGraph AssembleGraph(int obstaclePercent = 0, params int[] sizes)
-        {
-            var graph = (Graph2D)base.AssembleGraph(0, Constants.DimensionSizes2D);
-            var matrices = new Matrices(new CostMatrix(graph), new ObstacleMatrix(graph));
+            int size = Constants.DimensionSizes2D.GetMultiplication();
+            var vertices = new TestVertex[size];
+            for (int index = 0; index < size; index++)
+            {
+                var coordinates = Constants.DimensionSizes2D.ToCoordinates(index);
+                var coordinate = new TestCoordinate(coordinates);
+                var neighborhood = new MooreNeighborhood(coordinate);
+                vertices[index] = new TestVertex(neighborhood, coordinate);
+            }
+            var graph = new Graph2D(vertices, Constants.DimensionSizes2D);
+            var costMatrix = new CostMatrix(graph);
+            var obstacleMatric = new ObstacleMatrix(graph);
+            var matrices = new Matrices(costMatrix, obstacleMatric);
             matrices.Overlay();
             return graph;
         }

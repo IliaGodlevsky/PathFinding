@@ -1,5 +1,6 @@
 ﻿using GraphLib.Realizations.Factories.GraphAssembles;
 using GraphLib.Realizations.Factories.NeighboursCoordinatesFactories;
+using Random.Realizations.Generators;
 
 namespace GraphLib.TestRealizations.TestFactories
 {
@@ -10,7 +11,8 @@ namespace GraphLib.TestRealizations.TestFactories
                   new TestCoordinateFactory(),
                   new TestGraphFactory(),
                   new TestCostFactory(),
-                  new VonNeumannNeighborhoodFactory())
+                  new VonNeumannNeighborhoodFactory(),
+                  new PseudoRandom())
         {
 
         }

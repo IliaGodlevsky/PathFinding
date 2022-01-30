@@ -96,7 +96,9 @@ namespace ConsoleVersion.Model
             Console.Write(text, Color);
         }
 
-        public bool Equals(IVertex other) => other.IsEqual(this);
+        public bool Equals(IVertex other) => Equals((object)other);
+        public override bool Equals(object obj) => obj is IVertex vertex && vertex.IsEqual(this);
+        public override int GetHashCode() => base.GetHashCode();
         public bool IsVisualizedAsPath => ColorsHub.IsVisualizedAsPath(this);
         public bool IsVisualizedAsEndPoint => ColorsHub.IsVisualizedAsEndPoint(this);
         public void VisualizeAsTarget() => ColorsHub.VisualizeAsTarget(this);

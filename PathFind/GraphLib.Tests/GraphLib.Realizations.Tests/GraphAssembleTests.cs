@@ -1,7 +1,7 @@
-﻿using Autofac.Extras.Moq;
+﻿using Autofac;
+using Autofac.Extras.Moq;
 using Common.Extensions.EnumerableExtensions;
 using GraphLib.Extensions;
-using GraphLib.Interfaces;
 using GraphLib.NullRealizations.NullObjects;
 using GraphLib.Realizations.Factories.GraphAssembles;
 using GraphLib.Realizations.Neighbourhoods;
@@ -9,6 +9,8 @@ using GraphLib.Realizations.Tests.Extenions;
 using GraphLib.TestRealizations;
 using GraphLib.TestRealizations.TestObjects;
 using NUnit.Framework;
+using Random.Interface;
+using Random.Realizations.Generators;
 using System;
 using System.Linq;
 
@@ -17,18 +19,28 @@ namespace GraphLib.Realizations.Tests
     [TestFixture]
     public class GraphAssemblerTests
     {
+        private void RegisterNullRandomNumberGenerator(ContainerBuilder builder)
+        {
+            builder.Register(container => NullRandom.Instance).As<IRandom>();
+        }
+
+        private void RegisterPseudoRandomNumberGenerator(ContainerBuilder builder)
+        {
+            builder.RegisterType<PseudoRandom>().As<IRandom>();
+        }
+
         [TestCase(15, new int[] { 100 })]
         [TestCase(10, new int[] { 10, 15 })]
         [TestCase(10, new int[] { 7, 10, 7 })]
         [TestCase(33, new int[] { 7, 4, 7, 4 })]
         public void AssembleGraph_ReturnsValidGraph(int obstaclePercent, int[] dimensionSizes)
         {
-            using (var mock = AutoMock.GetLoose())
+            using (var mock = AutoMock.GetLoose(RegisterPseudoRandomNumberGenerator))
             {
                 mock.MockCoordinateFactory(x => new TestCoordinate(x));
                 mock.MockNeighbourhoodFactory(x => new MooreNeighborhood(x));
-                mock.MockVertexFactory((nc, c) => new TestVertex(nc, c));
-                mock.MockGraphFactory((vertices, dimensions) => new TestGraph(vertices, dimensions));
+                mock.MockVertexFactory((n, c) => new TestVertex(n, c));
+                mock.MockGraphFactory((v, d) => new TestGraph(v, d));
                 mock.MockVertexCostFactory(cost => new TestVertexCost(cost));
 
                 var assemble = mock.Create<GraphAssemble>();
@@ -36,14 +48,14 @@ namespace GraphLib.Realizations.Tests
 
                 Assert.IsTrue(graph.DimensionsSizes.SequenceEqual(dimensionSizes));
                 Assert.AreEqual(obstaclePercent, graph.GetObstaclePercent());
-                Assert.IsTrue(CoordinatesAreUnique(graph));
+                Assert.IsTrue(graph.Vertices.ContainsUniqueValues());
             }
         }
 
         [Test]
         public void AssembleGraph_NullRealizations_ReturnsNullGraph()
         {
-            using (var mock = AutoMock.GetLoose())
+            using (var mock = AutoMock.GetLoose(RegisterNullRandomNumberGenerator))
             {
                 mock.MockCoordinateFactory(_ => NullCoordinate.Instance);
                 mock.MockNeighbourhoodFactory(_ => NullNeighborhood.Instance);
@@ -56,15 +68,6 @@ namespace GraphLib.Realizations.Tests
 
                 Assert.AreSame(NullGraph.Instance, graph);
             }
-        }
-
-        private bool CoordinatesAreUnique(IGraph graph)
-        {
-            var uniqueVertices = graph.Vertices
-                .DistinctBy(vertex => vertex.Position)
-                .ToArray();
-
-            return uniqueVertices.Length == graph.Size;
         }
     }
 }

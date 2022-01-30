@@ -135,10 +135,9 @@ namespace WindowsFormsVersion.Model
             Text = cost.ToString();
         }
 
-        public bool Equals(IVertex other)
-        {
-            return other.IsEqual(this);
-        }
+        public bool Equals(IVertex other) => Equals((object)other);
+        public override bool Equals(object obj) => obj is IVertex vertex && vertex.IsEqual(this);
+        public override int GetHashCode() => base.GetHashCode();
 
         public bool IsVisualizedAsPath
             => BackColor.IsOneOf(PathVertexColor, AlreadyPathVertexColor, IntermediateVertexColor, ToReplaceMarkColor);

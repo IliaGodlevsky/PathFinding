@@ -237,5 +237,15 @@ namespace Common.Extensions.EnumerableExtensions
         {
             return array.AggregateOrDefault(IntExtensions.Xor);
         }
+
+        public static bool ContainsUniqueValues<T>(this IEnumerable<T> collection)
+        {
+            return collection.ContainsUniqueValues(EqualityComparer<T>.Default);
+        }
+
+        public static bool ContainsUniqueValues<T>(this IEnumerable<T> collection, IEqualityComparer<T> comparer)
+        {
+            return collection.Distinct(comparer).Count() == collection.Count();
+        }
     }
 }

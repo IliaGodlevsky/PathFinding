@@ -4,7 +4,6 @@ using GraphLib.Interfaces;
 using GraphLib.Interfaces.Factories;
 using Random.Extensions;
 using Random.Interface;
-using Random.Realizations.Generators;
 using System;
 using System.ComponentModel;
 using ValueRange;
@@ -33,18 +32,6 @@ namespace GraphLib.Realizations.Factories.GraphAssembles
             this.neighbourhoodFactory = neighbourhoodFactory;
             this.random = random;
             percentRange = new InclusiveValueRange<int>(99, 0);
-        }
-
-        public GraphAssemble(
-            IVertexFactory vertexFactory,
-            ICoordinateFactory coordinateFactory,
-            IGraphFactory graphFactory,
-            IVertexCostFactory costFactory,
-            INeighborhoodFactory neighbourhoodFactory)
-            : this(vertexFactory, coordinateFactory, graphFactory, costFactory,
-                  neighbourhoodFactory, new PseudoRandom())
-        {
-
         }
 
         /// <summary>

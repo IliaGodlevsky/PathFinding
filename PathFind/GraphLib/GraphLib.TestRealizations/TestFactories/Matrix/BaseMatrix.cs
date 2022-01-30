@@ -1,6 +1,6 @@
 ﻿using GraphLib.Interfaces;
-using GraphLib.Realizations.Coordinates;
 using GraphLib.Realizations.Graphs;
+using GraphLib.TestRealizations.TestObjects;
 using System;
 
 namespace GraphLib.TestRealizations.TestFactories.Matrix
@@ -21,7 +21,7 @@ namespace GraphLib.TestRealizations.TestFactories.Matrix
             {
                 for (int y = 0; y < graph.Length; y++)
                 {
-                    var coordinate = new Coordinate2D(x, y);
+                    var coordinate = new TestCoordinate(x, y);
                     Assign(graph[coordinate], Matrix[x, y]);
                 }
             }
