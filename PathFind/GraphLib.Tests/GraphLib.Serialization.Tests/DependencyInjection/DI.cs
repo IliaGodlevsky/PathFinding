@@ -18,7 +18,7 @@ namespace GraphLib.Serialization.Tests.DependencyInjection
         {
             var builder = new ContainerBuilder();
 
-            builder.RegisterType<TestGraphAssemble>().As<IGraphAssemble>().SingleInstance();           
+            builder.RegisterType<TestGraphAssemble>().As<IGraphAssemble>().SingleInstance();
             serializerRegister(builder);
             builder.RegisterType<BinaryFormatter>().As<IFormatter>().SingleInstance();
             builder.RegisterType<TestVertexFromInfoFactory>().As<IVertexFromInfoFactory>().SingleInstance();

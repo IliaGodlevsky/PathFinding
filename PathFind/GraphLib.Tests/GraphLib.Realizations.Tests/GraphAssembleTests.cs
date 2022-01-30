@@ -35,7 +35,6 @@ namespace GraphLib.Realizations.Tests
                 var graph = assemble.AssembleGraph(obstaclePercent, dimensionSizes);
 
                 Assert.IsTrue(graph.DimensionsSizes.SequenceEqual(dimensionSizes));
-                Assert.IsTrue(graph.Vertices.All(IsTestVertexType));
                 Assert.AreEqual(obstaclePercent, graph.GetObstaclePercent());
                 Assert.IsTrue(CoordinatesAreUnique(graph));
             }
@@ -66,11 +65,6 @@ namespace GraphLib.Realizations.Tests
                 .ToArray();
 
             return uniqueVertices.Length == graph.Size;
-        }
-
-        private bool IsTestVertexType(IVertex vertex)
-        {
-            return vertex is TestVertex;
         }
     }
 }

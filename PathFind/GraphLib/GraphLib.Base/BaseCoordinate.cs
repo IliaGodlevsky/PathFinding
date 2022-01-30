@@ -1,6 +1,5 @@
 ﻿using Common.Extensions.EnumerableExtensions;
 using Common.Interface;
-using GraphLib.Exceptions;
 using GraphLib.Extensions;
 using GraphLib.Interfaces;
 using System;
@@ -16,16 +15,7 @@ namespace GraphLib.Base
     {
         protected BaseCoordinate(int numberOfDimensions, params int[] coordinates)
         {
-            CoordinatesValues = coordinates.ToArray();
-            int actualLength = coordinates.Length;
-            if (actualLength != numberOfDimensions)
-            {
-                string argumentName = nameof(coordinates);
-                string message = "Number of dimensions must be equal ";
-                message += "to coordinates number of dimensions\n";
-                message += $"Required value is {numberOfDimensions}";
-                throw new WrongNumberOfDimensionsException(argumentName, actualLength, message);
-            }
+            CoordinatesValues = coordinates.TakeOrDefault(numberOfDimensions).ToArray();
             toString = $"({string.Join(",", CoordinatesValues)})";
             hashCode = CoordinatesValues.ToHashCode();
         }

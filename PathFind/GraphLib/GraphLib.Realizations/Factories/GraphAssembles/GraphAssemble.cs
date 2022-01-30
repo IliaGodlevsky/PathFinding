@@ -1,5 +1,4 @@
 ﻿using Common.Extensions.EnumerableExtensions;
-using GraphLib.Exceptions;
 using GraphLib.Extensions;
 using GraphLib.Interfaces;
 using GraphLib.Interfaces.Factories;
@@ -60,7 +59,6 @@ namespace GraphLib.Realizations.Factories.GraphAssembles
         /// <returns>Assembled graph suitable for use with 
         /// pathfinding algorithms</returns>
         /// <exception cref="ArgumentException"></exception>
-        /// <exception cref="WrongNumberOfDimensionsException"></exception>
         public virtual IGraph AssembleGraph(int obstaclePercent, params int[] graphDimensionsSizes)
         {
             int graphSize = graphDimensionsSizes.GetMultiplication();
