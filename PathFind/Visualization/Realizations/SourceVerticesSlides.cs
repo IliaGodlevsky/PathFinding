@@ -4,11 +4,11 @@ using Visualization.Interfaces;
 
 namespace Visualization.Realizations
 {
-    internal sealed class IntermediateVertices : ResultVertices, IVisualization
+    internal sealed class SourceVerticesSlides : EndPointsSlides, IVisualization
     {
         protected override void Visualize(IVisualizable visualizable)
         {
-            visualizable.VisualizeAsIntermediate();
+            visualizable.VisualizeAsSource();
         }
     }
 }

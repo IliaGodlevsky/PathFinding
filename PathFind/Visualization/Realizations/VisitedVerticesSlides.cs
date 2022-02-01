@@ -7,7 +7,7 @@ namespace Visualization.Realizations
     /// <summary>
     /// A class, that stores visited vertices by algorithm
     /// </summary>
-    internal sealed class VisitedVertices : AlgorithmVertices, IVisualization
+    internal sealed class VisitedVerticesSlides : AlgorithmProcessSlides, IVisualization
     {
         protected override void Visualize(IVisualizable visualizable)
         {

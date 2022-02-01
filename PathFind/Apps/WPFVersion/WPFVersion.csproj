@@ -81,7 +81,7 @@
     <Compile Include="Extensions\IMessengerExtensions.cs" />
     <Compile Include="Extensions\TypeExtensions.cs" />
     <Compile Include="Infrastructure\RelayCommand.cs" />
-    <Compile Include="Messages\ReturnActualCostsMessage.cs" />
+    <Compile Include="Messages\ReturnActualStateMessage.cs" />
     <Compile Include="Messages\SubscribeOnAlgorithmEventsMessage.cs" />
     <Compile Include="Messages\AlgorithmStartedMessage.cs" />
     <Compile Include="Messages\AlgorithmIndexMessage.cs" />
@@ -94,7 +94,9 @@
     <Compile Include="Messages\IsAllAlgorithmsFinishedMessage.cs" />
     <Compile Include="Messages\PathFoundMessage.cs" />
     <Compile Include="Messages\SubscribeOnCostChangedMessage.cs" />
+    <Compile Include="Messages\SubscribeOnObstacleChangedMessage.cs" />
     <Compile Include="Messages\UnsubscribeFromCostChangedMessage.cs" />
+    <Compile Include="Messages\UnsubscribeFromObstacleChangedMessage.cs" />
     <Compile Include="Messages\UpdateStatisticsMessage.cs" />
     <Compile Include="Model\EndPoints.cs" />
     <Compile Include="Model\CostColors.cs" />

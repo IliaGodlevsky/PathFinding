@@ -41,16 +41,25 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="CostChangedEventArgs.cs" />
-    <Compile Include="CostChangedEventHandler.cs" />
-    <Compile Include="INotifyCostChanged.cs" />
+    <Compile Include="EventArguments\BaseVertexStateChangedEventArgs.cs" />
+    <Compile Include="Interfaces\INotifyObstacleChanged.cs" />
+    <Compile Include="EventArguments\ObstacleChangedEventArgs.cs" />
+    <Compile Include="EventHandlers\ObstacleChangedEventHandler.cs" />
+    <Compile Include="EventArguments\CostChangedEventArgs.cs" />
+    <Compile Include="EventHandlers\CostChangedEventHandler.cs" />
+    <Compile Include="Interfaces\INotifyVertexCostChanged.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\Common\Common.csproj">
+      <Project>{A5A743F5-D346-4B2B-B6AC-07152F64E4D9}</Project>
+      <Name>Common</Name>
+    </ProjectReference>
     <ProjectReference Include="..\GraphLib.Interfaces\GraphLib.Interfaces.csproj">
       <Project>{D3C5CCFE-698B-41C7-9A72-5FD0262765E1}</Project>
       <Name>GraphLib.Interfaces</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

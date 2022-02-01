@@ -99,6 +99,10 @@ namespace WPFVersion3D.Model
                 {
                     VisualizeAsObstacle();
                 }
+                else
+                {
+                    VisualizeAsRegular();
+                }
             }
         }
 

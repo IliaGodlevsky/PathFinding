@@ -1,12 +1,12 @@
-﻿using GraphLib.Infrastructure;
+﻿using GraphLib.Infrastructure.Interfaces;
 
 namespace WPFVersion.Messages
 {
     internal class SubscribeOnCostChangedMessage
     {
-        public INotifyCostChanged Notifier { get; }
+        public INotifyVertexCostChanged Notifier { get; }
 
-        public SubscribeOnCostChangedMessage(INotifyCostChanged notifier)
+        public SubscribeOnCostChangedMessage(INotifyVertexCostChanged notifier)
         {
             Notifier = notifier;
         }

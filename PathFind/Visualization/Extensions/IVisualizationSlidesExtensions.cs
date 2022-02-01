@@ -24,7 +24,7 @@ namespace Visualization.Extensions
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static void RemoveRange(this AlgorithmVertices self, IAlgorithm algorithm, IEnumerable<IVertex> range)
+        public static void RemoveRange(this AlgorithmProcessSlides self, IAlgorithm algorithm, IEnumerable<IVertex> range)
         {
             range.ForEach(item => self.Remove(algorithm, item));
         }

@@ -8,9 +8,9 @@ using Visualization.Interfaces;
 
 namespace Visualization.Abstractions
 {
-    internal abstract class EndPointsVertices : IVisualizationSlides, IVisualization
+    internal abstract class EndPointsSlides : IVisualizationSlides, IVisualization
     {
-        public EndPointsVertices()
+        public EndPointsSlides()
         {
             vertices = new ConcurrentDictionary<IAlgorithm, IVertex>();
         }
