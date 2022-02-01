@@ -19,6 +19,9 @@ namespace WPFVersion.Model
             messenger.Register<PathFoundMessage>(this, MessageTokens.VisualizationModel, PathFound);
             messenger.Register<SubscribeOnAlgorithmEventsMessage>(this, MessageTokens.VisualizationModel, Subscribe);
             messenger.Register<EndPointsChosenMessage>(this, MessageTokens.VisualizationModel, RegisterEndPointsForAlgorithm);
+            messenger.Register<SubscribeOnCostChangedMessage>(this, MessageTokens.VisualizationModel, SubscribeOnCostChanged);
+            messenger.Register<UnsubscribeFromCostChangedMessage>(this, MessageTokens.VisualizationModel, UnsubscribeFromCostChanged);
+            messenger.Register<ReturnActualCostsMessage>(this, MessageTokens.VisualizationModel, ReturnActualCosts);
         }
 
         public void Dispose()
@@ -35,6 +38,21 @@ namespace WPFVersion.Model
         protected override async void OnVertexVisited(object sender, AlgorithmEventArgs e)
         {
             await Task.Run(() => base.OnVertexVisited(sender, e));
+        }
+
+        private void ReturnActualCosts(ReturnActualCostsMessage message)
+        {
+            ReturnActualCosts();
+        }
+
+        private void SubscribeOnCostChanged(SubscribeOnCostChangedMessage message)
+        {
+            SubscribeOnCostChanged(message.Notifier);
+        }
+
+        private void UnsubscribeFromCostChanged(UnsubscribeFromCostChangedMessage message)
+        {
+            UnsubscribeFromCostChanged(message.Notifier);
         }
 
         private void Subscribe(SubscribeOnAlgorithmEventsMessage message)

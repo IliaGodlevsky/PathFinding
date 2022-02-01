@@ -51,6 +51,7 @@
     <Compile Include="Interfaces\IVisualization.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Realizations\CompositeVisualization.cs" />
+    <Compile Include="Realizations\CostVertices.cs" />
     <Compile Include="Realizations\EnqueuedVertices.cs" />
     <Compile Include="Realizations\IntermediateVertices.cs" />
     <Compile Include="Realizations\ObstacleVertices.cs" />
@@ -85,6 +86,10 @@
     <ProjectReference Include="..\GraphLib\GraphLib.Extensions\GraphLib.Extensions.csproj">
       <Project>{93F88F47-1871-44CD-9622-EB8D406C969C}</Project>
       <Name>GraphLib.Extensions</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\GraphLib\GraphLib.infrastructure\GraphLib.Infrastructure.csproj">
+      <Project>{80B8111B-FCF0-4485-9F20-244AB9F1953D}</Project>
+      <Name>GraphLib.Infrastructure</Name>
     </ProjectReference>
     <ProjectReference Include="..\GraphLib\GraphLib.Interfaces\GraphLib.Interfaces.csproj">
       <Project>{D3C5CCFE-698B-41C7-9A72-5FD0262765E1}</Project>

@@ -97,6 +97,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ValueRange.Tests", "ValueRa
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SingletonLib", "SingletonLib\SingletonLib.csproj", "{1F8DE924-837C-4CD6-B902-110E1C565F89}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GraphLib.Infrastructure", "GraphLib\GraphLib.infrastructure\GraphLib.Infrastructure.csproj", "{80B8111B-FCF0-4485-9F20-244AB9F1953D}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -267,6 +269,10 @@ Global
 		{1F8DE924-837C-4CD6-B902-110E1C565F89}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{1F8DE924-837C-4CD6-B902-110E1C565F89}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{1F8DE924-837C-4CD6-B902-110E1C565F89}.Release|Any CPU.Build.0 = Release|Any CPU
+		{80B8111B-FCF0-4485-9F20-244AB9F1953D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{80B8111B-FCF0-4485-9F20-244AB9F1953D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{80B8111B-FCF0-4485-9F20-244AB9F1953D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{80B8111B-FCF0-4485-9F20-244AB9F1953D}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -299,6 +305,7 @@ Global
 		{FE692FCB-46C0-47A1-80ED-EFDCC811CF69} = {C2095ABE-A68C-4A85-82E8-D12C8D5FB2AD}
 		{D294DACD-668E-4397-B8E8-F1717D5653B5} = {8D715FA6-3414-48B3-ADF7-06107D21B20D}
 		{8270F3AF-2B53-45E4-9795-89091CEE60D4} = {C2095ABE-A68C-4A85-82E8-D12C8D5FB2AD}
+		{80B8111B-FCF0-4485-9F20-244AB9F1953D} = {FC422D56-6D0C-48D8-9F47-A6B3B43623B3}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {97B689F4-F324-4048-A586-6D7150C9C419}
