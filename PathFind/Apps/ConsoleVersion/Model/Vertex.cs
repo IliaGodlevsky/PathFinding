@@ -48,7 +48,7 @@ namespace ConsoleVersion.Model
                 {
                     VisualizeAsObstacle();
                 }
-                else
+                else if (!IsVisualizedAsEndPoint)
                 {
                     VisualizeAsRegular();
                 }

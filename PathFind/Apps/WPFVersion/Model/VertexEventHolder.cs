@@ -28,7 +28,7 @@ namespace WPFVersion.Model
         public override void ChangeVertexCost(object sender, EventArgs e)
         {
             base.ChangeVertexCost(sender, e);
-            if (sender is IVertex vertex)
+            if (sender is IVertex vertex && !vertex.IsObstacle)
             {
                 CostChanged?.Invoke(this, new CostChangedEventArgs(vertex));
             }

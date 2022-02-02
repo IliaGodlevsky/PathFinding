@@ -44,7 +44,7 @@ namespace WPFVersion.Model
 
         private void ReturnActualCosts(ReturnActualStateMessage message)
         {
-            ReturnActualState();
+            RestoreActualState();
         }
 
         private void SubscribeOnCostChanged(SubscribeOnCostChangedMessage message)
