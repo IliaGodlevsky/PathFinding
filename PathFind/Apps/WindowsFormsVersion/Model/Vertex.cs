@@ -72,10 +72,6 @@ namespace WindowsFormsVersion.Model
                 {
                     VisualizeAsObstacle();
                 }
-                else
-                {
-                    VisualizeAsRegular();
-                }
             }
         }
 

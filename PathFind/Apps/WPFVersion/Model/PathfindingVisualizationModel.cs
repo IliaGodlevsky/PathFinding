@@ -21,9 +21,7 @@ namespace WPFVersion.Model
             messenger.Register<EndPointsChosenMessage>(this, MessageTokens.VisualizationModel, RegisterEndPointsForAlgorithm);
             messenger.Register<SubscribeOnCostChangedMessage>(this, MessageTokens.VisualizationModel, SubscribeOnCostChanged);
             messenger.Register<UnsubscribeFromCostChangedMessage>(this, MessageTokens.VisualizationModel, UnsubscribeFromCostChanged);
-            messenger.Register<ReturnActualStateMessage>(this, MessageTokens.VisualizationModel, ReturnActualCosts);
-            messenger.Register<SubscribeOnObstacleChangedMessage>(this, MessageTokens.VisualizationModel, SubscribeOnObstacleChanged);
-            messenger.Register<UnsubscribeFromObstacleChangedMessage>(this, MessageTokens.VisualizationModel, UnsubscribeFromObstacleChanged);
+            messenger.Register<ReturnActualCostsMessage>(this, MessageTokens.VisualizationModel, ReturnActualCosts);
         }
 
         public void Dispose()
@@ -42,9 +40,9 @@ namespace WPFVersion.Model
             await Task.Run(() => base.OnVertexVisited(sender, e));
         }
 
-        private void ReturnActualCosts(ReturnActualStateMessage message)
+        private void ReturnActualCosts(ReturnActualCostsMessage message)
         {
-            ReturnActualState();
+            ReturnActualCosts();
         }
 
         private void SubscribeOnCostChanged(SubscribeOnCostChangedMessage message)
@@ -57,26 +55,6 @@ namespace WPFVersion.Model
             UnsubscribeFromCostChanged(message.Notifier);
         }
 
-        private void SubscribeOnObstacleChanged(SubscribeOnObstacleChangedMessage message)
-        {
-            SubscribeOnObstacleChanged(message.Notifier);
-        }
-
-        private void UnsubscribeFromObstacleChanged(UnsubscribeFromObstacleChangedMessage message)
-        {
-            UnsubscribeFromObstacleChanged(message.Notifier);
-        }
-
-        private void RegisterEndPointsForAlgorithm(EndPointsChosenMessage message)
-        {
-            AddEndPoints(message.Algorithm, message.EndPoints);
-        }
-
-        private void PathFound(PathFoundMessage message)
-        {
-            AddPathVertices(message.Algorithm, message.Path);
-        }
-
         private void Subscribe(SubscribeOnAlgorithmEventsMessage message)
         {
             if (message.IsVisualizationRequired)
@@ -87,6 +65,16 @@ namespace WPFVersion.Model
             {
                 message.Algorithm.Started += OnAlgorithmStarted;
             }
+        }
+
+        private void RegisterEndPointsForAlgorithm(EndPointsChosenMessage message)
+        {
+            AddEndPoints(message.Algorithm, message.EndPoints);
+        }
+
+        private void PathFound(PathFoundMessage message)
+        {
+            AddPathVertices(message.Algorithm, message.Path);
         }
 
         private readonly IMessenger messenger;

@@ -4,11 +4,11 @@ using Visualization.Interfaces;
 
 namespace Visualization.Realizations
 {
-    internal sealed class TargetVerticesSlides : EndPointsSlides, IVisualization
+    internal sealed class ObstacleVertices : ResultVertices, IVisualization
     {
         protected override void Visualize(IVisualizable visualizable)
         {
-            visualizable.VisualizeAsTarget();
+            visualizable.VisualizeAsObstacle();
         }
     }
 }

@@ -41,10 +41,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Abstractions\AlgorithmProcessSlides.cs" />
-    <Compile Include="Abstractions\EndPointsSlides.cs" />
-    <Compile Include="Abstractions\GraphSlides.cs" />
-    <Compile Include="Abstractions\AlgorithmResultSlides.cs" />
+    <Compile Include="Abstractions\AlgorithmVertices.cs" />
+    <Compile Include="Abstractions\EndPointsVertices.cs" />
+    <Compile Include="Abstractions\ResultVertices.cs" />
     <Compile Include="Extensions\GraphExtensions.cs" />
     <Compile Include="Extensions\IVisualizationSlidesExtensions.cs" />
     <Compile Include="Extensions\IVertexExtensions.cs" />
@@ -52,16 +51,16 @@
     <Compile Include="Interfaces\IVisualization.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Realizations\CompositeVisualization.cs" />
-    <Compile Include="Realizations\CompositeVisualizationSlides.cs" />
-    <Compile Include="Realizations\CostSlides.cs" />
-    <Compile Include="Realizations\EnqueuedVerticesSlides.cs" />
-    <Compile Include="Realizations\IntermediateEndPointsSlides.cs" />
-    <Compile Include="Realizations\ObstacleSlides.cs" />
-    <Compile Include="Realizations\PathVerticesSlides.cs" />
-    <Compile Include="Realizations\SourceVerticesSlides.cs" />
-    <Compile Include="Realizations\TargetVerticesSlides.cs" />
-    <Compile Include="Realizations\VisitedVerticesSlides.cs" />
+    <Compile Include="Realizations\CostVertices.cs" />
+    <Compile Include="Realizations\EnqueuedVertices.cs" />
+    <Compile Include="Realizations\IntermediateVertices.cs" />
+    <Compile Include="Realizations\ObstacleVertices.cs" />
+    <Compile Include="Realizations\PathVertices.cs" />
+    <Compile Include="Realizations\SourceVertices.cs" />
+    <Compile Include="Realizations\TargetVertices.cs" />
+    <Compile Include="Realizations\VisitedVertices.cs" />
     <Compile Include="PathfindingVisualization.cs" />
+    <Compile Include="Realizations\VisualizationSlides.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Algorithm\Algorithm.Base\Algorithm.Base.csproj">

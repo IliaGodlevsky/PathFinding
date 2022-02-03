@@ -1,7 +1,5 @@
 ﻿using GraphLib.Base;
-using GraphLib.Infrastructure.EventArguments;
-using GraphLib.Infrastructure.EventHandlers;
-using GraphLib.Infrastructure.Interfaces;
+using GraphLib.Infrastructure;
 using GraphLib.Interfaces;
 using GraphLib.Interfaces.Factories;
 using System;
@@ -9,11 +7,9 @@ using System.Windows.Input;
 
 namespace WPFVersion.Model
 {
-    internal sealed class VertexEventHolder : BaseVertexEventHolder, IVertexEventHolder,
-        INotifyVertexCostChanged, INotifyObstacleChanged
+    internal sealed class VertexEventHolder : BaseVertexEventHolder, IVertexEventHolder, INotifyCostChanged
     {
         public event CostChangedEventHandler CostChanged;
-        public event ObstacleChangedEventHandler ObstacleChanged;
 
         public VertexEventHolder(IVertexCostFactory costFactory) : base(costFactory)
         {
@@ -30,16 +26,8 @@ namespace WPFVersion.Model
             base.ChangeVertexCost(sender, e);
             if (sender is IVertex vertex)
             {
-                CostChanged?.Invoke(this, new CostChangedEventArgs(vertex));
-            }
-        }
-
-        public override void Reverse(object sender, EventArgs e)
-        {
-            base.Reverse(sender, e);
-            if (sender is IVertex vertex)
-            {
-                ObstacleChanged?.Invoke(this, new ObstacleChangedEventArgs(vertex));
+                var args = new CostChangedEventArgs(vertex.Cost, vertex);
+                CostChanged?.Invoke(this, args);
             }
         }
 

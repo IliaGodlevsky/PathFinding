@@ -48,10 +48,6 @@ namespace ConsoleVersion.Model
                 {
                     VisualizeAsObstacle();
                 }
-                else
-                {
-                    VisualizeAsRegular();
-                }
             }
         }
 
