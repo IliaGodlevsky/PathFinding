@@ -16,49 +16,38 @@ namespace Visualization
     {
         protected PathfindingVisualization(IGraph graph)
         {
-            visualizations = new CompositeVisualization(graph, costs, 
-                obstacles, enqueued, visited, path, intermediate, source, target);
-            visualizationSlides = new CompositeVisualizationSlides(costs, 
-                obstacles, enqueued, visited, path, intermediate, source, target);
+            visualizations = new CompositeVisualization(graph, costs, obstacles, enqueued, visited, path, intermediate, source, target);
+            visualizationSlides = new CompositeVisualizationSlides(costs, obstacles, enqueued, visited, path, intermediate, source, target);
             this.graph = graph;
         }
 
-        public void Clear()
-        {
-            visualizationSlides.Clear();
-        }
+        public void Clear() => visualizationSlides.Clear();
 
-        public void Remove(IAlgorithm algorithm)
-        {
-            visualizationSlides.Remove(algorithm);
-        }
+        public void Remove(IAlgorithm algorithm) => visualizationSlides.Remove(algorithm);
 
-        public void Visualize(IAlgorithm algorithm)
-        {
-            visualizations.Visualize(algorithm);
-        }
+        public void Visualize(IAlgorithm algorithm) => visualizations.Visualize(algorithm);
 
-        protected void SubscribeOnCostChanged(INotifyVertexCostChanged notifier)
+        protected virtual void SubscribeOnCostChanged(INotifyVertexCostChanged notifier)
         {
             notifier.CostChanged += costs.OnStateChanged;
         }
 
-        protected void UnsubscribeFromCostChanged(INotifyVertexCostChanged notifier) 
+        protected virtual void UnsubscribeFromCostChanged(INotifyVertexCostChanged notifier)
         {
             notifier.CostChanged -= costs.OnStateChanged;
         }
 
-        protected void SubscribeOnObstacleChanged(INotifyObstacleChanged notifier) 
+        protected virtual void SubscribeOnObstacleChanged(INotifyObstacleChanged notifier)
         {
             notifier.ObstacleChanged += obstacles.OnStateChanged;
         }
 
-        protected void UnsubscribeFromObstacleChanged(INotifyObstacleChanged notifier) 
+        protected virtual void UnsubscribeFromObstacleChanged(INotifyObstacleChanged notifier)
         {
             notifier.ObstacleChanged -= obstacles.OnStateChanged;
         }
 
-        protected virtual void RestoreActualState()
+        protected virtual void ReturnActualState()
         {
             costs.RestoreActualState();
             obstacles.RestoreActualState();
@@ -90,7 +79,7 @@ namespace Visualization
             if (sender is IAlgorithm algorithm)
             {
                 obstacles.AddRange(algorithm, graph.Vertices);
-                costs.AddRange(algorithm, graph.Vertices);
+                costs.AddRange(algorithm, graph.GetObstacles());
             }
         }
 

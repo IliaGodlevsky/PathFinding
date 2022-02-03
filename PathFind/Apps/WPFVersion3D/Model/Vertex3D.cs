@@ -99,7 +99,7 @@ namespace WPFVersion3D.Model
                 {
                     VisualizeAsObstacle();
                 }
-                else if (!IsVisualizedAsEndPoint)
+                else
                 {
                     VisualizeAsRegular();
                 }

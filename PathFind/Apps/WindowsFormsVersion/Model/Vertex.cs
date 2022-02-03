@@ -72,7 +72,7 @@ namespace WindowsFormsVersion.Model
                 {
                     VisualizeAsObstacle();
                 }
-                else if (!IsVisualizedAsEndPoint)
+                else
                 {
                     VisualizeAsRegular();
                 }

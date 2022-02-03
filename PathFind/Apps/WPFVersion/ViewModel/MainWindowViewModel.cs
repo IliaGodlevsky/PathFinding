@@ -57,7 +57,6 @@ namespace WPFVersion.ViewModel
             : base(fieldFactory, eventHolder, SerializationModule, endPoints, log)
         {
             messenger = DI.Container.Resolve<IMessenger>();
-
             ResetColorizingCommand = new RelayCommand(ExecuteResetColorizing, CanExecuteColorizingGraphOperation);
             ColorizeAccordingToCostCommand = new RelayCommand(ExecuteColorizeAccordingToCost, CanExecuteColorizingGraphOperation);
             ClearVerticesColorCommand = new RelayCommand(ExecuteClearVerticesColors, CanExecuteClearGraphOperation);
@@ -68,7 +67,6 @@ namespace WPFVersion.ViewModel
             LoadGraphCommand = new RelayCommand(ExecuteLoadGraphCommand, CanExecuteOperation);
             ShowVertexCost = new RelayCommand(ExecuteShowVertexCostCommand, CanExecuteOperation);
             InterruptAlgorithmCommand = new RelayCommand(ExecuteInterruptAlgorithmCommand, CanExecuteInterruptAlgorithmCommand);
-
             messenger.Register<IsAllAlgorithmsFinishedMessage>(this, MessageTokens.MainModel, OnIsAllAlgorithmsFinished);
             messenger.Register<GraphCreatedMessage>(this, MessageTokens.MainModel, SetGraph);
         }
@@ -134,6 +132,7 @@ namespace WPFVersion.ViewModel
         }
 
         private CostColors costColors;
+
         private readonly IMessenger messenger;
     }
 }
