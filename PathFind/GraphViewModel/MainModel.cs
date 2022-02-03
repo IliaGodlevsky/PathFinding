@@ -81,7 +81,7 @@ namespace GraphViewModel
             GraphParametres = Graph.ToString();
         }
 
-        public virtual void ClearColors()
+        public void ClearColors()
         {
             Graph.Refresh();
             endPoints.ReturnColors();
@@ -91,6 +91,7 @@ namespace GraphViewModel
         protected readonly IGraphFieldFactory fieldFactory;
         protected readonly BaseEndPoints endPoints;
         protected readonly GraphSerializationModule serializationModule;
-        protected readonly IVertexEventHolder eventHolder;
+
+        private readonly IVertexEventHolder eventHolder;
     }
 }

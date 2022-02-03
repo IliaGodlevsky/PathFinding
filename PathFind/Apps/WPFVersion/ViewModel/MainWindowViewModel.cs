@@ -2,7 +2,6 @@
 using GalaSoft.MvvmLight.Messaging;
 using GraphLib.Base;
 using GraphLib.Extensions;
-using GraphLib.Infrastructure;
 using GraphLib.Interfaces;
 using GraphLib.Serialization;
 using GraphViewModel;
@@ -81,16 +80,8 @@ namespace WPFVersion.ViewModel
             base.ConnectNewGraph(graph);
             WindowService.Adjust(graph);
             messenger
-                .Forward(new UnsubscribeFromCostChangedMessage((INotifyCostChanged)eventHolder), MessageTokens.VisualizationModel)
                 .Forward(new ClearStatisticsMessage(), MessageTokens.AlgorithmStatisticsModel)
-                .Forward(new GraphCreatedMessage(graph), MessageTokens.AlgorithmStatisticsModel)
-                .Forward(new SubscribeOnCostChangedMessage((INotifyCostChanged)eventHolder), MessageTokens.VisualizationModel);
-        }
-
-        public override void ClearColors()
-        {
-            base.ClearColors();
-            messenger.Forward(new ReturnActualCostsMessage(), MessageTokens.VisualizationModel);
+                .Forward(new GraphCreatedMessage(graph), MessageTokens.AlgorithmStatisticsModel);
         }
 
         private void ExecuteColorizeAccordingToCost(object param) => costColors.ColorizeAccordingToCost();

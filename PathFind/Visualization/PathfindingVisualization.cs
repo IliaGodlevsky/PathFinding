@@ -3,7 +3,6 @@ using Algorithm.Infrastructure.EventArguments;
 using Algorithm.Interfaces;
 using Common.Extensions.EnumerableExtensions;
 using GraphLib.Extensions;
-using GraphLib.Infrastructure;
 using GraphLib.Interfaces;
 using System;
 using System.Runtime.CompilerServices;
@@ -17,8 +16,8 @@ namespace Visualization
     {
         protected PathfindingVisualization(IGraph graph)
         {
-            visualizations = new CompositeVisualization(graph, costs, obstacles, enqueued, visited, path, intermediate, source, target);
-            visualizationSlides = new CompositeVisualizationSlides(costs, obstacles, enqueued, visited, path, intermediate, source, target);
+            visualizations = new CompositeVisualization(graph, obstacles, enqueued, visited, path, intermediate, source, target);
+            visualizationSlides = new CompositeVisualizationSlides(obstacles, enqueued, visited, path, intermediate, source, target);
             this.graph = graph;
         }
 
@@ -30,21 +29,6 @@ namespace Visualization
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public void Visualize(IAlgorithm algorithm) => visualizations.Visualize(algorithm);
-
-        protected virtual void SubscribeOnCostChanged(INotifyCostChanged notifier)
-        {
-            notifier.CostChanged += costs.OnCostChanged;
-        }
-
-        protected virtual void UnsubscribeFromCostChanged(INotifyCostChanged notifier)
-        {
-            notifier.CostChanged -= costs.OnCostChanged;
-        }
-
-        protected virtual void ReturnActualCosts()
-        {
-            costs.ReturnActualCosts();
-        }
 
         protected virtual void SubscribeOnAlgorithmEvents(PathfindingAlgorithm algorithm)
         {
@@ -73,7 +57,6 @@ namespace Visualization
             if (sender is IAlgorithm algorithm)
             {
                 obstacles.AddRange(algorithm, graph.GetObstacles());
-                costs.AddRange(algorithm, graph.Vertices);
             }
         }
 
@@ -108,7 +91,6 @@ namespace Visualization
         private readonly SourceVertices source = new SourceVertices();
         private readonly TargetVertices target = new TargetVertices();
         private readonly ObstacleVertices obstacles = new ObstacleVertices();
-        private readonly CostVertices costs = new CostVertices();
         private readonly IVisualization visualizations;
         private readonly IVisualizationSlides visualizationSlides;
         private readonly IGraph graph;

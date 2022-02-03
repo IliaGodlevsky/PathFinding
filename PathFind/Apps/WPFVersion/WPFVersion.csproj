@@ -81,7 +81,6 @@
     <Compile Include="Extensions\IMessengerExtensions.cs" />
     <Compile Include="Extensions\TypeExtensions.cs" />
     <Compile Include="Infrastructure\RelayCommand.cs" />
-    <Compile Include="Messages\ReturnActualCostsMessage.cs" />
     <Compile Include="Messages\SubscribeOnAlgorithmEventsMessage.cs" />
     <Compile Include="Messages\AlgorithmStartedMessage.cs" />
     <Compile Include="Messages\AlgorithmIndexMessage.cs" />
@@ -93,8 +92,6 @@
     <Compile Include="Messages\InterruptAllAlgorithmsMessage.cs" />
     <Compile Include="Messages\IsAllAlgorithmsFinishedMessage.cs" />
     <Compile Include="Messages\PathFoundMessage.cs" />
-    <Compile Include="Messages\SubscribeOnCostChangedMessage.cs" />
-    <Compile Include="Messages\UnsubscribeFromCostChangedMessage.cs" />
     <Compile Include="Messages\UpdateStatisticsMessage.cs" />
     <Compile Include="Model\EndPoints.cs" />
     <Compile Include="Model\CostColors.cs" />
@@ -233,10 +230,6 @@
     <ProjectReference Include="..\..\GraphLib\GraphLib.Extensions\GraphLib.Extensions.csproj">
       <Project>{93f88f47-1871-44cd-9622-eb8d406c969c}</Project>
       <Name>GraphLib.Extensions</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\GraphLib\GraphLib.infrastructure\GraphLib.Infrastructure.csproj">
-      <Project>{80B8111B-FCF0-4485-9F20-244AB9F1953D}</Project>
-      <Name>GraphLib.Infrastructure</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\GraphLib\GraphLib.Interfaces\GraphLib.Interfaces.csproj">
       <Project>{d3c5ccfe-698b-41c7-9a72-5fd0262765e1}</Project>
