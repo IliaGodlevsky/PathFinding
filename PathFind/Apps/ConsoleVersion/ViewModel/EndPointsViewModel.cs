@@ -10,7 +10,7 @@ using ConsoleVersion.Model;
 using ConsoleVersion.ValueInput;
 using ConsoleVersion.Views;
 using GalaSoft.MvvmLight.Messaging;
-using GraphLib.Base;
+using GraphLib.Base.EndPoints;
 using GraphLib.Extensions;
 using GraphLib.Interfaces;
 using GraphLib.NullRealizations.NullObjects;

@@ -5,7 +5,7 @@ using Algorithm.Infrastructure.EventArguments;
 using Algorithm.Interfaces;
 using Algorithm.NullRealizations;
 using Common.Extensions.EnumerableExtensions;
-using GraphLib.Base;
+using GraphLib.Base.EndPoints;
 using GraphLib.Interfaces;
 using Interruptable.EventArguments;
 using Logging.Interface;

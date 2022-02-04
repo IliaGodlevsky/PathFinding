@@ -15,7 +15,7 @@ using ConsoleVersion.Model;
 using ConsoleVersion.ValueInput;
 using ConsoleVersion.Views;
 using GalaSoft.MvvmLight.Messaging;
-using GraphLib.Base;
+using GraphLib.Base.EndPoints;
 using GraphLib.Extensions;
 using GraphViewModel;
 using Logging.Interface;

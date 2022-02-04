@@ -2,7 +2,7 @@
 using Autofac;
 using Common.Extensions;
 using Common.Interface;
-using GraphLib.Base;
+using GraphLib.Base.EndPoints;
 using GraphLib.Interfaces;
 using GraphLib.Interfaces.Factories;
 using GraphLib.Realizations.Factories.CoordinateFactories;

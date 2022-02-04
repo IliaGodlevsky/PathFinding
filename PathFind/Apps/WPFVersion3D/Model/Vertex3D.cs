@@ -148,7 +148,7 @@ namespace WPFVersion3D.Model
             DependencyPropertyChangedEventArgs prop)
         {
             Vertex3D vert = (Vertex3D)depObj;
-            vert.Brush = (SolidColorBrush)prop.NewValue;
+            vert.Brush = (Brush)prop.NewValue;
             vert.Material.Brush = vert.Brush;
         }
 

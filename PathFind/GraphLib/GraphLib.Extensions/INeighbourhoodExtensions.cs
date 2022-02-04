@@ -17,7 +17,7 @@ namespace GraphLib.Extensions
         /// <exception cref="ArgumentException"></exception>
         public static IReadOnlyCollection<IVertex> GetNeighbours(this INeighborhood self, IVertex vertex)
         {
-            if (vertex.Graph.IsNull())
+            if (vertex.Graph == null)
             {
                 string message = $"Vertex doesn't belong to any graph. Vertex: {vertex.GetInforamtion()}";
                 throw new ArgumentNullException(message);

@@ -1,4 +1,4 @@
-﻿using GraphLib.Base;
+﻿using GraphLib.Base.EventHolder;
 using GraphLib.Interfaces;
 using GraphLib.Interfaces.Factories;
 using System;

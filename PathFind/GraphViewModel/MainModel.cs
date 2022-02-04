@@ -1,4 +1,4 @@
-﻿using GraphLib.Base;
+﻿using GraphLib.Base.EndPoints;
 using GraphLib.Extensions;
 using GraphLib.Interfaces;
 using GraphLib.NullRealizations.NullObjects;

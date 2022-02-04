@@ -5,7 +5,7 @@ using Autofac;
 using Common.Extensions;
 using Common.Interface;
 using GalaSoft.MvvmLight.Messaging;
-using GraphLib.Base;
+using GraphLib.Base.EndPoints;
 using GraphViewModel;
 using Interruptable.EventArguments;
 using Logging.Interface;

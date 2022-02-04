@@ -84,6 +84,10 @@
       <Project>{a5a743f5-d346-4b2b-b6ac-07152f64e4d9}</Project>
       <Name>Common</Name>
     </ProjectReference>
+    <ProjectReference Include="..\GraphLib\GraphLib.Base.EndPoints\GraphLib.Base.EndPoints.csproj">
+      <Project>{62AE266B-0004-49A2-8769-C4014D4E7042}</Project>
+      <Name>GraphLib.Base.EndPoints</Name>
+    </ProjectReference>
     <ProjectReference Include="..\GraphLib\GraphLib.Base\GraphLib.Base.csproj">
       <Project>{6aa3b516-abfe-4eda-98dd-1ce799da747f}</Project>
       <Name>GraphLib.Base</Name>

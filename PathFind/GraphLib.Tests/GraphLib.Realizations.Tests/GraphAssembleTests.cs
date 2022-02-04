@@ -46,9 +46,12 @@ namespace GraphLib.Realizations.Tests
                 var assemble = mock.Create<GraphAssemble>();
                 var graph = assemble.AssembleGraph(obstaclePercent, dimensionSizes);
 
-                Assert.IsTrue(graph.DimensionsSizes.SequenceEqual(dimensionSizes));
-                Assert.AreEqual(obstaclePercent, graph.GetObstaclePercent());
-                Assert.IsTrue(graph.Vertices.ContainsUniqueValues());
+                Assert.Multiple(() => 
+                {
+                    Assert.IsTrue(graph.DimensionsSizes.SequenceEqual(dimensionSizes));
+                    Assert.AreEqual(obstaclePercent, graph.GetObstaclePercent());
+                    Assert.IsTrue(graph.Vertices.ContainsUniqueValues());
+                });
             }
         }
 

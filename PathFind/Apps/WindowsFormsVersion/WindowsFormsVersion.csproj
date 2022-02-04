@@ -160,6 +160,14 @@
       <Project>{A5A743F5-D346-4B2B-B6AC-07152F64E4D9}</Project>
       <Name>Common</Name>
     </ProjectReference>
+    <ProjectReference Include="..\..\GraphLib\GraphLib.Base.EndPoints\GraphLib.Base.EndPoints.csproj">
+      <Project>{62AE266B-0004-49A2-8769-C4014D4E7042}</Project>
+      <Name>GraphLib.Base.EndPoints</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\GraphLib\GraphLib.Base.EventHolder\GraphLib.Base.EventHolder.csproj">
+      <Project>{0A8309F2-7520-4E83-ACF8-B71EE7860E09}</Project>
+      <Name>GraphLib.Base.EventHolder</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\GraphLib\GraphLib.Base\GraphLib.Base.csproj">
       <Project>{6aa3b516-abfe-4eda-98dd-1ce799da747f}</Project>
       <Name>GraphLib.Base</Name>
