@@ -1,4 +1,5 @@
-﻿using Common.Interface;
+﻿using Autofac;
+using Common.Interface;
 using GalaSoft.MvvmLight.Messaging;
 using GraphLib.Extensions;
 using GraphLib.Interfaces.Factories;
@@ -9,6 +10,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Windows.Input;
 using ValueRange.Extensions;
+using WPFVersion3D.DependencyInjection;
 using WPFVersion3D.Enums;
 using WPFVersion3D.Extensions;
 using WPFVersion3D.Infrastructure;
@@ -28,6 +30,7 @@ namespace WPFVersion3D.ViewModel
         public GraphCreatingViewModel(IEnumerable<IGraphAssemble> graphAssembles, ILog log)
             : base(log, graphAssembles)
         {
+            messenger = DI.Container.Resolve<IMessenger>();
             SelectedGraphAssemble = graphAssembles.FirstOrDefault();
             ConfirmCreateGraphCommand = new RelayCommand(ExecuteConfirmCreateGraphCommand,
                 CanExecuteConfirmCreateGraphCommand);
@@ -40,7 +43,7 @@ namespace WPFVersion3D.ViewModel
             {
                 var graph = await SelectedGraphAssemble.AssembleGraphAsync(ObstaclePercent, Width, Length, Height);
                 var message = new GraphCreatedMessage(graph);
-                Messenger.Default.Forward(message, MessageTokens.MainModel);
+                messenger.Forward(message, MessageTokens.MainModel);
             }
             catch (Exception ex)
             {
@@ -71,5 +74,7 @@ namespace WPFVersion3D.ViewModel
         {
             WindowClosed = null;
         }
+
+        private readonly IMessenger messenger;
     }
 }

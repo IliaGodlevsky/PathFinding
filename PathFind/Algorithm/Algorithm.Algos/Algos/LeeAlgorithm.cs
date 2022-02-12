@@ -1,22 +1,20 @@
 ﻿using Algorithm.Base;
 using Algorithm.Extensions;
-using Algorithm.Interfaces;
 using Algorithm.Сompanions;
 using Algorithm.Сompanions.Interface;
 using Common.Extensions.EnumerableExtensions;
 using GraphLib.Extensions;
 using GraphLib.Interfaces;
-using Interruptable.Interface;
-using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Diagnostics;
 using System.Linq;
 
 namespace Algorithm.Algos.Algos
 {
     [DebuggerDisplay("Lee algorithm")]
-    public class LeeAlgorithm : WaveAlgorithm,
-        IAlgorithm, IInterruptableProcess, IInterruptable, IDisposable
+    [Description("Lee algorithm")]
+    public class LeeAlgorithm : WaveAlgorithm
     {
         public LeeAlgorithm(IEndPoints endPoints)
             : base(endPoints)

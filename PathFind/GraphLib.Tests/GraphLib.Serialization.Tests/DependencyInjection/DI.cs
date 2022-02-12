@@ -13,6 +13,7 @@ namespace GraphLib.Serialization.Tests.DependencyInjection
     {
         public static IContainer CryptoSerializerContainer => cryptoSerializerContainer.Value;
         public static IContainer SerializerContainer => serializerContainer.Value;
+        public static IContainer CompressSerializerContainer => compressGraphSerializer.Value;
 
         private static IContainer GraphSerializerConfigure(Action<ContainerBuilder> serializerRegister)
         {
@@ -37,6 +38,15 @@ namespace GraphLib.Serialization.Tests.DependencyInjection
             RegisterGraphSerializer(builder);
             builder.RegisterDecorator<CryptoGraphSerializer, IGraphSerializer>();
         }
+
+        private static void RegisterCompressGraphSerializer(ContainerBuilder builder)
+        {
+            RegisterCryptoGraphSerializer(builder);
+            builder.RegisterDecorator<CompressGraphSerializer, IGraphSerializer>();
+        }
+
+        private static readonly Lazy<IContainer> compressGraphSerializer
+            = new Lazy<IContainer>(() => GraphSerializerConfigure(RegisterCompressGraphSerializer));
 
         private static readonly Lazy<IContainer> cryptoSerializerContainer
             = new Lazy<IContainer>(() => GraphSerializerConfigure(RegisterCryptoGraphSerializer));

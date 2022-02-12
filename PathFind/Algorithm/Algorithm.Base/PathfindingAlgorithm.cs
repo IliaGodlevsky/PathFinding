@@ -21,8 +21,7 @@ namespace Algorithm.Base
     /// <remarks>Do not use the same instance of algorithm untill it stops 
     /// finding a path. And only then use it again. But it is better not to use
     /// the same instance twice. Create a new one instead.</remarks>
-    public abstract class PathfindingAlgorithm
-        : IAlgorithm, IInterruptableProcess, IInterruptable, IDisposable
+    public abstract class PathfindingAlgorithm : IAlgorithm, IProcess, IInterruptable, IDisposable
     {
         public event AlgorithmEventHandler VertexVisited;
         public event AlgorithmEventHandler VertexEnqueued;

@@ -1,5 +1,8 @@
 ﻿using Common.Extensions.EnumerableExtensions;
 using NUnit.Framework;
+using System;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace Common.Tests
 {
@@ -38,6 +41,37 @@ namespace Common.Tests
             bool matches = firstArray.Juxtapose(secondArray, (a, b) => a == b);
 
             Assert.IsTrue(matches);
+        }
+
+        [TestCase(new[] { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16 })]
+        public void Shuffle_OrderedCollection_ReturnShuffledCollection(IEnumerable<int> ordered)
+        {
+            var unordered = ordered.Shuffle(() => Guid.NewGuid());
+
+            Assert.IsFalse(unordered.Juxtapose(ordered));
+        }
+
+        [TestCase(10, new[] { 1, 2, 4, 5, 6, 5 })]
+        [TestCase(6, new[] { 1, 2, 4, 5, 5 })]
+        public void TakeOrDefault_TakeFromValues_RetunsValuesAndDefaults(int take, int[] values)
+        {
+            var taken = values.TakeOrDefault(take).ToArray();
+            var notDefaultCount = taken.TakeWhile(i => i != default).Count();
+
+            Assert.Multiple(() =>
+            {
+                Assert.IsTrue(taken.Length == take);
+                Assert.IsTrue(notDefaultCount == values.Length);
+            });
+        }
+
+        [TestCase(new[] { 5, 6, 7 }, new[] { 5, 6, 7, 1, 2, 3, 4 }, new[] { 1, 2, 3, 4 })]
+        public void Without_ArrayContainingValues_ReturnValuesWithoutValues(int[] valuesToRemove,
+            int[] values, int[] valuesWithout)
+        {
+            var without = values.Without(valuesToRemove);
+
+            Assert.IsTrue(without.Juxtapose(valuesWithout));
         }
     }
 }

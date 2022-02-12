@@ -30,9 +30,8 @@ namespace GraphLib.Realizations.Tests
         }
 
         [TestCase(15, new int[] { 100 })]
-        [TestCase(10, new int[] { 10, 15 })]
-        [TestCase(10, new int[] { 7, 10, 7 })]
-        [TestCase(33, new int[] { 7, 4, 7, 4 })]
+        [TestCase(12, new int[] { 10, 15 })]
+        [TestCase(12, new int[] { 7, 10, 7 })]
         public void AssembleGraph_ReturnsValidGraph(int obstaclePercent, int[] dimensionSizes)
         {
             using (var mock = AutoMock.GetLoose(RegisterPseudoRandomNumberGenerator))
@@ -46,7 +45,7 @@ namespace GraphLib.Realizations.Tests
                 var assemble = mock.Create<GraphAssemble>();
                 var graph = assemble.AssembleGraph(obstaclePercent, dimensionSizes);
 
-                Assert.Multiple(() => 
+                Assert.Multiple(() =>
                 {
                     Assert.IsTrue(graph.DimensionsSizes.SequenceEqual(dimensionSizes));
                     Assert.AreEqual(obstaclePercent, graph.GetObstaclePercent());

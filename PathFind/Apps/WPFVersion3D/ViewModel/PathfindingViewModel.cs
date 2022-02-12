@@ -1,5 +1,6 @@
 ﻿using Algorithm.Factory;
 using Algorithm.Infrastructure.EventArguments;
+using Autofac;
 using Common.Extensions;
 using Common.Interface;
 using GalaSoft.MvvmLight.Messaging;
@@ -15,6 +16,7 @@ using System.Diagnostics;
 using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
 using System.Windows.Input;
+using WPFVersion3D.DependencyInjection;
 using WPFVersion3D.Enums;
 using WPFVersion3D.Extensions;
 using WPFVersion3D.Infrastructure;
@@ -38,26 +40,26 @@ namespace WPFVersion3D.ViewModel
         public PathFindingViewModel(BaseEndPoints endPoints, IEnumerable<IAlgorithmFactory> algorithmFactories, ILog log)
             : base(endPoints, algorithmFactories, log)
         {
+            messenger = DI.Container.Resolve<IMessenger>();
             ConfirmPathFindAlgorithmChoice = new RelayCommand(
                 ExecuteConfirmPathFindAlgorithmChoice,
                 CanExecuteConfirmPathFindAlgorithmChoice);
             CancelPathFindAlgorithmChoice = new RelayCommand(ExecuteCloseWindowCommand);
-            Messenger.Default.Register<AlgorithmIndexMessage>(this, MessageTokens.PathfindingModel, SetAlgorithmIndex);
+            messenger.Register<AlgorithmIndexMessage>(this, MessageTokens.PathfindingModel, SetAlgorithmIndex);
             DelayTime = Convert.ToInt32(Constants.AlgorithmDelayValueRange.LowerValueOfRange);
         }
 
         private void SetAlgorithmIndex(AlgorithmIndexMessage message)
         {
-            Messenger.Default.Unregister<AlgorithmIndexMessage>(this, MessageTokens.PathfindingModel, SetAlgorithmIndex);
+            messenger.Unregister<AlgorithmIndexMessage>(this, MessageTokens.PathfindingModel, SetAlgorithmIndex);
             Index = message.Index;
         }
 
         protected override void OnAlgorithmStarted(object sender, ProcessEventArgs e)
         {
             base.OnAlgorithmStarted(sender, e);
-            string algorithmName = Algorithm.GetDescriptionAttributeValueOrEmpty();
-            var message = new AlgorithmStartedMessage(algorithm, algorithmName);
-            Messenger.Default.Forward(message, MessageTokens.AlgorithmStatisticsModel);
+            var message = new AlgorithmStartedMessage(algorithm);
+            messenger.Forward(message, MessageTokens.AlgorithmStatisticsModel);
         }
 
         protected override void SummarizePathfindingResults()
@@ -66,9 +68,9 @@ namespace WPFVersion3D.ViewModel
             string time = timer.ToFormattedString();
             var message = new UpdateAlgorithmStatisticsMessage(Index, time,
                 visitedVerticesCount, path.Length, path.Cost);
-            Messenger.Default.Forward(message, MessageTokens.AlgorithmStatisticsModel);
+            messenger.Forward(message, MessageTokens.AlgorithmStatisticsModel);
             var statusMessage = new AlgorithmStatusMessage(status, Index);
-            Messenger.Default.Forward(statusMessage, MessageTokens.AlgorithmStatisticsModel);
+            messenger.Forward(statusMessage, MessageTokens.AlgorithmStatisticsModel);
         }
 
         protected override async void OnVertexVisited(object sender, AlgorithmEventArgs e)
@@ -76,7 +78,7 @@ namespace WPFVersion3D.ViewModel
             Stopwatch.StartNew().Wait(DelayTime).Stop();
             string time = timer.ToFormattedString();
             var message = new UpdateAlgorithmStatisticsMessage(Index, time, visitedVerticesCount);
-            await Messenger.Default.ForwardAsync(message, MessageTokens.AlgorithmStatisticsModel);
+            await messenger.ForwardAsync(message, MessageTokens.AlgorithmStatisticsModel);
             await Task.Run(() => base.OnVertexVisited(sender, e));
         }
 
@@ -89,13 +91,13 @@ namespace WPFVersion3D.ViewModel
         {
             base.OnAlgorithmInterrupted(sender, e);
             var message = new AlgorithmStatusMessage(AlgorithmStatuses.Interrupted, Index);
-            Messenger.Default.Forward(message, MessageTokens.AlgorithmStatisticsModel);
+            messenger.Forward(message, MessageTokens.AlgorithmStatisticsModel);
         }
 
         protected override void OnAlgorithmFinished(object sender, ProcessEventArgs e)
         {
             base.OnAlgorithmFinished(sender, e);
-            Messenger.Default.Unregister(this);
+            messenger.Unregister(this);
         }
 
         private void ExecuteCloseWindowCommand(object param)
@@ -120,5 +122,7 @@ namespace WPFVersion3D.ViewModel
         }
 
         private int Index { get; set; }
+
+        private readonly IMessenger messenger;
     }
 }

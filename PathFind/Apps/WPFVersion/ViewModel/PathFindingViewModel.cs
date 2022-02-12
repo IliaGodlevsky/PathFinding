@@ -58,9 +58,8 @@ namespace WPFVersion.ViewModel
         protected override void OnAlgorithmStarted(object sender, ProcessEventArgs e)
         {
             base.OnAlgorithmStarted(sender, e);
-            string algorithmName = Algorithm.GetDescriptionAttributeValueOrEmpty();
             messenger
-                .Forward(new AlgorithmStartedMessage(algorithm, algorithmName, DelayTime), MessageTokens.AlgorithmStatisticsModel)
+                .Forward(new AlgorithmStartedMessage(algorithm, DelayTime), MessageTokens.AlgorithmStatisticsModel)
                 .Forward(new EndPointsChosenMessage(algorithm, endPoints), MessageTokens.VisualizationModel);
         }
 

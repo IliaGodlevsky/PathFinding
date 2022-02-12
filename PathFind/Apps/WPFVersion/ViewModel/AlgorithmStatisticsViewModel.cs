@@ -77,7 +77,7 @@ namespace WPFVersion.ViewModel
 
         private void OnAllAlgorithmInterrupted(InterruptAllAlgorithmsMessage message)
         {
-            Algorithms.ForEach(stat => stat.TryInterrupt());
+            Algorithms.ForEach(stat => stat.InterruptIfStarted());
         }
 
         private void NewGraphCreated(GraphCreatedMessage message)
@@ -110,7 +110,7 @@ namespace WPFVersion.ViewModel
 
         private void ExecuteInterruptSelectedAlgorithmCommand(object param)
         {
-            SelectedAlgorithm?.TryInterrupt();
+            SelectedAlgorithm?.InterruptIfStarted();
         }
 
         private bool CanExecuteRemoveFromStatisticsCommand(object param)
@@ -127,7 +127,7 @@ namespace WPFVersion.ViewModel
 
         private bool CanExecuteInterruptSelectedAlgorithmCommand(object param)
         {
-            return SelectedAlgorithm?.IsStarted() == true;
+            return SelectedAlgorithm?.IsStarted == true;
         }
 
         private void SendIsAllAlgorithmsFinishedMessage()
@@ -148,7 +148,7 @@ namespace WPFVersion.ViewModel
             }
         }
 
-        private bool IsAllFinished => Algorithms.All(stat => !stat.IsStarted());
+        private bool IsAllFinished => Algorithms.All(stat => !stat.IsStarted);
 
         private PathfindingVisualizationModel visualizationModel;
         private readonly IMessenger messenger;

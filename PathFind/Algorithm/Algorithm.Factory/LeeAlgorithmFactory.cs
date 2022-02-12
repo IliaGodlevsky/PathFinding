@@ -12,7 +12,7 @@ namespace Algorithm.Factory
     [Description("Lee algorithm")]
     public sealed class LeeAlgorithmFactory : IAlgorithmFactory
     {
-        public PathfindingAlgorithm CreateAlgorithm(IEndPoints endPoints)
+        public PathfindingAlgorithm Create(IEndPoints endPoints)
         {
             return new LeeAlgorithm(endPoints);
         }

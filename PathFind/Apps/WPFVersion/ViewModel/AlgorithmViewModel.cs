@@ -1,6 +1,7 @@
 ﻿using Algorithm.Base;
 using Algorithm.Interfaces;
 using Autofac;
+using Common.Extensions;
 using GalaSoft.MvvmLight.Messaging;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
@@ -55,21 +56,23 @@ namespace WPFVersion.ViewModel
             }
         }
 
-        public AlgorithmViewModel(PathfindingAlgorithm algorithm, string algorithmName, int delayTime, int index)
+        public AlgorithmViewModel(PathfindingAlgorithm algorithm, int delayTime, int index)
         {
             this.algorithm = algorithm;
             this.delayTime = delayTime;
-            AlgorithmName = algorithmName;
+            AlgorithmName = algorithm.GetDescriptionAttributeValueOrEmpty();
             Status = AlgorithmStatus.Started;
             Index = index;
             messenger = DI.Container.Resolve<IMessenger>();
         }
 
         public AlgorithmViewModel(AlgorithmStartedMessage message, int index)
-            : this(message.Algorithm, message.AlgorithmName, message.DelayTime, index)
+            : this(message.Algorithm, message.DelayTime, index)
         {
 
         }
+
+        public bool IsStarted => algorithm.IsInProcess;
 
         public void Interrupt()
         {

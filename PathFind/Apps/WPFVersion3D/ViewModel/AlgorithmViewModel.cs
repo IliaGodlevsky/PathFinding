@@ -1,4 +1,5 @@
 ﻿using Algorithm.Base;
+using Common.Extensions;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using WPFVersion3D.Enums;
@@ -51,11 +52,13 @@ namespace WPFVersion3D.ViewModel
             set { status = value; OnPropertyChanged(); }
         }
 
-        public AlgorithmViewModel(PathfindingAlgorithm algorithm, string algorithmName)
+        public AlgorithmViewModel(PathfindingAlgorithm algorithm)
         {
             this.algorithm = algorithm;
-            AlgorithmName = algorithmName;
+            AlgorithmName = algorithm.GetDescriptionAttributeValueOrEmpty();
         }
+
+        public bool IsStarted => algorithm.IsInProcess;
 
         public void Interrupt()
         {

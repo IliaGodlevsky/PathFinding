@@ -1,4 +1,5 @@
-﻿using Common.Extensions.EnumerableExtensions;
+﻿using Autofac;
+using Common.Extensions.EnumerableExtensions;
 using GalaSoft.MvvmLight.Messaging;
 using System;
 using System.Collections.ObjectModel;
@@ -7,6 +8,8 @@ using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Windows;
 using System.Windows.Input;
+using System.Windows.Threading;
+using WPFVersion3D.DependencyInjection;
 using WPFVersion3D.Enums;
 using WPFVersion3D.Extensions;
 using WPFVersion3D.Infrastructure;
@@ -16,6 +19,8 @@ namespace WPFVersion3D.ViewModel
 {
     internal class AlgorithmStatisticsViewModel : INotifyPropertyChanged, IDisposable
     {
+        private static Dispatcher Dispatcher => Application.Current.Dispatcher;
+
         public event PropertyChangedEventHandler PropertyChanged;
 
         protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = "")
@@ -37,13 +42,14 @@ namespace WPFVersion3D.ViewModel
 
         public AlgorithmStatisticsViewModel()
         {
+            messenger = DI.Container.Resolve<IMessenger>();
             InterruptSelelctedAlgorithmCommand = new RelayCommand(ExecuteInterruptSelectedAlgorithmCommand, CanExecuteInterruptSelectedAlgorithmCommand);
             RemoveSelelctedAlgorithmCommand = new RelayCommand(ExecuteRemoveFromStatisticsCommand, CanExecuteRemoveFromStatisticsCommand);
-            Messenger.Default.Register<AlgorithmStartedMessage>(this, MessageTokens.AlgorithmStatisticsModel, OnAlgorithmStarted);
-            Messenger.Default.Register<UpdateAlgorithmStatisticsMessage>(this, MessageTokens.AlgorithmStatisticsModel, UpdateAlgorithmStatistics);
-            Messenger.Default.Register<InterruptAllAlgorithmsMessage>(this, MessageTokens.AlgorithmStatisticsModel, OnAllAlgorithmInterrupted);
-            Messenger.Default.Register<ClearStatisticsMessage>(this, MessageTokens.AlgorithmStatisticsModel, OnClearStatistics);
-            Messenger.Default.Register<AlgorithmStatusMessage>(this, MessageTokens.AlgorithmStatisticsModel, SetAlgorithmStatus);
+            messenger.Register<AlgorithmStartedMessage>(this, MessageTokens.AlgorithmStatisticsModel, OnAlgorithmStarted);
+            messenger.Register<UpdateAlgorithmStatisticsMessage>(this, MessageTokens.AlgorithmStatisticsModel, UpdateAlgorithmStatistics);
+            messenger.Register<InterruptAllAlgorithmsMessage>(this, MessageTokens.AlgorithmStatisticsModel, OnAllAlgorithmInterrupted);
+            messenger.Register<ClearStatisticsMessage>(this, MessageTokens.AlgorithmStatisticsModel, OnClearStatistics);
+            messenger.Register<AlgorithmStatusMessage>(this, MessageTokens.AlgorithmStatisticsModel, SetAlgorithmStatus);
         }
 
         private void SetAlgorithmStatus(AlgorithmStatusMessage message)
@@ -58,21 +64,21 @@ namespace WPFVersion3D.ViewModel
         private void OnAlgorithmStarted(AlgorithmStartedMessage message)
         {
             int index = Statistics.Count;
-            var viewModel = new AlgorithmViewModel(message.Algorithm, message.AlgorithmName);
-            Application.Current.Dispatcher.Invoke(() => Statistics.Add(viewModel));
+            var viewModel = new AlgorithmViewModel(message.Algorithm);
+            Dispatcher.Invoke(() => Statistics.Add(viewModel));
             var msg = new AlgorithmIndexMessage(index);
-            Messenger.Default.Forward(msg, MessageTokens.PathfindingModel);
+            messenger.Forward(msg, MessageTokens.PathfindingModel);
             SendIsAllFinishedMessage();
         }
 
         private void UpdateAlgorithmStatistics(UpdateAlgorithmStatisticsMessage message)
         {
-            Application.Current.Dispatcher.Invoke(() => Statistics[message.Index].RecieveMessage(message));
+            Dispatcher.Invoke(() => Statistics[message.Index].RecieveMessage(message));
         }
 
         private void OnAllAlgorithmInterrupted(InterruptAllAlgorithmsMessage message)
         {
-            Statistics.ForEach(stat => stat.TryInterrupt());
+            Statistics.ForEach(stat => stat.InterruptIfStarted());
         }
 
         private void OnClearStatistics(ClearStatisticsMessage message)
@@ -89,31 +95,33 @@ namespace WPFVersion3D.ViewModel
 
         private bool CanExecuteRemoveFromStatisticsCommand(object param)
         {
-            return SelectedAlgorithm?.IsStarted() == false;
+            return SelectedAlgorithm?.IsStarted == false;
         }
 
         private void ExecuteInterruptSelectedAlgorithmCommand(object param)
         {
-            SelectedAlgorithm?.TryInterrupt();
+            SelectedAlgorithm?.InterruptIfStarted();
         }
 
         private bool CanExecuteInterruptSelectedAlgorithmCommand(object param)
         {
-            return SelectedAlgorithm?.IsStarted() == true;
+            return SelectedAlgorithm?.IsStarted == true;
         }
 
         private void SendIsAllFinishedMessage()
         {
-            var isAllFinished = Statistics.All(stat => !stat.IsStarted());
+            var isAllFinished = Statistics.All(stat => !stat.IsStarted);
             var message = new IsAllAlgorithmsFinishedMessage(isAllFinished);
-            Messenger.Default.Forward(message, MessageTokens.MainModel);
+            messenger.Forward(message, MessageTokens.MainModel);
         }
 
         public void Dispose()
         {
-            Messenger.Default.Unregister(this);
+            messenger.Unregister(this);
             Statistics.Clear();
             SelectedAlgorithm = null;
         }
+
+        private readonly IMessenger messenger;
     }
 }

@@ -5,9 +5,7 @@ using Algorithm.Realizations.GraphPaths;
 using Common.Extensions.EnumerableExtensions;
 using GraphLib.Extensions;
 using GraphLib.Interfaces;
-using Interruptable.Interface;
 using NullObject.Extensions;
-using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -17,8 +15,7 @@ namespace Algorithm.Base
     /// A base class for all Greedy algorithms.
     /// This is an abstract class
     /// </summary>
-    public abstract class GreedyAlgorithm : PathfindingAlgorithm,
-        IAlgorithm, IInterruptableProcess, IInterruptable, IDisposable
+    public abstract class GreedyAlgorithm : PathfindingAlgorithm
     {
         protected GreedyAlgorithm(IEndPoints endPoints)
            : base(endPoints)

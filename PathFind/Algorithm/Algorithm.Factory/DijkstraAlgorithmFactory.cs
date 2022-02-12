@@ -12,6 +12,7 @@ namespace Algorithm.Factory
     [Order(1)]
     [WaveGroup]
     [Description("Dijkstra's algorithm")]
+
     public sealed class DijkstraAlgorithmFactory : IAlgorithmFactory
     {
         public DijkstraAlgorithmFactory(IStepRule stepRule)
@@ -24,7 +25,7 @@ namespace Algorithm.Factory
 
         }
 
-        public PathfindingAlgorithm CreateAlgorithm(IEndPoints endPoints)
+        public PathfindingAlgorithm Create(IEndPoints endPoints)
         {
             return new DijkstraAlgorithm(endPoints, stepRule);
         }

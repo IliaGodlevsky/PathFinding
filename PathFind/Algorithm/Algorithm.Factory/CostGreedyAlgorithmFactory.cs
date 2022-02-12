@@ -22,7 +22,7 @@ namespace Algorithm.Factory
 
         }
 
-        public PathfindingAlgorithm CreateAlgorithm(IEndPoints endPoints)
+        public PathfindingAlgorithm Create(IEndPoints endPoints)
         {
             return new CostGreedyAlgorithm(endPoints, stepRule);
         }

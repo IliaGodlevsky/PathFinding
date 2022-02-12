@@ -3,6 +3,7 @@ using GraphLib.Interfaces;
 using GraphLib.Interfaces.Factories;
 using GraphLib.Serialization.Interfaces;
 using NUnit.Framework;
+using System.Collections;
 using System.IO;
 
 namespace GraphLib.Serialization.Tests.SerializersTests
@@ -10,12 +11,21 @@ namespace GraphLib.Serialization.Tests.SerializersTests
     [TestFixture]
     public abstract class BaseGraphSerializerTests
     {
+        public static IEnumerable TestCaseData { get; }
+
+        static BaseGraphSerializerTests()
+        {
+            TestCaseData = new TestCaseData[]
+            {
+                new TestCaseData(11, new[] { 25 }),
+                new TestCaseData(22, new[] { 7, 8 }),
+                new TestCaseData(66, new[] { 4, 5, 6 })
+            };
+        }
+
         protected abstract IContainer Container { get; }
 
-        [TestCase(11, new[] { 8, 9, 7 })]
-        [TestCase(22, new[] { 15, 15 })]
-        [TestCase(66, new[] { 4, 3, 4, 2 })]
-        [TestCase(44, new[] { 4, 3, 4, 2, 2 })]
+        [TestCaseSource(nameof(TestCaseData))]
         public void SaveGraph_LoadGraph_ReturnsEqualGraph(int obstaclePercent, int[] graphParams)
         {
             using (var scope = Container.BeginLifetimeScope())
@@ -32,8 +42,11 @@ namespace GraphLib.Serialization.Tests.SerializersTests
                     deserialized = serializer.LoadGraph(stream);
                 }
 
-                Assert.AreEqual(graph, deserialized);
-                Assert.AreNotSame(graph, deserialized);
+                Assert.Multiple(() =>
+                {
+                    Assert.AreEqual(graph, deserialized);
+                    Assert.AreNotSame(graph, deserialized);
+                });
             }
         }
     }

@@ -5,8 +5,7 @@ using Algorithm.Realizations.StepRules;
 using Algorithm.Сompanions;
 using Algorithm.Сompanions.Interface;
 using GraphLib.Interfaces;
-using Interruptable.Interface;
-using System;
+using System.ComponentModel;
 using System.Diagnostics;
 
 namespace Algorithm.Algos.Algos
@@ -16,7 +15,8 @@ namespace Algorithm.Algos.Algos
     /// </summary>
     /// <remarks><see cref="https://en.wikipedia.org/wiki/A*_search_algorithm"/></remarks>
     [DebuggerDisplay("A* algorithm")]
-    public class AStarAlgorithm : DijkstraAlgorithm, IAlgorithm, IInterruptableProcess, IInterruptable, IDisposable
+    [Description("A * algorithm")]
+    public class AStarAlgorithm : DijkstraAlgorithm
     {
         public AStarAlgorithm(IEndPoints endPoints)
             : this(endPoints, new DefaultStepRule(), new ChebyshevDistance())

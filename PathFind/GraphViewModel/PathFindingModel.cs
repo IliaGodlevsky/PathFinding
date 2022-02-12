@@ -40,7 +40,7 @@ namespace GraphViewModel
         {
             try
             {
-                algorithm = Algorithm.CreateAlgorithm(endPoints);
+                algorithm = Algorithm.Create(endPoints);
                 SubscribeOnAlgorithmEvents(algorithm);
                 endPoints.ReturnColors();
                 path = await algorithm.FindPathAsync();

@@ -9,6 +9,11 @@ namespace GraphLib.Realizations.Tests.Extenions
 {
     internal static class AutoMockExtensions
     {
+        public static void MockCoordinate(this AutoMock self, int[] coordinateValues)
+        {
+            self.Mock<ICoordinate>().Setup(c => c.CoordinatesValues).Returns(coordinateValues);
+        }
+
         public static void MockVertexCostFactory(this AutoMock self, Func<int, IVertexCost> returnCallback)
         {
             self.Mock<IVertexCostFactory>().Setup(x => x.CreateCost(It.IsAny<int>())).Returns<int>(returnCallback);

@@ -2,15 +2,14 @@
 using Algorithm.Interfaces;
 using Algorithm.Realizations.Heuristic;
 using GraphLib.Interfaces;
-using Interruptable.Interface;
-using System;
+using System.ComponentModel;
 using System.Diagnostics;
 
 namespace Algorithm.Algos.Algos
 {
     [DebuggerDisplay("Depth first algorithm")]
-    public sealed class DepthFirstAlgorithm : GreedyAlgorithm,
-        IAlgorithm, IInterruptableProcess, IInterruptable, IDisposable
+    [Description("Depth first algorithm")]
+    public sealed class DepthFirstAlgorithm : GreedyAlgorithm
     {
         public DepthFirstAlgorithm(IEndPoints endPoints, IHeuristic heuristic)
             : base(endPoints)

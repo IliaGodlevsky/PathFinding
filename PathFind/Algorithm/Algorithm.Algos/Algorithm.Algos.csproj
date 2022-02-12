@@ -43,6 +43,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Algos\AStarAlgorithm.cs" />
+    <Compile Include="Algos\HeuristicCostGreedyAlgorithm.cs" />
     <Compile Include="Algos\IDAStarAlgorithm.cs" />
     <Compile Include="Algos\BestFirstLeeAlgorithm.cs" />
     <Compile Include="Algos\CostGreedyAlgorithm.cs" />

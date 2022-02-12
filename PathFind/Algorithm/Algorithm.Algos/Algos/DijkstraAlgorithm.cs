@@ -6,10 +6,9 @@ using Algorithm.Realizations.StepRules;
 using Common.Extensions.EnumerableExtensions;
 using GraphLib.Extensions;
 using GraphLib.Interfaces;
-using Interruptable.Interface;
 using Priority_Queue;
-using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Diagnostics;
 
 namespace Algorithm.Algos.Algos
@@ -18,7 +17,8 @@ namespace Algorithm.Algos.Algos
     /// Realization of Dijkstra's algorithm
     /// </summary>
     [DebuggerDisplay("Dijkstra's algorithm")]
-    public class DijkstraAlgorithm : WaveAlgorithm, IAlgorithm, IInterruptableProcess, IInterruptable, IDisposable
+    [Description("Dijkstra's algorithm")]
+    public class DijkstraAlgorithm : WaveAlgorithm
     {
         public DijkstraAlgorithm(IEndPoints endPoints)
             : this(endPoints, new DefaultStepRule())

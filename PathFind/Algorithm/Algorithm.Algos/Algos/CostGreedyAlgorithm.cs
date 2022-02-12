@@ -3,8 +3,7 @@ using Algorithm.Interfaces;
 using Algorithm.Realizations.GraphPaths;
 using Algorithm.Realizations.StepRules;
 using GraphLib.Interfaces;
-using Interruptable.Interface;
-using System;
+using System.ComponentModel;
 using System.Diagnostics;
 
 namespace Algorithm.Algos.Algos
@@ -14,8 +13,8 @@ namespace Algorithm.Algos.Algos
     /// a vertex and goes to it
     /// </summary>
     [DebuggerDisplay("Cost greedy algorithm")]
-    public sealed class CostGreedyAlgorithm : GreedyAlgorithm,
-        IAlgorithm, IInterruptableProcess, IInterruptable, IDisposable
+    [Description("Cost greedy algorithm")]
+    public sealed class CostGreedyAlgorithm : GreedyAlgorithm
     {
         /// <summary>
         /// Initializes a new instance of <see cref="CostGreedyAlgorithm"/>

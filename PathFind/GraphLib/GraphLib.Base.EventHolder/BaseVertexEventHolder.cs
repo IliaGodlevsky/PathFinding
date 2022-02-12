@@ -12,7 +12,7 @@ namespace GraphLib.Base.EventHolder
         {
             this.costFactory = costFactory;
             conditions = new ReverseVertexConditions();
-        }        
+        }
 
         public virtual void ChangeVertexCost(object sender, EventArgs e)
         {

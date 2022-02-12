@@ -4,10 +4,10 @@ using Algorithm.Realizations.Heuristic;
 using Algorithm.Realizations.StepRules;
 using Common.Extensions.EnumerableExtensions;
 using GraphLib.Interfaces;
-using Interruptable.Interface;
 using NullObject.Extensions;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Diagnostics;
 using System.Linq;
 
@@ -21,8 +21,8 @@ namespace Algorithm.Algos.Algos
     /// of search and searches only among vertices, that are 
     /// the closest to the target vertex</remarks>
     [DebuggerDisplay("IDA* algorithm")]
-    public class IDAStarAlgorithm : AStarAlgorithm,
-        IAlgorithm, IInterruptableProcess, IInterruptable, IDisposable
+    [Description("IDA* algorithm")]
+    public class IDAStarAlgorithm : AStarAlgorithm
     {
         private const int PercentToDelete = 4;
 
@@ -42,7 +42,7 @@ namespace Algorithm.Algos.Algos
         {
             get
             {
-                var verticesToDelete = queue.TakeOrderedBy(ToDeleteCount, heuristics.GetCost).ToArray();
+                var verticesToDelete = queue.TakeOrderedBy(ToDeleteCount, heuristics.GetCost);
                 var tuples = queue.ToTuples(verticesToDelete, heuristics.GetCost).ToList();
                 queue.RemoveRange(verticesToDelete);
                 deletedVertices.AddRange(tuples);

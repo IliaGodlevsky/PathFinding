@@ -2,6 +2,7 @@
 using Autofac;
 using Common.Extensions;
 using Common.Interface;
+using GalaSoft.MvvmLight.Messaging;
 using GraphLib.Base.EndPoints;
 using GraphLib.Interfaces;
 using GraphLib.Interfaces.Factories;
@@ -61,6 +62,7 @@ namespace WPFVersion3D.DependencyInjection
             builder.RegisterType<VonNeumannNeighborhoodFactory>().As<INeighborhoodFactory>().SingleInstance();
             builder.RegisterType<CubicModel3DFactory>().As<IModel3DFactory>().SingleInstance();
             builder.RegisterType<GraphAssemble>().As<IGraphAssemble>().SingleInstance();
+            builder.RegisterType<Messenger>().As<IMessenger>().SingleInstance();
 
             builder.RegisterType<GraphSerializationModule>().AsSelf().SingleInstance();
             builder.RegisterType<PathInput>().As<IPathInput>().SingleInstance();

@@ -1,29 +1,38 @@
 ﻿using Autofac;
 using Autofac.Extras.Moq;
 using GraphLib.Interfaces;
+using GraphLib.Realizations.Tests.Extenions;
 using NUnit.Framework;
+using System;
+using System.Collections;
 using System.Linq;
 
 namespace GraphLib.Realizations.Tests.NeighborhoodTests
 {
     public abstract class BaseNeighborhoodTests<TNeighborhood> where TNeighborhood : INeighborhood
     {
+        public static IEnumerable CoordinateValues { get; }
+
+        static BaseNeighborhoodTests()
+        {
+            CoordinateValues = new TestCaseData[]
+            {
+                new TestCaseData(Array.Empty<int>()),
+                new TestCaseData(new[] { 11 }),
+                new TestCaseData(new[] { 20, 30 }),
+                new TestCaseData(new[] { 20, 10, 3 })
+            };
+        }
+
         protected abstract ulong GetExpectedNeighborhoodCount(int dimensionsCount);
 
-        [TestCase(new int[] { })]
-        [TestCase(new[] { 2 })]
-        [TestCase(new[] { 2, 3 })]
-        [TestCase(new[] { 2, 3, 4 })]
-        [TestCase(new[] { 2, 3, 4, 5 })]
-        [TestCase(new[] { 2, 3, 4, 5, 6 })]
-        [TestCase(new[] { 2, 3, 4, 5, 6, 7 })]
-        [TestCase(new[] { 2, 3, 4, 5, 6, 7, 8 })]
+        [TestCaseSource(nameof(CoordinateValues))]
         public void Coordinates_CoordinatesWithVariousDimensionsNumber_ReturnValidNumberOfNeighbours(int[] coordinateValues)
         {
             ulong expectedResult = GetExpectedNeighborhoodCount(coordinateValues.Length);
             using (var mock = AutoMock.GetLoose())
             {
-                mock.Mock<ICoordinate>().Setup(c => c.CoordinatesValues).Returns(coordinateValues);
+                mock.MockCoordinate(coordinateValues);
                 var neighboursCoordinate = mock.Create<TNeighborhood>();
 
                 var environment = neighboursCoordinate.Neighbours;
@@ -32,19 +41,12 @@ namespace GraphLib.Realizations.Tests.NeighborhoodTests
             }
         }
 
-        [TestCase(new int[] { })]
-        [TestCase(new[] { 2 })]
-        [TestCase(new[] { 2, 3 })]
-        [TestCase(new[] { 2, 3, 4 })]
-        [TestCase(new[] { 2, 3, 4, 5 })]
-        [TestCase(new[] { 2, 3, 4, 5, 6 })]
-        [TestCase(new[] { 2, 3, 4, 5, 6, 7 })]
-        [TestCase(new[] { 2, 3, 4, 5, 6, 7, 8 })]
+        [TestCaseSource(nameof(CoordinateValues))]
         public void Coordinates_CoordinatesWithVariousDimensionsNumber_ReturnNeighboursWithoutSelf(int[] coordinateValues)
         {
             using (var mock = AutoMock.GetLoose())
             {
-                mock.Mock<ICoordinate>().Setup(c => c.CoordinatesValues).Returns(coordinateValues);
+                mock.MockCoordinate(coordinateValues);
                 var neighboursCoordinate = mock.Create<TNeighborhood>();
 
                 var environment = neighboursCoordinate.Neighbours;
@@ -55,25 +57,18 @@ namespace GraphLib.Realizations.Tests.NeighborhoodTests
             }
         }
 
-        [TestCase(new int[] { })]
-        [TestCase(new[] { 3 })]
-        [TestCase(new[] { 1, 7 })]
-        [TestCase(new[] { 100, 25, 33 })]
-        [TestCase(new[] { 20, 13, 34, 58 })]
-        [TestCase(new[] { 12, 32, 44, 51, 69 })]
-        [TestCase(new[] { 23, 34, 45, 56, 67, 78 })]
-        [TestCase(new[] { 201, 33, 84, 15, 16, 73, 81 })]
-        [TestCase(new[] { 201, 33, 84, 15, 16, 73, 81, 11 })]
+        [TestCaseSource(nameof(CoordinateValues))]
         public void Coordinates_CoordinatesWithVariousDimensionsCount_ReturnUniqueCoordinates(int[] coordinateValues)
         {
             using (var mock = AutoMock.GetLoose())
             {
-                mock.Mock<ICoordinate>().Setup(c => c.CoordinatesValues).Returns(coordinateValues);
+                mock.MockCoordinate(coordinateValues);
                 var neighboursCoordinate = mock.Create<TNeighborhood>();
 
                 var environment = neighboursCoordinate.Neighbours;
+                var environmentCount = environment.Distinct().Count();
 
-                Assert.IsTrue(environment.Distinct().Count() == environment.Count);
+                Assert.IsTrue(environmentCount == environment.Count);
             }
         }
     }

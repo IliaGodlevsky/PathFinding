@@ -4,8 +4,7 @@ using Algorithm.Сompanions;
 using Algorithm.Сompanions.Interface;
 using Common.Extensions.EnumerableExtensions;
 using GraphLib.Interfaces;
-using Interruptable.Interface;
-using System;
+using System.ComponentModel;
 using System.Diagnostics;
 using System.Linq;
 
@@ -16,8 +15,8 @@ namespace Algorithm.Algos.Algos
     /// with a heuristic function
     /// </summary>
     [DebuggerDisplay("Lee algorithm (heusritic)")]
-    public class BestFirstLeeAlgorithm : LeeAlgorithm,
-        IAlgorithm, IInterruptableProcess, IInterruptable, IDisposable
+    [Description("Lee algorithm (heusritic)")]
+    public class BestFirstLeeAlgorithm : LeeAlgorithm
     {
         /// <summary>
         /// Initializes a new instance of <see cref="BestFirstLeeAlgorithm"/>

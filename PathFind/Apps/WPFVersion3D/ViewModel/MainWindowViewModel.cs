@@ -59,6 +59,7 @@ namespace WPFVersion3D.ViewModel
             IVertexEventHolder eventHolder, GraphSerializationModule serializationModule, BaseEndPoints endPoints, ILog log)
             : base(fieldFactory, eventHolder, serializationModule, endPoints, log)
         {
+            messenger = DI.Container.Resolve<IMessenger>();
             ClearVerticesColorCommand = new RelayCommand(ExecuteClearVerticesColors, CanExecuteClearGraphOperation);
             StartPathFindCommand = new RelayCommand(ExecuteStartPathFindCommand, CanExecuteStartFindPathCommand);
             CreateNewGraphCommand = new RelayCommand(ExecuteCreateNewGraphCommand, CanExecuteOperation);
@@ -69,8 +70,8 @@ namespace WPFVersion3D.ViewModel
             AnimatedAxisRotateCommand = new RelayCommand(ExecuteAnimatedAxisRotateCommand);
             InterruptAlgorithmCommand = new RelayCommand(ExecuteInterruptAlgorithmCommand, CanExecuteInterruptAlgorithmCommand);
             AnimationSpeeds = new EnumValuesWithoutIgnored<AnimationSpeeds>().ToAnimationSpeedTuples();
-            Messenger.Default.Register<IsAllAlgorithmsFinishedMessage>(this, MessageTokens.MainModel, OnIsAllAlgorithmsFinished);
-            Messenger.Default.Register<GraphCreatedMessage>(this, MessageTokens.MainModel, SetGraph);
+            messenger.Register<IsAllAlgorithmsFinishedMessage>(this, MessageTokens.MainModel, OnIsAllAlgorithmsFinished);
+            messenger.Register<GraphCreatedMessage>(this, MessageTokens.MainModel, SetGraph);
         }
 
         public override void FindPath() => DI.Container.Resolve<PathFindWindow>().Show();
@@ -80,7 +81,7 @@ namespace WPFVersion3D.ViewModel
         public override void ConnectNewGraph(IGraph graph)
         {
             base.ConnectNewGraph(graph);
-            Messenger.Default.Forward(new ClearStatisticsMessage(), MessageTokens.AlgorithmStatisticsModel);
+            messenger.Forward(new ClearStatisticsMessage(), MessageTokens.AlgorithmStatisticsModel);
             (graphField as GraphField3D)?.CenterGraph();
         }
 
@@ -105,13 +106,13 @@ namespace WPFVersion3D.ViewModel
         {
             base.ClearGraph();
             var message = new ClearStatisticsMessage();
-            Messenger.Default.Forward(message, MessageTokens.AlgorithmStatisticsModel);
+            messenger.Forward(message, MessageTokens.AlgorithmStatisticsModel);
         }
 
         private void ExecuteInterruptAlgorithmCommand(object param)
         {
             var message = new InterruptAllAlgorithmsMessage();
-            Messenger.Default.Forward(message, MessageTokens.AlgorithmStatisticsModel);
+            messenger.Forward(message, MessageTokens.AlgorithmStatisticsModel);
         }
 
         private bool CanExecuteStartFindPathCommand(object param) => !endPoints.HasIsolators();
@@ -126,7 +127,9 @@ namespace WPFVersion3D.ViewModel
 
         public void Dispose()
         {
-            Messenger.Default.Unregister(this);
+            messenger.Unregister(this);
         }
+
+        private readonly IMessenger messenger;
     }
 }

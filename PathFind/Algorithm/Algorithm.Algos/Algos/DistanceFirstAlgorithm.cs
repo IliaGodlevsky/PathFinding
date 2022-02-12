@@ -2,15 +2,14 @@
 using Algorithm.Interfaces;
 using Algorithm.Realizations.Heuristic;
 using GraphLib.Interfaces;
-using Interruptable.Interface;
-using System;
+using System.ComponentModel;
 using System.Diagnostics;
 
 namespace Algorithm.Algos.Algos
 {
     [DebuggerDisplay("Distance first algorithm")]
-    public class DistanceFirstAlgorithm : GreedyAlgorithm,
-        IAlgorithm, IInterruptableProcess, IInterruptable, IDisposable
+    [Description("Dijkstra's algorithm")]
+    public class DistanceFirstAlgorithm : GreedyAlgorithm
     {
         public DistanceFirstAlgorithm(IEndPoints endPoints, IHeuristic heuristic)
             : base(endPoints)

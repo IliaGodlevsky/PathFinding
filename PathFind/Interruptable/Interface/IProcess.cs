@@ -2,9 +2,11 @@
 
 namespace Interruptable.Interface
 {
-    public interface IInterruptableProcess : IInterruptable
+    public interface IProcess
     {
         event ProcessEventHandler Started;
         event ProcessEventHandler Finished;
+
+        bool IsInProcess { get; }
     }
 }
