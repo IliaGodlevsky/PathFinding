@@ -1,4 +1,5 @@
-﻿using Common.Extensions.EnumerableExtensions;
+﻿using Common;
+using Common.Extensions.EnumerableExtensions;
 using GraphLib.Extensions;
 using GraphLib.Interfaces;
 using GraphLib.Interfaces.Factories;
@@ -6,8 +7,11 @@ using Random.Extensions;
 using Random.Interface;
 using System;
 using System.ComponentModel;
+using System.Linq;
 using ValueRange;
 using ValueRange.Extensions;
+
+using static Common.EnumerableHelper;
 
 namespace GraphLib.Realizations.Factories.GraphAssembles
 {
@@ -51,7 +55,7 @@ namespace GraphLib.Realizations.Factories.GraphAssembles
             int graphSize = graphDimensionsSizes.GetMultiplication();
             var vertices = new IVertex[graphSize];
             int percentOfObstacles = percentRange.ReturnInRange(obstaclePercent);
-            var obstaclesMatrix = random.GetObstacleMatrix(graphSize, obstaclePercent);
+            var obstaclesMatrix = GetBools(graphSize, obstaclePercent).Shuffle(random.Next);
             for (int vertexIndex = 0; vertexIndex < graphSize; vertexIndex++)
             {
                 var coordinateValues = graphDimensionsSizes.ToCoordinates(vertexIndex);

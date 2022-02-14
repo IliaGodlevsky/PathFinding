@@ -4,7 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace Algorithm.Realizations.Heuristic
+namespace Algorithm.Realizations.Heuristic.Disntances
 {
     /// <summary>
     /// A base class for all distance classes.

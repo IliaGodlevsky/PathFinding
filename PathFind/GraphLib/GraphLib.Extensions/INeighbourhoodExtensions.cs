@@ -1,4 +1,5 @@
 ﻿using GraphLib.Interfaces;
+using NullObject.Extensions;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -16,9 +17,10 @@ namespace GraphLib.Extensions
         /// <exception cref="ArgumentException"></exception>
         public static IReadOnlyCollection<IVertex> GetNeighbours(this INeighborhood self, IVertex vertex)
         {
-            if (vertex.Graph == null)
+            if (vertex.Graph.IsNull())
             {
-                string message = $"Vertex doesn't belong to any graph. Vertex: {vertex.GetInforamtion()}";
+                string format = "Vertex doesn't belong to any graph. Vertex: {0}";
+                string message = string.Format(format, vertex.GetInforamtion());
                 throw new ArgumentNullException(message);
             }
 

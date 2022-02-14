@@ -27,13 +27,11 @@ namespace WindowsFormsVersion.ViewModel
 
         protected override void OnAlgorithmFinished(object sender, ProcessEventArgs e)
         {
-            base.OnAlgorithmFinished(sender, e);
             Messenger.Default.Send(AlgorithmStatusMessage.Finished, MessageTokens.MainModel);
         }
 
         protected override void OnAlgorithmStarted(object sender, ProcessEventArgs e)
         {
-            base.OnAlgorithmStarted(sender, e);
             Messenger.Default.Send(AlgorithmStatusMessage.Started, MessageTokens.MainModel);
         }
 
@@ -54,7 +52,6 @@ namespace WindowsFormsVersion.ViewModel
 
         protected override void OnAlgorithmInterrupted(object sender, ProcessEventArgs e)
         {
-            base.OnAlgorithmInterrupted(sender, e);
             Messenger.Default.Send(AlgorithmStatusMessage.Finished, MessageTokens.MainModel);
         }
 

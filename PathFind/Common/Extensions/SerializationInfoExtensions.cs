@@ -3,7 +3,7 @@ using System.Runtime.Serialization;
 
 namespace Common.Extensions
 {
-    public static class SerializationInfoInfoExtensions
+    public static class SerializationInfoExtensions
     {
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static void Add<T>(this SerializationInfo info, string name, T item)

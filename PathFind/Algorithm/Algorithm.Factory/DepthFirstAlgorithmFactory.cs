@@ -2,7 +2,7 @@
 using Algorithm.Base;
 using Algorithm.Factory.Attrbiutes;
 using Algorithm.Interfaces;
-using Algorithm.Realizations.Heuristic;
+using Algorithm.Realizations.Heuristic.Disntances;
 using GraphLib.Interfaces;
 using System.ComponentModel;
 

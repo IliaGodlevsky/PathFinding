@@ -1,13 +1,12 @@
-﻿using Common.Interface;
-using GraphLib.Interfaces;
+﻿using GraphLib.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace GraphLib.Serialization
+namespace GraphLib.Proxy
 {
     [Serializable]
-    internal sealed class NeighbourhoodProxy : INeighborhood, ICloneable<INeighborhood>
+    internal sealed class NeighbourhoodProxy : INeighborhood
     {
         public IReadOnlyCollection<ICoordinate> Neighbours { get; }
 

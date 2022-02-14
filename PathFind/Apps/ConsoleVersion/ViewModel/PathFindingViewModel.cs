@@ -18,6 +18,7 @@ using GalaSoft.MvvmLight.Messaging;
 using GraphLib.Base.EndPoints;
 using GraphLib.Extensions;
 using GraphViewModel;
+using Interruptable.EventArguments;
 using Logging.Interface;
 using NullObject.Extensions;
 using System;
@@ -130,6 +131,10 @@ namespace ConsoleVersion.ViewModel
             visitedVerticesCount = 0;
         }
 
+        protected override void OnAlgorithmInterrupted(object sender, ProcessEventArgs e){}
+        protected override void OnAlgorithmFinished(object sender, ProcessEventArgs e){}
+        protected override void OnAlgorithmStarted(object sender, ProcessEventArgs e){}
+
         protected override void OnVertexVisited(object sender, AlgorithmEventArgs e)
         {
             Stopwatch.StartNew().Wait(DelayTime).Stop();
@@ -173,6 +178,8 @@ namespace ConsoleVersion.ViewModel
             ClearGraph();
             ConsoleKeystrokesHook.Instance.KeyPressed -= OnConsoleKeyPressed;
         }
+
+
 
         private string CurrentAlgorithmName { get; set; }
 

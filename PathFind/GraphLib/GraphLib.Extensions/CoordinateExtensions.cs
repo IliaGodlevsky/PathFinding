@@ -1,5 +1,6 @@
 ﻿using Common.Extensions.EnumerableExtensions;
 using GraphLib.Interfaces;
+using GraphLib.Proxy.Extensions;
 using System;
 using System.Linq;
 using System.Runtime.CompilerServices;
@@ -78,6 +79,22 @@ namespace GraphLib.Extensions
             }
 
             return self.CoordinatesValues.Juxtapose(graph.DimensionsSizes, predicate);
+        }
+
+        public static ICoordinate Substract(this ICoordinate self, ICoordinate coordinate)
+        {
+            var substract = self.CoordinatesValues.Zip(coordinate.CoordinatesValues, (x, y) => x - y);
+            return substract.ToCoordinate();
+        }
+
+        public static double GetScalarProduct(this ICoordinate self, ICoordinate coordinate)
+        {
+            return self.CoordinatesValues.Zip(coordinate.CoordinatesValues, (a, b) => a * b).SumOrDefault();
+        }
+
+        public static double GetVectorLength(this ICoordinate self)
+        {
+            return Math.Sqrt(self.CoordinatesValues.Select(x => x * x).SumOrDefault());
         }
     }
 }

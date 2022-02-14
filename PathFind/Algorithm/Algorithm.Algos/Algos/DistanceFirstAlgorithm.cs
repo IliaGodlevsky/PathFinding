@@ -1,6 +1,6 @@
 ﻿using Algorithm.Base;
 using Algorithm.Interfaces;
-using Algorithm.Realizations.Heuristic;
+using Algorithm.Realizations.Heuristic.Disntances;
 using GraphLib.Interfaces;
 using System.ComponentModel;
 using System.Diagnostics;
@@ -8,7 +8,7 @@ using System.Diagnostics;
 namespace Algorithm.Algos.Algos
 {
     [DebuggerDisplay("Distance first algorithm")]
-    [Description("Dijkstra's algorithm")]
+    [Description("Distance first algorithm")]
     public class DistanceFirstAlgorithm : GreedyAlgorithm
     {
         public DistanceFirstAlgorithm(IEndPoints endPoints, IHeuristic heuristic)

@@ -1,4 +1,5 @@
 ﻿using GraphLib.Interfaces;
+using GraphLib.Proxy;
 using System;
 
 namespace GraphLib.Serialization

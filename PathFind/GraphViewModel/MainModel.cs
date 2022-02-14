@@ -84,7 +84,7 @@ namespace GraphViewModel
         public void ClearColors()
         {
             Graph.Refresh();
-            endPoints.ReturnColors();
+            endPoints.RestoreCurrentColors();
         }
 
         protected readonly ILog log;

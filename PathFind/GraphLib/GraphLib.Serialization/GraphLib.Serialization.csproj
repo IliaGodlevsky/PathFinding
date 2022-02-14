@@ -48,7 +48,6 @@
     <Compile Include="Extensions\GraphSerializerExtensions.cs" />
     <Compile Include="Extensions\GraphSerializationModuleExtensions.cs" />
     <Compile Include="Interfaces\ICrypto.cs" />
-    <Compile Include="NeighbourhoodProxy.cs" />
     <Compile Include="Serializers\GraphSerializationModule.cs" />
     <Compile Include="Serializers\CompressGraphSerializer.cs" />
     <Compile Include="Serializers\CryptoGraphSerializer.cs" />
@@ -91,6 +90,10 @@
     <ProjectReference Include="..\GraphLib.NullRealizations\GraphLib.NullRealizations.csproj">
       <Project>{FA595CBF-C9AA-4D4F-AFF7-19E571C91D00}</Project>
       <Name>GraphLib.NullRealizations</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\GraphLib.Proxy\GraphLib.Proxy.csproj">
+      <Project>{51c3baf5-6ae2-47c4-932b-25687013c2ce}</Project>
+      <Name>GraphLib.Proxy</Name>
     </ProjectReference>
     <ProjectReference Include="..\GraphLib.Realizations\GraphLib.Realizations.csproj">
       <Project>{B80C5250-3D81-4742-B8A5-84AE39122BA9}</Project>

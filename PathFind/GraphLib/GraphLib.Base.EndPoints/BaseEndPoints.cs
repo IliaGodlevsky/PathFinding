@@ -29,7 +29,7 @@ namespace GraphLib.Base.EndPoints
             leftButtonConditions.ResetAllExecutings();
         }
 
-        public void ReturnColors()
+        public void RestoreCurrentColors()
         {
             EndPoints.ForEach(returnColorsConditions.ExecuteTheFirstTrue);
         }

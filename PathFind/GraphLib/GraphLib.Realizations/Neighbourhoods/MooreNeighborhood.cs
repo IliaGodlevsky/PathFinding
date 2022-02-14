@@ -1,7 +1,7 @@
 ﻿using Common.Extensions;
 using Common.Interface;
 using GraphLib.Interfaces;
-using GraphLib.Realizations.Extensions;
+using GraphLib.Proxy.Extensions;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;

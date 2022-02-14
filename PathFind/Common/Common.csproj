@@ -64,6 +64,7 @@
   <ItemGroup>
     <Compile Include="Attrbiutes\GroupAttribute.cs" />
     <Compile Include="Attrbiutes\OrderAttribute.cs" />
+    <Compile Include="EnumerableHelper.cs" />
     <Compile Include="Extensions\EnumerableExtensions\ICollectionExtensions.cs" />
     <Compile Include="Extensions\EnumerableExtensions\ConcurrentDictionaryExtensions.cs" />
     <Compile Include="Extensions\GenericExtensions.cs" />
@@ -71,7 +72,7 @@
     <Compile Include="Extensions\IntExtensions.cs" />
     <Compile Include="Extensions\EnumerableExtensions\QueueExtensions.cs" />
     <Compile Include="Extensions\StopwatchExtensions.cs" />
-    <Compile Include="Extensions\SerializationInfoInfoExtensions.cs" />
+    <Compile Include="Extensions\SerializationInfoExtensions.cs" />
     <Compile Include="Extensions\StringBuilderExtensions.cs" />
     <Compile Include="Interface\ICloneable.cs" />
     <Compile Include="Interface\IViewModel.cs" />

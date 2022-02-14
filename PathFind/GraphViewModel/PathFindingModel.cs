@@ -4,6 +4,7 @@ using Algorithm.Factory;
 using Algorithm.Infrastructure.EventArguments;
 using Algorithm.Interfaces;
 using Algorithm.NullRealizations;
+using Common.Extensions;
 using Common.Extensions.EnumerableExtensions;
 using GraphLib.Base.EndPoints;
 using GraphLib.Interfaces;
@@ -42,7 +43,7 @@ namespace GraphViewModel
             {
                 algorithm = Algorithm.Create(endPoints);
                 SubscribeOnAlgorithmEvents(algorithm);
-                endPoints.ReturnColors();
+                endPoints.RestoreCurrentColors();
                 path = await algorithm.FindPathAsync();
                 await path.HighlightAsync(endPoints);
                 SummarizePathfindingResults();
@@ -70,9 +71,12 @@ namespace GraphViewModel
             }
         }
 
-        protected virtual void OnVertexVisitedNoVisualization(object sender, EventArgs e)
+        protected virtual void OnVertexVisitedNoVisualization(object sender, AlgorithmEventArgs e)
         {
-            visitedVerticesCount++;
+            if (!e.Current.IsNull())
+            {
+                visitedVerticesCount++;
+            }
         }
 
         protected virtual void OnVertexEnqueued(object sender, AlgorithmEventArgs e)
@@ -83,23 +87,10 @@ namespace GraphViewModel
             }
         }
 
-        protected virtual void OnAlgorithmInterrupted(object sender, ProcessEventArgs e)
-        {
-            timer.Stop();
-        }
-
-        protected virtual void OnAlgorithmFinished(object sender, ProcessEventArgs e)
-        {
-            timer.Stop();
-        }
-
+        protected abstract void OnAlgorithmInterrupted(object sender, ProcessEventArgs e);
+        protected abstract void OnAlgorithmFinished(object sender, ProcessEventArgs e);
+        protected abstract void OnAlgorithmStarted(object sender, ProcessEventArgs e);
         protected abstract void SummarizePathfindingResults();
-
-        protected virtual void OnAlgorithmStarted(object sender, ProcessEventArgs e)
-        {
-            visitedVerticesCount = 0;
-            timer.Restart();
-        }
 
         protected virtual void SubscribeOnAlgorithmEvents(PathfindingAlgorithm algorithm)
         {
@@ -113,8 +104,11 @@ namespace GraphViewModel
                 algorithm.VertexVisited += OnVertexVisitedNoVisualization;
             }
             algorithm.Finished += OnAlgorithmFinished;
+            algorithm.Finished += timer.Stop;
             algorithm.Started += OnAlgorithmStarted;
+            algorithm.Started += timer.Restart;           
             algorithm.Interrupted += OnAlgorithmInterrupted;
+            algorithm.Interrupted += timer.Stop;
         }
 
         protected readonly BaseEndPoints endPoints;

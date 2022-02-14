@@ -1,6 +1,6 @@
 ﻿using Common.Extensions.EnumerableExtensions;
-using GraphLib.Extensions.Objects;
 using GraphLib.Interfaces;
+using GraphLib.Proxy;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -22,7 +22,7 @@ namespace GraphLib.Extensions
                 while (iterator.MoveNext())
                 {
                     var current = iterator.Current;
-                    yield return new SubEndPoints(previous, current);
+                    yield return new EndPointsProxy(previous, current);
                     previous = iterator.Current;
                 }
             }

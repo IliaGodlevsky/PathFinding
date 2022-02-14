@@ -42,12 +42,10 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Enums\SmoothLevels.cs" />
-    <Compile Include="Extensions\EnumerableExtensions.cs" />
     <Compile Include="Extensions\EnumValuesExtensions.cs" />
     <Compile Include="Extensions\GraphExtensions.cs" />
     <Compile Include="Neighbourhoods\VonNeumannNeighborhood.cs" />
     <Compile Include="Neighbourhoods\MooreNeighborhood.cs" />
-    <Compile Include="Coordinates\CoordinateProxy.cs" />
     <Compile Include="MeanCosts\GeometricMeanCost.cs" />
     <Compile Include="MeanCosts\MeanCost.cs" />
     <Compile Include="MeanCosts\RootMeanSquareCost.cs" />
@@ -115,6 +113,10 @@
     <ProjectReference Include="..\GraphLib.NullRealizations\GraphLib.NullRealizations.csproj">
       <Project>{FA595CBF-C9AA-4D4F-AFF7-19E571C91D00}</Project>
       <Name>GraphLib.NullRealizations</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\GraphLib.Proxy\GraphLib.Proxy.csproj">
+      <Project>{51c3baf5-6ae2-47c4-932b-25687013c2ce}</Project>
+      <Name>GraphLib.Proxy</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

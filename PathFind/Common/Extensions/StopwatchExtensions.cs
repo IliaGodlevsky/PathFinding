@@ -1,4 +1,5 @@
-﻿using System.Diagnostics;
+﻿using System;
+using System.Diagnostics;
 
 namespace Common.Extensions
 {
@@ -24,6 +25,16 @@ namespace Common.Extensions
                 }
             }
             return watch;
+        }
+
+        public static void Stop(this Stopwatch self, object sender, EventArgs e)
+        {
+            self.Stop();
+        }
+
+        public static void Restart(this Stopwatch self, object sender, EventArgs e)
+        {
+            self.Restart();
         }
 
         public static string ToFormattedString(this Stopwatch self)

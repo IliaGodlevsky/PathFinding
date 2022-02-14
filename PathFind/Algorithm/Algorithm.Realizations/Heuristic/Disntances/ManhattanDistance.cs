@@ -3,7 +3,7 @@ using Common.Extensions.EnumerableExtensions;
 using System;
 using System.Collections.Generic;
 
-namespace Algorithm.Realizations.Heuristic
+namespace Algorithm.Realizations.Heuristic.Disntances
 {
     /// <summary>
     /// Calculates manhattan distance between two vertices.

@@ -124,6 +124,12 @@ namespace Common.Extensions.EnumerableExtensions
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static int SumOrDefault(this IEnumerable<int> collection)
+        {
+            return collection.Any() ? collection.Sum() : default;
+        }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static double MaxOrDefault(this IEnumerable<double> collection)
         {
             return collection.Any() ? collection.Max() : default;
@@ -192,10 +198,16 @@ namespace Common.Extensions.EnumerableExtensions
                 .SelectMany(item => item);
         }
 
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static IEnumerable<T> Shuffle<T, U>(this IEnumerable<T> self, Func<U> randomFunction)
+        public static IList<T> Shuffle<T>(this IList<T> list, Func<int> randomFunction)
         {
-            return self.OrderBy(_ => randomFunction());
+            for (int i = 0; i < list.Count; i++)
+            {
+                int index = randomFunction() % list.Count;
+                T temp = list[i];
+                list[i] = list[index];
+                list[index] = temp;
+            }
+            return list;
         }
 
         public static IEnumerable<T> TakeOrDefault<T>(this IEnumerable<T> collection, int number)

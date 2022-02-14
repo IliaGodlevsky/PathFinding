@@ -1,5 +1,5 @@
 ﻿using Algorithm.Interfaces;
-using Algorithm.Realizations.Heuristic;
+using Algorithm.Realizations.Heuristic.Disntances;
 using NUnit.Framework;
 
 namespace Algorithm.Realizations.Tests.HeuristicTests

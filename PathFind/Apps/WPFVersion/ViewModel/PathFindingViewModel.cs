@@ -57,7 +57,6 @@ namespace WPFVersion.ViewModel
 
         protected override void OnAlgorithmStarted(object sender, ProcessEventArgs e)
         {
-            base.OnAlgorithmStarted(sender, e);
             messenger
                 .Forward(new AlgorithmStartedMessage(algorithm, DelayTime), MessageTokens.AlgorithmStatisticsModel)
                 .Forward(new EndPointsChosenMessage(algorithm, endPoints), MessageTokens.VisualizationModel);
@@ -88,14 +87,12 @@ namespace WPFVersion.ViewModel
 
         protected override void OnAlgorithmInterrupted(object sender, ProcessEventArgs e)
         {
-            base.OnAlgorithmInterrupted(sender, e);
             var message = new AlgorithmStatusMessage(AlgorithmStatus.Interrupted, Index);
             messenger.Forward(message, MessageTokens.AlgorithmStatisticsModel);
         }
 
         protected override void OnAlgorithmFinished(object sender, ProcessEventArgs e)
         {
-            base.OnAlgorithmFinished(sender, e);
             messenger.Unregister(this);
         }
 

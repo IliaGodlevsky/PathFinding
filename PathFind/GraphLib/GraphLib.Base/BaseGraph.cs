@@ -35,7 +35,7 @@ namespace GraphLib.Base
 
         public override bool Equals(object obj)
         {
-            return obj is IGraph graph ? graph.IsEqual(this) : false;
+            return obj is IGraph graph && graph.IsEqual(this);
         }
 
         public override int GetHashCode()
