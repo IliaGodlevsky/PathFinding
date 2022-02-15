@@ -11,7 +11,7 @@ namespace GraphLib.Base.EventHolder
         protected BaseVertexEventHolder(IVertexCostFactory costFactory)
         {
             this.costFactory = costFactory;
-            conditions = new ReverseVertexConditions();
+            commands = new ReverseVertexCommands();
         }
 
         public virtual void ChangeVertexCost(object sender, EventArgs e)
@@ -26,7 +26,7 @@ namespace GraphLib.Base.EventHolder
 
         public virtual void Reverse(object sender, EventArgs e)
         {
-            conditions.ExecuteTheFirstTrue(sender as IVertex);
+            commands.Execute(sender as IVertex);
         }
 
         public virtual void UnsubscribeVertices(IGraph graph)
@@ -45,7 +45,7 @@ namespace GraphLib.Base.EventHolder
 
         protected abstract int GetWheelDelta(EventArgs e);
 
-        private readonly IVerticesCommands conditions;
+        private readonly IVerticesCommands commands;
         protected readonly IVertexCostFactory costFactory;
     }
 }

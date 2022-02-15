@@ -2,7 +2,7 @@ using Algorithm.Interfaces;
 using Algorithm.NullRealizations;
 using GraphLib.Extensions;
 using GraphLib.Interfaces;
-using GraphLib.NullRealizations.NullObjects;
+using GraphLib.NullRealizations;
 using GraphLib.TestRealizations.TestFactories;
 using GraphLib.TestRealizations.TestObjects;
 using NullObject.Extensions;

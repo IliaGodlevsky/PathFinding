@@ -1,4 +1,5 @@
 ﻿using GraphLib.Interfaces;
+using System.Linq;
 
 namespace GraphLib.Serialization.Extensions
 {
@@ -7,6 +8,11 @@ namespace GraphLib.Serialization.Extensions
         internal static GraphSerializationInfo ToGraphSerializationInfo(this IGraph graph)
         {
             return new GraphSerializationInfo(graph);
+        }
+
+        internal static VertexSerializationInfo[] GetVerticesSerializationInfo(this IGraph graph)
+        {
+            return graph.Vertices.Select(vertex => vertex.ToSerializationInfo()).ToArray();
         }
     }
 }

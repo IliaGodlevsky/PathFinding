@@ -13,7 +13,7 @@ using GalaSoft.MvvmLight.Messaging;
 using GraphLib.Base.EndPoints;
 using GraphLib.Extensions;
 using GraphLib.Interfaces;
-using GraphLib.NullRealizations.NullObjects;
+using GraphLib.NullRealizations;
 using GraphLib.Realizations.Graphs;
 using Logging.Interface;
 using System;

@@ -41,13 +41,13 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="NullObjects\NullCoordinate.cs" />
-    <Compile Include="NullObjects\NullEndPoints.cs" />
-    <Compile Include="NullObjects\NullNeighborhood.cs" />
-    <Compile Include="NullObjects\NullCost.cs" />
-    <Compile Include="NullObjects\NullGraph.cs" />
-    <Compile Include="NullObjects\NullVertex.cs" />
-    <Compile Include="NullObjects\NullVisualizable.cs" />
+    <Compile Include="NullCoordinate.cs" />
+    <Compile Include="NullEndPoints.cs" />
+    <Compile Include="NullNeighborhood.cs" />
+    <Compile Include="NullCost.cs" />
+    <Compile Include="NullGraph.cs" />
+    <Compile Include="NullVertex.cs" />
+    <Compile Include="NullVisualizable.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

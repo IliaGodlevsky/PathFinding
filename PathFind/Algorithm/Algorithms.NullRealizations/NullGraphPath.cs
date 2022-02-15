@@ -1,6 +1,6 @@
 ﻿using Algorithm.Interfaces;
 using GraphLib.Interfaces;
-using GraphLib.NullRealizations.NullObjects;
+using GraphLib.NullRealizations;
 using NullObject.Attributes;
 using SingletonLib;
 using System.Collections.Generic;

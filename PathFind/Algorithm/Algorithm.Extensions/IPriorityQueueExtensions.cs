@@ -1,6 +1,6 @@
 ﻿using Common.Extensions.EnumerableExtensions;
 using GraphLib.Interfaces;
-using GraphLib.NullRealizations.NullObjects;
+using GraphLib.NullRealizations;
 using Priority_Queue;
 using System;
 using System.Collections.Generic;

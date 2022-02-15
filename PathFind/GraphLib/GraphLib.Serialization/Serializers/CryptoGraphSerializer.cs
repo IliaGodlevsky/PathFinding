@@ -1,5 +1,5 @@
 ﻿using GraphLib.Interfaces;
-using GraphLib.NullRealizations.NullObjects;
+using GraphLib.NullRealizations;
 using GraphLib.Serialization.Exceptions;
 using GraphLib.Serialization.Interfaces;
 using System;

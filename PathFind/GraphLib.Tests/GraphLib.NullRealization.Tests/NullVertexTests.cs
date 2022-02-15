@@ -1,5 +1,5 @@
 ﻿using GraphLib.Extensions;
-using GraphLib.NullRealizations.NullObjects;
+using GraphLib.NullRealizations;
 using NUnit.Framework;
 
 namespace GraphLib.Common.Tests

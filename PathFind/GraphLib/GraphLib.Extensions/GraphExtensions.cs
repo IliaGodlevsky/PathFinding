@@ -1,6 +1,6 @@
 ﻿using Common.Extensions.EnumerableExtensions;
 using GraphLib.Interfaces;
-using GraphLib.NullRealizations.NullObjects;
+using GraphLib.NullRealizations;
 using System;
 using System.Linq;
 

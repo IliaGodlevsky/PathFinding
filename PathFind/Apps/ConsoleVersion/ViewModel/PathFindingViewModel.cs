@@ -131,9 +131,9 @@ namespace ConsoleVersion.ViewModel
             visitedVerticesCount = 0;
         }
 
-        protected override void OnAlgorithmInterrupted(object sender, ProcessEventArgs e){}
-        protected override void OnAlgorithmFinished(object sender, ProcessEventArgs e){}
-        protected override void OnAlgorithmStarted(object sender, ProcessEventArgs e){}
+        protected override void OnAlgorithmInterrupted(object sender, ProcessEventArgs e) { }
+        protected override void OnAlgorithmFinished(object sender, ProcessEventArgs e) { }
+        protected override void OnAlgorithmStarted(object sender, ProcessEventArgs e) { }
 
         protected override void OnVertexVisited(object sender, AlgorithmEventArgs e)
         {

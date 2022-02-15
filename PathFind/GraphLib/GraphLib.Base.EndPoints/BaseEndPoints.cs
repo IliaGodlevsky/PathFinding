@@ -1,5 +1,6 @@
 ﻿using Common.Extensions.EnumerableExtensions;
-using GraphLib.Base.EndPoints.Commands.VerticesConditions;
+using GraphLib.Base.EndPoints.Commands.VerticesCommands;
+using GraphLib.Base.EndPoints.Extensions;
 using GraphLib.Extensions;
 using GraphLib.Interfaces;
 using System;
@@ -13,25 +14,29 @@ namespace GraphLib.Base.EndPoints
     {
         public IVertex Source { get; internal set; }
         public IVertex Target { get; internal set; }
-        public IEnumerable<IVertex> EndPoints => intermediates.Prepend(Source).Append(Target);
+        public IEnumerable<IVertex> EndPoints 
+            => intermediates.Prepend(Source).Append(Target);
+
         public bool IsEndPoint(IVertex vertex)
         {
-            return Source.Equals(vertex)
-                || Target.Equals(vertex)
+            return Source.Equals(vertex) 
+                || Target.Equals(vertex) 
                 || intermediates.Contains(vertex);
         }
 
-        public void SubscribeToEvents(IGraph graph) => graph.ForEach(SubscribeVertex);
-        public void UnsubscribeFromEvents(IGraph graph) => graph.ForEach(UnsubscribeVertex);
+        public void SubscribeToEvents(IGraph graph) 
+            => graph.ForEach(SubscribeVertex);
+        public void UnsubscribeFromEvents(IGraph graph) 
+            => graph.ForEach(UnsubscribeVertex);
         public void Reset()
         {
-            middleButtonConditions.ResetAllExecutings();
-            leftButtonConditions.ResetAllExecutings();
+            setEndPointsCommands.Reset();
+            markToReplaceCommands.Reset();
         }
 
         public void RestoreCurrentColors()
         {
-            EndPoints.ForEach(returnColorsConditions.ExecuteTheFirstTrue);
+            returnColorsCommands.ExecuteForEach(EndPoints);
         }
 
         internal protected readonly Collection<IVertex> intermediates;
@@ -41,27 +46,27 @@ namespace GraphLib.Base.EndPoints
         {
             intermediates = new Collection<IVertex>();
             markedToReplaceIntermediates = new Queue<IVertex>();
-            leftButtonConditions = new SetEndPointsConditions(this);
-            middleButtonConditions = new MarkIntermediateToReplaceEndPointsConditions(this);
-            returnColorsConditions = new ReturnColorsConditions(this);
+            markToReplaceCommands = new SetEndPointsCommands(this);
+            setEndPointsCommands = new IntermediateToReplaceCommands(this);
+            returnColorsCommands = new ReturnColorsCommands(this);
             Reset();
         }
 
         protected virtual void SetEndPoints(object sender, EventArgs e)
         {
-            leftButtonConditions.ExecuteTheFirstTrue(sender as IVertex);
+            markToReplaceCommands.Execute(sender as IVertex);
         }
 
         protected virtual void MarkIntermediateToReplace(object sender, EventArgs e)
         {
-            middleButtonConditions.ExecuteTheFirstTrue(sender as IVertex);
+            setEndPointsCommands.Execute(sender as IVertex);
         }
 
         protected abstract void SubscribeVertex(IVertex vertex);
         protected abstract void UnsubscribeVertex(IVertex vertex);
 
-        private readonly IVerticesCommands middleButtonConditions;
-        private readonly IVerticesCommands leftButtonConditions;
-        private readonly IVerticesCommands returnColorsConditions;
+        private readonly IVerticesCommands setEndPointsCommands;
+        private readonly IVerticesCommands markToReplaceCommands;
+        private readonly IVerticesCommands returnColorsCommands;
     }
 }

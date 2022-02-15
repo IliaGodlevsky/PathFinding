@@ -2,8 +2,8 @@
 {
     public interface IVerticesCommands
     {
-        void ExecuteTheFirstTrue(IVertex vertex);
+        void Execute(IVertex vertex);
 
-        void ResetAllExecutings();
+        void Reset();
     }
 }

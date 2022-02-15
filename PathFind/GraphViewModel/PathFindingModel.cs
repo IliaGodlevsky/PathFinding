@@ -106,7 +106,7 @@ namespace GraphViewModel
             algorithm.Finished += OnAlgorithmFinished;
             algorithm.Finished += timer.Stop;
             algorithm.Started += OnAlgorithmStarted;
-            algorithm.Started += timer.Restart;           
+            algorithm.Started += timer.Restart;
             algorithm.Interrupted += OnAlgorithmInterrupted;
             algorithm.Interrupted += timer.Stop;
         }

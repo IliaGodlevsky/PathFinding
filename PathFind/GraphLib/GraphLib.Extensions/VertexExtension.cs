@@ -1,5 +1,5 @@
 ﻿using GraphLib.Interfaces;
-using GraphLib.NullRealizations.NullObjects;
+using GraphLib.NullRealizations;
 using NullObject.Extensions;
 using System;
 using System.Linq;
@@ -33,7 +33,7 @@ namespace GraphLib.Extensions
         {
             bool IsObstacleOrNull(IVertex vertex)
             {
-                return vertex.IsObstacle || vertex.IsNull();
+                return vertex.IsNull() || vertex.IsObstacle;
             }
 
             return IsObstacleOrNull(self) || self.Neighbours.All(IsObstacleOrNull);

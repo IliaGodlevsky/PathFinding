@@ -2,8 +2,6 @@
 using NUnit.Framework;
 using Random.Extensions;
 using Random.Realizations.Generators;
-using System;
-using System.Collections.Generic;
 using System.Linq;
 
 namespace Common.Tests
@@ -45,7 +43,7 @@ namespace Common.Tests
             Assert.IsTrue(matches);
         }
 
-        [TestCase(new[] { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16 })]
+        [TestCase(new[] { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 })]
         public void Shuffle_OrderedCollection_ReturnShuffledCollection(int[] ordered)
         {
             var random = new PseudoRandom();

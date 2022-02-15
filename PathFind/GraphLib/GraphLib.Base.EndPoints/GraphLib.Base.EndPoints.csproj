@@ -41,29 +41,34 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Attributes\AttachmentAttribute.cs" />
     <Compile Include="BaseEndPoints.cs" />
-    <Compile Include="EndPointsInspection\BaseEndPointsInspection.cs" />
-    <Compile Include="EndPointsInspection\BaseIntermediateEndPointsInspection.cs" />
+    <Compile Include="Commands\VerticesCommands\BaseVerticesCommands.cs" />
+    <Compile Include="BaseCommands\BaseEndPointsCommand.cs" />
+    <Compile Include="BaseCommands\BaseIntermediateEndPointsCommand.cs" />
+    <Compile Include="Extensions\IVertexCommandExtensions.cs" />
+    <Compile Include="Extensions\IVerticesCommandsExtensions.cs" />
+    <Compile Include="Extensions\TypeExtensions.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Commands\EndPointsCommands\ReplaceIntermediateIsolatedVertexCondition.cs" />
-    <Compile Include="Commands\EndPointsCommands\ReplaceIntermediateVertexCondition.cs" />
-    <Compile Include="Commands\EndPointsCommands\ReplaceIsolatedSourceVertexCondition.cs" />
+    <Compile Include="Commands\EndPointsCommands\ReplaceIntermediateIsolatedVertexCommand.cs" />
+    <Compile Include="Commands\EndPointsCommands\ReplaceIntermediateVertexCommand.cs" />
+    <Compile Include="Commands\EndPointsCommands\ReplaceIsolatedSourceVertexCommand.cs" />
     <Compile Include="Commands\EndPointsCommands\ReplaceIsolatedTargetVertexCondition.cs" />
-    <Compile Include="Commands\EndPointsCommands\ReturnIntermediateColorCondition.cs" />
-    <Compile Include="Commands\EndPointsCommands\ReturnMarkedToReplaceColorCondition.cs" />
-    <Compile Include="Commands\EndPointsCommands\ReturnSourceColorCondition.cs" />
-    <Compile Include="Commands\EndPointsCommands\ReturnTargetColorCondition.cs" />
-    <Compile Include="Commands\EndPointsCommands\SetIntermediateVertexCondition.cs" />
-    <Compile Include="Commands\EndPointsCommands\SetSourceVertexCondition.cs" />
-    <Compile Include="Commands\EndPointsCommands\SetTargetVertexCondition.cs" />
-    <Compile Include="Commands\EndPointsCommands\UnsetIntermediateVertexCondition.cs" />
-    <Compile Include="Commands\EndPointsCommands\UnsetSourceVertexCondition.cs" />
-    <Compile Include="Commands\EndPointsCommands\UnsetTargetVertexCondition.cs" />
-    <Compile Include="Commands\ReplaceIntermediatesConditions\CancelMarkToReplaceEndPointsConditions.cs" />
-    <Compile Include="Commands\ReplaceIntermediatesConditions\MarkToReplaceEndPointsCondition.cs" />
-    <Compile Include="Commands\VerticesConditions\MarkIntermediateToReplaceEndPointsConditions.cs" />
-    <Compile Include="Commands\VerticesConditions\ReturnColorsConditions.cs" />
-    <Compile Include="Commands\VerticesConditions\SetEndPointsConditions.cs" />
+    <Compile Include="Commands\EndPointsCommands\ReturnIntermediateColorCommand.cs" />
+    <Compile Include="Commands\EndPointsCommands\ReturnMarkedToReplaceColorCommand.cs" />
+    <Compile Include="Commands\EndPointsCommands\ReturnSourceColorCommand.cs" />
+    <Compile Include="Commands\EndPointsCommands\ReturnTargetColorCommand.cs" />
+    <Compile Include="Commands\EndPointsCommands\SetIntermediateVertexCommand.cs" />
+    <Compile Include="Commands\EndPointsCommands\SetSourceVertexCommand.cs" />
+    <Compile Include="Commands\EndPointsCommands\SetTargetVertexCommand.cs" />
+    <Compile Include="Commands\EndPointsCommands\UnsetIntermediateVertexCommand.cs" />
+    <Compile Include="Commands\EndPointsCommands\UnsetSourceVertexCommand.cs" />
+    <Compile Include="Commands\EndPointsCommands\UnsetTargetVertexCommand.cs" />
+    <Compile Include="Commands\ReplaceIntermediatesConditions\CancelMarkToReplaceCommand.cs" />
+    <Compile Include="Commands\ReplaceIntermediatesConditions\MarkToReplaceCommand.cs" />
+    <Compile Include="Commands\VerticesCommands\IntermediateToReplaceCommands.cs" />
+    <Compile Include="Commands\VerticesCommands\ReturnColorsCommands.cs" />
+    <Compile Include="Commands\VerticesCommands\SetEndPointsCommands.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\Common\Common.csproj">

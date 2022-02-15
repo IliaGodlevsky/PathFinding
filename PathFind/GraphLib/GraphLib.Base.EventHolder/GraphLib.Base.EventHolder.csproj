@@ -42,9 +42,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="BaseVertexEventHolder.cs" />
-    <Compile Include="Commands\ReverseVertexConditions.cs" />
-    <Compile Include="Commands\SetVertexAsObstacleCondition.cs" />
-    <Compile Include="Commands\SetVertexAsRegularCondition.cs" />
+    <Compile Include="Commands\ReverseVertexCommands.cs" />
+    <Compile Include="Commands\SetVertexAsObstacleCommand.cs" />
+    <Compile Include="Commands\SetVertexAsRegularCommand.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

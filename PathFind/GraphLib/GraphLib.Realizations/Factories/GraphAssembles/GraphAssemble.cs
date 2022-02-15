@@ -1,5 +1,4 @@
-﻿using Common;
-using Common.Extensions.EnumerableExtensions;
+﻿using Common.Extensions.EnumerableExtensions;
 using GraphLib.Extensions;
 using GraphLib.Interfaces;
 using GraphLib.Interfaces.Factories;
@@ -7,7 +6,6 @@ using Random.Extensions;
 using Random.Interface;
 using System;
 using System.ComponentModel;
-using System.Linq;
 using ValueRange;
 using ValueRange.Extensions;
 
@@ -53,9 +51,9 @@ namespace GraphLib.Realizations.Factories.GraphAssembles
         public virtual IGraph AssembleGraph(int obstaclePercent, params int[] graphDimensionsSizes)
         {
             int graphSize = graphDimensionsSizes.GetMultiplication();
-            var vertices = new IVertex[graphSize];
             int percentOfObstacles = percentRange.ReturnInRange(obstaclePercent);
             var obstaclesMatrix = GetBools(graphSize, obstaclePercent).Shuffle(random.Next);
+            var vertices = new IVertex[graphSize];
             for (int vertexIndex = 0; vertexIndex < graphSize; vertexIndex++)
             {
                 var coordinateValues = graphDimensionsSizes.ToCoordinates(vertexIndex);

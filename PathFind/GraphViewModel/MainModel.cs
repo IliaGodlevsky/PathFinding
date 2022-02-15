@@ -1,7 +1,7 @@
 ﻿using GraphLib.Base.EndPoints;
 using GraphLib.Extensions;
 using GraphLib.Interfaces;
-using GraphLib.NullRealizations.NullObjects;
+using GraphLib.NullRealizations;
 using GraphLib.Serialization;
 using GraphLib.Serialization.Extensions;
 using GraphViewModel.Interfaces;

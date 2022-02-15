@@ -2,7 +2,7 @@
 using Autofac.Extras.Moq;
 using Common.Extensions.EnumerableExtensions;
 using GraphLib.Extensions;
-using GraphLib.NullRealizations.NullObjects;
+using GraphLib.NullRealizations;
 using GraphLib.Realizations.Factories.GraphAssembles;
 using GraphLib.Realizations.Neighbourhoods;
 using GraphLib.Realizations.Tests.Extenions;

@@ -190,11 +190,16 @@ namespace Common.Extensions.EnumerableExtensions
             return tuples.Select(item => item.Item1);
         }
 
+        public static IOrderedEnumerable<T> OrderByOrderAttribute<T>(this IEnumerable<T> collection)
+        {
+            return collection.OrderBy(item => item.GetOrderAttributeValueOrMaxValue());
+        }
+
         public static IEnumerable<T> GroupByGroupAttribute<T>(this IEnumerable<T> collection)
         {
             return collection
                 .GroupBy(item => item.GetAttributeOrNull<GroupAttribute>())
-                .Select(item => item.OrderBy(x => x.GetOrderAttributeValueOrMaxValue()))
+                .Select(item => item.OrderByOrderAttribute())
                 .SelectMany(item => item);
         }
 

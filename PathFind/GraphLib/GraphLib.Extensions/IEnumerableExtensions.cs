@@ -1,6 +1,6 @@
 ﻿using Common.Extensions.EnumerableExtensions;
 using GraphLib.Interfaces;
-using GraphLib.NullRealizations.NullObjects;
+using GraphLib.NullRealizations;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,6 +11,11 @@ namespace GraphLib.Extensions
 {
     public static class IEnumerableExtensions
     {
+        public static void Execute(this IEnumerable<IVertexCommand> commands, IVertex vertex)
+        {
+            commands.FirstOrDefault(command => command.IsTrue(vertex))?.Execute(vertex);
+        }
+
         public static bool IsCardinal(this int[] coordinates, int[] neighbourCoordinates)
         {
             if (coordinates.Length != neighbourCoordinates.Length
