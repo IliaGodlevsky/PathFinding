@@ -7,7 +7,7 @@ using GraphLib.Interfaces;
 
 namespace GraphLib.Base.EndPoints.Commands.EndPointsCommands
 {
-    [Attachment(typeof(SetEndPointsCommands)), Order(2)]
+    [AttachedTo(typeof(SetEndPointsCommands)), Order(2)]
     internal sealed class UnsetIntermediateVertexCommand : BaseIntermediateEndPointsCommand
     {
         public UnsetIntermediateVertexCommand(BaseEndPoints endPoints)

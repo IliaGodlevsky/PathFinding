@@ -6,7 +6,7 @@ using GraphLib.Interfaces;
 
 namespace GraphLib.Base.EndPoints.Commands.EndPointsCommands
 {
-    [Attachment(typeof(SetEndPointsCommands)), Order(8)]
+    [AttachedTo(typeof(SetEndPointsCommands)), Order(8)]
     internal sealed class ReplaceIntermediateVertexCommand : BaseIntermediateEndPointsCommand
     {
         public ReplaceIntermediateVertexCommand(BaseEndPoints endPoints) : base(endPoints)

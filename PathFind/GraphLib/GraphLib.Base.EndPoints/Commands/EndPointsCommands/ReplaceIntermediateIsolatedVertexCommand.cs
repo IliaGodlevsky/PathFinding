@@ -9,7 +9,7 @@ using System.Linq;
 
 namespace GraphLib.Base.EndPoints.Commands.EndPointsCommands
 {
-    [Attachment(typeof(SetEndPointsCommands)), Order(3)]
+    [AttachedTo(typeof(SetEndPointsCommands)), Order(3)]
     internal sealed class ReplaceIntermediateIsolatedVertexCommand : BaseIntermediateEndPointsCommand
     {
         public ReplaceIntermediateIsolatedVertexCommand(BaseEndPoints endPoints)

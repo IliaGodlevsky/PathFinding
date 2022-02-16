@@ -8,7 +8,7 @@ using NullObject.Extensions;
 
 namespace GraphLib.Base.EndPoints.Commands.EndPointsCommands
 {
-    [Attachment(typeof(SetEndPointsCommands)), Order(4)]
+    [AttachedTo(typeof(SetEndPointsCommands)), Order(4)]
     internal sealed class SetSourceVertexCommand : BaseEndPointsCommand
     {
         public SetSourceVertexCommand(BaseEndPoints endPoints)

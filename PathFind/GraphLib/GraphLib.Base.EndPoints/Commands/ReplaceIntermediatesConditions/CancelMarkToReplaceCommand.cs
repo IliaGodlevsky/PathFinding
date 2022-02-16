@@ -7,7 +7,7 @@ using GraphLib.Interfaces;
 
 namespace GraphLib.Base.EndPoints.Commands.ReplaceIntermediatesConditions
 {
-    [Attachment(typeof(IntermediateToReplaceCommands)), Order(0)]
+    [AttachedTo(typeof(IntermediateToReplaceCommands)), Order(0)]
     internal sealed class CancelMarkToReplaceCommand : BaseIntermediateEndPointsCommand
     {
         public CancelMarkToReplaceCommand(BaseEndPoints endPoints) : base(endPoints)

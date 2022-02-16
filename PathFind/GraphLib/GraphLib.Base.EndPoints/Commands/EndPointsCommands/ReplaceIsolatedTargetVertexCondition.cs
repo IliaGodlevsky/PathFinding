@@ -8,7 +8,7 @@ using NullObject.Extensions;
 
 namespace GraphLib.Base.EndPoints.Commands.EndPointsCommands
 {
-    [Attachment(typeof(SetEndPointsCommands)), Order(7)]
+    [AttachedTo(typeof(SetEndPointsCommands)), Order(7)]
     internal sealed class ReplaceIsolatedTargetVertexCommand : BaseEndPointsCommand
     {
         public ReplaceIsolatedTargetVertexCommand(BaseEndPoints endPoints)

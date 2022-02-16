@@ -3,11 +3,11 @@
 namespace GraphLib.Base.EndPoints.Attributes
 {
     [AttributeUsage(AttributeTargets.Class)]
-    internal sealed class AttachmentAttribute : Attribute
+    internal sealed class AttachedToAttribute : Attribute
     {
         private Type AttachedType { get; }
 
-        public AttachmentAttribute(Type attachedTo)
+        public AttachedToAttribute(Type attachedTo)
         {
             AttachedType = attachedTo;
         }

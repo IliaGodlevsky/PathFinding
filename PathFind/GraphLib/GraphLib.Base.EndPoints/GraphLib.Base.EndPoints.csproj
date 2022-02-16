@@ -41,7 +41,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Attributes\AttachmentAttribute.cs" />
+    <Compile Include="Attributes\AttachedToAttribute.cs" />
     <Compile Include="BaseEndPoints.cs" />
     <Compile Include="Commands\VerticesCommands\BaseVerticesCommands.cs" />
     <Compile Include="BaseCommands\BaseEndPointsCommand.cs" />

@@ -9,7 +9,7 @@ using GraphLib.NullRealizations;
 
 namespace GraphLib.Base.VertexCondition.EndPointsConditions
 {
-    [Attachment(typeof(SetEndPointsCommands)), Order(0)]
+    [AttachedTo(typeof(SetEndPointsCommands)), Order(0)]
     internal sealed class UnsetSourceVertexCommand : BaseEndPointsCommand
     {
         public UnsetSourceVertexCommand(BaseEndPoints endPoints)

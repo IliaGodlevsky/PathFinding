@@ -6,7 +6,7 @@ using GraphLib.Interfaces;
 
 namespace GraphLib.Base.EndPoints.Commands.EndPointsCommands
 {
-    [Attachment(typeof(ReturnColorsCommands)), Order(0)]
+    [AttachedTo(typeof(ReturnColorsCommands)), Order(0)]
     internal sealed class ReturnSourceColorCommand : BaseEndPointsCommand
     {
         public ReturnSourceColorCommand(BaseEndPoints endPoints) : base(endPoints)

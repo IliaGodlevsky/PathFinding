@@ -8,7 +8,7 @@ using GraphLib.NullRealizations;
 
 namespace GraphLib.Base.EndPoints.Commands.EndPointsCommands
 {
-    [Attachment(typeof(SetEndPointsCommands)), Order(1)]
+    [AttachedTo(typeof(SetEndPointsCommands)), Order(1)]
     internal sealed class UnsetTargetVertexCommand : BaseEndPointsCommand
     {
         public UnsetTargetVertexCommand(BaseEndPoints endPoints)
