@@ -7,7 +7,7 @@ using GraphLib.Interfaces;
 namespace GraphLib.Base.EndPoints.Commands.EndPointsCommands
 {
     [Attachment(typeof(ReturnColorsCommands)), Order(3)]
-    internal sealed class ReturnIntermediateColorCommand : BaseEndPointsCommand
+    internal sealed class ReturnIntermediateColorCommand : BaseIntermediateEndPointsCommand
     {
         public ReturnIntermediateColorCommand(BaseEndPoints endPoints) : base(endPoints)
         {
@@ -20,7 +20,7 @@ namespace GraphLib.Base.EndPoints.Commands.EndPointsCommands
 
         public override bool IsTrue(IVertex vertex)
         {
-            return endPoints.intermediates.Contains(vertex);
+            return IsIntermediate(vertex);
         }
     }
 }

@@ -1,4 +1,5 @@
 ﻿using Common.Attrbiutes;
+using Common.Extensions.EnumerableExtensions;
 using GraphLib.Base.EndPoints.Attributes;
 using GraphLib.Base.EndPoints.BaseCommands;
 using GraphLib.Base.EndPoints.Commands.VerticesCommands;
@@ -21,6 +22,10 @@ namespace GraphLib.Base.EndPoints.Commands.EndPointsCommands
 
         public override void Execute(IVertex vertex)
         {
+            if (IsMarkedToReplace(vertex))
+            {
+                endPoints.markedToReplaceIntermediates.Remove(vertex);
+            }
             endPoints.intermediates.Remove(vertex);
             (vertex as IVisualizable)?.VisualizeAsRegular();
         }

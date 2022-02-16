@@ -23,7 +23,7 @@ namespace GraphLib.Base.EndPoints.Commands.ReplaceIntermediatesConditions
 
         public override bool IsTrue(IVertex vertex)
         {
-            return endPoints.markedToReplaceIntermediates.Contains(vertex);
+            return IsMarkedToReplace(vertex);
         }
     }
 }

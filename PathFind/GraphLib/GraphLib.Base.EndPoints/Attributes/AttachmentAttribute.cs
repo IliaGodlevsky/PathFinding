@@ -5,16 +5,16 @@ namespace GraphLib.Base.EndPoints.Attributes
     [AttributeUsage(AttributeTargets.Class)]
     internal sealed class AttachmentAttribute : Attribute
     {
-        public Type CommandsType { get; }
+        private Type AttachedType { get; }
 
-        public AttachmentAttribute(Type type)
+        public AttachmentAttribute(Type attachedTo)
         {
-            CommandsType = type;
+            AttachedType = attachedTo;
         }
 
-        public bool IsCommandType(Type type)
+        public bool IsAttachedTo(Type type)
         {
-            return CommandsType.Equals(type);
+            return AttachedType.Equals(type);
         }
     }
 }

@@ -1,10 +1,12 @@
 ﻿using GraphLib.Base.EndPoints;
 using GraphLib.Interfaces;
 using System;
+using System.Diagnostics;
 using System.Windows.Input;
 
 namespace WPFVersion.Model
 {
+    [DebuggerDisplay("Source - {Source}, Target - {Target}")]
     internal sealed class EndPoints : BaseEndPoints, IEndPoints
     {
         protected override void SubscribeVertex(IVertex vertex)

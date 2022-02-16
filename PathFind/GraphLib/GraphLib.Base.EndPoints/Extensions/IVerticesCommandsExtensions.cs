@@ -4,16 +4,20 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 
+using static System.Activator;
+
 namespace GraphLib.Base.EndPoints.Extensions
 {
     internal static class IVerticesCommandsExtensions
     {
         public static IReadOnlyList<IVertexCommand> GetAttachedCommands(this IVerticesCommands self, BaseEndPoints endPoints)
         {
-            return self.GetType().Assembly
+            var selfType = self.GetType();
+            return selfType
+                .Assembly
                 .GetTypes()
-                .Where(type => type.IsAttachedCommand(self.GetType()))
-                .Select(type => Activator.CreateInstance(type, endPoints))
+                .Where(type => type.IsAttachedTo(selfType))
+                .Select(type => CreateInstance(type, endPoints))
                 .Cast<IVertexCommand>()
                 .OrderByOrderAttribute()
                 .ToArray();

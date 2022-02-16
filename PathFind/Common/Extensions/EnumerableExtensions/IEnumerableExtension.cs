@@ -1,6 +1,7 @@
 ﻿using Common.Attrbiutes;
 using Common.Extensions.EnumerableExtensions;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.CompilerServices;
@@ -208,7 +209,7 @@ namespace Common.Extensions.EnumerableExtensions
             for (int i = 0; i < list.Count; i++)
             {
                 int index = randomFunction() % list.Count;
-                T temp = list[i];
+                var temp = list[i];
                 list[i] = list[index];
                 list[index] = temp;
             }

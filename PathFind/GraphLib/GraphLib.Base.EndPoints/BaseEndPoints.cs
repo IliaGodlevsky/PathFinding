@@ -24,14 +24,20 @@ namespace GraphLib.Base.EndPoints
                 || intermediates.Contains(vertex);
         }
 
-        public void SubscribeToEvents(IGraph graph) 
-            => graph.ForEach(SubscribeVertex);
-        public void UnsubscribeFromEvents(IGraph graph) 
-            => graph.ForEach(UnsubscribeVertex);
+        public void SubscribeToEvents(IGraph graph)
+        {
+            graph.ForEach(SubscribeVertex);
+        }
+
+        public void UnsubscribeFromEvents(IGraph graph)
+        {
+            graph.ForEach(UnsubscribeVertex);
+        }
+
         public void Reset()
         {
+            markedToReplaceCommands.Reset();
             setEndPointsCommands.Reset();
-            markToReplaceCommands.Reset();
         }
 
         public void RestoreCurrentColors()
@@ -39,34 +45,34 @@ namespace GraphLib.Base.EndPoints
             returnColorsCommands.ExecuteForEach(EndPoints);
         }
 
-        internal protected readonly Collection<IVertex> intermediates;
-        internal protected readonly Queue<IVertex> markedToReplaceIntermediates;
-
         protected BaseEndPoints()
         {
             intermediates = new Collection<IVertex>();
             markedToReplaceIntermediates = new Queue<IVertex>();
-            markToReplaceCommands = new SetEndPointsCommands(this);
-            setEndPointsCommands = new IntermediateToReplaceCommands(this);
+            setEndPointsCommands = new SetEndPointsCommands(this);
+            markedToReplaceCommands = new IntermediateToReplaceCommands(this);
             returnColorsCommands = new ReturnColorsCommands(this);
             Reset();
         }
 
         protected virtual void SetEndPoints(object sender, EventArgs e)
         {
-            markToReplaceCommands.Execute(sender as IVertex);
+            setEndPointsCommands.Execute(sender as IVertex);
         }
 
         protected virtual void MarkIntermediateToReplace(object sender, EventArgs e)
         {
-            setEndPointsCommands.Execute(sender as IVertex);
+            markedToReplaceCommands.Execute(sender as IVertex);
         }
 
         protected abstract void SubscribeVertex(IVertex vertex);
         protected abstract void UnsubscribeVertex(IVertex vertex);
 
+        internal protected readonly Collection<IVertex> intermediates;
+        internal protected readonly Queue<IVertex> markedToReplaceIntermediates;
+
+        private readonly IVerticesCommands markedToReplaceCommands;
         private readonly IVerticesCommands setEndPointsCommands;
-        private readonly IVerticesCommands markToReplaceCommands;
         private readonly IVerticesCommands returnColorsCommands;
     }
 }

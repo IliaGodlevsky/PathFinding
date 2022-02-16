@@ -17,5 +17,10 @@ namespace GraphLib.Base.EndPoints.BaseCommands
         {
             return endPoints.intermediates.Contains(vertex);
         }
+
+        protected bool IsMarkedToReplace(IVertex vertex)
+        {
+            return endPoints.markedToReplaceIntermediates.Contains(vertex);
+        }
     }
 }

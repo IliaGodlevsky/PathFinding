@@ -24,7 +24,7 @@ namespace GraphLib.Base.EndPoints.Commands.ReplaceIntermediatesConditions
         {
             return !vertex.IsOneOf(endPoints.Source, endPoints.Target)
                 && IsIntermediate(vertex)
-                && !endPoints.markedToReplaceIntermediates.Contains(vertex);
+                && !IsMarkedToReplace(vertex);
         }
     }
 }
