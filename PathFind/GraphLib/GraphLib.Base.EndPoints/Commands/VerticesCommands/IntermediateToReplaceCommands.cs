@@ -1,4 +1,4 @@
-﻿using GraphLib.Base.EndPoints.Extensions;
+﻿using GraphLib.Extensions;
 
 namespace GraphLib.Base.EndPoints.Commands.VerticesCommands
 {
@@ -13,7 +13,7 @@ namespace GraphLib.Base.EndPoints.Commands.VerticesCommands
 
         public override void Reset()
         {
-            var marked = endPoints.markedToReplaceIntermediates.ToArray();
+            var marked = MarkedToReplace.ToArray();
             Commands[CancelMarkToReplace].ExecuteForEach(marked);
         }
     }

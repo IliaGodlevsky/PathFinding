@@ -79,8 +79,9 @@ namespace WPFVersion.DependencyInjection
             builder.RegisterType<VertexFromInfoFactory>().As<IVertexFromInfoFactory>().SingleInstance();
 
             builder.RegisterAssemblyTypes(Assemblies).Where(Implements<IAlgorithmFactory>).As<IAlgorithmFactory>();
-            builder.RegisterType<LandscapeStepRule>().As<IStepRule>().SingleInstance();
-            builder.RegisterDecorator<WalkStepRule, IStepRule>();
+
+            builder.RegisterType<DefaultStepRule>().As<IStepRule>().SingleInstance();
+            builder.RegisterDecorator<CardinalStepRule, IStepRule>();
 
             return builder.Build();
         }

@@ -2,12 +2,13 @@
 using GraphLib.Base.EndPoints.Attributes;
 using GraphLib.Base.EndPoints.BaseCommands;
 using GraphLib.Base.EndPoints.Commands.VerticesCommands;
+using GraphLib.Extensions;
 using GraphLib.Interfaces;
 
 namespace GraphLib.Base.EndPoints.Commands.EndPointsCommands
 {
     [AttachedTo(typeof(ReturnColorsCommands)), Order(2)]
-    internal sealed class ReturnMarkedToReplaceColorCommand : BaseEndPointsCommand
+    internal sealed class ReturnMarkedToReplaceColorCommand : BaseIntermediateEndPointsCommand
     {
         public ReturnMarkedToReplaceColorCommand(BaseEndPoints endPoints) : base(endPoints)
         {
@@ -15,13 +16,13 @@ namespace GraphLib.Base.EndPoints.Commands.EndPointsCommands
 
         public override void Execute(IVertex vertex)
         {
-            (vertex as IVisualizable)?.VisualizeAsIntermediate();
-            (vertex as IVisualizable)?.VisualizeAsMarkedToReplaceIntermediate();
+            vertex.AsVisualizable().VisualizeAsIntermediate();
+            vertex.AsVisualizable().VisualizeAsMarkedToReplaceIntermediate();
         }
 
         public override bool IsTrue(IVertex vertex)
         {
-            return endPoints.markedToReplaceIntermediates.Contains(vertex);
+            return IsMarkedToReplace(vertex);
         }
     }
 }

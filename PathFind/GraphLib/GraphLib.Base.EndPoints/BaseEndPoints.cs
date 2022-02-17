@@ -1,6 +1,5 @@
 ﻿using Common.Extensions.EnumerableExtensions;
 using GraphLib.Base.EndPoints.Commands.VerticesCommands;
-using GraphLib.Base.EndPoints.Extensions;
 using GraphLib.Extensions;
 using GraphLib.Interfaces;
 using System;
@@ -14,13 +13,13 @@ namespace GraphLib.Base.EndPoints
     {
         public IVertex Source { get; internal set; }
         public IVertex Target { get; internal set; }
-        public IEnumerable<IVertex> EndPoints 
+        public IEnumerable<IVertex> EndPoints
             => intermediates.Prepend(Source).Append(Target);
 
         public bool IsEndPoint(IVertex vertex)
         {
-            return Source.Equals(vertex) 
-                || Target.Equals(vertex) 
+            return Source.Equals(vertex)
+                || Target.Equals(vertex)
                 || intermediates.Contains(vertex);
         }
 

@@ -7,6 +7,9 @@ namespace GraphLib.Base.EndPoints.Commands.VerticesCommands
 {
     internal abstract class BaseVerticesCommands : IVerticesCommands
     {
+        protected IReadOnlyCollection<IVertex> Intermediates => endPoints.intermediates;
+        protected Queue<IVertex> MarkedToReplace => endPoints.markedToReplaceIntermediates;
+
         protected IReadOnlyList<IVertexCommand> Commands { get; }
 
         protected BaseVerticesCommands(BaseEndPoints endPoints)

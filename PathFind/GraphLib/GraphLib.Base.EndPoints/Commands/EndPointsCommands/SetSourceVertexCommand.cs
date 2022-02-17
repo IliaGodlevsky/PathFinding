@@ -25,7 +25,7 @@ namespace GraphLib.Base.EndPoints.Commands.EndPointsCommands
         public override void Execute(IVertex vertex)
         {
             endPoints.Source = vertex;
-            (vertex as IVisualizable)?.VisualizeAsSource();
+            Source.VisualizeAsSource();
         }
     }
 }

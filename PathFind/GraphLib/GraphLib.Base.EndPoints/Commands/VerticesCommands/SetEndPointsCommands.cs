@@ -1,4 +1,4 @@
-﻿using GraphLib.Base.EndPoints.Extensions;
+﻿using GraphLib.Extensions;
 using System.Linq;
 
 namespace GraphLib.Base.EndPoints.Commands.VerticesCommands
@@ -18,7 +18,7 @@ namespace GraphLib.Base.EndPoints.Commands.VerticesCommands
         {
             Commands[UnsetSource].Execute(endPoints.Source);
             Commands[UnsetTarget].Execute(endPoints.Target);
-            Commands[UnsetIntermedate].ExecuteForEach(endPoints.intermediates.ToArray());
+            Commands[UnsetIntermedate].ExecuteForEach(Intermediates.ToArray());
         }
     }
 }

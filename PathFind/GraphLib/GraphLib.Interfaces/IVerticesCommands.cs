@@ -1,9 +1,7 @@
 ﻿namespace GraphLib.Interfaces
 {
-    public interface IVerticesCommands
+    public interface IVerticesCommands : IExecutable<IVertex>
     {
-        void Execute(IVertex vertex);
-
         void Reset();
     }
 }

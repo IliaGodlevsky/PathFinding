@@ -27,14 +27,14 @@ namespace GraphLib.Base.EndPoints.Commands.EndPointsCommands
 
         public override void Execute(IVertex vertex)
         {
-            var isolated = endPoints.intermediates.FirstOrDefault(v => v.IsIsolated());
+            var isolated = Intermediates.FirstOrDefault(v => v.IsIsolated());
             if (!isolated.IsNull())
             {
-                int isolatedIndex = endPoints.intermediates.IndexOf(isolated);
-                endPoints.intermediates.Remove(isolated);
-                (isolated as IVisualizable)?.VisualizeAsRegular();
-                endPoints.intermediates.Insert(isolatedIndex, vertex);
-                (vertex as IVisualizable)?.VisualizeAsIntermediate();
+                int isolatedIndex = Intermediates.IndexOf(isolated);
+                Intermediates.Remove(isolated);
+                isolated.AsVisualizable().VisualizeAsRegular();
+                Intermediates.Insert(isolatedIndex, vertex);
+                vertex.AsVisualizable().VisualizeAsIntermediate();
             }
         }
     }

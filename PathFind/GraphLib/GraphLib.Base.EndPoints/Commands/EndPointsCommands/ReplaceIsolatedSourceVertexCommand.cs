@@ -18,9 +18,9 @@ namespace GraphLib.Base.EndPoints.Commands.EndPointsCommands
 
         public override void Execute(IVertex vertex)
         {
-            (endPoints.Source as IVisualizable)?.VisualizeAsRegular();
+            Source.VisualizeAsRegular();
             endPoints.Source = vertex;
-            (endPoints.Source as IVisualizable)?.VisualizeAsSource();
+            Source.VisualizeAsSource();
         }
 
         public override bool IsTrue(IVertex vertex)

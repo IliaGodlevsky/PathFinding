@@ -19,7 +19,7 @@ namespace GraphLib.Base.EndPoints.Commands.EndPointsCommands
         public override void Execute(IVertex vertex)
         {
             endPoints.Target = vertex;
-            (vertex as IVisualizable)?.VisualizeAsTarget();
+            Target.VisualizeAsTarget();
         }
 
         public override bool IsTrue(IVertex vertex)

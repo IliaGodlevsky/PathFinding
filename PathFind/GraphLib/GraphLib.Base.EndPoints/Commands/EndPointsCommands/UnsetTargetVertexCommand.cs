@@ -23,7 +23,7 @@ namespace GraphLib.Base.EndPoints.Commands.EndPointsCommands
 
         public override void Execute(IVertex vertex)
         {
-            (vertex as IVisualizable)?.VisualizeAsRegular();
+            vertex.AsVisualizable().VisualizeAsRegular();
             endPoints.Target = NullVertex.Instance;
         }
     }

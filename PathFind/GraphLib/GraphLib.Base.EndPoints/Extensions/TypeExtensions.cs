@@ -6,10 +6,10 @@ namespace GraphLib.Base.EndPoints.Extensions
 {
     internal static class TypeExtensions
     {
-        public static bool IsAttachedTo(this Type type, Type attachedTo)
+        public static bool IsAttachedTo<T>(this Type type, T attachedTo)
         {
             var attribute = type.GetAttributeOrNull<AttachedToAttribute>();
-            return attribute?.IsAttachedTo(attachedTo) == true;
+            return attribute?.IsAttachedTo(attachedTo.GetType()) == true;
         }
     }
 }

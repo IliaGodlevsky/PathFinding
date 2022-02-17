@@ -1,8 +1,8 @@
 ﻿using Common.Attrbiutes;
 using Common.Extensions.EnumerableExtensions;
 using System;
-using System.Collections;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Runtime.CompilerServices;
 
@@ -194,6 +194,11 @@ namespace Common.Extensions.EnumerableExtensions
         public static IOrderedEnumerable<T> OrderByOrderAttribute<T>(this IEnumerable<T> collection)
         {
             return collection.OrderBy(item => item.GetOrderAttributeValueOrMaxValue());
+        }
+
+        public static ReadOnlyCollection<T> ToReadOnlyCollection<T>(this IList<T> list)
+        {
+            return new ReadOnlyCollection<T>(list);
         }
 
         public static IEnumerable<T> GroupByGroupAttribute<T>(this IEnumerable<T> collection)

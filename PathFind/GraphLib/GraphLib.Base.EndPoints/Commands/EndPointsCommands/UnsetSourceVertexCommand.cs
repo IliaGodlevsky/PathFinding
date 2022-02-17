@@ -25,7 +25,7 @@ namespace GraphLib.Base.VertexCondition.EndPointsConditions
 
         public override void Execute(IVertex vertex)
         {
-            (vertex as IVisualizable)?.VisualizeAsRegular();
+            vertex.AsVisualizable().VisualizeAsRegular();
             endPoints.Source = NullVertex.Instance;
         }
     }

@@ -46,7 +46,6 @@
     <Compile Include="Commands\VerticesCommands\BaseVerticesCommands.cs" />
     <Compile Include="BaseCommands\BaseEndPointsCommand.cs" />
     <Compile Include="BaseCommands\BaseIntermediateEndPointsCommand.cs" />
-    <Compile Include="Extensions\IVertexCommandExtensions.cs" />
     <Compile Include="Extensions\IVerticesCommandsExtensions.cs" />
     <Compile Include="Extensions\TypeExtensions.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -64,8 +63,8 @@
     <Compile Include="Commands\EndPointsCommands\UnsetIntermediateVertexCommand.cs" />
     <Compile Include="Commands\EndPointsCommands\UnsetSourceVertexCommand.cs" />
     <Compile Include="Commands\EndPointsCommands\UnsetTargetVertexCommand.cs" />
-    <Compile Include="Commands\ReplaceIntermediatesConditions\CancelMarkToReplaceCommand.cs" />
-    <Compile Include="Commands\ReplaceIntermediatesConditions\MarkToReplaceCommand.cs" />
+    <Compile Include="Commands\EndPointsCommands\CancelMarkToReplaceCommand.cs" />
+    <Compile Include="Commands\EndPointsCommands\MarkToReplaceCommand.cs" />
     <Compile Include="Commands\VerticesCommands\IntermediateToReplaceCommands.cs" />
     <Compile Include="Commands\VerticesCommands\ReturnColorsCommands.cs" />
     <Compile Include="Commands\VerticesCommands\SetEndPointsCommands.cs" />

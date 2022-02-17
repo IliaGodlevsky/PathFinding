@@ -2,6 +2,7 @@
 using GraphLib.Base.EndPoints.Attributes;
 using GraphLib.Base.EndPoints.BaseCommands;
 using GraphLib.Base.EndPoints.Commands.VerticesCommands;
+using GraphLib.Extensions;
 using GraphLib.Interfaces;
 
 namespace GraphLib.Base.EndPoints.Commands.EndPointsCommands
@@ -15,7 +16,7 @@ namespace GraphLib.Base.EndPoints.Commands.EndPointsCommands
 
         public override void Execute(IVertex vertex)
         {
-            (vertex as IVisualizable)?.VisualizeAsIntermediate();
+            vertex.AsVisualizable().VisualizeAsIntermediate();
         }
 
         public override bool IsTrue(IVertex vertex)

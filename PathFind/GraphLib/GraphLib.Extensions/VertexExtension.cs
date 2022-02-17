@@ -88,6 +88,16 @@ namespace GraphLib.Extensions
             }
         }
 
+        public static bool IsCardinal(this IVertex vertex, IVertex neighbor)
+        {
+            return vertex.Position.IsCardinal(neighbor.Position);
+        }
+
+        public static IVisualizable AsVisualizable(this IVertex vertex)
+        {
+            return vertex as IVisualizable ?? NullVisualizable.Instance;
+        }
+
         public static void Initialize(this IVertex self)
         {
             self.IsObstacle = false;

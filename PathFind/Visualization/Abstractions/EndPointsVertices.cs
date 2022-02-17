@@ -1,7 +1,6 @@
 ﻿using Algorithm.Interfaces;
 using GraphLib.Extensions;
 using GraphLib.Interfaces;
-using NullObject.Extensions;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using Visualization.Interfaces;
@@ -37,11 +36,8 @@ namespace Visualization.Abstractions
 
         public void Visualize(IAlgorithm algorithm)
         {
-            var vertex = vertices.GetOrNullVertex(algorithm) as IVisualizable;
-            if (!vertex.IsNull())
-            {
-                Visualize(vertex);
-            }
+            var vertex = vertices.GetOrNullVertex(algorithm).AsVisualizable();
+            Visualize(vertex);
         }
 
         protected abstract void Visualize(IVisualizable visualizable);

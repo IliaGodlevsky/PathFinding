@@ -3,6 +3,7 @@ using Common.Extensions.EnumerableExtensions;
 using GraphLib.Base.EndPoints.Attributes;
 using GraphLib.Base.EndPoints.BaseCommands;
 using GraphLib.Base.EndPoints.Commands.VerticesCommands;
+using GraphLib.Extensions;
 using GraphLib.Interfaces;
 
 namespace GraphLib.Base.EndPoints.Commands.EndPointsCommands
@@ -24,10 +25,10 @@ namespace GraphLib.Base.EndPoints.Commands.EndPointsCommands
         {
             if (IsMarkedToReplace(vertex))
             {
-                endPoints.markedToReplaceIntermediates.Remove(vertex);
+                MarkedToReplace.Remove(vertex);
             }
-            endPoints.intermediates.Remove(vertex);
-            (vertex as IVisualizable)?.VisualizeAsRegular();
+            Intermediates.Remove(vertex);
+            vertex.AsVisualizable().VisualizeAsRegular();
         }
     }
 }

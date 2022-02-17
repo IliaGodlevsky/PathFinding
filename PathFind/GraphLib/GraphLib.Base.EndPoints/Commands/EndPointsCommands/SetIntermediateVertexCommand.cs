@@ -8,7 +8,7 @@ using GraphLib.Interfaces;
 namespace GraphLib.Base.EndPoints.Commands.EndPointsCommands
 {
     [AttachedTo(typeof(SetEndPointsCommands)), Order(9)]
-    internal sealed class SetIntermediateVertexCommand : BaseEndPointsCommand
+    internal sealed class SetIntermediateVertexCommand : BaseIntermediateEndPointsCommand
     {
         public SetIntermediateVertexCommand(BaseEndPoints endPoints)
             : base(endPoints)
@@ -17,8 +17,8 @@ namespace GraphLib.Base.EndPoints.Commands.EndPointsCommands
 
         public override void Execute(IVertex vertex)
         {
-            endPoints.intermediates.Add(vertex);
-            (vertex as IVisualizable)?.VisualizeAsIntermediate();
+            Intermediates.Add(vertex);
+            LastIntermediate.VisualizeAsIntermediate();
         }
 
         public override bool IsTrue(IVertex vertex)

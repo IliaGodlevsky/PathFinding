@@ -5,7 +5,7 @@ using GraphLib.Base.EndPoints.Commands.VerticesCommands;
 using GraphLib.Extensions;
 using GraphLib.Interfaces;
 
-namespace GraphLib.Base.EndPoints.Commands.ReplaceIntermediatesConditions
+namespace GraphLib.Base.EndPoints.Commands.EndPointsCommands
 {
     [AttachedTo(typeof(IntermediateToReplaceCommands)), Order(1)]
     internal sealed class MarkToReplaceCommand : BaseIntermediateEndPointsCommand
@@ -16,8 +16,8 @@ namespace GraphLib.Base.EndPoints.Commands.ReplaceIntermediatesConditions
 
         public override void Execute(IVertex vertex)
         {
-            endPoints.markedToReplaceIntermediates.Enqueue(vertex);
-            (vertex as IVisualizable)?.VisualizeAsMarkedToReplaceIntermediate();
+            MarkedToReplace.Enqueue(vertex);
+            LastMarkedToReplace.VisualizeAsMarkedToReplaceIntermediate();
         }
 
         public override bool IsTrue(IVertex vertex)
