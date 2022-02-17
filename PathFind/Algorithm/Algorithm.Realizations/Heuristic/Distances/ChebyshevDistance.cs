@@ -3,7 +3,7 @@ using Common.Extensions.EnumerableExtensions;
 using System;
 using System.Collections.Generic;
 
-namespace Algorithm.Realizations.Heuristic.Disntances
+namespace Algorithm.Realizations.Heuristic.Distances
 {
     /// <summary>
     /// Calculates chebyshev distance between two vertices.

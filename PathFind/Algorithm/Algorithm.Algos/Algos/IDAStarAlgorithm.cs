@@ -1,6 +1,6 @@
 ﻿using Algorithm.Extensions;
 using Algorithm.Interfaces;
-using Algorithm.Realizations.Heuristic.Disntances;
+using Algorithm.Realizations.Heuristic.Distances;
 using Algorithm.Realizations.StepRules;
 using Common.Extensions.EnumerableExtensions;
 using GraphLib.Interfaces;

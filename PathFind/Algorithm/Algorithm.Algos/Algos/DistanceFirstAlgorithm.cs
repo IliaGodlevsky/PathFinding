@@ -1,6 +1,6 @@
 ﻿using Algorithm.Base;
 using Algorithm.Interfaces;
-using Algorithm.Realizations.Heuristic.Disntances;
+using Algorithm.Realizations.Heuristic.Distances;
 using GraphLib.Interfaces;
 using System.ComponentModel;
 using System.Diagnostics;

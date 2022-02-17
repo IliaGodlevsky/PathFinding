@@ -1,5 +1,5 @@
 ﻿using Algorithm.Interfaces;
-using Algorithm.Realizations.Heuristic.Disntances;
+using Algorithm.Realizations.Heuristic.Distances;
 using Algorithm.Сompanions;
 using Algorithm.Сompanions.Interface;
 using Common.Extensions.EnumerableExtensions;

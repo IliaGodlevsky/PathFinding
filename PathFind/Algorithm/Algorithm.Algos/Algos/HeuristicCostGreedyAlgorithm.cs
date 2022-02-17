@@ -1,7 +1,7 @@
 ﻿using Algorithm.Base;
 using Algorithm.Interfaces;
 using Algorithm.Realizations.GraphPaths;
-using Algorithm.Realizations.Heuristic.Disntances;
+using Algorithm.Realizations.Heuristic.Distances;
 using Algorithm.Realizations.StepRules;
 using GraphLib.Interfaces;
 using System.ComponentModel;
