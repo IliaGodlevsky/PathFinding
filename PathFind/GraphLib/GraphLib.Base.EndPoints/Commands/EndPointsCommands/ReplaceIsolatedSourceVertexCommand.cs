@@ -27,7 +27,6 @@ namespace GraphLib.Base.EndPoints.Commands.EndPointsCommands
         {
             return endPoints.Source.IsIsolated()
                 && !endPoints.Source.IsNull()
-                && !endPoints.IsEndPoint(vertex)
                 && endPoints.CanBeEndPoint(vertex);
         }
     }
