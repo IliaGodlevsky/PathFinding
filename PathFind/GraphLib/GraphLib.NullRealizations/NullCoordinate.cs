@@ -12,7 +12,7 @@ namespace GraphLib.NullRealizations
     [Null]
     [Serializable]
     [DebuggerDisplay("Null")]
-    public sealed class NullCoordinate : Singleton<NullCoordinate>, ICoordinate
+    public sealed class NullCoordinate : Singleton<NullCoordinate, ICoordinate>, ICoordinate
     {
         public int[] CoordinatesValues => Array.Empty<int>();
 

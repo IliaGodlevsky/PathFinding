@@ -70,7 +70,6 @@
     <Compile Include="Extensions\GenericExtensions.cs" />
     <Compile Include="Extensions\EnumerableExtensions\IDictionaryExtensions.cs" />
     <Compile Include="Extensions\IntExtensions.cs" />
-    <Compile Include="Extensions\EnumerableExtensions\QueueExtensions.cs" />
     <Compile Include="Extensions\StopwatchExtensions.cs" />
     <Compile Include="Extensions\SerializationInfoExtensions.cs" />
     <Compile Include="Extensions\StringBuilderExtensions.cs" />

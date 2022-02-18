@@ -13,10 +13,11 @@ namespace SingletonLib
     /// </summary>
     /// <typeparam name="T"></typeparam>
     [Serializable]
-    public abstract class Singleton<T> where T : class
+    public abstract class Singleton<TInstance, TInterface>
+        where TInstance : class, TInterface
     {
         [NonSerialized]
-        private static readonly Lazy<T> instance;
+        private static readonly Lazy<TInterface> instance;
         /// <summary>
         /// Returns the instance of <typeparamref name="T"/>.
         /// The instance is always the same object
@@ -25,26 +26,26 @@ namespace SingletonLib
         /// thrown if <typeparamref name="T"/>
         /// doesn't have a private or protected 
         /// paramtreless constructor</exception>
-        public static T Instance => instance.Value;
+        public static TInterface Instance => instance.Value;
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static IReadOnlyList<T> GetMany(int count)
+        public static IReadOnlyList<TInterface> GetMany(int count)
         {
             return count > 0
                 ? Enumerable.Repeat(Instance, count).ToArray()
-                : Array.Empty<T>();
+                : Array.Empty<TInterface>();
         }
 
         static Singleton()
         {
-            instance = new Lazy<T>(() => CreateInstance(typeof(T)), true);
+            instance = new Lazy<TInterface>(() => CreateInstance(typeof(TInstance)), true);
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        private static T CreateInstance(Type ofType)
+        private static TInstance CreateInstance(Type ofType)
         {
             return ofType.TryGetNonPublicParametrelessCtor(out var ctor)
-                ? (T)ctor.Invoke(Array.Empty<object>())
+                ? (TInstance)ctor.Invoke(Array.Empty<object>())
                 : throw new SingletonException(Constants.GetMessage(ofType));
         }
     }

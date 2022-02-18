@@ -8,7 +8,7 @@ namespace GraphLib.NullRealizations
 {
     [Null]
     [DebuggerDisplay("Null")]
-    public sealed class NullEndPoints : Singleton<NullEndPoints>, IEndPoints
+    public sealed class NullEndPoints : Singleton<NullEndPoints, IEndPoints>, IEndPoints
     {
         public IVertex Target => NullVertex.Instance;
 

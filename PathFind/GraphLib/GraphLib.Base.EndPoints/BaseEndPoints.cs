@@ -47,7 +47,7 @@ namespace GraphLib.Base.EndPoints
         protected BaseEndPoints()
         {
             intermediates = new Collection<IVertex>();
-            markedToReplaceIntermediates = new Queue<IVertex>();
+            markedToReplaceIntermediates = new Collection<IVertex>();
             setEndPointsCommands = new SetEndPointsCommands(this);
             markedToReplaceCommands = new IntermediateToReplaceCommands(this);
             returnColorsCommands = new ReturnColorsCommands(this);
@@ -68,7 +68,7 @@ namespace GraphLib.Base.EndPoints
         protected abstract void UnsubscribeVertex(IVertex vertex);
 
         internal protected readonly Collection<IVertex> intermediates;
-        internal protected readonly Queue<IVertex> markedToReplaceIntermediates;
+        internal protected readonly Collection<IVertex> markedToReplaceIntermediates;
 
         private readonly IVerticesCommands markedToReplaceCommands;
         private readonly IVerticesCommands setEndPointsCommands;

@@ -1,6 +1,6 @@
 ﻿using GraphLib.Extensions;
 using GraphLib.Interfaces;
-using NullObject.Extensions;
+using GraphLib.NullRealizations;
 
 namespace GraphLib.Base.EventHolder.Commands
 {
@@ -17,10 +17,7 @@ namespace GraphLib.Base.EventHolder.Commands
 
         public void Execute(IVertex vertex)
         {
-            if (!vertex.IsNull())
-            {
-                commands.Execute(vertex);
-            }
+            commands.Execute(vertex ?? NullVertex.Instance);
         }
 
         public void Reset() { }

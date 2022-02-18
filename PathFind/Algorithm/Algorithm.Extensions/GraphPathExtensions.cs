@@ -22,9 +22,8 @@ namespace Algorithm.Extensions
         {
             self.Path
                 .Without(endPoints)
-                .OfType<IVisualizable>()
                 .Reverse()
-                .ForEach(vertex => vertex.VisualizeAsPath());
+                .ForEach(vertex => vertex.AsVisualizable().VisualizeAsPath());
             return self;
         }
 

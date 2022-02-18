@@ -14,7 +14,7 @@ namespace Algorithm.NullRealizations
     /// </summary>
     [Null]
     [DebuggerDisplay("Null")]
-    public sealed class NullGraphPath : Singleton<NullGraphPath>, IGraphPath
+    public sealed class NullGraphPath : Singleton<NullGraphPath, IGraphPath>, IGraphPath
     {
         public IReadOnlyList<IVertex> Path => NullVertex.GetMany(0);
 

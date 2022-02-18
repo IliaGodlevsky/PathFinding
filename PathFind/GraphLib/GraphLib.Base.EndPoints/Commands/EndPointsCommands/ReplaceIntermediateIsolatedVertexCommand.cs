@@ -4,8 +4,6 @@ using GraphLib.Base.EndPoints.BaseCommands;
 using GraphLib.Base.EndPoints.Commands.VerticesCommands;
 using GraphLib.Extensions;
 using GraphLib.Interfaces;
-using NullObject.Extensions;
-using System.Linq;
 
 namespace GraphLib.Base.EndPoints.Commands.EndPointsCommands
 {
@@ -22,20 +20,18 @@ namespace GraphLib.Base.EndPoints.Commands.EndPointsCommands
             return endPoints.HasSourceAndTargetSet()
                 && !IsIntermediate(vertex)
                 && HasIsolatedIntermediates
-                && !endPoints.IsEndPoint(vertex);
+                && endPoints.CanBeEndPoint(vertex);
         }
 
         public override void Execute(IVertex vertex)
         {
-            var isolated = Intermediates.FirstOrDefault(v => v.IsIsolated());
-            if (!isolated.IsNull())
-            {
-                int isolatedIndex = Intermediates.IndexOf(isolated);
-                Intermediates.Remove(isolated);
-                isolated.AsVisualizable().VisualizeAsRegular();
-                Intermediates.Insert(isolatedIndex, vertex);
-                vertex.AsVisualizable().VisualizeAsIntermediate();
-            }
+            var isolated = Intermediates.FirstOrNullVertex(v => v.IsIsolated());
+            int isolatedIndex = Intermediates.IndexOf(isolated);
+            Intermediates.Remove(isolated);
+            MarkedToReplace.Remove(isolated);
+            isolated.AsVisualizable().VisualizeAsRegular();
+            Intermediates.Insert(isolatedIndex, vertex);
+            vertex.AsVisualizable().VisualizeAsIntermediate();
         }
     }
 }

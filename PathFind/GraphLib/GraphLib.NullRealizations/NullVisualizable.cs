@@ -7,7 +7,7 @@ namespace GraphLib.NullRealizations
 {
     [Null]
     [DebuggerDisplay("Null")]
-    public sealed class NullVisualizable : Singleton<NullVisualizable>, IVisualizable
+    public sealed class NullVisualizable : Singleton<NullVisualizable, IVisualizable>, IVisualizable
     {
         public bool IsVisualizedAsPath => false;
 

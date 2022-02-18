@@ -1,5 +1,4 @@
 ﻿using Algorithm.Interfaces;
-using Algorithm.Realizations.Heuristic.Distances;
 using Common.Extensions.EnumerableExtensions;
 using System;
 using System.Collections.Generic;

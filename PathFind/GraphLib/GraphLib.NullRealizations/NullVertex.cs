@@ -9,7 +9,7 @@ namespace GraphLib.NullRealizations
 {
     [Null]
     [DebuggerDisplay("Null")]
-    public sealed class NullVertex : Singleton<NullVertex>, IVertex, IEquatable<IVertex>
+    public sealed class NullVertex : Singleton<NullVertex, IVertex>, IVertex, IEquatable<IVertex>
     {
         public bool IsObstacle { get => true; set { } }
         public IVertexCost Cost { get => NullCost.Instance; set { } }

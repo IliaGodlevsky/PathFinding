@@ -10,7 +10,7 @@ namespace GraphLib.NullRealizations
     [Null]
     [Serializable]
     [DebuggerDisplay("Null")]
-    public sealed class NullNeighborhood : Singleton<NullNeighborhood>, INeighborhood
+    public sealed class NullNeighborhood : Singleton<NullNeighborhood, INeighborhood>, INeighborhood
     {
         public IReadOnlyCollection<ICoordinate> Neighbours => NullCoordinate.GetMany(0);
 

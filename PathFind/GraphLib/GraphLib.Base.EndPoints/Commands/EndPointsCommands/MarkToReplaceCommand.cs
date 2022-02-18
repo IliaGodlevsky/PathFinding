@@ -16,7 +16,7 @@ namespace GraphLib.Base.EndPoints.Commands.EndPointsCommands
 
         public override void Execute(IVertex vertex)
         {
-            MarkedToReplace.Enqueue(vertex);
+            MarkedToReplace.Add(vertex);
             LastMarkedToReplace.VisualizeAsMarkedToReplaceIntermediate();
         }
 

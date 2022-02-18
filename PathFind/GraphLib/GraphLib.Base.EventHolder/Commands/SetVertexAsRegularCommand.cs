@@ -1,4 +1,5 @@
-﻿using GraphLib.Interfaces;
+﻿using GraphLib.Extensions;
+using GraphLib.Interfaces;
 
 namespace GraphLib.Base.EventHolder.Commands
 {
@@ -7,14 +8,12 @@ namespace GraphLib.Base.EventHolder.Commands
         public void Execute(IVertex vertex)
         {
             vertex.IsObstacle = false;
-            (vertex as IVisualizable)?.VisualizeAsRegular();
+            vertex.AsVisualizable().VisualizeAsRegular();
         }
 
         public bool IsTrue(IVertex vertex)
         {
-            return vertex.IsObstacle
-                && vertex is IVisualizable visualizable
-                && !visualizable.IsVisualizedAsEndPoint;
+            return vertex.IsObstacle && !vertex.AsVisualizable().IsVisualizedAsEndPoint;
         }
     }
 }

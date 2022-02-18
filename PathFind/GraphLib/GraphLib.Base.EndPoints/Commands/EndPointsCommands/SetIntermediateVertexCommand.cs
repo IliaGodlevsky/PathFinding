@@ -23,7 +23,8 @@ namespace GraphLib.Base.EndPoints.Commands.EndPointsCommands
 
         public override bool IsTrue(IVertex vertex)
         {
-            return endPoints.HasSourceAndTargetSet();
+            return endPoints.HasSourceAndTargetSet()
+                && endPoints.CanBeEndPoint(vertex);
         }
     }
 }

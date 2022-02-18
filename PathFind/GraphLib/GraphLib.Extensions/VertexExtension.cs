@@ -51,9 +51,8 @@ namespace GraphLib.Extensions
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static bool IsNeighbour(this IVertex self, IVertex candidate)
         {
-            return self.Neighbours.Any(vertex =>
-                ReferenceEquals(vertex, candidate)
-                && ReferenceEquals(vertex.Graph, candidate.Graph));
+            return self.Neighbours.Any(vertex
+                => ReferenceEquals(vertex, candidate) && ReferenceEquals(vertex.Graph, candidate.Graph));
         }
 
         /// <summary>
@@ -75,16 +74,13 @@ namespace GraphLib.Extensions
         /// <param name="self"></param>
         public static void SetToDefault(this IVertex self)
         {
-            if (self is IVisualizable vertex)
+            if (self.IsObstacle)
             {
-                if (self.IsObstacle)
-                {
-                    vertex.VisualizeAsObstacle();
-                }
-                else
-                {
-                    vertex.VisualizeAsRegular();
-                }
+                self.AsVisualizable().VisualizeAsObstacle();
+            }
+            else
+            {
+                self.AsVisualizable().VisualizeAsRegular();
             }
         }
 

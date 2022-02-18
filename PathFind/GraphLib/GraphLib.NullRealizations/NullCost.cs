@@ -9,7 +9,7 @@ namespace GraphLib.NullRealizations
     [Null]
     [Serializable]
     [DebuggerDisplay("Null")]
-    public sealed class NullCost : Singleton<NullCost>, IVertexCost
+    public sealed class NullCost : Singleton<NullCost, IVertexCost>, IVertexCost
     {
         public int CurrentCost => default;
 

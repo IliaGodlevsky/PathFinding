@@ -24,7 +24,7 @@ namespace Algorithm.Base
 
         public override sealed IGraphPath FindPath()
         {
-            IGraphPath path = NullGraphPath.Instance;
+            var path = NullGraphPath.Instance;
             PrepareForPathfinding();
             foreach (var endPoint in endPoints.ToSubEndPoints())
             {

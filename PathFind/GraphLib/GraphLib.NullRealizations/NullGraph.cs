@@ -10,7 +10,7 @@ namespace GraphLib.NullRealizations
 {
     [Null]
     [DebuggerDisplay("Null")]
-    public sealed class NullGraph : Singleton<NullGraph>, IGraph, ICloneable<IGraph>
+    public sealed class NullGraph : Singleton<NullGraph, IGraph>, IGraph, ICloneable<IGraph>
     {
         public IVertex this[ICoordinate position]
         {
