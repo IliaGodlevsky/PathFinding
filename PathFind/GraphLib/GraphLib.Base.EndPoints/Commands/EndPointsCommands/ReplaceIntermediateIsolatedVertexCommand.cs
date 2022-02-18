@@ -18,7 +18,6 @@ namespace GraphLib.Base.EndPoints.Commands.EndPointsCommands
         public override bool IsTrue(IVertex vertex)
         {
             return endPoints.HasSourceAndTargetSet()
-                && !IsIntermediate(vertex)
                 && HasIsolatedIntermediates
                 && endPoints.CanBeEndPoint(vertex);
         }
