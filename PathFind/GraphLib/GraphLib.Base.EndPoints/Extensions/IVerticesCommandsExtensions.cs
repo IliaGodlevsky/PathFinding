@@ -19,8 +19,7 @@ namespace GraphLib.Base.EndPoints.Extensions
                 .Select(type => CreateInstance(type, endPoints))
                 .Cast<IVertexCommand>()
                 .OrderByOrderAttribute()
-                .ToArray()
-                .ToReadOnlyCollection();
+                .ToArray();
         }
     }
 }

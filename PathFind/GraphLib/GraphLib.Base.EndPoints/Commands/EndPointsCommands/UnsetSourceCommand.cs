@@ -10,15 +10,15 @@ using GraphLib.NullRealizations;
 namespace GraphLib.Base.VertexCondition.EndPointsConditions
 {
     [AttachedTo(typeof(SetEndPointsCommands)), Order(0)]
-    internal sealed class UnsetSourceVertexCommand : BaseEndPointsCommand
+    internal sealed class UnsetSourceCommand : BaseEndPointsCommand
     {
-        public UnsetSourceVertexCommand(BaseEndPoints endPoints)
+        public UnsetSourceCommand(BaseEndPoints endPoints)
             : base(endPoints)
         {
 
         }
 
-        public override bool IsTrue(IVertex vertex)
+        public override bool CanExecute(IVertex vertex)
         {
             return vertex.IsEqual(endPoints.Source);
         }

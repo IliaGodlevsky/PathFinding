@@ -2,6 +2,6 @@
 {
     public interface IVerticesCommands : IExecutable<IVertex>
     {
-        void Reset();
+        void Undo();
     }
 }

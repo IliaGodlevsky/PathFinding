@@ -7,10 +7,10 @@ using GraphLib.Interfaces;
 
 namespace GraphLib.Base.EndPoints.Commands.EndPointsCommands
 {
-    [AttachedTo(typeof(ReturnColorsCommands)), Order(0)]
-    internal sealed class ReturnSourceColorCommand : BaseEndPointsCommand
+    [AttachedTo(typeof(RestoreColorsCommands)), Order(0)]
+    internal sealed class RestoreSourceColorCommand : BaseEndPointsCommand
     {
-        public ReturnSourceColorCommand(BaseEndPoints endPoints) : base(endPoints)
+        public RestoreSourceColorCommand(BaseEndPoints endPoints) : base(endPoints)
         {
         }
 
@@ -19,7 +19,7 @@ namespace GraphLib.Base.EndPoints.Commands.EndPointsCommands
             vertex.AsVisualizable().VisualizeAsSource();
         }
 
-        public override bool IsTrue(IVertex vertex)
+        public override bool CanExecute(IVertex vertex)
         {
             return vertex.Equals(endPoints.Source);
         }

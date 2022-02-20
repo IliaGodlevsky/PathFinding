@@ -4,27 +4,30 @@ using GraphLib.Base.EndPoints.BaseCommands;
 using GraphLib.Base.EndPoints.Commands.VerticesCommands;
 using GraphLib.Extensions;
 using GraphLib.Interfaces;
-using GraphLib.NullRealizations;
 
 namespace GraphLib.Base.EndPoints.Commands.EndPointsCommands
 {
-    [AttachedTo(typeof(SetEndPointsCommands)), Order(1)]
-    internal sealed class UnsetTargetVertexCommand : BaseEndPointsCommand
+    [AttachedTo(typeof(SetEndPointsCommands)), Order(2)]
+    internal sealed class UnsetIntermediateCommand : BaseIntermediateEndPointsCommand
     {
-        public UnsetTargetVertexCommand(BaseEndPoints endPoints)
+        public UnsetIntermediateCommand(BaseEndPoints endPoints)
             : base(endPoints)
         {
         }
 
-        public override bool IsTrue(IVertex vertex)
+        public override bool CanExecute(IVertex vertex)
         {
-            return endPoints.Target.IsEqual(vertex);
+            return IsIntermediate(vertex);
         }
 
         public override void Execute(IVertex vertex)
         {
+            if (IsMarkedToReplace(vertex))
+            {
+                MarkedToReplace.Remove(vertex);
+            }
+            Intermediates.Remove(vertex);
             vertex.AsVisualizable().VisualizeAsRegular();
-            endPoints.Target = NullVertex.Instance;
         }
     }
 }

@@ -17,10 +17,10 @@ namespace GraphLib.Base.EndPoints.Commands.EndPointsCommands
         public override void Execute(IVertex vertex)
         {
             MarkedToReplace.Add(vertex);
-            LastMarkedToReplace.VisualizeAsMarkedToReplaceIntermediate();
+            vertex.AsVisualizable().VisualizeAsMarkedToReplaceIntermediate();
         }
 
-        public override bool IsTrue(IVertex vertex)
+        public override bool CanExecute(IVertex vertex)
         {
             return !vertex.IsOneOf(endPoints.Source, endPoints.Target)
                 && IsIntermediate(vertex)

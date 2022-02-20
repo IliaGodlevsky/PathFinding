@@ -196,11 +196,6 @@ namespace Common.Extensions.EnumerableExtensions
             return collection.OrderBy(item => item.GetOrderAttributeValueOrMaxValue());
         }
 
-        public static ReadOnlyCollection<T> ToReadOnlyCollection<T>(this IList<T> list)
-        {
-            return new ReadOnlyCollection<T>(list);
-        }
-
         public static IEnumerable<T> GroupByGroupAttribute<T>(this IEnumerable<T> collection)
         {
             return collection

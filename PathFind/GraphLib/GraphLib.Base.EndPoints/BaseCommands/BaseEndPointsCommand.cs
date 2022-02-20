@@ -15,7 +15,7 @@ namespace GraphLib.Base.EndPoints.BaseCommands
 
         protected readonly BaseEndPoints endPoints;
 
-        public abstract bool IsTrue(IVertex vertex);
+        public abstract bool CanExecute(IVertex vertex);
 
         public abstract void Execute(IVertex vertex);
     }

@@ -20,7 +20,7 @@ namespace GraphLib.Base.EventHolder.Commands
             commands.Execute(vertex ?? NullVertex.Instance);
         }
 
-        public void Reset() { }
+        public void Undo() { }
 
         private readonly IVertexCommand[] commands;
     }

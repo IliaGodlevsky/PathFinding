@@ -11,7 +11,7 @@ namespace GraphLib.Base.EventHolder.Commands
             vertex.AsVisualizable().VisualizeAsObstacle();
         }
 
-        public bool IsTrue(IVertex vertex)
+        public bool CanExecute(IVertex vertex)
         {
             return !vertex.IsObstacle && !vertex.AsVisualizable().IsVisualizedAsEndPoint;
         }

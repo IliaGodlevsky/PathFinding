@@ -7,21 +7,21 @@ using GraphLib.Interfaces;
 
 namespace GraphLib.Base.EndPoints.Commands.EndPointsCommands
 {
-    [AttachedTo(typeof(ReturnColorsCommands)), Order(1)]
-    internal sealed class ReturnTargetColorCommand : BaseEndPointsCommand
+    [AttachedTo(typeof(RestoreColorsCommands)), Order(3)]
+    internal sealed class RestoreIntermediateColorCommand : BaseIntermediateEndPointsCommand
     {
-        public ReturnTargetColorCommand(BaseEndPoints endPoints) : base(endPoints)
+        public RestoreIntermediateColorCommand(BaseEndPoints endPoints) : base(endPoints)
         {
         }
 
         public override void Execute(IVertex vertex)
         {
-            vertex.AsVisualizable().VisualizeAsTarget();
+            vertex.AsVisualizable().VisualizeAsIntermediate();
         }
 
-        public override bool IsTrue(IVertex vertex)
+        public override bool CanExecute(IVertex vertex)
         {
-            return vertex.Equals(endPoints.Target);
+            return IsIntermediate(vertex);
         }
     }
 }

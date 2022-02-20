@@ -14,9 +14,9 @@ namespace GraphLib.Base.EndPoints.Commands.VerticesCommands
 
         }
 
-        public override void Reset()
+        public override void Undo()
         {
-            Commands[UnsetSource].Execute(endPoints.Source);
+            Commands[UnsetSource].Execute(endPoints.Source); 
             Commands[UnsetTarget].Execute(endPoints.Target);
             Commands[UnsetIntermedate].ExecuteForEach(Intermediates.ToArray());
         }

@@ -8,24 +8,25 @@ using NullObject.Extensions;
 
 namespace GraphLib.Base.EndPoints.Commands.EndPointsCommands
 {
-    [AttachedTo(typeof(SetEndPointsCommands)), Order(6)]
-    internal sealed class SetTargetVertexCommand : BaseEndPointsCommand
+    [AttachedTo(typeof(SetEndPointsCommands)), Order(5)]
+    internal sealed class ReplaceIsolatedSourceCommand : BaseEndPointsCommand
     {
-        public SetTargetVertexCommand(BaseEndPoints endPoints)
+        public ReplaceIsolatedSourceCommand(BaseEndPoints endPoints)
             : base(endPoints)
         {
         }
 
         public override void Execute(IVertex vertex)
         {
-            endPoints.Target = vertex;
-            Target.VisualizeAsTarget();
+            Source.VisualizeAsRegular();
+            endPoints.Source = vertex;
+            Source.VisualizeAsSource();
         }
 
-        public override bool IsTrue(IVertex vertex)
+        public override bool CanExecute(IVertex vertex)
         {
-            return !endPoints.Source.IsNull()
-                && endPoints.Target.IsNull()
+            return endPoints.Source.IsIsolated()
+                && !endPoints.Source.IsNull()
                 && endPoints.CanBeEndPoint(vertex);
         }
     }

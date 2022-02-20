@@ -9,9 +9,9 @@ using NullObject.Extensions;
 namespace GraphLib.Base.EndPoints.Commands.EndPointsCommands
 {
     [AttachedTo(typeof(SetEndPointsCommands)), Order(7)]
-    internal sealed class ReplaceIsolatedTargetVertexCommand : BaseEndPointsCommand
+    internal sealed class ReplaceIsolatedTargetCommand : BaseEndPointsCommand
     {
-        public ReplaceIsolatedTargetVertexCommand(BaseEndPoints endPoints)
+        public ReplaceIsolatedTargetCommand(BaseEndPoints endPoints)
             : base(endPoints)
         {
         }
@@ -23,7 +23,7 @@ namespace GraphLib.Base.EndPoints.Commands.EndPointsCommands
             Target.VisualizeAsTarget();
         }
 
-        public override bool IsTrue(IVertex vertex)
+        public override bool CanExecute(IVertex vertex)
         {
             return endPoints.Target.IsIsolated()
                 && !endPoints.Target.IsNull()

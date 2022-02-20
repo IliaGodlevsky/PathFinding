@@ -19,7 +19,7 @@ namespace SingletonLib
         [NonSerialized]
         private static readonly Lazy<TInterface> instance;
         /// <summary>
-        /// Returns the instance of <typeparamref name="T"/>.
+        /// Returns the instance of <typeparamref name="TInstance"/>.
         /// The instance is always the same object
         /// </summary>
         /// <exception cref="SingletonException"> 

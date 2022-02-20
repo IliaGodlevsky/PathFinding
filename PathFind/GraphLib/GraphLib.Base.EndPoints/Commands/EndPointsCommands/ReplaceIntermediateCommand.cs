@@ -9,9 +9,9 @@ using System.Linq;
 namespace GraphLib.Base.EndPoints.Commands.EndPointsCommands
 {
     [AttachedTo(typeof(SetEndPointsCommands)), Order(8)]
-    internal sealed class ReplaceIntermediateVertexCommand : BaseIntermediateEndPointsCommand
+    internal sealed class ReplaceIntermediateCommand : BaseIntermediateEndPointsCommand
     {
-        public ReplaceIntermediateVertexCommand(BaseEndPoints endPoints) : base(endPoints)
+        public ReplaceIntermediateCommand(BaseEndPoints endPoints) : base(endPoints)
         {
 
         }
@@ -27,7 +27,7 @@ namespace GraphLib.Base.EndPoints.Commands.EndPointsCommands
             vertex.AsVisualizable().VisualizeAsIntermediate();
         }
 
-        public override bool IsTrue(IVertex vertex)
+        public override bool CanExecute(IVertex vertex)
         {
             return AreThereMarkedToReplace
                 && endPoints.CanBeEndPoint(vertex);

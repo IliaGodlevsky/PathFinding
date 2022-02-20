@@ -2,6 +2,7 @@
 using GraphLib.Base.EndPoints.Commands.VerticesCommands;
 using GraphLib.Extensions;
 using GraphLib.Interfaces;
+using GraphLib.NullRealizations;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -11,16 +12,19 @@ namespace GraphLib.Base.EndPoints
 {
     public abstract class BaseEndPoints : IEndPoints
     {
+        internal protected Collection<IVertex> Intermediates { get; }
+        internal protected Collection<IVertex> MarkedToReplace { get; }
+
         public IVertex Source { get; internal set; }
         public IVertex Target { get; internal set; }
         public IEnumerable<IVertex> EndPoints
-            => intermediates.Prepend(Source).Append(Target);
+            => Intermediates.Prepend(Source).Append(Target);
 
         public bool IsEndPoint(IVertex vertex)
         {
             return Source.Equals(vertex)
                 || Target.Equals(vertex)
-                || intermediates.Contains(vertex);
+                || Intermediates.Contains(vertex);
         }
 
         public void SubscribeToEvents(IGraph graph)
@@ -35,8 +39,8 @@ namespace GraphLib.Base.EndPoints
 
         public void Reset()
         {
-            markedToReplaceCommands.Reset();
-            setEndPointsCommands.Reset();
+            markedToReplaceCommands.Undo();
+            setEndPointsCommands.Undo();
         }
 
         public void RestoreCurrentColors()
@@ -46,29 +50,26 @@ namespace GraphLib.Base.EndPoints
 
         protected BaseEndPoints()
         {
-            intermediates = new Collection<IVertex>();
-            markedToReplaceIntermediates = new Collection<IVertex>();
+            Intermediates = new Collection<IVertex>();
+            MarkedToReplace = new Collection<IVertex>();
             setEndPointsCommands = new SetEndPointsCommands(this);
             markedToReplaceCommands = new IntermediateToReplaceCommands(this);
-            returnColorsCommands = new ReturnColorsCommands(this);
+            returnColorsCommands = new RestoreColorsCommands(this);
             Reset();
         }
 
         protected virtual void SetEndPoints(object sender, EventArgs e)
         {
-            setEndPointsCommands.Execute(sender as IVertex);
+            setEndPointsCommands.Execute(sender as IVertex ?? NullVertex.Instance);
         }
 
         protected virtual void MarkIntermediateToReplace(object sender, EventArgs e)
         {
-            markedToReplaceCommands.Execute(sender as IVertex);
+            markedToReplaceCommands.Execute(sender as IVertex ?? NullVertex.Instance);
         }
 
         protected abstract void SubscribeVertex(IVertex vertex);
         protected abstract void UnsubscribeVertex(IVertex vertex);
-
-        internal protected readonly Collection<IVertex> intermediates;
-        internal protected readonly Collection<IVertex> markedToReplaceIntermediates;
 
         private readonly IVerticesCommands markedToReplaceCommands;
         private readonly IVerticesCommands setEndPointsCommands;

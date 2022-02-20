@@ -8,14 +8,14 @@ using GraphLib.Interfaces;
 namespace GraphLib.Base.EndPoints.Commands.EndPointsCommands
 {
     [AttachedTo(typeof(SetEndPointsCommands)), Order(3)]
-    internal sealed class ReplaceIntermediateIsolatedVertexCommand : BaseIntermediateEndPointsCommand
+    internal sealed class ReplaceIntermediateIsolatedCommand : BaseIntermediateEndPointsCommand
     {
-        public ReplaceIntermediateIsolatedVertexCommand(BaseEndPoints endPoints)
+        public ReplaceIntermediateIsolatedCommand(BaseEndPoints endPoints)
             : base(endPoints)
         {
         }
 
-        public override bool IsTrue(IVertex vertex)
+        public override bool CanExecute(IVertex vertex)
         {
             return endPoints.HasSourceAndTargetSet()
                 && HasIsolatedIntermediates

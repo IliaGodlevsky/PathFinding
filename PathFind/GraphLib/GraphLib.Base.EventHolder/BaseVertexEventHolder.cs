@@ -2,6 +2,7 @@
 using GraphLib.Extensions;
 using GraphLib.Interfaces;
 using GraphLib.Interfaces.Factories;
+using GraphLib.NullRealizations;
 using System;
 
 namespace GraphLib.Base.EventHolder
@@ -26,7 +27,7 @@ namespace GraphLib.Base.EventHolder
 
         public virtual void Reverse(object sender, EventArgs e)
         {
-            commands.Execute(sender as IVertex);
+            commands.Execute(sender as IVertex ?? NullVertex.Instance);
         }
 
         public virtual void UnsubscribeVertices(IGraph graph)

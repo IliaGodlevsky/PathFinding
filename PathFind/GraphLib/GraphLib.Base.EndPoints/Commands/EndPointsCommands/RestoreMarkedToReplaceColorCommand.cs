@@ -7,10 +7,10 @@ using GraphLib.Interfaces;
 
 namespace GraphLib.Base.EndPoints.Commands.EndPointsCommands
 {
-    [AttachedTo(typeof(ReturnColorsCommands)), Order(2)]
-    internal sealed class ReturnMarkedToReplaceColorCommand : BaseIntermediateEndPointsCommand
+    [AttachedTo(typeof(RestoreColorsCommands)), Order(2)]
+    internal sealed class RestoreMarkedToReplaceColorCommand : BaseIntermediateEndPointsCommand
     {
-        public ReturnMarkedToReplaceColorCommand(BaseEndPoints endPoints) : base(endPoints)
+        public RestoreMarkedToReplaceColorCommand(BaseEndPoints endPoints) : base(endPoints)
         {
         }
 
@@ -20,7 +20,7 @@ namespace GraphLib.Base.EndPoints.Commands.EndPointsCommands
             vertex.AsVisualizable().VisualizeAsMarkedToReplaceIntermediate();
         }
 
-        public override bool IsTrue(IVertex vertex)
+        public override bool CanExecute(IVertex vertex)
         {
             return IsMarkedToReplace(vertex);
         }

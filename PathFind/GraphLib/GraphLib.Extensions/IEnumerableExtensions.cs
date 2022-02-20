@@ -13,7 +13,7 @@ namespace GraphLib.Extensions
     {
         public static void Execute(this IEnumerable<IVertexCommand> commands, IVertex vertex)
         {
-            commands.FirstOrNullExecutable(command => command.IsTrue(vertex)).Execute(vertex);
+            commands.FirstOrNullExecutable(command => command.CanExecute(vertex)).Execute(vertex);
         }
 
         public static bool IsCardinal(this int[] coordinates, int[] neighbourCoordinates)

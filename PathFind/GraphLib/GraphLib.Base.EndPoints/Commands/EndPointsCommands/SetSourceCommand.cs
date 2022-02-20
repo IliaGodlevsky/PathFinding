@@ -9,14 +9,14 @@ using NullObject.Extensions;
 namespace GraphLib.Base.EndPoints.Commands.EndPointsCommands
 {
     [AttachedTo(typeof(SetEndPointsCommands)), Order(4)]
-    internal sealed class SetSourceVertexCommand : BaseEndPointsCommand
+    internal sealed class SetSourceCommand : BaseEndPointsCommand
     {
-        public SetSourceVertexCommand(BaseEndPoints endPoints)
+        public SetSourceCommand(BaseEndPoints endPoints)
             : base(endPoints)
         {
         }
 
-        public override bool IsTrue(IVertex vertex)
+        public override bool CanExecute(IVertex vertex)
         {
             return endPoints.Source.IsNull()
                 && endPoints.CanBeEndPoint(vertex);

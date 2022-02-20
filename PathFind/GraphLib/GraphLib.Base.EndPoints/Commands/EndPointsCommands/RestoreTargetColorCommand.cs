@@ -7,23 +7,21 @@ using GraphLib.Interfaces;
 
 namespace GraphLib.Base.EndPoints.Commands.EndPointsCommands
 {
-    [AttachedTo(typeof(IntermediateToReplaceCommands)), Order(0)]
-    internal sealed class CancelMarkToReplaceCommand : BaseIntermediateEndPointsCommand
+    [AttachedTo(typeof(RestoreColorsCommands)), Order(1)]
+    internal sealed class RestoreTargetColorCommand : BaseEndPointsCommand
     {
-        public CancelMarkToReplaceCommand(BaseEndPoints endPoints) : base(endPoints)
+        public RestoreTargetColorCommand(BaseEndPoints endPoints) : base(endPoints)
         {
-
         }
 
         public override void Execute(IVertex vertex)
         {
-            MarkedToReplace.Remove(vertex);
-            vertex.AsVisualizable().VisualizeAsIntermediate();
+            vertex.AsVisualizable().VisualizeAsTarget();
         }
 
         public override bool CanExecute(IVertex vertex)
         {
-            return IsMarkedToReplace(vertex);
+            return vertex.Equals(endPoints.Target);
         }
     }
 }

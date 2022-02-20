@@ -9,7 +9,7 @@ namespace GraphLib.NullRealizations
     [DebuggerDisplay("Null")]
     public sealed class NullExecutable : Singleton<NullExecutable, IExecutable<IVertex>>, IExecutable<IVertex>
     {
-        public void Execute(IVertex obj)
+        public void Execute(IVertex vertex)
         {
 
         }

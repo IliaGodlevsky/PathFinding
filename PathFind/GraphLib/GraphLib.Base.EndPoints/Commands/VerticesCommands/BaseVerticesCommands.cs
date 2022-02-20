@@ -8,8 +8,8 @@ namespace GraphLib.Base.EndPoints.Commands.VerticesCommands
 {
     internal abstract class BaseVerticesCommands : IVerticesCommands
     {
-        protected IReadOnlyCollection<IVertex> Intermediates => endPoints.intermediates;
-        protected IReadOnlyCollection<IVertex> MarkedToReplace => endPoints.markedToReplaceIntermediates;
+        protected IReadOnlyCollection<IVertex> Intermediates => endPoints.Intermediates;
+        protected IReadOnlyCollection<IVertex> MarkedToReplace => endPoints.MarkedToReplace;
 
         protected IReadOnlyList<IVertexCommand> Commands { get; }
 
@@ -24,7 +24,7 @@ namespace GraphLib.Base.EndPoints.Commands.VerticesCommands
             Commands.Execute(vertex ?? NullVertex.Instance);
         }
 
-        public abstract void Reset();
+        public abstract void Undo();
 
         protected readonly BaseEndPoints endPoints;
     }

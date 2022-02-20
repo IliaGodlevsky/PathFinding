@@ -12,7 +12,7 @@ namespace GraphLib.Base.EndPoints.Commands.VerticesCommands
 
         }
 
-        public override void Reset()
+        public override void Undo()
         {
             var marked = MarkedToReplace.ToArray();
             Commands[CancelMarkToReplace].ExecuteForEach(marked);

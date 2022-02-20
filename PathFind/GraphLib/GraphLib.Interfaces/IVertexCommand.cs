@@ -2,6 +2,6 @@
 {
     public interface IVertexCommand : IExecutable<IVertex>
     {
-        bool IsTrue(IVertex vertex);
+        bool CanExecute(IVertex vertex);
     }
 }
