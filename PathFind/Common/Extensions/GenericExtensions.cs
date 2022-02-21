@@ -54,15 +54,17 @@ namespace Common.Extensions
         /// if <paramref name="self"/> is not marked with this attribute</returns>
         /// <remarks>Type name for <see cref="Enum"/> is a field name</remarks>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static string GetDescriptionAttributeValueOrEmpty<T>(this T self)
+        public static string GetDescriptionAttributeValueOrDefault<T>(this T self)
         {
-            return self.GetAttributeOrNull<DescriptionAttribute>()?.Description ?? string.Empty;
+            return self.GetAttributeOrNull<DescriptionAttribute>()?.Description 
+                ?? DescriptionAttribute.Default.Description;
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static int GetOrderAttributeValueOrMaxValue<T>(this T self)
+        public static int GetOrderAttributeValueOrDefault<T>(this T self)
         {
-            return self.GetAttributeOrNull<OrderAttribute>()?.Order ?? int.MaxValue;
+            return self.GetAttributeOrNull<OrderAttribute>()?.Order 
+                ?? OrderAttribute.Default.Order;
         }
 
         public static TAttribute GetAttributeOrNull<TAttribute>(this object self)

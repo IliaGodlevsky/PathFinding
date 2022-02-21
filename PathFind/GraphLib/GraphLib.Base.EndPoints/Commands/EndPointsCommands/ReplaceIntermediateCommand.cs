@@ -29,7 +29,7 @@ namespace GraphLib.Base.EndPoints.Commands.EndPointsCommands
 
         public override bool CanExecute(IVertex vertex)
         {
-            return AreThereMarkedToReplace
+            return MarkedToReplace.Count > 0
                 && endPoints.CanBeEndPoint(vertex);
         }
     }

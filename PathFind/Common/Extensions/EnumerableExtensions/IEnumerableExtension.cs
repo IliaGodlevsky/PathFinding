@@ -1,5 +1,6 @@
 ﻿using Common.Attrbiutes;
 using Common.Extensions.EnumerableExtensions;
+using Common.Interface;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -175,13 +176,13 @@ namespace Common.Extensions.EnumerableExtensions
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static IDictionary<string, T> ToNameInstanceDictionary<T>(this IEnumerable<T> collection)
         {
-            return collection.ToDictionary(item => item.GetDescriptionAttributeValueOrEmpty());
+            return collection.ToDictionary(item => item.GetDescriptionAttributeValueOrDefault());
         }
 
         public static Tuple<string, T>[] ToNameInstanceTuples<T>(this IEnumerable<T> collection)
         {
             return collection
-                .Select(item => new Tuple<string, T>(item.GetDescriptionAttributeValueOrEmpty(), item))
+                .Select(item => new Tuple<string, T>(item.GetDescriptionAttributeValueOrDefault(), item))
                 .ToArray();
         }
 
@@ -193,7 +194,7 @@ namespace Common.Extensions.EnumerableExtensions
 
         public static IOrderedEnumerable<T> OrderByOrderAttribute<T>(this IEnumerable<T> collection)
         {
-            return collection.OrderBy(item => item.GetOrderAttributeValueOrMaxValue());
+            return collection.OrderBy(item => item.GetOrderAttributeValueOrDefault());
         }
 
         public static IEnumerable<T> GroupByGroupAttribute<T>(this IEnumerable<T> collection)

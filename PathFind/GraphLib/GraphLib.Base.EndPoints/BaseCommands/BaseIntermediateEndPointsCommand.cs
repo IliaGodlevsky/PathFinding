@@ -10,7 +10,6 @@ namespace GraphLib.Base.EndPoints.BaseCommands
         protected Collection<IVertex> Intermediates => endPoints.Intermediates;
         protected Collection<IVertex> MarkedToReplace => endPoints.MarkedToReplace;
 
-        protected bool AreThereMarkedToReplace => MarkedToReplace.Count > 0;
         protected bool HasIsolatedIntermediates => HasIsolated(Intermediates);
 
         protected BaseIntermediateEndPointsCommand(BaseEndPoints endPoints) : base(endPoints)

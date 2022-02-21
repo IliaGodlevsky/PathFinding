@@ -84,7 +84,7 @@ namespace WindowsFormsVersion.ViewModel
             get
             {
                 string timerInfo = timer.ToFormattedString();
-                string description = Algorithm.GetDescriptionAttributeValueOrEmpty();
+                string description = Algorithm.GetDescriptionAttributeValueOrDefault();
                 string pathfindingInfo = string.Format(Format, PathfindingInfo);
                 return string.Join("    ", description, timerInfo, pathfindingInfo);
             }

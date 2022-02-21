@@ -1,8 +1,8 @@
 ﻿using Common.Extensions.EnumerableExtensions;
-using GraphLib.Interfaces;
+using Common.Interface;
 using System.Collections.Generic;
 
-namespace GraphLib.Extensions
+namespace Common.Extensions
 {
     public static class IExecutableExtensions
     {

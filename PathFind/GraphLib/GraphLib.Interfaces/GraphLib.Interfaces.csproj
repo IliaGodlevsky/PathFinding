@@ -41,7 +41,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="IExecutable.cs" />
     <Compile Include="IGraphFieldFactory.cs" />
     <Compile Include="IMeanCost.cs" />
     <Compile Include="ICoordinate.cs" />

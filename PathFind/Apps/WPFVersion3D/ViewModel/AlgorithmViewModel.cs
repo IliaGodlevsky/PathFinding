@@ -55,7 +55,7 @@ namespace WPFVersion3D.ViewModel
         public AlgorithmViewModel(PathfindingAlgorithm algorithm)
         {
             this.algorithm = algorithm;
-            AlgorithmName = algorithm.GetDescriptionAttributeValueOrEmpty();
+            AlgorithmName = algorithm.GetDescriptionAttributeValueOrDefault();
         }
 
         public bool IsStarted => algorithm.IsInProcess;

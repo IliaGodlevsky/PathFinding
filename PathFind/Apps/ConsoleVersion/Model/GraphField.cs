@@ -11,17 +11,17 @@ namespace ConsoleVersion.Model
 {
     internal sealed class GraphField : IGraphField, IDisplayable
     {
-        private IReadOnlyCollection<IDisplayable> UiElements => uiElements.Value;
+        private IEnumerable<IDisplayable> UiElements => uiElements.Value;
 
         public IReadOnlyCollection<IVertex> Vertices { get; }
 
         public GraphField(Graph2D graph)
         {
             Vertices = graph.Vertices;
-            uiElements = new Lazy<IReadOnlyCollection<IDisplayable>>(() => CreateCollection(graph));
+            uiElements = new Lazy<IEnumerable<IDisplayable>>(() => CreateCollection(graph));
         }
 
-        private IReadOnlyCollection<IDisplayable> CreateCollection(Graph2D graph)
+        private IEnumerable<IDisplayable> CreateCollection(Graph2D graph)
         {
             var elements = new Collection<IDisplayable>
             {
@@ -30,7 +30,7 @@ namespace ConsoleVersion.Model
                 new FramedToRightOrdinate(graph.Width, graph.Length),
                 new FramedToLeftOrdinate(graph.Length)
             };
-            return (IReadOnlyCollection<IDisplayable>)elements.AddCastedRange(Vertices);
+            return elements.AddCastedRange(Vertices);
         }
 
         public void Display()
@@ -38,6 +38,6 @@ namespace ConsoleVersion.Model
             UiElements.ForEach(element => element.Display());
         }
 
-        private readonly Lazy<IReadOnlyCollection<IDisplayable>> uiElements;
+        private readonly Lazy<IEnumerable<IDisplayable>> uiElements;
     }
 }

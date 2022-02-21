@@ -57,7 +57,7 @@ namespace ConsoleVersion.ViewModel
                 try
                 {
                     Console.CursorVisible = false;
-                    CurrentAlgorithmName = Algorithm.GetDescriptionAttributeValueOrEmpty();
+                    CurrentAlgorithmName = Algorithm.GetDescriptionAttributeValueOrDefault();
                     base.FindPath();
                     ConsoleKeystrokesHook.Instance.StartHookingConsoleKeystrokes();
                     Console.CursorVisible = true;

@@ -1,4 +1,6 @@
-﻿namespace GraphLib.Interfaces
+﻿using Common.Interface;
+
+namespace GraphLib.Interfaces
 {
     public interface IVertexCommand : IExecutable<IVertex>
     {

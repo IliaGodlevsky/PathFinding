@@ -1,4 +1,5 @@
 ﻿using Common.Extensions.EnumerableExtensions;
+using Common.Interface;
 using GraphLib.Interfaces;
 using GraphLib.NullRealizations;
 using System;
@@ -11,11 +12,6 @@ namespace GraphLib.Extensions
 {
     public static class IEnumerableExtensions
     {
-        public static void Execute(this IEnumerable<IVertexCommand> commands, IVertex vertex)
-        {
-            commands.FirstOrNullExecutable(command => command.CanExecute(vertex)).Execute(vertex);
-        }
-
         public static bool IsCardinal(this int[] coordinates, int[] neighbourCoordinates)
         {
             if (coordinates.Length != neighbourCoordinates.Length
@@ -61,6 +57,11 @@ namespace GraphLib.Extensions
             Func<IVertexCommand, bool> predicate)
         {
             return collection.FirstOrDefault(predicate) ?? NullExecutable.Instance;
+        }
+
+        public static void Execute(this IEnumerable<IVertexCommand> commands, IVertex vertex)
+        {
+            commands.FirstOrNullExecutable(command => command.CanExecute(vertex)).Execute(vertex);
         }
 
         public static Dictionary<ICoordinate, IVertex> ToDictionary(this IEnumerable<IVertex> vertices)

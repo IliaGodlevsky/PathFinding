@@ -12,7 +12,7 @@ namespace GraphLib.Realizations.Extensions
     {
         public static Tuple<string, ISmoothLevel>[] ToSmoothLevelTuples(this IEnumValues<SmoothLevels> values)
         {
-            string Description(SmoothLevels level) => level.GetDescriptionAttributeValueOrEmpty();
+            string Description(SmoothLevels level) => level.GetDescriptionAttributeValueOrDefault();
             ISmoothLevel Level(SmoothLevels level) => level.GetAttributeOrNull<SmoothLevelAttribute>();
             return values.ToTupleCollection(Description, Level);
         }

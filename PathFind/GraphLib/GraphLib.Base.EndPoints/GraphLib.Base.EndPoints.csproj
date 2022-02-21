@@ -42,7 +42,12 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Attributes\AttachedToAttribute.cs" />
+    <Compile Include="BaseCommands\BaseUndoCommand.cs" />
     <Compile Include="BaseEndPoints.cs" />
+    <Compile Include="Commands\UndoCommands\UndoMarkToReplaceCommand.cs" />
+    <Compile Include="Commands\UndoCommands\UndoSetIntermediatesCommand.cs" />
+    <Compile Include="Commands\UndoCommands\UndoSetSourceCommand.cs" />
+    <Compile Include="Commands\UndoCommands\UndoSetTargetCommand.cs" />
     <Compile Include="Commands\VerticesCommands\BaseVerticesCommands.cs" />
     <Compile Include="BaseCommands\BaseEndPointsCommand.cs" />
     <Compile Include="BaseCommands\BaseIntermediateEndPointsCommand.cs" />
@@ -95,5 +100,6 @@
       <Name>GraphLib.NullRealizations</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

@@ -1,4 +1,5 @@
-﻿using GraphLib.Interfaces;
+﻿using Common.Interface;
+using GraphLib.Interfaces;
 using NullObject.Attributes;
 using SingletonLib;
 using System.Diagnostics;

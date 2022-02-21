@@ -1,7 +1,9 @@
-﻿namespace GraphLib.Interfaces
+﻿using Common.Interface;
+
+namespace GraphLib.Interfaces
 {
-    public interface IVerticesCommands : IExecutable<IVertex>
+    public interface IVerticesCommands : IExecutable<IVertex>, IUndoCommand
     {
-        void Undo();
+
     }
 }

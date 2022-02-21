@@ -6,7 +6,5 @@
         {
 
         }
-
-        public override void Undo() { }
     }
 }

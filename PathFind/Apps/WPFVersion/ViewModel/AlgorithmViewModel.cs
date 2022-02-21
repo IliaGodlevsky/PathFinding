@@ -60,7 +60,7 @@ namespace WPFVersion.ViewModel
         {
             this.algorithm = algorithm;
             this.delayTime = delayTime;
-            AlgorithmName = algorithm.GetDescriptionAttributeValueOrEmpty();
+            AlgorithmName = algorithm.GetDescriptionAttributeValueOrDefault();
             Status = AlgorithmStatus.Started;
             Index = index;
             messenger = DI.Container.Resolve<IMessenger>();

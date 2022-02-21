@@ -47,7 +47,6 @@
     <Compile Include="IEnumerableExtensions.cs" />
     <Compile Include="GraphExtensions.cs" />
     <Compile Include="IDictionaryExtensions.cs" />
-    <Compile Include="IExecutableExtensions.cs" />
     <Compile Include="INeighbourhoodExtensions.cs" />
     <Compile Include="IVisitedVerticesExtensions.cs" />
     <Compile Include="StackExtension.cs" />

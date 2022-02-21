@@ -1,4 +1,4 @@
-﻿namespace GraphLib.Interfaces
+﻿namespace Common.Interface
 {
     public interface IExecutable<T>
     {
