@@ -7,7 +7,7 @@ using Algorithm.NullRealizations;
 using Common.Extensions;
 using Common.Extensions.EnumerableExtensions;
 using GraphLib.Base.EndPoints;
-using GraphLib.Interfaces;
+using GraphLib.Extensions;
 using Interruptable.EventArguments;
 using Logging.Interface;
 using NullObject.Extensions;
@@ -63,7 +63,7 @@ namespace GraphViewModel
         {
             if (!endPoints.IsEndPoint(e.Current))
             {
-                (e.Current as IVisualizable)?.VisualizeAsVisited();
+                e.Current.AsVisualizable().VisualizeAsVisited();
             }
             if (!e.Current.IsNull())
             {
@@ -83,7 +83,7 @@ namespace GraphViewModel
         {
             if (!endPoints.IsEndPoint(e.Current))
             {
-                (e.Current as IVisualizable)?.VisualizeAsEnqueued();
+                e.Current.AsVisualizable().VisualizeAsEnqueued();
             }
         }
 
