@@ -25,7 +25,7 @@ namespace GraphLib.Base.EndPoints.Commands.VerticesCommands
 
         public void Undo()
         {
-            UndoCommands.ForEach(command => command.Undo());
+            UndoCommands.UndoAll();
         }
     }
 }

@@ -166,6 +166,11 @@ namespace Common.Extensions.EnumerableExtensions
             return self.Juxtapose(second, (a, b) => a.Equals(b));
         }
 
+        public static void UndoAll(this IEnumerable<IUndoCommand> commands)
+        {
+            commands.ForEach(command => command.Undo());
+        }
+
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static IDictionary<TKey, TValue> ToDictionary<TKey, TValue>
             (this IEnumerable<KeyValuePair<TKey, TValue>> collection)

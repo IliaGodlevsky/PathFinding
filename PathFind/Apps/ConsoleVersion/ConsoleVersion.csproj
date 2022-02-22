@@ -69,6 +69,7 @@
     <Compile Include="EventArguments\ConsoleKeyPressedEventArgs.cs" />
     <Compile Include="EventHandlers\ConsoleKeyPressedEventHandler.cs" />
     <Compile Include="Extensions\ConsoleKeystrokesHookExtensions.cs" />
+    <Compile Include="Extensions\IEnumerableExtensions.cs" />
     <Compile Include="Extensions\IMessengerExtensions.cs" />
     <Compile Include="Extensions\ValueInputExtensions.cs" />
     <Compile Include="MenuItemsNames.cs" />

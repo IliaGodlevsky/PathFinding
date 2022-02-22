@@ -1,4 +1,5 @@
 ﻿using Common.Extensions.EnumerableExtensions;
+using ConsoleVersion.Extensions;
 using ConsoleVersion.Interface;
 using ConsoleVersion.Model.FramedAxes;
 using GraphLib.Interfaces;
@@ -35,7 +36,7 @@ namespace ConsoleVersion.Model
 
         public void Display()
         {
-            UiElements.ForEach(element => element.Display());
+            UiElements.DisplayAll();
         }
 
         private readonly Lazy<IEnumerable<IDisplayable>> uiElements;
