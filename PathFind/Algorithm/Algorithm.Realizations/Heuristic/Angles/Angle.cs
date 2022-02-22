@@ -3,7 +3,7 @@ using GraphLib.Extensions;
 using GraphLib.Interfaces;
 using System;
 
-namespace Algorithm.Realizations.Heuristic
+namespace Algorithm.Realizations.Heuristic.Angles
 {
     public sealed class Angle : IHeuristic
     {
