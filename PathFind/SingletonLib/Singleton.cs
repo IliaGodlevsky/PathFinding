@@ -11,7 +11,12 @@ namespace SingletonLib
     /// A base class for all singleton classes.
     /// This class is abstract
     /// </summary>
-    /// <typeparam name="T"></typeparam>
+    /// <typeparam name="TInstance">An instance, 
+    /// that should be created</typeparam>
+    /// <typeparam name="TInterface">An interface, 
+    /// that <typeparamref name="TInstance"/> 
+    /// implements and that will be returned
+    /// by <see cref="Instance"/> property</typeparam>
     [Serializable]
     public abstract class Singleton<TInstance, TInterface>
         where TInstance : class, TInterface
