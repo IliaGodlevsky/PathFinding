@@ -1,6 +1,5 @@
 ﻿using Random.Interface;
 using System;
-using System.Runtime.CompilerServices;
 using System.Security.Cryptography;
 using ValueRange;
 using ValueRange.Extensions;
@@ -43,19 +42,21 @@ namespace Random.Realizations.Generators
         /// <param name="maxValue"></param>
         /// <returns>Cryptographically strong 
         /// random <see cref="int"/></returns>
-        [MethodImpl(MethodImplOptions.Synchronized)]
         public int Next(int minValue, int maxValue)
         {
-            var range = new InclusiveValueRange<int>(maxValue, minValue);
-            long module = (long)range.Amplitude() + 1;
-            long max = 1 + (long)uint.MaxValue;
-            long remainder = max % module;
-            uint seed = Seed;
-            while (seed >= max - remainder)
+            lock (locker)
             {
-                seed = Seed;
+                var range = new InclusiveValueRange<int>(maxValue, minValue);
+                long module = (long)range.Amplitude() + 1;
+                long max = 1 + (long)uint.MaxValue;
+                long remainder = max % module;
+                uint seed = Seed;
+                while (seed >= max - remainder)
+                {
+                    seed = Seed;
+                }
+                return (int)(seed % module) + range.LowerValueOfRange;
             }
-            return (int)(seed % module) + range.LowerValueOfRange;
         }
 
         public void Dispose()
@@ -94,5 +95,6 @@ namespace Random.Realizations.Generators
 
         private bool isDisposing;
         private int currentBufferPosition;
+        private static readonly object locker = new object();
     }
 }

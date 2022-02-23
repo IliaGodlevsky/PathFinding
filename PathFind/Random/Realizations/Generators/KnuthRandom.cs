@@ -1,6 +1,5 @@
 ﻿using Random.Interface;
 using System;
-using System.Runtime.CompilerServices;
 using ValueRange;
 using ValueRange.Enums;
 using ValueRange.Extensions;
@@ -45,12 +44,14 @@ namespace Random.Realizations.Generators
         /// <param name="minValue"></param>
         /// <param name="maxValue"></param>
         /// <returns></returns>
-        [MethodImpl(MethodImplOptions.Synchronized)]
         public int Next(int minValue, int maxValue)
         {
-            var range = new InclusiveValueRange<int>(maxValue, minValue);
-            long module = (long)range.Amplitude() + 1;
-            return (int)(Seed % module) + range.LowerValueOfRange;
+            lock (locker)
+            {
+                var range = new InclusiveValueRange<int>(maxValue, minValue);
+                long module = (long)range.Amplitude() + 1;
+                return (int)(Seed % module) + range.LowerValueOfRange;
+            }
         }
 
         private int Seed
@@ -109,5 +110,6 @@ namespace Random.Realizations.Generators
 
         private readonly InclusiveValueRange<int> indexRange;
         private readonly Lazy<int[]> seeds;
+        private static readonly object locker = new object();
     }
 }

@@ -21,7 +21,7 @@ namespace Common.Attrbiutes
 
         public override bool Equals(object obj)
         {
-            return obj is OrderAttribute attribute 
+            return obj is OrderAttribute attribute
                 && attribute.Order == Order;
         }
 

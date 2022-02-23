@@ -1,6 +1,5 @@
 ﻿using Random.Interface;
 using System;
-using System.Runtime.CompilerServices;
 using ValueRange;
 using ValueRange.Extensions;
 
@@ -32,12 +31,16 @@ namespace Random.Realizations.Generators
 
         }
 
-        [MethodImpl(MethodImplOptions.Synchronized)]
         public int Next(int minValue, int maxValue)
         {
-            var range = new InclusiveValueRange<int>(maxValue, minValue);
-            ulong module = (ulong)range.Amplitude() + 1;
-            return (int)(Seed % module) + range.LowerValueOfRange;
+            lock (locker)
+            {
+                var range = new InclusiveValueRange<int>(maxValue, minValue);
+                ulong module = (ulong)range.Amplitude() + 1;
+                return (int)(Seed % module) + range.LowerValueOfRange;
+            }
         }
+
+        private static readonly object locker = new object();
     }
 }

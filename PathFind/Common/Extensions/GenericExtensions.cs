@@ -56,14 +56,14 @@ namespace Common.Extensions
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static string GetDescriptionAttributeValueOrDefault<T>(this T self)
         {
-            return self.GetAttributeOrNull<DescriptionAttribute>()?.Description 
+            return self.GetAttributeOrNull<DescriptionAttribute>()?.Description
                 ?? DescriptionAttribute.Default.Description;
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static int GetOrderAttributeValueOrDefault<T>(this T self)
         {
-            return self.GetAttributeOrNull<OrderAttribute>()?.Order 
+            return self.GetAttributeOrNull<OrderAttribute>()?.Order
                 ?? OrderAttribute.Default.Order;
         }
 
