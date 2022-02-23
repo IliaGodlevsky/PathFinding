@@ -10,7 +10,7 @@ using System.Linq;
 namespace GraphLib.Base.EndPoints.Commands.UndoCommands
 {
     [AttachedTo(typeof(IntermediateToReplaceCommands))]
-    internal sealed class UndoMarkToReplaceCommand : BaseUndoCommand
+    internal sealed class UndoMarkToReplaceCommand : BaseIntermediatesUndoCommand
     {
         public UndoMarkToReplaceCommand(BaseEndPoints endPoints) : base(endPoints)
         {

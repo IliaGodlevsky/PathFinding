@@ -42,7 +42,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Attributes\AttachedToAttribute.cs" />
-    <Compile Include="BaseCommands\BaseUndoCommand.cs" />
+    <Compile Include="BaseCommands\BaseIntermediatesUndoCommand.cs" />
+    <Compile Include="BaseCommands\BaseEndPointsUndoCommand.cs" />
     <Compile Include="BaseEndPoints.cs" />
     <Compile Include="Commands\UndoCommands\UndoMarkToReplaceCommand.cs" />
     <Compile Include="Commands\UndoCommands\UndoSetIntermediatesCommand.cs" />

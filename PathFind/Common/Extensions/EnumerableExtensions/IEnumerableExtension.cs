@@ -166,6 +166,7 @@ namespace Common.Extensions.EnumerableExtensions
             return self.Juxtapose(second, (a, b) => a.Equals(b));
         }
 
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static void UndoAll(this IEnumerable<IUndoCommand> commands)
         {
             commands.ForEach(command => command.Undo());
@@ -197,6 +198,7 @@ namespace Common.Extensions.EnumerableExtensions
             return tuples.Select(item => item.Item1);
         }
 
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static IOrderedEnumerable<T> OrderByOrderAttribute<T>(this IEnumerable<T> collection)
         {
             return collection.OrderBy(item => item.GetOrderAttributeValueOrDefault());
@@ -262,11 +264,13 @@ namespace Common.Extensions.EnumerableExtensions
             return array.AggregateOrDefault(IntExtensions.Xor);
         }
 
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static bool ContainsUniqueValues<T>(this IEnumerable<T> collection)
         {
             return collection.ContainsUniqueValues(EqualityComparer<T>.Default);
         }
 
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static bool ContainsUniqueValues<T>(this IEnumerable<T> collection, IEqualityComparer<T> comparer)
         {
             return collection.Distinct(comparer).Count() == collection.Count();

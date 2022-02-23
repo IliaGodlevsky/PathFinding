@@ -8,7 +8,7 @@ using GraphLib.Interfaces;
 namespace GraphLib.Base.EndPoints.Commands.UndoCommands
 {
     [AttachedTo(typeof(SetEndPointsCommands))]
-    internal sealed class UndoSetTargetCommand : BaseUndoCommand
+    internal sealed class UndoSetTargetCommand : BaseEndPointsUndoCommand
     {
         public UndoSetTargetCommand(BaseEndPoints endPoints) : base(endPoints)
         {

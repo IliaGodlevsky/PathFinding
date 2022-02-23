@@ -10,7 +10,7 @@ using System.Linq;
 namespace GraphLib.Base.EndPoints.Commands.UndoCommands
 {
     [AttachedTo(typeof(SetEndPointsCommands))]
-    internal sealed class UndoSetIntermediatesCommand : BaseUndoCommand
+    internal sealed class UndoSetIntermediatesCommand : BaseIntermediatesUndoCommand
     {
         public UndoSetIntermediatesCommand(BaseEndPoints endPoints) : base(endPoints)
         {
