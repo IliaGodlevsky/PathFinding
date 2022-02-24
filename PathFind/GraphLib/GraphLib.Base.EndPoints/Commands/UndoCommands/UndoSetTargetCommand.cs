@@ -1,5 +1,5 @@
-﻿using Common.Interface;
-using GraphLib.Base.EndPoints.Attributes;
+﻿using Commands.Attributes;
+using Commands.Interfaces;
 using GraphLib.Base.EndPoints.BaseCommands;
 using GraphLib.Base.EndPoints.Commands.EndPointsCommands;
 using GraphLib.Base.EndPoints.Commands.VerticesCommands;

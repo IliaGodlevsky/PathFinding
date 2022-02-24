@@ -103,6 +103,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GraphLib.Base.EventHolder",
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GraphLib.Proxy", "GraphLib\GraphLib.Proxy\GraphLib.Proxy.csproj", "{51C3BAF5-6AE2-47C4-932B-25687013C2CE}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Commands", "Commands\Commands.csproj", "{A68B0EB4-3F07-4711-B314-FC1C709A5E2F}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -285,6 +287,10 @@ Global
 		{51C3BAF5-6AE2-47C4-932B-25687013C2CE}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{51C3BAF5-6AE2-47C4-932B-25687013C2CE}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{51C3BAF5-6AE2-47C4-932B-25687013C2CE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A68B0EB4-3F07-4711-B314-FC1C709A5E2F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A68B0EB4-3F07-4711-B314-FC1C709A5E2F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A68B0EB4-3F07-4711-B314-FC1C709A5E2F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A68B0EB4-3F07-4711-B314-FC1C709A5E2F}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

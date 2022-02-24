@@ -1,7 +1,6 @@
-﻿using Common.Extensions.EnumerableExtensions;
-using Common.Interface;
+﻿using Commands.Extensions;
+using Commands.Interfaces;
 using GraphLib.Base.EndPoints.Extensions;
-using GraphLib.Extensions;
 using GraphLib.Interfaces;
 using System.Collections.Generic;
 

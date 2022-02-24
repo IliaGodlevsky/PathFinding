@@ -1,4 +1,4 @@
-﻿namespace Common.Interface
+﻿namespace Commands.Interfaces
 {
     public interface IExecutable<T>
     {

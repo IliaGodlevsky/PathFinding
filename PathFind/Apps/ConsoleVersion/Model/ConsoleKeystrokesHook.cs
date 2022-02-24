@@ -8,7 +8,7 @@ using System;
 
 namespace ConsoleVersion.Model
 {
-    internal sealed class ConsoleKeystrokesHook 
+    internal sealed class ConsoleKeystrokesHook
         : Singleton<ConsoleKeystrokesHook, ConsoleKeystrokesHook>, IInterruptable, IProcess
     {
         public event ConsoleKeyPressedEventHandler KeyPressed;

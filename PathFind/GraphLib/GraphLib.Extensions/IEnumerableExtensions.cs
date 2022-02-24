@@ -1,5 +1,4 @@
 ﻿using Common.Extensions.EnumerableExtensions;
-using Common.Interface;
 using GraphLib.Interfaces;
 using GraphLib.NullRealizations;
 using System;
@@ -51,17 +50,6 @@ namespace GraphLib.Extensions
         public static IVertex FirstOrNullVertex(this IEnumerable<IVertex> collection, Func<IVertex, bool> predicate)
         {
             return collection.FirstOrDefault(predicate) ?? NullVertex.Instance;
-        }
-
-        public static IExecutable<IVertex> FirstOrNullExecutable(this IEnumerable<IVertexCommand> collection,
-            Func<IVertexCommand, bool> predicate)
-        {
-            return collection.FirstOrDefault(predicate) ?? NullExecutable.Instance;
-        }
-
-        public static void Execute(this IEnumerable<IVertexCommand> commands, IVertex vertex)
-        {
-            commands.FirstOrNullExecutable(command => command.CanExecute(vertex)).Execute(vertex);
         }
 
         public static Dictionary<ICoordinate, IVertex> ToDictionary(this IEnumerable<IVertex> vertices)

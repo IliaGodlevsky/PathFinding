@@ -69,14 +69,11 @@
     <Compile Include="Extensions\EnumerableExtensions\ConcurrentDictionaryExtensions.cs" />
     <Compile Include="Extensions\GenericExtensions.cs" />
     <Compile Include="Extensions\EnumerableExtensions\IDictionaryExtensions.cs" />
-    <Compile Include="Extensions\IExecutableExtensions.cs" />
     <Compile Include="Extensions\IntExtensions.cs" />
     <Compile Include="Extensions\StopwatchExtensions.cs" />
     <Compile Include="Extensions\SerializationInfoExtensions.cs" />
     <Compile Include="Extensions\StringBuilderExtensions.cs" />
     <Compile Include="Interface\ICloneable.cs" />
-    <Compile Include="Interface\IExecutable.cs" />
-    <Compile Include="Interface\IUndoCommand.cs" />
     <Compile Include="Interface\IViewModel.cs" />
     <Compile Include="Extensions\EnumerableExtensions\IEnumerableExtension.cs" />
     <Compile Include="Extensions\MemberInfoExtensions.cs" />

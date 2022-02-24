@@ -1,8 +1,8 @@
-﻿using Common.Extensions.EnumerableExtensions;
-using Common.Interface;
+﻿using Commands.Interfaces;
+using Common.Extensions.EnumerableExtensions;
 using System.Collections.Generic;
 
-namespace Common.Extensions
+namespace Commands.Extensions
 {
     public static class IExecutableExtensions
     {

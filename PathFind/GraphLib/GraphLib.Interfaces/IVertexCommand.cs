@@ -1,9 +1,9 @@
-﻿using Common.Interface;
+﻿using Commands.Interfaces;
 
 namespace GraphLib.Interfaces
 {
-    public interface IVertexCommand : IExecutable<IVertex>
+    public interface IVertexCommand : IExecutable<IVertex>, ICanCheck<IVertex>
     {
-        bool CanExecute(IVertex vertex);
+
     }
 }

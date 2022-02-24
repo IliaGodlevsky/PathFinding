@@ -1,4 +1,4 @@
-﻿using Common.Interface;
+﻿using Commands.Interfaces;
 using GraphLib.Interfaces;
 
 namespace GraphLib.Base.EndPoints.BaseCommands

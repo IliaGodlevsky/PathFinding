@@ -1,10 +1,10 @@
-﻿using Common.Extensions;
-using GraphLib.Base.EndPoints.Attributes;
+﻿using Commands.Attributes;
+using Common.Extensions;
 using System;
 
-namespace GraphLib.Base.EndPoints.Extensions
+namespace Commands.Extensions
 {
-    internal static class TypeExtensions
+    public static class TypeExtensions
     {
         public static bool IsAttachedTo<T>(this Type type, T attachedTo)
         {

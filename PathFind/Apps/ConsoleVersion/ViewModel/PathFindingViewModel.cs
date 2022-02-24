@@ -2,6 +2,7 @@
 using Algorithm.Factory;
 using Algorithm.Infrastructure.EventArguments;
 using Autofac;
+using Commands.Extensions;
 using Common.Extensions;
 using Common.Interface;
 using ConsoleVersion.Attributes;
@@ -27,7 +28,6 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Threading;
 using ValueRange;
-using ValueRange.Extensions;
 
 namespace ConsoleVersion.ViewModel
 {
@@ -40,6 +40,8 @@ namespace ConsoleVersion.ViewModel
 
         public ConsoleValueInput<int> Int32Input { get; set; }
         public ConsoleValueInput<Answer> AnswerInput { get; set; }
+        public PathfindingAlgorithm CurrentAlgorithm => algorithm;
+        private IReadOnlyCollection<IConsoleKeyCommand> KeyCommands { get; }
 
         public PathFindingViewModel(BaseEndPoints endPoints, IEnumerable<IAlgorithmFactory> algorithmFactories, ILog log)
             : base(endPoints, algorithmFactories, log)
@@ -49,6 +51,7 @@ namespace ConsoleVersion.ViewModel
             DelayTime = Constants.AlgorithmDelayTimeValueRange.LowerValueOfRange;
             resetSlim = new ManualResetEventSlim();
             messenger = DI.Container.Resolve<IMessenger>();
+            KeyCommands = this.GetAttachedConsleKeyCommands();
         }
 
         [MenuItem(MenuItemsNames.FindPath, MenuItemPriority.Highest)]
@@ -141,7 +144,7 @@ namespace ConsoleVersion.ViewModel
         {
             resetSlim.Reset();
             Console.CursorVisible = false;
-            CurrentAlgorithmName = Algorithm.GetDescriptionAttributeValueOrDefault();
+            CurrentAlgorithmName = Algorithm.GetDescription();
         }
 
         protected override void OnVertexVisited(object sender, AlgorithmEventArgs e)
@@ -169,18 +172,7 @@ namespace ConsoleVersion.ViewModel
 
         private void OnConsoleKeyPressed(object sender, ConsoleKeyPressedEventArgs e)
         {
-            switch (e.PressedKey)
-            {
-                case ConsoleKey.Escape:
-                    algorithm.Interrupt();
-                    break;
-                case ConsoleKey.UpArrow:
-                    DelayTime = Constants.AlgorithmDelayTimeValueRange.ReturnInRange(DelayTime - 1);
-                    break;
-                case ConsoleKey.DownArrow:
-                    DelayTime = Constants.AlgorithmDelayTimeValueRange.ReturnInRange(DelayTime + 1);
-                    break;
-            }
+            KeyCommands.Execute(e.PressedKey, this);
         }
 
         public void Dispose()

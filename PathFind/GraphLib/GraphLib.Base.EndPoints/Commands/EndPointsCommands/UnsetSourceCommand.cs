@@ -1,6 +1,6 @@
-﻿using Common.Attrbiutes;
+﻿using Commands.Attributes;
+using Common.Attrbiutes;
 using GraphLib.Base.EndPoints;
-using GraphLib.Base.EndPoints.Attributes;
 using GraphLib.Base.EndPoints.BaseCommands;
 using GraphLib.Base.EndPoints.Commands.VerticesCommands;
 using GraphLib.Extensions;

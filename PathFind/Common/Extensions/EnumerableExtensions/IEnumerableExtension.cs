@@ -1,6 +1,5 @@
 ﻿using Common.Attrbiutes;
 using Common.Extensions.EnumerableExtensions;
-using Common.Interface;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -166,12 +165,6 @@ namespace Common.Extensions.EnumerableExtensions
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static void UndoAll(this IEnumerable<IUndoCommand> commands)
-        {
-            commands.ForEach(command => command.Undo());
-        }
-
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static IDictionary<TKey, TValue> ToDictionary<TKey, TValue>
             (this IEnumerable<KeyValuePair<TKey, TValue>> collection)
         {
@@ -181,13 +174,13 @@ namespace Common.Extensions.EnumerableExtensions
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static IDictionary<string, T> ToNameInstanceDictionary<T>(this IEnumerable<T> collection)
         {
-            return collection.ToDictionary(item => item.GetDescriptionAttributeValueOrDefault());
+            return collection.ToDictionary(item => item.GetDescription());
         }
 
         public static Tuple<string, T>[] ToNameInstanceTuples<T>(this IEnumerable<T> collection)
         {
             return collection
-                .Select(item => new Tuple<string, T>(item.GetDescriptionAttributeValueOrDefault(), item))
+                .Select(item => new Tuple<string, T>(item.GetDescription(), item))
                 .ToArray();
         }
 
@@ -200,7 +193,7 @@ namespace Common.Extensions.EnumerableExtensions
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static IOrderedEnumerable<T> OrderByOrderAttribute<T>(this IEnumerable<T> collection)
         {
-            return collection.OrderBy(item => item.GetOrderAttributeValueOrDefault());
+            return collection.OrderBy(item => item.GetOrder());
         }
 
         public static IEnumerable<T> GroupByGroupAttribute<T>(this IEnumerable<T> collection)

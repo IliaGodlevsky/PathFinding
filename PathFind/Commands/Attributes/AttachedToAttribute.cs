@@ -1,9 +1,9 @@
 ﻿using System;
 
-namespace GraphLib.Base.EndPoints.Attributes
+namespace Commands.Attributes
 {
     [AttributeUsage(AttributeTargets.Class)]
-    internal sealed class AttachedToAttribute : Attribute
+    public sealed class AttachedToAttribute : Attribute
     {
         private Type AttachedType { get; }
 
