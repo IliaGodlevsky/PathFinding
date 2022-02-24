@@ -1,13 +1,14 @@
 ﻿using ConsoleVersion.Model;
 using System;
+using System.Threading.Tasks;
 
 namespace ConsoleVersion.Extensions
 {
     internal static class ConsoleKeystrokesHookExtensions
     {
-        public static void CancelHookingConsoleKeystrokes(this ConsoleKeystrokesHook self, object sender, EventArgs e)
+        public static async void StartAsync(this ConsoleKeystrokesHook self, object sender, EventArgs e)
         {
-            self.CancelHookingConsoleKeystrokes();
+            await Task.Run(self.Start);
         }
     }
 }

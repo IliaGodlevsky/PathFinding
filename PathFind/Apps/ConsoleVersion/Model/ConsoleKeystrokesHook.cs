@@ -1,24 +1,33 @@
 ﻿using ConsoleVersion.EventArguments;
 using ConsoleVersion.EventHandlers;
+using Interruptable.EventArguments;
+using Interruptable.EventHandlers;
+using Interruptable.Interface;
+using SingletonLib;
 using System;
 
 namespace ConsoleVersion.Model
 {
-    internal sealed class ConsoleKeystrokesHook
+    internal sealed class ConsoleKeystrokesHook 
+        : Singleton<ConsoleKeystrokesHook, ConsoleKeystrokesHook>, IInterruptable, IProcess
     {
         public event ConsoleKeyPressedEventHandler KeyPressed;
+        public event ProcessEventHandler Interrupted;
+        public event ProcessEventHandler Started;
+        public event ProcessEventHandler Finished;
 
-        public static ConsoleKeystrokesHook Instance => instance.Value;
-
-        public void CancelHookingConsoleKeystrokes()
+        public void Interrupt()
         {
-            IsHookingRequired = false;
+            IsInProcess = false;
+            Finished?.Invoke(this, new ProcessEventArgs());
+            Interrupted?.Invoke(this, new ProcessEventArgs());
         }
 
-        public void StartHookingConsoleKeystrokes()
+        public void Start()
         {
-            IsHookingRequired = true;
-            while (IsHookingRequired)
+            Started?.Invoke(this, new ProcessEventArgs());
+            IsInProcess = true;
+            while (IsInProcess)
             {
                 var key = Console.ReadKey(true).Key;
                 var args = new ConsoleKeyPressedEventArgs(key);
@@ -26,14 +35,11 @@ namespace ConsoleVersion.Model
             }
         }
 
-        private bool IsHookingRequired { get; set; }
+        public bool IsInProcess { get; private set; }
 
         private ConsoleKeystrokesHook()
         {
 
         }
-
-        private static readonly Lazy<ConsoleKeystrokesHook> instance
-            = new Lazy<ConsoleKeystrokesHook>(() => new ConsoleKeystrokesHook());
     }
 }

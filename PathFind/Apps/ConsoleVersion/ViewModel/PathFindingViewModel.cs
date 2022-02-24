@@ -19,13 +19,14 @@ using GraphLib.Base.EndPoints;
 using GraphLib.Extensions;
 using GraphViewModel;
 using Interruptable.EventArguments;
+using Interruptable.Extensions;
 using Logging.Interface;
 using NullObject.Extensions;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Threading;
 using ValueRange;
-using ValueRange.Enums;
 using ValueRange.Extensions;
 
 namespace ConsoleVersion.ViewModel
@@ -46,6 +47,7 @@ namespace ConsoleVersion.ViewModel
             algorithmKeysValueRange = new InclusiveValueRange<int>(Algorithms.Length, 1);
             ConsoleKeystrokesHook.Instance.KeyPressed += OnConsoleKeyPressed;
             DelayTime = Constants.AlgorithmDelayTimeValueRange.LowerValueOfRange;
+            resetSlim = new ManualResetEventSlim();
             messenger = DI.Container.Resolve<IMessenger>();
         }
 
@@ -56,10 +58,9 @@ namespace ConsoleVersion.ViewModel
             {
                 try
                 {
-                    Console.CursorVisible = false;
-                    CurrentAlgorithmName = Algorithm.GetDescriptionAttributeValueOrDefault();
                     base.FindPath();
-                    ConsoleKeystrokesHook.Instance.StartHookingConsoleKeystrokes();
+                    resetSlim.Wait();
+                    Console.ReadKey(true);
                     Console.CursorVisible = true;
                 }
                 catch (Exception ex)
@@ -127,25 +128,35 @@ namespace ConsoleVersion.ViewModel
         protected override void SummarizePathfindingResults()
         {
             string statistics = !path.IsNull() ? GetStatistics() : MessagesTexts.CouldntFindPathMsg;
-            messenger.Forward(new UpdateStatisticsMessage(statistics), MessageTokens.MainView);
+            var message = new UpdateStatisticsMessage(statistics);
+            messenger.Forward(message, MessageTokens.MainView);
             visitedVerticesCount = 0;
+            resetSlim.Set();
         }
 
         protected override void OnAlgorithmInterrupted(object sender, ProcessEventArgs e) { }
         protected override void OnAlgorithmFinished(object sender, ProcessEventArgs e) { }
-        protected override void OnAlgorithmStarted(object sender, ProcessEventArgs e) { }
+
+        protected override void OnAlgorithmStarted(object sender, ProcessEventArgs e)
+        {
+            resetSlim.Reset();
+            Console.CursorVisible = false;
+            CurrentAlgorithmName = Algorithm.GetDescriptionAttributeValueOrDefault();
+        }
 
         protected override void OnVertexVisited(object sender, AlgorithmEventArgs e)
         {
             Stopwatch.StartNew().Wait(DelayTime).Stop();
             base.OnVertexVisited(sender, e);
-            messenger.Forward(new UpdateStatisticsMessage(GetStatistics()), MessageTokens.MainView);
+            var message = new UpdateStatisticsMessage(GetStatistics());
+            messenger.Forward(message, MessageTokens.MainView);
         }
 
         protected override void SubscribeOnAlgorithmEvents(PathfindingAlgorithm algorithm)
         {
             base.SubscribeOnAlgorithmEvents(algorithm);
-            algorithm.Finished += ConsoleKeystrokesHook.Instance.CancelHookingConsoleKeystrokes;
+            algorithm.Started += ConsoleKeystrokesHook.Instance.StartAsync;
+            algorithm.Finished += ConsoleKeystrokesHook.Instance.Interrupt;
         }
 
         private string GetStatistics()
@@ -164,10 +175,10 @@ namespace ConsoleVersion.ViewModel
                     algorithm.Interrupt();
                     break;
                 case ConsoleKey.UpArrow:
-                    DelayTime = Constants.AlgorithmDelayTimeValueRange.ReturnInRange(DelayTime - 1, ReturnOptions.Cycle);
+                    DelayTime = Constants.AlgorithmDelayTimeValueRange.ReturnInRange(DelayTime - 1);
                     break;
                 case ConsoleKey.DownArrow:
-                    DelayTime = Constants.AlgorithmDelayTimeValueRange.ReturnInRange(DelayTime + 1, ReturnOptions.Cycle);
+                    DelayTime = Constants.AlgorithmDelayTimeValueRange.ReturnInRange(DelayTime + 1);
                     break;
             }
         }
@@ -177,13 +188,13 @@ namespace ConsoleVersion.ViewModel
             WindowClosed = null;
             ClearGraph();
             ConsoleKeystrokesHook.Instance.KeyPressed -= OnConsoleKeyPressed;
+            resetSlim.Dispose();
         }
-
-
 
         private string CurrentAlgorithmName { get; set; }
 
         private readonly InclusiveValueRange<int> algorithmKeysValueRange;
         private readonly IMessenger messenger;
+        private readonly ManualResetEventSlim resetSlim;
     }
 }
