@@ -1,23 +1,21 @@
 ﻿using Common.Attrbiutes;
 using Common.Extensions;
-using ConsoleVersion.Interface;
 using ConsoleVersion.ViewModel;
 using System;
-using ValueRange.Extensions;
 
 namespace ConsoleVersion.Commands
 {
     [AttachedTo(typeof(PathFindingViewModel))]
-    internal sealed class SpeedDownAlgorithmKeysCommand : IConsoleKeyCommand
+    internal sealed class SpeedDownAlgorithmKeysCommand : BaseSpeedKeysCommand
     {
-        public bool CanExecute(ConsoleKey key)
+        public override bool CanExecute(ConsoleKey key)
         {
             return key.IsOneOf(ConsoleKey.DownArrow, ConsoleKey.S);
         }
 
-        public void Execute(PathFindingViewModel model)
+        protected override int GetNewDelay(PathFindingViewModel viewModel)
         {
-            model.DelayTime = Constants.AlgorithmDelayTimeValueRange.ReturnInRange(model.DelayTime + 1);
+            return viewModel.DelayTime + 1;
         }
     }
 }

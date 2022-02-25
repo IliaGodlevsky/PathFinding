@@ -61,6 +61,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Attributes\MenuItemAttribute.cs" />
+    <Compile Include="Commands\BaseSpeedKeysCommand.cs" />
     <Compile Include="Commands\SpeedDownAlgorithmKeysCommand.cs" />
     <Compile Include="Commands\InterruptAlgorithmKeysCommand.cs" />
     <Compile Include="Commands\SpeedUpAlgorithmKeysCommand.cs" />
