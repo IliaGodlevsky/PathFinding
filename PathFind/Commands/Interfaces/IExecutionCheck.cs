@@ -1,6 +1,6 @@
 ﻿namespace Commands.Interfaces
 {
-    public interface ICanCheck<T>
+    public interface IExecutionCheck<T>
     {
         bool CanExecute(T obj);
     }

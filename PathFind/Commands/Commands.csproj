@@ -49,7 +49,7 @@
     <Compile Include="Extensions\TypeExtensions.cs" />
     <Compile Include="Interfaces\IExecutable.cs" />
     <Compile Include="Interfaces\IUndoCommand.cs" />
-    <Compile Include="Interfaces\ICanCheck.cs" />
+    <Compile Include="Interfaces\IExecutionCheck.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Realizations\NullExecutable.cs" />
   </ItemGroup>
