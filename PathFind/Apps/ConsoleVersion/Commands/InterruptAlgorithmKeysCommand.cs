@@ -3,21 +3,20 @@ using Common.Extensions;
 using ConsoleVersion.Interface;
 using ConsoleVersion.ViewModel;
 using System;
-using ValueRange.Extensions;
 
 namespace ConsoleVersion.Commands
 {
     [AttachedTo(typeof(PathFindingViewModel))]
-    internal sealed class DownArrayKeyCommand : IConsoleKeyCommand
+    internal sealed class InterruptAlgorithmKeysCommand : IConsoleKeyCommand
     {
         public bool CanExecute(ConsoleKey key)
         {
-            return key.IsOneOf(ConsoleKey.DownArrow, ConsoleKey.S);
+            return key.IsOneOf(ConsoleKey.Escape, ConsoleKey.End, ConsoleKey.E);
         }
 
         public void Execute(PathFindingViewModel model)
         {
-            model.DelayTime = Constants.AlgorithmDelayTimeValueRange.ReturnInRange(model.DelayTime + 1);
+            model.CurrentAlgorithm.Interrupt();
         }
     }
 }

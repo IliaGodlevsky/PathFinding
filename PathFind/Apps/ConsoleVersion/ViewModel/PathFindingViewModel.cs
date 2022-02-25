@@ -42,6 +42,7 @@ namespace ConsoleVersion.ViewModel
         public ConsoleValueInput<Answer> AnswerInput { get; set; }
         public PathfindingAlgorithm CurrentAlgorithm => algorithm;
         private IReadOnlyCollection<IConsoleKeyCommand> KeyCommands { get; }
+        private string CurrentAlgorithmName { get; set; }
 
         public PathFindingViewModel(BaseEndPoints endPoints, IEnumerable<IAlgorithmFactory> algorithmFactories, ILog log)
             : base(endPoints, algorithmFactories, log)
@@ -182,8 +183,6 @@ namespace ConsoleVersion.ViewModel
             ConsoleKeystrokesHook.Instance.KeyPressed -= OnConsoleKeyPressed;
             resetSlim.Dispose();
         }
-
-        private string CurrentAlgorithmName { get; set; }
 
         private readonly InclusiveValueRange<int> algorithmKeysValueRange;
         private readonly IMessenger messenger;

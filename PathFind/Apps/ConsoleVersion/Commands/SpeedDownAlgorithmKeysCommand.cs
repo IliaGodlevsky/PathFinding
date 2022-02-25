@@ -8,16 +8,16 @@ using ValueRange.Extensions;
 namespace ConsoleVersion.Commands
 {
     [AttachedTo(typeof(PathFindingViewModel))]
-    internal sealed class UpArrowKeyCommand : IConsoleKeyCommand
+    internal sealed class SpeedDownAlgorithmKeysCommand : IConsoleKeyCommand
     {
         public bool CanExecute(ConsoleKey key)
         {
-            return key.IsOneOf(ConsoleKey.UpArrow, ConsoleKey.W);
+            return key.IsOneOf(ConsoleKey.DownArrow, ConsoleKey.S);
         }
 
         public void Execute(PathFindingViewModel model)
         {
-            model.DelayTime = Constants.AlgorithmDelayTimeValueRange.ReturnInRange(model.DelayTime - 1);
+            model.DelayTime = Constants.AlgorithmDelayTimeValueRange.ReturnInRange(model.DelayTime + 1);
         }
     }
 }

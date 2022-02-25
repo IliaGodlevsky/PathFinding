@@ -61,9 +61,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Attributes\MenuItemAttribute.cs" />
-    <Compile Include="Commands\DownArrayKeyCommand.cs" />
-    <Compile Include="Commands\EscapeKeyCommand.cs" />
-    <Compile Include="Commands\UpArrowKeyCommand.cs" />
+    <Compile Include="Commands\SpeedDownAlgorithmKeysCommand.cs" />
+    <Compile Include="Commands\InterruptAlgorithmKeysCommand.cs" />
+    <Compile Include="Commands\SpeedUpAlgorithmKeysCommand.cs" />
     <Compile Include="ConsoleCursor.cs" />
     <Compile Include="DependencyInjection\DI.cs" />
     <Compile Include="Constants.cs" />
