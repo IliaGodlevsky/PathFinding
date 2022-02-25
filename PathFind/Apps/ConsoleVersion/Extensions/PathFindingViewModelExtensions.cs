@@ -5,7 +5,7 @@ using System.Collections.Generic;
 
 namespace ConsoleVersion.Extensions
 {
-    internal static class ObjectExtensions
+    internal static class PathFindingViewModelExtensions
     {
         public static IReadOnlyCollection<IConsoleKeyCommand> GetAttachedConsleKeyCommands(this PathFindingViewModel model)
         {

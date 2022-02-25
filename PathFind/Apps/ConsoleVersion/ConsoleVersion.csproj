@@ -74,7 +74,7 @@
     <Compile Include="Extensions\ConsoleKeystrokesHookExtensions.cs" />
     <Compile Include="Extensions\IEnumerableExtensions.cs" />
     <Compile Include="Extensions\IMessengerExtensions.cs" />
-    <Compile Include="Extensions\ObjectExtensions.cs" />
+    <Compile Include="Extensions\PathFindingViewModelExtensions.cs" />
     <Compile Include="Extensions\ValueInputExtensions.cs" />
     <Compile Include="Interface\IConsoleKeyCommand.cs" />
     <Compile Include="MenuItemsNames.cs" />
