@@ -1,4 +1,4 @@
-﻿using Commands.Extensions;
+﻿using Common.Extensions;
 using ConsoleVersion.Interface;
 using ConsoleVersion.ViewModel;
 using System.Collections.Generic;
@@ -9,7 +9,7 @@ namespace ConsoleVersion.Extensions
     {
         public static IReadOnlyCollection<IConsoleKeyCommand> GetAttachedConsleKeyCommands(this PathFindingViewModel model)
         {
-            return model.GetAttachedCommands<IConsoleKeyCommand>();
+            return model.GetAttached<IConsoleKeyCommand>();
         }
     }
 }

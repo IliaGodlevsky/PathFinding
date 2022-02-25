@@ -1,4 +1,4 @@
-﻿using Commands.Attributes;
+﻿using Common.Attrbiutes;
 using Common.Extensions;
 using ConsoleVersion.Interface;
 using ConsoleVersion.ViewModel;

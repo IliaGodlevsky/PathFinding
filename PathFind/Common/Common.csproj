@@ -62,6 +62,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Attrbiutes\AttachedToAttribute.cs" />
     <Compile Include="Attrbiutes\GroupAttribute.cs" />
     <Compile Include="Attrbiutes\OrderAttribute.cs" />
     <Compile Include="EnumerableHelper.cs" />

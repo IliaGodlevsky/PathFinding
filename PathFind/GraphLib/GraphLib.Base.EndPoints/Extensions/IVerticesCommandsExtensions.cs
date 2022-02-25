@@ -1,5 +1,5 @@
-﻿using Commands.Extensions;
-using Commands.Interfaces;
+﻿using Commands.Interfaces;
+using Common.Extensions;
 using GraphLib.Interfaces;
 using System.Collections.Generic;
 
@@ -9,12 +9,12 @@ namespace GraphLib.Base.EndPoints.Extensions
     {
         public static IReadOnlyCollection<IUndoCommand> GetAttachedUndoCommands(this IVerticesCommands self, BaseEndPoints endPoints)
         {
-            return self.GetAttachedCommands<IUndoCommand>(endPoints);
+            return self.GetAttached<IUndoCommand>(endPoints);
         }
 
         public static IReadOnlyCollection<IVertexCommand> GetAttachedExecuteCommands(this IVerticesCommands self, BaseEndPoints endPoints)
         {
-            return self.GetAttachedCommands<IVertexCommand>(endPoints);
+            return self.GetAttached<IVertexCommand>(endPoints);
         }
     }
 }

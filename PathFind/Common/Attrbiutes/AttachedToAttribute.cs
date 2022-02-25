@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Commands.Attributes
+namespace Common.Attrbiutes
 {
     [AttributeUsage(AttributeTargets.Class)]
     public sealed class AttachedToAttribute : Attribute
