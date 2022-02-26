@@ -89,8 +89,6 @@ namespace ConsoleVersion.DependencyInjection
             builder.RegisterAssemblyTypes(Assemblies).Where(Implements<IAlgorithmFactory>)
                 .As<IAlgorithmFactory>().SingleInstance();
             builder.RegisterType<LandscapeStepRule>().As<IStepRule>().SingleInstance();
-            builder.RegisterDecorator<WalkStepRule, IStepRule>();
-            builder.RegisterDecorator<RatedStepRule, IStepRule>();
 
             return builder.Build();
         }
