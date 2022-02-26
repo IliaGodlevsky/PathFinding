@@ -72,18 +72,22 @@ namespace ConsoleVersion.Views
 
         private void OnStatisticsUpdated(UpdateStatisticsMessage message)
         {
-            var coordinate = MainView.PathfindingStatisticsPosition;
-            if (coordinate != null)
+            lock (locker)
             {
-                Console.SetCursorPosition(coordinate.X, coordinate.Y);
-                Console.Write(new string(' ', Console.BufferWidth));
-                Console.SetCursorPosition(coordinate.X, coordinate.Y);
-                Console.Write(message.Statistics);
+                var coordinate = MainView.PathfindingStatisticsPosition;
+                if (coordinate != null)
+                {
+                    Console.SetCursorPosition(coordinate.X, coordinate.Y);
+                    Console.Write(new string(' ', Console.BufferWidth));
+                    Console.SetCursorPosition(coordinate.X, coordinate.Y);
+                    Console.Write(message.Statistics);
+                }
             }
         }
 
         private static int PreviousMaxValueOfRange;
         private static int CurrentMaxValueOfRange;
         private readonly IMessenger messenger;
+        private static readonly object locker = new object();
     }
 }

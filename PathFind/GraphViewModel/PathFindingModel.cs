@@ -109,6 +109,8 @@ namespace GraphViewModel
             algorithm.Started += timer.Restart;
             algorithm.Interrupted += OnAlgorithmInterrupted;
             algorithm.Interrupted += timer.Stop;
+            algorithm.Paused += timer.Stop;
+            algorithm.Resumed += timer.Start;
         }
 
         protected readonly BaseEndPoints endPoints;

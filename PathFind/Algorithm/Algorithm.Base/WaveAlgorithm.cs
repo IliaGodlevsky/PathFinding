@@ -33,6 +33,7 @@ namespace Algorithm.Base
                 VisitVertex(CurrentVertex);
                 while (!IsDestination(CurrentEndPoints))
                 {
+                    WaitResumed();
                     InspectCurrentVertex();
                     CurrentVertex = NextVertex;
                     VisitVertex(CurrentVertex);

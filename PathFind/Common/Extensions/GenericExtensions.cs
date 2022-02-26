@@ -92,8 +92,7 @@ namespace Common.Extensions
                 .GetTypes()
                 .Where(type => typeof(T).IsAssignableFrom(type))
                 .Where(type => type.IsAttachedTo(self))
-                .Select(type => Activator.CreateInstance(type, ctorParams))
-                .Cast<T>()
+                .Select(type => (T)Activator.CreateInstance(type, ctorParams))
                 .OrderByOrderAttribute()
                 .ToArray();
         }

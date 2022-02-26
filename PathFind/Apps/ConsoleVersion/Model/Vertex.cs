@@ -91,9 +91,12 @@ namespace ConsoleVersion.Model
 
         public void Display()
         {
-            var consoleCoordinate = GetConsoleCoordinates();
-            Console.SetCursorPosition(consoleCoordinate.X, consoleCoordinate.Y);
-            Console.Write(text, Color);
+            lock (locker)
+            {
+                var consoleCoordinate = GetConsoleCoordinates();
+                Console.SetCursorPosition(consoleCoordinate.X, consoleCoordinate.Y);
+                Console.Write(text, Color);
+            }
         }
 
         public bool Equals(IVertex other) => Equals((object)other);
@@ -126,5 +129,6 @@ namespace ConsoleVersion.Model
 
         private readonly Lazy<IReadOnlyCollection<IVertex>> neighbours;
         private static readonly VerticesColorHub ColorsHub = new VerticesColorHub();
+        private static readonly object locker = new object();
     }
 }

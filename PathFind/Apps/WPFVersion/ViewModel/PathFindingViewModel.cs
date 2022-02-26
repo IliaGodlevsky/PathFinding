@@ -91,6 +91,18 @@ namespace WPFVersion.ViewModel
             messenger.Forward(message, MessageTokens.AlgorithmStatisticsModel);
         }
 
+        protected void OnAlgorithmPaused(object sender, ProcessEventArgs e)
+        {
+            var message = new AlgorithmStatusMessage(AlgorithmStatus.Paused, Index);
+            messenger.Forward(message, MessageTokens.AlgorithmStatisticsModel);
+        }
+
+        protected void OnAlgorithmUnpaused(object sender, ProcessEventArgs e)
+        {
+            var message = new AlgorithmStatusMessage(AlgorithmStatus.Started, Index);
+            messenger.Forward(message, MessageTokens.AlgorithmStatisticsModel);
+        }
+
         protected override void OnAlgorithmFinished(object sender, ProcessEventArgs e)
         {
             messenger.Unregister(this);
@@ -111,6 +123,8 @@ namespace WPFVersion.ViewModel
         {
             var message = new SubscribeOnAlgorithmEventsMessage(algorithm, IsVisualizationRequired);
             messenger.Forward(message, MessageTokens.VisualizationModel);
+            algorithm.Paused += OnAlgorithmPaused;
+            algorithm.Resumed += OnAlgorithmUnpaused;
             base.SubscribeOnAlgorithmEvents(algorithm);
         }
 

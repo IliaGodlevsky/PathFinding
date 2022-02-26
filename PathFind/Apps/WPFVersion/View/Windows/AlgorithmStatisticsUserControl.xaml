@@ -74,6 +74,8 @@
             </ListView.View>
             <ListView.ContextMenu>
                 <ContextMenu>
+                    <MenuItem Command="{Binding PauseSelectedAlgorithmCommand}" Header="Pause"/>
+                    <MenuItem Command="{Binding ResumeSelectedAlgorithmCommand}" Header="Resume"/>
                     <MenuItem Command="{Binding InterruptSelelctedAlgorithmCommand}" Header="Interrupt"/>
                     <MenuItem Command="{Binding RemoveSelelctedAlgorithmCommand}" Header="Remove"/>
                 </ContextMenu>

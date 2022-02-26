@@ -37,6 +37,11 @@ namespace Common.Extensions
             self.Restart();
         }
 
+        public static void Start(this Stopwatch self, object sender, EventArgs e)
+        {
+            self.Start();
+        }
+
         public static string ToFormattedString(this Stopwatch self)
         {
             return self.Elapsed.ToString(@"mm\:ss\.fff");

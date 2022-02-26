@@ -7,7 +7,7 @@ namespace ConsoleVersion.Extensions
 {
     internal static class PathFindingViewModelExtensions
     {
-        public static IReadOnlyCollection<IConsoleKeyCommand> GetAttachedConsleKeyCommands(this PathFindingViewModel model)
+        public static IReadOnlyCollection<IConsoleKeyCommand> GetAttachedConsoleKeyCommands(this PathFindingViewModel model)
         {
             return model.GetAttached<IConsoleKeyCommand>();
         }

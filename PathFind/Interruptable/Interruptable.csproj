@@ -45,6 +45,7 @@
     <Compile Include="EventHandlers\ProcessEventHandler.cs" />
     <Compile Include="Extensions\IInterruptableExtensions.cs" />
     <Compile Include="Interface\IInterruptable.cs" />
+    <Compile Include="Interface\IPausable.cs" />
     <Compile Include="Interface\IProcess.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

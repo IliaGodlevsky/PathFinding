@@ -11,93 +11,81 @@ using Interruptable.EventHandlers;
 using Interruptable.Interface;
 using NullObject.Extensions;
 using System;
+using System.Threading;
 
 namespace Algorithm.Base
 {
-    /// <summary>
-    /// A base algorithm for all pathfinding algorithms.
-    /// This class is abstract
-    /// </summary>
-    /// <remarks>Do not use the same instance of algorithm untill it stops 
-    /// finding a path. And only then use it again. But it is better not to use
-    /// the same instance twice. Create a new one instead.</remarks>
-    public abstract class PathfindingAlgorithm : IAlgorithm, IProcess, IInterruptable, IDisposable
+    public abstract class PathfindingAlgorithm : IAlgorithm, IProcess, IPausable, IInterruptable, IDisposable
     {
         public event AlgorithmEventHandler VertexVisited;
         public event AlgorithmEventHandler VertexEnqueued;
         public event ProcessEventHandler Started;
         public event ProcessEventHandler Finished;
         public event ProcessEventHandler Interrupted;
+        public event ProcessEventHandler Paused;
+        public event ProcessEventHandler Resumed;
 
         public bool IsInProcess { get; private set; }
+        public bool IsPaused { get; private set; }
+        private bool IsInterruptRequested { get; set; }
+        protected IVertex CurrentVertex { get; set; }
+        protected abstract IVertex NextVertex { get; }
+        protected bool IsTerminatedPrematurely => !CurrentVertex.IsNull() && !IsInterruptRequested;
 
-        /// <summary>
-        /// When overriden in derived class, 
-        /// finds the cheapest path in the graph
-        /// </summary>
-        /// <returns></returns>
         public abstract IGraphPath FindPath();
 
-        /// <summary>
-        /// Iterrupts the algorithm and stops its activity
-        /// The algorithm does not stop immidietly, 
-        /// but it performs the current iteration
-        /// and only then it will be stopped
-        /// </summary>
-        /// <remarks>The algorithm does not stop immidietly, 
-        /// but it performs the current iteration
-        /// and only then it will be stopped</remarks>
         public void Interrupt()
         {
+            pauseEvent.Set();
+            IsPaused = false;
             IsInterruptRequested = true;
             IsInProcess = false;
             Interrupted?.Invoke(this, new ProcessEventArgs());
         }
 
-        /// <summary>
-        /// Initialization a new instance of <see cref="PathfindingAlgorithm"/>
-        /// </summary>
-        /// <param name="graph"></param>
-        /// <param name="endPoints"></param>
+        public void Pause()
+        {
+            if (!IsPaused)
+            {
+                IsPaused = true;
+                Paused?.Invoke(this, new ProcessEventArgs());
+            }
+        }
+
+        public void Resume()
+        {
+            if (IsPaused)
+            {
+                IsPaused = false;
+                pauseEvent.Set();
+                Resumed?.Invoke(this, new ProcessEventArgs());
+            }
+        }
+
+        protected virtual void WaitResumed()
+        {
+            if (IsPaused)
+            {
+                pauseEvent.WaitOne();
+            }
+        }
+
         protected PathfindingAlgorithm(IEndPoints endPoints)
         {
             visitedVertices = new VisitedVertices();
             parentVertices = new ParentVertices();
             this.endPoints = endPoints;
+            pauseEvent = new AutoResetEvent(true);
         }
 
-        /// <summary>
-        /// Removes all activity of the
-        /// algorithm so that you can use it again
-        /// </summary>
         protected virtual void Reset()
         {
             visitedVertices.Clear();
             parentVertices.Clear();
             IsInterruptRequested = false;
+            IsPaused = false;
         }
 
-        /// <summary>
-        /// The vertex that is currently being processed by the algorithm
-        /// </summary>
-        protected IVertex CurrentVertex { get; set; }
-
-        /// <summary>
-        /// The vertex that is next to be processed
-        /// </summary>
-        protected abstract IVertex NextVertex { get; }
-
-        /// <summary>
-        /// Determines whether the algorithm is terminated prematurely
-        /// </summary>
-        protected bool IsTerminatedPrematurely => !CurrentVertex.IsNull() && !IsInterruptRequested;
-
-        /// <summary>
-        /// Determines, whether the algorithm has reached the target vertex
-        /// or whether it is able to continue pathfinding
-        /// </summary>
-        /// <param name="endPoints"></param>
-        /// <returns></returns>
         protected virtual bool IsDestination(IEndPoints endPoints)
         {
             return endPoints.Target.IsEqual(CurrentVertex) || !IsTerminatedPrematurely;
@@ -126,10 +114,6 @@ namespace Algorithm.Base
             Finished?.Invoke(this, new ProcessEventArgs());
         }
 
-        /// <summary>
-        /// Resets the algorithm and removes all 
-        /// subscribers from its events
-        /// </summary>
         public void Dispose()
         {
             Started = null;
@@ -137,13 +121,15 @@ namespace Algorithm.Base
             VertexEnqueued = null;
             VertexVisited = null;
             Interrupted = null;
+            Paused = null;
+            Resumed = null;
+            pauseEvent.Dispose();
             Reset();
         }
-
-        private bool IsInterruptRequested { get; set; }
 
         protected readonly IVisitedVertices visitedVertices;
         protected readonly IParentVertices parentVertices;
         protected readonly IEndPoints endPoints;
+        private readonly AutoResetEvent pauseEvent;
     }
 }

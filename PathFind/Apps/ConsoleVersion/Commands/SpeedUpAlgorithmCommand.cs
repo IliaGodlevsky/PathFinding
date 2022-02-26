@@ -6,11 +6,11 @@ using System;
 namespace ConsoleVersion.Commands
 {
     [AttachedTo(typeof(PathFindingViewModel))]
-    internal sealed class SpeedUpAlgorithmKeysCommand : BaseSpeedKeysCommand
+    internal sealed class SpeedUpAlgorithmCommand : BaseAlgorithmSpeedCommand
     {
         public override bool CanExecute(ConsoleKey key)
         {
-            return key.IsOneOf(ConsoleKey.UpArrow, ConsoleKey.W);
+            return key.IsOneOf(ConsoleKey.UpArrow);
         }
 
         protected override int GetNewDelay(PathFindingViewModel viewModel)

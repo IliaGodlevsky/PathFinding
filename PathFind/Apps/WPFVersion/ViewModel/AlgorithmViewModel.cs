@@ -23,6 +23,8 @@ namespace WPFVersion.ViewModel
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
 
+        public bool IsStarted => algorithm.IsInProcess;
+        public bool IsPaused => algorithm.IsPaused;
         public IAlgorithm Algorithm => algorithm;
 
         public int Index { get; }
@@ -72,11 +74,19 @@ namespace WPFVersion.ViewModel
 
         }
 
-        public bool IsStarted => algorithm.IsInProcess;
-
         public void Interrupt()
         {
             algorithm.Interrupt();
+        }
+
+        public void Pause()
+        {
+            algorithm.Pause();
+        }
+
+        public void Unpause()
+        {
+            algorithm.Resume();
         }
 
         private readonly PathfindingAlgorithm algorithm;

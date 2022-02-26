@@ -61,10 +61,12 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Attributes\MenuItemAttribute.cs" />
-    <Compile Include="Commands\BaseSpeedKeysCommand.cs" />
-    <Compile Include="Commands\SpeedDownAlgorithmKeysCommand.cs" />
-    <Compile Include="Commands\InterruptAlgorithmKeysCommand.cs" />
-    <Compile Include="Commands\SpeedUpAlgorithmKeysCommand.cs" />
+    <Compile Include="Commands\BaseAlgorithmSpeedCommand.cs" />
+    <Compile Include="Commands\PauseAlgorithmCommand.cs" />
+    <Compile Include="Commands\SpeedDownAlgorithmCommand.cs" />
+    <Compile Include="Commands\InterruptAlgorithmCommand.cs" />
+    <Compile Include="Commands\SpeedUpAlgorithmCommand.cs" />
+    <Compile Include="Commands\ResumeAlgorithmCommand.cs" />
     <Compile Include="ConsoleCursor.cs" />
     <Compile Include="DependencyInjection\DI.cs" />
     <Compile Include="Constants.cs" />

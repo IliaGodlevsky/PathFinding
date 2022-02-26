@@ -50,9 +50,9 @@ namespace ConsoleVersion.ViewModel
             algorithmKeysValueRange = new InclusiveValueRange<int>(Algorithms.Length, 1);
             ConsoleKeystrokesHook.Instance.KeyPressed += OnConsoleKeyPressed;
             DelayTime = Constants.AlgorithmDelayTimeValueRange.LowerValueOfRange;
-            resetSlim = new ManualResetEventSlim();
+            resetEvent = new ManualResetEventSlim();
             messenger = DI.Container.Resolve<IMessenger>();
-            KeyCommands = this.GetAttachedConsleKeyCommands();
+            KeyCommands = this.GetAttachedConsoleKeyCommands();
         }
 
         [MenuItem(MenuItemsNames.FindPath, MenuItemPriority.Highest)]
@@ -63,7 +63,7 @@ namespace ConsoleVersion.ViewModel
                 try
                 {
                     base.FindPath();
-                    resetSlim.Wait();
+                    resetEvent.Wait();
                     Console.ReadKey(true);
                     Console.CursorVisible = true;
                 }
@@ -135,7 +135,7 @@ namespace ConsoleVersion.ViewModel
             var message = new UpdateStatisticsMessage(statistics);
             messenger.Forward(message, MessageTokens.MainView);
             visitedVerticesCount = 0;
-            resetSlim.Set();
+            resetEvent.Set();
         }
 
         protected override void OnAlgorithmInterrupted(object sender, ProcessEventArgs e) { }
@@ -143,7 +143,7 @@ namespace ConsoleVersion.ViewModel
 
         protected override void OnAlgorithmStarted(object sender, ProcessEventArgs e)
         {
-            resetSlim.Reset();
+            resetEvent.Reset();
             Console.CursorVisible = false;
             CurrentAlgorithmName = Algorithm.GetDescription();
         }
@@ -181,11 +181,11 @@ namespace ConsoleVersion.ViewModel
             WindowClosed = null;
             ClearGraph();
             ConsoleKeystrokesHook.Instance.KeyPressed -= OnConsoleKeyPressed;
-            resetSlim.Dispose();
+            resetEvent.Dispose();
         }
 
         private readonly InclusiveValueRange<int> algorithmKeysValueRange;
         private readonly IMessenger messenger;
-        private readonly ManualResetEventSlim resetSlim;
+        private readonly ManualResetEventSlim resetEvent;
     }
 }

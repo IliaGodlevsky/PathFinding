@@ -32,6 +32,8 @@ namespace WPFVersion.ViewModel
         public ICommand InterruptSelelctedAlgorithmCommand { get; }
         public ICommand RemoveSelelctedAlgorithmCommand { get; }
         public ICommand VisualizeCommand { get; }
+        public ICommand PauseSelectedAlgorithmCommand { get; }
+        public ICommand ResumeSelectedAlgorithmCommand { get; }
 
         public AlgorithmViewModel SelectedAlgorithm { get; set; }
         public ObservableCollection<AlgorithmViewModel> Algorithms { get; set; }
@@ -40,6 +42,8 @@ namespace WPFVersion.ViewModel
         {
             messenger = DI.Container.Resolve<IMessenger>();
             Algorithms = new ObservableCollection<AlgorithmViewModel>();
+            ResumeSelectedAlgorithmCommand = new RelayCommand(ExecuteResumeAlgorithmCommand, CanExecuteResumedAlgorithmCommand);
+            PauseSelectedAlgorithmCommand = new RelayCommand(ExecutePauseAlgorithmCommand, CanExecutePauseSelectedAlgorithmCommand);
             VisualizeCommand = new RelayCommand(ExecuteVisualizeCommand, CanExecuteVisualizeCommand);
             InterruptSelelctedAlgorithmCommand = new RelayCommand(ExecuteInterruptSelectedAlgorithmCommand, CanExecuteInterruptSelectedAlgorithmCommand);
             RemoveSelelctedAlgorithmCommand = new RelayCommand(ExecuteRemoveFromStatisticsCommand, CanExecuteRemoveFromStatisticsCommand);
@@ -103,6 +107,16 @@ namespace WPFVersion.ViewModel
             SendIsAllAlgorithmsFinishedMessage();
         }
 
+        private void ExecuteResumeAlgorithmCommand(object param)
+        {
+            SelectedAlgorithm?.Unpause();
+        }
+
+        private void ExecutePauseAlgorithmCommand(object param)
+        {
+            SelectedAlgorithm?.Pause();
+        }
+
         private void ExecuteVisualizeCommand(object param)
         {
             visualizationModel.Visualize(SelectedAlgorithm.Algorithm);
@@ -116,6 +130,20 @@ namespace WPFVersion.ViewModel
         private bool CanExecuteRemoveFromStatisticsCommand(object param)
         {
             return IsAllFinished;
+        }
+
+        private bool CanExecutePauseSelectedAlgorithmCommand(object param)
+        {
+            return SelectedAlgorithm != null
+                && !SelectedAlgorithm.IsPaused
+                && SelectedAlgorithm.IsStarted;
+        }
+
+        private bool CanExecuteResumedAlgorithmCommand(object param)
+        {
+            return SelectedAlgorithm != null
+                && SelectedAlgorithm.IsPaused
+                && SelectedAlgorithm.IsStarted;
         }
 
         private bool CanExecuteVisualizeCommand(object param)

@@ -36,9 +36,13 @@ namespace ConsoleVersion.Model
 
         public void Display()
         {
-            UiElements.DisplayAll();
+            lock (locker)
+            {
+                UiElements.DisplayAll();
+            }
         }
 
         private readonly Lazy<IEnumerable<IDisplayable>> uiElements;
+        private static readonly object locker = new object();
     }
 }

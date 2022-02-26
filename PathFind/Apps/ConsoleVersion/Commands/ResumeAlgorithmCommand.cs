@@ -7,16 +7,16 @@ using System;
 namespace ConsoleVersion.Commands
 {
     [AttachedTo(typeof(PathFindingViewModel))]
-    internal sealed class InterruptAlgorithmKeysCommand : IConsoleKeyCommand
+    internal sealed class ResumeAlgorithmCommand : IConsoleKeyCommand
     {
         public bool CanExecute(ConsoleKey key)
         {
-            return key.IsOneOf(ConsoleKey.Escape, ConsoleKey.End, ConsoleKey.E);
+            return key.IsOneOf(ConsoleKey.Enter);
         }
 
-        public void Execute(PathFindingViewModel model)
+        public void Execute(PathFindingViewModel viewModel)
         {
-            model.CurrentAlgorithm.Interrupt();
+            viewModel.CurrentAlgorithm.Resume();
         }
     }
 }
