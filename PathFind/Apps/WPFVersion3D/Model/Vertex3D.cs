@@ -44,7 +44,7 @@ namespace WPFVersion3D.Model
             set => SetValue(BrushProperty, value);
         }
 
-        public Vertex3D(INeighborhood neighborhood, ICoordinate coordinate, 
+        public Vertex3D(INeighborhood neighborhood, ICoordinate coordinate,
             IModel3DFactory modelFactory, IVisualization<Vertex3D> visualization)
         {
             this.visualization = visualization;
@@ -57,7 +57,7 @@ namespace WPFVersion3D.Model
             neighbours = new Lazy<IReadOnlyCollection<IVertex>>(() => neighborhood.GetNeighbours(this));
         }
 
-        public Vertex3D(VertexSerializationInfo info, 
+        public Vertex3D(VertexSerializationInfo info,
             IModel3DFactory modelFactory, IVisualization<Vertex3D> visualization) :
             this(info.Neighbourhood, info.Position, modelFactory, visualization)
         {

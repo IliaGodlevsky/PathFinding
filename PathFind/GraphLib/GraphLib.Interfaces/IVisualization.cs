@@ -1,6 +1,6 @@
 ﻿namespace GraphLib.Interfaces
 {
-    public interface IVisualization<TVertex> 
+    public interface IVisualization<TVertex>
         where TVertex : IVertex, IVisualizable
     {
         bool IsVisualizedAsPath(TVertex vertex);

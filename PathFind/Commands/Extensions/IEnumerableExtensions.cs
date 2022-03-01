@@ -21,7 +21,7 @@ namespace Commands.Extensions
             commands.Execute(execute, execute);
         }
 
-        public static IExecutable<TExecute> FirstOrNullExecutable<TCommand, TCheck, TExecute>(this IEnumerable<TCommand> commands, 
+        public static IExecutable<TExecute> FirstOrNullExecutable<TCommand, TCheck, TExecute>(this IEnumerable<TCommand> commands,
             Func<TCommand, bool> predicate)
             where TCommand : IExecutable<TExecute>, IExecutionCheck<TCheck>
         {

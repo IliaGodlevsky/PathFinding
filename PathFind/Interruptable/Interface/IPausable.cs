@@ -6,7 +6,7 @@ namespace Interruptable.Interface
     {
         event ProcessEventHandler Paused;
         event ProcessEventHandler Resumed;
-        
+
         bool IsPaused { get; }
 
         void Pause();

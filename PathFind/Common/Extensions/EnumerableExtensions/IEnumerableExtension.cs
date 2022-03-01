@@ -3,7 +3,6 @@ using Common.Extensions.EnumerableExtensions;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Runtime.CompilerServices;
 
 namespace Common.Extensions.EnumerableExtensions
 {

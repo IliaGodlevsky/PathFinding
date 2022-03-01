@@ -30,38 +30,38 @@ namespace WPFVersion.ViewModel
         public string AlgorithmName { get; }
 
         private int pathLength;
-        public int PathLength 
-        { 
-            get => pathLength; 
-            set { pathLength = value; OnPropertyChanged(); } 
+        public int PathLength
+        {
+            get => pathLength;
+            set { pathLength = value; OnPropertyChanged(); }
         }
 
         private double pathCost;
-        public double PathCost 
-        { 
-            get => pathCost; 
-            set { pathCost = value; OnPropertyChanged(); } 
+        public double PathCost
+        {
+            get => pathCost;
+            set { pathCost = value; OnPropertyChanged(); }
         }
 
         private int visitedVerticesCount;
-        public int VisitedVerticesCount 
-        { 
-            get => visitedVerticesCount; 
-            set { visitedVerticesCount = value; OnPropertyChanged(); } 
+        public int VisitedVerticesCount
+        {
+            get => visitedVerticesCount;
+            set { visitedVerticesCount = value; OnPropertyChanged(); }
         }
 
         private AlgorithmStatus status;
-        public AlgorithmStatus Status 
-        { 
-            get => status; 
-            set { status = value; OnPropertyChanged(); } 
+        public AlgorithmStatus Status
+        {
+            get => status;
+            set { status = value; OnPropertyChanged(); }
         }
 
         private string time;
-        public string Time 
-        { 
-            get => time; 
-            set { time = value; OnPropertyChanged(); } 
+        public string Time
+        {
+            get => time;
+            set { time = value; OnPropertyChanged(); }
         }
 
         private int delayTime;

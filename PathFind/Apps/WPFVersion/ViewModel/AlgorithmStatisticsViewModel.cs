@@ -175,7 +175,7 @@ namespace WPFVersion.ViewModel
                 visualizationModel.Dispose();
                 visualizationModel = null;
             }
-        }       
+        }
 
         private PathfindingVisualizationModel visualizationModel;
         private readonly IMessenger messenger;
