@@ -6,12 +6,6 @@ using System.Linq;
 
 namespace Algorithm.Realizations.Heuristic.Distances
 {
-    /// <summary>
-    /// A base class for all distance classes.
-    /// Contains methods for calculating distance
-    /// between two <see cref="IVertex"/> classes.
-    /// This is an abstract class
-    /// </summary>
     public abstract class Distance
     {
         public double Calculate(IVertex first, IVertex second)

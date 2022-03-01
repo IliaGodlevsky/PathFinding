@@ -5,11 +5,6 @@ using System.Collections.Generic;
 
 namespace Algorithm.Realizations.Heuristic.Distances
 {
-    /// <summary>
-    /// Calculates chebyshev distance between two vertices.
-    /// This class can't be inherited
-    /// </summary>
-    /// <remarks><see cref="https://en.wikipedia.org/wiki/Chebyshev_distance"/></remarks>
     public sealed class ChebyshevDistance : Distance, IHeuristic
     {
         protected override double Aggregate(IEnumerable<double> collection)

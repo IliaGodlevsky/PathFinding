@@ -13,9 +13,6 @@ using System.Diagnostics;
 
 namespace Algorithm.Algos.Algos
 {
-    /// <summary>
-    /// Realization of Dijkstra's algorithm
-    /// </summary>
     [DebuggerDisplay("Dijkstra's algorithm")]
     [Description("Dijkstra's algorithm")]
     public class DijkstraAlgorithm : WaveAlgorithm

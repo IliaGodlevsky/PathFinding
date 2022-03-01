@@ -6,9 +6,6 @@ using System.Diagnostics;
 
 namespace GraphLib.NullRealizations
 {
-    /// <summary>
-    /// An empty coordinate with default realization
-    /// </summary>
     [Null]
     [Serializable]
     [DebuggerDisplay("Null")]

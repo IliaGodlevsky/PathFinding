@@ -1,5 +1,4 @@
-﻿using Common.Extensions;
-using GraphLib.Extensions;
+﻿using GraphLib.Extensions;
 using GraphLib.Interfaces;
 using GraphLib.Realizations.VertexCost;
 using GraphLib.Serialization;
@@ -16,19 +15,9 @@ namespace WindowsFormsVersion.Model
     [DebuggerDisplay("{Position.ToString()}")]
     internal class Vertex : Label, IVertex, IVisualizable, IWeightable, IEquatable<IVertex>
     {
-        private static Color RegularVertexColor = Color.FromKnownColor(KnownColor.WhiteSmoke);
-        private static Color ObstacleVertexColor = Color.FromKnownColor(KnownColor.Black);
-        private static Color PathVertexColor = Color.FromKnownColor(KnownColor.Yellow);
-        private static Color EnqueuedVertexColor = Color.FromKnownColor(KnownColor.Magenta);
-        private static Color SourceVertexColor = Color.FromKnownColor(KnownColor.Green);
-        private static Color TargetVertexColor = Color.FromKnownColor(KnownColor.Red);
-        private static Color AlreadyPathVertexColor = Color.FromKnownColor(KnownColor.Gold);
-        private static Color VisitedVertexColor = Color.FromKnownColor(KnownColor.CadetBlue);
-        private static Color IntermediateVertexColor = Color.FromKnownColor(KnownColor.DarkOrange);
-        private static Color ToReplaceMarkColor = Color.FromArgb(alpha: 185, red: 255, green: 140, blue: 0);
-
-        public Vertex(INeighborhood neighborhood, ICoordinate coordinate) : base()
+        public Vertex(INeighborhood neighborhood, ICoordinate coordinate, IVisualization<Vertex> visualization) : base()
         {
+            this.visualization = visualization;
             float fontSize = VertexSize * TextToSizeRatio;
             Font = new Font("Times New Roman", fontSize);
             Size = new Size(VertexSize, VertexSize);
@@ -38,8 +27,8 @@ namespace WindowsFormsVersion.Model
             neighbours = new Lazy<IReadOnlyCollection<IVertex>>(() => neighborhood.GetNeighbours(this));
         }
 
-        public Vertex(VertexSerializationInfo info)
-            : this(info.Neighbourhood, info.Position)
+        public Vertex(VertexSerializationInfo info, IVisualization<Vertex> visualization)
+            : this(info.Neighbourhood, info.Position, visualization)
         {
             this.Initialize(info);
         }
@@ -75,53 +64,17 @@ namespace WindowsFormsVersion.Model
             }
         }
 
-        public void VisualizeAsObstacle()
-        {
-            BackColor = ObstacleVertexColor;
-        }
-
-        public void VisualizeAsRegular()
-        {
-            BackColor = RegularVertexColor;
-        }
-
-        public void VisualizeAsSource()
-        {
-            BackColor = SourceVertexColor;
-        }
-
-        public void VisualizeAsTarget()
-        {
-            BackColor = TargetVertexColor;
-        }
-
-        public void VisualizeAsVisited()
-        {
-            if (!IsVisualizedAsPath)
-            {
-                BackColor = VisitedVertexColor;
-            }
-        }
-
-        public void VisualizeAsPath()
-        {
-            if (IsVisualizedAsPath)
-            {
-                BackColor = AlreadyPathVertexColor;
-            }
-            else
-            {
-                BackColor = PathVertexColor;
-            }
-        }
-
-        public void VisualizeAsEnqueued()
-        {
-            if (!IsVisualizedAsPath)
-            {
-                BackColor = EnqueuedVertexColor;
-            }
-        }
+        public void VisualizeAsMarkedToReplaceIntermediate() => visualization.VisualizeAsMarkedToReplaceIntermediate(this);
+        public void VisualizeAsObstacle() => visualization.VisualizeAsObstacle(this);
+        public void VisualizeAsRegular() => visualization.VisualizeAsRegular(this);
+        public void VisualizeAsSource() => visualization.VisualizeAsSource(this);
+        public void VisualizeAsTarget() => visualization.VisualizeAsTarget(this);
+        public void VisualizeAsVisited() => visualization.VisualizeAsVisited(this);
+        public void VisualizeAsPath() => visualization.VisualizeAsPath(this);
+        public void VisualizeAsEnqueued() => visualization.VisualizeAsEnqueued(this);
+        public void VisualizeAsIntermediate() => visualization.VisualizeAsIntermediate(this);
+        public bool IsVisualizedAsPath => visualization.IsVisualizedAsPath(this);
+        public bool IsVisualizedAsEndPoint => visualization.IsVisualizedAsEndPoint(this);
 
         public void MakeUnweighted()
         {
@@ -139,25 +92,7 @@ namespace WindowsFormsVersion.Model
         public override bool Equals(object obj) => obj is IVertex vertex && vertex.IsEqual(this);
         public override int GetHashCode() => base.GetHashCode();
 
-        public bool IsVisualizedAsPath
-            => BackColor.IsOneOf(PathVertexColor, AlreadyPathVertexColor, IntermediateVertexColor, ToReplaceMarkColor);
-
-        public bool IsVisualizedAsEndPoint
-            => BackColor.IsOneOf(SourceVertexColor, TargetVertexColor, IntermediateVertexColor, ToReplaceMarkColor);
-
-        public void VisualizeAsIntermediate()
-        {
-            BackColor = IntermediateVertexColor;
-        }
-
-        public void VisualizeAsMarkedToReplaceIntermediate()
-        {
-            if (BackColor == IntermediateVertexColor)
-            {
-                BackColor = ToReplaceMarkColor;
-            }
-        }
-
+        private readonly IVisualization<Vertex> visualization;
         private readonly Lazy<IReadOnlyCollection<IVertex>> neighbours;
     }
 }

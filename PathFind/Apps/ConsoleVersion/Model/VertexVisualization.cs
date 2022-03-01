@@ -1,9 +1,10 @@
 ﻿using Common.Extensions;
+using GraphLib.Interfaces;
 using System.Drawing;
 
 namespace ConsoleVersion.Model
 {
-    internal sealed class VerticesColorHub
+    internal sealed class VertexVisualization : IVisualization<Vertex>
     {
         private static readonly Color RegularVertexColor = Color.FromKnownColor(KnownColor.WhiteSmoke);
         private static readonly Color ObstacleVertexColor = Color.FromKnownColor(KnownColor.Black);
@@ -45,8 +46,6 @@ namespace ConsoleVersion.Model
                 Mark(vertex, PathVertexColor);
             }
         }
-
-
 
         public void VisualizeAsVisited(Vertex vertex)
         {

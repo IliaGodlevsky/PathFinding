@@ -10,17 +10,10 @@ using System.Runtime.Serialization;
 
 namespace GraphLib.Realizations.Neighbourhoods
 {
-    /// <summary>
-    /// A class that finds the neighbors of the specified coordinate
-    /// </summary>
     [Serializable]
     [DebuggerDisplay("Count = {Neighbours.Length}")]
     public sealed class MooreNeighborhood : INeighborhood, ISerializable, ICloneable<INeighborhood>
     {
-        /// <summary>
-        /// Returns an array of the coordinate neighbours
-        /// </summary>
-        /// <returns>An array of the coordinate neighbours</returns>
         public IReadOnlyCollection<ICoordinate> Neighbours => neighbourhood.Value;
 
         public MooreNeighborhood(ICoordinate coordinate)
@@ -43,13 +36,6 @@ namespace GraphLib.Realizations.Neighbourhoods
         {
 
         }
-
-        /// <summary>
-        /// Detects neighbours coordinates around the central coordinate
-        /// </summary>
-        /// <param name="depth">The depth of the recursive dive</param>
-        /// <remarks>Recursive method</remarks>
-        /// <returns>An array of neighbours coordinates around the central one</returns>
         private List<ICoordinate> DetectNeighborhood(int depth = 0)
         {
             var neighborhood = new List<ICoordinate>();

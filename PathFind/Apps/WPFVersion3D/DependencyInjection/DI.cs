@@ -63,6 +63,7 @@ namespace WPFVersion3D.DependencyInjection
             builder.RegisterType<CubicModel3DFactory>().As<IModel3DFactory>().SingleInstance();
             builder.RegisterType<GraphAssemble>().As<IGraphAssemble>().SingleInstance();
             builder.RegisterType<Messenger>().As<IMessenger>().SingleInstance();
+            builder.RegisterType<VertexVisualization>().As<IVisualization<Vertex3D>>().SingleInstance();
 
             builder.RegisterType<GraphSerializationModule>().AsSelf().SingleInstance();
             builder.RegisterType<PathInput>().As<IPathInput>().SingleInstance();

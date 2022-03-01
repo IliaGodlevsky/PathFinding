@@ -115,7 +115,7 @@
     <Compile Include="Model\Vertex3DCostFactory.cs" />
     <Compile Include="Model\Vertex3DFactory.cs" />
     <Compile Include="Model\Vertex3DFromInfoFactory.cs" />
-    <Compile Include="Model\VerticesColorsHub.cs" />
+    <Compile Include="Model\VertexVisualization.cs" />
     <Compile Include="ValidationRules\NonDoubleInputValidationRule.cs" />
     <Compile Include="ValidationRules\NonInt32InputValidationRule.cs" />
     <Compile Include="ValidationRules\RangedDoubleValidationRule.cs" />

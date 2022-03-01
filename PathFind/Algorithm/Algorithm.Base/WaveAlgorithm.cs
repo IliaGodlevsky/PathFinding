@@ -10,10 +10,6 @@ using System.Linq;
 
 namespace Algorithm.Base
 {
-    /// <summary>
-    /// A base class for all wave algorithms, such as Dijkstra's algorithm,
-    /// A* algorithm or Lee algorithm. This class is abstract
-    /// </summary>
     public abstract class WaveAlgorithm : PathfindingAlgorithm
     {
         protected WaveAlgorithm(IEndPoints endPoints)

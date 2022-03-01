@@ -69,6 +69,7 @@ namespace WPFVersion.DependencyInjection
             builder.RegisterType<MooreNeighborhoodFactory>().As<INeighborhoodFactory>().SingleInstance();
             builder.RegisterType<GeometricMeanCost>().As<IMeanCost>().SingleInstance();
             builder.RegisterType<HighSmoothLevel>().As<ISmoothLevel>().SingleInstance();
+            builder.RegisterType<VertexVisualization>().As<IVisualization<Vertex>>().SingleInstance();
 
             builder.RegisterType<GraphSerializationModule>().AsSelf().SingleInstance();
             builder.RegisterType<PathInput>().As<IPathInput>().SingleInstance();

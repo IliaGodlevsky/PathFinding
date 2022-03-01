@@ -11,10 +11,6 @@ using System.Linq;
 
 namespace Algorithm.Base
 {
-    /// <summary>
-    /// A base class for all Greedy algorithms.
-    /// This is an abstract class
-    /// </summary>
     public abstract class GreedyAlgorithm : PathfindingAlgorithm
     {
         protected GreedyAlgorithm(IEndPoints endPoints)
@@ -44,12 +40,6 @@ namespace Algorithm.Base
                 ? new GraphPath(parentVertices, endPoints)
                 : NullGraphPath.Instance;
         }
-
-        /// <summary>
-        /// A greedy function (heuristic) for algorithm
-        /// </summary>
-        /// <param name="vertex"></param>
-        /// <returns></returns>
         protected abstract double GreedyHeuristic(IVertex vertex);
 
         protected override void Reset()
@@ -66,11 +56,6 @@ namespace Algorithm.Base
             RaiseVertexVisited(new AlgorithmEventArgs(CurrentVertex));
             visitedVerticesStack.Push(CurrentVertex);
         }
-
-        /// <summary>
-        /// Gets next vertex according 
-        /// to <see cref="GreedyHeuristic(IVertex)"/> function
-        /// </summary>
         protected override IVertex NextVertex
         {
             get

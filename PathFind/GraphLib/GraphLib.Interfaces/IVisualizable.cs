@@ -1,10 +1,5 @@
 ﻿namespace GraphLib.Interfaces
 {
-    /// <summary>
-    /// An interface, that provides methods
-    /// for marking vertices as they are
-    /// processed by pathfinding algorithm
-    /// </summary>
     public interface IVisualizable
     {
         void VisualizeAsTarget();

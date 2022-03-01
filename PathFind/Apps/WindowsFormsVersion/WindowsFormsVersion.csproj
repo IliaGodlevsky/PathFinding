@@ -73,6 +73,7 @@
     <Compile Include="Model\PathInput.cs" />
     <Compile Include="Model\VertexFactory.cs" />
     <Compile Include="Model\VertexFromInfoFactory.cs" />
+    <Compile Include="Model\VertexVisualization.cs" />
     <Compile Include="ViewModel\GraphCreatingViewModel.cs" />
     <Compile Include="ViewModel\PathFindingViewModel.cs" />
     <Compile Include="View\GraphCreatingWIndow.cs">

@@ -5,10 +5,6 @@ using ValueRange.Extensions;
 
 namespace Random.Realizations.Generators
 {
-    /// <summary>
-    /// Linear congruential generator
-    /// </summary>
-    /// <remarks>See Numeric resipes in C, second edition</remarks>
     public sealed class PseudoRandom : IRandom
     {
         private const int Term = 12345;
@@ -22,10 +18,6 @@ namespace Random.Realizations.Generators
             this.seed = (ulong)seed;
         }
 
-        /// <summary>
-        /// Initializes new instance of <see cref="PseudoRandom"/>
-        /// using <see cref="Environment.TickCount"/> as seed
-        /// </summary>
         public PseudoRandom() : this(Environment.TickCount)
         {
 

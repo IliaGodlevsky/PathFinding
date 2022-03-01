@@ -2,6 +2,7 @@
 using Autofac;
 using Common.Extensions;
 using Common.Interface;
+using GalaSoft.MvvmLight.Messaging;
 using GraphLib.Base.EndPoints;
 using GraphLib.Interfaces;
 using GraphLib.Interfaces.Factories;
@@ -52,6 +53,7 @@ namespace WindowsFormsVersion.DependencyInjection
 
             builder.RegisterType<EndPoints>().As<BaseEndPoints>().SingleInstance();
             builder.RegisterType<VertexEventHolder>().As<IVertexEventHolder>().SingleInstance();
+            builder.RegisterType<Messenger>().As<IMessenger>().SingleInstance();
 
             builder.RegisterType<FileLog>().As<ILog>().SingleInstance();
             builder.RegisterType<MessageBoxLog>().As<ILog>().SingleInstance();
@@ -67,6 +69,7 @@ namespace WindowsFormsVersion.DependencyInjection
             builder.RegisterType<Graph2DFactory>().As<IGraphFactory>().SingleInstance();
             builder.RegisterType<GraphFieldFactory>().As<IGraphFieldFactory>().SingleInstance();
             builder.RegisterType<MooreNeighborhoodFactory>().As<INeighborhoodFactory>().SingleInstance();
+            builder.RegisterType<VertexVisualization>().As<IVisualization<Vertex>>().SingleInstance();
 
             builder.RegisterType<GraphSerializationModule>().AsSelf().SingleInstance();
             builder.RegisterType<PathInput>().As<IPathInput>().SingleInstance();

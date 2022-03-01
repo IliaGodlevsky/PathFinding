@@ -6,10 +6,6 @@ using ValueRange.Extensions;
 
 namespace Random.Realizations.Generators
 {
-    /// <summary>
-    /// Knuth substractive generator
-    /// </summary>
-    /// <remarks>See Numeric resipes in C, second edition</remarks>
     public sealed class KnuthRandom : IRandom
     {
         private const int MBig = int.MaxValue;
@@ -21,10 +17,6 @@ namespace Random.Realizations.Generators
 
         private int[] Seeds => seeds.Value;
 
-        /// <summary>
-        /// Initializes new instance of <see cref="KnuthRandom"/>
-        /// using <see cref="Environment.TickCount"/> as seed
-        /// </summary>
         public KnuthRandom()
           : this(Environment.TickCount)
         {
@@ -37,13 +29,6 @@ namespace Random.Realizations.Generators
             indexRange = new InclusiveValueRange<int>(ArrayLength - 1, 1);
         }
 
-        /// <summary>
-        /// Returns a pseudo random number 
-        /// based on Knuth algorithm
-        /// </summary>
-        /// <param name="minValue"></param>
-        /// <param name="maxValue"></param>
-        /// <returns></returns>
         public int Next(int minValue, int maxValue)
         {
             lock (locker)

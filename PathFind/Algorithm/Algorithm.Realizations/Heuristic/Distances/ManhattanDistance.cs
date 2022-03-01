@@ -5,11 +5,6 @@ using System.Collections.Generic;
 
 namespace Algorithm.Realizations.Heuristic.Distances
 {
-    /// <summary>
-    /// Calculates manhattan distance between two vertices.
-    /// This class can't be inherited
-    /// </summary>
-    /// <remarks><see cref="https://xlinux.nist.gov/dads/HTML/manhattanDistance.html"/></remarks>
     public sealed class ManhattanDistance : Distance, IHeuristic
     {
         protected override double Aggregate(IEnumerable<double> collection)

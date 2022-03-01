@@ -8,10 +8,6 @@ namespace GraphLib.Extensions
 {
     public static class GraphExtensions
     {
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="graph"></param>
         public static void Refresh(this IGraph graph)
         {
             graph.ForEach(vertex => vertex.Refresh());

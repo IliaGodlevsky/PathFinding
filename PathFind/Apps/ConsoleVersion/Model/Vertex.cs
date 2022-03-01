@@ -24,15 +24,16 @@ namespace ConsoleVersion.Model
         public event EventHandler VertexReversed;
         public event EventHandler MarkedToReplaceIntermediate;
 
-        public Vertex(INeighborhood neighbourhood, ICoordinate coordinate)
+        public Vertex(INeighborhood neighbourhood, ICoordinate coordinate, IVisualization<Vertex> visualization)
         {
+            this.visualization = visualization;
             Position = coordinate;
             this.Initialize();
             neighbours = new Lazy<IReadOnlyCollection<IVertex>>(() => neighbourhood.GetNeighbours(this));
         }
 
-        public Vertex(VertexSerializationInfo info)
-            : this(info.Neighbourhood, info.Position)
+        public Vertex(VertexSerializationInfo info, IVisualization<Vertex> visualization)
+            : this(info.Neighbourhood, info.Position, visualization)
         {
             this.Initialize(info);
         }
@@ -102,17 +103,17 @@ namespace ConsoleVersion.Model
         public bool Equals(IVertex other) => Equals((object)other);
         public override bool Equals(object obj) => obj is IVertex vertex && vertex.IsEqual(this);
         public override int GetHashCode() => base.GetHashCode();
-        public bool IsVisualizedAsPath => ColorsHub.IsVisualizedAsPath(this);
-        public bool IsVisualizedAsEndPoint => ColorsHub.IsVisualizedAsEndPoint(this);
-        public void VisualizeAsTarget() => ColorsHub.VisualizeAsTarget(this);
-        public void VisualizeAsRegular() => ColorsHub.VisualizeAsRegular(this);
-        public void VisualizeAsObstacle() => ColorsHub.VisualizeAsObstacle(this);
-        public void VisualizeAsPath() => ColorsHub.VisualizeAsPath(this);
-        public void VisualizeAsSource() => ColorsHub.VisualizeAsSource(this);
-        public void VisualizeAsVisited() => ColorsHub.VisualizeAsVisited(this);
-        public void VisualizeAsEnqueued() => ColorsHub.VisualizeAsEnqueued(this);
-        public void VisualizeAsIntermediate() => ColorsHub.VisualizeAsIntermediate(this);
-        public void VisualizeAsMarkedToReplaceIntermediate() => ColorsHub.VisualizeAsMarkedToReplaceIntermediate(this);
+        public bool IsVisualizedAsPath => visualization.IsVisualizedAsPath(this);
+        public bool IsVisualizedAsEndPoint => visualization.IsVisualizedAsEndPoint(this);
+        public void VisualizeAsTarget() => visualization.VisualizeAsTarget(this);
+        public void VisualizeAsRegular() => visualization.VisualizeAsRegular(this);
+        public void VisualizeAsObstacle() => visualization.VisualizeAsObstacle(this);
+        public void VisualizeAsPath() => visualization.VisualizeAsPath(this);
+        public void VisualizeAsSource() => visualization.VisualizeAsSource(this);
+        public void VisualizeAsVisited() => visualization.VisualizeAsVisited(this);
+        public void VisualizeAsEnqueued() => visualization.VisualizeAsEnqueued(this);
+        public void VisualizeAsIntermediate() => visualization.VisualizeAsIntermediate(this);
+        public void VisualizeAsMarkedToReplaceIntermediate() => visualization.VisualizeAsMarkedToReplaceIntermediate(this);
 
         private Coordinate2D GetConsoleCoordinates()
         {
@@ -126,9 +127,8 @@ namespace ConsoleVersion.Model
         }
 
         private string text;
-
         private readonly Lazy<IReadOnlyCollection<IVertex>> neighbours;
-        private static readonly VerticesColorHub ColorsHub = new VerticesColorHub();
+        private readonly IVisualization<Vertex> visualization;
         private static readonly object locker = new object();
     }
 }

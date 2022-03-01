@@ -27,7 +27,7 @@ namespace ConsoleVersion.Extensions
         /// to several recipients</remarks>
         public static IMessenger Forward<TMessage>(this IMessenger messenger, TMessage message, MessageTokens token)
         {
-            Tokens.BreakIntoFlags(token).ForEach(value => messenger.Send(message, value));
+            Tokens.DisassembleToFlags(token).ForEach(value => messenger.Send(message, value));
             return messenger;
         }
     }

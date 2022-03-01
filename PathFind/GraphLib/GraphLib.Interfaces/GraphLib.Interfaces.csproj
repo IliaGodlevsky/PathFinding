@@ -62,6 +62,7 @@
     <Compile Include="IVertexEventHolder.cs" />
     <Compile Include="Factories\IVertexFactory.cs" />
     <Compile Include="IVisitedVertices.cs" />
+    <Compile Include="IVisualization.cs" />
     <Compile Include="IWeightable.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

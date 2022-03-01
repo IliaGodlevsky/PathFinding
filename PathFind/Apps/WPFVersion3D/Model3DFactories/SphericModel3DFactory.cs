@@ -7,10 +7,6 @@ using WPFVersion3D.Model;
 
 namespace WPFVersion3D.Model3DFactories
 {
-    /// <summary>
-    /// A class, that responds for creating 
-    /// of spheric <see cref="Model3D"/>
-    /// </summary>
     internal sealed class SphericModel3DFactory : IModel3DFactory
     {
         private const int Meridians = 15;
@@ -19,12 +15,6 @@ namespace WPFVersion3D.Model3DFactories
         private const int PI = 180;
         private const int PI2 = 360;
 
-        /// <summary>
-        /// Creates a spheric <see cref="Model3D"/>
-        /// </summary>
-        /// <param name="diametre">A diametre of the sphere</param>
-        /// <param name="material"></param>
-        /// <returns></returns>
         public Model3D CreateModel3D(double diametre, Material material)
         {
             var sphere = new Model3DGroup();
@@ -34,13 +24,6 @@ namespace WPFVersion3D.Model3DFactories
             return sphere;
         }
 
-        /// <summary>
-        /// Returns all rectangle models, 
-        /// that are needed to create sphere
-        /// </summary>
-        /// <param name="points"></param>
-        /// <param name="material"></param>
-        /// <returns></returns>
         private IEnumerable<Model3D> GetRectangleModels(Point3D[,] points, Material material)
         {
             var reactangleFactory = new RectangleModel3DFactory();
@@ -58,15 +41,6 @@ namespace WPFVersion3D.Model3DFactories
             }
         }
 
-        /// <summary>
-        /// Creates an array of points 
-        /// for creation sphere segments
-        /// </summary>
-        /// <param name="radius"></param>
-        /// <returns>An array of points 
-        /// for sphere segments</returns>
-        /// <remarks>Each intersection of a latitude and
-        /// a meridian is a point, that will be returned</remarks>
         private Point3D[,] GetPoints3D(double radius)
         {
             var points = new Point3D[Latitudes, Meridians];
@@ -84,13 +58,6 @@ namespace WPFVersion3D.Model3DFactories
             return points;
         }
 
-        /// <summary>
-        /// Returns a point of a sphere segment
-        /// </summary>
-        /// <param name="radius"></param>
-        /// <param name="theta"></param>
-        /// <param name="phi"></param>
-        /// <returns>A point of the sphere segment</returns>
         private Point3D GetPosition(double radius, double theta, double phi)
         {
             double snt = Math.Sin(theta * Math.PI / PI);

@@ -8,20 +8,8 @@ using System.Security.Cryptography;
 
 namespace GraphLib.Serialization.Serializers
 {
-    /// <summary>
-    /// A cryptographic graph serializer
-    /// </summary>
     public sealed class CryptoGraphSerializer : IGraphSerializer
     {
-        /// <summary>
-        /// Creates new <see cref="CryptoGraphSerializer"/>
-        /// using some <see cref="SymmetricAlgorithm"/> and
-        /// <see cref="ICrypto"/>
-        /// </summary>
-        /// <param name="serializer"><see cref="IGraphSerializer"/> which 
-        /// will serialize a crypto stream, created by <see cref="CryptoGraphSerializer"/></param>
-        /// <param name="algorithm">Algorithm to create ecnryptor and decryptor</param>
-        /// <param name="crypto">A constant key and initializing vector provider</param>
         public CryptoGraphSerializer(
             IGraphSerializer serializer,
             SymmetricAlgorithm algorithm,
@@ -32,12 +20,6 @@ namespace GraphLib.Serialization.Serializers
             this.crypto = crypto;
         }
 
-        /// <summary>
-        /// Creates new <see cref="CryptoGraphSerializer"/>, 
-        /// using <see cref="AesCryptoServiceProvider"/> and
-        /// <see cref="AesCrypto"/>
-        /// </summary>
-        /// <param name="serializer"></param>
         public CryptoGraphSerializer(IGraphSerializer serializer)
             : this(serializer,
                   new AesCryptoServiceProvider(),
@@ -45,12 +27,6 @@ namespace GraphLib.Serialization.Serializers
         {
 
         }
-
-        /// <summary>
-        /// Loads graph from stream, that must be encrypted later
-        /// </summary>
-        /// <param name="stream"></param>
-        /// <returns></returns>
         public IGraph LoadGraph(Stream stream)
         {
             IGraph graph = NullGraph.Instance;

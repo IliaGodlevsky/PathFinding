@@ -6,11 +6,6 @@ using ValueRange.Extensions;
 
 namespace Random.Realizations.Generators
 {
-    /// <summary>
-    /// A random number generator 
-    /// based on <see cref="RandomNumberGenerator"/>
-    /// </summary>
-    /// <remarks>See <see cref="https://docs.microsoft.com/en-us/archive/msdn-magazine/2007/september/net-matters-tales-from-the-cryptorandom"/></remarks>
     public sealed class CryptoRandom : IRandom, IDisposable
     {
         private const int IntSize = sizeof(int);
@@ -35,13 +30,6 @@ namespace Random.Realizations.Generators
             generator.GetBytes(buffer);
         }
 
-        /// <summary>
-        /// Creates new random <see cref="int"/> value
-        /// </summary>
-        /// <param name="minValue"></param>
-        /// <param name="maxValue"></param>
-        /// <returns>Cryptographically strong 
-        /// random <see cref="int"/></returns>
         public int Next(int minValue, int maxValue)
         {
             lock (locker)

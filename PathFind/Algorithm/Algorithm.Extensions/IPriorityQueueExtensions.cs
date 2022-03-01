@@ -24,13 +24,11 @@ namespace Algorithm.Extensions
             }
         }
 
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static IVertex FirstOrNullVertex(this IPriorityQueue<IVertex, double> self)
         {
             return self.Count == 0 ? NullVertex.Instance : self.First;
         }
 
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static void RemoveRange<TItem, TPriority>(this IPriorityQueue<TItem, TPriority> self,
             IEnumerable<TItem> nodes)
         {
@@ -45,14 +43,12 @@ namespace Algorithm.Extensions
             }
         }
 
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static void EnqueueRange<TItem, TPriority>(this IPriorityQueue<TItem, TPriority> self,
             IEnumerable<Tuple<TItem, TPriority>> nodes)
         {
             nodes.ForEach(node => self.EnqueueOrUpdatePriority(node.Item1, node.Item2));
         }
 
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static IList<TItem> TakeOrderedBy<TItem, TPriority>(this IEnumerable<TItem> self, int take,
             Func<TItem, TPriority> selector)
         {

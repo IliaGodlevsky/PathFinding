@@ -10,33 +10,16 @@ using System.Linq;
 
 namespace Algorithm.Algos.Algos
 {
-    /// <summary>
-    /// A version of <see cref="LeeAlgorithm"/> that seaches path
-    /// with a heuristic function
-    /// </summary>
     [DebuggerDisplay("Lee algorithm (heusritic)")]
     [Description("Lee algorithm (heusritic)")]
     public class BestFirstLeeAlgorithm : LeeAlgorithm
     {
-        /// <summary>
-        /// Initializes a new instance of <see cref="BestFirstLeeAlgorithm"/>
-        /// </summary>
-        /// <param name="graph">A graph, where the cheapest path must be founded</param>
-        /// <param name="endPoints">Vertices, between which the cheapest path must be founded</param>
-        /// <param name="function">A function, that influences on the choosing the next vertex to move</param>
         public BestFirstLeeAlgorithm(IEndPoints endPoints, IHeuristic function)
             : base(endPoints)
         {
             heuristic = function;
             heuristics = new Costs();
         }
-
-        /// <summary>
-        /// Initializes a new instance of <see cref="BestFirstLeeAlgorithm"/>
-        /// using <see cref="ManhattanDistance"/> as a heuristic function
-        /// </summary>
-        /// <param name="graph">A graph, where the cheapest path must be founded</param>
-        /// <param name="endPoints">Vertices, between which the cheapest path must be founded</param>
         public BestFirstLeeAlgorithm(IEndPoints endPoints)
             : this(endPoints, new ManhattanDistance())
         {

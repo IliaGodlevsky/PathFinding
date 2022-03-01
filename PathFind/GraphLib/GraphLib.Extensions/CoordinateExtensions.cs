@@ -3,7 +3,6 @@ using GraphLib.Interfaces;
 using GraphLib.Proxy.Extensions;
 using System;
 using System.Linq;
-using System.Runtime.CompilerServices;
 using ValueRange;
 using ValueRange.Extensions;
 
@@ -11,16 +10,6 @@ namespace GraphLib.Extensions
 {
     public static class CoordinateExtensions
     {
-        /// <summary>
-        /// Compares two coordinates
-        /// </summary>
-        /// <param name="self"></param>
-        /// <param name="coordinate"></param>
-        /// <returns>true if all of the coordinates values of <paramref name="self"/> 
-        /// equals to the corresponding coordinates of <paramref name="coordinate"/>;
-        /// false if not, or if they have not equal number of coordinates values
-        /// or any of parametres is null</returns>
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static bool IsEqual(this ICoordinate self, ICoordinate coordinate)
         {
             if (self == null || coordinate == null)
@@ -31,28 +20,11 @@ namespace GraphLib.Extensions
             return self.CoordinatesValues.Juxtapose(coordinate.CoordinatesValues);
         }
 
-        /// <summary>
-        /// Checks, whether <paramref name="neighbour"/> 
-        /// is cardinal to <paramref name="coordinate"/>
-        /// </summary>
-        /// <param name="coordinate"></param>
-        /// <param name="neighbour"></param>
-        /// <returns>True if <paramref name="neighbour"/> is cardinal to <paramref name="coordinate"/></returns>
         public static bool IsCardinal(this ICoordinate coordinate, ICoordinate neighbour)
         {
             return coordinate.CoordinatesValues.IsCardinal(neighbour.CoordinatesValues);
         }
 
-        /// <summary>
-        /// Checks whether coordinate is within graph
-        /// </summary>
-        /// <param name="self"></param>
-        /// <param name="graph"></param>
-        /// <returns>true if <paramref name="self"/> coordinates 
-        /// values is not greater than the corresponding dimension if graph 
-        /// and is not lesser than 0; false if it is or coordinate has more or 
-        /// less coordinates values than <paramref name="graph"/> has dimensions</returns>
-        /// <exception cref="ArgumentNullException">Thrown when any of parametres is null</exception>
         public static bool IsWithinGraph(this ICoordinate self, IGraph graph)
         {
             bool IsWithin(int coordinate, int graphDimension)
@@ -64,13 +36,6 @@ namespace GraphLib.Extensions
             return self.IsWithinGraph(graph, IsWithin);
         }
 
-        /// <summary>
-        /// Checks whether coordinate is within graph according to <paramref name="predicate"/>
-        /// </summary>
-        /// <param name="self"></param>
-        /// <param name="graph"></param>
-        /// <param name="predicate"></param>
-        /// <exception cref="ArgumentNullException">Thrown when any of parametres is null</exception>
         public static bool IsWithinGraph(this ICoordinate self, IGraph graph, Func<int, int, bool> predicate)
         {
             if (graph == null)

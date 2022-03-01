@@ -13,13 +13,6 @@ using System.Linq;
 
 namespace Algorithm.Algos.Algos
 {
-    /// <summary>
-    /// A modified version of A* algorithm
-    /// </summary>
-    /// <remarks>The modification is that the algorithm 
-    /// removes the most distant vertices from its horisont 
-    /// of search and searches only among vertices, that are 
-    /// the closest to the target vertex</remarks>
     [DebuggerDisplay("IDA* algorithm")]
     [Description("IDA* algorithm")]
     public class IDAStarAlgorithm : AStarAlgorithm

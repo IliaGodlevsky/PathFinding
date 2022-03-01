@@ -1,5 +1,6 @@
 ﻿using Algorithm.Interfaces;
 using Common.Extensions.EnumerableExtensions;
+using GraphLib.Extensions;
 using GraphLib.Interfaces;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
@@ -15,9 +16,10 @@ namespace Visualization.Abstractions
             vertices = new ConcurrentDictionary<IAlgorithm, ConcurrentDictionary<ICoordinate, IVertex>>();
         }
 
-        public void Add(IAlgorithm algorithm, IVertex vertex)
+        public virtual void Add(IAlgorithm algorithm, IVertex vertex)
         {
             vertices.TryGetOrAddNew(algorithm).TryAddOrUpdate(vertex.Position, vertex);
+            Visualize(vertex.AsVisualizable());
         }
 
         public void Clear()

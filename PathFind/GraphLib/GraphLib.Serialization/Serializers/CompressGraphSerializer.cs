@@ -32,11 +32,6 @@ namespace GraphLib.Serialization.Serializers
             }
         }
 
-        /// <summary>
-        /// Saves graph in stream and compresses it
-        /// </summary>
-        /// <param name="graph"></param>
-        /// <param name="stream"></param>
         public void SaveGraph(IGraph graph, Stream stream)
         {
             try

@@ -35,6 +35,7 @@ namespace WPFVersion.ViewModel
         public ICommand PauseSelectedAlgorithmCommand { get; }
         public ICommand ResumeSelectedAlgorithmCommand { get; }
 
+        private bool IsAllFinished => Algorithms.All(algorithm => !algorithm.IsStarted);
         public AlgorithmViewModel SelectedAlgorithm { get; set; }
         public ObservableCollection<AlgorithmViewModel> Algorithms { get; set; }
 
@@ -174,9 +175,7 @@ namespace WPFVersion.ViewModel
                 visualizationModel.Dispose();
                 visualizationModel = null;
             }
-        }
-
-        private bool IsAllFinished => Algorithms.All(stat => !stat.IsStarted);
+        }       
 
         private PathfindingVisualizationModel visualizationModel;
         private readonly IMessenger messenger;

@@ -101,7 +101,7 @@
     <Compile Include="Model\Vertex.cs" />
     <Compile Include="Model\VertexFactory.cs" />
     <Compile Include="Model\VertexFromInfoFactory.cs" />
-    <Compile Include="Model\VerticesColorsHub.cs" />
+    <Compile Include="Model\VertexVisualization.cs" />
     <Compile Include="Model\VerticesCostMode\IVerticesCostsMode.cs" />
     <Compile Include="Model\VerticesCostMode\UnweightedVerticesCostsMode.cs" />
     <Compile Include="Model\VerticesCostMode\WeightedVerticesCostsMode.cs" />

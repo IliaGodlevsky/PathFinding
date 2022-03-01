@@ -1,4 +1,5 @@
 ﻿using Common.Extensions;
+using GraphLib.Interfaces;
 using System.Windows;
 using System.Windows.Media;
 using System.Windows.Threading;
@@ -6,7 +7,7 @@ using WPFVersion.Extensions;
 
 namespace WPFVersion.Model
 {
-    internal sealed class VerticesColorsHub
+    internal sealed class VertexVisualization : IVisualization<Vertex>
     {
         private static Dispatcher Dispatcher => Application.Current.Dispatcher;
         private static readonly Brush VisitedColor = new SolidColorBrush(Colors.CadetBlue);
@@ -29,7 +30,7 @@ namespace WPFVersion.Model
             });
         }
 
-        public bool IsVisualizedAsEndPoints(Vertex vertex)
+        public bool IsVisualizedAsEndPoint(Vertex vertex)
         {
             return Dispatcher.Invoke(() =>
             {

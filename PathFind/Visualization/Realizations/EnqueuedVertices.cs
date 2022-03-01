@@ -1,4 +1,5 @@
-﻿using GraphLib.Interfaces;
+﻿using Algorithm.Interfaces;
+using GraphLib.Interfaces;
 using Visualization.Abstractions;
 using Visualization.Interfaces;
 

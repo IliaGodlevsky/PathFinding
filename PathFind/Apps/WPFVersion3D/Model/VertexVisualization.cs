@@ -1,4 +1,5 @@
 ﻿using Common.Extensions;
+using GraphLib.Interfaces;
 using System.Windows;
 using System.Windows.Media;
 using System.Windows.Threading;
@@ -6,7 +7,7 @@ using WPFVersion3D.Extensions;
 
 namespace WPFVersion3D.Model
 {
-    internal sealed class VerticesColorsHub
+    internal sealed class VertexVisualization : IVisualization<Vertex3D>
     {
         private static Dispatcher Dispatcher => Application.Current.Dispatcher;
         public static Brush VisitedVertexBrush = new SolidColorBrush(Colors.CadetBlue) { Opacity = Constants.InitialVisitedVertexOpacity };
@@ -25,7 +26,7 @@ namespace WPFVersion3D.Model
             return Dispatcher.Invoke(() => vertex.Brush.IsOneOf(AlreadyPathVertexBrush, PathVertexBrush, IntermediateVertexBrush, ToReplaceMarkBrush));
         }
 
-        public bool IsVisualizedAsEndPoints(Vertex3D vertex)
+        public bool IsVisualizedAsEndPoint(Vertex3D vertex)
         {
             return Dispatcher.Invoke(() => vertex.Brush.IsOneOf(SourceVertexBrush, TargetVertexBrush, IntermediateVertexBrush, ToReplaceMarkBrush));
         }

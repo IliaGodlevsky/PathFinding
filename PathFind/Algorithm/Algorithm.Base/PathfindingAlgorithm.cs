@@ -3,6 +3,7 @@ using Algorithm.Infrastructure.Handlers;
 using Algorithm.Interfaces;
 using Algorithm.Сompanions;
 using Algorithm.Сompanions.Interface;
+using Common;
 using GraphLib.Extensions;
 using GraphLib.Interfaces;
 using GraphLib.Realizations;
@@ -115,7 +116,7 @@ namespace Algorithm.Base
         }
 
         public void Dispose()
-        {
+        {           
             Started = null;
             Finished = null;
             VertexEnqueued = null;

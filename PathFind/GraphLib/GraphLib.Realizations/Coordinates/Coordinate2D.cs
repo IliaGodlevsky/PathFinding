@@ -7,9 +7,6 @@ using System.Linq;
 
 namespace GraphLib.Realizations.Coordinates
 {
-    /// <summary>
-    /// A class representing cartesian two-dimensional coordinates
-    /// </summary>
     [Serializable]
     [DebuggerDisplay("{ToString()}")]
     public sealed class Coordinate2D : BaseCoordinate, ICoordinate, ICloneable<ICoordinate>

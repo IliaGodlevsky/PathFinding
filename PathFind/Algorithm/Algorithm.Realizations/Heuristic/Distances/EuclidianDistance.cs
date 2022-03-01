@@ -5,11 +5,6 @@ using System.Collections.Generic;
 
 namespace Algorithm.Realizations.Heuristic.Distances
 {
-    /// <summary>
-    /// Calculates euclidian distance between two vertices.
-    /// This class can't be inherited
-    /// </summary>
-    /// <remarks><see cref="https://en.wikipedia.org/wiki/Euclidean_distance"/></remarks>
     public sealed class EuclidianDistance : Distance, IHeuristic
     {
         private const int Precision = 1;

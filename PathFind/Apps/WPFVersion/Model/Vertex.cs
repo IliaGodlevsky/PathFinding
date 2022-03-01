@@ -13,8 +13,9 @@ namespace WPFVersion.Model
     [DebuggerDisplay("{Position.ToString()}")]
     internal class Vertex : ContentControl, IVertex, IVisualizable, IWeightable, IEquatable<IVertex>
     {
-        public Vertex(INeighborhood neighborhood, ICoordinate coordinate) : base()
+        public Vertex(INeighborhood neighborhood, ICoordinate coordinate, IVisualization<Vertex> visualization) : base()
         {
+            this.visualization = visualization;
             Width = Height = VertexSize;
             Template = (ControlTemplate)TryFindResource("vertexTemplate");
             Position = coordinate;
@@ -22,8 +23,8 @@ namespace WPFVersion.Model
             neighbours = new Lazy<IReadOnlyCollection<IVertex>>(() => neighborhood.GetNeighbours(this));
         }
 
-        public Vertex(VertexSerializationInfo info)
-            : this(info.Neighbourhood, info.Position)
+        public Vertex(VertexSerializationInfo info, IVisualization<Vertex> visualization)
+            : this(info.Neighbourhood, info.Position, visualization)
         {
             this.Initialize(info);
         }
@@ -71,17 +72,17 @@ namespace WPFVersion.Model
         }
 
         public bool Equals(IVertex other) => other.IsEqual(this);
-        public bool IsVisualizedAsPath => ColorsHub.IsVisualizedAsPath(this);
-        public bool IsVisualizedAsEndPoint => ColorsHub.IsVisualizedAsEndPoints(this);
-        public void VisualizeAsTarget() => ColorsHub.VisualizeAsTarget(this);
-        public void VisualizeAsObstacle() => ColorsHub.VisualizeAsObstacle(this);
-        public void VisualizeAsPath() => ColorsHub.VisualizeAsPath(this);
-        public void VisualizeAsSource() => ColorsHub.VisualizeAsSource(this);
-        public void VisualizeAsRegular() => ColorsHub.VisualizeAsRegular(this);
-        public void VisualizeAsVisited() => ColorsHub.VisualizeAsVisited(this);
-        public void VisualizeAsEnqueued() => ColorsHub.VisualizeAsEnqueued(this);
-        public void VisualizeAsIntermediate() => ColorsHub.VisualizeAsIntermediate(this);
-        public void VisualizeAsMarkedToReplaceIntermediate() => ColorsHub.VisualizeAsMarkedToReplaceIntermediate(this);
+        public bool IsVisualizedAsPath => visualization.IsVisualizedAsPath(this);
+        public bool IsVisualizedAsEndPoint => visualization.IsVisualizedAsEndPoint(this);
+        public void VisualizeAsTarget() => visualization.VisualizeAsTarget(this);
+        public void VisualizeAsObstacle() => visualization.VisualizeAsObstacle(this);
+        public void VisualizeAsPath() => visualization.VisualizeAsPath(this);
+        public void VisualizeAsSource() => visualization.VisualizeAsSource(this);
+        public void VisualizeAsRegular() => visualization.VisualizeAsRegular(this);
+        public void VisualizeAsVisited() => visualization.VisualizeAsVisited(this);
+        public void VisualizeAsEnqueued() => visualization.VisualizeAsEnqueued(this);
+        public void VisualizeAsIntermediate() => visualization.VisualizeAsIntermediate(this);
+        public void VisualizeAsMarkedToReplaceIntermediate() => visualization.VisualizeAsMarkedToReplaceIntermediate(this);
 
         public void MakeUnweighted()
         {
@@ -95,7 +96,7 @@ namespace WPFVersion.Model
             Dispatcher.Invoke(() => Content = cost.ToString());
         }
 
-        private static readonly VerticesColorsHub ColorsHub = new VerticesColorsHub();
+        private readonly IVisualization<Vertex> visualization;
         private readonly Lazy<IReadOnlyCollection<IVertex>> neighbours;
     }
 }

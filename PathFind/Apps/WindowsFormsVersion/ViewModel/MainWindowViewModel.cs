@@ -78,9 +78,10 @@ namespace WindowsFormsVersion.ViewModel
             IVertexEventHolder eventHolder, GraphSerializationModule serializationModule, BaseEndPoints endPoints, ILog log)
             : base(fieldFactory, eventHolder, serializationModule, endPoints, log)
         {
-            Messenger.Default.Register<AlgorithmStatusMessage>(this, MessageTokens.MainModel, SetAlgorithmStatus);
-            Messenger.Default.Register<UpdateStatisticsMessage>(this, MessageTokens.MainModel, SetStatisticsMessage);
-            Messenger.Default.Register<GraphCreatedMessage>(this, MessageTokens.MainModel, SetGraph);
+            messenger = DI.Container.Resolve<IMessenger>();
+            messenger.Register<AlgorithmStatusMessage>(this, MessageTokens.MainModel, SetAlgorithmStatus);
+            messenger.Register<UpdateStatisticsMessage>(this, MessageTokens.MainModel, SetStatisticsMessage);
+            messenger.Register<GraphCreatedMessage>(this, MessageTokens.MainModel, SetGraph);
         }
 
         private void SetAlgorithmStatus(AlgorithmStatusMessage message)
@@ -180,7 +181,9 @@ namespace WindowsFormsVersion.ViewModel
 
         public void Dispose()
         {
-            Messenger.Default.Unregister(this);
+            messenger.Unregister(this);
         }
+
+        private readonly IMessenger messenger;
     }
 }

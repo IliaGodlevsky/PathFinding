@@ -1,4 +1,5 @@
-﻿using GraphLib.Base.EventHolder.Commands;
+﻿using Common.Extensions;
+using GraphLib.Base.EventHolder.Commands;
 using GraphLib.Extensions;
 using GraphLib.Interfaces;
 using GraphLib.Interfaces.Factories;
@@ -27,7 +28,7 @@ namespace GraphLib.Base.EventHolder
 
         public virtual void Reverse(object sender, EventArgs e)
         {
-            commands.Execute(sender as IVertex ?? NullVertex.Instance);
+            commands.Execute(sender.AsVertex());
         }
 
         public virtual void UnsubscribeVertices(IGraph graph)

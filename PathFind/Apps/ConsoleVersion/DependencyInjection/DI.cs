@@ -77,6 +77,7 @@ namespace ConsoleVersion.DependencyInjection
             builder.RegisterType<Graph2DFactory>().As<IGraphFactory>().SingleInstance();
             builder.RegisterType<MooreNeighborhoodFactory>().As<INeighborhoodFactory>().SingleInstance();
             builder.RegisterType<RootMeanSquareCost>().As<IMeanCost>().SingleInstance();
+            builder.RegisterType<VertexVisualization>().As<IVisualization<Vertex>>().SingleInstance();
 
             builder.RegisterType<GraphSerializationModule>().AsSelf().SingleInstance();
             builder.RegisterType<PathInput>().As<IPathInput>().SingleInstance();

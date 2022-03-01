@@ -8,10 +8,6 @@ using System.Reflection;
 
 namespace GraphLib.Base
 {
-    /// <summary>
-    /// A base graph for all graph classes.
-    /// This is an abstract class
-    /// </summary>
     public abstract class BaseGraph : IGraph
     {
         public int Size { get; }

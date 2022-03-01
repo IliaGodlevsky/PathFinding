@@ -1,4 +1,5 @@
 ﻿using Commands.Extensions;
+using Common.Extensions;
 using Common.Extensions.EnumerableExtensions;
 using GraphLib.Base.EndPoints.Commands.VerticesCommands;
 using GraphLib.Extensions;
@@ -61,12 +62,12 @@ namespace GraphLib.Base.EndPoints
 
         protected virtual void SetEndPoints(object sender, EventArgs e)
         {
-            setEndPointsCommands.Execute(sender as IVertex ?? NullVertex.Instance);
+            setEndPointsCommands.Execute(sender.AsVertex());
         }
 
         protected virtual void MarkIntermediateToReplace(object sender, EventArgs e)
         {
-            markedToReplaceCommands.Execute(sender as IVertex ?? NullVertex.Instance);
+            markedToReplaceCommands.Execute(sender.AsVertex());
         }
 
         protected abstract void SubscribeVertex(IVertex vertex);

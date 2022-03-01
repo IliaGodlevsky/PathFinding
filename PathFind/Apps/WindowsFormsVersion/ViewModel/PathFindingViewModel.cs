@@ -1,5 +1,6 @@
 ﻿using Algorithm.Factory;
 using Algorithm.Infrastructure.EventArguments;
+using Autofac;
 using Common.Extensions;
 using Common.Interface;
 using GalaSoft.MvvmLight.Messaging;
@@ -10,6 +11,7 @@ using Logging.Interface;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using WindowsFormsVersion.DependencyInjection;
 using WindowsFormsVersion.Enums;
 using WindowsFormsVersion.Messeges;
 
@@ -23,23 +25,24 @@ namespace WindowsFormsVersion.ViewModel
             : base(endPoints, algorithmFactories, log)
         {
             DelayTime = Constants.AlgorithmDelayTimeValueRange.LowerValueOfRange;
+            messenger = DI.Container.Resolve<IMessenger>();
         }
 
         protected override void OnAlgorithmFinished(object sender, ProcessEventArgs e)
         {
-            Messenger.Default.Send(AlgorithmStatusMessage.Finished, MessageTokens.MainModel);
+            messenger.Send(AlgorithmStatusMessage.Finished, MessageTokens.MainModel);
         }
 
         protected override void OnAlgorithmStarted(object sender, ProcessEventArgs e)
         {
-            Messenger.Default.Send(AlgorithmStatusMessage.Started, MessageTokens.MainModel);
+            messenger.Send(AlgorithmStatusMessage.Started, MessageTokens.MainModel);
         }
 
         protected override void SummarizePathfindingResults()
         {
             string statistics = path.Length > 0 ? Statistics : CouldntFindPath;
             var message = new UpdateStatisticsMessage(statistics);
-            Messenger.Default.Send(message, MessageTokens.MainModel);
+            messenger.Send(message, MessageTokens.MainModel);
         }
 
         protected override void OnVertexVisited(object sender, AlgorithmEventArgs e)
@@ -47,12 +50,12 @@ namespace WindowsFormsVersion.ViewModel
             Stopwatch.StartNew().Wait(DelayTime).Stop();
             base.OnVertexVisited(sender, e);
             var message = new UpdateStatisticsMessage(Statistics);
-            Messenger.Default.Send(message, MessageTokens.MainModel);
+            messenger.Send(message, MessageTokens.MainModel);
         }
 
         protected override void OnAlgorithmInterrupted(object sender, ProcessEventArgs e)
         {
-            Messenger.Default.Send(AlgorithmStatusMessage.Finished, MessageTokens.MainModel);
+            messenger.Send(AlgorithmStatusMessage.Finished, MessageTokens.MainModel);
         }
 
         public void StartPathfinding(object sender, EventArgs e)
@@ -94,5 +97,7 @@ namespace WindowsFormsVersion.ViewModel
 
         private readonly string Format = "Steps: {0}   Path cost: {1}   Visited: {2}";
         private readonly string CouldntFindPath = "Could't fing path";
+
+        private readonly IMessenger messenger;
     }
 }

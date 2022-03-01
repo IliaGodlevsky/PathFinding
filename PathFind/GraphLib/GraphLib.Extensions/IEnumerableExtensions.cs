@@ -39,14 +39,6 @@ namespace GraphLib.Extensions
             return queue.Count == 0 ? NullVertex.Instance : queue.Dequeue();
         }
 
-        /// <summary>
-        /// Returns the first vertex of the sequence using <paramref name="predicate"/> 
-        /// of returns <see cref="NullVertex"/> if the sequence is empty or 
-        /// no element passes the <paramref name="predicate"/>
-        /// </summary>
-        /// <param name="collection"></param>
-        /// <param name="predicate"></param>
-        /// <returns></returns>
         public static IVertex FirstOrNullVertex(this IEnumerable<IVertex> collection, Func<IVertex, bool> predicate)
         {
             return collection.FirstOrDefault(predicate) ?? NullVertex.Instance;
@@ -57,18 +49,6 @@ namespace GraphLib.Extensions
             return vertices.ToDictionary(vertex => vertex.Position);
         }
 
-        /// <summary>
-        /// Converts <paramref name="index"/> 
-        /// into an array of cartesian coordinates 
-        /// according to graph dimension sizes
-        /// </summary>
-        /// <param name="self"></param>
-        /// <param name="index"></param>
-        /// <returns>An array of cartesian coordinates</returns>
-        /// <exception cref="ArgumentOutOfRangeException">Thrown when 
-        /// index is greater of equals
-        /// <paramref name="dimensionSizes"/> 
-        /// elements multiplication </exception>
         public static int[] ToCoordinates(this int[] dimensionSizes, int index)
         {
             int size = dimensionSizes.GetMultiplication();

@@ -44,8 +44,10 @@ namespace WPFVersion3D.Model
             set => SetValue(BrushProperty, value);
         }
 
-        public Vertex3D(INeighborhood neighborhood, ICoordinate coordinate, IModel3DFactory modelFactory)
+        public Vertex3D(INeighborhood neighborhood, ICoordinate coordinate, 
+            IModel3DFactory modelFactory, IVisualization<Vertex3D> visualization)
         {
+            this.visualization = visualization;
             this.modelFactory = modelFactory;
             Position = coordinate;
             Material = new DiffuseMaterial();
@@ -55,8 +57,9 @@ namespace WPFVersion3D.Model
             neighbours = new Lazy<IReadOnlyCollection<IVertex>>(() => neighborhood.GetNeighbours(this));
         }
 
-        public Vertex3D(VertexSerializationInfo info, IModel3DFactory modelFactory) :
-            this(info.Neighbourhood, info.Position, modelFactory)
+        public Vertex3D(VertexSerializationInfo info, 
+            IModel3DFactory modelFactory, IVisualization<Vertex3D> visualization) :
+            this(info.Neighbourhood, info.Position, modelFactory, visualization)
         {
             this.Initialize(info);
         }
@@ -108,17 +111,17 @@ namespace WPFVersion3D.Model
         public ICoordinate Position { get; }
 
         public bool Equals(IVertex other) => other.IsEqual(this);
-        public bool IsVisualizedAsPath => ColorsHub.IsVisualizedAsPath(this);
-        public bool IsVisualizedAsEndPoint => ColorsHub.IsVisualizedAsEndPoints(this);
-        public void VisualizeAsTarget() => ColorsHub.VisualizeAsTarget(this);
-        public void VisualizeAsObstacle() => ColorsHub.VisualizeAsObstacle(this);
-        public void VisualizeAsPath() => ColorsHub.VisualizeAsPath(this);
-        public void VisualizeAsRegular() => ColorsHub.VisualizeAsRegular(this);
-        public void VisualizeAsVisited() => ColorsHub.VisualizeAsVisited(this);
-        public void VisualizeAsEnqueued() => ColorsHub.VisualizeAsEnqueued(this);
-        public void VisualizeAsSource() => ColorsHub.VisualizeAsSource(this);
-        public void VisualizeAsIntermediate() => ColorsHub.VisualizeAsIntermediate(this);
-        public void VisualizeAsMarkedToReplaceIntermediate() => ColorsHub.VisualizeAsMarkedToReplaceIntermediate(this);
+        public bool IsVisualizedAsPath => visualization.IsVisualizedAsPath(this);
+        public bool IsVisualizedAsEndPoint => visualization.IsVisualizedAsEndPoint(this);
+        public void VisualizeAsTarget() => visualization.VisualizeAsTarget(this);
+        public void VisualizeAsObstacle() => visualization.VisualizeAsObstacle(this);
+        public void VisualizeAsPath() => visualization.VisualizeAsPath(this);
+        public void VisualizeAsRegular() => visualization.VisualizeAsRegular(this);
+        public void VisualizeAsVisited() => visualization.VisualizeAsVisited(this);
+        public void VisualizeAsEnqueued() => visualization.VisualizeAsEnqueued(this);
+        public void VisualizeAsSource() => visualization.VisualizeAsSource(this);
+        public void VisualizeAsIntermediate() => visualization.VisualizeAsIntermediate(this);
+        public void VisualizeAsMarkedToReplaceIntermediate() => visualization.VisualizeAsMarkedToReplaceIntermediate(this);
 
         protected static void MaterialPropertyChanged(DependencyObject depObj,
             DependencyPropertyChangedEventArgs prop)
@@ -153,7 +156,7 @@ namespace WPFVersion3D.Model
         }
 
         private readonly IModel3DFactory modelFactory;
-        private static readonly VerticesColorsHub ColorsHub = new VerticesColorsHub();
+        private readonly IVisualization<Vertex3D> visualization;
         private readonly Lazy<IReadOnlyCollection<IVertex>> neighbours;
     }
 }

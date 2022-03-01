@@ -10,10 +10,6 @@ using System.Diagnostics;
 
 namespace Algorithm.Algos.Algos
 {
-    /// <summary>
-    /// A realization of the A* algorithm
-    /// </summary>
-    /// <remarks><see cref="https://en.wikipedia.org/wiki/A*_search_algorithm"/></remarks>
     [DebuggerDisplay("A* algorithm")]
     [Description("A * algorithm")]
     public class AStarAlgorithm : DijkstraAlgorithm

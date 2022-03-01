@@ -7,9 +7,6 @@ using System.Linq;
 
 namespace GraphLib.Base
 {
-    /// <summary>
-    /// Provides base functionality to coordinate classes
-    /// </summary>
     [Serializable]
     public abstract class BaseCoordinate : ICoordinate, ICloneable<ICoordinate>
     {
