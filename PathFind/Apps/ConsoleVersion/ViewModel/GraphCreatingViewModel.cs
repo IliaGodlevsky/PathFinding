@@ -19,13 +19,13 @@ using ValueRange.Extensions;
 
 namespace ConsoleVersion.ViewModel
 {
-    internal sealed class GraphCreatingViewModel : GraphCreatingModel, IViewModel, IRequireInt32Input, IDisposable
+    internal sealed class GraphCreatingViewModel : GraphCreatingModel, IViewModel, IRequireIntInput, IDisposable
     {
         public event Action WindowClosed;
 
         public string GraphAssembleInpuMessage { private get; set; }
 
-        public ConsoleValueInput<int> Int32Input { get; set; }
+        public ConsoleValueInput<int> IntInput { get; set; }
 
         public GraphCreatingViewModel(IEnumerable<IGraphAssemble> graphAssembles, ILog log)
             : base(log, graphAssembles)
@@ -59,7 +59,7 @@ namespace ConsoleVersion.ViewModel
         [MenuItem(MenuItemsNames.ChooseGraphAssemble, MenuItemPriority.High)]
         public void ChooseGraphAssemble()
         {
-            int graphAssembleIndex = Int32Input.InputValue(GraphAssembleInpuMessage, graphAssembleKeyRange) - 1;
+            int graphAssembleIndex = IntInput.InputValue(GraphAssembleInpuMessage, graphAssembleKeyRange) - 1;
             string selectedGraphAssembleKey = GraphAssembles.Keys.ElementAt(graphAssembleIndex);
             SelectedGraphAssemble = GraphAssembles[selectedGraphAssembleKey];
         }
@@ -67,14 +67,14 @@ namespace ConsoleVersion.ViewModel
         [MenuItem(MenuItemsNames.InputGraphParametres, MenuItemPriority.High)]
         public void InputGraphParametres()
         {
-            Width = Int32Input.InputValue(MessagesTexts.GraphWidthInputMsg, Constants.GraphWidthValueRange);
-            Length = Int32Input.InputValue(MessagesTexts.GraphHeightInputMsg, Constants.GraphLengthValueRange);
+            Width = IntInput.InputValue(MessagesTexts.GraphWidthInputMsg, Constants.GraphWidthValueRange);
+            Length = IntInput.InputValue(MessagesTexts.GraphHeightInputMsg, Constants.GraphLengthValueRange);
         }
 
         [MenuItem(MenuItemsNames.InputObstaclePercent, MenuItemPriority.Normal)]
         public void InputObstaclePercent()
         {
-            ObstaclePercent = Int32Input.InputValue(MessagesTexts.ObstaclePercentInputMsg, Constants.ObstaclesPercentValueRange);
+            ObstaclePercent = IntInput.InputValue(MessagesTexts.ObstaclePercentInputMsg, Constants.ObstaclesPercentValueRange);
         }
 
         [MenuItem(MenuItemsNames.Exit, MenuItemPriority.Lowest)]

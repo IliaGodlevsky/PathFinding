@@ -10,7 +10,7 @@ using static GraphLib.Base.BaseVertexCost;
 
 namespace ConsoleVersion.Model
 {
-    internal sealed class VertexEventHolder : BaseVertexEventHolder, IVertexEventHolder, IRequireInt32Input
+    internal sealed class VertexEventHolder : BaseVertexEventHolder, IVertexEventHolder, IRequireIntInput
     {
         public VertexEventHolder(IVertexCostFactory costFactory)
             : base(costFactory)
@@ -18,13 +18,13 @@ namespace ConsoleVersion.Model
 
         }
 
-        public ConsoleValueInput<int> Int32Input { get; set; }
+        public ConsoleValueInput<int> IntInput { get; set; }
 
         public override void ChangeVertexCost(object sender, EventArgs e)
         {
             if (sender is Vertex vertex && !vertex.IsObstacle)
             {
-                var cost = Int32Input.InputValue(MessagesTexts.VertexCostInputMsg, CostRange);
+                var cost = IntInput.InputValue(MessagesTexts.VertexCostInputMsg, CostRange);
                 vertex.Cost = costFactory.CreateCost(cost);
             }
         }

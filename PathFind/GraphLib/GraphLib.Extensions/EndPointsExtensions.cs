@@ -25,7 +25,7 @@ namespace GraphLib.Extensions
 
         public static bool CanBeEndPoint(this IEndPoints self, IVertex vertex)
         {
-            return !self.IsEndPoint(vertex) && !vertex.IsIsolated();
+            return !vertex.IsIsolated() && !self.IsEndPoint(vertex);
         }
 
         public static bool HasSourceAndTargetSet(this IEndPoints self)

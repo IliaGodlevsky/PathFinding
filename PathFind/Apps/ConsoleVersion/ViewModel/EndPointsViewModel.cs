@@ -6,7 +6,6 @@ using ConsoleVersion.Enums;
 using ConsoleVersion.Extensions;
 using ConsoleVersion.Interface;
 using ConsoleVersion.Messages;
-using ConsoleVersion.Model;
 using ConsoleVersion.ValueInput;
 using ConsoleVersion.Views;
 using GalaSoft.MvvmLight.Messaging;
@@ -17,25 +16,19 @@ using GraphLib.NullRealizations;
 using GraphLib.Realizations.Graphs;
 using Logging.Interface;
 using System;
-using System.Collections.Generic;
 using System.Linq;
 
 namespace ConsoleVersion.ViewModel
 {
-    internal class EndPointsViewModel : IViewModel, IRequireInt32Input, IDisposable
+    internal class EndPointsViewModel : IViewModel, IRequireIntInput, IDisposable
     {
-        public string[] EndPointsMessages { private get; set; }
-        public string[] ReplaceIntermediatesMessages { private get; set; }
+        public event Action WindowClosed;
 
+        private const int MenuOffset = 6;
         private int NumberOfAvailableIntermediate => graph.Size - graph.GetIsolatedCount() - 2;
         private bool HasAnyVerticesToChooseAsEndPoints => NumberOfAvailableIntermediate >= 0;
 
-        private const int MethodsCount = 6;
-        private const int Offset = MethodsCount;
-
-        public event Action WindowClosed;
-
-        public ConsoleValueInput<int> Int32Input { get; set; }
+        public ConsoleValueInput<int> IntInput { get; set; }
 
         public EndPointsViewModel(BaseEndPoints endPoints, ILog log)
         {
@@ -53,8 +46,8 @@ namespace ConsoleVersion.ViewModel
             {
                 if (!endPoints.HasSourceAndTargetSet())
                 {
-                    SetCursorPositionUnderMenu();
-                    ChooseEndPointVertices(EndPointsMessages);
+                    MainView.SetCursorPositionUnderMenu(MenuOffset);
+                    IntInput.InputEndPoints((Graph2D)graph, endPoints, MessagesTexts.EndPointsMessages);
                 }
             }
             else
@@ -69,10 +62,10 @@ namespace ConsoleVersion.ViewModel
             if (endPoints.HasSourceAndTargetSet())
             {
                 string message = MessagesTexts.NumberOfIntermediateVerticesInputMsg;
-                SetCursorPositionUnderMenu();
-                int numberOfIntermediates = Int32Input.InputValue(message, NumberOfAvailableIntermediate);
+                MainView.SetCursorPositionUnderMenu(MenuOffset);
+                int numberOfIntermediates = IntInput.InputValue(message, NumberOfAvailableIntermediate);
                 var messages = Enumerable.Repeat(MessagesTexts.IntermediateVertexChoiceMsg, numberOfIntermediates);
-                ChooseEndPointVertices(messages);
+                IntInput.InputEndPoints((Graph2D)graph, endPoints, messages);
             }
         }
 
@@ -97,41 +90,6 @@ namespace ConsoleVersion.ViewModel
         private void SetGraph(GraphCreatedMessage message)
         {
             graph = message.Graph;
-        }
-
-        private void SetCursorPositionUnderMenu()
-        {
-            var fieldPosition = MainView.PathfindingStatisticsPosition;
-            Console.SetCursorPosition(fieldPosition.X, fieldPosition.Y + Offset);
-        }
-
-        private void ChooseEndPointVertices(IEnumerable<string> messages)
-        {
-            ConsoleCursor.SaveCursorPosition();
-            foreach (var message in messages)
-            {
-                ConsoleCursor.RestoreCursorPosition();
-                var vertex = (Vertex)InputVertex(message);
-                ConsoleCursor.SaveCursorPosition();
-                vertex.OnEndPointChosen();
-            }
-        }
-
-        private IVertex InputVertex(string message)
-        {
-            if (graph is Graph2D graph2D)
-            {
-                Console.WriteLine(message);
-                IVertex vertex;
-                do
-                {
-                    vertex = Int32Input.InputVertex(graph2D);
-                } while (!endPoints.CanBeEndPoint(vertex));
-
-                return vertex;
-            }
-
-            return NullVertex.Instance;
         }
 
         private readonly BaseEndPoints endPoints;

@@ -75,6 +75,7 @@
     <Compile Include="EventArguments\ConsoleKeyPressedEventArgs.cs" />
     <Compile Include="EventHandlers\ConsoleKeyPressedEventHandler.cs" />
     <Compile Include="Extensions\ConsoleKeystrokesHookExtensions.cs" />
+    <Compile Include="Extensions\ConsoleValueInputExtensions.cs" />
     <Compile Include="Extensions\IEnumerableExtensions.cs" />
     <Compile Include="Extensions\IMessengerExtensions.cs" />
     <Compile Include="Extensions\PathFindingViewModelExtensions.cs" />
@@ -96,7 +97,7 @@
     <Compile Include="ValueInput\Int32ConsoleValueInput.cs" />
     <Compile Include="Interface\IValueInput.cs" />
     <Compile Include="Interface\IRequireAnswerInput.cs" />
-    <Compile Include="Interface\IRequireInt32Input.cs" />
+    <Compile Include="Interface\IRequireIntInput.cs" />
     <Compile Include="ViewModel\EndPointsViewModel.cs" />
     <Compile Include="Views\View.cs" />
     <Compile Include="Interface\IDisplayable.cs" />

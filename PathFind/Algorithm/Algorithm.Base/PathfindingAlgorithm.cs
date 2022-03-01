@@ -36,11 +36,14 @@ namespace Algorithm.Base
 
         public void Interrupt()
         {
-            pauseEvent.Set();
-            IsPaused = false;
-            IsInterruptRequested = true;
-            IsInProcess = false;
-            Interrupted?.Invoke(this, new ProcessEventArgs());
+            if (IsInProcess)
+            {
+                pauseEvent.Set();
+                IsPaused = false;
+                IsInterruptRequested = true;
+                IsInProcess = false;
+                Interrupted?.Invoke(this, new ProcessEventArgs());
+            }
         }
 
         public void Pause()

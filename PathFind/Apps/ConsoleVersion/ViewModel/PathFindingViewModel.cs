@@ -32,13 +32,13 @@ using ValueRange;
 namespace ConsoleVersion.ViewModel
 {
     internal sealed class PathFindingViewModel : PathFindingModel,
-        IViewModel, IRequireInt32Input, IRequireAnswerInput, IDisposable
+        IViewModel, IRequireIntInput, IRequireAnswerInput, IDisposable
     {
         public event Action WindowClosed;
 
         public string AlgorithmKeyInputMessage { private get; set; }
 
-        public ConsoleValueInput<int> Int32Input { get; set; }
+        public ConsoleValueInput<int> IntInput { get; set; }
         public ConsoleValueInput<Answer> AnswerInput { get; set; }
         public PathfindingAlgorithm CurrentAlgorithm => algorithm;
         private IReadOnlyCollection<IConsoleKeyCommand> KeyCommands { get; }
@@ -81,7 +81,7 @@ namespace ConsoleVersion.ViewModel
         [MenuItem(MenuItemsNames.ChooseAlgorithm, MenuItemPriority.High)]
         public void ChooseAlgorithm()
         {
-            int algorithmKeyIndex = Int32Input.InputValue(AlgorithmKeyInputMessage, algorithmKeysValueRange) - 1;
+            int algorithmKeyIndex = IntInput.InputValue(AlgorithmKeyInputMessage, algorithmKeysValueRange) - 1;
             Algorithm = Algorithms[algorithmKeyIndex].Item2;
         }
 
@@ -90,7 +90,7 @@ namespace ConsoleVersion.ViewModel
         {
             if (IsVisualizationRequired)
             {
-                DelayTime = Int32Input.InputValue(MessagesTexts.DelayTimeInputMsg, Constants.AlgorithmDelayTimeValueRange);
+                DelayTime = IntInput.InputValue(MessagesTexts.DelayTimeInputMsg, Constants.AlgorithmDelayTimeValueRange);
             }
         }
 

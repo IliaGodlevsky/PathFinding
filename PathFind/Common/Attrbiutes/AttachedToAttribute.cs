@@ -2,7 +2,7 @@
 
 namespace Common.Attrbiutes
 {
-    [AttributeUsage(AttributeTargets.Class)]
+    [AttributeUsage(AttributeTargets.Class, AllowMultiple = true)]
     public sealed class AttachedToAttribute : Attribute
     {
         private Type AttachedType { get; }

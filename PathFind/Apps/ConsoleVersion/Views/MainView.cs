@@ -34,6 +34,12 @@ namespace ConsoleVersion.Views
             return costWidth >= width ? costWidth + 2 : width + width - costWidth;
         }
 
+        public static void SetCursorPositionUnderMenu(int menuOffset)
+        {
+            var fieldPosition = MainView.PathfindingStatisticsPosition;
+            Console.SetCursorPosition(fieldPosition.X, fieldPosition.Y + menuOffset);
+        }
+
         static MainView()
         {
             int x = WidthOfOrdinateView;

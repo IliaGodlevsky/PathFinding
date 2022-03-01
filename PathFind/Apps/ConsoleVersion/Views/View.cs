@@ -8,7 +8,7 @@ using ValueRange;
 
 namespace ConsoleVersion.Views
 {
-    internal abstract class View : IView, IRequireInt32Input, IDisposable
+    internal abstract class View : IView, IRequireIntInput, IDisposable
     {
         public event Action NewMenuIteration;
 
@@ -19,7 +19,7 @@ namespace ConsoleVersion.Views
 
         private bool IsInterruptRequested { get; set; }
 
-        public ConsoleValueInput<int> Int32Input { get; set; }
+        public ConsoleValueInput<int> IntInput { get; set; }
 
         protected View(IViewModel model)
         {
@@ -35,7 +35,7 @@ namespace ConsoleVersion.Views
             {
                 NewMenuIteration?.Invoke();
                 menuList.Display();
-                int menuItemIndex = Int32Input.InputValue(MessagesTexts.MenuOptionChoiceMsg, menuValueRange) - 1;
+                int menuItemIndex = IntInput.InputValue(MessagesTexts.MenuOptionChoiceMsg, menuValueRange) - 1;
                 string menuItem = menu.MenuActionsNames[menuItemIndex];
                 menu.MenuActions[menuItem].Invoke();
             }

@@ -7,8 +7,7 @@ namespace ConsoleVersion.Views
     {
         public EndPointsView(EndPointsViewModel model) : base(model)
         {
-            model.EndPointsMessages = new[] { MessagesTexts.SourceVertexChoiceMsg, MessagesTexts.TargetVertexChoiceMsg };
-            model.ReplaceIntermediatesMessages = new[] { MessagesTexts.IntermediateToReplaceMsg, MessagesTexts.PlaceToPutIntermediateMsg };
+
         }
     }
 }

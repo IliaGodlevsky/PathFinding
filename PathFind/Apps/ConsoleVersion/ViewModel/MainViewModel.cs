@@ -28,11 +28,11 @@ using Console = Colorful.Console;
 namespace ConsoleVersion.ViewModel
 {
     internal sealed class MainViewModel : MainModel,
-        IMainModel, IViewModel, IRequireAnswerInput, IRequireInt32Input, IDisposable
+        IMainModel, IViewModel, IRequireAnswerInput, IRequireIntInput, IDisposable
     {
         public event Action WindowClosed;
 
-        public ConsoleValueInput<int> Int32Input { get; set; }
+        public ConsoleValueInput<int> IntInput { get; set; }
         public ConsoleValueInput<Answer> AnswerInput { get; set; }
 
         public MainViewModel(IGraphFieldFactory fieldFactory,
@@ -92,7 +92,7 @@ namespace ConsoleVersion.ViewModel
         [MenuItem(MenuItemsNames.ChangeCostRange, MenuItemPriority.Low)]
         public void ChangeVertexCostValueRange()
         {
-            CostRange = Int32Input.InputRange(Constants.VerticesCostRange);
+            CostRange = IntInput.InputRange(Constants.VerticesCostRange);
             var message = new CostRangeChangedMessage(CostRange);
             messenger.Forward(message, MessageTokens.MainView);
         }
@@ -178,7 +178,7 @@ namespace ConsoleVersion.ViewModel
         {
             if (Graph.HasVertices() && Graph is Graph2D graph2D)
             {
-                var vertex = Int32Input.InputVertex(graph2D);
+                var vertex = IntInput.InputVertex(graph2D);
                 function(vertex as Vertex);
             }
         }
