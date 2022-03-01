@@ -1,5 +1,6 @@
 ﻿using Random.Interface;
 using ValueRange;
+using ValueRange.Extensions;
 
 namespace Random.Extensions
 {
@@ -13,6 +14,11 @@ namespace Random.Extensions
         public static int Next(this IRandom random)
         {
             return random.Next(default, int.MaxValue);
+        }
+
+        public static double NextDouble(this IRandom random, InclusiveValueRange<double> range)
+        {
+            return range.Amplitude() * ((double)random.Next() / int.MaxValue) + range.LowerValueOfRange;
         }
     }
 }

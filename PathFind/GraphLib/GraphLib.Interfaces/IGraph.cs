@@ -11,5 +11,7 @@ namespace GraphLib.Interfaces
         int[] DimensionsSizes { get; }
 
         IVertex this[ICoordinate coordinate] { get; }
+
+        string ToString();
     }
 }

@@ -83,6 +83,7 @@
     <Compile Include="Extensions\EnumValuesExtensions.cs" />
     <Compile Include="Extensions\IMessengerExtensions.cs" />
     <Compile Include="Extensions\TypeExtensions.cs" />
+    <Compile Include="Interface\IAnimatedAxisRotatorFactory.cs" />
     <Compile Include="Messages\AlgorithmStartedMessage.cs" />
     <Compile Include="Messages\AlgorithmIndexMessage.cs" />
     <Compile Include="Messages\IsAllAlgorithmsFinishedMessage.cs" />
@@ -116,6 +117,8 @@
     <Compile Include="Model\Vertex3DFactory.cs" />
     <Compile Include="Model\Vertex3DFromInfoFactory.cs" />
     <Compile Include="Model\VertexVisualization.cs" />
+    <Compile Include="RotatorsFactories\BackwardAnimatedAxisRotatorFactory.cs" />
+    <Compile Include="RotatorsFactories\ForwardAnimatedAxisRotatorFactory.cs" />
     <Compile Include="ValidationRules\NonDoubleInputValidationRule.cs" />
     <Compile Include="ValidationRules\NonInt32InputValidationRule.cs" />
     <Compile Include="ValidationRules\RangedDoubleValidationRule.cs" />
@@ -236,6 +239,10 @@
       <Project>{600d74af-a0ae-46aa-bcf5-695650bbe66f}</Project>
       <Name>Algorithm.Realizations</Name>
     </ProjectReference>
+    <ProjectReference Include="..\..\Commands\Commands.csproj">
+      <Project>{A68B0EB4-3F07-4711-B314-FC1C709A5E2F}</Project>
+      <Name>Commands</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\Common\Common.csproj">
       <Project>{A5A743F5-D346-4B2B-B6AC-07152F64E4D9}</Project>
       <Name>Common</Name>
@@ -296,6 +303,10 @@
       <Project>{03eb6575-5b74-418f-9231-1b67598c68e8}</Project>
       <Name>Random</Name>
     </ProjectReference>
+    <ProjectReference Include="..\..\SingletonLib\SingletonLib.csproj">
+      <Project>{1F8DE924-837C-4CD6-B902-110E1C565F89}</Project>
+      <Name>SingletonLib</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\ValueRange\ValueRange.csproj">
       <Project>{EB70607D-CDF4-4D91-BBFE-55F85ACC0A1B}</Project>
       <Name>ValueRange</Name>
@@ -327,5 +338,6 @@
   <ItemGroup>
     <Resource Include="Resources\Images\rotate.png" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

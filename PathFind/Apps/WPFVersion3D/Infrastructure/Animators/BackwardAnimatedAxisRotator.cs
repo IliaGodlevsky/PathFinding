@@ -9,7 +9,7 @@ using static WPFVersion3D.Constants;
 
 namespace WPFVersion3D.Infrastructure.Animators
 {
-    internal sealed class BackwardAnimatedAxisRotator : AnimatedAxisRotator, IAnimatedAxisRotator
+    internal sealed class BackwardAnimatedAxisRotator : AnimatedAxisRotator
     {
         public BackwardAnimatedAxisRotator(AxisAngleRotation3D axis, IAnimationSpeed speed)
             : base(axis, speed)

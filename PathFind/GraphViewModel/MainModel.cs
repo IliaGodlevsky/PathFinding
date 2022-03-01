@@ -34,10 +34,9 @@ namespace GraphViewModel
 
         public virtual async void SaveGraph()
         {
-            var task = serializationModule.SaveGraphAsync(Graph);
             try
             {
-                await task;
+                await serializationModule.SaveGraphAsync(Graph);
             }
             catch (Exception ex)
             {

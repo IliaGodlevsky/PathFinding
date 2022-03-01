@@ -7,9 +7,7 @@ using System.Windows.Data;
 using System.Windows.Media.Media3D;
 using WPFVersion3D.Infrastructure.Animators;
 using WPFVersion3D.Interface;
-
-using AnimatorFatory = System.Func<System.Windows.Media.Media3D.AxisAngleRotation3D,
-    WPFVersion3D.Interface.IAnimationSpeed, WPFVersion3D.Interface.IAnimatedAxisRotator>;
+using WPFVersion3D.RotatorsFactories;
 
 namespace WPFVersion3D.Converters
 {
@@ -17,10 +15,10 @@ namespace WPFVersion3D.Converters
     {
         public AnimatedAxisRotatorMultiConverter()
         {
-            animatorFactories = new Dictionary<bool?, AnimatorFatory>()
+            animatorFactories = new Dictionary<bool?, IAnimatedAxisRotatorFactory>()
             {
-                { true,  CreateForwardAxisRotator },
-                { false, CreateBackwardAxisRotator }
+                { true,  new ForwardAnimatedAxisRotatorFactory() },
+                { false, new BackwardAnimatedAxisRotatorFactory() }
             };
         }
 
@@ -30,9 +28,9 @@ namespace WPFVersion3D.Converters
             var axisAngleRotation = parameter as AxisAngleRotation3D;
             bool? type = values?.OfType<bool?>().FirstOrDefault();
 
-            return IsValidParametres(animationSpeed, type, axisAngleRotation)
-                ? animatorFactories[type](axisAngleRotation, animationSpeed)
-                : new NullAnimatedAxisRotator();
+            return AreValidParametres(animationSpeed, type, axisAngleRotation)
+                ? animatorFactories[type].CreateRotator(axisAngleRotation, animationSpeed)
+                : NullAnimatedAxisRotator.Instance;
         }
 
         public object[] ConvertBack(object value, Type[] targetTypes, object parameter, CultureInfo culture)
@@ -40,21 +38,11 @@ namespace WPFVersion3D.Converters
             return new object[] { Binding.DoNothing, Binding.DoNothing };
         }
 
-        private bool IsValidParametres(params object[] values)
+        private bool AreValidParametres(params object[] values)
         {
             return !values.ContainsNulls();
         }
 
-        private IAnimatedAxisRotator CreateForwardAxisRotator(AxisAngleRotation3D axis, IAnimationSpeed speed)
-        {
-            return new ForwardAnimatedAxisRotator(axis, speed);
-        }
-
-        private IAnimatedAxisRotator CreateBackwardAxisRotator(AxisAngleRotation3D axis, IAnimationSpeed speed)
-        {
-            return new BackwardAnimatedAxisRotator(axis, speed);
-        }
-
-        private readonly Dictionary<bool?, AnimatorFatory> animatorFactories;
+        private readonly Dictionary<bool?, IAnimatedAxisRotatorFactory> animatorFactories;
     }
 }
