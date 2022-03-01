@@ -42,17 +42,23 @@ namespace ConsoleVersion.ViewModel
         [MenuItem(MenuItemsNames.ChooseEndPoints, MenuItemPriority.Highest)]
         public void ChooseEndPoints()
         {
-            if (HasAnyVerticesToChooseAsEndPoints)
+            if (HasAnyVerticesToChooseAsEndPoints && !endPoints.HasSourceAndTargetSet())
             {
-                if (!endPoints.HasSourceAndTargetSet())
-                {
-                    MainView.SetCursorPositionUnderMenu(MenuOffset);
-                    IntInput.InputEndPoints((Graph2D)graph, endPoints, MessagesTexts.EndPointsMessages);
-                }
+                MainView.SetCursorPositionUnderMenu(MenuOffset);
+                IntInput.InputEndPoints((Graph2D)graph, endPoints, MessagesTexts.EndPointsMessages);
             }
             else
             {
                 log.Warn(MessagesTexts.NoVerticesAsEndPointsMsg);
+            }
+        }
+
+        [MenuItem(MenuItemsNames.ReplaceIntermediate, MenuItemPriority.Low)]
+        public void ReplaceIntermediates()
+        {
+            if (endPoints.GetIntermediates().Count() > 0)
+            {
+                IntInput.ChangeIntermediates((Graph2D)graph, endPoints);
             }
         }
 
@@ -61,11 +67,7 @@ namespace ConsoleVersion.ViewModel
         {
             if (endPoints.HasSourceAndTargetSet())
             {
-                string message = MessagesTexts.NumberOfIntermediateVerticesInputMsg;
-                MainView.SetCursorPositionUnderMenu(MenuOffset);
-                int numberOfIntermediates = IntInput.InputValue(message, NumberOfAvailableIntermediate);
-                var messages = Enumerable.Repeat(MessagesTexts.IntermediateVertexChoiceMsg, numberOfIntermediates);
-                IntInput.InputEndPoints((Graph2D)graph, endPoints, messages);
+                IntInput.ChooseIntermediates((Graph2D)graph, endPoints, NumberOfAvailableIntermediate, MenuOffset);
             }
         }
 

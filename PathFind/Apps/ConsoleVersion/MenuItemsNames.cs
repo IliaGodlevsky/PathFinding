@@ -2,6 +2,7 @@
 {
     internal static class MenuItemsNames
     {
+        public const string ReplaceIntermediate = "Replace intermediates";
         public const string MakeUnwieghted = "Make unweighted";
         public const string MakeWeighted = "Make weighted";
         public const string CreateNewGraph = "Create new graph";
