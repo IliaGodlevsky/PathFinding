@@ -1,6 +1,5 @@
 ﻿using ConsoleVersion.Model;
 using ConsoleVersion.ValueInput;
-using ConsoleVersion.Views;
 using GraphLib.Extensions;
 using GraphLib.Interfaces;
 using GraphLib.Realizations.Graphs;
@@ -12,54 +11,84 @@ namespace ConsoleVersion.Extensions
 {
     internal static class ConsoleValueInputExtensions
     {
-        public static Vertex InputVertex(this ConsoleValueInput<int> self,
-            Graph2D graph, IEndPoints endPoints, string message)
+        public static void ChooseEndPoints(this ConsoleValueInput<int> self, Graph2D graph, 
+            IEndPoints endPoints, IEnumerable<string> messages)
+        {
+            endPoints.ChooseEndPoints(graph, messages, self.InputEndPoint, OnEndPointChosen);
+        }
+
+        public static void ChooseIntermediates(this ConsoleValueInput<int> self, Graph2D graph, IEndPoints endPoints,
+            int numberOfAvailableIntermediate)
+        {
+            int numberOfIntermediates = self.InputValue(MessagesTexts.NumberOfIntermediateVerticesInputMsg, 
+                numberOfAvailableIntermediate);
+            var messages = Enumerable.Repeat(MessagesTexts.IntermediateVertexChoiceMsg, numberOfIntermediates);
+            self.ChooseEndPoints(graph, endPoints, messages);
+        }
+
+        public static void ChangeIntermediates(this ConsoleValueInput<int> self, Graph2D graph,
+            IEndPoints endPoints, int numberOfIntermediates)
+        {
+            int numberToReplace = self.InputValue(MessagesTexts.NumberOfIntermediateVerticesInputMsg, numberOfIntermediates);
+            var messages = Enumerable.Repeat(MessagesTexts.IntermediateToReplaceMsg, numberToReplace);
+            self.ChooseExistingIntermediates(graph, endPoints, messages);
+            messages = Enumerable.Repeat(MessagesTexts.PlaceToPutIntermediateMsg, numberToReplace);
+            self.ChooseEndPoints(graph, endPoints, messages);
+        }
+
+        public static void ChangeSource(this ConsoleValueInput<int> self, Graph2D graph, IEndPoints endPoints)
+        {
+            var source = (Vertex)endPoints.Source;
+            self.ChangeSourceOrTarget(graph, endPoints, source, MessagesTexts.SourceVertexChoiceMsg);
+        }
+
+        public static void ChangeTarget(this ConsoleValueInput<int> self, Graph2D graph, IEndPoints endPoints)
+        {
+            var target = (Vertex)endPoints.Target;
+            self.ChangeSourceOrTarget(graph, endPoints, target, MessagesTexts.TargetVertexChoiceMsg);
+        }
+
+        private static void ChooseExistingIntermediates(this ConsoleValueInput<int> self, 
+            Graph2D graph, IEndPoints endPoints, IEnumerable<string> messages)
+        {
+            endPoints.ChooseEndPoints(graph, messages, self.ChooseExistingIntermediate, MarkToReplace);
+        }
+
+        private static Vertex InputVertex(this ConsoleValueInput<int> self, 
+            Graph2D graph, Predicate<IVertex> predicate, string message)
         {
             Console.WriteLine(message);
             Vertex vertex;
             do
             {
                 vertex = (Vertex)self.InputVertex(graph);
-            } 
-            while (!endPoints.CanBeEndPoint(vertex));
+            }
+            while (!predicate(vertex));
 
             return vertex;
         }
 
-        public static void InputEndPoints(this ConsoleValueInput<int> self, Graph2D graph,
-            IEndPoints endPoints, IEnumerable<string> messages)
+        private static void ChangeSourceOrTarget(this ConsoleValueInput<int> self,
+            Graph2D graph, IEndPoints endPoints, Vertex vertex, string message)
         {
-            ConsoleCursor.SaveCursorPosition();
-            foreach (var message in messages)
-            {
-                ConsoleCursor.RestoreCursorPosition();
-                var vertex = self.InputVertex(graph, endPoints, message);
-                ConsoleCursor.SaveCursorPosition();
-                vertex.OnEndPointChosen();
-            }
+            vertex.OnEndPointChosen();
+            vertex = self.InputEndPoint(graph, endPoints, message);
+            vertex.OnEndPointChosen();
         }
 
-        public static void ChangeIntermediates(this ConsoleValueInput<int> self, Graph2D graph,
-            IEndPoints endPoints)
+        private static Vertex InputEndPoint(this ConsoleValueInput<int> self, Graph2D graph, IEndPoints endPoints, string message)
         {
-            Console.WriteLine(MessagesTexts.IntermediateToReplaceMsg);
-            var toReplace = (Vertex)self.InputVertex((Graph2D)graph);
-            ConsoleCursor.SaveCursorPosition();
-            toReplace.OnMarkedToReplaceIntermediate();
-            ConsoleCursor.RestoreCursorPosition();
-            Console.WriteLine(MessagesTexts.PlaceToPutIntermediateMsg);
-            var newIntermediate = (Vertex)self.InputVertex((Graph2D)graph);
-            newIntermediate.OnEndPointChosen();
+            return self.InputVertex(graph, endPoints.CanBeEndPoint, message);
         }
 
-        public static void ChooseIntermediates(this ConsoleValueInput<int> self, Graph2D graph,
-            IEndPoints endPoints, int numberOfAvailableIntermediate,  int offset)
+        private static Vertex ChooseExistingIntermediate(this ConsoleValueInput<int> self, 
+            Graph2D graph, IEndPoints endPoints, string message)
         {
-            MainView.SetCursorPositionUnderMenu(offset);
-            int numberOfIntermediates = self.InputValue(MessagesTexts.NumberOfIntermediateVerticesInputMsg, 
-                numberOfAvailableIntermediate);
-            var messages = Enumerable.Repeat(MessagesTexts.IntermediateVertexChoiceMsg, numberOfIntermediates);
-            self.InputEndPoints((Graph2D)graph, endPoints, messages);
+            var intermediates = endPoints.GetIntermediates().ToList();
+            return self.InputVertex(graph, intermediates.Contains, message);
         }
+
+        private static void MarkToReplace(Vertex vertex) => vertex.OnMarkedToReplaceIntermediate();
+        private static void OnEndPointChosen(Vertex vertex) => vertex.OnEndPointChosen();
     }
 }

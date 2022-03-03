@@ -7,7 +7,7 @@ using ValueRange.Extensions;
 
 namespace ConsoleVersion.ValueInput
 {
-    internal sealed class EnumConsoleValueInput<TEnum> : ConsoleValueInput<TEnum>, IValueInput<TEnum>
+    internal sealed class EnumConsoleValueInput<TEnum> : ConsoleValueInput<TEnum>
         where TEnum : struct, Enum
     {
         public EnumConsoleValueInput()

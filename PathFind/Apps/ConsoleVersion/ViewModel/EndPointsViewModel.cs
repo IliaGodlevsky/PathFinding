@@ -11,8 +11,6 @@ using ConsoleVersion.Views;
 using GalaSoft.MvvmLight.Messaging;
 using GraphLib.Base.EndPoints;
 using GraphLib.Extensions;
-using GraphLib.Interfaces;
-using GraphLib.NullRealizations;
 using GraphLib.Realizations.Graphs;
 using Logging.Interface;
 using System;
@@ -24,7 +22,7 @@ namespace ConsoleVersion.ViewModel
     {
         public event Action WindowClosed;
 
-        private const int MenuOffset = 6;
+        private const int MenuOffset = 8;
         private int NumberOfAvailableIntermediate => graph.Size - graph.GetIsolatedCount() - 2;
         private bool HasAnyVerticesToChooseAsEndPoints => NumberOfAvailableIntermediate >= 0;
 
@@ -32,7 +30,6 @@ namespace ConsoleVersion.ViewModel
 
         public EndPointsViewModel(BaseEndPoints endPoints, ILog log)
         {
-            graph = NullGraph.Instance;
             this.endPoints = endPoints;
             this.log = log;
             messenger = DI.Container.Resolve<IMessenger>();
@@ -45,7 +42,7 @@ namespace ConsoleVersion.ViewModel
             if (HasAnyVerticesToChooseAsEndPoints && !endPoints.HasSourceAndTargetSet())
             {
                 MainView.SetCursorPositionUnderMenu(MenuOffset);
-                IntInput.InputEndPoints((Graph2D)graph, endPoints, MessagesTexts.EndPointsMessages);
+                IntInput.ChooseEndPoints(graph, endPoints, MessagesTexts.EndPointsMessages);
             }
             else
             {
@@ -53,12 +50,33 @@ namespace ConsoleVersion.ViewModel
             }
         }
 
-        [MenuItem(MenuItemsNames.ReplaceIntermediate, MenuItemPriority.Low)]
-        public void ReplaceIntermediates()
+        [MenuItem(MenuItemsNames.ReplaceSource, MenuItemPriority.Low)]
+        public void ChangeSourceVertex()
         {
-            if (endPoints.GetIntermediates().Count() > 0)
+            if (endPoints.HasSourceAndTargetSet())
             {
-                IntInput.ChangeIntermediates((Graph2D)graph, endPoints);
+                MainView.SetCursorPositionUnderMenu(MenuOffset);
+                IntInput.ChangeSource(graph, endPoints);
+            }
+        }
+
+        [MenuItem(MenuItemsNames.ReplaceTarget, MenuItemPriority.Low)]
+        public void ChangeTargetVertex()
+        {
+            if (endPoints.HasSourceAndTargetSet())
+            {
+                MainView.SetCursorPositionUnderMenu(MenuOffset);
+                IntInput.ChangeTarget(graph, endPoints);
+            }
+        }
+
+        [MenuItem(MenuItemsNames.ReplaceIntermediate, MenuItemPriority.Low)]
+        public void ChangeIntermediates()
+        {
+            int numberOfIntermediates = endPoints.GetIntermediates().Count();
+            if (numberOfIntermediates > 0)
+            {
+                IntInput.ChangeIntermediates(graph, endPoints, numberOfIntermediates);
             }
         }
 
@@ -67,7 +85,8 @@ namespace ConsoleVersion.ViewModel
         {
             if (endPoints.HasSourceAndTargetSet())
             {
-                IntInput.ChooseIntermediates((Graph2D)graph, endPoints, NumberOfAvailableIntermediate, MenuOffset);
+                MainView.SetCursorPositionUnderMenu(MenuOffset);
+                IntInput.ChooseIntermediates(graph, endPoints, NumberOfAvailableIntermediate);
             }
         }
 
@@ -91,12 +110,12 @@ namespace ConsoleVersion.ViewModel
 
         private void SetGraph(GraphCreatedMessage message)
         {
-            graph = message.Graph;
+            graph = (Graph2D)message.Graph;
         }
 
         private readonly BaseEndPoints endPoints;
         private readonly ILog log;
-        private IGraph graph;
+        private Graph2D graph;
         private readonly IMessenger messenger;
     }
 }

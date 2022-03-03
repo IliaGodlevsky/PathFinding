@@ -95,8 +95,10 @@ namespace ConsoleVersion.Model
             lock (locker)
             {
                 var consoleCoordinate = GetConsoleCoordinates();
-                Console.SetCursorPosition(consoleCoordinate.X, consoleCoordinate.Y);
-                Console.Write(text, Color);
+                using (ConsoleCursor.UseCursorPosition(consoleCoordinate.X, consoleCoordinate.Y))
+                {
+                    Console.Write(text, Color);
+                }
             }
         }
 

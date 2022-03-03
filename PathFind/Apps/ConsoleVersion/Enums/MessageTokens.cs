@@ -3,9 +3,6 @@ using System;
 
 namespace ConsoleVersion.Enums
 {
-    /// <summary>
-    /// Tokens to channel messages
-    /// </summary>
     [Flags]
     [EnumValuesIgnore(None, Everyone)]
     internal enum MessageTokens

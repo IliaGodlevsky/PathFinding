@@ -3,6 +3,8 @@
     internal static class MenuItemsNames
     {
         public const string ReplaceIntermediate = "Replace intermediates";
+        public const string ReplaceSource = "Replace source vertex";
+        public const string ReplaceTarget = "Replace target vertex";
         public const string MakeUnwieghted = "Make unweighted";
         public const string MakeWeighted = "Make weighted";
         public const string CreateNewGraph = "Create new graph";
@@ -23,6 +25,6 @@
         public const string InputObstaclePercent = "Input obstacle percent";
         public const string InputGraphParametres = "Input graph parametres";
         public const string ChooseIntermediates = "Choose intermediates";
-        public const string ClearEndPoints = "Clear end point";
+        public const string ClearEndPoints = "Clear end points";
     }
 }

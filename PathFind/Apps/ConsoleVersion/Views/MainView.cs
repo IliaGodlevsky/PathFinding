@@ -83,10 +83,10 @@ namespace ConsoleVersion.Views
                 var coordinate = MainView.PathfindingStatisticsPosition;
                 if (coordinate != null)
                 {
-                    Console.SetCursorPosition(coordinate.X, coordinate.Y);
-                    Console.Write(new string(' ', Console.BufferWidth));
-                    Console.SetCursorPosition(coordinate.X, coordinate.Y);
-                    Console.Write(message.Statistics);
+                    using (ConsoleCursor.UseCursorPosition(coordinate.X, coordinate.Y))
+                    {
+                        Console.Write(message.Statistics.PadRight(Console.BufferWidth));
+                    }
                 }
             }
         }

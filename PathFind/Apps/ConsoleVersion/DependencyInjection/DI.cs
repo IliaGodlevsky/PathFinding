@@ -48,7 +48,7 @@ namespace ConsoleVersion.DependencyInjection
             var builder = new ContainerBuilder();
 
             builder.RegisterType<EnumConsoleValueInput<Answer>>().As<ConsoleValueInput<Answer>>().SingleInstance();
-            builder.RegisterType<Int32ConsoleValueInput>().As<ConsoleValueInput<int>>().SingleInstance();
+            builder.RegisterType<IntConsoleValueInput>().As<ConsoleValueInput<int>>().SingleInstance();
 
             builder.RegisterType<MainViewModel>().AsSelf().SingleInstance().PropertiesAutowired();
             builder.RegisterType<EndPointsViewModel>().AsSelf().PropertiesAutowired()

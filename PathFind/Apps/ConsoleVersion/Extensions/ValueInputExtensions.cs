@@ -9,14 +9,11 @@ namespace ConsoleVersion.Extensions
 {
     internal static class ValueInputExtensions
     {
-        public static TValue InputValue<TValue>(this IValueInput<TValue> self,
-            string accompanyingMessage,
+        public static TValue InputValue<TValue>(this IValueInput<TValue> self, string accompanyingMessage, 
             InclusiveValueRange<TValue> rangeOfValidInput)
             where TValue : struct, IComparable
         {
-            return self.InputValue(accompanyingMessage,
-                rangeOfValidInput.UpperValueOfRange,
-                rangeOfValidInput.LowerValueOfRange);
+            return self.InputValue(accompanyingMessage, rangeOfValidInput.UpperValueOfRange, rangeOfValidInput.LowerValueOfRange);
         }
 
         public static ICoordinate InputPoint(this IValueInput<int> self,

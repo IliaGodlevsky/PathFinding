@@ -21,8 +21,7 @@ namespace ConsoleVersion.ValueInput
             return Parse(userInput);
         }
 
-        protected abstract bool IsValidInput(string input,
-            InclusiveValueRange<TValue> valueRange);
+        protected abstract bool IsValidInput(string input, InclusiveValueRange<TValue> valueRange);
 
         protected abstract TValue Parse(string input);
     }
