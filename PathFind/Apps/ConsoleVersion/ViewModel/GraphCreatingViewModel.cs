@@ -6,7 +6,6 @@ using ConsoleVersion.Enums;
 using ConsoleVersion.Extensions;
 using ConsoleVersion.Interface;
 using ConsoleVersion.Messages;
-using ConsoleVersion.ValueInput;
 using GalaSoft.MvvmLight.Messaging;
 using GraphLib.Interfaces.Factories;
 using GraphLib.ViewModel;
@@ -25,7 +24,7 @@ namespace ConsoleVersion.ViewModel
 
         public string GraphAssembleInpuMessage { private get; set; }
 
-        public ConsoleValueInput<int> IntInput { get; set; }
+        public IValueInput<int> IntInput { get; set; }
 
         public GraphCreatingViewModel(IEnumerable<IGraphAssemble> graphAssembles, ILog log)
             : base(log, graphAssembles)

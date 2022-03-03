@@ -1,6 +1,5 @@
 ﻿using ConsoleVersion.Extensions;
 using ConsoleVersion.Interface;
-using ConsoleVersion.ValueInput;
 using GraphLib.Base.EventHolder;
 using GraphLib.Interfaces;
 using GraphLib.Interfaces.Factories;
@@ -18,7 +17,7 @@ namespace ConsoleVersion.Model
 
         }
 
-        public ConsoleValueInput<int> IntInput { get; set; }
+        public IValueInput<int> IntInput { get; set; }
 
         public override void ChangeVertexCost(object sender, EventArgs e)
         {

@@ -1,5 +1,4 @@
-﻿using ConsoleVersion.Interface;
-using EnumerationValues.Realizations;
+﻿using EnumerationValues.Realizations;
 using System;
 using System.Linq;
 using ValueRange;

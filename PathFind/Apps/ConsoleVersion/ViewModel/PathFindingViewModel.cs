@@ -13,7 +13,6 @@ using ConsoleVersion.Extensions;
 using ConsoleVersion.Interface;
 using ConsoleVersion.Messages;
 using ConsoleVersion.Model;
-using ConsoleVersion.ValueInput;
 using ConsoleVersion.Views;
 using GalaSoft.MvvmLight.Messaging;
 using GraphLib.Base.EndPoints;
@@ -38,8 +37,8 @@ namespace ConsoleVersion.ViewModel
 
         public string AlgorithmKeyInputMessage { private get; set; }
 
-        public ConsoleValueInput<int> IntInput { get; set; }
-        public ConsoleValueInput<Answer> AnswerInput { get; set; }
+        public IValueInput<int> IntInput { get; set; }
+        public IValueInput<Answer> AnswerInput { get; set; }
         public PathfindingAlgorithm CurrentAlgorithm => algorithm;
         private IReadOnlyCollection<IConsoleKeyCommand> KeyCommands { get; }
         private string CurrentAlgorithmName { get; set; }

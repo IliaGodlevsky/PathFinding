@@ -19,7 +19,7 @@ namespace ConsoleVersion.Views
 
         private bool IsInterruptRequested { get; set; }
 
-        public ConsoleValueInput<int> IntInput { get; set; }
+        public IValueInput<int> IntInput { get; set; }
 
         protected View(IViewModel model)
         {

@@ -28,16 +28,6 @@ namespace GraphLib.Extensions
             return endPoints.GetIntermediates().Any(v => v.IsEqual(vertex));
         }
 
-        public static bool IsSource(this IEndPoints endPoints, IVertex vertex)
-        {
-            return endPoints.Source.IsEqual(vertex);
-        }
-
-        public static bool IsTarget(this IEndPoints endPoints, IVertex vertex)
-        {
-            return endPoints.Target.IsEqual(vertex);
-        }
-
         public static bool CanBeEndPoint(this IEndPoints self, IVertex vertex)
         {
             return !vertex.IsIsolated() && !self.IsEndPoint(vertex);

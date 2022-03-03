@@ -76,7 +76,6 @@
     <Compile Include="EventHandlers\ConsoleKeyPressedEventHandler.cs" />
     <Compile Include="Extensions\BaseEndPointsExtensions.cs" />
     <Compile Include="Extensions\ConsoleKeystrokesHookExtensions.cs" />
-    <Compile Include="Extensions\ConsoleValueInputExtensions.cs" />
     <Compile Include="Extensions\IEnumerableExtensions.cs" />
     <Compile Include="Extensions\IMessengerExtensions.cs" />
     <Compile Include="Extensions\PathFindingViewModelExtensions.cs" />
