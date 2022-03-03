@@ -42,7 +42,8 @@ namespace ConsoleVersion.ViewModel
             if (HasAnyVerticesToChooseAsEndPoints && !endPoints.HasSourceAndTargetSet())
             {
                 MainView.SetCursorPositionUnderMenu(MenuOffset);
-                IntInput.ChooseEndPoints(graph, endPoints, MessagesTexts.EndPointsMessages);
+                Console.WriteLine(MessagesTexts.SourceAndTargetInputMsg);
+                IntInput.InputSourceAndTarget(graph, endPoints).MarkAsEndPoints();
             }
             else
             {
@@ -56,7 +57,9 @@ namespace ConsoleVersion.ViewModel
             if (endPoints.HasSourceAndTargetSet())
             {
                 MainView.SetCursorPositionUnderMenu(MenuOffset);
-                IntInput.ChangeSource(graph, endPoints);
+                endPoints.RemoveSource();
+                Console.WriteLine(MessagesTexts.SourceVertexChoiceMsg);
+                IntInput.InputEndPoint(graph, endPoints).OnEndPointChosen();
             }
         }
 
@@ -66,7 +69,9 @@ namespace ConsoleVersion.ViewModel
             if (endPoints.HasSourceAndTargetSet())
             {
                 MainView.SetCursorPositionUnderMenu(MenuOffset);
-                IntInput.ChangeTarget(graph, endPoints);
+                endPoints.RemoveTarget();
+                Console.WriteLine(MessagesTexts.TargetVertexChoiceMsg);
+                IntInput.InputEndPoint(graph, endPoints).OnEndPointChosen();
             }
         }
 
@@ -76,7 +81,11 @@ namespace ConsoleVersion.ViewModel
             int numberOfIntermediates = endPoints.GetIntermediates().Count();
             if (numberOfIntermediates > 0)
             {
-                IntInput.ChangeIntermediates(graph, endPoints, numberOfIntermediates);
+                int toReplaceNumber = IntInput.InputValue(MessagesTexts.NumberOfIntermediatesVerticesToReplaceMsg, numberOfIntermediates);
+                Console.WriteLine(MessagesTexts.IntermediateToReplaceMsg);
+                IntInput.InputExistingIntermediates(graph, endPoints, toReplaceNumber).MarkToReplace();
+                Console.WriteLine(MessagesTexts.IntermediateVertexChoiceMsg);
+                IntInput.InputIntermediates(graph, endPoints, toReplaceNumber).MarkAsEndPoints();
             }
         }
 
@@ -86,7 +95,9 @@ namespace ConsoleVersion.ViewModel
             if (endPoints.HasSourceAndTargetSet())
             {
                 MainView.SetCursorPositionUnderMenu(MenuOffset);
-                IntInput.ChooseIntermediates(graph, endPoints, NumberOfAvailableIntermediate);
+                int number = IntInput.InputValue(MessagesTexts.NumberOfIntermediateVerticesInputMsg, NumberOfAvailableIntermediate);
+                Console.WriteLine(MessagesTexts.IntermediateVertexChoiceMsg);
+                IntInput.InputIntermediates(graph, endPoints, number).MarkAsEndPoints();
             }
         }
 

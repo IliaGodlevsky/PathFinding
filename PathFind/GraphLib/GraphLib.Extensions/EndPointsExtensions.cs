@@ -23,6 +23,21 @@ namespace GraphLib.Extensions
             }
         }
 
+        public static bool IsIntermediate(this IEndPoints endPoints, IVertex vertex)
+        {
+            return endPoints.GetIntermediates().Any(v => v.IsEqual(vertex));
+        }
+
+        public static bool IsSource(this IEndPoints endPoints, IVertex vertex)
+        {
+            return endPoints.Source.IsEqual(vertex);
+        }
+
+        public static bool IsTarget(this IEndPoints endPoints, IVertex vertex)
+        {
+            return endPoints.Target.IsEqual(vertex);
+        }
+
         public static bool CanBeEndPoint(this IEndPoints self, IVertex vertex)
         {
             return !vertex.IsIsolated() && !self.IsEndPoint(vertex);
@@ -32,6 +47,7 @@ namespace GraphLib.Extensions
         {
             return !self.Source.IsIsolated() && !self.Target.IsIsolated();
         }
+
         public static bool HasIsolators(this IEndPoints self)
         {
             return self.EndPoints.Any(vertex => vertex.IsIsolated());

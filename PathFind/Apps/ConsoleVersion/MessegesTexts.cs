@@ -3,6 +3,7 @@
     internal static class MessagesTexts
     {
         public static readonly string[] EndPointsMessages = new[] { SourceVertexChoiceMsg, TargetVertexChoiceMsg };
+        public const string SourceAndTargetInputMsg = "Input source and target vertices: ";
         public const string PathfindingStatisticsFormat = "Steps: {0}  Path cost: {1}  Visited: {2}";
         public const string SourceVertexChoiceMsg = "Choose source vertex: ";
         public const string TargetVertexChoiceMsg = "Choose target vertex: ";
