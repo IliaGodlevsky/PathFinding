@@ -2,7 +2,7 @@
 
 namespace ConsoleVersion.Model.FramedAxes
 {
-    internal sealed class FramedUnderAbscissa : FramedAbscissa, IFramedAxis, IDisplayable
+    internal sealed class FramedUnderAbscissa : FramedAbscissa
     {
         public FramedUnderAbscissa(int graphWidth)
             : base(graphWidth)

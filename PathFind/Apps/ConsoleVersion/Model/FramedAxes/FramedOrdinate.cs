@@ -6,7 +6,7 @@ using System.Text;
 
 namespace ConsoleVersion.Model.FramedAxes
 {
-    internal abstract class FramedOrdinate : FramedAxis, IFramedAxis, IDisplayable
+    internal abstract class FramedOrdinate : FramedAxis
     {
         protected FramedOrdinate(int graphLength) : base()
         {

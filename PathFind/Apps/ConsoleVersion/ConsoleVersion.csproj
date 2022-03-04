@@ -79,7 +79,7 @@
     <Compile Include="Extensions\IEnumerableExtensions.cs" />
     <Compile Include="Extensions\IMessengerExtensions.cs" />
     <Compile Include="Extensions\PathFindingViewModelExtensions.cs" />
-    <Compile Include="Extensions\ValueInputExtensions.cs" />
+    <Compile Include="Extensions\IValueInputExtensions.cs" />
     <Compile Include="Interface\IConsoleKeyCommand.cs" />
     <Compile Include="MenuItemsNames.cs" />
     <Compile Include="Messages\ClaimGraphMessage.cs" />

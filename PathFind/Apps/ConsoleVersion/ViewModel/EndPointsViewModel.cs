@@ -21,8 +21,10 @@ namespace ConsoleVersion.ViewModel
     {
         public event Action WindowClosed;
 
+        private const int RequiredNumberOfEndPoints = 2;
         private const int MenuOffset = 8;
-        private int NumberOfAvailableIntermediate => graph.Size - graph.GetIsolatedCount() - 2;
+
+        private int NumberOfAvailableIntermediate => graph.Size - graph.GetIsolatedCount() - RequiredNumberOfEndPoints;
         private bool HasAnyVerticesToChooseAsEndPoints => NumberOfAvailableIntermediate >= 0;
 
         public IValueInput<int> IntInput { get; set; }
@@ -42,7 +44,7 @@ namespace ConsoleVersion.ViewModel
             {
                 MainView.SetCursorPositionUnderMenu(MenuOffset);
                 Console.WriteLine(MessagesTexts.SourceAndTargetInputMsg);
-                IntInput.InputEndPoints(graph, endPoints, 2).MarkAsEndPoints();
+                IntInput.InputEndPoints(graph, endPoints, RequiredNumberOfEndPoints).MarkAsEndPoints();
             }
             else
             {

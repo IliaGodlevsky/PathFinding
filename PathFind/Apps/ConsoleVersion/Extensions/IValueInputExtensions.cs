@@ -10,7 +10,7 @@ using ValueRange;
 
 namespace ConsoleVersion.Extensions
 {
-    internal static class ValueInputExtensions
+    internal static class IValueInputExtensions
     {
         public static TValue InputValue<TValue>(this IValueInput<TValue> self, string accompanyingMessage, InclusiveValueRange<TValue> range)
             where TValue : struct, IComparable

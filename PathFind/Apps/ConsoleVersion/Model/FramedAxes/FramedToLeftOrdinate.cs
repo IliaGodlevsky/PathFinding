@@ -2,7 +2,7 @@
 
 namespace ConsoleVersion.Model.FramedAxes
 {
-    internal sealed class FramedToLeftOrdinate : FramedOrdinate, IFramedAxis, IDisplayable
+    internal sealed class FramedToLeftOrdinate : FramedOrdinate
     {
         public FramedToLeftOrdinate(int graphLength)
             : base(graphLength)

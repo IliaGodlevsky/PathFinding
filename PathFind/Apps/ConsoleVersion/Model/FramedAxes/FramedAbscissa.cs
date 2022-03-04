@@ -8,7 +8,7 @@ using Console = Colorful.Console;
 
 namespace ConsoleVersion.Model.FramedAxes
 {
-    internal abstract class FramedAbscissa : FramedAxis, IFramedAxis, IDisplayable
+    internal abstract class FramedAbscissa : FramedAxis
     {
         protected FramedAbscissa(int graphWidth) : base()
         {

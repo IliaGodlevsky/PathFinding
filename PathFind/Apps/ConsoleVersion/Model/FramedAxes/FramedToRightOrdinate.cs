@@ -3,7 +3,7 @@ using ConsoleVersion.Views;
 
 namespace ConsoleVersion.Model.FramedAxes
 {
-    internal sealed class FramedToRightOrdinate : FramedOrdinate, IFramedAxis, IDisplayable
+    internal sealed class FramedToRightOrdinate : FramedOrdinate
     {
         public FramedToRightOrdinate(int graphWidth, int graphLength)
             : base(graphLength)
