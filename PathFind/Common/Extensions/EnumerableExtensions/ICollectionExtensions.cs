@@ -11,12 +11,6 @@ namespace Common.Extensions.EnumerableExtensions
             return collection;
         }
 
-        public static ICollection<TCast> AddCastedRange<TCast, TAdd>(this ICollection<TCast> collection, IEnumerable<TAdd> range)
-        {
-            range.Cast<TCast>().ForEach(collection.Add);
-            return collection;
-        }
-
         public static ICollection<T> AddRange<T>(this ICollection<T> collection, params T[] items)
         {
             return collection.AddRange(items.AsEnumerable());

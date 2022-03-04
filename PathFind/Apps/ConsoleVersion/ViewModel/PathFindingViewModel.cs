@@ -105,7 +105,7 @@ namespace ConsoleVersion.ViewModel
             using (var scope = DI.Container.BeginLifetimeScope())
             {
                 var view = scope.Resolve<EndPointsView>();
-                view.Start();
+                view.Display();
             }
         }
 

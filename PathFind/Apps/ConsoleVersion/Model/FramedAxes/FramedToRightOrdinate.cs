@@ -1,14 +1,16 @@
-﻿using ConsoleVersion.Interface;
+﻿using Common.Attrbiutes;
 using ConsoleVersion.Views;
+using GraphLib.Realizations.Graphs;
 
 namespace ConsoleVersion.Model.FramedAxes
 {
+    [AttachedTo(typeof(GraphField)), Order(2)]
     internal sealed class FramedToRightOrdinate : FramedOrdinate
     {
-        public FramedToRightOrdinate(int graphWidth, int graphLength)
-            : base(graphLength)
+        public FramedToRightOrdinate(Graph2D graph)
+            : base(graph.Length)
         {
-            this.graphWidth = graphWidth;
+            this.graphWidth = graph.Width;
         }
 
         protected override string GetPaddedYCoordinate(int yCoordinate)

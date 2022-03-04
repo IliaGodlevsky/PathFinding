@@ -1,11 +1,13 @@
-﻿using ConsoleVersion.Interface;
+﻿using Common.Attrbiutes;
+using GraphLib.Realizations.Graphs;
 
 namespace ConsoleVersion.Model.FramedAxes
 {
+    [AttachedTo(typeof(GraphField)), Order(3)]
     internal sealed class FramedToLeftOrdinate : FramedOrdinate
     {
-        public FramedToLeftOrdinate(int graphLength)
-            : base(graphLength)
+        public FramedToLeftOrdinate(Graph2D graph)
+            : base(graph.Length)
         {
 
         }

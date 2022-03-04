@@ -1,11 +1,13 @@
-﻿using ConsoleVersion.Interface;
+﻿using Common.Attrbiutes;
+using GraphLib.Realizations.Graphs;
 
 namespace ConsoleVersion.Model.FramedAxes
 {
+    [AttachedTo(typeof(GraphField)), Order(1)]
     internal sealed class FramedUnderAbscissa : FramedAbscissa
     {
-        public FramedUnderAbscissa(int graphWidth)
-            : base(graphWidth)
+        public FramedUnderAbscissa(Graph2D graph)
+            : base(graph.Width)
         {
 
         }

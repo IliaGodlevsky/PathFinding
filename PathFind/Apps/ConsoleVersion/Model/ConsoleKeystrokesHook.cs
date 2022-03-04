@@ -16,6 +16,8 @@ namespace ConsoleVersion.Model
         public event ProcessEventHandler Started;
         public event ProcessEventHandler Finished;
 
+        public bool IsInProcess { get; private set; }
+
         public void Interrupt()
         {
             IsInProcess = false;
@@ -34,8 +36,6 @@ namespace ConsoleVersion.Model
                 KeyPressed?.Invoke(this, args);
             }
         }
-
-        public bool IsInProcess { get; private set; }
 
         private ConsoleKeystrokesHook()
         {

@@ -12,12 +12,12 @@ namespace ConsoleVersion.Extensions
             collection.ForEach(display => display.Display());
         }
 
-        public static void MarkAsEndPoints(this IEnumerable<Vertex> vertices)
+        public static void OnEndPointChosen(this IEnumerable<Vertex> vertices)
         {
             vertices.ForEach(vertex => vertex.OnEndPointChosen());
         }
 
-        public static void MarkToReplace(this IEnumerable<Vertex> vertices)
+        public static void OnMarkedToReplaceIntermediate(this IEnumerable<Vertex> vertices)
         {
             vertices.ForEach(vertex => vertex.OnMarkedToReplaceIntermediate());
         }

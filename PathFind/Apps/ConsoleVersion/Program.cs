@@ -11,7 +11,7 @@ namespace ConsoleVersion
             using (var scope = DI.Container.BeginLifetimeScope())
             {
                 var view = scope.Resolve<MainView>();
-                view.Start();
+                view.Display();
             }
         }
     }

@@ -24,7 +24,7 @@ namespace Algorithm.Base
             PrepareForPathfinding();
             while (!IsDestination(endPoints))
             {
-                WaitResumed();
+                WaitUntillResumed();
                 PreviousVertex = CurrentVertex;
                 CurrentVertex = NextVertex;
                 ProcessCurrentVertex();

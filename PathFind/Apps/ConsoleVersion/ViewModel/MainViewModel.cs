@@ -26,8 +26,7 @@ using Console = Colorful.Console;
 
 namespace ConsoleVersion.ViewModel
 {
-    internal sealed class MainViewModel : MainModel,
-        IMainModel, IViewModel, IRequireAnswerInput, IRequireIntInput, IDisposable
+    internal sealed class MainViewModel : MainModel, IMainModel, IViewModel, IRequireAnswerInput, IRequireIntInput, IDisposable
     {
         public event Action WindowClosed;
 
@@ -52,41 +51,16 @@ namespace ConsoleVersion.ViewModel
         public void MakeGraphWeighted() => Graph.ToWeighted();
 
         [MenuItem(MenuItemsNames.CreateNewGraph, MenuItemPriority.Highest)]
-        public override void CreateNewGraph()
-        {
-            try
-            {
-                using (var scope = DI.Container.BeginLifetimeScope())
-                {
-                    var view = scope.Resolve<GraphCreateView>();
-                    view.Start();
-                }
-            }
-            catch (Exception ex)
-            {
-                log.Error(ex);
-            }
-        }
+        public override void CreateNewGraph() => DisplayView<GraphCreateView>();
 
         [MenuItem(MenuItemsNames.FindPath, MenuItemPriority.High)]
-        public override void FindPath()
-        {
-            try
-            {
-                using (var scope = DI.Container.BeginLifetimeScope())
-                {
-                    var view = scope.Resolve<PathFindView>();
-                    view.Start();
-                }
-            }
-            catch (Exception ex)
-            {
-                log.Error(ex);
-            }
-        }
+        public override void FindPath() => DisplayView<PathFindView>();
 
         [MenuItem(MenuItemsNames.ReverseVertex, MenuItemPriority.Normal)]
-        public void ReverseVertex() => PerformActionOnVertex(vertex => vertex?.OnVertexReversed());
+        public void ReverseVertex() => ChangeVertexState(vertex => vertex.OnVertexReversed());
+
+        [MenuItem(MenuItemsNames.ChangeVertexCost, MenuItemPriority.Low)]
+        public void ChangeVertexCost() => ChangeVertexState(vertex => vertex.OnVertexCostChanged());
 
         [MenuItem(MenuItemsNames.ChangeCostRange, MenuItemPriority.Low)]
         public void ChangeVertexCostValueRange()
@@ -95,9 +69,6 @@ namespace ConsoleVersion.ViewModel
             var message = new CostRangeChangedMessage(CostRange);
             messenger.Forward(message, MessageTokens.MainView);
         }
-
-        [MenuItem(MenuItemsNames.ChangeVertexCost, MenuItemPriority.Low)]
-        public void ChangeVertexCost() => PerformActionOnVertex(vertex => vertex?.OnVertexCostChanged());
 
         [MenuItem(MenuItemsNames.SaveGraph, MenuItemPriority.Normal)]
         public override void SaveGraph() => base.SaveGraph();
@@ -173,12 +144,27 @@ namespace ConsoleVersion.ViewModel
             messenger.Forward(new GraphCreatedMessage(Graph), message.ClaimerMessageToken);
         }
 
-        private void PerformActionOnVertex(Action<Vertex> function)
+        private void ChangeVertexState(Action<Vertex> changeFunction)
         {
-            if (Graph.HasVertices() && Graph is Graph2D graph2D)
+            if (Graph.HasVertices())
             {
-                var vertex = IntInput.InputVertex(graph2D);
-                function(vertex as Vertex);
+                changeFunction(IntInput.InputVertex((Graph2D)Graph));
+            }
+        }
+
+        private void DisplayView<TView>() where TView : IView
+        {
+            try
+            {
+                using (var scope = DI.Container.BeginLifetimeScope())
+                {
+                    var view = scope.Resolve<TView>();
+                    view.Display();
+                }
+            }
+            catch (Exception ex)
+            {
+                log.Error(ex);
             }
         }
 

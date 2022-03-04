@@ -65,7 +65,7 @@ namespace Algorithm.Base
             }
         }
 
-        protected virtual void WaitResumed()
+        protected virtual void WaitUntillResumed()
         {
             if (IsPaused)
             {

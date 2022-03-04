@@ -2,8 +2,8 @@
 
 namespace ConsoleVersion.Interface
 {
-    internal interface IValueInput<TValue> where TValue : struct, IComparable
+    internal interface IValueInput<T> where T : struct, IComparable
     {
-        TValue InputValue(string accompanyingMessage, TValue upperRangeValue, TValue lowerRangeValue = default);
+        T InputValue(string msg, T upper, T lower = default);
     }
 }

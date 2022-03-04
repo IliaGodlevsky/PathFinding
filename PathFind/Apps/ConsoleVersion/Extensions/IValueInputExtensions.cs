@@ -12,29 +12,29 @@ namespace ConsoleVersion.Extensions
 {
     internal static class IValueInputExtensions
     {
-        public static TValue InputValue<TValue>(this IValueInput<TValue> self, string accompanyingMessage, InclusiveValueRange<TValue> range)
-            where TValue : struct, IComparable
+        public static T InputValue<T>(this IValueInput<T> self, string accompanyingMessage, InclusiveValueRange<T> range)
+            where T : struct, IComparable
         {
             return self.InputValue(accompanyingMessage, range.UpperValueOfRange, range.LowerValueOfRange);
         }
 
-        public static InclusiveValueRange<TValue> InputRange<TValue>(this IValueInput<TValue> self, InclusiveValueRange<TValue> range)
-            where TValue : struct, IComparable
+        public static InclusiveValueRange<T> InputRange<T>(this IValueInput<T> self, InclusiveValueRange<T> range)
+            where T : struct, IComparable
         {
-            TValue upperValueOfRange = self.InputValue(MessagesTexts.RangeUpperValueInputMsg, range);
-            TValue lowerValueOfRange = self.InputValue(MessagesTexts.RangeLowerValueInputMsg, range);
+            T upperValueOfRange = self.InputValue(MessagesTexts.RangeUpperValueInputMsg, range);
+            T lowerValueOfRange = self.InputValue(MessagesTexts.RangeLowerValueInputMsg, range);
 
-            return new InclusiveValueRange<TValue>(upperValueOfRange, lowerValueOfRange);
+            return new InclusiveValueRange<T>(upperValueOfRange, lowerValueOfRange);
         }
 
-        public static IVertex InputVertex(this IValueInput<int> self, Graph2D graph2D)
+        public static Vertex InputVertex(this IValueInput<int> self, Graph2D graph2D)
         {
             int upperPossibleXValue = graph2D.Width - 1;
             int upperPossibleYValue = graph2D.Length - 1;
 
             var point = self.InputCoordinate(upperPossibleXValue, upperPossibleYValue);
 
-            return graph2D[point];
+            return (Vertex)graph2D[point];
         }
 
         public static Vertex InputEndPoint(this IValueInput<int> self, Graph2D graph, IEndPoints endPoints)
@@ -65,9 +65,10 @@ namespace ConsoleVersion.Extensions
             Vertex vertex;
             do
             {
-                vertex = (Vertex)self.InputVertex(graph);
+                vertex = self.InputVertex(graph);
             }
             while (!predicate(vertex));
+
             return vertex;
         }
 

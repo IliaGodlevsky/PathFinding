@@ -4,25 +4,23 @@ using ValueRange;
 
 namespace ConsoleVersion.ValueInput
 {
-    internal abstract class ConsoleValueInput<TValue> : IValueInput<TValue>
-        where TValue : struct, IComparable
+    internal abstract class ConsoleValueInput<T> : IValueInput<T> where T : struct, IComparable
     {
-        public virtual TValue InputValue(string accompanyingMessage,
-            TValue upperRangeValue, TValue lowerRangeValue = default)
+        public virtual T InputValue(string msg, T upper, T lower = default)
         {
-            var rangeOfValidInput = new InclusiveValueRange<TValue>(upperRangeValue, lowerRangeValue);
+            var range = new InclusiveValueRange<T>(upper, lower);
             string userInput;
             do
             {
-                Console.Write(accompanyingMessage);
+                Console.Write(msg);
                 userInput = Console.ReadLine();
-            } while (!IsValidInput(userInput, rangeOfValidInput));
+            } while (!IsValidInput(userInput, range));
 
             return Parse(userInput);
         }
 
-        protected abstract bool IsValidInput(string input, InclusiveValueRange<TValue> valueRange);
+        protected abstract bool IsValidInput(string input, InclusiveValueRange<T> valueRange);
 
-        protected abstract TValue Parse(string input);
+        protected abstract T Parse(string input);
     }
 }

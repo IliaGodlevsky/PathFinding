@@ -2,10 +2,8 @@
 
 namespace ConsoleVersion.Interface
 {
-    internal interface IView
+    internal interface IView : IDisplayable
     {
         event Action NewMenuIteration;
-
-        void Start();
     }
 }

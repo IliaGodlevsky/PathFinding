@@ -44,7 +44,7 @@ namespace ConsoleVersion.ViewModel
             {
                 MainView.SetCursorPositionUnderMenu(MenuOffset);
                 Console.WriteLine(MessagesTexts.SourceAndTargetInputMsg);
-                IntInput.InputEndPoints(graph, endPoints, RequiredNumberOfEndPoints).MarkAsEndPoints();
+                IntInput.InputEndPoints(graph, endPoints, RequiredNumberOfEndPoints).OnEndPointChosen();
             }
             else
             {
@@ -66,9 +66,9 @@ namespace ConsoleVersion.ViewModel
             {
                 int toReplaceNumber = IntInput.InputValue(MessagesTexts.NumberOfIntermediatesVerticesToReplaceMsg, numberOfIntermediates);
                 Console.WriteLine(MessagesTexts.IntermediateToReplaceMsg);
-                IntInput.InputExistingIntermediates(graph, endPoints, toReplaceNumber).MarkToReplace();
+                IntInput.InputExistingIntermediates(graph, endPoints, toReplaceNumber).OnMarkedToReplaceIntermediate();
                 Console.WriteLine(MessagesTexts.IntermediateVertexChoiceMsg);
-                IntInput.InputEndPoints(graph, endPoints, toReplaceNumber).MarkAsEndPoints();
+                IntInput.InputEndPoints(graph, endPoints, toReplaceNumber).OnEndPointChosen();
             }
         }
 
@@ -80,7 +80,7 @@ namespace ConsoleVersion.ViewModel
                 MainView.SetCursorPositionUnderMenu(MenuOffset);
                 int number = IntInput.InputValue(MessagesTexts.NumberOfIntermediateVerticesInputMsg, NumberOfAvailableIntermediate);
                 Console.WriteLine(MessagesTexts.IntermediateVertexChoiceMsg);
-                IntInput.InputEndPoints(graph, endPoints, number).MarkAsEndPoints();
+                IntInput.InputEndPoints(graph, endPoints, number).OnEndPointChosen();
             }
         }
 
@@ -114,8 +114,7 @@ namespace ConsoleVersion.ViewModel
                 MainView.SetCursorPositionUnderMenu(MenuOffset);
                 action();
                 Console.WriteLine(message);
-                var vertex = IntInput.InputEndPoint(graph, endPoints);
-                vertex.OnEndPointChosen();
+                IntInput.InputEndPoint(graph, endPoints).OnEndPointChosen();
             }
         }
 

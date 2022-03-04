@@ -29,7 +29,7 @@ namespace Algorithm.Base
                 VisitVertex(CurrentVertex);
                 while (!IsDestination(CurrentEndPoints))
                 {
-                    WaitResumed();
+                    WaitUntillResumed();
                     InspectCurrentVertex();
                     CurrentVertex = NextVertex;
                     VisitVertex(CurrentVertex);

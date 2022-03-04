@@ -1,6 +1,5 @@
 ﻿using Colorful;
 using Common.Extensions;
-using ConsoleVersion.Interface;
 using ConsoleVersion.Views;
 using System.Text;
 
