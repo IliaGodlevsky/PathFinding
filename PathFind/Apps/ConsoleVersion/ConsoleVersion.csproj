@@ -77,7 +77,9 @@
     <Compile Include="Extensions\BaseEndPointsExtensions.cs" />
     <Compile Include="Extensions\ConsoleKeystrokesHookExtensions.cs" />
     <Compile Include="Extensions\GraphFieldExtensions.cs" />
+    <Compile Include="Extensions\IContainerExtensions.cs" />
     <Compile Include="Extensions\IEnumerableExtensions.cs" />
+    <Compile Include="Extensions\IGraphPathExtensions.cs" />
     <Compile Include="Extensions\IMessengerExtensions.cs" />
     <Compile Include="Extensions\PathFindingViewModelExtensions.cs" />
     <Compile Include="Extensions\IValueInputExtensions.cs" />

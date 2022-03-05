@@ -1,5 +1,4 @@
-﻿using Common.Interface;
-using GraphLib.Interfaces;
+﻿using GraphLib.Interfaces;
 using System;
 using ValueRange;
 using ValueRange.Extensions;
@@ -7,7 +6,7 @@ using ValueRange.Extensions;
 namespace GraphLib.Base
 {
     [Serializable]
-    public abstract class BaseVertexCost : IVertexCost, ICloneable<IVertexCost>
+    public abstract class BaseVertexCost : IVertexCost
     {
         public static InclusiveValueRange<int> CostRange { get; set; }
 

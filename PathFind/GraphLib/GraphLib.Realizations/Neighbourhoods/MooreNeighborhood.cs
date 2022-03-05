@@ -1,5 +1,4 @@
 ﻿using Common.Extensions;
-using Common.Interface;
 using GraphLib.Interfaces;
 using GraphLib.Proxy.Extensions;
 using System;
@@ -12,7 +11,7 @@ namespace GraphLib.Realizations.Neighbourhoods
 {
     [Serializable]
     [DebuggerDisplay("Count = {Neighbours.Length}")]
-    public sealed class MooreNeighborhood : INeighborhood, ISerializable, ICloneable<INeighborhood>
+    public sealed class MooreNeighborhood : INeighborhood, ISerializable
     {
         public IReadOnlyCollection<ICoordinate> Neighbours => neighbourhood.Value;
 

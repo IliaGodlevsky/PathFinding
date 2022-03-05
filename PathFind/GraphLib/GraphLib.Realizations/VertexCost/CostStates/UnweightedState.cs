@@ -5,7 +5,7 @@ using System;
 namespace GraphLib.Realizations.VertexCost.CostStates
 {
     [Serializable]
-    internal sealed class UnweightedState : ICostState, ICloneable<ICostState>
+    internal sealed class UnweightedState : ICostState
     {
         public string ToString(WeightableVertexCost cost)
         {

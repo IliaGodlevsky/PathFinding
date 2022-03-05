@@ -1,18 +1,11 @@
-﻿using Autofac;
-using ConsoleVersion.DependencyInjection;
+﻿using ConsoleVersion.DependencyInjection;
+using ConsoleVersion.Extensions;
 using ConsoleVersion.Views;
 
 namespace ConsoleVersion
 {
     internal static class Program
     {
-        private static void Main(string[] args)
-        {
-            using (var scope = DI.Container.BeginLifetimeScope())
-            {
-                var view = scope.Resolve<MainView>();
-                view.Display();
-            }
-        }
+        private static void Main(string[] args) => DI.Container.Display<MainView>();
     }
 }

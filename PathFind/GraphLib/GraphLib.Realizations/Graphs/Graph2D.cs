@@ -5,7 +5,7 @@ using System.Linq;
 
 namespace GraphLib.Realizations.Graphs
 {
-    public sealed class Graph2D : BaseGraph, IGraph
+    public sealed class Graph2D : BaseGraph
     {
         public int Width { get; }
 

@@ -51,10 +51,10 @@ namespace ConsoleVersion.ViewModel
         public void MakeGraphWeighted() => Graph.ToWeighted();
 
         [MenuItem(MenuItemsNames.CreateNewGraph, MenuItemPriority.Highest)]
-        public override void CreateNewGraph() => DisplayView<GraphCreateView>();
+        public override void CreateNewGraph() => DI.Container.Display<GraphCreateView>();
 
         [MenuItem(MenuItemsNames.FindPath, MenuItemPriority.High)]
-        public override void FindPath() => DisplayView<PathFindView>();
+        public override void FindPath() => DI.Container.Display<PathFindView>();
 
         [MenuItem(MenuItemsNames.ReverseVertex, MenuItemPriority.Normal)]
         public void ReverseVertex() => ChangeVertexState(vertex => vertex.OnVertexReversed());
@@ -149,22 +149,6 @@ namespace ConsoleVersion.ViewModel
             if (Graph.HasVertices())
             {
                 changeFunction(IntInput.InputVertex((Graph2D)Graph));
-            }
-        }
-
-        private void DisplayView<TView>() where TView : IView
-        {
-            try
-            {
-                using (var scope = DI.Container.BeginLifetimeScope())
-                {
-                    var view = scope.Resolve<TView>();
-                    view.Display();
-                }
-            }
-            catch (Exception ex)
-            {
-                log.Error(ex);
             }
         }
 

@@ -1,5 +1,4 @@
-﻿using Common.Interface;
-using GraphLib.Base;
+﻿using GraphLib.Base;
 using GraphLib.Interfaces;
 using GraphLib.Realizations.Interfaces;
 using GraphLib.Realizations.VertexCost.CostStates;
@@ -10,7 +9,7 @@ namespace GraphLib.Realizations.VertexCost
 {
     [Serializable]
     [DebuggerDisplay("Cost = {CurrentCost}")]
-    public sealed class WeightableVertexCost : BaseVertexCost, IVertexCost, IWeightable, ICloneable<IVertexCost>
+    public sealed class WeightableVertexCost : BaseVertexCost, IWeightable
     {
         public WeightableVertexCost(int startCost)
             : base(startCost)

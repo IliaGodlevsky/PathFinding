@@ -1,5 +1,4 @@
-﻿using Common.Interface;
-using GraphLib.Base;
+﻿using GraphLib.Base;
 using GraphLib.Interfaces;
 using System;
 using System.Diagnostics;
@@ -9,7 +8,7 @@ namespace GraphLib.Realizations.Coordinates
 {
     [Serializable]
     [DebuggerDisplay("{ToString()}")]
-    public sealed class Coordinate2D : BaseCoordinate, ICoordinate, ICloneable<ICoordinate>
+    public sealed class Coordinate2D : BaseCoordinate
     {
         public int X { get; }
 

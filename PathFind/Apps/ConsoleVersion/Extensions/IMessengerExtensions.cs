@@ -30,5 +30,11 @@ namespace ConsoleVersion.Extensions
             Tokens.DisassembleToFlags(token).ForEach(value => messenger.Send(message, value));
             return messenger;
         }
+
+        public static IMessenger Forward<TMessage>(this IMessenger messenger, MessageTokens token)
+            where TMessage : new()
+        {
+            return messenger.Forward(new TMessage(), token);
+        }
     }
 }
