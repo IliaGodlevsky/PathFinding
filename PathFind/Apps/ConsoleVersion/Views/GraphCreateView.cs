@@ -1,10 +1,9 @@
-﻿using ConsoleVersion.Interface;
-using ConsoleVersion.Model;
+﻿using ConsoleVersion.Model;
 using ConsoleVersion.ViewModel;
 
 namespace ConsoleVersion.Views
 {
-    internal sealed class GraphCreateView : View, IView
+    internal sealed class GraphCreateView : View
     {
         public GraphCreateView(GraphCreatingViewModel model) : base(model)
         {

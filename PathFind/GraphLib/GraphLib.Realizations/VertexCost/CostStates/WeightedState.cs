@@ -1,5 +1,4 @@
-﻿using Common.Interface;
-using GraphLib.Realizations.Interfaces;
+﻿using GraphLib.Realizations.Interfaces;
 using System;
 
 namespace GraphLib.Realizations.VertexCost.CostStates

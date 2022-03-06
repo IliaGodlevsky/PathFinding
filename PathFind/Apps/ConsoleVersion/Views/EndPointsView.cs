@@ -1,9 +1,8 @@
-﻿using ConsoleVersion.Interface;
-using ConsoleVersion.ViewModel;
+﻿using ConsoleVersion.ViewModel;
 
 namespace ConsoleVersion.Views
 {
-    internal sealed class EndPointsView : View, IView
+    internal sealed class EndPointsView : View
     {
         public EndPointsView(EndPointsViewModel model) : base(model)
         {

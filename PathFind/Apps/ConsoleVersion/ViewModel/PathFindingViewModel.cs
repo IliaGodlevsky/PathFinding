@@ -118,7 +118,7 @@ namespace ConsoleVersion.ViewModel
 
         protected override void SummarizePathfindingResults()
         {
-            var message = new UpdateStatisticsMessage(Statistics);
+            var message = new UpdateStatisticsMessage(path.IsNull() ? MessagesTexts.CouldntFindPathMsg : Statistics);
             messenger.Forward(message, MessageTokens.MainView);
             visitedVerticesCount = 0;
             resetEvent.Set();

@@ -1,6 +1,5 @@
 ﻿using Algorithm.Interfaces;
 using Common.Extensions;
-using NullObject.Extensions;
 using System.Diagnostics;
 
 namespace ConsoleVersion.Extensions
@@ -9,10 +8,6 @@ namespace ConsoleVersion.Extensions
     {
         public static string ToStatistics(this IGraphPath path, Stopwatch timer, int visited, string algorithm)
         {
-            if (path.IsNull())
-            {
-                return MessagesTexts.CouldntFindPathMsg;
-            }
             string timerInfo = timer.ToFormattedString();
             var pathfindingInfos = new object[] { path.Length, path.Cost, visited };
             string pathfindingInfo = string.Format(MessagesTexts.PathfindingStatisticsFormat, pathfindingInfos);

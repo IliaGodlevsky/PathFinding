@@ -1,7 +1,6 @@
 ﻿using Autofac;
 using ConsoleVersion.DependencyInjection;
 using ConsoleVersion.Enums;
-using ConsoleVersion.Interface;
 using ConsoleVersion.Messages;
 using ConsoleVersion.ViewModel;
 using GalaSoft.MvvmLight.Messaging;
@@ -12,7 +11,7 @@ using System;
 
 namespace ConsoleVersion.Views
 {
-    internal sealed class MainView : View, IView
+    internal sealed class MainView : View
     {
         public static int HeightOfAbscissaView => 2;
         public static int HeightOfGraphParametresView => 1;

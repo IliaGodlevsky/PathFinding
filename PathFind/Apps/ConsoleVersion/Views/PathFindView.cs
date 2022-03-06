@@ -1,11 +1,10 @@
 ﻿using Common.Extensions.EnumerableExtensions;
-using ConsoleVersion.Interface;
 using ConsoleVersion.Model;
 using ConsoleVersion.ViewModel;
 
 namespace ConsoleVersion.Views
 {
-    internal sealed class PathFindView : View, IView
+    internal sealed class PathFindView : View
     {
         public PathFindView(PathFindingViewModel model) : base(model)
         {

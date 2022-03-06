@@ -12,10 +12,10 @@ namespace ConsoleVersion.Extensions
 {
     internal static class IValueInputExtensions
     {
-        public static T InputValue<T>(this IValueInput<T> self, string accompanyingMessage, InclusiveValueRange<T> range)
+        public static T InputValue<T>(this IValueInput<T> self, string msg, InclusiveValueRange<T> range)
             where T : struct, IComparable
         {
-            return self.InputValue(accompanyingMessage, range.UpperValueOfRange, range.LowerValueOfRange);
+            return self.InputValue(msg, range.UpperValueOfRange, range.LowerValueOfRange);
         }
 
         public static InclusiveValueRange<T> InputRange<T>(this IValueInput<T> self, InclusiveValueRange<T> range)
@@ -45,6 +45,12 @@ namespace ConsoleVersion.Extensions
         public static IEnumerable<Vertex> InputExistingIntermediates(this IValueInput<int> self, Graph2D graph, IEndPoints endPoints, int count)
         {
             return self.InputVertices(graph, endPoints.IsIntermediate, count);
+        }
+
+        public static IEnumerable<Vertex> InputRequiredEndPoints(this IValueInput<int> self, Graph2D graph, IEndPoints endPoints)
+        {
+            yield return self.InputEndPoint(graph, endPoints);
+            yield return self.InputEndPoint(graph, endPoints);
         }
 
         public static IEnumerable<Vertex> InputEndPoints(this IValueInput<int> self, Graph2D graph, IEndPoints endPoints, int count)

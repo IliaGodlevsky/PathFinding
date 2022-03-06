@@ -21,11 +21,7 @@ namespace ConsoleVersion.ViewModel
     {
         public event Action WindowClosed;
 
-        private const int RequiredNumberOfEndPoints = 2;
         private const int MenuOffset = 8;
-
-        private int NumberOfAvailableIntermediate => graph.Size - graph.GetIsolatedCount() - RequiredNumberOfEndPoints;
-        private bool HasAnyVerticesToChooseAsEndPoints => NumberOfAvailableIntermediate >= 0;
 
         public IValueInput<int> IntInput { get; set; }
 
@@ -40,11 +36,11 @@ namespace ConsoleVersion.ViewModel
         [MenuItem(MenuItemsNames.ChooseEndPoints, MenuItemPriority.Highest)]
         public void ChooseEndPoints()
         {
-            if (HasAnyVerticesToChooseAsEndPoints && !endPoints.HasSourceAndTargetSet())
+            if (graph.HasAvailableEndPoints() && !endPoints.HasSourceAndTargetSet())
             {
                 MainView.SetCursorPositionUnderMenu(MenuOffset);
                 Console.WriteLine(MessagesTexts.SourceAndTargetInputMsg);
-                IntInput.InputEndPoints(graph, endPoints, RequiredNumberOfEndPoints).OnEndPointChosen();
+                IntInput.InputRequiredEndPoints(graph, endPoints).OnEndPointChosen();
             }
             else
             {
@@ -78,7 +74,7 @@ namespace ConsoleVersion.ViewModel
             if (endPoints.HasSourceAndTargetSet())
             {
                 MainView.SetCursorPositionUnderMenu(MenuOffset);
-                int number = IntInput.InputValue(MessagesTexts.NumberOfIntermediateVerticesInputMsg, NumberOfAvailableIntermediate);
+                int number = IntInput.InputValue(MessagesTexts.NumberOfIntermediateVerticesInputMsg, graph.GetAvailableIntermediates());
                 Console.WriteLine(MessagesTexts.IntermediateVertexChoiceMsg);
                 IntInput.InputEndPoints(graph, endPoints, number).OnEndPointChosen();
             }

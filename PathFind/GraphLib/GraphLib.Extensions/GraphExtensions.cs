@@ -15,16 +15,12 @@ namespace GraphLib.Extensions
 
         public static void ToUnweighted(this IGraph graph)
         {
-            graph.Vertices
-                .OfType<IWeightable>()
-                .ForEach(vertex => vertex.MakeUnweighted());
+            graph.Vertices.OfType<IWeightable>().ForEach(vertex => vertex.MakeUnweighted());
         }
 
         public static void ToWeighted(this IGraph graph)
         {
-            graph.Vertices
-                .OfType<IWeightable>()
-                .ForEach(vertex => vertex.MakeWeighted());
+            graph.Vertices.OfType<IWeightable>().ForEach(vertex => vertex.MakeWeighted());
         }
 
         public static bool IsEmpty(this IGraph self)
@@ -39,8 +35,7 @@ namespace GraphLib.Extensions
 
         public static int GetObstaclePercent(this IGraph self)
         {
-            return self.Size == 0 ? 0
-                : self.GetObstaclesCount() * 100 / self.Size;
+            return self.Size == 0 ? 0 : self.GetObstaclesCount() * 100 / self.Size;
         }
 
         public static int GetObstaclesCount(this IGraph self)
@@ -52,6 +47,18 @@ namespace GraphLib.Extensions
         {
             self.Vertices.ForEach(action);
             return self;
+        }
+
+        public static int GetAvailableIntermediates(this IGraph graph)
+        {
+            const int NumberOfRequiredEndPoints = 2;
+            int number = graph.Size - graph.GetIsolatedCount() - NumberOfRequiredEndPoints;
+            return number > 0 ? number : 0;
+        }
+
+        public static bool HasAvailableEndPoints(this IGraph graph)
+        {
+            return graph.GetAvailableIntermediates() > 0;
         }
 
         public static bool IsEqual(this IGraph self, IGraph graph)

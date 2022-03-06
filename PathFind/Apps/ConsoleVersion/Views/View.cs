@@ -14,15 +14,16 @@ namespace ConsoleVersion.Views
         private bool IsClosureRequested { get; set; }
         public IValueInput<int> IntInput { get; set; }
 
+        private int MenuSize => menu.MenuActionsNames.Length;
         private string OptionsMsg => MessagesTexts.MenuOptionChoiceMsg;
-        private int MenuItemIndex => IntInput.InputValue(OptionsMsg, menuValueRange) - 1;
+        private int MenuItemIndex => IntInput.InputValue(OptionsMsg, menuRange) - 1;
         private string MenuItem => menu.MenuActionsNames[MenuItemIndex];
 
         protected View(IViewModel model)
         {
             menu = new Menu<Action>(model);
             menuList = new MenuList(menu.MenuActionsNames);
-            menuValueRange = new InclusiveValueRange<int>(menu.MenuActionsNames.Length, 1);
+            menuRange = new InclusiveValueRange<int>(MenuSize, 1);
             model.WindowClosed += OnClosed;
         }
 
@@ -36,18 +37,18 @@ namespace ConsoleVersion.Views
             }
         }
 
-        public void OnClosed()
-        {
-            IsClosureRequested = true;
-        }
-
         public void Dispose()
         {
             NewMenuIteration = null;
         }
 
+        private void OnClosed()
+        {
+            IsClosureRequested = true;
+        }
+
         private readonly Menu<Action> menu;
         private readonly IDisplayable menuList;
-        private readonly InclusiveValueRange<int> menuValueRange;
+        private readonly InclusiveValueRange<int> menuRange;
     }
 }
