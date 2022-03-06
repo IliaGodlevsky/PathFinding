@@ -49,8 +49,7 @@ namespace ConsoleVersion.Extensions
 
         public static IEnumerable<Vertex> InputRequiredEndPoints(this IValueInput<int> self, Graph2D graph, IEndPoints endPoints)
         {
-            yield return self.InputEndPoint(graph, endPoints);
-            yield return self.InputEndPoint(graph, endPoints);
+            return self.InputEndPoints(graph, endPoints, 2);
         }
 
         public static IEnumerable<Vertex> InputEndPoints(this IValueInput<int> self, Graph2D graph, IEndPoints endPoints, int count)

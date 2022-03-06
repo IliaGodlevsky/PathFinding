@@ -11,26 +11,17 @@ namespace ConsoleVersion.ValueInput
     {
         public EnumConsoleValueInput()
         {
-            ignoreCase = true;
-            type = typeof(TEnum);
             enumValues = new EnumValues<TEnum>();
         }
 
         protected override bool IsValidInput(string userInput,
-            InclusiveValueRange<TEnum> valueRange)
+            InclusiveValueRange<TEnum> valueRange, out TEnum result)
         {
-            return Enum.TryParse(userInput, ignoreCase, out TEnum input)
-                && enumValues.Values.Contains(input)
-                && valueRange.Contains(input);
-        }
-
-        protected override TEnum Parse(string input)
-        {
-            return (TEnum)Enum.Parse(type, input, ignoreCase);
+            return Enum.TryParse(userInput, ignoreCase: true, out result)
+                && enumValues.Values.Contains(result)
+                && valueRange.Contains(result);
         }
 
         private readonly EnumValues<TEnum> enumValues;
-        private readonly Type type;
-        private readonly bool ignoreCase;
     }
 }

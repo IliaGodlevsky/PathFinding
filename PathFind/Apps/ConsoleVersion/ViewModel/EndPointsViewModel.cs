@@ -60,7 +60,8 @@ namespace ConsoleVersion.ViewModel
             int numberOfIntermediates = endPoints.GetIntermediates().Count();
             if (numberOfIntermediates > 0)
             {
-                int toReplaceNumber = IntInput.InputValue(MessagesTexts.NumberOfIntermediatesVerticesToReplaceMsg, numberOfIntermediates);
+                string msg = MessagesTexts.NumberOfIntermediatesVerticesToReplaceMsg;
+                int toReplaceNumber = IntInput.InputValue(msg, numberOfIntermediates);
                 Console.WriteLine(MessagesTexts.IntermediateToReplaceMsg);
                 IntInput.InputExistingIntermediates(graph, endPoints, toReplaceNumber).OnMarkedToReplaceIntermediate();
                 Console.WriteLine(MessagesTexts.IntermediateVertexChoiceMsg);
@@ -73,8 +74,9 @@ namespace ConsoleVersion.ViewModel
         {
             if (endPoints.HasSourceAndTargetSet())
             {
+                string message = MessagesTexts.NumberOfIntermediateVerticesInputMsg;
                 MainView.SetCursorPositionUnderMenu(MenuOffset);
-                int number = IntInput.InputValue(MessagesTexts.NumberOfIntermediateVerticesInputMsg, graph.GetAvailableIntermediates());
+                int number = IntInput.InputValue(message, graph.GetAvailableIntermediatesNumber());
                 Console.WriteLine(MessagesTexts.IntermediateVertexChoiceMsg);
                 IntInput.InputEndPoints(graph, endPoints, number).OnEndPointChosen();
             }

@@ -49,7 +49,7 @@ namespace GraphLib.Extensions
             return self;
         }
 
-        public static int GetAvailableIntermediates(this IGraph graph)
+        public static int GetAvailableIntermediatesNumber(this IGraph graph)
         {
             const int NumberOfRequiredEndPoints = 2;
             int number = graph.Size - graph.GetIsolatedCount() - NumberOfRequiredEndPoints;
@@ -58,7 +58,7 @@ namespace GraphLib.Extensions
 
         public static bool HasAvailableEndPoints(this IGraph graph)
         {
-            return graph.GetAvailableIntermediates() > 0;
+            return graph.GetAvailableIntermediatesNumber() > 0;
         }
 
         public static bool IsEqual(this IGraph self, IGraph graph)

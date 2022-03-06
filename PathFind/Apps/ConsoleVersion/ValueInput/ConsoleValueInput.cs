@@ -6,21 +6,20 @@ namespace ConsoleVersion.ValueInput
 {
     internal abstract class ConsoleValueInput<T> : IValueInput<T> where T : struct, IComparable
     {
-        public virtual T InputValue(string msg, T upper, T lower = default)
+        public T InputValue(string msg, T upper, T lower = default)
         {
             var range = new InclusiveValueRange<T>(upper, lower);
+            T result;
             string userInput;
             do
             {
                 Console.Write(msg);
                 userInput = Console.ReadLine();
-            } while (!IsValidInput(userInput, range));
+            } while (!IsValidInput(userInput, range, out result));
 
-            return Parse(userInput);
+            return result;
         }
 
-        protected abstract bool IsValidInput(string input, InclusiveValueRange<T> valueRange);
-
-        protected abstract T Parse(string input);
+        protected abstract bool IsValidInput(string input, InclusiveValueRange<T> valueRange, out T parsed);
     }
 }
