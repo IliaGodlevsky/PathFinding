@@ -54,6 +54,9 @@ namespace ConsoleVersion.ViewModel
         [MenuItem(MenuItemsNames.ReplaceTarget, MenuItemPriority.Low)]
         public void ChangeTargetVertex() => ChangeVertex(endPoints.RemoveTarget, MessagesTexts.TargetVertexChoiceMsg);
 
+        [MenuItem(MenuItemsNames.ClearEndPoints, MenuItemPriority.Low)]
+        public void ClearEndPoints() => endPoints.Reset();
+
         [MenuItem(MenuItemsNames.ReplaceIntermediate, MenuItemPriority.Low)]
         public void ChangeIntermediates()
         {
@@ -80,13 +83,7 @@ namespace ConsoleVersion.ViewModel
                 Console.WriteLine(MessagesTexts.IntermediateVertexChoiceMsg);
                 IntInput.InputEndPoints(graph, endPoints, number).OnEndPointChosen();
             }
-        }
-
-        [MenuItem(MenuItemsNames.ClearEndPoints, MenuItemPriority.Low)]
-        public void ClearEndPoints()
-        {
-            endPoints.Reset();
-        }
+        }       
 
         [MenuItem(MenuItemsNames.Exit, MenuItemPriority.Lowest)]
         public void Interrupt()
