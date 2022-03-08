@@ -2,7 +2,6 @@
 using Common.Extensions.EnumerableExtensions;
 using GraphLib.Extensions;
 using GraphLib.Interfaces;
-using GraphLib.Realizations.Coordinates;
 using GraphLib.Realizations.Graphs;
 using System;
 using System.Collections.Generic;
@@ -15,7 +14,7 @@ namespace WPFVersion3D.Model
 {
     internal sealed class GraphField3D : ModelVisual3D, IGraphField
     {
-        public IReadOnlyCollection<IVertex> Vertices { get; }
+        public IReadOnlyCollection<IVertex> Vertices => vertices;
         public double DistanceBetweenVerticesAtXAxis { get; set; } = default;
         public double DistanceBetweenVerticesAtYAxis { get; set; } = default;
         public double DistanceBetweenVerticesAtZAxis { get; set; } = default;
@@ -27,8 +26,9 @@ namespace WPFVersion3D.Model
                 .OrderBy(axis => axis.Order)
                 .ToArray();
             DimensionSizes = graph.DimensionsSizes;
-            Vertices = graph.Vertices;
-            Vertices.ForEach(Add);
+            vertices = graph.Vertices.OfType<Vertex3D>().ToArray();
+            Children.AddRange(vertices);
+            vertices.ForEach(vertex => LocateVertex(CoordinateSystem, vertex));
         }
 
         public GraphField3D()
@@ -36,19 +36,10 @@ namespace WPFVersion3D.Model
 
         }
 
-        private void Add(IVertex vertex)
-        {
-            if (vertex is Vertex3D vertex3D && vertex.Position is Coordinate3D)
-            {
-                LocateVertex(CoordinateSystem, vertex3D);
-                Children.Add(vertex3D);
-            }
-        }
-
         public void CenterGraph(params double[] offsets)
         {
             var centerOffsets = CoordinateSystem.Select(axis => CalculateAxisOffset(offsets, axis)).ToArray();
-            Vertices.ForEach(vertex => LocateVertex(CoordinateSystem, (Vertex3D)vertex, centerOffsets));
+            vertices.ForEach(vertex => LocateVertex(CoordinateSystem, vertex, centerOffsets));
         }
 
         public void StretchAlongAxis(IAxis axis, double distanceBetween, params double[] additionalOffset)
@@ -92,5 +83,7 @@ namespace WPFVersion3D.Model
             DistanceBetweenVerticesAtYAxis,
             DistanceBetweenVerticesAtXAxis
         };
+
+        private readonly IReadOnlyCollection<Vertex3D> vertices;
     }
 }

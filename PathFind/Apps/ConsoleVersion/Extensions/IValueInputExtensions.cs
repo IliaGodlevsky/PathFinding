@@ -1,4 +1,5 @@
-﻿using ConsoleVersion.Interface;
+﻿using ConsoleVersion.Enums;
+using ConsoleVersion.Interface;
 using ConsoleVersion.Model;
 using GraphLib.Extensions;
 using GraphLib.Interfaces;
@@ -16,6 +17,11 @@ namespace ConsoleVersion.Extensions
             where T : struct, IComparable
         {
             return self.InputValue(msg, range.UpperValueOfRange, range.LowerValueOfRange);
+        }
+
+        public static bool InputAnswer(this IValueInput<Answer> self, string msg, InclusiveValueRange<Answer> range)
+        {
+            return self.InputValue(msg, range) == Answer.Yes;
         }
 
         public static InclusiveValueRange<T> InputRange<T>(this IValueInput<T> self, InclusiveValueRange<T> range)

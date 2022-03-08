@@ -12,7 +12,6 @@ using GalaSoft.MvvmLight.Messaging;
 using GraphLib.Base.EndPoints;
 using GraphLib.Extensions;
 using GraphLib.Interfaces;
-using GraphLib.Realizations.Coordinates;
 using GraphLib.Realizations.Graphs;
 using GraphLib.Serialization;
 using GraphLib.Serialization.Exceptions;
@@ -107,7 +106,7 @@ namespace ConsoleVersion.ViewModel
         public override void ClearGraph()
         {
             base.ClearGraph();
-            messenger.Forward(new UpdateStatisticsMessage(string.Empty), MessageTokens.MainView);
+            messenger.Forward(UpdateStatisticsMessage.Empty, MessageTokens.MainView);
         }
 
         public void DisplayGraph()
@@ -115,11 +114,11 @@ namespace ConsoleVersion.ViewModel
             try
             {
                 Console.Clear();
-                DisplayMainScreen();
-                if (MainView.PathfindingStatisticsPosition is Coordinate2D position)
-                {
-                    Console.SetCursorPosition(position.X, position.Y + 1);
-                }
+                Console.ForegroundColor = Color.White;
+                Console.WriteLine(GraphParametres);
+                (GraphField as IDisplayable)?.Display();
+                Console.WriteLine();
+                MainView.SetCursorPositionUnderMenu(1);
             }
             catch (ArgumentOutOfRangeException ex)
             {
@@ -129,14 +128,6 @@ namespace ConsoleVersion.ViewModel
             {
                 log.Error(ex);
             }
-        }
-
-        private void DisplayMainScreen()
-        {
-            Console.ForegroundColor = Color.White;
-            Console.WriteLine(GraphParametres);
-            (GraphField as IDisplayable)?.Display();
-            Console.WriteLine();
         }
 
         private void RecieveClaimGraphMessage(ClaimGraphMessage message)

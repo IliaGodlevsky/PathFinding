@@ -102,7 +102,7 @@ namespace ConsoleVersion.ViewModel
 
         private void SetGraph(GraphCreatedMessage message)
         {
-            graph = (Graph2D)message.Graph;
+            graph = message.Graph;
         }
 
         private void ChangeVertex(Action action, string message)

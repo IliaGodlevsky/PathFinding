@@ -10,7 +10,6 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Drawing;
-using System.Linq;
 
 using Console = Colorful.Console;
 
@@ -27,7 +26,7 @@ namespace ConsoleVersion.Model
         public Vertex(INeighborhood neighbourhood, ICoordinate coordinate, IVisualization<Vertex> visualization)
         {
             this.visualization = visualization;
-            Position = coordinate;
+            position = (Coordinate2D)coordinate;
             this.Initialize();
             neighbours = new Lazy<IReadOnlyCollection<IVertex>>(() => neighbourhood.GetNeighbours(this));
         }
@@ -71,7 +70,9 @@ namespace ConsoleVersion.Model
 
         public Color Color { get; set; }
         public IReadOnlyCollection<IVertex> Neighbours => neighbours.Value;
-        public ICoordinate Position { get; }
+
+        private readonly Coordinate2D position;
+        public ICoordinate Position => position;
 
         public void OnVertexCostChanged() => VertexCostChanged?.Invoke(this, EventArgs.Empty);
         public void OnVertexReversed() => VertexReversed?.Invoke(this, EventArgs.Empty);
@@ -119,12 +120,8 @@ namespace ConsoleVersion.Model
 
         private Coordinate2D GetConsoleCoordinates()
         {
-            var consolePosition = MainView.GraphFieldPosition;
-            int lateralDistance = MainView.GetLateralDistanceBetweenVertices();
-            int x = Position.CoordinatesValues.FirstOrDefault();
-            int y = Position.CoordinatesValues.LastOrDefault();
-            int left = consolePosition.X + x * lateralDistance;
-            int top = consolePosition.Y + y;
+            int left = MainView.GraphFieldPosition.X + position.X * MainView.LateralDistanceBetweenVertices;
+            int top = MainView.GraphFieldPosition.Y + position.Y;
             return new Coordinate2D(left, top);
         }
 

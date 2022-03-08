@@ -1,5 +1,6 @@
 ﻿using Common;
 using System;
+using Console = Colorful.Console;
 
 namespace ConsoleVersion
 {

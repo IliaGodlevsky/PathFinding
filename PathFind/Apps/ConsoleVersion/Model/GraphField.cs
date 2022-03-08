@@ -3,7 +3,6 @@ using ConsoleVersion.Interface;
 using GraphLib.Interfaces;
 using GraphLib.Realizations.Graphs;
 using System.Collections.Generic;
-using System.Linq;
 
 namespace ConsoleVersion.Model
 {
@@ -16,9 +15,7 @@ namespace ConsoleVersion.Model
         public GraphField(Graph2D graph)
         {
             Vertices = graph.Vertices;
-            var axes = this.GetAttachedFramedAxes(graph);
-            var vertices = Vertices.OfType<Vertex>();
-            Displayables = axes.Concat(vertices).ToArray();
+            Displayables = this.GenerateDisplayables(graph);
         }
 
         public void Display() => Displayables.DisplayAll();

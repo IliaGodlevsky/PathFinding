@@ -13,6 +13,6 @@ namespace ConsoleVersion.Model.FramedAxes
 
         protected const char Space = ' ';
 
-        protected int LateralDistance => MainView.GetLateralDistanceBetweenVertices();
+        protected int LateralDistance => MainView.LateralDistanceBetweenVertices;
     }
 }

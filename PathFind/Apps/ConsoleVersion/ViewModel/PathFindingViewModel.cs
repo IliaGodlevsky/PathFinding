@@ -30,8 +30,7 @@ using ValueRange;
 
 namespace ConsoleVersion.ViewModel
 {
-    internal sealed class PathFindingViewModel : PathFindingModel,
-        IViewModel, IRequireIntInput, IRequireAnswerInput, IDisposable
+    internal sealed class PathFindingViewModel : PathFindingModel, IViewModel, IRequireIntInput, IRequireAnswerInput, IDisposable
     {
         public event Action WindowClosed;
 
@@ -39,10 +38,14 @@ namespace ConsoleVersion.ViewModel
 
         public IValueInput<int> IntInput { get; set; }
         public IValueInput<Answer> AnswerInput { get; set; }
+
         public PathfindingAlgorithm CurrentAlgorithm => algorithm;
-        private IReadOnlyCollection<IConsoleKeyCommand> KeyCommands { get; }
-        private string Statistics => path.ToStatistics(timer, visitedVerticesCount, CurrentAlgorithmName);
+        
         private string CurrentAlgorithmName { get; set; }
+        private string Statistics => path.ToStatistics(timer, visitedVerticesCount, CurrentAlgorithmName);
+        private int AlgorithmIndex => IntInput.InputValue(AlgorithmKeyInputMessage, algorithmKeysValueRange) - 1;
+
+        private IReadOnlyCollection<IConsoleKeyCommand> KeyCommands { get; }
 
         public PathFindingViewModel(BaseEndPoints endPoints, IEnumerable<IAlgorithmFactory> algorithmFactories, ILog log)
             : base(endPoints, algorithmFactories, log)
@@ -78,13 +81,6 @@ namespace ConsoleVersion.ViewModel
             }
         }
 
-        [MenuItem(MenuItemsNames.ChooseAlgorithm, MenuItemPriority.High)]
-        public void ChooseAlgorithm()
-        {
-            int algorithmKeyIndex = IntInput.InputValue(AlgorithmKeyInputMessage, algorithmKeysValueRange) - 1;
-            Algorithm = Algorithms[algorithmKeyIndex].Item2;
-        }
-
         [MenuItem(MenuItemsNames.InputDelayTime, MenuItemPriority.Normal)]
         public void InputDelayTime()
         {
@@ -94,11 +90,11 @@ namespace ConsoleVersion.ViewModel
             }
         }
 
+        [MenuItem(MenuItemsNames.ChooseAlgorithm, MenuItemPriority.High)]
+        public void ChooseAlgorithm() => Algorithm = Algorithms[AlgorithmIndex].Item2;
+
         [MenuItem(MenuItemsNames.Exit, MenuItemPriority.Lowest)]
-        public void Interrupt()
-        {
-            WindowClosed?.Invoke();
-        }
+        public void Interrupt() => WindowClosed?.Invoke();
 
         [MenuItem(MenuItemsNames.ChooseEndPoints, MenuItemPriority.High)]
         public void ChooseExtremeVertex() => DI.Container.Display<EndPointsView>();
@@ -110,10 +106,9 @@ namespace ConsoleVersion.ViewModel
         public void ClearColors() => messenger.Forward<ClearColorsMessage>(MessageTokens.MainModel);
 
         [MenuItem(MenuItemsNames.ApplyVisualization, MenuItemPriority.Low)]
-        public void ApplyVisualization()
-        {
-            var answer = AnswerInput.InputValue(MessagesTexts.ApplyVisualizationMsg, Constants.AnswerValueRange);
-            IsVisualizationRequired = answer == Answer.Yes;
+        public void ApplyVisualization() 
+        { 
+            IsVisualizationRequired = AnswerInput.InputAnswer(MessagesTexts.ApplyVisualizationMsg, Constants.AnswerValueRange);
         }
 
         protected override void SummarizePathfindingResults()
@@ -123,9 +118,6 @@ namespace ConsoleVersion.ViewModel
             visitedVerticesCount = 0;
             resetEvent.Set();
         }
-
-        protected override void OnAlgorithmInterrupted(object sender, ProcessEventArgs e) { }
-        protected override void OnAlgorithmFinished(object sender, ProcessEventArgs e) { }
 
         protected override void OnAlgorithmStarted(object sender, ProcessEventArgs e)
         {
@@ -149,10 +141,7 @@ namespace ConsoleVersion.ViewModel
             algorithm.Finished += ConsoleKeystrokesHook.Instance.Interrupt;
         }
 
-        private void OnConsoleKeyPressed(object sender, ConsoleKeyPressedEventArgs e)
-        {
-            KeyCommands.Execute(e.PressedKey, this);
-        }
+        private void OnConsoleKeyPressed(object sender, ConsoleKeyPressedEventArgs e) => KeyCommands.Execute(e.PressedKey, this);
 
         public void Dispose()
         {

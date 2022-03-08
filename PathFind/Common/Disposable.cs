@@ -11,9 +11,6 @@ namespace Common
             this.disposeAction = disposeAction;
         }
 
-        public void Dispose()
-        {
-            disposeAction?.Invoke();
-        }
+        public void Dispose() => disposeAction?.Invoke();
     }
 }

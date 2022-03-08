@@ -6,7 +6,6 @@ using ConsoleVersion.ViewModel;
 using GalaSoft.MvvmLight.Messaging;
 using GraphLib.Base;
 using GraphLib.Realizations.Coordinates;
-using GraphLib.Realizations.Graphs;
 using System;
 
 namespace ConsoleVersion.Views
@@ -16,26 +15,15 @@ namespace ConsoleVersion.Views
         public static int HeightOfAbscissaView => 2;
         public static int HeightOfGraphParametresView => 1;
         public static int YCoordinatePadding => WidthOfOrdinateView - 1;
-
-        public static int WidthOfOrdinateView
-            => (Constants.GraphLengthValueRange.UpperValueOfRange - 1).ToString().Length + 1;
+        public static int WidthOfOrdinateView => (Constants.GraphLengthValueRange.UpperValueOfRange - 1).ToString().Length + 1;
+        public static int LateralDistanceBetweenVertices { get; private set; }
 
         public static Coordinate2D GraphFieldPosition { get; }
-
-        public static Coordinate2D PathfindingStatisticsPosition { get; private set; }
-
-        public static int GetLateralDistanceBetweenVertices()
-        {
-            int currentCostWidth = CurrentMaxValueOfRange.ToString().Length;
-            int previousCostWidth = PreviousMaxValueOfRange.ToString().Length;
-            int costWidth = Math.Max(currentCostWidth, previousCostWidth);
-            int width = (Constants.GraphWidthValueRange.UpperValueOfRange - 1).ToString().Length;
-            return costWidth >= width ? costWidth + 2 : width + width - costWidth;
-        }
+        public static Coordinate2D StatisticsPosition { get; private set; }
 
         public static void SetCursorPositionUnderMenu(int menuOffset)
         {
-            var fieldPosition = MainView.PathfindingStatisticsPosition;
+            var fieldPosition = MainView.StatisticsPosition;
             Console.SetCursorPosition(fieldPosition.X, fieldPosition.Y + menuOffset);
         }
 
@@ -44,6 +32,7 @@ namespace ConsoleVersion.Views
             int x = WidthOfOrdinateView;
             int y = HeightOfAbscissaView + HeightOfGraphParametresView;
             GraphFieldPosition = new Coordinate2D(x, y);
+            StatisticsPosition = new Coordinate2D(0, 0);
         }
 
         public MainView(MainViewModel model) : base(model)
@@ -56,14 +45,22 @@ namespace ConsoleVersion.Views
             OnCostRangeChanged(message);
         }
 
+        private static int CalculateLateralDistanceBetweenVertices()
+        {
+            int currentCostWidth = CurrentMaxValueOfRange.ToString().Length;
+            int previousCostWidth = PreviousMaxValueOfRange.ToString().Length;
+            int costWidth = Math.Max(currentCostWidth, previousCostWidth);
+            int width = (Constants.GraphWidthValueRange.UpperValueOfRange - 1).ToString().Length;
+            return costWidth >= width ? costWidth + 2 : width + width - costWidth;
+        }
+
         private void OnNewGraphCreated(GraphCreatedMessage message)
         {
             PreviousMaxValueOfRange = CurrentMaxValueOfRange;
-            if (message.Graph is Graph2D graph2D)
-            {
-                int pathFindingStatisticsOffset = graph2D.Length + HeightOfAbscissaView * 2 + HeightOfGraphParametresView;
-                PathfindingStatisticsPosition = new Coordinate2D(0, pathFindingStatisticsOffset);
-            }
+            int pathFindingStatisticsOffset = message.Graph.Length + HeightOfAbscissaView * 2 + HeightOfGraphParametresView;
+            StatisticsPosition = new Coordinate2D(0, pathFindingStatisticsOffset);
+            LateralDistanceBetweenVertices = CalculateLateralDistanceBetweenVertices();
+
         }
 
         private void OnCostRangeChanged(CostRangeChangedMessage message)
@@ -73,19 +70,17 @@ namespace ConsoleVersion.Views
             int max = Math.Max(upperValueRange, Math.Abs(lowerValueRange));
             PreviousMaxValueOfRange = Math.Max(CurrentMaxValueOfRange, PreviousMaxValueOfRange);
             CurrentMaxValueOfRange = max;
+            LateralDistanceBetweenVertices = CalculateLateralDistanceBetweenVertices();
         }
 
         private void OnStatisticsUpdated(UpdateStatisticsMessage message)
         {
             lock (locker)
             {
-                var coordinate = MainView.PathfindingStatisticsPosition;
-                if (coordinate != null)
+                var coordinate = MainView.StatisticsPosition;
+                using (ConsoleCursor.UseCursorPosition(coordinate.X, coordinate.Y))
                 {
-                    using (ConsoleCursor.UseCursorPosition(coordinate.X, coordinate.Y))
-                    {
-                        Console.Write(message.Statistics.PadRight(Console.BufferWidth));
-                    }
+                    Console.Write(message.Statistics.PadRight(Console.BufferWidth));
                 }
             }
         }
