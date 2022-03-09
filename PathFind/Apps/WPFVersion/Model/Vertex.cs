@@ -20,7 +20,7 @@ namespace WPFVersion.Model
             Template = (ControlTemplate)TryFindResource("vertexTemplate");
             Position = coordinate;
             this.Initialize();
-            neighbours = new Lazy<IReadOnlyCollection<IVertex>>(() => neighborhood.GetNeighbours(this));
+            neighbours = new Lazy<IReadOnlyCollection<IVertex>>(() => neighborhood.GetNeighboursWithinGraph(this));
         }
 
         public Vertex(VertexSerializationInfo info, IVisualization<Vertex> visualization)

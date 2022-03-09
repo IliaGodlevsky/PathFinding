@@ -1,6 +1,6 @@
-﻿using GraphLib.Interfaces;
+﻿using GraphLib.Exceptions;
+using GraphLib.Interfaces;
 using NullObject.Extensions;
-using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -8,20 +8,21 @@ namespace GraphLib.Extensions
 {
     public static class INeighbourhoodExtensions
     {
-        public static IReadOnlyCollection<IVertex> GetNeighbours(this INeighborhood self, IVertex vertex)
+        public static IReadOnlyCollection<IVertex> GetNeighboursWithinGraph(this INeighborhood self, IVertex vertex)
         {
-            if (vertex.Graph.IsNull())
-            {
-                string format = "Vertex doesn't belong to any graph. Vertex: {0}";
-                string message = string.Format(format, vertex.GetInforamtion());
-                throw new ArgumentNullException(message);
-            }
+            return vertex.Graph.IsNull() 
+                ? throw new LonelyVertexException(vertex) 
+                : self.GetNeighborsWithinGraphInternal(vertex);
+        }
 
-            return self
-                .Neighbours
-                .Where(coordinate => coordinate.IsWithinGraph(vertex.Graph))
-                .Select(coordinate => vertex.Graph[coordinate])
-                .ToArray();
+        private static IEnumerable<ICoordinate> WithoutOutOfGraph(this INeighborhood self, IVertex vertex)
+        {
+            return self.Neighbours.Where(coordinate => coordinate.IsWithinGraph(vertex.Graph));
+        }
+
+        private static IReadOnlyCollection<IVertex> GetNeighborsWithinGraphInternal(this INeighborhood self, IVertex vertex)
+        {
+            return self.WithoutOutOfGraph(vertex).Select(coordinate => vertex.Graph[coordinate]).ToArray();
         }
     }
 }

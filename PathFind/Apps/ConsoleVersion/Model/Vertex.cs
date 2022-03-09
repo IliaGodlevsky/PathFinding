@@ -28,7 +28,7 @@ namespace ConsoleVersion.Model
             this.visualization = visualization;
             position = (Coordinate2D)coordinate;
             this.Initialize();
-            neighbours = new Lazy<IReadOnlyCollection<IVertex>>(() => neighbourhood.GetNeighbours(this));
+            neighbours = new Lazy<IReadOnlyCollection<IVertex>>(() => neighbourhood.GetNeighboursWithinGraph(this));
         }
 
         public Vertex(VertexSerializationInfo info, IVisualization<Vertex> visualization)

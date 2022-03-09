@@ -24,7 +24,7 @@ namespace WindowsFormsVersion.Model
             TextAlign = ContentAlignment.MiddleCenter;
             this.Initialize();
             Position = coordinate;
-            neighbours = new Lazy<IReadOnlyCollection<IVertex>>(() => neighborhood.GetNeighbours(this));
+            neighbours = new Lazy<IReadOnlyCollection<IVertex>>(() => neighborhood.GetNeighboursWithinGraph(this));
         }
 
         public Vertex(VertexSerializationInfo info, IVisualization<Vertex> visualization)

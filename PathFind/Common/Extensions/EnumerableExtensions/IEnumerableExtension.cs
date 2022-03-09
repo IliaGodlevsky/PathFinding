@@ -6,7 +6,7 @@ using System.Linq;
 
 namespace Common.Extensions.EnumerableExtensions
 {
-    class MatchComparer<T> : IEqualityComparer<T>
+    sealed class MatchComparer<T> : IEqualityComparer<T>
     {
         public MatchComparer(Func<T, T, bool> predicate)
         {
@@ -28,22 +28,6 @@ namespace Common.Extensions.EnumerableExtensions
 
     public static class IEnumerableExtension
     {
-        public static IEnumerable<T> DistinctBy<T, TKey>(this IEnumerable<T> collection, Func<T, TKey> selector)
-        {
-            #region InvariantsObservance
-            if (collection == null || selector == null)
-            {
-                throw new ArgumentNullException("Bad incoming arguments");
-            }
-            #endregion
-
-            T FirstOfTheGroup(IGrouping<TKey, T> item) => item.First();
-
-            return collection
-                .GroupBy(selector)
-                .Select(FirstOfTheGroup);
-        }
-
         public static T AggregateOrDefault<T>(this IEnumerable<T> collection, Func<T, T, T> func)
         {
             return collection.Any() ? collection.Aggregate(func) : default;

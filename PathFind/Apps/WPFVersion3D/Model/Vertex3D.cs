@@ -54,7 +54,7 @@ namespace WPFVersion3D.Model
             Transform = new TranslateTransform3D();
             Size = Constants.InitialVertexSize;
             this.Initialize();
-            neighbours = new Lazy<IReadOnlyCollection<IVertex>>(() => neighborhood.GetNeighbours(this));
+            neighbours = new Lazy<IReadOnlyCollection<IVertex>>(() => neighborhood.GetNeighboursWithinGraph(this));
         }
 
         public Vertex3D(VertexSerializationInfo info,

@@ -1,5 +1,5 @@
-﻿using Algorithm.Interfaces;
-using Common.Extensions;
+﻿using Algorithm.Extensions;
+using Algorithm.Interfaces;
 using System.Diagnostics;
 
 namespace ConsoleVersion.Extensions
@@ -8,10 +8,7 @@ namespace ConsoleVersion.Extensions
     {
         public static string ToStatistics(this IGraphPath path, Stopwatch timer, int visited, string algorithm)
         {
-            string timerInfo = timer.ToFormattedString();
-            var pathfindingInfos = new object[] { path.Length, path.Cost, visited };
-            string pathfindingInfo = string.Format(MessagesTexts.PathfindingStatisticsFormat, pathfindingInfos);
-            return string.Join("\t", algorithm, timerInfo, pathfindingInfo);
+            return path.ToStatistics(timer, visited, algorithm, MessagesTexts.PathfindingStatisticsFormat);
         }
     }
 }

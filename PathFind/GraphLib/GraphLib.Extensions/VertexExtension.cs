@@ -8,13 +8,6 @@ namespace GraphLib.Extensions
 {
     public static class VertexExtension
     {
-        public static string GetInforamtion(this IVertex self)
-        {
-            string cost = self.Cost.CurrentCost.ToString();
-            string position = self.Position.ToString();
-            return $"[Cost: {cost}; position: {position}]";
-        }
-
         public static bool IsIsolated(this IVertex self)
         {
             bool IsObstacleOrNull(IVertex vertex)
