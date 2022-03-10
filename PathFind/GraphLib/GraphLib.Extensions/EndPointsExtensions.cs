@@ -23,6 +23,11 @@ namespace GraphLib.Extensions
             }
         }
 
+        public static bool IsEndPoint(this IEndPoints self, IVertex vertex)
+        {
+            return self.EndPoints.Contains(vertex);
+        }
+
         public static bool IsIntermediate(this IEndPoints endPoints, IVertex vertex)
         {
             return endPoints.GetIntermediates().Any(v => v.IsEqual(vertex));

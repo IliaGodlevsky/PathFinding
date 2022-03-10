@@ -17,15 +17,7 @@ namespace GraphLib.Base.EndPoints
 
         public IVertex Source { get; internal set; }
         public IVertex Target { get; internal set; }
-        public IEnumerable<IVertex> EndPoints
-            => Intermediates.Prepend(Source).Append(Target);
-
-        public bool IsEndPoint(IVertex vertex)
-        {
-            return Source.Equals(vertex)
-                || Target.Equals(vertex)
-                || Intermediates.Contains(vertex);
-        }
+        public IEnumerable<IVertex> EndPoints => Intermediates.Prepend(Source).Append(Target);
 
         public void SubscribeToEvents(IGraph graph)
         {

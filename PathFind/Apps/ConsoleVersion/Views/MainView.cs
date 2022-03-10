@@ -41,8 +41,7 @@ namespace ConsoleVersion.Views
             messenger.Register<GraphCreatedMessage>(this, MessageTokens.MainView, OnNewGraphCreated);
             messenger.Register<CostRangeChangedMessage>(this, MessageTokens.MainView, OnCostRangeChanged);
             messenger.Register<UpdateStatisticsMessage>(this, MessageTokens.MainView, OnStatisticsUpdated);
-            var message = new CostRangeChangedMessage(BaseVertexCost.CostRange);
-            OnCostRangeChanged(message);
+            OnCostRangeChanged(new CostRangeChangedMessage(BaseVertexCost.CostRange));
         }
 
         private static int CalculateLateralDistanceBetweenVertices()
@@ -77,8 +76,7 @@ namespace ConsoleVersion.Views
         {
             lock (locker)
             {
-                var coordinate = MainView.StatisticsPosition;
-                using (ConsoleCursor.UseCursorPosition(coordinate.X, coordinate.Y))
+                using (Cursor.UsePosition(MainView.StatisticsPosition))
                 {
                     Console.Write(message.Statistics.PadRight(Console.BufferWidth));
                 }

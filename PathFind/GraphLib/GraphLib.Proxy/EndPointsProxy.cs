@@ -15,10 +15,5 @@ namespace GraphLib.Proxy
             Target = target;
             EndPoints = new IVertex[] { Source, Target };
         }
-
-        public bool IsEndPoint(IVertex vertex)
-        {
-            return Source.Equals(vertex) || Target.Equals(vertex);
-        }
     }
 }

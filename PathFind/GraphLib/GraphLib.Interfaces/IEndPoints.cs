@@ -9,7 +9,5 @@ namespace GraphLib.Interfaces
         IVertex Source { get; }
 
         IEnumerable<IVertex> EndPoints { get; }
-
-        bool IsEndPoint(IVertex vertex);
     }
 }

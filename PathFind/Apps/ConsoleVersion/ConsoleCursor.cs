@@ -1,15 +1,16 @@
 ﻿using Common;
+using GraphLib.Realizations.Coordinates;
 using System;
 using Console = Colorful.Console;
 
 namespace ConsoleVersion
 {
-    internal static class ConsoleCursor
+    internal static class Cursor
     {
-        public static IDisposable UseCursorPosition(int left, int top)
+        public static IDisposable UsePosition(Coordinate2D point)
         {
             SaveCursorPosition();
-            Console.SetCursorPosition(left, top);
+            Console.SetCursorPosition(point.X, point.Y);
             return new Disposable(RestoreCursorPosition);
         }
 

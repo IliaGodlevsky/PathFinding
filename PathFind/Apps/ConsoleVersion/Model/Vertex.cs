@@ -95,8 +95,7 @@ namespace ConsoleVersion.Model
         {
             lock (locker)
             {
-                var consoleCoordinate = GetConsoleCoordinates();
-                using (ConsoleCursor.UseCursorPosition(consoleCoordinate.X, consoleCoordinate.Y))
+                using (Cursor.UsePosition(GetDisplayCoordinates()))
                 {
                     Console.Write(text, Color);
                 }
@@ -118,7 +117,7 @@ namespace ConsoleVersion.Model
         public void VisualizeAsIntermediate() => visualization.VisualizeAsIntermediate(this);
         public void VisualizeAsMarkedToReplaceIntermediate() => visualization.VisualizeAsMarkedToReplaceIntermediate(this);
 
-        private Coordinate2D GetConsoleCoordinates()
+        private Coordinate2D GetDisplayCoordinates()
         {
             int left = MainView.GraphFieldPosition.X + position.X * MainView.LateralDistanceBetweenVertices;
             int top = MainView.GraphFieldPosition.Y + position.Y;
