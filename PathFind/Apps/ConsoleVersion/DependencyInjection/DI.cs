@@ -10,7 +10,7 @@ using ConsoleVersion.Extensions;
 using ConsoleVersion.Interface;
 using ConsoleVersion.Messages;
 using ConsoleVersion.Model;
-using ConsoleVersion.ValueInput;
+using ConsoleVersion.ValueInput.UserInput;
 using ConsoleVersion.ViewModel;
 using GalaSoft.MvvmLight.Messaging;
 using GraphLib.Base.EndPoints;
@@ -47,8 +47,10 @@ namespace ConsoleVersion.DependencyInjection
         {
             var builder = new ContainerBuilder();
 
-            builder.RegisterType<EnumConsoleValueInput<Answer>>().As<IValueInput<Answer>>().SingleInstance();
-            builder.RegisterType<IntConsoleValueInput>().As<IValueInput<int>>().SingleInstance();
+            builder.RegisterType<ConsoleUserEnumInput<Answer>>().As<IInput<Answer>>().SingleInstance();
+            builder.RegisterType<ConsoleUserIntInput>().As<IInput<int>>().SingleInstance();
+            builder.RegisterType<ConsoleUserStringInput>().As<IInput<string>>().SingleInstance(); 
+            builder.RegisterType<ConsoleUserKeyInput>().As<IInput<ConsoleKey>>().SingleInstance();
 
             builder.RegisterType<MainViewModel>().AsSelf().SingleInstance().PropertiesAutowired();
             builder.RegisterType<EndPointsViewModel>().AsSelf().PropertiesAutowired()
@@ -80,7 +82,7 @@ namespace ConsoleVersion.DependencyInjection
             builder.RegisterType<VertexVisualization>().As<IVisualization<Vertex>>().SingleInstance();
 
             builder.RegisterType<GraphSerializationModule>().AsSelf().SingleInstance();
-            builder.RegisterType<PathInput>().As<IPathInput>().SingleInstance();
+            builder.RegisterType<PathInput>().As<IPathInput>().SingleInstance().PropertiesAutowired();
             builder.RegisterType<GraphSerializer>().As<IGraphSerializer>().SingleInstance();
             builder.RegisterDecorator<CompressGraphSerializer, IGraphSerializer>();
             builder.RegisterDecorator<CryptoGraphSerializer, IGraphSerializer>();

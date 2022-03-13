@@ -1,26 +1,21 @@
-﻿using GraphLib.Serialization.Interfaces;
-using System;
+﻿using ConsoleVersion.Extensions;
+using ConsoleVersion.Interface;
+using GraphLib.Serialization.Interfaces;
 
 namespace ConsoleVersion.Model
 {
-    internal sealed class PathInput : IPathInput
+    internal sealed class PathInput : IPathInput, IRequireStringInput
     {
+        public IInput<string> StringInput { get; set; }
+
         public string InputLoadPath()
         {
-            return InputPath();
+            return StringInput.Input(MessagesTexts.InputPathMsg);
         }
 
         public string InputSavePath()
         {
-            return InputPath();
+            return StringInput.Input(MessagesTexts.InputPathMsg);
         }
-
-        private string InputPath()
-        {
-            Console.Write(Message);
-            return Console.ReadLine();
-        }
-
-        private const string Message = "Input path: ";
     }
 }

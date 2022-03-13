@@ -1,5 +1,5 @@
-﻿using Common.Extensions.EnumerableExtensions;
-using Common.Extensions;
+﻿using Common.Extensions;
+using Common.Extensions.EnumerableExtensions;
 using GraphLib.Extensions;
 using GraphLib.Interfaces;
 using GraphLib.Interfaces.Factories;

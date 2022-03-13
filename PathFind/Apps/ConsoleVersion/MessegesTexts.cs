@@ -2,7 +2,6 @@
 {
     internal static class MessagesTexts
     {
-        public static readonly string[] EndPointsMessages = new[] { SourceVertexChoiceMsg, TargetVertexChoiceMsg };
         public const string SourceAndTargetInputMsg = "Input source and target vertices: ";
         public const string PathfindingStatisticsFormat = "Steps: {0}  Path cost: {1}  Visited: {2}";
         public const string SourceVertexChoiceMsg = "Choose source vertex: ";
@@ -30,5 +29,8 @@
         public const string NotEnoughParamtres = "Not enough parametres to create graph";
         public const string NumberOfIntermediateVerticesInputMsg = "Input number of intermediates vertices: ";
         public const string NumberOfIntermediatesVerticesToReplaceMsg = "Input number of intermediates to replace: ";
+        public const string OutOfRangeMsg = "Value is out of range. ";
+        public const string BadInputMsg = "Bad input. Try again: ";
+        public const string InputPathMsg = "Input path: ";
     }
 }

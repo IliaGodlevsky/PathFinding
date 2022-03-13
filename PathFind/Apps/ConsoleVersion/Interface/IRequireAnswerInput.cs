@@ -4,6 +4,6 @@ namespace ConsoleVersion.Interface
 {
     internal interface IRequireAnswerInput
     {
-        IValueInput<Answer> AnswerInput { get; set; }
+        IInput<Answer> AnswerInput { get; set; }
     }
 }

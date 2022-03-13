@@ -17,13 +17,13 @@ namespace ConsoleVersion.Model
 
         }
 
-        public IValueInput<int> IntInput { get; set; }
+        public IInput<int> IntInput { get; set; }
 
         public override void ChangeVertexCost(object sender, EventArgs e)
         {
             if (sender is Vertex vertex && !vertex.IsObstacle)
             {
-                var cost = IntInput.InputValue(MessagesTexts.VertexCostInputMsg, CostRange);
+                var cost = IntInput.Input(MessagesTexts.VertexCostInputMsg, CostRange);
                 vertex.Cost = costFactory.CreateCost(cost);
             }
         }

@@ -2,7 +2,6 @@
 using Common.Extensions;
 using Common.Extensions.EnumerableExtensions;
 using GraphLib.Extensions;
-using GraphLib.Interfaces;
 using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
@@ -26,7 +25,7 @@ namespace Algorithm.Extensions
         }
 
         public static string ToStatistics(this IGraphPath path, Stopwatch timer, int visited, string algorithm, string format)
-        {          
+        {
             string pathfindingInfo = string.Format(format, path.Length, path.Cost, visited);
             return string.Join("\t", algorithm, timer.ToFormattedString(), pathfindingInfo);
         }

@@ -1,5 +1,4 @@
 ﻿using Common.Extensions;
-using ConsoleVersion.Views;
 using System;
 using System.Text;
 
@@ -16,7 +15,7 @@ namespace ConsoleVersion.Model.FramedAxes
 
         public override void Display()
         {
-            Console.SetCursorPosition(0, MainView.HeightOfGraphParametresView);
+            Console.SetCursorPosition(0, Constants.HeightOfGraphParametresView);
             Console.Write(GetFramedAxis());
         }
 
@@ -40,7 +39,7 @@ namespace ConsoleVersion.Model.FramedAxes
             return string.Concat(index, GetSpace(index));
         }
 
-        private string LargeSpace => new string(Space, MainView.WidthOfOrdinateView);
+        private string LargeSpace => new string(Space, Constants.WidthOfOrdinateView);
         private string HorizontalFrameFragment
         {
             get

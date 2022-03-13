@@ -1,5 +1,4 @@
 ﻿using Common.Attrbiutes;
-using ConsoleVersion.Views;
 using GraphLib.Realizations.Graphs;
 
 namespace ConsoleVersion.Model.FramedAxes
@@ -26,7 +25,7 @@ namespace ConsoleVersion.Model.FramedAxes
 
         protected override string Offset => new string(Space, OffsetNumber);
 
-        private int WidthOfOrdinateView => MainView.WidthOfOrdinateView;
+        private int WidthOfOrdinateView => Constants.WidthOfOrdinateView;
         private int OffsetNumber => graphWidth * LateralDistance + WidthOfOrdinateView;
 
         private readonly int graphWidth;

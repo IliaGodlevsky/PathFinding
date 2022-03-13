@@ -15,6 +15,12 @@ namespace ValueRange.Extensions
             }
         }
 
+        public static InclusiveValueRange<T> ToRange<T>(this (T upper, T lower) range)
+            where T : IComparable
+        {
+            return new InclusiveValueRange<T>(range.upper, range.lower);
+        }
+
         public static uint Amplitude(this InclusiveValueRange<int> valueRange)
         {
             return (uint)((long)valueRange.UpperValueOfRange - valueRange.LowerValueOfRange);
@@ -26,29 +32,37 @@ namespace ValueRange.Extensions
         }
 
         public static bool Contains<T>(this InclusiveValueRange<T> self, T value)
-            where T : struct, IComparable
+            where T : IComparable
         {
             return value.IsBetween(self.UpperValueOfRange, self.LowerValueOfRange);
         }
 
         public static T ReturnInRange<T>(this InclusiveValueRange<T> self, T value,
             ReturnOptions returnOptions = ReturnOptions.Limit)
-            where T : struct, IComparable
+            where T : IComparable
         {
             if (value.IsGreater(self.UpperValueOfRange))
             {
                 switch (returnOptions)
                 {
-                    case ReturnOptions.Cycle: value = self.LowerValueOfRange; break;
-                    case ReturnOptions.Limit: value = self.UpperValueOfRange; break;
+                    case ReturnOptions.Cycle:
+                        value = self.LowerValueOfRange;
+                        break;
+                    case ReturnOptions.Limit:
+                        value = self.UpperValueOfRange;
+                        break;
                 }
             }
             else if (value.IsLess(self.LowerValueOfRange))
             {
                 switch (returnOptions)
                 {
-                    case ReturnOptions.Cycle: value = self.UpperValueOfRange; break;
-                    case ReturnOptions.Limit: value = self.LowerValueOfRange; break;
+                    case ReturnOptions.Cycle:
+                        value = self.UpperValueOfRange;
+                        break;
+                    case ReturnOptions.Limit:
+                        value = self.LowerValueOfRange;
+                        break;
                 }
             }
             return value;

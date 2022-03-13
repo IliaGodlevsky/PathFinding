@@ -61,7 +61,7 @@ namespace Logging.Loggers
                 || logLevel == LogLevel.Fatal
                 && isLogLevelAnaibled)
             {
-                Console.Beep();
+                //Console.Beep();
             }
             if (isLogLevelAnaibled)
             {

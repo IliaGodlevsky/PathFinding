@@ -29,8 +29,8 @@ namespace ConsoleVersion.ViewModel
     {
         public event Action WindowClosed;
 
-        public IValueInput<int> IntInput { get; set; }
-        public IValueInput<Answer> AnswerInput { get; set; }
+        public IInput<int> IntInput { get; set; }
+        public IInput<Answer> AnswerInput { get; set; }
 
         public MainViewModel(IGraphFieldFactory fieldFactory,
             IVertexEventHolder eventHolder, GraphSerializationModule serializationModule, BaseEndPoints endPoints, ILog log)
@@ -96,7 +96,7 @@ namespace ConsoleVersion.ViewModel
         [MenuItem(MenuItemsNames.Exit, MenuItemPriority.Lowest)]
         public void Interrupt()
         {
-            var answer = AnswerInput.InputValue(MessagesTexts.ExitAppMsg, Constants.AnswerValueRange);
+            var answer = AnswerInput.Input(MessagesTexts.ExitAppMsg, Constants.AnswerValueRange);
             if (answer == Answer.Yes)
             {
                 WindowClosed?.Invoke();

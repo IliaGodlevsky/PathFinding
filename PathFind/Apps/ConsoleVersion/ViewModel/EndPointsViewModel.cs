@@ -23,7 +23,7 @@ namespace ConsoleVersion.ViewModel
 
         private const int MenuOffset = 8;
 
-        public IValueInput<int> IntInput { get; set; }
+        public IInput<int> IntInput { get; set; }
 
         public EndPointsViewModel(BaseEndPoints endPoints, ILog log)
         {
@@ -64,7 +64,7 @@ namespace ConsoleVersion.ViewModel
             if (numberOfIntermediates > 0)
             {
                 string msg = MessagesTexts.NumberOfIntermediatesVerticesToReplaceMsg;
-                int toReplaceNumber = IntInput.InputValue(msg, numberOfIntermediates);
+                int toReplaceNumber = IntInput.Input(msg, numberOfIntermediates);
                 Console.WriteLine(MessagesTexts.IntermediateToReplaceMsg);
                 IntInput.InputExistingIntermediates(graph, endPoints, toReplaceNumber).OnMarkedToReplaceIntermediate();
                 Console.WriteLine(MessagesTexts.IntermediateVertexChoiceMsg);
@@ -79,11 +79,11 @@ namespace ConsoleVersion.ViewModel
             {
                 string message = MessagesTexts.NumberOfIntermediateVerticesInputMsg;
                 MainView.SetCursorPositionUnderMenu(MenuOffset);
-                int number = IntInput.InputValue(message, graph.GetAvailableIntermediatesNumber());
+                int number = IntInput.Input(message, graph.GetAvailableIntermediatesNumber());
                 Console.WriteLine(MessagesTexts.IntermediateVertexChoiceMsg);
                 IntInput.InputEndPoints(graph, endPoints, number).OnEndPointChosen();
             }
-        }       
+        }
 
         [MenuItem(MenuItemsNames.Exit, MenuItemPriority.Lowest)]
         public void Interrupt()

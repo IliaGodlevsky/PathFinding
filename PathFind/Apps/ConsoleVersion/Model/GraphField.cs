@@ -18,6 +18,12 @@ namespace ConsoleVersion.Model
             Displayables = this.GenerateDisplayables(graph);
         }
 
-        public void Display() => Displayables.DisplayAll();
+        public void Display()
+        {
+            using (Cursor.HideCursor())
+            {
+                Displayables.DisplayAll();
+            }
+        }
     }
 }

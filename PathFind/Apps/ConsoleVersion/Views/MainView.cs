@@ -1,10 +1,15 @@
 ﻿using Autofac;
+using Common.Extensions.EnumerableExtensions;
 using ConsoleVersion.DependencyInjection;
 using ConsoleVersion.Enums;
 using ConsoleVersion.Messages;
+using ConsoleVersion.Model;
 using ConsoleVersion.ViewModel;
 using GalaSoft.MvvmLight.Messaging;
 using GraphLib.Base;
+using GraphLib.Extensions;
+using GraphLib.Interfaces;
+using GraphLib.NullRealizations;
 using GraphLib.Realizations.Coordinates;
 using System;
 
@@ -12,10 +17,6 @@ namespace ConsoleVersion.Views
 {
     internal sealed class MainView : View
     {
-        public static int HeightOfAbscissaView => 2;
-        public static int HeightOfGraphParametresView => 1;
-        public static int YCoordinatePadding => WidthOfOrdinateView - 1;
-        public static int WidthOfOrdinateView => (Constants.GraphLengthValueRange.UpperValueOfRange - 1).ToString().Length + 1;
         public static int LateralDistanceBetweenVertices { get; private set; }
 
         public static Coordinate2D GraphFieldPosition { get; }
@@ -27,12 +28,21 @@ namespace ConsoleVersion.Views
             Console.SetCursorPosition(fieldPosition.X, fieldPosition.Y + menuOffset);
         }
 
+        private static void RecalculateConsolePosition(Vertex vertex)
+        {
+            var point = (Coordinate2D)vertex.Position;
+            int left = MainView.GraphFieldPosition.X + point.X * MainView.LateralDistanceBetweenVertices;
+            int top = MainView.GraphFieldPosition.Y + point.Y;
+            vertex.ConsolePosition = new Coordinate2D(left, top);
+        }
+
         static MainView()
         {
-            int x = WidthOfOrdinateView;
-            int y = HeightOfAbscissaView + HeightOfGraphParametresView;
+            int x = Constants.WidthOfOrdinateView;
+            int y = Constants.HeightOfAbscissaView + Constants.HeightOfGraphParametresView;
             GraphFieldPosition = new Coordinate2D(x, y);
             StatisticsPosition = new Coordinate2D(0, 0);
+            Vertex.VertexCreated += RecalculateConsolePosition;
         }
 
         public MainView(MainViewModel model) : base(model)
@@ -55,11 +65,12 @@ namespace ConsoleVersion.Views
 
         private void OnNewGraphCreated(GraphCreatedMessage message)
         {
+            graph = message.Graph;
             PreviousMaxValueOfRange = CurrentMaxValueOfRange;
-            int pathFindingStatisticsOffset = message.Graph.Length + HeightOfAbscissaView * 2 + HeightOfGraphParametresView;
+            int pathFindingStatisticsOffset = message.Graph.Length
+                + Constants.HeightOfAbscissaView * 2 + Constants.HeightOfGraphParametresView;
             StatisticsPosition = new Coordinate2D(0, pathFindingStatisticsOffset);
             LateralDistanceBetweenVertices = CalculateLateralDistanceBetweenVertices();
-
         }
 
         private void OnCostRangeChanged(CostRangeChangedMessage message)
@@ -70,22 +81,18 @@ namespace ConsoleVersion.Views
             PreviousMaxValueOfRange = Math.Max(CurrentMaxValueOfRange, PreviousMaxValueOfRange);
             CurrentMaxValueOfRange = max;
             LateralDistanceBetweenVertices = CalculateLateralDistanceBetweenVertices();
+            graph.ForEach(vertex => RecalculateConsolePosition((Vertex)vertex));
         }
 
         private void OnStatisticsUpdated(UpdateStatisticsMessage message)
         {
-            lock (locker)
-            {
-                using (Cursor.UsePosition(MainView.StatisticsPosition))
-                {
-                    Console.Write(message.Statistics.PadRight(Console.BufferWidth));
-                }
-            }
+            Cursor.SetPosition(MainView.StatisticsPosition);
+            Console.Write(message.Statistics.PadRight(Console.BufferWidth));
         }
 
         private static int PreviousMaxValueOfRange;
         private static int CurrentMaxValueOfRange;
         private readonly IMessenger messenger;
-        private static readonly object locker = new object();
+        private IGraph graph = NullGraph.Instance;
     }
 }

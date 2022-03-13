@@ -2,6 +2,6 @@
 {
     internal interface IRequireIntInput
     {
-        IValueInput<int> IntInput { get; set; }
+        IInput<int> IntInput { get; set; }
     }
 }

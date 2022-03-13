@@ -1,6 +1,5 @@
 ﻿using Colorful;
 using Common.Extensions;
-using ConsoleVersion.Views;
 using System.Text;
 
 namespace ConsoleVersion.Model.FramedAxes
@@ -10,12 +9,12 @@ namespace ConsoleVersion.Model.FramedAxes
         protected FramedOrdinate(int graphLength) : base()
         {
             this.graphLength = graphLength;
-            yCoordinatePadding = MainView.YCoordinatePadding;
+            yCoordinatePadding = Constants.YCoordinatePadding;
         }
 
         public override void Display()
         {
-            Console.SetCursorPosition(0, MainView.HeightOfAbscissaView + 1);
+            Console.SetCursorPosition(0, Constants.HeightOfAbscissaView + 1);
             Console.Write(GetFramedAxis());
         }
 

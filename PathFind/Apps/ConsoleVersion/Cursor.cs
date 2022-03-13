@@ -7,22 +7,32 @@ namespace ConsoleVersion
 {
     internal static class Cursor
     {
-        public static IDisposable UsePosition(Coordinate2D point)
+        public static IDisposable HideCursor()
         {
-            SaveCursorPosition();
-            Console.SetCursorPosition(point.X, point.Y);
-            return new Disposable(RestoreCursorPosition);
+            Console.CursorVisible = false;
+            return new Disposable(ShowCursor);
         }
 
-        private static void SaveCursorPosition()
+        public static IDisposable UseCurrentPosition()
         {
             CursorLeft = Console.CursorLeft;
             CursorRight = Console.CursorTop;
+            return new Disposable(RestoreCursorPosition);
+        }
+
+        public static void SetPosition(Coordinate2D point)
+        {
+            Console.SetCursorPosition(point.X, point.Y);
         }
 
         private static void RestoreCursorPosition()
         {
             Console.SetCursorPosition(CursorLeft, CursorRight);
+        }
+
+        private static void ShowCursor()
+        {
+            Console.CursorVisible = true;
         }
 
         private static int CursorLeft;

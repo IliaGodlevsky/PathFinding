@@ -7,6 +7,11 @@ namespace ConsoleVersion
 {
     internal static class Constants
     {
+        public static int HeightOfAbscissaView => 2;
+        public static int HeightOfGraphParametresView => 1;
+        public static int YCoordinatePadding => WidthOfOrdinateView - 1;
+        public static int WidthOfOrdinateView => (GraphLengthValueRange.UpperValueOfRange - 1).ToString().Length + 1;
+
         public static InclusiveValueRange<Answer> AnswerValueRange { get; }
         public static InclusiveValueRange<int> GraphWidthValueRange { get; }
         public static InclusiveValueRange<int> GraphLengthValueRange { get; }

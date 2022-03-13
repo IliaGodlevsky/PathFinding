@@ -30,20 +30,22 @@ using ValueRange;
 
 namespace ConsoleVersion.ViewModel
 {
-    internal sealed class PathFindingViewModel : PathFindingModel, IViewModel, IRequireIntInput, IRequireAnswerInput, IDisposable
+    internal sealed class PathFindingViewModel : PathFindingModel, IViewModel, 
+        IRequireIntInput, IRequireAnswerInput, IRequireConsoleKeyInput, IDisposable
     {
         public event Action WindowClosed;
 
         public string AlgorithmKeyInputMessage { private get; set; }
 
-        public IValueInput<int> IntInput { get; set; }
-        public IValueInput<Answer> AnswerInput { get; set; }
+        public IInput<int> IntInput { get; set; }
+        public IInput<Answer> AnswerInput { get; set; }
+        public IInput<ConsoleKey> KeyInput { get; set; }
 
         public PathfindingAlgorithm CurrentAlgorithm => algorithm;
-        
+
         private string CurrentAlgorithmName { get; set; }
         private string Statistics => path.ToStatistics(timer, visitedVerticesCount, CurrentAlgorithmName);
-        private int AlgorithmIndex => IntInput.InputValue(AlgorithmKeyInputMessage, algorithmKeysValueRange) - 1;
+        private int AlgorithmIndex => IntInput.Input(AlgorithmKeyInputMessage, algorithmKeysValueRange) - 1;
 
         private IReadOnlyCollection<IConsoleKeyCommand> KeyCommands { get; }
 
@@ -65,10 +67,13 @@ namespace ConsoleVersion.ViewModel
             {
                 try
                 {
-                    base.FindPath();
-                    resetEvent.Wait();
-                    Console.ReadKey(true);
-                    Console.CursorVisible = true;
+                    using (Cursor.HideCursor())
+                    {
+                        base.FindPath();
+                        resetEvent.Reset();
+                        resetEvent.Wait();
+                        KeyInput.Input();
+                    }
                 }
                 catch (Exception ex)
                 {
@@ -86,7 +91,7 @@ namespace ConsoleVersion.ViewModel
         {
             if (IsVisualizationRequired)
             {
-                DelayTime = IntInput.InputValue(MessagesTexts.DelayTimeInputMsg, Constants.AlgorithmDelayTimeValueRange);
+                DelayTime = IntInput.Input(MessagesTexts.DelayTimeInputMsg, Constants.AlgorithmDelayTimeValueRange);
             }
         }
 
@@ -100,14 +105,20 @@ namespace ConsoleVersion.ViewModel
         public void ChooseExtremeVertex() => DI.Container.Display<EndPointsView>();
 
         [MenuItem(MenuItemsNames.ClearGraph, MenuItemPriority.Low)]
-        public void ClearGraph() => messenger.Forward<ClearGraphMessage>(MessageTokens.MainModel);
+        public void ClearGraph()
+        {
+            using (Cursor.HideCursor())
+            {
+                messenger.Forward<ClearGraphMessage>(MessageTokens.MainModel);
+            }
+        }
 
         [MenuItem(MenuItemsNames.ClearColors, MenuItemPriority.Low)]
         public void ClearColors() => messenger.Forward<ClearColorsMessage>(MessageTokens.MainModel);
 
         [MenuItem(MenuItemsNames.ApplyVisualization, MenuItemPriority.Low)]
-        public void ApplyVisualization() 
-        { 
+        public void ApplyVisualization()
+        {
             IsVisualizationRequired = AnswerInput.InputAnswer(MessagesTexts.ApplyVisualizationMsg, Constants.AnswerValueRange);
         }
 
@@ -121,8 +132,6 @@ namespace ConsoleVersion.ViewModel
 
         protected override void OnAlgorithmStarted(object sender, ProcessEventArgs e)
         {
-            resetEvent.Reset();
-            Console.CursorVisible = false;
             CurrentAlgorithmName = Algorithm.GetDescription();
         }
 
@@ -137,6 +146,7 @@ namespace ConsoleVersion.ViewModel
         protected override void SubscribeOnAlgorithmEvents(PathfindingAlgorithm algorithm)
         {
             base.SubscribeOnAlgorithmEvents(algorithm);
+            ConsoleKeystrokesHook.Instance.KeyInput = KeyInput;
             algorithm.Started += ConsoleKeystrokesHook.Instance.StartAsync;
             algorithm.Finished += ConsoleKeystrokesHook.Instance.Interrupt;
         }

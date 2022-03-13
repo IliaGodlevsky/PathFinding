@@ -12,11 +12,11 @@ namespace ConsoleVersion.Views
         public event Action NewMenuIteration;
 
         private bool IsClosureRequested { get; set; }
-        public IValueInput<int> IntInput { get; set; }
+        public IInput<int> IntInput { get; set; }
 
         private int MenuSize => menu.MenuActionsNames.Length;
         private string OptionsMsg => MessagesTexts.MenuOptionChoiceMsg;
-        private int MenuItemIndex => IntInput.InputValue(OptionsMsg, menuRange) - 1;
+        private int MenuItemIndex => IntInput.Input(OptionsMsg, menuRange) - 1;
         private string MenuItem => menu.MenuActionsNames[MenuItemIndex];
 
         protected View(IViewModel model)

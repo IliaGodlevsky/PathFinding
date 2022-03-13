@@ -1,5 +1,4 @@
 ﻿using ConsoleVersion.Interface;
-using ConsoleVersion.Views;
 using GraphLib.Extensions;
 using GraphLib.Interfaces;
 using GraphLib.Realizations.Coordinates;
@@ -18,6 +17,7 @@ namespace ConsoleVersion.Model
     [DebuggerDisplay("{Position.ToString()}")]
     internal class Vertex : IVertex, IVisualizable, IWeightable, IDisplayable, IEquatable<IVertex>
     {
+        public static event Action<Vertex> VertexCreated;
         public event EventHandler VertexCostChanged;
         public event EventHandler EndPointChosen;
         public event EventHandler VertexReversed;
@@ -26,7 +26,8 @@ namespace ConsoleVersion.Model
         public Vertex(INeighborhood neighbourhood, ICoordinate coordinate, IVisualization<Vertex> visualization)
         {
             this.visualization = visualization;
-            position = (Coordinate2D)coordinate;
+            Position = coordinate;
+            VertexCreated?.Invoke(this);
             this.Initialize();
             neighbours = new Lazy<IReadOnlyCollection<IVertex>>(() => neighbourhood.GetNeighboursWithinGraph(this));
         }
@@ -68,11 +69,10 @@ namespace ConsoleVersion.Model
 
         public IGraph Graph { get; }
 
+        public Coordinate2D ConsolePosition { get; set; }
         public Color Color { get; set; }
         public IReadOnlyCollection<IVertex> Neighbours => neighbours.Value;
-
-        private readonly Coordinate2D position;
-        public ICoordinate Position => position;
+        public ICoordinate Position { get; }
 
         public void OnVertexCostChanged() => VertexCostChanged?.Invoke(this, EventArgs.Empty);
         public void OnVertexReversed() => VertexReversed?.Invoke(this, EventArgs.Empty);
@@ -93,13 +93,8 @@ namespace ConsoleVersion.Model
 
         public void Display()
         {
-            lock (locker)
-            {
-                using (Cursor.UsePosition(GetDisplayCoordinates()))
-                {
-                    Console.Write(text, Color);
-                }
-            }
+            Cursor.SetPosition(ConsolePosition);
+            Console.Write(text, Color);
         }
 
         public bool Equals(IVertex other) => Equals((object)other);
@@ -117,16 +112,8 @@ namespace ConsoleVersion.Model
         public void VisualizeAsIntermediate() => visualization.VisualizeAsIntermediate(this);
         public void VisualizeAsMarkedToReplaceIntermediate() => visualization.VisualizeAsMarkedToReplaceIntermediate(this);
 
-        private Coordinate2D GetDisplayCoordinates()
-        {
-            int left = MainView.GraphFieldPosition.X + position.X * MainView.LateralDistanceBetweenVertices;
-            int top = MainView.GraphFieldPosition.Y + position.Y;
-            return new Coordinate2D(left, top);
-        }
-
         private string text;
         private readonly Lazy<IReadOnlyCollection<IVertex>> neighbours;
         private readonly IVisualization<Vertex> visualization;
-        private static readonly object locker = new object();
     }
 }

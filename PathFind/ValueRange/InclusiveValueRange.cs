@@ -6,7 +6,7 @@ namespace ValueRange
 {
     [Serializable]
     [DebuggerDisplay("[{LowerValueOfRange} - {UpperValueOfRange}]")]
-    public readonly struct InclusiveValueRange<T> where T : struct, IComparable
+    public readonly struct InclusiveValueRange<T> where T : IComparable
     {
         public T UpperValueOfRange { get; }
         public T LowerValueOfRange { get; }
