@@ -1,8 +1,6 @@
-﻿using System;
-
-namespace ConsoleVersion.Interface
+﻿namespace ConsoleVersion.Interface
 {
-    internal interface IInput<T> where T : IComparable
+    internal interface IInput<T>
     {
         T Input();
     }

@@ -10,6 +10,7 @@ using ConsoleVersion.Extensions;
 using ConsoleVersion.Interface;
 using ConsoleVersion.Messages;
 using ConsoleVersion.Model;
+using ConsoleVersion.ValueInput.ProgrammedInput;
 using ConsoleVersion.ValueInput.UserInput;
 using ConsoleVersion.ViewModel;
 using GalaSoft.MvvmLight.Messaging;
@@ -47,10 +48,10 @@ namespace ConsoleVersion.DependencyInjection
         {
             var builder = new ContainerBuilder();
 
-            builder.RegisterType<ConsoleUserEnumInput<Answer>>().As<IInput<Answer>>().SingleInstance();
-            builder.RegisterType<ConsoleUserIntInput>().As<IInput<int>>().SingleInstance();
+            builder.RegisterType<ConsoleProgrammedAnswerInput>().As<IInput<Answer>>().SingleInstance();
+            builder.RegisterType<ConsoleProgrammedIntInput>().As<IInput<int>>().SingleInstance();
             builder.RegisterType<ConsoleUserStringInput>().As<IInput<string>>().SingleInstance(); 
-            builder.RegisterType<ConsoleUserKeyInput>().As<IInput<ConsoleKey>>().SingleInstance();
+            builder.RegisterType<ConsoleProgrammedKeyInput>().As<IInput<ConsoleKey>>().SingleInstance();
 
             builder.RegisterType<MainViewModel>().AsSelf().SingleInstance().PropertiesAutowired();
             builder.RegisterType<EndPointsViewModel>().AsSelf().PropertiesAutowired()

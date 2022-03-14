@@ -15,7 +15,6 @@ namespace ConsoleVersion.Extensions
     internal static class IInputExtensions
     {
         public static T Input<T>(this IInput<T> self, string msg)
-            where T : IComparable
         {
             Console.Write(msg);
             return self.Input();
