@@ -17,7 +17,7 @@ namespace Visualization
     {
         protected PathfindingVisualization(IGraph graph)
         {
-            visualizations = new CompositeVisualization(graph, obstacles, enqueued, visited, path, intermediate, source, target);
+            visualizations = new CompositeVisualization(graph) { obstacles, enqueued, visited, path, intermediate, source, target };
             visualizationSlides = new CompositeVisualizationSlides(obstacles, enqueued, visited, path, intermediate, source, target);
             this.graph = graph;
         }

@@ -2,25 +2,24 @@
 using Commands.Extensions;
 using Commands.Interfaces;
 using GraphLib.Interfaces;
+using System.Collections.Generic;
 using Visualization.Extensions;
 
 namespace Visualization.Realizations
 {
-    internal sealed class CompositeVisualization : IExecutable<IAlgorithm>
+    internal sealed class CompositeVisualization : List<IExecutable<IAlgorithm>>, IExecutable<IAlgorithm>
     {
-        public CompositeVisualization(IGraph graph, params IExecutable<IAlgorithm>[] visualizations)
+        public CompositeVisualization(IGraph graph)
         {
             this.graph = graph;
-            this.visualizations = visualizations;
         }
 
         public void Execute(IAlgorithm algorithm)
         {
             graph.RemoveAllColors();
-            visualizations.ExecuteAll(algorithm);
+            this.ExecuteAll(algorithm);
         }
 
         private readonly IGraph graph;
-        private readonly IExecutable<IAlgorithm>[] visualizations;
     }
 }
