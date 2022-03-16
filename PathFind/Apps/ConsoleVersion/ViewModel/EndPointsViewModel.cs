@@ -31,6 +31,8 @@ namespace ConsoleVersion.ViewModel
             this.log = log;
             messenger = DI.Container.Resolve<IMessenger>();
             messenger.Register<GraphCreatedMessage>(this, MessageTokens.EndPointsViewModel, SetGraph);
+            var message = new ClaimGraphMessage(MessageTokens.EndPointsViewModel);
+            messenger.Forward(message, MessageTokens.Everyone);
         }
 
         [MenuItem(MenuItemsNames.ChooseEndPoints, MenuItemPriority.Highest)]

@@ -1,4 +1,5 @@
 ﻿using Algorithm.Interfaces;
+using Commands.Interfaces;
 using GraphLib.Extensions;
 using GraphLib.Interfaces;
 using System.Collections.Concurrent;
@@ -7,7 +8,7 @@ using Visualization.Interfaces;
 
 namespace Visualization.Abstractions
 {
-    internal abstract class EndPointsVertices : IVisualizationSlides, IVisualization
+    internal abstract class EndPointsVertices : IVisualizationSlides, IExecutable<IAlgorithm>
     {
         public EndPointsVertices()
         {
@@ -34,7 +35,7 @@ namespace Visualization.Abstractions
             vertices.TryRemove(algorithm, out _);
         }
 
-        public void Visualize(IAlgorithm algorithm)
+        public void Execute(IAlgorithm algorithm)
         {
             var vertex = vertices.GetOrNullVertex(algorithm).AsVisualizable();
             Visualize(vertex);

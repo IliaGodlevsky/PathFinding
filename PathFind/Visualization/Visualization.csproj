@@ -48,7 +48,6 @@
     <Compile Include="Extensions\IVisualizationSlidesExtensions.cs" />
     <Compile Include="Extensions\IVertexExtensions.cs" />
     <Compile Include="Interfaces\IVisualizationSlides.cs" />
-    <Compile Include="Interfaces\IVisualization.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Realizations\CompositeVisualization.cs" />
     <Compile Include="Realizations\EnqueuedVertices.cs" />
@@ -77,6 +76,10 @@
     <ProjectReference Include="..\Algorithm\Algorithms.NullRealizations\Algorithm.NullRealizations.csproj">
       <Project>{FE692FCB-46C0-47A1-80ED-EFDCC811CF69}</Project>
       <Name>Algorithm.NullRealizations</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Commands\Commands.csproj">
+      <Project>{A68B0EB4-3F07-4711-B314-FC1C709A5E2F}</Project>
+      <Name>Commands</Name>
     </ProjectReference>
     <ProjectReference Include="..\Common\Common.csproj">
       <Project>{a5a743f5-d346-4b2b-b6ac-07152f64e4d9}</Project>

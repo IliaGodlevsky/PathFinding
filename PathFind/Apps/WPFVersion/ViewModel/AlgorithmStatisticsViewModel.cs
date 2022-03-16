@@ -120,7 +120,7 @@ namespace WPFVersion.ViewModel
 
         private void ExecuteVisualizeCommand(object param)
         {
-            visualizationModel.Visualize(SelectedAlgorithm.Algorithm);
+            visualizationModel.Execute(SelectedAlgorithm.Algorithm);
         }
 
         private void ExecuteInterruptSelectedAlgorithmCommand(object param)

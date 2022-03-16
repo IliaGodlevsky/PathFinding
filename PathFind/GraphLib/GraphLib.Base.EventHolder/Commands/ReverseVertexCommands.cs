@@ -17,7 +17,7 @@ namespace GraphLib.Base.EventHolder.Commands
 
         public void Execute(IVertex vertex)
         {
-            commands.Execute(vertex ?? NullVertex.Instance);
+            commands.ExecuteFirst(vertex ?? NullVertex.Instance);
         }
 
         public void Undo() { }

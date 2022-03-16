@@ -30,7 +30,7 @@ using ValueRange;
 
 namespace ConsoleVersion.ViewModel
 {
-    internal sealed class PathFindingViewModel : PathFindingModel, IViewModel, 
+    internal sealed class PathFindingViewModel : PathFindingModel, IViewModel,
         IRequireIntInput, IRequireAnswerInput, IRequireConsoleKeyInput, IDisposable
     {
         public event Action WindowClosed;
@@ -151,7 +151,7 @@ namespace ConsoleVersion.ViewModel
             algorithm.Finished += ConsoleKeystrokesHook.Instance.Interrupt;
         }
 
-        private void OnConsoleKeyPressed(object sender, ConsoleKeyPressedEventArgs e) => KeyCommands.Execute(e.PressedKey, this);
+        private void OnConsoleKeyPressed(object sender, ConsoleKeyPressedEventArgs e) => KeyCommands.ExecuteFirst(e.PressedKey, this);
 
         public void Dispose()
         {

@@ -2,22 +2,18 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Reflection;
+
+using static System.Reflection.BindingFlags;
 
 namespace ConsoleVersion.ValueInput.ProgrammedInput
 {
     internal abstract class ConsoleProgrammedInput<T> : ProgrammedInput<T>
         where T : IComparable
     {
-        private const BindingFlags Flags
-            = BindingFlags.NonPublic
-            | BindingFlags.Instance
-            | BindingFlags.Static;
-
         protected override Queue<T> GenerateCommands()
         {
             return GetType()
-                .GetFields(Flags)
+                .GetFields(NonPublic | Static)
                 .Where(field => field.FieldType == typeof(T))
                 .Select(field => (T)field.GetValue(null))
                 .ToQueue();

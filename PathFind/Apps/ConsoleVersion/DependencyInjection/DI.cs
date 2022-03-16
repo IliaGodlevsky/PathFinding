@@ -6,9 +6,7 @@ using Autofac.Core;
 using Common.Extensions;
 using Common.Interface;
 using ConsoleVersion.Enums;
-using ConsoleVersion.Extensions;
 using ConsoleVersion.Interface;
-using ConsoleVersion.Messages;
 using ConsoleVersion.Model;
 using ConsoleVersion.ValueInput.ProgrammedInput;
 using ConsoleVersion.ValueInput.UserInput;
@@ -47,17 +45,19 @@ namespace ConsoleVersion.DependencyInjection
         private static IContainer Configure()
         {
             var builder = new ContainerBuilder();
-
+#if DEBUG
             builder.RegisterType<ConsoleProgrammedAnswerInput>().As<IInput<Answer>>().SingleInstance();
             builder.RegisterType<ConsoleProgrammedIntInput>().As<IInput<int>>().SingleInstance();
-            builder.RegisterType<ConsoleUserStringInput>().As<IInput<string>>().SingleInstance(); 
-            builder.RegisterType<ConsoleProgrammedKeyInput>().As<IInput<ConsoleKey>>().SingleInstance();
+#elif !DEBUG
+            builder.RegisterType<ConsoleUserEnumInput<Answer>>().As<IInput<Answer>>().SingleInstance();
+            builder.RegisterType<ConsoleUserIntInput>().As<IInput<int>>().SingleInstance();
+#endif
+            builder.RegisterType<ConsoleUserStringInput>().As<IInput<string>>().SingleInstance();
+            builder.RegisterType<ConsoleUserKeyInput>().As<IInput<ConsoleKey>>().SingleInstance();
 
             builder.RegisterType<MainViewModel>().AsSelf().SingleInstance().PropertiesAutowired();
-            builder.RegisterType<EndPointsViewModel>().AsSelf().PropertiesAutowired()
-                .InstancePerLifetimeScope().OnActivated(OnEndPointsViewModelActivated);
-            builder.RegisterAssemblyTypes(Assemblies).Where(Implements<IViewModel>).Except<MainViewModel>()
-                .Except<EndPointsViewModel>().AsSelf().PropertiesAutowired().InstancePerLifetimeScope();
+            builder.RegisterAssemblyTypes(Assemblies).Where(Implements<IViewModel>).Except<MainViewModel>().AsSelf()
+                .PropertiesAutowired().InstancePerLifetimeScope();
             builder.RegisterAssemblyTypes(Assemblies).Where(Implements<IView>).AsSelf().PropertiesAutowired()
                 .OnActivated(OnViewActivated).InstancePerLifetimeScope();
 
@@ -102,13 +102,6 @@ namespace ConsoleVersion.DependencyInjection
             var view = (IView)e.Instance;
             var mainModel = e.Context.Resolve<MainViewModel>();
             view.NewMenuIteration += mainModel.DisplayGraph;
-        }
-
-        private static void OnEndPointsViewModelActivated(IActivatedEventArgs<object> e)
-        {
-            var messenger = e.Context.Resolve<IMessenger>();
-            var message = new ClaimGraphMessage(MessageTokens.EndPointsViewModel);
-            messenger.Forward(message, MessageTokens.Everyone);
         }
 
         private static SmoothedGraphAssemble RegisterSmoothedGraphAssemble(IComponentContext context)

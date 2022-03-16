@@ -1,6 +1,7 @@
 ﻿using Algorithm.Base;
 using Algorithm.Infrastructure.EventArguments;
 using Algorithm.Interfaces;
+using Commands.Interfaces;
 using Common.Extensions.EnumerableExtensions;
 using GraphLib.Extensions;
 using GraphLib.Interfaces;
@@ -12,7 +13,7 @@ using Visualization.Realizations;
 
 namespace Visualization
 {
-    public abstract class PathfindingVisualization : IVisualization
+    public abstract class PathfindingVisualization : IExecutable<IAlgorithm>
     {
         protected PathfindingVisualization(IGraph graph)
         {
@@ -21,14 +22,11 @@ namespace Visualization
             this.graph = graph;
         }
 
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public void Clear() => visualizationSlides.Clear();
 
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public void Remove(IAlgorithm algorithm) => visualizationSlides.Remove(algorithm);
 
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public void Visualize(IAlgorithm algorithm) => visualizations.Visualize(algorithm);
+        public void Execute(IAlgorithm algorithm) => visualizations.Execute(algorithm);
 
         protected virtual void SubscribeOnAlgorithmEvents(PathfindingAlgorithm algorithm)
         {
@@ -91,7 +89,7 @@ namespace Visualization
         private readonly SourceVertices source = new SourceVertices();
         private readonly TargetVertices target = new TargetVertices();
         private readonly ObstacleVertices obstacles = new ObstacleVertices();
-        private readonly IVisualization visualizations;
+        private readonly IExecutable<IAlgorithm> visualizations;
         private readonly IVisualizationSlides visualizationSlides;
         private readonly IGraph graph;
     }

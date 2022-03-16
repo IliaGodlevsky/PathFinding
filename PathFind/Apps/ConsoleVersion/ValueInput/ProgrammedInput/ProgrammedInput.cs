@@ -9,7 +9,7 @@ namespace ConsoleVersion.ValueInput.ProgrammedInput
     internal abstract class ProgrammedInput<T> : IInput<T>
         where T : IComparable
     {
-        private const int WaitMilliseconds = 25;
+        private const int WaitMilliseconds = 500;
         private readonly Lazy<Queue<T>> steps;
 
         protected Queue<T> Steps => steps.Value;

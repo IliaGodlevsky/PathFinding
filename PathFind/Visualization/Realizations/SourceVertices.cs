@@ -1,6 +1,5 @@
 ﻿using GraphLib.Interfaces;
 using Visualization.Abstractions;
-using Visualization.Interfaces;
 
 namespace Visualization.Realizations
 {
