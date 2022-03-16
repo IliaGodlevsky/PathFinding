@@ -6,7 +6,6 @@ using Common.Extensions.EnumerableExtensions;
 using GraphLib.Extensions;
 using GraphLib.Interfaces;
 using System;
-using System.Runtime.CompilerServices;
 using Visualization.Extensions;
 using Visualization.Interfaces;
 using Visualization.Realizations;
@@ -44,7 +43,6 @@ namespace Visualization
             intermediate.AddRange(algorithm, intermediates);
         }
 
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         protected void AddPathVertices(IAlgorithm algorithm, IGraphPath grapPath)
         {
             path.AddRange(algorithm, grapPath.Path);

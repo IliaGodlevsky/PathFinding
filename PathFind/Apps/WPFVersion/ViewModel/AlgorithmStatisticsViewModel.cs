@@ -110,7 +110,7 @@ namespace WPFVersion.ViewModel
 
         private void ExecuteResumeAlgorithmCommand(object param)
         {
-            SelectedAlgorithm?.Unpause();
+            SelectedAlgorithm?.Resume();
         }
 
         private void ExecutePauseAlgorithmCommand(object param)

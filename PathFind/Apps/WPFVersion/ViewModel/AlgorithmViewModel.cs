@@ -103,7 +103,7 @@ namespace WPFVersion.ViewModel
             algorithm.Pause();
         }
 
-        public void Unpause()
+        public void Resume()
         {
             algorithm.Resume();
         }

@@ -41,16 +41,32 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Commands\BaseReturnByOptionsCommand.cs" />
+    <Compile Include="Commands\BaseReturnInRangeCommand.cs" />
+    <Compile Include="Commands\GreaterReturnInRangeCommand.cs" />
+    <Compile Include="Commands\IReturnByOptionsCommand.cs" />
+    <Compile Include="Commands\IReturnInRangeCommand.cs" />
+    <Compile Include="Commands\LessReturnInRangeCommand.cs" />
+    <Compile Include="Commands\LowerCycledReturnByOptionsCommand.cs" />
+    <Compile Include="Commands\LowerLimitedReturnByOptionsCommand.cs" />
+    <Compile Include="Commands\UpperCycledReturnByOptionsCommand.cs" />
+    <Compile Include="Commands\UpperLimitedReturnByOptionsCommand.cs" />
     <Compile Include="Enums\ReturnOptions.cs" />
     <Compile Include="Extensions\InclusiveValueRangeExtensions.cs" />
     <Compile Include="InclusiveValueRange.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ValueWrap.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Commands\Commands.csproj">
+      <Project>{a68b0eb4-3f07-4711-b314-fc1c709a5e2f}</Project>
+      <Name>Commands</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Common\Common.csproj">
       <Project>{a5a743f5-d346-4b2b-b6ac-07152f64e4d9}</Project>
       <Name>Common</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

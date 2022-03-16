@@ -1,6 +1,8 @@
-﻿using Common.Extensions;
+﻿using Commands.Extensions;
+using Common.Extensions;
 using System;
 using System.Collections.Generic;
+using ValueRange.Commands;
 using ValueRange.Enums;
 
 namespace ValueRange.Extensions
@@ -41,31 +43,14 @@ namespace ValueRange.Extensions
             ReturnOptions returnOptions = ReturnOptions.Limit)
             where T : IComparable
         {
-            if (value.IsGreater(self.UpperValueOfRange))
+            var wrap = new ValueWrap<T>(value);
+            var commands = new IReturnInRangeCommand<T>[]
             {
-                switch (returnOptions)
-                {
-                    case ReturnOptions.Cycle:
-                        value = self.LowerValueOfRange;
-                        break;
-                    case ReturnOptions.Limit:
-                        value = self.UpperValueOfRange;
-                        break;
-                }
-            }
-            else if (value.IsLess(self.LowerValueOfRange))
-            {
-                switch (returnOptions)
-                {
-                    case ReturnOptions.Cycle:
-                        value = self.UpperValueOfRange;
-                        break;
-                    case ReturnOptions.Limit:
-                        value = self.LowerValueOfRange;
-                        break;
-                }
-            }
-            return value;
+                new LessReturnInRangeCommand<T>(self, returnOptions),
+                new GreaterReturnInRangeCommand<T>(self, returnOptions)
+            };
+            commands.ExecuteFirst(value, wrap);
+            return wrap.Value;
         }
     }
 }
