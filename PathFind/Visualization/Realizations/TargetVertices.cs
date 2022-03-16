@@ -3,7 +3,7 @@ using Visualization.Abstractions;
 
 namespace Visualization.Realizations
 {
-    internal sealed class TargetVertices : EndPointsVertices, IVisualization
+    internal sealed class TargetVertices : EndPointsVertices
     {
         protected override void Visualize(IVisualizable visualizable)
         {
