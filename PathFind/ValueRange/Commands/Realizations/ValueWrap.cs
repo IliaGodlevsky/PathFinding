@@ -1,4 +1,4 @@
-﻿namespace ValueRange
+﻿namespace ValueRange.Commands.Realizations
 {
     internal sealed class ValueWrap<T>
     {

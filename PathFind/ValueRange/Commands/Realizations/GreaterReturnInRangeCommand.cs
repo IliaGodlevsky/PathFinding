@@ -2,9 +2,11 @@
 using Common.Extensions;
 using System;
 using System.Collections.Generic;
+using ValueRange.Commands.Abstractions;
+using ValueRange.Commands.Interface;
 using ValueRange.Enums;
 
-namespace ValueRange.Commands
+namespace ValueRange.Commands.Realizations
 {
     internal sealed class GreaterReturnInRangeCommand<T> : BaseReturnInRangeCommand<T>
         where T : IComparable

@@ -1,7 +1,9 @@
 ﻿using System;
+using ValueRange.Commands.Interface;
+using ValueRange.Commands.Realizations;
 using ValueRange.Enums;
 
-namespace ValueRange.Commands
+namespace ValueRange.Commands.Abstractions
 {
     internal abstract class BaseReturnByOptionsCommand<T> : IReturnByOptionsCommand<T>
         where T : IComparable
@@ -11,9 +13,9 @@ namespace ValueRange.Commands
             this.range = range;
         }
 
-        public abstract bool CanExecute(ReturnOptions obj);
+        public abstract bool CanExecute(ReturnOptions option);
 
-        public abstract void Execute(ValueWrap<T> obj);
+        public abstract void Execute(ValueWrap<T> value);
 
         protected readonly InclusiveValueRange<T> range;
     }

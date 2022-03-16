@@ -1,7 +1,8 @@
 ﻿using System;
+using ValueRange.Commands.Abstractions;
 using ValueRange.Enums;
 
-namespace ValueRange.Commands
+namespace ValueRange.Commands.Realizations
 {
     internal sealed class UpperCycledReturnByOptionsCommand<T> : BaseReturnByOptionsCommand<T>
         where T : IComparable
@@ -10,14 +11,14 @@ namespace ValueRange.Commands
         {
         }
 
-        public override bool CanExecute(ReturnOptions obj)
+        public override bool CanExecute(ReturnOptions options)
         {
-            return obj == ReturnOptions.Cycle;
+            return options == ReturnOptions.Cycle;
         }
 
-        public override void Execute(ValueWrap<T> obj)
+        public override void Execute(ValueWrap<T> value)
         {
-            obj.Value = range.UpperValueOfRange;
+            value.Value = range.UpperValueOfRange;
         }
     }
 }
