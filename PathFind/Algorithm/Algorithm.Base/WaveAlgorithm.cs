@@ -30,7 +30,7 @@ namespace Algorithm.Base
                 while (!IsDestination(CurrentEndPoints))
                 {
                     WaitUntillResumed();
-                    InspectCurrentVertex();
+                    InspectVertex(CurrentVertex);
                     CurrentVertex = NextVertex;
                     VisitVertex(CurrentVertex);
                 }
@@ -67,12 +67,9 @@ namespace Algorithm.Base
             RaiseVertexEnqueued(new AlgorithmEventArgs(vertex));
         }
 
-        private void InspectCurrentVertex()
+        private void InspectVertex(IVertex vertex)
         {
-            var neighbours = visitedVertices
-                .GetUnvisitedNeighbours(CurrentVertex)
-                .FilterObstacles()
-                .ToArray();
+            var neighbours = GetUnvisitedVertices(vertex);
             neighbours.ForEach(RaiseVertexEnqueued);
             RelaxNeighbours(neighbours);
         }

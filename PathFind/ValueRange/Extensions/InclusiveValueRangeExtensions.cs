@@ -45,24 +45,16 @@ namespace ValueRange.Extensions
             {
                 switch (returnOptions)
                 {
-                    case ReturnOptions.Cycle:
-                        value = self.LowerValueOfRange;
-                        break;
-                    case ReturnOptions.Limit:
-                        value = self.UpperValueOfRange;
-                        break;
+                    case ReturnOptions.Cycle: return self.LowerValueOfRange;
+                    case ReturnOptions.Limit: return self.UpperValueOfRange;
                 }
             }
             else if (value.IsLess(self.LowerValueOfRange))
             {
                 switch (returnOptions)
                 {
-                    case ReturnOptions.Cycle:
-                        value = self.UpperValueOfRange;
-                        break;
-                    case ReturnOptions.Limit:
-                        value = self.LowerValueOfRange;
-                        break;
+                    case ReturnOptions.Cycle: return self.UpperValueOfRange;
+                    case ReturnOptions.Limit: return self.LowerValueOfRange;
                 }
             }
             return value;

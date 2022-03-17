@@ -60,16 +60,11 @@ namespace Algorithm.Base
         {
             get
             {
-                var neighbours = visitedVertices
-                    .GetUnvisitedNeighbours(CurrentVertex)
-                    .FilterObstacles()
-                    .ToArray();
+                var neighbours = GetUnvisitedVertices(CurrentVertex);
                 double leastVertexCost = neighbours.MinOrDefault(GreedyHeuristic);
-                bool IsLeastCostVertex(IVertex vertex)
-                    => GreedyHeuristic(vertex) == leastVertexCost;
                 return neighbours
                     .ForAll(Enqueue)
-                    .FirstOrNullVertex(IsLeastCostVertex);
+                    .FirstOrNullVertex(vertex => GreedyHeuristic(vertex) == leastVertexCost);
             }
         }
 

@@ -11,6 +11,8 @@ using Interruptable.EventHandlers;
 using Interruptable.Interface;
 using NullObject.Extensions;
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Threading;
 
 namespace Algorithm.Base
@@ -26,10 +28,15 @@ namespace Algorithm.Base
         public event ProcessEventHandler Resumed;
 
         public bool IsInProcess { get; private set; }
+
         public bool IsPaused { get; private set; }
+
         private bool IsInterruptRequested { get; set; }
+
         protected IVertex CurrentVertex { get; set; }
+
         protected abstract IVertex NextVertex { get; }
+
         protected bool IsTerminatedPrematurely => !CurrentVertex.IsNull() && !IsInterruptRequested;
 
         public abstract IGraphPath FindPath();
@@ -115,6 +122,14 @@ namespace Algorithm.Base
         {
             IsInProcess = false;
             Finished?.Invoke(this, new ProcessEventArgs());
+        }
+
+        protected IReadOnlyCollection<IVertex> GetUnvisitedVertices(IVertex vertex)
+        {
+            return visitedVertices
+                .GetUnvisitedNeighbours(vertex)
+                .FilterObstacles()
+                .ToArray();
         }
 
         public void Dispose()

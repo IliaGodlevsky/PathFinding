@@ -7,8 +7,8 @@
             DimensionSizes2D = new[] { Width, Length };
         }
 
-        public const int Width = 80;
-        public const int Length = 45;
+        public const int Width = 25;
+        public const int Length = 20;
 
         public static int[] DimensionSizes2D { get; }
     }

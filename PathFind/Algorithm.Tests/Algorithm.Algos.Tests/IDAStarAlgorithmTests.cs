@@ -24,12 +24,12 @@ namespace Algorithm.Algos.Tests
 
         protected override int GetExpectedCost()
         {
-            return 210;
+            return 70;
         }
 
         protected override int GetExpectedLength()
         {
-            return 86;
+            return 28;
         }
     }
 }
