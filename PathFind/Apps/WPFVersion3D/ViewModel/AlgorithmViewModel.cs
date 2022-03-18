@@ -10,42 +10,42 @@ namespace WPFVersion3D.ViewModel
     {
         public event PropertyChangedEventHandler PropertyChanged;
 
-        protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = "")
-        {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
-        }
-
-        public string AlgorithmName { get; }
+        private readonly PathfindingAlgorithm algorithm;
 
         private string time;
+        private int pathLength;
+        private double pathCost;
+        private int visitedVerticesCount;
+        private AlgorithmStatuses status;
+
+        public bool IsStarted => algorithm.IsInProcess;
+
+        public string AlgorithmName { get; }
+       
         public string Time
         {
             get => time;
             set { time = value; OnPropertyChanged(); }
         }
 
-        private int pathLength;
         public int PathLength
         {
             get => pathLength;
             set { pathLength = value; OnPropertyChanged(); }
         }
 
-        private double pathCost;
         public double PathCost
         {
             get => pathCost;
             set { pathCost = value; OnPropertyChanged(); }
         }
 
-        private int visitedVerticesCount;
         public int VisitedVerticesCount
         {
             get => visitedVerticesCount;
             set { visitedVerticesCount = value; OnPropertyChanged(); }
         }
 
-        private AlgorithmStatuses status;
         public AlgorithmStatuses Status
         {
             get => status;
@@ -58,13 +58,14 @@ namespace WPFVersion3D.ViewModel
             AlgorithmName = algorithm.GetDescription();
         }
 
-        public bool IsStarted => algorithm.IsInProcess;
-
         public void Interrupt()
         {
             algorithm.Interrupt();
         }
 
-        private readonly PathfindingAlgorithm algorithm;
+        protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = "")
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        }
     }
 }

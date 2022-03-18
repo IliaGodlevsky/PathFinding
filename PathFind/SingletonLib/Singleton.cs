@@ -10,7 +10,15 @@ namespace SingletonLib
     public abstract class Singleton<TInstance, TInterface>
         where TInstance : class, TInterface
     {
+        [NonSerialized]
+        private static readonly Lazy<TInterface> instance;
+
         public static TInterface Instance => instance.Value;
+
+        static Singleton()
+        {
+            instance = new Lazy<TInterface>(() => CreateInstance(typeof(TInstance)), true);
+        }
 
         public static IReadOnlyList<TInterface> GetMany(int count)
         {
@@ -19,19 +27,11 @@ namespace SingletonLib
                 : Array.Empty<TInterface>();
         }
 
-        static Singleton()
-        {
-            instance = new Lazy<TInterface>(() => CreateInstance(typeof(TInstance)), true);
-        }
-
         private static TInstance CreateInstance(Type ofType)
         {
             return ofType.TryGetNonPublicParametrelessCtor(out var ctor)
                 ? (TInstance)ctor.Invoke(Array.Empty<object>())
                 : throw new SingletonException(Constants.GetMessage(ofType));
         }
-
-        [NonSerialized]
-        private static readonly Lazy<TInterface> instance;
     }
 }

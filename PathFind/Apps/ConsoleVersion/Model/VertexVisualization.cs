@@ -17,27 +17,40 @@ namespace ConsoleVersion.Model
         private static readonly Color IntermediateVertexColor = Color.FromKnownColor(KnownColor.DarkOrange);
         private static readonly Color ToReplaceMarkColor = Color.FromKnownColor(KnownColor.DarkRed);
 
-        private void Mark(Vertex vertex, Color color)
+        public bool IsVisualizedAsPath(Vertex vertex)
         {
-            vertex.Color = color;
-            vertex.Display();
+            return vertex.Color.IsOneOf(PathVertexColor, AlreadyPathVertexColor, IntermediateVertexColor);
         }
 
-        private void MarkClean(Vertex vertex, Color color)
+        public bool IsVisualizedAsEndPoint(Vertex vertex)
         {
-            using (Cursor.UseCurrentPosition())
-            {
-                Mark(vertex, color);
-            }
+            return vertex.Color.IsOneOf(SourceVertexColor, TargetVertexColor, IntermediateVertexColor, ToReplaceMarkColor);
         }
 
-        public bool IsVisualizedAsPath(Vertex vertex) => vertex.Color.IsOneOf(PathVertexColor, AlreadyPathVertexColor, IntermediateVertexColor);
-        public bool IsVisualizedAsEndPoint(Vertex vertex) => vertex.Color.IsOneOf(SourceVertexColor, TargetVertexColor, IntermediateVertexColor, ToReplaceMarkColor);
-        public void VisualizeAsTarget(Vertex vertex) => MarkClean(vertex, TargetVertexColor);
-        public void VisualizeAsObstacle(Vertex vertex) => MarkClean(vertex, ObstacleVertexColor);
-        public void VisualizeAsSource(Vertex vertex) => MarkClean(vertex, SourceVertexColor);
-        public void VisualizeAsIntermediate(Vertex vertex) => MarkClean(vertex, IntermediateVertexColor);
-        public void VisualizeAsRegular(Vertex vertex) => Mark(vertex, RegularVertexColor);
+        public void VisualizeAsTarget(Vertex vertex)
+        {
+            MarkClean(vertex, TargetVertexColor);
+        }
+
+        public void VisualizeAsObstacle(Vertex vertex)
+        {
+            MarkClean(vertex, ObstacleVertexColor);
+        }
+
+        public void VisualizeAsSource(Vertex vertex)
+        {
+            MarkClean(vertex, SourceVertexColor);
+        }
+
+        public void VisualizeAsIntermediate(Vertex vertex)
+        {
+            MarkClean(vertex, IntermediateVertexColor);
+        }
+
+        public void VisualizeAsRegular(Vertex vertex)
+        {
+            Mark(vertex, RegularVertexColor);
+        }
 
         public void VisualizeAsPath(Vertex vertex)
         {
@@ -72,6 +85,20 @@ namespace ConsoleVersion.Model
             if (vertex.Color == IntermediateVertexColor)
             {
                 MarkClean(vertex, ToReplaceMarkColor);
+            }
+        }
+
+        private void Mark(Vertex vertex, Color color)
+        {
+            vertex.Color = color;
+            vertex.Display();
+        }
+
+        private void MarkClean(Vertex vertex, Color color)
+        {
+            using (Cursor.UseCurrentPosition())
+            {
+                Mark(vertex, color);
             }
         }
     }

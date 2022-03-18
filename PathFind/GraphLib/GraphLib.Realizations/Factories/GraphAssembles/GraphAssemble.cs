@@ -14,6 +14,14 @@ namespace GraphLib.Realizations.Factories.GraphAssembles
     [Description("Random cost graph assemble")]
     public class GraphAssemble : IGraphAssemble
     {
+        protected readonly IVertexCostFactory costFactory;
+        protected readonly ICoordinateFactory coordinateFactory;
+        protected readonly IVertexFactory vertexFactory;
+        protected readonly IGraphFactory graphFactory;
+        protected readonly INeighborhoodFactory neighbourhoodFactory;
+        protected readonly IRandom random;
+        protected readonly InclusiveValueRange<int> percentRange;
+
         public GraphAssemble(
             IVertexFactory vertexFactory,
             ICoordinateFactory coordinateFactory,
@@ -47,15 +55,8 @@ namespace GraphLib.Realizations.Factories.GraphAssembles
                 vertex.IsObstacle = obstaclesMatrix[vertexIndex];
                 vertices[vertexIndex] = vertex;
             }
+
             return graphFactory.CreateGraph(vertices, graphDimensionsSizes);
         }
-
-        protected readonly IVertexCostFactory costFactory;
-        protected readonly ICoordinateFactory coordinateFactory;
-        protected readonly IVertexFactory vertexFactory;
-        protected readonly IGraphFactory graphFactory;
-        protected readonly INeighborhoodFactory neighbourhoodFactory;
-        protected readonly IRandom random;
-        protected readonly InclusiveValueRange<int> percentRange;
     }
 }

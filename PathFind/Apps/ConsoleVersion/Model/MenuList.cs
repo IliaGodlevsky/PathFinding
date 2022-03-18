@@ -10,6 +10,18 @@ namespace ConsoleVersion.Model
 {
     internal sealed class MenuList : IDisplayable
     {
+        private const string NewLine = "\n";
+        private const string Space = " ";
+        private const string Format = "{0}. {1}";
+
+        private readonly int menuItemsCount;
+        private readonly int columns;
+        private readonly int menuItemNumberPad;
+        private readonly string[] menuItemsNames;
+
+        private readonly Lazy<string> menuList;
+        private readonly Lazy<int> longestNameLength;
+
         public MenuList(IEnumerable<string> menuItemsNames, int columns = 2)
         {
             this.menuItemsNames = menuItemsNames.ToArray();
@@ -52,17 +64,5 @@ namespace ConsoleVersion.Model
 
             return stringBuilder.ToString();
         }
-
-        private readonly Lazy<string> menuList;
-        private readonly Lazy<int> longestNameLength;
-
-        private readonly int menuItemsCount;
-        private readonly int columns;
-        private readonly int menuItemNumberPad;
-        private readonly string[] menuItemsNames;
-
-        private const string NewLine = "\n";
-        private const string Space = " ";
-        private const string Format = "{0}. {1}";
     }
 }

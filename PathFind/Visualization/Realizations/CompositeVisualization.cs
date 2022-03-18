@@ -9,6 +9,8 @@ namespace Visualization.Realizations
 {
     internal sealed class CompositeVisualization : List<IExecutable<IAlgorithm>>, IExecutable<IAlgorithm>
     {
+        private readonly IGraph graph;
+
         public CompositeVisualization(IGraph graph)
         {
             this.graph = graph;
@@ -18,8 +20,6 @@ namespace Visualization.Realizations
         {
             graph.RemoveAllColors();
             this.ExecuteAll(algorithm);
-        }
-
-        private readonly IGraph graph;
+        }       
     }
 }

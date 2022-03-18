@@ -12,6 +12,8 @@ namespace Visualization.Abstractions
 {
     internal abstract class AlgorithmVertices : IVisualizationSlides, IExecutable<IAlgorithm>
     {
+        private readonly ConcurrentDictionary<IAlgorithm, ConcurrentDictionary<ICoordinate, IVertex>> vertices;
+
         public AlgorithmVertices()
         {
             vertices = new ConcurrentDictionary<IAlgorithm, ConcurrentDictionary<ICoordinate, IVertex>>();
@@ -48,8 +50,6 @@ namespace Visualization.Abstractions
             return (IReadOnlyCollection<IVertex>)vertices.GetOrEmpty(algorithm).Values;
         }
 
-        protected abstract void Visualize(IVisualizable visualizable);
-
-        private readonly ConcurrentDictionary<IAlgorithm, ConcurrentDictionary<ICoordinate, IVertex>> vertices;
+        protected abstract void Visualize(IVisualizable visualizable);       
     }
 }

@@ -5,14 +5,14 @@ namespace ConsoleVersion.Model.FramedAxes
 {
     internal abstract class FramedAxis : IFramedAxis, IDisplayable
     {
-        public abstract string GetFramedAxis();
-
-        public abstract void Display();
-
-        protected abstract string Offset { get; }
+        protected static int LateralDistance => MainView.LateralDistanceBetweenVertices;
 
         protected const char Space = ' ';
 
-        protected int LateralDistance => MainView.LateralDistanceBetweenVertices;
+        protected abstract string Offset { get; }
+
+        public abstract string GetFramedAxis();
+
+        public abstract void Display();
     }
 }

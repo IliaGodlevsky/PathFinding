@@ -9,14 +9,14 @@ namespace ConsoleVersion.Commands
     [AttachedTo(typeof(PathFindingViewModel))]
     internal sealed class InterruptAlgorithmCommand : IConsoleKeyCommand
     {
-        public bool CanExecute(ConsoleKey key)
-        {
-            return key.IsOneOf(ConsoleKey.Escape, ConsoleKey.End);
-        }
-
         public void Execute(PathFindingViewModel model)
         {
             model.CurrentAlgorithm.Interrupt();
+        }
+
+        public bool CanExecute(ConsoleKey key)
+        {
+            return key.IsOneOf(ConsoleKey.Escape, ConsoleKey.End);
         }
     }
 }

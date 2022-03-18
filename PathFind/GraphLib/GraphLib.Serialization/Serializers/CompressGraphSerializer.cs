@@ -10,6 +10,8 @@ namespace GraphLib.Serialization.Serializers
 {
     public sealed class CompressGraphSerializer : IGraphSerializer
     {
+        private readonly IGraphSerializer serializer;
+
         public CompressGraphSerializer(IGraphSerializer serializer)
         {
             this.serializer = serializer;
@@ -45,8 +47,6 @@ namespace GraphLib.Serialization.Serializers
             {
                 throw new CantSerializeGraphException(ex.Message, ex);
             }
-        }
-
-        private readonly IGraphSerializer serializer;
+        }       
     }
 }

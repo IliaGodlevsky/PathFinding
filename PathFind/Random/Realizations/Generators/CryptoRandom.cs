@@ -11,6 +11,14 @@ namespace Random.Realizations.Generators
         private const int IntSize = sizeof(int);
         private const int MaxBufferSize = IntSize << 4;
 
+        private static readonly object locker = new object();
+
+        private readonly byte[] buffer;
+        private readonly RandomNumberGenerator generator;
+
+        private bool isDisposing;
+        private int currentBufferPosition;
+        
         private uint Seed
         {
             get
@@ -28,6 +36,11 @@ namespace Random.Realizations.Generators
             buffer = new byte[MaxBufferSize];
             currentBufferPosition = 0;
             generator.GetBytes(buffer);
+        }
+
+        ~CryptoRandom()
+        {
+            Dispose(false);
         }
 
         public int Next(int minValue, int maxValue)
@@ -72,17 +85,5 @@ namespace Random.Realizations.Generators
                 generator.GetBytes(buffer);
             }
         }
-
-        ~CryptoRandom()
-        {
-            Dispose(false);
-        }
-
-        private readonly byte[] buffer;
-        private readonly RandomNumberGenerator generator;
-
-        private bool isDisposing;
-        private int currentBufferPosition;
-        private static readonly object locker = new object();
     }
 }

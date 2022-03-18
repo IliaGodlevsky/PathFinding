@@ -3,10 +3,10 @@ using GraphLib.Realizations.Graphs;
 
 namespace GraphLib.TestRealizations.TestFactories.Matrix
 {
-    internal sealed class ObstacleMatrix : BaseMatrix<bool>, IMatrix
+    internal sealed class ObstacleMatrix : BaseMatrix<bool>
     {
-        private const bool O = true;
-        private const bool I = false;
+        private const bool X = true;
+        private const bool O = false;
 
         public ObstacleMatrix(Graph2D graph) : base(graph)
         {
@@ -22,31 +22,31 @@ namespace GraphLib.TestRealizations.TestFactories.Matrix
         {
             return new bool[Constants.Width, Constants.Length]
             {
-                {I,I,I,I,I,I,I,I,I,I,I,I,O,I,I,I,I,I,I,I},
-                {I,I,I,I,I,I,I,I,I,O,I,I,I,I,I,O,I,I,I,O},
-                {I,I,I,O,I,I,O,O,I,I,I,O,I,I,I,O,I,I,I,I},
-                {I,O,O,I,I,I,I,I,I,O,I,O,I,I,O,O,I,I,I,I},
-                {I,I,I,I,I,I,I,I,I,O,I,I,O,I,I,I,I,I,O,I},
-                {I,O,I,O,I,I,I,I,I,I,O,I,I,I,I,I,I,I,I,I},
-                {I,I,I,I,I,I,I,I,I,I,I,I,O,I,I,I,I,I,I,I},
-                {I,I,I,I,I,I,I,I,I,I,I,I,I,I,I,I,I,I,I,I},
-                {I,I,I,I,I,I,I,I,I,I,I,I,I,I,I,I,O,I,I,I},
-                {I,I,I,I,I,I,O,O,O,I,I,I,I,O,I,I,I,I,I,I},
-                {I,O,I,I,I,I,I,I,I,I,I,I,I,I,O,I,I,I,I,I},
-                {I,I,I,I,I,I,I,I,I,I,O,I,O,I,O,I,I,I,I,I},
-                {I,I,I,I,I,I,I,I,I,I,I,I,I,I,I,I,I,I,I,I},
-                {I,I,I,I,I,O,O,I,I,I,I,I,I,I,I,I,I,I,I,I},
-                {I,I,O,I,I,I,I,I,O,I,I,I,O,I,I,I,I,I,I,O},
-                {I,I,I,I,O,I,I,I,I,I,I,O,I,I,I,I,I,I,I,I},
-                {I,I,I,I,I,I,I,I,I,I,I,I,I,I,I,I,I,I,I,I},
-                {I,I,I,I,I,O,O,I,I,I,O,I,I,I,I,I,I,I,I,O},
-                {I,O,I,I,I,I,I,I,I,O,I,O,I,I,I,O,I,I,O,I},
-                {I,I,O,I,I,I,I,I,I,I,I,I,I,O,I,I,I,I,I,I},
-                {I,I,I,I,I,I,I,I,I,O,I,I,I,O,I,I,I,I,I,I},
-                {I,I,I,I,I,I,O,I,I,I,I,I,I,I,I,I,I,I,I,I},
-                {I,I,I,I,I,I,I,I,O,I,I,I,I,I,I,I,O,O,I,I},
-                {I,I,I,I,I,I,I,I,I,I,I,I,I,I,I,I,I,I,I,I},
-                {I,I,I,O,I,I,I,I,I,I,I,I,I,I,O,I,I,I,I,I},
+                {O,O,O,O,O,O,O,O,O,O,O,O,X,O,O,O,O,O,O,O},
+                {O,O,O,O,O,O,O,O,O,X,O,O,O,O,O,X,O,O,O,X},
+                {O,O,O,X,O,O,X,X,O,O,O,X,O,O,O,X,O,O,O,O},
+                {O,X,X,O,O,O,O,O,O,X,O,X,O,O,X,X,O,O,O,O},
+                {O,O,O,O,O,O,O,O,O,X,O,O,X,O,O,O,O,O,X,O},
+                {O,X,O,X,O,O,O,O,O,O,X,O,O,O,O,O,O,O,O,O},
+                {O,O,O,O,O,O,O,O,O,O,O,O,X,O,O,O,O,O,O,O},
+                {O,O,O,O,O,O,O,O,O,O,O,O,O,O,O,O,O,O,O,O},
+                {O,O,O,O,O,O,O,O,O,O,O,O,O,O,O,O,X,O,O,O},
+                {O,O,O,O,O,O,X,X,X,O,O,O,O,X,O,O,O,O,O,O},
+                {O,X,O,O,O,O,O,O,O,O,O,O,O,O,X,O,O,O,O,O},
+                {O,O,O,O,O,O,O,O,O,O,X,O,X,O,X,O,O,O,O,O},
+                {O,O,O,O,O,O,O,O,O,O,O,O,O,O,O,O,O,O,O,O},
+                {O,O,O,O,O,X,X,O,O,O,O,O,O,O,O,O,O,O,O,O},
+                {O,O,X,O,O,O,O,O,X,O,O,O,X,O,O,O,O,O,O,X},
+                {O,O,O,O,X,O,O,O,O,O,O,X,O,O,O,O,O,O,O,O},
+                {O,O,O,O,O,O,O,O,O,O,O,O,O,O,O,O,O,O,O,O},
+                {O,O,O,O,O,X,X,O,O,O,X,O,O,O,O,O,O,O,O,X},
+                {O,X,O,O,O,O,O,O,O,X,O,X,O,O,O,X,O,O,X,O},
+                {O,O,X,O,O,O,O,O,O,O,O,O,O,X,O,O,O,O,O,O},
+                {O,O,O,O,O,O,O,O,O,X,O,O,O,X,O,O,O,O,O,O},
+                {O,O,O,O,O,O,X,O,O,O,O,O,O,O,O,O,O,O,O,O},
+                {O,O,O,O,O,O,O,O,X,O,O,O,O,O,O,O,X,X,O,O},
+                {O,O,O,O,O,O,O,O,O,O,O,O,O,O,O,O,O,O,O,O},
+                {O,O,O,X,O,O,O,O,O,O,O,O,O,O,X,O,O,O,O,O},
             };
         }
     }

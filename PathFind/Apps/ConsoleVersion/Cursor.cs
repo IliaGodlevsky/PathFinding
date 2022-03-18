@@ -7,6 +7,9 @@ namespace ConsoleVersion
 {
     internal static class Cursor
     {
+        private static int CursorLeft;
+        private static int CursorRight;
+
         public static IDisposable HideCursor()
         {
             Console.CursorVisible = false;
@@ -34,8 +37,5 @@ namespace ConsoleVersion
         {
             Console.CursorVisible = true;
         }
-
-        private static int CursorLeft;
-        private static int CursorRight;
     }
 }

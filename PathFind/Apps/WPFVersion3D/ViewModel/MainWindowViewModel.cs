@@ -30,43 +30,57 @@ namespace WPFVersion3D.ViewModel
     {
         public event PropertyChangedEventHandler PropertyChanged;
 
-        protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = "")
-        {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
-        }
-
-        private string graphParametres;
-        public override string GraphParametres { get => graphParametres; set { graphParametres = value; OnPropertyChanged(); } }
+        private readonly IMessenger messenger;
 
         private IGraphField graphField;
-        public override IGraphField GraphField { get => graphField; set { graphField = value; OnPropertyChanged(); } }
-
-        private bool IsAllAlgorithmsFinished { get; set; } = true;
+        private string graphParametres;
 
         public Tuple<string, IAnimationSpeed>[] AnimationSpeeds { get; }
 
+        private bool IsAllAlgorithmsFinished { get; set; } = true;
+        
+        public override string GraphParametres 
+        { 
+            get => graphParametres; 
+            set { graphParametres = value; OnPropertyChanged(); } 
+        }
+       
+        public override IGraphField GraphField 
+        { 
+            get => graphField; 
+            set { graphField = value; OnPropertyChanged(); } 
+        }
+
         public ICommand StartPathFindCommand { get; }
+
         public ICommand CreateNewGraphCommand { get; }
+
         public ICommand ClearGraphCommand { get; }
+
         public ICommand SaveGraphCommand { get; }
+
         public ICommand LoadGraphCommand { get; }
+
         public ICommand ChangeOpacityCommand { get; }
+
         public ICommand AnimatedAxisRotateCommand { get; }
+
         public ICommand InterruptAlgorithmCommand { get; }
+
         public ICommand ClearVerticesColorCommand { get; }
 
-        public MainWindowViewModel(IGraphFieldFactory fieldFactory,
-            IVertexEventHolder eventHolder, GraphSerializationModule serializationModule, BaseEndPoints endPoints, ILog log)
+        public MainWindowViewModel(IGraphFieldFactory fieldFactory, IVertexEventHolder eventHolder, 
+            GraphSerializationModule serializationModule, BaseEndPoints endPoints, ILog log)
             : base(fieldFactory, eventHolder, serializationModule, endPoints, log)
         {
             messenger = DI.Container.Resolve<IMessenger>();
             ClearVerticesColorCommand = new RelayCommand(ExecuteClearVerticesColors, CanExecuteClearGraphOperation);
             StartPathFindCommand = new RelayCommand(ExecuteStartPathFindCommand, CanExecuteStartFindPathCommand);
-            CreateNewGraphCommand = new RelayCommand(ExecuteCreateNewGraphCommand, CanExecuteOperation);
+            CreateNewGraphCommand = new RelayCommand(ExecuteCreateNewGraphCommand, CanExecuteCommand);
             ClearGraphCommand = new RelayCommand(ExecuteClearGraphCommand, CanExecuteClearGraphOperation);
-            SaveGraphCommand = new RelayCommand(ExecuteSaveGraphCommand, CanExecuteGraphOperation);
-            LoadGraphCommand = new RelayCommand(ExecuteLoadGraphCommand, CanExecuteOperation);
-            ChangeOpacityCommand = new RelayCommand(ExecuteChangeOpacity, CanExecuteGraphOperation);
+            SaveGraphCommand = new RelayCommand(ExecuteSaveGraphCommand, CanExecuteGraphRelatedCommand);
+            LoadGraphCommand = new RelayCommand(ExecuteLoadGraphCommand, CanExecuteCommand);
+            ChangeOpacityCommand = new RelayCommand(ExecuteChangeOpacity, CanExecuteGraphRelatedCommand);
             AnimatedAxisRotateCommand = new RelayCommand(ExecuteAnimatedAxisRotateCommand);
             InterruptAlgorithmCommand = new RelayCommand(ExecuteInterruptAlgorithmCommand, CanExecuteInterruptAlgorithmCommand);
             AnimationSpeeds = new EnumValuesWithoutIgnored<AnimationSpeeds>().ToAnimationSpeedTuples();
@@ -74,33 +88,74 @@ namespace WPFVersion3D.ViewModel
             messenger.Register<GraphCreatedMessage>(this, MessageTokens.MainModel, SetGraph);
         }
 
-        public override void FindPath() => DI.Container.Resolve<PathFindWindow>().Show();
-        public override void CreateNewGraph() => DI.Container.Resolve<GraphCreateWindow>().Show();
-        private void ChangeVerticesOpacity() => DI.Container.Resolve<OpacityChangeWindow>().Show();
+        public void Dispose()
+        {
+            messenger.Unregister(this);
+        }
+
+        public override void FindPath()
+        {
+            DI.Container.Resolve<PathFindWindow>().Show();
+        }
+
+        public override void CreateNewGraph()
+        {
+            DI.Container.Resolve<GraphCreateWindow>().Show();
+        }
+
+        private void ChangeVerticesOpacity()
+        {
+            DI.Container.Resolve<OpacityChangeWindow>().Show();
+        }
 
         public override void ConnectNewGraph(IGraph graph)
         {
             base.ConnectNewGraph(graph);
-            messenger.Forward(new ClearStatisticsMessage(), MessageTokens.AlgorithmStatisticsModel);
+            messenger
+                .Forward(new ClearStatisticsMessage(), MessageTokens.AlgorithmStatisticsModel)
+                .Forward(new GraphFieldCreatedMessage(GraphField), MessageTokens.AllStretchModels);
             (graphField as GraphField3D)?.CenterGraph();
         }
 
-        public void StretchAlongXAxis(object sender, RoutedPropertyChangedEventArgs<double> e)
-            => (GraphField as GraphField3D)?.StretchAlongAxis(DI.Container.Resolve<Abscissa>(), e.NewValue, 0, 0, 1);
+        protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = "")
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        }
 
-        public void StretchAlongYAxis(object sender, RoutedPropertyChangedEventArgs<double> e)
-            => (GraphField as GraphField3D)?.StretchAlongAxis(DI.Container.Resolve<Ordinate>(), e.NewValue, 0, 1, 0);
+        private void ExecuteClearVerticesColors(object param)
+        {
+            ClearColors();
+        }
 
-        public void StretchAlongZAxis(object sender, RoutedPropertyChangedEventArgs<double> e)
-            => (GraphField as GraphField3D)?.StretchAlongAxis(DI.Container.Resolve<Applicate>(), e.NewValue, 1, 0, 0);
+        private void ExecuteSaveGraphCommand(object param)
+        {
+            base.SaveGraph();
+        }
 
-        private void ExecuteClearVerticesColors(object param) => ClearColors();
-        private void ExecuteSaveGraphCommand(object param) => base.SaveGraph();
-        private void ExecuteChangeOpacity(object param) => ChangeVerticesOpacity();
-        private void ExecuteLoadGraphCommand(object param) => base.LoadGraph();
-        private void ExecuteStartPathFindCommand(object param) => FindPath();
-        private void ExecuteCreateNewGraphCommand(object param) => CreateNewGraph();
-        private void ExecuteAnimatedAxisRotateCommand(object param) => (param as IAnimatedAxisRotator)?.RotateAxis();
+        private void ExecuteChangeOpacity(object param)
+        {
+            ChangeVerticesOpacity();
+        }
+
+        private void ExecuteLoadGraphCommand(object param)
+        {
+            base.LoadGraph();
+        }
+
+        private void ExecuteStartPathFindCommand(object param)
+        {
+            FindPath();
+        }
+
+        private void ExecuteCreateNewGraphCommand(object param)
+        {
+            CreateNewGraph();
+        }
+
+        private void ExecuteAnimatedAxisRotateCommand(object param)
+        {
+            (param as IAnimatedAxisRotator)?.RotateAxis();
+        }
 
         private void ExecuteClearGraphCommand(object param)
         {
@@ -115,21 +170,38 @@ namespace WPFVersion3D.ViewModel
             messenger.Forward(message, MessageTokens.AlgorithmStatisticsModel);
         }
 
-        private bool CanExecuteStartFindPathCommand(object param) => !endPoints.HasIsolators();
-        private bool CanExecuteClearGraphOperation(object param) => CanExecuteGraphOperation(param) && CanExecuteOperation(param);
-        private bool CanExecuteGraphOperation(object param) => !Graph.IsNull();
-        private bool CanExecuteOperation(object param) => IsAllAlgorithmsFinished;
-        private bool CanExecuteInterruptAlgorithmCommand(object sender) => !IsAllAlgorithmsFinished;
-
-        private void OnIsAllAlgorithmsFinished(IsAllAlgorithmsFinishedMessage message)
-            => IsAllAlgorithmsFinished = message.IsAllAlgorithmsFinished;
-        private void SetGraph(GraphCreatedMessage message) => ConnectNewGraph(message.Graph);
-
-        public void Dispose()
+        private bool CanExecuteStartFindPathCommand(object param)
         {
-            messenger.Unregister(this);
+            return !endPoints.HasIsolators();
         }
 
-        private readonly IMessenger messenger;
+        private bool CanExecuteClearGraphOperation(object param)
+        {
+            return CanExecuteGraphRelatedCommand(param) && CanExecuteCommand(param);
+        }
+
+        private bool CanExecuteGraphRelatedCommand(object param)
+        {
+            return !Graph.IsNull();
+        }
+
+        private bool CanExecuteCommand(object param)
+        {
+            return IsAllAlgorithmsFinished;
+        }
+        private bool CanExecuteInterruptAlgorithmCommand(object sender)
+        {
+            return !IsAllAlgorithmsFinished;
+        }
+
+        private void OnIsAllAlgorithmsFinished(IsAllAlgorithmsFinishedMessage message)
+        {
+            IsAllAlgorithmsFinished = message.IsAllAlgorithmsFinished;
+        }
+
+        private void SetGraph(GraphCreatedMessage message)
+        {
+            ConnectNewGraph(message.Value);
+        }
     }
 }

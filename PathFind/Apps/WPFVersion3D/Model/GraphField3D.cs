@@ -14,10 +14,26 @@ namespace WPFVersion3D.Model
 {
     internal sealed class GraphField3D : ModelVisual3D, IGraphField
     {
+        private readonly IReadOnlyCollection<Vertex3D> vertices;
+
         public IReadOnlyCollection<IVertex> Vertices => vertices;
+
         public double DistanceBetweenVerticesAtXAxis { get; set; } = default;
+
         public double DistanceBetweenVerticesAtYAxis { get; set; } = default;
+
         public double DistanceBetweenVerticesAtZAxis { get; set; } = default;
+
+        private int[] DimensionSizes { get; }
+
+        private IAxis[] CoordinateSystem { get; }
+
+        private double[] DistancesBetween => new[]
+        {
+            DistanceBetweenVerticesAtZAxis,
+            DistanceBetweenVerticesAtYAxis,
+            DistanceBetweenVerticesAtXAxis
+        };
 
         public GraphField3D(Graph3D graph)
         {
@@ -72,18 +88,9 @@ namespace WPFVersion3D.Model
             axis.Offset(vertex.Transform as TranslateTransform3D, offset);
         }
 
-        private double GetAdjustedVertexSize(IAxis axis) => Constants.InitialVertexSize + DistancesBetween[axis.Order];
-
-        private int[] DimensionSizes { get; }
-        private IAxis[] CoordinateSystem { get; }
-
-        private double[] DistancesBetween => new[]
+        private double GetAdjustedVertexSize(IAxis axis)
         {
-            DistanceBetweenVerticesAtZAxis,
-            DistanceBetweenVerticesAtYAxis,
-            DistanceBetweenVerticesAtXAxis
-        };
-
-        private readonly IReadOnlyCollection<Vertex3D> vertices;
+            return Constants.InitialVertexSize + DistancesBetween[axis.Order];
+        }
     }
 }

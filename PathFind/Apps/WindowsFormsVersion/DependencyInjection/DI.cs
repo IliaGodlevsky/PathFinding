@@ -1,4 +1,6 @@
-﻿using Algorithm.Factory;
+﻿using Algorithm.Base;
+using Algorithm.Factory.Interface;
+using Algorithm.Interfaces;
 using Autofac;
 using Common.Extensions;
 using Common.Interface;
@@ -79,7 +81,8 @@ namespace WindowsFormsVersion.DependencyInjection
             builder.RegisterType<BinaryFormatter>().As<IFormatter>().SingleInstance();
             builder.RegisterType<VertexFromInfoFactory>().As<IVertexFromInfoFactory>().SingleInstance();
 
-            builder.RegisterAssemblyTypes(Assemblies).Where(Implements<IAlgorithmFactory>).As<IAlgorithmFactory>().SingleInstance();
+            builder.RegisterAssemblyTypes(Assemblies).Where(Implements<IAlgorithmFactory<PathfindingAlgorithm>>)
+                .As<IAlgorithmFactory<PathfindingAlgorithm>>().SingleInstance();
 
             return builder.Build();
         }

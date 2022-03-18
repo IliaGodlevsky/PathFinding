@@ -6,12 +6,13 @@ using Common.Extensions.EnumerableExtensions;
 using GraphLib.Extensions;
 using GraphLib.Interfaces;
 using System.Collections.Generic;
-using System.Linq;
 
 namespace Algorithm.Base
 {
     public abstract class WaveAlgorithm : PathfindingAlgorithm
     {
+        protected virtual IEndPoints CurrentEndPoints { get; set; }
+
         protected WaveAlgorithm(IEndPoints endPoints)
             : base(endPoints)
         {
@@ -29,9 +30,9 @@ namespace Algorithm.Base
                 VisitVertex(CurrentVertex);
                 while (!IsDestination(CurrentEndPoints))
                 {
-                    WaitUntillResumed();
+                    WaitUntilResumed();
                     InspectVertex(CurrentVertex);
-                    CurrentVertex = NextVertex;
+                    CurrentVertex = GetNextVertex();
                     VisitVertex(CurrentVertex);
                 }
                 if (!IsTerminatedPrematurely) break;
@@ -60,7 +61,6 @@ namespace Algorithm.Base
         }
 
         protected abstract void RelaxNeighbours(IReadOnlyCollection<IVertex> vertex);
-        protected virtual IEndPoints CurrentEndPoints { get; set; }
 
         protected virtual void RaiseVertexEnqueued(IVertex vertex)
         {

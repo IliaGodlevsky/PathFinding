@@ -6,6 +6,9 @@ namespace ConsoleVersion
 {
     internal static class Program
     {
-        private static void Main(string[] args) => DI.Container.Display<MainView>();
+        private static void Main(string[] args)
+        {
+            DI.Container.Display<MainView>();
+        }
     }
 }

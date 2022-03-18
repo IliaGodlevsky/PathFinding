@@ -7,6 +7,8 @@ namespace WPFVersion3D.Model
 {
     internal sealed class Vertex3DCostFactory : IVertexCostFactory
     {
+        private readonly IRandom random;
+
         public Vertex3DCostFactory(IRandom random)
         {
             this.random = random;
@@ -22,7 +24,5 @@ namespace WPFVersion3D.Model
             int randomCost = random.Next(Vertex3DCost.CostRange);
             return new Vertex3DCost(randomCost);
         }
-
-        private readonly IRandom random;
     }
 }

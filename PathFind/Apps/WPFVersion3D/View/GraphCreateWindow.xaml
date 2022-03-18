@@ -119,7 +119,7 @@
             </TextBox.Text>
         </TextBox>
         <StackPanel Grid.Row="6" Grid.ColumnSpan="2" Orientation="Horizontal" HorizontalAlignment="Center">
-            <Button Command ="{Binding ConfirmCreateGraphCommand}" Margin="5" Content="OK"></Button>
+            <Button Command ="{Binding CreateGraphCommand}" Margin="5" Content="OK"></Button>
             <Button Command="{Binding CancelCreateGraphCommand}" Margin="5" Content="Cancel"></Button>
         </StackPanel>
     </Grid>

@@ -17,23 +17,26 @@ namespace ConsoleVersion.Views
 {
     internal sealed class MainView : View
     {
+        private static int PreviousMaxValueOfRange;
+        private static int CurrentMaxValueOfRange;
+
+        private readonly IMessenger messenger;
+
+        private IGraph graph = NullGraph.Instance;
+
         public static int LateralDistanceBetweenVertices { get; private set; }
 
         public static Coordinate2D GraphFieldPosition { get; }
+
         public static Coordinate2D StatisticsPosition { get; private set; }
 
-        public static void SetCursorPositionUnderMenu(int menuOffset)
+        public MainView(MainViewModel model) : base(model)
         {
-            var fieldPosition = MainView.StatisticsPosition;
-            Console.SetCursorPosition(fieldPosition.X, fieldPosition.Y + menuOffset);
-        }
-
-        private static void RecalculateConsolePosition(Vertex vertex)
-        {
-            var point = (Coordinate2D)vertex.Position;
-            int left = MainView.GraphFieldPosition.X + point.X * MainView.LateralDistanceBetweenVertices;
-            int top = MainView.GraphFieldPosition.Y + point.Y;
-            vertex.ConsolePosition = new Coordinate2D(left, top);
+            messenger = DI.Container.Resolve<IMessenger>();
+            messenger.Register<GraphCreatedMessage>(this, MessageTokens.MainView, OnNewGraphCreated);
+            messenger.Register<CostRangeChangedMessage>(this, MessageTokens.MainView, OnCostRangeChanged);
+            messenger.Register<UpdateStatisticsMessage>(this, MessageTokens.MainView, OnStatisticsUpdated);
+            OnCostRangeChanged(new CostRangeChangedMessage(BaseVertexCost.CostRange));
         }
 
         static MainView()
@@ -45,22 +48,10 @@ namespace ConsoleVersion.Views
             Vertex.VertexCreated += RecalculateConsolePosition;
         }
 
-        public MainView(MainViewModel model) : base(model)
+        public static void SetCursorPositionUnderMenu(int menuOffset)
         {
-            messenger = DI.Container.Resolve<IMessenger>();
-            messenger.Register<GraphCreatedMessage>(this, MessageTokens.MainView, OnNewGraphCreated);
-            messenger.Register<CostRangeChangedMessage>(this, MessageTokens.MainView, OnCostRangeChanged);
-            messenger.Register<UpdateStatisticsMessage>(this, MessageTokens.MainView, OnStatisticsUpdated);
-            OnCostRangeChanged(new CostRangeChangedMessage(BaseVertexCost.CostRange));
-        }
-
-        private static int CalculateLateralDistanceBetweenVertices()
-        {
-            int currentCostWidth = CurrentMaxValueOfRange.ToString().Length;
-            int previousCostWidth = PreviousMaxValueOfRange.ToString().Length;
-            int costWidth = Math.Max(currentCostWidth, previousCostWidth);
-            int width = (Constants.GraphWidthValueRange.UpperValueOfRange - 1).ToString().Length;
-            return costWidth >= width ? costWidth + 2 : width + width - costWidth;
+            var fieldPosition = MainView.StatisticsPosition;
+            Console.SetCursorPosition(fieldPosition.X, fieldPosition.Y + menuOffset);
         }
 
         private void OnNewGraphCreated(GraphCreatedMessage message)
@@ -90,9 +81,21 @@ namespace ConsoleVersion.Views
             Console.Write(message.Statistics.PadRight(Console.BufferWidth));
         }
 
-        private static int PreviousMaxValueOfRange;
-        private static int CurrentMaxValueOfRange;
-        private readonly IMessenger messenger;
-        private IGraph graph = NullGraph.Instance;
+        private static void RecalculateConsolePosition(Vertex vertex)
+        {
+            var point = (Coordinate2D)vertex.Position;
+            int left = MainView.GraphFieldPosition.X + point.X * MainView.LateralDistanceBetweenVertices;
+            int top = MainView.GraphFieldPosition.Y + point.Y;
+            vertex.ConsolePosition = new Coordinate2D(left, top);
+        }
+
+        private static int CalculateLateralDistanceBetweenVertices()
+        {
+            int currentCostWidth = CurrentMaxValueOfRange.ToString().Length;
+            int previousCostWidth = PreviousMaxValueOfRange.ToString().Length;
+            int costWidth = Math.Max(currentCostWidth, previousCostWidth);
+            int width = (Constants.GraphWidthValueRange.UpperValueOfRange - 1).ToString().Length;
+            return costWidth >= width ? costWidth + 2 : width + width - costWidth;
+        }
     }
 }

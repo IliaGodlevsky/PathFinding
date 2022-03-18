@@ -22,9 +22,12 @@ namespace WPFVersion3D.ViewModel
     {
         public event Action WindowClosed;
 
+        private readonly IMessenger messenger;
+
         public int Height { get; set; }
 
-        public ICommand ConfirmCreateGraphCommand { get; }
+        public ICommand CreateGraphCommand { get; }
+
         public ICommand CancelCreateGraphCommand { get; }
 
         public GraphCreatingViewModel(IEnumerable<IGraphAssemble> graphAssembles, ILog log)
@@ -32,8 +35,7 @@ namespace WPFVersion3D.ViewModel
         {
             messenger = DI.Container.Resolve<IMessenger>();
             SelectedGraphAssemble = graphAssembles.FirstOrDefault();
-            ConfirmCreateGraphCommand = new RelayCommand(ExecuteConfirmCreateGraphCommand,
-                CanExecuteConfirmCreateGraphCommand);
+            CreateGraphCommand = new RelayCommand(ExecuteCreateGraphCommand, CanExecuteCreateGraphCommand);
             CancelCreateGraphCommand = new RelayCommand(obj => CloseWindow());
         }
 
@@ -51,7 +53,12 @@ namespace WPFVersion3D.ViewModel
             }
         }
 
-        private void ExecuteConfirmCreateGraphCommand(object param)
+        public void Dispose()
+        {
+            WindowClosed = null;
+        }
+
+        private void ExecuteCreateGraphCommand(object param)
         {
             CreateGraph();
             CloseWindow();
@@ -62,19 +69,13 @@ namespace WPFVersion3D.ViewModel
             WindowClosed?.Invoke();
         }
 
-        private bool CanExecuteConfirmCreateGraphCommand(object sender)
+        private bool CanExecuteCreateGraphCommand(object sender)
         {
             return SelectedGraphAssemble != null
                 && Constants.GraphWidthValueRange.Contains(Width)
                 && Constants.GraphLengthValueRange.Contains(Length)
                 && Constants.GraphHeightValueRange.Contains(Height);
-        }
 
-        public void Dispose()
-        {
-            WindowClosed = null;
         }
-
-        private readonly IMessenger messenger;
     }
 }

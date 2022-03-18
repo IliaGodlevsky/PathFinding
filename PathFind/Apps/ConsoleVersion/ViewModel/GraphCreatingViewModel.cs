@@ -22,6 +22,9 @@ namespace ConsoleVersion.ViewModel
     {
         public event Action WindowClosed;
 
+        private readonly IMessenger messenger;
+        private readonly InclusiveValueRange<int> graphAssembleKeyRange;
+
         public string GraphAssembleInpuMessage { private get; set; }
 
         public IInput<int> IntInput { get; set; }
@@ -93,8 +96,5 @@ namespace ConsoleVersion.ViewModel
         {
             WindowClosed = null;
         }
-
-        private readonly IMessenger messenger;
-        private readonly InclusiveValueRange<int> graphAssembleKeyRange;
     }
 }

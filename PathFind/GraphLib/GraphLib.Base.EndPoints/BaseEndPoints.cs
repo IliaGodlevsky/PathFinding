@@ -12,12 +12,29 @@ namespace GraphLib.Base.EndPoints
 {
     public abstract class BaseEndPoints : IEndPoints
     {
-        internal protected Collection<IVertex> Intermediates { get; }
-        internal protected Collection<IVertex> MarkedToReplace { get; }
+        private readonly IVerticesCommands markedToReplaceCommands;
+        private readonly IVerticesCommands setEndPointsCommands;
+        private readonly IVerticesCommands returnColorsCommands;
 
         public IVertex Source { get; internal set; }
+
         public IVertex Target { get; internal set; }
+
         public IEnumerable<IVertex> EndPoints => Intermediates.Prepend(Source).Append(Target);
+
+        internal protected Collection<IVertex> Intermediates { get; }
+
+        internal protected Collection<IVertex> MarkedToReplace { get; }
+
+        protected BaseEndPoints()
+        {
+            Intermediates = new Collection<IVertex>();
+            MarkedToReplace = new Collection<IVertex>();
+            setEndPointsCommands = new SetEndPointsCommands(this);
+            markedToReplaceCommands = new IntermediateToReplaceCommands(this);
+            returnColorsCommands = new RestoreColorsCommands(this);
+            Reset();
+        }
 
         public void SubscribeToEvents(IGraph graph)
         {
@@ -40,16 +57,6 @@ namespace GraphLib.Base.EndPoints
             returnColorsCommands.ExecuteForEach(EndPoints);
         }
 
-        protected BaseEndPoints()
-        {
-            Intermediates = new Collection<IVertex>();
-            MarkedToReplace = new Collection<IVertex>();
-            setEndPointsCommands = new SetEndPointsCommands(this);
-            markedToReplaceCommands = new IntermediateToReplaceCommands(this);
-            returnColorsCommands = new RestoreColorsCommands(this);
-            Reset();
-        }
-
         protected virtual void SetEndPoints(object sender, EventArgs e)
         {
             setEndPointsCommands.Execute(sender.AsVertex());
@@ -62,9 +69,5 @@ namespace GraphLib.Base.EndPoints
 
         protected abstract void SubscribeVertex(IVertex vertex);
         protected abstract void UnsubscribeVertex(IVertex vertex);
-
-        private readonly IVerticesCommands markedToReplaceCommands;
-        private readonly IVerticesCommands setEndPointsCommands;
-        private readonly IVerticesCommands returnColorsCommands;
     }
 }

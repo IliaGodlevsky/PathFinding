@@ -23,22 +23,13 @@ namespace ConsoleVersion.Model
         public event EventHandler VertexReversed;
         public event EventHandler MarkedToReplaceIntermediate;
 
-        public Vertex(INeighborhood neighbourhood, ICoordinate coordinate, IVisualization<Vertex> visualization)
-        {
-            this.visualization = visualization;
-            Position = coordinate;
-            VertexCreated?.Invoke(this);
-            this.Initialize();
-            neighbours = new Lazy<IReadOnlyCollection<IVertex>>(() => neighbourhood.GetNeighboursWithinGraph(this));
-        }
+        private readonly Lazy<IReadOnlyCollection<IVertex>> neighbours;
+        private readonly IVisualization<Vertex> visualization;
 
-        public Vertex(VertexSerializationInfo info, IVisualization<Vertex> visualization)
-            : this(info.Neighbourhood, info.Position, visualization)
-        {
-            this.Initialize(info);
-        }
-
+        private string text;
         private bool isObstacle;
+        private IVertexCost cost;
+
         public bool IsObstacle
         {
             get => isObstacle;
@@ -52,7 +43,6 @@ namespace ConsoleVersion.Model
             }
         }
 
-        private IVertexCost cost;
         public IVertexCost Cost
         {
             get => cost;
@@ -70,14 +60,51 @@ namespace ConsoleVersion.Model
         public IGraph Graph { get; }
 
         public Coordinate2D ConsolePosition { get; set; }
+
         public Color Color { get; set; }
+
         public IReadOnlyCollection<IVertex> Neighbours => neighbours.Value;
+
         public ICoordinate Position { get; }
 
-        public void OnVertexCostChanged() => VertexCostChanged?.Invoke(this, EventArgs.Empty);
-        public void OnVertexReversed() => VertexReversed?.Invoke(this, EventArgs.Empty);
-        public void OnEndPointChosen() => EndPointChosen?.Invoke(this, EventArgs.Empty);
-        public void OnMarkedToReplaceIntermediate() => MarkedToReplaceIntermediate?.Invoke(this, EventArgs.Empty);
+        public bool IsVisualizedAsPath => visualization.IsVisualizedAsPath(this);
+
+        public bool IsVisualizedAsEndPoint => visualization.IsVisualizedAsEndPoint(this);
+
+        public Vertex(INeighborhood neighbourhood, ICoordinate coordinate, IVisualization<Vertex> visualization)
+        {
+            this.visualization = visualization;
+            Position = coordinate;
+            VertexCreated?.Invoke(this);
+            this.Initialize();
+            neighbours = new Lazy<IReadOnlyCollection<IVertex>>(() => neighbourhood.GetNeighboursWithinGraph(this));
+        }
+
+        public Vertex(VertexSerializationInfo info, IVisualization<Vertex> visualization)
+            : this(info.Neighbourhood, info.Position, visualization)
+        {
+            this.Initialize(info);
+        }
+
+        public void OnVertexCostChanged()
+        {
+            VertexCostChanged?.Invoke(this, EventArgs.Empty);
+        }
+
+        public void OnVertexReversed()
+        {
+            VertexReversed?.Invoke(this, EventArgs.Empty);
+        }
+
+        public void OnEndPointChosen()
+        {
+            EndPointChosen?.Invoke(this, EventArgs.Empty);
+        }
+
+        public void OnMarkedToReplaceIntermediate()
+        {
+            MarkedToReplaceIntermediate?.Invoke(this, EventArgs.Empty);
+        }
 
         public void MakeUnweighted()
         {
@@ -97,23 +124,64 @@ namespace ConsoleVersion.Model
             Console.Write(text, Color);
         }
 
-        public bool Equals(IVertex other) => Equals((object)other);
-        public override bool Equals(object obj) => obj is IVertex vertex && vertex.IsEqual(this);
-        public override int GetHashCode() => base.GetHashCode();
-        public bool IsVisualizedAsPath => visualization.IsVisualizedAsPath(this);
-        public bool IsVisualizedAsEndPoint => visualization.IsVisualizedAsEndPoint(this);
-        public void VisualizeAsTarget() => visualization.VisualizeAsTarget(this);
-        public void VisualizeAsRegular() => visualization.VisualizeAsRegular(this);
-        public void VisualizeAsObstacle() => visualization.VisualizeAsObstacle(this);
-        public void VisualizeAsPath() => visualization.VisualizeAsPath(this);
-        public void VisualizeAsSource() => visualization.VisualizeAsSource(this);
-        public void VisualizeAsVisited() => visualization.VisualizeAsVisited(this);
-        public void VisualizeAsEnqueued() => visualization.VisualizeAsEnqueued(this);
-        public void VisualizeAsIntermediate() => visualization.VisualizeAsIntermediate(this);
-        public void VisualizeAsMarkedToReplaceIntermediate() => visualization.VisualizeAsMarkedToReplaceIntermediate(this);
+        public bool Equals(IVertex other)
+        {
+            return Equals((object)other);
+        }
 
-        private string text;
-        private readonly Lazy<IReadOnlyCollection<IVertex>> neighbours;
-        private readonly IVisualization<Vertex> visualization;
+        public override bool Equals(object obj)
+        {
+            return obj is IVertex vertex && vertex.IsEqual(this);
+        }
+
+        public override int GetHashCode()
+        {
+            return base .GetHashCode();
+        }
+
+        public void VisualizeAsTarget()
+        {
+            visualization.VisualizeAsTarget(this);
+        }
+
+        public void VisualizeAsRegular()
+        {
+            visualization.VisualizeAsRegular(this);
+        }
+
+        public void VisualizeAsObstacle()
+        {
+            visualization.VisualizeAsObstacle(this);
+        }
+
+        public void VisualizeAsPath()
+        {
+            visualization.VisualizeAsPath(this);
+        }
+
+        public void VisualizeAsSource()
+        {
+            visualization.VisualizeAsSource(this);
+        }
+
+        public void VisualizeAsVisited()
+        {
+            visualization.VisualizeAsVisited(this);
+        }
+
+        public void VisualizeAsEnqueued()
+        {
+            visualization.VisualizeAsEnqueued(this);
+        }
+
+        public void VisualizeAsIntermediate()
+        {
+            visualization.VisualizeAsIntermediate(this);
+        }
+
+        public void VisualizeAsMarkedToReplaceIntermediate()
+        {
+            visualization.VisualizeAsMarkedToReplaceIntermediate(this);
+        }
     }
 }

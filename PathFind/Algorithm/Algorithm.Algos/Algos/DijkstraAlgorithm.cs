@@ -17,6 +17,9 @@ namespace Algorithm.Algos.Algos
     [Description("Dijkstra's algorithm")]
     public class DijkstraAlgorithm : WaveAlgorithm
     {
+        protected readonly SimplePriorityQueue<IVertex, double> queue;
+        protected readonly IStepRule stepRule;
+
         public DijkstraAlgorithm(IEndPoints endPoints)
             : this(endPoints, new DefaultStepRule())
         {
@@ -41,7 +44,10 @@ namespace Algorithm.Algos.Algos
             queue.Clear();
         }
 
-        protected override IVertex NextVertex => queue.FirstOrNullVertex();
+        protected override IVertex GetNextVertex()
+        {
+            return queue.FirstOrNullVertex();
+        }
 
         protected override void PrepareForLocalPathfinding()
         {
@@ -81,8 +87,5 @@ namespace Algorithm.Algos.Algos
             neighbours.ForEach(RelaxVertex);
             queue.RemoveIfContains(CurrentVertex);
         }
-
-        protected readonly SimplePriorityQueue<IVertex, double> queue;
-        protected readonly IStepRule stepRule;
     }
 }

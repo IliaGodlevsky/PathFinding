@@ -16,5 +16,10 @@ namespace Common.Extensions
             var obstacles = Enumerable.Repeat(true, numberOfTrueValues);
             return regulars.Concat(obstacles).ToArray();
         }
+
+        public static T[] Merge<T>(this (T first, T second) elements)
+        {
+            return new T[] { elements.first, elements.second };
+        }
     }
 }

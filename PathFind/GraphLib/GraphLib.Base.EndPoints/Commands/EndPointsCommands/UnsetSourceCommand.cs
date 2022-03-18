@@ -17,15 +17,15 @@ namespace GraphLib.Base.VertexCondition.EndPointsConditions
 
         }
 
-        public override bool CanExecute(IVertex vertex)
-        {
-            return vertex.IsEqual(endPoints.Source);
-        }
-
         public override void Execute(IVertex vertex)
         {
             vertex.AsVisualizable().VisualizeAsRegular();
             endPoints.Source = NullVertex.Instance;
+        }
+
+        public override bool CanExecute(IVertex vertex)
+        {
+            return vertex.IsEqual(endPoints.Source);
         }
     }
 }

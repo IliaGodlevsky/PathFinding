@@ -12,6 +12,10 @@ namespace GraphLib.Serialization.Serializers
 {
     public sealed class GraphSerializer : IGraphSerializer
     {
+        private readonly IFormatter formatter;
+        private readonly IVertexFromInfoFactory vertexFactory;
+        private readonly IGraphFactory graphFactory;
+
         public GraphSerializer(IFormatter formatter,
             IVertexFromInfoFactory converter,
             IGraphFactory graphFactory)
@@ -47,9 +51,5 @@ namespace GraphLib.Serialization.Serializers
                 throw new CantSerializeGraphException(ex.Message, ex);
             }
         }
-
-        private readonly IFormatter formatter;
-        private readonly IVertexFromInfoFactory vertexFactory;
-        private readonly IGraphFactory graphFactory;
     }
 }

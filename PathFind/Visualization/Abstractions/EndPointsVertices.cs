@@ -10,6 +10,8 @@ namespace Visualization.Abstractions
 {
     internal abstract class EndPointsVertices : IVisualizationSlides, IExecutable<IAlgorithm>
     {
+        private readonly ConcurrentDictionary<IAlgorithm, IVertex> vertices;
+
         public EndPointsVertices()
         {
             vertices = new ConcurrentDictionary<IAlgorithm, IVertex>();
@@ -42,7 +44,5 @@ namespace Visualization.Abstractions
         }
 
         protected abstract void Visualize(IVisualizable visualizable);
-
-        private readonly ConcurrentDictionary<IAlgorithm, IVertex> vertices;
     }
 }

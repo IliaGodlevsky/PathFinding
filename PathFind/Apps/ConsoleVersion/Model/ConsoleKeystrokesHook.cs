@@ -9,8 +9,8 @@ using System;
 
 namespace ConsoleVersion.Model
 {
-    internal sealed class ConsoleKeystrokesHook
-        : Singleton<ConsoleKeystrokesHook, ConsoleKeystrokesHook>, IInterruptable, IProcess, IRequireConsoleKeyInput
+    internal sealed class ConsoleKeystrokesHook : Singleton<ConsoleKeystrokesHook, ConsoleKeystrokesHook>, 
+        IInterruptable, IProcess, IRequireConsoleKeyInput
     {
         public event ConsoleKeyPressedEventHandler KeyPressed;
         public event ProcessEventHandler Interrupted;
@@ -18,6 +18,7 @@ namespace ConsoleVersion.Model
         public event ProcessEventHandler Finished;
 
         public bool IsInProcess { get; private set; }
+
         public IInput<ConsoleKey> KeyInput { get; set; }
 
         public void Interrupt()

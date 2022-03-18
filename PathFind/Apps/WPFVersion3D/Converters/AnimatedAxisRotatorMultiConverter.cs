@@ -13,6 +13,8 @@ namespace WPFVersion3D.Converters
 {
     internal sealed class AnimatedAxisRotatorMultiConverter : IMultiValueConverter
     {
+        private readonly Dictionary<bool?, IAnimatedAxisRotatorFactory> animatorFactories;
+
         public AnimatedAxisRotatorMultiConverter()
         {
             animatorFactories = new Dictionary<bool?, IAnimatedAxisRotatorFactory>()
@@ -42,7 +44,5 @@ namespace WPFVersion3D.Converters
         {
             return !values.ContainsNulls();
         }
-
-        private readonly Dictionary<bool?, IAnimatedAxisRotatorFactory> animatorFactories;
     }
 }

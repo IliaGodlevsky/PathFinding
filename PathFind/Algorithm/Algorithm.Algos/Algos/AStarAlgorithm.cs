@@ -14,6 +14,9 @@ namespace Algorithm.Algos.Algos
     [Description("A * algorithm")]
     public class AStarAlgorithm : DijkstraAlgorithm
     {
+        protected readonly ICosts heuristics;
+        protected readonly IHeuristic heuristic;
+
         public AStarAlgorithm(IEndPoints endPoints)
             : this(endPoints, new DefaultStepRule(), new ChebyshevDistance())
         {
@@ -48,9 +51,6 @@ namespace Algorithm.Algos.Algos
         protected virtual double CalculateHeuristic(IVertex vertex)
         {
             return heuristic.Calculate(vertex, CurrentEndPoints.Target);
-        }
-
-        protected readonly ICosts heuristics;
-        protected readonly IHeuristic heuristic;
+        }        
     }
 }

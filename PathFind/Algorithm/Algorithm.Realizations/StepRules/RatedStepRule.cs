@@ -6,6 +6,9 @@ namespace Algorithm.Realizations.StepRules
 {
     public sealed class RatedStepRule : IStepRule
     {
+        private readonly IStepRule stepRule;
+        private readonly int rate;
+
         public RatedStepRule(IStepRule stepRule, int rate = 2)
         {
             this.stepRule = stepRule;
@@ -16,8 +19,5 @@ namespace Algorithm.Realizations.StepRules
         {
             return Math.Pow(stepRule.CalculateStepCost(neighbour, current), rate);
         }
-
-        private readonly IStepRule stepRule;
-        private readonly int rate;
     }
 }

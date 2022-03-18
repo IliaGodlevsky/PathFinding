@@ -6,10 +6,12 @@ namespace ConsoleVersion.Model.FramedAxes
     [AttachedTo(typeof(GraphField)), Order(3)]
     internal sealed class FramedToLeftOrdinate : FramedOrdinate
     {
+        protected override string Offset { get; }
+
         public FramedToLeftOrdinate(Graph2D graph)
             : base(graph.Length)
         {
-
+            Offset = string.Empty;
         }
 
         protected override string GetPaddedYCoordinate(int yCoordinate)
@@ -22,7 +24,5 @@ namespace ConsoleVersion.Model.FramedAxes
             string paddedCoordinate = GetPaddedYCoordinate(yCoordinate);
             return string.Concat(paddedCoordinate, VerticalFrameComponent);
         }
-
-        protected override string Offset => string.Empty;
     }
 }

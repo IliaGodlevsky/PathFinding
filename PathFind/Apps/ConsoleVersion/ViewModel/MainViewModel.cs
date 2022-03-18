@@ -29,11 +29,14 @@ namespace ConsoleVersion.ViewModel
     {
         public event Action WindowClosed;
 
+        private readonly IMessenger messenger;
+
         public IInput<int> IntInput { get; set; }
+
         public IInput<Answer> AnswerInput { get; set; }
 
-        public MainViewModel(IGraphFieldFactory fieldFactory,
-            IVertexEventHolder eventHolder, GraphSerializationModule serializationModule, BaseEndPoints endPoints, ILog log)
+        public MainViewModel(IGraphFieldFactory fieldFactory, IVertexEventHolder eventHolder, 
+            GraphSerializationModule serializationModule, BaseEndPoints endPoints, ILog log)
             : base(fieldFactory, eventHolder, serializationModule, endPoints, log)
         {
             messenger = DI.Container.Resolve<IMessenger>();
@@ -44,22 +47,40 @@ namespace ConsoleVersion.ViewModel
         }
 
         [MenuItem(MenuItemsNames.MakeUnwieghted, MenuItemPriority.Normal)]
-        public void MakeGraphUnweighted() => Graph.ToUnweighted();
+        public void MakeGraphUnweighted()
+        {
+            Graph.ToUnweighted();
+        }
 
         [MenuItem(MenuItemsNames.MakeWeighted, MenuItemPriority.Normal)]
-        public void MakeGraphWeighted() => Graph.ToWeighted();
+        public void MakeGraphWeighted()
+        {
+            Graph.ToWeighted();
+        }
 
         [MenuItem(MenuItemsNames.CreateNewGraph, MenuItemPriority.Highest)]
-        public override void CreateNewGraph() => DI.Container.Display<GraphCreateView>();
+        public override void CreateNewGraph()
+        {
+            DI.Container.Display<GraphCreateView>();
+        }
 
         [MenuItem(MenuItemsNames.FindPath, MenuItemPriority.High)]
-        public override void FindPath() => DI.Container.Display<PathFindView>();
+        public override void FindPath()
+        {
+            DI.Container.Display<PathFindView>();
+        }
 
         [MenuItem(MenuItemsNames.ReverseVertex, MenuItemPriority.Normal)]
-        public void ReverseVertex() => ChangeVertexState(vertex => vertex.OnVertexReversed());
+        public void ReverseVertex()
+        {
+            ChangeVertexState(vertex => vertex.OnVertexReversed());
+        }
 
         [MenuItem(MenuItemsNames.ChangeVertexCost, MenuItemPriority.Low)]
-        public void ChangeVertexCost() => ChangeVertexState(vertex => vertex.OnVertexCostChanged());
+        public void ChangeVertexCost()
+        {
+            ChangeVertexState(vertex => vertex.OnVertexCostChanged());
+        }
 
         [MenuItem(MenuItemsNames.ChangeCostRange, MenuItemPriority.Low)]
         public void ChangeVertexCostValueRange()
@@ -70,7 +91,10 @@ namespace ConsoleVersion.ViewModel
         }
 
         [MenuItem(MenuItemsNames.SaveGraph, MenuItemPriority.Normal)]
-        public override void SaveGraph() => base.SaveGraph();
+        public override void SaveGraph()
+        {
+            base.SaveGraph();
+        }
 
         [MenuItem(MenuItemsNames.LoadGraph, MenuItemPriority.Normal)]
         public override void LoadGraph()
@@ -148,7 +172,5 @@ namespace ConsoleVersion.ViewModel
             messenger.Unregister(this);
             WindowClosed = null;
         }
-
-        private readonly IMessenger messenger;
     }
 }

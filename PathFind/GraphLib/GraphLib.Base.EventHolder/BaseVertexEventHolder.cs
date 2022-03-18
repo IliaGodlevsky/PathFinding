@@ -8,6 +8,9 @@ namespace GraphLib.Base.EventHolder
 {
     public abstract class BaseVertexEventHolder : IVertexEventHolder
     {
+        private readonly IVerticesCommands commands;
+        protected readonly IVertexCostFactory costFactory;
+
         protected BaseVertexEventHolder(IVertexCostFactory costFactory)
         {
             this.costFactory = costFactory;
@@ -44,8 +47,5 @@ namespace GraphLib.Base.EventHolder
         protected abstract void SubscribeToEvents(IVertex vertex);
 
         protected abstract int GetWheelDelta(EventArgs e);
-
-        private readonly IVerticesCommands commands;
-        protected readonly IVertexCostFactory costFactory;
     }
 }

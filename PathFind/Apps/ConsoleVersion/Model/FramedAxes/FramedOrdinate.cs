@@ -6,7 +6,13 @@ namespace ConsoleVersion.Model.FramedAxes
 {
     internal abstract class FramedOrdinate : FramedAxis
     {
-        protected FramedOrdinate(int graphLength) : base()
+        protected const string VerticalFrameComponent = "|";
+
+        protected readonly int graphLength;
+        protected readonly int yCoordinatePadding;
+
+        protected FramedOrdinate(int graphLength) 
+            : base()
         {
             this.graphLength = graphLength;
             yCoordinatePadding = Constants.YCoordinatePadding;
@@ -27,10 +33,5 @@ namespace ConsoleVersion.Model.FramedAxes
         protected abstract string GetStringToAppend(int yCoordinate);
 
         protected abstract string GetPaddedYCoordinate(int yCoordinate);
-
-        protected readonly int graphLength;
-        protected readonly int yCoordinatePadding;
-
-        protected const string VerticalFrameComponent = "|";
     }
 }

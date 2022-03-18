@@ -8,7 +8,9 @@
         xmlns:converters="clr-namespace:WPFVersion3D.Converters"
         xmlns:range="clr-namespace:WPFVersion3D" 
         xmlns:rules="clr-namespace:WPFVersion3D.ValidationRules" 
-        xmlns:model="clr-namespace:WPFVersion3D.Model"
+        xmlns:model="clr-namespace:WPFVersion3D.Model" 
+        xmlns:viewmodel="clr-namespace:WPFVersion3D.ViewModel" 
+        d:DataContext="{d:DesignInstance Type=viewmodel:PathFindingViewModel}"
         mc:Ignorable="d"
         Title="Algorithms" 
         SizeToContent="WidthAndHeight">
@@ -29,8 +31,8 @@
             <TextBlock Margin="5" Text="Apply visualization"/>
         </StackPanel>
         <StackPanel HorizontalAlignment="Center"  Orientation="Horizontal" Grid.Row="3">
-            <Button Command="{Binding ConfirmPathFindAlgorithmChoice}"  Margin ="5" Content="Start"></Button>
-            <Button Command="{Binding CancelPathFindAlgorithmChoice}" Margin ="5" Content="Cancel"></Button>
+            <Button Command="{Binding PathFindCommand}"  Margin ="5" Content="Start"></Button>
+            <Button Command="{Binding CancelPathFindCommand}" Margin ="5" Content="Cancel"></Button>
         </StackPanel>
 
         <ListBox ItemsSource="{Binding  Algorithms }"

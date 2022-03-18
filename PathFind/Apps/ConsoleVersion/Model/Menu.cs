@@ -11,7 +11,13 @@ namespace ConsoleVersion.Model
 {
     internal sealed class Menu<TAction> where TAction : Delegate
     {
+        private readonly object target;
+
+        private readonly Lazy<IDictionary<string, TAction>> menuActions;
+        private readonly Lazy<string[]> menuActionsNames;
+
         public IDictionary<string, TAction> MenuActions => menuActions.Value;
+
         public string[] MenuActionsNames => menuActionsNames.Value;
 
         public Menu(object target)
@@ -50,10 +56,5 @@ namespace ConsoleVersion.Model
         {
             return method.GetAttributeOrNull<MenuItemAttribute>().Priority;
         }
-
-        private readonly object target;
-
-        private readonly Lazy<IDictionary<string, TAction>> menuActions;
-        private readonly Lazy<string[]> menuActionsNames;
     }
 }

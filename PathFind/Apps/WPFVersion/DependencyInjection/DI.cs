@@ -1,4 +1,5 @@
-﻿using Algorithm.Factory;
+﻿using Algorithm.Base;
+using Algorithm.Factory.Interface;
 using Algorithm.Interfaces;
 using Algorithm.Realizations.StepRules;
 using Autofac;
@@ -79,7 +80,8 @@ namespace WPFVersion.DependencyInjection
             builder.RegisterType<BinaryFormatter>().As<IFormatter>().SingleInstance();
             builder.RegisterType<VertexFromInfoFactory>().As<IVertexFromInfoFactory>().SingleInstance();
 
-            builder.RegisterAssemblyTypes(Assemblies).Where(Implements<IAlgorithmFactory>).As<IAlgorithmFactory>();
+            builder.RegisterAssemblyTypes(Assemblies).Where(Implements<IAlgorithmFactory<PathfindingAlgorithm>>)
+                .As<IAlgorithmFactory<PathfindingAlgorithm>>().SingleInstance();
 
             builder.RegisterType<DefaultStepRule>().As<IStepRule>().SingleInstance();
             builder.RegisterDecorator<CardinalStepRule, IStepRule>();

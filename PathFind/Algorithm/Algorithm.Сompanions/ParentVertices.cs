@@ -7,6 +7,8 @@ namespace Algorithm.Сompanions
 {
     public sealed class ParentVertices : IParentVertices
     {
+        private readonly Dictionary<ICoordinate, IVertex> parentVertices;
+
         public ParentVertices()
         {
             parentVertices = new Dictionary<ICoordinate, IVertex>();
@@ -36,7 +38,5 @@ namespace Algorithm.Сompanions
         {
             parentVertices.Clear();
         }
-
-        private readonly Dictionary<ICoordinate, IVertex> parentVertices;
     }
 }

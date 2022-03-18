@@ -10,6 +10,8 @@ namespace Random.Realizations.Generators
         private const int Term = 12345;
         private const int Factor = 1103515245;
 
+        private static readonly object locker = new object();
+
         private ulong seed;
         private ulong Seed => seed = seed * Factor + Term;
 
@@ -18,7 +20,8 @@ namespace Random.Realizations.Generators
             this.seed = (ulong)seed;
         }
 
-        public PseudoRandom() : this(Environment.TickCount)
+        public PseudoRandom() 
+            : this(Environment.TickCount)
         {
 
         }
@@ -31,8 +34,6 @@ namespace Random.Realizations.Generators
                 ulong module = (ulong)range.Amplitude() + 1;
                 return (int)(Seed % module) + range.LowerValueOfRange;
             }
-        }
-
-        private static readonly object locker = new object();
+        }       
     }
 }

@@ -8,6 +8,16 @@ namespace ConsoleVersion.Model.FramedAxes
 {
     internal abstract class FramedAbscissa : FramedAxis
     {
+        private const string CoordinateDelimiter = "+";
+        private const char FrameComponent = '-';
+
+        protected const char Endl = '\n';
+        protected const string NewLine = "\n";
+
+        private static readonly string LargeSpace = new string(Space, Constants.WidthOfOrdinateView);
+
+        private readonly int graphWidth;
+
         protected FramedAbscissa(int graphWidth) : base()
         {
             this.graphWidth = graphWidth;
@@ -21,16 +31,17 @@ namespace ConsoleVersion.Model.FramedAxes
 
         protected string GetAbscissa()
         {
-            string largeSpace = LargeSpace;
-            var stringBuilder = new StringBuilder(largeSpace);
-            return stringBuilder.AppendMany(GetAbscissaFragment, graphWidth)
-                .Append(largeSpace).ToString();
+            var stringBuilder = new StringBuilder(LargeSpace);
+            return stringBuilder
+                .AppendMany(GetAbscissaFragment, graphWidth)
+                .Append(LargeSpace).ToString();
         }
 
         protected string GetHorizontalFrame()
         {
             var stringBuilder = new StringBuilder(LargeSpace);
-            return stringBuilder.AppendMany(HorizontalFrameFragment, graphWidth)
+            return stringBuilder
+                .AppendMany(GetHorizontalFrameFragment(), graphWidth)
                 .Append(CoordinateDelimiter).ToString();
         }
 
@@ -39,14 +50,10 @@ namespace ConsoleVersion.Model.FramedAxes
             return string.Concat(index, GetSpace(index));
         }
 
-        private string LargeSpace => new string(Space, Constants.WidthOfOrdinateView);
-        private string HorizontalFrameFragment
+        private string GetHorizontalFrameFragment()
         {
-            get
-            {
-                var frameComponent = new string(FrameComponent, LateralDistance - 1);
-                return string.Concat(CoordinateDelimiter, frameComponent);
-            }
+            var frameComponent = new string(FrameComponent, LateralDistance - 1);
+            return string.Concat(CoordinateDelimiter, frameComponent);
         }
 
         private string GetSpace(int index)
@@ -55,12 +62,5 @@ namespace ConsoleVersion.Model.FramedAxes
             int count = Math.Abs(LateralDistance - indexLog);
             return new string(Space, count);
         }
-
-        protected const char Endl = '\n';
-        protected const string NewLine = "\n";
-        private const string CoordinateDelimiter = "+";
-        private const char FrameComponent = '-';
-
-        private readonly int graphWidth;
     }
 }

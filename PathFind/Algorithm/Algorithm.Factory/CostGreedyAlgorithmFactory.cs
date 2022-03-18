@@ -1,6 +1,6 @@
 ﻿using Algorithm.Algos.Algos;
-using Algorithm.Base;
 using Algorithm.Factory.Attrbiutes;
+using Algorithm.Factory.Interface;
 using Algorithm.Interfaces;
 using Algorithm.Realizations.StepRules;
 using GraphLib.Interfaces;
@@ -10,23 +10,24 @@ namespace Algorithm.Factory
 {
     [GreedyGroup]
     [Description("Cost greedy algorithm")]
-    public sealed class CostGreedyAlgorithmFactory : IAlgorithmFactory
+    public sealed class CostGreedyAlgorithmFactory : IAlgorithmFactory<CostGreedyAlgorithm>
     {
+        private readonly IStepRule stepRule;
+
         public CostGreedyAlgorithmFactory(IStepRule stepRule)
         {
             this.stepRule = stepRule;
         }
 
-        public CostGreedyAlgorithmFactory() : this(new DefaultStepRule())
+        public CostGreedyAlgorithmFactory() 
+            : this(new DefaultStepRule())
         {
 
         }
 
-        public PathfindingAlgorithm Create(IEndPoints endPoints)
+        public CostGreedyAlgorithm Create(IEndPoints endPoints)
         {
             return new CostGreedyAlgorithm(endPoints, stepRule);
         }
-
-        private readonly IStepRule stepRule;
     }
 }

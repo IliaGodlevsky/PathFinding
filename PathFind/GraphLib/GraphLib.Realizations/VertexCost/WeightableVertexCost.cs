@@ -11,6 +11,14 @@ namespace GraphLib.Realizations.VertexCost
     [DebuggerDisplay("Cost = {CurrentCost}")]
     public sealed class WeightableVertexCost : BaseVertexCost, IWeightable
     {
+        private const int UnweightedCost = 1;
+
+        public string UnweightedCostView { get; set; }
+
+        private int WeightedCost { get; set; }
+
+        private ICostState Status { get; set; }
+
         public WeightableVertexCost(int startCost)
             : base(startCost)
         {
@@ -18,8 +26,6 @@ namespace GraphLib.Realizations.VertexCost
             Status = new WeightedState();
             UnweightedCostView = string.Empty;
         }
-
-        public string UnweightedCostView { get; set; }
 
         public void MakeWeighted()
         {
@@ -47,10 +53,5 @@ namespace GraphLib.Realizations.VertexCost
                 UnweightedCostView = UnweightedCostView
             };
         }
-
-        private int WeightedCost { get; set; }
-        private ICostState Status { get; set; }
-
-        private const int UnweightedCost = 1;
     }
 }

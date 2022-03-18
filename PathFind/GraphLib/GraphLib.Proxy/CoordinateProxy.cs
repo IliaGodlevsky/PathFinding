@@ -10,14 +10,17 @@ namespace GraphLib.Proxy
     [DebuggerDisplay("{ToString()}")]
     internal sealed class CoordinateProxy : ICoordinate
     {
+        private readonly string toString;
+        private readonly int hashCode;
+
+        public int[] CoordinatesValues { get; }
+
         public CoordinateProxy(params int[] coordinates)
         {
             CoordinatesValues = coordinates.ToArray();
             toString = $"({string.Join(",", CoordinatesValues)})";
             hashCode = CoordinatesValues.ToHashCode();
         }
-
-        public int[] CoordinatesValues { get; }
 
         public override bool Equals(object pos)
         {
@@ -48,8 +51,5 @@ namespace GraphLib.Proxy
         {
             return Clone();
         }
-
-        private readonly string toString;
-        private readonly int hashCode;
     }
 }

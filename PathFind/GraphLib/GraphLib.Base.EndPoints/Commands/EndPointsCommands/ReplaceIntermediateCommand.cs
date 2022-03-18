@@ -10,7 +10,8 @@ namespace GraphLib.Base.EndPoints.Commands.EndPointsCommands
     [AttachedTo(typeof(SetEndPointsCommands)), Order(8)]
     internal sealed class ReplaceIntermediateCommand : BaseIntermediateEndPointsCommand
     {
-        public ReplaceIntermediateCommand(BaseEndPoints endPoints) : base(endPoints)
+        public ReplaceIntermediateCommand(BaseEndPoints endPoints) 
+            : base(endPoints)
         {
 
         }

@@ -86,11 +86,13 @@
     <Compile Include="Interface\IAnimatedAxisRotatorFactory.cs" />
     <Compile Include="Messages\AlgorithmStartedMessage.cs" />
     <Compile Include="Messages\AlgorithmIndexMessage.cs" />
+    <Compile Include="Messages\GraphFieldCreatedMessage.cs" />
     <Compile Include="Messages\IsAllAlgorithmsFinishedMessage.cs" />
     <Compile Include="Messages\AlgorithmStatusMessage.cs" />
     <Compile Include="Messages\ClearStatisticsMessage.cs" />
     <Compile Include="Messages\GraphCreatedMessage.cs" />
     <Compile Include="Messages\InterruptAllAlgorithmsMessage.cs" />
+    <Compile Include="Messages\PassValueMessage.cs" />
     <Compile Include="Messages\UpdateAlgorithmStatisticsMessage.cs" />
     <Compile Include="Model3DFactories\ToricalModel3DFactory.cs" />
     <Compile Include="Model\RectangleModel3DFactory.cs" />
@@ -129,6 +131,10 @@
     <Compile Include="ViewModel\MainWindowViewModel.cs" />
     <Compile Include="ViewModel\OpacityChangeViewModel.cs" />
     <Compile Include="ViewModel\PathfindingViewModel.cs" />
+    <Compile Include="ViewModel\StretchGraphFieldViewModels\StretchFieldAlongAxisViewModel.cs" />
+    <Compile Include="ViewModel\StretchGraphFieldViewModels\StretchFieldAlongXAxisViewModel.cs" />
+    <Compile Include="ViewModel\StretchGraphFieldViewModels\StretchFieldAlongYAxisViewModel.cs" />
+    <Compile Include="ViewModel\StretchGraphFieldViewModels\StretchFieldAlongZAxisViewModel.cs" />
     <Compile Include="View\AlgorithmStatisticsUserControl.xaml.cs">
       <DependentUpon>AlgorithmStatisticsUserControl.xaml</DependentUpon>
     </Compile>
@@ -137,6 +143,9 @@
     </Compile>
     <Compile Include="View\PathFindWindow.xaml.cs">
       <DependentUpon>PathFindWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\StretchFieldAlongAxisUserConstrol.xaml.cs">
+      <DependentUpon>StretchFieldAlongAxisUserConstrol.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\ViewModelWindow.cs" />
     <Page Include="Resources\Images\SvgImages.xaml">
@@ -181,6 +190,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="View\PathFindWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\StretchFieldAlongAxisUserConstrol.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -338,6 +351,8 @@
   <ItemGroup>
     <Resource Include="Resources\Images\rotate.png" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="ViewModel\GraphFieldRotationViewModels\" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

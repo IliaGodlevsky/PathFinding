@@ -13,6 +13,16 @@ namespace GraphLib.Realizations.Neighbourhoods
     [DebuggerDisplay("Count = {Neighbours.Length}")]
     public sealed class MooreNeighborhood : INeighborhood, ISerializable
     {
+        private static readonly int[] EmptyOffsetMatrix = Array.Empty<int>();
+        private static readonly int[] OffsetMatrix = new int[] { -1, 0, 1 };
+
+        private readonly ICoordinate selfCoordinate;
+        private readonly int limitDepth;
+        private readonly int[] selfCoordinatesValues;
+        private readonly int[] resultCoordinatesValues;
+        private readonly int[] lateralOffsetMatrix;
+        private readonly Lazy<IReadOnlyCollection<ICoordinate>> neighbourhood;
+
         public IReadOnlyCollection<ICoordinate> Neighbours => neighbourhood.Value;
 
         public MooreNeighborhood(ICoordinate coordinate)
@@ -35,6 +45,17 @@ namespace GraphLib.Realizations.Neighbourhoods
         {
 
         }
+
+        public INeighborhood Clone()
+        {
+            return new MooreNeighborhood(selfCoordinate.Clone());
+        }
+
+        object ICloneable.Clone()
+        {
+            return Clone();
+        }
+
         private List<ICoordinate> DetectNeighborhood(int depth = 0)
         {
             var neighborhood = new List<ICoordinate>();
@@ -59,25 +80,5 @@ namespace GraphLib.Realizations.Neighbourhoods
             coordinates.Remove(selfCoordinate);
             return coordinates;
         }
-
-        public INeighborhood Clone()
-        {
-            return new MooreNeighborhood(selfCoordinate.Clone());
-        }
-
-        object ICloneable.Clone()
-        {
-            return Clone();
-        }
-
-        private readonly ICoordinate selfCoordinate;
-        private readonly int limitDepth;
-        private readonly int[] selfCoordinatesValues;
-        private readonly int[] resultCoordinatesValues;
-        private readonly int[] lateralOffsetMatrix;
-        private readonly Lazy<IReadOnlyCollection<ICoordinate>> neighbourhood;
-
-        private static readonly int[] EmptyOffsetMatrix = Array.Empty<int>();
-        private static readonly int[] OffsetMatrix = new int[] { -1, 0, 1 };
     }
 }

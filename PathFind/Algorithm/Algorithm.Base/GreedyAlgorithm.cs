@@ -13,6 +13,10 @@ namespace Algorithm.Base
 {
     public abstract class GreedyAlgorithm : PathfindingAlgorithm
     {
+        private readonly Stack<IVertex> visitedVerticesStack;
+
+        private IVertex PreviousVertex { get; set; }
+
         protected GreedyAlgorithm(IEndPoints endPoints)
            : base(endPoints)
         {
@@ -24,9 +28,9 @@ namespace Algorithm.Base
             PrepareForPathfinding();
             while (!IsDestination(endPoints))
             {
-                WaitUntillResumed();
+                WaitUntilResumed();
                 PreviousVertex = CurrentVertex;
-                CurrentVertex = NextVertex;
+                CurrentVertex = GetNextVertex();
                 ProcessCurrentVertex();
             }
             CompletePathfinding();
@@ -40,7 +44,17 @@ namespace Algorithm.Base
                 ? new GraphPath(parentVertices, endPoints)
                 : NullGraphPath.Instance;
         }
+
         protected abstract double GreedyHeuristic(IVertex vertex);
+
+        protected override IVertex GetNextVertex()
+        {
+            var neighbours = GetUnvisitedVertices(CurrentVertex);
+            double leastVertexCost = neighbours.MinOrDefault(GreedyHeuristic);
+            return neighbours
+                .ForAll(Enqueue)
+                .FirstOrNullVertex(vertex => GreedyHeuristic(vertex) == leastVertexCost);
+        }
 
         protected override void Reset()
         {
@@ -55,18 +69,7 @@ namespace Algorithm.Base
             visitedVertices.Add(CurrentVertex);
             RaiseVertexVisited(new AlgorithmEventArgs(CurrentVertex));
             visitedVerticesStack.Push(CurrentVertex);
-        }
-        protected override IVertex NextVertex
-        {
-            get
-            {
-                var neighbours = GetUnvisitedVertices(CurrentVertex);
-                double leastVertexCost = neighbours.MinOrDefault(GreedyHeuristic);
-                return neighbours
-                    .ForAll(Enqueue)
-                    .FirstOrNullVertex(vertex => GreedyHeuristic(vertex) == leastVertexCost);
-            }
-        }
+        }        
 
         private void VisitCurrentVertex()
         {
@@ -91,10 +94,6 @@ namespace Algorithm.Base
             {
                 VisitCurrentVertex();
             }
-        }
-
-        private IVertex PreviousVertex { get; set; }
-
-        private readonly Stack<IVertex> visitedVerticesStack;
+        }        
     }
 }

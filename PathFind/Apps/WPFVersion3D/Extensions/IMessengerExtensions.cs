@@ -23,9 +23,10 @@ namespace WPFVersion3D.Extensions
             await Task.Run(() => self.Forward(message, messageToken));
         }
 
-        public static void Forward<TMessage>(this IMessenger messenger, TMessage message, MessageTokens token)
+        public static IMessenger Forward<TMessage>(this IMessenger messenger, TMessage message, MessageTokens token)
         {
             Tokens.DisassembleToFlags(token).ForEach(value => messenger.Send(message, value));
+            return messenger;
         }
     }
 }

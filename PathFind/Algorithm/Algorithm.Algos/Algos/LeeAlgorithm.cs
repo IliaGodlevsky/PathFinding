@@ -16,6 +16,9 @@ namespace Algorithm.Algos.Algos
     [Description("Lee algorithm")]
     public class LeeAlgorithm : WaveAlgorithm
     {
+        protected Queue<IVertex> verticesQueue;
+        protected readonly ICosts accumulatedCosts;
+
         public LeeAlgorithm(IEndPoints endPoints)
             : base(endPoints)
         {
@@ -30,7 +33,10 @@ namespace Algorithm.Algos.Algos
             verticesQueue.Clear();
         }
 
-        protected override IVertex NextVertex => verticesQueue.DequeueOrNullVertex();
+        protected override IVertex GetNextVertex()
+        {
+            return verticesQueue.DequeueOrNullVertex();
+        }
 
         protected virtual double CreateWave()
         {
@@ -49,19 +55,14 @@ namespace Algorithm.Algos.Algos
             accumulatedCosts.Reevaluate(vertex, value);
         }
 
-        protected bool VertexIsUnwaved(IVertex vertex)
+        protected bool IsVertexUnwaved(IVertex vertex)
         {
             return accumulatedCosts.GetCostOrDefault(vertex, default) == 0;
         }
 
         protected override void RelaxNeighbours(IReadOnlyCollection<IVertex> neighbours)
         {
-            neighbours
-                .Where(VertexIsUnwaved)
-                .ForEach(RelaxNeighbour);
+            neighbours.Where(IsVertexUnwaved).ForEach(RelaxNeighbour);
         }
-
-        protected Queue<IVertex> verticesQueue;
-        protected readonly ICosts accumulatedCosts;
     }
 }

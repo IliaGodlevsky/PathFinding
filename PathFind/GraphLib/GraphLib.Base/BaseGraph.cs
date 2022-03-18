@@ -6,10 +6,18 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 
+using static System.Reflection.BindingFlags;
+
 namespace GraphLib.Base
 {
     public abstract class BaseGraph : IGraph
-    {
+    {       
+        private static readonly string ParamsFormat = "Obstacle percent: {0} ({1}/{2})";
+        private static readonly string LargeSpace = "   ";
+        protected static string[] DimensionNames = new[] { "Width", "Length", "Height" };
+
+        private readonly Dictionary<ICoordinate, IVertex> vertices;
+
         public int Size { get; }
 
         public IReadOnlyCollection<IVertex> Vertices => vertices.Values;
@@ -26,7 +34,7 @@ namespace GraphLib.Base
             DimensionsSizes = dimensionSizes.TakeOrDefault(requiredNumberOfDimensions).ToArray();
             Size = DimensionsSizes.GetMultiplication();
             this.vertices = vertices.ToDictionary();
-            Vertices.ForEach(SetGraphForVertex);
+            Vertices.ForEach(SetGraph);
         }
 
         public override bool Equals(object obj)
@@ -54,20 +62,14 @@ namespace GraphLib.Base
             return string.Join(LargeSpace, joined, graphParams);
         }
 
-        private void SetGraphForVertex(IVertex vertex)
+        private void SetGraph(IVertex vertex)
         {
             vertex
                 .GetType()
-                .GetFields(BindingFlags.NonPublic | BindingFlags.Instance)
+                .GetFields(NonPublic | Instance)
                 .Where(field => field.Name.Contains(nameof(vertex.Graph)))
                 .FirstOrDefault()
                 .TrySetValue(vertex, this);
         }
-
-        protected static string[] DimensionNames = new[] { "Width", "Length", "Height" };
-        private static readonly string ParamsFormat = "Obstacle percent: {0} ({1}/{2})";
-        private static readonly string LargeSpace = "   ";
-
-        private readonly Dictionary<ICoordinate, IVertex> vertices;
     }
 }

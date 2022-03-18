@@ -15,9 +15,9 @@ namespace Algorithm.Realizations.GraphPaths
 
         public CombinedGraphPath(params IGraphPath[] paths)
         {
-            Path = paths.SelectMany(x => x.Path.Reverse()).Reverse().ToArray();
-            Length = paths.Sum(x => x.Length);
-            Cost = paths.Sum(x => x.Cost);
+            Path = paths.SelectMany(path => path.Path.Reverse()).Reverse().ToArray();
+            Length = paths.Sum(path => path.Length);
+            Cost = paths.Sum(path => path.Cost);
         }
     }
 }

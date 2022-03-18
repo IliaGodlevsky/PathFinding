@@ -9,6 +9,8 @@ namespace Algorithm.Realizations.Heuristic.Angles
     {
         private const double Radians = 57.2956;
 
+        private readonly ICoordinate startingPoint;
+
         public Angle(IVertex startingPoint)
         {
             this.startingPoint = startingPoint.Position;
@@ -25,7 +27,5 @@ namespace Algorithm.Realizations.Heuristic.Angles
             var cosValue = vectorSum > 0 ? scalarProduct / vectorSum : 0;
             return Math.Round(Radians * Math.Acos(cosValue), digits: 3);
         }
-
-        private readonly ICoordinate startingPoint;
     }
 }

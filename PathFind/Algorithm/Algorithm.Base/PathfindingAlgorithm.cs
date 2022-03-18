@@ -27,19 +27,43 @@ namespace Algorithm.Base
         public event ProcessEventHandler Paused;
         public event ProcessEventHandler Resumed;
 
+        private readonly AutoResetEvent pauseEvent;
+        protected readonly IVisitedVertices visitedVertices;
+        protected readonly IParentVertices parentVertices;
+        protected readonly IEndPoints endPoints;
+        
         public bool IsInProcess { get; private set; }
 
         public bool IsPaused { get; private set; }
 
-        private bool IsInterruptRequested { get; set; }
-
         protected IVertex CurrentVertex { get; set; }
-
-        protected abstract IVertex NextVertex { get; }
 
         protected bool IsTerminatedPrematurely => !CurrentVertex.IsNull() && !IsInterruptRequested;
 
+        private bool IsInterruptRequested { get; set; }
+
+        protected PathfindingAlgorithm(IEndPoints endPoints)
+        {
+            visitedVertices = new VisitedVertices();
+            parentVertices = new ParentVertices();
+            this.endPoints = endPoints;
+            pauseEvent = new AutoResetEvent(true);
+        }
+
         public abstract IGraphPath FindPath();
+
+        public void Dispose()
+        {
+            Started = null;
+            Finished = null;
+            VertexEnqueued = null;
+            VertexVisited = null;
+            Interrupted = null;
+            Paused = null;
+            Resumed = null;
+            pauseEvent.Dispose();
+            Reset();
+        }
 
         public void Interrupt()
         {
@@ -72,20 +96,12 @@ namespace Algorithm.Base
             }
         }
 
-        protected virtual void WaitUntillResumed()
+        protected virtual void WaitUntilResumed()
         {
             if (IsPaused)
             {
                 pauseEvent.WaitOne();
             }
-        }
-
-        protected PathfindingAlgorithm(IEndPoints endPoints)
-        {
-            visitedVertices = new VisitedVertices();
-            parentVertices = new ParentVertices();
-            this.endPoints = endPoints;
-            pauseEvent = new AutoResetEvent(true);
         }
 
         protected virtual void Reset()
@@ -132,22 +148,6 @@ namespace Algorithm.Base
                 .ToArray();
         }
 
-        public void Dispose()
-        {
-            Started = null;
-            Finished = null;
-            VertexEnqueued = null;
-            VertexVisited = null;
-            Interrupted = null;
-            Paused = null;
-            Resumed = null;
-            pauseEvent.Dispose();
-            Reset();
-        }
-
-        protected readonly IVisitedVertices visitedVertices;
-        protected readonly IParentVertices parentVertices;
-        protected readonly IEndPoints endPoints;
-        private readonly AutoResetEvent pauseEvent;
+        protected abstract IVertex GetNextVertex();
     }
 }

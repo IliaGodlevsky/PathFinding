@@ -10,7 +10,8 @@ namespace ConsoleVersion.ValueInput.ProgrammedInput
     {
         protected readonly string path;
 
-        protected FromFileProgrammedInput(string path) : base()
+        protected FromFileProgrammedInput(string path) 
+            : base()
         {
             this.path = path;
         }

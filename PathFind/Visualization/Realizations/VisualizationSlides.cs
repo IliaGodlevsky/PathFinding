@@ -9,6 +9,8 @@ namespace Visualization.Realizations
 {
     internal sealed class CompositeVisualizationSlides : IVisualizationSlides
     {
+        private readonly IVisualizationSlides[] slides;
+
         public CompositeVisualizationSlides(params IVisualizationSlides[] slides)
         {
             this.slides = slides;
@@ -33,7 +35,5 @@ namespace Visualization.Realizations
         {
             slides.ForEach(slide => slide.Remove(algorithm));
         }
-
-        private readonly IVisualizationSlides[] slides;
     }
 }

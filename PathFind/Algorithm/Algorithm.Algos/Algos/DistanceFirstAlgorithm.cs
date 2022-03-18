@@ -11,6 +11,8 @@ namespace Algorithm.Algos.Algos
     [Description("Distance first algorithm")]
     public class DistanceFirstAlgorithm : GreedyAlgorithm
     {
+        private readonly IHeuristic heuristic;
+
         public DistanceFirstAlgorithm(IEndPoints endPoints, IHeuristic heuristic)
             : base(endPoints)
         {
@@ -27,7 +29,5 @@ namespace Algorithm.Algos.Algos
         {
             return heuristic.Calculate(vertex, endPoints.Target);
         }
-
-        private readonly IHeuristic heuristic;
     }
 }

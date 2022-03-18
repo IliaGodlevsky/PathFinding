@@ -14,13 +14,6 @@ namespace GraphLib.Base.EndPoints.Commands.EndPointsCommands
         {
         }
 
-        public override bool CanExecute(IVertex vertex)
-        {
-            return endPoints.HasSourceAndTargetSet()
-                && HasIsolatedIntermediates
-                && endPoints.CanBeEndPoint(vertex);
-        }
-
         public override void Execute(IVertex vertex)
         {
             var isolated = Intermediates.FirstOrNullVertex(v => v.IsIsolated());
@@ -30,6 +23,13 @@ namespace GraphLib.Base.EndPoints.Commands.EndPointsCommands
             isolated.AsVisualizable().VisualizeAsRegular();
             Intermediates.Insert(isolatedIndex, vertex);
             vertex.AsVisualizable().VisualizeAsIntermediate();
+        }
+
+        public override bool CanExecute(IVertex vertex)
+        {
+            return endPoints.HasSourceAndTargetSet()
+                && HasIsolatedIntermediates
+                && endPoints.CanBeEndPoint(vertex);
         }
     }
 }

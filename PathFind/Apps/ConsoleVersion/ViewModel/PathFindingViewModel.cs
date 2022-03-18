@@ -1,5 +1,5 @@
 ﻿using Algorithm.Base;
-using Algorithm.Factory;
+using Algorithm.Factory.Interface;
 using Algorithm.Infrastructure.EventArguments;
 using Autofac;
 using Commands.Extensions;
@@ -30,26 +30,35 @@ using ValueRange;
 
 namespace ConsoleVersion.ViewModel
 {
-    internal sealed class PathFindingViewModel : PathFindingModel, IViewModel,
-        IRequireIntInput, IRequireAnswerInput, IRequireConsoleKeyInput, IDisposable
+    internal sealed class PathFindingViewModel : PathFindingModel, 
+        IViewModel, IRequireIntInput, IRequireAnswerInput, IRequireConsoleKeyInput, IDisposable
     {
         public event Action WindowClosed;
 
-        public string AlgorithmKeyInputMessage { private get; set; }
+        private readonly InclusiveValueRange<int> algorithmKeysValueRange;
+        private readonly IMessenger messenger;
+        private readonly ManualResetEventSlim resetEvent;
 
         public IInput<int> IntInput { get; set; }
+
         public IInput<Answer> AnswerInput { get; set; }
+
         public IInput<ConsoleKey> KeyInput { get; set; }
+
+        public string AlgorithmKeyInputMessage { private get; set; }
 
         public PathfindingAlgorithm CurrentAlgorithm => algorithm;
 
         private string CurrentAlgorithmName { get; set; }
+
         private string Statistics => path.ToStatistics(timer, visitedVerticesCount, CurrentAlgorithmName);
+
         private int AlgorithmIndex => IntInput.Input(AlgorithmKeyInputMessage, algorithmKeysValueRange) - 1;
 
         private IReadOnlyCollection<IConsoleKeyCommand> KeyCommands { get; }
 
-        public PathFindingViewModel(BaseEndPoints endPoints, IEnumerable<IAlgorithmFactory> algorithmFactories, ILog log)
+        public PathFindingViewModel(BaseEndPoints endPoints, 
+            IEnumerable<IAlgorithmFactory<PathfindingAlgorithm>> algorithmFactories, ILog log)
             : base(endPoints, algorithmFactories, log)
         {
             algorithmKeysValueRange = new InclusiveValueRange<int>(Algorithms.Length, 1);
@@ -96,13 +105,22 @@ namespace ConsoleVersion.ViewModel
         }
 
         [MenuItem(MenuItemsNames.ChooseAlgorithm, MenuItemPriority.High)]
-        public void ChooseAlgorithm() => Algorithm = Algorithms[AlgorithmIndex].Item2;
+        public void ChooseAlgorithm()
+        {
+            Algorithm = Algorithms[AlgorithmIndex].Item2;
+        }
 
         [MenuItem(MenuItemsNames.Exit, MenuItemPriority.Lowest)]
-        public void Interrupt() => WindowClosed?.Invoke();
+        public void Interrupt()
+        {
+            WindowClosed?.Invoke();
+        }
 
         [MenuItem(MenuItemsNames.ChooseEndPoints, MenuItemPriority.High)]
-        public void ChooseExtremeVertex() => DI.Container.Display<EndPointsView>();
+        public void ChooseExtremeVertex()
+        {
+            DI.Container.Display<EndPointsView>();
+        }
 
         [MenuItem(MenuItemsNames.ClearGraph, MenuItemPriority.Low)]
         public void ClearGraph()
@@ -114,7 +132,10 @@ namespace ConsoleVersion.ViewModel
         }
 
         [MenuItem(MenuItemsNames.ClearColors, MenuItemPriority.Low)]
-        public void ClearColors() => messenger.Forward<ClearColorsMessage>(MessageTokens.MainModel);
+        public void ClearColors()
+        {
+            messenger.Forward<ClearColorsMessage>(MessageTokens.MainModel);
+        }
 
         [MenuItem(MenuItemsNames.ApplyVisualization, MenuItemPriority.Low)]
         public void ApplyVisualization()
@@ -122,9 +143,18 @@ namespace ConsoleVersion.ViewModel
             IsVisualizationRequired = AnswerInput.InputAnswer(MessagesTexts.ApplyVisualizationMsg, Constants.AnswerValueRange);
         }
 
+        public void Dispose()
+        {
+            WindowClosed = null;
+            ClearGraph();
+            ConsoleKeystrokesHook.Instance.KeyPressed -= OnConsoleKeyPressed;
+            resetEvent.Dispose();
+        }
+
         protected override void SummarizePathfindingResults()
         {
-            var message = new UpdateStatisticsMessage(path.IsNull() ? MessagesTexts.CouldntFindPathMsg : Statistics);
+            string statistics = path.IsNull() ? MessagesTexts.CouldntFindPathMsg : Statistics;
+            var message = new UpdateStatisticsMessage(statistics);
             messenger.Forward(message, MessageTokens.MainView);
             visitedVerticesCount = 0;
             resetEvent.Set();
@@ -151,18 +181,9 @@ namespace ConsoleVersion.ViewModel
             algorithm.Finished += ConsoleKeystrokesHook.Instance.Interrupt;
         }
 
-        private void OnConsoleKeyPressed(object sender, ConsoleKeyPressedEventArgs e) => KeyCommands.ExecuteFirst(e.PressedKey, this);
-
-        public void Dispose()
+        private void OnConsoleKeyPressed(object sender, ConsoleKeyPressedEventArgs e)
         {
-            WindowClosed = null;
-            ClearGraph();
-            ConsoleKeystrokesHook.Instance.KeyPressed -= OnConsoleKeyPressed;
-            resetEvent.Dispose();
+            KeyCommands.ExecuteFirst(e.PressedKey, this);
         }
-
-        private readonly InclusiveValueRange<int> algorithmKeysValueRange;
-        private readonly IMessenger messenger;
-        private readonly ManualResetEventSlim resetEvent;
     }
 }

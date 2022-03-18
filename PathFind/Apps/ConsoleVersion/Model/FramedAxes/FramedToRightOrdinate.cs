@@ -6,6 +6,12 @@ namespace ConsoleVersion.Model.FramedAxes
     [AttachedTo(typeof(GraphField)), Order(2)]
     internal sealed class FramedToRightOrdinate : FramedOrdinate
     {
+        private readonly int graphWidth;
+
+        protected override string Offset => new string(Space, OffsetNumber);
+
+        private int OffsetNumber => graphWidth * LateralDistance + Constants.WidthOfOrdinateView;
+
         public FramedToRightOrdinate(Graph2D graph)
             : base(graph.Length)
         {
@@ -21,13 +27,6 @@ namespace ConsoleVersion.Model.FramedAxes
         {
             string paddedCoordinate = GetPaddedYCoordinate(yCoordinate);
             return string.Concat(Offset, VerticalFrameComponent, paddedCoordinate);
-        }
-
-        protected override string Offset => new string(Space, OffsetNumber);
-
-        private int WidthOfOrdinateView => Constants.WidthOfOrdinateView;
-        private int OffsetNumber => graphWidth * LateralDistance + WidthOfOrdinateView;
-
-        private readonly int graphWidth;
+        }       
     }
 }

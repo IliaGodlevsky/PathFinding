@@ -6,6 +6,9 @@ namespace GraphLib.Serialization
 {
     public class GraphSerializationModule
     {
+        internal readonly IGraphSerializer serializer;
+        internal readonly IPathInput input;
+
         public GraphSerializationModule(IGraphSerializer graphSerializer, IPathInput pathInput)
         {
             serializer = graphSerializer;
@@ -23,8 +26,5 @@ namespace GraphLib.Serialization
             string savePath = input.InputSavePath();
             serializer.SaveGraphToFile(graph, savePath);
         }
-
-        internal readonly IGraphSerializer serializer;
-        internal readonly IPathInput input;
     }
 }

@@ -9,15 +9,17 @@ namespace GraphLib.Serialization
     [Serializable]
     public sealed class GraphSerializationInfo
     {
+        public int[] DimensionsSizes { get; }
+
+        public VertexSerializationInfo[] VerticesInfo { get; }
+
+        public InclusiveValueRange<int> CostRange { get; }
+
         public GraphSerializationInfo(IGraph graph)
         {
             DimensionsSizes = graph.DimensionsSizes;
             VerticesInfo = graph.GetVerticesSerializationInfo();
             CostRange = BaseVertexCost.CostRange;
         }
-
-        public int[] DimensionsSizes { get; }
-        public VertexSerializationInfo[] VerticesInfo { get; }
-        public InclusiveValueRange<int> CostRange { get; }
     }
 }

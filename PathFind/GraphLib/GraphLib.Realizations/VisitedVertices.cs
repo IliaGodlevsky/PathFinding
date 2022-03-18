@@ -6,6 +6,8 @@ namespace GraphLib.Realizations
 {
     public sealed class VisitedVertices : IVisitedVertices
     {
+        private readonly HashSet<IVertex> visitedVertices;
+
         public VisitedVertices()
         {
             visitedVertices = new HashSet<IVertex>();
@@ -28,7 +30,5 @@ namespace GraphLib.Realizations
         {
             visitedVertices.Clear();
         }
-
-        private readonly HashSet<IVertex> visitedVertices;
     }
 }

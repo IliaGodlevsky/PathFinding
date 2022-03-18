@@ -7,6 +7,9 @@ namespace Algorithm.Realizations.StepRules
 {
     public sealed class CardinalStepRule : IStepRule
     {
+        private readonly double stepCostIncreaseFactor;
+        private readonly IStepRule stepRule;
+
         public CardinalStepRule(IStepRule stepRule, double stepCostIncreaseFactor = 1.5)
         {
             this.stepRule = stepRule;
@@ -23,8 +26,5 @@ namespace Algorithm.Realizations.StepRules
             double cost = stepRule.CalculateStepCost(neighbour, current);
             return Math.Round(stepCostIncreaseFactor * cost);
         }
-
-        private readonly double stepCostIncreaseFactor;
-        private readonly IStepRule stepRule;
     }
 }

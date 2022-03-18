@@ -9,6 +9,8 @@ namespace GraphLib.TestRealizations.TestFactories
 {
     public class TestCostFactory : IVertexCostFactory
     {
+        private readonly IRandom random;
+
         public TestCostFactory()
         {
             random = new PseudoRandom();
@@ -24,7 +26,5 @@ namespace GraphLib.TestRealizations.TestFactories
             int randomCost = random.Next(TestVertexCost.CostRange);
             return new TestVertexCost(randomCost);
         }
-
-        private readonly IRandom random;
     }
 }

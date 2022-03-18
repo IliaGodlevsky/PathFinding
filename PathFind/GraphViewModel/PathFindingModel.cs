@@ -1,6 +1,6 @@
 ﻿using Algorithm.Base;
 using Algorithm.Extensions;
-using Algorithm.Factory;
+using Algorithm.Factory.Interface;
 using Algorithm.Infrastructure.EventArguments;
 using Algorithm.Interfaces;
 using Algorithm.NullRealizations;
@@ -23,12 +23,12 @@ namespace GraphViewModel
 
         public int DelayTime { get; set; }
 
-        public IAlgorithmFactory Algorithm { get; set; }
+        public IAlgorithmFactory<PathfindingAlgorithm> Algorithm { get; set; }
 
-        public Tuple<string, IAlgorithmFactory>[] Algorithms { get; }
+        public Tuple<string, IAlgorithmFactory<PathfindingAlgorithm>>[] Algorithms { get; }
 
         protected PathFindingModel(BaseEndPoints endPoints,
-            IEnumerable<IAlgorithmFactory> factories, ILog log)
+            IEnumerable<IAlgorithmFactory<PathfindingAlgorithm>> factories, ILog log)
         {
             this.endPoints = endPoints;
             this.log = log;

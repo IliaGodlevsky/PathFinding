@@ -6,6 +6,8 @@ namespace Algorithm.Сompanions
 {
     public sealed class Costs : ICosts
     {
+        private readonly Dictionary<ICoordinate, double> costs;
+
         public Costs()
         {
             costs = new Dictionary<ICoordinate, double>();
@@ -35,7 +37,5 @@ namespace Algorithm.Сompanions
         {
             return costs.TryGetValue(vertex.Position, out _);
         }
-
-        private readonly Dictionary<ICoordinate, double> costs;
     }
 }

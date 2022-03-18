@@ -15,7 +15,31 @@ namespace Random.Realizations.Generators
         private const int InitializationConst = 21;
         private const int CalculationConst = 30;
 
+        private static readonly object locker = new object();
+
+        private readonly InclusiveValueRange<int> indexRange;
+        private readonly Lazy<int[]> seeds;
+
+        private int inext;
+        private int inextp;
+
         private int[] Seeds => seeds.Value;
+
+        private int Seed
+        {
+            get
+            {
+                inext = indexRange.ReturnInRange(++inext, ReturnOptions.Cycle);
+                inextp = indexRange.ReturnInRange(++inextp, ReturnOptions.Cycle);
+                int result = Seeds[inext] - Seeds[inextp];
+                if (result < MZero)
+                {
+                    result += MBig;
+                }
+                Seeds[inext] = result;
+                return result;
+            }
+        }
 
         public KnuthRandom()
           : this(Environment.TickCount)
@@ -36,22 +60,6 @@ namespace Random.Realizations.Generators
                 var range = new InclusiveValueRange<int>(maxValue, minValue);
                 long module = (long)range.Amplitude() + 1;
                 return (int)(Seed % module) + range.LowerValueOfRange;
-            }
-        }
-
-        private int Seed
-        {
-            get
-            {
-                inext = indexRange.ReturnInRange(++inext, ReturnOptions.Cycle);
-                inextp = indexRange.ReturnInRange(++inextp, ReturnOptions.Cycle);
-                int result = Seeds[inext] - Seeds[inextp];
-                if (result < MZero)
-                {
-                    result += MBig;
-                }
-                Seeds[inext] = result;
-                return result;
             }
         }
 
@@ -89,12 +97,5 @@ namespace Random.Realizations.Generators
             inextp = CalculationConst + 1;
             return seeds;
         }
-
-        private int inext;
-        private int inextp;
-
-        private readonly InclusiveValueRange<int> indexRange;
-        private readonly Lazy<int[]> seeds;
-        private static readonly object locker = new object();
     }
 }

@@ -13,6 +13,10 @@ namespace GraphLib.Realizations.Neighbourhoods
     [DebuggerDisplay("Count = {Neighbours.Length}")]
     public sealed class VonNeumannNeighborhood : INeighborhood, ISerializable
     {
+        private readonly ICoordinate selfCoordinate;
+        private readonly INeighborhood neighboursCoordinates;
+        private readonly Lazy<IReadOnlyCollection<ICoordinate>> neighbourhood;
+
         public IReadOnlyCollection<ICoordinate> Neighbours => neighbourhood.Value;
 
         public VonNeumannNeighborhood(ICoordinate coordinate)
@@ -33,13 +37,6 @@ namespace GraphLib.Realizations.Neighbourhoods
 
         }
 
-        private IReadOnlyCollection<ICoordinate> DetectNeighborhood()
-        {
-            return neighboursCoordinates.Neighbours
-                .Where(neighbour => neighbour.IsCardinal(selfCoordinate))
-                .ToArray();
-        }
-
         public INeighborhood Clone()
         {
             return new VonNeumannNeighborhood(selfCoordinate.Clone());
@@ -50,8 +47,11 @@ namespace GraphLib.Realizations.Neighbourhoods
             return Clone();
         }
 
-        private readonly ICoordinate selfCoordinate;
-        private readonly INeighborhood neighboursCoordinates;
-        private readonly Lazy<IReadOnlyCollection<ICoordinate>> neighbourhood;
+        private IReadOnlyCollection<ICoordinate> DetectNeighborhood()
+        {
+            return neighboursCoordinates.Neighbours
+                .Where(neighbour => neighbour.IsCardinal(selfCoordinate))
+                .ToArray();
+        }
     }
 }

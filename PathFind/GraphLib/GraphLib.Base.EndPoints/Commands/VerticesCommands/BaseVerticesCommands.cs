@@ -9,6 +9,7 @@ namespace GraphLib.Base.EndPoints.Commands.VerticesCommands
     internal abstract class BaseVerticesCommands : IVerticesCommands
     {
         private IReadOnlyCollection<IVertexCommand> ExecuteCommands { get; }
+
         private IReadOnlyCollection<IUndoCommand> UndoCommands { get; }
 
         protected BaseVerticesCommands(BaseEndPoints endPoints)

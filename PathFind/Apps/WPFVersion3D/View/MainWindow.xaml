@@ -7,12 +7,10 @@
         xmlns:converters="clr-namespace:WPFVersion3D.Converters" 
         xmlns:model="clr-namespace:WPFVersion3D.Model"
         xmlns:range="clr-namespace:WPFVersion3D"
-        xmlns:window="clr-namespace:WPFVersion3D.View"
-        xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
-        xmlns:ei="http://schemas.microsoft.com/expression/2010/interactions" 
         xmlns:validationrules="clr-namespace:WPFVersion3D.ValidationRules" 
         xmlns:windows="clr-namespace:WPFVersion3D.View" 
         xmlns:viewmodel="clr-namespace:WPFVersion3D.ViewModel" 
+        xmlns:datacontext="clr-namespace:WPFVersion3D.ViewModel.StretchGraphFieldViewModels"
         d:DataContext="{d:DesignInstance Type=viewmodel:MainWindowViewModel}"
         mc:Ignorable="d"
         Title="3D pathfinding"
@@ -25,6 +23,9 @@
         <converters:PrecisedDoubleToStringConverter Precision="0" x:Key="doubleConverter"/>
         <converters:AnimatedAxisRotatorMultiConverter x:Key="animatedAxisRotatorConverter"/>
         <converters:AlgorithmStatusToStringConverter x:Key="StatusToStringConverter"/>
+        <datacontext:StretchFieldAlongXAxisViewModel x:Key="StretchAlongXAxis"/>
+        <datacontext:StretchFieldAlongYAxisViewModel x:Key="StretchAlongYAxis"/>
+        <datacontext:StretchFieldAlongZAxisViewModel x:Key="StretchAlongZAxis"/>
 
         <Style TargetType="TextBox" x:Key="TextBoxStyle">
             <Setter Property="MaxWidth" Value="40"></Setter>
@@ -150,10 +151,6 @@
                     </TextBox.Text>
                 </TextBox>
 
-                <TextBlock Grid.Row="6" Margin="5" Text="X axis"/>
-                <TextBlock Grid.Row="7" Margin="5" Text="Y axis"/>
-                <TextBlock Grid.Row="8" Margin="5" Text="Z axis"/>
-
                 <TextBox Style="{StaticResource TextBoxStyle}" 
                          Grid.Column="2" 
                          Grid.Row="2">
@@ -225,89 +222,20 @@
                         Grid.Row="4" 
                         Value="{Binding ElementName=zAxis, Path=Angle}"/>
 
-                <TextBox Style="{StaticResource TextBoxStyle}" 
-                         Grid.Column="2" 
-                         Grid.Row="6">
-                    <TextBox.Text>
-                        <Binding Path="Value" 
-                                 ElementName="xAxisStretchAxis" 
-                                 Converter="{StaticResource doubleConverter2}"
-                                 Mode="TwoWay">
-                            <Binding.ValidationRules>
-                                <validationrules:NonDoubleInputValidationRule/>
-                            </Binding.ValidationRules>
-                        </Binding>
-                    </TextBox.Text>
-                </TextBox>
+                <windows:StretchFieldAlongAxisUserConstrol 
+                    DataContext="{StaticResource StretchAlongXAxis}"
+                    Grid.ColumnSpan="4"
+                    Grid.Row="6"/>
 
-                <TextBox Style="{StaticResource TextBoxStyle}" 
-                         Grid.Column="2" 
-                         Grid.Row="7">
-                    <TextBox.Text>
-                        <Binding Path="Value" 
-                                 ElementName="yAxisStretchSlider" 
-                                 Converter="{StaticResource doubleConverter2}"
-                                 Mode="TwoWay">
-                            <Binding.ValidationRules>
-                                <validationrules:NonDoubleInputValidationRule/>
-                            </Binding.ValidationRules>
-                        </Binding>
-                    </TextBox.Text>
-                </TextBox>
+                <windows:StretchFieldAlongAxisUserConstrol 
+                    DataContext="{StaticResource StretchAlongYAxis}"
+                    Grid.ColumnSpan="4"
+                    Grid.Row="7"/>
 
-                <TextBox Style="{StaticResource TextBoxStyle}" 
-                         Grid.Column="2" 
-                         Grid.Row="8">
-                    <TextBox.Text>
-                        <Binding Path="Value" 
-                                 ElementName="zAxisStretchSlider" 
-                                 Converter="{StaticResource doubleConverter2}"
-                                 Mode="TwoWay">
-                            <Binding.ValidationRules>
-                                <validationrules:NonDoubleInputValidationRule/>
-                            </Binding.ValidationRules>
-                        </Binding>
-                    </TextBox.Text>
-                </TextBox>
-                
-                <model:RangedSlider x:Name="xAxisStretchAxis" 
-                                    Grid.Column="1" 
-                                    Style="{StaticResource SliderStyle}"
-                                    ValueRange="{x:Static range:Constants.DistanceBetweenVerticesValueRange}" 
-                                    Grid.Row="6">
-                    <i:Interaction.Triggers>
-                        <i:EventTrigger EventName="ValueChanged">
-                            <ei:CallMethodAction TargetObject="{Binding Path=DataContext, ElementName=Window}" 
-                                                 MethodName="StretchAlongXAxis"></ei:CallMethodAction>
-                        </i:EventTrigger>
-                    </i:Interaction.Triggers>
-                </model:RangedSlider>
-
-                <model:RangedSlider x:Name="yAxisStretchSlider" 
-                                    Grid.Column="1" 
-                                    Style="{StaticResource SliderStyle}" 
-                                    ValueRange="{x:Static range:Constants.DistanceBetweenVerticesValueRange}" 
-                                    Grid.Row="7">
-                    <i:Interaction.Triggers>
-                        <i:EventTrigger EventName="ValueChanged">
-                            <ei:CallMethodAction TargetObject="{Binding Path=DataContext, ElementName=Window}" 
-                                                 MethodName="StretchAlongYAxis"></ei:CallMethodAction>
-                        </i:EventTrigger>
-                    </i:Interaction.Triggers>
-                </model:RangedSlider>
-
-                <model:RangedSlider x:Name="zAxisStretchSlider"  
-                                    Grid.Column="1" 
-                                    Style="{StaticResource SliderStyle}" 
-                                    ValueRange="{x:Static range:Constants.DistanceBetweenVerticesValueRange}"
-                                    Grid.Row="8">
-                    <i:Interaction.Triggers>
-                        <i:EventTrigger EventName="ValueChanged">
-                            <ei:CallMethodAction TargetObject="{Binding Path=DataContext, ElementName=Window}" 
-                                                 MethodName="StretchAlongZAxis"></ei:CallMethodAction>
-                        </i:EventTrigger>
-                    </i:Interaction.Triggers>
-                </model:RangedSlider>
+                <windows:StretchFieldAlongAxisUserConstrol 
+                    DataContext="{StaticResource StretchAlongZAxis}"
+                    Grid.ColumnSpan="4"
+                    Grid.Row="8"/>
 
             </Grid>
         </Expander>

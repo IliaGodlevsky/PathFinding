@@ -12,11 +12,18 @@ namespace Algorithm.Realizations.GraphPaths
 {
     public sealed class GraphPath : IGraphPath
     {
+        private readonly IParentVertices parentVertices;
+        private readonly IEndPoints endPoints;
+        private readonly IStepRule stepRule;
+
+        private readonly Lazy<double> pathCost;
+        private readonly Lazy<IVertex[]> path;
+
         public IReadOnlyList<IVertex> Path => path.Value;
 
         public double Cost => pathCost.Value;
 
-        public int Length => pathLength.Value;
+        public int Length => Path.Count == 0 ? 0 : Path.Count - 1;
 
         public GraphPath(IParentVertices parentVertices, IEndPoints endPoints)
             : this(parentVertices, endPoints, new DefaultStepRule())
@@ -28,8 +35,7 @@ namespace Algorithm.Realizations.GraphPaths
             IEndPoints endPoints, IStepRule stepRule)
         {
             path = new Lazy<IVertex[]>(GetPath);
-            pathCost = new Lazy<double>(ExtractPathCost);
-            pathLength = new Lazy<int>(GetPathLength);
+            pathCost = new Lazy<double>(GetPathCost);
             this.parentVertices = parentVertices;
             this.endPoints = endPoints;
             this.stepRule = stepRule;
@@ -54,36 +60,14 @@ namespace Algorithm.Realizations.GraphPaths
             }
         }
 
-        private double ExtractPathCost()
+        private double GetPathCost()
         {
-            if (Path.Count == 0)
+            double totalCost = 0;
+            for (int i = 0; i < Path.Count - 1; i++)
             {
-                return default;
+                totalCost += stepRule.CalculateStepCost(Path[i], Path[i + 1]);
             }
-
-            double GetCost(int i)
-            {
-                return stepRule.CalculateStepCost(Path[i], Path[i + 1]);
-            }
-
-            return Enumerable.Range(0, Path.Count - 1).Sum(GetCost);
+            return totalCost;
         }
-
-        private int GetPathLength()
-        {
-            if (Path.Count == 0)
-            {
-                return default;
-            }
-            return Path.Count - 1;
-        }
-
-        private readonly IParentVertices parentVertices;
-        private readonly IEndPoints endPoints;
-        private readonly IStepRule stepRule;
-
-        private readonly Lazy<int> pathLength;
-        private readonly Lazy<double> pathCost;
-        private readonly Lazy<IVertex[]> path;
-    }
+   }
 }

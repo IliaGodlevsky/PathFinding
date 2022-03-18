@@ -10,6 +10,7 @@ namespace WPFVersion3D.Model
     internal sealed class VertexVisualization : IVisualization<Vertex3D>
     {
         private static Dispatcher Dispatcher => Application.Current.Dispatcher;
+
         public static Brush VisitedVertexBrush = new SolidColorBrush(Colors.CadetBlue) { Opacity = Constants.InitialVisitedVertexOpacity };
         public static Brush ObstacleVertexBrush = new SolidColorBrush(Colors.Black) { Opacity = Constants.InitialObstacleVertexOpacity };
         public static Brush RegularVertexBrush = new SolidColorBrush(Colors.White) { Opacity = Constants.InitialRegularVertexOpacity };
@@ -31,10 +32,25 @@ namespace WPFVersion3D.Model
             return Dispatcher.Invoke(() => vertex.Brush.IsOneOf(SourceVertexBrush, TargetVertexBrush, IntermediateVertexBrush, ToReplaceMarkBrush));
         }
 
-        public void VisualizeAsTarget(Vertex3D vertex) => Dispatcher.Invoke(() => vertex.Brush = TargetVertexBrush);
-        public void VisualizeAsIntermediate(Vertex3D vertex) => Dispatcher.Invoke(() => vertex.Brush = IntermediateVertexBrush);
-        public void VisualizeAsObstacle(Vertex3D vertex) => Dispatcher.Invoke(() => vertex.Brush = ObstacleVertexBrush);
-        public void VisualizeAsSource(Vertex3D vertex) => Dispatcher.Invoke(() => vertex.Brush = SourceVertexBrush);
+        public void VisualizeAsTarget(Vertex3D vertex)
+        {
+            Dispatcher.Invoke(() => vertex.Brush = TargetVertexBrush);
+        }
+
+        public void VisualizeAsIntermediate(Vertex3D vertex)
+        {
+            Dispatcher.Invoke(() => vertex.Brush = IntermediateVertexBrush);
+        }
+
+        public void VisualizeAsObstacle(Vertex3D vertex)
+        {
+            Dispatcher.Invoke(() => vertex.Brush = ObstacleVertexBrush);
+        }
+
+        public void VisualizeAsSource(Vertex3D vertex)
+        {
+            Dispatcher.Invoke(() => vertex.Brush = SourceVertexBrush);
+        }
 
         public void VisualizeAsRegular(Vertex3D vertex)
         {

@@ -1,6 +1,6 @@
 ﻿using Algorithm.Algos.Algos;
-using Algorithm.Base;
 using Algorithm.Factory.Attrbiutes;
+using Algorithm.Factory.Interface;
 using Algorithm.Interfaces;
 using Algorithm.Realizations.Heuristic.Distances;
 using GraphLib.Interfaces;
@@ -10,23 +10,24 @@ namespace Algorithm.Factory
 {
     [GreedyGroup]
     [Description("Distance first algorithm")]
-    public sealed class DistanceFirstAlgorithmFactory : IAlgorithmFactory
+    public sealed class DistanceFirstAlgorithmFactory : IAlgorithmFactory<DistanceFirstAlgorithm>
     {
+        private readonly IHeuristic heuristic;
+
         public DistanceFirstAlgorithmFactory(IHeuristic heuristic)
         {
             this.heuristic = heuristic;
         }
 
-        public DistanceFirstAlgorithmFactory() : this(new EuclidianDistance())
+        public DistanceFirstAlgorithmFactory() 
+            : this(new EuclidianDistance())
         {
 
         }
 
-        public PathfindingAlgorithm Create(IEndPoints endPoints)
+        public DistanceFirstAlgorithm Create(IEndPoints endPoints)
         {
             return new DistanceFirstAlgorithm(endPoints, heuristic);
         }
-
-        private readonly IHeuristic heuristic;
     }
 }

@@ -19,6 +19,10 @@ namespace Algorithm.Algos.Algos
     {
         private const int PercentToDelete = 4;
 
+        private readonly ICollection<Tuple<IVertex, double>> deletedVertices;
+
+        private int ToDeleteCount => queue.Count * PercentToDelete / 100;
+
         public IDAStarAlgorithm(IEndPoints endPoints)
             : this(endPoints, new DefaultStepRule(), new ChebyshevDistance())
         {
@@ -31,33 +35,26 @@ namespace Algorithm.Algos.Algos
             deletedVertices = new HashSet<Tuple<IVertex, double>>();
         }
 
-        protected override IVertex NextVertex
+        protected override IVertex GetNextVertex()
         {
-            get
+            var verticesToDelete = queue.TakeOrderedBy(ToDeleteCount, heuristics.GetCost);
+            var tuples = queue.ToTuples(verticesToDelete, heuristics.GetCost).ToList();
+            queue.RemoveRange(verticesToDelete);
+            deletedVertices.AddRange(tuples);
+            var next = base.GetNextVertex();
+            if (next.IsNull())
             {
-                var verticesToDelete = queue.TakeOrderedBy(ToDeleteCount, heuristics.GetCost);
-                var tuples = queue.ToTuples(verticesToDelete, heuristics.GetCost).ToList();
-                queue.RemoveRange(verticesToDelete);
-                deletedVertices.AddRange(tuples);
-                var next = base.NextVertex;
-                if (next.IsNull())
-                {
-                    queue.EnqueueRange(deletedVertices);
-                    deletedVertices.Clear();
-                    next = base.NextVertex;
-                }
-                return next;
+                queue.EnqueueRange(deletedVertices);
+                deletedVertices.Clear();
+                next = base.GetNextVertex();
             }
+            return next;
         }
-
-        private int ToDeleteCount => queue.Count * PercentToDelete / 100;
 
         protected override void Reset()
         {
             base.Reset();
             deletedVertices.Clear();
-        }
-
-        private readonly ICollection<Tuple<IVertex, double>> deletedVertices;
+        }       
     }
 }

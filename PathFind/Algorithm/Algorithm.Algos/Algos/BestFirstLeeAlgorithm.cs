@@ -14,28 +14,29 @@ namespace Algorithm.Algos.Algos
     [Description("Lee algorithm (heusritic)")]
     public class BestFirstLeeAlgorithm : LeeAlgorithm
     {
+        private readonly ICosts heuristics;
+        private readonly IHeuristic heuristic;
+
         public BestFirstLeeAlgorithm(IEndPoints endPoints, IHeuristic function)
             : base(endPoints)
         {
             heuristic = function;
             heuristics = new Costs();
         }
+
         public BestFirstLeeAlgorithm(IEndPoints endPoints)
             : this(endPoints, new ManhattanDistance())
         {
 
         }
 
-        protected override IVertex NextVertex
+        protected override IVertex GetNextVertex()
         {
-            get
-            {
-                verticesQueue = verticesQueue
-                    .OrderBy(heuristics.GetCost)
-                    .ToQueue();
+            verticesQueue = verticesQueue
+                .OrderBy(heuristics.GetCost)
+                .ToQueue();
 
-                return base.NextVertex;
-            }
+            return base.GetNextVertex();
         }
 
         protected override void Reset()
@@ -62,8 +63,5 @@ namespace Algorithm.Algos.Algos
         {
             return heuristic.Calculate(vertex, CurrentEndPoints.Target);
         }
-
-        private readonly ICosts heuristics;
-        private readonly IHeuristic heuristic;
     }
 }

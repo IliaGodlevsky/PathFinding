@@ -1,4 +1,6 @@
-﻿using Algorithm.Factory;
+﻿using Algorithm.Base;
+using Algorithm.Factory.Interface;
+using Algorithm.Interfaces;
 using Autofac;
 using Common.Extensions;
 using Common.Interface;
@@ -73,7 +75,8 @@ namespace WPFVersion3D.DependencyInjection
             builder.RegisterType<SoapFormatter>().As<IFormatter>().SingleInstance();
             builder.RegisterType<Vertex3DFromInfoFactory>().As<IVertexFromInfoFactory>().SingleInstance();
 
-            builder.RegisterAssemblyTypes(Assemblies).Where(Implements<IAlgorithmFactory>).As<IAlgorithmFactory>().SingleInstance();
+            builder.RegisterAssemblyTypes(Assemblies).Where(Implements<IAlgorithmFactory<PathfindingAlgorithm>>)
+                .As<IAlgorithmFactory<PathfindingAlgorithm>>().SingleInstance();
             builder.RegisterAssemblyTypes(Assemblies).Where(Implements<IAxis>).As<IAxis>().AsSelf().SingleInstance();
 
             return builder.Build();

@@ -10,6 +10,11 @@ namespace GraphLib.Realizations.Factories.GraphAssembles
     [Description("Smoothed cost graph assemble")]
     public class SmoothedGraphAssemble : IGraphAssemble
     {
+        private readonly IGraphAssemble graphAssemble;
+        private readonly IVertexCostFactory costFactory;
+        private readonly IMeanCost averageCost;
+        private readonly ISmoothLevel smoothLevel;
+
         public SmoothedGraphAssemble(
            IGraphAssemble graphAssemble,
            IVertexCostFactory costFactory,
@@ -57,10 +62,5 @@ namespace GraphLib.Realizations.Factories.GraphAssembles
                 .AssembleGraph(obstaclePercent, graphDimensionSizes)
                 .Smooth(costFactory, averageCost, smoothLevel.Level);
         }
-
-        private readonly IGraphAssemble graphAssemble;
-        private readonly IVertexCostFactory costFactory;
-        private readonly IMeanCost averageCost;
-        private readonly ISmoothLevel smoothLevel;
     }
 }

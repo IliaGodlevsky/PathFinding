@@ -5,6 +5,8 @@ namespace ConsoleVersion.Model
 {
     internal sealed class VertexFactory : IVertexFactory
     {
+        private readonly IVisualization<Vertex> visualization;
+
         public VertexFactory(IVisualization<Vertex> visualization)
         {
             this.visualization = visualization;
@@ -14,7 +16,5 @@ namespace ConsoleVersion.Model
         {
             return new Vertex(coordinateRadar, coordinate, visualization);
         }
-
-        private readonly IVisualization<Vertex> visualization;
     }
 }

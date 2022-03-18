@@ -15,16 +15,16 @@ namespace GraphLib.Base.EndPoints.Commands.EndPointsCommands
         {
         }
 
-        public override bool CanExecute(IVertex vertex)
-        {
-            return endPoints.Source.IsNull()
-                && endPoints.CanBeEndPoint(vertex);
-        }
-
         public override void Execute(IVertex vertex)
         {
             endPoints.Source = vertex;
             Source.VisualizeAsSource();
+        }
+
+        public override bool CanExecute(IVertex vertex)
+        {
+            return endPoints.Source.IsNull()
+                && endPoints.CanBeEndPoint(vertex);
         }
     }
 }

@@ -6,6 +6,8 @@ namespace ConsoleVersion.Model
 {
     internal sealed class VertexFromInfoFactory : IVertexFromInfoFactory
     {
+        private readonly IVisualization<Vertex> visualization;
+
         public VertexFromInfoFactory(IVisualization<Vertex> visualization)
         {
             this.visualization = visualization;
@@ -15,7 +17,5 @@ namespace ConsoleVersion.Model
         {
             return new Vertex(info, visualization);
         }
-
-        private readonly IVisualization<Vertex> visualization;
     }
 }

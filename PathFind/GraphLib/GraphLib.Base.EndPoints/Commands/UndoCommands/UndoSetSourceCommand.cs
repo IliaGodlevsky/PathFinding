@@ -10,6 +10,8 @@ namespace GraphLib.Base.EndPoints.Commands.UndoCommands
     [AttachedTo(typeof(SetEndPointsCommands))]
     internal sealed class UndoSetSourceCommand : BaseEndPointsUndoCommand
     {
+        private readonly IExecutable<IVertex> unsetSourceCommand;
+
         public UndoSetSourceCommand(BaseEndPoints endPoints) : base(endPoints)
         {
             unsetSourceCommand = new UnsetSourceCommand(endPoints);
@@ -18,8 +20,6 @@ namespace GraphLib.Base.EndPoints.Commands.UndoCommands
         public override void Undo()
         {
             unsetSourceCommand.Execute(Source);
-        }
-
-        private readonly IExecutable<IVertex> unsetSourceCommand;
+        }       
     }
 }

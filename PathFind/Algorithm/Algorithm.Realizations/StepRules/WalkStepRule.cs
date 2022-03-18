@@ -5,6 +5,9 @@ namespace Algorithm.Realizations.StepRules
 {
     public sealed class WalkStepRule : IStepRule
     {
+        private readonly IStepRule stepRule;
+        private readonly int walkStepCost;
+
         public WalkStepRule(IStepRule stepRule, int walkStepCost = 1)
         {
             this.stepRule = stepRule;
@@ -15,8 +18,5 @@ namespace Algorithm.Realizations.StepRules
         {
             return stepRule.CalculateStepCost(neighbour, current) + walkStepCost;
         }
-
-        private readonly IStepRule stepRule;
-        private readonly int walkStepCost;
     }
 }

@@ -1,4 +1,5 @@
-﻿using GraphLib.Interfaces;
+﻿using Common.Extensions;
+using GraphLib.Interfaces;
 using System.Collections.Generic;
 
 namespace GraphLib.Proxy
@@ -13,7 +14,7 @@ namespace GraphLib.Proxy
         {
             Source = source;
             Target = target;
-            EndPoints = new IVertex[] { Source, Target };
+            EndPoints = (Source, Target).Merge();
         }
     }
 }

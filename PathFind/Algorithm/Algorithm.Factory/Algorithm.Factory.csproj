@@ -51,7 +51,7 @@
     <Compile Include="DepthFirstAlgorithmFactory.cs" />
     <Compile Include="DijkstraAlgorithmFactory.cs" />
     <Compile Include="DistanceFirstAlgorithmFactory.cs" />
-    <Compile Include="IAlgorithmFactory.cs" />
+    <Compile Include="Interface\IAlgorithmFactory.cs" />
     <Compile Include="LeeAlgorithmFactory.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -85,5 +85,6 @@
       <Name>Algorithm.Realizations</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

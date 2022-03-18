@@ -2,11 +2,11 @@
 {
     internal sealed class AnimationSpeed : BaseAnimationSpeed
     {
+        public override double Milliseconds { get; }
+
         public AnimationSpeed(double milliseconds)
         {
             Milliseconds = milliseconds;
         }
-
-        public override double Milliseconds { get; }
     }
 }

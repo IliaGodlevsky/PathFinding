@@ -9,8 +9,10 @@ using System.Diagnostics;
 namespace GraphLib.TestRealizations.TestObjects
 {
     [DebuggerDisplay("{Position.ToString()}")]
-    public sealed class TestVertex : IVertex, IEquatable<IVertex>
+    public sealed class TestVertex : IVertex
     {
+        private readonly Lazy<IReadOnlyCollection<IVertex>> neighbours;
+
         public TestVertex(INeighborhood neighborhood, ICoordinate coordinate)
         {
             this.Initialize();
@@ -25,15 +27,28 @@ namespace GraphLib.TestRealizations.TestObjects
         }
 
         public bool IsObstacle { get; set; }
+
         public IVertexCost Cost { get; set; }
+
         public IReadOnlyCollection<IVertex> Neighbours => neighbours.Value;
+
         public ICoordinate Position { get; }
+
         public IGraph Graph { get; }
 
-        public bool Equals(IVertex other) => Equals((object)other);
-        public override bool Equals(object obj) => obj is IVertex vertex && vertex.IsEqual(this);
-        public override int GetHashCode() => base.GetHashCode();
+        public bool Equals(IVertex other)
+        {
+            return Equals((object)other);
+        }
 
-        private readonly Lazy<IReadOnlyCollection<IVertex>> neighbours;
+        public override bool Equals(object obj)
+        {
+            return obj is IVertex vertex && vertex.IsEqual(this);
+        }
+
+        public override int GetHashCode()
+        {
+            return base .GetHashCode();
+        }       
     }
 }

@@ -15,15 +15,15 @@ namespace GraphLib.Base.EndPoints.Commands.EndPointsCommands
         {
         }
 
-        public override bool CanExecute(IVertex vertex)
-        {
-            return endPoints.Target.IsEqual(vertex);
-        }
-
         public override void Execute(IVertex vertex)
         {
             vertex.AsVisualizable().VisualizeAsRegular();
             endPoints.Target = NullVertex.Instance;
+        }
+
+        public override bool CanExecute(IVertex vertex)
+        {
+            return endPoints.Target.IsEqual(vertex);
         }
     }
 }

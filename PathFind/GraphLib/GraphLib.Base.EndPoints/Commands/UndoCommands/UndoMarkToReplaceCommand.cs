@@ -12,6 +12,8 @@ namespace GraphLib.Base.EndPoints.Commands.UndoCommands
     [AttachedTo(typeof(IntermediateToReplaceCommands))]
     internal sealed class UndoMarkToReplaceCommand : BaseIntermediatesUndoCommand
     {
+        private readonly IExecutable<IVertex> cancelMarkToReplaceCommand;
+
         public UndoMarkToReplaceCommand(BaseEndPoints endPoints) : base(endPoints)
         {
             cancelMarkToReplaceCommand = new CancelMarkToReplaceCommand(endPoints);
@@ -20,8 +22,6 @@ namespace GraphLib.Base.EndPoints.Commands.UndoCommands
         public override void Undo()
         {
             cancelMarkToReplaceCommand.ExecuteForEach(MarkedToReplace.ToArray());
-        }
-
-        private readonly IExecutable<IVertex> cancelMarkToReplaceCommand;
+        }        
     }
 }

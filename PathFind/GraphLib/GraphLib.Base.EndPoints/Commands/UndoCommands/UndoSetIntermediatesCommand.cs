@@ -12,6 +12,8 @@ namespace GraphLib.Base.EndPoints.Commands.UndoCommands
     [AttachedTo(typeof(SetEndPointsCommands))]
     internal sealed class UndoSetIntermediatesCommand : BaseIntermediatesUndoCommand
     {
+        private readonly IExecutable<IVertex> unsetIntermediatesCommand;
+
         public UndoSetIntermediatesCommand(BaseEndPoints endPoints) : base(endPoints)
         {
             unsetIntermediatesCommand = new UnsetIntermediateCommand(endPoints);
@@ -20,8 +22,6 @@ namespace GraphLib.Base.EndPoints.Commands.UndoCommands
         public override void Undo()
         {
             unsetIntermediatesCommand.ExecuteForEach(Intermediates.ToArray());
-        }
-
-        private readonly IExecutable<IVertex> unsetIntermediatesCommand;
+        }       
     }
 }

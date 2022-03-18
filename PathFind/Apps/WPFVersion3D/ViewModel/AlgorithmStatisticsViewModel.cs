@@ -19,26 +19,25 @@ namespace WPFVersion3D.ViewModel
 {
     internal class AlgorithmStatisticsViewModel : INotifyPropertyChanged, IDisposable
     {
-        private static Dispatcher Dispatcher => Application.Current.Dispatcher;
-
         public event PropertyChangedEventHandler PropertyChanged;
 
-        protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = "")
-        {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
-        }
+        private static Dispatcher Dispatcher => Application.Current.Dispatcher;
 
-        public ICommand InterruptSelelctedAlgorithmCommand { get; }
-        public ICommand RemoveSelelctedAlgorithmCommand { get; }
-
-        public AlgorithmViewModel SelectedAlgorithm { get; set; }
+        private readonly IMessenger messenger;
 
         private ObservableCollection<AlgorithmViewModel> statistics;
+
         public ObservableCollection<AlgorithmViewModel> Statistics
         {
             get => statistics ?? (statistics = new ObservableCollection<AlgorithmViewModel>());
             set { statistics = value; OnPropertyChanged(); }
         }
+
+        public ICommand InterruptSelelctedAlgorithmCommand { get; }
+
+        public ICommand RemoveSelelctedAlgorithmCommand { get; }
+
+        public AlgorithmViewModel SelectedAlgorithm { get; set; }
 
         public AlgorithmStatisticsViewModel()
         {
@@ -50,6 +49,11 @@ namespace WPFVersion3D.ViewModel
             messenger.Register<InterruptAllAlgorithmsMessage>(this, MessageTokens.AlgorithmStatisticsModel, OnAllAlgorithmInterrupted);
             messenger.Register<ClearStatisticsMessage>(this, MessageTokens.AlgorithmStatisticsModel, OnClearStatistics);
             messenger.Register<AlgorithmStatusMessage>(this, MessageTokens.AlgorithmStatisticsModel, SetAlgorithmStatus);
+        }
+
+        protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = "")
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
 
         private void SetAlgorithmStatus(AlgorithmStatusMessage message)
@@ -121,7 +125,5 @@ namespace WPFVersion3D.ViewModel
             Statistics.Clear();
             SelectedAlgorithm = null;
         }
-
-        private readonly IMessenger messenger;
     }
 }

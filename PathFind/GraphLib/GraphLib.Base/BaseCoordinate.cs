@@ -8,16 +8,19 @@ using System.Linq;
 namespace GraphLib.Base
 {
     [Serializable]
-    public abstract class BaseCoordinate : ICoordinate, ICloneable<ICoordinate>
+    public abstract class BaseCoordinate : ICoordinate
     {
+        private readonly string toString;
+        private readonly int hashCode;
+
+        public int[] CoordinatesValues { get; }
+
         protected BaseCoordinate(int numberOfDimensions, params int[] coordinates)
         {
             CoordinatesValues = coordinates.TakeOrDefault(numberOfDimensions).ToArray();
             toString = $"({string.Join(",", CoordinatesValues)})";
             hashCode = CoordinatesValues.ToHashCode();
         }
-
-        public int[] CoordinatesValues { get; }
 
         public override bool Equals(object pos)
         {
@@ -45,8 +48,5 @@ namespace GraphLib.Base
         {
             return Clone();
         }
-
-        private readonly string toString;
-        private readonly int hashCode;
     }
 }

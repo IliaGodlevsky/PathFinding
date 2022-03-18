@@ -10,16 +10,16 @@ namespace GraphLib.Base
     {
         public static InclusiveValueRange<int> CostRange { get; set; }
 
+        static BaseVertexCost()
+        {
+            CostRange = new InclusiveValueRange<int>(9, 1);
+        }
+
         public int CurrentCost { get; protected set; }
 
         protected BaseVertexCost(int cost)
         {
             CurrentCost = CostRange.ReturnInRange(cost);
-        }
-
-        static BaseVertexCost()
-        {
-            CostRange = new InclusiveValueRange<int>(9, 1);
         }
 
         public override bool Equals(object obj)

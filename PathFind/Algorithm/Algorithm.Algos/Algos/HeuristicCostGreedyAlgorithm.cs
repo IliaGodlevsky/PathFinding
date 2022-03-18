@@ -13,6 +13,9 @@ namespace Algorithm.Algos.Algos
     [Description("Cost greedy (heuristic)")]
     public sealed class HeuristicCostGreedyAlgorithm : GreedyAlgorithm
     {
+        private readonly IStepRule stepRule;
+        private readonly IHeuristic heuristic;
+
         public HeuristicCostGreedyAlgorithm(IEndPoints endPoints,
             IHeuristic heuristic, IStepRule stepRule) : base(endPoints)
         {
@@ -37,8 +40,5 @@ namespace Algorithm.Algos.Algos
             var stepCost = stepRule.CalculateStepCost(vertex, CurrentVertex);
             return heuristicResult + stepCost;
         }
-
-        private readonly IStepRule stepRule;
-        private readonly IHeuristic heuristic;
     }
 }

@@ -23,6 +23,12 @@ namespace ConsoleVersion.ViewModel
 
         private const int MenuOffset = 8;
 
+        private readonly BaseEndPoints endPoints;
+        private readonly ILog log;
+        private readonly IMessenger messenger;
+
+        private Graph2D graph;
+
         public IInput<int> IntInput { get; set; }
 
         public EndPointsViewModel(BaseEndPoints endPoints, ILog log)
@@ -51,13 +57,22 @@ namespace ConsoleVersion.ViewModel
         }
 
         [MenuItem(MenuItemsNames.ReplaceSource, MenuItemPriority.Low)]
-        public void ChangeSourceVertex() => ChangeVertex(endPoints.RemoveSource, MessagesTexts.SourceVertexChoiceMsg);
+        public void ChangeSourceVertex()
+        {
+            ChangeVertex(endPoints.RemoveSource, MessagesTexts.SourceVertexChoiceMsg);
+        }
 
         [MenuItem(MenuItemsNames.ReplaceTarget, MenuItemPriority.Low)]
-        public void ChangeTargetVertex() => ChangeVertex(endPoints.RemoveTarget, MessagesTexts.TargetVertexChoiceMsg);
+        public void ChangeTargetVertex()
+        {
+            ChangeVertex(endPoints.RemoveTarget, MessagesTexts.TargetVertexChoiceMsg);
+        }
 
         [MenuItem(MenuItemsNames.ClearEndPoints, MenuItemPriority.Low)]
-        public void ClearEndPoints() => endPoints.Reset();
+        public void ClearEndPoints()
+        {
+            endPoints.Reset();
+        }
 
         [MenuItem(MenuItemsNames.ReplaceIntermediate, MenuItemPriority.Low)]
         public void ChangeIntermediates()
@@ -114,10 +129,5 @@ namespace ConsoleVersion.ViewModel
                 IntInput.InputEndPoint(graph, endPoints).OnEndPointChosen();
             }
         }
-
-        private readonly BaseEndPoints endPoints;
-        private readonly ILog log;
-        private Graph2D graph;
-        private readonly IMessenger messenger;
     }
 }

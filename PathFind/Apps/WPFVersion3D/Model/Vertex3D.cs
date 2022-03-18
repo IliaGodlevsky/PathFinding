@@ -20,6 +20,36 @@ namespace WPFVersion3D.Model
         public static readonly DependencyProperty SizeProperty;
         public static readonly DependencyProperty BrushProperty;
 
+        private readonly IModel3DFactory modelFactory;
+        private readonly IVisualization<Vertex3D> visualization;
+        private readonly Lazy<IReadOnlyCollection<IVertex>> neighbours;
+        private bool isObstacle;
+
+        public bool IsObstacle
+        {
+            get => isObstacle;
+            set
+            {
+                isObstacle = value;
+                if (isObstacle)
+                {
+                    VisualizeAsObstacle();
+                }
+            }
+        }
+
+        public IGraph Graph { get; }
+
+        public IVertexCost Cost { get; set; }
+
+        public IReadOnlyCollection<IVertex> Neighbours => neighbours.Value;
+
+        public ICoordinate Position { get; }
+
+        public bool IsVisualizedAsPath => visualization.IsVisualizedAsPath(this);
+
+        public bool IsVisualizedAsEndPoint => visualization.IsVisualizedAsEndPoint(this);
+
         public double Size
         {
             get => (double)GetValue(SizeProperty);
@@ -91,37 +121,55 @@ namespace WPFVersion3D.Model
                 new PropertyMetadata(BrushPropertyChanged));
         }
 
-        private bool isObstacle;
-        public bool IsObstacle
+        public bool Equals(IVertex other)
         {
-            get => isObstacle;
-            set
-            {
-                isObstacle = value;
-                if (isObstacle)
-                {
-                    VisualizeAsObstacle();
-                }
-            }
+            return other.IsEqual(this);
         }
 
-        public IGraph Graph { get; }
-        public IVertexCost Cost { get; set; }
-        public IReadOnlyCollection<IVertex> Neighbours => neighbours.Value;
-        public ICoordinate Position { get; }
+        public void VisualizeAsTarget()
+        {
+            visualization.VisualizeAsTarget(this);
+        }
 
-        public bool Equals(IVertex other) => other.IsEqual(this);
-        public bool IsVisualizedAsPath => visualization.IsVisualizedAsPath(this);
-        public bool IsVisualizedAsEndPoint => visualization.IsVisualizedAsEndPoint(this);
-        public void VisualizeAsTarget() => visualization.VisualizeAsTarget(this);
-        public void VisualizeAsObstacle() => visualization.VisualizeAsObstacle(this);
-        public void VisualizeAsPath() => visualization.VisualizeAsPath(this);
-        public void VisualizeAsRegular() => visualization.VisualizeAsRegular(this);
-        public void VisualizeAsVisited() => visualization.VisualizeAsVisited(this);
-        public void VisualizeAsEnqueued() => visualization.VisualizeAsEnqueued(this);
-        public void VisualizeAsSource() => visualization.VisualizeAsSource(this);
-        public void VisualizeAsIntermediate() => visualization.VisualizeAsIntermediate(this);
-        public void VisualizeAsMarkedToReplaceIntermediate() => visualization.VisualizeAsMarkedToReplaceIntermediate(this);
+        public void VisualizeAsObstacle()
+        {
+            visualization.VisualizeAsObstacle(this);
+        }
+
+        public void VisualizeAsPath()
+        {
+            visualization.VisualizeAsPath(this);
+        }
+
+        public void VisualizeAsRegular()
+        {
+            visualization.VisualizeAsRegular(this);
+        }
+
+        public void VisualizeAsVisited()
+        {
+            visualization.VisualizeAsVisited(this);
+        }
+
+        public void VisualizeAsEnqueued()
+        {
+            visualization.VisualizeAsEnqueued(this);
+        }
+
+        public void VisualizeAsSource()
+        {
+            visualization.VisualizeAsSource(this);
+        }
+
+        public void VisualizeAsIntermediate()
+        {
+            visualization.VisualizeAsIntermediate(this);
+        }
+
+        public void VisualizeAsMarkedToReplaceIntermediate()
+        {
+            visualization.VisualizeAsMarkedToReplaceIntermediate(this);
+        }
 
         protected static void MaterialPropertyChanged(DependencyObject depObj,
             DependencyPropertyChangedEventArgs prop)
@@ -154,9 +202,5 @@ namespace WPFVersion3D.Model
             vert.Brush = (Brush)prop.NewValue;
             vert.Material.Brush = vert.Brush;
         }
-
-        private readonly IModel3DFactory modelFactory;
-        private readonly IVisualization<Vertex3D> visualization;
-        private readonly Lazy<IReadOnlyCollection<IVertex>> neighbours;
     }
 }

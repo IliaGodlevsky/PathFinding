@@ -1,5 +1,7 @@
-﻿using Algorithm.Factory;
+﻿using Algorithm.Base;
+using Algorithm.Factory.Interface;
 using Algorithm.Infrastructure.EventArguments;
+using Algorithm.Interfaces;
 using Autofac;
 using Common.Extensions;
 using Common.Interface;
@@ -29,24 +31,27 @@ namespace WPFVersion3D.ViewModel
         public event Action WindowClosed;
         public event PropertyChangedEventHandler PropertyChanged;
 
+        private readonly IMessenger messenger;
+
+        public ICommand FindPathCommand { get; }
+
+        public ICommand CancelFindPathCommand { get; }
+
+        private int Index { get; set; }
+
+        public PathFindingViewModel(BaseEndPoints endPoints, IEnumerable<IAlgorithmFactory<PathfindingAlgorithm>> algorithmFactories, 
+            ILog log) : base(endPoints, algorithmFactories, log)
+        {
+            messenger = DI.Container.Resolve<IMessenger>();
+            FindPathCommand = new RelayCommand(ExecutePathFindCommand, CanExecutePathFindCommand);
+            CancelFindPathCommand = new RelayCommand(ExecuteCloseWindowCommand);
+            messenger.Register<AlgorithmIndexMessage>(this, MessageTokens.PathfindingModel, SetAlgorithmIndex);
+            DelayTime = Convert.ToInt32(Constants.AlgorithmDelayValueRange.LowerValueOfRange);
+        }
+
         protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = "")
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
-        }
-
-        public ICommand ConfirmPathFindAlgorithmChoice { get; }
-        public ICommand CancelPathFindAlgorithmChoice { get; }
-
-        public PathFindingViewModel(BaseEndPoints endPoints, IEnumerable<IAlgorithmFactory> algorithmFactories, ILog log)
-            : base(endPoints, algorithmFactories, log)
-        {
-            messenger = DI.Container.Resolve<IMessenger>();
-            ConfirmPathFindAlgorithmChoice = new RelayCommand(
-                ExecuteConfirmPathFindAlgorithmChoice,
-                CanExecuteConfirmPathFindAlgorithmChoice);
-            CancelPathFindAlgorithmChoice = new RelayCommand(ExecuteCloseWindowCommand);
-            messenger.Register<AlgorithmIndexMessage>(this, MessageTokens.PathfindingModel, SetAlgorithmIndex);
-            DelayTime = Convert.ToInt32(Constants.AlgorithmDelayValueRange.LowerValueOfRange);
         }
 
         private void SetAlgorithmIndex(AlgorithmIndexMessage message)
@@ -102,13 +107,13 @@ namespace WPFVersion3D.ViewModel
             WindowClosed?.Invoke();
         }
 
-        private void ExecuteConfirmPathFindAlgorithmChoice(object param)
+        private void ExecutePathFindCommand(object param)
         {
             ExecuteCloseWindowCommand(null);
             base.FindPath();
         }
 
-        private bool CanExecuteConfirmPathFindAlgorithmChoice(object param)
+        private bool CanExecutePathFindCommand(object param)
         {
             return Algorithm != null;
         }
@@ -117,9 +122,5 @@ namespace WPFVersion3D.ViewModel
         {
             WindowClosed = null;
         }
-
-        private int Index { get; set; }
-
-        private readonly IMessenger messenger;
     }
 }

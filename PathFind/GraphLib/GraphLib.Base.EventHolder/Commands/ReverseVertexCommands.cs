@@ -6,6 +6,8 @@ namespace GraphLib.Base.EventHolder.Commands
 {
     internal sealed class ReverseVertexCommands : IVerticesCommands
     {
+        private readonly IVertexCommand[] commands;
+
         public ReverseVertexCommands()
         {
             commands = new IVertexCommand[]
@@ -20,8 +22,6 @@ namespace GraphLib.Base.EventHolder.Commands
             commands.ExecuteFirst(vertex ?? NullVertex.Instance);
         }
 
-        public void Undo() { }
-
-        private readonly IVertexCommand[] commands;
+        public void Undo() { }        
     }
 }

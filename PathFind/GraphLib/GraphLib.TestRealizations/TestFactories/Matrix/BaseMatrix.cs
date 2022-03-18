@@ -5,7 +5,7 @@ using System;
 
 namespace GraphLib.TestRealizations.TestFactories.Matrix
 {
-    internal abstract class BaseMatrix<T>
+    internal abstract class BaseMatrix<T> : IMatrix
     {
         protected T[,] Matrix => matrix.Value;
 

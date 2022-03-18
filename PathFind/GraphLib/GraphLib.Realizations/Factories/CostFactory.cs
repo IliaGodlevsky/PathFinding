@@ -8,6 +8,8 @@ namespace GraphLib.Realizations.Factories
 {
     public sealed class CostFactory : IVertexCostFactory
     {
+        private readonly IRandom random;
+
         public CostFactory(IRandom random)
         {
             this.random = random;
@@ -23,7 +25,5 @@ namespace GraphLib.Realizations.Factories
             int randomCost = random.Next(WeightableVertexCost.CostRange);
             return new WeightableVertexCost(randomCost);
         }
-
-        private readonly IRandom random;
     }
 }

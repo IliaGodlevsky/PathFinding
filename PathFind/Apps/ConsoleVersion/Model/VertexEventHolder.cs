@@ -11,13 +11,13 @@ namespace ConsoleVersion.Model
 {
     internal sealed class VertexEventHolder : BaseVertexEventHolder, IRequireIntInput
     {
+        public IInput<int> IntInput { get; set; }
+
         public VertexEventHolder(IVertexCostFactory costFactory)
             : base(costFactory)
         {
 
         }
-
-        public IInput<int> IntInput { get; set; }
 
         public override void ChangeVertexCost(object sender, EventArgs e)
         {

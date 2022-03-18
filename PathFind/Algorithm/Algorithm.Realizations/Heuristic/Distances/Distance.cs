@@ -1,6 +1,5 @@
 ﻿using GraphLib.Extensions;
 using GraphLib.Interfaces;
-using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -10,17 +9,10 @@ namespace Algorithm.Realizations.Heuristic.Distances
     {
         public double Calculate(IVertex first, IVertex second)
         {
-            if (first == null || second == null)
-            {
-                throw new ArgumentNullException();
-            }
-
-            if (first.Position == null || second.Position == null)
-            {
-                throw new ArgumentException();
-            }
-
-            return Aggregate(first.GetCoordinates().Zip(second.GetCoordinates(), ZipMethod));
+            var firstCoordinates = first.GetCoordinates();
+            var secondCoordinates = second.GetCoordinates();
+            var zipped = firstCoordinates.Zip(secondCoordinates, ZipMethod);
+            return Aggregate(zipped);
         }
 
         protected abstract double Aggregate(IEnumerable<double> collection);

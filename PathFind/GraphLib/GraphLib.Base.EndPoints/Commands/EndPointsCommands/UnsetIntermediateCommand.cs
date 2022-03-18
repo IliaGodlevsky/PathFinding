@@ -14,11 +14,6 @@ namespace GraphLib.Base.EndPoints.Commands.EndPointsCommands
         {
         }
 
-        public override bool CanExecute(IVertex vertex)
-        {
-            return IsIntermediate(vertex);
-        }
-
         public override void Execute(IVertex vertex)
         {
             if (IsMarkedToReplace(vertex))
@@ -27,6 +22,11 @@ namespace GraphLib.Base.EndPoints.Commands.EndPointsCommands
             }
             Intermediates.Remove(vertex);
             vertex.AsVisualizable().VisualizeAsRegular();
+        }
+
+        public override bool CanExecute(IVertex vertex)
+        {
+            return IsIntermediate(vertex);
         }
     }
 }

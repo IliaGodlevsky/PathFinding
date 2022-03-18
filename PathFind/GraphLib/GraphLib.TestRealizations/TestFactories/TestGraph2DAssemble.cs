@@ -23,9 +23,7 @@ namespace GraphLib.TestRealizations.TestFactories
                 vertices[index] = new TestVertex(neighborhood, coordinate);
             }
             var graph = new Graph2D(vertices, Constants.DimensionSizes2D);
-            var costMatrix = new CostMatrix(graph);
-            var obstacleMatric = new ObstacleMatrix(graph);
-            var matrices = new Matrices(costMatrix, obstacleMatric);
+            var matrices = new Matrices(new CostMatrix(graph), new ObstacleMatrix(graph));
             matrices.Overlay();
             return graph;
         }

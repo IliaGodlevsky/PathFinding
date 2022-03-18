@@ -9,14 +9,14 @@ namespace ConsoleVersion.Commands
     [AttachedTo(typeof(PathFindingViewModel))]
     internal sealed class PauseAlgorithmCommand : IConsoleKeyCommand
     {
-        public bool CanExecute(ConsoleKey key)
-        {
-            return key.IsOneOf(ConsoleKey.P);
-        }
-
         public void Execute(PathFindingViewModel viewModel)
         {
             viewModel.CurrentAlgorithm.Pause();
+        }
+
+        public bool CanExecute(ConsoleKey key)
+        {
+            return key.IsOneOf(ConsoleKey.P);
         }
     }
 }

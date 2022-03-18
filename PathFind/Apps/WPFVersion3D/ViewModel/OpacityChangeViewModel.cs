@@ -17,6 +17,7 @@ namespace WPFVersion3D.ViewModel
         public double SimpleVertexColorOpacity { get; set; }
 
         public ICommand ConfirmOpacityChange { get; }
+
         public ICommand CancelOpacityChange { get; }
 
         public OpacityChangeViewModel()
@@ -29,6 +30,11 @@ namespace WPFVersion3D.ViewModel
 
             ConfirmOpacityChange = new RelayCommand(ExecuteChangeVertexOpacity);
             CancelOpacityChange = new RelayCommand(ExecuteCloseChangeVertexOpacity);
+        }
+
+        public void Dispose()
+        {
+            WindowClosed = null;
         }
 
         private void ExecuteChangeVertexOpacity(object param)
@@ -46,11 +52,6 @@ namespace WPFVersion3D.ViewModel
         private void ExecuteCloseChangeVertexOpacity(object param)
         {
             WindowClosed?.Invoke();
-        }
-
-        public void Dispose()
-        {
-            WindowClosed = null;
         }
     }
 }

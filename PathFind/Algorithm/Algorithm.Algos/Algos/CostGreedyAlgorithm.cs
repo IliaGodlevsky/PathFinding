@@ -12,6 +12,8 @@ namespace Algorithm.Algos.Algos
     [Description("Cost greedy algorithm")]
     public sealed class CostGreedyAlgorithm : GreedyAlgorithm
     {
+        private readonly IStepRule stepRule;
+
         public CostGreedyAlgorithm(IEndPoints endPoints)
             : this(endPoints, new DefaultStepRule())
         {
@@ -32,7 +34,5 @@ namespace Algorithm.Algos.Algos
         {
             return stepRule.CalculateStepCost(vertex, CurrentVertex);
         }
-
-        private readonly IStepRule stepRule;
     }
 }

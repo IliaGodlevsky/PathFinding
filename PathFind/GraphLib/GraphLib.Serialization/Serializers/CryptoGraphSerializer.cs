@@ -10,6 +10,10 @@ namespace GraphLib.Serialization.Serializers
 {
     public sealed class CryptoGraphSerializer : IGraphSerializer
     {
+        private readonly ICrypto crypto;
+        private readonly IGraphSerializer serializer;
+        private readonly SymmetricAlgorithm algorithm;
+
         public CryptoGraphSerializer(
             IGraphSerializer serializer,
             SymmetricAlgorithm algorithm,
@@ -66,9 +70,5 @@ namespace GraphLib.Serialization.Serializers
                 throw new CantSerializeGraphException(ex.Message, ex);
             }
         }
-
-        private readonly ICrypto crypto;
-        private readonly IGraphSerializer serializer;
-        private readonly SymmetricAlgorithm algorithm;
     }
 }

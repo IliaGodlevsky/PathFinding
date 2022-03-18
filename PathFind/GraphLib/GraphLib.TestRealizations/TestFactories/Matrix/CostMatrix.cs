@@ -4,7 +4,7 @@ using GraphLib.TestRealizations.TestObjects;
 
 namespace GraphLib.TestRealizations.TestFactories.Matrix
 {
-    internal sealed class CostMatrix : BaseMatrix<int>, IMatrix
+    internal sealed class CostMatrix : BaseMatrix<int>
     {
         public CostMatrix(Graph2D graph) : base(graph)
         {

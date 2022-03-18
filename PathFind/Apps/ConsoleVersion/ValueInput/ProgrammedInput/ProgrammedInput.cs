@@ -10,6 +10,7 @@ namespace ConsoleVersion.ValueInput.ProgrammedInput
         where T : IComparable
     {
         private const int WaitMilliseconds = 500;
+
         private readonly Lazy<Queue<T>> steps;
 
         protected Queue<T> Steps => steps.Value;

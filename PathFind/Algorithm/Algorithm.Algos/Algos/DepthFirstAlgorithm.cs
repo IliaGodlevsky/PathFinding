@@ -11,6 +11,8 @@ namespace Algorithm.Algos.Algos
     [Description("Depth first algorithm")]
     public sealed class DepthFirstAlgorithm : GreedyAlgorithm
     {
+        private readonly IHeuristic heuristic;
+
         public DepthFirstAlgorithm(IEndPoints endPoints, IHeuristic heuristic)
             : base(endPoints)
         {
@@ -27,7 +29,5 @@ namespace Algorithm.Algos.Algos
         {
             return heuristic.Calculate(vertex, endPoints.Source);
         }
-
-        private readonly IHeuristic heuristic;
     }
 }

@@ -9,6 +9,8 @@ namespace ConsoleVersion.ValueInput.UserInput
     internal sealed class ConsoleUserEnumInput<T> : ConsoleUserInput<T>
         where T : struct, Enum
     {
+        private readonly IEnumValues<T> enumValues;
+
         public ConsoleUserEnumInput()
         {
             enumValues = new EnumValues<T>();
@@ -19,7 +21,5 @@ namespace ConsoleVersion.ValueInput.UserInput
             return Enum.TryParse(userInput, ignoreCase: true, out result)
                 && enumValues.Values.Contains(result);
         }
-
-        private readonly IEnumValues<T> enumValues;
     }
 }

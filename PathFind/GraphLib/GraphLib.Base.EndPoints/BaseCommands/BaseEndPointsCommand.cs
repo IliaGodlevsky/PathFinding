@@ -8,15 +8,15 @@ namespace GraphLib.Base.EndPoints.BaseCommands
         protected IVisualizable Source => endPoints.Source.AsVisualizable();
         protected IVisualizable Target => endPoints.Target.AsVisualizable();
 
+        protected readonly BaseEndPoints endPoints;
+
         protected BaseEndPointsCommand(BaseEndPoints endPoints)
         {
             this.endPoints = endPoints;
         }
 
-        protected readonly BaseEndPoints endPoints;
-
-        public abstract bool CanExecute(IVertex vertex);
-
         public abstract void Execute(IVertex vertex);
+
+        public abstract bool CanExecute(IVertex vertex);        
     }
 }

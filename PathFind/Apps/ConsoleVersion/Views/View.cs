@@ -11,12 +11,20 @@ namespace ConsoleVersion.Views
     {
         public event Action NewMenuIteration;
 
+        private readonly Menu<Action> menu;
+        private readonly IDisplayable menuList;
+        private readonly InclusiveValueRange<int> menuRange;
+
         private bool IsClosureRequested { get; set; }
+
         public IInput<int> IntInput { get; set; }
 
         private int MenuSize => menu.MenuActionsNames.Length;
+
         private string OptionsMsg => MessagesTexts.MenuOptionChoiceMsg;
+
         private int MenuItemIndex => IntInput.Input(OptionsMsg, menuRange) - 1;
+
         private string MenuItem => menu.MenuActionsNames[MenuItemIndex];
 
         protected View(IViewModel model)
@@ -46,9 +54,5 @@ namespace ConsoleVersion.Views
         {
             IsClosureRequested = true;
         }
-
-        private readonly Menu<Action> menu;
-        private readonly IDisplayable menuList;
-        private readonly InclusiveValueRange<int> menuRange;
     }
 }

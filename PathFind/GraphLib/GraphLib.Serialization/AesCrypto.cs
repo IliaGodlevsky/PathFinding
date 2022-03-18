@@ -12,6 +12,9 @@ namespace GraphLib.Serialization
         private const int IVLength = 16;
         private const string CryptoString = "8~SBmlph7sfHLi?Od}CPrU5k{uNMAnYT";
 
+        private readonly Lazy<byte[]> key;
+        private readonly Lazy<byte[]> iv;
+
         public byte[] Key => key.Value;
 
         public byte[] IV => iv.Value;
@@ -27,8 +30,5 @@ namespace GraphLib.Serialization
             var chunk = CryptoString.Take(length).MakeString();
             return Encoding.ASCII.GetBytes(chunk);
         }
-
-        private readonly Lazy<byte[]> key;
-        private readonly Lazy<byte[]> iv;
     }
 }

@@ -15,6 +15,17 @@ namespace Visualization
 {
     public abstract class PathfindingVisualization : IExecutable<IAlgorithm>
     {
+        private readonly VisitedVertices visited = new VisitedVertices();
+        private readonly EnqueuedVertices enqueued = new EnqueuedVertices();
+        private readonly PathVertices path = new PathVertices();
+        private readonly IntermediateVertices intermediate = new IntermediateVertices();
+        private readonly SourceVertices source = new SourceVertices();
+        private readonly TargetVertices target = new TargetVertices();
+        private readonly ObstacleVertices obstacles = new ObstacleVertices();
+        private readonly IExecutable<IAlgorithm> visualizations;
+        private readonly IVisualizationSlides visualizationSlides;
+        private readonly IGraph graph;
+
         protected PathfindingVisualization(IGraph graph)
         {
             visualizations = new CompositeVisualization(graph) { obstacles, enqueued, visited, path, intermediate, source, target };
@@ -22,11 +33,20 @@ namespace Visualization
             this.graph = graph;
         }
 
-        public void Clear() => visualizationSlides.Clear();
+        public void Clear()
+        {
+            visualizationSlides.Clear();
+        }
 
-        public void Remove(IAlgorithm algorithm) => visualizationSlides.Remove(algorithm);
+        public void Remove(IAlgorithm algorithm)
+        {
+            visualizationSlides.Remove(algorithm);
+        }
 
-        public void Execute(IAlgorithm algorithm) => visualizations.Execute(algorithm);
+        public void Execute(IAlgorithm algorithm)
+        {
+            visualizations.Execute(algorithm);
+        }
 
         protected virtual void SubscribeOnAlgorithmEvents(PathfindingAlgorithm algorithm)
         {
@@ -44,7 +64,6 @@ namespace Visualization
             intermediate.AddRange(algorithm, intermediates);
         }
 
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         protected void AddPathVertices(IAlgorithm algorithm, IGraphPath grapPath)
         {
             path.AddRange(algorithm, grapPath.Path);
@@ -81,16 +100,5 @@ namespace Visualization
                 enqueued.RemoveRange(algorithm, visited.GetVertices(algorithm));
             }
         }
-
-        private readonly VisitedVertices visited = new VisitedVertices();
-        private readonly EnqueuedVertices enqueued = new EnqueuedVertices();
-        private readonly PathVertices path = new PathVertices();
-        private readonly IntermediateVertices intermediate = new IntermediateVertices();
-        private readonly SourceVertices source = new SourceVertices();
-        private readonly TargetVertices target = new TargetVertices();
-        private readonly ObstacleVertices obstacles = new ObstacleVertices();
-        private readonly IExecutable<IAlgorithm> visualizations;
-        private readonly IVisualizationSlides visualizationSlides;
-        private readonly IGraph graph;
     }
 }
