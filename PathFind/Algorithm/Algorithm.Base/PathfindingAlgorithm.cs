@@ -31,7 +31,7 @@ namespace Algorithm.Base
         protected readonly IVisitedVertices visitedVertices;
         protected readonly IParentVertices parentVertices;
         protected readonly IEndPoints endPoints;
-        
+
         public bool IsInProcess { get; private set; }
 
         public bool IsPaused { get; private set; }
@@ -41,6 +41,8 @@ namespace Algorithm.Base
         protected bool IsTerminatedPrematurely => !CurrentVertex.IsNull() && !IsInterruptRequested;
 
         private bool IsInterruptRequested { get; set; }
+
+        private bool IsAlgorithmDisposed { get; set; } = false;
 
         protected PathfindingAlgorithm(IEndPoints endPoints)
         {
@@ -54,6 +56,7 @@ namespace Algorithm.Base
 
         public void Dispose()
         {
+            IsAlgorithmDisposed = true;
             Started = null;
             Finished = null;
             VertexEnqueued = null;
@@ -129,6 +132,10 @@ namespace Algorithm.Base
 
         protected virtual void PrepareForPathfinding()
         {
+            if (IsAlgorithmDisposed)
+            {
+                throw new ObjectDisposedException(GetType().Name);
+            }
             Reset();
             IsInProcess = true;
             Started?.Invoke(this, new ProcessEventArgs());

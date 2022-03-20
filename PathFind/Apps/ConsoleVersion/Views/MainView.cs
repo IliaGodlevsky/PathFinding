@@ -45,7 +45,6 @@ namespace ConsoleVersion.Views
             int y = Constants.HeightOfAbscissaView + Constants.HeightOfGraphParametresView;
             GraphFieldPosition = new Coordinate2D(x, y);
             StatisticsPosition = new Coordinate2D(0, 0);
-            Vertex.VertexCreated += RecalculateConsolePosition;
         }
 
         public static void SetCursorPositionUnderMenu(int menuOffset)
@@ -62,6 +61,7 @@ namespace ConsoleVersion.Views
                 + Constants.HeightOfAbscissaView * 2 + Constants.HeightOfGraphParametresView;
             StatisticsPosition = new Coordinate2D(0, pathFindingStatisticsOffset);
             LateralDistanceBetweenVertices = CalculateLateralDistanceBetweenVertices();
+            graph.ForEach(vertex => RecalculateConsolePosition((Vertex)vertex));
         }
 
         private void OnCostRangeChanged(CostRangeChangedMessage message)
@@ -84,8 +84,8 @@ namespace ConsoleVersion.Views
         private static void RecalculateConsolePosition(Vertex vertex)
         {
             var point = (Coordinate2D)vertex.Position;
-            int left = MainView.GraphFieldPosition.X + point.X * MainView.LateralDistanceBetweenVertices;
-            int top = MainView.GraphFieldPosition.Y + point.Y;
+            int left = GraphFieldPosition.X + point.X * LateralDistanceBetweenVertices;
+            int top = GraphFieldPosition.Y + point.Y;
             vertex.ConsolePosition = new Coordinate2D(left, top);
         }
 

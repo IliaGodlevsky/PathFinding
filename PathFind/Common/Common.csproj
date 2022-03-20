@@ -65,7 +65,7 @@
     <Compile Include="Attrbiutes\AttachedToAttribute.cs" />
     <Compile Include="Attrbiutes\GroupAttribute.cs" />
     <Compile Include="Attrbiutes\OrderAttribute.cs" />
-    <Compile Include="Disposable.cs" />
+    <Compile Include="Disposing.cs" />
     <Compile Include="Extensions\EnumerableExtensions\ICollectionExtensions.cs" />
     <Compile Include="Extensions\EnumerableExtensions\ConcurrentDictionaryExtensions.cs" />
     <Compile Include="Extensions\GenericExtensions.cs" />

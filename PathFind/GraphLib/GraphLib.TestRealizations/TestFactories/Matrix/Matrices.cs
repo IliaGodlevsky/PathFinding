@@ -2,6 +2,8 @@
 {
     internal sealed class Matrices : IMatrix
     {
+        private readonly IMatrix[] matrices;
+
         public Matrices(params IMatrix[] matrices)
         {
             this.matrices = matrices;
@@ -14,7 +16,5 @@
                 matrix.Overlay();
             }
         }
-
-        private readonly IMatrix[] matrices;
     }
 }

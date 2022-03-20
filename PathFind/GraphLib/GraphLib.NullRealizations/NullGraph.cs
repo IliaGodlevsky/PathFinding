@@ -12,16 +12,21 @@ namespace GraphLib.NullRealizations
     [DebuggerDisplay("Null")]
     public sealed class NullGraph : Singleton<NullGraph, IGraph>, IGraph, ICloneable<IGraph>
     {
-        public IVertex this[ICoordinate position]
-        {
-            get => NullVertex.Instance;
-        }
-
         public int[] DimensionsSizes => Array.Empty<int>();
 
         public IReadOnlyCollection<IVertex> Vertices => NullVertex.GetMany(0);
 
         public int Size => 0;
+
+        private NullGraph()
+        {
+
+        }
+
+        public IVertex GetByCoordinate(ICoordinate coordinate)
+        {
+            return NullVertex.Instance;
+        }
 
         public override bool Equals(object obj)
         {
@@ -46,11 +51,6 @@ namespace GraphLib.NullRealizations
         object ICloneable.Clone()
         {
             return Clone();
-        }
-
-        private NullGraph()
-        {
-
         }
     }
 }

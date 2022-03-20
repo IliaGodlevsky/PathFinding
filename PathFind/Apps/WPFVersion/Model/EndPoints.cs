@@ -7,7 +7,7 @@ using System.Windows.Input;
 namespace WPFVersion.Model
 {
     [DebuggerDisplay("Source - {Source}, Target - {Target}")]
-    internal sealed class EndPoints : BaseEndPoints, IEndPoints
+    internal sealed class EndPoints : BaseEndPoints
     {
         protected override void SubscribeVertex(IVertex vertex)
         {

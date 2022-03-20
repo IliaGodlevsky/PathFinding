@@ -75,7 +75,6 @@ namespace WPFVersion3D.ViewModel
                 && Constants.GraphWidthValueRange.Contains(Width)
                 && Constants.GraphLengthValueRange.Contains(Length)
                 && Constants.GraphHeightValueRange.Contains(Height);
-
         }
     }
 }

@@ -18,13 +18,8 @@ namespace Algorithm.Realizations.StepRules
 
         public double CalculateStepCost(IVertex neighbour, IVertex current)
         {
-            if (current.IsCardinal(neighbour))
-            {
-                return stepRule.CalculateStepCost(neighbour, current);
-            }
-
             double cost = stepRule.CalculateStepCost(neighbour, current);
-            return Math.Round(stepCostIncreaseFactor * cost);
+            return current.IsCardinal(neighbour) ? cost : Math.Round(stepCostIncreaseFactor * cost);
         }
     }
 }

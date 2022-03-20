@@ -2,11 +2,11 @@
 
 namespace Common
 {
-    public sealed class Disposable : IDisposable
+    public sealed class Disposing : IDisposable
     {
         private readonly Action disposeAction;
 
-        public Disposable(Action disposeAction)
+        public Disposing(Action disposeAction)
         {
             this.disposeAction = disposeAction;
         }

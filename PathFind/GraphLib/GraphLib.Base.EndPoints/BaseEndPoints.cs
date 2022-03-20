@@ -68,6 +68,7 @@ namespace GraphLib.Base.EndPoints
         }
 
         protected abstract void SubscribeVertex(IVertex vertex);
+
         protected abstract void UnsubscribeVertex(IVertex vertex);
     }
 }

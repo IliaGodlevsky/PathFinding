@@ -19,6 +19,14 @@ namespace GraphViewModel
 {
     public abstract class PathFindingModel
     {
+        protected readonly BaseEndPoints endPoints;
+        protected readonly Stopwatch timer;
+        protected readonly ILog log;
+
+        protected IGraphPath path;
+        protected PathfindingAlgorithm algorithm;
+        protected int visitedVerticesCount;
+
         public bool IsVisualizationRequired { get; set; } = true;
 
         public int DelayTime { get; set; }
@@ -27,8 +35,7 @@ namespace GraphViewModel
 
         public Tuple<string, IAlgorithmFactory<PathfindingAlgorithm>>[] Algorithms { get; }
 
-        protected PathFindingModel(BaseEndPoints endPoints,
-            IEnumerable<IAlgorithmFactory<PathfindingAlgorithm>> factories, ILog log)
+        protected PathFindingModel(BaseEndPoints endPoints, IEnumerable<IAlgorithmFactory<PathfindingAlgorithm>> factories, ILog log)
         {
             this.endPoints = endPoints;
             this.log = log;
@@ -87,9 +94,16 @@ namespace GraphViewModel
             }
         }
 
-        protected virtual void OnAlgorithmInterrupted(object sender, ProcessEventArgs e) { }
-        protected virtual void OnAlgorithmFinished(object sender, ProcessEventArgs e) { }
+        protected virtual void OnAlgorithmInterrupted(object sender, ProcessEventArgs e) 
+        { 
+        }
+
+        protected virtual void OnAlgorithmFinished(object sender, ProcessEventArgs e) 
+        { 
+        }
+
         protected abstract void OnAlgorithmStarted(object sender, ProcessEventArgs e);
+
         protected abstract void SummarizePathfindingResults();
 
         protected virtual void SubscribeOnAlgorithmEvents(PathfindingAlgorithm algorithm)
@@ -112,13 +126,5 @@ namespace GraphViewModel
             algorithm.Paused += timer.Stop;
             algorithm.Resumed += timer.Start;
         }
-
-        protected readonly BaseEndPoints endPoints;
-        protected readonly Stopwatch timer;
-        protected readonly ILog log;
-
-        protected IGraphPath path;
-        protected PathfindingAlgorithm algorithm;
-        protected int visitedVerticesCount;
     }
 }

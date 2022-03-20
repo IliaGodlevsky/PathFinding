@@ -24,7 +24,6 @@ using System;
 using System.Reflection;
 using System.Runtime.Serialization;
 using System.Runtime.Serialization.Formatters.Soap;
-using WPFVersion3D.Axes;
 using WPFVersion3D.Extensions;
 using WPFVersion3D.Interface;
 using WPFVersion3D.Model;
@@ -77,7 +76,6 @@ namespace WPFVersion3D.DependencyInjection
 
             builder.RegisterAssemblyTypes(Assemblies).Where(Implements<IAlgorithmFactory<PathfindingAlgorithm>>)
                 .As<IAlgorithmFactory<PathfindingAlgorithm>>().SingleInstance();
-            builder.RegisterAssemblyTypes(Assemblies).Where(Implements<IAxis>).As<IAxis>().AsSelf().SingleInstance();
 
             return builder.Build();
         }

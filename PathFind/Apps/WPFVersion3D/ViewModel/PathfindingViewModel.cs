@@ -1,7 +1,6 @@
 ﻿using Algorithm.Base;
 using Algorithm.Factory.Interface;
 using Algorithm.Infrastructure.EventArguments;
-using Algorithm.Interfaces;
 using Autofac;
 using Common.Extensions;
 using Common.Interface;

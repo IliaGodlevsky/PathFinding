@@ -4,7 +4,6 @@ using GraphLib.Extensions;
 using GraphLib.Interfaces;
 using System.Collections.Generic;
 using System.Linq;
-using System.Reflection;
 
 using static System.Reflection.BindingFlags;
 
@@ -24,17 +23,17 @@ namespace GraphLib.Base
 
         public int[] DimensionsSizes { get; }
 
-        public IVertex this[ICoordinate coordinate]
-        {
-            get => vertices.GetOrNullVertex(coordinate);
-        }
-
         protected BaseGraph(int requiredNumberOfDimensions, IEnumerable<IVertex> vertices, params int[] dimensionSizes)
         {
             DimensionsSizes = dimensionSizes.TakeOrDefault(requiredNumberOfDimensions).ToArray();
             Size = DimensionsSizes.GetMultiplication();
             this.vertices = vertices.ToDictionary();
             Vertices.ForEach(SetGraph);
+        }
+
+        public IVertex GetByCoordinate(ICoordinate coordinate)
+        {
+            return vertices.GetOrNullVertex(coordinate);
         }
 
         public override bool Equals(object obj)

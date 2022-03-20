@@ -17,7 +17,6 @@ namespace ConsoleVersion.Model
     [DebuggerDisplay("{Position.ToString()}")]
     internal class Vertex : IVertex, IVisualizable, IWeightable, IDisplayable, IEquatable<IVertex>
     {
-        public static event Action<Vertex> VertexCreated;
         public event EventHandler VertexCostChanged;
         public event EventHandler EndPointChosen;
         public event EventHandler VertexReversed;
@@ -25,8 +24,7 @@ namespace ConsoleVersion.Model
 
         private readonly Lazy<IReadOnlyCollection<IVertex>> neighbours;
         private readonly IVisualization<Vertex> visualization;
-
-        private string text;
+        
         private bool isObstacle;
         private IVertexCost cost;
 
@@ -51,7 +49,7 @@ namespace ConsoleVersion.Model
                 if (value is WeightableVertexCost vertexCost)
                 {
                     vertexCost.UnweightedCostView = "#";
-                    text = value.ToString();
+                    Text = value.ToString();
                 }
                 cost = value;
             }
@@ -71,11 +69,12 @@ namespace ConsoleVersion.Model
 
         public bool IsVisualizedAsEndPoint => visualization.IsVisualizedAsEndPoint(this);
 
+        private string Text { get; set; }
+
         public Vertex(INeighborhood neighbourhood, ICoordinate coordinate, IVisualization<Vertex> visualization)
         {
             this.visualization = visualization;
             Position = coordinate;
-            VertexCreated?.Invoke(this);
             this.Initialize();
             neighbours = new Lazy<IReadOnlyCollection<IVertex>>(() => neighbourhood.GetNeighboursWithinGraph(this));
         }
@@ -109,19 +108,22 @@ namespace ConsoleVersion.Model
         public void MakeUnweighted()
         {
             (cost as IWeightable)?.MakeUnweighted();
-            text = cost.ToString();
+            Text = cost.ToString();
         }
 
         public void MakeWeighted()
         {
             (cost as IWeightable)?.MakeWeighted();
-            text = cost.ToString();
+            Text = cost.ToString();
         }
 
         public void Display()
         {
-            Cursor.SetPosition(ConsolePosition);
-            Console.Write(text, Color);
+            if (ConsolePosition != null)
+            {
+                Cursor.SetPosition(ConsolePosition);
+                Console.Write(Text, Color);
+            }
         }
 
         public bool Equals(IVertex other)

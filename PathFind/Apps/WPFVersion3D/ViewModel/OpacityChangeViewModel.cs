@@ -14,7 +14,7 @@ namespace WPFVersion3D.ViewModel
         public double VisitedVertexColorOpacity { get; set; }
         public double EnqueuedVertexColorOpacity { get; set; }
         public double PathVertexColorOpacity { get; set; }
-        public double SimpleVertexColorOpacity { get; set; }
+        public double RegularVertexColorOpacity { get; set; }
 
         public ICommand ConfirmOpacityChange { get; }
 
@@ -26,7 +26,7 @@ namespace WPFVersion3D.ViewModel
             VisitedVertexColorOpacity = VertexVisualization.VisitedVertexBrush.Opacity;
             EnqueuedVertexColorOpacity = VertexVisualization.EnqueuedVertexBrush.Opacity;
             PathVertexColorOpacity = VertexVisualization.PathVertexBrush.Opacity;
-            SimpleVertexColorOpacity = VertexVisualization.RegularVertexBrush.Opacity;
+            RegularVertexColorOpacity = VertexVisualization.RegularVertexBrush.Opacity;
 
             ConfirmOpacityChange = new RelayCommand(ExecuteChangeVertexOpacity);
             CancelOpacityChange = new RelayCommand(ExecuteCloseChangeVertexOpacity);
@@ -41,7 +41,7 @@ namespace WPFVersion3D.ViewModel
         {
             VertexVisualization.EnqueuedVertexBrush.Opacity = EnqueuedVertexColorOpacity;
             VertexVisualization.ObstacleVertexBrush.Opacity = ObstacleColorOpacity;
-            VertexVisualization.RegularVertexBrush.Opacity = SimpleVertexColorOpacity;
+            VertexVisualization.RegularVertexBrush.Opacity = RegularVertexColorOpacity;
             VertexVisualization.PathVertexBrush.Opacity = PathVertexColorOpacity;
             VertexVisualization.VisitedVertexBrush.Opacity = VisitedVertexColorOpacity;
             VertexVisualization.AlreadyPathVertexBrush.Opacity = PathVertexColorOpacity;

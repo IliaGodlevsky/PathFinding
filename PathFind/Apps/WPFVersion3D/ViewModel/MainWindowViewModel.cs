@@ -12,9 +12,7 @@ using NullObject.Extensions;
 using System;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
-using System.Windows;
 using System.Windows.Input;
-using WPFVersion3D.Axes;
 using WPFVersion3D.DependencyInjection;
 using WPFVersion3D.Enums;
 using WPFVersion3D.Extensions;
@@ -34,6 +32,17 @@ namespace WPFVersion3D.ViewModel
 
         private IGraphField graphField;
         private string graphParametres;
+
+        private IAnimationSpeed selectedAnimationSpeed;
+        public IAnimationSpeed SelectedRotationSpeed
+        {
+            get => selectedAnimationSpeed;
+            set
+            {
+                selectedAnimationSpeed = value;
+                messenger.Forward(new AnimationSpeedChangedMessage(value), MessageTokens.GraphFieldRotationModel);
+            }
+        }
 
         public Tuple<string, IAnimationSpeed>[] AnimationSpeeds { get; }
 
@@ -63,8 +72,6 @@ namespace WPFVersion3D.ViewModel
 
         public ICommand ChangeOpacityCommand { get; }
 
-        public ICommand AnimatedAxisRotateCommand { get; }
-
         public ICommand InterruptAlgorithmCommand { get; }
 
         public ICommand ClearVerticesColorCommand { get; }
@@ -81,7 +88,6 @@ namespace WPFVersion3D.ViewModel
             SaveGraphCommand = new RelayCommand(ExecuteSaveGraphCommand, CanExecuteGraphRelatedCommand);
             LoadGraphCommand = new RelayCommand(ExecuteLoadGraphCommand, CanExecuteCommand);
             ChangeOpacityCommand = new RelayCommand(ExecuteChangeOpacity, CanExecuteGraphRelatedCommand);
-            AnimatedAxisRotateCommand = new RelayCommand(ExecuteAnimatedAxisRotateCommand);
             InterruptAlgorithmCommand = new RelayCommand(ExecuteInterruptAlgorithmCommand, CanExecuteInterruptAlgorithmCommand);
             AnimationSpeeds = new EnumValuesWithoutIgnored<AnimationSpeeds>().ToAnimationSpeedTuples();
             messenger.Register<IsAllAlgorithmsFinishedMessage>(this, MessageTokens.MainModel, OnIsAllAlgorithmsFinished);
@@ -113,8 +119,7 @@ namespace WPFVersion3D.ViewModel
             base.ConnectNewGraph(graph);
             messenger
                 .Forward(new ClearStatisticsMessage(), MessageTokens.AlgorithmStatisticsModel)
-                .Forward(new GraphFieldCreatedMessage(GraphField), MessageTokens.AllStretchModels);
-            (graphField as GraphField3D)?.CenterGraph();
+                .Forward(new GraphFieldCreatedMessage(GraphField), MessageTokens.StretchAlongAxisModel);
         }
 
         protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = "")
@@ -150,11 +155,6 @@ namespace WPFVersion3D.ViewModel
         private void ExecuteCreateNewGraphCommand(object param)
         {
             CreateNewGraph();
-        }
-
-        private void ExecuteAnimatedAxisRotateCommand(object param)
-        {
-            (param as IAnimatedAxisRotator)?.RotateAxis();
         }
 
         private void ExecuteClearGraphCommand(object param)

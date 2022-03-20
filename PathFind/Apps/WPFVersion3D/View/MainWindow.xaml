@@ -7,10 +7,10 @@
         xmlns:converters="clr-namespace:WPFVersion3D.Converters" 
         xmlns:model="clr-namespace:WPFVersion3D.Model"
         xmlns:range="clr-namespace:WPFVersion3D"
-        xmlns:validationrules="clr-namespace:WPFVersion3D.ValidationRules" 
         xmlns:windows="clr-namespace:WPFVersion3D.View" 
         xmlns:viewmodel="clr-namespace:WPFVersion3D.ViewModel" 
-        xmlns:datacontext="clr-namespace:WPFVersion3D.ViewModel.StretchGraphFieldViewModels"
+        xmlns:datacontext="clr-namespace:WPFVersion3D.ViewModel" 
+        xmlns:validationrules="clr-namespace:WPFVersion3D.ValidationRules"
         d:DataContext="{d:DesignInstance Type=viewmodel:MainWindowViewModel}"
         mc:Ignorable="d"
         Title="3D pathfinding"
@@ -20,22 +20,20 @@
         <converters:InvertPointConverter x:Key="invertPointConverter"/>
         <converters:PointToNumberConverter x:Key="coordinateToDistance"/>
         <converters:PrecisedDoubleToStringConverter Precision="2" x:Key="doubleConverter2"/>
-        <converters:PrecisedDoubleToStringConverter Precision="0" x:Key="doubleConverter"/>
-        <converters:AnimatedAxisRotatorMultiConverter x:Key="animatedAxisRotatorConverter"/>
         <converters:AlgorithmStatusToStringConverter x:Key="StatusToStringConverter"/>
-        <datacontext:StretchFieldAlongXAxisViewModel x:Key="StretchAlongXAxis"/>
-        <datacontext:StretchFieldAlongYAxisViewModel x:Key="StretchAlongYAxis"/>
-        <datacontext:StretchFieldAlongZAxisViewModel x:Key="StretchAlongZAxis"/>
+        
+        <datacontext:StretchFieldAlongAxisViewModel Title="Abscissa" Axis="Abscissa" x:Key="StretchAlongXAxis"/>
+        <datacontext:StretchFieldAlongAxisViewModel Title="Ordinate" Axis="Ordinate" x:Key="StretchAlongYAxis"/>
+        <datacontext:StretchFieldAlongAxisViewModel Title ="Applicate" Axis="Applicate" x:Key="StretchAlongZAxis"/>
+        
+        <AxisAngleRotation3D Axis="1 0 0" x:Key="XAxis"/>
+        <AxisAngleRotation3D Axis="0 1 0" x:Key="YAxis"/>
+        <AxisAngleRotation3D Axis="0 0 1" x:Key="ZAxis"/>
 
-        <Style TargetType="TextBox" x:Key="TextBoxStyle">
-            <Setter Property="MaxWidth" Value="40"></Setter>
-            <Setter Property="Width" Value="40"></Setter>
-            <Setter Property="Margin" Value="5"></Setter>
-        </Style>
-        <Style TargetType="Slider" x:Key="SliderStyle">
-            <Setter Property="MinWidth" Value="150"></Setter>
-            <Setter Property="Margin" Value="5"></Setter>
-        </Style>
+        <viewmodel:GraphFieldRotatingViewModel Title="X axis rotate" AngleRotation="{StaticResource XAxis}" x:Key="XAxisRotation"/>
+        <viewmodel:GraphFieldRotatingViewModel Title="Y axis rotate" AngleRotation="{StaticResource YAxis}" x:Key="YAxisRotation"/>
+        <viewmodel:GraphFieldRotatingViewModel Title="Z axis rotate" AngleRotation="{StaticResource ZAxis}" x:Key="ZAxisRotation"/>
+
     </Window.Resources>
     <Grid>
         <Grid.RowDefinitions>
@@ -70,7 +68,6 @@
                     <RowDefinition Height="auto"></RowDefinition>
                 </Grid.RowDefinitions>
 
-                <windows:AlgorithmStatisticsUserControl Grid.Row="9" Grid.ColumnSpan="4"/>
                 <TextBlock Margin="5" 
                            Grid.Row ="1" 
                            Text="Rotation speed: "/>
@@ -81,59 +78,14 @@
                           Grid.Column="1" 
                           Grid.ColumnSpan="3" 
                           Grid.Row="1" 
-                          x:Name="RotationSpeeds" 
+                          x:Name="RotationSpeeds"
+                          SelectedValue="{Binding SelectedRotationSpeed}"
                           ItemsSource="{Binding AnimationSpeeds}"
                           DisplayMemberPath="Item1"
                           SelectedValuePath="Item2"
                           SelectedIndex="0"/>
 
-                <ToggleButton Command="{Binding AnimatedAxisRotateCommand}"
-                              Margin="5" 
-                              Grid.Column="3" 
-                              Grid.Row="2"
-                              Template ="{StaticResource RotationToggleButtonTemplate}">
-                    <ToggleButton.CommandParameter>
-                        <MultiBinding Converter="{StaticResource animatedAxisRotatorConverter}" 
-                                      ConverterParameter="{x:Reference Name=xAxis}">
-                            <Binding Path="IsChecked" RelativeSource="{RelativeSource Self}"></Binding>
-                            <Binding ElementName="RotationSpeeds" Path="SelectedValue"></Binding>
-                        </MultiBinding>
-                    </ToggleButton.CommandParameter>
-                </ToggleButton>
-
-                <ToggleButton Command="{Binding AnimatedAxisRotateCommand}"                                                           
-                              Margin="5" Grid.Column="3" Grid.Row="3"
-                              Template ="{StaticResource RotationToggleButtonTemplate}">
-                    <ToggleButton.CommandParameter>
-                        <MultiBinding Converter="{StaticResource animatedAxisRotatorConverter}" 
-                                      ConverterParameter="{x:Reference Name=yAxis}">
-                            <Binding Path="IsChecked" RelativeSource="{RelativeSource Self}"/>
-                            <Binding ElementName="RotationSpeeds" Path="SelectedValue"/>
-                        </MultiBinding>
-                    </ToggleButton.CommandParameter>
-                </ToggleButton>
-
-                <ToggleButton Command="{Binding AnimatedAxisRotateCommand}"                                                           
-                              Margin="5" Grid.Column="3" Grid.Row="4"
-                              Template ="{StaticResource RotationToggleButtonTemplate}">
-                    <ToggleButton.CommandParameter>
-                        <MultiBinding Converter="{StaticResource animatedAxisRotatorConverter}" 
-                                      ConverterParameter="{x:Reference Name=zAxis}">
-                            <Binding Path="IsChecked" RelativeSource="{RelativeSource Self}"/>
-                            <Binding ElementName="RotationSpeeds" Path="SelectedValue"/>
-                        </MultiBinding>
-                    </ToggleButton.CommandParameter>
-                </ToggleButton>
-
                 <TextBlock Margin="5" Text="Zoom"/>
-                <TextBlock Grid.Row="2" Margin="5" Text="X axis rotate"/>
-                <TextBlock Grid.Row="3" Margin="5" Text="Y axis rotate"/>
-                <TextBlock Grid.Row="4" Margin="5" Text="Z axis rotate"/>
-                <TextBlock Grid.ColumnSpan="3" 
-                           HorizontalAlignment="Center" 
-                           Grid.Row="5" 
-                           Margin="5" 
-                           Text="Distance between vertices"/>
 
                 <TextBox Style="{StaticResource TextBoxStyle}" 
                          Grid.Column="2" 
@@ -150,92 +102,28 @@
                         </Binding>
                     </TextBox.Text>
                 </TextBox>
-
-                <TextBox Style="{StaticResource TextBoxStyle}" 
-                         Grid.Column="2" 
-                         Grid.Row="2">
-                    <TextBox.Text>
-                        <Binding Path="Value" 
-                                 ElementName="xAxisSlider" 
-                                 Converter="{StaticResource doubleConverter2}"
-                                 Mode="TwoWay">
-                            <Binding.ValidationRules>
-                                <validationrules:NonDoubleInputValidationRule/>
-                            </Binding.ValidationRules>
-                        </Binding>
-                    </TextBox.Text>
-                </TextBox>
-
-                <TextBox Style="{StaticResource TextBoxStyle}" 
-                         Grid.Column="2" 
-                         Grid.Row="3"                          >
-                    <TextBox.Text>
-                        <Binding Path="Value" 
-                                 ElementName="yAxisSlider" 
-                                 Converter="{StaticResource doubleConverter2}"
-                                 Mode="TwoWay">
-                            <Binding.ValidationRules>
-                                <validationrules:NonDoubleInputValidationRule/>
-                            </Binding.ValidationRules>
-                        </Binding>
-                    </TextBox.Text>
-                </TextBox>
-
-                <TextBox Style="{StaticResource TextBoxStyle}" 
-                         Grid.Column="2" 
-                         Grid.Row="4">
-                    <TextBox.Text>
-                        <Binding Path="Value" 
-                                 ElementName="zAxisSlider" 
-                                 Converter="{StaticResource doubleConverter2}"
-                                 Mode="TwoWay">
-                            <Binding.ValidationRules>
-                                <validationrules:NonDoubleInputValidationRule/>
-                            </Binding.ValidationRules>
-                        </Binding>
-                    </TextBox.Text>
-                </TextBox>
-
+                
+                <TextBlock Grid.ColumnSpan="3" 
+                           HorizontalAlignment="Center" 
+                           Grid.Row="5" 
+                           Margin="5" 
+                           Text="Distance between vertices"/>
+                
                 <model:RangedSlider x:Name="zoomSlider" 
                                     Grid.Column="1" 
-                        Style="{StaticResource SliderStyle}" 
-                        ValueRange="{x:Static range:Constants.ZoomValueRange}" Grid.Row="0" 
-                        Value="{Binding ElementName=camera,     
-                                Path=Position, 
-                                Converter={StaticResource coordinateToDistance}}"/>
+                                    Style="{StaticResource SliderStyle}" 
+                                    ValueRange="{x:Static range:Constants.ZoomValueRange}" Grid.Row="0" 
+                                    Value="{Binding ElementName=camera, Path=Position, Converter={StaticResource coordinateToDistance}}"/>
 
-                <model:RangedSlider x:Name="xAxisSlider" Grid.Column="1" 
-                        Style="{StaticResource SliderStyle}" 
-                        ValueRange="{x:Static range:Constants.AngleValueRange}" 
-                        Grid.Row="2" 
-                        Value="{Binding ElementName=xAxis, Path=Angle}"/>
+                <windows:GraphFieldRotatingUserControl DataContext="{StaticResource XAxisRotation}" Grid.ColumnSpan="4" Grid.Row="2"/>
+                <windows:GraphFieldRotatingUserControl DataContext="{StaticResource YAxisRotation}" Grid.ColumnSpan="4" Grid.Row="3"/>
+                <windows:GraphFieldRotatingUserControl DataContext="{StaticResource ZAxisRotation}" Grid.ColumnSpan="4" Grid.Row="4"/>
+                
+                <windows:StretchFieldAlongAxisUserConstrol DataContext="{StaticResource StretchAlongXAxis}" Grid.ColumnSpan="4" Grid.Row="6"/>
+                <windows:StretchFieldAlongAxisUserConstrol DataContext="{StaticResource StretchAlongYAxis}" Grid.ColumnSpan="4" Grid.Row="7"/>
+                <windows:StretchFieldAlongAxisUserConstrol DataContext="{StaticResource StretchAlongZAxis}" Grid.ColumnSpan="4" Grid.Row="8"/>
 
-                <model:RangedSlider x:Name="yAxisSlider" Grid.Column="1" 
-                        Style="{StaticResource SliderStyle}" 
-                        ValueRange="{x:Static range:Constants.AngleValueRange}" 
-                        Grid.Row="3" 
-                        Value="{Binding ElementName=yAxis, Path=Angle}"/>
-
-                <model:RangedSlider x:Name="zAxisSlider" Grid.Column="1" 
-                        Style="{StaticResource SliderStyle}" 
-                        ValueRange="{x:Static range:Constants.AngleValueRange}" 
-                        Grid.Row="4" 
-                        Value="{Binding ElementName=zAxis, Path=Angle}"/>
-
-                <windows:StretchFieldAlongAxisUserConstrol 
-                    DataContext="{StaticResource StretchAlongXAxis}"
-                    Grid.ColumnSpan="4"
-                    Grid.Row="6"/>
-
-                <windows:StretchFieldAlongAxisUserConstrol 
-                    DataContext="{StaticResource StretchAlongYAxis}"
-                    Grid.ColumnSpan="4"
-                    Grid.Row="7"/>
-
-                <windows:StretchFieldAlongAxisUserConstrol 
-                    DataContext="{StaticResource StretchAlongZAxis}"
-                    Grid.ColumnSpan="4"
-                    Grid.Row="8"/>
+                <windows:AlgorithmStatisticsUserControl Grid.Row="9" Grid.ColumnSpan="4"/>
 
             </Grid>
         </Expander>
@@ -265,21 +153,9 @@
                     </ModelVisual3D.Content>
                     <ModelVisual3D.Transform>
                         <Transform3DGroup>
-                            <RotateTransform3D>
-                                <RotateTransform3D.Rotation>
-                                    <AxisAngleRotation3D x:Name="xAxis" Axis="1 0 0"/>
-                                </RotateTransform3D.Rotation>
-                            </RotateTransform3D>
-                            <RotateTransform3D>
-                                <RotateTransform3D.Rotation>
-                                    <AxisAngleRotation3D x:Name="yAxis" Axis="0 1 0"/>
-                                </RotateTransform3D.Rotation>
-                            </RotateTransform3D>
-                            <RotateTransform3D>
-                                <RotateTransform3D.Rotation>
-                                    <AxisAngleRotation3D x:Name="zAxis" Axis="0 0 1"/>
-                                </RotateTransform3D.Rotation>
-                            </RotateTransform3D>
+                            <RotateTransform3D Rotation= "{StaticResource XAxis}"/>
+                            <RotateTransform3D Rotation="{StaticResource YAxis}"/>
+                            <RotateTransform3D Rotation="{StaticResource ZAxis}"/>
                         </Transform3DGroup>
                     </ModelVisual3D.Transform>
                 </model:GraphField3DContainer>

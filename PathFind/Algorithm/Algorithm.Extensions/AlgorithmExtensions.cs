@@ -8,10 +8,9 @@ namespace Algorithm.Extensions
     {
         public static async Task<IGraphPath> FindPathAsync(this IAlgorithm self)
         {
-            var task = Task.Run(self.FindPath);
             try
             {
-                return await task.ConfigureAwait(false);
+                return await Task.Run(self.FindPath).ConfigureAwait(false);
             }
             catch (Exception)
             {

@@ -7,6 +7,9 @@ namespace GraphLib.TestRealizations.TestFactories.Matrix
 {
     internal abstract class BaseMatrix<T> : IMatrix
     {
+        protected readonly Graph2D graph;
+        protected readonly Lazy<T[,]> matrix;
+
         protected T[,] Matrix => matrix.Value;
 
         protected BaseMatrix(Graph2D graph)
@@ -22,15 +25,13 @@ namespace GraphLib.TestRealizations.TestFactories.Matrix
                 for (int y = 0; y < graph.Length; y++)
                 {
                     var coordinate = new TestCoordinate(x, y);
-                    Assign(graph[coordinate], Matrix[x, y]);
+                    Assign(graph.GetByCoordinate(coordinate), Matrix[x, y]);
                 }
             }
         }
 
         protected abstract void Assign(IVertex vertex, T value);
-        protected abstract T[,] CreateMatrix();
 
-        protected readonly Graph2D graph;
-        protected readonly Lazy<T[,]> matrix;
+        protected abstract T[,] CreateMatrix();
     }
 }

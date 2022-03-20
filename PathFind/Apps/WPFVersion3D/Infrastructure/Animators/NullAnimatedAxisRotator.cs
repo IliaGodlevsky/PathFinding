@@ -1,5 +1,6 @@
 ﻿using NullObject.Attributes;
 using SingletonLib;
+using System.Windows.Media.Media3D;
 using WPFVersion3D.Interface;
 
 namespace WPFVersion3D.Infrastructure.Animators
@@ -7,12 +8,12 @@ namespace WPFVersion3D.Infrastructure.Animators
     [Null]
     internal sealed class NullAnimatedAxisRotator : Singleton<NullAnimatedAxisRotator, IAnimatedAxisRotator>, IAnimatedAxisRotator
     {
-        public void RotateAxis()
+        private NullAnimatedAxisRotator()
         {
 
         }
 
-        private NullAnimatedAxisRotator()
+        public void RotateAxis(AxisAngleRotation3D angleRotation)
         {
 
         }

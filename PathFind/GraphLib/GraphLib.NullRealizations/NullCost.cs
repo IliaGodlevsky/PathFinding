@@ -13,6 +13,11 @@ namespace GraphLib.NullRealizations
     {
         public int CurrentCost => default;
 
+        private NullCost()
+        {
+
+        }
+
         public override bool Equals(object obj)
         {
             return obj is NullCost;
@@ -31,11 +36,6 @@ namespace GraphLib.NullRealizations
         object ICloneable.Clone()
         {
             return Clone();
-        }
-
-        private NullCost()
-        {
-
         }
     }
 }

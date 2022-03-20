@@ -7,22 +7,20 @@ namespace WPFVersion3D.Infrastructure.Animators
 {
     internal abstract class AnimatedAxisRotator : IAnimatedAxisRotator
     {
-        protected AnimatedAxisRotator(AxisAngleRotation3D axis, IAnimationSpeed speed)
+        protected readonly IAnimationSpeed speed;
+
+        protected AnimatedAxisRotator(IAnimationSpeed speed)
         {
-            this.axis = axis;
             this.speed = speed;
         }
 
-        public void RotateAxis()
+        public void RotateAxis(AxisAngleRotation3D angleRotation)
         {
-            axis.BeginAnimation(AxisAngleRotation3D.AngleProperty, CreateAnimation());
+            angleRotation.BeginAnimation(AxisAngleRotation3D.AngleProperty, CreateAnimation(angleRotation));
         }
 
-        protected abstract AnimationTimeline CreateAnimation();
+        protected abstract AnimationTimeline CreateAnimation(AxisAngleRotation3D angleRotation);
 
-        protected abstract Duration CalculateAnimationDuration();
-
-        protected readonly AxisAngleRotation3D axis;
-        protected readonly IAnimationSpeed speed;
+        protected abstract Duration CalculateAnimationDuration(AxisAngleRotation3D angleRotation);
     }
 }

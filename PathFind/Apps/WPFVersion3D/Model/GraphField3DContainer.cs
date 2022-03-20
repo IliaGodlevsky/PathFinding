@@ -23,8 +23,7 @@ namespace WPFVersion3D.Model
             set => SetValue(GraphFieldProperty, value);
         }
 
-        private static void OnGraphFieldChanged(DependencyObject depObj,
-            DependencyPropertyChangedEventArgs args)
+        private static void OnGraphFieldChanged(DependencyObject depObj, DependencyPropertyChangedEventArgs args)
         {
             if (args.NewValue is GraphField3D child && depObj is GraphField3DContainer field)
             {

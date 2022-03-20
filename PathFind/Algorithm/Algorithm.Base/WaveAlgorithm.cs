@@ -19,7 +19,7 @@ namespace Algorithm.Base
 
         }
 
-        public override sealed IGraphPath FindPath()
+        public sealed override IGraphPath FindPath()
         {
             var path = NullGraphPath.Instance;
             PrepareForPathfinding();

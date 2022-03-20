@@ -9,6 +9,8 @@ namespace EnumerationValues.Realizations
     public sealed class EnumValuesWithoutIgnored<TEnum> : IEnumValues<TEnum>
         where TEnum : Enum
     {
+        private readonly Lazy<TEnum[]> values;
+
         public IReadOnlyCollection<TEnum> Values => values.Value;
 
         public EnumValuesWithoutIgnored()
@@ -28,7 +30,5 @@ namespace EnumerationValues.Realizations
                 .Cast<TEnum>())
                 .ToArray();
         }
-
-        private readonly Lazy<TEnum[]> values;
     }
 }

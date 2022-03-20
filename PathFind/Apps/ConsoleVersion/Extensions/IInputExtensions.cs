@@ -60,7 +60,7 @@ namespace ConsoleVersion.Extensions
 
             var point = self.InputCoordinate(upperPossibleXValue, upperPossibleYValue);
 
-            return (Vertex)graph2D[point];
+            return (Vertex)graph2D.GetByCoordinate(point);
         }
 
         public static Vertex InputEndPoint(this IInput<int> self, Graph2D graph, IEndPoints endPoints)

@@ -11,22 +11,21 @@ namespace WPFVersion3D.Infrastructure.Animators
 {
     internal sealed class BackwardAnimatedAxisRotator : AnimatedAxisRotator
     {
-        public BackwardAnimatedAxisRotator(AxisAngleRotation3D axis, IAnimationSpeed speed)
-            : base(axis, speed)
+        public BackwardAnimatedAxisRotator(IAnimationSpeed speed)
+            : base(speed)
         {
 
         }
 
-        protected override AnimationTimeline CreateAnimation()
+        protected override AnimationTimeline CreateAnimation(AxisAngleRotation3D angleRotation)
         {
-            var duration = CalculateAnimationDuration();
-            return new DoubleAnimation(axis.Angle, AngleValueRange.LowerValueOfRange,
-                duration, FillBehavior.Stop);
+            var duration = CalculateAnimationDuration(angleRotation);
+            return new DoubleAnimation(angleRotation.Angle, AngleValueRange.LowerValueOfRange, duration, FillBehavior.Stop);
         }
 
-        protected override Duration CalculateAnimationDuration()
+        protected override Duration CalculateAnimationDuration(AxisAngleRotation3D angleRotation)
         {
-            var duration = speed.Milliseconds * axis.Angle / AngleValueRange.Amplitude();
+            var duration = speed.Milliseconds * angleRotation.Angle / AngleValueRange.Amplitude();
             return new Duration(TimeSpan.FromMilliseconds(duration));
         }
     }

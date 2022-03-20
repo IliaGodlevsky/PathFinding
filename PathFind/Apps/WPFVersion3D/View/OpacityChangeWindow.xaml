@@ -73,7 +73,7 @@
 
         <model:RangedSlider 
             ValueRange="{x:Static range:Constants.OpacityValueRange}"
-            Value="{Binding Path=SimpleVertexColorOpacity}" 
+            Value="{Binding Path=RegularVertexColorOpacity}" 
             Style="{StaticResource SliderStyle}"
             x:Name="simpleVertexColorOpacitySlider"
             Grid.Column="1"

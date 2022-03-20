@@ -13,6 +13,11 @@ namespace GraphLib.NullRealizations
 
         public bool IsVisualizedAsEndPoint => false;
 
+        private NullVisualizable()
+        {
+
+        }
+
         public void VisualizeAsEnqueued()
         {
 
@@ -54,11 +59,6 @@ namespace GraphLib.NullRealizations
         }
 
         public void VisualizeAsVisited()
-        {
-
-        }
-
-        private NullVisualizable()
         {
 
         }

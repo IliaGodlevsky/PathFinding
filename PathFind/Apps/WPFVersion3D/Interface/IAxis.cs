@@ -1,14 +1,9 @@
-﻿using System.Windows.Media.Media3D;
-using WPFVersion3D.Model;
+﻿using WPFVersion3D.Model;
 
-namespace WPFVersion3D.Axes
+namespace WPFVersion3D.Interface
 {
     internal interface IAxis
     {
-        int Order { get; }
-
-        void SetDistanceBeetween(double distance, GraphField3D field);
-
-        void Offset(TranslateTransform3D transfrom, double offset);
+        void Locate(GraphField3D field, double distanceBetweenVertices);
     }
 }

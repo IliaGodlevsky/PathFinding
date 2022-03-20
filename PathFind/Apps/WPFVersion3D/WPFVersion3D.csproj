@@ -70,22 +70,24 @@
     <Compile Include="Attributes\BaseAnimationSpeed.cs" />
     <Compile Include="Attributes\AnimationSpeed.cs" />
     <Compile Include="Attributes\RandomAnimationSpeed.cs" />
-    <Compile Include="Axes\Abscissa.cs" />
-    <Compile Include="Axes\Applicate.cs" />
-    <Compile Include="Axes\Ordinate.cs" />
     <Compile Include="Converters\AlgorithmStatusToStringConverter.cs" />
     <Compile Include="Converters\BoolToVisibilityConverter.cs" />
     <Compile Include="Enums\AlgorithmStatuses.cs" />
     <Compile Include="Enums\AnimationSpeeds.cs" />
+    <Compile Include="Enums\Axis.cs" />
+    <Compile Include="Enums\AxisRotators.cs" />
     <Compile Include="Enums\MessageTokens.cs" />
     <Compile Include="Extensions\AlgorithmViewModelExtensions.cs" />
     <Compile Include="Extensions\ColorExtensions.cs" />
     <Compile Include="Extensions\EnumValuesExtensions.cs" />
     <Compile Include="Extensions\IMessengerExtensions.cs" />
     <Compile Include="Extensions\TypeExtensions.cs" />
-    <Compile Include="Interface\IAnimatedAxisRotatorFactory.cs" />
+    <Compile Include="Interface\IAxis.cs" />
+    <Compile Include="Interface\IMessage.cs" />
+    <Compile Include="Interface\IPassValueMessage.cs" />
     <Compile Include="Messages\AlgorithmStartedMessage.cs" />
     <Compile Include="Messages\AlgorithmIndexMessage.cs" />
+    <Compile Include="Messages\AnimationSpeedChangedMessage.cs" />
     <Compile Include="Messages\GraphFieldCreatedMessage.cs" />
     <Compile Include="Messages\IsAllAlgorithmsFinishedMessage.cs" />
     <Compile Include="Messages\AlgorithmStatusMessage.cs" />
@@ -95,14 +97,17 @@
     <Compile Include="Messages\PassValueMessage.cs" />
     <Compile Include="Messages\UpdateAlgorithmStatisticsMessage.cs" />
     <Compile Include="Model3DFactories\ToricalModel3DFactory.cs" />
+    <Compile Include="Model\Axes\Axis.cs" />
+    <Compile Include="Model\Axes\Abscissa.cs" />
+    <Compile Include="Model\Axes\Ordinate.cs" />
+    <Compile Include="Model\Axes\Applicate.cs" />
     <Compile Include="Model\RectangleModel3DFactory.cs" />
     <Compile Include="Infrastructure\Animators\BackwardAnimatedAxisRotator.cs" />
     <Compile Include="Infrastructure\Animators\AnimatedAxisRotator.cs" />
     <Compile Include="Interface\IAnimationSpeed.cs" />
-    <Compile Include="Interface\IAxis.cs" />
     <Compile Include="DependencyInjection\DI.cs" />
     <Compile Include="Constants.cs" />
-    <Compile Include="Converters\AnimatedAxisRotatorMultiConverter.cs" />
+    <Compile Include="Converters\AnimatedAxisRotatorConverter.cs" />
     <Compile Include="Converters\PrecisedDoubleToStringConverter.cs" />
     <Compile Include="Interface\IModel3DFactory.cs" />
     <Compile Include="Model3DFactories\CubicModel3DFactory.cs" />
@@ -119,8 +124,6 @@
     <Compile Include="Model\Vertex3DFactory.cs" />
     <Compile Include="Model\Vertex3DFromInfoFactory.cs" />
     <Compile Include="Model\VertexVisualization.cs" />
-    <Compile Include="RotatorsFactories\BackwardAnimatedAxisRotatorFactory.cs" />
-    <Compile Include="RotatorsFactories\ForwardAnimatedAxisRotatorFactory.cs" />
     <Compile Include="ValidationRules\NonDoubleInputValidationRule.cs" />
     <Compile Include="ValidationRules\NonInt32InputValidationRule.cs" />
     <Compile Include="ValidationRules\RangedDoubleValidationRule.cs" />
@@ -128,15 +131,16 @@
     <Compile Include="ViewModel\AlgorithmStatisticsViewModel.cs" />
     <Compile Include="ViewModel\AlgorithmViewModel.cs" />
     <Compile Include="ViewModel\GraphCreateViewModel.cs" />
+    <Compile Include="ViewModel\GraphFieldRotatingViewModel.cs" />
     <Compile Include="ViewModel\MainWindowViewModel.cs" />
     <Compile Include="ViewModel\OpacityChangeViewModel.cs" />
     <Compile Include="ViewModel\PathfindingViewModel.cs" />
-    <Compile Include="ViewModel\StretchGraphFieldViewModels\StretchFieldAlongAxisViewModel.cs" />
-    <Compile Include="ViewModel\StretchGraphFieldViewModels\StretchFieldAlongXAxisViewModel.cs" />
-    <Compile Include="ViewModel\StretchGraphFieldViewModels\StretchFieldAlongYAxisViewModel.cs" />
-    <Compile Include="ViewModel\StretchGraphFieldViewModels\StretchFieldAlongZAxisViewModel.cs" />
+    <Compile Include="ViewModel\StretchFieldAlongAxisViewModel.cs" />
     <Compile Include="View\AlgorithmStatisticsUserControl.xaml.cs">
       <DependentUpon>AlgorithmStatisticsUserControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\GraphFieldRotatingUserControl.xaml.cs">
+      <DependentUpon>GraphFieldRotatingUserControl.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\OpacityChangeWindow.xaml.cs">
       <DependentUpon>OpacityChangeWindow.xaml</DependentUpon>
@@ -156,6 +160,14 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Resources\Styles\RotationSliderStyle.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Resources\Styles\RotationTextBoxStyle.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Resources\Templates\RotationToggleButtonTemplate.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -165,6 +177,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="View\GraphCreateWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\GraphFieldRotatingUserControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -351,8 +367,6 @@
   <ItemGroup>
     <Resource Include="Resources\Images\rotate.png" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="ViewModel\GraphFieldRotationViewModels\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

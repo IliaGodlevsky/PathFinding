@@ -2,6 +2,7 @@
 using Common.Extensions.EnumerableExtensions;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 
 namespace Common.Extensions.EnumerableExtensions
@@ -169,6 +170,11 @@ namespace Common.Extensions.EnumerableExtensions
         public static Queue<T> ToQueue<T>(this IEnumerable<T> collection)
         {
             return new Queue<T>(collection);
+        }
+
+        public static ReadOnlyCollection<T> ToReadOnly<T>(this IList<T> collection)
+        {
+            return new ReadOnlyCollection<T>(collection);
         }
 
         public static int ToHashCode(this IEnumerable<int> array)

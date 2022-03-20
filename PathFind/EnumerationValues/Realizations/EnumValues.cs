@@ -8,6 +8,8 @@ namespace EnumerationValues.Realizations
     public sealed class EnumValues<TEnum> : IEnumValues<TEnum>
         where TEnum : Enum
     {
+        private readonly Lazy<TEnum[]> values;
+
         public IReadOnlyCollection<TEnum> Values => values.Value;
 
         public EnumValues()
@@ -19,7 +21,5 @@ namespace EnumerationValues.Realizations
         {
             return Enum.GetValues(typeof(TEnum)).Cast<TEnum>().ToArray();
         }
-
-        private readonly Lazy<TEnum[]> values;
     }
 }

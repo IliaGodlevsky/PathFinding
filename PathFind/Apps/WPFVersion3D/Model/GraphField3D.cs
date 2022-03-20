@@ -1,96 +1,37 @@
-﻿using Autofac;
-using Common.Extensions.EnumerableExtensions;
-using GraphLib.Extensions;
+﻿using Common.Extensions.EnumerableExtensions;
 using GraphLib.Interfaces;
 using GraphLib.Realizations.Graphs;
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Windows.Media.Media3D;
-using WPFVersion3D.Axes;
-using WPFVersion3D.DependencyInjection;
+using WPFVersion3D.Interface;
+using WPFVersion3D.Model.Axes;
+
+using Axis = WPFVersion3D.Enums.Axis;
 
 namespace WPFVersion3D.Model
 {
     internal sealed class GraphField3D : ModelVisual3D, IGraphField
     {
-        private readonly IReadOnlyCollection<Vertex3D> vertices;
+        private readonly IDictionary<Axis, IAxis> axes;
 
-        public IReadOnlyCollection<IVertex> Vertices => vertices;
+        public IReadOnlyCollection<Vertex3D> Vertices { get; }
 
-        public double DistanceBetweenVerticesAtXAxis { get; set; } = default;
-
-        public double DistanceBetweenVerticesAtYAxis { get; set; } = default;
-
-        public double DistanceBetweenVerticesAtZAxis { get; set; } = default;
-
-        private int[] DimensionSizes { get; }
-
-        private IAxis[] CoordinateSystem { get; }
-
-        private double[] DistancesBetween => new[]
-        {
-            DistanceBetweenVerticesAtZAxis,
-            DistanceBetweenVerticesAtYAxis,
-            DistanceBetweenVerticesAtXAxis
-        };
+        IReadOnlyCollection<IVertex> IGraphField.Vertices => Vertices;
 
         public GraphField3D(Graph3D graph)
         {
-            CoordinateSystem = DI.Container
-                .Resolve<IEnumerable<IAxis>>()
-                .OrderBy(axis => axis.Order)
-                .ToArray();
-            DimensionSizes = graph.DimensionsSizes;
-            vertices = graph.Vertices.OfType<Vertex3D>().ToArray();
-            Children.AddRange(vertices);
-            vertices.ForEach(vertex => LocateVertex(CoordinateSystem, vertex));
+            axes = new Dictionary<Axis, IAxis>();
+            axes.Add(Axis.Applicate, new Applicate(graph));
+            axes.Add(Axis.Ordinate, new Ordinate(graph));
+            axes.Add(Axis.Abscissa, new Abscissa(graph));
+            Vertices = graph.Vertices.OfType<Vertex3D>().ToArray();
+            Children.AddRange(Vertices);
         }
 
-        public GraphField3D()
+        public void StretchAlongAxis(Axis axis, double distanceBetween)
         {
-
-        }
-
-        public void CenterGraph(params double[] offsets)
-        {
-            var centerOffsets = CoordinateSystem.Select(axis => CalculateAxisOffset(offsets, axis)).ToArray();
-            vertices.ForEach(vertex => LocateVertex(CoordinateSystem, vertex, centerOffsets));
-        }
-
-        public void StretchAlongAxis(IAxis axis, double distanceBetween, params double[] additionalOffset)
-        {
-            axis.SetDistanceBeetween(distanceBetween, this);
-            StretchAlongAxis(axis);
-            CenterGraph(distanceBetween == 0 ? Array.Empty<double>() : additionalOffset);
-        }
-
-        private double CalculateAxisOffset(double[] additionalOffset, IAxis axis)
-        {
-            return (additionalOffset.ElementAtOrDefault(axis.Order) - DimensionSizes[axis.Order]) * GetAdjustedVertexSize(axis) / 2;
-        }
-
-        private void StretchAlongAxis(IAxis axis)
-        {
-            Vertices.ForEach(vertex => LocateVertex(axis, (Vertex3D)vertex));
-        }
-
-        private void LocateVertex(IAxis[] axes, Vertex3D vertex, params double[] additionalOffset)
-        {
-            axes.ForEach(axis => LocateVertex(axis, vertex, additionalOffset));
-        }
-
-        private void LocateVertex(IAxis axis, Vertex3D vertex, params double[] additionalOffset)
-        {
-            var coordinates = vertex.GetCoordinates();
-            double offset = GetAdjustedVertexSize(axis) * coordinates[axis.Order]
-                + additionalOffset.ElementAtOrDefault(axis.Order);
-            axis.Offset(vertex.Transform as TranslateTransform3D, offset);
-        }
-
-        private double GetAdjustedVertexSize(IAxis axis)
-        {
-            return Constants.InitialVertexSize + DistancesBetween[axis.Order];
+            axes[axis].Locate(this, distanceBetween);
         }
     }
 }

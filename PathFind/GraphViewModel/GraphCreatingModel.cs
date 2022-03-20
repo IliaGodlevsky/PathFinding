@@ -7,6 +7,8 @@ namespace GraphLib.ViewModel
 {
     public abstract class GraphCreatingModel
     {
+        protected readonly ILog log;
+
         public int Width { get; set; }
 
         public int Length { get; set; }
@@ -24,7 +26,5 @@ namespace GraphLib.ViewModel
         }
 
         public abstract void CreateGraph();
-
-        protected readonly ILog log;
     }
 }

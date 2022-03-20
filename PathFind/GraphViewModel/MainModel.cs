@@ -12,6 +12,13 @@ namespace GraphViewModel
 {
     public abstract class MainModel : IMainModel
     {
+        private readonly IVertexEventHolder eventHolder;
+
+        protected readonly ILog log;
+        protected readonly IGraphFieldFactory fieldFactory;
+        protected readonly BaseEndPoints endPoints;
+        protected readonly GraphSerializationModule serializationModule;
+
         public virtual string GraphParametres { get; set; }
 
         public virtual IGraphField GraphField { get; set; }
@@ -85,12 +92,5 @@ namespace GraphViewModel
             Graph.Refresh();
             endPoints.RestoreCurrentColors();
         }
-
-        protected readonly ILog log;
-        protected readonly IGraphFieldFactory fieldFactory;
-        protected readonly BaseEndPoints endPoints;
-        protected readonly GraphSerializationModule serializationModule;
-
-        private readonly IVertexEventHolder eventHolder;
     }
 }

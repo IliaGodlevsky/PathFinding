@@ -13,6 +13,11 @@ namespace GraphLib.NullRealizations
     {
         public int[] CoordinatesValues => Array.Empty<int>();
 
+        private NullCoordinate()
+        {
+
+        }
+
         public ICoordinate Clone()
         {
             return Instance;
@@ -31,11 +36,6 @@ namespace GraphLib.NullRealizations
         object ICloneable.Clone()
         {
             return Clone();
-        }
-
-        private NullCoordinate()
-        {
-
         }
     }
 }

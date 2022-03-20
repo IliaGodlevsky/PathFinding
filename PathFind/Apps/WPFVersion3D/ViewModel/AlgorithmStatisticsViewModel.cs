@@ -68,7 +68,7 @@ namespace WPFVersion3D.ViewModel
         private void OnAlgorithmStarted(AlgorithmStartedMessage message)
         {
             int index = Statistics.Count;
-            var viewModel = new AlgorithmViewModel(message.Algorithm);
+            var viewModel = new AlgorithmViewModel(message.Value);
             Dispatcher.Invoke(() => Statistics.Add(viewModel));
             var msg = new AlgorithmIndexMessage(index);
             messenger.Forward(msg, MessageTokens.PathfindingModel);

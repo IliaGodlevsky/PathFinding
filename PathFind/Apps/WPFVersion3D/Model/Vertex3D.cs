@@ -38,6 +38,8 @@ namespace WPFVersion3D.Model
             }
         }
 
+        public TranslateTransform3D FieldPosition => (TranslateTransform3D)Transform;
+
         public IGraph Graph { get; }
 
         public IVertexCost Cost { get; set; }
@@ -49,18 +51,6 @@ namespace WPFVersion3D.Model
         public bool IsVisualizedAsPath => visualization.IsVisualizedAsPath(this);
 
         public bool IsVisualizedAsEndPoint => visualization.IsVisualizedAsEndPoint(this);
-
-        public double Size
-        {
-            get => (double)GetValue(SizeProperty);
-            set => SetValue(SizeProperty, value);
-        }
-
-        public Model3D Model
-        {
-            get => (Model3D)GetValue(ModelProperty);
-            set => SetValue(ModelProperty, value);
-        }
 
         public DiffuseMaterial Material
         {
@@ -74,8 +64,20 @@ namespace WPFVersion3D.Model
             set => SetValue(BrushProperty, value);
         }
 
-        public Vertex3D(INeighborhood neighborhood, ICoordinate coordinate,
-            IModel3DFactory modelFactory, IVisualization<Vertex3D> visualization)
+        private Model3D Model
+        {
+            get => (Model3D)GetValue(ModelProperty);
+            set => SetValue(ModelProperty, value);
+        }
+
+        private double Size
+        {
+            get => (double)GetValue(SizeProperty);
+            set => SetValue(SizeProperty, value);
+        }
+
+        public Vertex3D(INeighborhood neighborhood, ICoordinate coordinate, IModel3DFactory modelFactory, 
+            IVisualization<Vertex3D> visualization)
         {
             this.visualization = visualization;
             this.modelFactory = modelFactory;
@@ -87,9 +89,8 @@ namespace WPFVersion3D.Model
             neighbours = new Lazy<IReadOnlyCollection<IVertex>>(() => neighborhood.GetNeighboursWithinGraph(this));
         }
 
-        public Vertex3D(VertexSerializationInfo info,
-            IModel3DFactory modelFactory, IVisualization<Vertex3D> visualization) :
-            this(info.Neighbourhood, info.Position, modelFactory, visualization)
+        public Vertex3D(VertexSerializationInfo info,IModel3DFactory modelFactory, IVisualization<Vertex3D> visualization) 
+            : this(info.Neighbourhood, info.Position, modelFactory, visualization)
         {
             this.Initialize(info);
         }
@@ -171,15 +172,13 @@ namespace WPFVersion3D.Model
             visualization.VisualizeAsMarkedToReplaceIntermediate(this);
         }
 
-        protected static void MaterialPropertyChanged(DependencyObject depObj,
-            DependencyPropertyChangedEventArgs prop)
+        protected static void MaterialPropertyChanged(DependencyObject depObj, DependencyPropertyChangedEventArgs prop)
         {
             Vertex3D vert = (Vertex3D)depObj;
             vert.Material = (DiffuseMaterial)prop.NewValue;
         }
 
-        protected static void SizePropertyChanged(DependencyObject depObj,
-            DependencyPropertyChangedEventArgs prop)
+        protected static void SizePropertyChanged(DependencyObject depObj, DependencyPropertyChangedEventArgs prop)
         {
             Vertex3D vert = (Vertex3D)depObj;
             double size = (double)prop.NewValue;
@@ -188,15 +187,13 @@ namespace WPFVersion3D.Model
             vert.Model = vert.modelFactory.CreateModel3D(size, material);
         }
 
-        protected static void ModelPropertyChanged(DependencyObject depObj,
-            DependencyPropertyChangedEventArgs prop)
+        protected static void ModelPropertyChanged(DependencyObject depObj, DependencyPropertyChangedEventArgs prop)
         {
             Vertex3D vert = (Vertex3D)depObj;
             vert.Visual3DModel = (Model3D)prop.NewValue;
         }
 
-        protected static void BrushPropertyChanged(DependencyObject depObj,
-            DependencyPropertyChangedEventArgs prop)
+        protected static void BrushPropertyChanged(DependencyObject depObj, DependencyPropertyChangedEventArgs prop)
         {
             Vertex3D vert = (Vertex3D)depObj;
             vert.Brush = (Brush)prop.NewValue;

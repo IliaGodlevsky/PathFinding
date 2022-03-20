@@ -4,9 +4,11 @@
     <Application.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
-                <ResourceDictionary Source="Resources/Styles/ImageStyle.xaml"></ResourceDictionary>
-                <ResourceDictionary Source="Resources/Templates/RotationToggleButtonTemplate.xaml"></ResourceDictionary>
-                <ResourceDictionary Source="Resources/Images/SvgImages.xaml"></ResourceDictionary>
+                <ResourceDictionary Source="Resources/Styles/ImageStyle.xaml"/>
+                <ResourceDictionary Source="Resources/Styles/RotationSliderStyle.xaml"/>
+                <ResourceDictionary Source="Resources/Styles/RotationTextBoxStyle.xaml"/>
+                <ResourceDictionary Source="Resources/Templates/RotationToggleButtonTemplate.xaml"/>
+                <ResourceDictionary Source="Resources/Images/SvgImages.xaml"/>
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </Application.Resources>
