@@ -11,7 +11,7 @@ namespace ConsoleVersion.Model.FramedAxes
         protected readonly int graphLength;
         protected readonly int yCoordinatePadding;
 
-        protected FramedOrdinate(int graphLength) 
+        protected FramedOrdinate(int graphLength)
             : base()
         {
             this.graphLength = graphLength;

@@ -19,7 +19,7 @@ namespace Algorithm.Factory
             this.heuristic = heuristic;
         }
 
-        public DepthFirstAlgorithmFactory() 
+        public DepthFirstAlgorithmFactory()
             : this(new ManhattanDistance())
         {
 

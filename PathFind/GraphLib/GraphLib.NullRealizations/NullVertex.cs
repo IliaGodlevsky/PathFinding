@@ -11,26 +11,26 @@ namespace GraphLib.NullRealizations
     [DebuggerDisplay("Null")]
     public sealed class NullVertex : Singleton<NullVertex, IVertex>, IVertex, IEquatable<IVertex>
     {
-        public bool IsObstacle 
-        { 
-            get => true; 
-            set { } 
+        public bool IsObstacle
+        {
+            get => true;
+            set { }
         }
 
-        public IVertexCost Cost 
-        { 
-            get => NullCost.Instance; 
-            set { } 
+        public IVertexCost Cost
+        {
+            get => NullCost.Instance;
+            set { }
         }
 
         public IReadOnlyCollection<IVertex> Neighbours => GetMany(0);
 
         public IGraph Graph => NullGraph.Instance;
 
-        public ICoordinate Position 
-        { 
-            get => NullCoordinate.Instance; 
-            set { } 
+        public ICoordinate Position
+        {
+            get => NullCoordinate.Instance;
+            set { }
         }
 
         public INeighborhood Neighborhood => NullNeighborhood.Instance;

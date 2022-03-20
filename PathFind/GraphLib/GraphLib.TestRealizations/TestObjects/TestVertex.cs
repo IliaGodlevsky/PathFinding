@@ -48,7 +48,7 @@ namespace GraphLib.TestRealizations.TestObjects
 
         public override int GetHashCode()
         {
-            return base .GetHashCode();
-        }       
+            return base.GetHashCode();
+        }
     }
 }

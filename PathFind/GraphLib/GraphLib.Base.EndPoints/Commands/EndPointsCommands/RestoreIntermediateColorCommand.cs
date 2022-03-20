@@ -9,7 +9,7 @@ namespace GraphLib.Base.EndPoints.Commands.EndPointsCommands
     [AttachedTo(typeof(RestoreColorsCommands)), Order(3)]
     internal sealed class RestoreIntermediateColorCommand : BaseIntermediateEndPointsCommand
     {
-        public RestoreIntermediateColorCommand(BaseEndPoints endPoints) 
+        public RestoreIntermediateColorCommand(BaseEndPoints endPoints)
             : base(endPoints)
         {
         }

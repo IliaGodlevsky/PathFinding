@@ -55,6 +55,6 @@ namespace Algorithm.Algos.Algos
         {
             base.Reset();
             deletedVertices.Clear();
-        }       
+        }
     }
 }

@@ -10,6 +10,6 @@ namespace WPFVersion3D.Messages
         public AlgorithmStartedMessage(PathfindingAlgorithm algorithm)
         {
             Value = algorithm;
-        }        
+        }
     }
 }

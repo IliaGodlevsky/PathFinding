@@ -47,6 +47,6 @@ namespace GraphLib.Serialization.Serializers
             {
                 throw new CantSerializeGraphException(ex.Message, ex);
             }
-        }       
+        }
     }
 }

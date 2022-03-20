@@ -13,9 +13,9 @@ namespace WPFVersion3D.Converters
             {
                 switch (isChecked)
                 {
-                    case true: 
+                    case true:
                         return AxisRotators.ForwardRotator;
-                    case false: 
+                    case false:
                         return AxisRotators.BackwardRotator;
                 }
             }

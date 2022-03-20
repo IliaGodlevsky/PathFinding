@@ -51,6 +51,6 @@ namespace Algorithm.Algos.Algos
         protected virtual double CalculateHeuristic(IVertex vertex)
         {
             return heuristic.Calculate(vertex, CurrentEndPoints.Target);
-        }        
+        }
     }
 }

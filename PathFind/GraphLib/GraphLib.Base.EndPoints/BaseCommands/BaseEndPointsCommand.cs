@@ -17,6 +17,6 @@ namespace GraphLib.Base.EndPoints.BaseCommands
 
         public abstract void Execute(IVertex vertex);
 
-        public abstract bool CanExecute(IVertex vertex);        
+        public abstract bool CanExecute(IVertex vertex);
     }
 }

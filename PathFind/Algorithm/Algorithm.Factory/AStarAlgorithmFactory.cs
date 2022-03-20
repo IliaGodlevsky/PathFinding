@@ -24,19 +24,19 @@ namespace Algorithm.Factory
             this.stepRule = stepRule;
         }
 
-        public AStarAlgorithmFactory(IStepRule stepRule) 
+        public AStarAlgorithmFactory(IStepRule stepRule)
             : this(stepRule, new ChebyshevDistance())
         {
 
         }
 
-        public AStarAlgorithmFactory(IHeuristic heuristic) 
+        public AStarAlgorithmFactory(IHeuristic heuristic)
             : this(new DefaultStepRule(), heuristic)
         {
 
         }
 
-        public AStarAlgorithmFactory() 
+        public AStarAlgorithmFactory()
             : this(new DefaultStepRule(), new ChebyshevDistance())
         {
 

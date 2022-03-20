@@ -21,7 +21,7 @@ namespace Algorithm.Factory
             this.heuristic = heuristic;
         }
 
-        public BestFirstLeeAlgorithmFactory() 
+        public BestFirstLeeAlgorithmFactory()
             : this(new ManhattanDistance())
         {
 

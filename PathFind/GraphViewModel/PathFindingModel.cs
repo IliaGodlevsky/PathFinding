@@ -94,12 +94,12 @@ namespace GraphViewModel
             }
         }
 
-        protected virtual void OnAlgorithmInterrupted(object sender, ProcessEventArgs e) 
-        { 
+        protected virtual void OnAlgorithmInterrupted(object sender, ProcessEventArgs e)
+        {
         }
 
-        protected virtual void OnAlgorithmFinished(object sender, ProcessEventArgs e) 
-        { 
+        protected virtual void OnAlgorithmFinished(object sender, ProcessEventArgs e)
+        {
         }
 
         protected abstract void OnAlgorithmStarted(object sender, ProcessEventArgs e);

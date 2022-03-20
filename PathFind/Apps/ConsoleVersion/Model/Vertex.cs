@@ -24,7 +24,7 @@ namespace ConsoleVersion.Model
 
         private readonly Lazy<IReadOnlyCollection<IVertex>> neighbours;
         private readonly IVisualization<Vertex> visualization;
-        
+
         private bool isObstacle;
         private IVertexCost cost;
 
@@ -138,7 +138,7 @@ namespace ConsoleVersion.Model
 
         public override int GetHashCode()
         {
-            return base .GetHashCode();
+            return base.GetHashCode();
         }
 
         public void VisualizeAsTarget()

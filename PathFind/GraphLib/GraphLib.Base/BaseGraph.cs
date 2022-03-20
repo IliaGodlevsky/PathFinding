@@ -10,7 +10,7 @@ using static System.Reflection.BindingFlags;
 namespace GraphLib.Base
 {
     public abstract class BaseGraph : IGraph
-    {       
+    {
         private static readonly string ParamsFormat = "Obstacle percent: {0} ({1}/{2})";
         private static readonly string LargeSpace = "   ";
         protected static string[] DimensionNames = new[] { "Width", "Length", "Height" };

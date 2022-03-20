@@ -18,7 +18,7 @@ namespace Random.Realizations.Generators
 
         private bool isDisposing;
         private int currentBufferPosition;
-        
+
         private uint Seed
         {
             get

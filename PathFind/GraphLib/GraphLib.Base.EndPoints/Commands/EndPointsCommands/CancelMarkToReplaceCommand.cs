@@ -9,7 +9,7 @@ namespace GraphLib.Base.EndPoints.Commands.EndPointsCommands
     [AttachedTo(typeof(IntermediateToReplaceCommands)), Order(0)]
     internal sealed class CancelMarkToReplaceCommand : BaseIntermediateEndPointsCommand
     {
-        public CancelMarkToReplaceCommand(BaseEndPoints endPoints) 
+        public CancelMarkToReplaceCommand(BaseEndPoints endPoints)
             : base(endPoints)
         {
 

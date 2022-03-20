@@ -19,7 +19,6 @@ using WPFVersion3D.Extensions;
 using WPFVersion3D.Infrastructure;
 using WPFVersion3D.Interface;
 using WPFVersion3D.Messages;
-using WPFVersion3D.Model;
 using WPFVersion3D.View;
 
 namespace WPFVersion3D.ViewModel
@@ -47,17 +46,17 @@ namespace WPFVersion3D.ViewModel
         public Tuple<string, IAnimationSpeed>[] AnimationSpeeds { get; }
 
         private bool IsAllAlgorithmsFinished { get; set; } = true;
-        
-        public override string GraphParametres 
-        { 
-            get => graphParametres; 
-            set { graphParametres = value; OnPropertyChanged(); } 
+
+        public override string GraphParametres
+        {
+            get => graphParametres;
+            set { graphParametres = value; OnPropertyChanged(); }
         }
-       
-        public override IGraphField GraphField 
-        { 
-            get => graphField; 
-            set { graphField = value; OnPropertyChanged(); } 
+
+        public override IGraphField GraphField
+        {
+            get => graphField;
+            set { graphField = value; OnPropertyChanged(); }
         }
 
         public ICommand StartPathFindCommand { get; }
@@ -76,7 +75,7 @@ namespace WPFVersion3D.ViewModel
 
         public ICommand ClearVerticesColorCommand { get; }
 
-        public MainWindowViewModel(IGraphFieldFactory fieldFactory, IVertexEventHolder eventHolder, 
+        public MainWindowViewModel(IGraphFieldFactory fieldFactory, IVertexEventHolder eventHolder,
             GraphSerializationModule serializationModule, BaseEndPoints endPoints, ILog log)
             : base(fieldFactory, eventHolder, serializationModule, endPoints, log)
         {

@@ -13,7 +13,7 @@ namespace GraphLib.Base.EndPoints.BaseCommands
 
         protected bool HasIsolatedIntermediates => HasIsolated(Intermediates);
 
-        protected BaseIntermediateEndPointsCommand(BaseEndPoints endPoints) 
+        protected BaseIntermediateEndPointsCommand(BaseEndPoints endPoints)
             : base(endPoints)
         {
 

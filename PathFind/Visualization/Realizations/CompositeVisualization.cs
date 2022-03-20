@@ -20,6 +20,6 @@ namespace Visualization.Realizations
         {
             graph.RemoveAllColors();
             this.ExecuteAll(algorithm);
-        }       
+        }
     }
 }

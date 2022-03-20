@@ -19,7 +19,7 @@ namespace Algorithm.Factory
             this.heuristic = heuristic;
         }
 
-        public DistanceFirstAlgorithmFactory() 
+        public DistanceFirstAlgorithmFactory()
             : this(new EuclidianDistance())
         {
 

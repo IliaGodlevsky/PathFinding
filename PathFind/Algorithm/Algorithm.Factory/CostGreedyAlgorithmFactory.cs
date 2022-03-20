@@ -19,7 +19,7 @@ namespace Algorithm.Factory
             this.stepRule = stepRule;
         }
 
-        public CostGreedyAlgorithmFactory() 
+        public CostGreedyAlgorithmFactory()
             : this(new DefaultStepRule())
         {
 

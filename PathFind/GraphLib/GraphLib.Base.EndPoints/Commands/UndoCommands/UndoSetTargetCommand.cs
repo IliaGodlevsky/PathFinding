@@ -20,6 +20,6 @@ namespace GraphLib.Base.EndPoints.Commands.UndoCommands
         public override void Undo()
         {
             unsetTargetCommand.Execute(Target);
-        }        
+        }
     }
 }

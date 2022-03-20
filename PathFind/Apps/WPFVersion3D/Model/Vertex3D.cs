@@ -76,7 +76,7 @@ namespace WPFVersion3D.Model
             set => SetValue(SizeProperty, value);
         }
 
-        public Vertex3D(INeighborhood neighborhood, ICoordinate coordinate, IModel3DFactory modelFactory, 
+        public Vertex3D(INeighborhood neighborhood, ICoordinate coordinate, IModel3DFactory modelFactory,
             IVisualization<Vertex3D> visualization)
         {
             this.visualization = visualization;
@@ -89,7 +89,7 @@ namespace WPFVersion3D.Model
             neighbours = new Lazy<IReadOnlyCollection<IVertex>>(() => neighborhood.GetNeighboursWithinGraph(this));
         }
 
-        public Vertex3D(VertexSerializationInfo info,IModel3DFactory modelFactory, IVisualization<Vertex3D> visualization) 
+        public Vertex3D(VertexSerializationInfo info, IModel3DFactory modelFactory, IVisualization<Vertex3D> visualization)
             : this(info.Neighbourhood, info.Position, modelFactory, visualization)
         {
             this.Initialize(info);

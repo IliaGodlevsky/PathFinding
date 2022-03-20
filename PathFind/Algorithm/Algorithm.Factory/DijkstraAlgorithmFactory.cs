@@ -21,7 +21,7 @@ namespace Algorithm.Factory
             this.stepRule = stepRule;
         }
 
-        public DijkstraAlgorithmFactory() 
+        public DijkstraAlgorithmFactory()
             : this(new DefaultStepRule())
         {
 

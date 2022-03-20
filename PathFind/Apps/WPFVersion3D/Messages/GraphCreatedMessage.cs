@@ -4,7 +4,7 @@ namespace WPFVersion3D.Messages
 {
     internal sealed class GraphCreatedMessage : PassValueMessage<IGraph>
     {
-        public GraphCreatedMessage(IGraph graph) 
+        public GraphCreatedMessage(IGraph graph)
             : base(graph)
         {
 
