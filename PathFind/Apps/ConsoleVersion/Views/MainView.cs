@@ -61,7 +61,7 @@ namespace ConsoleVersion.Views
                 + Constants.HeightOfAbscissaView * 2 + Constants.HeightOfGraphParametresView;
             StatisticsPosition = new Coordinate2D(0, pathFindingStatisticsOffset);
             LateralDistanceBetweenVertices = CalculateLateralDistanceBetweenVertices();
-            graph.ForEach(vertex => RecalculateConsolePosition((Vertex)vertex));
+            graph.ForEach<Vertex>(RecalculateConsolePosition);
         }
 
         private void OnCostRangeChanged(CostRangeChangedMessage message)
@@ -72,7 +72,7 @@ namespace ConsoleVersion.Views
             PreviousMaxValueOfRange = Math.Max(CurrentMaxValueOfRange, PreviousMaxValueOfRange);
             CurrentMaxValueOfRange = max;
             LateralDistanceBetweenVertices = CalculateLateralDistanceBetweenVertices();
-            graph.ForEach(vertex => RecalculateConsolePosition((Vertex)vertex));
+            graph.ForEach<Vertex>(RecalculateConsolePosition);
         }
 
         private void OnStatisticsUpdated(UpdateStatisticsMessage message)
