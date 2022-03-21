@@ -15,7 +15,7 @@ using Console = Colorful.Console;
 namespace ConsoleVersion.Model
 {
     [DebuggerDisplay("{Position.ToString()}")]
-    internal class Vertex : IVertex, IVisualizable, IWeightable, IDisplayable, IEquatable<IVertex>
+    internal class Vertex : IVertex, IVisualizable, IWeightable, IDisplayable
     {
         public event EventHandler VertexCostChanged;
         public event EventHandler EndPointChosen;

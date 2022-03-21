@@ -172,11 +172,6 @@ namespace Common.Extensions.EnumerableExtensions
             return new Queue<T>(collection);
         }
 
-        public static ReadOnlyCollection<T> ToReadOnly<T>(this IList<T> collection)
-        {
-            return new ReadOnlyCollection<T>(collection);
-        }
-
         public static int ToHashCode(this IEnumerable<int> array)
         {
             return array.AggregateOrDefault(IntExtensions.Xor);

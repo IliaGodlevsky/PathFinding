@@ -102,7 +102,9 @@ namespace GraphViewModel
         {
         }
 
-        protected abstract void OnAlgorithmStarted(object sender, ProcessEventArgs e);
+        protected virtual void OnAlgorithmStarted(object sender, ProcessEventArgs e)
+        {
+        }
 
         protected abstract void SummarizePathfindingResults();
 

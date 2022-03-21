@@ -13,7 +13,7 @@ using static WindowsFormsVersion.Constants;
 namespace WindowsFormsVersion.Model
 {
     [DebuggerDisplay("{Position.ToString()}")]
-    internal class Vertex : Label, IVertex, IVisualizable, IWeightable, IEquatable<IVertex>
+    internal class Vertex : Label, IVertex, IVisualizable, IWeightable
     {
         public Vertex(INeighborhood neighborhood, ICoordinate coordinate, IVisualization<Vertex> visualization) : base()
         {

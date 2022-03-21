@@ -21,12 +21,6 @@ namespace Commands.Extensions
             commands.ExecuteFirst(execute, execute);
         }
 
-        public static void ExecuteAllTrue<TCommand, TExecute, TCheck>(this IEnumerable<TCommand> commands, TCheck validate, TExecute execute)
-            where TCommand : IExecutable<TExecute>, IExecutionCheck<TCheck>
-        {
-            commands.Where(command => command.CanExecute(validate)).ExecuteAll(execute);
-        }
-
         public static void ExecuteAll<TCommand, T>(this IEnumerable<TCommand> commands, T execute)
             where TCommand : IExecutable<T>
         {

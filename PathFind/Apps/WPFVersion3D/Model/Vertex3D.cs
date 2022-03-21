@@ -13,7 +13,7 @@ using WPFVersion3D.Interface;
 namespace WPFVersion3D.Model
 {
     [DebuggerDisplay("{Position.ToString()}")]
-    internal class Vertex3D : UIElement3D, IVertex, IVisualizable, IEquatable<IVertex>
+    internal class Vertex3D : UIElement3D, IVertex, IVisualizable
     {
         public static readonly DependencyProperty ModelProperty;
         public static readonly DependencyProperty MaterialProperty;
