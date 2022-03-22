@@ -30,7 +30,8 @@ namespace WPFVersion3D.Model.Axes
         {
             var coordinates = vertex.GetCoordinates();
             double adjustedVertexSize = Constants.InitialVertexSize + distanceBetweenVertices;
-            double centeredPosition = (coordinates[Order] - dimensionSize / 2.0);
+            double dimensionSizeCorrection = distanceBetweenVertices == 0 ? 0 : 1;
+            double centeredPosition = coordinates[Order] + (dimensionSizeCorrection - dimensionSize) / 2.0;
             Offset(vertex, centeredPosition * adjustedVertexSize);
         }
     }
