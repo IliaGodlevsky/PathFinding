@@ -20,7 +20,7 @@ namespace Random.Realizations.Generators
             this.seed = (ulong)seed;
         }
 
-        public PseudoRandom() 
+        public PseudoRandom()
             : this(Environment.TickCount)
         {
 
@@ -34,6 +34,6 @@ namespace Random.Realizations.Generators
                 ulong module = (ulong)range.Amplitude() + 1;
                 return (int)(Seed % module) + range.LowerValueOfRange;
             }
-        }       
+        }
     }
 }

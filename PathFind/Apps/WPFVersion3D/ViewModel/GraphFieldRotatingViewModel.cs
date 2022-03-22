@@ -17,7 +17,7 @@ namespace WPFVersion3D.ViewModel
     {
         private readonly Dictionary<AxisRotators, Func<IAnimationSpeed, IAnimatedAxisRotator>> rotationFactories;
 
-        private readonly IMessenger messenger;      
+        private readonly IMessenger messenger;
         private IAnimationSpeed rotationSpeed;
 
         public AxisAngleRotation3D AngleRotation { get; set; }

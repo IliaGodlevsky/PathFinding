@@ -49,6 +49,16 @@ namespace GraphLib.Extensions
             return self;
         }
 
+        public static IGraph ForEach<TVertex>(this IGraph self, Action<TVertex> action)
+            where TVertex : IVertex
+        {
+            foreach (TVertex vertex in self.Vertices)
+            {
+                action(vertex);
+            }
+            return self;
+        }
+
         public static int GetAvailableIntermediatesNumber(this IGraph graph)
         {
             const int NumberOfRequiredEndPoints = 2;

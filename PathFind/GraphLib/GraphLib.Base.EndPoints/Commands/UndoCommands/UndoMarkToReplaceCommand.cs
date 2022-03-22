@@ -22,6 +22,6 @@ namespace GraphLib.Base.EndPoints.Commands.UndoCommands
         public override void Undo()
         {
             cancelMarkToReplaceCommand.ExecuteForEach(MarkedToReplace.ToArray());
-        }        
+        }
     }
 }

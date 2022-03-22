@@ -27,6 +27,6 @@ namespace ConsoleVersion.Model.FramedAxes
         {
             string paddedCoordinate = GetPaddedYCoordinate(yCoordinate);
             return string.Concat(Offset, VerticalFrameComponent, paddedCoordinate);
-        }       
+        }
     }
 }

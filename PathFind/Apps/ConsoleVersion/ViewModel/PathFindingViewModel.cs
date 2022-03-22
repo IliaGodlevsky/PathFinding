@@ -1,6 +1,6 @@
 ﻿using Algorithm.Base;
-using Algorithm.Factory.Interface;
 using Algorithm.Infrastructure.EventArguments;
+using Algorithm.Interfaces;
 using Autofac;
 using Commands.Extensions;
 using Common.Extensions;
@@ -30,7 +30,7 @@ using ValueRange;
 
 namespace ConsoleVersion.ViewModel
 {
-    internal sealed class PathFindingViewModel : PathFindingModel, 
+    internal sealed class PathFindingViewModel : PathFindingModel,
         IViewModel, IRequireIntInput, IRequireAnswerInput, IRequireConsoleKeyInput, IDisposable
     {
         public event Action WindowClosed;
@@ -57,7 +57,7 @@ namespace ConsoleVersion.ViewModel
 
         private IReadOnlyCollection<IConsoleKeyCommand> KeyCommands { get; }
 
-        public PathFindingViewModel(BaseEndPoints endPoints, 
+        public PathFindingViewModel(BaseEndPoints endPoints,
             IEnumerable<IAlgorithmFactory<PathfindingAlgorithm>> algorithmFactories, ILog log)
             : base(endPoints, algorithmFactories, log)
         {

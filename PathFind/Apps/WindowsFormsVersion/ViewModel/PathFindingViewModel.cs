@@ -1,5 +1,4 @@
 ﻿using Algorithm.Base;
-using Algorithm.Factory.Interface;
 using Algorithm.Infrastructure.EventArguments;
 using Algorithm.Interfaces;
 using Autofac;
@@ -23,7 +22,7 @@ namespace WindowsFormsVersion.ViewModel
     {
         public event Action WindowClosed;
 
-        public PathFindingViewModel(BaseEndPoints endPoints, 
+        public PathFindingViewModel(BaseEndPoints endPoints,
             IEnumerable<IAlgorithmFactory<PathfindingAlgorithm>> algorithmFactories, ILog log)
             : base(endPoints, algorithmFactories, log)
         {

@@ -9,7 +9,7 @@ using System;
 
 namespace ConsoleVersion.Model
 {
-    internal sealed class ConsoleKeystrokesHook : Singleton<ConsoleKeystrokesHook, ConsoleKeystrokesHook>, 
+    internal sealed class ConsoleKeystrokesHook : Singleton<ConsoleKeystrokesHook, ConsoleKeystrokesHook>,
         IInterruptable, IProcess, IRequireConsoleKeyInput
     {
         public event ConsoleKeyPressedEventHandler KeyPressed;

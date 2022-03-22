@@ -1,6 +1,6 @@
 ﻿using Algorithm.Base;
-using Algorithm.Factory.Interface;
 using Algorithm.Infrastructure.EventArguments;
+using Algorithm.Interfaces;
 using Autofac;
 using Common.Extensions;
 using Common.Interface;
@@ -38,7 +38,7 @@ namespace WPFVersion3D.ViewModel
 
         private int Index { get; set; }
 
-        public PathFindingViewModel(BaseEndPoints endPoints, IEnumerable<IAlgorithmFactory<PathfindingAlgorithm>> algorithmFactories, 
+        public PathFindingViewModel(BaseEndPoints endPoints, IEnumerable<IAlgorithmFactory<PathfindingAlgorithm>> algorithmFactories,
             ILog log) : base(endPoints, algorithmFactories, log)
         {
             messenger = DI.Container.Resolve<IMessenger>();

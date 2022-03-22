@@ -1,6 +1,5 @@
 ﻿using Algorithm.Algos.Algos;
 using Algorithm.Factory.Attrbiutes;
-using Algorithm.Factory.Interface;
 using Algorithm.Interfaces;
 using Algorithm.Realizations.StepRules;
 using Common.Attrbiutes;
@@ -21,7 +20,7 @@ namespace Algorithm.Factory
             this.stepRule = stepRule;
         }
 
-        public DijkstraAlgorithmFactory() 
+        public DijkstraAlgorithmFactory()
             : this(new DefaultStepRule())
         {
 

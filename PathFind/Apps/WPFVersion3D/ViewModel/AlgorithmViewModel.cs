@@ -21,7 +21,7 @@ namespace WPFVersion3D.ViewModel
         public bool IsStarted => algorithm.IsInProcess;
 
         public string AlgorithmName { get; }
-       
+
         public string Time
         {
             get => time;

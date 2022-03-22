@@ -50,6 +50,6 @@ namespace Visualization.Abstractions
             return (IReadOnlyCollection<IVertex>)vertices.GetOrEmpty(algorithm).Values;
         }
 
-        protected abstract void Visualize(IVisualizable visualizable);       
+        protected abstract void Visualize(IVisualizable visualizable);
     }
 }

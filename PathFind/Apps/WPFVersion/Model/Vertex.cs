@@ -11,7 +11,7 @@ using static WPFVersion.Constants;
 namespace WPFVersion.Model
 {
     [DebuggerDisplay("{Position.ToString()}")]
-    internal class Vertex : ContentControl, IVertex, IVisualizable, IWeightable, IEquatable<IVertex>
+    internal class Vertex : ContentControl, IVertex, IVisualizable, IWeightable
     {
         public Vertex(INeighborhood neighborhood, ICoordinate coordinate, IVisualization<Vertex> visualization) : base()
         {

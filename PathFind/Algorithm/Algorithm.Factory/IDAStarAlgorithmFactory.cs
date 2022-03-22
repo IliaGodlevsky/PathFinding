@@ -1,6 +1,5 @@
 ﻿using Algorithm.Algos.Algos;
 using Algorithm.Factory.Attrbiutes;
-using Algorithm.Factory.Interface;
 using Algorithm.Interfaces;
 using Algorithm.Realizations.Heuristic.Distances;
 using Algorithm.Realizations.StepRules;
@@ -24,19 +23,19 @@ namespace Algorithm.Factory
             this.stepRule = stepRule;
         }
 
-        public IDAStarAlgorithmFactory(IStepRule stepRule) 
+        public IDAStarAlgorithmFactory(IStepRule stepRule)
             : this(stepRule, new ChebyshevDistance())
         {
 
         }
 
-        public IDAStarAlgorithmFactory(IHeuristic heuristic) 
+        public IDAStarAlgorithmFactory(IHeuristic heuristic)
             : this(new DefaultStepRule(), heuristic)
         {
 
         }
 
-        public IDAStarAlgorithmFactory() 
+        public IDAStarAlgorithmFactory()
             : this(new DefaultStepRule(), new ChebyshevDistance())
         {
 

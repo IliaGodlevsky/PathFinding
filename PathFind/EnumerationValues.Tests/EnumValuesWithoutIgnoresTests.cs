@@ -17,7 +17,7 @@ namespace EnumerationValues.Tests
                 Assert.True(values.Values.Count == 7);
                 Assert.False(values.Values.Contains(TestEnum.All));
                 Assert.False(values.Values.Contains(TestEnum.None));
-            });            
+            });
         }
     }
 }

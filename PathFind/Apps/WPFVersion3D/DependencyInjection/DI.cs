@@ -1,5 +1,4 @@
 ﻿using Algorithm.Base;
-using Algorithm.Factory.Interface;
 using Algorithm.Interfaces;
 using Autofac;
 using Common.Extensions;
@@ -23,7 +22,7 @@ using Random.Realizations.Generators;
 using System;
 using System.Reflection;
 using System.Runtime.Serialization;
-using System.Runtime.Serialization.Formatters.Soap;
+using System.Runtime.Serialization.Formatters.Binary;
 using WPFVersion3D.Extensions;
 using WPFVersion3D.Interface;
 using WPFVersion3D.Model;
@@ -71,7 +70,7 @@ namespace WPFVersion3D.DependencyInjection
             builder.RegisterType<GraphSerializer>().As<IGraphSerializer>().SingleInstance();
             builder.RegisterDecorator<CompressGraphSerializer, IGraphSerializer>();
             builder.RegisterDecorator<CryptoGraphSerializer, IGraphSerializer>();
-            builder.RegisterType<SoapFormatter>().As<IFormatter>().SingleInstance();
+            builder.RegisterType<BinaryFormatter>().As<IFormatter>().SingleInstance();
             builder.RegisterType<Vertex3DFromInfoFactory>().As<IVertexFromInfoFactory>().SingleInstance();
 
             builder.RegisterAssemblyTypes(Assemblies).Where(Implements<IAlgorithmFactory<PathfindingAlgorithm>>)

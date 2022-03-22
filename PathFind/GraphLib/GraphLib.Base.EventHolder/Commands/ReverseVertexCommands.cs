@@ -22,6 +22,6 @@ namespace GraphLib.Base.EventHolder.Commands
             commands.ExecuteFirst(vertex ?? NullVertex.Instance);
         }
 
-        public void Undo() { }        
+        public void Undo() { }
     }
 }

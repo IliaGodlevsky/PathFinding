@@ -35,7 +35,7 @@ namespace ConsoleVersion.ViewModel
 
         public IInput<Answer> AnswerInput { get; set; }
 
-        public MainViewModel(IGraphFieldFactory fieldFactory, IVertexEventHolder eventHolder, 
+        public MainViewModel(IGraphFieldFactory fieldFactory, IVertexEventHolder eventHolder,
             GraphSerializationModule serializationModule, BaseEndPoints endPoints, ILog log)
             : base(fieldFactory, eventHolder, serializationModule, endPoints, log)
         {

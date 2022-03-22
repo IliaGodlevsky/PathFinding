@@ -69,7 +69,7 @@ namespace Algorithm.Base
             visitedVertices.Add(CurrentVertex);
             RaiseVertexVisited(new AlgorithmEventArgs(CurrentVertex));
             visitedVerticesStack.Push(CurrentVertex);
-        }        
+        }
 
         private void VisitCurrentVertex()
         {
@@ -94,6 +94,6 @@ namespace Algorithm.Base
             {
                 VisitCurrentVertex();
             }
-        }        
+        }
     }
 }

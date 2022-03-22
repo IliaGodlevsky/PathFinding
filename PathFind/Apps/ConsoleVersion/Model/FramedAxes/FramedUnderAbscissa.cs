@@ -19,6 +19,6 @@ namespace ConsoleVersion.Model.FramedAxes
             string abscissa = GetAbscissa();
             string frame = GetHorizontalFrame();
             return string.Join(NewLine, abscissa, frame);
-        }        
+        }
     }
 }

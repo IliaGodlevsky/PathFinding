@@ -6,7 +6,6 @@ using Common.Extensions.EnumerableExtensions;
 using GraphLib.Extensions;
 using GraphLib.Interfaces;
 using System;
-using System.Runtime.CompilerServices;
 using Visualization.Extensions;
 using Visualization.Interfaces;
 using Visualization.Realizations;

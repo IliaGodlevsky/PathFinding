@@ -15,6 +15,6 @@ namespace GraphLib.Base.EndPoints.BaseCommands
             this.endPoints = endPoints;
         }
 
-        public abstract void Undo();       
+        public abstract void Undo();
     }
 }

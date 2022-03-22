@@ -1,6 +1,5 @@
 ﻿using Algorithm.Algos.Algos;
 using Algorithm.Factory.Attrbiutes;
-using Algorithm.Factory.Interface;
 using Algorithm.Interfaces;
 using Algorithm.Realizations.StepRules;
 using GraphLib.Interfaces;
@@ -19,7 +18,7 @@ namespace Algorithm.Factory
             this.stepRule = stepRule;
         }
 
-        public CostGreedyAlgorithmFactory() 
+        public CostGreedyAlgorithmFactory()
             : this(new DefaultStepRule())
         {
 

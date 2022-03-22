@@ -15,12 +15,12 @@ namespace WPFVersion3D.Model.Axes
         protected Axis(Graph3D graph)
         {
             dimensionSize = graph.DimensionsSizes[Order];
-            graph.ForEach(vertex => LocateVertex((Vertex3D)vertex));
+            graph.ForEach<Vertex3D>(LocateVertex);
         }
 
-        public void Locate(GraphField3D field, double distanceBetween)
+        public void Locate(GraphField3D field, double distanceBetweenVertices)
         {
-            distanceBetweenVertices = distanceBetween;
+            this.distanceBetweenVertices = distanceBetweenVertices;
             field.Vertices.ForEach(LocateVertex);
         }
 

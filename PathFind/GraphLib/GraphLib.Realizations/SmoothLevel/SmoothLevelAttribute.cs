@@ -11,6 +11,6 @@ namespace GraphLib.Realizations.SmoothLevel
         public SmoothLevelAttribute(int level)
         {
             Level = level;
-        }        
+        }
     }
 }

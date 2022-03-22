@@ -69,5 +69,5 @@ namespace Algorithm.Realizations.GraphPaths
             }
             return totalCost;
         }
-   }
+    }
 }
