@@ -1,5 +1,5 @@
 ﻿using Algorithm.Base;
-using Algorithm.Interfaces;
+using Algorithm.Factory.Interface;
 using Autofac;
 using Common.Extensions;
 using Common.Interface;

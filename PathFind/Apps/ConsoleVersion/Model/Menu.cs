@@ -13,21 +13,21 @@ namespace ConsoleVersion.Model
     {
         private readonly object target;
 
-        private readonly Lazy<IDictionary<string, TAction>> menuActions;
-        private readonly Lazy<string[]> menuActionsNames;
+        private readonly Lazy<IReadOnlyDictionary<string, TAction>> menuActions;
+        private readonly Lazy<IReadOnlyList<string>> menuActionsNames;
 
-        public IDictionary<string, TAction> MenuActions => menuActions.Value;
+        public IReadOnlyDictionary<string, TAction> MenuActions => menuActions.Value;
 
-        public string[] MenuActionsNames => menuActionsNames.Value;
+        public IReadOnlyList<string> MenuActionsNames => menuActionsNames.Value;
 
         public Menu(object target)
         {
             this.target = target;
-            menuActions = new Lazy<IDictionary<string, TAction>>(GetMenuActions);
-            menuActionsNames = new Lazy<string[]>(MenuActions.Keys.ToArray);
+            menuActions = new Lazy<IReadOnlyDictionary<string, TAction>>(GetMenuActions);
+            menuActionsNames = new Lazy<IReadOnlyList<string>>(MenuActions.Keys.ToArray);
         }
 
-        private IDictionary<string, TAction> GetMenuActions()
+        private IReadOnlyDictionary<string, TAction> GetMenuActions()
         {
             return target
                 .GetType()

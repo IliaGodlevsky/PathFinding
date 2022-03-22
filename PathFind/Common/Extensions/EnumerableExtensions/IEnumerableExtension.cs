@@ -98,18 +98,18 @@ namespace Common.Extensions.EnumerableExtensions
             return self.Juxtapose(second, (a, b) => a.Equals(b));
         }
 
-        public static IDictionary<TKey, TValue> ToDictionary<TKey, TValue>
+        public static Dictionary<TKey, TValue> ToDictionary<TKey, TValue>
             (this IEnumerable<KeyValuePair<TKey, TValue>> collection)
         {
             return collection.ToDictionary(item => item.Key, item => item.Value);
         }
 
-        public static IDictionary<string, T> ToNameInstanceDictionary<T>(this IEnumerable<T> collection)
+        public static Dictionary<string, T> ToNameInstanceDictionary<T>(this IEnumerable<T> collection)
         {
             return collection.ToDictionary(item => item.GetDescription());
         }
 
-        public static Tuple<string, T>[] ToNameInstanceTuples<T>(this IEnumerable<T> collection)
+        public static IReadOnlyList<Tuple<string, T>> ToNameInstanceTuples<T>(this IEnumerable<T> collection)
         {
             return collection
                 .Select(item => new Tuple<string, T>(item.GetDescription(), item))

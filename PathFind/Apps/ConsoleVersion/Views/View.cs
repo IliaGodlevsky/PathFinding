@@ -19,7 +19,7 @@ namespace ConsoleVersion.Views
 
         public IInput<int> IntInput { get; set; }
 
-        private int MenuSize => menu.MenuActionsNames.Length;
+        private int MenuSize => menu.MenuActionsNames.Count;
 
         private string OptionsMsg => MessagesTexts.MenuOptionChoiceMsg;
 

@@ -10,6 +10,7 @@ using GraphViewModel.Interfaces;
 using Logging.Interface;
 using NullObject.Extensions;
 using System;
+using System.Collections.Generic;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using System.Windows.Input;
@@ -43,7 +44,7 @@ namespace WPFVersion3D.ViewModel
             }
         }
 
-        public Tuple<string, IAnimationSpeed>[] AnimationSpeeds { get; }
+        public IReadOnlyCollection<Tuple<string, IAnimationSpeed>> AnimationSpeeds { get; }
 
         private bool IsAllAlgorithmsFinished { get; set; } = true;
 

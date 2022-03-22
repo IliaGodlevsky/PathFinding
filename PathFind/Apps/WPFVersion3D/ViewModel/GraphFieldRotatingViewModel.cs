@@ -15,7 +15,7 @@ namespace WPFVersion3D.ViewModel
 {
     internal class GraphFieldRotatingViewModel : IDisposable
     {
-        private readonly Dictionary<AxisRotators, Func<IAnimationSpeed, IAnimatedAxisRotator>> rotationFactories;
+        private readonly IReadOnlyDictionary<AxisRotators, Func<IAnimationSpeed, IAnimatedAxisRotator>> rotationFactories;
 
         private readonly IMessenger messenger;
         private IAnimationSpeed rotationSpeed;
