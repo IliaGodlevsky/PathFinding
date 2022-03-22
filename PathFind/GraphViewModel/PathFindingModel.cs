@@ -1,6 +1,5 @@
 ﻿using Algorithm.Base;
 using Algorithm.Extensions;
-using Algorithm.Factory.Interface;
 using Algorithm.Infrastructure.EventArguments;
 using Algorithm.Interfaces;
 using Algorithm.NullRealizations;

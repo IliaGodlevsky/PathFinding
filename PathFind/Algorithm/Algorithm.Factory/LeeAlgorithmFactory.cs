@@ -1,6 +1,6 @@
 ﻿using Algorithm.Algos.Algos;
 using Algorithm.Factory.Attrbiutes;
-using Algorithm.Factory.Interface;
+using Algorithm.Interfaces;
 using Common.Attrbiutes;
 using GraphLib.Interfaces;
 using System.ComponentModel;
