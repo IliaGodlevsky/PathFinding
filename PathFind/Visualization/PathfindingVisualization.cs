@@ -6,6 +6,7 @@ using Common.Extensions.EnumerableExtensions;
 using GraphLib.Extensions;
 using GraphLib.Interfaces;
 using System;
+using System.Linq;
 using Visualization.Extensions;
 using Visualization.Interfaces;
 using Visualization.Realizations;
@@ -65,7 +66,10 @@ namespace Visualization
 
         protected void AddPathVertices(IAlgorithm algorithm, IGraphPath grapPath)
         {
-            path.AddRange(algorithm, grapPath.Path);
+            var endPoints = source.GetVertices(algorithm)
+                .Concat(target.GetVertices(algorithm))
+                .Concat(intermediate.GetVertices(algorithm));
+            path.AddRange(algorithm, grapPath.Path.Without(endPoints));
         }
 
         protected virtual void OnAlgorithmStarted(object sender, EventArgs e)

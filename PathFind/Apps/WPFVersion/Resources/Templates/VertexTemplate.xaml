@@ -5,12 +5,12 @@
     <ControlTemplate x:Key="VertexTemplate" TargetType="vertex:Vertex">
         <ControlTemplate.Resources>
             <Storyboard x:Key="ScalingAnimation">
-                <DoubleAnimation Storyboard.TargetProperty="RenderTransform.ScaleX" From="1.3" To="1" Duration="0:0:0.5">
+                <DoubleAnimation Storyboard.TargetProperty="RenderTransform.ScaleX" From="1.35" To="1" Duration="0:0:0.230">
                     <DoubleAnimation.EasingFunction>
                         <BackEase/>
                     </DoubleAnimation.EasingFunction>
                 </DoubleAnimation>
-                <DoubleAnimation Storyboard.TargetProperty="RenderTransform.ScaleY" From="1.3" To="1" Duration="0:0:0.5">
+                <DoubleAnimation Storyboard.TargetProperty="RenderTransform.ScaleY" From="1.35" To="1" Duration="0:0:0.230">
                     <DoubleAnimation.EasingFunction>
                         <BackEase/>
                     </DoubleAnimation.EasingFunction>
@@ -18,7 +18,7 @@
             </Storyboard>
         </ControlTemplate.Resources>
         <Grid>
-            <Rectangle RadiusX="9" RadiusY="9" Fill="{TemplateBinding Background}" Stroke="Gray"/>
+            <Rectangle  RadiusX="8" RadiusY="8" Fill="{TemplateBinding Background}" Stroke="LightGray"/>
             <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center" />
         </Grid>
         <ControlTemplate.Triggers>
@@ -28,7 +28,7 @@
             <EventTrigger RoutedEvent="vertex:Vertex.ColoredAsPath">
                 <BeginStoryboard>
                     <Storyboard>
-                        <DoubleAnimation Storyboard.TargetProperty="Background.Opacity" From="0" To="1" Duration="0:0:1.5"/>
+                        <DoubleAnimation Storyboard.TargetProperty="Background.Opacity" From="0.2" To="1" Duration="0:0:1"/>
                     </Storyboard>
                 </BeginStoryboard>
                 <BeginStoryboard Storyboard="{StaticResource ScalingAnimation}"/>

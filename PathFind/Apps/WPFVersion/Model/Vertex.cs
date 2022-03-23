@@ -63,11 +63,11 @@ namespace WPFVersion.Model
                 Background = value;
                 if (Background == VertexVisualization.EnqueuedVertexColor)
                 {
-                    RaiseEnqueuedEvent();
+                    RaiseEvent(new RoutedEventArgs(EnqueuedEvent, this));
                 }
                 else if (IsVisualizedAsPath)
                 {
-                    RaiseColoredAsPathEvent();
+                    RaiseEvent(new RoutedEventArgs(ColoredAsPathEvent, this));
                 }
             }
         }
@@ -101,7 +101,7 @@ namespace WPFVersion.Model
         public Vertex(INeighborhood neighborhood, ICoordinate coordinate, IVisualization<Vertex> visualization) : base()
         {
             RenderTransformOrigin = new Point(0.5, 0.5);
-            RenderTransform = new ScaleTransform(); 
+            RenderTransform = new ScaleTransform();
             this.visualization = visualization;
             Width = Height = VertexSize;
             Template = (ControlTemplate)TryFindResource("VertexTemplate");
@@ -187,22 +187,6 @@ namespace WPFVersion.Model
         {
             (cost as IWeightable)?.MakeWeighted();
             Dispatcher.Invoke(() => Content = cost.ToString());
-        }
-
-        private void RaiseEnqueuedEvent()
-        {
-            Dispatcher.Invoke(() =>
-            {
-                RaiseEvent(new RoutedEventArgs(EnqueuedEvent, this));
-            });
-        }
-
-        private void RaiseColoredAsPathEvent()
-        {
-            Dispatcher.Invoke(() =>
-            {
-                RaiseEvent(new RoutedEventArgs(ColoredAsPathEvent, this));
-            });
         }
     }
 }
