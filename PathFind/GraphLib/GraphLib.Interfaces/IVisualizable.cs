@@ -2,6 +2,10 @@
 {
     public interface IVisualizable
     {
+        bool IsVisualizedAsPath { get; }
+
+        bool IsVisualizedAsEndPoint { get; }
+
         void VisualizeAsTarget();
 
         void VisualizeAsRegular();
@@ -19,9 +23,5 @@
         void VisualizeAsIntermediate();
 
         void VisualizeAsMarkedToReplaceIntermediate();
-
-        bool IsVisualizedAsPath { get; }
-
-        bool IsVisualizedAsEndPoint { get; }
     }
 }

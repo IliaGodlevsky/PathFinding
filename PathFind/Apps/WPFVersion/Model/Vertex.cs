@@ -1,11 +1,14 @@
-﻿using GraphLib.Extensions;
+﻿using Common.Extensions;
+using GraphLib.Extensions;
 using GraphLib.Interfaces;
 using GraphLib.Serialization;
 using GraphLib.Serialization.Extensions;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Media;
 using static WPFVersion.Constants;
 
 namespace WPFVersion.Model
@@ -13,23 +16,32 @@ namespace WPFVersion.Model
     [DebuggerDisplay("{Position.ToString()}")]
     internal class Vertex : ContentControl, IVertex, IVisualizable, IWeightable
     {
-        public Vertex(INeighborhood neighborhood, ICoordinate coordinate, IVisualization<Vertex> visualization) : base()
+        public static readonly RoutedEvent EnqueuedEvent;
+        public static readonly RoutedEvent ColoredAsPathEvent;
+
+        public event RoutedEventHandler Enqueued
         {
-            this.visualization = visualization;
-            Width = Height = VertexSize;
-            Template = (ControlTemplate)TryFindResource("vertexTemplate");
-            Position = coordinate;
-            this.Initialize();
-            neighbours = new Lazy<IReadOnlyCollection<IVertex>>(() => neighborhood.GetNeighboursWithinGraph(this));
+            add => AddHandler(EnqueuedEvent, value);
+            remove => RemoveHandler(EnqueuedEvent, value);
         }
 
-        public Vertex(VertexSerializationInfo info, IVisualization<Vertex> visualization)
-            : this(info.Neighbourhood, info.Position, visualization)
+        public event RoutedEventHandler ColoredAsPath
         {
-            this.Initialize(info);
+            add => AddHandler(ColoredAsPathEvent, value);
+            remove => RemoveHandler(ColoredAsPathEvent, value);
         }
 
+        private readonly IVisualization<Vertex> visualization;
+        private readonly Lazy<IReadOnlyCollection<IVertex>> neighbours;
+
+        private IVertexCost cost;
         private bool isObstacle;
+        private ICoordinate position;
+
+        public bool IsVisualizedAsPath => visualization.IsVisualizedAsPath(this);
+
+        public bool IsVisualizedAsEndPoint => visualization.IsVisualizedAsEndPoint(this);
+
         public bool IsObstacle
         {
             get => isObstacle;
@@ -43,9 +55,23 @@ namespace WPFVersion.Model
             }
         }
 
-        public virtual INeighborhood Neighborhood { get; }
+        public Brush VertexColor
+        {
+            get => Background;
+            set
+            {
+                Background = value;
+                if (Background == VertexVisualization.EnqueuedVertexColor)
+                {
+                    RaiseEnqueuedEvent();
+                }
+                else if (IsVisualizedAsPath)
+                {
+                    RaiseColoredAsPathEvent();
+                }
+            }
+        }
 
-        private IVertexCost cost;
         public IVertexCost Cost
         {
             get => cost;
@@ -56,11 +82,6 @@ namespace WPFVersion.Model
             }
         }
 
-        public IReadOnlyCollection<IVertex> Neighbours => neighbours.Value;
-
-        public IGraph Graph { get; }
-
-        private ICoordinate position;
         public ICoordinate Position
         {
             get => position;
@@ -71,18 +92,90 @@ namespace WPFVersion.Model
             }
         }
 
+        public IReadOnlyCollection<IVertex> Neighbours => neighbours.Value;
+
+        public virtual INeighborhood Neighborhood { get; }
+
+        public IGraph Graph { get; }
+        
+        public Vertex(INeighborhood neighborhood, ICoordinate coordinate, IVisualization<Vertex> visualization) : base()
+        {
+            RenderTransformOrigin = new Point(0.5, 0.5);
+            RenderTransform = new ScaleTransform(); 
+            this.visualization = visualization;
+            Width = Height = VertexSize;
+            Template = (ControlTemplate)TryFindResource("VertexTemplate");
+            Position = coordinate;
+            this.Initialize();
+            neighbours = new Lazy<IReadOnlyCollection<IVertex>>(() => neighborhood.GetNeighboursWithinGraph(this));
+        }
+
+        public Vertex(VertexSerializationInfo info, IVisualization<Vertex> visualization)
+            : this(info.Neighbourhood, info.Position, visualization)
+        {
+            this.Initialize(info);
+        }
+
+        static Vertex()
+        {
+            EnqueuedEvent = EventManager.RegisterRoutedEvent(
+                nameof(Enqueued),
+                RoutingStrategy.Bubble,
+                typeof(RoutedEventHandler),
+                typeof(Vertex));
+            ColoredAsPathEvent = EventManager.RegisterRoutedEvent(
+                nameof(ColoredAsPath),
+                RoutingStrategy.Bubble,
+                typeof(RoutedEventHandler),
+                typeof(Vertex));
+        }
+
         public bool Equals(IVertex other) => other.IsEqual(this);
-        public bool IsVisualizedAsPath => visualization.IsVisualizedAsPath(this);
-        public bool IsVisualizedAsEndPoint => visualization.IsVisualizedAsEndPoint(this);
-        public void VisualizeAsTarget() => visualization.VisualizeAsTarget(this);
-        public void VisualizeAsObstacle() => visualization.VisualizeAsObstacle(this);
-        public void VisualizeAsPath() => visualization.VisualizeAsPath(this);
-        public void VisualizeAsSource() => visualization.VisualizeAsSource(this);
-        public void VisualizeAsRegular() => visualization.VisualizeAsRegular(this);
-        public void VisualizeAsVisited() => visualization.VisualizeAsVisited(this);
-        public void VisualizeAsEnqueued() => visualization.VisualizeAsEnqueued(this);
-        public void VisualizeAsIntermediate() => visualization.VisualizeAsIntermediate(this);
-        public void VisualizeAsMarkedToReplaceIntermediate() => visualization.VisualizeAsMarkedToReplaceIntermediate(this);
+
+        public void VisualizeAsTarget()
+        {
+            visualization.VisualizeAsTarget(this);
+        }
+
+        public void VisualizeAsObstacle()
+        {
+            visualization.VisualizeAsObstacle(this);
+        }
+
+        public void VisualizeAsPath()
+        {
+            visualization.VisualizeAsPath(this);
+        }
+
+        public void VisualizeAsSource()
+        {
+            visualization.VisualizeAsSource(this);
+        }
+
+        public void VisualizeAsRegular()
+        {
+            visualization.VisualizeAsRegular(this);
+        }
+
+        public void VisualizeAsVisited()
+        {
+            visualization.VisualizeAsVisited(this);
+        }
+
+        public void VisualizeAsEnqueued()
+        {
+            visualization.VisualizeAsEnqueued(this);
+        }
+
+        public void VisualizeAsIntermediate()
+        {
+            visualization.VisualizeAsIntermediate(this);
+        }
+
+        public void VisualizeAsMarkedToReplaceIntermediate()
+        {
+            visualization.VisualizeAsMarkedToReplaceIntermediate(this);
+        }
 
         public void MakeUnweighted()
         {
@@ -96,7 +189,20 @@ namespace WPFVersion.Model
             Dispatcher.Invoke(() => Content = cost.ToString());
         }
 
-        private readonly IVisualization<Vertex> visualization;
-        private readonly Lazy<IReadOnlyCollection<IVertex>> neighbours;
+        private void RaiseEnqueuedEvent()
+        {
+            Dispatcher.Invoke(() =>
+            {
+                RaiseEvent(new RoutedEventArgs(EnqueuedEvent, this));
+            });
+        }
+
+        private void RaiseColoredAsPathEvent()
+        {
+            Dispatcher.Invoke(() =>
+            {
+                RaiseEvent(new RoutedEventArgs(ColoredAsPathEvent, this));
+            });
+        }
     }
 }
