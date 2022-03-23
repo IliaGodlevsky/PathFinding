@@ -1,5 +1,6 @@
 ﻿using Algorithm.Algos.Algos;
 using Algorithm.Factory.Attrbiutes;
+using Algorithm.Factory.Interface;
 using Algorithm.Interfaces;
 using Algorithm.Realizations.Heuristic.Distances;
 using Algorithm.Realizations.StepRules;

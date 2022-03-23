@@ -12,7 +12,7 @@
              xmlns:range="clr-namespace:WPFVersion3D"
              mc:Ignorable="d"
              d:DataContext="{d:DesignInstance Type=viewmodel:StretchFieldAlongAxisViewModel}"
-             d:DesignHeight="450" d:DesignWidth="800"
+             d:DesignHeight="30" d:DesignWidth="200"
              x:Name="UserControl">
     
     <UserControl.Resources>
@@ -31,10 +31,7 @@
         <TextBox Style="{StaticResource TextBoxStyle}"
                  Grid.Column="2">
             <TextBox.Text>
-                <Binding Path="Value"
-                         ElementName="StretchSlider" 
-                         Converter="{StaticResource doubleConverter2}"
-                         Mode="TwoWay">
+                <Binding Path="Value" ElementName="StretchSlider" Converter="{StaticResource doubleConverter2}" Mode="TwoWay">
                     <Binding.ValidationRules>
                         <validationrules:NonDoubleInputValidationRule/>
                     </Binding.ValidationRules>
@@ -42,14 +39,12 @@
             </TextBox.Text>
         </TextBox>
 
-        <model:RangedSlider x:Name="StretchSlider"                                     
-                            Style="{StaticResource SliderStyle}"
+        <model:RangedSlider x:Name="StretchSlider" Style="{StaticResource SliderStyle}"
                             ValueRange="{x:Static range:Constants.DistanceBetweenVerticesValueRange}"
                             Grid.Column="1">
             <i:Interaction.Triggers>
                 <i:EventTrigger EventName="ValueChanged">
-                    <ei:CallMethodAction TargetObject="{Binding Path=DataContext, ElementName=UserControl}" 
-                                         MethodName="StretchAlongAxis"></ei:CallMethodAction>
+                    <ei:CallMethodAction TargetObject="{Binding Path=DataContext, ElementName=UserControl}" MethodName="StretchAlongAxis"/>
                 </i:EventTrigger>
             </i:Interaction.Triggers>
         </model:RangedSlider>

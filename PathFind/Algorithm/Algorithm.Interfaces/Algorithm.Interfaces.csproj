@@ -42,7 +42,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="IAlgorithm.cs" />
-    <Compile Include="IAlgorithmFactory.cs" />
     <Compile Include="IHeuristic.cs" />
     <Compile Include="IGraphPath.cs" />
     <Compile Include="IStepRule.cs" />

@@ -1,6 +1,6 @@
 ﻿using Algorithm.Base;
+using Algorithm.Factory.Interface;
 using Algorithm.Infrastructure.EventArguments;
-using Algorithm.Interfaces;
 using Autofac;
 using Commands.Extensions;
 using Common.Extensions;
@@ -61,7 +61,7 @@ namespace ConsoleVersion.ViewModel
             IEnumerable<IAlgorithmFactory<PathfindingAlgorithm>> algorithmFactories, ILog log)
             : base(endPoints, algorithmFactories, log)
         {
-            algorithmKeysValueRange = new InclusiveValueRange<int>(Algorithms.Length, 1);
+            algorithmKeysValueRange = new InclusiveValueRange<int>(Algorithms.Count, 1);
             ConsoleKeystrokesHook.Instance.KeyPressed += OnConsoleKeyPressed;
             DelayTime = Constants.AlgorithmDelayTimeValueRange.LowerValueOfRange;
             resetEvent = new ManualResetEventSlim();

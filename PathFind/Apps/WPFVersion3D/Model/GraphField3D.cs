@@ -13,7 +13,7 @@ namespace WPFVersion3D.Model
 {
     internal sealed class GraphField3D : ModelVisual3D, IGraphField
     {
-        private readonly IDictionary<Axis, IAxis> axes;
+        private readonly IReadOnlyDictionary<Axis, IAxis> axes;
 
         public IReadOnlyCollection<Vertex3D> Vertices { get; }
 
@@ -21,10 +21,12 @@ namespace WPFVersion3D.Model
 
         public GraphField3D(Graph3D graph)
         {
-            axes = new Dictionary<Axis, IAxis>();
-            axes.Add(Axis.Applicate, new Applicate(graph));
-            axes.Add(Axis.Ordinate, new Ordinate(graph));
-            axes.Add(Axis.Abscissa, new Abscissa(graph));
+            axes = new Dictionary<Axis, IAxis>
+            {
+                { Axis.Applicate, new Applicate(graph) },
+                { Axis.Ordinate, new Ordinate(graph)},
+                { Axis.Abscissa, new Abscissa(graph) }
+            };
             Vertices = graph.Vertices.OfType<Vertex3D>().ToArray();
             Children.AddRange(Vertices);
         }

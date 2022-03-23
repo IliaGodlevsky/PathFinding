@@ -51,6 +51,7 @@
     <Compile Include="DepthFirstAlgorithmFactory.cs" />
     <Compile Include="DijkstraAlgorithmFactory.cs" />
     <Compile Include="DistanceFirstAlgorithmFactory.cs" />
+    <Compile Include="Interface\IAlgorithmFactory.cs" />
     <Compile Include="LeeAlgorithmFactory.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
