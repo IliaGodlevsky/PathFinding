@@ -17,7 +17,7 @@ namespace WPFVersion.Model
         public GraphField(Graph2D graph)
         {
             Vertices = graph.Vertices;
-            Vertices.ForEach(vertex => Locate((Vertex)vertex));
+            graph.ForEach<Vertex>(Locate);
         }
 
         public GraphField()

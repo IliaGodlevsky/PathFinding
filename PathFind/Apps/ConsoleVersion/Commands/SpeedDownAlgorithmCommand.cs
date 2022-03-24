@@ -1,5 +1,7 @@
-﻿using Common.Attrbiutes;
+﻿using Common;
+using Common.Attrbiutes;
 using Common.Extensions;
+using ConsoleVersion.Model;
 using ConsoleVersion.ViewModel;
 using System;
 
@@ -13,9 +15,9 @@ namespace ConsoleVersion.Commands
             return key.IsOneOf(ConsoleKey.DownArrow);
         }
 
-        protected override int GetNewDelay(PathFindingViewModel viewModel)
+        protected override int GetNewDelay(ValueTypeWrap<int> time)
         {
-            return viewModel.DelayTime + 1;
+            return time.Value + 1;
         }
     }
 }

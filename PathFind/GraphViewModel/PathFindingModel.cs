@@ -29,7 +29,7 @@ namespace GraphViewModel
 
         public bool IsVisualizationRequired { get; set; } = true;
 
-        public int DelayTime { get; set; }
+        public virtual int DelayTime { get; set; }
 
         public IAlgorithmFactory<PathfindingAlgorithm> Algorithm { get; set; }
 

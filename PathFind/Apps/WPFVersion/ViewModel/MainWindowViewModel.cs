@@ -23,33 +23,49 @@ using WPFVersion.View.Windows;
 
 namespace WPFVersion.ViewModel
 {
-    public class MainWindowViewModel : MainModel, IMainModel, INotifyPropertyChanged, IDisposable
+    public class MainWindowViewModel : MainModel, INotifyPropertyChanged, IDisposable
     {
         public event PropertyChangedEventHandler PropertyChanged;
 
-        protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = "")
-        {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        private readonly IMessenger messenger;
+
+        private CostColors costColors;
+        private string graphParametres;
+        private IGraphField graphField;
+
+        public override string GraphParametres 
+        { 
+            get => graphParametres; 
+            set { graphParametres = value; OnPropertyChanged(); } 
+        }
+       
+        public override IGraphField GraphField 
+        { 
+            get => graphField; 
+            set { graphField = value; OnPropertyChanged(); } 
         }
 
-        private string graphParametres;
-        public override string GraphParametres { get => graphParametres; set { graphParametres = value; OnPropertyChanged(); } }
+        public ICommand StartPathFindCommand { get; }
 
-        private IGraphField graphField;
-        public override IGraphField GraphField { get => graphField; set { graphField = value; OnPropertyChanged(); } }
+        public ICommand CreateNewGraphCommand { get; }
+
+        public ICommand ClearGraphCommand { get; }
+
+        public ICommand SaveGraphCommand { get; }
+
+        public ICommand LoadGraphCommand { get; }
+
+        public ICommand ShowVertexCost { get; }
+
+        public ICommand InterruptAlgorithmCommand { get; }
+
+        public ICommand ClearVerticesColorCommand { get; }
+
+        public ICommand ColorizeAccordingToCostCommand { get; }
+
+        public ICommand ResetColorizingCommand { get; }
 
         private bool IsAllAlgorithmsFinished { get; set; } = true;
-
-        public ICommand StartPathFindCommand { get; }
-        public ICommand CreateNewGraphCommand { get; }
-        public ICommand ClearGraphCommand { get; }
-        public ICommand SaveGraphCommand { get; }
-        public ICommand LoadGraphCommand { get; }
-        public ICommand ShowVertexCost { get; }
-        public ICommand InterruptAlgorithmCommand { get; }
-        public ICommand ClearVerticesColorCommand { get; }
-        public ICommand ColorizeAccordingToCostCommand { get; }
-        public ICommand ResetColorizingCommand { get; }
 
         public MainWindowViewModel(IGraphFieldFactory fieldFactory, IVertexEventHolder eventHolder,
             GraphSerializationModule SerializationModule, BaseEndPoints endPoints, ILog log)
@@ -70,9 +86,20 @@ namespace WPFVersion.ViewModel
             messenger.Register<GraphCreatedMessage>(this, MessageTokens.MainModel, SetGraph);
         }
 
-        public override void FindPath() => DI.Container.Resolve<PathFindWindow>().Show();
+        public void Dispose()
+        {
+            messenger.Unregister(this);
+        }
 
-        public override void CreateNewGraph() => DI.Container.Resolve<GraphCreatesWindow>().Show();
+        public override void FindPath()
+        {
+            DI.Container.Resolve<PathFindWindow>().Show();
+        }
+
+        public override void CreateNewGraph()
+        {
+            DI.Container.Resolve<GraphCreatesWindow>().Show();
+        }
 
         public override void ConnectNewGraph(IGraph graph)
         {
@@ -84,44 +111,100 @@ namespace WPFVersion.ViewModel
                 .Forward(new GraphCreatedMessage(graph), MessageTokens.AlgorithmStatisticsModel);
         }
 
-        private void ExecuteColorizeAccordingToCost(object param) => costColors.ColorizeAccordingToCost();
-        private void ExecuteResetColorizing(object param) => costColors.ReturnPreviousColors();
-        private void ExecuteShowVertexCostCommand(object parametre) => (parametre as IVerticesCostsMode)?.Apply(Graph);
-        private void ExecuteClearVerticesColors(object param) => ClearColors();
-        private void ExecuteSaveGraphCommand(object param) => base.SaveGraph();
-        private bool CanExecuteStartFindPathCommand(object param) => !endPoints.HasIsolators();
-        private void ExecuteLoadGraphCommand(object param) => base.LoadGraph();
-        private void ExecuteStartPathFindCommand(object param) => FindPath();
-        private void ExecuteCreateNewGraphCommand(object param) => CreateNewGraph();
+        protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = "")
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        }
+
+        private void ExecuteColorizeAccordingToCost(object param)
+        {
+            costColors.ColorizeAccordingToCost();
+        }
+
+        private void ExecuteResetColorizing(object param)
+        {
+            costColors.ReturnPreviousColors();
+        }
+
+        private void ExecuteShowVertexCostCommand(object parametre)
+        {
+            (parametre as IVerticesCostsMode)?.Apply(Graph);
+        }
+
+        private void ExecuteClearVerticesColors(object param)
+        {
+            ClearColors();
+        }
+
+        private void ExecuteSaveGraphCommand(object param)
+        {
+            base.SaveGraph();
+        }
+
+        private bool CanExecuteStartFindPathCommand(object param)
+        {
+            return !endPoints.HasIsolators();
+        }
+
+        private void ExecuteLoadGraphCommand(object param)
+        {
+            base.LoadGraph();
+        }
+
+        private void ExecuteStartPathFindCommand(object param)
+        {
+            FindPath();
+        }
+
+        private void ExecuteCreateNewGraphCommand(object param)
+        {
+            CreateNewGraph();
+        }
+
         private void ExecuteInterruptAlgorithmCommand(object param)
         {
             messenger.Forward(new InterruptAllAlgorithmsMessage(), MessageTokens.AlgorithmStatisticsModel);
         }
+
         private void ExecuteClearGraphCommand(object param)
         {
             base.ClearGraph();
             messenger.Forward(new ClearStatisticsMessage(), MessageTokens.AlgorithmStatisticsModel);
         }
 
-        private bool CanExecuteGraphOperation(object param) => !Graph.IsNull();
-        private bool CanExecuteOperation(object param) => IsAllAlgorithmsFinished;
-        private bool CanExecuteInterruptAlgorithmCommand(object param) => !IsAllAlgorithmsFinished;
-        private bool CanExecuteClearGraphOperation(object param) => CanExecuteOperation(param) && CanExecuteGraphOperation(param);
-        private bool CanExecuteColorizingGraphOperation(object param) => CanExecuteGraphOperation(param) && IsAllAlgorithmsFinished;
+        private bool CanExecuteGraphOperation(object param)
+        {
+            return !Graph.IsNull();
+        }
 
-        private void SetGraph(GraphCreatedMessage message) => ConnectNewGraph(message.Graph);
+        private bool CanExecuteOperation(object param)
+        {
+            return IsAllAlgorithmsFinished;
+        }
+
+        private bool CanExecuteInterruptAlgorithmCommand(object param)
+        {
+            return !IsAllAlgorithmsFinished;
+        }
+
+        private bool CanExecuteClearGraphOperation(object param) 
+        {
+            return CanExecuteOperation(param) && CanExecuteGraphOperation(param);
+        }
+
+        private bool CanExecuteColorizingGraphOperation(object param)
+        {
+            return CanExecuteGraphOperation(param) && IsAllAlgorithmsFinished;
+        }
+
+        private void SetGraph(GraphCreatedMessage message)
+        {
+            ConnectNewGraph(message.Graph);
+        }
+
         private void OnIsAllAlgorithmsFinished(IsAllAlgorithmsFinishedMessage message)
         {
             IsAllAlgorithmsFinished = message.IsAllAlgorithmsFinished;
         }
-
-        public void Dispose()
-        {
-            messenger.Unregister(this);
-        }
-
-        private CostColors costColors;
-
-        private readonly IMessenger messenger;
     }
 }

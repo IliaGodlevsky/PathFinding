@@ -1,4 +1,5 @@
-﻿using Common.Attrbiutes;
+﻿using Algorithm.Base;
+using Common.Attrbiutes;
 using Common.Extensions;
 using ConsoleVersion.Interface;
 using ConsoleVersion.ViewModel;
@@ -7,11 +8,11 @@ using System;
 namespace ConsoleVersion.Commands
 {
     [AttachedTo(typeof(PathFindingViewModel))]
-    internal sealed class PauseAlgorithmCommand : IConsoleKeyCommand
+    internal sealed class PauseAlgorithmCommand : IConsoleKeyCommand<PathfindingAlgorithm>
     {
-        public void Execute(PathFindingViewModel viewModel)
+        public void Execute(PathfindingAlgorithm algorithm)
         {
-            viewModel.CurrentAlgorithm.Pause();
+            algorithm.Pause();
         }
 
         public bool CanExecute(ConsoleKey key)

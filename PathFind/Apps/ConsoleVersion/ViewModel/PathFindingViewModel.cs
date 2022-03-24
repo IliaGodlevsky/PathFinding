@@ -3,6 +3,7 @@ using Algorithm.Factory.Interface;
 using Algorithm.Infrastructure.EventArguments;
 using Autofac;
 using Commands.Extensions;
+using Common;
 using Common.Extensions;
 using Common.Interface;
 using ConsoleVersion.Attributes;
@@ -38,6 +39,7 @@ namespace ConsoleVersion.ViewModel
         private readonly InclusiveValueRange<int> algorithmKeysValueRange;
         private readonly IMessenger messenger;
         private readonly ManualResetEventSlim resetEvent;
+        private readonly ValueTypeWrap<int> delayTime;
 
         public IInput<int> IntInput { get; set; }
 
@@ -47,7 +49,11 @@ namespace ConsoleVersion.ViewModel
 
         public string AlgorithmKeyInputMessage { private get; set; }
 
-        public PathfindingAlgorithm CurrentAlgorithm => algorithm;
+        public override int DelayTime 
+        {
+            get => delayTime.Value;
+            set => delayTime.Value = value;
+        }
 
         private string CurrentAlgorithmName { get; set; }
 
@@ -55,7 +61,9 @@ namespace ConsoleVersion.ViewModel
 
         private int AlgorithmIndex => IntInput.Input(AlgorithmKeyInputMessage, algorithmKeysValueRange) - 1;
 
-        private IReadOnlyCollection<IConsoleKeyCommand> KeyCommands { get; }
+        private IReadOnlyCollection<IConsoleKeyCommand<ValueTypeWrap<int>>> TimeDelayKeyCommands { get; }
+
+        private IReadOnlyCollection<IConsoleKeyCommand<PathfindingAlgorithm>> AlgorithmKeyCommands { get; }
 
         public PathFindingViewModel(BaseEndPoints endPoints,
             IEnumerable<IAlgorithmFactory<PathfindingAlgorithm>> algorithmFactories, ILog log)
@@ -63,10 +71,12 @@ namespace ConsoleVersion.ViewModel
         {
             algorithmKeysValueRange = new InclusiveValueRange<int>(Algorithms.Count, 1);
             ConsoleKeystrokesHook.Instance.KeyPressed += OnConsoleKeyPressed;
+            delayTime = new ValueTypeWrap<int>();
             DelayTime = Constants.AlgorithmDelayTimeValueRange.LowerValueOfRange;
             resetEvent = new ManualResetEventSlim();
             messenger = DI.Container.Resolve<IMessenger>();
-            KeyCommands = this.GetAttachedConsoleKeyCommands();
+            TimeDelayKeyCommands = this.GetAttachedDelayTimeConsoleKeyCommands();
+            AlgorithmKeyCommands = this.GetAttachedPathfindingKeyCommands();
         }
 
         [MenuItem(MenuItemsNames.FindPath, MenuItemPriority.Highest)]
@@ -183,7 +193,8 @@ namespace ConsoleVersion.ViewModel
 
         private void OnConsoleKeyPressed(object sender, ConsoleKeyPressedEventArgs e)
         {
-            KeyCommands.ExecuteFirst(e.PressedKey, this);
+            AlgorithmKeyCommands.ExecuteFirst(e.PressedKey, algorithm);
+            TimeDelayKeyCommands.ExecuteFirst(e.PressedKey, delayTime);
         }
     }
 }

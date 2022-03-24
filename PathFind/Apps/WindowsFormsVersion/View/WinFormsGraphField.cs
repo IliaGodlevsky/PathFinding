@@ -1,4 +1,5 @@
 ﻿using Common.Extensions.EnumerableExtensions;
+using GraphLib.Extensions;
 using GraphLib.Interfaces;
 using GraphLib.Realizations.Coordinates;
 using GraphLib.Realizations.Graphs;
@@ -11,12 +12,15 @@ namespace WindowsFormsVersion.View
 {
     internal sealed class WinFormsGraphField : UserControl, IGraphField
     {
+        private readonly int distanceBetweenVertices;
+
         public IReadOnlyCollection<IVertex> Vertices { get; }
+
         public WinFormsGraphField(Graph2D graph)
         {
             distanceBetweenVertices = Constants.DistanceBetweenVertices + Constants.VertexSize;
             Vertices = graph.Vertices;
-            Vertices.ForEach(Add);
+            graph.ForEach<Vertex>(Locate);
         }
 
         public WinFormsGraphField()
@@ -24,19 +28,16 @@ namespace WindowsFormsVersion.View
 
         }
 
-        private void Add(IVertex vertex)
+        private void Locate(Vertex vertex)
         {
-            if (vertex.Position is Coordinate2D coordinate && vertex is Vertex winFormsVertex)
-            {
-                var xCoordinate = coordinate.X * distanceBetweenVertices;
-                var yCoordinate = coordinate.Y * distanceBetweenVertices;
+            var position = (Coordinate2D)vertex.Position;
 
-                winFormsVertex.Location = new Point(xCoordinate, yCoordinate);
+            var xCoordinate = position.X * distanceBetweenVertices;
+            var yCoordinate = position.Y * distanceBetweenVertices;
 
-                Controls.Add(winFormsVertex);
-            }
+            vertex.Location = new Point(xCoordinate, yCoordinate);
+
+            Controls.Add(vertex);
         }
-
-        private readonly int distanceBetweenVertices;
     }
 }

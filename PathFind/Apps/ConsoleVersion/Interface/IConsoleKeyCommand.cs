@@ -4,7 +4,7 @@ using System;
 
 namespace ConsoleVersion.Interface
 {
-    internal interface IConsoleKeyCommand : IExecutable<PathFindingViewModel>, IExecutionCheck<ConsoleKey>
+    internal interface IConsoleKeyCommand<TExecute> : IExecutable<TExecute>, IExecutionCheck<ConsoleKey>
     {
 
     }

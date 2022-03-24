@@ -1,5 +1,4 @@
-﻿using Common.Extensions;
-using GraphLib.Extensions;
+﻿using GraphLib.Extensions;
 using GraphLib.Interfaces;
 using GraphLib.Serialization;
 using GraphLib.Serialization.Extensions;
@@ -118,16 +117,8 @@ namespace WPFVersion.Model
 
         static Vertex()
         {
-            EnqueuedEvent = EventManager.RegisterRoutedEvent(
-                nameof(Enqueued),
-                RoutingStrategy.Bubble,
-                typeof(RoutedEventHandler),
-                typeof(Vertex));
-            ColoredAsPathEvent = EventManager.RegisterRoutedEvent(
-                nameof(ColoredAsPath),
-                RoutingStrategy.Bubble,
-                typeof(RoutedEventHandler),
-                typeof(Vertex));
+            EnqueuedEvent = RegisterRoutedEvent(nameof(Enqueued));
+            ColoredAsPathEvent = RegisterRoutedEvent(nameof(ColoredAsPath));
         }
 
         public bool Equals(IVertex other) => other.IsEqual(this);
@@ -187,6 +178,11 @@ namespace WPFVersion.Model
         {
             (cost as IWeightable)?.MakeWeighted();
             Dispatcher.Invoke(() => Content = cost.ToString());
+        }
+
+        private static RoutedEvent RegisterRoutedEvent(string name)
+        {
+            return EventManager.RegisterRoutedEvent(name, RoutingStrategy.Bubble, typeof(RoutedEventHandler), typeof(Vertex));
         }
     }
 }
