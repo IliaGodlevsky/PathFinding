@@ -96,7 +96,7 @@ namespace WPFVersion.Model
         public virtual INeighborhood Neighborhood { get; }
 
         public IGraph Graph { get; }
-        
+
         public Vertex(INeighborhood neighborhood, ICoordinate coordinate, IVisualization<Vertex> visualization) : base()
         {
             RenderTransformOrigin = new Point(0.5, 0.5);

@@ -12,6 +12,7 @@ using GraphLib.ViewModel;
 using Logging.Interface;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using ValueRange;
 using ValueRange.Extensions;
@@ -36,23 +37,17 @@ namespace ConsoleVersion.ViewModel
             messenger = DI.Container.Resolve<IMessenger>();
         }
 
-        [ExecutionCheckMethod(nameof(CanCreateGraph))]
-        [MenuItem(MenuItemsNames.CreateNewGraph, MenuItemPriority.Highest)]
+        [ExecuteSafe(nameof(ExecuteSafe))]
+        [PreValidationMethod(nameof(CanCreateGraph))]
+        [MenuItem(0), Description(MenuItemsNames.CreateNewGraph)]
         public override void CreateGraph()
         {
-            try
-            {
-                var graph = SelectedGraphAssemble.AssembleGraph(ObstaclePercent, Width, Length);
-                var token = MessageTokens.MainModel | MessageTokens.MainView;
-                messenger.Forward(new GraphCreatedMessage(graph), token);
-            }
-            catch (Exception ex)
-            {
-                log.Error(ex);
-            }
+            var graph = SelectedGraphAssemble.AssembleGraph(ObstaclePercent, Width, Length);
+            var token = MessageTokens.MainModel | MessageTokens.MainView;
+            messenger.Forward(new GraphCreatedMessage(graph), token);
         }
 
-        [MenuItem(MenuItemsNames.ChooseGraphAssemble, MenuItemPriority.High)]
+        [MenuItem(1), Description(MenuItemsNames.ChooseGraphAssemble)]
         public void ChooseGraphAssemble()
         {
             int graphAssembleIndex = IntInput.Input(GraphAssembleInpuMessage, graphAssembleKeyRange) - 1;
@@ -60,23 +55,28 @@ namespace ConsoleVersion.ViewModel
             SelectedGraphAssemble = GraphAssembles[selectedGraphAssembleKey];
         }
 
-        [MenuItem(MenuItemsNames.InputGraphParametres, MenuItemPriority.High)]
+        [MenuItem(2), Description(MenuItemsNames.InputGraphParametres)]
         public void InputGraphParametres()
         {
             Width = IntInput.Input(MessagesTexts.GraphWidthInputMsg, Constants.GraphWidthValueRange);
             Length = IntInput.Input(MessagesTexts.GraphHeightInputMsg, Constants.GraphLengthValueRange);
         }
 
-        [MenuItem(MenuItemsNames.InputObstaclePercent, MenuItemPriority.Normal)]
+        [MenuItem(3), Description(MenuItemsNames.InputObstaclePercent)]
         public void InputObstaclePercent()
         {
             ObstaclePercent = IntInput.Input(MessagesTexts.ObstaclePercentInputMsg, Constants.ObstaclesPercentValueRange);
         }
 
-        [MenuItem(MenuItemsNames.Exit, MenuItemPriority.Lowest)]
+        [MenuItem(4), Description(MenuItemsNames.Exit)]
         public void Interrupt()
         {
             WindowClosed?.Invoke();
+        }
+
+        public void Dispose()
+        {
+            WindowClosed = null;
         }
 
         private bool CanCreateGraph()
@@ -86,9 +86,16 @@ namespace ConsoleVersion.ViewModel
                 && Constants.GraphLengthValueRange.Contains(Length);
         }
 
-        public void Dispose()
+        private void ExecuteSafe(Action action)
         {
-            WindowClosed = null;
+            try
+            {
+                action.Invoke();
+            }
+            catch (Exception ex)
+            {
+                log.Error(ex);
+            }
         }
     }
 }

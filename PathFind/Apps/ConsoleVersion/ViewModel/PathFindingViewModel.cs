@@ -19,12 +19,12 @@ using GalaSoft.MvvmLight.Messaging;
 using GraphLib.Base.EndPoints;
 using GraphLib.Extensions;
 using GraphViewModel;
-using Interruptable.EventArguments;
 using Interruptable.Extensions;
 using Logging.Interface;
 using NullObject.Extensions;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Diagnostics;
 using System.Threading;
 using ValueRange;
@@ -51,10 +51,10 @@ namespace ConsoleVersion.ViewModel
 
         public string AlgorithmKeyInputMessage { private get; set; }
 
-        public override int DelayTime 
-        { 
-            get => delayTime.Value; 
-            set => delayTime.Value = value; 
+        public override int DelayTime
+        {
+            get => delayTime.Value;
+            set => delayTime.Value = value;
         }
 
         private string Statistics => path.ToStatistics(timer, visitedVerticesCount, currentAlgorithmName);
@@ -65,7 +65,7 @@ namespace ConsoleVersion.ViewModel
 
         private IReadOnlyCollection<IConsoleKeyCommand<PathfindingAlgorithm>> AlgorithmKeyCommands { get; }
 
-        public PathFindingViewModel(BaseEndPoints endPoints, IEnumerable<IAlgorithmFactory<PathfindingAlgorithm>> algorithmFactories, 
+        public PathFindingViewModel(BaseEndPoints endPoints, IEnumerable<IAlgorithmFactory<PathfindingAlgorithm>> algorithmFactories,
             ILog log) : base(endPoints, algorithmFactories, log)
         {
             algorithmKeysValueRange = new InclusiveValueRange<int>(Algorithms.Count, 1);
@@ -78,52 +78,46 @@ namespace ConsoleVersion.ViewModel
             AlgorithmKeyCommands = this.GetAttachedPathfindingKeyCommands();
         }
 
-        [ExecutionCheckMethod(nameof(CanExecutePathfindingCommand))]
-        [MenuItem(MenuItemsNames.FindPath, MenuItemPriority.Highest)]
+        [ExecuteSafe(nameof(ExecuteSafe))]
+        [PreValidationMethod(nameof(CanExecutePathfinding))]
+        [MenuItem(0), Description(MenuItemsNames.FindPath)]
         public override void FindPath()
         {
-            try
+            using (Cursor.HideCursor())
             {
-                using (Cursor.HideCursor())
-                {
-                    base.FindPath();
-                    resetEvent.Reset();
-                    resetEvent.Wait();
-                    KeyInput.Input();
-                }
-            }
-            catch (Exception ex)
-            {
-                log.Error(ex);
+                base.FindPath();
+                resetEvent.Reset();
+                resetEvent.Wait();
+                KeyInput.Input();
             }
         }
 
-        [ExecutionCheckMethod(nameof(IsVisualizationNeeded))]
-        [MenuItem(MenuItemsNames.InputDelayTime, MenuItemPriority.Normal)]
+        [PreValidationMethod(nameof(IsVisualizationNeeded))]
+        [MenuItem(3), Description(MenuItemsNames.InputDelayTime)]
         public void InputDelayTime()
         {
             DelayTime = IntInput.Input(MessagesTexts.DelayTimeInputMsg, Constants.AlgorithmDelayTimeValueRange);
         }
 
-        [MenuItem(MenuItemsNames.ChooseAlgorithm, MenuItemPriority.High)]
+        [MenuItem(1), Description(MenuItemsNames.ChooseAlgorithm)]
         public void ChooseAlgorithm()
         {
             Algorithm = Algorithms[AlgorithmIndex].Item2;
         }
 
-        [MenuItem(MenuItemsNames.Exit, MenuItemPriority.Lowest)]
+        [MenuItem(7), Description(MenuItemsNames.Exit)]
         public void Interrupt()
         {
             WindowClosed?.Invoke();
         }
 
-        [MenuItem(MenuItemsNames.ChooseEndPoints, MenuItemPriority.High)]
+        [MenuItem(2), Description(MenuItemsNames.ChooseEndPoints)]
         public void ChooseExtremeVertex()
         {
             DI.Container.Display<EndPointsView>();
         }
 
-        [MenuItem(MenuItemsNames.ClearGraph, MenuItemPriority.Low)]
+        [MenuItem(4), Description(MenuItemsNames.ClearGraph)]
         public void ClearGraph()
         {
             using (Cursor.HideCursor())
@@ -132,13 +126,13 @@ namespace ConsoleVersion.ViewModel
             }
         }
 
-        [MenuItem(MenuItemsNames.ClearColors, MenuItemPriority.Low)]
+        [MenuItem(5), Description(MenuItemsNames.ClearColors)]
         public void ClearColors()
         {
             messenger.Forward<ClearColorsMessage>(MessageTokens.MainModel);
         }
 
-        [MenuItem(MenuItemsNames.ApplyVisualization, MenuItemPriority.Low)]
+        [MenuItem(6), Description(MenuItemsNames.ApplyVisualization)]
         public void ApplyVisualization()
         {
             IsVisualizationRequired = AnswerInput.InputAnswer(MessagesTexts.ApplyVisualizationMsg, Constants.AnswerValueRange);
@@ -189,9 +183,21 @@ namespace ConsoleVersion.ViewModel
             return IsVisualizationRequired;
         }
 
-        private bool CanExecutePathfindingCommand()
+        private bool CanExecutePathfinding()
         {
             return !endPoints.HasIsolators() && !Algorithm.IsNull();
+        }
+
+        private void ExecuteSafe(Action action)
+        {
+            try
+            {
+                action.Invoke();
+            }
+            catch (Exception ex)
+            {
+                log.Error(ex);
+            }
         }
     }
 }

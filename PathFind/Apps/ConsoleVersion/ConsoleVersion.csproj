@@ -60,7 +60,8 @@
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Attributes\ExecutionCheckMethodAttribute.cs" />
+    <Compile Include="Attributes\ExecuteSafeAttribute.cs" />
+    <Compile Include="Attributes\PreValidationMethodAttribute.cs" />
     <Compile Include="Attributes\MenuItemAttribute.cs" />
     <Compile Include="Commands\BaseAlgorithmSpeedCommand.cs" />
     <Compile Include="Commands\MenuCommand.cs" />
@@ -83,7 +84,6 @@
     <Compile Include="Extensions\IEnumerableExtensions.cs" />
     <Compile Include="Extensions\IGraphPathExtensions.cs" />
     <Compile Include="Extensions\IMessengerExtensions.cs" />
-    <Compile Include="Extensions\MenuCommandExtensions.cs" />
     <Compile Include="Extensions\PathFindingViewModelExtensions.cs" />
     <Compile Include="Extensions\IInputExtensions.cs" />
     <Compile Include="Interface\IConsoleKeyCommand.cs" />

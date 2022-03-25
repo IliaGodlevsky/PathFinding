@@ -9,7 +9,6 @@ using Common.Interface;
 using ConsoleVersion.Enums;
 using ConsoleVersion.Interface;
 using ConsoleVersion.Model;
-using ConsoleVersion.ValueInput.ProgrammedInput;
 using ConsoleVersion.ValueInput.UserInput;
 using ConsoleVersion.ViewModel;
 using GalaSoft.MvvmLight.Messaging;

@@ -12,7 +12,9 @@ using GraphLib.Base.EndPoints;
 using GraphLib.Extensions;
 using GraphLib.Realizations.Graphs;
 using Logging.Interface;
+using NullObject.Extensions;
 using System;
+using System.ComponentModel;
 using System.Linq;
 
 namespace ConsoleVersion.ViewModel
@@ -28,7 +30,6 @@ namespace ConsoleVersion.ViewModel
         private readonly IMessenger messenger;
 
         private int numberOfIntermediates;
-
         private Graph2D graph;
 
         public IInput<int> IntInput { get; set; }
@@ -43,8 +44,9 @@ namespace ConsoleVersion.ViewModel
             messenger.Forward(message, MessageTokens.Everyone);
         }
 
-        [ExecutionCheckMethod(nameof(CanChooseEndPoints))]
-        [MenuItem(MenuItemsNames.ChooseEndPoints, MenuItemPriority.Highest)]
+        [PreValidationMethod(nameof(IsGraphValid))]
+        [PreValidationMethod(nameof(CanChooseEndPoints))]
+        [MenuItem(0), Description(MenuItemsNames.ChooseEndPoints)]
         public void ChooseEndPoints()
         {
             MainView.SetCursorPositionUnderMenu(MenuOffset);
@@ -52,28 +54,29 @@ namespace ConsoleVersion.ViewModel
             IntInput.InputRequiredEndPoints(graph, endPoints).OnEndPointChosen();
         }
 
-        [ExecutionCheckMethod(nameof(CanChangeVertex))]
-        [MenuItem(MenuItemsNames.ReplaceSource, MenuItemPriority.Low)]
+        [PreValidationMethod(nameof(CanChangeVertex))]
+        [MenuItem(2), Description(MenuItemsNames.ReplaceSource)]
         public void ChangeSourceVertex()
         {
             ChangeVertex(endPoints.RemoveSource, MessagesTexts.SourceVertexChoiceMsg);
         }
 
-        [ExecutionCheckMethod(nameof(CanChangeVertex))]
-        [MenuItem(MenuItemsNames.ReplaceTarget, MenuItemPriority.Low)]
+        [PreValidationMethod(nameof(CanChangeVertex))]
+        [MenuItem(3), Description(MenuItemsNames.ReplaceTarget)]
         public void ChangeTargetVertex()
         {
             ChangeVertex(endPoints.RemoveTarget, MessagesTexts.TargetVertexChoiceMsg);
         }
 
-        [MenuItem(MenuItemsNames.ClearEndPoints, MenuItemPriority.Low)]
+        [MenuItem(5), Description(MenuItemsNames.ClearEndPoints)]
         public void ClearEndPoints()
         {
             endPoints.Reset();
         }
 
-        [ExecutionCheckMethod(nameof(CanChangeIntermediates))]
-        [MenuItem(MenuItemsNames.ReplaceIntermediate, MenuItemPriority.Low)]
+        [PreValidationMethod(nameof(IsGraphValid))]
+        [PreValidationMethod(nameof(CanChangeIntermediates))]
+        [MenuItem(4), Description(MenuItemsNames.ReplaceIntermediate)]
         public void ChangeIntermediates()
         {
             string msg = MessagesTexts.NumberOfIntermediatesVerticesToReplaceMsg;
@@ -84,8 +87,9 @@ namespace ConsoleVersion.ViewModel
             IntInput.InputEndPoints(graph, endPoints, toReplaceNumber).OnEndPointChosen();
         }
 
-        [ExecutionCheckMethod(nameof(CanChangeVertex))]
-        [MenuItem(MenuItemsNames.ChooseIntermediates, MenuItemPriority.Normal)]
+        [PreValidationMethod(nameof(IsGraphValid))]
+        [PreValidationMethod(nameof(CanChangeVertex))]
+        [MenuItem(1), Description(MenuItemsNames.ChooseIntermediates)]
         public void ChooseIntermediates()
         {
             string message = MessagesTexts.NumberOfIntermediateVerticesInputMsg;
@@ -95,7 +99,7 @@ namespace ConsoleVersion.ViewModel
             IntInput.InputEndPoints(graph, endPoints, number).OnEndPointChosen();
         }
 
-        [MenuItem(MenuItemsNames.Exit, MenuItemPriority.Lowest)]
+        [MenuItem(6), Description(MenuItemsNames.Exit)]
         public void Interrupt()
         {
             WindowClosed?.Invoke();
@@ -133,6 +137,11 @@ namespace ConsoleVersion.ViewModel
         private bool CanChooseEndPoints()
         {
             return graph.HasAvailableEndPoints() && !endPoints.HasSourceAndTargetSet();
+        }
+
+        private bool IsGraphValid()
+        {
+            return !graph.IsNull();
         }
     }
 }

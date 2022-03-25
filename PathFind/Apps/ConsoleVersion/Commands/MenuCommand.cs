@@ -1,27 +1,30 @@
 ﻿using System;
+using System.Linq;
 
 namespace ConsoleVersion.Commands
 {
     internal sealed class MenuCommand
     {
         private readonly Action action;
-        private readonly Func<bool> predicate;
+        private readonly Func<bool>[] predicates;
 
-        public MenuCommand(Action action, Func<bool> predicate)
+        public MenuCommand(Action action, params Func<bool>[] predicates)
         {
             this.action = action;
-            this.predicate = predicate;
+            this.predicates = predicates;
         }
 
         public void Execute()
         {
-            action.Invoke();
+            if (predicates.All(IsTrue))
+            {
+                action.Invoke();
+            }
         }
 
-        public bool CanExecute()
+        private static bool IsTrue(Func<bool> predicate)
         {
-            return predicate == null 
-                || predicate.Invoke();
+            return predicate == null || predicate.Invoke();
         }
     }
 }

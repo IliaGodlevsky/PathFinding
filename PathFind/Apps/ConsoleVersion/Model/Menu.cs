@@ -2,9 +2,9 @@
 using Common.Extensions.EnumerableExtensions;
 using ConsoleVersion.Attributes;
 using ConsoleVersion.Commands;
-using ConsoleVersion.Enums;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Reflection;
 
@@ -38,8 +38,8 @@ namespace ConsoleVersion.Model
         {
             return targetType
                 .GetMethods(MethodAccessModificators)
-                .Where(IsMenuAction)
-                .OrderByDescending(GetMenuActionPriority)
+                .Where(IsMenuItemMethod)
+                .OrderBy(GetMenuItemOrder)
                 .SelectMany(CreateNameCommandPair)
                 .ToDictionary();
         }
@@ -48,33 +48,61 @@ namespace ConsoleVersion.Model
         {
             if (methodInfo.TryCreateDelegate(target, out Action action))
             {
-                var checkMethod = GetCheckMethod(methodInfo);
-                var attribute = methodInfo.GetAttributeOrNull<MenuItemAttribute>();
-                var menuCommand = new MenuCommand(action, checkMethod);
-                yield return new KeyValuePair<string, MenuCommand>(attribute.Header, menuCommand);
+                var command = action;
+                TryCreateSafeAction(methodInfo, action, out command);
+                var validationMethods = GetValidationMethods(methodInfo);
+                var description = methodInfo.GetAttributeOrNull<DescriptionAttribute>();
+                string name = description?.Description ?? string.Empty;
+                var menuCommand = new MenuCommand(command, validationMethods);
+                yield return new KeyValuePair<string, MenuCommand>(name, menuCommand);
             }
         }
 
-        private Func<bool> GetCheckMethod(MethodInfo method)
+        private bool TryCreateSafeAction(MethodInfo info, Action toWrap, out Action safeAction)
         {
-            var attribute = method.GetAttributeOrNull<ExecutionCheckMethodAttribute>();
-            if (attribute != null)
+            safeAction = toWrap;
+            var tryCatchWrapName = info.GetAttributeOrNull<ExecuteSafeAttribute>();
+            if (tryCatchWrapName != null)
             {
-                var checkMethod = targetType.GetMethod(attribute.MethodName, MethodAccessModificators);
-                checkMethod.TryCreateDelegate(target, out Func<bool> predicate);
-                return predicate;
+                var method = targetType.GetMethod(tryCatchWrapName.MethodName, MethodAccessModificators);
+                if (method.TryCreateDelegate(target, out Action<Action> wrap))
+                {
+                    safeAction = new Action(() => wrap.Invoke(toWrap));
+                    return true;
+                }
             }
-            return null;
+            return false;
         }
 
-        private bool IsMenuAction(MethodInfo method)
+        private Func<bool>[] GetValidationMethods(MethodInfo method)
+        {
+            return method
+                .GetCustomAttributes<PreValidationMethodAttribute>()
+                .Select(attribute => attribute.MethodName)
+                .Select(GetMethod)
+                .Select(CreatePredicate)
+                .ToArray();
+        }
+
+        private Func<bool> CreatePredicate(MethodInfo info)
+        {
+            info.TryCreateDelegate(target, out Func<bool> predicate);
+            return predicate;
+        }
+
+        private MethodInfo GetMethod(string methodName)
+        {
+            return targetType.GetMethod(methodName, MethodAccessModificators);
+        }
+
+        private bool IsMenuItemMethod(MethodInfo method)
         {
             return Attribute.IsDefined(method, typeof(MenuItemAttribute));
         }
 
-        private MenuItemPriority GetMenuActionPriority(MethodInfo method)
+        private int GetMenuItemOrder(MethodInfo method)
         {
-            return method.GetAttributeOrNull<MenuItemAttribute>().Priority;
+            return method.GetAttributeOrNull<MenuItemAttribute>().Order;
         }
     }
 }

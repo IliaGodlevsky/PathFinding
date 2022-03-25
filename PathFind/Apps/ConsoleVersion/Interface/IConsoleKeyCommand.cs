@@ -1,5 +1,4 @@
 ﻿using Commands.Interfaces;
-using ConsoleVersion.ViewModel;
 using System;
 
 namespace ConsoleVersion.Interface

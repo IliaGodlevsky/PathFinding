@@ -5,7 +5,6 @@ using GraphLib.Extensions;
 using GraphLib.Interfaces;
 using GraphLib.Serialization;
 using GraphViewModel;
-using GraphViewModel.Interfaces;
 using Logging.Interface;
 using NullObject.Extensions;
 using System;
@@ -33,16 +32,16 @@ namespace WPFVersion.ViewModel
         private string graphParametres;
         private IGraphField graphField;
 
-        public override string GraphParametres 
-        { 
-            get => graphParametres; 
-            set { graphParametres = value; OnPropertyChanged(); } 
+        public override string GraphParametres
+        {
+            get => graphParametres;
+            set { graphParametres = value; OnPropertyChanged(); }
         }
-       
-        public override IGraphField GraphField 
-        { 
-            get => graphField; 
-            set { graphField = value; OnPropertyChanged(); } 
+
+        public override IGraphField GraphField
+        {
+            get => graphField;
+            set { graphField = value; OnPropertyChanged(); }
         }
 
         public ICommand StartPathFindCommand { get; }
@@ -187,7 +186,7 @@ namespace WPFVersion.ViewModel
             return !IsAllAlgorithmsFinished;
         }
 
-        private bool CanExecuteClearGraphOperation(object param) 
+        private bool CanExecuteClearGraphOperation(object param)
         {
             return CanExecuteOperation(param) && CanExecuteGraphOperation(param);
         }

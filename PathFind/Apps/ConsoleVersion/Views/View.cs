@@ -41,7 +41,7 @@ namespace ConsoleVersion.Views
             {
                 NewMenuIteration?.Invoke();
                 menuList.Display();
-                menu.MenuActions[MenuItem].Invoke();
+                menu.MenuActions[MenuItem].Execute();
             }
         }
 

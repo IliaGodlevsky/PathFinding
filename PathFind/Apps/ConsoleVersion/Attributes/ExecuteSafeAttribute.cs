@@ -3,11 +3,11 @@
 namespace ConsoleVersion.Attributes
 {
     [AttributeUsage(AttributeTargets.Method)]
-    internal sealed class ExecutionCheckMethodAttribute : Attribute
+    internal sealed class ExecuteSafeAttribute : Attribute
     {
         public string MethodName { get; }
 
-        public ExecutionCheckMethodAttribute(string methodName)
+        public ExecuteSafeAttribute(string methodName)
         {
             MethodName = methodName;
         }

@@ -1,7 +1,6 @@
 ﻿using Common;
 using Common.Attrbiutes;
 using Common.Extensions;
-using ConsoleVersion.Model;
 using ConsoleVersion.ViewModel;
 using System;
 

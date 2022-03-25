@@ -14,11 +14,12 @@ using GraphLib.Extensions;
 using GraphLib.Interfaces;
 using GraphLib.Realizations.Graphs;
 using GraphLib.Serialization;
-using GraphLib.Serialization.Exceptions;
 using GraphViewModel;
 using GraphViewModel.Interfaces;
 using Logging.Interface;
+using NullObject.Extensions;
 using System;
+using System.ComponentModel;
 using System.Drawing;
 using static GraphLib.Base.BaseVertexCost;
 using Console = Colorful.Console;
@@ -46,45 +47,47 @@ namespace ConsoleVersion.ViewModel
             messenger.Register<ClaimGraphMessage>(this, MessageTokens.MainModel, RecieveClaimGraphMessage);
         }
 
-        [MenuItem(MenuItemsNames.MakeUnwieghted, MenuItemPriority.Normal)]
+        [MenuItem(2), Description(MenuItemsNames.MakeUnwieghted)]
         public void MakeGraphUnweighted()
         {
             Graph.ToUnweighted();
         }
 
-        [MenuItem(MenuItemsNames.MakeWeighted, MenuItemPriority.Normal)]
+        [MenuItem(3), Description(MenuItemsNames.MakeWeighted)]
         public void MakeGraphWeighted()
         {
             Graph.ToWeighted();
         }
 
-        [MenuItem(MenuItemsNames.CreateNewGraph, MenuItemPriority.Highest)]
+        [MenuItem(0), Description(MenuItemsNames.CreateNewGraph)]
         public override void CreateNewGraph()
         {
             DI.Container.Display<GraphCreateView>();
         }
 
-        [MenuItem(MenuItemsNames.FindPath, MenuItemPriority.High)]
+        [PreValidationMethod(nameof(IsGraphEmpty))]
+        [MenuItem(1), Description(MenuItemsNames.FindPath)]
         public override void FindPath()
         {
             DI.Container.Display<PathFindView>();
         }
 
-        [ExecutionCheckMethod(nameof(CanChangeVertex))]
-        [MenuItem(MenuItemsNames.ReverseVertex, MenuItemPriority.Normal)]
+        [PreValidationMethod(nameof(IsGraphEmpty))]
+        [MenuItem(4), Description(MenuItemsNames.ReverseVertex)]
         public void ReverseVertex()
         {
             ChangeVertexState(vertex => vertex.OnVertexReversed());
         }
 
-        [ExecutionCheckMethod(nameof(CanChangeVertex))]
-        [MenuItem(MenuItemsNames.ChangeVertexCost, MenuItemPriority.Low)]
+        [PreValidationMethod(nameof(IsGraphEmpty))]
+        [MenuItem(7), Description(MenuItemsNames.ChangeVertexCost)]
         public void ChangeVertexCost()
         {
             ChangeVertexState(vertex => vertex.OnVertexCostChanged());
         }
 
-        [MenuItem(MenuItemsNames.ChangeCostRange, MenuItemPriority.Low)]
+        [ExecuteSafe(nameof(ExecuteSafe))]
+        [MenuItem(8), Description(MenuItemsNames.ChangeCostRange)]
         public void ChangeVertexCostValueRange()
         {
             CostRange = IntInput.InputRange(Constants.VerticesCostRange);
@@ -92,35 +95,25 @@ namespace ConsoleVersion.ViewModel
             messenger.Forward(message, MessageTokens.MainView);
         }
 
-        [MenuItem(MenuItemsNames.SaveGraph, MenuItemPriority.Normal)]
+        [MenuItem(5), Description(MenuItemsNames.SaveGraph)]
         public override void SaveGraph()
         {
             base.SaveGraph();
         }
 
-        [MenuItem(MenuItemsNames.LoadGraph, MenuItemPriority.Normal)]
+        [ExecuteSafe(nameof(ExecuteSafe))]
+        [MenuItem(6), Description(MenuItemsNames.LoadGraph)]
         public override void LoadGraph()
         {
-            try
-            {
-                var graph = serializationModule.LoadGraph();
-                ConnectNewGraph(graph);
-                messenger
-                    .Forward(new CostRangeChangedMessage(CostRange), MessageTokens.MainView)
-                    .Forward(new GraphCreatedMessage(graph), MessageTokens.MainView);
-            }
-            catch (CantSerializeGraphException ex)
-            {
-                log.Warn(ex);
-            }
-            catch (Exception ex)
-            {
-                log.Error(ex);
-            }
+            var graph = serializationModule.LoadGraph();
+            ConnectNewGraph(graph);
+            messenger
+                .Forward(new CostRangeChangedMessage(CostRange), MessageTokens.MainView)
+                .Forward(new GraphCreatedMessage(graph), MessageTokens.MainView);
         }
 
-        [ExecutionCheckMethod(nameof(CanExecuteInterrupt))]
-        [MenuItem(MenuItemsNames.Exit, MenuItemPriority.Lowest)]
+        [PreValidationMethod(nameof(CanExecuteInterrupt))]
+        [MenuItem(9), Description(MenuItemsNames.Exit)]
         public void Interrupt()
         {
             WindowClosed?.Invoke();
@@ -155,7 +148,10 @@ namespace ConsoleVersion.ViewModel
 
         private void RecieveClaimGraphMessage(ClaimGraphMessage message)
         {
-            messenger.Forward(new GraphCreatedMessage(Graph), message.ClaimerMessageToken);
+            if (!Graph.IsNull())
+            {
+                messenger.Forward(new GraphCreatedMessage(Graph), message.ClaimerMessageToken);
+            }
         }
 
         private void ChangeVertexState(Action<Vertex> changeFunction)
@@ -163,7 +159,7 @@ namespace ConsoleVersion.ViewModel
             changeFunction(IntInput.InputVertex((Graph2D)Graph));
         }
 
-        private bool CanChangeVertex()
+        private bool IsGraphEmpty()
         {
             return Graph.HasVertices();
         }
@@ -171,6 +167,18 @@ namespace ConsoleVersion.ViewModel
         private bool CanExecuteInterrupt()
         {
             return AnswerInput.Input(MessagesTexts.ExitAppMsg, Constants.AnswerValueRange) == Answer.Yes;
+        }
+
+        private void ExecuteSafe(Action action)
+        {
+            try
+            {
+                action.Invoke();
+            }
+            catch (Exception ex)
+            {
+                log.Error(ex);
+            }
         }
 
         public void Dispose()

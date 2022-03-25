@@ -1,19 +1,14 @@
-﻿using ConsoleVersion.Enums;
+﻿using Common.Attrbiutes;
 using System;
 
 namespace ConsoleVersion.Attributes
 {
     [AttributeUsage(AttributeTargets.Method)]
-    internal sealed class MenuItemAttribute : Attribute
+    internal sealed class MenuItemAttribute : OrderAttribute
     {
-        public MenuItemPriority Priority { get; }
-
-        public string Header { get; }
-
-        public MenuItemAttribute(string header, MenuItemPriority priority)
+        public MenuItemAttribute(int order) : base(order)
         {
-            Header = header;
-            Priority = priority;
+
         }
     }
 }
