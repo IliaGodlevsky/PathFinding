@@ -1,5 +1,6 @@
 ﻿using Common.Extensions;
 using Common.Extensions.EnumerableExtensions;
+using Common.Interface;
 using ConsoleVersion.Attributes;
 using ConsoleVersion.Commands;
 using System;
@@ -26,7 +27,7 @@ namespace ConsoleVersion.Model
 
         public IReadOnlyList<string> MenuActionsNames => menuActionsNames.Value;
 
-        public Menu(object target)
+        public Menu(IViewModel target)
         {
             this.target = target;
             targetType = target.GetType();
