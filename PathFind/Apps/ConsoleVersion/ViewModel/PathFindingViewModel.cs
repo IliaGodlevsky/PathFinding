@@ -41,6 +41,8 @@ namespace ConsoleVersion.ViewModel
         private readonly ManualResetEventSlim resetEvent;
         private readonly ValueTypeWrap<int> delayTime;
 
+        private string currentAlgorithmName;
+
         public IInput<int> IntInput { get; set; }
 
         public IInput<Answer> AnswerInput { get; set; }
@@ -50,14 +52,12 @@ namespace ConsoleVersion.ViewModel
         public string AlgorithmKeyInputMessage { private get; set; }
 
         public override int DelayTime 
-        {
-            get => delayTime.Value;
-            set => delayTime.Value = value;
+        { 
+            get => delayTime.Value; 
+            set => delayTime.Value = value; 
         }
 
-        private string CurrentAlgorithmName { get; set; }
-
-        private string Statistics => path.ToStatistics(timer, visitedVerticesCount, CurrentAlgorithmName);
+        private string Statistics => path.ToStatistics(timer, visitedVerticesCount, currentAlgorithmName);
 
         private int AlgorithmIndex => IntInput.Input(AlgorithmKeyInputMessage, algorithmKeysValueRange) - 1;
 
@@ -65,9 +65,8 @@ namespace ConsoleVersion.ViewModel
 
         private IReadOnlyCollection<IConsoleKeyCommand<PathfindingAlgorithm>> AlgorithmKeyCommands { get; }
 
-        public PathFindingViewModel(BaseEndPoints endPoints,
-            IEnumerable<IAlgorithmFactory<PathfindingAlgorithm>> algorithmFactories, ILog log)
-            : base(endPoints, algorithmFactories, log)
+        public PathFindingViewModel(BaseEndPoints endPoints, IEnumerable<IAlgorithmFactory<PathfindingAlgorithm>> algorithmFactories, 
+            ILog log) : base(endPoints, algorithmFactories, log)
         {
             algorithmKeysValueRange = new InclusiveValueRange<int>(Algorithms.Count, 1);
             ConsoleKeystrokesHook.Instance.KeyPressed += OnConsoleKeyPressed;
@@ -79,39 +78,31 @@ namespace ConsoleVersion.ViewModel
             AlgorithmKeyCommands = this.GetAttachedPathfindingKeyCommands();
         }
 
+        [ExecutionCheckMethod(nameof(CanExecutePathfindingCommand))]
         [MenuItem(MenuItemsNames.FindPath, MenuItemPriority.Highest)]
         public override void FindPath()
         {
-            if (!endPoints.HasIsolators() && !Algorithm.IsNull())
+            try
             {
-                try
+                using (Cursor.HideCursor())
                 {
-                    using (Cursor.HideCursor())
-                    {
-                        base.FindPath();
-                        resetEvent.Reset();
-                        resetEvent.Wait();
-                        KeyInput.Input();
-                    }
-                }
-                catch (Exception ex)
-                {
-                    log.Error(ex);
+                    base.FindPath();
+                    resetEvent.Reset();
+                    resetEvent.Wait();
+                    KeyInput.Input();
                 }
             }
-            else
+            catch (Exception ex)
             {
-                log.Warn(MessagesTexts.EndPointsFirstlyMsg);
+                log.Error(ex);
             }
         }
 
+        [ExecutionCheckMethod(nameof(IsVisualizationNeeded))]
         [MenuItem(MenuItemsNames.InputDelayTime, MenuItemPriority.Normal)]
         public void InputDelayTime()
         {
-            if (IsVisualizationRequired)
-            {
-                DelayTime = IntInput.Input(MessagesTexts.DelayTimeInputMsg, Constants.AlgorithmDelayTimeValueRange);
-            }
+            DelayTime = IntInput.Input(MessagesTexts.DelayTimeInputMsg, Constants.AlgorithmDelayTimeValueRange);
         }
 
         [MenuItem(MenuItemsNames.ChooseAlgorithm, MenuItemPriority.High)]
@@ -170,11 +161,6 @@ namespace ConsoleVersion.ViewModel
             resetEvent.Set();
         }
 
-        protected override void OnAlgorithmStarted(object sender, ProcessEventArgs e)
-        {
-            CurrentAlgorithmName = Algorithm.GetDescription();
-        }
-
         protected override void OnVertexVisited(object sender, AlgorithmEventArgs e)
         {
             Stopwatch.StartNew().Wait(DelayTime).Stop();
@@ -189,12 +175,23 @@ namespace ConsoleVersion.ViewModel
             ConsoleKeystrokesHook.Instance.KeyInput = KeyInput;
             algorithm.Started += ConsoleKeystrokesHook.Instance.StartAsync;
             algorithm.Finished += ConsoleKeystrokesHook.Instance.Interrupt;
+            currentAlgorithmName = Algorithm.GetDescription();
         }
 
         private void OnConsoleKeyPressed(object sender, ConsoleKeyPressedEventArgs e)
         {
             AlgorithmKeyCommands.ExecuteFirst(e.PressedKey, algorithm);
             TimeDelayKeyCommands.ExecuteFirst(e.PressedKey, delayTime);
+        }
+
+        private bool IsVisualizationNeeded()
+        {
+            return IsVisualizationRequired;
+        }
+
+        private bool CanExecutePathfindingCommand()
+        {
+            return !endPoints.HasIsolators() && !Algorithm.IsNull();
         }
     }
 }

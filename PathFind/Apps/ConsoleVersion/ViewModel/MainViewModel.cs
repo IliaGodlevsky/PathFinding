@@ -70,12 +70,14 @@ namespace ConsoleVersion.ViewModel
             DI.Container.Display<PathFindView>();
         }
 
+        [ExecutionCheckMethod(nameof(CanChangeVertex))]
         [MenuItem(MenuItemsNames.ReverseVertex, MenuItemPriority.Normal)]
         public void ReverseVertex()
         {
             ChangeVertexState(vertex => vertex.OnVertexReversed());
         }
 
+        [ExecutionCheckMethod(nameof(CanChangeVertex))]
         [MenuItem(MenuItemsNames.ChangeVertexCost, MenuItemPriority.Low)]
         public void ChangeVertexCost()
         {
@@ -117,14 +119,11 @@ namespace ConsoleVersion.ViewModel
             }
         }
 
+        [ExecutionCheckMethod(nameof(CanExecuteInterrupt))]
         [MenuItem(MenuItemsNames.Exit, MenuItemPriority.Lowest)]
         public void Interrupt()
         {
-            var answer = AnswerInput.Input(MessagesTexts.ExitAppMsg, Constants.AnswerValueRange);
-            if (answer == Answer.Yes)
-            {
-                WindowClosed?.Invoke();
-            }
+            WindowClosed?.Invoke();
         }
 
         public override void ClearGraph()
@@ -161,10 +160,17 @@ namespace ConsoleVersion.ViewModel
 
         private void ChangeVertexState(Action<Vertex> changeFunction)
         {
-            if (Graph.HasVertices())
-            {
-                changeFunction(IntInput.InputVertex((Graph2D)Graph));
-            }
+            changeFunction(IntInput.InputVertex((Graph2D)Graph));
+        }
+
+        private bool CanChangeVertex()
+        {
+            return Graph.HasVertices();
+        }
+
+        private bool CanExecuteInterrupt()
+        {
+            return AnswerInput.Input(MessagesTexts.ExitAppMsg, Constants.AnswerValueRange) == Answer.Yes;
         }
 
         public void Dispose()

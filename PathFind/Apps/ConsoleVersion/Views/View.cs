@@ -11,7 +11,7 @@ namespace ConsoleVersion.Views
     {
         public event Action NewMenuIteration;
 
-        private readonly Menu<Action> menu;
+        private readonly Menu menu;
         private readonly IDisplayable menuList;
         private readonly InclusiveValueRange<int> menuRange;
 
@@ -29,7 +29,7 @@ namespace ConsoleVersion.Views
 
         protected View(IViewModel model)
         {
-            menu = new Menu<Action>(model);
+            menu = new Menu(model);
             menuList = new MenuList(menu.MenuActionsNames);
             menuRange = new InclusiveValueRange<int>(MenuSize, 1);
             model.WindowClosed += OnClosed;

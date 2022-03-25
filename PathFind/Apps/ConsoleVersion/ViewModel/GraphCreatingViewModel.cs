@@ -36,25 +36,19 @@ namespace ConsoleVersion.ViewModel
             messenger = DI.Container.Resolve<IMessenger>();
         }
 
+        [ExecutionCheckMethod(nameof(CanCreateGraph))]
         [MenuItem(MenuItemsNames.CreateNewGraph, MenuItemPriority.Highest)]
         public override void CreateGraph()
         {
-            if (CanCreateGraph())
+            try
             {
-                try
-                {
-                    var graph = SelectedGraphAssemble.AssembleGraph(ObstaclePercent, Width, Length);
-                    var token = MessageTokens.MainModel | MessageTokens.MainView;
-                    messenger.Forward(new GraphCreatedMessage(graph), token);
-                }
-                catch (Exception ex)
-                {
-                    log.Error(ex);
-                }
+                var graph = SelectedGraphAssemble.AssembleGraph(ObstaclePercent, Width, Length);
+                var token = MessageTokens.MainModel | MessageTokens.MainView;
+                messenger.Forward(new GraphCreatedMessage(graph), token);
             }
-            else
+            catch (Exception ex)
             {
-                log.Warn(MessagesTexts.NotEnoughParamtres);
+                log.Error(ex);
             }
         }
 

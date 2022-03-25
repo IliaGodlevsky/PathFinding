@@ -27,6 +27,8 @@ namespace ConsoleVersion.ViewModel
         private readonly ILog log;
         private readonly IMessenger messenger;
 
+        private int numberOfIntermediates;
+
         private Graph2D graph;
 
         public IInput<int> IntInput { get; set; }
@@ -41,27 +43,23 @@ namespace ConsoleVersion.ViewModel
             messenger.Forward(message, MessageTokens.Everyone);
         }
 
+        [ExecutionCheckMethod(nameof(CanChooseEndPoints))]
         [MenuItem(MenuItemsNames.ChooseEndPoints, MenuItemPriority.Highest)]
         public void ChooseEndPoints()
         {
-            if (graph.HasAvailableEndPoints() && !endPoints.HasSourceAndTargetSet())
-            {
-                MainView.SetCursorPositionUnderMenu(MenuOffset);
-                Console.WriteLine(MessagesTexts.SourceAndTargetInputMsg);
-                IntInput.InputRequiredEndPoints(graph, endPoints).OnEndPointChosen();
-            }
-            else
-            {
-                log.Warn(MessagesTexts.NoVerticesAsEndPointsMsg);
-            }
+            MainView.SetCursorPositionUnderMenu(MenuOffset);
+            Console.WriteLine(MessagesTexts.SourceAndTargetInputMsg);
+            IntInput.InputRequiredEndPoints(graph, endPoints).OnEndPointChosen();
         }
 
+        [ExecutionCheckMethod(nameof(CanChangeVertex))]
         [MenuItem(MenuItemsNames.ReplaceSource, MenuItemPriority.Low)]
         public void ChangeSourceVertex()
         {
             ChangeVertex(endPoints.RemoveSource, MessagesTexts.SourceVertexChoiceMsg);
         }
 
+        [ExecutionCheckMethod(nameof(CanChangeVertex))]
         [MenuItem(MenuItemsNames.ReplaceTarget, MenuItemPriority.Low)]
         public void ChangeTargetVertex()
         {
@@ -74,32 +72,27 @@ namespace ConsoleVersion.ViewModel
             endPoints.Reset();
         }
 
+        [ExecutionCheckMethod(nameof(CanChangeIntermediates))]
         [MenuItem(MenuItemsNames.ReplaceIntermediate, MenuItemPriority.Low)]
         public void ChangeIntermediates()
         {
-            int numberOfIntermediates = endPoints.GetIntermediates().Count();
-            if (numberOfIntermediates > 0)
-            {
-                string msg = MessagesTexts.NumberOfIntermediatesVerticesToReplaceMsg;
-                int toReplaceNumber = IntInput.Input(msg, numberOfIntermediates);
-                Console.WriteLine(MessagesTexts.IntermediateToReplaceMsg);
-                IntInput.InputExistingIntermediates(graph, endPoints, toReplaceNumber).OnMarkedToReplaceIntermediate();
-                Console.WriteLine(MessagesTexts.IntermediateVertexChoiceMsg);
-                IntInput.InputEndPoints(graph, endPoints, toReplaceNumber).OnEndPointChosen();
-            }
+            string msg = MessagesTexts.NumberOfIntermediatesVerticesToReplaceMsg;
+            int toReplaceNumber = IntInput.Input(msg, numberOfIntermediates);
+            Console.WriteLine(MessagesTexts.IntermediateToReplaceMsg);
+            IntInput.InputExistingIntermediates(graph, endPoints, toReplaceNumber).OnMarkedToReplaceIntermediate();
+            Console.WriteLine(MessagesTexts.IntermediateVertexChoiceMsg);
+            IntInput.InputEndPoints(graph, endPoints, toReplaceNumber).OnEndPointChosen();
         }
 
+        [ExecutionCheckMethod(nameof(CanChangeVertex))]
         [MenuItem(MenuItemsNames.ChooseIntermediates, MenuItemPriority.Normal)]
         public void ChooseIntermediates()
         {
-            if (endPoints.HasSourceAndTargetSet())
-            {
-                string message = MessagesTexts.NumberOfIntermediateVerticesInputMsg;
-                MainView.SetCursorPositionUnderMenu(MenuOffset);
-                int number = IntInput.Input(message, graph.GetAvailableIntermediatesNumber());
-                Console.WriteLine(MessagesTexts.IntermediateVertexChoiceMsg);
-                IntInput.InputEndPoints(graph, endPoints, number).OnEndPointChosen();
-            }
+            string message = MessagesTexts.NumberOfIntermediateVerticesInputMsg;
+            MainView.SetCursorPositionUnderMenu(MenuOffset);
+            int number = IntInput.Input(message, graph.GetAvailableIntermediatesNumber());
+            Console.WriteLine(MessagesTexts.IntermediateVertexChoiceMsg);
+            IntInput.InputEndPoints(graph, endPoints, number).OnEndPointChosen();
         }
 
         [MenuItem(MenuItemsNames.Exit, MenuItemPriority.Lowest)]
@@ -121,13 +114,25 @@ namespace ConsoleVersion.ViewModel
 
         private void ChangeVertex(Action action, string message)
         {
-            if (endPoints.HasSourceAndTargetSet())
-            {
-                MainView.SetCursorPositionUnderMenu(MenuOffset);
-                action();
-                Console.WriteLine(message);
-                IntInput.InputEndPoint(graph, endPoints).OnEndPointChosen();
-            }
+            MainView.SetCursorPositionUnderMenu(MenuOffset);
+            action();
+            Console.WriteLine(message);
+            IntInput.InputEndPoint(graph, endPoints).OnEndPointChosen();
+        }
+
+        private bool CanChangeIntermediates()
+        {
+            return (numberOfIntermediates = endPoints.GetIntermediates().Count()) > 0;
+        }
+
+        private bool CanChangeVertex()
+        {
+            return endPoints.HasSourceAndTargetSet();
+        }
+
+        private bool CanChooseEndPoints()
+        {
+            return graph.HasAvailableEndPoints() && !endPoints.HasSourceAndTargetSet();
         }
     }
 }
