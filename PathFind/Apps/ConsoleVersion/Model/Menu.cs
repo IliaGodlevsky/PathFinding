@@ -3,16 +3,19 @@ using Common.Extensions.EnumerableExtensions;
 using ConsoleVersion.Attributes;
 using ConsoleVersion.Commands;
 using ConsoleVersion.Enums;
-using ConsoleVersion.Interface;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 
+using static System.Reflection.BindingFlags;
+
 namespace ConsoleVersion.Model
 {
     internal sealed class Menu
     {
+        private const BindingFlags MethodAccessModificators = NonPublic | Instance | Public;
+
         private readonly object target;
         private readonly Type targetType;
 
@@ -34,7 +37,7 @@ namespace ConsoleVersion.Model
         private IReadOnlyDictionary<string, MenuCommand> GetMenuActions()
         {
             return targetType
-                .GetMethods()
+                .GetMethods(MethodAccessModificators)
                 .Where(IsMenuAction)
                 .OrderByDescending(GetMenuActionPriority)
                 .SelectMany(CreateNameCommandPair)
@@ -57,8 +60,7 @@ namespace ConsoleVersion.Model
             var attribute = method.GetAttributeOrNull<ExecutionCheckMethodAttribute>();
             if (attribute != null)
             {
-                var flags = BindingFlags.NonPublic | BindingFlags.Instance;
-                var checkMethod = targetType.GetMethod(attribute.MethodName, flags);
+                var checkMethod = targetType.GetMethod(attribute.MethodName, MethodAccessModificators);
                 checkMethod.TryCreateDelegate(target, out Func<bool> predicate);
                 return predicate;
             }
