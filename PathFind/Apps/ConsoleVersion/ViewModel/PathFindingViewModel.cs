@@ -24,7 +24,6 @@ using Logging.Interface;
 using NullObject.Extensions;
 using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.Diagnostics;
 using System.Threading;
 using ValueRange;
@@ -80,7 +79,7 @@ namespace ConsoleVersion.ViewModel
 
         [ExecuteSafe(nameof(ExecuteSafe))]
         [PreValidationMethod(nameof(CanExecutePathfinding))]
-        [MenuItem(0), Description(MenuItemsNames.FindPath)]
+        [MenuItem(MenuItemsNames.FindPath, 0)]
         public override void FindPath()
         {
             using (Cursor.HideCursor())
@@ -93,31 +92,31 @@ namespace ConsoleVersion.ViewModel
         }
 
         [PreValidationMethod(nameof(IsVisualizationNeeded))]
-        [MenuItem(3), Description(MenuItemsNames.InputDelayTime)]
+        [MenuItem(MenuItemsNames.InputDelayTime, 3)]
         public void InputDelayTime()
         {
             DelayTime = IntInput.Input(MessagesTexts.DelayTimeInputMsg, Constants.AlgorithmDelayTimeValueRange);
         }
 
-        [MenuItem(1), Description(MenuItemsNames.ChooseAlgorithm)]
+        [MenuItem(MenuItemsNames.ChooseAlgorithm, 1)]
         public void ChooseAlgorithm()
         {
             Algorithm = Algorithms[AlgorithmIndex].Item2;
         }
 
-        [MenuItem(7), Description(MenuItemsNames.Exit)]
+        [MenuItem(MenuItemsNames.Exit, 7)]
         public void Interrupt()
         {
             WindowClosed?.Invoke();
         }
 
-        [MenuItem(2), Description(MenuItemsNames.ChooseEndPoints)]
+        [MenuItem(MenuItemsNames.ChooseEndPoints, 2)]
         public void ChooseExtremeVertex()
         {
             DI.Container.Display<EndPointsView>();
         }
 
-        [MenuItem(4), Description(MenuItemsNames.ClearGraph)]
+        [MenuItem(MenuItemsNames.ClearGraph, 4)]
         public void ClearGraph()
         {
             using (Cursor.HideCursor())
@@ -126,13 +125,13 @@ namespace ConsoleVersion.ViewModel
             }
         }
 
-        [MenuItem(5), Description(MenuItemsNames.ClearColors)]
+        [MenuItem(MenuItemsNames.ClearColors, 5)]
         public void ClearColors()
         {
             messenger.Forward<ClearColorsMessage>(MessageTokens.MainModel);
         }
 
-        [MenuItem(6), Description(MenuItemsNames.ApplyVisualization)]
+        [MenuItem(MenuItemsNames.ApplyVisualization, 6)]
         public void ApplyVisualization()
         {
             IsVisualizationRequired = AnswerInput.InputAnswer(MessagesTexts.ApplyVisualizationMsg, Constants.AnswerValueRange);

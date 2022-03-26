@@ -14,7 +14,6 @@ using GraphLib.Realizations.Graphs;
 using Logging.Interface;
 using NullObject.Extensions;
 using System;
-using System.ComponentModel;
 using System.Linq;
 
 namespace ConsoleVersion.ViewModel
@@ -46,7 +45,7 @@ namespace ConsoleVersion.ViewModel
 
         [PreValidationMethod(nameof(IsGraphValid))]
         [PreValidationMethod(nameof(CanChooseEndPoints))]
-        [MenuItem(0), Description(MenuItemsNames.ChooseEndPoints)]
+        [MenuItem(MenuItemsNames.ChooseEndPoints, 0)]
         public void ChooseEndPoints()
         {
             MainView.SetCursorPositionUnderMenu(MenuOffset);
@@ -55,20 +54,20 @@ namespace ConsoleVersion.ViewModel
         }
 
         [PreValidationMethod(nameof(CanChangeVertex))]
-        [MenuItem(2), Description(MenuItemsNames.ReplaceSource)]
+        [MenuItem(MenuItemsNames.ReplaceSource, 2)]
         public void ChangeSourceVertex()
         {
             ChangeVertex(endPoints.RemoveSource, MessagesTexts.SourceVertexChoiceMsg);
         }
 
         [PreValidationMethod(nameof(CanChangeVertex))]
-        [MenuItem(3), Description(MenuItemsNames.ReplaceTarget)]
+        [MenuItem(MenuItemsNames.ReplaceTarget, 3)]
         public void ChangeTargetVertex()
         {
             ChangeVertex(endPoints.RemoveTarget, MessagesTexts.TargetVertexChoiceMsg);
         }
 
-        [MenuItem(5), Description(MenuItemsNames.ClearEndPoints)]
+        [MenuItem(MenuItemsNames.ClearEndPoints, 5)]
         public void ClearEndPoints()
         {
             endPoints.Reset();
@@ -76,7 +75,7 @@ namespace ConsoleVersion.ViewModel
 
         [PreValidationMethod(nameof(IsGraphValid))]
         [PreValidationMethod(nameof(CanChangeIntermediates))]
-        [MenuItem(4), Description(MenuItemsNames.ReplaceIntermediate)]
+        [MenuItem(MenuItemsNames.ReplaceIntermediate, 4)]
         public void ChangeIntermediates()
         {
             string msg = MessagesTexts.NumberOfIntermediatesVerticesToReplaceMsg;
@@ -89,7 +88,7 @@ namespace ConsoleVersion.ViewModel
 
         [PreValidationMethod(nameof(IsGraphValid))]
         [PreValidationMethod(nameof(CanChangeVertex))]
-        [MenuItem(1), Description(MenuItemsNames.ChooseIntermediates)]
+        [MenuItem(MenuItemsNames.ChooseIntermediates, 1)]
         public void ChooseIntermediates()
         {
             string message = MessagesTexts.NumberOfIntermediateVerticesInputMsg;
@@ -99,7 +98,7 @@ namespace ConsoleVersion.ViewModel
             IntInput.InputEndPoints(graph, endPoints, number).OnEndPointChosen();
         }
 
-        [MenuItem(6), Description(MenuItemsNames.Exit)]
+        [MenuItem(MenuItemsNames.Exit, 6)]
         public void Interrupt()
         {
             WindowClosed?.Invoke();

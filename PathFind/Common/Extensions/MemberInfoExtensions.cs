@@ -7,11 +7,16 @@ namespace Common.Extensions
 {
     public static class MemberInfoExtensions
     {
-
         public static TAttribute GetAttributeOrNull<TAttribute>(this MemberInfo self, bool inherit = false)
             where TAttribute : Attribute
         {
             return Attribute.GetCustomAttribute(self, typeof(TAttribute), inherit) as TAttribute;
+        }
+
+        public static int GetOrder(this MethodInfo self)
+        {
+            return self.GetAttributeOrNull<OrderAttribute>()?.Order
+                ?? OrderAttribute.Default.Order;
         }
 
         public static bool TryCreateDelegate<TDelegate>(this MethodInfo self, object target,

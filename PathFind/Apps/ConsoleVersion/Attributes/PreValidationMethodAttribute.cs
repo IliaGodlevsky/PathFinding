@@ -3,13 +3,12 @@
 namespace ConsoleVersion.Attributes
 {
     [AttributeUsage(AttributeTargets.Method, AllowMultiple = true)]
-    internal sealed class PreValidationMethodAttribute : Attribute
+    internal sealed class PreValidationMethodAttribute : BaseMethodAttribute
     {
-        public string MethodName { get; }
-
         public PreValidationMethodAttribute(string methodName)
+            : base(methodName)
         {
-            MethodName = methodName;
+
         }
     }
 }

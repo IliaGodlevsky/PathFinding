@@ -45,13 +45,7 @@ namespace ConsoleVersion.DependencyInjection
         private static IContainer Configure()
         {
             var builder = new ContainerBuilder();
-#if DEBUG
-            //builder.RegisterType<ConsoleProgrammedAnswerInput>().As<IInput<Answer>>().SingleInstance();
-            //builder.RegisterType<ConsoleProgrammedIntInput>().As<IInput<int>>().SingleInstance();
-#elif !DEBUG
-            builder.RegisterType<ConsoleUserEnumInput<Answer>>().As<IInput<Answer>>().SingleInstance();
-            builder.RegisterType<ConsoleUserIntInput>().As<IInput<int>>().SingleInstance();
-#endif
+
             builder.RegisterType<ConsoleUserEnumInput<Answer>>().As<IInput<Answer>>().SingleInstance();
             builder.RegisterType<ConsoleUserIntInput>().As<IInput<int>>().SingleInstance();
             builder.RegisterType<ConsoleUserStringInput>().As<IInput<string>>().SingleInstance();

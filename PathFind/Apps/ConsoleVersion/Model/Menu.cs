@@ -5,7 +5,6 @@ using ConsoleVersion.Attributes;
 using ConsoleVersion.Commands;
 using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.Linq;
 using System.Reflection;
 
@@ -16,8 +15,9 @@ namespace ConsoleVersion.Model
     internal sealed class Menu
     {
         private const BindingFlags MethodAccessModificators = NonPublic | Instance | Public;
+        private static readonly Action<Action> DefaultSafeAction = action => action.Invoke();
 
-        private readonly object target;
+        private readonly IViewModel target;
         private readonly Type targetType;
 
         private readonly Lazy<IReadOnlyDictionary<string, MenuCommand>> menuActions;
@@ -31,16 +31,16 @@ namespace ConsoleVersion.Model
         {
             this.target = target;
             targetType = target.GetType();
-            menuActions = new Lazy<IReadOnlyDictionary<string, MenuCommand>>(GetMenuActions);
+            menuActions = new Lazy<IReadOnlyDictionary<string, MenuCommand>>(GetMenuCommands);
             menuActionsNames = new Lazy<IReadOnlyList<string>>(MenuActions.Keys.ToArray);
         }
 
-        private IReadOnlyDictionary<string, MenuCommand> GetMenuActions()
+        private IReadOnlyDictionary<string, MenuCommand> GetMenuCommands()
         {
             return targetType
                 .GetMethods(MethodAccessModificators)
                 .Where(IsMenuItemMethod)
-                .OrderBy(GetMenuItemOrder)
+                .OrderByOrderAttribute()
                 .SelectMany(CreateNameCommandPair)
                 .ToDictionary();
         }
@@ -49,61 +49,51 @@ namespace ConsoleVersion.Model
         {
             if (methodInfo.TryCreateDelegate(target, out Action action))
             {
-                var command = action;
-                TryCreateSafeAction(methodInfo, action, out command);
+                var safeAction = GetSafeMethodOrNull(methodInfo) ?? DefaultSafeAction;
                 var validationMethods = GetValidationMethods(methodInfo);
-                var description = methodInfo.GetAttributeOrNull<DescriptionAttribute>();
-                string name = description?.Description ?? string.Empty;
+                var command = new Action(() => safeAction.Invoke(action));
+                string header = methodInfo.GetAttributeOrNull<MenuItemAttribute>().Header;
                 var menuCommand = new MenuCommand(command, validationMethods);
-                yield return new KeyValuePair<string, MenuCommand>(name, menuCommand);
+                yield return new KeyValuePair<string, MenuCommand>(header, menuCommand);
             }
         }
 
-        private bool TryCreateSafeAction(MethodInfo info, Action toWrap, out Action safeAction)
+        private Action<Action> GetSafeMethodOrNull(MethodInfo method)
         {
-            safeAction = toWrap;
-            var tryCatchWrapName = info.GetAttributeOrNull<ExecuteSafeAttribute>();
-            if (tryCatchWrapName != null)
-            {
-                var method = targetType.GetMethod(tryCatchWrapName.MethodName, MethodAccessModificators);
-                if (method.TryCreateDelegate(target, out Action<Action> wrap))
-                {
-                    safeAction = new Action(() => wrap.Invoke(toWrap));
-                    return true;
-                }
-            }
-            return false;
+            return CreateDelegates<Action<Action>, ExecuteSafeAttribute>(method).FirstOrDefault();
         }
 
         private Func<bool>[] GetValidationMethods(MethodInfo method)
         {
-            return method
-                .GetCustomAttributes<PreValidationMethodAttribute>()
+            return CreateDelegates<Func<bool>, PreValidationMethodAttribute>(method).ToArray();
+        }
+
+        private IEnumerable<TDelegate> CreateDelegates<TDelegate, TAttribute>(MethodInfo self)
+            where TDelegate : Delegate
+            where TAttribute : BaseMethodAttribute
+        {
+            return self
+                .GetCustomAttributes<TAttribute>()
                 .Select(attribute => attribute.MethodName)
                 .Select(GetMethod)
-                .Select(CreatePredicate)
-                .ToArray();
+                .Select(CreateDelegateOrNull<TDelegate>);
         }
 
-        private Func<bool> CreatePredicate(MethodInfo info)
+        private TDelegate CreateDelegateOrNull<TDelegate>(MethodInfo info)
+            where TDelegate : Delegate
         {
-            info.TryCreateDelegate(target, out Func<bool> predicate);
-            return predicate;
+            info.TryCreateDelegate(target, out TDelegate action);
+            return action;
         }
 
-        private MethodInfo GetMethod(string methodName)
+        private MethodInfo GetMethod(string name)
         {
-            return targetType.GetMethod(methodName, MethodAccessModificators);
+            return targetType.GetMethod(name, MethodAccessModificators);
         }
 
         private bool IsMenuItemMethod(MethodInfo method)
         {
             return Attribute.IsDefined(method, typeof(MenuItemAttribute));
-        }
-
-        private int GetMenuItemOrder(MethodInfo method)
-        {
-            return method.GetAttributeOrNull<MenuItemAttribute>().Order;
         }
     }
 }

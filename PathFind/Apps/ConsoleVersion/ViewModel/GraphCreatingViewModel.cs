@@ -12,7 +12,6 @@ using GraphLib.ViewModel;
 using Logging.Interface;
 using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.Linq;
 using ValueRange;
 using ValueRange.Extensions;
@@ -39,7 +38,7 @@ namespace ConsoleVersion.ViewModel
 
         [ExecuteSafe(nameof(ExecuteSafe))]
         [PreValidationMethod(nameof(CanCreateGraph))]
-        [MenuItem(0), Description(MenuItemsNames.CreateNewGraph)]
+        [MenuItem(MenuItemsNames.CreateNewGraph, 0)]
         public override void CreateGraph()
         {
             var graph = SelectedGraphAssemble.AssembleGraph(ObstaclePercent, Width, Length);
@@ -47,7 +46,7 @@ namespace ConsoleVersion.ViewModel
             messenger.Forward(new GraphCreatedMessage(graph), token);
         }
 
-        [MenuItem(1), Description(MenuItemsNames.ChooseGraphAssemble)]
+        [MenuItem(MenuItemsNames.ChooseGraphAssemble, 1)]
         public void ChooseGraphAssemble()
         {
             int graphAssembleIndex = IntInput.Input(GraphAssembleInpuMessage, graphAssembleKeyRange) - 1;
@@ -55,20 +54,20 @@ namespace ConsoleVersion.ViewModel
             SelectedGraphAssemble = GraphAssembles[selectedGraphAssembleKey];
         }
 
-        [MenuItem(2), Description(MenuItemsNames.InputGraphParametres)]
+        [MenuItem(MenuItemsNames.InputGraphParametres, 2)]
         public void InputGraphParametres()
         {
             Width = IntInput.Input(MessagesTexts.GraphWidthInputMsg, Constants.GraphWidthValueRange);
             Length = IntInput.Input(MessagesTexts.GraphHeightInputMsg, Constants.GraphLengthValueRange);
         }
 
-        [MenuItem(3), Description(MenuItemsNames.InputObstaclePercent)]
+        [MenuItem(MenuItemsNames.InputObstaclePercent, 3)]
         public void InputObstaclePercent()
         {
             ObstaclePercent = IntInput.Input(MessagesTexts.ObstaclePercentInputMsg, Constants.ObstaclesPercentValueRange);
         }
 
-        [MenuItem(4), Description(MenuItemsNames.Exit)]
+        [MenuItem(MenuItemsNames.Exit, 4)]
         public void Interrupt()
         {
             WindowClosed?.Invoke();

@@ -3,6 +3,7 @@ using Common.Extensions.EnumerableExtensions;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 
 namespace Common.Extensions.EnumerableExtensions
 {
@@ -121,6 +122,11 @@ namespace Common.Extensions.EnumerableExtensions
         }
 
         public static IOrderedEnumerable<T> OrderByOrderAttribute<T>(this IEnumerable<T> collection)
+        {
+            return collection.OrderBy(item => item.GetOrder());
+        }
+
+        public static IOrderedEnumerable<MethodInfo> OrderByOrderAttribute(this IEnumerable<MethodInfo> collection)
         {
             return collection.OrderBy(item => item.GetOrder());
         }

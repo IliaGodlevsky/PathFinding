@@ -60,6 +60,7 @@
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Attributes\BaseMethodAttribute.cs" />
     <Compile Include="Attributes\ExecuteSafeAttribute.cs" />
     <Compile Include="Attributes\PreValidationMethodAttribute.cs" />
     <Compile Include="Attributes\MenuItemAttribute.cs" />
@@ -74,7 +75,6 @@
     <Compile Include="DependencyInjection\DI.cs" />
     <Compile Include="Constants.cs" />
     <Compile Include="Enums\Answer.cs" />
-    <Compile Include="Enums\MenuItemPriority.cs" />
     <Compile Include="EventArguments\ConsoleKeyPressedEventArgs.cs" />
     <Compile Include="EventHandlers\ConsoleKeyPressedEventHandler.cs" />
     <Compile Include="Extensions\BaseEndPointsExtensions.cs" />
