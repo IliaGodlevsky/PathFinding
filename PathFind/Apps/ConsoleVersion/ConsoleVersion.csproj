@@ -87,6 +87,8 @@
     <Compile Include="Extensions\PathFindingViewModelExtensions.cs" />
     <Compile Include="Extensions\IInputExtensions.cs" />
     <Compile Include="Interface\IConsoleKeyCommand.cs" />
+    <Compile Include="Interface\IMenu.cs" />
+    <Compile Include="Interface\IMenuCommand.cs" />
     <Compile Include="Interface\IRequireConsoleKeyInput.cs" />
     <Compile Include="Interface\IRequireStringInput.cs" />
     <Compile Include="MenuItemsNames.cs" />

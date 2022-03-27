@@ -28,7 +28,7 @@
             <EventTrigger RoutedEvent="vertex:Vertex.ColoredAsPath">
                 <BeginStoryboard>
                     <Storyboard>
-                        <DoubleAnimation Storyboard.TargetProperty="Background.Opacity" From="0.2" To="1" Duration="0:0:1"/>
+                        <DoubleAnimation Storyboard.TargetProperty="Background.Opacity" From="0" To="1" Duration="0:0:2"/>
                     </Storyboard>
                 </BeginStoryboard>
                 <BeginStoryboard Storyboard="{StaticResource ScalingAnimation}"/>

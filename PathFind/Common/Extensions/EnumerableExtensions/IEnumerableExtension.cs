@@ -2,6 +2,7 @@
 using Common.Extensions.EnumerableExtensions;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Reflection;
 
@@ -98,10 +99,10 @@ namespace Common.Extensions.EnumerableExtensions
             return self.Juxtapose(second, (a, b) => a.Equals(b));
         }
 
-        public static Dictionary<TKey, TValue> ToDictionary<TKey, TValue>
+        public static ReadOnlyDictionary<TKey, TValue> ToReadOnlyDictionary<TKey, TValue>
             (this IEnumerable<KeyValuePair<TKey, TValue>> collection)
         {
-            return collection.ToDictionary(item => item.Key, item => item.Value);
+            return new ReadOnlyDictionary<TKey, TValue>(collection.ToDictionary(item => item.Key, item => item.Value));
         }
 
         public static Dictionary<string, T> ToNameInstanceDictionary<T>(this IEnumerable<T> collection)

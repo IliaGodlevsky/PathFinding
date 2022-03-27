@@ -1,9 +1,10 @@
-﻿using System;
+﻿using ConsoleVersion.Interface;
+using System;
 using System.Linq;
 
 namespace ConsoleVersion.Commands
 {
-    internal sealed class MenuCommand
+    internal sealed class MenuCommand : IMenuCommand
     {
         private readonly Action action;
         private readonly Func<bool>[] predicates;
@@ -14,7 +15,7 @@ namespace ConsoleVersion.Commands
             this.predicates = predicates;
         }
 
-        public void Execute()
+        public void Execute(params object[] args)
         {
             if (predicates.All(IsTrue))
             {
