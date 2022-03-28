@@ -36,13 +36,5 @@ namespace Algorithm.Realizations.Tests.HeuristicTests
 
             return Heuristic.Calculate(FirstVertex, SecondVertex);
         }
-
-        [Test]
-        public void Calculate_CoordinatesAreNull_ThrowsArgumentException()
-        {
-            void CalculateChebyshevDistance() => Heuristic.Calculate(FirstVertex, SecondVertex);
-
-            Assert.Throws<ArgumentException>(CalculateChebyshevDistance);
-        }
     }
 }

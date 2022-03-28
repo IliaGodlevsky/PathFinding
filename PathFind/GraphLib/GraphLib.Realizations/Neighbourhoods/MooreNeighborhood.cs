@@ -60,18 +60,18 @@ namespace GraphLib.Realizations.Neighbourhoods
         {
             var neighborhood = new List<ICoordinate>();
             foreach (int offset in lateralOffsetMatrix)
-            {
+            {               
                 resultCoordinatesValues[depth] = selfCoordinatesValues[depth] + offset;
-                if (depth < limitDepth - 1)
-                {
-                    neighborhood.AddRange(DetectNeighborhood(depth + 1));
-                }
-                else
-                {
-                    neighborhood.Add(resultCoordinatesValues.ToCoordinate());
-                }
+                neighborhood.AddRange(GetCoordinates(depth));
             }
             return neighborhood;
+        }
+
+        private IReadOnlyCollection<ICoordinate> GetCoordinates(int depth)
+        {
+            return depth < limitDepth - 1 
+                ? DetectNeighborhood(depth + 1) 
+                : new[] { resultCoordinatesValues.ToCoordinate() };
         }
 
         private List<ICoordinate> GetNeighborhood()
