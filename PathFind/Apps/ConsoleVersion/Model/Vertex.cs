@@ -85,12 +85,12 @@ namespace ConsoleVersion.Model
             this.Initialize(info);
         }
 
-        public void OnVertexCostChanged()
+        public void ChangeCost()
         {
             VertexCostChanged?.Invoke(this, EventArgs.Empty);
         }
 
-        public void OnVertexReversed()
+        public void Reverse()
         {
             VertexReversed?.Invoke(this, EventArgs.Empty);
         }

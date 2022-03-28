@@ -23,8 +23,6 @@ namespace ConsoleVersion.ViewModel
     {
         public event Action WindowClosed;
 
-        private const int MenuOffset = 8;
-
         private readonly BaseEndPoints endPoints;
         private readonly ILog log;
         private readonly IMessenger messenger;

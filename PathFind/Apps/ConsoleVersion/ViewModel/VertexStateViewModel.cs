@@ -36,13 +36,13 @@ namespace ConsoleVersion.ViewModel
         [MenuItem(MenuItemsNames.ReverseVertex, 0)]
         public void ReverseVertex()
         {
-            Vertex.OnVertexReversed();
+            Vertex.Reverse();
         }
 
         [MenuItem(MenuItemsNames.ChangeVertexCost, 1)]
         public void ChangeVertexCost()
         {
-            Vertex.OnVertexCostChanged();
+            Vertex.ChangeCost();
         }
 
         [MenuItem(MenuItemsNames.Exit, 2)]
