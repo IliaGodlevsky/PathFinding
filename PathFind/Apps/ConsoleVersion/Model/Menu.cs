@@ -71,8 +71,7 @@ namespace ConsoleVersion.Model
         {
             return self
                 .GetCustomAttributes<TAttribute>()
-                .Select(attribute => attribute.MethodName)
-                .Select(GetMethod)
+                .Select(attribute => GetMethod(attribute.MethodName))
                 .Select(CreateDelegateOrNull<TDelegate>);
         }
 

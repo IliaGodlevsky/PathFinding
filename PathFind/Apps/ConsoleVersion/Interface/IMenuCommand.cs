@@ -2,6 +2,6 @@
 {
     internal interface IMenuCommand
     {
-        void Execute(params object[] args);
+        void Execute();
     }
 }

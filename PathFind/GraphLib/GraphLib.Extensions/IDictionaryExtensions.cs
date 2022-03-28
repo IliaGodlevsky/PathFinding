@@ -6,7 +6,7 @@ namespace GraphLib.Extensions
 {
     public static class IDictionaryExtensions
     {
-        public static IVertex GetOrNullVertex<TKey>(this IDictionary<TKey, IVertex> self, TKey key)
+        public static IVertex GetOrNullVertex<TKey>(this IReadOnlyDictionary<TKey, IVertex> self, TKey key)
         {
             if (self.TryGetValue(key, out var value))
             {

@@ -1,4 +1,5 @@
 ﻿using Autofac;
+using Common.Extensions;
 using Common.Interface;
 using ConsoleVersion.Attributes;
 using ConsoleVersion.DependencyInjection;
@@ -6,7 +7,7 @@ using ConsoleVersion.Enums;
 using ConsoleVersion.Extensions;
 using ConsoleVersion.Interface;
 using ConsoleVersion.Messages;
-using ConsoleVersion.Views;
+using ConsoleVersion.Model;
 using GalaSoft.MvvmLight.Messaging;
 using GraphLib.Base.EndPoints;
 using GraphLib.Extensions;
@@ -48,23 +49,24 @@ namespace ConsoleVersion.ViewModel
         [MenuItem(MenuItemsNames.ChooseEndPoints, 0)]
         public void ChooseEndPoints()
         {
-            MainView.SetCursorPositionUnderMenu(MenuOffset);
             Console.WriteLine(MessagesTexts.SourceAndTargetInputMsg);
             IntInput.InputRequiredEndPoints(graph, endPoints).OnEndPointChosen();
         }
 
-        [PreValidationMethod(nameof(CanChangeVertex))]
+        [PreValidationMethod(nameof(CanReplaceSourceOrTargetVertex))]
         [MenuItem(MenuItemsNames.ReplaceSource, 2)]
-        public void ChangeSourceVertex()
+        public void ReplaceSourceVertex()
         {
-            ChangeVertex(endPoints.RemoveSource, MessagesTexts.SourceVertexChoiceMsg);
+            endPoints.Source.As<Vertex>().OnEndPointChosen();
+            IntInput.InputEndPoint(MessagesTexts.SourceVertexChoiceMsg, graph, endPoints).OnEndPointChosen();
         }
 
-        [PreValidationMethod(nameof(CanChangeVertex))]
+        [PreValidationMethod(nameof(CanReplaceSourceOrTargetVertex))]
         [MenuItem(MenuItemsNames.ReplaceTarget, 3)]
-        public void ChangeTargetVertex()
+        public void ReplaceTargetVertex()
         {
-            ChangeVertex(endPoints.RemoveTarget, MessagesTexts.TargetVertexChoiceMsg);
+            endPoints.Target.As<Vertex>().OnEndPointChosen();
+            IntInput.InputEndPoint(MessagesTexts.TargetVertexChoiceMsg, graph, endPoints).OnEndPointChosen();
         }
 
         [MenuItem(MenuItemsNames.ClearEndPoints, 5)]
@@ -74,9 +76,9 @@ namespace ConsoleVersion.ViewModel
         }
 
         [PreValidationMethod(nameof(IsGraphValid))]
-        [PreValidationMethod(nameof(CanChangeIntermediates))]
+        [PreValidationMethod(nameof(CanReplaceIntermediates))]
         [MenuItem(MenuItemsNames.ReplaceIntermediate, 4)]
-        public void ChangeIntermediates()
+        public void ReplaceIntermediates()
         {
             string msg = MessagesTexts.NumberOfIntermediatesVerticesToReplaceMsg;
             int toReplaceNumber = IntInput.Input(msg, numberOfIntermediates);
@@ -87,12 +89,11 @@ namespace ConsoleVersion.ViewModel
         }
 
         [PreValidationMethod(nameof(IsGraphValid))]
-        [PreValidationMethod(nameof(CanChangeVertex))]
+        [PreValidationMethod(nameof(CanReplaceSourceOrTargetVertex))]
         [MenuItem(MenuItemsNames.ChooseIntermediates, 1)]
         public void ChooseIntermediates()
         {
             string message = MessagesTexts.NumberOfIntermediateVerticesInputMsg;
-            MainView.SetCursorPositionUnderMenu(MenuOffset);
             int number = IntInput.Input(message, graph.GetAvailableIntermediatesNumber());
             Console.WriteLine(MessagesTexts.IntermediateVertexChoiceMsg);
             IntInput.InputEndPoints(graph, endPoints, number).OnEndPointChosen();
@@ -115,20 +116,12 @@ namespace ConsoleVersion.ViewModel
             graph = message.Graph;
         }
 
-        private void ChangeVertex(Action action, string message)
-        {
-            MainView.SetCursorPositionUnderMenu(MenuOffset);
-            action();
-            Console.WriteLine(message);
-            IntInput.InputEndPoint(graph, endPoints).OnEndPointChosen();
-        }
-
-        private bool CanChangeIntermediates()
+        private bool CanReplaceIntermediates()
         {
             return (numberOfIntermediates = endPoints.GetIntermediates().Count()) > 0;
         }
 
-        private bool CanChangeVertex()
+        private bool CanReplaceSourceOrTargetVertex()
         {
             return endPoints.HasSourceAndTargetSet();
         }

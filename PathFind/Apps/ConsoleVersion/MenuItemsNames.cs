@@ -10,6 +10,7 @@
         public const string CreateNewGraph = "Create new graph";
         public const string FindPath = "Find path";
         public const string ReverseVertex = "Reverse vertex";
+        public const string ChangedVertexState = "Change vertex state";
         public const string ChangeCostRange = "Change cost range";
         public const string ChangeVertexCost = "Change vertex cost";
         public const string SaveGraph = "Save graph";

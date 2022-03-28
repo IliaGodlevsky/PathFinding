@@ -15,17 +15,17 @@ namespace ConsoleVersion.Commands
             this.predicates = predicates;
         }
 
-        public void Execute(params object[] args)
+        public void Execute()
         {
-            if (predicates.All(IsTrue))
+            if (CanExecute())
             {
                 action.Invoke();
             }
         }
 
-        private static bool IsTrue(Func<bool> predicate)
+        private bool CanExecute()
         {
-            return predicate == null || predicate.Invoke();
+            return predicates.All(p => p is null || p.Invoke());
         }
     }
 }

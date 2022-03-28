@@ -60,12 +60,18 @@ namespace ConsoleVersion.Extensions
 
             var point = self.InputCoordinate(upperPossibleXValue, upperPossibleYValue);
 
-            return (Vertex)graph2D.GetByCoordinate(point);
+            return (Vertex)graph2D.Get(point);
         }
 
         public static Vertex InputEndPoint(this IInput<int> self, Graph2D graph, IEndPoints endPoints)
         {
             return self.InputVertex(graph, endPoints.CanBeEndPoint);
+        }
+
+        public static Vertex InputEndPoint(this IInput<int> self, string message, Graph2D graph, IEndPoints endPoints)
+        {
+            Console.WriteLine(message);
+            return self.InputEndPoint(graph, endPoints);
         }
 
         public static IEnumerable<Vertex> InputExistingIntermediates(this IInput<int> self, Graph2D graph, IEndPoints endPoints, int count)

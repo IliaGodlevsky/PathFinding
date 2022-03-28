@@ -20,7 +20,7 @@ namespace GraphLib.Extensions
 
         private static IReadOnlyCollection<IVertex> GetNeighborsWithinGraphInternal(this INeighborhood self, IVertex vertex)
         {
-            return self.WithoutOutOfGraph(vertex).Select(coordinate => vertex.Graph.GetByCoordinate(coordinate)).ToArray();
+            return self.WithoutOutOfGraph(vertex).Select(coordinate => vertex.Graph.Get(coordinate)).ToArray();
         }
     }
 }

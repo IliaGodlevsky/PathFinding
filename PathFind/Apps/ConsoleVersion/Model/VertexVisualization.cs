@@ -49,7 +49,7 @@ namespace ConsoleVersion.Model
 
         public void VisualizeAsRegular(Vertex vertex)
         {
-            Mark(vertex, RegularVertexColor);
+            MarkClean(vertex, RegularVertexColor);
         }
 
         public void VisualizeAsPath(Vertex vertex)

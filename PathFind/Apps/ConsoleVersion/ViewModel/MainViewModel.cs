@@ -74,21 +74,14 @@ namespace ConsoleVersion.ViewModel
         }
 
         [PreValidationMethod(nameof(IsGraphEmpty))]
-        [MenuItem(MenuItemsNames.ReverseVertex, 4)]
-        public void ReverseVertex()
+        [MenuItem(MenuItemsNames.ChangedVertexState, 4)]
+        public void ChangeVertexState()
         {
-            ChangeVertexState(vertex => vertex.OnVertexReversed());
-        }
-
-        [PreValidationMethod(nameof(IsGraphEmpty))]
-        [MenuItem(MenuItemsNames.ChangeVertexCost, 7)]
-        public void ChangeVertexCost()
-        {
-            ChangeVertexState(vertex => vertex.OnVertexCostChanged());
+            DI.Container.Display<VertexStateView>();
         }
 
         [ExecuteSafe(nameof(ExecuteSafe))]
-        [MenuItem(MenuItemsNames.ChangeCostRange, 8)]
+        [MenuItem(MenuItemsNames.ChangeCostRange, 7)]
         public void ChangeVertexCostValueRange()
         {
             CostRange = IntInput.InputRange(Constants.VerticesCostRange);
@@ -115,7 +108,7 @@ namespace ConsoleVersion.ViewModel
         }
 
         [PreValidationMethod(nameof(CanExecuteInterrupt))]
-        [MenuItem(MenuItemsNames.Exit, 9)]
+        [MenuItem(MenuItemsNames.Exit, 8)]
         public void Interrupt()
         {
             WindowClosed?.Invoke();
@@ -154,11 +147,6 @@ namespace ConsoleVersion.ViewModel
             {
                 messenger.Forward(new GraphCreatedMessage(Graph), message.ClaimerMessageToken);
             }
-        }
-
-        private void ChangeVertexState(Action<Vertex> changeFunction)
-        {
-            changeFunction(IntInput.InputVertex((Graph2D)Graph));
         }
 
         private bool IsGraphEmpty()

@@ -34,8 +34,8 @@ namespace Algorithm.Realizations.Tests
                 new TestCoordinate(4,7)  //5
             };
             graph = graphAssemble.AssembleGraph(0);
-            var source = graph.GetByCoordinate(expectedPraphPathCoordinates.First());
-            var target = graph.GetByCoordinate(expectedPraphPathCoordinates.Last());
+            var source = graph.Get(expectedPraphPathCoordinates.First());
+            var target = graph.Get(expectedPraphPathCoordinates.Last());
             endPoints = new TestEndPoints(source, target);
             parentVertices = new ParentVertices();
             FormParentVertices(parentVertices);
@@ -61,8 +61,8 @@ namespace Algorithm.Realizations.Tests
         {
             for (int i = 0; i < expectedPraphPathCoordinates.Length - 1; i++)
             {
-                var childCoordinate = graph.GetByCoordinate(expectedPraphPathCoordinates[i + 1]);
-                var parentCoordinate = graph.GetByCoordinate(expectedPraphPathCoordinates[i]);
+                var childCoordinate = graph.Get(expectedPraphPathCoordinates[i + 1]);
+                var parentCoordinate = graph.Get(expectedPraphPathCoordinates[i]);
                 parentVertices.Add(childCoordinate, parentCoordinate);
             }
         }

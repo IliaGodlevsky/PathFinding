@@ -118,6 +118,8 @@
     <Compile Include="Interface\IRequireIntInput.cs" />
     <Compile Include="ValueInput\ProgrammedInput\ProgrammedInput.cs" />
     <Compile Include="ViewModel\EndPointsViewModel.cs" />
+    <Compile Include="ViewModel\VertexStateViewModel.cs" />
+    <Compile Include="Views\VertexStateView.cs" />
     <Compile Include="Views\View.cs" />
     <Compile Include="Interface\IDisplayable.cs" />
     <Compile Include="Model\EndPoints.cs" />

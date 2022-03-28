@@ -23,7 +23,7 @@ namespace GraphLib.NullRealizations
 
         }
 
-        public IVertex GetByCoordinate(ICoordinate coordinate)
+        public IVertex Get(ICoordinate coordinate)
         {
             return NullVertex.Instance;
         }

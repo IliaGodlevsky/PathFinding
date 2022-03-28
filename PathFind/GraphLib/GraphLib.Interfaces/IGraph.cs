@@ -10,7 +10,7 @@ namespace GraphLib.Interfaces
 
         IReadOnlyCollection<IVertex> Vertices { get; }
 
-        IVertex GetByCoordinate(ICoordinate coordinate);
+        IVertex Get(ICoordinate coordinate);
 
         string ToString();
     }

@@ -25,7 +25,7 @@ namespace GraphLib.TestRealizations.TestFactories.Matrix
                 for (int y = 0; y < graph.Length; y++)
                 {
                     var coordinate = new TestCoordinate(x, y);
-                    Assign(graph.GetByCoordinate(coordinate), Matrix[x, y]);
+                    Assign(graph.Get(coordinate), Matrix[x, y]);
                 }
             }
         }

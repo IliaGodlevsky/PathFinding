@@ -4,7 +4,6 @@ using GraphLib.Extensions;
 using GraphLib.Interfaces;
 using System.Collections.Generic;
 using System.Linq;
-
 using static System.Reflection.BindingFlags;
 
 namespace GraphLib.Base
@@ -13,7 +12,7 @@ namespace GraphLib.Base
     {
         private static readonly string ParamsFormat = "Obstacle percent: {0} ({1}/{2})";
         private static readonly string LargeSpace = "   ";
-        protected static string[] DimensionNames = new[] { "Width", "Length", "Height" };
+        protected static readonly string[] DimensionNames = new[] { "Width", "Length", "Height" };
 
         private readonly Dictionary<ICoordinate, IVertex> vertices;
 
@@ -31,7 +30,7 @@ namespace GraphLib.Base
             Vertices.ForEach(SetGraph);
         }
 
-        public IVertex GetByCoordinate(ICoordinate coordinate)
+        public IVertex Get(ICoordinate coordinate)
         {
             return vertices.GetOrNullVertex(coordinate);
         }
