@@ -42,7 +42,6 @@ namespace ConsoleVersion.ViewModel
             messenger.Forward(message, MessageTokens.Everyone);
         }
 
-        [PreValidationMethod(nameof(IsGraphValid))]
         [PreValidationMethod(nameof(CanChooseEndPoints))]
         [MenuItem(MenuItemsNames.ChooseEndPoints, 0)]
         public void ChooseEndPoints()
@@ -73,7 +72,6 @@ namespace ConsoleVersion.ViewModel
             endPoints.Reset();
         }
 
-        [PreValidationMethod(nameof(IsGraphValid))]
         [PreValidationMethod(nameof(CanReplaceIntermediates))]
         [MenuItem(MenuItemsNames.ReplaceIntermediate, 4)]
         public void ReplaceIntermediates()
@@ -86,7 +84,6 @@ namespace ConsoleVersion.ViewModel
             IntInput.InputEndPoints(graph, endPoints, toReplaceNumber).OnEndPointChosen();
         }
 
-        [PreValidationMethod(nameof(IsGraphValid))]
         [PreValidationMethod(nameof(CanReplaceSourceOrTargetVertex))]
         [MenuItem(MenuItemsNames.ChooseIntermediates, 1)]
         public void ChooseIntermediates()
@@ -127,11 +124,6 @@ namespace ConsoleVersion.ViewModel
         private bool CanChooseEndPoints()
         {
             return graph.HasAvailableEndPoints() && !endPoints.HasSourceAndTargetSet();
-        }
-
-        private bool IsGraphValid()
-        {
-            return !graph.IsNull();
         }
     }
 }

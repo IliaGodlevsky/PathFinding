@@ -12,7 +12,7 @@ namespace ConsoleVersion.Model
     {
         private const string NewLine = "\n";
         private const string Space = " ";
-        private const string Format = "{0}. {1}";
+        private const string MenuFormat = "{0}. {1}";
 
         private readonly int menuItemsCount;
         private readonly int columns;
@@ -58,7 +58,7 @@ namespace ConsoleVersion.Model
             {
                 string paddedName = menuItemsNames[index].PadRight(longestNameLength.Value);
                 string paddedMenuItemIndex = (index + 1).ToString().PadLeft(menuItemNumberPad);
-                string format = Format + ((index + 1) % columns == 0 ? NewLine : Space);
+                string format = MenuFormat + ((index + 1) % columns == 0 ? NewLine : Space);
                 stringBuilder.AppendFormat(format, paddedMenuItemIndex, paddedName);
             }
 

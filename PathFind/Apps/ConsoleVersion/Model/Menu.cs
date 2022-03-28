@@ -71,7 +71,7 @@ namespace ConsoleVersion.Model
         {
             return self
                 .GetCustomAttributes<TAttribute>()
-                .Select(attribute => GetMethod(attribute.MethodName))
+                .Select(GetMethod)
                 .Select(CreateDelegateOrNull<TDelegate>);
         }
 
@@ -82,9 +82,9 @@ namespace ConsoleVersion.Model
             return action;
         }
 
-        private MethodInfo GetMethod(string name)
+        private MethodInfo GetMethod(BaseMethodAttribute attribute)
         {
-            return targetType.GetMethod(name, MethodAccessModificators);
+            return targetType.GetMethod(attribute.MethodName, MethodAccessModificators);
         }
 
         private bool IsMenuItemMethod(MethodInfo method)

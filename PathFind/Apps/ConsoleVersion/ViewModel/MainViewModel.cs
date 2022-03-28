@@ -46,14 +46,14 @@ namespace ConsoleVersion.ViewModel
             messenger.Register<ClaimGraphMessage>(this, MessageTokens.MainModel, RecieveClaimGraphMessage);
         }
 
-        [PreValidationMethod(nameof(IsGraphEmpty))]
+        [PreValidationMethod(nameof(IsGraphValid))]
         [MenuItem(MenuItemsNames.MakeUnwieghted, 2)]
         public void MakeGraphUnweighted()
         {
             Graph.ToUnweighted();
         }
 
-        [PreValidationMethod(nameof(IsGraphEmpty))]
+        [PreValidationMethod(nameof(IsGraphValid))]
         [MenuItem(MenuItemsNames.MakeWeighted, 3)]
         public void MakeGraphWeighted()
         {
@@ -66,14 +66,14 @@ namespace ConsoleVersion.ViewModel
             DI.Container.Display<GraphCreateView>();
         }
 
-        [PreValidationMethod(nameof(IsGraphEmpty))]
+        [PreValidationMethod(nameof(IsGraphValid))]
         [MenuItem(MenuItemsNames.FindPath, 1)]
         public override void FindPath()
         {
             DI.Container.Display<PathFindView>();
         }
 
-        [PreValidationMethod(nameof(IsGraphEmpty))]
+        [PreValidationMethod(nameof(IsGraphValid))]
         [MenuItem(MenuItemsNames.ChangedVertexState, 4)]
         public void ChangeVertexState()
         {
@@ -89,7 +89,7 @@ namespace ConsoleVersion.ViewModel
             messenger.Forward(message, MessageTokens.MainView);
         }
 
-        [PreValidationMethod(nameof(IsGraphEmpty))]
+        [PreValidationMethod(nameof(IsGraphValid))]
         [MenuItem(MenuItemsNames.SaveGraph, 5)]
         public override void SaveGraph()
         {
@@ -149,9 +149,9 @@ namespace ConsoleVersion.ViewModel
             }
         }
 
-        private bool IsGraphEmpty()
+        private bool IsGraphValid()
         {
-            return Graph.HasVertices();
+            return !Graph.IsNull() && Graph.HasVertices();
         }
 
         private bool CanExecuteInterrupt()
