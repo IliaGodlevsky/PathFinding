@@ -21,7 +21,7 @@ namespace ConsoleVersion.ValueInput.RandomInput
                 ConsoleKey.Enter, 
                 ConsoleKey.UpArrow, 
                 ConsoleKey.DownArrow, 
-                ConsoleKey.P 
+                //ConsoleKey.P 
             };
 
             Range = new InclusiveValueRange<int>(AvailableKeys.Length - 1);

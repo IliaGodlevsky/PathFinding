@@ -10,8 +10,8 @@ using ConsoleVersion.Enums;
 using ConsoleVersion.Interface;
 using ConsoleVersion.Model;
 using ConsoleVersion.ValueInput.ProgrammedInput;
+using ConsoleVersion.ValueInput.ProgrammedInput.FromFile;
 using ConsoleVersion.ValueInput.RandomInput;
-using ConsoleVersion.ValueInput.UserInput;
 using ConsoleVersion.ViewModel;
 using GalaSoft.MvvmLight.Messaging;
 using GraphLib.Base.EndPoints;
@@ -49,9 +49,9 @@ namespace ConsoleVersion.DependencyInjection
         {
             var builder = new ContainerBuilder();
 
-            builder.RegisterType<ConsoleProgrammedAnswerInput>().As<IInput<Answer>>().SingleInstance();
-            builder.RegisterType<ConsoleProgrammedIntInput>().As<IInput<int>>().SingleInstance();
-            builder.RegisterType<ConsoleUserStringInput>().As<IInput<string>>().SingleInstance();
+            builder.RegisterType<FromFileProgrammedAnswerInput>().As<IInput<Answer>>().SingleInstance();
+            builder.RegisterType<FromFileProgrammedIntInput>().As<IInput<int>>().SingleInstance();
+            builder.RegisterType<ConsoleProgrammedStringInput>().As<IInput<string>>().SingleInstance();
             builder.RegisterType<RandomKeyInput>().As<IInput<ConsoleKey>>().SingleInstance();
 
             builder.RegisterType<MainViewModel>().AsSelf().SingleInstance().PropertiesAutowired();

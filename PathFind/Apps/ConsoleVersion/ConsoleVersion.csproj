@@ -118,6 +118,7 @@
     <Compile Include="ValueInput\RecordingInput\RecordingAnswerInput.cs" />
     <Compile Include="ValueInput\RecordingInput\RecordingInput.cs" />
     <Compile Include="ValueInput\RecordingInput\RecordingIntInput.cs" />
+    <Compile Include="ValueInput\RecordingInput\RecordingStringInput.cs" />
     <Compile Include="ValueInput\UserInput\ConsoleUserKeyInput.cs" />
     <Compile Include="ValueInput\UserInput\ConsoleUserStringInput.cs" />
     <Compile Include="ValueInput\UserInput\ConsoleUserInput.cs" />
