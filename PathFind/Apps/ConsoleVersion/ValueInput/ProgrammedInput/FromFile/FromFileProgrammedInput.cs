@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 
-namespace ConsoleVersion.ValueInput.ProgrammedInput
+namespace ConsoleVersion.ValueInput.ProgrammedInput.FromFile
 {
     internal abstract class FromFileProgrammedInput<T> : ProgrammedInput<T>
         where T : IComparable
@@ -36,6 +36,6 @@ namespace ConsoleVersion.ValueInput.ProgrammedInput
             return new Queue<T>(commands);
         }
 
-        protected abstract bool Parse(string msg, out T output);
+        protected abstract bool Parse(string value, out T output);
     }
 }

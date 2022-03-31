@@ -9,6 +9,8 @@ using Common.Interface;
 using ConsoleVersion.Enums;
 using ConsoleVersion.Interface;
 using ConsoleVersion.Model;
+using ConsoleVersion.ValueInput.ProgrammedInput;
+using ConsoleVersion.ValueInput.RandomInput;
 using ConsoleVersion.ValueInput.UserInput;
 using ConsoleVersion.ViewModel;
 using GalaSoft.MvvmLight.Messaging;
@@ -40,16 +42,17 @@ namespace ConsoleVersion.DependencyInjection
         public static IContainer Container => container.Value;
 
         private const string GraphAssemble = nameof(GraphAssemble);
+
         private static Assembly[] Assemblies => AppDomain.CurrentDomain.GetAssemblies();
 
         private static IContainer Configure()
         {
             var builder = new ContainerBuilder();
 
-            builder.RegisterType<ConsoleUserEnumInput<Answer>>().As<IInput<Answer>>().SingleInstance();
-            builder.RegisterType<ConsoleUserIntInput>().As<IInput<int>>().SingleInstance();
+            builder.RegisterType<ConsoleProgrammedAnswerInput>().As<IInput<Answer>>().SingleInstance();
+            builder.RegisterType<ConsoleProgrammedIntInput>().As<IInput<int>>().SingleInstance();
             builder.RegisterType<ConsoleUserStringInput>().As<IInput<string>>().SingleInstance();
-            builder.RegisterType<ConsoleUserKeyInput>().As<IInput<ConsoleKey>>().SingleInstance();
+            builder.RegisterType<RandomKeyInput>().As<IInput<ConsoleKey>>().SingleInstance();
 
             builder.RegisterType<MainViewModel>().AsSelf().SingleInstance().PropertiesAutowired();
             builder.RegisterAssemblyTypes(Assemblies).Where(Implements<IViewModel>).Except<MainViewModel>().AsSelf()
