@@ -1,5 +1,6 @@
 ﻿using Common.Extensions;
 using ConsoleVersion.Interface;
+using Random.Extensions;
 using Random.Interface;
 using System;
 using System.Diagnostics;
@@ -29,7 +30,10 @@ namespace ConsoleVersion.ValueInput.RandomInput
             return converted;
         }
 
-        protected abstract int GetRandomInt();
+        protected virtual int GetRandomInt()
+        {
+            return Random.Next(Range);
+        }
 
         protected abstract T ConvertFrom(int value);
     }

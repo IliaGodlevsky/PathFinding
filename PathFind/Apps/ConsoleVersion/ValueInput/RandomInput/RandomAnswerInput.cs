@@ -1,5 +1,4 @@
 ﻿using ConsoleVersion.Enums;
-using Random.Extensions;
 using Random.Interface;
 using ValueRange;
 
@@ -17,11 +16,6 @@ namespace ConsoleVersion.ValueInput.RandomInput
         protected override Answer ConvertFrom(int value)
         {
             return (Answer)value;
-        }
-
-        protected override int GetRandomInt()
-        {
-            return Random.Next(Range);
         }
     }
 }

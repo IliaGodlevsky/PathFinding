@@ -92,6 +92,7 @@
     <Compile Include="Interface\IRequireConsoleKeyInput.cs" />
     <Compile Include="Interface\IRequireStringInput.cs" />
     <Compile Include="MenuItemsNames.cs" />
+    <Compile Include="MenuItemsOrder.cs" />
     <Compile Include="Messages\ClaimGraphMessage.cs" />
     <Compile Include="Messages\ClearColorMessage.cs" />
     <Compile Include="Messages\ClearGraphMessage.cs" />

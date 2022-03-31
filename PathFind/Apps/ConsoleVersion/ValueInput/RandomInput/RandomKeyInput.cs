@@ -1,5 +1,4 @@
 ﻿using Common.Extensions;
-using Random.Extensions;
 using Random.Interface;
 using System;
 using System.Diagnostics;
@@ -11,13 +10,13 @@ namespace ConsoleVersion.ValueInput.RandomInput
     {
         protected override int WaitMilliseconds => 500;
 
-        private ConsoleKey[] AvaliableKeys { get; }
+        private ConsoleKey[] AvailableKeys { get; }
 
         protected override InclusiveValueRange<int> Range { get; }
 
         public RandomKeyInput(IRandom random) : base(random)
         {
-            AvaliableKeys = new[] 
+            AvailableKeys = new[] 
             { 
                 ConsoleKey.Enter, 
                 ConsoleKey.UpArrow, 
@@ -25,7 +24,7 @@ namespace ConsoleVersion.ValueInput.RandomInput
                 ConsoleKey.P 
             };
 
-            Range = new InclusiveValueRange<int>(AvaliableKeys.Length - 1);
+            Range = new InclusiveValueRange<int>(AvailableKeys.Length - 1);
         }
 
         public override ConsoleKey Input()
@@ -38,12 +37,7 @@ namespace ConsoleVersion.ValueInput.RandomInput
 
         protected override ConsoleKey ConvertFrom(int value)
         {
-            return AvaliableKeys[value];
-        }
-
-        protected override int GetRandomInt()
-        {
-            return Random.Next(Range);
+            return AvailableKeys[value];
         }
     }
 }
