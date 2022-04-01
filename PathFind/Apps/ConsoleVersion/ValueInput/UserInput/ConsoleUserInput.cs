@@ -3,7 +3,7 @@ using System;
 
 namespace ConsoleVersion.ValueInput.UserInput
 {
-    internal abstract class ConsoleUserInput<T> : IInput<T> where T : struct, IComparable
+    internal abstract class ConsoleUserInput<T> : IInput<T>
     {
         public T Input()
         {

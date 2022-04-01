@@ -29,12 +29,12 @@ namespace WPFVersion.Model
 
         protected override async void OnVertexEnqueued(object sender, AlgorithmEventArgs e)
         {
-            await Task.Run(() => base.OnVertexEnqueued(sender, e));
+            await Task.Run(() => base.OnVertexEnqueued(sender, e)).ConfigureAwait(false);
         }
 
         protected override async void OnVertexVisited(object sender, AlgorithmEventArgs e)
         {
-            await Task.Run(() => base.OnVertexVisited(sender, e));
+            await Task.Run(() => base.OnVertexVisited(sender, e)).ConfigureAwait(false);
         }
 
         private void Subscribe(SubscribeOnAlgorithmEventsMessage message)

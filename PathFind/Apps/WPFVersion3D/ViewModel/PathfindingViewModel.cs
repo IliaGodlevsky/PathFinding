@@ -81,13 +81,13 @@ namespace WPFVersion3D.ViewModel
             Stopwatch.StartNew().Wait(DelayTime).Stop();
             string time = timer.ToFormattedString();
             var message = new UpdateAlgorithmStatisticsMessage(Index, time, visitedVerticesCount);
-            await messenger.ForwardAsync(message, MessageTokens.AlgorithmStatisticsModel);
-            await Task.Run(() => base.OnVertexVisited(sender, e));
+            await messenger.ForwardAsync(message, MessageTokens.AlgorithmStatisticsModel).ConfigureAwait(false);
+            await Task.Run(() => base.OnVertexVisited(sender, e)).ConfigureAwait(false);
         }
 
         protected override async void OnVertexEnqueued(object sender, AlgorithmEventArgs e)
         {
-            await Task.Run(() => base.OnVertexEnqueued(sender, e));
+            await Task.Run(() => base.OnVertexEnqueued(sender, e)).ConfigureAwait(false);
         }
 
         protected override void OnAlgorithmInterrupted(object sender, ProcessEventArgs e)

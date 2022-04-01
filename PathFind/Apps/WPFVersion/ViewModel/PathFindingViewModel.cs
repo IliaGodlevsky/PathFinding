@@ -77,7 +77,7 @@ namespace WPFVersion.ViewModel
         {
             Stopwatch.StartNew().Wait(DelayTime).Stop();
             var message = new UpdateStatisticsMessage(Index, timer.ToFormattedString(), visitedVerticesCount);
-            await messenger.ForwardAsync(message, MessageTokens.AlgorithmStatisticsModel);
+            await messenger.ForwardAsync(message, MessageTokens.AlgorithmStatisticsModel).ConfigureAwait(false);
             if (!e.Current.IsNull())
             {
                 visitedVerticesCount++;

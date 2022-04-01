@@ -6,7 +6,6 @@ using System.Linq;
 namespace ConsoleVersion.ValueInput.ProgrammedInput.FromFile
 {
     internal abstract class FromFileProgrammedInput<T> : ProgrammedInput<T>
-        where T : IComparable
     {
         protected readonly string path;
 
