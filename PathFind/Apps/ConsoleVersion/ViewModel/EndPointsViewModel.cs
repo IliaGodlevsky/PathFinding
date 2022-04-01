@@ -13,7 +13,6 @@ using GraphLib.Base.EndPoints;
 using GraphLib.Extensions;
 using GraphLib.Realizations.Graphs;
 using Logging.Interface;
-using NullObject.Extensions;
 using System;
 using System.Linq;
 

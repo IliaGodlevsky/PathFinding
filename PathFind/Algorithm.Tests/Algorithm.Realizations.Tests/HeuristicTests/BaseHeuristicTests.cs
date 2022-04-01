@@ -1,8 +1,6 @@
 ﻿using Algorithm.Interfaces;
 using GraphLib.Interfaces;
 using Moq;
-using NUnit.Framework;
-using System;
 
 namespace Algorithm.Realizations.Tests.HeuristicTests
 {

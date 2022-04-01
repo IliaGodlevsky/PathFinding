@@ -8,7 +8,7 @@ namespace ConsoleVersion.Attributes
         public ExecuteSafeAttribute(string methodName)
             : base(methodName)
         {
-            
+
         }
     }
 }

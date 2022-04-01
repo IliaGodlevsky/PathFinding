@@ -16,10 +16,10 @@ namespace ConsoleVersion.ValueInput.RandomInput
 
         public RandomKeyInput(IRandom random) : base(random)
         {
-            AvailableKeys = new[] 
-            { 
-                ConsoleKey.Enter, 
-                ConsoleKey.UpArrow, 
+            AvailableKeys = new[]
+            {
+                ConsoleKey.Enter,
+                ConsoleKey.UpArrow,
                 ConsoleKey.DownArrow, 
                 //ConsoleKey.P 
             };
