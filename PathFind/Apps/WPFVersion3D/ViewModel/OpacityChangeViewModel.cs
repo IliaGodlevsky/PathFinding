@@ -1,8 +1,10 @@
-﻿using Common.Interface;
+﻿using Common.Extensions.EnumerableExtensions;
+using Common.Interface;
 using System;
+using System.Collections.Generic;
 using System.Windows.Input;
 using WPFVersion3D.Infrastructure;
-using WPFVersion3D.Model;
+using WPFVersion3D.Interface;
 
 namespace WPFVersion3D.ViewModel
 {
@@ -10,24 +12,14 @@ namespace WPFVersion3D.ViewModel
     {
         public event Action WindowClosed;
 
-        public double ObstacleColorOpacity { get; set; }
-        public double VisitedVertexColorOpacity { get; set; }
-        public double EnqueuedVertexColorOpacity { get; set; }
-        public double PathVertexColorOpacity { get; set; }
-        public double RegularVertexColorOpacity { get; set; }
-
         public ICommand ConfirmOpacityChange { get; }
 
         public ICommand CancelOpacityChange { get; }
 
+        internal IReadOnlyCollection<IChangeColorOpacity> OpacityChangers { get; set; }
+
         public OpacityChangeViewModel()
         {
-            ObstacleColorOpacity = VertexVisualization.ObstacleVertexBrush.Opacity;
-            VisitedVertexColorOpacity = VertexVisualization.VisitedVertexBrush.Opacity;
-            EnqueuedVertexColorOpacity = VertexVisualization.EnqueuedVertexBrush.Opacity;
-            PathVertexColorOpacity = VertexVisualization.PathVertexBrush.Opacity;
-            RegularVertexColorOpacity = VertexVisualization.RegularVertexBrush.Opacity;
-
             ConfirmOpacityChange = new RelayCommand(ExecuteChangeVertexOpacity);
             CancelOpacityChange = new RelayCommand(ExecuteCloseChangeVertexOpacity);
         }
@@ -39,13 +31,7 @@ namespace WPFVersion3D.ViewModel
 
         private void ExecuteChangeVertexOpacity(object param)
         {
-            VertexVisualization.EnqueuedVertexBrush.Opacity = EnqueuedVertexColorOpacity;
-            VertexVisualization.ObstacleVertexBrush.Opacity = ObstacleColorOpacity;
-            VertexVisualization.RegularVertexBrush.Opacity = RegularVertexColorOpacity;
-            VertexVisualization.PathVertexBrush.Opacity = PathVertexColorOpacity;
-            VertexVisualization.VisitedVertexBrush.Opacity = VisitedVertexColorOpacity;
-            VertexVisualization.AlreadyPathVertexBrush.Opacity = PathVertexColorOpacity;
-
+            OpacityChangers.ForEach(model => model.ChangeOpacity());
             ExecuteCloseChangeVertexOpacity(param);
         }
 

@@ -83,6 +83,7 @@
     <Compile Include="Extensions\IMessengerExtensions.cs" />
     <Compile Include="Extensions\TypeExtensions.cs" />
     <Compile Include="Interface\IAxis.cs" />
+    <Compile Include="Interface\IChangeColorOpacity.cs" />
     <Compile Include="Interface\IMessage.cs" />
     <Compile Include="Interface\IPassValueMessage.cs" />
     <Compile Include="Messages\AlgorithmStartedMessage.cs" />
@@ -136,6 +137,12 @@
     <Compile Include="ViewModel\OpacityChangeViewModel.cs" />
     <Compile Include="ViewModel\PathfindingViewModel.cs" />
     <Compile Include="ViewModel\StretchFieldAlongAxisViewModel.cs" />
+    <Compile Include="ViewModel\VertexOpacityViewModels\BaseVertexOpacityViewModel.cs" />
+    <Compile Include="ViewModel\VertexOpacityViewModels\EnqueuedVertexOpacityViewModel.cs" />
+    <Compile Include="ViewModel\VertexOpacityViewModels\ObstacleVertexOpacityViewModel.cs" />
+    <Compile Include="ViewModel\VertexOpacityViewModels\PathVertexOpacityViewModel.cs" />
+    <Compile Include="ViewModel\VertexOpacityViewModels\RegularVertexOpacityViewModel.cs" />
+    <Compile Include="ViewModel\VertexOpacityViewModels\VisistedVertexOpacityViewModel.cs" />
     <Compile Include="View\AlgorithmStatisticsUserControl.xaml.cs">
       <DependentUpon>AlgorithmStatisticsUserControl.xaml</DependentUpon>
     </Compile>
@@ -150,6 +157,9 @@
     </Compile>
     <Compile Include="View\StretchFieldAlongAxisUserConstrol.xaml.cs">
       <DependentUpon>StretchFieldAlongAxisUserConstrol.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\VertexOpacityUserControl.xaml.cs">
+      <DependentUpon>VertexOpacityUserControl.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\ViewModelWindow.cs" />
     <Page Include="Resources\Images\SvgImages.xaml">
@@ -210,6 +220,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="View\StretchFieldAlongAxisUserConstrol.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\VertexOpacityUserControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
