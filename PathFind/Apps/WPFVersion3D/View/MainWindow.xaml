@@ -4,36 +4,25 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
-        xmlns:converters="clr-namespace:WPFVersion3D.Converters" 
-        xmlns:model="clr-namespace:WPFVersion3D.Model"
-        xmlns:range="clr-namespace:WPFVersion3D"
         xmlns:windows="clr-namespace:WPFVersion3D.View" 
         xmlns:viewmodel="clr-namespace:WPFVersion3D.ViewModel" 
-        xmlns:datacontext="clr-namespace:WPFVersion3D.ViewModel" 
-        xmlns:validationrules="clr-namespace:WPFVersion3D.ValidationRules"
         d:DataContext="{d:DesignInstance Type=viewmodel:MainWindowViewModel}"
         mc:Ignorable="d"
         Title="3D pathfinding"
         Height="350" 
         Width="450">
     <Window.Resources>
-        <converters:InvertPointConverter x:Key="invertPointConverter"/>
-        <converters:PointToNumberConverter x:Key="coordinateToDistance"/>
-        <converters:PrecisedDoubleToStringConverter Precision="2" x:Key="doubleConverter2"/>
-        <converters:AlgorithmStatusToStringConverter x:Key="StatusToStringConverter"/>
-        
-        <datacontext:StretchFieldAlongAxisViewModel Title="Abscissa" Axis="Abscissa" x:Key="StretchAlongXAxis"/>
-        <datacontext:StretchFieldAlongAxisViewModel Title="Ordinate" Axis="Ordinate" x:Key="StretchAlongYAxis"/>
-        <datacontext:StretchFieldAlongAxisViewModel Title ="Applicate" Axis="Applicate" x:Key="StretchAlongZAxis"/>
-        
         <AxisAngleRotation3D Axis="1 0 0" x:Key="XAxis"/>
         <AxisAngleRotation3D Axis="0 1 0" x:Key="YAxis"/>
         <AxisAngleRotation3D Axis="0 0 1" x:Key="ZAxis"/>
-
+        
+        <viewmodel:StretchFieldAlongAxisViewModel Title="Abscissa" Axis="Abscissa" x:Key="StretchAlongXAxis"/>
+        <viewmodel:StretchFieldAlongAxisViewModel Title="Ordinate" Axis="Ordinate" x:Key="StretchAlongYAxis"/>
+        <viewmodel:StretchFieldAlongAxisViewModel Title ="Applicate" Axis="Applicate" x:Key="StretchAlongZAxis"/>
         <viewmodel:GraphFieldAxisRotatingViewModel Title="X axis rotate" AngleRotation="{StaticResource XAxis}" x:Key="XAxisRotation"/>
         <viewmodel:GraphFieldAxisRotatingViewModel Title="Y axis rotate" AngleRotation="{StaticResource YAxis}" x:Key="YAxisRotation"/>
         <viewmodel:GraphFieldAxisRotatingViewModel Title="Z axis rotate" AngleRotation="{StaticResource ZAxis}" x:Key="ZAxisRotation"/>
-
+        <viewmodel:GraphFieldViewModel XAxisAngleRotation="{StaticResource XAxis}" YAxisAngleRotation="{StaticResource YAxis}" ZAxisAngleRotation="{StaticResource ZAxis}" x:Key="GraphFieldModel"/>
         <viewmodel:GraphFieldRotationViewModel x:Key="FieldRotation" XAxisRotationViewModel="{StaticResource XAxisRotation}" YAxisRotationViewModel="{StaticResource YAxisRotation}" ZAxisRotationViewModel="{StaticResource ZAxisRotation}"/>
 
     </Window.Resources>
@@ -50,35 +39,12 @@
         </Grid.ColumnDefinitions>
         <Expander Width="auto" Grid.Column="1" Grid.RowSpan="4">
             <StackPanel Orientation="Vertical">
-                <StackPanel Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment ="Center">
-                    <TextBlock Margin="5" Text="Zoom"/>
-                    <model:RangedSlider x:Name="zoomSlider" Style="{StaticResource SliderStyle}" 
-                                    ValueRange="{x:Static range:Constants.ZoomValueRange}" 
-                                    Value="{Binding ElementName=camera, Path=Position, Converter={StaticResource coordinateToDistance}}"/>
 
-                    <TextBox Style="{StaticResource TextBoxStyle}">
-                        <TextBox.Text>
-                            <Binding Path="Value" 
-                                 ElementName="zoomSlider" 
-                                 Converter="{StaticResource doubleConverter2}"
-                                 Mode="TwoWay"
-                                 UpdateSourceTrigger="PropertyChanged">
-                                <Binding.ValidationRules>
-                                    <validationrules:NonInt32InputValidationRule/>
-                                </Binding.ValidationRules>
-                            </Binding>
-                        </TextBox.Text>
-                    </TextBox>
-                </StackPanel>
-                
                 <TextBlock HorizontalAlignment="Center" Margin="5" Text="Distance between vertices"/>
-
                 <windows:StretchFieldAlongAxisUserConstrol DataContext="{StaticResource StretchAlongXAxis}"/>
                 <windows:StretchFieldAlongAxisUserConstrol DataContext="{StaticResource StretchAlongYAxis}"/>
                 <windows:StretchFieldAlongAxisUserConstrol DataContext="{StaticResource StretchAlongZAxis}"/>
-
                 <windows:GraphRotationUserControl DataContext="{StaticResource FieldRotation}"/>
-
                 <windows:AlgorithmStatisticsUserControl/>
 
             </StackPanel>
@@ -93,30 +59,9 @@
             <Button Style="{StaticResource ImageStyle}" Content="{StaticResource Interrupt}" ToolTip="Interrupt all" Command ="{Binding InterruptAlgorithmCommand}"/>
             <Button Style="{StaticResource ImageStyle}" Content="{StaticResource Transperency}" ToolTip="Change opacity" Command="{Binding ChangeOpacityCommand}"/>
         </ToolBar>
-        <Viewport3D Grid.Row="2" Margin="5" Grid.RowSpan="2">
-            <Viewport3D.Camera>
-                <PerspectiveCamera x:Name="camera" 
-                    LookDirection="{Binding RelativeSource={RelativeSource Self}, 
-                                    Path=Position, 
-                                    Converter={StaticResource invertPointConverter}}" 
-                    Position="600,600,600"/>
-            </Viewport3D.Camera>
-            <Viewport3D.Children>
-                <model:GraphField3DContainer GraphField="{Binding GraphField, UpdateSourceTrigger=PropertyChanged}">
-                    <ModelVisual3D.Content>
-                        <DirectionalLight Direction="{Binding ElementName=camera, Path=LookDirection}" 
-                                          Color="White"/>
-                    </ModelVisual3D.Content>
-                    <ModelVisual3D.Transform>
-                        <Transform3DGroup>
-                            <RotateTransform3D Rotation= "{StaticResource XAxis}"/>
-                            <RotateTransform3D Rotation="{StaticResource YAxis}"/>
-                            <RotateTransform3D Rotation="{StaticResource ZAxis}"/>
-                        </Transform3DGroup>
-                    </ModelVisual3D.Transform>
-                </model:GraphField3DContainer>
-            </Viewport3D.Children>
-        </Viewport3D>
+        
+        <windows:GraphFieldUserControl DataContext="{StaticResource GraphFieldModel}" Grid.Row="2" Margin="5" Grid.RowSpan="2"/>
+
         <StatusBar Grid.Row="1">
             <TextBlock Text="{Binding GraphParametres}"/>
         </StatusBar>

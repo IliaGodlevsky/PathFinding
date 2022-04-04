@@ -24,23 +24,11 @@ namespace WPFVersion3D.ViewModel
             set { speed = value; SpeedChanged?.Invoke(this, new RotationSpeedChangedEventArgs(speed)); }
         }
 
-        public GraphFieldAxisRotatingViewModel XAxisRotationViewModel 
-        {
-            get => xAxis;
-            set { xAxis = value; xAxis.RotationSpeed = speed; SpeedChanged += xAxis.OnRotationSpeedChanged; }
-        }
+        public GraphFieldAxisRotatingViewModel XAxisRotationViewModel { get => xAxis; set => SetAxis(ref xAxis, value); }
 
-        public GraphFieldAxisRotatingViewModel YAxisRotationViewModel 
-        {
-            get => yAxis;
-            set { yAxis = value; yAxis.RotationSpeed = speed; SpeedChanged += yAxis.OnRotationSpeedChanged; }
-        }
+        public GraphFieldAxisRotatingViewModel YAxisRotationViewModel { get => yAxis; set => SetAxis(ref yAxis, value); }
 
-        public GraphFieldAxisRotatingViewModel ZAxisRotationViewModel 
-        {
-            get => zAxis;
-            set { zAxis = value; zAxis.RotationSpeed = speed; SpeedChanged += zAxis.OnRotationSpeedChanged; }
-        }
+        public GraphFieldAxisRotatingViewModel ZAxisRotationViewModel { get => zAxis; set => SetAxis(ref zAxis, value); }
 
         public IReadOnlyCollection<Tuple<string, IAnimationSpeed>> AnimationSpeeds { get; }
 
@@ -52,6 +40,13 @@ namespace WPFVersion3D.ViewModel
         public void Dispose()
         {
             SpeedChanged = null;
+        }
+
+        private void SetAxis(ref GraphFieldAxisRotatingViewModel axis, GraphFieldAxisRotatingViewModel value)
+        {
+            axis = value; 
+            axis.RotationSpeed = speed;
+            SpeedChanged += axis.OnRotationSpeedChanged;
         }
     }
 }

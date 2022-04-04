@@ -24,14 +24,7 @@ namespace WPFVersion3D.ViewModel
         private static Dispatcher Dispatcher => Application.Current.Dispatcher;
 
         private readonly IMessenger messenger;
-
-        private ObservableCollection<AlgorithmViewModel> statistics;
-
-        public ObservableCollection<AlgorithmViewModel> Statistics
-        {
-            get => statistics ?? (statistics = new ObservableCollection<AlgorithmViewModel>());
-            set { statistics = value; OnPropertyChanged(); }
-        }
+        public ObservableCollection<AlgorithmViewModel> Statistics { get; set; }
 
         public ICommand InterruptSelelctedAlgorithmCommand { get; }
 
@@ -41,6 +34,7 @@ namespace WPFVersion3D.ViewModel
 
         public AlgorithmStatisticsViewModel()
         {
+            Statistics = new ObservableCollection<AlgorithmViewModel>();
             messenger = DI.Container.Resolve<IMessenger>();
             InterruptSelelctedAlgorithmCommand = new RelayCommand(ExecuteInterruptSelectedAlgorithmCommand, CanExecuteInterruptSelectedAlgorithmCommand);
             RemoveSelelctedAlgorithmCommand = new RelayCommand(ExecuteRemoveFromStatisticsCommand, CanExecuteRemoveFromStatisticsCommand);

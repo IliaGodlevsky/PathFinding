@@ -136,6 +136,7 @@
     <Compile Include="ViewModel\GraphCreateViewModel.cs" />
     <Compile Include="ViewModel\GraphFieldAxisRotatingViewModel.cs" />
     <Compile Include="ViewModel\GraphFieldRotationViewModel.cs" />
+    <Compile Include="ViewModel\GraphFieldViewModel.cs" />
     <Compile Include="ViewModel\MainWindowViewModel.cs" />
     <Compile Include="ViewModel\OpacityChangeViewModel.cs" />
     <Compile Include="ViewModel\PathfindingViewModel.cs" />
@@ -151,6 +152,9 @@
     </Compile>
     <Compile Include="View\GraphFieldRotatingUserControl.xaml.cs">
       <DependentUpon>GraphFieldRotatingUserControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\GraphFieldUserControl.xaml.cs">
+      <DependentUpon>GraphFieldUserControl.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\GraphRotationUserControl.xaml.cs">
       <DependentUpon>GraphRotationUserControl.xaml</DependentUpon>
@@ -197,6 +201,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="View\GraphFieldRotatingUserControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\GraphFieldUserControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

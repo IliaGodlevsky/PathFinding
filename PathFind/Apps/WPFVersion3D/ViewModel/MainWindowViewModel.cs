@@ -27,7 +27,6 @@ namespace WPFVersion3D.ViewModel
 
         private readonly IMessenger messenger;
 
-        private IGraphField graphField;
         private string graphParametres;
 
         private bool IsAllAlgorithmsFinished { get; set; } = true;
@@ -36,12 +35,6 @@ namespace WPFVersion3D.ViewModel
         {
             get => graphParametres;
             set { graphParametres = value; OnPropertyChanged(); }
-        }
-
-        public override IGraphField GraphField
-        {
-            get => graphField;
-            set { graphField = value; OnPropertyChanged(); }
         }
 
         public ICommand StartPathFindCommand { get; }
@@ -102,7 +95,7 @@ namespace WPFVersion3D.ViewModel
             base.ConnectNewGraph(graph);
             messenger
                 .Forward(new ClearStatisticsMessage(), MessageTokens.AlgorithmStatisticsModel)
-                .Forward(new GraphFieldCreatedMessage(GraphField), MessageTokens.StretchAlongAxisModel);
+                .Forward(new GraphFieldCreatedMessage(GraphField), MessageTokens.Everyone);
         }
 
         protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = "")
@@ -172,6 +165,7 @@ namespace WPFVersion3D.ViewModel
         {
             return IsAllAlgorithmsFinished;
         }
+
         private bool CanExecuteInterruptAlgorithmCommand(object sender)
         {
             return !IsAllAlgorithmsFinished;
