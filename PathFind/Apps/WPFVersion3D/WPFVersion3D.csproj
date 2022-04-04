@@ -82,6 +82,8 @@
     <Compile Include="Extensions\EnumValuesExtensions.cs" />
     <Compile Include="Extensions\IMessengerExtensions.cs" />
     <Compile Include="Extensions\TypeExtensions.cs" />
+    <Compile Include="Infrastructure\EventArguments\RotationSpeedChangedEventArgs.cs" />
+    <Compile Include="Infrastructure\EventHandlers\RotationSpeedChangedEventHandler.cs" />
     <Compile Include="Interface\IAxis.cs" />
     <Compile Include="Interface\IChangeColorOpacity.cs" />
     <Compile Include="Interface\IMessage.cs" />
@@ -132,7 +134,8 @@
     <Compile Include="ViewModel\AlgorithmStatisticsViewModel.cs" />
     <Compile Include="ViewModel\AlgorithmViewModel.cs" />
     <Compile Include="ViewModel\GraphCreateViewModel.cs" />
-    <Compile Include="ViewModel\GraphFieldRotatingViewModel.cs" />
+    <Compile Include="ViewModel\GraphFieldAxisRotatingViewModel.cs" />
+    <Compile Include="ViewModel\GraphFieldRotationViewModel.cs" />
     <Compile Include="ViewModel\MainWindowViewModel.cs" />
     <Compile Include="ViewModel\OpacityChangeViewModel.cs" />
     <Compile Include="ViewModel\PathfindingViewModel.cs" />
@@ -148,6 +151,9 @@
     </Compile>
     <Compile Include="View\GraphFieldRotatingUserControl.xaml.cs">
       <DependentUpon>GraphFieldRotatingUserControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\GraphRotationUserControl.xaml.cs">
+      <DependentUpon>GraphRotationUserControl.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\OpacityChangeWindow.xaml.cs">
       <DependentUpon>OpacityChangeWindow.xaml</DependentUpon>
@@ -191,6 +197,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="View\GraphFieldRotatingUserControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\GraphRotationUserControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

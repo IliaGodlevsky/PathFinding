@@ -1,24 +1,20 @@
-﻿using Autofac;
-using GalaSoft.MvvmLight.Messaging;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Windows.Input;
 using System.Windows.Media.Media3D;
-using WPFVersion3D.DependencyInjection;
 using WPFVersion3D.Enums;
 using WPFVersion3D.Infrastructure;
 using WPFVersion3D.Infrastructure.Animators;
+using WPFVersion3D.Infrastructure.EventArguments;
 using WPFVersion3D.Interface;
-using WPFVersion3D.Messages;
 
 namespace WPFVersion3D.ViewModel
 {
-    internal class GraphFieldRotatingViewModel : IDisposable
+    internal class GraphFieldAxisRotatingViewModel
     {
         private readonly IReadOnlyDictionary<AxisRotators, Func<IAnimationSpeed, IAnimatedAxisRotator>> rotationFactories;
 
-        private readonly IMessenger messenger;
-        private IAnimationSpeed rotationSpeed;
+        public IAnimationSpeed RotationSpeed { get; set; }
 
         public AxisAngleRotation3D AngleRotation { get; set; }
 
@@ -26,10 +22,8 @@ namespace WPFVersion3D.ViewModel
 
         public ICommand RotateFieldCommand { get; }
 
-        public GraphFieldRotatingViewModel()
+        public GraphFieldAxisRotatingViewModel()
         {
-            messenger = DI.Container.Resolve<IMessenger>();
-            messenger.Register<AnimationSpeedChangedMessage>(this, MessageTokens.GraphFieldRotationModel, OnAnimationSpeedChanged);
             RotateFieldCommand = new RelayCommand(ExecuteRotateFieldCommand);
             rotationFactories = new Dictionary<AxisRotators, Func<IAnimationSpeed, IAnimatedAxisRotator>>
             {
@@ -39,21 +33,16 @@ namespace WPFVersion3D.ViewModel
             };
         }
 
-        public void Dispose()
+        public void OnRotationSpeedChanged(object sender, RotationSpeedChangedEventArgs e)
         {
-            messenger.Unregister(this);
+            RotationSpeed = e.Speed;
         }
 
         private void ExecuteRotateFieldCommand(object parameter)
         {
             var rotatorType = parameter is AxisRotators value ? value : AxisRotators.None;
-            var rotator = rotationFactories[rotatorType].Invoke(rotationSpeed);
+            var rotator = rotationFactories[rotatorType].Invoke(RotationSpeed);
             rotator.RotateAxis(AngleRotation);
-        }
-
-        private void OnAnimationSpeedChanged(AnimationSpeedChangedMessage message)
-        {
-            rotationSpeed = message.Value;
         }
     }
 }

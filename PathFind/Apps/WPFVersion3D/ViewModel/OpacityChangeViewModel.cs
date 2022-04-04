@@ -20,6 +20,7 @@ namespace WPFVersion3D.ViewModel
 
         public OpacityChangeViewModel()
         {
+            OpacityChangers = Array.Empty<IChangeColorOpacity>();
             ConfirmOpacityChange = new RelayCommand(ExecuteChangeVertexOpacity);
             CancelOpacityChange = new RelayCommand(ExecuteCloseChangeVertexOpacity);
         }

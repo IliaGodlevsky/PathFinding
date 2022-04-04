@@ -10,7 +10,7 @@
              xmlns:validationrules="clr-namespace:WPFVersion3D.ValidationRules"
              mc:Ignorable="d" 
              d:DesignHeight="30" d:DesignWidth="180"
-             d:DataContext="{d:DesignInstance Type=viewmodel:GraphFieldRotatingViewModel}">
+             d:DataContext="{d:DesignInstance Type=viewmodel:GraphFieldAxisRotatingViewModel}">
     <UserControl.Resources>
         <converters:AnimatedAxisRotatorConverter x:Key="animatedAxisRotatorConverter"/>
         <converters:PrecisedDoubleToStringConverter Precision="2" x:Key="doubleConverter2"/>

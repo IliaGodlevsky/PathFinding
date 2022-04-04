@@ -30,9 +30,11 @@
         <AxisAngleRotation3D Axis="0 1 0" x:Key="YAxis"/>
         <AxisAngleRotation3D Axis="0 0 1" x:Key="ZAxis"/>
 
-        <viewmodel:GraphFieldRotatingViewModel Title="X axis rotate" AngleRotation="{StaticResource XAxis}" x:Key="XAxisRotation"/>
-        <viewmodel:GraphFieldRotatingViewModel Title="Y axis rotate" AngleRotation="{StaticResource YAxis}" x:Key="YAxisRotation"/>
-        <viewmodel:GraphFieldRotatingViewModel Title="Z axis rotate" AngleRotation="{StaticResource ZAxis}" x:Key="ZAxisRotation"/>
+        <viewmodel:GraphFieldAxisRotatingViewModel Title="X axis rotate" AngleRotation="{StaticResource XAxis}" x:Key="XAxisRotation"/>
+        <viewmodel:GraphFieldAxisRotatingViewModel Title="Y axis rotate" AngleRotation="{StaticResource YAxis}" x:Key="YAxisRotation"/>
+        <viewmodel:GraphFieldAxisRotatingViewModel Title="Z axis rotate" AngleRotation="{StaticResource ZAxis}" x:Key="ZAxisRotation"/>
+
+        <viewmodel:GraphFieldRotationViewModel x:Key="FieldRotation" XAxisRotationViewModel="{StaticResource XAxisRotation}" YAxisRotationViewModel="{StaticResource YAxisRotation}" ZAxisRotationViewModel="{StaticResource ZAxisRotation}"/>
 
     </Window.Resources>
     <Grid>
@@ -47,85 +49,39 @@
             <ColumnDefinition Width="auto"/>
         </Grid.ColumnDefinitions>
         <Expander Width="auto" Grid.Column="1" Grid.RowSpan="4">
-            <Grid>
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition></ColumnDefinition>
-                    <ColumnDefinition></ColumnDefinition>
-                    <ColumnDefinition></ColumnDefinition>
-                    <ColumnDefinition></ColumnDefinition>
-                </Grid.ColumnDefinitions>
+            <StackPanel Orientation="Vertical">
+                <StackPanel Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment ="Center">
+                    <TextBlock Margin="5" Text="Zoom"/>
+                    <model:RangedSlider x:Name="zoomSlider" Style="{StaticResource SliderStyle}" 
+                                    ValueRange="{x:Static range:Constants.ZoomValueRange}" 
+                                    Value="{Binding ElementName=camera, Path=Position, Converter={StaticResource coordinateToDistance}}"/>
 
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="auto"></RowDefinition>
-                    <RowDefinition Height="auto"></RowDefinition>
-                    <RowDefinition Height="auto"></RowDefinition>
-                    <RowDefinition Height="auto"></RowDefinition>
-                    <RowDefinition Height="auto"></RowDefinition>
-                    <RowDefinition Height="auto"></RowDefinition>
-                    <RowDefinition Height="auto"></RowDefinition>
-                    <RowDefinition Height="auto"></RowDefinition>
-                    <RowDefinition Height="auto"></RowDefinition>
-                    <RowDefinition Height="auto"></RowDefinition>
-                </Grid.RowDefinitions>
-
-                <TextBlock Margin="5" 
-                           Grid.Row ="1" 
-                           Text="Rotation speed: "/>
-
-                <ComboBox HorizontalAlignment="Left" 
-                          MinWidth="150"
-                          Margin="5" 
-                          Grid.Column="1" 
-                          Grid.ColumnSpan="3" 
-                          Grid.Row="1" 
-                          x:Name="RotationSpeeds"
-                          SelectedValue="{Binding SelectedRotationSpeed}"
-                          ItemsSource="{Binding AnimationSpeeds}"
-                          DisplayMemberPath="Item1"
-                          SelectedValuePath="Item2"
-                          SelectedIndex="0"/>
-
-                <TextBlock Margin="5" Text="Zoom"/>
-
-                <TextBox Style="{StaticResource TextBoxStyle}" 
-                         Grid.Column="2" 
-                         Grid.Row="0">
-                    <TextBox.Text>
-                        <Binding Path="Value" 
+                    <TextBox Style="{StaticResource TextBoxStyle}">
+                        <TextBox.Text>
+                            <Binding Path="Value" 
                                  ElementName="zoomSlider" 
                                  Converter="{StaticResource doubleConverter2}"
                                  Mode="TwoWay"
                                  UpdateSourceTrigger="PropertyChanged">
-                            <Binding.ValidationRules>
-                                <validationrules:NonInt32InputValidationRule/>
-                            </Binding.ValidationRules>
-                        </Binding>
-                    </TextBox.Text>
-                </TextBox>
+                                <Binding.ValidationRules>
+                                    <validationrules:NonInt32InputValidationRule/>
+                                </Binding.ValidationRules>
+                            </Binding>
+                        </TextBox.Text>
+                    </TextBox>
+                </StackPanel>
                 
-                <TextBlock Grid.ColumnSpan="3" 
-                           HorizontalAlignment="Center" 
-                           Grid.Row="5" 
-                           Margin="5" 
-                           Text="Distance between vertices"/>
-                
-                <model:RangedSlider x:Name="zoomSlider" 
-                                    Grid.Column="1" 
-                                    Style="{StaticResource SliderStyle}" 
-                                    ValueRange="{x:Static range:Constants.ZoomValueRange}" Grid.Row="0" 
-                                    Value="{Binding ElementName=camera, Path=Position, Converter={StaticResource coordinateToDistance}}"/>
+                <TextBlock HorizontalAlignment="Center" Margin="5" Text="Distance between vertices"/>
 
-                <windows:GraphFieldRotatingUserControl DataContext="{StaticResource XAxisRotation}" Grid.ColumnSpan="4" Grid.Row="2"/>
-                <windows:GraphFieldRotatingUserControl DataContext="{StaticResource YAxisRotation}" Grid.ColumnSpan="4" Grid.Row="3"/>
-                <windows:GraphFieldRotatingUserControl DataContext="{StaticResource ZAxisRotation}" Grid.ColumnSpan="4" Grid.Row="4"/>
-                
-                <windows:StretchFieldAlongAxisUserConstrol DataContext="{StaticResource StretchAlongXAxis}" Grid.ColumnSpan="4" Grid.Row="6"/>
-                <windows:StretchFieldAlongAxisUserConstrol DataContext="{StaticResource StretchAlongYAxis}" Grid.ColumnSpan="4" Grid.Row="7"/>
-                <windows:StretchFieldAlongAxisUserConstrol DataContext="{StaticResource StretchAlongZAxis}" Grid.ColumnSpan="4" Grid.Row="8"/>
+                <windows:StretchFieldAlongAxisUserConstrol DataContext="{StaticResource StretchAlongXAxis}"/>
+                <windows:StretchFieldAlongAxisUserConstrol DataContext="{StaticResource StretchAlongYAxis}"/>
+                <windows:StretchFieldAlongAxisUserConstrol DataContext="{StaticResource StretchAlongZAxis}"/>
 
-                <windows:AlgorithmStatisticsUserControl Grid.Row="9" Grid.ColumnSpan="4"/>
+                <windows:GraphRotationUserControl DataContext="{StaticResource FieldRotation}"/>
 
-            </Grid>
+                <windows:AlgorithmStatisticsUserControl/>
+
+            </StackPanel>
         </Expander>
         <ToolBar Grid.Row="0">
             <Button Style="{StaticResource ImageStyle}" Content="{StaticResource LoadGraph}" ToolTip="Load graph" Command="{Binding LoadGraphCommand}"/>

@@ -1,5 +1,4 @@
 ﻿using Autofac;
-using EnumerationValues.Realizations;
 using GalaSoft.MvvmLight.Messaging;
 using GraphLib.Base.EndPoints;
 using GraphLib.Extensions;
@@ -10,7 +9,6 @@ using GraphViewModel.Interfaces;
 using Logging.Interface;
 using NullObject.Extensions;
 using System;
-using System.Collections.Generic;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using System.Windows.Input;
@@ -18,7 +16,6 @@ using WPFVersion3D.DependencyInjection;
 using WPFVersion3D.Enums;
 using WPFVersion3D.Extensions;
 using WPFVersion3D.Infrastructure;
-using WPFVersion3D.Interface;
 using WPFVersion3D.Messages;
 using WPFVersion3D.View;
 
@@ -32,19 +29,6 @@ namespace WPFVersion3D.ViewModel
 
         private IGraphField graphField;
         private string graphParametres;
-
-        private IAnimationSpeed selectedAnimationSpeed;
-        public IAnimationSpeed SelectedRotationSpeed
-        {
-            get => selectedAnimationSpeed;
-            set
-            {
-                selectedAnimationSpeed = value;
-                messenger.Forward(new AnimationSpeedChangedMessage(value), MessageTokens.GraphFieldRotationModel);
-            }
-        }
-
-        public IReadOnlyCollection<Tuple<string, IAnimationSpeed>> AnimationSpeeds { get; }
 
         private bool IsAllAlgorithmsFinished { get; set; } = true;
 
@@ -89,7 +73,6 @@ namespace WPFVersion3D.ViewModel
             LoadGraphCommand = new RelayCommand(ExecuteLoadGraphCommand, CanExecuteCommand);
             ChangeOpacityCommand = new RelayCommand(ExecuteChangeOpacity, CanExecuteGraphRelatedCommand);
             InterruptAlgorithmCommand = new RelayCommand(ExecuteInterruptAlgorithmCommand, CanExecuteInterruptAlgorithmCommand);
-            AnimationSpeeds = new EnumValuesWithoutIgnored<AnimationSpeeds>().ToAnimationSpeedTuples();
             messenger.Register<IsAllAlgorithmsFinishedMessage>(this, MessageTokens.MainModel, OnIsAllAlgorithmsFinished);
             messenger.Register<GraphCreatedMessage>(this, MessageTokens.MainModel, SetGraph);
         }
