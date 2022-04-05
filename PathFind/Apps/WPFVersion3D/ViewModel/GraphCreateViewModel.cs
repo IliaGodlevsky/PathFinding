@@ -45,7 +45,7 @@ namespace WPFVersion3D.ViewModel
             {
                 var graph = await SelectedGraphAssemble.AssembleGraphAsync(ObstaclePercent, Width, Length, Height);
                 var message = new GraphCreatedMessage(graph);
-                messenger.Forward(message, MessageTokens.MainModel);
+                messenger.Forward(message, MessageTokens.Everyone);
             }
             catch (Exception ex)
             {

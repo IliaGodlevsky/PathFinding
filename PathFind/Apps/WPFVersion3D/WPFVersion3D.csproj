@@ -132,6 +132,14 @@
     <Compile Include="ValidationRules\RangedIntValidationRule.cs" />
     <Compile Include="ViewModel\AlgorithmStatisticsViewModel.cs" />
     <Compile Include="ViewModel\AlgorithmViewModel.cs" />
+    <Compile Include="ViewModel\ButtonViewModels\ChangeOpacityViewModel.cs" />
+    <Compile Include="ViewModel\ButtonViewModels\ClearColorsViewModel.cs" />
+    <Compile Include="ViewModel\ButtonViewModels\ClearGraphViewModel.cs" />
+    <Compile Include="ViewModel\ButtonViewModels\CreateGraphViewModel.cs" />
+    <Compile Include="ViewModel\ButtonViewModels\FindPathViewModel.cs" />
+    <Compile Include="ViewModel\ButtonViewModels\InterruptAllAlgorithmsViewModel.cs" />
+    <Compile Include="ViewModel\ButtonViewModels\LoadGraphViewModel.cs" />
+    <Compile Include="ViewModel\ButtonViewModels\SaveGraphViewModel.cs" />
     <Compile Include="ViewModel\GraphCreateViewModel.cs" />
     <Compile Include="ViewModel\GraphFieldAxisRotatingViewModel.cs" />
     <Compile Include="ViewModel\GraphFieldRotationViewModel.cs" />
@@ -151,6 +159,9 @@
     <Compile Include="ViewModel\VertexOpacityViewModels\VisistedVertexOpacityViewModel.cs" />
     <Compile Include="View\AlgorithmStatisticsUserControl.xaml.cs">
       <DependentUpon>AlgorithmStatisticsUserControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\ButtonPanelUserControl.xaml.cs">
+      <DependentUpon>ButtonPanelUserControl.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\GraphFieldRotatingUserControl.xaml.cs">
       <DependentUpon>GraphFieldRotatingUserControl.xaml</DependentUpon>
@@ -195,6 +206,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="View\AlgorithmStatisticsUserControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\ButtonPanelUserControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

@@ -1,7 +1,7 @@
-﻿using GraphViewModel.Interfaces;
-using System;
+﻿using System;
 using System.Windows;
 using WPFVersion3D.Attributes;
+using WPFVersion3D.ViewModel;
 
 namespace WPFVersion3D
 {
@@ -11,7 +11,7 @@ namespace WPFVersion3D
     [AppWindow]
     public partial class MainWindow : Window
     {
-        public MainWindow(IMainModel viewModel)
+        public MainWindow(MainWindowViewModel viewModel)
         {
             InitializeComponent();
             DataContext = viewModel;

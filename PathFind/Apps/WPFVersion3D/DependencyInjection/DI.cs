@@ -41,7 +41,7 @@ namespace WPFVersion3D.DependencyInjection
         {
             var builder = new ContainerBuilder();
 
-            builder.RegisterType<MainWindowViewModel>().As<IMainModel>().InstancePerDependency();
+            builder.RegisterType<MainWindowViewModel>().AsSelf().InstancePerDependency();
             builder.RegisterAssemblyTypes(Assemblies).Where(Implements<IViewModel>).AsSelf().InstancePerDependency();
             builder.RegisterAssemblyTypes(Assemblies).Where(type => type.IsAppWindow()).AsSelf().InstancePerDependency();
 

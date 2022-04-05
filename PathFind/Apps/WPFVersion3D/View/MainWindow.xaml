@@ -20,9 +20,11 @@
         <stretch:StretchAlongAbscissaViewModel Title="Abscissa" x:Key="StretchAlongXAxis"/>
         <stretch:StretchAlongOrdinateViewModel Title="Ordinate" x:Key="StretchAlongYAxis"/>
         <stretch:StretchAlongApplicateViewModel Title ="Applicate" x:Key="StretchAlongZAxis"/>
+        
         <viewmodel:GraphFieldAxisRotatingViewModel Title="X axis rotate" AngleRotation="{StaticResource XAxis}" x:Key="XAxisRotation"/>
         <viewmodel:GraphFieldAxisRotatingViewModel Title="Y axis rotate" AngleRotation="{StaticResource YAxis}" x:Key="YAxisRotation"/>
         <viewmodel:GraphFieldAxisRotatingViewModel Title="Z axis rotate" AngleRotation="{StaticResource ZAxis}" x:Key="ZAxisRotation"/>
+        
         <viewmodel:GraphFieldViewModel XAxisAngleRotation="{StaticResource XAxis}" YAxisAngleRotation="{StaticResource YAxis}" ZAxisAngleRotation="{StaticResource ZAxis}" x:Key="GraphFieldModel"/>
         <viewmodel:GraphFieldRotationViewModel x:Key="FieldRotation" XAxisRotationViewModel="{StaticResource XAxisRotation}" YAxisRotationViewModel="{StaticResource YAxisRotation}" ZAxisRotationViewModel="{StaticResource ZAxisRotation}"/>
 
@@ -40,27 +42,16 @@
         </Grid.ColumnDefinitions>
         <Expander Width="auto" Grid.Column="1" Grid.RowSpan="4">
             <StackPanel Orientation="Vertical">
-
                 <TextBlock HorizontalAlignment="Center" Margin="5" Text="Distance between vertices"/>
                 <windows:StretchFieldAlongAxisUserConstrol DataContext="{StaticResource StretchAlongXAxis}"/>
                 <windows:StretchFieldAlongAxisUserConstrol DataContext="{StaticResource StretchAlongYAxis}"/>
                 <windows:StretchFieldAlongAxisUserConstrol DataContext="{StaticResource StretchAlongZAxis}"/>
                 <windows:GraphRotationUserControl DataContext="{StaticResource FieldRotation}"/>
                 <windows:AlgorithmStatisticsUserControl/>
-
             </StackPanel>
         </Expander>
-        <ToolBar Grid.Row="0">
-            <Button Style="{StaticResource ImageStyle}" Content="{StaticResource LoadGraph}" ToolTip="Load graph" Command="{Binding LoadGraphCommand}"/>
-            <Button Style="{StaticResource ImageStyle}" Content="{StaticResource SaveGraph}" ToolTip="Save graph" Command="{Binding SaveGraphCommand}"/>
-            <Button Style="{StaticResource ImageStyle}" Content="{StaticResource CreateNewGraph}" ToolTip="Create graph" Command="{Binding CreateNewGraphCommand}"/>
-            <Button Style="{StaticResource ImageStyle}" Content="{StaticResource ClearGraph}" ToolTip="Clear graph" Command="{Binding ClearGraphCommand}"/>
-            <Button Style="{StaticResource ImageStyle}" Content="{StaticResource ClearColors}" ToolTip="Clear colors" Command="{Binding ClearVerticesColorCommand}"/>
-            <Button Style="{StaticResource ImageStyle}" Content="{StaticResource FindPath}" ToolTip="Choose graph" Command ="{Binding StartPathFindCommand}"/>
-            <Button Style="{StaticResource ImageStyle}" Content="{StaticResource Interrupt}" ToolTip="Interrupt all" Command ="{Binding InterruptAlgorithmCommand}"/>
-            <Button Style="{StaticResource ImageStyle}" Content="{StaticResource Transperency}" ToolTip="Change opacity" Command="{Binding ChangeOpacityCommand}"/>
-        </ToolBar>
-        
+
+        <windows:ButtonPanelUserControl Grid.Row="0"/>
         <windows:GraphFieldUserControl DataContext="{StaticResource GraphFieldModel}" Grid.Row="2" Margin="5" Grid.RowSpan="2"/>
 
         <StatusBar Grid.Row="1">

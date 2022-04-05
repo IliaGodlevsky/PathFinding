@@ -110,7 +110,7 @@ namespace WPFVersion3D.ViewModel
         {
             var isAllFinished = Statistics.All(stat => !stat.IsStarted);
             var message = new IsAllAlgorithmsFinishedMessage(isAllFinished);
-            messenger.Forward(message, MessageTokens.MainModel);
+            messenger.Forward(message, MessageTokens.Everyone);
         }
 
         public void Dispose()
