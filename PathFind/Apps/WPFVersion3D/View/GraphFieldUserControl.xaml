@@ -29,11 +29,7 @@
 
             <TextBox Style="{StaticResource TextBoxStyle}">
                 <TextBox.Text>
-                    <Binding Path="Value" 
-                                 ElementName="Slider" 
-                                 Converter="{StaticResource doubleConverter2}"
-                                 Mode="TwoWay"
-                                 UpdateSourceTrigger="PropertyChanged">
+                    <Binding Path="Value" ElementName="Slider" Converter="{StaticResource doubleConverter2}" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
                         <Binding.ValidationRules>
                             <validationrules:NonInt32InputValidationRule/>
                         </Binding.ValidationRules>
@@ -45,16 +41,12 @@
         <Viewport3D Grid.Row="1">
             <Viewport3D.Camera>
                 <PerspectiveCamera x:Name="Camera" 
-                    LookDirection="{Binding RelativeSource={RelativeSource Self}, 
-                                    Path=Position, 
-                                    Converter={StaticResource invertPointConverter}}" 
-                    Position="600,600,600"/>
+                    LookDirection="{Binding RelativeSource={RelativeSource Self}, Path=Position, Converter={StaticResource invertPointConverter}}" Position="600,600,600"/>
             </Viewport3D.Camera>
             <Viewport3D.Children>
                 <model:GraphField3DContainer GraphField="{Binding GraphField,  UpdateSourceTrigger=PropertyChanged}">
                     <ModelVisual3D.Content>
-                        <DirectionalLight Direction="{Binding ElementName=Camera, Path=LookDirection}" 
-                                          Color="White"/>
+                        <DirectionalLight Direction="{Binding ElementName=Camera, Path=LookDirection}" Color="White"/>
                     </ModelVisual3D.Content>
                     <ModelVisual3D.Transform>
                         <Transform3DGroup>
