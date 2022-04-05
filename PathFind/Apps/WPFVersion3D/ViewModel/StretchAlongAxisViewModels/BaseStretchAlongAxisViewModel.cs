@@ -4,22 +4,23 @@ using System;
 using System.Windows;
 using WPFVersion3D.DependencyInjection;
 using WPFVersion3D.Enums;
+using WPFVersion3D.Interface;
 using WPFVersion3D.Messages;
 using WPFVersion3D.Model;
 
-namespace WPFVersion3D.ViewModel
+namespace WPFVersion3D.ViewModel.StretchAlongAxisViewModels
 {
-    internal sealed class StretchFieldAlongAxisViewModel : IDisposable
+    internal abstract class BaseStretchAlongAxisViewModel : IDisposable
     {
         private readonly IMessenger messenger;
 
-        private GraphField3D graphField;
+        protected GraphField3D graphField;
+
+        protected abstract IAxis Axis { get; }
 
         public string Title { get; set; }
 
-        public Axis Axis { get; set; }
-
-        public StretchFieldAlongAxisViewModel()
+        public BaseStretchAlongAxisViewModel()
         {
             messenger = DI.Container.Resolve<IMessenger>();
             messenger.Register<GraphFieldCreatedMessage>(this, MessageTokens.StretchAlongAxisModel, OnGraphFieldCreated);
@@ -27,10 +28,7 @@ namespace WPFVersion3D.ViewModel
 
         public void StretchAlongAxis(object sender, RoutedPropertyChangedEventArgs<double> e)
         {
-            if (graphField != null)
-            {
-                graphField.StretchAlongAxis(Axis, e.NewValue);
-            }
+            Axis?.LocateVertices(e.NewValue);
         }
 
         public void Dispose()

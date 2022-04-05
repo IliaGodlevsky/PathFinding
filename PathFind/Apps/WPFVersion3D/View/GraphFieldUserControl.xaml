@@ -3,7 +3,6 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-             xmlns:local="clr-namespace:WPFVersion3D.View" 
              xmlns:model="clr-namespace:WPFVersion3D.Model" 
              xmlns:converters="clr-namespace:WPFVersion3D.Converters" 
              xmlns:viewmodel="clr-namespace:WPFVersion3D.ViewModel" 
@@ -59,9 +58,9 @@
                     </ModelVisual3D.Content>
                     <ModelVisual3D.Transform>
                         <Transform3DGroup>
-                            <RotateTransform3D Rotation= "{Binding XAxisAngleRotation, Mode=TwoWay}"/>
-                            <RotateTransform3D Rotation="{Binding YAxisAngleRotation, Mode=TwoWay}"/>
-                            <RotateTransform3D Rotation="{Binding ZAxisAngleRotation, Mode=TwoWay}"/>
+                            <RotateTransform3D Rotation= "{Binding XAxisAngleRotation}"/>
+                            <RotateTransform3D Rotation="{Binding YAxisAngleRotation}"/>
+                            <RotateTransform3D Rotation="{Binding ZAxisAngleRotation}"/>
                         </Transform3DGroup>
                     </ModelVisual3D.Transform>
                 </model:GraphField3DContainer>

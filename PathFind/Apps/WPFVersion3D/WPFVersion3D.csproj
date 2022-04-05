@@ -74,7 +74,6 @@
     <Compile Include="Converters\BoolToVisibilityConverter.cs" />
     <Compile Include="Enums\AlgorithmStatuses.cs" />
     <Compile Include="Enums\AnimationSpeeds.cs" />
-    <Compile Include="Enums\Axis.cs" />
     <Compile Include="Enums\AxisRotators.cs" />
     <Compile Include="Enums\MessageTokens.cs" />
     <Compile Include="Extensions\AlgorithmViewModelExtensions.cs" />
@@ -140,7 +139,10 @@
     <Compile Include="ViewModel\MainWindowViewModel.cs" />
     <Compile Include="ViewModel\OpacityChangeViewModel.cs" />
     <Compile Include="ViewModel\PathfindingViewModel.cs" />
-    <Compile Include="ViewModel\StretchFieldAlongAxisViewModel.cs" />
+    <Compile Include="ViewModel\StretchAlongAxisViewModels\BaseStretchAlongAxisViewModel.cs" />
+    <Compile Include="ViewModel\StretchAlongAxisViewModels\StretchAlongApplicateViewModel.cs" />
+    <Compile Include="ViewModel\StretchAlongAxisViewModels\StretchAlongOrdinateViewModel.cs" />
+    <Compile Include="ViewModel\StretchAlongAxisViewModels\StretchAlongAbscissaViewModel.cs" />
     <Compile Include="ViewModel\VertexOpacityViewModels\BaseVertexOpacityViewModel.cs" />
     <Compile Include="ViewModel\VertexOpacityViewModels\EnqueuedVertexOpacityViewModel.cs" />
     <Compile Include="ViewModel\VertexOpacityViewModels\ObstacleVertexOpacityViewModel.cs" />

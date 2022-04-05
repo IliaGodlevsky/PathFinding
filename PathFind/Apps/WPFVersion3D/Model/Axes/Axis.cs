@@ -1,6 +1,6 @@
 ﻿using Common.Extensions.EnumerableExtensions;
 using GraphLib.Extensions;
-using GraphLib.Realizations.Graphs;
+using System.Collections.Generic;
 using WPFVersion3D.Interface;
 
 namespace WPFVersion3D.Model.Axes
@@ -8,20 +8,23 @@ namespace WPFVersion3D.Model.Axes
     internal abstract class Axis : IAxis
     {
         private readonly int dimensionSize;
+        private readonly IReadOnlyCollection<Vertex3D> vertices;
+
         private double distanceBetweenVertices = 0;
 
         protected abstract int Order { get; }
 
-        protected Axis(Graph3D graph)
+        protected Axis(int[] dimensionSizes, IReadOnlyCollection<Vertex3D> vertices)
         {
-            dimensionSize = graph.DimensionsSizes[Order];
-            graph.ForEach<Vertex3D>(LocateVertex);
+            dimensionSize = dimensionSizes[Order];
+            this.vertices = vertices;
+            this.vertices.ForEach(LocateVertex);
         }
 
-        public void Locate(GraphField3D field, double distanceBetweenVertices)
+        public void LocateVertices(double distanceBetweenVertices)
         {
             this.distanceBetweenVertices = distanceBetweenVertices;
-            field.Vertices.ForEach(LocateVertex);
+            vertices.ForEach(LocateVertex);
         }
 
         protected abstract void Offset(Vertex3D vertex, double offset);

@@ -4,6 +4,6 @@ namespace WPFVersion3D.Interface
 {
     internal interface IAxis
     {
-        void Locate(GraphField3D field, double distanceBetweenVertices);
+        void LocateVertices(double distanceBetweenVertices);
     }
 }
