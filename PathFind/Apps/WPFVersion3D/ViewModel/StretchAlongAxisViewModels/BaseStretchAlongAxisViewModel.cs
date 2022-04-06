@@ -23,7 +23,7 @@ namespace WPFVersion3D.ViewModel.StretchAlongAxisViewModels
         public BaseStretchAlongAxisViewModel()
         {
             messenger = DI.Container.Resolve<IMessenger>();
-            messenger.Register<GraphFieldCreatedMessage>(this, MessageTokens.StretchAlongAxisModel, OnGraphFieldCreated);
+            messenger.Register<GraphFieldCreatedMessage>(this, Tokens.StretchAlongAxisModel, OnGraphFieldCreated);
         }
 
         public void StretchAlongAxis(object sender, RoutedPropertyChangedEventArgs<double> e)

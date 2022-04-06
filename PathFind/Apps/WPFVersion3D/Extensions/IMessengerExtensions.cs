@@ -1,31 +1,20 @@
 ﻿using Common.Extensions.EnumerableExtensions;
-using EnumerationValues.Extensions;
-using EnumerationValues.Interface;
-using EnumerationValues.Realizations;
 using GalaSoft.MvvmLight.Messaging;
+using System;
 using System.Threading.Tasks;
-using WPFVersion3D.Enums;
 
 namespace WPFVersion3D.Extensions
 {
     internal static class IMessengerExtensions
     {
-        private static IEnumValues<MessageTokens> Tokens { get; }
-
-        static IMessengerExtensions()
+        public static async Task ForwardAsync<TMessage>(this IMessenger self, TMessage message, params Guid[] tokens)
         {
-            Tokens = new EnumValuesWithoutIgnored<MessageTokens>();
+            await Task.Run(() => self.Forward(message, tokens));
         }
 
-        public static async Task ForwardAsync<TMessage>(this IMessenger self,
-            TMessage message, MessageTokens messageToken)
+        public static IMessenger Forward<TMessage>(this IMessenger messenger, TMessage message, params Guid[] tokens)
         {
-            await Task.Run(() => self.Forward(message, messageToken));
-        }
-
-        public static IMessenger Forward<TMessage>(this IMessenger messenger, TMessage message, MessageTokens token)
-        {
-            Tokens.DisassembleToFlags(token).ForEach(value => messenger.Send(message, value));
+            tokens.ForEach(token => messenger.Send(message, token));
             return messenger;
         }
     }

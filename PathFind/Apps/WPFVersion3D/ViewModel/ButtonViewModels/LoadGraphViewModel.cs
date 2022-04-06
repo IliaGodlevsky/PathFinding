@@ -26,7 +26,7 @@ namespace WPFVersion3D.ViewModel.ButtonViewModels
         public LoadGraphViewModel()
         {
             messenger = DI.Container.Resolve<IMessenger>();
-            messenger.Register<IsAllAlgorithmsFinishedMessage>(this, MessageTokens.LoadGraphModel, OnAllAlgorithmFinishedPathfinding);
+            messenger.Register<IsAllAlgorithmsFinishedMessage>(this, Tokens.LoadGraphModel, OnAllAlgorithmFinishedPathfinding);
             module = DI.Container.Resolve<GraphSerializationModule>();
             log = DI.Container.Resolve<ILog>();
             LoadGraphCommand = new RelayCommand(ExecuteLoadGraphCommand);
@@ -37,7 +37,7 @@ namespace WPFVersion3D.ViewModel.ButtonViewModels
             try
             {
                 var graph = await module.LoadGraphAsync();
-                messenger.Forward(new GraphCreatedMessage(graph), MessageTokens.Everyone);
+                messenger.Forward(new GraphCreatedMessage(graph), Tokens.Everyone);
             }
             catch(Exception ex)
             {
@@ -52,7 +52,7 @@ namespace WPFVersion3D.ViewModel.ButtonViewModels
 
         private void OnAllAlgorithmFinishedPathfinding(IsAllAlgorithmsFinishedMessage message)
         {
-            IsAllAlgorithmsFinishedPathfinding = message.IsAllAlgorithmsFinished;
+            IsAllAlgorithmsFinishedPathfinding = message.Value;
         }
     }
 }

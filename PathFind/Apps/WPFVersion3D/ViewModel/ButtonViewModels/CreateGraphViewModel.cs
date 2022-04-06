@@ -20,7 +20,7 @@ namespace WPFVersion3D.ViewModel.ButtonViewModels
         public CreateGraphViewModel()
         {
             messenger = DI.Container.Resolve<IMessenger>();
-            messenger.Register<IsAllAlgorithmsFinishedMessage>(this, MessageTokens.CreateGraphModel, OnAllAlgorithmFinished);
+            messenger.Register<IsAllAlgorithmsFinishedMessage>(this, Tokens.CreateGraphModel, OnAllAlgorithmFinished);
             CreateGraphCommand = new RelayCommand(ExecuteCreateGraphCommand, CanExecuteCreateGraphCommand);
         }
 
@@ -36,7 +36,7 @@ namespace WPFVersion3D.ViewModel.ButtonViewModels
 
         private void OnAllAlgorithmFinished(IsAllAlgorithmsFinishedMessage message)
         {
-            IsAllAlgorithmsFinishedPathfinding = message.IsAllAlgorithmsFinished;
+            IsAllAlgorithmsFinishedPathfinding = message.Value;
         }
     }
 }

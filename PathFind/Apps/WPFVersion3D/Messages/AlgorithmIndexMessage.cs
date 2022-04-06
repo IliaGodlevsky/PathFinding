@@ -1,12 +1,10 @@
 ﻿namespace WPFVersion3D.Messages
 {
-    internal sealed class AlgorithmIndexMessage
+    internal sealed class AlgorithmIndexMessage : PassValueMessage<int>
     {
-        public int Index { get; }
-
-        public AlgorithmIndexMessage(int index)
+        public AlgorithmIndexMessage(int index) : base(index)
         {
-            Index = index;
+
         }
     }
 }

@@ -1,7 +1,7 @@
 ﻿using Common.Extensions.EnumerableExtensions;
 using System.Windows.Media.Media3D;
+using WPFVersion3D.Extensions;
 using WPFVersion3D.Interface;
-using WPFVersion3D.Model;
 
 namespace WPFVersion3D.Model3DFactories
 {
@@ -33,16 +33,14 @@ namespace WPFVersion3D.Model3DFactories
 
         private Model3D[] GetRectangleModels3D(Point3D[] points, Material material)
         {
-            var reactangleFactory = new RectangleModel3DFactory();
-
             return new Model3D[]
             {
-                reactangleFactory.CreateRectangleModel(points[4], points[3], points[2], points[5], material),
-                reactangleFactory.CreateRectangleModel(points[5], points[2], points[1], points[6], material),
-                reactangleFactory.CreateRectangleModel(points[7], points[6], points[1], points[0], material),
-                reactangleFactory.CreateRectangleModel(points[7], points[0], points[3], points[4], material),
-                reactangleFactory.CreateRectangleModel(points[7], points[4], points[5], points[6], material),
-                reactangleFactory.CreateRectangleModel(points[0], points[1], points[2], points[3], material)
+                (points[4], points[3], points[2], points[5]).CreateRectangleModel(material),
+                (points[5], points[2], points[1], points[6]).CreateRectangleModel(material),
+                (points[7], points[6], points[1], points[0]).CreateRectangleModel(material),
+                (points[7], points[0], points[3], points[4]).CreateRectangleModel(material),
+                (points[7], points[4], points[5], points[6]).CreateRectangleModel(material),
+                (points[0], points[1], points[2], points[3]).CreateRectangleModel(material)
             };
         }
     }

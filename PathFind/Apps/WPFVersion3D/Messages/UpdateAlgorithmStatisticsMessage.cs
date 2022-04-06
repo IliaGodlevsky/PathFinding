@@ -3,9 +3,13 @@
     internal sealed class UpdateAlgorithmStatisticsMessage
     {
         public int Index { get; }
+
         public string Time { get; }
+
         public int VisitedVertices { get; }
+
         public double PathCost { get; }
+
         public int PathLength { get; }
 
         public UpdateAlgorithmStatisticsMessage(int index,

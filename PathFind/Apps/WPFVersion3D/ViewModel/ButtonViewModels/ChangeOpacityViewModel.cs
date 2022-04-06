@@ -4,7 +4,6 @@ using GraphLib.Interfaces;
 using NullObject.Extensions;
 using System.Windows.Input;
 using WPFVersion3D.DependencyInjection;
-using WPFVersion3D.Enums;
 using WPFVersion3D.Infrastructure;
 using WPFVersion3D.Messages;
 using WPFVersion3D.View;
@@ -22,7 +21,7 @@ namespace WPFVersion3D.ViewModel.ButtonViewModels
         public ChangeOpacityViewModel()
         {
             messenger = DI.Container.Resolve<IMessenger>();
-            messenger.Register<GraphCreatedMessage>(this, MessageTokens.ChangeOpacityModel, OnGraphCreated);
+            messenger.Register<GraphCreatedMessage>(this, Tokens.ChangeOpacityModel, OnGraphCreated);
             ChangeVerticesOpacityCommand = new RelayCommand(ExecuteChangeOpacityCommand, CanExecuteChangeOpacityCommand);
         }
 

@@ -44,7 +44,7 @@ namespace WPFVersion3D.ViewModel
             messenger = DI.Container.Resolve<IMessenger>();
             FindPathCommand = new RelayCommand(ExecutePathFindCommand, CanExecutePathFindCommand);
             CancelFindPathCommand = new RelayCommand(ExecuteCloseWindowCommand);
-            messenger.Register<AlgorithmIndexMessage>(this, MessageTokens.PathfindingModel, SetAlgorithmIndex);
+            messenger.Register<AlgorithmIndexMessage>(this, Tokens.PathfindingModel, SetAlgorithmIndex);
             DelayTime = Convert.ToInt32(Constants.AlgorithmDelayValueRange.LowerValueOfRange);
         }
 
@@ -55,14 +55,14 @@ namespace WPFVersion3D.ViewModel
 
         private void SetAlgorithmIndex(AlgorithmIndexMessage message)
         {
-            messenger.Unregister<AlgorithmIndexMessage>(this, MessageTokens.PathfindingModel, SetAlgorithmIndex);
-            Index = message.Index;
+            messenger.Unregister<AlgorithmIndexMessage>(this, Tokens.PathfindingModel, SetAlgorithmIndex);
+            Index = message.Value;
         }
 
         protected override void OnAlgorithmStarted(object sender, ProcessEventArgs e)
         {
             var message = new AlgorithmStartedMessage(algorithm);
-            messenger.Forward(message, MessageTokens.AlgorithmStatisticsModel);
+            messenger.Forward(message, Tokens.AlgorithmStatisticsModel);
         }
 
         protected override void SummarizePathfindingResults()
@@ -71,9 +71,9 @@ namespace WPFVersion3D.ViewModel
             string time = timer.ToFormattedString();
             var message = new UpdateAlgorithmStatisticsMessage(Index, time,
                 visitedVerticesCount, path.Length, path.Cost);
-            messenger.Forward(message, MessageTokens.AlgorithmStatisticsModel);
+            messenger.Forward(message, Tokens.AlgorithmStatisticsModel);
             var statusMessage = new AlgorithmStatusMessage(status, Index);
-            messenger.Forward(statusMessage, MessageTokens.AlgorithmStatisticsModel);
+            messenger.Forward(statusMessage, Tokens.AlgorithmStatisticsModel);
         }
 
         protected override async void OnVertexVisited(object sender, AlgorithmEventArgs e)
@@ -81,7 +81,7 @@ namespace WPFVersion3D.ViewModel
             Stopwatch.StartNew().Wait(DelayTime).Stop();
             string time = timer.ToFormattedString();
             var message = new UpdateAlgorithmStatisticsMessage(Index, time, visitedVerticesCount);
-            await messenger.ForwardAsync(message, MessageTokens.AlgorithmStatisticsModel).ConfigureAwait(false);
+            await messenger.ForwardAsync(message, Tokens.AlgorithmStatisticsModel).ConfigureAwait(false);
             await Task.Run(() => base.OnVertexVisited(sender, e)).ConfigureAwait(false);
         }
 
@@ -93,7 +93,7 @@ namespace WPFVersion3D.ViewModel
         protected override void OnAlgorithmInterrupted(object sender, ProcessEventArgs e)
         {
             var message = new AlgorithmStatusMessage(AlgorithmStatuses.Interrupted, Index);
-            messenger.Forward(message, MessageTokens.AlgorithmStatisticsModel);
+            messenger.Forward(message, Tokens.AlgorithmStatisticsModel);
         }
 
         protected override void OnAlgorithmFinished(object sender, ProcessEventArgs e)

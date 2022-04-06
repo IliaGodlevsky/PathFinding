@@ -75,12 +75,12 @@
     <Compile Include="Enums\AlgorithmStatuses.cs" />
     <Compile Include="Enums\AnimationSpeeds.cs" />
     <Compile Include="Enums\AxisRotators.cs" />
-    <Compile Include="Enums\MessageTokens.cs" />
     <Compile Include="Extensions\AlgorithmViewModelExtensions.cs" />
     <Compile Include="Extensions\ColorExtensions.cs" />
     <Compile Include="Extensions\EnumValuesExtensions.cs" />
     <Compile Include="Extensions\IMessengerExtensions.cs" />
     <Compile Include="Extensions\TypeExtensions.cs" />
+    <Compile Include="Extensions\ValueTupleExtensions.cs" />
     <Compile Include="Infrastructure\EventArguments\RotationSpeedChangedEventArgs.cs" />
     <Compile Include="Infrastructure\EventHandlers\RotationSpeedChangedEventHandler.cs" />
     <Compile Include="Interface\IAxis.cs" />
@@ -89,7 +89,6 @@
     <Compile Include="Interface\IPassValueMessage.cs" />
     <Compile Include="Messages\AlgorithmStartedMessage.cs" />
     <Compile Include="Messages\AlgorithmIndexMessage.cs" />
-    <Compile Include="Messages\AnimationSpeedChangedMessage.cs" />
     <Compile Include="Messages\GraphFieldCreatedMessage.cs" />
     <Compile Include="Messages\IsAllAlgorithmsFinishedMessage.cs" />
     <Compile Include="Messages\AlgorithmStatusMessage.cs" />
@@ -103,7 +102,6 @@
     <Compile Include="Model\Axes\Abscissa.cs" />
     <Compile Include="Model\Axes\Ordinate.cs" />
     <Compile Include="Model\Axes\Applicate.cs" />
-    <Compile Include="Model\RectangleModel3DFactory.cs" />
     <Compile Include="Infrastructure\Animators\BackwardAnimatedAxisRotator.cs" />
     <Compile Include="Infrastructure\Animators\AnimatedAxisRotator.cs" />
     <Compile Include="Interface\IAnimationSpeed.cs" />
@@ -126,6 +124,7 @@
     <Compile Include="Model\Vertex3DFactory.cs" />
     <Compile Include="Model\Vertex3DFromInfoFactory.cs" />
     <Compile Include="Model\VertexVisualization.cs" />
+    <Compile Include="Tokens.cs" />
     <Compile Include="ValidationRules\NonDoubleInputValidationRule.cs" />
     <Compile Include="ValidationRules\NonInt32InputValidationRule.cs" />
     <Compile Include="ValidationRules\RangedDoubleValidationRule.cs" />

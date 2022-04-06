@@ -38,11 +38,11 @@ namespace WPFVersion3D.ViewModel
             messenger = DI.Container.Resolve<IMessenger>();
             InterruptSelelctedAlgorithmCommand = new RelayCommand(ExecuteInterruptSelectedAlgorithmCommand, CanExecuteInterruptSelectedAlgorithmCommand);
             RemoveSelelctedAlgorithmCommand = new RelayCommand(ExecuteRemoveFromStatisticsCommand, CanExecuteRemoveFromStatisticsCommand);
-            messenger.Register<AlgorithmStartedMessage>(this, MessageTokens.AlgorithmStatisticsModel, OnAlgorithmStarted);
-            messenger.Register<UpdateAlgorithmStatisticsMessage>(this, MessageTokens.AlgorithmStatisticsModel, UpdateAlgorithmStatistics);
-            messenger.Register<InterruptAllAlgorithmsMessage>(this, MessageTokens.AlgorithmStatisticsModel, OnAllAlgorithmInterrupted);
-            messenger.Register<ClearStatisticsMessage>(this, MessageTokens.AlgorithmStatisticsModel, OnClearStatistics);
-            messenger.Register<AlgorithmStatusMessage>(this, MessageTokens.AlgorithmStatisticsModel, SetAlgorithmStatus);
+            messenger.Register<AlgorithmStartedMessage>(this, Tokens.AlgorithmStatisticsModel, OnAlgorithmStarted);
+            messenger.Register<UpdateAlgorithmStatisticsMessage>(this, Tokens.AlgorithmStatisticsModel, UpdateAlgorithmStatistics);
+            messenger.Register<InterruptAllAlgorithmsMessage>(this, Tokens.AlgorithmStatisticsModel, OnAllAlgorithmInterrupted);
+            messenger.Register<ClearStatisticsMessage>(this, Tokens.AlgorithmStatisticsModel, OnClearStatistics);
+            messenger.Register<AlgorithmStatusMessage>(this, Tokens.AlgorithmStatisticsModel, SetAlgorithmStatus);
         }
 
         protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = "")
@@ -65,7 +65,7 @@ namespace WPFVersion3D.ViewModel
             var viewModel = new AlgorithmViewModel(message.Value);
             Dispatcher.Invoke(() => Statistics.Add(viewModel));
             var msg = new AlgorithmIndexMessage(index);
-            messenger.Forward(msg, MessageTokens.PathfindingModel);
+            messenger.Forward(msg, Tokens.PathfindingModel);
             SendIsAllFinishedMessage();
         }
 
@@ -110,7 +110,7 @@ namespace WPFVersion3D.ViewModel
         {
             var isAllFinished = Statistics.All(stat => !stat.IsStarted);
             var message = new IsAllAlgorithmsFinishedMessage(isAllFinished);
-            messenger.Forward(message, MessageTokens.Everyone);
+            messenger.Forward(message, Tokens.Everyone);
         }
 
         public void Dispose()

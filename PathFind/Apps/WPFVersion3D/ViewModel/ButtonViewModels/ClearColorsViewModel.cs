@@ -6,7 +6,6 @@ using GraphLib.Interfaces;
 using NullObject.Extensions;
 using System.Windows.Input;
 using WPFVersion3D.DependencyInjection;
-using WPFVersion3D.Enums;
 using WPFVersion3D.Infrastructure;
 using WPFVersion3D.Messages;
 
@@ -27,8 +26,8 @@ namespace WPFVersion3D.ViewModel.ButtonViewModels
         {
             messenger = DI.Container.Resolve<IMessenger>();
             endPoints = DI.Container.Resolve<BaseEndPoints>();
-            messenger.Register<GraphCreatedMessage>(this, MessageTokens.ClearColorsModel, OnGraphCreated);
-            messenger.Register<IsAllAlgorithmsFinishedMessage>(this, MessageTokens.ClearColorsModel, OnAllAlgorithmFinishedPathfinding);
+            messenger.Register<GraphCreatedMessage>(this, Tokens.ClearColorsModel, OnGraphCreated);
+            messenger.Register<IsAllAlgorithmsFinishedMessage>(this, Tokens.ClearColorsModel, OnAllAlgorithmFinishedPathfinding);
             ClearColorsCommand = new RelayCommand(ExecuteClearColorsCommand, CanExecuteClearColorsCommand);
         }
 
@@ -45,7 +44,7 @@ namespace WPFVersion3D.ViewModel.ButtonViewModels
 
         private void OnAllAlgorithmFinishedPathfinding(IsAllAlgorithmsFinishedMessage message)
         {
-            IsAllAlgorithmFinishedPathfinding = message.IsAllAlgorithmsFinished;
+            IsAllAlgorithmFinishedPathfinding = message.Value;
         }
 
         private void OnGraphCreated(GraphCreatedMessage message)

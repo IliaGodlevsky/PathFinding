@@ -41,7 +41,7 @@ namespace WPFVersion3D.ViewModel
             this.endPoints = endPoints;
             this.eventHolder = eventHolder;
             messenger = DI.Container.Resolve<IMessenger>();
-            messenger.Register<GraphCreatedMessage>(this, MessageTokens.MainModel, SetGraph);
+            messenger.Register<GraphCreatedMessage>(this, Tokens.MainModel, SetGraph);
         }
 
         public void Dispose()
@@ -65,8 +65,8 @@ namespace WPFVersion3D.ViewModel
             eventHolder.SubscribeVertices(Graph);
             GraphParametres = Graph.ToString();
             messenger
-                .Forward(new ClearStatisticsMessage(), MessageTokens.AlgorithmStatisticsModel)
-                .Forward(new GraphFieldCreatedMessage(graphField), MessageTokens.Everyone);
+                .Forward(new ClearStatisticsMessage(), Tokens.AlgorithmStatisticsModel)
+                .Forward(new GraphFieldCreatedMessage(graphField), Tokens.Everyone);
         }
 
         private void SetGraph(GraphCreatedMessage message)

@@ -48,7 +48,7 @@ namespace WPFVersion3D.ViewModel
         public GraphFieldViewModel()
         {
             messenger = DI.Container.Resolve<IMessenger>();
-            messenger.Register<GraphFieldCreatedMessage>(this, MessageTokens.GraphFieldModel, OnGraphFieldCreated);
+            messenger.Register<GraphFieldCreatedMessage>(this, Tokens.GraphFieldModel, OnGraphFieldCreated);
         }
 
         protected virtual void OnPropertyChanged([CallerMemberName]string propertyName = null)

@@ -28,8 +28,8 @@ namespace WPFVersion3D.ViewModel.ButtonViewModels
         {
             messenger = DI.Container.Resolve<IMessenger>();
             endPoints = DI.Container.Resolve<BaseEndPoints>();
-            messenger.Register<IsAllAlgorithmsFinishedMessage>(this, MessageTokens.ClearGraphModel, OnAllAlgorithmFinishedPathfinding);
-            messenger.Register<GraphCreatedMessage>(this, MessageTokens.ClearGraphModel, OnGraphCreated);
+            messenger.Register<IsAllAlgorithmsFinishedMessage>(this, Tokens.ClearGraphModel, OnAllAlgorithmFinishedPathfinding);
+            messenger.Register<GraphCreatedMessage>(this, Tokens.ClearGraphModel, OnGraphCreated);
             ClearGraphCommand = new RelayCommand(ExecuteClearGraphCommand, CanExecuteClearGraphCommand);
         }
 
@@ -38,7 +38,7 @@ namespace WPFVersion3D.ViewModel.ButtonViewModels
             Graph.Refresh();
             endPoints.Reset();
             var message = new ClearStatisticsMessage();
-            messenger.Forward(message, MessageTokens.AlgorithmStatisticsModel);
+            messenger.Forward(message, Tokens.AlgorithmStatisticsModel);
         }
 
         private bool CanExecuteClearGraphCommand(object param)
@@ -48,7 +48,7 @@ namespace WPFVersion3D.ViewModel.ButtonViewModels
 
         private void OnAllAlgorithmFinishedPathfinding(IsAllAlgorithmsFinishedMessage message)
         {
-            IsAllAlgorithmFinishedPathfinding = message.IsAllAlgorithmsFinished;
+            IsAllAlgorithmFinishedPathfinding = message.Value;
         }
 
         private void OnGraphCreated(GraphCreatedMessage message)

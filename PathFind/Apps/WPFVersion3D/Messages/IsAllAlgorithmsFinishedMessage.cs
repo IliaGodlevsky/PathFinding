@@ -1,12 +1,10 @@
 ﻿namespace WPFVersion3D.Messages
 {
-    internal sealed class IsAllAlgorithmsFinishedMessage
+    internal sealed class IsAllAlgorithmsFinishedMessage : PassValueMessage<bool>
     {
-        public bool IsAllAlgorithmsFinished { get; }
-
-        public IsAllAlgorithmsFinishedMessage(bool isAllFinished)
+        public IsAllAlgorithmsFinishedMessage(bool isAllFinished) : base(isAllFinished)
         {
-            IsAllAlgorithmsFinished = isAllFinished;
+            
         }
     }
 }

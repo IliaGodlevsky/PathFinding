@@ -2,8 +2,8 @@
 using System;
 using System.Collections.Generic;
 using System.Windows.Media.Media3D;
+using WPFVersion3D.Extensions;
 using WPFVersion3D.Interface;
-using WPFVersion3D.Model;
 
 namespace WPFVersion3D.Model3DFactories
 {
@@ -58,8 +58,6 @@ namespace WPFVersion3D.Model3DFactories
 
         private IEnumerable<Model3D> GetRectangleModels(Point3D[,] points, Material material)
         {
-            var rectangleFactory = new RectangleModel3DFactory();
-
             for (int latitude = 0; latitude < Latitudes - 1; latitude++)
             {
                 for (int meridian = 0; meridian < Meridians - 1; meridian++)
@@ -68,7 +66,7 @@ namespace WPFVersion3D.Model3DFactories
                     var p1 = points[latitude + 1, meridian];
                     var p2 = points[latitude + 1, meridian + 1];
                     var p3 = points[latitude, meridian + 1];
-                    yield return rectangleFactory.CreateRectangleModel(p0, p1, p2, p3, material);
+                    yield return (p0, p1, p2, p3).CreateRectangleModel(material);
                 }
             }
         }

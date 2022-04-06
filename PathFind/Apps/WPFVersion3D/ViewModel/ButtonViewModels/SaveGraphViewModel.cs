@@ -30,7 +30,7 @@ namespace WPFVersion3D.ViewModel.ButtonViewModels
             messenger = DI.Container.Resolve<IMessenger>();
             log = DI.Container.Resolve<ILog>();
             SaveGraphCommand = new RelayCommand(ExecuteSaveGraphCommand, CanExecuteSaveGraphCommand);
-            messenger.Register<GraphCreatedMessage>(this, MessageTokens.SaveGraphViewModel, OnGraphCreated);
+            messenger.Register<GraphCreatedMessage>(this, Tokens.SaveGraphViewModel, OnGraphCreated);
         }
 
         private async void ExecuteSaveGraphCommand(object param)
