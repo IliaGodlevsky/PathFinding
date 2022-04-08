@@ -57,8 +57,8 @@ namespace WPFVersion3D.ViewModel
         private void SetAxis(ref GraphFieldAxisRotatingViewModel axis, GraphFieldAxisRotatingViewModel value)
         {
             axis = value;
-            axis.RotationSpeed = speed;
             SpeedChanged += axis.OnRotationSpeedChanged;
+            axis.OnRotationSpeedChanged(this, new RotationSpeedChangedEventArgs(speed));
         }
     }
 }

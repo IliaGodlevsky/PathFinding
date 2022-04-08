@@ -74,7 +74,6 @@
     <Compile Include="Converters\BoolToVisibilityConverter.cs" />
     <Compile Include="Enums\AlgorithmStatuses.cs" />
     <Compile Include="Enums\AnimationSpeeds.cs" />
-    <Compile Include="Enums\AxisRotators.cs" />
     <Compile Include="Extensions\AlgorithmViewModelExtensions.cs" />
     <Compile Include="Extensions\ColorExtensions.cs" />
     <Compile Include="Extensions\EnumValuesExtensions.cs" />
@@ -89,6 +88,7 @@
     <Compile Include="Infrastructure\Commands\InterruptAlgorithmCommand.cs" />
     <Compile Include="Infrastructure\Commands\PauseAlgorithmCommand.cs" />
     <Compile Include="Interface\IAxis.cs" />
+    <Compile Include="Interface\IAnimatedAxisRotatorFactory.cs" />
     <Compile Include="Interface\IChangeColorOpacity.cs" />
     <Compile Include="Interface\IPassValueMessage.cs" />
     <Compile Include="Messages\PassValueMessages\AlgorithmStartedMessage.cs" />
@@ -132,6 +132,9 @@
     <Compile Include="Model\PathInput.cs" />
     <Compile Include="Model\RangedSlider.cs" />
     <Compile Include="Model3DFactories\SphericModel3DFactory.cs" />
+    <Compile Include="Model\RotatorFactories\BackwardAnimatedAxisRotatorFactory.cs" />
+    <Compile Include="Model\RotatorFactories\ForwardAnimatedAxisRotatorFactory.cs" />
+    <Compile Include="Model\RotatorFactories\NullAnimatedAxisRotatorFactory.cs" />
     <Compile Include="Model\Vertex3DCost.cs" />
     <Compile Include="Model\Vertex3DCostFactory.cs" />
     <Compile Include="Model\Vertex3DFactory.cs" />

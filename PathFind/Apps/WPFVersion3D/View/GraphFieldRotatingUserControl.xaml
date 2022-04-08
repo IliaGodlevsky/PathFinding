@@ -9,7 +9,7 @@
              xmlns:converters="clr-namespace:WPFVersion3D.Converters" 
              xmlns:validationrules="clr-namespace:WPFVersion3D.ValidationRules"
              mc:Ignorable="d" 
-             d:DesignHeight="30" d:DesignWidth="180"
+             d:DesignHeight="30" d:DesignWidth="280"
              d:DataContext="{d:DesignInstance Type=viewmodel:GraphFieldAxisRotatingViewModel}">
     <UserControl.Resources>
         <converters:AnimatedAxisRotatorConverter x:Key="AnimatedAxisRotatorConverter"/>
