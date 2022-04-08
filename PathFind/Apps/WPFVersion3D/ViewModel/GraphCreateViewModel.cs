@@ -11,10 +11,8 @@ using System.Linq;
 using System.Windows.Input;
 using ValueRange.Extensions;
 using WPFVersion3D.DependencyInjection;
-using WPFVersion3D.Enums;
-using WPFVersion3D.Extensions;
-using WPFVersion3D.Infrastructure;
-using WPFVersion3D.Messages;
+using WPFVersion3D.Infrastructure.Commands;
+using WPFVersion3D.Messages.PassValueMessages;
 
 namespace WPFVersion3D.ViewModel
 {
@@ -44,8 +42,7 @@ namespace WPFVersion3D.ViewModel
             try
             {
                 var graph = await SelectedGraphAssemble.AssembleGraphAsync(ObstaclePercent, Width, Length, Height);
-                var message = new GraphCreatedMessage(graph);
-                messenger.Forward(message, Tokens.Everyone);
+                messenger.Send(new GraphCreatedMessage(graph));
             }
             catch (Exception ex)
             {

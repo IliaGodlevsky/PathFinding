@@ -12,32 +12,18 @@
              d:DesignHeight="30" d:DesignWidth="180"
              d:DataContext="{d:DesignInstance Type=viewmodel:GraphFieldAxisRotatingViewModel}">
     <UserControl.Resources>
-        <converters:AnimatedAxisRotatorConverter x:Key="animatedAxisRotatorConverter"/>
-        <converters:PrecisedDoubleToStringConverter Precision="2" x:Key="doubleConverter2"/>
+        <converters:AnimatedAxisRotatorConverter x:Key="AnimatedAxisRotatorConverter"/>
+        <converters:PrecisedDoubleToStringConverter Precision="2" x:Key="DoubleConverter"/>
     </UserControl.Resources>
-    <Grid>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition></ColumnDefinition>
-            <ColumnDefinition></ColumnDefinition>
-            <ColumnDefinition></ColumnDefinition>
-            <ColumnDefinition></ColumnDefinition>
-        </Grid.ColumnDefinitions>
-        
+    <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+
         <TextBlock Margin="5" Text="{Binding Title}"/>
         
-        <model:RangedSlider x:Name="Slider" 
-                            Grid.Column="1" 
-                            Style="{StaticResource SliderStyle}" 
-                            ValueRange="{x:Static range:Constants.AngleValueRange}" 
-                            Value="{Binding Path=AngleRotation.Angle}"/>
+        <model:RangedSlider x:Name="Slider" Style="{StaticResource SliderStyle}" ValueRange="{x:Static range:Constants.AngleValueRange}" Value="{Binding Path=AngleRotation.Angle}"/>
 
-        <TextBox Style="{StaticResource TextBoxStyle}" 
-                         Grid.Column="2"                       >
+        <TextBox Style="{StaticResource TextBoxStyle}">
             <TextBox.Text>
-                <Binding Path="Value" 
-                         ElementName="Slider" 
-                         Converter="{StaticResource doubleConverter2}"
-                         Mode="TwoWay">
+                <Binding Path="Value" ElementName="Slider" Converter="{StaticResource DoubleConverter}" Mode="TwoWay">
                     <Binding.ValidationRules>
                         <validationrules:NonDoubleInputValidationRule/>
                     </Binding.ValidationRules>
@@ -45,14 +31,11 @@
             </TextBox.Text>
         </TextBox>
 
-        <ToggleButton Command="{Binding RotateFieldCommand}" 
-                      Margin="5" Grid.Column="3"
-                      Template ="{StaticResource RotationToggleButtonTemplate}">
+        <ToggleButton Command="{Binding RotateFieldCommand}" Margin="5" Template ="{StaticResource RotationToggleButtonTemplate}">
             <ToggleButton.CommandParameter>
-                <Binding Converter="{StaticResource animatedAxisRotatorConverter}"  
-                         Path="IsChecked" RelativeSource="{RelativeSource Self}"/>
+                <Binding Converter="{StaticResource AnimatedAxisRotatorConverter}" Path="IsChecked" RelativeSource="{RelativeSource Self}"/>
             </ToggleButton.CommandParameter>
         </ToggleButton>
         
-    </Grid>
+    </StackPanel>
 </UserControl>

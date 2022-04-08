@@ -6,8 +6,8 @@ using GraphLib.Interfaces;
 using NullObject.Extensions;
 using System.Windows.Input;
 using WPFVersion3D.DependencyInjection;
-using WPFVersion3D.Infrastructure;
-using WPFVersion3D.Messages;
+using WPFVersion3D.Infrastructure.Commands;
+using WPFVersion3D.Messages.PassValueMessages;
 
 namespace WPFVersion3D.ViewModel.ButtonViewModels
 {
@@ -26,8 +26,8 @@ namespace WPFVersion3D.ViewModel.ButtonViewModels
         {
             messenger = DI.Container.Resolve<IMessenger>();
             endPoints = DI.Container.Resolve<BaseEndPoints>();
-            messenger.Register<GraphCreatedMessage>(this, Tokens.ClearColorsModel, OnGraphCreated);
-            messenger.Register<IsAllAlgorithmsFinishedMessage>(this, Tokens.ClearColorsModel, OnAllAlgorithmFinishedPathfinding);
+            messenger.Register<GraphCreatedMessage>(this, OnGraphCreated);
+            messenger.Register<IsAllAlgorithmsFinishedMessage>(this, OnAllAlgorithmFinishedPathfinding);
             ClearColorsCommand = new RelayCommand(ExecuteClearColorsCommand, CanExecuteClearColorsCommand);
         }
 

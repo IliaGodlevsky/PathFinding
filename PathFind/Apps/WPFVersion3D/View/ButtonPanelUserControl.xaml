@@ -5,7 +5,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:buttonviewmodels="clr-namespace:WPFVersion3D.ViewModel.ButtonViewModels"
              mc:Ignorable="d" 
-             d:DesignHeight="450" d:DesignWidth="800">
+             d:DesignHeight="40" d:DesignWidth="800">
     <StackPanel Orientation="Horizontal">
         <ToolBar>
             <Button Style="{StaticResource ImageStyle}" Content="{StaticResource LoadGraph}" ToolTip="Load graph" Command="{Binding LoadGraphCommand}">
@@ -38,9 +38,19 @@
                     <buttonviewmodels:FindPathViewModel/>
                 </Button.DataContext>
             </Button>
-            <Button Style="{StaticResource ImageStyle}" Content="{StaticResource Interrupt}" ToolTip="Interrupt all" Command ="{Binding InterruptAllAlgorithmsCommand}">
+            <Button Style="{StaticResource ImageStyle}" Content="{StaticResource Interrupt}" ToolTip="Interrupt all" Command ="{Binding Command}">
                 <Button.DataContext>
                     <buttonviewmodels:InterruptAllAlgorithmsViewModel/>
+                </Button.DataContext>
+            </Button>
+            <Button Style="{StaticResource ImageStyle}" Content="{StaticResource Pause}" ToolTip="Pause all" Command="{Binding Command}">
+                <Button.DataContext>
+                    <buttonviewmodels:PauseAllAlgorithmsViewModel/>
+                </Button.DataContext>
+            </Button>
+            <Button Style="{StaticResource ImageStyle}" Content="{StaticResource Resume}" ToolTip="Resume all" Command="{Binding Command}">
+                <Button.DataContext>
+                    <buttonviewmodels:ResumeAllAlgorithmViewModel/>
                 </Button.DataContext>
             </Button>
             <Button Style="{StaticResource ImageStyle}" Content="{StaticResource Transperency}" ToolTip="Change opacity" Command="{Binding ChangeVerticesOpacityCommand}">

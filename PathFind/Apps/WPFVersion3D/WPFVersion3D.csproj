@@ -81,22 +81,34 @@
     <Compile Include="Extensions\IMessengerExtensions.cs" />
     <Compile Include="Extensions\TypeExtensions.cs" />
     <Compile Include="Extensions\ValueTupleExtensions.cs" />
+    <Compile Include="Infrastructure\Commands\BaseAlgorithmCommand.cs" />
+    <Compile Include="Infrastructure\Commands\BaseCommand.cs" />
+    <Compile Include="Infrastructure\Commands\ResumeAlgorithmCommand.cs" />
     <Compile Include="Infrastructure\EventArguments\RotationSpeedChangedEventArgs.cs" />
     <Compile Include="Infrastructure\EventHandlers\RotationSpeedChangedEventHandler.cs" />
+    <Compile Include="Infrastructure\Commands\InterruptAlgorithmCommand.cs" />
+    <Compile Include="Infrastructure\Commands\PauseAlgorithmCommand.cs" />
     <Compile Include="Interface\IAxis.cs" />
     <Compile Include="Interface\IChangeColorOpacity.cs" />
-    <Compile Include="Interface\IMessage.cs" />
     <Compile Include="Interface\IPassValueMessage.cs" />
-    <Compile Include="Messages\AlgorithmStartedMessage.cs" />
-    <Compile Include="Messages\AlgorithmIndexMessage.cs" />
-    <Compile Include="Messages\GraphFieldCreatedMessage.cs" />
-    <Compile Include="Messages\IsAllAlgorithmsFinishedMessage.cs" />
-    <Compile Include="Messages\AlgorithmStatusMessage.cs" />
-    <Compile Include="Messages\ClearStatisticsMessage.cs" />
-    <Compile Include="Messages\GraphCreatedMessage.cs" />
-    <Compile Include="Messages\InterruptAllAlgorithmsMessage.cs" />
-    <Compile Include="Messages\PassValueMessage.cs" />
-    <Compile Include="Messages\UpdateAlgorithmStatisticsMessage.cs" />
+    <Compile Include="Messages\PassValueMessages\AlgorithmStartedMessage.cs" />
+    <Compile Include="Messages\PassValueMessages\AlgorithmIndexMessage.cs" />
+    <Compile Include="Messages\ActionMessages\GraphChangedMessage.cs" />
+    <Compile Include="Messages\PassValueMessages\EndPointsChosenMessage.cs" />
+    <Compile Include="Messages\PassValueMessages\GraphFieldCreatedMessage.cs" />
+    <Compile Include="Interface\IAlgorithmActionMessage.cs" />
+    <Compile Include="Messages\PassValueMessages\IsAllAlgorithmsFinishedMessage.cs" />
+    <Compile Include="Messages\PassValueMessages\AlgorithmStatusMessage.cs" />
+    <Compile Include="Messages\ActionMessages\ClearStatisticsMessage.cs" />
+    <Compile Include="Messages\PassValueMessages\GraphCreatedMessage.cs" />
+    <Compile Include="Messages\ActionMessages\InterruptAllAlgorithmsMessage.cs" />
+    <Compile Include="Messages\PassValueMessages\PassValueMessage.cs" />
+    <Compile Include="Messages\ActionMessages\PauseAllAlgorithmMessage.cs" />
+    <Compile Include="Messages\PassValueMessages\PathFoundMessage.cs" />
+    <Compile Include="Messages\PassValueMessages\RemoveAlgorithmMessage.cs" />
+    <Compile Include="Messages\ActionMessages\ResumeAllAlgorithmMessage.cs" />
+    <Compile Include="Messages\PassValueMessages\SubscribeOnAlgorithmEventsMessage.cs" />
+    <Compile Include="Messages\PassValueMessages\UpdateAlgorithmStatisticsMessage.cs" />
     <Compile Include="Model3DFactories\ToricalModel3DFactory.cs" />
     <Compile Include="Model\Axes\Axis.cs" />
     <Compile Include="Model\Axes\Abscissa.cs" />
@@ -116,6 +128,7 @@
     <Compile Include="Infrastructure\Animators\NullAnimatedAxisRotator.cs" />
     <Compile Include="Model\EndPoints.cs" />
     <Compile Include="Model\GraphField3DContainer.cs" />
+    <Compile Include="Model\PathfindingVisualizationModel.cs" />
     <Compile Include="Model\PathInput.cs" />
     <Compile Include="Model\RangedSlider.cs" />
     <Compile Include="Model3DFactories\SphericModel3DFactory.cs" />
@@ -124,13 +137,16 @@
     <Compile Include="Model\Vertex3DFactory.cs" />
     <Compile Include="Model\Vertex3DFromInfoFactory.cs" />
     <Compile Include="Model\VertexVisualization.cs" />
-    <Compile Include="Tokens.cs" />
     <Compile Include="ValidationRules\NonDoubleInputValidationRule.cs" />
     <Compile Include="ValidationRules\NonInt32InputValidationRule.cs" />
     <Compile Include="ValidationRules\RangedDoubleValidationRule.cs" />
     <Compile Include="ValidationRules\RangedIntValidationRule.cs" />
-    <Compile Include="ViewModel\AlgorithmStatisticsViewModel.cs" />
+    <Compile Include="ViewModel\AlgorithmsViewModel.cs" />
     <Compile Include="ViewModel\AlgorithmViewModel.cs" />
+    <Compile Include="ViewModel\BaseViewModel\BaseAllAlgorithmsOperationViewModel.cs" />
+    <Compile Include="ViewModel\ButtonViewModels\PauseAllAlgorithmsViewModel.cs" />
+    <Compile Include="ViewModel\ButtonViewModels\ResumeAllAlgorithmViewModel.cs" />
+    <Compile Include="ViewModel\BaseViewModel\NotifyPropertyChanged.cs" />
     <Compile Include="ViewModel\ButtonViewModels\ChangeOpacityViewModel.cs" />
     <Compile Include="ViewModel\ButtonViewModels\ClearColorsViewModel.cs" />
     <Compile Include="ViewModel\ButtonViewModels\ClearGraphViewModel.cs" />
@@ -146,11 +162,11 @@
     <Compile Include="ViewModel\MainWindowViewModel.cs" />
     <Compile Include="ViewModel\OpacityChangeViewModel.cs" />
     <Compile Include="ViewModel\PathfindingViewModel.cs" />
-    <Compile Include="ViewModel\StretchAlongAxisViewModels\BaseStretchAlongAxisViewModel.cs" />
+    <Compile Include="ViewModel\BaseViewModel\BaseStretchAlongAxisViewModel.cs" />
     <Compile Include="ViewModel\StretchAlongAxisViewModels\StretchAlongApplicateViewModel.cs" />
     <Compile Include="ViewModel\StretchAlongAxisViewModels\StretchAlongOrdinateViewModel.cs" />
     <Compile Include="ViewModel\StretchAlongAxisViewModels\StretchAlongAbscissaViewModel.cs" />
-    <Compile Include="ViewModel\VertexOpacityViewModels\BaseVertexOpacityViewModel.cs" />
+    <Compile Include="ViewModel\BaseViewModel\BaseVertexOpacityViewModel.cs" />
     <Compile Include="ViewModel\VertexOpacityViewModels\EnqueuedVertexOpacityViewModel.cs" />
     <Compile Include="ViewModel\VertexOpacityViewModels\ObstacleVertexOpacityViewModel.cs" />
     <Compile Include="ViewModel\VertexOpacityViewModels\PathVertexOpacityViewModel.cs" />
@@ -237,7 +253,7 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Converters\IntToStringConverter.cs" />
-    <Compile Include="Infrastructure\RelayCommand.cs" />
+    <Compile Include="Infrastructure\Commands\RelayCommand.cs" />
     <Compile Include="View\GraphCreateWindow.xaml.cs">
       <DependentUpon>GraphCreateWindow.xaml</DependentUpon>
     </Compile>
@@ -387,6 +403,10 @@
     <ProjectReference Include="..\..\ValueRange\ValueRange.csproj">
       <Project>{EB70607D-CDF4-4D91-BBFE-55F85ACC0A1B}</Project>
       <Name>ValueRange</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Visualization\Visualization.csproj">
+      <Project>{abb541f1-72ec-4607-8515-7a43bcd67b13}</Project>
+      <Name>Visualization</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

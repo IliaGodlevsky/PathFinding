@@ -12,23 +12,19 @@ using Logging.Interface;
 using NullObject.Extensions;
 using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.Diagnostics;
-using System.Runtime.CompilerServices;
-using System.Threading.Tasks;
 using System.Windows.Input;
 using WPFVersion3D.DependencyInjection;
 using WPFVersion3D.Enums;
 using WPFVersion3D.Extensions;
-using WPFVersion3D.Infrastructure;
-using WPFVersion3D.Messages;
+using WPFVersion3D.Infrastructure.Commands;
+using WPFVersion3D.Messages.PassValueMessages;
 
 namespace WPFVersion3D.ViewModel
 {
-    public class PathFindingViewModel : PathFindingModel, IViewModel, INotifyPropertyChanged, IDisposable
+    public class PathFindingViewModel : PathFindingModel, IViewModel, IDisposable
     {
         public event Action WindowClosed;
-        public event PropertyChangedEventHandler PropertyChanged;
 
         private readonly IMessenger messenger;
 
@@ -44,36 +40,29 @@ namespace WPFVersion3D.ViewModel
             messenger = DI.Container.Resolve<IMessenger>();
             FindPathCommand = new RelayCommand(ExecutePathFindCommand, CanExecutePathFindCommand);
             CancelFindPathCommand = new RelayCommand(ExecuteCloseWindowCommand);
-            messenger.Register<AlgorithmIndexMessage>(this, Tokens.PathfindingModel, SetAlgorithmIndex);
+            messenger.Register<AlgorithmIndexMessage>(this, SetAlgorithmIndex);
             DelayTime = Convert.ToInt32(Constants.AlgorithmDelayValueRange.LowerValueOfRange);
-        }
-
-        protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = "")
-        {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
 
         private void SetAlgorithmIndex(AlgorithmIndexMessage message)
         {
-            messenger.Unregister<AlgorithmIndexMessage>(this, Tokens.PathfindingModel, SetAlgorithmIndex);
+            messenger.Unregister<AlgorithmIndexMessage>(this, SetAlgorithmIndex);
             Index = message.Value;
         }
 
         protected override void OnAlgorithmStarted(object sender, ProcessEventArgs e)
         {
-            var message = new AlgorithmStartedMessage(algorithm);
-            messenger.Forward(message, Tokens.AlgorithmStatisticsModel);
+            messenger.Send(new AlgorithmStartedMessage(algorithm));
+            messenger.Send(new EndPointsChosenMessage(endPoints, algorithm));
         }
 
         protected override void SummarizePathfindingResults()
         {
             var status = !path.IsNull() ? AlgorithmStatuses.Finished : AlgorithmStatuses.Failed;
             string time = timer.ToFormattedString();
-            var message = new UpdateAlgorithmStatisticsMessage(Index, time,
-                visitedVerticesCount, path.Length, path.Cost);
-            messenger.Forward(message, Tokens.AlgorithmStatisticsModel);
-            var statusMessage = new AlgorithmStatusMessage(status, Index);
-            messenger.Forward(statusMessage, Tokens.AlgorithmStatisticsModel);
+            messenger.Send(new UpdateAlgorithmStatisticsMessage(Index, time, visitedVerticesCount, path.Length, path.Cost));
+            messenger.Send(new AlgorithmStatusMessage(status, Index));
+            messenger.Send(new PathFoundMessage(path, algorithm));
         }
 
         protected override async void OnVertexVisited(object sender, AlgorithmEventArgs e)
@@ -81,24 +70,43 @@ namespace WPFVersion3D.ViewModel
             Stopwatch.StartNew().Wait(DelayTime).Stop();
             string time = timer.ToFormattedString();
             var message = new UpdateAlgorithmStatisticsMessage(Index, time, visitedVerticesCount);
-            await messenger.ForwardAsync(message, Tokens.AlgorithmStatisticsModel).ConfigureAwait(false);
-            await Task.Run(() => base.OnVertexVisited(sender, e)).ConfigureAwait(false);
+            await messenger.SendAsync(message).ConfigureAwait(false);
+            if (!e.Current.IsNull())
+            {
+                visitedVerticesCount++;
+            }
         }
 
-        protected override async void OnVertexEnqueued(object sender, AlgorithmEventArgs e)
-        {
-            await Task.Run(() => base.OnVertexEnqueued(sender, e)).ConfigureAwait(false);
+        protected override void OnVertexEnqueued(object sender, AlgorithmEventArgs e)
+        {         
         }
 
         protected override void OnAlgorithmInterrupted(object sender, ProcessEventArgs e)
         {
-            var message = new AlgorithmStatusMessage(AlgorithmStatuses.Interrupted, Index);
-            messenger.Forward(message, Tokens.AlgorithmStatisticsModel);
+            messenger.Send(AlgorithmStatusMessage.Interrupted(Index));
         }
 
         protected override void OnAlgorithmFinished(object sender, ProcessEventArgs e)
         {
             messenger.Unregister(this);
+        }
+
+        protected override void SubscribeOnAlgorithmEvents(PathfindingAlgorithm algorithm)
+        {
+            messenger.Send(new SubscribeOnAlgorithmEventsMessage(algorithm, IsVisualizationRequired));
+            algorithm.Paused += OnAlgorithmPaused;
+            algorithm.Resumed += OnAlgorithmUnpaused;
+            base.SubscribeOnAlgorithmEvents(algorithm);
+        }
+
+        private void OnAlgorithmPaused(object sender, ProcessEventArgs e)
+        {
+            messenger.Send(AlgorithmStatusMessage.Paused(Index));
+        }
+
+        private void OnAlgorithmUnpaused(object sender, ProcessEventArgs e)
+        {
+            messenger.Send(AlgorithmStatusMessage.Started(Index));
         }
 
         private void ExecuteCloseWindowCommand(object param)

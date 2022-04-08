@@ -38,7 +38,7 @@ namespace Algorithm.Base
 
         protected IVertex CurrentVertex { get; set; }
 
-        protected bool IsTerminatedPrematurely => !CurrentVertex.IsNull() && !IsInterruptRequested;
+        protected bool IsTerminatedPrematurely => CurrentVertex.IsNull() || IsInterruptRequested;
 
         private bool IsInterruptRequested { get; set; }
 
@@ -117,7 +117,7 @@ namespace Algorithm.Base
 
         protected virtual bool IsDestination(IEndPoints endPoints)
         {
-            return endPoints.Target.IsEqual(CurrentVertex) || !IsTerminatedPrematurely;
+            return endPoints.Target.IsEqual(CurrentVertex) || IsTerminatedPrematurely;
         }
 
         protected void RaiseVertexVisited(AlgorithmEventArgs e)

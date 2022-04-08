@@ -6,10 +6,8 @@ using Logging.Interface;
 using System;
 using System.Windows.Input;
 using WPFVersion3D.DependencyInjection;
-using WPFVersion3D.Enums;
-using WPFVersion3D.Extensions;
-using WPFVersion3D.Infrastructure;
-using WPFVersion3D.Messages;
+using WPFVersion3D.Infrastructure.Commands;
+using WPFVersion3D.Messages.PassValueMessages;
 
 namespace WPFVersion3D.ViewModel.ButtonViewModels
 {
@@ -26,7 +24,7 @@ namespace WPFVersion3D.ViewModel.ButtonViewModels
         public LoadGraphViewModel()
         {
             messenger = DI.Container.Resolve<IMessenger>();
-            messenger.Register<IsAllAlgorithmsFinishedMessage>(this, Tokens.LoadGraphModel, OnAllAlgorithmFinishedPathfinding);
+            messenger.Register<IsAllAlgorithmsFinishedMessage>(this, OnAllAlgorithmFinishedPathfinding);
             module = DI.Container.Resolve<GraphSerializationModule>();
             log = DI.Container.Resolve<ILog>();
             LoadGraphCommand = new RelayCommand(ExecuteLoadGraphCommand);
@@ -37,9 +35,9 @@ namespace WPFVersion3D.ViewModel.ButtonViewModels
             try
             {
                 var graph = await module.LoadGraphAsync();
-                messenger.Forward(new GraphCreatedMessage(graph), Tokens.Everyone);
+                messenger.Send(new GraphCreatedMessage(graph));
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 log.Error(ex);
             }

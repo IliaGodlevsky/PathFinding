@@ -1,4 +1,4 @@
-﻿namespace WPFVersion3D.Messages
+﻿namespace WPFVersion3D.Messages.PassValueMessages
 {
     internal sealed class UpdateAlgorithmStatisticsMessage
     {
@@ -12,11 +12,8 @@
 
         public int PathLength { get; }
 
-        public UpdateAlgorithmStatisticsMessage(int index,
-            string time,
-            int visitedVertices,
-            int pathLength = default,
-            double pathCost = default)
+        public UpdateAlgorithmStatisticsMessage(int index, string time, int visitedVertices,
+            int pathLength = default, double pathCost = default)
         {
             Index = index;
             Time = time;

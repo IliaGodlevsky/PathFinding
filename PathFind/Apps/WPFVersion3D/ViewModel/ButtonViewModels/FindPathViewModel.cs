@@ -3,7 +3,7 @@ using GraphLib.Base.EndPoints;
 using GraphLib.Extensions;
 using System.Windows.Input;
 using WPFVersion3D.DependencyInjection;
-using WPFVersion3D.Infrastructure;
+using WPFVersion3D.Infrastructure.Commands;
 using WPFVersion3D.View;
 
 namespace WPFVersion3D.ViewModel.ButtonViewModels

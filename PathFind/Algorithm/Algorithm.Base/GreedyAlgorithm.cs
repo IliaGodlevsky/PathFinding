@@ -40,9 +40,9 @@ namespace Algorithm.Base
 
         protected virtual IGraphPath CreateGraphPath()
         {
-            return IsTerminatedPrematurely
-                ? new GraphPath(parentVertices, endPoints)
-                : NullGraphPath.Instance;
+            return IsTerminatedPrematurely 
+                ? NullGraphPath.Instance
+                : new GraphPath(parentVertices, endPoints);
         }
 
         protected abstract double GreedyHeuristic(IVertex vertex);

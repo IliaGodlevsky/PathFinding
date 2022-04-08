@@ -35,13 +35,13 @@ namespace Algorithm.Base
                     CurrentVertex = GetNextVertex();
                     VisitVertex(CurrentVertex);
                 }
-                if (!IsTerminatedPrematurely) break;
+                if (IsTerminatedPrematurely) break;
                 var found = CreateGraphPath();
                 path = new CombinedGraphPath(path, found);
                 Reset();
             }
             CompletePathfinding();
-            return !IsTerminatedPrematurely ? NullGraphPath.Instance : path;
+            return IsTerminatedPrematurely ? NullGraphPath.Instance : path;
         }
 
         protected virtual void PrepareForLocalPathfinding()

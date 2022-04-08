@@ -7,13 +7,16 @@ namespace WPFVersion3D.Enums
         [Description("Started")]
         Started = 0,
 
+        [Description("Paused")]
+        Paused = 1,
+
         [Description("Interrupted")]
-        Interrupted = 1,
+        Interrupted = 2,
 
         [Description("Finished")]
-        Finished = 2,
+        Finished = 3,
 
         [Description("Failed")]
-        Failed = 3
+        Failed = 4
     }
 }

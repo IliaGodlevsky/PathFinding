@@ -12,7 +12,7 @@ namespace WPFVersion3D.View
         public OpacityChangeWindow(OpacityChangeViewModel viewModel) : base(viewModel)
         {
             InitializeComponent();
-            viewModel.OpacityChangers = 
+            viewModel.OpacityChangers =
                 GetType()
                 .GetFields(NonPublic | Instance)
                 .Where(field => field.FieldType == typeof(VertexOpacityUserControl))

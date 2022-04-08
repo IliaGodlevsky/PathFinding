@@ -19,13 +19,15 @@
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="auto"/>
+            <RowDefinition Height="auto"/>
             <RowDefinition/>
         </Grid.RowDefinitions>
-        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+        <StatusBar>
+            <TextBlock Text="{Binding GraphParametres}"/>
+        </StatusBar>
+        <StackPanel Grid.Row="1" Orientation="Horizontal" HorizontalAlignment="Center">
             <TextBlock Margin="5" Text="Zoom"/>
-            <model:RangedSlider x:Name="Slider" Style="{StaticResource SliderStyle}" 
-                                    ValueRange="{x:Static range:Constants.ZoomValueRange}" 
-                                    Value="{Binding ElementName=Camera, Path=Position, Converter={StaticResource coordinateToDistance}}"/>
+            <model:RangedSlider x:Name="Slider" Style="{StaticResource SliderStyle}" ValueRange="{x:Static range:Constants.ZoomValueRange}" Value="{Binding ElementName=Camera, Path=Position, Converter={StaticResource coordinateToDistance}}"/>
 
             <TextBox Style="{StaticResource TextBoxStyle}">
                 <TextBox.Text>
@@ -38,19 +40,18 @@
             </TextBox>
         </StackPanel>
 
-        <Viewport3D Grid.Row="1">
+        <Viewport3D Grid.Row="2">
             <Viewport3D.Camera>
-                <PerspectiveCamera x:Name="Camera" 
-                    LookDirection="{Binding RelativeSource={RelativeSource Self}, Path=Position, Converter={StaticResource invertPointConverter}}" Position="600,600,600"/>
+                <PerspectiveCamera x:Name="Camera" LookDirection="{Binding RelativeSource={RelativeSource Self}, Path=Position, Converter={StaticResource invertPointConverter}}" Position="{Binding FieldPosition}"/>
             </Viewport3D.Camera>
             <Viewport3D.Children>
-                <model:GraphField3DContainer GraphField="{Binding GraphField,  UpdateSourceTrigger=PropertyChanged}">
+                <model:GraphField3DContainer GraphField="{Binding GraphField, UpdateSourceTrigger=PropertyChanged}">
                     <ModelVisual3D.Content>
                         <DirectionalLight Direction="{Binding ElementName=Camera, Path=LookDirection}" Color="White"/>
                     </ModelVisual3D.Content>
                     <ModelVisual3D.Transform>
                         <Transform3DGroup>
-                            <RotateTransform3D Rotation= "{Binding XAxisAngleRotation}"/>
+                            <RotateTransform3D Rotation="{Binding XAxisAngleRotation}"/>
                             <RotateTransform3D Rotation="{Binding YAxisAngleRotation}"/>
                             <RotateTransform3D Rotation="{Binding ZAxisAngleRotation}"/>
                         </Transform3DGroup>

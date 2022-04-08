@@ -1,7 +1,7 @@
 ﻿using GraphLib.Interfaces;
 using WPFVersion3D.Model;
 
-namespace WPFVersion3D.Messages
+namespace WPFVersion3D.Messages.PassValueMessages
 {
     internal sealed class GraphFieldCreatedMessage : PassValueMessage<GraphField3D>
     {

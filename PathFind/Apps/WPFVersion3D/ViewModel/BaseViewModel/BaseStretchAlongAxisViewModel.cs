@@ -3,12 +3,11 @@ using GalaSoft.MvvmLight.Messaging;
 using System;
 using System.Windows;
 using WPFVersion3D.DependencyInjection;
-using WPFVersion3D.Enums;
 using WPFVersion3D.Interface;
-using WPFVersion3D.Messages;
+using WPFVersion3D.Messages.PassValueMessages;
 using WPFVersion3D.Model;
 
-namespace WPFVersion3D.ViewModel.StretchAlongAxisViewModels
+namespace WPFVersion3D.ViewModel.BaseViewModel
 {
     internal abstract class BaseStretchAlongAxisViewModel : IDisposable
     {
@@ -23,7 +22,7 @@ namespace WPFVersion3D.ViewModel.StretchAlongAxisViewModels
         public BaseStretchAlongAxisViewModel()
         {
             messenger = DI.Container.Resolve<IMessenger>();
-            messenger.Register<GraphFieldCreatedMessage>(this, Tokens.StretchAlongAxisModel, OnGraphFieldCreated);
+            messenger.Register<GraphFieldCreatedMessage>(this, OnGraphFieldCreated);
         }
 
         public void StretchAlongAxis(object sender, RoutedPropertyChangedEventArgs<double> e)

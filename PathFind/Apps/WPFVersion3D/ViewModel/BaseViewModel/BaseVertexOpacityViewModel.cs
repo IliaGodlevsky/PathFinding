@@ -1,7 +1,7 @@
 ﻿using System.Windows.Media;
 using WPFVersion3D.Interface;
 
-namespace WPFVersion3D.ViewModel.VertexOpacityViewModels
+namespace WPFVersion3D.ViewModel.BaseViewModel
 {
     internal abstract class BaseVertexOpacityViewModel : IChangeColorOpacity
     {

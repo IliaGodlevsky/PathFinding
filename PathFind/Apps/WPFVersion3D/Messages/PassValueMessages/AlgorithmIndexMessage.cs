@@ -1,4 +1,4 @@
-﻿namespace WPFVersion3D.Messages
+﻿namespace WPFVersion3D.Messages.PassValueMessages
 {
     internal sealed class AlgorithmIndexMessage : PassValueMessage<int>
     {

@@ -4,35 +4,20 @@ using GraphLib.Base.EndPoints;
 using GraphLib.Interfaces;
 using GraphLib.NullRealizations;
 using System;
-using System.ComponentModel;
-using System.Runtime.CompilerServices;
 using WPFVersion3D.DependencyInjection;
-using WPFVersion3D.Enums;
-using WPFVersion3D.Extensions;
-using WPFVersion3D.Messages;
+using WPFVersion3D.Messages.ActionMessages;
+using WPFVersion3D.Messages.PassValueMessages;
 
 namespace WPFVersion3D.ViewModel
 {
-    public class MainWindowViewModel : INotifyPropertyChanged, IDisposable
+    public class MainWindowViewModel : IDisposable
     {
-        public event PropertyChangedEventHandler PropertyChanged;
-
         private readonly IVertexEventHolder eventHolder;
         private readonly IGraphFieldFactory fieldFactory;
         private readonly BaseEndPoints endPoints;
         private readonly IMessenger messenger;
 
-        private string graphParametres;
-
         private IGraph Graph { get; set; }
-
-        private bool IsAllAlgorithmsFinished { get; set; } = true;
-
-        public string GraphParametres
-        {
-            get => graphParametres;
-            set { graphParametres = value; OnPropertyChanged(); }
-        }
 
         public MainWindowViewModel(IGraphFieldFactory fieldFactory, IVertexEventHolder eventHolder, BaseEndPoints endPoints)
         {
@@ -41,7 +26,7 @@ namespace WPFVersion3D.ViewModel
             this.endPoints = endPoints;
             this.eventHolder = eventHolder;
             messenger = DI.Container.Resolve<IMessenger>();
-            messenger.Register<GraphCreatedMessage>(this, Tokens.MainModel, SetGraph);
+            messenger.Register<GraphCreatedMessage>(this, SetGraph);
         }
 
         public void Dispose()
@@ -49,29 +34,17 @@ namespace WPFVersion3D.ViewModel
             messenger.Unregister(this);
         }
 
-        protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = "")
-        {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
-        }
-
-        private void ConnectNewGraph(IGraph graph)
+        private void SetGraph(GraphCreatedMessage message)
         {
             endPoints.UnsubscribeFromEvents(Graph);
             endPoints.Reset();
             eventHolder.UnsubscribeVertices(Graph);
-            Graph = graph;
+            Graph = message.Value;
             var graphField = fieldFactory.CreateGraphField(Graph);
             endPoints.SubscribeToEvents(Graph);
             eventHolder.SubscribeVertices(Graph);
-            GraphParametres = Graph.ToString();
-            messenger
-                .Forward(new ClearStatisticsMessage(), Tokens.AlgorithmStatisticsModel)
-                .Forward(new GraphFieldCreatedMessage(graphField), Tokens.Everyone);
-        }
-
-        private void SetGraph(GraphCreatedMessage message)
-        {
-            ConnectNewGraph(message.Value);
+            messenger.Send(new ClearStatisticsMessage());
+            messenger.Send(new GraphFieldCreatedMessage(graphField));
         }
     }
 }

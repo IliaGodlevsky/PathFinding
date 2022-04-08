@@ -1,42 +1,13 @@
-﻿using Autofac;
-using GalaSoft.MvvmLight.Messaging;
-using System.Windows.Input;
-using WPFVersion3D.DependencyInjection;
-using WPFVersion3D.Extensions;
-using WPFVersion3D.Infrastructure;
-using WPFVersion3D.Messages;
+﻿using WPFVersion3D.Messages.ActionMessages;
+using WPFVersion3D.ViewModel.BaseViewModel;
 
 namespace WPFVersion3D.ViewModel.ButtonViewModels
 {
-    internal class InterruptAllAlgorithmsViewModel
+    internal class InterruptAllAlgorithmsViewModel : BaseAllAlgorithmsOperationViewModel
     {
-        private readonly IMessenger messenger;
-
-        private bool IsAllAlgorithmsFinishedPathfinding { get; set; }
-
-        public ICommand InterruptAllAlgorithmsCommand { get; }
-
-        public InterruptAllAlgorithmsViewModel()
+        protected override void ExecuteCommand(object param)
         {
-            messenger = DI.Container.Resolve<IMessenger>();
-            messenger.Register<IsAllAlgorithmsFinishedMessage>(this, Tokens.InterruptAllAlgorithmsModel, OnAllAlgorithmsFinishedPathfinding);
-            InterruptAllAlgorithmsCommand = new RelayCommand(ExecuteInterruptAllAlgorithmCommand, CanExecuteInterruptAllAlgorithmCommand);
-        }
-
-        private void ExecuteInterruptAllAlgorithmCommand(object param)
-        {
-            var message = new InterruptAllAlgorithmsMessage();
-            messenger.Forward(message, Tokens.AlgorithmStatisticsModel);
-        }
-
-        private bool CanExecuteInterruptAllAlgorithmCommand(object param)
-        {
-            return !IsAllAlgorithmsFinishedPathfinding;
-        }
-
-        private void OnAllAlgorithmsFinishedPathfinding(IsAllAlgorithmsFinishedMessage message)
-        {
-            IsAllAlgorithmsFinishedPathfinding = message.Value;
+            messenger.Send(new InterruptAllAlgorithmsMessage());
         }
     }
 }

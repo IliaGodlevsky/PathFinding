@@ -3,7 +3,7 @@ using Common.Interface;
 using System;
 using System.Collections.Generic;
 using System.Windows.Input;
-using WPFVersion3D.Infrastructure;
+using WPFVersion3D.Infrastructure.Commands;
 using WPFVersion3D.Interface;
 
 namespace WPFVersion3D.ViewModel

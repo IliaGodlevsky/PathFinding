@@ -2,9 +2,8 @@
 using GalaSoft.MvvmLight.Messaging;
 using System.Windows.Input;
 using WPFVersion3D.DependencyInjection;
-using WPFVersion3D.Enums;
-using WPFVersion3D.Infrastructure;
-using WPFVersion3D.Messages;
+using WPFVersion3D.Infrastructure.Commands;
+using WPFVersion3D.Messages.PassValueMessages;
 using WPFVersion3D.View;
 
 namespace WPFVersion3D.ViewModel.ButtonViewModels
@@ -20,7 +19,7 @@ namespace WPFVersion3D.ViewModel.ButtonViewModels
         public CreateGraphViewModel()
         {
             messenger = DI.Container.Resolve<IMessenger>();
-            messenger.Register<IsAllAlgorithmsFinishedMessage>(this, Tokens.CreateGraphModel, OnAllAlgorithmFinished);
+            messenger.Register<IsAllAlgorithmsFinishedMessage>(this, OnAllAlgorithmFinished);
             CreateGraphCommand = new RelayCommand(ExecuteCreateGraphCommand, CanExecuteCreateGraphCommand);
         }
 

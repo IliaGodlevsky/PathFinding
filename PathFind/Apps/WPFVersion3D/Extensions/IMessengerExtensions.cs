@@ -1,21 +1,13 @@
-﻿using Common.Extensions.EnumerableExtensions;
-using GalaSoft.MvvmLight.Messaging;
-using System;
+﻿using GalaSoft.MvvmLight.Messaging;
 using System.Threading.Tasks;
 
 namespace WPFVersion3D.Extensions
 {
     internal static class IMessengerExtensions
     {
-        public static async Task ForwardAsync<TMessage>(this IMessenger self, TMessage message, params Guid[] tokens)
+        public static async Task SendAsync<TMessage>(this IMessenger self, TMessage message)
         {
-            await Task.Run(() => self.Forward(message, tokens));
-        }
-
-        public static IMessenger Forward<TMessage>(this IMessenger messenger, TMessage message, params Guid[] tokens)
-        {
-            tokens.ForEach(token => messenger.Send(message, token));
-            return messenger;
+            await Task.Run(() => self.Send(message));
         }
     }
 }

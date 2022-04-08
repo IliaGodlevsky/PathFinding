@@ -5,20 +5,26 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:converters="clr-namespace:WPFVersion3D.Converters" 
              xmlns:viewmodel="clr-namespace:WPFVersion3D.ViewModel" 
-             d:DataContext="{d:DesignInstance Type=viewmodel:AlgorithmStatisticsViewModel}"
+             xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+             d:DataContext="{d:DesignInstance Type=viewmodel:AlgorithmsViewModel}"
              mc:Ignorable="d">
     <UserControl.DataContext>
-        <viewmodel:AlgorithmStatisticsViewModel/>
+        <viewmodel:AlgorithmsViewModel/>
     </UserControl.DataContext>
     <UserControl.Resources>
         <converters:AlgorithmStatusToStringConverter x:Key="StatusToStringConverter"/>
     </UserControl.Resources>
     <Grid>
-        <ListView HorizontalAlignment="Left" 
+        <ListView HorizontalAlignment="Left" x:Name="AlgorithmModels"
                       BorderBrush="White" 
-                      BorderThickness="0.1" 
-                      SelectedItem="{Binding SelectedAlgorithm}" 
-                      ItemsSource="{Binding Statistics}">
+                      BorderThickness="0.1"
+                      SelectedItem="{Binding SelectedAlgorithm}"
+                      ItemsSource="{Binding AlgorithmModels}">
+            <i:Interaction.Triggers>
+                <i:EventTrigger EventName="SelectionChanged">
+                    <i:InvokeCommandAction Command="{Binding VisualizeCommand}"/>
+                </i:EventTrigger>
+            </i:Interaction.Triggers>
             <ListView.View>
                 <GridView>
                     <GridView.Columns>
@@ -57,8 +63,10 @@
             </ListView.View>
             <ListView.ContextMenu>
                 <ContextMenu>
-                    <MenuItem Command="{Binding InterruptSelelctedAlgorithmCommand}" Header="Interrupt"/>
-                    <MenuItem Command="{Binding RemoveSelelctedAlgorithmCommand}" Header="Remove"/>
+                    <MenuItem DataContext="{Binding SelectedAlgorithm}" Command="{Binding InterruptCommand}" Header="Interrupt"/>
+                    <MenuItem DataContext="{Binding SelectedAlgorithm}" Command="{Binding RemoveCommand}" Header="Remove"/>
+                    <MenuItem DataContext="{Binding SelectedAlgorithm}" Command="{Binding PauseCommand}" Header="Pause"/>
+                    <MenuItem DataContext="{Binding SelectedAlgorithm}" Command="{Binding ResumeCommand}" Header="Resume"/>
                 </ContextMenu>
             </ListView.ContextMenu>
         </ListView>

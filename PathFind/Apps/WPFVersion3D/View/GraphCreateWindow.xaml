@@ -1,4 +1,4 @@
-﻿<view:ViewModelWindow  x:Class="WPFVersion3D.View.GraphCreateWindow"
+﻿<view:ViewModelWindow x:Class="WPFVersion3D.View.GraphCreateWindow"
         xmlns:view="clr-namespace:WPFVersion3D.View"                      
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"

@@ -14,8 +14,7 @@
         
         <StackPanel Orientation="Horizontal" HorizontalAlignment="Stretch">
             <TextBlock Margin="5" Text="Rotation speed: "/>
-            <ComboBox Width="150" Margin="5" SelectedValue="{Binding SelectedRotationSpeed}" ItemsSource="{Binding AnimationSpeeds}"
-                          DisplayMemberPath="Item1" SelectedValuePath="Item2" SelectedIndex="0"/>
+            <ComboBox Width="150" Margin="5" SelectedValue="{Binding SelectedRotationSpeed}" ItemsSource="{Binding AnimationSpeeds}" DisplayMemberPath="Item1" SelectedValuePath="Item2" SelectedIndex="0"/>
         </StackPanel>
 
         <local:GraphFieldRotatingUserControl DataContext="{Binding Path=XAxisRotationViewModel}"/>

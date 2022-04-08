@@ -8,9 +8,8 @@ using NullObject.Extensions;
 using System;
 using System.Windows.Input;
 using WPFVersion3D.DependencyInjection;
-using WPFVersion3D.Enums;
-using WPFVersion3D.Infrastructure;
-using WPFVersion3D.Messages;
+using WPFVersion3D.Infrastructure.Commands;
+using WPFVersion3D.Messages.PassValueMessages;
 
 namespace WPFVersion3D.ViewModel.ButtonViewModels
 {
@@ -30,7 +29,7 @@ namespace WPFVersion3D.ViewModel.ButtonViewModels
             messenger = DI.Container.Resolve<IMessenger>();
             log = DI.Container.Resolve<ILog>();
             SaveGraphCommand = new RelayCommand(ExecuteSaveGraphCommand, CanExecuteSaveGraphCommand);
-            messenger.Register<GraphCreatedMessage>(this, Tokens.SaveGraphViewModel, OnGraphCreated);
+            messenger.Register<GraphCreatedMessage>(this, OnGraphCreated);
         }
 
         private async void ExecuteSaveGraphCommand(object param)

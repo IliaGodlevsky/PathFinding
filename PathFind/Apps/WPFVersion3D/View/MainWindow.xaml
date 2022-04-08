@@ -32,15 +32,13 @@
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="auto"/>
-            <RowDefinition Height="auto"/>
             <RowDefinition Height="*"/>
-            <RowDefinition Height="auto"/>
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*"/>
             <ColumnDefinition Width="auto"/>
         </Grid.ColumnDefinitions>
-        <Expander Width="auto" Grid.Column="1" Grid.RowSpan="4">
+        <Expander Width="auto" Grid.Column="1" Grid.RowSpan="2">
             <StackPanel Orientation="Vertical">
                 <TextBlock HorizontalAlignment="Center" Margin="5" Text="Distance between vertices"/>
                 <windows:StretchFieldAlongAxisUserConstrol DataContext="{StaticResource StretchAlongXAxis}"/>
@@ -51,11 +49,7 @@
             </StackPanel>
         </Expander>
 
-        <windows:ButtonPanelUserControl Grid.Row="0"/>
-        <windows:GraphFieldUserControl DataContext="{StaticResource GraphFieldModel}" Grid.Row="2" Margin="5" Grid.RowSpan="2"/>
-
-        <StatusBar Grid.Row="1">
-            <TextBlock Text="{Binding GraphParametres}"/>
-        </StatusBar>
+        <windows:ButtonPanelUserControl/>
+        <windows:GraphFieldUserControl DataContext="{StaticResource GraphFieldModel}" Grid.Row="1" Margin="5"/>
     </Grid>
 </Window>

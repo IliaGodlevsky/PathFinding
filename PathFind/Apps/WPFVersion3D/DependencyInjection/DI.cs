@@ -14,7 +14,6 @@ using GraphLib.Realizations.Factories.NeighboursCoordinatesFactories;
 using GraphLib.Serialization;
 using GraphLib.Serialization.Interfaces;
 using GraphLib.Serialization.Serializers;
-using GraphViewModel.Interfaces;
 using Logging.Interface;
 using Logging.Loggers;
 using Random.Interface;

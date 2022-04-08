@@ -6,10 +6,9 @@ using GraphLib.Interfaces;
 using NullObject.Extensions;
 using System.Windows.Input;
 using WPFVersion3D.DependencyInjection;
-using WPFVersion3D.Enums;
-using WPFVersion3D.Extensions;
-using WPFVersion3D.Infrastructure;
-using WPFVersion3D.Messages;
+using WPFVersion3D.Infrastructure.Commands;
+using WPFVersion3D.Messages.ActionMessages;
+using WPFVersion3D.Messages.PassValueMessages;
 
 namespace WPFVersion3D.ViewModel.ButtonViewModels
 {
@@ -28,8 +27,8 @@ namespace WPFVersion3D.ViewModel.ButtonViewModels
         {
             messenger = DI.Container.Resolve<IMessenger>();
             endPoints = DI.Container.Resolve<BaseEndPoints>();
-            messenger.Register<IsAllAlgorithmsFinishedMessage>(this, Tokens.ClearGraphModel, OnAllAlgorithmFinishedPathfinding);
-            messenger.Register<GraphCreatedMessage>(this, Tokens.ClearGraphModel, OnGraphCreated);
+            messenger.Register<IsAllAlgorithmsFinishedMessage>(this, OnAllAlgorithmFinishedPathfinding);
+            messenger.Register<GraphCreatedMessage>(this, OnGraphCreated);
             ClearGraphCommand = new RelayCommand(ExecuteClearGraphCommand, CanExecuteClearGraphCommand);
         }
 
@@ -37,8 +36,7 @@ namespace WPFVersion3D.ViewModel.ButtonViewModels
         {
             Graph.Refresh();
             endPoints.Reset();
-            var message = new ClearStatisticsMessage();
-            messenger.Forward(message, Tokens.AlgorithmStatisticsModel);
+            messenger.Send(new ClearStatisticsMessage());
         }
 
         private bool CanExecuteClearGraphCommand(object param)

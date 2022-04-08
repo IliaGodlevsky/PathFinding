@@ -3,8 +3,8 @@ using System.Collections.Generic;
 using System.Windows.Input;
 using System.Windows.Media.Media3D;
 using WPFVersion3D.Enums;
-using WPFVersion3D.Infrastructure;
 using WPFVersion3D.Infrastructure.Animators;
+using WPFVersion3D.Infrastructure.Commands;
 using WPFVersion3D.Infrastructure.EventArguments;
 using WPFVersion3D.Interface;
 
