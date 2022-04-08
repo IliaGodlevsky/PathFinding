@@ -4,7 +4,7 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:model="clr-namespace:WPFVersion3D.Model" 
-             xmlns:viewmodel="clr-namespace:WPFVersion3D.ViewModel.VertexOpacityViewModels" 
+             xmlns:viewmodel="clr-namespace:WPFVersion3D.ViewModel.BaseViewModel" 
              xmlns:validationrules="clr-namespace:WPFVersion3D.ValidationRules" 
              xmlns:range="clr-namespace:WPFVersion3D" 
              xmlns:converter="clr-namespace:WPFVersion3D.Converters" 
