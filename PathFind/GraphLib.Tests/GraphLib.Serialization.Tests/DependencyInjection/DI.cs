@@ -12,8 +12,12 @@ namespace GraphLib.Serialization.Tests.DependencyInjection
     internal static class DI
     {
         public static IContainer CryptoSerializerContainer => cryptoSerializerContainer.Value;
+
         public static IContainer SerializerContainer => serializerContainer.Value;
+
         public static IContainer CompressSerializerContainer => compressGraphSerializer.Value;
+
+        public static IContainer BinaryGraphSerializerContainer => binarySerializerContainer.Value;
 
         private static IContainer GraphSerializerConfigure(Action<ContainerBuilder> serializerRegister)
         {
@@ -28,9 +32,16 @@ namespace GraphLib.Serialization.Tests.DependencyInjection
             return builder.Build();
         }
 
+        private static void BinaryGraphSerializerRegister(ContainerBuilder builder)
+        {
+            builder.RegisterType<BinaryGraphSerializer>().As<IGraphSerializer>().SingleInstance();
+            builder.RegisterType<TestCoordinateFactory>().As<ICoordinateFactory>().SingleInstance();
+            builder.RegisterType<TestCostFactory>().As<IVertexCostFactory>().SingleInstance();
+        }
+
         private static void RegisterGraphSerializer(ContainerBuilder builder)
         {
-            builder.RegisterType<GraphSerializer>().As<IGraphSerializer>().SingleInstance();
+            builder.RegisterType<BlobGraphSerializer>().As<IGraphSerializer>().SingleInstance();
         }
 
         private static void RegisterCryptoGraphSerializer(ContainerBuilder builder)
@@ -53,5 +64,8 @@ namespace GraphLib.Serialization.Tests.DependencyInjection
 
         private static readonly Lazy<IContainer> serializerContainer
             = new Lazy<IContainer>(() => GraphSerializerConfigure(RegisterGraphSerializer));
+
+        private static readonly Lazy<IContainer> binarySerializerContainer
+            = new Lazy<IContainer>(() => GraphSerializerConfigure(BinaryGraphSerializerRegister));
     }
 }

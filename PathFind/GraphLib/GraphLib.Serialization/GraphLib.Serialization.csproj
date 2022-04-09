@@ -42,12 +42,15 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AesCrypto.cs" />
+    <Compile Include="Extensions\BinaryReaderExtensions.cs" />
+    <Compile Include="Extensions\BinaryWriterExtensions.cs" />
     <Compile Include="Extensions\EnumerableExtensions.cs" />
     <Compile Include="Extensions\FormatterExtensions.cs" />
     <Compile Include="Extensions\GraphSerializationInfoExtensions.cs" />
     <Compile Include="Extensions\GraphSerializerExtensions.cs" />
     <Compile Include="Extensions\GraphSerializationModuleExtensions.cs" />
     <Compile Include="Interfaces\ICrypto.cs" />
+    <Compile Include="Serializers\BinaryGraphSerializer.cs" />
     <Compile Include="Serializers\GraphSerializationModule.cs" />
     <Compile Include="Serializers\CompressGraphSerializer.cs" />
     <Compile Include="Serializers\CryptoGraphSerializer.cs" />
@@ -55,7 +58,7 @@
     <Compile Include="Extensions\GraphExtensions.cs" />
     <Compile Include="Extensions\VertexExtension.cs" />
     <Compile Include="GraphSerializationInfo.cs" />
-    <Compile Include="Serializers\GraphSerializer.cs" />
+    <Compile Include="Serializers\BlobGraphSerializer.cs" />
     <Compile Include="Interfaces\IGraphSerializer.cs" />
     <Compile Include="Interfaces\IPathInput.cs" />
     <Compile Include="Interfaces\IVertexFromInfoFactory.cs" />

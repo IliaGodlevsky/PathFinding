@@ -5,8 +5,8 @@ using NUnit.Framework;
 namespace GraphLib.Serialization.Tests.SerializersTests
 {
     [TestFixture]
-    internal class GraphSerializerTests : BaseGraphSerializerTests
+    public class BinaryGraphSerializerTests : BaseGraphSerializerTests
     {
-        protected override IContainer Container => DI.SerializerContainer;
+        protected override IContainer Container => DI.BinaryGraphSerializerContainer;
     }
 }

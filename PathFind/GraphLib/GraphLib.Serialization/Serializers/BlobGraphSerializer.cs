@@ -10,13 +10,13 @@ using System.Runtime.Serialization;
 
 namespace GraphLib.Serialization.Serializers
 {
-    public sealed class GraphSerializer : IGraphSerializer
+    public sealed class BlobGraphSerializer : IGraphSerializer
     {
         private readonly IFormatter formatter;
         private readonly IVertexFromInfoFactory vertexFactory;
         private readonly IGraphFactory graphFactory;
 
-        public GraphSerializer(IFormatter formatter,
+        public BlobGraphSerializer(IFormatter formatter,
             IVertexFromInfoFactory converter,
             IGraphFactory graphFactory)
         {

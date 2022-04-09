@@ -17,7 +17,7 @@ namespace GraphLib.Proxy
                 .ToArray();
         }
 
-        private NeighbourhoodProxy(IReadOnlyCollection<ICoordinate> coordinates)
+        internal NeighbourhoodProxy(IReadOnlyCollection<ICoordinate> coordinates)
         {
             Neighbours = coordinates.ToArray();
         }
