@@ -25,8 +25,8 @@
         <viewmodel:GraphFieldAxisRotatingViewModel Title="Y axis rotate" AngleRotation="{StaticResource YAxis}" x:Key="YAxisRotation"/>
         <viewmodel:GraphFieldAxisRotatingViewModel Title="Z axis rotate" AngleRotation="{StaticResource ZAxis}" x:Key="ZAxisRotation"/>
         
-        <viewmodel:GraphFieldViewModel XAxisAngleRotation="{StaticResource XAxis}" YAxisAngleRotation="{StaticResource YAxis}" ZAxisAngleRotation="{StaticResource ZAxis}" x:Key="GraphFieldModel"/>
-        <viewmodel:GraphFieldRotationViewModel x:Key="FieldRotation" XAxisRotationViewModel="{StaticResource XAxisRotation}" YAxisRotationViewModel="{StaticResource YAxisRotation}" ZAxisRotationViewModel="{StaticResource ZAxisRotation}"/>
+        <viewmodel:GraphFieldViewModel x:Key="GraphFieldModel"/>
+        <viewmodel:GraphFieldRotationViewModel XAxisRotationViewModel="{StaticResource XAxisRotation}" YAxisRotationViewModel="{StaticResource YAxisRotation}" ZAxisRotationViewModel="{StaticResource ZAxisRotation}" x:Key="FieldRotation"/>
 
     </Window.Resources>
     <Grid>
@@ -50,6 +50,6 @@
         </Expander>
 
         <windows:ButtonPanelUserControl/>
-        <windows:GraphFieldUserControl DataContext="{StaticResource GraphFieldModel}" Grid.Row="1" Margin="5"/>
+        <windows:GraphFieldUserControl ZAngleRotation="{StaticResource ZAxis}" YAngleRotation="{StaticResource YAxis}" XAngleRotation="{StaticResource XAxis}" DataContext="{StaticResource GraphFieldModel}" Grid.Row="1" Margin="5"/>
     </Grid>
 </Window>

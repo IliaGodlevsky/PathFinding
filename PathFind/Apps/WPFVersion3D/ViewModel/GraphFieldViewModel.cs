@@ -16,21 +16,12 @@ namespace WPFVersion3D.ViewModel
 
         private Graph3D graph;
         private IGraphField field;
-        private AxisAngleRotation3D xAxis;
-        private AxisAngleRotation3D yAxis;
-        private AxisAngleRotation3D zAxis;
         private string graphParametres;
         private Point3D fieldPosition;
 
         public Point3D FieldPosition { get => fieldPosition; set => Set(ref fieldPosition, value); }
 
         public string GraphParametres { get => graphParametres; set => Set(ref graphParametres, value); }
-
-        public AxisAngleRotation3D XAxisAngleRotation { get => xAxis; set => Set(ref xAxis, value); }
-
-        public AxisAngleRotation3D YAxisAngleRotation { get => yAxis; set => Set(ref yAxis, value); }
-
-        public AxisAngleRotation3D ZAxisAngleRotation { get => zAxis; set => Set(ref zAxis, value); }
 
         public IGraphField GraphField { get => field; set => Set(ref field, value); }
 

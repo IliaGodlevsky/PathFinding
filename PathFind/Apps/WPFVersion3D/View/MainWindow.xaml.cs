@@ -5,9 +5,6 @@ using WPFVersion3D.ViewModel;
 
 namespace WPFVersion3D
 {
-    /// <summary>
-    /// Логика взаимодействия для MainWindow.xaml
-    /// </summary>
     [AppWindow]
     public partial class MainWindow : Window
     {

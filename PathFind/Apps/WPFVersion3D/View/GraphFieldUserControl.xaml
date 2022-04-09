@@ -10,6 +10,7 @@
              xmlns:range="clr-namespace:WPFVersion3D"
              d:DataContext="{d:DesignInstance Type=viewmodel:GraphFieldViewModel}"
              mc:Ignorable="d" 
+             x:Name="UserControl"
              d:DesignHeight="200" d:DesignWidth="400">
     <UserControl.Resources>
         <converters:InvertPointConverter x:Key="invertPointConverter"/>
@@ -51,9 +52,9 @@
                     </ModelVisual3D.Content>
                     <ModelVisual3D.Transform>
                         <Transform3DGroup>
-                            <RotateTransform3D Rotation="{Binding XAxisAngleRotation}"/>
-                            <RotateTransform3D Rotation="{Binding YAxisAngleRotation}"/>
-                            <RotateTransform3D Rotation="{Binding ZAxisAngleRotation}"/>
+                            <RotateTransform3D Rotation="{Binding ElementName=UserControl, Path=XAngleRotation}"/>
+                            <RotateTransform3D Rotation="{Binding ElementName =UserControl, Path=YAngleRotation}"/>
+                            <RotateTransform3D Rotation="{Binding ElementName=UserControl, Path=ZAngleRotation}"/>
                         </Transform3DGroup>
                     </ModelVisual3D.Transform>
                 </model:GraphField3DContainer>
