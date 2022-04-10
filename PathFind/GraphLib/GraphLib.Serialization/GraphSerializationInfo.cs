@@ -22,7 +22,7 @@ namespace GraphLib.Serialization
             CostRange = BaseVertexCost.CostRange;
         }
 
-        internal GraphSerializationInfo(int[] dimensionsSizes, 
+        internal GraphSerializationInfo(int[] dimensionsSizes,
             VertexSerializationInfo[] info, InclusiveValueRange<int> range)
         {
             DimensionsSizes = dimensionsSizes;

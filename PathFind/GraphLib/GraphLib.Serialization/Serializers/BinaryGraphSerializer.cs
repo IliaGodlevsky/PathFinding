@@ -17,8 +17,8 @@ namespace GraphLib.Serialization.Serializers
         private readonly IVertexCostFactory costFactory;
         private readonly ICoordinateFactory coordinateFactory;
 
-        public BinaryGraphSerializer(IVertexFromInfoFactory converter, 
-            IGraphFactory graphFactory, 
+        public BinaryGraphSerializer(IVertexFromInfoFactory converter,
+            IGraphFactory graphFactory,
             IVertexCostFactory costFactory,
             ICoordinateFactory coordinateFactory)
         {

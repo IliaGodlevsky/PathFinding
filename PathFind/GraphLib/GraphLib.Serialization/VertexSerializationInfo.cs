@@ -23,7 +23,7 @@ namespace GraphLib.Serialization
             Neighbourhood = new NeighbourhoodProxy(vertex);
         }
 
-        internal VertexSerializationInfo(bool isObstacle, IVertexCost cost, 
+        internal VertexSerializationInfo(bool isObstacle, IVertexCost cost,
             ICoordinate position, INeighborhood neighborhood)
         {
             IsObstacle = isObstacle;

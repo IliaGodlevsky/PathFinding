@@ -58,6 +58,6 @@ namespace WPFVersion3D.Model
         private void PathFound(PathFoundMessage message)
         {
             AddPathVertices(message.Algorithm, message.Value);
-        }       
+        }
     }
 }

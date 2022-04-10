@@ -8,7 +8,7 @@ namespace GraphLib.Serialization.Extensions
 {
     internal static class BinaryReaderExtensions
     {
-        public static GraphSerializationInfo ReadGraph(this BinaryReader reader, 
+        public static GraphSerializationInfo ReadGraph(this BinaryReader reader,
             IVertexCostFactory costFactory, ICoordinateFactory coordinateFactory)
         {
             var dimensionsSizes = reader.ReadIntArray();
@@ -17,7 +17,7 @@ namespace GraphLib.Serialization.Extensions
             return new GraphSerializationInfo(dimensionsSizes, verticesInfo, costRange);
         }
 
-        private static VertexSerializationInfo[] ReadVertices(this BinaryReader reader, 
+        private static VertexSerializationInfo[] ReadVertices(this BinaryReader reader,
             IVertexCostFactory costFactory, ICoordinateFactory coordinateFactory)
         {
             int verticesCount = reader.ReadInt32();

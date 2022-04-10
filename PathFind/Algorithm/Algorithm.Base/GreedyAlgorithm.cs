@@ -40,7 +40,7 @@ namespace Algorithm.Base
 
         protected virtual IGraphPath CreateGraphPath()
         {
-            return IsTerminatedPrematurely 
+            return IsTerminatedPrematurely
                 ? NullGraphPath.Instance
                 : new GraphPath(parentVertices, endPoints);
         }

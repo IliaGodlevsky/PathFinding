@@ -100,7 +100,7 @@ namespace WPFVersion3D.ViewModel
         private void ExecuteVisualizeCommand(object param)
         {
             visualizationModel.Execute(SelectedAlgorithm.Algorithm);
-        }       
+        }
 
         private bool CanExecuteVisualizeCommand(object param)
         {

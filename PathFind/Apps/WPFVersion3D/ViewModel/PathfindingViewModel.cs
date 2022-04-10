@@ -78,7 +78,7 @@ namespace WPFVersion3D.ViewModel
         }
 
         protected override void OnVertexEnqueued(object sender, AlgorithmEventArgs e)
-        {         
+        {
         }
 
         protected override void OnAlgorithmInterrupted(object sender, ProcessEventArgs e)

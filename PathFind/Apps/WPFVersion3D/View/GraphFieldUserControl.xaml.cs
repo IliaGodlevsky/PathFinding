@@ -10,10 +10,10 @@ namespace WPFVersion3D.View
         public static readonly DependencyProperty YAngleRotationProperty;
         public static readonly DependencyProperty ZAngleRotationProperty;
 
-        public AxisAngleRotation3D XAngleRotation 
+        public AxisAngleRotation3D XAngleRotation
         {
             get => (AxisAngleRotation3D)GetValue(XAngleRotationProperty);
-            set => SetValue(XAngleRotationProperty, value); 
+            set => SetValue(XAngleRotationProperty, value);
         }
 
         public AxisAngleRotation3D YAngleRotation

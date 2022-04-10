@@ -31,9 +31,9 @@ namespace GraphLib.Serialization.Extensions
         }
 
         private static void WriterNeighborhood(this BinaryWriter writer, IReadOnlyCollection<ICoordinate> neighbourhood)
-        {           
+        {
             writer.Write(neighbourhood.Count);
-            foreach(var coordinate in neighbourhood)
+            foreach (var coordinate in neighbourhood)
             {
                 writer.WriteIntArray(coordinate.CoordinatesValues);
             }
@@ -42,7 +42,7 @@ namespace GraphLib.Serialization.Extensions
         private static void WriteVertices(this BinaryWriter writer, VertexSerializationInfo[] vertices)
         {
             writer.Write(vertices.Length);
-            foreach(var vertex in vertices)
+            foreach (var vertex in vertices)
             {
                 writer.Write(vertex.IsObstacle);
                 writer.Write(vertex.Cost.CurrentCost);
