@@ -5,7 +5,7 @@ using NUnit.Framework;
 namespace GraphLib.Serialization.Tests.SerializersTests
 {
     [TestFixture]
-    internal class BlobGraphSerializerTests : BaseGraphSerializerTests
+    internal class FormatterGraphSerializerTests : BaseGraphSerializerTests
     {
         protected override IContainer Container => DI.SerializerContainer;
     }

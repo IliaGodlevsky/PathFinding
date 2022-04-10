@@ -41,7 +41,7 @@ namespace GraphLib.Serialization.Tests.DependencyInjection
 
         private static void RegisterGraphSerializer(ContainerBuilder builder)
         {
-            builder.RegisterType<BlobGraphSerializer>().As<IGraphSerializer>().SingleInstance();
+            builder.RegisterType<FormatterGraphSerializer>().As<IGraphSerializer>().SingleInstance();
         }
 
         private static void RegisterCryptoGraphSerializer(ContainerBuilder builder)

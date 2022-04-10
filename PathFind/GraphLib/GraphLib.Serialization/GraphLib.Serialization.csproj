@@ -58,7 +58,7 @@
     <Compile Include="Extensions\GraphExtensions.cs" />
     <Compile Include="Extensions\VertexExtension.cs" />
     <Compile Include="GraphSerializationInfo.cs" />
-    <Compile Include="Serializers\BlobGraphSerializer.cs" />
+    <Compile Include="Serializers\FormatterGraphSerializer.cs" />
     <Compile Include="Interfaces\IGraphSerializer.cs" />
     <Compile Include="Interfaces\IPathInput.cs" />
     <Compile Include="Interfaces\IVertexFromInfoFactory.cs" />
