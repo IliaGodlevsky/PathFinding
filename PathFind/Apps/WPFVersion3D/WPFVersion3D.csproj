@@ -109,6 +109,8 @@
     <Compile Include="Messages\ActionMessages\ResumeAllAlgorithmMessage.cs" />
     <Compile Include="Messages\PassValueMessages\SubscribeOnAlgorithmEventsMessage.cs" />
     <Compile Include="Messages\PassValueMessages\UpdateAlgorithmStatisticsMessage.cs" />
+    <Compile Include="Model3DFactories\ConicModel3DFactory.cs" />
+    <Compile Include="Model3DFactories\CylindricModel3DFactory.cs" />
     <Compile Include="Model3DFactories\ToricalModel3DFactory.cs" />
     <Compile Include="Model\Axes\Axis.cs" />
     <Compile Include="Model\Axes\Abscissa.cs" />
