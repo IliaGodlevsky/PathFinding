@@ -1,4 +1,5 @@
-﻿using GraphLib.Interfaces;
+﻿using Common.Extensions.EnumerableExtensions;
+using GraphLib.Interfaces;
 using System.Collections.Generic;
 using System.IO;
 using ValueRange;
@@ -18,10 +19,7 @@ namespace GraphLib.Serialization.Extensions
         private static void WriteIntArray(this BinaryWriter writer, int[] array)
         {
             writer.Write(array.Length);
-            for (int i = 0; i < array.Length; i++)
-            {
-                writer.Write(array[i]);
-            }
+            array.ForEach(writer.Write);
         }
 
         private static void WriteRange(this BinaryWriter writer, InclusiveValueRange<int> range)
@@ -33,10 +31,12 @@ namespace GraphLib.Serialization.Extensions
         private static void WriterNeighborhood(this BinaryWriter writer, IReadOnlyCollection<ICoordinate> neighbourhood)
         {
             writer.Write(neighbourhood.Count);
-            foreach (var coordinate in neighbourhood)
-            {
-                writer.WriteIntArray(coordinate.CoordinatesValues);
-            }
+            neighbourhood.ForEach(writer.WriteCoordinate);
+        }
+
+        private static void WriteCoordinate(this BinaryWriter writer, ICoordinate coordinate)
+        {
+            writer.WriteIntArray(coordinate.CoordinatesValues);
         }
 
         private static void WriteVertices(this BinaryWriter writer, VertexSerializationInfo[] vertices)

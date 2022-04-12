@@ -5,14 +5,6 @@ namespace WPFVersion3D.Extensions
 {
     internal static class AlgorithmViewModelExtensions
     {
-        public static void InterruptIfStarted(this AlgorithmViewModel model)
-        {
-            if (model.IsStarted)
-            {
-                model.Interrupt();
-            }
-        }
-
         public static void UpdateStatistics(this AlgorithmViewModel model, UpdateAlgorithmStatisticsMessage message)
         {
             model.Time = message.Time;

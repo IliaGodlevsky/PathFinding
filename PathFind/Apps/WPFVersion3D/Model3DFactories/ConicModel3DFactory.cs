@@ -12,7 +12,7 @@ namespace WPFVersion3D.Model3DFactories
         private const int Segments = 25;
         private const int Positions = 4;
 
-        private const double Height = 6;
+        private const double Height = 5;
         private const double HalfHeight = Height / 2;
 
         private const double PI = 180;
@@ -24,11 +24,11 @@ namespace WPFVersion3D.Model3DFactories
         {
             double radius = diametre / 2;
             center = new Vector3D(radius, radius, radius);
-            var conus = new Model3DGroup();
+            var cone = new Model3DGroup();
             var points = GetPositions(0, radius);
             var rectangles = GetRectangleModels(points, material);
-            conus.Children.AddRange(rectangles);
-            return conus;
+            cone.Children.AddRange(rectangles);
+            return cone;
         }
 
         private Point3D[,] GetPositions(double rtop, double rbottom)
