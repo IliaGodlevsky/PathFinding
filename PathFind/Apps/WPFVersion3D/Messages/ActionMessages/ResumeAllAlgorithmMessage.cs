@@ -3,9 +3,9 @@ using WPFVersion3D.ViewModel;
 
 namespace WPFVersion3D.Messages.ActionMessages
 {
-    internal sealed class ResumeAllAlgorithmMessage : IAlgorithmActionMessage
+    internal sealed class ResumeAllAlgorithmMessage : BaseAlgorithmsExecutionMessage
     {
-        public void Execute(AlgorithmViewModel model)
+        protected override void Execute(AlgorithmViewModel model)
         {
             model.Resume();
         }

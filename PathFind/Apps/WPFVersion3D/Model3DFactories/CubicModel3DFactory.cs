@@ -8,10 +8,10 @@ namespace WPFVersion3D.Model3DFactories
     internal sealed class CubicModel3DFactory : IModel3DFactory
     {
         public Model3D CreateModel3D(double cubeEdgeSize, Material material)
-        {
-            var cube = new Model3DGroup();
+        {            
             var points = GetPoints(cubeEdgeSize);
             var rectangles = GetRectangleModels3D(points, material);
+            var cube = new Model3DGroup();
             cube.Children.AddRange(rectangles);
             return cube;
         }

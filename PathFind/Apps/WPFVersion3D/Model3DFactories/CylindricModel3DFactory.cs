@@ -22,10 +22,10 @@ namespace WPFVersion3D.Model3DFactories
         public Model3D CreateModel3D(double diametre, Material material)
         {
             double radius = diametre / 2;
-            center = new Vector3D(radius, radius, radius);
-            var cylinder = new Model3DGroup();
+            center = new Vector3D(radius, radius, radius);           
             var points = GetPoints3D(0, radius);
             var rectangles = GetRectangleModels(points, material);
+            var cylinder = new Model3DGroup();
             cylinder.Children.AddRange(rectangles);
             return cylinder;
         }

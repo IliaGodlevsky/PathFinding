@@ -40,9 +40,9 @@ namespace WPFVersion3D.ViewModel
             endPoints.Reset();
             eventHolder.UnsubscribeVertices(Graph);
             Graph = message.Value;
-            var graphField = fieldFactory.CreateGraphField(Graph);
             endPoints.SubscribeToEvents(Graph);
             eventHolder.SubscribeVertices(Graph);
+            var graphField = fieldFactory.CreateGraphField(Graph);
             messenger.Send(new ClearStatisticsMessage());
             messenger.Send(new GraphFieldCreatedMessage(graphField));
         }

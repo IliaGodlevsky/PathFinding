@@ -15,7 +15,7 @@ namespace Random.Realizations.Generators
         private const int InitializationConst = 21;
         private const int CalculationConst = 30;
 
-        private static readonly object locker = new object();
+        private readonly object locker = new object();
 
         private readonly InclusiveValueRange<int> indexRange;
         private readonly Lazy<int[]> seeds;

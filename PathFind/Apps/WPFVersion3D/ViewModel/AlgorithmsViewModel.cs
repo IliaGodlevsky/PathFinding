@@ -1,5 +1,4 @@
 ﻿using Autofac;
-using Common.Extensions.EnumerableExtensions;
 using GalaSoft.MvvmLight.Messaging;
 using System;
 using System.Collections.ObjectModel;
@@ -44,7 +43,7 @@ namespace WPFVersion3D.ViewModel
             messenger.Register<ClearStatisticsMessage>(this, OnClearStatistics);
             messenger.Register<AlgorithmStatusMessage>(this, SetAlgorithmStatus);
             messenger.Register<RemoveAlgorithmMessage>(this, OnAlgorithmRemoved);
-            messenger.Register<IAlgorithmActionMessage>(this, true, OnAllAlgorithmExecution);
+            messenger.Register<IAlgorithmsExecutionMessage>(this, true, OnAllAlgorithmExecution);
             messenger.Register<GraphCreatedMessage>(this, NewGraphCreated);
         }
 
@@ -71,9 +70,9 @@ namespace WPFVersion3D.ViewModel
             Dispatcher.Invoke(() => AlgorithmModels[message.Index].UpdateStatistics(message));
         }
 
-        private void OnAllAlgorithmExecution(IAlgorithmActionMessage message)
+        private void OnAllAlgorithmExecution(IAlgorithmsExecutionMessage message)
         {
-            AlgorithmModels.ForEach(model => message.Execute(model));
+            message.Execute(AlgorithmModels);
         }
 
         private void OnClearStatistics(ClearStatisticsMessage message)

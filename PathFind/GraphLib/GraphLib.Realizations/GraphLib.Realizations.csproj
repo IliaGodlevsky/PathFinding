@@ -43,8 +43,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Enums\SmoothLevels.cs" />
-    <Compile Include="Extensions\EnumValuesExtensions.cs" />
     <Compile Include="Extensions\GraphExtensions.cs" />
     <Compile Include="Neighbourhoods\VonNeumannNeighborhood.cs" />
     <Compile Include="Neighbourhoods\MooreNeighborhood.cs" />

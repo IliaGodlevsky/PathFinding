@@ -27,6 +27,7 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <LangVersion>Latest</LangVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -36,6 +37,7 @@
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <LangVersion>Latest</LangVersion>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
@@ -91,12 +93,13 @@
     <Compile Include="Interface\IAnimatedAxisRotatorFactory.cs" />
     <Compile Include="Interface\IChangeColorOpacity.cs" />
     <Compile Include="Interface\IPassValueMessage.cs" />
+    <Compile Include="Messages\ActionMessages\BaseAlgorithmsExecutionMessage.cs" />
     <Compile Include="Messages\PassValueMessages\AlgorithmStartedMessage.cs" />
     <Compile Include="Messages\PassValueMessages\AlgorithmIndexMessage.cs" />
     <Compile Include="Messages\ActionMessages\GraphChangedMessage.cs" />
     <Compile Include="Messages\PassValueMessages\EndPointsChosenMessage.cs" />
     <Compile Include="Messages\PassValueMessages\GraphFieldCreatedMessage.cs" />
-    <Compile Include="Interface\IAlgorithmActionMessage.cs" />
+    <Compile Include="Interface\IAlgorithmsExecutionMessage.cs" />
     <Compile Include="Messages\PassValueMessages\IsAllAlgorithmsFinishedMessage.cs" />
     <Compile Include="Messages\PassValueMessages\AlgorithmStatusMessage.cs" />
     <Compile Include="Messages\ActionMessages\ClearStatisticsMessage.cs" />

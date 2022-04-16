@@ -1,11 +1,10 @@
-﻿using WPFVersion3D.Interface;
-using WPFVersion3D.ViewModel;
+﻿using WPFVersion3D.ViewModel;
 
 namespace WPFVersion3D.Messages.ActionMessages
 {
-    internal sealed class InterruptAllAlgorithmsMessage : IAlgorithmActionMessage
+    internal sealed class InterruptAllAlgorithmsMessage : BaseAlgorithmsExecutionMessage
     {
-        public void Execute(AlgorithmViewModel model)
+        protected override void Execute(AlgorithmViewModel model)
         {
             model.Interrupt();
         }

@@ -10,7 +10,7 @@ namespace Random.Realizations.Generators
         private const int Term = 12345;
         private const int Factor = 1103515245;
 
-        private static readonly object locker = new object();
+        private readonly object locker = new object();
 
         private ulong seed;
         private ulong Seed => seed = seed * Factor + Term;

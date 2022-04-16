@@ -11,7 +11,7 @@ namespace Random.Realizations.Generators
         private const int IntSize = sizeof(int);
         private const int MaxBufferSize = IntSize << 4;
 
-        private static readonly object locker = new object();
+        private readonly object locker = new object();
 
         private readonly byte[] buffer;
         private readonly RandomNumberGenerator generator;
