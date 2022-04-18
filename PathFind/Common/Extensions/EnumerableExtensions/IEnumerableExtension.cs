@@ -154,25 +154,18 @@ namespace Common.Extensions.EnumerableExtensions
         public static IEnumerable<T> TakeOrDefault<T>(this IEnumerable<T> collection, int number, T defaultValue = default)
         {
             int count = 0;
-            using (var iterator = collection.GetEnumerator())
+            foreach (var item in collection)
             {
-                while (iterator.MoveNext())
+                if (count > number)
                 {
-                    count++;
-                    if (count > number)
-                    {
-                        break;
-                    }
-                    yield return iterator.Current;
+                    break;
                 }
+                yield return item;
             }
-            if (count != number)
+            int remained = count != number ? number - count : 0;
+            while (remained--> 0)
             {
-                int remained = number - count;
-                while (remained-- > 0)
-                {
-                    yield return defaultValue;
-                }
+                yield return defaultValue;
             }
         }
 
