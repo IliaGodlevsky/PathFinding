@@ -151,7 +151,7 @@ namespace Common.Extensions.EnumerableExtensions
             return list;
         }
 
-        public static IEnumerable<T> TakeOrDefault<T>(this IEnumerable<T> collection, int number)
+        public static IEnumerable<T> TakeOrDefault<T>(this IEnumerable<T> collection, int number, T defaultValue = default)
         {
             int count = 0;
             using (var iterator = collection.GetEnumerator())
@@ -159,6 +159,10 @@ namespace Common.Extensions.EnumerableExtensions
                 while (iterator.MoveNext())
                 {
                     count++;
+                    if (count > number)
+                    {
+                        break;
+                    }
                     yield return iterator.Current;
                 }
             }
@@ -167,7 +171,7 @@ namespace Common.Extensions.EnumerableExtensions
                 int remained = number - count;
                 while (remained-- > 0)
                 {
-                    yield return default;
+                    yield return defaultValue;
                 }
             }
         }

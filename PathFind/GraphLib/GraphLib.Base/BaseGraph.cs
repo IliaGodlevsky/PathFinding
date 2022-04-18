@@ -2,6 +2,7 @@
 using Common.Extensions.EnumerableExtensions;
 using GraphLib.Extensions;
 using GraphLib.Interfaces;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using static System.Reflection.BindingFlags;
@@ -24,7 +25,11 @@ namespace GraphLib.Base
 
         protected BaseGraph(int requiredNumberOfDimensions, IEnumerable<IVertex> vertices, params int[] dimensionSizes)
         {
-            DimensionsSizes = dimensionSizes.TakeOrDefault(requiredNumberOfDimensions).ToArray();
+            if (requiredNumberOfDimensions < dimensionSizes.Length)
+            {
+                throw new ArgumentOutOfRangeException(nameof(dimensionSizes));
+            }
+            DimensionsSizes = dimensionSizes.TakeOrDefault(requiredNumberOfDimensions, 1).ToArray();
             Size = DimensionsSizes.GetMultiplication();
             this.vertices = vertices.ToDictionary();
             Vertices.ForEach(SetGraph);
