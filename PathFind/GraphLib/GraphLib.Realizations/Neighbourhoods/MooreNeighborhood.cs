@@ -70,7 +70,7 @@ namespace GraphLib.Realizations.Neighbourhoods
         private IReadOnlyCollection<ICoordinate> GetCoordinates(int depth)
         {
             return depth < limitDepth - 1
-                ? DetectNeighborhood(depth + 1)
+                ? (IReadOnlyCollection<ICoordinate>)DetectNeighborhood(depth + 1)
                 : new[] { resultCoordinatesValues.ToCoordinate() };
         }
 
