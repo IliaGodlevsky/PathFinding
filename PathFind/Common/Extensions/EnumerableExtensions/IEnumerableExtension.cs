@@ -156,6 +156,7 @@ namespace Common.Extensions.EnumerableExtensions
             int count = 0;
             foreach (var item in collection)
             {
+                count++;
                 if (count > number)
                 {
                     break;
