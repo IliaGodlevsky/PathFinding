@@ -16,7 +16,7 @@ namespace WPFVersion3D.Model3DFactories
         private const int PI2 = 360;
 
         public Model3D CreateModel3D(double diametre, Material material)
-        {           
+        {
             var points = GetPoints3D(diametre / 2);
             var rectangles = GetRectangleModels(points, material);
             var sphere = new Model3DGroup();

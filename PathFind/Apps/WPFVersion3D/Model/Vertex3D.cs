@@ -15,8 +15,6 @@ namespace WPFVersion3D.Model
     [DebuggerDisplay("{Position.ToString()}")]
     internal class Vertex3D : UIElement3D, IVertex, IVisualizable
     {
-        public static readonly DependencyProperty ModelProperty;
-        public static readonly DependencyProperty MaterialProperty;
         public static readonly DependencyProperty SizeProperty;
         public static readonly DependencyProperty BrushProperty;
 
@@ -52,22 +50,12 @@ namespace WPFVersion3D.Model
 
         public bool IsVisualizedAsEndPoint => visualization.IsVisualizedAsEndPoint(this);
 
-        public DiffuseMaterial Material
-        {
-            get => (DiffuseMaterial)GetValue(MaterialProperty);
-            set => SetValue(MaterialProperty, value);
-        }
+        public DiffuseMaterial Material { get; set; }
 
         public Brush Brush
         {
             get => (Brush)GetValue(BrushProperty);
             set => SetValue(BrushProperty, value);
-        }
-
-        private Model3D Model
-        {
-            get => (Model3D)GetValue(ModelProperty);
-            set => SetValue(ModelProperty, value);
         }
 
         private double Size
@@ -97,29 +85,8 @@ namespace WPFVersion3D.Model
 
         static Vertex3D()
         {
-            ModelProperty = DependencyProperty.Register(
-                nameof(Model),
-                typeof(Model3D),
-                typeof(Vertex3D),
-                new PropertyMetadata(ModelPropertyChanged));
-
-            MaterialProperty = DependencyProperty.Register(
-                nameof(Material),
-                typeof(Material),
-                typeof(Vertex3D),
-                new PropertyMetadata(MaterialPropertyChanged));
-
-            SizeProperty = DependencyProperty.Register(
-                nameof(Size),
-                typeof(double),
-                typeof(Vertex3D),
-                new UIPropertyMetadata(SizePropertyChanged));
-
-            BrushProperty = DependencyProperty.Register(
-                nameof(Brush),
-                typeof(Brush),
-                typeof(Vertex3D),
-                new PropertyMetadata(BrushPropertyChanged));
+            SizeProperty = RegisterProperty(nameof(Size), typeof(double), SizePropertyChanged);
+            BrushProperty = RegisterProperty(nameof(Brush), typeof(Brush), BrushPropertyChanged);
         }
 
         public bool Equals(IVertex other)
@@ -172,25 +139,11 @@ namespace WPFVersion3D.Model
             visualization.VisualizeAsMarkedToReplaceIntermediate(this);
         }
 
-        protected static void MaterialPropertyChanged(DependencyObject depObj, DependencyPropertyChangedEventArgs prop)
-        {
-            Vertex3D vert = (Vertex3D)depObj;
-            vert.Material = (DiffuseMaterial)prop.NewValue;
-        }
-
         protected static void SizePropertyChanged(DependencyObject depObj, DependencyPropertyChangedEventArgs prop)
         {
             Vertex3D vert = (Vertex3D)depObj;
-            double size = (double)prop.NewValue;
-            var material = vert.Material;
-            vert.Size = size;
-            vert.Model = vert.modelFactory.CreateModel3D(size, material);
-        }
-
-        protected static void ModelPropertyChanged(DependencyObject depObj, DependencyPropertyChangedEventArgs prop)
-        {
-            Vertex3D vert = (Vertex3D)depObj;
-            vert.Visual3DModel = (Model3D)prop.NewValue;
+            vert.Size = (double)prop.NewValue;
+            vert.Visual3DModel = vert.modelFactory.CreateModel3D(vert.Size, vert.Material);
         }
 
         protected static void BrushPropertyChanged(DependencyObject depObj, DependencyPropertyChangedEventArgs prop)
@@ -198,6 +151,11 @@ namespace WPFVersion3D.Model
             Vertex3D vert = (Vertex3D)depObj;
             vert.Brush = (Brush)prop.NewValue;
             vert.Material.Brush = vert.Brush;
+        }
+
+        private static DependencyProperty RegisterProperty(string propertyName, Type propertyType, PropertyChangedCallback callback)
+        {
+            return DependencyProperty.Register(propertyName, propertyType, typeof(Vertex3D), new PropertyMetadata(callback));
         }
     }
 }

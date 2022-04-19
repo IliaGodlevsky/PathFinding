@@ -6,6 +6,6 @@ namespace WPFVersion3D.Interface
 {
     internal interface IAlgorithmsExecutionMessage : IExecutable<IEnumerable<AlgorithmViewModel>>
     {
-        
+
     }
 }

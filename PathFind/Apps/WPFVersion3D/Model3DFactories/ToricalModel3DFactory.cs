@@ -16,7 +16,7 @@ namespace WPFVersion3D.Model3DFactories
         private const double PI2 = 360;
 
         public Model3D CreateModel3D(double diametre, Material material)
-        {            
+        {
             var points = GetPoints3D(diametre / 2);
             var rectangleModels = GetRectangleModels(points, material);
             var torus = new Model3DGroup();

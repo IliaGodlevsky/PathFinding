@@ -164,7 +164,7 @@ namespace Common.Extensions.EnumerableExtensions
                 yield return item;
             }
             int remained = count != number ? number - count : 0;
-            while (remained--> 0)
+            while (remained-- > 0)
             {
                 yield return defaultValue;
             }

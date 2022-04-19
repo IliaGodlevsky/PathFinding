@@ -1,5 +1,4 @@
-﻿using WPFVersion3D.Interface;
-using WPFVersion3D.ViewModel;
+﻿using WPFVersion3D.ViewModel;
 
 namespace WPFVersion3D.Messages.ActionMessages
 {
