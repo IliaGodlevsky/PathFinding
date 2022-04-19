@@ -10,7 +10,6 @@ using System.Runtime.Serialization;
 
 namespace GraphLib.Serialization.Serializers
 {
-    [Obsolete("Consider utilizing BinaryGraphSerializer instead")]
     public sealed class FormatterGraphSerializer : IGraphSerializer
     {
         private readonly IFormatter formatter;

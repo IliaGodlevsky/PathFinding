@@ -1,6 +1,7 @@
 ﻿using Common.Extensions.EnumerableExtensions;
 using GraphLib.Extensions;
 using System.Collections.Generic;
+using System.Linq;
 using WPFVersion3D.Interface;
 
 namespace WPFVersion3D.Model.Axes
@@ -34,7 +35,7 @@ namespace WPFVersion3D.Model.Axes
             var coordinates = vertex.GetCoordinates();
             double adjustedVertexSize = Constants.InitialVertexSize + distanceBetweenVertices;
             double dimensionSizeCorrection = distanceBetweenVertices == 0 ? 0 : 1;
-            double centeredPosition = coordinates[Order] + (dimensionSizeCorrection - dimensionSize) / 2.0;
+            double centeredPosition = coordinates.ElementAtOrDefault(Order) + (dimensionSizeCorrection - dimensionSize) / 2.0;
             Offset(vertex, centeredPosition * adjustedVertexSize);
         }
     }

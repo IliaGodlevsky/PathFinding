@@ -25,13 +25,9 @@ namespace GraphLib.Base
 
         protected BaseGraph(int requiredNumberOfDimensions, IEnumerable<IVertex> vertices, params int[] dimensionSizes)
         {
-            if (requiredNumberOfDimensions < dimensionSizes.Length)
-            {
-                throw new ArgumentOutOfRangeException(nameof(dimensionSizes));
-            }
             DimensionsSizes = dimensionSizes.TakeOrDefault(requiredNumberOfDimensions, 1).ToArray();
             Size = DimensionsSizes.GetMultiplication();
-            this.vertices = vertices.ToDictionary();
+            this.vertices = vertices.Take(Size).ToDictionary();
             Vertices.ForEach(SetGraph);
         }
 

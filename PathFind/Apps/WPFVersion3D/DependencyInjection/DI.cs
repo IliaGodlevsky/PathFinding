@@ -20,6 +20,8 @@ using Random.Interface;
 using Random.Realizations.Generators;
 using System;
 using System.Reflection;
+using System.Runtime.Serialization;
+using System.Runtime.Serialization.Formatters.Binary;
 using WPFVersion3D.Extensions;
 using WPFVersion3D.Interface;
 using WPFVersion3D.Model;
@@ -64,7 +66,8 @@ namespace WPFVersion3D.DependencyInjection
 
             builder.RegisterType<GraphSerializationModule>().AsSelf().SingleInstance();
             builder.RegisterType<PathInput>().As<IPathInput>().SingleInstance();
-            builder.RegisterType<BinaryGraphSerializer>().As<IGraphSerializer>().SingleInstance();
+            builder.RegisterType<BinaryFormatter>().As<IFormatter>().SingleInstance();
+            builder.RegisterType<FormatterGraphSerializer>().As<IGraphSerializer>().SingleInstance();
             builder.RegisterDecorator<CompressGraphSerializer, IGraphSerializer>();
             builder.RegisterDecorator<CryptoGraphSerializer, IGraphSerializer>();
             builder.RegisterType<Vertex3DFromInfoFactory>().As<IVertexFromInfoFactory>().SingleInstance();

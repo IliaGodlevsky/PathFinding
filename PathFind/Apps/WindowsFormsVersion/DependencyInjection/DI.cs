@@ -21,6 +21,8 @@ using Random.Interface;
 using Random.Realizations.Generators;
 using System;
 using System.Reflection;
+using System.Runtime.Serialization;
+using System.Runtime.Serialization.Formatters.Binary;
 using WindowsFormsVersion.Extensions;
 using WindowsFormsVersion.Model;
 using WindowsFormsVersion.ViewModel;
@@ -72,7 +74,8 @@ namespace WindowsFormsVersion.DependencyInjection
 
             builder.RegisterType<GraphSerializationModule>().AsSelf().SingleInstance();
             builder.RegisterType<PathInput>().As<IPathInput>().SingleInstance();
-            builder.RegisterType<BinaryGraphSerializer>().As<IGraphSerializer>().SingleInstance();
+            builder.RegisterType<BinaryFormatter>().As<IFormatter>().SingleInstance();
+            builder.RegisterType<FormatterGraphSerializer>().As<IGraphSerializer>().SingleInstance();
             builder.RegisterDecorator<CompressGraphSerializer, IGraphSerializer>();
             builder.RegisterDecorator<CryptoGraphSerializer, IGraphSerializer>();
             builder.RegisterType<VertexFromInfoFactory>().As<IVertexFromInfoFactory>().SingleInstance();
