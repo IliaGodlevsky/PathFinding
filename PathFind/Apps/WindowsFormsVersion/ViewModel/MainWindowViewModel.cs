@@ -143,22 +143,6 @@ namespace WindowsFormsVersion.ViewModel
             PathFindingStatistics = string.Empty;
         }
 
-        public void MakeWeighted(object sender, EventArgs e)
-        {
-            if (!IsPathfindingStarted)
-            {
-                Graph.ToWeighted();
-            }
-        }
-
-        public void MakeUnweighted(object sender, EventArgs e)
-        {
-            if (!IsPathfindingStarted)
-            {
-                Graph.ToUnweighted();
-            }
-        }
-
         public void StartPathFind(object sender, EventArgs e)
         {
             FindPath();

@@ -10,10 +10,8 @@ using System.Collections.Generic;
 using System.Windows.Input;
 using ValueRange.Extensions;
 using WPFVersion.DependencyInjection;
-using WPFVersion.Enums;
-using WPFVersion.Extensions;
 using WPFVersion.Infrastructure;
-using WPFVersion.Messages;
+using WPFVersion.Messages.DataMessages;
 
 namespace WPFVersion.ViewModel
 {
@@ -38,8 +36,7 @@ namespace WPFVersion.ViewModel
             try
             {
                 var graph = await SelectedGraphAssemble.AssembleGraphAsync(ObstaclePercent, Width, Length);
-                var message = new GraphCreatedMessage(graph);
-                messenger.Forward(message, MessageTokens.MainModel);
+                messenger.Send(new GraphCreatedMessage(graph));
             }
             catch (Exception ex)
             {

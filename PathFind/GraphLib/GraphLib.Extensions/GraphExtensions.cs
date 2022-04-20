@@ -13,16 +13,6 @@ namespace GraphLib.Extensions
             graph.ForEach(vertex => vertex.Refresh());
         }
 
-        public static void ToUnweighted(this IGraph graph)
-        {
-            graph.Vertices.OfType<IWeightable>().ForEach(vertex => vertex.MakeUnweighted());
-        }
-
-        public static void ToWeighted(this IGraph graph)
-        {
-            graph.Vertices.OfType<IWeightable>().ForEach(vertex => vertex.MakeWeighted());
-        }
-
         public static bool IsEmpty(this IGraph self)
         {
             return !self.Vertices.Any();

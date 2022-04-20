@@ -11,9 +11,7 @@ using GalaSoft.MvvmLight.Messaging;
 using GraphLib.Base.EndPoints;
 using GraphLib.Extensions;
 using GraphLib.Interfaces;
-using GraphLib.Serialization;
-using GraphViewModel;
-using GraphViewModel.Interfaces;
+using GraphLib.NullRealizations;
 using Logging.Interface;
 using NullObject.Extensions;
 using System;
@@ -23,99 +21,100 @@ using Console = Colorful.Console;
 
 namespace ConsoleVersion.ViewModel
 {
-    internal sealed class MainViewModel : MainModel, IMainModel, IViewModel, IRequireAnswerInput, IRequireIntInput, IDisposable
+    internal sealed class MainViewModel : IViewModel, IRequireAnswerInput, IRequireIntInput, IDisposable
     {
         public event Action WindowClosed;
 
+        private readonly ILog log;
         private readonly IMessenger messenger;
+        private readonly IVertexEventHolder eventHolder;       
+        private readonly IGraphFieldFactory fieldFactory;
+        private readonly BaseEndPoints endPoints;
+
+        private IGraph graph;
+        private IGraphField graphField;
+
+        public string GraphParamters { get; set; }
 
         public IInput<int> IntInput { get; set; }
 
         public IInput<Answer> AnswerInput { get; set; }
 
-        public MainViewModel(IGraphFieldFactory fieldFactory, IVertexEventHolder eventHolder,
-            GraphSerializationModule serializationModule, BaseEndPoints endPoints, ILog log)
-            : base(fieldFactory, eventHolder, serializationModule, endPoints, log)
+        public MainViewModel(IGraphFieldFactory fieldFactory, IVertexEventHolder eventHolder, BaseEndPoints endPoints, ILog log)
         {
+            graph = NullGraph.Instance;
             messenger = DI.Container.Resolve<IMessenger>();
-            messenger.Register<GraphCreatedMessage>(this, MessageTokens.MainModel, message => ConnectNewGraph(message.Graph));
-            messenger.Register<ClearGraphMessage>(this, MessageTokens.MainModel, message => ClearGraph());
-            messenger.Register<ClearColorsMessage>(this, MessageTokens.MainModel, message => ClearColors());
-            messenger.Register<ClaimGraphMessage>(this, MessageTokens.MainModel, RecieveClaimGraphMessage);
-        }
-
-        [PreValidationMethod(nameof(IsGraphValid))]
-        [MenuItem(MenuItemsNames.MakeUnwieghted, 2)]
-        public void MakeGraphUnweighted()
-        {
-            Graph.ToUnweighted();
-        }
-
-        [PreValidationMethod(nameof(IsGraphValid))]
-        [MenuItem(MenuItemsNames.MakeWeighted, 3)]
-        public void MakeGraphWeighted()
-        {
-            Graph.ToWeighted();
+            messenger.Register<GraphCreatedMessage>(this, SetGraph);
+            messenger.Register<ClearGraphMessage>(this, message => ClearGraph());
+            messenger.Register<ClearColorsMessage>(this, message => ClearColors());
+            messenger.Register<ClaimGraphMessage>(this, RecieveClaimGraphMessage);
+            this.fieldFactory = fieldFactory;
+            this.eventHolder = eventHolder;
+            this.endPoints = endPoints;
+            this.log = log;
         }
 
         [MenuItem(MenuItemsNames.CreateNewGraph, 0)]
-        public override void CreateNewGraph()
+        private void CreateNewGraph()
         {
             DI.Container.Display<GraphCreateView>();
         }
 
         [PreValidationMethod(nameof(IsGraphValid))]
         [MenuItem(MenuItemsNames.FindPath, 1)]
-        public override void FindPath()
+        private void FindPath()
         {
             DI.Container.Display<PathFindView>();
         }
 
         [PreValidationMethod(nameof(IsGraphValid))]
         [MenuItem(MenuItemsNames.ChangedVertexState, 4)]
-        public void ChangeVertexState()
+        private void ChangeVertexState()
         {
             DI.Container.Display<VertexStateView>();
         }
 
         [ExecuteSafe(nameof(ExecuteSafe))]
         [MenuItem(MenuItemsNames.ChangeCostRange, 7)]
-        public void ChangeVertexCostValueRange()
+        private void ChangeVertexCostValueRange()
         {
             CostRange = IntInput.InputRange(Constants.VerticesCostRange);
-            var message = new CostRangeChangedMessage(CostRange);
-            messenger.Forward(message, MessageTokens.MainView);
+            messenger.Send(new CostRangeChangedMessage(CostRange));
         }
 
         [PreValidationMethod(nameof(IsGraphValid))]
         [MenuItem(MenuItemsNames.SaveGraph, 5)]
-        public override void SaveGraph()
+        private void SaveGraph()
         {
-            base.SaveGraph();
+            DI.Container.Display<GraphSaveView>();
         }
 
         [ExecuteSafe(nameof(ExecuteSafe))]
         [MenuItem(MenuItemsNames.LoadGraph, 6)]
-        public override void LoadGraph()
+        private void LoadGraph()
         {
-            var graph = serializationModule.LoadGraph();
-            ConnectNewGraph(graph);
-            messenger
-                .Forward(new CostRangeChangedMessage(CostRange), MessageTokens.MainView)
-                .Forward(new GraphCreatedMessage(graph), MessageTokens.MainView);
+            DI.Container.Display<GraphLoadView>();
         }
 
         [PreValidationMethod(nameof(CanExecuteInterrupt))]
         [MenuItem(MenuItemsNames.Exit, 8)]
-        public void Interrupt()
+        private void Interrupt()
         {
             WindowClosed?.Invoke();
         }
 
-        public override void ClearGraph()
+        public void ClearGraph()
         {
-            base.ClearGraph();
-            messenger.Forward(UpdateStatisticsMessage.Empty, MessageTokens.MainView);
+            graph.Refresh();
+            GraphParamters = graph.ToString();
+            endPoints.Reset();
+            messenger.Send(UpdateStatisticsMessage.Empty);
+        }
+
+        public void ClearColors()
+        {
+            graph.Refresh();
+            endPoints.RestoreCurrentColors();
         }
 
         public void DisplayGraph()
@@ -124,8 +123,8 @@ namespace ConsoleVersion.ViewModel
             {
                 Console.Clear();
                 Console.ForegroundColor = Color.White;
-                Console.WriteLine(GraphParametres);
-                (GraphField as IDisplayable)?.Display();
+                Console.WriteLine(GraphParamters);
+                (graphField as IDisplayable)?.Display();
                 Console.WriteLine();
                 MainView.SetCursorPositionUnderMenu(1);
             }
@@ -139,17 +138,29 @@ namespace ConsoleVersion.ViewModel
             }
         }
 
+        private void SetGraph(GraphCreatedMessage message)
+        {
+            endPoints.UnsubscribeFromEvents(graph);
+            endPoints.Reset();
+            eventHolder.UnsubscribeVertices(graph);
+            graph = message.Graph;
+            graphField = fieldFactory.CreateGraphField(graph);
+            endPoints.SubscribeToEvents(graph);
+            eventHolder.SubscribeVertices(graph);
+            GraphParamters = graph.ToString();
+        }
+
         private void RecieveClaimGraphMessage(ClaimGraphMessage message)
         {
-            if (!Graph.IsNull())
+            if (!graph.IsNull())
             {
-                messenger.Forward(new GraphCreatedMessage(Graph), message.ClaimerMessageToken);
+                messenger.Send(new ClaimGraphAnswer(graph));
             }
         }
 
         private bool IsGraphValid()
         {
-            return !Graph.IsNull() && Graph.HasVertices();
+            return !graph.IsNull() && graph.HasVertices();
         }
 
         private bool CanExecuteInterrupt()

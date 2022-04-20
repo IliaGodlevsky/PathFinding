@@ -1,6 +1,5 @@
 ﻿using GraphLib.Extensions;
 using GraphLib.Interfaces;
-using GraphLib.Realizations.VertexCost;
 using GraphLib.Serialization;
 using GraphLib.Serialization.Extensions;
 using System;
@@ -13,7 +12,7 @@ using static WindowsFormsVersion.Constants;
 namespace WindowsFormsVersion.Model
 {
     [DebuggerDisplay("{Position.ToString()}")]
-    internal class Vertex : Label, IVertex, IVisualizable, IWeightable
+    internal class Vertex : Label, IVertex, IVisualizable
     {
         public Vertex(INeighborhood neighborhood, ICoordinate coordinate, IVisualization<Vertex> visualization) : base()
         {
@@ -42,7 +41,7 @@ namespace WindowsFormsVersion.Model
             set
             {
                 cost = value;
-                Text = cost.ToString();
+                Text = cost.CurrentCost.ToString();
             }
         }
 
@@ -75,18 +74,6 @@ namespace WindowsFormsVersion.Model
         public void VisualizeAsIntermediate() => visualization.VisualizeAsIntermediate(this);
         public bool IsVisualizedAsPath => visualization.IsVisualizedAsPath(this);
         public bool IsVisualizedAsEndPoint => visualization.IsVisualizedAsEndPoint(this);
-
-        public void MakeUnweighted()
-        {
-            Text = string.Empty;
-            (cost as WeightableVertexCost)?.MakeUnweighted();
-        }
-
-        public void MakeWeighted()
-        {
-            (cost as WeightableVertexCost)?.MakeWeighted();
-            Text = cost.ToString();
-        }
 
         public bool Equals(IVertex other) => Equals((object)other);
         public override bool Equals(object obj) => obj is IVertex vertex && vertex.IsEqual(this);

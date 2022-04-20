@@ -66,9 +66,7 @@
     <Compile Include="SmoothLevel\LowSmoothLevel.cs" />
     <Compile Include="SmoothLevel\MediumSmoothLevel.cs" />
     <Compile Include="SmoothLevel\SmoothLevelAttribute.cs" />
-    <Compile Include="VertexCost\WeightableVertexCost.cs" />
-    <Compile Include="VertexCost\CostStates\UnweightedState.cs" />
-    <Compile Include="VertexCost\CostStates\WeightedState.cs" />
+    <Compile Include="VertexCost.cs" />
     <Compile Include="VisitedVertices.cs" />
   </ItemGroup>
   <ItemGroup>

@@ -50,11 +50,7 @@ namespace ConsoleVersion.ViewModel
 
         public string AlgorithmKeyInputMessage { private get; set; }
 
-        public override int DelayTime
-        {
-            get => delayTime.Value;
-            set => delayTime.Value = value;
-        }
+        public override int DelayTime { get => delayTime.Value; set => delayTime.Value = value; }
 
         private string Statistics => path.ToStatistics(timer, visitedVerticesCount, currentAlgorithmName);
 
@@ -64,8 +60,8 @@ namespace ConsoleVersion.ViewModel
 
         private IReadOnlyCollection<IConsoleKeyCommand<PathfindingAlgorithm>> AlgorithmKeyCommands { get; }
 
-        public PathFindingViewModel(BaseEndPoints endPoints, IEnumerable<IAlgorithmFactory<PathfindingAlgorithm>> algorithmFactories,
-            ILog log) : base(endPoints, algorithmFactories, log)
+        public PathFindingViewModel(BaseEndPoints endPoints, IEnumerable<IAlgorithmFactory<PathfindingAlgorithm>> algorithmFactories, ILog log)
+            : base(endPoints, algorithmFactories, log)
         {
             algorithmKeysValueRange = new InclusiveValueRange<int>(Algorithms.Count, 1);
             ConsoleKeystrokesHook.Instance.KeyPressed += OnConsoleKeyPressed;
@@ -121,14 +117,14 @@ namespace ConsoleVersion.ViewModel
         {
             using (Cursor.HideCursor())
             {
-                messenger.Forward<ClearGraphMessage>(MessageTokens.MainModel);
+                messenger.Send(new ClearGraphMessage());
             }
         }
 
         [MenuItem(MenuItemsNames.ClearColors, 5)]
         public void ClearColors()
         {
-            messenger.Forward<ClearColorsMessage>(MessageTokens.MainModel);
+            messenger.Send(new ClearColorsMessage());
         }
 
         [MenuItem(MenuItemsNames.ApplyVisualization, 6)]
@@ -148,8 +144,7 @@ namespace ConsoleVersion.ViewModel
         protected override void SummarizePathfindingResults()
         {
             string statistics = path.IsNull() ? MessagesTexts.CouldntFindPathMsg : Statistics;
-            var message = new UpdateStatisticsMessage(statistics);
-            messenger.Forward(message, MessageTokens.MainView);
+            messenger.Send(new UpdateStatisticsMessage(statistics));
             visitedVerticesCount = 0;
             resetEvent.Set();
         }
@@ -158,8 +153,7 @@ namespace ConsoleVersion.ViewModel
         {
             Stopwatch.StartNew().Wait(DelayTime).Stop();
             base.OnVertexVisited(sender, e);
-            var message = new UpdateStatisticsMessage(Statistics);
-            messenger.Forward(message, MessageTokens.MainView);
+            messenger.Send(new UpdateStatisticsMessage(Statistics));
         }
 
         protected override void SubscribeOnAlgorithmEvents(PathfindingAlgorithm algorithm)

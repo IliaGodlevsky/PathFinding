@@ -6,8 +6,8 @@ using System;
 using System.Threading.Tasks;
 using Visualization;
 using WPFVersion.DependencyInjection;
-using WPFVersion.Enums;
 using WPFVersion.Messages;
+using WPFVersion.Messages.DataMessages;
 
 namespace WPFVersion.Model
 {
@@ -16,9 +16,9 @@ namespace WPFVersion.Model
         public PathfindingVisualizationModel(IGraph graph) : base(graph)
         {
             messenger = DI.Container.Resolve<IMessenger>();
-            messenger.Register<PathFoundMessage>(this, MessageTokens.VisualizationModel, PathFound);
-            messenger.Register<SubscribeOnAlgorithmEventsMessage>(this, MessageTokens.VisualizationModel, Subscribe);
-            messenger.Register<EndPointsChosenMessage>(this, MessageTokens.VisualizationModel, RegisterEndPointsForAlgorithm);
+            messenger.Register<PathFoundMessage>(this, PathFound);
+            messenger.Register<SubscribeOnAlgorithmEventsMessage>(this, Subscribe);
+            messenger.Register<EndPointsChosenMessage>(this, RegisterEndPointsForAlgorithm);
         }
 
         public void Dispose()

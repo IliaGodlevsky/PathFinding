@@ -38,8 +38,6 @@ namespace WindowsFormsVersion.Forms
             this.toolStripButton3 = new System.Windows.Forms.ToolStripButton();
             this.toolStripButton4 = new System.Windows.Forms.ToolStripButton();
             this.toolStripButton5 = new System.Windows.Forms.ToolStripButton();
-            this.unweightedButton = new Syncfusion.Windows.Forms.Tools.ToolStripRadioButton();
-            this.weightedButton = new Syncfusion.Windows.Forms.Tools.ToolStripRadioButton();
             this.graphField = new WindowsFormsVersion.View.WinFormsGraphField();
             this.menu.SuspendLayout();
             this.SuspendLayout();
@@ -70,9 +68,7 @@ namespace WindowsFormsVersion.Forms
             this.toolStripButton2,
             this.toolStripButton3,
             this.toolStripButton4,
-            this.toolStripButton5,
-            this.unweightedButton,
-            this.weightedButton});
+            this.toolStripButton5});
             this.menu.Location = new System.Drawing.Point(0, 0);
             this.menu.Name = "menu";
             this.menu.Size = new System.Drawing.Size(610, 33);
@@ -124,18 +120,6 @@ namespace WindowsFormsVersion.Forms
             this.toolStripButton5.Size = new System.Drawing.Size(34, 28);
             this.toolStripButton5.Text = "toolStripButton5";
             // 
-            // unweightedButton
-            // 
-            this.unweightedButton.Checked = true;
-            this.unweightedButton.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.unweightedButton.Name = "unweightedButton";
-            this.unweightedButton.Size = new System.Drawing.Size(26, 28);
-            // 
-            // weightedButton
-            // 
-            this.weightedButton.Name = "weightedButton";
-            this.weightedButton.Size = new System.Drawing.Size(26, 28);
-            // 
             // graphField
             // 
             this.graphField.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
@@ -175,8 +159,6 @@ namespace WindowsFormsVersion.Forms
         private System.Windows.Forms.ToolStripButton toolStripButton4;
         private System.Windows.Forms.ToolStripButton toolStripButton5;
         private System.Windows.Forms.ToolStrip menu;
-        private Syncfusion.Windows.Forms.Tools.ToolStripRadioButton unweightedButton;
-        private Syncfusion.Windows.Forms.Tools.ToolStripRadioButton weightedButton;
     }
 }
 

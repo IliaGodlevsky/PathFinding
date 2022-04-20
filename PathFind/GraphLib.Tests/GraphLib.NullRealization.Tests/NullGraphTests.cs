@@ -29,22 +29,6 @@ namespace GraphLib.Common.Tests
         }
 
         [Test]
-        public void ToWeighted_DoesntThrow()
-        {
-            var graph = NullGraph.Instance;
-
-            Assert.DoesNotThrow(() => graph.ToWeighted());
-        }
-
-        [Test]
-        public void ToUnweighted_DoesntThrow()
-        {
-            var graph = NullGraph.Instance;
-
-            Assert.DoesNotThrow(() => graph.ToUnweighted());
-        }
-
-        [Test]
         public void ForEach_DoesntThrow()
         {
             var graph = NullGraph.Instance;

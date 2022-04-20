@@ -69,30 +69,40 @@
     <Compile Include="DependencyInjection\DI.cs" />
     <Compile Include="Constants.cs" />
     <Compile Include="Converters\AlgorithmStatusToStringConverter.cs" />
-    <Compile Include="Converters\BoolToVerticesCostsModeConverter.cs" />
     <Compile Include="Converters\BoolToVisibilityConverter.cs" />
     <Compile Include="Converters\PrecisedDoubleToStringConverter.cs" />
     <Compile Include="Converters\IntToStringConverter.cs" />
     <Compile Include="Enums\AlgorithmStatus.cs" />
-    <Compile Include="Enums\MessageTokens.cs" />
     <Compile Include="Extensions\AlgorithmViewModelExtensions.cs" />
     <Compile Include="Extensions\ColorExtensions.cs" />
     <Compile Include="Extensions\IGraphPathExtensions.cs" />
     <Compile Include="Extensions\IMessengerExtensions.cs" />
     <Compile Include="Extensions\TypeExtensions.cs" />
+    <Compile Include="Infrastructure\BaseAlgorithmCommands.cs" />
+    <Compile Include="Infrastructure\BaseCommand.cs" />
+    <Compile Include="Infrastructure\InterruptAlgorithmCommand.cs" />
+    <Compile Include="Infrastructure\PauseAlgorithmCommand.cs" />
     <Compile Include="Infrastructure\RelayCommand.cs" />
-    <Compile Include="Messages\SubscribeOnAlgorithmEventsMessage.cs" />
-    <Compile Include="Messages\AlgorithmStartedMessage.cs" />
-    <Compile Include="Messages\AlgorithmIndexMessage.cs" />
-    <Compile Include="Messages\AlgorithmStatusMessage.cs" />
-    <Compile Include="Messages\ClearStatisticsMessage.cs" />
-    <Compile Include="Messages\DelayTimeChangedMessage.cs" />
-    <Compile Include="Messages\EndPointsChosenMessage.cs" />
-    <Compile Include="Messages\GraphCreatedMessage.cs" />
-    <Compile Include="Messages\InterruptAllAlgorithmsMessage.cs" />
-    <Compile Include="Messages\IsAllAlgorithmsFinishedMessage.cs" />
-    <Compile Include="Messages\PathFoundMessage.cs" />
-    <Compile Include="Messages\UpdateStatisticsMessage.cs" />
+    <Compile Include="Infrastructure\ResumeAlgorithmCommand.cs" />
+    <Compile Include="Messages\ActionMessages\GraphChangedMessage.cs" />
+    <Compile Include="Messages\ActionMessages\RemoveAlgorithmMessage.cs" />
+    <Compile Include="Messages\BaseMessages\BaseAlgorithmsExecutionMessage.cs" />
+    <Compile Include="Messages\DataMessages\GraphFieldCreatedMessage.cs" />
+    <Compile Include="Messages\Interfaces\IAlgorithmExecutionMessage.cs" />
+    <Compile Include="Messages\ActionMessages\PauseAllAlgorithmMessage.cs" />
+    <Compile Include="Messages\ActionMessages\ResumeAllAlgorithmsMessage.cs" />
+    <Compile Include="Messages\ActionMessages\SubscribeOnAlgorithmEventsMessage.cs" />
+    <Compile Include="Messages\DataMessages\AlgorithmStartedMessage.cs" />
+    <Compile Include="Messages\DataMessages\AlgorithmIndexMessage.cs" />
+    <Compile Include="Messages\DataMessages\AlgorithmStatusMessage.cs" />
+    <Compile Include="Messages\ActionMessages\ClearStatisticsMessage.cs" />
+    <Compile Include="Messages\DataMessages\DelayTimeChangedMessage.cs" />
+    <Compile Include="Messages\DataMessages\EndPointsChosenMessage.cs" />
+    <Compile Include="Messages\DataMessages\GraphCreatedMessage.cs" />
+    <Compile Include="Messages\ActionMessages\InterruptAllAlgorithmsMessage.cs" />
+    <Compile Include="Messages\DataMessages\IsAllAlgorithmsFinishedMessage.cs" />
+    <Compile Include="Messages\DataMessages\PathFoundMessage.cs" />
+    <Compile Include="Messages\ActionMessages\UpdateStatisticsMessage.cs" />
     <Compile Include="Model\EndPoints.cs" />
     <Compile Include="Model\CostColors.cs" />
     <Compile Include="Model\PathInput.cs" />
@@ -102,9 +112,6 @@
     <Compile Include="Model\VertexFactory.cs" />
     <Compile Include="Model\VertexFromInfoFactory.cs" />
     <Compile Include="Model\VertexVisualization.cs" />
-    <Compile Include="Model\VerticesCostMode\IVerticesCostsMode.cs" />
-    <Compile Include="Model\VerticesCostMode\UnweightedVerticesCostsMode.cs" />
-    <Compile Include="Model\VerticesCostMode\WeightedVerticesCostsMode.cs" />
     <Compile Include="Model\PathfindingVisualizationModel.cs" />
     <Compile Include="Model\WindowService.cs" />
     <Compile Include="Model\GraphField.cs" />
@@ -115,14 +122,36 @@
     <Compile Include="ValidationRules\RangedIntValidationRule.cs" />
     <Compile Include="ViewModel\AlgorithmStatisticsViewModel.cs" />
     <Compile Include="ViewModel\AlgorithmViewModel.cs" />
+    <Compile Include="ViewModel\BaseViewModels\BaseAllAlgorithmsOperationViewModel.cs" />
+    <Compile Include="ViewModel\BaseViewModels\NotifyPropertyChanged.cs" />
+    <Compile Include="ViewModel\ButtonViewModels\ClearGraphViewModel.cs" />
+    <Compile Include="ViewModel\ButtonViewModels\ClearColorsViewModel.cs" />
+    <Compile Include="ViewModel\ButtonViewModels\CreateGraphViewModel.cs" />
+    <Compile Include="ViewModel\ButtonViewModels\FindPathViewModel.cs" />
+    <Compile Include="ViewModel\ButtonViewModels\InterruptAllAlgorithmsMessage.cs" />
+    <Compile Include="ViewModel\ButtonViewModels\LoadGraphViewModel.cs" />
+    <Compile Include="ViewModel\ButtonViewModels\PauseAllAlgorithmsViewModel.cs" />
+    <Compile Include="ViewModel\ButtonViewModels\ResumeAllAlgorithmsViewModel.cs" />
+    <Compile Include="ViewModel\ButtonViewModels\SaveGraphViewModel.cs" />
+    <Compile Include="ViewModel\ColorizeGraphViewModel.cs" />
     <Compile Include="ViewModel\GraphCreatingViewModel.cs" />
+    <Compile Include="ViewModel\GraphFieldViewModel.cs" />
     <Compile Include="ViewModel\PathFindingViewModel.cs" />
     <Compile Include="ViewModel\MainWindowViewModel.cs" />
     <Compile Include="View\Windows\AlgorithmStatisticsUserControl.xaml.cs">
       <DependentUpon>AlgorithmStatisticsUserControl.xaml</DependentUpon>
     </Compile>
+    <Compile Include="View\Windows\ButtonPanelUserControl.xaml.cs">
+      <DependentUpon>ButtonPanelUserControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\Windows\ColorizeGraphUserControl.xaml.cs">
+      <DependentUpon>ColorizeGraphUserControl.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\Windows\GraphCreateWindow.xaml.cs">
       <DependentUpon>GraphCreateWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\Windows\GraphFieldUserControl.xaml.cs">
+      <DependentUpon>GraphFieldUserControl.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\Windows\MainWIndow.xaml.cs">
       <DependentUpon>MainWIndow.xaml</DependentUpon>
@@ -151,7 +180,19 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="View\Windows\ButtonPanelUserControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\Windows\ColorizeGraphUserControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="View\Windows\GraphCreateWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\Windows\GraphFieldUserControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -214,6 +255,10 @@
     <ProjectReference Include="..\..\Algorithm\Algorithm.Realizations\Algorithm.Realizations.csproj">
       <Project>{600d74af-a0ae-46aa-bcf5-695650bbe66f}</Project>
       <Name>Algorithm.Realizations</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Commands\Commands.csproj">
+      <Project>{A68B0EB4-3F07-4711-B314-FC1C709A5E2F}</Project>
+      <Name>Commands</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\Common\Common.csproj">
       <Project>{a5a743f5-d346-4b2b-b6ac-07152f64e4d9}</Project>
@@ -278,6 +323,10 @@
     <ProjectReference Include="..\..\Random\Random.csproj">
       <Project>{03EB6575-5B74-418F-9231-1B67598C68E8}</Project>
       <Name>Random</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\SingletonLib\SingletonLib.csproj">
+      <Project>{1F8DE924-837C-4CD6-B902-110E1C565F89}</Project>
+      <Name>SingletonLib</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\ValueRange\ValueRange.csproj">
       <Project>{EB70607D-CDF4-4D91-BBFE-55F85ACC0A1B}</Project>

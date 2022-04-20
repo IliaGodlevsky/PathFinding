@@ -74,10 +74,10 @@
             </ListView.View>
             <ListView.ContextMenu>
                 <ContextMenu>
-                    <MenuItem Command="{Binding PauseSelectedAlgorithmCommand}" Header="Pause"/>
-                    <MenuItem Command="{Binding ResumeSelectedAlgorithmCommand}" Header="Resume"/>
-                    <MenuItem Command="{Binding InterruptSelelctedAlgorithmCommand}" Header="Interrupt"/>
-                    <MenuItem Command="{Binding RemoveSelelctedAlgorithmCommand}" Header="Remove"/>
+                    <MenuItem DataContext="{Binding SelectedAlgorithm}" Command="{Binding PauseCommand}" Header="Pause"/>
+                    <MenuItem DataContext="{Binding SelectedAlgorithm}" Command="{Binding ResumeCommand}" Header="Resume"/>
+                    <MenuItem DataContext="{Binding SelectedAlgorithm}" Command="{Binding InterruptCommand}" Header="Interrupt"/>
+                    <MenuItem DataContext="{Binding SelectedAlgorithm}" Command="{Binding RemoveCommand}" Header="Remove"/>
                 </ContextMenu>
             </ListView.ContextMenu>
         </ListView>

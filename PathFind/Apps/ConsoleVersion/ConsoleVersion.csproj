@@ -83,7 +83,6 @@
     <Compile Include="Extensions\IContainerExtensions.cs" />
     <Compile Include="Extensions\IEnumerableExtensions.cs" />
     <Compile Include="Extensions\IGraphPathExtensions.cs" />
-    <Compile Include="Extensions\IMessengerExtensions.cs" />
     <Compile Include="Extensions\PathFindingViewModelExtensions.cs" />
     <Compile Include="Extensions\IInputExtensions.cs" />
     <Compile Include="Interface\IConsoleKeyCommand.cs" />
@@ -92,13 +91,13 @@
     <Compile Include="Interface\IRequireConsoleKeyInput.cs" />
     <Compile Include="Interface\IRequireStringInput.cs" />
     <Compile Include="MenuItemsNames.cs" />
+    <Compile Include="Messages\ClaimGraphAnswer.cs" />
     <Compile Include="Messages\ClaimGraphMessage.cs" />
     <Compile Include="Messages\ClearColorMessage.cs" />
     <Compile Include="Messages\ClearGraphMessage.cs" />
     <Compile Include="Messages\CostRangeChangedMessage.cs" />
     <Compile Include="Messages\GraphCreatedMessage.cs" />
     <Compile Include="Messages\UpdateStatisticsMessage.cs" />
-    <Compile Include="Enums\MessageTokens.cs" />
     <Compile Include="MessegesTexts.cs" />
     <Compile Include="Model\ConsoleKeystrokesHook.cs" />
     <Compile Include="ValueInput\ProgrammedInput\ConsoleProgrammedKeyInput.cs" />
@@ -128,7 +127,11 @@
     <Compile Include="Interface\IRequireIntInput.cs" />
     <Compile Include="ValueInput\ProgrammedInput\ProgrammedInput.cs" />
     <Compile Include="ViewModel\EndPointsViewModel.cs" />
+    <Compile Include="ViewModel\GraphLoadViewModel.cs" />
+    <Compile Include="ViewModel\GraphSaveViewModel.cs" />
     <Compile Include="ViewModel\VertexStateViewModel.cs" />
+    <Compile Include="Views\GraphLoadView.cs" />
+    <Compile Include="Views\GraphSaveView.cs" />
     <Compile Include="Views\VertexStateView.cs" />
     <Compile Include="Views\View.cs" />
     <Compile Include="Interface\IDisplayable.cs" />

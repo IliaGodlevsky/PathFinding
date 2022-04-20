@@ -36,9 +36,8 @@ namespace ConsoleVersion.ViewModel
             this.endPoints = endPoints;
             this.log = log;
             messenger = DI.Container.Resolve<IMessenger>();
-            messenger.Register<GraphCreatedMessage>(this, MessageTokens.EndPointsViewModel, SetGraph);
-            var message = new ClaimGraphMessage(MessageTokens.EndPointsViewModel);
-            messenger.Forward(message, MessageTokens.Everyone);
+            messenger.Register<ClaimGraphAnswer>(this, SetGraph);
+            messenger.Send(new ClaimGraphMessage());
         }
 
         [PreValidationMethod(nameof(CanChooseEndPoints))]
@@ -105,9 +104,9 @@ namespace ConsoleVersion.ViewModel
             messenger.Unregister(this);
         }
 
-        private void SetGraph(GraphCreatedMessage message)
+        private void SetGraph(ClaimGraphAnswer message)
         {
-            graph = message.Graph;
+            graph = (Graph2D)message.Graph;
         }
 
         private bool CanReplaceIntermediates()

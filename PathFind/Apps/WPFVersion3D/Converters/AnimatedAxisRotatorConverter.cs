@@ -11,11 +11,11 @@ namespace WPFVersion3D.Converters
         {
             switch (value)
             {
-                case true: 
+                case true:
                     return new ForwardAnimatedAxisRotatorFactory();
-                case false: 
+                case false:
                     return new BackwardAnimatedAxisRotatorFactory();
-                default: 
+                default:
                     return new NullAnimatedAxisRotatorFactory();
             }
         }

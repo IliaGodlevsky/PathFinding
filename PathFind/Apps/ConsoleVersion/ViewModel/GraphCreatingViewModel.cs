@@ -42,8 +42,7 @@ namespace ConsoleVersion.ViewModel
         public override void CreateGraph()
         {
             var graph = SelectedGraphAssemble.AssembleGraph(ObstaclePercent, Width, Length);
-            var token = MessageTokens.MainModel | MessageTokens.MainView;
-            messenger.Forward(new GraphCreatedMessage(graph), token);
+            messenger.Send(new GraphCreatedMessage(graph));
         }
 
         [MenuItem(MenuItemsNames.ChooseGraphAssemble, 1)]

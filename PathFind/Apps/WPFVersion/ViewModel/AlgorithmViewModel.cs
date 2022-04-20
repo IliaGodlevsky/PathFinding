@@ -3,77 +3,64 @@ using Algorithm.Interfaces;
 using Autofac;
 using Common.Extensions;
 using GalaSoft.MvvmLight.Messaging;
-using System.ComponentModel;
-using System.Runtime.CompilerServices;
+using System.Windows.Input;
 using ValueRange.Enums;
 using ValueRange.Extensions;
 using WPFVersion.DependencyInjection;
 using WPFVersion.Enums;
 using WPFVersion.Extensions;
-using WPFVersion.Messages;
+using WPFVersion.Infrastructure;
+using WPFVersion.Messages.ActionMessages;
+using WPFVersion.Messages.DataMessages;
+using WPFVersion.ViewModel.BaseViewModels;
 
 namespace WPFVersion.ViewModel
 {
-    internal class AlgorithmViewModel : INotifyPropertyChanged
+    internal class AlgorithmViewModel : NotifyPropertyChanged
     {
-        public event PropertyChangedEventHandler PropertyChanged;
-
-        protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = "")
-        {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
-        }
-
-        public bool IsStarted => algorithm.IsInProcess;
-        public bool IsPaused => algorithm.IsPaused;
-        public IAlgorithm Algorithm => algorithm;
-        public int Index { get; }
-        public string AlgorithmName { get; }
+        private readonly PathfindingAlgorithm algorithm;
+        private readonly IMessenger messenger;
 
         private int pathLength;
-        public int PathLength
-        {
-            get => pathLength;
-            set { pathLength = value; OnPropertyChanged(); }
-        }
-
         private double pathCost;
-        public double PathCost
-        {
-            get => pathCost;
-            set { pathCost = value; OnPropertyChanged(); }
-        }
-
         private int visitedVerticesCount;
-        public int VisitedVerticesCount
-        {
-            get => visitedVerticesCount;
-            set { visitedVerticesCount = value; OnPropertyChanged(); }
-        }
-
         private AlgorithmStatus status;
-        public AlgorithmStatus Status
-        {
-            get => status;
-            set { status = value; OnPropertyChanged(); }
-        }
-
         private string time;
-        public string Time
-        {
-            get => time;
-            set { time = value; OnPropertyChanged(); }
-        }
-
         private int delayTime;
+
+        public ICommand InterruptCommand { get; }
+
+        public ICommand RemoveCommand { get; }
+
+        public ICommand PauseCommand { get; }
+
+        public ICommand ResumeCommand { get; }
+
+        public bool IsStarted => algorithm.IsInProcess;
+
+        public IAlgorithm Algorithm => algorithm;
+
+        public int Index { get; }
+
+        public string AlgorithmName { get; }
+
+        public int PathLength { get => pathLength; set => Set(ref pathLength, value); }
+
+        public double PathCost { get => pathCost; set => Set(ref pathCost, value); }
+
+        public int VisitedVerticesCount { get => visitedVerticesCount; set => Set(ref visitedVerticesCount, value); }
+
+        public AlgorithmStatus Status { get => status; set => Set(ref status, value); }
+
+        public string Time { get => time; set => Set(ref time, value); }
+
         public int DelayTime
         {
             get => delayTime;
             set
             {
-                delayTime = (int)Constants.AlgorithmDelayTimeValueRange.ReturnInRange(value, ReturnOptions.Cycle);
-                OnPropertyChanged();
-                var message = new DelayTimeChangedMessage(delayTime, Index);
-                messenger.ForwardParallel(message, MessageTokens.PathfindingModel);
+                Set(ref delayTime, (int)Constants.AlgorithmDelayTimeValueRange.ReturnInRange(value, ReturnOptions.Cycle));
+                messenger.SendParallel(new DelayTimeChangedMessage(delayTime, Index));
             }
         }
 
@@ -85,6 +72,10 @@ namespace WPFVersion.ViewModel
             Status = AlgorithmStatus.Started;
             Index = index;
             messenger = DI.Container.Resolve<IMessenger>();
+            InterruptCommand = new InterruptAlgorithmCommand(algorithm);
+            PauseCommand = new PauseAlgorithmCommand(algorithm);
+            ResumeCommand = new ResumeAlgorithmCommand(algorithm);
+            RemoveCommand = new RelayCommand(ExecuteRemoveCommand, CanExecuteRemoveCommand);
         }
 
         public AlgorithmViewModel(AlgorithmStartedMessage message, int index)
@@ -103,12 +94,19 @@ namespace WPFVersion.ViewModel
             algorithm.Pause();
         }
 
-        public void Unpause()
+        public void Resume()
         {
             algorithm.Resume();
         }
 
-        private readonly PathfindingAlgorithm algorithm;
-        private readonly IMessenger messenger;
+        private void ExecuteRemoveCommand(object param)
+        {
+            messenger.Send(new RemoveAlgorithmMessage(this));
+        }
+
+        private bool CanExecuteRemoveCommand(object param)
+        {
+            return !algorithm.IsInProcess;
+        }
     }
 }

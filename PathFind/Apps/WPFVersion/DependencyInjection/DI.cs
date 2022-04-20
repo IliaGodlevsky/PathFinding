@@ -19,15 +19,12 @@ using GraphLib.Realizations.SmoothLevel;
 using GraphLib.Serialization;
 using GraphLib.Serialization.Interfaces;
 using GraphLib.Serialization.Serializers;
-using GraphViewModel.Interfaces;
 using Logging.Interface;
 using Logging.Loggers;
 using Random.Interface;
 using Random.Realizations.Generators;
 using System;
 using System.Reflection;
-using System.Runtime.Serialization;
-using System.Runtime.Serialization.Formatters.Binary;
 using WPFVersion.Extensions;
 using WPFVersion.Model;
 using WPFVersion.ViewModel;
@@ -46,7 +43,7 @@ namespace WPFVersion.DependencyInjection
         {
             var builder = new ContainerBuilder();
 
-            builder.RegisterType<MainWindowViewModel>().As<IMainModel>().InstancePerDependency();
+            builder.RegisterType<MainWindowViewModel>().AsSelf().InstancePerDependency();
             builder.RegisterAssemblyTypes(Assemblies).Where(Implements<IViewModel>).AsSelf().InstancePerDependency();
             builder.RegisterAssemblyTypes(Assemblies).Where(type => type.IsAppWindow()).AsSelf().InstancePerDependency();
 
@@ -74,8 +71,7 @@ namespace WPFVersion.DependencyInjection
 
             builder.RegisterType<GraphSerializationModule>().AsSelf().SingleInstance();
             builder.RegisterType<PathInput>().As<IPathInput>().SingleInstance();
-            builder.RegisterType<BinaryFormatter>().As<IFormatter>().SingleInstance();
-            builder.RegisterType<FormatterGraphSerializer>().As<IGraphSerializer>().SingleInstance();
+            builder.RegisterType<BinaryGraphSerializer>().As<IGraphSerializer>().SingleInstance();
             builder.RegisterDecorator<CompressGraphSerializer, IGraphSerializer>();
             builder.RegisterDecorator<CryptoGraphSerializer, IGraphSerializer>();
             builder.RegisterType<VertexFromInfoFactory>().As<IVertexFromInfoFactory>().SingleInstance();

@@ -2,7 +2,6 @@
 using Common.Interface;
 using ConsoleVersion.Attributes;
 using ConsoleVersion.DependencyInjection;
-using ConsoleVersion.Enums;
 using ConsoleVersion.Extensions;
 using ConsoleVersion.Interface;
 using ConsoleVersion.Messages;
@@ -28,9 +27,8 @@ namespace ConsoleVersion.ViewModel
         public VertexStateViewModel()
         {
             messenger = DI.Container.Resolve<IMessenger>();
-            messenger.Register<GraphCreatedMessage>(this, MessageTokens.VertexStateModel, OnGraphRecieved);
-            var message = new ClaimGraphMessage(MessageTokens.VertexStateModel);
-            messenger.Forward(message, MessageTokens.Everyone);
+            messenger.Register<ClaimGraphAnswer>(this, OnGraphRecieved);
+            messenger.Send(new ClaimGraphMessage());
         }
 
         [MenuItem(MenuItemsNames.ReverseVertex, 0)]
@@ -57,9 +55,9 @@ namespace ConsoleVersion.ViewModel
             WindowClosed = null;
         }
 
-        private void OnGraphRecieved(GraphCreatedMessage message)
+        private void OnGraphRecieved(ClaimGraphAnswer message)
         {
-            Graph = message.Graph;
+            Graph = (Graph2D)message.Graph;
         }
     }
 }

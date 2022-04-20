@@ -33,9 +33,9 @@ namespace ConsoleVersion.Views
         public MainView(MainViewModel model) : base(model)
         {
             messenger = DI.Container.Resolve<IMessenger>();
-            messenger.Register<GraphCreatedMessage>(this, MessageTokens.MainView, OnNewGraphCreated);
-            messenger.Register<CostRangeChangedMessage>(this, MessageTokens.MainView, OnCostRangeChanged);
-            messenger.Register<UpdateStatisticsMessage>(this, MessageTokens.MainView, OnStatisticsUpdated);
+            messenger.Register<GraphCreatedMessage>(this, OnNewGraphCreated);
+            messenger.Register<CostRangeChangedMessage>(this, OnCostRangeChanged);
+            messenger.Register<UpdateStatisticsMessage>(this, OnStatisticsUpdated);
             OnCostRangeChanged(new CostRangeChangedMessage(BaseVertexCost.CostRange));
         }
 

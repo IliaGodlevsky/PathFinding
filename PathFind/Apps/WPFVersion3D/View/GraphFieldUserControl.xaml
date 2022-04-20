@@ -53,7 +53,7 @@
                     <ModelVisual3D.Transform>
                         <Transform3DGroup>
                             <RotateTransform3D Rotation="{Binding ElementName=UserControl, Path=XAngleRotation}"/>
-                            <RotateTransform3D Rotation="{Binding ElementName =UserControl, Path=YAngleRotation}"/>
+                            <RotateTransform3D Rotation="{Binding ElementName=UserControl, Path=YAngleRotation}"/>
                             <RotateTransform3D Rotation="{Binding ElementName=UserControl, Path=ZAngleRotation}"/>
                         </Transform3DGroup>
                     </ModelVisual3D.Transform>

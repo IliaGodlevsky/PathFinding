@@ -31,12 +31,7 @@ namespace WindowsFormsVersion.Forms
                 mainModel.CreateNewGraph,
                 mainModel.ClearGraph,
                 mainModel.StartPathFind,
-                mainModel.MakeWeighted,
-                mainModel.MakeUnweighted
             };
-
-            weightedButton.GroupID = 1;
-            unweightedButton.GroupID = 1;
 
             mainModel.StatisticsChanged += OnStatisticsChanged;
 

@@ -2,7 +2,6 @@
 using GraphLib.Extensions;
 using GraphLib.Interfaces;
 using GraphLib.Realizations.Coordinates;
-using GraphLib.Realizations.VertexCost;
 using GraphLib.Serialization;
 using GraphLib.Serialization.Extensions;
 using System;
@@ -15,7 +14,7 @@ using Console = Colorful.Console;
 namespace ConsoleVersion.Model
 {
     [DebuggerDisplay("{Position.ToString()}")]
-    internal class Vertex : IVertex, IVisualizable, IWeightable, IDisplayable
+    internal class Vertex : IVertex, IVisualizable, IDisplayable
     {
         public event EventHandler VertexCostChanged;
         public event EventHandler EndPointChosen;
@@ -46,12 +45,8 @@ namespace ConsoleVersion.Model
             get => cost;
             set
             {
-                if (value is WeightableVertexCost vertexCost)
-                {
-                    vertexCost.UnweightedCostView = "#";
-                    Text = value.ToString();
-                }
                 cost = value;
+                Text = cost.CurrentCost.ToString();
             }
         }
 
@@ -103,18 +98,6 @@ namespace ConsoleVersion.Model
         public void OnMarkedToReplaceIntermediate()
         {
             MarkedToReplaceIntermediate?.Invoke(this, EventArgs.Empty);
-        }
-
-        public void MakeUnweighted()
-        {
-            (cost as IWeightable)?.MakeUnweighted();
-            Text = cost.ToString();
-        }
-
-        public void MakeWeighted()
-        {
-            (cost as IWeightable)?.MakeWeighted();
-            Text = cost.ToString();
         }
 
         public void Display()

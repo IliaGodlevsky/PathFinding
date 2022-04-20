@@ -9,9 +9,7 @@ using Common.Interface;
 using ConsoleVersion.Enums;
 using ConsoleVersion.Interface;
 using ConsoleVersion.Model;
-using ConsoleVersion.ValueInput.ProgrammedInput;
-using ConsoleVersion.ValueInput.ProgrammedInput.FromFile;
-using ConsoleVersion.ValueInput.RandomInput;
+using ConsoleVersion.ValueInput.UserInput;
 using ConsoleVersion.ViewModel;
 using GalaSoft.MvvmLight.Messaging;
 using GraphLib.Base.EndPoints;
@@ -32,8 +30,6 @@ using Random.Interface;
 using Random.Realizations.Generators;
 using System;
 using System.Reflection;
-using System.Runtime.Serialization;
-using System.Runtime.Serialization.Formatters.Binary;
 
 namespace ConsoleVersion.DependencyInjection
 {
@@ -49,10 +45,10 @@ namespace ConsoleVersion.DependencyInjection
         {
             var builder = new ContainerBuilder();
 
-            builder.RegisterType<FromFileProgrammedAnswerInput>().As<IInput<Answer>>().SingleInstance();
-            builder.RegisterType<FromFileProgrammedIntInput>().As<IInput<int>>().SingleInstance();
-            builder.RegisterType<ConsoleProgrammedStringInput>().As<IInput<string>>().SingleInstance();
-            builder.RegisterType<RandomKeyInput>().As<IInput<ConsoleKey>>().SingleInstance();
+            builder.RegisterType<ConsoleUserEnumInput<Answer>>().As<IInput<Answer>>().SingleInstance();
+            builder.RegisterType<ConsoleUserIntInput>().As<IInput<int>>().SingleInstance();
+            builder.RegisterType<ConsoleUserStringInput>().As<IInput<string>>().SingleInstance();
+            builder.RegisterType<ConsoleUserKeyInput>().As<IInput<ConsoleKey>>().SingleInstance();
 
             builder.RegisterType<MainViewModel>().AsSelf().SingleInstance().PropertiesAutowired();
             builder.RegisterAssemblyTypes(Assemblies).Where(Implements<IViewModel>).Except<MainViewModel>().AsSelf()
@@ -83,8 +79,7 @@ namespace ConsoleVersion.DependencyInjection
 
             builder.RegisterType<GraphSerializationModule>().AsSelf().SingleInstance();
             builder.RegisterType<PathInput>().As<IPathInput>().SingleInstance().PropertiesAutowired();
-            builder.RegisterType<BinaryFormatter>().As<IFormatter>().SingleInstance();
-            builder.RegisterType<FormatterGraphSerializer>().As<IGraphSerializer>().SingleInstance();
+            builder.RegisterType<BinaryGraphSerializer>().As<IGraphSerializer>().SingleInstance();
             builder.RegisterDecorator<CompressGraphSerializer, IGraphSerializer>();
             builder.RegisterDecorator<CryptoGraphSerializer, IGraphSerializer>();
             builder.RegisterType<VertexFromInfoFactory>().As<IVertexFromInfoFactory>().SingleInstance();

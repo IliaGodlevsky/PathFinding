@@ -13,7 +13,7 @@ using static WPFVersion.Constants;
 namespace WPFVersion.Model
 {
     [DebuggerDisplay("{Position.ToString()}")]
-    internal class Vertex : ContentControl, IVertex, IVisualizable, IWeightable
+    internal class Vertex : ContentControl, IVertex, IVisualizable
     {
         public static readonly RoutedEvent EnqueuedEvent;
         public static readonly RoutedEvent ColoredAsPathEvent;
@@ -77,7 +77,7 @@ namespace WPFVersion.Model
             set
             {
                 cost = value;
-                Dispatcher.Invoke(() => Content = cost.ToString());
+                Dispatcher.Invoke(() => Content = cost.CurrentCost.ToString());
             }
         }
 
@@ -166,18 +166,6 @@ namespace WPFVersion.Model
         public void VisualizeAsMarkedToReplaceIntermediate()
         {
             visualization.VisualizeAsMarkedToReplaceIntermediate(this);
-        }
-
-        public void MakeUnweighted()
-        {
-            (cost as IWeightable)?.MakeUnweighted();
-            Dispatcher.Invoke(() => Content = cost.ToString());
-        }
-
-        public void MakeWeighted()
-        {
-            (cost as IWeightable)?.MakeWeighted();
-            Dispatcher.Invoke(() => Content = cost.ToString());
         }
 
         private static RoutedEvent RegisterRoutedEvent(string name)

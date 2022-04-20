@@ -1,17 +1,14 @@
-﻿using GraphViewModel.Interfaces;
-using System;
+﻿using System;
 using System.Windows;
 using WPFVersion.Attributes;
+using WPFVersion.ViewModel;
 
 namespace WPFVersion
 {
-    /// <summary>
-    /// Логика взаимодействия для MainWindow.xaml
-    /// </summary>
     [AppWindow]
     public partial class MainWindow : Window
     {
-        public MainWindow(IMainModel viewModel)
+        public MainWindow(MainWindowViewModel viewModel)
         {
             InitializeComponent();
             DataContext = viewModel;

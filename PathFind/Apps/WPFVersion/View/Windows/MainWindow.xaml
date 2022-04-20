@@ -3,168 +3,27 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
-        xmlns:model="clr-namespace:WPFVersion.Model" 
-        xmlns:converters="clr-namespace:WPFVersion.Converters"
-        xmlns:range="clr-namespace:WPFVersion" 
-        xmlns:rules="clr-namespace:WPFVersion.ValidationRules" 
         xmlns:viewmodel="clr-namespace:WPFVersion.ViewModel" 
         xmlns:windows="clr-namespace:WPFVersion.View.Windows"
-        xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
-        d:DataContext="{d:DesignInstance Type=viewmodel:MainWindowViewModel}"
         mc:Ignorable="d"
         Background="White"
         Title="Path find"
         ResizeMode="CanResize"        
         WindowStartupLocation="CenterScreen"
         Icon="../../Resources/Images/mainwindow2.png">
-    <Window.Resources>
-        <!--Number suffix in a key name is a round precision-->
-        <converters:PrecisedDoubleToStringConverter Precision="2" x:Key="doubleConverter2"/>
-        <converters:PrecisedDoubleToStringConverter Precision="0" x:Key="doubleConverter0"/>
-        <converters:BoolToVerticesCostsModeConverter x:Key="BoolToVerticesCostModeConverter"/>
-        <converters:AlgorithmStatusToStringConverter x:Key="StatusToStringConverter"/>
-    </Window.Resources>
     <Grid Background="White">
         <Grid.RowDefinitions>
-            <RowDefinition Height="auto"></RowDefinition>
-            <RowDefinition Height="auto"></RowDefinition>
-            <RowDefinition Height="auto"></RowDefinition>
-            <RowDefinition Height="auto"></RowDefinition>
-            <RowDefinition Height="*"></RowDefinition>
-            <RowDefinition Height="auto"></RowDefinition>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="auto"/>
         </Grid.RowDefinitions>
-        <model:GraphField Panel.ZIndex="0" Margin="3" Grid.Row="4" x:Name="graphField">
-            <model:GraphField.RenderTransform>
-                <TransformGroup>
-                    <ScaleTransform 
-                        ScaleX="{Binding ElementName=scaleSlider, Path=Value, IsAsync=True}"
-                        ScaleY="{Binding ElementName=scaleSlider, Path=Value, IsAsync=True}">
-                    </ScaleTransform>
-                    <TranslateTransform 
-                        X="{Binding ElementName=xSlider, Path=Value}"
-                        Y="{Binding ElementName=ySlider, Path=Value}">
-                    </TranslateTransform>
-                </TransformGroup>
-            </model:GraphField.RenderTransform>
-            <ContentPresenter Content="{Binding GraphField}"/>
-        </model:GraphField>
-        <StackPanel Background="White" Grid.Row="1" Grid.RowSpan="3">
-            <ToolBar Background="White" Grid.Row="1">
-                <Button Style="{StaticResource ImageStyle}" Content="{StaticResource LoadGraph}" ToolTip="Load graph" Command="{Binding LoadGraphCommand}"/>
-                <Button Style="{StaticResource ImageStyle}" Content="{StaticResource SaveGraph}" ToolTip="Save graph" Command="{Binding SaveGraphCommand}"/>
-                <Button Style="{StaticResource ImageStyle}" Content="{StaticResource CreateNewGraph}" ToolTip="Create graph" Command="{Binding CreateNewGraphCommand}"/>
-                <Button Style="{StaticResource ImageStyle}" Content="{StaticResource ClearGraph}" ToolTip="Clear graph" Command="{Binding ClearGraphCommand}"/>
-                <Button Style="{StaticResource ImageStyle}" Content="{StaticResource ClearColors}" ToolTip="Clear colors" Command="{Binding ClearVerticesColorCommand}"/>
-                <Button Style="{StaticResource ImageStyle}" Content="{StaticResource FindPath}" ToolTip="Choose graph" Command ="{Binding StartPathFindCommand}"/>
-                <Button Style="{StaticResource ImageStyle}" Content="{StaticResource Interrupt}" ToolTip="Interrupt all" Command ="{Binding InterruptAlgorithmCommand}"/>
-                <ToggleButton MaxWidth="25" MaxHeight="25" Margin="3" ToolTip="Delete/Return vertices costs" Command="{Binding ShowVertexCost}"
-                         CommandParameter="{Binding IsChecked, RelativeSource = {RelativeSource Self}, Converter={StaticResource BoolToVerticesCostModeConverter}}"
-                        x:Name="fontButton" IsChecked="True" Background="White">
-                    <ToggleButton.Style>
-                        <Style TargetType="{x:Type ToggleButton}">
-                            <Setter Property="Content" Value="{StaticResource UnweightGraph}"/>
-                            <Style.Triggers>
-                                <Trigger Property="IsChecked" Value="False">
-                                    <Setter Property="Content" Value="{StaticResource WeightGraph}" />
-                                </Trigger>
-                                <Trigger Property="IsChecked" Value="True">
-                                    <Setter Property="Content" Value="{StaticResource UnweightGraph}" />
-                                </Trigger>
-                            </Style.Triggers>
-                        </Style>
-                    </ToggleButton.Style>
-                </ToggleButton>
-                <Button MaxWidth="25" MaxHeight="25" Margin="3">
-                    <Button.Style>
-                        <Style TargetType="{x:Type Button}">
-                            <Setter Property="Content" Value="{StaticResource UncolorizeVertices}"/>
-                            <Style.Triggers>
-                                <Trigger Property="IsMouseOver" Value="True">
-                                    <Setter Property="Content" Value="{StaticResource ColorizeVertices}" />
-                                </Trigger>
-                                <Trigger Property="IsMouseOver" Value="False">
-                                    <Setter Property="Content" Value="{StaticResource UncolorizeVertices}" />
-                                </Trigger>
-                            </Style.Triggers>
-                        </Style>
-                    </Button.Style>
-                    <i:Interaction.Triggers>
-                        <i:EventTrigger EventName="MouseEnter">
-                            <i:InvokeCommandAction Command="{Binding ColorizeAccordingToCostCommand}"></i:InvokeCommandAction>
-                        </i:EventTrigger>
-                        <i:EventTrigger EventName="MouseLeave">
-                            <i:InvokeCommandAction Command="{Binding ResetColorizingCommand}"></i:InvokeCommandAction>
-                        </i:EventTrigger>
-                    </i:Interaction.Triggers>
-                </Button>
-            </ToolBar>
-            <StatusBar Background="White" Grid.Row="2">
-                <TextBlock Text="{Binding GraphParametres}"></TextBlock>
-            </StatusBar>
-            <Expander Background="White" Panel.ZIndex="1" Grid.Row="3" Margin="5" >
-                <Grid>
-                    <Grid.RowDefinitions>
-                        <RowDefinition></RowDefinition>
-                        <RowDefinition></RowDefinition>
-                        <RowDefinition></RowDefinition>
-                        <RowDefinition></RowDefinition>
-                        <RowDefinition></RowDefinition>
-                    </Grid.RowDefinitions>
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="*"></ColumnDefinition>
-                        <ColumnDefinition Width="auto"></ColumnDefinition>
-                    </Grid.ColumnDefinitions>
-                    <TextBlock HorizontalAlignment="Center" Grid.ColumnSpan="2" Margin="1" Text="Scaling"/>
-                    <model:RangedSlider 
-                        Margin="1" 
-                        MinWidth="150" 
-                        Grid.Row="1" 
-                        Grid.Column="0" 
-                        x:Name="scaleSlider" 
-                        Value="1" 
-                        ValueRange="{x:Static range:Constants.GraphFieldScaleValueRange}"/>
-                    <TextBox Margin="1" MinWidth="25" Grid.Row="1" Grid.Column="1">
-                        <TextBox.Text>
-                            <Binding Mode="TwoWay" 
-                                     Path="Value" 
-                                     ElementName="scaleSlider" 
-                                     Converter="{StaticResource doubleConverter2}">
-                                <Binding.ValidationRules>
-                                    <rules:NonDoubleInputValidationRule/>
-                                </Binding.ValidationRules>
-                            </Binding>
-                        </TextBox.Text>
-                    </TextBox>
-                    <TextBlock Margin="1" HorizontalAlignment="Center" Grid.Row="2" Text="Offset"></TextBlock>
-                    <TextBox Margin="1" MinWidth="25" Grid.Column="1" Grid.Row="3">
-                        <TextBox.Text>
-                            <Binding Mode="TwoWay" Path="Value" ElementName="xSlider" 
-                                     Converter="{StaticResource doubleConverter0}">
-                                <Binding.ValidationRules>
-                                    <rules:NonInt32InputValidationRule/>
-                                </Binding.ValidationRules>
-                            </Binding>
-                        </TextBox.Text>
-                    </TextBox>
-                    <TextBox Margin="2" MinWidth="25" Grid.Column="1" Grid.Row="4">
-                        <TextBox.Text>
-                            <Binding Mode="TwoWay" Path="Value" ElementName="ySlider" 
-                                     Converter="{StaticResource doubleConverter0}">
-                                <Binding.ValidationRules>
-                                    <rules:NonInt32InputValidationRule/>
-                                </Binding.ValidationRules>
-                            </Binding>
-                        </TextBox.Text>
-                    </TextBox>
-                    <model:RangedSlider MinWidth="150" Margin="1" x:Name="xSlider" Grid.Row="3" Grid.Column="0" 
-                                        ValueRange="{x:Static range:Constants.OffsetValueRange}"></model:RangedSlider>
-                    <model:RangedSlider MinWidth="150" Margin="1" x:Name="ySlider" Grid.Row="4" Grid.Column="0"
-                                        ValueRange="{x:Static range:Constants.OffsetValueRange}"></model:RangedSlider>
-                </Grid>
-            </Expander>
-        </StackPanel>
-
-        <Expander Background="White" Grid.Row="5">
+        <windows:ButtonPanelUserControl Grid.Row="0"/>
+        <windows:GraphFieldUserControl Grid.Row="1">
+            <windows:GraphFieldUserControl.DataContext>
+                <viewmodel:GraphFieldViewModel/>
+            </windows:GraphFieldUserControl.DataContext>
+        </windows:GraphFieldUserControl>
+        <Expander Background="White" Grid.Row="2">
             <windows:AlgorithmStatisticsUserControl/>
         </Expander>
     </Grid>
