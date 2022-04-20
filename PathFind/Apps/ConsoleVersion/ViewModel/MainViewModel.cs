@@ -27,7 +27,7 @@ namespace ConsoleVersion.ViewModel
 
         private readonly ILog log;
         private readonly IMessenger messenger;
-        private readonly IVertexEventHolder eventHolder;       
+        private readonly IVertexEventHolder eventHolder;
         private readonly IGraphFieldFactory fieldFactory;
         private readonly BaseEndPoints endPoints;
 

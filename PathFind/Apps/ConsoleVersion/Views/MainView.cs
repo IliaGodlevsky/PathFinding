@@ -1,7 +1,6 @@
 ﻿using Autofac;
 using Common.Extensions.EnumerableExtensions;
 using ConsoleVersion.DependencyInjection;
-using ConsoleVersion.Enums;
 using ConsoleVersion.Messages;
 using ConsoleVersion.Model;
 using ConsoleVersion.ViewModel;

@@ -2,7 +2,6 @@
 using Common.Interface;
 using ConsoleVersion.Attributes;
 using ConsoleVersion.DependencyInjection;
-using ConsoleVersion.Enums;
 using ConsoleVersion.Extensions;
 using ConsoleVersion.Interface;
 using ConsoleVersion.Messages;
