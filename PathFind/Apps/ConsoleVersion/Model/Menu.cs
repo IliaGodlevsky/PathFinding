@@ -3,6 +3,7 @@ using Common.Extensions.EnumerableExtensions;
 using Common.Interface;
 using ConsoleVersion.Attributes;
 using ConsoleVersion.Commands;
+using ConsoleVersion.Extensions;
 using ConsoleVersion.Interface;
 using ConsoleVersion.Model.DelegateExtractors;
 using System;
@@ -17,9 +18,9 @@ namespace ConsoleVersion.Model
     internal sealed class Menu : IMenu
     {
         private const BindingFlags MethodAccessModificators = NonPublic | Instance | Public;
-        private static readonly Action<Action> DefaultSafeAction = action => action.Invoke();
 
-        private readonly IDelegateExtractor<Func<bool>>
+        private readonly IDelegateExtractor<Func<bool>> validationExtractor;
+        private readonly IDelegateExtractor<Action<Action>> safeActionExtractor;
         private readonly IViewModel target;
         private readonly Type targetType;
 
@@ -29,6 +30,8 @@ namespace ConsoleVersion.Model
 
         public Menu(IViewModel target)
         {
+            safeActionExtractor = new SafeMethodExtractor();
+            validationExtractor = new ValidationMethodExtractor();
             this.target = target;
             targetType = target.GetType();
             menuActions = new Lazy<IReadOnlyDictionary<string, IMenuCommand>>(GetMenuCommands);
@@ -38,7 +41,7 @@ namespace ConsoleVersion.Model
         {
             return targetType
                 .GetMethods(MethodAccessModificators)
-                .Where(IsMenuItemMethod)
+                .Where(method => Attribute.IsDefined(method, typeof(MenuItemAttribute)))
                 .OrderByOrderAttribute()
                 .SelectMany(CreateNameCommandPair)
                 .ToReadOnlyDictionary();
@@ -48,50 +51,13 @@ namespace ConsoleVersion.Model
         {
             if (methodInfo.TryCreateDelegate(target, out Action action))
             {
-                var safeAction = safeActionExtractor.Create(target).FirstOrDefault() ?? DefaultSafeAction;
-                var validationMethods = GetValidationMethods(methodInfo);
+                var safeAction = safeActionExtractor.ExtractFirstOrEmpty(methodInfo, target);
+                var validationMethods = validationExtractor.Extract(methodInfo, target).ToArray();
                 var command = new Action(() => safeAction.Invoke(action));
                 string header = methodInfo.GetAttributeOrNull<MenuItemAttribute>().Header;
                 var menuCommand = new MenuCommand(command, validationMethods);
                 yield return new KeyValuePair<string, IMenuCommand>(header, menuCommand);
             }
-        }
-
-        private Action<Action> GetSafeMethodOrNull(MethodInfo method)
-        {
-            return CreateDelegates<Action<Action>, ExecuteSafeAttribute>(method).FirstOrDefault();
-        }
-
-        private Func<bool>[] GetValidationMethods(MethodInfo method)
-        {
-            return CreateDelegates<Func<bool>, PreValidationMethodAttribute>(method).ToArray();
-        }
-
-        private IEnumerable<TDelegate> CreateDelegates<TDelegate, TAttribute>(MethodInfo self)
-            where TDelegate : Delegate
-            where TAttribute : BaseMethodAttribute
-        {
-            return self
-                .GetCustomAttributes<TAttribute>()
-                .Select(GetMethod)
-                .Select(CreateDelegateOrNull<TDelegate>);
-        }
-
-        private TDelegate CreateDelegateOrNull<TDelegate>(MethodInfo info)
-            where TDelegate : Delegate
-        {
-            info.TryCreateDelegate(target, out TDelegate action);
-            return action;
-        }
-
-        private MethodInfo GetMethod(BaseMethodAttribute attribute)
-        {
-            return targetType.GetMethod(attribute.MethodName, MethodAccessModificators);
-        }
-
-        private bool IsMenuItemMethod(MethodInfo method)
-        {
-            return Attribute.IsDefined(method, typeof(MenuItemAttribute));
         }
     }
 }

@@ -15,11 +15,10 @@ namespace ConsoleVersion.Model.DelegateExtractors
     {
         private const BindingFlags MethodAccessModificators = NonPublic | Instance | Public;
 
-        public IEnumerable<TDelegate> Create(object target)
+        public IEnumerable<TDelegate> Extract(MethodInfo info, object target)
         {
             var type = target.GetType();
-            return type
-                .GetType()
+            return info
                 .GetCustomAttributes<TAttribute>()
                 .Select(attribute => GetMethod(type, attribute))
                 .Select(method => CreateDelegateOrNull(target, method));
