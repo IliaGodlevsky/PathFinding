@@ -18,7 +18,7 @@ using WPFVersion.Model;
 
 namespace WPFVersion.ViewModel
 {
-    internal class AlgorithmStatisticsViewModel : IDisposable
+    internal class AlgorithmsViewModel : IDisposable
     {
         private PathfindingVisualizationModel visualizationModel;
         private readonly IMessenger messenger;
@@ -33,7 +33,7 @@ namespace WPFVersion.ViewModel
 
         public ObservableCollection<AlgorithmViewModel> Algorithms { get; }
 
-        public AlgorithmStatisticsViewModel()
+        public AlgorithmsViewModel()
         {
             messenger = DI.Container.Resolve<IMessenger>();
             Algorithms = new ObservableCollection<AlgorithmViewModel>();

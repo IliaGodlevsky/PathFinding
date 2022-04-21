@@ -89,7 +89,6 @@ namespace ConsoleVersion.ViewModel
             DI.Container.Display<GraphSaveView>();
         }
 
-        [ExecuteSafe(nameof(ExecuteSafe))]
         [MenuItem(MenuItemsNames.LoadGraph, 6)]
         private void LoadGraph()
         {

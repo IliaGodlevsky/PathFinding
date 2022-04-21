@@ -120,7 +120,7 @@
     <Compile Include="ValidationRules\NonInt32InputValidationRule.cs" />
     <Compile Include="ValidationRules\RangedDoubleValidationRule.cs" />
     <Compile Include="ValidationRules\RangedIntValidationRule.cs" />
-    <Compile Include="ViewModel\AlgorithmStatisticsViewModel.cs" />
+    <Compile Include="ViewModel\AlgorithmsViewModel.cs" />
     <Compile Include="ViewModel\AlgorithmViewModel.cs" />
     <Compile Include="ViewModel\BaseViewModels\BaseAllAlgorithmsOperationViewModel.cs" />
     <Compile Include="ViewModel\BaseViewModels\NotifyPropertyChanged.cs" />

@@ -19,7 +19,7 @@ namespace WPFVersion.ViewModel.ButtonViewModels
 
         public ICommand LoadGraphCommand { get; }
 
-        private bool IsAllAlgorithmsFinished { get; set; }
+        private bool IsAllAlgorithmsFinished { get; set; } = true;
 
         public LoadGraphViewModel()
         {

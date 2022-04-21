@@ -86,6 +86,7 @@
     <Compile Include="Extensions\PathFindingViewModelExtensions.cs" />
     <Compile Include="Extensions\IInputExtensions.cs" />
     <Compile Include="Interface\IConsoleKeyCommand.cs" />
+    <Compile Include="Interface\IDelegateExtractor.cs" />
     <Compile Include="Interface\IMenu.cs" />
     <Compile Include="Interface\IMenuCommand.cs" />
     <Compile Include="Interface\IRequireConsoleKeyInput.cs" />
@@ -100,6 +101,9 @@
     <Compile Include="Messages\UpdateStatisticsMessage.cs" />
     <Compile Include="MessegesTexts.cs" />
     <Compile Include="Model\ConsoleKeystrokesHook.cs" />
+    <Compile Include="Model\DelegateExtractors\BaseDelegateExtractor.cs" />
+    <Compile Include="Model\DelegateExtractors\SafeMethodExtractor.cs" />
+    <Compile Include="Model\DelegateExtractors\ValidationMethodExtractor.cs" />
     <Compile Include="ValueInput\ProgrammedInput\ConsoleProgrammedKeyInput.cs" />
     <Compile Include="ValueInput\ProgrammedInput\ConsoleProgrammedStringInput.cs" />
     <Compile Include="ValueInput\ProgrammedInput\FromFile\FromFileProgrammedAnswerInput.cs" />

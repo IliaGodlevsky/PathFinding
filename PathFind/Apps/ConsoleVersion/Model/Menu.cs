@@ -4,6 +4,7 @@ using Common.Interface;
 using ConsoleVersion.Attributes;
 using ConsoleVersion.Commands;
 using ConsoleVersion.Interface;
+using ConsoleVersion.Model.DelegateExtractors;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -18,6 +19,7 @@ namespace ConsoleVersion.Model
         private const BindingFlags MethodAccessModificators = NonPublic | Instance | Public;
         private static readonly Action<Action> DefaultSafeAction = action => action.Invoke();
 
+        private readonly IDelegateExtractor<Func<bool>>
         private readonly IViewModel target;
         private readonly Type targetType;
 
@@ -46,7 +48,7 @@ namespace ConsoleVersion.Model
         {
             if (methodInfo.TryCreateDelegate(target, out Action action))
             {
-                var safeAction = GetSafeMethodOrNull(methodInfo) ?? DefaultSafeAction;
+                var safeAction = safeActionExtractor.Create(target).FirstOrDefault() ?? DefaultSafeAction;
                 var validationMethods = GetValidationMethods(methodInfo);
                 var command = new Action(() => safeAction.Invoke(action));
                 string header = methodInfo.GetAttributeOrNull<MenuItemAttribute>().Header;

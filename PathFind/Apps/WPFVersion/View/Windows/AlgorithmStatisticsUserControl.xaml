@@ -7,10 +7,10 @@
              xmlns:viewmodel="clr-namespace:WPFVersion.ViewModel" 
              xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit" 
              xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
-             d:DataContext="{d:DesignInstance Type=viewmodel:AlgorithmStatisticsViewModel}"
+             d:DataContext="{d:DesignInstance Type=viewmodel:AlgorithmsViewModel}"
              mc:Ignorable="d">
     <UserControl.DataContext>
-        <viewmodel:AlgorithmStatisticsViewModel/>
+        <viewmodel:AlgorithmsViewModel/>
     </UserControl.DataContext>
     <UserControl.Resources>
         <converters:AlgorithmStatusToStringConverter x:Key="StatusToStringConverter"/>

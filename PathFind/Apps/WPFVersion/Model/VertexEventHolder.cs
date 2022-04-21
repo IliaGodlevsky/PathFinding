@@ -1,11 +1,9 @@
-﻿using Autofac;
-using GalaSoft.MvvmLight.Messaging;
+﻿using GalaSoft.MvvmLight.Messaging;
 using GraphLib.Base.EventHolder;
 using GraphLib.Interfaces;
 using GraphLib.Interfaces.Factories;
 using System;
 using System.Windows.Input;
-using WPFVersion.DependencyInjection;
 using WPFVersion.Messages.ActionMessages;
 
 namespace WPFVersion.Model
@@ -14,15 +12,15 @@ namespace WPFVersion.Model
     {
         private readonly IMessenger messenger;
 
-        public VertexEventHolder(IVertexCostFactory costFactory) : base(costFactory)
+        public VertexEventHolder(IVertexCostFactory costFactory, IMessenger messenger) : base(costFactory)
         {
-            messenger = DI.Container.Resolve<IMessenger>();
+            this.messenger = messenger;
         }
 
         public override void Reverse(object sender, EventArgs e)
-        {
-            messenger.Send(new GraphChangedMessage());
+        {            
             base.Reverse(sender, e);
+            messenger.Send(new GraphChangedMessage());
         }
 
         protected override int GetWheelDelta(EventArgs e)
