@@ -30,7 +30,7 @@ namespace ConsoleVersion.Model.DelegateExtractors
             return action;
         }
 
-        private MethodInfo GetMethod(Type type, BaseMethodAttribute attribute)
+        private MethodInfo GetMethod(Type type, TAttribute attribute)
         {
             return type.GetMethod(attribute.MethodName, MethodAccessModificators);
         }

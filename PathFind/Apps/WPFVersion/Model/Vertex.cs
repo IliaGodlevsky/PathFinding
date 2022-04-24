@@ -30,7 +30,7 @@ namespace WPFVersion.Model
             remove => RemoveHandler(ColoredAsPathEvent, value);
         }
 
-        private readonly IVisualization<Vertex> visualization;
+        private readonly VertexVisualization visualization;
         private readonly Lazy<IReadOnlyCollection<IVertex>> neighbours;
 
         private IVertexCost cost;
@@ -60,11 +60,11 @@ namespace WPFVersion.Model
             set
             {
                 Background = value;
-                if (Background == VertexVisualization.EnqueuedVertexColor)
+                if (visualization.IsVisualizedAsEnqueued(this))
                 {
                     RaiseEvent(new RoutedEventArgs(EnqueuedEvent, this));
                 }
-                else if (IsVisualizedAsPath)
+                if (visualization.IsVisualizedAsPath(this))
                 {
                     RaiseEvent(new RoutedEventArgs(ColoredAsPathEvent, this));
                 }
@@ -93,15 +93,13 @@ namespace WPFVersion.Model
 
         public IReadOnlyCollection<IVertex> Neighbours => neighbours.Value;
 
-        public virtual INeighborhood Neighborhood { get; }
-
         public IGraph Graph { get; }
 
         public Vertex(INeighborhood neighborhood, ICoordinate coordinate, IVisualization<Vertex> visualization) : base()
         {
             RenderTransformOrigin = new Point(0.5, 0.5);
             RenderTransform = new ScaleTransform();
-            this.visualization = visualization;
+            this.visualization = (VertexVisualization)visualization;
             Width = Height = VertexSize;
             Template = (ControlTemplate)TryFindResource("VertexTemplate");
             Position = coordinate;

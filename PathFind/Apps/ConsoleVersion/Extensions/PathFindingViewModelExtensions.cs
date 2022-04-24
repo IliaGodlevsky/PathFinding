@@ -1,7 +1,5 @@
 ﻿using Algorithm.Base;
-using Common;
 using Common.Extensions;
-using ConsoleVersion.Interface;
 using ConsoleVersion.ViewModel;
 using System.Collections.Generic;
 

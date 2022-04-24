@@ -6,7 +6,6 @@ using System.Linq;
 
 namespace GraphLib.Base
 {
-    [Serializable]
     public abstract class BaseCoordinate : ICoordinate
     {
         private readonly string toString;

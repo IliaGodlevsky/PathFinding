@@ -1,6 +1,7 @@
 ﻿using GraphLib.Interfaces;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Windows.Media;
 using ValueRange.Extensions;
@@ -10,13 +11,17 @@ namespace WPFVersion.Model
 {
     internal sealed class CostColors
     {
-        public static Color CostColor { get; set; }
+        private readonly Lazy<IReadOnlyDictionary<int, Brush>> costColors;
+        private readonly List<Brush> previousColors;
+        private readonly IGraph graph;
+
+        public Color CostColor { get; set; }
 
         public CostColors(IGraph graph)
         {
             this.graph = graph;
             previousColors = new List<Brush>();
-            costColors = new Lazy<Dictionary<int, Brush>>(FormCostColors);
+            costColors = new Lazy<IReadOnlyDictionary<int, Brush>>(FormCostColors);
             CostColor = Colors.DodgerBlue;
         }
 
@@ -46,7 +51,7 @@ namespace WPFVersion.Model
             previousColors.Clear();
         }
 
-        private Dictionary<int, Brush> FormCostColors()
+        private IReadOnlyDictionary<int, Brush> FormCostColors()
         {
             var availableCostValues = CostRange.GetAllValuesInRange().ToArray();
             var colors = new Dictionary<int, Brush>();
@@ -58,7 +63,7 @@ namespace WPFVersion.Model
                 var brush = new SolidColorBrush(color);
                 colors.Add(availableCostValues[i], brush);
             }
-            return colors;
+            return new ReadOnlyDictionary<int, Brush>(colors);
         }
 
         private bool CanBeColored(Vertex vertex)
@@ -67,9 +72,5 @@ namespace WPFVersion.Model
                 && !vertex.IsVisualizedAsEndPoint
                 && !vertex.IsVisualizedAsPath;
         }
-
-        private readonly Lazy<Dictionary<int, Brush>> costColors;
-        private readonly List<Brush> previousColors;
-        private readonly IGraph graph;
     }
 }

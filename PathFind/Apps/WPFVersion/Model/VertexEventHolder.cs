@@ -18,7 +18,7 @@ namespace WPFVersion.Model
         }
 
         public override void Reverse(object sender, EventArgs e)
-        {            
+        {
             base.Reverse(sender, e);
             messenger.Send(new GraphChangedMessage());
         }

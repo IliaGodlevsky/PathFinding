@@ -26,7 +26,7 @@ namespace GraphLib.Base
         {
             DimensionsSizes = dimensionSizes.TakeOrDefault(requiredNumberOfDimensions, 1).ToArray();
             Size = DimensionsSizes.GetMultiplication();
-            this.vertices= vertices.Take(Size).ForAll(SetGraph).ToDictionary();
+            this.vertices = vertices.Take(Size).ForAll(SetGraph).ToDictionary();
         }
 
         public IVertex Get(ICoordinate coordinate)

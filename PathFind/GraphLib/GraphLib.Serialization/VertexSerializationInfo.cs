@@ -16,11 +16,9 @@ namespace GraphLib.Serialization
         public INeighborhood Neighbourhood { get; }
 
         public VertexSerializationInfo(IVertex vertex)
+            : this(vertex.IsObstacle, vertex.Cost, vertex.Position, new NeighbourhoodProxy(vertex))
         {
-            Cost = vertex.Cost.Clone();
-            Position = vertex.Position.Clone();
-            IsObstacle = vertex.IsObstacle;
-            Neighbourhood = new NeighbourhoodProxy(vertex);
+
         }
 
         internal VertexSerializationInfo(bool isObstacle, IVertexCost cost,

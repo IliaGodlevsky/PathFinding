@@ -14,10 +14,7 @@ namespace GraphLib.Serialization.Serializers
         private readonly IGraphSerializer serializer;
         private readonly SymmetricAlgorithm algorithm;
 
-        public CryptoGraphSerializer(
-            IGraphSerializer serializer,
-            SymmetricAlgorithm algorithm,
-            ICrypto crypto)
+        public CryptoGraphSerializer(IGraphSerializer serializer, SymmetricAlgorithm algorithm, ICrypto crypto)
         {
             this.serializer = serializer;
             this.algorithm = algorithm;
@@ -25,9 +22,7 @@ namespace GraphLib.Serialization.Serializers
         }
 
         public CryptoGraphSerializer(IGraphSerializer serializer)
-            : this(serializer,
-                  new AesCryptoServiceProvider(),
-                  new AesCrypto())
+            : this(serializer, new AesCryptoServiceProvider(), new AesCrypto())
         {
 
         }

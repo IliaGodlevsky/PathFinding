@@ -4,7 +4,6 @@ using System.Runtime.Serialization;
 
 namespace GraphLib.Exceptions
 {
-    [Serializable]
     public class LonelyVertexException : ArgumentException
     {
         public LonelyVertexException(IVertex vertex) : base(CreateMessage(vertex))

@@ -5,7 +5,6 @@ using System.Linq;
 
 namespace GraphLib.Proxy
 {
-    [Serializable]
     internal sealed class NeighbourhoodProxy : INeighborhood
     {
         public IReadOnlyCollection<ICoordinate> Neighbours { get; }

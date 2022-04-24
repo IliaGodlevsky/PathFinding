@@ -6,11 +6,9 @@ using System.Linq;
 
 namespace SingletonLib
 {
-    [Serializable]
     public abstract class Singleton<TInstance, TInterface>
         where TInstance : class, TInterface
     {
-        [NonSerialized]
         private static readonly Lazy<TInterface> instance;
 
         public static TInterface Instance => instance.Value;

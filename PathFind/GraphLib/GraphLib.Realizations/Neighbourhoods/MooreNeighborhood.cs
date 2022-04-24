@@ -1,17 +1,14 @@
-﻿using Common.Extensions;
-using GraphLib.Interfaces;
+﻿using GraphLib.Interfaces;
 using GraphLib.Proxy.Extensions;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
-using System.Runtime.Serialization;
 
 namespace GraphLib.Realizations.Neighbourhoods
 {
-    [Serializable]
     [DebuggerDisplay("Count = {Neighbours.Length}")]
-    public sealed class MooreNeighborhood : INeighborhood, ISerializable
+    public sealed class MooreNeighborhood : INeighborhood
     {
         private static readonly int[] EmptyOffsetMatrix = Array.Empty<int>();
         private static readonly int[] OffsetMatrix = new int[] { -1, 0, 1 };
@@ -33,17 +30,6 @@ namespace GraphLib.Realizations.Neighbourhoods
             resultCoordinatesValues = new int[limitDepth];
             lateralOffsetMatrix = limitDepth == 0 ? EmptyOffsetMatrix : OffsetMatrix;
             neighbourhood = new Lazy<IReadOnlyCollection<ICoordinate>>(GetNeighborhood);
-        }
-
-        public void GetObjectData(SerializationInfo info, StreamingContext context)
-        {
-            info.Add(nameof(selfCoordinate), selfCoordinate);
-        }
-
-        private MooreNeighborhood(SerializationInfo info, StreamingContext context)
-            : this(info.Get<ICoordinate>(nameof(selfCoordinate)))
-        {
-
         }
 
         public INeighborhood Clone()

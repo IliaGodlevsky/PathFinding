@@ -19,10 +19,10 @@ namespace ConsoleVersion.Model
     {
         private const BindingFlags MethodAccessModificators = NonPublic | Instance | Public;
 
-        private readonly IDelegateExtractor<Func<bool>> validationExtractor;
-        private readonly IDelegateExtractor<Action<Action>> safeActionExtractor;
         private readonly IViewModel target;
         private readonly Type targetType;
+        private readonly IDelegateExtractor<Func<bool>> validationExtractor;
+        private readonly IDelegateExtractor<Action<Action>> safeActionExtractor;
 
         private readonly Lazy<IReadOnlyDictionary<string, IMenuCommand>> menuActions;
 

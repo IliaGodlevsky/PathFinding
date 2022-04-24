@@ -7,6 +7,6 @@ namespace GraphLib.Serialization.Tests.SerializersTests
     [TestFixture]
     public class BinaryGraphSerializerTests : BaseGraphSerializerTests
     {
-        protected override IContainer Container => DI.BinaryGraphSerializerContainer;
+        protected override IContainer Container => DI.SerializerContainer;
     }
 }

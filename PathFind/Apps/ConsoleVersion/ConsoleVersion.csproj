@@ -64,13 +64,7 @@
     <Compile Include="Attributes\ExecuteSafeAttribute.cs" />
     <Compile Include="Attributes\PreValidationMethodAttribute.cs" />
     <Compile Include="Attributes\MenuItemAttribute.cs" />
-    <Compile Include="Commands\BaseAlgorithmSpeedCommand.cs" />
     <Compile Include="Commands\MenuCommand.cs" />
-    <Compile Include="Commands\PauseAlgorithmCommand.cs" />
-    <Compile Include="Commands\SpeedDownAlgorithmCommand.cs" />
-    <Compile Include="Commands\InterruptAlgorithmCommand.cs" />
-    <Compile Include="Commands\SpeedUpAlgorithmCommand.cs" />
-    <Compile Include="Commands\ResumeAlgorithmCommand.cs" />
     <Compile Include="Cursor.cs" />
     <Compile Include="DependencyInjection\DI.cs" />
     <Compile Include="Constants.cs" />
@@ -86,7 +80,6 @@
     <Compile Include="Extensions\IGraphPathExtensions.cs" />
     <Compile Include="Extensions\PathFindingViewModelExtensions.cs" />
     <Compile Include="Extensions\IInputExtensions.cs" />
-    <Compile Include="Interface\IConsoleKeyCommand.cs" />
     <Compile Include="Interface\IDelegateExtractor.cs" />
     <Compile Include="Interface\IMenu.cs" />
     <Compile Include="Interface\IMenuCommand.cs" />

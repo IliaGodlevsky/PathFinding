@@ -5,7 +5,6 @@ using ValueRange.Extensions;
 
 namespace GraphLib.Base
 {
-    [Serializable]
     public abstract class BaseVertexCost : IVertexCost
     {
         public static InclusiveValueRange<int> CostRange { get; set; }

@@ -2,8 +2,6 @@
 using Algorithm.Factory.Interface;
 using Algorithm.Infrastructure.EventArguments;
 using Autofac;
-using Commands.Extensions;
-using Common;
 using Common.Extensions;
 using Common.Interface;
 using ConsoleVersion.Attributes;
@@ -27,18 +25,17 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Threading;
 using ValueRange;
+using ValueRange.Extensions;
 
 namespace ConsoleVersion.ViewModel
 {
-    internal sealed class PathFindingViewModel : PathFindingModel,
-        IViewModel, IRequireIntInput, IRequireAnswerInput, IRequireConsoleKeyInput, IDisposable
+    internal sealed class PathFindingViewModel : PathFindingModel, IViewModel, IRequireIntInput, IRequireAnswerInput, IRequireConsoleKeyInput, IDisposable
     {
         public event Action WindowClosed;
 
         private readonly InclusiveValueRange<int> algorithmKeysValueRange;
         private readonly IMessenger messenger;
         private readonly ManualResetEventSlim resetEvent;
-        private readonly ValueTypeWrap<int> delayTime;
 
         private string currentAlgorithmName;
 
@@ -50,27 +47,18 @@ namespace ConsoleVersion.ViewModel
 
         public string AlgorithmKeyInputMessage { private get; set; }
 
-        public override int DelayTime { get => delayTime.Value; set => delayTime.Value = value; }
-
         private string Statistics => path.ToStatistics(timer, visitedVerticesCount, currentAlgorithmName);
 
         private int AlgorithmIndex => IntInput.Input(AlgorithmKeyInputMessage, algorithmKeysValueRange) - 1;
-
-        private IReadOnlyCollection<IConsoleKeyCommand<ValueTypeWrap<int>>> TimeDelayKeyCommands { get; }
-
-        private IReadOnlyCollection<IConsoleKeyCommand<PathfindingAlgorithm>> AlgorithmKeyCommands { get; }
 
         public PathFindingViewModel(BaseEndPoints endPoints, IEnumerable<IAlgorithmFactory<PathfindingAlgorithm>> algorithmFactories, ILog log)
             : base(endPoints, algorithmFactories, log)
         {
             algorithmKeysValueRange = new InclusiveValueRange<int>(Algorithms.Count, 1);
             ConsoleKeystrokesHook.Instance.KeyPressed += OnConsoleKeyPressed;
-            delayTime = new ValueTypeWrap<int>();
             DelayTime = Constants.AlgorithmDelayTimeValueRange.LowerValueOfRange;
             resetEvent = new ManualResetEventSlim();
             messenger = DI.Container.Resolve<IMessenger>();
-            TimeDelayKeyCommands = this.GetAttachedDelayTimeConsoleKeyCommands();
-            AlgorithmKeyCommands = this.GetAttachedPathfindingKeyCommands();
         }
 
         [ExecuteSafe(nameof(ExecuteSafe))]
@@ -167,8 +155,24 @@ namespace ConsoleVersion.ViewModel
 
         private void OnConsoleKeyPressed(object sender, ConsoleKeyPressedEventArgs e)
         {
-            AlgorithmKeyCommands.ExecuteFirst(e.PressedKey, algorithm);
-            TimeDelayKeyCommands.ExecuteFirst(e.PressedKey, delayTime);
+            switch (e.PressedKey)
+            {
+                case ConsoleKey.Escape:
+                    algorithm.Interrupt();
+                    break;
+                case ConsoleKey.P:
+                    algorithm.Pause();
+                    break;
+                case ConsoleKey.Enter:
+                    algorithm.Resume();
+                    break;
+                case ConsoleKey.DownArrow:
+                    DelayTime = Constants.AlgorithmDelayTimeValueRange.ReturnInRange(DelayTime - 1);
+                    break;
+                case ConsoleKey.UpArrow:
+                    DelayTime = Constants.AlgorithmDelayTimeValueRange.ReturnInRange(DelayTime + 1);
+                    break;
+            }
         }
 
         private bool IsVisualizationNeeded()

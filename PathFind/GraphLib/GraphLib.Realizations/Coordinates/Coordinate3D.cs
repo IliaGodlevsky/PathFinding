@@ -1,12 +1,10 @@
 ﻿using GraphLib.Base;
 using GraphLib.Interfaces;
-using System;
 using System.Diagnostics;
 using System.Linq;
 
 namespace GraphLib.Realizations.Coordinates
 {
-    [Serializable]
     [DebuggerDisplay("{ToString()}")]
     public sealed class Coordinate3D : BaseCoordinate
     {

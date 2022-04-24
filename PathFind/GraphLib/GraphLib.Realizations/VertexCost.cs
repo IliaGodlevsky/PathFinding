@@ -1,11 +1,9 @@
 ﻿using GraphLib.Base;
 using GraphLib.Interfaces;
-using System;
 using System.Diagnostics;
 
 namespace GraphLib.Realizations
 {
-    [Serializable]
     [DebuggerDisplay("Cost = {CurrentCost}")]
     public sealed class VertexCost : BaseVertexCost
     {

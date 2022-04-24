@@ -9,17 +9,18 @@ namespace WPFVersion.Model
 {
     internal sealed class VertexVisualization : IVisualization<Vertex>
     {
-        private static Dispatcher Dispatcher => Application.Current.Dispatcher;
         private static readonly Brush VisitedColor = new SolidColorBrush(Colors.CadetBlue);
-        public static readonly Brush PathVertexColor = new SolidColorBrush(Colors.Yellow);
+        private static readonly Brush PathVertexColor = new SolidColorBrush(Colors.Yellow);
         private static readonly Brush SourceVertexColor = new SolidColorBrush(Colors.Green);
         private static readonly Brush TargetVertexColor = new SolidColorBrush(Colors.Red);
-        public static readonly Brush EnqueuedVertexColor = new SolidColorBrush(Colors.Magenta);
+        private static readonly Brush EnqueuedVertexColor = new SolidColorBrush(Colors.Magenta);
         private static readonly Brush ObstacleVertexColor = new SolidColorBrush(Colors.Black);
         private static readonly Brush RegularVertexColor = new SolidColorBrush(Colors.White);
-        public static readonly Brush AlreadyPathVertexColor = new SolidColorBrush(Colors.Gold);
+        private static readonly Brush AlreadyPathVertexColor = new SolidColorBrush(Colors.Gold);
         private static readonly Brush IntermediateVertexColor = new SolidColorBrush(Colors.DarkOrange);
         private static readonly Brush ToReplaceMarkColor = new SolidColorBrush(Colors.DarkOrange.SetBrightness(72.5));
+
+        private static Dispatcher Dispatcher => Application.Current.Dispatcher;
 
         public bool IsVisualizedAsPath(Vertex vertex)
         {
@@ -37,10 +38,33 @@ namespace WPFVersion.Model
             });
         }
 
-        public void VisualizeAsTarget(Vertex vertex) => Dispatcher.Invoke(() => vertex.VertexColor = TargetVertexColor);
-        public void VisualizeAsIntermediate(Vertex vertex) => Dispatcher.Invoke(() => vertex.VertexColor = IntermediateVertexColor);
-        public void VisualizeAsObstacle(Vertex vertex) => Dispatcher.Invoke(() => vertex.VertexColor = ObstacleVertexColor);
-        public void VisualizeAsSource(Vertex vertex) => Dispatcher.Invoke(() => vertex.VertexColor = SourceVertexColor);
+        public bool IsVisualizedAsEnqueued(Vertex vertex)
+        {
+            return Dispatcher.Invoke(() =>
+            {
+                return vertex.VertexColor == EnqueuedVertexColor;
+            });
+        }
+
+        public void VisualizeAsTarget(Vertex vertex)
+        {
+            Dispatcher.Invoke(() => vertex.VertexColor = TargetVertexColor);
+        }
+
+        public void VisualizeAsIntermediate(Vertex vertex)
+        {
+            Dispatcher.Invoke(() => vertex.VertexColor = IntermediateVertexColor);
+        }
+
+        public void VisualizeAsObstacle(Vertex vertex)
+        {
+            Dispatcher.Invoke(() => vertex.VertexColor = ObstacleVertexColor);
+        }
+
+        public void VisualizeAsSource(Vertex vertex)
+        {
+            Dispatcher.Invoke(() => vertex.VertexColor = SourceVertexColor);
+        }
 
         public void VisualizeAsRegular(Vertex vertex)
         {

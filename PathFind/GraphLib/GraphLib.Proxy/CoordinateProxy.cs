@@ -6,7 +6,6 @@ using System.Linq;
 
 namespace GraphLib.Proxy
 {
-    [Serializable]
     [DebuggerDisplay("{ToString()}")]
     internal sealed class CoordinateProxy : ICoordinate
     {

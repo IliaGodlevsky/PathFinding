@@ -60,7 +60,6 @@
     <Compile Include="Factories\GraphAssembles\SmoothedGraphAssemble.cs" />
     <Compile Include="Graphs\Graph2D.cs" />
     <Compile Include="Graphs\Graph3D.cs" />
-    <Compile Include="Interfaces\ICostState.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SmoothLevel\HighSmoothLevel.cs" />
     <Compile Include="SmoothLevel\LowSmoothLevel.cs" />

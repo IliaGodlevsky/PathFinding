@@ -7,7 +7,7 @@ namespace WPFVersion3D.Model
     {
         public IGraphField CreateGraphField(IGraph graph)
         {
-            return new GraphField3D((Graph3D)graph);  
+            return new GraphField3D((Graph3D)graph);
         }
     }
 }
