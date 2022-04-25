@@ -1,8 +1,6 @@
-﻿using Common.Interface;
-
-namespace GraphLib.Interfaces
+﻿namespace GraphLib.Interfaces
 {
-    public interface IVertexCost : ICloneable<IVertexCost>
+    public interface IVertexCost
     {
         int CurrentCost { get; }
     }

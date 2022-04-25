@@ -3,6 +3,8 @@ using GraphLib.Extensions;
 using System.Collections.Generic;
 using WPFVersion3D.Interface;
 
+using static WPFVersion3D.Constants;
+
 namespace WPFVersion3D.Model.Axes
 {
     internal abstract class Axis : IAxis
@@ -10,32 +12,27 @@ namespace WPFVersion3D.Model.Axes
         private readonly int dimensionSize;
         private readonly IReadOnlyCollection<Vertex3D> vertices;
 
-        private double distanceBetweenVertices = 0;
-
         protected abstract int Order { get; }
 
         protected Axis(int[] dimensionSizes, IReadOnlyCollection<Vertex3D> vertices)
         {
             dimensionSize = dimensionSizes[Order];
-            this.vertices = vertices;
-            this.vertices.ForEach(LocateVertex);
+            this.vertices = (IReadOnlyCollection<Vertex3D>)vertices.ForAll(vertex => LocateVertex(vertex));
         }
 
         public void LocateVertices(double distanceBetweenVertices)
         {
-            this.distanceBetweenVertices = distanceBetweenVertices;
-            vertices.ForEach(LocateVertex);
+            vertices.ForEach(vertex => LocateVertex(vertex, distanceBetweenVertices));
         }
 
         protected abstract void Offset(Vertex3D vertex, double offset);
 
-        private void LocateVertex(Vertex3D vertex)
+        private void LocateVertex(Vertex3D vertex, double distanceBetweenVertices = 0)
         {
-            var coordinates = vertex.GetCoordinates();
-            double adjustedVertexSize = Constants.InitialVertexSize + distanceBetweenVertices;
+            int coordinate = vertex.GetCoordinates()[Order];
             double dimensionSizeCorrection = distanceBetweenVertices == 0 ? 0 : 1;
-            double centeredPosition = coordinates[Order] + (dimensionSizeCorrection - dimensionSize) / 2.0;
-            Offset(vertex, centeredPosition * adjustedVertexSize);
+            double centeredPosition = coordinate + (dimensionSizeCorrection - dimensionSize) / 2.0;
+            Offset(vertex, centeredPosition * (InitialVertexSize + distanceBetweenVertices));
         }
     }
 }

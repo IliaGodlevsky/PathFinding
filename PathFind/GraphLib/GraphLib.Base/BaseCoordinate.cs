@@ -1,7 +1,6 @@
 ﻿using Common.Extensions.EnumerableExtensions;
 using GraphLib.Extensions;
 using GraphLib.Interfaces;
-using System;
 using System.Linq;
 
 namespace GraphLib.Base
@@ -38,13 +37,6 @@ namespace GraphLib.Base
         public override string ToString()
         {
             return toString;
-        }
-
-        public abstract ICoordinate Clone();
-
-        object ICloneable.Clone()
-        {
-            return Clone();
         }
     }
 }

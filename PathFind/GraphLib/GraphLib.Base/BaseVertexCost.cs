@@ -1,5 +1,4 @@
 ﻿using GraphLib.Interfaces;
-using System;
 using ValueRange;
 using ValueRange.Extensions;
 
@@ -29,13 +28,6 @@ namespace GraphLib.Base
         public override int GetHashCode()
         {
             return CurrentCost.GetHashCode();
-        }
-
-        public abstract IVertexCost Clone();
-
-        object ICloneable.Clone()
-        {
-            return Clone();
         }
     }
 }

@@ -13,9 +13,10 @@ namespace Algorithm.Extensions
         public static IGraphPath Highlight(this IGraphPath self)
         {
             self.Path
-                .Where(vertex => !vertex.AsVisualizable().IsVisualizedAsEndPoint)
+                .Select(vertex => vertex.AsVisualizable())
+                .Where(vertex => !vertex.IsVisualizedAsEndPoint)
                 .Reverse()
-                .ForEach(vertex => vertex.AsVisualizable().VisualizeAsPath());
+                .ForEach(vertex => vertex.VisualizeAsPath());
             return self;
         }
 

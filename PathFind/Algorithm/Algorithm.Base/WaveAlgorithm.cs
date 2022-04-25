@@ -36,8 +36,7 @@ namespace Algorithm.Base
                     VisitVertex(CurrentVertex);
                 }
                 if (IsTerminatedPrematurely) break;
-                var found = CreateGraphPath();
-                path = new CombinedGraphPath(path, found);
+                path = new CombinedGraphPath(path, CreateGraphPath());
                 Reset();
             }
             CompletePathfinding();

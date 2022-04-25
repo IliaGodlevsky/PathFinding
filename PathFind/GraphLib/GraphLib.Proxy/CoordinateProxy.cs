@@ -1,6 +1,5 @@
 ﻿using Common.Extensions.EnumerableExtensions;
 using GraphLib.Interfaces;
-using System;
 using System.Diagnostics;
 using System.Linq;
 
@@ -39,16 +38,6 @@ namespace GraphLib.Proxy
         public override string ToString()
         {
             return toString;
-        }
-
-        public ICoordinate Clone()
-        {
-            return new CoordinateProxy(CoordinatesValues);
-        }
-
-        object ICloneable.Clone()
-        {
-            return Clone();
         }
     }
 }

@@ -14,11 +14,11 @@ namespace GraphLib.Base
         private static readonly string LargeSpace = "   ";
         protected static readonly string[] DimensionNames = new[] { "Width", "Length", "Height" };
 
-        private readonly Dictionary<ICoordinate, IVertex> vertices;
+        private readonly IReadOnlyDictionary<ICoordinate, IVertex> vertices;
+
+        public IReadOnlyCollection<IVertex> Vertices => (IReadOnlyCollection<IVertex>)vertices.Values;
 
         public int Size { get; }
-
-        public IReadOnlyCollection<IVertex> Vertices => vertices.Values;
 
         public int[] DimensionsSizes { get; }
 
@@ -26,7 +26,7 @@ namespace GraphLib.Base
         {
             DimensionsSizes = dimensionSizes.TakeOrDefault(requiredNumberOfDimensions, 1).ToArray();
             Size = DimensionsSizes.GetMultiplication();
-            this.vertices = vertices.Take(Size).ForAll(SetGraph).ToDictionary();
+            this.vertices = vertices.Take(Size).ForAll(SetGraph).ToDictionary(vertex => vertex.Position).ToReadOnlyDictionary();
         }
 
         public IVertex Get(ICoordinate coordinate)

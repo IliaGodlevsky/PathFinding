@@ -39,11 +39,6 @@ namespace GraphLib.Extensions
             return collection.FirstOrDefault(predicate) ?? NullVertex.Instance;
         }
 
-        public static Dictionary<ICoordinate, IVertex> ToDictionary(this IEnumerable<IVertex> vertices)
-        {
-            return vertices.ToDictionary(vertex => vertex.Position);
-        }
-
         public static int[] ToCoordinates(this int[] dimensionSizes, int index)
         {
             int size = dimensionSizes.GetMultiplication();

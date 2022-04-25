@@ -32,16 +32,6 @@ namespace GraphLib.Realizations.Neighbourhoods
             neighbourhood = new Lazy<IReadOnlyCollection<ICoordinate>>(GetNeighborhood);
         }
 
-        public INeighborhood Clone()
-        {
-            return new MooreNeighborhood(selfCoordinate.Clone());
-        }
-
-        object ICloneable.Clone()
-        {
-            return Clone();
-        }
-
         private List<ICoordinate> DetectNeighborhood(int depth = 0)
         {
             var neighborhood = new List<ICoordinate>();

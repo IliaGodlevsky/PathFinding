@@ -23,16 +23,6 @@ namespace GraphLib.Realizations.Neighbourhoods
             neighboursCoordinates = new MooreNeighborhood(coordinate);
         }
 
-        public INeighborhood Clone()
-        {
-            return new VonNeumannNeighborhood(selfCoordinate.Clone());
-        }
-
-        object ICloneable.Clone()
-        {
-            return Clone();
-        }
-
         private IReadOnlyCollection<ICoordinate> DetectNeighborhood()
         {
             return neighboursCoordinates.Neighbours

@@ -1,5 +1,4 @@
-﻿using Common.Interface;
-using GraphLib.Interfaces;
+﻿using GraphLib.Interfaces;
 using NullObject.Attributes;
 using SingletonLib;
 using System;
@@ -10,7 +9,7 @@ namespace GraphLib.NullRealizations
 {
     [Null]
     [DebuggerDisplay("Null")]
-    public sealed class NullGraph : Singleton<NullGraph, IGraph>, IGraph, ICloneable<IGraph>
+    public sealed class NullGraph : Singleton<NullGraph, IGraph>, IGraph
     {
         public int[] DimensionsSizes => Array.Empty<int>();
 
@@ -41,16 +40,6 @@ namespace GraphLib.NullRealizations
         public override int GetHashCode()
         {
             return base.GetHashCode();
-        }
-
-        public IGraph Clone()
-        {
-            return Instance;
-        }
-
-        object ICloneable.Clone()
-        {
-            return Clone();
         }
     }
 }

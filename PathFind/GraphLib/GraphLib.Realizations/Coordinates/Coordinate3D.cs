@@ -1,5 +1,4 @@
 ﻿using GraphLib.Base;
-using GraphLib.Interfaces;
 using System.Diagnostics;
 using System.Linq;
 
@@ -26,11 +25,6 @@ namespace GraphLib.Realizations.Coordinates
             : this(new[] { x, y, z })
         {
 
-        }
-
-        public override ICoordinate Clone()
-        {
-            return new Coordinate3D(X, Y, Z);
         }
     }
 }

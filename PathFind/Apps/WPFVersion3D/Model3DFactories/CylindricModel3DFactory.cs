@@ -24,13 +24,13 @@ namespace WPFVersion3D.Model3DFactories
             double radius = diametre / 2;
             center = new Vector3D(radius, radius, radius);
             var points = GetPoints3D(0, radius);
-            var rectangles = GetRectangleModels(points, material);
+            var rectangles = GetTriangleModels(points, material);
             var cylinder = new Model3DGroup();
             cylinder.Children.AddRange(rectangles);
             return cylinder;
         }
 
-        private IEnumerable<Model3D> GetRectangleModels(Point3D[,] points, Material material)
+        private IEnumerable<Model3D> GetTriangleModels(Point3D[,] points, Material material)
         {
             for (int i = 0; i < Segments - 1; i++)
             {

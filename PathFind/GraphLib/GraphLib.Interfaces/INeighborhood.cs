@@ -1,9 +1,8 @@
-﻿using Common.Interface;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 
 namespace GraphLib.Interfaces
 {
-    public interface INeighborhood : ICloneable<INeighborhood>
+    public interface INeighborhood
     {
         IReadOnlyCollection<ICoordinate> Neighbours { get; }
     }

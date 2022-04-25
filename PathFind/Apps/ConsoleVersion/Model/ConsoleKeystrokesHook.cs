@@ -4,13 +4,11 @@ using ConsoleVersion.Interface;
 using Interruptable.EventArguments;
 using Interruptable.EventHandlers;
 using Interruptable.Interface;
-using SingletonLib;
 using System;
 
 namespace ConsoleVersion.Model
 {
-    internal sealed class ConsoleKeystrokesHook : Singleton<ConsoleKeystrokesHook, ConsoleKeystrokesHook>,
-        IInterruptable, IProcess, IRequireConsoleKeyInput
+    internal sealed class ConsoleKeystrokesHook : IInterruptable, IProcess, IRequireConsoleKeyInput
     {
         public event ConsoleKeyPressedEventHandler KeyPressed;
         public event ProcessEventHandler Interrupted;
@@ -35,14 +33,8 @@ namespace ConsoleVersion.Model
             while (IsInProcess)
             {
                 var key = KeyInput.Input();
-                var args = new ConsoleKeyPressedEventArgs(key);
-                KeyPressed?.Invoke(this, args);
+                KeyPressed?.Invoke(this, new ConsoleKeyPressedEventArgs(key));
             }
-        }
-
-        private ConsoleKeystrokesHook()
-        {
-
         }
     }
 }

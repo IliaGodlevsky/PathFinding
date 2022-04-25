@@ -27,15 +27,5 @@ namespace GraphLib.NullRealizations
         {
             return base.GetHashCode();
         }
-
-        public IVertexCost Clone()
-        {
-            return Instance;
-        }
-
-        object ICloneable.Clone()
-        {
-            return Clone();
-        }
     }
 }

@@ -14,16 +14,6 @@ namespace GraphLib.NullRealizations
     {
         public IReadOnlyCollection<ICoordinate> Neighbours => NullCoordinate.GetMany(0);
 
-        public INeighborhood Clone()
-        {
-            return Instance;
-        }
-
-        object ICloneable.Clone()
-        {
-            return Clone();
-        }
-
         private NullNeighborhood()
         {
 

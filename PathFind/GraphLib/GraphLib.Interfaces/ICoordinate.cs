@@ -1,8 +1,6 @@
-﻿using Common.Interface;
-
-namespace GraphLib.Interfaces
+﻿namespace GraphLib.Interfaces
 {
-    public interface ICoordinate : ICloneable<ICoordinate>
+    public interface ICoordinate
     {
         int[] CoordinatesValues { get; }
     }

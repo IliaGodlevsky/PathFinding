@@ -18,11 +18,6 @@ namespace GraphLib.NullRealizations
 
         }
 
-        public ICoordinate Clone()
-        {
-            return Instance;
-        }
-
         public override bool Equals(object pos)
         {
             return pos is NullCoordinate;
@@ -31,11 +26,6 @@ namespace GraphLib.NullRealizations
         public override int GetHashCode()
         {
             return base.GetHashCode();
-        }
-
-        object ICloneable.Clone()
-        {
-            return Clone();
         }
     }
 }

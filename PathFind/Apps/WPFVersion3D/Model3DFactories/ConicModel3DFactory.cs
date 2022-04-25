@@ -25,7 +25,7 @@ namespace WPFVersion3D.Model3DFactories
             double radius = diametre / 2;
             center = new Vector3D(radius, radius, radius);
             var points = GetPositions(0, radius);
-            var rectangles = GetRectangleModels(points, material);
+            var rectangles = GetTriangleModels(points, material);
             var cone = new Model3DGroup();
             cone.Children.AddRange(rectangles);
             return cone;
@@ -44,7 +44,7 @@ namespace WPFVersion3D.Model3DFactories
             return points;
         }
 
-        private IEnumerable<Model3D> GetRectangleModels(Point3D[,] points, Material material)
+        private IEnumerable<Model3D> GetTriangleModels(Point3D[,] points, Material material)
         {
             for (int i = 0; i < Segments; i++)
             {

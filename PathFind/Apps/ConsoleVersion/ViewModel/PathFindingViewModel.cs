@@ -36,8 +36,11 @@ namespace ConsoleVersion.ViewModel
         private readonly InclusiveValueRange<int> algorithmKeysValueRange;
         private readonly IMessenger messenger;
         private readonly ManualResetEventSlim resetEvent;
+        private readonly ConsoleKeystrokesHook keystrokesHook;
 
         private string currentAlgorithmName;
+
+        private InclusiveValueRange<int> DelayRange => Constants.AlgorithmDelayTimeValueRange;
 
         public IInput<int> IntInput { get; set; }
 
@@ -55,8 +58,9 @@ namespace ConsoleVersion.ViewModel
             : base(endPoints, algorithmFactories, log)
         {
             algorithmKeysValueRange = new InclusiveValueRange<int>(Algorithms.Count, 1);
-            ConsoleKeystrokesHook.Instance.KeyPressed += OnConsoleKeyPressed;
-            DelayTime = Constants.AlgorithmDelayTimeValueRange.LowerValueOfRange;
+            keystrokesHook = new ConsoleKeystrokesHook();
+            keystrokesHook.KeyPressed += OnConsoleKeyPressed;
+            DelayTime = DelayRange.LowerValueOfRange;
             resetEvent = new ManualResetEventSlim();
             messenger = DI.Container.Resolve<IMessenger>();
         }
@@ -79,7 +83,7 @@ namespace ConsoleVersion.ViewModel
         [MenuItem(MenuItemsNames.InputDelayTime, 3)]
         public void InputDelayTime()
         {
-            DelayTime = IntInput.Input(MessagesTexts.DelayTimeInputMsg, Constants.AlgorithmDelayTimeValueRange);
+            DelayTime = IntInput.Input(MessagesTexts.DelayTimeInputMsg, DelayRange);
         }
 
         [MenuItem(MenuItemsNames.ChooseAlgorithm, 1)]
@@ -125,7 +129,7 @@ namespace ConsoleVersion.ViewModel
         {
             WindowClosed = null;
             ClearGraph();
-            ConsoleKeystrokesHook.Instance.KeyPressed -= OnConsoleKeyPressed;
+            keystrokesHook.KeyPressed -= OnConsoleKeyPressed;
             resetEvent.Dispose();
         }
 
@@ -147,9 +151,8 @@ namespace ConsoleVersion.ViewModel
         protected override void SubscribeOnAlgorithmEvents(PathfindingAlgorithm algorithm)
         {
             base.SubscribeOnAlgorithmEvents(algorithm);
-            ConsoleKeystrokesHook.Instance.KeyInput = KeyInput;
-            algorithm.Started += ConsoleKeystrokesHook.Instance.StartAsync;
-            algorithm.Finished += ConsoleKeystrokesHook.Instance.Interrupt;
+            algorithm.Started += keystrokesHook.StartAsync;
+            algorithm.Finished += keystrokesHook.Interrupt;
             currentAlgorithmName = Algorithm.GetDescription();
         }
 
@@ -167,10 +170,10 @@ namespace ConsoleVersion.ViewModel
                     algorithm.Resume();
                     break;
                 case ConsoleKey.DownArrow:
-                    DelayTime = Constants.AlgorithmDelayTimeValueRange.ReturnInRange(DelayTime - 1);
+                    DelayTime = DelayRange.ReturnInRange(DelayTime - 1);
                     break;
                 case ConsoleKey.UpArrow:
-                    DelayTime = Constants.AlgorithmDelayTimeValueRange.ReturnInRange(DelayTime + 1);
+                    DelayTime = DelayRange.ReturnInRange(DelayTime + 1);
                     break;
             }
         }

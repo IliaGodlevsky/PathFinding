@@ -78,7 +78,6 @@
     <Compile Include="Extensions\IDelegateExtractorExtensions.cs" />
     <Compile Include="Extensions\IEnumerableExtensions.cs" />
     <Compile Include="Extensions\IGraphPathExtensions.cs" />
-    <Compile Include="Extensions\PathFindingViewModelExtensions.cs" />
     <Compile Include="Extensions\IInputExtensions.cs" />
     <Compile Include="Interface\IDelegateExtractor.cs" />
     <Compile Include="Interface\IMenu.cs" />
@@ -112,6 +111,7 @@
     <Compile Include="ValueInput\RandomInput\RandomIntInput.cs" />
     <Compile Include="ValueInput\RandomInput\RandomInput.cs" />
     <Compile Include="ValueInput\RecordingInput\RecordingAnswerInput.cs" />
+    <Compile Include="ValueInput\RecordingInput\RecordingConsoleKeyInput.cs" />
     <Compile Include="ValueInput\RecordingInput\RecordingInput.cs" />
     <Compile Include="ValueInput\RecordingInput\RecordingIntInput.cs" />
     <Compile Include="ValueInput\RecordingInput\RecordingStringInput.cs" />

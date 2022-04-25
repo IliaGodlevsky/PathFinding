@@ -1,5 +1,4 @@
 ﻿using GraphLib.Base;
-using GraphLib.Interfaces;
 using System.Diagnostics;
 
 namespace GraphLib.Realizations
@@ -11,11 +10,6 @@ namespace GraphLib.Realizations
             : base(startCost)
         {
 
-        }
-
-        public override IVertexCost Clone()
-        {
-            return new VertexCost(CurrentCost);
         }
     }
 }
