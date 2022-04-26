@@ -45,17 +45,7 @@ namespace WPFVersion3D.ViewModel
 
         public int VisitedVerticesCount { get => visitedCount; set => Set(ref visitedCount, value); }
 
-        public AlgorithmStatuses Status
-        {
-            get => status;
-            set
-            {
-                if (status != AlgorithmStatuses.Interrupted)
-                {
-                    Set(ref status, value);
-                }
-            }
-        }
+        public AlgorithmStatuses Status { get => status; set => Set(ref status, value); }
 
         public AlgorithmViewModel(PathfindingAlgorithm algorithm)
         {
