@@ -21,7 +21,7 @@ namespace ConsoleVersion
 
         static Constants()
         {
-            AnswerValueRange = new EnumValues<Answer>().ToValueRange();
+            AnswerValueRange = EnumValues<Answer>.Create().ToValueRange();
             VerticesCostRange = new InclusiveValueRange<int>(99, 1);
             GraphWidthValueRange = new InclusiveValueRange<int>(75, 1);
             GraphLengthValueRange = new InclusiveValueRange<int>(45, 1);

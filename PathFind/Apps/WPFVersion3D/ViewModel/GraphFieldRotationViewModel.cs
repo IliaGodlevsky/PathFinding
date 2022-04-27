@@ -34,7 +34,7 @@ namespace WPFVersion3D.ViewModel
 
         public GraphFieldRotationViewModel()
         {
-            AnimationSpeeds = new EnumValuesWithoutIgnored<AnimationSpeeds>().ToAnimationSpeedTuples();
+            AnimationSpeeds = EnumValuesWithoutIgnored<AnimationSpeeds>.Create().ToAnimationSpeedTuples();
         }
 
         public void Dispose()

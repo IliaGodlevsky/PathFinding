@@ -13,7 +13,7 @@ namespace ConsoleVersion.ValueInput.UserInput
 
         public ConsoleUserEnumInput()
         {
-            enumValues = new EnumValues<T>();
+            enumValues = EnumValues<T>.Create();
         }
 
         protected override bool IsValidInput(string userInput, out T result)

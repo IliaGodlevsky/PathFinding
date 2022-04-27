@@ -8,6 +8,8 @@ namespace EnumerationValues.Realizations
     public sealed class EnumValues<TEnum> : IEnumValues<TEnum>
         where TEnum : Enum
     {
+        public static IEnumValues<TEnum> Create() => new EnumValues<TEnum>();
+
         private readonly Lazy<TEnum[]> values;
 
         public IReadOnlyCollection<TEnum> Values => values.Value;

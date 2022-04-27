@@ -24,9 +24,15 @@ namespace GraphLib.Base
 
         protected BaseGraph(int requiredNumberOfDimensions, IEnumerable<IVertex> vertices, params int[] dimensionSizes)
         {
-            DimensionsSizes = dimensionSizes.TakeOrDefault(requiredNumberOfDimensions, 1).ToArray();
+            DimensionsSizes = dimensionSizes
+                .TakeOrDefault(requiredNumberOfDimensions, 1)
+                .ToArray();
             Size = DimensionsSizes.GetMultiplication();
-            this.vertices = vertices.Take(Size).ForAll(SetGraph).ToDictionary(vertex => vertex.Position).ToReadOnlyDictionary();
+            this.vertices = vertices
+                .Take(Size)
+                .ForAll(SetGraph)
+                .ToDictionary(vertex => vertex.Position)
+                .ToReadOnlyDictionary();
         }
 
         public IVertex Get(ICoordinate coordinate)
