@@ -50,6 +50,8 @@ namespace ConsoleVersion.DependencyInjection
             builder.RegisterType<ConsoleUserStringInput>().As<IInput<string>>().SingleInstance();
             builder.RegisterType<ConsoleUserKeyInput>().As<IInput<ConsoleKey>>().SingleInstance();
 
+            builder.RegisterType<ConsoleKeystrokesHook>().AsSelf().InstancePerDependency().PropertiesAutowired();
+
             builder.RegisterType<MainViewModel>().AsSelf().SingleInstance().PropertiesAutowired();
             builder.RegisterAssemblyTypes(Assemblies).Where(Implements<IViewModel>).Except<MainViewModel>().AsSelf()
                 .PropertiesAutowired().InstancePerLifetimeScope();

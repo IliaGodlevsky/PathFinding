@@ -58,7 +58,7 @@ namespace ConsoleVersion.ViewModel
             : base(endPoints, algorithmFactories, log)
         {
             algorithmKeysValueRange = new InclusiveValueRange<int>(Algorithms.Count, 1);
-            keystrokesHook = new ConsoleKeystrokesHook();
+            keystrokesHook = DI.Container.Resolve<ConsoleKeystrokesHook>();
             keystrokesHook.KeyPressed += OnConsoleKeyPressed;
             DelayTime = DelayRange.LowerValueOfRange;
             resetEvent = new ManualResetEventSlim();
