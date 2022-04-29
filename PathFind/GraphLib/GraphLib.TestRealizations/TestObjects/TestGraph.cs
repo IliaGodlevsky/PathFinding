@@ -6,7 +6,7 @@ namespace GraphLib.TestRealizations
 {
     public sealed class TestGraph : BaseGraph
     {
-        public TestGraph(IEnumerable<IVertex> vertices, params int[] dimensionSizes)
+        public TestGraph(IReadOnlyCollection<IVertex> vertices, params int[] dimensionSizes)
             : base(dimensionSizes.Length, vertices, dimensionSizes)
         {
 
