@@ -57,6 +57,7 @@ namespace GraphViewModel
             }
             catch (Exception ex)
             {
+                algorithm.Interrupt();
                 log.Error(ex);
             }
             finally

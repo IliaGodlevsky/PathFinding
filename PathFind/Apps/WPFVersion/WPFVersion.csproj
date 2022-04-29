@@ -80,6 +80,8 @@
     <Compile Include="Extensions\TypeExtensions.cs" />
     <Compile Include="Infrastructure\BaseAlgorithmCommands.cs" />
     <Compile Include="Infrastructure\BaseCommand.cs" />
+    <Compile Include="Infrastructure\EventArguments\GraphCreatedEventArgs.cs" />
+    <Compile Include="Infrastructure\EventHandlers\GraphCreatedEventHandler.cs" />
     <Compile Include="Infrastructure\InterruptAlgorithmCommand.cs" />
     <Compile Include="Infrastructure\PauseAlgorithmCommand.cs" />
     <Compile Include="Infrastructure\RelayCommand.cs" />
@@ -113,7 +115,6 @@
     <Compile Include="Model\VertexFromInfoFactory.cs" />
     <Compile Include="Model\VertexVisualization.cs" />
     <Compile Include="Model\PathfindingVisualizationModel.cs" />
-    <Compile Include="Model\WindowService.cs" />
     <Compile Include="Model\GraphField.cs" />
     <Compile Include="Model\GraphFieldFactory.cs" />
     <Compile Include="ValidationRules\NonDoubleInputValidationRule.cs" />

@@ -3,16 +3,20 @@ using GalaSoft.MvvmLight.Messaging;
 using GraphLib.Base.EndPoints;
 using GraphLib.Interfaces;
 using GraphLib.NullRealizations;
+using GraphLib.Realizations.Graphs;
 using System;
 using WPFVersion.DependencyInjection;
+using WPFVersion.Infrastructure.EventArguments;
+using WPFVersion.Infrastructure.EventHandlers;
 using WPFVersion.Messages;
 using WPFVersion.Messages.DataMessages;
-using WPFVersion.Model;
 
 namespace WPFVersion.ViewModel
 {
     public class MainWindowViewModel : IDisposable
     {
+        internal event GraphCreatedEventHandler GraphCreated;
+
         private readonly IMessenger messenger;
         private readonly IVertexEventHolder eventHolder;
         private readonly IGraphFieldFactory fieldFactory;
@@ -44,7 +48,7 @@ namespace WPFVersion.ViewModel
             var graphField = fieldFactory.CreateGraphField(Graph);
             endPoints.SubscribeToEvents(Graph);
             eventHolder.SubscribeVertices(Graph);
-            WindowService.Adjust(Graph);
+            GraphCreated?.Invoke(this, new GraphCreatedEventArgs((Graph2D)Graph));
             messenger.Send(new GraphFieldCreatedMessage(graphField));
             messenger.Send(new ClearStatisticsMessage());
         }
