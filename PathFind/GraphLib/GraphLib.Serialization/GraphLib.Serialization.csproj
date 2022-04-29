@@ -50,6 +50,7 @@
     <Compile Include="Extensions\GraphSerializerExtensions.cs" />
     <Compile Include="Extensions\GraphSerializationModuleExtensions.cs" />
     <Compile Include="Interfaces\ICrypto.cs" />
+    <Compile Include="Interfaces\IGraphSerializationModule.cs" />
     <Compile Include="Serializers\BinaryGraphSerializer.cs" />
     <Compile Include="Serializers\GraphSerializationModule.cs" />
     <Compile Include="Serializers\CompressGraphSerializer.cs" />

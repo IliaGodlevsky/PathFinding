@@ -2,6 +2,7 @@
 using GalaSoft.MvvmLight.Messaging;
 using GraphLib.Serialization;
 using GraphLib.Serialization.Extensions;
+using GraphLib.Serialization.Interfaces;
 using Logging.Interface;
 using System;
 using System.Windows.Input;
@@ -15,7 +16,7 @@ namespace WPFVersion3D.ViewModel.ButtonViewModels
     {
         private readonly IMessenger messenger;
         private readonly ILog log;
-        private readonly GraphSerializationModule module;
+        private readonly IGraphSerializationModule module;
 
         private bool IsAllAlgorithmsFinishedPathfinding { get; set; } = true;
 
@@ -25,7 +26,7 @@ namespace WPFVersion3D.ViewModel.ButtonViewModels
         {
             messenger = DI.Container.Resolve<IMessenger>();
             messenger.Register<IsAllAlgorithmsFinishedMessage>(this, OnAllAlgorithmFinishedPathfinding);
-            module = DI.Container.Resolve<GraphSerializationModule>();
+            module = DI.Container.Resolve<IGraphSerializationModule>();
             log = DI.Container.Resolve<ILog>();
             LoadGraphCommand = new RelayCommand(ExecuteLoadGraphCommand);
         }

@@ -6,6 +6,7 @@ using GraphLib.Serialization.Extensions;
 using GraphLib.Serialization.Interfaces;
 using System;
 using System.IO;
+using System.Linq;
 using System.Text;
 
 namespace GraphLib.Serialization.Serializers
@@ -35,7 +36,7 @@ namespace GraphLib.Serialization.Serializers
                 using (var reader = new BinaryReader(stream, Encoding.Default, leaveOpen: true))
                 {
                     var graphInfo = reader.ReadGraph(costFactory, coordinateFactory);
-                    var vertices = graphInfo.CreateVertices(vertexFactory);
+                    var vertices = graphInfo.CreateVertices(vertexFactory).ToArray();
                     BaseVertexCost.CostRange = graphInfo.CostRange;
                     return graphFactory.CreateGraph(vertices, graphInfo.DimensionsSizes);
                 }

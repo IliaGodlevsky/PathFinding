@@ -7,6 +7,7 @@ using GalaSoft.MvvmLight.Messaging;
 using GraphLib.Interfaces;
 using GraphLib.Serialization;
 using GraphLib.Serialization.Extensions;
+using GraphLib.Serialization.Interfaces;
 using NullObject.Extensions;
 using System;
 
@@ -17,11 +18,11 @@ namespace ConsoleVersion.ViewModel
         public event Action WindowClosed;
 
         private readonly IMessenger messenger;
-        private readonly GraphSerializationModule module;
+        private readonly IGraphSerializationModule module;
 
         private IGraph Graph { get; set; }
 
-        public GraphSaveViewModel(GraphSerializationModule module)
+        public GraphSaveViewModel(IGraphSerializationModule module)
         {
             messenger = DI.Container.Resolve<IMessenger>();
             messenger.Register<ClaimGraphAnswer>(this, OnClaimAnswerRecieved);

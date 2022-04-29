@@ -2,6 +2,7 @@
 using GalaSoft.MvvmLight.Messaging;
 using GraphLib.Serialization;
 using GraphLib.Serialization.Extensions;
+using GraphLib.Serialization.Interfaces;
 using Logging.Interface;
 using System;
 using System.Windows.Input;
@@ -14,7 +15,7 @@ namespace WPFVersion.ViewModel.ButtonViewModels
     internal class LoadGraphViewModel
     {
         private readonly IMessenger messenger;
-        private readonly GraphSerializationModule module;
+        private readonly IGraphSerializationModule module;
         private readonly ILog log;
 
         public ICommand LoadGraphCommand { get; }
@@ -26,7 +27,7 @@ namespace WPFVersion.ViewModel.ButtonViewModels
             messenger = DI.Container.Resolve<IMessenger>();
             messenger.Register<IsAllAlgorithmsFinishedMessage>(this, OnAlgorithmsFinished);
             log = DI.Container.Resolve<ILog>();
-            module = DI.Container.Resolve<GraphSerializationModule>();
+            module = DI.Container.Resolve<IGraphSerializationModule>();
             LoadGraphCommand = new RelayCommand(ExecuteLoadGraphCommand, CanExecuteLoadGrapgCommand);
         }
 

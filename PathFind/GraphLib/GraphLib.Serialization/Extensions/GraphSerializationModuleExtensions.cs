@@ -1,41 +1,19 @@
 ﻿using GraphLib.Interfaces;
-using System;
+using GraphLib.Serialization.Interfaces;
 using System.Threading.Tasks;
 
 namespace GraphLib.Serialization.Extensions
 {
     public static class GraphSerializationModuleExtensions
     {
-        public static async Task<IGraph> LoadGraphAsync(this GraphSerializationModule self)
+        public static async Task<IGraph> LoadGraphAsync(this IGraphSerializationModule self)
         {
-            string filePath = self.input.InputLoadPath();
-            return await Task.Run(() =>
-            {
-                try
-                {
-                    return self.serializer.LoadGraphFromFile(filePath);
-                }
-                catch (Exception)
-                {
-                    throw;
-                }
-            }).ConfigureAwait(false);
+            return await Task.Run(() => self.LoadGraph()).ConfigureAwait(false);
         }
 
-        public static async Task SaveGraphAsync(this GraphSerializationModule self, IGraph graph)
+        public static async Task SaveGraphAsync(this IGraphSerializationModule self, IGraph graph)
         {
-            string filePath = self.input.InputSavePath();
-            await Task.Run(() =>
-            {
-                try
-                {
-                    self.serializer.SaveGraphToFile(graph, filePath);
-                }
-                catch (Exception)
-                {
-                    throw;
-                }
-            }).ConfigureAwait(false);
+            await Task.Run(() => self.SaveGraph(graph)).ConfigureAwait(false);            
         }
     }
 }

@@ -5,6 +5,7 @@ using GraphLib.Extensions;
 using GraphLib.Interfaces;
 using GraphLib.Realizations.Graphs;
 using GraphLib.Serialization;
+using GraphLib.Serialization.Interfaces;
 using GraphViewModel;
 using GraphViewModel.Interfaces;
 using Logging.Interface;
@@ -75,7 +76,7 @@ namespace WindowsFormsVersion.ViewModel
         public MainWindow MainWindow { get; set; }
 
         public MainWindowViewModel(IGraphFieldFactory fieldFactory,
-            IVertexEventHolder eventHolder, GraphSerializationModule serializationModule, BaseEndPoints endPoints, ILog log)
+            IVertexEventHolder eventHolder, IGraphSerializationModule serializationModule, BaseEndPoints endPoints, ILog log)
             : base(fieldFactory, eventHolder, serializationModule, endPoints, log)
         {
             messenger = DI.Container.Resolve<IMessenger>();

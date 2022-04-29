@@ -3,6 +3,7 @@ using GalaSoft.MvvmLight.Messaging;
 using GraphLib.Interfaces;
 using GraphLib.Serialization;
 using GraphLib.Serialization.Extensions;
+using GraphLib.Serialization.Interfaces;
 using Logging.Interface;
 using NullObject.Extensions;
 using System;
@@ -16,7 +17,7 @@ namespace WPFVersion.ViewModel.ButtonViewModels
     internal class SaveGraphViewModel
     {
         private readonly IMessenger messenger;
-        private readonly GraphSerializationModule module;
+        private readonly IGraphSerializationModule module;
         private readonly ILog log;
 
         private IGraph Graph { get; set; }
@@ -25,7 +26,7 @@ namespace WPFVersion.ViewModel.ButtonViewModels
 
         public SaveGraphViewModel()
         {
-            module = DI.Container.Resolve<GraphSerializationModule>();
+            module = DI.Container.Resolve<IGraphSerializationModule>();
             messenger = DI.Container.Resolve<IMessenger>();
             log = DI.Container.Resolve<ILog>();
             SaveGraphCommand = new RelayCommand(ExecuteSaveGraphCommand, CanExecuteSaveGraphCommand);

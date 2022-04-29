@@ -6,6 +6,7 @@ using ConsoleVersion.Messages;
 using GalaSoft.MvvmLight.Messaging;
 using GraphLib.Base;
 using GraphLib.Serialization;
+using GraphLib.Serialization.Interfaces;
 using System;
 
 namespace ConsoleVersion.ViewModel
@@ -15,9 +16,9 @@ namespace ConsoleVersion.ViewModel
         public event Action WindowClosed;
 
         private readonly IMessenger messenger;
-        private readonly GraphSerializationModule module;
+        private readonly IGraphSerializationModule module;
 
-        public GraphLoadViewModel(GraphSerializationModule module)
+        public GraphLoadViewModel(IGraphSerializationModule module)
         {
             messenger = DI.Container.Resolve<IMessenger>();
             this.module = module;

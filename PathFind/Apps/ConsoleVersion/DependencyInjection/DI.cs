@@ -79,7 +79,7 @@ namespace ConsoleVersion.DependencyInjection
             builder.RegisterType<RootMeanSquareCost>().As<IMeanCost>().SingleInstance();
             builder.RegisterType<VertexVisualization>().As<IVisualization<Vertex>>().SingleInstance();
 
-            builder.RegisterType<GraphSerializationModule>().AsSelf().SingleInstance();
+            builder.RegisterType<GraphSerializationModule>().As<IGraphSerializationModule>().SingleInstance();
             builder.RegisterType<PathInput>().As<IPathInput>().SingleInstance().PropertiesAutowired();
             builder.RegisterType<BinaryGraphSerializer>().As<IGraphSerializer>().SingleInstance();
             builder.RegisterDecorator<CompressGraphSerializer, IGraphSerializer>();

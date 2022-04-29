@@ -4,10 +4,10 @@ using GraphLib.Serialization.Interfaces;
 
 namespace GraphLib.Serialization
 {
-    public class GraphSerializationModule
+    public sealed class GraphSerializationModule : IGraphSerializationModule
     {
-        internal readonly IGraphSerializer serializer;
-        internal readonly IPathInput input;
+        private readonly IGraphSerializer serializer;
+        private readonly IPathInput input;
 
         public GraphSerializationModule(IGraphSerializer graphSerializer, IPathInput pathInput)
         {

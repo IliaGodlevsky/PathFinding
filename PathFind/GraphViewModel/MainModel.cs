@@ -4,6 +4,7 @@ using GraphLib.Interfaces;
 using GraphLib.NullRealizations;
 using GraphLib.Serialization;
 using GraphLib.Serialization.Extensions;
+using GraphLib.Serialization.Interfaces;
 using GraphViewModel.Interfaces;
 using Logging.Interface;
 using System;
@@ -17,7 +18,7 @@ namespace GraphViewModel
         protected readonly ILog log;
         protected readonly IGraphFieldFactory fieldFactory;
         protected readonly BaseEndPoints endPoints;
-        protected readonly GraphSerializationModule serializationModule;
+        protected readonly IGraphSerializationModule serializationModule;
 
         public virtual string GraphParametres { get; set; }
 
@@ -27,7 +28,7 @@ namespace GraphViewModel
 
         protected MainModel(IGraphFieldFactory fieldFactory,
             IVertexEventHolder eventHolder,
-            GraphSerializationModule serializationModule,
+            IGraphSerializationModule serializationModule,
             BaseEndPoints endPoints,
             ILog log)
         {

@@ -69,7 +69,7 @@ namespace WPFVersion.DependencyInjection
             builder.RegisterType<HighSmoothLevel>().As<ISmoothLevel>().SingleInstance();
             builder.RegisterType<VertexVisualization>().As<IVisualization<Vertex>>().SingleInstance();
 
-            builder.RegisterType<GraphSerializationModule>().AsSelf().SingleInstance();
+            builder.RegisterType<GraphSerializationModule>().As<IGraphSerializationModule>().SingleInstance();
             builder.RegisterType<PathInput>().As<IPathInput>().SingleInstance();
             builder.RegisterType<BinaryGraphSerializer>().As<IGraphSerializer>().SingleInstance();
             builder.RegisterDecorator<CompressGraphSerializer, IGraphSerializer>();
