@@ -1,13 +1,11 @@
 ﻿using GraphLib.Interfaces;
 using NullObject.Attributes;
 using SingletonLib;
-using System;
 using System.Diagnostics;
 
 namespace GraphLib.NullRealizations
 {
     [Null]
-    [Serializable]
     [DebuggerDisplay("Null")]
     public sealed class NullCost : Singleton<NullCost, IVertexCost>, IVertexCost
     {

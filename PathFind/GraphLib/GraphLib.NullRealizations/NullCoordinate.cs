@@ -7,7 +7,6 @@ using System.Diagnostics;
 namespace GraphLib.NullRealizations
 {
     [Null]
-    [Serializable]
     [DebuggerDisplay("Null")]
     public sealed class NullCoordinate : Singleton<NullCoordinate, ICoordinate>, ICoordinate
     {

@@ -13,7 +13,7 @@ namespace GraphLib.Realizations
             visitedVertices = new HashSet<IVertex>();
         }
 
-        public void Add(IVertex vertex)
+        public void Visit(IVertex vertex)
         {
             if (!vertex.IsNull())
             {

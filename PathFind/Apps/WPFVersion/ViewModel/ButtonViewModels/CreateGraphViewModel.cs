@@ -1,8 +1,12 @@
 ﻿using Autofac;
 using GalaSoft.MvvmLight.Messaging;
+using GraphLib.Base.EndPoints;
+using GraphLib.Interfaces;
+using GraphLib.NullRealizations;
 using System.Windows.Input;
 using WPFVersion.DependencyInjection;
 using WPFVersion.Infrastructure;
+using WPFVersion.Messages;
 using WPFVersion.Messages.DataMessages;
 using WPFVersion.View.Windows;
 
@@ -14,12 +18,15 @@ namespace WPFVersion.ViewModel.ButtonViewModels
 
         public ICommand CreateGraphCommand { get; }
 
+        private IGraph Graph { get; set; } = NullGraph.Instance;
+
         private bool IsAllAlgorithmsFinishedPathfinding { get; set; } = true;
 
         public CreateGraphViewModel()
         {
             messenger = DI.Container.Resolve<IMessenger>();
             messenger.Register<IsAllAlgorithmsFinishedMessage>(this, OnAllAlgorithmFinished);
+            messenger.Register<GraphCreatedMessage>(this, OnGraphCreated);
             CreateGraphCommand = new RelayCommand(ExecuteCreateGraphCommand, CanExecuteCreateGraphCommand);
         }
 
@@ -31,6 +38,19 @@ namespace WPFVersion.ViewModel.ButtonViewModels
         private bool CanExecuteCreateGraphCommand(object param)
         {
             return IsAllAlgorithmsFinishedPathfinding;
+        }
+
+        private void OnGraphCreated(GraphCreatedMessage message)
+        {
+            var endPoints = DI.Container.Resolve<BaseEndPoints>();
+            var eventHolder = DI.Container.Resolve<IVertexEventHolder>();
+            endPoints.UnsubscribeFromEvents(Graph);
+            endPoints.Reset();
+            eventHolder.UnsubscribeVertices(Graph);
+            Graph = message.Graph;
+            endPoints.SubscribeToEvents(Graph);
+            eventHolder.SubscribeVertices(Graph);
+            messenger.Send(new ClearStatisticsMessage());
         }
 
         private void OnAllAlgorithmFinished(IsAllAlgorithmsFinishedMessage message)

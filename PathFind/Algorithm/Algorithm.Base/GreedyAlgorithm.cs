@@ -66,14 +66,14 @@ namespace Algorithm.Base
         {
             base.PrepareForPathfinding();
             CurrentVertex = endPoints.Source;
-            visitedVertices.Add(CurrentVertex);
+            visitedVertices.Visit(CurrentVertex);
             RaiseVertexVisited(new AlgorithmEventArgs(CurrentVertex));
             visitedVerticesStack.Push(CurrentVertex);
         }
 
         private void VisitCurrentVertex()
         {
-            visitedVertices.Add(CurrentVertex);
+            visitedVertices.Visit(CurrentVertex);
             RaiseVertexVisited(new AlgorithmEventArgs(CurrentVertex));
             visitedVerticesStack.Push(CurrentVertex);
             parentVertices.Add(CurrentVertex, PreviousVertex);

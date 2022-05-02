@@ -42,6 +42,9 @@ namespace WPFVersion3D.ViewModel
         private void OnGraphCreated(GraphCreatedMessage message)
         {
             graph = (Graph3D)message.Value;
+            var graphFieldFactry = DI.Container.Resolve<IGraphFieldFactory>();
+            GraphField = graphFieldFactry.CreateGraphField(graph);
+            messenger.Send(new GraphFieldCreatedMessage(GraphField));
             GraphParametres = graph.ToString();
         }
 

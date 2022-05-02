@@ -1,12 +1,10 @@
 ﻿using GraphLib.Base;
 using GraphLib.Interfaces;
 using GraphLib.Serialization.Extensions;
-using System;
 using ValueRange;
 
 namespace GraphLib.Serialization
 {
-    [Serializable]
     public sealed class GraphSerializationInfo
     {
         public int[] DimensionsSizes { get; }

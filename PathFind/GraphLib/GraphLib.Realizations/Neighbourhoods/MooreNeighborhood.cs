@@ -10,8 +10,7 @@ namespace GraphLib.Realizations.Neighbourhoods
     [DebuggerDisplay("Count = {Neighbours.Length}")]
     public sealed class MooreNeighborhood : INeighborhood
     {
-        private static readonly int[] EmptyOffsetMatrix = Array.Empty<int>();
-        private static readonly int[] OffsetMatrix = new int[] { -1, 0, 1 };
+        private static readonly int[] OffsetMatrix = new[] { -1, 0, 1 };
 
         private readonly ICoordinate selfCoordinate;
         private readonly int limitDepth;
@@ -28,7 +27,7 @@ namespace GraphLib.Realizations.Neighbourhoods
             selfCoordinatesValues = selfCoordinate.CoordinatesValues.ToArray();
             limitDepth = selfCoordinatesValues.Length;
             resultCoordinatesValues = new int[limitDepth];
-            lateralOffsetMatrix = limitDepth == 0 ? EmptyOffsetMatrix : OffsetMatrix;
+            lateralOffsetMatrix = limitDepth == 0 ? Array.Empty<int>() : OffsetMatrix;
             neighbourhood = new Lazy<IReadOnlyCollection<ICoordinate>>(GetNeighborhood);
         }
 

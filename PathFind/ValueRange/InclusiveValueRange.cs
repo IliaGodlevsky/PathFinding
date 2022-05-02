@@ -4,7 +4,7 @@ using System.Diagnostics;
 
 namespace ValueRange
 {
-    [DebuggerDisplay("[{LowerValueOfRange} - {UpperValueOfRange}]")]
+    [DebuggerDisplay("[{LowerValueOfRange}...{UpperValueOfRange}]")]
     public readonly struct InclusiveValueRange<T> where T : IComparable
     {
         public T UpperValueOfRange { get; }

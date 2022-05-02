@@ -16,7 +16,7 @@ namespace GraphLib.Realizations.Extensions
                 var visited = new VisitedVertices();
                 foreach (var vertex in self.Vertices)
                 {
-                    visited.Add(vertex);
+                    visited.Visit(vertex);
                     if (visited.HasUnvisitedNeighbours(vertex))
                     {
                         int Calculate(IVertex neighbour) => meanCost.Calculate(neighbour, vertex);

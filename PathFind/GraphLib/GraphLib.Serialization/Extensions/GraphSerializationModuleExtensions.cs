@@ -13,7 +13,7 @@ namespace GraphLib.Serialization.Extensions
 
         public static async Task SaveGraphAsync(this IGraphSerializationModule self, IGraph graph)
         {
-            await Task.Run(() => self.SaveGraph(graph)).ConfigureAwait(false);            
+            await Task.Run(() => self.SaveGraph(graph)).ConfigureAwait(false);
         }
     }
 }

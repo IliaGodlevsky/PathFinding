@@ -24,19 +24,15 @@ namespace WPFVersion.ViewModel
         public GraphFieldViewModel()
         {
             messenger = DI.Container.Resolve<IMessenger>();
-            messenger.Register<GraphFieldCreatedMessage>(this, OnFieldCreated);
             messenger.Register<GraphCreatedMessage>(this, OnGraphCreated);
             messenger.Register<GraphChangedMessage>(this, OnGraphChanged);
-        }
-
-        private void OnFieldCreated(GraphFieldCreatedMessage message)
-        {
-            GraphField = message.Field;
         }
 
         private void OnGraphCreated(GraphCreatedMessage message)
         {
             graph = (Graph2D)message.Graph;
+            var graphFieldFactory = DI.Container.Resolve<IGraphFieldFactory>();
+            GraphField = graphFieldFactory.CreateGraphField(graph);
             GraphParamtres = graph.ToString();
         }
 

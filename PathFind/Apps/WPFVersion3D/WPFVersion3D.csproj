@@ -98,8 +98,8 @@
     <Compile Include="Messages\PassValueMessages\AlgorithmIndexMessage.cs" />
     <Compile Include="Messages\ActionMessages\GraphChangedMessage.cs" />
     <Compile Include="Messages\PassValueMessages\EndPointsChosenMessage.cs" />
-    <Compile Include="Messages\PassValueMessages\GraphFieldCreatedMessage.cs" />
     <Compile Include="Interface\IAlgorithmsExecutionMessage.cs" />
+    <Compile Include="Messages\PassValueMessages\GraphFieldCreatedMessage.cs" />
     <Compile Include="Messages\PassValueMessages\IsAllAlgorithmsFinishedMessage.cs" />
     <Compile Include="Messages\PassValueMessages\AlgorithmStatusMessage.cs" />
     <Compile Include="Messages\ActionMessages\ClearStatisticsMessage.cs" />

@@ -1,10 +1,8 @@
 ﻿using GraphLib.Interfaces;
 using GraphLib.Proxy;
-using System;
 
 namespace GraphLib.Serialization
 {
-    [Serializable]
     public sealed class VertexSerializationInfo
     {
         public bool IsObstacle { get; }

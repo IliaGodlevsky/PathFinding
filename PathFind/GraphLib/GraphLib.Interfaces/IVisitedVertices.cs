@@ -2,7 +2,7 @@
 {
     public interface IVisitedVertices
     {
-        void Add(IVertex vertex);
+        void Visit(IVertex vertex);
 
         bool IsNotVisited(IVertex vertex);
 

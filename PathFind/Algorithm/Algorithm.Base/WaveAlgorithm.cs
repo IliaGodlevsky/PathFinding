@@ -55,7 +55,7 @@ namespace Algorithm.Base
 
         protected virtual void VisitVertex(IVertex vertex)
         {
-            visitedVertices.Add(vertex);
+            visitedVertices.Visit(vertex);
             RaiseVertexVisited(new AlgorithmEventArgs(vertex));
         }
 
