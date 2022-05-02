@@ -6,7 +6,7 @@ namespace GraphLib.TestRealizations.TestFactories
 {
     public class TestGraphFactory : IGraphFactory
     {
-        public IGraph CreateGraph(IEnumerable<IVertex> vertices, int[] dimensionSizes)
+        public IGraph CreateGraph(IReadOnlyCollection<IVertex> vertices, int[] dimensionSizes)
         {
             return new TestGraph(vertices, dimensionSizes);
         }

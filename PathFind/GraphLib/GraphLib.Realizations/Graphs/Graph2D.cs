@@ -11,7 +11,7 @@ namespace GraphLib.Realizations.Graphs
 
         public int Length { get; }
 
-        public Graph2D(IEnumerable<IVertex> vertices, params int[] dimensions)
+        public Graph2D(IReadOnlyCollection<IVertex> vertices, params int[] dimensions)
             : base(requiredNumberOfDimensions: 2, vertices, dimensions)
         {
             Width = DimensionsSizes.First();

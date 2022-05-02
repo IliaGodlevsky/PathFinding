@@ -19,11 +19,11 @@ namespace GraphLib.Realizations.Tests.Extenions
             self.Mock<IVertexCostFactory>().Setup(x => x.CreateCost(It.IsAny<int>())).Returns<int>(returnCallback);
         }
 
-        public static void MockGraphFactory(this AutoMock self, Func<IEnumerable<IVertex>, int[], IGraph> returnCallback)
+        public static void MockGraphFactory(this AutoMock self, Func<IReadOnlyCollection<IVertex>, int[], IGraph> returnCallback)
         {
             self.Mock<IGraphFactory>()
-                .Setup(x => x.CreateGraph(It.IsAny<IEnumerable<IVertex>>(), It.IsAny<int[]>()))
-                .Returns<IEnumerable<IVertex>, int[]>(returnCallback);
+                .Setup(x => x.CreateGraph(It.IsAny<IReadOnlyCollection<IVertex>>(), It.IsAny<int[]>()))
+                .Returns<IReadOnlyCollection<IVertex>, int[]>(returnCallback);
         }
 
         public static void MockCoordinateFactory(this AutoMock self, Func<int[], ICoordinate> returnCallback)
