@@ -27,7 +27,7 @@ namespace ConsoleVersion.ViewModel
 
         private readonly ILog log;
         private readonly IMessenger messenger;
-        private readonly IVertexEventHolder eventHolder;
+        private readonly IGraphEvents events;
         private readonly IGraphFieldFactory fieldFactory;
         private readonly BaseEndPoints endPoints;
 
@@ -40,7 +40,7 @@ namespace ConsoleVersion.ViewModel
 
         public IInput<Answer> AnswerInput { get; set; }
 
-        public MainViewModel(IGraphFieldFactory fieldFactory, IVertexEventHolder eventHolder, BaseEndPoints endPoints, ILog log)
+        public MainViewModel(IGraphFieldFactory fieldFactory, IGraphEvents events, BaseEndPoints endPoints, ILog log)
         {
             graph = NullGraph.Instance;
             messenger = DI.Container.Resolve<IMessenger>();
@@ -49,7 +49,7 @@ namespace ConsoleVersion.ViewModel
             messenger.Register<ClearColorsMessage>(this, message => ClearColors());
             messenger.Register<ClaimGraphMessage>(this, RecieveClaimGraphMessage);
             this.fieldFactory = fieldFactory;
-            this.eventHolder = eventHolder;
+            this.events = events;
             this.endPoints = endPoints;
             this.log = log;
         }
@@ -139,13 +139,11 @@ namespace ConsoleVersion.ViewModel
 
         private void SetGraph(GraphCreatedMessage message)
         {
-            endPoints.UnsubscribeFromEvents(graph);
             endPoints.Reset();
-            eventHolder.UnsubscribeVertices(graph);
+            events.Unsubscribe(graph);
             graph = message.Graph;
             graphField = fieldFactory.CreateGraphField(graph);
-            endPoints.SubscribeToEvents(graph);
-            eventHolder.SubscribeVertices(graph);
+            events.Subscribe(graph);
             GraphParamters = graph.ToString();
         }
 

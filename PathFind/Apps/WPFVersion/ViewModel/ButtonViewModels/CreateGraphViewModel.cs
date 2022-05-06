@@ -42,14 +42,12 @@ namespace WPFVersion.ViewModel.ButtonViewModels
 
         private void OnGraphCreated(GraphCreatedMessage message)
         {
+            var events = DI.Container.Resolve<IGraphEvents>();
             var endPoints = DI.Container.Resolve<BaseEndPoints>();
-            var eventHolder = DI.Container.Resolve<IVertexEventHolder>();
-            endPoints.UnsubscribeFromEvents(Graph);
+            events.Unsubscribe(Graph);
             endPoints.Reset();
-            eventHolder.UnsubscribeVertices(Graph);
             Graph = message.Graph;
-            endPoints.SubscribeToEvents(Graph);
-            eventHolder.SubscribeVertices(Graph);
+            events.Subscribe(Graph);
             messenger.Send(new ClearStatisticsMessage());
         }
 

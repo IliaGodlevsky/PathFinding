@@ -10,7 +10,7 @@ namespace EnumerationValues.Realizations
         where TEnum : Enum
     {
         public static IEnumValues<TEnum> Create() => new EnumValuesWithoutIgnored<TEnum>();
-        
+
         private readonly Lazy<TEnum[]> values;
 
         public IReadOnlyCollection<TEnum> Values => values.Value;

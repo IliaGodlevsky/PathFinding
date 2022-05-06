@@ -9,17 +9,17 @@ using static GraphLib.Base.BaseVertexCost;
 
 namespace ConsoleVersion.Model
 {
-    internal sealed class VertexEventHolder : BaseVertexEventHolder, IRequireIntInput
+    internal sealed class GraphEvents : BaseGraphEvents, IRequireIntInput
     {
         public IInput<int> IntInput { get; set; }
 
-        public VertexEventHolder(IVertexCostFactory costFactory)
+        public GraphEvents(IVertexCostFactory costFactory)
             : base(costFactory)
         {
 
         }
 
-        public override void ChangeVertexCost(object sender, EventArgs e)
+        protected override void ChangeVertexCost(object sender, EventArgs e)
         {
             if (sender is Vertex vertex && !vertex.IsObstacle)
             {

@@ -41,6 +41,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CompositeGraphEvents.cs" />
     <Compile Include="Extensions\GraphExtensions.cs" />
     <Compile Include="Neighbourhoods\VonNeumannNeighborhood.cs" />
     <Compile Include="Neighbourhoods\MooreNeighborhood.cs" />

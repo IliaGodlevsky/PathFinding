@@ -5,7 +5,6 @@ using ConsoleVersion.DependencyInjection;
 using ConsoleVersion.Messages;
 using GalaSoft.MvvmLight.Messaging;
 using GraphLib.Interfaces;
-using GraphLib.Serialization;
 using GraphLib.Serialization.Extensions;
 using GraphLib.Serialization.Interfaces;
 using NullObject.Extensions;

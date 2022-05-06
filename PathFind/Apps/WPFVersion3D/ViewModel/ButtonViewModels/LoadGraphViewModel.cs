@@ -1,6 +1,5 @@
 ﻿using Autofac;
 using GalaSoft.MvvmLight.Messaging;
-using GraphLib.Serialization;
 using GraphLib.Serialization.Extensions;
 using GraphLib.Serialization.Interfaces;
 using Logging.Interface;

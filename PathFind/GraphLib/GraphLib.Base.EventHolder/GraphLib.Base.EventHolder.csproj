@@ -41,7 +41,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="BaseVertexEventHolder.cs" />
+    <Compile Include="BaseGraphEvents.cs" />
     <Compile Include="Commands\ReverseVertexCommands.cs" />
     <Compile Include="Commands\SetVertexAsObstacleCommand.cs" />
     <Compile Include="Commands\SetVertexAsRegularCommand.cs" />

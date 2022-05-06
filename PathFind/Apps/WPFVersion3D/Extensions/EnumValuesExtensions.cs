@@ -12,7 +12,7 @@ namespace WPFVersion3D.Extensions
     {
         public static Tuple<string, IAnimationSpeed>[] ToAnimationSpeedTuples(this IEnumValues<AnimationSpeeds> values)
         {
-            return values.ToTupleCollection(speed => speed.GetDescription(), 
+            return values.ToTupleCollection(speed => speed.GetDescription(),
                 speed => (IAnimationSpeed)speed.GetAttributeOrNull<BaseAnimationSpeed>());
         }
     }

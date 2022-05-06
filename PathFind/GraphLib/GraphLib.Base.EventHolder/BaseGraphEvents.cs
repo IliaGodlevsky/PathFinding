@@ -6,18 +6,18 @@ using System;
 
 namespace GraphLib.Base.EventHolder
 {
-    public abstract class BaseVertexEventHolder : IVertexEventHolder
+    public abstract class BaseGraphEvents : IGraphEvents
     {
         private readonly IVerticesCommands commands;
         protected readonly IVertexCostFactory costFactory;
 
-        protected BaseVertexEventHolder(IVertexCostFactory costFactory)
+        protected BaseGraphEvents(IVertexCostFactory costFactory)
         {
             this.costFactory = costFactory;
             commands = new ReverseVertexCommands();
         }
 
-        public virtual void ChangeVertexCost(object sender, EventArgs e)
+        protected virtual void ChangeVertexCost(object sender, EventArgs e)
         {
             if (sender is IVertex vertex && !vertex.IsObstacle)
             {
@@ -27,17 +27,17 @@ namespace GraphLib.Base.EventHolder
             }
         }
 
-        public virtual void Reverse(object sender, EventArgs e)
+        protected virtual void Reverse(object sender, EventArgs e)
         {
             commands.Execute(sender.AsVertex());
         }
 
-        public virtual void UnsubscribeVertices(IGraph graph)
+        public virtual void Unsubscribe(IGraph graph)
         {
             graph.ForEach(UnsubscribeFromEvents);
         }
 
-        public virtual void SubscribeVertices(IGraph graph)
+        public virtual void Subscribe(IGraph graph)
         {
             graph.ForEach(SubscribeToEvents);
         }

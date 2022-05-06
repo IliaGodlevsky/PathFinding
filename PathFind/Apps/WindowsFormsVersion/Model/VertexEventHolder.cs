@@ -6,7 +6,7 @@ using System.Windows.Forms;
 
 namespace WindowsFormsVersion.Model
 {
-    internal sealed class VertexEventHolder : BaseVertexEventHolder, IVertexEventHolder
+    internal sealed class VertexEventHolder : BaseGraphEvents
     {
         public VertexEventHolder(IVertexCostFactory costFactory) : base(costFactory)
         {
@@ -17,7 +17,7 @@ namespace WindowsFormsVersion.Model
             return e is MouseEventArgs args ? args.Delta > 0 ? 1 : -1 : default;
         }
 
-        public override void Reverse(object sender, EventArgs e)
+        protected override void Reverse(object sender, EventArgs e)
         {
             if ((e as MouseEventArgs)?.Button == MouseButtons.Right)
             {
