@@ -6,6 +6,7 @@ namespace GraphLib.Base.EndPoints.BaseCommands
     internal abstract class BaseEndPointsCommand : IVertexCommand
     {
         protected IVisualizable Source => endPoints.Source.AsVisualizable();
+
         protected IVisualizable Target => endPoints.Target.AsVisualizable();
 
         protected readonly BaseEndPoints endPoints;

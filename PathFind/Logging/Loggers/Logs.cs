@@ -1,10 +1,13 @@
-﻿using Logging.Interface;
+﻿using Common.Extensions.EnumerableExtensions;
+using Logging.Interface;
 using System;
 
 namespace Logging.Loggers
 {
     public sealed class Logs : ILog
     {
+        private readonly ILog[] logs;
+
         public Logs(params ILog[] logs)
         {
             this.logs = logs;
@@ -12,76 +15,47 @@ namespace Logging.Loggers
 
         public void Debug(string message)
         {
-            foreach (var log in logs)
-            {
-                log.Debug(message);
-            }
+            logs.ForEach(log => log.Debug(message));
         }
 
         public void Error(Exception ex, string message = null)
         {
-            foreach (var log in logs)
-            {
-                log.Error(ex, message);
-            }
+            logs.ForEach(log => log.Error(ex, message));
         }
 
         public void Error(string message)
         {
-            foreach (var log in logs)
-            {
-                log.Error(message);
-            }
+            logs.ForEach(log => log.Error(message));
         }
 
         public void Fatal(Exception ex, string message = null)
         {
-            foreach (var log in logs)
-            {
-                log.Fatal(ex, message);
-            }
+            logs.ForEach(log => log.Fatal(ex, message));
         }
 
         public void Fatal(string message)
         {
-            foreach (var log in logs)
-            {
-                log.Fatal(message);
-            }
+            logs.ForEach(log => log.Fatal(message));
         }
 
         public void Info(string message)
         {
-            foreach (var log in logs)
-            {
-                log.Info(message);
-            }
+            logs.ForEach(log => log.Info(message));
         }
 
         public void Trace(string message)
         {
-            foreach (var log in logs)
-            {
-                log.Trace(message);
-            }
+            logs.ForEach(log => log.Trace(message));
         }
 
         public void Warn(Exception ex, string message = null)
         {
-            foreach (var log in logs)
-            {
-                log.Warn(ex, message);
-            }
+            logs.ForEach(log => log.Warn(ex, message));
         }
 
         public void Warn(string message)
         {
-            foreach (var log in logs)
-            {
-                log.Warn(message);
-            }
+            logs.ForEach(log => log.Warn(message));
         }
-
-        private readonly ILog[] logs;
     }
 }
