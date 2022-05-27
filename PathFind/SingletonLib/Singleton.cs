@@ -29,7 +29,7 @@ namespace SingletonLib
         {
             return ofType.TryGetNonPublicParametrelessCtor(out var ctor)
                 ? (TInstance)ctor.Invoke(Array.Empty<object>())
-                : throw new SingletonException(Constants.GetMessage(ofType));
+                : throw new SingletonException(ofType);
         }
     }
 }

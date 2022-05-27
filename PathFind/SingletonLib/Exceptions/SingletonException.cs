@@ -6,18 +6,12 @@ namespace SingletonLib.Exceptions
     [Serializable]
     public class SingletonException : Exception
     {
-        public SingletonException(string message) : base(message)
+        internal static string GetMessage(Type genericType)
         {
-
+            return string.Format("{0} has neither private nor protected parametreless constructor", genericType.Name);
         }
 
-        public SingletonException(string message, Exception ex) : base(message, ex)
-        {
-
-        }
-
-        protected SingletonException(SerializationInfo info, StreamingContext context)
-            : base(info, context)
+        public SingletonException(Type type) : base(GetMessage(type))
         {
 
         }
