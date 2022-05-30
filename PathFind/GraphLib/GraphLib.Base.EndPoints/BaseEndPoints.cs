@@ -10,7 +10,7 @@ using System.Linq;
 
 namespace GraphLib.Base.EndPoints
 {
-    public abstract class BaseEndPoints : IEndPoints
+    public abstract class BaseEndPoints : IEndPoints, IGraphEvents
     {
         private readonly IVerticesCommands markedToReplaceCommands;
         private readonly IVerticesCommands setEndPointsCommands;
@@ -36,12 +36,12 @@ namespace GraphLib.Base.EndPoints
             Reset();
         }
 
-        public void SubscribeToEvents(IGraph graph)
+        public void Subscribe(IGraph graph)
         {
             graph.ForEach(SubscribeVertex);
         }
 
-        public void UnsubscribeFromEvents(IGraph graph)
+        public void Unsubscribe(IGraph graph)
         {
             graph.ForEach(UnsubscribeVertex);
         }

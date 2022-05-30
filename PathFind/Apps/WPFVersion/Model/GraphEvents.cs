@@ -1,26 +1,22 @@
-﻿using GalaSoft.MvvmLight.Messaging;
+﻿using Autofac;
+using GalaSoft.MvvmLight.Messaging;
 using GraphLib.Base.EventHolder;
 using GraphLib.Interfaces;
 using GraphLib.Interfaces.Factories;
 using System;
 using System.Windows.Input;
+using WPFVersion.DependencyInjection;
 using WPFVersion.Messages.ActionMessages;
 
 namespace WPFVersion.Model
 {
-    internal sealed class VertexEventHolder : BaseVertexEventHolder, IVertexEventHolder
+    internal sealed class GraphEvents : BaseGraphEvents
     {
         private readonly IMessenger messenger;
 
-        public VertexEventHolder(IVertexCostFactory costFactory, IMessenger messenger) : base(costFactory)
+        public GraphEvents(IVertexCostFactory costFactory) : base(costFactory)
         {
-            this.messenger = messenger;
-        }
-
-        public override void Reverse(object sender, EventArgs e)
-        {
-            base.Reverse(sender, e);
-            messenger.Send(new GraphChangedMessage());
+            this.messenger = DI.Container.Resolve<IMessenger>();
         }
 
         protected override int GetWheelDelta(EventArgs e)
@@ -33,6 +29,7 @@ namespace WPFVersion.Model
             if (vertex is Vertex vert)
             {
                 vert.MouseRightButtonDown += Reverse;
+                vert.MouseRightButtonDown += OnGraphChanged;
                 vert.MouseWheel += ChangeVertexCost;
             }
         }
@@ -42,8 +39,14 @@ namespace WPFVersion.Model
             if (vertex is Vertex vert)
             {
                 vert.MouseRightButtonDown -= Reverse;
+                vert.MouseRightButtonDown -= OnGraphChanged;
                 vert.MouseWheel -= ChangeVertexCost;
             }
+        }
+
+        private void OnGraphChanged(object sender, EventArgs e)
+        {
+            messenger.Send(new GraphChangedMessage());
         }
     }
 }

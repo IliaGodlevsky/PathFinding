@@ -15,15 +15,17 @@ using GalaSoft.MvvmLight.Messaging;
 using GraphLib.Base.EndPoints;
 using GraphLib.Interfaces;
 using GraphLib.Interfaces.Factories;
+using GraphLib.Realizations;
 using GraphLib.Realizations.Factories;
 using GraphLib.Realizations.Factories.CoordinateFactories;
 using GraphLib.Realizations.Factories.GraphAssembles;
 using GraphLib.Realizations.Factories.GraphFactories;
 using GraphLib.Realizations.Factories.NeighboursCoordinatesFactories;
 using GraphLib.Realizations.MeanCosts;
-using GraphLib.Serialization;
 using GraphLib.Serialization.Interfaces;
+using GraphLib.Serialization.Modules;
 using GraphLib.Serialization.Serializers;
+using GraphLib.Serialization.Serializers.Decorators;
 using Logging.Interface;
 using Logging.Loggers;
 using Random.Interface;
@@ -59,13 +61,15 @@ namespace ConsoleVersion.DependencyInjection
                 .OnActivated(OnViewActivated).InstancePerLifetimeScope();
 
             builder.RegisterType<Messenger>().As<IMessenger>().SingleInstance();
-            builder.RegisterType<EndPoints>().As<BaseEndPoints>().SingleInstance();
-            builder.RegisterType<VertexEventHolder>().As<IVertexEventHolder>().SingleInstance().PropertiesAutowired();
+            builder.RegisterType<EndPoints>().As<BaseEndPoints>().AsImplementedInterfaces().SingleInstance();
+            builder.RegisterType<GraphEvents>().As<IGraphEvents>().SingleInstance().PropertiesAutowired();
 
             builder.RegisterType<FileLog>().As<ILog>().SingleInstance();
             builder.RegisterType<ConsoleLog>().As<ILog>().SingleInstance();
             builder.RegisterType<MailLog>().As<ILog>().SingleInstance();
             builder.RegisterComposite<Logs, ILog>().SingleInstance();
+
+            builder.RegisterComposite<CompositeGraphEvents, IGraphEvents>().SingleInstance();
 
             builder.RegisterType<KnuthRandom>().As<IRandom>().SingleInstance();
             builder.RegisterType<GraphAssemble>().As<IGraphAssemble>().SingleInstance().Named<IGraphAssemble>(GraphAssemble);
@@ -79,7 +83,7 @@ namespace ConsoleVersion.DependencyInjection
             builder.RegisterType<RootMeanSquareCost>().As<IMeanCost>().SingleInstance();
             builder.RegisterType<VertexVisualization>().As<IVisualization<Vertex>>().SingleInstance();
 
-            builder.RegisterType<GraphSerializationModule>().As<IGraphSerializationModule>().SingleInstance();
+            builder.RegisterType<InFileSerializationModule>().As<IGraphSerializationModule>().SingleInstance();
             builder.RegisterType<PathInput>().As<IPathInput>().SingleInstance().PropertiesAutowired();
             builder.RegisterType<BinaryGraphSerializer>().As<IGraphSerializer>().SingleInstance();
             builder.RegisterDecorator<CompressGraphSerializer, IGraphSerializer>();

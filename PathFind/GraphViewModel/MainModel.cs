@@ -12,7 +12,7 @@ namespace GraphViewModel
 {
     public abstract class MainModel : IMainModel
     {
-        private readonly IVertexEventHolder eventHolder;
+        private readonly IGraphEvents events;
 
         protected readonly ILog log;
         protected readonly IGraphFieldFactory fieldFactory;
@@ -26,12 +26,12 @@ namespace GraphViewModel
         public virtual IGraph Graph { get; protected set; }
 
         protected MainModel(IGraphFieldFactory fieldFactory,
-            IVertexEventHolder eventHolder,
+            IGraphEvents events,
             IGraphSerializationModule serializationModule,
             BaseEndPoints endPoints,
             ILog log)
         {
-            this.eventHolder = eventHolder;
+            this.events = events;
             this.serializationModule = serializationModule;
             this.fieldFactory = fieldFactory;
             this.endPoints = endPoints;
@@ -77,13 +77,11 @@ namespace GraphViewModel
 
         public virtual void ConnectNewGraph(IGraph graph)
         {
-            endPoints.UnsubscribeFromEvents(Graph);
             endPoints.Reset();
-            eventHolder.UnsubscribeVertices(Graph);
+            events.Unsubscribe(Graph);
             Graph = graph;
             GraphField = fieldFactory.CreateGraphField(Graph);
-            endPoints.SubscribeToEvents(Graph);
-            eventHolder.SubscribeVertices(Graph);
+            events.Subscribe(Graph);
             GraphParametres = Graph.ToString();
         }
 

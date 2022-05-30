@@ -8,12 +8,7 @@ namespace Common.Extensions.EnumerableExtensions
     {
         public static TValue GetOrDefault<TKey, TValue>(this IReadOnlyDictionary<TKey, TValue> self, TKey key, Func<TValue> defaultValue)
         {
-            if (self.TryGetValue(key, out var value))
-            {
-                return value;
-            }
-
-            return defaultValue();
+            return self.TryGetValue(key, out var value) ? value : defaultValue();
         }
 
         public static TValue GetOrEmpty<TKey, TValue>(this IReadOnlyDictionary<TKey, TValue> self, TKey key)

@@ -75,8 +75,8 @@ namespace WindowsFormsVersion.ViewModel
         public MainWindow MainWindow { get; set; }
 
         public MainWindowViewModel(IGraphFieldFactory fieldFactory,
-            IVertexEventHolder eventHolder, IGraphSerializationModule serializationModule, BaseEndPoints endPoints, ILog log)
-            : base(fieldFactory, eventHolder, serializationModule, endPoints, log)
+            IGraphEvents events, IGraphSerializationModule serializationModule, BaseEndPoints endPoints, ILog log)
+            : base(fieldFactory, events, serializationModule, endPoints, log)
         {
             messenger = DI.Container.Resolve<IMessenger>();
             messenger.Register<AlgorithmStatusMessage>(this, MessageTokens.MainModel, SetAlgorithmStatus);

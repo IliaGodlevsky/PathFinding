@@ -108,7 +108,7 @@
     <Compile Include="Model\CostColors.cs" />
     <Compile Include="Model\PathInput.cs" />
     <Compile Include="Model\RangedSlider.cs" />
-    <Compile Include="Model\VertexEventHolder.cs" />
+    <Compile Include="Model\GraphEvents.cs" />
     <Compile Include="Model\Vertex.cs" />
     <Compile Include="Model\VertexFactory.cs" />
     <Compile Include="Model\VertexFromInfoFactory.cs" />

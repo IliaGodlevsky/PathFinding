@@ -45,16 +45,17 @@
     <Compile Include="Extensions\BinaryReaderExtensions.cs" />
     <Compile Include="Extensions\BinaryWriterExtensions.cs" />
     <Compile Include="Extensions\EnumerableExtensions.cs" />
-    <Compile Include="Extensions\FormatterExtensions.cs" />
     <Compile Include="Extensions\GraphSerializationInfoExtensions.cs" />
     <Compile Include="Extensions\GraphSerializerExtensions.cs" />
     <Compile Include="Extensions\GraphSerializationModuleExtensions.cs" />
+    <Compile Include="Extensions\XDocumentExtensions.cs" />
+    <Compile Include="Extensions\XmlDocumentExtensions.cs" />
     <Compile Include="Interfaces\ICrypto.cs" />
     <Compile Include="Interfaces\IGraphSerializationModule.cs" />
     <Compile Include="Serializers\BinaryGraphSerializer.cs" />
-    <Compile Include="Serializers\GraphSerializationModule.cs" />
-    <Compile Include="Serializers\CompressGraphSerializer.cs" />
-    <Compile Include="Serializers\CryptoGraphSerializer.cs" />
+    <Compile Include="Modules\InFileSerializationModule.cs" />
+    <Compile Include="Serializers\Decorators\CompressGraphSerializer.cs" />
+    <Compile Include="Serializers\Decorators\CryptoGraphSerializer.cs" />
     <Compile Include="Exceptions\CantSerializeGraphException.cs" />
     <Compile Include="Extensions\GraphExtensions.cs" />
     <Compile Include="Extensions\VertexExtension.cs" />
@@ -63,6 +64,7 @@
     <Compile Include="Interfaces\IPathInput.cs" />
     <Compile Include="Interfaces\IVertexFromInfoFactory.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Serializers\XmlGraphSerializer.cs" />
     <Compile Include="VertexSerializationInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -102,6 +104,9 @@
       <Project>{B80C5250-3D81-4742-B8A5-84AE39122BA9}</Project>
       <Name>GraphLib.Realizations</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

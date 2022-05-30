@@ -6,6 +6,7 @@ namespace GraphLib.Base.EndPoints.BaseCommands
     internal abstract class BaseEndPointsUndoCommand : IUndoCommand
     {
         protected IVertex Source => endPoints.Source;
+
         protected IVertex Target => endPoints.Target;
 
         protected readonly BaseEndPoints endPoints;

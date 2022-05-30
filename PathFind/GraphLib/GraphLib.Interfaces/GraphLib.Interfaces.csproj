@@ -41,6 +41,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="IGraphEvents.cs" />
     <Compile Include="IGraphFieldFactory.cs" />
     <Compile Include="IMeanCost.cs" />
     <Compile Include="ICoordinate.cs" />
@@ -59,7 +60,6 @@
     <Compile Include="IVisualizable.cs" />
     <Compile Include="IVertex.cs" />
     <Compile Include="IVertexCost.cs" />
-    <Compile Include="IVertexEventHolder.cs" />
     <Compile Include="Factories\IVertexFactory.cs" />
     <Compile Include="IVisitedVertices.cs" />
     <Compile Include="IVisualization.cs" />

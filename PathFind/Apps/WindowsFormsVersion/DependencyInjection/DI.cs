@@ -7,14 +7,16 @@ using GalaSoft.MvvmLight.Messaging;
 using GraphLib.Base.EndPoints;
 using GraphLib.Interfaces;
 using GraphLib.Interfaces.Factories;
+using GraphLib.Realizations;
 using GraphLib.Realizations.Factories;
 using GraphLib.Realizations.Factories.CoordinateFactories;
 using GraphLib.Realizations.Factories.GraphAssembles;
 using GraphLib.Realizations.Factories.GraphFactories;
 using GraphLib.Realizations.Factories.NeighboursCoordinatesFactories;
-using GraphLib.Serialization;
 using GraphLib.Serialization.Interfaces;
+using GraphLib.Serialization.Modules;
 using GraphLib.Serialization.Serializers;
+using GraphLib.Serialization.Serializers.Decorators;
 using Logging.Interface;
 using Logging.Loggers;
 using Random.Interface;
@@ -50,14 +52,16 @@ namespace WindowsFormsVersion.DependencyInjection
             builder.RegisterAssemblyTypes(Assemblies).Where(Implements<IViewModel>).AsSelf().InstancePerDependency();
             builder.RegisterAssemblyTypes(Assemblies).Where(type => type.IsAppWindow()).AsSelf().InstancePerDependency();
 
-            builder.RegisterType<EndPoints>().As<BaseEndPoints>().SingleInstance();
-            builder.RegisterType<VertexEventHolder>().As<IVertexEventHolder>().SingleInstance();
+            builder.RegisterType<EndPoints>().As<BaseEndPoints>().AsImplementedInterfaces().SingleInstance();
+            builder.RegisterType<VertexEventHolder>().As<IGraphEvents>().SingleInstance();
             builder.RegisterType<Messenger>().As<IMessenger>().SingleInstance();
 
             builder.RegisterType<FileLog>().As<ILog>().SingleInstance();
             builder.RegisterType<MessageBoxLog>().As<ILog>().SingleInstance();
             builder.RegisterType<MailLog>().As<ILog>().SingleInstance();
             builder.RegisterComposite<Logs, ILog>().SingleInstance();
+
+            builder.RegisterComposite<CompositeGraphEvents, IGraphEvents>().SingleInstance();
 
             builder.RegisterType<KnuthRandom>().As<IRandom>().SingleInstance();
             builder.RegisterType<GraphAssemble>().Named<IGraphAssemble>(GraphAssembleName).As<IGraphAssemble>().SingleInstance();
@@ -70,7 +74,7 @@ namespace WindowsFormsVersion.DependencyInjection
             builder.RegisterType<MooreNeighborhoodFactory>().As<INeighborhoodFactory>().SingleInstance();
             builder.RegisterType<VertexVisualization>().As<IVisualization<Vertex>>().SingleInstance();
 
-            builder.RegisterType<GraphSerializationModule>().As<IGraphSerializationModule>().SingleInstance();
+            builder.RegisterType<InFileSerializationModule>().As<IGraphSerializationModule>().SingleInstance();
             builder.RegisterType<PathInput>().As<IPathInput>().SingleInstance();
             builder.RegisterType<BinaryGraphSerializer>().As<IGraphSerializer>().SingleInstance();
             builder.RegisterDecorator<CompressGraphSerializer, IGraphSerializer>();
