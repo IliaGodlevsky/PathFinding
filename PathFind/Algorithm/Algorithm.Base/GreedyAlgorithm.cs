@@ -6,6 +6,7 @@ using Common.Extensions.EnumerableExtensions;
 using GraphLib.Extensions;
 using GraphLib.Interfaces;
 using NullObject.Extensions;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -52,7 +53,7 @@ namespace Algorithm.Base
             var neighbours = GetUnvisitedVertices(CurrentVertex);
             double leastVertexCost = neighbours.MinOrDefault(GreedyHeuristic);
             return neighbours
-                .ForAll(Enqueue)
+                .ForAll(new Action<IVertex>(Enqueue))
                 .FirstOrNullVertex(vertex => GreedyHeuristic(vertex) == leastVertexCost);
         }
 

@@ -49,7 +49,8 @@ namespace Common.Extensions.EnumerableExtensions
             return array.AggregateOrDefault((x, y) => x * y);
         }
 
-        public static IEnumerable<T> ForAll<T>(this IEnumerable<T> collection, Action<T> action)
+        public static T ForAll<T, U>(this T collection, Action<U> action)
+            where T : IEnumerable<U>
         {
             collection.ForEach(action);
             return collection;

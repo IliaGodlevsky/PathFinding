@@ -35,7 +35,7 @@ namespace WPFVersion3D
             AngleValueRange = new InclusiveValueRange<double>(360, 0);
             ObstaclePercentValueRange = new InclusiveValueRange<double>(99, 0);
             AlgorithmDelayValueRange = new InclusiveValueRange<double>(35, 1);
-            GraphWidthValueRange = new InclusiveValueRange<int>(13, 1);
+            GraphWidthValueRange = new InclusiveValueRange<int>(9, 1);
             FieldOfViewValueRange = new InclusiveValueRange<double>(360, 0);
             GraphLengthValueRange = GraphWidthValueRange;
             GraphHeightValueRange = GraphLengthValueRange;

@@ -69,7 +69,8 @@ namespace WPFVersion3D.DependencyInjection
             builder.RegisterDecorator<CryptoGraphSerializer, IGraphSerializer>();
             builder.RegisterType<Vertex3DFromInfoFactory>().As<IVertexFromInfoFactory>().SingleInstance();
 
-            builder.RegisterAssemblyTypes(Assemblies).Where(Implements<IAlgorithmFactory<PathfindingAlgorithm>>)
+            builder.RegisterAssemblyTypes(Assemblies)
+                .Where(Implements<IAlgorithmFactory<PathfindingAlgorithm>>)
                 .As<IAlgorithmFactory<PathfindingAlgorithm>>().SingleInstance();
 
             return builder.Build();

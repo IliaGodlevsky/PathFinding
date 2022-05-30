@@ -2,7 +2,6 @@
 using GraphLib.Extensions;
 using GraphLib.Interfaces;
 using GraphLib.NullRealizations;
-using GraphLib.Serialization;
 using GraphLib.Serialization.Extensions;
 using GraphLib.Serialization.Interfaces;
 using GraphViewModel.Interfaces;

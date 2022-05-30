@@ -16,14 +16,7 @@ namespace ConsoleVersion.ValueInput.RandomInput
 
         public RandomKeyInput(IRandom random) : base(random)
         {
-            AvailableKeys = new[]
-            {
-                ConsoleKey.Enter,
-                ConsoleKey.UpArrow,
-                ConsoleKey.DownArrow, 
-                //ConsoleKey.P 
-            };
-
+            AvailableKeys = new[] { ConsoleKey.Enter, ConsoleKey.UpArrow, ConsoleKey.DownArrow };
             Range = new InclusiveValueRange<int>(AvailableKeys.Length - 1);
         }
 

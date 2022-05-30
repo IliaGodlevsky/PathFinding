@@ -25,9 +25,9 @@ namespace WPFVersion3D.Model
         {
             Vertices = graph.Vertices.OfType<Vertex3D>().ToArray();
             Children.AddRange(Vertices);
-            Abscissa = new Abscissa(graph.DimensionsSizes, Vertices);
-            Ordinate = new Ordinate(graph.DimensionsSizes, Vertices);
-            Applicate = new Applicate(graph.DimensionsSizes, Vertices);
+            Abscissa = new Abscissa(graph);
+            Ordinate = new Ordinate(graph);
+            Applicate = new Applicate(graph);
         }
     }
 }

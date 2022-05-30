@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using GraphLib.Realizations.Graphs;
+using System.Collections.Generic;
 
 namespace WPFVersion3D.Model.Axes
 {
@@ -6,8 +7,7 @@ namespace WPFVersion3D.Model.Axes
     {
         protected override int Order => 1;
 
-        public Ordinate(int[] dimensionSizes, IReadOnlyCollection<Vertex3D> vertices)
-            : base(dimensionSizes, vertices)
+        public Ordinate(Graph3D graph) : base(graph)
         {
         }
 

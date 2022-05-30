@@ -2,6 +2,7 @@
 using Common.Extensions.EnumerableExtensions;
 using GraphLib.Extensions;
 using GraphLib.Interfaces;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using static System.Reflection.BindingFlags;
@@ -30,7 +31,7 @@ namespace GraphLib.Base
             Size = DimensionsSizes.GetMultiplication();
             this.vertices = vertices
                 .Take(Size)
-                .ForAll(SetGraph)
+                .ForAll(new Action<IVertex>(SetGraph))
                 .ToDictionary(vertex => vertex.Position)
                 .ToReadOnlyDictionary();
         }

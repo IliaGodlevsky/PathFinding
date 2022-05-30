@@ -20,12 +20,7 @@ namespace ConsoleVersion.ValueInput.RandomInput
 
         protected override int GetRandomInt()
         {
-            int value = Random.Next(Range);
-            while (value == 7 || value == 6)
-            {
-                value = Random.Next(Range);
-            }
-            return value;
+            return Random.Next(Range);
         }
     }
 }
