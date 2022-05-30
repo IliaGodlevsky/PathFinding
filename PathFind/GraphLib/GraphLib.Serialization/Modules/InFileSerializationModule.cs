@@ -2,14 +2,14 @@
 using GraphLib.Serialization.Extensions;
 using GraphLib.Serialization.Interfaces;
 
-namespace GraphLib.Serialization
+namespace GraphLib.Serialization.Modules
 {
-    public sealed class GraphSerializationModule : IGraphSerializationModule
+    public sealed class InFileSerializationModule : IGraphSerializationModule
     {
         private readonly IGraphSerializer serializer;
         private readonly IPathInput input;
 
-        public GraphSerializationModule(IGraphSerializer graphSerializer, IPathInput pathInput)
+        public InFileSerializationModule(IGraphSerializer graphSerializer, IPathInput pathInput)
         {
             serializer = graphSerializer;
             input = pathInput;

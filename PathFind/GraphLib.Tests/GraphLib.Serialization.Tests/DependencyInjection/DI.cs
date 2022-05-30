@@ -2,6 +2,7 @@
 using GraphLib.Interfaces.Factories;
 using GraphLib.Serialization.Interfaces;
 using GraphLib.Serialization.Serializers;
+using GraphLib.Serialization.Serializers.Decorators;
 using GraphLib.TestRealizations.TestFactories;
 using System;
 

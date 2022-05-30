@@ -17,9 +17,10 @@ using GraphLib.Realizations.Factories.GraphFactories;
 using GraphLib.Realizations.Factories.NeighboursCoordinatesFactories;
 using GraphLib.Realizations.MeanCosts;
 using GraphLib.Realizations.SmoothLevel;
-using GraphLib.Serialization;
 using GraphLib.Serialization.Interfaces;
+using GraphLib.Serialization.Modules;
 using GraphLib.Serialization.Serializers;
+using GraphLib.Serialization.Serializers.Decorators;
 using Logging.Interface;
 using Logging.Loggers;
 using Random.Interface;
@@ -72,9 +73,9 @@ namespace WPFVersion.DependencyInjection
             builder.RegisterType<HighSmoothLevel>().As<ISmoothLevel>().SingleInstance();
             builder.RegisterType<VertexVisualization>().As<IVisualization<Vertex>>().SingleInstance();
 
-            builder.RegisterType<GraphSerializationModule>().As<IGraphSerializationModule>().SingleInstance();
+            builder.RegisterType<InFileSerializationModule>().As<IGraphSerializationModule>().SingleInstance();
             builder.RegisterType<PathInput>().As<IPathInput>().SingleInstance();
-            builder.RegisterType<BinaryGraphSerializer>().As<IGraphSerializer>().SingleInstance();
+            builder.RegisterType<XmlGraphSerializer>().As<IGraphSerializer>().SingleInstance();
             builder.RegisterDecorator<CompressGraphSerializer, IGraphSerializer>();
             builder.RegisterDecorator<CryptoGraphSerializer, IGraphSerializer>();
             builder.RegisterType<VertexFromInfoFactory>().As<IVertexFromInfoFactory>().SingleInstance();

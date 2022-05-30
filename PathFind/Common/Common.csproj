@@ -75,6 +75,7 @@
     <Compile Include="Extensions\SerializationInfoExtensions.cs" />
     <Compile Include="Extensions\StringBuilderExtensions.cs" />
     <Compile Include="Extensions\ValueTupleExtensions.cs" />
+    <Compile Include="Extensions\XmlElementExtensions.cs" />
     <Compile Include="Interface\IViewModel.cs" />
     <Compile Include="Extensions\EnumerableExtensions\IEnumerableExtension.cs" />
     <Compile Include="Extensions\MemberInfoExtensions.cs" />

@@ -12,9 +12,10 @@ using GraphLib.Realizations.Factories.CoordinateFactories;
 using GraphLib.Realizations.Factories.GraphAssembles;
 using GraphLib.Realizations.Factories.GraphFactories;
 using GraphLib.Realizations.Factories.NeighboursCoordinatesFactories;
-using GraphLib.Serialization;
 using GraphLib.Serialization.Interfaces;
+using GraphLib.Serialization.Modules;
 using GraphLib.Serialization.Serializers;
+using GraphLib.Serialization.Serializers.Decorators;
 using Logging.Interface;
 using Logging.Loggers;
 using Random.Interface;
@@ -65,7 +66,7 @@ namespace WPFVersion3D.DependencyInjection
             builder.RegisterType<Messenger>().As<IMessenger>().SingleInstance();
             builder.RegisterType<VertexVisualization>().As<IVisualization<Vertex3D>>().SingleInstance();
 
-            builder.RegisterType<GraphSerializationModule>().As<IGraphSerializationModule>().SingleInstance();
+            builder.RegisterType<InFileSerializationModule>().As<IGraphSerializationModule>().SingleInstance();
             builder.RegisterType<PathInput>().As<IPathInput>().SingleInstance();
             builder.RegisterType<BinaryGraphSerializer>().As<IGraphSerializer>().SingleInstance();
             builder.RegisterDecorator<CompressGraphSerializer, IGraphSerializer>();

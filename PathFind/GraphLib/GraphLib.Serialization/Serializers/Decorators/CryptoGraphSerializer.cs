@@ -6,7 +6,7 @@ using System;
 using System.IO;
 using System.Security.Cryptography;
 
-namespace GraphLib.Serialization.Serializers
+namespace GraphLib.Serialization.Serializers.Decorators
 {
     public sealed class CryptoGraphSerializer : IGraphSerializer
     {

@@ -10,6 +10,9 @@ using GraphLib.Extensions;
 using GraphLib.Interfaces;
 using GraphLib.NullRealizations;
 using GraphLib.Realizations.Coordinates;
+using GraphLib.Serialization.Extensions;
+using GraphLib.TestRealizations;
+using GraphLib.TestRealizations.TestFactories;
 using System;
 
 namespace ConsoleVersion.Views
