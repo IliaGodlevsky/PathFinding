@@ -35,7 +35,7 @@ namespace WPFVersion.DependencyInjection
 {
     internal static class DI
     {
-        private const string GraphAssembleName = nameof(GraphAssembleName);
+        private static readonly Lazy<IContainer> container = new Lazy<IContainer>(Configure);
 
         private static Assembly[] Assemblies => AppDomain.CurrentDomain.GetAssemblies();
 
@@ -61,8 +61,7 @@ namespace WPFVersion.DependencyInjection
             builder.RegisterComposite<CompositeGraphEvents, IGraphEvents>().SingleInstance();
 
             builder.RegisterType<CryptoRandom>().As<IRandom>().SingleInstance();
-            builder.RegisterType<GraphAssemble>().Named<IGraphAssemble>(GraphAssembleName).As<IGraphAssemble>().SingleInstance();
-            builder.Register(RegisterSmoothedGraphAssemble).As<IGraphAssemble>().SingleInstance();
+            builder.RegisterType<GraphAssemble>().As<IGraphAssemble>().SingleInstance();
             builder.RegisterType<VertexFactory>().As<IVertexFactory>().SingleInstance();
             builder.RegisterType<CostFactory>().As<IVertexCostFactory>().SingleInstance();
             builder.RegisterType<Coordinate2DFactory>().As<ICoordinateFactory>().SingleInstance();
@@ -92,17 +91,6 @@ namespace WPFVersion.DependencyInjection
         private static bool Implements<TInterface>(Type type)
         {
             return type.ImplementsAll(typeof(TInterface));
-        }
-
-        private static SmoothedGraphAssemble RegisterSmoothedGraphAssemble(IComponentContext context)
-        {
-            var randomGraphAssemble = context.ResolveNamed<IGraphAssemble>(GraphAssembleName);
-            var costFactory = context.Resolve<IVertexCostFactory>();
-            var meanCost = context.Resolve<IMeanCost>();
-            var smoothLevel = context.Resolve<ISmoothLevel>();
-            return new SmoothedGraphAssemble(randomGraphAssemble, costFactory, meanCost, smoothLevel);
-        }
-
-        private static readonly Lazy<IContainer> container = new Lazy<IContainer>(Configure);
+        }        
     }
 }

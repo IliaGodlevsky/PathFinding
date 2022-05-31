@@ -8,25 +8,25 @@ namespace GraphLib.Realizations.Extensions
 {
     public static class GraphExtensions
     {
-        public static IGraph Smooth(this IGraph self, IVertexCostFactory costFactory,
+        public static void Smooth(this IGraph self, IVertexCostFactory costFactory, 
             IMeanCost meanCost, int smoothLevel)
         {
-            while (smoothLevel-- > 0)
+            var visited = new VisitedVertices();
+            while (smoothLevel--> 0)
             {
-                var visited = new VisitedVertices();
-                foreach (var vertex in self.Vertices)
+                self.ForEach(vertex =>
                 {
                     visited.Visit(vertex);
                     if (visited.HasUnvisitedNeighbours(vertex))
                     {
-                        int Calculate(IVertex neighbour) => meanCost.Calculate(neighbour, vertex);
-                        double avgCost = visited.GetUnvisitedNeighbours(vertex).Average(Calculate);
-                        int cost = Convert.ToInt32(Math.Round(avgCost, 0));
-                        vertex.Cost = costFactory.CreateCost(cost);
+                        double avgCost = visited
+                            .GetUnvisitedNeighbours(vertex)
+                            .Average(neighbour => meanCost.Calculate(neighbour, vertex));
+                        vertex.Cost = costFactory.CreateCost((int)Math.Round(avgCost, 0));
                     }
-                }
+                });
+                visited.Clear();
             }
-            return self;
         }
     }
 }

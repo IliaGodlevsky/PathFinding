@@ -18,7 +18,7 @@ namespace ValueRange.Extensions
         public static T[] ToArray<T>(this InclusiveValueRange<T> range)
             where T : IComparable
         {
-            return new[] { range.LowerValueOfRange, range.UpperValueOfRange };
+            return (range.LowerValueOfRange, range.UpperValueOfRange).Merge();
         }
 
         public static InclusiveValueRange<T> ToRange<T>(this (T upper, T lower) range)

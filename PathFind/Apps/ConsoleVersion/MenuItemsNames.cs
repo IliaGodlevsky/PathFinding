@@ -15,6 +15,7 @@
         public const string ChangeVertexCost = "Change vertex cost";
         public const string SaveGraph = "Save graph";
         public const string LoadGraph = "Load graph";
+        public const string SmoothGraph = "Smooth graph";
         public const string Exit = "Exit";
         public const string ChooseEndPoints = "Choose end points";
         public const string ChooseAlgorithm = "Choose algorithm";

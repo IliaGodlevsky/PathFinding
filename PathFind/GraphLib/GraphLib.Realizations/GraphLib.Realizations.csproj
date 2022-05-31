@@ -42,6 +42,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="CompositeGraphEvents.cs" />
+    <Compile Include="Enums\SmoothLevels.cs" />
     <Compile Include="Extensions\GraphExtensions.cs" />
     <Compile Include="Neighbourhoods\VonNeumannNeighborhood.cs" />
     <Compile Include="Neighbourhoods\MooreNeighborhood.cs" />
@@ -58,7 +59,6 @@
     <Compile Include="Factories\GraphFactories\Graph2DFactory.cs" />
     <Compile Include="Factories\GraphFactories\Graph3DFactory.cs" />
     <Compile Include="Factories\GraphAssembles\GraphAssemble.cs" />
-    <Compile Include="Factories\GraphAssembles\SmoothedGraphAssemble.cs" />
     <Compile Include="Graphs\Graph2D.cs" />
     <Compile Include="Graphs\Graph3D.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

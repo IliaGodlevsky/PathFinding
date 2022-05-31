@@ -33,13 +33,15 @@ using Random.Realizations.Generators;
 using System;
 using System.Reflection;
 
+using static Common.Extensions.MemberInfoExtensions;
+
 namespace ConsoleVersion.DependencyInjection
 {
     internal static class DI
     {
-        public static IContainer Container => container.Value;
+        private static readonly Lazy<IContainer> container = new Lazy<IContainer>(Configure);
 
-        private const string GraphAssemble = nameof(GraphAssemble);
+        public static IContainer Container => container.Value;
 
         private static Assembly[] Assemblies => AppDomain.CurrentDomain.GetAssemblies();
 
@@ -55,9 +57,9 @@ namespace ConsoleVersion.DependencyInjection
             builder.RegisterType<ConsoleKeystrokesHook>().AsSelf().InstancePerDependency().PropertiesAutowired();
 
             builder.RegisterType<MainViewModel>().AsSelf().SingleInstance().PropertiesAutowired();
-            builder.RegisterAssemblyTypes(Assemblies).Where(Implements<IViewModel>).Except<MainViewModel>().AsSelf()
+            builder.RegisterAssemblyTypes(Assemblies).Where(type => type.Implements<IViewModel>()).Except<MainViewModel>().AsSelf()
                 .PropertiesAutowired().InstancePerLifetimeScope();
-            builder.RegisterAssemblyTypes(Assemblies).Where(Implements<IView>).AsSelf().PropertiesAutowired()
+            builder.RegisterAssemblyTypes(Assemblies).Where(type => type.Implements<IView>()).AsSelf().PropertiesAutowired()
                 .OnActivated(OnViewActivated).InstancePerLifetimeScope();
 
             builder.RegisterType<Messenger>().As<IMessenger>().SingleInstance();
@@ -72,8 +74,7 @@ namespace ConsoleVersion.DependencyInjection
             builder.RegisterComposite<CompositeGraphEvents, IGraphEvents>().SingleInstance();
 
             builder.RegisterType<KnuthRandom>().As<IRandom>().SingleInstance();
-            builder.RegisterType<GraphAssemble>().As<IGraphAssemble>().SingleInstance().Named<IGraphAssemble>(GraphAssemble);
-            builder.Register(RegisterSmoothedGraphAssemble).As<IGraphAssemble>().SingleInstance();
+            builder.RegisterType<GraphAssemble>().As<IGraphAssemble>().SingleInstance();
             builder.RegisterType<CostFactory>().As<IVertexCostFactory>().SingleInstance();
             builder.RegisterType<VertexFactory>().As<IVertexFactory>().SingleInstance();
             builder.RegisterType<GraphFieldFactory>().As<IGraphFieldFactory>().SingleInstance();
@@ -90,7 +91,7 @@ namespace ConsoleVersion.DependencyInjection
             builder.RegisterDecorator<CryptoGraphSerializer, IGraphSerializer>();
             builder.RegisterType<VertexFromInfoFactory>().As<IVertexFromInfoFactory>().SingleInstance();
 
-            builder.RegisterAssemblyTypes(Assemblies).Where(Implements<IAlgorithmFactory<PathfindingAlgorithm>>)
+            builder.RegisterAssemblyTypes(Assemblies).Where(type => type.Implements<IAlgorithmFactory<PathfindingAlgorithm>>())
                 .As<IAlgorithmFactory<PathfindingAlgorithm>>().SingleInstance();
             builder.RegisterType<LandscapeStepRule>().As<IStepRule>().SingleInstance();
 
@@ -103,20 +104,5 @@ namespace ConsoleVersion.DependencyInjection
             var mainModel = e.Context.Resolve<MainViewModel>();
             view.NewMenuIteration += mainModel.DisplayGraph;
         }
-
-        private static SmoothedGraphAssemble RegisterSmoothedGraphAssemble(IComponentContext context)
-        {
-            var randomGraphAssemble = context.ResolveNamed<IGraphAssemble>(GraphAssemble);
-            var costFactory = context.Resolve<IVertexCostFactory>();
-            var meanCost = context.Resolve<IMeanCost>();
-            return new SmoothedGraphAssemble(randomGraphAssemble, costFactory, meanCost);
-        }
-
-        private static bool Implements<TInterface>(Type type)
-        {
-            return type.ImplementsAll(typeof(TInterface));
-        }
-
-        private static readonly Lazy<IContainer> container = new Lazy<IContainer>(Configure);
     }
 }

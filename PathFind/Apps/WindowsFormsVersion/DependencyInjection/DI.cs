@@ -31,13 +31,7 @@ namespace WindowsFormsVersion.DependencyInjection
 {
     internal static class DI
     {
-        private const string GraphAssembleName = nameof(GraphAssembleName);
-        private static SmoothedGraphAssemble RegisterSmoothedGraphAssemble(IComponentContext context)
-        {
-            var randomGraphAssemble = context.ResolveNamed<IGraphAssemble>(GraphAssembleName);
-            var costFactory = context.Resolve<IVertexCostFactory>();
-            return new SmoothedGraphAssemble(randomGraphAssemble, costFactory);
-        }
+        private static readonly Lazy<IContainer> container = new Lazy<IContainer>(Configure);
 
         private static Assembly[] Assemblies => AppDomain.CurrentDomain.GetAssemblies();
 
@@ -64,8 +58,7 @@ namespace WindowsFormsVersion.DependencyInjection
             builder.RegisterComposite<CompositeGraphEvents, IGraphEvents>().SingleInstance();
 
             builder.RegisterType<KnuthRandom>().As<IRandom>().SingleInstance();
-            builder.RegisterType<GraphAssemble>().Named<IGraphAssemble>(GraphAssembleName).As<IGraphAssemble>().SingleInstance();
-            builder.Register(RegisterSmoothedGraphAssemble).As<IGraphAssemble>().SingleInstance();
+            builder.RegisterType<GraphAssemble>().As<IGraphAssemble>().SingleInstance();
             builder.RegisterType<CostFactory>().As<IVertexCostFactory>().SingleInstance();
             builder.RegisterType<VertexFactory>().As<IVertexFactory>().SingleInstance();
             builder.RegisterType<Coordinate2DFactory>().As<ICoordinateFactory>().SingleInstance();
@@ -90,8 +83,6 @@ namespace WindowsFormsVersion.DependencyInjection
         private static bool Implements<TInterface>(Type type)
         {
             return type.ImplementsAll(typeof(TInterface));
-        }
-
-        private static readonly Lazy<IContainer> container = new Lazy<IContainer>(Configure);
+        }        
     }
 }

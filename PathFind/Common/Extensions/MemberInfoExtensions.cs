@@ -48,6 +48,8 @@ namespace Common.Extensions
 
         public static bool TrySetValue(this FieldInfo fieldInfo, object obj, object value)
         {
+            var locker = new object();
+
             lock (locker)
             {
                 if (fieldInfo == null)
@@ -72,6 +74,10 @@ namespace Common.Extensions
             return attribute?.IsAttachedTo(attachedTo.GetType()) == true;
         }
 
-        private static readonly object locker = new object();
+        public static bool Implements<TInterface>(this Type type) 
+            where TInterface : class
+        {
+            return type.ImplementsAll(typeof(TInterface));
+        }
     }
 }

@@ -83,6 +83,13 @@ namespace ConsoleVersion.ViewModel
         }
 
         [PreValidationMethod(nameof(IsGraphValid))]
+        [MenuItem(MenuItemsNames.SmoothGraph, 2)]
+        private void SmoothGraph()
+        {
+            DI.Container.Display<GraphSmoothView>();
+        }
+
+        [PreValidationMethod(nameof(IsGraphValid))]
         [MenuItem(MenuItemsNames.SaveGraph, 5)]
         private void SaveGraph()
         {
