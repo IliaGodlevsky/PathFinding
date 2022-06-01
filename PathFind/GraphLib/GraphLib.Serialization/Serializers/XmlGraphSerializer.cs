@@ -1,18 +1,14 @@
-﻿using GraphLib.Base;
-using GraphLib.Interfaces;
+﻿using GraphLib.Interfaces;
 using GraphLib.Interfaces.Factories;
-using GraphLib.Serialization.Exceptions;
 using GraphLib.Serialization.Extensions;
 using GraphLib.Serialization.Interfaces;
-using System;
 using System.IO;
-using System.Linq;
 using System.Xml;
 using System.Xml.Linq;
 
 namespace GraphLib.Serialization.Serializers
 {
-    public sealed class XmlGraphSerializer : IGraphSerializer
+    public sealed class XmlGraphSerializer : GraphSerializer
     {
         internal const string Dimensions = "dimensions";
         internal const string Vertices = "vertices";
@@ -25,47 +21,23 @@ namespace GraphLib.Serialization.Serializers
         internal const string Graph = "graph";
         internal const string Cost = "cost";
 
-        private readonly IVertexFromInfoFactory vertexFactory;
-        private readonly IGraphFactory graphFactory;
-        private readonly IVertexCostFactory costFactory;
-        private readonly ICoordinateFactory coordinateFactory;
-
         public XmlGraphSerializer(IVertexFromInfoFactory converter,
             IGraphFactory graphFactory,
             IVertexCostFactory costFactory,
             ICoordinateFactory coordinateFactory)
+            : base(converter, graphFactory, costFactory, coordinateFactory)
         {
-            this.vertexFactory = converter;
-            this.graphFactory = graphFactory;
-            this.costFactory = costFactory;
-            this.coordinateFactory = coordinateFactory;
+            
         }
 
-        public IGraph LoadGraph(Stream stream)
+        protected override GraphSerializationInfo LoadGraphInternal(Stream stream)
         {
-            try
-            {
-                var graphInfo = XDocument.Load(stream).ToGraph(costFactory, coordinateFactory);
-                var vertices = graphInfo.CreateVertices(vertexFactory).ToArray();
-                BaseVertexCost.CostRange = graphInfo.CostRange;
-                return graphFactory.CreateGraph(vertices, graphInfo.DimensionsSizes);
-            }
-            catch (Exception ex)
-            {
-                throw new CantSerializeGraphException(ex.Message, ex);
-            }
+            return XDocument.Load(stream).ToGraph(costFactory, coordinateFactory);
         }
 
-        public void SaveGraph(IGraph graph, Stream stream)
+        protected override void SaveGraphInternal(IGraph graph, Stream stream)
         {
-            try
-            {
-                new XmlDocument().ToXml(graph.ToGraphSerializationInfo()).Save(stream);
-            }
-            catch (Exception ex)
-            {
-                throw new CantSerializeGraphException(ex.Message, ex);
-            }
+            new XmlDocument().ToXml(graph.ToGraphSerializationInfo()).Save(stream);
         }
     }
 }
