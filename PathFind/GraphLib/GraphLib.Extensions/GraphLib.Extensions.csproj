@@ -50,6 +50,7 @@
     <Compile Include="INeighbourhoodExtensions.cs" />
     <Compile Include="IVisitedVerticesExtensions.cs" />
     <Compile Include="StackExtension.cs" />
+    <Compile Include="ValueTupleExtensions.cs" />
     <Compile Include="VertexExtension.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

@@ -48,9 +48,7 @@ namespace GraphLib.Realizations.Factories.GraphAssembles
             for (int vertexIndex = 0; vertexIndex < graphSize; vertexIndex++)
             {
                 var coordinateValues = graphDimensionsSizes.ToCoordinates(vertexIndex);
-                var coordinate = coordinateFactory.CreateCoordinate(coordinateValues);
-                var neighbourhood = neighbourhoodFactory.CreateNeighborhood(coordinate);
-                var vertex = vertexFactory.CreateVertex(neighbourhood, coordinate);
+                var vertex = (coordinateFactory, neighbourhoodFactory, vertexFactory).Create(coordinateValues);
                 vertex.Cost = costFactory.CreateCost();
                 vertex.IsObstacle = obstaclesMatrix[vertexIndex];
                 vertices[vertexIndex] = vertex;
