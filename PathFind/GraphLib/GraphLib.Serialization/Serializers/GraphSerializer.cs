@@ -6,16 +6,15 @@ using GraphLib.Serialization.Extensions;
 using GraphLib.Serialization.Interfaces;
 using System;
 using System.IO;
-using System.Linq;
 
 namespace GraphLib.Serialization.Serializers
 {
     public abstract class GraphSerializer : IGraphSerializer
     {
-        protected readonly IVertexFromInfoFactory vertexFactory;
-        protected readonly IGraphFactory graphFactory;
-        protected readonly IVertexCostFactory costFactory;
-        protected readonly ICoordinateFactory coordinateFactory;
+        private readonly IVertexFromInfoFactory vertexFactory;
+        private readonly IGraphFactory graphFactory;
+        private readonly IVertexCostFactory costFactory;
+        private readonly ICoordinateFactory coordinateFactory;
 
         public GraphSerializer(IVertexFromInfoFactory converter,
             IGraphFactory graphFactory,
@@ -32,10 +31,9 @@ namespace GraphLib.Serialization.Serializers
         {
             try
             {
-                var graphInfo = LoadGraphInternal(stream);
-                var vertices = graphInfo.CreateVertices(vertexFactory).ToArray();
+                var graphInfo = LoadGraphInternal(stream, costFactory, coordinateFactory);
                 BaseVertexCost.CostRange = graphInfo.CostRange;
-                return graphFactory.CreateGraph(vertices, graphInfo.DimensionsSizes);
+                return (graphFactory, vertexFactory).Create(graphInfo);
             }
             catch (Exception ex)
             {
@@ -55,7 +53,8 @@ namespace GraphLib.Serialization.Serializers
             }
         }
 
-        protected abstract GraphSerializationInfo LoadGraphInternal(Stream stream);
+        protected abstract GraphSerializationInfo LoadGraphInternal(Stream stream, 
+            IVertexCostFactory costFactory, ICoordinateFactory coordinateFactory);
 
         protected abstract void SaveGraphInternal(IGraph graph, Stream stream);
     }

@@ -27,17 +27,18 @@ namespace GraphLib.Serialization.Serializers
             ICoordinateFactory coordinateFactory)
             : base(converter, graphFactory, costFactory, coordinateFactory)
         {
-            
+
         }
 
-        protected override GraphSerializationInfo LoadGraphInternal(Stream stream)
+        protected override GraphSerializationInfo LoadGraphInternal(Stream stream, 
+            IVertexCostFactory costFactory, ICoordinateFactory coordinateFactory)
         {
             return XDocument.Load(stream).ToGraph(costFactory, coordinateFactory);
         }
 
         protected override void SaveGraphInternal(IGraph graph, Stream stream)
         {
-            new XmlDocument().ToXml(graph.ToGraphSerializationInfo()).Save(stream);
+            new XmlDocument().Append(graph.ToGraphSerializationInfo()).Save(stream);
         }
     }
 }

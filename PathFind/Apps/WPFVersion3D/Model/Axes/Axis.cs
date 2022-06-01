@@ -2,7 +2,6 @@
 using GraphLib.Extensions;
 using GraphLib.Interfaces;
 using GraphLib.Realizations.Graphs;
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using WPFVersion3D.Interface;

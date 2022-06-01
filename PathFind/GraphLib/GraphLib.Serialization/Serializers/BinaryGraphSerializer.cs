@@ -12,17 +12,18 @@ namespace GraphLib.Serialization.Serializers
         public BinaryGraphSerializer(IVertexFromInfoFactory converter,
             IGraphFactory graphFactory,
             IVertexCostFactory costFactory,
-            ICoordinateFactory coordinateFactory) 
+            ICoordinateFactory coordinateFactory)
             : base(converter, graphFactory, costFactory, coordinateFactory)
         {
-            
+
         }
 
-        protected override GraphSerializationInfo LoadGraphInternal(Stream stream)
+        protected override GraphSerializationInfo LoadGraphInternal(Stream stream, 
+            IVertexCostFactory costFactory, ICoordinateFactory coordinateFactory)
         {
             using (var reader = new BinaryReader(stream, Encoding.Default, leaveOpen: true))
             {
-                return reader.ReadGraph(costFactory, coordinateFactory);                
+                return reader.ReadGraph(costFactory, coordinateFactory);
             }
         }
 

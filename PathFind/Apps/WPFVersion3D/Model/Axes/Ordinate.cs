@@ -1,5 +1,4 @@
 ﻿using GraphLib.Realizations.Graphs;
-using System.Collections.Generic;
 
 namespace WPFVersion3D.Model.Axes
 {

@@ -8,11 +8,11 @@ namespace GraphLib.Realizations.Extensions
 {
     public static class GraphExtensions
     {
-        public static void Smooth(this IGraph self, IVertexCostFactory costFactory, 
+        public static void Smooth(this IGraph self, IVertexCostFactory costFactory,
             IMeanCost meanCost, int smoothLevel)
         {
             var visited = new VisitedVertices();
-            while (smoothLevel--> 0)
+            while (smoothLevel-- > 0)
             {
                 self.ForEach(vertex =>
                 {

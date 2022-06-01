@@ -26,9 +26,10 @@ namespace GraphLib.Serialization.Serializers.Decorators
         {
 
         }
+
         public IGraph LoadGraph(Stream stream)
         {
-            IGraph graph = NullGraph.Instance;
+            var graph = NullGraph.Instance;
             try
             {
                 algorithm.Padding = PaddingMode.None;

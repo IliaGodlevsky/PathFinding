@@ -14,7 +14,7 @@ namespace Common.Extensions
 
         public static void AppendChildren(this XmlNode element, params XmlNode[] nodes)
         {
-            foreach(var node in nodes)
+            foreach (var node in nodes)
             {
                 element.AppendChild(node);
             }

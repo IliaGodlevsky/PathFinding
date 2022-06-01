@@ -1,6 +1,5 @@
 ﻿using GraphLib.Interfaces.Factories;
 using GraphLib.Proxy;
-using GraphLib.Serialization.Serializers;
 using System.Linq;
 using System.Xml.Linq;
 using ValueRange;
@@ -17,7 +16,7 @@ namespace GraphLib.Serialization.Extensions
             return document.Root.GetGraphInfo(costFactory, coordinateFactory);
         }
 
-        private static GraphSerializationInfo GetGraphInfo(this XElement root, 
+        private static GraphSerializationInfo GetGraphInfo(this XElement root,
             IVertexCostFactory costFactory, ICoordinateFactory coordinateFactory)
         {
             var dimensions = root.Element(Dimensions).GetAttributes();
@@ -33,7 +32,7 @@ namespace GraphLib.Serialization.Extensions
             return new GraphSerializationInfo(dimensions, vertices, range);
         }
 
-        private static VertexSerializationInfo GetVertex(this XElement element, 
+        private static VertexSerializationInfo GetVertex(this XElement element,
             IVertexCostFactory costFactory, ICoordinateFactory factory)
         {
             bool isObstacle = element.Element(Obstacle).Attribute(string.Format(Value, 0)).ParseBool();
@@ -45,7 +44,7 @@ namespace GraphLib.Serialization.Extensions
                 .Select(factory.CreateCoordinate)
                 .ToArray();
 
-            return new VertexSerializationInfo(isObstacle, costFactory.CreateCost(cost), 
+            return new VertexSerializationInfo(isObstacle, costFactory.CreateCost(cost),
                 factory.CreateCoordinate(coordinate), new NeighbourhoodProxy(neighbours));
         }
 

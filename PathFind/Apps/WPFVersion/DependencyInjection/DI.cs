@@ -91,6 +91,6 @@ namespace WPFVersion.DependencyInjection
         private static bool Implements<TInterface>(Type type)
         {
             return type.ImplementsAll(typeof(TInterface));
-        }        
+        }
     }
 }

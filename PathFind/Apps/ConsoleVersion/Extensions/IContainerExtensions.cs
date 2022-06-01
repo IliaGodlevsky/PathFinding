@@ -1,7 +1,6 @@
 ﻿using Autofac;
 using ConsoleVersion.Interface;
 using Logging.Interface;
-using Logging.Loggers;
 using System;
 
 namespace ConsoleVersion.Extensions

@@ -74,7 +74,7 @@ namespace Common.Extensions
             return attribute?.IsAttachedTo(attachedTo.GetType()) == true;
         }
 
-        public static bool Implements<TInterface>(this Type type) 
+        public static bool Implements<TInterface>(this Type type)
             where TInterface : class
         {
             return type.ImplementsAll(typeof(TInterface));
