@@ -3,7 +3,6 @@ using GraphLib.Interfaces.Factories;
 using GraphLib.Serialization.Extensions;
 using GraphLib.Serialization.Interfaces;
 using System.IO;
-using System.Xml;
 using System.Xml.Linq;
 
 namespace GraphLib.Serialization.Serializers
@@ -38,7 +37,7 @@ namespace GraphLib.Serialization.Serializers
 
         protected override void SaveGraphInternal(IGraph graph, Stream stream)
         {
-            new XmlDocument().Append(graph.ToGraphSerializationInfo()).Save(stream);
+            graph.ToGraphSerializationInfo().ToXmlDocument().Save(stream);
         }
     }
 }

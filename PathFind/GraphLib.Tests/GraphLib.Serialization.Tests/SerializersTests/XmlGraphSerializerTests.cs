@@ -5,13 +5,13 @@ using NUnit.Framework;
 namespace GraphLib.Serialization.Tests.SerializersTests
 {
     [TestFixture]
-    internal class BinaryGraphSerializerTests : GraphSerializerTests
+    internal class XmlGraphSerializerTests : GraphSerializerTests
     {
         protected override IGraphSerializer Serializer { get; }
 
-        public BinaryGraphSerializerTests()
+        public XmlGraphSerializerTests()
         {
-            Serializer = new BinaryGraphSerializer(VertexFactory, GraphFactory, CostFactory, CoordinateFactory);
-        }       
+            Serializer = new XmlGraphSerializer(VertexFactory, GraphFactory, CostFactory, CoordinateFactory);
+        }
     }
 }

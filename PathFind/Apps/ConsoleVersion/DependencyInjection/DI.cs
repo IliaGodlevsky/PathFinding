@@ -88,7 +88,7 @@ namespace ConsoleVersion.DependencyInjection
             builder.RegisterType<PathInput>().As<IPathInput>().SingleInstance().PropertiesAutowired();
             builder.RegisterType<BinaryGraphSerializer>().As<IGraphSerializer>().SingleInstance();
             builder.RegisterDecorator<CompressGraphSerializer, IGraphSerializer>();
-            builder.RegisterDecorator<CryptoGraphSerializer, IGraphSerializer>();
+            //builder.RegisterDecorator<CryptoGraphSerializer, IGraphSerializer>();
             builder.RegisterType<VertexFromInfoFactory>().As<IVertexFromInfoFactory>().SingleInstance();
 
             builder.RegisterAssemblyTypes(Assemblies).Where(type => type.Implements<IAlgorithmFactory<PathfindingAlgorithm>>())
