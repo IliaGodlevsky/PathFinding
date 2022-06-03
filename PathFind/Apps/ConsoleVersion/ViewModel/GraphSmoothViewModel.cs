@@ -1,21 +1,17 @@
 ﻿using Autofac;
-using Common.Extensions;
 using Common.Interface;
 using ConsoleVersion.Attributes;
 using ConsoleVersion.DependencyInjection;
 using ConsoleVersion.Extensions;
 using ConsoleVersion.Interface;
 using ConsoleVersion.Messages;
-using EnumerationValues.Realizations;
 using GalaSoft.MvvmLight.Messaging;
 using GraphLib.Interfaces;
 using GraphLib.Interfaces.Factories;
-using GraphLib.Realizations.Enums;
 using GraphLib.Realizations.Extensions;
 using GraphLib.Realizations.SmoothLevel;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 
 namespace ConsoleVersion.ViewModel
 {
@@ -31,9 +27,9 @@ namespace ConsoleVersion.ViewModel
 
         public IInput<int> IntInput { get; set; }
 
-        public IReadOnlyList<ISmoothLevel> SmoothLevels { get; }
+        public IReadOnlyList<ISmoothLevel> SmoothLevels { get; set; } = NullSmoothLevel.GetMany(1);
 
-        public string ChooseSmoothLevelMsg { private get; set; }
+        public string ChooseSmoothLevelMsg { private get; set; } = string.Empty;
 
         private int SmoothLevelIndex => IntInput.Input(ChooseSmoothLevelMsg, SmoothLevels.Count, 1) - 1;
 
@@ -41,11 +37,6 @@ namespace ConsoleVersion.ViewModel
 
         public GraphSmoothViewModel(IMeanCost meanAlgorithm, IVertexCostFactory costFactory)
         {
-            SmoothLevels = EnumValuesWithoutIgnored<SmoothLevels>
-                .Create()
-                .Values
-                .Select(item => (ISmoothLevel)item.GetAttributeOrNull<SmoothLevelAttribute>())
-                .ToArray();
             messenger = DI.Container.Resolve<IMessenger>();
             this.costFactory = costFactory;
             this.meanAlgorithm = meanAlgorithm;

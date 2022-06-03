@@ -10,7 +10,7 @@ using Visualization.Interfaces;
 
 namespace Visualization.Abstractions
 {
-    internal abstract class AlgorithmVertices : IVisualizationSlides, IExecutable<IAlgorithm>
+    internal abstract class AlgorithmVertices : IVisualizationSlides<IVertex>, IExecutable<IAlgorithm>, IAlgorithmVertices
     {
         private readonly ConcurrentDictionary<IAlgorithm, ConcurrentDictionary<ICoordinate, IVertex>> vertices;
 

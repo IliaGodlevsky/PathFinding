@@ -81,7 +81,9 @@
     <Compile Include="Interface\IDelegateExtractor.cs" />
     <Compile Include="Interface\IMenu.cs" />
     <Compile Include="Interface\IMenuCommand.cs" />
+    <Compile Include="Interface\IRequireAnswerInput.cs" />
     <Compile Include="Interface\IRequireConsoleKeyInput.cs" />
+    <Compile Include="Interface\IRequireIntInput.cs" />
     <Compile Include="Interface\IRequireStringInput.cs" />
     <Compile Include="MenuItemsNames.cs" />
     <Compile Include="Messages\ClaimGraphAnswer.cs" />
@@ -93,6 +95,7 @@
     <Compile Include="Messages\UpdateStatisticsMessage.cs" />
     <Compile Include="MessegesTexts.cs" />
     <Compile Include="Model\ConsoleKeystrokesHook.cs" />
+    <Compile Include="Model\CustomSmoothLevel.cs" />
     <Compile Include="Model\DelegateExtractors\BaseDelegateExtractor.cs" />
     <Compile Include="Model\DelegateExtractors\SafeMethodExtractor.cs" />
     <Compile Include="Model\DelegateExtractors\ValidationMethodExtractor.cs" />
@@ -120,8 +123,6 @@
     <Compile Include="ValueInput\UserInput\ConsoleUserEnumInput.cs" />
     <Compile Include="ValueInput\UserInput\ConsoleUserIntInput.cs" />
     <Compile Include="Interface\IInput.cs" />
-    <Compile Include="Interface\IRequireAnswerInput.cs" />
-    <Compile Include="Interface\IRequireIntInput.cs" />
     <Compile Include="ValueInput\ProgrammedInput\ProgrammedInput.cs" />
     <Compile Include="ViewModel\EndPointsViewModel.cs" />
     <Compile Include="ViewModel\GraphLoadViewModel.cs" />

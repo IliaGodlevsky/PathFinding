@@ -13,7 +13,7 @@ using Visualization.Realizations;
 
 namespace Visualization
 {
-    public abstract class PathfindingVisualization : IExecutable<IAlgorithm>
+    public abstract class PathfindingVisualization : IExecutable<IAlgorithm>, IVisualizationSlides<IGraphPath>, IVisualizationSlides<IEndPoints> 
     {
         private readonly VisitedVertices visited = new VisitedVertices();
         private readonly EnqueuedVertices enqueued = new EnqueuedVertices();
@@ -23,13 +23,13 @@ namespace Visualization
         private readonly TargetVertices target = new TargetVertices();
         private readonly ObstacleVertices obstacles = new ObstacleVertices();
         private readonly IExecutable<IAlgorithm> visualizations;
-        private readonly IVisualizationSlides visualizationSlides;
+        private readonly IVisualizationSlides<IVertex> visualizationSlides;
         private readonly IGraph graph;
 
         protected PathfindingVisualization(IGraph graph)
         {
             visualizations = new CompositeVisualization(graph) { obstacles, enqueued, visited, path, intermediate, source, target };
-            visualizationSlides = new CompositeVisualizationSlides(obstacles, enqueued, visited, path, intermediate, source, target);
+            visualizationSlides = new CompositeVisualizationSlides { obstacles, enqueued, visited, path, intermediate, source, target };
             this.graph = graph;
         }
 
@@ -56,7 +56,7 @@ namespace Visualization
             algorithm.Started += OnAlgorithmStarted;
         }
 
-        protected void AddEndPoints(IAlgorithm algorithm, IEndPoints endPoints)
+        public void Add(IAlgorithm algorithm, IEndPoints endPoints)
         {
             source.Add(algorithm, endPoints.Source);
             target.Add(algorithm, endPoints.Target);
@@ -64,12 +64,12 @@ namespace Visualization
             intermediate.AddRange(algorithm, intermediates);
         }
 
-        protected void AddPathVertices(IAlgorithm algorithm, IGraphPath grapPath)
+        public void Add(IAlgorithm algorithm, IGraphPath graphPath)
         {
             var endPoints = source.GetVertices(algorithm)
                 .Concat(target.GetVertices(algorithm))
                 .Concat(intermediate.GetVertices(algorithm));
-            path.AddRange(algorithm, grapPath.Path.Without(endPoints));
+            path.AddRange(algorithm, graphPath.Path.Without(endPoints));
         }
 
         protected virtual void OnAlgorithmStarted(object sender, EventArgs e)

@@ -56,6 +56,8 @@ namespace ConsoleVersion.DependencyInjection
 
             builder.RegisterType<ConsoleKeystrokesHook>().AsSelf().InstancePerDependency().PropertiesAutowired();
 
+            builder.RegisterType<CustomSmoothLevel>().AsSelf().As<ISmoothLevel>().SingleInstance().PropertiesAutowired();
+
             builder.RegisterType<MainViewModel>().AsSelf().SingleInstance().PropertiesAutowired();
             builder.RegisterAssemblyTypes(Assemblies).Where(type => type.Implements<IViewModel>()).Except<MainViewModel>().AsSelf()
                 .PropertiesAutowired().InstancePerLifetimeScope();

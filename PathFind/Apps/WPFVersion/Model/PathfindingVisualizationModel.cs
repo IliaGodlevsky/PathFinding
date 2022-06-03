@@ -51,12 +51,12 @@ namespace WPFVersion.Model
 
         private void RegisterEndPointsForAlgorithm(EndPointsChosenMessage message)
         {
-            AddEndPoints(message.Algorithm, message.EndPoints);
+            Add(message.Algorithm, message.EndPoints);
         }
 
         private void PathFound(PathFoundMessage message)
         {
-            AddPathVertices(message.Algorithm, message.Path);
+            Add(message.Algorithm, message.Path);
         }
 
         private readonly IMessenger messenger;

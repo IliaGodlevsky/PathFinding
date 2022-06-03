@@ -52,12 +52,12 @@ namespace WPFVersion3D.Model
 
         private void RegisterEndPointsForAlgorithm(EndPointsChosenMessage message)
         {
-            AddEndPoints(message.Algorithm, message.Value);
+            Add(message.Algorithm, message.Value);
         }
 
         private void PathFound(PathFoundMessage message)
         {
-            AddPathVertices(message.Algorithm, message.Value);
+            Add(message.Algorithm, message.Value);
         }
     }
 }

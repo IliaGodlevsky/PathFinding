@@ -9,7 +9,7 @@ namespace Visualization.Extensions
 {
     internal static class IVisualizationSlidesExtensions
     {
-        public static void AddRange(this IVisualizationSlides self, IAlgorithm algorithm, IEnumerable<IVertex> range)
+        public static void AddRange<TAdd>(this IVisualizationSlides<TAdd> self, IAlgorithm algorithm, IEnumerable<TAdd> range)
         {
             range.ForEach(item => self.Add(algorithm, item));
         }
