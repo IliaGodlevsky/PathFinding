@@ -22,6 +22,7 @@ using GraphLib.Realizations.Factories.GraphAssembles;
 using GraphLib.Realizations.Factories.GraphFactories;
 using GraphLib.Realizations.Factories.NeighboursCoordinatesFactories;
 using GraphLib.Realizations.MeanCosts;
+using GraphLib.Realizations.SmoothLevel;
 using GraphLib.Serialization.Interfaces;
 using GraphLib.Serialization.Modules;
 using GraphLib.Serialization.Serializers;
@@ -56,8 +57,6 @@ namespace ConsoleVersion.DependencyInjection
 
             builder.RegisterType<ConsoleKeystrokesHook>().AsSelf().InstancePerDependency().PropertiesAutowired();
 
-            builder.RegisterType<CustomSmoothLevel>().AsSelf().As<ISmoothLevel>().SingleInstance().PropertiesAutowired();
-
             builder.RegisterType<MainViewModel>().AsSelf().SingleInstance().PropertiesAutowired();
             builder.RegisterAssemblyTypes(Assemblies).Where(type => type.Implements<IViewModel>()).Except<MainViewModel>().AsSelf()
                 .PropertiesAutowired().InstancePerLifetimeScope();
@@ -91,6 +90,7 @@ namespace ConsoleVersion.DependencyInjection
             builder.RegisterType<BinaryGraphSerializer>().As<IGraphSerializer>().SingleInstance();
             builder.RegisterDecorator<CompressGraphSerializer, IGraphSerializer>();
             //builder.RegisterDecorator<CryptoGraphSerializer, IGraphSerializer>();
+            builder.RegisterDecorator<ThreadSafeGraphSerializer, IGraphSerializer>();
             builder.RegisterType<VertexFromInfoFactory>().As<IVertexFromInfoFactory>().SingleInstance();
 
             builder.RegisterAssemblyTypes(Assemblies).Where(type => type.Implements<IAlgorithmFactory<PathfindingAlgorithm>>())

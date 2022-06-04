@@ -1,11 +1,9 @@
-﻿using EnumerationValues.Realizations;
-using System;
+﻿using System;
 using System.Collections.Generic;
-using WPFVersion3D.Enums;
-using WPFVersion3D.Extensions;
 using WPFVersion3D.Infrastructure.EventArguments;
 using WPFVersion3D.Infrastructure.EventHandlers;
 using WPFVersion3D.Interface;
+using WPFVersion3D.Model;
 
 namespace WPFVersion3D.ViewModel
 {
@@ -30,12 +28,7 @@ namespace WPFVersion3D.ViewModel
 
         public GraphFieldAxisRotatingViewModel ZAxisRotationViewModel { get => zAxis; set => Set(ref zAxis, value); }
 
-        public IReadOnlyCollection<Tuple<string, IAnimationSpeed>> AnimationSpeeds { get; }
-
-        public GraphFieldRotationViewModel()
-        {
-            AnimationSpeeds = EnumValuesWithoutIgnored<AnimationSpeeds>.Create().ToAnimationSpeedTuples();
-        }
+        public IReadOnlyCollection<IAnimationSpeed> AnimationSpeeds => AnimationSpeedsCollection.Speeds;
 
         public void Dispose()
         {

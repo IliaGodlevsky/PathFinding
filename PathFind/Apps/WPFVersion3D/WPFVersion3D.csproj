@@ -69,16 +69,11 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Attributes\AppWindowAttribute.cs" />
-    <Compile Include="Attributes\BaseAnimationSpeed.cs" />
-    <Compile Include="Attributes\AnimationSpeed.cs" />
-    <Compile Include="Attributes\RandomAnimationSpeed.cs" />
     <Compile Include="Converters\AlgorithmStatusToStringConverter.cs" />
     <Compile Include="Converters\BoolToVisibilityConverter.cs" />
     <Compile Include="Enums\AlgorithmStatuses.cs" />
-    <Compile Include="Enums\AnimationSpeeds.cs" />
     <Compile Include="Extensions\AlgorithmViewModelExtensions.cs" />
     <Compile Include="Extensions\ColorExtensions.cs" />
-    <Compile Include="Extensions\EnumValuesExtensions.cs" />
     <Compile Include="Extensions\IMessengerExtensions.cs" />
     <Compile Include="Extensions\TypeExtensions.cs" />
     <Compile Include="Extensions\ValueTupleExtensions.cs" />
@@ -115,6 +110,7 @@
     <Compile Include="Model3DFactories\ConicModel3DFactory.cs" />
     <Compile Include="Model3DFactories\CylindricModel3DFactory.cs" />
     <Compile Include="Model3DFactories\ToricalModel3DFactory.cs" />
+    <Compile Include="Model\AnimationSpeedsCollection.cs" />
     <Compile Include="Model\Axes\Axis.cs" />
     <Compile Include="Model\Axes\Abscissa.cs" />
     <Compile Include="Model\Axes\Ordinate.cs" />

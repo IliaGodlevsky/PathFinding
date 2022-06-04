@@ -95,7 +95,7 @@
     <Compile Include="Messages\UpdateStatisticsMessage.cs" />
     <Compile Include="MessegesTexts.cs" />
     <Compile Include="Model\ConsoleKeystrokesHook.cs" />
-    <Compile Include="Model\CustomSmoothLevel.cs" />
+    <Compile Include="Model\ConsoleSmoothLevels.cs" />
     <Compile Include="Model\DelegateExtractors\BaseDelegateExtractor.cs" />
     <Compile Include="Model\DelegateExtractors\SafeMethodExtractor.cs" />
     <Compile Include="Model\DelegateExtractors\ValidationMethodExtractor.cs" />
