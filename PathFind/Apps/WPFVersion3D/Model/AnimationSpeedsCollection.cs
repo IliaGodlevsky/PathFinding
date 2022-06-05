@@ -21,54 +21,31 @@ namespace WPFVersion3D.Model
             speeds = new Lazy<IReadOnlyCollection<IAnimationSpeed>>(GetSpeeds);
         }
 
-        private sealed class SlowestAnimationSpeed : IAnimationSpeed
+        private sealed class AnimationSpeed : IAnimationSpeed
         {
-            public double Milliseconds => 4800;
+            private readonly string name;
 
-            public override string ToString() => "Slowest";
-        }
+            public double Milliseconds { get; }
 
-        private sealed class SlowAnimationSpeed : IAnimationSpeed
-        {
-            public double Milliseconds => 2400;
-
-            public override string ToString() => "Slow";
-        }
-
-        private sealed class MediumAnimationSpeed : IAnimationSpeed
-        {
-            public double Milliseconds => 1200;
-
-            public override string ToString() => "Medium";
-        }
-
-        private sealed class HighAnimationSpeed : IAnimationSpeed
-        {
-            public double Milliseconds => 600;
-
-            public override string ToString() => "High";
-        }
-
-        private sealed class HighestAnimationSpeed : IAnimationSpeed
-        {
-            public double Milliseconds => 300;
-
-            public override string ToString() => "Highest";
+            public AnimationSpeed(double milliseconds, string name)
+            {
+                Milliseconds = milliseconds;
+                this.name = name;
+            }
+            
+            public override string ToString() => name;
         }
 
         private sealed class RandomAnimationSpeed : IAnimationSpeed
         {
-            private const double From = 300;
-            private const double To = 4800;
-
             private readonly IRandom random;
             private readonly InclusiveValueRange<double> range;
 
             public double Milliseconds => random.NextDouble(range);
 
-            public RandomAnimationSpeed()
+            public RandomAnimationSpeed(double from, double to)
             {
-                range = new InclusiveValueRange<double>(From, To);
+                range = new InclusiveValueRange<double>(from, to);
                 random = DI.Container.Resolve<IRandom>();
             }
 
@@ -79,14 +56,14 @@ namespace WPFVersion3D.Model
         {
             var speeds = new IAnimationSpeed[]
             {
-                new SlowestAnimationSpeed(),
-                new SlowAnimationSpeed(),
-                new MediumAnimationSpeed(),
-                new HighAnimationSpeed(),
-                new HighAnimationSpeed(),
-                new RandomAnimationSpeed()
+                new AnimationSpeed(4800, "Slowest"),
+                new AnimationSpeed(2400, "Slow"),
+                new AnimationSpeed(1200, "Medium"),
+                new AnimationSpeed(600, "High"),
+                new AnimationSpeed(300, "Highest"),
+                new RandomAnimationSpeed(4800, 300)
             };
             return new ReadOnlyCollection<IAnimationSpeed>(speeds);
-        }           
+        }
     }
 }

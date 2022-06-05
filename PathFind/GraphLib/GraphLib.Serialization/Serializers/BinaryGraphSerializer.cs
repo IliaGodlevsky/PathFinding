@@ -18,7 +18,7 @@ namespace GraphLib.Serialization.Serializers
 
         }
 
-        protected override GraphSerializationInfo LoadGraphInternal(Stream stream, 
+        protected override GraphSerializationInfo LoadGraphInternal(Stream stream,
             IVertexCostFactory costFactory, ICoordinateFactory coordinateFactory)
         {
             using (var reader = new BinaryReader(stream, Encoding.Default, leaveOpen: true))

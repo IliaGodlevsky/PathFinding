@@ -43,7 +43,7 @@ namespace WindowsFormsVersion.DependencyInjection
 
             builder.RegisterType<MainWindowViewModel>().AsSelf().InstancePerDependency();
 
-            builder.RegisterAssemblyTypes(Assemblies).Where(Implements<IViewModel>).AsSelf().InstancePerDependency();
+            builder.RegisterAssemblyTypes(Assemblies).Where(type => type.Implements<IViewModel>()).AsSelf().InstancePerDependency();
             builder.RegisterAssemblyTypes(Assemblies).Where(type => type.IsAppWindow()).AsSelf().InstancePerDependency();
 
             builder.RegisterType<EndPoints>().As<BaseEndPoints>().AsImplementedInterfaces().SingleInstance();
@@ -74,15 +74,10 @@ namespace WindowsFormsVersion.DependencyInjection
             //builder.RegisterDecorator<CryptoGraphSerializer, IGraphSerializer>();
             builder.RegisterType<VertexFromInfoFactory>().As<IVertexFromInfoFactory>().SingleInstance();
 
-            builder.RegisterAssemblyTypes(Assemblies).Where(Implements<IAlgorithmFactory<PathfindingAlgorithm>>)
+            builder.RegisterAssemblyTypes(Assemblies).Where(type => type.Implements<IAlgorithmFactory<PathfindingAlgorithm>>())
                 .As<IAlgorithmFactory<PathfindingAlgorithm>>().SingleInstance();
 
             return builder.Build();
-        }
-
-        private static bool Implements<TInterface>(Type type)
-        {
-            return type.ImplementsAll(typeof(TInterface));
         }
     }
 }

@@ -22,7 +22,6 @@ using GraphLib.Realizations.Factories.GraphAssembles;
 using GraphLib.Realizations.Factories.GraphFactories;
 using GraphLib.Realizations.Factories.NeighboursCoordinatesFactories;
 using GraphLib.Realizations.MeanCosts;
-using GraphLib.Realizations.SmoothLevel;
 using GraphLib.Serialization.Interfaces;
 using GraphLib.Serialization.Modules;
 using GraphLib.Serialization.Serializers;

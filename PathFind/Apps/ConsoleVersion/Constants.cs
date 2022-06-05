@@ -1,6 +1,4 @@
 ﻿using ConsoleVersion.Enums;
-using EnumerationValues.Extensions;
-using EnumerationValues.Realizations;
 using ValueRange;
 
 namespace ConsoleVersion
@@ -21,7 +19,7 @@ namespace ConsoleVersion
 
         static Constants()
         {
-            AnswerValueRange = EnumValues<Answer>.Create().ToValueRange();
+            AnswerValueRange = new InclusiveValueRange<Answer>(Answer.Yes, Answer.No);
             VerticesCostRange = new InclusiveValueRange<int>(99, 1);
             GraphWidthValueRange = new InclusiveValueRange<int>(75, 1);
             GraphLengthValueRange = new InclusiveValueRange<int>(45, 1);

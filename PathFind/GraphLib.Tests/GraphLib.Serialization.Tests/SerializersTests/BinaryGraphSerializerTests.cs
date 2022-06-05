@@ -12,6 +12,6 @@ namespace GraphLib.Serialization.Tests.SerializersTests
         public BinaryGraphSerializerTests()
         {
             Serializer = new BinaryGraphSerializer(VertexFactory, GraphFactory, CostFactory, CoordinateFactory);
-        }       
+        }
     }
 }

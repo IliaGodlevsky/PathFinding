@@ -13,7 +13,7 @@ using Visualization.Realizations;
 
 namespace Visualization
 {
-    public abstract class PathfindingVisualization : IExecutable<IAlgorithm>, IVisualizationSlides<IGraphPath>, IVisualizationSlides<IEndPoints> 
+    public abstract class PathfindingVisualization : IExecutable<IAlgorithm>, IVisualizationSlides<IGraphPath>, IVisualizationSlides<IEndPoints>
     {
         private readonly VisitedVertices visited = new VisitedVertices();
         private readonly EnqueuedVertices enqueued = new EnqueuedVertices();

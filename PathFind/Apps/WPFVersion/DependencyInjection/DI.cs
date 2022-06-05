@@ -16,7 +16,6 @@ using GraphLib.Realizations.Factories.GraphAssembles;
 using GraphLib.Realizations.Factories.GraphFactories;
 using GraphLib.Realizations.Factories.NeighboursCoordinatesFactories;
 using GraphLib.Realizations.MeanCosts;
-using GraphLib.Realizations.SmoothLevel;
 using GraphLib.Serialization.Interfaces;
 using GraphLib.Serialization.Modules;
 using GraphLib.Serialization.Serializers;
@@ -46,7 +45,7 @@ namespace WPFVersion.DependencyInjection
             var builder = new ContainerBuilder();
 
             builder.RegisterType<MainWindowViewModel>().AsSelf().InstancePerDependency();
-            builder.RegisterAssemblyTypes(Assemblies).Where(Implements<IViewModel>).AsSelf().InstancePerDependency();
+            builder.RegisterAssemblyTypes(Assemblies).Where(type => type.Implements<IViewModel>()).AsSelf().InstancePerDependency();
             builder.RegisterAssemblyTypes(Assemblies).Where(type => type.IsAppWindow()).AsSelf().InstancePerDependency();
 
             builder.RegisterType<Messenger>().As<IMessenger>().SingleInstance();
@@ -78,18 +77,13 @@ namespace WPFVersion.DependencyInjection
             //builder.RegisterDecorator<CryptoGraphSerializer, IGraphSerializer>();
             builder.RegisterType<VertexFromInfoFactory>().As<IVertexFromInfoFactory>().SingleInstance();
 
-            builder.RegisterAssemblyTypes(Assemblies).Where(Implements<IAlgorithmFactory<PathfindingAlgorithm>>)
+            builder.RegisterAssemblyTypes(Assemblies).Where(type => type.Implements<IAlgorithmFactory<PathfindingAlgorithm>>())
                 .As<IAlgorithmFactory<PathfindingAlgorithm>>().SingleInstance();
 
             builder.RegisterType<DefaultStepRule>().As<IStepRule>().SingleInstance();
             builder.RegisterDecorator<CardinalStepRule, IStepRule>();
 
             return builder.Build();
-        }
-
-        private static bool Implements<TInterface>(Type type)
-        {
-            return type.ImplementsAll(typeof(TInterface));
         }
     }
 }

@@ -6,7 +6,7 @@ using GraphLib.Interfaces;
 using GraphLib.Realizations.SmoothLevel;
 using System;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
+using System.Linq;
 
 namespace ConsoleVersion.Model
 {
@@ -34,11 +34,8 @@ namespace ConsoleVersion.Model
 
         private static IReadOnlyList<ISmoothLevel> GetSmoothLevels()
         {
-            var levels = new List<ISmoothLevel>(SmoothLevels.Levels)
-            {
-                new CustomSmoothLevel()
-            };
-            return new ReadOnlyCollection<ISmoothLevel>(levels);
+            var levels = new List<ISmoothLevel>(SmoothLevels.Levels.Append(new CustomSmoothLevel()));
+            return levels.AsReadOnly();
         }
     }
 }

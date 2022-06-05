@@ -16,42 +16,29 @@ namespace GraphLib.Realizations.SmoothLevel
             levels = new Lazy<IReadOnlyList<ISmoothLevel>>(GetSmoothLevels);
         }
 
-        private sealed class FlatSmoothLevel : ISmoothLevel
+        private sealed class SmoothLevel : ISmoothLevel
         {
-            public int Level => 25;
+            private readonly string name;
 
-            public override string ToString() => "Flat";
-        }
+            public int Level { get; }
 
-        private sealed class HighSmoothLevel : ISmoothLevel
-        {
-            public int Level => 3;
+            public SmoothLevel(int level, string name)
+            {
+                Level = level;
+                this.name = name;
+            }
 
-            public override string ToString() => "High";
-        }
-
-        private sealed class MediumSmoothLevel : ISmoothLevel
-        {
-            public int Level => 2;
-
-            public override string ToString() => "Medium";
-        }
-
-        private sealed class LowSmoothLevel : ISmoothLevel
-        {
-            public int Level => 1;
-
-            public override string ToString() => "Low";
+            public override string ToString() => name;
         }
 
         private static IReadOnlyList<ISmoothLevel> GetSmoothLevels()
         {
             var smoothLevels = new ISmoothLevel[]
             {
-                new LowSmoothLevel(),
-                new MediumSmoothLevel(),
-                new HighSmoothLevel(),
-                new FlatSmoothLevel()
+                new SmoothLevel(1, "Low"),
+                new SmoothLevel(2, "Medium"),
+                new SmoothLevel(3, "High"),
+                new SmoothLevel(25, "Flat")
             };
             return new ReadOnlyCollection<ISmoothLevel>(smoothLevels);
         }

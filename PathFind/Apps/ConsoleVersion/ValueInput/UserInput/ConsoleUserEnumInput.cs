@@ -1,25 +1,14 @@
-﻿using EnumerationValues.Interface;
-using EnumerationValues.Realizations;
-using System;
-using System.Linq;
-using ValueRange.Extensions;
+﻿using System;
 
 namespace ConsoleVersion.ValueInput.UserInput
 {
     internal sealed class ConsoleUserEnumInput<T> : ConsoleUserInput<T>
         where T : struct, Enum
     {
-        private readonly IEnumValues<T> enumValues;
-
-        public ConsoleUserEnumInput()
-        {
-            enumValues = EnumValues<T>.Create();
-        }
-
         protected override bool IsValidInput(string userInput, out T result)
         {
             return Enum.TryParse(userInput, ignoreCase: true, out result)
-                && enumValues.Values.Contains(result);
+                && Enum.IsDefined(typeof(T), result);
         }
     }
 }

@@ -32,6 +32,8 @@ namespace WPFVersion3D.DependencyInjection
 {
     internal static class DI
     {
+        private static readonly Lazy<IContainer> container = new Lazy<IContainer>(Configure);
+
         public static IContainer Container => container.Value;
 
         private static Assembly[] Assemblies => AppDomain.CurrentDomain.GetAssemblies();
@@ -41,7 +43,7 @@ namespace WPFVersion3D.DependencyInjection
             var builder = new ContainerBuilder();
 
             builder.RegisterType<MainWindowViewModel>().AsSelf().InstancePerDependency();
-            builder.RegisterAssemblyTypes(Assemblies).Where(Implements<IViewModel>).AsSelf().InstancePerDependency();
+            builder.RegisterAssemblyTypes(Assemblies).Where(type => type.Implements<IViewModel>()).AsSelf().InstancePerDependency();
             builder.RegisterAssemblyTypes(Assemblies).Where(type => type.IsAppWindow()).AsSelf().InstancePerDependency();
 
             builder.RegisterType<EndPoints>().As<BaseEndPoints>().AsImplementedInterfaces().SingleInstance();
@@ -74,17 +76,10 @@ namespace WPFVersion3D.DependencyInjection
             builder.RegisterType<Vertex3DFromInfoFactory>().As<IVertexFromInfoFactory>().SingleInstance();
 
             builder.RegisterAssemblyTypes(Assemblies)
-                .Where(Implements<IAlgorithmFactory<PathfindingAlgorithm>>)
+                .Where(type => type.Implements<IAlgorithmFactory<PathfindingAlgorithm>>())
                 .As<IAlgorithmFactory<PathfindingAlgorithm>>().SingleInstance();
 
             return builder.Build();
         }
-
-        private static bool Implements<TInterface>(Type type)
-        {
-            return type.ImplementsAll(typeof(TInterface));
-        }
-
-        private static readonly Lazy<IContainer> container = new Lazy<IContainer>(Configure);
     }
 }

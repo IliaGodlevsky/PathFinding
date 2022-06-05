@@ -5,7 +5,7 @@ namespace GraphLib.Extensions
 {
     public static class ValueTupleExtensions
     {
-        public static IVertex Create(this (ICoordinateFactory CoordinateFactory, 
+        public static IVertex Create(this (ICoordinateFactory CoordinateFactory,
             INeighborhoodFactory NeighbourhoodFactory, IVertexFactory VertexFactory) factories, int[] coordinates)
         {
             var coordinate = factories.CoordinateFactory.CreateCoordinate(coordinates);

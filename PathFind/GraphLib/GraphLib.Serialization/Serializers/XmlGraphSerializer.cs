@@ -29,7 +29,7 @@ namespace GraphLib.Serialization.Serializers
 
         }
 
-        protected override GraphSerializationInfo LoadGraphInternal(Stream stream, 
+        protected override GraphSerializationInfo LoadGraphInternal(Stream stream,
             IVertexCostFactory costFactory, ICoordinateFactory coordinateFactory)
         {
             return XDocument.Load(stream).ToGraph(costFactory, coordinateFactory);

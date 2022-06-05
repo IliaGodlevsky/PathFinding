@@ -53,7 +53,7 @@ namespace GraphLib.Serialization.Serializers
             }
         }
 
-        protected abstract GraphSerializationInfo LoadGraphInternal(Stream stream, 
+        protected abstract GraphSerializationInfo LoadGraphInternal(Stream stream,
             IVertexCostFactory costFactory, ICoordinateFactory coordinateFactory);
 
         protected abstract void SaveGraphInternal(IGraph graph, Stream stream);
