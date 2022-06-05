@@ -5,9 +5,14 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:WPFVersion3D.View" 
              xmlns:viewmodel="clr-namespace:WPFVersion3D.ViewModel" 
+             xmlns:converters="clr-namespace:WPFVersion3D.Converters"
              d:DataContext="{d:DesignInstance Type=viewmodel:GraphFieldRotationViewModel}"
              mc:Ignorable="d" 
              d:DesignHeight="150" d:DesignWidth="300">
+    <UserControl.Resources>
+        <converters:AnimationSpeedToVisibiltyConverter x:Key="SpeedToVisibility"/>
+        <converters:AnimationSpeedToDataContextConverter x:Key="SpeedToDataContext"/>
+    </UserControl.Resources>
 
     <StackPanel Orientation="Vertical">
         <Separator Margin="5"/>
@@ -15,6 +20,10 @@
         <StackPanel Orientation="Horizontal" HorizontalAlignment="Stretch">
             <TextBlock Margin="5" Text="Rotation speed: "/>
             <ComboBox Width="150" Margin="5" SelectedValue="{Binding SelectedRotationSpeed}" ItemsSource="{Binding AnimationSpeeds}" SelectedIndex="0"/>
+        </StackPanel>
+        <StackPanel Visibility="{Binding SelectedRotationSpeed, Converter={StaticResource SpeedToVisibility}}" Orientation="Horizontal" HorizontalAlignment="Center">
+            <TextBlock Margin="5" Text="Speed (milliseconds)"/>
+            <TextBox Text="{Binding Milliseconds}" Margin="5" Width="45" DataContext="{Binding SelectedRotationSpeed, Converter={StaticResource SpeedToDataContext}, UpdateSourceTrigger=PropertyChanged}"/>
         </StackPanel>
 
         <local:GraphFieldRotatingUserControl DataContext="{Binding Path=XAxisRotationViewModel}"/>

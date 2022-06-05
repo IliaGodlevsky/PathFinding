@@ -52,6 +52,13 @@ namespace WPFVersion3D.Model
             public override string ToString() => "Random";
         }
 
+        public sealed class CustomAnimationSpeed : IAnimationSpeed
+        {
+            public double Milliseconds { get; set; } = 2400;
+
+            public override string ToString() => "Custom";
+        }
+
         private static IReadOnlyCollection<IAnimationSpeed> GetSpeeds()
         {
             var speeds = new IAnimationSpeed[]
@@ -61,7 +68,8 @@ namespace WPFVersion3D.Model
                 new AnimationSpeed(1200, "Medium"),
                 new AnimationSpeed(600, "High"),
                 new AnimationSpeed(300, "Highest"),
-                new RandomAnimationSpeed(4800, 300)
+                new RandomAnimationSpeed(4800, 300),
+                new CustomAnimationSpeed()
             };
             return new ReadOnlyCollection<IAnimationSpeed>(speeds);
         }

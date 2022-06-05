@@ -70,6 +70,8 @@
     </ApplicationDefinition>
     <Compile Include="Attributes\AppWindowAttribute.cs" />
     <Compile Include="Converters\AlgorithmStatusToStringConverter.cs" />
+    <Compile Include="Converters\AnimationSpeedToDataContextConverter.cs" />
+    <Compile Include="Converters\AnimationSpeedToVisibiltyConverter.cs" />
     <Compile Include="Converters\BoolToVisibilityConverter.cs" />
     <Compile Include="Enums\AlgorithmStatuses.cs" />
     <Compile Include="Extensions\AlgorithmViewModelExtensions.cs" />
