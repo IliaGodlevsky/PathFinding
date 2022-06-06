@@ -15,7 +15,6 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Windows.Input;
 using WPFVersion3D.DependencyInjection;
-using WPFVersion3D.Enums;
 using WPFVersion3D.Extensions;
 using WPFVersion3D.Infrastructure.Commands;
 using WPFVersion3D.Messages.PassValueMessages;
@@ -58,7 +57,7 @@ namespace WPFVersion3D.ViewModel
 
         protected override void SummarizePathfindingResults()
         {
-            var status = !path.IsNull() ? AlgorithmStatuses.Finished : AlgorithmStatuses.Failed;
+            var status = !path.IsNull() ? AlgorithmViewModel.Finished : AlgorithmViewModel.Failed;
             string time = timer.ToFormattedString();
             messenger.Send(new UpdateAlgorithmStatisticsMessage(Index, time, visitedVerticesCount, path.Length, path.Cost));
             messenger.Send(new AlgorithmStatusMessage(status, Index));

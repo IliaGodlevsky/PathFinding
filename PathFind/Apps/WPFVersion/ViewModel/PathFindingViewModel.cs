@@ -15,7 +15,6 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Windows.Input;
 using WPFVersion.DependencyInjection;
-using WPFVersion.Enums;
 using WPFVersion.Extensions;
 using WPFVersion.Infrastructure;
 using WPFVersion.Messages;
@@ -86,19 +85,19 @@ namespace WPFVersion.ViewModel
 
         protected override void OnAlgorithmInterrupted(object sender, ProcessEventArgs e)
         {
-            var message = new AlgorithmStatusMessage(AlgorithmStatus.Interrupted, Index);
+            var message = new AlgorithmStatusMessage(AlgorithmViewModel.Interrupted, Index);
             messenger.Send(message);
         }
 
         protected void OnAlgorithmPaused(object sender, ProcessEventArgs e)
         {
-            var message = new AlgorithmStatusMessage(AlgorithmStatus.Paused, Index);
+            var message = new AlgorithmStatusMessage(AlgorithmViewModel.Paused, Index);
             messenger.Send(message);
         }
 
         protected void OnAlgorithmUnpaused(object sender, ProcessEventArgs e)
         {
-            var message = new AlgorithmStatusMessage(AlgorithmStatus.Started, Index);
+            var message = new AlgorithmStatusMessage(AlgorithmViewModel.Started, Index);
             messenger.Send(message);
         }
 

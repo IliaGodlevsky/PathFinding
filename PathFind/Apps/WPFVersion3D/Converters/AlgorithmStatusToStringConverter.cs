@@ -1,8 +1,6 @@
-﻿using Common.Extensions;
-using System;
+﻿using System;
 using System.Globalization;
 using System.Windows.Data;
-using WPFVersion3D.Enums;
 
 namespace WPFVersion3D.Converters
 {
@@ -10,12 +8,7 @@ namespace WPFVersion3D.Converters
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            if (value is AlgorithmStatuses status)
-            {
-                return status.GetDescription();
-            }
-
-            return Binding.DoNothing;
+            return value?.ToString() ?? string.Empty;
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)

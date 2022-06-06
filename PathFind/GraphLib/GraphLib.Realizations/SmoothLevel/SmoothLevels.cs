@@ -1,7 +1,6 @@
 ﻿using GraphLib.Interfaces;
 using System;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
 
 namespace GraphLib.Realizations.SmoothLevel
 {
@@ -33,14 +32,13 @@ namespace GraphLib.Realizations.SmoothLevel
 
         private static IReadOnlyList<ISmoothLevel> GetSmoothLevels()
         {
-            var smoothLevels = new ISmoothLevel[]
+            return new ISmoothLevel[]
             {
                 new SmoothLevel(1, "Low"),
                 new SmoothLevel(2, "Medium"),
                 new SmoothLevel(3, "High"),
                 new SmoothLevel(25, "Flat")
             };
-            return new ReadOnlyCollection<ISmoothLevel>(smoothLevels);
         }
     }
 }

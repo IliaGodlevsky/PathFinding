@@ -21,5 +21,10 @@ namespace ConsoleVersion.Extensions
         {
             vertices.ForEach(vertex => vertex.OnMarkedToReplaceIntermediate());
         }
+
+        public static MenuList ToMenuList(this IEnumerable<string> strings, int columnsNumber = 2)
+        {
+            return new MenuList(strings, columnsNumber);
+        }
     }
 }

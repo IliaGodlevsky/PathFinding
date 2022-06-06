@@ -7,7 +7,6 @@ using System.Windows.Input;
 using ValueRange.Enums;
 using ValueRange.Extensions;
 using WPFVersion.DependencyInjection;
-using WPFVersion.Enums;
 using WPFVersion.Extensions;
 using WPFVersion.Infrastructure;
 using WPFVersion.Messages.ActionMessages;
@@ -18,13 +17,19 @@ namespace WPFVersion.ViewModel
 {
     internal class AlgorithmViewModel : NotifyPropertyChanged
     {
+        public const string Started = "Started";
+        public const string Paused = "Paused";
+        public const string Interrupted = "Interrupted";
+        public const string Finished = "Finished";
+        public const string Failed = "Failed";
+
         private readonly PathfindingAlgorithm algorithm;
         private readonly IMessenger messenger;
 
         private int pathLength;
         private double pathCost;
         private int visitedVerticesCount;
-        private AlgorithmStatus status;
+        private string status;
         private string time;
         private int delayTime;
 
@@ -50,7 +55,7 @@ namespace WPFVersion.ViewModel
 
         public int VisitedVerticesCount { get => visitedVerticesCount; set => Set(ref visitedVerticesCount, value); }
 
-        public AlgorithmStatus Status { get => status; set => Set(ref status, value); }
+        public string Status { get => status; set => Set(ref status, value); }
 
         public string Time { get => time; set => Set(ref time, value); }
 
@@ -69,7 +74,7 @@ namespace WPFVersion.ViewModel
             this.algorithm = algorithm;
             this.delayTime = delayTime;
             AlgorithmName = algorithm.GetDescription();
-            Status = AlgorithmStatus.Started;
+            Status = AlgorithmViewModel.Started;
             Index = index;
             messenger = DI.Container.Resolve<IMessenger>();
             InterruptCommand = new InterruptAlgorithmCommand(algorithm);

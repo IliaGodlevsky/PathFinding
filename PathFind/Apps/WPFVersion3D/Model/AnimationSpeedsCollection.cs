@@ -3,7 +3,6 @@ using Random.Extensions;
 using Random.Interface;
 using System;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using ValueRange;
 using WPFVersion3D.DependencyInjection;
 using WPFVersion3D.Interface;
@@ -32,7 +31,7 @@ namespace WPFVersion3D.Model
                 Milliseconds = milliseconds;
                 this.name = name;
             }
-            
+
             public override string ToString() => name;
         }
 
@@ -54,14 +53,14 @@ namespace WPFVersion3D.Model
 
         public sealed class CustomAnimationSpeed : IAnimationSpeed
         {
-            public double Milliseconds { get; set; } = 2400;
+            public double Milliseconds { get; set; }
 
             public override string ToString() => "Custom";
         }
 
         private static IReadOnlyCollection<IAnimationSpeed> GetSpeeds()
         {
-            var speeds = new IAnimationSpeed[]
+            return new IAnimationSpeed[]
             {
                 new AnimationSpeed(4800, "Slowest"),
                 new AnimationSpeed(2400, "Slow"),
@@ -69,9 +68,8 @@ namespace WPFVersion3D.Model
                 new AnimationSpeed(600, "High"),
                 new AnimationSpeed(300, "Highest"),
                 new RandomAnimationSpeed(4800, 300),
-                new CustomAnimationSpeed()
+                new CustomAnimationSpeed { Milliseconds = 2400 }
             };
-            return new ReadOnlyCollection<IAnimationSpeed>(speeds);
         }
     }
 }

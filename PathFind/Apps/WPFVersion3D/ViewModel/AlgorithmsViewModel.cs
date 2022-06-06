@@ -7,7 +7,6 @@ using System.Windows;
 using System.Windows.Input;
 using System.Windows.Threading;
 using WPFVersion3D.DependencyInjection;
-using WPFVersion3D.Enums;
 using WPFVersion3D.Extensions;
 using WPFVersion3D.Infrastructure.Commands;
 using WPFVersion3D.Interface;
@@ -49,7 +48,7 @@ namespace WPFVersion3D.ViewModel
 
         private void SetAlgorithmStatus(AlgorithmStatusMessage message)
         {
-            if (AlgorithmModels[message.Index].Status != AlgorithmStatuses.Interrupted)
+            if (AlgorithmModels[message.Index].Status != AlgorithmViewModel.Interrupted)
             {
                 AlgorithmModels[message.Index].Status = message.Status;
                 messenger.Send(new IsAllAlgorithmsFinishedMessage(IsAllAlgorithmsFinished));

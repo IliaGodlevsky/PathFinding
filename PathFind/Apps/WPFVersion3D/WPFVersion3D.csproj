@@ -73,7 +73,6 @@
     <Compile Include="Converters\AnimationSpeedToDataContextConverter.cs" />
     <Compile Include="Converters\AnimationSpeedToVisibiltyConverter.cs" />
     <Compile Include="Converters\BoolToVisibilityConverter.cs" />
-    <Compile Include="Enums\AlgorithmStatuses.cs" />
     <Compile Include="Extensions\AlgorithmViewModelExtensions.cs" />
     <Compile Include="Extensions\ColorExtensions.cs" />
     <Compile Include="Extensions\IMessengerExtensions.cs" />

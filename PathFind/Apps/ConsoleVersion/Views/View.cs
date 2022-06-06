@@ -36,7 +36,7 @@ namespace ConsoleVersion.Views
         {
             menu = new Menu(model);
             MenuActionsNames = menu.MenuCommands.Keys.ToArray();
-            menuList = new MenuList(MenuActionsNames);
+            menuList = menu.MenuCommands.Keys.ToMenuList();
             menuRange = new InclusiveValueRange<int>(MenuSize, 1);
             model.WindowClosed += OnClosed;
         }

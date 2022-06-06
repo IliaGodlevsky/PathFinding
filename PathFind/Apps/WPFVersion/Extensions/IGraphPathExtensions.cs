@@ -1,14 +1,14 @@
 ﻿using Algorithm.Interfaces;
 using NullObject.Extensions;
-using WPFVersion.Enums;
+using WPFVersion.ViewModel;
 
 namespace WPFVersion.Extensions
 {
     internal static class IGraphPathExtensions
     {
-        public static AlgorithmStatus ToStatus(this IGraphPath self)
+        public static string ToStatus(this IGraphPath self)
         {
-            return self.IsNull() ? AlgorithmStatus.Failed : AlgorithmStatus.Finished;
+            return self.IsNull() ? AlgorithmViewModel.Failed : AlgorithmViewModel.Finished;
         }
     }
 }

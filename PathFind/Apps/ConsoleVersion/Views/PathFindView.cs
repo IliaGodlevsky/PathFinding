@@ -1,5 +1,5 @@
 ﻿using Common.Extensions.EnumerableExtensions;
-using ConsoleVersion.Model;
+using ConsoleVersion.Extensions;
 using ConsoleVersion.ViewModel;
 
 namespace ConsoleVersion.Views
@@ -8,7 +8,7 @@ namespace ConsoleVersion.Views
     {
         public PathFindView(PathFindingViewModel model) : base(model)
         {
-            string algorithmMenu = new MenuList(model.Algorithms.GetItems1()).ToString();
+            var algorithmMenu = model.Algorithms.GetItems1().ToMenuList();
             model.AlgorithmKeyInputMessage = algorithmMenu + MessagesTexts.AlgorithmChoiceMsg;
         }
     }

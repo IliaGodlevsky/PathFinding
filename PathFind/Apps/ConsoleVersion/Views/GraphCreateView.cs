@@ -1,4 +1,4 @@
-﻿using ConsoleVersion.Model;
+﻿using ConsoleVersion.Extensions;
 using ConsoleVersion.ViewModel;
 
 namespace ConsoleVersion.Views
@@ -7,8 +7,7 @@ namespace ConsoleVersion.Views
     {
         public GraphCreateView(GraphCreatingViewModel model) : base(model)
         {
-            var keys = model.GraphAssembles.Keys;
-            string graphAssembleMenu = new MenuList(keys, 1).ToString();
+            var graphAssembleMenu = model.GraphAssembles.Keys.ToMenuList(columnsNumber: 1);
             model.GraphAssembleInpuMessage = graphAssembleMenu + MessagesTexts.GraphAssembleChoiceMsg;
         }
     }

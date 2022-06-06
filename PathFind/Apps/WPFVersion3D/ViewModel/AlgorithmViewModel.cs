@@ -5,7 +5,6 @@ using Common.Extensions;
 using GalaSoft.MvvmLight.Messaging;
 using System.Windows.Input;
 using WPFVersion3D.DependencyInjection;
-using WPFVersion3D.Enums;
 using WPFVersion3D.Infrastructure.Commands;
 using WPFVersion3D.Messages.PassValueMessages;
 using WPFVersion3D.ViewModel.BaseViewModel;
@@ -14,6 +13,12 @@ namespace WPFVersion3D.ViewModel
 {
     internal class AlgorithmViewModel : NotifyPropertyChanged
     {
+        public const string Paused = "Paused";
+        public const string Interrupted = "Interrupted";
+        public const string Finished = "Finished";
+        public const string Failed = "Failed";
+        public const string Started = "Started";
+
         private readonly PathfindingAlgorithm algorithm;
         private readonly IMessenger messenger;
 
@@ -21,7 +26,7 @@ namespace WPFVersion3D.ViewModel
         private int pathLength;
         private double pathCost;
         private int visitedCount;
-        private AlgorithmStatuses status;
+        private string status;
 
         public ICommand InterruptCommand { get; }
 
@@ -45,7 +50,7 @@ namespace WPFVersion3D.ViewModel
 
         public int VisitedVerticesCount { get => visitedCount; set => Set(ref visitedCount, value); }
 
-        public AlgorithmStatuses Status { get => status; set => Set(ref status, value); }
+        public string Status { get => status; set => Set(ref status, value); }
 
         public AlgorithmViewModel(PathfindingAlgorithm algorithm)
         {

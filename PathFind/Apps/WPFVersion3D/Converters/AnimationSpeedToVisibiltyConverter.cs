@@ -10,7 +10,9 @@ namespace WPFVersion3D.Converters
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            return value is AnimationSpeedsCollection.CustomAnimationSpeed ? Visibility.Visible : Visibility.Collapsed;
+            return value is AnimationSpeedsCollection.CustomAnimationSpeed
+                ? Visibility.Visible
+                : Visibility.Collapsed;
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)

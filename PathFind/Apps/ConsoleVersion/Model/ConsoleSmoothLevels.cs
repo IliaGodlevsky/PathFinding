@@ -23,19 +23,19 @@ namespace ConsoleVersion.Model
 
         private sealed class CustomSmoothLevel : ISmoothLevel, IRequireIntInput
         {
+            private const int MaxSmoothLevel = 100;
             private const string LevelMsg = "Input level of smoothing: ";
 
             public IInput<int> IntInput { get; set; } = DI.Container.Resolve<IInput<int>>();
 
-            public int Level => IntInput.Input(LevelMsg, 100);
+            public int Level => IntInput.Input(LevelMsg, MaxSmoothLevel);
 
             public override string ToString() => "Custom";
         }
 
         private static IReadOnlyList<ISmoothLevel> GetSmoothLevels()
         {
-            var levels = new List<ISmoothLevel>(SmoothLevels.Levels.Append(new CustomSmoothLevel()));
-            return levels.AsReadOnly();
+            return SmoothLevels.Levels.Append(new CustomSmoothLevel()).ToArray();
         }
     }
 }
