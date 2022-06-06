@@ -1,4 +1,4 @@
-﻿using ConsoleVersion.Enums;
+﻿using ConsoleVersion.Model;
 using Random.Interface;
 using ValueRange;
 
