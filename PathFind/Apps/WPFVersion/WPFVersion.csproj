@@ -66,6 +66,8 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Attributes\AppWindowAttribute.cs" />
+    <Compile Include="Converters\SmoothLevelToDataContextConverter.cs" />
+    <Compile Include="Converters\SmoothLevelToVisibilityConverter.cs" />
     <Compile Include="DependencyInjection\DI.cs" />
     <Compile Include="Constants.cs" />
     <Compile Include="Converters\AlgorithmStatusToStringConverter.cs" />
@@ -115,6 +117,7 @@
     <Compile Include="Model\PathfindingVisualizationModel.cs" />
     <Compile Include="Model\GraphField.cs" />
     <Compile Include="Model\GraphFieldFactory.cs" />
+    <Compile Include="Model\WpfSmoothLevels.cs" />
     <Compile Include="ValidationRules\NonDoubleInputValidationRule.cs" />
     <Compile Include="ValidationRules\NonInt32InputValidationRule.cs" />
     <Compile Include="ValidationRules\RangedDoubleValidationRule.cs" />
@@ -132,6 +135,7 @@
     <Compile Include="ViewModel\ButtonViewModels\PauseAllAlgorithmsViewModel.cs" />
     <Compile Include="ViewModel\ButtonViewModels\ResumeAllAlgorithmsViewModel.cs" />
     <Compile Include="ViewModel\ButtonViewModels\SaveGraphViewModel.cs" />
+    <Compile Include="ViewModel\ButtonViewModels\SmoothGraphViewModel.cs" />
     <Compile Include="ViewModel\ColorizeGraphViewModel.cs" />
     <Compile Include="ViewModel\GraphCreatingViewModel.cs" />
     <Compile Include="ViewModel\GraphFieldViewModel.cs" />
@@ -157,6 +161,9 @@
     </Compile>
     <Compile Include="View\Windows\PathFindWindow.xaml.cs">
       <DependentUpon>PathFindWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\Windows\SmoothGraphUserControl.xaml.cs">
+      <DependentUpon>SmoothGraphUserControl.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\Windows\ViewModelWindow.cs" />
     <Page Include="Resources\Images\SvgImages.xaml">
@@ -200,6 +207,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="View\Windows\PathFindWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\Windows\SmoothGraphUserControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

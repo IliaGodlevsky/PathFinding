@@ -3,7 +3,7 @@ using System;
 
 namespace ConsoleVersion.Model.DelegateExtractors
 {
-    internal sealed class SafeMethodExtractor : BaseDelegateExtractor<Action<Action>, ExecuteSafeAttribute>
+    internal sealed class SafeMethodExtractor : DelegateExtractor<Action<Action>, ExecuteSafeAttribute>
     {
     }
 }

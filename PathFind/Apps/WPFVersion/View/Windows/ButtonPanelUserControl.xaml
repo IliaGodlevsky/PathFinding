@@ -59,5 +59,6 @@
                 <viewmodel:ColorizeGraphViewModel/>
             </local:ColorizeGraphUserControl.DataContext>
         </local:ColorizeGraphUserControl>
+        <local:SmoothGraphUserControl/>
     </ToolBar>
 </UserControl>

@@ -9,7 +9,7 @@ using static System.Reflection.BindingFlags;
 
 namespace ConsoleVersion.Model.DelegateExtractors
 {
-    internal abstract class BaseDelegateExtractor<TDelegate, TAttribute> : IDelegateExtractor<TDelegate>
+    internal abstract class DelegateExtractor<TDelegate, TAttribute> : IDelegateExtractor<TDelegate>
         where TDelegate : Delegate
         where TAttribute : BaseMethodAttribute
     {

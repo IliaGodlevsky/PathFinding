@@ -96,7 +96,7 @@
     <Compile Include="MessegesTexts.cs" />
     <Compile Include="Model\ConsoleKeystrokesHook.cs" />
     <Compile Include="Model\ConsoleSmoothLevels.cs" />
-    <Compile Include="Model\DelegateExtractors\BaseDelegateExtractor.cs" />
+    <Compile Include="Model\DelegateExtractors\DelegateExtractor.cs" />
     <Compile Include="Model\DelegateExtractors\SafeMethodExtractor.cs" />
     <Compile Include="Model\DelegateExtractors\ValidationMethodExtractor.cs" />
     <Compile Include="ValueInput\ProgrammedInput\ConsoleProgrammedKeyInput.cs" />

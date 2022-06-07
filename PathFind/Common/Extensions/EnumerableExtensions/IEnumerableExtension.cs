@@ -136,8 +136,7 @@ namespace Common.Extensions.EnumerableExtensions
         {
             return collection
                 .GroupBy(item => item.GetAttributeOrNull<GroupAttribute>())
-                .Select(item => item.OrderByOrderAttribute())
-                .SelectMany(item => item);
+                .SelectMany(item => item.OrderByOrderAttribute());
         }
 
         public static IList<T> Shuffle<T>(this IList<T> list, Func<int> randomFunction)

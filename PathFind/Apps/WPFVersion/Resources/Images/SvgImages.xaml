@@ -53,4 +53,9 @@
     <Viewbox x:Key="Resume">
         <Path Stroke="Black" Data="M10,16.5V7.5L16,12M12,2A10,10 0 0,0 2,12A10,10 0 0,0 12,22A10,10 0 0,0 22,12A10,10 0 0,0 12,2Z"/>
     </Viewbox>
+    <Viewbox x:Key="Smooth">
+        <Path Stroke="Black" Data="M21 6C19.34 6 18 7.34 18 9V13C18 13.55 17.55 14 17 14V10C17 8.34 15.66 7 14 7H10C8.34 7 7 8.34 7 
+              10H9C9 9.45 9.45 9 10 9H14C14.55 9 15 9.45 15 10V11H6C3.79 11 2 12.79 2 15V18H17V16C18.66 16 20 14.66 20 13V9C20 8.45 20.45 
+              8 21 8H22V6H21Z"/>
+    </Viewbox>
 </ResourceDictionary>
