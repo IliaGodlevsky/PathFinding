@@ -68,6 +68,7 @@
     <Compile Include="Cursor.cs" />
     <Compile Include="DependencyInjection\DI.cs" />
     <Compile Include="Constants.cs" />
+    <Compile Include="Enums\Answer.cs" />
     <Compile Include="EventArguments\ConsoleKeyPressedEventArgs.cs" />
     <Compile Include="EventHandlers\ConsoleKeyPressedEventHandler.cs" />
     <Compile Include="Extensions\ConsoleKeystrokesHookExtensions.cs" />

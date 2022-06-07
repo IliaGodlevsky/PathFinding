@@ -1,4 +1,4 @@
-﻿using ConsoleVersion.Model;
+﻿using ConsoleVersion.Enums;
 
 namespace ConsoleVersion.Interface
 {

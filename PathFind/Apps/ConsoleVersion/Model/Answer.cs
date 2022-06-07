@@ -3,15 +3,13 @@ using ValueRange;
 
 namespace ConsoleVersion.Model
 {
-    internal sealed class Answer : IComparable
+    internal readonly struct Answer : IComparable
     {
-        public static readonly Answer None = new Answer(-1, string.Empty);
+        private static readonly Answer Yes = new Answer(1, "Yes");
 
-        public static readonly Answer Yes = new Answer(1, "Yes");
+        private static readonly Answer No = new Answer(0, "No");
 
-        public static readonly Answer No = new Answer(0, "No");
-
-        public static readonly InclusiveValueRange<Answer> Range = new InclusiveValueRange<Answer>(Yes, No);
+        private static readonly InclusiveValueRange<Answer> Range = new InclusiveValueRange<Answer>(Yes, No);
 
         private readonly int value;
         private readonly string name;
@@ -40,11 +38,10 @@ namespace ConsoleVersion.Model
         {
             switch (obj)
             {
-                case int value: 
+                case int value:
                     return value.Equals(this.value);
                 case string name:
-                    return name.Equals(this.name, StringComparison.InvariantCultureIgnoreCase)
-                        || this.value.ToString().Equals(name, StringComparison.InvariantCultureIgnoreCase);
+                    return name.Equals(this.name, StringComparison.InvariantCultureIgnoreCase);
                 default:
                     return false;
             }
@@ -52,7 +49,7 @@ namespace ConsoleVersion.Model
 
         public override string ToString() => name;
 
-        public static bool operator ==(Answer value1, Answer value2)
+        public static bool operator == (Answer value1, Answer value2)
         {
             return value1.value == value2.value && value1.name == value2.name;
         }
@@ -62,33 +59,24 @@ namespace ConsoleVersion.Model
             return !(value1 == value2);
         }
 
-        public static explicit operator Answer(int answer)
+        public static bool operator true(Answer value)
         {
-            switch (answer)
-            {
-                case 0:
-                    return Answer.No;
-                case 1:
-                    return Answer.Yes;
-                default:
-                    return Answer.None;
-            }
+            return value.value == 1;
         }
 
-        public static explicit operator Answer(string answer)
+        public static bool operator false(Answer value)
         {
-            if (Answer.Yes.Equals(answer))
-            {
-                return Answer.Yes;
-            }
-            else if (Answer.No.Equals(answer))
-            {
-                return Answer.No;
-            }
-            else
-            {
-                return Answer.None;
-            }
+            return value.value == 0;
+        }
+
+        public static explicit operator int(Answer value)
+        {
+            return value.value;
+        }
+
+        public static explicit operator string(Answer answer)
+        {
+            return answer.name;
         }
     }
 }

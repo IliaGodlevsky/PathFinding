@@ -1,4 +1,4 @@
-﻿using ConsoleVersion.Model;
+﻿using ConsoleVersion.Enums;
 using System;
 
 namespace ConsoleVersion.ValueInput.ProgrammedInput.FromFile
@@ -11,8 +11,7 @@ namespace ConsoleVersion.ValueInput.ProgrammedInput.FromFile
 
         protected override bool Parse(string value, out Answer output)
         {
-            output = (Answer)value;
-            return output != Answer.None;
+            return Enum.TryParse(value, ignoreCase: true, out output);
         }
     }
 }

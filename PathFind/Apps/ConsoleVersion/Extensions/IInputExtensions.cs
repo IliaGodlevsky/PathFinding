@@ -1,4 +1,5 @@
-﻿using ConsoleVersion.Interface;
+﻿using ConsoleVersion.Enums;
+using ConsoleVersion.Interface;
 using ConsoleVersion.Model;
 using GraphLib.Extensions;
 using GraphLib.Interfaces;

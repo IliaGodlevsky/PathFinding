@@ -1,14 +1,14 @@
-﻿using ConsoleVersion.Model;
-using System;
+﻿using System;
 
 namespace ConsoleVersion.ValueInput.UserInput
 {
-    internal sealed class ConsoleUserAnswerInput : ConsoleUserInput<Answer>
+    internal sealed class ConsoleUserEnumInput<T> : ConsoleUserInput<T>
+        where T : struct, Enum
     {
-        protected override bool IsValidInput(string userInput, out Answer result)
+        protected override bool IsValidInput(string userInput, out T result)
         {
-            result = (Answer)userInput;
-            return result != Answer.None;
+            return Enum.TryParse(userInput, ignoreCase: true, out result)
+                && Enum.IsDefined(typeof(T), result);
         }
     }
 }
