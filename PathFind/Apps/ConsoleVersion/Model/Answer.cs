@@ -1,4 +1,6 @@
-﻿using System;
+﻿using Common.Extensions.EnumerableExtensions;
+using System;
+using System.Collections.Generic;
 using ValueRange;
 
 namespace ConsoleVersion.Model
@@ -13,11 +15,14 @@ namespace ConsoleVersion.Model
 
         public static readonly InclusiveValueRange<Answer> Range = new InclusiveValueRange<Answer>(Yes, No);
 
+        private static readonly Dictionary<int, Answer> valueMap = new Dictionary<int, Answer>() { { 1, Yes}, { 0, No} };
+        private static readonly Dictionary<string, Answer> nameMap = new Dictionary<string, Answer>() { { "yes", Yes }, { "no", No } };
+
         private readonly int value;
         private readonly string name;
 
         private Answer(int value, string name)
-        {
+        {            
             this.value = value;
             this.name = name;
         }
@@ -40,11 +45,12 @@ namespace ConsoleVersion.Model
         {
             switch (obj)
             {
-                case int value: 
-                    return value.Equals(this.value);
+                case int value:
+                    return value == this.value;
                 case string name:
-                    return name.Equals(this.name, StringComparison.InvariantCultureIgnoreCase)
-                        || this.value.ToString().Equals(name, StringComparison.InvariantCultureIgnoreCase);
+                    return name.Equals(this.name, StringComparison.InvariantCultureIgnoreCase) || this.value.Equals(name);
+                case Answer answer:
+                    return answer == this;
                 default:
                     return false;
             }
@@ -62,33 +68,19 @@ namespace ConsoleVersion.Model
             return !(value1 == value2);
         }
 
+        public static explicit operator bool(Answer answer)
+        {
+            return answer.value > 0;
+        }
+
         public static explicit operator Answer(int answer)
         {
-            switch (answer)
-            {
-                case 0:
-                    return Answer.No;
-                case 1:
-                    return Answer.Yes;
-                default:
-                    return Answer.None;
-            }
+            return valueMap.GetOrDefault(answer, () => Answer.None);
         }
 
         public static explicit operator Answer(string answer)
         {
-            if (Answer.Yes.Equals(answer))
-            {
-                return Answer.Yes;
-            }
-            else if (Answer.No.Equals(answer))
-            {
-                return Answer.No;
-            }
-            else
-            {
-                return Answer.None;
-            }
+            return nameMap.GetOrDefault(answer.ToLower(), () => Answer.None);
         }
     }
 }
