@@ -14,9 +14,13 @@ namespace WPFVersion.Model
     {
         private readonly IMessenger messenger;
 
+        private bool IsRedactorModeStarted { get; set; } = false;
+
         public GraphEvents(IVertexCostFactory costFactory) : base(costFactory)
         {
             this.messenger = DI.Container.Resolve<IMessenger>();
+            messenger.Register<StartRedactorModeMessage>(this, OnRedactorModeStarted);
+            messenger.Register<StopRedactorModeMessage>(this, OnRedactorModeStopped);
         }
 
         protected override int GetWheelDelta(EventArgs e)
@@ -28,6 +32,7 @@ namespace WPFVersion.Model
         {
             if (vertex is Vertex vert)
             {
+                vert.MouseEnter += ReverseVertexModeDependent;
                 vert.MouseRightButtonDown += Reverse;
                 vert.MouseRightButtonDown += OnGraphChanged;
                 vert.MouseWheel += ChangeVertexCost;
@@ -38,15 +43,43 @@ namespace WPFVersion.Model
         {
             if (vertex is Vertex vert)
             {
+                vert.MouseEnter -= ReverseVertexModeDependent;
                 vert.MouseRightButtonDown -= Reverse;
                 vert.MouseRightButtonDown -= OnGraphChanged;
                 vert.MouseWheel -= ChangeVertexCost;
             }
         }
 
+        private void ReverseVertexModeDependent(object sender, EventArgs e)
+        {
+            if (IsRedactorModeStarted)
+            {
+                base.Reverse(sender, e);
+                OnGraphChanged(sender, e);
+            }
+        }
+
+        protected override void Reverse(object sender, EventArgs e)
+        {
+            if (!IsRedactorModeStarted)
+            {
+                base.Reverse(sender, e);
+            }
+        }
+
         private void OnGraphChanged(object sender, EventArgs e)
         {
             messenger.Send(new GraphChangedMessage());
+        }
+
+        private void OnRedactorModeStarted(StartRedactorModeMessage message)
+        {
+            IsRedactorModeStarted = true;
+        }
+
+        private void OnRedactorModeStopped(StopRedactorModeMessage message)
+        {
+            IsRedactorModeStarted = false;
         }
     }
 }

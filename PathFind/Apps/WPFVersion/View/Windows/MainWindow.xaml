@@ -4,13 +4,24 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
         xmlns:viewmodel="clr-namespace:WPFVersion.ViewModel" 
-        xmlns:windows="clr-namespace:WPFVersion.View.Windows"
+        xmlns:windows="clr-namespace:WPFVersion.View.Windows" 
+        xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+        xmlns:ei="http://schemas.microsoft.com/expression/2010/interactions"
         mc:Ignorable="d"
         Background="White"
         Title="Path find"
         ResizeMode="CanResize"        
         WindowStartupLocation="CenterScreen"
-        Icon="../../Resources/Images/mainwindow2.png">
+        Icon="../../Resources/Images/mainwindow2.png"
+        x:Name="Window">
+    <i:Interaction.Triggers>
+        <i:EventTrigger EventName="KeyDown">
+            <ei:CallMethodAction TargetObject="{Binding Path=DataContext, ElementName=Window}" MethodName="OnKeyDown"/>
+        </i:EventTrigger>
+        <i:EventTrigger EventName="KeyUp">
+            <ei:CallMethodAction TargetObject="{Binding Path=DataContext, ElementName=Window}" MethodName="OnKeyUp"/>
+        </i:EventTrigger>
+    </i:Interaction.Triggers>
     <Grid Background="White">
         <Grid.RowDefinitions>
             <RowDefinition Height="auto"/>
