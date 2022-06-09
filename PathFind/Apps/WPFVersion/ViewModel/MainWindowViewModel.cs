@@ -17,25 +17,29 @@ namespace WPFVersion.ViewModel
 
         private readonly IMessenger messenger;
 
+        private bool IsEditorModeEnabled { get; set; }
+
         public MainWindowViewModel()
         {
             messenger = DI.Container.Resolve<IMessenger>();
             messenger.Register<GraphCreatedMessage>(this, SetGraph);
-        }        
+        }
 
         public void OnKeyUp(object sender, KeyEventArgs e)
         {
-            if (e.Key == Key.LeftCtrl)
+            if (e.Key == Key.LeftCtrl && IsEditorModeEnabled)
             {
-                messenger.Send(new StopRedactorModeMessage());
+                IsEditorModeEnabled = false;
+                messenger.Send(new StopEditorModeMessage());
             }
         }
 
         public void OnKeyDown(object sender, KeyEventArgs e)
         {
-            if (e.Key == Key.LeftCtrl)
+            if (e.Key == Key.LeftCtrl && !IsEditorModeEnabled)
             {
-                messenger.Send(new StartRedactorModeMessage());
+                IsEditorModeEnabled = true;
+                messenger.Send(new StartEditorModeMessage());
             }
         }
 

@@ -3,7 +3,6 @@ using GalaSoft.MvvmLight.Messaging;
 using GraphLib.Interfaces;
 using GraphLib.Interfaces.Factories;
 using GraphLib.Realizations.Extensions;
-using NullObject.Extensions;
 using System.Collections.Generic;
 using System.Windows.Input;
 using WPFVersion.DependencyInjection;

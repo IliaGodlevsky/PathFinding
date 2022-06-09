@@ -1,6 +1,6 @@
 ﻿namespace WPFVersion.Messages.ActionMessages
 {
-    internal sealed class StartRedactorModeMessage
+    internal sealed class StartEditorModeMessage
     {
     }
 }

@@ -14,13 +14,13 @@ namespace WPFVersion.Model
     {
         private readonly IMessenger messenger;
 
-        private bool IsRedactorModeStarted { get; set; } = false;
+        private bool IsEditorModeEnabled { get; set; } = false;
 
         public GraphEvents(IVertexCostFactory costFactory) : base(costFactory)
         {
             this.messenger = DI.Container.Resolve<IMessenger>();
-            messenger.Register<StartRedactorModeMessage>(this, OnRedactorModeStarted);
-            messenger.Register<StopRedactorModeMessage>(this, OnRedactorModeStopped);
+            messenger.Register<StartEditorModeMessage>(this, OnEditorModeStarted);
+            messenger.Register<StopEditorModeMessage>(this, OnEditorModeStopped);
         }
 
         protected override int GetWheelDelta(EventArgs e)
@@ -32,9 +32,8 @@ namespace WPFVersion.Model
         {
             if (vertex is Vertex vert)
             {
-                vert.MouseEnter += ReverseVertexModeDependent;
+                vert.MouseEnter += EditorModeReverse;
                 vert.MouseRightButtonDown += Reverse;
-                vert.MouseRightButtonDown += OnGraphChanged;
                 vert.MouseWheel += ChangeVertexCost;
             }
         }
@@ -43,16 +42,15 @@ namespace WPFVersion.Model
         {
             if (vertex is Vertex vert)
             {
-                vert.MouseEnter -= ReverseVertexModeDependent;
+                vert.MouseEnter -= EditorModeReverse;
                 vert.MouseRightButtonDown -= Reverse;
-                vert.MouseRightButtonDown -= OnGraphChanged;
                 vert.MouseWheel -= ChangeVertexCost;
             }
         }
 
-        private void ReverseVertexModeDependent(object sender, EventArgs e)
+        private void EditorModeReverse(object sender, EventArgs e)
         {
-            if (IsRedactorModeStarted)
+            if (IsEditorModeEnabled)
             {
                 base.Reverse(sender, e);
                 OnGraphChanged(sender, e);
@@ -61,9 +59,10 @@ namespace WPFVersion.Model
 
         protected override void Reverse(object sender, EventArgs e)
         {
-            if (!IsRedactorModeStarted)
+            if (!IsEditorModeEnabled)
             {
                 base.Reverse(sender, e);
+                OnGraphChanged(sender, e);
             }
         }
 
@@ -72,14 +71,14 @@ namespace WPFVersion.Model
             messenger.Send(new GraphChangedMessage());
         }
 
-        private void OnRedactorModeStarted(StartRedactorModeMessage message)
+        private void OnEditorModeStarted(StartEditorModeMessage message)
         {
-            IsRedactorModeStarted = true;
+            IsEditorModeEnabled = true;
         }
 
-        private void OnRedactorModeStopped(StopRedactorModeMessage message)
+        private void OnEditorModeStopped(StopEditorModeMessage message)
         {
-            IsRedactorModeStarted = false;
+            IsEditorModeEnabled = false;
         }
     }
 }

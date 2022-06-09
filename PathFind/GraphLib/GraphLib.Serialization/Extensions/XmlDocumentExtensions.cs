@@ -42,9 +42,7 @@ namespace GraphLib.Serialization.Extensions
 
         private static IEnumerable<XmlNode> CreateNodes(this XmlDocument document, INeighborhood neighborhood)
         {
-            return neighborhood.Neighbours
-                .Select(neighbour => document.CreateElement(Coordinate)
-                .WithAttributes(neighbour.CoordinatesValues));
+            return neighborhood.Neighbours.Select(neighbour => document.CreateElement(Coordinate).WithAttributes(neighbour.CoordinatesValues));
         }
 
         private static XmlText CreateValue<T>(this XmlDocument document, T value)
@@ -59,7 +57,7 @@ namespace GraphLib.Serialization.Extensions
 
         private static IEnumerable<XmlAttribute> GenerateAttributes<T>(this XmlDocument document, T[] array)
         {
-            return array.Select((value, i) => document.CreateAttributeWithValue($"value-{i}", value));
+            return array.Select((value, i) => document.CreateAttributeWithValue(string.Format(Value, i), value));
         }
 
         private static Xml WithAttributes<Xml, T>(this Xml node, params T[] array)
