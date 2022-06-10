@@ -17,7 +17,7 @@ namespace WPFVersion.ViewModel
 
         private readonly IMessenger messenger;
 
-        private bool IsEditorModeEnabled { get; set; }
+        private bool IsEditorModeEnabled { get; set; } = false;
 
         public MainWindowViewModel()
         {
