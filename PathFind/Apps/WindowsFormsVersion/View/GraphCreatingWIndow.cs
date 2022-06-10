@@ -19,9 +19,6 @@ namespace WindowsFormsVersion.View
             var source = model.GraphAssembles.ToArray();
             graphAssemblesListBox.DataSource = source;
 
-            graphAssemblesListBox.ValueMember = "Value";
-            graphAssemblesListBox.DisplayMember = "Key";
-
             var graphAssembleBinding = new Binding(
                 nameof(graphAssemblesListBox.SelectedValue),
                 model,

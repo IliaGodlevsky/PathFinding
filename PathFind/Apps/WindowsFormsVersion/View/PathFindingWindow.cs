@@ -17,9 +17,6 @@ namespace WindowsFormsVersion.View
             var dataSource = model.Algorithms;
             algorithmListBox.DataSource = dataSource;
 
-            algorithmListBox.ValueMember = "Item2";
-            algorithmListBox.DisplayMember = "Item1";
-
             var algorithmBinding = new Binding(
                 nameof(algorithmListBox.SelectedValue),
                 model,

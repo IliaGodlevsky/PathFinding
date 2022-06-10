@@ -7,14 +7,10 @@ using GraphLib.Interfaces;
 using NullObject.Extensions;
 using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Diagnostics;
 using System.Linq;
 
 namespace Algorithm.Algos.Algos
 {
-    [DebuggerDisplay("IDA* algorithm")]
-    [Description("IDA* algorithm")]
     public class IDAStarAlgorithm : AStarAlgorithm
     {
         private const int PercentToDelete = 4;
@@ -55,6 +51,11 @@ namespace Algorithm.Algos.Algos
         {
             base.Reset();
             deletedVertices.Clear();
+        }
+
+        public override string ToString()
+        {
+            return "IDA* algorithm";
         }
     }
 }

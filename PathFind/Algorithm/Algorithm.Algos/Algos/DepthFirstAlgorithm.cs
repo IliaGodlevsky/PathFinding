@@ -2,13 +2,9 @@
 using Algorithm.Interfaces;
 using Algorithm.Realizations.Heuristic.Distances;
 using GraphLib.Interfaces;
-using System.ComponentModel;
-using System.Diagnostics;
 
 namespace Algorithm.Algos.Algos
 {
-    [DebuggerDisplay("Depth first algorithm")]
-    [Description("Depth first algorithm")]
     public sealed class DepthFirstAlgorithm : GreedyAlgorithm
     {
         private readonly IHeuristic heuristic;
@@ -28,6 +24,11 @@ namespace Algorithm.Algos.Algos
         protected override double GreedyHeuristic(IVertex vertex)
         {
             return heuristic.Calculate(vertex, endPoints.Source);
+        }
+
+        public override string ToString()
+        {
+            return "Depth first algorithm";
         }
     }
 }

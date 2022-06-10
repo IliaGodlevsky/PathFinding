@@ -105,23 +105,6 @@ namespace Common.Extensions.EnumerableExtensions
             return new ReadOnlyDictionary<TKey, TValue>(collection.ToDictionary(item => item.Key, item => item.Value));
         }
 
-        public static Dictionary<string, T> ToNameInstanceDictionary<T>(this IEnumerable<T> collection)
-        {
-            return collection.ToDictionary(item => item.GetDescription());
-        }
-
-        public static IReadOnlyList<Tuple<string, T>> ToNameInstanceTuples<T>(this IEnumerable<T> collection)
-        {
-            return collection
-                .Select(item => new Tuple<string, T>(item.GetDescription(), item))
-                .ToArray();
-        }
-
-        public static IEnumerable<T1> GetItems1<T1, T2>(this IEnumerable<Tuple<T1, T2>> tuples)
-        {
-            return tuples.Select(item => item.Item1);
-        }
-
         public static IOrderedEnumerable<T> OrderByOrderAttribute<T>(this IEnumerable<T> collection)
         {
             return collection.OrderBy(item => item.GetOrder());

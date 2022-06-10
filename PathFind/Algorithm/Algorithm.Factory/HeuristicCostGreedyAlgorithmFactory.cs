@@ -5,12 +5,10 @@ using Algorithm.Interfaces;
 using Algorithm.Realizations.Heuristic.Distances;
 using Algorithm.Realizations.StepRules;
 using GraphLib.Interfaces;
-using System.ComponentModel;
 
 namespace Algorithm.Factory
 {
     [GreedyGroup]
-    [Description("Cost greedy (heuristic)")]
     public sealed class HeuristicCostGreedyAlgorithmFactory : IAlgorithmFactory<HeuristicCostGreedyAlgorithm>
     {
         private readonly IStepRule stepRule;
@@ -43,6 +41,11 @@ namespace Algorithm.Factory
         public HeuristicCostGreedyAlgorithm Create(IEndPoints endPoints)
         {
             return new HeuristicCostGreedyAlgorithm(endPoints, heuristic, stepRule);
+        }
+
+        public override string ToString()
+        {
+            return "Cost greedy (heuristic)";
         }
     }
 }

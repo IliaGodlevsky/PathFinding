@@ -1,7 +1,7 @@
-﻿using Common.Extensions.EnumerableExtensions;
-using GraphLib.Interfaces.Factories;
+﻿using GraphLib.Interfaces.Factories;
 using Logging.Interface;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace GraphLib.ViewModel
 {
@@ -15,14 +15,14 @@ namespace GraphLib.ViewModel
 
         public int ObstaclePercent { get; set; }
 
-        public IReadOnlyDictionary<string, IGraphAssemble> GraphAssembles { get; }
+        public IReadOnlyList<IGraphAssemble> GraphAssembles { get; }
 
         public virtual IGraphAssemble SelectedGraphAssemble { get; set; }
 
         protected GraphCreatingModel(ILog log, IEnumerable<IGraphAssemble> graphAssembles)
         {
             this.log = log;
-            GraphAssembles = graphAssembles.ToNameInstanceDictionary();
+            GraphAssembles = graphAssembles.ToArray();
         }
 
         public abstract void CreateGraph();

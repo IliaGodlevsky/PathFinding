@@ -1,7 +1,6 @@
 ﻿using Algorithm.Base;
 using Algorithm.Interfaces;
 using Autofac;
-using Common.Extensions;
 using GalaSoft.MvvmLight.Messaging;
 using System.Windows.Input;
 using WPFVersion3D.DependencyInjection;
@@ -56,7 +55,7 @@ namespace WPFVersion3D.ViewModel
         {
             this.algorithm = algorithm;
             messenger = DI.Container.Resolve<IMessenger>();
-            AlgorithmName = algorithm.GetDescription();
+            AlgorithmName = algorithm.ToString();
             InterruptCommand = new InterruptAlgorithmCommand(algorithm);
             PauseCommand = new PauseAlgorithmCommand(algorithm);
             ResumeCommand = new ResumeAlgorithmCommand(algorithm);

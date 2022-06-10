@@ -4,12 +4,10 @@ using Algorithm.Factory.Interface;
 using Algorithm.Interfaces;
 using Algorithm.Realizations.Heuristic.Distances;
 using GraphLib.Interfaces;
-using System.ComponentModel;
 
 namespace Algorithm.Factory
 {
     [GreedyGroup]
-    [Description("Distance first algorithm")]
     public sealed class DistanceFirstAlgorithmFactory : IAlgorithmFactory<DistanceFirstAlgorithm>
     {
         private readonly IHeuristic heuristic;
@@ -28,6 +26,11 @@ namespace Algorithm.Factory
         public DistanceFirstAlgorithm Create(IEndPoints endPoints)
         {
             return new DistanceFirstAlgorithm(endPoints, heuristic);
+        }
+
+        public override string ToString()
+        {
+            return "Distance first algorithm";
         }
     }
 }

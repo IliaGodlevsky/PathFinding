@@ -6,14 +6,10 @@ using Common.Extensions.EnumerableExtensions;
 using GraphLib.Extensions;
 using GraphLib.Interfaces;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Diagnostics;
 using System.Linq;
 
 namespace Algorithm.Algos.Algos
 {
-    [DebuggerDisplay("Lee algorithm")]
-    [Description("Lee algorithm")]
     public class LeeAlgorithm : WaveAlgorithm
     {
         protected Queue<IVertex> verticesQueue;
@@ -63,6 +59,11 @@ namespace Algorithm.Algos.Algos
         protected override void RelaxNeighbours(IReadOnlyCollection<IVertex> neighbours)
         {
             neighbours.Where(IsVertexUnwaved).ForEach(RelaxNeighbour);
+        }
+
+        public override string ToString()
+        {
+            return "Lee algorithm";
         }
     }
 }

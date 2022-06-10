@@ -1,7 +1,6 @@
 ﻿using Algorithm.Base;
 using Algorithm.Interfaces;
 using Autofac;
-using Common.Extensions;
 using GalaSoft.MvvmLight.Messaging;
 using System.Windows.Input;
 using ValueRange.Enums;
@@ -73,7 +72,7 @@ namespace WPFVersion.ViewModel
         {
             this.algorithm = algorithm;
             this.delayTime = delayTime;
-            AlgorithmName = algorithm.GetDescription();
+            AlgorithmName = algorithm.ToString();
             Status = AlgorithmViewModel.Started;
             Index = index;
             messenger = DI.Container.Resolve<IMessenger>();

@@ -4,12 +4,10 @@ using Algorithm.Factory.Interface;
 using Algorithm.Interfaces;
 using Algorithm.Realizations.StepRules;
 using GraphLib.Interfaces;
-using System.ComponentModel;
 
 namespace Algorithm.Factory
 {
     [GreedyGroup]
-    [Description("Cost greedy algorithm")]
     public sealed class CostGreedyAlgorithmFactory : IAlgorithmFactory<CostGreedyAlgorithm>
     {
         private readonly IStepRule stepRule;
@@ -28,6 +26,11 @@ namespace Algorithm.Factory
         public CostGreedyAlgorithm Create(IEndPoints endPoints)
         {
             return new CostGreedyAlgorithm(endPoints, stepRule);
+        }
+
+        public override string ToString()
+        {
+            return "Cost greedy algorithm";
         }
     }
 }

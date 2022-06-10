@@ -6,13 +6,11 @@ using Algorithm.Realizations.Heuristic.Distances;
 using Algorithm.Realizations.StepRules;
 using Common.Attrbiutes;
 using GraphLib.Interfaces;
-using System.ComponentModel;
 
 namespace Algorithm.Factory
 {
     [Order(2)]
     [WaveGroup]
-    [Description("A* algorithm")]
     public sealed class AStarAlgorithmFactory : IAlgorithmFactory<AStarAlgorithm>
     {
         private readonly IStepRule stepRule;
@@ -45,6 +43,11 @@ namespace Algorithm.Factory
         public AStarAlgorithm Create(IEndPoints endPoints)
         {
             return new AStarAlgorithm(endPoints, stepRule, heuristic);
+        }
+
+        public override string ToString()
+        {
+            return "A* algorithm";
         }
     }
 }

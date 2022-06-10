@@ -5,11 +5,11 @@ using ConsoleVersion.DependencyInjection;
 using ConsoleVersion.Extensions;
 using ConsoleVersion.Interface;
 using ConsoleVersion.Messages;
+using ConsoleVersion.Model;
 using GalaSoft.MvvmLight.Messaging;
 using GraphLib.Interfaces;
 using GraphLib.Interfaces.Factories;
 using GraphLib.Realizations.Extensions;
-using GraphLib.Realizations.SmoothLevel;
 using System;
 using System.Collections.Generic;
 
@@ -27,7 +27,7 @@ namespace ConsoleVersion.ViewModel
 
         public IInput<int> IntInput { get; set; }
 
-        public IReadOnlyList<ISmoothLevel> SmoothLevels { get; set; } = NullSmoothLevel.GetMany(1);
+        public IReadOnlyList<ISmoothLevel> SmoothLevels => ConsoleSmoothLevels.Levels;
 
         public string ChooseSmoothLevelMsg { private get; set; } = string.Empty;
 

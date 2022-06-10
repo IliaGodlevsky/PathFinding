@@ -48,8 +48,7 @@ namespace ConsoleVersion.ViewModel
         public void ChooseGraphAssemble()
         {
             int graphAssembleIndex = IntInput.Input(GraphAssembleInpuMessage, graphAssembleKeyRange) - 1;
-            string selectedGraphAssembleKey = GraphAssembles.Keys.ElementAt(graphAssembleIndex);
-            SelectedGraphAssemble = GraphAssembles[selectedGraphAssembleKey];
+            SelectedGraphAssemble = GraphAssembles[graphAssembleIndex];
         }
 
         [MenuItem(MenuItemsNames.InputGraphParametres, 2)]

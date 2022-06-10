@@ -5,13 +5,11 @@ using GraphLib.Interfaces;
 using GraphLib.Interfaces.Factories;
 using Random.Extensions;
 using Random.Interface;
-using System.ComponentModel;
 using ValueRange;
 using ValueRange.Extensions;
 
 namespace GraphLib.Realizations.Factories.GraphAssembles
 {
-    [Description("Random cost graph assemble")]
     public class GraphAssemble : IGraphAssemble
     {
         protected readonly IVertexCostFactory costFactory;
@@ -55,6 +53,11 @@ namespace GraphLib.Realizations.Factories.GraphAssembles
             }
 
             return graphFactory.CreateGraph(vertices, graphDimensionsSizes);
+        }
+
+        public override string ToString()
+        {
+            return "Random cost graph assemble";
         }
     }
 }

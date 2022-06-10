@@ -32,11 +32,11 @@
             <Button Command="{Binding CancelPathFindAlgorithmChoice}" Margin ="5" Content="Cancel">
             </Button>
         </StackPanel>
-        <ListBox ItemsSource="{Binding Algorithms }" SelectedValuePath="Item2" x:Name="algoListBox" BorderThickness="0" Margin="5" SelectedValue="{Binding Path = Algorithm, UpdateSourceTrigger=PropertyChanged}">
+        <ListBox ItemsSource="{Binding Algorithms }" x:Name="algoListBox" BorderThickness="0" Margin="5" SelectedValue="{Binding Path = Algorithm, UpdateSourceTrigger=PropertyChanged}">
             <ListBox.ItemTemplate>
                 <DataTemplate>
                     <StackPanel Orientation="Horizontal">
-                        <TextBlock Margin="3" Text="{Binding Path=Item1}"/>
+                        <TextBlock Margin="3" Text="{Binding}"/>
                     </StackPanel>
                 </DataTemplate>
             </ListBox.ItemTemplate>

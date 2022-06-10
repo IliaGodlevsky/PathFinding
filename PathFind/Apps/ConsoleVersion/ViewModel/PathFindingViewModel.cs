@@ -89,7 +89,7 @@ namespace ConsoleVersion.ViewModel
         [MenuItem(MenuItemsNames.ChooseAlgorithm, 1)]
         public void ChooseAlgorithm()
         {
-            Algorithm = Algorithms[AlgorithmIndex].Item2;
+            Algorithm = Algorithms[AlgorithmIndex];
         }
 
         [MenuItem(MenuItemsNames.Exit, 7)]
@@ -153,7 +153,7 @@ namespace ConsoleVersion.ViewModel
             base.SubscribeOnAlgorithmEvents(algorithm);
             algorithm.Started += keystrokesHook.StartAsync;
             algorithm.Finished += keystrokesHook.Interrupt;
-            currentAlgorithmName = Algorithm.GetDescription();
+            currentAlgorithmName = Algorithm.ToString();
         }
 
         private void OnConsoleKeyPressed(object sender, ConsoleKeyPressedEventArgs e)

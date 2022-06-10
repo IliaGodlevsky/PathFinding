@@ -5,13 +5,11 @@ using Algorithm.Interfaces;
 using Algorithm.Realizations.Heuristic.Distances;
 using Common.Attrbiutes;
 using GraphLib.Interfaces;
-using System.ComponentModel;
 
 namespace Algorithm.Factory
 {
     [Order(5)]
     [WaveGroup]
-    [Description("Lee algorithm (heuristic)")]
     public sealed class BestFirstLeeAlgorithmFactory : IAlgorithmFactory<BestFirstLeeAlgorithm>
     {
         private readonly IHeuristic heuristic;
@@ -30,6 +28,11 @@ namespace Algorithm.Factory
         public BestFirstLeeAlgorithm Create(IEndPoints endPoints)
         {
             return new BestFirstLeeAlgorithm(endPoints, heuristic);
+        }
+
+        public override string ToString()
+        {
+            return "Lee algorithm (heuristic)";
         }
     }
 }

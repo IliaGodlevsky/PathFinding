@@ -8,13 +8,9 @@ using GraphLib.Extensions;
 using GraphLib.Interfaces;
 using Priority_Queue;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Diagnostics;
 
 namespace Algorithm.Algos.Algos
 {
-    [DebuggerDisplay("Dijkstra's algorithm")]
-    [Description("Dijkstra's algorithm")]
     public class DijkstraAlgorithm : WaveAlgorithm
     {
         protected readonly SimplePriorityQueue<IVertex, double> queue;
@@ -86,6 +82,11 @@ namespace Algorithm.Algos.Algos
         {
             neighbours.ForEach(RelaxVertex);
             queue.RemoveIfContains(CurrentVertex);
+        }
+
+        public override string ToString()
+        {
+            return "Dijkstra's algorithm";
         }
     }
 }

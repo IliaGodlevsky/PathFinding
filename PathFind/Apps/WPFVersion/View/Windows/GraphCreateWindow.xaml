@@ -85,17 +85,16 @@
             </TextBox.Text>
             
         </TextBox>
-        <ListBox SelectedValuePath="Value" 
-                 SelectedValue="{Binding SelectedGraphAssemble}" 
+        <ListBox SelectedValue="{Binding SelectedGraphAssemble}" 
                  Grid.Row="4" 
                  Grid.ColumnSpan="2" 
-                 ItemsSource="{Binding GraphAssembles }" 
+                 ItemsSource="{Binding GraphAssembles}" 
                  x:Name="algoListBox" 
                  BorderThickness="0" Margin="5">
             <ListBox.ItemTemplate>
                 <DataTemplate>
                     <StackPanel Orientation="Horizontal">
-                        <TextBlock Margin="3" Text="{Binding Key}"/>
+                        <TextBlock Margin="3" Text="{Binding}"/>
                     </StackPanel>
                 </DataTemplate>
             </ListBox.ItemTemplate>

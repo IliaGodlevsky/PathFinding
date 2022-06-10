@@ -22,7 +22,7 @@ namespace ConsoleVersion.Extensions
             }
             catch (Exception ex)
             {
-                log.Error(ex);
+                log?.Error(ex);
             }
         }
     }

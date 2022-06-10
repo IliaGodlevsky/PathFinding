@@ -4,14 +4,10 @@ using Algorithm.Сompanions;
 using Algorithm.Сompanions.Interface;
 using Common.Extensions.EnumerableExtensions;
 using GraphLib.Interfaces;
-using System.ComponentModel;
-using System.Diagnostics;
 using System.Linq;
 
 namespace Algorithm.Algos.Algos
 {
-    [DebuggerDisplay("Lee algorithm (heusritic)")]
-    [Description("Lee algorithm (heusritic)")]
     public class BestFirstLeeAlgorithm : LeeAlgorithm
     {
         private readonly ICosts heuristics;
@@ -62,6 +58,11 @@ namespace Algorithm.Algos.Algos
         private double CalculateHeuristic(IVertex vertex)
         {
             return heuristic.Calculate(vertex, CurrentEndPoints.Target);
+        }
+
+        public override string ToString()
+        {
+            return "Lee algorithm (heusritic)";
         }
     }
 }

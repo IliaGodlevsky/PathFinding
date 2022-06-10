@@ -3,13 +3,9 @@ using Algorithm.Interfaces;
 using Algorithm.Realizations.GraphPaths;
 using Algorithm.Realizations.StepRules;
 using GraphLib.Interfaces;
-using System.ComponentModel;
-using System.Diagnostics;
 
 namespace Algorithm.Algos.Algos
 {
-    [DebuggerDisplay("Cost greedy algorithm")]
-    [Description("Cost greedy algorithm")]
     public sealed class CostGreedyAlgorithm : GreedyAlgorithm
     {
         private readonly IStepRule stepRule;
@@ -33,6 +29,11 @@ namespace Algorithm.Algos.Algos
         protected override double GreedyHeuristic(IVertex vertex)
         {
             return stepRule.CalculateStepCost(vertex, CurrentVertex);
+        }
+
+        public override string ToString()
+        {
+            return "Cost greedy algorithm";
         }
     }
 }

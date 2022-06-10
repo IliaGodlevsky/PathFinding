@@ -2,7 +2,6 @@
 using Common.Extensions.EnumerableExtensions;
 using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.Linq;
 using System.Reflection;
 
@@ -38,12 +37,6 @@ namespace Common.Extensions
             where T : IComparable
         {
             return value.IsLessOrEqual(upper) && value.IsGreaterOrEqual(lower);
-        }
-
-        public static string GetDescription<T>(this T self)
-        {
-            return self.GetAttributeOrNull<DescriptionAttribute>()?.Description
-                ?? DescriptionAttribute.Default.Description;
         }
 
         public static int GetOrder<T>(this T self)

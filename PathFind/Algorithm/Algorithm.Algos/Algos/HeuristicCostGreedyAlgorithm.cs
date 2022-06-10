@@ -4,13 +4,9 @@ using Algorithm.Realizations.GraphPaths;
 using Algorithm.Realizations.Heuristic.Distances;
 using Algorithm.Realizations.StepRules;
 using GraphLib.Interfaces;
-using System.ComponentModel;
-using System.Diagnostics;
 
 namespace Algorithm.Algos.Algos
 {
-    [DebuggerDisplay("Cost greedy (heuristic)")]
-    [Description("Cost greedy (heuristic)")]
     public sealed class HeuristicCostGreedyAlgorithm : GreedyAlgorithm
     {
         private readonly IStepRule stepRule;
@@ -39,6 +35,11 @@ namespace Algorithm.Algos.Algos
             var heuristicResult = heuristic.Calculate(vertex, endPoints.Target);
             var stepCost = stepRule.CalculateStepCost(vertex, CurrentVertex);
             return heuristicResult + stepCost;
+        }
+
+        public override string ToString()
+        {
+            return "Cost greedy (heuristic)";
         }
     }
 }

@@ -10,7 +10,6 @@ namespace ConsoleVersion.Views
         public GraphSmoothView(GraphSmoothViewModel model) : base(model)
         {
             var menuList = ConsoleSmoothLevels.Levels.Select(level => level.ToString()).ToMenuList();
-            model.SmoothLevels = ConsoleSmoothLevels.Levels;
             model.ChooseSmoothLevelMsg = menuList + "\nChoose smooth level: ";
         }
     }

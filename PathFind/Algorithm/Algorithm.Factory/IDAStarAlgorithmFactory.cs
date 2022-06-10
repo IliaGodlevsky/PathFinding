@@ -6,13 +6,11 @@ using Algorithm.Realizations.Heuristic.Distances;
 using Algorithm.Realizations.StepRules;
 using Common.Attrbiutes;
 using GraphLib.Interfaces;
-using System.ComponentModel;
 
 namespace Algorithm.Factory
 {
     [Order(3)]
     [WaveGroup]
-    [Description("IDA* algorithm")]
     public sealed class IDAStarAlgorithmFactory : IAlgorithmFactory<IDAStarAlgorithm>
     {
         private readonly IStepRule stepRule;
@@ -45,6 +43,11 @@ namespace Algorithm.Factory
         public IDAStarAlgorithm Create(IEndPoints endPoints)
         {
             return new IDAStarAlgorithm(endPoints, stepRule, heuristic);
+        }
+
+        public override string ToString()
+        {
+            return "IDA* algorithm";
         }
     }
 }

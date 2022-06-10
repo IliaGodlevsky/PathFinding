@@ -5,13 +5,9 @@ using Algorithm.Realizations.StepRules;
 using Algorithm.Сompanions;
 using Algorithm.Сompanions.Interface;
 using GraphLib.Interfaces;
-using System.ComponentModel;
-using System.Diagnostics;
 
 namespace Algorithm.Algos.Algos
 {
-    [DebuggerDisplay("A* algorithm")]
-    [Description("A * algorithm")]
     public class AStarAlgorithm : DijkstraAlgorithm
     {
         protected readonly ICosts heuristics;
@@ -51,6 +47,11 @@ namespace Algorithm.Algos.Algos
         protected virtual double CalculateHeuristic(IVertex vertex)
         {
             return heuristic.Calculate(vertex, CurrentEndPoints.Target);
+        }
+
+        public override string ToString()
+        {
+            return "A * algorithm";
         }
     }
 }

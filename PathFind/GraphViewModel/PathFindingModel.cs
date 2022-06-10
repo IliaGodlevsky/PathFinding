@@ -14,6 +14,7 @@ using NullObject.Extensions;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Linq;
 
 namespace GraphViewModel
 {
@@ -33,13 +34,13 @@ namespace GraphViewModel
 
         public IAlgorithmFactory<PathfindingAlgorithm> Algorithm { get; set; }
 
-        public IReadOnlyList<Tuple<string, IAlgorithmFactory<PathfindingAlgorithm>>> Algorithms { get; }
+        public IReadOnlyList<IAlgorithmFactory<PathfindingAlgorithm>> Algorithms { get; }
 
         protected PathFindingModel(BaseEndPoints endPoints, IEnumerable<IAlgorithmFactory<PathfindingAlgorithm>> factories, ILog log)
         {
             this.endPoints = endPoints;
             this.log = log;
-            Algorithms = factories.GroupByGroupAttribute().ToNameInstanceTuples();
+            Algorithms = factories.GroupByGroupAttribute().ToArray();
             timer = new Stopwatch();
             path = NullGraphPath.Instance;
         }
