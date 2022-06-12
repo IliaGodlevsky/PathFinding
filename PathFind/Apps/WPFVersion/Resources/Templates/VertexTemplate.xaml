@@ -5,12 +5,12 @@
     <ControlTemplate x:Key="VertexTemplate" TargetType="vertex:Vertex">
         <ControlTemplate.Resources>
             <Storyboard x:Key="ScalingAnimation">
-                <DoubleAnimation Storyboard.TargetProperty="RenderTransform.ScaleX" From="1.35" To="1" Duration="0:0:0.230">
+                <DoubleAnimation Storyboard.TargetProperty="RenderTransform.ScaleX" From="1.2" To="1" Duration="0:0:0.230">
                     <DoubleAnimation.EasingFunction>
                         <BackEase/>
                     </DoubleAnimation.EasingFunction>
                 </DoubleAnimation>
-                <DoubleAnimation Storyboard.TargetProperty="RenderTransform.ScaleY" From="1.35" To="1" Duration="0:0:0.230">
+                <DoubleAnimation Storyboard.TargetProperty="RenderTransform.ScaleY" From="1.2" To="1" Duration="0:0:0.230">
                     <DoubleAnimation.EasingFunction>
                         <BackEase/>
                     </DoubleAnimation.EasingFunction>

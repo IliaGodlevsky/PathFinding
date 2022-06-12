@@ -14,7 +14,7 @@ namespace WPFVersion.Model
     {
         private readonly IMessenger messenger;
 
-        private bool IsEditorModeEnabled { get; set; } = false;
+        private bool IsEditorModeStarted { get; set; } = false;
 
         public GraphEvents(IVertexCostFactory costFactory) : base(costFactory)
         {
@@ -25,7 +25,7 @@ namespace WPFVersion.Model
 
         protected override int GetWheelDelta(EventArgs e)
         {
-            return e is MouseWheelEventArgs args ? args.Delta > 0 ? 1 : -1 : default;
+            return e is MouseWheelEventArgs args ? (args.Delta > 0 ? 1 : -1) : default;
         }
 
         protected override void SubscribeToEvents(IVertex vertex)
@@ -50,7 +50,7 @@ namespace WPFVersion.Model
 
         private void EditorModeReverse(object sender, EventArgs e)
         {
-            if (IsEditorModeEnabled)
+            if (IsEditorModeStarted)
             {
                 base.Reverse(sender, e);
                 OnGraphChanged(sender, e);
@@ -59,7 +59,7 @@ namespace WPFVersion.Model
 
         protected override void Reverse(object sender, EventArgs e)
         {
-            if (!IsEditorModeEnabled)
+            if (!IsEditorModeStarted)
             {
                 base.Reverse(sender, e);
                 OnGraphChanged(sender, e);
@@ -73,12 +73,12 @@ namespace WPFVersion.Model
 
         private void OnEditorModeStarted(StartEditorModeMessage message)
         {
-            IsEditorModeEnabled = true;
+            IsEditorModeStarted = true;
         }
 
         private void OnEditorModeStopped(StopEditorModeMessage message)
         {
-            IsEditorModeEnabled = false;
+            IsEditorModeStarted = false;
         }
     }
 }

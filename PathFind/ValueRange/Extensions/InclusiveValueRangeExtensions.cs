@@ -49,21 +49,41 @@ namespace ValueRange.Extensions
         {
             if (value.IsGreater(self.UpperValueOfRange))
             {
-                switch (returnOptions)
-                {
-                    case ReturnOptions.Cycle: return self.LowerValueOfRange;
-                    case ReturnOptions.Limit: return self.UpperValueOfRange;
-                }
+                return self.ReturnInRangeIfGreaterThanRange(value, returnOptions);
             }
             else if (value.IsLess(self.LowerValueOfRange))
             {
-                switch (returnOptions)
-                {
-                    case ReturnOptions.Cycle: return self.UpperValueOfRange;
-                    case ReturnOptions.Limit: return self.LowerValueOfRange;
-                }
+                return self.ReturnInRangeIfLessThanRange(value, returnOptions);
             }
             return value;
+        }
+
+        private static T ReturnInRangeIfGreaterThanRange<T>(this InclusiveValueRange<T> self, T value, ReturnOptions returnOptions)
+            where T : IComparable
+        {
+            switch (returnOptions)
+            {
+                case ReturnOptions.Cycle:
+                    return self.LowerValueOfRange;
+                case ReturnOptions.Limit:
+                    return self.UpperValueOfRange;
+                default:
+                    return value;
+            }
+        }
+
+        private static T ReturnInRangeIfLessThanRange<T>(this InclusiveValueRange<T> self, T value, ReturnOptions returnOptions)
+            where T : IComparable
+        {
+            switch (returnOptions)
+            {
+                case ReturnOptions.Cycle:
+                    return self.UpperValueOfRange;
+                case ReturnOptions.Limit:
+                    return self.LowerValueOfRange;
+                default:
+                    return value;
+            }
         }
     }
 }
