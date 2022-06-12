@@ -11,27 +11,12 @@ namespace GraphLib.Extensions
 {
     public static class IEnumerableExtensions
     {
-        public static bool IsCardinal(this int[] coordinates, int[] neighbourCoordinates)
+        public static bool IsCardinal(this int[] centralCoordinates, int[] cardinalCoordinates)
         {
-            if (coordinates.Length != neighbourCoordinates.Length
-                || coordinates.Length == 0 || neighbourCoordinates.Length == 0)
-            {
-                return false;
-            }
-
-            bool IsNotEqual(int i) => coordinates[i] != neighbourCoordinates[i];
             // Cardinal coordinate differs from central coordinate only for one coordinate value
-            return Enumerable.Range(0, coordinates.Length).IsSingle(IsNotEqual);
-        }
-
-        public static IEnumerable<IVertex> FilterObstacles(this IEnumerable<IVertex> collection)
-        {
-            return collection.Where(vertex => !vertex.IsObstacle);
-        }
-
-        public static IVertex DequeueOrNullVertex(this Queue<IVertex> queue)
-        {
-            return queue.Count == 0 ? NullVertex.Instance : queue.Dequeue();
+            return centralCoordinates.Length == cardinalCoordinates.Length
+                ? centralCoordinates.Zip(cardinalCoordinates, (x, y) => x != y).Count(i => i) == 1
+                : false;
         }
 
         public static IVertex FirstOrNullVertex(this IEnumerable<IVertex> collection, Func<IVertex, bool> predicate)

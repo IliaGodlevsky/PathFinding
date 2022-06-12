@@ -5,6 +5,7 @@ using Algorithm.Сompanions.Interface;
 using Common.Extensions.EnumerableExtensions;
 using GraphLib.Extensions;
 using GraphLib.Interfaces;
+using GraphLib.NullRealizations;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -31,7 +32,9 @@ namespace Algorithm.Algos.Algos
 
         protected override IVertex GetNextVertex()
         {
-            return verticesQueue.DequeueOrNullVertex();
+            return verticesQueue.Count == 0 
+                ? NullVertex.Instance 
+                : verticesQueue.Dequeue();
         }
 
         protected virtual double CreateWave()

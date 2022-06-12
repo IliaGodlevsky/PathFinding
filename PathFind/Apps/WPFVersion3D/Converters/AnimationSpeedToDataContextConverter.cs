@@ -9,7 +9,7 @@ namespace WPFVersion3D.Converters
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            return value is AnimationSpeedsCollection.CustomAnimationSpeed ? value : Binding.DoNothing;
+            return value is AnimationSpeeds.CustomAnimationSpeed ? value : Binding.DoNothing;
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)

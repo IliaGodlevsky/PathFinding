@@ -42,6 +42,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AlgorithmExtensions.cs" />
+    <Compile Include="CoordinateExtensions.cs" />
     <Compile Include="GraphPathExtensions.cs" />
     <Compile Include="ICostsExtensions.cs" />
     <Compile Include="IPriorityQueueExtensions.cs" />
@@ -65,6 +66,10 @@
     <ProjectReference Include="..\..\GraphLib\GraphLib.NullRealizations\GraphLib.NullRealizations.csproj">
       <Project>{FA595CBF-C9AA-4D4F-AFF7-19E571C91D00}</Project>
       <Name>GraphLib.NullRealizations</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\GraphLib\GraphLib.Proxy\GraphLib.Proxy.csproj">
+      <Project>{51C3BAF5-6AE2-47C4-932B-25687013C2CE}</Project>
+      <Name>GraphLib.Proxy</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\Interruptable\Interruptable.csproj">
       <Project>{97260353-B5E4-414B-A789-C4B5568089DC}</Project>

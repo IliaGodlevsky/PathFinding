@@ -12,18 +12,27 @@
     <UserControl.Resources>
         <converters:AnimationSpeedToVisibiltyConverter x:Key="SpeedToVisibility"/>
         <converters:AnimationSpeedToDataContextConverter x:Key="SpeedToDataContext"/>
+        <converters:AnimatedAxisRotatorConverter x:Key="AnimatedAxisRotatorConverter"/>
     </UserControl.Resources>
 
     <StackPanel Orientation="Vertical">
         <Separator Margin="5"/>
         
         <StackPanel Orientation="Horizontal" HorizontalAlignment="Stretch">
-            <TextBlock Margin="5" Text="Rotation speed: "/>
-            <ComboBox Width="150" Margin="5" SelectedValue="{Binding SelectedRotationSpeed}" ItemsSource="{Binding AnimationSpeeds}" SelectedIndex="0"/>
+            <TextBlock VerticalAlignment="Center" HorizontalAlignment="Center" Margin="5" Text="Rotation speed: "/>
+            <ComboBox VerticalAlignment="Center" HorizontalAlignment="Center" Width="150" Margin="5" SelectedValue="{Binding SelectedRotationSpeed}" ItemsSource="{Binding Speeds}" SelectedIndex="0"/>
+            <ToggleButton VerticalAlignment="Center" HorizontalAlignment="Center" Command="{Binding RotateCommand}" Margin="5" Template ="{StaticResource RotationToggleButtonTemplate}">
+                <ToggleButton.CommandParameter>
+                    <Binding Converter="{StaticResource AnimatedAxisRotatorConverter}" Path="IsChecked" RelativeSource="{RelativeSource Self}"/>
+                </ToggleButton.CommandParameter>
+                <ToggleButton.DataContext>
+                    <viewmodel:GraphFieldAxesRotationViewModel/>
+                </ToggleButton.DataContext>
+            </ToggleButton>
         </StackPanel>
         <StackPanel Visibility="{Binding SelectedRotationSpeed, Converter={StaticResource SpeedToVisibility}}" Orientation="Horizontal" HorizontalAlignment="Center">
-            <TextBlock Margin="5" Text="Speed (milliseconds)"/>
-            <TextBox Text="{Binding Milliseconds}" Margin="5" Width="auto" MinWidth="45" DataContext="{Binding SelectedRotationSpeed, Converter={StaticResource SpeedToDataContext}, UpdateSourceTrigger=PropertyChanged}"/>
+            <TextBlock VerticalAlignment="Center" HorizontalAlignment="Center" Margin="5" Text="Speed (milliseconds)"/>
+            <TextBox VerticalAlignment="Center" HorizontalAlignment="Center" Text="{Binding Milliseconds}" Margin="5" Width="auto" MinWidth="45" DataContext="{Binding SelectedRotationSpeed, Converter={StaticResource SpeedToDataContext}, UpdateSourceTrigger=PropertyChanged}"/>
         </StackPanel>
 
         <local:GraphFieldRotatingUserControl DataContext="{Binding Path=XAxisRotationViewModel}"/>

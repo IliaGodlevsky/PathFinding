@@ -16,9 +16,9 @@
     </UserControl.DataContext>
     <Grid>
         <StackPanel Background="White" Margin="5" VerticalAlignment="Center" Orientation="Horizontal" HorizontalAlignment="Center">
-            <Button MaxWidth="25" MaxHeight="25" BorderBrush="White" Background="White" Margin="5" Content="{StaticResource Smooth}" Command="{Binding SmoothCommand}"></Button>
-            <ComboBox Height="auto" Margin="5" MinWidth="85" SelectedIndex="0" SelectedValue="{Binding SelectSmoothLevel, UpdateSourceTrigger=PropertyChanged}" ItemsSource="{Binding Levels}"/>
-            <TextBox Height="auto" DataContext="{Binding SelectSmoothLevel, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource LevelToDataContext}}" Visibility="{Binding RelativeSource={RelativeSource Self}, Path=DataContext, Converter={StaticResource LevelToVisibility}, UpdateSourceTrigger=PropertyChanged}" Margin="5" MinWidth="25" Text="{Binding Level, UpdateSourceTrigger=PropertyChanged}"></TextBox>
+            <Button VerticalAlignment="Center" HorizontalAlignment="Center" MaxWidth="25" MaxHeight="25" BorderBrush="White" Background="White" Margin="5" Content="{StaticResource Smooth}" Command="{Binding SmoothCommand}"></Button>
+            <ComboBox VerticalAlignment="Center" HorizontalAlignment="Center" Height="auto" Margin="5" MinWidth="85" SelectedIndex="0" SelectedValue="{Binding SelectSmoothLevel, UpdateSourceTrigger=PropertyChanged}" ItemsSource="{Binding Levels}"/>
+            <TextBox VerticalAlignment="Center" HorizontalAlignment="Center" Height="auto" DataContext="{Binding SelectSmoothLevel, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource LevelToDataContext}}" Visibility="{Binding RelativeSource={RelativeSource Self}, Path=DataContext, Converter={StaticResource LevelToVisibility}, UpdateSourceTrigger=PropertyChanged}" Margin="5" MinWidth="25" Text="{Binding Level, UpdateSourceTrigger=PropertyChanged}"></TextBox>
         </StackPanel>
     </Grid>
 </UserControl>

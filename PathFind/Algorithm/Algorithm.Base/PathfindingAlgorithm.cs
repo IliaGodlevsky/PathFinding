@@ -151,7 +151,7 @@ namespace Algorithm.Base
         {
             return visitedVertices
                 .GetUnvisitedNeighbours(vertex)
-                .FilterObstacles()
+                .Where(v => !v.IsObstacle)
                 .ToArray();
         }
 

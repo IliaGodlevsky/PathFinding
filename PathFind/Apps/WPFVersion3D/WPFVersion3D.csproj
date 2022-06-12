@@ -90,6 +90,7 @@
     <Compile Include="Interface\IChangeColorOpacity.cs" />
     <Compile Include="Interface\IPassValueMessage.cs" />
     <Compile Include="Messages\ActionMessages\BaseAlgorithmsExecutionMessage.cs" />
+    <Compile Include="Messages\PassValueMessages\AddRotationViewModelMessage.cs" />
     <Compile Include="Messages\PassValueMessages\AlgorithmStartedMessage.cs" />
     <Compile Include="Messages\PassValueMessages\AlgorithmIndexMessage.cs" />
     <Compile Include="Messages\ActionMessages\GraphChangedMessage.cs" />
@@ -106,12 +107,13 @@
     <Compile Include="Messages\PassValueMessages\PathFoundMessage.cs" />
     <Compile Include="Messages\PassValueMessages\RemoveAlgorithmMessage.cs" />
     <Compile Include="Messages\ActionMessages\ResumeAllAlgorithmMessage.cs" />
+    <Compile Include="Messages\PassValueMessages\RemoveRotationViewModelMessage.cs" />
     <Compile Include="Messages\PassValueMessages\SubscribeOnAlgorithmEventsMessage.cs" />
     <Compile Include="Messages\PassValueMessages\UpdateAlgorithmStatisticsMessage.cs" />
     <Compile Include="Model3DFactories\ConicModel3DFactory.cs" />
     <Compile Include="Model3DFactories\CylindricModel3DFactory.cs" />
     <Compile Include="Model3DFactories\ToricalModel3DFactory.cs" />
-    <Compile Include="Model\AnimationSpeedsCollection.cs" />
+    <Compile Include="Model\AnimationSpeeds.cs" />
     <Compile Include="Model\Axes\Axis.cs" />
     <Compile Include="Model\Axes\Abscissa.cs" />
     <Compile Include="Model\Axes\Ordinate.cs" />
@@ -160,6 +162,7 @@
     <Compile Include="ViewModel\ButtonViewModels\InterruptAllAlgorithmsViewModel.cs" />
     <Compile Include="ViewModel\ButtonViewModels\LoadGraphViewModel.cs" />
     <Compile Include="ViewModel\ButtonViewModels\SaveGraphViewModel.cs" />
+    <Compile Include="ViewModel\GraphFieldAxesRotationViewModel.cs" />
     <Compile Include="ViewModel\GraphCreateViewModel.cs" />
     <Compile Include="ViewModel\GraphFieldAxisRotatingViewModel.cs" />
     <Compile Include="ViewModel\GraphFieldRotationViewModel.cs" />

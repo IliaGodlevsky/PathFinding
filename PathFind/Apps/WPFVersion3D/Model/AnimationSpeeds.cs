@@ -9,13 +9,13 @@ using WPFVersion3D.Interface;
 
 namespace WPFVersion3D.Model
 {
-    internal static class AnimationSpeedsCollection
+    internal static class AnimationSpeeds
     {
         private static readonly Lazy<IReadOnlyCollection<IAnimationSpeed>> speeds;
 
         public static IReadOnlyCollection<IAnimationSpeed> Speeds => speeds.Value;
 
-        static AnimationSpeedsCollection()
+        static AnimationSpeeds()
         {
             speeds = new Lazy<IReadOnlyCollection<IAnimationSpeed>>(GetSpeeds);
         }
@@ -62,11 +62,11 @@ namespace WPFVersion3D.Model
         {
             return new IAnimationSpeed[]
             {
-                new AnimationSpeed(4800, "Slowest"),
-                new AnimationSpeed(2400, "Slow"),
-                new AnimationSpeed(1200, "Medium"),
-                new AnimationSpeed(600, "High"),
-                new AnimationSpeed(300, "Highest"),
+                new AnimationSpeed(5000, "Slowest"),
+                new AnimationSpeed(2000, "Slow"),
+                new AnimationSpeed(1000, "Medium"),
+                new AnimationSpeed(700, "High"),
+                new AnimationSpeed(400, "Highest"),
                 new RandomAnimationSpeed(4800, 300),
                 new CustomAnimationSpeed { Milliseconds = 2400 }
             };

@@ -28,7 +28,7 @@ namespace WPFVersion3D.ViewModel
 
         public GraphFieldAxisRotatingViewModel ZAxisRotationViewModel { get => zAxis; set => Set(ref zAxis, value); }
 
-        public IReadOnlyCollection<IAnimationSpeed> AnimationSpeeds => AnimationSpeedsCollection.Speeds;
+        public IReadOnlyCollection<IAnimationSpeed> Speeds => AnimationSpeeds.Speeds;
 
         public void Dispose()
         {

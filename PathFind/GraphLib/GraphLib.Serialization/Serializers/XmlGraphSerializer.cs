@@ -37,7 +37,7 @@ namespace GraphLib.Serialization.Serializers
 
         protected override void SaveGraphInternal(IGraph graph, Stream stream)
         {
-            graph.ToGraphSerializationInfo().ToXmlDocument().Save(stream);
+            graph.ToGraphSerializationInfo().ToXml().Save(stream);
         }
     }
 }

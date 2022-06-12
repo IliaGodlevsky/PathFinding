@@ -16,6 +16,7 @@ using System.Runtime.InteropServices;
 [assembly: InternalsVisibleTo("GraphLib.Extensions")]
 [assembly: InternalsVisibleTo("GraphLib.Realizations")]
 [assembly: InternalsVisibleTo("GraphLib.Serialization")]
+[assembly: InternalsVisibleTo("Algorithm.Extensions")]
 
 // Setting ComVisible to false makes the types in this assembly not visible
 // to COM components.  If you need to access a type in this assembly from

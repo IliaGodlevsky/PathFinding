@@ -1,4 +1,5 @@
-﻿using Algorithm.Interfaces;
+﻿using Algorithm.Extensions;
+using Algorithm.Interfaces;
 using GraphLib.Extensions;
 using GraphLib.Interfaces;
 using System;

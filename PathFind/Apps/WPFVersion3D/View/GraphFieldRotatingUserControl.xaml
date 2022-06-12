@@ -9,7 +9,7 @@
              xmlns:converters="clr-namespace:WPFVersion3D.Converters" 
              xmlns:validationrules="clr-namespace:WPFVersion3D.ValidationRules"
              mc:Ignorable="d" 
-             d:DesignHeight="30" d:DesignWidth="280"
+             d:DesignHeight="30" d:DesignWidth="300"
              d:DataContext="{d:DesignInstance Type=viewmodel:GraphFieldAxisRotatingViewModel}">
     <UserControl.Resources>
         <converters:AnimatedAxisRotatorConverter x:Key="AnimatedAxisRotatorConverter"/>
@@ -21,7 +21,7 @@
         
         <model:RangedSlider x:Name="Slider" Style="{StaticResource SliderStyle}" ValueRange="{x:Static range:Constants.AngleValueRange}" Value="{Binding Path=AngleRotation.Angle}"/>
 
-        <TextBox Style="{StaticResource TextBoxStyle}">
+        <TextBox HorizontalAlignment="Center" VerticalAlignment="Center" Style="{StaticResource TextBoxStyle}">
             <TextBox.Text>
                 <Binding Path="Value" ElementName="Slider" Converter="{StaticResource DoubleConverter}" Mode="TwoWay">
                     <Binding.ValidationRules>
@@ -31,7 +31,13 @@
             </TextBox.Text>
         </TextBox>
 
-        <ToggleButton Command="{Binding RotateFieldCommand}" Margin="5" Template ="{StaticResource RotationToggleButtonTemplate}">
+        <CheckBox IsChecked="{Binding IsEnabled}" Command="{Binding EnableRotationCommand}" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="5">
+            <CheckBox.CommandParameter>
+                <Binding Path="IsChecked" RelativeSource="{RelativeSource Self}"/>
+            </CheckBox.CommandParameter>
+        </CheckBox>
+
+        <ToggleButton HorizontalAlignment="Center" VerticalAlignment="Center" Command="{Binding RotateFieldCommand}" Margin="5" Template ="{StaticResource RotationToggleButtonTemplate}">
             <ToggleButton.CommandParameter>
                 <Binding Converter="{StaticResource AnimatedAxisRotatorConverter}" Path="IsChecked" RelativeSource="{RelativeSource Self}"/>
             </ToggleButton.CommandParameter>
