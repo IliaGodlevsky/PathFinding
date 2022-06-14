@@ -1,34 +1,29 @@
-﻿using Autofac;
-using GalaSoft.MvvmLight.Messaging;
-using System.Windows.Input;
+﻿using System.Windows.Input;
 using System.Windows.Media.Media3D;
-using WPFVersion3D.DependencyInjection;
 using WPFVersion3D.Infrastructure.Commands;
 using WPFVersion3D.Infrastructure.EventArguments;
+using WPFVersion3D.Infrastructure.States;
 using WPFVersion3D.Interface;
-using WPFVersion3D.Messages.PassValueMessages;
 
 namespace WPFVersion3D.ViewModel
 {
     internal class GraphFieldAxisRotatingViewModel
     {
-        private readonly IMessenger messenger;
-
-        private IAnimationSpeed RotationSpeed { get; set; }
+        public string Title { get; set; }
 
         public AxisAngleRotation3D AngleRotation { get; set; }
-
-        public bool IsEnabled { get; set; } = true;
-
-        public string Title { get; set; }
 
         public ICommand EnableRotationCommand { get; }
 
         public ICommand RotateFieldCommand { get; }
 
+        private IRotationState RotationState { get; set; }
+
+        private IAnimationSpeed RotationSpeed { get; set; }
+
         public GraphFieldAxisRotatingViewModel()
         {
-            messenger = DI.Container.Resolve<IMessenger>();
+            RotationState = new EnabledRotationState();
             RotateFieldCommand = new RelayCommand(ExecuteRotateFieldCommand, CanExecuteRotateFieldCommand);
             EnableRotationCommand = new RelayCommand(ExecuteEnableRotationCommand);
         }
@@ -40,14 +35,8 @@ namespace WPFVersion3D.ViewModel
 
         private void ExecuteEnableRotationCommand(object param)
         {
-            if (param is false)
-            {
-                messenger.Send(new AddRotationViewModelMessage(this));
-            }
-            else if (param is true)
-            {
-                messenger.Send(new RemoveRotationViewModelMessage(this));
-            }
+            RotationState = (IRotationState)param;
+            RotationState.Activate(this);
         }
 
         private void ExecuteRotateFieldCommand(object parameter)
@@ -59,7 +48,7 @@ namespace WPFVersion3D.ViewModel
 
         private bool CanExecuteRotateFieldCommand(object parameter)
         {
-            return IsEnabled;
+            return RotationState.CanRotate;
         }
     }
 }

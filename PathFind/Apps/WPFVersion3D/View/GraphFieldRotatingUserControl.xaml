@@ -14,6 +14,7 @@
     <UserControl.Resources>
         <converters:AnimatedAxisRotatorConverter x:Key="AnimatedAxisRotatorConverter"/>
         <converters:PrecisedDoubleToStringConverter Precision="2" x:Key="DoubleConverter"/>
+        <converters:RotationStateConverter x:Key="StateConverter"/>
     </UserControl.Resources>
     <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
 
@@ -31,9 +32,9 @@
             </TextBox.Text>
         </TextBox>
 
-        <CheckBox IsChecked="{Binding IsEnabled}" Command="{Binding EnableRotationCommand}" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="5">
+        <CheckBox IsChecked="True" Command="{Binding EnableRotationCommand}" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="5">
             <CheckBox.CommandParameter>
-                <Binding Path="IsChecked" RelativeSource="{RelativeSource Self}"/>
+                <Binding Converter="{StaticResource StateConverter}" Path="IsChecked" RelativeSource="{RelativeSource Self}"/>
             </CheckBox.CommandParameter>
         </CheckBox>
 

@@ -73,6 +73,7 @@
     <Compile Include="Converters\AnimationSpeedToDataContextConverter.cs" />
     <Compile Include="Converters\AnimationSpeedToVisibiltyConverter.cs" />
     <Compile Include="Converters\BoolToVisibilityConverter.cs" />
+    <Compile Include="Converters\RotationStateConverter.cs" />
     <Compile Include="Extensions\AlgorithmViewModelExtensions.cs" />
     <Compile Include="Extensions\ColorExtensions.cs" />
     <Compile Include="Extensions\IMessengerExtensions.cs" />
@@ -85,10 +86,15 @@
     <Compile Include="Infrastructure\EventHandlers\RotationSpeedChangedEventHandler.cs" />
     <Compile Include="Infrastructure\Commands\InterruptAlgorithmCommand.cs" />
     <Compile Include="Infrastructure\Commands\PauseAlgorithmCommand.cs" />
+    <Compile Include="Infrastructure\States\DisabledRotationState.cs" />
+    <Compile Include="Infrastructure\States\EnabledRotationState.cs" />
+    <Compile Include="Infrastructure\States\NullRotationState.cs" />
+    <Compile Include="Infrastructure\States\RotationState.cs" />
     <Compile Include="Interface\IAxis.cs" />
     <Compile Include="Interface\IAnimatedAxisRotatorFactory.cs" />
     <Compile Include="Interface\IChangeColorOpacity.cs" />
     <Compile Include="Interface\IPassValueMessage.cs" />
+    <Compile Include="Interface\IRotationState.cs" />
     <Compile Include="Messages\ActionMessages\BaseAlgorithmsExecutionMessage.cs" />
     <Compile Include="Messages\PassValueMessages\AddRotationViewModelMessage.cs" />
     <Compile Include="Messages\PassValueMessages\AlgorithmStartedMessage.cs" />
