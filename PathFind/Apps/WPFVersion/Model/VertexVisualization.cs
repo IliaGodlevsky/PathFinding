@@ -7,7 +7,7 @@ using WPFVersion.Extensions;
 
 namespace WPFVersion.Model
 {
-    internal sealed class VertexVisualization : IVisualization<Vertex>
+    internal class VertexVisualization : IVisualization<Vertex>
     {
         private static readonly Brush VisitedColor = new SolidColorBrush(Colors.CadetBlue);
         private static readonly Brush PathVertexColor = new SolidColorBrush(Colors.Yellow);

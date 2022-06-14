@@ -1,12 +1,11 @@
 ﻿using Common.Attrbiutes;
 using GraphLib.Base.EndPoints.BaseCommands;
-using GraphLib.Base.EndPoints.Commands.VerticesCommands;
 using GraphLib.Extensions;
 using GraphLib.Interfaces;
 
 namespace GraphLib.Base.EndPoints.Commands.EndPointsCommands
 {
-    [AttachedTo(typeof(IntermediateToReplaceCommands)), Order(0)]
+    [Order(0)]
     internal sealed class CancelMarkToReplaceCommand : BaseIntermediateEndPointsCommand
     {
         public CancelMarkToReplaceCommand(BaseEndPoints endPoints)

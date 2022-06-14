@@ -60,14 +60,14 @@ namespace ConsoleVersion.ViewModel
             DI.Container.Display<GraphCreateView>();
         }
 
-        [PreValidationMethod(nameof(IsGraphValid))]
+        [Validate(nameof(IsGraphValid))]
         [MenuItem(MenuItemsNames.FindPath, 1)]
         private void FindPath()
         {
             DI.Container.Display<PathFindView>();
         }
 
-        [PreValidationMethod(nameof(IsGraphValid))]
+        [Validate(nameof(IsGraphValid))]
         [MenuItem(MenuItemsNames.ChangedVertexState, 4)]
         private void ChangeVertexState()
         {
@@ -82,14 +82,14 @@ namespace ConsoleVersion.ViewModel
             messenger.Send(new CostRangeChangedMessage(CostRange));
         }
 
-        [PreValidationMethod(nameof(IsGraphValid))]
+        [Validate(nameof(IsGraphValid))]
         [MenuItem(MenuItemsNames.SmoothGraph, 2)]
         private void SmoothGraph()
         {
             DI.Container.Display<GraphSmoothView>();
         }
 
-        [PreValidationMethod(nameof(IsGraphValid))]
+        [Validate(nameof(IsGraphValid))]
         [MenuItem(MenuItemsNames.SaveGraph, 5)]
         private void SaveGraph()
         {
@@ -102,7 +102,7 @@ namespace ConsoleVersion.ViewModel
             DI.Container.Display<GraphLoadView>();
         }
 
-        [PreValidationMethod(nameof(CanExecuteInterrupt))]
+        [Validate(nameof(CanExecuteInterrupt))]
         [MenuItem(MenuItemsNames.Exit, 8)]
         private void Interrupt()
         {

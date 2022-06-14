@@ -1,21 +1,33 @@
 ﻿using ConsoleVersion.Extensions;
 using ConsoleVersion.Interface;
+using ConsoleVersion.Model.FramedAxes;
 using GraphLib.Interfaces;
 using GraphLib.Realizations.Graphs;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace ConsoleVersion.Model
 {
     internal sealed class GraphField : IGraphField, IDisplayable
     {
-        public IReadOnlyCollection<IVertex> Vertices { get; }
+        public IReadOnlyCollection<Vertex> Vertices { get; }
+
+        IReadOnlyCollection<IVertex> IGraphField.Vertices => Vertices;
 
         private IReadOnlyCollection<IDisplayable> Displayables { get; }
 
         public GraphField(Graph2D graph)
         {
-            Vertices = graph.Vertices;
-            Displayables = this.GenerateDisplayables(graph);
+            Vertices = graph.Vertices.Cast<Vertex>().ToArray();
+            var displayables = new List<IDisplayable>()
+            {
+                new FramedOverAbscissa(graph),
+                new FramedUnderAbscissa(graph),
+                new FramedToRightOrdinate(graph),
+                new FramedToLeftOrdinate(graph)
+            };
+            displayables.AddRange(Vertices);
+            Displayables = displayables.AsReadOnly();
         }
 
         public void Display()

@@ -1,6 +1,5 @@
 ﻿using Common.Extensions.EnumerableExtensions;
 using GraphLib.Interfaces;
-using GraphLib.Proxy.Extensions;
 using System;
 using System.Linq;
 using ValueRange;

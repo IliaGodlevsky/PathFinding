@@ -2,11 +2,11 @@
 
 namespace ConsoleVersion.Attributes
 {
-    internal abstract class BaseMethodAttribute : Attribute
+    internal abstract class MethodAttribute : Attribute
     {
         public string MethodName { get; }
 
-        protected BaseMethodAttribute(string methodName)
+        protected MethodAttribute(string methodName)
         {
             MethodName = methodName;
         }

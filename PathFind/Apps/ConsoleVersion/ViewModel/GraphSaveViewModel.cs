@@ -35,7 +35,7 @@ namespace ConsoleVersion.ViewModel
             WindowClosed = null;
         }
 
-        [PreValidationMethod(nameof(IsGraphValid))]
+        [Validate(nameof(IsGraphValid))]
         [MenuItem(MenuItemsNames.SaveGraph, 0)]
         private async void SaveGraph()
         {

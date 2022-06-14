@@ -66,7 +66,7 @@ namespace ConsoleVersion.ViewModel
         }
 
         [ExecuteSafe(nameof(ExecuteSafe))]
-        [PreValidationMethod(nameof(CanExecutePathfinding))]
+        [Validate(nameof(CanExecutePathfinding))]
         [MenuItem(MenuItemsNames.FindPath, 0)]
         public override void FindPath()
         {
@@ -79,7 +79,7 @@ namespace ConsoleVersion.ViewModel
             }
         }
 
-        [PreValidationMethod(nameof(IsVisualizationNeeded))]
+        [Validate(nameof(IsVisualizationNeeded))]
         [MenuItem(MenuItemsNames.InputDelayTime, 3)]
         public void InputDelayTime()
         {

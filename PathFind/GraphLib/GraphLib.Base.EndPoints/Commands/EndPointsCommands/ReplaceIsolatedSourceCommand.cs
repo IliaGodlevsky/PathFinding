@@ -1,13 +1,12 @@
 ﻿using Common.Attrbiutes;
 using GraphLib.Base.EndPoints.BaseCommands;
-using GraphLib.Base.EndPoints.Commands.VerticesCommands;
 using GraphLib.Extensions;
 using GraphLib.Interfaces;
 using NullObject.Extensions;
 
 namespace GraphLib.Base.EndPoints.Commands.EndPointsCommands
 {
-    [AttachedTo(typeof(SetEndPointsCommands)), Order(5)]
+    [Order(5)]
     internal sealed class ReplaceIsolatedSourceCommand : BaseEndPointsCommand
     {
         public ReplaceIsolatedSourceCommand(BaseEndPoints endPoints)

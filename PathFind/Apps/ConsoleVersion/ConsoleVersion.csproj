@@ -72,9 +72,7 @@
     <Compile Include="EventArguments\ConsoleKeyPressedEventArgs.cs" />
     <Compile Include="EventHandlers\ConsoleKeyPressedEventHandler.cs" />
     <Compile Include="Extensions\ConsoleKeystrokesHookExtensions.cs" />
-    <Compile Include="Extensions\GraphFieldExtensions.cs" />
     <Compile Include="Extensions\IContainerExtensions.cs" />
-    <Compile Include="Extensions\IDelegateExtractorExtensions.cs" />
     <Compile Include="Extensions\IEnumerableExtensions.cs" />
     <Compile Include="Extensions\IGraphPathExtensions.cs" />
     <Compile Include="Extensions\IInputExtensions.cs" />

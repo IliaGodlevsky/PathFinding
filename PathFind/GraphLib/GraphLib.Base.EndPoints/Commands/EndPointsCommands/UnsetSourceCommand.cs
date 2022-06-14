@@ -1,14 +1,12 @@
 ﻿using Common.Attrbiutes;
-using GraphLib.Base.EndPoints;
 using GraphLib.Base.EndPoints.BaseCommands;
-using GraphLib.Base.EndPoints.Commands.VerticesCommands;
 using GraphLib.Extensions;
 using GraphLib.Interfaces;
 using GraphLib.NullRealizations;
 
-namespace GraphLib.Base.VertexCondition.EndPointsConditions
+namespace GraphLib.Base.EndPoints.Commands.EndPointsCommands
 {
-    [AttachedTo(typeof(SetEndPointsCommands)), Order(0)]
+    [Order(0)]
     internal sealed class UnsetSourceCommand : BaseEndPointsCommand
     {
         public UnsetSourceCommand(BaseEndPoints endPoints)

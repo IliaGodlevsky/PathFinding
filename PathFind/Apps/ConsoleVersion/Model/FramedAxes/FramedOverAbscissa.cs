@@ -1,9 +1,7 @@
-﻿using Common.Attrbiutes;
-using GraphLib.Realizations.Graphs;
+﻿using GraphLib.Realizations.Graphs;
 
 namespace ConsoleVersion.Model.FramedAxes
 {
-    [AttachedTo(typeof(GraphField)), Order(0)]
     internal sealed class FramedOverAbscissa : FramedAbscissa
     {
         private readonly int graphLength;

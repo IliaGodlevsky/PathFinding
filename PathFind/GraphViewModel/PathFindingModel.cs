@@ -49,22 +49,19 @@ namespace GraphViewModel
         {
             try
             {
-                algorithm = Algorithm.Create(endPoints);
-                SubscribeOnAlgorithmEvents(algorithm);
-                endPoints.RestoreCurrentColors();
-                path = await algorithm.FindPathAsync();
-                await path.HighlightAsync();
-                SummarizePathfindingResults();
+                using (algorithm = Algorithm.Create(endPoints))
+                {
+                    SubscribeOnAlgorithmEvents(algorithm);
+                    endPoints.RestoreCurrentColors();
+                    path = await algorithm.FindPathAsync();
+                    await path.HighlightAsync();
+                    SummarizePathfindingResults();
+                }
             }
             catch (Exception ex)
             {
                 algorithm.Interrupt();
                 log.Error(ex);
-            }
-            finally
-            {
-                algorithm.Dispose();
-                path = NullGraphPath.Instance;
             }
         }
 

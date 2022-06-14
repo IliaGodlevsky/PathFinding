@@ -1,13 +1,10 @@
 ﻿using Commands.Interfaces;
-using Common.Attrbiutes;
 using GraphLib.Base.EndPoints.BaseCommands;
 using GraphLib.Base.EndPoints.Commands.EndPointsCommands;
-using GraphLib.Base.EndPoints.Commands.VerticesCommands;
 using GraphLib.Interfaces;
 
 namespace GraphLib.Base.EndPoints.Commands.UndoCommands
 {
-    [AttachedTo(typeof(SetEndPointsCommands))]
     internal sealed class UndoSetTargetCommand : BaseEndPointsUndoCommand
     {
         private readonly IExecutable<IVertex> unsetTargetCommand;

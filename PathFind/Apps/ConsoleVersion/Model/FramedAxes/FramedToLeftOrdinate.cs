@@ -1,9 +1,7 @@
-﻿using Common.Attrbiutes;
-using GraphLib.Realizations.Graphs;
+﻿using GraphLib.Realizations.Graphs;
 
 namespace ConsoleVersion.Model.FramedAxes
 {
-    [AttachedTo(typeof(GraphField)), Order(3)]
     internal sealed class FramedToLeftOrdinate : FramedOrdinate
     {
         protected override string Offset { get; }

@@ -50,8 +50,7 @@ namespace GraphLib.Base
         {
             return Vertices
                 .Select(x => x.GetHashCode())
-                .ToHashCode()
-                .Xor(DimensionsSizes.ToHashCode());
+                .ToHashCode() ^ (DimensionsSizes.ToHashCode());
         }
 
         public override string ToString()

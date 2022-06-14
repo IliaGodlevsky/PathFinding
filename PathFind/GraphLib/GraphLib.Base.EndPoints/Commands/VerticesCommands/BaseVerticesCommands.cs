@@ -1,21 +1,23 @@
 ﻿using Commands.Extensions;
 using Commands.Interfaces;
-using GraphLib.Base.EndPoints.Extensions;
+using Common.Extensions.EnumerableExtensions;
 using GraphLib.Interfaces;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace GraphLib.Base.EndPoints.Commands.VerticesCommands
 {
     internal abstract class BaseVerticesCommands : IVerticesCommands
     {
-        private IReadOnlyCollection<IVertexCommand> ExecuteCommands { get; }
+        protected IReadOnlyCollection<IVertexCommand> ExecuteCommands { get; }
 
-        private IReadOnlyCollection<IUndoCommand> UndoCommands { get; }
+        protected abstract IReadOnlyCollection<IUndoCommand> UndoCommands { get; }
 
         protected BaseVerticesCommands(BaseEndPoints endPoints)
         {
-            ExecuteCommands = this.GetAttachedExecuteCommands(endPoints);
-            UndoCommands = this.GetAttachedUndoCommands(endPoints);
+            ExecuteCommands = GetCommands(endPoints)
+                .OrderByOrderAttribute()
+                .ToArray();
         }
 
         public void Execute(IVertex vertex)
@@ -27,5 +29,7 @@ namespace GraphLib.Base.EndPoints.Commands.VerticesCommands
         {
             UndoCommands.UndoAll();
         }
+
+        protected abstract IReadOnlyCollection<IVertexCommand> GetCommands(BaseEndPoints endPoints);
     }
 }

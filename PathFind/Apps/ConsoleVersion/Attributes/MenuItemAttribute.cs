@@ -8,8 +8,7 @@ namespace ConsoleVersion.Attributes
     {
         public string Header { get; }
 
-        public MenuItemAttribute(string header, int order)
-            : base(order)
+        public MenuItemAttribute(string header, int order) : base(order)
         {
             Header = header;
         }

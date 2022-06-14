@@ -9,13 +9,15 @@ using static System.Reflection.BindingFlags;
 
 namespace ConsoleVersion.Model.DelegateExtractors
 {
-    internal abstract class DelegateExtractor<TDelegate, TAttribute> : IDelegateExtractor<TDelegate>
+    internal abstract class DelegateExtractor<TResult, TDelegate, TAttribute> : IDelegateExtractor<TDelegate, TResult>
         where TDelegate : Delegate
-        where TAttribute : BaseMethodAttribute
+        where TAttribute : MethodAttribute
     {
         private const BindingFlags MethodAccessModificators = NonPublic | Instance | Public;
 
-        public IEnumerable<TDelegate> Extract(MethodInfo info, object target)
+        public abstract TResult Extract(MethodInfo info, object target);
+
+        protected virtual IEnumerable<TDelegate> ExtractInternal(MethodInfo info, object target)
         {
             var type = target.GetType();
             return info

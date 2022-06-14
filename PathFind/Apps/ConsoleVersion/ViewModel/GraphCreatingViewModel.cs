@@ -36,7 +36,7 @@ namespace ConsoleVersion.ViewModel
         }
 
         [ExecuteSafe(nameof(ExecuteSafe))]
-        [PreValidationMethod(nameof(CanCreateGraph))]
+        [Validate(nameof(CanCreateGraph))]
         [MenuItem(MenuItemsNames.CreateNewGraph, 0)]
         public override void CreateGraph()
         {

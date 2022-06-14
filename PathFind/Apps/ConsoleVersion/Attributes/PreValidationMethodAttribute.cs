@@ -3,9 +3,9 @@
 namespace ConsoleVersion.Attributes
 {
     [AttributeUsage(AttributeTargets.Method, AllowMultiple = true)]
-    internal sealed class PreValidationMethodAttribute : BaseMethodAttribute
+    internal sealed class ValidateAttribute : MethodAttribute
     {
-        public PreValidationMethodAttribute(string methodName)
+        public ValidateAttribute(string methodName)
             : base(methodName)
         {
 

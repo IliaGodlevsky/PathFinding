@@ -3,7 +3,6 @@ using Common.Extensions.EnumerableExtensions;
 using Common.Interface;
 using ConsoleVersion.Attributes;
 using ConsoleVersion.Commands;
-using ConsoleVersion.Extensions;
 using ConsoleVersion.Interface;
 using ConsoleVersion.Model.DelegateExtractors;
 using System;
@@ -21,8 +20,8 @@ namespace ConsoleVersion.Model
 
         private readonly IViewModel target;
         private readonly Type targetType;
-        private readonly IDelegateExtractor<Func<bool>> validationExtractor;
-        private readonly IDelegateExtractor<Action<Action>> safeActionExtractor;
+        private readonly IDelegateExtractor<Func<bool>, Func<bool>[]> validationExtractor;
+        private readonly IDelegateExtractor<Action<Action>, Action<Action>> safeActionExtractor;
 
         private readonly Lazy<IReadOnlyDictionary<string, IMenuCommand>> menuActions;
 
@@ -42,7 +41,7 @@ namespace ConsoleVersion.Model
             return targetType
                 .GetMethods(MethodAccessModificators)
                 .Where(method => Attribute.IsDefined(method, typeof(MenuItemAttribute)))
-                .OrderByOrderAttribute()
+                .OrderBy(item => item.GetOrder())
                 .SelectMany(CreateNameCommandPair)
                 .ToReadOnlyDictionary();
         }
@@ -51,8 +50,8 @@ namespace ConsoleVersion.Model
         {
             if (methodInfo.TryCreateDelegate(target, out Action action))
             {
-                var safeAction = safeActionExtractor.ExtractFirstOrEmpty(methodInfo, target);
-                var validationMethods = validationExtractor.Extract(methodInfo, target).ToArray();
+                var safeAction = safeActionExtractor.Extract(methodInfo, target);
+                var validationMethods = validationExtractor.Extract(methodInfo, target);
                 var command = new Action(() => safeAction.Invoke(action));
                 string header = methodInfo.GetAttributeOrNull<MenuItemAttribute>().Header;
                 var menuCommand = new MenuCommand(command, validationMethods);

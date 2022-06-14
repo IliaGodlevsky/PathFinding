@@ -3,7 +3,6 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
-using System.Reflection;
 
 namespace Common.Extensions.EnumerableExtensions
 {
@@ -64,11 +63,6 @@ namespace Common.Extensions.EnumerableExtensions
             }
         }
 
-        public static bool IsSingle<T>(this IEnumerable<T> collection, Func<T, bool> predicate)
-        {
-            return collection.Count(predicate) == 1;
-        }
-
         public static double SumOrDefault(this IEnumerable<double> collection)
         {
             return collection.Any() ? collection.Sum() : default;
@@ -106,11 +100,6 @@ namespace Common.Extensions.EnumerableExtensions
         }
 
         public static IOrderedEnumerable<T> OrderByOrderAttribute<T>(this IEnumerable<T> collection)
-        {
-            return collection.OrderBy(item => item.GetOrder());
-        }
-
-        public static IOrderedEnumerable<MethodInfo> OrderByOrderAttribute(this IEnumerable<MethodInfo> collection)
         {
             return collection.OrderBy(item => item.GetOrder());
         }
@@ -160,7 +149,7 @@ namespace Common.Extensions.EnumerableExtensions
 
         public static int ToHashCode(this IEnumerable<int> array)
         {
-            return array.AggregateOrDefault(IntExtensions.Xor);
+            return array.AggregateOrDefault((x, y) => x ^ y);
         }
 
         public static bool ContainsUniqueValues<T>(this IEnumerable<T> collection)

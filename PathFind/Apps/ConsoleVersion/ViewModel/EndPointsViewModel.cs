@@ -39,7 +39,7 @@ namespace ConsoleVersion.ViewModel
             messenger.Send(new ClaimGraphMessage());
         }
 
-        [PreValidationMethod(nameof(CanChooseEndPoints))]
+        [Validate(nameof(CanChooseEndPoints))]
         [MenuItem(MenuItemsNames.ChooseEndPoints, 0)]
         public void ChooseEndPoints()
         {
@@ -47,7 +47,7 @@ namespace ConsoleVersion.ViewModel
             IntInput.InputRequiredEndPoints(graph, endPoints).OnEndPointChosen();
         }
 
-        [PreValidationMethod(nameof(CanReplaceSourceOrTargetVertex))]
+        [Validate(nameof(CanReplaceSourceOrTargetVertex))]
         [MenuItem(MenuItemsNames.ReplaceSource, 2)]
         public void ReplaceSourceVertex()
         {
@@ -55,7 +55,7 @@ namespace ConsoleVersion.ViewModel
             IntInput.InputEndPoint(MessagesTexts.SourceVertexChoiceMsg, graph, endPoints).OnEndPointChosen();
         }
 
-        [PreValidationMethod(nameof(CanReplaceSourceOrTargetVertex))]
+        [Validate(nameof(CanReplaceSourceOrTargetVertex))]
         [MenuItem(MenuItemsNames.ReplaceTarget, 3)]
         public void ReplaceTargetVertex()
         {
@@ -69,7 +69,7 @@ namespace ConsoleVersion.ViewModel
             endPoints.Reset();
         }
 
-        [PreValidationMethod(nameof(CanReplaceIntermediates))]
+        [Validate(nameof(CanReplaceIntermediates))]
         [MenuItem(MenuItemsNames.ReplaceIntermediate, 4)]
         public void ReplaceIntermediates()
         {
@@ -81,7 +81,7 @@ namespace ConsoleVersion.ViewModel
             IntInput.InputEndPoints(graph, endPoints, toReplaceNumber).OnEndPointChosen();
         }
 
-        [PreValidationMethod(nameof(CanReplaceSourceOrTargetVertex))]
+        [Validate(nameof(CanReplaceSourceOrTargetVertex))]
         [MenuItem(MenuItemsNames.ChooseIntermediates, 1)]
         public void ChooseIntermediates()
         {

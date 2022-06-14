@@ -1,12 +1,11 @@
 ﻿using Common.Attrbiutes;
 using GraphLib.Base.EndPoints.BaseCommands;
-using GraphLib.Base.EndPoints.Commands.VerticesCommands;
 using GraphLib.Extensions;
 using GraphLib.Interfaces;
 
 namespace GraphLib.Base.EndPoints.Commands.EndPointsCommands
 {
-    [AttachedTo(typeof(RestoreColorsCommands)), Order(0)]
+    [Order(0)]
     internal sealed class RestoreSourceColorCommand : BaseEndPointsCommand
     {
         public RestoreSourceColorCommand(BaseEndPoints endPoints)

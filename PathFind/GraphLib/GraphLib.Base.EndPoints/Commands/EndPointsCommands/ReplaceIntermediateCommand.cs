@@ -1,13 +1,12 @@
 ﻿using Common.Attrbiutes;
 using GraphLib.Base.EndPoints.BaseCommands;
-using GraphLib.Base.EndPoints.Commands.VerticesCommands;
 using GraphLib.Extensions;
 using GraphLib.Interfaces;
 using System.Linq;
 
 namespace GraphLib.Base.EndPoints.Commands.EndPointsCommands
 {
-    [AttachedTo(typeof(SetEndPointsCommands)), Order(8)]
+    [Order(8)]
     internal sealed class ReplaceIntermediateCommand : BaseIntermediateEndPointsCommand
     {
         public ReplaceIntermediateCommand(BaseEndPoints endPoints)

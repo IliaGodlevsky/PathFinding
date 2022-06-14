@@ -68,12 +68,6 @@ namespace Common.Extensions
             }
         }
 
-        public static bool IsAttachedTo<T>(this Type type, T attachedTo)
-        {
-            var attribute = type.GetAttributeOrNull<AttachedToAttribute>();
-            return attribute?.IsAttachedTo(attachedTo.GetType()) == true;
-        }
-
         public static bool Implements<TInterface>(this Type type)
             where TInterface : class
         {

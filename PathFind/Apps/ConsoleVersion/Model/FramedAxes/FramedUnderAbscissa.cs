@@ -1,9 +1,7 @@
-﻿using Common.Attrbiutes;
-using GraphLib.Realizations.Graphs;
+﻿using GraphLib.Realizations.Graphs;
 
 namespace ConsoleVersion.Model.FramedAxes
 {
-    [AttachedTo(typeof(GraphField)), Order(1)]
     internal sealed class FramedUnderAbscissa : FramedAbscissa
     {
         protected override string Offset { get; }
