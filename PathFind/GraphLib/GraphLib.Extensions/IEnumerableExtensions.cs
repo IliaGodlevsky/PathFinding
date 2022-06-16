@@ -26,7 +26,7 @@ namespace GraphLib.Extensions
 
         public static int[] ToCoordinates(this int[] dimensionSizes, int index)
         {
-            int size = dimensionSizes.GetMultiplication();
+            int size = dimensionSizes.AggregateOrDefault((x, y) => x * y);
             var rangeOfIndices = new InclusiveValueRange<int>(size - 1, 0);
             if (!rangeOfIndices.Contains(index))
             {

@@ -23,7 +23,7 @@ namespace ConsoleVersion.Extensions
         public static T Input<T>(this IInput<T> self, string msg, T upper, T lower = default)
             where T : IComparable
         {
-            var range = (upper, lower).ToRange();
+            var range = new InclusiveValueRange<T>(upper, lower);
             var input = self.Input(msg);
             while (!range.Contains(input))
             {

@@ -1,10 +1,8 @@
-﻿using Common.Extensions;
-using GraphLib.Interfaces;
+﻿using GraphLib.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Xml;
-using ValueRange.Extensions;
 
 using static GraphLib.Serialization.Serializers.XmlGraphSerializer;
 
@@ -21,7 +19,7 @@ namespace GraphLib.Serialization.Extensions
         {
             yield return document.CreateElement(Dimensions).WithAttributes(info.DimensionsSizes);
             yield return document.CreateNode(info.VerticesInfo);
-            yield return document.CreateElement(Range).WithAttributes(info.CostRange.ToArray());
+            yield return document.CreateElement(Range).WithAttributes(info.CostRange.LowerValueOfRange, info.CostRange.UpperValueOfRange);
         }
 
         private static XmlNode CreateNode(this XmlDocument document, VertexSerializationInfo[] infos)
@@ -86,6 +84,22 @@ namespace GraphLib.Serialization.Extensions
             var text = value.Invoke();
             attribute.AppendChild(text);
             return attribute;
+        }
+
+        private static void AppendAttributes(this XmlNode element, params XmlAttribute[] attriutes)
+        {
+            foreach (var attribute in attriutes)
+            {
+                element.Attributes.Append(attribute);
+            }
+        }
+
+        private static void AppendChildren(this XmlNode element, params XmlNode[] nodes)
+        {
+            foreach (var node in nodes)
+            {
+                element.AppendChild(node);
+            }
         }
     }
 }

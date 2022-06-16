@@ -1,4 +1,5 @@
-﻿using ConsoleVersion.Extensions;
+﻿using Common.Extensions.EnumerableExtensions;
+using ConsoleVersion.Extensions;
 using ConsoleVersion.Interface;
 using ConsoleVersion.Model.FramedAxes;
 using GraphLib.Interfaces;
@@ -34,7 +35,7 @@ namespace ConsoleVersion.Model
         {
             using (Cursor.HideCursor())
             {
-                Displayables.DisplayAll();
+                Displayables.ForEach(display => display.Display());
             }
         }
     }

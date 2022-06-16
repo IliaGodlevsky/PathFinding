@@ -46,7 +46,6 @@
     <Compile Include="GraphPathExtensions.cs" />
     <Compile Include="ICostsExtensions.cs" />
     <Compile Include="IPriorityQueueExtensions.cs" />
-    <Compile Include="IParentVerticesExtensions.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SimplePriorityQueueExtensions.cs" />
   </ItemGroup>

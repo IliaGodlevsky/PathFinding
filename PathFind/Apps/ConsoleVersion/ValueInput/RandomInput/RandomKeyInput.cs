@@ -1,7 +1,6 @@
 ﻿using Common.Extensions;
 using Random.Interface;
 using System;
-using System.Diagnostics;
 using ValueRange;
 
 namespace ConsoleVersion.ValueInput.RandomInput
@@ -24,7 +23,7 @@ namespace ConsoleVersion.ValueInput.RandomInput
         {
             int value = GetRandomInt();
             ConsoleKey key = ConvertFrom(value);
-            Stopwatch.StartNew().Wait(WaitMilliseconds);
+            TimeSpan.FromMilliseconds(WaitMilliseconds).Wait();
             return key;
         }
 

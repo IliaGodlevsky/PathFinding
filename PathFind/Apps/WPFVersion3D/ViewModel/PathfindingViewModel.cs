@@ -12,7 +12,6 @@ using Logging.Interface;
 using NullObject.Extensions;
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Windows.Input;
 using WPFVersion3D.DependencyInjection;
 using WPFVersion3D.Extensions;
@@ -58,7 +57,7 @@ namespace WPFVersion3D.ViewModel
         protected override void SummarizePathfindingResults()
         {
             var status = !path.IsNull() ? AlgorithmViewModel.Finished : AlgorithmViewModel.Failed;
-            string time = timer.ToFormattedString();
+            string time = timer.Elapsed.ToString(@"mm\:ss\.fff");
             messenger.Send(new UpdateAlgorithmStatisticsMessage(Index, time, visitedVerticesCount, path.Length, path.Cost));
             messenger.Send(new AlgorithmStatusMessage(status, Index));
             messenger.Send(new PathFoundMessage(path, algorithm));
@@ -66,8 +65,8 @@ namespace WPFVersion3D.ViewModel
 
         protected override async void OnVertexVisited(object sender, AlgorithmEventArgs e)
         {
-            Stopwatch.StartNew().Wait(DelayTime).Stop();
-            string time = timer.ToFormattedString();
+            TimeSpan.FromMilliseconds(DelayTime).Wait();
+            string time = timer.Elapsed.ToString(@"mm\:ss\.fff");
             var message = new UpdateAlgorithmStatisticsMessage(Index, time, visitedVerticesCount);
             await messenger.SendAsync(message).ConfigureAwait(false);
             if (!e.Current.IsNull())

@@ -19,7 +19,7 @@ namespace Visualization.Realizations
         public void Execute(IAlgorithm algorithm)
         {
             graph.RemoveAllColors();
-            this.ExecuteAll(algorithm);
+            ForEach(command => command.Execute(algorithm));
         }
     }
 }

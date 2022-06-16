@@ -1,6 +1,4 @@
-﻿using Common.Extensions;
-
-namespace GraphLib.TestRealizations
+﻿namespace GraphLib.TestRealizations
 {
     internal static class Constants
     {
@@ -11,7 +9,7 @@ namespace GraphLib.TestRealizations
 
         static Constants()
         {
-            DimensionSizes2D = (Width, Length).Merge();
+            DimensionSizes2D = new[] { Width, Length };
         }
     }
 }

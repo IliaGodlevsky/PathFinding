@@ -5,6 +5,7 @@ using GraphLib.Interfaces;
 using GraphLib.Interfaces.Factories;
 using Random.Extensions;
 using Random.Interface;
+using System.Linq;
 using ValueRange;
 using ValueRange.Extensions;
 
@@ -39,14 +40,19 @@ namespace GraphLib.Realizations.Factories.GraphAssembles
 
         public virtual IGraph AssembleGraph(int obstaclePercent, params int[] graphDimensionsSizes)
         {
-            int graphSize = graphDimensionsSizes.GetMultiplication();
+            int graphSize = graphDimensionsSizes.AggregateOrDefault((x, y) => x * y);
             int percentOfObstacles = percentRange.ReturnInRange(obstaclePercent);
-            var obstaclesMatrix = (graphSize, obstaclePercent).ToBoolsArray().Shuffle(random.Next);
+            int numberOfObstacles = graphSize.GetPercentage(obstaclePercent);
+            var regulars = Enumerable.Repeat(false, graphSize - numberOfObstacles);
+            var obstacles = Enumerable.Repeat(true, numberOfObstacles);
+            var obstaclesMatrix = regulars.Concat(obstacles).OrderBy(_ => random.Next()).ToArray();
             var vertices = new IVertex[graphSize];
             for (int vertexIndex = 0; vertexIndex < graphSize; vertexIndex++)
             {
                 var coordinateValues = graphDimensionsSizes.ToCoordinates(vertexIndex);
-                var vertex = (coordinateFactory, neighbourhoodFactory, vertexFactory).Create(coordinateValues);
+                var coordinate = coordinateFactory.CreateCoordinate(coordinateValues);
+                var neighbourhood = neighbourhoodFactory.CreateNeighborhood(coordinate);
+                var vertex = vertexFactory.CreateVertex(neighbourhood, coordinate);
                 vertex.Cost = costFactory.CreateCost();
                 vertex.IsObstacle = obstaclesMatrix[vertexIndex];
                 vertices[vertexIndex] = vertex;

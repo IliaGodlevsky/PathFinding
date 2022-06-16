@@ -50,7 +50,7 @@ namespace Algorithm.Realizations.Tests
 
             double pathCost = graphPath.Cost;
             int pathLength = graphPath.Length;
-            var pathCoordinates = graphPath.Path.Select(Coordinate).Reverse();
+            var pathCoordinates = graphPath.Path.Select(vertex => vertex.Position).Reverse();
 
             Assert.AreEqual(expectedPathLength, pathLength);
             Assert.AreEqual(expectedPathCost, pathCost);
@@ -65,11 +65,6 @@ namespace Algorithm.Realizations.Tests
                 var parentCoordinate = graph.Get(expectedPraphPathCoordinates[i]);
                 parentVertices.Add(childCoordinate, parentCoordinate);
             }
-        }
-
-        private ICoordinate Coordinate(IVertex vertex)
-        {
-            return vertex.Position;
         }
     }
 }

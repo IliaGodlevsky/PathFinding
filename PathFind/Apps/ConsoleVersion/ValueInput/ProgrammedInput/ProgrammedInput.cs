@@ -2,7 +2,6 @@
 using ConsoleVersion.Interface;
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 
 namespace ConsoleVersion.ValueInput.ProgrammedInput
 {
@@ -23,7 +22,7 @@ namespace ConsoleVersion.ValueInput.ProgrammedInput
         {
             var input = Steps.Dequeue();
             Console.WriteLine(input);
-            Stopwatch.StartNew().Wait(WaitMilliseconds);
+            TimeSpan.FromMilliseconds(WaitMilliseconds).Wait();
             return input;
         }
 

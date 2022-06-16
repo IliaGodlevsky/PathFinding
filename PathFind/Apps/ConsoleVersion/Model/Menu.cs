@@ -1,4 +1,5 @@
-﻿using Common.Extensions;
+﻿using Common.Attrbiutes;
+using Common.Extensions;
 using Common.Extensions.EnumerableExtensions;
 using Common.Interface;
 using ConsoleVersion.Attributes;
@@ -41,7 +42,7 @@ namespace ConsoleVersion.Model
             return targetType
                 .GetMethods(MethodAccessModificators)
                 .Where(method => Attribute.IsDefined(method, typeof(MenuItemAttribute)))
-                .OrderBy(item => item.GetOrder())
+                .OrderBy(item => item.GetAttributeOrNull<OrderAttribute>()?.Order ?? OrderAttribute.Default.Order)
                 .SelectMany(CreateNameCommandPair)
                 .ToReadOnlyDictionary();
         }

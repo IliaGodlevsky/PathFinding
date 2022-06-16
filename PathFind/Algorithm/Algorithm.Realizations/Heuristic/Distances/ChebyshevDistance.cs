@@ -1,7 +1,7 @@
 ﻿using Algorithm.Interfaces;
-using Common.Extensions.EnumerableExtensions;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Algorithm.Realizations.Heuristic.Distances
 {
@@ -9,7 +9,7 @@ namespace Algorithm.Realizations.Heuristic.Distances
     {
         protected override double Aggregate(IEnumerable<double> collection)
         {
-            return collection.MaxOrDefault();
+            return collection.Any() ? collection.Max() : default;
         }
 
         protected override double ZipMethod(int first, int second)

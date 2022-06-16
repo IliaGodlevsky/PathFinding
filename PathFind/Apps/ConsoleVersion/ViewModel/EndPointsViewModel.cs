@@ -120,7 +120,7 @@ namespace ConsoleVersion.ViewModel
 
         private bool CanChooseEndPoints()
         {
-            return graph.HasAvailableEndPoints() && !endPoints.HasSourceAndTargetSet();
+            return graph.GetAvailableIntermediatesNumber() > 0 && !endPoints.HasSourceAndTargetSet();
         }
     }
 }

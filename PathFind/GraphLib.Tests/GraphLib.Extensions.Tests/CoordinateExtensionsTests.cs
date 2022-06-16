@@ -1,7 +1,6 @@
 ﻿using GraphLib.Interfaces;
 using Moq;
 using NUnit.Framework;
-using System;
 
 namespace GraphLib.Extensions.Tests
 {
@@ -46,32 +45,6 @@ namespace GraphLib.Extensions.Tests
             bool isEqual = first.IsEqual(second);
 
             Assert.IsFalse(isEqual);
-        }
-
-        [TestCase(new[] { 8, 16 }, new[] { 10, 20 }, ExpectedResult = true)]
-        [TestCase(new[] { 33, 1, 100 }, new[] { 60, 50, 150 }, ExpectedResult = true)]
-        [TestCase(new[] { 33, 1, 100, 50 }, new[] { 60, 50, 150, 67 }, ExpectedResult = true)]
-        [TestCase(new[] { 11, 16 }, new[] { 10, 20 }, ExpectedResult = false)]
-        [TestCase(new[] { 33, 52, 100 }, new[] { 60, 50, 150 }, ExpectedResult = false)]
-        [TestCase(new[] { 33, 1, 100, 69 }, new[] { 60, 50, 150, 67 }, ExpectedResult = false)]
-        public bool IsWithinGraph_CoordinateIsOfSameDimensionAsTheGraph_ReturnsValidCondition(
-            int[] coordinateValues,
-            int[] graphDimensionSizes)
-        {
-            graphMock.Setup(g => g.DimensionsSizes).Returns(graphDimensionSizes);
-            coordinateMock.Setup(c => c.CoordinatesValues).Returns(coordinateValues);
-
-            return coordinateMock.Object.IsWithinGraph(graphMock.Object);
-        }
-
-        [TestCase(new[] { 33, 52, 100 })]
-        [TestCase(new[] { 33, 1, 100, 69 })]
-        public void IsWithinGraph_GraphIsNull_ThrowsArgumentNullException(int[] coordinateValues)
-        {
-            IGraph graph = null;
-            coordinateMock.Setup(c => c.CoordinatesValues).Returns(coordinateValues);
-
-            Assert.Throws<ArgumentNullException>(() => coordinateMock.Object.IsWithinGraph(graph));
         }
     }
 }

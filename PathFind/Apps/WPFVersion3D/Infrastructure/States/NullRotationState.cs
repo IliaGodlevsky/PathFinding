@@ -10,7 +10,7 @@ namespace WPFVersion3D.Infrastructure.States
 
         public void Activate(GraphFieldAxisRotatingViewModel model)
         {
-            
+
         }
 
         private NullRotationState()

@@ -1,7 +1,6 @@
 ﻿using Common.Extensions;
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Linq;
 
 namespace ConsoleVersion.ValueInput.ProgrammedInput
@@ -22,7 +21,7 @@ namespace ConsoleVersion.ValueInput.ProgrammedInput
             {
                 Keys.ForEach(Steps.Enqueue);
             }
-            Stopwatch.StartNew().Wait(750);
+            TimeSpan.FromMilliseconds(750).Wait();
             return Steps.Dequeue();
         }
 

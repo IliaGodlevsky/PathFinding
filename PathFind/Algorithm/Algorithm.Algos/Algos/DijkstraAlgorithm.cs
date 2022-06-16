@@ -6,6 +6,7 @@ using Algorithm.Realizations.StepRules;
 using Common.Extensions.EnumerableExtensions;
 using GraphLib.Extensions;
 using GraphLib.Interfaces;
+using GraphLib.NullRealizations;
 using Priority_Queue;
 using System.Collections.Generic;
 
@@ -42,7 +43,9 @@ namespace Algorithm.Algos.Algos
 
         protected override IVertex GetNextVertex()
         {
-            return queue.FirstOrNullVertex();
+            return queue.TryFirst(out var vertex) 
+                ? vertex 
+                : NullVertex.Instance;
         }
 
         protected override void PrepareForLocalPathfinding()
@@ -81,7 +84,7 @@ namespace Algorithm.Algos.Algos
         protected override void RelaxNeighbours(IReadOnlyCollection<IVertex> neighbours)
         {
             neighbours.ForEach(RelaxVertex);
-            queue.RemoveIfContains(CurrentVertex);
+            queue.TryRemove(CurrentVertex);
         }
 
         public override string ToString()

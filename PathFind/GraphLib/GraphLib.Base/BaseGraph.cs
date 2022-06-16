@@ -10,11 +10,13 @@ using static System.Reflection.BindingFlags;
 namespace GraphLib.Base
 {
     public abstract class BaseGraph : IGraph
-    {
+    {       
         private static readonly string ParamsFormat = "Obstacle percent: {0} ({1}/{2})";
         private static readonly string LargeSpace = "   ";
         protected static readonly string[] DimensionNames = new[] { "Width", "Length", "Height" };
 
+        private readonly Type graphType;
+        private readonly object locker = new object();
         private readonly IReadOnlyDictionary<ICoordinate, IVertex> vertices;
 
         public IReadOnlyCollection<IVertex> Vertices => (IReadOnlyCollection<IVertex>)vertices.Values;
@@ -25,13 +27,14 @@ namespace GraphLib.Base
 
         protected BaseGraph(int requiredNumberOfDimensions, IReadOnlyCollection<IVertex> vertices, params int[] dimensionSizes)
         {
+            graphType = GetType();
             DimensionsSizes = dimensionSizes
                 .TakeOrDefault(requiredNumberOfDimensions, 1)
                 .ToArray();
-            Size = DimensionsSizes.GetMultiplication();
+            Size = DimensionsSizes.AggregateOrDefault((x, y) => x * y);
             this.vertices = vertices
                 .Take(Size)
-                .ForAll(new Action<IVertex>(SetGraph))
+                .ForEach(SetGraph)
                 .ToDictionary(vertex => vertex.Position)
                 .ToReadOnlyDictionary();
         }
@@ -43,14 +46,21 @@ namespace GraphLib.Base
 
         public override bool Equals(object obj)
         {
-            return obj is IGraph graph && graph.IsEqual(this);
+            if (obj is IGraph graph)
+            {
+                bool hasEqualDimensionSizes = DimensionsSizes.SequenceEqual(graph.DimensionsSizes);
+                bool hasEqualNumberOfObstacles = graph.GetObstaclesCount() == this.GetObstaclesCount();
+                bool hasEqualVertices = Vertices.Juxtapose(graph.Vertices, (a, b) => a.Equals(b));
+                return hasEqualNumberOfObstacles && hasEqualVertices && hasEqualDimensionSizes;
+            }
+            return false;
         }
 
         public override int GetHashCode()
         {
-            return Vertices
-                .Select(x => x.GetHashCode())
-                .ToHashCode() ^ (DimensionsSizes.ToHashCode());
+            var verticesHashCode = Vertices.Select(x => x.GetHashCode()).ToHashCode();
+            var dimensionsHashCode = DimensionsSizes.ToHashCode();
+            return verticesHashCode ^ dimensionsHashCode;
         }
 
         public override string ToString()
@@ -67,12 +77,14 @@ namespace GraphLib.Base
 
         private void SetGraph(IVertex vertex)
         {
-            vertex
-                .GetType()
-                .GetFields(NonPublic | Instance)
-                .Where(field => field.Name.Contains(nameof(vertex.Graph)))
-                .FirstOrDefault()
-                .TrySetValue(vertex, this);
+            lock (locker)
+            {
+                vertex
+                  .GetType()
+                  .GetFields(NonPublic | Instance)
+                  .Where(field => field.FieldType.IsAssignableFrom(graphType))
+                  .ForEach(info => info.SetValue(vertex, this));
+            }
         }
     }
 }

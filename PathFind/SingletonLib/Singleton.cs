@@ -3,6 +3,7 @@ using SingletonLib.Exceptions;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 
 namespace SingletonLib
 {
@@ -27,7 +28,10 @@ namespace SingletonLib
 
         private static TInstance CreateInstance(Type ofType)
         {
-            return ofType.TryGetNonPublicParametrelessCtor(out var ctor)
+            var ctor = ofType
+                .GetConstructors(BindingFlags.NonPublic | BindingFlags.Instance)
+                .FirstOrDefault(c => c.GetParameters().Length == 0);
+            return ctor != null
                 ? (TInstance)ctor.Invoke(Array.Empty<object>())
                 : throw new SingletonException(ofType);
         }

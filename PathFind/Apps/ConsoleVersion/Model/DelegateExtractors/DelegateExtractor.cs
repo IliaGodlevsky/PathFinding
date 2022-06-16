@@ -23,7 +23,8 @@ namespace ConsoleVersion.Model.DelegateExtractors
             return info
                 .GetCustomAttributes<TAttribute>()
                 .Select(attribute => GetMethod(type, attribute))
-                .Select(method => CreateDelegateOrNull(target, method));
+                .Select(method => CreateDelegateOrNull(target, method))
+                .Where(method => method != null);
         }
 
         private TDelegate CreateDelegateOrNull(object target, MethodInfo info)

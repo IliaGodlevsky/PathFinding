@@ -1,12 +1,11 @@
-﻿using Algorithm.Extensions;
-using Algorithm.Interfaces;
+﻿using Algorithm.Interfaces;
 using Algorithm.Realizations.StepRules;
 using Algorithm.Сompanions.Interface;
 using GraphLib.Extensions;
 using GraphLib.Interfaces;
+using GraphLib.NullRealizations;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 
 namespace Algorithm.Realizations.GraphPaths
 {
@@ -17,7 +16,7 @@ namespace Algorithm.Realizations.GraphPaths
         private readonly IStepRule stepRule;
 
         private readonly Lazy<double> pathCost;
-        private readonly Lazy<IVertex[]> path;
+        private readonly Lazy<IReadOnlyList<IVertex>> path;
 
         public IReadOnlyList<IVertex> Path => path.Value;
 
@@ -34,30 +33,26 @@ namespace Algorithm.Realizations.GraphPaths
         public GraphPath(IParentVertices parentVertices,
             IEndPoints endPoints, IStepRule stepRule)
         {
-            path = new Lazy<IVertex[]>(GetPath);
+            path = new Lazy<IReadOnlyList<IVertex>>(GetPath);
             pathCost = new Lazy<double>(GetPathCost);
             this.parentVertices = parentVertices;
             this.endPoints = endPoints;
             this.stepRule = stepRule;
         }
 
-        private IVertex[] GetPath()
+        private IReadOnlyList<IVertex> GetPath()
         {
-            var path = ExtractPath().ToArray();
-            return path.Contains(endPoints.Source) ? path : Array.Empty<IVertex>();
-        }
-
-        private IEnumerable<IVertex> ExtractPath()
-        {
+            var vertices = new List<IVertex>();
             var vertex = endPoints.Target;
-            yield return vertex;
-            var parent = parentVertices.GetParentOrNullVertex(vertex);
+            vertices.Add(vertex);
+            var parent = GetOrNullVertex(vertex);
             while (parent.IsNeighbour(vertex))
             {
-                yield return parent;
+                vertices.Add(parent);
                 vertex = parent;
-                parent = parentVertices.GetParentOrNullVertex(vertex);
+                parent = GetOrNullVertex(vertex);
             }
+            return vertices.AsReadOnly();
         }
 
         private double GetPathCost()
@@ -68,6 +63,13 @@ namespace Algorithm.Realizations.GraphPaths
                 totalCost += stepRule.CalculateStepCost(Path[i], Path[i + 1]);
             }
             return totalCost;
+        }
+
+        private IVertex GetOrNullVertex(IVertex vertex)
+        {
+            return parentVertices.HasParent(vertex) 
+                ? parentVertices.GetParent(vertex) 
+                : NullVertex.Instance;
         }
     }
 }

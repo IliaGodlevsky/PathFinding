@@ -1,7 +1,5 @@
 ﻿using Common.Extensions.EnumerableExtensions;
 using NUnit.Framework;
-using Random.Extensions;
-using Random.Realizations.Generators;
 using System.Linq;
 
 namespace Common.Tests
@@ -43,16 +41,6 @@ namespace Common.Tests
             Assert.IsTrue(matches);
         }
 
-        [TestCase(new[] { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 })]
-        public void Shuffle_OrderedCollection_ReturnShuffledCollection(int[] ordered)
-        {
-            var random = new PseudoRandom();
-            var toOrder = ordered.ToArray();
-            var unordered = toOrder.Shuffle(random.Next);
-
-            Assert.IsFalse(unordered.Juxtapose(ordered));
-        }
-
         [TestCase(10, new[] { 1, 2, 4, 5, 6, 5 })]
         [TestCase(6, new[] { 1, 2, 4, 5, 5 })]
         public void TakeOrDefault_TakeFromValues_RetunsValuesAndDefaults(int take, int[] values)
@@ -65,15 +53,6 @@ namespace Common.Tests
                 Assert.IsTrue(taken.Length == take);
                 Assert.IsTrue(notDefaultCount == values.Length);
             });
-        }
-
-        [TestCase(new[] { 5, 6, 7 }, new[] { 5, 6, 7, 1, 2, 3, 4 }, new[] { 1, 2, 3, 4 })]
-        public void Without_ArrayContainingValues_ReturnValuesWithoutValues(int[] valuesToRemove,
-            int[] values, int[] valuesWithout)
-        {
-            var without = values.Without(valuesToRemove);
-
-            Assert.IsTrue(without.Juxtapose(valuesWithout));
         }
     }
 }

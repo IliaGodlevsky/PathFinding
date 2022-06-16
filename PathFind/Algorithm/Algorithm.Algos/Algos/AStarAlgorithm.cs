@@ -34,7 +34,10 @@ namespace Algorithm.Algos.Algos
 
         protected override void Enqueue(IVertex vertex, double value)
         {
-            heuristics.ReevaluateIfNotExists(vertex, CalculateHeuristic);
+            if (!heuristics.Contains(vertex))
+            {
+                heuristics.Reevaluate(vertex, CalculateHeuristic(vertex));
+            }
             base.Enqueue(vertex, value + heuristics.GetCost(vertex));
         }
 

@@ -11,7 +11,6 @@ using Interruptable.EventArguments;
 using Logging.Interface;
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using WindowsFormsVersion.DependencyInjection;
 using WindowsFormsVersion.Enums;
 using WindowsFormsVersion.Messeges;
@@ -49,7 +48,7 @@ namespace WindowsFormsVersion.ViewModel
 
         protected override void OnVertexVisited(object sender, AlgorithmEventArgs e)
         {
-            Stopwatch.StartNew().Wait(DelayTime).Stop();
+            TimeSpan.FromMilliseconds(DelayTime).Wait();
             base.OnVertexVisited(sender, e);
             var message = new UpdateStatisticsMessage(Statistics);
             messenger.Send(message, MessageTokens.MainModel);
@@ -88,7 +87,7 @@ namespace WindowsFormsVersion.ViewModel
         {
             get
             {
-                string timerInfo = timer.ToFormattedString();
+                string timerInfo = timer.Elapsed.ToString(@"mm\:ss\.fff");
                 string description = Algorithm.ToString();
                 string pathfindingInfo = string.Format(Format, PathfindingInfo);
                 return string.Join("    ", description, timerInfo, pathfindingInfo);

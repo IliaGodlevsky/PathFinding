@@ -1,5 +1,4 @@
-﻿using Common.Extensions.EnumerableExtensions;
-using GraphLib.Interfaces;
+﻿using GraphLib.Interfaces;
 using GraphLib.Proxy;
 using System.Collections.Generic;
 using System.Linq;
@@ -50,7 +49,8 @@ namespace GraphLib.Extensions
 
         public static IEnumerable<IVertex> GetIntermediates(this IEndPoints self)
         {
-            return self.EndPoints.Without(self.Source, self.Target);
+            var vertices = new[] { self.Source, self.Target };
+            return self.EndPoints.Where(item => !vertices.Contains(item));
         }
     }
 }

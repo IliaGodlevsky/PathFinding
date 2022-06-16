@@ -17,10 +17,10 @@ namespace GraphLib.Realizations.Extensions
                 self.ForEach(vertex =>
                 {
                     visited.Visit(vertex);
-                    if (visited.HasUnvisitedNeighbours(vertex))
+                    if (vertex.Neighbours.Any(visited.IsNotVisited))
                     {
-                        double avgCost = visited
-                            .GetUnvisitedNeighbours(vertex)
+                        double avgCost = vertex.Neighbours
+                            .Where(visited.IsNotVisited)
                             .Average(neighbour => meanCost.Calculate(neighbour, vertex));
                         vertex.Cost = costFactory.CreateCost((int)Math.Round(avgCost, 0));
                     }

@@ -22,7 +22,6 @@ using Logging.Interface;
 using NullObject.Extensions;
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Threading;
 using ValueRange;
 using ValueRange.Extensions;
@@ -143,7 +142,7 @@ namespace ConsoleVersion.ViewModel
 
         protected override void OnVertexVisited(object sender, AlgorithmEventArgs e)
         {
-            Stopwatch.StartNew().Wait(DelayTime).Stop();
+            TimeSpan.FromMilliseconds(DelayTime).Wait();
             base.OnVertexVisited(sender, e);
             messenger.Send(new UpdateStatisticsMessage(Statistics));
         }

@@ -4,6 +4,7 @@ using Algorithm.Factory.Interface;
 using Algorithm.Infrastructure.EventArguments;
 using Algorithm.Interfaces;
 using Algorithm.NullRealizations;
+using Common.Attrbiutes;
 using Common.Extensions;
 using Common.Extensions.EnumerableExtensions;
 using GraphLib.Base.EndPoints;
@@ -40,7 +41,10 @@ namespace GraphViewModel
         {
             this.endPoints = endPoints;
             this.log = log;
-            Algorithms = factories.GroupByGroupAttribute().ToArray();
+            Algorithms = factories
+                .GroupBy(item => item.GetAttributeOrNull<GroupAttribute>())
+                .SelectMany(item => item.OrderByOrderAttribute())
+                .ToArray();
             timer = new Stopwatch();
             path = NullGraphPath.Instance;
         }
@@ -119,13 +123,13 @@ namespace GraphViewModel
                 algorithm.VertexVisited += OnVertexVisitedNoVisualization;
             }
             algorithm.Finished += OnAlgorithmFinished;
-            algorithm.Finished += timer.Stop;
+            algorithm.Finished += (s, e) => timer.Stop();
             algorithm.Started += OnAlgorithmStarted;
-            algorithm.Started += timer.Restart;
+            algorithm.Started += (s, e) => timer.Restart();
             algorithm.Interrupted += OnAlgorithmInterrupted;
-            algorithm.Interrupted += timer.Stop;
-            algorithm.Paused += timer.Stop;
-            algorithm.Resumed += timer.Start;
+            algorithm.Interrupted += (s, e) => timer.Stop();
+            algorithm.Paused += (s, e) => timer.Stop();
+            algorithm.Resumed += (s, e) => timer.Start();
         }
     }
 }

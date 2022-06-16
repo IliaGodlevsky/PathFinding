@@ -1,6 +1,7 @@
 ﻿using GraphLib.Extensions;
 using GraphLib.NullRealizations;
 using NUnit.Framework;
+using System.Linq;
 
 namespace GraphLib.Common.Tests
 {
@@ -46,7 +47,7 @@ namespace GraphLib.Common.Tests
             var graph = NullGraph.Instance;
 
             var candidate = NullVertex.Instance;
-            var vertex = graph.FirstOrNullVertex();
+            var vertex = graph.Vertices.FirstOrDefault() ?? NullVertex.Instance;
 
             Assert.DoesNotThrow(() => vertex.IsNeighbour(candidate));
         }

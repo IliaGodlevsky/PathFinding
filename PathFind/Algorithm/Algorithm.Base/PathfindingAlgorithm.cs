@@ -149,8 +149,9 @@ namespace Algorithm.Base
 
         protected IReadOnlyCollection<IVertex> GetUnvisitedVertices(IVertex vertex)
         {
-            return visitedVertices
-                .GetUnvisitedNeighbours(vertex)
+            return vertex
+                .Neighbours
+                .Where(visitedVertices.IsNotVisited)
                 .Where(v => !v.IsObstacle)
                 .ToArray();
         }

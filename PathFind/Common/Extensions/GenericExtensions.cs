@@ -1,5 +1,4 @@
-﻿using Common.Attrbiutes;
-using System;
+﻿using System;
 using System.Linq;
 using System.Reflection;
 
@@ -35,12 +34,6 @@ namespace Common.Extensions
             where T : IComparable
         {
             return value.IsLessOrEqual(upper) && value.IsGreaterOrEqual(lower);
-        }
-
-        public static int GetOrder<T>(this T self)
-        {
-            return self.GetAttributeOrNull<OrderAttribute>()?.Order
-                ?? OrderAttribute.Default.Order;
         }
 
         public static TAttribute GetAttributeOrNull<TAttribute>(this object self)

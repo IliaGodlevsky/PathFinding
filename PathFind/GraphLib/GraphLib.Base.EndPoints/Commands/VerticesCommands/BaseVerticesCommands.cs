@@ -27,7 +27,7 @@ namespace GraphLib.Base.EndPoints.Commands.VerticesCommands
 
         public void Undo()
         {
-            UndoCommands.UndoAll();
+            UndoCommands.ForEach(command => command.Undo());
         }
 
         protected abstract IReadOnlyCollection<IVertexCommand> GetCommands(BaseEndPoints endPoints);

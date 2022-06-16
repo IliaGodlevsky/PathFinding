@@ -55,8 +55,8 @@ namespace Algorithm.Algos.Tests
         public void FindPath_GraphsWithoutObstacles_ReturnsNotEmptyPath(int[] dimensionSizes)
         {
             var graph = testGraphAssemble.AssembleGraph(0, dimensionSizes);
-            var source = graph.FirstOrNullVertex();
-            var target = graph.LastOrNullVertex();
+            var source = graph.Vertices.FirstOrDefault() ?? NullVertex.Instance;
+            var target = graph.Vertices.LastOrDefault() ?? NullVertex.Instance;
             var endPoints = new TestEndPoints(source, target);
             var algorithm = CreateAlgorithm(endPoints);
 

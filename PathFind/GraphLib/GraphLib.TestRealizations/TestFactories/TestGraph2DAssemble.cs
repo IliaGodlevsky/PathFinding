@@ -13,7 +13,7 @@ namespace GraphLib.TestRealizations.TestFactories
     {
         public IGraph AssembleGraph(int obstaclePercent = 0, params int[] sizes)
         {
-            int size = Constants.DimensionSizes2D.GetMultiplication();
+            int size = Constants.DimensionSizes2D.AggregateOrDefault((x, y) => x * y);
             var vertices = new TestVertex[size];
             for (int index = 0; index < size; index++)
             {

@@ -5,8 +5,8 @@ using Algorithm.Realizations.GraphPaths;
 using Common.Extensions.EnumerableExtensions;
 using GraphLib.Extensions;
 using GraphLib.Interfaces;
+using GraphLib.NullRealizations;
 using NullObject.Extensions;
-using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -51,9 +51,9 @@ namespace Algorithm.Base
         protected override IVertex GetNextVertex()
         {
             var neighbours = GetUnvisitedVertices(CurrentVertex);
-            double leastVertexCost = neighbours.MinOrDefault(GreedyHeuristic);
+            double leastVertexCost = neighbours.Any() ? neighbours.Min(GreedyHeuristic) : default;
             return neighbours
-                .ForAll(new Action<IVertex>(Enqueue))
+                .ForEach(Enqueue)
                 .FirstOrNullVertex(vertex => GreedyHeuristic(vertex) == leastVertexCost);
         }
 
@@ -89,7 +89,9 @@ namespace Algorithm.Base
         {
             if (CurrentVertex.IsNull())
             {
-                CurrentVertex = visitedVerticesStack.PopOrNullVertex();
+                CurrentVertex = visitedVerticesStack.Count == 0
+                    ? NullVertex.Instance
+                    : visitedVerticesStack.Pop();
             }
             else
             {

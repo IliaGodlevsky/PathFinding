@@ -33,34 +33,13 @@ namespace Common.Extensions.EnumerableExtensions
             return collection.Any() ? collection.Aggregate(func) : default;
         }
 
-        public static IEnumerable<T> Without<T>(this IEnumerable<T> self, IEnumerable<T> items)
-        {
-            return self.Where(item => !items.Contains(item));
-        }
-
-        public static IEnumerable<T> Without<T>(this IEnumerable<T> self, params T[] items)
-        {
-            return self.Without(items.AsEnumerable());
-        }
-
-        public static int GetMultiplication(this IEnumerable<int> array)
-        {
-            return array.AggregateOrDefault((x, y) => x * y);
-        }
-
-        public static T ForAll<T, U>(this T collection, Action<U> action)
-            where T : IEnumerable<U>
-        {
-            collection.ForEach(action);
-            return collection;
-        }
-
-        public static void ForEach<T>(this IEnumerable<T> collection, Action<T> action)
+        public static IEnumerable<T> ForEach<T>(this IEnumerable<T> collection, Action<T> action)
         {
             foreach (var item in collection)
             {
                 action(item);
             }
+            return collection;
         }
 
         public static double SumOrDefault(this IEnumerable<double> collection)
@@ -71,16 +50,6 @@ namespace Common.Extensions.EnumerableExtensions
         public static int SumOrDefault(this IEnumerable<int> collection)
         {
             return collection.Any() ? collection.Sum() : default;
-        }
-
-        public static double MaxOrDefault(this IEnumerable<double> collection)
-        {
-            return collection.Any() ? collection.Max() : default;
-        }
-
-        public static double MinOrDefault<T>(this IEnumerable<T> collection, Func<T, double> selector)
-        {
-            return collection.Any() ? collection.Min(selector) : default;
         }
 
         public static bool Juxtapose<T>(this IEnumerable<T> self, IEnumerable<T> second, Func<T, T, bool> predicate)
@@ -101,26 +70,7 @@ namespace Common.Extensions.EnumerableExtensions
 
         public static IOrderedEnumerable<T> OrderByOrderAttribute<T>(this IEnumerable<T> collection)
         {
-            return collection.OrderBy(item => item.GetOrder());
-        }
-
-        public static IEnumerable<T> GroupByGroupAttribute<T>(this IEnumerable<T> collection)
-        {
-            return collection
-                .GroupBy(item => item.GetAttributeOrNull<GroupAttribute>())
-                .SelectMany(item => item.OrderByOrderAttribute());
-        }
-
-        public static IList<T> Shuffle<T>(this IList<T> list, Func<int> randomFunction)
-        {
-            for (int i = 0; i < list.Count; i++)
-            {
-                int index = randomFunction() % list.Count;
-                var temp = list[i];
-                list[i] = list[index];
-                list[index] = temp;
-            }
-            return list;
+            return collection.OrderBy(item => item.GetAttributeOrNull<OrderAttribute>()?.Order ?? OrderAttribute.Default.Order);
         }
 
         public static IEnumerable<T> TakeOrDefault<T>(this IEnumerable<T> collection, int number, T defaultValue = default)
@@ -150,16 +100,6 @@ namespace Common.Extensions.EnumerableExtensions
         public static int ToHashCode(this IEnumerable<int> array)
         {
             return array.AggregateOrDefault((x, y) => x ^ y);
-        }
-
-        public static bool ContainsUniqueValues<T>(this IEnumerable<T> collection)
-        {
-            return collection.ContainsUniqueValues(EqualityComparer<T>.Default);
-        }
-
-        public static bool ContainsUniqueValues<T>(this IEnumerable<T> collection, IEqualityComparer<T> comparer)
-        {
-            return collection.Distinct(comparer).Count() == collection.Count();
         }
     }
 }

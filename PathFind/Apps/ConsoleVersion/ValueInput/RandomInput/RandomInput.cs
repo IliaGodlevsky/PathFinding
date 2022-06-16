@@ -3,7 +3,6 @@ using ConsoleVersion.Interface;
 using Random.Extensions;
 using Random.Interface;
 using System;
-using System.Diagnostics;
 using ValueRange;
 
 namespace ConsoleVersion.ValueInput.RandomInput
@@ -26,7 +25,7 @@ namespace ConsoleVersion.ValueInput.RandomInput
             int value = GetRandomInt();
             T converted = ConvertFrom(value);
             Console.WriteLine(converted);
-            Stopwatch.StartNew().Wait(WaitMilliseconds);
+            TimeSpan.FromMilliseconds(WaitMilliseconds).Wait();
             return converted;
         }
 

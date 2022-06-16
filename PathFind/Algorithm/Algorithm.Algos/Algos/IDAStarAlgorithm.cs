@@ -5,7 +5,6 @@ using Algorithm.Realizations.StepRules;
 using Common.Extensions.EnumerableExtensions;
 using GraphLib.Interfaces;
 using NullObject.Extensions;
-using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -15,7 +14,7 @@ namespace Algorithm.Algos.Algos
     {
         private const int PercentToDelete = 4;
 
-        private readonly ICollection<Tuple<IVertex, double>> deletedVertices;
+        private readonly Dictionary<IVertex, double> deletedVertices;
 
         private int ToDeleteCount => queue.Count * PercentToDelete / 100;
 
@@ -28,19 +27,24 @@ namespace Algorithm.Algos.Algos
         public IDAStarAlgorithm(IEndPoints endPoints, IStepRule stepRule, IHeuristic function)
             : base(endPoints, stepRule, function)
         {
-            deletedVertices = new HashSet<Tuple<IVertex, double>>();
+            deletedVertices = new Dictionary<IVertex, double>();
         }
 
         protected override IVertex GetNextVertex()
         {
-            var verticesToDelete = queue.TakeOrderedBy(ToDeleteCount, heuristics.GetCost);
-            var tuples = queue.ToTuples(verticesToDelete, heuristics.GetCost).ToList();
-            queue.RemoveRange(verticesToDelete);
-            deletedVertices.AddRange(tuples);
+            var query = queue
+                .OrderByDescending(heuristics.GetCost)
+                .Take(ToDeleteCount)
+                .Select(vertex => new { Vertex = vertex, Priority = queue.GetPriorityOrInfinity(vertex) })
+                .ForEach(item =>
+                {
+                    queue.TryRemove(item.Vertex);
+                    deletedVertices[item.Vertex] = item.Priority;
+                });
             var next = base.GetNextVertex();
             if (next.IsNull())
             {
-                queue.EnqueueRange(deletedVertices);
+                deletedVertices.ForEach(node => queue.EnqueueOrUpdatePriority(node.Key, node.Value));
                 deletedVertices.Clear();
                 next = base.GetNextVertex();
             }
